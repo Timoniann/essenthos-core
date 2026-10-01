@@ -54,17 +54,18 @@ public sealed class StrongRenderingLoaderTests : IDisposable
 
     private void Clear() => _db.Database.ExecuteSqlRaw("DELETE FROM text");
 
-    private void Renders(int[] hebrew, int[] english)
+    private void Renders(int[] hebrew, int[] english, Text? translation = null)
     {
+        translation ??= _english;
         var link = new Link
         {
-            FromTextId = _english.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Renders,
+            FromTextId = translation.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         foreach (var position in english)
         {
-            _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(_english, 1, 1, position), Side = LinkSide.From });
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(translation, 1, 1, position), Side = LinkSide.From });
         }
 
         foreach (var position in hebrew)
@@ -119,6 +120,51 @@ public sealed class StrongRenderingLoaderTests : IDisposable
 
         (await Kept()).Should().Equal((Create, 1, "created", 1), (God, 1, "god", 1));
     }
+
+    /// <summary>
+    /// A Forge run that changed one text's links outside a load counts that text again as it ends, and
+    /// what it leaves is what a fresh count of every text would: the next count finds nothing to write.
+    /// A text it did not name keeps its rows as they were.
+    /// </summary>
+    [Fact]
+    public async Task ARunCountsAgainTheTextItRelinkedAndLeavesWhatAFreshCountWould()
+    {
+        var other = Corpus.Add(_db, "OTHER", TextKind.Translation, "en", (1, 1, ["made", "Gods"]));
+        _db.SaveChanges();
+        Renders([1], [1], other);
+        Renders([2], [2], other);
+        _db.SaveChanges();
+        await _loader.Load();
+        var others = await OtherRows(other);
+        var thy = await _db.LinkWords.Where(lw => lw.Word!.Surface == "thy").Select(lw => lw.LinkId).SingleAsync();
+        await _db.Links.Where(l => l.Id == thy).ExecuteDeleteAsync();
+
+        var recounted = await _loader.Load(Relinked.Of("kjv"));
+
+        recounted.AlreadyLoaded.Should().BeFalse();
+        recounted.Texts.Should().Be(1);
+        (await _db.StrongRenderings.Where(r => r.TextId == _english.Id && r.StrongNumber == God).Select(r => r.Phrase).ToListAsync())
+            .Should().Equal("god");
+        (await _db.StrongReaches.Where(r => r.TextId == _english.Id && r.StrongNumber == God).Select(r => r.Reached).SingleAsync())
+            .Should().Be(1);
+        (await OtherRows(other)).Should().Equal(others);
+        (await _loader.Load()).AlreadyLoaded.Should().BeTrue("the run left what counting every text would");
+    }
+
+    [Fact]
+    public async Task ARunThatChangedNothingCountsNothing()
+    {
+        await _loader.Load();
+        var ids = await _db.StrongRenderings.Select(r => r.Id).OrderBy(id => id).ToListAsync();
+
+        (await _loader.Load(Relinked.None)).Texts.Should().Be(0);
+        (await _loader.Load(Relinked.Run(-1))).Texts.Should().Be(0);
+
+        (await _db.StrongRenderings.Select(r => r.Id).OrderBy(id => id).ToListAsync()).Should().Equal(ids);
+    }
+
+    private Task<List<int>> OtherRows(Text other) =>
+        _db.StrongRenderings.Where(r => r.TextId == other.Id).Select(r => r.Id).OrderBy(id => id).ToListAsync();
 
     /// <summary>The entry page answers from what the load counted exactly as it answers counting as it is asked.</summary>
     [Fact]

@@ -275,6 +275,38 @@ public sealed class ContextEndpointTests : IDisposable
     }
 
     /// <summary>
+    /// A row carries our own line in the reader's language where it was rendered from the English the
+    /// record still holds, as the record's page does; a changed English line has no rendering, and an
+    /// English reader is given none.
+    /// </summary>
+    [Fact]
+    public async Task ARowCarriesOurLineInTheReadersLanguage()
+    {
+        var spirit = Record("holy-spirit", EntityKind.Person);
+        var altered = Record("altered", EntityKind.Person);
+        spirit.Distinguisher = "whom the text calls the Holy Spirit (MAT 28:19; 1CO 3:16)";
+        altered.Distinguisher = "a line changed since it was rendered";
+        await _db.SaveChangesAsync();
+        Rendered(spirit, spirit.Distinguisher, "той, кого текст називає Святим Духом (MAT 28:19; 1CO 3:16)");
+        Rendered(altered, "the line as it was", "рядок, яким він був");
+        NamedAt(spirit, 10, 1);
+        NamedAt(altered, 10, 1);
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        var ukrainian = await ContextEndpoints.Context(_db, Genesis, 10, "ukr", default);
+        var english = await ContextEndpoints.Context(_db, Genesis, 10, "eng", default);
+
+        ukrainian.Entities.ToDictionary(e => e.Slug, e => e.LocalDistinguisher).Should().BeEquivalentTo(
+            new Dictionary<string, string?>
+            {
+                ["holy-spirit"] = "той, кого текст називає Святим Духом (MAT 28:19; 1CO 3:16)",
+                ["altered"] = null,
+            });
+        english.Entities.Should().OnlyContain(e => e.LocalDistinguisher == null);
+    }
+
+    /// <summary>
     /// A unit is counted once a verse, whichever texts carry its number, and a number that is not
     /// only a unit is not counted at all.
     /// </summary>
@@ -441,6 +473,12 @@ public sealed class ContextEndpointTests : IDisposable
             Method = method,
             Confidence = confidence,
             Source = $"test:{method}:{entity.Slug}",
+        });
+
+    private void Rendered(Entity entity, string english, string ukrainian) =>
+        _db.EntityDistinguishers.Add(new EntityDistinguisher
+        {
+            Entity = entity, Language = "ukr", Text = ukrainian, English = english, Source = "Essenthos, a test",
         });
 
     private void NamedAt(Entity entity, int chapter, int verse, bool disputed = false) =>

@@ -213,7 +213,12 @@ if (!verb.Accepts(arguments))
     return 1;
 }
 
-var exit = await verb.Run(new ForgeRun(app.Services, logger, resources, databaseConnection), arguments);
+var forge = new ForgeRun(app.Services, logger, resources, databaseConnection);
+var exit = await verb.Run(forge, arguments);
+if (exit == 0)
+{
+    await forge.Recount(verb.Changed(arguments));
+}
 
 // A run that wrote what the load does not goes into the recipe the load replays.
 if (exit == 0)

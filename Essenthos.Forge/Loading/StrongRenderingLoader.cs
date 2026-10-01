@@ -26,9 +26,37 @@ internal sealed record StrongRenderingOutcome(
 }
 
 /// <summary>
+/// Which texts a Forge run changed the links of, so their Strong counts are counted again at its end:
+/// the texts named, the two texts of a stored EVIDENTIA run, or every text where the run cannot say.
+/// </summary>
+internal sealed record Relinked(IReadOnlyList<string>? Texts, int? EvidentiaRun = null)
+{
+    public static Relinked None { get; } = new([]);
+
+    public static Relinked Every { get; } = new((IReadOnlyList<string>?)null);
+
+    public static Relinked Of(params string[] texts) => new([.. texts.Select(text => text.ToUpperInvariant()).Distinct()]);
+
+    public static Relinked Run(int run) => new([], run);
+
+    public bool Nothing => Texts is { Count: 0 } && EvidentiaRun is null;
+
+    public override string ToString() =>
+        EvidentiaRun is { } run ? $"the texts of EVIDENTIA run {run}"
+        : Texts is null ? "every text"
+        : string.Join(", ", Texts);
+}
+
+/// <summary>
 /// What the lexicon and the entry page say about how each text renders each Strong number — the
 /// phrases, how many of the number's places it reaches and by which methods — counted from the links
 /// once rather than for every page a reader turns.
+///
+/// <para>
+/// **A run that changes links outside a load counts its own texts again** (<see cref="Relinked"/>),
+/// at the end, the way it ends with a vacuum: otherwise the page keeps the old numbers for that text
+/// until the next load.
+/// </para>
 ///
 /// <para>
 /// **Counted whole on every load.** It is a projection of the links, which the recipe, the composed
@@ -40,10 +68,30 @@ internal sealed record StrongRenderingOutcome(
 /// </summary>
 internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRenderingLoader> logger)
 {
-    public async Task<StrongRenderingOutcome> Load(CancellationToken cancellationToken = default)
+    public Task<StrongRenderingOutcome> Load(CancellationToken cancellationToken = default) =>
+        Load(Relinked.Every, cancellationToken);
+
+    /// <summary>The texts a run changed the links of, counted again; the rest are left as they were counted.</summary>
+    public async Task<StrongRenderingOutcome> Load(Relinked relinked, CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
-        var texts = await db.Texts.OrderBy(t => t.Slug).Select(t => new { t.Id, t.Slug }).ToListAsync(cancellationToken);
+        var named = relinked.Texts?.ToList() ?? [];
+        if (relinked.EvidentiaRun is { } run)
+        {
+            foreach (var pair in await db.EvidentiaRuns.Where(r => r.Id == run)
+                         .Select(r => new { From = r.FromText!.Slug, To = r.ToText!.Slug })
+                         .ToListAsync(cancellationToken))
+            {
+                named.AddRange([pair.From, pair.To]);
+            }
+        }
+
+        var every = relinked.Texts is null;
+        var texts = await db.Texts
+            .Where(t => every || named.Contains(t.Slug))
+            .OrderBy(t => t.Slug)
+            .Select(t => new { t.Id, t.Slug })
+            .ToListAsync(cancellationToken);
 
         int counted = 0, numbers = 0, renderings = 0;
         var written = false;

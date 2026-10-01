@@ -168,10 +168,31 @@ internal static partial class EncyclopediaEndpoints
                 ],
                 cancellationToken);
             var mine = readByUs.GetValueOrDefault(entity.Slug);
-            related = [.. related.Select(r => r with { Distinguisher = OursOnlyRecords.Line(readByUs, r.Slug, r.Distinguisher) })];
+            var lines = await EntityDistinguishers.OfSlugs(
+                db,
+                [
+                    .. related.Select(r => r.Slug),
+                    .. bearers.Select(b => b.Slug),
+                    .. titles.Select(t => t.Slug),
+                    .. alternatives.Select(a => a.Slug).OfType<string>(),
+                ],
+                language,
+                cancellationToken);
+            related =
+            [
+                .. related.Select(r => r with
+                {
+                    Distinguisher = OursOnlyRecords.Line(readByUs, r.Slug, r.Distinguisher),
+                    LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, r.Slug),
+                }),
+            ];
             alternatives =
             [
-                .. alternatives.Select(a => a with { Distinguisher = OursOnlyRecords.Line(readByUs, a.Slug, a.Distinguisher) }),
+                .. alternatives.Select(a => a with
+                {
+                    Distinguisher = OursOnlyRecords.Line(readByUs, a.Slug, a.Distinguisher),
+                    LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, a.Slug),
+                }),
             ];
 
             return Results.Ok(new EntityResponse(
@@ -226,13 +247,19 @@ internal static partial class EncyclopediaEndpoints
                 [
                     .. bearers.Select(b => new EntityTitleResponse(
                         b.Slug, EnumSpelling.Of(b.Kind), b.Name, OursOnlyRecords.Line(readByUs, b.Slug, b.Distinguisher),
-                        BookReferences.At(b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse)!, b.Note)),
+                        BookReferences.At(b.CanonicalBook, b.CanonicalChapter, b.CanonicalVerse)!, b.Note)
+                    {
+                        LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, b.Slug),
+                    }),
                 ],
                 Titles =
                 [
                     .. titles.Select(t => new EntityTitleResponse(
                         t.Slug, EnumSpelling.Of(t.Kind), t.Name, OursOnlyRecords.Line(readByUs, t.Slug, t.Distinguisher),
-                        BookReferences.At(t.CanonicalBook, t.CanonicalChapter, t.CanonicalVerse)!, t.Note)),
+                        BookReferences.At(t.CanonicalBook, t.CanonicalChapter, t.CanonicalVerse)!, t.Note)
+                    {
+                        LocalDistinguisher = EntityDistinguishers.For(readByUs, lines, t.Slug),
+                    }),
                 ],
                 Subtype = entity.Subtype,
                 Passages = [.. passages.Select(Passage)],

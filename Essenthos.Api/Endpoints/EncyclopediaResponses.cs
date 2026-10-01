@@ -276,7 +276,11 @@ internal record EntityTitleResponse(
     string Name,
     string? Distinguisher,
     VerseRefResponse Reference,
-    string? Note);
+    string? Note)
+{
+    /// <summary>Our own line under the counterpart's name in the language asked for, where this corpus rendered one.</summary>
+    public string? LocalDistinguisher { get; init; }
+}
 
 /// <param name="Kind">
 /// What the point stands for: <c>point</c> the place itself, <c>representative-point</c> a spot
@@ -355,7 +359,11 @@ internal record EntityAlternativeResponse(
     string? Describes,
     string Reason,
     string Source,
-    string? Dataset);
+    string? Dataset)
+{
+    /// <summary>Our own line under the counterpart's name in the language asked for, where this corpus rendered one.</summary>
+    public string? LocalDistinguisher { get; init; }
+}
 
 /// <summary>
 /// Who states that the text names this entity, and how much of the count is theirs.

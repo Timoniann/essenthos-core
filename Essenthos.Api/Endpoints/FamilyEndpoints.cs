@@ -68,6 +68,7 @@ internal static class FamilyEndpoints
                 : null;
 
         var local = await EntityNames.Of(db, ids, language, cancellationToken);
+        var lines = await EntityDistinguishers.OfSlugs(db, [.. people.Select(p => p.Slug)], language, cancellationToken);
         var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken, generated);
         var order = slugs.Select((slug, index) => (slug, index)).ToDictionary(p => p.slug, p => p.index, StringComparer.Ordinal);
 
@@ -97,6 +98,7 @@ internal static class FamilyEndpoints
                             .DistinctBy(tie => (tie.Type, tie.Inward, tie.Slug)),
                     ])
                 {
+                    LocalDistinguisher = EntityDistinguishers.For(ours, lines, p.Slug),
                     Thumbnail = pictured.GetValueOrDefault(p.Slug),
                 }),
         ]);
@@ -132,6 +134,9 @@ internal sealed record FamilyMemberResponse(
     string? Sex,
     IList<FamilyTieResponse> Ties)
 {
+    /// <summary>Our own line under the name in the language asked for, where this corpus rendered one.</summary>
+    public string? LocalDistinguisher { get; init; }
+
     /// <summary>The picture the person's page leads with, to show small; null where there is none.</summary>
     public EntityThumbnailResponse? Thumbnail { get; init; }
 }

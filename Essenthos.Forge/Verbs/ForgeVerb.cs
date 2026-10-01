@@ -16,6 +16,11 @@ namespace Essenthos.Core.Verbs;
 /// Whether a finished run with these arguments writes what the load does not, and so goes into the
 /// recipe the load replays (<see cref="Recipe"/>). Null for a verb that never does.
 /// </param>
+/// <param name="Relinks">
+/// Which texts a finished run with these arguments changed the links or the words of, so their Strong
+/// counts are counted again when it ends (<see cref="StrongRenderingLoader"/>). Null for a verb that
+/// never does.
+/// </param>
 internal sealed record ForgeVerb(
     string Name,
     string Arguments,
@@ -23,9 +28,19 @@ internal sealed record ForgeVerb(
     Func<ForgeRun, string[], Task<int>> Run,
     int Least = 0,
     int? Most = null,
-    Func<string[], bool>? Records = null)
+    Func<string[], bool>? Records = null,
+    Func<string[], Relinked>? Relinks = null)
 {
     public bool Accepts(string[] args) => args.Length - 1 >= Least && (Most is not { } most || args.Length - 1 <= most);
+
+    /// <summary>
+    /// The texts to count again after a finished run of these arguments. Nothing for a trial, and
+    /// nothing for a step the load replays from its recipe: the load counts every text after it.
+    /// </summary>
+    public Relinked Changed(string[] args) =>
+        Relinks is null || args.Contains("--dry-run") || Environment.GetEnvironmentVariable(Recipe.Replaying) is not null
+            ? Relinked.None
+            : Relinks(args);
 
     public string Usage => Arguments.Length > 0 ? $"{Name} {Arguments}" : Name;
 }
@@ -46,6 +61,23 @@ internal sealed class ForgeRun(IServiceProvider services, ILogger logger, string
     /// they now are rather than as autovacuum last saw them.
     /// </summary>
     public async Task Tidy() => logger.LogInformation("{Outcome}", await Maintenance.Tidy(databaseConnection, []));
+
+    /// <summary>
+    /// The Strong counts of the texts a run changed, counted again, so the Strong pages do not keep the
+    /// numbers of links that are gone until the next load.
+    /// </summary>
+    public async Task Recount(Relinked relinked)
+    {
+        if (relinked.Nothing)
+        {
+            return;
+        }
+
+        using var scope = Scope();
+        logger.LogInformation("Counting the Strong pages again for {Texts}", relinked);
+        logger.LogInformation(
+            "{Outcome}", await scope.ServiceProvider.GetRequiredService<StrongRenderingLoader>().Load(relinked));
+    }
 
     /// <summary>A verdict recorded is written to the ledger at once, so no verdict lives only in this database.</summary>
     public async Task Record(IServiceScope scope, int runId) =>

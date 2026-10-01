@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Loading.Links.Evidentia;
 
@@ -17,6 +18,13 @@ internal static partial class ForgeVerbs
     private static bool Always(string[] args) => true;
 
     private static bool Applying(string[] args) => args.Contains("--apply");
+
+    // The texts a run changed the links of, which it counts again as it ends (ForgeVerb.Relinks).
+    private static Relinked Every(string[] args) => Relinked.Every;
+
+    private static Relinked Pair(string[] args) => Relinked.Of(args[1], args[2]);
+
+    private static Relinked AppliedPair(string[] args) => Applying(args) ? Pair(args) : Relinked.None;
 
     public static IReadOnlyList<ForgeVerb> All { get; } =
     [
@@ -35,11 +43,12 @@ internal static partial class ForgeVerbs
             "Restore a release on a target, verify it there and swap it in.", Publish),
         new("rollback", "--to <target> [--dry-run]", "Swap a target's live corpus with the previous release.", Rollback),
         new("releases", "[--on <target>]", "The releases this machine has built, and where each was published.", Releases),
-        new("recipe", "[--run]", "List the recorded Forge runs the load replays, or run the ones the corpus lacks.", RecipeVerb),
+        new("recipe", "[--run]", "List the recorded Forge runs the load replays, or run the ones the corpus lacks.", RecipeVerb,
+            Relinks: args => args.Contains("--run") ? Relinked.Every : Relinked.None),
         new("reload", "<text>", "Read one text again from its source without the whole load.", Reload,
-            Least: 1, Most: 1, Records: Always),
+            Least: 1, Most: 1, Records: Always, Relinks: Every),
         new("correct", "", "Correct the King James, the Synodal and Ohienko against their editions in a loaded corpus.",
-            Correct, Records: Always),
+            Correct, Records: Always, Relinks: Every),
         new("marks", "", "Write what the editions print about their own words as word groups.", Marks),
         new("relations", "", "Make what each text was translated or revised from match the list kept by hand.", Relations),
         new("carry", "", "Carry every annotation a pass carried into another text again over the links as they stand.", Carry),
@@ -47,10 +56,10 @@ internal static partial class ForgeVerbs
         // Links between texts.
         new("align", "<from> <to> [--min <confidence>] [--model <model>] [--replace] [--outside <text>]",
             "Align two texts with SIL's statistical aligner and write the result as aligner links.", Align,
-            Least: 2, Records: Always),
+            Least: 2, Records: Always, Relinks: Pair),
         new("compose", "<from> <via[,via]> <to> [--min <c>] [--precision <p>] [--agreeing <n>] [--daughter] [--unmeasured] [--dry-run]",
             "Compose a text's links to an original through aligned intermediates.", Compose,
-            Least: 3, Records: Always),
+            Least: 3, Records: Always, Relinks: args => Relinked.Of(args[1], args[3])),
         new("score", "<from> <to> [--min <c,...>] [--model <m>] [--surface] [--stated] [--suppletion] [--pairs <file>]",
             "What an aligner threshold costs, against the pair's stated links. Writes nothing.", Score, Least: 2),
         new("score-anchors", "<from> <to> [--min <c,...>] [--model <m>] [--fold <n>]",
@@ -58,31 +67,37 @@ internal static partial class ForgeVerbs
         new("syntax", "<from> <to> [--model <m>] [--stated]",
             "What the target's syntax is worth as a check on the aligner. Writes nothing.", Syntax, Least: 2),
         new("strong", "<from> <to>", "Link a Strong-tagged translation to a witness that carries the numbers too.",
-            Strong, Least: 2, Records: Always),
+            Strong, Least: 2, Records: Always, Relinks: Pair),
         new("synodal-strong", "[<witness> ...]", "Link the Synodal by Bob Jones University's Strong numbering.",
-            SynodalStrong, Records: Always),
+            SynodalStrong, Records: Always, Relinks: Every),
         new("union-strong", "[<witness> ...]", "Link the Chinese Union Version by FHL's Strong numbers.",
-            UnionStrong, Records: Always),
+            UnionStrong, Records: Always, Relinks: Every),
         new("crosswire-strong", "[<module> ...]", "Link the texts CrossWire's Strong-numbered modules number.",
-            CrossWireStrong, Records: Always),
+            CrossWireStrong, Records: Always, Relinks: Every),
         new("ohb-cuv", "[--replace]", "Link the Chinese Union Version's Old Testament to BHSA by the Open Hebrew Bible's mapping.",
-            OhbCuv, Records: Always),
+            OhbCuv, Records: Always, Relinks: Every),
         new("object-marker", "[<text> ...] [--apply]", "Match again the numbered links to the Hebrew the object marker made.",
-            ObjectMarker),
+            ObjectMarker, Relinks: args => Applying(args) ? Relinked.Every : Relinked.None),
         new("interlinear-join", "<text> [--replace]", "Measure a Door43 interlinear's join, and with --replace write it again.",
-            InterlinearJoin, Least: 1, Records: args => args.Contains("--replace")),
+            InterlinearJoin, Least: 1, Records: args => args.Contains("--replace"),
+            Relinks: args => args.Contains("--replace") ? Relinked.Of(args[1]) : Relinked.None),
         new("redraw", "berean <witness> | clearbible <translation>", "Withdraw and draw again one stated mapping's links.",
-            Redraw, Least: 2, Most: 2),
-        new("clearbible", "", "Clear Bible's hand-made alignments, set by set.", ClearBibleVerb),
+            Redraw, Least: 2, Most: 2, Relinks: args => args[1] switch
+            {
+                "berean" => Relinked.Of(BereanTextSource.Slug, args[2]),
+                "clearbible" => Relinked.Of(args[2]),
+                _ => Relinked.None,
+            }),
+        new("clearbible", "", "Clear Bible's hand-made alignments, set by set.", ClearBibleVerb, Relinks: Every),
         new("names", "<from> <to> [--chapters b:c,...] [--books b,...] [--apply]",
             "Settle the names of each verse by spelling and order over links already written.", Names,
-            Least: 2, Records: Applying),
+            Least: 2, Records: Applying, Relinks: AppliedPair),
         new("possessives", "<from> <to> [--apply]",
             "Link the possessive a Slavic text writes beside the word rendering a suffixed Hebrew word.", Possessives,
-            Least: 2, Records: Applying),
+            Least: 2, Records: Applying, Relinks: AppliedPair),
         new("unshare", "<from> <to> [--apply]",
             "Withdraw the aligner's links that put a pronoun or particle on a word another word renders.", Unshare,
-            Least: 2, Records: Applying),
+            Least: 2, Records: Applying, Relinks: AppliedPair),
 
         // EVIDENTIA.
         new("evidentia-preview", "<from> <to> <book> <chapter> [--verse <v>] [--without-source-strong] [--without-known-renderings]",
@@ -105,10 +120,11 @@ internal static partial class ForgeVerbs
         new("evidentia-accept-tier", "<run> [--tier <t>] [filters] [--reviewer <name>] [--note <text>]",
             "Accept one tier of a stored run unread.", EvidentiaAcceptTier, Least: 1),
         new("evidentia-apply", "<run> [--write]", "Write a run's accepted verdicts as links and claims; without --write, say what it would.",
-            EvidentiaApply, Least: 1),
+            EvidentiaApply, Least: 1,
+            Relinks: args => args.Contains("--write") && int.TryParse(args[1], out var run) ? Relinked.Run(run) : Relinked.None),
         new("evidentia-export", "[<run> ...]", "Write the verdicts to the ledger under Resources/Essenthos/evidentia.",
             EvidentiaExport),
-        new("evidentia-replay", "", "Put the ledger's verdicts back into the corpus.", EvidentiaReplay),
+        new("evidentia-replay", "", "Put the ledger's verdicts back into the corpus.", EvidentiaReplay, Relinks: Every),
         new("evidentia-problems", "<run,...> [--take <n>] [--min-words <n>] [--flagged]",
             "The verses a run did worst on.", EvidentiaProblems, Least: 1),
         new("evidentia-rerun", "<run> [--take <n>] [--min-words <n>]", "Run a stored run's worst verses again.",
