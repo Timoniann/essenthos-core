@@ -61,27 +61,32 @@ services:
       APP_DEV_PASSWORD: ${APP_DEV_PASSWORD:?set APP_DEV_PASSWORD}
       # The page counter's role and database, created only when this is set.
       STATS_PASSWORD: ${STATS_PASSWORD:-}
-    # Sized for the deployment droplet's 8 GB, holding production's corpus and its rollback, dev's pair
-    # and the app databases in one shared_buffers pool.
+    # The database gets at most 4 GB of the droplet (owner, 2026-10-01), holding production's corpus and
+    # its rollback, dev's pair and the app databases in one shared_buffers pool. Measured in a 4 GB
+    # container (TSK-0920): verify peaks at 2.9 GB with these settings, the reader is as fast as with
+    # no limit, and 3 or 4 GB of shared_buffers bought nothing measurable. maintenance_work_mem 1GB got
+    # a publication's pg_restore -j 4 killed for memory (PRB-0926); 256MB restores in about four minutes.
+    mem_limit: 4g
     command:
       - postgres
       - -c
       - shared_buffers=2GB
       - -c
-      - effective_cache_size=5GB
+      - effective_cache_size=3GB
       - -c
       - work_mem=32MB
       - -c
-      - maintenance_work_mem=1GB
+      - maintenance_work_mem=256MB
       - -c
       - max_wal_size=4GB
       - -c
       - random_page_cost=1.1
       - -c
       - max_parallel_workers_per_gather=2
-    # A parallel hash's workers share memory through /dev/shm, which Docker caps at 64 MB. The gate a
-    # publication runs peaked at 1,085 MB on the workstation with twice this work_mem.
-    shm_size: 2gb
+    # A parallel hash's workers share memory through /dev/shm, which Docker caps at 64 MB, and what is
+    # used there counts against mem_limit. The gate a publication runs peaked at 1,085 MB on the
+    # workstation with twice this work_mem; with two workers per gather it stays under 1 GB.
+    shm_size: 1gb
     volumes:
       # On the attached Block Storage volume, with everything else under HOST_DATA_ROOT, so a new
       # machine takes over the data by having the volume attached. Droplet backups do not include
