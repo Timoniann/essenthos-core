@@ -206,6 +206,12 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// number of verses is visible without looking at a single link. Where the counts agree and the
     /// division does not, nothing is visibly wrong and the alignment quietly collapses, which the
     /// mean confidence of the verse reports.
+    ///
+    /// The mean is taken in <c>numeric</c>, whose sums are exact. Summed as floating point, links of
+    /// 0.7, 0.6 and 0.2 averaged 0.49999999999999994 in that order and 0.5 in another, so the same
+    /// links read as a weak verse or not depending on how the table happened to be laid out on disk;
+    /// and the worst are named in a fixed order, so a tie at the twelfth does not pick a different
+    /// verse each run.
     /// </summary>
     private static readonly string PairingSql =
         $"""
@@ -220,7 +226,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         ),
         pairs AS (SELECT DISTINCT from_text_id, to_text_id FROM link),
         strength AS (
-            SELECT l.from_text_id, l.to_text_id, w.verse_id, avg(l.confidence) AS mean, count(*) AS links
+            SELECT l.from_text_id, l.to_text_id, w.verse_id, avg(l.confidence::numeric) AS mean, count(*) AS links
             FROM link l
             JOIN link_word lw ON lw.link_id = l.id AND lw.side = 'from'
             JOIN word w ON w.id = lw.word_id
@@ -236,14 +242,14 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                (SELECT count(*) FROM strength s
                  WHERE s.from_text_id = p.from_text_id AND s.to_text_id = p.to_text_id
                    AND s.links >= {EnoughLinks} AND s.mean < {Weak}),
-               (SELECT coalesce(array_agg(name ORDER BY mean), ARRAY[]::text[]) FROM (
-                    SELECT b.name || ' ' || v.chapter_number || ':' || v.number AS name, s.mean
+               (SELECT coalesce(array_agg(name ORDER BY mean, verse_id), ARRAY[]::text[]) FROM (
+                    SELECT b.name || ' ' || v.chapter_number || ':' || v.number AS name, s.mean, s.verse_id
                     FROM strength s
                     JOIN verse v ON v.id = s.verse_id
                     JOIN book b ON b.id = v.book_id
                     WHERE s.from_text_id = p.from_text_id AND s.to_text_id = p.to_text_id
                       AND s.links >= {EnoughLinks} AND s.mean < {Weak}
-                    ORDER BY s.mean
+                    ORDER BY s.mean, s.verse_id
                     LIMIT {WorstNamed}) worst)
         FROM pairs p
         JOIN text f ON f.id = p.from_text_id
