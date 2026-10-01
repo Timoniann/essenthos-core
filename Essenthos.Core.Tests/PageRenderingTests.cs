@@ -186,6 +186,18 @@ public sealed class PageRenderingTests
     }
 
     [Theory]
+    [InlineData("son of Jesse (RUT 4:17), King of Israel (2SA 5:3)", "son of Jesse, King of Israel")]
+    [InlineData("whom the text calls the Holy Spirit (MAT 28:19; 1CO 3:16)", "whom the text calls the Holy Spirit")]
+    [InlineData("son of Esau (GEN 36:4, 10, 15)", "son of Esau")]
+    [InlineData("an angel (GEN 16:7, GEN 22:11, etc.)", "an angel")]
+    [InlineData("the Paltite (Pelonite in 1CH 11:27)", "the Paltite (Pelonite in 1 Chronicles 11:27)")]
+    [InlineData("a city (in Judah)", "a city (in Judah)")]
+    public void ARecordsLineLosesTheCodesItsSourceWroteIntoIt(string line, string expected)
+    {
+        PageViews.WithoutCitations(line).Should().Be(expected);
+    }
+
+    [Theory]
     [InlineData(1, "Згадується в 1 вірші Біблії.")]
     [InlineData(3, "Згадується в 3 віршах Біблії.")]
     [InlineData(11, "Згадується в 11 віршах Біблії.")]

@@ -420,6 +420,9 @@ internal record EntityRelationshipResponse(
     VerseRefResponse? Reference,
     string? Notes)
 {
+    /// <summary>Our own line under the counterpart's name in the language asked for, where this corpus rendered one.</summary>
+    public string? LocalDistinguisher { get; init; }
+
     /// <summary>
     /// The counterpart's name in every case a pass produced for the language asked for, keyed by
     /// case. Null where no pass has declined this name into that language, which is where the

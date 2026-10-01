@@ -128,6 +128,7 @@ internal static class ContextEndpoints
 
         var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
         var local = await EntityNames.Of(db, [.. records.Select(r => r.Id)], language, cancellationToken);
+        var lines = await EntityDistinguishers.OfSlugs(db, slugs, language, cancellationToken);
         var described = await Descriptors.Of(db, slugs, language, cancellationToken);
         var meanings = await Meanings(db, [.. records.Select(r => r.Id)], cancellationToken);
         var namesUsed = await ChapterSalience.NamesUsed(db, book, chapter, cancellationToken);
@@ -148,6 +149,7 @@ internal static class ContextEndpoints
                 [.. verses[r.Slug]])
             {
                 LocalName = local.GetValueOrDefault(r.Id),
+                LocalDistinguisher = EntityDistinguishers.For(ours, lines, r.Slug),
                 Descriptor = described.GetValueOrDefault(r.Slug),
                 Meaning = meanings.GetValueOrDefault(r.Id),
                 PlaceKind = r.PlaceKind,
@@ -587,6 +589,12 @@ internal record ContextEntityResponse(
 {
     /// <summary>The name in the language asked for, where the corpus has one.</summary>
     public string? LocalName { get; init; }
+
+    /// <summary>
+    /// Our own line under the name in the language asked for, where this corpus wrote it and rendered
+    /// it; null otherwise, and a client shows <see cref="Distinguisher"/> as the source's words.
+    /// </summary>
+    public string? LocalDistinguisher { get; init; }
 
     public EntityDescriptorResponse? Descriptor { get; init; }
 

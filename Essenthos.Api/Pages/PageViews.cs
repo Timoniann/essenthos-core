@@ -1,6 +1,8 @@
 using System.Text.RegularExpressions;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Utils;
 
 namespace Essenthos.Core.Pages;
 
@@ -414,8 +416,18 @@ internal static partial class PageViews
         return Page(StatusCodes.Status404NotFound, t.Titled(title), title, description, body) with { Indexed = false };
     }
 
-    /// <summary>A record's short description without the verse codes the source writes into it, <c>(EXO 13:3)</c>.</summary>
-    public static string WithoutCitations(string text) => Citations().Replace(text, "").Trim();
+    /// <summary>
+    /// A record's short description without the verse codes the source writes into it, <c>(EXO 13:3)</c>
+    /// or <c>(MAT 28:19; 1CO 3:16)</c>; a code standing in the words is the book's name,
+    /// <em>Pelonite in 1 Chronicles 11:27</em>.
+    /// </summary>
+    public static string WithoutCitations(string text) =>
+        Bare().Replace(
+                Citations().Replace(text, ""),
+                code => BibleBookAbbreviation.GetAbbreviation(code.Groups[1].Value) is { } book
+                    ? $"{BookReferences.Name(book.Ordinal)} {code.Groups[2].Value}"
+                    : code.Value)
+            .Trim();
 
     private static readonly string[] HomeSections =
     [
@@ -437,6 +449,9 @@ internal static partial class PageViews
     [GeneratedRegex(@"[.!?…]$")]
     private static partial Regex Sentence();
 
-    [GeneratedRegex(@"\s*\((?:[1-4]?[A-Z]{2,3} \d+:\d+(?:[-–]\d+)?(?:,\s*)?)+\)")]
+    [GeneratedRegex(@"\s*\([1-4]?[A-Z]{2,4} \d+:\d+(?:[-–]\d+)?(?:[,;]\s*(?:(?:[1-4]?[A-Z]{2,4} )?\d+(?::\d+)?(?:[-–]\d+)?|etc\.))*\)")]
     private static partial Regex Citations();
+
+    [GeneratedRegex(@"\b([1-4]?[A-Z]{2,4}) (\d+:\d+(?:[-–]\d+)?)")]
+    private static partial Regex Bare();
 }
