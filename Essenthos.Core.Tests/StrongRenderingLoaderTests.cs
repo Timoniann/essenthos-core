@@ -2,6 +2,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +12,8 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// The lexicon's phrases, counted by the load from the links of the translation the cards quote, and
-/// counted again whenever the links say something else.
+/// The lexicon's phrases and each number's reach, counted by the load from the links of every text
+/// linked to an original, and counted again whenever the links say something else.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class StrongRenderingLoaderTests : IDisposable
@@ -118,4 +119,34 @@ public sealed class StrongRenderingLoaderTests : IDisposable
 
         (await Kept()).Should().Equal((Create, 1, "created", 1), (God, 1, "god", 1));
     }
+
+    /// <summary>The entry page answers from what the load counted exactly as it answers counting as it is asked.</summary>
+    [Fact]
+    public async Task TheEntryPageReadsWhatItWouldHaveCounted()
+    {
+        var asked = await Page(God);
+
+        await _loader.Load();
+
+        (await _db.StrongReaches.Select(r => new { r.StrongNumber, r.Occurrences, r.Reached }).OrderBy(r => r.StrongNumber).ToListAsync())
+            .Should().Equal(new { StrongNumber = Create, Occurrences = 1, Reached = 1 }, new { StrongNumber = God, Occurrences = 2, Reached = 2 });
+        (await Page(God)).Should().BeEquivalentTo(asked, options => options.WithStrictOrdering());
+    }
+
+    /// <summary>What the load counted is what the page says, so a count it kept is never counted again.</summary>
+    [Fact]
+    public async Task TheEntryPageAnswersFromTheCount()
+    {
+        await _loader.Load();
+        await _db.StrongReaches.Where(r => r.StrongNumber == God).ExecuteUpdateAsync(r => r.SetProperty(x => x.Reached, 1));
+
+        var page = await Page(God);
+
+        page.Reached.Should().Be(1);
+        page.Unrendered.Should().Be(1);
+        page.Methods.Should().Equal(new TextLinkMethodResponse("stated-by-source", 2));
+    }
+
+    private Task<StrongRenderingsResponse> Page(string number) =>
+        StrongEndpoints.RenderingsOf(_db, number, _english.Id, _english.Slug, 40, default);
 }

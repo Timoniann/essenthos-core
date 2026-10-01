@@ -291,6 +291,11 @@ public class AppDbContext : DbContext
     /// <summary>A translation's commonest phrases for each Strong number, counted from the links once per load.</summary>
     public DbSet<StrongRendering> StrongRenderings { get; set; } = null!;
 
+    /// <summary>How much of each Strong number each text reaches, counted from the links once per load.</summary>
+    public DbSet<StrongReach> StrongReaches { get; set; } = null!;
+
+    public DbSet<StrongReachMethod> StrongReachMethods { get; set; } = null!;
+
     /// <summary>
     /// Which word names which person, place or people. The encyclopedia says a verse names
     /// somebody; this says which word of it does, which is what a reader hovering a word is asking.
@@ -1270,6 +1275,45 @@ public class AppDbContext : DbContext
                     "A translation's commonest phrases for one Strong number, counted from the links by "
                     + "the statement the entry page counts with. Derived and rebuilt on every load; it "
                     + "asserts nothing the links do not.");
+            });
+        });
+
+        modelBuilder.Entity<StrongReach>(entity =>
+        {
+            entity.HasOne(r => r.Text)
+                .WithMany()
+                .HasForeignKey(r => r.TextId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(r => r.Witness)
+                .WithMany()
+                .HasForeignKey(r => r.WitnessId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasMany(r => r.Methods)
+                .WithOne(m => m.Reach)
+                .HasForeignKey(m => new { m.TextId, m.StrongNumber })
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("strong_reach", t =>
+            {
+                t.HasCheckConstraint("ck_strong_reach_occurrences", "occurrences > 0");
+                t.HasCheckConstraint("ck_strong_reach_reached", "reached >= 0 AND reached <= occurrences");
+                t.HasComment(
+                    "How often a Strong number stands in the edition a text is counted over and how many of "
+                    + "those places the text's links render, counted by the statements the entry page counts "
+                    + "with. Derived and rebuilt on every load; it asserts nothing the links do not.");
+            });
+        });
+
+        modelBuilder.Entity<StrongReachMethod>(entity =>
+        {
+            entity.Property(m => m.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.ToTable("strong_reach_method", t =>
+            {
+                t.HasCheckConstraint("ck_strong_reach_method_links", "links > 0");
+                t.HasComment("The links a strong_reach row counts, by the method that made them.");
             });
         });
     }

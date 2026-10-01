@@ -102,6 +102,23 @@ public sealed class CorpusPairingTests : IDisposable
         pairing.Verses.Should().Be(2);
     }
 
+    /// <summary>
+    /// A verse whose links average exactly the threshold is not below it, whatever order they are read
+    /// in: added as floating point, 0.7 + 0.6 + 0.2 is 1.4999999999999998, and the same three links
+    /// read in another order are 1.5.
+    /// </summary>
+    [Fact]
+    public async Task AVerseAtTheThresholdIsNotSuspectInAnyOrder()
+    {
+        Aligned(verse: 1, position: 1, confidence: 0.7);
+        Aligned(verse: 1, position: 2, confidence: 0.6);
+        Aligned(verse: 1, position: 3, confidence: 0.2);
+
+        var pairing = (await _check.Measure()).Pairing.Single();
+
+        pairing.Suspect.Should().Be(0);
+    }
+
     private void Aligned(int verse, int position, double confidence)
     {
         var link = new Link

@@ -206,6 +206,12 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// number of verses is visible without looking at a single link. Where the counts agree and the
     /// division does not, nothing is visibly wrong and the alignment quietly collapses, which the
     /// mean confidence of the verse reports.
+    ///
+    /// The mean is taken in <c>numeric</c>, whose sums are exact. Summed as floating point, links of
+    /// 0.7, 0.6 and 0.2 averaged 0.49999999999999994 in that order and 0.5 in another, so the same
+    /// links read as a weak verse or not depending on how the table happened to be laid out on disk;
+    /// and the worst are named in a fixed order, so a tie at the twelfth does not pick a different
+    /// verse each run.
     /// </summary>
     private static readonly string PairingSql =
         $"""
@@ -220,7 +226,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         ),
         pairs AS (SELECT DISTINCT from_text_id, to_text_id FROM link),
         strength AS (
-            SELECT l.from_text_id, l.to_text_id, w.verse_id, avg(l.confidence) AS mean, count(*) AS links
+            SELECT l.from_text_id, l.to_text_id, w.verse_id, avg(l.confidence::numeric) AS mean, count(*) AS links
             FROM link l
             JOIN link_word lw ON lw.link_id = l.id AND lw.side = 'from'
             JOIN word w ON w.id = lw.word_id
@@ -236,14 +242,14 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                (SELECT count(*) FROM strength s
                  WHERE s.from_text_id = p.from_text_id AND s.to_text_id = p.to_text_id
                    AND s.links >= {EnoughLinks} AND s.mean < {Weak}),
-               (SELECT coalesce(array_agg(name ORDER BY mean), ARRAY[]::text[]) FROM (
-                    SELECT b.name || ' ' || v.chapter_number || ':' || v.number AS name, s.mean
+               (SELECT coalesce(array_agg(name ORDER BY mean, verse_id), ARRAY[]::text[]) FROM (
+                    SELECT b.name || ' ' || v.chapter_number || ':' || v.number AS name, s.mean, s.verse_id
                     FROM strength s
                     JOIN verse v ON v.id = s.verse_id
                     JOIN book b ON b.id = v.book_id
                     WHERE s.from_text_id = p.from_text_id AND s.to_text_id = p.to_text_id
                       AND s.links >= {EnoughLinks} AND s.mean < {Weak}
-                    ORDER BY s.mean
+                    ORDER BY s.mean, s.verse_id
                     LIMIT {WorstNamed}) worst)
         FROM pairs p
         JOIN text f ON f.id = p.from_text_id
@@ -308,46 +314,64 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// who both looked, and is the most interesting row in the corpus. Counted together, the second
     /// hides the first: a pair with real duplication and a pair with rich disagreement report the
     /// same number.
+    ///
+    /// <para>
+    /// A source's answer is the set of words its one link names on the other side, and it is only
+    /// read where every source names exactly one link — so it is only built where those links
+    /// differ. Built for every link of the corpus up front, it was 21 million arrays computed once
+    /// per worker, and with the source compared as text it spilled 18 GB of sorts to disk.
+    /// </para>
     /// </summary>
     private const string ContentionSql =
         """
-        WITH counterpart AS (
-            SELECT link_id, array_agg(word_id ORDER BY word_id) AS words
-            FROM link_word
-            WHERE side = 'to'
-            GROUP BY link_id
-        ),
-        claimed AS (
-            SELECT lw.word_id, l.from_text_id, l.to_text_id, p.source,
+        WITH claimed AS (
+            SELECT lw.word_id, l.from_text_id, l.to_text_id, s.id AS source,
                    count(DISTINCT lw.link_id) AS links,
-                   -- The words this source names. Read only where the source names one link, where
-                   -- min is that link's own set; a stated absence answers with the empty set.
-                   min(coalesce(cp.words, '{}')) AS answer
+                   min(lw.link_id) AS link_id
             FROM link_word lw
             JOIN link l ON l.id = lw.link_id
             JOIN link_claim c ON c.link_id = l.id
             JOIN provenance p ON p.id = c.provenance_id
-            LEFT JOIN counterpart cp ON cp.link_id = l.id
+            -- One number for each source, however many notes it was written with.
+            JOIN (SELECT source, row_number() OVER () AS id FROM (SELECT DISTINCT source FROM provenance) d) s
+              ON s.source = p.source
             WHERE lw.side = 'from'
-            GROUP BY lw.word_id, l.from_text_id, l.to_text_id, p.source
+            GROUP BY lw.word_id, l.from_text_id, l.to_text_id, s.id
         ),
         perWord AS (
             SELECT word_id, from_text_id, to_text_id,
                    max(links) AS most_by_one_source,
                    count(*) AS sources,
-                   count(DISTINCT answer) AS answers
+                   CASE WHEN min(link_id) <> max(link_id) THEN array_agg(DISTINCT link_id) END AS rivals
             FROM claimed
             GROUP BY word_id, from_text_id, to_text_id
+        ),
+        answered AS (
+            SELECT p.from_text_id, p.to_text_id, p.most_by_one_source, p.sources,
+                   -- The words each source names; a stated absence answers with the empty set.
+                   CASE WHEN p.rivals IS NULL OR p.sources = 1 OR p.most_by_one_source > 1 THEN 1
+                        ELSE (SELECT count(DISTINCT cp.words)
+                              FROM unnest(p.rivals) AS r(link_id)
+                              CROSS JOIN LATERAL (
+                                  SELECT coalesce(array_agg(lw.word_id ORDER BY lw.word_id), '{}') AS words
+                                  FROM link_word lw
+                                  WHERE lw.link_id = r.link_id AND lw.side = 'to') cp)
+                   END AS answers
+            FROM perWord p
+        ),
+        counted AS (
+            SELECT from_text_id, to_text_id,
+                   count(*) FILTER (WHERE most_by_one_source > 1) AS contended,
+                   coalesce(max(most_by_one_source), 0) AS worst,
+                   count(*) FILTER (WHERE sources > 1 AND most_by_one_source = 1 AND answers > 1) AS disputed,
+                   count(*) FILTER (WHERE sources > 1 AND most_by_one_source = 1 AND answers = 1) AS corroborated
+            FROM answered
+            GROUP BY from_text_id, to_text_id
         )
-        SELECT t.slug, against.slug,
-               count(*) FILTER (WHERE most_by_one_source > 1),
-               coalesce(max(most_by_one_source), 0),
-               count(*) FILTER (WHERE sources > 1 AND most_by_one_source = 1 AND answers > 1),
-               count(*) FILTER (WHERE sources > 1 AND most_by_one_source = 1 AND answers = 1)
-        FROM perWord
-        JOIN text t ON t.id = perWord.from_text_id
-        JOIN text against ON against.id = perWord.to_text_id
-        GROUP BY t.slug, against.slug
+        SELECT t.slug, against.slug, contended, worst, disputed, corroborated
+        FROM counted
+        JOIN text t ON t.id = counted.from_text_id
+        JOIN text against ON against.id = counted.to_text_id
         ORDER BY t.slug, against.slug
         """;
 
@@ -647,28 +671,36 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         // A link may name words in two verses on purpose — that is how "the word ended up
         // elsewhere" is said. It is only wrong when no verse link joins the two verses, because
         // then the corpus is claiming a correspondence across a boundary it does not believe in.
+        //
+        // The verse pairs the links cross are gathered first and each is looked up once. Asked of
+        // every pair of words a link joins, the lookup ran 25 million times for 5,924 pairs and was
+        // half the verification; joined through verse_link_verse alone, because the verse_link row
+        // adds nothing the two membership rows do not already say.
         ("word links crossing a verse pair no verse link joins",
             """
-            SELECT count(DISTINCT l.id)
-            FROM link l
-            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
-            JOIN word fw ON fw.id = f.word_id
-            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
-            JOIN word tw ON tw.id = t.word_id
-            JOIN verse_reference fr ON fr.verse_id = fw.verse_id AND fr.is_primary
-            JOIN verse_reference tr ON tr.verse_id = tw.verse_id AND tr.is_primary
-            WHERE (fr.canonical_book, fr.canonical_chapter, fr.canonical_verse)
-               <> (tr.canonical_book, tr.canonical_chapter, tr.canonical_verse)
-              -- Joined through verse_link_verse alone rather than through verse_link as well:
-              -- the link row adds nothing the two membership rows do not already say, and with a
-              -- quarter of a million verse links in the table the extra join was enough to time
-              -- the whole verification out.
-              AND NOT EXISTS (
-                  SELECT 1 FROM verse_link_verse a
-                  JOIN verse_link_verse b
-                    ON b.verse_link_id = a.verse_link_id AND b.verse_id = tw.verse_id
-                  WHERE a.verse_id = fw.verse_id
-              )
+            WITH crossing AS MATERIALIZED (
+                SELECT DISTINCT f.link_id, fw.verse_id AS from_verse, tw.verse_id AS to_verse
+                FROM link_word f
+                JOIN word fw ON fw.id = f.word_id
+                JOIN link_word t ON t.link_id = f.link_id AND t.side = 'to'
+                JOIN word tw ON tw.id = t.word_id
+                JOIN verse_reference fr ON fr.verse_id = fw.verse_id AND fr.is_primary
+                JOIN verse_reference tr ON tr.verse_id = tw.verse_id AND tr.is_primary
+                WHERE f.side = 'from'
+                  AND (fr.canonical_book, fr.canonical_chapter, fr.canonical_verse)
+                   <> (tr.canonical_book, tr.canonical_chapter, tr.canonical_verse)
+            ),
+            unjoined AS (
+                SELECT p.from_verse, p.to_verse
+                FROM (SELECT DISTINCT from_verse, to_verse FROM crossing) p
+                WHERE NOT EXISTS (
+                    SELECT 1 FROM verse_link_verse a
+                    JOIN verse_link_verse b ON b.verse_link_id = a.verse_link_id AND b.verse_id = p.to_verse
+                    WHERE a.verse_id = p.from_verse)
+            )
+            SELECT count(DISTINCT c.link_id)
+            FROM crossing c
+            JOIN unjoined u ON u.from_verse = c.from_verse AND u.to_verse = c.to_verse
             """),
     ];
 
