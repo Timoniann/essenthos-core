@@ -106,118 +106,173 @@ internal sealed class DatasetLoader(
         await JoinTheVerses(cancellationToken);
     }
 
-    public async Task Run(CancellationToken stoppingToken)
+    /// <summary>
+    /// Runs the load from its first step, or from the step named, and says whether it finished. A step
+    /// that fails stops the load and is named in the log and on <see cref="DatasetStatus"/>, so the
+    /// load can be run again from it: every step before it has written what it writes.
+    /// </summary>
+    public async Task<bool> Run(string? from, CancellationToken stoppingToken)
     {
+        var resources = ResourcePaths.Read(configuration, environment.ContentRootPath);
+        var steps = Steps(resources);
+        var first = 0;
+        if (from is { Length: > 0 })
+        {
+            first = steps.FindIndex(step => string.Equals(step.Name, from, StringComparison.OrdinalIgnoreCase));
+            if (first < 0)
+            {
+                logger.LogError(
+                    "The load has no step \"{From}\". Its steps, in order: {Steps}",
+                    from, string.Join(", ", steps.Select(step => step.Name)));
+                return false;
+            }
+        }
+
+        var current = steps[first];
         try
         {
-            var resources = ResourcePaths.Read(configuration, environment.ContentRootPath);
             logger.LogInformation("Loading the dataset from {ResourcesPath}", resources);
+            if (first > 0)
+            {
+                logger.LogInformation("Resuming at {Step}; the {Skipped} steps before it are not run", current.Name, first);
+            }
 
-            var bhsa = BhsaProject.Load(Path.Combine(resources, "etcbc"));
-            await Load("BHSA", () => BhsaTextSource.Build(bhsa), stoppingToken);
-            await LemmatiseTheHebrewByItsHeadwords(stoppingToken);
-            await Load("Nestle 1904", () => NestleTextSource.Read(
+            foreach (var step in steps.Skip(first))
+            {
+                current = step;
+                await step.Run(stoppingToken);
+            }
+
+            status.Ready();
+            logger.LogInformation("The dataset is loaded");
+            return true;
+        }
+        catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+        {
+            logger.LogInformation("The dataset load was cancelled at {Step}", current.Name);
+            return false;
+        }
+        catch (Exception exception)
+        {
+            status.Failed($"{current.Name}: {exception.Message}");
+            logger.LogError(
+                exception,
+                "The dataset load failed at {Step}. Fix it and run `load --from {Step}`: the steps before it are done",
+                current.Name, current.Name);
+            return false;
+        }
+    }
+
+    /// <summary>The names of the load's steps, in the order it runs them.</summary>
+    public IReadOnlyList<string> StepNames() =>
+        [.. Steps(ResourcePaths.Read(configuration, environment.ContentRootPath)).Select(step => step.Name)];
+
+    /// <summary>
+    /// Every step of the load, in order, each under the name <c>load --from</c> resumes at. A text is
+    /// its own step, named by its slug; nothing is read from disk until a step runs.
+    /// </summary>
+    private List<LoadStep> Steps(string resources)
+    {
+        BhsaProject? bhsa = null;
+        BhsaProject Bhsa() => bhsa ??= BhsaProject.Load(Path.Combine(resources, "etcbc"));
+
+        LoadStep Text(string slug, string what, Func<TextSource> read) =>
+            new(slug, cancellationToken => Load(what, read, cancellationToken));
+
+        return
+        [
+            Text(BhsaTextSource.Slug, "BHSA", () => BhsaTextSource.Build(Bhsa())),
+            new("bhsa-headwords", LemmatiseTheHebrewByItsHeadwords),
+            Text(NestleTextSource.Slug, "Nestle 1904", () => NestleTextSource.Read(
                 ResourcePaths.File(resources, "Nestle1904", "Nestle1904.xml"),
-                ResourcePaths.File(resources, "Nestle1904", "berean-interlinear-glosses.xml")), stoppingToken);
+                ResourcePaths.File(resources, "Nestle1904", "berean-interlinear-glosses.xml"))),
 
             // Both printed editions come out of one file, so they are one parse and two texts. The
             // extraction is checked against byztxt/greektext-scrivener in the tests rather than here:
             // it is a property of the reader, not of a particular load.
-            foreach (var edition in Editions)
-            {
-                await Load($"the {edition} Textus Receptus", () => TextusReceptusTextSource.Read(
-                    Path.Combine(resources, "TextusReceptus"), edition), stoppingToken);
-            }
+            .. Editions.Select(edition => Text(TextusReceptusTextSource.Slug(edition), $"the {edition} Textus Receptus",
+                () => TextusReceptusTextSource.Read(Path.Combine(resources, "TextusReceptus"), edition))),
 
             // The two editions Nestle 1904 was voted out of. They add almost no reading the corpus
             // could not already see; what they add is the reason Nestle reads as it does, because
             // at every place the three differ his text is whichever two of them agreed.
-            await Load("Tischendorf's eighth edition", () => TischendorfTextSource.Read(
-                Path.Combine(resources, TischendorfFolder)), stoppingToken);
-            await Load("Westcott and Hort", () => WestcottHortTextSource.Read(
-                Path.Combine(resources, WestcottHortFolder)), stoppingToken);
+            Text(TischendorfTextSource.Slug, "Tischendorf's eighth edition", () => TischendorfTextSource.Read(
+                Path.Combine(resources, TischendorfFolder))),
+            Text(WestcottHortTextSource.Slug, "Westcott and Hort", () => WestcottHortTextSource.Read(
+                Path.Combine(resources, WestcottHortFolder))),
 
             // The one Greek witness that is neither critical nor Erasmian. It is loaded from the
             // same shape of file as the two above and carries a Strong number on every word, so it
             // needs no reader of its own beyond an alphabet and no aligner at all.
-            await Load("the Byzantine Textform", () => ByzantineTextSource.Read(
-                Path.Combine(resources, "Byzantine")), stoppingToken);
+            Text(ByzantineTextSource.Slug, "the Byzantine Textform", () => ByzantineTextSource.Read(
+                Path.Combine(resources, "Byzantine"))),
 
-            await Load("Brenton's Septuagint", () => SeptuagintTextSource.Read(
-                Path.Combine(resources, "Septuagint")), stoppingToken);
+            Text(SeptuagintTextSource.Slug, "Brenton's Septuagint", () => SeptuagintTextSource.Read(
+                Path.Combine(resources, "Septuagint"))),
 
             // The second Greek Old Testament, and a diplomatic one: Codex Vaticanus as it stands
             // where Brenton is a text printed to be translated from. They disagree about the verse
             // division of most of the books they share, which is the whole reason to hold both.
-            await Load("Swete's Septuagint", () => SweteTextSource.Read(
-                Path.Combine(resources, "Swete")), stoppingToken);
+            Text(SweteTextSource.Slug, "Swete's Septuagint", () => SweteTextSource.Read(
+                Path.Combine(resources, "Swete"))),
 
             // The Old Greek of Susanna, Daniel and Bel, which Swete prints beside Theodotion's: another
             // translation of the same books, so a text of its own beside his.
-            await Load("Swete's Old Greek Daniel", () => SweteOldGreekTextSource.Read(
-                Path.Combine(resources, "Swete")), stoppingToken);
+            Text(SweteOldGreekTextSource.Slug, "Swete's Old Greek Daniel", () => SweteOldGreekTextSource.Read(
+                Path.Combine(resources, "Swete"))),
 
             // Codex Alexandrinus, in the one book it is printed whole here: Ottley's Isaiah, a
             // diplomatic text of a different manuscript from the Vaticanus Swete prints.
-            await Load("Ottley's Isaiah", () => OttleyTextSource.Read(
-                Path.Combine(resources, "Swete")), stoppingToken);
+            Text(OttleyTextSource.Slug, "Ottley's Isaiah", () => OttleyTextSource.Read(
+                Path.Combine(resources, "Swete"))),
 
             // The same manuscript as one witness of both Testaments: INTF's transcription of its New
             // Testament, and the Old Testament where a printing gives its own text.
-            await Load(AlexandrinusTextSource.Definition.Name, () => AlexandrinusTextSource.Read(resources),
-                stoppingToken);
+            Text(AlexandrinusTextSource.Slug, AlexandrinusTextSource.Definition.Name,
+                () => AlexandrinusTextSource.Read(resources)),
 
             // The Torah as the Samaritan community transmitted it, which is the first text here
             // that disagrees with BHSA about the Hebrew rather than about a translation of it.
-            await Load("the Samaritan Pentateuch", () => SamaritanTextSource.Read(
-                Path.Combine(resources, "SamaritanPentateuch")), stoppingToken);
+            Text(SamaritanTextSource.Slug, "the Samaritan Pentateuch", () => SamaritanTextSource.Read(
+                Path.Combine(resources, "SamaritanPentateuch"))),
 
             // The Ethiopic Bible, the first daughter version of the Septuagint here and the only text
             // of Enoch and Jubilees: the church's printed Bible, with Dillmann's and Ludolf's editions
             // where the files hold them in verses.
-            await Load(GeezTextSource.Definition.Name, () => GeezTextSource.Read(
-                Path.Combine(resources, GeezTextSource.Folder)), stoppingToken);
+            Text(GeezTextSource.Slug, GeezTextSource.Definition.Name, () => GeezTextSource.Read(
+                Path.Combine(resources, GeezTextSource.Folder))),
 
             // The Berean's own edition, because rebuilding it from the tables is right nine verses
             // in ten and a text that is right nine times in ten is not a text. The tables then say
             // which of its words renders which Greek word.
-            await Load("the Berean Standard Bible", () => BereanTextSource.Read(
+            Text(BereanTextSource.Slug, "the Berean Standard Bible", () => BereanTextSource.Read(
                 ResourcePaths.File(resources, "Berean", "bsb.txt"),
-                ResourcePaths.File(resources, "Berean", "bsb_tables.tsv")), stoppingToken);
+                ResourcePaths.File(resources, "Berean", "bsb_tables.tsv"))),
 
             // The Synodal's non-canonical books and the King James's Apocrypha are not in bible4u's
             // files; they come from their own sources and are written into the same texts.
-            foreach (var translation in Bible4uTranslations)
-            {
-                await Load(translation, () => DeuterocanonTextSource.Extend(Bible4uTextSource.Read(
-                    ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation, resources), resources),
-                    stoppingToken);
-            }
+            .. Bible4uTranslations.Select(translation => Text(translation, translation,
+                () => DeuterocanonTextSource.Extend(Bible4uTextSource.Read(
+                    ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation, resources), resources))),
 
             // The first complete Ukrainian Bible, and the only Ukrainian text the corpus holds that
             // needs nobody's permission. It reads through the same USFM reader as Brenton.
-            await Load("the Kulish Bible", () => KulishTextSource.Read(
-                Path.Combine(resources, "Kulish")), stoppingToken);
+            Text(KulishTextSource.Slug, "the Kulish Bible", () => KulishTextSource.Read(
+                Path.Combine(resources, "Kulish"))),
 
             // The German and the Spanish, which the interface is to speak and the corpus had no
             // text in. Luther carries Strong numbers on its own words, which is the only route to
             // the originals German has that is not this project's own inference; the Spanish
             // reaches them through an alignment somebody else published, and its own tagging is
             // deliberately not loaded.
-            foreach (var (folder, definition) in EbibleTextSource.Definitions)
-            {
-                await Load(definition.Name, () => EbibleTextSource.Read(
-                    Path.Combine(resources, folder)), stoppingToken);
-            }
+            .. EbibleTextSource.Definitions.Select(text => Text(text.Value.Slug, text.Value.Name,
+                () => EbibleTextSource.Read(Path.Combine(resources, text.Key)))),
 
             // The Chinese Union Version in both scripts and the Korean Revised Version, from CrossWire's
             // modules. The Chinese reaches the originals through FHL's Strong numbers, which are read
             // by their own command and never stored; the Korean carries nothing but its words.
-            foreach (var text in SwordTextSource.Texts.Values)
-            {
-                await Load(text.Definition.Name, () => SwordTextSource.Read(
-                    Path.Combine(resources, text.Folder)), stoppingToken);
-            }
+            .. SwordTextSource.Texts.Values.Select(text => Text(text.Definition.Slug, text.Definition.Name,
+                () => SwordTextSource.Read(Path.Combine(resources, text.Folder)))),
 
             // The English that is not the King James in other spelling: Tyndale, which the King
             // James is largely a revision of, and five more each made from a different underlying
@@ -225,147 +280,131 @@ internal sealed class DatasetLoader(
             // reach the originals through the aligner — Young's best, because Young translated one
             // lexeme by one lexeme, which is what makes it a check on the aligner rather than only
             // another consumer of it.
-            foreach (var (folder, definition) in EnglishTextSource.Definitions)
-            {
-                await Load(definition.Name, () => DeuterocanonTextSource.Extend(EnglishTextSource.Read(
-                    Path.Combine(resources, folder)), resources), stoppingToken);
-            }
+            .. EnglishTextSource.Definitions.Select(text => Text(text.Value.Slug, text.Value.Name,
+                () => DeuterocanonTextSource.Extend(EnglishTextSource.Read(Path.Combine(resources, text.Key)), resources))),
 
             // The texts that hold the deuterocanon as a matter of course: Brenton's English beside his
             // Greek, and the Vulgate with the Douay-Rheims translated from it, in the Latin numbering.
-            foreach (var (folder, definition) in DeuterocanonTextSource.Texts)
-            {
-                await Load(definition.Name, () => DeuterocanonTextSource.Read(
-                    Path.Combine(resources, folder)), stoppingToken);
-            }
+            .. DeuterocanonTextSource.Texts.Select(text => Text(text.Definition.Slug, text.Definition.Name,
+                () => DeuterocanonTextSource.Read(Path.Combine(resources, text.Folder)))),
 
             // The one English besides the Berean whose words people tied to the originals, read from the
             // aligned file the ties are drawn from later; and the Portuguese Almeida, whose New Testament
             // Clear Bible's Portuguese set speaks about.
-            await Load(UnfoldingWordTextSource.Definition.Name, () => UnfoldingWordTextSource.Read(
-                Path.Combine(resources, "Door43", UnfoldingWordTextSource.Folder)), stoppingToken);
-            await Load(AlmeidaTextSource.Definition.Name, () => AlmeidaTextSource.Read(
-                Path.Combine(resources, AlmeidaTextSource.Folder)), stoppingToken);
+            Text(UnfoldingWordTextSource.Slug, UnfoldingWordTextSource.Definition.Name, () => UnfoldingWordTextSource.Read(
+                Path.Combine(resources, "Door43", UnfoldingWordTextSource.Folder))),
+            Text(AlmeidaTextSource.Slug, AlmeidaTextSource.Definition.Name, () => AlmeidaTextSource.Read(
+                Path.Combine(resources, AlmeidaTextSource.Folder))),
 
             // The Indian Revised Version in Bengali and Assamese, from the aligned files their links are
             // drawn from; and the Hausa, which nobody publishes in a form the corpus may take except the
             // token files of the alignment Clear Bible made of it.
-            foreach (var (folder, definition) in Door43TextSource.Definitions)
+            .. Door43TextSource.Definitions.Select(text => Text(text.Value.Slug, text.Value.Name,
+                () => Door43TextSource.Read(Path.Combine(resources, "Door43", text.Key)))),
+
+            Text(ClearBible.ClearBibleTextSource.Definition.Slug, ClearBible.ClearBibleTextSource.Definition.Name,
+                () => ClearBible.ClearBibleTextSource.Read(Path.Combine(resources, "ClearBible"))),
+            new("statistics", async cancellationToken =>
             {
-                await Load(definition.Name, () => Door43TextSource.Read(
-                    Path.Combine(resources, "Door43", folder)), stoppingToken);
-            }
+                if (_wroteWords)
+                {
+                    await RefreshTheStatistics(cancellationToken);
+                }
+            }),
 
-            await Load(ClearBible.ClearBibleTextSource.Definition.Name, () => ClearBible.ClearBibleTextSource.Read(
-                Path.Combine(resources, "ClearBible")), stoppingToken);
-            if (_wroteWords)
+            new("relations", RelateTheTexts),
+            new("lexicon", cancellationToken => LoadTheLexicon(resources, cancellationToken)),
+            new("lexicon-translations", cancellationToken => TranslateTheLexicon(resources, cancellationToken)),
+            new("syntax", cancellationToken => LoadTheSyntax(Bhsa(), cancellationToken)),
+            new("frame", cancellationToken => PlaceInTheFrame(resources, cancellationToken)),
+            new("misprints", cancellationToken => CorrectWhatTheirFilesMisprint(resources, cancellationToken)),
+            new("psalm-openings", cancellationToken => OpenThePsalmsTheirEditionsOpenWith(resources, cancellationToken)),
+            new("ohienko-endings", cancellationToken => FinishTheVersesOhienkosFileCutShort(resources, cancellationToken)),
+            new("swete-restoration", cancellationToken => RestoreWhatSwetesTranscriptionLost(resources, cancellationToken)),
+            new("septuagint-lemmas", cancellationToken => LemmatiseTheSeptuagint(resources, cancellationToken)),
+            new("greek-glosses", cancellationToken => GlossTheGreek(resources, cancellationToken)),
+            new("geez-lexicon", cancellationToken => GlossTheGeez(resources, cancellationToken)),
+            new("morphgnt", cancellationToken => ParseTheGreekASecondTime(resources, cancellationToken)),
+            new("macula", cancellationToken => AnnotateTheGreek(resources, cancellationToken)),
+            new("old-testament-links", cancellationToken => LinkTheOldTestament(resources, cancellationToken)),
+            new("new-testament-links", cancellationToken => LinkTheNewTestament(resources, cancellationToken)),
+            new("berean", cancellationToken => LinkTheBerean(resources, cancellationToken)),
+            new("edition-marks", cancellationToken => MarkTheEditions(resources, cancellationToken)),
+            new("clearbible", cancellationToken => ReadTheHandMadeAlignments(resources, cancellationToken)),
+            new("printed-editions", cancellationToken => LinkThePrintedEditions(resources, cancellationToken)),
+            new("greek-witnesses", LinkTheGreekWitnesses),
+            new("hebrew-witnesses", LinkTheHebrewWitnesses),
+            new("septuagints", LinkTheTwoSeptuagints),
+            new("searchable-forms", GiveEveryWordASearchableForm),
+            new("printed-forms", JoinTheWordsThatArePrintedTogether),
+            new("interlinear", cancellationToken => LinkFromTheInterlinear(resources, cancellationToken)),
+            new("psalm-titles", cancellationToken => CoverThePsalmTitles(resources, cancellationToken)),
+            new("recipe", cancellationToken => FollowTheRecipe(resources, cancellationToken)),
+            new("verse-links", JoinTheVerses),
+            new("evidentia-verdicts", cancellationToken => ReplayTheVerdictsOnEvidentia(resources, cancellationToken)),
+            new("encyclopedia", cancellationToken => LoadTheEncyclopedia(resources, cancellationToken)),
+            new("miswritten-numbers", CorrectTheNumbersADatasetMiswrote),
+            new("gentilics", ReadTheStatedKinship),
+            new("peoples", cancellationToken => NameThePeoples(resources, cancellationToken)),
+            new("place-register", cancellationToken => MakeThePlacesOurs(resources, cancellationToken)),
+            new("person-register", cancellationToken => TellTheNamesakesApart(resources, cancellationToken)),
+            new("annotations", SayWhichWordNamesWhom),
+            new("own-records", cancellationToken => WriteTheRecordsNobodyElseHolds(resources, cancellationToken)),
+            new("sense-readings", cancellationToken => ReadTheNamesNothingSettles(resources, cancellationToken)),
+            new("namesake-places", cancellationToken => TellTheNamesakePlacesApart(resources, cancellationToken)),
+            new("greek-namesakes", TellTheGreekNamesakesApart),
+            new("hebrew-origin-names", NameTheGreekNamesOfHebrewOrigin),
+            new("listed-bearers", cancellationToken => NameWhatTheVerseListLeavesOneBearerFor(resources, cancellationToken)),
+            new("rendered-names", NameWhatTheEncyclopediaHoldsUnderAnotherNumber),
+            new("tribe-names", NameTheTribesTheConstructNames),
+            new("sole-bearers", ReachTheNamesNobodyElseCarries),
+            new("words-for-god", WriteTheWordsForGod),
+            new("titles", HoldTheTitlesAsTitles),
+            new("own-names", GiveTheNamesNoDatasetGives),
+            new("things", WriteTheThingsMadeAndTheTimesKept),
+            new("narratives", WriteWhatTheNarrativesTurnOn),
+            new("eponyms", NameTheAncestorsTheTribesAreNamedAfter),
+            new("realms", cancellationToken => NameThePeoplesTheRealmsAreNamedAfter(resources, cancellationToken)),
+            new("spelled-names", NameTheGreekNamesARecordSpells),
+            new("context-bearers", cancellationToken => NameTheBearerTheBookNames(resources, cancellationToken)),
+            new("fixed-titles", NameTheTitlesTheTextFixes),
+            new("title-readings", ReadWhoseTheTitleIsWhereItStands),
+            new("passage-readings", cancellationToken => NameWhomTheReadingsOfThePassagesFind(resources, cancellationToken)),
+            new("verse-readings", KeepTheVersesReadForTheRecordsTheySpeakOf),
+            new("misplaced-annotations", TakeTheMisplacedNamesOffTheirRecords),
+            new("own-references", CiteTheVersesOurOwnWordsName),
+            new("misfiled-verses", cancellationToken => GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, cancellationToken)),
+            new("descriptors", cancellationToken => DescribeTheEntitiesInOurOwnWords(resources, cancellationToken)),
+            new("own-relationships", RelateTheEntitiesOurOwnClausesRelate),
+            new("name-forms", cancellationToken => DeclineTheNamesThoseLinesName(resources, cancellationToken)),
+            new("fold-records", FoldTheRecordsWrittenTwice),
+            new("own-lines", RenderOurOwnLinesInEveryLanguage),
+            new("refiled-ties", MoveWhatWasReadOffTheMisfiledVerses),
+            new("crossed-names", CrossBackTheNamesGivenToEachOther),
+            new("relationship-verses", ListTheVersesTheRelationshipsWereReadFrom),
+            new("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
+            new("spellings", CountHowEachTextSpellsEachName),
+            new("lexicon-phrases", CountTheLexiconsPhrases),
+            new("locations", cancellationToken => PutThePlacesOnTheMap(resources, cancellationToken)),
+            new("commandments", CountTheCommandments),
+            new("reigns", SetTheProphetsInTheirKingsDays),
+            new("topics", cancellationToken => FileTheVersesUnderNavesTopics(resources, cancellationToken)),
+            new("cross-references", cancellationToken => SendTheVersesToOneAnother(resources, cancellationToken)),
+            new("naming-verses", TellTheVersesThatNameFromThoseThatConcern),
+            new("images", cancellationToken => PictureThePeopleAndPlaces(resources, cancellationToken)),
+            new("withdrawn-records", WithdrawTheRecordsThatAreNoName),
+            new("verify", async cancellationToken =>
             {
-                await RefreshTheStatistics(stoppingToken);
-            }
+                // The index answers from what it read the first time it was asked, and until now that
+                // was an empty database.
+                canon.Forget();
 
-            await RelateTheTexts(stoppingToken);
-            await LoadTheLexicon(resources, stoppingToken);
-            await TranslateTheLexicon(resources, stoppingToken);
-            await LoadTheSyntax(bhsa, stoppingToken);
-            await PlaceInTheFrame(resources, stoppingToken);
-            await CorrectWhatTheirFilesMisprint(resources, stoppingToken);
-            await OpenThePsalmsTheirEditionsOpenWith(resources, stoppingToken);
-            await FinishTheVersesOhienkosFileCutShort(resources, stoppingToken);
-            await RestoreWhatSwetesTranscriptionLost(resources, stoppingToken);
-            await LemmatiseTheSeptuagint(resources, stoppingToken);
-            await GlossTheGreek(resources, stoppingToken);
-            await GlossTheGeez(resources, stoppingToken);
-            await ParseTheGreekASecondTime(resources, stoppingToken);
-            await AnnotateTheGreek(resources, stoppingToken);
-            await LinkTheOldTestament(resources, stoppingToken);
-            await LinkTheNewTestament(resources, stoppingToken);
-            await LinkTheBerean(resources, stoppingToken);
-            await MarkTheEditions(resources, stoppingToken);
-            await ReadTheHandMadeAlignments(resources, stoppingToken);
-            await LinkThePrintedEditions(resources, stoppingToken);
-            await LinkTheGreekWitnesses(stoppingToken);
-            await LinkTheHebrewWitnesses(stoppingToken);
-            await LinkTheTwoSeptuagints(stoppingToken);
-            await GiveEveryWordASearchableForm(stoppingToken);
-            await JoinTheWordsThatArePrintedTogether(stoppingToken);
-            await LinkFromTheInterlinear(resources, stoppingToken);
-            await CoverThePsalmTitles(resources, stoppingToken);
-            await FollowTheRecipe(resources, stoppingToken);
-            await JoinTheVerses(stoppingToken);
-            await ReplayTheVerdictsOnEvidentia(resources, stoppingToken);
-            await LoadTheEncyclopedia(resources, stoppingToken);
-            await CorrectTheNumbersADatasetMiswrote(stoppingToken);
-            await ReadTheStatedKinship(stoppingToken);
-            await NameThePeoples(resources, stoppingToken);
-            await MakeThePlacesOurs(resources, stoppingToken);
-            await TellTheNamesakesApart(resources, stoppingToken);
-            await SayWhichWordNamesWhom(stoppingToken);
-            await WriteTheRecordsNobodyElseHolds(resources, stoppingToken);
-            await ReadTheNamesNothingSettles(resources, stoppingToken);
-            await TellTheNamesakePlacesApart(resources, stoppingToken);
-            await TellTheGreekNamesakesApart(stoppingToken);
-            await NameTheGreekNamesOfHebrewOrigin(stoppingToken);
-            await NameWhatTheVerseListLeavesOneBearerFor(resources, stoppingToken);
-            await NameWhatTheEncyclopediaHoldsUnderAnotherNumber(stoppingToken);
-            await NameTheTribesTheConstructNames(stoppingToken);
-            await ReachTheNamesNobodyElseCarries(stoppingToken);
-            await WriteTheWordsForGod(stoppingToken);
-            await HoldTheTitlesAsTitles(stoppingToken);
-            await GiveTheNamesNoDatasetGives(stoppingToken);
-            await WriteTheThingsMadeAndTheTimesKept(stoppingToken);
-            await WriteWhatTheNarrativesTurnOn(stoppingToken);
-            await NameTheAncestorsTheTribesAreNamedAfter(stoppingToken);
-            await NameThePeoplesTheRealmsAreNamedAfter(resources, stoppingToken);
-            await NameTheGreekNamesARecordSpells(stoppingToken);
-            await NameTheBearerTheBookNames(resources, stoppingToken);
-            await NameTheTitlesTheTextFixes(stoppingToken);
-            await ReadWhoseTheTitleIsWhereItStands(stoppingToken);
-            await NameWhomTheReadingsOfThePassagesFind(resources, stoppingToken);
-            await KeepTheVersesReadForTheRecordsTheySpeakOf(stoppingToken);
-            await TakeTheMisplacedNamesOffTheirRecords(stoppingToken);
-            await CiteTheVersesOurOwnWordsName(stoppingToken);
-            await GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, stoppingToken);
-            await DescribeTheEntitiesInOurOwnWords(resources, stoppingToken);
-            await RelateTheEntitiesOurOwnClausesRelate(stoppingToken);
-            await DeclineTheNamesThoseLinesName(resources, stoppingToken);
-            await FoldTheRecordsWrittenTwice(stoppingToken);
-            await RenderOurOwnLinesInEveryLanguage(stoppingToken);
-            await MoveWhatWasReadOffTheMisfiledVerses(stoppingToken);
-            await CrossBackTheNamesGivenToEachOther(stoppingToken);
-            await ListTheVersesTheRelationshipsWereReadFrom(stoppingToken);
-            await NameWhatTheVersesShare(resources, stoppingToken);
-            await CountHowEachTextSpellsEachName(stoppingToken);
-            await CountTheLexiconsPhrases(stoppingToken);
-            await PutThePlacesOnTheMap(resources, stoppingToken);
-            await CountTheCommandments(stoppingToken);
-            await SetTheProphetsInTheirKingsDays(stoppingToken);
-            await FileTheVersesUnderNavesTopics(resources, stoppingToken);
-            await SendTheVersesToOneAnother(resources, stoppingToken);
-            await TellTheVersesThatNameFromThoseThatConcern(stoppingToken);
-            await PictureThePeopleAndPlaces(resources, stoppingToken);
-            await WithdrawTheRecordsThatAreNoName(stoppingToken);
-
-            // The index answers from what it read the first time it was asked, and until now that
-            // was an empty database.
-            canon.Forget();
-
-            // Measured after every load and not only after a change, because the corpus is written
-            // by several loaders and the question is what they produced together.
-            status.Starting("the verification pass");
-            await Verify(stoppingToken);
-
-            status.Ready();
-            logger.LogInformation("The dataset is loaded");
-        }
-        catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
-        {
-            logger.LogInformation("The dataset load was cancelled by shutdown");
-        }
-        catch (Exception exception)
-        {
-            status.Failed(exception.Message);
-            logger.LogError(exception, "The dataset load failed; the API will answer 404 until it is fixed");
-        }
+                // Measured after every load and not only after a change, because the corpus is written
+                // by several loaders and the question is what they produced together.
+                status.Starting("the verification pass");
+                await Verify(cancellationToken);
+            }),
+        ];
     }
 
     /// <summary>
@@ -1273,14 +1312,6 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// Which verse of one text is which verse of another, for every pair the word links already
-    /// cover. It runs last of the linking steps on purpose: the pairs come from the links, and the
-    /// alignment commands that create most of them are run outside this pipeline, so a pair aligned
-    /// today gets its verse links on the next start. The same run also joins every verse that
-    /// covers a second address to what stands there, which is what makes a word link crossing a
-    /// verse boundary a correspondence the frame backs rather than a fault.
-    /// </summary>
-    /// <summary>
     /// Whether this run wrote a text or a book of one, and so left the planner's statistics behind.
     /// </summary>
     private bool _wroteWords;
@@ -1304,6 +1335,14 @@ internal sealed class DatasetLoader(
 
     private const string AnalyseTheTexts = "ANALYZE text, book, chapter, verse, word";
 
+    /// <summary>
+    /// Which verse of one text is which verse of another, for every pair the word links already
+    /// cover. It runs last of the linking steps on purpose: the pairs come from the links, and the
+    /// alignment commands that create most of them are run outside this pipeline, so a pair aligned
+    /// today gets its verse links on the next start. The same run also joins every verse that
+    /// covers a second address to what stands there, which is what makes a word link crossing a
+    /// verse boundary a correspondence the frame backs rather than a fault.
+    /// </summary>
     private async Task JoinTheVerses(CancellationToken cancellationToken)
     {
         status.Starting("the verse links");
@@ -2250,3 +2289,6 @@ internal sealed class DatasetLoader(
         }
     }
 }
+
+/// <summary>One step of the load, under the name <c>load --from</c> resumes at.</summary>
+internal sealed record LoadStep(string Name, Func<CancellationToken, Task> Run);

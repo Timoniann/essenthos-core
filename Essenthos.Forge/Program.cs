@@ -203,14 +203,27 @@ var resources = ResourcePaths.Read(configuration, environment.ContentRootPath);
 // The load itself, which the API used to run in the background while it served. It is a command
 // here because that is what it always was: hours of parsing that ends, against a database nobody is
 // reading yet. Each source checks whether it is already there and does nothing if it is, so running
-// it twice is how a new witness is added.
+// it twice is how a new witness is added. `--from <step>` starts at a step, the one a failed load
+// names; `--steps` lists them.
 if (args is [] or ["load", ..])
 {
     using var loadScope = app.Services.CreateScope();
-    await loadScope.ServiceProvider.GetRequiredService<DatasetLoader>().Run(CancellationToken.None);
+    var loader = loadScope.ServiceProvider.GetRequiredService<DatasetLoader>();
+    if (args.Contains("--steps"))
+    {
+        logger.LogInformation("\n{Steps}", string.Join('\n', loader.StepNames()));
+        return 0;
+    }
+
+    var loaded = await loader.Run(LoadFrom(args), CancellationToken.None);
     await Tidy();
-    return 0;
+    return loaded ? 0 : 1;
 }
+
+// `--from <step>` or `--from=<step>`; an empty one is the first step, so an action can always pass it.
+static string? LoadFrom(string[] args) =>
+    args.FirstOrDefault(argument => argument.StartsWith("--from=", StringComparison.Ordinal))?["--from=".Length..]
+    ?? Option(args, "--from");
 
 // VACUUM (ANALYZE) of the tables that need it, or of the ones named. The steps that write millions of
 // rows end with this themselves; on its own it is for after a step that does not.
