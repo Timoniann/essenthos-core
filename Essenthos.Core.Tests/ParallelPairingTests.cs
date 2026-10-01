@@ -285,7 +285,7 @@ public sealed class ParallelPairingTests : IDisposable
             ToTextId = to.Id,
             Relation = LinkRelation.Renders,
             Method = confidence is null ? LinkMethod.StatedBySource : LinkMethod.Aligner,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
             Confidence = confidence,
         };
         _db.Links.Add(link);
@@ -296,7 +296,7 @@ public sealed class ParallelPairingTests : IDisposable
             LinkId = link.Id,
             Method = link.Method,
             Confidence = link.Confidence,
-            Source = link.Source,
+            Provenance = link.Provenance,
         });
         _db.LinkWords.Add(new LinkWord
         {

@@ -318,7 +318,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             GROUP BY link_id
         ),
         claimed AS (
-            SELECT lw.word_id, l.from_text_id, l.to_text_id, c.source,
+            SELECT lw.word_id, l.from_text_id, l.to_text_id, p.source,
                    count(DISTINCT lw.link_id) AS links,
                    -- The words this source names. Read only where the source names one link, where
                    -- min is that link's own set; a stated absence answers with the empty set.
@@ -326,9 +326,10 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             FROM link_word lw
             JOIN link l ON l.id = lw.link_id
             JOIN link_claim c ON c.link_id = l.id
+            JOIN provenance p ON p.id = c.provenance_id
             LEFT JOIN counterpart cp ON cp.link_id = l.id
             WHERE lw.side = 'from'
-            GROUP BY lw.word_id, l.from_text_id, l.to_text_id, c.source
+            GROUP BY lw.word_id, l.from_text_id, l.to_text_id, p.source
         ),
         perWord AS (
             SELECT word_id, from_text_id, to_text_id,
@@ -625,48 +626,22 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
              """),
 
         // Two links naming exactly the same words in the same pair of texts are not two facts.
-        // They are two methods agreeing, and agreeing is what link_claim is for -- one link with
-        // two claims. Before that table existed there were 4,664 of these, every one of them the
-        // Ukrainian interlinear and the aligner independently reaching the same word pair, stored
-        // as rivals. A loader that writes one again has silently gone back to throwing the
-        // agreement away.
-        // Two links naming exactly the same words in the same pair of texts are not two facts.
         // They are two methods agreeing, and agreeing is what link_claim is for -- one link with two
         // claims. Before that table existed there were 4,664 of these, every one the Ukrainian
-        // interlinear and the aligner independently reaching the same word pair, stored as rivals.
-        // A loader that writes one again has quietly gone back to throwing the agreement away.
+        // interlinear and the aligner independently reaching the same word pair, stored as rivals,
+        // and a Clear Bible set loaded over the aligner's links wrote 388,190 more in one step.
         //
-        // Fingerprinted before it is compared. The obvious form of this -- string_agg over every
-        // link -- asks Postgres to sort 4.6 million assembled strings across parallel workers, and
-        // it died on the shared memory segment rather than returning a wrong answer. Counting the
-        // words and summing their ids is cheap and integer-only, and the exact comparison then runs
-        // on the handful that collide.
+        // The database now refuses them: every link carries the fingerprint of its words, kept by a
+        // trigger whoever writes them, and a unique constraint over the pair and the fingerprint. So
+        // this reads the constraint rather than every word of every link: it breaks if the constraint
+        // is gone, or if a link has no fingerprint for it to compare.
         ("links naming the same words as another link, instead of one link with two claims",
             """
-            WITH fingerprint AS (
-                SELECT l.id, l.from_text_id, l.to_text_id, count(*) AS words,
-                       min(lw.word_id) AS lowest, max(lw.word_id) AS highest, sum(lw.word_id) AS total
-                FROM link l JOIN link_word lw ON lw.link_id = l.id
-                GROUP BY l.id, l.from_text_id, l.to_text_id),
-            colliding AS (
-                SELECT f.id, f.from_text_id, f.to_text_id
-                FROM fingerprint f
-                JOIN (SELECT from_text_id, to_text_id, words, lowest, highest, total
-                      FROM fingerprint
-                      GROUP BY 1, 2, 3, 4, 5, 6
-                      HAVING count(*) > 1) c
-                  ON c.from_text_id = f.from_text_id AND c.to_text_id = f.to_text_id
-                 AND c.words = f.words AND c.lowest = f.lowest
-                 AND c.highest = f.highest AND c.total = f.total),
-            shaped AS (
-                SELECT co.id, co.from_text_id, co.to_text_id,
-                       string_agg(lw.word_id::text, ',' ORDER BY lw.side, lw.word_id) AS words
-                FROM colliding co JOIN link_word lw ON lw.link_id = co.id
-                GROUP BY co.id, co.from_text_id, co.to_text_id)
-            SELECT count(*) FROM (
-                SELECT 1 FROM shaped
-                GROUP BY from_text_id, to_text_id, words
-                HAVING count(*) > 1) duplicated
+            SELECT (SELECT count(*) FROM link WHERE fingerprint IS NULL)
+                 + CASE WHEN EXISTS (SELECT 1 FROM pg_constraint
+                                     WHERE conname = 'ix_link_from_text_id_to_text_id_fingerprint'
+                                       AND contype = 'u' AND convalidated)
+                        THEN 0 ELSE 1 END
             """),
 
         // A link may name words in two verses on purpose — that is how "the word ended up
@@ -803,7 +778,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         // earlier, smaller state of the table — make the contention sweep nest a loop over every
         // link; it then does not finish in fifteen minutes, where with fresh statistics it takes a
         // second.
-        await using (var analyze = new NpgsqlCommand("ANALYZE", connection) { CommandTimeout = SweepSeconds })
+        await using (var analyze = new NpgsqlCommand("ANALYZE", connection))
         {
             await analyze.ExecuteNonQueryAsync(cancellationToken);
         }
@@ -856,7 +831,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var integrity = new List<IntegrityCheck>(Integrity.Length);
         foreach (var (breaks, sql) in Integrity)
         {
-            await using var command = new NpgsqlCommand(sql, connection) { CommandTimeout = SweepSeconds };
+            await using var command = new NpgsqlCommand(sql, connection);
             integrity.Add(new IntegrityCheck(breaks, (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!));
         }
 
@@ -901,7 +876,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             return [];
         }
 
-        await using var command = new NpgsqlCommand(VoteSql, connection) { CommandTimeout = SweepSeconds };
+        await using var command = new NpgsqlCommand(VoteSql, connection);
         command.Parameters.AddWithValue("text", Voted);
         command.Parameters.AddWithValue("first", FirstVoter);
         command.Parameters.AddWithValue("second", SecondVoter);
@@ -1056,13 +1031,6 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             ? coverage.Deserialize<List<Coverage>>(MeasureJson) ?? []
             : [];
 
-    /// <summary>
-    /// How long any one measure may run. They sweep the whole link table -- three and a half million
-    /// rows joined to their words and addresses -- so they are minutes, not seconds, and Npgsql's
-    /// default thirty seconds silently turns a correct corpus into a failed verification.
-    /// </summary>
-    private const int SweepSeconds = 900;
-
     private static readonly JsonSerializerOptions MeasureJson =
         new(JsonSerializerDefaults.Web) { WriteIndented = false };
 
@@ -1072,7 +1040,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         CancellationToken cancellationToken,
         Func<NpgsqlDataReader, T> row)
     {
-        await using var command = new NpgsqlCommand(sql, connection) { CommandTimeout = SweepSeconds };
+        await using var command = new NpgsqlCommand(sql, connection);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
 
         var rows = new List<T>();

@@ -110,7 +110,7 @@ public sealed class EvidentiaLexicalKeyTests : IDisposable
                 ToText = hebrew,
                 Relation = LinkRelation.Renders,
                 Method = LinkMethod.StatedBySource,
-                Source = "a test's stated table",
+                Provenance = new() { Source = "a test's stated table" },
             };
             _db.Links.Add(link);
             _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(learned, 1, verse, 1), Side = LinkSide.From });

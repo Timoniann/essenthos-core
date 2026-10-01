@@ -62,7 +62,7 @@ public sealed class StatedVerseLinkTests : IDisposable
             Relation = relation,
             Method = method,
             Confidence = confidence,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord

@@ -14,7 +14,6 @@ namespace Essenthos.Core.Database.Entities;
 /// Word order never enters, and neither do verse boundaries: a link may name words in two verses,
 /// which makes a word ending up elsewhere expressible rather than a defect.
 /// </summary>
-[Index(nameof(FromTextId), nameof(ToTextId))]
 public class Link
 {
     [Key]
@@ -44,11 +43,19 @@ public class Link
     /// </summary>
     public double? Confidence { get; set; }
 
-    /// <summary>The file, the algorithm and its version, or the person. Never empty.</summary>
-    public required string Source { get; set; }
+    /// <summary>The source and note of the strongest claim: the file, the algorithm and its version, or the person.</summary>
+    public int ProvenanceId { get; set; }
 
-    /// <summary>For a manual link, why.</summary>
-    public string? Note { get; set; }
+    public Provenance? Provenance { get; set; }
+
+    /// <summary>
+    /// The words the link names, as one hash: <see cref="LinkShape"/> says how it is made. Two links
+    /// of one pair of texts may not name the same words, and a unique constraint on this column is
+    /// what refuses the second — agreeing is a second claim on the link, not a second link. The
+    /// database keeps it true whoever writes the words, so it is null only for a link written in this
+    /// transaction that has no words yet.
+    /// </summary>
+    public Guid? Fingerprint { get; set; }
 
     /// <summary>
     /// Every method that says this link is true, including the one the link shows as its own. A

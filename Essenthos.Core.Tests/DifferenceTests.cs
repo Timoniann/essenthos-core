@@ -283,7 +283,7 @@ public sealed class DifferenceEndpointTests : IDisposable
             Relation = how.Relation,
             Method = LinkMethod.Lexical,
             Confidence = how.Confidence,
-            Source = "test",
+            Provenance = new() { Source = "test" },
         };
         if (fromWord is { } f)
         {

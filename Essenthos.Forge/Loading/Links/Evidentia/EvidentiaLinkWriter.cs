@@ -165,7 +165,8 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             .Distinct().ToList();
         var touching = await db.Links
             .Include(link => link.Words)
-            .Include(link => link.Claims)
+            .Include(link => link.Provenance)
+            .Include(link => link.Claims).ThenInclude(held => held.Provenance)
             .AsSplitQuery()
             .Where(link => link.Words.Any(word => words.Contains(word.WordId)))
             .Where(link => (link.FromTextId == run.FromTextId && link.ToTextId == run.ToTextId)
@@ -222,7 +223,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                 }
 
                 claims.Where(held => held.Method == LinkMethod.RuleBased).ToList()
-                    .ForEach(held => held.Note = Joined(held.Note, SupersededNote));
+                    .ForEach(held => held.Provenance = Noted(held.Provenance!, SupersededNote));
             }
             var links = (index.GetValueOrDefault(claim.Word) ?? []).Where(link => !removed.Contains(link)).ToList();
 
@@ -250,7 +251,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                 }
 
                 claims.Where(held => held.Method == LinkMethod.RuleBased).ToList()
-                    .ForEach(held => held.Note = Joined(held.Note, WithdrawnNote));
+                    .ForEach(held => held.Provenance = Noted(held.Provenance!, WithdrawnNote));
             }
 
             var elsewhere = links
@@ -264,12 +265,11 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                 {
                     Keep(exact, new LinkClaim
                     {
-                        Method = exact.Method, Confidence = exact.Confidence, Source = exact.Source, Note = exact.Note,
+                        Method = exact.Method, Confidence = exact.Confidence, Provenance = exact.Provenance,
                     });
                     exact.Method = strongest.Method;
                     exact.Confidence = strongest.Confidence;
-                    exact.Source = strongest.Source;
-                    exact.Note = strongest.Note;
+                    exact.Provenance = strongest.Provenance;
                     tally.Promoted++;
                     tally.Lines.Add($"link {exact.Id}: settled answer now {EnumSpelling.Of(strongest.Method)} (review {review.Id})");
                 }
@@ -282,8 +282,14 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             {
                 claims.ForEach(held => Keep(within, new LinkClaim
                 {
-                    Method = held.Method, Confidence = held.Confidence, Source = held.Source,
-                    Note = Joined(claim.Relation == LinkRelation.Renders ? WithinNote : WithinAbsenceNote, held.Note),
+                    Method = held.Method,
+                    Confidence = held.Confidence,
+                    Provenance = new Provenance
+                    {
+                        Source = held.Provenance!.Source,
+                        Note = Joined(
+                            claim.Relation == LinkRelation.Renders ? WithinNote : WithinAbsenceNote, held.Provenance.Note),
+                    },
                 }));
                 review.Link = within;
                 tally.Within++;
@@ -306,8 +312,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                     Relation = claim.Relation,
                     Method = strongest.Method,
                     Confidence = strongest.Confidence,
-                    Source = strongest.Source,
-                    Note = strongest.Note,
+                    Provenance = strongest.Provenance,
                     Words =
                     [
                         .. claim.Source.Select(word => new LinkWord { WordId = word, Side = LinkSide.From }),
@@ -427,13 +432,13 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             Relation = link.Relation,
             Method = link.Method,
             Confidence = link.Confidence,
-            Source = link.Source,
-            Note = link.Note,
+            Source = link.Provenance!.Source,
+            Note = link.Provenance.Note,
             FromWordIds = [.. link.Words.Where(held => held.Side == LinkSide.From).Select(held => held.WordId).Order()],
             ToWordIds = [.. link.Words.Where(held => held.Side == LinkSide.To).Select(held => held.WordId).Order()],
-            ClaimSources = [.. claims.Select(held => held.Source)],
+            ClaimSources = [.. claims.Select(held => held.Provenance!.Source)],
             ClaimConfidences = [.. claims.Select(held => held.Confidence)],
-            ClaimNotes = [.. claims.Select(held => held.Note)],
+            ClaimNotes = [.. claims.Select(held => held.Provenance!.Note)],
             WithdrawnAt = DateTimeOffset.UtcNow,
         });
 
@@ -463,7 +468,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
 
     private static void Keep(Link link, LinkClaim claim)
     {
-        if (!link.Claims.Any(held => held.Method == claim.Method && held.Source == claim.Source))
+        if (!link.Claims.Any(held => held.Method == claim.Method && held.Provenance!.Source == claim.Provenance!.Source))
         {
             link.Claims.Add(claim);
         }
@@ -476,10 +481,13 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
         {
             Method = LinkMethod.Manual,
             Confidence = null,
-            Source = review.Verdict == EvidentiaVerdict.Corrected
-                ? $"{review.Reviewer}, correcting EVIDENTIA run {run.Id} decision {decision.Id}"
-                : $"{review.Reviewer}, reviewing EVIDENTIA run {run.Id} decision {decision.Id}",
-            Note = review.Note,
+            Provenance = new Provenance
+            {
+                Source = review.Verdict == EvidentiaVerdict.Corrected
+                    ? $"{review.Reviewer}, correcting EVIDENTIA run {run.Id} decision {decision.Id}"
+                    : $"{review.Reviewer}, reviewing EVIDENTIA run {run.Id} decision {decision.Id}",
+                Note = review.Note,
+            },
         };
         if (review.Verdict == EvidentiaVerdict.Corrected)
         {
@@ -490,13 +498,23 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
         {
             Method = LinkMethod.RuleBased,
             Confidence = decision.Confidence is { } confidence ? Math.Round(confidence, ConfidenceDigits) : null,
-            Source = $"EVIDENTIA run {run.Id} ({run.RuleVersion}), {decision.Kind}",
-            Note = Joined(
-                ($"decision {decision.Id}, {decision.Tier} tier: {decision.Rationale}"),
-                review.Examined ? null : $"accepted with its tier by {review.Reviewer}, not read one by one"),
+            Provenance = new Provenance
+            {
+                Source = $"EVIDENTIA run {run.Id} ({run.RuleVersion}), {decision.Kind}",
+                Note = Joined(
+                    ($"decision {decision.Id}, {decision.Tier} tier: {decision.Rationale}"),
+                    review.Examined ? null : $"accepted with its tier by {review.Reviewer}, not read one by one"),
+            },
         };
         return review.Examined ? [person, rule] : [rule];
     }
+
+    /// <summary>
+    /// The same source with something added to its note. A new provenance rather than an edit,
+    /// because the row the claim points at may be every other claim's with that source and note.
+    /// </summary>
+    private static Provenance Noted(Provenance provenance, string note) =>
+        new() { Source = provenance.Source, Note = Joined(provenance.Note, note) };
 
     private static string? Joined(string? first, string? second) =>
         (first, second) switch

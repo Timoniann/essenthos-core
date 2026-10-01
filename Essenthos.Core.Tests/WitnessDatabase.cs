@@ -101,6 +101,7 @@ public sealed class WitnessDatabase : IAsyncLifetime
             .AddInMemoryCollection(new Dictionary<string, string?>
             {
                 [DatabaseConnection.ConnectionStringKey] = DefaultConnectionString,
+                [DatabaseConnection.CommandTimeoutKey] = "1800",
             })
             .AddUserSecrets(typeof(WitnessDatabase).Assembly)
             .AddEnvironmentVariables()

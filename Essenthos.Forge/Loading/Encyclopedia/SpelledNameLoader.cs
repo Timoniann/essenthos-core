@@ -170,7 +170,6 @@ internal sealed class SpelledNameLoader(AppDbContext db, ILogger<SpelledNameLoad
         await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
         await using var contest = new NpgsqlCommand(
             Contest, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        contest.CommandTimeout = Annotating.Patient;
         var contested = await contest.ExecuteNonQueryAsync(cancellationToken);
 
         var method = EnumSpelling.Of(LinkMethod.RuleBased);
@@ -211,7 +210,6 @@ internal sealed class SpelledNameLoader(AppDbContext db, ILogger<SpelledNameLoad
             command.Parameters.AddWithValue(name, value);
         }
 
-        command.CommandTimeout = Annotating.Patient;
         var rows = new List<T>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))

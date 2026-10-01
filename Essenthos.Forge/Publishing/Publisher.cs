@@ -147,7 +147,6 @@ internal sealed class Publisher(
         }
 
         logger.LogInformation("Measuring the corpus before anything is dumped");
-        db.Database.SetCommandTimeout(TimeSpan.FromMinutes(30));
         var measures = await check.Measure(cancellationToken);
         if (!CorpusGate.Pass(measures, CorpusCheck.RenderedFloor, logger))
         {

@@ -1035,9 +1035,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 || (link.FromTextId == to.Id && link.ToTextId == from.Id))
             .Where(link => link.Method == LinkMethod.StatedBySource
                 || link.Method == LinkMethod.StrongNumber)
-            .Where(link => goldSource == null || link.Source.Contains(goldSource));
+            .Where(link => goldSource == null || link.Provenance!.Source.Contains(goldSource));
         var described = await scopedLinks
-            .Select(link => new { link.Id, link.FromTextId, link.Method, link.Source, link.Relation })
+            .Select(link => new { link.Id, link.FromTextId, link.Method, link.Provenance!.Source, link.Relation })
             .ToDictionaryAsync(link => link.Id, cancellationToken);
         var links = await scopedLinks
             .SelectMany(link => link.Words.Select(word => new

@@ -62,9 +62,9 @@ public sealed class TextFactsTests : IAsyncLifetime
         _db.WordAt(witness, 1, 2, 1).Elided = true;
 
         var berean = Datasets.All.Single(dataset => dataset.Id == "berean");
-        Link(translation, witness, LinkMethod.StatedBySource, $"{berean.Prefix}, a test");
-        Link(translation, witness, LinkMethod.Aligner, "an aligner");
-        Link(translation, witness, LinkMethod.Aligner, "an aligner");
+        Link(translation, witness, 1, LinkMethod.StatedBySource, $"{berean.Prefix}, a test");
+        Link(translation, witness, 2, LinkMethod.Aligner, "an aligner");
+        Link(translation, witness, 3, LinkMethod.Aligner, "an aligner");
         await _db.SaveChangesAsync();
 
         var facts = new TextFacts(Scopes());
@@ -107,7 +107,7 @@ public sealed class TextFactsTests : IAsyncLifetime
         }
     }
 
-    private void Link(Text from, Text to, LinkMethod method, string source)
+    private void Link(Text from, Text to, int position, LinkMethod method, string source)
     {
         var link = new Link
         {
@@ -116,11 +116,11 @@ public sealed class TextFactsTests : IAsyncLifetime
             Relation = LinkRelation.Renders,
             Method = method,
             Confidence = method == LinkMethod.Aligner ? 0.5 : null,
-            Source = source,
+            Provenance = new() { Source = source },
         };
         _db.Links.Add(link);
-        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(from, 1, 1, 1), Side = LinkSide.From });
-        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(to, 1, 1, 1), Side = LinkSide.To });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(from, 1, 1, position), Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(to, 1, 1, position), Side = LinkSide.To });
     }
 
     private IServiceScopeFactory Scopes() =>

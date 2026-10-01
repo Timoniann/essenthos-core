@@ -443,7 +443,6 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
 
         await using var settle = new NpgsqlCommand(
             KeptSettle, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        settle.CommandTimeout = Annotating.Patient;
         var given = await settle.ExecuteNonQueryAsync(cancellationToken);
 
         foreach (var claim in KeptClaims)

@@ -50,7 +50,7 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
             ToText = hebrew,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test's own answer key",
+            Provenance = new() { Source = "a test's own answer key" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(english, 1, 1, 4), Side = LinkSide.From });
@@ -93,7 +93,7 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
             ToText = hebrew,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test's own answer key",
+            Provenance = new() { Source = "a test's own answer key" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(route, 1, 1, 4), Side = LinkSide.From });
@@ -142,7 +142,7 @@ public sealed class EvidentiaReadOnlyTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Aligner,
             Confidence = 0.6,
-            Source = "a test's aligner",
+            Provenance = new() { Source = "a test's aligner" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(english, 1, 1, 1), Side = LinkSide.From });

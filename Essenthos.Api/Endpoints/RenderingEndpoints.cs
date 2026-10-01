@@ -219,7 +219,7 @@ internal static class RenderingEndpoints
         var links = rows.Select(row => row.Link).Distinct().ToArray();
         var sources = await db.Links
             .Where(l => links.Contains(l.Id))
-            .GroupBy(l => new { Other = l.FromTextId == textId ? l.ToTextId : l.FromTextId, l.Source })
+            .GroupBy(l => new { Other = l.FromTextId == textId ? l.ToTextId : l.FromTextId, l.Provenance!.Source })
             .Select(g => new { g.Key.Other, g.Key.Source })
             .ToListAsync(cancellationToken);
 

@@ -169,7 +169,6 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
         {
             command.Parameters.AddWithValue("witnesses", (string[])[EntityCandidates.Witness, .. EntityCandidates.GreekWitnesses]);
             command.Parameters.AddWithValue("numbers", numbers);
-            command.CommandTimeout = Annotating.Patient;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
@@ -216,7 +215,6 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
         {
             command.Parameters.AddWithValue("source", rulings.Source);
             command.Parameters.AddWithValue("carried", Annotating.CarriedNote);
-            command.CommandTimeout = Annotating.Patient;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
@@ -238,7 +236,6 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
             withdraw.Parameters.AddWithValue("fixed", FixedTitleLoader.Source);
             withdraw.Parameters.AddWithValue("open", open.ToArray());
             withdraw.Parameters.AddWithValue("carried", Annotating.CarriedNote);
-            withdraw.CommandTimeout = Annotating.Patient;
             withdrawn = await withdraw.ExecuteNonQueryAsync(cancellationToken);
         }
 
@@ -266,7 +263,6 @@ internal sealed class TitleReadingLoader(AppDbContext db, ILogger<TitleReadingLo
         await using var contest = new NpgsqlCommand(
             Contest, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
         contest.Parameters.AddWithValue("title", Title);
-        contest.CommandTimeout = Annotating.Patient;
         var contested = await contest.ExecuteNonQueryAsync(cancellationToken);
 
         await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,

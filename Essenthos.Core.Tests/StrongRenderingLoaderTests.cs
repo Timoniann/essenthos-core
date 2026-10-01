@@ -58,7 +58,7 @@ public sealed class StrongRenderingLoaderTests : IDisposable
         var link = new Link
         {
             FromTextId = _english.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.StatedBySource, Source = "a test",
+            Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         foreach (var position in english)

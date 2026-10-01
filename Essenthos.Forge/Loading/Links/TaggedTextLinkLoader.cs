@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Diagnostics;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -192,15 +193,6 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     /// </summary>
     private const string WithinNote = "the aligner proposed one word pair of this link";
 
-    private const string LinkImport =
-        """
-        COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
-    private const string LinkWordImport =
-        "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
-
     private const string FoldTable =
         "CREATE TEMP TABLE settled_fold (guess bigint, kept bigint, exact boolean) ON COMMIT DROP";
 
@@ -213,16 +205,25 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     /// </summary>
     private const string FoldClaims =
         """
-        INSERT INTO link_claim (link_id, method, confidence, source, note)
-        SELECT f.kept, c.method, c.confidence, c.source,
-               CASE WHEN f.exact THEN c.note ELSE coalesce(c.note, @within) END
+        CREATE TEMP TABLE settled_claim ON COMMIT DROP AS
+        SELECT f.kept, c.method, c.confidence, p.source,
+               CASE WHEN f.exact THEN p.note ELSE coalesce(p.note, @within) END AS note
         FROM settled_fold f
         JOIN LATERAL (
-            SELECT method, confidence, source, note FROM link_claim WHERE link_id = f.guess
+            SELECT method, confidence, provenance_id FROM link_claim WHERE link_id = f.guess
             UNION
-            SELECT method, confidence, source, note FROM link WHERE id = f.guess
+            SELECT method, confidence, provenance_id FROM link WHERE id = f.guess
         ) c ON true
-        ON CONFLICT DO NOTHING
+        JOIN provenance p ON p.id = c.provenance_id;
+
+        INSERT INTO provenance (source, note) SELECT DISTINCT source, note FROM settled_claim
+        ON CONFLICT (source, note) DO NOTHING;
+
+        INSERT INTO link_claim (link_id, method, confidence, provenance_id)
+        SELECT s.kept, s.method, s.confidence, p.id
+        FROM settled_claim s
+        JOIN provenance p ON p.source = s.source AND p.note IS NOT DISTINCT FROM s.note
+        ON CONFLICT DO NOTHING;
         """;
 
     private const string RemoveSettled = "DELETE FROM link WHERE id = ANY(@ids)";
@@ -247,11 +248,12 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             UPDATE link l SET confidence = r.confidence
             FROM unnest(@links, @confidences) AS r (id, confidence)
             WHERE l.id = r.id
-            RETURNING l.id, l.method, l.source, l.confidence
+            RETURNING l.id, l.method, l.provenance_id, l.confidence
         )
         UPDATE link_claim c SET confidence = restated.confidence
         FROM restated
-        WHERE c.link_id = restated.id AND c.method = restated.method AND c.source = restated.source
+        WHERE c.link_id = restated.id AND c.method = restated.method
+          AND c.provenance_id = restated.provenance_id
         """;
 
     public Task<TaggedTextLinkOutcome> Load(
@@ -285,7 +287,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         // not a pair the numbers have spoken about.
         if (only is null && await db.Links.AnyAsync(
                 l => l.FromTextId == from.Id && l.ToTextId == to.Id
-                     && l.Method == LinkMethod.StrongNumber && written.Contains(l.Source),
+                     && l.Method == LinkMethod.StrongNumber && written.Contains(l.Provenance!.Source),
                 cancellationToken))
         {
             logger.LogInformation("{From} and {To} are already linked by these numbers; nothing to do", fromSlug, toSlug);
@@ -542,7 +544,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
 
         if (removed.Length > 0)
         {
-            await using var remove = new NpgsqlCommand(RemoveSettled, connection) { CommandTimeout = 600 };
+            await using var remove = new NpgsqlCommand(RemoveSettled, connection);
             remove.Parameters.AddWithValue("ids", removed);
             await remove.ExecuteNonQueryAsync(cancellationToken);
         }
@@ -556,7 +558,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
                 .SelectMany(c => c.Draft.To.Where(word => !c.Link.To.Contains(word)), (c, word) => (c.Link.Link, Word: word))
                 .ToList();
 
-            await using (var take = new NpgsqlCommand(TakeWitnessWords, connection) { CommandTimeout = 600 })
+            await using (var take = new NpgsqlCommand(TakeWitnessWords, connection))
             {
                 take.Parameters.AddWithValue("links", taken.Select(t => t.Link).ToArray());
                 take.Parameters.AddWithValue("words", taken.Select(t => t.Word).ToArray());
@@ -564,7 +566,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
                 await take.ExecuteNonQueryAsync(cancellationToken);
             }
 
-            await using (var give = new NpgsqlCommand(GiveWitnessWords, connection) { CommandTimeout = 600 })
+            await using (var give = new NpgsqlCommand(GiveWitnessWords, connection))
             {
                 give.Parameters.AddWithValue("links", given.Select(g => g.Link).ToArray());
                 give.Parameters.AddWithValue("words", given.Select(g => g.Word).ToArray());
@@ -572,7 +574,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
                 await give.ExecuteNonQueryAsync(cancellationToken);
             }
 
-            await using var restate = new NpgsqlCommand(Restate, connection) { CommandTimeout = 600 };
+            await using var restate = new NpgsqlCommand(Restate, connection);
             restate.Parameters.AddWithValue("links", changed.Select(c => c.Link.Link).ToArray());
             restate.Parameters.AddWithValue("confidences", changed.Select(c => c.Draft.Confidence).ToArray());
             await restate.ExecuteNonQueryAsync(cancellationToken);
@@ -580,10 +582,9 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
 
         if (added.Count > 0)
         {
-            var firstId = await ReserveLinkIds(connection, added.Count, cancellationToken);
-            await WriteLinks(connection, fromTextId, toTextId, source, added, firstId, cancellationToken);
-            await LinkClaims.Record(connection, transaction, firstId, added.Count, cancellationToken);
-            await Fold(connection, settled, firstId, cancellationToken);
+            var written = await WriteLinks(
+                connection, transaction, fromTextId, toTextId, source, added, settled, cancellationToken);
+            await Fold(connection, settled, written.Ids, cancellationToken);
         }
 
         await transaction.CommitAsync(cancellationToken);
@@ -908,7 +909,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             .Where(lw => lw.Link!.FromTextId == fromTextId && lw.Link.ToTextId == toTextId && lw.Link.Method == method);
         if (sources is not null)
         {
-            drawn = drawn.Where(lw => sources.Contains(lw.Link!.Source));
+            drawn = drawn.Where(lw => sources.Contains(lw.Link!.Provenance!.Source));
         }
 
         var rows = await drawn
@@ -942,7 +943,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             .. await db.LinkWords
                 .Where(lw => lw.Side == LinkSide.From && words.Contains(lw.WordId)
                              && lw.Link!.FromTextId == fromTextId && lw.Link.ToTextId == toTextId
-                             && lw.Link.Method == LinkMethod.StrongNumber && written.Contains(lw.Link.Source))
+                             && lw.Link.Method == LinkMethod.StrongNumber && written.Contains(lw.Link.Provenance!.Source))
                 .Select(lw => lw.LinkId)
                 .Distinct()
                 .ToListAsync(cancellationToken),
@@ -975,69 +976,45 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             await give.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        var firstId = drafts.Count == 0 ? 0 : await ReserveLinkIds(connection, drafts.Count, cancellationToken);
-        if (drafts.Count > 0)
-        {
-            await WriteLinks(connection, fromTextId, toTextId, source, drafts, firstId, cancellationToken);
-            await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
-        }
+        var written = await WriteLinks(
+            connection, transaction, fromTextId, toTextId, source, drafts, settled, cancellationToken);
 
         await LinkClaims.Corroborate(
             connection, transaction, corroborations, LinkMethod.StrongNumber, CorroborationNote, cancellationToken);
 
-        await Fold(connection, settled, firstId, cancellationToken);
+        await Fold(connection, settled, written.Ids, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
     }
 
-    private static async Task WriteLinks(
+    /// <summary>
+    /// The matches as links. The aligner's links they settle are left out of the shapes a match may
+    /// be folded into, because <see cref="Fold"/> removes them in the same transaction once their
+    /// claims have moved onto the match.
+    /// </summary>
+    private static async Task<LinkWrite> WriteLinks(
         NpgsqlConnection connection,
+        IDbContextTransaction transaction,
         int fromTextId,
         int toTextId,
         string source,
         List<Draft> drafts,
-        long firstId,
-        CancellationToken cancellationToken)
-    {
-        var renders = EnumSpelling.Of(LinkRelation.Renders);
-        var byNumber = EnumSpelling.Of(LinkMethod.StrongNumber);
-        var fromSide = EnumSpelling.Of(LinkSide.From);
-        var toSide = EnumSpelling.Of(LinkSide.To);
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(byNumber, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(drafts[i].Confidence, NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(source, NpgsqlDbType.Text, cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                foreach (var word in drafts[i].From)
-                {
-                    await Row(writer, firstId + i, word, fromSide, cancellationToken);
-                }
-
-                foreach (var word in drafts[i].To)
-                {
-                    await Row(writer, firstId + i, word, toSide, cancellationToken);
-                }
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-    }
+        List<Settled> settled,
+        CancellationToken cancellationToken) =>
+        await LinkWriter.Write(
+            connection,
+            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            [
+                .. drafts.Select(draft => new NewLink(
+                    fromTextId, toTextId, LinkRelation.Renders, LinkMethod.StrongNumber, draft.Confidence, source, null,
+                    draft.From, draft.To)),
+            ],
+            cancellationToken,
+            leaving:
+            [
+                .. settled
+                    .Where(s => s.Verdict is SettledVerdict.Confirmed or SettledVerdict.Contradicted)
+                    .Select(s => s.Link),
+            ]);
 
     /// <summary>
     /// The aligner's links the matches settled: a confirmed one becomes a claim on its match, a
@@ -1047,7 +1024,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     private static async Task Fold(
         NpgsqlConnection connection,
         List<Settled> settled,
-        long firstId,
+        long[] ids,
         CancellationToken cancellationToken)
     {
         var confirmed = settled.Where(s => s.Verdict == SettledVerdict.Confirmed).ToList();
@@ -1073,46 +1050,21 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
                 {
                     await writer.StartRowAsync(cancellationToken);
                     await writer.WriteAsync(fold.Link, NpgsqlDbType.Bigint, cancellationToken);
-                    await writer.WriteAsync(firstId + fold.Draft, NpgsqlDbType.Bigint, cancellationToken);
+                    await writer.WriteAsync(ids[fold.Draft], NpgsqlDbType.Bigint, cancellationToken);
                     await writer.WriteAsync(fold.Exact, NpgsqlDbType.Boolean, cancellationToken);
                 }
 
                 await writer.CompleteAsync(cancellationToken);
             }
 
-            await using var claims = new NpgsqlCommand(FoldClaims, connection) { CommandTimeout = 600 };
+            await using var claims = new NpgsqlCommand(FoldClaims, connection);
             claims.Parameters.AddWithValue("within", WithinNote);
             await claims.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        await using var remove = new NpgsqlCommand(RemoveSettled, connection) { CommandTimeout = 600 };
+        await using var remove = new NpgsqlCommand(RemoveSettled, connection);
         remove.Parameters.AddWithValue("ids", removed);
         await remove.ExecuteNonQueryAsync(cancellationToken);
-    }
-
-    private static async Task Row(
-        NpgsqlBinaryImporter writer,
-        long linkId,
-        long wordId,
-        string side,
-        CancellationToken cancellationToken)
-    {
-        await writer.StartRowAsync(cancellationToken);
-        await writer.WriteAsync(linkId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-    }
-
-    private static async Task<long> ReserveLinkIds(
-        NpgsqlConnection connection,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     /// <param name="Unit">

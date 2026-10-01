@@ -155,21 +155,6 @@ internal readonly record struct ClearBiblePlacement(
 /// </summary>
 internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<ClearBibleLinkLoader> logger)
 {
-    private const string LinkImport =
-        """
-        COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
-    private const string LinkWordImport =
-        "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
-
-    private const string ClaimImport =
-        """
-        COPY link_claim (link_id, method, confidence, source, note)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
     /// <summary>
     /// How much of a verse the two editions have to write the same way before their words are put in
     /// step at all. Below it the verse is refused whole and every record in it is unresolved: an
@@ -177,12 +162,6 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
     /// would look exactly like the correct ones.
     /// </summary>
     private const double SameVerse = 0.5;
-
-    /// <summary>
-    /// A withdrawal cascades through tens of thousands of link words and claims, which does not
-    /// finish inside the default thirty seconds.
-    /// </summary>
-    private static readonly TimeSpan WithdrawTimeout = TimeSpan.FromMinutes(30);
 
     public async Task<ClearBibleOutcome> Load(
         string directory,
@@ -213,7 +192,7 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
         }
 
         if (await db.LinkClaims.AnyAsync(
-                c => c.Source == set.Statement && c.Link!.FromTextId == from.Id, cancellationToken))
+                c => c.Provenance!.Source == set.Statement && c.Link!.FromTextId == from.Id, cancellationToken))
         {
             logger.LogInformation("Clear Bible has already spoken about {From} and {To}", set.From, set.To);
             return Nothing();
@@ -238,7 +217,7 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
             to, set.Join, [.. ClearBibleAlignment.Tokens(source)], ClearBibleAlignment.Unit, placement.Source,
             cancellationToken);
 
-        var existing = await Shapes(from.Id, to.Id, cancellationToken);
+        var spokenFor = await SpokenFor(from.Id, to.Id, cancellationToken);
         var renders = Renders(tokens);
         var targetFrame = await Frame(from.Id, cancellationToken);
         var sourceFrame = set.Join == ClearBibleJoin.Edition ? null : await Frame(to.Id, cancellationToken);
@@ -250,7 +229,6 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
         var overruled = await (rulings ?? LinkRulings.None).Overruled(
             db, set.From, set.To, LinkRulings.ClearBible, logger, cancellationToken);
 
-        var claims = new List<long>();
         var drafts = new List<Draft>();
         int records = 0, corroborated = 0, added = 0, contradicted = 0, unresolved = 0, withoutCounterpart = 0;
         int astray = 0, shifted = 0, refused = 0, overruledRecords = 0, trimmed = 0;
@@ -302,17 +280,21 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
                 trimmed++;
             }
 
-            if (existing.Shapes.TryGetValue(Shape(translation, witness), out var link))
+            drafts.Add(new Draft(translation, witness));
+        }
+
+        var written = await Write(from.Id, to.Id, set.Statement, drafts, cancellationToken);
+        for (var i = 0; i < drafts.Count; i++)
+        {
+            // A record naming the words a link already names is a second opinion on it. A witness
+            // word the corpus already joins to different words of the translation is two people who
+            // both looked, disagreeing: counted apart from a plain addition because the two mean
+            // different things about the corpus and a single total would hide it.
+            if (!written.Fresh[i])
             {
                 corroborated++;
-                claims.Add(link);
-                continue;
             }
-
-            // A witness word the corpus already joins to different words of the translation: two
-            // people who both looked, disagreeing. Counted apart from a plain addition because the
-            // two mean different things about the corpus and a single total would hide it.
-            if (witness.Any(existing.SpokenFor.Contains))
+            else if (drafts[i].To.Any(spokenFor.Contains))
             {
                 contradicted++;
             }
@@ -320,11 +302,7 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
             {
                 added++;
             }
-
-            drafts.Add(new Draft(translation, witness));
         }
-
-        await Write(from.Id, to.Id, set.Statement, drafts, [.. claims.Distinct()], cancellationToken);
 
         var outcome = new ClearBibleOutcome(
             false,
@@ -356,18 +334,19 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
         var from = await db.Texts.Where(t => t.Slug == set.From).Select(t => t.Id).SingleAsync(cancellationToken);
         var to = await db.Texts.Where(t => t.Slug == set.To).Select(t => t.Id).SingleAsync(cancellationToken);
 
-        db.Database.SetCommandTimeout(WithdrawTimeout);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var claims = await db.Database.ExecuteSqlRawAsync(
             """
             DELETE FROM link_claim c
             USING link l
             WHERE c.link_id = l.id AND l.from_text_id = {0} AND l.to_text_id = {1}
-              AND c.source = {2} AND l.source <> {2}
+              AND c.provenance_id IN (SELECT id FROM provenance WHERE source = {2})
+              AND l.provenance_id NOT IN (SELECT id FROM provenance WHERE source = {2})
             """,
             [from, to, set.Statement], cancellationToken);
         var links = await db.Database.ExecuteSqlRawAsync(
-            "DELETE FROM link WHERE from_text_id = {0} AND to_text_id = {1} AND source = {2}",
+            "DELETE FROM link WHERE from_text_id = {0} AND to_text_id = {1} " +
+            "AND provenance_id IN (SELECT id FROM provenance WHERE source = {2})",
             [from, to, set.Statement], cancellationToken);
         var verses = await db.Database.ExecuteSqlRawAsync(
             "DELETE FROM verse_link WHERE from_text_id = {0} AND to_text_id = {1} AND source = {2}",
@@ -1030,46 +1009,22 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
     }
 
     /// <summary>
-    /// Every link of a pair by the words it names, so a second opinion can find it. The aligner's are
-    /// left out: a record naming the same words as a guess is a statement of its own, and folded into
-    /// the guess as a claim it would go when the next composition replaces the aligner's links.
+    /// The witness words some link of the pair already reaches, which is what separates *nobody had
+    /// an answer for this word* from *somebody had a different one*. The aligner's are left out: a
+    /// guess is not somebody's answer.
     /// </summary>
-    private async Task<Existing> Shapes(
+    private async Task<HashSet<long>> SpokenFor(
         int fromTextId,
         int toTextId,
-        CancellationToken cancellationToken)
-    {
-        var rows = await db.LinkWords
-            .Where(word => word.Link!.FromTextId == fromTextId
+        CancellationToken cancellationToken) =>
+        (await db.LinkWords
+            .Where(word => word.Side == LinkSide.To
+                           && word.Link!.FromTextId == fromTextId
                            && word.Link!.ToTextId == toTextId
                            && word.Link!.Method != LinkMethod.Aligner)
-            .Select(word => new { word.LinkId, word.WordId, word.Side })
-            .ToListAsync(cancellationToken);
-
-        var shapes = new Dictionary<string, long>(rows.Count / 2, StringComparer.Ordinal);
-        var spokenFor = new HashSet<long>(rows.Count / 2);
-
-        foreach (var link in rows.GroupBy(row => row.LinkId))
-        {
-            var fromWords = link.Where(w => w.Side == LinkSide.From).Select(w => w.WordId).ToList();
-            var toWords = link.Where(w => w.Side == LinkSide.To).Select(w => w.WordId).ToList();
-            shapes[Shape(fromWords, toWords)] = link.Key;
-            spokenFor.UnionWith(toWords);
-        }
-
-        return new Existing(shapes, spokenFor);
-    }
-
-    /// <param name="Shapes">Every link of the pair by the words it names.</param>
-    /// <param name="SpokenFor">
-    /// The witness words some link already reaches, which is what separates *nobody had an answer
-    /// for this word* from *somebody had a different one*.
-    /// </param>
-    private sealed record Existing(Dictionary<string, long> Shapes, HashSet<long> SpokenFor);
-
-    /// <summary>The words a link names, as one key. Order never enters a link, so it is sorted.</summary>
-    private static string Shape(IEnumerable<long> from, IEnumerable<long> to) =>
-        string.Join(',', from.Order()) + '|' + string.Join(',', to.Order());
+            .Select(word => word.WordId)
+            .Distinct()
+            .ToListAsync(cancellationToken)).ToHashSet();
 
     /// <param name="canonical">
     /// Whether to key by where the canonical frame places a verse or by the number the text prints
@@ -1115,113 +1070,31 @@ internal sealed partial class ClearBibleLinkLoader(AppDbContext db, ILogger<Clea
                     .ToList());
     }
 
-    private async Task Write(
+    private async Task<LinkWrite> Write(
         int fromTextId,
         int toTextId,
         string statement,
         List<Draft> drafts,
-        IReadOnlyList<long> corroborated,
         CancellationToken cancellationToken)
     {
-        if (drafts.Count == 0 && corroborated.Count == 0)
+        if (drafts.Count == 0)
         {
-            return;
+            return new LinkWrite([], []);
         }
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-
-        var stated = EnumSpelling.Of(LinkMethod.StatedBySource);
-        var renders = EnumSpelling.Of(LinkRelation.Renders);
-        var fromSide = EnumSpelling.Of(LinkSide.From);
-        var toSide = EnumSpelling.Of(LinkSide.To);
-        var firstId = drafts.Count == 0 ? 0 : await ReserveLinkIds(connection, drafts.Count, cancellationToken);
-
-        if (drafts.Count > 0)
-        {
-            await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-            {
-                for (var i = 0; i < drafts.Count; i++)
-                {
-                    await writer.StartRowAsync(cancellationToken);
-                    await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                    await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
-                    await writer.WriteAsync(stated, NpgsqlDbType.Text, cancellationToken);
-                    await writer.WriteNullAsync(cancellationToken);
-                    await writer.WriteAsync(statement, NpgsqlDbType.Text, cancellationToken);
-                }
-
-                await writer.CompleteAsync(cancellationToken);
-            }
-
-            await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-            {
-                for (var i = 0; i < drafts.Count; i++)
-                {
-                    foreach (var word in drafts[i].From)
-                    {
-                        await Row(writer, firstId + i, word, fromSide, cancellationToken);
-                    }
-
-                    foreach (var word in drafts[i].To)
-                    {
-                        await Row(writer, firstId + i, word, toSide, cancellationToken);
-                    }
-                }
-
-                await writer.CompleteAsync(cancellationToken);
-            }
-        }
-
-        // The links this loader wrote of its own get their claim the way every other loader's do,
-        // copied from the link itself. Only the corroborations are written by hand here, because
-        // those are claims on somebody else's link and there is nothing to copy them from.
-        await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
-
-        await using (var writer = await connection.BeginBinaryImportAsync(ClaimImport, cancellationToken))
-        {
-            foreach (var link in corroborated)
-            {
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(link, NpgsqlDbType.Bigint, cancellationToken);
-                await writer.WriteAsync(stated, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteNullAsync(cancellationToken);
-                await writer.WriteAsync(statement, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteNullAsync(cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
+        var written = await LinkWriter.Write(
+            (NpgsqlConnection)db.Database.GetDbConnection(),
+            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            [
+                .. drafts.Select(draft => new NewLink(
+                    fromTextId, toTextId, LinkRelation.Renders, LinkMethod.StatedBySource, null, statement, null,
+                    draft.From, draft.To)),
+            ],
+            cancellationToken);
         await transaction.CommitAsync(cancellationToken);
-    }
-
-    private static async Task Row(
-        NpgsqlBinaryImporter writer,
-        long linkId,
-        long wordId,
-        string side,
-        CancellationToken cancellationToken)
-    {
-        await writer.StartRowAsync(cancellationToken);
-        await writer.WriteAsync(linkId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-    }
-
-    private static async Task<long> ReserveLinkIds(
-        NpgsqlConnection connection,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
+        return written;
     }
 
     private sealed record WordRow(

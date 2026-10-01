@@ -83,7 +83,7 @@ internal sealed class SharedWordPass(AppDbContext db, ILogger<SharedWordPass> lo
             await writer.CompleteAsync(cancellationToken);
         }
 
-        await using (var find = new NpgsqlCommand(Dumped, connection, transaction) { CommandTimeout = 1800 })
+        await using (var find = new NpgsqlCommand(Dumped, connection, transaction))
         {
             find.Parameters.AddWithValue("from", from.Id);
             find.Parameters.AddWithValue("to", to.Id);
@@ -107,7 +107,7 @@ internal sealed class SharedWordPass(AppDbContext db, ILogger<SharedWordPass> lo
         if (apply)
         {
             await using var withdraw = new NpgsqlCommand(
-                "DELETE FROM link WHERE id IN (SELECT link FROM dumped)", connection, transaction) { CommandTimeout = 1800 };
+                "DELETE FROM link WHERE id IN (SELECT link FROM dumped)", connection, transaction);
             await withdraw.ExecuteNonQueryAsync(cancellationToken);
         }
 

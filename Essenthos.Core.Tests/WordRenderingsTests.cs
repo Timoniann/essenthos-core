@@ -175,7 +175,7 @@ public sealed class WordRenderingsTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = method,
             Confidence = method == LinkMethod.StatedBySource ? null : InferredConfidence,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
 

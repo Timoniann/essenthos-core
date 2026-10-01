@@ -114,7 +114,7 @@ public sealed class RenderedNameTests : IDisposable
         var link = new Link
         {
             FromTextId = _english.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.StatedBySource, Source = "a test",
+            Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = English(verse), Side = LinkSide.From });

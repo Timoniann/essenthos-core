@@ -47,9 +47,12 @@ UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Program).Assembly)
 // password stops the process at startup with the message that says what to set.
 var databaseConnection = DatabaseConnection.Read(builder.Configuration);
 
+// Every context and every command made from its connection waits as long as the configuration says,
+// so no step is the one that forgot to raise Npgsql's thirty seconds.
+var commandTimeout = new Npgsql.NpgsqlConnectionStringBuilder(databaseConnection).CommandTimeout;
 builder.Services.AddDbContext<AppDbContext>(optionsBuilder =>
 {
-    optionsBuilder.UseNpgsql(databaseConnection);
+    optionsBuilder.UseNpgsql(databaseConnection, npgsql => npgsql.CommandTimeout(commandTimeout));
 });
 
 builder.Services.AddScoped<CorpusLoader>();
@@ -205,6 +208,15 @@ if (args is [] or ["load", ..])
 {
     using var loadScope = app.Services.CreateScope();
     await loadScope.ServiceProvider.GetRequiredService<DatasetLoader>().Run(CancellationToken.None);
+    await Tidy();
+    return 0;
+}
+
+// VACUUM (ANALYZE) of the tables that need it, or of the ones named. The steps that write millions of
+// rows end with this themselves; on its own it is for after a step that does not.
+if (args is ["maintain", ..])
+{
+    logger.LogInformation("{Outcome}", await Maintenance.Tidy(databaseConnection, args[1..]));
     return 0;
 }
 
@@ -270,6 +282,7 @@ if (args is ["compose", var composeFrom, var composeVia, var composeTo, ..])
         Agreeing(args)));
     await Replay(composeScope, (from, to) => Between(from, to, Identifier(composeFrom), Identifier(composeTo)));
     Recipe.Record(resources, args, DateTimeOffset.UtcNow);
+    await Tidy();
     return 0;
 }
 
@@ -383,6 +396,7 @@ if (args is ["interlinear-join", var interlinearText, ..])
         logger.LogInformation(
             "{Outcome}", await interlinearScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
         logger.LogInformation("\n{Report}", await interlinearLoader.Measure(interlinearFolder, interlinearSlug));
+        await Tidy();
     }
 
     Recipe.Record(resources, args, DateTimeOffset.UtcNow);
@@ -546,6 +560,11 @@ if (args is ["evidentia-apply", var applyRun, ..])
     using var applyScope = app.Services.CreateScope();
     logger.LogInformation("\n{Outcome}", await applyScope.ServiceProvider.GetRequiredService<EvidentiaLinkWriter>()
         .Apply(int.Parse(applyRun), args.Contains("--write")));
+    if (args.Contains("--write"))
+    {
+        await Tidy();
+    }
+
     return 0;
 }
 
@@ -611,6 +630,10 @@ if (args is ["evidentia-compare", var compareBefore, var compareAfter, ..])
         .Compare(int.Parse(compareBefore), int.Parse(compareAfter)));
     return 0;
 }
+
+// The vacuum a step that wrote millions of rows ends with, so the next step plans against the tables as
+// they now are rather than as autovacuum last saw them.
+async Task Tidy() => logger.LogInformation("{Outcome}", await Maintenance.Tidy(databaseConnection, []));
 
 // A verdict recorded is written to the ledger at once, so no verdict lives only in this database.
 async Task Record(IServiceScope scope, int runId) =>
@@ -842,6 +865,7 @@ if (args is ["crosswire-strong", ..])
         "{Outcome}", await crosswireScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
     await crosswireScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
     Recipe.Record(resources, args, DateTimeOffset.UtcNow);
+    await Tidy();
     return 0;
 }
 
@@ -867,6 +891,7 @@ if (args is ["ohb-cuv", ..])
         "{Outcome}", await ohbScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
     await ohbScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
     Recipe.Record(resources, args, DateTimeOffset.UtcNow);
+    await Tidy();
     return 0;
 }
 
@@ -1034,7 +1059,6 @@ if (args is ["naming", ..])
 {
     using var namingScope = app.Services.CreateScope();
     var namingDb = namingScope.ServiceProvider.GetRequiredService<AppDbContext>();
-    namingDb.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
     var namingChanged = await namingDb.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
     Console.WriteLine($"{namingChanged} listed verses changed between naming their entity and only concerning it");
     return 0;
@@ -1099,6 +1123,7 @@ if (args is ["carry", ..])
 {
     using var carryScope = app.Services.CreateScope();
     await carryScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+    await Tidy();
     return 0;
 }
 
@@ -1151,6 +1176,7 @@ if (args is ["redraw", var redrawSource, var redrawSlug])
     logger.LogInformation(
         "{Outcome}", await redrawScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
     await redrawScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+    await Tidy();
     return 0;
 }
 
@@ -1307,7 +1333,6 @@ if (args is ["verse-readings", ..])
     logger.LogInformation("{Outcome}", await verseScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
         .Load());
     var verseDb = verseScope.ServiceProvider.GetRequiredService<AppDbContext>();
-    verseDb.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
     var verseNaming = await verseDb.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
     Console.WriteLine($"{verseNaming} listed verses changed between naming their entity and only concerning it");
     return 0;
@@ -1348,7 +1373,6 @@ if (args is ["dataset-records", ..])
     logger.LogInformation("{Outcome}", await records.GetRequiredService<RelationshipVerseLoader>().Load());
     logger.LogInformation("{Outcome}", await records.GetRequiredService<DistinguisherLoader>().Load());
     var recordsDb = records.GetRequiredService<AppDbContext>();
-    recordsDb.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
     var recordsNaming = await recordsDb.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
     Console.WriteLine($"{recordsNaming} listed verses changed between naming their entity and only concerning it");
     return 0;
@@ -1468,12 +1492,13 @@ if (args is ["align", var alignFrom, var alignTo, ..])
         outsideSlug: Option(args, "--outside") is { } outside ? Identifier(outside) : null));
     await Replay(alignScope, (from, to) => Between(from, to, alignOne, alignTwo));
     Recipe.Record(resources, args, DateTimeOffset.UtcNow);
+    await Tidy();
     return 0;
 }
 
 
 logger.LogError(
-    "Nothing is known to do with \"{Verb}\". The verbs are load, recipe, reload, correct, marks, verify, release, publish, rollback, releases, align, names, possessives, unshare, score, score-anchors, syntax, "
+    "Nothing is known to do with \"{Verb}\". The verbs are load, maintain, recipe, reload, correct, marks, verify, release, publish, rollback, releases, align, names, possessives, unshare, score, score-anchors, syntax, "
     + "compose, strong, synodal-strong, union-strong, crosswire-strong, ohb-cuv, object-marker, carry, clearbible, redraw, interlinear-join, locate, spell, images, dillmann, cross-references and the evidentia family",
     args[0]);
 return 1;

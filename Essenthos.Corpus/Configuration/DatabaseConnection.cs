@@ -17,18 +17,32 @@ internal static class DatabaseConnection
     public const string ConnectionStringKey = "Database:ConnectionString";
     public const string PasswordKey = "Database:Password";
 
+    /// <summary>
+    /// How long any one command may run, in seconds, for every connection made from the string.
+    /// The Forge sets it, because a statement over the whole corpus outlasts Npgsql's thirty
+    /// seconds and a timeout set command by command is one somebody forgets; the API leaves it
+    /// unset and keeps the default, with its own limit on the server.
+    /// </summary>
+    public const string CommandTimeoutKey = "Database:CommandTimeoutSeconds";
+
     public const string AccountsConnectionStringKey = "Accounts:ConnectionString";
     public const string AccountsPasswordKey = "Accounts:Password";
 
     private static readonly string[] GssEncryptionModeKeywords = ["GSS Encryption Mode", "GssEncryptionMode"];
 
+    private static readonly string[] CommandTimeoutKeywords = ["Command Timeout", "CommandTimeout"];
+
     public static string Read(IConfiguration configuration) =>
-        Read(configuration, ConnectionStringKey, PasswordKey);
+        Read(configuration, ConnectionStringKey, PasswordKey, CommandTimeoutKey);
 
     public static string ReadAccounts(IConfiguration configuration) =>
-        Read(configuration, AccountsConnectionStringKey, AccountsPasswordKey);
+        Read(configuration, AccountsConnectionStringKey, AccountsPasswordKey, null);
 
-    private static string Read(IConfiguration configuration, string connectionStringKey, string passwordKey)
+    private static string Read(
+        IConfiguration configuration,
+        string connectionStringKey,
+        string passwordKey,
+        string? commandTimeoutKey)
     {
         var connectionString = configuration[connectionStringKey];
         if (string.IsNullOrWhiteSpace(connectionString))
@@ -47,6 +61,14 @@ internal static class DatabaseConnection
         if (!GssEncryptionModeKeywords.Any(named.ContainsKey))
         {
             builder.GssEncryptionMode = GssEncryptionMode.Disable;
+        }
+
+        // A connection string that names its own timeout keeps it.
+        if (commandTimeoutKey is not null
+            && !CommandTimeoutKeywords.Any(named.ContainsKey)
+            && int.TryParse(configuration[commandTimeoutKey], out var seconds))
+        {
+            builder.CommandTimeout = seconds;
         }
 
         var password = configuration[passwordKey];

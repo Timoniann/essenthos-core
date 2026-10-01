@@ -32,8 +32,6 @@ internal sealed record BhsaLemmaOutcome(int Words, TimeSpan Elapsed)
 /// </summary>
 internal sealed class BhsaLemmaLoader(AppDbContext db, ILogger<BhsaLemmaLoader> logger)
 {
-    /// <summary>Rewriting four hundred thousand rows takes longer than the default thirty seconds.</summary>
-    private static readonly TimeSpan Timeout = TimeSpan.FromMinutes(20);
 
     public async Task<BhsaLemmaOutcome> Load(CancellationToken cancellationToken = default)
     {
@@ -46,7 +44,6 @@ internal sealed class BhsaLemmaLoader(AppDbContext db, ILogger<BhsaLemmaLoader> 
             return new BhsaLemmaOutcome(0, TimeSpan.Zero);
         }
 
-        db.Database.SetCommandTimeout(Timeout);
         var pending = await db.Database
             .SqlQueryRaw<bool>(
                 """

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore.Storage;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using Essenthos.Core.BetaMasaheft;
@@ -80,15 +81,6 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// an alignment and it looks like one.
     /// </summary>
     private const int CollapsedCluster = 4;
-
-    private const string LinkImport =
-        """
-        COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
-    private const string LinkWordImport =
-        "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
 
     /// <param name="minimumConfidence">
     /// The threshold, or null for the one measured for the source's language, and
@@ -199,7 +191,6 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 """, (NpgsqlConnection)db.Database.GetDbConnection());
             command.Parameters.AddWithValue("text", textId);
             command.Parameters.AddWithValue("outside", outsideTextId);
-            command.CommandTimeout = 600;
 
             var words = new HashSet<long>();
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -1258,93 +1249,51 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         // The earlier run's links go in the same transaction the new ones arrive in, so the pair is
-        // never read with neither or with both. Their words and claims go with them.
+        // never read with neither or with both. Their words and claims go with them, and so do the
+        // claims the run left on links somebody else heads: an answer the aligner gave that landed
+        // on a stated link's words is a claim on that link, and the rerun gives it again or not.
         if (replace)
         {
             await using var delete = new NpgsqlCommand(
-                "DELETE FROM link WHERE from_text_id = @from AND to_text_id = @to AND method = 'aligner'",
+                """
+                DELETE FROM link WHERE from_text_id = @from AND to_text_id = @to AND method = 'aligner';
+                DELETE FROM link_claim c
+                USING link l
+                WHERE c.link_id = l.id AND l.from_text_id = @from AND l.to_text_id = @to
+                  AND l.method <> 'aligner' AND c.method = 'aligner';
+                """,
                 connection);
             delete.Parameters.AddWithValue("from", fromTextId);
             delete.Parameters.AddWithValue("to", toTextId);
-            delete.CommandTimeout = 600;
             await delete.ExecuteNonQueryAsync(cancellationToken);
         }
-
-        var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
-        var renders = EnumSpelling.Of(LinkRelation.Renders);
-        var method = EnumSpelling.Of(LinkMethod.Aligner);
-        var fromSide = EnumSpelling.Of(LinkSide.From);
-        var toSide = EnumSpelling.Of(LinkSide.To);
 
         // The model reports how likely the word pairing is and how likely the position is. The
         // schema has one confidence, so the pairing is what it holds and the position rides along
         // in the source, where it stays readable rather than being averaged away.
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(Routes.Written(drafts[i].Translation), NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(
+        await LinkWriter.Write(
+            connection,
+            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            [
+                .. drafts.Select(draft => new NewLink(
+                    fromTextId,
+                    toTextId,
+                    LinkRelation.Renders,
+                    LinkMethod.Aligner,
+                    Routes.Written(draft.Translation),
                     $"SIL.Machine {modelType}, symmetrised och" +
                     (syntax ? ", rescored on ETCBC phrase and clause structure" : string.Empty) +
-                    (double.IsNaN(drafts[i].Position)
+                    (double.IsNaN(draft.Position)
                         ? ", the names of the verse paired by spelling and order"
-                        : $", position {drafts[i].Position:F4}") +
+                        : $", position {draft.Position:F4}") +
                     (note is null ? string.Empty : $"; {note}"),
-                    NpgsqlDbType.Text, cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                await Row(writer, firstId + i, drafts[i].SourceWordId, fromSide, cancellationToken);
-                await Row(writer, firstId + i, drafts[i].TargetWordId, toSide, cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        // The claim that says this loader is the one asserting these links. Written here rather
-        // than left to a backfill: a link with no claim is invisible to the agreement measure, and
-        // the measure spent a day reporting the migration instead of the corpus.
-        await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
+                    null,
+                    [draft.SourceWordId],
+                    [draft.TargetWordId])),
+            ],
+            cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);
-    }
-
-    private static async Task Row(
-        NpgsqlBinaryImporter writer,
-        long linkId,
-        long wordId,
-        string side,
-        CancellationToken cancellationToken)
-    {
-        await writer.StartRowAsync(cancellationToken);
-        await writer.WriteAsync(linkId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-    }
-
-    private static async Task<long> ReserveLinkIds(
-        NpgsqlConnection connection,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     private static async Task Machine(string[] arguments, CancellationToken cancellationToken)

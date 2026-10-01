@@ -733,13 +733,6 @@ internal static class Annotating
         + "ELSE 0 END";
 
     /// <summary>
-    /// Long enough for a pass over four and a half million words and their links, which is what the
-    /// carrying step is. A start-up pass that throws does not fail its own step — it fails every
-    /// step after it.
-    /// </summary>
-    public const int Patient = 1800;
-
-    /// <summary>
     /// The seed, sent as a binary copy rather than as thousands of parameterised inserts. Ten
     /// thousand round trips is a minute of start-up on a corpus that already takes long enough.
     /// </summary>
@@ -841,7 +834,6 @@ internal static class Annotating
             command.Parameters.AddWithValue(name, value ?? DBNull.Value);
         }
 
-        command.CommandTimeout = Patient;
         await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
@@ -862,7 +854,6 @@ internal static class Annotating
             connection,
             (NpgsqlTransaction)transaction.GetDbTransaction());
         command.Parameters.AddWithValue("source", source);
-        command.CommandTimeout = Patient;
 
         var counts = new List<(string, int)>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);

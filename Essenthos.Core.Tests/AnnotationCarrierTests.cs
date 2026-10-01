@@ -106,7 +106,7 @@ public sealed class AnnotationCarrierTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = method,
             Confidence = confidence,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.From });
@@ -276,7 +276,7 @@ public sealed class AnnotationCarrierTests : IDisposable
         var link = Link(Hebrew(2), Russian(3), LinkMethod.StrongNumber, 0.7);
         _db.LinkClaims.Add(new LinkClaim
         {
-            LinkId = link.Id, Method = LinkMethod.Aligner, Confidence = 0.97, Source = "an aligner",
+            LinkId = link.Id, Method = LinkMethod.Aligner, Confidence = 0.97, Provenance = new() { Source = "an aligner" },
         });
         await _db.SaveChangesAsync();
 
@@ -295,7 +295,7 @@ public sealed class AnnotationCarrierTests : IDisposable
         var link = new Link
         {
             FromTextId = _russian.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.StrongNumber, Confidence = 0.3, Source = "a test",
+            Method = LinkMethod.StrongNumber, Confidence = 0.3, Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = Russian(1), Side = LinkSide.From });
@@ -303,7 +303,7 @@ public sealed class AnnotationCarrierTests : IDisposable
         _db.LinkWords.Add(new LinkWord { Link = link, Word = Hebrew(2), Side = LinkSide.To });
         _db.LinkClaims.Add(new LinkClaim
         {
-            Link = link, Method = LinkMethod.Aligner, Confidence = 0.97, Source = "an aligner",
+            Link = link, Method = LinkMethod.Aligner, Confidence = 0.97, Provenance = new() { Source = "an aligner" },
         });
         await _db.SaveChangesAsync();
 

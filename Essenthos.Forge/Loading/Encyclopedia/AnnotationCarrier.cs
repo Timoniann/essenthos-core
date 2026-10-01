@@ -327,7 +327,6 @@ internal sealed class AnnotationCarrier(
         CancellationToken cancellationToken)
     {
         await using var command = new NpgsqlCommand(PerText, connection);
-        command.CommandTimeout = Annotating.Patient;
 
         var counts = new Dictionary<string, int>(StringComparer.Ordinal);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -374,7 +373,6 @@ internal sealed class AnnotationCarrier(
             command.Parameters.AddWithValue(name, value ?? DBNull.Value);
         }
 
-        command.CommandTimeout = Annotating.Patient;
         return command;
     }
 }

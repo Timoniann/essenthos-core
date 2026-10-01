@@ -91,7 +91,7 @@ public sealed class ObjectMarkerRematchTests : IDisposable
             ToTextId = _hebrew.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StrongNumber,
-            Source = $"{Credit}, matched within the verse against {_hebrew.Slug}",
+            Provenance = new() { Source = $"{Credit}, matched within the verse against {_hebrew.Slug}" },
             Confidence = confidence,
         };
         foreach (var position in russian)
@@ -108,7 +108,7 @@ public sealed class ObjectMarkerRematchTests : IDisposable
         _db.SaveChanges();
         _db.LinkClaims.Add(new LinkClaim
         {
-            LinkId = link.Id, Method = link.Method, Confidence = link.Confidence, Source = link.Source,
+            LinkId = link.Id, Method = link.Method, Confidence = link.Confidence, Provenance = link.Provenance,
         });
         _db.SaveChanges();
         return link;

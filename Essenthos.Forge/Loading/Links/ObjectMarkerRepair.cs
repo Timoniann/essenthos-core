@@ -42,7 +42,7 @@ internal sealed class ObjectMarkerRepair(
     {
         var pairs = await db.Links
             .Where(l => l.Method == LinkMethod.StrongNumber && l.ToText!.Language != Greek)
-            .Select(l => new { From = l.FromText!.Slug, To = l.ToText!.Slug, l.Source })
+            .Select(l => new { From = l.FromText!.Slug, To = l.ToText!.Slug, l.Provenance!.Source })
             .Distinct()
             .ToListAsync(cancellationToken);
 

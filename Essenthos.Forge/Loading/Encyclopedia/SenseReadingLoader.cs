@@ -368,7 +368,6 @@ internal sealed class SenseReadingLoader(
     {
         await using var command = new NpgsqlCommand(
             sql, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.CommandTimeout = Annotating.Patient;
         return (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 }

@@ -190,7 +190,9 @@ internal static class Recipe
             WHERE ((f.slug = @from AND t.slug = @to) OR (f.slug = @to AND t.slug = @from))
         """;
 
-    private const string BySource = "SELECT EXISTS (SELECT 1 FROM link l WHERE starts_with(l.source, @source)";
+    private const string BySource =
+        "SELECT EXISTS (SELECT 1 FROM link l WHERE l.provenance_id IN " +
+        "(SELECT id FROM provenance WHERE starts_with(source, @source))";
 
     private static async Task<bool> Exists(
         NpgsqlConnection connection, string query, string? from, string? to, string? source,
@@ -200,7 +202,6 @@ internal static class Recipe
         command.Parameters.AddWithValue("from", from ?? string.Empty);
         command.Parameters.AddWithValue("to", to ?? string.Empty);
         command.Parameters.AddWithValue("source", source ?? string.Empty);
-        command.CommandTimeout = 600;
         return await command.ExecuteScalarAsync(cancellationToken) is true;
     }
 

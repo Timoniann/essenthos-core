@@ -4,6 +4,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Strong;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -153,17 +154,6 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     private const int Superscription = 0;
 
     private const int FirstVerse = 1;
-
-    private const string LinkImport =
-        """
-        COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
-    private const string LinkWordImport =
-        """
-        COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)
-        """;
 
     /// <summary>
     /// The mapping file gives every Hebrew word a Strong number, which BHSA itself does not carry.
@@ -692,65 +682,24 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
-        var bySource = EnumSpelling.Of(LinkMethod.StatedBySource);
-        var lexical = EnumSpelling.Of(LinkMethod.Lexical);
-        var fromSide = EnumSpelling.Of(LinkSide.From);
-        var toSide = EnumSpelling.Of(LinkSide.To);
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(
-                    EnumSpelling.Of(drafts[i].Omitted ? LinkRelation.Omits : drafts[i].Relation),
-                    NpgsqlDbType.Text,
-                    cancellationToken);
-                await writer.WriteAsync(
-                    drafts[i].Confidence is null ? bySource : lexical, NpgsqlDbType.Text, cancellationToken);
-
-                if (drafts[i].Confidence is { } confidence)
-                {
-                    await writer.WriteAsync(confidence, NpgsqlDbType.Double, cancellationToken);
-                }
-                else
-                {
-                    await writer.WriteNullAsync(cancellationToken);
-                }
-
-                await writer.WriteAsync(Source, NpgsqlDbType.Text, cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                foreach (var wordId in drafts[i].English)
-                {
-                    await Row(writer, firstId + i, wordId, fromSide, cancellationToken);
-                }
-
-                foreach (var wordId in drafts[i].Hebrew.Distinct())
-                {
-                    await Row(writer, firstId + i, wordId, toSide, cancellationToken);
-                }
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
+        var written = await LinkWriter.Write(
+            connection,
+            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            [
+                .. drafts.Select(draft => new NewLink(
+                    fromTextId,
+                    toTextId,
+                    draft.Omitted ? LinkRelation.Omits : draft.Relation,
+                    draft.Confidence is null ? LinkMethod.StatedBySource : LinkMethod.Lexical,
+                    draft.Confidence,
+                    Source,
+                    null,
+                    draft.English,
+                    draft.Hebrew)),
+            ],
+            cancellationToken);
 
         await WriteStrongNumbers(connection, stated, cancellationToken);
-        // The claim that says this loader is the one asserting these links. Written here rather
-        // than left to a backfill: a link with no claim is invisible to the agreement measure, and
-        // the measure spent a day reporting the migration instead of the corpus.
-        await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
 
         // And the second claim, where a second source reached the same place. TAHOT says nothing
         // about the King James, so it cannot make one of these links stated -- what it says is what
@@ -761,7 +710,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         {
             if (drafts[i].Stated)
             {
-                corroborated.Add(firstId + i);
+                corroborated.Add(written.Ids[i]);
             }
         }
 
@@ -820,35 +769,6 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             "WHERE word.id = s.word_id AND word.strong_number IS NULL",
             connection);
         return await update.ExecuteNonQueryAsync(cancellationToken);
-    }
-
-    private static async Task Row(
-        NpgsqlBinaryImporter writer,
-        long linkId,
-        long wordId,
-        string side,
-        CancellationToken cancellationToken)
-    {
-        await writer.StartRowAsync(cancellationToken);
-        await writer.WriteAsync(linkId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-    }
-
-    /// <summary>
-    /// COPY cannot report the keys it generated, so a block of them is taken from the identity
-    /// sequence up front and the rows are written with the ids already known.
-    /// </summary>
-    private static async Task<long> ReserveLinkIds(
-        NpgsqlConnection connection,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     private sealed record Word(long Id, string Text, string? Gloss);

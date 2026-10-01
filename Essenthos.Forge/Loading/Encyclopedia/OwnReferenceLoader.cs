@@ -235,7 +235,6 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
         await using var command = new NpgsqlCommand(
             sql, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
         command.Parameters.AddWithValue("source", source);
-        command.CommandTimeout = Annotating.Patient;
         return await command.ExecuteNonQueryAsync(cancellationToken);
     }
 

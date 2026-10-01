@@ -53,6 +53,7 @@ public sealed class SeptuagintLinkLoadTests : IDisposable
         await _loader.Load(_swete.Slug, _brenton.Slug);
         return await _db.Links
             .Include(l => l.Words)
+            .Include(l => l.Provenance)
             .Where(l => l.FromTextId == _swete.Id && l.ToTextId == _brenton.Id)
             .ToListAsync();
     }
@@ -117,7 +118,7 @@ public sealed class SeptuagintLinkLoadTests : IDisposable
 
         links.Should().OnlyContain(l => l.Method == LinkMethod.Lexical);
         links.Should().OnlyContain(l => l.Confidence != null);
-        links.Should().OnlyContain(l => l.Source.StartsWith("the letters both Greek editions print"));
+        links.Should().OnlyContain(l => l.Provenance!.Source.StartsWith("the letters both Greek editions print"));
     }
 
     /// <summary>

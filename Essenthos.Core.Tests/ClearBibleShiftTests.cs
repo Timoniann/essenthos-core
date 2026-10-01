@@ -180,7 +180,7 @@ public sealed class ClearBibleMorphemeLoadTests : IDisposable
     }
 
     private async Task<List<(string Spanish, string Hebrew)>> Pairs() =>
-        (await _db.Links.Where(link => link.Source == Statement)
+        (await _db.Links.Where(link => link.Provenance!.Source == Statement)
             .Select(link => new
             {
                 Spanish = link.Words.Where(word => word.Side == LinkSide.From).Select(word => word.Word!.Surface).Single(),

@@ -184,7 +184,7 @@ public sealed class TribeNameTests : IDisposable
         var link = new Link
         {
             FromTextId = _russian.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.StrongNumber, Confidence = 0.9, Source = "a test",
+            Method = LinkMethod.StrongNumber, Confidence = 0.9, Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.From });

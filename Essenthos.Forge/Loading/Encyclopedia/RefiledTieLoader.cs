@@ -179,7 +179,6 @@ internal sealed class RefiledTieLoader(AppDbContext db, ILogger<RefiledTieLoader
             command.Parameters.AddWithValue(name, value);
         }
 
-        command.CommandTimeout = Annotating.Patient;
         return Math.Max(0, await command.ExecuteNonQueryAsync(cancellationToken));
     }
 }

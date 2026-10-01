@@ -71,17 +71,6 @@ internal sealed class CompositionPipeline(
     /// </summary>
     public const double AgreementFloor = 0.1;
 
-    private const string LinkImport =
-        """
-        COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
-    private const string LinkWordImport =
-        """
-        COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)
-        """;
-
     /// <param name="viaSlugs">
     /// The middle texts, one or two. A second is a second route that shares no evidence with the
     /// first, so the two agreeing is worth as much as either agreeing with the direct alignment.
@@ -396,7 +385,6 @@ internal sealed class CompositionPipeline(
         command.Parameters.AddWithValue("language", from.Language);
         command.Parameters.AddWithValue("from", from.Id);
         command.Parameters.AddWithValue("fewest", Admission.FewestToMeasure);
-        command.CommandTimeout = 600;
 
         var proxies = new List<(int, string)>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -541,7 +529,6 @@ internal sealed class CompositionPipeline(
         command.Parameters.AddWithValue("via", viaTextId);
         command.Parameters.AddWithValue("to", toTextId);
         command.Parameters.AddWithValue("aligned", aligned);
-        command.CommandTimeout = 600;
 
         var rows = new List<(long Bridge, long To, double Confidence)>(400_000);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -653,49 +640,19 @@ internal sealed class CompositionPipeline(
             withdraw.Parameters.AddWithValue("from", from.Id);
             withdraw.Parameters.AddWithValue("to", to.Id);
             withdraw.Parameters.AddWithValue("aligner", EnumSpelling.Of(LinkMethod.Aligner));
-            withdraw.CommandTimeout = 600;
             await withdraw.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        var firstId = await ReserveLinkIds(connection, fresh.Count, cancellationToken);
-        var method = EnumSpelling.Of(LinkMethod.Aligner);
-        var fromSide = EnumSpelling.Of(LinkSide.From);
-        var toSide = EnumSpelling.Of(LinkSide.To);
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-        {
-            for (var i = 0; i < fresh.Count; i++)
-            {
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                await writer.WriteAsync(from.Id, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(to.Id, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(Routes.Written(fresh[i].Confidence), NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(
-                    Routes.Describe(fresh[i].Route, viaSlugs) + (note is null ? string.Empty : $"; {note}"),
-                    NpgsqlDbType.Text, cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-        {
-            for (var i = 0; i < fresh.Count; i++)
-            {
-                await Row(writer, firstId + i, fresh[i].From, fromSide, cancellationToken);
-                await Row(writer, firstId + i, fresh[i].To, toSide, cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        // The claim that says this loader is the one asserting these links. Written here rather
-        // than left to a backfill: a link with no claim is invisible to the agreement measure, and
-        // the measure spent a day reporting the migration instead of the corpus.
-        await LinkClaims.Record(connection, transaction, firstId, fresh.Count, cancellationToken);
+        await LinkWriter.Write(
+            connection,
+            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            [
+                .. fresh.Select(link => new NewLink(
+                    from.Id, to.Id, LinkRelation.Renders, LinkMethod.Aligner, Routes.Written(link.Confidence),
+                    Routes.Describe(link.Route, viaSlugs) + (note is null ? string.Empty : $"; {note}"), null,
+                    [link.From], [link.To])),
+            ],
+            cancellationToken);
 
         await LinkClaims.Corroborate(
             connection, transaction, agreeing, LinkMethod.Aligner, Agreement, cancellationToken);
@@ -841,7 +798,6 @@ internal sealed class CompositionPipeline(
         command.Parameters.AddWithValue("from", fromTextId);
         command.Parameters.AddWithValue("to", toTextId);
         command.Parameters.AddWithValue("rules", rules);
-        command.CommandTimeout = 600;
 
         var statements = new Dictionary<long, HashSet<long>>(400_000);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -879,7 +835,6 @@ internal sealed class CompositionPipeline(
         command.Parameters.AddWithValue("from", fromTextId);
         command.Parameters.AddWithValue("to", toTextId);
         command.Parameters.AddWithValue("omits", EnumSpelling.Of(LinkRelation.Omits));
-        command.CommandTimeout = 600;
 
         var words = new HashSet<long>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -973,7 +928,6 @@ internal sealed class CompositionPipeline(
         await using var command = new NpgsqlCommand(
             "SELECT id, verse_id, trailer FROM word WHERE text_id = @text ORDER BY verse_id, position", connection);
         command.Parameters.AddWithValue("text", textId);
-        command.CommandTimeout = 600;
 
         var words = new List<(long, int, string)>(500_000);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -983,31 +937,6 @@ internal sealed class CompositionPipeline(
         }
 
         return words;
-    }
-
-    private static async Task Row(
-        NpgsqlBinaryImporter writer,
-        long linkId,
-        long wordId,
-        string side,
-        CancellationToken cancellationToken)
-    {
-        await writer.StartRowAsync(cancellationToken);
-        await writer.WriteAsync(linkId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-    }
-
-    private static async Task<long> ReserveLinkIds(
-        NpgsqlConnection connection,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     private async Task<Database.Entities.Text> Text(string slug, CancellationToken cancellationToken) =>

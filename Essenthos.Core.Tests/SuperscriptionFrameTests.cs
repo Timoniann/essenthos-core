@@ -257,7 +257,7 @@ public sealed class SuperscriptionFrameTests : IDisposable
             ToTextId = to.TextId,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Manual,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.SaveChanges();
@@ -267,7 +267,7 @@ public sealed class SuperscriptionFrameTests : IDisposable
             LinkId = link.Id,
             Method = link.Method,
             Confidence = link.Confidence,
-            Source = link.Source,
+            Provenance = link.Provenance,
         });
         _db.LinkWords.Add(new LinkWord { LinkId = link.Id, WordId = from.Id, Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { LinkId = link.Id, WordId = to.Id, Side = LinkSide.To });

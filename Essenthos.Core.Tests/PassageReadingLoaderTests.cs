@@ -56,7 +56,7 @@ public sealed class PassageReadingLoaderTests : IDisposable
         var link = new Link
         {
             FromTextId = _english.Id, ToTextId = _greek.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.StatedBySource, Source = "a test",
+            Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(_english, 4, 1, 3), Side = LinkSide.From });

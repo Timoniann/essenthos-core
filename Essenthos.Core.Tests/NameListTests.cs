@@ -276,14 +276,14 @@ public sealed class NameListPassTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Aligner,
             Confidence = 0.98,
-            Source = "SIL.Machine, aligned as written",
+            Provenance = new() { Source = "SIL.Machine, aligned as written" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(_greek, 46, 16, greek), Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(_hebrew, 46, 16, hebrew), Side = LinkSide.To });
         _db.LinkClaims.Add(new LinkClaim
         {
-            Link = link, Method = LinkMethod.Aligner, Confidence = 0.98, Source = link.Source,
+            Link = link, Method = LinkMethod.Aligner, Confidence = 0.98, Provenance = link.Provenance,
         });
         _db.SaveChanges();
         return link;

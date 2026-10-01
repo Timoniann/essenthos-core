@@ -237,7 +237,6 @@ internal sealed class CrossReferenceLoader(AppDbContext db, ILogger<CrossReferen
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
         await using var command = new NpgsqlCommand(Lemmas, connection);
         command.Parameters.AddWithValue("slug", slug);
-        command.CommandTimeout = (int)TimeSpan.FromMinutes(5).TotalSeconds;
 
         var tokens = new List<LemmaToken>(450_000);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);

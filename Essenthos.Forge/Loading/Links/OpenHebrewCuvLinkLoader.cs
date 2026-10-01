@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Diagnostics;
 using System.Globalization;
 using System.Text;
@@ -85,11 +86,6 @@ internal sealed class OpenHebrewCuvLinkLoader(
 
     private const string Note = "the Open Hebrew Bible's mapping names the same words";
 
-    private const string LinkImport =
-        "COPY link (id, from_text_id, to_text_id, relation, method, confidence, source) FROM STDIN (FORMAT BINARY)";
-
-    private const string LinkWordImport = "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
-
     /// <param name="Words">Indexes into the verse's words, in order.</param>
     /// <param name="Positions">The running numbers the spans name.</param>
     internal sealed record Placement(IReadOnlyList<int> Words, IReadOnlyList<int> Positions);
@@ -131,7 +127,7 @@ internal sealed class OpenHebrewCuvLinkLoader(
             {
                 var removed = await db.Links
                     .Where(l => l.FromTextId == text.Id && l.ToTextId == bhsa.Id
-                                && l.Source != null && l.Source.StartsWith(UnionStrongLinkLoader.Credit))
+                                && l.Provenance!.Source.StartsWith(UnionStrongLinkLoader.Credit))
                     .ExecuteDeleteAsync(cancellationToken);
                 logger.LogInformation("{Slug}: {Removed} links of FHL's numbers removed, to be matched again after", slug, removed);
             }
@@ -291,10 +287,10 @@ internal sealed class OpenHebrewCuvLinkLoader(
     {
         var clock = Stopwatch.StartNew();
         if (await db.Links.AnyAsync(
-                l => l.FromTextId == text.Id && l.ToTextId == bhsaId && l.Source != null && l.Source.StartsWith(Credit),
+                l => l.FromTextId == text.Id && l.ToTextId == bhsaId && l.Provenance!.Source.StartsWith(Credit),
                 cancellationToken)
             || await db.LinkClaims.AnyAsync(
-                c => c.Source.StartsWith(Credit) && c.Link!.FromTextId == text.Id && c.Link.ToTextId == bhsaId,
+                c => c.Provenance!.Source.StartsWith(Credit) && c.Link!.FromTextId == text.Id && c.Link.ToTextId == bhsaId,
                 cancellationToken))
         {
             return new OpenHebrewCuvOutcome(text.Slug, true, 0, 0, 0, 0, 0, 0, 0, 0, 0, clock.Elapsed);
@@ -401,59 +397,15 @@ internal sealed class OpenHebrewCuvLinkLoader(
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        if (drafts.Count > 0)
-        {
-            long firstId;
-            await using (var reserve = new NpgsqlCommand(
-                             "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-                             "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection))
-            {
-                reserve.Parameters.AddWithValue("count", drafts.Count);
-                firstId = (long)(await reserve.ExecuteScalarAsync(cancellationToken))!;
-            }
-
-            var renders = EnumSpelling.Of(LinkRelation.Renders);
-            var stated = EnumSpelling.Of(LinkMethod.StatedBySource);
-            await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-            {
-                for (var i = 0; i < drafts.Count; i++)
-                {
-                    await writer.StartRowAsync(cancellationToken);
-                    await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                    await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
-                    await writer.WriteAsync(stated, NpgsqlDbType.Text, cancellationToken);
-                    await writer.WriteNullAsync(cancellationToken);
-                    await writer.WriteAsync(Credit, NpgsqlDbType.Text, cancellationToken);
-                }
-
-                await writer.CompleteAsync(cancellationToken);
-            }
-
-            var from = EnumSpelling.Of(LinkSide.From);
-            var to = EnumSpelling.Of(LinkSide.To);
-            await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-            {
-                for (var i = 0; i < drafts.Count; i++)
-                {
-                    foreach (var (words, side) in new[] { (drafts[i].Chinese, from), (drafts[i].Hebrew, to) })
-                    {
-                        foreach (var word in words)
-                        {
-                            await writer.StartRowAsync(cancellationToken);
-                            await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                            await writer.WriteAsync(word, NpgsqlDbType.Bigint, cancellationToken);
-                            await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-                        }
-                    }
-                }
-
-                await writer.CompleteAsync(cancellationToken);
-            }
-
-            await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
-        }
+        await LinkWriter.Write(
+            connection,
+            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            [
+                .. drafts.Select(draft => new NewLink(
+                    fromTextId, toTextId, LinkRelation.Renders, LinkMethod.StatedBySource, null, Credit, null,
+                    draft.Chinese, draft.Hebrew)),
+            ],
+            cancellationToken);
 
         await LinkClaims.Corroborate(
             connection, transaction, corroborated.Distinct().ToList(), LinkMethod.StatedBySource, null, Credit, Note,

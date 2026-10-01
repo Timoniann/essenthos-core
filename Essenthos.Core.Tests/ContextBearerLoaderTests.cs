@@ -198,7 +198,7 @@ public sealed class ContextBearerLoaderTests : IDisposable
         var link = new Link
         {
             FromTextId = _english.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.StrongNumber, Confidence = 0.9, Source = "a test",
+            Method = LinkMethod.StrongNumber, Confidence = 0.9, Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.From });

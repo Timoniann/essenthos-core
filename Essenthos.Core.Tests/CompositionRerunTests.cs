@@ -55,7 +55,7 @@ public sealed class CompositionRerunTests : IDisposable
 
         var link = (await Links()).Single(one => one.Id == stated.Id);
         link.Method.Should().Be(LinkMethod.StatedBySource);
-        link.Claims.Should().ContainSingle().Which.Source.Should().Be(Door43);
+        link.Claims.Should().ContainSingle().Which.Provenance!.Source.Should().Be(Door43);
     }
 
     [Fact]
@@ -71,7 +71,7 @@ public sealed class CompositionRerunTests : IDisposable
         var aligner = (await Links()).Single(one => one.Id == stated.Id).Claims
             .Should().ContainSingle(claim => claim.Method == LinkMethod.Aligner).Which;
         aligner.Confidence.Should().Be(0.95);
-        aligner.Source.Should().Be(Routes.Describe(Route.Written | Route.Composed, "KJV"));
+        aligner.Provenance!.Source.Should().Be(Routes.Describe(Route.Written | Route.Composed, "KJV"));
     }
 
     [Fact]
@@ -143,26 +143,26 @@ public sealed class CompositionRerunTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = method,
             Confidence = confidence,
-            Source = source,
+            Provenance = new() { Source = source },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = Ukrainian(ukrainian), Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = Greek(greek), Side = LinkSide.To });
-        _db.LinkClaims.Add(new LinkClaim { Link = link, Method = method, Confidence = confidence, Source = source });
+        _db.LinkClaims.Add(new LinkClaim { Link = link, Method = method, Confidence = confidence, Provenance = new() { Source = source }});
         _db.SaveChanges();
         return link;
     }
 
     private void Claim(Link link, LinkMethod method, double? confidence, string source)
     {
-        _db.LinkClaims.Add(new LinkClaim { LinkId = link.Id, Method = method, Confidence = confidence, Source = source });
+        _db.LinkClaims.Add(new LinkClaim { LinkId = link.Id, Method = method, Confidence = confidence, Provenance = new() { Source = source }});
         _db.SaveChanges();
     }
 
     private async Task<List<Link>> Links() =>
         await _db.Links
             .AsNoTracking()
-            .Include(link => link.Claims)
+            .Include(link => link.Provenance).Include(link => link.Claims).ThenInclude(claim => claim.Provenance)
             .Include(link => link.Words)
             .Where(link => link.FromTextId == _ukrainian.Id)
             .OrderBy(link => link.Id)

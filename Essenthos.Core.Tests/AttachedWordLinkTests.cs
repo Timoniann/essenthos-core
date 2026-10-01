@@ -304,9 +304,9 @@ public sealed class AttachedWordLinkTests : IDisposable
             ToTextId = _greek.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test table",
+            Provenance = new() { Source = "a test table" },
             Words = [new LinkWord { WordId = source, Side = LinkSide.From }, new LinkWord { WordId = target, Side = LinkSide.To }],
-            Claims = [new LinkClaim { Method = LinkMethod.StatedBySource, Source = "a test table" }],
+            Claims = [new LinkClaim { Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test table" }}],
         });
         _db.SaveChanges();
         _db.ChangeTracker.Clear();

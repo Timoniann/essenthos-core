@@ -602,7 +602,7 @@ public sealed class DuplicateRecordTests : IDisposable
         var link = new Link
         {
             FromTextId = _hebrew.Id, ToTextId = english.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.StatedBySource, Source = "a test",
+            Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = hebrew, Side = LinkSide.From });

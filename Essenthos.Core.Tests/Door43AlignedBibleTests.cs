@@ -80,13 +80,13 @@ public sealed class Door43SecondStatementTests : IDisposable
             ToTextId = greek.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = Clear,
+            Provenance = new() { Source = Clear },
             Words =
             [
                 new Database.Entities.LinkWord { WordId = _db.WordAt(bengali, 1, 1, 1).Id, Side = LinkSide.From },
                 new Database.Entities.LinkWord { WordId = _db.WordAt(greek, 1, 1, 1).Id, Side = LinkSide.To },
             ],
-            Claims = [new Database.Entities.LinkClaim { Method = LinkMethod.StatedBySource, Source = Clear }],
+            Claims = [new Database.Entities.LinkClaim { Method = LinkMethod.StatedBySource, Provenance = new() { Source = Clear }}],
         });
         _db.SaveChanges();
 
@@ -116,11 +116,11 @@ public sealed class Door43SecondStatementTests : IDisposable
         var outcome = await loader.Load(_folder, Door43TextSource.IrvBengali, Door43);
 
         outcome.Written.Should().Be(new InterlinearReconciliation(0, 1, 1, 0, 0, 0, 0));
-        var links = await _db.Links.Include(link => link.Claims).ToListAsync();
+        var links = await _db.Links.Include(link => link.Provenance).Include(link => link.Claims).ThenInclude(claim => claim.Provenance).ToListAsync();
         links.Should().HaveCount(2);
-        links.Should().ContainSingle(link => link.Source == Clear)
-            .Which.Claims.Select(claim => claim.Source).Should().BeEquivalentTo([Clear, Door43]);
-        links.Should().ContainSingle(link => link.Source == Door43);
+        links.Should().ContainSingle(link => link.Provenance!.Source == Clear)
+            .Which.Claims.Select(claim => claim.Provenance!.Source).Should().BeEquivalentTo([Clear, Door43]);
+        links.Should().ContainSingle(link => link.Provenance!.Source == Door43);
 
         (await loader.Load(_folder, Door43TextSource.IrvBengali, Door43)).Written.Should().BeNull();
     }

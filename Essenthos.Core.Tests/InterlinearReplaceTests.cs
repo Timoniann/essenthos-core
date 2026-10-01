@@ -54,7 +54,7 @@ public sealed class InterlinearReplaceTests : IDisposable
         var stated = (await Links()).Should().ContainSingle().Which;
         stated.Method.Should().Be(LinkMethod.StatedBySource);
         Words(stated).Should().Equal(Ukrainian(1).Id, Greek(3).Id);
-        stated.Claims.Should().ContainSingle(claim => claim.Source == Door43);
+        stated.Claims.Should().ContainSingle(claim => claim.Provenance!.Source == Door43);
     }
 
     [Fact]
@@ -84,7 +84,7 @@ public sealed class InterlinearReplaceTests : IDisposable
         var guess = (await Links()).Should().ContainSingle(link => link.Id == folded.Id).Which;
         guess.Method.Should().Be(LinkMethod.Aligner);
         guess.Confidence.Should().Be(0.8);
-        guess.Source.Should().Be("an aligner");
+        guess.Provenance!.Source.Should().Be("an aligner");
         guess.Claims.Should().ContainSingle().Which.Method.Should().Be(LinkMethod.Aligner);
     }
 
@@ -100,7 +100,7 @@ public sealed class InterlinearReplaceTests : IDisposable
         link.Id.Should().Be(guess.Id);
         link.Method.Should().Be(LinkMethod.StatedBySource);
         link.Confidence.Should().BeNull();
-        link.Source.Should().Be(Door43);
+        link.Provenance!.Source.Should().Be(Door43);
         link.Claims.Should().Contain(claim => claim.Method == LinkMethod.Aligner && claim.Confidence == 0.6);
     }
 
@@ -125,7 +125,7 @@ public sealed class InterlinearReplaceTests : IDisposable
 
         await Reconcile((1, 1));
 
-        (await Links()).Should().Contain(link => link.Id == other.Id && link.Source == "another interlinear");
+        (await Links()).Should().Contain(link => link.Id == other.Id && link.Provenance!.Source == "another interlinear");
     }
 
     [Fact]
@@ -164,26 +164,26 @@ public sealed class InterlinearReplaceTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = method,
             Confidence = confidence,
-            Source = source,
+            Provenance = new() { Source = source },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = Ukrainian(ukrainian), Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = Greek(greek), Side = LinkSide.To });
-        _db.LinkClaims.Add(new LinkClaim { Link = link, Method = method, Confidence = confidence, Source = source });
+        _db.LinkClaims.Add(new LinkClaim { Link = link, Method = method, Confidence = confidence, Provenance = new() { Source = source }});
         _db.SaveChanges();
         return link;
     }
 
     private void Claim(Link link, LinkMethod method, double confidence, string source)
     {
-        _db.LinkClaims.Add(new LinkClaim { LinkId = link.Id, Method = method, Confidence = confidence, Source = source });
+        _db.LinkClaims.Add(new LinkClaim { LinkId = link.Id, Method = method, Confidence = confidence, Provenance = new() { Source = source }});
         _db.SaveChanges();
     }
 
     private async Task<List<Link>> Links() =>
         await _db.Links
             .AsNoTracking()
-            .Include(link => link.Claims)
+            .Include(link => link.Provenance).Include(link => link.Claims).ThenInclude(claim => claim.Provenance)
             .Include(link => link.Words)
             .Where(link => link.FromTextId == _ukrainian.Id)
             .OrderBy(link => link.Id)

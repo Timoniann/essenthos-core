@@ -420,7 +420,6 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
             command.Parameters.AddWithValue("source", WordSource);
             command.Parameters.AddWithValue("method", Method);
             command.Parameters.AddWithValue("carried", Annotating.CarriedNote);
-            command.CommandTimeout = Annotating.Patient;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
@@ -469,7 +468,6 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         command.Parameters.AddWithValue("singularNoun", SingularNoun);
         command.Parameters.AddWithValue("alongside", rule.Beside);
         command.Parameters.AddWithValue("source", WordSource);
-        command.CommandTimeout = Annotating.Patient;
 
         var words = new List<(long, string)>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);

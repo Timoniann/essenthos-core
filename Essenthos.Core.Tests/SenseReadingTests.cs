@@ -412,7 +412,7 @@ public sealed class SenseReadingTests : IDisposable
             ToTextId = supplied.TextId,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = Hebrew(2), Side = LinkSide.From });
@@ -445,7 +445,7 @@ public sealed class SenseReadingTests : IDisposable
             ToTextId = name.TextId,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = Hebrew(3), Side = LinkSide.From });
@@ -561,7 +561,7 @@ public sealed class SenseReadingTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = method,
             Confidence = confidence,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = from, Side = LinkSide.From });

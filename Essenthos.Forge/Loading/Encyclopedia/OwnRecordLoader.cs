@@ -729,7 +729,6 @@ internal sealed class OwnRecordLoader(
             + "AND morphology->>'nameType' IN ('pers', 'topo')",
             connection);
         command.Parameters.AddWithValue("ids", readings.Select(r => r.WordId).ToArray());
-        command.CommandTimeout = Annotating.Patient;
 
         var kinds = new Dictionary<long, EntityKind>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
