@@ -64,6 +64,11 @@
     "files": 103,
     "sha256": "1fc235c38d7d66d11c0350b00df46dd9bafc7430d0892969e5d0e4d5d8f90fff"
   },
+  "DarbyFrench": {
+    "bytes": 3431375,
+    "files": 7,
+    "sha256": "3dd88801e7eff68805014270c11748cfdc444423c9254c3af85e55751e3f5d4b"
+  },
   "Dillmann": {
     "bytes": 76301127,
     "files": 13729,
@@ -184,6 +189,11 @@
     "files": 67,
     "sha256": "96ff91f4969ed7149e5301a97d6ca0d4c17c3f3824fa256804a1108c01d9792e"
   },
+  "RevisedLiteral": {
+    "bytes": 4299220,
+    "files": 7,
+    "sha256": "ce666d8c7b89f00fd0c5fbe2209373c852ab6db4fe8ade7602ba198432c9cfe0"
+  },
   "STEPBible": {
     "bytes": 70208423,
     "files": 4,
@@ -199,10 +209,20 @@
     "files": 41,
     "sha256": "b1dbf43a2217910bf8eb582baabafd542b812f5cf4effb77dc3e3fe80695c223"
   },
+  "Schlachter1951": {
+    "bytes": 2826158,
+    "files": 7,
+    "sha256": "98bc8b32791fbef1a117729515315df0778b8578e00db05836afd241d050d95d"
+  },
   "Segond1910": {
     "bytes": 20489348,
     "files": 67,
     "sha256": "06f680c49493e8c4137fa27c9b558f84647338f647d865f10708ecece0acaff5"
+  },
+  "Segond1910Strong": {
+    "bytes": 3129602,
+    "files": 7,
+    "sha256": "5e26d19541098089aef77125db21311603d9b9394428bfd21a4283e5ae088f30"
   },
   "SenseReadings": {
     "bytes": 3342878,

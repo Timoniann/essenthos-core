@@ -123,6 +123,7 @@ builder.Services.AddScoped<ClearBibleLinkLoader>();
 builder.Services.AddScoped<TaggedTextLinkLoader>();
 builder.Services.AddScoped<SynodalStrongLinkLoader>();
 builder.Services.AddScoped<UnionStrongLinkLoader>();
+builder.Services.AddScoped<CrossWireStrongLinkLoader>();
 builder.Services.AddScoped<ObjectMarkerRepair>();
 builder.Services.AddScoped<VerseLinkLoader>();
 builder.Services.AddScoped<BibleDataLoader>();
@@ -826,6 +827,23 @@ if (args is ["union-strong", ..])
     return 0;
 }
 
+// The Strong numbers on the other CrossWire modules, read and never stored as FHL's are: the
+// Segond's laid onto the Segond loaded from eBible, and Darby's French, the Schlachter and the
+// Revised Literal Translation onto the texts loaded from their own modules. The modules to run may
+// follow the verb; with none named, every numbering runs against the witnesses it is declared with.
+if (args is ["crosswire-strong", ..])
+{
+    using var crosswireScope = app.Services.CreateScope();
+    await crosswireScope.ServiceProvider.GetRequiredService<CrossWireStrongLinkLoader>()
+        .Load(resources, CrossWireStrongLinkLoader.Named(args[1..]));
+
+    logger.LogInformation(
+        "{Outcome}", await crosswireScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+    await crosswireScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+    Recipe.Record(resources, args, DateTimeOffset.UtcNow);
+    return 0;
+}
+
 // The numbered links to the Hebrew matched again where the object marker made them, for a corpus
 // whose numberings were laid before a bare marker stopped being a target (ObjectMarker). Every
 // numbering is read as its own load reads it. Reports and writes nothing without --apply; the texts
@@ -1430,6 +1448,6 @@ if (args is ["align", var alignFrom, var alignTo, ..])
 
 logger.LogError(
     "Nothing is known to do with \"{Verb}\". The verbs are load, recipe, reload, correct, marks, verify, release, publish, rollback, releases, align, names, possessives, unshare, score, score-anchors, syntax, "
-    + "compose, strong, synodal-strong, union-strong, object-marker, carry, clearbible, redraw, interlinear-join, locate, spell, images, dillmann, cross-references and the evidentia family",
+    + "compose, strong, synodal-strong, union-strong, crosswire-strong, object-marker, carry, clearbible, redraw, interlinear-join, locate, spell, images, dillmann, cross-references and the evidentia family",
     args[0]);
 return 1;

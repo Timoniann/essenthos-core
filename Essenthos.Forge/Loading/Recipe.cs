@@ -7,7 +7,7 @@ using Npgsql;
 
 namespace Essenthos.Core.Loading;
 
-/// <param name="Verb">The Forge verb, as typed: align, compose, names, strong, synodal-strong, union-strong, interlinear-join, correct, reload.</param>
+/// <param name="Verb">The Forge verb, as typed: align, compose, names, strong, synodal-strong, union-strong, crosswire-strong, interlinear-join, correct, reload.</param>
 /// <param name="Arguments">What followed the verb, flags included.</param>
 /// <param name="At">When it last ran, or null for a step written down from what the corpus held rather than recorded as it ran.</param>
 /// <param name="Note">Why the step is there, for a step somebody wrote by hand.</param>
@@ -55,7 +55,7 @@ internal static class Recipe
         + "here when it finishes; the load replays them after its own linking steps, skipping what the corpus already holds.";
 
     private static readonly HashSet<string> Recorded =
-        ["align", "compose", "names", "possessives", "unshare", "strong", "synodal-strong", "union-strong", "interlinear-join", "correct", "reload"];
+        ["align", "compose", "names", "possessives", "unshare", "strong", "synodal-strong", "union-strong", "crosswire-strong", "interlinear-join", "correct", "reload"];
 
     private static readonly JsonSerializerOptions Json = new()
     {
@@ -158,6 +158,17 @@ internal static class Recipe
                 return await Exists(connection, BySource, null, null, UnionStrongLinkLoader.Credit, cancellationToken)
                     ? "the Union Version's Strong numbering is already linked"
                     : null;
+
+            case "crosswire-strong":
+                foreach (var numbering in CrossWireStrongLinkLoader.Named(step.Arguments))
+                {
+                    if (!await Exists(connection, BySource, null, null, numbering.Credit, cancellationToken))
+                    {
+                        return null;
+                    }
+                }
+
+                return "CrossWire's Strong numberings are already linked";
 
             // strong, interlinear-join and correct each check for themselves.
             default:

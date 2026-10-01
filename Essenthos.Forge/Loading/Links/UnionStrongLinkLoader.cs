@@ -63,7 +63,17 @@ internal sealed class UnionStrongLinkLoader(
 
     /// <summary>FHL's numbers laid onto one Chinese text's words, for the length of the caller's run.</summary>
     /// <param name="module">The text's module root.</param>
-    public async Task<EditionNumbers> Numbers(string slug, string module, CancellationToken cancellationToken = default)
+    public Task<EditionNumbers> Numbers(string slug, string module, CancellationToken cancellationToken = default) =>
+        Numbers(slug, module, Credit, cancellationToken);
+
+    /// <summary>
+    /// A SWORD module's numbers laid onto the words of the corpus text named, for the length of the
+    /// caller's run, credited as <paramref name="credit"/>. The text need not have been loaded from
+    /// the module: the words are laid together verse by verse, and a verse that does not agree is refused.
+    /// </summary>
+    /// <param name="module">The module root the numbers are read from.</param>
+    public async Task<EditionNumbers> Numbers(
+        string slug, string module, string credit, CancellationToken cancellationToken = default)
     {
         var text = await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken)
                    ?? throw new InvalidOperationException(
@@ -73,10 +83,11 @@ internal sealed class UnionStrongLinkLoader(
         var laid = SynodalStrongLayer.Lay(
             SwordTextSource.Numbers(module), await Verses(text.Id, cancellationToken));
         logger.LogInformation(
-            "{Slug}: FHL's numbers laid onto {Verses} verses, {Refused} refused because the loaded words differ "
-            + "from the module's, {Words} words given a number",
-            slug, laid.Verses, laid.Refused, laid.TaggedWords);
-        return new EditionNumbers(laid.Tags, Credit);
+            "{Slug}: the module's numbers laid onto {Verses} verses, {Joined} of them with a neighbour, {Refused} "
+            + "refused because the loaded words differ from the module's, {Unused} module verses no verse took, "
+            + "{Words} words given a number",
+            slug, laid.Verses, laid.Joined, laid.Refused, laid.Unused, laid.TaggedWords);
+        return new EditionNumbers(laid.Tags, credit);
     }
 
     private async Task<List<CorpusVerse>> Verses(int textId, CancellationToken cancellationToken)

@@ -43,7 +43,11 @@ internal static class UnionStrongNumbers
     };
 
     /// <summary>The lexemes a <c>lemma</c> attribute names, in the order written, each once.</summary>
-    public static IReadOnlyList<string> Read(string? lemma)
+    /// <param name="fhlPrefixes">
+    /// Whether numbers above the Hebrew dictionary are FHL's prefixes. In any other module they name
+    /// no lexeme the corpus's Hebrew writes, and are read as nothing.
+    /// </param>
+    public static IReadOnlyList<string> Read(string? lemma, bool fhlPrefixes = true)
     {
         if (string.IsNullOrWhiteSpace(lemma))
         {
@@ -63,7 +67,8 @@ internal static class UnionStrongNumbers
             var read = number[0] switch
             {
                 StrongNumbers.Hebrew when value <= LastHebrew => number,
-                StrongNumbers.Hebrew => Prefixes.GetValueOrDefault(value),
+                StrongNumbers.Hebrew when fhlPrefixes => Prefixes.GetValueOrDefault(value),
+                StrongNumbers.Hebrew => null,
                 _ => value <= LastGreek ? number : null,
             };
 

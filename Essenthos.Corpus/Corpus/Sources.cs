@@ -75,6 +75,25 @@ internal static class Sources
         "the Faith Hope Love foundation's Strong numbering of the Chinese Union Version, read from CrossWire's ChiUn and ChiUns";
 
     /// <summary>
+    /// What every link drawn from the Strong numbers on Louis Segond 1910 begins with. The numbers are
+    /// read from a module whose words are another copy of the Segond the corpus loads from eBible.
+    /// </summary>
+    public const string SegondStrongCredit =
+        "the Strong numbering of Louis Segond 1910 by Concordances et Traductions de la Bible, read from CrossWire's FreSegond1910";
+
+    /// <summary>What every link drawn from the Strong numbers on Darby's French Bible begins with.</summary>
+    public const string DarbyFrenchStrongCredit =
+        "the Strong numbering of the Darby French Bible by Concordances et Traductions de la Bible, read from CrossWire's FreJND";
+
+    /// <summary>What every link drawn from the Strong numbers on the Schlachter Bible of 1951 begins with.</summary>
+    public const string SchlachterStrongCredit =
+        "the Strong numbering of the Schlachter Bible 1951, read from CrossWire's GerSch";
+
+    /// <summary>What every link drawn from the Strong numbers on the Revised Literal Translation begins with.</summary>
+    public const string RevisedLiteralStrongCredit =
+        "the King James Strong numbering of the Revised Literal Translation (Bible Foundation and KJV2003), read from CrossWire's RLT";
+
+    /// <summary>
     /// How a translated lexicon row begins. The English of the lexicon is public domain and the
     /// rendering into a reader's language is this project's, so the row names the model, the prompt
     /// version and the day, and the English stays beside it.
