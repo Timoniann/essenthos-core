@@ -42,13 +42,20 @@ internal sealed class DatasetLoader(
     /// placed, folded and joined verse by verse again. Its word links go with it and have to be
     /// aligned again.
     /// </summary>
-    private static readonly Dictionary<string, Func<string, TextSource>> Reloadable = new()
+    private static readonly Dictionary<string, Func<string, TextSource>> Reloadable = new Dictionary<string, Func<string, TextSource>>
     {
         [GeezTextSource.Slug] = resources => GeezTextSource.Read(Path.Combine(resources, GeezTextSource.Folder)),
         [SweteTextSource.Slug] = resources => SweteTextSource.Read(Path.Combine(resources, "Swete")),
         [SweteOldGreekTextSource.Slug] = resources => SweteOldGreekTextSource.Read(Path.Combine(resources, "Swete")),
         [AlexandrinusTextSource.Slug] = AlexandrinusTextSource.Read,
-    };
+    }.Concat(SwordTexts.ToDictionary(
+            text => text.Key,
+            text => (Func<string, TextSource>)(resources => SwordTextSource.Read(Path.Combine(resources, text.Value)))))
+        .ToDictionary();
+
+    /// <summary>The texts read from CrossWire's modules, by slug, each with its module's folder.</summary>
+    private static Dictionary<string, string> SwordTexts =>
+        SwordTextSource.Texts.Values.ToDictionary(text => text.Definition.Slug, text => text.Folder);
 
     public async Task Reload(string slug, CancellationToken cancellationToken)
     {
@@ -78,6 +85,18 @@ internal sealed class DatasetLoader(
             var text = await db.Texts.SingleAsync(t => t.Slug == slug, cancellationToken);
             status.Record(await scope.ServiceProvider.GetRequiredService<CanonicalFrameLoader>()
                 .Place(text, rules, cancellationToken));
+        }
+
+        // A module's psalm titles are marked as titles, which the full load reads at its own step.
+        if (SwordTexts.ContainsKey(slug))
+        {
+            using var scope = services.CreateScope();
+            var outcome = await scope.ServiceProvider.GetRequiredService<SuperscriptionFrameLoader>()
+                .Load(read(resources), cancellationToken);
+            if (outcome.Verses > 0)
+            {
+                status.Record(outcome.ToString());
+            }
         }
 
         await GiveEveryWordASearchableForm(cancellationToken);

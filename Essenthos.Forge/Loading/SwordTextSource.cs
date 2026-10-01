@@ -34,7 +34,15 @@ internal sealed record SwordText(
     string Folder,
     SwordSegmentation Segmentation,
     TextDefinition Definition,
-    IReadOnlyList<((int Book, int Chapter, int Verse) Stored, (int Book, int Chapter, int Verse) English)>? Renumbered = null);
+    IReadOnlyList<((int Book, int Chapter, int Verse) Stored, (int Book, int Chapter, int Verse) English)>? Renumbered = null)
+{
+    /// <summary>
+    /// Whether the module writes the Faith Hope Love foundation's own numbers for the Hebrew
+    /// prefixes, which are read as the corpus's (<see cref="UnionStrongNumbers"/>). Every other
+    /// module numbers only what Strong's dictionaries hold.
+    /// </summary>
+    public bool FhlPrefixes { get; init; }
+}
 
 /// <param name="Numbers">
 /// The Strong numbers the edition writes on the element the word came from, in the corpus's series;
@@ -95,6 +103,15 @@ internal static class SwordTextSource
     /// <summary>개역한글, the Korean Revised Version of 1961.</summary>
     public const string KoreanRevised = "KRV";
 
+    /// <summary>J. N. Darby's French Bible, in the 2024 revision of Bibles et Publications Chrétiennes.</summary>
+    public const string DarbyFrench = "JND2024";
+
+    /// <summary>Franz Eugen Schlachter's German Bible in the Geneva Bible Society's revision of 1951.</summary>
+    public const string Schlachter = "SCH1951";
+
+    /// <summary>Michael W. Jones's Revised Literal Translation of the King James.</summary>
+    public const string RevisedLiteral = "RLT2018";
+
     /// <summary>ISO 15924 for the two ways Chinese is printed.</summary>
     public const string TraditionalChinese = "Hant";
 
@@ -117,11 +134,17 @@ internal static class SwordTextSource
     private static readonly Dictionary<string, SwordText> Known = new(StringComparer.OrdinalIgnoreCase)
     {
         ["ChiUn"] = new(Path.Combine("ChineseUnion1919", "ChiUn"), SwordSegmentation.Tagged, ChineseUnionDefinition(
-            ChineseUnion, "和合本", "ChiUn", TraditionalChinese, "traditional characters, as the 1919 edition was printed")),
+            ChineseUnion, "和合本", "ChiUn", TraditionalChinese, "traditional characters, as the 1919 edition was printed"))
+        {
+            FhlPrefixes = true,
+        },
 
         ["ChiUns"] = new(Path.Combine("ChineseUnion1919", "ChiUns"), SwordSegmentation.Tagged, ChineseUnionDefinition(
             ChineseUnionSimplified, "和合本（简体字）", "ChiUns", SimplifiedChinese,
-            "simplified characters, FHL's conversion of the same text")),
+            "simplified characters, FHL's conversion of the same text"))
+        {
+            FhlPrefixes = true,
+        },
 
         ["KorRV"] = new(Path.Combine("KoreanRevised1961", "KorRV"), SwordSegmentation.Spaced, new TextDefinition(
             Slug: KoreanRevised,
@@ -175,10 +198,141 @@ internal static class SwordTextSource
                 ((47, 13, 12), (47, 13, 13)),
             ],
         },
+
+        ["FreJND"] = new(Path.Combine("DarbyFrench", "FreJND"), SwordSegmentation.Spaced, new TextDefinition(
+            Slug: DarbyFrench,
+            Name: "Darby Bible (French)",
+            NameNative: "La Sainte Bible, traduction J.N. Darby",
+            Kind: TextKind.Translation,
+            Language: "fra",
+            Direction: TextDirection.LeftToRight,
+            Versification: Versification.Original,
+            PublishedYear: 1885,
+            SourceUrl: "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=FreJND",
+            RightsHolder: null,
+            Licence: "Public Domain",
+            LicenceUrl: "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/frejnd.conf",
+            Redistribution: Redistribution.PublicDomain,
+            TextualFamily: "Alexandrian")
+        {
+            Translators = "John Nelson Darby (1800-1882), with the Brethren who worked with him",
+            Editors = "Bibles et Publications Chrétiennes (Valence), whose revision JND v2.0 of 2024 is the text served",
+            Edition = "The 2024 revision of Bibles et Publications Chrétiennes, as CrossWire publishes it in FreJND 3.3",
+            EditionYear = 2024,
+            About =
+                "Darby made his French Bible from the Hebrew and from the Greek text he had established "
+                + "himself, alongside his German and English ones; the complete Bible appeared in 1885 "
+                + "and was reissued in 1916. Bibles et Publications Chrétiennes revised the text in 2024 "
+                + "and released it free of rights. Its New Testament follows the critical Greek: Acts "
+                + "8:37 has no text and the Lord's Prayer ends without the doxology. The Old Testament "
+                + "is numbered as the Hebrew is, a psalm's title counted as its first verse. The asterisk "
+                + "the edition prints at the head of a paragraph is printed here too.",
+            RightsNote =
+                "CrossWire publishes the module as Public Domain, and its description says the 2024 text "
+                + "is free of rights as BPC provides it. The Strong numbers in the module are the work of "
+                + "Concordances et Traductions de la Bible (concordance.bible); they are read to draw "
+                + "links and are not stored on the words.",
+            Citation =
+                "La Sainte Bible, traduction J.N. Darby, révision BPC 2024 (JND v2.0), as CrossWire "
+                + "publishes it in the SWORD module FreJND, with the Strong numbers of concordance.bible.",
+        }),
+
+        ["GerSch"] = new(Path.Combine("Schlachter1951", "GerSch"), SwordSegmentation.Spaced, new TextDefinition(
+            Slug: Schlachter,
+            Name: "Schlachter Bible 1951",
+            NameNative: "Schlachter-Bibel 1951",
+            Kind: TextKind.Translation,
+            Language: "deu",
+            Direction: TextDirection.LeftToRight,
+            Versification: Versification.Original,
+            PublishedYear: 1905,
+            SourceUrl: "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=GerSch",
+            RightsHolder: "Genfer Bibelgesellschaft (Geneva Bible Society)",
+            Licence: "Copyrighted; Free non-commercial distribution",
+            LicenceUrl: "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/gersch.conf",
+            Redistribution: Redistribution.NonCommercialOnly,
+            TextualFamily: "Byzantine")
+        {
+            Translators = "Franz Eugen Schlachter (1859-1911)",
+            Editors = "The Genfer Bibelgesellschaft, whose revision of 1951 is the text served",
+            Edition = "The 1951 revision, as CrossWire publishes it in GerSch 2.1",
+            EditionYear = 1951,
+            About =
+                "Franz Eugen Schlachter, a Swiss preacher, translated the whole Bible alone from the "
+                + "Hebrew and Greek and published it in 1905 as the Miniaturbibel, for readers who did not "
+                + "read Luther's German easily. The Geneva Bible Society revised it in 1951, and that "
+                + "revision is the Schlachter German free churches read until the 2000 edition replaced it. "
+                + "Its New Testament keeps Acts 8:37 and the doxology of the Lord's Prayer and does not "
+                + "print the heavenly witnesses of 1 John 5:7. The Old Testament is numbered as the "
+                + "Hebrew is, a psalm's title counted as its first verse.",
+            RightsNote =
+                "The 1951 revision is the Geneva Bible Society's (Copyright 1951 Genfer Bibelgesellschaft, "
+                + "as the module's description prints it), and CrossWire publishes it under "
+                + "\"Copyrighted; Free non-commercial distribution\". It is served for that use only. "
+                + "Nobody is named for the Strong numbers in the module; they are read to draw links and "
+                + "are not stored on the words.",
+            Citation =
+                "Die Heilige Schrift des Alten und Neuen Testaments, übersetzt von F. E. Schlachter, "
+                + "Neue Überarbeitung 1951, © Genfer Bibelgesellschaft, as CrossWire publishes it in the "
+                + "SWORD module GerSch.",
+        }),
+
+        ["RLT"] = new(Path.Combine("RevisedLiteral", "RLT"), SwordSegmentation.Spaced, new TextDefinition(
+            Slug: RevisedLiteral,
+            Name: "Revised Literal Translation",
+            NameNative: null,
+            Kind: TextKind.Translation,
+            Language: "eng",
+            Direction: TextDirection.LeftToRight,
+            Versification: Versification.English,
+            PublishedYear: 2018,
+            SourceUrl: "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=RLT",
+            RightsHolder: "Michael W. Jones, Sr.",
+            Licence: "GPL",
+            LicenceUrl: "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/rlt.conf",
+            Redistribution: Redistribution.ShareAlike,
+            TextualFamily: "Byzantine")
+        {
+            Translators = "Michael W. Jones, Sr., revising the King James Version of 1769",
+            Edition = "The 2018 text, as CrossWire publishes it in RLT 1.0 of 2022",
+            About =
+                "A light revision of the King James Version (1769) by Michael W. Jones, made to change "
+                + "as little as possible: the LORD becomes Yhwh, church becomes assembly, and archaic "
+                + "words and phrases are modernised where he judged them unclear or inaccurate, with the "
+                + "Textus Receptus as the standard. The words the King James prints in italics are kept. "
+                + "Its Strong numbers are the King James's own, from the Bible Foundation's Old "
+                + "Testament and the KJV2003 project's New Testament.",
+            RightsNote =
+                "Jones \"hereby grants a general public license to use this text for any purpose\", and "
+                + "CrossWire publishes the module under the GPL; anything published as an adaptation of "
+                + "it carries the same terms. The base text is the King James, whose rights in the "
+                + "United Kingdom are the Crown's. The Strong numbers are read to draw links and are not "
+                + "stored on the words.",
+            Citation =
+                "Revised Literal Translation (RLT) by Michael W. Jones, Sr., as CrossWire publishes it "
+                + "in the SWORD module RLT.",
+        }),
+    };
+
+    /// <summary>
+    /// Modules read only for the Strong numbers they put on a text the corpus loads from elsewhere,
+    /// and never loaded as texts: their words are another digitisation of that text, so the numbers
+    /// are laid onto its words and nothing else of them is used. Each is keyed by its module name, and
+    /// its definition is the text the numbers are laid onto.
+    /// </summary>
+    private static readonly Dictionary<string, SwordText> NumberingOnly = new(StringComparer.OrdinalIgnoreCase)
+    {
+        ["FreSegond1910"] = new(
+            Path.Combine("Segond1910Strong", "FreSegond1910"),
+            SwordSegmentation.Spaced,
+            EbibleTextSource.Definitions["Segond1910"]),
     };
 
     /// <summary>Every text this reader knows, by the module it is read from.</summary>
     public static IReadOnlyDictionary<string, SwordText> Texts => Known;
+
+    /// <summary>The modules read only for their numbers, by module name.</summary>
+    public static IReadOnlyDictionary<string, SwordText> Numberings => NumberingOnly;
 
     /// <summary>What each of those texts is, by the same key.</summary>
     public static IReadOnlyDictionary<string, TextDefinition> Definitions =>
@@ -247,7 +401,8 @@ internal static class SwordTextSource
     private static (SwordText Text, Dictionary<(int Book, int Chapter, int Verse), ReadVerse> Verses) Verses(string folder)
     {
         var configuration = SwordModule.Configuration(folder);
-        if (!Known.TryGetValue(configuration.Name, out var text))
+        if (!Known.TryGetValue(configuration.Name, out var text)
+            && !NumberingOnly.TryGetValue(configuration.Name, out text))
         {
             throw new ArgumentException(
                 $"There is no text definition for the SWORD module \"{configuration.Name}\". A translation cannot be "
@@ -261,7 +416,7 @@ internal static class SwordTextSource
         foreach (var (address, markup) in SwordModule.Verses(folder))
         {
             var pieces = OsisVerse.Parse(markup);
-            var words = Segment(pieces, text.Segmentation, ref unit, out var notes);
+            var words = Segment(pieces, text.Segmentation, ref unit, out var notes, text.FhlPrefixes);
             if (words.Count == 0)
             {
                 continue;
@@ -339,9 +494,11 @@ internal static class SwordTextSource
         IReadOnlyList<OsisPiece> pieces,
         SwordSegmentation segmentation,
         ref int unit,
-        out List<VerseNoteDraft> notes)
+        out List<VerseNoteDraft> notes,
+        bool fhlPrefixes = true)
     {
         var words = new List<SwordWord>();
+        var splits = new Dictionary<string, int>(StringComparer.Ordinal);
         notes = [];
         var tagged = segmentation == SwordSegmentation.Tagged;
 
@@ -357,16 +514,23 @@ internal static class SwordTextSource
                 continue;
             }
 
-            IReadOnlyList<string> numbers = piece.Kind == OsisPieceKind.Word ? UnionStrongNumbers.Read(piece.Lemma) : [];
-            var element = piece.Kind == OsisPieceKind.Word ? ++unit : 0;
+            IReadOnlyList<string> numbers =
+                piece.Kind == OsisPieceKind.Word ? UnionStrongNumbers.Read(piece.Lemma, fhlPrefixes) : [];
+            var element = piece.Kind != OsisPieceKind.Word
+                ? 0
+                : piece.Split is not { } split
+                    ? ++unit
+                    : splits.TryGetValue(split, out var shared)
+                        ? shared
+                        : splits[split] = ++unit;
             var joinable = !tagged;
 
             foreach (var (run, letters) in Runs(piece.Text))
             {
                 if (!letters)
                 {
-                    var trailer = tagged ? WithoutMarkupSpaces(run) : run;
-                    if (trailer.Length == 0 || (words.Count == 0 && !tagged && string.IsNullOrWhiteSpace(trailer)))
+                    var trailer = tagged ? WithoutMarkupSpaces(run) : words.Count == 0 ? run.TrimStart() : run;
+                    if (trailer.Length == 0)
                     {
                         continue;
                     }

@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -347,6 +348,61 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             "Linked {Verses} of {Wanted} corrected King James verses to BHSA from the mapping file: {Links} links",
             joined, wanted.Count, pairs.Count);
         return pairs.Count;
+    }
+
+    /// <summary>
+    /// Which BHSA word each of the Open Hebrew Bible's running word numbers names, read from this
+    /// file the way the links are: a verse whose Hebrew lines up word for word gives every word its
+    /// number, and the words of a verse divided differently are numbered from the placed words on
+    /// either side (<see cref="RunningWordNumbers"/>). The project's other mappings write the same
+    /// numbers, so this is how they reach BHSA too. A number no word took is not in the result.
+    /// </summary>
+    public async Task<IReadOnlyDictionary<int, long>> WordsByRunningNumber(
+        string path,
+        CancellationToken cancellationToken = default)
+    {
+        var hebrew = await db.Texts.SingleOrDefaultAsync(t => t.Slug == BhsaTextSource.Slug, cancellationToken)
+                     ?? throw new InvalidOperationException(
+                         "BHSA is not loaded, and the running word numbers name its words. Load the corpus first.");
+        var records = KjvBhsMapping.Read(path);
+        var hebrewVerses = await VerseWords(hebrew.Id, cancellationToken);
+        var placed = new Dictionary<long, int>(430_000);
+        foreach (var record in records)
+        {
+            if (JoinHebrew(record, hebrewVerses, out _) is { } bhsa)
+            {
+                for (var i = 0; i < record.Hebrew.Count; i++)
+                {
+                    placed[bhsa[i].Id] = record.Hebrew[i].Position;
+                }
+            }
+        }
+
+        // The stretches between placed words are numbered by the same reading as the Strong numbers
+        // are, with each entry's own running number standing where its Strong number would.
+        var numbers = new Dictionary<int, (string Strong, string Gloss)>(430_000);
+        foreach (var entry in records.SelectMany(record => record.Hebrew))
+        {
+            numbers.TryAdd(entry.Position, (entry.Position.ToString(CultureInfo.InvariantCulture), entry.Gloss));
+        }
+
+        var inTextOrder = hebrewVerses.Values
+            .SelectMany(words => words)
+            .OrderBy(word => word.Id)
+            .Select(word => (word.Id, word.Gloss))
+            .ToList();
+        var byNumber = new Dictionary<int, long>(placed.Count);
+        foreach (var (wordId, number) in placed)
+        {
+            byNumber.TryAdd(number, wordId);
+        }
+
+        foreach (var (wordId, number) in RunningWordNumbers.Between(inTextOrder, placed, numbers, SameVerse))
+        {
+            byNumber.TryAdd(int.Parse(number, CultureInfo.InvariantCulture), wordId);
+        }
+
+        return byNumber;
     }
 
     /// <summary>

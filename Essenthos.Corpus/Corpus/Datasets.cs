@@ -461,6 +461,77 @@ public static class Datasets
                 + "The FDL does not say whether correspondences derived from the numbers are a modified version "
                 + "of them."),
 
+        // Read the way FHL's numbers are: for one run, never stored. CrossWire's terms for the Segond
+        // module are a permission to CrossWire; the owner approved taking the numbering for the mapping
+        // on 2026-10-01, and Resources/Segond1910Strong/LICENCE.md has the statement and the reading.
+        new("concordance-segond-strong", "Strong numbering of Louis Segond 1910",
+            "Concordances et Traductions de la Bible (concordance.bible), 2026; the copy read is CrossWire's "
+            + "FreSegond1910 module, version 4.0, whose text is Richard Lemay's",
+            "Copyrighted; Permission to distribute granted to CrossWire",
+            "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/fresegond1910.conf",
+            "https://concordance.bible/",
+            "Which words of Louis Segond 1910 render which Hebrew or Greek word, matched within the verse "
+            + "on the Strong numbers Concordances et Traductions de la Bible keyed to the Segond. The "
+            + "numbering is read for the length of one run, laid onto the Segond the corpus loads from "
+            + "eBible, and never stored or served: the corpus holds only the links drawn from it, each "
+            + "carrying a confidence, because a number is a lemma and which occurrence a word renders is "
+            + "this project's inference.",
+            Sources.SegondStrongCredit, Links: true,
+            Obliges: "The module's terms are a permission granted to CrossWire to distribute it; the corpus "
+                + "distributes neither the module nor its numbers, only correspondences derived from them."),
+
+        // The same project and the same terms as the King James mapping (mapping/LICENCE.md);
+        // Resources/OpenHebrewBible/LICENCE.md has the statement as read and the commit it was read at.
+        new("ohb-cuv", "Open Hebrew Bible mapping of the Chinese Union Version",
+            "Eliran Wong, Open Hebrew Bible Project, on the Faith Hope Love foundation's tagged text of the Union Version",
+            "CC BY-NC 4.0",
+            "https://creativecommons.org/licenses/by-nc/4.0/",
+            "https://github.com/eliranwong/OpenHebrewBible/tree/master/009-BHS-mapping-CUV",
+            "Which BHS word each span of the Chinese Union Version's Old Testament renders, as Eliran Wong "
+            + "mapped FHL's Strong-numbered spans to the running word numbers of BHS. Stated by the source: "
+            + "where FHL's numbers say only which lexeme a span renders, the mapping names the occurrence.",
+            Sources.OpenHebrewCuvCredit, Links: true,
+            Obliges: "NonCommercial: these links, and anything published from them, may not be used commercially; "
+                + "Eliran Wong and the Open Hebrew Bible Project are credited on every link and claim."),
+
+        new("concordance-darby-strong", "Strong numbering of the Darby French Bible",
+            "Concordances et Traductions de la Bible (concordance.bible); the copy read is CrossWire's FreJND "
+            + "module, version 3.3",
+            "Public Domain",
+            "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/frejnd.conf",
+            "https://concordance.bible/",
+            "Which words of Darby's French Bible render which Hebrew or Greek word, matched within the "
+            + "verse on the Strong numbers Concordances et Traductions de la Bible keyed to it. The "
+            + "numbering is read from the module the text is loaded from, for the length of one run, and "
+            + "never stored: the corpus holds the links drawn from it, each carrying a confidence.",
+            Sources.DarbyFrenchStrongCredit, Links: true),
+
+        new("schlachter-strong", "Strong numbering of the Schlachter Bible 1951",
+            "not named by anyone; the copy read is CrossWire's GerSch module, version 2.1",
+            "Copyrighted; Free non-commercial distribution",
+            "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/gersch.conf",
+            "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=GerSch",
+            "Which words of the Schlachter Bible of 1951 render which Hebrew or Greek word, matched within "
+            + "the verse on the Strong numbers the module puts on them. The numbering is read from the "
+            + "module the text is loaded from, for the length of one run, and never stored: the corpus "
+            + "holds the links drawn from it, each carrying a confidence.",
+            Sources.SchlachterStrongCredit, Links: true,
+            Obliges: "NonCommercial: the module is distributed for non-commercial use only, so these links, "
+                + "and anything published from them, may not be used commercially."),
+
+        new("rlt-strong", "Strong numbering of the Revised Literal Translation",
+            "the Bible Foundation (Old Testament) and CrossWire's KJV2003 project (New Testament), as Michael "
+            + "W. Jones, Sr. carried them onto his revision; the copy read is CrossWire's RLT module, version 1.0",
+            "GPL",
+            "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/rlt.conf",
+            "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=RLT",
+            "Which words of the Revised Literal Translation render which Hebrew or Greek word, matched "
+            + "within the verse on the King James's Strong numbers the module carries. The numbering is "
+            + "read from the module the text is loaded from, for the length of one run, and never stored: "
+            + "the corpus holds the links drawn from it, each carrying a confidence.",
+            Sources.RevisedLiteralStrongCredit, Links: true,
+            Obliges: "The GPL: anything published as an adaptation of the text carries the same terms."),
+
         new("glaux", "GLAUx", "Alek Keersmaekers and the GLAUx contributors", "CC BY-SA 3.0",
             "https://creativecommons.org/licenses/by-sa/3.0/",
             "https://github.com/alekkeersmaekers/glaux",

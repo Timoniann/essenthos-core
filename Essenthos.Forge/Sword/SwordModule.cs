@@ -29,7 +29,7 @@ internal sealed record SwordConfiguration(string Name, IReadOnlyDictionary<strin
 /// versification counted in order: the module's heading, the testament's heading, then for every
 /// book a heading of its own and for every chapter a heading before its verses. So what a verse is
 /// called is settled by the versification the configuration names and by nothing in the data, which
-/// is why only the two the corpus needs are tabulated, and why a module in any other is refused
+/// is why only the four the corpus needs are tabulated, and why a module in any other is refused
 /// rather than read with every verse at a wrong address.
 /// </para>
 ///
@@ -52,6 +52,8 @@ internal static class SwordModule
     private const string ZipCompression = "ZIP";
     private const string KingJames = "KJV";
     private const string Nrsv = "NRSV";
+    private const string German = "German";
+    private const string Segond = "Segond";
     private const int OldTestamentBooks = 39;
 
     /// <summary>The heading entries each testament opens with: the module's and the testament's.</summary>
@@ -141,6 +143,77 @@ internal static class SwordModule
         [(66, 12)] = 1,
     };
 
+    /// <summary>
+    /// SWORD's German versification, where it differs from the King James's, book by book. It is the
+    /// Hebrew Bible's numbering in the Old Testament — a psalm's title is its first verse, Malachi has
+    /// three chapters and Joel four — and the critical Greek's in the New, where 2 Corinthians 13 has
+    /// thirteen verses and 3 John fifteen. Taken from <c>canon_german.h</c> in CrossWire's SWORD source.
+    /// </summary>
+    private static readonly Dictionary<int, int[]> GermanBooks = new()
+    {
+        [1] = [31, 25, 24, 26, 32, 22, 24, 22, 29, 32, 32, 20, 18, 24, 21, 16, 27, 33, 38, 18, 34, 24, 20, 67, 34, 35, 46, 22, 35, 43, 54, 33, 20, 31, 29, 43, 36, 30, 23, 23, 57, 38, 34, 34, 28, 34, 31, 22, 33, 26],
+        [2] = [22, 25, 22, 31, 23, 30, 29, 28, 35, 29, 10, 51, 22, 31, 27, 36, 16, 27, 25, 26, 37, 30, 33, 18, 40, 37, 21, 43, 46, 38, 18, 35, 23, 35, 35, 38, 29, 31, 43, 38],
+        [3] = [17, 16, 17, 35, 26, 23, 38, 36, 24, 20, 47, 8, 59, 57, 33, 34, 16, 30, 37, 27, 24, 33, 44, 23, 55, 46, 34],
+        [4] = [54, 34, 51, 49, 31, 27, 89, 26, 23, 36, 35, 16, 33, 45, 41, 35, 28, 32, 22, 29, 35, 41, 30, 25, 19, 65, 23, 31, 39, 17, 54, 42, 56, 29, 34, 13],
+        [5] = [46, 37, 29, 49, 33, 25, 26, 20, 29, 22, 32, 31, 19, 29, 23, 22, 20, 22, 21, 20, 23, 29, 26, 22, 19, 19, 26, 69, 28, 20, 30, 52, 29, 12],
+        [9] = [28, 36, 21, 22, 12, 21, 17, 22, 27, 27, 15, 25, 23, 52, 35, 23, 58, 30, 24, 42, 16, 23, 28, 23, 44, 25, 12, 25, 11, 31, 13],
+        [10] = [27, 32, 39, 12, 25, 23, 29, 18, 13, 19, 27, 31, 39, 33, 37, 23, 29, 32, 44, 26, 22, 51, 39, 25],
+        [11] = [53, 46, 28, 20, 32, 38, 51, 66, 28, 29, 43, 33, 34, 31, 34, 34, 24, 46, 21, 43, 29, 54],
+        [12] = [18, 25, 27, 44, 27, 33, 20, 29, 37, 36, 20, 22, 25, 29, 39, 20, 41, 37, 37, 21, 26, 20, 37, 20, 30],
+        [13] = [54, 55, 24, 43, 41, 66, 40, 40, 44, 14, 47, 41, 14, 17, 29, 43, 27, 17, 19, 8, 30, 19, 32, 31, 31, 32, 34, 21, 30],
+        [14] = [18, 17, 17, 22, 14, 42, 22, 18, 31, 19, 23, 16, 23, 14, 19, 14, 19, 34, 11, 37, 20, 12, 21, 27, 28, 23, 9, 27, 36, 27, 21, 33, 25, 33, 27, 23],
+        [16] = [11, 20, 38, 17, 19, 19, 73, 18, 37, 40, 36, 47, 31],
+        [18] = [22, 13, 26, 21, 27, 30, 21, 22, 35, 22, 20, 25, 28, 22, 35, 22, 16, 21, 29, 29, 34, 30, 17, 25, 6, 14, 23, 28, 25, 31, 40, 22, 33, 37, 16, 33, 24, 41, 30, 32, 26, 17],
+        [19] = [6, 12, 9, 9, 13, 11, 18, 10, 21, 18, 7, 9, 6, 7, 5, 11, 15, 51, 15, 10, 14, 32, 6, 10, 22, 12, 14, 9, 11, 13, 25, 11, 22, 23, 28, 13, 40, 23, 14, 18, 14, 12, 5, 27, 18, 12, 10, 15, 21, 23, 21, 11, 7, 9, 24, 14, 12, 12, 18, 14, 9, 13, 12, 11, 14, 20, 8, 36, 37, 6, 24, 20, 28, 23, 11, 13, 21, 72, 13, 20, 17, 8, 19, 13, 14, 17, 7, 19, 53, 17, 16, 16, 5, 23, 11, 13, 12, 9, 9, 5, 8, 29, 22, 35, 45, 48, 43, 14, 31, 7, 10, 10, 9, 8, 18, 19, 2, 29, 176, 7, 8, 9, 4, 8, 5, 6, 5, 6, 8, 8, 3, 18, 3, 3, 21, 26, 9, 8, 24, 14, 10, 8, 12, 15, 21, 10, 20, 14, 9, 6],
+        [21] = [18, 26, 22, 17, 19, 12, 29, 17, 18, 20, 10, 14],
+        [22] = [17, 17, 11, 16, 16, 12, 14, 14],
+        [23] = [31, 22, 26, 6, 30, 13, 25, 23, 20, 34, 16, 6, 22, 32, 9, 14, 14, 7, 25, 6, 17, 25, 18, 23, 12, 21, 13, 29, 24, 33, 9, 20, 24, 17, 10, 22, 38, 22, 8, 31, 29, 25, 28, 28, 25, 13, 15, 22, 26, 11, 23, 15, 12, 17, 13, 12, 21, 14, 21, 22, 11, 12, 19, 11, 25, 24],
+        [24] = [19, 37, 25, 31, 31, 30, 34, 23, 25, 25, 23, 17, 27, 22, 21, 21, 27, 23, 15, 18, 14, 30, 40, 10, 38, 24, 22, 17, 32, 24, 40, 44, 26, 22, 19, 32, 21, 28, 18, 16, 18, 22, 13, 30, 5, 28, 7, 47, 39, 46, 64, 34],
+        [26] = [28, 10, 27, 17, 17, 14, 27, 18, 11, 22, 25, 28, 23, 23, 8, 63, 24, 32, 14, 44, 37, 31, 49, 27, 17, 21, 36, 26, 21, 26, 18, 32, 33, 31, 15, 38, 28, 23, 29, 49, 26, 20, 27, 31, 25, 24, 23, 35],
+        [27] = [21, 49, 33, 34, 30, 29, 28, 27, 27, 21, 45, 13],
+        [28] = [9, 25, 5, 19, 15, 11, 16, 14, 17, 15, 11, 15, 15, 10],
+        [29] = [20, 27, 5, 21],
+        [32] = [16, 11, 10, 11],
+        [33] = [16, 13, 12, 14, 14, 16, 20],
+        [34] = [14, 14, 19],
+        [38] = [17, 17, 10, 14, 11, 15, 14, 23, 17, 12, 17, 14, 9, 21],
+        [39] = [14, 17, 24],
+        [44] = [26, 47, 26, 37, 42, 15, 60, 40, 43, 48, 30, 25, 52, 28, 41, 40, 34, 28, 40, 38, 40, 30, 35, 27, 27, 32, 44, 31],
+        [47] = [24, 17, 18, 18, 21, 18, 16, 24, 15, 18, 33, 21, 13],
+        [64] = [15],
+        [66] = [20, 29, 22, 11, 14, 17, 17, 13, 21, 11, 19, 18, 18, 20, 8, 21, 18, 24, 21, 15, 27, 21],
+    };
+
+    /// <summary>
+    /// SWORD's Segond versification, where it differs from the King James's: the French Bibles' own
+    /// numbering, which follows the Hebrew in most of the Old Testament and the Greek in the New.
+    /// Taken from <c>canon_segond.h</c> in CrossWire's SWORD source.
+    /// </summary>
+    private static readonly Dictionary<int, int[]> SegondBooks = new()
+    {
+        [2] = [22, 25, 22, 31, 23, 30, 29, 28, 35, 29, 10, 51, 22, 31, 27, 36, 16, 27, 25, 26, 36, 31, 33, 18, 40, 37, 21, 43, 46, 38, 18, 35, 23, 35, 35, 38, 29, 31, 43, 38],
+        [3] = [17, 16, 17, 35, 26, 23, 38, 36, 24, 20, 47, 8, 59, 57, 33, 34, 16, 30, 37, 27, 24, 33, 44, 23, 55, 46, 34],
+        [4] = [54, 34, 51, 49, 31, 27, 89, 26, 23, 36, 35, 16, 33, 45, 41, 50, 13, 32, 22, 29, 35, 41, 30, 25, 18, 65, 23, 31, 39, 17, 54, 42, 56, 29, 34, 13],
+        [9] = [28, 36, 21, 22, 12, 21, 17, 22, 27, 27, 15, 25, 23, 52, 35, 23, 58, 30, 24, 43, 15, 23, 28, 23, 44, 25, 12, 25, 11, 31, 13],
+        [11] = [53, 46, 28, 34, 18, 38, 51, 66, 28, 29, 43, 33, 34, 31, 34, 34, 24, 46, 21, 43, 29, 54],
+        [14] = [17, 18, 17, 22, 14, 42, 22, 18, 31, 19, 23, 16, 23, 14, 19, 14, 19, 34, 11, 37, 20, 12, 21, 27, 28, 23, 9, 27, 36, 27, 21, 33, 25, 33, 27, 23],
+        [18] = [22, 13, 26, 21, 27, 30, 21, 22, 35, 22, 20, 25, 28, 22, 35, 22, 16, 21, 29, 29, 34, 30, 17, 25, 6, 14, 23, 28, 25, 31, 40, 22, 33, 37, 16, 33, 24, 38, 38, 28, 25, 17],
+        [19] = [6, 12, 9, 9, 13, 11, 18, 10, 21, 18, 7, 9, 6, 7, 5, 11, 15, 51, 15, 10, 14, 32, 6, 10, 22, 12, 14, 9, 11, 13, 25, 11, 22, 23, 28, 13, 40, 23, 14, 18, 14, 12, 5, 27, 18, 12, 10, 15, 21, 23, 21, 11, 7, 9, 24, 14, 12, 12, 18, 14, 9, 13, 12, 11, 14, 20, 8, 36, 37, 6, 24, 20, 28, 23, 11, 13, 21, 72, 13, 20, 17, 8, 19, 13, 14, 17, 7, 19, 53, 17, 16, 16, 5, 23, 11, 13, 12, 9, 9, 5, 8, 29, 22, 35, 45, 48, 43, 14, 31, 7, 10, 10, 9, 8, 18, 19, 2, 29, 176, 7, 8, 9, 4, 8, 5, 6, 5, 6, 8, 8, 3, 18, 3, 3, 21, 26, 9, 8, 24, 14, 10, 8, 12, 15, 21, 10, 20, 14, 9, 6],
+        [21] = [18, 26, 22, 17, 19, 12, 29, 17, 18, 20, 8, 16],
+        [22] = [17, 17, 11, 16, 16, 12, 14, 14],
+        [23] = [31, 22, 26, 6, 30, 13, 25, 23, 20, 34, 16, 6, 22, 32, 9, 14, 14, 7, 25, 6, 17, 25, 18, 23, 12, 21, 13, 29, 24, 33, 9, 20, 24, 17, 10, 22, 38, 22, 8, 31, 29, 25, 28, 28, 25, 13, 15, 22, 26, 11, 23, 15, 12, 17, 13, 12, 21, 14, 21, 22, 11, 12, 19, 11, 25, 24],
+        [26] = [28, 10, 27, 17, 17, 14, 27, 18, 11, 22, 25, 28, 23, 23, 8, 63, 24, 32, 14, 44, 37, 31, 49, 27, 17, 21, 36, 26, 21, 26, 18, 32, 33, 31, 15, 38, 28, 23, 29, 49, 26, 20, 27, 31, 25, 24, 23, 35],
+        [28] = [9, 25, 5, 19, 15, 11, 16, 14, 17, 15, 11, 15, 16, 9],
+        [32] = [16, 11, 10, 11],
+        [33] = [16, 13, 12, 14, 14, 16, 20],
+        [34] = [14, 14, 19],
+        [41] = [45, 28, 35, 41, 43, 56, 37, 38, 51, 52, 33, 44, 37, 72, 47, 20],
+        [44] = [26, 47, 26, 37, 42, 15, 60, 40, 43, 48, 30, 25, 52, 28, 41, 40, 34, 28, 40, 38, 40, 30, 35, 27, 27, 32, 44, 31],
+        [47] = [24, 17, 18, 18, 21, 18, 16, 24, 15, 18, 33, 21, 13],
+        [64] = [15],
+        [66] = [20, 29, 22, 11, 14, 17, 17, 13, 21, 11, 19, 18, 18, 20, 8, 21, 18, 24, 21, 15, 27, 21],
+    };
+
     /// <param name="folder">The module's root: the folder holding <c>mods.d</c> and <c>modules</c>.</param>
     public static SwordConfiguration Configuration(string folder)
     {
@@ -208,9 +281,13 @@ internal static class SwordModule
         return verses;
     }
 
-    private static int[][] Chapters(SwordConfiguration configuration)
+    private static int[][] Chapters(SwordConfiguration configuration) =>
+        Chapters(configuration.Values.GetValueOrDefault("Versification", KingJames), configuration.Name);
+
+    /// <summary>The verses of every chapter, book by book in canonical order, in a SWORD numbering.</summary>
+    /// <param name="module">The module asking, for the refusal to name.</param>
+    public static int[][] Chapters(string versification, string module = "The module")
     {
-        var versification = configuration.Values.GetValueOrDefault("Versification", KingJames);
         return versification switch
         {
             KingJames => KingJamesVerses,
@@ -220,12 +297,17 @@ internal static class SwordModule
                     .Select((count, chapter) => count + NrsvAdds.GetValueOrDefault((index + 1, chapter + 1)))
                     .ToArray()),
             ],
+            German => Differing(GermanBooks),
+            Segond => Differing(SegondBooks),
             _ => throw new NotSupportedException(
-                $"{configuration.Name} is numbered by the {versification} versification. SWORD's index names no " +
+                $"{module} is numbered by the {versification} versification. SWORD's index names no " +
                 "verse, so reading a module in a versification this reader does not tabulate would put every " +
-                $"verse at a wrong address; only {KingJames} and {Nrsv} are known."),
+                $"verse at a wrong address; only {KingJames}, {Nrsv}, {German} and {Segond} are known."),
         };
     }
+
+    private static int[][] Differing(Dictionary<int, int[]> books) =>
+        [.. KingJamesVerses.Select((book, index) => books.GetValueOrDefault(index + 1, book))];
 
     private static void Testament(
         string data,

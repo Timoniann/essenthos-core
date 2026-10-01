@@ -185,6 +185,21 @@ internal static class TextTaglines
                 "Французька Біблія Луї Сегона в редакції 1910 року, що довго була Біблією французьких протестантів.",
                 "Louis Segonds französische Bibel in der Revision von 1910, lange die Bibel der französischen Protestanten.",
                 "La Biblia francesa de Louis Segond en la revisión de 1910, durante décadas la de los protestantes franceses."),
+            ["JND2024"] = Say(
+                "Darby's French Bible of 1885, in the 2024 revision released free of rights.",
+                "Французька Біблія Дарбі 1885 року в редакції 2024 року, вільній від прав.",
+                "Darbys französische Bibel von 1885 in der rechtefreien Revision von 2024.",
+                "La Biblia francesa de Darby de 1885, en la revisión de 2024 libre de derechos."),
+            ["SCH1951"] = Say(
+                "Schlachter's German Bible in the Geneva Bible Society's revision of 1951.",
+                "Німецька Біблія Шлахтера в редакції Женевського біблійного товариства 1951 року.",
+                "Schlachters deutsche Bibel in der Revision der Genfer Bibelgesellschaft von 1951.",
+                "La Biblia alemana de Schlachter en la revisión de 1951 de la Sociedad Bíblica de Ginebra."),
+            ["RLT2018"] = Say(
+                "A light modern revision of the King James Version, with the divine name as Yhwh.",
+                "Легка сучасна редакція Біблії короля Якова, з Божим ім'ям як Yhwh.",
+                "Eine behutsame moderne Revision der King James Version, mit dem Gottesnamen als Yhwh.",
+                "Una revisión moderna y ligera de la King James Version, con el nombre divino como Yhwh."),
             ["ALM1911"] = Say(
                 "Almeida's Bible, the first in Portuguese, in the Revista e Corrigida.",
                 "Біблія Алмейди, перша португальською, у редакції Revista e Corrigida.",

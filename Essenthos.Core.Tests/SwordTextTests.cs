@@ -147,6 +147,9 @@ public partial class SwordTextTests
     [InlineData("ChiUn", true)]
     [InlineData("ChiUns", true)]
     [InlineData("KorRV", false)]
+    [InlineData("FreJND", false)]
+    [InlineData("GerSch", false)]
+    [InlineData("RLT", false)]
     public void EveryVerseReadsBackAsTheModulePrintsIt(string module, bool chinese)
     {
         var folder = Module(module);
