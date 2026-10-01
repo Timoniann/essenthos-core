@@ -618,7 +618,6 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
         {
             await using var command = new NpgsqlCommand(Addressed, (NpgsqlConnection)db.Database.GetDbConnection());
             command.Transaction = (NpgsqlTransaction?)db.Database.CurrentTransaction?.GetDbTransaction();
-            command.CommandTimeout = 0;
             command.Parameters.AddWithValue("text", textId);
             command.Parameters.AddWithValue("books", books.ToArray());
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);

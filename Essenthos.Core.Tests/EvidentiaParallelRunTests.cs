@@ -145,6 +145,8 @@ public sealed class EvidentiaParallelRunTests : IDisposable
         var hebrewVerse = verseIds.Where(verse => verse.TextId == hebrewText!.Id)
             .ToDictionary(verse => (verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse), verse => verse.VerseId);
         var linked = 0;
+        var answerKey = new Provenance { Source = "a test's answer key" };
+        var aligner = new Provenance { Source = "a test's aligner" };
         foreach (var verse in verseIds.Where(verse => verse.TextId == englishText!.Id))
         {
             var target = byVerse[hebrewVerse[(verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse)]];
@@ -165,7 +167,7 @@ public sealed class EvidentiaParallelRunTests : IDisposable
                     Relation = LinkRelation.Renders,
                     Method = stated ? LinkMethod.StatedBySource : LinkMethod.Aligner,
                     Confidence = stated ? null : 0.6,
-                    Source = stated ? "a test's answer key" : "a test's aligner",
+                    Provenance = stated ? answerKey : aligner,
                 };
                 _db.Links.Add(link);
                 _db.LinkWords.Add(new LinkWord { Link = link, WordId = from.Id, Side = LinkSide.From });
