@@ -25,7 +25,7 @@ internal static partial class ForgeVerbs
         var loader = loadScope.ServiceProvider.GetRequiredService<DatasetLoader>();
         if (args.Contains("--steps"))
         {
-            forge.Logger.LogInformation("\n{Steps}", string.Join('\n', loader.StepNames()));
+            Console.WriteLine(string.Join('\n', loader.StepNames()));
             return 0;
         }
 

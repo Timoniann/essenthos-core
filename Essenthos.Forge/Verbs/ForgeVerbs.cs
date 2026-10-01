@@ -163,7 +163,7 @@ internal static partial class ForgeVerbs
             }
         }
 
-        forge.Logger.LogInformation("\n{Verbs}", help);
+        Console.Write(help);
         return Task.FromResult(0);
     }
 
