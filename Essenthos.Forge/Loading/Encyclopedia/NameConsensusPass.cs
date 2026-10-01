@@ -701,7 +701,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             await using var withdraw = new NpgsqlCommand($"DELETE {ours}", connection, transaction);
             withdraw.Parameters.AddWithValue("text", reading.Slug);
             withdraw.Parameters.AddWithValue("source", Source);
-            withdraw.CommandTimeout = Annotating.Patient;
             var withdrawn = await withdraw.ExecuteNonQueryAsync(cancellationToken);
             logger.LogInformation("{Text}: took back {Count} annotations an earlier run wrote", reading.Slug, withdrawn);
         }
@@ -749,7 +748,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
         {
             insert.Parameters.AddWithValue("method", EnumSpelling.Of(LinkMethod.RuleBased));
             insert.Parameters.AddWithValue("source", Source);
-            insert.CommandTimeout = Annotating.Patient;
             written = await insert.ExecuteNonQueryAsync(cancellationToken);
         }
 
@@ -757,7 +755,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
         {
             claim.Parameters.AddWithValue("method", EnumSpelling.Of(LinkMethod.RuleBased));
             claim.Parameters.AddWithValue("source", Source);
-            claim.CommandTimeout = Annotating.Patient;
             await claim.ExecuteNonQueryAsync(cancellationToken);
         }
 
@@ -975,7 +972,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
         await using var command = new NpgsqlCommand(sql, connection);
         command.Parameters.AddWithValue("kinds", Kinds.Select(EnumSpelling.Of).ToArray());
         command.Parameters.AddWithValue("originals", Originals);
-        command.CommandTimeout = 0;
 
         var spelled = Kinds.ToDictionary(EnumSpelling.Of, kind => kind);
         var entities = new Dictionary<int, HashSet<int>>();
@@ -1065,7 +1061,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
                          "SELECT verse_id, id, text FROM word WHERE text_id = @text ORDER BY verse_id, position", connection))
         {
             command.Parameters.AddWithValue("text", textId);
-            command.CommandTimeout = 0;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             List<(long, string)>? words = null;
             var current = -1;
@@ -1099,7 +1094,6 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
             command.Parameters.AddWithValue("text", textId);
             command.Parameters.AddWithValue("ours", Source);
             command.Parameters.AddWithValue("stated", StatedLinks);
-            command.CommandTimeout = 0;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {

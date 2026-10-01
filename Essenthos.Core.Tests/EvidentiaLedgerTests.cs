@@ -79,9 +79,10 @@ public sealed class EvidentiaLedgerTests : IDisposable
             ("approved", false, Owner),
             ("rejected", true, Owner),
         ]);
-        var person = await _db.LinkClaims.AsNoTracking().SingleAsync(claim => claim.Method == LinkMethod.Manual);
-        person.Source.Should().StartWith(Owner + ", reviewing EVIDENTIA run");
-        person.Note.Should().Be("read against the verse");
+        var person = await _db.LinkClaims.AsNoTracking().Include(claim => claim.Provenance)
+            .SingleAsync(claim => claim.Method == LinkMethod.Manual);
+        person.Provenance!.Source.Should().StartWith(Owner + ", reviewing EVIDENTIA run");
+        person.Provenance!.Note.Should().Be("read against the verse");
     }
 
     [Fact]
@@ -286,7 +287,7 @@ public sealed class EvidentiaLedgerTests : IDisposable
     private async Task<List<string>> Snapshot() =>
         (await _db.Links.AsNoTracking()
             .Include(link => link.Words).ThenInclude(word => word.Word)
-            .Include(link => link.Claims)
+            .Include(link => link.Provenance).Include(link => link.Claims).ThenInclude(claim => claim.Provenance)
             .ToListAsync())
         .Select(link =>
             $"{EnumSpelling.Of(link.Relation)} "

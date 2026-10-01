@@ -523,7 +523,6 @@ internal sealed class PeopleLoader(
 
         await using var command = new NpgsqlCommand(Gentilics, connection);
         command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
-        command.CommandTimeout = Annotating.Patient;
 
         var held = named.ToHashSet(StringComparer.Ordinal);
         var numbers = new List<string>();
@@ -915,7 +914,6 @@ internal sealed class PeopleLoader(
         await using var command = new NpgsqlCommand(StatedDescent, connection);
         command.Parameters.AddWithValue("source", FromTheStatedDescent);
         command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
-        command.CommandTimeout = Annotating.Patient;
         return await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
@@ -946,7 +944,6 @@ internal sealed class PeopleLoader(
         command.Parameters.AddWithValue("source", FromOurOwnWords);
         command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
         command.Parameters.AddWithValue("peoples", peoples);
-        command.CommandTimeout = Annotating.Patient;
 
         return await command.ExecuteNonQueryAsync(cancellationToken);
     }

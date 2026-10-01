@@ -675,7 +675,6 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         command.Parameters.AddWithValue("strong", rule.Strong);
         command.Parameters.AddWithValue("with", rule.With ?? string.Empty);
         command.Parameters.AddWithValue("reach", Reach);
-        command.CommandTimeout = Annotating.Patient;
 
         var words = new List<(long, string)>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -699,7 +698,6 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         command.Parameters.AddWithValue("command", PassageRoles.Command);
         command.Parameters.AddWithValue("passages", _set.Source);
         command.Parameters.AddWithValue("source", _set.PassageSource);
-        command.CommandTimeout = Annotating.Patient;
         return (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
@@ -723,7 +721,6 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
             command.Parameters.AddWithValue("source", _set.Source);
             command.Parameters.AddWithValue("reviewed", _set.ReviewedSource);
             command.Parameters.AddWithValue("carried", Annotating.CarriedNote);
-            command.CommandTimeout = Annotating.Patient;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {

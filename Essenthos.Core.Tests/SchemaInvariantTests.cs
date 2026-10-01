@@ -149,7 +149,7 @@ public sealed class SchemaInvariantTests : IDisposable
             ToTextId = english.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 1), Side = LinkSide.From });

@@ -599,7 +599,6 @@ internal sealed class PlaceRegisterLoader(
         await using var command = new NpgsqlCommand(EntityCandidates.Derived, connection);
         command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
         command.Parameters.AddWithValue("rendering", EntityCandidates.Rendering);
-        command.CommandTimeout = Annotating.Patient;
 
         var read = new Dictionary<string, List<Entity>>(StringComparer.Ordinal);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);

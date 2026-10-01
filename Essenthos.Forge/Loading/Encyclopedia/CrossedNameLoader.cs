@@ -257,7 +257,6 @@ internal sealed class CrossedNameLoader(AppDbContext db, ILogger<CrossedNameLoad
     {
         await using var command = new NpgsqlCommand(
             Report, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.CommandTimeout = Annotating.Patient;
 
         var rows = new List<string>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);

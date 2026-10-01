@@ -187,7 +187,6 @@ internal sealed class PassageReadingLoader(
             await using (var contest = new NpgsqlCommand(
                              Contest, connection, (NpgsqlTransaction)transaction.GetDbTransaction()))
             {
-                contest.CommandTimeout = Annotating.Patient;
                 contested += await contest.ExecuteNonQueryAsync(cancellationToken);
             }
 
@@ -237,7 +236,6 @@ internal sealed class PassageReadingLoader(
         command.Parameters.AddWithValue("chapters", wanted.Select(w => w.At.Chapter).ToArray());
         command.Parameters.AddWithValue("verses", wanted.Select(w => w.At.Verse).ToArray());
         command.Parameters.AddWithValue("positions", wanted.Select(w => w.Position).ToArray());
-        command.CommandTimeout = Annotating.Patient;
         var found = new Dictionary<long, (long, string, bool)>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))

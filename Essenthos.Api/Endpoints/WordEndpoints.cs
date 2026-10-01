@@ -167,7 +167,7 @@ internal static class WordEndpoints
                     other.LinkId,
                     side.Link!.Method,
                     side.Link.Confidence,
-                    side.Link.Source,
+                    side.Link.Provenance!.Source,
                     other.Word!.Text!.Slug,
                     other.Word.Surface,
                     other.Word.Gloss,

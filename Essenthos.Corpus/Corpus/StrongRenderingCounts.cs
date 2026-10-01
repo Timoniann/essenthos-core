@@ -101,14 +101,12 @@ internal static class StrongRenderingCounts
     /// The commonest <paramref name="take"/> phrases for each of <paramref name="numbers"/>, or for every
     /// number the text renders where <paramref name="numbers"/> is null.
     /// </summary>
-    /// <param name="timeout">Seconds the statement may take; null for the connection's own limit.</param>
     public static async Task<List<StrongRenderingCount>> Count(
         AppDbContext db,
         int textId,
         IReadOnlyCollection<string>? numbers,
         int take,
-        CancellationToken cancellationToken,
-        int? timeout = null)
+        CancellationToken cancellationToken)
     {
         var witnesses = LinkedOriginals.Primary(await LinkedOriginals.Of(db, textId, cancellationToken))
             .Select(original => original.Id)
@@ -127,11 +125,6 @@ internal static class StrongRenderingCounts
         if (numbers is not null)
         {
             command.Parameters.AddWithValue("numbers", numbers.ToArray());
-        }
-
-        if (timeout is { } seconds)
-        {
-            command.CommandTimeout = seconds;
         }
 
         var rows = new List<StrongRenderingCount>();

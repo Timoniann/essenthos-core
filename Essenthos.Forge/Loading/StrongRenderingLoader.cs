@@ -56,7 +56,7 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
         }
 
         var counted = await StrongRenderingCounts.Count(
-            db, text.Id, null, StrongRenderingCounts.CardRenderings, cancellationToken, Annotating.Patient);
+            db, text.Id, null, StrongRenderingCounts.CardRenderings, cancellationToken);
 
         var held = await db.StrongRenderings
             .Where(r => r.TextId == text.Id)

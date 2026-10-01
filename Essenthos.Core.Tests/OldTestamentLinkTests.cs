@@ -139,13 +139,13 @@ public sealed class OldTestamentLinkTests : IDisposable
             Segment(["In", "the", "beginning"], 2),
             Segment(["created"], 3)));
 
-        var links = await _db.Links.ToListAsync();
+        var links = await _db.Links.Include(l => l.Provenance).ToListAsync();
         links.Should().OnlyContain(l => l.Method == LinkMethod.StatedBySource && l.Confidence == null);
 
         // Who stated it, not which file it arrived in. This asserted the filename until the
         // mapping's terms were read: the source is CC BY-NC and requires attribution, and a path
         // attributes nobody.
-        links.Should().OnlyContain(l => l.Source.Contains("Eliran Wong") && l.Source.Contains("CC BY-NC"));
+        links.Should().OnlyContain(l => l.Provenance!.Source.Contains("Eliran Wong") && l.Provenance!.Source.Contains("CC BY-NC"));
     }
 
     /// <summary>

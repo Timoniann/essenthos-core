@@ -81,7 +81,7 @@ public sealed class SynodalStrongLinkTests : IDisposable
             ToTextId = _hebrew.Id,
             Relation = LinkRelation.Renders,
             Method = method,
-            Source = method == LinkMethod.Aligner ? Aligner : "a source under test",
+            Provenance = new() { Source = method == LinkMethod.Aligner ? Aligner : "a source under test" },
             Confidence = method == LinkMethod.Aligner ? 0.6 : null,
         };
         link.Words.Add(new LinkWord { WordId = Russian(russian).Id, Side = LinkSide.From });
@@ -91,7 +91,7 @@ public sealed class SynodalStrongLinkTests : IDisposable
 
         _db.LinkClaims.Add(new LinkClaim
         {
-            LinkId = link.Id, Method = link.Method, Confidence = link.Confidence, Source = link.Source,
+            LinkId = link.Id, Method = link.Method, Confidence = link.Confidence, Provenance = link.Provenance,
         });
         _db.SaveChanges();
         return link;
@@ -101,7 +101,7 @@ public sealed class SynodalStrongLinkTests : IDisposable
         await _db.Links
             .AsNoTracking()
             .Include(l => l.Words)
-            .Include(l => l.Claims)
+            .Include(l => l.Provenance).Include(l => l.Claims).ThenInclude(claim => claim.Provenance)
             .Where(l => l.FromTextId == _russian.Id && l.ToTextId == _hebrew.Id)
             .ToListAsync();
 
@@ -118,7 +118,7 @@ public sealed class SynodalStrongLinkTests : IDisposable
 
         outcome.Links.Should().Be(4);
         (await Links()).Should().OnlyContain(link =>
-            link.Method == LinkMethod.StrongNumber && link.Source.StartsWith(Credit));
+            link.Method == LinkMethod.StrongNumber && link.Provenance!.Source.StartsWith(Credit));
         _db.Words.AsNoTracking().Where(w => w.TextId == _russian.Id).Should().OnlyContain(w => w.StrongNumber == null);
         _db.WordStrongs.Should().BeEmpty();
     }
@@ -140,7 +140,7 @@ public sealed class SynodalStrongLinkTests : IDisposable
         var match = links.Single(link => Names(link, Russian(4)));
         match.Method.Should().Be(LinkMethod.StrongNumber);
         match.Claims.Select(claim => claim.Method).Should().BeEquivalentTo([LinkMethod.StrongNumber, LinkMethod.Aligner]);
-        match.Claims.Single(claim => claim.Method == LinkMethod.Aligner).Source.Should().Be(Aligner);
+        match.Claims.Single(claim => claim.Method == LinkMethod.Aligner).Provenance!.Source.Should().Be(Aligner);
     }
 
     /// <summary>

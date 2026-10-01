@@ -535,7 +535,6 @@ internal sealed class SiteSplitLoader(
             command.Parameters.AddWithValue(name, value ?? DBNull.Value);
         }
 
-        command.CommandTimeout = Annotating.Patient;
         return (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 }

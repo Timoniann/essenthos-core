@@ -47,7 +47,7 @@ public sealed class LinkShapeTests : IDisposable
             ToTextId = greek.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 1), Side = LinkSide.From });
@@ -78,7 +78,7 @@ public sealed class LinkShapeTests : IDisposable
             ToTextId = greek.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 1), Side = LinkSide.From });
@@ -108,7 +108,7 @@ public sealed class LinkShapeTests : IDisposable
             ToTextId = greek.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 1), Side = LinkSide.From });
@@ -155,8 +155,7 @@ public sealed class LinkShapeTests : IDisposable
             ToTextId = greek.Id,
             Relation = LinkRelation.Expands,
             Method = LinkMethod.Manual,
-            Source = "a test",
-            Note = "the article is supplied",
+            Provenance = new() { Source = "a test", Note = "the article is supplied" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(english, 1, 1, 1), Side = LinkSide.From });
@@ -185,7 +184,7 @@ public sealed class LinkShapeTests : IDisposable
             ToTextId = receptus.Id,
             Relation = LinkRelation.Omits,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(receptus, 1, 18, 2), Side = LinkSide.To });
@@ -221,8 +220,7 @@ public sealed class LinkShapeTests : IDisposable
             ToTextId = english.Id,
             Relation = LinkRelation.Transposes,
             Method = LinkMethod.Manual,
-            Source = "a test",
-            Note = "the second Hebrew word is rendered in the previous English verse",
+            Provenance = new() { Source = "a test", Note = "the second Hebrew word is rendered in the previous English verse" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 1), Side = LinkSide.From });

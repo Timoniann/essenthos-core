@@ -287,14 +287,6 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     internal const string VerseList =
         "the encyclopedia's own list of the verses each entity is named in";
 
-    /// <summary>
-    /// Long enough for a pass over four and a half million words and their links, which is what the
-    /// carrying step is. The default thirty seconds is what a start-up pass gets on the day the
-    /// counts are cold, and a start-up pass that throws does not fail its own step — it fails every
-    /// step after it.
-    /// </summary>
-    private const int Patient = 1800;
-
     /// <summary>What a language answers when nothing of it is loaded, or nothing was asked.</summary>
     private static readonly NameAnswers Nothing = new(0, 0, 0);
 
@@ -1148,8 +1140,6 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             command.Parameters.AddWithValue(name, value);
         }
 
-        command.CommandTimeout = Patient;
-
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         await reader.ReadAsync(cancellationToken);
         return new NameAnswers(
@@ -1186,7 +1176,6 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             connection,
             (NpgsqlTransaction)transaction.GetDbTransaction());
         command.Parameters.AddWithValue("source", source);
-        command.CommandTimeout = Patient;
         return (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
@@ -1204,7 +1193,6 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             command.Parameters.AddWithValue(name, value);
         }
 
-        command.CommandTimeout = Patient;
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
         {
@@ -1242,7 +1230,6 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             command.Parameters.AddWithValue(name, value);
         }
 
-        command.CommandTimeout = Patient;
         return await command.ExecuteNonQueryAsync(cancellationToken);
     }
 }

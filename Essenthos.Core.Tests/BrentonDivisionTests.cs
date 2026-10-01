@@ -291,7 +291,7 @@ public sealed class BrentonDivisionLoadTests : IDisposable
         var link = new Link
         {
             FromTextId = from.Id, ToTextId = to.Id, Relation = LinkRelation.Equals, Method = LinkMethod.Lexical,
-            Confidence = 0.9, Source = "a test",
+            Confidence = 0.9, Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = fromWord, Side = LinkSide.From });

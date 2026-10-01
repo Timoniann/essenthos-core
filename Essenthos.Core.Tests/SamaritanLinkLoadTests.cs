@@ -57,6 +57,7 @@ public sealed class SamaritanLinkLoadTests : IDisposable
         await _loader.Load(_samaritan.Slug, _masoretic.Slug);
         return await _db.Links
             .Include(l => l.Words)
+            .Include(l => l.Provenance)
             .Where(l => l.FromTextId == _samaritan.Id && l.ToTextId == _masoretic.Id)
             .ToListAsync();
     }
@@ -159,7 +160,7 @@ public sealed class SamaritanLinkLoadTests : IDisposable
 
         links.Should().OnlyContain(l => l.Method == LinkMethod.Lexical);
         links.Should().OnlyContain(l => l.Confidence != null);
-        links.Should().OnlyContain(l => l.Source.StartsWith("the consonants both Hebrew witnesses write"));
+        links.Should().OnlyContain(l => l.Provenance!.Source.StartsWith("the consonants both Hebrew witnesses write"));
     }
 
     /// <summary>

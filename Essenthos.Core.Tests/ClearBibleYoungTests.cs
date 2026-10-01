@@ -123,7 +123,7 @@ public sealed class ClearBibleYoungLoadTests : IDisposable
         var outcome = await _loader.Load(_folder, _set);
 
         (outcome.Records, outcome.Added, outcome.Unresolved).Should().Be((3, 3, 0));
-        var links = await _db.Links.Where(link => link.Source == Statement)
+        var links = await _db.Links.Where(link => link.Provenance!.Source == Statement)
             .Select(link => new
             {
                 English = link.Words.Where(word => word.Side == LinkSide.From).Select(word => word.Word!.Surface).Order().ToList(),

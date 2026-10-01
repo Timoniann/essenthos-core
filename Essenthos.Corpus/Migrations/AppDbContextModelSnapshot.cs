@@ -2102,6 +2102,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("double precision")
                         .HasColumnName("confidence");
 
+                    b.Property<Guid?>("Fingerprint")
+                        .HasColumnType("uuid")
+                        .HasColumnName("fingerprint");
+
                     b.Property<int>("FromTextId")
                         .HasColumnType("integer")
                         .HasColumnName("from_text_id");
@@ -2111,19 +2115,14 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("method");
 
-                    b.Property<string>("Note")
-                        .HasColumnType("text")
-                        .HasColumnName("note");
+                    b.Property<int>("ProvenanceId")
+                        .HasColumnType("integer")
+                        .HasColumnName("provenance_id");
 
                     b.Property<string>("Relation")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("relation");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
 
                     b.Property<int>("ToTextId")
                         .HasColumnType("integer")
@@ -2135,16 +2134,15 @@ namespace Essenthos.Core.Migrations
                     b.HasIndex("ToTextId")
                         .HasDatabaseName("ix_link_to_text_id");
 
-                    b.HasIndex("FromTextId", "ToTextId")
-                        .HasDatabaseName("ix_link_from_text_id_to_text_id");
+                    b.HasIndex("FromTextId", "ToTextId", "Fingerprint")
+                        .IsUnique()
+                        .HasDatabaseName("ix_link_from_text_id_to_text_id_fingerprint");
 
                     b.ToTable("link", null, t =>
                         {
                             t.HasCheckConstraint("ck_link_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
 
                             t.HasCheckConstraint("ck_link_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
-
-                            t.HasCheckConstraint("ck_link_source_not_empty", "length(btrim(\"source\")) > 0");
 
                             t.HasCheckConstraint("ck_link_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
                         });
@@ -2172,32 +2170,22 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("method");
 
-                    b.Property<string>("Note")
-                        .HasColumnType("text")
-                        .HasColumnName("note");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("source");
+                    b.Property<int>("ProvenanceId")
+                        .HasColumnType("integer")
+                        .HasColumnName("provenance_id");
 
                     b.HasKey("Id")
                         .HasName("pk_link_claim");
 
-                    b.HasIndex("LinkId")
-                        .HasDatabaseName("ix_link_claim_link_id");
-
-                    b.HasIndex("LinkId", "Method", "Source")
+                    b.HasIndex("LinkId", "Method", "ProvenanceId")
                         .IsUnique()
-                        .HasDatabaseName("ix_link_claim_link_id_method_source");
+                        .HasDatabaseName("ix_link_claim_link_id_method_provenance_id");
 
                     b.ToTable("link_claim", null, t =>
                         {
                             t.HasCheckConstraint("ck_link_claim_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
 
                             t.HasCheckConstraint("ck_link_claim_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
-
-                            t.HasCheckConstraint("ck_link_claim_source_not_empty", "length(btrim(\"source\")) > 0");
 
                             t.HasCheckConstraint("ck_link_claim_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
                         });
@@ -2766,6 +2754,39 @@ namespace Essenthos.Core.Migrations
                             t.HasCheckConstraint("ck_prophet_field_realm", "realm IN ('united', 'israel', 'judah', 'exile', 'return', 'egypt', 'cush', 'aram', 'assyria', 'babylon', 'persia')");
 
                             t.HasCheckConstraint("ck_prophet_field_source_not_empty", "length(btrim(source)) > 0");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.Provenance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Note")
+                        .HasColumnType("text")
+                        .HasColumnName("note");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.HasKey("Id")
+                        .HasName("pk_provenance");
+
+                    b.HasIndex("Source", "Note")
+                        .IsUnique()
+                        .HasDatabaseName("ix_provenance_source_note");
+
+                    NpgsqlIndexBuilderExtensions.AreNullsDistinct(b.HasIndex("Source", "Note"), false);
+
+                    b.ToTable("provenance", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_provenance_source_not_empty", "length(btrim(\"source\")) > 0");
                         });
                 });
 
@@ -4987,6 +5008,13 @@ namespace Essenthos.Core.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_link_texts_from_text_id");
 
+                    b.HasOne("Essenthos.Core.Database.Entities.Provenance", "Provenance")
+                        .WithMany()
+                        .HasForeignKey("ProvenanceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_link_provenances_provenance_id");
+
                     b.HasOne("Essenthos.Core.Database.Entities.Text", "ToText")
                         .WithMany()
                         .HasForeignKey("ToTextId")
@@ -4995,6 +5023,8 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_link_texts_to_text_id");
 
                     b.Navigation("FromText");
+
+                    b.Navigation("Provenance");
 
                     b.Navigation("ToText");
                 });
@@ -5008,7 +5038,16 @@ namespace Essenthos.Core.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_link_claim_link_link_id");
 
+                    b.HasOne("Essenthos.Core.Database.Entities.Provenance", "Provenance")
+                        .WithMany()
+                        .HasForeignKey("ProvenanceId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_link_claim_provenances_provenance_id");
+
                     b.Navigation("Link");
+
+                    b.Navigation("Provenance");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.LinkWord", b =>

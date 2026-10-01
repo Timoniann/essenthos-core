@@ -95,11 +95,16 @@ internal sealed class TextFacts(IServiceScopeFactory scopes)
 
         // Only the links somebody stated carry a source worth naming; the aligner's are this
         // project's own inference and their source strings number in the thousands.
-        var stated = Query(db => db.Links
-            .Where(l => l.Method != LinkMethod.Aligner)
-            .GroupBy(l => new { l.FromTextId, l.ToTextId, l.Source })
-            .Select(g => new SourceRow(g.Key.FromTextId, g.Key.ToTextId, g.Key.Source))
-            .ToListAsync(cancellationToken));
+        var stated = Query(async db => (await db.Links
+                .Where(l => l.Method != LinkMethod.Aligner)
+                .GroupBy(l => new { l.FromTextId, l.ToTextId, l.ProvenanceId })
+                .Select(g => g.Key)
+                .Join(db.Provenances, k => k.ProvenanceId, p => p.Id,
+                    (k, p) => new { k.FromTextId, k.ToTextId, p.Source })
+                .Distinct()
+                .ToListAsync(cancellationToken))
+            .Select(row => new SourceRow(row.FromTextId, row.ToTextId, row.Source))
+            .ToList());
 
         await Task.WhenAll(words, besideStrong, chapters, verses, named, groups, notes, links, stated);
 

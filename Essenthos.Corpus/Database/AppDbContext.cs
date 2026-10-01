@@ -1,6 +1,13 @@
 ﻿using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.DependencyInjection;
+using Npgsql;
 
 namespace Essenthos.Core.Database;
 
@@ -13,6 +20,94 @@ public class AppDbContext : DbContext
 {
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
+    }
+
+    /// <summary>
+    /// A <see cref="Provenance"/> created in code is a lookup, not a new row: before anything is
+    /// written, every one added is resolved to the row holding the same source and note, written if
+    /// there is none, and the links and claims that named a copy are pointed at the one kept.
+    /// </summary>
+    public override async Task<int> SaveChangesAsync(
+        bool acceptAllChangesOnSuccess,
+        CancellationToken cancellationToken = default)
+    {
+        await ResolveProvenances(cancellationToken);
+        return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+    }
+
+    public override int SaveChanges(bool acceptAllChangesOnSuccess)
+    {
+        ResolveProvenances(CancellationToken.None).GetAwaiter().GetResult();
+        return base.SaveChanges(acceptAllChangesOnSuccess);
+    }
+
+    private async Task ResolveProvenances(CancellationToken cancellationToken)
+    {
+        ChangeTracker.DetectChanges();
+        var added = ChangeTracker.Entries<Provenance>().Where(e => e.State == EntityState.Added).ToList();
+        if (added.Count == 0)
+        {
+            return;
+        }
+
+        await Database.OpenConnectionAsync(cancellationToken);
+        try
+        {
+            Dictionary<(string Source, string? Note), int> ids;
+            try
+            {
+                ids = await ProvenanceIds.Of(
+                    (NpgsqlConnection)Database.GetDbConnection(),
+                    (NpgsqlTransaction?)Database.CurrentTransaction?.GetDbTransaction(),
+                    added.Select(e => (e.Entity.Source, e.Entity.Note)),
+                    cancellationToken);
+            }
+            catch (PostgresException refused)
+            {
+                // The database's own rules on a source -- never empty -- refuse it here, before the
+                // rows that point at it, and the caller sees the refusal a save reports.
+                throw new DbUpdateException(
+                    $"A source was refused: {refused.MessageText}. Every link and claim names the file, " +
+                    "the algorithm or the person it rests on.", refused);
+            }
+
+            var kept = ChangeTracker.Entries<Provenance>()
+                .Where(e => e.State != EntityState.Added)
+                .Select(e => e.Entity)
+                .ToDictionary(p => p.Id);
+
+            foreach (var entry in added)
+            {
+                var id = ids[(entry.Entity.Source, entry.Entity.Note)];
+                if (kept.TryGetValue(id, out var keeper))
+                {
+                    foreach (var link in ChangeTracker.Entries<Link>().Where(l => l.Entity.Provenance == entry.Entity))
+                    {
+                        link.Reference(l => l.Provenance).CurrentValue = keeper;
+                    }
+
+                    foreach (var claim in ChangeTracker.Entries<LinkClaim>().Where(c => c.Entity.Provenance == entry.Entity))
+                    {
+                        claim.Reference(c => c.Provenance).CurrentValue = keeper;
+                    }
+
+                    entry.State = EntityState.Detached;
+                    continue;
+                }
+
+                var key = entry.Property(p => p.Id);
+                key.CurrentValue = id;
+                key.IsTemporary = false;
+                entry.State = EntityState.Unchanged;
+                kept[id] = entry.Entity;
+            }
+        }
+        finally
+        {
+            await Database.CloseConnectionAsync();
+        }
+
+        ChangeTracker.DetectChanges();
     }
 
     public DbSet<Text> Texts { get; set; } = null!;
@@ -42,6 +137,9 @@ public class AppDbContext : DbContext
     /// is where the others live, and where agreement between them becomes countable.
     /// </summary>
     public DbSet<LinkClaim> LinkClaims { get; set; } = null!;
+
+    /// <summary>The distinct sources and notes the links and their claims point at.</summary>
+    public DbSet<Provenance> Provenances { get; set; } = null!;
 
     /// <summary>
     /// EVIDENTIA's passes, what each decided about each word, and what a person said about it. None
@@ -1234,7 +1332,25 @@ public class AppDbContext : DbContext
                 .HasForeignKey(l => l.ToTextId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            entity.ToTable("link", t => AddProvenanceConstraints(t, "link"));
+            entity.HasOne(l => l.Provenance)
+                .WithMany()
+                .HasForeignKey(l => l.ProvenanceId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // One link per set of words in a pair of texts. In the database this is a unique
+            // constraint deferred to commit, written by the migration, because EF cannot declare a
+            // deferrable one and a link's words arrive in the statement after the link. Its leading
+            // columns serve every read by pair, so no index on the pair alone is kept beside it.
+            entity.HasIndex(l => new { l.FromTextId, l.ToTextId, l.Fingerprint }).IsUnique();
+
+            entity.ToTable("link", t => AddProvenanceConstraints(t, "link", sourceOnTheRow: false));
+        });
+
+        modelBuilder.Entity<Provenance>(entity =>
+        {
+            entity.HasIndex(p => new { p.Source, p.Note }).IsUnique().AreNullsDistinct(false);
+            entity.ToTable("provenance", t => t.HasCheckConstraint(
+                "ck_provenance_source_not_empty", "length(btrim(\"source\")) > 0"));
         });
 
         modelBuilder.Entity<LinkWord>(entity =>
@@ -1282,7 +1398,12 @@ public class AppDbContext : DbContext
                 .HasForeignKey(c => c.LinkId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            entity.ToTable("link_claim", t => AddProvenanceConstraints(t, "link_claim"));
+            entity.HasOne(c => c.Provenance)
+                .WithMany()
+                .HasForeignKey(c => c.ProvenanceId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            entity.ToTable("link_claim", t => AddProvenanceConstraints(t, "link_claim", sourceOnTheRow: false));
         });
     }
 
@@ -1401,8 +1522,13 @@ public class AppDbContext : DbContext
     /// carries no confidence, one a process inferred carries one, and every correspondence names
     /// what produced it.
     /// </summary>
+    /// <param name="sourceOnTheRow">
+    /// False for a table whose source is a <see cref="Provenance"/> it points at, which holds the
+    /// non-empty rule for it.
+    /// </param>
     private static Microsoft.EntityFrameworkCore.Metadata.Builders.TableBuilder AddProvenanceConstraints(
-        Microsoft.EntityFrameworkCore.Metadata.Builders.TableBuilder table, string tableName)
+        Microsoft.EntityFrameworkCore.Metadata.Builders.TableBuilder table, string tableName,
+        bool sourceOnTheRow = true)
     {
         var stated = EnumSpelling.Of(LinkMethod.StatedBySource);
         var manual = EnumSpelling.Of(LinkMethod.Manual);
@@ -1419,11 +1545,38 @@ public class AppDbContext : DbContext
             $"ck_{tableName}_inferred_carries_confidence",
             $"\"method\" IN ('{stated}', '{manual}') OR \"confidence\" IS NOT NULL");
 
-        table.HasCheckConstraint(
-            $"ck_{tableName}_source_not_empty",
-            "length(btrim(\"source\")) > 0");
+        if (sourceOnTheRow)
+        {
+            table.HasCheckConstraint(
+                $"ck_{tableName}_source_not_empty",
+                "length(btrim(\"source\")) > 0");
+        }
 
         return table;
+    }
+
+    protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.Conventions.Replace<ForeignKeyIndexConvention>(services =>
+            new UnindexedProvenanceConvention(services.GetRequiredService<ProviderConventionSetBuilderDependencies>()));
+    }
+
+    /// <summary>
+    /// EF indexes every foreign key, and removing one by hand only makes it put the index back.
+    /// Nothing reads links or claims by their provenance alone, and an index for each of those two
+    /// keys would be half a gigabyte kept for the delete of a provenance row, which never happens.
+    /// </summary>
+    private sealed class UnindexedProvenanceConvention(ProviderConventionSetBuilderDependencies dependencies)
+        : ForeignKeyIndexConvention(dependencies)
+    {
+        protected override IConventionIndex? CreateIndex(
+            IReadOnlyList<IConventionProperty> properties,
+            bool unique,
+            IConventionEntityTypeBuilder entityTypeBuilder) =>
+            properties is [{ Name: nameof(Link.ProvenanceId) }]
+            && (entityTypeBuilder.Metadata.ClrType == typeof(Link) || entityTypeBuilder.Metadata.ClrType == typeof(LinkClaim))
+                ? null
+                : base.CreateIndex(properties, unique, entityTypeBuilder);
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

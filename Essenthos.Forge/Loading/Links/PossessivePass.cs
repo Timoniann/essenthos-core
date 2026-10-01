@@ -68,7 +68,7 @@ internal sealed class PossessivePass(AppDbContext db, ILogger<PossessivePass> lo
             await writer.CompleteAsync(cancellationToken);
         }
 
-        await using (var candidates = new NpgsqlCommand(Candidates, connection, transaction) { CommandTimeout = 1800 })
+        await using (var candidates = new NpgsqlCommand(Candidates, connection, transaction))
         {
             candidates.Parameters.AddWithValue("from", from.Id);
             candidates.Parameters.AddWithValue("to", to.Id);
@@ -90,10 +90,11 @@ internal sealed class PossessivePass(AppDbContext db, ILogger<PossessivePass> lo
 
         if (apply)
         {
-            await using var write = new NpgsqlCommand(Write, connection, transaction) { CommandTimeout = 1800 };
+            await using var write = new NpgsqlCommand(Write, connection, transaction);
             write.Parameters.AddWithValue("from", from.Id);
             write.Parameters.AddWithValue("to", to.Id);
-            write.Parameters.AddWithValue("source", Source);
+            write.Parameters.AddWithValue(
+                "provenance", await ProvenanceIds.Of(connection, transaction, Source, null, cancellationToken));
             write.Parameters.AddWithValue("confidence", Confidence);
             await write.ExecuteNonQueryAsync(cancellationToken);
         }
@@ -181,13 +182,15 @@ internal sealed class PossessivePass(AppDbContext db, ILogger<PossessivePass> lo
             SELECT word, hebrew, nextval(pg_get_serial_sequence('link', 'id')) AS id FROM possessive
         ),
         links AS (
-            INSERT INTO link (id, from_text_id, to_text_id, relation, method, confidence, source)
-            SELECT id, @from, @to, 'renders', 'rule-based', @confidence, @source FROM numbered
+            INSERT INTO link (id, from_text_id, to_text_id, relation, method, confidence, provenance_id, fingerprint)
+            SELECT id, @from, @to, 'renders', 'rule-based', @confidence, @provenance,
+                   md5('f' || word || ' t' || hebrew)::uuid
+            FROM numbered
             RETURNING id
         ),
         claims AS (
-            INSERT INTO link_claim (link_id, method, confidence, source)
-            SELECT id, 'rule-based', @confidence, @source FROM numbered
+            INSERT INTO link_claim (link_id, method, confidence, provenance_id)
+            SELECT id, 'rule-based', @confidence, @provenance FROM numbered
         ),
         froms AS (
             INSERT INTO link_word (link_id, word_id, side) SELECT id, word, 'from' FROM numbered

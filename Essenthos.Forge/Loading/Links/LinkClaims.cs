@@ -6,60 +6,12 @@ using Npgsql;
 namespace Essenthos.Core.Loading.Links;
 
 /// <summary>
-/// Records that the loader which just wrote a batch of links is the one claiming them.
-///
-/// `link_claim` arrived with a migration that backfilled one claim per link *that existed when it
-/// ran*, and nothing was taught to keep it up. Only <see cref="ClearBibleLinkLoader"/> wrote claims
-/// afterwards, so every link written since — the Berean's 403,343, every aligner run, everything
-/// reloaded — carried none, and a link two independent sources had both arrived at read as a link
-/// one source stated. The agreement measure sat at 4,664 and was measuring the migration.
-///
-/// <para>
-/// **A loader's own claim is taken from the link rather than passed in.** At the moment a batch is written the
-/// link's own <c>method</c>, <c>confidence</c> and <c>source</c> *are* its single claim, so copying
-/// them cannot disagree with them — and a helper that took them as arguments could be called with
-/// the wrong ones. The columns on <c>link</c> become a cached view of the strongest claim; this is
-/// where the reasoning is kept. <see cref="Corroborate"/> is the exception and has to be: a second
-/// source agreeing is by definition not what the link's own columns say.
-/// </para>
+/// A second answer on links somebody else already wrote. A loader's own claim on the links it writes
+/// arrives with them, from <see cref="LinkWriter"/>; this is for a source that reached the same place
+/// independently and is by definition not what the link's own columns say.
 /// </summary>
 internal static class LinkClaims
 {
-    private const string Import =
-        """
-        INSERT INTO link_claim (link_id, method, confidence, source, note)
-        SELECT id, method, confidence, source, note
-        FROM link
-        WHERE id >= @first AND id < @first + @count
-        ON CONFLICT DO NOTHING
-        """;
-
-    /// <summary>
-    /// One claim for each of the <paramref name="count"/> links written from
-    /// <paramref name="firstId"/>. Call it inside the same transaction as the links themselves: a
-    /// link with no claim is invisible to the agreement measure, and a claim with no link is refused
-    /// by the foreign key, so the two have to arrive together or not at all.
-    /// </summary>
-    public static async Task Record(
-        NpgsqlConnection connection,
-        IDbContextTransaction transaction,
-        long firstId,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        if (count <= 0)
-        {
-            return;
-        }
-
-        await using var command = new NpgsqlCommand(
-            Import, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.Parameters.AddWithValue("first", firstId);
-        command.Parameters.AddWithValue("count", (long)count);
-        command.CommandTimeout = 600;
-        await command.ExecuteNonQueryAsync(cancellationToken);
-    }
-
     /// <summary>
     /// A second answer on links that already have one: another source, asked independently, that
     /// agrees. Two sources agreeing is the whole point of the table — a link with two claims is one
@@ -70,7 +22,7 @@ internal static class LinkClaims
     /// The claim is passed in here rather than copied from the link, because it is by definition not
     /// what the link says: the link records the method and source that established it, and this
     /// records a different one that reached the same place. A claim is unique on
-    /// (link, method, source), so calling this twice with the same source adds nothing.
+    /// (link, method, source and note), so calling this twice with the same source adds nothing.
     /// </para>
     /// </summary>
     public static async Task Corroborate(
@@ -88,14 +40,13 @@ internal static class LinkClaims
             return;
         }
 
-        await using var command = new NpgsqlCommand(Corroboration, connection,
-            (NpgsqlTransaction)transaction.GetDbTransaction());
+        var npgsqlTransaction = (NpgsqlTransaction)transaction.GetDbTransaction();
+        await using var command = new NpgsqlCommand(Corroboration, connection, npgsqlTransaction);
         command.Parameters.AddWithValue("ids", linkIds as long[] ?? [.. linkIds]);
         command.Parameters.AddWithValue("method", EnumSpelling.Of(method));
         command.Parameters.AddWithValue("confidence", (object?)confidence ?? DBNull.Value);
-        command.Parameters.AddWithValue("source", source);
-        command.Parameters.AddWithValue("note", note);
-        command.CommandTimeout = 600;
+        command.Parameters.AddWithValue(
+            "provenance", await ProvenanceIds.Of(connection, npgsqlTransaction, source, note, cancellationToken));
         await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
@@ -124,29 +75,30 @@ internal static class LinkClaims
             return;
         }
 
-        await using var command = new NpgsqlCommand(
-            EachCorroboration, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
+        var npgsqlTransaction = (NpgsqlTransaction)transaction.GetDbTransaction();
+        var provenance = await ProvenanceIds.Of(
+            connection, npgsqlTransaction, claims.Select(claim => (claim.Source, (string?)note)), cancellationToken);
+        await using var command = new NpgsqlCommand(EachCorroboration, connection, npgsqlTransaction);
         command.Parameters.AddWithValue("ids", claims.Select(claim => claim.Link).ToArray());
         command.Parameters.AddWithValue("confidences", claims.Select(claim => claim.Confidence).ToArray());
-        command.Parameters.AddWithValue("sources", claims.Select(claim => claim.Source).ToArray());
+        command.Parameters.AddWithValue(
+            "provenances", claims.Select(claim => provenance[(claim.Source, note)]).ToArray());
         command.Parameters.AddWithValue("method", EnumSpelling.Of(method));
-        command.Parameters.AddWithValue("note", note);
-        command.CommandTimeout = 600;
         await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
     private const string Corroboration =
         """
-        INSERT INTO link_claim (link_id, method, confidence, source, note)
-        SELECT id, @method, @confidence, @source, @note FROM unnest(@ids) AS id
+        INSERT INTO link_claim (link_id, method, confidence, provenance_id)
+        SELECT id, @method, @confidence, @provenance FROM unnest(@ids) AS id
         ON CONFLICT DO NOTHING
         """;
 
     private const string EachCorroboration =
         """
-        INSERT INTO link_claim (link_id, method, confidence, source, note)
-        SELECT claim.link_id, @method, claim.confidence, claim.source, @note
-        FROM unnest(@ids, @confidences, @sources) AS claim(link_id, confidence, source)
+        INSERT INTO link_claim (link_id, method, confidence, provenance_id)
+        SELECT claim.link_id, @method, claim.confidence, claim.provenance_id
+        FROM unnest(@ids, @confidences, @provenances) AS claim(link_id, confidence, provenance_id)
         ON CONFLICT DO NOTHING
         """;
 }

@@ -108,7 +108,6 @@ internal sealed class CompositionTrial
         {
             command.Parameters.AddWithValue("from", fromTextId);
             command.Parameters.AddWithValue("to", toTextId);
-            command.CommandTimeout = 600;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {

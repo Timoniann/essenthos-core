@@ -135,7 +135,7 @@ public sealed class SuppliedWordTests : IDisposable
             ToTextId = _hebrew.Id,
             Relation = LinkRelation.Expands,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.SaveChanges();
@@ -144,7 +144,7 @@ public sealed class SuppliedWordTests : IDisposable
         {
             LinkId = link.Id,
             Method = link.Method,
-            Source = link.Source,
+            Provenance = link.Provenance,
         });
         _db.LinkWords.Add(new LinkWord { LinkId = link.Id, WordId = WordId(position), Side = LinkSide.From });
         _db.SaveChanges();

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -134,26 +135,10 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
     /// </summary>
     private const double SameVerse = 0.8;
 
-    private const string LinkImport =
-        """
-        COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
-    private const string LinkWordImport =
-        "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
-
     private const string StrongNumberTable =
         """
         CREATE TEMP TABLE tagged_strong (word_id bigint, strong_number text, position int) ON COMMIT DROP;
         """;
-
-    /// <summary>
-    /// How long each statement of the Strong-number write may take. It updates the King James words
-    /// of a whole Testament against a table of every tag, and on a server busy with something else
-    /// Npgsql's default thirty seconds runs out partway through the load.
-    /// </summary>
-    private const int WholeTestamentSeconds = 600;
 
     private const string StrongNumberUpdate =
         """
@@ -580,84 +565,36 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
-        var renders = EnumSpelling.Of(LinkRelation.Renders);
-        var expands = EnumSpelling.Of(LinkRelation.Expands);
-        var byNumber = EnumSpelling.Of(LinkMethod.StrongNumber);
-        var lexical = EnumSpelling.Of(LinkMethod.Lexical);
-        var bySource = EnumSpelling.Of(LinkMethod.StatedBySource);
-        var fromSide = EnumSpelling.Of(LinkSide.From);
-        var toSide = EnumSpelling.Of(LinkSide.To);
         var source = Source(greekSlug);
         var recovered = RecoveredSource(greekSlug);
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                var kind = drafts[i].Kind;
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(
-                    kind == GreekMatch.Supplied ? expands : renders, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(
-                    kind switch
+        await LinkWriter.Write(
+            connection,
+            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            [
+                .. drafts.Select(draft => new NewLink(
+                    fromTextId,
+                    toTextId,
+                    draft.Kind == GreekMatch.Supplied ? LinkRelation.Expands : LinkRelation.Renders,
+                    draft.Kind switch
                     {
-                        GreekMatch.Supplied => bySource,
-                        GreekMatch.FunctionWord => lexical,
-                        _ => byNumber,
+                        GreekMatch.Supplied => LinkMethod.StatedBySource,
+                        GreekMatch.FunctionWord => LinkMethod.Lexical,
+                        _ => LinkMethod.StrongNumber,
                     },
-                    NpgsqlDbType.Text,
-                    cancellationToken);
-
-                if (drafts[i].Confidence is { } confidence)
-                {
-                    await writer.WriteAsync(confidence, NpgsqlDbType.Double, cancellationToken);
-                }
-                else
-                {
-                    await writer.WriteNullAsync(cancellationToken);
-                }
-
-                await writer.WriteAsync(
-                    kind switch
+                    draft.Confidence,
+                    draft.Kind switch
                     {
                         GreekMatch.Supplied => SuppliedSource,
                         GreekMatch.FunctionWord => recovered,
                         _ => source,
                     },
-                    NpgsqlDbType.Text,
-                    cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                foreach (var wordId in drafts[i].English)
-                {
-                    await Row(writer, firstId + i, wordId, fromSide, cancellationToken);
-                }
-
-                foreach (var wordId in drafts[i].Greek)
-                {
-                    await Row(writer, firstId + i, wordId, toSide, cancellationToken);
-                }
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
+                    null,
+                    draft.English,
+                    draft.Greek)),
+            ],
+            cancellationToken);
 
         await WriteStrongNumbers(connection, stated, cancellationToken);
-        // The claim that says this loader is the one asserting these links. Written here rather
-        // than left to a backfill: a link with no claim is invisible to the agreement measure, and
-        // the measure spent a day reporting the migration instead of the corpus.
-        await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);
     }
@@ -682,7 +619,6 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
 
         await using (var create = new NpgsqlCommand(StrongNumberTable, connection))
         {
-            create.CommandTimeout = WholeTestamentSeconds;
             await create.ExecuteNonQueryAsync(cancellationToken);
         }
 
@@ -714,40 +650,13 @@ internal sealed class NewTestamentLinkLoader(AppDbContext db, ILogger<NewTestame
 
         await using (var update = new NpgsqlCommand(StrongNumberUpdate, connection))
         {
-            update.CommandTimeout = WholeTestamentSeconds;
             await update.ExecuteNonQueryAsync(cancellationToken);
         }
 
         await using var phrases = new NpgsqlCommand(PhraseNumbers, connection);
-        phrases.CommandTimeout = WholeTestamentSeconds;
         phrases.Parameters.AddWithValue("method", EnumSpelling.Of(LinkMethod.StatedBySource));
         phrases.Parameters.AddWithValue("source", PhraseSource);
         await phrases.ExecuteNonQueryAsync(cancellationToken);
-    }
-
-    private static async Task Row(
-        NpgsqlBinaryImporter writer,
-        long linkId,
-        long wordId,
-        string side,
-        CancellationToken cancellationToken)
-    {
-        await writer.StartRowAsync(cancellationToken);
-        await writer.WriteAsync(linkId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-    }
-
-    private static async Task<long> ReserveLinkIds(
-        NpgsqlConnection connection,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     /// <param name="Supplied">

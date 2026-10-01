@@ -249,7 +249,7 @@ public sealed class ClearBibleAstrayLoadTests : IDisposable
         var outcome = await _loader.Load(_folder, _set);
 
         (outcome.Records, outcome.Astray, outcome.Added).Should().Be((2, 1, 1));
-        var words = await _db.LinkWords.Where(word => word.Link!.Source == Statement)
+        var words = await _db.LinkWords.Where(word => word.Link!.Provenance!.Source == Statement)
             .Select(word => word.Word!.Surface).ToListAsync();
         words.Should().BeEquivalentTo(["tierra", "tierra"]);
     }
@@ -278,6 +278,6 @@ public sealed class ClearBibleAstrayLoadTests : IDisposable
         await _loader.Withdraw(_set);
 
         (await _db.VerseLinks.CountAsync(link => link.Source == Statement)).Should().Be(0);
-        (await _db.Links.CountAsync(link => link.Source == Statement)).Should().Be(0);
+        (await _db.Links.CountAsync(link => link.Provenance!.Source == Statement)).Should().Be(0);
     }
 }

@@ -241,10 +241,10 @@ internal static class TextCensus
         // same thing, so only the others are kept apart.
         var links = await Rows(connection,
             """
-            select from_text_id, to_text_id, method, relation,
-                   case when method = 'aligner' then '' else source end,
-                   count(*), count(confidence), coalesce(sum(confidence), 0)
-            from link
+            select l.from_text_id, l.to_text_id, l.method, l.relation, coalesce(p.source, ''),
+                   count(*), count(l.confidence), coalesce(sum(l.confidence), 0)
+            from link l
+            left join provenance p on p.id = l.provenance_id and l.method <> 'aligner'
             group by 1, 2, 3, 4, 5
             """,
             r => (From: r.GetInt32(0), To: r.GetInt32(1), Method: r.GetString(2), Relation: r.GetString(3), Source: r.GetString(4),

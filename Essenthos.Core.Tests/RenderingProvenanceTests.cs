@@ -117,7 +117,7 @@ public sealed class RenderingProvenanceTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = method,
             Confidence = confidence,
-            Source = source,
+            Provenance = new() { Source = source },
         };
         _db.Links.Add(link);
         _db.SaveChanges();
@@ -129,7 +129,7 @@ public sealed class RenderingProvenanceTests : IDisposable
                 LinkId = link.Id,
                 Method = claim.Method,
                 Confidence = claim.Confidence,
-                Source = claim.Source,
+                Provenance = new() { Source = claim.Source },
             });
         }
 

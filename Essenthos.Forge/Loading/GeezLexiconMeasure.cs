@@ -41,7 +41,7 @@ internal sealed class GeezLexiconMeasure(AppDbContext db)
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
-        await using var command = new NpgsqlCommand(Words, connection) { CommandTimeout = 0 };
+        await using var command = new NpgsqlCommand(Words, connection);
         command.Parameters.AddWithValue("slug", Sources.GeezSlug);
 
         var counts = new Dictionary<(string Part, string Via), int>();

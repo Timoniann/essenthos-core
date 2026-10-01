@@ -310,7 +310,6 @@ internal sealed class ContextBearerLoader(
     {
         await using var command = new NpgsqlCommand(
             Contest, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.CommandTimeout = Annotating.Patient;
         var rows = new List<(long, int, int)>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
@@ -373,7 +372,6 @@ internal sealed class ContextBearerLoader(
             command.Parameters.AddWithValue(name, value);
         }
 
-        command.CommandTimeout = Annotating.Patient;
         var rows = new List<T>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))

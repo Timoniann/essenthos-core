@@ -6,6 +6,7 @@ using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Door43;
 using Essenthos.Core.Corpus;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -117,31 +118,19 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         "unfoldingWord Literal Text alignment to unfoldingWord's Hebrew Bible and Greek New Testament, "
         + "release 90, git.door43.org/unfoldingWord/en_ult, CC BY-SA 4.0";
 
-    private const string LinkImport =
-        """
-        COPY link (id, from_text_id, to_text_id, relation, method, source)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
-    private const string LinkWordImport =
-        "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
-
     public async Task<InterlinearOutcome> Load(
         string folder,
         string translationSlug,
         string source,
         CancellationToken cancellationToken = default)
     {
-        // The full corpus holds millions of claims: asking whether this source already stated any takes
-        // longer than the default 30 seconds there, as it never did on a slim copy.
-        db.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
         var translation = await Text(translationSlug, cancellationToken);
 
         // Asked of this source and not of any statement: the Van Dyck and the Hindi already hold Clear
         // Bible's stated links when their Door43 alignment arrives, and a second statement about the same
         // words is what the corpus wants rather than a reason to skip.
-        if (await db.Links.AnyAsync(l => l.FromTextId == translation && l.Source == source, cancellationToken)
-            || await db.LinkClaims.AnyAsync(c => c.Source == source && c.Link!.FromTextId == translation, cancellationToken))
+        if (await db.Links.AnyAsync(l => l.FromTextId == translation && l.Provenance!.Source == source, cancellationToken)
+            || await db.LinkClaims.AnyAsync(c => c.Provenance!.Source == source && c.Link!.FromTextId == translation, cancellationToken))
         {
             logger.LogInformation("{Text} is already linked from the interlinear; nothing to do", translationSlug);
             return new InterlinearOutcome(translationSlug, 0, 0, 0, 0, 0, TimeSpan.Zero);
@@ -395,10 +384,12 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         await db.Database.OpenConnectionAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        var npgsqlTransaction = (NpgsqlTransaction)transaction.GetDbTransaction();
         (string, object)[] parameters =
         [
             ("translation", translation),
             ("source", source),
+            ("provenance", await ProvenanceIds.Of(connection, npgsqlTransaction, source, null, cancellationToken)),
             ("stated", EnumSpelling.Of(LinkMethod.StatedBySource)),
             ("manual", EnumSpelling.Of(LinkMethod.Manual)),
             ("numbered", EnumSpelling.Of(LinkMethod.StrongNumber)),
@@ -444,7 +435,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         var demoted = await Count(connection, Rehead, cancellationToken, parameters);
 
         var unmatched = new List<int>();
-        await using (var command = new NpgsqlCommand(Unmatched, connection) { CommandTimeout = 600 })
+        await using (var command = new NpgsqlCommand(Unmatched, connection))
         await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
         {
             while (await reader.ReadAsync(cancellationToken))
@@ -453,16 +444,15 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             }
         }
 
-        if (unmatched.Count > 0)
-        {
-            var fresh = unmatched.Select(index => distinct[index]).ToList();
-            var firstId = await ReserveLinkIds(connection, fresh.Count, cancellationToken);
-            await WriteLinks(connection, source, fresh, firstId, cancellationToken);
-
-            // The claim that says this loader is the one asserting these links, in the same
-            // transaction: a link with no claim is invisible to the agreement measure.
-            await LinkClaims.Record(connection, transaction, firstId, fresh.Count, cancellationToken);
-        }
+        await LinkWriter.Write(
+            connection,
+            npgsqlTransaction,
+            [
+                .. unmatched.Select(index => new NewLink(
+                    distinct[index].FromTextId, distinct[index].ToTextId, LinkRelation.Renders,
+                    LinkMethod.StatedBySource, null, source, null, distinct[index].From, distinct[index].To)),
+            ],
+            cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);
         return new InterlinearReconciliation(kept, adopted, unmatched.Count, retracted, yielded, demoted, removed);
@@ -506,7 +496,8 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         ANALYZE interlinear_shape;
 
         CREATE TEMP TABLE interlinear_nearby ON COMMIT DROP AS
-        WITH touched AS (
+        WITH said AS (SELECT id FROM provenance WHERE source = @source),
+        touched AS (
             SELECT lw.link_id
             FROM interlinear_draft d
             JOIN link_word lw ON lw.word_id = d.word_id AND lw.side = 'from'
@@ -516,13 +507,14 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
             FROM link l
             WHERE l.from_text_id = @translation AND l.method IN (@stated, @manual)
               AND EXISTS (SELECT 1 FROM link_claim c
-                          WHERE c.link_id = l.id AND c.method = @stated AND c.source = @source)
+                          WHERE c.link_id = l.id AND c.method = @stated AND c.provenance_id IN (SELECT id FROM said))
         )
         SELECT l.id, l.to_text_id, l.relation,
                (SELECT string_agg(lw.side || ':' || lw.word_id, ',' ORDER BY lw.side, lw.word_id)
                 FROM link_word lw WHERE lw.link_id = l.id) AS shape,
                EXISTS (SELECT 1 FROM link_claim c
-                       WHERE c.link_id = l.id AND c.method = @stated AND c.source = @source) AS testified
+                       WHERE c.link_id = l.id AND c.method = @stated
+                         AND c.provenance_id IN (SELECT id FROM said)) AS testified
         FROM touched t
         JOIN link l ON l.id = t.link_id
         WHERE l.from_text_id = @translation;
@@ -548,14 +540,14 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
     /// </summary>
     private const string Adopt =
         """
-        INSERT INTO link_claim (link_id, method, confidence, source, note)
-        SELECT l.id, l.method, l.confidence, l.source, l.note
+        INSERT INTO link_claim (link_id, method, confidence, provenance_id)
+        SELECT l.id, l.method, l.confidence, l.provenance_id
         FROM link l
         JOIN interlinear_match m ON m.link_id = l.id AND NOT m.testified
         ON CONFLICT DO NOTHING;
 
-        INSERT INTO link_claim (link_id, method, confidence, source, note)
-        SELECT link_id, @stated, NULL, @source, NULL FROM interlinear_match
+        INSERT INTO link_claim (link_id, method, confidence, provenance_id)
+        SELECT link_id, @stated, NULL, @provenance FROM interlinear_match
         ON CONFLICT DO NOTHING;
         """;
 
@@ -569,7 +561,8 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         WITH retracted AS (
             DELETE FROM link_claim c
             USING interlinear_nearby n
-            WHERE c.link_id = n.id AND n.testified AND c.method = @stated AND c.source = @source
+            WHERE c.link_id = n.id AND n.testified AND c.method = @stated
+              AND c.provenance_id IN (SELECT id FROM provenance WHERE source = @source)
               AND NOT EXISTS (SELECT 1 FROM interlinear_match m WHERE m.link_id = n.id)
             RETURNING c.link_id
         ),
@@ -605,7 +598,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
     private static string Rehead =>
         $"""
          WITH best AS (
-             SELECT DISTINCT ON (c.link_id) c.link_id, c.method, c.confidence, c.source, c.note
+             SELECT DISTINCT ON (c.link_id) c.link_id, c.method, c.confidence, c.provenance_id
              FROM link_claim c
              WHERE c.link_id IN (SELECT link_id FROM interlinear_withdrawn
                                  UNION SELECT link_id FROM interlinear_match)
@@ -613,11 +606,11 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
          ),
          headed AS (
              UPDATE link l
-             SET method = best.method, confidence = best.confidence, source = best.source, note = best.note
+             SET method = best.method, confidence = best.confidence, provenance_id = best.provenance_id
              FROM best
              WHERE l.id = best.link_id
-               AND (l.method, l.confidence, l.source, l.note)
-                   IS DISTINCT FROM (best.method, best.confidence, best.source, best.note)
+               AND (l.method, l.confidence, l.provenance_id)
+                   IS DISTINCT FROM (best.method, best.confidence, best.provenance_id)
              RETURNING l.id, l.method
          )
          SELECT count(*) FROM headed
@@ -645,7 +638,7 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         CancellationToken cancellationToken,
         params (string Name, object Value)[] parameters)
     {
-        await using var command = new NpgsqlCommand(sql, connection) { CommandTimeout = 600 };
+        await using var command = new NpgsqlCommand(sql, connection);
         foreach (var (name, value) in parameters)
         {
             command.Parameters.AddWithValue(name, value);
@@ -660,85 +653,13 @@ internal sealed class InterlinearLinkLoader(AppDbContext db, ILogger<Interlinear
         CancellationToken cancellationToken,
         params (string Name, object Value)[] parameters)
     {
-        await using var command = new NpgsqlCommand(sql, connection) { CommandTimeout = 600 };
+        await using var command = new NpgsqlCommand(sql, connection);
         foreach (var (name, value) in parameters)
         {
             command.Parameters.AddWithValue(name, value);
         }
 
         return (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
-    }
-
-    private static async Task WriteLinks(
-        NpgsqlConnection connection,
-        string source,
-        List<InterlinearDraft> drafts,
-        long firstId,
-        CancellationToken cancellationToken)
-    {
-        var relation = EnumSpelling.Of(LinkRelation.Renders);
-        var method = EnumSpelling.Of(LinkMethod.StatedBySource);
-        var fromSide = EnumSpelling.Of(LinkSide.From);
-        var toSide = EnumSpelling.Of(LinkSide.To);
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                await writer.WriteAsync(drafts[i].FromTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(drafts[i].ToTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(relation, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(source, NpgsqlDbType.Text, cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                foreach (var word in drafts[i].From)
-                {
-                    await Row(writer, firstId + i, word, fromSide, cancellationToken);
-                }
-
-                foreach (var word in drafts[i].To)
-                {
-                    await Row(writer, firstId + i, word, toSide, cancellationToken);
-                }
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-    }
-
-    private static async Task Row(
-        NpgsqlBinaryImporter writer,
-        long linkId,
-        long wordId,
-        string side,
-        CancellationToken cancellationToken)
-    {
-        await writer.StartRowAsync(cancellationToken);
-        await writer.WriteAsync(linkId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-    }
-
-    private static async Task<long> ReserveLinkIds(
-        NpgsqlConnection connection,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection) { CommandTimeout = 600 };
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     private async Task<int> Text(string slug, CancellationToken cancellationToken) =>

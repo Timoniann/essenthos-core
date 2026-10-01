@@ -195,7 +195,7 @@ public sealed class EntityAnnotationTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = method,
             Confidence = confidence,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = from, Side = LinkSide.From });
@@ -216,7 +216,7 @@ public sealed class EntityAnnotationTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StrongNumber,
             Confidence = 0.3,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
 
@@ -245,7 +245,7 @@ public sealed class EntityAnnotationTests : IDisposable
             ToTextId = to[0].TextId,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = from, Side = LinkSide.From });

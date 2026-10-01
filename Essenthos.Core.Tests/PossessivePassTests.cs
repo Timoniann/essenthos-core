@@ -57,7 +57,7 @@ public sealed class PossessivePassTests : IDisposable
         report.Should().StartWith("RUSV to BHSA: 1 possessives");
         again.Should().StartWith("RUSV to BHSA: 0 possessives");
         var written = await _db.Links.AsNoTracking()
-            .Where(link => link.Source == PossessivePass.Source)
+            .Where(link => link.Provenance!.Source == PossessivePass.Source)
             .Select(link => new
             {
                 link.Method,
@@ -114,12 +114,12 @@ public sealed class PossessivePassTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Aligner,
             Confidence = 0.9,
-            Source = "SIL.Machine, aligned as written",
+            Provenance = new() { Source = "SIL.Machine, aligned as written" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(_russian, 4, 8, russian), Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(_hebrew, 4, 8, hebrew), Side = LinkSide.To });
-        _db.LinkClaims.Add(new LinkClaim { Link = link, Method = LinkMethod.Aligner, Confidence = 0.9, Source = link.Source });
+        _db.LinkClaims.Add(new LinkClaim { Link = link, Method = LinkMethod.Aligner, Confidence = 0.9, Provenance = link.Provenance});
         _db.SaveChanges();
     }
 }

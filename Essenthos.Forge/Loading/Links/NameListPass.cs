@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Diagnostics;
 using System.Text;
 using Essenthos.Core.Database;
@@ -64,15 +65,6 @@ internal sealed record NameListOutcome(
 internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, ILogger<NameListPass> logger)
 {
     internal const string Source = "the names of the verse, paired by spelling and order";
-
-    private const string LinkImport =
-        """
-        COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
-    private const string LinkWordImport =
-        "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
 
     /// <param name="chapters">
     /// Chapters to report on apart from the whole, as canonical book and chapter. Applying always
@@ -268,7 +260,6 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
             """, connection);
         command.Parameters.AddWithValue("from", fromTextId);
         command.Parameters.AddWithValue("to", toTextId);
-        command.CommandTimeout = 600;
 
         var guessed = new List<(long From, long Link, long To)>(600_000);
         var stated = new List<(long From, long To)>(600_000);
@@ -377,75 +368,23 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
                          "DELETE FROM link WHERE id = ANY(@ids) AND method = 'aligner'", connection))
         {
             delete.Parameters.AddWithValue("ids", refused.ToArray());
-            delete.CommandTimeout = 600;
             await delete.ExecuteNonQueryAsync(cancellationToken);
         }
 
         if (added.Count > 0)
         {
-            var firstId = await ReserveLinkIds(connection, added.Count, cancellationToken);
-            var renders = EnumSpelling.Of(LinkRelation.Renders);
-            var method = EnumSpelling.Of(LinkMethod.Aligner);
-
-            await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-            {
-                for (var i = 0; i < added.Count; i++)
-                {
-                    await writer.StartRowAsync(cancellationToken);
-                    await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                    await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                    await writer.WriteAsync(renders, NpgsqlDbType.Text, cancellationToken);
-                    await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
-                    await writer.WriteAsync(NameLists.Settled, NpgsqlDbType.Double, cancellationToken);
-                    await writer.WriteAsync(Source, NpgsqlDbType.Text, cancellationToken);
-                }
-
-                await writer.CompleteAsync(cancellationToken);
-            }
-
-            await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-            {
-                var fromSide = EnumSpelling.Of(LinkSide.From);
-                var toSide = EnumSpelling.Of(LinkSide.To);
-                for (var i = 0; i < added.Count; i++)
-                {
-                    await Row(writer, firstId + i, added[i].From, fromSide, cancellationToken);
-                    await Row(writer, firstId + i, added[i].To, toSide, cancellationToken);
-                }
-
-                await writer.CompleteAsync(cancellationToken);
-            }
-
-            await LinkClaims.Record(connection, transaction, firstId, added.Count, cancellationToken);
+            await LinkWriter.Write(
+                connection,
+                (NpgsqlTransaction)transaction.GetDbTransaction(),
+                [
+                    .. added.Select(pair => new NewLink(
+                        fromTextId, toTextId, LinkRelation.Renders, LinkMethod.Aligner, NameLists.Settled, Source, null,
+                        [pair.From], [pair.To])),
+                ],
+                cancellationToken);
         }
 
         await transaction.CommitAsync(cancellationToken);
-    }
-
-    private static async Task Row(
-        NpgsqlBinaryImporter writer,
-        long linkId,
-        long wordId,
-        string side,
-        CancellationToken cancellationToken)
-    {
-        await writer.StartRowAsync(cancellationToken);
-        await writer.WriteAsync(linkId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-    }
-
-    private static async Task<long> ReserveLinkIds(
-        NpgsqlConnection connection,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     /// <param name="Guessed">The aligner's links by source word: the link, and the word it reaches.</param>

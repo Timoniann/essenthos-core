@@ -230,22 +230,22 @@ public sealed class TextBoardTests : IDisposable
         var stated = new Link
         {
             FromTextId = translation.Id, ToTextId = original.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.StatedBySource, Source = BereanSource,
+            Method = LinkMethod.StatedBySource, Provenance = new() { Source = BereanSource },
         };
         stated.Words.Add(new LinkWord { WordId = a.Id, Side = LinkSide.From });
         stated.Words.Add(new LinkWord { WordId = b.Id, Side = LinkSide.From });
         stated.Words.Add(new LinkWord { WordId = x.Id, Side = LinkSide.To });
-        stated.Claims.Add(new LinkClaim { Method = LinkMethod.StatedBySource, Source = BereanSource });
-        stated.Claims.Add(new LinkClaim { Method = LinkMethod.Aligner, Confidence = 0.9, Source = "SIL.Machine, a test run" });
+        stated.Claims.Add(new LinkClaim { Method = LinkMethod.StatedBySource, Provenance = new() { Source = BereanSource }});
+        stated.Claims.Add(new LinkClaim { Method = LinkMethod.Aligner, Confidence = 0.9, Provenance = new() { Source = "SIL.Machine, a test run" }});
 
         var aligned = new Link
         {
             FromTextId = translation.Id, ToTextId = original.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.Aligner, Confidence = 0.5, Source = "SIL.Machine, a test run",
+            Method = LinkMethod.Aligner, Confidence = 0.5, Provenance = new() { Source = "SIL.Machine, a test run" },
         };
         aligned.Words.Add(new LinkWord { WordId = d.Id, Side = LinkSide.From });
         aligned.Words.Add(new LinkWord { WordId = z.Id, Side = LinkSide.To });
-        aligned.Claims.Add(new LinkClaim { Method = LinkMethod.Aligner, Confidence = 0.5, Source = "SIL.Machine, a test run" });
+        aligned.Claims.Add(new LinkClaim { Method = LinkMethod.Aligner, Confidence = 0.5, Provenance = new() { Source = "SIL.Machine, a test run" }});
         _db.Links.AddRange(stated, aligned);
 
         var verses = new VerseLink

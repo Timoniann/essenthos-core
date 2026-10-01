@@ -698,13 +698,13 @@ public sealed class DeuterocanonVerseLinkTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Aligner,
             Confidence = 0.9,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         await _db.SaveChangesAsync();
         _db.LinkClaims.Add(new LinkClaim
         {
-            LinkId = link.Id, Method = link.Method, Confidence = link.Confidence, Source = link.Source,
+            LinkId = link.Id, Method = link.Method, Confidence = link.Confidence, Provenance = link.Provenance,
         });
         _db.LinkWords.Add(new LinkWord { LinkId = link.Id, WordId = words[from].Id, Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { LinkId = link.Id, WordId = words[to].Id, Side = LinkSide.To });

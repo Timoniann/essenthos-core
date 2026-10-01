@@ -153,7 +153,6 @@ internal sealed class FixedTitleLoader(AppDbContext db, ILogger<FixedTitleLoader
         await using var contest = new NpgsqlCommand(
             Contest, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
         contest.Parameters.AddWithValue("title", Title);
-        contest.CommandTimeout = Annotating.Patient;
         var contested = await contest.ExecuteNonQueryAsync(cancellationToken);
 
         var method = EnumSpelling.Of(LinkMethod.RuleBased);
@@ -195,7 +194,6 @@ internal sealed class FixedTitleLoader(AppDbContext db, ILogger<FixedTitleLoader
             command.Parameters.AddWithValue(name, value);
         }
 
-        command.CommandTimeout = Annotating.Patient;
         var rows = new List<T>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))

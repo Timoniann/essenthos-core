@@ -339,7 +339,7 @@ public sealed class CorpusCheckTests : IDisposable
             ToTextId = _hebrew.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Manual,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         });
         _db.SaveChanges();
 
@@ -469,7 +469,7 @@ public sealed class CorpusCheckTests : IDisposable
             ToTextId = _hebrew.Id,
             Relation = relation,
             Method = method,
-            Source = source,
+            Provenance = new() { Source = source },
 
             // Confidence is null exactly when a source stated it, and set exactly when something
             // inferred it. The schema holds that as a check constraint, so a fixture that ignores
@@ -487,7 +487,7 @@ public sealed class CorpusCheckTests : IDisposable
             LinkId = link.Id,
             Method = link.Method,
             Confidence = link.Confidence,
-            Source = link.Source,
+            Provenance = link.Provenance,
         });
 
         // An `omits` link names no word of the text it is written from — that is the whole claim —
@@ -523,7 +523,7 @@ public sealed class CorpusCheckTests : IDisposable
             LinkId = link.Id,
             Method = link.Method,
             Confidence = link.Confidence,
-            Source = source,
+            Provenance = new() { Source = source },
         });
         _db.SaveChanges();
     }

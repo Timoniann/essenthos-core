@@ -90,7 +90,7 @@ public sealed class GeezMeaningTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Aligner,
             Confidence = confidence,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = from, Side = LinkSide.From });

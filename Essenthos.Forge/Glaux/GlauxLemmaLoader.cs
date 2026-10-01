@@ -271,7 +271,6 @@ internal sealed class GlauxLemmaLoader(AppDbContext db, ILogger<GlauxLemmaLoader
             "UPDATE word SET lemma = g.lemma FROM glaux_lemma g WHERE word.id = g.word_id",
             connection, (NpgsqlTransaction)transaction.GetDbTransaction()))
         {
-            update.CommandTimeout = 600;
             await update.ExecuteNonQueryAsync(cancellationToken);
         }
 

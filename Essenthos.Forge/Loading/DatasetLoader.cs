@@ -74,7 +74,6 @@ internal sealed class DatasetLoader(
         using (var scope = services.CreateScope())
         {
             var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-            db.Database.SetCommandTimeout(TimeSpan.FromMinutes(30));
             var deleted = await db.Texts.Where(text => text.Slug == slug).ExecuteDeleteAsync(cancellationToken);
             logger.LogInformation("Deleted {Count} text {Slug} with its words, verses and links", deleted, slug);
         }
@@ -578,7 +577,7 @@ internal sealed class DatasetLoader(
                 var synodal = await db.Texts.SingleAsync(t => t.Slug == Bible4uTextSource.Synodal, cancellationToken);
                 if (!await db.Links.AnyAsync(
                         l => l.FromTextId == synodal.Id && l.Method == LinkMethod.StrongNumber
-                             && l.Source.StartsWith(SynodalStrongLinkLoader.Credit),
+                             && l.Provenance!.Source.StartsWith(SynodalStrongLinkLoader.Credit),
                         cancellationToken))
                 {
                     continue;
@@ -1298,15 +1297,12 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        db.Database.SetCommandTimeout(StatisticsTimeout);
         var started = Stopwatch.StartNew();
         await db.Database.ExecuteSqlRawAsync(AnalyseTheTexts, cancellationToken);
         status.Record($"The texts' tables analysed again in {started.Elapsed}");
     }
 
     private const string AnalyseTheTexts = "ANALYZE text, book, chapter, verse, word";
-
-    private static readonly TimeSpan StatisticsTimeout = TimeSpan.FromMinutes(10);
 
     private async Task JoinTheVerses(CancellationToken cancellationToken)
     {
@@ -2190,7 +2186,6 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        db.Database.SetCommandTimeout(TimeSpan.FromMinutes(10));
         var changed = await db.Database.ExecuteSqlRawAsync(NamingVerses, cancellationToken);
         var naming = await db.EntityVerses.CountAsync(v => v.Names, cancellationToken);
         var all = await db.EntityVerses.CountAsync(cancellationToken);

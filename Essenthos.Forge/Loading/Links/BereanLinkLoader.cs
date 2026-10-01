@@ -114,27 +114,12 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
     private const string Source =
         "Berean Standard Bible translation tables, bereanbible.com, public domain";
 
-    /// <summary>
-    /// A withdrawal cascades through a few hundred thousand link words and their claims, which does
-    /// not finish inside the default thirty seconds.
-    /// </summary>
-    private static readonly TimeSpan WithdrawTimeout = TimeSpan.FromMinutes(30);
-
     private const char OpenParagraph = 'פ';
 
     private const char ClosedParagraph = 'ס';
 
     /// <summary>The table's mark for a word rendered together with the word whose English follows.</summary>
     private const string Together = "vvv";
-
-    private const string LinkImport =
-        """
-        COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
-    private const string LinkWordImport =
-        "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
 
     public async Task<BereanLinkOutcome> Load(
         string tables,
@@ -153,7 +138,7 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         // Guarded on this source rather than on the pair: the aligner may already have spoken about
         // these two texts, and what it said is not what this file says.
         if (await db.Links.AnyAsync(
-                l => l.FromTextId == from && l.ToTextId == to && l.Source == Source, cancellationToken))
+                l => l.FromTextId == from && l.ToTextId == to && l.Provenance!.Source == Source, cancellationToken))
         {
             logger.LogInformation("The Berean is already linked to {Witness}; nothing to do", witnessSlug);
             return new BereanLinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
@@ -282,9 +267,9 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         var from = await Text(BereanTextSource.Slug, cancellationToken);
         var to = await Text(witnessSlug, cancellationToken);
 
-        db.Database.SetCommandTimeout(WithdrawTimeout);
         return await db.Database.ExecuteSqlRawAsync(
-            "DELETE FROM link WHERE from_text_id = {0} AND to_text_id = {1} AND source = {2}",
+            "DELETE FROM link WHERE from_text_id = {0} AND to_text_id = {1} " +
+            "AND provenance_id IN (SELECT id FROM provenance WHERE source = {2})",
             [from, to, Source], cancellationToken);
     }
 
@@ -692,77 +677,17 @@ internal sealed class BereanLinkLoader(AppDbContext db, ILogger<BereanLinkLoader
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
-        var method = EnumSpelling.Of(LinkMethod.StatedBySource);
-        var fromSide = EnumSpelling.Of(LinkSide.From);
-        var toSide = EnumSpelling.Of(LinkSide.To);
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(EnumSpelling.Of(drafts[i].Relation), NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteNullAsync(cancellationToken);
-                await writer.WriteAsync(Source, NpgsqlDbType.Text, cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                foreach (var word in drafts[i].From)
-                {
-                    await Row(writer, firstId + i, word, fromSide, cancellationToken);
-                }
-
-                foreach (var word in drafts[i].To)
-                {
-                    await Row(writer, firstId + i, word, toSide, cancellationToken);
-                }
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        // The claim that says this loader is the one asserting these links. Written here rather
-        // than left to a backfill: a link with no claim is invisible to the agreement measure, and
-        // the measure spent a day reporting the migration instead of the corpus.
-        await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
+        await LinkWriter.Write(
+            connection,
+            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            [
+                .. drafts.Select(draft => new NewLink(
+                    fromTextId, toTextId, draft.Relation, LinkMethod.StatedBySource, null, Source, null,
+                    draft.From, draft.To)),
+            ],
+            cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);
-    }
-
-    private static async Task Row(
-        NpgsqlBinaryImporter writer,
-        long linkId,
-        long wordId,
-        string side,
-        CancellationToken cancellationToken)
-    {
-        await writer.StartRowAsync(cancellationToken);
-        await writer.WriteAsync(linkId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-    }
-
-    private static async Task<long> ReserveLinkIds(
-        NpgsqlConnection connection,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     private async Task<int> Text(string slug, CancellationToken cancellationToken) =>

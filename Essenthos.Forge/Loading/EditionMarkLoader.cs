@@ -359,7 +359,6 @@ internal sealed class EditionMarkLoader(AppDbContext db, ILogger<EditionMarkLoad
         });
         command.Parameters.AddWithValue("spans", memberSpans.ToArray());
         command.Parameters.AddWithValue("words", members.ToArray());
-        command.CommandTimeout = 600;
         await command.ExecuteNonQueryAsync(cancellationToken);
     }
 

@@ -298,7 +298,7 @@ public sealed class TextRepairTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Aligner,
             Confidence = 0.5,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, WordId = rendering.Id, Side = LinkSide.From });

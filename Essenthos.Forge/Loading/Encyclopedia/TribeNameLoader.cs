@@ -166,7 +166,6 @@ internal sealed class TribeNameLoader(AppDbContext db, ILogger<TribeNameLoader> 
     {
         await using var command = new NpgsqlCommand(
             Tally, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.CommandTimeout = Annotating.Patient;
 
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         await reader.ReadAsync(cancellationToken);

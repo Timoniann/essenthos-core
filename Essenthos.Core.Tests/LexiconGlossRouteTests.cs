@@ -68,7 +68,7 @@ public sealed class LexiconGlossRouteTests : IDisposable
             Relation = LinkRelation.Equals,
             Method = LinkMethod.Lexical,
             Confidence = 0.9,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(_swete, 1, 1, 2), Side = LinkSide.From });

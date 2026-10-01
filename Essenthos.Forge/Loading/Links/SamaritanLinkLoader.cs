@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore.Storage;
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -79,15 +80,6 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
 {
     private const string Source =
         "the consonants both Hebrew witnesses write, aligned within each verse";
-
-    private const string LinkImport =
-        """
-        COPY link (id, from_text_id, to_text_id, relation, method, confidence, source)
-        FROM STDIN (FORMAT BINARY)
-        """;
-
-    private const string LinkWordImport =
-        "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
 
     public async Task<SamaritanLinkOutcome> Load(
         string fromSlug,
@@ -345,74 +337,16 @@ internal sealed class SamaritanLinkLoader(AppDbContext db, ILogger<SamaritanLink
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        var firstId = await ReserveLinkIds(connection, drafts.Count, cancellationToken);
-        var method = EnumSpelling.Of(LinkMethod.Lexical);
-        var fromSide = EnumSpelling.Of(LinkSide.From);
-        var toSide = EnumSpelling.Of(LinkSide.To);
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                await writer.StartRowAsync(cancellationToken);
-                await writer.WriteAsync(firstId + i, NpgsqlDbType.Bigint, cancellationToken);
-                await writer.WriteAsync(fromTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(toTextId, NpgsqlDbType.Integer, cancellationToken);
-                await writer.WriteAsync(
-                    EnumSpelling.Of(drafts[i].Relation), NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(method, NpgsqlDbType.Text, cancellationToken);
-                await writer.WriteAsync(drafts[i].Confidence, NpgsqlDbType.Double, cancellationToken);
-                await writer.WriteAsync(Source, NpgsqlDbType.Text, cancellationToken);
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
-        {
-            for (var i = 0; i < drafts.Count; i++)
-            {
-                foreach (var word in drafts[i].From)
-                {
-                    await Row(writer, firstId + i, word, fromSide, cancellationToken);
-                }
-
-                foreach (var word in drafts[i].To)
-                {
-                    await Row(writer, firstId + i, word, toSide, cancellationToken);
-                }
-            }
-
-            await writer.CompleteAsync(cancellationToken);
-        }
-
-        await LinkClaims.Record(connection, transaction, firstId, drafts.Count, cancellationToken);
+        await LinkWriter.Write(
+            connection,
+            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            [
+                .. drafts.Select(draft => new NewLink(
+                    fromTextId, toTextId, draft.Relation, LinkMethod.Lexical, draft.Confidence, Source, null,
+                    draft.From, draft.To)),
+            ],
+            cancellationToken);
         await transaction.CommitAsync(cancellationToken);
-    }
-
-    private static async Task Row(
-        NpgsqlBinaryImporter writer,
-        long linkId,
-        long wordId,
-        string side,
-        CancellationToken cancellationToken)
-    {
-        await writer.StartRowAsync(cancellationToken);
-        await writer.WriteAsync(linkId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
-        await writer.WriteAsync(side, NpgsqlDbType.Text, cancellationToken);
-    }
-
-    private static async Task<long> ReserveLinkIds(
-        NpgsqlConnection connection,
-        int count,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection);
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
     }
 
     private async Task<Database.Entities.Text> Text(string slug, CancellationToken cancellationToken) =>

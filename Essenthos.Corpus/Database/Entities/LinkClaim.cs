@@ -29,8 +29,7 @@ namespace Essenthos.Core.Database.Entities;
 /// reasoning; the link is the conclusion.
 /// </para>
 /// </summary>
-[Index(nameof(LinkId))]
-[Index(nameof(LinkId), nameof(Method), nameof(Source), IsUnique = true)]
+[Index(nameof(LinkId), nameof(Method), nameof(ProvenanceId), IsUnique = true)]
 public class LinkClaim
 {
     [Key]
@@ -49,9 +48,9 @@ public class LinkClaim
     /// </summary>
     public double? Confidence { get; set; }
 
-    public required string Source { get; set; }
+    public int ProvenanceId { get; set; }
 
-    public string? Note { get; set; }
+    public Provenance? Provenance { get; set; }
 
     public override string ToString() => $"LinkClaim({Method} on link {LinkId})";
 }

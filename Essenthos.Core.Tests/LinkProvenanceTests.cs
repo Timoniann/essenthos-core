@@ -91,7 +91,7 @@ public sealed class LinkProvenanceTests : IDisposable
             ToTextId = _to.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "mapping/kjv-bhs.txt",
+            Provenance = new() { Source = "mapping/kjv-bhs.txt" },
         };
         _db.Links.Add(link);
         _db.SaveChanges();
@@ -117,7 +117,7 @@ public sealed class LinkProvenanceTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = method,
             Confidence = confidence,
-            Source = source,
+            Provenance = new() { Source = source },
         };
         _db.Links.Add(link);
 

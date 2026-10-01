@@ -74,9 +74,15 @@ public static class DatasetEndpoints
         // Only the links somebody stated. The aligner's millions are this project's own
         // inference and belong to no third party, and sweeping them would cost a second a call
         // to count nothing.
-        var links = await Counted(
-            db.Links.Where(link => link.Method != LinkMethod.Aligner).Select(link => link.Source),
-            cancellationToken);
+        var links = (await db.Links
+                .Where(link => link.Method != LinkMethod.Aligner)
+                .GroupBy(link => link.ProvenanceId)
+                .Select(group => new { Id = group.Key, Rows = group.Count() })
+                .Join(db.Provenances, row => row.Id, p => p.Id, (row, p) => new { p.Source, row.Rows })
+                .ToListAsync(cancellationToken))
+            .GroupBy(row => row.Source)
+            .Select(group => (Source: group.Key, Rows: group.Sum(row => row.Rows)))
+            .ToList();
 
         var parsings = await Counted(db.WordParsings.Select(parsing => parsing.Source), cancellationToken);
         var commandments = await Counted(db.Commandments.Select(c => c.Source), cancellationToken);

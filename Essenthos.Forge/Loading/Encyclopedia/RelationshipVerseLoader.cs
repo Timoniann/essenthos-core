@@ -123,7 +123,6 @@ internal sealed class RelationshipVerseLoader(AppDbContext db, ILogger<Relations
         await using var command = new NpgsqlCommand(
             sql, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
         command.Parameters.AddWithValue("source", Source);
-        command.CommandTimeout = Annotating.Patient;
         return await command.ExecuteNonQueryAsync(cancellationToken);
     }
 }

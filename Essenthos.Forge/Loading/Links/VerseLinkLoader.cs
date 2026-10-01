@@ -200,11 +200,12 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         CREATE TEMP TABLE stated_verse_pair ON COMMIT DROP AS
         WITH crossing AS (
             SELECT l.from_text_id, l.to_text_id, fw.verse_id AS from_verse, tw.verse_id AS to_verse,
-                   min(l.source) AS source,
+                   min(p.source) AS source,
                    bool_or(l.relation = 'transposes' AND l.method <> 'stated-by-source') AS transposed,
                    min(l.method) FILTER (WHERE l.relation = 'transposes') AS transposed_method,
                    min(l.confidence) FILTER (WHERE l.relation = 'transposes') AS transposed_confidence
             FROM link l
+            JOIN provenance p ON p.id = l.provenance_id
             JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
             JOIN word fw ON fw.id = f.word_id
             JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
@@ -596,7 +597,6 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
         await using var command = new NpgsqlCommand(StatedVerseImport, connection)
         {
-            CommandTimeout = 600,
             Transaction = (NpgsqlTransaction)transaction.GetDbTransaction(),
         };
 
@@ -610,10 +610,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
-        await using var command = new NpgsqlCommand(CoveredVerseImport, connection)
-        {
-            CommandTimeout = 600,
-        };
+        await using var command = new NpgsqlCommand(CoveredVerseImport, connection);
 
         // A verse one covering joins can cover a further address, which only the next pass sees.
         var added = 0;

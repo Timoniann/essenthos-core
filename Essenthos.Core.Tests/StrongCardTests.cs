@@ -181,7 +181,7 @@ public sealed class StrongCardTests : IDisposable
             ToTextId = _hebrew.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
 

@@ -164,7 +164,7 @@ public sealed class CoverageSectionTests : IDisposable
             ToTextId = to.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Manual,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.SaveChanges();

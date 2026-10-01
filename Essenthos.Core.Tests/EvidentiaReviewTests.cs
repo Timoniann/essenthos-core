@@ -108,7 +108,7 @@ public sealed class EvidentiaReviewTests : IDisposable
         link.Claims.Select(claim => claim.Method).Should().BeEquivalentTo([LinkMethod.Manual, LinkMethod.RuleBased]);
         var rule = link.Claims.Single(claim => claim.Method == LinkMethod.RuleBased);
         rule.Confidence.Should().BeApproximately(RuleConfidence, 0.0001);
-        rule.Source.Should().Contain($"EVIDENTIA run {_run.Id}").And.Contain("global-review-known-rendering");
+        rule.Provenance!.Source.Should().Contain($"EVIDENTIA run {_run.Id}").And.Contain("global-review-known-rendering");
         (await _db.EvidentiaReviews.AsNoTracking().SingleAsync()).LinkId.Should().Be(link.Id);
     }
 
@@ -126,7 +126,7 @@ public sealed class EvidentiaReviewTests : IDisposable
         var link = await StoredLink();
         link.Method.Should().Be(LinkMethod.RuleBased, "nobody read it, so no person may be said to state it");
         link.Confidence.Should().BeApproximately(RuleConfidence, 0.0001);
-        link.Claims.Should().ContainSingle().Which.Note.Should().Contain("not read one by one");
+        link.Claims.Should().ContainSingle().Which.Provenance!.Note.Should().Contain("not read one by one");
     }
 
     [Fact]
@@ -275,7 +275,7 @@ public sealed class EvidentiaReviewTests : IDisposable
         accepted.Should().Be(2, "an absence waits in the queue like a proposal");
         outcome.NewLinks.Should().Be(2);
         outcome.NewAbsences.Should().Be(2);
-        var links = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Claims)
+        var links = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Provenance).Include(row => row.Claims).ThenInclude(claim => claim.Provenance)
             .OrderBy(row => row.Id).ToListAsync();
         links.Select(link => (link.Relation, link.Words.Single().WordId, link.Words.Single().Side)).Should().Equal(
             (LinkRelation.Expands, English(2), LinkSide.From),
@@ -285,10 +285,10 @@ public sealed class EvidentiaReviewTests : IDisposable
             link.FromTextId.Should().Be(_english.Id);
             link.Method.Should().Be(LinkMethod.RuleBased, "a rule said it and nobody read it");
             link.Confidence.Should().BeApproximately(RuleConfidence, 0.0001);
-            link.Claims.Should().ContainSingle().Which.Source.Should().Contain($"EVIDENTIA run {_run.Id}");
+            link.Claims.Should().ContainSingle().Which.Provenance!.Source.Should().Contain($"EVIDENTIA run {_run.Id}");
         });
-        links[0].Source.Should().EndWith("supplied-article");
-        links[1].Source.Should().EndWith("unrendered-conjunction");
+        links[0].Provenance!.Source.Should().EndWith("supplied-article");
+        links[1].Provenance!.Source.Should().EndWith("unrendered-conjunction");
     }
 
     [Fact]
@@ -350,12 +350,12 @@ public sealed class EvidentiaReviewTests : IDisposable
         outcome.Withdrawn.Should().Be(1);
         outcome.NewAbsences.Should().Be(1);
         outcome.Withheld.Should().Be(0);
-        var links = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Claims).ToListAsync();
+        var links = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Provenance).Include(row => row.Claims).ThenInclude(claim => claim.Provenance).ToListAsync();
         links.Select(link => link.Id).Should().NotContain(guess, "'the' was all of the link's English side");
         links.Select(link => link.Id).Should().Contain(kept);
         var absence = links.Single(link => link.Relation == LinkRelation.Expands);
         absence.Words.Should().ContainSingle().Which.WordId.Should().Be(English(2));
-        absence.Claims.Single().Note.Should().Contain("withdrawn");
+        absence.Claims.Single().Provenance!.Note.Should().Contain("withdrawn");
 
         var withdrawal = await _db.EvidentiaWithdrawals.AsNoTracking().Include(row => row.Review).SingleAsync();
         withdrawal.Review!.DecisionId.Should().Be(supplied.Id, "the verdict names the run and the rule that withdrew it");
@@ -415,7 +415,7 @@ public sealed class EvidentiaReviewTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Aligner,
             Confidence = 0.5,
-            Source = "an existing loader",
+            Provenance = new() { Source = "an existing loader" },
             Words =
             [
                 new LinkWord { WordId = English(1), Side = LinkSide.From },
@@ -423,7 +423,7 @@ public sealed class EvidentiaReviewTests : IDisposable
                 new LinkWord { WordId = Hebrew(1), Side = LinkSide.To },
                 new LinkWord { WordId = Hebrew(2), Side = LinkSide.To },
             ],
-            Claims = [new LinkClaim { Method = LinkMethod.Aligner, Confidence = 0.5, Source = "an existing loader" }],
+            Claims = [new LinkClaim { Method = LinkMethod.Aligner, Confidence = 0.5, Provenance = new() { Source = "an existing loader" }}],
         };
         _db.Links.Add(wide);
         _db.SaveChanges();
@@ -462,9 +462,9 @@ public sealed class EvidentiaReviewTests : IDisposable
         outcome.Superseded.Should().Be(2);
         outcome.NewLinks.Should().Be(2);
         outcome.Withheld.Should().Be(0);
-        var links = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Claims).ToListAsync();
+        var links = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Provenance).Include(row => row.Claims).ThenInclude(claim => claim.Provenance).ToListAsync();
         links.Should().OnlyContain(link => link.Relation == LinkRelation.Renders, "a word supplied and rendered at once is a contradiction");
-        links.SelectMany(link => link.Claims).Should().OnlyContain(claim => claim.Note!.Contains("taken back"));
+        links.SelectMany(link => link.Claims).Should().OnlyContain(claim => claim.Provenance!.Note!.Contains("taken back"));
         var withdrawals = await _db.EvidentiaWithdrawals.AsNoTracking().Include(row => row.Review).ThenInclude(review => review!.Decision)
             .ToListAsync();
         withdrawals.Select(row => (row.WordId, row.Relation, row.Method, row.LinkId)).Should().BeEquivalentTo(
@@ -642,9 +642,9 @@ public sealed class EvidentiaReviewTests : IDisposable
             ToTextId = _hebrew.Id,
             Relation = relation,
             Method = LinkMethod.StatedBySource,
-            Source = "an existing loader",
+            Provenance = new() { Source = "an existing loader" },
             Words = [new LinkWord { WordId = word, Side = relation == LinkRelation.Omits ? LinkSide.To : LinkSide.From }],
-            Claims = [new LinkClaim { Method = LinkMethod.StatedBySource, Source = "an existing loader" }],
+            Claims = [new LinkClaim { Method = LinkMethod.StatedBySource, Provenance = new() { Source = "an existing loader" }}],
         };
         _db.Links.Add(link);
         _db.SaveChanges();
@@ -704,13 +704,13 @@ public sealed class EvidentiaReviewTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = method,
             Confidence = confidence,
-            Source = "an existing loader",
+            Provenance = new() { Source = "an existing loader" },
             Words =
             [
                 new LinkWord { WordId = source, Side = LinkSide.From },
                 new LinkWord { WordId = target, Side = LinkSide.To },
             ],
-            Claims = [new LinkClaim { Method = method, Confidence = confidence, Source = "an existing loader" }],
+            Claims = [new LinkClaim { Method = method, Confidence = confidence, Provenance = new() { Source = "an existing loader" }}],
         };
         _db.Links.Add(link);
         _db.SaveChanges();
@@ -723,7 +723,7 @@ public sealed class EvidentiaReviewTests : IDisposable
 
     private async Task<(long Id, LinkMethod Method, double? Confidence, List<(long, LinkSide)> Words, List<LinkClaim> Claims)> StoredLink()
     {
-        var link = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Claims).SingleAsync();
+        var link = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Provenance).Include(row => row.Claims).ThenInclude(claim => claim.Provenance).SingleAsync();
         return (link.Id, link.Method, link.Confidence,
             link.Words.Select(word => (word.WordId, word.Side)).ToList(), [.. link.Claims]);
     }

@@ -244,7 +244,6 @@ internal sealed class VerseReadingLoader(AppDbContext db, ILogger<VerseReadingLo
             command.Parameters.AddWithValue("chapters", pointed.Select(p => p.At.Chapter).ToArray());
             command.Parameters.AddWithValue("verses", pointed.Select(p => p.At.Verse).ToArray());
             command.Parameters.AddWithValue("positions", pointed.Select(p => p.Word.Position).ToArray());
-            command.CommandTimeout = Annotating.Patient;
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
@@ -299,7 +298,6 @@ internal sealed class VerseReadingLoader(AppDbContext db, ILogger<VerseReadingLo
         await using var command = new NpgsqlCommand(Seeded, connection);
         command.Parameters.AddWithValue("sources", file.WordSources.ToArray());
         command.Parameters.AddWithValue("carried", Annotating.CarriedNote);
-        command.CommandTimeout = Annotating.Patient;
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
         {
@@ -344,7 +342,6 @@ internal sealed class VerseReadingLoader(AppDbContext db, ILogger<VerseReadingLo
             {
                 contest.Parameters.AddWithValue("person", Person);
                 contest.Parameters.AddWithValue("people", People);
-                contest.CommandTimeout = Annotating.Patient;
                 contested += await contest.ExecuteNonQueryAsync(cancellationToken);
             }
 

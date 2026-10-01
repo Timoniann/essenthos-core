@@ -160,7 +160,7 @@ public sealed class EntityCandidateTests : IDisposable
             ToTextId = _english.Id,
             Relation = LinkRelation.Renders,
             Method = LinkMethod.StatedBySource,
-            Source = "a test",
+            Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
 

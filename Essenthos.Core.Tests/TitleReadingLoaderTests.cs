@@ -104,7 +104,7 @@ public sealed class TitleReadingLoaderTests : IDisposable
         var link = new Link
         {
             FromTextId = _english.Id, ToTextId = original.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.StatedBySource, Source = "a test",
+            Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.From });

@@ -994,7 +994,6 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, IL
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
         return new NpgsqlCommand(sql, connection)
         {
-            CommandTimeout = Annotating.Patient,
             Transaction = db.Database.CurrentTransaction?.GetDbTransaction() as NpgsqlTransaction,
         };
     }

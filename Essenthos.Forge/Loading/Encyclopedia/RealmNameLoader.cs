@@ -384,7 +384,6 @@ internal sealed class RealmNameLoader(AppDbContext db, ReviewLists lists, ILogge
     {
         await using var command = new NpgsqlCommand(
             Listed, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.CommandTimeout = Annotating.Patient;
 
         var replaced = new List<Replacement>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
@@ -413,7 +412,6 @@ internal sealed class RealmNameLoader(AppDbContext db, ReviewLists lists, ILogge
             command.Parameters.AddWithValue(name, value ?? DBNull.Value);
         }
 
-        command.CommandTimeout = Annotating.Patient;
         return await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
@@ -424,7 +422,6 @@ internal sealed class RealmNameLoader(AppDbContext db, ReviewLists lists, ILogge
     {
         await using var command = new NpgsqlCommand(
             Tally, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.CommandTimeout = Annotating.Patient;
 
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         await reader.ReadAsync(cancellationToken);
@@ -439,7 +436,6 @@ internal sealed class RealmNameLoader(AppDbContext db, ReviewLists lists, ILogge
     {
         await using var command = new NpgsqlCommand(
             Unheld, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.CommandTimeout = Annotating.Patient;
 
         var names = new List<(string, string, int)>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
