@@ -153,24 +153,6 @@
     {
       "verb": "compose",
       "arguments": [
-        "YLT",
-        "KJV,BSB",
-        "BHSA"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
-        "YLT",
-        "KJV,BSB",
-        "NESTLE1904"
-      ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
-    },
-    {
-      "verb": "compose",
-      "arguments": [
         "GNV1599",
         "KJV,BSB",
         "BHSA"
@@ -866,6 +848,36 @@
         "--replace"
       ],
       "at": "2026-10-01T09:09:50.7907862+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "YLT",
+        "KJV,BSB",
+        "BHSA"
+      ],
+      "at": "2026-10-01T09:44:33.882462+00:00"
+    },
+    {
+      "verb": "compose",
+      "arguments": [
+        "YLT",
+        "KJV,BSB",
+        "NESTLE1904"
+      ],
+      "at": "2026-10-01T09:46:17.3231645+00:00"
+    },
+    {
+      "verb": "crosswire-strong",
+      "arguments": [],
+      "at": "2026-10-01T09:53:53.7163322+00:00"
+    },
+    {
+      "verb": "ohb-cuv",
+      "arguments": [
+        "--replace"
+      ],
+      "at": "2026-10-01T09:58:41.0817298+00:00"
     }
   ]
 }
