@@ -125,7 +125,6 @@ internal static partial class ForgeVerbs
         new("cards", "", "Count the phrases the lexicon quotes under each entry.", Cards),
         new("commandments", "", "Load the 613 commandments.", Commandments),
         new("lands", "", "Load the periods of the lands from PeriodO.", Lands),
-        new("restate", "", "Write what the event files state that the corpus does not hold.", Restate),
         new("name-forms", "", "Load the names the descriptions put into a case.", NameForms),
         new("reigns", "", "Load the kings, the rulers of the nations and the prophets of their days.", Reigns),
         new("own-records", "", "Apply the rulings on records, then write their lines in every language.", OwnRecords),

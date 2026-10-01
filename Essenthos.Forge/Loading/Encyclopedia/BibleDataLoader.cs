@@ -268,33 +268,6 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     {
         if (await db.Entities.AnyAsync(cancellationToken))
         {
-            var loaded = await db.EntityNames
-                .Where(n => n.Kind == LabelKind && n.Entity!.Kind == EntityKind.Place
-                            && (n.HebrewStrongNumber != null || n.GreekStrongNumber != null))
-                .ToListAsync(cancellationToken);
-            var places = loaded.Select(n => n.EntityId).ToHashSet();
-            if ((NumberPlacesOnlyByTheirNames(loaded, places, await PlaceNameNumbers(cancellationToken))
-                 + NumberPhrasesOnlyByTheirOwnNames(loaded, places)) is > 0 and var taken)
-            {
-                await db.SaveChangesAsync(cancellationToken);
-                logger.LogInformation(
-                    "{Taken} Strong numbers on loaded place names were words of a phrase and were taken off", taken);
-            }
-
-            var named = await db.EntityNames
-                .Where(n => n.Kind == LabelKind && n.Entity!.Kind == EntityKind.Person && n.GreekStrongNumber != null)
-                .ToListAsync(cancellationToken);
-            var persons = named.Select(n => n.EntityId).ToHashSet();
-            if (NumberPeopleOnlyByTheirNames(
-                    named, persons, await GreekNameNumbers(cancellationToken),
-                    await Definitions(named, cancellationToken)) is > 0 and var meanings)
-            {
-                await db.SaveChangesAsync(cancellationToken);
-                logger.LogInformation(
-                    "{Taken} Greek numbers on loaded names of people were the words their names mean and were taken off",
-                    meanings);
-            }
-
             logger.LogInformation("The encyclopedia is already loaded; nothing to do");
             return new EncyclopediaOutcome(true, 0, 0, 0, 0, 0, 0, 0, TimeSpan.Zero);
         }

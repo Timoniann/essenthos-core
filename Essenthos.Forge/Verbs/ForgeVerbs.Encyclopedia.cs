@@ -87,19 +87,6 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
-    /// <summary>
-    /// What the event files state that a corpus loaded before they were read does not hold, Ussher's
-    /// years from his Annals among it.
-    /// </summary>
-    private static async Task<int> Restate(ForgeRun forge, string[] args)
-    {
-        using var restateScope = forge.Scope();
-        Console.WriteLine(await restateScope.ServiceProvider.GetRequiredService<EventRestatementLoader>().Load(
-            Path.Combine(forge.Resources, "BibleData2026"),
-            Path.Combine(AppContext.BaseDirectory, "Resources", "WorldHistory")));
-        return 0;
-    }
-
     /// <summary>The names a clause puts into a case, from name-form files written after the corpus was loaded.</summary>
     private static async Task<int> NameForms(ForgeRun forge, string[] args)
     {
