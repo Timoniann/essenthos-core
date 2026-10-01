@@ -390,16 +390,32 @@ public sealed class EntityRenderingTests : IDisposable
             Note = $"through NESTLE1904 word 1, linked by {linkedBy}",
         });
 
-    /// <summary>A second load leaves the same rows, not twice as many.</summary>
+    /// <summary>
+    /// A second load leaves the same rows, ids and all, not twice as many; a spelling that changed is
+    /// the only row written again.
+    /// </summary>
     [Fact]
-    public async Task LoadingAgainRebuildsRatherThanAdds()
+    public async Task LoadingAgainWritesOnlyWhatChanged()
     {
         await Load();
-        var first = await _db.EntityRenderings.CountAsync();
+        var first = await _db.EntityRenderings.AsNoTracking().OrderBy(r => r.Id).ToListAsync();
 
         await Load();
 
-        (await _db.EntityRenderings.CountAsync()).Should().Be(first);
+        (await _db.EntityRenderings.AsNoTracking().OrderBy(r => r.Id).ToListAsync())
+            .Should().BeEquivalentTo(first, options => options.WithStrictOrdering());
+
+        var changed = first[0];
+        await _db.EntityRenderings.Where(r => r.Id == changed.Id)
+            .ExecuteUpdateAsync(set => set.SetProperty(r => r.Occurrences, r => r.Occurrences + 1));
+
+        await Load();
+
+        var after = await _db.EntityRenderings.AsNoTracking().ToListAsync();
+        after.Should().HaveCount(first.Count);
+        after.Select(r => r.Id).Should().BeEquivalentTo(first.Skip(1).Select(r => r.Id).Append(after.Max(r => r.Id)));
+        after.Should().ContainSingle(r => r.EntityId == changed.EntityId && r.TextId == changed.TextId
+                                          && r.Form == changed.Form && r.Occurrences == changed.Occurrences);
     }
 
     /// <summary>

@@ -371,7 +371,10 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
             Meaning = w.Meaning,
             Kind = NameKind,
         }).ToList();
-        if (!entity.Names.Select(NameKey).SequenceEqual(names.Select(NameKey)))
+        // In the order they were written, which is the file's: the rows come back in whatever order
+        // the database finds them, and compared that way a record whose names are as the file has
+        // them is written again.
+        if (!entity.Names.OrderBy(n => n.Id).Select(NameKey).SequenceEqual(names.Select(NameKey)))
         {
             entity.Names.Clear();
             names.ForEach(entity.Names.Add);
@@ -561,7 +564,10 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
         var held = await db.EntityNameForms
             .Where(f => f.EntityId == entity.Id)
             .ToListAsync(cancellationToken);
-        foreach (var form in held.Where(f => !wanted.ContainsKey((f.Language, f.GrammaticalCase))))
+        // Only the forms this file wrote: the name-forms pass writes a thing's other cases from its own
+        // files and would write them again after every load that took them away.
+        foreach (var form in held.Where(f => !wanted.ContainsKey((f.Language, f.GrammaticalCase))
+                                             && (f.Source == _set.Source || f.Source == _set.ReviewedSource)))
         {
             db.EntityNameForms.Remove(form);
         }

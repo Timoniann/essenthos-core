@@ -100,6 +100,34 @@ internal sealed class EditionMarkLoader(AppDbContext db, ILogger<EditionMarkLoad
         JOIN groups g ON g."position" = m.span
         """;
 
+    /// <summary>
+    /// Whether a text's groups of one kind are already exactly the spans about to be written: the same
+    /// positions, features and words. Asked first so that a load that would write them again as they
+    /// are leaves them, ids and all.
+    /// </summary>
+    private const string Unchanged =
+        """
+        WITH spans AS (
+            SELECT span, (array_agg(features))[1]::jsonb AS features
+            FROM unnest(@featureSpans, @features) AS s(span, features)
+            GROUP BY span),
+        members AS (
+            SELECT span, array_agg(word_id ORDER BY word_id) AS words
+            FROM unnest(@spans, @words) AS m(span, word_id)
+            GROUP BY span),
+        wanted AS (
+            SELECT s.span AS position, s.features, m.words
+            FROM spans s LEFT JOIN members m ON m.span = s.span),
+        held AS (
+            SELECT g."position", g.features, array_agg(gw.word_id ORDER BY gw.word_id) FILTER (WHERE gw.word_id IS NOT NULL) AS words
+            FROM word_group g
+            LEFT JOIN word_group_word gw ON gw.word_group_id = g.id
+            WHERE g.text_id = @text AND g.kind = @kind
+            GROUP BY g.id, g."position", g.features)
+        SELECT NOT EXISTS (SELECT * FROM wanted EXCEPT ALL SELECT * FROM held)
+           AND NOT EXISTS (SELECT * FROM held EXCEPT ALL SELECT * FROM wanted)
+        """;
+
     public async Task<IReadOnlyList<EditionMarkOutcome>> Mark(string tables, CancellationToken cancellationToken)
     {
         var outcomes = new List<EditionMarkOutcome>();
@@ -349,16 +377,30 @@ internal sealed class EditionMarkLoader(AppDbContext db, ILogger<EditionMarkLoad
             }
         }
 
-        await using var command = new NpgsqlCommand(Replace, connection, transaction);
-        command.Parameters.AddWithValue("text", text);
-        command.Parameters.AddWithValue("kind", EnumSpelling.Of(kind));
-        command.Parameters.AddWithValue("featureSpans", featureSpans.ToArray());
-        command.Parameters.Add(new NpgsqlParameter("features", NpgsqlDbType.Array | NpgsqlDbType.Text)
+        NpgsqlCommand Command(string sql)
         {
-            Value = features.Select(f => (object?)f ?? DBNull.Value).ToArray(),
-        });
-        command.Parameters.AddWithValue("spans", memberSpans.ToArray());
-        command.Parameters.AddWithValue("words", members.ToArray());
+            var command = new NpgsqlCommand(sql, connection, transaction);
+            command.Parameters.AddWithValue("text", text);
+            command.Parameters.AddWithValue("kind", EnumSpelling.Of(kind));
+            command.Parameters.AddWithValue("featureSpans", featureSpans.ToArray());
+            command.Parameters.Add(new NpgsqlParameter("features", NpgsqlDbType.Array | NpgsqlDbType.Text)
+            {
+                Value = features.Select(f => (object?)f ?? DBNull.Value).ToArray(),
+            });
+            command.Parameters.AddWithValue("spans", memberSpans.ToArray());
+            command.Parameters.AddWithValue("words", members.ToArray());
+            return command;
+        }
+
+        await using (var unchanged = Command(Unchanged))
+        {
+            if ((bool)(await unchanged.ExecuteScalarAsync(cancellationToken))!)
+            {
+                return;
+            }
+        }
+
+        await using var command = Command(Replace);
         await command.ExecuteNonQueryAsync(cancellationToken);
     }
 

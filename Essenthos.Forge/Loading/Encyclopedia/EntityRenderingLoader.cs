@@ -27,16 +27,16 @@ internal sealed record EntityRenderingOutcome(
 /// Every text's spellings of every entity's name, counted from the words that name it.
 ///
 /// <para>
-/// <strong>Rebuilt whole on every load.</strong> It is a projection of <c>word_entity</c>, which a
+/// <strong>Counted whole on every load.</strong> It is a projection of <c>word_entity</c>, which a
 /// dozen passes write and several correct after the fact, so a guard asking whether it had already
 /// run would keep the spellings of annotations that no longer exist. It reads a quarter of a million
-/// rows and writes a few tens of thousands, which is seconds, and it runs last among the passes that
-/// name words so that it counts what they settled on.
+/// rows, which is seconds, writes only the spellings that changed, and runs last among the passes
+/// that name words so that it counts what they settled on.
 /// </para>
 ///
 /// <para>
 /// <see cref="Renderings"/> is the rule; this reads the words and the nominatives it prefers and
-/// writes what it returns, in one transaction so a reader never sees the table half empty.
+/// brings the table to what it returns, in one transaction so a reader never sees it half written.
 /// </para>
 /// </summary>
 internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRenderingLoader> logger)
@@ -79,15 +79,24 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
 
         var renderings = Renderings.Of(words, nominatives).ToList();
 
+        // Only what changed is written, so a load that counts the same spellings leaves the rows as
+        // they are, ids and all.
+        var standing = await db.EntityRenderings
+            .AsNoTracking()
+            .Select(r => new { r.Id, Rendering = new Rendering(r.EntityId, r.TextId, r.Form, r.Folded, r.Occurrences, r.Heading) })
+            .ToListAsync(cancellationToken);
+        var wanted = renderings.ToHashSet();
+        var gone = standing.Where(r => !wanted.Remove(r.Rendering)).Select(r => r.Id).ToList();
+
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        await db.EntityRenderings.ExecuteDeleteAsync(cancellationToken);
+        await db.EntityRenderings.Where(r => gone.Contains(r.Id)).ExecuteDeleteAsync(cancellationToken);
 
         await using (var writer = await connection.BeginBinaryImportAsync(
                          "COPY entity_rendering (entity_id, text_id, form, folded, occurrences, heading) "
                          + "FROM STDIN (FORMAT BINARY)",
                          cancellationToken))
         {
-            foreach (var rendering in renderings)
+            foreach (var rendering in renderings.Where(wanted.Contains))
             {
                 await writer.StartRowAsync(cancellationToken);
                 await writer.WriteAsync(rendering.EntityId, NpgsqlDbType.Integer, cancellationToken);

@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Globalization;
 using System.Reflection;
 using System.Text.Json;
 using Essenthos.Core.Database;
@@ -267,8 +268,35 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         await using var transaction = db.Database.CurrentTransaction is null
             ? await db.Database.BeginTransactionAsync(cancellationToken)
             : null;
-        await db.EntityImages.ExecuteDeleteAsync(cancellationToken);
-        db.EntityImages.AddRange(rows);
+        // Only the pictures that changed are written, so a load that lists the same ones leaves their
+        // rows as they are, ids and all.
+        var standing = await db.EntityImages.AsNoTracking().Include(i => i.Captions).ToListAsync(cancellationToken);
+        var wanted = rows.GroupBy(Key).ToDictionary(g => g.Key, g => g.Count(), StringComparer.Ordinal);
+        var gone = new List<int>();
+        foreach (var image in standing)
+        {
+            var key = Key(image);
+            if (wanted.TryGetValue(key, out var count) && count > 0)
+            {
+                wanted[key] = count - 1;
+            }
+            else
+            {
+                gone.Add(image.Id);
+            }
+        }
+
+        await db.EntityImages.Where(i => gone.Contains(i.Id)).ExecuteDeleteAsync(cancellationToken);
+        foreach (var image in rows)
+        {
+            var key = Key(image);
+            if (wanted[key] > 0)
+            {
+                wanted[key]--;
+                db.EntityImages.Add(image);
+            }
+        }
+
         await db.SaveChangesAsync(cancellationToken);
         if (transaction is not null)
         {
@@ -290,6 +318,19 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         logger.LogInformation("Pictured the people and places: {Outcome}", outcome);
         return outcome;
     }
+
+    /// <summary>Everything a picture's row says, its captions included, as one string to compare.</summary>
+    private static string Key(EntityImage image) =>
+        string.Join('\u001f',
+            image.EntityId, image.Kind, image.Role, image.Ordinal, image.File, image.Digest, image.Width, image.Height,
+            image.Caption, image.Credit, image.CreditUrl, image.Licence, image.LicenceUrl, image.Source,
+            Exact(image.FocusX), Exact(image.FocusY), Exact(image.BustX), Exact(image.BustY), Exact(image.BustWidth),
+            Exact(image.BustHeight),
+            string.Join('\u001e', image.Captions
+                .OrderBy(c => c.Language, StringComparer.Ordinal)
+                .Select(c => $"{c.Language}={c.Caption}")));
+
+    private static string? Exact(double? value) => value?.ToString("R", CultureInfo.InvariantCulture);
 
     /// <summary>
     /// Whether an entity may never be pictured: God, under every record the text is read to name him
