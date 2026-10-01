@@ -32,6 +32,8 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
 
     public DbSet<ChapterBookmark> ChapterBookmarks => Set<ChapterBookmark>();
 
+    public DbSet<FavoriteText> FavoriteTexts => Set<FavoriteText>();
+
     public DbSet<Suggestion> Suggestions => Set<Suggestion>();
 
     public DbSet<SuggestionMessage> SuggestionMessages => Set<SuggestionMessage>();
@@ -145,6 +147,16 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             bookmark.HasIndex(b => new { b.AccountId, b.Book, b.Chapter }).IsUnique();
             bookmark.HasIndex(b => b.Revision);
             bookmark.HasOne<Account>().WithMany().HasForeignKey(b => b.AccountId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        model.Entity<FavoriteText>(favorite =>
+        {
+            favorite.ToTable("favorite_text");
+            favorite.Property(f => f.Id).ValueGeneratedNever();
+            favorite.Property(f => f.Text).HasMaxLength(Limits.TextSlug);
+            favorite.HasIndex(f => new { f.AccountId, f.Text }).IsUnique();
+            favorite.HasIndex(f => f.Revision);
+            favorite.HasOne<Account>().WithMany().HasForeignKey(f => f.AccountId).OnDelete(DeleteBehavior.Cascade);
         });
 
         model.Entity<Suggestion>(suggestion =>
@@ -272,6 +284,12 @@ public static class Limits
 
     /// <summary>The texts one chapter bookmark remembers as open: more panes than a screen holds.</summary>
     public const int ChapterBookmarkTexts = 12;
+
+    /// <summary>A text's slug, as an account names one: <c>KJV</c>, <c>NESTLE1904</c>.</summary>
+    public const int TextSlug = 32;
+
+    /// <summary>How many texts one account keeps as favourites: more than anyone moves between.</summary>
+    public const int FavoriteTextsPerAccount = 200;
 
     /// <summary>A suggestion's main text: a long letter, not a manuscript.</summary>
     public const int SuggestionBody = 10_000;
