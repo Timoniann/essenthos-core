@@ -126,7 +126,8 @@ internal sealed record OwnRecordRuling(
     RecordSays? Says,
     IReadOnlyList<OwnAlternative>? Alternatives,
     string Why,
-    string? Corrects = null)
+    string? Corrects = null,
+    string? Alongside = null)
 {
     public RuledWord Word => new(Text, Reference, Position, Surface);
 }
@@ -609,7 +610,9 @@ internal static class SenseReadingFiles
         DatasetRecordRulings(), Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.PhilipRecords.json"),
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.SynodalJehoiakimRecords.json"),
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.RevelationTribeRecords.json"),
+        Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.SynodalChristTitleRecords.json"),
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.OhienkoAdamRecords.json"),
+        Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.SynodalChristBearerRecords.json"),
     ];
 
     private static T Embedded<T>(string name)

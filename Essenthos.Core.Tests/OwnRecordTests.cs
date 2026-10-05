@@ -52,7 +52,7 @@ public sealed class OwnRecordTests : IDisposable
         {
             _db.Entities.Add(new Entity
             {
-                Kind = EntityKind.Person,
+                Kind = slug == "anointed" ? EntityKind.Title : EntityKind.Person,
                 Slug = slug,
                 Name = slug,
                 SourceId = slug,
@@ -93,6 +93,69 @@ public sealed class OwnRecordTests : IDisposable
 
     private Task<OwnRecordOutcome> Load() =>
         Loader().Load(Path.Combine(Path.GetTempPath(), $"absent-{Guid.NewGuid():N}"));
+
+    [Fact]
+    public async Task SynodalAddedChristNamesTheTitleAndJesusLocallyWithoutChangingSatan()
+    {
+        var address = new RuledWord("RUSV", "1CO 5:5", 15, "Христа");
+        var christ = _words.TryGetValue(address, out var id) ? _db.Words.Single(w => w.Id == id)
+            : _db.Place([address])[address];
+        var russianSatan = _db.Words.Single(w => w.VerseId == christ.VerseId && w.Position == 2);
+        russianSatan.Surface = "сатане";
+        var greekAddress = new RuledWord("NESTLE1904", "1CO 5:5", 5, "Σατανᾷ");
+        var greek = _db.Place([greekAddress])[greekAddress];
+        foreach (var slug in new[] { "satan", "jesus", "anointed" })
+            if (!_db.Entities.Any(e => e.Slug == slug))
+                _db.Entities.Add(new Entity { Slug = slug, SourceId = slug, Name = slug,
+                    Kind = slug == "anointed" ? EntityKind.Title : EntityKind.Person, Source = "a test" });
+        await _db.SaveChangesAsync();
+        var satan = await _db.Entities.SingleAsync(e => e.Slug == "satan");
+        _db.TitleBearers.Add(new TitleBearer {
+            TitleEntityId = (await _db.Entities.SingleAsync(e => e.Slug == "anointed")).Id,
+            BearerEntityId = (await _db.Entities.SingleAsync(e => e.Slug == "jesus")).Id,
+            CanonicalBook = 43, CanonicalChapter = 1, CanonicalVerse = 41,
+            Source = "a fixture of the held Christ-Jesus title/bearer relation" });
+        foreach (var word in new[] { russianSatan, greek })
+            _db.WordEntities.Add(new() { Word = word, Entity = satan, Method = LinkMethod.StrongNumber,
+                Confidence = 0.99, Source = "independent Satan reading" });
+        var link = new Link { FromTextId = christ.TextId, ToTextId = greek.TextId,
+            Method = LinkMethod.Aligner, Relation = LinkRelation.Renders, Confidence = 0.29,
+            Provenance = new() { Source = "a fixture's faint alignment" } };
+        link.Words.Add(new() { Word = christ, Side = LinkSide.From });
+        link.Words.Add(new() { Word = greek, Side = LinkSide.To });
+        await _db.SaveChangesAsync();
+        var satanIds = await _db.WordEntities.Where(a => a.EntityId == satan.Id).Select(a => a.Id).ToArrayAsync();
+
+        await Load();
+        var named = await _db.WordEntities.Where(a => a.WordId == christ.Id).Include(a => a.Entity).AsNoTracking().ToListAsync();
+        named.Select(a => a.Entity!.Slug).Should().BeEquivalentTo("anointed", "jesus");
+        (await Essenthos.Core.Corpus.Annotations.AllOf(_db, [christ.Id], CancellationToken.None))[christ.Id]
+            .Select(e => e.Slug).Should().BeEquivalentTo("anointed", "jesus");
+        named.Should().OnlyContain(a => a.Method == LinkMethod.Manual && a.Confidence == null);
+        var ids = named.Select(a => a.Id).Order().ToArray();
+        var carrier = new AnnotationCarrier(_db,
+            new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance), NullLogger<AnnotationCarrier>.Instance);
+        await carrier.Carry();
+        (await _db.WordEntities.Where(a => a.WordId == greek.Id).Select(a => a.EntityId).ToArrayAsync())
+            .Should().Equal(satan.Id);
+        (await _db.WordEntities.Where(a => a.EntityId == satan.Id && (a.WordId == russianSatan.Id || a.WordId == greek.Id)).Select(a => a.Id).ToArrayAsync())
+            .Should().BeEquivalentTo(satanIds);
+        var references = new OwnReferenceLoader(_db, NullLogger<OwnReferenceLoader>.Instance);
+        await references.Load();
+        await _db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        foreach (var slug in new[] { "jesus", "anointed" })
+            (await _db.EntityVerses.AnyAsync(v => v.Entity!.Slug == slug && v.CanonicalBook == 46
+                && v.CanonicalChapter == 5 && v.CanonicalVerse == 5 && v.Names)).Should().BeTrue();
+        await Load();
+        (await _db.WordEntities.Where(a => a.WordId == christ.Id && a.EntityId != satan.Id)
+            .OrderBy(a => a.Id).Select(a => a.Id).ToArrayAsync()).Should().Equal(ids);
+        await _db.WordEntities.Where(a => a.WordId == christ.Id && a.EntityId != satan.Id).ExecuteDeleteAsync();
+        await Load();
+        (await _db.WordEntities.Where(a => a.WordId == christ.Id && a.EntityId != satan.Id)
+            .Include(a => a.Entity).Select(a => a.Entity!.Slug).ToArrayAsync()).Should().BeEquivalentTo("anointed", "jesus");
+        (await _db.WordEntities.Where(a => a.WordId == greek.Id).Select(a => a.EntityId).ToArrayAsync())
+            .Should().Equal(satan.Id);
+    }
 
     [Fact]
     public async Task UkrainianAdamNamesAdamAndPreservesHisWifesReading()
@@ -202,7 +265,7 @@ public sealed class OwnRecordTests : IDisposable
         await Load();
 
         var named = await _db.WordEntities.Include(a => a.Entity).ToListAsync();
-        named.Select(a => a.WordId).Should().BeEquivalentTo(_rulings.Select(r => _words[r.Word]).Distinct());
+        named.Select(a => a.WordId).Distinct().Should().BeEquivalentTo(_rulings.Select(r => _words[r.Word]).Distinct());
         named.Should().OnlyContain(a => a.Method == LinkMethod.Manual);
         named.Should().OnlyContain(a => a.Confidence == null);
     }
@@ -649,7 +712,15 @@ public sealed class OwnRecordTests : IDisposable
         {
             var (earlier, later) = (word.First(), word.Last());
             word.Count().Should().Be(2, $"word {word.Key} is ruled on once and corrected once at most");
-            later.Corrects.Should().Be(earlier.Existing, $"the ruling on {later.Reference} corrects the earlier one");
+            if (later.Alongside is not null)
+            {
+                later.Corrects.Should().BeNull();
+                later.Alongside.Should().Be(earlier.Existing);
+                var companionFiles = SenseReadingFiles.AllRulings().Where(f => f.Rulings.Contains(earlier) || f.Rulings.Contains(later));
+                companionFiles.Should().OnlyContain(f => !f.Carry && f.Method == "manual");
+            }
+            else
+                later.Corrects.Should().Be(earlier.Existing, $"the ruling on {later.Reference} corrects the earlier one");
         }
     }
 

@@ -340,6 +340,7 @@ internal sealed class DatasetLoader(
             new("interlinear", cancellationToken => LinkFromTheInterlinear(resources, cancellationToken)),
             new("psalm-titles", cancellationToken => CoverThePsalmTitles(resources, cancellationToken)),
             new("recipe", cancellationToken => FollowTheRecipe(resources, cancellationToken)),
+            new("rejected-renderings", WithdrawRejectedRenderings),
             new("verse-links", JoinTheVerses),
             new("evidentia-verdicts", cancellationToken => ReplayTheVerdictsOnEvidentia(resources, cancellationToken)),
             new("encyclopedia", cancellationToken => LoadTheEncyclopedia(resources, cancellationToken)),
@@ -1547,6 +1548,13 @@ internal sealed class DatasetLoader(
     /// steps to have finished: BHSA's annotation, the links that carry the answer into every other
     /// text, and the encyclopedia the answer is about.
     /// </summary>
+    private async Task WithdrawRejectedRenderings(CancellationToken cancellationToken)
+    {
+        status.Starting("the rejected statistical renderings");
+        using var scope = services.CreateScope();
+        status.Record((await RejectedRenderings.Withdraw(scope.ServiceProvider.GetRequiredService<AppDbContext>(), cancellationToken)).ToString());
+    }
+
     private async Task SayWhichWordNamesWhom(CancellationToken cancellationToken)
     {
         status.Starting("the entity annotations");

@@ -1271,6 +1271,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         // The model reports how likely the word pairing is and how likely the position is. The
         // schema has one confidence, so the pairing is what it holds and the position rides along
         // in the source, where it stays readable rather than being averaged away.
+        var rejected = await RejectedRenderings.Locate(connection, cancellationToken);
+        drafts.RemoveAll(draft => rejected.Contains((draft.SourceWordId, draft.TargetWordId))
+            || rejected.Contains((draft.TargetWordId, draft.SourceWordId)));
         await LinkWriter.Write(
             connection,
             (NpgsqlTransaction)transaction.GetDbTransaction(),

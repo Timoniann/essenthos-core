@@ -124,6 +124,7 @@ internal sealed class OwnRecordLoader(
         CancellationToken cancellationToken = default)
     {
         var files = SenseReadingFiles.AllRulings();
+        await ValidateCompanions(files, cancellationToken);
 
         var started = Stopwatch.StartNew();
         int created = 0, unsettled = 0, named = 0, annotated = 0;
@@ -177,6 +178,21 @@ internal sealed class OwnRecordLoader(
             false, created, unsettled, named, annotated, withheld, labelled, started.Elapsed, restored);
         logger.LogInformation("Wrote: {Outcome}", outcome);
         return outcome;
+    }
+
+    private async Task ValidateCompanions(IReadOnlyList<OwnRecordRulings> files, CancellationToken cancellationToken)
+    {
+        foreach (var file in files)
+        foreach (var ruling in file.Rulings.Where(r => r.Alongside is not null))
+        {
+            var companion = files.Where(f => !f.Carry && f.Method == "manual")
+                .SelectMany(f => f.Rulings).SingleOrDefault(r => r.Word == ruling.Word && r.Existing == ruling.Alongside);
+            if (file.Carry || file.Method != "manual" || ruling.Corrects is not null
+                || companion is null || ruling.Existing is null
+                || !await db.Entities.AnyAsync(e => e.Slug == ruling.Alongside && e.Kind == EntityKind.Title, cancellationToken)
+                || !await db.Entities.AnyAsync(e => e.Slug == ruling.Existing && e.Kind == EntityKind.Person, cancellationToken))
+                throw new InvalidDataException($"The companion ruling on {ruling.Word} must name a held person beside an explicitly ruled, edition-local title.");
+        }
     }
 
     /// <summary>

@@ -1,0 +1,18 @@
+{
+  "method": "manual",
+  "carry": false,
+  "decidedBy": "Essenthos, read by Codex on 2026-10-05 against the held Synodal wording; awaiting human review",
+  "rulings": [
+    {
+      "why": "The held wording is Господа нашего Иисуса Христа. Christ is the Anointed title borne by the explicitly named Jesus, not Satan, who is named separately at position 2.",
+      "surface": "Христа",
+      "existing": "jesus",
+      "reference": "1CO 5:5",
+      "position": 15,
+      "text": "RUSV",
+      "alongside": "anointed"
+    }
+  ],
+  "source": "Essenthos, the Synodal Christ bearer in 1 Corinthians 5:5, read by Codex on 2026-10-05",
+  "policy": "The Synodal prints Jesus Christ here, where the held Nestle and Scrivener witnesses print Jesus alone. Keep this added title and its explicitly named bearer local to this edition."
+}

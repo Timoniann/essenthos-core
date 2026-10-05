@@ -620,8 +620,11 @@ internal sealed class CompositionPipeline(
         var stated = await Stated(connection, from.Id, to.Id, renders, cancellationToken);
         var claimed = (await Statements(connection, from.Id, to.Id, cancellationToken, rules: true)).Keys.ToHashSet();
         var unrendered = await Unrendered(connection, from.Id, to.Id, cancellationToken);
+        var rejected = await RejectedRenderings.Locate(connection, cancellationToken);
         var (fresh, agreeing) = Split(
-            [.. merged.Where(link => !unrendered.Contains(link.To))], stated, claimed, viaSlugs);
+            [.. merged.Where(link => !unrendered.Contains(link.To) && !rejected.Contains((link.From, link.To))
+                && !rejected.Contains((link.To, link.From)))],
+            stated, claimed, viaSlugs);
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
 

@@ -9,6 +9,17 @@ namespace Essenthos.Core.Verbs;
 
 internal static partial class ForgeVerbs
 {
+    private static async Task<int> RejectedRenderingVerb(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        var db = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Database.AppDbContext>();
+        Console.WriteLine(await RejectedRenderings.Withdraw(db));
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OwnRecordLoader>().Load(forge.Resources));
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load());
+        Console.WriteLine($"{await Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRawAsync(db.Database, DatasetLoader.NamingVerses)} verse naming flags refreshed");
+        return 0;
+    }
+
     /// <summary>
     /// Alignment is computed once per pair of texts, not per request, so it is a batch run rather than
     /// part of the load. <c>--outside BHSA</c> trains on every verse the pair shares and writes only where

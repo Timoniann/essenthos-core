@@ -243,7 +243,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private const string Resolution =
         "BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name";
 
-    private const string GreekResolution =
+    internal const string GreekResolution =
         "the lexicon's capitalised lemma, the Greek Strong number the encyclopedia records for the " +
         "name, and the Greek text spelling that name the way the encyclopedia spells it";
 

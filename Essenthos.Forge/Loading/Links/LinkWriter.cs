@@ -119,6 +119,9 @@ internal static class LinkWriter
             return new LinkWrite([], []);
         }
 
+        if ((await RejectedRenderings.Admitted(connection, drafts, cancellationToken)).Count != drafts.Count)
+            throw new InvalidDataException("A rejected rendering reached the link writer; filter the statistical proposals before writing them.");
+
         var provenance = await ProvenanceIds.Of(
             connection, transaction, drafts.Select(draft => (draft.Source, draft.Note)), cancellationToken);
         var shapes = drafts.Select(draft => LinkShape.Of(draft.From, draft.To)).ToArray();
