@@ -23,6 +23,10 @@ run() {
 	fi
 }
 
+if [ "${1:-}" = --once ]; then
+	run
+	exit 0
+fi
 while :; do
 	run
 	sleep 3600

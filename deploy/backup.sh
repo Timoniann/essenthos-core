@@ -44,6 +44,7 @@ encrypted() {
 }
 
 run() {
+	run_status=0
 	stamp=$(date -u +%Y%m%dT%H%MZ)
 	recipient=$(key)
 	if [ -z "$recipient" ]; then
@@ -54,6 +55,7 @@ run() {
 		# A database this server does not have — the page counter's, where it is off — is not a failure.
 		if ! present=$(psql -d postgres -Atc "SELECT 1 FROM pg_database WHERE datname = '$database'"); then
 			echo "backup: $database FAILED, the database server did not answer" >&2
+			run_status=1
 			continue
 		fi
 		if [ "$present" != 1 ]; then
@@ -72,6 +74,7 @@ run() {
 			else
 				rm -f "$file.partial"
 				echo "backup: $database FAILED" >&2
+				run_status=1
 			fi
 			continue
 		fi
@@ -83,6 +86,7 @@ run() {
 		else
 			rm -f "$file.partial"
 			echo "backup: $database FAILED" >&2
+			run_status=1
 		fi
 	done
 
@@ -92,14 +96,19 @@ run() {
 	# age down to whole days and keep each dump a day and more past what the privacy page says.
 	find /backups \( -name '*.dump' -o -name '*.dump.gpg' \) -mmin "+$((BACKUP_KEEP_DAYS * 1440 - 30))" -delete
 	find /backups -name '*.partial' -mmin +1440 -delete
+	return "$run_status"
 }
 
 # One on start, so a fresh deployment has a backup the same day and a broken one says so at once.
-run
+if [ "${1:-}" = --once ]; then
+	run
+	exit $?
+fi
+run || true
 while :; do
 	now=$(date -u +%s)
 	next=$(date -u -d "$(date -u +%Y-%m-%d) $BACKUP_HOUR_UTC:00" +%s)
 	[ "$next" -le "$now" ] && next=$((next + 86400))
 	sleep $((next - now))
-	run
+	run || true
 done

@@ -66,11 +66,12 @@ restores a fifth beside them before the swap, so plan for five copies, 60–75 G
 
 - **Volume: 100 GB or more.** A volume can be grown later without moving anything (resize it at the
   provider, then `resize2fs` on the machine); it cannot be shrunk.
-- **Machine: start with a shared-CPU 8 GB / 4 vCPU.** `compose.yaml` sizes Postgres for 8 GB
-  (`shared_buffers=2GB`, `effective_cache_size=5GB`, `maintenance_work_mem=1GB`), and search and the
-  parallel view live on indexes that want to be in memory. A **4 GB / 2 vCPU** machine with the same
-  volume works for a quiet start if the money matters more: halve those three values in `compose.yaml`
-  first, or Postgres will be sized for memory the machine does not have.
+- **Machine: start with a shared-CPU 8 GB / 4 vCPU.** `compose.yaml` caps Postgres at 4 GB,
+  with `shared_buffers=2GB`, `effective_cache_size=3GB`, `work_mem=32MB`,
+  `maintenance_work_mem=256MB` and two parallel workers. The remaining machine memory serves both
+  API environments and the proxy. A **4 GB / 2 vCPU** machine needs a separately measured smaller
+  database limit that leaves room for those other containers and the operating system; the present
+  compose settings are not a whole-machine 4 GB budget.
 - **Later**, when readers are many or the CPU graph stays high, move to a dedicated-CPU plan: that is a
   new machine and the same volume, which is exactly the move the layout above makes cheap.
 
@@ -409,5 +410,26 @@ streamed back into `pg_restore`, and the dump is never on the server in the clea
 A dump written through gpg was written to a pipe, so `pg_restore` reads it front to back: one table can
 still be restored out of it with `-t`, but not in parallel with `-j`.
 
-The unencrypted procedure was run on the rehearsal on 2026-09-18: a row written to `essenthos_app`,
-backed up, restored into `restore_test` and read back. The encrypted one has not been run yet.
+The unencrypted procedure was run on the rehearsal on 2026-09-18. The encrypted stream was also
+rehearsed locally before release; neither rehearsal establishes recovery on a server that has not
+been provisioned.
+
+Run the current account-schema recovery check through the registered action:
+
+    avioniq services run core-backup-rehearsal --set root=. --set output=backup-rehearsal
+
+It uses synthetic accounts in isolated workstation databases, the pinned deployment Postgres client
+image, and an ephemeral key pair. The private key is mounted only in the client that decrypts; the
+backup process sees only the public key. The real backup script runs once with `--once`, writes only
+encrypted files, prunes expired files and removes older plain backups. Decryption streams directly
+into a fresh database. Every restored table is compared with the original, and the check exercises
+the restored data-protection key, existing cookie and bearer sessions, expired and revoked sessions,
+the revision sequence and an unchanged migration rerun. A corrupt dump is refused in another isolated
+candidate while the original account data stays intact. Temporary databases, files and private keys
+are removed; the TRX result is kept under `TestResults/<output>`. The offsite script is also run once
+against a local isolated rclone destination, checking encrypted-only copying and expired-copy removal.
+
+This requires Docker and the registered workstation database to be available. It does not contact a
+production host or external backup destination, publish a corpus or modify real accounts. Before the first
+public release, repeat recovery against a real encrypted server backup in a scratch database and
+verify the configured daily schedule and the owner's offsite download separately.
