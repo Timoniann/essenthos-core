@@ -4,8 +4,10 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Verbs;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
@@ -94,6 +96,57 @@ public sealed class FixedTitleLoaderTests : IDisposable
     }
 
     private FixedTitleLoader Loader() => new(_db, NullLogger<FixedTitleLoader>.Instance);
+
+    [Theory]
+    [MemberData(nameof(FixedTitleWitnessTests.Witnesses), MemberType = typeof(FixedTitleWitnessTests))]
+    public async Task TheWitnessVerbCarriesOnlyNewNamesAndKeepsNamedReferencesOnRepeat(string witness)
+    {
+        _greek.Slug = witness;
+        foreach (var book in await _db.Books.ToListAsync())
+        {
+            book.CanonicalOrdinal = 40;
+            book.Name = "Matthew";
+            book.Slug = "mat";
+        }
+        foreach (var reference in await _db.VerseReferences.ToListAsync())
+            reference.CanonicalBook = 40;
+        if (witness != NestleTextSource.Slug)
+        {
+            foreach (var verse in new[] { 1, 3 })
+            {
+                Parse(Greek(verse, 1), """{"robinson":"T-GSM"}""");
+                Parse(Greek(verse, 2), """{"robinson":"A-GSM"}""");
+            }
+            Parse(Greek(2, 1), """{"robinson":"A-NSM"}""");
+            Parse(Greek(2, 2), """{"robinson":"A-NSM"}""");
+        }
+        await _db.SaveChangesAsync();
+        var manual = await _db.WordEntities.AsNoTracking().SingleAsync();
+        using var services = new ServiceCollection().AddSingleton(_db)
+            .AddSingleton(Loader())
+            .AddSingleton(new OwnReferenceLoader(_db, NullLogger<OwnReferenceLoader>.Instance))
+            .BuildServiceProvider();
+        var run = new ForgeRun(services, NullLogger.Instance, TestResources.Folder(""), _db.Database.GetConnectionString()!);
+        var verb = ForgeVerbs.Find("fixed-titles")!;
+        (await verb.Run(run, ["fixed-titles"])).Should().Be(0);
+        var ours = await Ours();
+        ours.Should().HaveCount(2);
+        ours[Greek(1, 2).Id].EntityId.Should().Be(_satan.Id);
+        ours.Should().ContainKey(_db.WordAt(_english, 4, 1, 2).Id);
+        ours.Should().NotContainKey(Greek(2, 2).Id);
+        (await _db.WordEntities.AsNoTracking().SingleAsync(a => a.Id == manual.Id)).EntityId.Should().Be(_judas.Id);
+        var named = await _db.EntityVerses.AsNoTracking().Where(v => v.EntityId == _satan.Id).ToListAsync();
+        named.Should().ContainSingle().Which.Names.Should().BeTrue();
+        named[0].CanonicalBook.Should().Be(40);
+        var before = await FixtureFingerprint();
+        (await verb.Run(run, ["fixed-titles"])).Should().Be(0);
+        (await FixtureFingerprint()).Should().Be(before);
+    }
+
+    private async Task<string> FixtureFingerprint() => string.Join("\n",
+        JsonSerializer.Serialize(await _db.WordEntities.AsNoTracking().OrderBy(a => a.Id).ToListAsync()),
+        JsonSerializer.Serialize(await _db.WordEntityClaims.AsNoTracking().OrderBy(a => a.Id).ToListAsync()),
+        JsonSerializer.Serialize(await _db.EntityVerses.AsNoTracking().OrderBy(a => a.Id).ToListAsync()));
 
     private async Task<Dictionary<long, WordEntity>> Ours()
     {

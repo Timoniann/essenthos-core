@@ -55,7 +55,7 @@ internal sealed class FixedTitleLoader(AppDbContext db, ILogger<FixedTitleLoader
     /// <summary>Enough words after a title for the longest shape a rule asks for.</summary>
     private const int Ahead = 3;
 
-    private static readonly string[] Originals = [BhsaTextSource.Slug, .. EntityCandidates.GreekWitnesses];
+    private static readonly string[] Originals = [BhsaTextSource.Slug, .. FixedTitles.GreekWitnesses];
 
     private static readonly string Title = EnumSpelling.Of(EntityKind.Title);
 

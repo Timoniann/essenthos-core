@@ -42,6 +42,32 @@ public sealed class FixedTitlesTests
 
     private static string? SlugOf(FixedTitleWord word) => FixedTitles.Of(word)?.Slug;
 
+    [Theory]
+    [InlineData("T-GSM", "A-GSM", true)]
+    [InlineData("T-GSM", "A-NSM", false)]
+    [InlineData("T-GSF", "A-GSM", false)]
+    [InlineData("T-GPM", "A-GSM", false)]
+    [InlineData("N-GSM", "A-GSM", false)]
+    public void AParsedArticleMustAgreeInCaseNumberAndGender(string article, string noun, bool expected)
+    {
+        var word = new FixedTitleWord(1, ByzantineTextSource.Slug, Matthew, "G1228",
+            new FixedTitleMorphology(null, null, null, null, noun),
+            new FixedTitleMorphology(null, null, null, null, article), []);
+        FixedTitles.HasArticle(word).Should().Be(expected);
+    }
+
+    [Fact]
+    public void TheParsingCodeSettlesACaseEvenWhenAnExpandedFieldIsWrong()
+    {
+        var word = Greek("G1228", "A-NSM", new FixedTitleMorphology("det", "masculine", "singular", null, "T-NSM"));
+        SlugOf(word).Should().Be("satan");
+        FixedTitles.HasArticle(word with
+        {
+            Morphology = new FixedTitleMorphology("adj", null, "singular", null, null),
+            Previous = new FixedTitleMorphology("det", null, "singular", null, null),
+        }).Should().BeFalse();
+    }
+
     /// <summary>τοῦ διαβόλου, Matthew 4:1.</summary>
     [Fact]
     public void TheDevilWithTheArticleIsSatan() =>

@@ -1,0 +1,2662 @@
+[
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "NESTLE1904",
+    "named": [
+      "satan"
+    ],
+    "verse": 1,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 4,
+    "surface": "διαβόλου",
+    "position": 14,
+    "previous": {
+      "pos": "det",
+      "case": "genitive",
+      "form": "T-GSM",
+      "func": "T-GSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "τοῦ"
+    },
+    "following": [],
+    "morphology": {
+      "pos": "adj",
+      "case": "genitive",
+      "form": "A-GSM",
+      "func": "A-GSM",
+      "normalized": "διαβόλου"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "RP2018",
+    "named": [],
+    "verse": 1,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 4,
+    "surface": "διαβολου",
+    "position": 14,
+    "previous": {
+      "robinson": "T-GSM"
+    },
+    "following": [],
+    "morphology": {
+      "robinson": "A-GSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TISCH",
+    "named": [
+      "satan"
+    ],
+    "verse": 1,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 4,
+    "surface": "διαβόλου",
+    "position": 14,
+    "previous": {
+      "robinson": "T-GSM"
+    },
+    "following": [],
+    "morphology": {
+      "robinson": "A-GSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TR1550",
+    "named": [],
+    "verse": 1,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 4,
+    "surface": "διαβολου",
+    "position": 14,
+    "previous": {
+      "robinson": "T-GSM"
+    },
+    "following": [],
+    "morphology": {
+      "robinson": "A-GSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TR1894",
+    "named": [
+      "satan"
+    ],
+    "verse": 1,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 4,
+    "surface": "διαβολου",
+    "position": 14,
+    "previous": {
+      "robinson": "T-GSM"
+    },
+    "following": [],
+    "morphology": {
+      "robinson": "A-GSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "WH1881",
+    "named": [
+      "satan"
+    ],
+    "verse": 1,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 4,
+    "surface": "διαβολου",
+    "position": 14,
+    "previous": {
+      "robinson": "T-GSM"
+    },
+    "following": [],
+    "morphology": {
+      "robinson": "A-GSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "NESTLE1904",
+    "named": [],
+    "verse": 70,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 6,
+    "surface": "διάβολός",
+    "position": 15,
+    "previous": {
+      "pos": "adj",
+      "case": "nominative",
+      "form": "A-NSM",
+      "func": "A-NSM",
+      "normalized": "εἷς"
+    },
+    "following": [
+      "G1510"
+    ],
+    "morphology": {
+      "pos": "adj",
+      "case": "nominative",
+      "form": "A-NSM",
+      "func": "A-NSM",
+      "normalized": "διάβολος"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "RP2018",
+    "named": [],
+    "verse": 70,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 6,
+    "surface": "διαβολος",
+    "position": 15,
+    "previous": {
+      "robinson": "A-NSM"
+    },
+    "following": [
+      "G1510"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "TISCH",
+    "named": [],
+    "verse": 70,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 6,
+    "surface": "διάβολός",
+    "position": 13,
+    "previous": {
+      "robinson": "A-NSM"
+    },
+    "following": [
+      "G1510"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "TR1550",
+    "named": [],
+    "verse": 70,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 6,
+    "surface": "διαβολος",
+    "position": 15,
+    "previous": {
+      "robinson": "A-NSM"
+    },
+    "following": [
+      "G1510"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "TR1894",
+    "named": [],
+    "verse": 70,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 6,
+    "surface": "διαβολος",
+    "position": 15,
+    "previous": {
+      "robinson": "A-NSM"
+    },
+    "following": [
+      "G1510"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "WH1881",
+    "named": [],
+    "verse": 70,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 6,
+    "surface": "διαβολος",
+    "position": 15,
+    "previous": {
+      "robinson": "A-NSM"
+    },
+    "following": [
+      "G1510"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 44,
+    "text": "NESTLE1904",
+    "named": [],
+    "verse": 10,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 13,
+    "surface": "διαβόλου",
+    "position": 10,
+    "previous": {
+      "pos": "noun",
+      "case": "vocative",
+      "form": "N-VSM",
+      "func": "N-VSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "υἱέ"
+    },
+    "following": [
+      "G2190",
+      "G3956",
+      "G1343"
+    ],
+    "morphology": {
+      "pos": "adj",
+      "case": "genitive",
+      "form": "A-GSM",
+      "func": "A-GSM",
+      "normalized": "διαβόλου"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 44,
+    "text": "RP2018",
+    "named": [],
+    "verse": 10,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 13,
+    "surface": "διαβολου",
+    "position": 10,
+    "previous": {
+      "robinson": "N-VSM"
+    },
+    "following": [
+      "G2190",
+      "G3956",
+      "G1343"
+    ],
+    "morphology": {
+      "robinson": "A-GSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 44,
+    "text": "TISCH",
+    "named": [],
+    "verse": 10,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 13,
+    "surface": "διαβόλου",
+    "position": 10,
+    "previous": {
+      "robinson": "N-VSM"
+    },
+    "following": [
+      "G2190",
+      "G3956",
+      "G1343"
+    ],
+    "morphology": {
+      "robinson": "A-GSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 44,
+    "text": "TR1550",
+    "named": [],
+    "verse": 10,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 13,
+    "surface": "διαβολου",
+    "position": 10,
+    "previous": {
+      "robinson": "N-VSM"
+    },
+    "following": [
+      "G2190",
+      "G3956",
+      "G1343"
+    ],
+    "morphology": {
+      "robinson": "A-GSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 44,
+    "text": "TR1894",
+    "named": [],
+    "verse": 10,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 13,
+    "surface": "διαβολου",
+    "position": 10,
+    "previous": {
+      "robinson": "N-VSM"
+    },
+    "following": [
+      "G2190",
+      "G3956",
+      "G1343"
+    ],
+    "morphology": {
+      "robinson": "A-GSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 44,
+    "text": "WH1881",
+    "named": [],
+    "verse": 10,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 13,
+    "surface": "διαβολου",
+    "position": 10,
+    "previous": {
+      "robinson": "N-VSM"
+    },
+    "following": [
+      "G2190",
+      "G3956",
+      "G1343"
+    ],
+    "morphology": {
+      "robinson": "A-GSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 54,
+    "text": "NESTLE1904",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 3,
+    "surface": "διαβόλους",
+    "position": 5,
+    "previous": {
+      "pos": "ptcl",
+      "form": "PRT-N",
+      "func": "PRT-N",
+      "normalized": "μή"
+    },
+    "following": [
+      "G3524",
+      "G4103",
+      "G1722"
+    ],
+    "morphology": {
+      "pos": "adj",
+      "case": "accusative",
+      "form": "A-APF",
+      "func": "A-APF",
+      "normalized": "διαβόλους"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 54,
+    "text": "RP2018",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 3,
+    "surface": "διαβολους",
+    "position": 5,
+    "previous": {
+      "robinson": "PRT-N"
+    },
+    "following": [
+      "G3524",
+      "G4103",
+      "G1722"
+    ],
+    "morphology": {
+      "robinson": "A-APF"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 54,
+    "text": "TISCH",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 3,
+    "surface": "διαβόλους",
+    "position": 5,
+    "previous": {
+      "robinson": "PRT-N"
+    },
+    "following": [
+      "G3524",
+      "G4103",
+      "G1722"
+    ],
+    "morphology": {
+      "robinson": "A-APF"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 54,
+    "text": "TR1550",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 3,
+    "surface": "διαβολους",
+    "position": 5,
+    "previous": {
+      "robinson": "PRT-N"
+    },
+    "following": [
+      "G3524",
+      "G4103",
+      "G1722"
+    ],
+    "morphology": {
+      "robinson": "A-APF"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 54,
+    "text": "TR1894",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 3,
+    "surface": "διαβολους",
+    "position": 5,
+    "previous": {
+      "robinson": "PRT-N"
+    },
+    "following": [
+      "G3524",
+      "G4103",
+      "G1722"
+    ],
+    "morphology": {
+      "robinson": "A-APF"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 54,
+    "text": "WH1881",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1228",
+    "chapter": 3,
+    "surface": "διαβολους",
+    "position": 5,
+    "previous": {
+      "robinson": "PRT-N"
+    },
+    "following": [
+      "G3524",
+      "G4103",
+      "G1722"
+    ],
+    "morphology": {
+      "robinson": "A-APF"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "NESTLE1904",
+    "named": [
+      "satan"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 12,
+    "surface": "Διάβολος",
+    "position": 13,
+    "previous": {
+      "pos": "verb",
+      "case": "nominative",
+      "form": "V-PEP-NSM",
+      "func": "V-PPP-NSM",
+      "mood": "participle",
+      "tense": "present",
+      "voice": "middlepassive",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "καλούμενος"
+    },
+    "following": [
+      "G2532",
+      "G3588",
+      "G4567"
+    ],
+    "morphology": {
+      "pos": "adj",
+      "case": "nominative",
+      "form": "A-NSM",
+      "func": "A-NSM",
+      "normalized": "Διάβολος"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "RP2018",
+    "named": [],
+    "verse": 9,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 12,
+    "surface": "διαβολος",
+    "position": 13,
+    "previous": {
+      "robinson": "V-PPP-NSM"
+    },
+    "following": [
+      "G2532",
+      "G4567",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TISCH",
+    "named": [
+      "satan"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 12,
+    "surface": "διάβολος",
+    "position": 13,
+    "previous": {
+      "robinson": "V-PPP-NSM"
+    },
+    "following": [
+      "G2532",
+      "G3588",
+      "G4567"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1550",
+    "named": [],
+    "verse": 9,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 12,
+    "surface": "διαβολος",
+    "position": 13,
+    "previous": {
+      "robinson": "V-PPP-NSM",
+      "inflection": "5746"
+    },
+    "following": [
+      "G2532",
+      "G3588",
+      "G4567"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1894",
+    "named": [
+      "satan"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 12,
+    "surface": "διαβολος",
+    "position": 13,
+    "previous": {
+      "robinson": "V-PPP-NSM",
+      "inflection": "5746"
+    },
+    "following": [
+      "G2532",
+      "G3588",
+      "G4567"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "WH1881",
+    "named": [
+      "satan"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 12,
+    "surface": "διαβολος",
+    "position": 13,
+    "previous": {
+      "robinson": "V-PPP-NSM",
+      "inflection": "5746"
+    },
+    "following": [
+      "G2532",
+      "G3588",
+      "G4567"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "NESTLE1904",
+    "named": [
+      "satan"
+    ],
+    "verse": 2,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 20,
+    "surface": "Διάβολος",
+    "position": 11,
+    "previous": {
+      "pos": "verb",
+      "form": "V-PAI-3S",
+      "func": "V-PAI-3S",
+      "mood": "indicative",
+      "tense": "present",
+      "voice": "active",
+      "number": "singular",
+      "person": "third",
+      "normalized": "ἐστιν"
+    },
+    "following": [
+      "G2532",
+      "G3588",
+      "G4567"
+    ],
+    "morphology": {
+      "pos": "adj",
+      "case": "nominative",
+      "form": "A-NSM",
+      "func": "A-NSM",
+      "normalized": "Διάβολος"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "RP2018",
+    "named": [],
+    "verse": 2,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 20,
+    "surface": "διαβολος",
+    "position": 11,
+    "previous": {
+      "robinson": "V-PAI-3S"
+    },
+    "following": [
+      "G2532",
+      "G3588",
+      "G4567"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TISCH",
+    "named": [
+      "satan"
+    ],
+    "verse": 2,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 20,
+    "surface": "διάβολος",
+    "position": 11,
+    "previous": {
+      "robinson": "V-PAI-3S"
+    },
+    "following": [
+      "G2532",
+      "G3588",
+      "G4567"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1550",
+    "named": [],
+    "verse": 2,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 20,
+    "surface": "διαβολος",
+    "position": 11,
+    "previous": {
+      "robinson": "V-PAI-3S",
+      "inflection": "5719"
+    },
+    "following": [
+      "G2532",
+      "G4567",
+      "G2532"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1894",
+    "named": [
+      "satan"
+    ],
+    "verse": 2,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 20,
+    "surface": "διαβολος",
+    "position": 11,
+    "previous": {
+      "robinson": "V-PAI-3S",
+      "inflection": "5719"
+    },
+    "following": [
+      "G2532",
+      "G4567",
+      "G2532"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "WH1881",
+    "named": [
+      "satan"
+    ],
+    "verse": 2,
+    "listed": true,
+    "number": "G1228",
+    "chapter": 20,
+    "surface": "διαβολος",
+    "position": 11,
+    "previous": {
+      "robinson": "V-PAI-3S",
+      "inflection": "5719"
+    },
+    "following": [
+      "G2532",
+      "G3588",
+      "G4567"
+    ],
+    "morphology": {
+      "robinson": "A-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "NESTLE1904",
+    "named": [
+      "satan"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δράκων",
+    "position": 4,
+    "previous": {
+      "pos": "det",
+      "case": "nominative",
+      "form": "T-NSM",
+      "func": "T-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "ὁ"
+    },
+    "following": [
+      "G3588",
+      "G3173",
+      "G3588"
+    ],
+    "morphology": {
+      "pos": "noun",
+      "case": "nominative",
+      "form": "N-NSM",
+      "func": "N-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "δράκων"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "RP2018",
+    "named": [],
+    "verse": 9,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δρακων",
+    "position": 4,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G3173",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TISCH",
+    "named": [
+      "satan"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δράκων",
+    "position": 4,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G3173",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1550",
+    "named": [],
+    "verse": 9,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δρακων",
+    "position": 4,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G3173",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1894",
+    "named": [
+      "satan"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δρακων",
+    "position": 4,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G3173",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "WH1881",
+    "named": [
+      "satan"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δρακων",
+    "position": 4,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G3173",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "NESTLE1904",
+    "named": [
+      "serpent-of-eden"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G3789",
+    "chapter": 12,
+    "surface": "ὄφις",
+    "position": 8,
+    "previous": {
+      "pos": "det",
+      "case": "nominative",
+      "form": "T-NSM",
+      "func": "T-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "ὁ"
+    },
+    "following": [
+      "G3588",
+      "G744",
+      "G3588"
+    ],
+    "morphology": {
+      "pos": "noun",
+      "case": "nominative",
+      "form": "N-NSM",
+      "func": "N-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "ὄφις"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "RP2018",
+    "named": [
+      "serpent-of-eden"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G3789",
+    "chapter": 12,
+    "surface": "οφις",
+    "position": 8,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G744",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TISCH",
+    "named": [
+      "serpent-of-eden"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G3789",
+    "chapter": 12,
+    "surface": "ὄφις",
+    "position": 8,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G744",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1550",
+    "named": [
+      "serpent-of-eden"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G3789",
+    "chapter": 12,
+    "surface": "οφις",
+    "position": 8,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G744",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1894",
+    "named": [
+      "serpent-of-eden"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G3789",
+    "chapter": 12,
+    "surface": "οφις",
+    "position": 8,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G744",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "WH1881",
+    "named": [
+      "serpent-of-eden"
+    ],
+    "verse": 9,
+    "listed": true,
+    "number": "G3789",
+    "chapter": 12,
+    "surface": "οφις",
+    "position": 8,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G744",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "satan"
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "NESTLE1904",
+    "named": [
+      "satan"
+    ],
+    "verse": 3,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δράκων",
+    "position": 10,
+    "previous": {
+      "pos": "verb",
+      "form": "V-2AMM-2S",
+      "func": "V-2AMM-2S",
+      "mood": "imperative",
+      "tense": "aorist",
+      "voice": "middle",
+      "number": "singular",
+      "person": "second",
+      "normalized": "ἰδού"
+    },
+    "following": [
+      "G4450",
+      "G3173",
+      "G2192"
+    ],
+    "morphology": {
+      "pos": "noun",
+      "case": "nominative",
+      "form": "N-NSM",
+      "func": "N-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "δράκων"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "RP2018",
+    "named": [],
+    "verse": 3,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δρακων",
+    "position": 10,
+    "previous": {
+      "robinson": "V-2AMM-2S"
+    },
+    "following": [
+      "G4442",
+      "G3173",
+      "G2192"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TISCH",
+    "named": [
+      "satan"
+    ],
+    "verse": 3,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δράκων",
+    "position": 10,
+    "previous": {
+      "robinson": "V-2AMM-2S"
+    },
+    "following": [
+      "G4450",
+      "G3173",
+      "G2192"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1550",
+    "named": [],
+    "verse": 3,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δρακων",
+    "position": 10,
+    "previous": {
+      "robinson": "V-2AMM-2S",
+      "inflection": "5640"
+    },
+    "following": [
+      "G3173",
+      "G4450",
+      "G2192"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1894",
+    "named": [
+      "satan"
+    ],
+    "verse": 3,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δρακων",
+    "position": 10,
+    "previous": {
+      "robinson": "V-2AMM-2S",
+      "inflection": "5640"
+    },
+    "following": [
+      "G3173",
+      "G4450",
+      "G2192"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "WH1881",
+    "named": [
+      "satan"
+    ],
+    "verse": 3,
+    "listed": true,
+    "number": "G1404",
+    "chapter": 12,
+    "surface": "δρακων",
+    "position": 10,
+    "previous": {
+      "robinson": "V-2AMM-2S",
+      "inflection": "5640"
+    },
+    "following": [
+      "G3173",
+      "G4450",
+      "G2192"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "NESTLE1904",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1404",
+    "chapter": 13,
+    "surface": "δράκων",
+    "position": 18,
+    "previous": {
+      "pos": "adv",
+      "form": "ADV",
+      "func": "ADV",
+      "normalized": "ὡς"
+    },
+    "following": [],
+    "morphology": {
+      "pos": "noun",
+      "case": "nominative",
+      "form": "N-NSM",
+      "func": "N-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "δράκων"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "RP2018",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1404",
+    "chapter": 13,
+    "surface": "δρακων",
+    "position": 18,
+    "previous": {
+      "robinson": "ADV"
+    },
+    "following": [],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TISCH",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1404",
+    "chapter": 13,
+    "surface": "δράκων",
+    "position": 18,
+    "previous": {
+      "robinson": "ADV"
+    },
+    "following": [],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1550",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1404",
+    "chapter": 13,
+    "surface": "δρακων",
+    "position": 18,
+    "previous": {
+      "robinson": "ADV"
+    },
+    "following": [],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1894",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1404",
+    "chapter": 13,
+    "surface": "δρακων",
+    "position": 18,
+    "previous": {
+      "robinson": "ADV"
+    },
+    "following": [],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "WH1881",
+    "named": [],
+    "verse": 11,
+    "listed": false,
+    "number": "G1404",
+    "chapter": 13,
+    "surface": "δρακων",
+    "position": 18,
+    "previous": {
+      "robinson": "ADV"
+    },
+    "following": [],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "NESTLE1904",
+    "named": [
+      "jesus"
+    ],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 9,
+    "surface": "Υἱὸς",
+    "position": 8,
+    "previous": {
+      "pos": "det",
+      "case": "nominative",
+      "form": "T-NSM",
+      "func": "T-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "ὁ"
+    },
+    "following": [
+      "G3588",
+      "G444",
+      "G1909"
+    ],
+    "morphology": {
+      "pos": "noun",
+      "case": "nominative",
+      "form": "N-NSM",
+      "func": "N-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "Υἱός"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "RP2018",
+    "named": [],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 9,
+    "surface": "υιος",
+    "position": 8,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G444",
+      "G1909"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TISCH",
+    "named": [
+      "jesus"
+    ],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 9,
+    "surface": "υἱὸς",
+    "position": 8,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G444",
+      "G1909"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TR1550",
+    "named": [],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 9,
+    "surface": "υιος",
+    "position": 8,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G444",
+      "G1909"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TR1894",
+    "named": [
+      "jesus"
+    ],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 9,
+    "surface": "υιος",
+    "position": 8,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G444",
+      "G1909"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "WH1881",
+    "named": [
+      "jesus"
+    ],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 9,
+    "surface": "υιος",
+    "position": 8,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G444",
+      "G1909"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "NESTLE1904",
+    "named": [
+      "jesus"
+    ],
+    "verse": 27,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 5,
+    "surface": "Υἱὸς",
+    "position": 8,
+    "previous": {
+      "pos": "conj",
+      "form": "CONJ",
+      "func": "CONJ",
+      "normalized": "ὅτι"
+    },
+    "following": [
+      "G444",
+      "G1510"
+    ],
+    "morphology": {
+      "pos": "noun",
+      "case": "nominative",
+      "form": "N-NSM",
+      "func": "N-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "Υἱός"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "RP2018",
+    "named": [],
+    "verse": 27,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 5,
+    "surface": "υιος",
+    "position": 9,
+    "previous": {
+      "robinson": "CONJ"
+    },
+    "following": [
+      "G444",
+      "G1510"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "TISCH",
+    "named": [
+      "jesus"
+    ],
+    "verse": 27,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 5,
+    "surface": "υἱὸς",
+    "position": 8,
+    "previous": {
+      "robinson": "CONJ"
+    },
+    "following": [
+      "G444",
+      "G1510"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "TR1550",
+    "named": [],
+    "verse": 27,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 5,
+    "surface": "υιος",
+    "position": 9,
+    "previous": {
+      "robinson": "CONJ"
+    },
+    "following": [
+      "G444",
+      "G1510"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "TR1894",
+    "named": [
+      "jesus"
+    ],
+    "verse": 27,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 5,
+    "surface": "υιος",
+    "position": 9,
+    "previous": {
+      "robinson": "CONJ"
+    },
+    "following": [
+      "G444",
+      "G1510"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 43,
+    "text": "WH1881",
+    "named": [
+      "jesus"
+    ],
+    "verse": 27,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 5,
+    "surface": "υιος",
+    "position": 8,
+    "previous": {
+      "robinson": "CONJ"
+    },
+    "following": [
+      "G444",
+      "G1510"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 58,
+    "text": "NESTLE1904",
+    "named": [],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 2,
+    "surface": "υἱὸς",
+    "position": 13,
+    "previous": {
+      "pos": "ptcl",
+      "form": "PRT",
+      "func": "PRT",
+      "normalized": "ἤ"
+    },
+    "following": [
+      "G444",
+      "G3754",
+      "G1980"
+    ],
+    "morphology": {
+      "pos": "noun",
+      "case": "nominative",
+      "form": "N-NSM",
+      "func": "N-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "υἱός"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 58,
+    "text": "RP2018",
+    "named": [],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 2,
+    "surface": "υιος",
+    "position": 13,
+    "previous": {
+      "robinson": "PRT"
+    },
+    "following": [
+      "G444",
+      "G3754",
+      "G1980"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 58,
+    "text": "TISCH",
+    "named": [],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 2,
+    "surface": "υἱὸς",
+    "position": 13,
+    "previous": {
+      "robinson": "PRT"
+    },
+    "following": [
+      "G444",
+      "G3754",
+      "G1980"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 58,
+    "text": "TR1550",
+    "named": [],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 2,
+    "surface": "υιος",
+    "position": 13,
+    "previous": {
+      "robinson": "PRT"
+    },
+    "following": [
+      "G444",
+      "G3754",
+      "G1980"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 58,
+    "text": "TR1894",
+    "named": [],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 2,
+    "surface": "υιος",
+    "position": 13,
+    "previous": {
+      "robinson": "PRT"
+    },
+    "following": [
+      "G444",
+      "G3754",
+      "G1980"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 58,
+    "text": "WH1881",
+    "named": [],
+    "verse": 6,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 2,
+    "surface": "υιος",
+    "position": 13,
+    "previous": {
+      "robinson": "PRT"
+    },
+    "following": [
+      "G444",
+      "G3754",
+      "G1980"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "NESTLE1904",
+    "named": [
+      "jesus"
+    ],
+    "verse": 13,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 1,
+    "surface": "υἱὸν",
+    "position": 7,
+    "previous": {
+      "pos": "adj",
+      "case": "accusative",
+      "form": "A-ASM",
+      "func": "A-ASM",
+      "normalized": "ὅμοιον"
+    },
+    "following": [
+      "G444",
+      "G1746",
+      "G4158"
+    ],
+    "morphology": {
+      "pos": "noun",
+      "case": "accusative",
+      "form": "N-ASM",
+      "func": "N-ASM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "υἱόν"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "RP2018",
+    "named": [],
+    "verse": 13,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 1,
+    "surface": "υιω",
+    "position": 8,
+    "previous": {
+      "robinson": "A-ASM"
+    },
+    "following": [
+      "G444",
+      "G1746",
+      "G4158"
+    ],
+    "morphology": {
+      "robinson": "N-DSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TISCH",
+    "named": [
+      "jesus"
+    ],
+    "verse": 13,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 1,
+    "surface": "υἱὸν",
+    "position": 7,
+    "previous": {
+      "robinson": "A-ASM"
+    },
+    "following": [
+      "G444",
+      "G1746",
+      "G4158"
+    ],
+    "morphology": {
+      "robinson": "N-ASM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1550",
+    "named": [],
+    "verse": 13,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 1,
+    "surface": "υιω",
+    "position": 8,
+    "previous": {
+      "robinson": "A-ASM"
+    },
+    "following": [
+      "G444",
+      "G1746",
+      "G4158"
+    ],
+    "morphology": {
+      "robinson": "N-DSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1894",
+    "named": [
+      "jesus"
+    ],
+    "verse": 13,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 1,
+    "surface": "υιω",
+    "position": 8,
+    "previous": {
+      "robinson": "A-ASM"
+    },
+    "following": [
+      "G444",
+      "G1746",
+      "G4158"
+    ],
+    "morphology": {
+      "robinson": "N-DSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "WH1881",
+    "named": [
+      "jesus"
+    ],
+    "verse": 13,
+    "listed": true,
+    "number": "G5207",
+    "chapter": 1,
+    "surface": "υιον",
+    "position": 7,
+    "previous": {
+      "robinson": "A-ASM"
+    },
+    "following": [
+      "G444",
+      "G1746",
+      "G4158"
+    ],
+    "morphology": {
+      "robinson": "N-ASM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "NESTLE1904",
+    "named": [],
+    "verse": 14,
+    "listed": false,
+    "number": "G5207",
+    "chapter": 14,
+    "surface": "υἱὸν",
+    "position": 13,
+    "previous": {
+      "pos": "adj",
+      "case": "accusative",
+      "form": "A-ASM",
+      "func": "A-ASM",
+      "normalized": "ὅμοιον"
+    },
+    "following": [
+      "G444",
+      "G2192",
+      "G1909"
+    ],
+    "morphology": {
+      "pos": "noun",
+      "case": "accusative",
+      "form": "N-ASM",
+      "func": "N-ASM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "υἱόν"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "RP2018",
+    "named": [],
+    "verse": 14,
+    "listed": false,
+    "number": "G5207",
+    "chapter": 14,
+    "surface": "υιω",
+    "position": 13,
+    "previous": {
+      "robinson": "A-ASM"
+    },
+    "following": [
+      "G444",
+      "G2192",
+      "G1909"
+    ],
+    "morphology": {
+      "robinson": "N-DSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TISCH",
+    "named": [],
+    "verse": 14,
+    "listed": false,
+    "number": "G5207",
+    "chapter": 14,
+    "surface": "υἱὸν",
+    "position": 13,
+    "previous": {
+      "robinson": "A-ASM"
+    },
+    "following": [
+      "G444",
+      "G2192",
+      "G1909"
+    ],
+    "morphology": {
+      "robinson": "N-ASM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1550",
+    "named": [],
+    "verse": 14,
+    "listed": false,
+    "number": "G5207",
+    "chapter": 14,
+    "surface": "υιω",
+    "position": 13,
+    "previous": {
+      "robinson": "A-NSM"
+    },
+    "following": [
+      "G444",
+      "G2192",
+      "G1909"
+    ],
+    "morphology": {
+      "robinson": "N-DSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "TR1894",
+    "named": [],
+    "verse": 14,
+    "listed": false,
+    "number": "G5207",
+    "chapter": 14,
+    "surface": "υιω",
+    "position": 13,
+    "previous": {
+      "robinson": "A-NSM"
+    },
+    "following": [
+      "G444",
+      "G2192",
+      "G1909"
+    ],
+    "morphology": {
+      "robinson": "N-DSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 66,
+    "text": "WH1881",
+    "named": [],
+    "verse": 14,
+    "listed": false,
+    "number": "G5207",
+    "chapter": 14,
+    "surface": "υιον",
+    "position": 13,
+    "previous": {
+      "robinson": "A-ASM"
+    },
+    "following": [
+      "G444",
+      "G2192",
+      "G1909"
+    ],
+    "morphology": {
+      "robinson": "N-ASM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "NESTLE1904",
+    "named": [
+      "jesus"
+    ],
+    "verse": 16,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 16,
+    "surface": "Χριστὸς",
+    "position": 9,
+    "previous": {
+      "pos": "det",
+      "case": "nominative",
+      "form": "T-NSM",
+      "func": "T-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "ὁ"
+    },
+    "following": [
+      "G3588",
+      "G5207",
+      "G3588"
+    ],
+    "morphology": {
+      "pos": "noun",
+      "case": "nominative",
+      "form": "N-NSM",
+      "func": "N-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "Χριστός"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "RP2018",
+    "named": [
+      "jesus"
+    ],
+    "verse": 16,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 16,
+    "surface": "χριστος",
+    "position": 9,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G5207",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TISCH",
+    "named": [
+      "jesus"
+    ],
+    "verse": 16,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 16,
+    "surface": "Χριστὸς",
+    "position": 9,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G5207",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TR1550",
+    "named": [
+      "jesus"
+    ],
+    "verse": 16,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 16,
+    "surface": "χριστος",
+    "position": 9,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G5207",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TR1894",
+    "named": [
+      "jesus"
+    ],
+    "verse": 16,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 16,
+    "surface": "χριστος",
+    "position": 9,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G5207",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "WH1881",
+    "named": [
+      "jesus"
+    ],
+    "verse": 16,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 16,
+    "surface": "χριστος",
+    "position": 9,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G3588",
+      "G5207",
+      "G3588"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": "jesus"
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "NESTLE1904",
+    "named": [],
+    "verse": 5,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 24,
+    "surface": "Χριστός",
+    "position": 12,
+    "previous": {
+      "pos": "det",
+      "case": "nominative",
+      "form": "T-NSM",
+      "func": "T-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "ὁ"
+    },
+    "following": [
+      "G2532",
+      "G4183",
+      "G4105"
+    ],
+    "morphology": {
+      "pos": "noun",
+      "case": "nominative",
+      "form": "N-NSM",
+      "func": "N-NSM",
+      "gender": "masculine",
+      "number": "singular",
+      "normalized": "Χριστός"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "RP2018",
+    "named": [],
+    "verse": 5,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 24,
+    "surface": "χριστος",
+    "position": 12,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G2532",
+      "G4183",
+      "G4105"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TISCH",
+    "named": [],
+    "verse": 5,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 24,
+    "surface": "Χριστός",
+    "position": 12,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G2532",
+      "G4183",
+      "G4105"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TR1550",
+    "named": [],
+    "verse": 5,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 24,
+    "surface": "χριστος",
+    "position": 12,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G2532",
+      "G4183",
+      "G4105"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "TR1894",
+    "named": [],
+    "verse": 5,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 24,
+    "surface": "χριστος",
+    "position": 12,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G2532",
+      "G4183",
+      "G4105"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  },
+  {
+    "nth": 1,
+    "book": 40,
+    "text": "WH1881",
+    "named": [],
+    "verse": 5,
+    "listed": true,
+    "number": "G5547",
+    "chapter": 24,
+    "surface": "χριστος",
+    "position": 12,
+    "previous": {
+      "robinson": "T-NSM"
+    },
+    "following": [
+      "G2532",
+      "G4183",
+      "G4105"
+    ],
+    "morphology": {
+      "robinson": "N-NSM"
+    },
+    "expected": null
+  }
+]

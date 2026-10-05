@@ -305,6 +305,7 @@ internal static partial class ForgeVerbs
             .Load());
         forge.Logger.LogInformation("{Outcome}", await titleScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>()
             .Load());
+        await TellTheNamingVerses(titleScope);
         return 0;
     }
 

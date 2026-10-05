@@ -1,4 +1,5 @@
 using System.Text.RegularExpressions;
+using Essenthos.Core.Loading.Links;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
@@ -65,24 +66,32 @@ internal static partial class FixedTitles
 
     private const int Ezekiel = 26;
 
+    public static readonly IReadOnlyList<string> GreekWitnesses =
+        [.. EntityCandidates.GreekWitnesses, TischendorfTextSource.Slug, WestcottHortTextSource.Slug];
+
     public static readonly IReadOnlyList<FixedTitleRule> Rules =
     [
         // ὁ διάβολος, singular with its own article: 29 words in 27 verses; the dataset files 24 of them
         // under Satan and leaves out Rev 12:12, Jas 4:7 and 1 John 3:10, which say the same. Without the
         // article the word is a description (John 6:70, Acts 13:10) and in the plural 'slanderers'.
-        new("satan", NestleTextSource.Slug, "G1228", null, Article: true, Construct: false, [],
-            "ὁ διάβολος, singular with the article: the devil, whom Rev 12:9 and 20:2 call Satan"),
+        .. GreekWitnesses.Select(witness => new FixedTitleRule(
+            "satan", witness, "G1228", null, Article: true, Construct: false, [],
+            "ὁ διάβολος, singular with the article: the devil, whom Rev 12:9 and 20:2 call Satan")),
         // The two verses that say so name him Διάβολος without an article and 'the Satan' beside it.
-        new("satan", NestleTextSource.Slug, "G1228", null, Article: false, Construct: false,
+        .. GreekWitnesses.Select(witness => new FixedTitleRule("satan", witness, "G1228", null, Article: false, Construct: false,
             ["G2532", "G3588", "G4567"],
-            "Διάβολος beside 'and the Satan': the verse gives both names to one bearer"),
+            "Διάβολος beside 'and the Satan': the verse gives both names to one bearer")),
+        // Some witnesses give the same two names without a second article.
+        .. GreekWitnesses.Select(witness => new FixedTitleRule("satan", witness, "G1228", null, Article: false, Construct: false,
+            ["G2532", "G4567"],
+            "Διάβολος beside 'and Satan': the verse gives both names to one bearer")),
         // In Revelation the dragon and the serpent are the one Rev 12:9 and 20:2 call the devil and
-        // Satan: with the article, 13 words in 12 verses, all filed under Satan by the dataset. The dragon
+        // Satan when the title stands with its article. The dragon
         // of 12:3 is introduced without one, and 13:11's 'as a dragon' is a likeness.
-        new("satan", NestleTextSource.Slug, "G1404", new HashSet<int> { Revelation }, Article: true,
-            Construct: false, [], "ὁ δράκων in Revelation, whom 12:9 and 20:2 call the devil and Satan"),
-        new("satan", NestleTextSource.Slug, "G3789", new HashSet<int> { Revelation }, Article: true,
-            Construct: false, [], "ὁ ὄφις in Revelation, whom 12:9 and 20:2 call the devil and Satan"),
+        .. GreekWitnesses.Select(witness => new FixedTitleRule("satan", witness, "G1404", new HashSet<int> { Revelation }, Article: true,
+            Construct: false, [], "ὁ δράκων in Revelation, whom 12:9 and 20:2 call the devil and Satan")),
+        .. GreekWitnesses.Select(witness => new FixedTitleRule("satan", witness, "G3789", new HashSet<int> { Revelation }, Article: true,
+            Construct: false, [], "ὁ ὄφις in Revelation, whom 12:9 and 20:2 call the devil and Satan")),
         // הַשָּׂטָן with the article: Job 1-2 and Zech 3:1-2, 17 words, every verse filed under Satan.
         // Without it the word is 'an adversary' (Num 22:22, 1 Kgs 11:14) and is left to the readings.
         new("satan", BhsaTextSource.Slug, "H7854", null, Article: true, Construct: false, [],
@@ -94,14 +103,14 @@ internal static partial class FixedTitles
         // rulings on the title leave them to the title alone. Read in each Greek witness, because the
         // Byzantine and the Received Text print Χριστός in some forty verses where Nestle does not, and
         // Robinson and Stephanus are not linked to Nestle at all.
-        .. EntityCandidates.GreekWitnesses.Select(witness => new FixedTitleRule(
+        .. GreekWitnesses.Select(witness => new FixedTitleRule(
             "jesus", witness, "G5547", null, Article: false, Construct: false, [],
             "Χριστός, the title the New Testament gives Jesus",
             Except: SenseReadingFiles.TitleReadings().Open("G5547"))),
         // ὁ υἱὸς τοῦ ἀνθρώπου: 81 words in 77 verses, every one filed under Jesus. Without the articles it
         // is Daniel's 'a son of man' (John 5:27, Heb 2:6, Rev 1:13, 14:14), and is left to the readings.
-        new("jesus", NestleTextSource.Slug, "G5207", null, Article: false, Construct: false, ["G3588", "G444"],
-            "ὁ υἱὸς τοῦ ἀνθρώπου, the Son of Man, Jesus's name for himself"),
+        .. GreekWitnesses.Select(witness => new FixedTitleRule("jesus", witness, "G5207", null, Article: false, Construct: false, ["G3588", "G444"],
+            "ὁ υἱὸς τοῦ ἀνθρώπου, the Son of Man, Jesus's name for himself")),
         // בֶּן־אָדָם in Ezekiel is how God addresses the prophet, 93 times from 2:1; the dataset files 83
         // of the verses under him and leaves out ten that address him the same way (8:8, 17:2, 38:14).
         // Daniel 8:17 addresses Daniel so, which is why the rule stops at the book.
@@ -119,13 +128,27 @@ internal static partial class FixedTitles
         || (morphology.Number is null && morphology.Form is { } form && SingularForm().IsMatch(form));
 
     /// <summary>
-    /// BHSA writes the article as a word of its own before the noun; Nestle's article is a word of its
-    /// own too, and it has to be in the noun's case to be the noun's.
+    /// BHSA writes the article as a word of its own before the noun. The Greek article must agree
+    /// with the noun; read the shared parsing code before the expanded fields.
     /// </summary>
-    public static bool HasArticle(FixedTitleWord word) =>
-        word.Previous is { } previous
-        && (previous.Pos == "art"
-            || (previous.Pos == "det" && previous.Case == word.Morphology.Case && Singular(previous)));
+    public static bool HasArticle(FixedTitleWord word)
+    {
+        if (word.Previous is not { } previous)
+            return false;
+
+        if (word.Text == BhsaTextSource.Slug)
+            return previous.Pos == "art";
+
+        if (previous.Form is not null && word.Morphology.Form is not null)
+        {
+            var article = GreekMorphology.Parse(previous.Form);
+            return article.Part == GreekPart.Article && article.Number == 'S'
+                && article.Agrees(GreekMorphology.Parse(word.Morphology.Form));
+        }
+
+        return previous.Pos == "det" && previous.Case is not null
+            && previous.Case == word.Morphology.Case && Singular(previous);
+    }
 
     [GeneratedRegex("^[A-Z0-9]+-[NGDAV]S")]
     private static partial Regex SingularForm();
