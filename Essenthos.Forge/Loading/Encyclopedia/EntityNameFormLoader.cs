@@ -40,8 +40,8 @@ internal sealed record NameFormOutcome(
         AlreadyLoaded ? "every name form on this disk is already loaded"
         : NoFiles ? "no name-form files are on this disk, so nothing was loaded from them"
         : $"{Declined} entities decline their names in {Forms} forms, read from {Records} records " +
-          $"over {Files} files in {Elapsed}. {Skipped} entities had already been declined by this " +
-          $"loader and were left alone, {Replaced} forms were superseded by a later file, " +
+          $"over {Files} files in {Elapsed}. {Skipped} records added no missing form, " +
+          $"{Replaced} forms were superseded by a later file, " +
           $"{Repaired} forms replaced one that carried its own preposition, and {Bared} forms had " +
           $"one taken off on the way in. Refused: {Refused}.";
 }
@@ -69,12 +69,9 @@ internal sealed record NameFormOutcome(
 /// </para>
 ///
 /// <para>
-/// **The guard is on this loader's own rows, and per entity.** Guarding on "does the table hold
-/// anything" is what left a cold database with no name resolutions at all when another loader
-/// started writing into the same table a step earlier — and this loader writes into a table
-/// <see cref="EntityDescriptorLoader"/> is already filling, so that is not hypothetical here.
-/// Per entity rather than per table because the passes arrive in batches over days: a second batch
-/// must load beside the first, and an entity this loader has already declined is left as it is.
+/// **The guard is per entity, language and case.** The descriptor pass shares this table, and
+/// later batches can add cases an earlier batch omitted. A sound stored form remains unchanged;
+/// another form of the same entity does not prevent filling a missing case.
 /// </para>
 /// </summary>
 internal sealed class EntityNameFormLoader(
@@ -84,7 +81,7 @@ internal sealed class EntityNameFormLoader(
 {
     /// <summary>
     /// How every source string written here begins. It is what tells this loader's rows from the
-    /// descriptor pass's rows in the same table, and what the per-entity guard matches on.
+    /// descriptor pass's rows in the same table.
     /// </summary>
     public const string SourcePrefix = "declined by";
 
@@ -117,7 +114,6 @@ internal sealed class EntityNameFormLoader(
         }
 
         var entities = await Slugs(records, cancellationToken);
-        var declined = await Declined(entities.Values, cancellationToken);
         var held = await Held(entities.Values, cancellationToken);
 
         int unknownEntity = 0, unknownCase = 0, empty = 0, alreadyHeld = 0;
@@ -137,12 +133,7 @@ internal sealed class EntityNameFormLoader(
                 continue;
             }
 
-            if (declined.Contains(entityId))
-            {
-                skipped++;
-                continue;
-            }
-
+            var changed = false;
             var source = Source(record);
             foreach (var (language, cases) in record.Names ?? NoNames)
             {
@@ -183,6 +174,7 @@ internal sealed class EntityNameFormLoader(
                         earlier.Form = form;
                         earlier.Source = source;
                         replaced++;
+                        changed = true;
                         continue;
                     }
 
@@ -215,7 +207,13 @@ internal sealed class EntityNameFormLoader(
 
                     db.EntityNameForms.Add(row);
                     decided[key] = row;
+                    changed = true;
                 }
+            }
+
+            if (!changed)
+            {
+                skipped++;
             }
         }
 
@@ -227,6 +225,7 @@ internal sealed class EntityNameFormLoader(
             .Count();
 
         var refused = new NameFormRefusals(unknownEntity, unknownCase, empty, alreadyHeld);
+        var missing = unknownEntity + unknownCase + empty;
 
         if (forms > 0)
         {
@@ -234,19 +233,19 @@ internal sealed class EntityNameFormLoader(
         }
 
         var outcome = new NameFormOutcome(
-            AlreadyLoaded: forms == 0 && skipped == records.Count,
+            AlreadyLoaded: forms == 0 && skipped == records.Count && missing == 0,
             NoFiles: false,
             files, records.Count, replaced, skipped, wrote, forms, repaired, bared, refused,
             started.Elapsed);
 
-        if (refused.Total > 0)
+        if (missing > 0)
         {
             logger.LogWarning(
                 "{Count} name forms were refused and are not in the corpus: {Refused}. A language "
                 + "with no form falls back to the English name, which is a visible gap; the one "
                 + "thing that must not happen is an invented ending, so a form nothing can place "
                 + "is dropped rather than guessed at",
-                refused.Total,
+                missing,
                 refused);
         }
 
@@ -290,24 +289,6 @@ internal sealed class EntityNameFormLoader(
         return await db.Entities
             .Where(e => slugs.Contains(e.Slug))
             .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
-    }
-
-    /// <summary>
-    /// The entities this loader has already written a form for. On its own source and not on the
-    /// table, because the table is shared with the descriptor pass and asking whether it holds
-    /// anything would answer yes on a database this loader has never run against.
-    /// </summary>
-    private async Task<HashSet<int>> Declined(
-        IReadOnlyCollection<int> entities,
-        CancellationToken cancellationToken)
-    {
-        var rows = await db.EntityNameForms
-            .Where(f => entities.Contains(f.EntityId) && f.Source.StartsWith(SourcePrefix))
-            .Select(f => f.EntityId)
-            .Distinct()
-            .ToListAsync(cancellationToken);
-
-        return [.. rows];
     }
 
     /// <summary>

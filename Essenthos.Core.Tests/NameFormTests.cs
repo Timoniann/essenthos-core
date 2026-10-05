@@ -143,6 +143,38 @@ public sealed class NameFormTests : IDisposable
         _db.EntityNameForms.Count(f => f.Entity!.Slug == "moses").Should().Be(6);
     }
 
+    [Fact]
+    public async Task AMissingCaseIsFilledAfterAnEarlierBatchDeclinedTheEntity()
+    {
+        await Decline("named");
+        var missing = (await Form("moses", "ukr", GrammaticalCases.Genitive))!;
+        _db.EntityNameForms.Remove(missing);
+        var preserved = (await Form("moses", "ukr", GrammaticalCases.Nominative))!;
+        preserved.Source = "an editor's held form";
+        await _db.SaveChangesAsync();
+        var preservedId = preserved.Id;
+        var preservedSource = preserved.Source;
+
+        var repaired = await Decline("named");
+
+        repaired.Forms.Should().Be(1);
+        (await Form("moses", "ukr", GrammaticalCases.Genitive))!.Form.Should().Be("Мойсея");
+        var held = (await Form("moses", "ukr", GrammaticalCases.Nominative))!;
+        held.Id.Should().Be(preservedId);
+        held.Source.Should().Be(preservedSource);
+        held.Form.Should().Be("Мойсей");
+        var beforeRepeat = await _db.EntityNameForms.OrderBy(f => f.Id)
+            .Select(f => new { f.Id, f.EntityId, f.Language, f.GrammaticalCase, f.Form, f.Source })
+            .ToListAsync();
+
+        var again = await Decline("named");
+
+        again.Forms.Should().Be(0);
+        (await _db.EntityNameForms.OrderBy(f => f.Id)
+            .Select(f => new { f.Id, f.EntityId, f.Language, f.GrammaticalCase, f.Form, f.Source })
+            .ToListAsync()).Should().Equal(beforeRepeat);
+    }
+
     /// <summary>
     /// A form the descriptor pass wrote for its own subject is the one left standing: the two
     /// loaders share a table with a unique key per entity, language and case, so the second writer
