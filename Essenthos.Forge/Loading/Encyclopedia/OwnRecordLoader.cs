@@ -155,7 +155,7 @@ internal sealed class OwnRecordLoader(
                 ? 0
                 : await Annotate(
                     settled, await Corrections(file, words, cancellationToken), EnumSpelling.ToLinkMethod(file.Method),
-                    file.Source, cancellationToken);
+                    file.Source, cancellationToken, file.Carry);
         }
 
         var labelled = await Label(files, words, cancellationToken);
@@ -263,7 +263,7 @@ internal sealed class OwnRecordLoader(
             var seed = file
                 .Select(c => ((long, int, double?, bool, string))(c.Word, ids[c.Slug], null, false, c.Ruling.Why))
                 .ToList();
-            await Annotate(seed, [], EnumSpelling.ToLinkMethod(file.Key.Method), file.Key.Source, cancellationToken);
+            await Annotate(seed, [], EnumSpelling.ToLinkMethod(file.Key.Method), file.Key.Source, cancellationToken, file.Key.Carry);
             logger.LogInformation(
                 "{Count} words ruled on in a recorded file had lost the ruling's answer and were given it again: {Words}",
                 seed.Count, string.Join("; ", file.Select(c => c.Ruling.Word)));
@@ -697,7 +697,8 @@ internal sealed class OwnRecordLoader(
         IReadOnlyList<(long Word, int Entity)> corrected,
         LinkMethod method,
         string source,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool carry = true)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -715,7 +716,8 @@ internal sealed class OwnRecordLoader(
         await Annotating.Run(connection, transaction, Overruled, cancellationToken,
             ("manual", EnumSpelling.Of(LinkMethod.Manual)));
         await Annotating.Run(connection, transaction, Annotating.MarkCorroboration, cancellationToken);
-        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
+        if (carry)
+            await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
 
         var spelled = EnumSpelling.Of(method);
         await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,

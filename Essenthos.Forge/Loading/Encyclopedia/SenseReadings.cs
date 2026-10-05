@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -161,12 +161,14 @@ internal sealed record OwnAlternative(string? Slug, string? Describes, string Re
 /// Who decided, in the words a reader gets on the card: the person, or the review with its models,
 /// its prompt version and its date.
 /// </param>
+/// <param name="Carry">Whether the reading may cross links into another edition. Edition-specific additions stay on their own words.</param>
 internal sealed record OwnRecordRulings(
     string DecidedBy,
     string Policy,
     string Method,
     string Source,
-    IReadOnlyList<OwnRecordRuling> Rulings);
+    IReadOnlyList<OwnRecordRuling> Rulings,
+    bool Carry = true);
 
 /// <summary>
 /// A record the owner ruled is a title rather than one person: what it is now said to be, the
@@ -604,7 +606,10 @@ internal static class SenseReadingFiles
         Rulings(), ReviewRulings(), ReportRulings(), TitleRulings(), UnsettledRulings(), GenealogyRulings(),
         SeveralPeopleRulings(), SeveralPeopleSecondRulings(), SeveralPeopleThirdRulings(), NamesakeRulings(),
         UnsettledSecondRulings(), SeveralPeopleFourthRulings(), AddressedRulings(), NamesakeSecondRulings(),
-        DatasetRecordRulings(),
+        DatasetRecordRulings(), Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.PhilipRecords.json"),
+        Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.SynodalJehoiakimRecords.json"),
+        Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.RevelationTribeRecords.json"),
+        Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.OhienkoAdamRecords.json"),
     ];
 
     private static T Embedded<T>(string name)

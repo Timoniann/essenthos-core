@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -86,6 +86,10 @@
         <EmbeddedResource Include="Loading\Encyclopedia\NamesakeRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\NamesakeRecordsSecond.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\DatasetRecordRulings.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\PhilipRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\SynodalJehoiakimRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\RevelationTribeRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\OhienkoAdamRecords.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />

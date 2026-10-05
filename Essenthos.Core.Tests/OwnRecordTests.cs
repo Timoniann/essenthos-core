@@ -1,7 +1,8 @@
-﻿using System.Text.Json;
+using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -94,6 +95,108 @@ public sealed class OwnRecordTests : IDisposable
         Loader().Load(Path.Combine(Path.GetTempPath(), $"absent-{Guid.NewGuid():N}"));
 
     [Fact]
+    public async Task UkrainianAdamNamesAdamAndPreservesHisWifesReading()
+    {
+        var adamAddress = new RuledWord("UBIO", "GEN 3:8", 17, "Адам");
+        var wifeAddress = new RuledWord("UBIO", "GEN 3:8", 20, "жінка");
+        var addresses = new[] { adamAddress, wifeAddress };
+        var added = _words.ContainsKey(adamAddress)
+            ? new Dictionary<RuledWord, Word>() : _db.Place(addresses);
+        if (_words.TryGetValue(adamAddress, out var adamWordId))
+        {
+            var adamWord = await _db.Words.SingleAsync(w => w.Id == adamWordId);
+            added[wifeAddress] = _db.Words.Add(new Word { TextId = adamWord.TextId, VerseId = adamWord.VerseId,
+                Position = wifeAddress.Position, Surface = wifeAddress.Surface, Trailer = " " }).Entity;
+            await _db.SaveChangesAsync();
+        }
+        var focus = addresses.ToDictionary(a => a, a => _words.TryGetValue(a, out var id)
+            ? _db.Words.Single(w => w.Id == id) : added[a]);
+        foreach (var slug in new[] { "adam", "eve" })
+            if (!_db.Entities.Any(e => e.Slug == slug))
+                _db.Entities.Add(new Entity { Slug = slug, SourceId = slug, Name = slug,
+                    Kind = EntityKind.Person, Source = "a test" });
+        await _db.SaveChangesAsync();
+        var adam = await _db.Entities.SingleAsync(e => e.Slug == "adam");
+        var eve = await _db.Entities.SingleAsync(e => e.Slug == "eve");
+        var wrong = new WordEntity { Word = focus[adamAddress], Entity = eve,
+            Method = LinkMethod.RuleBased, Confidence = 0.988028802880288, Source = NameConsensusPass.Source,
+            Note = "the word its verses share in this text: адам" };
+        var wife = new WordEntity { Word = focus[wifeAddress], Entity = eve,
+            Method = LinkMethod.ModelReading, Confidence = 0.91, Source = "a reading of his wife",
+            Claims = [new WordEntityClaim { Method = LinkMethod.ModelReading, Confidence = 0.91,
+                Source = "a reading of his wife" }] };
+        _db.WordEntities.AddRange(wrong, wife);
+        await _db.SaveChangesAsync();
+        var wifeId = wife.Id;
+        var wifeClaimId = wife.Claims.Single().Id;
+
+        await Load();
+        var wordId = focus[adamAddress].Id;
+        (await _db.WordEntities.Where(a => a.WordId == wordId).Select(a => a.EntityId).ToArrayAsync())
+            .Should().Equal(adam.Id);
+        (await _db.WordEntities.AsNoTracking().SingleAsync(a => a.Id == wifeId)).EntityId.Should().Be(eve.Id);
+        (await _db.WordEntityClaims.AsNoTracking().SingleAsync(c => c.Id == wifeClaimId)).WordEntityId.Should().Be(wifeId);
+        var fixedId = (await _db.WordEntities.SingleAsync(a => a.WordId == wordId)).Id;
+        await Load();
+        (await _db.WordEntities.SingleAsync(a => a.WordId == wordId)).Id.Should().Be(fixedId);
+        await _db.WordEntities.Where(a => a.WordId == wordId).ExecuteDeleteAsync();
+        await Load();
+        (await _db.WordEntities.AsNoTracking().SingleAsync(a => a.WordId == wordId)).EntityId.Should().Be(adam.Id);
+    }
+
+    [Fact]
+    public async Task RevelationTribalNamesIdentifyTheAncestorsAndKeepNamesakesSeparate()
+    {
+        var addresses = new[] {
+            (new RuledWord("NESTLE1904", "REV 7:4", 16, "Ἰσραήλ"), "jacob"),
+            (new RuledWord("NESTLE1904", "REV 7:5", 3, "Ἰούδα"), "judah"),
+            (new RuledWord("NESTLE1904", "REV 7:6", 8, "Νεφθαλεὶμ"), "naphtali"),
+            (new RuledWord("NESTLE1904", "REV 7:6", 13, "Μανασσῆ"), "manasseh"),
+            (new RuledWord("BSB", "REV 7:4", 18, "Israel"), "jacob"),
+            (new RuledWord("BSB", "REV 7:5", 5, "Judah"), "judah"),
+            (new RuledWord("BSB", "REV 7:6", 12, "Naphtali"), "naphtali"),
+            (new RuledWord("BSB", "REV 7:6", 19, "Manasseh"), "manasseh"),
+        };
+        var added = _db.Place(addresses.Select(a => a.Item1).Where(a => !_words.ContainsKey(a)));
+        var focus = addresses.ToDictionary(a => a.Item1, a => _words.TryGetValue(a.Item1, out var id)
+            ? _db.Words.Single(w => w.Id == id) : added[a.Item1]);
+        foreach (var slug in addresses.Select(a => a.Item2).Concat(new[] { "manasseh-3", "judah-6", "israelites" }).Distinct())
+            if (!_db.Entities.Any(e => e.Slug == slug))
+                _db.Entities.Add(new Entity { Slug = slug, SourceId = slug, Name = slug,
+                    Kind = slug == "judah-6" ? EntityKind.Place : slug == "israelites" ? EntityKind.People : EntityKind.Person,
+                    Source = "a test" });
+        await _db.SaveChangesAsync();
+        var entities = await _db.Entities.ToDictionaryAsync(e => e.Slug);
+        foreach (var (address, target) in addresses.Where(a => a.Item2 != "naphtali"))
+            _db.WordEntities.Add(new WordEntity { Word = focus[address], Entity = entities[target == "jacob"
+                ? "israelites" : target == "judah" ? "judah-6" : "manasseh-3"],
+                Method = LinkMethod.ModelReading, Confidence = 0.99, Source = "a fixture of the old readings" });
+        var separate = _db.Place([new RuledWord("BSB", "MAT 1:10", 1, "Manasseh")]).Values.Single();
+        _db.WordEntities.Add(new WordEntity { Word = separate, Entity = entities["manasseh-3"],
+            Method = LinkMethod.Manual, Source = "a test of the king in the genealogy" });
+        await _db.SaveChangesAsync();
+
+        await Load();
+        foreach (var (address, target) in addresses)
+            (await _db.WordEntities.Where(a => a.WordId == focus[address].Id).Select(a => a.Entity!.Slug).ToArrayAsync())
+                .Should().Equal(target);
+        (await _db.WordEntities.SingleAsync(a => a.WordId == separate.Id)).EntityId.Should().Be(entities["manasseh-3"].Id);
+        var references = new OwnReferenceLoader(_db, NullLogger<OwnReferenceLoader>.Instance);
+        await references.Load();
+        await _db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        (await _db.EntityVerses.AnyAsync(v => v.EntityId == entities["naphtali"].Id && v.CanonicalBook == 66
+            && v.CanonicalChapter == 7 && v.CanonicalVerse == 6 && v.Names)).Should().BeTrue();
+        var ids = focus.Values.Select(w => w.Id).ToArray();
+        var before = await _db.WordEntities.Where(a => ids.Contains(a.WordId)).OrderBy(a => a.Id).Select(a => a.Id).ToArrayAsync();
+        await Load();
+        (await _db.WordEntities.Where(a => ids.Contains(a.WordId)).OrderBy(a => a.Id).Select(a => a.Id).ToArrayAsync())
+            .Should().Equal(before);
+        await _db.WordEntities.Where(a => a.WordId == focus[addresses[2].Item1].Id).ExecuteDeleteAsync();
+        await Load();
+        (await _db.WordEntities.SingleAsync(a => a.WordId == focus[addresses[2].Item1].Id)).EntityId
+            .Should().Be(entities["naphtali"].Id);
+    }
+    [Fact]
     public async Task EveryRulingAnnotatesItsWord()
     {
         await Load();
@@ -102,6 +205,129 @@ public sealed class OwnRecordTests : IDisposable
         named.Select(a => a.WordId).Should().BeEquivalentTo(_rulings.Select(r => _words[r.Word]).Distinct());
         named.Should().OnlyContain(a => a.Method == LinkMethod.Manual);
         named.Should().OnlyContain(a => a.Confidence == null);
+    }
+
+    [Fact]
+    public async Task SynodalJehoiakimNamesTheKingWithoutAddingHimToGreekJeconiah()
+    {
+        var addresses = new[] {
+            new RuledWord("RUSV", "MAT 1:11", 3, "Иоакима"),
+            new RuledWord("RUSV", "MAT 1:11", 4, "Иоаким"),
+        };
+        var missing = _db.Place(addresses.Where(a => !_words.ContainsKey(a)));
+        var source = addresses.Select(a => _words.TryGetValue(a, out var id)
+            ? _db.Words.Single(w => w.Id == id) : missing[a]).ToArray();
+        var others = _db.Place([
+            new RuledWord("NESTLE1904", "MAT 1:11", 5, "Ἰεχονίαν"),
+            new RuledWord("RUSV", "MAT 1:13", 6, "Елиакима"),
+        ]);
+        var greek = others.Single(p => p.Key.Text == "NESTLE1904").Value;
+        var namesake = others.Single(p => p.Key.Text == "RUSV").Value;
+        foreach (var slug in new[] { "eliakim-2", "jehoiachin", "eliakim-4" })
+            if (!_db.Entities.Any(e => e.Slug == slug))
+                _db.Entities.Add(new Entity { Slug = slug, SourceId = slug, Name = slug,
+                    Kind = EntityKind.Person, Source = "a test" });
+        await _db.SaveChangesAsync();
+        var king = await _db.Entities.SingleAsync(e => e.Slug == "eliakim-2");
+        var jeconiah = await _db.Entities.SingleAsync(e => e.Slug == "jehoiachin");
+        var otherEliakim = await _db.Entities.SingleAsync(e => e.Slug == "eliakim-4");
+        foreach (var pair in new[] { (greek, jeconiah), (namesake, otherEliakim) })
+            _db.WordEntities.Add(new WordEntity { Word = pair.Item1, Entity = pair.Item2,
+                Method = LinkMethod.Manual, Source = "a test's independent name reading" });
+        var link = new Link { FromTextId = source[0].TextId, ToTextId = greek.TextId,
+            Method = LinkMethod.Aligner, Relation = LinkRelation.Renders, Confidence = 0.29,
+            Provenance = new() { Source = "a fixture's faint alignment" } };
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = source[0], Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = greek, Side = LinkSide.To });
+        await _db.SaveChangesAsync();
+
+        await Load();
+        var ids = source.Select(w => w.Id).ToArray();
+        var named = await _db.WordEntities.Where(a => ids.Contains(a.WordId)).ToListAsync();
+        named.Should().HaveCount(2).And.OnlyContain(a => a.EntityId == king.Id);
+        named.Should().OnlyContain(a => a.Method == LinkMethod.Manual && a.Confidence == null);
+        (await _db.WordEntities.AnyAsync(a => a.WordId == greek.Id && a.EntityId == king.Id))
+            .Should().BeFalse();
+        (await _db.WordEntities.SingleAsync(a => a.WordId == namesake.Id)).EntityId.Should().Be(otherEliakim.Id);
+        var carrier = new AnnotationCarrier(_db,
+            new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance),
+            NullLogger<AnnotationCarrier>.Instance);
+        await carrier.Carry();
+        (await _db.WordEntities.AnyAsync(a => a.WordId == greek.Id && a.EntityId == king.Id))
+            .Should().BeFalse();
+        var references = new OwnReferenceLoader(_db, NullLogger<OwnReferenceLoader>.Instance);
+        await references.Load();
+        await _db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        (await _db.EntityVerses.AnyAsync(v => v.EntityId == king.Id && v.CanonicalBook == 40
+            && v.CanonicalChapter == 1 && v.CanonicalVerse == 11 && v.Names)).Should().BeTrue();
+        var annotationIds = named.Select(a => a.Id).Order().ToArray();
+        await Load();
+        (await _db.WordEntities.Where(a => ids.Contains(a.WordId) && a.EntityId == king.Id).OrderBy(a => a.Id).Select(a => a.Id).ToArrayAsync())
+            .Should().Equal(annotationIds);
+        await _db.WordEntities.Where(a => a.WordId == source[0].Id && a.EntityId == king.Id).ExecuteDeleteAsync();
+        await Load();
+        (await _db.WordEntities.AnyAsync(a => a.WordId == source[0].Id && a.EntityId == king.Id))
+            .Should().BeTrue();
+        (await _db.WordEntities.AnyAsync(a => a.WordId == greek.Id && a.EntityId == king.Id))
+            .Should().BeFalse();
+    }
+
+    [Fact]
+    public async Task PhilipInTheReceivedTextNamesHerodiasHusbandAndKeepsTheTetrarchSeparate()
+    {
+        var sourceAddress = new RuledWord("TR1894", "LUK 3:19", 13, "φιλιππου");
+        var source = _words.TryGetValue(sourceAddress, out var sourceId)
+            ? await _db.Words.SingleAsync(w => w.Id == sourceId)
+            : _db.Place([sourceAddress])[sourceAddress];
+        var targets = _db.Place([
+            new RuledWord("TR1550", "LUK 3:19", 13, "φιλιππου"),
+            new RuledWord("KJV", "LUK 3:19", 13, "Philip's"),
+            new RuledWord("TR1550", "LUK 3:1", 19, "φιλιππου"),
+        ]);
+        foreach (var word in targets.Values.Append(source))
+        {
+            word.StrongNumber = "G5376";
+            if (word.Text!.Slug.StartsWith("TR", StringComparison.Ordinal))
+            {
+                word.Text.Kind = TextKind.CriticalEdition;
+                word.Text.Language = "grc";
+            }
+        }
+        if (!await _db.Entities.AnyAsync(e => e.Slug == "philip-2"))
+            _db.Entities.Add(new Entity { Slug = "philip-2", SourceId = "philip-2", Name = "Philip", Kind = EntityKind.Person, Source = "a test" });
+        var tetrarch = new Entity { Slug = "philip-4", SourceId = "philip-4", Name = "Philip", Kind = EntityKind.Person, Source = "a test" };
+        _db.Entities.Add(tetrarch);
+        var tetrarchWord = targets.Single(p => p.Key.Reference == "LUK 3:1").Value;
+        _db.WordEntities.Add(new WordEntity { Word = tetrarchWord, Entity = tetrarch, Method = LinkMethod.Manual, Source = "a test's tetrarch ruling" });
+        foreach (var target in targets.Where(p => p.Key.Reference == "LUK 3:19").Select(p => p.Value))
+        {
+            var link = new Link { FromTextId = source.TextId, ToTextId = target.TextId,
+                Relation = LinkRelation.Renders, Method = LinkMethod.StrongNumber, Confidence = 1,
+                Provenance = new() { Source = "a fixture's stated number match" } };
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = source, Side = LinkSide.From });
+            _db.LinkWords.Add(new LinkWord { Link = link, Word = target, Side = LinkSide.To });
+        }
+        await _db.SaveChangesAsync();
+        await Load();
+        var references = new OwnReferenceLoader(_db, NullLogger<OwnReferenceLoader>.Instance);
+        await references.Load();
+        await _db.Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses);
+        var wordIds = targets.Where(p => p.Key.Reference == "LUK 3:19").Select(p => p.Value.Id).Append(source.Id).ToArray();
+        var named = await _db.WordEntities.Include(a => a.Entity).Where(a => wordIds.Contains(a.WordId)).ToListAsync();
+        named.Should().HaveCount(3).And.OnlyContain(a => a.Entity!.Slug == "philip-2");
+        named.Should().OnlyContain(a => a.Source.Contains("Textus Receptus"));
+        named.Single(a => a.WordId == source.Id).Note.Should().Contain("Herodias");
+        named.Where(a => a.WordId != source.Id).Should().OnlyContain(a => a.Note!.StartsWith("through "));
+        (await _db.EntityVerses.AnyAsync(v => v.Entity!.Slug == "philip-2" && v.CanonicalBook == 42
+            && v.CanonicalChapter == 3 && v.CanonicalVerse == 19 && v.Names)).Should().BeTrue();
+        (await _db.WordEntities.SingleAsync(a => a.WordId == tetrarchWord.Id)).EntityId.Should().Be(tetrarch.Id);
+        var annotationIds = named.Select(a => a.Id).Order().ToArray();
+        await Load();
+        var again = await references.Load();
+        again.Written.Should().Be(0);
+        again.Withdrawn.Should().Be(0);
+        (await _db.WordEntities.Where(a => wordIds.Contains(a.WordId)).OrderBy(a => a.Id).Select(a => a.Id).ToArrayAsync())
+            .Should().Equal(annotationIds);
     }
 
     /// <summary>

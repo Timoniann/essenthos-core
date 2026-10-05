@@ -1,0 +1,25 @@
+{
+  "decidedBy": "Essenthos, 2026-10-04, read by Codex against the held Russian Synodal wording and 2 Kings 23:34 / 1 Chronicles 3:15-16; no person has reviewed this ruling",
+  "policy": "Both Jehoiakim occurrences in the Synodal genealogy name the held king of Judah, Eliakim renamed Jehoiakim. This edition-local reading is not carried over statistical links into Greek editions that omit the name.",
+  "method": "manual",
+  "source": "Essenthos, the Synodal Jehoiakim occurrences in Matthew 1:11, read by Codex on 2026-10-04",
+  "carry": false,
+  "rulings": [
+    {
+      "text": "RUSV",
+      "reference": "MAT 1:11",
+      "position": 3,
+      "surface": "Иоакима",
+      "existing": "eliakim-2",
+      "why": "The Synodal reads Josiah begot Jehoiakim; Jehoiakim begot Jeconiah. 2 Kings 23:34 identifies Josiah's son Eliakim as the king renamed Jehoiakim, and 1 Chronicles 3:15-16 names Jehoiakim as Josiah's son and Jeconiah's father. This is the held king record, not the high priest Joiakim or the later Eliakim in Matthew 1:13."
+    },
+    {
+      "text": "RUSV",
+      "reference": "MAT 1:11",
+      "position": 4,
+      "surface": "Иоаким",
+      "existing": "eliakim-2",
+      "why": "The second Synodal occurrence is the same Jehoiakim just named as Josiah's son, now named as Jeconiah's father. The held 2 Kings 23:34 and 1 Chronicles 3:15-16 identify him with the king Eliakim renamed Jehoiakim."
+    }
+  ]
+}

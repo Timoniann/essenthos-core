@@ -1,0 +1,17 @@
+{
+  "decidedBy": "Essenthos, 2026-10-03, the occurrence read by Codex against the held Textus Receptus and King James wording and the existing Herodias-husband record; no person has reviewed this ruling",
+  "policy": "The Philip named as Herodias's husband is kept distinct from the tetrarch named in Luke 3:1. A word is named only where this edition prints it; an edition omitting the name receives no invented occurrence.",
+  "method": "manual",
+  "source": "Essenthos, the Textus Receptus Philip occurrence in Luke 3:19, read by Codex on 2026-10-03",
+  "rulings": [
+    {
+      "text": "TR1894",
+      "reference": "LUK 3:19",
+      "position": 13,
+      "surface": "φιλιππου",
+      "strongNumber": "G5376",
+      "existing": "philip-2",
+      "why": "The Textus Receptus names Philip as the husband of Herodias in Luke 3:19, as the King James reads 'Herodias his brother Philip's wife'. This is the husband already named in Matthew 14:3 and Mark 6:17, not the tetrarch of Ituraea and Trachonitis named in Luke 3:1. Nestle omits Philip here; this ruling is about the word the Received Text actually prints."
+    }
+  ]
+}

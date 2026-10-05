@@ -315,7 +315,8 @@ internal sealed class AnnotationCarrier(
         // than from a seed, so carrying them would spread a Russian word's name along Russian links.
         // They are written again from scratch once the carry is done.
         groups.AddRange(present
-            .Except([.. EntityAnnotationLoader.Written, CrossedNameLoader.Source], StringComparer.Ordinal)
+            .Except([.. EntityAnnotationLoader.Written, CrossedNameLoader.Source,
+                .. SenseReadingFiles.AllRulings().Where(file => !file.Carry).Select(file => file.Source)], StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .Select(source => (new[] { source }, false)));
 

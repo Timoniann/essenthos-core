@@ -1,0 +1,37 @@
+{
+  "decidedBy": "Essenthos, 2026-10-05, read by Codex against the held Ohienko wording after the owner reported Eve on Adam's word; no person has reviewed this ruling",
+  "policy": "Read the explicitly printed personal name separately from the wife mentioned beside it. These six held Ukrainian occurrences were assigned to Eve by verse-list consensus.",
+  "method": "manual",
+  "source": "Essenthos, the Ohienko Adam occurrences in Genesis 2-4, read by Codex on 2026-10-05",
+  "carry": false,
+  "rulings": [
+    {
+      "text": "UBIO", "reference": "GEN 2:23", "position": 3, "surface": "Адам", "existing": "adam",
+      "why": "І промовив Адам explicitly names the speaker Adam. The woman he speaks about is a different referent."
+    },
+    {
+      "text": "UBIO", "reference": "GEN 2:25", "position": 6, "surface": "Адам", "existing": "adam",
+      "why": "Адам та жінка його names Adam and separately his wife; the man's personal name does not identify her."
+    },
+    {
+      "text": "UBIO",
+      "reference": "GEN 3:8",
+      "position": 17,
+      "surface": "Адам",
+      "existing": "adam",
+      "why": "Ohienko reads 'І сховався Адам і його жінка': Адам explicitly names Adam; his wife is the separate following phrase. The verse-list consensus assigned Eve to Адам because his name recurs in verses concerning her. That co-occurrence does not make his name hers."
+    },
+    {
+      "text": "UBIO", "reference": "GEN 3:12", "position": 2, "surface": "Адам", "existing": "adam",
+      "why": "А Адам відказав explicitly names Adam as the speaker, who then speaks about the woman."
+    },
+    {
+      "text": "UBIO", "reference": "GEN 3:20", "position": 3, "surface": "Адам", "existing": "adam",
+      "why": "І назвав Адам ім'я своїй жінці: Єва distinguishes the man Adam naming his wife from the name Eve he gives her."
+    },
+    {
+      "text": "UBIO", "reference": "GEN 4:1", "position": 3, "surface": "Адам", "existing": "adam",
+      "why": "І пізнав Адам Єву, жінку свою explicitly names Adam and then Eve as separate people."
+    }
+  ]
+}

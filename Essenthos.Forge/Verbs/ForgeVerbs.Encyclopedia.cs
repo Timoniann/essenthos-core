@@ -120,6 +120,8 @@ internal static partial class ForgeVerbs
     {
         using var ownScope = forge.Scope();
         Console.WriteLine(await ownScope.ServiceProvider.GetRequiredService<OwnRecordLoader>().Load(forge.Resources));
+        Console.WriteLine(await ownScope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load());
+        Console.WriteLine($"{await ownScope.ServiceProvider.GetRequiredService<AppDbContext>().Database.ExecuteSqlRawAsync(DatasetLoader.NamingVerses)} verse naming flags refreshed");
         Console.WriteLine(await ownScope.ServiceProvider.GetRequiredService<DistinguisherLoader>().Load());
         return 0;
     }

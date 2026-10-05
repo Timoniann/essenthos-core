@@ -1,0 +1,736 @@
+{
+  "policy": "Revelation 7:4-8 names the ancestral persons in its tribal enumeration, on the owners scoped reading. Preserve independent people and territorial records and readings outside this passage.",
+  "method": "manual",
+  "source": "Essenthos, the owners Revelation 7 ancestral-name reading of 2026-10-04",
+  "rulings": [
+    {
+      "surface": "Israel",
+      "text": "BSB",
+      "reference": "REV 7:4",
+      "position": 18,
+      "why": "The owner reads Israel in this enumeration of tribes as their ancestor Jacob, who bears the name Israel. This ruling is scoped to Revelation 7:4 and does not replace national readings elsewhere.",
+      "existing": "jacob"
+    },
+    {
+      "surface": "Judah",
+      "text": "BSB",
+      "reference": "REV 7:5",
+      "position": 5,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person judah, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "judah"
+    },
+    {
+      "surface": "Reuben",
+      "text": "BSB",
+      "reference": "REV 7:5",
+      "position": 14,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person reuben, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "reuben"
+    },
+    {
+      "surface": "Gad",
+      "text": "BSB",
+      "reference": "REV 7:5",
+      "position": 21,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person gad, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "gad"
+    },
+    {
+      "surface": "Asher",
+      "text": "BSB",
+      "reference": "REV 7:6",
+      "position": 5,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person asher, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "asher"
+    },
+    {
+      "surface": "Naphtali",
+      "text": "BSB",
+      "reference": "REV 7:6",
+      "position": 12,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person naphtali, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "naphtali"
+    },
+    {
+      "surface": "Manasseh",
+      "text": "BSB",
+      "reference": "REV 7:6",
+      "position": 19,
+      "why": "The tribal list refers to the ancestor Manasseh, son of Joseph (Genesis 41:51 and 48:5), not King Manasseh son of Hezekiah.",
+      "existing": "manasseh"
+    },
+    {
+      "surface": "Simeon",
+      "text": "BSB",
+      "reference": "REV 7:7",
+      "position": 5,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person simeon, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "simeon"
+    },
+    {
+      "surface": "Levi",
+      "text": "BSB",
+      "reference": "REV 7:7",
+      "position": 12,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person levi, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "levi"
+    },
+    {
+      "surface": "Issachar",
+      "text": "BSB",
+      "reference": "REV 7:7",
+      "position": 19,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person issachar, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "issachar"
+    },
+    {
+      "surface": "Zebulun",
+      "text": "BSB",
+      "reference": "REV 7:8",
+      "position": 5,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person zebulun, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "zebulun"
+    },
+    {
+      "surface": "Joseph",
+      "text": "BSB",
+      "reference": "REV 7:8",
+      "position": 12,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person joseph, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "joseph"
+    },
+    {
+      "surface": "Benjamin",
+      "text": "BSB",
+      "reference": "REV 7:8",
+      "position": 20,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person benjamin, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "benjamin"
+    },
+    {
+      "surface": "Ἰσραήλ",
+      "text": "NESTLE1904",
+      "reference": "REV 7:4",
+      "position": 16,
+      "why": "The owner reads Israel in this enumeration of tribes as their ancestor Jacob, who bears the name Israel. This ruling is scoped to Revelation 7:4 and does not replace national readings elsewhere.",
+      "existing": "jacob"
+    },
+    {
+      "surface": "Ἰούδα",
+      "text": "NESTLE1904",
+      "reference": "REV 7:5",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person judah, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "judah"
+    },
+    {
+      "surface": "Ῥουβὴν",
+      "text": "NESTLE1904",
+      "reference": "REV 7:5",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person reuben, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "reuben"
+    },
+    {
+      "surface": "Γὰδ",
+      "text": "NESTLE1904",
+      "reference": "REV 7:5",
+      "position": 14,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person gad, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "gad"
+    },
+    {
+      "surface": "Ἀσὴρ",
+      "text": "NESTLE1904",
+      "reference": "REV 7:6",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person asher, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "asher"
+    },
+    {
+      "surface": "Νεφθαλεὶμ",
+      "text": "NESTLE1904",
+      "reference": "REV 7:6",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person naphtali, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "naphtali"
+    },
+    {
+      "surface": "Μανασσῆ",
+      "text": "NESTLE1904",
+      "reference": "REV 7:6",
+      "position": 13,
+      "why": "The tribal list refers to the ancestor Manasseh, son of Joseph (Genesis 41:51 and 48:5), not King Manasseh son of Hezekiah.",
+      "existing": "manasseh"
+    },
+    {
+      "surface": "Συμεὼν",
+      "text": "NESTLE1904",
+      "reference": "REV 7:7",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person simeon, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "simeon"
+    },
+    {
+      "surface": "Λευεὶ",
+      "text": "NESTLE1904",
+      "reference": "REV 7:7",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person levi, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "levi"
+    },
+    {
+      "surface": "Ἰσσαχὰρ",
+      "text": "NESTLE1904",
+      "reference": "REV 7:7",
+      "position": 13,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person issachar, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "issachar"
+    },
+    {
+      "surface": "Ζαβουλὼν",
+      "text": "NESTLE1904",
+      "reference": "REV 7:8",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person zebulun, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "zebulun"
+    },
+    {
+      "surface": "Ἰωσὴφ",
+      "text": "NESTLE1904",
+      "reference": "REV 7:8",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person joseph, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "joseph"
+    },
+    {
+      "surface": "Βενιαμεὶν",
+      "text": "NESTLE1904",
+      "reference": "REV 7:8",
+      "position": 13,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person benjamin, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "benjamin"
+    },
+    {
+      "surface": "ισραηλ",
+      "text": "RP2018",
+      "reference": "REV 7:4",
+      "position": 17,
+      "why": "The owner reads Israel in this enumeration of tribes as their ancestor Jacob, who bears the name Israel. This ruling is scoped to Revelation 7:4 and does not replace national readings elsewhere.",
+      "existing": "jacob"
+    },
+    {
+      "surface": "ιουδα",
+      "text": "RP2018",
+      "reference": "REV 7:5",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person judah, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "judah"
+    },
+    {
+      "surface": "ρουβιμ",
+      "text": "RP2018",
+      "reference": "REV 7:5",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person reuben, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "reuben"
+    },
+    {
+      "surface": "γαδ",
+      "text": "RP2018",
+      "reference": "REV 7:5",
+      "position": 14,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person gad, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "gad"
+    },
+    {
+      "surface": "ασηρ",
+      "text": "RP2018",
+      "reference": "REV 7:6",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person asher, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "asher"
+    },
+    {
+      "surface": "νεφθαλειμ",
+      "text": "RP2018",
+      "reference": "REV 7:6",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person naphtali, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "naphtali"
+    },
+    {
+      "surface": "μανασση",
+      "text": "RP2018",
+      "reference": "REV 7:6",
+      "position": 13,
+      "why": "The tribal list refers to the ancestor Manasseh, son of Joseph (Genesis 41:51 and 48:5), not King Manasseh son of Hezekiah.",
+      "existing": "manasseh"
+    },
+    {
+      "surface": "συμεων",
+      "text": "RP2018",
+      "reference": "REV 7:7",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person simeon, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "simeon"
+    },
+    {
+      "surface": "λευι",
+      "text": "RP2018",
+      "reference": "REV 7:7",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person levi, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "levi"
+    },
+    {
+      "surface": "ισαχαρ",
+      "text": "RP2018",
+      "reference": "REV 7:7",
+      "position": 13,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person issachar, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "issachar"
+    },
+    {
+      "surface": "ζαβουλων",
+      "text": "RP2018",
+      "reference": "REV 7:8",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person zebulun, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "zebulun"
+    },
+    {
+      "surface": "ιωσηφ",
+      "text": "RP2018",
+      "reference": "REV 7:8",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person joseph, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "joseph"
+    },
+    {
+      "surface": "βενιαμιν",
+      "text": "RP2018",
+      "reference": "REV 7:8",
+      "position": 13,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person benjamin, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "benjamin"
+    },
+    {
+      "surface": "Ἰσραήλ",
+      "text": "TISCH",
+      "reference": "REV 7:4",
+      "position": 16,
+      "why": "The owner reads Israel in this enumeration of tribes as their ancestor Jacob, who bears the name Israel. This ruling is scoped to Revelation 7:4 and does not replace national readings elsewhere.",
+      "existing": "jacob"
+    },
+    {
+      "surface": "Ἰούδα",
+      "text": "TISCH",
+      "reference": "REV 7:5",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person judah, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "judah"
+    },
+    {
+      "surface": "Ῥουβὴν",
+      "text": "TISCH",
+      "reference": "REV 7:5",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person reuben, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "reuben"
+    },
+    {
+      "surface": "Γὰδ",
+      "text": "TISCH",
+      "reference": "REV 7:5",
+      "position": 14,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person gad, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "gad"
+    },
+    {
+      "surface": "Ἀσὴρ",
+      "text": "TISCH",
+      "reference": "REV 7:6",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person asher, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "asher"
+    },
+    {
+      "surface": "Νεφθαλεὶμ",
+      "text": "TISCH",
+      "reference": "REV 7:6",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person naphtali, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "naphtali"
+    },
+    {
+      "surface": "Μανασσῆ",
+      "text": "TISCH",
+      "reference": "REV 7:6",
+      "position": 13,
+      "why": "The tribal list refers to the ancestor Manasseh, son of Joseph (Genesis 41:51 and 48:5), not King Manasseh son of Hezekiah.",
+      "existing": "manasseh"
+    },
+    {
+      "surface": "Συμεὼν",
+      "text": "TISCH",
+      "reference": "REV 7:7",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person simeon, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "simeon"
+    },
+    {
+      "surface": "Λευεὶ",
+      "text": "TISCH",
+      "reference": "REV 7:7",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person levi, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "levi"
+    },
+    {
+      "surface": "Ἰσσαχὰρ",
+      "text": "TISCH",
+      "reference": "REV 7:7",
+      "position": 13,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person issachar, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "issachar"
+    },
+    {
+      "surface": "Ζαβουλὼν",
+      "text": "TISCH",
+      "reference": "REV 7:8",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person zebulun, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "zebulun"
+    },
+    {
+      "surface": "Ἰωσὴφ",
+      "text": "TISCH",
+      "reference": "REV 7:8",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person joseph, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "joseph"
+    },
+    {
+      "surface": "Βενιαμεὶν",
+      "text": "TISCH",
+      "reference": "REV 7:8",
+      "position": 13,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person benjamin, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "benjamin"
+    },
+    {
+      "surface": "ισραηλ",
+      "text": "TR1550",
+      "reference": "REV 7:4",
+      "position": 14,
+      "why": "The owner reads Israel in this enumeration of tribes as their ancestor Jacob, who bears the name Israel. This ruling is scoped to Revelation 7:4 and does not replace national readings elsewhere.",
+      "existing": "jacob"
+    },
+    {
+      "surface": "ιουδα",
+      "text": "TR1550",
+      "reference": "REV 7:5",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person judah, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "judah"
+    },
+    {
+      "surface": "ρουβην",
+      "text": "TR1550",
+      "reference": "REV 7:5",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person reuben, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "reuben"
+    },
+    {
+      "surface": "γαδ",
+      "text": "TR1550",
+      "reference": "REV 7:5",
+      "position": 15,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person gad, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "gad"
+    },
+    {
+      "surface": "ασηρ",
+      "text": "TR1550",
+      "reference": "REV 7:6",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person asher, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "asher"
+    },
+    {
+      "surface": "νεφθαλειμ",
+      "text": "TR1550",
+      "reference": "REV 7:6",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person naphtali, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "naphtali"
+    },
+    {
+      "surface": "μανασση",
+      "text": "TR1550",
+      "reference": "REV 7:6",
+      "position": 15,
+      "why": "The tribal list refers to the ancestor Manasseh, son of Joseph (Genesis 41:51 and 48:5), not King Manasseh son of Hezekiah.",
+      "existing": "manasseh"
+    },
+    {
+      "surface": "συμεων",
+      "text": "TR1550",
+      "reference": "REV 7:7",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person simeon, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "simeon"
+    },
+    {
+      "surface": "λευι",
+      "text": "TR1550",
+      "reference": "REV 7:7",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person levi, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "levi"
+    },
+    {
+      "surface": "ισαχαρ",
+      "text": "TR1550",
+      "reference": "REV 7:7",
+      "position": 15,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person issachar, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "issachar"
+    },
+    {
+      "surface": "ζαβουλων",
+      "text": "TR1550",
+      "reference": "REV 7:8",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person zebulun, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "zebulun"
+    },
+    {
+      "surface": "ιωσηφ",
+      "text": "TR1550",
+      "reference": "REV 7:8",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person joseph, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "joseph"
+    },
+    {
+      "surface": "βενιαμιν",
+      "text": "TR1550",
+      "reference": "REV 7:8",
+      "position": 15,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person benjamin, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "benjamin"
+    },
+    {
+      "surface": "ισραηλ",
+      "text": "TR1894",
+      "reference": "REV 7:4",
+      "position": 14,
+      "why": "The owner reads Israel in this enumeration of tribes as their ancestor Jacob, who bears the name Israel. This ruling is scoped to Revelation 7:4 and does not replace national readings elsewhere.",
+      "existing": "jacob"
+    },
+    {
+      "surface": "ιουδα",
+      "text": "TR1894",
+      "reference": "REV 7:5",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person judah, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "judah"
+    },
+    {
+      "surface": "ρουβην",
+      "text": "TR1894",
+      "reference": "REV 7:5",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person reuben, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "reuben"
+    },
+    {
+      "surface": "γαδ",
+      "text": "TR1894",
+      "reference": "REV 7:5",
+      "position": 15,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person gad, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "gad"
+    },
+    {
+      "surface": "ασηρ",
+      "text": "TR1894",
+      "reference": "REV 7:6",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person asher, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "asher"
+    },
+    {
+      "surface": "νεφθαλειμ",
+      "text": "TR1894",
+      "reference": "REV 7:6",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person naphtali, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "naphtali"
+    },
+    {
+      "surface": "μανασση",
+      "text": "TR1894",
+      "reference": "REV 7:6",
+      "position": 15,
+      "why": "The tribal list refers to the ancestor Manasseh, son of Joseph (Genesis 41:51 and 48:5), not King Manasseh son of Hezekiah.",
+      "existing": "manasseh"
+    },
+    {
+      "surface": "συμεων",
+      "text": "TR1894",
+      "reference": "REV 7:7",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person simeon, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "simeon"
+    },
+    {
+      "surface": "λευι",
+      "text": "TR1894",
+      "reference": "REV 7:7",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person levi, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "levi"
+    },
+    {
+      "surface": "ισαχαρ",
+      "text": "TR1894",
+      "reference": "REV 7:7",
+      "position": 15,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person issachar, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "issachar"
+    },
+    {
+      "surface": "ζαβουλων",
+      "text": "TR1894",
+      "reference": "REV 7:8",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person zebulun, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "zebulun"
+    },
+    {
+      "surface": "ιωσηφ",
+      "text": "TR1894",
+      "reference": "REV 7:8",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person joseph, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "joseph"
+    },
+    {
+      "surface": "βενιαμιν",
+      "text": "TR1894",
+      "reference": "REV 7:8",
+      "position": 15,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person benjamin, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "benjamin"
+    },
+    {
+      "surface": "ισραηλ",
+      "text": "WH1881",
+      "reference": "REV 7:4",
+      "position": 16,
+      "why": "The owner reads Israel in this enumeration of tribes as their ancestor Jacob, who bears the name Israel. This ruling is scoped to Revelation 7:4 and does not replace national readings elsewhere.",
+      "existing": "jacob"
+    },
+    {
+      "surface": "ιουδα",
+      "text": "WH1881",
+      "reference": "REV 7:5",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person judah, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "judah"
+    },
+    {
+      "surface": "ρουβην",
+      "text": "WH1881",
+      "reference": "REV 7:5",
+      "position": 9,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person reuben, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "reuben"
+    },
+    {
+      "surface": "γαδ",
+      "text": "WH1881",
+      "reference": "REV 7:5",
+      "position": 14,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person gad, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "gad"
+    },
+    {
+      "surface": "ασηρ",
+      "text": "WH1881",
+      "reference": "REV 7:6",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person asher, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "asher"
+    },
+    {
+      "surface": "νεφθαλιμ",
+      "text": "WH1881",
+      "reference": "REV 7:6",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person naphtali, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "naphtali"
+    },
+    {
+      "surface": "μανασση",
+      "text": "WH1881",
+      "reference": "REV 7:6",
+      "position": 13,
+      "why": "The tribal list refers to the ancestor Manasseh, son of Joseph (Genesis 41:51 and 48:5), not King Manasseh son of Hezekiah.",
+      "existing": "manasseh"
+    },
+    {
+      "surface": "συμεων",
+      "text": "WH1881",
+      "reference": "REV 7:7",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person simeon, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "simeon"
+    },
+    {
+      "surface": "λευι",
+      "text": "WH1881",
+      "reference": "REV 7:7",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person levi, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "levi"
+    },
+    {
+      "surface": "ισσαχαρ",
+      "text": "WH1881",
+      "reference": "REV 7:7",
+      "position": 13,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person issachar, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "issachar"
+    },
+    {
+      "surface": "ζαβουλων",
+      "text": "WH1881",
+      "reference": "REV 7:8",
+      "position": 3,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person zebulun, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "zebulun"
+    },
+    {
+      "surface": "ιωσηφ",
+      "text": "WH1881",
+      "reference": "REV 7:8",
+      "position": 8,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person joseph, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "joseph"
+    },
+    {
+      "surface": "βενιαμειν",
+      "text": "WH1881",
+      "reference": "REV 7:8",
+      "position": 13,
+      "why": "The owner reads the name after tribe in this enumeration as the ancestral person benjamin, whose descendants bear that tribe name. The tribe itself remains a distinct record.",
+      "existing": "benjamin"
+    }
+  ],
+  "decidedBy": "The project owner requested ancestral-person readings for Revelation 7 on 2026-10-04; recorded by Codex against the seven held editions, technical verification remains subject to review"
+}
