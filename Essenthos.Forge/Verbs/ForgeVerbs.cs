@@ -144,6 +144,7 @@ internal static partial class ForgeVerbs
         new("commandments", "", "Load the 613 commandments.", Commandments),
         new("lands", "", "Load the periods of the lands from PeriodO.", Lands),
         new("name-forms", "", "Load the names the descriptions put into a case.", NameForms),
+        new("own-names", "", "Apply sourced name corrections and names the datasets do not give.", OwnNames),
         new("reigns", "", "Load the kings, the rulers of the nations and the prophets of their days.", Reigns),
         new("own-records", "", "Apply the rulings on records, then write their lines in every language.", OwnRecords),
         new("distinguishers", "", "Write our own lines under our records in every language.", Distinguishers),

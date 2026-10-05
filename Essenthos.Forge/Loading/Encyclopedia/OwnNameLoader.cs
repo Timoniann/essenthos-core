@@ -9,13 +9,15 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <param name="Written">Names added, which is all of them on a cold corpus and none after.</param>
 /// <param name="Missing">Names for a record the encyclopedia does not hold, which the log names.</param>
-internal sealed record OwnNameOutcome(int Written, int Missing, TimeSpan Elapsed)
+/// <param name="Corrected">Existing name rows whose numbers or forms this pass corrected.</param>
+internal sealed record OwnNameOutcome(int Written, int Missing, TimeSpan Elapsed, int Corrected = 0)
 {
     public override string ToString() =>
-        Written == 0 && Missing == 0
+        (Written == 0 && Missing == 0
             ? "the names this corpus gives records of other datasets are already there"
             : $"{Written} names this corpus gives records of other datasets written, {Missing} for records it " +
-              $"does not hold, in {Elapsed}";
+              $"does not hold, in {Elapsed}")
+        + (Corrected > 0 ? $"; {Corrected} name rows corrected" : string.Empty);
 }
 
 /// <summary>
@@ -43,8 +45,8 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
 
     public async Task<OwnNameOutcome> Load(CancellationToken cancellationToken = default)
     {
-        await Correct(cancellationToken);
-        return await Load(Read().Names, cancellationToken);
+        var corrected = await Correct(cancellationToken);
+        return (await Load(Read().Names, cancellationToken)) with { Corrected = corrected };
     }
 
     /// <summary>
@@ -67,8 +69,43 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
     /// </para>
     /// </summary>
     /// <returns>The rows corrected or removed on this run.</returns>
-    public async Task<int> Correct(CancellationToken cancellationToken = default) =>
-        await Correct(Read().Numbers ?? [], cancellationToken);
+    public async Task<int> Correct(CancellationToken cancellationToken = default)
+    {
+        var list = Read();
+        var numbers = await Correct(list.Numbers ?? [], cancellationToken);
+        return numbers + await CorrectForms(list.Forms ?? [], cancellationToken);
+    }
+
+    /// <summary>Correct a Greek form only while its record identity and original row still match.</summary>
+    internal async Task<int> CorrectForms(IReadOnlyList<CorrectedNameForm> corrections, CancellationToken cancellationToken)
+    {
+        var slugs = corrections.Select(c => c.Entity).Distinct(StringComparer.Ordinal).ToList();
+        var records = await db.Entities.Where(e => slugs.Contains(e.Slug)).Include(e => e.Names)
+            .ToDictionaryAsync(e => e.Slug, StringComparer.Ordinal, cancellationToken);
+        var corrected = 0;
+        foreach (var correction in corrections)
+        {
+            if (!records.TryGetValue(correction.Entity, out var record)
+                || !string.Equals(record.SourceId, correction.SourceId, StringComparison.Ordinal))
+                continue;
+
+            foreach (var name in record.Names.Where(n =>
+                         string.Equals(n.Label, correction.Label, StringComparison.Ordinal)
+                         && string.Equals(n.HebrewStrongNumber, correction.HebrewStrongNumber, StringComparison.Ordinal)
+                         && string.Equals(n.Greek, correction.Was.Greek, StringComparison.Ordinal)
+                         && string.Equals(n.GreekTransliterated, correction.Was.GreekTransliterated, StringComparison.Ordinal)
+                         && string.Equals(n.Source, correction.Was.Source, StringComparison.Ordinal)))
+            {
+                name.Greek = correction.Greek;
+                name.GreekTransliterated = correction.GreekTransliterated;
+                name.Source = correction.Source;
+                corrected++;
+                logger.LogInformation("Corrected the Greek name of {Slug}: {Why}", record.Slug, correction.Why);
+            }
+        }
+        await db.SaveChangesAsync(cancellationToken);
+        return corrected;
+    }
 
     internal async Task<int> Correct(IReadOnlyList<CorrectedNumber> corrections, CancellationToken cancellationToken)
     {
@@ -179,7 +216,15 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
 }
 
 /// <summary>The embedded list, as a file.</summary>
-internal sealed record OwnNames(IReadOnlyList<OwnName> Names, IReadOnlyList<CorrectedNumber>? Numbers);
+internal sealed record OwnNames(IReadOnlyList<OwnName> Names, IReadOnlyList<CorrectedNumber>? Numbers,
+    IReadOnlyList<CorrectedNameForm>? Forms = null);
+
+/// <summary>A sourced Greek spelling replacing a specific original name row.</summary>
+internal sealed record CorrectedNameForm(string Entity, string SourceId, string Label, string? HebrewStrongNumber,
+    WrongNameForm Was, string Greek, string GreekTransliterated, string Source, string Why);
+
+/// <summary>The original spelling, transliteration and attribution that admit a correction.</summary>
+internal sealed record WrongNameForm(string Greek, string GreekTransliterated, string? Source = null);
 
 /// <summary>
 /// The Strong numbers a label should carry on these records, and the ones a dataset wrote that it

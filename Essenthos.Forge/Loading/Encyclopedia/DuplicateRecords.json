@@ -514,6 +514,48 @@
       "why": "The dataset's second YHVH, God the Father as the New Testament names him, is the God of Israel: the project owner ruled that the Father is YHVH, and the record is folded into YHVH's.",
       "source": "the project owner, ruled 2026-09-30",
       "method": "manual"
+    },
+    {
+      "strongNumber": "H3059", "keeps": "jehoahaz-2", "folds": "joahaz-2",
+      "why": "The register describes Joahaz as Josiah's son who reigned in Judah for three months and was taken to Egypt by Necho. That is Jehoahaz in 2 Kings 23:30-34 and 2 Chronicles 36:1-4, whose existing record already holds the testimony; the Joahaz record holds no verse, word or relationship.",
+      "confidence": 0.99,
+      "source": "Essenthos, the register alias compared with the held record and its verses by Codex, 2026-10-04"
+    },
+    {
+      "strongNumber": "H3059", "keeps": "jehoahaz", "folds": "joahaz-3",
+      "why": "The register's king of Israel, son of Jehu and father of Jehoash, oppressed by Syria, is Jehoahaz of 2 Kings 13:1-9. The existing record holds those attestations; its Joahaz alias holds no independent verse, word or relationship.",
+      "confidence": 0.99,
+      "source": "Essenthos, the register alias compared with the held record and its verses by Codex, 2026-10-04"
+    },
+    {
+      "strongNumber": "H3059", "keeps": "ahaziah-2", "folds": "joahaz-4",
+      "why": "The register itself identifies this Joahaz as Ahaziah, king of Judah and son of Jehoram. Second Chronicles 21:17 names Jehoram's youngest son Jehoahaz, while 22:1 names the youngest son made king Ahaziah. The Ahaziah record already holds the name and testimony; the alias holds no independent verse, word or relationship.",
+      "confidence": 0.99,
+      "source": "Essenthos, the register alias compared with the held record and its verses by Codex, 2026-10-04"
+    },
+    {
+      "strongNumber": "H7467", "keeps": "deuel", "folds": "reuel-5",
+      "why": "Both are Eliasaph's father, the Gadite leader's patronymic: Numbers 1:14 calls the father Deuel, and 2:14 calls him Reuel. The deuel record and the occurrence ruling already hold both spellings; the register's reuel-5 holds no independent attestation.",
+      "confidence": 0.99,
+      "source": "Essenthos, the register alias compared with the held record and its verses by Codex, 2026-10-04"
+    },
+    {
+      "strongNumber": "H3273", "keeps": "jeiel-2", "folds": "jeiel-11",
+      "why": "The register describes Jeiel as the man of Gibeon and ancestor of Saul. First Chronicles 9:35 names the father of Gibeon Jeiel and continues the ancestry of Saul; the existing jeiel-2 record and occurrence ruling hold it. The register's jeiel-11 holds no independent attestation.",
+      "confidence": 0.99,
+      "source": "Essenthos, the register alias compared with the held record and its verses by Codex, 2026-10-04"
+    },
+    {
+      "strongNumber": "H3442", "keeps": "joshua", "folds": "jeshua-10",
+      "why": "The register explicitly identifies this Jeshua as Joshua son of Nun, successor of Moses. Nehemiah 8:17 uses this later spelling for Jeshua son of Nun, and the shipped occurrence ruling assigns it to joshua. The register's jeshua-10 holds no independent attestation.",
+      "confidence": 0.99,
+      "source": "Essenthos, the register alias compared with the held record and its verses by Codex, 2026-10-04"
+    },
+    {
+      "strongNumber": "H3568", "keeps": "cush-2", "folds": "cush-5",
+      "why": "Both describe Cush the Benjamite named in the heading of Psalm 7. The existing cush-2 record carries that word and its Benjamite relationship through the shipped reading; the register's cush-5 holds no verse, word or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos, the register alias compared with the held record and its verses by Codex, 2026-10-04"
     }
   ],
   "declined": [

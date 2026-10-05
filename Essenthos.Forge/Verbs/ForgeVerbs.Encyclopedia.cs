@@ -95,6 +95,14 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>The sourced name corrections and additional names, for a corpus already loaded.</summary>
+    private static async Task<int> OwnNames(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OwnNameLoader>().Load());
+        return 0;
+    }
+
     /// <summary>The kings, the rulers of the nations and the prophets of their days, for a corpus loaded before they were.</summary>
     private static async Task<int> Reigns(ForgeRun forge, string[] args)
     {

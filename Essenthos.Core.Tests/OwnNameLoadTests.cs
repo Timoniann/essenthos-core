@@ -35,6 +35,64 @@ public sealed class OwnNameLoadTests : IDisposable
         new(["heaven"], "heavens", "שָׁמַיִם", "shamayim", "H8064", "the heavens", "no singular");
 
     [Fact]
+    public async Task TheShippedGreekFormCorrectionKeepsRehoboamDistinctFromJeroboamAndRunsOnce()
+    {
+        var rehoboam = new Entity
+        {
+            Slug = "rehoboam", SourceId = "person:Rehoboam_1", Name = "Rehoboam", Kind = EntityKind.Person, Source = "a test",
+            Names = [new EntityName { Label = "Rehoboam", Hebrew = "רְחַבְעָם", HebrewStrongNumber = "H7346",
+                Greek = "Ιεροβοαμ", GreekTransliterated = "Ieroboam", Kind = "proper name" }],
+        };
+        var jeroboam = new Entity
+        {
+            Slug = "jeroboam", SourceId = "person:Jeroboam_1", Name = "Jeroboam", Kind = EntityKind.Person, Source = "a test",
+            Names = [new EntityName { Label = "Jeroboam", HebrewStrongNumber = "H3379", Greek = "Ιεροβοαμ",
+                GreekTransliterated = "Ieroboam", Kind = "proper name" }],
+        };
+        _db.Entities.AddRange(rehoboam, jeroboam);
+        await _db.SaveChangesAsync();
+        var nameId = rehoboam.Names.Single().Id;
+        var loader = new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance);
+        (await loader.Correct()).Should().Be(1);
+        var name = await _db.EntityNames.SingleAsync(n => n.EntityId == rehoboam.Id);
+        name.Id.Should().Be(nameId);
+        name.Greek.Should().Be("Ῥοβοάμ");
+        name.GreekTransliterated.Should().Be("Rhoboám");
+        name.Source.Should().Contain("Codex");
+        name.Hebrew.Should().Be("רְחַבְעָם");
+        name.HebrewStrongNumber.Should().Be("H7346");
+        (await _db.EntityNames.SingleAsync(n => n.EntityId == jeroboam.Id)).Greek.Should().Be("Ιεροβοαμ");
+        (await loader.Correct()).Should().Be(0);
+        (await _db.EntityNames.SingleAsync(n => n.EntityId == rehoboam.Id)).Id.Should().Be(nameId);
+    }
+
+    [Theory]
+    [InlineData("person:Other_1", "Rehoboam", "H7346", "Ιεροβοαμ", "Ieroboam", null)]
+    [InlineData("person:Rehoboam_1", "King Rehoboam", "H7346", "Ιεροβοαμ", "Ieroboam", null)]
+    [InlineData("person:Rehoboam_1", "Rehoboam", "H3379", "Ιεροβοαμ", "Ieroboam", null)]
+    [InlineData("person:Rehoboam_1", "Rehoboam", "H7346", "other Greek", "Ieroboam", null)]
+    [InlineData("person:Rehoboam_1", "Rehoboam", "H7346", "Ιεροβοαμ", "other transliteration", null)]
+    [InlineData("person:Rehoboam_1", "Rehoboam", "H7346", "Ιεροβοαμ", "Ieroboam", "an owner's correction")]
+    public async Task AChangedIdentityOrNameRowDoesNotAdmitTheGreekFormCorrection(
+        string sourceId, string label, string number, string greek, string transliteration, string? source)
+    {
+        var entity = new Entity
+        {
+            Slug = "rehoboam", SourceId = sourceId, Name = "Rehoboam", Kind = EntityKind.Person, Source = "a test",
+            Names = [new EntityName { Label = label, HebrewStrongNumber = number, Greek = greek,
+                GreekTransliterated = transliteration, Source = source, Kind = "proper name" }],
+        };
+        _db.Entities.Add(entity);
+        await _db.SaveChangesAsync();
+        var loader = new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance);
+        (await loader.Correct()).Should().Be(0);
+        var name = await _db.EntityNames.SingleAsync(n => n.EntityId == entity.Id);
+        name.Greek.Should().Be(greek);
+        name.GreekTransliterated.Should().Be(transliteration);
+        name.Source.Should().Be(source);
+    }
+
+    [Fact]
     public async Task HeavenAnswersToHeavensOnceHoweverOftenItLoads()
     {
         _db.Entities.Add(new Entity

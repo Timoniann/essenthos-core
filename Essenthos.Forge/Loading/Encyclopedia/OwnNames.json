@@ -1,5 +1,18 @@
 {
   "names": [],
+  "forms": [
+    {
+      "entity": "rehoboam",
+      "sourceId": "person:Rehoboam_1",
+      "label": "Rehoboam",
+      "hebrewStrongNumber": "H7346",
+      "was": { "greek": "Ιεροβοαμ", "greekTransliterated": "Ieroboam", "source": null },
+      "greek": "Ῥοβοάμ",
+      "greekTransliterated": "Rhoboám",
+      "source": "Essenthos, Rehoboam's Greek name read in NESTLE1904 Matthew 1:7 and GRCBRENT 1 Kings 12:1 by Codex, 2026-10-04",
+      "why": "The held Matthew 1:7 prints Ῥοβοάμ (G4497), Solomon's son; Brenton's 1 Kings 12:1 names the same king Ῥοβοὰμ. BibleData-PersonLabel.csv row Rehoboam_1_1 instead gives him Ιεροβοαμ and Ieroboam, which name Jeroboam. Correct only that original name row, keeping the Hebrew, numbering and other titles."
+    }
+  ],
   "numbers": [
     {
       "entities": [

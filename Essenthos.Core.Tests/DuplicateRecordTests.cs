@@ -73,6 +73,54 @@ public sealed class DuplicateRecordTests : IDisposable
         new(LinkMethod.ModelReading, 0.9, "a test",
             [.. pairs.Select(p => new DuplicateRecordPair("H2518", p.Keeps, p.Folds, "one list written twice"))]);
 
+    [Theory]
+    [InlineData("joahaz-2", "jehoahaz-2")]
+    [InlineData("joahaz-3", "jehoahaz")]
+    [InlineData("joahaz-4", "ahaziah-2")]
+    [InlineData("reuel-5", "deuel")]
+    [InlineData("jeiel-11", "jeiel-2")]
+    [InlineData("jeshua-10", "joshua")]
+    [InlineData("cush-5", "cush-2")]
+    public async Task AShippedRegisterAliasKeepsTheCanonicalEvidenceAndRedirectOnRepeatedLoads(string alias, string canonical)
+    {
+        var shipped = DuplicateRecordLoader.Read();
+        var pairs = shipped.Merges.Where(m => m.Folds == alias).ToList();
+        pairs.Should().ContainSingle().Which.Keeps.Should().Be(canonical);
+        var kept = Record(canonical, $"test:{canonical}", "the attested bearer");
+        var folded = Record(alias, $"test:{alias}", "the same bearer under the register's other spelling");
+        folded.Names.Add(new EntityName { Label = alias, Kind = "proper name" });
+        Cites(kept, 14, 36, 1);
+        var relationship = new EntityRelationship
+        {
+            From = kept, To = _meshullam, Type = "son-of", Category = RelationshipCategories.Read,
+            CanonicalBook = 14, CanonicalChapter = 36, CanonicalVerse = 1,
+            Method = LinkMethod.Manual, Source = Decided,
+        };
+        _db.EntityRelationships.Add(relationship);
+        await _db.SaveChangesAsync();
+        var verseId = await _db.EntityVerses.Where(v => v.EntityId == kept.Id).Select(v => v.Id).SingleAsync();
+        var list = shipped with { Merges = pairs, Splits = [] };
+
+        (await _loader.Fold(list)).Folded.Should().Be(1);
+        (await _db.Entities.AnyAsync(e => e.Slug == alias)).Should().BeFalse();
+        var merged = await _db.MergedRecords.AsNoTracking().SingleAsync();
+        merged.EntityId.Should().Be(kept.Id);
+        merged.RecordSourceId.Should().Be($"test:{alias}");
+        merged.Source.Should().Contain("Codex");
+        (await _db.EntityVerses.SingleAsync()).Id.Should().Be(verseId);
+        (await _db.EntityRelationships.SingleAsync()).Id.Should().Be(relationship.Id);
+        var name = await _db.EntityNames.AsNoTracking().SingleAsync();
+        name.EntityId.Should().Be(kept.Id);
+        name.Label.Should().Be(alias);
+        var again = await _loader.Fold(list);
+        again.Folded.Should().Be(0);
+        again.Moved.Should().Be(0);
+        again.Joined.Should().Be(0);
+        again.AlreadyFolded.Should().Be(1);
+        (await _db.EntityNames.AsNoTracking().SingleAsync()).Id.Should().Be(name.Id);
+        (await _db.MergedRecords.AsNoTracking().SingleAsync()).Id.Should().Be(merged.Id);
+    }
+
     private void Cites(Entity entity, int book, int chapter, int verse) =>
         _db.EntityVerses.Add(new EntityVerse
         {
