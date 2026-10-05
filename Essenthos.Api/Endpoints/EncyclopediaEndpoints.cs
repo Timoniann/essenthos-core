@@ -45,13 +45,13 @@ internal static partial class EncyclopediaEndpoints
     internal static readonly Expression<Func<Entity, EntityTally>> Tally =
         e => new EntityTally(
             e.Verses
-                .Where(v => !v.Source.StartsWith(ShownVerses.Witness))
+                .AsQueryable().Where(ShownVerses.IsShown)
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count(),
-            e.Verses.Count(v => !v.Source.StartsWith(ShownVerses.Witness)),
+            e.Verses.AsQueryable().Count(ShownVerses.IsShown),
             e.Verses
-                .Where(v => v.Disputed && !v.Source.StartsWith(ShownVerses.Witness))
+                .AsQueryable().Where(ShownVerses.IsShown).Where(v => v.Disputed)
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count());
@@ -63,11 +63,11 @@ internal static partial class EncyclopediaEndpoints
             e.Name,
             e.Distinguisher,
             e.Verses
-                .Where(v => !v.Source.StartsWith(ShownVerses.Witness))
+                .AsQueryable().Where(ShownVerses.IsShown)
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count(),
-            e.Verses.Count(v => !v.Source.StartsWith(ShownVerses.Witness)))
+            e.Verses.AsQueryable().Count(ShownVerses.IsShown))
         {
             Subtype = e.Subtype,
         };
@@ -133,7 +133,7 @@ internal static partial class EncyclopediaEndpoints
             {
                 Kind = g.Key,
                 Entities = g.Count(),
-                Named = g.Count(e => e.Verses.Any(v => !v.Source.StartsWith(ShownVerses.Witness))),
+                Named = g.Count(e => e.Verses.AsQueryable().Any(ShownVerses.IsShown)),
             })
             .ToListAsync(cancellationToken);
 
@@ -269,13 +269,13 @@ internal static partial class EncyclopediaEndpoints
     {
         "verses" => EntityNames.Alphabetical(
             entities.OrderByDescending(l => l.Entity.Verses
-                .Where(v => !v.Source.StartsWith(ShownVerses.Witness))
+                .AsQueryable().Where(ShownVerses.IsShown)
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count()),
             language),
         "mentions" => EntityNames.Alphabetical(
-            entities.OrderByDescending(l => l.Entity.Verses.Count(v => !v.Source.StartsWith(ShownVerses.Witness))),
+            entities.OrderByDescending(l => l.Entity.Verses.AsQueryable().Count(ShownVerses.IsShown)),
             language),
         "name" => EntityNames.Alphabetical(entities, language),
         _ => q is { Length: > 0 }

@@ -45,7 +45,7 @@ internal static partial class EncyclopediaEndpoints
                 l.Score,
                 l.Source,
                 References = l.Entity.Verses
-                    .Where(v => !v.Source.StartsWith(ShownVerses.Witness))
+                    .AsQueryable().Where(ShownVerses.IsShown)
                     .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                                  + v.CanonicalVerse)
                     .Distinct().Count(),

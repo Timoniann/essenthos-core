@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Essenthos.Core.Database.Entities;
 
 namespace Essenthos.Core.Corpus;
@@ -15,6 +16,16 @@ internal static class ShownVerses
     /// <summary>What the source of every row the witness states starts with.</summary>
     public const string Witness = "BibleData by";
 
+    private const string OpenBible =
+        "OpenBible.info Bible Geocoding, github.com/openbibleinfo/Bible-Geocoding-Data, CC BY 4.0";
+
+    // Ezekiel's Tarshish stone describes the wheels' appearance, not the geographical place.
+    // Keep OpenBible's testimony stored, but do not count this lexical sense as a place reference.
+    internal static readonly Expression<Func<EntityVerse, bool>> IsShown =
+        v => !v.Source.StartsWith(Witness)
+             && !(v.Source == OpenBible && v.Entity!.OpenBibleId == "a5f43dd"
+                  && v.CanonicalBook == 26 && v.CanonicalChapter == 10 && v.CanonicalVerse == 9);
+
     public static IQueryable<EntityVerse> Shown(this IQueryable<EntityVerse> references) =>
-        references.Where(v => !v.Source.StartsWith(Witness));
+        references.Where(IsShown);
 }
