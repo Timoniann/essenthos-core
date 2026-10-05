@@ -857,16 +857,6 @@ internal sealed class PeopleLoader(
         return (seed.Count, undecided, words);
     }
 
-    /// <summary>
-    /// A people's own list of the verses it is named in, derived from the words this pass annotated
-    /// rather than supplied by anybody.
-    ///
-    /// Every other layer's list comes from a dataset and the source column says which. There is no
-    /// dataset here, so the source says what it actually is — our own annotation, read back to the
-    /// verse — and a reader can weigh it accordingly. It is written after the annotations rather
-    /// than beside them so that nothing in this run can be corroborated by a list this run derived
-    /// from it.
-    /// </summary>
     /// <summary>Where the verse stating a people's descent comes from.</summary>
     internal const string FromTheStatedDescent =
         "Essenthos, from the verse that calls the people's ancestor the father of it";
@@ -925,6 +915,16 @@ internal sealed class PeopleLoader(
         return await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// A people's own list of the verses it is named in, derived from the words this pass annotated
+    /// rather than supplied by anybody.
+    ///
+    /// Every other layer's list comes from a dataset and the source column says which. There is no
+    /// dataset here, so the source says what it actually is — our own annotation, read back to the
+    /// verse — and a reader can weigh it accordingly. It is written after the annotations rather
+    /// than beside them so that nothing in this run can be corroborated by a list this run derived
+    /// from it.
+    /// </summary>
     private async Task<int> Reference(int[] peoples, CancellationToken cancellationToken)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);

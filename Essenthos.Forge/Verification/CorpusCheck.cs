@@ -299,11 +299,6 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         """;
 
     /// <summary>
-    /// A word may legitimately be named by two links — the Synodal writes <em>по роду</em> where
-    /// Hebrew writes one word — so this is not an error count. It is a number that moves sharply
-    /// when a mapping starts guessing, which is how the heuristic New Testament mapping was found.
-    /// </summary>
-    /// <summary>
     /// A word given more than one counterpart **by one source**, and a word two sources answer
     /// differently. They were one number until a second source could disagree, and then it read
     /// 18,086 for a pair that had read 0 the morning before — not because anything broke, but

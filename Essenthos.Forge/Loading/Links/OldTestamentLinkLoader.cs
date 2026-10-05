@@ -516,12 +516,6 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     }
 
     /// <summary>
-    /// Lines the file's English up with the King James as loaded, over a verse whose Hebrew has
-    /// already joined, and refuses rather than guessing when it cannot. The join is positional and
-    /// checked against the words themselves, folded for case because the file writes the divine name
-    /// in capitals and bible4u does not.
-    /// </summary>
-    /// <summary>
     /// Whether the file and the loaded text spell one word. The file writes the psalm titles' names
     /// whole where the King James hyphenates them — <em>Bathsheba</em>, <em>Altaschith</em> — and
     /// its apostrophe is straight where the text's is curly.
@@ -531,6 +525,12 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
     private static string Spelled(string word) => word.Replace("-", "").Replace('’', '\'');
 
+    /// <summary>
+    /// Lines the file's English up with the King James as loaded, over a verse whose Hebrew has
+    /// already joined, and refuses rather than guessing when it cannot. The join is positional and
+    /// checked against the words themselves, folded for case because the file writes the divine name
+    /// in capitals and bible4u does not.
+    /// </summary>
     private static List<LinkDraft>? Build(
         MappingRecord record,
         List<Word> kjv,

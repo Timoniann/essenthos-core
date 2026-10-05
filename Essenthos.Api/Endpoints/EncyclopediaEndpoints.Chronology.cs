@@ -308,10 +308,6 @@ internal static partial class EncyclopediaEndpoints
     }
 
     /// <summary>
-    /// The Strong numbers of one name, which the column keeps comma-joined the way the lexicon's
-    /// own cross-references are kept.
-    /// </summary>
-    /// <summary>
     /// The lexicon entries stored against a name, one per word of it.
     ///
     /// Trimmed and emptied out, because the column holds them as one comma-separated string written

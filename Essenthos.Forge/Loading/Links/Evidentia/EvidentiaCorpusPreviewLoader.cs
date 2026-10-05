@@ -912,12 +912,6 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     }
 
     /// <summary>
-    /// The answer key in scope, as pairs and as the annotation those pairs came from. The links are
-    /// kept beside the pairs because a disagreement cannot be read without them: how many words
-    /// stood on each side of the link decides whether a one-to-one selector could have satisfied it
-    /// at all, and which dataset stated it decides whose convention is being compared with ours.
-    /// </summary>
-    /// <summary>
     /// Which entity each word of the passage names. The original's are its annotations. The
     /// translation's are its own annotations, or, with <paramref name="consensusFile"/>, the words
     /// file of a <c>name-consensus --out</c> reading, which addresses each word by its verse's first
@@ -1017,6 +1011,12 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         return names;
     }
 
+    /// <summary>
+    /// The answer key in scope, as pairs and as the annotation those pairs came from. The links are
+    /// kept beside the pairs because a disagreement cannot be read without them: how many words
+    /// stood on each side of the link decides whether a one-to-one selector could have satisfied it
+    /// at all, and which dataset stated it decides whose convention is being compared with ours.
+    /// </summary>
     private async Task<EvidentiaGold> Gold(
         string fromSlug,
         string toSlug,
@@ -1326,10 +1326,6 @@ internal sealed record EvidentiaBookMeasurement(
 }
 
 /// <summary>
-/// How many of a passage's final links a route text could check, and how many of those it agrees
-/// with. <see cref="Links"/> is every final link, so the share a route reaches is part of the answer.
-/// </summary>
-/// <summary>
 /// What the confirmed renderings and the aligner's pairs changed in a passage: words placed by each,
 /// placements withheld, and placements moved into and out of the safe tier.
 /// </summary>
@@ -1346,6 +1342,10 @@ internal readonly record struct EvidentiaSecondPassAccount(
         $"{IntoSafe:N0} into the safe tier on its agreement, {OutOfSafe:N0} out of it";
 }
 
+/// <summary>
+/// How many of a passage's final links a route text could check, and how many of those it agrees
+/// with. <see cref="Links"/> is every final link, so the share a route reaches is part of the answer.
+/// </summary>
 internal sealed record EvidentiaRouteAgreement(string Route, int Links, int Compared, int Agreed)
 {
     public static IEnumerable<EvidentiaRouteAgreement> Total(IEnumerable<EvidentiaRouteAgreement> routes) =>

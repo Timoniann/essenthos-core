@@ -492,10 +492,6 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         "(w.morphology->>'pos' = 'noun' OR w.morphology->>'robinson' LIKE 'N-%')";
 
     /// <summary>
-    /// The Greek numbers the lexicon writes as a name and the encyclopedia answers with exactly one
-    /// entity. Takes <c>@witnesses</c>.
-    /// </summary>
-    /// <summary>
     /// A Greek lexicon entry that is a name: its lemma is written with a capital, and it is neither
     /// a gentilic nor a title. The capital cannot tell <em>Galilee</em> from <em>a Galilean</em>, nor a
     /// name from <em>the Baptist</em>, and Nestle tags both as nouns, so the entry's own definition

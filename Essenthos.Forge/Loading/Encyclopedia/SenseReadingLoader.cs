@@ -344,17 +344,17 @@ internal sealed class SenseReadingLoader(
         (string.IsNullOrWhiteSpace(reading.Reason) ? string.Empty : $": {reading.Reason}");
 
     /// <summary>
-    /// Who said it, in the words a reader gets on the card: which model, under which prompt, and
-    /// when. Taken from the answers themselves rather than declared here, so a second run under a
-    /// different model or a revised prompt cannot be stored under the first one's name.
-    /// </summary>
-    /// <summary>
     /// How every source string written here begins, which is what tells this loader's rows from
     /// every other row that carries the same method — the encyclopedia can also hold records
     /// written from a reading, and those are the reading's work rather than this pass's.
     /// </summary>
     private const string SourcePrefix = Sources.VerseReadingPrefix;
 
+    /// <summary>
+    /// Who said it, in the words a reader gets on the card: which model, under which prompt, and
+    /// when. Taken from the answers themselves rather than declared here, so a second run under a
+    /// different model or a revised prompt cannot be stored under the first one's name.
+    /// </summary>
     private static string Source(IReadOnlyCollection<SenseReading> readings)
     {
         var models = readings.Select(r => r.Model).Distinct().Order(StringComparer.Ordinal);

@@ -27,10 +27,6 @@ internal static class DeskEndpoints
     private static readonly FileExtensionContentTypeProvider ContentTypes = new();
 
     /// <summary>
-    /// How much is waiting on the owner in each section. Each count stands alone, so one that cannot
-    /// be read — avioniq missing, the corpus not loaded — says so without hiding the others.
-    /// </summary>
-    /// <summary>
     /// How much is waiting on the owner in each section, and how many of his changes wait on a step
     /// that applies them. Each count stands alone, so one that cannot be read — the corpus not
     /// loaded, a list missing — says so without hiding the others.

@@ -496,21 +496,17 @@ internal sealed class EntityDescriptorLoader(
     }
 
     /// <summary>
-    /// The entities this loader has already written for. On this loader's own source and not on the
-    /// table, so a second batch loads beside the first and so nothing another writer puts in the
-    /// table can make this one believe its work is done.
+    /// What this loader already wrote about these entities, and which file of which pass each row
+    /// came from. Per entity, because the passes arrive in batches over days and a second batch has
+    /// to load beside the first; per file, because a re-ask is the same model on the same date and
+    /// there is nothing else to tell it from the batch it corrects. Only this loader's own source
+    /// counts, so another writer's rows cannot make this one believe its work is done.
     ///
     /// <para>
     /// Both tables, because a record can produce name forms and no clauses at all — which is what
     /// every record naming somebody else's genitive does — and asking only about the clauses would
     /// make those records look untouched and write their forms again on every boot.
     /// </para>
-    /// </summary>
-    /// <summary>
-    /// What this loader already wrote about these entities, and which file of which pass each row
-    /// came from. Per entity, because the passes arrive in batches over days and a second batch has
-    /// to load beside the first; per file, because a re-ask is the same model on the same date and
-    /// there is nothing else to tell it from the batch it corrects.
     /// </summary>
     private async Task<Dictionary<int, HashSet<string>>> Described(
         IReadOnlyCollection<int> entities,
