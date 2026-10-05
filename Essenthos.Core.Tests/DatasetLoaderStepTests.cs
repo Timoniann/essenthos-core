@@ -37,6 +37,17 @@ public sealed class DatasetLoaderStepTests : IDisposable
     }
 
     [Fact]
+    public void TheKingJamesIsMatchedAgainstAllFiveNumberedGreekEditions()
+    {
+        DatasetLoader.GreekWitnesses.Should().Equal(
+            Essenthos.Core.Loading.TextusReceptusTextSource.Slug(Essenthos.Core.TextusReceptus.Edition.Scrivener1894),
+            ByzantineTextSource.Slug,
+            NestleTextSource.Slug,
+            TischendorfTextSource.Slug,
+            WestcottHortTextSource.Slug);
+    }
+
+    [Fact]
     public void EveryStepHasANameOfItsOwnAndTheLoadEndsByMeasuring()
     {
         var names = Loader().StepNames();

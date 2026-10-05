@@ -68,6 +68,8 @@ internal static partial class ForgeVerbs
             "What the target's syntax is worth as a check on the aligner. Writes nothing.", Syntax, Least: 2),
         new("strong", "<from> <to>", "Link a Strong-tagged translation to a witness that carries the numbers too.",
             Strong, Least: 2, Records: Always, Relinks: Pair),
+        new("kjv-greek", "<witness>", "Match the tagged King James to one of its five Greek witnesses.",
+            KingJamesGreek, Least: 1, Most: 1, Relinks: args => Relinked.Of(Bible4uTextSource.KingJames, args[1])),
         new("synodal-strong", "[<witness> ...]", "Link the Synodal by Bob Jones University's Strong numbering.",
             SynodalStrong, Records: Always, Relinks: Every),
         new("union-strong", "[<witness> ...]", "Link the Chinese Union Version by FHL's Strong numbers.",

@@ -172,6 +172,28 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    private static async Task<int> KingJamesGreek(ForgeRun forge, string[] args)
+    {
+        var witness = Identifier(args[1]);
+        if (!DatasetLoader.GreekWitnesses.Contains(witness))
+        {
+            throw new InvalidOperationException(
+                $"\"{witness}\" is not a King James Greek witness. Choose {string.Join(", ", DatasetLoader.GreekWitnesses)}.");
+        }
+
+        using var scope = forge.Scope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<NewTestamentLinkLoader>().Load(
+            ResourcePaths.File(forge.Resources, "Zefania", "SF_2009-01-20_ENG_KJV_(KJV+).xml"), witness);
+        forge.Logger.LogInformation("{Outcome}", outcome);
+        if (!outcome.AlreadyLoaded)
+        {
+            forge.Logger.LogInformation("{Outcome}", await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+            await forge.Tidy();
+        }
+
+        return 0;
+    }
+
     /// <summary>
     /// A translation that arrived carrying its own Strong numbers, matched to a witness that carries
     /// them too — the one route Luther 1912 has to the originals that is not our own inference. It is a

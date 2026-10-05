@@ -30,6 +30,9 @@ public sealed class ForgeVerbTests
     [InlineData(new[] { "redraw", "berean", "BHSA", "NESTLE1904" }, false)]
     [InlineData(new[] { "reload", "GEEZ81" }, true)]
     [InlineData(new[] { "reload" }, false)]
+    [InlineData(new[] { "kjv-greek", "TISCH" }, true)]
+    [InlineData(new[] { "kjv-greek" }, false)]
+    [InlineData(new[] { "kjv-greek", "TISCH", "WH1881" }, false)]
     [InlineData(new[] { "evidentia-preview", "BSB", "BHSA", "1" }, false)]
     [InlineData(new[] { "evidentia-preview", "BSB", "BHSA", "1", "1" }, true)]
     public void AVerbTakesTheArgumentsItNeeds(string[] args, bool accepted) =>
@@ -63,6 +66,7 @@ public sealed class ForgeVerbTests
     [InlineData(new[] { "names", "KJV", "BHSA" }, "")]
     [InlineData(new[] { "names", "KJV", "BHSA", "--apply" }, "KJV,BHSA")]
     [InlineData(new[] { "cards" }, "")]
+    [InlineData(new[] { "kjv-greek", "tisch" }, "KJV,TISCH")]
     public void ARunCountsAgainTheTextsWhoseLinksItChanged(string[] args, string texts) =>
         string.Join(',', ForgeVerbs.Find(args[0])!.Changed(args).Texts!).Should().Be(texts);
 
@@ -72,5 +76,15 @@ public sealed class ForgeVerbTests
         ForgeVerbs.Find("crosswire-strong")!.Changed(["crosswire-strong"]).Texts.Should().BeNull();
         ForgeVerbs.Find("evidentia-apply")!.Changed(["evidentia-apply", "7", "--write"]).EvidentiaRun.Should().Be(7);
         ForgeVerbs.Find("evidentia-apply")!.Changed(["evidentia-apply", "7"]).Nothing.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task TheKingJamesVerbRefusesOtherTextsBeforeResolvingAnyLoader()
+    {
+        var verb = ForgeVerbs.Find("kjv-greek")!;
+        verb.Records.Should().BeNull();
+        var run = new ForgeRun(null!, Microsoft.Extensions.Logging.Abstractions.NullLogger.Instance, "", "");
+        var act = () => verb.Run(run, ["kjv-greek", "BHSA"]);
+        await act.Should().ThrowAsync<InvalidOperationException>().WithMessage("*not a King James Greek witness*");
     }
 }

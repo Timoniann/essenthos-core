@@ -3,8 +3,11 @@ using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.TextusReceptus;
+using Essenthos.Core.Verbs;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 using Xunit.Abstractions;
@@ -15,18 +18,8 @@ namespace Essenthos.Core.Tests;
 /// Which Greek edition the King James actually reaches most of, asked of the corpus rather than of
 /// the literature.
 ///
-/// Everyone says the King James renders the Received Text. This corpus can now say it from its own
-/// data: load the English beside all three Greek editions, match the Strong numbers each states,
-/// and count. The answer is an ordering, and the ordering is the claim — the Received Text first,
-/// the majority text next, the critical text last, with the gaps in the right proportion.
-///
-/// It is asserted as an ordering and not as four numbers on purpose. The counts move whenever the
-/// matcher improves and that is not a regression; the day the King James reaches Nestle better than
-/// Scrivener, something is broken, and nothing else in the suite would notice.
-///
-/// This one test loads four texts and links three pairs, so it takes about a minute. That is the
-/// price of measuring the thing the product exists to claim, and the numbers it prints are the
-/// answer to <c>how far apart are these editions</c>, which no other measure in the corpus gives.
+/// The Scrivener, Byzantine and Nestle ordering and gap proportion are stable contracts. Tischendorf
+/// and Westcott-Hort are measured separately, without assuming which critical edition reaches most.
 /// </summary>
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
@@ -35,8 +28,7 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
 {
     /// <summary>
     /// Time enough for a million-word load on a machine also running the rest of the suite. The
-    /// default thirty seconds is right for every other class here, all of which hold a few dozen
-    /// words; this one loads the whole New Testament four times over.
+    /// default thirty seconds is too short for six texts and five pairs.
     /// </summary>
     private static readonly TimeSpan LongEnoughForAWholeCorpus = TimeSpan.FromMinutes(10);
 
@@ -94,16 +86,43 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
         var scrivener = await Reached(Scrivener);
         var byzantine = await Reached(ByzantineTextSource.Slug);
         var nestle = await Reached(NestleTextSource.Slug);
+        var tischendorf = await Reached(TischendorfTextSource.Slug);
+        var westcottHort = await Reached(WestcottHortTextSource.Slug);
 
         output.WriteLine($"of {scrivener.Words} King James New Testament words:");
         output.WriteLine($"  scrivener 1894  reaches {scrivener.Reached}, leaving {scrivener.Unreached} tagged");
         output.WriteLine($"  byzantine 2018  reaches {byzantine.Reached}, leaving {byzantine.Unreached} tagged");
         output.WriteLine($"  nestle 1904     reaches {nestle.Reached}, leaving {nestle.Unreached} tagged");
+        output.WriteLine($"  tischendorf 8   reaches {tischendorf.Reached}, leaving {tischendorf.Unreached} tagged");
+        output.WriteLine($"  westcott-hort   reaches {westcottHort.Reached}, leaving {westcottHort.Unreached} tagged");
 
         var before = await Reached(Scrivener, NestleTextSource.Slug);
         var after = await Reached(Scrivener, NestleTextSource.Slug, ByzantineTextSource.Slug);
         output.WriteLine($"  together, without the byzantine: {before.Reached}, {before.Unreached} tagged");
         output.WriteLine($"  together, with it:               {after.Reached}, {after.Unreached} tagged");
+        var five = await Reached([.. DatasetLoader.GreekWitnesses]);
+        output.WriteLine($"  together, all five:               {five.Reached}, {five.Unreached} tagged");
+
+        foreach (var reach in new[] { tischendorf, westcottHort })
+        {
+            reach.Words.Should().Be(scrivener.Words);
+            reach.Reached.Should().BeGreaterThan(100_000);
+        }
+        five.Reached.Should().BeGreaterThanOrEqualTo(after.Reached);
+        five.Unreached.Should().BeLessThanOrEqualTo(after.Unreached);
+
+        var both = await Reached(NestleTextSource.Slug, TischendorfTextSource.Slug);
+        var other = await Reached(NestleTextSource.Slug, WestcottHortTextSource.Slug);
+        var critical = await Reached(NestleTextSource.Slug, TischendorfTextSource.Slug, WestcottHortTextSource.Slug);
+        var addedByTischendorf = nestle.Unreached - both.Unreached;
+        var addedByWestcottHort = nestle.Unreached - other.Unreached;
+        var addedByEither = nestle.Unreached - critical.Unreached;
+        var addedByBoth = addedByTischendorf + addedByWestcottHort - addedByEither;
+        addedByBoth.Should().BeGreaterThanOrEqualTo(0);
+        addedByBoth.Should().BeLessThanOrEqualTo(Math.Min(addedByTischendorf, addedByWestcottHort));
+        output.WriteLine($"  {nestle.Unreached} tagged words Nestle misses: both other critical editions reach {addedByBoth}, " +
+                         $"Tischendorf only {addedByTischendorf - addedByBoth}, " +
+                         $"Westcott-Hort only {addedByWestcottHort - addedByBoth}, neither {critical.Unreached}");
 
         // The ordering the textual history predicts, measured rather than repeated. Scrivener is
         // the text reconstructed from the English itself, so it should win; the majority text is
@@ -154,6 +173,8 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
             TestResources.TextusReceptusFolder, Edition.Scrivener1894));
         await corpus.Load(ByzantineTextSource.Read(TestResources.ByzantineFolder));
         await corpus.Load(NestleTextSource.Read(TestResources.Nestle1904));
+        await corpus.Load(TischendorfTextSource.Read(TestResources.TischendorfFolder));
+        await corpus.Load(WestcottHortTextSource.Read(TestResources.WestcottHortFolder));
 
         // The matcher reaches past a bare number match through the lexicon's own derivations, so a
         // measurement taken without it would understate every edition by about ten thousand words.
@@ -171,17 +192,70 @@ public sealed class GreekWitnessReachTests(WitnessDatabase database, ITestOutput
 
     private async Task<List<GreekLinkOutcome>> LinkTheEnglishToEachGreek(AppDbContext db)
     {
-        var loads = new List<GreekLinkOutcome>(3);
+        var loads = new List<GreekLinkOutcome>(DatasetLoader.GreekWitnesses.Count);
+        var logger = new OutcomeLogger(output);
+        using var services = new ServiceCollection()
+            .AddSingleton(db)
+            .AddSingleton(new NewTestamentLinkLoader(db, NullLogger<NewTestamentLinkLoader>.Instance))
+            .AddSingleton(new VerseLinkLoader(db, NullLogger<VerseLinkLoader>.Instance))
+            .AddSingleton(new StrongRenderingLoader(db, NullLogger<StrongRenderingLoader>.Instance))
+            .BuildServiceProvider();
+        var run = new ForgeRun(services, logger, TestResources.Folder(""), db.Database.GetConnectionString()!);
+        var verb = ForgeVerbs.Find("kjv-greek")!;
 
-        foreach (var greek in new[] { Scrivener, ByzantineTextSource.Slug, NestleTextSource.Slug })
+        foreach (var greek in DatasetLoader.GreekWitnesses)
         {
-            var loader = new NewTestamentLinkLoader(db, NullLogger<NewTestamentLinkLoader>.Instance);
-            var outcome = await loader.Load(TestResources.ZefaniaKingJames, greek);
+            string[] args = ["kjv-greek", greek];
+            (await verb.Run(run, args)).Should().Be(0);
+            var outcome = logger.Outcome!;
+            outcome.AlreadyLoaded.Should().BeFalse();
             output.WriteLine($"{greek}: {outcome}");
             loads.Add(outcome);
+            await run.Recount(verb.Changed(args));
+            var fingerprint = await Fingerprint();
+            (await verb.Run(run, args)).Should().Be(0);
+            logger.Outcome!.AlreadyLoaded.Should().BeTrue();
+            await run.Recount(verb.Changed(args));
+            (await Fingerprint()).Should().Be(fingerprint);
+            output.WriteLine($"{greek}: second verb run and recount preserved the table fingerprints");
         }
 
         return loads;
+    }
+
+    private async Task<string> Fingerprint()
+    {
+        await using var connection = database.NewConnection();
+        await connection.OpenAsync();
+        var fingerprints = new List<string>();
+        foreach (var table in new[] { "link", "link_word", "link_claim", "verse_link", "verse_link_verse",
+                     "word", "word_strong", "strong_rendering", "strong_reach", "strong_reach_method" })
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandTimeout = (int)LongEnoughForAWholeCorpus.TotalSeconds;
+            command.CommandText = $"SELECT count(*)::text || ':' || coalesce(sum(hashtext(x::text)::bigint), 0)::text FROM {table} x";
+            fingerprints.Add($"{table}:{await command.ExecuteScalarAsync()}");
+        }
+        return string.Join(';', fingerprints);
+    }
+
+    private sealed class OutcomeLogger(ITestOutputHelper output) : ILogger
+    {
+        public GreekLinkOutcome? Outcome { get; private set; }
+        public IDisposable? BeginScope<TState>(TState state) where TState : notnull => null;
+        public bool IsEnabled(LogLevel level) => true;
+        public void Log<TState>(LogLevel level, EventId eventId, TState state, Exception? exception,
+            Func<TState, Exception?, string> formatter)
+        {
+            if (state is IEnumerable<KeyValuePair<string, object?>> values)
+            {
+                foreach (var value in values)
+                {
+                    if (value.Value is GreekLinkOutcome outcome) Outcome = outcome;
+                }
+            }
+            output.WriteLine(formatter(state, exception));
+        }
     }
 
     /// <summary>

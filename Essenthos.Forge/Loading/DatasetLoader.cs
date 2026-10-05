@@ -434,17 +434,16 @@ internal sealed class DatasetLoader(
 
     /// <summary>
     /// The Greek texts the King James is matched against, in the order they are worth reading: the
-    /// one it was translated from, then the tradition that text belongs to, then the one it was not.
-    ///
-    /// Matching it against all three is how the corpus answers from its own data which text the
-    /// translators followed, rather than repeating what everyone says about it. The difference in
-    /// what the English reaches in each is the evidence.
+    /// one it was translated from, then the tradition that text belongs to, then the critical
+    /// editions. Their order within that last group does not assert an ordering of their reach.
     /// </summary>
-    private static readonly string[] GreekWitnesses =
+    internal static IReadOnlyList<string> GreekWitnesses { get; } =
     [
         TextusReceptusTextSource.Slug(Edition.Scrivener1894),
         ByzantineTextSource.Slug,
         NestleTextSource.Slug,
+        TischendorfTextSource.Slug,
+        WestcottHortTextSource.Slug,
     ];
 
     /// <summary>
@@ -873,10 +872,6 @@ internal sealed class DatasetLoader(
     {
         var zefania = ResourcePaths.File(resources, "Zefania", "SF_2009-01-20_ENG_KJV_(KJV+).xml");
 
-        // Against both Greek witnesses. The King James renders the Textus Receptus, so Scrivener is
-        // the text it was translated from and Nestle is the one the corpus could offer it until
-        // now; the difference between what it reaches in each is evidence of which text it followed,
-        // derived from our own data.
         foreach (var greek in GreekWitnesses)
         {
             status.Starting($"the New Testament links against {greek}");
