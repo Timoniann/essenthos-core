@@ -773,6 +773,9 @@ internal sealed class DatasetLoader(
     /// Every text is placed in the shared frame after all of them are loaded, so that a text added
     /// later is placed on the next boot without the others being touched.
     /// </summary>
+    public Task Reframe(CancellationToken cancellationToken) =>
+        PlaceInTheFrame(ResourcePaths.Read(configuration, environment.ContentRootPath), cancellationToken);
+
     private async Task PlaceInTheFrame(string resources, CancellationToken cancellationToken)
     {
         status.Starting("the canonical frame");

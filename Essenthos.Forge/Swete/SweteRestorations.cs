@@ -74,7 +74,18 @@ internal static class SweteRestorations
     /// made the same way and in this order: a page restoration names its place in the verse as the
     /// corrections leave it.
     /// </summary>
-    public static readonly IReadOnlyList<SweteRestoration> All = [.. Lost(), .. SweteCorrections.All, .. SwetePage.All];
+    public static readonly IReadOnlyList<SweteRestoration> BeforeChapterMarkers = [.. Lost(), .. SweteCorrections.All, .. SwetePage.All];
+
+    public static readonly IReadOnlyList<SweteRestoration> ChapterMarkers =
+    [
+        new("12.Regnorum_II", 19, 43, "Ἰσραήλ. XX", "Ἰσραήλ.",
+            "The duplicated chapter XX marker also opens the next source block, 20:1 XXυἱὸς; it is not a word of 19:43."),
+    ];
+
+    public const string ChapterMarkersNote =
+        "Modified: the duplicated Roman chapter XX marker at the end of Second Samuel 19:43 is omitted by Essenthos; the transcription also runs it into the first word of chapter 20.";
+
+    public static readonly IReadOnlyList<SweteRestoration> All = [.. BeforeChapterMarkers, .. ChapterMarkers];
 
     /// <summary>
     /// The restorations as earlier passes made them, oldest first: the Genesis words alone, then with
@@ -87,6 +98,7 @@ internal static class SweteRestorations
         Lost(),
         [.. Lost(), .. SweteCorrections.First],
         [.. Lost(), .. SweteCorrections.First, .. SwetePage.All],
+        BeforeChapterMarkers,
     ];
 
     private static IReadOnlyList<SweteRestoration> Lost() =>

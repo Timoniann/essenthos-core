@@ -93,7 +93,8 @@ internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLi
     public async Task<SeptuagintLinkOutcome> Load(
         string fromSlug,
         string toSlug,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        IReadOnlySet<int>? only = null)
     {
         var from = await Text(fromSlug, cancellationToken);
         var to = await Text(toSlug, cancellationToken);
@@ -109,8 +110,8 @@ internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLi
         // Book by book, so that a book either edition gains after the pair was linked — Swete's
         // Isaiah — is linked on its own, and the books already linked keep every link they have.
         // Only the books still to link are read, so a pair with nothing to do costs three queries.
-        var linked = await Linked(from.Id, to.Id, cancellationToken);
-        HashSet<int>? pending = null;
+        var linked = only is null ? await Linked(from.Id, to.Id, cancellationToken) : [];
+        HashSet<int>? pending = only?.ToHashSet();
         if (linked.Count > 0)
         {
             pending = [.. (await Books(from.Id, cancellationToken)).Intersect(await Books(to.Id, cancellationToken))];
@@ -175,6 +176,30 @@ internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLi
             started.Elapsed);
 
         logger.LogInformation("Linked {From} to {To}: {Outcome}", fromSlug, toSlug, outcome);
+        return outcome;
+    }
+
+    public async Task<SeptuagintLinkOutcome> Refresh(
+        string fromSlug, string toSlug, IReadOnlySet<int> books, CancellationToken cancellationToken = default)
+    {
+        if (books.Count == 0) throw new InvalidOperationException("Name the books to refresh.");
+        var from = await Text(fromSlug, cancellationToken);
+        var to = await Text(toSlug, cancellationToken);
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        var links = await db.Links.Where(l => l.FromTextId == from.Id && l.ToTextId == to.Id
+            && l.Words.Any(w => w.Word!.Verse!.References.Any(r => r.IsPrimary && books.Contains(r.CanonicalBook))))
+            .Select(l => l.Id).ToArrayAsync(cancellationToken);
+        await db.LinkClaims.Where(c => links.Contains(c.LinkId) && c.Method == LinkMethod.Lexical && c.Provenance!.Source == Source)
+            .ExecuteDeleteAsync(cancellationToken);
+        await db.Links.Where(l => links.Contains(l.Id) && l.Method == LinkMethod.Lexical && l.Provenance!.Source == Source
+            && !l.Claims.Any()).ExecuteDeleteAsync(cancellationToken);
+        await db.Database.ExecuteSqlRawAsync(
+            "UPDATE link l SET method = c.method, confidence = c.confidence, provenance_id = c.provenance_id "
+            + "FROM (SELECT DISTINCT ON (link_id) link_id, method, confidence, provenance_id FROM link_claim "
+            + "WHERE link_id = ANY({0}) ORDER BY link_id, " + LinkWriter.Standing("method")
+            + " DESC, id) c WHERE l.id = c.link_id", [links], cancellationToken);
+        var outcome = await Load(fromSlug, toSlug, cancellationToken, books);
+        await transaction.CommitAsync(cancellationToken);
         return outcome;
     }
 
@@ -253,19 +278,20 @@ internal sealed class SeptuagintLinkLoader(AppDbContext db, ILogger<SeptuagintLi
             return;
         }
 
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var transaction = db.Database.CurrentTransaction is null
+            ? await db.Database.BeginTransactionAsync(cancellationToken) : null;
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         await LinkWriter.Write(
             connection,
-            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            (NpgsqlTransaction)db.Database.CurrentTransaction!.GetDbTransaction(),
             [
                 .. drafts.Select(draft => new NewLink(
                     fromTextId, toTextId, draft.Relation, LinkMethod.Lexical, draft.Confidence, Source, null,
                     draft.From, draft.To)),
             ],
             cancellationToken);
-        await transaction.CommitAsync(cancellationToken);
+        if (transaction is not null) await transaction.CommitAsync(cancellationToken);
     }
 
     /// <summary>The books of the frame an edition stands in.</summary>

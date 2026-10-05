@@ -269,7 +269,19 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         SELECT count(*) FROM stated_verse_pair;
         """;
 
-    public async Task<VerseLinkOutcome> Load(CancellationToken cancellationToken = default)
+    public async Task<VerseLinkOutcome> Refresh(IReadOnlySet<string> texts, CancellationToken cancellationToken = default)
+    {
+        var ids = await db.Texts.Where(t => texts.Contains(t.Slug)).Select(t => t.Id).ToArrayAsync(cancellationToken);
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await db.VerseLinks.Where(l => (ids.Contains(l.FromTextId) || ids.Contains(l.ToTextId)) && l.Source == Source
+            && l.Method == LinkMethod.StatedBySource).ExecuteDeleteAsync(cancellationToken);
+        var outcome = await Load(cancellationToken, ids.ToHashSet());
+        var repeated = await Unrepeat(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        return outcome with { Repeated = outcome.Repeated + repeated };
+    }
+
+    public async Task<VerseLinkOutcome> Load(CancellationToken cancellationToken = default, IReadOnlySet<int>? refresh = null)
     {
         var started = Stopwatch.StartNew();
         var repeated = await Unrepeat(cancellationToken);
@@ -291,6 +303,8 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
                 .ToListAsync(cancellationToken))
             .Select(pair => (pair.FromTextId, pair.ToTextId))
             .ToHashSet();
+        if (refresh is not null)
+            already.RemoveWhere(pair => refresh.Contains(pair.FromTextId) || refresh.Contains(pair.ToTextId));
 
         // A declared pair already joined is joined again in the books it has not been, which is how
         // the books a loaded text gains reach the texts it is declared against.
@@ -634,16 +648,17 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     public async Task<int> Stated(CancellationToken cancellationToken = default)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var transaction = db.Database.CurrentTransaction is null
+            ? await db.Database.BeginTransactionAsync(cancellationToken) : null;
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         await using var command = new NpgsqlCommand(StatedVerseImport, connection)
         {
-            Transaction = (NpgsqlTransaction)transaction.GetDbTransaction(),
+            Transaction = (NpgsqlTransaction)db.Database.CurrentTransaction!.GetDbTransaction(),
         };
 
         var written = (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
-        await transaction.CommitAsync(cancellationToken);
+        if (transaction is not null) await transaction.CommitAsync(cancellationToken);
         return written;
     }
 
@@ -896,7 +911,8 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             return;
         }
 
-        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var transaction = db.Database.CurrentTransaction is null
+            ? await db.Database.BeginTransactionAsync(cancellationToken) : null;
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         var firstId = await ReserveIds(connection, components.Count, cancellationToken);
@@ -949,7 +965,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             await writer.CompleteAsync(cancellationToken);
         }
 
-        await transaction.CommitAsync(cancellationToken);
+        if (transaction is not null) await transaction.CommitAsync(cancellationToken);
     }
 
     private static async Task Row(

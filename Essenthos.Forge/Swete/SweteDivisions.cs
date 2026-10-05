@@ -7,7 +7,7 @@ namespace Essenthos.Core.Swete;
 /// <para>
 /// Swete prints every verse number in the margin, and where a verse begins inside a line he prints
 /// its number small in the text as well. The transcription let that figure into the text, glued to
-/// the word after it, <c>⁸καὶ</c>, or standing on its own, and in twenty-five places did not open the
+/// the word after it, <c>⁸καὶ</c>, or standing on its own, and in twenty-six places did not open the
 /// verse, so the file's verse holds two and the address of the second stands empty. The figure names
 /// a verse the file has nowhere else, which is the page's own evidence of where it begins; each was
 /// also read against Brenton, who begins the verse at the same words or, where he divides the book
@@ -33,7 +33,7 @@ internal static class SweteDivisions
 {
     /// <summary>What the text's row says about these divisions.</summary>
     public const string Note =
-        "Modified: twenty-nine verse divisions the transcription lost are restored by Essenthos — twenty-five "
+        "Modified: thirty verse divisions the transcription lost are restored by Essenthos — twenty-six "
         + "where Swete's own verse number stands in the text before the verse's first word, and Genesis 15:19, "
         + "20 and 21 and Psalm 91:16 from the printed page, with the two words the transcription lost in Genesis.";
 
@@ -55,6 +55,10 @@ internal static class SweteDivisions
                 $"{Page}, prints 21 and καὶ before these words; the transcription lost both, and Brenton reads καὶ"),
             EditionRepair.Replace(15, "21", "καὶ Εὑοίους", "καὶ τοὺς Εὑοίους",
                 $"{Page}, prints τοὺς before the name, as before every other name of the list; Brenton reads it"),
+        ],
+        ["12.Regnorum_II"] =
+        [
+            EditionRepair.Divide(19, "42", "καὶ ἀπεκρίθη ἀνὴρ", "καὶ ἀπεκρίθη ἀνὴρ", "43", Figure),
         ],
         ["15.Paralipomenon_I"] =
         [

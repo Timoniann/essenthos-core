@@ -405,7 +405,7 @@ public sealed class SweteCorrectionLoadTests : IDisposable
         var verses = SweteRestorations.All.Where(r => SweteTextSource.Reads(r.Book))
             .Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).Distinct().ToList();
         outcome.Verses.Should().Be(verses.Count);
-        outcome.Words.Should().Be(17 + SweteCorrections.All.Concat(SwetePage.All).Where(r => SweteTextSource.Reads(r.Book))
+        outcome.Words.Should().Be(17 + SweteCorrections.All.Concat(SwetePage.All).Concat(SweteRestorations.ChapterMarkers).Where(r => SweteTextSource.Reads(r.Book))
             .Sum(r => Words(r.Printed) - Words(r.Digitised)));
 
         var cold = SweteTextSource.Read(TestResources.SweteFolder);

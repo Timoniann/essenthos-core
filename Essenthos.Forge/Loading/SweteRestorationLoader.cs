@@ -146,6 +146,14 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                         "restoring anything in it. Nothing was changed.");
                 }
 
+                if (here.Any(SweteRestorations.ChapterMarkers.Contains))
+                {
+                    var removed = stored.Where(w => w.Surface == "XX").Select(w => w.Id).ToArray();
+                    await SweteChapterMarkerEvidence.GuardRemoved(db, removed, cancellationToken);
+                    if (text.RightsNote?.Contains(SweteRestorations.ChapterMarkersNote, StringComparison.Ordinal) != true)
+                        text.RightsNote = $"{text.RightsNote} {SweteRestorations.ChapterMarkersNote}".Trim();
+                }
+
                 added += await Write(text, stored, after, here.All(SweteCorrections.KeepsTheWord), cancellationToken);
                 await EnsureRebuilds(stored[0].VerseId, after, $"{placed}:{verse}{label}", cancellationToken);
                 verses++;

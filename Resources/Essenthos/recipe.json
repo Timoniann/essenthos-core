@@ -500,29 +500,11 @@
     {
       "verb": "align",
       "arguments": [
-        "GEEZ81",
-        "SWETE",
-        "--replace"
-      ],
-      "at": "2026-09-27T21:15:59.5688963+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
         "DRA",
         "VULGCLEM",
         "--replace"
       ],
       "at": "2026-09-27T21:24:44.1932496+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "RUSV",
-        "KJV",
-        "--replace"
-      ],
-      "at": "2026-09-27T21:27:38.4625122+00:00"
     },
     {
       "verb": "compose",
@@ -754,17 +736,6 @@
     {
       "verb": "align",
       "arguments": [
-        "KJV",
-        "GRCBRENT",
-        "--outside",
-        "BHSA",
-        "--replace"
-      ],
-      "at": "2026-09-29T05:53:54.8708797+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
         "WEB",
         "GRCBRENT",
         "--outside",
@@ -878,6 +849,40 @@
         "--replace"
       ],
       "at": "2026-10-01T09:58:41.0817298+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "KJV",
+        "GRCBRENT",
+        "--outside",
+        "BHSA",
+        "--replace"
+      ],
+      "at": "2026-10-04T19:16:14.8034406+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "RUSV",
+        "KJV",
+        "--replace"
+      ],
+      "at": "2026-10-04T19:20:04.6639623+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "SWETE",
+        "--replace"
+      ],
+      "at": "2026-10-04T19:23:21.620216+00:00"
+    },
+    {
+      "verb": "edition-boundaries",
+      "arguments": [],
+      "at": "2026-10-05T14:52:16.1175816+00:00"
     }
   ]
 }

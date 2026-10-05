@@ -58,6 +58,46 @@ public sealed class SeptuagintLinkLoadTests : IDisposable
             .ToListAsync();
     }
 
+    [Fact]
+    public async Task RefreshRetainsManualAndUnrelatedBookEvidence()
+    {
+        var links = await Load();
+        var deity = links.Single(l => _db.Side(l.Id, LinkSide.From).Any(w => w.Surface == "θεὸς"));
+        var left = _db.Side(deity.Id, LinkSide.From).Select(w => w.Id).ToArray();
+        var right = _db.Side(deity.Id, LinkSide.To).Select(w => w.Id).ToArray();
+        await _db.Database.OpenConnectionAsync();
+        await LinkWriter.Write((Npgsql.NpgsqlConnection)_db.Database.GetDbConnection(), null,
+            [new NewLink(_swete.Id, _brenton.Id, deity.Relation, LinkMethod.Manual, null,
+                "owner reviewed correspondence", null, left, right)], CancellationToken.None);
+        var manual = await _db.LinkClaims.AsNoTracking().SingleAsync(c => c.LinkId == deity.Id && c.Method == LinkMethod.Manual);
+        _db.AddBook(_swete, 10, "Second Samuel", (19, 42, ["καὶ"]));
+        _db.AddBook(_brenton, 10, "Second Samuel", (19, 42, ["καὶ"]));
+        await _db.SaveChangesAsync();
+        await _loader.Load(_swete.Slug, _brenton.Slug);
+        var other = await _db.Links.AsNoTracking().Where(l => l.Words.Any(w => w.Word!.Verse!.Book!.CanonicalOrdinal == 10))
+            .Select(l => l.Id).ToListAsync();
+        await _loader.Refresh(_swete.Slug, _brenton.Slug, new HashSet<int> { 1 });
+        (await _db.LinkClaims.AsNoTracking().SingleAsync(c => c.Id == manual.Id)).Should()
+            .BeEquivalentTo(manual, options => options.Excluding(c => c.Link).Excluding(c => c.Provenance));
+        (await _db.Links.AsNoTracking().SingleAsync(l => l.Id == deity.Id)).Method.Should().Be(LinkMethod.Manual);
+        (await _db.Links.AsNoTracking().Where(l => l.Words.Any(w => w.Word!.Verse!.Book!.CanonicalOrdinal == 10))
+            .Select(l => l.Id).ToListAsync()).Should().Equal(other);
+        (await _db.LinkClaims.CountAsync(c => c.LinkId == deity.Id)).Should().Be(2);
+    }
+
+    [Fact]
+    public async Task AFailedRefreshPreservesTheEarlierDerivedRows()
+    {
+        await Load();
+        var before = await _db.Links.AsNoTracking().OrderBy(l => l.Id).Select(l => new { l.Id, l.Fingerprint }).ToListAsync();
+        await _db.Texts.Where(t => t.Id == _brenton.Id).ExecuteUpdateAsync(s => s.SetProperty(t => t.Language, "en"));
+        _db.ChangeTracker.Clear();
+        var refreshing = () => _loader.Refresh(_swete.Slug, _brenton.Slug, new HashSet<int> { 1 });
+        await refreshing.Should().ThrowAsync<InvalidOperationException>().WithMessage("*alphabet*");
+        (await _db.Links.AsNoTracking().OrderBy(l => l.Id).Select(l => new { l.Id, l.Fingerprint }).ToListAsync())
+            .Should().BeEquivalentTo(before, options => options.WithStrictOrdering());
+    }
+
     /// <summary>
     /// Two editions print the same word with different accents, and a comparison that reads the
     /// bytes says they are different words. Folded, they are one word and the link says so.

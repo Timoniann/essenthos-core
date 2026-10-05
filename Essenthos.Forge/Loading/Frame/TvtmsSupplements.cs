@@ -41,8 +41,8 @@ internal sealed record TvtmsSupplement(
 /// 8:19-29 each stand one before the words they carry.
 /// </para>
 /// <para>
-/// Swete prints 2 Samuel 19 under the English numbers and without its last verse, which fails both
-/// the English and the Hebrew tests; and it prints the altar on Ebal as Joshua 9:3-8 where the
+/// Swete prints 2 Samuel 19 under the English numbers, which the Greek scheme's tests do not
+/// recognise; and it prints the altar on Ebal as Joshua 9:3-8 where the
 /// Hebrew has it as 8:30-35, numbering the Gibeonites on from 9:9. At the end of Joshua it keeps the
 /// Septuagint's order under the Hebrew's verse numbers, which the data's tests cannot tell apart
 /// from Brenton's renumbering of the same three verses.
@@ -196,9 +196,9 @@ internal static class TvtmsSupplements
             ("Pro.29:43", "Pro.31:26"),
             ("Pro.29:44", "Pro.31:25"),
             ("Pro.29:45-49", "Pro.31:27-31")),
-        Passage(Swete, "2Sa.19:1", "2Sa.18:33=Last & 2Sa.19:42=Last",
+        Passage(Swete, "2Sa.19:1", "2Sa.18:33=Last & 2Sa.19:43=Last",
             ("2Sa.18:33", "2Sa.18:33"),
-            ("2Sa.19:1-42", "2Sa.19:1-42")),
+            ("2Sa.19:1-43", "2Sa.19:1-43")),
         Passage(Swete, "Jos.8:30", SweteJoshua,
             ("Jos.9:3-8", "Jos.8:30-35"),
             ("Jos.9:9-27", "Jos.9:3-21")),

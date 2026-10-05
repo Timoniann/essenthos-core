@@ -151,6 +151,50 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
+    /// Repair the two known edition boundaries atomically, retaining real words and their evidence.
+    /// </summary>
+    private static async Task<int> EditionBoundaries(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<EditionBoundaryRepairLoader>()
+            .Load(forge.Resources, CancellationToken.None);
+        Console.WriteLine(outcome);
+        return 0;
+    }
+
+    private static async Task<int> Reframe(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        await scope.ServiceProvider.GetRequiredService<DatasetLoader>().Reframe(CancellationToken.None);
+        return 0;
+    }
+
+    private static async Task<int> VerseLinks(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+        return 0;
+    }
+
+    private static async Task<int> VerseRefresh(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>()
+            .Refresh(args[1].Split(',').Select(Identifier).ToHashSet()));
+        return 0;
+    }
+
+    private static async Task<int> SeptuagintRefresh(ForgeRun forge, string[] args)
+    {
+        var books = args[3].Split(',').Select(int.Parse).ToHashSet();
+        if (books.Count == 0 || books.Any(b => b < 1)) throw new InvalidOperationException("Name positive canonical book ordinals.");
+        using var scope = forge.Scope();
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<SeptuagintLinkLoader>()
+            .Refresh(Identifier(args[1]), Identifier(args[2]), books));
+        return 0;
+    }
+
+    /// <summary>
     /// The words bible4u's King James, Synodal and Ohienko print wrong, corrected in a corpus that loaded
     /// them before the reader did it: word rows kept wherever the word is the same, the corrected verses
     /// linked again by the sources that state what their words render, then the verse links and the carry.

@@ -179,7 +179,8 @@ internal static class DeuterocanonTextSource
 
         var continued = Continued.GetValueOrDefault(slug) ?? [];
         var divided = Divided.GetValueOrDefault(slug) ?? [];
-        var files = Books(Path.Combine(resources, folder), [.. codes, .. continued, .. divided]);
+        var files = Books(Path.Combine(resources, folder), [.. codes, .. continued, .. divided],
+            editorialHeadings: slug == Sources.KingJamesSlug);
         var bible4u = slug is Sources.SynodalSlug or Sources.KingJamesSlug;
         var gained = codes.Select(code =>
         {
@@ -641,7 +642,8 @@ internal static class DeuterocanonTextSource
     /// The books of a folder by the code their <c>\id</c> line states, and only scripture: eBible
     /// ships prefaces, tables and errata as USFM files of their own, under codes a book never has.
     /// </summary>
-    private static Dictionary<string, ReadBook> Books(string folder, IReadOnlyCollection<string>? wanted)
+    private static Dictionary<string, ReadBook> Books(
+        string folder, IReadOnlyCollection<string>? wanted, bool editorialHeadings = false)
     {
         var books = new Dictionary<string, ReadBook>(StringComparer.Ordinal);
         foreach (var path in Directory.GetFiles(folder, "*.usfm"))
@@ -655,7 +657,7 @@ internal static class DeuterocanonTextSource
                 continue;
             }
 
-            books[code] = new ReadBook(UsfmReader.Read(content), path);
+            books[code] = new ReadBook(UsfmReader.Read(content, editorialHeadings), path);
         }
 
         if (wanted?.FirstOrDefault(code => !books.ContainsKey(code)) is { } missing)

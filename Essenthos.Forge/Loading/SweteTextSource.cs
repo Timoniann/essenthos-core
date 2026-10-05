@@ -187,7 +187,7 @@ internal static class SweteTextSource
                      + "credit and to share alike anything derived from these files. "
                      + SweteRestorations.Note + " " + SweteCorrections.Note + " " + SwetePage.Note + " "
                      + SweteCorrections.FiguresNote + " " + SweteDivisions.Note + " " + SweteIsaiah.Note + " "
-                     + SweteOdes.Note,
+                     + SweteOdes.Note + " " + SweteRestorations.ChapterMarkersNote,
         Citation = "Henry Barclay Swete (ed.), The Old Testament in Greek according to the Septuagint, "
                    + "Cambridge University Press, 1887-1894, in the digital edition of Nathan D. Smith "
                    + "(nathans/lxx-swete) derived from the Open Greek and Latin First1KGreek transcription "
@@ -260,7 +260,7 @@ internal static class SweteTextSource
     /// False for the edition as the transcription reads it, without <see cref="SweteRestorations"/>:
     /// what a corpus loaded before them holds. The verses it ran together are divided either way.
     /// </param>
-    public static TextSource Read(string folder, bool restored = true)
+    public static TextSource Read(string folder, bool restored = true, bool chapterMarkers = true)
     {
         var books = new List<BookDraft>(Canon.Length + 1);
         var position = 0;
@@ -281,7 +281,8 @@ internal static class SweteTextSource
             var lines = file == Isaiah
                 ? SweteIsaiah.Lines(folder)
                 : restored
-                    ? SweteRestorations.Apply(file, SweteDivisions.Lines(file, File.ReadLines(path)))
+                    ? SweteRestorations.Apply(file, SweteDivisions.Lines(file, File.ReadLines(path)),
+                        chapterMarkers ? SweteRestorations.All : SweteRestorations.BeforeChapterMarkers)
                     : SweteDivisions.Lines(file, File.ReadLines(path));
             if (file == SweteOdes.File)
             {
