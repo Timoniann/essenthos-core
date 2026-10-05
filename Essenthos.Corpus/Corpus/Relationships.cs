@@ -187,6 +187,10 @@ internal static class Relationships
         && outward.To == inward.From
         && RelationshipVocabulary.Reversed(outward.Type).Contains(inward.Type);
 
+    internal static string? ReaderNote(string? note) =>
+        string.Equals(note?.Trim(), "the verse states it, decided on the review page", StringComparison.OrdinalIgnoreCase)
+            ? null : note;
+
     private static EntityRelationshipResponse Show(Related row, IReadOnlyList<Related> corroboration) =>
         new(row.Type, row.Category, row.Slug, row.Name, row.Distinguisher, row.Inward,
             row.Reference, row.Notes)
@@ -211,6 +215,7 @@ internal static class Relationships
             Method = EnumSpelling.Of(witness.Method),
             Confidence = witness.Confidence,
             Source = witness.Source,
+            Verses = Verses(witness.Citation),
         };
 
     /// <summary>

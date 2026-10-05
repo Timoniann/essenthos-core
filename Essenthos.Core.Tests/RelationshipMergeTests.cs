@@ -35,6 +35,18 @@ public sealed class RelationshipMergeTests : IDisposable
 
     private readonly AppDbContext _db;
 
+    [Theory]
+    [InlineData("the verse states it, decided on the review page", null)]
+    [InlineData(" The verse states it, decided on the review page ", null)]
+    [InlineData("The verse names both parents.", "The verse names both parents.")]
+    [InlineData("This identification remains uncertain.", "This identification remains uncertain.")]
+    public void ReaderNotesExcludeOnlyTheKnownReviewProcessSentence(string note, string? expected)
+    {
+        var response = new EntityRelationshipResponse("son-of", "read", "adam", "Adam", null, false, null, note);
+        response.Notes.Should().Be(note);
+        response.ReaderNote.Should().Be(expected);
+    }
+
     public RelationshipMergeTests(WitnessDatabase database)
     {
         _db = database.NewContext();

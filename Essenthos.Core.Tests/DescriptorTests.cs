@@ -35,6 +35,54 @@ public sealed class DescriptorTests : IDisposable
 
     private const string AskedAt = "2026-09-06";
 
+    [Fact]
+    public async Task RepeatedRelationAndTargetRenderOnceWithoutLosingTheirEvidence()
+    {
+        await Load("described");
+        var original = await _db.EntityDescriptors.FirstAsync(d => d.Entity!.Slug == "hobab-1");
+        _db.EntityDescriptors.Add(new EntityDescriptor
+        {
+            EntityId = original.EntityId, TargetEntityId = original.TargetEntityId,
+            Relation = original.Relation, Ordinal = 100,
+            CanonicalBook = 7, CanonicalChapter = 4, CanonicalVerse = 11,
+            Method = original.Method, Confidence = original.Confidence,
+            Source = original.Source, Note = "A second reading of the same relationship",
+        });
+        await _db.SaveChangesAsync();
+        var descriptor = (await Read("hobab-1", "eng"))!;
+        descriptor.Parts.Count(part => part.Entity?.Slug == original.Target!.Slug).Should().Be(1);
+        descriptor.Claims.Count(claim => claim.Target.Slug == original.Target.Slug).Should().Be(2);
+        descriptor.Claims.Should().Contain(claim => claim.Note == "A second reading of the same relationship"
+            && claim.Reference!.Chapter == 4 && claim.Reference.Verse == 11);
+        (await _db.EntityDescriptors.CountAsync(d => d.EntityId == original.EntityId
+            && d.TargetEntityId == original.TargetEntityId && d.Relation == original.Relation)).Should().Be(2);
+    }
+
+    [Fact]
+    public async Task ATribeResolvesOnlyThroughCanonicalTribalTargets()
+    {
+        await Load("described");
+        var target = await _db.Entities.SingleAsync(e => e.Slug == "reuel-1");
+        var hobab = await _db.Entities.SingleAsync(e => e.Slug == "hobab-1");
+        _db.EntityDescriptors.Add(new EntityDescriptor { EntityId = hobab.Id, TargetEntityId = target.Id,
+            Relation = "of-tribe", Ordinal = 102, CanonicalBook = 4, CanonicalChapter = 10, CanonicalVerse = 29,
+            Source = "test" });
+        await _db.SaveChangesAsync();
+        (await EncyclopediaEndpoints.TribeRecord(_db, "Reuel", "eng", default))!.Slug.Should().Be("reuel-1");
+        (await EncyclopediaEndpoints.TribeRecord(_db, "Reuel", "ukr", default))!.LocalName.Should().Be("Регуїл");
+        (await EncyclopediaEndpoints.TribeRecord(_db, "Judah", "eng", default)).Should().BeNull();
+        (await EncyclopediaEndpoints.TribeRecord(_db, null, "eng", default)).Should().BeNull();
+        var namesake = new Entity { Slug = "reuel-namesake", Name = "Reuel", Kind = EntityKind.Person,
+            Source = "a test", SourceId = "namesake" };
+        _db.Entities.Add(namesake);
+        await _db.SaveChangesAsync();
+        _db.EntityDescriptors.Add(new EntityDescriptor { EntityId = hobab.Id, TargetEntityId = namesake.Id,
+            Relation = "of-tribe", Ordinal = 103, CanonicalBook = 4, CanonicalChapter = 10, CanonicalVerse = 29,
+            Source = "test" });
+        await _db.SaveChangesAsync();
+        (await EncyclopediaEndpoints.TribeRecord(_db, "Reuel", "ukr", default)).Should().BeNull();
+    }
+
     /// <summary>What BibleData says about Hobab, which nothing here may touch.</summary>
     private const string ImportedSentence = "the son of Reuel, Moses' father-in-law (NUM 10:29)";
 

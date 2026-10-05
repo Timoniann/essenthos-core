@@ -1,4 +1,4 @@
-﻿namespace Essenthos.Core.Corpus;
+namespace Essenthos.Core.Corpus;
 
 /// <summary>
 /// The records more than one endpoint group answers with. Everything else lives beside the
@@ -420,6 +420,8 @@ internal record EntityRelationshipResponse(
     VerseRefResponse? Reference,
     string? Notes)
 {
+    public string? ReaderNote => Relationships.ReaderNote(Notes);
+
     /// <summary>Our own line under the counterpart's name in the language asked for, where this corpus rendered one.</summary>
     public string? LocalDistinguisher { get; init; }
 
@@ -495,6 +497,10 @@ internal record EntityRelationshipWitnessResponse(
     VerseRefResponse? Reference,
     string? Notes)
 {
+    public IList<VerseRefResponse>? Verses { get; init; }
+
+    public string? ReaderNote => Relationships.ReaderNote(Notes);
+
     public string? Method { get; init; }
 
     public double? Confidence { get; init; }

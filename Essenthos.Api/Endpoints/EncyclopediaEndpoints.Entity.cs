@@ -10,6 +10,21 @@ namespace Essenthos.Core.Endpoints;
 
 internal static partial class EncyclopediaEndpoints
 {
+    internal static async Task<EntityTribeResponse?> TribeRecord(AppDbContext db, string? tribe, string? language, CancellationToken cancellationToken)
+    {
+        if (tribe is null) return null;
+        var tribalIds = db.EntityDescriptors.Where(d => d.Relation == "of-tribe").Select(d => d.TargetEntityId);
+        var patriarchIds = db.EntityDescriptors.Where(d => tribalIds.Contains(d.EntityId)
+            && d.Relation == "descendants-of" && d.Target!.Kind == EntityKind.Person).Select(d => d.TargetEntityId);
+        var candidates = await db.Entities.Where(e => e.Name == tribe && e.Kind == EntityKind.Person
+            && (tribalIds.Contains(e.Id) || patriarchIds.Contains(e.Id)))
+            .Select(e => new { e.Id, e.Slug, e.Kind, e.Name }).ToListAsync(cancellationToken);
+        if (candidates.Count != 1) return null;
+        var found = candidates[0];
+        var names = await EntityNames.Of(db, [found.Id], language, cancellationToken);
+        return new EntityTribeResponse(found.Slug, EnumSpelling.Of(found.Kind), found.Name, names.GetValueOrDefault(found.Id));
+    }
+
     /// <summary>One entity's page.</summary>
     private static void MapEntity(IEndpointRouteBuilder routes)
     {
@@ -231,6 +246,7 @@ internal static partial class EncyclopediaEndpoints
                 alternatives.Count > 0)
             {
                 Forms = own.GetValueOrDefault(entity.Slug),
+                TribeRecord = await TribeRecord(db, mine is null ? entity.Tribe : mine.Tribe, language, cancellationToken),
                 Descriptor = await Descriptors.Of(
                     db, entity.Slug, language, cancellationToken),
                 Location = entity.Location,

@@ -15,6 +15,7 @@ namespace Essenthos.Core;
 /// </summary>
 [JsonSourceGenerationOptions(JsonSerializerDefaults.Web)]
 [JsonSerializable(typeof(HealthProbeResponse))]
+[JsonSerializable(typeof(EntityTribeResponse))]
 [JsonSerializable(typeof(HealthResponse))]
 [JsonSerializable(typeof(CorpusReleaseResponse))]
 [JsonSerializable(typeof(VersionResponse))]

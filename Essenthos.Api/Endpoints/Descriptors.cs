@@ -138,6 +138,7 @@ internal static class Descriptors
     {
         var parts = new List<DescriptorPartResponse>();
         var claims = new List<DescriptorClaimResponse>();
+        var rendered = new HashSet<(string Relation, int Target)>();
 
         foreach (var clause in clauses)
         {
@@ -153,28 +154,30 @@ internal static class Descriptors
             var cases = forms.GetValueOrDefault(clause.TargetEntityId);
             var target = Target(clause, cases);
 
-            if (parts.Count > 0)
+            if (rendered.Add((clause.Relation, clause.TargetEntityId)))
             {
-                parts.Add(new DescriptorPartResponse(DescriptorPhrasings.Separator));
+                if (parts.Count > 0)
+                {
+                    parts.Add(new DescriptorPartResponse(DescriptorPhrasings.Separator));
+                }
+
+                var written = Name(clause, phrasing.Case, cases);
+                parts.Add(new DescriptorPartResponse(
+                    DescriptorPhrasings.AgreeWithWhatFollows(phrasing.Before, written))
+                {
+                    Doubtful = doubtful,
+                });
+                parts.Add(new DescriptorPartResponse(written)
+                {
+                    Entity = target,
+                    Doubtful = doubtful,
+                });
+
+                if (phrasing.After.Length > 0)
+                {
+                    parts.Add(new DescriptorPartResponse(phrasing.After) { Doubtful = doubtful });
+                }
             }
-
-            var written = Name(clause, phrasing.Case, cases);
-            parts.Add(new DescriptorPartResponse(
-                DescriptorPhrasings.AgreeWithWhatFollows(phrasing.Before, written))
-            {
-                Doubtful = doubtful,
-            });
-            parts.Add(new DescriptorPartResponse(written)
-            {
-                Entity = target,
-                Doubtful = doubtful,
-            });
-
-            if (phrasing.After.Length > 0)
-            {
-                parts.Add(new DescriptorPartResponse(phrasing.After) { Doubtful = doubtful });
-            }
-
             claims.Add(new DescriptorClaimResponse(
                 clause.Ordinal,
                 clause.Relation,

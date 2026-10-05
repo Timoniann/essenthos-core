@@ -192,6 +192,8 @@ internal record EntityResponse(
     /// </summary>
     public Dictionary<string, string>? Forms { get; init; }
 
+    public EntityTribeResponse? TribeRecord { get; init; }
+
     /// <summary>
     /// What this corpus says the entity is: the pieces of a line, each name among them carrying the
     /// entity it names complete enough to be linked, and the claims the line was made of with the
@@ -342,6 +344,8 @@ internal record EntityClaimResponse(
 /// of whoever said it, and only the link is missing.
 /// </summary>
 internal record EntityOriginResponse(string Slug, string Kind, string Name, string? Distinguisher);
+
+internal record EntityTribeResponse(string Slug, string Kind, string Name, string? LocalName);
 
 /// <param name="Slug">
 /// The alternative's own page, where the encyclopedia holds one. Null where it does not, in which
