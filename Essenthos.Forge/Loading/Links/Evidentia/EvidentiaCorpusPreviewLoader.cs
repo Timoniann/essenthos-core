@@ -680,19 +680,19 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         int canonicalChapter,
         int? canonicalVerse,
         CancellationToken cancellationToken,
-        bool required = true)
+        bool required = true,
+        bool primaryChapterOnly = false)
     {
-        // A verse spanning two canonical verses carries a reference row for each, and reading the
-        // words through the references gave every one of its words back once per row - with the
-        // same id and two different addresses. Every count downstream doubled for it, and every
-        // resolver could propose the same source word twice. One placement per verse, the primary
-        // one where the scope holds it.
-        var placements = await db.VerseReferences
+        var references = db.VerseReferences
             .AsNoTracking()
             .Where(reference => reference.Verse!.Text!.Slug == slug
                 && reference.CanonicalBook == canonicalBook
                 && reference.CanonicalChapter == canonicalChapter
-                && (!canonicalVerse.HasValue || reference.CanonicalVerse == canonicalVerse.Value))
+                && (!canonicalVerse.HasValue || reference.CanonicalVerse == canonicalVerse.Value));
+        var placements = await references
+            .Where(reference => !primaryChapterOnly || db.VerseReferences.Any(primary =>
+                primary.VerseId == reference.VerseId && primary.IsPrimary
+                && primary.CanonicalBook == canonicalBook && primary.CanonicalChapter == canonicalChapter))
             .OrderBy(reference => reference.VerseId)
             .ThenBy(reference => reference.CanonicalVerse)
             .Select(reference => new
@@ -704,6 +704,11 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 reference.IsPrimary,
             })
             .ToListAsync(cancellationToken);
+        if (primaryChapterOnly && placements.Count == 0 && await references.AnyAsync(cancellationToken))
+        {
+            return [];
+        }
+
         var addressByVerse = placements
             .GroupBy(placement => placement.VerseId)
             .ToDictionary(
@@ -771,7 +776,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     private async Task<UdpipeAnnotation> SourceTokens(
         string slug, int book, int chapter, int? verse, CancellationToken cancellationToken)
     {
-        var tokens = await Tokens(slug, book, chapter, verse, cancellationToken);
+        var tokens = await Tokens(slug, book, chapter, verse, cancellationToken, primaryChapterOnly: true);
         return await udpipe.Annotate(tokens, cancellationToken);
     }
 

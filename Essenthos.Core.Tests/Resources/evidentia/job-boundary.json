@@ -1,0 +1,1534 @@
+{
+  "Verses": [
+    {
+      "Slug": "BHSA",
+      "Words": [
+        {
+          "Gloss": "if",
+          "Lemma": "אִם",
+          "Surface": "אִם",
+          "Trailer": "־",
+          "Position": 1,
+          "Morphology": {
+            "pos": "conj",
+            "phono": "ʔim-",
+            "language": "hbo",
+            "phrasePos": "conj",
+            "consonantal": "אם",
+            "phonoTrailer": "",
+            "realisedLexeme": "אִם",
+            "vocalizedLexeme": "אִם"
+          },
+          "StrongNumber": "H518"
+        },
+        {
+          "Gloss": "upon",
+          "Lemma": "עַל",
+          "Surface": "עַל",
+          "Trailer": "־",
+          "Position": 2,
+          "Morphology": {
+            "pos": "prep",
+            "phono": "ʕal-",
+            "language": "hbo",
+            "phrasePos": "prep",
+            "consonantal": "על",
+            "phonoTrailer": "",
+            "realisedLexeme": "עַל",
+            "vocalizedLexeme": "עַל"
+          },
+          "StrongNumber": "H5921"
+        },
+        {
+          "Gloss": "mouth",
+          "Lemma": "פֶּה",
+          "Surface": "פִּ֭יךָ",
+          "Trailer": " ",
+          "Position": 3,
+          "Morphology": {
+            "pos": "subs",
+            "phono": "ˈpîḵā",
+            "state": "a",
+            "gender": "m",
+            "number": "sg",
+            "language": "hbo",
+            "phrasePos": "subs",
+            "consonantal": "פיך",
+            "phonoTrailer": " ",
+            "suffixGender": "m",
+            "suffixNumber": "sg",
+            "suffixPerson": "p2",
+            "realisedLexeme": "פִּי",
+            "vocalizedLexeme": "פֶּה"
+          },
+          "StrongNumber": "H6310"
+        },
+        {
+          "Gloss": "be high",
+          "Lemma": "גָּבַהּ",
+          "Surface": "יַגְבִּ֣יהַּ",
+          "Trailer": " ",
+          "Position": 4,
+          "Morphology": {
+            "pos": "verb",
+            "stem": "hif",
+            "phono": "yaḡbˈîₐh",
+            "tense": "impf",
+            "gender": "m",
+            "number": "sg",
+            "person": "p3",
+            "language": "hbo",
+            "phrasePos": "verb",
+            "consonantal": "יגביה",
+            "phonoTrailer": " ",
+            "realisedLexeme": "גְבִּיהַּ",
+            "vocalizedLexeme": "גָּבַהּ"
+          },
+          "StrongNumber": "H1361"
+        },
+        {
+          "Gloss": "eagle",
+          "Lemma": "נֶשֶׁר",
+          "Surface": "נָ֑שֶׁר",
+          "Trailer": " ",
+          "Position": 5,
+          "Morphology": {
+            "pos": "subs",
+            "phono": "nˈāšer",
+            "state": "a",
+            "gender": "m",
+            "number": "sg",
+            "language": "hbo",
+            "phrasePos": "subs",
+            "consonantal": "נשׁר",
+            "phonoTrailer": " ",
+            "realisedLexeme": "נָשֶׁר",
+            "vocalizedLexeme": "נֶשֶׁר"
+          },
+          "StrongNumber": "H5404"
+        },
+        {
+          "Gloss": "and",
+          "Lemma": "וְ",
+          "Surface": "וְ֝",
+          "Trailer": "",
+          "Position": 6,
+          "Morphology": {
+            "pos": "conj",
+            "phono": "ˈw",
+            "language": "hbo",
+            "phrasePos": "conj",
+            "consonantal": "ו",
+            "phonoTrailer": "",
+            "realisedLexeme": "וְ",
+            "vocalizedLexeme": "וְ"
+          },
+          "StrongNumber": "H9000"
+        },
+        {
+          "Gloss": "that",
+          "Lemma": "כִּי",
+          "Surface": "כִ֗י",
+          "Trailer": " ",
+          "Position": 7,
+          "Morphology": {
+            "pos": "conj",
+            "phono": "ḵˈî",
+            "language": "hbo",
+            "phrasePos": "conj",
+            "consonantal": "כי",
+            "phonoTrailer": " ",
+            "realisedLexeme": "כִי",
+            "vocalizedLexeme": "כִּי"
+          },
+          "StrongNumber": "H3588"
+        },
+        {
+          "Gloss": "be high",
+          "Lemma": "רום",
+          "Surface": "יָרִ֥ים",
+          "Trailer": " ",
+          "Position": 8,
+          "Morphology": {
+            "pos": "verb",
+            "stem": "hif",
+            "phono": "yārˌîm",
+            "tense": "impf",
+            "gender": "m",
+            "number": "sg",
+            "person": "p3",
+            "language": "hbo",
+            "phrasePos": "verb",
+            "consonantal": "ירים",
+            "phonoTrailer": " ",
+            "realisedLexeme": "רִים",
+            "vocalizedLexeme": "רום"
+          },
+          "StrongNumber": "H7311"
+        },
+        {
+          "Gloss": "nest",
+          "Lemma": "קֵן",
+          "Surface": "קִנֹּֽו",
+          "Trailer": "׃ ",
+          "Position": 9,
+          "Morphology": {
+            "pos": "subs",
+            "phono": "qinnˈô",
+            "state": "a",
+            "gender": "m",
+            "number": "sg",
+            "language": "hbo",
+            "phrasePos": "subs",
+            "consonantal": "קנו",
+            "phonoTrailer": " . ",
+            "suffixGender": "m",
+            "suffixNumber": "sg",
+            "suffixPerson": "p3",
+            "realisedLexeme": "קִןּ",
+            "vocalizedLexeme": "קֵן"
+          },
+          "StrongNumber": "H7064"
+        }
+      ],
+      "Number": 27,
+      "Chapter": 39,
+      "References": [
+        {
+          "Book": 18,
+          "Verse": 27,
+          "Chapter": 39,
+          "IsPrimary": true
+        }
+      ]
+    },
+    {
+      "Slug": "BHSA",
+      "Words": [
+        {
+          "Gloss": "and",
+          "Lemma": "וְ",
+          "Surface": "וַ",
+          "Trailer": "",
+          "Position": 1,
+          "Morphology": {
+            "pos": "conj",
+            "phono": "wa",
+            "language": "hbo",
+            "phrasePos": "conj",
+            "consonantal": "ו",
+            "phonoTrailer": "",
+            "realisedLexeme": "וַ",
+            "vocalizedLexeme": "וְ"
+          },
+          "StrongNumber": "H9000"
+        },
+        {
+          "Gloss": "answer",
+          "Lemma": "ענה",
+          "Surface": "יַּ֖עַן",
+          "Trailer": " ",
+          "Position": 2,
+          "Morphology": {
+            "pos": "verb",
+            "stem": "qal",
+            "phono": "yyˌaʕan",
+            "tense": "wayq",
+            "gender": "m",
+            "number": "sg",
+            "person": "p3",
+            "language": "hbo",
+            "phrasePos": "verb",
+            "consonantal": "יען",
+            "phonoTrailer": " ",
+            "realisedLexeme": "עַן",
+            "vocalizedLexeme": "ענה"
+          },
+          "StrongNumber": "H6030"
+        },
+        {
+          "Gloss": "YHWH",
+          "Lemma": "יְהוָה",
+          "Surface": "יְהוָ֥ה",
+          "Trailer": " ",
+          "Position": 3,
+          "Morphology": {
+            "pos": "nmpr",
+            "phono": "[yᵊhwˌāh]",
+            "state": "a",
+            "gender": "m",
+            "number": "sg",
+            "language": "hbo",
+            "nameType": "pers",
+            "phrasePos": "nmpr",
+            "consonantal": "יהוה",
+            "phonoTrailer": " ",
+            "realisedLexeme": "יְהוָה",
+            "vocalizedLexeme": "יְהוָה"
+          },
+          "StrongNumber": "H3068"
+        },
+        {
+          "Gloss": "<object marker>",
+          "Lemma": "אֵת",
+          "Surface": "אֶת",
+          "Trailer": "־",
+          "Position": 4,
+          "Morphology": {
+            "pos": "prep",
+            "phono": "ʔeṯ-",
+            "language": "hbo",
+            "phrasePos": "prep",
+            "consonantal": "את",
+            "phonoTrailer": "",
+            "realisedLexeme": "אֶת",
+            "vocalizedLexeme": "אֵת"
+          },
+          "StrongNumber": "H853"
+        },
+        {
+          "Gloss": "Job",
+          "Lemma": "אִיֹּוב",
+          "Surface": "אִיֹּ֗וב",
+          "Trailer": " ",
+          "Position": 5,
+          "Morphology": {
+            "pos": "nmpr",
+            "phono": "ʔiyyˈôv",
+            "state": "a",
+            "gender": "m",
+            "number": "sg",
+            "language": "hbo",
+            "nameType": "pers",
+            "phrasePos": "nmpr",
+            "consonantal": "איוב",
+            "phonoTrailer": " ",
+            "realisedLexeme": "אִיֹּוב",
+            "vocalizedLexeme": "אִיֹּוב"
+          },
+          "StrongNumber": "H347"
+        },
+        {
+          "Gloss": "and",
+          "Lemma": "וְ",
+          "Surface": "וַ",
+          "Trailer": "",
+          "Position": 6,
+          "Morphology": {
+            "pos": "conj",
+            "phono": "wa",
+            "language": "hbo",
+            "phrasePos": "conj",
+            "consonantal": "ו",
+            "phonoTrailer": "",
+            "realisedLexeme": "וַ",
+            "vocalizedLexeme": "וְ"
+          },
+          "StrongNumber": "H9000"
+        },
+        {
+          "Gloss": "say",
+          "Lemma": "אמר",
+          "Surface": "יֹּאמַֽר",
+          "Trailer": "׃ ",
+          "Position": 7,
+          "Morphology": {
+            "pos": "verb",
+            "stem": "qal",
+            "phono": "yyōmˈar",
+            "tense": "wayq",
+            "gender": "m",
+            "number": "sg",
+            "person": "p3",
+            "language": "hbo",
+            "phrasePos": "verb",
+            "lexicalSet": "quot",
+            "consonantal": "יאמר",
+            "phonoTrailer": " . ",
+            "realisedLexeme": "אמַר",
+            "vocalizedLexeme": "אמר"
+          },
+          "StrongNumber": "H559"
+        }
+      ],
+      "Number": 1,
+      "Chapter": 40,
+      "References": [
+        {
+          "Book": 18,
+          "Verse": 1,
+          "Chapter": 40,
+          "IsPrimary": true
+        }
+      ]
+    },
+    {
+      "Slug": "RV1909",
+      "Words": [
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "¿Se",
+          "Trailer": " ",
+          "Position": 1,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "remonta",
+          "Trailer": " ",
+          "Position": 2,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "el",
+          "Trailer": " ",
+          "Position": 3,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "águila",
+          "Trailer": " ",
+          "Position": 4,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "por",
+          "Trailer": " ",
+          "Position": 5,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "tu",
+          "Trailer": " ",
+          "Position": 6,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "mandamiento",
+          "Trailer": ", ",
+          "Position": 7,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "y",
+          "Trailer": " ",
+          "Position": 8,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "pone",
+          "Trailer": " ",
+          "Position": 9,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "en",
+          "Trailer": " ",
+          "Position": 10,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "alto",
+          "Trailer": " ",
+          "Position": 11,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "su",
+          "Trailer": " ",
+          "Position": 12,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "nido",
+          "Trailer": "? ",
+          "Position": 13,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Ella",
+          "Trailer": " ",
+          "Position": 14,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "habita",
+          "Trailer": " ",
+          "Position": 15,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "y",
+          "Trailer": " ",
+          "Position": 16,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "está",
+          "Trailer": " ",
+          "Position": 17,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "en",
+          "Trailer": " ",
+          "Position": 18,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "la",
+          "Trailer": " ",
+          "Position": 19,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "piedra",
+          "Trailer": ", ",
+          "Position": 20,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "en",
+          "Trailer": " ",
+          "Position": 21,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "la",
+          "Trailer": " ",
+          "Position": 22,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "cumbre",
+          "Trailer": " ",
+          "Position": 23,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "del",
+          "Trailer": " ",
+          "Position": 24,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "peñasco",
+          "Trailer": " ",
+          "Position": 25,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "y",
+          "Trailer": " ",
+          "Position": 26,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "de",
+          "Trailer": " ",
+          "Position": 27,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "la",
+          "Trailer": " ",
+          "Position": 28,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "roca",
+          "Trailer": ". ",
+          "Position": 29,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Desde",
+          "Trailer": " ",
+          "Position": 30,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "allí",
+          "Trailer": " ",
+          "Position": 31,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "acecha",
+          "Trailer": " ",
+          "Position": 32,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "la",
+          "Trailer": " ",
+          "Position": 33,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "comida",
+          "Trailer": ": ",
+          "Position": 34,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "sus",
+          "Trailer": " ",
+          "Position": 35,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "ojos",
+          "Trailer": " ",
+          "Position": 36,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "observan",
+          "Trailer": " ",
+          "Position": 37,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "de",
+          "Trailer": " ",
+          "Position": 38,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "muy",
+          "Trailer": " ",
+          "Position": 39,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "lejos",
+          "Trailer": ". ",
+          "Position": 40,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Sus",
+          "Trailer": " ",
+          "Position": 41,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "pollos",
+          "Trailer": " ",
+          "Position": 42,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "chupan",
+          "Trailer": " ",
+          "Position": 43,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "la",
+          "Trailer": " ",
+          "Position": 44,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "sangre",
+          "Trailer": ": ",
+          "Position": 45,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "y",
+          "Trailer": " ",
+          "Position": 46,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "donde",
+          "Trailer": " ",
+          "Position": 47,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "hubiere",
+          "Trailer": " ",
+          "Position": 48,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "cadáveres",
+          "Trailer": ", ",
+          "Position": 49,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "allí",
+          "Trailer": " ",
+          "Position": 50,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "está",
+          "Trailer": ". ",
+          "Position": 51,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "A",
+          "Trailer": " ",
+          "Position": 52,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "más",
+          "Trailer": " ",
+          "Position": 53,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "de",
+          "Trailer": " ",
+          "Position": 54,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "eso",
+          "Trailer": " ",
+          "Position": 55,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "respondió",
+          "Trailer": " ",
+          "Position": 56,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Jehová",
+          "Trailer": " ",
+          "Position": 57,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "á",
+          "Trailer": " ",
+          "Position": 58,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Job",
+          "Trailer": ", ",
+          "Position": 59,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "y",
+          "Trailer": " ",
+          "Position": 60,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "dijo",
+          "Trailer": ": ",
+          "Position": 61,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "¿Es",
+          "Trailer": " ",
+          "Position": 62,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "sabiduría",
+          "Trailer": " ",
+          "Position": 63,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "contender",
+          "Trailer": " ",
+          "Position": 64,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "con",
+          "Trailer": " ",
+          "Position": 65,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "el",
+          "Trailer": " ",
+          "Position": 66,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Omnipotente",
+          "Trailer": "? ",
+          "Position": 67,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "El",
+          "Trailer": " ",
+          "Position": 68,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "que",
+          "Trailer": " ",
+          "Position": 69,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "disputa",
+          "Trailer": " ",
+          "Position": 70,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "con",
+          "Trailer": " ",
+          "Position": 71,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Dios",
+          "Trailer": ", ",
+          "Position": 72,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "responda",
+          "Trailer": " ",
+          "Position": 73,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "á",
+          "Trailer": " ",
+          "Position": 74,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "esto",
+          "Trailer": ". ",
+          "Position": 75,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Y",
+          "Trailer": " ",
+          "Position": 76,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "respondió",
+          "Trailer": " ",
+          "Position": 77,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Job",
+          "Trailer": " ",
+          "Position": 78,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "á",
+          "Trailer": " ",
+          "Position": 79,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Jehová",
+          "Trailer": ", ",
+          "Position": 80,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "y",
+          "Trailer": " ",
+          "Position": 81,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "dijo",
+          "Trailer": ": ",
+          "Position": 82,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "He",
+          "Trailer": " ",
+          "Position": 83,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "aquí",
+          "Trailer": " ",
+          "Position": 84,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "que",
+          "Trailer": " ",
+          "Position": 85,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "yo",
+          "Trailer": " ",
+          "Position": 86,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "soy",
+          "Trailer": " ",
+          "Position": 87,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "vil",
+          "Trailer": ", ",
+          "Position": 88,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "¿qué",
+          "Trailer": " ",
+          "Position": 89,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "te",
+          "Trailer": " ",
+          "Position": 90,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "responderé",
+          "Trailer": "? ",
+          "Position": 91,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Mi",
+          "Trailer": " ",
+          "Position": 92,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "mano",
+          "Trailer": " ",
+          "Position": 93,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "pongo",
+          "Trailer": " ",
+          "Position": 94,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "sobre",
+          "Trailer": " ",
+          "Position": 95,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "mi",
+          "Trailer": " ",
+          "Position": 96,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "boca",
+          "Trailer": ". ",
+          "Position": 97,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Una",
+          "Trailer": " ",
+          "Position": 98,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "vez",
+          "Trailer": " ",
+          "Position": 99,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "hablé",
+          "Trailer": ", ",
+          "Position": 100,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "y",
+          "Trailer": " ",
+          "Position": 101,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "no",
+          "Trailer": " ",
+          "Position": 102,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "responderé",
+          "Trailer": ": ",
+          "Position": 103,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "aun",
+          "Trailer": " ",
+          "Position": 104,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "dos",
+          "Trailer": " ",
+          "Position": 105,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "veces",
+          "Trailer": ", ",
+          "Position": 106,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "mas",
+          "Trailer": " ",
+          "Position": 107,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "no",
+          "Trailer": " ",
+          "Position": 108,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "tornaré",
+          "Trailer": " ",
+          "Position": 109,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "á",
+          "Trailer": " ",
+          "Position": 110,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "hablar",
+          "Trailer": ". ",
+          "Position": 111,
+          "Morphology": null,
+          "StrongNumber": null
+        }
+      ],
+      "Number": 30,
+      "Chapter": 39,
+      "References": [
+        {
+          "Book": 18,
+          "Verse": 27,
+          "Chapter": 39,
+          "IsPrimary": true
+        },
+        {
+          "Book": 18,
+          "Verse": 28,
+          "Chapter": 39,
+          "IsPrimary": false
+        },
+        {
+          "Book": 18,
+          "Verse": 29,
+          "Chapter": 39,
+          "IsPrimary": false
+        },
+        {
+          "Book": 18,
+          "Verse": 30,
+          "Chapter": 39,
+          "IsPrimary": false
+        },
+        {
+          "Book": 18,
+          "Verse": 1,
+          "Chapter": 40,
+          "IsPrimary": false
+        },
+        {
+          "Book": 18,
+          "Verse": 2,
+          "Chapter": 40,
+          "IsPrimary": false
+        },
+        {
+          "Book": 18,
+          "Verse": 3,
+          "Chapter": 40,
+          "IsPrimary": false
+        },
+        {
+          "Book": 18,
+          "Verse": 4,
+          "Chapter": 40,
+          "IsPrimary": false
+        },
+        {
+          "Book": 18,
+          "Verse": 5,
+          "Chapter": 40,
+          "IsPrimary": false
+        }
+      ]
+    },
+    {
+      "Slug": "RV1909",
+      "Words": [
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "ENTONCES",
+          "Trailer": " ",
+          "Position": 1,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "respondió",
+          "Trailer": " ",
+          "Position": 2,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Jehová",
+          "Trailer": " ",
+          "Position": 3,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "á",
+          "Trailer": " ",
+          "Position": 4,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "Job",
+          "Trailer": " ",
+          "Position": 5,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "desde",
+          "Trailer": " ",
+          "Position": 6,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "la",
+          "Trailer": " ",
+          "Position": 7,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "oscuridad",
+          "Trailer": ", ",
+          "Position": 8,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "y",
+          "Trailer": " ",
+          "Position": 9,
+          "Morphology": null,
+          "StrongNumber": null
+        },
+        {
+          "Gloss": null,
+          "Lemma": null,
+          "Surface": "dijo",
+          "Trailer": ": ",
+          "Position": 10,
+          "Morphology": null,
+          "StrongNumber": null
+        }
+      ],
+      "Number": 1,
+      "Chapter": 40,
+      "References": [
+        {
+          "Book": 18,
+          "Verse": 6,
+          "Chapter": 40,
+          "IsPrimary": true
+        }
+      ]
+    }
+  ],
+  "CapturedAt": "2026-10-03T21:46:57.511248+03:00"
+}
