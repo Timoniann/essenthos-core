@@ -24,7 +24,7 @@ public sealed class FixedTitleWitnessTests
                 $"{text} {word.Book}:{word.Chapter}:{word.Verse} position {word.Position} prints {word.Surface}");
     }
 
-    [Fact]
+    [TitleMeasurementFact]
     [Trait("Category", "Corpus")]
     public void MeasureTheFrozenHeldTitleCandidates()
     {
@@ -66,5 +66,19 @@ public sealed class FixedTitleWitnessTests
                 && json.TryGetProperty(key, out var value) && value.ValueKind == JsonValueKind.String ? value.GetString() : null;
             return new(Value("pos"), Value("case"), Value("number"), Value("state"), Value("form") ?? Value("robinson"));
         }
+    }
+}
+
+/// <summary>
+/// The measurement reads a frozen snapshot and writes a scratch file, so it runs only when both are named;
+/// a plain run of the corpus tests skips it rather than failing on what it was never given.
+/// </summary>
+public sealed class TitleMeasurementFactAttribute : FactAttribute
+{
+    public TitleMeasurementFactAttribute()
+    {
+        if (Environment.GetEnvironmentVariable("ESSENTHOS_TITLE_SNAPSHOT") is null
+            || Environment.GetEnvironmentVariable("ESSENTHOS_TITLE_MEASUREMENT") is null)
+            Skip = "Set ESSENTHOS_TITLE_SNAPSHOT and ESSENTHOS_TITLE_MEASUREMENT to measure the held title candidates.";
     }
 }
