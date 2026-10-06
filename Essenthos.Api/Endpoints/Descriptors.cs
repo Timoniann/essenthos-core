@@ -138,7 +138,9 @@ internal static class Descriptors
     {
         var parts = new List<DescriptorPartResponse>();
         var claims = new List<DescriptorClaimResponse>();
-        var rendered = new HashSet<(string Relation, int Target)>();
+        // The parts each relation and target was drawn as, so a later claim of the same fact can
+        // lift the doubt: a merged part is doubtful only when every claim behind it is.
+        var rendered = new Dictionary<(string Relation, int Target), (int First, int Count)>();
 
         foreach (var clause in clauses)
         {
@@ -154,13 +156,25 @@ internal static class Descriptors
             var cases = forms.GetValueOrDefault(clause.TargetEntityId);
             var target = Target(clause, cases);
 
-            if (rendered.Add((clause.Relation, clause.TargetEntityId)))
+            var key = (clause.Relation, clause.TargetEntityId);
+            if (rendered.TryGetValue(key, out var drawn))
+            {
+                if (!doubtful)
+                {
+                    for (var at = drawn.First; at < drawn.First + drawn.Count; at++)
+                    {
+                        parts[at] = parts[at] with { Doubtful = false };
+                    }
+                }
+            }
+            else
             {
                 if (parts.Count > 0)
                 {
                     parts.Add(new DescriptorPartResponse(DescriptorPhrasings.Separator));
                 }
 
+                var first = parts.Count;
                 var written = Name(clause, phrasing.Case, cases);
                 parts.Add(new DescriptorPartResponse(
                     DescriptorPhrasings.AgreeWithWhatFollows(phrasing.Before, written))
@@ -177,6 +191,8 @@ internal static class Descriptors
                 {
                     parts.Add(new DescriptorPartResponse(phrasing.After) { Doubtful = doubtful });
                 }
+
+                rendered[key] = (first, parts.Count - first);
             }
             claims.Add(new DescriptorClaimResponse(
                 clause.Ordinal,

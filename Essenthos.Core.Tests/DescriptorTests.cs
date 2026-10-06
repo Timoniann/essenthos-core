@@ -83,6 +83,28 @@ public sealed class DescriptorTests : IDisposable
         (await EncyclopediaEndpoints.TribeRecord(_db, "Reuel", "ukr", default)).Should().BeNull();
     }
 
+    /// <summary>
+    /// A people a record belongs to is written as one of its members is called — Moabite, Midianite
+    /// — or as the land it is named after, and is the people's own record, named in the language
+    /// asked for. A value that names the record itself, or nobody, resolves to nothing.
+    /// </summary>
+    [Fact]
+    public async Task APeopleWrittenAsAMemberOrAsItsLandResolvesToThePeoplesRecord()
+    {
+        await Load("described");
+        var moabites = await _db.Entities.SingleAsync(e => e.Slug == "moabites");
+        _db.EntityNames.Add(new EntityName { EntityId = moabites.Id, Label = "Moabites", Kind = "gentilic" });
+        await _db.SaveChangesAsync();
+
+        var member = (await EncyclopediaEndpoints.TribeRecord(_db, "Moabite", "eng", default))!;
+        (member.Slug, member.Kind, member.Name).Should().Be(("moabites", "people", "Moabites"));
+        (await EncyclopediaEndpoints.TribeRecord(_db, "Midianite", "eng", default))!.Slug.Should().Be("midianites");
+        (await EncyclopediaEndpoints.TribeRecord(_db, "Moab", "eng", default))!.Slug.Should().Be("moabites");
+        (await EncyclopediaEndpoints.TribeRecord(_db, "Moabites", "eng", default))!.Slug.Should().Be("moabites");
+        (await EncyclopediaEndpoints.TribeRecord(_db, "Hivite", "eng", default)).Should().BeNull();
+        (await EncyclopediaEndpoints.TribeRecord(_db, "Moabite", "eng", default, self: "moabites")).Should().BeNull();
+    }
+
     /// <summary>What BibleData says about Hobab, which nothing here may touch.</summary>
     private const string ImportedSentence = "the son of Reuel, Moses' father-in-law (NUM 10:29)";
 
@@ -917,6 +939,31 @@ public sealed class DescriptorTests : IDisposable
         description!.Claims.Should().ContainSingle()
             .Which.Should().Match<DescriptorClaimResponse>(c => c.Doubtful && c.Confidence == 0.55);
         description.Parts.Should().OnlyContain(p => p.Doubtful);
+    }
+
+    /// <summary>
+    /// One fact read twice is drawn once, and it is doubtful only while every reading of it is: a
+    /// plain second reading lifts the mark the first one put on the shared part.
+    /// </summary>
+    [Fact]
+    public async Task AMergedPartIsDoubtfulOnlyWhenEveryClaimBehindItIs()
+    {
+        await Load("refused");
+        var doubtful = await _db.EntityDescriptors.SingleAsync(d => d.Entity!.Slug == "jethro-1");
+        _db.EntityDescriptors.Add(new EntityDescriptor
+        {
+            EntityId = doubtful.EntityId, TargetEntityId = doubtful.TargetEntityId,
+            Relation = doubtful.Relation, Ordinal = doubtful.Ordinal + 1,
+            CanonicalBook = 2, CanonicalChapter = 18, CanonicalVerse = 1,
+            Method = doubtful.Method, Confidence = 0.95, Source = doubtful.Source,
+        });
+        await _db.SaveChangesAsync();
+
+        var description = (await Read("jethro-1", DescriptorPhrasings.English))!;
+
+        description.Claims.Select(c => c.Doubtful).Should().BeEquivalentTo([true, false]);
+        description.Parts.Count(p => p.Entity is not null).Should().Be(1);
+        description.Parts.Should().OnlyContain(p => !p.Doubtful);
     }
 
     /// <summary>

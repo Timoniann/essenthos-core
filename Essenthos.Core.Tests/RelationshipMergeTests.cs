@@ -40,11 +40,40 @@ public sealed class RelationshipMergeTests : IDisposable
     [InlineData(" The verse states it, decided on the review page ", null)]
     [InlineData("The verse names both parents.", "The verse names both parents.")]
     [InlineData("This identification remains uncertain.", "This identification remains uncertain.")]
-    public void ReaderNotesExcludeOnlyTheKnownReviewProcessSentence(string note, string? expected)
+    [InlineData("agent: EZR 8:33 'Noadiah the son of Binnui, Levites'.", "EZR 8:33 'Noadiah the son of Binnui, Levites'.")]
+    [InlineData(
+        "agent: 1CH 11:46 'Ithmah the Moabite'; GEN 19:37 Moab 'is the father of the Moabites' - as decided for 'Shiza the Reubenite'.",
+        "1CH 11:46 'Ithmah the Moabite'; GEN 19:37 Moab 'is the father of the Moabites'.")]
+    [InlineData(
+        "agent: descendant, not son: 1CH 7:25-26 'Tahan his son, Laadan his son' continues the chain below Ephraim; as decided for Telah and Ammihud.",
+        "descendant, not son: 1CH 7:25-26 'Tahan his son, Laadan his son' continues the chain below Ephraim.")]
+    [InlineData(
+        "agent: EZR 10:15 'Meshullam and Shabbethai the Levite helped them'. agent: NEH 8:7-9: Shabbethai is among them.",
+        "EZR 10:15 'Meshullam and Shabbethai the Levite helped them'. NEH 8:7-9: Shabbethai is among them.")]
+    [InlineData(
+        "owner, in chat 2026-09-27: priests as Aaron's descendants, not certain. NEH 10:8 'these were the priests'.",
+        "priests as Aaron's descendants, not certain. NEH 10:8 'these were the priests'.")]
+    [InlineData("agent:", null)]
+    [InlineData("A namesake agent: the word stays.", "A namesake agent: the word stays.")]
+    public void AReaderNoteKeepsWhatTheVerseSaysAndDropsWhoSettledIt(string note, string? expected)
     {
         var response = new EntityRelationshipResponse("son-of", "read", "adam", "Adam", null, false, null, note);
         response.Notes.Should().Be(note);
         response.ReaderNote.Should().Be(expected);
+        response.ReaderNoteLanguage.Should().Be(expected is null ? null : "eng");
+    }
+
+    /// <summary>
+    /// The owner writes his notes in Ukrainian, so a page in English leaves them out as a Ukrainian
+    /// page leaves out the English ones; the language says which.
+    /// </summary>
+    [Fact]
+    public void AReaderNoteSaysWhichLanguageItIsWrittenIn()
+    {
+        var owner = new EntityRelationshipWitnessResponse("father-of", "read", true, null,
+            "Цікавий контраргумент) Але все-таки там би писало");
+        owner.ReaderNote.Should().Be("Цікавий контраргумент) Але все-таки там би писало");
+        owner.ReaderNoteLanguage.Should().Be("ukr");
     }
 
     public RelationshipMergeTests(WitnessDatabase database)
