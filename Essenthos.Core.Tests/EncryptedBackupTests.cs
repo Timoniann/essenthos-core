@@ -21,20 +21,41 @@ public sealed class EncryptedBackupTests
 
     [BackupRehearsalFact]
     [Trait("Category", "Deployment")]
-    public async Task AOneShotBackupReportsFailureWithoutPublishingAPartialFile()
+    public async Task AFailedBackupReportsFailureKeepsItsLastGoodDumpsAndPublishesNothing()
     {
         var root = Environment.GetEnvironmentVariable("ESSENTHOS_REHEARSAL_ROOT")!;
         var folder = Path.Combine(Path.GetTempPath(), $"essenthos-backup-failure-{Guid.NewGuid():N}");
         Directory.CreateDirectory(folder);
         try
         {
-            using var process = Process.Start(Info(["run", "--rm", "--network", "none", "--entrypoint", "sh", "-e", "PGHOST=127.0.0.1", "-e", "PGPORT=1", "-e", "PGUSER=rehearsal", "-e", "PGCONNECT_TIMEOUT=3", "-e", "BACKUP_DATABASES=unreachable", "-e", "BACKUP_KEEP_DAYS=14", "--mount", $"type=bind,source={folder},target=/backups", "--mount", $"type=bind,source={Path.Combine(root, "deploy", "backup.sh")},target=/backup.sh,readonly", Image, "/backup.sh", "--once"]))!;
-            var output = process.StandardOutput.ReadToEndAsync();
-            var error = process.StandardError.ReadToEndAsync();
-            await Task.WhenAll(process.WaitForExitAsync(), output, error);
-            (await error).Should().Contain("FAILED");
-            process.ExitCode.Should().NotBe(0, "a scheduler or operator must detect a failed backup");
-            Directory.GetFiles(folder).Should().BeEmpty();
+            // The last good dump of the database that is failing, three weeks old, and one of a
+            // database no longer backed up at all, as old.
+            var held = Path.Combine(folder, "unreachable-20260901T0300Z.dump.gpg");
+            var gone = Path.Combine(folder, "retired-20260901T0300Z.dump.gpg");
+            foreach (var old in new[] { held, gone })
+            {
+                await File.WriteAllTextAsync(old, "old");
+                File.SetLastWriteTimeUtc(old, DateTime.UtcNow.AddDays(-21));
+            }
+
+            string[] unreachable = ["run", "--rm", "--network", "none", "--entrypoint", "sh", "-e", "PGHOST=127.0.0.1", "-e", "PGPORT=1", "-e", "PGUSER=rehearsal", "-e", "PGCONNECT_TIMEOUT=3", "-e", "BACKUP_DATABASES=unreachable", "-e", "BACKUP_KEEP_DAYS=14", "-e", "BACKUP_HOUR_UTC=3", "--mount", $"type=bind,source={folder},target=/backups", "--mount", $"type=bind,source={Path.Combine(root, "deploy", "backup.sh")},target=/backup.sh,readonly", Image];
+            var (code, _, error) = await Run([.. unreachable, "/backup.sh", "--once"]);
+            error.Should().Contain("FAILED");
+            code.Should().NotBe(0, "a scheduler or operator must detect a failed backup");
+            Directory.GetFiles(folder).Select(Path.GetFileName).Should().BeEquivalentTo(
+                [Path.GetFileName(held)],
+                "a database whose run failed keeps its last good dump past the window, and nothing new is published");
+
+            // The daemon: a failed run is reported and the daemon carries on to its next run rather
+            // than either exiting or treating the run as fine.
+            var (daemon, _, said) = await Run([.. unreachable, "-c", "timeout 15 sh /backup.sh; echo exit=$?"]);
+            daemon.Should().Be(0);
+            said.Should().Contain("FAILED").And.Contain("this run failed");
+
+            // And the healthcheck has nothing to go on but a database that never succeeded.
+            var (check, _, why) = await Run([.. unreachable, "/backup.sh", "--check"]);
+            check.Should().NotBe(0);
+            why.Should().Contain("never been backed up");
         }
         finally
         {
@@ -71,6 +92,7 @@ public sealed class EncryptedBackupTests
         var token = SessionTokens.New();
         var expired = SessionTokens.New();
         var revoked = SessionTokens.New();
+        var revokedId = Guid.CreateVersion7();
         string protectedCookie;
         try
         {
@@ -82,33 +104,67 @@ public sealed class EncryptedBackupTests
                 db.Credentials.Add(new Credential { AccountId = accountId, Provider = "google", Subject = "synthetic-recovery", Email = "recovery@example.invalid", CreatedAt = now, LastUsedAt = now });
                 db.Sessions.AddRange(
                     new Session { Id = sessionId, AccountId = accountId, TokenHash = SessionTokens.Hash(token)!, CreatedAt = now, LastSeenAt = now, ExpiresAt = now.AddDays(10) },
-                    new Session { Id = Guid.CreateVersion7(), AccountId = accountId, TokenHash = SessionTokens.Hash(expired)!, CreatedAt = now, LastSeenAt = now, ExpiresAt = now.AddDays(-1) });
+                    new Session { Id = Guid.CreateVersion7(), AccountId = accountId, TokenHash = SessionTokens.Hash(expired)!, CreatedAt = now, LastSeenAt = now, ExpiresAt = now.AddDays(-1) },
+                    new Session { Id = revokedId, AccountId = accountId, TokenHash = SessionTokens.Hash(revoked)!, CreatedAt = now, LastSeenAt = now, ExpiresAt = now.AddDays(10) });
                 db.Bookmarks.Add(new Bookmark { Id = Guid.CreateVersion7(), AccountId = accountId, Text = "KJV", Book = 43, Chapter = 3, Verse = 16, EndChapter = 3, EndVerse = 16, Color = "amber", Comment = "Restored margin", CreatedAt = now });
                 db.AccountPhotos.Add(new AccountPhoto { AccountId = accountId, Content = [1, 2, 3, 4], ContentType = "image/png", UpdatedAt = now });
                 await db.SaveChangesAsync();
+            }
+            // Signed out before the backup: the session was valid, and revoking it deletes its row.
+            await using (var db = Context(connection, source))
+            {
+                (await db.Sessions.CountAsync(s => s.Id == revokedId)).Should().Be(1);
+                await db.Sessions.Where(s => s.Id == revokedId).ExecuteDeleteAsync();
             }
             using (var services = Services(Connection(connection, source)))
             {
                 protectedCookie = services.GetRequiredService<IDataProtectionProvider>().CreateProtector("recovery-cookie").Protect("external-callback-state");
             }
             var original = await Fingerprint(connection, source);
+            var password = new Dictionary<string, string> { ["PGPASSWORD"] = connection.Password ?? "" };
+            List<string> Backup(params string[] extra) =>
+            [
+                "run", "--rm", "--entrypoint", "sh", "-e", "PGPASSWORD", "-e", "PGHOST=host.docker.internal", "-e", $"PGPORT={connection.Port}", "-e", $"PGUSER={connection.Username}", "-e", $"BACKUP_DATABASES={source}", "-e", "BACKUP_KEEP_DAYS=14", "-e", "BACKUP_HOUR_UTC=3", .. extra,
+                "--mount", $"type=bind,source={backups},target=/backups", "--mount", $"type=bind,source={publicKeys},target=/backup-key,readonly", "--mount", $"type=bind,source={Path.Combine(root, "deploy", "backup.sh")},target=/backup.sh,readonly", Image, "/backup.sh", "--once",
+            ];
+            List<string> Check() =>
+            [
+                "run", "--rm", "--network", "none", "--entrypoint", "sh", "-e", $"BACKUP_DATABASES={source}",
+                "--mount", $"type=bind,source={backups},target=/backups", "--mount", $"type=bind,source={Path.Combine(root, "deploy", "backup.sh")},target=/backup.sh,readonly", Image, "/backup.sh", "--check",
+            ];
+
+            // No key yet: the run fails and writes nothing, unless plain dumps are asked for by name.
+            var (refused, _, refusal) = await Run(Backup(), password);
+            refused.Should().NotBe(0, "a deployment without its key must not look like one that is backing up");
+            refusal.Should().Contain("BACKUP_ALLOW_UNENCRYPTED").And.Contain("FAILED");
+            Directory.GetFiles(backups).Should().BeEmpty("nothing is written in the clear without being asked");
+            var (allowed, plainSaid, _) = await Run(Backup("-e", "BACKUP_ALLOW_UNENCRYPTED=yes"), password);
+            allowed.Should().Be(0);
+            plainSaid.Should().Contain("NOT encrypted");
+            var plain = Directory.GetFiles(backups, "*.dump").Should().ContainSingle().Subject;
+
             await Docker(["run", "--name", client, "--network", "none", "--mount", $"type=bind,source={privateKeys},target=/private", "--mount", $"type=bind,source={publicKeys},target=/public", "--entrypoint", "sh", Image, "-c",
                 "set -eu; export GNUPGHOME=/private; chmod 700 /private; gpg --batch --pinentry-mode loopback --passphrase '' --quick-generate-key 'Recovery rehearsal <recovery@example.invalid>' default default 1d >/dev/null 2>&1; gpg --batch --armor --export > /public/rehearsal.asc"]);
             await Docker(["rm", client]);
-            var password = new Dictionary<string, string> { ["PGPASSWORD"] = connection.Password ?? "" };
-            var args = new List<string> { "run", "--rm", "--entrypoint", "sh", "-e", "PGPASSWORD", "-e", "PGHOST=host.docker.internal", "-e", $"PGPORT={connection.Port}", "-e", $"PGUSER={connection.Username}", "-e", $"BACKUP_DATABASES={source}", "-e", "BACKUP_KEEP_DAYS=14", "-e", "BACKUP_HOUR_UTC=3",
-                "--mount", $"type=bind,source={backups},target=/backups", "--mount", $"type=bind,source={publicKeys},target=/backup-key,readonly", "--mount", $"type=bind,source={Path.Combine(root, "deploy", "backup.sh")},target=/backup.sh,readonly", Image, "/backup.sh", "--once" };
             var stale = Path.Combine(backups, source + "-stale.dump.gpg");
             await File.WriteAllTextAsync(stale, "stale");
             File.SetLastWriteTimeUtc(stale, DateTime.UtcNow.AddDays(-20));
-            var plain = Path.Combine(backups, source + "-previous.dump");
-            await File.WriteAllTextAsync(plain, "older plain backup");
-            var output = await Docker(args, password);
+            var output = await Docker(Backup(), password);
             output.Should().Contain("encrypted").And.NotContain("FAILED");
-            File.Exists(stale).Should().BeFalse();
+            File.Exists(stale).Should().BeFalse("a database whose run succeeded keeps nothing past the window");
             File.Exists(plain).Should().BeFalse();
             var encryptedFile = Directory.GetFiles(backups, "*.dump.gpg").Should().ContainSingle().Subject;
             Directory.GetFiles(backups, "*.partial").Should().BeEmpty();
+
+            // The healthcheck: fine after a success, failing once that success is over 26 hours old.
+            var lastSuccess = Path.Combine(backups, ".last-success-" + source);
+            File.Exists(lastSuccess).Should().BeTrue();
+            (await Run(Check())).Code.Should().Be(0);
+            File.SetLastWriteTimeUtc(lastSuccess, DateTime.UtcNow.AddHours(-27));
+            var (stalled, _, stalledSaid) = await Run(Check());
+            stalled.Should().NotBe(0);
+            stalledSaid.Should().Contain("more than 26 hours");
+            File.SetLastWriteTimeUtc(lastSuccess, DateTime.UtcNow);
             var encryptedBytes = await File.ReadAllBytesAsync(encryptedFile);
             System.Text.Encoding.Latin1.GetString(encryptedBytes).Should().NotContain("recovery@example.invalid").And.NotContain("Restored margin");
             var offsite = Directory.CreateDirectory(Path.Combine(folder, "offsite")).FullName;
@@ -117,9 +173,23 @@ public sealed class EncryptedBackupTests
             File.SetLastWriteTimeUtc(expiredCopy, DateTime.UtcNow.AddDays(-20));
             var neverCopy = Path.Combine(backups, "never-copy.dump");
             await File.WriteAllTextAsync(neverCopy, "plain backup must stay local");
-            var copied = await Docker(["run", "--rm", "--network", "none", "--entrypoint", "sh", "-e", "BACKUP_OFFSITE=/offsite", "-e", "BACKUP_KEEP_DAYS=14", "--mount", $"type=bind,source={backups},target=/backups,readonly", "--mount", $"type=bind,source={offsite},target=/offsite", "--mount", $"type=bind,source={Path.Combine(root, "deploy", "backup-offsite.sh")},target=/backup-offsite.sh,readonly", "rclone/rclone:1.68.2", "/backup-offsite.sh", "--once"]);
+            // A dump the backup service is holding past the window, because its database's runs fail.
+            var heldHere = Path.Combine(backups, "failing-20260901T0300Z.dump.gpg");
+            await File.WriteAllTextAsync(heldHere, "held");
+            File.SetLastWriteTimeUtc(heldHere, DateTime.UtcNow.AddDays(-20));
+            List<string> Offsite(string remote) =>
+            [
+                "run", "--rm", "--network", "none", "--entrypoint", "sh", "-e", $"BACKUP_OFFSITE={remote}", "-e", "BACKUP_KEEP_DAYS=14", "--mount", $"type=bind,source={backups},target=/backups,readonly", "--mount", $"type=bind,source={offsite},target=/offsite", "--mount", $"type=bind,source={Path.Combine(root, "deploy", "backup-offsite.sh")},target=/backup-offsite.sh,readonly", "rclone/rclone:1.68.2", "/backup-offsite.sh", "--once",
+            ];
+            var copied = await Docker(Offsite("/offsite"));
             copied.Should().Contain("copied").And.NotContain("FAILED");
-            Directory.GetFiles(offsite).Should().ContainSingle().Which.Should().EndWith(Path.GetFileName(encryptedFile));
+            Directory.GetFiles(offsite).Select(Path.GetFileName).Should().BeEquivalentTo(
+                [Path.GetFileName(encryptedFile), Path.GetFileName(heldHere)],
+                "the expired copy whose dump is gone here goes, and the one held here stays");
+            File.Delete(heldHere);
+            var (unconfigured, _, unconfiguredSaid) = await Run(Offsite("nowhere:essenthos"));
+            unconfigured.Should().NotBe(0, "a copy that went nowhere must not report success");
+            unconfiguredSaid.Should().Contain("FAILED");
             (await File.ReadAllBytesAsync(Path.Combine(offsite, Path.GetFileName(encryptedFile)))).Should().Equal(encryptedBytes);
             await Create(connection, restored);
             await Restore(encryptedFile, privateKeys, restored, connection, password);
@@ -179,6 +249,16 @@ public sealed class EncryptedBackupTests
                 throw new InvalidOperationException("Cleanup must remain inside the owned temporary directory.");
             Directory.Delete(folder, recursive: true);
         }
+    }
+
+    private static async Task<(int Code, string Output, string Error)> Run(
+        IEnumerable<string> args, Dictionary<string, string>? environment = null)
+    {
+        using var process = Process.Start(Info(args, environment))!;
+        var output = process.StandardOutput.ReadToEndAsync();
+        var error = process.StandardError.ReadToEndAsync();
+        await Task.WhenAll(process.WaitForExitAsync(), output, error);
+        return (process.ExitCode, await output, await error);
     }
 
     private static AccountsDbContext Context(NpgsqlConnectionStringBuilder connection, string database) =>
