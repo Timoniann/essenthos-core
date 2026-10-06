@@ -323,16 +323,26 @@ accounts, and later what readers write — is the only thing on the server that 
 page counts in `essenthos_stats` are backed up beside it where the counter is on.
 
 - The `backup` service dumps them every night into `/srv/essenthos/backups`, on the volume, and keeps
-  each dump **14 days** (`BACKUP_KEEP_DAYS`), not a day more.
+  each dump **14 days** (`BACKUP_KEEP_DAYS`), not a day more — **except while that database's backups
+  are failing**: a database whose latest run failed keeps every dump it has until a run succeeds again,
+  so an outage (the database down, the key expired, the disk full) never ages out the last good dump.
+  That is the only way a dump outlives 14 days, and it lasts only as long as the outage; the first
+  successful run removes everything past the window.
 - **Every dump is encrypted as it is written**, with gpg, to a public key in `/srv/essenthos/backup-key/`.
   No dump is ever on the disk in the clear, so neither a volume snapshot nor a stolen disk yields a
-  reader's email or reading history. The private key is never on the server. Until a key is there the
-  service keeps writing plain dumps and says so in its log on every run; once one is, the next run
-  encrypts and removes the plain dumps it replaces.
+  reader's email or reading history. The private key is never on the server. **Without a key a run
+  writes nothing and fails**, every database `FAILED` in its log; plain dumps are written only when
+  `.env` sets `BACKUP_ALLOW_UNENCRYPTED=yes`, and the next run with a key encrypts and removes the plain
+  dumps it replaces.
+- **A failure is visible**: each database that succeeds gets `/srv/essenthos/backups/.last-success-<database>`,
+  and the container's healthcheck (`backup.sh --check`) turns it **unhealthy** once any of them is older
+  than 26 hours (`BACKUP_STALE_HOURS`) — `docker compose ps backup` shows it. `backup.sh --once` exits
+  non-zero on a failed run, as does `backup-offsite.sh --once`.
 - **Off the machine**: the `backup-offsite` service copies the encrypted dumps to an rclone remote every
-  hour and removes the copies there once they are 14 days old, so the off-site copy is kept exactly as
-  long as the dump here. Only `*.dump.gpg` files are sent. It runs only when `.env` turns it on — and
-  since the volume is the one place the dumps are written, it is what survives losing the volume.
+  hour and removes a copy there once it is 14 days old and its dump is gone from here, so the off-site
+  copy is kept exactly as long as the dump here — through an outage too. Only `*.dump.gpg` files are
+  sent. It runs only when `.env` turns it on — and since the volume is the one place the dumps are
+  written, it is what survives losing the volume.
 - **To the owner's machine**: the console's Backups section (`Essenthos.Desk`) copies the newest
   encrypted dump of each database into `E:\Projects\Essenthos\server-backups` on a button, and on its
   own once a day while the console runs. It connects exactly as the deploy does — `ssh` with the
@@ -392,7 +402,8 @@ remote into `/srv/essenthos/rclone/rclone.conf` on the server, `chmod 600` it, a
     docker compose up -d backup-offsite && docker compose logs --tail 5 backup-offsite
 
 Give the bucket a lifecycle rule deleting objects after 15 days as well, so a copy expires even if the
-service stops. The privacy page promises that the backups are encrypted and that deleted data is gone
+service stops — knowing that it also removes, during an outage, the off-site copy of a dump the server is
+still holding. The privacy page promises that the backups are encrypted and that deleted data is gone
 from every one of them within six weeks: a copy kept anywhere has to keep to that.
 
 ### Restoring
@@ -420,14 +431,19 @@ Run the current account-schema recovery check through the registered action:
 
 It uses synthetic accounts in isolated workstation databases, the pinned deployment Postgres client
 image, and an ephemeral key pair. The private key is mounted only in the client that decrypts; the
-backup process sees only the public key. The real backup script runs once with `--once`, writes only
-encrypted files, prunes expired files and removes older plain backups. Decryption streams directly
+backup process sees only the public key. The real backup script runs with `--once`: without a key it
+fails and writes nothing, with `BACKUP_ALLOW_UNENCRYPTED=yes` it writes a plain dump, and with the key it
+writes only encrypted files, prunes expired files, removes older plain backups and stamps
+`.last-success-<database>`, which `--check` accepts and refuses once it is 27 hours old. An unreachable
+database fails the run, keeps its three-week-old dump and stamps nothing, and the daemon reports the
+failed run and carries on. Decryption streams directly
 into a fresh database. Every restored table is compared with the original, and the check exercises
 the restored data-protection key, existing cookie and bearer sessions, expired and revoked sessions,
 the revision sequence and an unchanged migration rerun. A corrupt dump is refused in another isolated
 candidate while the original account data stays intact. Temporary databases, files and private keys
 are removed; the TRX result is kept under `TestResults/<output>`. The offsite script is also run once
-against a local isolated rclone destination, checking encrypted-only copying and expired-copy removal.
+against a local isolated rclone destination, checking encrypted-only copying, expired-copy removal, that
+a copy of a dump still held here stays, and that an unconfigured remote exits non-zero.
 
 This requires Docker and the registered workstation database to be available. It does not contact a
 production host or external backup destination, publish a corpus or modify real accounts. Before the first

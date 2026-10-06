@@ -268,6 +268,17 @@ services:
       BACKUP_DATABASES: essenthos_app essenthos_app_dev essenthos_stats
       BACKUP_KEEP_DAYS: ${BACKUP_KEEP_DAYS:-14}
       BACKUP_HOUR_UTC: ${BACKUP_HOUR_UTC:-3}
+      # Without a key in backup-key/ a run writes nothing and fails, unless this is "yes".
+      BACKUP_ALLOW_UNENCRYPTED: ${BACKUP_ALLOW_UNENCRYPTED:-}
+      BACKUP_STALE_HOURS: ${BACKUP_STALE_HOURS:-26}
+    # Unhealthy once any database's last successful dump is older than BACKUP_STALE_HOURS, which a
+    # daily run should never let happen: `docker compose ps` says so, where a failing run only logs.
+    healthcheck:
+      test: ["CMD", "sh", "/backup.sh", "--check"]
+      interval: 15m
+      timeout: 30s
+      retries: 1
+      start_period: 1h
     volumes:
       - ./backup.sh:/backup.sh:ro
       - ${HOST_DATA_ROOT}/backups:/backups

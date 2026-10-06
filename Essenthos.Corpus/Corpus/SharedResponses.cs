@@ -420,7 +420,11 @@ internal record EntityRelationshipResponse(
     VerseRefResponse? Reference,
     string? Notes)
 {
-    public string? ReaderNote => Relationships.ReaderNote(Notes);
+    /// <summary>What of <see cref="Notes"/> a reader is shown; null where none of it is for a reader.</summary>
+    public string? ReaderNote => ReaderNotes.Of(Notes);
+
+    /// <summary>The language <see cref="ReaderNote"/> is written in, so a page in another language leaves it out.</summary>
+    public string? ReaderNoteLanguage => ReaderNotes.LanguageOf(ReaderNote);
 
     /// <summary>Our own line under the counterpart's name in the language asked for, where this corpus rendered one.</summary>
     public string? LocalDistinguisher { get; init; }
@@ -499,7 +503,11 @@ internal record EntityRelationshipWitnessResponse(
 {
     public IList<VerseRefResponse>? Verses { get; init; }
 
-    public string? ReaderNote => Relationships.ReaderNote(Notes);
+    /// <summary>What of <see cref="Notes"/> a reader is shown; null where none of it is for a reader.</summary>
+    public string? ReaderNote => ReaderNotes.Of(Notes);
+
+    /// <summary>The language <see cref="ReaderNote"/> is written in, so a page in another language leaves it out.</summary>
+    public string? ReaderNoteLanguage => ReaderNotes.LanguageOf(ReaderNote);
 
     public string? Method { get; init; }
 
