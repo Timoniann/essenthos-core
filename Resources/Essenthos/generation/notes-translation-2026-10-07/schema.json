@@ -1,0 +1,1 @@
+{"type": "object", "additionalProperties": false, "required": ["ukr", "deu", "spa"], "properties": {"ukr": {"type": "string"}, "deu": {"type": "string"}, "spa": {"type": "string"}}}
