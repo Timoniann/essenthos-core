@@ -1,0 +1,150 @@
+{
+ "book": "job",
+ "chapter": 41,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:28:05+00:00",
+ "greek_unused": [
+  1
+ ],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "2",
+   "confidence": 0.85,
+   "note": "Matches the final question about resisting God; the opening fear and preparation clauses are absent."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17-18",
+   "greek": "18-19",
+   "confidence": 0.8,
+   "note": "Greek 18's ineffective spears and breastplate span Ge'ez 17-18; Ge'ez 18 continues with Greek 19's chaff and rotten wood."
+  },
+  {
+   "geez": "19",
+   "greek": "20-21",
+   "confidence": 0.8,
+   "note": "Combines the bow and sling passage with the mauls and mocking passage."
+  },
+  {
+   "geez": "20",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

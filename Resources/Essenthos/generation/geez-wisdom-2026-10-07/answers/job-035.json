@@ -1,0 +1,100 @@
+{
+ "book": "job",
+ "chapter": 35,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:26:28+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "",
+   "confidence": 0.9,
+   "note": "The question about the benefit of sinning has no counterpart in the supplied Greek text."
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "10-11",
+   "confidence": 0.85,
+   "note": "Combines the question about God the maker and the comparison with earthly beasts and heavenly birds."
+  },
+  {
+   "geez": "11",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "13",
+   "confidence": 0.85,
+   "note": "Matches God's unwillingness to behold evil and his universal rule; the final knowing clause may reflect the opening of Greek 14."
+  },
+  {
+   "geez": "13",
+   "greek": "14",
+   "confidence": 0.85,
+   "note": "Matches the lawless doers, pleading before God, and praising him, though the opening clause differs."
+  },
+  {
+   "geez": "14",
+   "greek": "15",
+   "confidence": 0.85,
+   "note": "Matches wrath and unrecognized trespass; the opening 'now' corresponds to the end of Greek 14."
+  },
+  {
+   "geez": "15",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

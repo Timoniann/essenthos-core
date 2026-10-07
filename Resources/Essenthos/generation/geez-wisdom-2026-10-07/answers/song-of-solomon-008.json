@@ -1,0 +1,76 @@
+{
+ "book": "song-of-solomon",
+ "chapter": 8,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:47:01+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-6",
+   "greek": "5",
+   "confidence": 0.85,
+   "note": "The rising woman and apple-tree occur in Ge'ez 5; the mother's travail continues in 6, with additional material."
+  },
+  {
+   "geez": "7-8",
+   "greek": "6",
+   "confidence": 0.85,
+   "note": "The seals, love, and grave occur in Ge'ez 7; jealousy and fiery wings continue in 8, with expansions."
+  },
+  {
+   "geez": "9",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "9",
+   "confidence": 0.85,
+   "note": "Matches the silver bulwarks and cedar door, with an added clause about Solomon and Hebron."
+  },
+  {
+   "geez": "12",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13-16",
+   "greek": "11-14",
+   "confidence": 0.75,
+   "note": "Greek 11's payment continues into Ge'ez 14, which also contains Greek 12 and begins the gardens passage. That expanded passage continues through 15 to the hearing request in 16, followed by Greek 14's closing invitation."
+  }
+ ]
+}

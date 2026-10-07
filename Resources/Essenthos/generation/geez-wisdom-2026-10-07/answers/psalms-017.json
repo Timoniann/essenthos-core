@@ -1,0 +1,286 @@
+{
+ "book": "psalms",
+ "chapter": 17,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:29:57+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-3",
+   "greek": "1-3",
+   "confidence": 0.8,
+   "note": "Ge'ez abbreviates the title, includes Greek 2, and divides Greek 3 across verses 1-3."
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7-8",
+   "greek": "7",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the cry to God from his hearing it in the temple."
+  },
+  {
+   "geez": "9",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17-18",
+   "greek": "16",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the exposed springs and foundations from the rebuke and breath of wrath."
+  },
+  {
+   "geez": "19",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "25",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "26",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "30",
+   "greek": "28",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "31",
+   "greek": "29",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "32",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "33",
+   "greek": "31",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "34",
+   "greek": "32",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "35",
+   "greek": "33",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "36",
+   "greek": "34",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "37",
+   "greek": "35",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "38-39",
+   "greek": "36",
+   "confidence": 0.85,
+   "note": "Ge'ez separates salvation and the helping right hand from the clauses about instruction and correction."
+  },
+  {
+   "geez": "40",
+   "greek": "37",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "41",
+   "greek": "38",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "42",
+   "greek": "39",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "43",
+   "greek": "40",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "44",
+   "greek": "41",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "45",
+   "greek": "42",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "46",
+   "greek": "43",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "47-49",
+   "greek": "44-46",
+   "confidence": 0.8,
+   "note": "Shifted boundaries: Ge'ez 48 joins parts of Greek 44 and 45; Ge'ez 49 joins the end of Greek 45 to Greek 46."
+  },
+  {
+   "geez": "50",
+   "greek": "47",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "51-52",
+   "greek": "48-49",
+   "confidence": 0.85,
+   "note": "Ge'ez 51 includes Greek 48 and the opening deliverance clause of Greek 49; Ge'ez 52 completes Greek 49."
+  },
+  {
+   "geez": "53",
+   "greek": "50",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "54",
+   "greek": "51",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

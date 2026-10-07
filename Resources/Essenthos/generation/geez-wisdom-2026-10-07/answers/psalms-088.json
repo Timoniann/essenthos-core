@@ -1,0 +1,274 @@
+{
+ "book": "psalms",
+ "chapter": 88,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:38:43+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Ge'ez 1 includes the title and the first clause of Greek 2; Ge'ez 2 completes Greek 2."
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-5",
+   "greek": "4-5",
+   "confidence": 0.8,
+   "note": "Ge'ez 4 includes Greek 4 and the seed clause of Greek 5; Ge'ez 5 completes the throne clause."
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12-16",
+   "greek": "12-17",
+   "confidence": 0.8,
+   "note": "Successive Ge'ez boundaries split Greek 13, 14, 15, and 16: creation, Tabor and Hermon, mighty arm, throne justice, mercy and truth, and the blessed people's walk. Joined to avoid repeating Greek verses."
+  },
+  {
+   "geez": "17",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "25",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "26",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "28",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "29",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "30",
+   "greek": "31",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "31",
+   "greek": "32",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "32",
+   "greek": "33",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "33",
+   "greek": "34",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "34",
+   "greek": "35",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "35-36",
+   "greek": "36-38",
+   "confidence": 0.8,
+   "note": "Ge'ez 35 includes the oath and Greek 37's enduring seed; Ge'ez 36 continues Greek 37's sunlike throne and includes Greek 38's moon and faithful witness."
+  },
+  {
+   "geez": "37",
+   "greek": "39",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "38",
+   "greek": "40",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "39",
+   "greek": "41",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "40",
+   "greek": "42",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "41",
+   "greek": "43",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "42",
+   "greek": "44",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "43",
+   "greek": "45",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "44",
+   "greek": "46",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "45",
+   "greek": "47",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "46",
+   "greek": "48",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "47",
+   "greek": "49",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "48",
+   "greek": "50",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "49",
+   "greek": "51",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "50",
+   "greek": "52",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "51",
+   "greek": "53",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

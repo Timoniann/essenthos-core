@@ -1,0 +1,58 @@
+{
+ "book": "psalms",
+ "chapter": 112,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:41:30+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5-6",
+   "confidence": 0.85,
+   "note": "Ge'ez joins dwelling on high and looking upon low things in heaven and earth."
+  },
+  {
+   "geez": "6",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

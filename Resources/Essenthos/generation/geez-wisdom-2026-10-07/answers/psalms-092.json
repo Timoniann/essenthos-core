@@ -1,0 +1,46 @@
+{
+ "book": "psalms",
+ "chapter": 92,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:39:05+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the title and the Lord's reign from the concluding clause establishing the world."
+  },
+  {
+   "geez": "3",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "",
+   "confidence": 0.9,
+   "note": "Additional clause about the rivers lifting their sound, absent from the supplied Greek."
+  },
+  {
+   "geez": "6",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

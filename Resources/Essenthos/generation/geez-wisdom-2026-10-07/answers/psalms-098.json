@@ -1,0 +1,46 @@
+{
+ "book": "psalms",
+ "chapter": 98,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:39:42+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3-4",
+   "greek": "3-4",
+   "confidence": 0.8,
+   "note": "Ge'ez 3 includes Greek 3 and the opening of Greek 4; Ge'ez 4 completes Greek 4."
+  },
+  {
+   "geez": "5-8",
+   "greek": "5-7",
+   "confidence": 0.8,
+   "note": "Overlapping divisions require joining: Ge'ez 6 completes Greek 5 and begins Greek 6; Ge'ez 7 completes Greek 6 and begins Greek 7; Ge'ez 8 completes Greek 7."
+  },
+  {
+   "geez": "9",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

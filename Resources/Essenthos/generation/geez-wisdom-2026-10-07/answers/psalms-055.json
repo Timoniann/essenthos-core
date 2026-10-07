@@ -1,0 +1,64 @@
+{
+ "book": "psalms",
+ "chapter": 55,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:34:36+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines an abbreviated title with the plea for mercy."
+  },
+  {
+   "geez": "2-3",
+   "greek": "3-4",
+   "confidence": 0.8,
+   "note": "The fear clause begins Greek 4 but ends Ge'ez 2; Ge'ez 3 supplies the trust clause."
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6-8",
+   "greek": "7-9",
+   "confidence": 0.8,
+   "note": "Ge'ez 7 completes Greek 7 and continues into Greek 8; Greek 8's final divine address begins Ge'ez 8, followed by Greek 9."
+  },
+  {
+   "geez": "9-10",
+   "greek": "10",
+   "confidence": 0.85,
+   "note": "Divides the enemies' retreat from the invocation and acknowledgment of God."
+  },
+  {
+   "geez": "11",
+   "greek": "11-12",
+   "confidence": 0.85,
+   "note": "Combines praise of God's words with trust and freedom from fear."
+  },
+  {
+   "geez": "12",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "14",
+   "confidence": 0.85,
+   "note": "Same deliverance and walking before God; Ge'ez additionally mentions eyes delivered from tears."
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+{
+ "book": "psalms",
+ "chapter": 69,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:35:48+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Combines the title with the plea for help; adds an appeal to hasten."
+  },
+  {
+   "geez": "2-3",
+   "greek": "3",
+   "confidence": 0.85,
+   "note": "Splits the shame of those seeking his soul and the turning back of those wishing him evil into two verses."
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

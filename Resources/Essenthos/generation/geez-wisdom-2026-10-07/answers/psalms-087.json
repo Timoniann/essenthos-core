@@ -1,0 +1,106 @@
+{
+ "book": "psalms",
+ "chapter": 87,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:38:24+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Combines a shortened superscription with the cry to the God of salvation."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-5",
+   "greek": "5-6",
+   "confidence": 0.8,
+   "note": "Ge'ez 4 includes Greek 5 and the opening of Greek 6, 'free among the dead'; Ge'ez 5 completes Greek 6."
+  },
+  {
+   "geez": "6",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8-10",
+   "greek": "9-10",
+   "confidence": 0.8,
+   "note": "Ge'ez 9 joins the confinement clause ending Greek 9 with the weakened eyes opening Greek 10; Ge'ez 8 and 10 supply the surrounding clauses."
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

@@ -1,0 +1,136 @@
+{
+ "book": "job",
+ "chapter": 27,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:24:51+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3-4",
+   "confidence": 0.8,
+   "note": "Combines the remaining breath and divine spirit with the vow against speaking evil."
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8-9",
+   "greek": "9-10",
+   "confidence": 0.8,
+   "note": "Ge'ez 8 includes the opening question of Greek 10; Ge'ez 9 completes that verse."
+  },
+  {
+   "geez": "10",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "12",
+   "confidence": 0.85,
+   "note": "Both begin with all knowing; Ge'ez describes evil coming to the wicked where Greek describes adding vanity to vanity."
+  },
+  {
+   "geez": "12",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "15",
+   "confidence": 0.85,
+   "note": "Corresponds to the widows clause; the Greek clause about survivors dying is absent."
+  },
+  {
+   "geez": "15",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

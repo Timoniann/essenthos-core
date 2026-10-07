@@ -1,0 +1,100 @@
+{
+ "book": "psalms",
+ "chapter": 7,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:28:54+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the abbreviated psalm title with the opening prayer."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6-9",
+   "greek": "7-9",
+   "confidence": 0.8,
+   "note": "The calls to arise, congregation, return on high, and judgment clauses cross verse boundaries; joined to avoid reusing Greek verses."
+  },
+  {
+   "geez": "10",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

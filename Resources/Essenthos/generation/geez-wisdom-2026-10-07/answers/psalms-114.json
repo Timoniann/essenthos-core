@@ -1,0 +1,52 @@
+{
+ "book": "psalms",
+ "chapter": 114,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:41:36+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3-5",
+   "greek": "3-5",
+   "confidence": 0.8,
+   "note": "Ge'ez 3-4 divide Greek 3; Ge'ez 4-5 divide Greek 4; Ge'ez 5 also includes Greek 5."
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

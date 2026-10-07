@@ -1,0 +1,40 @@
+{
+ "book": "psalms",
+ "chapter": 63,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:35:15+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Combines the title with the prayer and deliverance from the enemy."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3-5",
+   "greek": "4-6",
+   "confidence": 0.8,
+   "note": "Ge'ez 3-4 split Greek 5; Ge'ez 4-5 split Greek 6, requiring a joined passage."
+  },
+  {
+   "geez": "6-10",
+   "greek": "7-10",
+   "confidence": 0.8,
+   "note": "Successive Ge'ez verses split Greek 7, 8, 9, and 10 across adjacent boundaries, requiring a joined passage."
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

@@ -1,0 +1,76 @@
+{
+ "book": "psalms",
+ "chapter": 31,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:31:01+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-6",
+   "greek": "5",
+   "confidence": 0.85,
+   "note": "Ge'ez splits acknowledgment of sin from confession and forgiveness."
+  },
+  {
+   "geez": "7-8",
+   "greek": "6",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the prayer clause from the floodwaters clause."
+  },
+  {
+   "geez": "9",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11-12",
+   "greek": "9",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the horse-and-mule comparison from the bit-and-bridle clause."
+  },
+  {
+   "geez": "13",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

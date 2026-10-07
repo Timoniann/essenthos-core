@@ -1,0 +1,100 @@
+{
+ "book": "job",
+ "chapter": 11,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:50:31+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2-3",
+   "greek": "2-3",
+   "confidence": 0.8,
+   "note": "Greek 2's blessed offspring clause begins Ge'ez 3, which continues with Greek 3's warning against many words."
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5-6",
+   "confidence": 0.8,
+   "note": "Contains God's speech and wisdom; Greek 6's recompense clause continues in Ge'ez 7. Listed numbering omits 6, preventing a contiguous Ge'ez range."
+  },
+  {
+   "geez": "7",
+   "greek": "6-8",
+   "confidence": 0.8,
+   "note": "Begins with Greek 6's recompense, continues with Greek 7's divine traces, and ends with Greek 8's high heaven. Greek 6 and 8 are shared across adjacent supplied verses."
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.8,
+   "note": "Continues Greek 8's questions about action and knowledge of the depths; its high-heaven clause appears in Ge'ez 7."
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "11-12",
+   "confidence": 0.85,
+   "note": "Combines God's knowledge of transgressors with the mortal born of woman compared to an ass."
+  },
+  {
+   "geez": "13",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14-15",
+   "greek": "14-15",
+   "confidence": 0.8,
+   "note": "Ge'ez 14 includes Greek 15's shining face and pure water; Ge'ez 15 continues with removing uncleanness and freedom from fear."
+  },
+  {
+   "geez": "16",
+   "greek": "16-17",
+   "confidence": 0.85,
+   "note": "Combines forgotten trouble like a passing wave with prayer like the morning star and rising life."
+  },
+  {
+   "geez": "17",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

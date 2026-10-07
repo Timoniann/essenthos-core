@@ -1,0 +1,70 @@
+{
+ "book": "psalms",
+ "chapter": 16,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:29:34+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the title and opening petition from the prayer without deceitful lips."
+  },
+  {
+   "geez": "3",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-6",
+   "greek": "3-5",
+   "confidence": 0.8,
+   "note": "Shared clauses require joining: Ge'ez 5 bridges Greek 3-4, and Ge'ez 6 bridges Greek 4-5."
+  },
+  {
+   "geez": "7",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9-10",
+   "greek": "8-10",
+   "confidence": 0.8,
+   "note": "Ge'ez 9 includes Greek 8 and the opening of 9; Ge'ez 10 completes Greek 9 and includes 10."
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13-15",
+   "greek": "13-14",
+   "confidence": 0.8,
+   "note": "Ge'ez 13 includes the opening of Greek 14 concerning enemies of God's hand; Ge'ez 14-15 divide its remaining clauses."
+  },
+  {
+   "geez": "16",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

@@ -1,0 +1,22 @@
+{
+ "book": "psalms",
+ "chapter": 12,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:29:11+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the title with the plea about being forgotten and God's face turning away."
+  },
+  {
+   "geez": "2-6",
+   "greek": "3-6",
+   "confidence": 0.8,
+   "note": "Staggered divisions require joining this passage: Greek 3 is split across Ge'ez 2-3, Greek 4 across 3-4, Greek 5 across 4-5, and Greek 6 across 5-6."
+  }
+ ]
+}

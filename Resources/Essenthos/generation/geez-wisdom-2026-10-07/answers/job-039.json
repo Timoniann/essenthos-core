@@ -1,0 +1,168 @@
+{
+ "book": "job",
+ "chapter": 39,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:27:48+00:00",
+ "greek_unused": [
+  29
+ ],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13-14",
+   "greek": "13-15",
+   "confidence": 0.8,
+   "note": "The bird, eggs in earth, warming, and trampling clauses cross divisions; Greek 14 is shared."
+  },
+  {
+   "geez": "15",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "17",
+   "confidence": 0.85,
+   "note": "Same divine allotment of wisdom passage, but Ge'ez states giving where Greek states withholding."
+  },
+  {
+   "geez": "17",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19-20",
+   "greek": "20-21",
+   "confidence": 0.85,
+   "note": "Greek 20's armour and glorious breast clauses are divided between Ge'ez 19 and 20; Ge'ez 20 continues with pawing and strength."
+  },
+  {
+   "geez": "21",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "25",
+   "greek": "26",
+   "confidence": 0.85,
+   "note": "Same steady hawk with spread wings; the final gaze clause differs."
+  },
+  {
+   "geez": "26",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "28",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

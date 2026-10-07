@@ -1,0 +1,1662 @@
+[
+ {
+  "id": "job-001:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-001:6-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-001:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-001:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-001:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-001:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-001:17",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-001:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-001:20-21",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-002:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-002:9-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-002:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-003:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-003:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-003:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-003:12-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-003:15-18",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-003:20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-003:21-22",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-004:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-004:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-004:19-20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-005:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-005:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-005:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-005:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-006:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-006:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-006:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-006:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-006:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-006:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-006:20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-006:21-22",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-006:23",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-007:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-007:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-007:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-008:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-008:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-008:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-008:16",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-008:18-19",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-009:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-009:6-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-009:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-009:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-009:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-009:19",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-009:20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-009:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-009:24",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-009:29-31",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-010:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-010:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-010:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-010:17-18",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-010:19-20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-011:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-011:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-011:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-011:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-011:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-011:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-011:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-011:16",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-012:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-012:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-012:20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-012:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-013:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-013:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-013:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-013:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-013:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-013:22",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-013:24-25",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-014:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-014:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-015:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-015:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-015:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-015:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-015:20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-015:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-016:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-016:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-016:16",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-016:19",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-016:22-23",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-017:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-018:11-12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-018:18-20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-019:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-019:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-019:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-019:25-27",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-019:28-29",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-020:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-020:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-020:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-020:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-020:22-23",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-020:26",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-021:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-021:10-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-021:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-021:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-021:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-021:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-021:19-20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-021:22",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-021:25",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-021:27",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-022:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-022:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-022:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-022:16-17",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-022:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-022:23",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-023:6-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-023:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-024:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-024:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-024:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-024:18-19",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-025:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-025:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-026:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-026:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-026:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-026:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-027:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-027:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-027:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-027:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-027:17",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-028:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-028:22",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-028:26",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-029:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-029:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-029:17",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-029:23",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-029:24",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-030:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-030:12-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-030:16",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-030:19",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-030:24",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-031:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-031:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-031:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-031:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-031:19",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-031:24",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-031:29",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-031:31",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-032:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-032:10-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-032:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-032:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-033:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-033:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-033:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-033:23-24",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-033:31-32",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-034:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-034:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-034:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-034:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-034:21-22",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-034:25",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-034:27",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-034:29-30",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-034:31",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-035:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-035:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-035:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-035:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-035:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-036:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-036:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-036:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-036:17",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-036:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-036:22-23",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-036:26",
+  "verdict": "edge",
+  "reason": "The last two clauses of Greek 36:28 (appointed time for cattle, they know the order of rest; none of this astonishes your mind / heart not changed) are not in job-036:26; the Ge'ez has them inside job-037:5 (next line). The opening (old things flow, clouds over mortals, rain) is right."
+ },
+ {
+  "id": "job-036:31",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-037:5",
+  "verdict": "edge",
+  "reason": "Core (thunder, great things unknown) matches Greek 37:5, but the middle clauses about animals' seasons, lying down and the heart not astonished are the tail of Greek 36:28, which line job-036:26 also claims; they are not Greek 37:5."
+ },
+ {
+  "id": "job-037:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-037:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-037:19",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-037:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-037:24",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-038:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-038:17",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-038:20-21",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-038:29-30",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-038:31",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-038:33",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-038:34",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-038:37",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-039:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-039:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-039:13-14",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-039:16",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-039:19-20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-039:25",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-040:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-040:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-040:12-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-040:20",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-040:27",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-040:31",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-040:32",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-040:33",
+  "verdict": "wrong",
+  "reason": "'No Greek counterpart' is false: the Ge'ez (you saw his words, were not afraid or amazed, because I prepared you for me) answers Greek 41:1 'Have you not seen him? nor marvelled at what is said?' plus the first clause of Greek 41:2 'Do you not fear, because it is prepared by me?', which sit in the next chapter's Greek (job-041 G1 and start of G2)."
+ },
+ {
+  "id": "job-041:1",
+  "verdict": "edge",
+  "reason": "Core is right (who resists me = second half of Greek 41:2), but the first clause of Greek 41:2 ('Do you not fear because preparation is made by me?') belongs to the previous line job-040:33, and Greek 41:1 is also that line's."
+ },
+ {
+  "id": "job-041:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-041:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-041:17-18",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-041:19",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-041:23",
+  "verdict": "ok"
+ },
+ {
+  "id": "job-042:17-25",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-001:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-001:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-001:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-002:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-002:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-002:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-002:12-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-003:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-003:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-003:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-004:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-004:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-005:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-005:2-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-005:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-005:10-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-006:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-007:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-007:6-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-007:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-008:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-008:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-009:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-009:6-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-009:13-16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-009:24",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-009:25-27",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-009:30-33",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-009:37-38",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-009:41",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-010:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-010:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-011:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-011:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-012:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-012:2-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-013:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-013:4-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-013:8-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-014:2-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-014:5-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-015:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-015:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-015:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-016:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-016:4-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-016:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-016:13-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-016:16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-017:1-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-017:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-017:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-017:17-18",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-017:28",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-017:38-39",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-017:47-49",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-017:51-52",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-018:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-018:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-018:5-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-018:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-018:13-14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-018:15-16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-019:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-019:5-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-020:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-020:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-021:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-021:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-021:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-021:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-021:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-021:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-021:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-021:24-26",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-021:29-30",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-021:32-34",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-022:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-022:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-022:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-022:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-023:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-024:1-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-024:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-024:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-024:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-026:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-026:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-026:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-026:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-026:9-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-026:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-027:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-027:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-027:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-027:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-028:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-028:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-028:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-029:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-029:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-029:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-029:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-029:11-12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:7-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:12-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:14-17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:18-19",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:20-22",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:23-24",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:25-26",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:27",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-030:28-29",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-031:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-031:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-031:11-12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-032:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-032:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-032:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-032:22",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-033:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-033:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-033:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-033:17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-033:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-034:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-034:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-034:11-12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-034:15-16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-034:18-19",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-034:29-30",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-035:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-035:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-035:6-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-036:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-036:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-036:20-21",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-036:23",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-036:26",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-036:29-30",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-036:33",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-036:34",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-036:39",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-037:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-037:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-037:11-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-037:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-037:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-037:22",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-038:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-038:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-038:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-038:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-038:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-038:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-038:13-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-039:1-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-039:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-039:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-039:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-039:9-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-039:12-14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-039:16-17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-039:19-20",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-039:23-24",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-040:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-040:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-040:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-041:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-041:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-041:6-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-041:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-041:11-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-041:14-16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-042:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-042:4-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-043:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-043:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-043:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-043:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-043:26",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-044:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-044:4-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-044:10-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-044:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-044:16",
+  "verdict": "ok"
+ }
+]

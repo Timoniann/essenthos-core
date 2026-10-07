@@ -1,0 +1,28 @@
+{
+ "book": "psalms",
+ "chapter": 130,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:43:22+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the title and humility clauses from the clause about great and wonderful matters."
+  },
+  {
+   "geez": "3-4",
+   "greek": "2",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the humility clause from the weaned-child comparison and recompense of the soul."
+  },
+  {
+   "geez": "5",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

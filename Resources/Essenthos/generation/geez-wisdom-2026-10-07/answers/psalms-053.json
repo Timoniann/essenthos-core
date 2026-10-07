@@ -1,0 +1,52 @@
+{
+ "book": "psalms",
+ "chapter": 53,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:34:02+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-3",
+   "confidence": 0.8,
+   "note": "Combines the title in Greek 1 with the prayer in Greek 3; Greek 2's Ziphites notice is absent."
+  },
+  {
+   "geez": "2",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

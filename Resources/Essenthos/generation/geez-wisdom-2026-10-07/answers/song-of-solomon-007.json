@@ -1,0 +1,70 @@
+{
+ "book": "song-of-solomon",
+ "chapter": 7,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:50:13+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.85,
+   "note": "Matches the Sunamite question and army bands; omits the opening calls to return."
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.85,
+   "note": "Matches the twin fawns; adds spiritual milk."
+  },
+  {
+   "geez": "5-6",
+   "greek": "5",
+   "confidence": 0.8,
+   "note": "Divides the neck, eyes and nose description between two verses; adds kings and nations seeking her beauty."
+  },
+  {
+   "geez": "7-10",
+   "greek": "6-8",
+   "confidence": 0.75,
+   "note": "Greek 6 is divided between Ge'ez 7 and 9, interrupted by the added golden tower of Solomon in Ge'ez 8. Ge'ez 9-10 continue with beauty, love, delights, palm and breasts."
+  },
+  {
+   "geez": "11-13",
+   "greek": "9-10",
+   "confidence": 0.75,
+   "note": "Greek 9 is divided between Ge'ez 11-12, and Greek 10 between Ge'ez 12-13; includes added height and fragrance descriptions."
+  },
+  {
+   "geez": "14",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15-16",
+   "greek": "12-13",
+   "confidence": 0.8,
+   "note": "Ge'ez 15 joins the field and villages with vineyard inspection; Ge'ez 16 completes Greek 13's promise of breasts, with added fragrance and desire clauses."
+  },
+  {
+   "geez": "17",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

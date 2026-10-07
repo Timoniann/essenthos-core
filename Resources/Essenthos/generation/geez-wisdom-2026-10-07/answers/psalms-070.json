@@ -1,0 +1,136 @@
+{
+ "book": "psalms",
+ "chapter": 70,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:36:15+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Ge'ez 1 includes the opening righteousness-and-deliverance clause of Greek 2; Ge'ez 2 completes it."
+  },
+  {
+   "geez": "3-4",
+   "greek": "3",
+   "confidence": 0.8,
+   "note": "Ge'ez separates the protecting God and stronghold petition from the fortress-and-refuge clause."
+  },
+  {
+   "geez": "5",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7-8",
+   "greek": "6-7",
+   "confidence": 0.8,
+   "note": "Ge'ez 8 begins with the continual-praise clause ending Greek 6, then contains Greek 7."
+  },
+  {
+   "geez": "9",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16-17",
+   "greek": "15-16",
+   "confidence": 0.8,
+   "note": "Ge'ez 17 begins with the affairs clause ending Greek 15, then contains Greek 16."
+  },
+  {
+   "geez": "18",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19-20",
+   "greek": "18",
+   "confidence": 0.8,
+   "note": "Ge'ez separates the old-age petition from declaring God's arm to the coming generation."
+  },
+  {
+   "geez": "21",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "25",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "26",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

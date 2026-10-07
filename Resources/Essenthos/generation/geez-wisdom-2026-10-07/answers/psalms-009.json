@@ -1,0 +1,196 @@
+{
+ "book": "psalms",
+ "chapter": 9,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T11:57:10+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Combines the Greek title and the opening thanksgiving."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6-8",
+   "greek": "7-9",
+   "confidence": 0.8,
+   "note": "Overlapping divisions: Ge'ez 7 joins the lost memorial to the Lord's endurance; Ge'ez 8 joins the prepared throne to righteous judgment."
+  },
+  {
+   "geez": "9",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13-16",
+   "greek": "14-16",
+   "confidence": 0.8,
+   "note": "Overlapping divisions across mercy, the gates of death, praise in Zion, rejoicing in salvation, and the nations caught in their snare."
+  },
+  {
+   "geez": "17",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "25-27",
+   "greek": "25-26",
+   "confidence": 0.8,
+   "note": "Ge'ez 26 joins the absence of God from Greek 25 to the profane ways of Greek 26; Ge'ez 27 completes Greek 26."
+  },
+  {
+   "geez": "28",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29",
+   "greek": "28",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "30-33",
+   "greek": "29-31",
+   "confidence": 0.8,
+   "note": "Overlapping divisions across ambush, eyes watching the poor, the lion, dragging into a snare, humiliation, and falling."
+  },
+  {
+   "geez": "34",
+   "greek": "32",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "35",
+   "greek": "33",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "36",
+   "greek": "34",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "37-38",
+   "greek": "35",
+   "confidence": 0.8,
+   "note": "Splits God's observation of trouble and wrath from the poor entrusted to him and his help for the orphan."
+  },
+  {
+   "geez": "39",
+   "greek": "36",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "40",
+   "greek": "37",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "41",
+   "greek": "38",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "42",
+   "greek": "39",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

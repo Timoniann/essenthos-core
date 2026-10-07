@@ -1,0 +1,136 @@
+{
+ "book": "job",
+ "chapter": 6,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:20:38+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2-3",
+   "greek": "2-4",
+   "confidence": 0.8,
+   "note": "Greek 3 is split: its sand comparison ends Ge'ez 2; its remark about vain words begins Ge'ez 3, followed by Greek 4's arrows."
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "9",
+   "confidence": 0.85,
+   "note": "Both concern the Lord completing his assault; Ge'ez asks for death, while Greek says not to destroy him utterly."
+  },
+  {
+   "geez": "9",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14-15",
+   "greek": "15-17",
+   "confidence": 0.8,
+   "note": "Greek 16 is split: former reverence and present hostility end Ge'ez 14; snow and ice begin Ge'ez 15, followed by their melting."
+  },
+  {
+   "geez": "16",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "22-23",
+   "confidence": 0.8,
+   "note": "Combines the question about requesting help with deliverance from enemies and the mighty."
+  },
+  {
+   "geez": "21-22",
+   "greek": "24-27",
+   "confidence": 0.8,
+   "note": "Greek 25 is split: vain truthful words end Ge'ez 21; not asking strength begins Ge'ez 22, followed by reproof and attacks on orphan and friend."
+  },
+  {
+   "geez": "23",
+   "greek": "28-29",
+   "confidence": 0.8,
+   "note": "Combines looking at their faces without lying with sitting down and speaking justly."
+  },
+  {
+   "geez": "24",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

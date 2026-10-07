@@ -1,0 +1,70 @@
+{
+ "book": "psalms",
+ "chapter": 56,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:34:22+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Ge'ez 1 combines an abridged title with the opening of Greek 2; Ge'ez 2 completes Greek 2."
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-6",
+   "greek": "4-5",
+   "confidence": 0.8,
+   "note": "Ge'ez 5 bridges Greek 4 and 5; Ge'ez 4 begins Greek 4, and Ge'ez 6 completes Greek 5."
+  },
+  {
+   "geez": "7",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8-9",
+   "greek": "7",
+   "confidence": 0.8,
+   "note": "Ge'ez splits the snares and bowed soul from the pit and the enemies' fall into it."
+  },
+  {
+   "geez": "10",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

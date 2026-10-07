@@ -1,0 +1,34 @@
+{
+ "book": "psalms",
+ "chapter": 42,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:32:33+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-6",
+   "greek": "4-5",
+   "confidence": 0.8,
+   "note": "Ge'ez 5 joins the harp thanksgiving ending Greek 4 with the soul's questions beginning Greek 5; Ge'ez 4 and 6 supply the surrounding clauses."
+  }
+ ]
+}

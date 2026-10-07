@@ -1,0 +1,52 @@
+{
+ "book": "psalms",
+ "chapter": 97,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:39:33+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1",
+   "confidence": 0.85,
+   "note": "Ge'ez divides the new song and the saving right hand and holy arm into two verses."
+  },
+  {
+   "geez": "3",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-5",
+   "greek": "3",
+   "confidence": 0.85,
+   "note": "Ge'ez separates mercy to Jacob and Israel from the ends of the earth seeing salvation."
+  },
+  {
+   "geez": "6",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7-8",
+   "greek": "5-7",
+   "confidence": 0.8,
+   "note": "Ge'ez 7 joins the harp with the trumpets; Ge'ez 8 joins the shout before the king with the sea and world. Together they cover Greek 5-7, sharing Greek 6."
+  },
+  {
+   "geez": "9",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

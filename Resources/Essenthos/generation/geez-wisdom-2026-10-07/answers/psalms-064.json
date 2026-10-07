@@ -1,0 +1,70 @@
+{
+ "book": "psalms",
+ "chapter": 64,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:35:25+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the title and the praise in Zion."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-6",
+   "greek": "5-6",
+   "confidence": 0.8,
+   "note": "Overlapping divisions: Ge'ez 5 joins the house and holy temple of Greek 5 with 'wonderful in righteousness' from Greek 6."
+  },
+  {
+   "geez": "7-8",
+   "greek": "7-9",
+   "confidence": 0.8,
+   "note": "Ge'ez 7 joins the mountains and sea clauses; Ge'ez 8 begins with the nations' turmoil at the end of Greek 8 and continues through Greek 9."
+  },
+  {
+   "geez": "9-10",
+   "greek": "10",
+   "confidence": 0.85,
+   "note": "Splits the enriched earth from God's river and the preparation of food."
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

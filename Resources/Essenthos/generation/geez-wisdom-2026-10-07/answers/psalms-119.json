@@ -1,0 +1,46 @@
+{
+ "book": "psalms",
+ "chapter": 119,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:42:08+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6-7",
+   "greek": "6-7",
+   "confidence": 0.85,
+   "note": "Ge'ez 6 includes Greek 6 and the opening of Greek 7, 'with those who hate peace'; Ge'ez 7 continues Greek 7. Joined to avoid repeating Greek 7."
+  }
+ ]
+}

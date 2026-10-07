@@ -1,0 +1,166 @@
+{
+ "book": "job",
+ "chapter": 9,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:22:00+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6-9",
+   "greek": "6-9",
+   "confidence": 0.8,
+   "note": "Overlapping divisions and reordered clauses require joining this passage: Ge'ez 6-7 divide Greek 6, while Ge'ez 7 and 9 contain Greek 7 material; Ge'ez 8 matches Greek 8 and 9 includes Greek 9."
+  },
+  {
+   "geez": "10",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "19-20",
+   "confidence": 0.8,
+   "note": "Combines God's irresistible power and judgment with the mouth's condemnation despite righteousness."
+  },
+  {
+   "geez": "20",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "22-24",
+   "confidence": 0.8,
+   "note": "Combines the great and mighty, sinners' deaths, righteous people mocked, delivery into wicked hands, and covered judges' faces."
+  },
+  {
+   "geez": "22",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "27-28",
+   "confidence": 0.8,
+   "note": "Combines speech and the bowed, groaning face with trembling limbs and the knowledge that God will not acquit him."
+  },
+  {
+   "geez": "25",
+   "greek": "29",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "26",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "31",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "32",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29-31",
+   "greek": "33-35",
+   "confidence": 0.8,
+   "note": "Ge'ez 29 combines the mediator with removal of the rod; 30 continues the fear clause and begins speaking; 31 continues speaking without fear."
+  }
+ ]
+}

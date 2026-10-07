@@ -1,0 +1,61 @@
+{
+ "book": "psalms",
+ "chapter": 51,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:33:44+00:00",
+ "greek_unused": [
+  1,
+  2
+ ],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "3",
+   "confidence": 0.8,
+   "note": "The opening title also corresponds to Greek 1; Greek 2's historical superscription is absent. The remaining text matches Greek 3."
+  },
+  {
+   "geez": "2",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6-7",
+   "greek": "8-9",
+   "confidence": 0.8,
+   "note": "Ge'ez 6 contains Greek 8 and the opening of Greek 9; Ge'ez 7 completes Greek 9."
+  },
+  {
+   "geez": "8",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

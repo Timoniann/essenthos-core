@@ -1,0 +1,106 @@
+{
+ "book": "job",
+ "chapter": 3,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T11:57:29+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2-3",
+   "confidence": 0.85,
+   "note": "Combines 'saying' with the curse on the birth day and night."
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-5",
+   "greek": "5-6",
+   "confidence": 0.85,
+   "note": "The curse beginning Greek 6 ends Ge'ez 4; its darkness and calendar clauses follow in 5."
+  },
+  {
+   "geez": "6",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8-9",
+   "greek": "9-10",
+   "confidence": 0.85,
+   "note": "The morning-star clause of Greek 9 occurs in Ge'ez 9 with the womb and sorrow clauses of Greek 10."
+  },
+  {
+   "geez": "10",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12-13",
+   "greek": "13-14",
+   "confidence": 0.85,
+   "note": "Rest and kings correspond; supplied Greek 14 repeats the rest clause of 13."
+  },
+  {
+   "geez": "14",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15-18",
+   "greek": "16-19",
+   "confidence": 0.8,
+   "note": "Greek 17 is split across Ge'ez 16-17; the infants clause of 16 and exactor clause of 18 occur in Ge'ez 18 with small, great, and servant."
+  },
+  {
+   "geez": "19",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "21-23",
+   "confidence": 0.85,
+   "note": "Combines seeking death, joy at finding it, and death as rest with God's enclosure."
+  },
+  {
+   "geez": "21-22",
+   "greek": "24-25",
+   "confidence": 0.8,
+   "note": "Ge'ez 21 varies the food/groaning clause; 22 joins Greek 24's weeping clause to the fears of 25."
+  },
+  {
+   "geez": "23",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

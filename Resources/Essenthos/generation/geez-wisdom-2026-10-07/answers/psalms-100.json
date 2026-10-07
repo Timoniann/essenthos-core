@@ -1,0 +1,52 @@
+{
+ "book": "psalms",
+ "chapter": 100,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:39:50+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2-3",
+   "greek": "2",
+   "confidence": 0.8,
+   "note": "Ge'ez splits the blameless way and coming question from walking innocently within the house."
+  },
+  {
+   "geez": "4-5",
+   "greek": "3-4",
+   "confidence": 0.8,
+   "note": "The perverse-heart clause ends Greek 3 but begins Ge'ez 5, which also contains Greek 4."
+  },
+  {
+   "geez": "6-7",
+   "greek": "5",
+   "confidence": 0.8,
+   "note": "Ge'ez separates the secret slanderer from the proud eye and insatiable heart."
+  },
+  {
+   "geez": "8",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

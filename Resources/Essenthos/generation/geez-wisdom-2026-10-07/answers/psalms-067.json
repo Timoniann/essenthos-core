@@ -1,0 +1,184 @@
+{
+ "book": "psalms",
+ "chapter": 67,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:36:00+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the title and the call for God to arise."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-7",
+   "greek": "6-7",
+   "confidence": 0.8,
+   "note": "Ge'ez 6 joins God's holy dwelling from Greek 6 to the solitary housed in Greek 7."
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15-17",
+   "greek": "15-17",
+   "confidence": 0.8,
+   "note": "Mountain clauses cross both boundaries: Ge'ez 15 begins Greek 16, and Ge'ez 16 begins Greek 17."
+  },
+  {
+   "geez": "18",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19-21",
+   "greek": "19-20",
+   "confidence": 0.8,
+   "note": "Ge'ez 20 joins the rebellious dwelling clause from Greek 19 to the opening blessing of Greek 20."
+  },
+  {
+   "geez": "22",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "25",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "26",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29-30",
+   "greek": "28",
+   "confidence": 0.85,
+   "note": "Benjamin and the princes of Judah, Zebulun, and Naphtali divide one Greek verse."
+  },
+  {
+   "geez": "31",
+   "greek": "29",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "32",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "33-34",
+   "greek": "31-32",
+   "confidence": 0.8,
+   "note": "Ge'ez 34 joins the scattering of warlike nations from Greek 31 to Egypt and Ethiopia in Greek 32."
+  },
+  {
+   "geez": "35",
+   "greek": "33",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "36-38",
+   "greek": "34-35",
+   "confidence": 0.8,
+   "note": "Ge'ez 37 joins the mighty voice from Greek 34 to the opening command to give glory in Greek 35."
+  },
+  {
+   "geez": "39",
+   "greek": "36",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

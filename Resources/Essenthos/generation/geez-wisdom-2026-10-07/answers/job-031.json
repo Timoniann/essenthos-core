@@ -1,0 +1,208 @@
+{
+ "book": "job",
+ "chapter": 31,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:25:32+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7-8",
+   "greek": "7-9",
+   "confidence": 0.8,
+   "note": "Greek 8 is split between Ge'ez 7 (others eat the crop) and 8 (being rootless); the surrounding clauses match Greek 7 and 9."
+  },
+  {
+   "geez": "9-10",
+   "greek": "10-12",
+   "confidence": 0.8,
+   "note": "Ge'ez 9 joins Greek 10 to the uncontrolled wrath of Greek 11; Ge'ez 10 joins its adultery clause to the consuming fire of Greek 12."
+  },
+  {
+   "geez": "11",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "21-22",
+   "confidence": 0.8,
+   "note": "Combines raising a hand against an orphan with the penalty of shoulder and arm being broken."
+  },
+  {
+   "geez": "20",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "25",
+   "greek": "28",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "26",
+   "greek": "29",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "31",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29",
+   "greek": "32-33",
+   "confidence": 0.8,
+   "note": "Combines hospitality to strangers with the condition about sinning and concealing sin."
+  },
+  {
+   "geez": "30",
+   "greek": "34",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "31",
+   "greek": "35-36",
+   "confidence": 0.8,
+   "note": "Combines the appeal for a hearer, fear of God's hand, and written charge with carrying and reading it."
+  },
+  {
+   "geez": "32",
+   "greek": "37",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "33",
+   "greek": "38",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "34",
+   "greek": "39",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "35",
+   "greek": "40",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

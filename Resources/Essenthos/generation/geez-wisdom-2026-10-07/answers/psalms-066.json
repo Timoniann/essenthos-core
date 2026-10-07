@@ -1,0 +1,40 @@
+{
+ "book": "psalms",
+ "chapter": 66,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:35:32+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Ge'ez combines the title and the prayer for God's mercy, blessing, and shining face."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-6",
+   "greek": "6-8",
+   "confidence": 0.8,
+   "note": "Greek 7 is split between Ge'ez 5 (earth yielding fruit) and 6 (God our God blessing us), so the neighbouring verses are joined."
+  }
+ ]
+}

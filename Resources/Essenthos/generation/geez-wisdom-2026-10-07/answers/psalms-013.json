@@ -1,0 +1,40 @@
+{
+ "book": "psalms",
+ "chapter": 13,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:29:09+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1",
+   "confidence": 0.85,
+   "note": "Ge'ez divides the title, fool's declaration, and corruption passage across two verses."
+  },
+  {
+   "geez": "3",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-7",
+   "greek": "3",
+   "confidence": 0.85,
+   "note": "Ge'ez divides this Greek verse into four, from universal corruption through absence of fear of God."
+  },
+  {
+   "geez": "8-10",
+   "greek": "4-6",
+   "confidence": 0.8,
+   "note": "Ge'ez 9 joins the end of Greek 4 to the start of 5; Ge'ez 10 joins the end of 5 to 6, requiring one combined block."
+  },
+  {
+   "geez": "11",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

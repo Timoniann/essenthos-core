@@ -1,0 +1,40 @@
+{
+ "book": "psalms",
+ "chapter": 110,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:41:16+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-7",
+   "greek": "4-8",
+   "confidence": 0.8,
+   "note": "Shifted boundaries split Greek 5, 6, and 7 between successive Ge'ez verses; the joined passage runs from remembered wonders through commandments established forever."
+  },
+  {
+   "geez": "8-10",
+   "greek": "9-10",
+   "confidence": 0.8,
+   "note": "Ge'ez 9 joins the holy and fearful name from Greek 9 to the beginning of wisdom from Greek 10, requiring the surrounding verses to be joined."
+  }
+ ]
+}

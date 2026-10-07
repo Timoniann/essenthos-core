@@ -1,0 +1,406 @@
+{
+ "book": "psalms",
+ "chapter": 77,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:37:37+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-5",
+   "greek": "4",
+   "confidence": 0.8,
+   "note": "Ge'ez splits the children and succeeding generation from the declaration of God's praises and wonders."
+  },
+  {
+   "geez": "6-8",
+   "greek": "5-6",
+   "confidence": 0.8,
+   "note": "Ge'ez 7 bridges Greek 5-6: the command to the fathers and the succeeding generation's knowledge."
+  },
+  {
+   "geez": "9",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10-11",
+   "greek": "8",
+   "confidence": 0.8,
+   "note": "Ge'ez divides the rebellious generation from its unfaithful heart and spirit."
+  },
+  {
+   "geez": "12",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23-24",
+   "greek": "20",
+   "confidence": 0.8,
+   "note": "Ge'ez separates water from the rock from the question about bread and a table."
+  },
+  {
+   "geez": "25",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "26",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "30",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "31",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "32",
+   "greek": "28",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "33-35",
+   "greek": "29-31",
+   "confidence": 0.8,
+   "note": "Ge'ez 33 bridges Greek 29-30, and Ge'ez 34 bridges Greek 30-31; together they cover satisfaction, food still in their mouths, and punishment."
+  },
+  {
+   "geez": "36",
+   "greek": "32",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "37",
+   "greek": "33",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "38",
+   "greek": "34",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "39",
+   "greek": "35",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "40",
+   "greek": "36",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "41",
+   "greek": "37",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "42-43",
+   "greek": "38",
+   "confidence": 0.8,
+   "note": "Ge'ez separates God's mercy and forgiveness from his restraint of wrath."
+  },
+  {
+   "geez": "44",
+   "greek": "39",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "45",
+   "greek": "40",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "46",
+   "greek": "41",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "47",
+   "greek": "42",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "48",
+   "greek": "43",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "49",
+   "greek": "44",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "50",
+   "greek": "45",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "51",
+   "greek": "46",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "52",
+   "greek": "47",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "53",
+   "greek": "48",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "54",
+   "greek": "49",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "55",
+   "greek": "50",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "56",
+   "greek": "51",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "57",
+   "greek": "52",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "58",
+   "greek": "53",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "59",
+   "greek": "54",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "60-61",
+   "greek": "55",
+   "confidence": 0.8,
+   "note": "Ge'ez separates expulsion and inheritance from Israel's dwelling in the tents."
+  },
+  {
+   "geez": "62",
+   "greek": "56",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "63",
+   "greek": "57",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "64",
+   "greek": "58",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "65",
+   "greek": "59",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "66-68",
+   "greek": "60-62",
+   "confidence": 0.8,
+   "note": "The supplied Greek splits the dwelling clause across 60-61 and the enemy's hand across 61-62; Ge'ez keeps each clause intact."
+  },
+  {
+   "geez": "69",
+   "greek": "63",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "70",
+   "greek": "64",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "71",
+   "greek": "65",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "72",
+   "greek": "66",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "73",
+   "greek": "67",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "74",
+   "greek": "68",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "75",
+   "greek": "69",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "76-77",
+   "greek": "70-71",
+   "confidence": 0.8,
+   "note": "Ge'ez 76 includes Greek 70 and the opening of 71 about taking David from nursing ewes; Ge'ez 77 completes his shepherding commission."
+  },
+  {
+   "geez": "78",
+   "greek": "72",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

@@ -1,0 +1,174 @@
+{
+ "book": "job",
+ "chapter": 15,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:22:46+00:00",
+ "greek_unused": [
+  32
+ ],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12-13",
+   "confidence": 0.85,
+   "note": "Combines the heart and eyes with rage before God and words from the mouth; the eyes clause comes last."
+  },
+  {
+   "geez": "13",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "15-16",
+   "confidence": 0.85,
+   "note": "Combines the unclean man drinking sin with God's distrust of saints and heaven's impurity, reversing their order."
+  },
+  {
+   "geez": "15",
+   "greek": "17-19",
+   "confidence": 0.85,
+   "note": "Joins the invitation to listen, wisdom transmitted by fathers, and land given exclusively to them."
+  },
+  {
+   "geez": "16",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "24-25",
+   "confidence": 0.85,
+   "note": "Joins distress and the falling captain with hands raised and a hardened neck against God."
+  },
+  {
+   "geez": "21",
+   "greek": "26-28",
+   "confidence": 0.8,
+   "note": "Combines the assault, bodily covering and thighs, and desolate cities and houses; some bodily imagery differs."
+  },
+  {
+   "geez": "23",
+   "greek": "29",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "25",
+   "greek": "31",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "26",
+   "greek": "33",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "34",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "35",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

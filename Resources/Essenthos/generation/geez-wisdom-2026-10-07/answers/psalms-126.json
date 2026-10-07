@@ -1,0 +1,40 @@
+{
+ "book": "psalms",
+ "chapter": 126,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:43:06+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the house-building and city-guarding clauses of Greek verse 1 into two verses."
+  },
+  {
+   "geez": "3",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

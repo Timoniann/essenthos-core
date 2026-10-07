@@ -1,0 +1,118 @@
+{
+ "book": "psalms",
+ "chapter": 30,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:31:17+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the title and the opening prayer."
+  },
+  {
+   "geez": "2-3",
+   "greek": "3",
+   "confidence": 0.85,
+   "note": "Splits the plea for swift rescue from the protecting God and refuge clauses."
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7-9",
+   "greek": "7-8",
+   "confidence": 0.8,
+   "note": "Ge'ez 8 joins the closing trust clause of Greek 7 to the opening rejoicing clause of Greek 8."
+  },
+  {
+   "geez": "10",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12-13",
+   "greek": "11",
+   "confidence": 0.85,
+   "note": "Divides grief and groaning from weakened strength and troubled bones."
+  },
+  {
+   "geez": "14-17",
+   "greek": "12-14",
+   "confidence": 0.8,
+   "note": "Ge'ez 15 bridges Greek 12-13, and Ge'ez 16 bridges Greek 13-14."
+  },
+  {
+   "geez": "18-19",
+   "greek": "15-16",
+   "confidence": 0.8,
+   "note": "Ge'ez 18 joins the declaration of trust to the opening hands-and-lots clause of Greek 16."
+  },
+  {
+   "geez": "20-22",
+   "greek": "17-19",
+   "confidence": 0.8,
+   "note": "Ge'ez 20 bridges Greek 17-18, and Ge'ez 21 bridges Greek 18-19."
+  },
+  {
+   "geez": "23-24",
+   "greek": "20",
+   "confidence": 0.85,
+   "note": "Divides goodness reserved for those who fear God from provision for those who trust him."
+  },
+  {
+   "geez": "25-26",
+   "greek": "21",
+   "confidence": 0.85,
+   "note": "Divides hiding from human turmoil from sheltering against contentious tongues."
+  },
+  {
+   "geez": "27",
+   "greek": "22",
+   "confidence": 0.85,
+   "note": "Both bless the Lord for magnified mercy; Ge'ez ends with great distress instead of a fortified city."
+  },
+  {
+   "geez": "28-29",
+   "greek": "23",
+   "confidence": 0.85,
+   "note": "Divides feeling cast from God's sight from God's hearing the supplication."
+  },
+  {
+   "geez": "30",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "31",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

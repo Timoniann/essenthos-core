@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lines"],
+  "properties": {
+    "lines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["geez", "greek", "confidence", "note"],
+        "properties": {
+          "geez": {"type": "string", "description": "Ge'ez verse or range in this chapter, e.g. \"3\" or \"3-4\""},
+          "greek": {"type": "string", "description": "Greek verse or range in this chapter, e.g. \"2\" or \"2-3\"; empty string if the Ge'ez has no Greek counterpart"},
+          "confidence": {"type": "number", "description": "0.9 plainly the same; 0.7-0.85 a division differs or the line joins a passage; 0.5 unsure"},
+          "note": {"type": "string", "description": "Short reason when confidence is below 0.9 or greek is empty; else empty"}
+        }
+      }
+    }
+  }
+}

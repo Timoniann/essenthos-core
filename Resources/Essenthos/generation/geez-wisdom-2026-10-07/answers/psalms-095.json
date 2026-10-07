@@ -1,0 +1,58 @@
+{
+ "book": "psalms",
+ "chapter": 95,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:39:26+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7-10",
+   "greek": "7-10",
+   "confidence": 0.85,
+   "note": "Successive boundaries cross: Ge'ez 7 includes Greek 8's opening; 8 finishes Greek 8 and opens 9; 9 finishes Greek 9 and opens 10; 10 finishes Greek 10. Joined to avoid reusing Greek verses."
+  },
+  {
+   "geez": "11-13",
+   "greek": "11-13",
+   "confidence": 0.85,
+   "note": "Ge'ez 11 includes Greek 11 and the opening of 12; 12 finishes Greek 12 and opens 13; 13 finishes Greek 13. Joined to avoid reusing Greek verses."
+  }
+ ]
+}

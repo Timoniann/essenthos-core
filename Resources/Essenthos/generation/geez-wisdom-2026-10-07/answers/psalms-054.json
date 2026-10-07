@@ -1,0 +1,118 @@
+{
+ "book": "psalms",
+ "chapter": 54,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:34:15+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-3",
+   "greek": "1-4",
+   "confidence": 0.8,
+   "note": "Ge'ez 1 includes the title, prayer, and opening of Greek 3; Ge'ez 2-3 divide the remainder of Greek 3-4."
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10-11",
+   "greek": "11-12",
+   "confidence": 0.8,
+   "note": "Ge'ez 10 includes the opening unrighteousness clause of Greek 12; Ge'ez 11 completes its street-deceit clause."
+  },
+  {
+   "geez": "12-13",
+   "greek": "13",
+   "confidence": 0.8,
+   "note": "The two conditional clauses of Greek 13 are divided between Ge'ez 12 and 13."
+  },
+  {
+   "geez": "14",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16-17",
+   "greek": "16",
+   "confidence": 0.8,
+   "note": "Ge'ez separates the death-and-Hades petition from its explanation about wickedness in their dwellings."
+  },
+  {
+   "geez": "18",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21-24",
+   "greek": "20-22",
+   "confidence": 0.8,
+   "note": "Boundaries cross: Ge'ez 22 joins the end of Greek 20 to the opening of 21; Ge'ez 23 joins the end of 21 to the opening of 22; Ge'ez 24 completes 22."
+  },
+  {
+   "geez": "25",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "26-27",
+   "greek": "24",
+   "confidence": 0.8,
+   "note": "Ge'ez divides the pit-of-destruction petition from the bloody men's shortened days and final declaration of trust."
+  }
+ ]
+}

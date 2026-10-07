@@ -1,0 +1,58 @@
+{
+ "book": "psalms",
+ "chapter": 41,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:32:35+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the title with the hart longing for water."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-5",
+   "greek": "5",
+   "confidence": 0.85,
+   "note": "Splits the remembrance and tabernacle passage from the festival voices."
+  },
+  {
+   "geez": "6-8",
+   "greek": "6-7",
+   "confidence": 0.8,
+   "note": "Ge'ez 7 joins the hope refrain to 'my God,' which begins Greek 7; grouped to avoid overlap."
+  },
+  {
+   "geez": "9-10",
+   "greek": "8",
+   "confidence": 0.85,
+   "note": "Separates deep calling to deep from the billows and waves."
+  },
+  {
+   "geez": "11-13",
+   "greek": "9-10",
+   "confidence": 0.8,
+   "note": "Ge'ez 12 bridges the prayer ending Greek 9 and the address to God beginning Greek 10."
+  },
+  {
+   "geez": "14-16",
+   "greek": "11-12",
+   "confidence": 0.8,
+   "note": "Ge'ez 15 bridges the enemies' taunt ending Greek 11 and the refrain beginning Greek 12."
+  }
+ ]
+}

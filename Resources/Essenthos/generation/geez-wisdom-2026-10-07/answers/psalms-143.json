@@ -1,0 +1,94 @@
+{
+ "book": "psalms",
+ "chapter": 143,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:44:52+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2-3",
+   "greek": "2",
+   "confidence": 0.8,
+   "note": "Ge'ez divides the descriptions of God's protection and trust across two verses."
+  },
+  {
+   "geez": "4",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13-14",
+   "greek": "12",
+   "confidence": 0.8,
+   "note": "Ge'ez separates the children as plants from the adorned daughters."
+  },
+  {
+   "geez": "15-17",
+   "greek": "13-14",
+   "confidence": 0.8,
+   "note": "Ge'ez 15 covers the garners; 16 joins the sheep of Greek 13 and oxen of Greek 14; 17 completes Greek 14."
+  },
+  {
+   "geez": "18",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

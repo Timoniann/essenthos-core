@@ -1,0 +1,46 @@
+{
+ "book": "psalms",
+ "chapter": 141,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:44:34+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Combines the cave superscription with the cry and supplication to the Lord."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3-4",
+   "greek": "4",
+   "confidence": 0.8,
+   "note": "Splits the fainting spirit and known paths from the snare hidden on the way."
+  },
+  {
+   "geez": "5-6",
+   "greek": "5",
+   "confidence": 0.8,
+   "note": "Splits looking right and finding no acquaintance from failed refuge and no one caring for the soul."
+  },
+  {
+   "geez": "7",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8-9",
+   "greek": "7-8",
+   "confidence": 0.8,
+   "note": "Verse 8 begins Greek 7; verse 9 completes its plea for deliverance and includes all of Greek 8."
+  }
+ ]
+}

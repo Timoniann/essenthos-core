@@ -1,0 +1,82 @@
+{
+ "book": "psalms",
+ "chapter": 58,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:34:45+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Combines an abbreviated title with the deliverance prayer; omits the title's Saul narrative."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3-6",
+   "greek": "4-6",
+   "confidence": 0.8,
+   "note": "Interlocking divisions across the pursuit, innocence, awakening, and visitation clauses require grouping."
+  },
+  {
+   "geez": "7",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10-12",
+   "greek": "10-12",
+   "confidence": 0.8,
+   "note": "Mercy, vengeance, and the command to spare and scatter enemies cross successive verse boundaries."
+  },
+  {
+   "geez": "13-15",
+   "greek": "13-14",
+   "confidence": 0.8,
+   "note": "The cursing clause crosses into Ge'ez 14; the destruction and Jacob clauses divide Greek 14."
+  },
+  {
+   "geez": "16",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18-19",
+   "greek": "17",
+   "confidence": 0.8,
+   "note": "Ge'ez separates the morning praise from its reason: God's protection in affliction."
+  },
+  {
+   "geez": "20",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

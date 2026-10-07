@@ -1,0 +1,126 @@
+{
+ "book": "job",
+ "chapter": 1,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:20:08+00:00",
+ "greek_unused": [
+  22
+ ],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3-4",
+   "greek": "3",
+   "confidence": 0.8,
+   "note": "Livestock, servants, husbandry, and eastern standing divide one Greek verse into two Ge'ez verses."
+  },
+  {
+   "geez": "5",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6-8",
+   "greek": "5",
+   "confidence": 0.8,
+   "note": "Purification, sacrifices, the calf offering, and Job's explanation divide one Greek verse into three."
+  },
+  {
+   "geez": "9",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "9-10",
+   "confidence": 0.8,
+   "note": "Combines Satan's question about worship with God's protection and blessing of Job."
+  },
+  {
+   "geez": "13",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20-21",
+   "greek": "18-19",
+   "confidence": 0.8,
+   "note": "Ge'ez 20 includes Greek 18 and the wind clause of 19; Ge'ez 21 completes 19 with the collapse, deaths, and survivor."
+  },
+  {
+   "geez": "22",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

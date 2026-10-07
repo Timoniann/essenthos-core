@@ -1,0 +1,40 @@
+{
+ "book": "psalms",
+ "chapter": 22,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T11:56:54+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Ge'ez 1 includes Greek 1 and the green-grass clause of Greek 2; Ge'ez 2 completes Greek 2 with the water-of-rest clause."
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-5",
+   "greek": "4",
+   "confidence": 0.85,
+   "note": "Ge'ez divides the shadow-of-death passage and the rod-and-staff clause into two verses."
+  },
+  {
+   "geez": "6-7",
+   "greek": "5",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the prepared table from the anointed head and cup."
+  },
+  {
+   "geez": "8-9",
+   "greek": "6",
+   "confidence": 0.85,
+   "note": "Ge'ez separates mercy following throughout life from dwelling in the Lord's house."
+  }
+ ]
+}

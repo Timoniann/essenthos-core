@@ -1,0 +1,106 @@
+{
+ "book": "song-of-solomon",
+ "chapter": 5,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:46:26+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1",
+   "confidence": 0.8,
+   "note": "Greek 1 is divided across Ge'ez 1-2; Ge'ez 1 also includes the preceding north/south wind invocation."
+  },
+  {
+   "geez": "3",
+   "greek": "",
+   "confidence": 0.9,
+   "note": "Added passage about jealousy and a healing vine planted at Golgotha; no counterpart in the supplied Greek."
+  },
+  {
+   "geez": "4-5",
+   "greek": "2",
+   "confidence": 0.8,
+   "note": "The sleeping heart and knocking begin in Ge'ez 4; the request to open and night dew continue in Ge'ez 5."
+  },
+  {
+   "geez": "6",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8-9",
+   "greek": "5-6",
+   "confidence": 0.8,
+   "note": "Ge'ez 9 begins with the lock handles ending Greek 5, then continues with the opening and departed beloved of Greek 6."
+  },
+  {
+   "geez": "10",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

@@ -1,0 +1,70 @@
+{
+ "book": "psalms",
+ "chapter": 5,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:28:39+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the title and the plea to hear his words and cry."
+  },
+  {
+   "geez": "2-4",
+   "greek": "3-4",
+   "confidence": 0.8,
+   "note": "Overlapping divisions: supplication, prayer to God, and the two morning clauses span these verses."
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6-7",
+   "greek": "6-7",
+   "confidence": 0.85,
+   "note": "Ge'ez 6 includes the destruction of liars from Greek 7; Ge'ez 7 completes that verse."
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10-11",
+   "greek": "10",
+   "confidence": 0.85,
+   "note": "Splits the false mouth and vain heart from the open throat and deceitful tongues."
+  },
+  {
+   "geez": "12",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

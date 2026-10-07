@@ -1,0 +1,1659 @@
+[
+ {
+  "id": "psalms-044:19-20",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-045:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-045:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-046:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-047:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-047:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-047:13-14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-048:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-048:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-048:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-049:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-049:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-049:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-049:21-22",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-050:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-051:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-051:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-051:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-052:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-052:5-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-052:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-053:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-054:1-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-054:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-054:10-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-054:12-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-054:16-17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-054:21-24",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-054:26-27",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-055:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-055:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-055:6-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-055:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-055:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-055:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-056:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-056:4-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-056:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-057:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-057:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-057:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-058:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-058:3-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-058:10-12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-058:13-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-058:18-19",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-059:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-059:7-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-060:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-061:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-061:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-061:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-062:1-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-062:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-062:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-063:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-063:3-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-063:6-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-064:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-064:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-064:4-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-064:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-064:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-065:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-065:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-065:10-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-065:17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-065:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-066:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-066:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-067:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-067:5-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-067:15-17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-067:19-21",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-067:29-30",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-067:33-34",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-067:36-38",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:16-17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:18-19",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:23-25",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:26",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:35",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:38",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-068:40-41",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-069:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-069:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-070:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-070:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-070:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-070:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-070:16-17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-070:19-20",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-071:17-18",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-071:19",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-071:20",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-072:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-072:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-072:21-23",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-072:27-28",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-073:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-073:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-073:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-073:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-073:23",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-074:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-074:6-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-074:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-075:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-075:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-075:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-075:11-12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-076:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-076:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-076:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-076:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-076:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-076:13-14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-076:15-16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-076:17-18",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:6-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:10-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:23-24",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:31",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:32",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:33-35",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:38",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:42-43",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:46",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:60-61",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:65",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:66-68",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-077:76-77",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-078:10-12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-078:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-078:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-079:1-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-079:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-079:20",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-080:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-080:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-081:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-082:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-082:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-082:10-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-083:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-083:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-083:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-083:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-083:10-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-083:12-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-084:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-084:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-084:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-084:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-085:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-085:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-085:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-085:16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-086:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-086:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-087:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-087:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-087:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-087:8-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-088:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-088:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-088:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-088:12-16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-088:20",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-088:25",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-088:35-36",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-088:44",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-088:47",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-089:4-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-089:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-089:9-12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-090:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-090:4-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-091:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-091:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-091:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-091:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-092:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-092:5",
+  "verdict": "wrong",
+  "reason": "The no-counterpart claim looks false: 'the rivers will lift up their sounds' is the third clause of LXX Ps 92:3 (the rivers will lift up their waves), which sits with Ge'ez 4 (Greek 3). No Greek was supplied for the neighbours, so this rests on my knowledge of the Psalm; check Greek 3."
+ },
+ {
+  "id": "psalms-093:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-093:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-093:12",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-093:16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-094:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-094:5-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-094:10-11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-095:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-095:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-095:7-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-095:11-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-096:7-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-096:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-097:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-097:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-097:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-097:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-098:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-098:5-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-098:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-099:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-099:3-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-100:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-100:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-100:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-101:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-101:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-101:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-101:22",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-101:27-28",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-102:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-102:9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-102:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-102:13-14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-102:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-102:16-18",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-103:1-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-103:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-103:15-17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-103:18-19",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-103:26-28",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-104:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-104:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-104:17-18",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-104:24",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-104:27",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-104:36",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-105:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-105:22",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-105:23-25",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-105:28",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-105:32-33",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-105:34",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-105:36-37",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-105:40-41",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-105:45-46",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-106:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-106:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-106:21",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-106:24",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-107:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-107:5-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-107:8-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-107:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-108:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-108:14-15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-108:20-21",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-109:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-109:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-110:4-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-110:8-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-111:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-111:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-111:5-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-112:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-113:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-113:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-113:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-113:20-21",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-114:3-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-115:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-115:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-115:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-117:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-117:15-16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-117:18",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-117:19",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-117:24-26",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-117:27-28",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:19",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:20",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:27",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:33",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:40",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:70",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:78",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:83",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:120",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:130",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:143",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:159",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:160",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:165",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-118:176",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-119:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-119:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-120:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-121:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-121:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-122:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-123:2-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-123:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-124:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-125:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-125:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-125:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-126:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-127:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-127:6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-128:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-129:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-129:5-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-130:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-130:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-131:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-131:12-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-132:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-133:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-134:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-134:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-134:14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-134:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-134:17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-134:19",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-135:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-135:16",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-135:17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-136:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-136:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-136:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-137:1-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-137:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-138:1-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-138:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-138:17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-138:22",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-138:23",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-139:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-139:4-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-139:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-140:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-140:6-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-141:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-141:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-141:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-141:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-142:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-142:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-142:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-142:11-14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-143:2-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-143:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-143:13-14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-143:15-17",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-144:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-144:13-14",
+  "verdict": "edge",
+  "reason": "Ge'ez 13 is Greek 13 (kingdom), but Ge'ez 14 ('faithful in all his word, righteous in all his works') is Greek 14, which is the supplied greek_after. The last clause belongs to the next line."
+ },
+ {
+  "id": "psalms-144:15",
+  "verdict": "wrong",
+  "reason": "Ge'ez 15 says 'the Lord upholds the falling and raises the fallen', which is the supplied greek_after (Greek 15). The proposed Greek 14 ('The Lord is faithful in his words') is what the previous Ge'ez verse says."
+ },
+ {
+  "id": "psalms-144:19",
+  "verdict": "wrong",
+  "reason": "Ge'ez 19 says 'The Lord is near to all who call on him', which is the supplied greek_after (Greek 19). The proposed Greek 18 ('righteous in all his ways') is what the previous Ge'ez verse (18) says."
+ },
+ {
+  "id": "psalms-145:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-145:4-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-146:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-146:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-147:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-148:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-148:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-148:12-14",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-150:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-150:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-150:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "psalms-151:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-001:1-3",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-001:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-001:11-12",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-002:7",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-002:8",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-002:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-002:11-14",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-002:16-18",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-003:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-003:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-003:5",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-003:6-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-003:11-12",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-003:13",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-004:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-004:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-004:10",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-005:1-2",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-005:3",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-005:4-5",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-005:8-9",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-005:15",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-006:2",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-006:3-4",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-006:5-7",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-006:9-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-006:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-006:14",
+  "verdict": "wrong",
+  "reason": "The no-counterpart claim is false. 'Return, return, Shulamite; return, and let us look at you' is the opening of Greek SoS 7:1: the English of the next line's Greek begins 'Return, return, O Sunamite; return, return, and we will look at thee'. It belongs to Greek 7:1."
+ },
+ {
+  "id": "song-of-solomon-007:1",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-007:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-007:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-007:7-10",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-007:11-13",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-007:15-16",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-008:4",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-008:5-6",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-008:7-8",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-008:11",
+  "verdict": "ok"
+ },
+ {
+  "id": "song-of-solomon-008:13-16",
+  "verdict": "ok"
+ }
+]

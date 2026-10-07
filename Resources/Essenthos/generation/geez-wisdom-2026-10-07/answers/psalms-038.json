@@ -1,0 +1,76 @@
+{
+ "book": "psalms",
+ "chapter": 38,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:32:04+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Ge'ez 1 combines the title with the opening of Greek 2; Ge'ez 2 completes Greek 2."
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-6",
+   "greek": "5",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the request to know his end from the number of his days and what he lacks."
+  },
+  {
+   "geez": "7-8",
+   "greek": "6",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the days and existence clauses from the declaration that every living person is vanity."
+  },
+  {
+   "geez": "9-10",
+   "greek": "7",
+   "confidence": 0.85,
+   "note": "Ge'ez separates walking in a shadow and vain agitation from gathering treasures for an unknown recipient."
+  },
+  {
+   "geez": "11",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13-15",
+   "greek": "10-12",
+   "confidence": 0.8,
+   "note": "Ge'ez 13 contains Greek 10 and the opening of 11; Ge'ez 14 completes 11 and begins 12; Ge'ez 15 completes 12."
+  },
+  {
+   "geez": "16",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

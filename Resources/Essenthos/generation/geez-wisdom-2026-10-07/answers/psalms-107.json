@@ -1,0 +1,70 @@
+{
+ "book": "psalms",
+ "chapter": 107,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:40:56+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines David's title with the ready-heart and singing verse."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-7",
+   "greek": "6-8",
+   "confidence": 0.8,
+   "note": "Divisions cross: Ge'ez 5 begins Greek 7; Ge'ez 6 completes Greek 7 and begins Greek 8; Ge'ez 7 completes Greek 8."
+  },
+  {
+   "geez": "8-10",
+   "greek": "9-10",
+   "confidence": 0.8,
+   "note": "Ge'ez 9 joins Judah, ending Greek 9, with Moab, beginning Greek 10; Ge'ez 10 completes Greek 10."
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

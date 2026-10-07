@@ -1,0 +1,82 @@
+{
+ "book": "psalms",
+ "chapter": 18,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:29:46+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Ge'ez combines the title and the heavens declaring God's glory."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-7",
+   "greek": "6-7",
+   "confidence": 0.8,
+   "note": "Ge'ez 6 joins the giant running his course to the sun's departure from heaven; the shared Greek verses require grouping."
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13-14",
+   "greek": "13-14",
+   "confidence": 0.85,
+   "note": "Ge'ez 13 includes Greek 13 and the opening plea concerning strangers in Greek 14; Ge'ez 14 completes Greek 14."
+  },
+  {
+   "geez": "15-16",
+   "greek": "15",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the closing invocation to the Lord, helper and redeemer, into verse 16."
+  }
+ ]
+}

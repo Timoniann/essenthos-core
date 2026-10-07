@@ -1,0 +1,1066 @@
+{
+ "book": "psalms",
+ "chapter": 118,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:43:09+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "25",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "26",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "28",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29",
+   "greek": "29",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "30",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "31",
+   "greek": "31",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "32",
+   "greek": "32",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "33",
+   "greek": "33",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "34",
+   "greek": "34",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "35",
+   "greek": "35",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "36",
+   "greek": "36",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "37",
+   "greek": "37",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "38",
+   "greek": "38",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "39",
+   "greek": "39",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "40",
+   "greek": "40",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "41",
+   "greek": "41",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "42",
+   "greek": "42",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "43",
+   "greek": "43",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "44",
+   "greek": "44",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "45",
+   "greek": "45",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "46",
+   "greek": "46",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "47",
+   "greek": "47",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "48",
+   "greek": "48",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "49",
+   "greek": "49",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "50",
+   "greek": "50",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "51",
+   "greek": "51",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "52",
+   "greek": "52",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "53",
+   "greek": "53",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "54",
+   "greek": "54",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "55",
+   "greek": "55",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "56",
+   "greek": "56",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "57",
+   "greek": "57",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "58",
+   "greek": "58",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "59",
+   "greek": "59",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "60",
+   "greek": "60",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "61",
+   "greek": "61",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "62",
+   "greek": "62",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "63",
+   "greek": "63",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "64",
+   "greek": "64",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "65",
+   "greek": "65",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "66",
+   "greek": "66",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "67",
+   "greek": "67",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "68",
+   "greek": "68",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "69",
+   "greek": "69",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "70",
+   "greek": "70",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "71",
+   "greek": "71",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "72",
+   "greek": "72",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "73",
+   "greek": "73",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "74",
+   "greek": "74",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "75",
+   "greek": "75",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "76",
+   "greek": "76",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "77",
+   "greek": "77",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "78",
+   "greek": "78",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "79",
+   "greek": "79",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "80",
+   "greek": "80",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "81",
+   "greek": "81",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "82",
+   "greek": "82",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "83",
+   "greek": "83",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "84",
+   "greek": "84",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "85",
+   "greek": "85",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "86",
+   "greek": "86",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "87",
+   "greek": "87",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "88",
+   "greek": "88",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "89",
+   "greek": "89",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "90",
+   "greek": "90",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "91",
+   "greek": "91",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "92",
+   "greek": "92",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "93",
+   "greek": "93",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "94",
+   "greek": "94",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "95",
+   "greek": "95",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "96",
+   "greek": "96",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "97",
+   "greek": "97",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "98",
+   "greek": "98",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "99",
+   "greek": "99",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "100",
+   "greek": "100",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "101",
+   "greek": "101",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "102",
+   "greek": "102",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "103",
+   "greek": "103",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "104",
+   "greek": "104",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "105",
+   "greek": "105",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "106",
+   "greek": "106",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "107",
+   "greek": "107",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "108",
+   "greek": "108",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "109",
+   "greek": "109",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "110",
+   "greek": "110",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "111",
+   "greek": "111",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "112",
+   "greek": "112",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "113",
+   "greek": "113",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "114",
+   "greek": "114",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "115",
+   "greek": "115",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "116",
+   "greek": "116",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "117",
+   "greek": "117",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "118",
+   "greek": "118",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "119",
+   "greek": "119",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "120",
+   "greek": "120",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "121",
+   "greek": "121",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "122",
+   "greek": "122",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "123",
+   "greek": "123",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "124",
+   "greek": "124",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "125",
+   "greek": "125",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "126",
+   "greek": "126",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "127",
+   "greek": "127",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "128",
+   "greek": "128",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "129",
+   "greek": "129",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "130",
+   "greek": "130",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "131",
+   "greek": "131",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "132",
+   "greek": "132",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "133",
+   "greek": "133",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "134",
+   "greek": "134",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "135",
+   "greek": "135",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "136",
+   "greek": "136",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "137",
+   "greek": "137",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "138",
+   "greek": "138",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "139",
+   "greek": "139",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "140",
+   "greek": "140",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "141",
+   "greek": "141",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "142",
+   "greek": "142",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "143",
+   "greek": "143",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "144",
+   "greek": "144",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "145",
+   "greek": "145",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "146",
+   "greek": "146",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "147",
+   "greek": "147",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "148",
+   "greek": "148",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "149",
+   "greek": "149",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "150",
+   "greek": "150",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "151",
+   "greek": "151",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "152",
+   "greek": "152",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "153",
+   "greek": "153",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "154",
+   "greek": "154",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "155",
+   "greek": "155",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "156",
+   "greek": "156",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "157",
+   "greek": "157",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "158",
+   "greek": "158",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "159",
+   "greek": "159",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "160",
+   "greek": "160",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "161",
+   "greek": "161",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "162",
+   "greek": "162",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "163",
+   "greek": "163",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "164",
+   "greek": "164",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "165",
+   "greek": "165",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "166",
+   "greek": "166",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "167",
+   "greek": "167",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "168",
+   "greek": "168",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "169",
+   "greek": "169",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "170",
+   "greek": "170",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "171",
+   "greek": "171",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "172",
+   "greek": "172",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "173",
+   "greek": "173",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "174",
+   "greek": "174",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "175",
+   "greek": "175",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "176",
+   "greek": "176",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

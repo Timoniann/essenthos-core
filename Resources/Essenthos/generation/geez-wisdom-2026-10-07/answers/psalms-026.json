@@ -1,0 +1,88 @@
+{
+ "book": "psalms",
+ "chapter": 26,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:30:42+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the title and the two clauses about the Lord as light, saviour, and defender across two verses."
+  },
+  {
+   "geez": "3-4",
+   "greek": "2",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the evildoers approaching to eat his flesh from the enemies weakening and falling."
+  },
+  {
+   "geez": "5-6",
+   "greek": "3",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the army and fearless heart from the war and confidence."
+  },
+  {
+   "geez": "7-8",
+   "greek": "4",
+   "confidence": 0.85,
+   "note": "Ge'ez separates dwelling in the Lord's house from beholding his beauty and visiting his temple."
+  },
+  {
+   "geez": "9-11",
+   "greek": "5-6",
+   "confidence": 0.8,
+   "note": "The divisions overlap: Ge'ez 10 joins the rock clause ending Greek 5 to the lifted-head clause beginning Greek 6; Ge'ez 9 and 11 complete those Greek verses."
+  },
+  {
+   "geez": "12",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14-15",
+   "greek": "9",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the pleas not to turn away in anger from the pleas for help and against abandonment."
+  },
+  {
+   "geez": "16",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

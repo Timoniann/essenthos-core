@@ -1,0 +1,72 @@
+{
+ "book": "song-of-solomon",
+ "chapter": 6,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:46:26+00:00",
+ "greek_unused": [
+  3
+ ],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3-4",
+   "greek": "4",
+   "confidence": 0.8,
+   "note": "The companion/Pleasure and Jerusalem/armies clauses divide Greek verse 4."
+  },
+  {
+   "geez": "5-7",
+   "greek": "5-7",
+   "confidence": 0.8,
+   "note": "Shared hair and lips clauses link these divisions: Ge'ez 6 spans Greek 5-6, and Ge'ez 7 spans Greek 6-7."
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9-10",
+   "greek": "9",
+   "confidence": 0.8,
+   "note": "The dove and mother/praise clauses divide Greek verse 9; Ge'ez adds silver wings and golden plumage."
+  },
+  {
+   "geez": "11",
+   "greek": "10",
+   "confidence": 0.85,
+   "note": "Matches dawn, moon, sun, and armies; Ge'ez adds a clause about her mysterious movements."
+  },
+  {
+   "geez": "12",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "",
+   "confidence": 0.9,
+   "note": "The summons to return, Shulamite, has no counterpart in the supplied Greek chapter."
+  }
+ ]
+}

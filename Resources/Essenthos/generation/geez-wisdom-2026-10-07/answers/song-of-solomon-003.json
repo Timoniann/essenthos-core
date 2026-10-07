@@ -1,0 +1,76 @@
+{
+ "book": "song-of-solomon",
+ "chapter": 3,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:46:01+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.85,
+   "note": "The bed, night, search, and unanswered call match; the opening gazelle and mountains passage has no counterpart in this Greek chapter."
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.85,
+   "note": "Matches the search through the city, markets, and streets; Ge'ez adds an unanswered-call refrain."
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.85,
+   "note": "Matches the adjuration to Jerusalem's daughters and awakening love; Ge'ez expands it with resurrection language."
+  },
+  {
+   "geez": "6-7",
+   "greek": "6",
+   "confidence": 0.8,
+   "note": "Ge'ez splits the wilderness and smoke imagery from the myrrh, frankincense, and perfumer's powders, adding cloud and breast imagery."
+  },
+  {
+   "geez": "8",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11-12",
+   "greek": "10",
+   "confidence": 0.8,
+   "note": "Silver pillars begin in Ge'ez 11; gold support, purple seat, interior pavement, and Jerusalem's daughters continue in 12, with added gemstones."
+  },
+  {
+   "geez": "13",
+   "greek": "11",
+   "confidence": 0.85,
+   "note": "Matches Zion's daughters, Solomon's crown, his mother, wedding, and gladness; Ge'ez adds suffering and crucifixion days."
+  }
+ ]
+}

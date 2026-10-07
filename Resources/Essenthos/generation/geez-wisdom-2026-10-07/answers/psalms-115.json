@@ -1,0 +1,53 @@
+{
+ "book": "psalms",
+ "chapter": 115,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07",
+ "greek_unused": [],
+ "accepted_by": "lead, by reading (validator refused only because of PRB-0972)",
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5-6",
+   "confidence": 0.85,
+   "note": "Combines paying vows and the precious death of the saints. The second Greek verse labelled 4 is treated as verse 5. Greek 5 is the verse GRCBRENT serves as a second 4 (PRB-0972); accepted by the lead after reading."
+  },
+  {
+   "geez": "6-7",
+   "greek": "7-8",
+   "confidence": 0.8,
+   "note": "Greek 7 is split between Ge'ez 6 and 7; Ge'ez 7 continues with Greek 8 and repeats the invocation of the Lord's name."
+  },
+  {
+   "geez": "8",
+   "greek": "9-10",
+   "confidence": 0.85,
+   "note": "Combines paying vows before the people with the courts of the Lord's house in Jerusalem."
+  }
+ ]
+}

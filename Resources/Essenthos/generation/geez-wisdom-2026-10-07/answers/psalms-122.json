@@ -1,0 +1,34 @@
+{
+ "book": "psalms",
+ "chapter": 122,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:42:35+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2-3",
+   "greek": "2",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the servants' eyes from the maidservant's eyes and the concluding appeal; together they match Greek verse 2."
+  },
+  {
+   "geez": "4",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

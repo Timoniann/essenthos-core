@@ -1,0 +1,40 @@
+{
+ "book": "psalms",
+ "chapter": 52,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:33:58+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Ge'ez 1 combines the title with the fool's declaration; Ge'ez 2 completes Greek 2."
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-7",
+   "greek": "5-6",
+   "confidence": 0.8,
+   "note": "Ge'ez 6 bridges Greek 5's closing clause and Greek 6's fear clause, requiring the three Ge'ez verses to be joined."
+  },
+  {
+   "geez": "8-9",
+   "greek": "7",
+   "confidence": 0.8,
+   "note": "Ge'ez 8 gives salvation from Zion and the return from captivity; Ge'ez 9 completes Greek 7 with Jacob and Israel rejoicing."
+  }
+ ]
+}

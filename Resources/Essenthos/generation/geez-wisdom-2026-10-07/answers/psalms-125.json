@@ -1,0 +1,46 @@
+{
+ "book": "psalms",
+ "chapter": 125,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:42:54+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2-3",
+   "greek": "2",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the joyful mouth and tongue from the nations' declaration; both are in Greek verse 2."
+  },
+  {
+   "geez": "4",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7-8",
+   "greek": "6",
+   "confidence": 0.85,
+   "note": "Ge'ez separates going out weeping with seed from returning joyfully with sheaves; Greek combines both."
+  }
+ ]
+}

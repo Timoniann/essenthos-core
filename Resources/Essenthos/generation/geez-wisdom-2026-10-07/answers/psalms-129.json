@@ -1,0 +1,40 @@
+{
+ "book": "psalms",
+ "chapter": 129,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:43:24+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1-2",
+   "greek": "1-2",
+   "confidence": 0.8,
+   "note": "Ge'ez 1 includes Greek 1 and the opening of Greek 2; Ge'ez 2 completes Greek 2."
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-7",
+   "greek": "5-7",
+   "confidence": 0.8,
+   "note": "Ge'ez 5 includes Greek 5 and the opening of Greek 6; Ge'ez 6 continues Greek 6 and begins Greek 7; Ge'ez 7 completes Greek 7."
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

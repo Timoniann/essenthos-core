@@ -1,0 +1,52 @@
+{
+ "book": "psalms",
+ "chapter": 10,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:28:52+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-5",
+   "greek": "4",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the temple and heavenly throne from the eyes and eyelids clauses of Greek verse 4."
+  },
+  {
+   "geez": "6",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

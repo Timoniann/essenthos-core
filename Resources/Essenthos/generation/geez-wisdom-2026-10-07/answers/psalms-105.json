@@ -1,0 +1,250 @@
+{
+ "book": "psalms",
+ "chapter": 105,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:40:58+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7-8",
+   "greek": "7",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the Red Sea provocation from the preceding clauses of Greek 7."
+  },
+  {
+   "geez": "9",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "21-22",
+   "confidence": 0.85,
+   "note": "Ge'ez combines forgetting God with his wonders in Egypt, Cham, and the Red Sea."
+  },
+  {
+   "geez": "23-25",
+   "greek": "23-25",
+   "confidence": 0.8,
+   "note": "Greek 23 is split across Ge'ez 23-24, and Greek 24 across Ge'ez 24-25; Ge'ez 25 also contains Greek 25."
+  },
+  {
+   "geez": "26",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "28",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29",
+   "greek": "29",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "30",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "31",
+   "greek": "31",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "32-33",
+   "greek": "32-34",
+   "confidence": 0.8,
+   "note": "Greek 33 is split across Ge'ez 32-33; these verses also include Greek 32 and 34."
+  },
+  {
+   "geez": "34",
+   "greek": "35-36",
+   "confidence": 0.85,
+   "note": "Ge'ez combines mingling with the nations and learning their works with serving their idols."
+  },
+  {
+   "geez": "35",
+   "greek": "37",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "36-37",
+   "greek": "38-39",
+   "confidence": 0.8,
+   "note": "Greek 38 is split across Ge'ez 36-37; Ge'ez 37 continues with the pollution and whoredom of Greek 39."
+  },
+  {
+   "geez": "38",
+   "greek": "40",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "39",
+   "greek": "41",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "40-41",
+   "greek": "42-43",
+   "confidence": 0.8,
+   "note": "Ge'ez 40 contains Greek 42 and the opening deliverance clause of Greek 43; Ge'ez 41 completes Greek 43."
+  },
+  {
+   "geez": "42",
+   "greek": "44",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "43",
+   "greek": "45",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "44",
+   "greek": "46",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "45-46",
+   "greek": "47",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the plea for salvation and gathering from its purpose: thanksgiving and glorying in God's praise."
+  },
+  {
+   "geez": "47",
+   "greek": "48",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+{
+ "book": "psalms",
+ "chapter": 14,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:29:21+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2-4",
+   "greek": "2-3",
+   "confidence": 0.8,
+   "note": "Ge'ez 3 joins the heart-truth clause of Greek 2 to the tongue clause of Greek 3; Ge'ez 2 and 4 complete those verses."
+  },
+  {
+   "geez": "5-7",
+   "greek": "4-5",
+   "confidence": 0.8,
+   "note": "Ge'ez 6 joins the oath clause of Greek 4 to the usury and bribes clauses of Greek 5; Ge'ez 5 and 7 complete those verses."
+  }
+ ]
+}

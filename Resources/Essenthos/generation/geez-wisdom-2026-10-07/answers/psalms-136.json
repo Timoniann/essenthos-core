@@ -1,0 +1,64 @@
+{
+ "book": "psalms",
+ "chapter": 136,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:43:57+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3-4",
+   "greek": "3",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the captors' request and the command to sing songs of Zion."
+  },
+  {
+   "geez": "5",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7-8",
+   "greek": "6",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the tongue clinging to the throat and preferring Jerusalem above one's joy."
+  },
+  {
+   "geez": "9-10",
+   "greek": "7",
+   "confidence": 0.85,
+   "note": "Ge'ez splits the remembrance of Edom and their command to raze Jerusalem to its foundations."
+  },
+  {
+   "geez": "11",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

@@ -1,0 +1,88 @@
+{
+ "book": "song-of-solomon",
+ "chapter": 2,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:45:55+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "7",
+   "confidence": 0.85,
+   "note": "Same adjuration to Jerusalem's daughters; Ge'ez expands the waking clause with raising all the dead."
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11-14",
+   "greek": "11-14",
+   "confidence": 0.8,
+   "note": "Crossing divisions require joining: Ge'ez 11 includes Greek 12's flowers; 12 includes Greek 13's figs and vines; 13 joins Greek 13's invitation to Greek 14's rock shelter; 14 completes Greek 14."
+  },
+  {
+   "geez": "15",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16-18",
+   "greek": "16-17",
+   "confidence": 0.8,
+   "note": "Ge'ez 17 joins Greek 16's feeding among lilies to Greek 17's day and shadows; 18 continues Greek 17's return and roe comparison, with variant added clauses. Ge'ez 16 also adds clauses about the beloved's mighty right arm."
+  }
+ ]
+}

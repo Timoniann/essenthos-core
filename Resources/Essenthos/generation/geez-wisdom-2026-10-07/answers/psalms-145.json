@@ -1,0 +1,46 @@
+{
+ "book": "psalms",
+ "chapter": 145,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:45:08+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the shared title and praise of Greek 1 with lifelong praise in Greek 2."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-7",
+   "greek": "5-8",
+   "confidence": 0.8,
+   "note": "Joined because Ge'ez boundaries split Greek 6, 7, and 8; raising the fallen precedes giving wisdom to the blind in Ge'ez."
+  },
+  {
+   "geez": "8",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

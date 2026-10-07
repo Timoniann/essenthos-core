@@ -1,0 +1,100 @@
+{
+ "book": "psalms",
+ "chapter": 76,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:37:04+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the title and the cry to God."
+  },
+  {
+   "geez": "2-3",
+   "greek": "3-4",
+   "confidence": 0.85,
+   "note": "Greek 3's refusal of comfort begins Ge'ez 3, followed by Greek 4's remembrance and complaint."
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-6",
+   "greek": "6-7",
+   "confidence": 0.85,
+   "note": "Ge'ez 5 includes Greek 7's opening meditation clause; Ge'ez 6 continues the nighttime communion and searching."
+  },
+  {
+   "geez": "7",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13-14",
+   "greek": "14-16",
+   "confidence": 0.85,
+   "note": "Greek 15 is split: doing wonders ends Ge'ez 13; revealing power begins Ge'ez 14, followed by redemption."
+  },
+  {
+   "geez": "15-16",
+   "greek": "17-18",
+   "confidence": 0.85,
+   "note": "Greek 17's troubled depths begin Ge'ez 16, followed by Greek 18's waters, clouds, and arrows."
+  },
+  {
+   "geez": "17-18",
+   "greek": "19",
+   "confidence": 0.85,
+   "note": "Splits the thunder clause from the lightning and trembling earth clauses."
+  },
+  {
+   "geez": "19",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

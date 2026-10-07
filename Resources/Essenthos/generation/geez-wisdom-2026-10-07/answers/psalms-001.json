@@ -1,0 +1,46 @@
+{
+ "book": "psalms",
+ "chapter": 1,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:28:16+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.85,
+   "note": "Includes an introductory heading absent from Greek; the main text matches Greek verse 1."
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3-4",
+   "greek": "3",
+   "confidence": 0.8,
+   "note": "Ge'ez splits the tree and fruit clauses from the leaf and prosperity clauses of Greek verse 3."
+  },
+  {
+   "geez": "5",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

@@ -1,0 +1,70 @@
+{
+ "book": "psalms",
+ "chapter": 75,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:37:01+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the title and opening statement about God in Judah and Israel; omits the Assyrian phrase."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.85,
+   "note": "Matches the broken bows and weapons, with an additional repeated clause about breaking horns."
+  },
+  {
+   "geez": "4-5",
+   "greek": "5-6",
+   "confidence": 0.8,
+   "note": "Ge'ez 4 combines Greek 5 with the opening of Greek 6; Ge'ez 5 completes Greek 6."
+  },
+  {
+   "geez": "6",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "10",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11-12",
+   "greek": "12-13",
+   "confidence": 0.85,
+   "note": "Ge'ez 11 includes the opening 'to the terrible one' of Greek 13; Ge'ez 12 completes that verse."
+  }
+ ]
+}

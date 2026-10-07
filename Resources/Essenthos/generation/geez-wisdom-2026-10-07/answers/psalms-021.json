@@ -1,0 +1,172 @@
+{
+ "book": "psalms",
+ "chapter": 21,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:30:20+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Ge'ez combines the morning-aid title with the opening prayer."
+  },
+  {
+   "geez": "2",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9-10",
+   "greek": "10-11",
+   "confidence": 0.8,
+   "note": "Ge'ez 9 includes Greek 10 and the first clause of Greek 11; Ge'ez 10 completes Greek 11."
+  },
+  {
+   "geez": "11",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14-15",
+   "greek": "15",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the poured-out water and scattered bones from the heart melting like wax."
+  },
+  {
+   "geez": "16",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "20",
+   "greek": "20",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "21",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "24-26",
+   "greek": "24-25",
+   "confidence": 0.8,
+   "note": "Ge'ez 25 joins the final Israel clause of Greek 24 to the opening poor-supplicant clause of Greek 25; Ge'ez 26 completes Greek 25."
+  },
+  {
+   "geez": "27",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29-30",
+   "greek": "28",
+   "confidence": 0.85,
+   "note": "Ge'ez separates the ends of the earth turning to the Lord from the nations worshipping."
+  },
+  {
+   "geez": "31",
+   "greek": "29",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "32-34",
+   "greek": "30-32",
+   "confidence": 0.8,
+   "note": "Ge'ez 33 joins the soul-living clause of Greek 30 to the seed-serving clause of Greek 31; Ge'ez 34 completes Greek 31 and includes Greek 32."
+  }
+ ]
+}

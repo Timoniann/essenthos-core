@@ -1,0 +1,214 @@
+{
+ "book": "psalms",
+ "chapter": 68,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:36:09+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1-2",
+   "confidence": 0.85,
+   "note": "Combines the title and the plea for salvation from rising waters."
+  },
+  {
+   "geez": "2-3",
+   "greek": "3",
+   "confidence": 0.85,
+   "note": "Splits the deep mire and overwhelming sea clauses."
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5-6",
+   "greek": "5",
+   "confidence": 0.85,
+   "note": "Splits the numerous haters from the strengthened enemies and repayment clauses."
+  },
+  {
+   "geez": "7",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8-9",
+   "greek": "7",
+   "confidence": 0.85,
+   "note": "Splits the two pleas that God's followers not be ashamed."
+  },
+  {
+   "geez": "10",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "11",
+   "greek": "9",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "12",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "13",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16-17",
+   "greek": "14",
+   "confidence": 0.85,
+   "note": "Splits the prayer at the favorable time from the appeal to mercy and salvation."
+  },
+  {
+   "geez": "18-19",
+   "greek": "15-16",
+   "confidence": 0.8,
+   "note": "Verse 18 includes Greek 15 and the opening flood clause of Greek 16; verse 19 completes Greek 16."
+  },
+  {
+   "geez": "20",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "21",
+   "greek": "18",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "22",
+   "greek": "19",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "23-25",
+   "greek": "20-21",
+   "confidence": 0.8,
+   "note": "Verse 24 bridges Greek 20's final affliction clause and Greek 21's opening reproach clause; verse 25 completes the lament."
+  },
+  {
+   "geez": "26",
+   "greek": "22",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "27",
+   "greek": "23",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "28",
+   "greek": "24",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "29",
+   "greek": "25",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "30",
+   "greek": "26",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "31",
+   "greek": "27",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "32",
+   "greek": "28",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "33",
+   "greek": "29",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "34",
+   "greek": "30",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "35",
+   "greek": "31",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "36",
+   "greek": "32",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "37",
+   "greek": "33",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "38",
+   "greek": "34",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "39",
+   "greek": "35",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "40-41",
+   "greek": "36",
+   "confidence": 0.85,
+   "note": "Splits Zion's salvation and Judah's rebuilding from dwelling there and inheriting it."
+  },
+  {
+   "geez": "42",
+   "greek": "37",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

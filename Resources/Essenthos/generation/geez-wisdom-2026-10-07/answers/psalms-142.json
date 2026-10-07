@@ -1,0 +1,58 @@
+{
+ "book": "psalms",
+ "chapter": 142,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:44:48+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3-4",
+   "greek": "3-4",
+   "confidence": 0.8,
+   "note": "Ge'ez 4 begins with the final darkness clause of Greek 3, then includes Greek 4."
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7-8",
+   "greek": "7",
+   "confidence": 0.85,
+   "note": "Ge'ez splits Greek 7 after the plea for speedy hearing and the failing spirit."
+  },
+  {
+   "geez": "9-10",
+   "greek": "8",
+   "confidence": 0.85,
+   "note": "Ge'ez splits Greek 8 between morning mercy and guidance in the way."
+  },
+  {
+   "geez": "11-14",
+   "greek": "9-12",
+   "confidence": 0.8,
+   "note": "Overlapping divisions require joining: Ge'ez 11 covers Greek 9 and the start of 10; 12 finishes 10 and starts 11; 13 finishes 11 and starts 12; 14 finishes 12."
+  }
+ ]
+}

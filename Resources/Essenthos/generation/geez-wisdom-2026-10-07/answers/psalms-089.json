@@ -1,0 +1,94 @@
+{
+ "book": "psalms",
+ "chapter": 89,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:38:38+00:00",
+ "greek_unused": [],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4-6",
+   "greek": "4-6",
+   "confidence": 0.8,
+   "note": "Ge'ez 5 joins the night watch from Greek 4 to the vain years from Greek 5; Ge'ez 6 joins Greek 5's morning grass to Greek 6's flowering and withering."
+  },
+  {
+   "geez": "7",
+   "greek": "7",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "8",
+   "greek": "8",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "9-12",
+   "greek": "9-10",
+   "confidence": 0.8,
+   "note": "Ge'ez 10 joins Greek 9's spider comparison to Greek 10's seventy years; Ge'ez 11-12 continue Greek 10's eighty years, toil, weakness, and chastening."
+  },
+  {
+   "geez": "13",
+   "greek": "11",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "14",
+   "greek": "12",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "15",
+   "greek": "13",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "16",
+   "greek": "14",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "17",
+   "greek": "15",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "18",
+   "greek": "16",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "19",
+   "greek": "17",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}

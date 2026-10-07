@@ -1,0 +1,68 @@
+{
+ "book": "job",
+ "chapter": 2,
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T12:19:55+00:00",
+ "greek_unused": [
+  11,
+  12,
+  13
+ ],
+ "lines": [
+  {
+   "geez": "1",
+   "greek": "1",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "2",
+   "greek": "2",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "3",
+   "greek": "3",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "4",
+   "greek": "4",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "5",
+   "greek": "5",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "6",
+   "greek": "6",
+   "confidence": 0.9,
+   "note": ""
+  },
+  {
+   "geez": "7",
+   "greek": "7-8",
+   "confidence": 0.85,
+   "note": "Combines Satan striking Job with boils and Job scraping himself outside the city."
+  },
+  {
+   "geez": "9-11",
+   "greek": "9",
+   "confidence": 0.85,
+   "note": "Divides the wife's extended speech across three verses; all Greek clauses labeled 9 belong to this passage."
+  },
+  {
+   "geez": "12",
+   "greek": "10",
+   "confidence": 0.9,
+   "note": ""
+  }
+ ]
+}
