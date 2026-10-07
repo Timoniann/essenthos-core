@@ -18,6 +18,9 @@ public class StrongParsedEntry
     public string? SeeAlso { get; init; }
     public string? SourceLanguage { get; init; }
     public string? TwotReference { get; init; }
+
+    /// <summary>What the etymology says about other entries, read before it is flattened to prose.</summary>
+    public IReadOnlyList<StatedRelation> Relations { get; init; } = [];
 }
 
 public partial class StrongXmlParser
@@ -119,6 +122,7 @@ public partial class StrongXmlParser
                 Derivation = derivation,
                 KjvDefinition = kjvDefinition,
                 SeeAlso = seeAlso,
+                Relations = StrongEtymology.Read(strongNumber, GreekParts(strongNumber, entry.Element("strongs_derivation"))),
             });
         }
 
@@ -354,10 +358,113 @@ public partial class StrongXmlParser
                 KjvDefinition = CleanText(kjvDefinition),
                 DetailedDefinition = detailedDefinition,
                 SeeAlso = seeAlso,
+                Relations = StrongEtymology.Read(strongNumber, HebrewParts(exegesis, ns)),
             });
         }
 
         return entries;
+    }
+
+    /// <summary>
+    /// A Greek derivation as words and references, the way <see cref="GetInnerTextWithRefs"/> writes
+    /// it, with the few references the file leaves as bare numbers read as references too.
+    /// </summary>
+    private static List<EtymologyPart> GreekParts(string number, XElement? element)
+    {
+        var parts = new List<EtymologyPart>();
+        if (element is null)
+        {
+            return parts;
+        }
+
+        BareReferences.TryGetValue(number, out var bare);
+        foreach (var node in element.Nodes())
+        {
+            switch (node)
+            {
+                case XText text:
+                    AddWords(parts, text.Value, bare);
+                    break;
+                case XElement { Name.LocalName: "strongsref" } reference when reference.Attribute("strongs")?.Value is { } digits:
+                {
+                    var referenced = (reference.Attribute("language")?.Value == "HEBREW" ? "H" : "G") + int.Parse(digits);
+                    parts.Add(new EtymologyPart(referenced, referenced));
+                    break;
+                }
+                case XElement { Name.LocalName: "greek" } greek:
+                    parts.Add(new EtymologyPart(greek.Attribute("unicode")?.Value ?? string.Empty));
+                    break;
+                case XElement { Name.LocalName: "pronunciation" } pronunciation:
+                    parts.Add(new EtymologyPart(pronunciation.Attribute("strongs")?.Value ?? string.Empty));
+                    break;
+                case XElement other:
+                    AddWords(parts, other.Value, bare);
+                    break;
+            }
+        }
+
+        return parts;
+    }
+
+    private static void AddWords(List<EtymologyPart> parts, string text, (string Written, string Number)[]? bare)
+    {
+        if (bare is null)
+        {
+            parts.Add(new EtymologyPart(text));
+            return;
+        }
+
+        var at = 0;
+        foreach (Match match in Regex.Matches(text, @"(?<![\w:])\d+(?![\w:])"))
+        {
+            if (bare.FirstOrDefault(b => b.Written == match.Value) is not { Number: { } referenced })
+            {
+                continue;
+            }
+
+            parts.Add(new EtymologyPart(text[at..match.Index]));
+            parts.Add(new EtymologyPart(referenced, referenced));
+            at = match.Index + match.Length;
+        }
+
+        parts.Add(new EtymologyPart(text[at..]));
+    }
+
+    /// <summary>A Hebrew etymology note as words and references, each reference written as its lemma and number.</summary>
+    private static List<EtymologyPart> HebrewParts(XElement? element, XNamespace ns)
+    {
+        var parts = new List<EtymologyPart>();
+        if (element is null)
+        {
+            return parts;
+        }
+
+        foreach (var node in element.Nodes())
+        {
+            switch (node)
+            {
+                case XText text:
+                    parts.Add(new EtymologyPart(text.Value));
+                    break;
+                case XElement child when child.Name == ns + "w" && child.Attribute("src")?.Value is { Length: > 0 } src:
+                {
+                    var lemma = child.Attribute("lemma")?.Value ?? child.Value;
+                    var referenced = "H" + (src.TrimStart('0') is { Length: > 0 } digits ? digits : src);
+                    parts.Add(new EtymologyPart($"{lemma} ({referenced})", referenced));
+                    break;
+                }
+                case XElement child when child.Name == ns + "w":
+                    parts.Add(new EtymologyPart(child.Attribute("lemma")?.Value ?? child.Value));
+                    break;
+                case XElement child when child.Name == ns + "note":
+                    break;
+                case XElement child:
+                    parts.Add(new EtymologyPart(child.Value));
+                    break;
+            }
+        }
+
+        return parts;
     }
 
     /// <summary>

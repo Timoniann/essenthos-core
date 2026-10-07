@@ -1,5 +1,6 @@
 ﻿using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Strong;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -298,6 +299,9 @@ public class AppDbContext : DbContext
     public DbSet<StrongReach> StrongReaches { get; set; } = null!;
 
     public DbSet<StrongReachMethod> StrongReachMethods { get; set; } = null!;
+
+    /// <summary>What one Strong entry's etymology says about another, read from the source's own words.</summary>
+    public DbSet<StrongRelation> StrongRelations { get; set; } = null!;
 
     /// <summary>
     /// Which word names which person, place or people. The encyclopedia says a verse names
@@ -1317,6 +1321,23 @@ public class AppDbContext : DbContext
             {
                 t.HasCheckConstraint("ck_strong_reach_method_links", "links > 0");
                 t.HasComment("The links a strong_reach row counts, by the method that made them.");
+            });
+        });
+
+        modelBuilder.Entity<StrongRelation>(entity =>
+        {
+            entity.ToTable("strong_relation", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_strong_relation_kind",
+                    $"kind IN ({string.Join(", ", StrongRelationKinds.All.Select(kind => $"'{kind}'"))})");
+                t.HasCheckConstraint(
+                    "ck_strong_relation_to_number",
+                    $"(to_number IS NULL) = (kind = '{StrongRelationKinds.Primitive}')");
+                t.HasCheckConstraint("ck_strong_relation_source", "length(statement) > 0 AND length(source) > 0");
+                t.HasComment(
+                    "What one Strong entry's etymology says about another, with the clause it was read from "
+                    + "and whose reading it is. Keyed on numbers: a claim about two words of the language.");
             });
         });
     }
