@@ -529,6 +529,10 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                  AND coalesce(lexicon.definition, '') !~ '^[[:upper:]][[:alpha:]]+, ')
         """;
 
+    /// <summary>
+    /// The Greek numbers the lexicon writes as a name and the encyclopedia answers with exactly one
+    /// entity. Takes <c>@witnesses</c>.
+    /// </summary>
     private static readonly string GreekResolvable =
         $"""
          SELECT number, min(entity_id) AS entity_id

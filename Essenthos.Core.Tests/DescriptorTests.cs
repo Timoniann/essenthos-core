@@ -570,6 +570,27 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
+    /// A verse can state company in none of the guard's words: <em>there remained two of the men in the
+    /// camp, ... Eldad, and ... Medad</em>. A person who read it and decided the clause is taken at
+    /// their word; the pass's own reading of the same verse is still refused.
+    /// </summary>
+    [Fact]
+    public async Task ACompanionAPersonDecidedStandsWhereTheGuardsWordsAreAbsent()
+    {
+        Corpus.Add(_db, Bible4uTextSource.KingJames, TextKind.Translation, "eng",
+            (5, 3, ["there", "remained", "two", "of", "the", "men", "in", "the", "camp", "Eldad", "Medad"]));
+        Add("eldad-1", EntityKind.Person, "Eldad", null, (1, 5, 3));
+        Add("medad-1", EntityKind.Person, "Medad", null, (1, 5, 3));
+        await _db.SaveChangesAsync();
+
+        var outcome = await Load("companions-decided");
+
+        outcome.Refused.Unaccompanied.Should().Be(1, "the pass's reading still needs the verse's words");
+        (await _db.EntityDescriptors.Select(d => d.Entity!.Slug + " " + d.Method).ToListAsync())
+            .Should().Equal("medad-1 manual");
+    }
+
+    /// <summary>
     /// A brook is nobody's companion: <em>David ... came to the brook Besor</em> (1SA 30:9) names a
     /// place where he was, and a relation of company is said of someone. The man beside him at the
     /// same verse is kept.
@@ -588,6 +609,179 @@ public sealed class DescriptorTests : IDisposable
 
         outcome.Refused.Inadmissible.Should().Be(1, "a brook is not anybody's companion");
         (await _db.EntityDescriptors.Select(d => d.Entity!.Slug).ToListAsync()).Should().Equal("abiathar-1");
+    }
+
+    /// <summary>
+    /// Spanish does not decline its names, so where no pass produced a Spanish form the line names a
+    /// record as the Spanish text prints it, the way its record page and the lists already do:
+    /// <em>hijo de Ragüel</em>, not <em>hijo de Reuel</em>.
+    /// </summary>
+    [Fact]
+    public async Task ASpanishLineNamesARecordAsItsTextPrintsItWhereNoFormWasProduced()
+    {
+        await Load("described");
+        var text = Corpus.Add(_db, "RV1909", TextKind.Translation, "spa", (1, 1, ["Ragüel"]));
+        await _db.SaveChangesAsync();
+        _db.EntityRenderings.Add(new EntityRendering
+        {
+            EntityId = await _db.Entities.Where(e => e.Slug == "reuel-1").Select(e => e.Id).SingleAsync(),
+            TextId = text.Id,
+            Form = "Ragüel",
+            Folded = "raguel",
+            Occurrences = 3,
+            Heading = true,
+        });
+        await _db.SaveChangesAsync();
+
+        Line(await Read("hobab-1", "spa")).Should().StartWith("hijo de Ragüel");
+    }
+
+    /// <summary>
+    /// A clause the pass read in the Hebrew says so: the text and the word it rests on are stored with
+    /// it and sent with its claim, so a reader can tell a Hebrew reading from an English one.
+    /// </summary>
+    [Fact]
+    public async Task AClauseReadInTheHebrewSaysWhichTextAndWhichWord()
+    {
+        await Load("witnessed");
+
+        var stored = await _db.EntityDescriptors.SingleAsync();
+        stored.Witness.Should().Be("BHSA");
+        stored.Original.Should().Be("רְעוּאֵל");
+        var claim = (await Read("hobab-1", "eng"))!.Claims.Single();
+        claim.Witness.Should().Be("BHSA");
+        claim.Original.Should().Be("רְעוּאֵל");
+    }
+
+    /// <summary>
+    /// A clause loaded before the witness was kept is read again, once, and gains it.
+    /// </summary>
+    [Fact]
+    public async Task AClauseLoadedWithoutItsWitnessGainsItOnTheNextLoad()
+    {
+        await Load("witnessed");
+        await _db.EntityDescriptors.ExecuteUpdateAsync(s => s
+            .SetProperty(d => d.Witness, (string?)null)
+            .SetProperty(d => d.Original, (string?)null));
+
+        var outcome = await Load("witnessed");
+
+        outcome.Superseded.Should().Be(1);
+        (await _db.EntityDescriptors.SingleAsync()).Witness.Should().Be("BHSA");
+        (await Load("witnessed")).AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>
+    /// A people's clauses read the wrong way round. <em>Keilah the Garmite</em> makes Keilah a Garmite,
+    /// not the Garmites' forebear; <em>Doeg an Edomite</em> makes Doeg the Edomites', not the Edomites
+    /// Doeg's; and a land is nobody's forebear. <em>The sons of Dedan were Asshurim</em> and
+    /// <em>Casluhim, out of whom came Philistim</em> are a people's descent and stay, and so does Doeg's
+    /// own clause.
+    /// </summary>
+    [Fact]
+    public async Task APeoplesClauseThatTurnsTheVerseRoundIsRefused()
+    {
+        await SeedThePeoples();
+
+        var outcome = await Load("turned");
+
+        outcome.Refused.Mistargeted.Should().Be(2, "Doeg is a man and Edom here a land");
+        outcome.Refused.Members.Should().Be(1, "Keilah the Garmite is one of the Garmites");
+        outcome.Refused.UnknownRelation.Should().Be(1, "a claim the pass wrote with no relation is refused, not a failure");
+        (await _db.EntityDescriptors.Select(d => d.Entity!.Slug + " " + d.Relation + " " + d.Target!.Slug).ToListAsync())
+            .Should().BeEquivalentTo(
+                "doeg-1 of-people edomites",
+                "ashurites descendants-of dedan-1",
+                "philistines descendants-of casluhim");
+    }
+
+    /// <summary>
+    /// A clause loaded before these rules existed is read again and leaves, with the relationship read
+    /// off it, and the load after that has nothing left to take.
+    /// </summary>
+    [Fact]
+    public async Task APeoplesClauseLoadedTheWrongWayRoundLeavesOnTheNextLoad()
+    {
+        await SeedThePeoples();
+        var (records, _, _) = DescriptorFiles.Read(Fixtures("turned"));
+        var edomites = records.Single(r => r.Entity == "edomites");
+        var ids = await _db.Entities.ToDictionaryAsync(e => e.Slug, e => e.Id);
+        _db.EntityDescriptors.Add(new EntityDescriptor
+        {
+            EntityId = ids["edomites"],
+            Ordinal = 1,
+            Relation = DescriptorRelations.OfPeople,
+            TargetEntityId = ids["doeg-1"],
+            CanonicalBook = 1,
+            CanonicalChapter = 5,
+            CanonicalVerse = 3,
+            Method = LinkMethod.ModelReading,
+            Confidence = 0.4,
+            Source = EntityDescriptorLoader.SourcePrefix + " claude-sonnet-5, asked 2026-09-28",
+            Run = edomites.Run,
+        });
+        _db.EntityRelationships.Add(new EntityRelationship
+        {
+            FromEntityId = ids["edomites"],
+            ToEntityId = ids["doeg-1"],
+            Type = DescriptorRelations.OfPeople,
+            Category = RelationshipCategories.Read,
+            CanonicalBook = 1,
+            CanonicalChapter = 5,
+            CanonicalVerse = 3,
+            Method = LinkMethod.ModelReading,
+            Confidence = 0.4,
+            Source = EntityDescriptorLoader.SourcePrefix + " claude-sonnet-5, asked 2026-09-28",
+        });
+        await _db.SaveChangesAsync();
+
+        var outcome = await Load("turned");
+
+        outcome.Superseded.Should().Be(1);
+        (await _db.EntityDescriptors.CountAsync(d => d.EntityId == ids["edomites"])).Should().Be(0);
+        (await _db.EntityRelationships.CountAsync()).Should().Be(0);
+        var again = await Load("turned");
+        again.Superseded.Should().Be(0, "the second load has nothing left to withdraw");
+        again.AlreadyLoaded.Should().BeTrue();
+    }
+
+    private async Task SeedThePeoples()
+    {
+        Corpus.Add(_db, Bible4uTextSource.KingJames, TextKind.Translation, "eng",
+            (5, 1, ["Keilah", "the", "Garmite"]),
+            (5, 2, ["the", "sons", "of", "Dedan", "were", "Asshurim"]),
+            (5, 3, ["his", "name", "was", "Doeg", "an", "Edomite"]),
+            (5, 4, ["Casluhim", "out", "of", "whom", "came", "Philistim"]));
+        Add("garmites", EntityKind.People, "Garmites", null, (1, 5, 1));
+        Add("keilah-1", EntityKind.Person, "Keilah", null, (1, 5, 1));
+        Add("ashurites", EntityKind.People, "Ashurites", null, (1, 5, 2));
+        Add("dedan-1", EntityKind.Person, "Dedan", null, (1, 5, 2));
+        Add("edomites", EntityKind.People, "Edomites", null, (1, 5, 3));
+        Add("doeg-1", EntityKind.Person, "Doeg", null, (1, 5, 3));
+        Add("edom-region-1", EntityKind.Place, "Edom", null, (1, 5, 3));
+        Add("philistines", EntityKind.People, "Philistines", null, (1, 5, 4));
+        Add("casluhim", EntityKind.People, "Casluhim", null, (1, 5, 4));
+        await _db.SaveChangesAsync();
+
+        var words = await _db.Words.Select(w => new { w.Id, w.Surface }).ToListAsync();
+        var ids = await _db.Entities.ToDictionaryAsync(e => e.Slug, e => e.Id);
+        foreach (var (surface, slug) in new[]
+                 {
+                     ("Keilah", "keilah-1"), ("Garmite", "garmites"), ("Dedan", "dedan-1"),
+                     ("Asshurim", "ashurites"), ("Doeg", "doeg-1"), ("Edomite", "edomites"),
+                     ("Casluhim", "casluhim"), ("Philistim", "philistines"),
+                 })
+        {
+            _db.WordEntities.Add(new WordEntity
+            {
+                WordId = words.Single(w => w.Surface == surface).Id,
+                EntityId = ids[slug],
+                Method = LinkMethod.Manual,
+                Source = "a test",
+            });
+        }
+
+        await _db.SaveChangesAsync();
     }
 
     /// <summary>

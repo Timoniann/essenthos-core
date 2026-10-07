@@ -192,6 +192,14 @@ internal record EntityResponse(
     /// </summary>
     public Dictionary<string, string>? Forms { get; init; }
 
+    /// <summary>
+    /// <paramref name="Notes"/> in the reader's language, where this corpus wrote them and they were
+    /// rendered from the English the record says now. Null for an English reader, for a dataset's
+    /// notes, which stay its own words, and for notes rewritten since they were rendered — the
+    /// English is then what the page shows.
+    /// </summary>
+    public string? LocalNotes { get; init; }
+
     public EntityTribeResponse? TribeRecord { get; init; }
 
     /// <summary>

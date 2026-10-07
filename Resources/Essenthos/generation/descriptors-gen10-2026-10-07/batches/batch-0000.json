@@ -1,0 +1,2393 @@
+{
+ "batch": "batch-0000",
+ "prompt_version": "descriptor-3",
+ "entities": [
+  {
+   "entity": "amorites",
+   "kind": "people",
+   "name": "Amorites",
+   "sex": null,
+   "place_kind": null,
+   "hebrew": "אֱמֹר",
+   "hebrew_transliterated": "amor",
+   "greek": "Αμορραῖον",
+   "greek_transliterated": "Amorraion",
+   "name_means": null,
+   "attested_in_total": 83,
+   "question": "open",
+   "verses": [
+    {
+     "reference": "GEN 10:16",
+     "king_james": "And the Jebusite, and the Amorite, and the Girgasite,",
+     "ukrainian": "і Евусеянина, і Амореянина, і Ґірґашеянина,",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | GRCBRENT καὶ~",
+       "2 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "3 הַ הַ H9009 article \"the\" | KJV the | BSB the Jebusites",
+       "4 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusite | BSB the Jebusites | RUSV Иевусей | GRCBRENT Ἰεβουσαῖον~",
+       "5 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "6 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "7 הָ הַ H9009 article \"the\" | KJV the | BSB the Amorites",
+       "8 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorite | BSB the Amorites | RUSV Аморей | GRCBRENT Ἀμοῤῥαῖον~",
+       "9 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "10 אֵת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB the Girgashites",
+       "12 גִּרְגָּשִׁי גִּרְגָּשִׁי H1622 adj masc sg absolute \"Girgashite\" | KJV Girgasite | BSB the Girgashites | RUSV Гергесей | GRCBRENT Γεργεσαῖον~"
+      ],
+      "BSB": "the Jebusites, the Amorites, the Girgashites,",
+      "RUSV": "Иевусей, Аморей, Гергесей,",
+      "SWETE": "καὶ τὸν Ἰεβουσαῖον κα τὸν Ἀμορραῖον καὶ τὸν Γερυεσαῖον",
+      "GRCBRENT": "καὶ τὸν Ἰεβουσαῖον, καὶ τὸν Ἀμοῤῥαῖον, καὶ τὸν Γεργεσαῖον,"
+     }
+    },
+    {
+     "reference": "GEN 14:7",
+     "king_james": "And they returned, and came to Enmishpat, which is Kadesh, and smote all the country of the Amalekites, and also the Amorites, that dwelt in Hazezontamar.",
+     "ukrainian": "І вернулись вони, і прибули до Ен-Мішпату, воно тепер Кадеш, і звоювали всю землю Амалика, а також Аморея, що сидів у Хаццон-Тамарі.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וַ וְ H9000 conj \"and\" | KJV And | BSB Then they turned back | RUSV И~ | GRCBRENT Καὶ~",
+       "2 יָּשֻׁבוּ שׁוב H7725 verb qal wayq p3 masc pl \"return\" | KJV they returned | BSB Then they turned back | RUSV возвратившись они~ | GRCBRENT ἀναστρέψαντες~",
+       "3 וַ וְ H9000 conj \"and\" | KJV and | BSB to invade",
+       "4 יָּבֹאוּ בוא H935 verb qal wayq p3 masc pl \"come\" | KJV came | BSB to invade | RUSV пришли | GRCBRENT ἦλθον~",
+       "5 אֶל אֶל H413 prep \"to\" | KJV to | RUSV к",
+       "6 עֵין מִשְׁפָּט עֵין מִשְׁפָּט H5880 proper-name topo sg absolute \"En Mishpat\" | KJV Enmishpat | BSB En-mishpat | RUSV источнику~ Мишпат | GRCBRENT πηγὴν~",
+       "7 הִוא הִיא H1931 pron ppde p3 fem sg \"she\" | KJV which | BSB that is | RUSV который~ есть~ | GRCBRENT ἐστὶ~",
+       "8 קָדֵשׁ קָדֵשׁ H6946 proper-name topo sg absolute \"Kadesh\" | KJV Kadesh | BSB Kadesh | RUSV Кадес | GRCBRENT Κάδης~",
+       "9 וַ וְ H9000 conj \"and\" | KJV and | BSB and they conquered | RUSV и~ | GRCBRENT καὶ~",
+       "10 יַּכּוּ נכה H5221 verb hif wayq p3 masc pl \"strike\" | KJV smote | BSB and they conquered | RUSV поразили | GRCBRENT κατέκοψαν~",
+       "11 אֶת אֵת H853 prep \"<object marker>\" | KJV smote",
+       "12 כָּל כֹּל H3605 noun masc sg construct \"whole\" | KJV all | BSB the whole | RUSV всю~ | GRCBRENT πάντας~",
+       "13 שְׂדֵה שָׂדֶה H7704 noun masc sg construct \"open field\" | KJV the country | BSB territory | RUSV страну",
+       "14 הָ הַ H9009 article \"the\" | BSB of the Amalekites",
+       "15 עֲמָלֵקִי עֲמָלֵקִי H6003 adj masc sg absolute \"Amalekite\" | KJV of the Amalekites | BSB of the Amalekites | RUSV Амаликитян | GRCBRENT Ἀμαλὴκ~",
+       "16 וְ וְ H9000 conj \"and\" | KJV and | BSB as | RUSV и~ | GRCBRENT καὶ~",
+       "17 גַם גַּם H1571 adv \"even\" | KJV also | BSB as | RUSV также~",
+       "18 אֶת אֵת H853 prep \"<object marker>\" | KJV also | GRCBRENT τοὺς~ τοὺς~",
+       "19 הָ הַ H9009 article \"the\" | KJV the | BSB well as the Amorites",
+       "20 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorites | BSB well as the Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαίους~",
+       "21 הַ הַ H9009 article \"the\" | BSB who lived",
+       "22 יֹּשֵׁב ישׁב H3427 verb qal ptca masc sg absolute \"sit\" | KJV that dwelt | BSB who lived | RUSV живущих",
+       "23 בְּ בְּ H9003 prep \"in\" | KJV in | BSB in Hazazon-tamar | RUSV в~ | GRCBRENT ἐν~",
+       "24 חַצְצֹן תָּמָר חַצְצֹן תָּמָר H2688 proper-name topo sg absolute \"Hazazon Tamar\" | KJV Hazezontamar | BSB in Hazazon-tamar | RUSV Хацацон-Фамаре | GRCBRENT ʼΑσασονθαμὰρ~"
+      ],
+      "BSB": "Then they turned back to invade En-mishpat (that is, Kadesh), and they conquered the whole territory of the Amalekites, as well as the Amorites who lived in Hazazon-tamar.",
+      "RUSV": "И возвратившись оттуда, они пришли к источнику Мишпат, который есть Кадес, и поразили всю страну Амаликитян, и также Аморреев, живущих в Хацацон-Фамаре.",
+      "SWETE": "καὶ ἀναστρέψαντες ἤλθοσαν ἐπὶ τὴν πηγὴν τῆς κρίσεως, αὕτη ἐστὶν Καδής, καὶ κατέκοψαν πάντας τοὺς ἄρχοντας Ἀμαλὴκ καὶ τοὺς Ἀμορραίους τοὺς κατοικοῦντας ἐν Ἁσασὰν Θάμαρ.",
+      "GRCBRENT": "Καὶ ἀναστρέψαντες ἦλθον ἐπὶ τὴν πηγὴν τῆς κρίσεως· αὕτη ἐστὶ Κάδης· καὶ κατέκοψαν πάντας τοὺς ἄρχοντας Ἀμαλὴκ, καὶ τοὺς Ἀμοῤῥαίους τοὺς κατοικοῦντας ἐν ʼΑσασονθαμὰρ",
+      "no_original_word": {
+       "KJV": "is",
+       "RUSV": "оттуда"
+      }
+     }
+    },
+    {
+     "reference": "GEN 14:13",
+     "king_james": "And there came one that had escaped, and told Abram the Hebrew; for he dwelt in the plain of Mamre the Amorite, brother of Eshcol, and brother of Aner: and these were confederate with Abram.",
+     "ukrainian": "І прийшов був недобиток, та й розповів єврею Аврамові, а він жив між дубами амореянина Мамре, брата Ешколового й брата Анерового, Аврамових спільників.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וַ וְ H9000 conj \"and\" | KJV And | BSB came | RUSV И~ | GRCBRENT δὲ~",
+       "2 יָּבֹא בוא H935 verb qal wayq p3 masc sg \"come\" | KJV there came | BSB came | RUSV пришел | GRCBRENT Παραγενόμενος~",
+       "3 הַ הַ H9009 article \"the\" | BSB Then an escapee | GRCBRENT τῶν~",
+       "4 פָּלִיט פָּלִיט H6412 noun masc sg absolute \"escaped one\" | KJV one that had escaped | BSB Then an escapee | RUSV уцелевших | GRCBRENT ἀνασωθέντων~",
+       "5 וַ וְ H9000 conj \"and\" | KJV and | BSB and reported this | RUSV и~",
+       "6 יַּגֵּד נגד H5046 verb hif wayq p3 masc sg \"report\" | KJV told | BSB and reported this | RUSV известил | GRCBRENT ἀπήγγειλεν~",
+       "7 לְ לְ H9005 prep \"to\" | BSB to Abram",
+       "8 אַבְרָם אַבְרָם H87 proper-name pers masc sg absolute \"Abram\" | KJV Abram | BSB to Abram | RUSV Аврама | GRCBRENT Ἅβραμ~",
+       "9 הָ הַ H9009 article \"the\" | KJV the | BSB the Hebrew",
+       "10 עִבְרִי עִבְרִי H5680 adj masc sg absolute \"Hebrew\" | KJV Hebrew | BSB the Hebrew | RUSV Еврея | GRCBRENT περάτῃ~",
+       "11 וְ וְ H9000 conj \"and\" | BSB Now Abram",
+       "12 הוּא הוּא H1931 pron ppde p3 masc sg \"he\" | KJV for he | BSB Now Abram | GRCBRENT αὐτὸς~",
+       "13 שֹׁכֵן שׁכן H7931 verb qal ptca masc sg absolute \"dwell\" | KJV dwelt | BSB was living | RUSV жившего | GRCBRENT κατῴκει~",
+       "14 בְּ בְּ H9003 prep \"in\" | KJV in | BSB near the Oaks",
+       "15 אֵלֹנֵי אֵלֹון H436 noun masc pl construct \"big tree\" | KJV the plain | BSB near the Oaks | RUSV дубравы | GRCBRENT τῇ~ δρυῒ~ τῇ~",
+       "16 מַמְרֵא מַמְרֵא H4471 proper-name pers masc sg absolute \"Mamre\" | KJV of Mamre | BSB of Mamre | RUSV Мамре | GRCBRENT Μαμβρῇ~",
+       "17 הָ הַ H9009 article \"the\" | KJV the | BSB the Amorite",
+       "18 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorite | BSB the Amorite | RUSV Аморреянина | GRCBRENT Ἀμοῤῥαίου~",
+       "19 אֲחִי אָח H251 noun masc sg construct \"brother\" | KJV brother | BSB a brother | RUSV брата | GRCBRENT ἀδελφοῦ~",
+       "20 אֶשְׁכֹּל אֶשְׁכֹּל H812 proper-name pers masc sg absolute \"Eshcol\" | KJV of Eshcol | BSB of Eshcol | RUSV Эшколу | GRCBRENT Ἐσχὼλ~",
+       "21 וַ וְ H9000 conj \"and\" | KJV and | BSB and | RUSV и~ | GRCBRENT καὶ~",
+       "22 אֲחִי אָח H251 noun masc sg construct \"brother\" | KJV brother | BSB and | RUSV брата | GRCBRENT ἀδελφοῦ~",
+       "23 עָנֵר עָנֵר H6063 proper-name pers masc sg absolute \"Aner\" | KJV of Aner | BSB Aner | RUSV Анеру | GRCBRENT τοῦ~ Αὐνὰν~",
+       "24 וְ וְ H9000 conj \"and\" | KJV and | BSB all of whom",
+       "25 הֵם הֵם H1992 pron ppde p3 masc pl \"they\" | KJV these | BSB all of whom",
+       "26 בַּעֲלֵי בַּעַל H1167 noun masc pl construct \"lord, baal\" | KJV confederate | BSB were bound | RUSV союзники",
+       "27 בְרִית בְּרִית H1285 noun fem sg construct \"covenant\" | KJV confederate | BSB by treaty | RUSV союзники | GRCBRENT συνωμόται~",
+       "28 אַבְרָם אַבְרָם H87 proper-name pers masc sg absolute \"Abram\" | KJV with Abram | BSB to Abram | RUSV Аврамовы | GRCBRENT Ἅβραμ~"
+      ],
+      "BSB": "Then an escapee came and reported this to Abram the Hebrew. Now Abram was living near the Oaks of Mamre the Amorite, a brother of Eshcol and Aner, all of whom were bound by treaty to Abram.",
+      "RUSV": "И пришел один из уцелевших и известил Аврама Еврея, жившего тогда у дубравы Мамре, Аморреянина, брата Эшколу и брата Анеру, которые были союзники Аврамовы.",
+      "SWETE": "παραγενόμενος δὲ τῶν ἀνασωθέντων τις κατοικῶν Ἀβρὰμ τῷ περάτῃ· αὐτὸς δὲ κατῴκει ἐν τῇ δρυὶ τῇ Μαμβρῆ ὁ Ἄμορις τοῦ ἀδελφοῦ Ἐσχὼλ καὶ τοῦ ἀδελφοῦ Αὐνάν, οἳ ἦσαν συνωμόται τοῦ Ἀβράμ.",
+      "GRCBRENT": "Παραγενόμενος δὲ τῶν ἀνασωθέντων τις ἀπήγγειλεν Ἅβραμ τῷ περάτῃ· αὐτὸς δὲ κατῴκει παρὰ τῇ δρυῒ τῇ Μαμβρῇ Ἀμοῤῥαίου τοῦ ἀδελφοῦ Ἐσχὼλ, καὶ τοῦ ἀδελφοῦ Αὐνὰν, οἳ ἦσαν συνωμόται τοῦ Ἅβραμ.",
+      "no_original_word": {
+       "KJV": "were",
+       "RUSV": "один из тогда у которые были"
+      }
+     }
+    },
+    {
+     "reference": "GEN 15:16",
+     "king_james": "But in the fourth generation they shall come hither again: for the iniquity of the Amorites is not yet full.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV But | BSB generation | GRCBRENT δὲ~",
+       "2 דֹור דֹּור H1755 noun masc sg absolute \"generation\" | KJV generation | BSB generation | RUSV роде | GRCBRENT γενεᾷ~",
+       "3 רְבִיעִי רְבִיעִי H7243 adj masc sg absolute \"fourth\" | KJV in the fourth | BSB In the fourth | RUSV в~ четвертом | GRCBRENT Τετάρτῃ~",
+       "4 יָשׁוּבוּ שׁוב H7725 verb qal impf p3 masc pl \"return\" | KJV they shall come hither again | BSB your descendants will return | RUSV они~ сюда",
+       "5 הֵנָּה הֵנָּה H2008 adv \"here\" | KJV they shall come hither again | BSB here | RUSV возвратятся | GRCBRENT ὧδε~",
+       "6 כִּי כִּי H3588 conj \"that\" | KJV for | BSB for | RUSV ибо~ | GRCBRENT γὰρ~",
+       "7 לֹא לֹא H3808 neg \"not\" | KJV not | BSB is not | RUSV не~",
+       "8 שָׁלֵם שָׁלֵם H8003 adj masc sg absolute \"complete\" | KJV full | BSB complete | RUSV наполнилась",
+       "9 עֲוֹן עָוֹן H5771 noun masc sg construct \"sin\" | KJV the iniquity | BSB the iniquity | RUSV беззаконий | GRCBRENT ἀναπεπλήρωνται~ ἁμαρτίαι~",
+       "10 הָ הַ H9009 article \"the\" | BSB of the Amorites | GRCBRENT τῶν~",
+       "11 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV of the Amorites | BSB of the Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαίων~",
+       "12 עַד עַד H5704 prep \"unto\" | KJV yet | BSB yet | RUSV еще~ | GRCBRENT ἕως~",
+       "13 הֵנָּה הֵנָּה H2008 adv \"here\" | KJV yet | RUSV доселе"
+      ],
+      "BSB": "In the fourth generation your descendants will return here, for the iniquity of the Amorites is not yet complete.”",
+      "RUSV": "в четвертом роде возвратятся они сюда: ибо мера беззаконий Аморреев доселе еще не наполнилась.",
+      "SWETE": "τετάρτῃ δὲ γενεᾷ ἀποστραφήσονται ὧδε· οὔπω γὰρ ἀναπεπλήρωνται αἱ ἁμαρτίαι τῶν Ἀμορραίων ἕως τοῦ νῦν.",
+      "no_original_word": {
+       "KJV": "is",
+       "RUSV": "мера"
+      }
+     }
+    },
+    {
+     "reference": "GEN 15:21",
+     "king_james": "And the Amorites, and the Canaanites, and the Girgashites, and the Jebusites.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | GRCBRENT καὶ~",
+       "2 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τοὺς~",
+       "3 הָ הַ H9009 article \"the\" | KJV the | BSB Amorites",
+       "4 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorites | BSB Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαίους~",
+       "5 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "6 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τοὺς~",
+       "7 הַ הַ H9009 article \"the\" | KJV the | BSB Canaanites",
+       "8 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV Canaanites | BSB Canaanites | RUSV Хананеев | GRCBRENT Χαναναίους~",
+       "9 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~ καὶ~",
+       "10 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τοὺς~",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB Girgashites",
+       "12 גִּרְגָּשִׁי גִּרְגָּשִׁי H1622 adj masc sg absolute \"Girgashite\" | KJV Girgashites | BSB Girgashites | RUSV Гергесеев | GRCBRENT τοὺς~ Γεργεσαίους~",
+       "13 וְ וְ H9000 conj \"and\" | KJV and | RUSV и~ | GRCBRENT καὶ~",
+       "14 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τοὺς~",
+       "15 הַ הַ H9009 article \"the\" | KJV the | BSB and Jebusites",
+       "16 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusites | BSB and Jebusites | RUSV Иевусеев | GRCBRENT Ἰεβουσαίους~"
+      ],
+      "BSB": "Amorites, Canaanites, Girgashites, and Jebusites.”",
+      "RUSV": "Аморреев, Хананеев, Гергесеев и Иевусеев.",
+      "SWETE": "καὶ τοὺς Ἀμορραίους καὶ τοὺς Χαναναίους καὶ τοὺς Εὑοίους καὶ τοὺς Γεργεσαίους καὶ τοὺς Ἰεβουσαίους.",
+      "GRCBRENT": "καὶ τοὺς Ἀμοῤῥαίους, καὶ τοὺς Χαναναίους, καὶ τοὺς Εὐαίους, καὶ τοὺς Γεργεσαίους, καὶ τοὺς Ἰεβουσαίους."
+     }
+    },
+    {
+     "reference": "GEN 48:22",
+     "king_james": "Moreover I have given to thee one portion above thy brethren, which I took out of the hand of the Amorite with my sword and with my bow.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וַ וְ H9000 conj \"and\" | BSB I",
+       "2 אֲנִי אֲנִי H589 pron p1 sg \"i\" | KJV Moreover I | BSB I | RUSV я~ | GRCBRENT Ἐγὼ~",
+       "3 נָתַתִּי נתן H5414 verb qal perf p1 sg \"give\" | KJV have given | BSB give | RUSV даю",
+       "4 לְךָ לְ H9005 prep +suffix p2 masc sg \"to\" | BSB And to you | RUSV тебе~ | GRCBRENT σοι~",
+       "5 שְׁכֶם שְׁכֶם H7926 noun masc sg absolute \"shoulder\" | KJV portion | BSB ridge of land | RUSV участок | GRCBRENT Σίκιμα~",
+       "6 אַחַד אֶחָד H259 noun sg construct \"one\" | KJV to thee one | BSB the | RUSV один | GRCBRENT ἐξαίρετον~",
+       "7 עַל עַל H5921 prep \"upon\" | KJV above | BSB as one who is above | GRCBRENT ὑπὲρ~",
+       "8 אַחֶיךָ אָח H251 noun masc pl absolute +suffix p2 masc sg \"brother\" | KJV thy brethren | BSB your brothers | RUSV братьями твоими~ | GRCBRENT ἀδελφούς~ σου~",
+       "9 אֲשֶׁר אֲשֶׁר H834 conj \"<relative>\" | KJV which | BSB that | RUSV который~ | GRCBRENT ἣν~",
+       "10 לָקַחְתִּי לקח H3947 verb qal perf p1 sg \"take\" | KJV I took | BSB I took | RUSV я~ взял | GRCBRENT ἔλαβον~",
+       "11 מִ מִן H4480 prep \"from\" | KJV out of the hand | BSB from | RUSV из~ | GRCBRENT ἐκ~",
+       "12 יַּד יָד H3027 noun sg construct \"hand\" | KJV out of the hand | BSB from | RUSV рук | GRCBRENT χειρὸς~",
+       "13 הָ הַ H9009 article \"the\" | BSB the Amorites",
+       "14 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV of the Amorite | BSB the Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαίων~",
+       "15 בְּ בְּ H9003 prep \"in\" | KJV with | BSB with my sword | GRCBRENT ἐν~",
+       "16 חַרְבִּי חֶרֶב H2719 noun fem sg absolute +suffix p1 sg \"dagger\" | KJV my sword | BSB with my sword | RUSV мечом моим~ | GRCBRENT μαχαίρᾳ~ μου~",
+       "17 וּ וְ H9000 conj \"and\" | KJV and | BSB and bow | RUSV и~ | GRCBRENT καὶ~",
+       "18 בְ בְּ H9003 prep \"in\" | KJV with | BSB and bow",
+       "19 קַשְׁתִּי קֶשֶׁת H7198 noun fem sg absolute +suffix p1 sg \"bow\" | KJV my bow | BSB and bow | RUSV луком моим~ | GRCBRENT τόξῳ~"
+      ],
+      "BSB": "And to you, as one who is above your brothers, I give the ridge of land that I took from the Amorites with my sword and bow.”",
+      "RUSV": "я даю тебе, преимущественно пред братьями твоими, один участок, который я взял из рук Аморреев мечом моим и луком моим.",
+      "SWETE": "ἐγὼ δὲ δίδωμί σοι σίκιμα ἐξαίρετον ὑπὲρ τοὺς ἀδελφούς σου, ἣν ἔλαβον ἐκ χειρὸς Ἀμορραίων ἐν μαχαίρᾳ μου καὶ τόξῳ.",
+      "no_original_word": {
+       "RUSV": "преимущественно пред"
+      }
+     }
+    },
+    {
+     "reference": "EXO 3:8",
+     "king_james": "And I am come down to deliver them out of the hand of the Egyptians, and to bring them up out of that land unto a good land and a large, unto a land flowing with milk and honey; unto the place of the Canaanites, and the Hittites, and the Amorites, and the Perizzites, and the Hivites, and the Jebusites.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וָ וְ H9000 conj \"and\" | KJV And | BSB I have come down | RUSV и~ | GRCBRENT καὶ~",
+       "2 אֵרֵד ירד H3381 verb qal wayq p1 sg \"descend\" | KJV I am come down | BSB I have come down | RUSV иду | GRCBRENT κατέβην~",
+       "3 לְ לְ H9005 prep \"to\" | KJV to | BSB to rescue them",
+       "4 הַצִּילֹו נצל H5337 verb hif infc absolute +suffix p3 masc sg \"deliver\" | KJV deliver | BSB to rescue them | RUSV избавить его | GRCBRENT ἐξελέσθαι~",
+       "5 מִ מִן H4480 prep \"from\" | KJV them out of the hand | BSB the hand | RUSV от~ | GRCBRENT αὐτοὺς~ ἐκ~",
+       "6 יַּד יָד H3027 noun sg construct \"hand\" | KJV them out of the hand | BSB the hand | RUSV руки | GRCBRENT αὐτοὺς~ χειρὸς~",
+       "7 מִצְרַיִם מִצְרַיִם H4713 proper-name topo sg absolute \"Egypt\" | KJV of the Egyptians | BSB of the Egyptians | GRCBRENT Αἰγυπτίων~",
+       "8 וּ וְ H9000 conj \"and\" | KJV and | BSB and to bring them up | RUSV и~ | GRCBRENT καὶ~",
+       "9 לְ לְ H9005 prep \"to\" | KJV to | BSB and to bring them up",
+       "10 הַעֲלֹתֹו עלה H5927 verb hif infc absolute +suffix p3 masc sg \"ascend\" | KJV bring them up | BSB and to bring them up | RUSV вывести его | GRCBRENT αὐτοὺς~ εἰσαγαγεῖν~",
+       "11 מִן מִן H4480 prep \"from\" | KJV out of | BSB from | RUSV из~ | GRCBRENT ἐκ~",
+       "12 הָ הַ H9009 article \"the\" | BSB land | GRCBRENT τῆς~",
+       "13 אָרֶץ אֶרֶץ H776 noun sg absolute \"earth\" | KJV land | BSB land | RUSV земли землю | GRCBRENT γῆς~",
+       "14 הַ הַ H9009 article \"the\" | BSB out of that",
+       "15 הִוא הִיא H1931 pron ppde p3 fem sg \"she\" | KJV that | BSB out of that | GRCBRENT ἐκείνης~",
+       "16 אֶל אֶל H413 prep \"to\" | KJV unto | BSB to | GRCBRENT εἰς~",
+       "17 אֶרֶץ אֶרֶץ H776 noun sg absolute \"earth\" | KJV land | BSB land | RUSV земли землю | GRCBRENT γῆν~",
+       "18 טֹובָה טֹוב H2896 adj fem sg absolute \"good\" | KJV a good | BSB a good | RUSV хорошую | GRCBRENT ἀγαθὴν~",
+       "19 וּ וְ H9000 conj \"and\" | KJV and | BSB and spacious | RUSV и~ | GRCBRENT καὶ~",
+       "20 רְחָבָה רָחָב H7342 adj fem sg absolute \"wide\" | KJV a large | BSB and spacious | RUSV пространную | GRCBRENT πολλήν~",
+       "21 אֶל אֶל H413 prep \"to\" | KJV unto | GRCBRENT εἰς~",
+       "22 אֶרֶץ אֶרֶץ H776 noun sg absolute \"earth\" | KJV a land | BSB a land | RUSV земли землю | GRCBRENT γῆν~",
+       "23 זָבַת זוב H2100 verb qal ptca fem sg construct \"flow\" | KJV flowing | BSB flowing | RUSV где~ течет | GRCBRENT ῥέουσαν~",
+       "24 חָלָב חָלָב H2461 noun masc sg absolute \"milk\" | KJV with milk | BSB with milk | RUSV молоко | GRCBRENT γάλα~",
+       "25 וּ וְ H9000 conj \"and\" | KJV and | BSB and honey | RUSV и~ | GRCBRENT καὶ~",
+       "26 דְבָשׁ דְּבַשׁ H1706 noun masc sg absolute \"honey\" | KJV honey | BSB and honey | RUSV мед | GRCBRENT μέλι~",
+       "27 אֶל אֶל H413 prep \"to\" | KJV unto | GRCBRENT εἰς~",
+       "28 מְקֹום מָקֹום H4725 noun masc sg construct \"place\" | KJV the place | BSB the home | RUSV землю | GRCBRENT τόπον~",
+       "29 הַ הַ H9009 article \"the\" | BSB of the Canaanites | GRCBRENT τῶν~",
+       "30 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV of the Canaanites | BSB of the Canaanites | RUSV Хананеев | GRCBRENT Χαναναίων~",
+       "31 וְ וְ H9000 conj \"and\" | KJV and | BSB Hittites | GRCBRENT καὶ~",
+       "32 הַ הַ H9009 article \"the\" | KJV the | BSB Hittites",
+       "33 חִתִּי חִתִּי H2850 adj masc sg absolute \"Hittite\" | KJV Hittites | BSB Hittites | RUSV Хеттеев | GRCBRENT Χετταίων~",
+       "34 וְ וְ H9000 conj \"and\" | KJV and | BSB Amorites | GRCBRENT καὶ~",
+       "35 הָ הַ H9009 article \"the\" | KJV the | BSB Amorites",
+       "36 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorites | BSB Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαίων~",
+       "37 וְ וְ H9000 conj \"and\" | KJV and | BSB Perizzites | GRCBRENT καὶ~",
+       "38 הַ הַ H9009 article \"the\" | KJV the | BSB Perizzites",
+       "39 פְּרִזִּי פְּרִזִּי H6522 adj masc sg absolute \"Perizzite\" | KJV Perizzites | BSB Perizzites | RUSV Ферезеев | GRCBRENT Φερεζαίων~",
+       "40 וְ וְ H9000 conj \"and\" | KJV and | BSB Hivites | GRCBRENT καὶ~",
+       "41 הַ הַ H9009 article \"the\" | KJV the | BSB Hivites | GRCBRENT Γεργεσαὶων~",
+       "42 חִוִּי חִוִּי H2340 adj masc sg absolute \"Hivite\" | KJV Hivites | BSB Hivites | RUSV Евеев | GRCBRENT Εὐαίων~",
+       "43 וְ וְ H9000 conj \"and\" | KJV and | BSB and Jebusites | RUSV и~ | GRCBRENT καὶ~",
+       "44 הַ הַ H9009 article \"the\" | KJV the | BSB and Jebusites",
+       "45 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusites | BSB and Jebusites | RUSV Иевусеев | GRCBRENT Ἰεβουσαίων~"
+      ],
+      "BSB": "I have come down to rescue them from the hand of the Egyptians and to bring them up out of that land to a good and spacious land, a land flowing with milk and honey—the home of the Canaanites, Hittites, Amorites, Perizzites, Hivites, and Jebusites.",
+      "RUSV": "и иду избавить его от руки Египтян и вывести его из земли сей в землю хорошую и пространную, где течет молоко и мед, в землю Хананеев, Хеттеев, Аморреев, Ферезеев, Евеев и Иевусеев.",
+      "SWETE": "καὶ κατέβην ἐξελέσθαι αὐτοὺς ἐκ χειρὸς Αἰγυπτίων καὶ ἐξαγαγεῖν αὐτοὺς ἐκ τῆς γῆς ἐκείνης, καὶ εἰσαγαγεῖν αὐτοὺς εἰς γῆν ἀγαθὴν καὶ πολλήν, εἰς γῆν ῥέουσαν γάλα καὶ μέλι, εἰς τὸν τόπον τῶν χαναναίων καὶ Χετταίων καὶ Ἀμορραίων καὶ Φερεζαίων καὶ Γεργεσαίων καὶ Εὑαίων",
+      "GRCBRENT": "καὶ κατέβην ἐξελέσθαι αὐτοὺς ἐκ χειρὸς τῶν Αἰγυπτίων, καὶ ἐξαγαγεῖν αὐτοὺς ἐκ τῆς γῆς ἐκείνης, καὶ εἰσαγαγεῖν αὐτοὺς εἰς γῆν ἀγαθὴν καὶ πολλήν, εἰς γῆν ῥέουσαν γάλα καὶ μέλι, εἰς τὸν τόπον τῶν Χαναναίων, καὶ Χετταίων, καὶ Ἀμοῤῥαίων, καὶ Φερεζαίων, καὶ Γεργεσαὶων, καὶ Εὐαίων, καὶ Ἰεβουσαίων.",
+      "no_original_word": {
+       "RUSV": "Египтян сей в в"
+      }
+     }
+    },
+    {
+     "reference": "EXO 3:17",
+     "king_james": "And I have said, I will bring you up out of the affliction of Egypt unto the land of the Canaanites, and the Hittites, and the Amorites, and the Perizzites, and the Hivites, and the Jebusites, unto a land flowing with milk and honey.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וָ וְ H9000 conj \"and\" | KJV And | BSB And I have promised | RUSV И~ | GRCBRENT Καὶ~",
+       "2 אֹמַר אמר H559 verb qal wayq p1 sg \"say\" | KJV I have said | BSB And I have promised | RUSV сказал Я~ | GRCBRENT εἶπεν~",
+       "3 אַעֲלֶה עלה H5927 verb hif impf p1 sg \"ascend\" | KJV I will bring you up | BSB to bring you up | RUSV выведу | GRCBRENT ἀναβιβάσω~",
+       "4 אֶתְכֶם אֵת H853 prep +suffix p2 masc pl \"<object marker>\" | KJV I will bring you up | RUSV вас~ | GRCBRENT ὑμᾶς~",
+       "5 מֵ מִן H4480 prep \"from\" | KJV out of the affliction | BSB out of your affliction | RUSV от~ | GRCBRENT ἐκ~",
+       "6 עֳנִי עֳנִי H6040 noun masc sg construct \"poverty\" | KJV out of the affliction | BSB out of your affliction | RUSV угнетения | GRCBRENT κακώσεως~",
+       "7 מִצְרַיִם מִצְרַיִם H4714 proper-name topo sg absolute \"Egypt\" | KJV of Egypt | BSB in Egypt | RUSV Египетского | GRCBRENT τῶν~ Αἰγυπτίων~",
+       "8 אֶל אֶל H413 prep \"to\" | KJV unto | BSB into | RUSV в~ | GRCBRENT εἰς~",
+       "9 אֶרֶץ אֶרֶץ H776 noun sg construct \"earth\" | KJV the land | BSB the land | RUSV землю | GRCBRENT γῆν~",
+       "10 הַ הַ H9009 article \"the\" | BSB of the Canaanites | GRCBRENT τῶν~",
+       "11 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV of the Canaanites | BSB of the Canaanites | RUSV Хананеев | GRCBRENT Χαναναίων~",
+       "12 וְ וְ H9000 conj \"and\" | KJV and | BSB Hittites | GRCBRENT καὶ~",
+       "13 הַ הַ H9009 article \"the\" | KJV the | BSB Hittites",
+       "14 חִתִּי חִתִּי H2850 adj masc sg absolute \"Hittite\" | KJV Hittites | BSB Hittites | RUSV Хеттеев | GRCBRENT Χετταίων~",
+       "15 וְ וְ H9000 conj \"and\" | KJV and | BSB Amorites | GRCBRENT καὶ~",
+       "16 הָ הַ H9009 article \"the\" | KJV the | BSB Amorites",
+       "17 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorites | BSB Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαίων~",
+       "18 וְ וְ H9000 conj \"and\" | KJV and | BSB Perizzites | GRCBRENT καὶ~",
+       "19 הַ הַ H9009 article \"the\" | KJV the | BSB Perizzites",
+       "20 פְּרִזִּי פְּרִזִּי H6522 adj masc sg absolute \"Perizzite\" | KJV Perizzites | BSB Perizzites | RUSV Ферезеев | GRCBRENT Φερεζαίων~",
+       "21 וְ וְ H9000 conj \"and\" | KJV and | BSB Hivites | GRCBRENT καὶ~",
+       "22 הַ הַ H9009 article \"the\" | KJV the | BSB Hivites | GRCBRENT Γεργεσαίων~",
+       "23 חִוִּי חִוִּי H2340 adj masc sg absolute \"Hivite\" | KJV Hivites | BSB Hivites | RUSV Евеев | GRCBRENT Εὑαίων~",
+       "24 וְ וְ H9000 conj \"and\" | KJV and | BSB and Jebusites | RUSV и~ | GRCBRENT καὶ~",
+       "25 הַ הַ H9009 article \"the\" | KJV the | BSB and Jebusites",
+       "26 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusites | BSB and Jebusites | RUSV Иевусеев | GRCBRENT Ἰεβουσαίων~",
+       "27 אֶל אֶל H413 prep \"to\" | KJV unto | GRCBRENT εἰς~",
+       "28 אֶרֶץ אֶרֶץ H776 noun sg absolute \"earth\" | KJV a land | BSB a land | RUSV землю | GRCBRENT γῆν~",
+       "29 זָבַת זוב H2100 verb qal ptca fem sg construct \"flow\" | KJV flowing | BSB flowing | RUSV где~ течет | GRCBRENT ῥέουσαν~",
+       "30 חָלָב חָלָב H2461 noun masc sg absolute \"milk\" | KJV with milk | BSB with milk | RUSV молоко | GRCBRENT γάλα~",
+       "31 וּ וְ H9000 conj \"and\" | KJV and | BSB and honey | RUSV и~ | GRCBRENT καὶ~",
+       "32 דְבָשׁ דְּבַשׁ H1706 noun masc sg absolute \"honey\" | KJV honey | BSB and honey | RUSV мед | GRCBRENT μέλι~"
+      ],
+      "BSB": "And I have promised to bring you up out of your affliction in Egypt, into the land of the Canaanites, Hittites, Amorites, Perizzites, Hivites, and Jebusites—a land flowing with milk and honey.’",
+      "RUSV": "И сказал: Я выведу вас от угнетения Египетского в землю Хананеев, Хеттеев, Аморреев, Ферезеев, Евеев и Иевусеев, в землю, где течет молоко и мед.",
+      "SWETE": "καὶ εἶπεν Ἀναβιβάσω ὑμᾶς ἐκ τῆς κακώσεως τῶν Αἰγυπτίων εἴς τὴν γῆν τῶν Χαναναίων καὶ Χετταίων καὶ Ἀμορραίων καὶ Φερεζαίων καὶ Γεργεσαίων κα Εὑαίων καὶ Ἰεβουσαίων, εἰς γῆν ῥέουσαν γάλα καὶ μέλι.",
+      "GRCBRENT": "Καὶ εἶπεν, ἀναβιβάσω ὑμᾶς ἐκ τῆς κακώσεως τῶν Αἰγυπτίων, εἰς τὴν γῆν τῶν Χαναναίων, καὶ Χετταίων, καὶ Ἀμοῤῥαίων, καὶ Φερεζαίων, καὶ Γεργεσαίων, καὶ Εὑαίων, καὶ Ἰεβουσαίων, εἰς γῆν ῥέουσαν γάλα καὶ μέλι.",
+      "no_original_word": {
+       "RUSV": "в"
+      }
+     }
+    },
+    {
+     "reference": "EXO 13:5",
+     "king_james": "And it shall be when the LORD shall bring thee into the land of the Canaanites, and the Hittites, and the Amorites, and the Hivites, and the Jebusites, which he sware unto thy fathers to give thee, a land flowing with milk and honey, that thou shalt keep this service in this month.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | BSB And | RUSV И~ | GRCBRENT Καὶ~",
+       "2 הָיָה היה H1961 verb qal perf p3 masc sg \"be\" | KJV it shall be | BSB And | GRCBRENT ἔσται~",
+       "3 כִי כִּי H3588 conj \"that\" | KJV when | BSB when | RUSV когда~ | GRCBRENT ἡνίκα~ ἐὰν~",
+       "4 יְבִיאֲךָ בוא H935 verb hif impf p3 masc sg +suffix p2 masc sg \"come\" | KJV shall bring | BSB brings | RUSV введет | GRCBRENT εἰσαγάγῃ~",
+       "5 יְהוָה יְהוָה H3068 proper-name pers masc sg absolute \"YHWH\" | KJV the LORD | BSB the LORD | RUSV Господь | GRCBRENT σε~ Κύριος~",
+       "6 אֶל אֶל H413 prep \"to\" | KJV thee into | BSB you into | RUSV в~ | GRCBRENT εἰς~",
+       "7 אֶרֶץ אֶרֶץ H776 noun sg construct \"earth\" | KJV the land | BSB the land | RUSV землю | GRCBRENT γῆν~",
+       "8 הַ הַ H9009 article \"the\" | BSB of the Canaanites | GRCBRENT τῶν~",
+       "9 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV of the Canaanites | BSB of the Canaanites | RUSV Хананеев | GRCBRENT Χαναναίων~",
+       "10 וְ וְ H9000 conj \"and\" | KJV and | BSB Hittites | RUSV и~ | GRCBRENT καὶ~",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB Hittites",
+       "12 חִתִּי חִתִּי H2850 adj masc sg absolute \"Hittite\" | KJV Hittites | BSB Hittites | RUSV Хеттеев | GRCBRENT Χετταίων~",
+       "13 וְ וְ H9000 conj \"and\" | KJV and | BSB Amorites | RUSV и~ | GRCBRENT καὶ~",
+       "14 הָ הַ H9009 article \"the\" | KJV the | BSB Amorites",
+       "15 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorites | BSB Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαίων~",
+       "16 וְ וְ H9000 conj \"and\" | KJV and | BSB Hivites | RUSV и~ | GRCBRENT καὶ~",
+       "17 הַ הַ H9009 article \"the\" | KJV the | BSB Hivites",
+       "18 חִוִּי חִוִּי H2340 adj masc sg absolute \"Hivite\" | KJV Hivites | BSB Hivites | RUSV Евеев | GRCBRENT Εὐαίων~",
+       "19 וְ וְ H9000 conj \"and\" | KJV and | BSB and Jebusites | RUSV и~ | GRCBRENT καὶ~",
+       "20 הַ הַ H9009 article \"the\" | KJV the | BSB and Jebusites | GRCBRENT Γεργεσαίων~",
+       "21 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusites | BSB and Jebusites | RUSV Иевусеев | GRCBRENT Ἰεβουσαίων~",
+       "22 אֲשֶׁר אֲשֶׁר H834 conj \"<relative>\" | KJV which | BSB the land | RUSV которой~ | GRCBRENT ἣν~",
+       "23 נִשְׁבַּע שׁבע H7650 verb nif perf p3 masc sg \"swear\" | KJV he sware | BSB He swore | RUSV клялся Он~ | GRCBRENT ὤμοσε~",
+       "24 לַ לְ H9005 prep \"to\" | KJV unto | BSB to your fathers | GRCBRENT τοῖς~",
+       "25 אֲבֹתֶיךָ אָב H1 noun masc pl absolute +suffix p2 masc sg \"father\" | KJV thy fathers | BSB to your fathers | RUSV отцам твоим~ | GRCBRENT πατράσι~ σου~",
+       "26 לָ לְ H9005 prep \"to\" | KJV to | BSB that He would give",
+       "27 תֶת נתן H5414 verb qal infc absolute \"give\" | KJV give | BSB that He would give | RUSV даст | GRCBRENT δοῦναί~",
+       "28 לָךְ לְ H9005 prep +suffix p2 masc sg \"to\" | BSB you | RUSV тебе~ | GRCBRENT σοι~",
+       "29 אֶרֶץ אֶרֶץ H776 noun sg absolute \"earth\" | KJV thee a land | BSB a land | RUSV землю | GRCBRENT γῆν~",
+       "30 זָבַת זוב H2100 verb qal ptca fem sg construct \"flow\" | KJV flowing | BSB flowing | RUSV где~ течет | GRCBRENT ῥέουσαν~",
+       "31 חָלָב חָלָב H2461 noun masc sg absolute \"milk\" | KJV with milk | BSB with milk | RUSV молоко | GRCBRENT γάλα~",
+       "32 וּ וְ H9000 conj \"and\" | KJV and | BSB and honey | RUSV и~ | GRCBRENT καὶ~",
+       "33 דְבָשׁ דְּבַשׁ H1706 noun masc sg absolute \"honey\" | KJV honey | BSB and honey | RUSV мед | GRCBRENT μέλι~",
+       "34 וְ וְ H9000 conj \"and\" | BSB you shall keep | RUSV то~ | GRCBRENT καὶ~",
+       "35 עָבַדְתָּ עבד H5647 verb qal perf p2 masc sg \"work, serve\" | KJV that thou shalt keep | BSB you shall keep | RUSV совершай",
+       "36 אֶת אֵת H853 prep \"<object marker>\" | KJV that thou shalt keep | GRCBRENT τὴν~",
+       "37 הָ הַ H9009 article \"the\" | BSB service",
+       "38 עֲבֹדָה עֲבֹדָה H5656 noun fem sg absolute \"work\" | KJV service | BSB service | RUSV служение | GRCBRENT λατρείαν~",
+       "39 הַ הַ H9009 article \"the\" | BSB this",
+       "40 זֹּאת זֹאת H2063 pron-dem fem sg \"this\" | KJV this | BSB this | RUSV сие~ | GRCBRENT ταύτην~",
+       "41 בַּ בְּ H9003 prep \"in\" | BSB month | GRCBRENT ἐν~",
+       "42 הַ H9009 article \"the\" | BSB month | GRCBRENT τῷ~",
+       "43 חֹדֶשׁ חֹדֶשׁ H2320 noun masc sg absolute \"month\" | KJV month | BSB month | RUSV месяце | GRCBRENT μηνὶ~",
+       "44 הַ הַ H9009 article \"the\" | BSB in this",
+       "45 זֶּה זֶה H2088 pron-dem masc sg \"this\" | KJV in this | BSB in this | RUSV в~ сем~ | GRCBRENT τούτῳ~"
+      ],
+      "BSB": "And when the LORD brings you into the land of the Canaanites, Hittites, Amorites, Hivites, and Jebusites—the land He swore to your fathers that He would give you, a land flowing with milk and honey—you shall keep this service in this month.",
+      "RUSV": "И когда введет тебя Господь в землю Хананеев и Хеттеев, и Аморреев, и Евеев, и Иевусеев, о которой клялся Он отцам твоим, что даст тебе землю, где течет молоко и мед, то совершай сие служение в сем месяце;",
+      "SWETE": "καὶ ἔσται ἡνίκα ἐὰν εἰσαγάγῃ σε κύριος ὁ θεός σου εἰς τὴν γῆν τῶν Χαναναίων καὶ Χετταίων καὶ εὐαίων καὶ Αμορραίων καὶ Ἀμορραίων καὶ Φερεζαίων καὶ Ἰεβουσαίων, ἢν ὤμοσεν τοῖς πατράσιν σου δοῦναί σοι, γῆν ῥέουσαν γάλα καὶ μέλι, καὶ ποιήσεις τὴν λατρίαν ταύτην ἐν τῷ μηνὶ τούτῳ.",
+      "GRCBRENT": "Καὶ ἔσται ἡνίκα ἐὰν εἰσαγάγῃ σε Κύριος ὁ Θεός σου εἰς τὴν γῆν τῶν Χαναναίων, καὶ Χετταίων, καὶ Ἀμοῤῥαίων, καὶ Εὐαίων, καὶ Ἰεβουσαίων, καὶ Γεργεσαίων, καὶ Φερεζαίων, ἣν ὤμοσε τοῖς πατράσι σου, δοῦναί σοι γῆν ῥέουσαν γάλα καὶ μέλι· καὶ ποιήσεις τὴν λατρείαν ταύτην ἐν τῷ μηνὶ τούτῳ.",
+      "no_original_word": {
+       "RUSV": "тебя о что"
+      }
+     }
+    },
+    {
+     "reference": "EXO 23:23",
+     "king_james": "For mine Angel shall go before thee, and bring thee in unto the Amorites, and the Hittites, and the Perizzites, and the Canaanites, the Hivites, and the Jebusites: and I will cut them off.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 כִּי כִּי H3588 conj \"that\" | KJV For | BSB For | GRCBRENT γὰρ~",
+       "2 יֵלֵךְ הלך H1980 verb qal impf p3 masc sg \"walk\" | KJV shall go | BSB will go | RUSV пойдет~ | GRCBRENT Πορεύσεται~",
+       "3 מַלְאָכִי מַלְאָךְ H4397 noun masc sg absolute +suffix p1 sg \"messenger\" | KJV mine Angel | BSB My angel | RUSV Ангел Мой | GRCBRENT ἄγγελός~ μου~",
+       "4 לְ לְ H9005 prep \"to\" | BSB before you",
+       "5 פָנֶיךָ פָּנֶה H6440 noun masc pl absolute +suffix p2 masc sg \"face\" | KJV before | BSB before you | RUSV пред~ | GRCBRENT ἡγούμενός~ σου~",
+       "6 וֶ וְ H9000 conj \"and\" | BSB and bring you | RUSV и~ | GRCBRENT καὶ~",
+       "7 הֱבִיאֲךָ בוא H935 verb hif perf p3 masc sg +suffix p2 masc sg \"come\" | KJV thee and bring thee in | BSB and bring you | RUSV поведет тебя~ | GRCBRENT εἰσάξει~ σε~",
+       "8 אֶל אֶל H413 prep \"to\" | KJV unto | BSB into | RUSV к~ | GRCBRENT πρὸς~",
+       "9 הָ הַ H9009 article \"the\" | KJV the | BSB the land of the Amorites",
+       "10 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorites | BSB the land of the Amorites | RUSV Аморреям | GRCBRENT Ἀμοῤῥαῖον~",
+       "11 וְ וְ H9000 conj \"and\" | KJV and | BSB Hittites | GRCBRENT καὶ~",
+       "12 הַ הַ H9009 article \"the\" | KJV the | BSB Hittites",
+       "13 חִתִּי חִתִּי H2850 adj masc sg absolute \"Hittite\" | KJV Hittites | BSB Hittites | RUSV Хеттеям | GRCBRENT Χετταῖον~",
+       "14 וְ וְ H9000 conj \"and\" | KJV and | BSB Perizzites | GRCBRENT καὶ~",
+       "15 הַ הַ H9009 article \"the\" | KJV the | BSB Perizzites",
+       "16 פְּרִזִּי פְּרִזִּי H6522 adj masc sg absolute \"Perizzite\" | KJV Perizzites | BSB Perizzites | RUSV Ферезеям | GRCBRENT Φερεζαῖον~",
+       "17 וְ וְ H9000 conj \"and\" | KJV and | BSB Canaanites | GRCBRENT καὶ~",
+       "18 הַ הַ H9009 article \"the\" | KJV the | BSB Canaanites",
+       "19 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV Canaanites | BSB Canaanites | RUSV Хананеям | GRCBRENT Χαναναῖον~",
+       "20 הַ הַ H9009 article \"the\" | KJV the | BSB Hivites | GRCBRENT Γεργεσαῖον~",
+       "21 חִוִּי חִוִּי H2340 adj masc sg absolute \"Hivite\" | KJV Hivites | BSB Hivites | RUSV Евеям | GRCBRENT Εὑαῖον~",
+       "22 וְ וְ H9000 conj \"and\" | KJV and | BSB and Jebusites | RUSV и~ | GRCBRENT καὶ~",
+       "23 הַ הַ H9009 article \"the\" | KJV the | BSB and Jebusites",
+       "24 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusites | BSB and Jebusites | RUSV Иевусеям | GRCBRENT Ἰεβουσαῖον~",
+       "25 וְ וְ H9000 conj \"and\" | KJV and | BSB and I will annihilate them | RUSV и~ | GRCBRENT καὶ~",
+       "26 הִכְחַדְתִּיו כחד H3582 verb hif perf p1 sg +suffix p3 masc sg \"hide\" | KJV I will cut them off | BSB and I will annihilate them | RUSV истреблю их~ | GRCBRENT ἐκτρίψω~ αὐτούς~"
+      ],
+      "BSB": "For My angel will go before you and bring you into the land of the Amorites, Hittites, Perizzites, Canaanites, Hivites, and Jebusites, and I will annihilate them.",
+      "RUSV": "Когда пойдет пред тобою Ангел Мой и поведет тебя к Аморреям, Хеттеям, Ферезеям, Хананеям, Евеям и Иевусеям, и истреблю их:",
+      "SWETE": "πορεύσεται γὰρ ὁ ἅγγελός μου ἡγούμενος ὑμῶν, καὶ εἰσάξει σε πρὸς τὸν Ἀμορραῖον καὶ Χετταῖον καὶ καὶ Χαναναῖον καὶ Γεργεσαῖον καὶ Εὑαῖον καὶ ἰεβουσαῖον, καὶ ἑ αὐτούς.",
+      "GRCBRENT": "Πορεύσεται γὰρ ὁ ἄγγελός μου ἡγούμενός σου, καὶ εἰσάξει σε πρὸς τὸν Ἀμοῤῥαῖον, καὶ Χετταῖον, καὶ Φερεζαῖον, καὶ Χαναναῖον, καὶ Γεργεσαῖον, καὶ Εὑαῖον, καὶ Ἰεβουσαῖον, καὶ ἐκτρίψω αὐτούς.",
+      "no_original_word": {
+       "RUSV": "Когда тобою"
+      }
+     }
+    },
+    {
+     "reference": "NUM 32:39",
+     "king_james": "And the children of Machir the son of Manasseh went to Gilead, and took it, and dispossessed the Amorite which was in it.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וַ וְ H9000 conj \"and\" | KJV And | BSB went | RUSV И~ | GRCBRENT Καὶ~",
+       "2 יֵּלְכוּ הלך H1980 verb qal wayq p3 masc pl \"walk\" | KJV went | BSB went | RUSV пошли~ | GRCBRENT ἐπορεύθη~",
+       "3 בְּנֵי בֵּן H1121 noun masc pl construct \"son\" | KJV the children | BSB The descendants | RUSV сыны | GRCBRENT υἱὸς~",
+       "4 מָכִיר מָכִיר H4353 proper-name pers,gens sg absolute \"Makir\" | KJV of Machir | BSB of Machir | RUSV Махира | GRCBRENT Μαχὶρ~",
+       "5 בֶּן בֵּן H1121 noun masc sg construct \"son\" | KJV the son | BSB son | RUSV сына | GRCBRENT υἱοῦ~",
+       "6 מְנַשֶּׁה מְנַשֶּׁה H4519 proper-name pers,gens sg absolute \"Manasseh\" | KJV of Manasseh | BSB of Manasseh | RUSV Манассиина | GRCBRENT Μανασσὴ~",
+       "7 גִּלְעָדָה גִּלְעָד H1568 proper-name topo sg absolute \"Gilead\" | KJV to Gilead | BSB to Gilead | RUSV Галаад | GRCBRENT Γαλαὰδ~",
+       "8 וַ וְ H9000 conj \"and\" | KJV and | BSB captured it | RUSV и~ | GRCBRENT καὶ~",
+       "9 יִּלְכְּדֻהָ לכד H3920 verb qal wayq p3 masc pl +suffix p3 fem sg \"seize\" | KJV took | BSB captured it | RUSV взяли | GRCBRENT ἔλαβεν~",
+       "10 וַ וְ H9000 conj \"and\" | BSB and drove out | RUSV и~ | GRCBRENT καὶ~",
+       "11 יֹּורֶשׁ ירשׁ H3423 verb hif wayq p3 masc sg \"trample down\" | KJV it and dispossessed | BSB and drove out | RUSV выгнали | GRCBRENT αὐτὴν~ ἀπώλεσε~",
+       "12 אֶת אֵת H853 prep \"<object marker>\" | KJV it and dispossessed | GRCBRENT αὐτὴν~ τὸν~",
+       "13 הָ הַ H9009 article \"the\" | KJV the | BSB the Amorites",
+       "14 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorite | BSB the Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαῖον~",
+       "15 אֲשֶׁר אֲשֶׁר H834 conj \"<relative>\" | KJV which | BSB who were | RUSV которые~",
+       "16 בָּהּ בְּ H9003 prep +suffix p3 fem sg \"in\" | BSB there | GRCBRENT ἐν~ αὐτῇ~"
+      ],
+      "BSB": "The descendants of Machir son of Manasseh went to Gilead, captured it, and drove out the Amorites who were there.",
+      "RUSV": "И пошли сыны Махира, сына Манассиина, в Галаад, и взяли его, и выгнали Аморреев, которые были в нем;",
+      "SWETE": "καὶ ἐπορεύθη υἱὸς Μαχεὶρ υἱοῦ Μανασσὴ Γαλαὰδ καὶ ἔλαβεν αὐτήν, καὶ ἀπώλεσεν τὸν Ἀμορραῖον τὸν κατοικοῦντα ἐν αὐτῇ.",
+      "GRCBRENT": "Καὶ ἐπορεύθη υἱὸς Μαχὶρ υἱοῦ Μανασσὴ Γαλαὰδ, καὶ ἔλαβεν αὐτὴν, καὶ ἀπώλεσε τὸν Ἀμοῤῥαῖον τὸν κατοικοῦντα ἐν αὐτῇ.",
+      "no_original_word": {
+       "KJV": "was in it",
+       "RUSV": "в его были в нем"
+      }
+     }
+    },
+    {
+     "reference": "DEU 31:4",
+     "king_james": "And the LORD shall do unto them as he did to Sihon and to Og, kings of the Amorites, and unto the land of them, whom he destroyed.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | BSB will do | RUSV и~ | GRCBRENT Καὶ~",
+       "2 עָשָׂה עשׂה H6213 verb qal perf p3 masc sg \"make\" | KJV shall do | BSB will do | RUSV поступит | GRCBRENT ποιήσει~",
+       "3 יְהוָה יְהוָה H3068 proper-name pers masc sg absolute \"YHWH\" | KJV the LORD | BSB And the LORD | RUSV Господь | GRCBRENT Κύριος~",
+       "4 לָהֶם לְ H9005 prep +suffix p3 masc pl \"to\" | KJV unto | BSB to them",
+       "5 כַּ כְּ H9004 prep \"as\" | BSB as",
+       "6 אֲשֶׁר אֲשֶׁר H834 conj \"<relative>\" | KJV them as | BSB as | RUSV как~ | GRCBRENT αὐτοῖς~ καθὼς~",
+       "7 עָשָׂה עשׂה H6213 verb qal perf p3 masc sg \"make\" | KJV he did | BSB He did | RUSV Он~ поступил | GRCBRENT ἐποίησε~",
+       "8 לְ לְ H9005 prep \"to\" | KJV to | BSB to Sihon",
+       "9 סִיחֹון סִיחֹון H5511 proper-name pers masc sg absolute \"Sihon\" | KJV Sihon | BSB to Sihon | RUSV Сигоном | GRCBRENT Σηὼν~",
+       "10 וּ וְ H9000 conj \"and\" | KJV and | BSB and Og | RUSV и~ | GRCBRENT καὶ~",
+       "11 לְ לְ H9005 prep \"to\" | KJV to | BSB and Og",
+       "12 עֹוג עֹוג H5747 proper-name pers masc sg absolute \"Og\" | KJV Og | BSB and Og | RUSV Огом | GRCBRENT Ὢγ~",
+       "13 מַלְכֵי מֶלֶךְ H4428 noun masc pl construct \"king\" | KJV kings | BSB the kings | RUSV царями | GRCBRENT βασιλεῦσι~",
+       "14 הָ הַ H9009 article \"the\" | BSB of the Amorites | GRCBRENT τῶν~",
+       "15 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV of the Amorites | BSB of the Amorites | RUSV Аморрейскими | GRCBRENT Ἀμοῤῥαίων~",
+       "16 וּ וְ H9000 conj \"and\" | KJV and | BSB along with their land | RUSV и~ | GRCBRENT καὶ~",
+       "17 לְ לְ H9005 prep \"to\" | KJV unto | BSB along with their land",
+       "18 אַרְצָם אֶרֶץ H776 noun sg absolute +suffix p3 masc pl \"earth\" | KJV the land | BSB along with their land | RUSV землею их | GRCBRENT γῇ~",
+       "19 אֲשֶׁר אֲשֶׁר H834 conj \"<relative>\" | KJV of them whom | BSB when | RUSV которых~ | GRCBRENT ἦσαν~ αὐτῶν~ καθότι~",
+       "20 הִשְׁמִיד שׁמד H8045 verb hif perf p3 masc sg \"destroy\" | KJV he destroyed | BSB He destroyed | RUSV он~ истребил",
+       "21 אֹתָם אֵת H853 prep +suffix p3 masc pl \"<object marker>\" | BSB them"
+      ],
+      "BSB": "And the LORD will do to them as He did to Sihon and Og, the kings of the Amorites, when He destroyed them along with their land.",
+      "RUSV": "и поступит Господь с ними так же, как Он поступил с Сигоном и Огом, царями Аморрейскими, и с землею их, которых он истребил;",
+      "SWETE": "καὶ ποιήσει Κύριος ὁ θεός σου αὐτοῖς καθὰ ἐποίησεν Σηὼν καὶ Ὤγ, τοῖς δυσὶ βασιλεῦσιν τῶν Ἀμορραίων οἳ ἦσαν πέραν τοῦ Ἰορδάνου, καὶ τῇ γῇ αὐτῶν, καθότι ἐξωλέθρευσεν αὐτοὺς",
+      "GRCBRENT": "Καὶ ποιήσει Κύριος ὁ Θεός σου αὐτοῖς καθὼς ἐποίησε Σηὼν καὶ Ὢγ δυσὶ βασιλεῦσι τῶν Ἀμοῤῥαίων, οἳ ἦσαν πέραν τοῦ Ἰορδάνου, καὶ τῇ γῇ αὐτῶν, καθότι ἐξωλόθρευσεν αὐτούς.",
+      "no_original_word": {
+       "RUSV": "с ними так же с с"
+      }
+     }
+    },
+    {
+     "reference": "JOS 13:10",
+     "king_james": "And all the cities of Sihon king of the Amorites, which reigned in Heshbon, unto the border of the children of Ammon;",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | BSB and all | RUSV также~",
+       "2 כֹל כֹּל H3605 noun masc sg construct \"whole\" | KJV all | BSB and all | RUSV все~ | GRCBRENT Πάσας~",
+       "3 עָרֵי עִיר H5892 noun fem pl construct \"town\" | KJV the cities | BSB the cities | RUSV города | GRCBRENT τὰς~ πόλεις~",
+       "4 סִיחֹון סִיחֹון H5511 proper-name pers masc sg absolute \"Sihon\" | KJV of Sihon | BSB of Sihon | RUSV Сигона | GRCBRENT Σηὼν~",
+       "5 מֶלֶךְ מֶלֶךְ H4428 noun masc sg construct \"king\" | KJV king | BSB king | RUSV царя | GRCBRENT βασιλέως~",
+       "6 הָ הַ H9009 article \"the\" | BSB of the Amorites",
+       "7 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV of the Amorites | BSB of the Amorites | RUSV Аморрейского | GRCBRENT Ἀμοῤῥαίων~",
+       "8 אֲשֶׁר אֲשֶׁר H834 conj \"<relative>\" | KJV which | BSB who | RUSV который~ | GRCBRENT ὃς~",
+       "9 מָלַךְ מלך H4427 verb qal perf p3 masc sg \"be king\" | KJV reigned | BSB reigned | RUSV царствовал | GRCBRENT ἐβασίλευσεν~",
+       "10 בְּ בְּ H9003 prep \"in\" | KJV in | BSB in Heshbon | RUSV в~ | GRCBRENT ἐν~",
+       "11 חֶשְׁבֹּון חֶשְׁבֹּון H2809 proper-name topo sg absolute \"Heshbon\" | KJV Heshbon | BSB in Heshbon | RUSV Есевоне | GRCBRENT Ἐσεβὼν~",
+       "12 עַד עַד H5704 prep \"unto\" | KJV unto | BSB as far as | RUSV до~ | GRCBRENT ἕως~",
+       "13 גְּבוּל גְּבוּל H1366 noun masc sg construct \"boundary\" | KJV the border | BSB the border | RUSV пределов | GRCBRENT ὁρίων~",
+       "14 בְּנֵי בֵּן H1121 noun masc pl construct \"son\" | KJV of the children | BSB of the Ammonites | RUSV Аммонитских | GRCBRENT υἱῶν~",
+       "15 עַמֹּון עַמֹּון H5983 proper-name gens sg absolute \"Ammon\" | KJV of Ammon | RUSV Аммонитских | GRCBRENT Ἀμμῶν~"
+      ],
+      "BSB": "and all the cities of Sihon king of the Amorites who reigned in Heshbon, as far as the border of the Ammonites;",
+      "RUSV": "также все города Сигона, царя Аморрейского, который царствовал в Есевоне, до пределов Аммонитских,",
+      "SWETE": "πάσας τὰς πόλεις Σηὼν βασιλέως Ἀμορραίων, ὃς ἐβασίλευσεν ἐν",
+      "GRCBRENT": "Πάσας τὰς πόλεις Σηὼν βασιλέως Ἀμοῤῥαίων, ὃς ἐβασίλευσεν ἐν Ἐσεβὼν ἕως τῶν ὁρίων υἱῶν Ἀμμῶν·"
+     }
+    },
+    {
+     "reference": "JDG 11:22",
+     "king_james": "And they possessed all the coasts of the Amorites, from Arnon even unto Jabbok, and from the wilderness even unto Jordan.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וַ וְ H9000 conj \"and\" | KJV And | BSB seizing | RUSV и~",
+       "2 יִּירְשׁוּ ירשׁ H3423 verb qal wayq p3 masc pl \"trample down\" | KJV they possessed | BSB seizing | RUSV получили они~ наследие",
+       "3 אֵת אֵת H853 prep \"<object marker>\" | KJV they possessed",
+       "4 כָּל כֹּל H3605 noun masc sg construct \"whole\" | KJV all | BSB all | RUSV все~",
+       "5 גְּבוּל גְּבוּל H1366 noun masc sg construct \"boundary\" | KJV the coasts | BSB the land | RUSV пределы",
+       "6 הָ הַ H9009 article \"the\"",
+       "7 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV of the Amorites | RUSV Аморрея",
+       "8 מֵ מִן H4480 prep \"from\" | KJV from Arnon | BSB the Arnon | RUSV от~ | GRCBRENT ἀπὸ~",
+       "9 אַרְנֹון אַרְנֹון H769 proper-name topo sg absolute \"Arnon\" | KJV from Arnon | BSB the Arnon | RUSV Арнона | GRCBRENT Ἀρνὼν~",
+       "10 וְ וְ H9000 conj \"and\" | BSB to | GRCBRENT καὶ~",
+       "11 עַד עַד H5704 prep \"unto\" | KJV even unto | BSB to | RUSV до~ | GRCBRENT ἕως~",
+       "12 הַ הַ H9009 article \"the\" | BSB the Jabbok | GRCBRENT τοῦ~",
+       "13 יַּבֹּק יַבֹּק H2999 proper-name topo sg absolute \"Jabbok\" | KJV Jabbok | BSB the Jabbok | RUSV Иавока | GRCBRENT Ἰαβὸκ~",
+       "14 וּ וְ H9000 conj \"and\" | KJV and | BSB from | RUSV и~ | GRCBRENT καὶ~",
+       "15 מִן מִן H4480 prep \"from\" | KJV from | BSB from | RUSV от~ | GRCBRENT ἀπὸ~",
+       "16 הַ הַ H9009 article \"the\" | KJV the | BSB and from the wilderness | GRCBRENT τοῦ~",
+       "17 מִּדְבָּר מִדְבָּר H4057 noun masc sg absolute \"desert\" | KJV wilderness | BSB and from the wilderness | RUSV пустыни | GRCBRENT ἐρήμου~",
+       "18 וְ וְ H9000 conj \"and\" | BSB to",
+       "19 עַד עַד H5704 prep \"unto\" | KJV even unto | BSB to | RUSV до~ | GRCBRENT ἕως~",
+       "20 הַ הַ H9009 article \"the\" | BSB the Jordan | GRCBRENT τοῦ~",
+       "21 יַּרְדֵּן יַרְדֵּן H3383 proper-name topo sg absolute \"Jordan\" | KJV Jordan | BSB the Jordan | RUSV Иордана | GRCBRENT Ἰορδάνου~"
+      ],
+      "BSB": "seizing all the land from the Arnon to the Jabbok and from the wilderness to the Jordan.",
+      "RUSV": "и получили они в наследие все пределы Аморрея от Арнона до Иавока и от пустыни до Иордана.",
+      "SWETE": "ἀπὸ Ἀρνῶν καὶ ἕως τοῦ Ἰαβὸκ καὶ ἀπὸ τῆς ἐρήμου ἕως τοῦ Ἰορδάνου.",
+      "GRCBRENT": "ἀπὸ Ἀρνὼν καὶ ἕως τοῦ Ἰαβὸκ, καὶ ἀπὸ τοῦ ἐρήμου ἕως τοῦ Ἰορδάνου.",
+      "no_original_word": {
+       "RUSV": "в"
+      }
+     }
+    }
+   ],
+   "candidates": [
+    {
+     "slug": "canaan",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Canaan",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 9:18",
+      "GEN 10:6",
+      "GEN 10:15",
+      "1CH 1:13"
+     ]
+    },
+    {
+     "slug": "jebusites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Jebusites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:16",
+      "DEU 7:1",
+      "JDG 3:5",
+      "1CH 11:6"
+     ]
+    },
+    {
+     "slug": "canaan-2",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Canaan",
+     "sex": null,
+     "place_kind": "geographic region",
+     "attested_in": [
+      "GEN 10:19",
+      "GEN 45:17",
+      "LEV 25:38",
+      "JDG 3:1"
+     ]
+    },
+    {
+     "slug": "canaanites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Canaanites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 9:18",
+      "EXO 23:23",
+      "JOS 11:3",
+      "JDG 1:29"
+     ]
+    },
+    {
+     "slug": "egypt",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Egypt",
+     "sex": null,
+     "place_kind": "geographic region",
+     "attested_in": [
+      "GEN 12:10",
+      "EXO 12:29",
+      "JOS 24:14",
+      "JER 26:22"
+     ]
+    },
+    {
+     "slug": "hittites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Hittites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 15:20",
+      "EXO 23:23",
+      "JOS 12:8",
+      "2SA 23:39"
+     ]
+    },
+    {
+     "slug": "hivites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Hivites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:17",
+      "EXO 23:23",
+      "JOS 3:10",
+      "JDG 3:3"
+     ]
+    },
+    {
+     "slug": "sihon",
+     "how": "annotated",
+     "kind": "person",
+     "name": "Sihon",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "NUM 21:21",
+      "DEU 1:4",
+      "DEU 4:46",
+      "JOS 13:21"
+     ]
+    },
+    {
+     "slug": "yhvh",
+     "how": "annotated",
+     "kind": "person",
+     "name": "YHVH",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 2:4",
+      "1SA 6:21",
+      "PSA 120:2",
+      "MIC 6:5"
+     ]
+    },
+    {
+     "slug": "ammonites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Ammonites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 19:38",
+      "JDG 11:30",
+      "2SA 17:27",
+      "NEH 2:10"
+     ]
+    },
+    {
+     "slug": "girgashites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Girgashites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:16",
+      "GEN 15:21",
+      "DEU 7:1",
+      "JOS 3:10"
+     ]
+    },
+    {
+     "slug": "hazazontamar",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Hazazon-tamar",
+     "sex": null,
+     "place_kind": "settlement",
+     "attested_in": [
+      "GEN 14:7"
+     ]
+    },
+    {
+     "slug": "kadesh",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Kadesh",
+     "sex": null,
+     "place_kind": "settlement",
+     "attested_in": [
+      "GEN 14:7",
+      "NUM 20:22",
+      "DEU 1:19",
+      "JOS 15:3"
+     ]
+    },
+    {
+     "slug": "perizzites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Perizzites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 13:7",
+      "EXO 23:23",
+      "JOS 3:10",
+      "JDG 1:4"
+     ]
+    },
+    {
+     "slug": "abram",
+     "how": "annotated",
+     "kind": "person",
+     "name": "Abram",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 11:26",
+      "GEN 18:33",
+      "GEN 25:5",
+      "MIC 7:20"
+     ]
+    },
+    {
+     "slug": "aner",
+     "how": "annotated",
+     "kind": "person",
+     "name": "Aner",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 14:13",
+      "GEN 14:24"
+     ]
+    },
+    {
+     "slug": "arnon",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Arnon",
+     "sex": null,
+     "place_kind": "river",
+     "attested_in": [
+      "NUM 21:13",
+      "NUM 22:36",
+      "DEU 3:16",
+      "JOS 13:16"
+     ]
+    },
+    {
+     "slug": "eshcol",
+     "how": "annotated",
+     "kind": "person",
+     "name": "Eshcol",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 14:13",
+      "GEN 14:24"
+     ]
+    },
+    {
+     "slug": "gilead-4",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Gilead",
+     "sex": null,
+     "place_kind": "geographic region",
+     "attested_in": [
+      "GEN 31:21",
+      "JOS 17:1",
+      "JDG 12:4",
+      "1CH 5:10"
+     ]
+    },
+    {
+     "slug": "heshbon",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Heshbon",
+     "sex": null,
+     "place_kind": "settlement",
+     "attested_in": [
+      "NUM 21:25",
+      "DEU 2:24",
+      "JOS 12:5",
+      "JDG 11:26"
+     ]
+    },
+    {
+     "slug": "jabbok",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Jabbok",
+     "sex": null,
+     "place_kind": "river",
+     "attested_in": [
+      "GEN 32:22",
+      "NUM 21:24",
+      "DEU 2:37",
+      "DEU 3:16"
+     ]
+    },
+    {
+     "slug": "jordan",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Jordan",
+     "sex": null,
+     "place_kind": "river",
+     "attested_in": [
+      "GEN 13:10",
+      "DEU 12:10",
+      "JOS 16:7",
+      "2SA 19:39"
+     ]
+    },
+    {
+     "slug": "machir",
+     "how": "annotated",
+     "kind": "person",
+     "name": "Machir",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 50:22",
+      "NUM 32:39",
+      "JOS 13:31",
+      "1CH 2:23"
+     ]
+    },
+    {
+     "slug": "mamre",
+     "how": "annotated",
+     "kind": "person",
+     "name": "Mamre",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 14:13",
+      "GEN 14:24"
+     ]
+    },
+    {
+     "slug": "manasseh",
+     "how": "annotated",
+     "kind": "person",
+     "name": "Manasseh",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 41:51",
+      "NUM 36:1",
+      "JOS 17:17",
+      "1CH 6:61"
+     ]
+    },
+    {
+     "slug": "og",
+     "how": "annotated",
+     "kind": "person",
+     "name": "Og",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "NUM 21:33",
+      "DEU 3:4",
+      "DEU 29:7",
+      "JOS 13:12"
+     ]
+    },
+    {
+     "slug": "amalekites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Amalekites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 14:7",
+      "NUM 14:45",
+      "1SA 15:6",
+      "1SA 27:8"
+     ]
+    },
+    {
+     "slug": "ammon",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Ammon",
+     "sex": null,
+     "place_kind": "region",
+     "attested_in": [
+      "GEN 19:38",
+      "JDG 11:28",
+      "2SA 12:31",
+      "2CH 20:23"
+     ]
+    },
+    {
+     "slug": "feast-of-unleavened-bread",
+     "how": "annotated",
+     "kind": "observance",
+     "name": "Feast of Unleavened Bread",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "EXO 12:15",
+      "EXO 13:8",
+      "NUM 28:20",
+      "DEU 16:8"
+     ]
+    },
+    {
+     "slug": "hebrews",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Hebrews",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 14:13",
+      "EXO 1:19",
+      "EXO 9:1",
+      "1SA 13:7"
+     ]
+    },
+    {
+     "slug": "mamre-2",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Mamre",
+     "sex": null,
+     "place_kind": "settlement",
+     "attested_in": [
+      "GEN 13:18",
+      "GEN 18:1",
+      "GEN 23:19",
+      "GEN 35:27"
+     ]
+    },
+    {
+     "slug": "theangelofthelord",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "the angel of the LORD",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 16:7",
+      "NUM 22:34",
+      "JDG 13:20",
+      "ZEC 1:12"
+     ]
+    },
+    {
+     "slug": "altar-the-lord-is-my-banner",
+     "how": "named in the text",
+     "kind": "object",
+     "name": "Altar 'The LORD Is My Banner' (Jehovah-nissi)",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "EXO 17:15"
+     ]
+    },
+    {
+     "slug": "altar-the-lord-is-peace",
+     "how": "named in the text",
+     "kind": "object",
+     "name": "Altar 'The LORD Is Peace' (Jehovah-shalom)",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "JDG 6:24"
+     ]
+    },
+    {
+     "slug": "appointed-times",
+     "how": "named in the text",
+     "kind": "observance",
+     "name": "The Appointed Times of the LORD",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "EXO 23:14",
+      "LEV 23:29",
+      "NUM 28:24",
+      "NUM 29:34"
+     ]
+    },
+    {
+     "slug": "lords-day",
+     "how": "named in the text",
+     "kind": "observance",
+     "name": "The Lord's Day",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "REV 1:10"
+     ]
+    },
+    {
+     "slug": "lords-supper",
+     "how": "named in the text",
+     "kind": "observance",
+     "name": "The Lord's Supper",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "MAT 26:26",
+      "MRK 14:23",
+      "LUK 22:16",
+      "1CO 11:20"
+     ]
+    },
+    {
+     "slug": "thecaptainofthehostofthelord",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "the captain of the host of the LORD",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "JOS 5:14",
+      "JOS 5:15"
+     ]
+    },
+    {
+     "slug": "thelordisthere",
+     "how": "named in the text",
+     "kind": "place",
+     "name": "The Lord Is There",
+     "sex": null,
+     "place_kind": "settlement",
+     "attested_in": [
+      "EZK 48:35"
+     ]
+    },
+    {
+     "slug": "thelordwillprovide",
+     "how": "named in the text",
+     "kind": "place",
+     "name": "The LORD Will Provide",
+     "sex": null,
+     "place_kind": "unique",
+     "attested_in": [
+      "GEN 22:14"
+     ]
+    },
+    {
+     "slug": "aner-2",
+     "how": "named in the text",
+     "kind": "place",
+     "name": "Aner",
+     "sex": null,
+     "place_kind": "settlement",
+     "attested_in": [
+      "1CH 6:70"
+     ]
+    }
+   ],
+   "context": [
+    {
+     "reference": "GEN 10:15",
+     "king_james": "And Canaan begat Sidon his firstborn, and Heth,"
+    }
+   ]
+  },
+  {
+   "entity": "arkites",
+   "kind": "people",
+   "name": "Arkites",
+   "sex": null,
+   "place_kind": null,
+   "hebrew": "עַרְק",
+   "hebrew_transliterated": "areq",
+   "greek": "Αρουκαῖον",
+   "greek_transliterated": "Aroukaion",
+   "name_means": null,
+   "attested_in_total": 2,
+   "question": "open",
+   "verses": [
+    {
+     "reference": "GEN 10:17",
+     "king_james": "And the Hivite, and the Arkite, and the Sinite,",
+     "ukrainian": "і Хіввеянина, і Аркеянина, і Синеянина,",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | GRCBRENT καὶ~",
+       "2 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "3 הַ הַ H9009 article \"the\" | KJV the | BSB the Hivites",
+       "4 חִוִּי חִוִּי H2340 adj masc sg absolute \"Hivite\" | KJV Hivite | BSB the Hivites | RUSV Евей | GRCBRENT Εὐαῖον~",
+       "5 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "6 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "7 הַ הַ H9009 article \"the\" | KJV the | BSB the Arkites",
+       "8 עַרְקִי עַרְקִי H6208 adj masc sg absolute \"Arkite\" | KJV Arkite | BSB the Arkites | RUSV Аркей | GRCBRENT Ἀρουκαῖον~",
+       "9 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "10 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB the Sinites",
+       "12 סִּינִי סִינִי H5513 adj masc sg absolute \"Sinite\" | KJV Sinite | BSB the Sinites | RUSV Синей | GRCBRENT Ἀσενναῖον~"
+      ],
+      "BSB": "the Hivites, the Arkites, the Sinites,",
+      "RUSV": "Евей, Аркей, Синей,",
+      "SWETE": "τὸν Εὑαῖον καὶ τὸν Ἀρουκαιον καὶ τὸν Ἁσενναῖον",
+      "GRCBRENT": "καὶ τὸν Εὐαῖον, καὶ τὸν Ἀρουκαῖον, καὶ τὸν Ἀσενναῖον,"
+     }
+    },
+    {
+     "reference": "1CH 1:15",
+     "king_james": "And the Hivite, and the Arkite, and the Sinite,",
+     "ukrainian": "і хіввеянина, і аркеянина, і сінеянина,",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And",
+       "2 אֶת אֵת H853 prep \"<object marker>\"",
+       "3 הַ הַ H9009 article \"the\" | KJV the | BSB the Hivites",
+       "4 חִוִּי חִוִּי H2340 adj masc sg absolute \"Hivite\" | KJV Hivite | BSB the Hivites | RUSV Евея",
+       "5 וְ וְ H9000 conj \"and\" | KJV and",
+       "6 אֶת אֵת H853 prep \"<object marker>\"",
+       "7 הַ הַ H9009 article \"the\" | KJV the | BSB the Arkites",
+       "8 עַרְקִי עַרְקִי H6208 adj masc sg absolute \"Arkite\" | KJV Arkite | BSB the Arkites | RUSV Аркея",
+       "9 וְ וְ H9000 conj \"and\" | KJV and",
+       "10 אֶת אֵת H853 prep \"<object marker>\"",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB the Sinites",
+       "12 סִּינִי סִינִי H5513 adj masc sg absolute \"Sinite\" | KJV Sinite | BSB the Sinites | RUSV Синея"
+      ],
+      "BSB": "the Hivites, the Arkites, the Sinites,",
+      "RUSV": "Евея, Аркея, Синея,"
+     }
+    }
+   ],
+   "candidates": [
+    {
+     "slug": "canaan",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Canaan",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 9:18",
+      "GEN 10:6",
+      "GEN 10:15",
+      "1CH 1:13"
+     ]
+    },
+    {
+     "slug": "hivites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Hivites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:17",
+      "EXO 23:23",
+      "JOS 3:10",
+      "JDG 3:3"
+     ]
+    },
+    {
+     "slug": "sinites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Sinites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:17",
+      "1CH 1:15"
+     ]
+    }
+   ],
+   "context": [
+    {
+     "reference": "1CH 1:13",
+     "king_james": "And Canaan begat Zidon his firstborn, and Heth,"
+    },
+    {
+     "reference": "GEN 10:15",
+     "king_james": "And Canaan begat Sidon his firstborn, and Heth,"
+    }
+   ]
+  },
+  {
+   "entity": "arvadites",
+   "kind": "people",
+   "name": "Arvadites",
+   "sex": null,
+   "place_kind": null,
+   "hebrew": "אַרְוָד",
+   "hebrew_transliterated": "arəvad",
+   "greek": "Ἀράδιον",
+   "greek_transliterated": "Aradion",
+   "name_means": null,
+   "attested_in_total": 2,
+   "question": "open",
+   "verses": [
+    {
+     "reference": "GEN 10:18",
+     "king_james": "And the Arvadite, and the Zemarite, and the Hamathite: and afterward were the families of the Canaanites spread abroad.",
+     "ukrainian": "і Арвадеянина, і Цемареянина, і Хаматеянина. А потім розпорошилися роди Ханаанеянина.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | GRCBRENT καὶ~",
+       "2 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τον~",
+       "3 הָ הַ H9009 article \"the\" | KJV the | BSB the Arvadites",
+       "4 אַרְוָדִי אַרְוָדִי H721 adj masc sg absolute \"Arvadite\" | KJV Arvadite | BSB the Arvadites | RUSV Арвадей | GRCBRENT Ἀράδιον~",
+       "5 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "6 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "7 הַ הַ H9009 article \"the\" | KJV the | BSB the Zemarites",
+       "8 צְּמָרִי צְמָרִי H6786 adj masc sg absolute \"Zemarite\" | KJV Zemarite | BSB the Zemarites | RUSV Цемарей | GRCBRENT Σαμαραῖον~",
+       "9 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "10 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB and the Hamathites",
+       "12 חֲמָתִי חֲמָתִי H2577 adj masc sg absolute \"Hamathite\" | KJV Hamathite | BSB and the Hamathites | RUSV Химарей | GRCBRENT Ἀμαθί~",
+       "13 וְ וְ H9000 conj \"and\" | KJV and | BSB Later | GRCBRENT Καὶ~",
+       "14 אַחַר אַחַר H310 noun masc sg absolute \"after\" | KJV afterward | BSB Later | RUSV последствии | GRCBRENT μετὰ~",
+       "15 נָפֹצוּ פוץ H6327 verb nif perf p3 pl \"disperse\" | KJV spread abroad | BSB were scattered | RUSV рассеялись | GRCBRENT διεσπάρησαν~",
+       "16 מִשְׁפְּחֹות מִשְׁפָּחָה H4940 noun fem pl construct \"clan\" | KJV were the families | BSB clans | RUSV племена | GRCBRENT αἱ~ φυλαὶ~",
+       "17 הַ הַ H9009 article \"the\" | BSB the Canaanite | GRCBRENT τῶν~",
+       "18 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV of the Canaanites | BSB the Canaanite | RUSV Ханаанские | GRCBRENT Χαναναίων~"
+      ],
+      "BSB": "the Arvadites, the Zemarites, and the Hamathites. Later the Canaanite clans were scattered,",
+      "RUSV": "Арвадей, Цемарей и Химарей. В последствии племена Ханаанские рассеялись.",
+      "SWETE": "καὶ τὸν Ἀράδιον καὶ τὸν Σαμαραῖον καὶ τὸν Ἁμαθί. καὶ μετὰ τοῦτο διεσπάρησαν αἱ φυλαὶ τῶν Χαναναίων.",
+      "no_original_word": {
+       "RUSV": "и В"
+      }
+     }
+    },
+    {
+     "reference": "1CH 1:16",
+     "king_james": "And the Arvadite, and the Zemarite, and the Hamathite.",
+     "ukrainian": "і арвадянина, і цемарянина, і хаматянина.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And",
+       "2 אֶת אֵת H853 prep \"<object marker>\"",
+       "3 הָ הַ H9009 article \"the\" | KJV the | BSB the Arvadites",
+       "4 אַרְוָדִי אַרְוָדִי H721 adj masc sg absolute \"Arvadite\" | KJV Arvadite | BSB the Arvadites | RUSV Арвадея",
+       "5 וְ וְ H9000 conj \"and\" | KJV and | RUSV и~",
+       "6 אֶת אֵת H853 prep \"<object marker>\"",
+       "7 הַ הַ H9009 article \"the\" | KJV the | BSB the Zemarites",
+       "8 צְּמָרִי צְמָרִי H6786 adj masc sg absolute \"Zemarite\" | KJV Zemarite | BSB the Zemarites | RUSV Цемарея",
+       "9 וְ וְ H9000 conj \"and\" | KJV and",
+       "10 אֶת אֵת H853 prep \"<object marker>\"",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB and the Hamathites",
+       "12 חֲמָתִי חֲמָתִי H2577 adj masc sg absolute \"Hamathite\" | KJV Hamathite | BSB and the Hamathites | RUSV Хамафея"
+      ],
+      "BSB": "the Arvadites, the Zemarites, and the Hamathites.",
+      "RUSV": "Арвадея, Цемарея и Хамафея."
+     }
+    }
+   ],
+   "candidates": [
+    {
+     "slug": "canaan",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Canaan",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 9:18",
+      "GEN 10:6",
+      "GEN 10:15",
+      "1CH 1:13"
+     ]
+    },
+    {
+     "slug": "hamathites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Hamathites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:18",
+      "1CH 1:16"
+     ]
+    },
+    {
+     "slug": "zemarites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Zemarites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:18",
+      "1CH 1:16"
+     ]
+    },
+    {
+     "slug": "canaanites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Canaanites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 9:18",
+      "EXO 23:23",
+      "JOS 11:3",
+      "JDG 1:29"
+     ]
+    }
+   ],
+   "context": [
+    {
+     "reference": "1CH 1:13",
+     "king_james": "And Canaan begat Zidon his firstborn, and Heth,"
+    },
+    {
+     "reference": "GEN 10:15",
+     "king_james": "And Canaan begat Sidon his firstborn, and Heth,"
+    }
+   ]
+  },
+  {
+   "entity": "casluhim",
+   "kind": "people",
+   "name": "Casluhim",
+   "sex": null,
+   "place_kind": null,
+   "hebrew": "כַּסְלֻח",
+   "hebrew_transliterated": "kasluch",
+   "greek": "Χασλωνιιμ",
+   "greek_transliterated": "Xasloniim",
+   "name_means": null,
+   "attested_in_total": 2,
+   "question": "register",
+   "verses": [
+    {
+     "reference": "GEN 10:14",
+     "king_james": "And Pathrusim, and Casluhim, (out of whom came Philistim,) and Caphtorim.",
+     "register": true,
+     "ukrainian": "і патрусів, і каслухів, що звідси пішли филистимляни, і кафторів.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | GRCBRENT καὶ~",
+       "2 אֶת אֵת H853 prep \"<object marker>\"",
+       "3 פַּתְרֻסִים פַּתְרֻסִים H6625 proper-name gens masc pl absolute \"Pathrusites\" | KJV Pathrusim | BSB the Pathrusites | RUSV Патрусим | GRCBRENT τοὺς~ Πατροσωνιεὶμ~",
+       "4 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "5 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τοὺς~",
+       "6 כַּסְלֻחִים כַּסְלֻחִים H3695 proper-name gens masc pl absolute \"Casluhites\" | KJV Casluhim | BSB the Casluhites | RUSV Каслухим откуда~ | GRCBRENT Χασμωνιεὶμ~ ὅθεν~",
+       "7 אֲשֶׁר אֲשֶׁר H834 conj \"<relative>\" | BSB whom",
+       "8 יָצְאוּ יצא H3318 verb qal perf p3 pl \"go out\" | KJV came | BSB came | RUSV вышли | GRCBRENT ἐξῆλθε~",
+       "9 מִ מִן H4480 prep \"from\" | KJV out of whom | BSB from",
+       "10 שָּׁם שָׁם H8033 adv \"there\" | KJV out of whom | BSB from",
+       "11 פְּלִשְׁתִּים פְּלִשְׁתִּי H6430 adj masc pl absolute \"Philistine\" | KJV Philistim | BSB the Philistines | RUSV Филистимляне | GRCBRENT Φυλιστιεὶμ~",
+       "12 וְ וְ H9000 conj \"and\" | KJV and | BSB and | RUSV и~ | GRCBRENT καὶ~",
+       "13 אֶת אֵת H853 prep \"<object marker>\" | BSB and | GRCBRENT τοὺς~",
+       "14 כַּפְתֹּרִים כַּפְתֹּרִי H3732 adj masc pl absolute \"Caphtorite\" | KJV Caphtorim | BSB the Caphtorites | RUSV Кафторим | GRCBRENT Γαφθοριείμ~"
+      ],
+      "BSB": "the Pathrusites, the Casluhites (from whom the Philistines came), and the Caphtorites.",
+      "RUSV": "Патрусим, Каслухим, откуда вышли Филистимляне, и Кафторим.",
+      "SWETE": "καὶ τοὺς ΙΙατροσωνιεὶμ καὶ τοὺς Χσμωνιείμ, ὅθεν ἐξῆλθεν ἐκεῖθεν Φυλιστιείμ, καὶ τοὺς ΧαΦθοπιείμ.",
+      "GRCBRENT": "καὶ τοὺς Πατροσωνιεὶμ, καὶ τοὺς Χασμωνιεὶμ, ὅθεν ἐξῆλθε Φυλιστιεὶμ, καὶ τοὺς Γαφθοριείμ."
+     }
+    },
+    {
+     "reference": "1CH 1:12",
+     "king_james": "And Pathrusim, and Casluhim, (of whom came the Philistines,) and Caphthorim.",
+     "register": true,
+     "ukrainian": "і патрусян 6625, і каслух'ян 3695, що вийшли 3318 8804 звідти филистимляни 6430, і кафторян 3732.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And",
+       "2 אֶת אֵת H853 prep \"<object marker>\"",
+       "3 פַּתְרֻסִים פַּתְרֻסִים H6625 proper-name gens masc pl absolute \"Pathrusites\" | KJV Pathrusim | BSB the Pathrusites | RUSV Патрусима",
+       "4 וְ וְ H9000 conj \"and\" | KJV and",
+       "5 אֶת אֵת H853 prep \"<object marker>\"",
+       "6 כַּסְלֻחִים כַּסְלֻחִים H3695 proper-name gens masc pl absolute \"Casluhites\" | KJV Casluhim | BSB the Casluhites | RUSV Каслухима",
+       "7 אֲשֶׁר אֲשֶׁר H834 conj \"<relative>\" | KJV of whom | BSB from whom | RUSV от~ которого~",
+       "8 יָצְאוּ יצא H3318 verb qal perf p3 pl \"go out\" | KJV came | BSB came | RUSV произошли",
+       "9 מִ מִן H4480 prep \"from\"",
+       "10 שָּׁם שָׁם H8033 adv \"there\"",
+       "11 פְּלִשְׁתִּים פְּלִשְׁתִּי H6430 adj masc pl absolute \"Philistine\" | KJV the Philistines | BSB the Philistines | RUSV Филистимляне",
+       "12 וְ וְ H9000 conj \"and\" | KJV and | RUSV и~",
+       "13 אֶת אֵת H853 prep \"<object marker>\"",
+       "14 כַּפְתֹּרִים כַּפְתֹּרִי H3732 adj masc pl absolute \"Caphtorite\" | KJV Caphthorim | BSB and the Caphtorites | RUSV Кафторима"
+      ],
+      "BSB": "the Pathrusites, the Casluhites (from whom the Philistines came), and the Caphtorites.",
+      "RUSV": "Патрусима, Каслухима, от которого произошли Филистимляне, и Кафторима."
+     }
+    }
+   ],
+   "candidates": [
+    {
+     "slug": "caphthorim",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Caphthorim",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:14",
+      "DEU 2:23",
+      "1CH 1:12"
+     ]
+    },
+    {
+     "slug": "pathrusim",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Pathrusim",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:14",
+      "1CH 1:12"
+     ]
+    },
+    {
+     "slug": "caphtor-2",
+     "how": "annotated",
+     "kind": "place",
+     "name": "Caphtor",
+     "sex": null,
+     "place_kind": "island, region",
+     "attested_in": [
+      "GEN 10:14",
+      "DEU 2:23",
+      "1CH 1:12",
+      "JER 47:4"
+     ]
+    },
+    {
+     "slug": "philistines",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Philistines",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:14",
+      "1SA 6:17",
+      "1SA 17:50",
+      "2SA 21:18"
+     ]
+    },
+    {
+     "slug": "anamim",
+     "how": "named in the text",
+     "kind": "people",
+     "name": "Anamim",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:13",
+      "1CH 1:11"
+     ]
+    },
+    {
+     "slug": "canaan",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Canaan",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 9:18",
+      "GEN 9:26",
+      "GEN 10:15",
+      "GEN 28:8"
+     ]
+    },
+    {
+     "slug": "canaan-2",
+     "how": "named in the text",
+     "kind": "place",
+     "name": "Canaan",
+     "sex": null,
+     "place_kind": "geographic region",
+     "attested_in": [
+      "GEN 10:19",
+      "GEN 45:17",
+      "LEV 25:38",
+      "JDG 3:1"
+     ]
+    },
+    {
+     "slug": "heth",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Heth",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:15",
+      "GEN 23:7",
+      "GEN 23:18",
+      "GEN 27:46"
+     ]
+    },
+    {
+     "slug": "kingofsidon",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "King of Sidon",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "JER 27:3"
+     ]
+    },
+    {
+     "slug": "lehabim",
+     "how": "named in the text",
+     "kind": "people",
+     "name": "Lehabim",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:13",
+      "1CH 1:11"
+     ]
+    },
+    {
+     "slug": "mizraim",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Mizraim",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:6",
+      "GEN 10:13",
+      "1CH 1:8",
+      "1CH 1:11"
+     ]
+    },
+    {
+     "slug": "naphtuhim",
+     "how": "named in the text",
+     "kind": "people",
+     "name": "Naphtuhim",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:13",
+      "1CH 1:11"
+     ]
+    },
+    {
+     "slug": "sidon",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Sidon",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:15",
+      "1CH 1:13"
+     ]
+    },
+    {
+     "slug": "sidon-2",
+     "how": "named in the text",
+     "kind": "place",
+     "name": "Sidon",
+     "sex": null,
+     "place_kind": "settlement",
+     "attested_in": [
+      "GEN 10:19",
+      "2SA 24:6",
+      "JER 27:3",
+      "MAT 15:21"
+     ]
+    }
+   ],
+   "context": [
+    {
+     "reference": "GEN 10:13",
+     "king_james": "And Mizraim begat Ludim, and Anamim, and Lehabim, and Naphtuhim,"
+    },
+    {
+     "reference": "GEN 10:15",
+     "king_james": "And Canaan begat Sidon his first born, and Heth,"
+    },
+    {
+     "reference": "1CH 1:11",
+     "king_james": "And Mizraim begat Ludim, and Anamim, and Lehabim, and Naphtuhim,"
+    },
+    {
+     "reference": "1CH 1:13",
+     "king_james": "And Canaan begat Zidon his firstborn, and Heth,"
+    }
+   ]
+  },
+  {
+   "entity": "girgashites",
+   "kind": "people",
+   "name": "Girgashites",
+   "sex": null,
+   "place_kind": null,
+   "hebrew": "גִּרְגָּשׁ",
+   "hebrew_transliterated": "girgash",
+   "greek": "Γεργεσαῖον",
+   "greek_transliterated": "Gergesaion",
+   "name_means": null,
+   "attested_in_total": 6,
+   "question": "open",
+   "verses": [
+    {
+     "reference": "GEN 10:16",
+     "king_james": "And the Jebusite, and the Amorite, and the Girgasite,",
+     "ukrainian": "і Евусеянина, і Амореянина, і Ґірґашеянина,",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | GRCBRENT καὶ~",
+       "2 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "3 הַ הַ H9009 article \"the\" | KJV the | BSB the Jebusites",
+       "4 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusite | BSB the Jebusites | RUSV Иевусей | GRCBRENT Ἰεβουσαῖον~",
+       "5 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "6 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "7 הָ הַ H9009 article \"the\" | KJV the | BSB the Amorites",
+       "8 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorite | BSB the Amorites | RUSV Аморей | GRCBRENT Ἀμοῤῥαῖον~",
+       "9 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "10 אֵת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB the Girgashites",
+       "12 גִּרְגָּשִׁי גִּרְגָּשִׁי H1622 adj masc sg absolute \"Girgashite\" | KJV Girgasite | BSB the Girgashites | RUSV Гергесей | GRCBRENT Γεργεσαῖον~"
+      ],
+      "BSB": "the Jebusites, the Amorites, the Girgashites,",
+      "RUSV": "Иевусей, Аморей, Гергесей,",
+      "SWETE": "καὶ τὸν Ἰεβουσαῖον κα τὸν Ἀμορραῖον καὶ τὸν Γερυεσαῖον",
+      "GRCBRENT": "καὶ τὸν Ἰεβουσαῖον, καὶ τὸν Ἀμοῤῥαῖον, καὶ τὸν Γεργεσαῖον,"
+     }
+    },
+    {
+     "reference": "GEN 15:21",
+     "king_james": "And the Amorites, and the Canaanites, and the Girgashites, and the Jebusites.",
+     "ukrainian": "і амореянина, і ханаанеянина, і ґірґашеянина, і евусеянина.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | GRCBRENT καὶ~",
+       "2 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τοὺς~",
+       "3 הָ הַ H9009 article \"the\" | KJV the | BSB Amorites",
+       "4 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorites | BSB Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαίους~",
+       "5 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "6 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τοὺς~",
+       "7 הַ הַ H9009 article \"the\" | KJV the | BSB Canaanites",
+       "8 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV Canaanites | BSB Canaanites | RUSV Хананеев | GRCBRENT Χαναναίους~",
+       "9 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~ καὶ~",
+       "10 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τοὺς~",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB Girgashites",
+       "12 גִּרְגָּשִׁי גִּרְגָּשִׁי H1622 adj masc sg absolute \"Girgashite\" | KJV Girgashites | BSB Girgashites | RUSV Гергесеев | GRCBRENT τοὺς~ Γεργεσαίους~",
+       "13 וְ וְ H9000 conj \"and\" | KJV and | RUSV и~ | GRCBRENT καὶ~",
+       "14 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τοὺς~",
+       "15 הַ הַ H9009 article \"the\" | KJV the | BSB and Jebusites",
+       "16 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusites | BSB and Jebusites | RUSV Иевусеев | GRCBRENT Ἰεβουσαίους~"
+      ],
+      "BSB": "Amorites, Canaanites, Girgashites, and Jebusites.”",
+      "RUSV": "Аморреев, Хананеев, Гергесеев и Иевусеев.",
+      "SWETE": "καὶ τοὺς Ἀμορραίους καὶ τοὺς Χαναναίους καὶ τοὺς Εὑοίους καὶ τοὺς Γεργεσαίους καὶ τοὺς Ἰεβουσαίους.",
+      "GRCBRENT": "καὶ τοὺς Ἀμοῤῥαίους, καὶ τοὺς Χαναναίους, καὶ τοὺς Εὐαίους, καὶ τοὺς Γεργεσαίους, καὶ τοὺς Ἰεβουσαίους."
+     }
+    },
+    {
+     "reference": "DEU 7:1",
+     "king_james": "When the LORD thy God shall bring thee into the land whither thou goest to possess it, and hath cast out many nations before thee, the Hittites, and the Girgashites, and the Amorites, and the Canaanites, and the Perizzites, and the Hivites, and the Jebusites, seven nations greater and mightier than thou;",
+     "ukrainian": "Коли Господь, Бог твій, уведе тебе до того Краю, куди ти входиш, щоб заволодіти ним, то Він вижене численні поганські народи перед тобою: хіттеянина, і ґірґашеянина, і амореянина, і ханаанеянина, і періззеянина, і хіввеянина, і євусеянина, сім народів, численніших та міцніших за тебе.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 כִּי כִּי H3588 conj \"that\" | KJV When | BSB When | RUSV Когда~ | GRCBRENT Ἐὰν~",
+       "2 יְבִיאֲךָ בוא H935 verb hif impf p3 masc sg +suffix p2 masc sg \"come\" | KJV shall bring | BSB brings | RUSV введет | GRCBRENT εἰσάγῃ~",
+       "3 יְהוָה יְהוָה H3068 proper-name pers masc sg absolute \"YHWH\" | KJV the LORD | BSB the LORD | RUSV Господь | GRCBRENT σε~ Κύριος~",
+       "4 אֱלֹהֶיךָ אֱלֹהִים H430 noun masc pl absolute +suffix p2 masc sg \"god(s)\" | KJV thy God | BSB your God | RUSV Бог твой~ | GRCBRENT Θεός~ σου~",
+       "5 אֶל אֶל H413 prep \"to\" | KJV thee into | BSB you into | RUSV в~ | GRCBRENT εἰς~",
+       "6 הָ הַ H9009 article \"the\" | KJV the | BSB the land | GRCBRENT τὴν~",
+       "7 אָרֶץ אֶרֶץ H776 noun sg absolute \"earth\" | KJV land | BSB the land | RUSV землю | GRCBRENT γῆν~",
+       "8 אֲשֶׁר אֲשֶׁר H834 conj \"<relative>\" | KJV whither | BSB that | RUSV которую~ | GRCBRENT ἣν~",
+       "9 אַתָּה אַתָּה H859 pron p2 masc sg \"you\" | KJV thou | BSB you | RUSV ты~",
+       "10 בָא בוא H935 verb qal ptca masc sg absolute \"come\" | KJV goest | BSB are entering | RUSV идешь | GRCBRENT εἰσπορεύῃ~",
+       "11 שָׁמָּה שָׁם H8033 adv \"there\" | GRCBRENT ἐκεῖ~",
+       "12 לְ לְ H9005 prep \"to\" | KJV to | BSB to possess | RUSV чтоб~",
+       "13 רִשְׁתָּהּ ירשׁ H3423 verb qal infc absolute +suffix p3 fem sg \"trample down\" | KJV possess | BSB to possess | RUSV овладеть ею~ | GRCBRENT κληρονομῆσαι~",
+       "14 וְ וְ H9000 conj \"and\" | BSB and He drives out | RUSV и~ | GRCBRENT καὶ~",
+       "15 נָשַׁל נשׁל H5394 verb qal perf p3 masc sg \"draw off\" | KJV it and hath cast out | BSB and He drives out | RUSV изгонит | GRCBRENT αὐτὴν~ ἐξάρῃ~",
+       "16 גֹּויִם גֹּוי H1471 noun masc pl absolute \"people\" | KJV nations | BSB nations | RUSV народы | GRCBRENT ἔθνη~",
+       "17 רַבִּים רַב H7227 adj masc pl absolute \"much\" | KJV many | BSB many | RUSV многочисленные",
+       "18 מִ מִן H4480 prep \"from\" | KJV before | BSB before you | GRCBRENT ἀπὸ~",
+       "19 פָּנֶיךָ פָּנֶה H6440 noun masc pl absolute +suffix p2 masc sg \"face\" | KJV before | BSB before you | RUSV лица твоего | GRCBRENT προσώπου~ σου~",
+       "20 הַ הַ H9009 article \"the\" | BSB the Hittites",
+       "21 חִתִּי חִתִּי H2850 adj masc sg absolute \"Hittite\" | KJV thee the Hittites | BSB the Hittites | RUSV Хеттеев | GRCBRENT Χετταῖον~",
+       "22 וְ וְ H9000 conj \"and\" | KJV and | BSB Girgashites | GRCBRENT καὶ~",
+       "23 הַ הַ H9009 article \"the\" | KJV the | BSB Girgashites",
+       "24 גִּרְגָּשִׁי גִּרְגָּשִׁי H1622 adj masc sg absolute \"Girgashite\" | KJV Girgashites | BSB Girgashites | RUSV Гергесеев | GRCBRENT Γεργεσαῖον~",
+       "25 וְ וְ H9000 conj \"and\" | KJV and | BSB Amorites | GRCBRENT καὶ~",
+       "26 הָ הַ H9009 article \"the\" | KJV the | BSB Amorites",
+       "27 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorites | BSB Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαῖον~",
+       "28 וְ וְ H9000 conj \"and\" | KJV and | BSB Canaanites | GRCBRENT καὶ~",
+       "29 הַ הַ H9009 article \"the\" | KJV the | BSB Canaanites",
+       "30 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV Canaanites | BSB Canaanites | RUSV Хананеев | GRCBRENT Χαναναῖον~",
+       "31 וְ וְ H9000 conj \"and\" | KJV and | BSB Perizzites | GRCBRENT καὶ~",
+       "32 הַ הַ H9009 article \"the\" | KJV the | BSB Perizzites",
+       "33 פְּרִזִּי פְּרִזִּי H6522 adj masc sg absolute \"Perizzite\" | KJV Perizzites | BSB Perizzites | RUSV Ферезеев | GRCBRENT Φερεζαῖον~",
+       "34 וְ וְ H9000 conj \"and\" | KJV and | BSB Hivites | GRCBRENT καὶ~",
+       "35 הַ הַ H9009 article \"the\" | KJV the | BSB Hivites",
+       "36 חִוִּי חִוִּי H2340 adj masc sg absolute \"Hivite\" | KJV Hivites | BSB Hivites | RUSV Евеев | GRCBRENT Εὐαῖον~",
+       "37 וְ וְ H9000 conj \"and\" | KJV and | BSB and Jebusites | RUSV и~ | GRCBRENT καὶ~",
+       "38 הַ הַ H9009 article \"the\" | KJV the | BSB and Jebusites",
+       "39 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusites | BSB and Jebusites | RUSV Иевусеев | GRCBRENT Ἰεβουσαῖον~",
+       "40 שִׁבְעָה שֶׁבַע H7651 noun fem sg absolute \"seven\" | KJV seven | BSB seven | RUSV семь | GRCBRENT ἐπτὰ~",
+       "41 גֹויִם גֹּוי H1471 noun masc pl absolute \"people\" | KJV nations | BSB nations | RUSV народов | GRCBRENT ἔθην~",
+       "42 רַבִּים רַב H7227 adj masc pl absolute \"much\" | KJV greater | BSB larger | RUSV многочисленнее | GRCBRENT πολλὰ~",
+       "43 וַ וְ H9000 conj \"and\" | KJV and | BSB and stronger | GRCBRENT καὶ~",
+       "44 עֲצוּמִים עָצוּם H6099 adj masc pl absolute \"mighty\" | KJV mightier | BSB and stronger | RUSV и сильнее",
+       "45 מִמֶּךָּ מִן H4480 prep +suffix p2 masc sg \"from\" | KJV than | BSB than you | RUSV тебя~ | GRCBRENT ἰσχυρότερα~"
+      ],
+      "BSB": "When the LORD your God brings you into the land that you are entering to possess, and He drives out before you many nations—the Hittites, Girgashites, Amorites, Canaanites, Perizzites, Hivites, and Jebusites, seven nations larger and stronger than you—",
+      "RUSV": "Когда введет тебя Господь, Бог твой, в землю, в которую ты идешь, чтоб овладеть ею, и изгонит от лица твоего многочисленные народы, Хеттеев, Гергесеев, Аморреев, Хананеев, Ферезеев, Евеев и Иевусеев, семь народов, которые многочисленнее и сильнее тебя,",
+      "SWETE": "Ἐὰν δὲ εἰσαγάγῃ σε Κύριος ὁ θεός σου εἰς τὴν γῆν εἰς ἣν εἰσπορεύῃ ἐκεῖ κληρονομῆσαι, καὶ ἐξαρεῖ ἔθνη μεγάλα ἀπὸ προσώπου σου, τὸν Χετταῖον καὶ Ἀμορραῖον καὶ Γεργεσαῖον καὶ Χαναναῖον καὶ Φερεζαῖον καὶ Εὑαῖον καὶ Ἰεβουσαῖον, ἑπτὰ ἔθνη πολλὰ κὼ ἰσχυρότερα ὑμῶν,",
+      "GRCBRENT": "Ἐὰν δὲ εἰσάγῃ σε Κύριος ὁ Θεός σου εἰς τὴν γῆν, εἰς ἣν εἰσπορεύῃ ἐκεῖ κληρονομῆσαι αὐτὴν, καὶ ἐξάρῃ ἔθνη μεγάλα ἀπὸ προσώπου σου, τὸν Χετταῖον καὶ Γεργεσαῖον καὶ Ἀμοῤῥαῖον καὶ Χαναναῖον καὶ Φερεζαῖον καὶ Εὐαῖον καὶ Ἰεβουσαῖον, ἐπτὰ ἔθην πολλὰ καὶ ἰσχυρότερα ὑμῶν·",
+      "no_original_word": {
+       "KJV": "thou",
+       "RUSV": "тебя в от которые"
+      }
+     }
+    },
+    {
+     "reference": "JOS 3:10",
+     "king_james": "And Joshua said, Hereby ye shall know that the living God is among you, and that he will without fail drive out from before you the Canaanites, and the Hittites, and the Hivites, and the Perizzites, and the Girgashites, and the Amorites, and the Jebusites.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וַ וְ H9000 conj \"and\" | KJV And | BSB continued | RUSV И~ | GRCBRENT καὶ~",
+       "2 יֹּאמֶר אמר H559 verb qal wayq p3 masc sg \"say\" | KJV said | BSB continued | RUSV сказал",
+       "3 יְהֹושֻׁעַ יְהֹושֻׁעַ H3091 proper-name pers masc sg absolute \"Joshua\" | KJV Joshua | BSB He | RUSV Иисус",
+       "4 בְּ בְּ H9003 prep \"in\" | BSB This is how | GRCBRENT Ἐν~",
+       "5 זֹאת זֹאת H2063 pron-dem fem sg \"this\" | KJV Hereby | BSB This is how | RUSV сего~ | GRCBRENT τούτῳ~",
+       "6 תֵּדְעוּן ידע H3045 verb qal impf p2 masc pl \"know\" | KJV ye shall know | BSB you will know | RUSV узнаете | GRCBRENT γνώσεσθε~",
+       "7 כִּי כִּי H3588 conj \"that\" | KJV that | BSB that | RUSV что~ | GRCBRENT ὅτι~",
+       "8 אֵל אֵל H410 noun masc sg absolute \"god\" | KJV God | BSB God is | RUSV Бог | GRCBRENT Θεὸς~",
+       "9 חַי חַי H2416 adj masc sg absolute \"alive\" | KJV the living | BSB the living | RUSV живый | GRCBRENT ζῶν~",
+       "10 בְּ בְּ H9003 prep \"in\" | KJV is | BSB among you | GRCBRENT ἐν~",
+       "11 קִרְבְּכֶם קֶרֶב H7130 noun masc sg absolute +suffix p2 masc pl \"interior\" | KJV among | BSB among you | RUSV среди вас~ | GRCBRENT ὑμῖν~",
+       "12 וְ וְ H9000 conj \"and\" | BSB and that He will surely drive out",
+       "13 הֹורֵשׁ ירשׁ H3423 verb hif infa absolute \"trample down\" | KJV you and he will without fail drive out | BSB and that He will surely drive out | RUSV прогонит",
+       "14 יֹורִישׁ ירשׁ H3423 verb hif impf p3 masc sg \"trample down\" | KJV you and he will without fail drive out | RUSV прогонит | GRCBRENT ὀλοθρεύσει~",
+       "15 מִ מִן H4480 prep \"from\" | KJV from before | BSB before you | RUSV от~ | GRCBRENT ἀπὸ~",
+       "16 פְּנֵיכֶם פָּנֶה H6440 noun masc pl absolute +suffix p2 masc pl \"face\" | KJV from before | BSB before you | RUSV вас~ | GRCBRENT προσώπου~",
+       "17 אֶת אֵת H853 prep \"<object marker>\" | KJV you | GRCBRENT τὸν~",
+       "18 הַ הַ H9009 article \"the\" | KJV the | BSB the Canaanites",
+       "19 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV Canaanites | BSB the Canaanites | RUSV Хананеев | GRCBRENT Χαναναῖον~",
+       "20 וְ וְ H9000 conj \"and\" | KJV and | RUSV и~ | GRCBRENT καὶ~",
+       "21 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "22 הַ הַ H9009 article \"the\" | KJV the | BSB Hittites",
+       "23 חִתִּי חִתִּי H2850 adj masc sg absolute \"Hittite\" | KJV Hittites | BSB Hittites | RUSV Хеттеев | GRCBRENT Χετταῖον~",
+       "24 וְ וְ H9000 conj \"and\" | KJV and | RUSV и~ | GRCBRENT καὶ~",
+       "25 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "26 הַ הַ H9009 article \"the\" | KJV the | BSB Hivites",
+       "27 חִוִּי חִוִּי H2340 adj masc sg absolute \"Hivite\" | KJV Hivites | BSB Hivites | RUSV Евеев | GRCBRENT Εὐαῖον~",
+       "28 וְ וְ H9000 conj \"and\" | KJV and | RUSV и~ | GRCBRENT καὶ~",
+       "29 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "30 הַ הַ H9009 article \"the\" | KJV the | BSB Perizzites",
+       "31 פְּרִזִּי פְּרִזִּי H6522 adj masc sg absolute \"Perizzite\" | KJV Perizzites | BSB Perizzites | RUSV Ферезеев | GRCBRENT Φερεζαῖον~",
+       "32 וְ וְ H9000 conj \"and\" | KJV and | RUSV и~ | GRCBRENT καὶ~",
+       "33 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "34 הַ הַ H9009 article \"the\" | KJV the | BSB Girgashites",
+       "35 גִּרְגָּשִׁי גִּרְגָּשִׁי H1622 adj masc sg absolute \"Girgashite\" | KJV Girgashites | BSB Girgashites | RUSV Гергесеев | GRCBRENT Γεργεσαῖον~",
+       "36 וְ וְ H9000 conj \"and\" | KJV and | BSB Amorites | RUSV и~ | GRCBRENT καὶ~",
+       "37 הָ הַ H9009 article \"the\" | KJV the | BSB Amorites",
+       "38 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorites | BSB Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαῖον~",
+       "39 וְ וְ H9000 conj \"and\" | KJV and | BSB and Jebusites | RUSV и~ | GRCBRENT καὶ~",
+       "40 הַ הַ H9009 article \"the\" | KJV the | BSB and Jebusites",
+       "41 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusites | BSB and Jebusites | RUSV Иевусеев | GRCBRENT Ἰεβουσαῖον~"
+      ],
+      "BSB": "He continued, “This is how you will know that the living God is among you and that He will surely drive out before you the Canaanites, Hittites, Hivites, Perizzites, Girgashites, Amorites, and Jebusites.",
+      "RUSV": "И сказал Иисус: из сего узнаете, что среди вас есть Бог живый, Который прогонит от вас Хананеев и Хеттеев, и Евеев, и Ферезеев, и Гергесеев, и Аморреев, и Иевусеев:",
+      "SWETE": "ἐν τούτῳ γνώσεσθε ὅτι θεὸς ζῶν ἐν ὑμῖν, καὶ ὀλεθρεύων ὀλεθρεύσει ἀπὸ προσώπου ἡμῶν τὸν Χαναναῖον καὶ τὸν Χεττααῖον καὶ τὸν Φερεζαῖον καὶ τὸν Εὑαῖον καὶ τὸν Ἀμορραῖον καὶ τὸν Γεργεσαῖον καὶ τὸν Ἰεβουσαῖον.",
+      "GRCBRENT": "Ἐν τούτῳ γνώσεσθε, ὅτι Θεὸς ζῶν ἐν ὑμῖν, καὶ ὀλοθρεύων ὀλοθρεύσει ἀπὸ προσώπου ἡμῶν τὸν Χαναναῖον, καὶ τὸν Χετταῖον, καὶ τὸν Φερεζαῖον, καὶ τὸν Εὐαῖον, καὶ τὸν Ἀμοῤῥαῖον, καὶ τὸν Γεργεσαῖον, καὶ τὸν Ἰεβουσαῖον.",
+      "no_original_word": {
+       "KJV": "that",
+       "RUSV": "из есть Который"
+      }
+     }
+    },
+    {
+     "reference": "1CH 1:14",
+     "king_james": "The Jebusite also, and the Amorite, and the Girgashite,",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\"",
+       "2 אֶת אֵת H853 prep \"<object marker>\"",
+       "3 הַ הַ H9009 article \"the\" | KJV The | BSB the Jebusites",
+       "4 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusite | BSB the Jebusites | RUSV Иевусея",
+       "5 וְ וְ H9000 conj \"and\" | KJV also",
+       "6 אֶת אֵת H853 prep \"<object marker>\"",
+       "7 הָ הַ H9009 article \"the\" | KJV the | BSB the Amorites",
+       "8 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV and Amorite | BSB the Amorites | RUSV Аморрея",
+       "9 וְ וְ H9000 conj \"and\" | KJV and",
+       "10 אֵת אֵת H853 prep \"<object marker>\"",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB the Girgashites",
+       "12 גִּרְגָּשִׁי גִּרְגָּשִׁי H1622 adj masc sg absolute \"Girgashite\" | KJV Girgashite | BSB the Girgashites | RUSV Гергесея"
+      ],
+      "BSB": "the Jebusites, the Amorites, the Girgashites,",
+      "RUSV": "Иевусея, Аморрея, Гергесея,"
+     }
+    },
+    {
+     "reference": "NEH 9:8",
+     "king_james": "And foundest his heart faithful before thee, and madest a covenant with him to give the land of the Canaanites, the Hittites, the Amorites, and the Perizzites, and the Jebusites, and the Girgashites, to give it, I say, to his seed, and hast performed thy words; for thou art righteous:",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וּ וְ H9000 conj \"and\" | KJV And | BSB You found | RUSV и~ | GRCBRENT Καὶ~",
+       "2 מָצָאתָ מצא H4672 verb qal perf p2 masc sg \"find\" | KJV foundest | BSB You found | RUSV нашел | GRCBRENT εὗρες~",
+       "3 אֶת אֵת H853 prep \"<object marker>\" | KJV foundest | GRCBRENT τὴν~",
+       "4 לְבָבֹו לֵבָב H3824 noun masc sg absolute +suffix p3 masc sg \"heart\" | KJV his heart | BSB his heart | RUSV сердце его | GRCBRENT καρδίαν~ αὐτοῦ~",
+       "5 נֶאֱמָן אמן H539 verb nif ptca masc sg absolute \"be firm\" | KJV faithful | BSB faithful | RUSV верным | GRCBRENT πιστὴν~",
+       "6 לְ לְ H9005 prep \"to\" | BSB before You",
+       "7 פָנֶיךָ פָּנֶה H6440 noun masc pl absolute +suffix p2 masc sg \"face\" | KJV before | BSB before You | RUSV пред~ | GRCBRENT ἐνώπιόν~ σου~",
+       "8 וְ וְ H9000 conj \"and\" | BSB and made | GRCBRENT καὶ~",
+       "9 כָרֹות כרת H3772 verb qal infa absolute \"cut\" | KJV thee and madest | BSB and made | RUSV заключил | GRCBRENT διέθου~",
+       "10 עִמֹּו עִם H5973 prep +suffix p3 masc sg \"with\" | KJV with | BSB with him | RUSV с~ ним~",
+       "11 הַ הַ H9009 article \"the\" | BSB a covenant",
+       "12 בְּרִית בְּרִית H1285 noun fem sg absolute \"covenant\" | KJV a covenant | BSB a covenant | RUSV завет | GRCBRENT διαθήκην~",
+       "13 לָ לְ H9005 prep \"to\" | BSB to give | RUSV чтобы~",
+       "14 תֵת נתן H5414 verb qal infc absolute \"give\" | KJV him to give | BSB to give | RUSV дать | GRCBRENT αὐτὸν~ δοῦναι~",
+       "15 אֶת אֵת H853 prep \"<object marker>\" | KJV him to give | GRCBRENT αὐτὸν~ τὴν~",
+       "16 אֶרֶץ אֶרֶץ H776 noun sg construct \"earth\" | KJV the land | BSB the land | RUSV землю | GRCBRENT γῆν~",
+       "17 הַ הַ H9009 article \"the\" | BSB of the Canaanites | GRCBRENT τῶν~",
+       "18 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV of the Canaanites | BSB of the Canaanites | RUSV Хананеев | GRCBRENT Χαναναίων~",
+       "19 הַ הַ H9009 article \"the\" | KJV the | BSB and Hittites",
+       "20 חִתִּי חִתִּי H2850 adj masc sg absolute \"Hittite\" | KJV Hittites | BSB and Hittites | RUSV Хеттеев | GRCBRENT Χετταίων~",
+       "21 הָ הַ H9009 article \"the\" | KJV the | BSB of the Amorites",
+       "22 אֱמֹרִי אֱמֹרִי H567 adj masc sg absolute \"Amorite\" | KJV Amorites | BSB of the Amorites | RUSV Аморреев | GRCBRENT Ἀμοῤῥαίων~",
+       "23 וְ וְ H9000 conj \"and\" | KJV and | BSB and Perizzites | GRCBRENT καὶ~ καὶ~",
+       "24 הַ הַ H9009 article \"the\" | KJV the | BSB and Perizzites",
+       "25 פְּרִזִּי פְּרִזִּי H6522 adj masc sg absolute \"Perizzite\" | KJV Perizzites | BSB and Perizzites | RUSV Ферезеев | GRCBRENT Φερεζαίων~",
+       "26 וְ וְ H9000 conj \"and\" | KJV and | BSB of the Jebusites | GRCBRENT καὶ~",
+       "27 הַ הַ H9009 article \"the\" | KJV the | BSB of the Jebusites",
+       "28 יְבוּסִי יְבוּסִי H2983 adj masc sg absolute \"Jebusite\" | KJV Jebusites | BSB of the Jebusites | RUSV Иевусеев | GRCBRENT Ἰεβουσαίων~",
+       "29 וְ וְ H9000 conj \"and\" | KJV and | BSB and Girgashites | RUSV и~ | GRCBRENT καὶ~",
+       "30 הַ הַ H9009 article \"the\" | KJV the | BSB and Girgashites",
+       "31 גִּרְגָּשִׁי גִּרְגָּשִׁי H1622 adj masc sg absolute \"Girgashite\" | KJV Girgashites | BSB and Girgashites | RUSV Гергесеев | GRCBRENT Γεργεσαίων~",
+       "32 לָ לְ H9005 prep \"to\" | KJV to | BSB to give it",
+       "33 תֵת נתן H5414 verb qal infc absolute \"give\" | KJV give | BSB to give it | RUSV дать",
+       "34 לְ לְ H9005 prep \"to\" | BSB to his descendants | GRCBRENT τῷ~",
+       "35 זַרְעֹו זֶרַע H2233 noun masc sg absolute +suffix p3 masc sg \"seed\" | KJV to his seed | BSB to his descendants | RUSV семени его | GRCBRENT σπέρματι~ αὐτοῦ~",
+       "36 וַ וְ H9000 conj \"and\" | KJV and | BSB You have kept | RUSV И~ | GRCBRENT καὶ~",
+       "37 תָּקֶם קום H6965 verb hif wayq p2 masc sg \"arise\" | KJV hast performed | BSB You have kept | RUSV исполнил",
+       "38 אֶת אֵת H853 prep \"<object marker>\" | KJV hast performed | GRCBRENT τοὺς~",
+       "39 דְּבָרֶיךָ דָּבָר H1697 noun masc pl absolute +suffix p2 masc sg \"word\" | KJV thy words | BSB Your promise | RUSV слово Свое | GRCBRENT λόγους~ σου~",
+       "40 כִּי כִּי H3588 conj \"that\" | KJV for | BSB because | RUSV потому~ | GRCBRENT ὅτι~",
+       "41 צַדִּיק צַדִּיק H6662 adj masc sg absolute \"just\" | KJV righteous | BSB are righteous | RUSV праведен | GRCBRENT δίκαιος~",
+       "42 אָתָּה אַתָּה H859 pron p2 masc sg \"you\" | KJV thou | BSB You | RUSV Ты~ | GRCBRENT σύ~"
+      ],
+      "BSB": "You found his heart faithful before You, and made a covenant with him to give the land of the Canaanites and Hittites, of the Amorites and Perizzites, of the Jebusites and Girgashites—to give it to his descendants. You have kept Your promise, because You are righteous.",
+      "RUSV": "и нашел сердце его верным пред Тобою, и заключил с ним завет, чтобы дать семени его землю Хананеев, Хеттеев, Аморреев, Ферезеев, Иевусеев и Гергесеев. И Ты исполнил слово Свое, потому что Ты праведен.",
+      "SWETE": "καὶ εὗρες τὴν καρδίαν αὐτοῦ πιστὴν ἐνώπιόν σου, καὶ διέθου πρὸς αὐτὸν διαθήκην δοῦναι αὐτῷ τὴν γῆν τῶν Χαναναίων καὶ Χετταίων καὶ Ἀμορραίων καὶ Φερεζαίων καὶ Ἰεβουσαίων καὶ Γεργεσαίων καὶ τῷ σπέρματι αὐτοῦ· καὶ ἔστησας τοὺς λόγους σου, ὅτι δίκαιος σύ.",
+      "no_original_word": {
+       "KJV": "it I say art",
+       "RUSV": "Тобою и Ты что"
+      }
+     }
+    }
+   ],
+   "candidates": [
+    {
+     "slug": "canaan",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Canaan",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 9:18",
+      "GEN 10:6",
+      "GEN 10:15",
+      "1CH 1:13"
+     ]
+    },
+    {
+     "slug": "amorites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Amorites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:16",
+      "NUM 21:34",
+      "JOS 5:1",
+      "JDG 6:10"
+     ]
+    },
+    {
+     "slug": "jebusites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Jebusites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:16",
+      "DEU 7:1",
+      "JDG 3:5",
+      "1CH 11:6"
+     ]
+    },
+    {
+     "slug": "canaanites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Canaanites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 9:18",
+      "EXO 23:23",
+      "JOS 11:3",
+      "JDG 1:29"
+     ]
+    },
+    {
+     "slug": "hittites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Hittites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 15:20",
+      "EXO 23:23",
+      "JOS 12:8",
+      "2SA 23:39"
+     ]
+    },
+    {
+     "slug": "perizzites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Perizzites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 13:7",
+      "EXO 23:23",
+      "JOS 3:10",
+      "JDG 1:4"
+     ]
+    },
+    {
+     "slug": "el",
+     "how": "annotated",
+     "kind": "term",
+     "name": "El",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 14:18",
+      "NEH 1:5",
+      "JOB 40:19",
+      "PSA 94:1"
+     ]
+    },
+    {
+     "slug": "hivites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Hivites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:17",
+      "EXO 23:23",
+      "JOS 3:10",
+      "JDG 3:3"
+     ]
+    },
+    {
+     "slug": "joshua",
+     "how": "annotated",
+     "kind": "person",
+     "name": "Joshua",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "EXO 17:9",
+      "JOS 4:14",
+      "JOS 8:29",
+      "JOS 11:18"
+     ]
+    },
+    {
+     "slug": "yhvh",
+     "how": "annotated",
+     "kind": "person",
+     "name": "YHVH",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 2:4",
+      "1SA 6:21",
+      "PSA 120:2",
+      "MIC 6:5"
+     ]
+    },
+    {
+     "slug": "elohim",
+     "how": "annotated",
+     "kind": "term",
+     "name": "Elohim",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 1:1",
+      "DEU 17:2",
+      "1CH 4:10",
+      "PSA 67:3"
+     ]
+    },
+    {
+     "slug": "altar-the-lord-is-my-banner",
+     "how": "named in the text",
+     "kind": "object",
+     "name": "Altar 'The LORD Is My Banner' (Jehovah-nissi)",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "EXO 17:15"
+     ]
+    },
+    {
+     "slug": "altar-the-lord-is-peace",
+     "how": "named in the text",
+     "kind": "object",
+     "name": "Altar 'The LORD Is Peace' (Jehovah-shalom)",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "JDG 6:24"
+     ]
+    },
+    {
+     "slug": "appointed-times",
+     "how": "named in the text",
+     "kind": "observance",
+     "name": "The Appointed Times of the LORD",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "EXO 23:14",
+      "LEV 23:29",
+      "NUM 28:24",
+      "NUM 29:34"
+     ]
+    },
+    {
+     "slug": "joshua-2",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Joshua",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "1SA 6:14",
+      "1SA 6:18"
+     ]
+    },
+    {
+     "slug": "joshua-3",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Joshua",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "2KI 23:8"
+     ]
+    },
+    {
+     "slug": "joshua-4",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Joshua",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "HAG 1:1",
+      "HAG 2:2",
+      "ZEC 3:3",
+      "ZEC 3:9"
+     ]
+    },
+    {
+     "slug": "joshua-5",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Joshua",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "LUK 3:29"
+     ]
+    },
+    {
+     "slug": "lords-day",
+     "how": "named in the text",
+     "kind": "observance",
+     "name": "The Lord's Day",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "REV 1:10"
+     ]
+    },
+    {
+     "slug": "lords-supper",
+     "how": "named in the text",
+     "kind": "observance",
+     "name": "The Lord's Supper",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "MAT 26:26",
+      "MRK 14:23",
+      "LUK 22:16",
+      "1CO 11:20"
+     ]
+    },
+    {
+     "slug": "theangelofthelord",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "the angel of the LORD",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 16:7",
+      "NUM 22:34",
+      "JDG 13:20",
+      "ZEC 1:12"
+     ]
+    },
+    {
+     "slug": "thecaptainofthehostofthelord",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "the captain of the host of the LORD",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "JOS 5:14",
+      "JOS 5:15"
+     ]
+    },
+    {
+     "slug": "thelordisthere",
+     "how": "named in the text",
+     "kind": "place",
+     "name": "The Lord Is There",
+     "sex": null,
+     "place_kind": "settlement",
+     "attested_in": [
+      "EZK 48:35"
+     ]
+    },
+    {
+     "slug": "thelordwillprovide",
+     "how": "named in the text",
+     "kind": "place",
+     "name": "The LORD Will Provide",
+     "sex": null,
+     "place_kind": "unique",
+     "attested_in": [
+      "GEN 22:14"
+     ]
+    }
+   ],
+   "context": [
+    {
+     "reference": "1CH 1:13",
+     "king_james": "And Canaan begat Zidon his firstborn, and Heth,"
+    },
+    {
+     "reference": "GEN 10:15",
+     "king_james": "And Canaan begat Sidon his firstborn, and Heth,"
+    }
+   ]
+  },
+  {
+   "entity": "hamathites",
+   "kind": "people",
+   "name": "Hamathites",
+   "sex": null,
+   "place_kind": null,
+   "hebrew": "חֲמָת",
+   "hebrew_transliterated": "chamat",
+   "greek": "Αμαθι",
+   "greek_transliterated": "Amathi",
+   "name_means": null,
+   "attested_in_total": 2,
+   "question": "open",
+   "verses": [
+    {
+     "reference": "GEN 10:18",
+     "king_james": "And the Arvadite, and the Zemarite, and the Hamathite: and afterward were the families of the Canaanites spread abroad.",
+     "ukrainian": "і Арвадеянина, і Цемареянина, і Хаматеянина. А потім розпорошилися роди Ханаанеянина.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And | GRCBRENT καὶ~",
+       "2 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τον~",
+       "3 הָ הַ H9009 article \"the\" | KJV the | BSB the Arvadites",
+       "4 אַרְוָדִי אַרְוָדִי H721 adj masc sg absolute \"Arvadite\" | KJV Arvadite | BSB the Arvadites | RUSV Арвадей | GRCBRENT Ἀράδιον~",
+       "5 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "6 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "7 הַ הַ H9009 article \"the\" | KJV the | BSB the Zemarites",
+       "8 צְּמָרִי צְמָרִי H6786 adj masc sg absolute \"Zemarite\" | KJV Zemarite | BSB the Zemarites | RUSV Цемарей | GRCBRENT Σαμαραῖον~",
+       "9 וְ וְ H9000 conj \"and\" | KJV and | GRCBRENT καὶ~",
+       "10 אֶת אֵת H853 prep \"<object marker>\" | GRCBRENT τὸν~",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB and the Hamathites",
+       "12 חֲמָתִי חֲמָתִי H2577 adj masc sg absolute \"Hamathite\" | KJV Hamathite | BSB and the Hamathites | RUSV Химарей | GRCBRENT Ἀμαθί~",
+       "13 וְ וְ H9000 conj \"and\" | KJV and | BSB Later | GRCBRENT Καὶ~",
+       "14 אַחַר אַחַר H310 noun masc sg absolute \"after\" | KJV afterward | BSB Later | RUSV последствии | GRCBRENT μετὰ~",
+       "15 נָפֹצוּ פוץ H6327 verb nif perf p3 pl \"disperse\" | KJV spread abroad | BSB were scattered | RUSV рассеялись | GRCBRENT διεσπάρησαν~",
+       "16 מִשְׁפְּחֹות מִשְׁפָּחָה H4940 noun fem pl construct \"clan\" | KJV were the families | BSB clans | RUSV племена | GRCBRENT αἱ~ φυλαὶ~",
+       "17 הַ הַ H9009 article \"the\" | BSB the Canaanite | GRCBRENT τῶν~",
+       "18 כְּנַעֲנִי כְּנַעֲנִי H3669 adj masc sg absolute \"Canaanite\" | KJV of the Canaanites | BSB the Canaanite | RUSV Ханаанские | GRCBRENT Χαναναίων~"
+      ],
+      "BSB": "the Arvadites, the Zemarites, and the Hamathites. Later the Canaanite clans were scattered,",
+      "RUSV": "Арвадей, Цемарей и Химарей. В последствии племена Ханаанские рассеялись.",
+      "SWETE": "καὶ τὸν Ἀράδιον καὶ τὸν Σαμαραῖον καὶ τὸν Ἁμαθί. καὶ μετὰ τοῦτο διεσπάρησαν αἱ φυλαὶ τῶν Χαναναίων.",
+      "no_original_word": {
+       "RUSV": "и В"
+      }
+     }
+    },
+    {
+     "reference": "1CH 1:16",
+     "king_james": "And the Arvadite, and the Zemarite, and the Hamathite.",
+     "ukrainian": "і арвадянина, і цемарянина, і хаматянина.",
+     "witnesses": {
+      "original": "BHSA",
+      "words": [
+       "1 וְ וְ H9000 conj \"and\" | KJV And",
+       "2 אֶת אֵת H853 prep \"<object marker>\"",
+       "3 הָ הַ H9009 article \"the\" | KJV the | BSB the Arvadites",
+       "4 אַרְוָדִי אַרְוָדִי H721 adj masc sg absolute \"Arvadite\" | KJV Arvadite | BSB the Arvadites | RUSV Арвадея",
+       "5 וְ וְ H9000 conj \"and\" | KJV and | RUSV и~",
+       "6 אֶת אֵת H853 prep \"<object marker>\"",
+       "7 הַ הַ H9009 article \"the\" | KJV the | BSB the Zemarites",
+       "8 צְּמָרִי צְמָרִי H6786 adj masc sg absolute \"Zemarite\" | KJV Zemarite | BSB the Zemarites | RUSV Цемарея",
+       "9 וְ וְ H9000 conj \"and\" | KJV and",
+       "10 אֶת אֵת H853 prep \"<object marker>\"",
+       "11 הַ הַ H9009 article \"the\" | KJV the | BSB and the Hamathites",
+       "12 חֲמָתִי חֲמָתִי H2577 adj masc sg absolute \"Hamathite\" | KJV Hamathite | BSB and the Hamathites | RUSV Хамафея"
+      ],
+      "BSB": "the Arvadites, the Zemarites, and the Hamathites.",
+      "RUSV": "Арвадея, Цемарея и Хамафея."
+     }
+    }
+   ],
+   "candidates": [
+    {
+     "slug": "canaan",
+     "how": "named in the text",
+     "kind": "person",
+     "name": "Canaan",
+     "sex": "male",
+     "place_kind": null,
+     "attested_in": [
+      "GEN 9:18",
+      "GEN 10:6",
+      "GEN 10:15",
+      "1CH 1:13"
+     ]
+    },
+    {
+     "slug": "arvadites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Arvadites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:18",
+      "1CH 1:16"
+     ]
+    },
+    {
+     "slug": "zemarites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Zemarites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 10:18",
+      "1CH 1:16"
+     ]
+    },
+    {
+     "slug": "canaanites",
+     "how": "annotated",
+     "kind": "people",
+     "name": "Canaanites",
+     "sex": null,
+     "place_kind": null,
+     "attested_in": [
+      "GEN 9:18",
+      "EXO 23:23",
+      "JOS 11:3",
+      "JDG 1:29"
+     ]
+    }
+   ],
+   "context": [
+    {
+     "reference": "1CH 1:13",
+     "king_james": "And Canaan begat Zidon his firstborn, and Heth,"
+    },
+    {
+     "reference": "GEN 10:15",
+     "king_james": "And Canaan begat Sidon his firstborn, and Heth,"
+    }
+   ]
+  }
+ ]
+}

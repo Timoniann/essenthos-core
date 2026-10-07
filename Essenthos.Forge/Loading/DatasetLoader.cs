@@ -387,6 +387,7 @@ internal sealed class DatasetLoader(
             new("relationship-verses", ListTheVersesTheRelationshipsWereReadFrom),
             new("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
             new("foreign-names", TakeBackTheNamesCarriedOntoAnothersName),
+            new("pronouns", TakeBackThePersonsAPronounDoesNotSettle),
             new("consensus-namesakes", GiveTheConsensusNamesToTheBearerTheVerseNames),
             new("edition-twins", NameTheSameWordInTheOtherEditions),
             new("spellings", CountHowEachTextSpellsEachName),
@@ -1756,8 +1757,8 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// The lines this corpus wrote under its own records, in each reader's language. After every
-    /// step that writes such a record and after the folds, which can retire one.
+    /// The lines this corpus wrote under its own records, and their notes, in each reader's language.
+    /// After every step that writes such a record and after the folds, which can retire one.
     /// </summary>
     private async Task RenderOurOwnLinesInEveryLanguage(CancellationToken cancellationToken)
     {
@@ -1766,6 +1767,10 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<DistinguisherLoader>();
         status.Record(await loader.Load(cancellationToken));
+
+        status.Starting("the notes of our own records in every language");
+        var notes = scope.ServiceProvider.GetRequiredService<NoteTranslationLoader>();
+        status.Record(await notes.Load(cancellationToken));
     }
 
     /// <summary>
@@ -2134,8 +2139,22 @@ internal sealed class DatasetLoader(
         status.Record(outcome.ToString());
     }
 
-    /// <summary>What the foreign-names step took back in this run, which the verse references are read again for.</summary>
+    /// <summary>What the foreign-names and pronouns steps took back in this run, which the verse references are read again for.</summary>
     private int foreignNamesWithdrawn;
+
+    /// <summary>
+    /// The persons carried onto a pronoun whose verse does not settle who the pronoun is, taken back;
+    /// the ones it does settle stay. After every pass that carries a name.
+    /// </summary>
+    private async Task TakeBackThePersonsAPronounDoesNotSettle(CancellationToken cancellationToken)
+    {
+        status.Starting("the persons a pronoun does not settle");
+
+        using var scope = services.CreateScope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<PronounReferents>().Withdraw(cancellationToken);
+        foreignNamesWithdrawn += outcome.Withdrawn;
+        status.Record(outcome.ToString());
+    }
 
     /// <summary>
     /// A name the verses' consensus wrote for one man where the verse's own readings name another man

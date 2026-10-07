@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -65,6 +65,9 @@ internal static class EntityNames
     /// text heads with is the name and not one case of it.
     /// </summary>
     private static readonly HashSet<string> Undeclined = new(StringComparer.Ordinal) { "spa" };
+
+    /// <summary>Whether a record with no form in this language is called by its text's printed spelling.</summary>
+    public static bool NamesByThePrintedSpelling(string? language) => Local(language) is { } local && Undeclined.Contains(local);
 
     /// <summary>
     /// The collation a language's names sort in. Without it Postgres orders by the database's

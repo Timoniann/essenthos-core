@@ -16,6 +16,18 @@
   "numbers": [
     {
       "entities": [
+        "rehoboam"
+      ],
+      "label": "Rehoboam",
+      "was": {
+        "hebrew": "H7346"
+      },
+      "hebrewStrongNumber": "H7346",
+      "greekStrongNumber": "G4497",
+      "why": "Matthew 1:7 prints Rehoboam's name as Ῥοβοάμ, G4497, which Strong heads Roboam (i.e. Rechobam), an Israelite; the name row the dataset gave him carries no Greek number, so the Greek words that name him named nobody by number. No other record bears G4497."
+    },
+    {
+      "entities": [
         "deborah-2",
         "deborah"
       ],

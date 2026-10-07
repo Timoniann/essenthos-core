@@ -17,11 +17,13 @@ internal sealed record DescriptorRefusals(
     int Unaccompanied,
     int Misplaced,
     int Inadmissible,
-    int Reversed = 0)
+    int Reversed = 0,
+    int Mistargeted = 0,
+    int Members = 0)
 {
     public int Total =>
         UnknownEntity + UnknownRelation + UnresolvedTarget + UnmatchedReference + WithoutConfidence
-        + Unaccompanied + Misplaced + Inadmissible + Reversed;
+        + Unaccompanied + Misplaced + Inadmissible + Reversed + Mistargeted + Members;
 
     public override string ToString() =>
         $"{UnknownEntity} for an entity the encyclopedia does not hold, " +
@@ -32,7 +34,9 @@ internal sealed record DescriptorRefusals(
         $"{Unaccompanied} reading company out of a verse that speaks of none, and " +
         $"{Misplaced} placing something somewhere that is not a place, and " +
         $"{Inadmissible} saying of a record what its kind cannot be, and " +
-        $"{Reversed} reading a line of descent the wrong way round against a reading of equal or higher standing";
+        $"{Reversed} reading a line of descent the wrong way round against a reading of equal or higher standing, and " +
+        $"{Mistargeted} giving a person or a place as somebody's people, or a place as a people's forebear, and " +
+        $"{Members} making a people's forebear of a man the verse calls one of that people";
 }
 
 internal sealed record DescriptorOutcome(
@@ -139,6 +143,16 @@ internal sealed class EntityDescriptorLoader(
         var occurrences = await Occurrences(entities.Values, cancellationToken);
         var opposed = Opposed(records, entities, occurrences);
 
+        // What kind each record is, so a clause can be asked whether its subject can hold the
+        // relation and whether its other end is the kind of record the relation points at. Every
+        // entity the records name, not only the described ones, because a target is as often
+        // somebody else's entity as it is one of these.
+        var kinds = await db.Entities
+            .Where(e => entities.Values.Contains(e.Id))
+            .Select(e => new { e.Id, e.Kind })
+            .ToDictionaryAsync(e => e.Id, e => e.Kind, cancellationToken);
+        var members = await WrittenWithTheGentilic(records, entities, cancellationToken);
+
         // A record for an entity this loader already described, published in a file it has not
         // read, is a re-ask: the vocabulary widened or the prompt changed and the pass was asked
         // again. The file is what tells them apart -- both passes ran as claude-sonnet-5 on
@@ -153,7 +167,9 @@ internal sealed class EntityDescriptorLoader(
                 && !loaded.Contains(record.Run))
             .Select(record => entities[record.Entity])
             .ToHashSet();
-        superseded.UnionWith(await HoldingAnOpposedClause(opposed, cancellationToken));
+        superseded.UnionWith(await HoldingARefusedClause(
+            [.. opposed, .. Turned(records, entities, kinds, members)], cancellationToken));
+        superseded.UnionWith(await MissingTheirWitness(records, entities, cancellationToken));
 
         // In one transaction with the writes below, and this is not a precaution. `Forget` deletes
         // through the database rather than through the change tracker, so it lands the moment it
@@ -181,17 +197,9 @@ internal sealed class EntityDescriptorLoader(
         var refiled = await Refiled(cancellationToken);
         var accompanied = await Accompanied(records, cancellationToken);
 
-        // What kind each record is, so a clause can be asked whether its subject can hold the
-        // relation and whether a clause that places something points at a place. Every entity the
-        // records name, not only the described ones, because a target is as often somebody else's
-        // entity as it is one of these.
-        var kinds = await db.Entities
-            .Where(e => entities.Values.Contains(e.Id))
-            .Select(e => new { e.Id, e.Kind })
-            .ToDictionaryAsync(e => e.Id, e => e.Kind, cancellationToken);
-
         int unknownEntity = 0, unknownRelation = 0, unresolvedTarget = 0, reversed = 0;
         int unmatchedReference = 0, withoutConfidence = 0, unaccompanied = 0, misplaced = 0, inadmissible = 0;
+        int mistargeted = 0, asMembers = 0;
         int skipped = 0, unresolved = 0, clauses = 0, forms = 0, wrote = 0;
 
         foreach (var record in records)
@@ -249,6 +257,12 @@ internal sealed class EntityDescriptorLoader(
                     continue;
                 }
 
+                if (!DescriptorTargets.Admits(claim.Relation, kinds.GetValueOrDefault(targetId)))
+                {
+                    mistargeted++;
+                    continue;
+                }
+
                 if (Citation.Parse(claim.Reference) is not { } citation
                     || !Cites(citation, entityId, targetId, occurrences))
                 {
@@ -259,6 +273,13 @@ internal sealed class EntityDescriptorLoader(
                 if (opposed.Contains((entityId, claim.Relation, targetId)))
                 {
                     reversed++;
+                    continue;
+                }
+
+                if (claim.Relation == DescriptorRelations.DescendantsOf
+                    && citation.Verses.Any(v => members.Contains((entityId, targetId, v.Book, v.Chapter, v.Verse))))
+                {
+                    asMembers++;
                     continue;
                 }
 
@@ -308,8 +329,11 @@ internal sealed class EntityDescriptorLoader(
                 //
                 // A necessary condition and not a sufficient one: it removes the list-shaped
                 // reading, which is the whole of the measured failure, and leaves the judgement of
-                // a verse that does speak of company to the pass and to its confidence.
+                // a verse that does speak of company to the pass and to its confidence. A verse can
+                // state company in none of these words -- *there remained two of the men in the camp,
+                // ... Eldad, and ... Medad* -- and a person reading it can say so: a decision stands.
                 if (claim.Relation == DescriptorRelations.CompanionOf
+                    && !decided
                     && accompanied is not null
                     && !accompanied.Contains((verse.Book, verse.Chapter, verse.Verse)))
                 {
@@ -332,6 +356,8 @@ internal sealed class EntityDescriptorLoader(
                     Source = credit,
                     Run = record.Run,
                     Note = claim.Reason,
+                    Witness = Trimmed(claim.Witness, WitnessLength),
+                    Original = Trimmed(claim.Original, OriginalLength),
                     Claims =
                     [
                         new EntityDescriptorClaim
@@ -356,7 +382,7 @@ internal sealed class EntityDescriptorLoader(
 
         var refused = new DescriptorRefusals(
             unknownEntity, unknownRelation, unresolvedTarget, unmatchedReference, withoutConfidence,
-            unaccompanied, misplaced, inadmissible, reversed);
+            unaccompanied, misplaced, inadmissible, reversed, mistargeted, asMembers);
 
         if (clauses > 0 || forms > 0)
         {
@@ -442,8 +468,8 @@ internal sealed class EntityDescriptorLoader(
                     continue;
                 }
 
-                var bare = NameForms.Bare(language, form);
-                if (bare.Length == 0)
+                var bare = NameForms.Bare(language, form, grammaticalCase);
+                if (bare.Length == 0 || NameForms.MixesScripts(language, bare))
                 {
                     continue;
                 }
@@ -592,10 +618,211 @@ internal sealed class EntityDescriptorLoader(
     }
 
     /// <summary>
+    /// The clauses that turn a people's line round: belonging to what is not a people, descending
+    /// from what is neither a man nor a people, or descending from a man the cited verse writes with
+    /// the people's own name after his (<em>Keilah the Garmite</em> is a Garmite, not the Garmites'
+    /// forebear). Collected before anything is written so a clause loaded before these rules
+    /// existed is read again and leaves.
+    /// </summary>
+    internal static HashSet<(int Entity, string Relation, int Target)> Turned(
+        IReadOnlyList<DescriptorRecord> records,
+        IReadOnlyDictionary<string, int> entities,
+        IReadOnlyDictionary<int, EntityKind> kinds,
+        IReadOnlySet<(int People, int Member, int Book, int Chapter, int Verse)> members)
+    {
+        var turned = new HashSet<(int Entity, string Relation, int Target)>();
+        foreach (var record in records)
+        {
+            if (!entities.TryGetValue(record.Entity, out var entityId))
+            {
+                continue;
+            }
+
+            foreach (var claim in record.Claims ?? [])
+            {
+                if (claim.Relation is null || claim.Target is null || !entities.TryGetValue(claim.Target, out var targetId))
+                {
+                    continue;
+                }
+
+                var wrongKind = kinds.TryGetValue(targetId, out var kind)
+                    && !DescriptorTargets.Admits(claim.Relation, kind);
+                var member = claim.Relation == DescriptorRelations.DescendantsOf
+                    && Citation.Parse(claim.Reference) is { } citation
+                    && citation.Verses.Any(v => members.Contains((entityId, targetId, v.Book, v.Chapter, v.Verse)));
+                if (wrongKind || member)
+                {
+                    turned.Add((entityId, claim.Relation, targetId));
+                }
+            }
+        }
+
+        return turned;
+    }
+
+    /// <summary>
+    /// The verses where a man is written with a people's name straight after his own, an article
+    /// between at most — <em>Keilah the Garmite</em>, <em>Doeg an Edomite</em> — as the people and the
+    /// man, for the descendants-of clauses that cite them. Read from the words of the text the pass
+    /// was shown and the names already settled on them; a verse no word of which is annotated says
+    /// nothing either way.
+    /// </summary>
+    private async Task<HashSet<(int People, int Member, int Book, int Chapter, int Verse)>> WrittenWithTheGentilic(
+        IReadOnlyList<DescriptorRecord> records,
+        IReadOnlyDictionary<string, int> entities,
+        CancellationToken cancellationToken)
+    {
+        var asked = new HashSet<(int People, int Member, int Book, int Chapter, int Verse)>();
+        foreach (var record in records)
+        {
+            if (!entities.TryGetValue(record.Entity, out var people))
+            {
+                continue;
+            }
+
+            foreach (var claim in record.Claims ?? [])
+            {
+                if (claim.Relation == DescriptorRelations.DescendantsOf
+                    && claim.Target is not null
+                    && entities.TryGetValue(claim.Target, out var member)
+                    && Citation.Parse(claim.Reference) is { } citation)
+                {
+                    foreach (var verse in citation.Verses)
+                    {
+                        asked.Add((people, member, verse.Book, verse.Chapter, verse.Verse));
+                    }
+                }
+            }
+        }
+
+        if (asked.Count == 0)
+        {
+            return [];
+        }
+
+        var ids = asked.SelectMany(a => new[] { a.People, a.Member }).Distinct().ToList();
+        var books = asked.Select(a => a.Book).Distinct().ToList();
+        var chapters = asked.Select(a => a.Chapter).Distinct().ToList();
+
+        var words = await db.Words
+            .Where(w => w.Text!.Slug == Shown)
+            .SelectMany(w => w.Verse!.References.Where(r => r.IsPrimary), (w, r) => new
+            {
+                w.Id,
+                w.VerseId,
+                w.Position,
+                w.Surface,
+                r.CanonicalBook,
+                r.CanonicalChapter,
+                r.CanonicalVerse,
+            })
+            .Where(row => books.Contains(row.CanonicalBook) && chapters.Contains(row.CanonicalChapter))
+            .ToListAsync(cancellationToken);
+
+        var verses = asked.Select(a => (a.Book, a.Chapter, a.Verse)).ToHashSet();
+        words = [.. words.Where(w => verses.Contains((w.CanonicalBook, w.CanonicalChapter, w.CanonicalVerse)))];
+        var wordIds = words.Select(w => w.Id).ToList();
+        var named = (await db.WordEntities
+                .Where(a => wordIds.Contains(a.WordId) && ids.Contains(a.EntityId))
+                .Select(a => new { a.WordId, a.EntityId })
+                .ToListAsync(cancellationToken))
+            .ToLookup(a => a.WordId, a => a.EntityId);
+
+        var found = new HashSet<(int People, int Member, int Book, int Chapter, int Verse)>();
+        foreach (var verse in words.GroupBy(w => w.VerseId))
+        {
+            var ordered = verse.OrderBy(w => w.Position).ToList();
+            for (var i = 0; i < ordered.Count; i++)
+            {
+                var next = i + 1;
+                if (next < ordered.Count && Articles.Contains(ordered[next].Surface))
+                {
+                    next++;
+                }
+
+                if (next >= ordered.Count)
+                {
+                    continue;
+                }
+
+                var at = ordered[i];
+                foreach (var member in named[at.Id])
+                {
+                    foreach (var people in named[ordered[next].Id])
+                    {
+                        var key = (people, member, at.CanonicalBook, at.CanonicalChapter, at.CanonicalVerse);
+                        if (asked.Contains(key))
+                        {
+                            found.Add(key);
+                        }
+                    }
+                }
+            }
+        }
+
+        return found;
+    }
+
+    private static readonly HashSet<string> Articles = new(StringComparer.OrdinalIgnoreCase) { "the", "an", "a" };
+
+    private const int WitnessLength = 64;
+
+    private const int OriginalLength = 256;
+
+    private static string? Trimmed(string? value, int length)
+    {
+        var trimmed = value?.Trim();
+        return string.IsNullOrEmpty(trimmed) ? null : trimmed.Length > length ? trimmed[..length] : trimmed;
+    }
+
+    /// <summary>
+    /// The entities holding a loaded clause stored without the text its record says it was read in,
+    /// so a corpus loaded before the clause kept it reads the record again rather than keep the
+    /// clause without it.
+    /// </summary>
+    private async Task<HashSet<int>> MissingTheirWitness(
+        IReadOnlyList<DescriptorRecord> records,
+        IReadOnlyDictionary<string, int> entities,
+        CancellationToken cancellationToken)
+    {
+        var witnessed = new HashSet<(int Entity, string Relation, int Target)>();
+        foreach (var record in records)
+        {
+            if (!entities.TryGetValue(record.Entity, out var entityId))
+            {
+                continue;
+            }
+
+            foreach (var claim in record.Claims ?? [])
+            {
+                if (!string.IsNullOrWhiteSpace(claim.Witness) && claim.Relation is not null && claim.Target is not null
+                    && entities.TryGetValue(claim.Target, out var targetId))
+                {
+                    witnessed.Add((entityId, claim.Relation, targetId));
+                }
+            }
+        }
+
+        if (witnessed.Count == 0)
+        {
+            return [];
+        }
+
+        var subjects = witnessed.Select(w => w.Entity).Distinct().ToList();
+        var bare = await db.EntityDescriptors
+            .Where(d => subjects.Contains(d.EntityId) && d.Source.StartsWith(SourcePrefix) && d.Witness == null)
+            .Select(d => new { d.EntityId, d.Relation, d.TargetEntityId })
+            .ToListAsync(cancellationToken);
+        return [.. bare
+            .Where(d => witnessed.Contains((d.EntityId, d.Relation, d.TargetEntityId)))
+            .Select(d => d.EntityId)];
+    }
+
+    /// <summary>
     /// The entities whose loaded clauses include one of those, so a record read before the rule
     /// existed is read again and the clause leaves the page with the relationship read off it.
     /// </summary>
-    private async Task<HashSet<int>> HoldingAnOpposedClause(
+    private async Task<HashSet<int>> HoldingARefusedClause(
         HashSet<(int Entity, string Relation, int Target)> opposed,
         CancellationToken cancellationToken)
     {

@@ -71,7 +71,7 @@ USER = 'essenthos'
 # Every session is read-only on the server's side, so a statement that would write fails instead.
 READ_ONLY = 'PGOPTIONS=-c default_transaction_read_only=on'
 
-PROMPT_VERSION = 'forms-3'
+PROMPT_VERSION = 'forms-4'
 
 # The texts a form can be read out of rather than guessed at. English is the rendering the rest of
 # the corpus is keyed to; the other four are the Bible each language's own readers know, so the
@@ -94,7 +94,7 @@ BOOKS = [
 CASES = {
     'eng': ['nominative'],
     'spa': ['nominative'],
-    'deu': ['nominative', 'genitive'],
+    'deu': ['nominative', 'genitive', 'locative'],
     'ukr': ['nominative', 'genitive', 'locative'],
     'rus': ['nominative', 'genitive', 'locative'],
 }
@@ -144,14 +144,23 @@ PREPOSITIONS = {
     'eng': {'in', 'at', 'on', 'of'},
 }
 
-# A German genitive is normally written with its article -- *des Bachs* -- and Spanish names a place
-# with one. Neither belongs in the form for the same reason the preposition does not: what stands
-# before the name is the phrasing's, and a form carrying its own doubles it.
+# The articles a phrase supplies for itself before a nominative: what stands before the name there
+# is the phrasing's, and a form carrying its own doubles it. A German genitive or dative keeps its
+# article (ARTICLE_KEPT).
 ARTICLES = {
     'deu': {'der', 'die', 'das', 'des', 'dem', 'den'},
     'spa': {'el', 'la', 'los', 'las'},
     'eng': {'the'},
 }
+
+# German supplies an article only before a nominative: a genitive or dative of a name that is a
+# common noun keeps its own (*Sohn der breiten Mauer*, *wohnte im alten Teich*), and the loader keeps it.
+ARTICLE_KEPT = {'deu': {'genitive', 'locative'}}
+
+# An English headword that is a description rather than a name -- *the younger*, *Brook of Egypt*.
+# Its forms are a translation of the phrase, not a declension of a name, and the check says so
+# rather than passing them as names.
+PHRASE = re.compile(r'^the\s|\sof\s', re.IGNORECASE)
 
 SLAVIC = ('ukr', 'rus')
 
@@ -203,6 +212,11 @@ def faults(language, forms, english):
     if not nominative:
         return [('no nominative', 'no nominative, so nothing else can be checked against it')]
 
+    if language != 'eng' and english and PHRASE.search(english):
+        found.append(('translates a phrase',
+                      f'"{english}" is a description, so "{nominative}" translates it rather than '
+                      f'declining a name -- read it against how the {language} Bible says it'))
+
     for case in CASES.get(language, ['nominative']):
         value = (forms.get(case) or '').strip()
         if not value:
@@ -213,7 +227,8 @@ def faults(language, forms, english):
             found.append(('carries a preposition',
                           f'{case} "{value}" starts with a preposition; the phrasing supplies one, '
                           f'so this renders as "у {value}" -- give the bare form'))
-        elif len(words) > 1 and first in ARTICLES.get(language, ()):
+        elif len(words) > 1 and first in ARTICLES.get(language, ()) \
+                and case not in ARTICLE_KEPT.get(language, ()):
             found.append(('carries an article',
                           f'{case} "{value}" starts with an article, which the phrase around it '
                           f'supplies -- give the bare form'))
@@ -449,7 +464,10 @@ Which forms each language owes:
 
   eng   nominative only
   spa   nominative only -- Spanish says *de Moisés* and has no genitive case
-  deu   nominative and genitive: *Mose*, *Moses*
+  deu   nominative and genitive: *Mose*, *Moses* -- and for a place, the dative a preposition takes
+        (asked as `locative`): *Hebron*. A name that is a common noun carries its article in the
+        genitive and the dative, because no phrase can know its gender: *der breiten Mauer*,
+        *dem alten Teich*; the nominative stays bare: *breite Mauer*.
   ukr   nominative and genitive: *Мойсей*, *Мойсея* -- and for a place, the locative as well
   rus   nominative and genitive: *Моисей*, *Моисея* -- and for a place, the locative as well
 
@@ -804,11 +822,12 @@ def compare(args):
 # ---------------------------------------------------------------------------- publishing
 
 
-def bare(language, value):
-    """The form with what the phrase supplies for itself taken off the front."""
+def bare(language, value, case=None):
+    """The form with what the phrase supplies for itself taken off the front -- the loader's rule."""
+    articles = () if case in ARTICLE_KEPT.get(language, ()) else ARTICLES.get(language, ())
     words = value.split()
     while len(words) > 1 and (words[0].strip('.,').casefold() in PREPOSITIONS.get(language, ())
-                              or words[0].strip('.,').casefold() in ARTICLES.get(language, ())):
+                              or words[0].strip('.,').casefold() in articles):
         words = words[1:]
     return ' '.join(words)
 
@@ -890,7 +909,7 @@ def publish(args):
         names = {}
         for language in languages:
             forms = row['names'].get(language) or {}
-            forms = {case: bare(language, (value or '').strip())
+            forms = {case: bare(language, (value or '').strip(), case)
                      for case, value in forms.items() if case in CASES.get(language, [])}
             stripped += sum(1 for case, value in forms.items()
                             if value != (row['names'][language][case] or '').strip())

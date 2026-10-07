@@ -624,6 +624,7 @@ internal static class SenseReadingFiles
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.SeveralPeopleRecordsFifth.json"),
         UnsettledThirdRulings(),
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.ReviewNoteRecords.json"),
+        Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.OhienkoGentilicRecords.json"),
     ];
 
     private static T Embedded<T>(string name)

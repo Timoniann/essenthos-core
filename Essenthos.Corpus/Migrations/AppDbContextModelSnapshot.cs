@@ -643,6 +643,11 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("ordinal");
 
+                    b.Property<string>("Original")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("original");
+
                     b.Property<string>("Relation")
                         .IsRequired()
                         .HasColumnType("text")
@@ -660,6 +665,11 @@ namespace Essenthos.Core.Migrations
                     b.Property<int>("TargetEntityId")
                         .HasColumnType("integer")
                         .HasColumnName("target_entity_id");
+
+                    b.Property<string>("Witness")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("witness");
 
                     b.HasKey("Id")
                         .HasName("pk_entity_descriptor");
@@ -1095,6 +1105,51 @@ namespace Essenthos.Core.Migrations
 
                             t.HasCheckConstraint("ck_entity_name_form_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
                         });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityNoteTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("EnglishSha256")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("english_sha256");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_id");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
+                        .HasColumnName("language");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("text");
+
+                    b.HasKey("Id")
+                        .HasName("pk_entity_note_translation");
+
+                    b.HasIndex("EntityId", "Language")
+                        .IsUnique()
+                        .HasDatabaseName("ix_entity_note_translation_entity_id_language");
+
+                    b.ToTable("entity_note_translation", (string)null);
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityPassage", b =>
@@ -4851,6 +4906,18 @@ namespace Essenthos.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_entity_name_form_entity_entity_id");
+
+                    b.Navigation("Entity");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityNoteTranslation", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_entity_note_translation_entity_entity_id");
 
                     b.Navigation("Entity");
                 });

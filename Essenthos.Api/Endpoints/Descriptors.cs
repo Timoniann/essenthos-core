@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -93,6 +93,8 @@ internal static class Descriptors
                 d.Note)
             {
                 Citation = d.Citation,
+                Witness = d.Witness,
+                Original = d.Original,
             })
             .ToListAsync(cancellationToken);
 
@@ -113,6 +115,30 @@ internal static class Descriptors
                 target => target.Key,
                 target => (IReadOnlyDictionary<string, string>)target.ToDictionary(
                     f => f.GrammaticalCase, f => f.Form, StringComparer.Ordinal));
+
+        // A language that does not decline its names calls a record by the heading spelling of its
+        // own text where no pass produced a form: the Reina Valera's israelitas, not Israelites.
+        // The rule the lists and the record pages name a record by, so a line and a list agree.
+        var missing = targets
+            .Where(t => !forms.TryGetValue(t, out var cases) || !cases.ContainsKey(GrammaticalCases.Nominative))
+            .ToList();
+        var printedNames = missing.Count == 0 || !EntityNames.NamesByThePrintedSpelling(named)
+            ? []
+            : await EntityNames.Of(db, missing, named, cancellationToken);
+        foreach (var (target, printed) in printedNames)
+        {
+            var cases = new Dictionary<string, string>(StringComparer.Ordinal);
+            if (forms.TryGetValue(target, out var held))
+            {
+                foreach (var (grammaticalCase, form) in held)
+                {
+                    cases[grammaticalCase] = form;
+                }
+            }
+
+            cases[GrammaticalCases.Nominative] = printed;
+            forms[target] = cases;
+        }
 
         return clauses
             .GroupBy(c => c.Slug, StringComparer.Ordinal)
@@ -184,9 +210,9 @@ internal static class Descriptors
                 }
 
                 var first = parts.Count;
-                var written = Name(clause, phrasing.Case, cases);
-                parts.Add(new DescriptorPartResponse(
-                    DescriptorPhrasings.AgreeWithWhatFollows(phrasing.Before, written))
+                var (before, written) = DescriptorPhrasings.Say(
+                    language, phrasing, clause.TargetKind, cases, clause.TargetEnglishName);
+                parts.Add(new DescriptorPartResponse(before)
                 {
                     Doubtful = doubtful,
                 });
@@ -220,6 +246,8 @@ internal static class Descriptors
             {
                 Note = clause.Note,
                 Verses = Relationships.Verses(clause.Citation),
+                Witness = clause.Witness,
+                Original = clause.Original,
             });
         }
 
@@ -253,20 +281,6 @@ internal static class Descriptors
             Distinguisher = clause.TargetDistinguisher,
         };
 
-    /// <summary>
-    /// The target's name in the form the phrase puts it in, and the English name where the pass
-    /// produced no such form.
-    ///
-    /// The fallback is the contract's and it is deliberately not an inflection: a stemmer guessing
-    /// the genitive of a Hebrew proper name is wrong often and silently, and a reader cannot tell.
-    /// <em>тесть Moses</em> is visibly a gap; <em>тесть Мойсей</em> looks like Ukrainian and is not.
-    /// </summary>
-    private static string Name(
-        Clause clause,
-        string grammaticalCase,
-        IReadOnlyDictionary<string, string>? cases) =>
-        cases?.GetValueOrDefault(grammaticalCase) ?? clause.TargetEnglishName;
-
     /// <summary>One clause with its target flattened, so the render is a loop and not a join.</summary>
     private sealed record Clause(
         string Slug,
@@ -286,6 +300,10 @@ internal static class Descriptors
         string? Note)
     {
         public string? Citation { get; init; }
+
+        public string? Witness { get; init; }
+
+        public string? Original { get; init; }
     }
 }
 
@@ -382,4 +400,14 @@ internal record DescriptorClaimResponse(
     /// composed — the first being <see cref="Reference"/>. Null for a clause read from one verse.
     /// </summary>
     public IList<VerseRefResponse>? Verses { get; init; }
+
+    /// <summary>
+    /// The text the clause was read in, by its slug, where that was an original rather than the
+    /// King James every clause is shown in: <c>BHSA</c>, <c>NESTLE1904</c>. Null for a reading of
+    /// the English.
+    /// </summary>
+    public string? Witness { get; init; }
+
+    /// <summary>The words of <see cref="Witness"/> the clause rests on, as that text prints them.</summary>
+    public string? Original { get; init; }
 }

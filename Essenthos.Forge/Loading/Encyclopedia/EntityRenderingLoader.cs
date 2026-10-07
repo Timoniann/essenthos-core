@@ -48,7 +48,7 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
     /// spelling it gives is believed, and whether the entity is a thing. A word its language never
     /// names anybody with is no spelling of anything (<see cref="Annotating.NeverAName"/>).
     /// </summary>
-    private const string Named =
+    private static readonly string Named =
         $"""
         SELECT a.entity_id, hw.text_id, hw.verse_id, hw.position, hw.text, hw.trailer, hw.lemma, ht.language,
                CASE WHEN ht.language = ANY(@originals) THEN NULL ELSE (
@@ -66,7 +66,7 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
         JOIN entity e ON e.id = a.entity_id
         JOIN word hw ON hw.id = a.word_id
         JOIN text ht ON ht.id = hw.text_id
-        WHERE NOT {Annotating.NeverAName}
+        WHERE NOT {Annotating.NeverAName} AND NOT {Pronouns.IsWord()}
         """;
 
     public async Task<EntityRenderingOutcome> Load(CancellationToken cancellationToken = default)

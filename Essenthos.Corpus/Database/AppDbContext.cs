@@ -237,6 +237,9 @@ public class AppDbContext : DbContext
 
     public DbSet<EntityDistinguisher> EntityDistinguishers { get; set; } = null!;
 
+    /// <summary>The notes of our own records in a reader's language, keyed by the English they render.</summary>
+    public DbSet<EntityNoteTranslation> EntityNoteTranslations { get; set; } = null!;
+
     /// <summary>The passages an object's or an observance's page sends a reader to.</summary>
     public DbSet<EntityPassage> EntityPassages { get; set; } = null!;
 

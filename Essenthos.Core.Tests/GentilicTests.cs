@@ -1,4 +1,4 @@
-using Essenthos.Core.Database.Entities.Enums;
+﻿using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Strong;
 using FluentAssertions;
@@ -31,6 +31,22 @@ public sealed class GentilicTests
         stated!.Value.OriginNumber.Should().Be("H4124");
         stated.Value.Kind.Should().Be(GentilicKinds.Patronymic);
         stated.Value.Statement.Should().Be("patronymical from מוֹאָב (H4124)");
+    }
+
+    /// <summary>
+    /// Strong abbreviates the word in four entries, and Benjamin's own gentilic is one of them: H1145
+    /// gives five spellings of the compound before it says <em>patron from בִּנְיָמִין (H1144)</em>.
+    /// </summary>
+    [Theory]
+    [InlineData("H1145", "a Jeminite; (plural) בְּנֵי יְמִינִיxlit Bᵉnîy corrected to Bᵉnêy; patron from בִּנְיָמִין (H1144);", "H1144")]
+    [InlineData("H440", "patron from אַלּוֹן (H438);", "H438")]
+    public void AnAbbreviatedPatronymicIsStillOne(string number, string derivation, string origin)
+    {
+        var stated = GentilicDerivations.Read(number, derivation, out var refusal);
+
+        refusal.Should().Be(GentilicRefusal.None);
+        stated!.Value.OriginNumber.Should().Be(origin);
+        stated.Value.Kind.Should().Be(GentilicKinds.Patronymic);
     }
 
     /// <summary>A people named after where it lives reaches a map, not a man.</summary>
@@ -215,7 +231,7 @@ public sealed class StatedGentilicCoverageTests : IClassFixture<BibleDataCorpus>
                         .Select(claim => claim!.Value),
                 ],
                 out var refused)
-            .Should().HaveCount(159);
+            .Should().HaveCount(163);
 
         refused.Select(claim => claim.StrongNumber).Should().Equal("H722");
     }
@@ -244,8 +260,8 @@ public sealed class StatedGentilicCoverageTests : IClassFixture<BibleDataCorpus>
             _output.WriteLine($"  refused {count} — {refusal}");
         }
 
-        claiming.Should().HaveCount(192);
-        stated.Should().Be(160);
+        claiming.Should().HaveCount(196);
+        stated.Should().Be(164);
         refusals[GentilicRefusal.NamesNoNumber].Should().Be(29);
         refusals[GentilicRefusal.Hedged].Should().Be(2);
         refusals[GentilicRefusal.TwoCandidates].Should().Be(1);

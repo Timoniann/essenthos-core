@@ -597,6 +597,29 @@ public sealed class PeopleLoadTests : IDisposable
     }
 
     /// <summary>
+    /// A gentilic the dictionary parse learns to read after the corpus holds a people for its number
+    /// — the Egyptians, made from BHSA's analysis — joins that people instead of writing a second page
+    /// of the same name, and the load after that writes nothing.
+    /// </summary>
+    [Fact]
+    public async Task ADictionaryGentilicReadLaterJoinsThePeopleAlreadyBearingItsNumber()
+    {
+        await Load();
+        var egyptians = await _db.Entities.SingleAsync(e => e.Name == "Egyptians");
+        _db.StrongGentilics.Add(new StrongGentilic
+        {
+            StrongNumber = Analysed, OriginNumber = "H4714", Kind = GentilicKinds.Patrial,
+            Statement = "patron from מִצְרַיִם (H4714)", Source = "a dictionary",
+        });
+        await _db.SaveChangesAsync();
+
+        await Load();
+
+        (await _db.Entities.CountAsync(e => e.Kind == EntityKind.People && e.Name == "Egyptians")).Should().Be(1);
+        (await _db.StrongGentilics.SingleAsync(g => g.StrongNumber == Analysed)).PeopleEntityId.Should().Be(egyptians.Id);
+    }
+
+    /// <summary>
     /// The file grows after the corpus is loaded. A people it gains is written on the next boot,
     /// with its words and its verses, and nothing an earlier boot wrote is written a second time.
     /// </summary>

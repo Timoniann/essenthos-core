@@ -1,0 +1,25 @@
+{
+  "decidedBy": "Essenthos, 2026-10-07, read by an agent against the held Ohienko wording on the project owner's instruction to uncross the names and gentilics of David's men; no person has reviewed this ruling",
+  "policy": "Ohienko puts the gentilic before the man's name where the Hebrew puts it after, and the links follow the Hebrew, so the man's record landed on the gentilic and the people's on his name. Each word is read as what it says: the name names the man, the gentilic his people.",
+  "method": "manual",
+  "source": "Essenthos, the Ohienko names and gentilics of 1 Chronicles 11:44 and 27:4, read on 2026-10-07",
+  "carry": false,
+  "rulings": [
+    {
+      "text": "UBIO", "reference": "1CH 11:44", "position": 1, "surface": "аштерянин", "existing": "ashterathites",
+      "why": "аштерянин Уззійя: аштерянин is the gentilic, Uzzia's people, the Ashterathite."
+    },
+    {
+      "text": "UBIO", "reference": "1CH 11:44", "position": 2, "surface": "Уззійя", "existing": "uzzia",
+      "why": "аштерянин Уззійя: Уззійя is the man's name, Uzzia."
+    },
+    {
+      "text": "UBIO", "reference": "1CH 27:4", "position": 6, "surface": "Ахохівець", "existing": "ahohites",
+      "why": "Ахохівець Додай: Ахохівець is the gentilic, Dodai's people, the Ahohite."
+    },
+    {
+      "text": "UBIO", "reference": "1CH 27:4", "position": 7, "surface": "Додай", "existing": "dodai",
+      "why": "Ахохівець Додай: Додай is the man's name, Dodai."
+    }
+  ]
+}
