@@ -77,7 +77,8 @@ internal static partial class ForgeVerbs
         using var relationsScope = forge.Scope();
         Console.WriteLine(await relationsScope.ServiceProvider.GetRequiredService<StrongRelationLoader>().Load(
             ResourcePaths.File(forge.Resources, "Strong", "StrongHebrew.xml"),
-            ResourcePaths.File(forge.Resources, "Strong", "StrongGreek.xml")));
+            ResourcePaths.File(forge.Resources, "Strong", "StrongGreek.xml"),
+            ResourcePaths.File(forge.Resources, "BibleData2026", Essenthos.Core.Strong.CompiledHebrewStrongs.File)));
         return 0;
     }
 

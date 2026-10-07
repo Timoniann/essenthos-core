@@ -904,10 +904,43 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var stranded = await Read(connection, StrandedSql, cancellationToken, reader => new Stranded(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), reader.GetFieldValue<string[]>(3)));
 
+        var counted = await Read(connection, LexiconCountSql, cancellationToken, reader => new CountDisagreement(
+            reader.GetString(0), reader.GetInt32(1), (int)reader.GetInt64(2)));
+        var profiled = await db.StrongProfiles.CountAsync(cancellationToken);
+        LexiconCounts? lexicon = profiled == 0
+            ? null
+            : new LexiconCounts(
+                profiled,
+                profiled - counted.Count,
+                counted.Count(d => d.Counted == 0),
+                [.. counted.OrderByDescending(d => Math.Abs(d.Stated - d.Counted)).ThenBy(d => d.Number).Take(LargestDisagreements)]);
+
         return new CorpusMeasures(
             coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity, shared, unaligned,
-            stranded);
+            stranded, lexicon);
     }
+
+    /// <summary>How many of the numbers the compiler's count parts from BHSA's on most are kept to name.</summary>
+    private const int LargestDisagreements = 50;
+
+    /// <summary>
+    /// Every Hebrew number whose count in the compiler's profile is not the number of BHSA words
+    /// carrying it as their own Strong number. One pass over BHSA's words, grouped.
+    /// </summary>
+    private static readonly string LexiconCountSql =
+        $"""
+         WITH counted AS (
+             SELECT w.strong_number AS number, count(*) AS counted
+             FROM word w
+             WHERE w.text_id = (SELECT id FROM text WHERE slug = '{BhsaTextSource.Slug}')
+               AND w.strong_number LIKE 'H%'
+             GROUP BY w.strong_number
+         )
+         SELECT p.strong_number, p.occurrences, coalesce(c.counted, 0)
+         FROM strong_profile p
+         LEFT JOIN counted c ON c.number = p.strong_number
+         WHERE p.occurrences <> coalesce(c.counted, 0)
+         """;
 
     /// <summary>The edition Nestle voted, and the two of his three voters the corpus holds.</summary>
     private const string Voted = NestleTextSource.Slug;

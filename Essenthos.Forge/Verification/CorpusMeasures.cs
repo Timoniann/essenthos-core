@@ -366,6 +366,27 @@ internal sealed record Unaligned(string Text, int Ordinal, string Book, int Word
 internal sealed record Stranded(string Text, string Witness, int Words, IReadOnlyList<string> Chapters);
 
 /// <summary>
+/// A compiler's count of each Hebrew Strong number against the number of BHSA words carrying it. Two
+/// counts of one thing made by different hands: where they part, one of the two tags something the
+/// other does not, and which is a question for the number, not a correction to make. Neither is
+/// served as the other.
+/// </summary>
+/// <param name="Numbers">Hebrew numbers the compiler counts.</param>
+/// <param name="Agreeing">Of them, those BHSA carries exactly as often.</param>
+/// <param name="Absent">Those the compiler counts and no BHSA word carries.</param>
+/// <param name="Largest">The numbers the two counts part on most, the compiler's count first.</param>
+internal sealed record LexiconCounts(
+    int Numbers,
+    int Agreeing,
+    int Absent,
+    IReadOnlyList<CountDisagreement> Largest)
+{
+    public int Disagreeing => Numbers - Agreeing;
+}
+
+internal sealed record CountDisagreement(string Number, int Stated, int Counted);
+
+/// <summary>
 /// What one load produced. Every field is a query, and the point of storing it is that the next
 /// load can be compared with it.
 /// </summary>
@@ -381,7 +402,8 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<IntegrityCheck> Integrity,
     IReadOnlyList<SharedAddresses> Shared,
     IReadOnlyList<Unaligned> Unaligned,
-    IReadOnlyList<Stranded>? Stranded = null)
+    IReadOnlyList<Stranded>? Stranded = null,
+    LexiconCounts? Lexicon = null)
 {
     /// <summary>
     /// The share of links more than one method claims. It is the number the corpus could not
@@ -558,6 +580,17 @@ internal sealed record CorpusMeasures(
         foreach (var s in Stranded ?? [])
         {
             report.AppendLine($"  {s.Text} to {s.Witness,-14} {s.Words,7}   {string.Join(", ", s.Chapters)}");
+        }
+
+        if (Lexicon is { } lexicon)
+        {
+            report.AppendLine(
+                $"lexicon       Hebrew numbers BibleData counts, {lexicon.Numbers}: as often as BHSA {lexicon.Agreeing}, " +
+                $"differently {lexicon.Disagreeing}, never in BHSA {lexicon.Absent}");
+            foreach (var d in lexicon.Largest.Take(BooksNamed * 2))
+            {
+                report.AppendLine($"  {d.Number,-8} BibleData {d.Stated,6}   BHSA {d.Counted,6}");
+            }
         }
 
         report.AppendLine("integrity     every one of these should be zero");

@@ -48,6 +48,7 @@ internal static class StrongEndpoints
                 {
                     Relations = relations,
                     Kin = kin,
+                    Profile = await Profile(db, canonical, cancellationToken),
                 });
             }
 
@@ -517,6 +518,47 @@ internal static class StrongEndpoints
             ]);
     }
 
+    /// <summary>
+    /// A compiler's part of speech, gender and first verse for a Hebrew entry, credited to him. The
+    /// verse is named as BHSA names its book, which is the edition the Hebrew is read in. His count
+    /// is not served: verify compares it with BHSA's own, and a reader shown one would not know the
+    /// other disagrees.
+    /// </summary>
+    internal static async Task<StrongProfileResponse?> Profile(
+        AppDbContext db,
+        string canonical,
+        CancellationToken cancellationToken)
+    {
+        var profile = await db.StrongProfiles.AsNoTracking()
+            .FirstOrDefaultAsync(p => p.StrongNumber == canonical, cancellationToken);
+        if (profile is null)
+        {
+            return null;
+        }
+
+        var book = profile.FirstBook is { } ordinal
+            ? await db.Books
+                .Where(b => b.Text!.Slug == BhsaSlug && b.CanonicalOrdinal == ordinal)
+                .Select(b => new { b.Name, b.Slug })
+                .FirstOrDefaultAsync(cancellationToken)
+            : null;
+
+        return new StrongProfileResponse(
+            profile.Language,
+            profile.PartOfSpeech,
+            profile.Gender,
+            profile.Source)
+        {
+            First = book is null || profile.FirstChapter is null || profile.FirstVerse is null
+                ? null
+                : new StrongFirstVerseResponse(profile.FirstBook!.Value, book.Name, book.Slug,
+                    profile.FirstChapter.Value, profile.FirstVerse.Value),
+        };
+    }
+
+    /// <summary>The edition the Hebrew is read in, whose book names a compiler's first verse.</summary>
+    private const string BhsaSlug = "BHSA";
+
     private static StrongEntryResponse Response(
         Database.Entities.StrongEntry entry,
         StrongGentilicResponse? gentilic) => new(
@@ -615,6 +657,9 @@ internal record StrongEntryResponse(
     /// </summary>
     public IList<StrongRelationResponse>? Kin { get; init; }
 
+    /// <summary>A compiler's part of speech, gender and first verse, for a Hebrew entry he profiles. Null otherwise.</summary>
+    public StrongProfileResponse? Profile { get; init; }
+
     /// <summary>
     /// The commonest few phrases <see cref="StrongListResponse.Corpus"/> puts where this number
     /// stands, commonest first, counted as the entry page's renderings are. Empty where that text
@@ -639,6 +684,16 @@ internal record StrongRelationResponse(
     bool Hedged,
     string Statement,
     string Source);
+
+/// <param name="Language"><c>hbo</c> or <c>arc</c>.</param>
+/// <param name="Source">Whose analysis it is: a compiler's, never Strong's.</param>
+internal record StrongProfileResponse(string Language, string? PartOfSpeech, string? Gender, string Source)
+{
+    /// <summary>The first verse the compiler finds the word in, on the shared frame.</summary>
+    public StrongFirstVerseResponse? First { get; init; }
+}
+
+internal record StrongFirstVerseResponse(int BookOrdinal, string Book, string BookSlug, int Chapter, int Verse);
 
 internal record StrongListResponse(int Total, IList<StrongEntryResponse> Items)
 {

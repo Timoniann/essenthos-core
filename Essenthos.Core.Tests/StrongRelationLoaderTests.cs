@@ -67,7 +67,7 @@ public sealed class StrongRelationLoaderTests : IDisposable
     [Fact]
     public async Task Each_relation_is_written_with_its_kind_its_clause_and_whose_reading_it_is()
     {
-        var outcome = await _loader.Load(HebrewPath, GreekPath);
+        var outcome = await _loader.Load(HebrewPath, GreekPath, null);
 
         outcome.AlreadyLoaded.Should().BeFalse();
         var rows = await _db.StrongRelations.OrderBy(r => r.FromNumber).ThenBy(r => r.Position).ToListAsync();
@@ -84,10 +84,10 @@ public sealed class StrongRelationLoaderTests : IDisposable
     [Fact]
     public async Task A_second_load_writes_nothing_and_keeps_every_row()
     {
-        await _loader.Load(HebrewPath, GreekPath);
+        await _loader.Load(HebrewPath, GreekPath, null);
         var first = await _db.StrongRelations.AsNoTracking().OrderBy(r => r.Id).ToListAsync();
 
-        var outcome = await _loader.Load(HebrewPath, GreekPath);
+        var outcome = await _loader.Load(HebrewPath, GreekPath, null);
 
         outcome.AlreadyLoaded.Should().BeTrue();
         (await _db.StrongRelations.AsNoTracking().OrderBy(r => r.Id).ToListAsync())
@@ -97,10 +97,10 @@ public sealed class StrongRelationLoaderTests : IDisposable
     [Fact]
     public async Task A_changed_reading_replaces_what_was_held()
     {
-        await _loader.Load(HebrewPath, GreekPath);
+        await _loader.Load(HebrewPath, GreekPath, null);
         File.WriteAllText(HebrewPath, Hebrew.Replace("the same as", "a variation of"));
 
-        var outcome = await _loader.Load(HebrewPath, GreekPath);
+        var outcome = await _loader.Load(HebrewPath, GreekPath, null);
 
         outcome.AlreadyLoaded.Should().BeFalse();
         (await _db.StrongRelations.SingleAsync(r => r.FromNumber == "H1006")).Kind.Should().Be(StrongRelationKinds.Variant);
@@ -113,7 +113,7 @@ public sealed class StrongRelationLoaderTests : IDisposable
         _db.StrongEntries.Add(new StrongEntry { StrongNumber = "H1129", Lemma = "בָּנָה", Definition = "to build" });
         _db.StrongEntries.Add(new StrongEntry { StrongNumber = "H1006", Lemma = "בַּיִת", Definition = "Bajith" });
         await _db.SaveChangesAsync();
-        await _loader.Load(HebrewPath, GreekPath);
+        await _loader.Load(HebrewPath, GreekPath, null);
 
         var (relations, kin) = await Endpoints.StrongEndpoints.Relations(_db, "H1004", CancellationToken.None);
 
@@ -122,6 +122,46 @@ public sealed class StrongRelationLoaderTests : IDisposable
             StrongRelationLoader.HebrewSource));
         kin.Should().ContainSingle().Which.Should().Match<Endpoints.StrongRelationResponse>(r =>
             r.Kind == StrongRelationKinds.SameAs && r.Number == "H1006" && r.Lemma == "בַּיִת");
+    }
+
+    [Fact]
+    public async Task The_compilers_roots_stand_beside_strongs_reading_under_his_name_and_his_profile_beside_the_entry()
+    {
+        var compiled = Path.Combine(_folder, "HebrewStrongs.csv");
+        File.WriteAllText(compiled,
+            """
+            strongs_number,word,gloss,language,part_of_speech,gender,occurrences,first_occurrence,root_word,word_root_occurrence,first_root_number,first_root_hebrew,second_root_number,second_root_hebrew,third_root_number,third_root_hebrew
+            1006,בַּיִת,"Bayith (bah'-yith) n/l.
+            1. Bajith
+            [the same as H1004]
+            KJV: Bajith.",H,noun location,,1,ISA 15:2,,,1004,בית,,,,
+            2,אַב,"ab n-m.
+            1. father
+            [(Aramaic) corresponding to H1]",A,noun,masculine,9,EZK 4:15,אב,1414,1,אב,,,,
+
+            """);
+
+        var outcome = await _loader.Load(HebrewPath, GreekPath, compiled);
+
+        outcome.Profiles.Should().Be(2);
+        var root = await _db.StrongRelations.SingleAsync(r => r.Kind == StrongRelationKinds.Root && r.FromNumber == "H1006");
+        (root.ToNumber, root.Position, root.Statement, root.Source)
+            .Should().Be(("H1004", 1, "the same as H1004", CompiledHebrewStrongs.Source));
+        var father = await _db.StrongProfiles.SingleAsync(p => p.StrongNumber == "H2");
+        (father.Language, father.PartOfSpeech, father.Gender, father.Occurrences, father.FirstBook, father.FirstChapter, father.FirstVerse)
+            .Should().Be(("arc", "noun", "masculine", 9, 26, 4, 15));
+
+        (await _loader.Load(HebrewPath, GreekPath, compiled)).AlreadyLoaded.Should().BeTrue();
+
+        var bhsa = Corpus.Add(_db, "BHSA", Database.Entities.Enums.TextKind.ManuscriptTradition, "hbo", (1, 1, ["בְּ"]));
+        _db.AddBook(bhsa, 26, "Ezekiel", (4, 15, ["אַב"]));
+        await _db.SaveChangesAsync();
+        var served = await Endpoints.StrongEndpoints.Profile(_db, "H2", CancellationToken.None);
+        served.Should().BeEquivalentTo(new Endpoints.StrongProfileResponse("arc", "noun", "masculine", CompiledHebrewStrongs.Source)
+        {
+            First = new Endpoints.StrongFirstVerseResponse(26, "Ezekiel", "eze", 4, 15),
+        });
+        (await Endpoints.StrongEndpoints.Profile(_db, "G1", CancellationToken.None)).Should().BeNull();
     }
 
     [Fact]

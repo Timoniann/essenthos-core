@@ -303,6 +303,9 @@ public class AppDbContext : DbContext
     /// <summary>What one Strong entry's etymology says about another, read from the source's own words.</summary>
     public DbSet<StrongRelation> StrongRelations { get; set; } = null!;
 
+    /// <summary>A compiler's part of speech, gender, count and first verse for each Hebrew entry, credited to him.</summary>
+    public DbSet<StrongProfile> StrongProfiles { get; set; } = null!;
+
     /// <summary>
     /// Which word names which person, place or people. The encyclopedia says a verse names
     /// somebody; this says which word of it does, which is what a reader hovering a word is asking.
@@ -1338,6 +1341,22 @@ public class AppDbContext : DbContext
                 t.HasComment(
                     "What one Strong entry's etymology says about another, with the clause it was read from "
                     + "and whose reading it is. Keyed on numbers: a claim about two words of the language.");
+            });
+        });
+
+        modelBuilder.Entity<StrongProfile>(entity =>
+        {
+            entity.ToTable("strong_profile", t =>
+            {
+                t.HasCheckConstraint("ck_strong_profile_language", "language IN ('hbo', 'arc')");
+                t.HasCheckConstraint("ck_strong_profile_occurrences", "occurrences >= 0");
+                t.HasCheckConstraint(
+                    "ck_strong_profile_first",
+                    "(first_book IS NULL) = (first_chapter IS NULL) AND (first_book IS NULL) = (first_verse IS NULL)");
+                t.HasCheckConstraint("ck_strong_profile_source", "length(source) > 0");
+                t.HasComment(
+                    "A compiler's part of speech, gender, occurrence count and first verse for a Hebrew Strong "
+                    + "entry. His analysis, not Strong's and not this corpus's: verify compares the count with BHSA's.");
             });
         });
     }

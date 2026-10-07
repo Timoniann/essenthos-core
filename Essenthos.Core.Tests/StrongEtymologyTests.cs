@@ -184,4 +184,43 @@ public class StrongEtymologyCorpusTests(ITestOutputHelper output)
 
         gentilic.Should().BeEquivalentTo(kept.Select(g => (g.StrongNumber, (string?)g.OriginNumber, StrongRelationReading.KindOf(g))));
     }
+
+    [Fact]
+    public void The_compilers_file_profiles_every_hebrew_entry_and_places_every_first_verse()
+    {
+        var compiled = CompiledHebrewStrongs.Read(TestResources.Path("BibleData2026", CompiledHebrewStrongs.File));
+
+        compiled.Profiles.Should().HaveCount(8_674);
+        compiled.UnreadFirstVerses.Should().Be(0);
+        compiled.Profiles.Count(p => p.Language == "arc").Should().Be(683);
+        var father = compiled.Profiles.Single(p => p.StrongNumber == "H1");
+        (father.PartOfSpeech, father.Gender, father.FirstBook, father.FirstChapter, father.FirstVerse)
+            .Should().Be(("noun", "masculine", 1, 2, 24));
+        compiled.Roots.Should().HaveCount(6_439 + 783 + 34);
+        compiled.Roots.Where(r => r.FromNumber == "H62").Select(r => (r.ToNumber, r.Position))
+            .Should().Equal(("H58", 1), ("H1004", 2), ("H4601", 3));
+    }
+
+    /// <summary>
+    /// The compiler's roots are his reading of Strong's derivation, so nearly all of them are numbers
+    /// Strong's own etymology names for the same entry; the rest are where the two readings part.
+    /// </summary>
+    [Fact]
+    public void Nearly_every_root_the_compiler_lists_is_a_number_strongs_etymology_names()
+    {
+        var compiled = CompiledHebrewStrongs.Read(TestResources.Path("BibleData2026", CompiledHebrewStrongs.File));
+        var named = StrongRelationReading.Of(Entries.Value)
+            .Where(r => r.ToNumber is not null)
+            .Select(r => (r.FromNumber, r.ToNumber))
+            .ToHashSet();
+
+        var apart = compiled.Roots.Where(r => !named.Contains((r.FromNumber, r.ToNumber))).ToList();
+        output.WriteLine($"{apart.Count} of {compiled.Roots.Count} compiler roots are not named by Strong's etymology");
+        foreach (var root in apart.Take(25))
+        {
+            output.WriteLine($"  {root.FromNumber} -> {root.ToNumber}: {root.Statement}");
+        }
+
+        apart.Count.Should().BeLessThan(compiled.Roots.Count / 20);
+    }
 }

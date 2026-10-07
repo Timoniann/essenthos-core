@@ -510,6 +510,7 @@ internal sealed class DatasetLoader(
         status.Record(await loader.Load(
             ResourcePaths.File(resources, "Strong", "StrongHebrew.xml"),
             ResourcePaths.File(resources, "Strong", "StrongGreek.xml"),
+            ResourcePaths.File(resources, "BibleData2026", Strong.CompiledHebrewStrongs.File),
             cancellationToken));
     }
 
