@@ -61,7 +61,7 @@ internal static class VariedRenderingEndpoints
         var counted = await db.StrongReaches.AnyAsync(r => r.TextId == textId && r.Renderings != null, cancellationToken);
 
         var rows = db.StrongReaches.AsNoTracking()
-            .Where(r => r.TextId == textId && r.Renderings != null && r.RenderingLinks >= floor);
+            .Where(r => r.TextId == textId && r.Renderings != null && r.RenderingLinks >= floor && r.Lexical != false);
         if (letter is not null)
         {
             rows = rows.Where(r => r.StrongNumber.StartsWith(letter));

@@ -3,6 +3,7 @@ using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Links.Evidentia;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using NpgsqlTypes;
@@ -93,6 +94,7 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
             .Select(t => new { t.Id, t.Slug, t.Language })
             .ToListAsync(cancellationToken);
 
+        var lexical = Lexical(await StrongRenderingCounts.ClassesOf(db, cancellationToken));
         int counted = 0, numbers = 0, renderings = 0;
         var written = false;
         var editions = new HashSet<int>();
@@ -113,12 +115,12 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
             }
 
             var variety = RenderingVariety.Count(text.Language, count.Everything);
-            if (await Holds(text.Id, count, variety, cancellationToken))
+            if (await Holds(text.Id, count, variety, lexical, cancellationToken))
             {
                 continue;
             }
 
-            await Replace(text.Id, count, variety, cancellationToken);
+            await Replace(text.Id, count, variety, lexical, cancellationToken);
             written = true;
             logger.LogInformation(
                 "Counted {Text}: {Renderings} phrases, {Numbers} numbers reached",
@@ -177,10 +179,30 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
     }
 
     /// <summary>Whether what is kept for the text is exactly what was counted.</summary>
+    /// <summary>
+    /// Whether each number is a word of content: most of the words carrying it, in every edition
+    /// that states a part of speech, are of an open class. A number no edition classes is unknown.
+    /// </summary>
+    internal static IReadOnlyDictionary<string, bool> Lexical(IEnumerable<(string Number, string Label, int Words)> classes) =>
+        classes
+            .GroupBy(row => row.Number, StringComparer.Ordinal)
+            .Select(number =>
+            {
+                var language = number.Key.StartsWith('G') ? "grc" : "hbo";
+                var classed = number
+                    .Where(row => EvidentiaMorphologyLabels.PartOfSpeech(row.Label, language) is not null)
+                    .ToList();
+                var open = classed.Where(row => EvidentiaMorphologyLabels.IsOpenClass(row.Label, language)).Sum(row => row.Words);
+                return (number.Key, Known: classed.Count > 0, Open: open * 2 > classed.Sum(row => row.Words));
+            })
+            .Where(number => number.Known)
+            .ToDictionary(number => number.Key, number => number.Open, StringComparer.Ordinal);
+
     private async Task<bool> Holds(
         int textId,
         StrongTextCount count,
         TextVariety variety,
+        IReadOnlyDictionary<string, bool> lexical,
         CancellationToken cancellationToken)
     {
         var phrases = await db.StrongRenderings
@@ -194,11 +216,11 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
 
         var reach = await db.StrongReaches
             .Where(r => r.TextId == textId)
-            .Select(r => new { r.StrongNumber, r.WitnessId, r.Occurrences, r.Reached, r.Phrases, r.Renderings, r.RenderingLinks })
+            .Select(r => new { r.StrongNumber, r.WitnessId, r.Occurrences, r.Reached, r.Phrases, r.Renderings, r.RenderingLinks, r.Lexical })
             .ToListAsync(cancellationToken);
-        if (!reach.Select(r => (r.StrongNumber, r.WitnessId, r.Occurrences, r.Reached, new Variety(r.Phrases, r.Renderings, r.RenderingLinks)))
+        if (!reach.Select(r => (r.StrongNumber, r.WitnessId, r.Occurrences, r.Reached, new Variety(r.Phrases, r.Renderings, r.RenderingLinks), r.Lexical))
                 .ToHashSet()
-                .SetEquals(count.Reach.Select(r => (r.Number, r.WitnessId, r.Occurrences, r.Reached, variety.Of(r.Number)))))
+                .SetEquals(count.Reach.Select(r => (r.Number, r.WitnessId, r.Occurrences, r.Reached, variety.Of(r.Number), LexicalOf(lexical, r.Number)))))
         {
             return false;
         }
@@ -223,10 +245,14 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
     private static IEnumerable<(string Number, LinkMethod Method, int Links)> Methods(StrongTextCount count) =>
         count.Reach.SelectMany(r => r.Methods.Select(m => (r.Number, m.Method, m.Links)));
 
+    private static bool? LexicalOf(IReadOnlyDictionary<string, bool> lexical, string number) =>
+        lexical.TryGetValue(number, out var open) ? open : null;
+
     private async Task Replace(
         int textId,
         StrongTextCount count,
         TextVariety variety,
+        IReadOnlyDictionary<string, bool> lexical,
         CancellationToken cancellationToken)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
@@ -256,7 +282,7 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
         }
 
         await using (var writer = await connection.BeginBinaryImportAsync(
-                         "COPY strong_reach (text_id, strong_number, witness_id, occurrences, reached, phrases, renderings, rendering_links) " +
+                         "COPY strong_reach (text_id, strong_number, witness_id, occurrences, reached, phrases, renderings, rendering_links, lexical) " +
                          "FROM STDIN (FORMAT BINARY)",
                          cancellationToken))
         {
@@ -280,6 +306,14 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
                 }
 
                 await writer.WriteAsync(counted.RenderingLinks, NpgsqlDbType.Integer, cancellationToken);
+                if (LexicalOf(lexical, row.Number) is { } open)
+                {
+                    await writer.WriteAsync(open, NpgsqlDbType.Boolean, cancellationToken);
+                }
+                else
+                {
+                    await writer.WriteNullAsync(cancellationToken);
+                }
             }
 
             await writer.CompleteAsync(cancellationToken);

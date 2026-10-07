@@ -250,3 +250,26 @@ public class RenderingVarietyTests
         Loading.RenderingVariety.Key("твій бог", grammar, stem).Should().Be(Loading.RenderingVariety.Key("бог", grammar, stem));
     }
 }
+
+public class LexicalNumberTests
+{
+    [Fact]
+    public void A_number_is_a_word_of_content_where_most_of_its_words_are_of_an_open_class()
+    {
+        var lexical = Loading.StrongRenderingLoader.Lexical(
+        [
+            ("H4480", "prep", 7000),
+            ("H430", "subs", 2600),
+            ("H430", "nmpr", 1),
+            ("G3588", "det", 19000),
+            ("G2316", "noun", 1300),
+            ("H6213", "verb", 2600),
+            ("H1", "unheard-of", 3),
+        ]);
+
+        lexical.Should().BeEquivalentTo(new Dictionary<string, bool>
+        {
+            ["H4480"] = false, ["H430"] = true, ["G3588"] = false, ["G2316"] = true, ["H6213"] = true,
+        });
+    }
+}

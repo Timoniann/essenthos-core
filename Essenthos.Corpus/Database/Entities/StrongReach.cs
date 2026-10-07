@@ -52,6 +52,14 @@ public class StrongReach
     /// </summary>
     public int RenderingLinks { get; set; }
 
+    /// <summary>
+    /// Whether the editions that state a part of speech call the number's words mostly nouns, names,
+    /// verbs, adjectives or numerals - a word of content - rather than a preposition, a particle, a
+    /// pronoun or the object marker, whose renderings vary with whatever stands beside them. Null
+    /// where no edition states one.
+    /// </summary>
+    public bool? Lexical { get; set; }
+
     public ICollection<StrongReachMethod> Methods { get; set; } = [];
 
     public override string ToString() => $"StrongReach({StrongNumber} in {TextId}: {Reached} of {Occurrences})";

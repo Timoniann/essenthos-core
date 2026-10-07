@@ -197,6 +197,28 @@ internal static class StrongRenderingCounts
         GROUP BY w.strong_number, b.canonical_ordinal
         """;
 
+    /// <summary>
+    /// The parts of speech the editions of the original state for the words carrying each number,
+    /// and how many words each: the class a number is read as. Only words whose morphology states one.
+    /// </summary>
+    private const string Classes =
+        """
+        SELECT w.strong_number, w.morphology ->> 'pos', count(*)
+        FROM word w
+        JOIN text t ON t.id = w.text_id
+        WHERE t.language IN ('hbo', 'arc', 'grc')
+          AND w.strong_number IS NOT NULL
+          AND w.morphology ? 'pos'
+        GROUP BY w.strong_number, w.morphology ->> 'pos'
+        """;
+
+    /// <summary>Each number's stated parts of speech, as the edition labels them, with how many words carry each.</summary>
+    public static async Task<List<(string Number, string Label, int Words)>> ClassesOf(AppDbContext db, CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(Classes, await Open(db, cancellationToken));
+        return await Read(command, reader => (reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2)), cancellationToken);
+    }
+
     /// <summary>How often each number stands in each book of one edition.</summary>
     public static async Task<List<StrongBookCount>> CountBooks(AppDbContext db, int witnessId, CancellationToken cancellationToken)
     {

@@ -32,7 +32,7 @@ internal static class StrongBookEndpoints
     {
         routes.MapGet("/strong/{number}/books", async (
             string number,
-            [FromQuery] string[]? corpus,
+            [FromQuery] string? corpus,
             AppDbContext db,
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
@@ -44,7 +44,7 @@ internal static class StrongBookEndpoints
             }
 
             var texts = new List<TextEntry>();
-            foreach (var slug in (corpus is { Length: > 0 } ? corpus : [StrongRenderingCounts.CardTranslation]).Take(MostTexts))
+            foreach (var slug in Named(corpus))
             {
                 if (await canon.Text(slug, cancellationToken) is not { } text)
                 {
@@ -60,7 +60,7 @@ internal static class StrongBookEndpoints
         routes.MapGet("/strong/{number}/books/{book:int}", async (
             string number,
             int book,
-            [FromQuery] string[]? corpus,
+            [FromQuery] string? corpus,
             AppDbContext db,
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
@@ -72,7 +72,7 @@ internal static class StrongBookEndpoints
             }
 
             var renderings = new List<StrongBookRenderingsResponse>();
-            foreach (var slug in (corpus is { Length: > 0 } ? corpus : [StrongRenderingCounts.CardTranslation]).Take(MostTexts))
+            foreach (var slug in Named(corpus))
             {
                 if (await canon.Text(slug, cancellationToken) is not { } text)
                 {
@@ -86,6 +86,14 @@ internal static class StrongBookEndpoints
                 canonical, book, BookReferences.Name(book), BookReferences.Slug(book), renderings));
         }).RequireRateLimiting(RateLimits.Expensive);
     }
+
+    /// <summary>The texts asked for, as <c>KJV,UBIO</c>; the King James where none is named.</summary>
+    private static IEnumerable<string> Named(string? corpus) =>
+        (corpus?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) is { Length: > 0 } named
+            ? named
+            : [StrongRenderingCounts.CardTranslation])
+        .Distinct(StringComparer.OrdinalIgnoreCase)
+        .Take(MostTexts);
 
     /// <summary>
     /// The number's books in the edition the first text is counted over, each text's reach in each,
