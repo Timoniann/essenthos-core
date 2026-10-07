@@ -315,6 +315,26 @@ public sealed class MisfiledVerseLoadTests : IDisposable
         moved.Label.Should().Be("Israel");
     }
 
+    /// <summary>
+    /// The people may already hold the verse from the same source under another label — read off
+    /// the words that now name the nation — and a record holds one row per source and verse.
+    /// </summary>
+    [Fact]
+    public async Task A_verse_the_people_already_holds_under_another_label_is_not_moved_twice()
+    {
+        _db.EntityVerses.Add(new EntityVerse
+        {
+            EntityId = _israelites.Id, CanonicalBook = Exodus, CanonicalChapter = 25, CanonicalVerse = 2,
+            Label = "Israelites", Source = BibleDataLoader.Source,
+        });
+        await _db.SaveChangesAsync();
+
+        await _loader.Load(_resources);
+
+        (await Verses(_israelites)).Should().BeEquivalentTo(["EXO 25:2", "EXO 1:7"]);
+        (await Verses(_jacob)).Should().NotContain("EXO 25:2");
+    }
+
     [Fact]
     public async Task What_the_rule_cannot_settle_is_listed_for_the_owner_one_entry_per_reason()
     {
