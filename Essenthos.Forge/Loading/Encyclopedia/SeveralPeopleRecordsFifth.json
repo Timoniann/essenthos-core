@@ -608,6 +608,18 @@
     },
     {
       "text": "BHSA",
+      "reference": "EST 1:1",
+      "position": 5,
+      "surface": "אֲחַשְׁוֵרֹ֑ושׁ",
+      "strongNumber": "H325",
+      "existing": "ahasuerus",
+      "says": {
+        "notes": "The Ahasuerus of Daniel 9:1, father of Darius the Mede, is another man."
+      },
+      "why": "'Now it came to pass in the days of Ahasuerus, (this is Ahasuerus which reigned, from India even unto Ethiopia, over an hundred and seven and twenty provinces)': the king of Esther. The Ahasuerus of Daniel 9:1, father of Darius the Mede, is held as ahasuerus-father-of-darius."
+    },
+    {
+      "text": "BHSA",
       "reference": "DAN 6:27",
       "position": 18,
       "surface": "דָֽנִיֵּ֑אל",
