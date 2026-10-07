@@ -83,22 +83,26 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
 
         await using (var command = new NpgsqlCommand(
                          """
-                         SELECT l.id,
+                         WITH named AS MATERIALIZED (
+                             SELECT l.id, l.from_text_id, l.to_text_id
+                             FROM link l
+                             WHERE l.method = 'aligner'
+                               AND l.provenance_id IN (SELECT p.id FROM provenance p
+                                                       WHERE starts_with(p.source, @pass) OR strpos(p.source, @added) > 0)
+                         )
+                         SELECT n.id,
                                 fw.text, fw.morphology ->> 'consonantal', ft.language,
                                 tw.text, tw.morphology ->> 'consonantal', tt.language,
-                                EXISTS (SELECT 1 FROM link_claim c WHERE c.link_id = l.id AND c.method <> 'aligner')
-                                OR EXISTS (SELECT 1 FROM evidentia_review r WHERE r.link_id = l.id)
-                         FROM link l
-                         JOIN provenance p ON p.id = l.provenance_id
-                         JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
+                                EXISTS (SELECT 1 FROM link_claim c WHERE c.link_id = n.id AND c.method <> 'aligner')
+                                OR EXISTS (SELECT 1 FROM evidentia_review r WHERE r.link_id = n.id)
+                         FROM named n
+                         JOIN link_word f ON f.link_id = n.id AND f.side = 'from'
                          JOIN word fw ON fw.id = f.word_id
-                         JOIN text ft ON ft.id = l.from_text_id
-                         JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
+                         JOIN text ft ON ft.id = n.from_text_id
+                         JOIN link_word t ON t.link_id = n.id AND t.side = 'to'
                          JOIN word tw ON tw.id = t.word_id
-                         JOIN text tt ON tt.id = l.to_text_id
-                         WHERE l.method = 'aligner'
-                           AND (starts_with(p.source, @pass) OR strpos(p.source, @added) > 0)
-                           AND (SELECT count(*) FROM link_word w WHERE w.link_id = l.id) = 2
+                         JOIN text tt ON tt.id = n.to_text_id
+                         WHERE (SELECT count(*) FROM link_word w WHERE w.link_id = n.id) = 2
                          """, connection, (NpgsqlTransaction)transaction.GetDbTransaction()))
         {
             command.Parameters.AddWithValue("pass", Source);
