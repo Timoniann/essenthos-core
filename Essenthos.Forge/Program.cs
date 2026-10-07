@@ -125,6 +125,7 @@ builder.Services.AddScoped<ClearBibleLinkLoader>();
 builder.Services.AddScoped<TaggedTextLinkLoader>();
 builder.Services.AddScoped<SynodalStrongLinkLoader>();
 builder.Services.AddScoped<UnionStrongLinkLoader>();
+builder.Services.AddScoped<ReinaValeraStrongLinkLoader>();
 builder.Services.AddScoped<CrossWireStrongLinkLoader>();
 builder.Services.AddScoped<OpenHebrewCuvLinkLoader>();
 builder.Services.AddScoped<ObjectMarkerRepair>();

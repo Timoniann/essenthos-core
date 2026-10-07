@@ -125,6 +125,27 @@ internal sealed record MarkerRematchOutcome(
             : string.Join(", ", tiers.OrderByDescending(tier => tier.Key).Select(tier => $"{tier.Key:0.0#} ×{tier.Value}"));
 }
 
+/// <summary>
+/// What the numbers would draw for a pair, scored against the links a source already states for it,
+/// before any of it is written.
+/// </summary>
+/// <param name="Drafts">Matches the numbers draw.</param>
+/// <param name="Words">Translation words they name.</param>
+/// <param name="StatedWords">Of those, the words a source's link names, which are the ones it can be scored on.</param>
+/// <param name="AgreedWords">Of those, the words whose match reaches a witness word the source links them to.</param>
+/// <param name="Pairs">Word pairs the matches name on the stated words.</param>
+/// <param name="AgreedPairs">Of those, the pairs a source's link names too.</param>
+internal sealed record TaggedTextScore(string From, string To, int Drafts, int Words, int StatedWords, int AgreedWords, int Pairs, int AgreedPairs)
+{
+    public double WordPrecision => StatedWords == 0 ? 0 : (double)AgreedWords / StatedWords;
+
+    public double PairPrecision => Pairs == 0 ? 0 : (double)AgreedPairs / Pairs;
+
+    public override string ToString() =>
+        $"{From} to {To}: {Drafts} matches over {Words} words; on the {StatedWords} words a source links, " +
+        $"{AgreedWords} reach a word it links them to ({WordPrecision:P2}); word pairs {AgreedPairs}/{Pairs} ({PairPrecision:P2})";
+}
+
 /// <param name="Tags">The numbers the edition puts on each of the translation's words, by word id.</param>
 /// <param name="Credit">
 /// What the links drawn from it say they rest on, which is also the prefix the dataset declaration
@@ -338,6 +359,56 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             started.Elapsed);
         logger.LogInformation("{From} to {To}: {Outcome}", fromSlug, toSlug, outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// What the numbers would draw for the pair, scored against the links a source states for it
+    /// (<see cref="LinkMethod.StatedBySource"/>), writing nothing: how far a number-matched link
+    /// agrees with a hand-made alignment of the same text, before it is believed.
+    /// </summary>
+    public async Task<TaggedTextScore> Score(
+        string fromSlug,
+        string toSlug,
+        EditionNumbers? edition,
+        CancellationToken cancellationToken = default)
+    {
+        var (from, to) = await Pair(fromSlug, toSlug, cancellationToken);
+        var (drafts, _, _, _, _, _, _) = await Match(from, to, edition, cancellationToken);
+        var stated = new Dictionary<long, HashSet<long>>();
+        foreach (var link in await Drawn(from.Id, to.Id, LinkMethod.StatedBySource, cancellationToken))
+        {
+            foreach (var word in link.From)
+            {
+                if (!stated.TryGetValue(word, out var targets))
+                {
+                    stated[word] = targets = [];
+                }
+
+                targets.UnionWith(link.To);
+            }
+        }
+
+        int words = 0, statedWords = 0, agreedWords = 0, pairs = 0, agreedPairs = 0;
+        foreach (var draft in drafts)
+        {
+            foreach (var word in draft.From.Distinct())
+            {
+                words++;
+                if (!stated.TryGetValue(word, out var targets))
+                {
+                    continue;
+                }
+
+                statedWords++;
+                agreedWords += draft.To.Any(targets.Contains) ? 1 : 0;
+                pairs += draft.To.Count;
+                agreedPairs += draft.To.Count(targets.Contains);
+            }
+        }
+
+        var score = new TaggedTextScore(fromSlug, toSlug, drafts.Count, words, statedWords, agreedWords, pairs, agreedPairs);
+        logger.LogInformation("{Score}", score);
+        return score;
     }
 
     /// <summary>

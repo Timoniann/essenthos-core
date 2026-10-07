@@ -1,5 +1,6 @@
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Corpus;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Usfm;
 
 namespace Essenthos.Core.Loading;
@@ -368,8 +369,8 @@ internal static class EbibleTextSource
     /// The owner decided on 2026-09-20 that the numbers may be read as an input to the mapping and
     /// never shown — the position the Synodal's numbering is already loaded under
     /// (<see cref="Links.SynodalStrongLinkLoader"/>). This set is what keeps them off the word:
-    /// nothing here stores a Spanish Strong number, so nothing serves one. A pass that reads them
-    /// in memory to draw links has not been written yet.
+    /// nothing here stores a Spanish Strong number, so nothing serves one. The pass that reads them
+    /// in memory to draw links is <see cref="Links.ReinaValeraStrongLinkLoader"/>, through <see cref="Numbers"/>.
     /// </para>
     ///
     /// <para>
@@ -448,6 +449,57 @@ internal static class EbibleTextSource
         }
 
         return new TextSource(definition, drafts);
+    }
+
+    /// <summary>More <c>\w</c> elements than any book has, so a book's own count names its tags apart from every other book's.</summary>
+    private const int TagsPerBook = 1_000_000;
+
+    /// <summary>
+    /// The Strong numbers an edition writes on its words, at the address <see cref="Read"/> stores each
+    /// verse under, for a pass that lays them onto the loaded words for the length of one run and
+    /// stores none — the only use made of a tagging that is not ours to take. A tag naming several
+    /// numbers at once gives the word none, as on the load.
+    /// </summary>
+    public static Dictionary<(int Book, int Chapter, int Verse), List<EditionWord>> Numbers(string folder)
+    {
+        var name = new DirectoryInfo(folder).Name;
+        if (!Known.ContainsKey(name))
+        {
+            throw new ArgumentException(
+                $"There is no text definition for the folder \"{name}\", so there is no text its numbers could be laid on.",
+                nameof(folder));
+        }
+
+        var books = Directory.GetFiles(folder, "*.usfm")
+            .Select(path => UsfmReader.Read(File.ReadAllText(path), HeadingsAreTheEditors.Contains(name)))
+            .ToDictionary(book => book.Book, StringComparer.Ordinal);
+        var numbers = new Dictionary<(int, int, int), List<EditionWord>>(32_000);
+        var untagged = 0;
+        foreach (var ordinal in Holds.GetValueOrDefault(name) ?? [.. Enumerable.Range(1, Canon.Length)])
+        {
+            if (!books.TryGetValue(Canon[ordinal - 1], out var book))
+            {
+                continue;
+            }
+
+            foreach (var chapter in book.Chapters)
+            {
+                foreach (var verse in chapter.Verses)
+                {
+                    if (!numbers.TryGetValue((ordinal, chapter.Number, verse.Number), out var words))
+                    {
+                        numbers[(ordinal, chapter.Number, verse.Number)] = words = [];
+                    }
+
+                    words.AddRange(verse.Words.Select(word => new EditionWord(
+                        word.Surface,
+                        word.StrongNumber is { } number ? [number] : [],
+                        word.TagUnit is { } unit ? ordinal * TagsPerBook + unit : -++untagged)));
+                }
+            }
+        }
+
+        return numbers;
     }
 
     internal static string? Corrected(string? name) =>

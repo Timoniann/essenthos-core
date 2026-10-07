@@ -75,6 +75,13 @@ internal static class Sources
         "the Faith Hope Love foundation's Strong numbering of the Chinese Union Version, read from CrossWire's ChiUn and ChiUns";
 
     /// <summary>
+    /// What every link drawn from the Strong numbers on the Reina-Valera 1909 begins with. eBible's copy
+    /// carries the numbers without his name, so the credit is where his name is said.
+    /// </summary>
+    public const string ReinaValeraStrongCredit =
+        "Rubén Gómez's Strong numbering of the Reina-Valera 1909, read from eBible's spaRV1909";
+
+    /// <summary>
     /// What every link drawn from the Strong numbers on Louis Segond 1910 begins with. The numbers are
     /// read from a module whose words are another copy of the Segond the corpus loads from eBible.
     /// </summary>
