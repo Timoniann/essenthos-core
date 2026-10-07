@@ -93,10 +93,13 @@ internal static partial class CompiledHebrewStrongs
     private static string Statement(string gloss)
     {
         var lines = gloss.Split('\n', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-        var derivation = lines.FirstOrDefault(line => line.StartsWith('[') && line.EndsWith(']'));
-        return derivation is not null
-            ? derivation[1..^1].Trim()
-            : lines.FirstOrDefault(line => line.StartsWith("Root(s):", StringComparison.Ordinal)) ?? "Root(s)";
+        var derivation = lines
+            .Where(line => line.StartsWith('[') && line.EndsWith(']'))
+            .Select(line => line[1..^1].Trim())
+            .FirstOrDefault(line => line.Length > 0);
+        return derivation
+               ?? lines.FirstOrDefault(line => line.StartsWith("Root(s):", StringComparison.Ordinal))
+               ?? "Root(s)";
     }
 
     private static string? Stated(string value) => string.IsNullOrWhiteSpace(value) ? null : value.Trim();

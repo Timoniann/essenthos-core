@@ -148,6 +148,7 @@ public class StrongEtymologyCorpusTests(ITestOutputHelper output)
         referenced.Count.Should().BeGreaterThan(13_000);
         referenced.Count(r => r.Kind == StrongRelationKinds.Unclassified).Should().BeLessThan(referenced.Count / 50);
         relations.Should().OnlyContain(r => StrongRelationKinds.All.Contains(r.Kind));
+        relations.Should().OnlyContain(r => r.Statement.Length > 0);
     }
 
     [Fact]
@@ -197,6 +198,7 @@ public class StrongEtymologyCorpusTests(ITestOutputHelper output)
         (father.PartOfSpeech, father.Gender, father.FirstBook, father.FirstChapter, father.FirstVerse)
             .Should().Be(("noun", "masculine", 1, 2, 24));
         compiled.Roots.Should().HaveCount(6_439 + 783 + 34);
+        compiled.Roots.Should().OnlyContain(r => r.Statement.Length > 0);
         compiled.Roots.Where(r => r.FromNumber == "H62").Select(r => (r.ToNumber, r.Position))
             .Should().Equal(("H58", 1), ("H1004", 2), ("H4601", 3));
     }
