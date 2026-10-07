@@ -212,14 +212,25 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
              entity_id integer)
          ON COMMIT DROP;
          INSERT INTO occurrence (word_id, number, construct, entity_id)
-         SELECT w.id, w.strong_number,
-                CASE WHEN {AfterATribe("w")} THEN 'tribe' WHEN {CalledATribe("w")} THEN 'antecedent' ELSE 'realm' END,
-                {Answer("w")}
-         FROM word w
-         JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
-         JOIN strong_entry lexicon ON lexicon.strong_number = w.strong_number
-         WHERE {EntityAnnotationLoader.GreekName}
-           AND ({AfterATribe("w")} OR {CalledATribe("w")} OR {AfterARealm("w")})
+         WITH named AS MATERIALIZED (
+             SELECT w.id, w.strong_number, w.verse_id, w.position
+             FROM word w
+             JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
+             JOIN strong_entry lexicon ON lexicon.strong_number = w.strong_number
+             WHERE {EntityAnnotationLoader.GreekName}
+         ),
+         placed AS MATERIALIZED (
+             SELECT n.id, n.strong_number,
+                    CASE WHEN {AfterATribe("n")} THEN 'tribe'
+                         WHEN {CalledATribe("n")} THEN 'antecedent'
+                         WHEN {AfterARealm("n")} THEN 'realm' END AS construct
+             FROM named n
+         )
+         SELECT candidate.id, candidate.strong_number, candidate.construct,
+                CASE WHEN candidate.construct = 'realm' THEN {People(Hebrew("candidate.strong_number"))}
+                     ELSE {Ancestor(Hebrew("candidate.strong_number"))} END
+         FROM placed candidate
+         WHERE candidate.construct IS NOT NULL
          """;
 
     private const string Seed =
