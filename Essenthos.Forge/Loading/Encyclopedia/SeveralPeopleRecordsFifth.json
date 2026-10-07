@@ -1,5 +1,5 @@
 {
-  "decidedBy": "Essenthos, 2026-10-07, on the portrait briefs' report of person records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, under the project owner's decisions of 2026-09-16 that a namesake the text does not identify is a person of his own and that where the text leaves an identification open the record says so",
+  "decidedBy": "Essenthos, 2026-10-07, on the portrait briefs' report of person records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, and on the words of a man Strong numbers under two entries that no pass named, under the project owner's decisions of 2026-09-16 that a namesake the text does not identify is a person of his own and that where the text leaves an identification open the record says so",
   "policy": "A record is one person, and a word names the one its verse names. Where a record held the verses of another man of the name, the occurrences go to the man the verse names, to a record already held where there is one and to a record of his own where there is none; a record keeps the man its line and portrait were made for. Where the text does not say whether two men of one name are one, both are held and each says so.",
   "method": "manual",
   "source": "Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07",
@@ -509,6 +509,33 @@
       "existing": "akkub-5",
       "why": "'Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai ... and the Levites, caused the people to understand the law': a Levite who taught. The verse does not make him the porter Akkub of the gates (1CH 9:17, NEH 11:19, 12:25), and the owner's rule for a namesake the text does not identify is a record of his own.",
       "corrects": "akkub-2"
+    },
+    {
+      "text": "BHSA",
+      "reference": "DAN 6:27",
+      "position": 18,
+      "surface": "דָֽנִיֵּ֑אל",
+      "strongNumber": "H1841",
+      "existing": "daniel-2",
+      "why": "'that men tremble and fear before the God of Daniel': Darius's decree speaks of the Daniel of the den (6:16-23)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1KI 22:14",
+      "position": 3,
+      "surface": "מִיכָ֑יְהוּ",
+      "strongNumber": "H4321",
+      "existing": "micaiah",
+      "why": "'And Micaiah said, As the LORD liveth': Micaiah the son of Imlah of 22:8-9."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1KI 22:25",
+      "position": 3,
+      "surface": "מִיכָ֔יְהוּ",
+      "strongNumber": "H4321",
+      "existing": "micaiah",
+      "why": "'And Micaiah said, Behold, thou shalt see in that day': Micaiah the son of Imlah of 22:8-9."
     },
     {
       "text": "BHSA",
