@@ -556,6 +556,22 @@
       "why": "Both describe Cush the Benjamite named in the heading of Psalm 7. The existing cush-2 record carries that word and its Benjamite relationship through the shipped reading; the register's cush-5 holds no verse, word or relationship of its own.",
       "confidence": 0.99,
       "source": "Essenthos, the register alias compared with the held record and its verses by Codex, 2026-10-04"
+    },
+    {
+      "strongNumber": "H141",
+      "keeps": "adoniram",
+      "folds": "adoram",
+      "why": "One officer over the forced labour: Adoram under David (2SA 20:24), Adoniram the son of Abda under Solomon (1KI 4:6, 5:14) and Adoram, whom Rehoboam sent and all Israel stoned (1KI 12:18), called Hadoram in 2CH 10:18. The office and the name, shortened, are the same, and no verse names two such men.",
+      "confidence": 0.9,
+      "source": "Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H5809",
+      "keeps": "azzur-3",
+      "folds": "azzur-4",
+      "why": "Both records are Azzur the father of Jaazaniah, a prince of the people against whom Ezekiel prophesied (EZK 11:1); the second holds no verse, word or relationship of its own.",
+      "confidence": 0.95,
+      "source": "Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07"
     }
   ],
   "declined": [
@@ -1175,6 +1191,508 @@
         "ACT 4:36"
       ],
       "why": "Acts 4:36 is 'Joses, who by the apostles was surnamed Barnabas, a Levite, and of the country of Cyprus'; the brother of Jesus is not in the verse."
+    },
+    {
+      "from": "pashhur",
+      "to": "pashhur-the-priest",
+      "name": null,
+      "verses": [
+        "1CH 9:12",
+        "EZR 2:38",
+        "EZR 10:22",
+        "NEH 7:41",
+        "NEH 10:3",
+        "NEH 11:12"
+      ],
+      "why": "The priest Pashhur son of Malchijah of 1 Chronicles 9:12 and Nehemiah 11:12, the house of priests named after him (Ezra 2:38, 10:22, Nehemiah 7:41) and the Pashhur who sealed the covenant among the priests (Nehemiah 10:3); the record keeps Zedekiah's envoy of Jeremiah 21:1 and 38:1, whom the text does not make that priest."
+    },
+    {
+      "from": "pashhur-3",
+      "to": "pashhur",
+      "name": null,
+      "verses": [
+        "JER 21:1"
+      ],
+      "why": "Jeremiah 21:1 names Pashur the son of Melchiah, Zedekiah's envoy; Gedaliah's father of Jeremiah 38:1 is not in the verse."
+    },
+    {
+      "from": "malchijah-2",
+      "to": "malchijah-father-of-pashhur",
+      "name": null,
+      "verses": [
+        "1CH 9:12",
+        "NEH 11:12"
+      ],
+      "why": "1 Chronicles 9:12 and Nehemiah 11:12 name Malchijah as the father of the priest Pashhur, generations before the Malchiah who stood at Ezra's left hand (Nehemiah 8:4)."
+    },
+    {
+      "from": "malchijah-2",
+      "to": "malchijah-11",
+      "name": null,
+      "verses": [
+        "NEH 10:3",
+        "NEH 12:42"
+      ],
+      "why": "Nehemiah 10:3 is a priest who sealed the covenant and 12:42 a Malchijah at the dedication of the wall; the text does not make either of them the man at Ezra's left hand."
+    },
+    {
+      "from": "malchijah-2",
+      "to": "malchijah-10",
+      "name": null,
+      "verses": [
+        "JER 38:1"
+      ],
+      "why": "Jeremiah 38:1 names Pashur the son of Malchiah among Zedekiah's princes, and 38:6 that Malchiah's dungeon; the priest of Ezra's day is not in the verse."
+    },
+    {
+      "from": "erastus-2",
+      "to": "erastus",
+      "name": null,
+      "verses": [
+        "ACT 19:22"
+      ],
+      "why": "Acts 19:22 is the Erastus whom Paul sent into Macedonia with Timothy, held as erastus; the verse does not call him the city's chamberlain."
+    },
+    {
+      "from": "horam",
+      "to": "kingofmakkedah",
+      "name": null,
+      "verses": [
+        "JOS 10:28",
+        "JOS 12:16"
+      ],
+      "why": "Joshua 10:28 and 12:16 name the king of Makkedah; Horam king of Gezer is not in them."
+    },
+    {
+      "from": "azariah",
+      "to": "azariah-6",
+      "name": null,
+      "verses": [
+        "1CH 6:9"
+      ],
+      "why": "1 Chronicles 6:9 is 'Ahimaaz begat Azariah, and Azariah begat Johanan', the grandfather of the Azariah of 6:10."
+    },
+    {
+      "from": "azariah",
+      "to": "azariah-20",
+      "name": null,
+      "verses": [
+        "2CH 26:17",
+        "2CH 26:20"
+      ],
+      "why": "2 Chronicles 26:17-20 is Azariah the priest who withstood King Uzziah, held as azariah-20, and the verses do not place him in the line of 1 Chronicles 6."
+    },
+    {
+      "from": "azariah-15",
+      "to": "azariah-the-covenant-priest",
+      "name": null,
+      "verses": [
+        "NEH 10:2"
+      ],
+      "why": "Nehemiah 10:2 is a priest who sealed the covenant under Nehemiah, three centuries after Hezekiah's chief priest of 2 Chronicles 31:10."
+    },
+    {
+      "from": "azariah-16",
+      "to": "azariah-22",
+      "name": null,
+      "verses": [
+        "NEH 8:7"
+      ],
+      "why": "Nehemiah 8:7 is a Levite who helped the people understand the law; the verse does not make him Azariah the son of Maaseiah, who repaired the wall beside his house (Nehemiah 3:23)."
+    },
+    {
+      "from": "jonathan-4",
+      "to": "jonathan-15",
+      "name": null,
+      "verses": [
+        "1CH 27:32"
+      ],
+      "why": "1 Chronicles 27:32 is 'Jonathan David's uncle ... a counsellor, a wise man, and a scribe', held as jonathan-15; the son of Shimea is David's nephew."
+    },
+    {
+      "from": "maaseiah",
+      "to": "maaseiah-20",
+      "name": null,
+      "verses": [
+        "JER 35:4"
+      ],
+      "why": "Jeremiah 35:4 is Maaseiah the son of Shallum, the keeper of the door in Jehoiakim's day, centuries after the Levite with the psaltery of 1 Chronicles 15:18-20."
+    },
+    {
+      "from": "maaseiah-10",
+      "to": "maaseiah-16",
+      "name": null,
+      "verses": [
+        "NEH 8:7"
+      ],
+      "why": "Nehemiah 8:7 is a Levite who helped the people understand the law; the verse does not make him the Maaseiah at Ezra's right hand (8:4)."
+    },
+    {
+      "from": "maaseiah-10",
+      "to": "maaseiah-17",
+      "name": null,
+      "verses": [
+        "NEH 10:25"
+      ],
+      "why": "Nehemiah 10:25 is a chief of the people who sealed the covenant; the verse does not make him the Maaseiah at Ezra's right hand."
+    },
+    {
+      "from": "maaseiah-10",
+      "to": "maaseiah-18",
+      "name": null,
+      "verses": [
+        "NEH 12:42"
+      ],
+      "why": "Nehemiah 12:42 is a Maaseiah at the dedication of the wall; the verse does not make him the Maaseiah at Ezra's right hand."
+    },
+    {
+      "from": "shebaniah-2",
+      "to": "shebaniah-4",
+      "name": null,
+      "verses": [
+        "NEH 10:10"
+      ],
+      "why": "Nehemiah 10:10 is a Levite Shebaniah who sealed the covenant, held as shebaniah-4; the text does not make him the Shebaniah of 9:4-5."
+    },
+    {
+      "from": "nehemiah",
+      "to": "nehemiah-3",
+      "name": null,
+      "verses": [
+        "EZR 2:2",
+        "NEH 7:7"
+      ],
+      "why": "Ezra 2:2 and Nehemiah 7:7 are the Nehemiah who came up with Zerubbabel, about ninety years before the governor son of Hachaliah."
+    },
+    {
+      "from": "conaniah",
+      "to": "conaniah-chief-of-the-levites",
+      "name": null,
+      "verses": [
+        "2CH 35:9"
+      ],
+      "why": "2 Chronicles 35:9 is a chief of the Levites at Josiah's passover, about ninety years after Hezekiah's Cononiah."
+    },
+    {
+      "from": "jehiel",
+      "to": "jehiel-9",
+      "name": null,
+      "verses": [
+        "1CH 23:8",
+        "1CH 26:21-22",
+        "1CH 29:8"
+      ],
+      "why": "1 Chronicles 23:8, 26:21-22 and 29:8 are Jehiel the son of Laadan the Gershonite, over the treasures of the house of the LORD; the Levite with the psaltery of 15:18-20 is not called his son or a Gershonite."
+    },
+    {
+      "from": "jehiel-4",
+      "to": "jehiel-ruler-of-the-house-of-god",
+      "name": null,
+      "verses": [
+        "2CH 35:8"
+      ],
+      "why": "2 Chronicles 35:8 is Jehiel a ruler of the house of God at Josiah's passover, held apart from the son of Heman of Hezekiah's day."
+    },
+    {
+      "from": "kingofmoab",
+      "to": "eglon",
+      "name": null,
+      "verses": [
+        "1SA 12:9"
+      ],
+      "why": "1 Samuel 12:9 recalls the king of Moab into whose hand the LORD sold Israel in the days of the judges, which is Eglon (Judges 3:12-14), not the former king of Moab from whom Sihon took the land (Numbers 21:26)."
+    },
+    {
+      "from": "benaiah-4",
+      "to": "benaiah-the-trumpeting-priest",
+      "name": null,
+      "verses": [
+        "1CH 15:24",
+        "1CH 16:6"
+      ],
+      "why": "1 Chronicles 15:24 and 16:6 are Benaiah among the priests with trumpets; the Benaiah of 15:18-20 and 16:5 is a Levite of the second degree with a psaltery."
+    },
+    {
+      "from": "jaaziel",
+      "to": "jahaziel-the-trumpeting-priest",
+      "name": null,
+      "verses": [
+        "1CH 16:6"
+      ],
+      "why": "1 Chronicles 16:6 is Jahaziel among the priests with trumpets; Jaaziel of 15:18 is a Levite of the second degree."
+    },
+    {
+      "from": "jeiel-7",
+      "to": "jeiel-chief-of-the-levites",
+      "name": null,
+      "verses": [
+        "2CH 35:9"
+      ],
+      "why": "2 Chronicles 35:9 is a chief of the Levites at Josiah's passover, about ninety years after the Jeiel of 29:13."
+    },
+    {
+      "from": "shemaiah-12",
+      "to": "shemaiah-23",
+      "name": null,
+      "verses": [
+        "2CH 35:9"
+      ],
+      "why": "2 Chronicles 35:9 is a chief of the Levites at Josiah's passover, held as shemaiah-23, about ninety years after the Shemaiah of 31:15."
+    },
+    {
+      "from": "akkub-2",
+      "to": "akkub-5",
+      "name": null,
+      "verses": [
+        "NEH 8:7"
+      ],
+      "why": "Nehemiah 8:7 is a Levite who helped the people understand the law, held as akkub-5; the porter Akkub is not in the verse."
+    },
+    {
+      "from": "amasai",
+      "to": "amasai-2",
+      "name": null,
+      "verses": [
+        "1CH 15:24"
+      ],
+      "why": "1 Chronicles 15:24 is Amasai among the priests with trumpets, held as amasai-2; the son of Elkanah of 6:25 and 6:35 is a forefather of Samuel."
+    },
+    {
+      "from": "amasai",
+      "to": "amasai-3",
+      "name": null,
+      "verses": [
+        "2CH 29:12"
+      ],
+      "why": "2 Chronicles 29:12 is Mahath the son of Amasai in Hezekiah's day, held as amasai-3."
+    },
+    {
+      "from": "hanan-4",
+      "to": "hanan-6",
+      "name": null,
+      "verses": [
+        "NEH 8:7"
+      ],
+      "why": "Nehemiah 8:7 is a Levite who helped the people understand the law, held as hanan-6; the house of temple servants of Ezra 2:46 is named after another Hanan."
+    },
+    {
+      "from": "hanan-6",
+      "to": "hanan-9",
+      "name": null,
+      "verses": [
+        "NEH 10:26"
+      ],
+      "why": "Nehemiah 10:26 is a chief of the people who sealed the covenant, held as hanan-9; the Levite of 8:7 is not in the verse."
+    },
+    {
+      "from": "zechariah-5",
+      "to": "zechariah-the-trumpeting-priest",
+      "name": null,
+      "verses": [
+        "1CH 15:24"
+      ],
+      "why": "1 Chronicles 15:24 is Zechariah among the priests with trumpets; the Zechariah of 15:18-20 is a Levite of the second degree with a psaltery."
+    },
+    {
+      "from": "jozabad-5",
+      "to": "jozabad-7",
+      "name": null,
+      "verses": [
+        "EZR 10:23"
+      ],
+      "why": "Ezra 10:23 is a Levite who had taken a foreign wife, held as jozabad-7."
+    },
+    {
+      "from": "jozabad-5",
+      "to": "jozabad-8",
+      "name": null,
+      "verses": [
+        "NEH 8:7"
+      ],
+      "why": "Nehemiah 8:7 is a Levite who helped the people understand the law, held as jozabad-8."
+    },
+    {
+      "from": "obadiah-5",
+      "to": "obadiah-the-teaching-prince",
+      "name": null,
+      "verses": [
+        "2CH 17:7"
+      ],
+      "why": "2 Chronicles 17:7 is a prince Jehoshaphat sent to teach in the cities of Judah, held as obadiah-the-teaching-prince; the son of Shemaiah of 1 Chronicles 9:16 lived after the return."
+    },
+    {
+      "from": "zechariah-15",
+      "to": "zechariah-26",
+      "name": null,
+      "verses": [
+        "2CH 35:8"
+      ],
+      "why": "2 Chronicles 35:8 is Zechariah a ruler of the house of God at Josiah's passover, held as zechariah-26; the overseer of the repairs of 34:12 is not named a ruler."
+    },
+    {
+      "from": "amariah-2",
+      "to": "amariah-9",
+      "name": null,
+      "verses": [
+        "2CH 19:11"
+      ],
+      "why": "2 Chronicles 19:11 is Jehoshaphat's chief priest, whom the verse does not place in a line; held apart until the text says he is the son of Azariah of 1 Chronicles 6:11."
+    },
+    {
+      "from": "meshullam-13",
+      "to": "meshullam-the-covenant-chief",
+      "name": null,
+      "verses": [
+        "NEH 10:20"
+      ],
+      "why": "Nehemiah 10:20 is a chief of the people who sealed the covenant, held as meshullam-the-covenant-chief."
+    },
+    {
+      "from": "meshullam-13",
+      "to": "meshullam-17",
+      "name": null,
+      "verses": [
+        "NEH 10:7"
+      ],
+      "why": "Nehemiah 10:7 is a priest who sealed the covenant, held as meshullam-17."
+    },
+    {
+      "from": "meshullam-13",
+      "to": "meshullam-18",
+      "name": null,
+      "verses": [
+        "NEH 12:16"
+      ],
+      "why": "Nehemiah 12:16 is the head of the house of Ginnethon in Joiakim's days, held as meshullam-18."
+    },
+    {
+      "from": "hanani-4",
+      "to": "hanani-5",
+      "name": null,
+      "verses": [
+        "NEH 12:36"
+      ],
+      "why": "Nehemiah 12:36 is a musician at the dedication of the wall, held as hanani-5; Nehemiah's brother is not in the verse."
+    },
+    {
+      "from": "enoch",
+      "to": "enoch-2",
+      "name": null,
+      "verses": [
+        "HEB 11:5"
+      ],
+      "why": "Hebrews 11:5 is Enoch who was translated that he should not see death, the son of Jared (Genesis 5:24), not Cain's son."
+    },
+    {
+      "from": "gomer",
+      "to": "gomer-2",
+      "name": null,
+      "verses": [
+        "HOS 1:3"
+      ],
+      "why": "Hosea 1:3 is Gomer the daughter of Diblaim, Hosea's wife, held as gomer-2; the son of Japheth is not in the verse."
+    },
+    {
+      "from": "pedaiah-5",
+      "to": "pedaiah-7",
+      "name": null,
+      "verses": [
+        "NEH 13:13"
+      ],
+      "why": "Nehemiah 13:13 is the Levite Pedaiah whom Nehemiah made a treasurer, held as pedaiah-7; the verse does not make him the man at Ezra's left hand (8:4)."
+    },
+    {
+      "from": "elhanan",
+      "to": "elhanan-son-of-dodo",
+      "name": null,
+      "verses": [
+        "2SA 23:24",
+        "1CH 11:26"
+      ],
+      "why": "2 Samuel 23:24 and 1 Chronicles 11:26 are Elhanan the son of Dodo of Bethlehem, one of the thirty; the giant-slayer is the son of Jaare-oregim (2 Samuel 21:19)."
+    },
+    {
+      "from": "amaziah-3",
+      "to": "amaziah-the-merarite",
+      "name": null,
+      "verses": [
+        "1CH 6:45"
+      ],
+      "why": "1 Chronicles 6:45 is Amaziah the son of Hilkiah in the line of Ethan the Merarite, generations before the priest of Bethel who stood against Amos (Amos 7:10-14)."
+    },
+    {
+      "from": "james-2",
+      "to": "levi-son-of-alphaeus",
+      "name": null,
+      "verses": [
+        "MRK 2:14",
+        "LUK 5:27",
+        "LUK 5:29"
+      ],
+      "why": "Mark 2:14 and Luke 5:27-29 are Levi the son of Alphaeus, the publican; the verses do not make him James the son of Alphaeus."
+    },
+    {
+      "from": "joel",
+      "to": "joel-son-of-azariah",
+      "name": null,
+      "verses": [
+        "1CH 6:36"
+      ],
+      "why": "1 Chronicles 6:36 is Joel the son of Azariah in the line of Heman, generations before Samuel's son."
+    },
+    {
+      "from": "ezer-2",
+      "to": "ezer-at-the-dedication",
+      "name": null,
+      "verses": [
+        "NEH 12:42"
+      ],
+      "why": "Nehemiah 12:42 is an Ezer at the dedication of the wall, not the son of Hur of 1 Chronicles 4:4."
+    },
+    {
+      "from": "ezer-5",
+      "to": "ezer-at-the-dedication",
+      "name": null,
+      "verses": [
+        "NEH 12:42"
+      ],
+      "why": "Nehemiah 12:42 is an Ezer at the dedication of the wall; the verse does not make him the Ezer son of Jeshua who repaired the wall (3:19)."
+    },
+    {
+      "from": "ezer-2",
+      "to": "ezer-4",
+      "name": null,
+      "verses": [
+        "1CH 12:9"
+      ],
+      "why": "1 Chronicles 12:9 is Ezer the first of the Gadites who came to David, held as ezer-4; the son of Hur is a man of Judah."
+    },
+    {
+      "from": "maaseiah-6",
+      "to": "maaseiah-19",
+      "name": null,
+      "verses": [
+        "JER 29:21"
+      ],
+      "why": "Jeremiah 29:21 is Maaseiah the father of the false prophet Zedekiah in the exile, held as maaseiah-19; the priest of Ezra 10:18 lived a century later."
+    },
+    {
+      "from": "shemaiah-21",
+      "to": "shemaiah-22",
+      "name": null,
+      "verses": [
+        "JER 36:12"
+      ],
+      "why": "Jeremiah 36:12 is Delaiah the son of Shemaiah among the princes, held as shemaiah-22; the verse does not call his father the Nehelamite."
+    },
+    {
+      "from": "jaazaniah",
+      "to": "jaazaniah-5",
+      "name": null,
+      "verses": [
+        "JER 42:1"
+      ],
+      "why": "Jeremiah 42:1 is Jezaniah the son of Hoshaiah; whether he is the Maachathite's son of 2 Kings 25:23 and Jeremiah 40:8 the text does not settle, so he is held as a man of his own who says so."
     }
   ]
 }

@@ -729,4 +729,26 @@ public sealed class DuplicateRecordTests : IDisposable
         list.Splits.SelectMany(split => split.Keeps ?? []).Should().OnlyContain(span => ScriptureSpan.TryParse(span) != null);
         list.Splits.Single(split => split.To == "ahasuerus-father-of-darius").Keeps.Should().Contain("EZR 4:6");
     }
+
+    /// <summary>
+    /// A record that held several people keeps the man its line and picture were made for, and no
+    /// verse of it is sent to two records or back to the record it leaves: Zedekiah's envoy keeps
+    /// Jeremiah 21:1 and 38:1 while the priest's verses go, and the son of Hoshaiah leaves the
+    /// Maachathite's son only at Jeremiah 42:1.
+    /// </summary>
+    [Fact]
+    public void TheShippedSplitsSendEachVerseOfARecordToOneOtherMan()
+    {
+        var splits = DuplicateRecordLoader.Read().Splits!;
+
+        splits.Should().OnlyContain(split => split.From != split.To && split.Why.Length > 0);
+        splits.SelectMany(split => split.Verses.Select(verse => (split.From, verse)))
+            .Should().OnlyHaveUniqueItems("a verse of one record goes to one other record");
+
+        var priest = splits.Single(split => split.From == "pashhur" && split.To == "pashhur-the-priest").Verses;
+        priest.Should().Contain(["1CH 9:12", "NEH 11:12", "EZR 2:38", "NEH 7:41"]).And.NotContain(["JER 21:1", "JER 38:1"]);
+        splits.Should().ContainSingle(split => split.From == "jaazaniah").Which.Verses.Should().Equal("JER 42:1");
+        splits.Where(split => split.From == "malchijah-2").SelectMany(split => split.Verses)
+            .Should().NotContain("NEH 8:4", "the record keeps the man at Ezra's left hand its portrait shows");
+    }
 }

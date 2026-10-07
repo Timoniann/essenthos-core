@@ -92,6 +92,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\SynodalChristTitleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OhienkoAdamRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SynodalChristBearerRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsFifth.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />

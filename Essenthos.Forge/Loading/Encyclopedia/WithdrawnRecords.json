@@ -66,6 +66,16 @@
       "slug": "rokeim",
       "sourceId": "person:Rokeim_1",
       "why": "Withdrawn on the project owner's instruction of 2026-09-30 to settle every record BibleData supplied that rested on it alone, as claude-opus-5-5 read its verse. Rahlfs' Septuagint transliterates the apothecaries of Nehemiah 3:8 as a name; Brenton's reads 'Ananias the son of one of the apothecaries', and the Hebrew and every translation here read the word as a trade."
+    },
+    {
+      "slug": "haggedolim",
+      "sourceId": "person:Haggedolim_1",
+      "why": "Withdrawn as claude-opus-5-5 read Nehemiah 11:14 on 2026-10-07: 'Zabdiel, the son of one of the great men'. Ben-haggedolim has the article and a plural adjective; it is no name."
+    },
+    {
+      "slug": "beno",
+      "sourceId": "person:Beno_1",
+      "why": "Withdrawn as claude-opus-5-5 read 1 Chronicles 24:26-27 on 2026-10-07: the Hebrew reads 'his son', and only the King James prints Beno as a name."
     }
   ]
 }
