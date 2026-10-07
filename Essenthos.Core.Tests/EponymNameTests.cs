@@ -189,24 +189,35 @@ public sealed class EponymNameTests : IDisposable
         _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.From });
         _db.LinkWords.Add(new LinkWord { Link = link, Word = word, Side = LinkSide.To });
         var jacob = await _db.Entities.SingleAsync(e => e.Slug == "jacob");
-        foreach (var named in new[] { word, rendering })
+        _db.WordEntities.Add(new WordEntity
         {
-            _db.WordEntities.Add(new WordEntity
-            {
-                WordId = named.Id, EntityId = jacob.Id, Method = LinkMethod.RuleBased, Confidence = 0.99,
-                Source = NameConsensusPass.Source, Note = "the word its verses share in this text: israel",
-            });
-        }
+            WordId = rendering.Id, EntityId = jacob.Id, Method = LinkMethod.RuleBased, Confidence = 0.99,
+            Source = NameConsensusPass.Source, Note = "the word its verses share in this text: israel",
+        });
+        await _db.SaveChangesAsync();
 
+        // From empty: the rule names the people and the consensus's row is not its to take back.
+        await _loader.Load();
+        (await Slugs(rendering)).Should().Contain("jacob");
+
+        // A corpus loaded before the rule read the nation: the man on the Hebrew word, the consensus's beside it.
+        await _db.WordEntities.Where(a => a.WordId == word.Id).ExecuteDeleteAsync();
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = word.Id, EntityId = jacob.Id, Method = LinkMethod.RuleBased, Confidence = 0.7,
+            Source = EponymNameLoader.Source, Note = "H3478, a name the tribe shares with its ancestor, so the ancestor",
+        });
         await _db.SaveChangesAsync();
 
         await _loader.Load();
 
-        var slugs = await _db.WordEntities.AsNoTracking()
-            .Where(a => a.WordId == word.Id || a.WordId == rendering.Id)
-            .Select(a => a.Entity!.Slug).ToListAsync();
-        slugs.Should().Equal("israelites", "israelites");
+        (await Slugs(word)).Should().Equal("israelites");
+        (await Slugs(rendering)).Should().NotContain("jacob");
     }
+
+    private async Task<List<string>> Slugs(Word word) =>
+        await _db.WordEntities.AsNoTracking().Where(a => a.WordId == word.Id).Select(a => a.Entity!.Slug).ToListAsync();
+
 
     /// <summary><em>The king of Israel</em> is neither the man nor the tribe, and is left as it was.</summary>
     [Fact]

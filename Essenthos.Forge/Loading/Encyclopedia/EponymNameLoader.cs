@@ -110,8 +110,10 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
     /// carried from such a word, taken back so the word can be named again — and what the verses'
     /// consensus wrote as the man, in any text, on a verse where Israel is only the nation and Jacob
     /// goes unnamed. The consensus names a word only where nothing names another record, so in a
-    /// load from empty it meets the people already there and writes nothing; on a corpus loaded
-    /// before, it found the man there and its rows kept citing him for the verse.
+    /// load from empty it meets the people already there; on a corpus loaded before, it found the
+    /// man there and its rows kept citing him for the verse. Its rows are taken back only in the run
+    /// that takes back the rule's own, which is that corpus, so a load from empty followed by a
+    /// second load leaves whatever it wrote where it is.
     /// </summary>
     private static readonly string WithdrawTheMan =
         $"""
@@ -138,7 +140,7 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
            AND ((a.source = @source
                  AND (a.word_id IN (SELECT id FROM nation)
                       OR substring(a.note FROM '^through \S+ word ([0-9]+)')::bigint IN (SELECT id FROM nation)))
-                OR (a.source = @consensus
+                OR (@consensus_too AND a.source = @consensus
                     AND EXISTS (SELECT 1 FROM verse_reference r
                                 JOIN nation_verse v ON (v.canonical_book, v.canonical_chapter, v.canonical_verse)
                                                        = (r.canonical_book, r.canonical_chapter, r.canonical_verse)
@@ -259,14 +261,26 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
         IDbContextTransaction transaction,
         CancellationToken cancellationToken)
     {
-        await using var command = new NpgsqlCommand(
-            WithdrawTheMan, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
-        command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
-        command.Parameters.AddWithValue("israel", Israel);
-        command.Parameters.AddWithValue("jacob", JacobsName);
-        command.Parameters.AddWithValue("source", Source);
-        command.Parameters.AddWithValue("consensus", NameConsensusPass.Source);
-        return await command.ExecuteNonQueryAsync(cancellationToken);
+        var withdrawn = 0;
+        foreach (var consensusToo in new[] { false, true })
+        {
+            await using var command = new NpgsqlCommand(
+                WithdrawTheMan, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
+            command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
+            command.Parameters.AddWithValue("israel", Israel);
+            command.Parameters.AddWithValue("jacob", JacobsName);
+            command.Parameters.AddWithValue("source", Source);
+            command.Parameters.AddWithValue("consensus", NameConsensusPass.Source);
+            command.Parameters.AddWithValue("consensus_too", consensusToo);
+            var deleted = await command.ExecuteNonQueryAsync(cancellationToken);
+            withdrawn += deleted;
+            if (!consensusToo && deleted == 0)
+            {
+                break;
+            }
+        }
+
+        return withdrawn;
     }
 
     private static async Task<(int Occurrences, int Children, int Eponyms, int Realms)> Counted(
