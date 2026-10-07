@@ -795,6 +795,23 @@ public sealed class EntityAnnotationTests : IDisposable
     }
 
     /// <summary>
+    /// The Hindi's postposition follows the noun it governs, so in <em>मूसा के पुत्र</em> the name is
+    /// the word before the genitive and not the sons at the end of the phrase.
+    /// </summary>
+    [Fact]
+    public async Task AHindiPostpositionClosesTheNameBeforeIt()
+    {
+        var name = _db.WordAt(_hindi, 1, 21, 1);
+        var sons = _db.WordAt(_hindi, 1, 21, 3);
+        Phrase(Hebrew(1), name, _db.WordAt(_hindi, 1, 21, 2), sons);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(sons.Id);
+    }
+
+    /// <summary>
     /// A Greek edition that carries no Strong numbers, as the Septuagints here do not, still says its
     /// article by its letters.
     /// </summary>

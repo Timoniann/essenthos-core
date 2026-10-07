@@ -234,6 +234,16 @@ internal static class Annotating
         """;
 
     /// <summary>
+    /// The postpositions of Hindi, Urdu and Punjabi, which follow the noun they govern: in a phrase
+    /// that renders a name, the word before one of them is the name — <em>एसाव के पुत्र</em>,
+    /// <em>Esau's sons</em>, is a name, its genitive and what it governs, and the last word is the
+    /// sons. They close the name as an English possessive does.
+    /// </summary>
+    private const string Postpositions =
+        "'के', 'ने', 'की', 'को', 'का', 'से', 'में', 'पर', 'تک', 'کے', 'نے', 'کی', 'کا', 'کو', 'سے', 'میں', 'پر', " +
+        "'ਦੇ', 'ਨੇ', 'ਨੂੰ', 'ਦਾ', 'ਦੀ', 'ਤੋਂ', 'ਵਿੱਚ'";
+
+    /// <summary>
     /// <see cref="Head"/> as it was chosen before the words that are never a name were passed over,
     /// which a withdrawal still has to find the rows of.
     /// </summary>
@@ -247,8 +257,14 @@ internal static class Annotating
          SELECT peer.word_id
          FROM (
              SELECT lw.word_id, hw.verse_id, hw.position,
-                    hw.text ~* '{Possessive}'
-                        AND row_number() OVER (ORDER BY hw.verse_id DESC, hw.position DESC) = 2
+                    (hw.text ~* '{Possessive}'
+                        AND row_number() OVER (ORDER BY hw.verse_id DESC, hw.position DESC) = 2)
+                    OR (ht.language IN ('hin', 'urd', 'pan')
+                        AND EXISTS (SELECT 1 FROM link_word after
+                                    JOIN word governs ON governs.id = after.word_id
+                                    WHERE after.link_id = mine.link_id AND after.side = lw.side
+                                      AND governs.verse_id = hw.verse_id AND governs.position = hw.position + 1
+                                      AND governs.text = ANY(ARRAY[{Postpositions}])))
                         AS closes,
                     coalesce((
                         SELECT max(similarity(
