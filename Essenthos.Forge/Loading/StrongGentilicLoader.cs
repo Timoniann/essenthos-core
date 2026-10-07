@@ -59,13 +59,13 @@ internal sealed class StrongGentilicLoader(AppDbContext db, ILogger<StrongGentil
 
     public async Task<GentilicOutcome> Load(CancellationToken cancellationToken = default)
     {
-        if (await db.StrongGentilics.AnyAsync(cancellationToken))
-        {
-            logger.LogInformation("The stated gentilics are already loaded; nothing to do");
-            return new GentilicOutcome(true, 0, 0, 0, 0, TimeSpan.Zero);
-        }
-
         var started = Stopwatch.StartNew();
+
+        // Guarded per entry rather than per table, so a claim the parse has since learnt to read
+        // reaches a corpus that already holds the others, and a corpus holding all of them is left
+        // exactly as it is.
+        var held = (await db.StrongGentilics.Select(g => g.StrongNumber).ToListAsync(cancellationToken))
+            .ToHashSet(StringComparer.Ordinal);
 
         var entries = await db.StrongEntries
             .Where(e => e.Derivation != null && e.Derivation.Length > 0)
@@ -93,6 +93,13 @@ internal sealed class StrongGentilicLoader(AppDbContext db, ILogger<StrongGentil
         if (chained.Count > 0)
         {
             refusals[GentilicRefusal.DerivesFromAPeople] = chained.Count;
+        }
+
+        stated = [.. stated.Where(claim => !held.Contains(claim.StrongNumber))];
+        if (stated.Count == 0 && held.Count > 0)
+        {
+            logger.LogInformation("The stated gentilics are already loaded; nothing to do");
+            return new GentilicOutcome(true, 0, 0, 0, 0, TimeSpan.Zero);
         }
 
         var origins = await Origins(stated, cancellationToken);

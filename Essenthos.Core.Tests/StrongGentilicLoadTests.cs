@@ -112,6 +112,26 @@ public sealed class StrongGentilicLoadTests : IDisposable
     }
 
     /// <summary>
+    /// A claim the parse has since learnt to read reaches a corpus that already holds the others, and
+    /// leaves the rows it holds as they were.
+    /// </summary>
+    [Fact]
+    public async Task AClaimTheParseLearntLaterIsAddedBesideTheOthers()
+    {
+        Entry("H4125", "patronymical from מוֹאָב (H4124);");
+        await _loader.Load();
+        var first = await _db.StrongGentilics.SingleAsync();
+        Entry("H1145", "a Jeminite; patron from בִּנְיָמִין (H1144);");
+
+        var outcome = await _loader.Load();
+
+        outcome.Claims.Should().Be(1);
+        (await _db.StrongGentilics.Select(g => g.StrongNumber).ToListAsync()).Should().BeEquivalentTo("H4125", "H1145");
+        (await _db.StrongGentilics.SingleAsync(g => g.StrongNumber == "H4125")).Id.Should().Be(first.Id);
+        (await _loader.Load()).AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>
     /// A name whose Strong column holds a list is a title of several words, and a people is not
     /// named after a title.
     /// </summary>
