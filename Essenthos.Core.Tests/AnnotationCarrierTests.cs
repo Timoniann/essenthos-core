@@ -39,7 +39,7 @@ public sealed class AnnotationCarrierTests : IDisposable
             _db,
             new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance),
             new ForeignNames(_db, NullLogger<ForeignNames>.Instance),
-            NullLogger<AnnotationCarrier>.Instance);
+            new EqualTwinNames(_db, NullLogger<EqualTwinNames>.Instance), NullLogger<AnnotationCarrier>.Instance);
 
         _hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
             (10, 13, ["מצרים", "לודים"]));

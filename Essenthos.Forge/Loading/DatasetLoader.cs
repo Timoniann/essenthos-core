@@ -387,6 +387,7 @@ internal sealed class DatasetLoader(
             new("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
             new("foreign-names", TakeBackTheNamesCarriedOntoAnothersName),
             new("consensus-namesakes", GiveTheConsensusNamesToTheBearerTheVerseNames),
+            new("edition-twins", NameTheSameWordInTheOtherEditions),
             new("spellings", CountHowEachTextSpellsEachName),
             new("lexicon-phrases", CountTheLexiconsPhrases),
             new("locations", cancellationToken => PutThePlacesOnTheMap(resources, cancellationToken)),
@@ -2138,6 +2139,24 @@ internal sealed class DatasetLoader(
         // The references were read off the words before these two steps changed any; read again, so
         // a verse is not left on the page of a man its words no longer name.
         if (foreignNamesWithdrawn + outcome.Given + outcome.Withdrawn > 0)
+        {
+            status.Record((await scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load(cancellationToken)).ToString());
+        }
+    }
+
+    /// <summary>
+    /// The name a word carries, given to the same word in another edition — Swete beside Brenton,
+    /// the Samaritan Pentateuch beside BHSA — where no pass named it. After every pass that names a
+    /// word, and the verses read again off the words if it changed any.
+    /// </summary>
+    private async Task NameTheSameWordInTheOtherEditions(CancellationToken cancellationToken)
+    {
+        status.Starting("the names of the same words in the other editions");
+
+        using var scope = services.CreateScope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<EqualTwinNames>().Load(cancellationToken);
+        status.Record(outcome.ToString());
+        if (outcome.Written + outcome.Withdrawn > 0)
         {
             status.Record((await scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load(cancellationToken)).ToString());
         }

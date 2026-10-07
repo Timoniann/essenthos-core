@@ -213,7 +213,7 @@ internal static class Annotating
     /// Greek by its numbers, or by its letters where an edition carries none. A pronoun is not among
     /// them.
     /// </summary>
-    private const string NeverAName =
+    internal const string NeverAName =
         """
         (CASE ht.language
             WHEN 'eng' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['all', 'a', 'an', 'the', 'of', 'and', 'to', 'in', 'at', 'by', 'for', 'from', 'with', 'into', 'unto', 'upon', 'when', 'then', 'that', 'as', 'but', 'or', 'nor', 'not', 'was', 'were', 'is', 'are', 'be', 'been', 'being', 'had', 'have', 'has', 'hath', 'did', 'do', 'doth', 'shall', 'will', 'should', 'would', 'also', 'there', 'thus', 'so', 'which', 'while'])
