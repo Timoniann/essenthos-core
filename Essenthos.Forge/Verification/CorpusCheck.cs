@@ -904,9 +904,110 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         var stranded = await Read(connection, StrandedSql, cancellationToken, reader => new Stranded(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), reader.GetFieldValue<string[]>(3)));
 
+        var variation = await TheVariation(connection, cancellationToken);
+
         return new CorpusMeasures(
             coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity, shared, unaligned,
-            stranded);
+            stranded, variation);
+    }
+
+    /// <summary>The editions whose places of variation are counted against each text they are joined to by their letters.</summary>
+    private static readonly string[] Varied = [SblgntTextSource.Slug];
+
+    /// <summary>
+    /// <see cref="Variation"/>: the words of the edition walked in order within each verse of the
+    /// frame, each with the position of the word it equals in the other edition. A unit opens on a
+    /// word with no equal after one that has one, and on a word whose equal does not follow the
+    /// previous word's — the other edition has words there this one has not — and at either end of a
+    /// verse whose first or last word is equal to something other than the other's first or last.
+    /// </summary>
+    private const string VariationSql =
+        """
+        WITH pairs AS (
+            SELECT DISTINCT l.from_text_id, l.to_text_id
+            FROM link l
+            JOIN provenance p ON p.id = l.provenance_id
+            JOIN text f ON f.id = l.from_text_id
+            WHERE p.source = @source AND f.slug = ANY(@texts)
+        ),
+        here AS (
+            SELECT pr.from_text_id, pr.to_text_id, r.canonical_book AS book, r.canonical_chapter AS chapter,
+                   r.canonical_verse AS verse, w.id,
+                   row_number() OVER (PARTITION BY pr.to_text_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
+                                      ORDER BY v.chapter_number, v.number, w.position) AS at
+            FROM pairs pr
+            JOIN word w ON w.text_id = pr.from_text_id
+            JOIN verse v ON v.id = w.verse_id
+            JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
+        ),
+        there AS (
+            SELECT pr.from_text_id, pr.to_text_id, r.canonical_book AS book, r.canonical_chapter AS chapter,
+                   r.canonical_verse AS verse, w.id,
+                   row_number() OVER (PARTITION BY pr.to_text_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
+                                      ORDER BY v.chapter_number, v.number, w.position) AS at
+            FROM pairs pr
+            JOIN word w ON w.text_id = pr.to_text_id
+            JOIN verse v ON v.id = w.verse_id
+            JOIN verse_reference r ON r.verse_id = v.id AND r.is_primary
+        ),
+        sizes AS (
+            SELECT to_text_id, book, chapter, verse, max(at) AS words
+            FROM there GROUP BY 1, 2, 3, 4
+        ),
+        same AS (
+            SELECT pr.to_text_id, f.word_id AS here_id, t.word_id AS there_id
+            FROM pairs pr
+            JOIN link l ON l.from_text_id = pr.from_text_id AND l.to_text_id = pr.to_text_id AND l.relation = 'equals'
+            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
+            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
+        ),
+        walked AS (
+            SELECT h.from_text_id, h.to_text_id, h.book, h.chapter, h.verse, sz.words, th.at AS partner,
+                   lag(th.at) OVER w AS previous_partner,
+                   lag(h.at) OVER w AS previous_at,
+                   lag(th.at IS NOT NULL) OVER w AS previous_same,
+                   lead(h.at) OVER w AS next_at
+            FROM here h
+            JOIN sizes sz ON sz.to_text_id = h.to_text_id AND sz.book = h.book AND sz.chapter = h.chapter AND sz.verse = h.verse
+            LEFT JOIN same s ON s.to_text_id = h.to_text_id AND s.here_id = h.id
+            LEFT JOIN there th ON th.to_text_id = h.to_text_id AND th.id = s.there_id
+            WINDOW w AS (PARTITION BY h.to_text_id, h.book, h.chapter, h.verse ORDER BY h.at)
+        ),
+        units AS (
+            SELECT from_text_id, to_text_id,
+                   count(*) FILTER (WHERE partner IS NULL AND (previous_at IS NULL OR previous_same))
+                 + count(*) FILTER (WHERE partner IS NOT NULL AND previous_same AND partner <> previous_partner + 1)
+                 + count(*) FILTER (WHERE partner IS NOT NULL AND previous_at IS NULL AND partner > 1)
+                 + count(*) FILTER (WHERE partner IS NOT NULL AND next_at IS NULL AND partner < words) AS units
+            FROM walked
+            GROUP BY from_text_id, to_text_id, book, chapter, verse
+        )
+        SELECT f.slug, t.slug, sum(u.units), count(*) FILTER (WHERE u.units > 0), count(*)
+        FROM units u
+        JOIN text f ON f.id = u.from_text_id
+        JOIN text t ON t.id = u.to_text_id
+        GROUP BY f.slug, t.slug
+        ORDER BY f.slug, t.slug
+        """;
+
+    private static async Task<IReadOnlyList<Variation>> TheVariation(
+        NpgsqlConnection connection,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(VariationSql, connection);
+        command.Parameters.AddWithValue("source", SeptuagintLinkLoader.Source);
+        command.Parameters.AddWithValue("texts", Varied);
+
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        var rows = new List<Variation>();
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            rows.Add(new Variation(
+                reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
+                (int)reader.GetInt64(4)));
+        }
+
+        return rows;
     }
 
     /// <summary>The edition Nestle voted, and the two of his three voters the corpus holds.</summary>

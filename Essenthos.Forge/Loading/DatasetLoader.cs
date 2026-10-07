@@ -49,6 +49,7 @@ internal sealed class DatasetLoader(
         new(SweteOldGreekTextSource.Slug, resources => SweteOldGreekTextSource.Read(Path.Combine(resources, "Swete"))),
         new(AlexandrinusTextSource.Slug, AlexandrinusTextSource.Read),
         .. CodexTextSource.All.Select(codex => KeyValuePair.Create<string, Func<string, TextSource>>(codex.Slug, codex.Read)),
+        new(SblgntTextSource.Slug, SblgntTextSource.Read),
         .. Door43TextSource.Definitions.Select(text => KeyValuePair.Create<string, Func<string, TextSource>>(
             text.Value.Slug, resources => Door43TextSource.Read(Path.Combine(resources, "Door43", text.Key)))),
         new(ClearBible.ClearBibleTextSource.OpenHausa,
@@ -202,6 +203,10 @@ internal sealed class DatasetLoader(
             Text(WestcottHortTextSource.Slug, "Westcott and Hort", () => WestcottHortTextSource.Read(
                 Path.Combine(resources, WestcottHortFolder))),
 
+            // A modern critical text decided apart from the Nestle line, read without the parsing
+            // MorphGNT lays over it, and so joined to the other editions by its letters alone.
+            Text(SblgntTextSource.Slug, SblgntTextSource.Definition.Name, () => SblgntTextSource.Read(resources)),
+
             // The one Greek witness that is neither critical nor Erasmian. It is loaded from the
             // same shape of file as the two above and carries a Strong number on every word, so it
             // needs no reader of its own beyond an alphabet and no aligner at all.
@@ -339,6 +344,7 @@ internal sealed class DatasetLoader(
             new("greek-witnesses", LinkTheGreekWitnesses),
             new("hebrew-witnesses", LinkTheHebrewWitnesses),
             new("septuagints", LinkTheTwoSeptuagints),
+            new("greek-editions", LinkTheGreekEditionsByTheirLetters),
             new("searchable-forms", GiveEveryWordASearchableForm),
             new("printed-forms", JoinTheWordsThatArePrintedTogether),
             new("interlinear", cancellationToken => LinkFromTheInterlinear(resources, cancellationToken)),
@@ -1013,6 +1019,23 @@ internal sealed class DatasetLoader(
             SweteOldGreekTextSource.Slug, SweteTextSource.Slug, cancellationToken));
         status.Record(await loader.Load(
             SweteOldGreekTextSource.Slug, SeptuagintTextSource.Slug, cancellationToken));
+    }
+
+    /// <summary>
+    /// The SBL Greek New Testament against Nestle 1904 and Scrivener, by the letters each prints
+    /// within each verse of the frame: it carries no Strong number to be joined by, and two editions
+    /// of one Greek sentence need none. The SBLGNT is the <c>from</c>, as the newly linked witness.
+    /// </summary>
+    private async Task LinkTheGreekEditionsByTheirLetters(CancellationToken cancellationToken)
+    {
+        status.Starting("the Greek editions joined by their letters");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SeptuagintLinkLoader>();
+        foreach (var against in (string[])[NestleTextSource.Slug, Sources.ScrivenerSlug])
+        {
+            status.Record(await loader.Load(SblgntTextSource.Slug, against, cancellationToken));
+        }
     }
 
     /// <summary>

@@ -33,6 +33,7 @@ internal static class TextCorpus
         CodexTextSource.Vaticanus.Definition,
         TischendorfTextSource.Definition,
         WestcottHortTextSource.Definition,
+        SblgntTextSource.Definition,
         TextusReceptusTextSource.Definition(Edition.Scrivener1894),
         TextusReceptusTextSource.Definition(Edition.Stephanus1550),
         ByzantineTextSource.Definition,

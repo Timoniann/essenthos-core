@@ -35,7 +35,7 @@ internal sealed record SeptuagintLinkOutcome(
 {
     public override string ToString() =>
         AlreadyLoaded
-            ? "the two Septuagints are already linked"
+            ? "the two editions are already linked"
             : $"{Links} links over {Addresses} shared addresses in {Elapsed}: {Identical} where the two " +
               $"editions write the same letters, {Differing} where they write the same word differently, " +
               $"{Expanded} the first prints and the second does not, {Omitted} the second prints and the " +

@@ -41,7 +41,7 @@ public sealed class TextProvenanceTests
     private static TextDefinition Of(string slug) => All.Single(definition => definition.Slug == slug);
 
     [Fact]
-    public void TheCorpusHoldsFiftyNineTexts() => All.Should().HaveCount(59);
+    public void TheCorpusHoldsSixtyTexts() => All.Should().HaveCount(60);
 
     /// <summary>
     /// Every text says what it is. A licence and a year identify a file, not an edition, and the

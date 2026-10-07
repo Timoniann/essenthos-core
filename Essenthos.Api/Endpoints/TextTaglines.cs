@@ -85,6 +85,11 @@ internal static class TextTaglines
                 "Олександрійський кодекс V століття, переписаний так, як його написав писар.",
                 "Der Codex Alexandrinus aus dem fünften Jahrhundert, so transkribiert, wie sein Schreiber ihn schrieb.",
                 "El Códice Alejandrino del siglo V, transcrito tal como lo escribió su copista."),
+            ["SBLGNT"] = Say(
+                "Holmes's critical Greek text of 2010, decided apart from the Nestle line.",
+                "Критичний грецький текст Голмса 2010 року, укладений незалежно від лінії Нестле.",
+                "Holmes' kritischer griechischer Text von 2010, unabhängig von der Nestle-Linie erstellt.",
+                "El texto griego crítico de Holmes de 2010, decidido al margen de la línea de Nestle."),
             ["SIN"] = Say(
                 "The fourth-century Codex Sinaiticus, its New Testament as its scribe wrote it.",
                 "Синайський кодекс IV століття — його Новий Заповіт так, як його написав писар.",

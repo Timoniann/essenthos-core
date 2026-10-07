@@ -199,6 +199,11 @@
     "files": 7,
     "sha256": "ce666d8c7b89f00fd0c5fbe2209373c852ab6db4fe8ade7602ba198432c9cfe0"
   },
+  "SBLGNT": {
+    "bytes": 1795210,
+    "files": 31,
+    "sha256": "c95b75b7ec55b4aaf147c2ccf8ed63fdbb97e528c1c17d59ee853d6c2609d89a"
+  },
   "STEPBible": {
     "bytes": 70208423,
     "files": 4,
