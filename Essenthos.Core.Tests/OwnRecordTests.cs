@@ -813,6 +813,52 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
+    /// Esau's wives of Genesis 36:2-3 are each a woman of her own, the words of the second list leave the
+    /// records of the first, and every record of the six names the other reading; Beeri is not Anah.
+    /// </summary>
+    [Fact]
+    public async Task EsausWivesOfTheSecondListAreWomenOfTheirOwnWhoNameTheOtherReading()
+    {
+        var file = SenseReadingFiles.UnsettledThirdRulings();
+        foreach (var held in new[] { "basemath", "judith", "mahalath" })
+        {
+            var record = _db.Entities.Single(e => e.Slug == held);
+            foreach (var ruling in file.Rulings.Where(r => r.Corrects == held))
+            {
+                _db.WordEntities.Add(new WordEntity
+                {
+                    WordId = _words[ruling.Word], EntityId = record.Id, Method = LinkMethod.ModelReading,
+                    Confidence = 0.8, Source = "a reading of the verse",
+                });
+            }
+        }
+
+        await _db.SaveChangesAsync();
+        await Load();
+
+        var wives = new Dictionary<string, string>
+        {
+            ["adah-wife-of-esau"] = "basemath", ["oholibamah-wife-of-esau"] = "judith", ["basemath-daughter-of-ishmael"] = "mahalath",
+        };
+        foreach (var (wife, first) in wives)
+        {
+            var record = await _db.Entities.SingleAsync(e => e.Slug == wife);
+            record.Notes.Should().Contain("the text does not say");
+            (await _db.EntityAlternatives.Where(a => a.EntityId == record.Id).Select(a => a.Alternative!.Slug).ToListAsync())
+                .Should().Equal(first);
+            var words = file.Rulings.Where(r => (r.Create?.Slug ?? r.Existing) == wife).Select(r => _words[r.Word]).ToList();
+            words.Should().HaveCountGreaterThan(3);
+            (await _db.WordEntities.Where(a => words.Contains(a.WordId)).Select(a => a.Entity!.Slug).Distinct().ToListAsync())
+                .Should().Equal(wife);
+            (await _db.Entities.SingleAsync(e => e.Slug == first)).Notes.Should().Contain("the text does not say");
+        }
+
+        var beeri = await _db.Entities.SingleAsync(e => e.Slug == "beeri");
+        beeri.Distinguisher.Should().NotContain("Anah");
+        beeri.Notes.Should().Contain("does not say");
+    }
+
+    /// <summary>
     /// Two captains of one name in one story, whose fathers the verses name differently: each is a
     /// record of his own, the word of Jeremiah 42:1 leaves the Maachathite's son, and both records say
     /// that whether they are one man is open.

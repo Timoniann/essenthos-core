@@ -1693,6 +1693,56 @@
         "JER 42:1"
       ],
       "why": "Jeremiah 42:1 is Jezaniah the son of Hoshaiah; whether he is the Maachathite's son of 2 Kings 25:23 and Jeremiah 40:8 the text does not settle, so he is held as a man of his own who says so."
+    },
+    {
+      "from": "basemath",
+      "to": "adah-wife-of-esau",
+      "name": null,
+      "verses": [
+        "GEN 36:2",
+        "GEN 36:4",
+        "GEN 36:10",
+        "GEN 36:12",
+        "GEN 36:16"
+      ],
+      "why": "Genesis 36:2-16 names Esau's wife Adah the daughter of Elon; whether she is the Bashemath of 26:34 the text does not say, so she is held as a woman of her own and each record names the other reading."
+    },
+    {
+      "from": "judith",
+      "to": "oholibamah-wife-of-esau",
+      "name": null,
+      "verses": [
+        "GEN 36:2",
+        "GEN 36:5",
+        "GEN 36:14",
+        "GEN 36:18",
+        "GEN 36:25"
+      ],
+      "why": "Genesis 36:2-25 names Esau's wife Aholibamah the daughter of Anah; whether she is Judith of 26:34 the text does not say, so she is held as a woman of her own and each record names the other reading."
+    },
+    {
+      "from": "mahalath",
+      "to": "basemath-daughter-of-ishmael",
+      "name": null,
+      "verses": [
+        "GEN 36:3",
+        "GEN 36:4",
+        "GEN 36:10",
+        "GEN 36:13",
+        "GEN 36:17"
+      ],
+      "why": "Genesis 36:3-17 names Esau's wife Bashemath Ishmael's daughter; whether she is Mahalath of 28:9 the text does not say, so she is held as a woman of her own and each record names the other reading."
+    },
+    {
+      "from": "anah",
+      "to": "anah-son-of-zibeon",
+      "name": null,
+      "verses": [
+        "GEN 36:24",
+        "GEN 36:25",
+        "1CH 1:41"
+      ],
+      "why": "Genesis 36:24-25 and 1 Chronicles 1:41 are Anah the son of Zibeon, whose children were Dishon and Aholibamah; Seir's son Anah is his uncle."
     }
   ]
 }

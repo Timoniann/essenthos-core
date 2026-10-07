@@ -77,6 +77,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecords.json" />
         <Content Remove="Loading\Encyclopedia\UnsettledRecordsSecond.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecordsSecond.json" />
+        <Content Remove="Loading\Encyclopedia\UnsettledRecordsThird.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecordsThird.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\GenealogyRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsSecond.json" />

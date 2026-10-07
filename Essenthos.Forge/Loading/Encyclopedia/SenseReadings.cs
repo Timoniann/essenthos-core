@@ -543,6 +543,14 @@ internal static class SenseReadingFiles
     public static OwnRecordRulings UnsettledSecondRulings() => Embedded<OwnRecordRulings>(UnsettledSecondResource);
 
     /// <summary>
+    /// Esau's wives, whom Genesis names twice in two lists that agree in one name and two fathers: each
+    /// woman of the second list is a record of her own that names the woman of the first she may be, and
+    /// Beeri is no longer said to be Anah.
+    /// </summary>
+    public static OwnRecordRulings UnsettledThirdRulings() =>
+        Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.UnsettledRecordsThird.json");
+
+    /// <summary>
     /// The occurrences in the genealogies a reading answered against the verse the genealogy repeats.
     /// </summary>
     public static OwnRecordRulings GenealogyRulings() => Embedded<OwnRecordRulings>(GenealogyResource);
@@ -614,6 +622,7 @@ internal static class SenseReadingFiles
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.OhienkoAdamRecords.json"),
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.SynodalChristBearerRecords.json"),
         Embedded<OwnRecordRulings>("Essenthos.Core.Loading.Encyclopedia.SeveralPeopleRecordsFifth.json"),
+        UnsettledThirdRulings(),
     ];
 
     private static T Embedded<T>(string name)
