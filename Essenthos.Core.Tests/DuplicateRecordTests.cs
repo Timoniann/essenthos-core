@@ -348,6 +348,37 @@ public sealed class DuplicateRecordTests : IDisposable
     }
 
     /// <summary>
+    /// A record a pass wrote again under an address already folded. The pair that folded the address
+    /// leaves a different record standing under it alone, and the address keeps arriving where it did;
+    /// the record that was folded before goes where it went the first time, writing no second address.
+    /// </summary>
+    [Fact]
+    public async Task ARecordWrittenAgainUnderAFoldedAddressIsNotFoldedAsTheAddressesOwner()
+    {
+        await _loader.Fold(List(("hilkiah-3", "hilkiah-6")));
+        Record("meshullam-16", "person:Meshullam_16", "a namesake");
+        await _db.SaveChangesAsync();
+        await _loader.Fold(List(("meshullam-15", "meshullam-16")));
+        var again = Record("meshullam-16", "person:Hilkiah_6", "son of Meshullam (NEH 11:11), written again");
+        await _db.SaveChangesAsync();
+
+        var byTheList = await _loader.Fold(List(("meshullam-15", "meshullam-16")));
+
+        byTheList.Folded.Should().Be(0);
+        byTheList.Missing.Should().Be(1);
+        (await _db.Entities.AnyAsync(e => e.Id == again.Id)).Should().BeTrue();
+
+        var byItsOwnFold = await _loader.Fold(List(("hilkiah-3", "meshullam-16")));
+
+        byItsOwnFold.Folded.Should().Be(1);
+        (await _db.Entities.AnyAsync(e => e.Id == again.Id)).Should().BeFalse();
+        var addresses = await _db.MergedRecords.AsNoTracking().ToDictionaryAsync(m => m.Slug, m => m.EntityId);
+        addresses.Should().HaveCount(2);
+        addresses["meshullam-16"].Should().Be(_meshullam.Id);
+        addresses["hilkiah-6"].Should().Be(_kept.Id);
+    }
+
+    /// <summary>
     /// A record folded into one that is itself folded later reaches the last of them, and so does
     /// its address.
     /// </summary>

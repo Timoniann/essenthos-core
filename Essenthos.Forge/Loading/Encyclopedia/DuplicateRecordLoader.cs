@@ -760,9 +760,15 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
             .Where(m => slugs.Contains(m.Slug))
             .Select(m => new { m.Slug, m.EntityId })
             .ToDictionaryAsync(m => m.Slug, m => m.EntityId, StringComparer.Ordinal, cancellationToken);
+        var sources = held.Values.Select(e => e.SourceId).ToList();
+        var foldedBefore = (await db.MergedRecords
+                .Where(m => sources.Contains(m.RecordSourceId))
+                .Select(m => new { m.RecordSourceId, m.EntityId })
+                .ToListAsync(cancellationToken))
+            .ToLookup(m => m.RecordSourceId, m => m.EntityId, StringComparer.Ordinal);
 
         int already = 0, missing = 0;
-        var folds = new List<(int Folded, int Kept, bool Across, MergedRecord Record)>();
+        var folds = new List<(int Folded, int Kept, bool Across, MergedRecord? Record)>();
         foreach (var merge in list.Merges)
         {
             if (!held.TryGetValue(merge.Folds, out var folded))
@@ -796,6 +802,28 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                 continue;
             }
 
+            // An address already folded that a record stands under again. The same record written
+            // again goes where it went the first time, and the address keeps arriving where it did;
+            // any other record under that address is not the one the pair is about.
+            if (gone.ContainsKey(merge.Folds))
+            {
+                if (foldedBefore[folded.SourceId].Contains(kept.Value))
+                {
+                    folds.Add((folded.Id, kept.Value, merge.AcrossKinds, null));
+                }
+                else
+                {
+                    missing++;
+                    logger.LogWarning(
+                        "The list of records written twice folds \"{Folds}\" into \"{Keeps}\". That address was " +
+                        "folded before, and the record now under it ({SourceId}) is another one, so it is left " +
+                        "alone. Find the pass that wrote a record under a folded address.",
+                        merge.Folds, merge.Keeps, folded.SourceId);
+                }
+
+                continue;
+            }
+
             folds.Add((folded.Id, kept.Value, merge.AcrossKinds, new MergedRecord
             {
                 Slug = folded.Slug,
@@ -823,7 +851,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
 
         // Written before the fold so an earlier fold into one of these follows it with the rest.
-        db.MergedRecords.AddRange(folds.Select(f => f.Record));
+        db.MergedRecords.AddRange(folds.Select(f => f.Record).OfType<MergedRecord>());
         await db.SaveChangesAsync(cancellationToken);
 
         await Annotating.Run(connection, transaction, Folding, cancellationToken,

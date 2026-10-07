@@ -382,8 +382,7 @@ internal sealed class PersonRegisterLoader(
 
         var byGroup = Grouped(held, groups);
 
-        var slugs = (await db.Entities.Select(e => e.Slug).ToListAsync(cancellationToken))
-            .ToHashSet(StringComparer.Ordinal);
+        var slugs = await Taken(cancellationToken);
 
         var made = new Dictionary<Entity, List<PersonRegisterRecord>>();
         var added = new List<Entity>();
@@ -705,18 +704,33 @@ internal sealed class PersonRegisterLoader(
             return new RegisterRematchOutcome(0, 0, 0, 0, started.Elapsed);
         }
 
+        var ours = records.Select(record => SourceIdOf(record.Key)).ToHashSet(StringComparer.Ordinal);
+        var foldedInto = (await db.MergedRecords
+                .Where(m => ours.Contains(m.RecordSourceId))
+                .Select(m => new { m.RecordSourceId, m.EntityId })
+                .ToListAsync(cancellationToken))
+            .GroupBy(m => m.RecordSourceId, StringComparer.Ordinal)
+            .ToDictionary(m => m.Key, m => m.First().EntityId, StringComparer.Ordinal);
+        var targets = foldedInto.Values.ToList();
+
         var people = await db.Entities
             .Where(e => e.Kind == EntityKind.Person
                         && (groups.Contains(e.Name)
-                            || e.Names.Any(n => n.Kind == ProperName && groups.Contains(n.Label))))
+                            || e.Names.Any(n => n.Kind == ProperName && groups.Contains(n.Label))
+                            || targets.Contains(e.Id)))
             .Include(e => e.Names)
             .Include(e => e.Verses)
             .Include(e => e.Claims)
             .AsSplitQuery()
             .ToListAsync(cancellationToken);
 
-        var ours = records.Select(record => SourceIdOf(record.Key)).ToHashSet(StringComparer.Ordinal);
         bool AddedHere(Entity person) => ours.Contains(person.SourceId);
+
+        // A record the register added and the list of records written twice folded is the man it was
+        // folded into, whatever the verses say now: a bearer the lexicon alone establishes shares no
+        // verse with anybody, and would otherwise be added again on every load.
+        Entity? Folded(PersonRegisterRecord record) =>
+            foldedInto.TryGetValue(SourceIdOf(record.Key), out var id) ? people.FirstOrDefault(p => p.Id == id) : null;
         var held = people.Where(person => !AddedHere(person)).OrderBy(person => person.Id).ToList();
         var byGroup = Grouped(held, groups);
 
@@ -744,8 +758,7 @@ internal sealed class PersonRegisterLoader(
         List<PersonRegisterRecord> On(Entity person) =>
             after.TryGetValue(person, out var on) ? on : after[person] = [];
 
-        var slugs = (await db.Entities.Select(e => e.Slug).ToListAsync(cancellationToken))
-            .ToHashSet(StringComparer.Ordinal);
+        var slugs = await Taken(cancellationToken);
         var folds = new List<(Entity Added, Entity Into, PersonRegisterRecord Record)>();
         var made = new Dictionary<Entity, List<PersonRegisterRecord>>();
         var unplaced = new List<(PersonRegisterRecord Record, Entity Into)>();
@@ -761,7 +774,7 @@ internal sealed class PersonRegisterLoader(
             foreach (var record in mine)
             {
                 var at = after.Where(pair => pair.Value.Contains(record)).Select(pair => pair.Key).ToList();
-                if (links.TryGetValue(record.Id, out var into))
+                if ((Folded(record) ?? links.GetValueOrDefault(record.Id)) is { } into)
                 {
                     if (at.Contains(into) || at.Any(person => !AddedHere(person) && Shares(person, record)))
                     {
@@ -942,6 +955,17 @@ internal sealed class PersonRegisterLoader(
         }
 
         return byGroup;
+    }
+
+    /// <summary>
+    /// Every address a new record may not take: the records held, and the ones folded into another,
+    /// whose address still arrives where it was folded.
+    /// </summary>
+    private async Task<HashSet<string>> Taken(CancellationToken cancellationToken)
+    {
+        var slugs = await db.Entities.Select(e => e.Slug).ToListAsync(cancellationToken);
+        var folded = await db.MergedRecords.Select(m => m.Slug).ToListAsync(cancellationToken);
+        return slugs.Concat(folded).ToHashSet(StringComparer.Ordinal);
     }
 
     /// <summary>A record for a bearer no held record is.</summary>

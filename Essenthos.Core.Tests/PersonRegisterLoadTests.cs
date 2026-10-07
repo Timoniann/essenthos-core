@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -583,6 +583,114 @@ public sealed class PersonRegisterLoadTests : IDisposable
         scribe.Verses.Select(v => v.CanonicalChapter).Should().OnlyContain(chapter => chapter == 13);
         scribe.Claims.Should().Contain(c => c.Source == Ours && c.Note!.StartsWith("Zadok #7, "));
         (await Person("zadok-3"))!.Claims.Single(c => c.Source == Ours).Note.Should().StartWith("Zadok #2, ");
+    }
+
+    /// <summary>
+    /// The register added Joshua son of Nun under the spelling Jeshua, on the lexicon alone, and the
+    /// list of records written twice folded that record into Joshua's. Matched again, the bearer shares
+    /// no verse with Joshua, since he has none, and is still the man he was folded into: nothing is
+    /// added, and the address a dataset's Levite was folded under stays his.
+    /// </summary>
+    [Fact]
+    public async Task A_bearer_the_list_folded_stays_on_the_record_it_was_folded_into()
+    {
+        await Jeshuas(recreated: false);
+
+        (await Load()).AlreadyLoaded.Should().BeTrue();
+
+        _db.ChangeTracker.Clear();
+        (await _db.Entities.AnyAsync(e => e.SourceId == "essenthos:jeshua1")).Should().BeFalse();
+        (await Person("jeshua-8")).Should().BeNull();
+        (await Person("joshua"))!.Claims.Single(c => c.Source == Ours).Note.Should().Contain("Jeshua #1, ");
+        (await _db.MergedRecords.CountAsync()).Should().Be(2);
+    }
+
+    /// <summary>
+    /// The corpus as a load left it before the fold was respected: the bearer added again under the
+    /// address the Levite was folded under. The next load folds him back into Joshua and leaves the
+    /// address arriving at the Levite.
+    /// </summary>
+    [Fact]
+    public async Task A_bearer_added_again_under_a_folded_address_goes_back_where_he_was_folded()
+    {
+        await Jeshuas(recreated: true);
+
+        await Load();
+
+        _db.ChangeTracker.Clear();
+        (await Person("jeshua-8")).Should().BeNull();
+        var joshua = (await Person("joshua"))!;
+        joshua.Claims.Single(c => c.Source == Ours && c.Method == LinkMethod.ModelReading)
+            .Note.Should().Contain("Jeshua #1, ");
+        var addresses = await _db.MergedRecords.AsNoTracking().ToListAsync();
+        addresses.Should().HaveCount(2);
+        addresses.Single(m => m.Slug == "jeshua-8").EntityId.Should().Be((await Person("jeshua-7"))!.Id);
+
+        var people = await _db.Entities.CountAsync();
+        await Load();
+        (await _db.Entities.CountAsync()).Should().Be(people, "a second load finds nothing to add or fold");
+        (await _db.MergedRecords.CountAsync()).Should().Be(2);
+    }
+
+    [Fact]
+    public async Task A_bearer_added_never_takes_the_address_of_a_folded_record()
+    {
+        _db.MergedRecords.Add(new MergedRecord
+        {
+            Slug = "zimri-3", EntityId = (await Person("zimri"))!.Id, Name = "Zimri",
+            RecordSourceId = "person:Zimri_3", RecordSource = Dataset, Method = LinkMethod.Manual,
+            Reason = "a test", Source = "a test",
+        });
+        await _db.SaveChangesAsync();
+        Register(Bearer(5, "An obscure name among the mingled people of Jeremiah", [], standing: "lexicon"));
+
+        (await Load()).Added.Should().Be(1);
+
+        (await Person("zimri-3")).Should().BeNull();
+        (await Person("zimri-4"))!.SourceId.Should().Be("essenthos:zimri5");
+    }
+
+    private async Task Jeshuas(bool recreated)
+    {
+        _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        Held("joshua", "Joshua", "person:Joshua_1", ["Joshua", "Jeshua"], [(6, 1, 1), (16, 8, 17)]);
+        Held("jeshua-3", "Jeshua", "person:Jeshua_3", ["Jeshua"], [(15, 3, 2), (16, 12, 26)]);
+        Held("jeshua-7", "Jeshua", "person:Jeshua_7", ["Jeshua"], [(16, 8, 7), (16, 12, 10)]);
+        await _db.SaveChangesAsync();
+        var sonOfNun = "Jeshua #1, \"son of Nun\" — no verse of this corpus tells him from his namesakes";
+        Claimed((await Person("joshua"))!,
+            "Joshua #1, \"son of Nun\" — 2 verses of this corpus print the name" + (recreated ? "" : "; " + sonOfNun));
+        Claimed((await Person("jeshua-3"))!, "Jeshua #2, \"the high priest\" — 2 verses of this corpus print the name");
+        Claimed((await Person("jeshua-7"))!, "Jeshua #5, \"a Levite\" — 1 verse of this corpus prints the name");
+        _db.MergedRecords.AddRange(
+            new MergedRecord
+            {
+                Slug = "jeshua-10", EntityId = (await Person("joshua"))!.Id, Name = "Jeshua",
+                RecordSourceId = "essenthos:jeshua1", RecordSource = Ours, Method = LinkMethod.Manual,
+                Reason = "the register's spelling of Joshua son of Nun", Source = "a test",
+            },
+            new MergedRecord
+            {
+                Slug = "jeshua-8", EntityId = (await Person("jeshua-7"))!.Id, Name = "Jeshua",
+                RecordSourceId = "person:Jeshua_8", RecordSource = Dataset, Method = LinkMethod.Manual,
+                Reason = "one assembly, one Jeshua", Source = "a test",
+            });
+        if (recreated)
+        {
+            _db.Entities.Add(new Entity
+            {
+                Kind = EntityKind.Person, Slug = "jeshua-8", Name = "Jeshua", SourceId = "essenthos:jeshua1",
+                Source = Ours, Names = [new EntityName { Label = "Jeshua", Kind = "proper name" }],
+                Claims = [new EntityClaim { Method = LinkMethod.ModelReading, Confidence = 0.7, Source = Ours, Note = sonOfNun }],
+            });
+        }
+
+        await _db.SaveChangesAsync();
+        Register(
+            Bearer(1, "son of Nun", [], standing: "lexicon", group: "Jeshua", name: "Jeshua"),
+            Bearer(2, "the high priest", ["EZR 3:2", "NEH 12:10", "NEH 12:26"], group: "Jeshua", name: "Jeshua"),
+            Bearer(5, "a Levite", ["NEH 8:7"], group: "Jeshua", name: "Jeshua"),
+            Bearer(1, "son of Nun", ["JOS 1:1", "NEH 8:17"], group: "Joshua", name: "Joshua"));
     }
 
     private void Claimed(Entity person, string note)
