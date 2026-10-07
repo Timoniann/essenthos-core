@@ -1309,6 +1309,9 @@ public class AppDbContext : DbContext
             {
                 t.HasCheckConstraint("ck_strong_reach_occurrences", "occurrences > 0");
                 t.HasCheckConstraint("ck_strong_reach_reached", "reached >= 0 AND reached <= occurrences");
+                t.HasCheckConstraint(
+                    "ck_strong_reach_renderings",
+                    "phrases >= 0 AND rendering_links >= 0 AND (renderings IS NULL OR renderings <= phrases)");
                 t.HasComment(
                     "How often a Strong number stands in the edition a text is counted over and how many of "
                     + "those places the text's links render, counted by the statements the entry page counts "

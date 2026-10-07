@@ -224,3 +224,27 @@ public class StrongEtymologyCorpusTests(ITestOutputHelper output)
         apart.Count.Should().BeLessThan(compiled.Roots.Count / 20);
     }
 }
+
+public class RenderingVarietyTests
+{
+    [Theory]
+    [InlineData("thy god", "god")]
+    [InlineData("of the gods", "god")]
+    [InlineData("and he said unto him", "said")]
+    [InlineData("him", "")]
+    [InlineData("the lord god", "lord god")]
+    public void An_english_phrase_is_counted_as_its_words_of_content(string phrase, string key)
+    {
+        var (grammar, stem) = Loading.RenderingVariety.For("eng")!.Value;
+
+        Loading.RenderingVariety.Key(phrase, grammar, stem).Should().Be(key);
+    }
+
+    [Fact]
+    public void A_ukrainian_pronoun_does_not_make_a_rendering_of_its_own()
+    {
+        var (grammar, stem) = Loading.RenderingVariety.For("ukr")!.Value;
+
+        Loading.RenderingVariety.Key("твій бог", grammar, stem).Should().Be(Loading.RenderingVariety.Key("бог", grammar, stem));
+    }
+}

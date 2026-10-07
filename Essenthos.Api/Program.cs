@@ -149,6 +149,7 @@ v1.MapVerses();
 v1.MapParallel();
 v1.MapDifferences();
 v1.MapStrong();
+v1.MapVariedRenderings();
 v1.MapRenderings();
 v1.MapLinkChecks();
 v1.MapSyntax();

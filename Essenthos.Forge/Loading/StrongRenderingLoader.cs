@@ -90,7 +90,7 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
         var texts = await db.Texts
             .Where(t => every || named.Contains(t.Slug))
             .OrderBy(t => t.Slug)
-            .Select(t => new { t.Id, t.Slug })
+            .Select(t => new { t.Id, t.Slug, t.Language })
             .ToListAsync(cancellationToken);
 
         int counted = 0, numbers = 0, renderings = 0;
@@ -110,12 +110,13 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
                 renderings += count.Renderings.Count;
             }
 
-            if (await Holds(text.Id, count, cancellationToken))
+            var variety = RenderingVariety.Count(text.Language, count.Everything);
+            if (await Holds(text.Id, count, variety, cancellationToken))
             {
                 continue;
             }
 
-            await Replace(text.Id, count, cancellationToken);
+            await Replace(text.Id, count, variety, cancellationToken);
             written = true;
             logger.LogInformation(
                 "Counted {Text}: {Renderings} phrases, {Numbers} numbers reached",
@@ -128,7 +129,11 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
     }
 
     /// <summary>Whether what is kept for the text is exactly what was counted.</summary>
-    private async Task<bool> Holds(int textId, StrongTextCount count, CancellationToken cancellationToken)
+    private async Task<bool> Holds(
+        int textId,
+        StrongTextCount count,
+        TextVariety variety,
+        CancellationToken cancellationToken)
     {
         var phrases = await db.StrongRenderings
             .Where(r => r.TextId == textId)
@@ -141,10 +146,11 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
 
         var reach = await db.StrongReaches
             .Where(r => r.TextId == textId)
-            .Select(r => new { r.StrongNumber, r.WitnessId, r.Occurrences, r.Reached })
+            .Select(r => new { r.StrongNumber, r.WitnessId, r.Occurrences, r.Reached, r.Phrases, r.Renderings, r.RenderingLinks })
             .ToListAsync(cancellationToken);
-        if (!reach.Select(r => (r.StrongNumber, r.WitnessId, r.Occurrences, r.Reached)).ToHashSet()
-                .SetEquals(count.Reach.Select(r => (r.Number, r.WitnessId, r.Occurrences, r.Reached))))
+        if (!reach.Select(r => (r.StrongNumber, r.WitnessId, r.Occurrences, r.Reached, new Variety(r.Phrases, r.Renderings, r.RenderingLinks)))
+                .ToHashSet()
+                .SetEquals(count.Reach.Select(r => (r.Number, r.WitnessId, r.Occurrences, r.Reached, variety.Of(r.Number)))))
         {
             return false;
         }
@@ -160,7 +166,11 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
     private static IEnumerable<(string Number, LinkMethod Method, int Links)> Methods(StrongTextCount count) =>
         count.Reach.SelectMany(r => r.Methods.Select(m => (r.Number, m.Method, m.Links)));
 
-    private async Task Replace(int textId, StrongTextCount count, CancellationToken cancellationToken)
+    private async Task Replace(
+        int textId,
+        StrongTextCount count,
+        TextVariety variety,
+        CancellationToken cancellationToken)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
@@ -188,7 +198,8 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
         }
 
         await using (var writer = await connection.BeginBinaryImportAsync(
-                         "COPY strong_reach (text_id, strong_number, witness_id, occurrences, reached) FROM STDIN (FORMAT BINARY)",
+                         "COPY strong_reach (text_id, strong_number, witness_id, occurrences, reached, phrases, renderings, rendering_links) " +
+                         "FROM STDIN (FORMAT BINARY)",
                          cancellationToken))
         {
             foreach (var row in count.Reach)
@@ -199,6 +210,18 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
                 await writer.WriteAsync(row.WitnessId, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(row.Occurrences, NpgsqlDbType.Integer, cancellationToken);
                 await writer.WriteAsync(row.Reached, NpgsqlDbType.Integer, cancellationToken);
+                var counted = variety.Of(row.Number);
+                await writer.WriteAsync(counted.Phrases, NpgsqlDbType.Integer, cancellationToken);
+                if (counted.Renderings is { } renderings)
+                {
+                    await writer.WriteAsync(renderings, NpgsqlDbType.Integer, cancellationToken);
+                }
+                else
+                {
+                    await writer.WriteNullAsync(cancellationToken);
+                }
+
+                await writer.WriteAsync(counted.RenderingLinks, NpgsqlDbType.Integer, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);

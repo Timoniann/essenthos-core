@@ -21,9 +21,14 @@ internal sealed record StrongReachCount(
     IReadOnlyList<(LinkMethod Method, int Links)> Methods);
 
 /// <summary>Everything the entry page says about how one text renders every number it renders.</summary>
+/// <param name="Renderings">The commonest <see cref="StrongRenderingCounts.Kept"/> phrases of each number, which are kept.</param>
+/// <param name="Everything">Every phrase of each number, which the variety of its renderings is counted from.</param>
 internal sealed record StrongTextCount(
     IReadOnlyList<StrongRenderingCount> Renderings,
-    IReadOnlyList<StrongReachCount> Reach);
+    IReadOnlyList<StrongReachCount> Reach)
+{
+    public IReadOnlyList<StrongRenderingCount> Everything { get; init; } = Renderings;
+}
 
 /// <summary>
 /// The whole phrase each link renders, not each word of it separately, and the commonest few of them
@@ -204,7 +209,7 @@ internal static class StrongRenderingCounts
             var command = new NpgsqlCommand(sql, connection);
             command.Parameters.AddWithValue("text", textId);
             command.Parameters.AddWithValue("witnesses", primary.Select(original => original.Id).ToArray());
-            command.Parameters.AddWithValue("take", Kept);
+            command.Parameters.AddWithValue("take", int.MaxValue);
             command.Parameters.AddWithValue("hebrew", hebrew);
             command.Parameters.AddWithValue("greek", greek);
             return command;
@@ -222,7 +227,7 @@ internal static class StrongRenderingCounts
             await using var reached = Command(Reached);
             await using var methods = Command(Methods);
 
-            var renderings = await Read(phrases, Phrase, cancellationToken);
+            var everything = await Read(phrases, Phrase, cancellationToken);
             var standing = await Read(occurrences, Tally, cancellationToken);
             var reach = (await Read(reached, Tally, cancellationToken)).ToDictionary(row => row.Number, row => row.Count);
             var made = (await Read(methods, reader => (
@@ -232,7 +237,7 @@ internal static class StrongRenderingCounts
                 .ToLookup(row => row.Number, row => (row.Method, row.Links));
 
             return new StrongTextCount(
-                renderings,
+                [.. everything.Where(row => row.Rank <= Kept)],
                 [
                     .. standing.Select(row => new StrongReachCount(
                         row.Number,
@@ -240,7 +245,10 @@ internal static class StrongRenderingCounts
                         row.Count,
                         reach.GetValueOrDefault(row.Number),
                         [.. Ordered(made[row.Number])])),
-                ]);
+                ])
+            {
+                Everything = everything,
+            };
         }
         finally
         {

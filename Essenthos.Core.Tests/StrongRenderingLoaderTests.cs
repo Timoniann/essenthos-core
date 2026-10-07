@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -96,6 +96,51 @@ public sealed class StrongRenderingLoaderTests : IDisposable
     }
 
     /// <summary>The startup pipeline runs on every load, and a load that counts the same writes nothing.</summary>
+    /// <summary>
+    /// <em>God</em> and <em>thy God</em> are one rendering of אֱלֹהִים: the pronoun is the Hebrew's
+    /// suffix, which the English spends a word on. Both links still count in the denominator.
+    /// </summary>
+    [Fact]
+    public async Task EachNumbersRenderingsAreCountedWithoutTheGrammarItsLanguageSpends()
+    {
+        await _loader.Load();
+
+        var reach = await _db.StrongReaches.AsNoTracking().OrderBy(r => r.StrongNumber)
+            .Select(r => new { r.StrongNumber, r.Phrases, r.Renderings, r.RenderingLinks })
+            .ToListAsync();
+        reach.Select(r => (r.StrongNumber, r.Phrases, r.Renderings, r.RenderingLinks))
+            .Should().Equal((Create, 1, (int?)1, 1), (God, 2, (int?)1, 2));
+    }
+
+    [Fact]
+    public async Task TheIndexRanksTheNumbersRenderedMostWaysOverTheLinksThatSayItAndHidesTheRest()
+    {
+        await _loader.Load();
+
+        var ranked = await VariedRenderingEndpoints.Page(_db, _english.Id, _english.Slug, null, 1, false, 0, 10, CancellationToken.None);
+
+        ranked.Counted.Should().BeTrue();
+        ranked.Items.Select(i => (i.StrongNumber, i.Renderings, i.RenderingLinks, i.Witness))
+            .Should().Equal((God, 1, 2, "BHSA"), (Create, 1, 1, "BHSA"));
+        ranked.Items[0].Commonest.Select(c => c.Text).Should().Contain("thy god");
+
+        var floored = await VariedRenderingEndpoints.Page(_db, _english.Id, _english.Slug, null, 2, false, 0, 10, CancellationToken.None);
+        floored.Items.Select(i => i.StrongNumber).Should().Equal(God);
+        floored.Total.Should().Be(1);
+    }
+
+    /// <summary>A language with no list of its grammar words is not counted, which is not a count of one.</summary>
+    [Fact]
+    public async Task ALanguageWithNoListOfItsGrammarIsNotCounted()
+    {
+        _english.Language = "xyz";
+        await _db.SaveChangesAsync();
+
+        await _loader.Load();
+
+        (await _db.StrongReaches.AsNoTracking().Select(r => r.Renderings).ToListAsync()).Should().OnlyContain(r => r == null);
+    }
+
     [Fact]
     public async Task ASecondLoadWritesNothing()
     {
