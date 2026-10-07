@@ -20,7 +20,8 @@ namespace Essenthos.Core.Swete;
 /// before καὶ τοὺς Ἀμορραίους, and the transcription lost the divisions with two of the words — the
 /// καὶ before τοὺς Ἀμορραίους and the τοὺς before Εὐαίους — which the page prints and Brenton reads.
 /// In Psalm 91 (vol. 2, 1896, p. 337) he prints 16 before τοῦ ἀναγγεῖλαι, where Brenton begins it too,
-/// and without it the psalm's last verse is its fifteenth.
+/// and without it the psalm's last verse is its fifteenth. And 3 Kingdoms 16:1 opens a chapter: the
+/// transcription ran its one line into 15:34 and kept only the chapter's number for the verse itself.
 /// </para>
 ///
 /// <para>
@@ -43,6 +44,8 @@ internal static class SweteDivisions
 
     private const string PsalterPage = "Swete, vol. 2 (Cambridge, 1896), p. 337";
 
+    private const string KingdomsPage = "Swete, vol. 1 (Cambridge, 1901), p. 718";
+
     private static readonly Dictionary<string, IReadOnlyList<EditionRepair>> Repairs = new()
     {
         ["01.Genesis"] =
@@ -59,6 +62,12 @@ internal static class SweteDivisions
         ["12.Regnorum_II"] =
         [
             EditionRepair.Divide(19, "42", "καὶ ἀπεκρίθη ἀνὴρ", "καὶ ἀπεκρίθη ἀνὴρ", "43", Figure),
+        ],
+        ["13.Regnorum_III"] =
+        [
+            EditionRepair.DivideInto(15, "34", "καὶ ἐγένετο λόγος Κυρίου", "καὶ ἐγένετο λόγος Κυρίου", 16, "1",
+                $"{KingdomsPage}, prints these words on the line its number XVI stands beside, between 15:34 and 16:2; "
+                + "the transcription closes 15:34 with that number and holds nothing else in 16:1, and Brenton begins 16:1 at them"),
         ],
         ["15.Paralipomenon_I"] =
         [

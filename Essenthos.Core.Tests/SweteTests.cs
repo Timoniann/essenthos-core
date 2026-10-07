@@ -164,7 +164,8 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(575995, "the 61 chapter numbers are not words, and Exodus 20:1 holds the page's eight in place of one");
+            .Should().Be(575783, "the 59 chapter numbers are not words, Exodus 20:1 and Numbers 17:1 and 19:1 hold the page's words in "
+                                  + "place of one, and the running head and apparatus read into Judges 18:8 and 1 Samuel 8:2 and 11:11 are not Swete's text");
     }
 
     /// <summary>
@@ -420,7 +421,7 @@ public class SweteFigureTests(Swete swete) : IClassFixture<Swete>
                     .Select(word => $"{book.CanonicalOrdinal} {chapter.Number}:{verse.Number} {word.Surface}"))))
             .ToList();
 
-        left.Should().HaveCount(8, string.Join("; ", left));
+        left.Should().HaveCount(7, string.Join("; ", left));
     }
 
     [Theory]

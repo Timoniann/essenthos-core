@@ -83,19 +83,20 @@ internal static class SweteRestorations
         "Modified: the duplicated Roman chapter XX marker at the end of Second Samuel 19:43 is omitted by Essenthos; the transcription also runs it into the first word of chapter 20.";
 
     /// <summary>
-    /// These, the corrections a rule settles, the words read back off the printed page, and the
-    /// chapter openings the transcription lost with their numeral, which are made the same way and in
-    /// this order: a page restoration names its place in the verse as the corrections leave it.
+    /// These, the corrections a rule settles, the words read back off the printed page, the chapter
+    /// openings the transcription lost with their numeral, and the verses settled one by one against the
+    /// page, which are made the same way and in this order: a page restoration names its place in the
+    /// verse as the corrections leave it.
     /// </summary>
     public static readonly IReadOnlyList<SweteRestoration> All =
-        [.. Lost(), .. SweteCorrections.All, .. SwetePage.All, .. Openings()];
+        [.. Lost(), .. SweteCorrections.All, .. SwetePage.All, .. Openings(), .. SweteSettled.All];
 
     /// <summary>
     /// The restorations as earlier passes made them, oldest first: the Genesis words alone, then with
     /// the letter corrections, then with the words read off the page, before the figures were taken
-    /// out, then before the lost chapter openings. A corpus restored by one of them reads as that set
-    /// and not as the transcription, and the pass carries it on to <see cref="All"/> rather than
-    /// refusing it.
+    /// out, then before the lost chapter openings, then before the verses settled one by one. A corpus
+    /// restored by one of them reads as that set and not as the transcription, and the pass carries it
+    /// on to <see cref="All"/> rather than refusing it.
     /// </summary>
     public static readonly IReadOnlyList<IReadOnlyList<SweteRestoration>> Earlier =
     [
@@ -103,6 +104,7 @@ internal static class SweteRestorations
         [.. Lost(), .. SweteCorrections.First],
         [.. Lost(), .. SweteCorrections.First, .. SwetePage.All],
         [.. Lost(), .. SweteCorrections.All, .. SwetePage.All],
+        [.. Lost(), .. SweteCorrections.All, .. SwetePage.All, .. Openings()],
     ];
 
     private static IReadOnlyList<SweteRestoration> Lost() =>
@@ -152,8 +154,8 @@ internal static class SweteRestorations
     /// <summary>
     /// A chapter's opening the transcription lost with the line its number is printed beside, so the
     /// verse holds the numeral and nothing else. Put back where the page prints the words and Brenton's
-    /// Greek reads them too. Numbers 17:1 and 19:1 lost theirs the same way, but the archive's reading of
-    /// those pages is illegible there, so they stay empty.
+    /// Greek reads them too. Numbers 17:1 and 19:1, which lost theirs the same way, are among
+    /// <see cref="SweteSettled"/>'s.
     /// </summary>
     private static IReadOnlyList<SweteRestoration> Openings() =>
     [

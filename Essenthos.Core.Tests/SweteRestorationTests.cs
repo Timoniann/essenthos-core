@@ -180,7 +180,8 @@ public sealed class SweteRestorationLoadTests : IDisposable
 
         var row = await _db.Texts.AsNoTracking().SingleAsync(t => t.Id == text.Id);
         row.RightsNote.Should().Be(
-            $"CC BY-SA 4.0. {SweteRestorations.Note} {SweteCorrections.Note} {SwetePage.Note} {SweteCorrections.FiguresNote}");
+            $"CC BY-SA 4.0. {SweteRestorations.Note} {SweteCorrections.Note} {SwetePage.Note} {SweteCorrections.FiguresNote} "
+            + SweteSettled.Note);
         var restored = await _db.Words.AsNoTracking().SingleAsync(w => w.TextId == text.Id && w.Surface == "πεντήκοντα"
                                                                        && w.Verse!.ChapterNumber == 9);
         restored.NormalisedText.Should().Be("πεντηκοντα", "a word written here is searchable at once");
@@ -336,7 +337,7 @@ public class SweteCorrectionTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void NoCorrectionIsMadeInAVerseRestoredByHand()
     {
-        var byHand = SweteRestorations.All.Except(SweteCorrections.All).Except(SwetePage.All)
+        var byHand = SweteRestorations.All.Except(SweteCorrections.All).Except(SwetePage.All).Except(SweteSettled.All)
             .Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).ToHashSet();
 
         SweteCorrections.All.Should().NotContain(c => byHand.Contains(ValueTuple.Create(c.Book, c.Chapter, c.Verse, c.Label)));
@@ -464,7 +465,7 @@ public sealed class SweteCorrectionLoadTests : IDisposable
         var boundaries = new EditionBoundaryRepairLoader(_db);
         var taken = await boundaries.Load(TestResources.Folder(string.Empty));
         _output.WriteLine(taken.ToString());
-        taken.RemovedWords.Should().Be(61);
+        taken.RemovedWords.Should().Be(59);
         taken.RewrittenWords.Should().Be(3);
         var numbered = marked.Books.SelectMany(b => b.Chapters.SelectMany(c => c.Verses.Select(v => (b, c, v))))
             .Select(x => (x.b.CanonicalOrdinal, x.c.Number, x.v.Number, x.v.Label, Marked: x.v.Words,
@@ -472,7 +473,7 @@ public sealed class SweteCorrectionLoadTests : IDisposable
                     .Verses.Single(v => v.Number == x.v.Number && v.Label == x.v.Label).Words))
             .Where(x => !x.Marked.SequenceEqual(x.Cold))
             .ToList();
-        numbered.Should().HaveCount(64);
+        numbered.Should().HaveCount(61);
         foreach (var (canonical, chapter, verse, label, _, expected) in numbered)
         {
             (await _db.Words.AsNoTracking()

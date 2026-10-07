@@ -43,6 +43,11 @@ internal sealed record EditionRepair(
         int chapter, string verse, string digitised, string printed, string toVerse, string why) =>
         new(EditionRepairKind.Divide, chapter, verse, digitised, printed, (chapter, toVerse), why);
 
+    /// <summary>A division whose words open the next chapter rather than a verse of their own one.</summary>
+    public static EditionRepair DivideInto(
+        int chapter, string verse, string digitised, string printed, int toChapter, string toVerse, string why) =>
+        new(EditionRepairKind.Divide, chapter, verse, digitised, printed, (toChapter, toVerse), why);
+
     public static EditionRepair Replace(int chapter, string verse, string digitised, string printed, string why) =>
         new(EditionRepairKind.Replace, chapter, verse, digitised, printed, default, why);
 
