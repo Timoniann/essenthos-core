@@ -262,7 +262,7 @@ function Arguments($passage) {
 }
 
 # One passage, waited for; its wall seconds.
-function Measure($passage) {
+function MeasurePassage($passage) {
     $name = $passage[0]
     $prefix = Join-Path $directory $name
     $arguments = Arguments $passage
@@ -323,7 +323,7 @@ try {
         foreach ($passage in $passages[$set]) {
             $name = $passage[0]
             $prefix = Join-Path $directory $name
-            $seconds = if ($FromReports) { 0 } elseif ($Parallel) { $measured[$name] } else { Measure $passage }
+            $seconds = if ($FromReports) { 0 } elseif ($Parallel) { $measured[$name] } else { MeasurePassage $passage }
             $total.Seconds += $seconds
             '{0,-10} wall {1:N1}s' -f $name, $seconds
             foreach ($match in (Select-String -LiteralPath "$prefix.report.txt" -Pattern $line)) {
