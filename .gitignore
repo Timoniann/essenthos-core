@@ -221,3 +221,4 @@ scripts/__pycache__/
 /.rehearsal/
 deploy/.env
 deploy/.env.*
+.worktrees/
