@@ -29,6 +29,8 @@ internal static class TextCorpus
         SweteOldGreekTextSource.Definition,
         OttleyTextSource.Definition,
         AlexandrinusTextSource.Definition,
+        CodexTextSource.Sinaiticus.Definition,
+        CodexTextSource.Vaticanus.Definition,
         TischendorfTextSource.Definition,
         WestcottHortTextSource.Definition,
         TextusReceptusTextSource.Definition(Edition.Scrivener1894),

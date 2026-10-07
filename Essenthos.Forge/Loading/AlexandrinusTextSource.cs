@@ -128,7 +128,7 @@ internal static class AlexandrinusTextSource
     public static TextSource Read(string resources)
     {
         var folder = Path.Combine(resources, Folder);
-        var transcription = Path.Combine(folder, NtvmrTranscription.File);
+        var transcription = Path.Combine(folder, NtvmrTranscription.Alexandrinus.File);
         if (!File.Exists(transcription))
         {
             throw new InvalidOperationException(
@@ -152,7 +152,7 @@ internal static class AlexandrinusTextSource
             books.Add(Book(canonical, books.Count + 1, SweteAlexandrinus.Read(folder, work)));
         }
 
-        books.AddRange(NtvmrTranscription.Books(transcription, books.Count + 1));
+        books.AddRange(NtvmrTranscription.Books(transcription, books.Count + 1, NtvmrTranscription.Alexandrinus));
         return new TextSource(Definition, books);
     }
 

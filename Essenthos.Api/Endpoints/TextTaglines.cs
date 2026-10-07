@@ -85,6 +85,16 @@ internal static class TextTaglines
                 "Олександрійський кодекс V століття, переписаний так, як його написав писар.",
                 "Der Codex Alexandrinus aus dem fünften Jahrhundert, so transkribiert, wie sein Schreiber ihn schrieb.",
                 "El Códice Alejandrino del siglo V, transcrito tal como lo escribió su copista."),
+            ["SIN"] = Say(
+                "The fourth-century Codex Sinaiticus, its New Testament as its scribe wrote it.",
+                "Синайський кодекс IV століття — його Новий Заповіт так, як його написав писар.",
+                "Der Codex Sinaiticus aus dem vierten Jahrhundert, sein Neues Testament, wie sein Schreiber es schrieb.",
+                "El Códice Sinaítico del siglo IV, su Nuevo Testamento tal como lo escribió su copista."),
+            ["VAT"] = Say(
+                "The fourth-century Codex Vaticanus, its New Testament as far as the codex survives.",
+                "Ватиканський кодекс IV століття — його Новий Заповіт, наскільки кодекс зберігся.",
+                "Der Codex Vaticanus aus dem vierten Jahrhundert, sein Neues Testament, soweit der Kodex erhalten ist.",
+                "El Códice Vaticano del siglo IV, su Nuevo Testamento hasta donde se conserva el códice."),
             ["KJV"] = Say(
                 "The English Bible of 1611, in the modern standard text, with the Apocrypha.",
                 "Англійська Біблія 1611 року в сучасному стандартному тексті, з апокрифами.",

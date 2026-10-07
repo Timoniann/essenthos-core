@@ -173,10 +173,10 @@ public class AlexandrinusTests
     [Fact]
     public void ALabelNeitherFormNorRepairIsRefused()
     {
-        var act = () => NtvmrTranscription.Address("Rom.1.1");
+        var act = () => NtvmrTranscription.Address("Rom.1.1", NtvmrTranscription.Alexandrinus);
 
         act.Should().Throw<InvalidOperationException>().WithMessage("*CNTR*");
-        NtvmrTranscription.Address("B02KInscriptioV0").Should().BeNull();
-        NtvmrTranscription.Address("Heb.subscriptio").Should().BeNull();
+        NtvmrTranscription.Address("B02KInscriptioV0", NtvmrTranscription.Alexandrinus).Should().BeNull();
+        NtvmrTranscription.Address("Heb.subscriptio", NtvmrTranscription.Alexandrinus).Should().BeNull();
     }
 }

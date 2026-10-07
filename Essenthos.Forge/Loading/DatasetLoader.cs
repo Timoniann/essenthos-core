@@ -48,6 +48,7 @@ internal sealed class DatasetLoader(
         new(SweteTextSource.Slug, resources => SweteTextSource.Read(Path.Combine(resources, "Swete"))),
         new(SweteOldGreekTextSource.Slug, resources => SweteOldGreekTextSource.Read(Path.Combine(resources, "Swete"))),
         new(AlexandrinusTextSource.Slug, AlexandrinusTextSource.Read),
+        .. CodexTextSource.All.Select(codex => KeyValuePair.Create<string, Func<string, TextSource>>(codex.Slug, codex.Read)),
         .. Door43TextSource.Definitions.Select(text => KeyValuePair.Create<string, Func<string, TextSource>>(
             text.Value.Slug, resources => Door43TextSource.Read(Path.Combine(resources, "Door43", text.Key)))),
         new(ClearBible.ClearBibleTextSource.OpenHausa,
@@ -230,6 +231,9 @@ internal sealed class DatasetLoader(
             // Testament, and the Old Testament where a printing gives its own text.
             Text(AlexandrinusTextSource.Slug, AlexandrinusTextSource.Definition.Name,
                 () => AlexandrinusTextSource.Read(resources)),
+
+            // The other two great codices, as far as their New Testaments survive transcribed.
+            .. CodexTextSource.All.Select(codex => Text(codex.Slug, codex.Definition.Name, () => codex.Read(resources))),
 
             // The Torah as the Samaritan community transmitted it, which is the first text here
             // that disagrees with BHSA about the Hebrew rather than about a translation of it.

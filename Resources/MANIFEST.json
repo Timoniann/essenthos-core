@@ -239,6 +239,11 @@
     "files": 53,
     "sha256": "4e797384dcc7916fdd54d58dcb730853af3994d9d62a238d7fb6d4558fed83c8"
   },
+  "Sinaiticus": {
+    "bytes": 5526188,
+    "files": 4,
+    "sha256": "1de31c5cb442cb26642b632f6558ff15a0cea32c7ab1b0aabbf41ef165f07a89"
+  },
   "Strong": {
     "bytes": 9072609,
     "files": 2,
@@ -298,6 +303,11 @@
     "bytes": 7822806,
     "files": 67,
     "sha256": "fa9ac5dbc91f682346afa650ee064883d656a2e57ad5cd1f0d51fd4165cb3988"
+  },
+  "Vaticanus": {
+    "bytes": 4866260,
+    "files": 4,
+    "sha256": "a019d4449e3196759272a363d4c73fcdfec4c26ef6f81736f40acfbd657e899c"
   },
   "Versification": {
     "bytes": 5790928,
