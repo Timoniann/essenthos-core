@@ -91,9 +91,10 @@ public readonly record struct StatedGentilic(
 public static partial class GentilicDerivations
 {
     /// <summary>
-    /// The clause. Both words appear in four spellings across the dictionary — <em>patronymic</em>,
-    /// <em>patronymical</em>, <em>patronymically</em>, <em>patrial</em> — and either may be joined
-    /// to the other by <em>or</em> before the origin is named.
+    /// The clause. Both words appear in five spellings across the dictionary — <em>patronymic</em>,
+    /// <em>patronymical</em>, <em>patronymically</em>, his abbreviation <em>patron</em>
+    /// (<em>patron from בִּנְיָמִין</em>, the Benjamite) and <em>patrial</em> — and either may be
+    /// joined to the other by <em>or</em> before the origin is named.
     ///
     /// The Hebrew is required rather than allowed. Strong writes the origin as its own word and
     /// then its number, and every derivation that instead describes the origin in English —
@@ -101,8 +102,8 @@ public static partial class GentilicDerivations
     /// in the line belongs to something other than the ancestor.
     /// </summary>
     [GeneratedRegex(
-        "(?<kind>patronymically|patronymical|patronymic|patrial)" +
-        @"(?:\s+or\s+(?<second>patronymically|patronymical|patronymic|patrial))?" +
+        @"(?<kind>patronymically|patronymical|patronymic|patron\b|patrial)" +
+        @"(?:\s+or\s+(?<second>patronymically|patronymical|patronymic|patron\b|patrial))?" +
         @"\s+(?:from|of)\s+" +
         @"(?<origin>[\p{IsHebrew}\uFB1D-\uFB4F]+(?:[\s\u05BE]+[\p{IsHebrew}\uFB1D-\uFB4F]+)*)" +
         @"\s*\(\s*(?<number>H[0-9]+)\s*\)",
@@ -116,7 +117,7 @@ public static partial class GentilicDerivations
     [GeneratedRegex(@"\b(?:probabl|perhaps|apparentl|possibl|seem)", RegexOptions.IgnoreCase)]
     private static partial Regex Hedge();
 
-    [GeneratedRegex("patronymic|patrial", RegexOptions.IgnoreCase)]
+    [GeneratedRegex(@"patronymic|patron\b|patrial", RegexOptions.IgnoreCase)]
     private static partial Regex Gentilic();
 
     /// <summary>Whether the entry claims to be a gentilic at all, however it goes on to say it.</summary>
