@@ -111,7 +111,10 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
                 added.AddRange(verse.Added);
             }
 
-            var adding = added.Distinct().ToList();
+            var rejected = await RejectedRenderings.Locate(connection, cancellationToken);
+            var adding = added.Distinct()
+                .Where(pair => !rejected.Contains((pair.From, pair.To)) && !rejected.Contains((pair.To, pair.From)))
+                .ToList();
             var report = new StringBuilder()
                 .AppendLine(whole.Outcome(fromSlug, toSlug, "every verse read").ToString());
             if (chapters.Count > 0)

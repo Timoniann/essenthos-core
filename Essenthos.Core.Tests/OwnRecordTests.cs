@@ -134,7 +134,8 @@ public sealed class OwnRecordTests : IDisposable
         named.Should().OnlyContain(a => a.Method == LinkMethod.Manual && a.Confidence == null);
         var ids = named.Select(a => a.Id).Order().ToArray();
         var carrier = new AnnotationCarrier(_db,
-            new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance), NullLogger<AnnotationCarrier>.Instance);
+            new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance),
+            new ForeignNames(_db, NullLogger<ForeignNames>.Instance), NullLogger<AnnotationCarrier>.Instance);
         await carrier.Carry();
         (await _db.WordEntities.Where(a => a.WordId == greek.Id).Select(a => a.EntityId).ToArrayAsync())
             .Should().Equal(satan.Id);
@@ -314,6 +315,7 @@ public sealed class OwnRecordTests : IDisposable
         (await _db.WordEntities.SingleAsync(a => a.WordId == namesake.Id)).EntityId.Should().Be(otherEliakim.Id);
         var carrier = new AnnotationCarrier(_db,
             new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance),
+            new ForeignNames(_db, NullLogger<ForeignNames>.Instance),
             NullLogger<AnnotationCarrier>.Instance);
         await carrier.Carry();
         (await _db.WordEntities.AnyAsync(a => a.WordId == greek.Id && a.EntityId == king.Id))

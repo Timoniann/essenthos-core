@@ -48,7 +48,7 @@ public sealed class RejectedRenderingTests : IDisposable
     }
 
     [Fact]
-    public async Task AdmissionRejectsAllThreePairingsAndTheirReverseButKeepsOtherCorrespondences()
+    public async Task AdmissionRejectsEveryListedPairingAndItsReverseButKeepsOtherCorrespondences()
     {
         await db.Database.OpenConnectionAsync();
         var rejected = RejectedRenderings.All.Select(r => Draft(words[r.From], words[r.To])).ToArray();
@@ -89,7 +89,7 @@ public sealed class RejectedRenderingTests : IDisposable
         var kept = await db.Links.Where(l => l.Method == LinkMethod.StrongNumber).Select(l => l.Id).ToArrayAsync();
         var preserved = await db.WordEntities.Where(a => a.Note == "independent seed").Select(a => a.Id).ToArrayAsync();
 
-        (await RejectedRenderings.Withdraw(db)).Should().Be(new RejectedRenderingOutcome(3, 2));
+        (await RejectedRenderings.Withdraw(db)).Should().Be(new RejectedRenderingOutcome(4, 2));
         (await db.Links.Select(l => l.Id).ToArrayAsync()).Should().BeEquivalentTo(kept);
         (await db.WordEntities.Select(a => a.Id).ToArrayAsync()).Should().BeEquivalentTo(preserved);
         (await RejectedRenderings.Withdraw(db)).Should().Be(new RejectedRenderingOutcome(0, 0));
@@ -149,6 +149,21 @@ public sealed class RejectedRenderingTests : IDisposable
         await db.Database.OpenConnectionAsync();
         var locate = () => RejectedRenderings.Locate((NpgsqlConnection)db.Database.GetDbConnection(), CancellationToken.None);
         await locate.Should().ThrowAsync<InvalidDataException>().WithMessage("*no longer names its ruled words*");
+    }
+
+    [Fact]
+    public async Task EachWordOfARejectedPairIsLookedForAtItsOwnTextsAddress()
+    {
+        var russian = new RuledWord("RUSV", "PSA 9:22", 3, "Христа");
+        var greek = new RuledWord("GRCBRENT", "PSA 10:1", 2, "Σατανᾶν");
+        var placed = db.Place([russian, greek]);
+        await db.SaveChangesAsync();
+        await db.Database.OpenConnectionAsync();
+
+        var found = await RejectedRenderings.Locate((NpgsqlConnection)db.Database.GetDbConnection(),
+            [new RejectedRendering(russian, greek, "a test")], CancellationToken.None);
+
+        found.Should().Equal((placed[russian].Id, placed[greek].Id));
     }
 
     private static NewLink Draft(Word from, Word to) => new(from.TextId, to.TextId, LinkRelation.Renders,

@@ -704,6 +704,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                   AND ev.canonical_verse = r.canonical_verse
              WHERE r.verse_id = w.verse_id AND r.is_primary) AS named) agreed
          WHERE {GreekNoun} AND {Unspoken}
+           AND coalesce(({GreekTribeNameLoader.Answer("w")}) = resolved.entity_id, TRUE)
          ON CONFLICT (word_id) DO NOTHING
          """;
 
@@ -779,6 +780,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </para>
     ///
     /// <para>
+    /// The fifth is the Greek resolution on a name the phrase settles: one standing after the word
+    /// for a tribe, or after a land, a border, a city or a king, where <see cref="GreekTribeNameLoader"/>
+    /// names another record than the number does. The number names whoever the encyclopedia happens
+    /// to give it — King Manasseh for the tribe of Revelation 7:6 — and the phrase says who is meant;
+    /// where the two agree, as Reuben's number and his tribe do, the resolution stands.
+    /// </para>
+    ///
+    /// <para>
     /// One statement, inside the pass's own transaction. <c>ExecuteDelete</c> commits on its own
     /// and would leave the corpus half-withdrawn if anything after it failed.
     /// </para>
@@ -827,6 +836,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                AND NOT EXISTS (SELECT 1 FROM resolvable
                                WHERE resolvable.number = w.strong_number
                                  AND resolvable.entity_id = a.entity_id)
+             UNION
+             SELECT a.word_id, a.entity_id
+             FROM word_entity a
+             JOIN word w ON w.id = a.word_id
+             JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
+             WHERE a.source = ANY(@greek)
+               AND coalesce(a.note, '') NOT LIKE @carried
+               AND ({GreekTribeNameLoader.Answer("w")}) <> a.entity_id
          ),
          carried AS (
              SELECT other.word_id, seed.entity_id

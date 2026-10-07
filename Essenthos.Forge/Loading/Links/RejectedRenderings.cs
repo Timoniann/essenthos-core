@@ -24,38 +24,58 @@ internal static class RejectedRenderings
             "Codex, 2026-10-05: the Synodal adds Christ after Jesus; Satan is separately named at position 2."),
         new(new("RUSV", "1CO 5:5", 15, "Христа"), new("TR1894", "1CO 5:5", 5, "σατανα"),
             "Codex, 2026-10-05: Scrivener omits Christ here and names Satan earlier in the verse."),
+        new(new("RUSV", "1CO 5:5", 15, "Христа"), new("KJV", "1CO 5:5", 7, "Satan"),
+            "Claude, 2026-10-06: the King James's Satan is the Synodal's сатане at position 2; Христа is Christ."),
     ];
 
+    /// <summary>
+    /// Both words of every rejected pair, each at the address its own text numbers it by: the two
+    /// texts need not number a verse alike, so the second word is never looked for at the first's.
+    /// </summary>
     private const string Located =
         """
         SELECT x.n, ft.id, tt.id, f.id, f.text, z.id, z.text
-        FROM unnest(@from_texts, @to_texts, @books, @chapters, @verses, @from_positions, @to_positions)
-             WITH ORDINALITY x(fs, ts, b, c, v, fp, tp, n)
+        FROM unnest(@from_texts, @from_books, @from_chapters, @from_verses, @from_labels, @from_positions,
+                    @to_texts, @to_books, @to_chapters, @to_verses, @to_labels, @to_positions)
+             WITH ORDINALITY x(fs, fb, fc, fv, fl, fp, ts, tb, tc, tv, tl, tp, n)
         LEFT JOIN text ft ON ft.slug = x.fs LEFT JOIN text tt ON tt.slug = x.ts
-        LEFT JOIN book fb ON fb.text_id = ft.id AND fb.canonical_ordinal = x.b
-        LEFT JOIN book tb ON tb.text_id = tt.id AND tb.canonical_ordinal = x.b
-        LEFT JOIN verse fv ON fv.book_id = fb.id AND fv.chapter_number = x.c AND fv.number = x.v AND fv.label = ''
-        LEFT JOIN verse tv ON tv.book_id = tb.id AND tv.chapter_number = x.c AND tv.number = x.v AND tv.label = ''
-        LEFT JOIN word f ON f.verse_id = fv.id AND f.position = x.fp
-        LEFT JOIN word z ON z.verse_id = tv.id AND z.position = x.tp
+        LEFT JOIN book fbk ON fbk.text_id = ft.id AND fbk.canonical_ordinal = x.fb
+        LEFT JOIN book tbk ON tbk.text_id = tt.id AND tbk.canonical_ordinal = x.tb
+        LEFT JOIN verse fve ON fve.book_id = fbk.id AND fve.chapter_number = x.fc AND fve.number = x.fv AND fve.label = x.fl
+        LEFT JOIN verse tve ON tve.book_id = tbk.id AND tve.chapter_number = x.tc AND tve.number = x.tv AND tve.label = x.tl
+        LEFT JOIN word f ON f.verse_id = fve.id AND f.position = x.fp
+        LEFT JOIN word z ON z.verse_id = tve.id AND z.position = x.tp
         """;
 
     internal static async Task<HashSet<(long From, long To)>> Locate(
-        NpgsqlConnection connection, CancellationToken cancellationToken)
+        NpgsqlConnection connection, CancellationToken cancellationToken) =>
+        await Locate(connection, All, cancellationToken);
+
+    internal static async Task<HashSet<(long From, long To)>> Locate(
+        NpgsqlConnection connection, IReadOnlyList<RejectedRendering> rejected, CancellationToken cancellationToken)
     {
+        var from = rejected.Select(r => r.From.Address()
+            ?? throw new InvalidDataException($"The rejected rendering names no verse: {r.From}.")).ToArray();
+        var to = rejected.Select(r => r.To.Address()
+            ?? throw new InvalidDataException($"The rejected rendering names no verse: {r.To}.")).ToArray();
         await using var command = new NpgsqlCommand(Located, connection);
-        command.Parameters.AddWithValue("from_texts", All.Select(r => r.From.Text).ToArray());
-        command.Parameters.AddWithValue("to_texts", All.Select(r => r.To.Text).ToArray());
-        command.Parameters.AddWithValue("books", All.Select(r => r.From.Address()!.Value.Book).ToArray());
-        command.Parameters.AddWithValue("chapters", All.Select(r => r.From.Address()!.Value.Chapter).ToArray());
-        command.Parameters.AddWithValue("verses", All.Select(r => r.From.Address()!.Value.Verse).ToArray());
-        command.Parameters.AddWithValue("from_positions", All.Select(r => r.From.Position).ToArray());
-        command.Parameters.AddWithValue("to_positions", All.Select(r => r.To.Position).ToArray());
+        command.Parameters.AddWithValue("from_texts", rejected.Select(r => r.From.Text).ToArray());
+        command.Parameters.AddWithValue("from_books", from.Select(a => a.Book).ToArray());
+        command.Parameters.AddWithValue("from_chapters", from.Select(a => a.Chapter).ToArray());
+        command.Parameters.AddWithValue("from_verses", from.Select(a => a.Verse).ToArray());
+        command.Parameters.AddWithValue("from_labels", from.Select(a => a.Label).ToArray());
+        command.Parameters.AddWithValue("from_positions", rejected.Select(r => r.From.Position).ToArray());
+        command.Parameters.AddWithValue("to_texts", rejected.Select(r => r.To.Text).ToArray());
+        command.Parameters.AddWithValue("to_books", to.Select(a => a.Book).ToArray());
+        command.Parameters.AddWithValue("to_chapters", to.Select(a => a.Chapter).ToArray());
+        command.Parameters.AddWithValue("to_verses", to.Select(a => a.Verse).ToArray());
+        command.Parameters.AddWithValue("to_labels", to.Select(a => a.Label).ToArray());
+        command.Parameters.AddWithValue("to_positions", rejected.Select(r => r.To.Position).ToArray());
         var found = new HashSet<(long, long)>();
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
         while (await reader.ReadAsync(cancellationToken))
         {
-            var ruling = All[(int)reader.GetInt64(0) - 1];
+            var ruling = rejected[(int)reader.GetInt64(0) - 1];
             if (reader.IsDBNull(1) || reader.IsDBNull(2)) continue;
             if (reader.IsDBNull(3) || reader.IsDBNull(5)
                 || reader.GetString(4) != ruling.From.Surface || reader.GetString(6) != ruling.To.Surface)

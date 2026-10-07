@@ -62,7 +62,11 @@ internal static class Annotations
             .Where(a => ids.Contains(a.WordId))
             .Select(a => new Claimed(
                 a.WordId, a.Method, a.Confidence, a.Source, a.Note,
-                a.Entity!.Kind, a.Entity.Slug, a.Entity.Name) { EntityId = a.EntityId })
+                a.Entity!.Kind, a.Entity.Slug, a.Entity.Name)
+            {
+                EntityId = a.EntityId,
+                Held = a.Claims.Where(c => c.Method != LinkMethod.StatedBySource).Select(c => c.Method).Distinct().ToList(),
+            })
             .ToListAsync(cancellationToken);
 
         var settled = Settle(rows, await Bearers(db, rows, cancellationToken));
@@ -200,6 +204,13 @@ internal static class Annotations
     private static readonly Regex Leading =
         new(@"^([HG]\d+),", RegexOptions.CultureInvariant);
 
+    /// <summary>
+    /// What the annotations the verses' consensus writes are credited to: a word named because the
+    /// text prints it in most of a record's verses. It is an inference about the text, not a reading
+    /// of the word, and stands with the carried answers rather than above them.
+    /// </summary>
+    internal const string Consensus = "Essenthos, read from the verses that name it";
+
     /// <summary>The kind a record's own name has, as against its titles and epithets.</summary>
     private const string ProperName = "proper name";
 
@@ -232,6 +243,8 @@ internal static class Annotations
                         annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name)
                     {
                         EntityId = annotation.EntityId,
+                        Held = annotation.Claims.Where(c => c.Method != LinkMethod.StatedBySource)
+                            .Select(c => c.Method).Distinct().ToList(),
                     },
                 })
             .ToListAsync(cancellationToken);
@@ -280,6 +293,8 @@ internal static class Annotations
                         annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name)
                     {
                         EntityId = annotation.EntityId,
+                        Held = annotation.Claims.Where(c => c.Method != LinkMethod.StatedBySource)
+                            .Select(c => c.Method).Distinct().ToList(),
                     },
                 })
             .ToListAsync(cancellationToken);
@@ -323,11 +338,18 @@ internal static class Annotations
         (await AllOf(db, wordId, cancellationToken)).FirstOrDefault();
 
     /// <summary>
-    /// The answer per word, or none where the strongest two disagree. Ordered by standing first and
-    /// by confidence within it, so a hand correction beats a resolution however sure the resolution
-    /// was — the standing is what the method knew before it started, and no confidence can make a
-    /// guess into a reading. Where standing and confidence are both equal the record that is not a
-    /// title stands first, so the order is the same on every read.
+    /// The answer per word, or none where the strongest two disagree. What was read of the word
+    /// itself comes before anything the links carried onto it from a word of another text, whatever
+    /// method made either: a carried answer is only as good as the correspondence it crossed, and
+    /// Romans 16:20 shows what that costs when an aligner pairs <em>Христа</em> with
+    /// <em>Σατανᾶν</em>. The verses' consensus (<see cref="Consensus"/>) is not a reading of the
+    /// word and does not come first: where it disagrees with a carried answer, the measured
+    /// cases are namesakes it confused, and the carried ruling was right. Then by standing and by confidence within it, so a hand correction beats a
+    /// resolution however sure the resolution was — the standing is what the method knew before it
+    /// started — an answer's standing is that of its strongest claim, so a ruling that arrived at an
+    /// answer a resolution had already written stands as a ruling — and no confidence can make a
+    /// guess into a reading. Where all three are equal the
+    /// record that is not a title stands first, so the order is the same on every read.
     ///
     /// <para>
     /// With that answer come the records that stand beside it (<see cref="Beside"/>) and no others:
@@ -345,7 +367,8 @@ internal static class Annotations
             {
                 group.Key,
                 Ranked = group
-                    .OrderByDescending(row => ClaimStanding.Of(row.Method))
+                    .OrderByDescending(row => row.ReadHere)
+                    .ThenByDescending(row => row.Standing)
                     .ThenByDescending(row => row.Confidence ?? 1)
                     .ThenBy(row => row.Kind == EntityKind.Title)
                     .ThenBy(row => EnumSpelling.Of(row.Kind), StringComparer.Ordinal)
@@ -364,7 +387,8 @@ internal static class Annotations
 
     private static bool Disputed(Claimed best, Claimed next) =>
         best.Slug != next.Slug
-        && ClaimStanding.Of(best.Method) == ClaimStanding.Of(next.Method)
+        && best.ReadHere == next.ReadHere
+        && best.Standing == next.Standing
         && (best.Confidence ?? 1) == (next.Confidence ?? 1);
 
     /// <summary>
@@ -398,5 +422,20 @@ internal static class Annotations
     {
         /// <summary>The record's row, which is what a title's bearers and a record's names are joined by.</summary>
         public int EntityId { get; init; }
+
+        /// <summary>
+        /// The methods of the claims the answer holds, other than a source's testimony about the
+        /// verse: a ruling that arrived at an answer the word already had is one of them.
+        /// </summary>
+        public IReadOnlyList<LinkMethod> Held { get; init; } = [];
+
+        /// <summary>The standing of the strongest of the answer's own method and its claims'.</summary>
+        public int Standing => Held.Select(ClaimStanding.Of).Append(ClaimStanding.Of(Method)).Max();
+
+        /// <summary>
+        /// Whether this answer was read of this word, rather than carried here by the links from a
+        /// word of another text or inferred from what the text's verses share across the book.
+        /// </summary>
+        public bool ReadHere => Note?.StartsWith("through ", StringComparison.Ordinal) != true && Source != Consensus;
     }
 }

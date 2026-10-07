@@ -384,6 +384,8 @@ internal sealed class DatasetLoader(
             new("crossed-names", CrossBackTheNamesGivenToEachOther),
             new("relationship-verses", ListTheVersesTheRelationshipsWereReadFrom),
             new("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
+            new("foreign-names", TakeBackTheNamesCarriedOntoAnothersName),
+            new("consensus-namesakes", GiveTheConsensusNamesToTheBearerTheVerseNames),
             new("spellings", CountHowEachTextSpellsEachName),
             new("lexicon-phrases", CountTheLexiconsPhrases),
             new("locations", cancellationToken => PutThePlacesOnTheMap(resources, cancellationToken)),
@@ -1902,11 +1904,12 @@ internal sealed class DatasetLoader(
     /// </summary>
     private async Task NameTheTribesTheConstructNames(CancellationToken cancellationToken)
     {
-        status.Starting("the tribes the Hebrew construct names");
+        status.Starting("the tribes the Hebrew and the Greek constructs name");
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<TribeNameLoader>();
         status.Record(await loader.Load(cancellationToken));
+        status.Record((await scope.ServiceProvider.GetRequiredService<GreekTribeNameLoader>().Load(cancellationToken)).ToString());
     }
 
     /// <summary>
@@ -2090,6 +2093,46 @@ internal sealed class DatasetLoader(
             cancellationToken: cancellationToken);
         logger.LogInformation("\n{Report}", report);
         status.Record("the words the verses naming each entity share, annotated where nothing else named them");
+    }
+
+    /// <summary>
+    /// A person's name the links carried onto a word the text writes as somebody else's. After every
+    /// pass that carries a name, because the record whose name the word is may reach it only later —
+    /// the titles are written after the names — and before the spellings are counted, so that Satan
+    /// is not counted as spelled <em>Христа</em>.
+    /// </summary>
+    private async Task TakeBackTheNamesCarriedOntoAnothersName(CancellationToken cancellationToken)
+    {
+        status.Starting("the names carried onto another's name");
+
+        using var scope = services.CreateScope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<ForeignNames>().Withdraw(cancellationToken);
+        foreignNamesWithdrawn = outcome.Withdrawn;
+        status.Record(outcome.ToString());
+    }
+
+    /// <summary>What the foreign-names step took back in this run, which the verse references are read again for.</summary>
+    private int foreignNamesWithdrawn;
+
+    /// <summary>
+    /// A name the verses' consensus wrote for one man where the verse's own readings name another man
+    /// of that name. After the consensus, and before the spellings are counted; the verse references
+    /// are read again if this or the foreign-names step changed a word.
+    /// </summary>
+    private async Task GiveTheConsensusNamesToTheBearerTheVerseNames(CancellationToken cancellationToken)
+    {
+        status.Starting("the consensus's names the verse gives another bearer");
+
+        using var scope = services.CreateScope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<ConsensusNamesakes>().Load(cancellationToken);
+        status.Record(outcome.ToString());
+
+        // The references were read off the words before these two steps changed any; read again, so
+        // a verse is not left on the page of a man its words no longer name.
+        if (foreignNamesWithdrawn + outcome.Given + outcome.Withdrawn > 0)
+        {
+            status.Record((await scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load(cancellationToken)).ToString());
+        }
     }
 
     /// <summary>
