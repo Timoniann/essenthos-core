@@ -376,12 +376,12 @@ internal sealed class DatasetLoader(
             new("own-references", CiteTheVersesOurOwnWordsName),
             new("misfiled-verses", cancellationToken => GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, cancellationToken)),
             new("descriptors", cancellationToken => DescribeTheEntitiesInOurOwnWords(resources, cancellationToken)),
-            new("own-relationships", RelateTheEntitiesOurOwnClausesRelate),
             new("name-forms", cancellationToken => DeclineTheNamesThoseLinesName(resources, cancellationToken)),
             new("fold-records", FoldTheRecordsWrittenTwice),
             new("settled-names", SayAgainWhichWordNamesWhom),
             new("own-lines", RenderOurOwnLinesInEveryLanguage),
             new("refiled-ties", MoveWhatWasReadOffTheMisfiledVerses),
+            new("own-relationships", RelateTheEntitiesOurOwnClausesRelate),
             new("crossed-names", CrossBackTheNamesGivenToEachOther),
             new("relationship-verses", ListTheVersesTheRelationshipsWereReadFrom),
             new("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
@@ -1839,8 +1839,10 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// The relationships an entity page draws, read off the clauses the step above loaded.
-    /// Immediately after it, because it reads nothing else.
+    /// The relationships an entity page draws, read off the clauses. After every step that moves a
+    /// clause — the fold, which takes a record of another kind's clauses away and says a repeated
+    /// one once, and the verses filed under the wrong man — so the rows follow the clauses as they
+    /// end up, and before anything lists the verses the relationships were read from.
     /// </summary>
     private async Task RelateTheEntitiesOurOwnClausesRelate(CancellationToken cancellationToken)
     {

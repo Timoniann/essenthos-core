@@ -73,6 +73,17 @@ public sealed class DatasetLoaderStepTests : IDisposable
             "crossed-names", "name-consensus", "spellings", "verify");
     }
 
+    /// <summary>
+    /// The relationships are read off the clauses after every step that moves a clause, and before
+    /// the verses they were read from are listed.
+    /// </summary>
+    [Fact]
+    public void TheRelationshipsAreReadOffTheClausesWhereTheyEndUp()
+    {
+        Loader().StepNames().Should().ContainInOrder(
+            "descriptors", "fold-records", "refiled-ties", "own-relationships", "relationship-verses");
+    }
+
     [Fact]
     public async Task AStepThatIsNotThereIsRefusedBeforeAnythingRuns()
     {

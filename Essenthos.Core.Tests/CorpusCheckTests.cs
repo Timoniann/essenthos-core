@@ -1,4 +1,5 @@
-﻿using Essenthos.Core.Database;
+﻿using Essenthos.Core.Corpus;
+using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Verbs;
@@ -483,6 +484,46 @@ public sealed class CorpusCheckTests : IDisposable
         _db.SaveChanges();
 
         (await Integrity("verse links saying again what another link of the same pair says")).Should().Be(1);
+    }
+
+    /// <summary>
+    /// A relationship read from Scripture stands on a clause of the same two records, relation and
+    /// verse. One whose clause is gone, and one saying again what another says, are each counted.
+    /// </summary>
+    [Fact]
+    public async Task ARelationshipNoClauseStatesAndOneWrittenTwiceAreCounted()
+    {
+        const string check = "relationships read from Scripture that no clause states, or that say again what another says";
+        const string source = Sources.DescriptorReadingPrefix + " a test, asked 2026-09-10";
+        Entity Person(string slug) => new() { Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test" };
+        var amorites = Person("amorites");
+        var canaan = Person("canaan");
+        var deborah = Person("deborah");
+        var rebekah = Person("rebekah");
+        _db.Entities.AddRange(amorites, canaan, deborah, rebekah);
+        _db.SaveChanges();
+        EntityRelationship Row(Entity from, Entity to, string type) => new()
+        {
+            FromEntityId = from.Id, ToEntityId = to.Id, Type = type, Category = RelationshipCategories.Read,
+            CanonicalBook = 1, CanonicalChapter = 10, CanonicalVerse = 16,
+            Method = LinkMethod.ModelReading, Confidence = 0.9, Source = source,
+        };
+        _db.EntityDescriptors.Add(new EntityDescriptor
+        {
+            EntityId = deborah.Id, Ordinal = 1, Relation = DescriptorRelations.ServantOf, TargetEntityId = rebekah.Id,
+            CanonicalBook = 1, CanonicalChapter = 10, CanonicalVerse = 16,
+            Method = LinkMethod.ModelReading, Confidence = 0.9, Source = source,
+        });
+        _db.EntityRelationships.Add(Row(deborah, rebekah, DescriptorRelations.ServantOf));
+        _db.SaveChanges();
+
+        (await Integrity(check)).Should().Be(0);
+
+        _db.EntityRelationships.Add(Row(amorites, canaan, DescriptorRelations.SonOf));
+        _db.EntityRelationships.Add(Row(deborah, rebekah, DescriptorRelations.ServantOf));
+        _db.SaveChanges();
+
+        (await Integrity(check)).Should().Be(2);
     }
 
     private void VerseLink(string source) =>

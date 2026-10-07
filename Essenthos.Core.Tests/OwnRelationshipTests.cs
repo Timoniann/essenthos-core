@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -155,7 +155,7 @@ public sealed class OwnRelationshipTests : IDisposable
         Clause(one, two, DescriptorRelations.SonOf, 0.9);
         Clause(one, two, DescriptorRelations.DescendantOf, 0.9);
 
-        var outcome = await Load();
+        var outcome = await _loader.Load([], default);
         outcome.Written.Should().Be(0);
         outcome.Disputed.Should().Be(1);
     }
@@ -197,8 +197,8 @@ public sealed class OwnRelationshipTests : IDisposable
     }
 
     /// <summary>
-    /// A reading the list names is not written, and what else the record says is. Its record is read
-    /// on every load while it has no other row, and the reading stays unwritten each time.
+    /// A reading the list names is not written, and what else the record says is. Every clause is
+    /// read on every load, and the reading stays unwritten each time.
     /// </summary>
     [Fact]
     public async Task AReadingTheListNamesIsHeldBack()
@@ -225,7 +225,7 @@ public sealed class OwnRelationshipTests : IDisposable
 
         var again = await _loader.Load(held, default);
         again.AlreadyLoaded.Should().BeTrue();
-        again.Held.Should().Be(1, "Elioenai has no row, so his clause is read again and held again");
+        again.Held.Should().Be(2, "both clauses are read again and held again");
         (await _db.EntityRelationships.CountAsync()).Should().Be(1);
     }
 
@@ -292,6 +292,75 @@ public sealed class OwnRelationshipTests : IDisposable
         var abraham = Person("abraham");
         Clause(abraham, haran, DescriptorRelations.BrotherOf, 0.9);
         (await Load()).Written.Should().Be(1);
+    }
+
+    /// <summary>
+    /// The Amorite was read as Canaan's son, and the record was folded into the people, which takes
+    /// the clause away: the relationship read off it goes with it, and one the clause still states
+    /// stays the row it was.
+    /// </summary>
+    [Fact]
+    public async Task ARelationshipNoClauseStatesAnyMoreIsWithdrawn()
+    {
+        var amorites = Person("amorites");
+        var canaan = Person("canaan");
+        var gilead = Person("gilead");
+        Clause(amorites, canaan, DescriptorRelations.SonOf, 0.9);
+        Clause(amorites, gilead, DescriptorRelations.LivedIn, 0.65);
+        await Load();
+        var kept = await _db.EntityRelationships.AsNoTracking().SingleAsync(r => r.ToEntityId == gilead.Id);
+        await _db.EntityDescriptors.Where(d => d.TargetEntityId == canaan.Id).ExecuteDeleteAsync();
+
+        var outcome = await Load();
+
+        outcome.Withdrawn.Should().Be(1);
+        outcome.Written.Should().Be(0);
+        (await _db.EntityRelationships.AsNoTracking().SingleAsync()).Id.Should().Be(kept.Id);
+    }
+
+    /// <summary>A relationship standing twice is said once, and the first row is the one that stays.</summary>
+    [Fact]
+    public async Task ARelationshipWrittenTwiceIsSaidOnce()
+    {
+        var deborah = Person("deborah");
+        var rebekah = Person("rebekah");
+        Clause(deborah, rebekah, DescriptorRelations.ServantOf, 0.9);
+        await Load();
+        var first = await _db.EntityRelationships.AsNoTracking().SingleAsync();
+        _db.EntityRelationships.Add(new EntityRelationship
+        {
+            FromEntityId = first.FromEntityId, ToEntityId = first.ToEntityId, Type = first.Type,
+            Category = first.Category, CanonicalBook = first.CanonicalBook,
+            CanonicalChapter = first.CanonicalChapter, CanonicalVerse = first.CanonicalVerse,
+            Method = first.Method, Confidence = first.Confidence, Source = first.Source,
+        });
+        await _db.SaveChangesAsync();
+
+        (await Load()).Withdrawn.Should().Be(1);
+
+        (await _db.EntityRelationships.AsNoTracking().SingleAsync()).Id.Should().Be(first.Id);
+    }
+
+    /// <summary>
+    /// A clause moved to the verse that says it moves the relationship read off it: Seraiah's father
+    /// is cited where the clause cites him, not where the row was first read.
+    /// </summary>
+    [Fact]
+    public async Task ARelationshipFollowsItsClauseToAnotherVerse()
+    {
+        var azariah = Person("azariah");
+        var seraiah = Person("seraiah");
+        Clause(azariah, seraiah, DescriptorRelations.FatherOf, 0.9);
+        await Load();
+        await _db.EntityDescriptors.ExecuteUpdateAsync(d => d.SetProperty(x => x.CanonicalBook, 15)
+            .SetProperty(x => x.CanonicalChapter, 7).SetProperty(x => x.CanonicalVerse, 1));
+
+        var outcome = await Load();
+
+        (outcome.Written, outcome.Withdrawn).Should().Be((1, 1));
+        var row = await _db.EntityRelationships.AsNoTracking().SingleAsync();
+        (row.CanonicalBook, row.CanonicalChapter, row.CanonicalVerse).Should().Be((15, 7, 1));
+        (await _loader.Load([], default)).AlreadyLoaded.Should().BeTrue();
     }
 
     /// <summary>
