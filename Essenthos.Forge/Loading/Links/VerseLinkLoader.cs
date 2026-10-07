@@ -556,39 +556,55 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
         foreach (var pair in pairs)
         {
-            if (await db.VerseLinks.AnyAsync(
-                    link => link.FromTextId == pair.FromTextId && link.ToTextId == pair.ToTextId
-                            && link.Method == LinkMethod.ModelReading,
-                    cancellationToken))
-            {
-                continue;
-            }
-
-            var there = await Addressed(addresses, pair.ToTextId, cancellationToken);
-            var components = new List<(Component Verses, double Confidence)>();
-            foreach (var line in GeezVerseMap.Lines)
-            {
-                var from = line.From
-                    .Select(verse => own.GetValueOrDefault((line.Book, verse.Chapter, verse.Verse)))
-                    .Where(id => id != 0)
-                    .ToList();
-                var to = line.To
-                    .Where(address => GeezTextSource.Aligns(slugs[pair.ToTextId], address.Book, address.Chapter, address.Verse))
-                    .SelectMany(address => there.GetValueOrDefault(address) ?? [])
+            // A book read is joined once; a book whose reading came later is joined beside the ones before.
+            var read = (await db.VerseLinkVerses
+                    .Where(side => side.Side == LinkSide.From && side.VerseLink!.FromTextId == pair.FromTextId
+                                   && side.VerseLink.ToTextId == pair.ToTextId
+                                   && side.VerseLink.Method == LinkMethod.ModelReading)
+                    .Select(side => side.Verse!.Book!.CanonicalOrdinal)
                     .Distinct()
-                    .ToList();
-                if (from.Count > 0 && to.Count > 0)
-                {
-                    components.Add((new Component(from, to), line.Confidence));
-                }
+                    .ToListAsync(cancellationToken))
+                .ToHashSet();
+            var there = await Addressed(addresses, pair.ToTextId, cancellationToken);
+            foreach (var book in GeezVerseMap.Lines.Select(line => line.Book).Distinct().Where(book => !read.Contains(book)))
+            {
+                written += await Mapped(pair, book, own, there, slugs, cancellationToken);
             }
-
-            await Write(pair.FromTextId, pair.ToTextId, [.. components.Select(c => c.Verses)], cancellationToken,
-                new MappedVerses([.. components.Select(c => c.Confidence)], GeezVerseMap.Source));
-            written += components.Count;
         }
 
         return written;
+    }
+
+    /// <summary>The verse links one Ge'ez book's lines of the map draw for one pair.</summary>
+    private async Task<int> Mapped(
+        (int FromTextId, int ToTextId) pair,
+        int book,
+        Dictionary<(int, int, int), int> own,
+        Dictionary<(int, int, int), List<int>> there,
+        Dictionary<int, string> slugs,
+        CancellationToken cancellationToken)
+    {
+        var components = new List<(Component Verses, double Confidence)>();
+        foreach (var line in GeezVerseMap.Lines.Where(line => line.Book == book))
+        {
+            var from = line.From
+                .Select(verse => own.GetValueOrDefault((line.Book, verse.Chapter, verse.Verse)))
+                .Where(id => id != 0)
+                .ToList();
+            var to = line.To
+                .Where(address => GeezTextSource.Aligns(slugs[pair.ToTextId], address.Book, address.Chapter, address.Verse))
+                .SelectMany(address => there.GetValueOrDefault(address) ?? [])
+                .Distinct()
+                .ToList();
+            if (from.Count > 0 && to.Count > 0)
+            {
+                components.Add((new Component(from, to), line.Confidence));
+            }
+        }
+
+        await Write(pair.FromTextId, pair.ToTextId, [.. components.Select(c => c.Verses)], cancellationToken,
+            new MappedVerses([.. components.Select(c => c.Confidence)], GeezVerseMap.SourceOf(book)));
+        return components.Count;
     }
 
     /// <summary>How a set of verse links was established, where it is not the frame's statement.</summary>

@@ -125,6 +125,50 @@ public sealed class GeezVerseLinkTests : IDisposable
         (await _db.VerseLinks.CountAsync()).Should().Be(links.Count, "a second load reads the map again and adds nothing");
     }
 
+    /// <summary>
+    /// A corpus joined before the Song was read keeps its other readings as they are, and the Song's
+    /// lines are joined beside them, under the name of the model that read them.
+    /// </summary>
+    [Fact]
+    public async Task ABookReadLaterIsJoinedBesideTheBooksReadBefore()
+    {
+        const int Song = 22;
+        var geez = GeezTextSource.Read(TestResources.Folder(GeezTextSource.Folder));
+        await Load(new TextSource(geez.Definition,
+            [.. geez.Books.Where(book => book.CanonicalOrdinal is LetterOfJeremiah or Song)
+                .Select(book => book with { Chapters = [book.Chapters[0]] })]));
+        await Load(Tiny(SeptuagintTextSource.Definition(), (LetterOfJeremiah, 73), (Song, 17)));
+
+        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var placer = new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance);
+        foreach (var text in await _db.Texts.ToListAsync())
+        {
+            await placer.Place(text, rules);
+        }
+
+        var loader = new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance);
+        await loader.Load();
+        var letter = await _db.VerseLinks.Where(link => link.Source == GeezVerseMap.Source).Select(link => link.Id).ToListAsync();
+        await _db.VerseLinks.Where(link => link.Source == GeezVerseMap.WisdomSource).ExecuteDeleteAsync();
+
+        await loader.Load();
+
+        var song = await _db.VerseLinks
+            .Where(link => link.Source == GeezVerseMap.WisdomSource)
+            .Select(link => new
+            {
+                link.Method,
+                Books = link.Verses.Select(member => member.Verse!.Book!.CanonicalOrdinal).Distinct().ToList(),
+            })
+            .ToListAsync();
+        song.Should().NotBeEmpty().And.OnlyContain(link => link.Method == LinkMethod.ModelReading && link.Books.Single() == Song);
+        (await _db.VerseLinks.Where(link => link.Source == GeezVerseMap.Source).Select(link => link.Id).ToListAsync())
+            .Should().BeEquivalentTo(letter, "the readings already joined are not drawn again");
+        (await _db.VerseLinks.CountAsync(link => link.Method == LinkMethod.StatedBySource
+                                                 && link.Verses.Any(member => member.Verse!.Book!.CanonicalOrdinal == Song)))
+            .Should().Be(0, "the Song's frame rows are not its correspondence");
+    }
+
     private async Task Load(TextSource source) =>
         await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance).Load(source);
 

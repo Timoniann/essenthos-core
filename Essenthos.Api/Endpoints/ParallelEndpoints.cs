@@ -6,10 +6,12 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Endpoints;
 
 /// <param name="Alignment">
-/// How this pane's verse was paired with the row. Every pairing now goes through the shared frame,
-/// so it is always <c>original-verse</c> where there is a verse at all — the contract's name for
-/// "a recorded mapping said so" rather than "the numbers matched". Pairing by number is what showed
-/// two different passages in two panes, and it is no longer possible here.
+/// How this pane's verse was paired with the row. Every pairing goes through the shared frame, so it
+/// is <c>original-verse</c> — the contract's name for "a recorded mapping said so" rather than "the
+/// numbers matched" — wherever the frame's rows are where the two texts' verses answer each other.
+/// It is <c>verse-number</c> for a pane whose verses here answer the reference pane's only by a
+/// reading of where each falls: a book divided as no scheme describes stands in the frame at the
+/// numbers it prints, so there the row does pair by number, and the reader is told so.
 /// </param>
 /// <param name="Reference">
 /// What this text itself calls the verse, which can differ from the row: canonical Joel 3:1 is
@@ -94,6 +96,13 @@ internal static class ParallelEndpoints
 {
     private const string PairedThroughTheFrame = "original-verse";
 
+    /// <summary>
+    /// A pane whose verses this chapter answers the reference pane's only by a reading of where each
+    /// falls — the Ge'ez Psalter, Job, Song and Esther, which divide their verses as no versification
+    /// scheme does: the frame lays them at the numbers they print, so a row pairs them by that number.
+    /// </summary>
+    private const string PairedByItsOwnNumber = "verse-number";
+
     /// <summary>The contract's separator for the corpus list, and the cap it sets.</summary>
     private const char CorpusSeparator = ',';
 
@@ -152,6 +161,7 @@ internal static class ParallelEndpoints
             var stated = new Dictionary<string, Dictionary<int, List<string>>>();
             var notes = new Dictionary<string, Dictionary<int, List<SourceNoteResponse>>>();
             var strength = new Dictionary<string, Dictionary<int, LinkStrengthResponse>>();
+            var byNumber = new HashSet<string>();
             var reference = requested[0];
             foreach (var entry in requested)
             {
@@ -177,6 +187,10 @@ internal static class ParallelEndpoints
                     {
                         Merge(strength[entry.Slug], await Strengths(
                             db, entry.Id, reference.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                        if (await JoinedOnlyByReading(db, entry.Id, reference.Id, heldBook, heldChapter, cancellationToken))
+                        {
+                            byNumber.Add(entry.Slug);
+                        }
                     }
                 }
             }
@@ -195,7 +209,8 @@ internal static class ParallelEndpoints
                         entry => entry.Slug,
                         entry => Cell(
                             byText[entry.Slug], references[entry.Slug], own[entry.Slug],
-                            stated[entry.Slug], notes[entry.Slug], strength[entry.Slug], number))))
+                            stated[entry.Slug], notes[entry.Slug], strength[entry.Slug], number,
+                            byNumber.Contains(entry.Slug) ? PairedByItsOwnNumber : PairedThroughTheFrame))))
                 .ToList();
 
             var corpusRows = await CorpusRows(db, canon, requested, cancellationToken);
@@ -248,7 +263,8 @@ internal static class ParallelEndpoints
         Dictionary<int, List<string>> stated,
         Dictionary<int, List<SourceNoteResponse>> notes,
         Dictionary<int, LinkStrengthResponse> strength,
-        int number)
+        int number,
+        string alignment)
     {
         var hasWords = verses.TryGetValue(number, out var words);
         var hasNotes = notes.TryGetValue(number, out var sourceNotes);
@@ -259,7 +275,7 @@ internal static class ParallelEndpoints
 
         return new ParallelCellResponse(
             words ?? [],
-            PairedThroughTheFrame,
+            alignment,
             references.GetValueOrDefault(number),
             own.GetValueOrDefault(number) ?? [],
             stated.GetValueOrDefault(number) ?? [],
@@ -323,6 +339,33 @@ internal static class ParallelEndpoints
             .ToDictionary(
                 group => group.Key,
                 group => Strength([.. group.Select(row => row.Confidence)]));
+    }
+
+    /// <summary>
+    /// Whether this text's verses in the chapter are joined to the reference's verses only by verse
+    /// links a reading drew, and by none the frame or a source states. Then the rows lay the two side
+    /// by side by the numbers each prints, and the reading — which may put a verse a row or two away —
+    /// is the only statement of which verse answers which.
+    /// </summary>
+    internal static async Task<bool> JoinedOnlyByReading(
+        AppDbContext db,
+        int textId,
+        int againstId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var methods = await db.VerseLinks
+            .Where(link => ((link.FromTextId == textId && link.ToTextId == againstId)
+                            || (link.FromTextId == againstId && link.ToTextId == textId))
+                           && link.Verses.Any(side => side.Verse!.TextId == textId
+                                                      && side.Verse.References.Any(r => r.IsPrimary
+                                                          && r.CanonicalBook == canonicalBook
+                                                          && r.CanonicalChapter == canonicalChapter)))
+            .Select(link => link.Method)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+        return methods.Count > 0 && methods.All(method => method == LinkMethod.ModelReading);
     }
 
     /// <summary>

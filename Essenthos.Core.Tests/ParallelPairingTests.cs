@@ -315,6 +315,40 @@ public sealed class ParallelPairingTests : IDisposable
         return link;
     }
 
+    /// <summary>
+    /// A pane whose verses here answer the reference's only by a reading of where each falls is laid
+    /// at the numbers it prints, and says so; one the frame or a source joins is paired by the frame.
+    /// </summary>
+    [Fact]
+    public async Task APaneJoinedOnlyByAReadingIsPairedByItsNumber()
+    {
+        var geez = Corpus.Add(_db, "GEEZ81", TextKind.Translation, "gez", (3, 1, ["ቃል"]), (4, 1, ["ቃል"]));
+        var greek = Corpus.Add(_db, "GRCBRENT", TextKind.PrintedEdition, "grc", (3, 1, ["λόγος"]), (4, 1, ["λόγος"]));
+        _db.SaveChanges();
+        Join(geez, greek, 3, LinkMethod.ModelReading);
+        Join(geez, greek, 4, LinkMethod.ModelReading);
+        Join(geez, greek, 4, LinkMethod.StatedBySource);
+        _db.SaveChanges();
+
+        (await ParallelEndpoints.JoinedOnlyByReading(_db, geez.Id, greek.Id, 1, 3, default)).Should().BeTrue();
+        (await ParallelEndpoints.JoinedOnlyByReading(_db, greek.Id, geez.Id, 1, 3, default)).Should().BeTrue();
+        (await ParallelEndpoints.JoinedOnlyByReading(_db, geez.Id, greek.Id, 1, 4, default)).Should().BeFalse();
+        (await ParallelEndpoints.JoinedOnlyByReading(_db, geez.Id, greek.Id, 1, 5, default)).Should().BeFalse(
+            "a chapter nothing joins says nothing about how it is paired");
+    }
+
+    private void Join(Text from, Text to, int chapter, LinkMethod method)
+    {
+        var link = new VerseLink
+        {
+            FromTextId = from.Id, ToTextId = to.Id, Relation = LinkRelation.Renders, Method = method,
+            Confidence = method == LinkMethod.StatedBySource ? null : 0.9, Source = "a test",
+        };
+        _db.VerseLinks.Add(link);
+        _db.VerseLinkVerses.Add(new VerseLinkVerse { VerseLink = link, VerseId = _db.VerseAt(from, chapter, 1).Id, Side = LinkSide.From });
+        _db.VerseLinkVerses.Add(new VerseLinkVerse { VerseLink = link, VerseId = _db.VerseAt(to, chapter, 1).Id, Side = LinkSide.To });
+    }
+
     private void Place(Text text, int chapter, int verse, int canonicalChapter, int canonicalVerse)
     {
         var own = _db.VerseAt(text, chapter, verse);
