@@ -70,6 +70,7 @@ public sealed class SuperscriptionFrameTests : IDisposable
 
         outcome.Verses.Should().Be(1);
         outcome.Placed.Should().Be(1);
+        outcome.PlacedVerses.Should().Equal(_db.VerseAt(_slavic, 3, 1).Id);
 
         Addresses(_slavic, 3, 1).Should().BeEquivalentTo([(0, false), (1, true)]);
     }

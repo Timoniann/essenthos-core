@@ -6,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading;
 
-internal sealed record SuperscriptionOutcome(string Slug, int Verses, int Placed, TimeSpan Elapsed)
+/// <param name="PlacedVerses">The verses given the title's address by this run.</param>
+internal sealed record SuperscriptionOutcome(string Slug, int Verses, int Placed, TimeSpan Elapsed,
+    IReadOnlyList<int>? PlacedVerses = null)
 {
     public override string ToString() => (Verses, Placed) switch
     {
@@ -94,7 +96,7 @@ internal sealed class SuperscriptionFrameLoader(AppDbContext db, ILogger<Supersc
         var covering = await Covering(text.Id, marked, cancellationToken);
         var placed = await Place(covering, cancellationToken);
 
-        var outcome = new SuperscriptionOutcome(slug, covering.Count, placed, started.Elapsed);
+        var outcome = new SuperscriptionOutcome(slug, covering.Count, placed.Count, started.Elapsed, placed);
         logger.LogInformation("Superscriptions: {Outcome}", outcome);
         return outcome;
     }
@@ -148,7 +150,7 @@ internal sealed class SuperscriptionFrameLoader(AppDbContext db, ILogger<Supersc
         ];
     }
 
-    private async Task<int> Place(
+    private async Task<List<int>> Place(
         List<(int VerseId, CanonicalReference Title)> covering,
         CancellationToken cancellationToken)
     {
@@ -158,7 +160,7 @@ internal sealed class SuperscriptionFrameLoader(AppDbContext db, ILogger<Supersc
             .Select(r => r.VerseId)
             .ToListAsync(cancellationToken);
 
-        var placed = 0;
+        var placed = new List<int>();
         foreach (var (verseId, title) in covering.Where(row => !already.Contains(row.VerseId)))
         {
             db.VerseReferences.Add(new VerseReference
@@ -169,10 +171,10 @@ internal sealed class SuperscriptionFrameLoader(AppDbContext db, ILogger<Supersc
                 CanonicalVerse = title.Verse,
                 IsPrimary = false,
             });
-            placed++;
+            placed.Add(verseId);
         }
 
-        if (placed > 0)
+        if (placed.Count > 0)
         {
             await db.SaveChangesAsync(cancellationToken);
         }

@@ -346,6 +346,57 @@ internal static class EbibleTextSource
     public static IReadOnlyDictionary<string, TextDefinition> Definitions => Known;
 
     /// <summary>
+    /// Editions eBible numbered as the English Bibles are, with a psalm's title printed inside its
+    /// first verse and no title marker: Luther's of 1912. That first verse opens with the title's own
+    /// sentence, which names what the psalm is — <em>Ein Psalm Davids</em>, <em>vorzusingen</em>, <em>Eine
+    /// Unterweisung</em>, <em>Ein gülden Kleinod</em> — and the file tags those words with the Hebrew
+    /// title's own numbers; either says the verse holds a title.
+    /// </summary>
+    private static readonly HashSet<string> TitleInsideTheFirstVerse =
+        new(["Luther1912"], StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>The Strong numbers of the words a psalm's title names its kind by: mizmor, lamnatseach, maskil, miktam, shir, tefillah, shiggaion, tehillah.</summary>
+    private static readonly HashSet<string> TitleNumbers =
+        new(["H4210", "H5329", "H4905", "H4387", "H7892", "H8605", "H7692", "H8416"], StringComparer.Ordinal);
+
+    /// <summary>Luther's words for the same.</summary>
+    private static readonly HashSet<string> TitleWords =
+        new(["Psalm", "Psalmlied", "vorzusingen", "Vorzusingen", "Unterweisung", "Lied", "Gebet", "Kleinod", "Unschuld"],
+            StringComparer.Ordinal);
+
+    /// <summary>
+    /// How far into the verse the title names the psalm's kind. A title says it at once — <em>Ein
+    /// Brautlied und Unterweisung</em> is the latest — and a psalm's own first line that sings a new
+    /// song (96:1) or praise (33:1) says it later or not before its first full stop.
+    /// </summary>
+    private const int TitleNamesItsKindWithin = 5;
+
+    private const string Psalms = "PSA";
+
+    /// <summary>
+    /// Whether a psalm's first verse opens with its title: one of its first words, before the first
+    /// sentence ends, names a psalm's kind. Which psalms the Hebrew numbers a title apart is the
+    /// frame's to say, and the verse is placed at the title's row only there.
+    /// </summary>
+    internal static bool OpensWithATitle(IReadOnlyList<UsfmWord> words)
+    {
+        foreach (var word in words.Take(TitleNamesItsKindWithin))
+        {
+            if (TitleWords.Contains(word.Surface) || (word.StrongNumber is { } number && TitleNumbers.Contains(number)))
+            {
+                return true;
+            }
+
+            if (word.Trailer.Contains('.', StringComparison.Ordinal))
+            {
+                return false;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
     /// Texts whose Strong tagging is somebody else's work, republished by eBible without their
     /// name on it. The words are loaded and the numbers are not.
     ///
@@ -442,7 +493,8 @@ internal static class EbibleTextSource
                 Position: drafts.Count + 1,
                 Name: BookReferences.Name(ordinal),
                 Slug: BookReferences.Slug(ordinal),
-                Chapters: [.. book.Chapters.Select(chapter => Chapter(chapter, tagged))],
+                Chapters: [.. book.Chapters.Select(chapter => Chapter(chapter, tagged,
+                    code == Psalms && TitleInsideTheFirstVerse.Contains(name)))],
                 NameNative: Corrected(book.Name),
                 Abbreviation: BookReferences.Abbreviation(ordinal)));
         }
@@ -455,7 +507,8 @@ internal static class EbibleTextSource
             ? null
             : BookNameMisprints.Aggregate(name, (named, misprint) => named.Replace(misprint.Misprint, misprint.Correction, StringComparison.Ordinal));
 
-    internal static ChapterDraft Chapter(UsfmChapter chapter, bool tagged) => new(
+    /// <param name="titled">A psalm whose first verse, where it opens with a title, holds one.</param>
+    internal static ChapterDraft Chapter(UsfmChapter chapter, bool tagged, bool titled = false) => new(
         chapter.Number,
         [.. chapter.Verses.Select(verse => new VerseDraft(
             verse.Number,
@@ -473,7 +526,8 @@ internal static class EbibleTextSource
                 note.AnchorWordPosition))],
             Stated = [.. verse.Stated.Select(address => new StatedNumberDraft(address.Chapter, address.Number))],
             OpensBeforeItsStatedAddress = verse.OpensBeforeItsStatedAddress,
-            MarksASuperscription = verse.MarksASuperscription,
+            MarksASuperscription = verse.MarksASuperscription
+                                   || (titled && verse.Number == 1 && verse.Label.Length == 0 && OpensWithATitle(verse.Words)),
         })]);
 
     /// <param name="translation">
