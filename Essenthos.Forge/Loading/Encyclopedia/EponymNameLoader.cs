@@ -82,6 +82,9 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
     /// <summary>The ancestor Jacob's other name, whose children are the people.</summary>
     private const string Israel = "H3478";
 
+    /// <summary>The ancestor's own name, which a verse speaking of the man may give him.</summary>
+    private const string JacobsName = "H3290";
+
     /// <summary>
     /// Whether the word <c>w</c> of BHSA, Israel standing alone, is the nation: outside Genesis,
     /// unless Isaac stands just before it, as in <em>Abraham, Isaac and Israel</em>, or it follows
@@ -105,10 +108,10 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
     /// <summary>
     /// What the rule wrote as the ancestor on a word it now reads as the nation, and every row
     /// carried from such a word, taken back so the word can be named again — and what the verses'
-    /// consensus wrote as the man on the word or on a word of another text linked to it. The
-    /// consensus names a word only where nothing names another record, so in a load from empty it
-    /// meets the people already there and writes nothing; on a corpus loaded before, it found the
-    /// man there and its rows kept citing him for the verse.
+    /// consensus wrote as the man, in any text, on a verse where Israel is only the nation and Jacob
+    /// goes unnamed. The consensus names a word only where nothing names another record, so in a
+    /// load from empty it meets the people already there and writes nothing; on a corpus loaded
+    /// before, it found the man there and its rows kept citing him for the verse.
     /// </summary>
     private static readonly string WithdrawTheMan =
         $"""
@@ -118,11 +121,15 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
              JOIN text t ON t.id = w.text_id AND t.slug = @witness
              WHERE {Nation}
          ),
-         rendering AS MATERIALIZED (
-             SELECT other.word_id AS id
-             FROM link_word mine
-             JOIN link_word other ON other.link_id = mine.link_id AND other.side <> mine.side
-             WHERE mine.word_id IN (SELECT id FROM nation)
+         nation_verse AS MATERIALIZED (
+             SELECT DISTINCT r.canonical_book, r.canonical_chapter, r.canonical_verse
+             FROM nation n
+             JOIN word w ON w.id = n.id
+             JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+             WHERE NOT EXISTS (SELECT 1 FROM word man
+                               WHERE man.verse_id = w.verse_id
+                                 AND (man.strong_number = @jacob
+                                      OR (man.strong_number = @israel AND man.id NOT IN (SELECT id FROM nation))))
          )
          DELETE FROM word_entity a
          USING entity man
@@ -132,7 +139,11 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
                  AND (a.word_id IN (SELECT id FROM nation)
                       OR substring(a.note FROM '^through \S+ word ([0-9]+)')::bigint IN (SELECT id FROM nation)))
                 OR (a.source = @consensus
-                    AND (a.word_id IN (SELECT id FROM nation) OR a.word_id IN (SELECT id FROM rendering))))
+                    AND EXISTS (SELECT 1 FROM verse_reference r
+                                JOIN nation_verse v ON (v.canonical_book, v.canonical_chapter, v.canonical_verse)
+                                                       = (r.canonical_book, r.canonical_chapter, r.canonical_verse)
+                                JOIN word named ON named.verse_id = r.verse_id AND named.id = a.word_id
+                                WHERE r.is_primary)))
          """;
 
     /// <summary>
@@ -252,6 +263,7 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
             WithdrawTheMan, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
         command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
         command.Parameters.AddWithValue("israel", Israel);
+        command.Parameters.AddWithValue("jacob", JacobsName);
         command.Parameters.AddWithValue("source", Source);
         command.Parameters.AddWithValue("consensus", NameConsensusPass.Source);
         return await command.ExecuteNonQueryAsync(cancellationToken);
