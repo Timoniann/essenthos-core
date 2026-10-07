@@ -180,7 +180,7 @@ internal static class GeezTextSource
         {
             BhsaTextSource.Slug, SeptuagintTextSource.Slug, SweteTextSource.Slug, NestleTextSource.Slug,
             ByzantineTextSource.Slug,
-        }.Select(to => new DeclaredVersePair(Slug, to, UnlinkedBooks)),
+        }.Select(to => new DeclaredVersePair(Slug, to, UnlinkedBooks) { Never = UnlinkedBooks }),
     ];
 
     /// <summary>

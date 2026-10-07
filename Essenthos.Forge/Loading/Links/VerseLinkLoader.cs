@@ -71,6 +71,14 @@ internal sealed record DeclaredVersePair(string From, string To, IReadOnlySet<in
     /// otherwise would pair every verse after the first difference with the wrong one.
     /// </summary>
     public bool AgreeingChaptersOnly { get; init; }
+
+    /// <summary>
+    /// Books of <see cref="From"/> never joined through the frame, whatever word links the pair holds:
+    /// divided as no versification scheme describes, so the frame stands them at their own numbers and
+    /// a shared address says nothing. <see cref="Without"/> gives way once the pair is linked word by
+    /// word; these do not, and a reading of the book (the Ge'ez verse map) joins them instead.
+    /// </summary>
+    public IReadOnlySet<int> Never { get; init; } = new HashSet<int>();
 }
 
 /// <summary>
@@ -392,10 +400,11 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// joined wherever those links reach, as every linked pair is, and its declaration only adds the
     /// books it names: the Synodal is declared against the King James for the books it gains, and read
     /// as the declaration alone its sixty-six were left unjoined the first time the pair was built
-    /// afresh, beneath half a million word links.
+    /// afresh, beneath half a million word links. Its <see cref="DeclaredVersePair.Never"/> books are
+    /// left out either way.
     /// </summary>
     private static IReadOnlySet<int> Outside(DeclaredVersePair declaration, bool linked) =>
-        linked ? new HashSet<int>() : declaration.Without;
+        linked ? declaration.Never : declaration.Without.Union(declaration.Never).ToHashSet();
 
     /// <summary>
     /// The two texts' addresses without the chapters, in books the frame has no rules for, that the
