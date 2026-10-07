@@ -89,6 +89,11 @@
     "files": 67,
     "sha256": "6d6165ae6a757bd8ae8277599a0d238c13e57bb98426804b7c616cbd8cd98f3f"
   },
+  "ElizabethBible": {
+    "bytes": 2181718,
+    "files": 8,
+    "sha256": "c1f3bc6ac38e5cfa3c2c3285e1c9220fb414c4eeaa166e51f0bbf9fe3a072546"
+  },
   "Geneva1599": {
     "bytes": 4447845,
     "files": 67,

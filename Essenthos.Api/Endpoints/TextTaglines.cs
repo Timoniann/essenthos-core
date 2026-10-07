@@ -85,6 +85,11 @@ internal static class TextTaglines
                 "Олександрійський кодекс V століття, переписаний так, як його написав писар.",
                 "Der Codex Alexandrinus aus dem fünften Jahrhundert, so transkribiert, wie sein Schreiber ihn schrieb.",
                 "El Códice Alejandrino del siglo V, transcrito tal como lo escribió su copista."),
+            ["CSLELIZABETH"] = Say(
+                "The Church Slavonic Bible of 1751, still read in Orthodox worship, in modern spelling.",
+                "Церковнослов'янська Біблія 1751 року, яку й досі читають у православному богослужінні, сучасним правописом.",
+                "Die kirchenslawische Bibel von 1751, bis heute im orthodoxen Gottesdienst gelesen, in moderner Schreibweise.",
+                "La Biblia eslava eclesiástica de 1751, leída aún en el culto ortodoxo, con ortografía moderna."),
             ["SBLGNT"] = Say(
                 "Holmes's critical Greek text of 2010, decided apart from the Nestle line.",
                 "Критичний грецький текст Голмса 2010 року, укладений незалежно від лінії Нестле.",

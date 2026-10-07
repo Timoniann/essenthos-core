@@ -26,6 +26,10 @@ internal static class BookTraditions
 {
     private const int Psalms = 19;
 
+    private const int FirstKings = 11;
+
+    private const int Malachi = 39;
+
     private static readonly Dictionary<string, IReadOnlyDictionary<int, Versification>> Editions =
         new(StringComparer.OrdinalIgnoreCase)
         {
@@ -35,6 +39,21 @@ internal static class BookTraditions
             },
             [Sources.SynodalSlug] = new[] { 68, 69, 70, 71, 72, 75 }
                 .ToDictionary(book => book, _ => Versification.Unknown),
+
+            // The Elizabeth Bible numbers the same books the Synodal's way, and the data has no column for it
+            // either. It numbers the Septuagint's way everywhere else except in 1 Kings and Malachi, where it
+            // divides the chapters as the King James does: placed by the Greek's rules there, 1 Kings 5 stood
+            // at the Greek's chapter 4 and Malachi 4:4 at 4:5, against the Synodal's words.
+            [Sources.ElizabethSlug] = new Dictionary<int, Versification>
+            {
+                [FirstKings] = Versification.English,
+                [Malachi] = Versification.English,
+                [68] = Versification.Unknown,
+                [70] = Versification.Unknown,
+                [71] = Versification.Unknown,
+                [72] = Versification.Unknown,
+                [75] = Versification.Unknown,
+            },
         };
 
     /// <summary>

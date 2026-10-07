@@ -112,6 +112,9 @@ internal static class SwordTextSource
     /// <summary>Michael W. Jones's Revised Literal Translation of the King James.</summary>
     public const string RevisedLiteral = "RLT2018";
 
+    /// <summary>The Church Slavonic Bible of 1751, in rusbible.ru's modernised spelling.</summary>
+    public const string Elizabeth = Sources.ElizabethSlug;
+
     /// <summary>ISO 15924 for the two ways Chinese is printed.</summary>
     public const string TraditionalChinese = "Hant";
 
@@ -312,6 +315,50 @@ internal static class SwordTextSource
                 "Revised Literal Translation (RLT) by Michael W. Jones, Sr., as CrossWire publishes it "
                 + "in the SWORD module RLT.",
         }),
+
+        ["CSlElizabeth"] = new(Path.Combine("ElizabethBible", "CSlElizabeth"), SwordSegmentation.Spaced, new TextDefinition(
+            Slug: Elizabeth,
+            Name: "Elizabeth Bible (Church Slavonic)",
+            NameNative: "Елисаветинская Библия",
+            Kind: TextKind.Translation,
+            Language: "chu",
+            Direction: TextDirection.LeftToRight,
+            Versification: Versification.Septuagint,
+            PublishedYear: 1751,
+            SourceUrl: "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=CSlElizabeth",
+            RightsHolder: null,
+            Licence: "Public Domain",
+            LicenceUrl: "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/cslelizabeth.conf",
+            Redistribution: Redistribution.PublicDomain,
+            TextualFamily: "Septuagint")
+        {
+            Script = "Cyrl",
+            Translators = "The Slavonic translators from Cyril and Methodius on, in the text revised for the edition of "
+                          + "1751 by the commission Elizabeth of Russia appointed",
+            Edition = "The 1757 printing, in the electronic text of rusbible.ru with modernised spelling, as "
+                      + "CrossWire publishes it in CSlElizabeth 1.5.2",
+            EditionYear = 1757,
+            About =
+                "The Church Slavonic Bible in the recension prepared under Elizabeth of Russia and first printed "
+                + "in 1751, revised from the older Slavonic text against the Greek Septuagint. It is the Bible of "
+                + "the Russian Orthodox Church's worship to this day, and the text the Russian Synodal "
+                + "translation was made beside. The words are Church Slavonic, but the spelling here is "
+                + "modernised: rusbible.ru typed it in the civil alphabet, without the titla, the accents and "
+                + "the letters Slavonic printing uses, so it reads as Slavonic words written as Russian is "
+                + "written, and is not a facsimile of the printed page. Its Old Testament follows the "
+                + "Septuagint's numbering and books: Tobit, Judith, Wisdom, Sirach, Baruch and the Letter of "
+                + "Jeremiah, 2 Ezra (the Greek 1 Esdras), 1 and 2 Maccabees and the Prayer of Manasseh are here, "
+                + "Psalm 151 closes the Psalter, and Susanna and Bel are Daniel 13 and 14. 3 Maccabees and "
+                + "3 Ezra, which the printed Bible has, are not in this electronic text and are not here.",
+            RightsNote =
+                "The Elizabeth Bible has been out of copyright for more than two centuries. CrossWire publishes "
+                + "the module as Public Domain, with rusbible.ru as its source. The JSON copy getBible serves from the same module sits in a repository "
+                + "badged GPL-3.0, which covers that project's code, and it is not what is read here.",
+            Citation =
+                "Библия, сиречь книги Священнаго Писания Ветхаго и Новаго Завета (the Elizabeth Bible, 1751; "
+                + "the 1757 printing), in rusbible.ru's electronic text as CrossWire publishes it in the SWORD "
+                + "module CSlElizabeth.",
+        }),
     };
 
     /// <summary>
@@ -363,16 +410,26 @@ internal static class SwordTextSource
                     + "rather than loading part of a text as though it were the whole of one.");
             }
 
-            books.Add(new BookDraft(
-                CanonicalOrdinal: ordinal,
-                Position: ordinal,
-                Name: BookReferences.Name(ordinal),
-                Slug: BookReferences.Slug(ordinal),
-                Chapters: held,
-                Abbreviation: BookReferences.Abbreviation(ordinal)));
+            books.Add(Book(ordinal, held));
+        }
+
+        // The books a canon holds beyond the sixty-six, where the module's versification has room for them.
+        foreach (var ordinal in chapters.Keys.Select(chapter => chapter.Book).Where(book => book > BookReferences.CanonBookCount)
+                     .Distinct().Order())
+        {
+            books.Add(Book(ordinal, [.. chapters.Where(chapter => chapter.Key.Book == ordinal)
+                .OrderBy(chapter => chapter.Key.Chapter).Select(chapter => chapter.Value)]));
         }
 
         return new TextSource(text.Definition, books);
+
+        static BookDraft Book(int ordinal, List<ChapterDraft> held) => new(
+            CanonicalOrdinal: ordinal,
+            Position: ordinal,
+            Name: BookReferences.Name(ordinal),
+            Slug: BookReferences.Slug(ordinal),
+            Chapters: held,
+            Abbreviation: BookReferences.Abbreviation(ordinal));
     }
 
     /// <summary>
