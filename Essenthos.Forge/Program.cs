@@ -160,6 +160,7 @@ builder.Services.AddScoped<PassageReadingLoader>();
 builder.Services.AddScoped<CrossedNameLoader>();
 builder.Services.AddScoped<EqualTwinNames>();
 builder.Services.AddScoped<ForeignNames>();
+builder.Services.AddScoped<PronounReferents>();
 builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
 builder.Services.AddScoped<TermLoader>();

@@ -81,6 +81,7 @@ internal sealed class AnnotationCarrier(
     CrossedNameLoader crossed,
     ForeignNames foreign,
     EqualTwinNames twins,
+    PronounReferents pronouns,
     ILogger<AnnotationCarrier> logger)
 {
     /// <summary>
@@ -291,6 +292,9 @@ internal sealed class AnnotationCarrier(
 
         // A name a batch carried before the record whose name its word is had reached the word.
         await foreign.Withdraw(cancellationToken);
+
+        // A person carried onto a pronoun the verse does not settle.
+        await pronouns.Withdraw(cancellationToken);
 
         // The other editions' twins of the words just named, which no link from a seed reaches.
         logger.LogInformation("{Outcome}", await twins.Load(cancellationToken));
