@@ -1,0 +1,119 @@
+{
+  "decidedBy": "the project owner, in his notes on the review page of relationship facts, 2026-09-13 to 2026-09-16, written onto the records by claude-opus-5-5 on 2026-10-07",
+  "policy": "Where the owner's note on a relationship he removed or confirmed asks the record to say something no relationship row can hold, the record says it: what the texts disagree on and which reading is the more natural, what one verse leaves open and another settles, and which namesake a man is not.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's notes on the review page of relationship facts, 2026-09-13 to 2026-09-16",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "1SA 14:50",
+      "position": 4,
+      "surface": "שָׁא֔וּל",
+      "strongNumber": "H7586",
+      "existing": "saul",
+      "says": {
+        "notes": "1 Samuel 14:50-51 makes Kish, Saul's father, and Ner, Abner's father, both sons of Abiel, so that Ner was Saul's uncle and Abner his cousin, and 1 Samuel 9:1 calls Kish the son of Abiel. 1 Chronicles 8:33 and 9:39 read 'Ner begat Kish, and Kish begat Saul', which makes Ner Saul's grandfather and Abner his uncle. The reading of 1 Samuel is the more natural one and is the one Josephus gives; Chronicles keeps the other, twice, and no way of reconciling the two can be shown."
+      },
+      "why": "'And the name of Saul's wife was Ahinoam': the king, whose family 14:50-51 sets out."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 14:51",
+      "position": 2,
+      "surface": "קִ֧ישׁ",
+      "strongNumber": "H7027",
+      "existing": "kish",
+      "says": {
+        "notes": "1 Samuel 14:50-51 makes Kish, Saul's father, and Ner, Abner's father, both sons of Abiel, so that Ner was Saul's uncle and Abner his cousin, and 1 Samuel 9:1 calls Kish the son of Abiel. 1 Chronicles 8:33 and 9:39 read 'Ner begat Kish, and Kish begat Saul', which makes Ner Saul's grandfather and Abner his uncle. The reading of 1 Samuel is the more natural one and is the one Josephus gives; Chronicles keeps the other, twice, and no way of reconciling the two can be shown."
+      },
+      "why": "'And Kish was the father of Saul'."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 14:51",
+      "position": 6,
+      "surface": "נֵ֥ר",
+      "strongNumber": "H5369",
+      "existing": "ner",
+      "says": {
+        "notes": "1 Samuel 14:50-51 makes Kish, Saul's father, and Ner, Abner's father, both sons of Abiel, so that Ner was Saul's uncle and Abner his cousin, and 1 Samuel 9:1 calls Kish the son of Abiel. 1 Chronicles 8:33 and 9:39 read 'Ner begat Kish, and Kish begat Saul', which makes Ner Saul's grandfather and Abner his uncle. The reading of 1 Samuel is the more natural one and is the one Josephus gives; Chronicles keeps the other, twice, and no way of reconciling the two can be shown."
+      },
+      "why": "'and Ner the father of Abner was the son of Abiel'."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 14:50",
+      "position": 12,
+      "surface": "אֲבִינֵ֔ר",
+      "strongNumber": "H74",
+      "existing": "abner",
+      "says": {
+        "notes": "1 Samuel 14:50-51 makes Kish, Saul's father, and Ner, Abner's father, both sons of Abiel, so that Ner was Saul's uncle and Abner his cousin, and 1 Samuel 9:1 calls Kish the son of Abiel. 1 Chronicles 8:33 and 9:39 read 'Ner begat Kish, and Kish begat Saul', which makes Ner Saul's grandfather and Abner his uncle. The reading of 1 Samuel is the more natural one and is the one Josephus gives; Chronicles keeps the other, twice, and no way of reconciling the two can be shown."
+      },
+      "why": "'the name of the captain of his host was Abner, the son of Ner, Saul's uncle'."
+    },
+    {
+      "text": "BHSA",
+      "reference": "RUT 1:4",
+      "position": 9,
+      "surface": "עָרְפָּ֔ה",
+      "strongNumber": "H6204",
+      "existing": "orpah",
+      "says": {
+        "distinguisher": "a woman of Moab, wife of Chilion (RUT 1:4, 4:10)",
+        "notes": "Ruth 1:4 names the Moabite wives of Mahlon and Chilion without saying which was whose; Ruth 4:10 says that Ruth was the wife of Mahlon, so Orpah was Chilion's."
+      },
+      "why": "'the name of the one was Orpah, and the name of the other Ruth': the verse does not say whose wife each was; Ruth 4:10 makes Ruth the wife of Mahlon."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 18:30",
+      "position": 14,
+      "surface": "מְנַשֶּׁ֜ה",
+      "strongNumber": "H4519",
+      "existing": "manasseh-2",
+      "says": {
+        "notes": "He is not Joseph's son Manasseh. The Hebrew of Judges 18:30 writes the name with its nun raised above the line, and read without it the name is Moses, whose son was Gershom (EXO 2:22)."
+      },
+      "why": "'Jonathan, the son of Gershom, the son of Manasseh, he and his sons were priests to the tribe of Dan'."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2SA 13:1",
+      "position": 14,
+      "surface": "תָּמָ֑ר",
+      "strongNumber": "H8559",
+      "existing": "tamar-2",
+      "says": {
+        "notes": "A king's daughter, she wore the garment of divers colours that the king's daughters who were virgins wore (2SA 13:18). She is not Tamar, Judah's daughter-in-law (GEN 38)."
+      },
+      "why": "'Absalom the son of David had a fair sister, whose name was Tamar'."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 2:24",
+      "position": 11,
+      "surface": "אֲבִיָּ֔ה",
+      "strongNumber": "H29",
+      "existing": "abijah-3",
+      "says": {
+        "distinguisher": "wife of Hezron and mother of Ashur the father of Tekoa (1CH 2:24)",
+        "notes": "Hezron married the daughter of Machir the father of Gilead when he was sixty (1CH 2:21). Whether Abiah is that daughter the text does not say."
+      },
+      "why": "'then Abiah Hezron's wife bare him Ashur the father of Tekoa': the verse names her as Hezron's wife and does not say whose daughter she was."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1KI 11:26",
+      "position": 4,
+      "surface": "נְבָ֨ט",
+      "strongNumber": "H5028",
+      "existing": "nebat",
+      "says": {
+        "distinguisher": "father of Jeroboam (1KI 11:26)",
+        "notes": "Jeroboam his son is called an Ephrathite of Zereda (1KI 11:26); of what tribe Nebat himself was the text does not say."
+      },
+      "why": "'Jeroboam the son of Nebat, an Ephrathite of Zereda': the verse gives the son's people, not the father's."
+    }
+  ]
+}

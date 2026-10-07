@@ -813,6 +813,31 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
+    /// The owner's review notes reach the records they are about: Saul's family says both genealogies
+    /// and which is the more natural, Abiah is no longer Machir's daughter in her line, and the
+    /// Manasseh of Judges 18:30 says he is not Joseph's son.
+    /// </summary>
+    [Fact]
+    public async Task WhatTheOwnersReviewNotesAskTheRecordsToSayTheySay()
+    {
+        await Load();
+
+        var records = await _db.Entities
+            .Where(e => new[] { "saul", "kish", "ner", "abner", "abijah-3", "manasseh-2", "orpah", "nebat" }.Contains(e.Slug))
+            .ToDictionaryAsync(e => e.Slug);
+        foreach (var family in new[] { "saul", "kish", "ner", "abner" })
+        {
+            records[family].Notes.Should().Contain("1 Chronicles 8:33").And.Contain("1 Samuel 14:50-51");
+        }
+
+        records["abijah-3"].Distinguisher.Should().NotContain("Machir");
+        records["abijah-3"].Notes.Should().Contain("the text does not say");
+        records["manasseh-2"].Notes.Should().Contain("not Joseph's son");
+        records["orpah"].Distinguisher.Should().NotContain("elimination");
+        records["nebat"].Distinguisher.Should().NotContain("Ephr");
+    }
+
+    /// <summary>
     /// Esau's wives of Genesis 36:2-3 are each a woman of her own, the words of the second list leave the
     /// records of the first, and every record of the six names the other reading; Beeri is not Anah.
     /// </summary>
