@@ -173,6 +173,7 @@ builder.Services.AddScoped<OwnNameLoader>();
 builder.Services.AddScoped<WithdrawnRecordLoader>();
 builder.Services.AddScoped<ThingLoader>();
 builder.Services.AddScoped<DistinguisherLoader>();
+builder.Services.AddScoped<NoteTranslationLoader>();
 builder.Services.AddScoped<OwnReferenceLoader>();
 builder.Services.AddSingleton(_ => ReviewLists.Read(builder.Configuration));
 builder.Services.AddScoped<MisfiledVerseLoader>();

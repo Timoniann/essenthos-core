@@ -1756,8 +1756,8 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// The lines this corpus wrote under its own records, in each reader's language. After every
-    /// step that writes such a record and after the folds, which can retire one.
+    /// The lines this corpus wrote under its own records, and their notes, in each reader's language.
+    /// After every step that writes such a record and after the folds, which can retire one.
     /// </summary>
     private async Task RenderOurOwnLinesInEveryLanguage(CancellationToken cancellationToken)
     {
@@ -1766,6 +1766,10 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<DistinguisherLoader>();
         status.Record(await loader.Load(cancellationToken));
+
+        status.Starting("the notes of our own records in every language");
+        var notes = scope.ServiceProvider.GetRequiredService<NoteTranslationLoader>();
+        status.Record(await notes.Load(cancellationToken));
     }
 
     /// <summary>

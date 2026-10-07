@@ -60,6 +60,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\OwnRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\Distinguishers.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OwnLines.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\NoteTranslations.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\MisplacedAnnotations.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ReviewRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\ReportRecords.json" />

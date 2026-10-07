@@ -300,6 +300,9 @@ internal static partial class EncyclopediaEndpoints
                     }),
                 ],
                 Subtype = entity.Subtype,
+                LocalNotes = mine is null
+                    ? await NoteTranslations.Of(db, entity.Id, entity.Notes, words, cancellationToken)
+                    : null,
                 Passages = [.. passages.Select(Passage)],
                 Times =
                 [
