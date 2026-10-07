@@ -38,6 +38,17 @@ internal static class SearchEndpoints
     private const int MostPerPage = 100;
 
     /// <summary>
+    /// Languages printed without spaces between words. A row of such a text is only where a tagger
+    /// divided the line — the Chinese Union Version's are FHL's Strong-number spans, 天 and 地 apart in
+    /// Genesis 1:1 and 於是女人 as one — so a reader's word may be two rows or part of one. A term is
+    /// matched there against the characters of the line as printed between two marks of punctuation.
+    /// </summary>
+    private static readonly HashSet<string> Unspaced = new(["zho"], StringComparer.Ordinal);
+
+    /// <summary>What stands in the line for a mark of punctuation, which no typed term holds.</summary>
+    private const char PunctuationBreak = '\n';
+
+    /// <summary>
     /// The books the scope allows, as bounds on the canonical ordinal where it is a range and a
     /// list only where books were named: a testament is 27 or 39 ordinals, and two comparisons
     /// read the index where a list of that size does not.
@@ -109,25 +120,35 @@ internal static class SearchEndpoints
                 return Results.BadRequest(new ProblemResponse(widenHint));
             }
 
-            if (widening == SearchWidening.PartOfAWord &&
+            var language = await db.Texts.Where(t => t.Id == text.Id).Select(t => t.Language)
+                .FirstAsync(cancellationToken);
+
+            // A character of Chinese is a word's worth of meaning, so a single one is a search there.
+            if (widening == SearchWidening.PartOfAWord && !Unspaced.Contains(language) &&
                 terms.FirstOrDefault(term => term.Length < SearchTerms.ShortestPart) is { } tooShort)
             {
                 return Results.BadRequest(new ProblemResponse(SearchTerms.ShortPartHint(tooShort)));
             }
-
-            var language = await db.Texts.Where(t => t.Id == text.Id).Select(t => t.Language)
-                .FirstAsync(cancellationToken);
 
             // Every term narrows the set of verses. Each is resolved on its own so that the
             // response can say how each one was matched, and so that one term falling back to a
             // substring does not quietly change how the others were read.
             var matched = new List<SearchTerm>(terms.Length);
             IQueryable<int>? verses = null;
+            var unspaced = Unspaced.Contains(language);
 
             foreach (var term in terms)
             {
                 var folded = WordFolding.Fold(term, language);
                 var words = Within(db.Words.Where(w => w.TextId == text.Id && w.NormalisedText != null), scope);
+
+                if (unspaced)
+                {
+                    matched.Add(new SearchTerm(term, TermMatching.Printed, folded));
+                    var inThisTerm = VersesPrinting(words, folded);
+                    verses = verses is null ? inThisTerm : verses.Intersect(inThisTerm);
+                    continue;
+                }
 
                 var whole = words.Where(w => w.NormalisedText == folded);
                 var matching = TermMatching.Folded;
@@ -191,6 +212,10 @@ internal static class SearchEndpoints
                 .ToListAsync(cancellationToken);
 
             var wanted = matched.ToList();
+            var marked = unspaced
+                ? page.ToDictionary(verse => verse.Id, verse => CharactersMatched(
+                    [.. verse.Words.Select(word => (word.NormalisedText, word.Trailer))], [.. wanted.Select(term => term.Match)]))
+                : null;
 
             return Results.Ok(new SearchResultsResponse(
                 total,
@@ -203,10 +228,12 @@ internal static class SearchEndpoints
                             verse.Ordinal, BookReferences.Name(verse.Ordinal), BookReferences.Slug(verse.Ordinal)),
                         verse.ChapterNumber,
                         verse.Number,
-                        Snippets.Build(verse.Words.Select(word => (
+                        Snippets.Build(verse.Words.Select((word, at) => (
                             word.Surface,
                             word.Trailer,
-                            Matched: word.NormalisedText is { } folded && wanted.Any(term =>
+                            Matched: marked is not null
+                                ? marked[verse.Id].Contains(at)
+                                : word.NormalisedText is { } folded && wanted.Any(term =>
                                 term.Matching switch
                                 {
                                     // Every row of the run carries the run's form, so marking on it
@@ -221,6 +248,59 @@ internal static class SearchEndpoints
                 SearchTerms.Matching(matched),
                 [.. matched.Select(term => new SearchTermResponse(term.Text, SearchTerms.Name(term.Matching)))]));
         }).RequireRateLimiting(RateLimits.Expensive);
+    }
+
+    /// <summary>
+    /// The verses whose line, as printed between two marks of punctuation, holds these characters. The
+    /// printed run a row stands in is that stretch of the line; a row standing alone between two marks
+    /// has none, and is its own run.
+    /// </summary>
+    internal static IQueryable<int> VersesPrinting(IQueryable<Word> words, string characters)
+    {
+        var pattern = LikePatterns.Containing(characters);
+        return words.Where(w => EF.Functions.Like(w.GraphicalText ?? w.NormalisedText!, pattern))
+            .Select(w => w.VerseId)
+            .Distinct();
+    }
+
+    /// <summary>
+    /// The words of a verse printed without spaces that a term's characters fall in: each term is
+    /// found in the line as printed, never across a mark of punctuation, and every word it touches
+    /// is marked — both of 天 and 地 for 天地, and the whole of 於是女人 for 女人.
+    /// </summary>
+    internal static HashSet<int> CharactersMatched(
+        IReadOnlyList<(string? Folded, string Trailer)> words,
+        IReadOnlyList<string> terms)
+    {
+        var line = new System.Text.StringBuilder();
+        var owner = new List<int>();
+        for (var at = 0; at < words.Count; at++)
+        {
+            foreach (var character in words[at].Folded ?? string.Empty)
+            {
+                line.Append(character);
+                owner.Add(at);
+            }
+
+            if (words[at].Trailer.Length > 0)
+            {
+                line.Append(PunctuationBreak);
+                owner.Add(-1);
+            }
+        }
+
+        var printed = line.ToString();
+        var marked = new HashSet<int>();
+        foreach (var term in terms.Where(term => term.Length > 0))
+        {
+            for (var from = printed.IndexOf(term, StringComparison.Ordinal); from >= 0;
+                 from = printed.IndexOf(term, from + 1, StringComparison.Ordinal))
+            {
+                marked.UnionWith(owner.Skip(from).Take(term.Length).Where(at => at >= 0));
+            }
+        }
+
+        return marked;
     }
 }
 
