@@ -511,6 +511,102 @@
       "corrects": "akkub-2"
     },
     {
+      "text": "NESTLE1904",
+      "reference": "MAT 27:56",
+      "position": 11,
+      "surface": "Ἰακώβου",
+      "strongNumber": "G2385",
+      "create": {
+        "slug": "james-son-of-mary",
+        "name": "James",
+        "distinguisher": "son of Mary, called James the less, whose mother watched at the cross and came to the tomb (MAT 27:56, MRK 15:40, 16:1, LUK 24:10)",
+        "notes": "Matthew 13:55 names a James and a Joses among the brothers of Jesus, and Matthew 27:56 names Mary the mother of James and Joses. Whether these are the same two men the text does not say.",
+        "kind": "person"
+      },
+      "alternatives": [
+        {
+          "slug": "james-3",
+          "describes": null,
+          "reason": "Matthew 13:55 and Mark 6:3 name a James and a Joses among the brothers of Jesus."
+        }
+      ],
+      "why": "'Mary the mother of James and Joses' beside Mary Magdalene at the cross: the verse names her sons and does not make them the Lord's brothers of 13:55, and no verse makes the Lord's brothers Mary's sons. The owner's rule for a namesake the text does not identify is a record of his own that says what is open.",
+      "corrects": "james-3"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 15:40",
+      "position": 17,
+      "surface": "Ἰακώβου",
+      "strongNumber": "G2385",
+      "existing": "james-son-of-mary",
+      "why": "'Mary the mother of James the less and of Joses': her son of Matthew 27:56.",
+      "corrects": "james-3"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 16:1",
+      "position": 12,
+      "surface": "Ἰακώβου",
+      "strongNumber": "G2385",
+      "existing": "james-son-of-mary",
+      "why": "'Mary the mother of James' came to the tomb: her son of 15:40.",
+      "corrects": "james-3"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 24:10",
+      "position": 11,
+      "surface": "Ἰακώβου",
+      "strongNumber": "G2385",
+      "existing": "james-son-of-mary",
+      "why": "'Mary the mother of James' told the apostles: her son of Mark 15:40.",
+      "corrects": "james-3"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MAT 27:56",
+      "position": 13,
+      "surface": "Ἰωσὴφ",
+      "strongNumber": "G2501",
+      "create": {
+        "slug": "joses-son-of-mary",
+        "name": "Joses",
+        "distinguisher": "son of Mary and brother of James the less, whose mother watched at the cross (MAT 27:56, MRK 15:40, 15:47)",
+        "notes": "Matthew 13:55 and Mark 6:3 name a Joses among the brothers of Jesus. Whether he is this son of Mary the text does not say.",
+        "kind": "person"
+      },
+      "alternatives": [
+        {
+          "slug": "joseph-7",
+          "describes": null,
+          "reason": "Matthew 13:55 and Mark 6:3 name a Joses among the brothers of Jesus, beside a James."
+        }
+      ],
+      "why": "'Mary the mother of James and Joses': her second son, whom the verse does not make the Lord's brother.",
+      "corrects": "joseph-7"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 15:40",
+      "position": 21,
+      "surface": "Ἰωσῆτος",
+      "strongNumber": "G2500",
+      "existing": "joses-son-of-mary",
+      "why": "'Mary the mother of James the less and of Joses': her son of Matthew 27:56.",
+      "corrects": "joseph-7"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 15:47",
+      "position": 9,
+      "surface": "Ἰωσῆτος",
+      "strongNumber": "G2500",
+      "existing": "joses-son-of-mary",
+      "why": "'Mary the mother of Joses beheld where he was laid': her son of 15:40.",
+      "corrects": "joseph-7"
+    },
+    {
       "text": "BHSA",
       "reference": "DAN 6:27",
       "position": 18,

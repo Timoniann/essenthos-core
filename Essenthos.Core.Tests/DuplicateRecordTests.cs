@@ -778,5 +778,10 @@ public sealed class DuplicateRecordTests : IDisposable
         splits.Should().ContainSingle(split => split.From == "jaazaniah").Which.Verses.Should().Equal("JER 42:1");
         splits.Where(split => split.From == "malchijah-2").SelectMany(split => split.Verses)
             .Should().NotContain("NEH 8:4", "the record keeps the man at Ezra's left hand its portrait shows");
+        foreach (var (brother, son) in new[] { ("james-3", "james-son-of-mary"), ("joseph-7", "joses-son-of-mary") })
+        {
+            splits.Single(split => split.From == brother && split.To == son).Verses
+                .Should().Contain("MAT 27:56").And.NotContain(["MAT 13:55", "MRK 6:3"], "the Lord's brother keeps the verses that name him so");
+        }
     }
 }
