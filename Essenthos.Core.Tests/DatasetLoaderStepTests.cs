@@ -1,4 +1,4 @@
-using Essenthos.Core.Loading;
+﻿using Essenthos.Core.Loading;
 using FluentAssertions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -56,6 +56,21 @@ public sealed class DatasetLoaderStepTests : IDisposable
         names.Should().StartWith("BHSA");
         names.Should().ContainInOrder("KJV", "statistics", "lexicon", "recipe", "encyclopedia", "person-register");
         names[^1].Should().Be("verify");
+    }
+
+    /// <summary>
+    /// The names are resolved once over the encyclopedia the register left and again over the one the
+    /// passes after it added things to and the fold made one record of two, before anything counts
+    /// or carries what the resolutions wrote.
+    /// </summary>
+    [Fact]
+    public void TheNamesAreResolvedAgainAfterTheRecordsAreFolded()
+    {
+        var names = Loader().StepNames();
+
+        names.Should().ContainInOrder(
+            "person-register", "annotations", "things", "fold-records", "settled-names",
+            "crossed-names", "name-consensus", "spellings", "verify");
     }
 
     [Fact]

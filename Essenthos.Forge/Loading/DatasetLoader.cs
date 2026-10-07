@@ -379,6 +379,7 @@ internal sealed class DatasetLoader(
             new("own-relationships", RelateTheEntitiesOurOwnClausesRelate),
             new("name-forms", cancellationToken => DeclineTheNamesThoseLinesName(resources, cancellationToken)),
             new("fold-records", FoldTheRecordsWrittenTwice),
+            new("settled-names", SayAgainWhichWordNamesWhom),
             new("own-lines", RenderOurOwnLinesInEveryLanguage),
             new("refiled-ties", MoveWhatWasReadOffTheMisfiledVerses),
             new("crossed-names", CrossBackTheNamesGivenToEachOther),
@@ -1565,6 +1566,17 @@ internal sealed class DatasetLoader(
         var loader = scope.ServiceProvider.GetRequiredService<EntityAnnotationLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
+
+    /// <summary>
+    /// The entity annotations again, over the encyclopedia as the passes after the first left it.
+    /// Those passes add records and names — a pillar called Boaz gives the number of the man a
+    /// second bearer — and the fold makes two records of one man one, so a number that answered
+    /// with one bearer may answer with several, and the reverse. On a corpus loaded before, the first
+    /// pass already sees all of this; on one built from nothing only this one does, and without it
+    /// the corpus would hold resolutions of a shared name until a second load withdrew them.
+    /// </summary>
+    private Task SayAgainWhichWordNamesWhom(CancellationToken cancellationToken) =>
+        SayWhichWordNamesWhom(cancellationToken);
 
     /// <summary>
     /// The people a verse names and no dataset holds. Before the readings rather than after them,
