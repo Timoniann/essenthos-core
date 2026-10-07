@@ -304,6 +304,11 @@ public sealed class ContextEndpointTests : IDisposable
                 ["altered"] = null,
             });
         english.Entities.Should().OnlyContain(e => e.LocalDistinguisher == null);
+
+        var overTheSynodal = await ContextEndpoints.Context(
+            _db, Genesis, 10, "rus", await ContextWeights.Count(_db, default), default, prose: "ukr");
+        overTheSynodal.Entities.Single(e => e.Slug == "holy-spirit").LocalDistinguisher
+            .Should().Be("той, кого текст називає Святим Духом (MAT 28:19; 1CO 3:16)");
     }
 
     /// <summary>

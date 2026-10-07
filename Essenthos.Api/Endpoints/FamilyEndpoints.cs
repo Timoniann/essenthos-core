@@ -33,7 +33,8 @@ internal static class FamilyEndpoints
         IReadOnlyCollection<string> slugs,
         string? language,
         CancellationToken cancellationToken,
-        bool generated = true)
+        bool generated = true,
+        string? prose = null)
     {
         var people = await db.Entities
             .Where(e => slugs.Contains(e.Slug))
@@ -68,7 +69,8 @@ internal static class FamilyEndpoints
                 : null;
 
         var local = await EntityNames.Of(db, ids, language, cancellationToken);
-        var lines = await EntityDistinguishers.OfSlugs(db, [.. people.Select(p => p.Slug)], language, cancellationToken);
+        var lines = await EntityDistinguishers.OfSlugs(
+            db, [.. people.Select(p => p.Slug)], ReaderLanguages.Prose(prose, language), cancellationToken);
         var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken, generated);
         var order = slugs.Select((slug, index) => (slug, index)).ToDictionary(p => p.slug, p => p.index, StringComparer.Ordinal);
 

@@ -35,6 +35,7 @@ internal static class ContextEndpoints
             string book,
             int chapter,
             [FromQuery] string? language,
+            [FromQuery] string? prose,
             AppDbContext db,
             ICanonIndex canon,
             ContextWeightsCache weights,
@@ -44,7 +45,7 @@ internal static class ContextEndpoints
             var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
             return refusal ?? Results.Ok(await Context(
                 db, ordinal, chapter, language, await weights.Get(cancellationToken), cancellationToken,
-                settings.Is(SiteSettings.GeneratedImages)));
+                settings.Is(SiteSettings.GeneratedImages), prose));
         });
 
         // The families among the chapter's people, apart from the rest because a genealogy's trees
@@ -53,12 +54,13 @@ internal static class ContextEndpoints
             string book,
             int chapter,
             [FromQuery] string? language,
+            [FromQuery] string? prose,
             AppDbContext db,
             ICanonIndex canon,
             CancellationToken cancellationToken) =>
         {
             var (ordinal, refusal) = await Chapter(canon, book, chapter, cancellationToken);
-            return refusal ?? Results.Ok(await ChapterFamily.Of(db, ordinal, chapter, language, cancellationToken));
+            return refusal ?? Results.Ok(await ChapterFamily.Of(db, ordinal, chapter, language, cancellationToken, prose));
         });
     }
 
@@ -99,7 +101,8 @@ internal static class ContextEndpoints
         string? language,
         ContextWeights weights,
         CancellationToken cancellationToken,
-        bool generated = true)
+        bool generated = true,
+        string? prose = null)
     {
         var (verses, how, spoken) = await NamedAndHow(db, book, chapter, cancellationToken);
         ChapterSalience.SettleWordsForGod(verses, how, spoken);
@@ -128,8 +131,9 @@ internal static class ContextEndpoints
 
         var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
         var local = await EntityNames.Of(db, [.. records.Select(r => r.Id)], language, cancellationToken);
-        var lines = await EntityDistinguishers.OfSlugs(db, slugs, language, cancellationToken);
-        var described = await Descriptors.Of(db, slugs, language, cancellationToken);
+        var words = ReaderLanguages.Prose(prose, language);
+        var lines = await EntityDistinguishers.OfSlugs(db, slugs, words, cancellationToken);
+        var described = await Descriptors.Of(db, slugs, words, cancellationToken, language);
         var meanings = await Meanings(db, [.. records.Select(r => r.Id)], cancellationToken);
         var namesUsed = await ChapterSalience.NamesUsed(db, book, chapter, cancellationToken);
         // A face for the people only: a place's or a thing's picture is its page's, and a row of the

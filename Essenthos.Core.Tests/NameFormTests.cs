@@ -125,6 +125,25 @@ public sealed class NameFormTests : IDisposable
     }
 
     /// <summary>
+    /// A Ukrainian page over the Synodal: the words of the line are the interface's and the names
+    /// in it the chosen text's, each in the case the Ukrainian phrase puts it in.
+    /// </summary>
+    [Fact]
+    public async Task TheLineSpeaksTheInterfacesWordsAroundTheChosenTextsNames()
+    {
+        await Describe("aaron");
+        _db.EntityNameForms.Add(Held("moses", "rus", GrammaticalCases.Genitive, "Моисея"));
+        _db.EntityNameForms.Add(Held("moses", "rus", GrammaticalCases.Nominative, "Моисей"));
+        await _db.SaveChangesAsync();
+
+        var line = await Descriptors.Of(_db, "aaron", DescriptorPhrasings.Ukrainian, default, names: "rus");
+
+        line!.Language.Should().Be(DescriptorPhrasings.Ukrainian);
+        string.Concat(line.Parts.Select(p => p.Text)).Should().StartWith("брат Моисея");
+        (await Line("aaron", "rus")).Should().StartWith("brother of ", "a line asked in Russian alone has no Russian words to be said in");
+    }
+
+    /// <summary>
     /// The guard is on this loader's own rows, and per entity. Guarding on whether the table holds
     /// anything is what left a cold database with no name resolutions at all, and this
     /// loader writes into a table the descriptor pass is already filling, so the table is never

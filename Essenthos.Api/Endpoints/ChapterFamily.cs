@@ -66,7 +66,8 @@ internal static class ChapterFamily
         int book,
         int chapter,
         string? language,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? prose = null)
     {
         var named = (await ContextEndpoints.Named(db, book, chapter, cancellationToken)).Keys.ToList();
         var people = await db.Entities
@@ -120,7 +121,7 @@ internal static class ChapterFamily
         // A member's family ties reach only the tree, so the tree draws exactly who is in it. Their
         // other ties stay, because a king's crown on his card is read from them — all but the
         // ancestors and descendants, which a tree never draws and a genealogy has hundreds of.
-        var family = await FamilyEndpoints.Family(db, [.. memberSlugs], language, cancellationToken);
+        var family = await FamilyEndpoints.Family(db, [.. memberSlugs], language, cancellationToken, prose: prose);
         var familyTypes = Types.ToHashSet(StringComparer.Ordinal);
         var shown = family.People
             .Select(p => p with

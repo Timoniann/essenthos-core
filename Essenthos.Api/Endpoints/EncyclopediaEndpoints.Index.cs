@@ -17,6 +17,7 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] string? q,
             [FromQuery] string? kind,
             [FromQuery] string? language,
+            [FromQuery] string? prose,
             [FromQuery] string? sort,
             [FromQuery] string? letter,
             [FromQuery] int? skip,
@@ -78,7 +79,8 @@ internal static partial class EncyclopediaEndpoints
                 .Where(e => slugs.Contains(e.Slug))
                 .Select(Summary)
                 .ToDictionaryAsync(row => row.Slug, cancellationToken);
-            var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], language, cancellationToken);
+            var words = ReaderLanguages.Prose(prose, language);
+            var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], words, cancellationToken);
             var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
             var page = named
                 .Select(row => ours.TryGetValue(row.Slug, out var own)
@@ -96,7 +98,7 @@ internal static partial class EncyclopediaEndpoints
                 .ToList();
 
             var described = await Descriptors.Of(
-                db, page.Select(e => e.Slug), language, cancellationToken);
+                db, page.Select(e => e.Slug), words, cancellationToken, language);
             var pictured = await ImageEndpoints.Leading(
                 db, slugs, cancellationToken, settings.Is(SiteSettings.GeneratedImages));
 
@@ -143,12 +145,13 @@ internal static partial class EncyclopediaEndpoints
         routes.MapGet("/entities/family", async (
             [FromQuery] string? slugs,
             [FromQuery] string? language,
+            [FromQuery] string? prose,
             AppDbContext db,
             SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
             FamilyEndpoints.Requested(slugs) is { } named
                 ? Results.Ok(await FamilyEndpoints.Family(
-                    db, named, language, cancellationToken, settings.Is(SiteSettings.GeneratedImages)))
+                    db, named, language, cancellationToken, settings.Is(SiteSettings.GeneratedImages), prose))
                 : Results.BadRequest(new ProblemResponse(
                     $"Name between 1 and {FamilyEndpoints.MostPeople} people, as slugs=moses,aaron.")));
     }
