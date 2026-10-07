@@ -477,7 +477,7 @@ internal static class SenseReadingFiles
                     throw new InvalidDataException(
                         $"A line of {file} names its word by row id or not at all. An answer names its word by text, "
                         + "reference, position and surface; convert the files once with "
-                        + "scripts/address-sense-readings.py before loading them.");
+                        + "scripts/address-word-ids.py before loading them.");
                 }
 
                 answers++;

@@ -1,15 +1,16 @@
 """
-Names every word of the model's sense answers and of the two review files beside them by its address
-(text, the verse as that text numbers it, position, surface) instead of by its row id, which a rebuilt
-corpus gives to another word.
+Names every word of the stores outside the corpus that still named words by row id by its address
+(text, the verse as that text numbers it, position, surface) instead: a rebuilt corpus gives a row id
+to another word.
 
-    python scripts/address-sense-readings.py query <resources>  > addresses.sql
+    python scripts/address-word-ids.py query <resources>  > addresses.sql
     (run addresses.sql against the corpus the ids were written against; it prints CSV)
-    python scripts/address-sense-readings.py apply <resources> addresses.csv
+    python scripts/address-word-ids.py apply <resources> addresses.csv
 
-`apply` rewrites every Resources/SenseReadings/**/answers*.jsonl and the repository's
-Essenthos.Forge/Loading/Encyclopedia/RefusedReadings.json and SupersededReadings.json, and refuses to
-write anything if one id has no address. Run it once; a file already addressed is left as it is.
+`apply` rewrites the model's sense answers (Resources/SenseReadings/**/answers*.jsonl), the site
+register (Resources/Essenthos/sites/register-*.jsonl, its `wordId` becoming an `address` object) and the
+repository's Essenthos.Forge/Loading/Encyclopedia/RefusedReadings.json and SupersededReadings.json, and
+refuses to write anything if one id has no address. Run it once; a file already addressed is left as it is.
 """
 import csv
 import glob
@@ -32,12 +33,20 @@ def answer_files(resources):
     return sorted(glob.glob(os.path.join(resources, 'SenseReadings', '**', 'answers*.jsonl'), recursive=True))
 
 
+def site_files(resources):
+    return sorted(glob.glob(os.path.join(resources, 'Essenthos', 'sites', 'register-*.jsonl')))
+
+
 def ids(resources):
     found = set()
     for path in answer_files(resources):
         for line in open(path, encoding='utf-8'):
             if line.strip() and 'word_id' in (row := json.loads(line)):
                 found.add(int(row['word_id']))
+    for path in site_files(resources):
+        for line in open(path, encoding='utf-8'):
+            if line.strip() and 'wordId' in (row := json.loads(line)):
+                found.add(int(row['wordId']))
     for name in REVIEWS:
         data = json.load(open(os.path.join(ENCYCLOPEDIA, name + '.json'), encoding='utf-8'))
         found.update(int(r['wordId']) for r in data['readings'] if 'wordId' in r)
@@ -78,6 +87,19 @@ def apply(resources, table):
             if 'word_id' in row:
                 word_id = row.pop('word_id')
                 row = {**address(word_id), **row}
+                count += 1
+            out.append(json.dumps(row, ensure_ascii=False))
+        pending.append((path, '\n'.join(out) + '\n', count))
+
+    for path in site_files(resources):
+        out, count = [], 0
+        for line in open(path, encoding='utf-8'):
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            if 'wordId' in row:
+                word_id = row.pop('wordId')
+                row = {**row, 'address': address(word_id)}
                 count += 1
             out.append(json.dumps(row, ensure_ascii=False))
         pending.append((path, '\n'.join(out) + '\n', count))

@@ -376,7 +376,7 @@ public sealed class SenseReadingTests : IDisposable
 
         var load = () => Load();
 
-        await load.Should().ThrowAsync<InvalidDataException>().WithMessage("*address-sense-readings.py*");
+        await load.Should().ThrowAsync<InvalidDataException>().WithMessage("*address-word-ids.py*");
     }
 
     /// <summary>

@@ -1,4 +1,6 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
@@ -46,10 +48,13 @@ internal sealed record SiteCheckRecord(
 /// What the corpus already annotates the word with. A word that already names somebody is not
 /// re-answered here: an occurrence naming two places is worse than one naming none.
 /// </param>
+/// <param name="Address">
+/// The word, by its address (<see cref="RuledWord"/>): a row id names another word after a rebuild.
+/// </param>
 internal sealed record SiteRegisterRecord(
     string Number,
     string Name,
-    long WordId,
+    RuledWord Address,
     string? Witness,
     string? Reference,
     string? Spelling,
@@ -61,7 +66,12 @@ internal sealed record SiteRegisterRecord(
     IReadOnlyList<string>? OtherDataset,
     IReadOnlyList<string>? Annotated,
     SiteReadingRecord? Reading,
-    SiteCheckRecord? Check);
+    SiteCheckRecord? Check)
+{
+    /// <summary>Where <see cref="Address"/> stands in the corpus being loaded; never read from the file.</summary>
+    [JsonIgnore]
+    public long WordId { get; init; }
+}
 
 /// <summary>
 /// Where the site register is read from, and what one line of one has to be.
@@ -101,6 +111,19 @@ internal static class SiteRegisterFiles
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
 
+    /// <summary>
+    /// Each record on the word its address names in the corpus the connection reads, and the
+    /// addresses that name no word there or a word that reads otherwise now.
+    /// </summary>
+    public static async Task<(IReadOnlyList<SiteRegisterRecord> Placed, IReadOnlyList<RuledWord> Lost)> Place(
+        NpgsqlConnection connection,
+        IReadOnlyList<SiteRegisterRecord> records,
+        CancellationToken cancellationToken = default)
+    {
+        var (found, lost) = await RuledWords.Find(connection, records.Select(r => r.Address), cancellationToken);
+        return ([.. records.Where(r => found.ContainsKey(r.Address)).Select(r => r with { WordId = found[r.Address] })], lost);
+    }
+
     public static IReadOnlyList<SiteRegisterRecord> Read(string directory)
     {
         var records = new List<SiteRegisterRecord>();
@@ -115,12 +138,20 @@ internal static class SiteRegisterFiles
                     continue;
                 }
 
-                records.Add(
+                var record =
                     JsonSerializer.Deserialize<SiteRegisterRecord>(line, Shape)
                     ?? throw new InvalidDataException(
                         $"A line of {file} is not a register entry. Each line must be one JSON "
-                        + "object with at least a number, a name, a wordId and a why; regenerate "
-                        + "the folder with \"python scripts/sites.py publish\"."));
+                        + "object with at least a number, a name, an address and a why; regenerate "
+                        + "the folder with \"python scripts/sites.py publish\".");
+                if (record.Address is null || string.IsNullOrEmpty(record.Address.Reference))
+                {
+                    throw new InvalidDataException(
+                        $"A line of {file} names its word by row id or not at all. A register line names its word "
+                        + "by its address; convert the register once with scripts/address-word-ids.py before loading it.");
+                }
+
+                records.Add(record);
             }
         }
 
