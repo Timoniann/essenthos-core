@@ -60,17 +60,26 @@ internal sealed class SynodalStrongLinkLoader(
     /// Synodal words written after the numbering was laid, the only ones whose links are drawn;
     /// null draws the whole of each pair not yet drawn.
     /// </param>
+    /// <param name="unreached">
+    /// Match only the verses no link of the numbering reaches each witness from yet
+    /// (<see cref="TaggedTextLinkLoader.Unreached"/>), for a witness that gained numbers after the pair
+    /// was linked.
+    /// </param>
     public async Task<IReadOnlyList<TaggedTextLinkOutcome>> Load(
         string editionPath,
         IReadOnlyList<string> witnesses,
         CancellationToken cancellationToken = default,
-        IReadOnlySet<long>? only = null)
+        IReadOnlySet<long>? only = null,
+        bool unreached = false)
     {
         var numbers = await Numbers(editionPath, cancellationToken);
         var outcomes = new List<TaggedTextLinkOutcome>(witnesses.Count);
         foreach (var witness in witnesses)
         {
-            outcomes.Add(await tagged.Load(Bible4uTextSource.Synodal, witness, numbers, cancellationToken, only));
+            var words = unreached
+                ? await tagged.Unreached(Bible4uTextSource.Synodal, witness, numbers, cancellationToken)
+                : only;
+            outcomes.Add(await tagged.Load(Bible4uTextSource.Synodal, witness, numbers, cancellationToken, words));
         }
 
         return outcomes;

@@ -233,6 +233,40 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
+    /// A pair already linked by its numbers, matched again in the verses no link of them reaches: what a
+    /// witness that gained numbers since asks for, and never what a load replays, since a load that
+    /// builds the corpus afresh matches every verse anyway.
+    /// </summary>
+    private static async Task<int> StrongUnreached(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        var tagged = scope.ServiceProvider.GetRequiredService<TaggedTextLinkLoader>();
+        var (from, to) = (Identifier(args[1]), Identifier(args[2]));
+        var words = await tagged.Unreached(from, to, null);
+        forge.Logger.LogInformation("{From} has {Words} words in verses no link of its numbers reaches {To} from", from,
+            words.Count, to);
+        forge.Logger.LogInformation("{Outcome}", await tagged.Load(from, to, null, default, words));
+        forge.Logger.LogInformation("{Outcome}", await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+        return 0;
+    }
+
+    /// <summary>The Synodal's verses no link of its numbering reaches a witness from, matched again.</summary>
+    private static async Task<int> SynodalStrongUnreached(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        string[] witnesses = args.Length > 1 ? [.. args[1..].Select(Identifier)] : SynodalStrongLinkLoader.Witnesses;
+        foreach (var outcome in await scope.ServiceProvider.GetRequiredService<SynodalStrongLinkLoader>().Load(
+                     ResourcePaths.File(forge.Resources, SynodalStrongLinkLoader.EditionFile), witnesses, unreached: true))
+        {
+            forge.Logger.LogInformation("{Outcome}", outcome);
+        }
+
+        forge.Logger.LogInformation("{Outcome}", await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+        await scope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+        return 0;
+    }
+
+    /// <summary>
     /// The Synodal by Bob Jones University's Strong numbering, read from the edition and never stored:
     /// the links are written and the numbers are gone when the command returns. With no witness named it
     /// runs all five the numbering reaches.
