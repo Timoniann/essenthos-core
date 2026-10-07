@@ -50,11 +50,13 @@ internal static partial class EncyclopediaEndpoints
         routes.MapGet("/entities/{slug}", async (
             string slug,
             [FromQuery] string? language,
+            [FromQuery] string? prose,
             AppDbContext db,
             SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
         {
             slug = await MergedAddresses.Current(db, slug, cancellationToken);
+            var words = ReaderLanguages.Prose(prose, language);
             var entity = await db.Entities
                 .Where(e => e.Slug == slug)
                 .Select(e => new
@@ -210,7 +212,7 @@ internal static partial class EncyclopediaEndpoints
                     .. titles.Select(t => t.Slug),
                     .. alternatives.Select(a => a.Slug).OfType<string>(),
                 ],
-                language,
+                words,
                 cancellationToken);
             related =
             [
@@ -268,12 +270,12 @@ internal static partial class EncyclopediaEndpoints
                 TribeRecord = await TribeRecord(
                     db, mine is null ? entity.Tribe : mine.Tribe, language, cancellationToken, entity.Slug),
                 Descriptor = await Descriptors.Of(
-                    db, entity.Slug, language, cancellationToken),
+                    db, entity.Slug, words, cancellationToken, language),
                 Location = entity.Location,
                 LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
                     .GetValueOrDefault(entity.Id),
                 LocalDistinguisher = mine is null || mine.Line is not null
-                    ? (await EntityDistinguishers.Of(db, [entity.Id], language, cancellationToken))
+                    ? (await EntityDistinguishers.Of(db, [entity.Id], words, cancellationToken))
                         .GetValueOrDefault(entity.Id)
                     : null,
                 Renderings = await Renderings(db, entity.Id, cancellationToken),

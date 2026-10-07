@@ -97,6 +97,12 @@ internal sealed record UsfmWord(string Surface, string Trailer)
     /// the first word that follows it, whichever verse that is in.
     /// </summary>
     public TextBreak? Break { get; init; }
+
+    /// <summary>
+    /// The word stands under a section heading (<c>\s</c>, <c>\ms</c>), which a reader told the
+    /// headings are the editor's leaves out of the verse.
+    /// </summary>
+    public bool Heading { get; init; }
 }
 
 /// <summary>
@@ -240,6 +246,7 @@ internal static partial class UsfmReader
         var title = string.Empty;
         var running = new Running();
         var superscribed = false;
+        var heading = false;
         TextBreak? pending = null;
 
         // A break waits for the first word after it, and two marks before one word are one break:
@@ -252,6 +259,11 @@ internal static partial class UsfmReader
             {
                 words[before] = words[before] with { Break = opening };
                 pending = null;
+            }
+
+            for (var at = before; heading && at < words.Count; at++)
+            {
+                words[at] = words[at] with { Heading = true };
             }
         }
 
@@ -324,6 +336,7 @@ internal static partial class UsfmReader
 
             var name = match.Groups["marker"].Value;
             var rest = match.Groups["rest"].Value.Trim();
+            heading = Headings.Contains(name);
 
             switch (name)
             {

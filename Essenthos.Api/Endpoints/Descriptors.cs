@@ -46,11 +46,18 @@ internal static class Descriptors
     /// The descriptions of a set of entities, in one query pair. A page of search results asks for
     /// forty of these at once, so it is two indexed reads rather than two per entity.
     /// </summary>
+    /// <param name="language">The language the words of the line are said in: the interface's.</param>
+    /// <param name="names">
+    /// The language the names in it are written in, which is the chosen text's: a Ukrainian page over
+    /// the Synodal reads <em>син Марии</em>, Ukrainian words around the Synodal's name. The line's own
+    /// language where nothing is said.
+    /// </param>
     public static async Task<Dictionary<string, EntityDescriptorResponse>> Of(
         AppDbContext db,
         IEnumerable<string> slugs,
         string? language,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? names = null)
     {
         var wanted = slugs.Distinct(StringComparer.Ordinal).ToList();
         if (wanted.Count == 0)
@@ -60,6 +67,7 @@ internal static class Descriptors
 
         var spoken = DescriptorPhrasings.Spoken(language);
         var phrasings = DescriptorPhrasings.For(spoken)!;
+        var named = string.IsNullOrWhiteSpace(names) ? spoken : names.Trim();
 
         // Everything the target contributes is taken along this join rather than looked up per
         // clause: a subquery in a projection is evaluated once per joined row, which is what took
@@ -95,7 +103,7 @@ internal static class Descriptors
 
         var targets = clauses.Select(c => c.TargetEntityId).Distinct().ToList();
         var rows = await db.EntityNameForms
-            .Where(f => targets.Contains(f.EntityId) && f.Language == spoken)
+            .Where(f => targets.Contains(f.EntityId) && f.Language == named)
             .Select(f => new { f.EntityId, f.GrammaticalCase, f.Form })
             .ToListAsync(cancellationToken);
 
@@ -119,9 +127,10 @@ internal static class Descriptors
         AppDbContext db,
         string slug,
         string? language,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? names = null)
     {
-        var found = await Of(db, [slug], language, cancellationToken);
+        var found = await Of(db, [slug], language, cancellationToken, names);
         return found.GetValueOrDefault(slug);
     }
 

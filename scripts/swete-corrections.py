@@ -195,7 +195,9 @@ def moved(runs):
 
 def hand_restored(forge):
     source = open(os.path.join(forge, 'Swete', 'SweteRestorations.cs'), encoding='utf-8').read()
-    return {('01.Genesis', m.group(1), m.group(2)) for m in re.finditer(r'new\(Genesis, (\d+), (\d+),', source)}
+    files = {'Genesis': '01.Genesis', 'Exodus': '02.Exodus'}
+    return {(files[m.group(1)], m.group(2), m.group(3))
+            for m in re.finditer(r'new\((Genesis|Exodus), (\d+), (\d+),', source)}
 
 
 def main():
