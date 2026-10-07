@@ -60,6 +60,8 @@ internal static class SweteRestorations
 {
     private const string Genesis = "01.Genesis";
 
+    private const string Exodus = "02.Exodus";
+
     private const string Witnesses = "Brenton's Greek and GLAUx's both read";
 
     /// <summary>What the text's row says about these words, on a cold load and on a warm one.</summary>
@@ -69,36 +71,38 @@ internal static class SweteRestorations
         + "restored by Essenthos where Brenton's Greek and the GLAUx treebank read the same words, in the "
         + "spelling Swete prints beside them. Letters the transcription misread are left as it reads them.";
 
-    /// <summary>
-    /// These, the corrections a rule settles, and the words read back off the printed page, which are
-    /// made the same way and in this order: a page restoration names its place in the verse as the
-    /// corrections leave it.
-    /// </summary>
-    public static readonly IReadOnlyList<SweteRestoration> BeforeChapterMarkers = [.. Lost(), .. SweteCorrections.All, .. SwetePage.All];
-
-    public static readonly IReadOnlyList<SweteRestoration> ChapterMarkers =
-    [
-        new("12.Regnorum_II", 19, 43, "Ἰσραήλ. XX", "Ἰσραήλ.",
-            "The duplicated chapter XX marker also opens the next source block, 20:1 XXυἱὸς; it is not a word of 19:43."),
-    ];
-
+    /// <summary>What the text's row says about the chapter numbers the reader takes out.</summary>
     public const string ChapterMarkersNote =
+        "Modified: the Roman chapter numbers Swete prints in the margin, which the transcription let into the "
+        + "text at the end of a chapter or the start of the next, are taken out by Essenthos, and a word one was "
+        + "run into is kept; Exodus 20:1, of which the transcription kept only the number, is restored from the "
+        + "printed page.";
+
+    /// <summary>What the text's row said when only the marker closing Second Samuel 19 was taken out.</summary>
+    public const string SecondSamuelMarkerNote =
         "Modified: the duplicated Roman chapter XX marker at the end of Second Samuel 19:43 is omitted by Essenthos; the transcription also runs it into the first word of chapter 20.";
 
-    public static readonly IReadOnlyList<SweteRestoration> All = [.. BeforeChapterMarkers, .. ChapterMarkers];
+    /// <summary>
+    /// These, the corrections a rule settles, the words read back off the printed page, and the
+    /// chapter openings the transcription lost with their numeral, which are made the same way and in
+    /// this order: a page restoration names its place in the verse as the corrections leave it.
+    /// </summary>
+    public static readonly IReadOnlyList<SweteRestoration> All =
+        [.. Lost(), .. SweteCorrections.All, .. SwetePage.All, .. Openings()];
 
     /// <summary>
     /// The restorations as earlier passes made them, oldest first: the Genesis words alone, then with
     /// the letter corrections, then with the words read off the page, before the figures were taken
-    /// out. A corpus restored by one of them reads as that set and not as the transcription, and the
-    /// pass carries it on to <see cref="All"/> rather than refusing it.
+    /// out, then before the lost chapter openings. A corpus restored by one of them reads as that set
+    /// and not as the transcription, and the pass carries it on to <see cref="All"/> rather than
+    /// refusing it.
     /// </summary>
     public static readonly IReadOnlyList<IReadOnlyList<SweteRestoration>> Earlier =
     [
         Lost(),
         [.. Lost(), .. SweteCorrections.First],
         [.. Lost(), .. SweteCorrections.First, .. SwetePage.All],
-        BeforeChapterMarkers,
+        [.. Lost(), .. SweteCorrections.All, .. SwetePage.All],
     ];
 
     private static IReadOnlyList<SweteRestoration> Lost() =>
@@ -143,6 +147,19 @@ internal static class SweteRestorations
             $"{Witnesses} καθάπερ ἐλάλησεν αὐτῷ Κύριος."),
         new(Genesis, 12, 4, "ἐτῶν πέντε", "ἐτῶν ἑβδομήκοντα πέντε",
             $"{Witnesses} seventy-five and the Hebrew 75; ἑβδομήκοντα as 11:26 prints it."),
+    ];
+
+    /// <summary>
+    /// A chapter's opening the transcription lost with the line its number is printed beside, so the
+    /// verse holds the numeral and nothing else. Put back where the page prints the words and Brenton's
+    /// Greek reads them too. Numbers 17:1 and 19:1 lost theirs the same way, but the archive's reading of
+    /// those pages is illegible there, so they stay empty.
+    /// </summary>
+    private static IReadOnlyList<SweteRestoration> Openings() =>
+    [
+        new(Exodus, 20, 1, "XX", "Καὶ ἐλάλησεν Κύριος πάντας τοὺς λόγους τούτους λέγων",
+            "Printed in Swete, vol. 1 (Cambridge, 1901), p. 143, beside the chapter's number, which is all the "
+            + "transcription kept; Brenton's Greek reads the same words."),
     ];
 
     /// <summary>The books any restoration is made in, which are the only files worth reading twice.</summary>

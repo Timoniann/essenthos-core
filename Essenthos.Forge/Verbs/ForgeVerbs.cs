@@ -49,7 +49,7 @@ internal static partial class ForgeVerbs
             Least: 1, Most: 1, Records: Always, Relinks: Every),
         new("correct", "", "Correct the King James, the Synodal and Ohienko against their editions in a loaded corpus.",
             Correct, Records: Always, Relinks: Every),
-        new("edition-boundaries", "", "Remove KJV Apocrypha headings and open Swete's lost 2 Samuel 19:43 without replacing either text.",
+        new("edition-boundaries", "", "Remove KJV Apocrypha headings, open Swete's lost 2 Samuel 19:43 and take out the chapter numbers its transcription let into the text, without replacing either text.",
             EditionBoundaries, Records: Always, Relinks: Every),
         new("frame", "", "Recompute every text's canonical frame and report which texts changed.", Reframe),
         new("verse-links", "", "Complete verse correspondences from the current frame and sourced word links.", VerseLinks),

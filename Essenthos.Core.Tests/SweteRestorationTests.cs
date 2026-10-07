@@ -3,6 +3,7 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Swete;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
@@ -103,6 +104,7 @@ public sealed class SweteRestorationLoadTests : IDisposable
     private readonly AppDbContext _db;
     private readonly SweteRestorationLoader _loader;
     private readonly SweteBook _digitised;
+    private readonly SweteBook _marked;
     private readonly SweteBook _restored;
 
     public SweteRestorationLoadTests(WitnessDatabase database)
@@ -112,7 +114,8 @@ public sealed class SweteRestorationLoadTests : IDisposable
         _loader = new SweteRestorationLoader(_db, NullLogger<SweteRestorationLoader>.Instance);
 
         var path = Path.Combine(TestResources.SweteFolder, SweteTextSource.FileName(Genesis));
-        _digitised = SweteReader.Read(File.ReadLines(path));
+        _digitised = SweteReader.Read(File.ReadLines(path), keepChapterMarkers: true);
+        _marked = SweteReader.Read(SweteRestorations.Apply(Genesis, File.ReadLines(path)), keepChapterMarkers: true);
         _restored = SweteReader.Read(SweteRestorations.Apply(Genesis, File.ReadLines(path)));
     }
 
@@ -171,7 +174,8 @@ public sealed class SweteRestorationLoadTests : IDisposable
         outcome.Verses.Should().Be(Restored.Count());
         foreach (var (chapter, verse) in Restored)
         {
-            Read(text, chapter, verse).Should().Be(Expected(_restored, chapter, verse), $"{chapter}:{verse}");
+            // The chapter numbers stay for the edition boundary pass to take out.
+            Read(text, chapter, verse).Should().Be(Expected(_marked, chapter, verse), $"{chapter}:{verse}");
         }
 
         var row = await _db.Texts.AsNoTracking().SingleAsync(t => t.Id == text.Id);
@@ -203,7 +207,8 @@ public sealed class SweteRestorationLoadTests : IDisposable
 
     /// <summary>
     /// A word both readings hold keeps its row and its link; a misread token that goes takes the
-    /// link it stood in alone with it, rather than leaving a link that names words on one side only.
+    /// matcher's link it stood in alone with it, rather than leaving a link that names words on one
+    /// side only.
     /// </summary>
     [Fact]
     public async Task WhatBothReadingsShareKeepsItsLinks()
@@ -217,13 +222,35 @@ public sealed class SweteRestorationLoadTests : IDisposable
         kept.Surface.Should().Be("αὐτὸν");
         misread.Surface.Should().Be("αὐτὸν");
         var equals = Link(text, brenton, LinkRelation.Equals, kept, _db.WordAt(brenton, 11, 25, 1));
-        var expands = Link(text, brenton, LinkRelation.Expands, misread, null);
+        var expands = Link(text, brenton, LinkRelation.Expands, misread, null, SeptuagintLinkLoader.Source);
 
         await _loader.Load(TestResources.SweteFolder);
 
         (await _db.Links.AnyAsync(l => l.Id == equals.Id)).Should().BeTrue();
         (await _db.Words.AnyAsync(w => w.Id == kept.Id && w.Position == 7)).Should().BeTrue();
         (await _db.Links.AnyAsync(l => l.Id == expands.Id)).Should().BeFalse();
+    }
+
+    /// <summary>
+    /// Anything but a matcher's link on a token the restoration replaces is somebody's statement about
+    /// it, and the pass stops rather than delete it unread.
+    /// </summary>
+    [Fact]
+    public async Task ATokenOtherEvidenceStandsOnStopsThePass()
+    {
+        var text = Loaded(_digitised);
+        var brenton = Corpus.Add(_db, "GRCBRENT", TextKind.CriticalEdition, "grc", (11, 25, ["αὐτὸν"]));
+        _db.SaveChanges();
+        var misread = _db.WordAt(text, 11, 25, 9);
+        var stated = Link(text, brenton, LinkRelation.Expands, misread, null);
+        var before = await _db.Words.AsNoTracking().OrderBy(w => w.Id).Select(w => new { w.Id, w.Position, w.Surface }).ToListAsync();
+
+        var restoring = () => _loader.Load(TestResources.SweteFolder);
+
+        await restoring.Should().ThrowAsync<InvalidOperationException>().WithMessage("*protected*");
+        (await _db.Links.AnyAsync(l => l.Id == stated.Id)).Should().BeTrue();
+        (await _db.Words.AsNoTracking().OrderBy(w => w.Id).Select(w => new { w.Id, w.Position, w.Surface }).ToListAsync())
+            .Should().BeEquivalentTo(before, o => o.WithStrictOrdering());
     }
 
     /// <summary>
@@ -245,12 +272,12 @@ public sealed class SweteRestorationLoadTests : IDisposable
         corrected.NormalisedText.Should().Be("εισ");
     }
 
-    private Link Link(Text from, Text to, LinkRelation relation, Word fromWord, Word? toWord)
+    private Link Link(Text from, Text to, LinkRelation relation, Word fromWord, Word? toWord, string source = "a test")
     {
         var link = new Link
         {
             FromTextId = from.Id, ToTextId = to.Id, Relation = relation, Method = LinkMethod.Lexical,
-            Confidence = 0.9, Provenance = new() { Source = "a test" },
+            Confidence = 0.9, Provenance = new() { Source = source },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = fromWord, Side = LinkSide.From });
@@ -405,15 +432,18 @@ public sealed class SweteCorrectionLoadTests : IDisposable
         var verses = SweteRestorations.All.Where(r => SweteTextSource.Reads(r.Book))
             .Select(r => (r.Book, r.Chapter, r.Verse, r.Label)).Distinct().ToList();
         outcome.Verses.Should().Be(verses.Count);
-        outcome.Words.Should().Be(17 + SweteCorrections.All.Concat(SwetePage.All).Concat(SweteRestorations.ChapterMarkers).Where(r => SweteTextSource.Reads(r.Book))
-            .Sum(r => Words(r.Printed) - Words(r.Digitised)));
+        // The Genesis words add 17, which their entries do not count because two of them divide a token.
+        outcome.Words.Should().Be(17 + SweteRestorations.All.Except(SweteRestorations.Earlier[0])
+            .Where(r => SweteTextSource.Reads(r.Book)).Sum(r => Words(r.Printed) - Words(r.Digitised)));
 
+        // The restorations leave the chapter numbers standing; they go in the boundary pass below.
+        var marked = SweteTextSource.Read(TestResources.SweteFolder, chapterMarkers: false);
         var cold = SweteTextSource.Read(TestResources.SweteFolder);
         var text = await _db.Texts.SingleAsync(t => t.Slug == SweteTextSource.Slug);
         foreach (var (book, chapter, verse, label) in verses)
         {
             var (canonical, placed) = SweteTextSource.Placed(book, chapter);
-            var expected = string.Concat(cold.Books.Single(b => b.CanonicalOrdinal == canonical)
+            var expected = string.Concat(marked.Books.Single(b => b.CanonicalOrdinal == canonical)
                 .Chapters.Single(c => c.Number == placed).Verses.Single(v => v.Number == verse && v.Label == label)
                 .Words.Select(w => w.Surface + w.Trailer));
             var stored = string.Concat(await _db.Words.AsNoTracking()
@@ -426,5 +456,35 @@ public sealed class SweteCorrectionLoadTests : IDisposable
         }
 
         (await loader.Load(TestResources.SweteFolder)).Verses.Should().Be(0);
+
+        // The chapter numbers are the edition boundary pass's, and after it the whole text is the cold one.
+        await _db.Texts.Where(t => t.Id == text.Id).ExecuteUpdateAsync(s => s.SetProperty(t => t.RightsNote,
+            "Earlier notes. " + SweteRestorations.SecondSamuelMarkerNote));
+        _db.ChangeTracker.Clear();
+        var boundaries = new EditionBoundaryRepairLoader(_db);
+        var taken = await boundaries.Load(TestResources.Folder(string.Empty));
+        _output.WriteLine(taken.ToString());
+        taken.RemovedWords.Should().Be(61);
+        taken.RewrittenWords.Should().Be(3);
+        var numbered = marked.Books.SelectMany(b => b.Chapters.SelectMany(c => c.Verses.Select(v => (b, c, v))))
+            .Select(x => (x.b.CanonicalOrdinal, x.c.Number, x.v.Number, x.v.Label, Marked: x.v.Words,
+                Cold: cold.Books.Single(b => b.CanonicalOrdinal == x.b.CanonicalOrdinal).Chapters.Single(c => c.Number == x.c.Number)
+                    .Verses.Single(v => v.Number == x.v.Number && v.Label == x.v.Label).Words))
+            .Where(x => !x.Marked.SequenceEqual(x.Cold))
+            .ToList();
+        numbered.Should().HaveCount(64);
+        foreach (var (canonical, chapter, verse, label, _, expected) in numbered)
+        {
+            (await _db.Words.AsNoTracking()
+                    .Where(w => w.TextId == text.Id && w.Verse!.Book!.CanonicalOrdinal == canonical
+                                && w.Verse.ChapterNumber == chapter && w.Verse.Number == verse && w.Verse.Label == label)
+                    .OrderBy(w => w.Position).Select(w => w.Surface + w.Trailer).ToListAsync())
+                .Should().Equal(expected.Select(w => w.Surface + w.Trailer), $"{canonical} {chapter}:{verse}{label}");
+        }
+
+        (await _db.Texts.AsNoTracking().SingleAsync(t => t.Id == text.Id)).RightsNote.Should()
+            .Be("Earlier notes. " + SweteRestorations.ChapterMarkersNote);
+        var again = await boundaries.Load(TestResources.Folder(string.Empty));
+        (again.RemovedWords, again.MovedWords, again.RewrittenWords).Should().Be((0, 0, 0));
     }
 }

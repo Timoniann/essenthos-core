@@ -257,11 +257,17 @@ internal static class SweteTextSource
     }
 
     /// <param name="restored">
-    /// False for the edition as the transcription reads it, without <see cref="SweteRestorations"/>:
-    /// what a corpus loaded before them holds. The verses it ran together are divided either way.
+    /// False for the edition as the transcription reads it, without <see cref="SweteRestorations"/>
+    /// and with its chapter numbers: what a corpus loaded before them holds. The verses it ran together
+    /// are divided either way.
+    /// </param>
+    /// <param name="chapterMarkers">
+    /// False for the restored edition with the chapter numbers the transcription let into the text
+    /// still standing, as a corpus restored before <see cref="SweteReader"/> took them out holds it.
     /// </param>
     public static TextSource Read(string folder, bool restored = true, bool chapterMarkers = true)
     {
+        var keepChapterMarkers = !restored || !chapterMarkers;
         var books = new List<BookDraft>(Canon.Length + 1);
         var position = 0;
 
@@ -281,16 +287,15 @@ internal static class SweteTextSource
             var lines = file == Isaiah
                 ? SweteIsaiah.Lines(folder)
                 : restored
-                    ? SweteRestorations.Apply(file, SweteDivisions.Lines(file, File.ReadLines(path)),
-                        chapterMarkers ? SweteRestorations.All : SweteRestorations.BeforeChapterMarkers)
+                    ? SweteRestorations.Apply(file, SweteDivisions.Lines(file, File.ReadLines(path)))
                     : SweteDivisions.Lines(file, File.ReadLines(path));
             if (file == SweteOdes.File)
             {
-                books.Add(Book(canonical, ++position, SweteOdes.Chapters(SweteReader.Read(SweteOdes.Lines(lines)))));
+                books.Add(Book(canonical, ++position, SweteOdes.Chapters(SweteReader.Read(SweteOdes.Lines(lines), keepChapterMarkers))));
                 continue;
             }
 
-            var read = SweteReader.Read(lines);
+            var read = SweteReader.Read(lines, keepChapterMarkers);
             var chapters = Misnumbered.Renumber(file, read.Chapters).Select(Chapter).ToList();
 
             if (file == SecondEsdras.File)

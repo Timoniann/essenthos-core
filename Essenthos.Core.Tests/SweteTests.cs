@@ -164,7 +164,7 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(576048);
+            .Should().Be(575995, "the 61 chapter numbers are not words, and Exodus 20:1 holds the page's eight in place of one");
     }
 
     /// <summary>

@@ -90,7 +90,8 @@ public class EditionBoundaryLoaderTests : IClassFixture<WitnessDatabase>, IDispo
         var last = chapter.Verses.Single(v => v.Number == 43);
         var raw = SweteReader.Read(SweteRestorations.Apply("12.Regnorum_II",
             File.ReadLines(Path.Combine(TestResources.SweteFolder, "12.Regnorum_II.txt")),
-            [.. SweteCorrections.All.Where(c => c.Book == "12.Regnorum_II" && c.Chapter == 19 && c.Verse == 42)]));
+            [.. SweteCorrections.All.Where(c => c.Book == "12.Regnorum_II" && c.Chapter == 19 && c.Verse == 42)]),
+            keepChapterMarkers: true);
         raw.Number.Should().Be(12);
         var rawWords = raw.Chapters.Single(c => c.Number == 19).Verses.Single(v => v.Number == 42).Words;
         var warmWords = historical ? rawWords.Select(w => new WordDraft(w.Surface, w.Trailer)).ToArray()
@@ -230,7 +231,7 @@ public class EditionBoundaryLoaderTests : IClassFixture<WitnessDatabase>, IDispo
         var claims = await db.LinkClaims.AsNoTracking().OrderBy(c => c.Id)
             .Select(c => new { c.Id, c.LinkId, c.Method, c.ProvenanceId }).ToListAsync();
         var loader = new EditionBoundaryRepairLoader(db);
-        if (evidence == "derived")
+        if (evidence is "derived" or "rendering")
         {
             (await loader.Load(TestResources.Folder(string.Empty))).RemovedWords.Should().Be(1);
             (await db.Words.AnyAsync(w => w.Id == marker.Id)).Should().BeFalse();
@@ -251,6 +252,93 @@ public class EditionBoundaryLoaderTests : IClassFixture<WitnessDatabase>, IDispo
                 .Select(c => new { c.Id, c.LinkId, c.Method, c.ProvenanceId }).ToListAsync())
                 .Should().BeEquivalentTo(claims, o => o.WithStrictOrdering());
         }
+    }
+
+    [Theory]
+    [InlineData("word_strong")]
+    [InlineData("word_parsing")]
+    [InlineData("shared-aligner-side")]
+    public async Task AChapterNumberAnythingElseStandsOnStopsThePassAndChangesNothing(string evidence)
+    {
+        await Reset();
+        var marked = SweteTextSource.Read(TestResources.SweteFolder, chapterMarkers: false);
+        var book = marked.Books.Single(b => b.CanonicalOrdinal == 10);
+        await new CorpusLoader(db, NullLogger<CorpusLoader>.Instance).Load(new TextSource(marked.Definition,
+            [book with { Chapters = [.. book.Chapters.Where(c => c.Number is 11 or 12)] }]));
+        var marker = await db.Words.SingleAsync(w => w.Verse!.ChapterNumber == 11 && w.Verse.Number == 27 && w.Surface == "XII");
+        var neighbour = await db.Words.SingleAsync(w => w.VerseId == marker.VerseId && w.Position == marker.Position - 1);
+        switch (evidence)
+        {
+            case "word_strong":
+                db.WordStrongs.Add(new WordStrong { WordId = marker.Id, Number = "G1427", Method = LinkMethod.StatedBySource, Source = "a test" });
+                await db.SaveChangesAsync();
+                break;
+            case "word_parsing":
+                db.WordParsings.Add(new WordParsing
+                {
+                    WordId = marker.Id, Morphology = System.Text.Json.JsonDocument.Parse("{}"),
+                    Method = LinkMethod.StatedBySource, Source = "a test",
+                });
+                await db.SaveChangesAsync();
+                break;
+            default:
+                var other = Corpus.Add(db, "OTHER", TextKind.CriticalEdition, "grc", (1, 1, ["λόγος"]));
+                await db.SaveChangesAsync();
+                var target = await db.Words.SingleAsync(w => w.TextId == other.Id);
+                await db.Database.OpenConnectionAsync();
+                await LinkWriter.Write((Npgsql.NpgsqlConnection)db.Database.GetDbConnection(), null,
+                    [new NewLink(marker.TextId, target.TextId, LinkRelation.Renders, LinkMethod.Aligner, .5,
+                        "a model guess over two words", null, [neighbour.Id, marker.Id], [target.Id])], CancellationToken.None);
+                break;
+        }
+
+        var before = await db.Words.AsNoTracking().OrderBy(w => w.Id)
+            .Select(w => new { w.Id, w.VerseId, w.Position, w.Surface, w.Trailer }).ToListAsync();
+        var correcting = () => new EditionBoundaryRepairLoader(db).Load(TestResources.Folder(string.Empty));
+        await correcting.Should().ThrowAsync<InvalidOperationException>().WithMessage("*protected*");
+        (await db.Words.AsNoTracking().OrderBy(w => w.Id)
+            .Select(w => new { w.Id, w.VerseId, w.Position, w.Surface, w.Trailer }).ToListAsync())
+            .Should().BeEquivalentTo(before, o => o.WithStrictOrdering());
+    }
+
+    [Fact]
+    public async Task ChapterNumbersGoWithTheirOwnMatcherLinksAndTheWordsAroundThemKeepTheirRows()
+    {
+        await Reset();
+        var marked = SweteTextSource.Read(TestResources.SweteFolder, chapterMarkers: false);
+        var read = SweteTextSource.Read(TestResources.SweteFolder);
+        var book = marked.Books.Single(b => b.CanonicalOrdinal == 10);
+        await new CorpusLoader(db, NullLogger<CorpusLoader>.Instance).Load(new TextSource(marked.Definition,
+            [book with { Chapters = [.. book.Chapters.Where(c => c.Number is >= 11 and <= 17)] }]));
+        var marker = await db.Words.SingleAsync(w => w.Verse!.ChapterNumber == 11 && w.Verse.Number == 27 && w.Surface == "XII");
+        var other = Corpus.Add(db, "GEEZ81", TextKind.Translation, "gez", (1, 1, ["ቃል"]));
+        await db.SaveChangesAsync();
+        var target = await db.Words.SingleAsync(w => w.TextId == other.Id);
+        await db.Database.OpenConnectionAsync();
+        await LinkWriter.Write((Npgsql.NpgsqlConnection)db.Database.GetDbConnection(), null,
+            [new NewLink(target.TextId, marker.TextId, LinkRelation.Renders, LinkMethod.Aligner, .5,
+                "a model guess", null, [target.Id], [marker.Id])], CancellationToken.None);
+        var before = await db.Words.AsNoTracking().Where(w => w.TextId == marker.TextId)
+            .Select(w => new { w.Id, w.Surface, w.Trailer }).ToListAsync();
+
+        var loader = new EditionBoundaryRepairLoader(db);
+        var outcome = await loader.Load(TestResources.Folder(string.Empty));
+
+        outcome.RemovedWords.Should().Be(3);
+        outcome.Texts.Should().Equal(SweteTextSource.Slug);
+        (await db.Links.CountAsync()).Should().Be(0);
+        var after = await db.Words.AsNoTracking().Where(w => w.TextId == marker.TextId)
+            .Select(w => new { w.Id, w.Surface, w.Trailer }).ToListAsync();
+        after.Should().BeEquivalentTo(before.Where(w => w.Surface is not ("XII" or "XVI" or "XVII")));
+        foreach (var chapter in read.Books.Single(b => b.CanonicalOrdinal == 10).Chapters.Where(c => c.Number is >= 11 and <= 17))
+        foreach (var verse in chapter.Verses)
+            (await db.Words.AsNoTracking().Where(w => w.TextId == marker.TextId && w.Verse!.ChapterNumber == chapter.Number
+                    && w.Verse.Number == verse.Number).OrderBy(w => w.Position).Select(w => w.Surface + w.Trailer).ToListAsync())
+                .Should().Equal(verse.Words.Select(w => w.Surface + w.Trailer), $"2 Samuel {chapter.Number}:{verse.Number}");
+        var again = await loader.Load(TestResources.Folder(string.Empty));
+        again.ToString().Should().Contain("nothing to do");
+        (await db.Words.AsNoTracking().Where(w => w.TextId == marker.TextId)
+            .Select(w => new { w.Id, w.Surface, w.Trailer }).ToListAsync()).Should().BeEquivalentTo(after);
     }
 
     private async Task SeedKjv()

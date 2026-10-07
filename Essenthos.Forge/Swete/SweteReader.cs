@@ -20,6 +20,12 @@ internal sealed record SweteChapter(int Number, IReadOnlyList<SweteVerse> Verses
 internal sealed record SweteBook(int Number, IReadOnlyList<SweteChapter> Chapters);
 
 /// <summary>
+/// A chapter's Roman numeral the reader took out of the text: the token as the file has it, and what
+/// of it stays — nothing for a numeral standing alone, the word for one run into its front.
+/// </summary>
+internal sealed record SweteChapterMarker(string Chapter, string Verse, string Token, string Kept);
+
+/// <summary>
 /// The one-token-per-line files of the machine-readable Swete: a reference, a space, and a word.
 ///
 /// <code>
@@ -51,6 +57,21 @@ internal sealed record SweteBook(int Number, IReadOnlyList<SweteChapter> Chapter
 /// does with the same case in USFM. Checked against Brenton, whose edition numbers a psalm's title
 /// as verse 1: after the repair the two editions hold the same words at the same address.
 /// </para>
+///
+/// <para>
+/// **The chapter numbers are not the text either.** Swete prints a chapter's number in Roman
+/// figures in the margin beside its first line, and the transcription let it in — at the end of the
+/// chapter before, at the start of the chapter itself, often both (<c>XX</c> closing Exodus 19 and
+/// standing alone as 20:1), and sometimes run into the first word (<c>XVαβὰθ</c>). A token that is
+/// nothing but a Roman numeral is taken out where it stands in a chapter's last verse and names the
+/// chapter after it, or in a chapter's first verse and names that chapter; a numeral run into the
+/// front of a chapter's first word, naming the chapter the one before closes with, is taken off the
+/// word, which stays. Nothing
+/// else is touched: a Latin letter elsewhere is a misreading <see cref="SweteCorrections"/> settles
+/// or leaves, and a numeral that names no chapter beside it is not a chapter's number. A verse whose
+/// only token was the numeral stays, empty: the edition numbers it, and the transcription has none
+/// of its words.
+/// </para>
 /// </summary>
 internal static class SweteReader
 {
@@ -79,7 +100,26 @@ internal static class SweteReader
     /// <summary>Where both kinds of unnumbered chapter belong: at the head of the book.</summary>
     private const int FirstChapter = 1;
 
-    public static SweteBook Read(IEnumerable<string> lines)
+    /// <param name="keepChapterMarkers">
+    /// True for the edition as a corpus loaded before the chapter numbers were taken out holds it.
+    /// </param>
+    public static SweteBook Read(IEnumerable<string> lines, bool keepChapterMarkers = false)
+    {
+        var (book, blocks) = Blocks(lines);
+        if (!keepChapterMarkers)
+        {
+            TakeChapterMarkers(blocks);
+        }
+
+        return new SweteBook(book, Chapters(blocks));
+    }
+
+    /// <summary>The chapter numbers <see cref="Read"/> takes out of these lines, in file order.</summary>
+    public static IReadOnlyList<SweteChapterMarker> ChapterMarkers(IEnumerable<string> lines) =>
+        TakeChapterMarkers(Blocks(lines).Blocks);
+
+    private static (int Book, List<(string Chapter, string Verse, List<string> Tokens)> Blocks) Blocks(
+        IEnumerable<string> lines)
     {
         var book = 0;
         var blocks = new List<(string Chapter, string Verse, List<string> Tokens)>(4096);
@@ -133,8 +173,123 @@ internal static class SweteReader
             throw new InvalidOperationException("The file holds no lines, so nothing says which book it is.");
         }
 
-        return new SweteBook(book, Chapters(blocks));
+        return (book, blocks);
     }
+
+    /// <summary>
+    /// Takes the chapter numbers out of the blocks in place and says what it took. A chapter's first
+    /// and last block are read in file order, which is the order the page prints them in. A numeral run
+    /// into a word is taken off it only where the chapter before closes with the same numeral standing
+    /// alone, which is the transcription's own evidence that it is the number: an <c>X</c> opening a
+    /// word is as often the chi it looks like.
+    /// </summary>
+    private static List<SweteChapterMarker> TakeChapterMarkers(
+        List<(string Chapter, string Verse, List<string> Tokens)> blocks)
+    {
+        var taken = new List<SweteChapterMarker>();
+        int? closedWith = null;
+        for (var i = 0; i < blocks.Count; i++)
+        {
+            var (chapter, verse, tokens) = blocks[i];
+            var opens = i == 0 || blocks[i - 1].Chapter != chapter;
+            var closing = closedWith;
+            closedWith = null;
+            if (!int.TryParse(chapter, out var number))
+            {
+                continue;
+            }
+
+            var next = i + 1 < blocks.Count && blocks[i + 1].Chapter != chapter
+                       && int.TryParse(blocks[i + 1].Chapter, out var following)
+                ? following
+                : 0;
+
+            var here = new List<SweteChapterMarker>();
+            for (var at = tokens.Count - 1; at >= 0; at--)
+            {
+                var token = tokens[at];
+                var letters = 0;
+                while (letters < token.Length && RomanFigures.Contains(token[letters]))
+                {
+                    letters++;
+                }
+
+                if (letters == 0 || Roman(token[..letters]) is not { } value)
+                {
+                    continue;
+                }
+
+                if (letters == token.Length)
+                {
+                    if ((opens && value == number) || (next > 0 && value == next))
+                    {
+                        here.Add(new SweteChapterMarker(chapter, verse, token, string.Empty));
+                        tokens.RemoveAt(at);
+                        if (next > 0 && value == next)
+                        {
+                            closedWith = value;
+                        }
+                    }
+                }
+                else if (opens && at == 0 && value == number && closing == number && IsGreekLetter(token[letters]))
+                {
+                    here.Add(new SweteChapterMarker(chapter, verse, token, token[letters..]));
+                    tokens[at] = token[letters..];
+                }
+            }
+
+            here.Reverse();
+            taken.AddRange(here);
+        }
+
+        return taken;
+    }
+
+    private const string RomanFigures = "IVXLC";
+
+    /// <summary>The value of a Roman numeral written as Swete prints them, or null where it is not one.</summary>
+    internal static int? Roman(string figures)
+    {
+        var value = 0;
+        for (var i = 0; i < figures.Length; i++)
+        {
+            var here = Figure(figures[i]);
+            var after = i + 1 < figures.Length ? Figure(figures[i + 1]) : 0;
+            value += here < after ? -here : here;
+        }
+
+        return value > 0 && value < 400 && Written(value) == figures ? value : null;
+    }
+
+    private static int Figure(char figure) => figure switch
+    {
+        'I' => 1,
+        'V' => 5,
+        'X' => 10,
+        'L' => 50,
+        'C' => 100,
+        _ => 0,
+    };
+
+    private static string Written(int value)
+    {
+        (int Value, string Figures)[] steps =
+            [(100, "C"), (90, "XC"), (50, "L"), (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")];
+        var written = new System.Text.StringBuilder();
+        foreach (var (step, figures) in steps)
+        {
+            while (value >= step)
+            {
+                written.Append(figures);
+                value -= step;
+            }
+        }
+
+        return written.ToString();
+    }
+
+    private static bool IsGreekLetter(char letter) =>
+        char.IsLetter(letter) && letter is (>= 'Ͱ' and <= 'Ͽ') or (>= 'ἀ' and <= '῿');
 
     private static IReadOnlyList<SweteChapter> Chapters(
         List<(string Chapter, string Verse, List<string> Tokens)> blocks)

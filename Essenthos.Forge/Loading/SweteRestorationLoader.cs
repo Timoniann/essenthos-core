@@ -25,7 +25,8 @@ internal sealed record SweteRestorationOutcome(int Verses, int Words, TimeSpan E
 /// already right. A warm one holds the verses as the transcription had them, and the corpus loader
 /// does not load a text twice, so the verses are rewritten here in place: the words the two readings
 /// share keep their rows, and with them every link and annotation already standing on them; a
-/// digitised token the restoration replaces goes, with the links it stood in alone; and the printed
+/// digitised token the restoration replaces goes, with the links a matcher drew on it alone, and
+/// anything else standing on it stops the pass (<see cref="RemovedWordEvidence"/>); and the printed
 /// words are inserted with no link, which is what they are until the two Septuagints are linked again.
 /// </para>
 ///
@@ -52,28 +53,9 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
         UPDATE word SET "position" = @position WHERE id = @id;
         """;
 
-    /// <summary>
-    /// The links a word about to go stands in alone on its side. The row cascades out of every link,
-    /// and a link left with words on one side only would read as a statement that those words have
-    /// no counterpart, which nobody made.
-    /// </summary>
-    private const string Unlink =
-        """
-        DELETE FROM link l
-        USING link_word lw
-        WHERE lw.link_id = l.id AND lw.word_id = @id
-          AND NOT EXISTS (SELECT 1 FROM link_word other
-                          WHERE other.link_id = l.id AND other.side = lw.side AND other.word_id <> @id);
-        """;
-
     private const string Rewrite =
         """
         UPDATE word SET "text" = @surface, trailer = @trailer, normalised_text = @normalised WHERE id = @id;
-        """;
-
-    private const string Remove =
-        """
-        DELETE FROM word WHERE id = @id;
         """;
 
     private const string Rebuild =
@@ -102,10 +84,13 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
         foreach (var book in SweteRestorations.Books.Where(SweteTextSource.Reads))
         {
             var path = Path.Combine(folder, SweteTextSource.FileName(book));
-            var digitised = SweteReader.Read(Lines(book, path));
-            var restored = SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path)));
+            // With the chapter numbers kept: they are taken out of a warm corpus by the edition's
+            // boundary repair, and a verse here is compared with what such a corpus holds.
+            var digitised = SweteReader.Read(Lines(book, path), keepChapterMarkers: true);
+            var restored = SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path)), keepChapterMarkers: true);
+            var cold = SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path)));
             var earlier = SweteRestorations.Earlier
-                .Select(set => SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path), set)))
+                .Select(set => SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path), set), keepChapterMarkers: true))
                 .ToList();
 
             foreach (var here in SweteRestorations.All
@@ -132,7 +117,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                     .Select(w => new StoredWord(w.Id, w.VerseId, w.Position, w.Surface, w.Trailer))
                     .ToListAsync(cancellationToken);
 
-                if (Same(stored, after))
+                if (Same(stored, after) || Same(stored, Words(cold, chapter, verse, label)))
                 {
                     continue;
                 }
@@ -144,14 +129,6 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                         $"transcription nor as its restoration: \"{string.Concat(stored.Select(w => w.Surface + w.Trailer))}\". " +
                         "The corpus holds a Swete loaded from other files; load the text again from these before " +
                         "restoring anything in it. Nothing was changed.");
-                }
-
-                if (here.Any(SweteRestorations.ChapterMarkers.Contains))
-                {
-                    var removed = stored.Where(w => w.Surface == "XX").Select(w => w.Id).ToArray();
-                    await SweteChapterMarkerEvidence.GuardRemoved(db, removed, cancellationToken);
-                    if (text.RightsNote?.Contains(SweteRestorations.ChapterMarkersNote, StringComparison.Ordinal) != true)
-                        text.RightsNote = $"{text.RightsNote} {SweteRestorations.ChapterMarkersNote}".Trim();
                 }
 
                 added += await Write(text, stored, after, here.All(SweteCorrections.KeepsTheWord), cancellationToken);
@@ -202,9 +179,9 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
     /// The stretch between what the two readings share at the head and at the tail is what differs.
     /// Where every change to the verse corrects a word's letters — a Latin letter, a margin number —
     /// each row is rewritten in place and keeps its links, since it is the same word. Otherwise
-    /// its digitised rows go — a misread token is not a word the edition prints, so nothing standing on
-    /// it is kept — and the printed words are written in their place. Returns how many words the verse
-    /// gained.
+    /// its digitised rows go — a misread token is not a word the edition prints, so a matcher's link on
+    /// it alone goes with it, and anything more refuses — and the printed words are written in their
+    /// place. Returns how many words the verse gained.
     /// </summary>
     private async Task<int> Write(
         Text text,
@@ -247,11 +224,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
             return 0;
         }
 
-        for (var i = 0; i < old; i++)
-        {
-            await Execute(Unlink, cancellationToken, ("id", stored[head + i].Id));
-            await Execute(Remove, cancellationToken, ("id", stored[head + i].Id));
-        }
+        await RemovedWordEvidence.Remove(db, [.. stored.Skip(head).Take(old).Select(w => w.Id)], cancellationToken);
 
         if (now != old)
         {
