@@ -151,6 +151,8 @@ public sealed class AnnotationCarrierTests : IDisposable
     [Fact]
     public async Task AFaintLinkThatNamedAWordLosesItOnceTheNameIsRenderedFirmly()
     {
+        Russian(1).Surface = "Сыны";
+        await _db.SaveChangesAsync();
         Link(Hebrew(2), Russian(1), LinkMethod.Aligner, 0.69);
         await _carrier.Carry();
         (await Named()).Should().ContainKey(Russian(1).Id);
@@ -204,11 +206,27 @@ public sealed class AnnotationCarrierTests : IDisposable
     public async Task AWordWrittenWithoutACapitalKeepsTheNameWhereNothingBesideItIsWrittenAsAName()
     {
         Spelled();
+        Russian(1).Surface = "лудимляне";
+        Russian(1).NormalisedText = "лудимляне";
+        await _db.SaveChangesAsync();
         Link(Hebrew(2), Russian(1), LinkMethod.Aligner, 0.93);
 
         await _carrier.Carry();
 
         (await Named()).Should().ContainKey(Russian(1).Id);
+    }
+
+    /// <summary>
+    /// A preposition is never the name, however strong the link that reached it.
+    /// </summary>
+    [Fact]
+    public async Task APrepositionIsNeverNamed()
+    {
+        Link(Hebrew(2), Russian(1), LinkMethod.StrongNumber, 0.95);
+
+        await _carrier.Carry();
+
+        (await Named()).Should().NotContainKey(Russian(1).Id);
     }
 
     /// <summary>

@@ -32,6 +32,7 @@ public sealed class EntityAnnotationTests : IDisposable
     private readonly EntityAnnotationLoader _loader;
     private readonly Text _hebrew;
     private readonly Text _english;
+    private readonly Text _hindi;
 
     /// <summary>
     /// Genesis 1, one verse per case, so a failure names the case rather than a position. The
@@ -69,7 +70,10 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 13, ["Moses’s", "lifetime"]),
             (1, 14, ["Moses", "and", "Aaron"]),
             (1, 15, ["set", "out"]),
-            (1, 19, ["Moses", "and", "Moses"]));
+            (1, 19, ["Moses", "and", "Moses"]),
+            (1, 20, ["and", "had", "been"]));
+
+        _hindi = Corpus.Add(_db, "IRV2019", TextKind.Translation, "hin", (1, 21, ["मूसा", "के", "पुत्र"]));
 
         _db.SaveChanges();
 
@@ -764,6 +768,28 @@ public sealed class EntityAnnotationTests : IDisposable
 
         (await _db.WordEntities.AnyAsync(a => a.Word!.TextId == _english.Id && a.Word.Verse!.Number == 19))
             .Should().BeFalse("which of the two the head renders is as much a choice as any other word");
+    }
+
+    /// <summary>
+    /// A word its language never names anybody with is no head. The Berean renders the second
+    /// יָרָבְעָם of 1 Kings 12:2 by <em>and had been</em>, which names nobody, and the Hindi's
+    /// <em>मूसा के पुत्र</em> puts the postposition after the name, where the last word of the
+    /// phrase would be.
+    /// </summary>
+    [Fact]
+    public async Task AWordThatIsNeverANameIsNoHead()
+    {
+        Phrase(Hebrew(1), _db.WordAt(_english, 1, 20, 1), _db.WordAt(_english, 1, 20, 2), _db.WordAt(_english, 1, 20, 3));
+        var name = _db.WordAt(_hindi, 1, 21, 1);
+        var postposition = _db.WordAt(_hindi, 1, 21, 2);
+        Phrase(Hebrew(1), name, postposition);
+
+        var named = await Load();
+
+        named.Keys.Should().NotIntersectWith(
+            [.. _db.Words.Where(w => w.TextId == _english.Id && w.Verse!.Number == 20).Select(w => w.Id)]);
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(postposition.Id);
     }
 
     /// <summary>
