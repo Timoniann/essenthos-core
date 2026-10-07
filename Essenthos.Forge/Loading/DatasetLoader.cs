@@ -644,9 +644,12 @@ internal sealed class DatasetLoader(
         {
             var divisions = scope.ServiceProvider.GetRequiredService<BrentonDivisionLoader>();
             var divided = await divisions.Load(cancellationToken);
-            if (divided.Divisions > 0)
+            var edited = await scope.ServiceProvider.GetRequiredService<BrentonEditLoader>()
+                .Load(Path.Combine(resources, "Septuagint"), cancellationToken);
+            if (divided.Divisions > 0 || edited.Verses > 0)
             {
                 status.Record(divided.ToString());
+                status.Record(edited.ToString());
                 relinked = true;
 
                 // How long a verse is decides which scheme of its tradition an edition follows, so the
@@ -665,7 +668,7 @@ internal sealed class DatasetLoader(
 
                 // Swete's editions are linked to Brenton's by the letters both print within each address,
                 // book by book, which is the load's own pass: the books the divisions touched are drawn again.
-                var books = divided.Verses.Select(verse => verse.Book).ToHashSet();
+                var books = divided.Verses.Select(verse => verse.Book).Concat(edited.Books).ToHashSet();
                 foreach (var slug in (string[])[SweteTextSource.Slug, SweteOldGreekTextSource.Slug])
                 {
                     if (await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken) is not { } swete)

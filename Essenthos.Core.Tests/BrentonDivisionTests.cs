@@ -168,10 +168,12 @@ public class BrentonDividedReadTests(Brenton brenton) : IClassFixture<Brenton>
             .Select(path => UsfmReader.Read(File.ReadAllText(path)))
             .ToDictionary(book => book.Book);
 
+        // The words the file repeats or lost are BrentonEdits', and read here as the file prints them.
+        var unedited = SeptuagintTextSource.Read(TestResources.SeptuagintFolder, edited: false);
         foreach (var code in (string[])["NUM", "PSA", "ISA", "1ES"])
         {
             var printed = files[code].Chapters.SelectMany(c => c.Verses).SelectMany(v => v.Words).Select(w => w.Surface + w.Trailer);
-            var read = brenton.Book(SeptuagintTextSource.Canonical(code)).Chapters
+            var read = unedited.Books.Single(b => b.CanonicalOrdinal == SeptuagintTextSource.Canonical(code)).Chapters
                 .SelectMany(c => c.Verses).SelectMany(v => v.Words).Select(w => w.Surface + w.Trailer);
 
             read.Should().Equal(printed, code);
@@ -180,7 +182,7 @@ public class BrentonDividedReadTests(Brenton brenton) : IClassFixture<Brenton>
 
     [Fact]
     public void TheRowSaysTheDivisionsAreOurs() =>
-        SeptuagintTextSource.Definition().RightsNote.Should().Be(BrentonDivisions.Note);
+        SeptuagintTextSource.Definition().RightsNote.Should().Be($"{BrentonDivisions.Note} {BrentonEdits.Note}");
 }
 
 /// <summary>The divisions made in place on a corpus that loaded Brenton's Greek before them.</summary>

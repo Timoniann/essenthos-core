@@ -238,7 +238,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
             return 0;
         }
 
-        var kept = Shared(stored, after);
+        var kept = SharedWords.Of([.. stored.Select(w => w.Surface)], [.. after.Select(w => w.Surface)]);
         var keptRows = kept.Where(k => k >= 0).ToHashSet();
         await RemovedWordEvidence.Remove(db,
             [.. stored.Where((_, index) => !keptRows.Contains(index)).Select(w => w.Id)], cancellationToken);
@@ -276,46 +276,6 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
 
         await db.SaveChangesAsync(cancellationToken);
         return after.Count - stored.Count;
-    }
-
-    /// <summary>
-    /// For each printed word, the stored row that is the same word, or -1: the longest run of surfaces
-    /// the two readings share in order, taken from the end so that a word repeated inside a stretch
-    /// the restoration replaces is not kept in place of the one the edition prints.
-    /// </summary>
-    private static int[] Shared(IReadOnlyList<StoredWord> stored, IReadOnlyList<SweteWord> after)
-    {
-        var lengths = new int[stored.Count + 1, after.Count + 1];
-        for (var i = 1; i <= stored.Count; i++)
-        {
-            for (var j = 1; j <= after.Count; j++)
-            {
-                lengths[i, j] = stored[i - 1].Surface == after[j - 1].Surface
-                    ? lengths[i - 1, j - 1] + 1
-                    : Math.Max(lengths[i - 1, j], lengths[i, j - 1]);
-            }
-        }
-
-        var kept = Enumerable.Repeat(-1, after.Count).ToArray();
-        for (int i = stored.Count, j = after.Count; i > 0 && j > 0;)
-        {
-            if (stored[i - 1].Surface == after[j - 1].Surface)
-            {
-                kept[j - 1] = i - 1;
-                i--;
-                j--;
-            }
-            else if (lengths[i - 1, j] >= lengths[i, j - 1])
-            {
-                i--;
-            }
-            else
-            {
-                j--;
-            }
-        }
-
-        return kept;
     }
 
     /// <summary>The words in order must give back the restored verse, checked inside the transaction.</summary>

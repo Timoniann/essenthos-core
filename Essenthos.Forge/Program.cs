@@ -68,6 +68,7 @@ builder.Services.AddScoped<SweteRestorationLoader>();
 builder.Services.AddScoped<TextRepairLoader>();
 builder.Services.AddScoped<EditionBoundaryRepairLoader>();
 builder.Services.AddScoped<BrentonDivisionLoader>();
+builder.Services.AddScoped<BrentonEditLoader>();
 builder.Services.AddScoped<BhsaLemmaLoader>();
 builder.Services.AddScoped<BereanNumberLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.Links.OldTestamentLinkLoader>();
