@@ -66,7 +66,9 @@
     {"slug": "belshazzar", "realm": "babylon", "reigns": [{"period": "period-belshazzar1reign"}]},
     {"slug": "darius-2", "realm": "persia", "reigns": []},
     {"slug": "cyrus", "realm": "persia", "reigns": [{"period": "period-cyrus1reignoverpersia"}]},
-    {"slug": "darius", "realm": "persia", "reigns": [{"period": "period-darius1reign"}]}
+    {"slug": "darius", "realm": "persia", "reigns": [{"period": "period-darius1reign"}]},
+    {"slug": "ahasuerus", "realm": "persia", "reigns": [{"period": "period-ahasuerus1reign"}]},
+    {"slug": "artaxerxes", "realm": "persia", "reigns": [{"period": "period-artaxerxes1reign"}]}
   ],
   "prophets": [
     {"slug": "samuel-2", "fields": [{"realm": "united", "kind": "prophesied", "verse": "1SA 3:20"}]},
@@ -185,6 +187,17 @@
     {"person": "daniel-2", "ruler": "cyrus", "role": "prophet", "kind": "dated", "verse": "DAN 10:1", "year": 3},
     {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 1:2-3", "year": 5, "count": "captivity"},
     {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 29:17", "year": 27, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 8:1", "year": 6, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 20:1", "year": 7, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 24:1", "year": 9, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 26:1", "year": 11, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 29:1", "year": 10, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 30:20", "year": 11, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 31:1", "year": 11, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 32:1", "year": 12, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 32:17", "year": 12, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 33:21", "year": 12, "count": "captivity"},
+    {"person": "ezekiel", "ruler": "jehoiachin", "role": "prophet", "kind": "dated", "verse": "EZK 40:1", "year": 25, "count": "captivity"},
     {"person": "ezekiel", "ruler": "nebuchadnezzar", "role": "prophet", "kind": "concerning", "verse": "EZK 29:18"},
     {"person": "haggai", "ruler": "darius", "role": "prophet", "kind": "superscription", "verse": "HAG 1:1", "year": 2},
     {"person": "haggai", "ruler": "zerubbabel-2", "role": "prophet", "kind": "superscription", "verse": "HAG 1:1"},
@@ -256,6 +269,11 @@
     {"person": "ahaz", "ruler": "pekah", "role": "accession", "kind": "narrative", "verse": "2KI 16:1", "year": 17},
     {"person": "hoshea", "ruler": "jotham-2", "role": "accession", "kind": "narrative", "verse": "2KI 15:30", "year": 20},
     {"person": "hoshea", "ruler": "ahaz", "role": "accession", "kind": "narrative", "verse": "2KI 17:1", "year": 12},
-    {"person": "hezekiah", "ruler": "hoshea", "role": "accession", "kind": "narrative", "verse": "2KI 18:1", "year": 3}
+    {"person": "hezekiah", "ruler": "hoshea", "role": "accession", "kind": "narrative", "verse": "2KI 18:1", "year": 3},
+    {"person": "ezra", "ruler": "artaxerxes", "role": "subject", "kind": "dated", "verse": "EZR 7:7-8", "year": 7},
+    {"person": "nehemiah", "ruler": "artaxerxes", "role": "subject", "kind": "dated", "verse": "NEH 2:1", "year": 20},
+    {"person": "nehemiah", "ruler": "artaxerxes", "role": "subject", "kind": "dated", "verse": "NEH 13:6", "year": 32},
+    {"person": "hadassah", "ruler": "ahasuerus", "role": "subject", "kind": "dated", "verse": "EST 2:16", "year": 7},
+    {"person": "haman", "ruler": "ahasuerus", "role": "subject", "kind": "dated", "verse": "EST 3:7", "year": 12}
   ]
 }

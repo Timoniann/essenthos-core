@@ -223,6 +223,26 @@ public sealed class ReignLoaderTests : IDisposable
     }
 
     /// <summary>
+    /// The kings of Persia the books of the return are dated by reign where a reckoning dates them,
+    /// Darius the Mede, whom none dates, stays unmarked, and Nehemiah and Esther are set in their
+    /// kings' days at the years their verses give, though neither is a prophet.
+    /// </summary>
+    [Fact]
+    public void TheKingsOfPersiaReignWhereAReckoningDatesThemAndTheirSubjectsAreSetAtTheirYears()
+    {
+        var persia = _decision.Rulers.Where(r => r.Realm == RulerRealms.Persia).ToDictionary(r => r.Slug);
+        persia["ahasuerus"].Reigns.Should().ContainSingle().Which.Period.Should().Be("period-ahasuerus1reign");
+        persia["artaxerxes"].Reigns.Should().ContainSingle().Which.Period.Should().Be("period-artaxerxes1reign");
+        persia["darius-2"].Reigns.Should().BeEmpty();
+
+        var subjects = _decision.Statements.Where(s => s.Role == ReignRoles.Subject).ToList();
+        subjects.Should().Contain(s => s.Person == "nehemiah" && s.Ruler == "artaxerxes" && s.Verse == "NEH 2:1" && s.Year == 20);
+        subjects.Should().Contain(s => s.Person == "hadassah" && s.Ruler == "ahasuerus" && s.Verse == "EST 2:16" && s.Year == 7);
+        subjects.Should().OnlyContain(s => s.Kind == ReignStatementKinds.Dated && s.Year != null);
+        _decision.Statements.Count(s => s.Person == "ezekiel" && s.Kind == ReignStatementKinds.Dated).Should().Be(13);
+    }
+
+    /// <summary>
     /// A ruler comes with the length the text gives his reign and the name he reigned under, and a
     /// prophet with where he spoke and where he came from: Amos at Bethel, from Tekoa in Judah.
     /// </summary>
