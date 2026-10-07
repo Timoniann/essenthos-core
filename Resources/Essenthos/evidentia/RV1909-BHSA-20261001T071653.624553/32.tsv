@@ -1,0 +1,11 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:2	15	ha		13	עָלְתָ֥ה		attached-word	attached	0.655	approved	0				AuxiliaryVerb of 'subido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:5	32	había		28	יָרַד֙		attached-word	attached	0.3053	approved	0				AuxiliaryVerb of 'bajado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:9	2	él		2	יֹּ֥אמֶר		attached-word	attached	0.5728	approved	0				SubjectPronoun of 'respondió', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	10	has		12	עָשִׂ֑יתָ		attached-word	attached	0.5847	approved	0				AuxiliaryVerb of 'hecho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	14	ellos		14	יָדְע֣וּ		attached-word	attached	0.3625	approved	0				SubjectPronoun of 'entendieron', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	25	había		25	הִגִּ֖יד		attached-word	attached	0.5364	approved	0				AuxiliaryVerb of 'declarado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:14	30	has		30	עָשִֽׂיתָ		attached-word	attached	0.5847	approved	0				AuxiliaryVerb of 'hecho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:6	18	tú		12	תַּ֧עַל		attached-word	attached	0.34	approved	0				SubjectPronoun of 'sacaste', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:10	19	había		21	דִּבֶּ֥ר		attached-word	attached	0.3229	approved	0				AuxiliaryVerb of 'dicho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:9	13	él		14	יֹּ֕אמֶר		attached-word	attached	0.5731	approved	0				SubjectPronoun of 'respondió', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

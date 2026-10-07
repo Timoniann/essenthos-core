@@ -1,0 +1,7 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:4	3	yo		4	ἔχω		attached-word	attached	0.5388	approved	0				SubjectPronoun of 'tengo', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:9	1	Yo		1	Ἔγραψά		attached-word	attached	0.6859	approved	0				SubjectPronoun of 'escrito', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:9	2	he		1	Ἔγραψά		attached-word	attached	0.6859	approved	0				AuxiliaryVerb of 'escrito', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	5	yo		4	ἔλθω		attached-word	attached	0.7	approved	0				SubjectPronoun of 'viniere', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:11	26	ha		18	ἑώρακεν		attached-word	attached	0.6027	approved	0				AuxiliaryVerb of 'visto', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:13	1	Yo		2	εἶχον		attached-word	attached	0.6239	approved	0				SubjectPronoun of 'tenía', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

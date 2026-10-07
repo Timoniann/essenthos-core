@@ -1,0 +1,13 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:3	33	ist		20	παραδοθείσῃ		attached-word	attached	0.5875	approved	0				AuxiliaryVerb of 'übergeben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:4	11	ist		7	προγεγραμμένοι		attached-word	attached	0.3	approved	0				AuxiliaryVerb of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:6	14	er		22	τετήρηκεν		attached-word	attached	0.4545	approved	0				SubjectPronoun of 'behalten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:7	23	sind		16	ἀπελθοῦσαι		attached-word	attached	0.3625	approved	0				AuxiliaryVerb of 'gegangen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:9	20	er		16	ἐτόλμησεν		attached-word	attached	0.7	approved	0				SubjectPronoun of 'wagte', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	6	sie		6	οἴδασιν		attached-word	attached	0.5179	approved	0				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	20	sie		18	φθείρονται		attached-word	attached	0.3211	approved	0				SubjectPronoun of 'verderben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:11	4	sie		8	ἐπορεύθησαν		attached-word	attached	0.3063	approved	0				SubjectPronoun of 'gehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:14	2	hat		1	Ἐπροφήτευσεν		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'geweissagt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:15	34	haben		24	ἐλάλησαν		attached-word	attached	0.6196	approved	0				AuxiliaryVerb of 'geredet', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:18	2	sie		2	ἔλεγον		attached-word	attached	0.6224	approved	0				SubjectPronoun of 'sagten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:23	22	ist		16	ἐσπιλωμένον		attached-word	attached	0.4	approved	0				AuxiliaryVerb of 'befleckt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

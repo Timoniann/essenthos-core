@@ -1,0 +1,9 @@
+{"entity":"amaw","name":"Amaw","kind":"place","names":{"ukr":{"nominative":"Амав","genitive":"Амаву"}},"model":"GPT-6 (Codex)","answered":true,"usage":null}
+{"entity":"asher-2","name":"Asher","kind":"place","names":{"ukr":{"nominative":"Асир","locative":"Асирі"}},"model":"GPT-6 (Codex)","answered":true,"usage":null}
+{"entity":"benjamin-5","name":"Benjamin","kind":"place","names":{"ukr":{"nominative":"Веніямин","locative":"Веніямині"}},"model":"GPT-6 (Codex)","answered":true,"usage":null}
+{"entity":"jezerites","name":"Jezerites","kind":"people","names":{"ukr":{"nominative":"Єцерівці","genitive":"Єцерівців"}},"model":"GPT-6 (Codex)","answered":true,"usage":null}
+{"entity":"merom","name":"Merom","kind":"place","names":{"ukr":{"nominative":"Мером","genitive":"Мерому"}},"model":"GPT-6 (Codex)","answered":true,"usage":null}
+{"entity":"naphtali-2","name":"Naphtali","kind":"place","names":{"ukr":{"nominative":"Нефталим","locative":"Нефталимі"}},"model":"GPT-6 (Codex)","answered":true,"usage":null}
+{"entity":"netaim","name":"Netaim","kind":"place","names":{"ukr":{"nominative":"Нетаїм","genitive":"Нетаїму"}},"model":"GPT-6 (Codex)","answered":true,"usage":null}
+{"entity":"trogyllium","name":"Trogyllium","kind":"place","names":{"ukr":{"nominative":"Трогілій","genitive":"Трогілія"}},"model":"GPT-6 (Codex)","answered":true,"usage":null}
+{"entity":"zebulun-2","name":"Zebulun","kind":"place","names":{"ukr":{"nominative":"Завулон","locative":"Завулоні"}},"model":"GPT-6 (Codex)","answered":true,"usage":null}

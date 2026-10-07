@@ -1,0 +1,7 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:7	16	han		16	ἀναπέπαυται		attached-word	attached	0.4	approved	0				AuxiliaryVerb of 'recreadas', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:7	17	sido		16	ἀναπέπαυται		attached-word	attached	0.4	approved	0				AuxiliaryVerb of 'recreadas', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	7	he		8	ἐγέννησα		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'engendrado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:15	6	ha		5	ἐχωρίσθη		attached-word	attached	0.3063	approved	0				AuxiliaryVerb of 'apartado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:21	2	he		5	ἔγραψά		attached-word	attached	0.6859	approved	0				AuxiliaryVerb of 'escrito', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:22	15	ser		14	χαρισθήσομαι		attached-word	attached	0.475	approved	0				AuxiliaryVerb of 'concedido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

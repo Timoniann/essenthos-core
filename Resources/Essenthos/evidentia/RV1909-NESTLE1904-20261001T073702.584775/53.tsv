@@ -1,0 +1,7 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:10	25	ha		15	ἐπιστεύθη		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'creído', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	26	sido		15	ἐπιστεύθη		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'creído', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:5	2	os		2	μνημονεύετε		attached-word	attached	0.55	approved	0				SubjectPronoun of 'acordáis', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:8	3	será		3	ἀποκαλυφθήσεται		attached-word	attached	0.2846	approved	0				AuxiliaryVerb of 'manifestado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:1	14	sea		14	δοξάζηται		attached-word	attached	0.6719	approved	0				AuxiliaryVerb of 'glorificada', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:2	3	seamos		3	ῥυσθῶμεν		attached-word	attached	0.475	approved	0				AuxiliaryVerb of 'librados', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

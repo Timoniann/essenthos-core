@@ -1,0 +1,9 @@
+{
+  "requested": 9,
+  "answered": 9,
+  "new_forms": 12,
+  "structural_faults": [],
+  "same_checker_on_existing_forms": [],
+  "omitted_entities": [],
+  "semantic_review": "Model forms reviewed against frozen held spellings and passages; generated morphology remains inferred."
+}

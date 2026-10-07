@@ -1,0 +1,13 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:2	5	sea		5	πληθυνθείη		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'multiplicada', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:3	28	ha		19	καλέσαντος		attached-word	attached	0.4273	approved	0				AuxiliaryVerb of 'llamado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:14	14	ha		17	ἐδήλωσέν		attached-word	attached	0.3143	approved	0				AuxiliaryVerb of 'declarado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:17	3	había		1	λαβὼν		attached-word	attached	0.475	approved	0				AuxiliaryVerb of 'recibido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:4	10	habían		6	ἁμαρτησάντων		attached-word	attached	0.2836	approved	0				AuxiliaryVerb of 'pecado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:4	26	ser		16	τηρουμένους		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'reservados', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:15	2	han		1	καταλειπόντες		attached-word	attached	0.2875	approved	0				AuxiliaryVerb of 'dejado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:15	9	han		4	ἐπλανήθησαν		attached-word	attached	0.55	approved	0				AuxiliaryVerb of 'extraviado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:1	2	yo		6	γράφω		attached-word	attached	0.7	approved	0				SubjectPronoun of 'escribo', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:15	21	ha		18	δοθεῖσαν		attached-word	attached	0.671	approved	0				AuxiliaryVerb of 'dada', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:15	22	sido		18	δοθεῖσαν		attached-word	attached	0.671	approved	0				AuxiliaryVerb of 'dada', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:15	25	ha		21	ἔγραψεν		attached-word	attached	0.6859	approved	0				AuxiliaryVerb of 'escrito', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

@@ -1,0 +1,4 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+3:5	8	habíamos		8	ἐποιήσαμεν		attached-word	attached	0.4681	approved	0				AuxiliaryVerb of 'hecho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:7	7	seamos		7	γενηθῶμεν		attached-word	attached	0.4088	approved	0				AuxiliaryVerb of 'hechos', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:12	18	he		16	κέκρικα		attached-word	attached	0.34	approved	0				AuxiliaryVerb of 'determinado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

@@ -1,0 +1,15 @@
+{
+ "prompt_version":"forms-3-bounded-codex-20261004",
+ "languages":["ukr"],
+ "selection":"nine remaining target/case pairs recorded on PRB-0392",
+ "model":"GPT-6 (Codex)",
+ "effort":"current Codex session; no separate generation job",
+ "date":"2026-10-04",
+ "entities":9,
+ "expected_new_forms":12,
+ "slugs":[["amaw","asher-2","benjamin-5","jezerites","merom","naphtali-2","netaim","trogyllium","zebulun-2"]],
+ "input":"../targets-before.json",
+ "raw_output":"out/batch-0000.jsonl",
+ "provenance":"Inferred localized forms, not source-text annotations or human decisions. Existing Ukrainian nominatives are retained for six targets. UBIO supplies Merom and the Jezer clan stem; Netaim is a model transliteration because UBIO renders 1CH 4:23 as common nouns. The supplied genitives and locatives are model morphology, not quoted Bible wording.",
+ "usage":"not separately measurable inside this Codex turn"
+}

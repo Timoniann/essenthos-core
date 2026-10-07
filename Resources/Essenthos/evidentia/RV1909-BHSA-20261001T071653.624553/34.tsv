@@ -1,0 +1,8 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:10	10	serán		9	אֻ֨כְּל֔וּ		attached-word	attached	0.3087	approved	0				AuxiliaryVerb of 'consumidos', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:12	2	ha		2	אָמַ֣ר		attached-word	attached	0.5771	approved	0				AuxiliaryVerb of 'dicho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:12	15	él		13	עָבָ֑ר		attached-word	attached	0.5734	approved	0				SubjectPronoun of 'pasará', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:12	20	he		15	עִ֨נִּתִ֔ךְ		attached-word	attached	0.3	approved	0				AuxiliaryVerb of 'afligido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:14	10	sea		6	יִזָּרַ֥ע		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'sembrado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:10	10	fueron		12	יְרֻטְּשׁ֖וּ		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'estrellados', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:12	19	ha		12	אֹוכֵֽל		attached-word	attached	0.597	approved	0				AuxiliaryVerb of 'comer', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

@@ -1,0 +1,10 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:1	2	der				expands	supplied-article-deu	safe	0.7864	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Christi' → 'Χριστοῦ'
+1:2	10	der				expands	supplied-article-deu	safe	0.7942	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Gemeinde' → 'ἐκκλησίᾳ'
+1:3	12	dem				expands	supplied-article-deu	safe	0.7908	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'HERRN' → 'Κυρίου'
+1:9	17	ein				expands	supplied-indefinite-article-deu	safe	0.7941	approved	0				indefinite article, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Paulus' → 'Παῦλος'
+1:9	23	ein				expands	supplied-indefinite-article-deu	safe	0.8	approved	0				indefinite article, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Jesu' → 'Ἰησοῦ'
+1:16	13	einen				expands	supplied-indefinite-article-deu	safe	0.7958	approved	0				indefinite article, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Bruder' → 'ἀδελφὸν'
+1:16	25	dem				expands	supplied-article-deu	safe	0.7929	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Fleisch' → 'σαρκὶ'
+1:16	29	dem				expands	supplied-article-deu	safe	0.7908	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'HERRN' → 'Κυρίῳ'
+1:20	13	dem				expands	supplied-article-deu	safe	0.7908	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'HERRN' → 'Κυρίῳ'

@@ -1,0 +1,267 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:1	3	Jahre		2	שְׁנַ֤ת		global-review-known-rendering	safe	0.7951	approved	1				global known-rendering assignment; lexical score 0.65
+1:1	5	Königs		7	מֶּ֔לֶךְ		global-review-known-rendering	safe	0.7744	approved	1				global known-rendering assignment; lexical score 0.62
+1:1	8	sechsten		12	שִּׁשִּׁ֔י		global-review-known-rendering	safe	0.7654	approved	1				global known-rendering assignment; lexical score 0.62
+1:1	9	Monat		10	חֹ֨דֶשׁ֙		global-review-known-rendering	safe	0.7716	approved	1				global known-rendering assignment; lexical score 0.62
+1:1	12	Tage		14	יֹ֥ום		global-review-known-rendering	safe	0.7758	approved	1				global known-rendering assignment; lexical score 0.63
+1:1	14	Monats		18	חֹ֑דֶשׁ		global-review-known-rendering	safe	0.7839	approved	1				global known-rendering assignment; lexical score 0.63
+1:1	15	geschah		19	הָיָ֨ה		global-review-known-rendering	safe	0.7	approved	1				global known-rendering assignment; lexical score 0.55
+1:1	16	das				expands	supplied-article-deu	safe	0.7326	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Wort' → 'דְבַר'
+1:1	17	Wort		20	דְבַר		global-review-known-rendering	safe	0.7326	approved	1				global known-rendering assignment; lexical score 0.58
+1:1	20	den				expands	supplied-article-deu	safe	0.8	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Haggai' → 'חַגַּ֣י'
+1:1	21	Propheten		26	נָּבִ֗יא		global-review-known-rendering	safe	0.7961	approved	1				global known-rendering assignment; lexical score 0.65
+1:1	22	Haggai		24	חַגַּ֣י		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:1	25	dem				expands	supplied-article-deu	safe	0.8	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Sohne' → 'בֶּן'
+1:1	26	Sohne		29	בֶּן		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:1	31	Juda		32	יְהוּדָ֔ה		global-review-known-rendering	safe	0.7893	approved	1				global known-rendering assignment; lexical score 0.64
+1:1	34	Josua		35	יְהֹושֻׁ֧עַ		global-review-known-rendering	safe	0.7976	approved	1				global known-rendering assignment; lexical score 0.65
+1:1	36	Sohne		36	בֶּן		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:1	39	Hohenpriester		41	גָּדֹ֖ול		global-review-known-rendering	safe	0.71	approved	1				global known-rendering assignment; lexical score 0.56
+1:2	7	sagt		6	אמֹ֑ר		global-review-known-rendering	safe	0.6602	approved	1				global known-rendering assignment; lexical score 0.51
+1:2	8	Dieses		10	זֶּה֙		global-review-known-rendering	safe	0.5545	approved	1				global known-rendering assignment; lexical score 0.40
+1:2	9	Volk		8	עָ֤ם		global-review-known-rendering	safe	0.7586	approved	1				global known-rendering assignment; lexical score 0.61
+1:2	15	gekommen		14	בֹּ֛א		global-review-known-rendering	safe	0.6923	approved	1				global known-rendering assignment; lexical score 0.54
+1:2	19	das				expands	supplied-article-deu	safe	0.7858	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Haus' → 'בֵּ֥ית'
+1:2	20	Haus		16	בֵּ֥ית		global-review-known-rendering	safe	0.7858	approved	1				global known-rendering assignment; lexical score 0.64
+1:2	22	gebaut		19	הִבָּנֹֽות		global-review-known-rendering	safe	0.725	approved	1				global known-rendering assignment; lexical score 0.57
+1:3	2	das				expands	supplied-article-deu	safe	0.7326	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Wort' → 'דְּבַר'
+1:3	3	Wort		3	דְּבַר		global-review-known-rendering	safe	0.7326	approved	1				global known-rendering assignment; lexical score 0.58
+1:3	5	geschah		2	יְהִי֙		global-review-known-rendering	safe	0.7	approved	1				global known-rendering assignment; lexical score 0.55
+1:3	7	den				expands	supplied-article-deu	safe	0.8	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Haggai' → 'חַגַּ֥י'
+1:3	8	Propheten		9	נָּבִ֖יא		global-review-known-rendering	safe	0.7961	approved	1				global known-rendering assignment; lexical score 0.65
+1:3	9	Haggai		7	חַגַּ֥י		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:4	10	Häusern		8	בָתֵּיכֶ֣ם		global-review-known-rendering	safe	0.75	approved	1				global known-rendering assignment; lexical score 0.60
+1:4	12	wohnen		6	שֶׁ֖בֶת		global-review-known-rendering	safe	0.6576	approved	1				global known-rendering assignment; lexical score 0.51
+1:4	14	dieses		14	זֶּ֖ה		global-review-known-rendering	safe	0.5545	approved	1				global known-rendering assignment; lexical score 0.40
+1:4	15	Haus		12	בַּ֥יִת		global-review-known-rendering	safe	0.7858	approved	1				global known-rendering assignment; lexical score 0.64
+1:5	2	nun		2	עַתָּ֕ה		global-review-known-rendering	safe	0.6326	approved	1				global known-rendering assignment; lexical score 0.48
+1:5	13	Wege		10	דַּרְכֵיכֶֽם		global-review-known-rendering	safe	0.7477	approved	1				global known-rendering assignment; lexical score 0.60
+1:6	6	wenig		5	מְעָ֗ט		global-review-known-rendering	safe	0.6576	approved	1				global known-rendering assignment; lexical score 0.51
+1:6	9	esset		6	אָכֹ֤ול		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:6	15	trinket		11	שָׁתֹ֣ו		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:7	11	Wege		8	דַּרְכֵיכֶֽם		global-review-known-rendering	safe	0.7477	approved	1				global known-rendering assignment; lexical score 0.60
+1:8	4	Gebirge		3	הָ֛ר		global-review-known-rendering	safe	0.7851	approved	1				global known-rendering assignment; lexical score 0.64
+1:8	7	Holz		6	עֵ֖ץ		global-review-known-rendering	safe	0.7812	approved	1				global known-rendering assignment; lexical score 0.63
+1:8	12	Haus		10	בָּ֑יִת		global-review-known-rendering	safe	0.7858	approved	1				global known-rendering assignment; lexical score 0.64
+1:9	7	siehe		5	הִנֵּ֣ה		global-review-known-rendering	safe	0.6544	approved	1				global known-rendering assignment; lexical score 0.50
+1:9	10	wenig		7	מְעָ֔ט		global-review-known-rendering	safe	0.6576	approved	1				global known-rendering assignment; lexical score 0.51
+1:9	15	heim		11	בַּ֖יִת		global-review-known-rendering	safe	0.5682	approved	1				global known-rendering assignment; lexical score 0.42
+1:9	28	Hauses		21	בֵּיתִי֙		global-review-known-rendering	safe	0.7865	approved	1				global known-rendering assignment; lexical score 0.64
+1:9	40	Haus		30	בֵיתֹֽו		global-review-known-rendering	safe	0.7858	approved	1				global known-rendering assignment; lexical score 0.64
+1:10	3	der				expands	supplied-article-deu	safe	0.7641	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Himmel' → 'שָׁמַ֖יִם'
+1:10	4	Himmel		5	שָׁמַ֖יִם		global-review-known-rendering	safe	0.7641	approved	1				global known-rendering assignment; lexical score 0.61
+1:10	5	den				expands	supplied-article-deu	safe	0.7182	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Tau' → 'טָּ֑ל'
+1:10	6	Tau		7	טָּ֑ל		global-review-known-rendering	safe	0.7182	approved	1				global known-rendering assignment; lexical score 0.57
+1:10	12	Erde		10	אָ֖רֶץ		global-review-known-rendering	safe	0.7214	approved	1				global known-rendering assignment; lexical score 0.57
+1:11	6	gerufen		2	אֶקְרָ֨א		global-review-known-rendering	safe	0.6687	approved	1				global known-rendering assignment; lexical score 0.52
+1:11	9	Land		6	אָ֣רֶץ		global-review-known-rendering	safe	0.7647	approved	1				global known-rendering assignment; lexical score 0.61
+1:11	13	Berge		10	הָרִ֗ים		global-review-known-rendering	safe	0.783	approved	1				global known-rendering assignment; lexical score 0.63
+1:11	17	Korn		14	דָּגָן֙		global-review-known-rendering	safe	0.65	approved	1				global known-rendering assignment; lexical score 0.50
+1:11	21	Most		18	תִּירֹ֣ושׁ		global-review-known-rendering	safe	0.7419	approved	1				global known-rendering assignment; lexical score 0.59
+1:11	36	Menschen		32	אָדָם֙		global-review-known-rendering	safe	0.7114	approved	1				global known-rendering assignment; lexical score 0.56
+1:11	40	Vieh		36	בְּהֵמָ֔ה		global-review-known-rendering	safe	0.6257	approved	1				global known-rendering assignment; lexical score 0.48
+1:11	43	alle		39	כָּל		global-review-known-rendering	safe	0.7257	approved	1				global known-rendering assignment; lexical score 0.58
+1:12	3	der				expands	supplied-article-deu	safe	0.7851	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Sohn' → 'בֶּֽן'
+1:12	4	Sohn		4	בֶּֽן		global-review-known-rendering	safe	0.7851	approved	1				global known-rendering assignment; lexical score 0.64
+1:12	7	Josua		7	יהֹושֻׁ֣עַ		global-review-known-rendering	safe	0.7976	approved	1				global known-rendering assignment; lexical score 0.65
+1:12	8	der				expands	supplied-article-deu	safe	0.7851	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Sohn' → 'בֶּן'
+1:12	9	Sohn		8	בֶּן		global-review-known-rendering	safe	0.7851	approved	1				global known-rendering assignment; lexical score 0.64
+1:12	12	Hohepriester		13	גָּדֹ֜ול		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:12	15	ganze		15	כֹ֣ל		global-review-known-rendering	safe	0.768	approved	1				global known-rendering assignment; lexical score 0.62
+1:12	18	Volkes		18	עָ֗ם		global-review-known-rendering	safe	0.7738	approved	1				global known-rendering assignment; lexical score 0.62
+1:12	19	hörten		2	יִּשְׁמַ֣ע		global-review-known-rendering	safe	0.774	approved	1				global known-rendering assignment; lexical score 0.62
+1:12	21	die				expands	supplied-article-deu	safe	0.7917	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Stimme' → 'קֹול֙'
+1:12	22	Stimme		20	קֹול֙		global-review-known-rendering	safe	0.7917	approved	1				global known-rendering assignment; lexical score 0.64
+1:12	25	Gottes		22	אֱלֹֽהֵיהֶ֔ם		global-review-known-rendering	safe	0.7416	approved	1				global known-rendering assignment; lexical score 0.59
+1:12	28	die				expands	supplied-article-deu	safe	0.7641	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Worte' → 'דִּבְרֵי֙'
+1:12	29	Worte		25	דִּבְרֵי֙		global-review-known-rendering	safe	0.7641	approved	1				global known-rendering assignment; lexical score 0.61
+1:12	31	Propheten		28	נָּבִ֔יא		global-review-known-rendering	safe	0.7961	approved	1				global known-rendering assignment; lexical score 0.65
+1:12	32	Haggai		26	חַגַּ֣י		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:12	37	Gott		33	אֱלֹהֵיהֶ֑ם		global-review-known-rendering	safe	0.7357	approved	1				global known-rendering assignment; lexical score 0.59
+1:12	39	gesandt		31	שְׁלָחֹ֖ו		global-review-known-rendering	safe	0.7723	approved	1				global known-rendering assignment; lexical score 0.62
+1:12	43	Volk		37	עָ֖ם		global-review-known-rendering	safe	0.7586	approved	1				global known-rendering assignment; lexical score 0.61
+1:12	44	fürchtete		35	יִּֽירְא֥וּ		global-review-known-rendering	safe	0.6929	approved	1				global known-rendering assignment; lexical score 0.54
+1:13	2	sprach		2	יֹּאמֶר		global-review-known-rendering	safe	0.7899	approved	1				global known-rendering assignment; lexical score 0.64
+1:13	3	Haggai		3	חַגַּ֞י		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:13	4	der				expands	supplied-article-deu	safe	0.7	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Bote' → 'מַלְאַ֧ךְ'
+1:13	5	Bote		4	מַלְאַ֧ךְ		global-review-known-rendering	safe	0.7	approved	1				global known-rendering assignment; lexical score 0.55
+1:13	13	Volke		11	עָ֣ם		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:14	4	den				expands	supplied-article-deu	safe	0.7565	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Geist' → 'רוּחַ֩'
+1:14	5	Geist		5	רוּחַ֩		global-review-known-rendering	safe	0.7565	approved	1				global known-rendering assignment; lexical score 0.61
+1:14	8	Sohnes		7	בֶּן		global-review-known-rendering	safe	0.7925	approved	1				global known-rendering assignment; lexical score 0.64
+1:14	13	Juda		10	יְהוּדָ֗ה		global-review-known-rendering	safe	0.7893	approved	1				global known-rendering assignment; lexical score 0.64
+1:14	15	den				expands	supplied-article-deu	safe	0.7565	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Geist' → 'ר֨וּחַ֙'
+1:14	16	Geist		13	ר֨וּחַ֙		global-review-known-rendering	safe	0.7565	approved	1				global known-rendering assignment; lexical score 0.61
+1:14	17	Josuas		14	יְהֹושֻׁ֤עַ		global-review-known-rendering	safe	0.7437	approved	1				global known-rendering assignment; lexical score 0.59
+1:14	18	des				expands	supplied-article-deu	safe	0.7925	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Sohnes' → 'בֶּן'
+1:14	19	Sohnes		15	בֶּן		global-review-known-rendering	safe	0.7925	approved	1				global known-rendering assignment; lexical score 0.64
+1:14	22	Hohenpriesters		20	גָּדֹ֔ול		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:14	24	den				expands	supplied-article-deu	safe	0.7565	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Geist' → 'ר֔וּחַ'
+1:14	25	Geist		23	ר֔וּחַ		global-review-known-rendering	safe	0.7565	approved	1				global known-rendering assignment; lexical score 0.61
+1:14	27	ganzen		24	כֹּ֖ל		global-review-known-rendering	safe	0.7478	approved	1				global known-rendering assignment; lexical score 0.60
+1:14	30	Volkes		27	עָ֑ם		global-review-known-rendering	safe	0.7738	approved	1				global known-rendering assignment; lexical score 0.62
+1:14	33	kamen		29	יָּבֹ֨אוּ֙		global-review-known-rendering	safe	0.7383	approved	1				global known-rendering assignment; lexical score 0.59
+1:14	35	arbeiteten		31	יַּעֲשׂ֣וּ		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:14	37	Hause		34	בֵית		global-review-known-rendering	safe	0.7849	approved	1				global known-rendering assignment; lexical score 0.63
+1:14	42	Gottes		37	אֱלֹהֵיהֶֽם		global-review-known-rendering	safe	0.7416	approved	1				global known-rendering assignment; lexical score 0.59
+1:15	2	vierundzwanzigsten		5	אַרְבָּעָ֛ה		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+1:15	3	Tage		2	יֹ֨ום		global-review-known-rendering	safe	0.7758	approved	1				global known-rendering assignment; lexical score 0.63
+1:15	5	sechsten		11	שִּׁשִּׁ֑י		global-review-known-rendering	safe	0.7654	approved	1				global known-rendering assignment; lexical score 0.62
+1:15	6	Monats		8	חֹ֖דֶשׁ		global-review-known-rendering	safe	0.7839	approved	1				global known-rendering assignment; lexical score 0.63
+1:15	9	Jahre		13	שְׁנַ֥ת		global-review-known-rendering	safe	0.7951	approved	1				global known-rendering assignment; lexical score 0.65
+1:15	11	Königs		18	מֶּֽלֶךְ		global-review-known-rendering	safe	0.7744	approved	1				global known-rendering assignment; lexical score 0.62
+2:1	5	Einundzwanzigsten		7	אֶחָ֖ד		global-review-known-rendering	safe	0.71	approved	1				global known-rendering assignment; lexical score 0.56
+2:1	7	Monats		10	חֹ֑דֶשׁ		global-review-known-rendering	safe	0.7841	approved	1				global known-rendering assignment; lexical score 0.63
+2:1	8	geschah		11	הָיָה֙		global-review-known-rendering	safe	0.6971	approved	1				global known-rendering assignment; lexical score 0.55
+2:1	9	das				expands	supplied-article-deu	safe	0.7323	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Wort' → 'דְּבַר'
+2:1	10	Wort		12	דְּבַר		global-review-known-rendering	safe	0.7323	approved	1				global known-rendering assignment; lexical score 0.58
+2:1	13	den				expands	supplied-article-deu	safe	0.8	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Haggai' → 'חַגַּ֥י'
+2:1	14	Propheten		18	נָּבִ֖יא		global-review-known-rendering	safe	0.7962	approved	1				global known-rendering assignment; lexical score 0.65
+2:1	15	Haggai		16	חַגַּ֥י		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:2	5	dem				expands	supplied-article-deu	safe	0.8	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Sohne' → 'בֶּן'
+2:2	6	Sohne		5	בֶּן		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:2	11	Juda		8	יְהוּדָ֔ה		global-review-known-rendering	safe	0.7893	approved	1				global known-rendering assignment; lexical score 0.64
+2:2	14	Josua		11	יְהֹושֻׁ֥עַ		global-review-known-rendering	safe	0.7976	approved	1				global known-rendering assignment; lexical score 0.65
+2:2	15	dem				expands	supplied-article-deu	safe	0.8	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Sohne' → 'בֶּן'
+2:2	16	Sohne		12	בֶּן		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:2	19	Hohenpriester		17	גָּדֹ֑ול		global-review-known-rendering	safe	0.71	approved	1				global known-rendering assignment; lexical score 0.56
+2:2	25	Volkes		22	עָ֖ם		global-review-known-rendering	safe	0.7744	approved	1				global known-rendering assignment; lexical score 0.62
+2:2	27	sprich		24	אמֹֽר		global-review-known-rendering	safe	0.7893	approved	1				global known-rendering assignment; lexical score 0.64
+2:3	1	Wer		1	מִ֤י		global-review-known-rendering	safe	0.6107	approved	1				global known-rendering assignment; lexical score 0.46
+2:3	8	Haus		9	בַּ֣יִת		global-review-known-rendering	safe	0.7859	approved	1				global known-rendering assignment; lexical score 0.64
+2:3	12	Herrlichkeit		13	כְבֹודֹ֖ו		global-review-known-rendering	safe	0.6654	approved	1				global known-rendering assignment; lexical score 0.52
+2:3	13	gesehen		6	רָאָה֙		global-review-known-rendering	safe	0.7715	approved	1				global known-rendering assignment; lexical score 0.62
+2:3	17	sehet		19	רֹאִ֤ים		global-review-known-rendering	safe	0.7413	approved	1				global known-rendering assignment; lexical score 0.59
+2:3	28	Augen		28	עֵינֵיכֶֽם		global-review-known-rendering	safe	0.7865	approved	1				global known-rendering assignment; lexical score 0.64
+2:4	2	nun		2	עַתָּ֣ה		global-review-known-rendering	safe	0.6324	approved	1				global known-rendering assignment; lexical score 0.48
+2:4	11	Josua		9	יְהֹושֻׁ֣עַ		global-review-known-rendering	safe	0.7976	approved	1				global known-rendering assignment; lexical score 0.65
+2:4	12	Sohn		10	בֶּן		global-review-known-rendering	safe	0.7851	approved	1				global known-rendering assignment; lexical score 0.64
+2:4	19	alles		18	כָּל		global-review-known-rendering	safe	0.7028	approved	1				global known-rendering assignment; lexical score 0.55
+2:4	20	Volk		19	עַ֥ם		global-review-known-rendering	safe	0.7586	approved	1				global known-rendering assignment; lexical score 0.61
+2:4	22	Landes		21	אָ֛רֶץ		global-review-known-rendering	safe	0.7477	approved	1				global known-rendering assignment; lexical score 0.60
+2:5	2	Wort		3	דָּבָ֞ר		global-review-known-rendering	safe	0.7323	approved	1				global known-rendering assignment; lexical score 0.58
+2:5	3	welches		4	אֲשֶׁר		global-review-known-rendering	safe	0.6167	approved	1				global known-rendering assignment; lexical score 0.47
+2:5	12	Ägypten		10	מִּצְרַ֔יִם		global-review-known-rendering	safe	0.7881	approved	1				global known-rendering assignment; lexical score 0.64
+2:5	13	zoget		8	צֵאתְכֶ֣ם		global-review-known-rendering	safe	0.62	approved	1				global known-rendering assignment; lexical score 0.47
+2:5	16	Geist		12	רוּחִ֖י		global-review-known-rendering	safe	0.757	approved	1				global known-rendering assignment; lexical score 0.61
+2:5	20	Mitte		15	תֹוכְכֶ֑ם		global-review-known-rendering	safe	0.62	approved	1				global known-rendering assignment; lexical score 0.47
+2:5	21	Fürchtet		17	תִּירָֽאוּ		global-review-known-rendering	safe	0.6125	approved	1				global known-rendering assignment; lexical score 0.46
+2:6	8	einmal		7	אַחַ֖ת		global-review-known-rendering	safe	0.674	approved	1				global known-rendering assignment; lexical score 0.52
+2:6	18	Himmel		15	שָּׁמַ֣יִם		global-review-known-rendering	safe	0.764	approved	1				global known-rendering assignment; lexical score 0.61
+2:6	22	Erde		19	אָ֔רֶץ		global-review-known-rendering	safe	0.7201	approved	1				global known-rendering assignment; lexical score 0.57
+2:6	25	Meer		23	יָּ֖ם		global-review-known-rendering	safe	0.7708	approved	1				global known-rendering assignment; lexical score 0.62
+2:7	4	alle		4	כָּל		global-review-known-rendering	safe	0.7258	approved	1				global known-rendering assignment; lexical score 0.58
+2:7	10	aller		10	כָּל		global-review-known-rendering	safe	0.7341	approved	1				global known-rendering assignment; lexical score 0.58
+2:7	13	kommen		8	בָ֖אוּ		global-review-known-rendering	safe	0.6289	approved	1				global known-rendering assignment; lexical score 0.48
+2:7	18	Haus		17	בַּ֤יִת		global-review-known-rendering	safe	0.7859	approved	1				global known-rendering assignment; lexical score 0.64
+2:7	20	Herrlichkeit		20	כָּבֹ֔וד		global-review-known-rendering	safe	0.6654	approved	1				global known-rendering assignment; lexical score 0.52
+2:7	21	füllen		14	מִלֵּאתִ֞י		global-review-known-rendering	safe	0.663	approved	1				global known-rendering assignment; lexical score 0.51
+2:8	4	Silber		3	כֶּ֖סֶף		global-review-known-rendering	safe	0.7829	approved	1				global known-rendering assignment; lexical score 0.63
+2:8	8	Gold		7	זָּהָ֑ב		global-review-known-rendering	safe	0.7507	approved	1				global known-rendering assignment; lexical score 0.60
+2:9	1	Die				expands	supplied-article-deu	safe	0.6654	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Herrlichkeit' → 'כְּבֹוד֩'
+2:9	2	letzte		9	אַֽחֲרֹון֙		global-review-known-rendering	safe	0.7	approved	1				global known-rendering assignment; lexical score 0.55
+2:9	3	Herrlichkeit		3	כְּבֹוד֩		global-review-known-rendering	safe	0.6654	approved	1				global known-rendering assignment; lexical score 0.52
+2:9	5	Hauses		5	בַּ֨יִת		global-review-known-rendering	safe	0.7864	approved	1				global known-rendering assignment; lexical score 0.64
+2:9	18	diesem		21	זֶּה֙		global-review-known-rendering	safe	0.5975	approved	1				global known-rendering assignment; lexical score 0.45
+2:9	19	Orte		19	מָּקֹ֤ום		global-review-known-rendering	safe	0.575	approved	1				global known-rendering assignment; lexical score 0.43
+2:9	22	Frieden		23	שָׁלֹ֔ום		global-review-known-rendering	safe	0.7591	approved	1				global known-rendering assignment; lexical score 0.61
+2:9	23	geben		22	אֶתֵּ֣ן		global-review-known-rendering	safe	0.727	approved	1				global known-rendering assignment; lexical score 0.58
+2:10	2	Vierundzwanzigsten		4	אַרְבָּעָה֙		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:10	4	neunten		7	תְּשִׁיעִ֔י		global-review-known-rendering	safe	0.6594	approved	1				global known-rendering assignment; lexical score 0.51
+2:10	8	Jahre		9	שְׁנַ֥ת		global-review-known-rendering	safe	0.7951	approved	1				global known-rendering assignment; lexical score 0.65
+2:10	11	geschah		13	הָיָה֙		global-review-known-rendering	safe	0.6971	approved	1				global known-rendering assignment; lexical score 0.55
+2:10	12	das				expands	supplied-article-deu	safe	0.7323	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Wort' → 'דְּבַר'
+2:10	13	Wort		14	דְּבַר		global-review-known-rendering	safe	0.7323	approved	1				global known-rendering assignment; lexical score 0.58
+2:10	16	dem				expands	supplied-article-deu	safe	0.8	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Haggai' → 'חַגַּ֥י'
+2:10	17	Propheten		19	נָּבִ֖יא		global-review-known-rendering	safe	0.7962	approved	1				global known-rendering assignment; lexical score 0.65
+2:10	18	Haggai		17	חַגַּ֥י		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:11	9	Priester		9	כֹּהֲנִ֛ים		global-review-known-rendering	safe	0.7852	approved	1				global known-rendering assignment; lexical score 0.64
+2:11	11	das				expands	supplied-article-deu	safe	0.7407	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Gesetz' → 'תֹּורָ֖ה'
+2:11	12	Gesetz		10	תֹּורָ֖ה		global-review-known-rendering	safe	0.7407	approved	1				global known-rendering assignment; lexical score 0.59
+2:11	14	sprich		12	אמֹֽר		global-review-known-rendering	safe	0.7893	approved	1				global known-rendering assignment; lexical score 0.64
+2:12	2	trägt		2	יִשָּׂא		global-review-known-rendering	safe	0.575	approved	1				global known-rendering assignment; lexical score 0.43
+2:12	3	jemand		3	אִ֨ישׁ		global-review-known-rendering	safe	0.7	approved	1				global known-rendering assignment; lexical score 0.55
+2:12	5	Fleisch		4	בְּשַׂר		global-review-known-rendering	safe	0.7821	approved	1				global known-rendering assignment; lexical score 0.63
+2:12	7	Zipfel		7	כְנַ֣ף		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:12	9	Kleides		8	בִּגְדֹ֗ו		global-review-known-rendering	safe	0.6489	approved	1				global known-rendering assignment; lexical score 0.50
+2:12	15	Zipfel		12	כְנָפֹו		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:12	16	Brot		15	לֶּ֨חֶם		global-review-known-rendering	safe	0.7682	approved	1				global known-rendering assignment; lexical score 0.62
+2:12	20	Wein		23	יַּ֧יִן		global-review-known-rendering	safe	0.7507	approved	1				global known-rendering assignment; lexical score 0.60
+2:12	22	Öl		26	שֶׁ֛מֶן		global-review-known-rendering	safe	0.7344	approved	1				global known-rendering assignment; lexical score 0.58
+2:12	33	Priester		36	כֹּהֲנִ֛ים		global-review-known-rendering	safe	0.7852	approved	1				global known-rendering assignment; lexical score 0.64
+2:12	36	sprachen		38	יֹּאמְר֖וּ		global-review-known-rendering	safe	0.772	approved	1				global known-rendering assignment; lexical score 0.62
+2:12	37	Nein		39	לֹֽא		global-review-known-rendering	safe	0.75	approved	1				global known-rendering assignment; lexical score 0.60
+2:13	2	Haggai		3	חַגַּ֔י		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:13	3	sprach		2	יֹּ֣אמֶר		global-review-known-rendering	safe	0.7899	approved	1				global known-rendering assignment; lexical score 0.64
+2:13	9	Verunreinigter		12	יִטְמָ֑א		global-review-known-rendering	safe	0.7	approved	1				global known-rendering assignment; lexical score 0.55
+2:13	10	alles		9	כָל		global-review-known-rendering	safe	0.7028	approved	1				global known-rendering assignment; lexical score 0.55
+2:13	12	anrührt		5	יִגַּ֧ע		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:13	15	unrein		6	טְמֵא		global-review-known-rendering	safe	0.6289	approved	1				global known-rendering assignment; lexical score 0.48
+2:13	19	Priester		16	כֹּהֲנִ֛ים		global-review-known-rendering	safe	0.7852	approved	1				global known-rendering assignment; lexical score 0.64
+2:13	22	sprachen		18	יֹּאמְר֖וּ		global-review-known-rendering	safe	0.772	approved	1				global known-rendering assignment; lexical score 0.62
+2:14	3	Haggai		3	חַגַּ֜י		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:14	5	sprach		5	יֹּ֗אמֶר		global-review-known-rendering	safe	0.7899	approved	1				global known-rendering assignment; lexical score 0.64
+2:14	9	Volk		8	עָם		global-review-known-rendering	safe	0.7586	approved	1				global known-rendering assignment; lexical score 0.61
+2:14	21	alles		23	כָּל		global-review-known-rendering	safe	0.7028	approved	1				global known-rendering assignment; lexical score 0.55
+2:14	24	Hände		25	יְדֵיהֶ֑ם		global-review-known-rendering	safe	0.7278	approved	1				global known-rendering assignment; lexical score 0.58
+2:14	28	daselbst		29	שָׁ֖ם		global-review-known-rendering	safe	0.7119	approved	1				global known-rendering assignment; lexical score 0.56
+2:14	31	unrein		30	טָמֵ֥א		global-review-known-rendering	safe	0.6289	approved	1				global known-rendering assignment; lexical score 0.48
+2:15	2	nun		2	עַתָּה֙		global-review-known-rendering	safe	0.6324	approved	1				global known-rendering assignment; lexical score 0.48
+2:15	11	diesem		10	זֶּ֖ה		global-review-known-rendering	safe	0.5975	approved	1				global known-rendering assignment; lexical score 0.45
+2:15	12	Tage		8	יֹּ֥ום		global-review-known-rendering	safe	0.7764	approved	1				global known-rendering assignment; lexical score 0.63
+2:15	17	Stein		16	אֶ֛בֶן		global-review-known-rendering	safe	0.7367	approved	1				global known-rendering assignment; lexical score 0.59
+2:15	19	Stein		18	אֶ֖בֶן		global-review-known-rendering	safe	0.7367	approved	1				global known-rendering assignment; lexical score 0.59
+2:15	23	Tempel		20	הֵיכַ֥ל		global-review-known-rendering	safe	0.7182	approved	1				global known-rendering assignment; lexical score 0.57
+2:16	3	geschah		2	הְיֹותָ֥ם		global-review-known-rendering	safe	0.6971	approved	1				global known-rendering assignment; lexical score 0.55
+2:16	4	Kam		3	בָּא֙		global-review-known-rendering	safe	0.6698	approved	1				global known-rendering assignment; lexical score 0.52
+2:16	10	zwanzig		6	עֶשְׂרִ֔ים		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:16	15	zehn		9	עֲשָׂרָ֑ה		global-review-known-rendering	safe	0.7795	approved	1				global known-rendering assignment; lexical score 0.63
+2:16	16	kam		10	בָּ֣א		global-review-known-rendering	safe	0.6698	approved	1				global known-rendering assignment; lexical score 0.52
+2:16	22	fünfzig		16	חֲמִשִּׁ֣ים		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:16	29	zwanzig		20	עֶשְׂרִֽים		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:17	2	schlug		1	הִכֵּ֨יתִי		global-review-known-rendering	safe	0.7506	approved	1				global known-rendering assignment; lexical score 0.60
+2:17	11	Hagel		13	בָּרָ֔ד		global-review-known-rendering	safe	0.7135	approved	1				global known-rendering assignment; lexical score 0.56
+2:17	12	alle		15	כָּל		global-review-known-rendering	safe	0.7258	approved	1				global known-rendering assignment; lexical score 0.58
+2:17	15	Hände		17	יְדֵיכֶ֑ם		global-review-known-rendering	safe	0.7278	approved	1				global known-rendering assignment; lexical score 0.58
+2:18	9	diesem		8	זֶּ֖ה		global-review-known-rendering	safe	0.5975	approved	1				global known-rendering assignment; lexical score 0.45
+2:18	10	Tage		6	יֹּ֥ום		global-review-known-rendering	safe	0.7764	approved	1				global known-rendering assignment; lexical score 0.63
+2:18	16	vierundzwanzigsten		15	אַרְבָּעָ֜ה		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:18	17	Tage		12	יֹּום֩		global-review-known-rendering	safe	0.7764	approved	1				global known-rendering assignment; lexical score 0.63
+2:18	19	neunten		18	תְּשִׁיעִ֗י		global-review-known-rendering	safe	0.6594	approved	1				global known-rendering assignment; lexical score 0.51
+2:18	24	Tage		22	יֹּ֛ום		global-review-known-rendering	safe	0.7764	approved	1				global known-rendering assignment; lexical score 0.63
+2:18	27	der				expands	supplied-article-deu	safe	0.7182	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Tempel' → 'הֵֽיכַל'
+2:18	28	Tempel		25	הֵֽיכַל		global-review-known-rendering	safe	0.7182	approved	1				global known-rendering assignment; lexical score 0.57
+2:18	30	gegründet		24	יֻסַּ֥ד		global-review-known-rendering	safe	0.7182	approved	1				global known-rendering assignment; lexical score 0.57
+2:19	11	Weinstock		11	גֶּ֨פֶן		global-review-known-rendering	safe	0.789	approved	1				global known-rendering assignment; lexical score 0.64
+2:19	14	Feigenbaum		14	תְּאֵנָ֧ה		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:19	17	Granatbaum		17	רִמֹּ֛ון		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:19	23	getragen		23	נָשָׂ֑א		global-review-known-rendering	safe	0.575	approved	1				global known-rendering assignment; lexical score 0.43
+2:19	25	diesem		28	זֶּ֖ה		global-review-known-rendering	safe	0.5975	approved	1				global known-rendering assignment; lexical score 0.45
+2:19	26	Tage		26	יֹּ֥ום		global-review-known-rendering	safe	0.7764	approved	1				global known-rendering assignment; lexical score 0.63
+2:19	30	segnen		29	אֲבָרֵֽךְ		global-review-known-rendering	safe	0.789	approved	1				global known-rendering assignment; lexical score 0.64
+2:20	2	das				expands	supplied-article-deu	safe	0.7323	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Wort' → 'דְבַר'
+2:20	3	Wort		3	דְבַר		global-review-known-rendering	safe	0.7323	approved	1				global known-rendering assignment; lexical score 0.58
+2:20	5	geschah		2	יְהִ֨י		global-review-known-rendering	safe	0.6971	approved	1				global known-rendering assignment; lexical score 0.55
+2:20	7	zweiten		5	שֵׁנִית֙		global-review-known-rendering	safe	0.6731	approved	1				global known-rendering assignment; lexical score 0.52
+2:20	10	Haggai		7	חַגַּ֔י		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:20	12	Vierundzwanzigsten		11	אַרְבָּעָ֛ה		global-review-known-rendering	safe	0.8	approved	1				global known-rendering assignment; lexical score 0.65
+2:20	14	Monats		14	חֹ֖דֶשׁ		global-review-known-rendering	safe	0.7841	approved	1				global known-rendering assignment; lexical score 0.63
+2:21	7	Juda		5	יְהוּדָ֖ה		global-review-known-rendering	safe	0.7893	approved	1				global known-rendering assignment; lexical score 0.64
+2:21	9	sprich		7	אמֹ֑ר		global-review-known-rendering	safe	0.7893	approved	1				global known-rendering assignment; lexical score 0.64
+2:21	13	Himmel		12	שָּׁמַ֖יִם		global-review-known-rendering	safe	0.764	approved	1				global known-rendering assignment; lexical score 0.61
+2:21	16	Erde		16	אָֽרֶץ		global-review-known-rendering	safe	0.7201	approved	1				global known-rendering assignment; lexical score 0.57
+2:22	4	den				expands	supplied-article-deu	safe	0.6875	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Thron' → 'כִּסֵּ֣א'
+2:22	5	Thron		3	כִּסֵּ֣א		global-review-known-rendering	safe	0.6875	approved	1				global known-rendering assignment; lexical score 0.54
+2:22	6	der				expands	supplied-article-deu	safe	0.6826	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Königreiche' → 'מַמְלָכֹ֔ות'
+2:22	7	Königreiche		4	מַמְלָכֹ֔ות		global-review-known-rendering	safe	0.6826	approved	1				global known-rendering assignment; lexical score 0.53
+2:22	12	der				expands	supplied-article-deu	safe	0.6826	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Königreiche' → 'מַמְלְכֹ֣ות'
+2:22	13	Königreiche		8	מַמְלְכֹ֣ות		global-review-known-rendering	safe	0.6826	approved	1				global known-rendering assignment; lexical score 0.53
+2:22	28	die				expands	supplied-article-deu	safe	0.787	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Rosse' → 'סוּסִים֙'
+2:22	29	Rosse		18	סוּסִים֙		global-review-known-rendering	safe	0.787	approved	1				global known-rendering assignment; lexical score 0.64
+2:22	38	das				expands	supplied-article-deu	safe	0.7935	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Schwert' → 'חֶ֥רֶב'
+2:22	39	Schwert		23	חֶ֥רֶב		global-review-known-rendering	safe	0.7935	approved	1				global known-rendering assignment; lexical score 0.64
+2:23	3	Tage		3	יֹּ֣ום		global-review-known-rendering	safe	0.7764	approved	1				global known-rendering assignment; lexical score 0.63
+2:23	11	nehmen		9	אֶ֠קָּחֲךָ		global-review-known-rendering	safe	0.6749	approved	1				global known-rendering assignment; lexical score 0.52
+2:23	13	Sohn		11	בֶּן		global-review-known-rendering	safe	0.7851	approved	1				global known-rendering assignment; lexical score 0.64
+2:23	16	Knecht		13	עַבְדִּי֙		global-review-known-rendering	safe	0.7746	approved	1				global known-rendering assignment; lexical score 0.62
+2:23	30	erwählt		23	בָחַ֔רְתִּי		global-review-known-rendering	safe	0.7812	approved	1				global known-rendering assignment; lexical score 0.63

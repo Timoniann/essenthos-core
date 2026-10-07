@@ -1,0 +1,6 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:12	22	tú		19	יְסַדְתֹּֽו		attached-word	attached	0.7	approved	0				SubjectPronoun of 'fundaste', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:7	9	han		5	נֹשְׁכֶ֔יךָ		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'morder', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:8	3	has		3	שַׁלֹּ֨ותָ֙		attached-word	attached	0.3	approved	0				AuxiliaryVerb of 'despojado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:10	11	has		9	חֹוטֵ֥א		attached-word	attached	0.3313	approved	0				AuxiliaryVerb of 'pecado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:7	1	He		3	רָאִ֖יתִי		attached-word	attached	0.6651	approved	0				AuxiliaryVerb of 'visto', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

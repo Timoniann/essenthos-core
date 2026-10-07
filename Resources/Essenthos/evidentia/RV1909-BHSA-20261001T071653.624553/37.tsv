@@ -1,0 +1,13 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:2	25	sea		19	הִבָּנֹֽות		attached-word	attached	0.6471	approved	0				AuxiliaryVerb of 'reedificada', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:5	3	ha		4	אָמַ֖ר		attached-word	attached	0.5768	approved	0				AuxiliaryVerb of 'dicho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:7	2	ha		2	אָמַ֖ר		attached-word	attached	0.5768	approved	0				AuxiliaryVerb of 'dicho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:8	18	seré		15	אכבד		attached-word	attached	0.5875	approved	0				AuxiliaryVerb of 'honrado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:8	20	ha		16	אָמַ֥ר		attached-word	attached	0.5768	approved	0				AuxiliaryVerb of 'dicho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:12	33	había		31	שְׁלָחֹ֖ו		attached-word	attached	0.6926	approved	0				AuxiliaryVerb of 'enviado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:3	2	ha		4	נִּשְׁאָ֔ר		attached-word	attached	0.4515	approved	0				AuxiliaryVerb of 'quedado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:3	7	haya		6	רָאָה֙		attached-word	attached	0.6651	approved	0				AuxiliaryVerb of 'visto', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:7	22	ha		21	אָמַ֖ר		attached-word	attached	0.5768	approved	0				AuxiliaryVerb of 'dicho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:9	14	ha		13	אָמַ֖ר		attached-word	attached	0.5768	approved	0				AuxiliaryVerb of 'dicho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:11	2	ha		2	אָמַ֖ר		attached-word	attached	0.5768	approved	0				AuxiliaryVerb of 'dicho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:23	28	yo		23	בָחַ֔רְתִּי		attached-word	attached	0.7	approved	0				SubjectPronoun of 'escogí', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

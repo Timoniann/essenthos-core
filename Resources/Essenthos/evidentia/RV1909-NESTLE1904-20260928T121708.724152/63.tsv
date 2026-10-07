@@ -1,0 +1,5 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:4	19	el				expands	supplied-article-spa	safe	0.7163	approved	0				article the original does not write, read as one by UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'mandamiento' → 'ἐντολὴν'
+1:5	9	un				expands	supplied-indefinite-article-spa	safe	0.7163	approved	0				indefinite article, read as one by UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'mandamiento' → 'ἐντολὴν'
+1:5	19	el				expands	supplied-article-spa	safe	0.7341	approved	0				article the original does not write, read as one by UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'principio' → 'ἀρχῆς'
+1:6	23	el				expands	supplied-article-spa	safe	0.7341	approved	0				article the original does not write, read as one by UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'principio' → 'ἀρχῆς'

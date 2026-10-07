@@ -1,0 +1,13 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:7	17	ha		11	הֵכִ֧ין		attached-word	attached	0.4	approved	0				AuxiliaryVerb of 'aparejado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:12	7	yo		8	אֲחַפֵּ֥שׂ		attached-word	attached	0.4187	approved	0				SubjectPronoun of 'escudriñaré', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:17	18	será		16	שֻׁפַּ֤ךְ		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'derramada', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:18	21	será		17	תֵּאָכֵ֖ל		attached-word	attached	0.4429	approved	0				AuxiliaryVerb of 'consumida', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:8	1	Yo		1	שָׁמַ֨עְתִּי֙		attached-word	attached	0.5416	approved	0				SubjectPronoun of 'oído', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:8	2	he		1	שָׁמַ֨עְתִּי֙		attached-word	attached	0.5416	approved	0				AuxiliaryVerb of 'oído', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:7	21	ellos		16	הִשְׁכִּ֣ימוּ		attached-word	attached	0.3473	approved	0				SubjectPronoun of 'levantaron', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:8	41	será		30	תֵּאָכֵ֖ל		attached-word	attached	0.4429	approved	0				AuxiliaryVerb of 'consumida', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:13	22	serán		19	יִרְע֥וּ		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'apacentados', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:15	2	ha		1	הֵסִ֤יר		attached-word	attached	0.4324	approved	0				AuxiliaryVerb of 'apartado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:17	7	él		6	יֹושִׁ֑יעַ		attached-word	attached	0.6438	approved	0				SubjectPronoun of 'salvará', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:20	4	yo		6	אָבִ֣יא		attached-word	attached	0.671	approved	0				SubjectPronoun of 'traeré', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

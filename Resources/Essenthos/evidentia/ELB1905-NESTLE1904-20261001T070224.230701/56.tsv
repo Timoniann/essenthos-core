@@ -1,0 +1,10 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:12	2	hat		1	εἶπέν		attached-word	attached	0.5875	approved	0				AuxiliaryVerb of 'gesagt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:16	12	sie		7	ἀρνοῦνται		attached-word	attached	0.525	approved	0				SubjectPronoun of 'verleugnen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:14	7	hat		2	ἔδωκεν		attached-word	attached	0.6475	approved	0				AuxiliaryVerb of 'gegeben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:5	13	hatten		8	ἐποιήσαμεν		attached-word	attached	0.5169	approved	0				AuxiliaryVerb of 'getan', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:8	21	haben		16	πεπιστευκότες		attached-word	attached	0.6654	approved	0				AuxiliaryVerb of 'geglaubt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:12	2	ich		2	πέμψω		attached-word	attached	0.52	approved	0				SubjectPronoun of 'senden', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:12	9	werde		2	πέμψω		attached-word	attached	0.52	approved	0				AuxiliaryVerb of 'senden', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:12	20	ich		16	κέκρικα		attached-word	attached	0.55	approved	0				SubjectPronoun of 'beschlossen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:12	21	habe		16	κέκρικα		attached-word	attached	0.55	approved	0				AuxiliaryVerb of 'beschlossen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

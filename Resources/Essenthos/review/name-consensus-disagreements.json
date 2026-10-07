@@ -1,0 +1,7976 @@
+{
+  "about": "Words where the name read from the verses that name an entity disagrees with an annotation the word already carries. Nothing here was written: the annotation already there stands. Reference is canonical book:chapter:verse, position the word's place in the verse from 1, found the entity the verses read, annotated what the word carries now.",
+  "written": "2026-09-28T18:07:59.3888397+00:00",
+  "words": [
+    {
+      "text": "ALM1911",
+      "reference": "10:7:7",
+      "position": 30,
+      "word": "d’Israel",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "11:16:24",
+      "position": 3,
+      "word": "Semer",
+      "found": "shemer",
+      "annotated": [
+        "samaria"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "11:16:24",
+      "position": 8,
+      "word": "Samaria",
+      "found": "samaria",
+      "annotated": [
+        "shemer"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "11:6:13",
+      "position": 14,
+      "word": "d’Israel",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "12:23:29",
+      "position": 5,
+      "word": "Pharaó",
+      "found": "pharaoh-title",
+      "annotated": [
+        "pharaohneco"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "12:23:35",
+      "position": 45,
+      "word": "Pharaó",
+      "found": "pharaoh-title",
+      "annotated": [
+        "pharaohneco"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "14:11:16",
+      "position": 20,
+      "word": "d’Israel",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "14:11:20",
+      "position": 13,
+      "word": "Abias",
+      "found": "abijam",
+      "annotated": [
+        "abishalom"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "14:25:23",
+      "position": 13,
+      "word": "Joás",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "14:33:22",
+      "position": 18,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "manasseh-3"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "14:36:8",
+      "position": 34,
+      "word": "Joaquim",
+      "found": "eliakim-2",
+      "annotated": [
+        "jehoiachin"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "14:9:1",
+      "position": 13,
+      "word": "Jerusalem",
+      "found": "jerusalem",
+      "annotated": [
+        "solomon"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "14:9:1",
+      "position": 16,
+      "word": "Salomão",
+      "found": "solomon",
+      "annotated": [
+        "jerusalem"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "15:10:28",
+      "position": 8,
+      "word": "Zabbai",
+      "found": "bebai",
+      "annotated": [
+        "zabbai"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "15:6:21",
+      "position": 30,
+      "word": "d’Israel",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "1:11:31",
+      "position": 13,
+      "word": "Haran",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "24:41:9",
+      "position": 30,
+      "word": "Baasa",
+      "found": "asa",
+      "annotated": [
+        "baasha"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "40:10:2",
+      "position": 23,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "40:17:1",
+      "position": 14,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "40:1:10",
+      "position": 10,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "40:1:10",
+      "position": 12,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "40:1:4",
+      "position": 15,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "nahshon"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "40:4:21",
+      "position": 13,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "41:10:35",
+      "position": 6,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "41:10:41",
+      "position": 13,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "41:13:3",
+      "position": 15,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "41:14:33",
+      "position": 11,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "41:1:19",
+      "position": 14,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "41:1:29",
+      "position": 17,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "41:3:17",
+      "position": 9,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "41:5:37",
+      "position": 13,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "41:9:2",
+      "position": 14,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "42:3:32",
+      "position": 8,
+      "word": "Obed",
+      "found": "obed",
+      "annotated": [
+        "jesse"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "42:3:32",
+      "position": 16,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "nahshon"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "42:3:32",
+      "position": 18,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "42:3:34",
+      "position": 14,
+      "word": "Abrahão",
+      "found": "abram",
+      "annotated": [
+        "terah"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "42:3:37",
+      "position": 6,
+      "word": "Mathusala",
+      "found": "methuselah",
+      "annotated": [
+        "enoch-2"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "42:5:10",
+      "position": 9,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "42:6:14",
+      "position": 13,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "42:8:51",
+      "position": 17,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "42:9:54",
+      "position": 7,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "43:19:38",
+      "position": 5,
+      "word": "Arimathea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "44:12:2",
+      "position": 8,
+      "word": "João",
+      "found": "john-2",
+      "annotated": [
+        "james"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "44:26:30",
+      "position": 13,
+      "word": "Berenice",
+      "found": "bernice",
+      "annotated": [
+        "governor"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "4:25:8",
+      "position": 6,
+      "word": "israelita",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "4:25:8",
+      "position": 17,
+      "word": "israelita",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "5:23:17",
+      "position": 7,
+      "word": "d’Israel",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "6:24:1",
+      "position": 14,
+      "word": "d’Israel",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "7:20:13",
+      "position": 19,
+      "word": "d’Israel",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "7:20:35",
+      "position": 8,
+      "word": "d’Israel",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "7:21:6",
+      "position": 16,
+      "word": "d’Israel",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "ALM1911",
+      "reference": "9:5:10",
+      "position": 21,
+      "word": "Ekron",
+      "found": "ekron",
+      "annotated": [
+        "ekronites"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "10:23:33",
+      "position": 8,
+      "word": "Sharar",
+      "found": "shammah-5",
+      "annotated": [
+        "sharar"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "11:10:29",
+      "position": 39,
+      "word": "Syria",
+      "found": "syria",
+      "annotated": [
+        "egypt"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "12:16:6",
+      "position": 20,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "12:8:28",
+      "position": 21,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "12:8:29",
+      "position": 15,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "12:9:15",
+      "position": 16,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "14:1:17",
+      "position": 39,
+      "word": "Syria",
+      "found": "syria",
+      "annotated": [
+        "egypt"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "14:22:5",
+      "position": 29,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "14:25:23",
+      "position": 14,
+      "word": "Joash",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "1:11:31",
+      "position": 12,
+      "word": "Haran",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "1:12:14",
+      "position": 14,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "1:43:32",
+      "position": 17,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "1:43:32",
+      "position": 27,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "40:1:10",
+      "position": 8,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "40:1:10",
+      "position": 10,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "40:27:57",
+      "position": 12,
+      "word": "Arimathæa",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "41:15:43",
+      "position": 5,
+      "word": "Arimathæa",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "42:3:32",
+      "position": 16,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "43:19:38",
+      "position": 7,
+      "word": "Arimathæa",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "44:28:8",
+      "position": 18,
+      "word": "Paul",
+      "found": "saul-2",
+      "annotated": [
+        "publius"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "6:24:7",
+      "position": 15,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "7:12:5",
+      "position": 12,
+      "word": "Ephraimites",
+      "found": "ephrathites",
+      "annotated": [
+        "ephraim"
+      ]
+    },
+    {
+      "text": "ASV",
+      "reference": "9:5:6",
+      "position": 11,
+      "word": "Ashdod",
+      "found": "ashdod",
+      "annotated": [
+        "ashdodites"
+      ]
+    },
+    {
+      "text": "AVD1865",
+      "reference": "14:25:23",
+      "position": 10,
+      "word": "يُوآشُ",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "AVD1865",
+      "reference": "15:10:28",
+      "position": 6,
+      "word": "وَزَبَايُ",
+      "found": "bebai",
+      "annotated": [
+        "zabbai"
+      ]
+    },
+    {
+      "text": "AVD1865",
+      "reference": "24:38:10",
+      "position": 5,
+      "word": "ٱلْكُوشِيَّ",
+      "found": "ebedmelech",
+      "annotated": [
+        "cushites"
+      ]
+    },
+    {
+      "text": "AVD1865",
+      "reference": "24:38:12",
+      "position": 4,
+      "word": "ٱلْكُوشِيُّ",
+      "found": "ebedmelech",
+      "annotated": [
+        "cushites"
+      ]
+    },
+    {
+      "text": "AVD1865",
+      "reference": "24:38:7",
+      "position": 5,
+      "word": "ٱلْكُوشِيُّ",
+      "found": "ebedmelech",
+      "annotated": [
+        "cushites"
+      ]
+    },
+    {
+      "text": "AVD1865",
+      "reference": "24:39:16",
+      "position": 5,
+      "word": "ٱلْكُوشِيَّ",
+      "found": "ebedmelech",
+      "annotated": [
+        "cushites"
+      ]
+    },
+    {
+      "text": "AVD1865",
+      "reference": "42:3:32",
+      "position": 8,
+      "word": "سَلْمُونَ",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "10:23:33",
+      "position": 12,
+      "word": "Sharar",
+      "found": "shammah-5",
+      "annotated": [
+        "sharar"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "12:8:28",
+      "position": 20,
+      "word": "Joram",
+      "found": "jehoram-2",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "14:25:23",
+      "position": 14,
+      "word": "Joash",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "1:11:31",
+      "position": 12,
+      "word": "Haran",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "1:12:14",
+      "position": 14,
+      "word": "Egypt",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "1:43:32",
+      "position": 19,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "1:43:32",
+      "position": 28,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "24:51:41",
+      "position": 3,
+      "word": "Babylon",
+      "found": "babylon",
+      "annotated": [
+        "sheshach"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "40:1:10",
+      "position": 14,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "40:27:57",
+      "position": 12,
+      "word": "Arimathaea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "41:15:43",
+      "position": 5,
+      "word": "Arimathaea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "42:3:32",
+      "position": 16,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "43:19:38",
+      "position": 6,
+      "word": "Arimathaea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "4:25:15",
+      "position": 5,
+      "word": "Midian",
+      "found": "midian-2",
+      "annotated": [
+        "midianites"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "6:24:7",
+      "position": 14,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "9:14:24",
+      "position": 7,
+      "word": "Saul",
+      "found": "saul",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "BBE",
+      "reference": "9:28:12",
+      "position": 8,
+      "word": "Saul",
+      "found": "saul",
+      "annotated": [
+        "samuel-2"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "10:23:33",
+      "position": 9,
+      "word": "Sharar",
+      "found": "shammah-5",
+      "annotated": [
+        "sharar"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "11:8:16",
+      "position": 22,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "12:13:5",
+      "position": 20,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "12:1:17",
+      "position": 21,
+      "word": "Jehoram",
+      "found": "jehoram",
+      "annotated": [
+        "jehoram-2"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "12:8:28",
+      "position": 20,
+      "word": "Arameans",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "12:8:29",
+      "position": 14,
+      "word": "Arameans",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "12:9:15",
+      "position": 21,
+      "word": "Arameans",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "13:5:1",
+      "position": 27,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "14:11:16",
+      "position": 6,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "14:22:5",
+      "position": 27,
+      "word": "Arameans",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "14:30:6",
+      "position": 26,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "14:6:5",
+      "position": 24,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "1:11:31",
+      "position": 12,
+      "word": "Haran",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "1:12:14",
+      "position": 7,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "1:43:32",
+      "position": 9,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "1:43:32",
+      "position": 15,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "1:46:5",
+      "position": 10,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "1:46:8",
+      "position": 10,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "2:19:3",
+      "position": 33,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "2:1:1",
+      "position": 9,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "30:9:7",
+      "position": 12,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "40:1:10",
+      "position": 11,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "40:1:10",
+      "position": 12,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "40:27:57",
+      "position": 11,
+      "word": "Arimathea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "41:15:43",
+      "position": 3,
+      "word": "Arimathea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "42:3:32",
+      "position": 16,
+      "word": "Sala",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "43:19:38",
+      "position": 4,
+      "word": "Arimathea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "43:19:38",
+      "position": 27,
+      "word": "Jesus",
+      "found": "jesus",
+      "annotated": [
+        "pilate"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "4:25:15",
+      "position": 20,
+      "word": "Midianite",
+      "found": "midianites",
+      "annotated": [
+        "midian-2"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "4:26:2",
+      "position": 9,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "4:3:27",
+      "position": 22,
+      "word": "Kohathites",
+      "found": "kohath",
+      "annotated": [
+        "kohathites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "5:33:5",
+      "position": 19,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "5:33:8",
+      "position": 9,
+      "word": "Levi",
+      "found": "levi",
+      "annotated": [
+        "urim-and-thummim"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "6:13:3",
+      "position": 32,
+      "word": "Ekron",
+      "found": "ekron",
+      "annotated": [
+        "ekronites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "6:22:14",
+      "position": 14,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "6:24:1",
+      "position": 8,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "6:24:7",
+      "position": 17,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "7:18:1",
+      "position": 38,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "7:20:10",
+      "position": 15,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "9:15:17",
+      "position": 23,
+      "word": "Israel",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "BSB",
+      "reference": "9:5:6",
+      "position": 13,
+      "word": "Ashdod",
+      "found": "ashdod",
+      "annotated": [
+        "ashdodites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "10:6:8",
+      "position": 12,
+      "word": "烏撒",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "11:11:14",
+      "position": 3,
+      "word": "以東人",
+      "found": "edom",
+      "annotated": [
+        "edomites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "11:1:15",
+      "position": 9,
+      "word": "書念",
+      "found": "abishag",
+      "annotated": [
+        "shunamites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "11:1:3",
+      "position": 8,
+      "word": "書念",
+      "found": "abishag",
+      "annotated": [
+        "shunamites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "11:2:17",
+      "position": 7,
+      "word": "書念",
+      "found": "abishag",
+      "annotated": [
+        "shunamites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "11:2:21",
+      "position": 3,
+      "word": "書念",
+      "found": "abishag",
+      "annotated": [
+        "shunamites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "11:2:22",
+      "position": 8,
+      "word": "書念",
+      "found": "abishag",
+      "annotated": [
+        "shunamites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "12:16:6",
+      "position": 13,
+      "word": "亞蘭人",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "12:17:31",
+      "position": 7,
+      "word": "西法瓦音",
+      "found": "sepharvaim",
+      "annotated": [
+        "sepharvites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "12:23:29",
+      "position": 4,
+      "word": "法老",
+      "found": "pharaoh-title",
+      "annotated": [
+        "pharaohneco"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "12:8:28",
+      "position": 13,
+      "word": "亞蘭人",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "13:13:11",
+      "position": 12,
+      "word": "烏撒",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "13:1:4",
+      "position": 2,
+      "word": "挪亞生閃",
+      "found": "noah",
+      "annotated": [
+        "shem"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "13:2:23",
+      "position": 4,
+      "word": "睚珥",
+      "found": "jair",
+      "annotated": [
+        "geshur"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "14:22:5",
+      "position": 17,
+      "word": "亞蘭人",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "14:25:23",
+      "position": 10,
+      "word": "約阿施",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "14:31:1",
+      "position": 25,
+      "word": "於是以色列",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "15:1:5",
+      "position": 16,
+      "word": "耶路撒冷",
+      "found": "jerusalem",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "1:11:31",
+      "position": 6,
+      "word": "哈蘭",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "1:12:14",
+      "position": 5,
+      "word": "埃及人",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "2:6:24",
+      "position": 7,
+      "word": "可拉",
+      "found": "korah-3",
+      "annotated": [
+        "korahites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "38:12:7",
+      "position": 4,
+      "word": "猶大",
+      "found": "judah",
+      "annotated": [
+        "judahites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "42:3:36",
+      "position": 5,
+      "word": "亞法撒是閃",
+      "found": "arpachshad",
+      "annotated": [
+        "shem"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "4:26:57",
+      "position": 9,
+      "word": "屬哥轄",
+      "found": "kohathites",
+      "annotated": [
+        "kohath"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "4:3:21",
+      "position": 9,
+      "word": "革順",
+      "found": "gershon",
+      "annotated": [
+        "gershonites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "4:3:27",
+      "position": 1,
+      "word": "屬哥轄",
+      "found": "kohathites",
+      "annotated": [
+        "kohath"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "4:3:27",
+      "position": 13,
+      "word": "哥轄",
+      "found": "kohath",
+      "annotated": [
+        "kohathites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "6:17:11",
+      "position": 18,
+      "word": "多珥",
+      "found": "dor",
+      "annotated": [
+        "endor"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "6:19:9",
+      "position": 9,
+      "word": "猶大",
+      "found": "judah",
+      "annotated": [
+        "judahites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "7:12:5",
+      "position": 17,
+      "word": "以法蓮人",
+      "found": "ephraim",
+      "annotated": [
+        "ephrathites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "7:17:7",
+      "position": 6,
+      "word": "猶大",
+      "found": "judah",
+      "annotated": [
+        "judahites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "7:1:16",
+      "position": 8,
+      "word": "猶大",
+      "found": "judah",
+      "annotated": [
+        "judahites"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "7:3:12",
+      "position": 15,
+      "word": "以色列人",
+      "found": "jacob",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "CUV",
+      "reference": "9:3:21",
+      "position": 10,
+      "word": "撒母耳",
+      "found": "samuel-2",
+      "annotated": [
+        "shiloh"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "10:6:8",
+      "position": 12,
+      "word": "乌撒",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "11:11:14",
+      "position": 3,
+      "word": "以东人",
+      "found": "edom",
+      "annotated": [
+        "edomites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "11:1:15",
+      "position": 9,
+      "word": "书念",
+      "found": "abishag",
+      "annotated": [
+        "shunamites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "11:1:3",
+      "position": 8,
+      "word": "书念",
+      "found": "abishag",
+      "annotated": [
+        "shunamites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "11:2:17",
+      "position": 7,
+      "word": "书念",
+      "found": "abishag",
+      "annotated": [
+        "shunamites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "11:2:21",
+      "position": 3,
+      "word": "书念",
+      "found": "abishag",
+      "annotated": [
+        "shunamites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "11:2:22",
+      "position": 8,
+      "word": "书念",
+      "found": "abishag",
+      "annotated": [
+        "shunamites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "12:16:6",
+      "position": 13,
+      "word": "亚兰人",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "12:17:31",
+      "position": 7,
+      "word": "西法瓦音",
+      "found": "sepharvaim",
+      "annotated": [
+        "sepharvites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "12:23:29",
+      "position": 4,
+      "word": "法老",
+      "found": "pharaoh-title",
+      "annotated": [
+        "pharaohneco"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "12:8:28",
+      "position": 13,
+      "word": "亚兰人",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "13:13:11",
+      "position": 12,
+      "word": "乌撒",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "13:1:4",
+      "position": 2,
+      "word": "挪亚生闪",
+      "found": "noah",
+      "annotated": [
+        "shem"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "13:2:23",
+      "position": 4,
+      "word": "睚珥",
+      "found": "jair",
+      "annotated": [
+        "geshur"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "14:22:5",
+      "position": 17,
+      "word": "亚兰人",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "14:25:23",
+      "position": 10,
+      "word": "约阿施",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "14:31:1",
+      "position": 25,
+      "word": "于是以色列",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "15:1:5",
+      "position": 16,
+      "word": "耶路撒冷",
+      "found": "jerusalem",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "1:11:31",
+      "position": 6,
+      "word": "哈兰",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "1:12:14",
+      "position": 5,
+      "word": "埃及人",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "2:6:24",
+      "position": 7,
+      "word": "可拉",
+      "found": "korah-3",
+      "annotated": [
+        "korahites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "38:12:7",
+      "position": 4,
+      "word": "犹大",
+      "found": "judah",
+      "annotated": [
+        "judahites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "42:3:36",
+      "position": 5,
+      "word": "亚法撒是闪",
+      "found": "arpachshad",
+      "annotated": [
+        "shem"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "4:26:57",
+      "position": 9,
+      "word": "属哥辖",
+      "found": "kohathites",
+      "annotated": [
+        "kohath"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "4:3:21",
+      "position": 9,
+      "word": "革顺",
+      "found": "gershon",
+      "annotated": [
+        "gershonites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "4:3:27",
+      "position": 1,
+      "word": "属哥辖",
+      "found": "kohathites",
+      "annotated": [
+        "kohath"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "4:3:27",
+      "position": 13,
+      "word": "哥辖",
+      "found": "kohath",
+      "annotated": [
+        "kohathites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "6:17:11",
+      "position": 18,
+      "word": "多珥",
+      "found": "dor",
+      "annotated": [
+        "endor"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "6:19:9",
+      "position": 9,
+      "word": "犹大",
+      "found": "judah",
+      "annotated": [
+        "judahites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "7:12:5",
+      "position": 17,
+      "word": "以法莲人",
+      "found": "ephraim",
+      "annotated": [
+        "ephrathites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "7:17:7",
+      "position": 6,
+      "word": "犹大",
+      "found": "judah",
+      "annotated": [
+        "judahites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "7:1:16",
+      "position": 8,
+      "word": "犹大",
+      "found": "judah",
+      "annotated": [
+        "judahites"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "7:3:12",
+      "position": 15,
+      "word": "以色列人",
+      "found": "jacob",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "CUVS",
+      "reference": "9:3:21",
+      "position": 10,
+      "word": "撒母耳",
+      "found": "samuel-2",
+      "annotated": [
+        "shiloh"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "10:23:33",
+      "position": 7,
+      "word": "Scharars",
+      "found": "shammah-5",
+      "annotated": [
+        "sharar"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "11:11:14",
+      "position": 9,
+      "word": "Edomiter",
+      "found": "edom",
+      "annotated": [
+        "edomites"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "11:16:24",
+      "position": 28,
+      "word": "Samaria",
+      "found": "samaria",
+      "annotated": [
+        "shemer"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "11:16:24",
+      "position": 32,
+      "word": "Schemers",
+      "found": "shemer",
+      "annotated": [
+        "samaria"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "12:16:6",
+      "position": 23,
+      "word": "Syrer",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "12:8:28",
+      "position": 22,
+      "word": "Syrer",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "12:8:29",
+      "position": 20,
+      "word": "Syrer",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "14:22:5",
+      "position": 32,
+      "word": "Syrer",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "14:25:23",
+      "position": 15,
+      "word": "Joas",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "16:12:16",
+      "position": 3,
+      "word": "Sacharja",
+      "found": "iddo-5",
+      "annotated": [
+        "zechariah-25"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "1:12:14",
+      "position": 12,
+      "word": "Ägypter",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "1:43:32",
+      "position": 15,
+      "word": "Ägypter",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "1:43:32",
+      "position": 23,
+      "word": "Ägypter",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "23:23:1",
+      "position": 8,
+      "word": "Tyrus",
+      "found": "tyre",
+      "annotated": [
+        "tarshish-4"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "38:12:7",
+      "position": 6,
+      "word": "Judas",
+      "found": "judah",
+      "annotated": [
+        "judahites"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "40:1:10",
+      "position": 8,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "40:1:10",
+      "position": 9,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "42:3:32",
+      "position": 8,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "6:24:7",
+      "position": 14,
+      "word": "Ägypter",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "7:21:10",
+      "position": 25,
+      "word": "Jabes-Gilead",
+      "found": "jobesh",
+      "annotated": [
+        "gilead-4"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "7:21:12",
+      "position": 8,
+      "word": "Jabes-Gilead",
+      "found": "jobesh",
+      "annotated": [
+        "gilead-4"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "7:21:8",
+      "position": 25,
+      "word": "Jabes-Gilead",
+      "found": "jobesh",
+      "annotated": [
+        "gilead-4"
+      ]
+    },
+    {
+      "text": "ELB1905",
+      "reference": "7:21:9",
+      "position": 16,
+      "word": "Jabes-Gilead",
+      "found": "jobesh",
+      "annotated": [
+        "gilead-4"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "11:11:18",
+      "position": 14,
+      "word": "ፈርዖን",
+      "found": "pharaoh-title",
+      "annotated": [
+        "paran"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "11:11:33",
+      "position": 6,
+      "word": "ለሲዶና",
+      "found": "malcam",
+      "annotated": [
+        "sidonians"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "11:11:5",
+      "position": 3,
+      "word": "ለሲዶና",
+      "found": "malcam",
+      "annotated": [
+        "sidonians"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "11:14:31",
+      "position": 2,
+      "word": "ሮብዓም",
+      "found": "rehoboam",
+      "annotated": [
+        "abijam"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "11:16:16",
+      "position": 8,
+      "word": "ዝንበሪ",
+      "found": "omri",
+      "annotated": [
+        "zimri-2"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "11:20:1",
+      "position": 8,
+      "word": "ለሰማርያ",
+      "found": "samaria",
+      "annotated": [
+        "syria"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "11:21:1",
+      "position": 8,
+      "word": "ናቡቴ",
+      "found": "jezreelites",
+      "annotated": [
+        "naboth"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "11:21:15",
+      "position": 17,
+      "word": "ናቡቴ",
+      "found": "jezreelites",
+      "annotated": [
+        "naboth"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "11:21:16",
+      "position": 6,
+      "word": "ናቡቴ",
+      "found": "jezreelites",
+      "annotated": [
+        "naboth"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "11:8:1",
+      "position": 18,
+      "word": "በጽዮን",
+      "found": "zion",
+      "annotated": [
+        "solomon"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "12:15:16",
+      "position": 4,
+      "word": "ለቴርሳ",
+      "found": "tirzah-2",
+      "annotated": [
+        "tiphsah-2"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "12:19:2",
+      "position": 12,
+      "word": "ኢሳይያስ",
+      "found": "isaiah",
+      "annotated": [
+        "shebnah"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "12:23:13",
+      "position": 14,
+      "word": "ለሲዶና",
+      "found": "malcam",
+      "annotated": [
+        "sidonians"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "12:9:21",
+      "position": 22,
+      "word": "ናቡቴ",
+      "found": "jezreelites",
+      "annotated": [
+        "naboth"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "12:9:25",
+      "position": 8,
+      "word": "ናቡቴ",
+      "found": "jezreelites",
+      "annotated": [
+        "naboth"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:13:11",
+      "position": 13,
+      "word": "ኦዛ",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:15:18",
+      "position": 8,
+      "word": "ወኢያሄል",
+      "found": "benaiah-4",
+      "annotated": [
+        "jehiel"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:15:18",
+      "position": 17,
+      "word": "ወኢያሄል",
+      "found": "benaiah-4",
+      "annotated": [
+        "jeiel-4"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:15:20",
+      "position": 4,
+      "word": "ወኢያሄል",
+      "found": "benaiah-4",
+      "annotated": [
+        "jehiel"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:15:24",
+      "position": 15,
+      "word": "ወኢያኢያ",
+      "found": "benaiah-4",
+      "annotated": [
+        "jehiah"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:16:5",
+      "position": 5,
+      "word": "ወኢያሄል",
+      "found": "benaiah-4",
+      "annotated": [
+        "jeiel-the-alamoth-psaltery-player"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:27:24",
+      "position": 9,
+      "word": "እስራኤል",
+      "found": "jacob",
+      "annotated": [
+        "zeruiah"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:2:10",
+      "position": 4,
+      "word": "ወአሚናዳብ",
+      "found": "ram",
+      "annotated": [
+        "amminadab"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:2:53",
+      "position": 11,
+      "word": "ሠራውያን",
+      "found": "zorites",
+      "annotated": [
+        "eshtaulites"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:2:7",
+      "position": 4,
+      "word": "ወከርሚ",
+      "found": "carmi-2",
+      "annotated": [
+        "achan"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "13:4:6",
+      "position": 3,
+      "word": "ኑአራ",
+      "found": "naarah",
+      "annotated": [
+        "ahuzzam"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "14:22:6",
+      "position": 17,
+      "word": "ሶርያ",
+      "found": "syria",
+      "annotated": [
+        "ahaziah-2"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "14:25:23",
+      "position": 7,
+      "word": "ኢዮአስ",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "16:10:12",
+      "position": 2,
+      "word": "ሳሬብያ",
+      "found": "shebaniah-2",
+      "annotated": [
+        "sherebiah-2"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "1:10:26",
+      "position": 6,
+      "word": "ወለኤራኅ",
+      "found": "joktan",
+      "annotated": [
+        "jerah"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "1:12:14",
+      "position": 10,
+      "word": "ግብጽ",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "1:12:5",
+      "position": 11,
+      "word": "በካራን",
+      "found": "haran-4",
+      "annotated": [
+        "canaan-2"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "1:25:9",
+      "position": 9,
+      "word": "ኤፌሮን",
+      "found": "machpelah",
+      "annotated": [
+        "ephron"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "1:36:20",
+      "position": 11,
+      "word": "ወሶባን",
+      "found": "shobal",
+      "annotated": [
+        "zibeon-2"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "1:36:29",
+      "position": 7,
+      "word": "ወሶባን",
+      "found": "shobal",
+      "annotated": [
+        "zibeon-2"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "1:43:32",
+      "position": 17,
+      "word": "ግብጽ",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "1:46:5",
+      "position": 9,
+      "word": "ለእስራኤል",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "1:49:30",
+      "position": 14,
+      "word": "ኤፌሮን",
+      "found": "machpelah",
+      "annotated": [
+        "ephron"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "1:50:13",
+      "position": 14,
+      "word": "ኤፌሮን",
+      "found": "machpelah",
+      "annotated": [
+        "ephron"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "23:36:4",
+      "position": 4,
+      "word": "ለሕዝቅያስ",
+      "found": "hezekiah",
+      "annotated": [
+        "rabshakeh"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "23:37:2",
+      "position": 13,
+      "word": "ኢሳይያስ",
+      "found": "isaiah",
+      "annotated": [
+        "shebnah"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "24:21:1",
+      "position": 2,
+      "word": "እግዚአብሔር",
+      "found": "yhvh",
+      "annotated": [
+        "maaseiah-14"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "30:7:10",
+      "position": 16,
+      "word": "ስራኤል",
+      "found": "amos",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "30:8:2",
+      "position": 14,
+      "word": "እሰስራኤል",
+      "found": "amos",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "40:1:4",
+      "position": 4,
+      "word": "ወአሚናዳብኒ",
+      "found": "ram",
+      "annotated": [
+        "amminadab"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "40:27:57",
+      "position": 5,
+      "word": "እምአርማትያስ",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "41:15:43",
+      "position": 3,
+      "word": "እምአርማትያስ",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "43:19:38",
+      "position": 6,
+      "word": "ዘአርማትያስ",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "46:3:5",
+      "position": 4,
+      "word": "አጵሎስ",
+      "found": "apollos",
+      "annotated": [
+        "saul-2"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "4:1:45",
+      "position": 9,
+      "word": "ለእስራኤል",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "4:23:26",
+      "position": 4,
+      "word": "ለባላቅ",
+      "found": "balak",
+      "annotated": [
+        "balaam"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "4:26:20",
+      "position": 13,
+      "word": "ፋሬስ",
+      "found": "perez",
+      "annotated": [
+        "pharzites"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "4:26:29",
+      "position": 5,
+      "word": "ማኪር",
+      "found": "machir",
+      "annotated": [
+        "makirites"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "4:2:27",
+      "position": 4,
+      "word": "አሴር",
+      "found": "asher",
+      "annotated": [
+        "asherites"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "4:34:10",
+      "position": 6,
+      "word": "አርሴናይን",
+      "found": "hazarenan",
+      "annotated": [
+        "shepham"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "6:18:25",
+      "position": 2,
+      "word": "ወራማ",
+      "found": "ramah",
+      "annotated": [
+        "beeroth"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "6:19:30",
+      "position": 2,
+      "word": "ወዓፌቅ",
+      "found": "rehob-5",
+      "annotated": [
+        "aphek"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "6:21:22",
+      "position": 1,
+      "word": "ወቄቤሳይን",
+      "found": "kibzaim",
+      "annotated": [
+        "bethhoron"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "6:24:7",
+      "position": 9,
+      "word": "ግብጽ",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "6:7:18",
+      "position": 8,
+      "word": "አካን",
+      "found": "achan",
+      "annotated": [
+        "carmi-2"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "6:7:24",
+      "position": 28,
+      "word": "ኤሜቃኮር",
+      "found": "valleyofachor",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "7:12:11",
+      "position": 5,
+      "word": "ዛቡሎናዊ",
+      "found": "elon-3",
+      "annotated": [
+        "zebulonites"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "9:14:47",
+      "position": 4,
+      "word": "ለእስራኤል",
+      "found": "jacob",
+      "annotated": [
+        "saul"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "9:15:17",
+      "position": 7,
+      "word": "እስራኤልአ",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "9:9:17",
+      "position": 7,
+      "word": "ለሳሙኤል",
+      "found": "samuel-2",
+      "annotated": [
+        "saul"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "10:6:8",
+      "position": 20,
+      "word": "Vzzah",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "12:16:6",
+      "position": 21,
+      "word": "Aramites",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "12:8:28",
+      "position": 22,
+      "word": "Aramites",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "12:8:29",
+      "position": 15,
+      "word": "Aramites",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "12:9:15",
+      "position": 15,
+      "word": "Aramites",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "13:25:9",
+      "position": 11,
+      "word": "Asaph",
+      "found": "asaph-2",
+      "annotated": [
+        "joseph-3"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "13:5:23",
+      "position": 18,
+      "word": "Hermon",
+      "found": "mounthermon",
+      "annotated": [
+        "baalhermon"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "14:22:5",
+      "position": 30,
+      "word": "Aramites",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "14:25:23",
+      "position": 15,
+      "word": "Ioash",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "1:11:31",
+      "position": 12,
+      "word": "Haran",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "1:12:14",
+      "position": 9,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "1:23:10",
+      "position": 6,
+      "word": "Hittites",
+      "found": "hittites",
+      "annotated": [
+        "heth"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "1:23:10",
+      "position": 19,
+      "word": "Hittites",
+      "found": "hittites",
+      "annotated": [
+        "heth"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "1:43:32",
+      "position": 16,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "1:43:32",
+      "position": 26,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "40:1:10",
+      "position": 8,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "40:1:10",
+      "position": 10,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "40:27:57",
+      "position": 13,
+      "word": "Arimathea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "41:15:43",
+      "position": 3,
+      "word": "Arimathea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "43:19:38",
+      "position": 7,
+      "word": "Arimathea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "44:27:7",
+      "position": 25,
+      "word": "Candie",
+      "found": "crete",
+      "annotated": [
+        "cnidus"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "44:28:8",
+      "position": 22,
+      "word": "Paul",
+      "found": "saul-2",
+      "annotated": [
+        "publius"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "46:3:5",
+      "position": 3,
+      "word": "Paul",
+      "found": "saul-2",
+      "annotated": [
+        "apollos"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "46:3:5",
+      "position": 8,
+      "word": "Apollos",
+      "found": "apollos",
+      "annotated": [
+        "saul-2"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "6:13:13",
+      "position": 15,
+      "word": "Geshurites",
+      "found": "geshurites",
+      "annotated": [
+        "geshur"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "6:13:13",
+      "position": 18,
+      "word": "Maachathites",
+      "found": "maachathites",
+      "annotated": [
+        "maacah-9"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "6:24:7",
+      "position": 16,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "9:5:6",
+      "position": 12,
+      "word": "Ashdod",
+      "found": "ashdod",
+      "annotated": [
+        "ashdodites"
+      ]
+    },
+    {
+      "text": "GNV1599",
+      "reference": "9:9:24",
+      "position": 20,
+      "word": "Samuel",
+      "found": "samuel-2",
+      "annotated": [
+        "saul"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "10:11:21",
+      "position": 36,
+      "word": "Οὐρίας",
+      "found": "uriah",
+      "annotated": [
+        "jerubbesheth"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "10:6:8",
+      "position": 18,
+      "word": "Ὀζᾶ",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "11:11:18",
+      "position": 20,
+      "word": "Φαραὼ",
+      "found": "pharaoh-title",
+      "annotated": [
+        "paran"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "11:11:43",
+      "position": 65,
+      "word": "Ῥοβοὰμ",
+      "found": "rehoboam",
+      "annotated": [
+        "jeroboam"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "11:14:31",
+      "position": 3,
+      "word": "Ῥοβοὰμ",
+      "found": "rehoboam",
+      "annotated": [
+        "abijam"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "11:16:24",
+      "position": 38,
+      "word": "Σεμηρών",
+      "found": "shemer",
+      "annotated": [
+        "samaria"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "11:20:1",
+      "position": 14,
+      "word": "Σαμάρειαν",
+      "found": "samaria",
+      "annotated": [
+        "syria"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "11:8:1",
+      "position": 28,
+      "word": "Σιὼν",
+      "found": "zion",
+      "annotated": [
+        "solomon"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "12:15:16",
+      "position": 6,
+      "word": "Θερσὰ",
+      "found": "tirzah-2",
+      "annotated": [
+        "tiphsah-2"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "12:19:2",
+      "position": 18,
+      "word": "Ἡσαΐαν",
+      "found": "isaiah",
+      "annotated": [
+        "shebnah"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "12:24:6",
+      "position": 10,
+      "word": "Ἰωακεὶμ",
+      "found": "eliakim-2",
+      "annotated": [
+        "jehoiachin"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "13:13:11",
+      "position": 16,
+      "word": "Ὀζὰ",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "13:19:18",
+      "position": 12,
+      "word": "Σύρου",
+      "found": "syria",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "13:1:9",
+      "position": 4,
+      "word": "Σαβὰ",
+      "found": "sheba-6",
+      "annotated": [
+        "seba"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "13:26:1",
+      "position": 7,
+      "word": "Κορεῒμ",
+      "found": "kore",
+      "annotated": [
+        "korahites"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "13:2:42",
+      "position": 6,
+      "word": "Μαρισὰ",
+      "found": "mareshah",
+      "annotated": [
+        "mesha-2"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "13:9:19",
+      "position": 4,
+      "word": "Κορὲ",
+      "found": "korah-3",
+      "annotated": [
+        "kore"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "14:22:6",
+      "position": 25,
+      "word": "Συρίας",
+      "found": "syria",
+      "annotated": [
+        "ahaziah-2"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "18:15:1",
+      "position": 5,
+      "word": "Θαιμανίτης",
+      "found": "eliphaz-2",
+      "annotated": [
+        "temanites"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "18:22:1",
+      "position": 5,
+      "word": "Θαιμανίτης",
+      "found": "eliphaz-2",
+      "annotated": [
+        "temanites"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "18:42:7",
+      "position": 19,
+      "word": "Θαιμανὺίτῃ",
+      "found": "eliphaz-2",
+      "annotated": [
+        "temanites"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "18:42:9",
+      "position": 5,
+      "word": "Θαιμανίτης",
+      "found": "eliphaz-2",
+      "annotated": [
+        "temanites"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "18:4:1",
+      "position": 5,
+      "word": "Θαιμανίτης",
+      "found": "eliphaz-2",
+      "annotated": [
+        "temanites"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "1:10:7",
+      "position": 4,
+      "word": "Σαβὰ",
+      "found": "sheba-6",
+      "annotated": [
+        "seba"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "1:12:14",
+      "position": 10,
+      "word": "Αἰγύπτιοι",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "1:12:5",
+      "position": 28,
+      "word": "Χαῤῥάν",
+      "found": "haran-4",
+      "annotated": [
+        "canaan-2"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "1:43:32",
+      "position": 11,
+      "word": "Αἰγυπτίοις",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "1:43:32",
+      "position": 22,
+      "word": "Αἰγύπτιοι",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "23:20:1",
+      "position": 13,
+      "word": "Ἀσσυρίων",
+      "found": "assyria",
+      "annotated": [
+        "sargon"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "23:37:2",
+      "position": 18,
+      "word": "Ἠσαΐαν",
+      "found": "isaiah",
+      "annotated": [
+        "shebnah"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "24:32:25",
+      "position": 25,
+      "word": "Χαλδαίων",
+      "found": "chaldeans",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "24:50:25",
+      "position": 19,
+      "word": "Χαλδαίων",
+      "found": "chaldeans",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "2:33:2",
+      "position": 14,
+      "word": "Χετταῖον",
+      "found": "hittites",
+      "annotated": [
+        "canaanites"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "2:6:24",
+      "position": 12,
+      "word": "Κορέ",
+      "found": "korah-3",
+      "annotated": [
+        "korahites"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "4:3:21",
+      "position": 13,
+      "word": "Γεδσών",
+      "found": "gershon",
+      "annotated": [
+        "gershonites"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "4:3:27",
+      "position": 27,
+      "word": "Καὰθ",
+      "found": "kohath",
+      "annotated": [
+        "kohathites"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "5:33:8",
+      "position": 6,
+      "word": "Λευὶ",
+      "found": "levi",
+      "annotated": [
+        "urim-and-thummim"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "6:10:41",
+      "position": 5,
+      "word": "Γάζης",
+      "found": "gaza",
+      "annotated": [
+        "goshen-2"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "6:13:13",
+      "position": 18,
+      "word": "Γεσιρὶ",
+      "found": "geshurites",
+      "annotated": [
+        "geshur"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "6:15:34",
+      "position": 4,
+      "word": "Τανὼ",
+      "found": "zanoah-2",
+      "annotated": [
+        "engannim"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "6:24:7",
+      "position": 15,
+      "word": "Αἰγυπτίων",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "6:7:18",
+      "position": 3,
+      "word": "Ἄχαρ",
+      "found": "achan",
+      "annotated": [
+        "carmi-2"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "6:7:24",
+      "position": 54,
+      "word": "Ἐμεκαχώρ",
+      "found": "valleyofachor",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "7:5:15",
+      "position": 8,
+      "word": "Βαράκ",
+      "found": "barak",
+      "annotated": [
+        "issacharites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "10:15:35",
+      "position": 8,
+      "word": "एब्यातार",
+      "found": "abiathar",
+      "annotated": [
+        "zadok"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "10:15:35",
+      "position": 24,
+      "word": "एब्यातार",
+      "found": "abiathar",
+      "annotated": [
+        "zadok"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "10:5:2",
+      "position": 18,
+      "word": "यहोवा",
+      "found": "yhvh",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "10:7:7",
+      "position": 21,
+      "word": "इस्राएल",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "10:8:17",
+      "position": 8,
+      "word": "एब्यातार",
+      "found": "abiathar",
+      "annotated": [
+        "zadok"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "12:13:10",
+      "position": 11,
+      "word": "यहोआहाज",
+      "found": "jehoahaz",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "12:15:14",
+      "position": 5,
+      "word": "मनहेम",
+      "found": "menachem",
+      "annotated": [
+        "gadi"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "12:15:27",
+      "position": 11,
+      "word": "रमल्याह",
+      "found": "remaliah",
+      "annotated": [
+        "pekah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "12:15:27",
+      "position": 14,
+      "word": "पेकह",
+      "found": "pekah",
+      "annotated": [
+        "remaliah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "12:23:29",
+      "position": 4,
+      "word": "फ़िरौन-नको",
+      "found": "pharaohneco",
+      "annotated": [
+        "pharaoh-title"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "12:23:33",
+      "position": 2,
+      "word": "फ़िरौन-नको",
+      "found": "pharaohneco",
+      "annotated": [
+        "pharaoh-title"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "12:23:34",
+      "position": 2,
+      "word": "फ़िरौन-नको",
+      "found": "pharaohneco",
+      "annotated": [
+        "pharaoh-title"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "12:23:35",
+      "position": 42,
+      "word": "फ़िरौन-नको",
+      "found": "pharaohneco",
+      "annotated": [
+        "pharaoh-title"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "13:1:36",
+      "position": 6,
+      "word": "तेमान",
+      "found": "teman",
+      "annotated": [
+        "timna"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "16:10:14",
+      "position": 7,
+      "word": "परोश",
+      "found": "parosh",
+      "annotated": [
+        "pahathmoab"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "1:43:32",
+      "position": 15,
+      "word": "मिस्री",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "1:43:32",
+      "position": 28,
+      "word": "मिस्री",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "26:14:14",
+      "position": 4,
+      "word": "नूह",
+      "found": "noah",
+      "annotated": [
+        "job"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "2:1:1",
+      "position": 1,
+      "word": "इस्राएल",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "2:35:12",
+      "position": 8,
+      "word": "ढकना",
+      "found": "mercy-seat",
+      "annotated": [
+        "veil-of-the-sanctuary"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "2:39:33",
+      "position": 5,
+      "word": "मूसा",
+      "found": "moses",
+      "annotated": [
+        "tabernacle"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "3:16:2",
+      "position": 18,
+      "word": "ढकने",
+      "found": "mercy-seat",
+      "annotated": [
+        "ark-of-the-covenant"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "40:1:10",
+      "position": 8,
+      "word": "आमोन",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "40:27:57",
+      "position": 7,
+      "word": "अरिमतियाह",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "42:3:32",
+      "position": 15,
+      "word": "सलमोन",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "4:21:13",
+      "position": 13,
+      "word": "एमोरियों",
+      "found": "amorites",
+      "annotated": [
+        "arnon"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "4:21:23",
+      "position": 31,
+      "word": "यहस",
+      "found": "jahaz",
+      "annotated": [
+        "sihon"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "4:25:15",
+      "position": 3,
+      "word": "मिद्यानी",
+      "found": "midian-2",
+      "annotated": [
+        "midianites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "4:26:57",
+      "position": 16,
+      "word": "गेर्शोनियों",
+      "found": "gershonites",
+      "annotated": [
+        "gershon"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "4:3:19",
+      "position": 17,
+      "word": "उज्जीएल",
+      "found": "uzziel",
+      "annotated": [
+        "hebron"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "4:4:5",
+      "position": 23,
+      "word": "सन्दूक",
+      "found": "ark-of-the-covenant",
+      "annotated": [
+        "veil-of-the-sanctuary"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "4:7:89",
+      "position": 17,
+      "word": "ढकने",
+      "found": "mercy-seat",
+      "annotated": [
+        "ark-of-the-covenant"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "5:33:5",
+      "position": 7,
+      "word": "इस्राएल",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "6:13:13",
+      "position": 14,
+      "word": "गशूरी",
+      "found": "geshurites",
+      "annotated": [
+        "geshur"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "6:24:7",
+      "position": 13,
+      "word": "मिस्रियों",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "6:9:18",
+      "position": 14,
+      "word": "इस्राएल",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:10:6",
+      "position": 31,
+      "word": "यहोवा",
+      "found": "yhvh",
+      "annotated": [
+        "syria"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:10:9",
+      "position": 4,
+      "word": "बिन्यामीन",
+      "found": "benjamin",
+      "annotated": [
+        "judah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:11:22",
+      "position": 13,
+      "word": "एमोरियों",
+      "found": "amorites",
+      "annotated": [
+        "arnon"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:11:25",
+      "position": 7,
+      "word": "सिप्पोर",
+      "found": "zippor",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:11:5",
+      "position": 8,
+      "word": "गिलाद",
+      "found": "gilead-4",
+      "annotated": [
+        "jephthah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:11:5",
+      "position": 12,
+      "word": "यिप्तह",
+      "found": "jephthah",
+      "annotated": [
+        "gilead-4"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:11:9",
+      "position": 3,
+      "word": "गिलाद",
+      "found": "gilead-4",
+      "annotated": [
+        "jephthah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:12:4",
+      "position": 18,
+      "word": "गिलादियों",
+      "found": "gilead-4",
+      "annotated": [
+        "ephraim"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:15:11",
+      "position": 13,
+      "word": "शिमशोन",
+      "found": "samson",
+      "annotated": [
+        "etam-2"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:18:8",
+      "position": 5,
+      "word": "एश्ताओल",
+      "found": "eshtaol",
+      "annotated": [
+        "zorah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:19:14",
+      "position": 9,
+      "word": "बिन्यामीन",
+      "found": "benjamin",
+      "annotated": [
+        "gibeah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:19:18",
+      "position": 7,
+      "word": "यहूदा",
+      "found": "judah",
+      "annotated": [
+        "bethlehem"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:19:18",
+      "position": 9,
+      "word": "बैतलहम",
+      "found": "bethlehem",
+      "annotated": [
+        "judah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:1:12",
+      "position": 2,
+      "word": "कालेब",
+      "found": "caleb",
+      "annotated": [
+        "kirjathsannah"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:1:13",
+      "position": 3,
+      "word": "कालेब",
+      "found": "caleb",
+      "annotated": [
+        "othniel"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:1:21",
+      "position": 5,
+      "word": "यबूसियों",
+      "found": "jebusites",
+      "annotated": [
+        "jerusalem"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:1:21",
+      "position": 7,
+      "word": "बिन्यामीनियों",
+      "found": "benjaminites",
+      "annotated": [
+        "jebusites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:1:21",
+      "position": 12,
+      "word": "यबूसी",
+      "found": "jebusites",
+      "annotated": [
+        "jerusalem"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:1:27",
+      "position": 1,
+      "word": "मनश्शे",
+      "found": "manasseh",
+      "annotated": [
+        "taanach"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:1:27",
+      "position": 7,
+      "word": "तानाक",
+      "found": "taanach",
+      "annotated": [
+        "dor"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:1:33",
+      "position": 1,
+      "word": "नप्ताली",
+      "found": "naphtali",
+      "annotated": [
+        "bethshemesh-3"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:1:4",
+      "position": 11,
+      "word": "परिज्जियों",
+      "found": "perizzites",
+      "annotated": [
+        "canaanites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:20:1",
+      "position": 11,
+      "word": "गिलाद",
+      "found": "gilead-4",
+      "annotated": [
+        "beersheba-2"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:20:10",
+      "position": 54,
+      "word": "इस्राएल",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:20:15",
+      "position": 4,
+      "word": "गिबावासी",
+      "found": "gibeah",
+      "annotated": [
+        "benjaminites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:21:6",
+      "position": 14,
+      "word": "इस्राएल",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:3:3",
+      "position": 8,
+      "word": "कनानियों",
+      "found": "canaanites",
+      "annotated": [
+        "hivites"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:3:3",
+      "position": 25,
+      "word": "हिब्बियों",
+      "found": "hivites",
+      "annotated": [
+        "baalhermon"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:3:9",
+      "position": 2,
+      "word": "इस्राएलियों",
+      "found": "israelites",
+      "annotated": [
+        "othniel"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:4:14",
+      "position": 14,
+      "word": "यहोवा",
+      "found": "yhvh",
+      "annotated": [
+        "sisera"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:4:17",
+      "position": 18,
+      "word": "याबीन",
+      "found": "jabin",
+      "annotated": [
+        "sisera"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:4:18",
+      "position": 2,
+      "word": "याएल",
+      "found": "jael",
+      "annotated": [
+        "sisera"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:4:24",
+      "position": 18,
+      "word": "याबीन",
+      "found": "jabin",
+      "annotated": [
+        "canaan-2"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:4:6",
+      "position": 14,
+      "word": "इस्राएल",
+      "found": "jacob",
+      "annotated": [
+        "naphtali"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:4:9",
+      "position": 29,
+      "word": "दबोरा",
+      "found": "deborah",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:5:1",
+      "position": 8,
+      "word": "बाराक",
+      "found": "barak",
+      "annotated": [
+        "abinoam"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:5:15",
+      "position": 5,
+      "word": "दबोरा",
+      "found": "deborah",
+      "annotated": [
+        "barak"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:5:4",
+      "position": 5,
+      "word": "सेईर",
+      "found": "mountseir",
+      "annotated": [
+        "edom"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:5:9",
+      "position": 3,
+      "word": "इस्राएल",
+      "found": "jacob",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:6:1",
+      "position": 2,
+      "word": "इस्राएलियों",
+      "found": "israelites",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:6:2",
+      "position": 2,
+      "word": "मिद्यानी",
+      "found": "midian-2",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:6:22",
+      "position": 13,
+      "word": "गिदोन",
+      "found": "gideon",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:6:24",
+      "position": 5,
+      "word": "यहोवा",
+      "found": "yhvh",
+      "annotated": [
+        "altar-the-lord-is-peace"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:6:3",
+      "position": 4,
+      "word": "इस्राएली",
+      "found": "jacob",
+      "annotated": [
+        "midian-2"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:7:15",
+      "position": 13,
+      "word": "इस्राएल",
+      "found": "jacob",
+      "annotated": [
+        "midian-2"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:7:15",
+      "position": 22,
+      "word": "मिद्यानी",
+      "found": "midian-2",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:7:24",
+      "position": 40,
+      "word": "एप्रैमी",
+      "found": "ephraim",
+      "annotated": [
+        "jordan"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:7:24",
+      "position": 45,
+      "word": "यरदन",
+      "found": "jordan",
+      "annotated": [
+        "ephraim"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:8:27",
+      "position": 8,
+      "word": "ओप्रा",
+      "found": "ophrah-3",
+      "annotated": [
+        "gideons-ephod"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "7:9:23",
+      "position": 17,
+      "word": "शेकेम",
+      "found": "shechem-4",
+      "annotated": [
+        "abimelech-2"
+      ]
+    },
+    {
+      "text": "IRV2019",
+      "reference": "9:15:17",
+      "position": 25,
+      "word": "इस्राएल",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "10:23:33",
+      "position": 8,
+      "word": "Sharar",
+      "found": "shammah-5",
+      "annotated": [
+        "sharar"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "12:8:28",
+      "position": 21,
+      "word": "Arameans",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "12:8:29",
+      "position": 15,
+      "word": "Arameans",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "12:9:15",
+      "position": 16,
+      "word": "Arameans",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "14:22:5",
+      "position": 29,
+      "word": "Arameans",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "14:25:23",
+      "position": 14,
+      "word": "Joash",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "1:11:31",
+      "position": 12,
+      "word": "Haran",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "1:12:14",
+      "position": 14,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "1:43:32",
+      "position": 17,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "1:43:32",
+      "position": 27,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "24:40:15",
+      "position": 44,
+      "word": "Jews",
+      "found": "judahites",
+      "annotated": [
+        "judah"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "6:24:7",
+      "position": 16,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "7:12:5",
+      "position": 12,
+      "word": "Ephraimites",
+      "found": "ephrathites",
+      "annotated": [
+        "ephraim"
+      ]
+    },
+    {
+      "text": "JPS1917",
+      "reference": "9:5:6",
+      "position": 12,
+      "word": "Ashdod",
+      "found": "ashdod",
+      "annotated": [
+        "ashdodites"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "10:23:33",
+      "position": 8,
+      "word": "Sharar",
+      "found": "shammah-5",
+      "annotated": [
+        "sharar"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "12:16:6",
+      "position": 20,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "12:8:28",
+      "position": 22,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "12:8:29",
+      "position": 16,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "12:9:15",
+      "position": 16,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "14:22:5",
+      "position": 29,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "1:11:31",
+      "position": 12,
+      "word": "Haran",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "1:12:14",
+      "position": 14,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "1:43:32",
+      "position": 17,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "1:43:32",
+      "position": 27,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "40:27:57",
+      "position": 12,
+      "word": "Arimathaea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "41:15:43",
+      "position": 3,
+      "word": "Arimathaea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "43:19:38",
+      "position": 6,
+      "word": "Arimathaea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "4:26:58",
+      "position": 27,
+      "word": "Mushites",
+      "found": "korahites",
+      "annotated": [
+        "mushites"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "6:13:13",
+      "position": 15,
+      "word": "Geshurites",
+      "found": "geshurites",
+      "annotated": [
+        "geshur"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "6:13:13",
+      "position": 18,
+      "word": "Maachathites",
+      "found": "maachathites",
+      "annotated": [
+        "maacah-9"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "6:24:7",
+      "position": 15,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "KJV",
+      "reference": "9:5:6",
+      "position": 23,
+      "word": "Ashdod",
+      "found": "ashdod",
+      "annotated": [
+        "ashdodites"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "10:23:33",
+      "position": 6,
+      "word": "Scharar",
+      "found": "shammah-5",
+      "annotated": [
+        "sharar"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "10:4:2",
+      "position": 23,
+      "word": "Beéroth",
+      "found": "beeroth",
+      "annotated": [
+        "beerothites"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "10:7:7",
+      "position": 27,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "11:21:1",
+      "position": 10,
+      "word": "Jizreel",
+      "found": "jezreel-4",
+      "annotated": [
+        "jezreelites"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "11:6:13",
+      "position": 13,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "11:8:1",
+      "position": 13,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "11:8:16",
+      "position": 11,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "11:8:16",
+      "position": 44,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "12:16:6",
+      "position": 23,
+      "word": "Syriens",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "12:17:31",
+      "position": 9,
+      "word": "Sepharvaïm",
+      "found": "sepharvaim",
+      "annotated": [
+        "sepharvites"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "12:8:28",
+      "position": 21,
+      "word": "Syriens",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "12:8:29",
+      "position": 16,
+      "word": "Syriens",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "12:9:15",
+      "position": 18,
+      "word": "Syriens",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "13:27:29",
+      "position": 3,
+      "word": "Saron",
+      "found": "sharon",
+      "annotated": [
+        "sharonites"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "13:5:1",
+      "position": 5,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "13:9:19",
+      "position": 4,
+      "word": "Koré",
+      "found": "korah-3",
+      "annotated": [
+        "kore"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "14:11:16",
+      "position": 16,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "14:22:5",
+      "position": 27,
+      "word": "Syriens",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "14:25:23",
+      "position": 13,
+      "word": "Joas",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "14:30:6",
+      "position": 35,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "14:31:1",
+      "position": 8,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "14:5:2",
+      "position": 8,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "14:6:5",
+      "position": 48,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "15:6:21",
+      "position": 34,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "1:12:14",
+      "position": 8,
+      "word": "Égyptiens",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "1:43:32",
+      "position": 12,
+      "word": "Égyptiens",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "1:43:32",
+      "position": 24,
+      "word": "Égyptiens",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "26:37:16",
+      "position": 43,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "26:43:7",
+      "position": 34,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "2:9:4",
+      "position": 6,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "3:22:18",
+      "position": 23,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "40:1:10",
+      "position": 6,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "40:1:10",
+      "position": 7,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "42:3:32",
+      "position": 11,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "4:16:1",
+      "position": 16,
+      "word": "Abiram",
+      "found": "eliab-2",
+      "annotated": [
+        "abiram"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "4:16:12",
+      "position": 6,
+      "word": "Abiram",
+      "found": "eliab-2",
+      "annotated": [
+        "abiram"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "4:1:45",
+      "position": 26,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "4:25:8",
+      "position": 4,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "4:25:8",
+      "position": 16,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "4:26:2",
+      "position": 26,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "4:26:9",
+      "position": 6,
+      "word": "Abiram",
+      "found": "eliab-2",
+      "annotated": [
+        "abiram"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "4:26:9",
+      "position": 12,
+      "word": "Abiram",
+      "found": "eliab-2",
+      "annotated": [
+        "abiram"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "55:4:19",
+      "position": 2,
+      "word": "Prisca",
+      "found": "onesiphorus",
+      "annotated": [
+        "priscilla"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "5:11:6",
+      "position": 9,
+      "word": "Abiram",
+      "found": "eliab-2",
+      "annotated": [
+        "abiram"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "5:23:17",
+      "position": 9,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "6:10:12",
+      "position": 21,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "6:13:13",
+      "position": 18,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "6:22:14",
+      "position": 25,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "6:24:1",
+      "position": 14,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "6:24:7",
+      "position": 15,
+      "word": "Égyptiens",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "6:9:18",
+      "position": 19,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "7:12:15",
+      "position": 12,
+      "word": "Pirathon",
+      "found": "pirathonites",
+      "annotated": [
+        "pirathon"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "7:20:13",
+      "position": 24,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "7:21:6",
+      "position": 22,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "7:6:8",
+      "position": 16,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "9:10:18",
+      "position": 12,
+      "word": "d’Israël",
+      "found": "israelites",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "9:9:15",
+      "position": 7,
+      "word": "Saül",
+      "found": "saul",
+      "annotated": [
+        "samuel-2"
+      ]
+    },
+    {
+      "text": "LSG1910",
+      "reference": "9:9:15",
+      "position": 11,
+      "word": "Samuel",
+      "found": "samuel-2",
+      "annotated": [
+        "saul"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "10:7:7",
+      "position": 18,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "11:11:14",
+      "position": 10,
+      "word": "Edomiter",
+      "found": "edom",
+      "annotated": [
+        "edomites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "11:8:16",
+      "position": 22,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "12:16:6",
+      "position": 21,
+      "word": "Syrer",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "12:17:31",
+      "position": 10,
+      "word": "Sepharvaim",
+      "found": "sepharvaim",
+      "annotated": [
+        "sepharvites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "12:8:28",
+      "position": 24,
+      "word": "Syrer",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "12:8:29",
+      "position": 20,
+      "word": "Syrer",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "12:9:15",
+      "position": 20,
+      "word": "Syrer",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "13:20:4",
+      "position": 7,
+      "word": "Geser",
+      "found": "gezer",
+      "annotated": [
+        "philistines"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "13:20:4",
+      "position": 10,
+      "word": "Philistern",
+      "found": "philistines",
+      "annotated": [
+        "gezer"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "13:5:1",
+      "position": 31,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "14:11:16",
+      "position": 8,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "14:22:5",
+      "position": 34,
+      "word": "Syrer",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "14:6:5",
+      "position": 20,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "15:5:1",
+      "position": 16,
+      "word": "Juda",
+      "found": "judahites",
+      "annotated": [
+        "judea-2"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "16:3:7",
+      "position": 6,
+      "word": "Gibeon",
+      "found": "gibeon",
+      "annotated": [
+        "gibeonites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "1:46:5",
+      "position": 11,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "5:23:17",
+      "position": 16,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "5:33:5",
+      "position": 17,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "6:13:13",
+      "position": 8,
+      "word": "Gessur",
+      "found": "geshur",
+      "annotated": [
+        "geshurites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "6:13:13",
+      "position": 11,
+      "word": "Maacha",
+      "found": "maacah-9",
+      "annotated": [
+        "maachathites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "6:24:1",
+      "position": 5,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "7:18:1",
+      "position": 38,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "7:20:10",
+      "position": 21,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "9:15:17",
+      "position": 20,
+      "word": "Israels",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "9:5:10",
+      "position": 21,
+      "word": "Ekron",
+      "found": "ekron",
+      "annotated": [
+        "ekronites"
+      ]
+    },
+    {
+      "text": "LUTH1912",
+      "reference": "9:5:6",
+      "position": 11,
+      "word": "Asdod",
+      "found": "ashdod",
+      "annotated": [
+        "ashdodites"
+      ]
+    },
+    {
+      "text": "RP2018",
+      "reference": "40:1:10",
+      "position": 10,
+      "word": "αμων",
+      "found": "amos-2",
+      "annotated": [
+        "amon-2"
+      ]
+    },
+    {
+      "text": "RP2018",
+      "reference": "40:1:10",
+      "position": 11,
+      "word": "αμων",
+      "found": "amos-2",
+      "annotated": [
+        "amon-2"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "13:26:1",
+      "position": 5,
+      "word": "Кореян",
+      "found": "kore",
+      "annotated": [
+        "korahites"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "13:3:15",
+      "position": 4,
+      "word": "Иоахаз",
+      "found": "jehoahaz-2",
+      "annotated": [
+        "johanan-firstborn-of-josiah"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "13:5:1",
+      "position": 20,
+      "word": "Израилева",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "14:30:6",
+      "position": 24,
+      "word": "Израиля",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "15:9:9",
+      "position": 44,
+      "word": "Иерусалиме",
+      "found": "jerusalem",
+      "annotated": [
+        "judah"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "16:11:35",
+      "position": 1,
+      "word": "Лоде",
+      "found": "ono",
+      "annotated": [
+        "lod"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "16:7:37",
+      "position": 2,
+      "word": "Лода",
+      "found": "ono",
+      "annotated": [
+        "lod"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "38:12:7",
+      "position": 6,
+      "word": "Иуды",
+      "found": "judah",
+      "annotated": [
+        "judahites"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "40:27:57",
+      "position": 9,
+      "word": "Аримафеи",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "41:15:43",
+      "position": 4,
+      "word": "Аримафеи",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "43:19:38",
+      "position": 5,
+      "word": "Аримафеи",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "4:26:42",
+      "position": 8,
+      "word": "Шухама",
+      "found": "shuhamites",
+      "annotated": [
+        "hushim"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "4:2:29",
+      "position": 3,
+      "word": "Неффалима",
+      "found": "naphtali",
+      "annotated": [
+        "naphtalites"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "4:3:27",
+      "position": 16,
+      "word": "Каафа",
+      "found": "kohath",
+      "annotated": [
+        "kohathites"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "6:10:12",
+      "position": 15,
+      "word": "Израилю",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "6:13:13",
+      "position": 7,
+      "word": "Гессура",
+      "found": "geshur",
+      "annotated": [
+        "geshurites"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "6:17:1",
+      "position": 16,
+      "word": "Галаада",
+      "found": "gilead-4",
+      "annotated": [
+        "gilead"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "6:17:11",
+      "position": 27,
+      "word": "Ен-Дора",
+      "found": "dor",
+      "annotated": [
+        "endor"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "7:12:11",
+      "position": 7,
+      "word": "Завулонянин",
+      "found": "elon-3",
+      "annotated": [
+        "zebulonites"
+      ]
+    },
+    {
+      "text": "RUSV",
+      "reference": "9:14:40",
+      "position": 3,
+      "word": "Саул",
+      "found": "saul",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "10:4:2",
+      "position": 36,
+      "word": "Beeroth",
+      "found": "beeroth",
+      "annotated": [
+        "beerothites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "11:11:14",
+      "position": 19,
+      "word": "Edom",
+      "found": "edom",
+      "annotated": [
+        "edomites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "11:21:1",
+      "position": 8,
+      "word": "Jezreel",
+      "found": "jezreel-4",
+      "annotated": [
+        "jezreelites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "11:22:11",
+      "position": 18,
+      "word": "Jehová",
+      "found": "yhvh",
+      "annotated": [
+        "chenaanah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "11:22:24",
+      "position": 23,
+      "word": "Jehová",
+      "found": "yhvh",
+      "annotated": [
+        "chenaanah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:16:6",
+      "position": 21,
+      "word": "Siros",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:17:31",
+      "position": 12,
+      "word": "Sepharvaim",
+      "found": "sepharvaim",
+      "annotated": [
+        "avites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:17:31",
+      "position": 25,
+      "word": "Sepharvaim",
+      "found": "sepharvaim",
+      "annotated": [
+        "sepharvites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:18:34",
+      "position": 14,
+      "word": "Sepharvaim",
+      "found": "sepharvaim",
+      "annotated": [
+        "ivvah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:19:13",
+      "position": 17,
+      "word": "Sepharvaim",
+      "found": "sepharvaim",
+      "annotated": [
+        "ivvah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:22:3",
+      "position": 18,
+      "word": "Azalía",
+      "found": "meshullam",
+      "annotated": [
+        "azaliah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:23:29",
+      "position": 4,
+      "word": "Faraón",
+      "found": "pharaoh-title",
+      "annotated": [
+        "pharaohneco"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:23:35",
+      "position": 47,
+      "word": "Faraón",
+      "found": "pharaoh-title",
+      "annotated": [
+        "pharaohneco"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:8:28",
+      "position": 22,
+      "word": "Siros",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:8:29",
+      "position": 16,
+      "word": "Siros",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "12:9:15",
+      "position": 16,
+      "word": "Siros",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:10:2",
+      "position": 25,
+      "word": "Saúl",
+      "found": "saul",
+      "annotated": [
+        "malchishua"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:11:39",
+      "position": 10,
+      "word": "Sarvia",
+      "found": "zeruiah",
+      "annotated": [
+        "naharai"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:1:32",
+      "position": 10,
+      "word": "Medán",
+      "found": "dedan-2",
+      "annotated": [
+        "medan"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:1:53",
+      "position": 9,
+      "word": "Mibzar",
+      "found": "mibzar",
+      "annotated": [
+        "kenaz"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:1:9",
+      "position": 5,
+      "word": "Seba",
+      "found": "sheba-6",
+      "annotated": [
+        "seba"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:26:1",
+      "position": 10,
+      "word": "Coraitas",
+      "found": "kore",
+      "annotated": [
+        "korahites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:27:19",
+      "position": 16,
+      "word": "Azriel",
+      "found": "azriel-2",
+      "annotated": [
+        "jeremoth-4"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:5:23",
+      "position": 24,
+      "word": "Hermón",
+      "found": "mounthermon",
+      "annotated": [
+        "baalhermon"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:8:36",
+      "position": 13,
+      "word": "Azmaveth",
+      "found": "azmaveth-2",
+      "annotated": [
+        "alemeth-2"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:9:19",
+      "position": 5,
+      "word": "Core",
+      "found": "korah-3",
+      "annotated": [
+        "kore"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "13:9:42",
+      "position": 10,
+      "word": "Azmaveth",
+      "found": "azmaveth-2",
+      "annotated": [
+        "alemeth-2"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "14:18:10",
+      "position": 17,
+      "word": "Jehová",
+      "found": "yhvh",
+      "annotated": [
+        "chenaanah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "14:18:23",
+      "position": 29,
+      "word": "Jehová",
+      "found": "yhvh",
+      "annotated": [
+        "chenaanah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "14:25:23",
+      "position": 16,
+      "word": "Joas",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "16:10:4",
+      "position": 3,
+      "word": "Malluch",
+      "found": "malluch-4",
+      "annotated": [
+        "hattush-3"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "1:10:29",
+      "position": 15,
+      "word": "Joctán",
+      "found": "joktan",
+      "annotated": [
+        "jobab"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "1:10:7",
+      "position": 6,
+      "word": "Seba",
+      "found": "sheba-6",
+      "annotated": [
+        "seba"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "1:12:14",
+      "position": 10,
+      "word": "Egipcios",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "1:23:10",
+      "position": 12,
+      "word": "Hetheo",
+      "found": "hittites",
+      "annotated": [
+        "heth"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "1:36:43",
+      "position": 13,
+      "word": "Edom",
+      "found": "edom",
+      "annotated": [
+        "iram"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "1:43:32",
+      "position": 14,
+      "word": "Egipcios",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "1:43:32",
+      "position": 21,
+      "word": "Egipcios",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "23:37:13",
+      "position": 18,
+      "word": "Sepharvaim",
+      "found": "sepharvaim",
+      "annotated": [
+        "ivvah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "24:40:8",
+      "position": 36,
+      "word": "Maachâti",
+      "found": "maachathites",
+      "annotated": [
+        "tanhumeth"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "40:1:10",
+      "position": 10,
+      "word": "Amón",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "40:1:10",
+      "position": 12,
+      "word": "Amón",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "40:27:57",
+      "position": 13,
+      "word": "Arimatea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "40:3:13",
+      "position": 7,
+      "word": "Juan",
+      "found": "john",
+      "annotated": [
+        "jordan"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "40:3:13",
+      "position": 9,
+      "word": "Jordán",
+      "found": "jordan",
+      "annotated": [
+        "john"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "41:15:43",
+      "position": 3,
+      "word": "Arimatea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "42:3:32",
+      "position": 20,
+      "word": "Salmón",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "43:19:38",
+      "position": 7,
+      "word": "Arimatea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "4:11:3",
+      "position": 11,
+      "word": "Jehová",
+      "found": "yhvh",
+      "annotated": [
+        "taberah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "4:26:20",
+      "position": 30,
+      "word": "Zeraitas",
+      "found": "zarchites",
+      "annotated": [
+        "pharzites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "4:26:29",
+      "position": 13,
+      "word": "Machîr",
+      "found": "machir",
+      "annotated": [
+        "makirites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "4:26:58",
+      "position": 27,
+      "word": "Musitas",
+      "found": "korahites",
+      "annotated": [
+        "mushites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "4:26:6",
+      "position": 2,
+      "word": "Hesrón",
+      "found": "hezron",
+      "annotated": [
+        "hezronites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "4:3:21",
+      "position": 16,
+      "word": "Gersón",
+      "found": "gershon",
+      "annotated": [
+        "gershonites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "6:15:49",
+      "position": 7,
+      "word": "Debir",
+      "found": "debir-2",
+      "annotated": [
+        "kirjathsannah"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "6:15:9",
+      "position": 17,
+      "word": "Nephtoa",
+      "found": "nephtoah",
+      "annotated": [
+        "mountephron"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "6:24:7",
+      "position": 14,
+      "word": "Egipcios",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "7:1:5",
+      "position": 6,
+      "word": "Bezec",
+      "found": "bezek",
+      "annotated": [
+        "adonibezek"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "8:2:6",
+      "position": 15,
+      "word": "Moab",
+      "found": "moab-2",
+      "annotated": [
+        "moabites"
+      ]
+    },
+    {
+      "text": "RV1909",
+      "reference": "9:5:6",
+      "position": 10,
+      "word": "Asdod",
+      "found": "ashdod",
+      "annotated": [
+        "ashdodites"
+      ]
+    },
+    {
+      "text": "SP",
+      "reference": "1:12:14",
+      "position": 10,
+      "word": "מצרים",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "SP",
+      "reference": "1:43:32",
+      "position": 12,
+      "word": "מצרים",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "SP",
+      "reference": "1:43:32",
+      "position": 22,
+      "word": "מצרים",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "SP",
+      "reference": "2:23:28",
+      "position": 20,
+      "word": "חתי",
+      "found": "hittites",
+      "annotated": [
+        "hivites"
+      ]
+    },
+    {
+      "text": "SP",
+      "reference": "2:23:28",
+      "position": 32,
+      "word": "חוי",
+      "found": "hivites",
+      "annotated": [
+        "hittites"
+      ]
+    },
+    {
+      "text": "TISCH",
+      "reference": "43:1:43",
+      "position": 9,
+      "word": "Ἰησοῦς",
+      "found": "jesus",
+      "annotated": [
+        "galilee"
+      ]
+    },
+    {
+      "text": "TR1550",
+      "reference": "40:1:10",
+      "position": 10,
+      "word": "αμων",
+      "found": "amos-2",
+      "annotated": [
+        "amon-2"
+      ]
+    },
+    {
+      "text": "TR1550",
+      "reference": "40:1:10",
+      "position": 11,
+      "word": "αμων",
+      "found": "amos-2",
+      "annotated": [
+        "amon-2"
+      ]
+    },
+    {
+      "text": "TYN1534",
+      "reference": "42:3:32",
+      "position": 24,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "TYN1534",
+      "reference": "44:27:7",
+      "position": 29,
+      "word": "Candy",
+      "found": "crete",
+      "annotated": [
+        "cnidus"
+      ]
+    },
+    {
+      "text": "TYN1534",
+      "reference": "44:28:8",
+      "position": 8,
+      "word": "Publius",
+      "found": "publius",
+      "annotated": [
+        "saul-2"
+      ]
+    },
+    {
+      "text": "TYN1534",
+      "reference": "44:5:3",
+      "position": 4,
+      "word": "Ananias",
+      "found": "ananias",
+      "annotated": [
+        "satan"
+      ]
+    },
+    {
+      "text": "TYN1534",
+      "reference": "66:12:9",
+      "position": 12,
+      "word": "Sathanas",
+      "found": "serpent-of-eden",
+      "annotated": [
+        "satan"
+      ]
+    },
+    {
+      "text": "TYN1534",
+      "reference": "66:20:2",
+      "position": 14,
+      "word": "Satanas",
+      "found": "serpent-of-eden",
+      "annotated": [
+        "satan"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "11:11:1",
+      "position": 12,
+      "word": "аммонітянок",
+      "found": "ammonites",
+      "annotated": [
+        "moabites"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "11:11:1",
+      "position": 14,
+      "word": "сидонянок",
+      "found": "sidonians",
+      "annotated": [
+        "edomites"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "12:17:31",
+      "position": 9,
+      "word": "Сефарваїму",
+      "found": "sepharvaim",
+      "annotated": [
+        "sepharvites"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "13:1:9",
+      "position": 6,
+      "word": "Шева",
+      "found": "sheba-6",
+      "annotated": [
+        "seba"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "15:2:63",
+      "position": 20,
+      "word": "тумміму",
+      "found": "tirshatha",
+      "annotated": [
+        "urim-and-thummim"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "16:13:23",
+      "position": 13,
+      "word": "аммонітянок",
+      "found": "ammonites",
+      "annotated": [
+        "moabites"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "16:7:65",
+      "position": 20,
+      "word": "тумміму",
+      "found": "tirshatha",
+      "annotated": [
+        "urim-and-thummim"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "26:37:16",
+      "position": 17,
+      "word": "Ізраїля",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "2:19:3",
+      "position": 21,
+      "word": "Ізраїля",
+      "found": "jacob",
+      "annotated": [
+        "israelites"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "2:1:19",
+      "position": 7,
+      "word": "єврейки",
+      "found": "hebrews",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "2:9:11",
+      "position": 7,
+      "word": "Мойсеєм",
+      "found": "moses",
+      "annotated": [
+        "egypt"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "40:27:57",
+      "position": 10,
+      "word": "Ариматеї",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "41:15:43",
+      "position": 4,
+      "word": "Ариматеї",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "43:19:38",
+      "position": 4,
+      "word": "Аріматеї",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "4:26:21",
+      "position": 6,
+      "word": "Хецрона",
+      "found": "hezronites",
+      "annotated": [
+        "hezron-2"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "4:26:57",
+      "position": 9,
+      "word": "Ґершона",
+      "found": "gershonites",
+      "annotated": [
+        "gershon"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "4:26:6",
+      "position": 2,
+      "word": "Хецрона",
+      "found": "hezronites",
+      "annotated": [
+        "hezron"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "4:3:21",
+      "position": 2,
+      "word": "Ґершона",
+      "found": "gershonites",
+      "annotated": [
+        "gershon"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "4:3:27",
+      "position": 18,
+      "word": "Кегатових",
+      "found": "kohath",
+      "annotated": [
+        "kohathites"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "7:6:22",
+      "position": 10,
+      "word": "Гедеон",
+      "found": "gideon",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "UBIO",
+      "reference": "9:9:26",
+      "position": 35,
+      "word": "Саул",
+      "found": "saul",
+      "annotated": [
+        "samuel-2"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "10:15:18",
+      "position": 26,
+      "word": "Гету",
+      "found": "gittites",
+      "annotated": [
+        "gath"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "10:6:2",
+      "position": 3,
+      "word": "Давид",
+      "found": "david",
+      "annotated": [
+        "baaleofjudah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "10:8:5",
+      "position": 13,
+      "word": "Сирийцїв",
+      "found": "syria",
+      "annotated": [
+        "zobah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "11:16:24",
+      "position": 6,
+      "word": "Самарию",
+      "found": "samaria",
+      "annotated": [
+        "shemer"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "11:16:24",
+      "position": 20,
+      "word": "Самария",
+      "found": "samaria",
+      "annotated": [
+        "shemer"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "11:21:15",
+      "position": 20,
+      "word": "Езреелїя",
+      "found": "jezreelites",
+      "annotated": [
+        "jezebel"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "11:9:20",
+      "position": 12,
+      "word": "Евузіїв",
+      "found": "jebusites",
+      "annotated": [
+        "hivites"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "12:18:18",
+      "position": 9,
+      "word": "Еліяким",
+      "found": "eliakim",
+      "annotated": [
+        "hilkiah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "12:18:26",
+      "position": 3,
+      "word": "Еліяким",
+      "found": "eliakim",
+      "annotated": [
+        "hilkiah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "12:18:37",
+      "position": 3,
+      "word": "Еліяким",
+      "found": "eliakim",
+      "annotated": [
+        "hilkiah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "12:8:28",
+      "position": 18,
+      "word": "Сирийцї",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "12:8:29",
+      "position": 13,
+      "word": "Сирийцї",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "12:8:29",
+      "position": 26,
+      "word": "Йораменко",
+      "found": "ramah-5",
+      "annotated": [
+        "jehoram"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "12:9:15",
+      "position": 14,
+      "word": "Сирийцї",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "13:11:4",
+      "position": 17,
+      "word": "Евусії",
+      "found": "jebus-2",
+      "annotated": [
+        "jebusites"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "13:26:1",
+      "position": 5,
+      "word": "Кореїв",
+      "found": "kore",
+      "annotated": [
+        "korahites"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "13:6:17",
+      "position": 5,
+      "word": "Ливнїй",
+      "found": "shimei",
+      "annotated": [
+        "libni"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "13:6:37",
+      "position": 8,
+      "word": "Кореєвого",
+      "found": "abiasaph",
+      "annotated": [
+        "korah-3"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "13:7:37",
+      "position": 7,
+      "word": "Беера",
+      "found": "ithran-2",
+      "annotated": [
+        "beera"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "13:9:19",
+      "position": 7,
+      "word": "Кореєвого",
+      "found": "abiasaph",
+      "annotated": [
+        "korah-3"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "13:9:19",
+      "position": 14,
+      "word": "Кореї",
+      "found": "kore",
+      "annotated": [
+        "korah-3"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "14:22:5",
+      "position": 24,
+      "word": "Сирийцї",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "14:22:6",
+      "position": 25,
+      "word": "Йорамів",
+      "found": "ramah-5",
+      "annotated": [
+        "jehoram"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "14:25:23",
+      "position": 10,
+      "word": "Йоас",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "14:33:22",
+      "position": 18,
+      "word": "Манассія",
+      "found": "manasseh-3",
+      "annotated": [
+        "amon-2"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "14:33:22",
+      "position": 22,
+      "word": "Амон",
+      "found": "amon-2",
+      "annotated": [
+        "manasseh-3"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "14:8:7",
+      "position": 15,
+      "word": "Евузіїв",
+      "found": "jebusites",
+      "annotated": [
+        "hivites"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "15:2:40",
+      "position": 5,
+      "word": "Кадмуїла",
+      "found": "jeshua-5",
+      "annotated": [
+        "kadmiel"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "15:5:1",
+      "position": 14,
+      "word": "Юдеї",
+      "found": "judahites",
+      "annotated": [
+        "judea-2"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "19:78:60",
+      "position": 4,
+      "word": "Силомську",
+      "found": "shiloh",
+      "annotated": [
+        "tabernacle"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "1:11:31",
+      "position": 35,
+      "word": "Гаран",
+      "found": "haran",
+      "annotated": [
+        "haran-4"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "1:12:14",
+      "position": 11,
+      "word": "Египтяне",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "1:43:32",
+      "position": 17,
+      "word": "Египтяне",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "23:36:1",
+      "position": 11,
+      "word": "Сеннахирим",
+      "found": "sennacherib",
+      "annotated": [
+        "assyria"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "23:36:22",
+      "position": 3,
+      "word": "Еліяким",
+      "found": "eliakim",
+      "annotated": [
+        "hilkiah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "23:36:3",
+      "position": 5,
+      "word": "Еліяким",
+      "found": "eliakim",
+      "annotated": [
+        "hilkiah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "24:41:9",
+      "position": 24,
+      "word": "Вааса",
+      "found": "asa",
+      "annotated": [
+        "baasha"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "28:2:11",
+      "position": 13,
+      "word": "суботам",
+      "found": "sabbath",
+      "annotated": [
+        "appointed-times"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "2:3:17",
+      "position": 12,
+      "word": "Гетіїв",
+      "found": "hittites",
+      "annotated": [
+        "egypt"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "2:6:17",
+      "position": 4,
+      "word": "Лібнїй",
+      "found": "shimei",
+      "annotated": [
+        "libni"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "40:27:57",
+      "position": 9,
+      "word": "Ариматеї",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "41:15:43",
+      "position": 4,
+      "word": "Ариматеї",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "42:3:32",
+      "position": 4,
+      "word": "Салмонів",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "43:19:38",
+      "position": 8,
+      "word": "Ариматеї",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "44:20:4",
+      "position": 4,
+      "word": "Азиї",
+      "found": "asia",
+      "annotated": [
+        "sopater"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "46:3:5",
+      "position": 3,
+      "word": "Павел",
+      "found": "saul-2",
+      "annotated": [
+        "apollos"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "46:3:5",
+      "position": 6,
+      "word": "Аполос",
+      "found": "apollos",
+      "annotated": [
+        "saul-2"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "4:26:42",
+      "position": 11,
+      "word": "Шухаміїв",
+      "found": "shuhamites",
+      "annotated": [
+        "hushim"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "4:3:18",
+      "position": 9,
+      "word": "Лїбнїй",
+      "found": "shimei",
+      "annotated": [
+        "libni"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "6:11:19",
+      "position": 11,
+      "word": "Гевіїв",
+      "found": "hivites",
+      "annotated": [
+        "gibeon"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "6:11:3",
+      "position": 20,
+      "word": "Гетїїв",
+      "found": "hittites",
+      "annotated": [
+        "hivites"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "6:12:8",
+      "position": 19,
+      "word": "Евузіїв",
+      "found": "jebusites",
+      "annotated": [
+        "hivites"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "7:12:11",
+      "position": 5,
+      "word": "Забулонїй",
+      "found": "elon-3",
+      "annotated": [
+        "zebulonites"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "7:3:5",
+      "position": 14,
+      "word": "Евузіїв",
+      "found": "jebusites",
+      "annotated": [
+        "hivites"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "7:6:22",
+      "position": 11,
+      "word": "Гедеон",
+      "found": "gideon",
+      "annotated": [
+        "yhvh"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "9:14:47",
+      "position": 5,
+      "word": "Ізраїлем",
+      "found": "jacob",
+      "annotated": [
+        "saul"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "9:14:47",
+      "position": 7,
+      "word": "Саул",
+      "found": "saul",
+      "annotated": [
+        "jacob"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "9:14:51",
+      "position": 8,
+      "word": "Абенирів",
+      "found": "abner",
+      "annotated": [
+        "ner"
+      ]
+    },
+    {
+      "text": "UKR1871",
+      "reference": "9:5:6",
+      "position": 17,
+      "word": "Азотї",
+      "found": "ashdod",
+      "annotated": [
+        "ashdodites"
+      ]
+    },
+    {
+      "text": "ULT",
+      "reference": "1:12:14",
+      "position": 11,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ULT",
+      "reference": "1:43:32",
+      "position": 16,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ULT",
+      "reference": "1:43:32",
+      "position": 25,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "ULT",
+      "reference": "42:3:32",
+      "position": 8,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "ULT",
+      "reference": "6:24:7",
+      "position": 15,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "10:23:33",
+      "position": 8,
+      "word": "Sharar",
+      "found": "shammah-5",
+      "annotated": [
+        "sharar"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "10:6:8",
+      "position": 18,
+      "word": "Uzzah",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "12:16:6",
+      "position": 20,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "12:8:28",
+      "position": 21,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "12:8:29",
+      "position": 14,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "12:9:15",
+      "position": 16,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "13:13:11",
+      "position": 17,
+      "word": "Uzza",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "14:22:5",
+      "position": 29,
+      "word": "Syrians",
+      "found": "syria",
+      "annotated": [
+        "syrians"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "14:25:23",
+      "position": 13,
+      "word": "Joash",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "1:11:31",
+      "position": 10,
+      "word": "Haran",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "1:12:14",
+      "position": 8,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "1:43:32",
+      "position": 12,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "1:43:32",
+      "position": 21,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "40:1:10",
+      "position": 12,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "40:1:10",
+      "position": 13,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "40:27:57",
+      "position": 9,
+      "word": "Arimathaea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "41:15:43",
+      "position": 3,
+      "word": "Arimathaea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "42:3:32",
+      "position": 16,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "43:19:38",
+      "position": 6,
+      "word": "Arimathaea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "4:33:36",
+      "position": 4,
+      "word": "Ezion",
+      "found": "eziongeber",
+      "annotated": [
+        "zin"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "6:24:7",
+      "position": 15,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "7:12:5",
+      "position": 11,
+      "word": "Ephraimites",
+      "found": "ephrathites",
+      "annotated": [
+        "ephraim"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "7:3:10",
+      "position": 22,
+      "word": "Rishathaim",
+      "found": "cushanrishathaim",
+      "annotated": [
+        "mesopotamia"
+      ]
+    },
+    {
+      "text": "WEB",
+      "reference": "9:5:6",
+      "position": 11,
+      "word": "Ashdod",
+      "found": "ashdod",
+      "annotated": [
+        "ashdodites"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "10:23:33",
+      "position": 7,
+      "word": "Sharar",
+      "found": "shammah-5",
+      "annotated": [
+        "sharar"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "13:13:11",
+      "position": 22,
+      "word": "Uzza",
+      "found": "uzzah",
+      "annotated": [
+        "perezuzzah"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "14:25:23",
+      "position": 13,
+      "word": "Joash",
+      "found": "joash-3",
+      "annotated": [
+        "joash-4"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "1:11:31",
+      "position": 11,
+      "word": "Haran",
+      "found": "haran-4",
+      "annotated": [
+        "haran"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "1:12:14",
+      "position": 15,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "1:43:32",
+      "position": 16,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "1:43:32",
+      "position": 26,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "40:1:10",
+      "position": 8,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "40:1:10",
+      "position": 10,
+      "word": "Amon",
+      "found": "amon-2",
+      "annotated": [
+        "amos-2"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "40:27:57",
+      "position": 11,
+      "word": "Arimathea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "41:15:43",
+      "position": 3,
+      "word": "Arimathea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "42:3:32",
+      "position": 20,
+      "word": "Salmon",
+      "found": "salmon",
+      "annotated": [
+        "shelah"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "43:19:38",
+      "position": 8,
+      "word": "Arimathea",
+      "found": "joseph-8",
+      "annotated": [
+        "ramah"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "44:28:8",
+      "position": 20,
+      "word": "Paul",
+      "found": "saul-2",
+      "annotated": [
+        "publius"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "46:3:5",
+      "position": 4,
+      "word": "Paul",
+      "found": "saul-2",
+      "annotated": [
+        "apollos"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "46:3:5",
+      "position": 7,
+      "word": "Apollos",
+      "found": "apollos",
+      "annotated": [
+        "saul-2"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "6:24:7",
+      "position": 15,
+      "word": "Egyptians",
+      "found": "egypt",
+      "annotated": [
+        "egyptians"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "7:21:10",
+      "position": 26,
+      "word": "Jabesh-Gilead",
+      "found": "jobesh",
+      "annotated": [
+        "gilead-4"
+      ]
+    },
+    {
+      "text": "YLT",
+      "reference": "7:21:9",
+      "position": 18,
+      "word": "Jabesh-Gilead",
+      "found": "jobesh",
+      "annotated": [
+        "gilead-4"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:5	32	haben		19	πιστεύσαντας		attached-word	attached	0.6654	approved	0				AuxiliaryVerb of 'geglaubt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:6	15	hat		22	τετήρηκεν		attached-word	attached	0.34	approved	0				AuxiliaryVerb of 'verwahrt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:6	16	er		22	τετήρηκεν		attached-word	attached	0.34	approved	0				SubjectPronoun of 'verwahrt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:9	6	er		16	ἐτόλμησεν		attached-word	attached	0.7	approved	0				SubjectPronoun of 'wagte', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	5	sie		6	οἴδασιν		attached-word	attached	0.65	approved	0				SubjectPronoun of 'kennen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	21	sie		18	φθείρονται		attached-word	attached	0.3211	approved	0				SubjectPronoun of 'verderben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:14	18	ist		11	ἦλθεν		attached-word	attached	0.5467	approved	0				AuxiliaryVerb of 'gekommen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:15	35	haben		24	ἐλάλησαν		attached-word	attached	0.6196	approved	0				AuxiliaryVerb of 'geredet', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:18	2	sie		2	ἔλεγον		attached-word	attached	0.6224	approved	0				SubjectPronoun of 'sagten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

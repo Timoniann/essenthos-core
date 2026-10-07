@@ -1,0 +1,12 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:1	27	han		22	ἐγνωκότες		attached-word	attached	0.5615	approved	0				AuxiliaryVerb of 'conocido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:4	3	he		1	Ἐχάρην		attached-word	attached	0.3512	approved	0				AuxiliaryVerb of 'gozado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:4	6	he		4	εὕρηκα		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'hallado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:4	16	nosotros		14	ἐλάβομεν		attached-word	attached	0.475	approved	0				SubjectPronoun of 'recibido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:4	17	hemos		14	ἐλάβομεν		attached-word	attached	0.475	approved	0				AuxiliaryVerb of 'recibido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:5	15	nosotros		14	εἴχαμεν		attached-word	attached	0.5714	approved	0				SubjectPronoun of 'tenido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:5	16	hemos		14	εἴχαμεν		attached-word	attached	0.5714	approved	0				AuxiliaryVerb of 'tenido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:6	20	habéis		17	ἠκούσατε		attached-word	attached	0.6006	approved	0				AuxiliaryVerb of 'oído', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:7	15	ha		13	ἐρχόμενον		attached-word	attached	0.5393	approved	0				AuxiliaryVerb of 'venido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:8	11	hemos		7	ἠργασάμεθα		attached-word	attached	0.2848	approved	0				AuxiliaryVerb of 'obrado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:12	8	he		6	ἐβουλήθην		attached-word	attached	0.3459	approved	0				AuxiliaryVerb of 'querido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

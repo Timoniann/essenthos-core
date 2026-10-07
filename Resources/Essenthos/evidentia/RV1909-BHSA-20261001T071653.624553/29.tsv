@@ -1,0 +1,10 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:18	18	fueron		15	נֶאְשָֽׁמוּ		attached-word	attached	0.2909	approved	0				AuxiliaryVerb of 'asolados', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:17	38	han		30	יֹאמְר֣וּ		attached-word	attached	0.6347	approved	0				AuxiliaryVerb of 'decir', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:21	9	ha		11	עֲשֹֽׂות		attached-word	attached	0.5725	approved	0				AuxiliaryVerb of 'hacer', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:23	15	ha		11	נָתַ֥ן		attached-word	attached	0.5957	approved	0				AuxiliaryVerb of 'dado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:27	26	será		17	יֵבֹ֥שׁוּ		attached-word	attached	0.5393	approved	0				AuxiliaryVerb of 'avergonzado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:32	26	ha		21	אָמַ֣ר		attached-word	attached	0.5771	approved	0				AuxiliaryVerb of 'dicho', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:4	30	yo		25	אָשִׁ֥יב		attached-word	attached	0.475	approved	0				SubjectPronoun of 'recaer', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:8	17	ellos		13	מְכָר֥וּם		attached-word	attached	0.7	approved	0				SubjectPronoun of 'venderán', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:8	27	ha		21	דִּבֵּֽר		attached-word	attached	0.6524	approved	0				AuxiliaryVerb of 'hablado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)

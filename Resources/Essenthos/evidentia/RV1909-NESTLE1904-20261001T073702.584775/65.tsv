@@ -1,0 +1,8 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:2	7	sean		7	πληθυνθείη		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'multiplicados', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:5	9	habéis		5	εἰδότας		attached-word	attached	0.3625	approved	0				AuxiliaryVerb of 'sabido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:5	15	habiendo		14	σώσας		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'salvado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:6	15	ha		22	τετήρηκεν		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'reservado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:13	16	es		17	τετήρηται		attached-word	attached	0.7	approved	0				AuxiliaryVerb of 'reservada', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:14	15	es		11	ἦλθεν		attached-word	attached	0.5415	approved	0				AuxiliaryVerb of 'venido', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:15	37	han		24	ἐλάλησαν		attached-word	attached	0.6667	approved	0				AuxiliaryVerb of 'hablado', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
