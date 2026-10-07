@@ -169,6 +169,7 @@ internal sealed class EntityDescriptorLoader(
             .ToHashSet();
         superseded.UnionWith(await HoldingARefusedClause(
             [.. opposed, .. Turned(records, entities, kinds, members)], cancellationToken));
+        superseded.UnionWith(await MissingTheirWitness(records, entities, cancellationToken));
 
         // In one transaction with the writes below, and this is not a precaution. `Forget` deletes
         // through the database rather than through the change tracker, so it lands the moment it
@@ -352,6 +353,8 @@ internal sealed class EntityDescriptorLoader(
                     Source = credit,
                     Run = record.Run,
                     Note = claim.Reason,
+                    Witness = Trimmed(claim.Witness, WitnessLength),
+                    Original = Trimmed(claim.Original, OriginalLength),
                     Claims =
                     [
                         new EntityDescriptorClaim
@@ -757,6 +760,58 @@ internal sealed class EntityDescriptorLoader(
     }
 
     private static readonly HashSet<string> Articles = new(StringComparer.OrdinalIgnoreCase) { "the", "an", "a" };
+
+    private const int WitnessLength = 64;
+
+    private const int OriginalLength = 256;
+
+    private static string? Trimmed(string? value, int length)
+    {
+        var trimmed = value?.Trim();
+        return string.IsNullOrEmpty(trimmed) ? null : trimmed.Length > length ? trimmed[..length] : trimmed;
+    }
+
+    /// <summary>
+    /// The entities holding a loaded clause stored without the text its record says it was read in,
+    /// so a corpus loaded before the clause kept it reads the record again rather than keep the
+    /// clause without it.
+    /// </summary>
+    private async Task<HashSet<int>> MissingTheirWitness(
+        IReadOnlyList<DescriptorRecord> records,
+        IReadOnlyDictionary<string, int> entities,
+        CancellationToken cancellationToken)
+    {
+        var witnessed = new HashSet<(int Entity, string Relation, int Target)>();
+        foreach (var record in records)
+        {
+            if (!entities.TryGetValue(record.Entity, out var entityId))
+            {
+                continue;
+            }
+
+            foreach (var claim in record.Claims ?? [])
+            {
+                if (!string.IsNullOrWhiteSpace(claim.Witness) && entities.TryGetValue(claim.Target, out var targetId))
+                {
+                    witnessed.Add((entityId, claim.Relation, targetId));
+                }
+            }
+        }
+
+        if (witnessed.Count == 0)
+        {
+            return [];
+        }
+
+        var subjects = witnessed.Select(w => w.Entity).Distinct().ToList();
+        var bare = await db.EntityDescriptors
+            .Where(d => subjects.Contains(d.EntityId) && d.Source.StartsWith(SourcePrefix) && d.Witness == null)
+            .Select(d => new { d.EntityId, d.Relation, d.TargetEntityId })
+            .ToListAsync(cancellationToken);
+        return [.. bare
+            .Where(d => witnessed.Contains((d.EntityId, d.Relation, d.TargetEntityId)))
+            .Select(d => d.EntityId)];
+    }
 
     /// <summary>
     /// The entities whose loaded clauses include one of those, so a record read before the rule

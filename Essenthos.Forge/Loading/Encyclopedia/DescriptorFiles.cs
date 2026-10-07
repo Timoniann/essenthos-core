@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 
@@ -24,13 +24,21 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// is then that decision and says whose in its credit, and carries a confidence only where the
 /// decider said the verse does not settle it.
 /// </param>
+/// <param name="Witness">
+/// The text the pass read the clause in where it was shown one beside the King James — <c>BHSA</c>,
+/// <c>NESTLE1904</c> — so a stored clause says it rests on the Hebrew or the Greek and not on the
+/// English. Absent for a reading of the English.
+/// </param>
+/// <param name="Original">The words of that text the clause rests on, as it prints them.</param>
 internal sealed record DescriptorClaimRecord(
     string Relation,
     string Target,
     string Reference,
     double? Confidence,
     string? Reason,
-    string? DecidedBy = null);
+    string? DecidedBy = null,
+    string? Witness = null,
+    string? Original = null);
 
 /// <summary>
 /// Everything one pass says about one entity: the ordered clauses, the name forms a language needs

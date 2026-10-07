@@ -126,6 +126,18 @@ public class EntityDescriptor
     /// <summary>Why, where it is worth reading. Usually the model's own sentence for the clause.</summary>
     public string? Note { get; set; }
 
+    /// <summary>
+    /// The text the clause was read in, by its slug — <c>BHSA</c>, <c>NESTLE1904</c> — where the pass
+    /// read it in an original rather than in the King James it is always shown. Null where it says
+    /// nothing, which is a reading of the English.
+    /// </summary>
+    [MaxLength(64)]
+    public string? Witness { get; set; }
+
+    /// <summary>The words of <see cref="Witness"/> the clause rests on, as that text prints them: <em>אָשֵׁר</em>.</summary>
+    [MaxLength(256)]
+    public string? Original { get; set; }
+
     public ICollection<EntityDescriptorClaim> Claims { get; set; } = [];
 
     public override string ToString() =>

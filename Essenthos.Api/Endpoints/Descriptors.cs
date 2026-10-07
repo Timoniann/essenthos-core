@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -93,6 +93,8 @@ internal static class Descriptors
                 d.Note)
             {
                 Citation = d.Citation,
+                Witness = d.Witness,
+                Original = d.Original,
             })
             .ToListAsync(cancellationToken);
 
@@ -220,6 +222,8 @@ internal static class Descriptors
             {
                 Note = clause.Note,
                 Verses = Relationships.Verses(clause.Citation),
+                Witness = clause.Witness,
+                Original = clause.Original,
             });
         }
 
@@ -286,6 +290,10 @@ internal static class Descriptors
         string? Note)
     {
         public string? Citation { get; init; }
+
+        public string? Witness { get; init; }
+
+        public string? Original { get; init; }
     }
 }
 
@@ -382,4 +390,14 @@ internal record DescriptorClaimResponse(
     /// composed — the first being <see cref="Reference"/>. Null for a clause read from one verse.
     /// </summary>
     public IList<VerseRefResponse>? Verses { get; init; }
+
+    /// <summary>
+    /// The text the clause was read in, by its slug, where that was an original rather than the
+    /// King James every clause is shown in: <c>BHSA</c>, <c>NESTLE1904</c>. Null for a reading of
+    /// the English.
+    /// </summary>
+    public string? Witness { get; init; }
+
+    /// <summary>The words of <see cref="Witness"/> the clause rests on, as that text prints them.</summary>
+    public string? Original { get; init; }
 }

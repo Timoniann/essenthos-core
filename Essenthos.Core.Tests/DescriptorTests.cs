@@ -591,6 +591,41 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
+    /// A clause the pass read in the Hebrew says so: the text and the word it rests on are stored with
+    /// it and sent with its claim, so a reader can tell a Hebrew reading from an English one.
+    /// </summary>
+    [Fact]
+    public async Task AClauseReadInTheHebrewSaysWhichTextAndWhichWord()
+    {
+        await Load("witnessed");
+
+        var stored = await _db.EntityDescriptors.SingleAsync();
+        stored.Witness.Should().Be("BHSA");
+        stored.Original.Should().Be("רְעוּאֵל");
+        var claim = (await Read("hobab-1", "eng"))!.Claims.Single();
+        claim.Witness.Should().Be("BHSA");
+        claim.Original.Should().Be("רְעוּאֵל");
+    }
+
+    /// <summary>
+    /// A clause loaded before the witness was kept is read again, once, and gains it.
+    /// </summary>
+    [Fact]
+    public async Task AClauseLoadedWithoutItsWitnessGainsItOnTheNextLoad()
+    {
+        await Load("witnessed");
+        await _db.EntityDescriptors.ExecuteUpdateAsync(s => s
+            .SetProperty(d => d.Witness, (string?)null)
+            .SetProperty(d => d.Original, (string?)null));
+
+        var outcome = await Load("witnessed");
+
+        outcome.Superseded.Should().Be(1);
+        (await _db.EntityDescriptors.SingleAsync()).Witness.Should().Be("BHSA");
+        (await Load("witnessed")).AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>
     /// A people's clauses read the wrong way round. <em>Keilah the Garmite</em> makes Keilah a Garmite,
     /// not the Garmites' forebear; <em>Doeg an Edomite</em> makes Doeg the Edomites', not the Edomites
     /// Doeg's; and a land is nobody's forebear. <em>The sons of Dedan were Asshurim</em> and
