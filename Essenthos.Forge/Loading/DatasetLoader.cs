@@ -342,6 +342,7 @@ internal sealed class DatasetLoader(
             new("recipe", cancellationToken => FollowTheRecipe(resources, cancellationToken)),
             new("rejected-renderings", WithdrawRejectedRenderings),
             new("unlike-names", WithdrawTheNamesTheLettersNoLongerPair),
+            new("supplied-words", StateWhatTheEditionsSupplied),
             new("verse-links", JoinTheVerses),
             new("evidentia-verdicts", cancellationToken => ReplayTheVerdictsOnEvidentia(resources, cancellationToken)),
             new("encyclopedia", cancellationToken => LoadTheEncyclopedia(resources, cancellationToken)),
@@ -1566,6 +1567,16 @@ internal sealed class DatasetLoader(
         status.Starting("the names the letters no longer pair");
         using var scope = services.CreateScope();
         status.Record(await NameListPass.WithdrawUnlike(scope.ServiceProvider.GetRequiredService<AppDbContext>(), cancellationToken));
+    }
+
+    private async Task StateWhatTheEditionsSupplied(CancellationToken cancellationToken)
+    {
+        status.Starting("the words the editions mark as their translators' own");
+        using var scope = services.CreateScope();
+        foreach (var outcome in await SuppliedWordAbsences.State(scope.ServiceProvider.GetRequiredService<AppDbContext>(), cancellationToken))
+        {
+            status.Record(outcome.ToString());
+        }
     }
 
     private async Task SayWhichWordNamesWhom(CancellationToken cancellationToken)
