@@ -167,6 +167,47 @@ public sealed class EponymNameTests : IDisposable
         again.AlreadyLoaded.Should().BeTrue();
     }
 
+    /// <summary>
+    /// The verses' consensus found the man on the nation's word before the rule named it the people,
+    /// in the Hebrew and in the King James word linked to it, and those rows kept citing him for the
+    /// verse. They go with the rule's own.
+    /// </summary>
+    [Fact]
+    public async Task WhatTheConsensusWroteAsTheManOnTheNationGoesToo()
+    {
+        var word = In(11, 12, 16, 2);
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["x"]));
+        _db.AddBook(english, 11, "1 Kings", (12, 16, ["O", "Israel"]));
+        _db.SaveChanges();
+        var rendering = _db.Words.Single(w => w.TextId == english.Id && w.Surface == "Israel");
+        var link = new Link
+        {
+            FromTextId = english.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Renders,
+            Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = word, Side = LinkSide.To });
+        var jacob = await _db.Entities.SingleAsync(e => e.Slug == "jacob");
+        foreach (var named in new[] { word, rendering })
+        {
+            _db.WordEntities.Add(new WordEntity
+            {
+                WordId = named.Id, EntityId = jacob.Id, Method = LinkMethod.RuleBased, Confidence = 0.99,
+                Source = NameConsensusPass.Source, Note = "the word its verses share in this text: israel",
+            });
+        }
+
+        await _db.SaveChangesAsync();
+
+        await _loader.Load();
+
+        var slugs = await _db.WordEntities.AsNoTracking()
+            .Where(a => a.WordId == word.Id || a.WordId == rendering.Id)
+            .Select(a => a.Entity!.Slug).ToListAsync();
+        slugs.Should().Equal("israelites", "israelites");
+    }
+
     /// <summary><em>The king of Israel</em> is neither the man nor the tribe, and is left as it was.</summary>
     [Fact]
     public async Task ARealmIsLeftAlone()

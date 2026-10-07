@@ -104,24 +104,35 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
 
     /// <summary>
     /// What the rule wrote as the ancestor on a word it now reads as the nation, and every row
-    /// carried from such a word, taken back so the word can be named again.
+    /// carried from such a word, taken back so the word can be named again — and what the verses'
+    /// consensus wrote as the man on the word or on a word of another text linked to it. The
+    /// consensus names a word only where nothing names another record, so in a load from empty it
+    /// meets the people already there and writes nothing; on a corpus loaded before, it found the
+    /// man there and its rows kept citing him for the verse.
     /// </summary>
     private static readonly string WithdrawTheMan =
         $"""
-         WITH nation AS (
+         WITH nation AS MATERIALIZED (
              SELECT w.id
              FROM word w
              JOIN text t ON t.id = w.text_id AND t.slug = @witness
-             LEFT JOIN word before ON before.verse_id = w.verse_id AND before.position = w.position - 1
              WHERE {Nation}
-               AND NOT coalesce(before.strong_number = @son, FALSE)
+         ),
+         rendering AS MATERIALIZED (
+             SELECT other.word_id AS id
+             FROM link_word mine
+             JOIN link_word other ON other.link_id = mine.link_id AND other.side <> mine.side
+             WHERE mine.word_id IN (SELECT id FROM nation)
          )
          DELETE FROM word_entity a
          USING entity man
          WHERE man.id = a.entity_id AND man.kind = 'person'
-           AND a.source = @source
-           AND (a.word_id IN (SELECT id FROM nation)
-                OR substring(a.note FROM '^through \S+ word ([0-9]+)')::bigint IN (SELECT id FROM nation))
+           AND EXISTS (SELECT 1 FROM entity_name n WHERE n.entity_id = man.id AND n.hebrew_strong_number = @israel)
+           AND ((a.source = @source
+                 AND (a.word_id IN (SELECT id FROM nation)
+                      OR substring(a.note FROM '^through \S+ word ([0-9]+)')::bigint IN (SELECT id FROM nation)))
+                OR (a.source = @consensus
+                    AND (a.word_id IN (SELECT id FROM nation) OR a.word_id IN (SELECT id FROM rendering))))
          """;
 
     /// <summary>
@@ -240,8 +251,9 @@ internal sealed class EponymNameLoader(AppDbContext db, ILogger<EponymNameLoader
         await using var command = new NpgsqlCommand(
             WithdrawTheMan, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
         command.Parameters.AddWithValue("witness", EntityCandidates.Witness);
-        command.Parameters.AddWithValue("son", Son);
+        command.Parameters.AddWithValue("israel", Israel);
         command.Parameters.AddWithValue("source", Source);
+        command.Parameters.AddWithValue("consensus", NameConsensusPass.Source);
         return await command.ExecuteNonQueryAsync(cancellationToken);
     }
 
