@@ -38,7 +38,11 @@ param(
     # time; the reports are then read in the set's order, so the figures are the ones a run one at a time gives.
     [switch] $Parallel,
     [ValidateRange(2, 4)]
-    [int] $Degree = 4
+    [int] $Degree = 4,
+
+    # Sums the reports a run under this label already left, measuring nothing: a summary changed since is
+    # read again without a second pass over the corpus.
+    [switch] $FromReports
 )
 
 # Reads essenthos_core and writes nothing to it. Passages run one at a time unless -Parallel: the owner works on this
@@ -47,7 +51,8 @@ $ErrorActionPreference = 'Stop'
 $repository = Split-Path -Parent $PSScriptRoot
 $directory = Join-Path $Output $Label
 $snapshot = Join-Path $directory 'bin'
-if (-not (Test-Path -LiteralPath $snapshot)) {
+if ($FromReports -and -not (Test-Path -LiteralPath $directory)) { throw "No reports under $directory to read." }
+if (-not $FromReports -and -not (Test-Path -LiteralPath $snapshot)) {
     # Not bin/Debug: a running core or forge holds that folder.
     & dotnet build (Join-Path $repository 'Essenthos.Forge') -p:BaseOutputPath=bin/benchmark/ -v q -nologo
     if ($LASTEXITCODE -ne 0) { throw "The Forge build failed ($LASTEXITCODE); fix it before measuring." }
@@ -143,6 +148,20 @@ $passages = @{
 }
 
 $final = 'global review + syntax-gated target gloss + attached grammatical words'
+# The placements the witness's own word gloss licenses. Nestle 1904's gloss is the Berean Interlinear's, so on a
+# New Testament passage measured against the Berean key they read the key's own rendering: a rule the gloss
+# licenses is chosen on the Old Testament figure (ETCBC's gloss) or on the King James sets, never on that one.
+$glossTier = "licensed by the witness's gloss"
+function Testament($passage) { if ($passage[2] -eq 'NESTLE1904') { 'NT' } else { 'OT' } }
+function GlossSummary([string] $name, $gloss) {
+    foreach ($testament in $gloss.Keys) {
+        $g = $gloss[$testament]
+        $whose = if ($testament -eq 'OT') { "ETCBC's gloss" }
+                 elseif ($g.BereanKey) { "the Berean Interlinear's gloss read against the Berean key: circular, choose no rule on it" }
+                 else { "the Berean Interlinear's gloss" }
+        '{0,-10} gloss-licensed, {1}: {2} ({3})' -f $name, $testament, (Ratio $g.Correct $g.Covered), $whose
+    }
+}
 $line = '^(?<tier>.+?): (?<correct>[\d,]+)/[\d,]+ \([^)]*\) counting every proposal; [\d,]+/(?<covered>[\d,]+) \([^)]*\) over gold-covered words .*gold recall: [\d,]+/(?<gold>[\d,]+)'
 function Number([string] $text) { [int]($text -replace ',', '') }
 
@@ -289,7 +308,7 @@ function MeasureSideBySide($set) {
     $seconds
 }
 
-Push-Location $snapshot
+Push-Location $(if ($FromReports) { $directory } else { $snapshot })
 try {
     foreach ($set in $Runs -split ',') {
         if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, held2, kjv, kjvval, self, selfstrong, bbe or nwt." }
@@ -298,11 +317,13 @@ try {
         $words = @{}
         $routes = [ordered]@{}
         $fractions = [ordered]@{}
-        $measured = if ($Parallel) { MeasureSideBySide $passages[$set] } else { @{} }
+        $gloss = [ordered]@{}
+        $rulesByTestament = [ordered]@{}
+        $measured = if ($Parallel -and -not $FromReports) { MeasureSideBySide $passages[$set] } else { @{} }
         foreach ($passage in $passages[$set]) {
             $name = $passage[0]
             $prefix = Join-Path $directory $name
-            $seconds = if ($Parallel) { $measured[$name] } else { Measure $passage }
+            $seconds = if ($FromReports) { 0 } elseif ($Parallel) { $measured[$name] } else { Measure $passage }
             $total.Seconds += $seconds
             '{0,-10} wall {1:N1}s' -f $name, $seconds
             foreach ($match in (Select-String -LiteralPath "$prefix.report.txt" -Pattern $line)) {
@@ -318,6 +339,12 @@ try {
                 elseif ($tier -eq 'safe tier') {
                     $total.SafeCorrect += $correct; $total.SafeCovered += $covered
                 }
+                elseif ($tier -eq $glossTier) {
+                    $testament = Testament $passage
+                    if (-not $gloss.Contains($testament)) { $gloss[$testament] = @{ Correct = 0; Covered = 0; BereanKey = $false } }
+                    $gloss[$testament].Correct += $correct; $gloss[$testament].Covered += $covered
+                    if ($passage[1] -eq 'BSB') { $gloss[$testament].BereanKey = $true }
+                }
             }
             $counts = Counts "$prefix.report.txt"
             ByWord $name $counts
@@ -328,7 +355,13 @@ try {
                 foreach ($field in 'Agreed', 'Compared', 'Links') { $routes[$route][$field] += $passageRoutes[$route][$field] }
             }
             foreach ($key in $counts.Keys) { $words[$key] = [int]$words[$key] + $counts[$key] }
-            AddFractions $fractions (Fractions "$prefix.report.txt")
+            $passageFractions = Fractions "$prefix.report.txt"
+            AddFractions $fractions $passageFractions
+            $testament = Testament $passage
+            if (-not $rulesByTestament.Contains($testament)) { $rulesByTestament[$testament] = [ordered]@{} }
+            $rules = [ordered]@{}
+            foreach ($label in @($passageFractions.Keys | Where-Object { $_ -like 'by rule, *' })) { $rules[$label] = $passageFractions[$label] }
+            AddFractions $rulesByTestament[$testament] $rules
         }
         '{0,-10} precision {1,5}/{2,-5} = {3:P2}   recall {1,5}/{4,-5} = {5:P2}   safe tier {6}/{7} = {8:P2}' -f "$set all",
             $total.Correct, $total.Covered, ($total.Correct / [Math]::Max(1, $total.Covered)), $total.Gold,
@@ -337,8 +370,10 @@ try {
         ByWord "$set all" $words
         RouteSummary "$set all" $routes
         FractionSummary "$set all" $fractions
+        GlossSummary "$set all" $gloss
+        foreach ($testament in $rulesByTestament.Keys) { FractionSummary "$set $testament" $rulesByTestament[$testament] }
         '{0,-10} wall {1:N1}s' -f "$set all", $total.Seconds
-        if ($Parallel) { '{0,-10} wall clock {1:N1}s, {2} at once' -f "$set all", $measured['*'], $Degree }
+        if ($Parallel -and -not $FromReports) { '{0,-10} wall clock {1:N1}s, {2} at once' -f "$set all", $measured['*'], $Degree }
     }
 }
 finally {
