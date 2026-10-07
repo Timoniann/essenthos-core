@@ -327,6 +327,26 @@ public sealed class NameFormTests : IDisposable
         NameForms.Bare("deu", form, grammaticalCase).Should().Be(bare);
 
     /// <summary>
+    /// A Latin letter typed into a Cyrillic name — <em>Аaрон</em> with a Latin <em>a</em> — prints a word
+    /// no reader can read. Such a form is refused on the way in, and one already held gives way to a
+    /// sound one; the next load changes nothing.
+    /// </summary>
+    [Fact]
+    public async Task ACyrillicNameWithALatinLetterInItIsRefusedAndRepaired()
+    {
+        _db.EntityNameForms.Add(Held("aaron", "ukr", GrammaticalCases.Nominative, "Аaрон"));
+        await _db.SaveChangesAsync();
+
+        var outcome = await Decline("scripts");
+
+        outcome.Refused.MixedScripts.Should().Be(1, "Мойсeй has a Latin e");
+        outcome.Repaired.Should().Be(1);
+        (await Form("aaron", "ukr", GrammaticalCases.Nominative))!.Form.Should().Be("Аарон");
+        (await Form("moses", "ukr", GrammaticalCases.Nominative)).Should().BeNull();
+        (await Decline("scripts")).Repaired.Should().Be(0);
+    }
+
+    /// <summary>
     /// A German genitive stored bare before the article stayed on it is given its article back by
     /// a later file that has it, and the load after that changes nothing.
     /// </summary>

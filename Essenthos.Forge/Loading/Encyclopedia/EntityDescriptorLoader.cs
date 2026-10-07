@@ -469,7 +469,7 @@ internal sealed class EntityDescriptorLoader(
                 }
 
                 var bare = NameForms.Bare(language, form, grammaticalCase);
-                if (bare.Length == 0)
+                if (bare.Length == 0 || NameForms.MixesScripts(language, bare))
                 {
                     continue;
                 }

@@ -11,14 +11,16 @@ internal sealed record NameFormRefusals(
     int UnknownEntity,
     int UnknownCase,
     int Empty,
-    int AlreadyHeld)
+    int AlreadyHeld,
+    int MixedScripts = 0)
 {
-    public int Total => UnknownEntity + UnknownCase + Empty + AlreadyHeld;
+    public int Total => UnknownEntity + UnknownCase + Empty + AlreadyHeld + MixedScripts;
 
     public override string ToString() =>
         $"{UnknownEntity} for an entity the encyclopedia does not hold, " +
         $"{UnknownCase} in a case a form cannot be held in, " +
-        $"{Empty} that were empty, and " +
+        $"{Empty} that were empty, " +
+        $"{MixedScripts} with a Latin letter in a Cyrillic name, and " +
         $"{AlreadyHeld} the corpus already holds a sound form for";
 }
 
@@ -116,7 +118,7 @@ internal sealed class EntityNameFormLoader(
         var entities = await Slugs(records, cancellationToken);
         var held = await Held(entities.Values, cancellationToken);
 
-        int unknownEntity = 0, unknownCase = 0, empty = 0, alreadyHeld = 0;
+        int unknownEntity = 0, unknownCase = 0, empty = 0, alreadyHeld = 0, mixedScripts = 0;
         int skipped = 0, repaired = 0, bared = 0, replaced = 0;
 
         // What this run has settled per form rather than per entity: the row it wrote, or null
@@ -158,6 +160,12 @@ internal sealed class EntityNameFormLoader(
                         continue;
                     }
 
+                    if (NameForms.MixesScripts(language, form))
+                    {
+                        mixedScripts++;
+                        continue;
+                    }
+
                     if (form != given.Trim())
                     {
                         bared++;
@@ -190,6 +198,7 @@ internal sealed class EntityNameFormLoader(
                     if (held.TryGetValue(key, out var standing))
                     {
                         if (NameForms.Bare(language, standing.Form, grammaticalCase) == standing.Form
+                            && !NameForms.MixesScripts(language, standing.Form)
                             && !NameForms.RestoresItsArticle(language, grammaticalCase, standing.Form, form))
                         {
                             alreadyHeld++;
@@ -234,7 +243,7 @@ internal sealed class EntityNameFormLoader(
             .Distinct()
             .Count();
 
-        var refused = new NameFormRefusals(unknownEntity, unknownCase, empty, alreadyHeld);
+        var refused = new NameFormRefusals(unknownEntity, unknownCase, empty, alreadyHeld, mixedScripts);
         var missing = unknownEntity + unknownCase + empty;
 
         if (forms > 0)

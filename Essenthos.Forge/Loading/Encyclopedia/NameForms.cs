@@ -86,6 +86,17 @@ internal static class NameForms
         }
     }
 
+    /// <summary>The languages whose names are written in Cyrillic, where a Latin letter is never right.</summary>
+    private static readonly HashSet<string> Cyrillic = new(StringComparer.Ordinal) { "ukr", "rus" };
+
+    /// <summary>
+    /// Whether a form mixes a Latin letter into a Cyrillic name: <em>Хananія</em>, <em>Меронотi</em>.
+    /// A pass typed the letters that look alike, the line prints a word no reader can read, and
+    /// nothing else about it is wrong enough for another check to see.
+    /// </summary>
+    public static bool MixesScripts(string language, string form) =>
+        Cyrillic.Contains(language) && form.Any(c => c is >= 'A' and <= 'Z' or >= 'a' and <= 'z');
+
     /// <summary>
     /// Whether a form is the one held with the article it was produced with in front of it: the
     /// German genitive and dative the loaders stored bare before an article stayed on them.

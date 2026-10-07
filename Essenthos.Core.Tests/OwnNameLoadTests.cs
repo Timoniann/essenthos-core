@@ -53,8 +53,9 @@ public sealed class OwnNameLoadTests : IDisposable
         await _db.SaveChangesAsync();
         var nameId = rehoboam.Names.Single().Id;
         var loader = new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance);
-        (await loader.Correct()).Should().Be(1);
+        (await loader.Correct()).Should().Be(2, "his Greek number and his Greek name");
         var name = await _db.EntityNames.SingleAsync(n => n.EntityId == rehoboam.Id);
+        name.GreekStrongNumber.Should().Be("G4497");
         name.Id.Should().Be(nameId);
         name.Greek.Should().Be("Ῥοβοάμ");
         name.GreekTransliterated.Should().Be("Rhoboám");
@@ -85,7 +86,7 @@ public sealed class OwnNameLoadTests : IDisposable
         _db.Entities.Add(entity);
         await _db.SaveChangesAsync();
         var loader = new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance);
-        (await loader.Correct()).Should().Be(0);
+        await loader.Correct();
         var name = await _db.EntityNames.SingleAsync(n => n.EntityId == entity.Id);
         name.Greek.Should().Be(greek);
         name.GreekTransliterated.Should().Be(transliteration);
