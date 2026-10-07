@@ -1287,7 +1287,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                     $"SIL.Machine {modelType}, symmetrised och" +
                     (syntax ? ", rescored on ETCBC phrase and clause structure" : string.Empty) +
                     (double.IsNaN(draft.Position)
-                        ? ", the names of the verse paired by spelling and order"
+                        ? $", {NameLists.AddedSource}"
                         : $", position {draft.Position:F4}") +
                     (note is null ? string.Empty : $"; {note}"),
                     null,

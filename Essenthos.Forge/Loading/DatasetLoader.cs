@@ -341,6 +341,7 @@ internal sealed class DatasetLoader(
             new("psalm-titles", cancellationToken => CoverThePsalmTitles(resources, cancellationToken)),
             new("recipe", cancellationToken => FollowTheRecipe(resources, cancellationToken)),
             new("rejected-renderings", WithdrawRejectedRenderings),
+            new("unlike-names", WithdrawTheNamesTheLettersNoLongerPair),
             new("verse-links", JoinTheVerses),
             new("evidentia-verdicts", cancellationToken => ReplayTheVerdictsOnEvidentia(resources, cancellationToken)),
             new("encyclopedia", cancellationToken => LoadTheEncyclopedia(resources, cancellationToken)),
@@ -1555,6 +1556,13 @@ internal sealed class DatasetLoader(
         status.Starting("the rejected statistical renderings");
         using var scope = services.CreateScope();
         status.Record((await RejectedRenderings.Withdraw(scope.ServiceProvider.GetRequiredService<AppDbContext>(), cancellationToken)).ToString());
+    }
+
+    private async Task WithdrawTheNamesTheLettersNoLongerPair(CancellationToken cancellationToken)
+    {
+        status.Starting("the names the letters no longer pair");
+        using var scope = services.CreateScope();
+        status.Record(await NameListPass.WithdrawUnlike(scope.ServiceProvider.GetRequiredService<AppDbContext>(), cancellationToken));
     }
 
     private async Task SayWhichWordNamesWhom(CancellationToken cancellationToken)

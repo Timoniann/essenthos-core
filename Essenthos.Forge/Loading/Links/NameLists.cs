@@ -32,6 +32,9 @@ internal static class NameLists
     /// </summary>
     public const double LeastLikeness = 0.6;
 
+    /// <summary>How the aligner's source says a pair was added by the names alone, the model never having proposed it.</summary>
+    public const string AddedSource = "the names of the verse paired by spelling and order";
+
     /// <summary>
     /// What a pair settled by spelling and order is worth. Measured against the eleven pairs of
     /// texts where another method already links the names — the King James against BHSA and Nestle
@@ -113,12 +116,54 @@ internal static class NameLists
     /// <see cref="Likeness"/>, except that a name of one consonant is alike to nothing. The
     /// Septuagint's Ἰεούλ is L and so shares two thirds of רְעוּאֵל, and it is Jeush; the Ukrainian's
     /// Емів is M, and so is Ham in the same verse, which it is not.
+    ///
+    /// <para>
+    /// A short name that differs from the other by a consonant is alike only where the two begin
+    /// with the same consonant or keep the ones they share in the same places, counted from the
+    /// front or from the back. Two names of three consonants sharing two are otherwise two thirds
+    /// alike by letters any two names may have in common: Христа is RST, Satan STN, and the ST
+    /// they share drew Christ onto Satan in 1 Corinthians 5:5, as it drew Иерусалим onto Silas and
+    /// Syria onto מִצְרַיִם. Καζηρά against Gazera and Кір-Моав against Moab keep their letters where
+    /// they stood and are still one name.
+    /// </para>
     /// </summary>
-    public static double Alike(string one, string other) =>
-        Math.Min(one.Length, other.Length) < 2 ? 0 : Likeness(one, other);
+    public static double Alike(string one, string other)
+    {
+        if (Math.Min(one.Length, other.Length) < 2)
+        {
+            return 0;
+        }
+
+        var shared = Common(one, other);
+        var likeness = 2.0 * shared / (one.Length + other.Length);
+        return Math.Min(one.Length, other.Length) <= ShortName && likeness < ShortLikeness
+               && one[0] != other[0] && !InPlace(one, other, shared)
+            ? 0
+            : likeness;
+    }
+
+    private const int ShortName = 3;
+
+    private const double ShortLikeness = 0.75;
+
+    private static bool InPlace(string one, string other, int shared)
+    {
+        var fromFront = 0;
+        var fromBack = 0;
+        for (var at = 0; at < Math.Min(one.Length, other.Length); at++)
+        {
+            fromFront += one[at] == other[at] ? 1 : 0;
+            fromBack += one[^(at + 1)] == other[^(at + 1)] ? 1 : 0;
+        }
+
+        return fromFront >= shared || fromBack >= shared;
+    }
 
     /// <summary>Twice the longest common subsequence over the two lengths; nothing for an empty side.</summary>
-    public static double Likeness(string one, string other)
+    public static double Likeness(string one, string other) =>
+        one.Length == 0 || other.Length == 0 ? 0 : 2.0 * Common(one, other) / (one.Length + other.Length);
+
+    private static int Common(string one, string other)
     {
         if (one.Length == 0 || other.Length == 0)
         {
@@ -139,7 +184,7 @@ internal static class NameLists
             (previous, current) = (current, previous);
         }
 
-        return 2.0 * previous[other.Length] / (one.Length + other.Length);
+        return previous[other.Length];
     }
 
     /// <summary>
@@ -392,6 +437,11 @@ internal static class NameLists
         return names;
     }
 
+    /// <summary>
+    /// The letters of a word, lower case and without marks. The build runs with invariant
+    /// globalization, under which decomposing does nothing, so a consonant written with its mark in one
+    /// character — the ῥ of Ῥαχήλ and Ῥώμη — keeps it and has to be read as itself.
+    /// </summary>
     private static string Plain(string written)
     {
         var decomposed = written.ToLowerInvariant().Normalize(NormalizationForm.FormD);
@@ -439,7 +489,7 @@ internal static class NameLists
             'm' or 'μ' or 'м' or 'מ' or 'ם' => "M",
             'n' or 'ν' or 'н' or 'נ' or 'ן' => "N",
             'p' or 'f' or 'π' or 'φ' or 'п' or 'ф' or 'פ' or 'ף' => "P",
-            'r' or 'ρ' or 'р' or 'ר' => "R",
+            'r' or 'ρ' or 'ῥ' or 'ῤ' or 'р' or 'ר' => "R",
             's' or 'z' or 'σ' or 'ς' or 'ζ' or 'с' or 'з' or 'ж' or 'ц' or 'ш' or 'щ'
                 or 'ס' or 'צ' or 'ץ' or 'ש' or 'ז' => "S",
             't' or 'θ' or 'τ' or 'т' or 'ט' or 'ת' => "T",
