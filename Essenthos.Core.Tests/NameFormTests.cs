@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -312,6 +312,40 @@ public sealed class NameFormTests : IDisposable
     public void WhatThePhraseSuppliesComesOffAndNothingElseDoes(
         string language, string form, string bare) =>
         NameForms.Bare(language, form).Should().Be(bare);
+
+    /// <summary>
+    /// A German article comes off a nominative, which a phrase puts after its own preposition, and
+    /// stays on a genitive or a dative: no phrasing can know that the broad wall is feminine, and
+    /// without it the line reads <em>Sohn breiten Mauer</em>.
+    /// </summary>
+    [Theory]
+    [InlineData(GrammaticalCases.Nominative, "die breite Mauer", "breite Mauer")]
+    [InlineData(GrammaticalCases.Genitive, "der breiten Mauer", "der breiten Mauer")]
+    [InlineData(GrammaticalCases.Locative, "dem alten Teich", "dem alten Teich")]
+    [InlineData(GrammaticalCases.Locative, "in dem alten Teich", "dem alten Teich")]
+    public void AGermanArticleStaysWhereNoPhraseSuppliesIt(string grammaticalCase, string form, string bare) =>
+        NameForms.Bare("deu", form, grammaticalCase).Should().Be(bare);
+
+    /// <summary>
+    /// A German genitive stored bare before the article stayed on it is given its article back by
+    /// a later file that has it, and the load after that changes nothing.
+    /// </summary>
+    [Fact]
+    public async Task AGermanGenitiveStoredWithoutItsArticleGetsItBack()
+    {
+        Add("broadwall", EntityKind.Place, "Broad Wall", (16, 3, 8));
+        await _db.SaveChangesAsync();
+        _db.EntityNameForms.Add(Held("broadwall", "deu", GrammaticalCases.Genitive, "breiten Mauer"));
+        await _db.SaveChangesAsync();
+
+        var outcome = await Decline("articles");
+
+        outcome.Repaired.Should().Be(1);
+        (await Form("broadwall", "deu", GrammaticalCases.Genitive))!.Form.Should().Be("der breiten Mauer");
+        (await Form("broadwall", "deu", GrammaticalCases.Nominative))!.Form.Should().Be("breite Mauer");
+        (await Decline("articles")).Repaired.Should().Be(0, "the article is already back");
+        (await Form("broadwall", "deu", GrammaticalCases.Genitive))!.Form.Should().Be("der breiten Mauer");
+    }
 
     /// <summary>A row as the descriptor pass left it, which is what the corpus holds today.</summary>
     private EntityNameForm Held(

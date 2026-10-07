@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -151,7 +151,7 @@ internal sealed class EntityNameFormLoader(
                         continue;
                     }
 
-                    var form = NameForms.Bare(language, given);
+                    var form = NameForms.Bare(language, given, grammaticalCase);
                     if (form.Length == 0)
                     {
                         empty++;
@@ -168,6 +168,15 @@ internal sealed class EntityNameFormLoader(
                     {
                         if (earlier is null)
                         {
+                            if (held.TryGetValue(key, out var kept)
+                                && NameForms.RestoresItsArticle(language, grammaticalCase, kept.Form, form))
+                            {
+                                kept.Form = form;
+                                kept.Source = source;
+                                repaired++;
+                                changed = true;
+                            }
+
                             continue;
                         }
 
@@ -180,7 +189,8 @@ internal sealed class EntityNameFormLoader(
 
                     if (held.TryGetValue(key, out var standing))
                     {
-                        if (NameForms.Bare(language, standing.Form) == standing.Form)
+                        if (NameForms.Bare(language, standing.Form, grammaticalCase) == standing.Form
+                            && !NameForms.RestoresItsArticle(language, grammaticalCase, standing.Form, form))
                         {
                             alreadyHeld++;
                             decided[key] = null;

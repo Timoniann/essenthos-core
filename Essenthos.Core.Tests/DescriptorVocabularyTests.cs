@@ -1,7 +1,8 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 ﻿using System.Text.Json;
 using Essenthos.Core;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
@@ -120,14 +121,15 @@ public sealed class DescriptorVocabularyTests
 
     /// <summary>
     /// No language asks for a case its own generation pass was never asked for. A pass produces
-    /// three forms for Ukrainian, two for German, the nominative alone for English and Spanish,
-    /// and a phrasing that reaches past them renders the English name for every entity in the
-    /// corpus rather than for the few missing a form.
+    /// three forms for Ukrainian, three for German (its locative is the dative a place clause takes,
+    /// and a bare name's nominative stands in for it), the nominative alone for English and
+    /// Spanish, and a phrasing that reaches past them renders the English name for every entity in
+    /// the corpus rather than for the few missing a form.
     /// </summary>
     [Theory]
     [InlineData("eng", GrammaticalCases.Nominative)]
     [InlineData("spa", GrammaticalCases.Nominative)]
-    [InlineData("deu", GrammaticalCases.Nominative, GrammaticalCases.Genitive)]
+    [InlineData("deu", GrammaticalCases.Nominative, GrammaticalCases.Genitive, GrammaticalCases.Locative)]
     [InlineData("ukr", GrammaticalCases.Nominative, GrammaticalCases.Genitive,
         GrammaticalCases.Locative)]
     public void NoLanguageAsksForACaseItsOwnPassDoesNotProduce(string language, params string[] produced) =>
@@ -286,4 +288,40 @@ public sealed class DescriptorVocabularyTests
     [InlineData("брама ", "Вавилона", "брама ")]
     public void ThePrepositionAgreesWithTheWordAfterIt(string before, string next, string expected) =>
         DescriptorPhrasings.AgreeWithWhatFollows(before, next).Should().Be(expected);
+
+    /// <summary>
+    /// What German and Spanish put before a name that a proper name does not need, and what a German
+    /// clause says where its name has no genitive. Each is a phrase as a German or Spanish reader
+    /// writes it: never <em>Knecht HERRN</em>, <em>König Israeliten</em> or <em>rey de Israelites</em>.
+    /// </summary>
+    [Theory]
+    [InlineData("deu", "servant-of", "person", "genitive=des HERRN", "Knecht des HERRN")]
+    [InlineData("deu", "king-of", "people", "genitive=Israeliten", "König der Israeliten")]
+    [InlineData("deu", "king-of", "people", "genitive=der Saroniter", "König der Saroniter")]
+    [InlineData("deu", "son-of", "person", "genitive=Isais", "Sohn Isais")]
+    [InlineData("deu", "son-of", "person", "nominative=Isai", "Sohn von Isai")]
+    [InlineData("deu", "son-of", "person", "", "Sohn Jesse")]
+    [InlineData("deu", "lived-in", "place", "nominative=Hebron", "wohnte in Hebron")]
+    [InlineData("deu", "lived-in", "place", "nominative=alte Teich;locative=dem alten Teich", "wohnte im alten Teich")]
+    [InlineData("deu", "near", "place", "locative=dem alten Teich", "beim alten Teich")]
+    [InlineData("deu", "city-in", "place", "locative=der Ebene Kirjataim", "eine Stadt in der Ebene Kirjataim")]
+    [InlineData("spa", "king-of", "people", "nominative=israelitas", "rey de los israelitas")]
+    [InlineData("spa", "son-of", "person", "nominative=Isaí", "hijo de Isaí")]
+    [InlineData("spa", "of-people", "people", "nominative=moabitas", "del pueblo de los moabitas")]
+    [InlineData("ukr", "son-of", "person", "genitive=Єссея", "син Єссея")]
+    public void ANameIsSaidWithWhatItsLanguageNeedsAroundIt(
+        string language, string relation, string kind, string forms, string expected)
+    {
+        var cases = forms.Length == 0
+            ? null
+            : forms.Split(';').Select(f => f.Split('=')).ToDictionary(f => f[0], f => f[1]);
+        var (before, name) = DescriptorPhrasings.Say(
+            language,
+            DescriptorPhrasings.For(language)![relation],
+            Enum.Parse<EntityKind>(kind, ignoreCase: true),
+            cases,
+            "Jesse");
+
+        (before + name).Should().Be(expected);
+    }
 }

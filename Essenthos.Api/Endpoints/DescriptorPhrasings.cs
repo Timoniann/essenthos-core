@@ -1,5 +1,6 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 
 namespace Essenthos.Core.Endpoints;
 
@@ -316,9 +317,10 @@ internal static partial class DescriptorPhrasings
     /// <para>
     /// Where the German phrase does not want a genitive it asks for the nominative rather than
     /// bending the sentence to use one. <em>vom Stamm Levi</em> names the tribe plainly and
-    /// <em>vom Stamm Levis</em> would be wrong; a place after a preposition is the dative, which
-    /// for a proper name is the nominative unchanged, so <em>begraben in Hebron</em> needs no
-    /// fourth case in the table. The two homicide clauses lean on that twice more: the agent of a
+    /// <em>vom Stamm Levis</em> would be wrong. A place after a preposition is the dative, which
+    /// the pass produced as the locative where the name is not bare — <em>im alten Teich</em> — and
+    /// which for a proper name is the nominative unchanged, so <em>begraben in Hebron</em> falls
+    /// back to it (<see cref="Say"/>). The two homicide clauses lean on that twice more: the agent of a
     /// passive takes <em>von</em> and the dative, and the object of <em>töten</em> takes an
     /// accusative, and a proper name marks neither.
     /// </para>
@@ -394,16 +396,16 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.AngelOf] = new("Engel ", Genitive),
             [DescriptorRelations.OfTribe] = new("vom Stamm ", Nominative),
             [DescriptorRelations.OfPeople] = new("aus dem Volk der ", Nominative),
-            [DescriptorRelations.FromPlace] = new("aus ", Nominative),
-            [DescriptorRelations.LivedIn] = new("wohnte in ", Nominative),
-            [DescriptorRelations.BuriedIn] = new("begraben in ", Nominative),
+            [DescriptorRelations.FromPlace] = new("aus ", Locative),
+            [DescriptorRelations.LivedIn] = new("wohnte in ", Locative),
+            [DescriptorRelations.BuriedIn] = new("begraben in ", Locative),
             [DescriptorRelations.DescendantsOf] = new("Nachkommen ", Genitive),
-            [DescriptorRelations.CityIn] = new("eine Stadt in ", Nominative),
-            [DescriptorRelations.RegionOf] = new("eine Landschaft in ", Nominative),
-            [DescriptorRelations.RiverOf] = new("ein Fluss in ", Nominative),
-            [DescriptorRelations.MountainIn] = new("ein Berg in ", Nominative),
+            [DescriptorRelations.CityIn] = new("eine Stadt in ", Locative),
+            [DescriptorRelations.RegionOf] = new("eine Landschaft in ", Locative),
+            [DescriptorRelations.RiverOf] = new("ein Fluss in ", Locative),
+            [DescriptorRelations.MountainIn] = new("ein Berg in ", Locative),
             [DescriptorRelations.GateOf] = new("ein Tor ", Genitive),
-            [DescriptorRelations.Near] = new("bei ", Nominative),
+            [DescriptorRelations.Near] = new("bei ", Locative),
         };
 
     /// <summary>
@@ -499,4 +501,97 @@ internal static partial class DescriptorPhrasings
             [German] = Deu,
             [Spanish] = Spa,
         };
+}
+
+/// <summary>
+/// What German and Spanish put between a phrase and a name that a Biblical proper name does not
+/// need: the article. <em>Sohn Isais</em> takes none, <em>Knecht des HERRN</em>, <em>König der
+/// Israeliten</em> and <em>rey de los israelitas</em> do, and leaving it out is <em>Knecht HERRN</em>.
+/// </summary>
+internal static partial class DescriptorPhrasings
+{
+    private static readonly string[] GermanArticles = ["der ", "die ", "das ", "des ", "dem ", "den "];
+
+    /// <summary>
+    /// A German preposition and the dative article after it as German writes them together:
+    /// <em>wohnte im alten Teich</em>, never <em>wohnte in dem alten Teich</em>.
+    /// </summary>
+    private static readonly Dictionary<(string Preposition, string Article), string> Contracted = new()
+    {
+        [("in", "dem")] = "im",
+        [("an", "dem")] = "am",
+        [("bei", "dem")] = "beim",
+        [("von", "dem")] = "vom",
+        [("zu", "dem")] = "zum",
+        [("zu", "der")] = "zur",
+    };
+
+    /// <summary>
+    /// The words before the name and the name, in the case the phrasing wants, for one target.
+    ///
+    /// <para>
+    /// Every language takes the form of that case the pass produced, and the English name where it
+    /// produced none — a gap a reader can see, never an inflection guessed here. German and Spanish
+    /// add only what their grammar fixes whatever the name: a people is a plural, so its genitive is
+    /// <em>der Israeliten</em> and its Spanish <em>de los israelitas</em>; a name with no German
+    /// genitive is said with <em>von</em> and the name as it stands, which is its dative — <em>Sohn
+    /// von Isai</em>; a German place clause takes the dative the pass produced as the locative, or
+    /// a bare name unchanged, and joins the preposition to its article. An article the form already
+    /// carries — <em>des HERRN</em>, <em>der breiten Mauer</em> — is the form's and is kept.
+    /// </para>
+    /// </summary>
+    public static (string Before, string Name) Say(
+        string language,
+        Phrasing phrasing,
+        EntityKind kind,
+        IReadOnlyDictionary<string, string>? cases,
+        string englishName)
+    {
+        var before = phrasing.Before;
+        var form = cases?.GetValueOrDefault(phrasing.Case);
+
+        if (language == German && form is null && cases is not null)
+        {
+            if (phrasing.Case == Genitive && cases.GetValueOrDefault(Nominative) is { } nominative)
+            {
+                return (before + "von ", nominative);
+            }
+
+            if (phrasing.Case == Locative)
+            {
+                form = cases.GetValueOrDefault(Nominative);
+            }
+        }
+
+        if (form is null)
+        {
+            return (before, englishName);
+        }
+
+        if (language == German && kind == EntityKind.People && phrasing.Case == Genitive && !Articled(form))
+        {
+            return (before + "der ", form);
+        }
+
+        if (language == German && phrasing.Case == Locative)
+        {
+            var space = form.IndexOf(' ');
+            var lead = before.TrimEnd();
+            var last = lead.LastIndexOf(' ') + 1;
+            if (space > 0 && Contracted.TryGetValue((lead[last..], form[..space]), out var joined))
+            {
+                return (lead[..last] + joined + " ", form[(space + 1)..]);
+            }
+        }
+
+        if (language == Spanish && kind == EntityKind.People && before.EndsWith(" de ", StringComparison.Ordinal))
+        {
+            return (before + "los ", form);
+        }
+
+        return (AgreeWithWhatFollows(before, form), form);
+    }
+
+    private static bool Articled(string form) =>
+        GermanArticles.Any(article => form.StartsWith(article, StringComparison.Ordinal));
 }

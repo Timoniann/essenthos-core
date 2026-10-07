@@ -1,3 +1,5 @@
+﻿using Essenthos.Core.Database.Entities;
+
 namespace Essenthos.Core.Loading.Encyclopedia;
 
 /// <summary>
@@ -39,23 +41,37 @@ internal static class NameForms
             ["deu"] = new(StringComparer.OrdinalIgnoreCase)
             {
                 "in", "im", "zu", "zum", "zur", "am", "an", "auf", "bei", "beim", "nach", "von",
-                "vom", "der", "die", "das", "des", "dem", "den",
+                "vom",
             },
             ["spa"] = new(StringComparer.OrdinalIgnoreCase)
                 { "en", "a", "de", "del", "al", "el", "la", "los", "las" },
         };
 
     /// <summary>
+    /// The German articles, which a phrase supplies only before a nominative. A German genitive or
+    /// dative of a name that is a common noun keeps its own — <em>Sohn der breiten Mauer</em>,
+    /// <em>wohnte im alten Teich</em> — because no phrasing can know the name's gender, and without
+    /// it the phrase reads <em>wohnte in breite Mauer</em>.
+    /// </summary>
+    private static readonly HashSet<string> GermanArticles =
+        new(StringComparer.OrdinalIgnoreCase) { "der", "die", "das", "des", "dem", "den" };
+
+    /// <summary>
     /// The form with nothing in front of the name that the phrase already says. Returns what it was
     /// given when there is nothing to take off, so a caller compares the two to learn whether the
     /// form it holds is sound.
     /// </summary>
-    public static string Bare(string language, string form)
+    public static string Bare(string language, string form, string? grammaticalCase = null)
     {
         var bare = form.Trim();
         if (!Supplied.TryGetValue(language, out var supplied))
         {
             return bare;
+        }
+
+        if (language == "deu" && grammaticalCase is null or GrammaticalCases.Nominative)
+        {
+            supplied = [.. supplied, .. GermanArticles];
         }
 
         while (true)
@@ -68,5 +84,20 @@ internal static class NameForms
 
             bare = bare[(space + 1)..].TrimStart();
         }
+    }
+
+    /// <summary>
+    /// Whether a form is the one held with the article it was produced with in front of it: the
+    /// German genitive and dative the loaders stored bare before an article stayed on them.
+    /// </summary>
+    public static bool RestoresItsArticle(string language, string grammaticalCase, string held, string form)
+    {
+        if (language != "deu" || grammaticalCase == GrammaticalCases.Nominative)
+        {
+            return false;
+        }
+
+        var space = form.IndexOf(' ');
+        return space > 0 && GermanArticles.Contains(form[..space]) && form[(space + 1)..].TrimStart() == held;
     }
 }

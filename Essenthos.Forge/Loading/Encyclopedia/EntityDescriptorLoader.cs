@@ -468,7 +468,7 @@ internal sealed class EntityDescriptorLoader(
                     continue;
                 }
 
-                var bare = NameForms.Bare(language, form);
+                var bare = NameForms.Bare(language, form, grammaticalCase);
                 if (bare.Length == 0)
                 {
                     continue;
