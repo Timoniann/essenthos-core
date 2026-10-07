@@ -209,8 +209,9 @@ internal static class Annotating
     /// <em>all</em>. A source's table puts the phrase that renders a name opposite the name, and the
     /// phrase's last word is often one of these: the Hindi <em>एसाव के पुत्र</em> is <em>Esau's
     /// sons</em>, and its last word before <em>sons</em> is the postposition; the Berean's <em>and had been</em> renders the
-    /// יָרָבְעָם of 1 Kings 12:2 that it leaves unwritten. The Hebrew and the Greek say it by their
-    /// parsing and their numbers. A pronoun is not among them.
+    /// יָרָבְעָם of 1 Kings 12:2 that it leaves unwritten. The Hebrew says it by its parsing and the
+    /// Greek by its numbers, or by its letters where an edition carries none. A pronoun is not among
+    /// them.
     /// </summary>
     private const string NeverAName =
         """
@@ -228,6 +229,7 @@ internal static class Annotating
             WHEN 'pan' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['ਦੇ', 'ਨੇ', 'ਨੂੰ', 'ਦਾ', 'ਦੀ', 'ਤੋਂ', 'ਵਿੱਚ', 'ਅਤੇ', 'ਨਾਲ'])
             WHEN 'hbo' THEN coalesce(hw.morphology ->> 'pos', '') IN ('prep', 'conj', 'art', 'nega')
             WHEN 'grc' THEN coalesce(hw.strong_number, '') IN ('G3588', 'G2532', 'G1161', 'G1063', 'G3754', 'G1537', 'G1519', 'G1722', 'G575', 'G4314', 'G1223', 'G2596', 'G3326', 'G5228', 'G5259', 'G1909', 'G3844', 'G4012', 'G4862')
+                              OR coalesce(hw.normalised_text, '') IN ('ο', 'η', 'το', 'του', 'τησ', 'τω', 'τη', 'τον', 'την', 'οι', 'αι', 'τα', 'των', 'τοισ', 'ταισ', 'τουσ', 'τασ', 'και', 'δε', 'εν', 'εισ', 'εκ', 'εξ', 'απο', 'απ', 'αφ', 'προσ', 'παρα', 'παρ', 'επι', 'επ', 'εφ', 'δια', 'δι', 'κατα', 'κατ', 'καθ', 'μετα', 'μετ', 'μεθ', 'υπο', 'υπ', 'υφ', 'περι', 'συν', 'οτι', 'γαρ')
             ELSE FALSE END)
         """;
 

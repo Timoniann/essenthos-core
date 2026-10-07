@@ -795,6 +795,28 @@ public sealed class EntityAnnotationTests : IDisposable
     }
 
     /// <summary>
+    /// A Greek edition that carries no Strong numbers, as the Septuagints here do not, still says its
+    /// article by its letters.
+    /// </summary>
+    [Fact]
+    public async Task AGreekArticleWithoutANumberIsNoHeadEither()
+    {
+        var greek = Corpus.Add(_db, "GRCBRENT", TextKind.Translation, "grc", (1, 22, ["Μωυσῆς", "τοῦ"]));
+        _db.SaveChanges();
+        var name = _db.WordAt(greek, 1, 22, 1);
+        var article = _db.WordAt(greek, 1, 22, 2);
+        name.NormalisedText = "μωυσησ";
+        article.NormalisedText = "του";
+        _db.SaveChanges();
+        Phrase(Hebrew(1), name, article);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(article.Id);
+    }
+
+    /// <summary>
     /// The head of a set of one name written twice is no exception: Luther's <em>alles</em> of
     /// Deuteronomy 5:27 stood last in such a set and was named the LORD, while the name beside it
     /// was left to the same-word test against it.
