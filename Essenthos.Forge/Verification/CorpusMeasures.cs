@@ -321,6 +321,19 @@ internal sealed record Vote(
 internal sealed record IntegrityCheck(string Breaks, int Found);
 
 /// <summary>
+/// The places two editions of one Greek text read differently, as the letters joining them say.
+///
+/// A unit is a run of words one edition has where the other does not have the same words, closed on
+/// both sides by words the two print alike: a word in place of another, a word one leaves out, a
+/// phrase one transposes. An edition's preface counts its differences from another the same way,
+/// which is what makes the count comparable with the one it states.
+/// </summary>
+/// <param name="Units">Places the two read differently.</param>
+/// <param name="Addresses">Verses of the frame holding at least one of them.</param>
+/// <param name="Shared">Verses of the frame both editions print.</param>
+internal sealed record Variation(string Text, string Against, int Units, int Addresses, int Shared);
+
+/// <summary>
 /// Canonical addresses that two or more verses of one text stand at as their primary address.
 ///
 /// Not a defect, which is why it is a measure and not an integrity check: the Hebrew numbers the
@@ -381,7 +394,8 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<IntegrityCheck> Integrity,
     IReadOnlyList<SharedAddresses> Shared,
     IReadOnlyList<Unaligned> Unaligned,
-    IReadOnlyList<Stranded>? Stranded = null)
+    IReadOnlyList<Stranded>? Stranded = null,
+    IReadOnlyList<Variation>? Variation = null)
 {
     /// <summary>
     /// The share of links more than one method claims. It is the number the corpus could not
@@ -558,6 +572,12 @@ internal sealed record CorpusMeasures(
         foreach (var s in Stranded ?? [])
         {
             report.AppendLine($"  {s.Text} to {s.Witness,-14} {s.Words,7}   {string.Join(", ", s.Chapters)}");
+        }
+
+        report.AppendLine("variation     places two editions read differently, the verses holding them, and the verses both print");
+        foreach (var v in Variation ?? [])
+        {
+            report.AppendLine($"  {v.Text} to {v.Against,-14} {v.Units,7} {v.Addresses,7} {v.Shared,7}");
         }
 
         report.AppendLine("integrity     every one of these should be zero");

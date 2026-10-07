@@ -36,6 +36,18 @@ internal static class Sources
     /// <summary>Codex Alexandrinus, both Testaments, as far as its own text exists typed.</summary>
     public const string AlexandrinusSlug = "ALEX";
 
+    /// <summary>Codex Sinaiticus, its New Testament as INTF transcribed it.</summary>
+    public const string SinaiticusSlug = "SIN";
+
+    /// <summary>Codex Vaticanus, its New Testament as INTF transcribed it, as far as the codex survives.</summary>
+    public const string VaticanusSlug = "VAT";
+
+    /// <summary>The SBL Greek New Testament, as its publishers name it.</summary>
+    public const string SblgntSlug = "SBLGNT";
+
+    /// <summary>The Church Slavonic Elizabeth Bible, by the name of the CrossWire module it is read from.</summary>
+    public const string ElizabethSlug = "CSLELIZABETH";
+
     /// <summary>
     /// The Ethiopic Bible in Ge'ez, all eighty-one books. CrossWire's <c>Geez</c> is sixteen of them,
     /// HaCohen's Octateuch and Psalter, and is another text.

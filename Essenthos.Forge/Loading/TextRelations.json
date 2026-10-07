@@ -239,6 +239,14 @@
       "scope": "40-66",
       "note": "Its New Testament was made from the Greek behind the Revised Version of 1881, which is the Greek the American Standard Version renders.",
       "source": "Jost Oliver Zetzsche, The Bible in China: The History of the Union Version (1999)"
+    },
+    {
+      "from": "CSLELIZABETH",
+      "to": "GRCBRENT",
+      "relation": "translated-from",
+      "scope": "1-39",
+      "note": "The Slavonic Old Testament was translated from the Greek, and the commission that prepared the 1751 edition revised it against the Septuagint.",
+      "source": "Preface to the Elizabeth Bible (Moscow, 1751)"
     }
   ]
 }

@@ -837,6 +837,37 @@ public sealed class CorpusCheckTests : IDisposable
         (await _check.Measure()).Stranded.Should().BeEmpty();
     }
 
+    /// <summary>
+    /// Two Greek editions joined by their letters, and the places they read differently counted the
+    /// way an edition's preface counts them: a word one has in place of nothing, a word only the
+    /// other has, and one missing at the end of a verse, each once — and a verse they print alike
+    /// not at all.
+    /// </summary>
+    [Fact]
+    public async Task ThePlacesTwoGreekEditionsReadDifferentlyAreCountedOnceEach()
+    {
+        var holmes = Corpus.Add(_db, "SBLGNT", TextKind.CriticalEdition, "grc");
+        _db.AddBook(holmes, 40, "Matthew",
+            (1, 1, ["Βίβλος", "γενέσεως", "Ἰησοῦ", "χριστοῦ"]),
+            (1, 2, ["ὁ", "δὲ", "Ἰησοῦς", "εἶπεν", "αὐτοῖς"]),
+            (1, 3, ["καὶ", "ἦλθεν", "εἰς", "τὴν", "πόλιν"]),
+            (1, 4, ["ἐγώ", "εἰμι"]));
+        var nestle = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc");
+        _db.AddBook(nestle, 40, "Matthew",
+            (1, 1, ["Βίβλος", "γενέσεως", "Ἰησοῦ", "Χριστοῦ"]),
+            (1, 2, ["ὁ", "δὲ", "εἶπεν", "αὐτοῖς"]),
+            (1, 3, ["καὶ", "ἦλθεν", "πάλιν", "εἰς", "τὴν", "πόλιν"]),
+            (1, 4, ["ἐγώ", "εἰμι", "ὁ", "ποιμήν"]));
+        await _db.SaveChangesAsync();
+
+        await new Essenthos.Core.Loading.Links.SeptuagintLinkLoader(
+                _db, NullLogger<Essenthos.Core.Loading.Links.SeptuagintLinkLoader>.Instance)
+            .Load("SBLGNT", "NESTLE1904");
+
+        (await _check.Measure()).Variation.Should().ContainSingle()
+            .Which.Should().Be(new Variation("SBLGNT", "NESTLE1904", Units: 3, Addresses: 3, Shared: 4));
+    }
+
     /// <summary>The coverage a run stored is the coverage the next run compares against.</summary>
     [Fact]
     public async Task TheStoredCoverageReadsBackAsItWasMeasured()

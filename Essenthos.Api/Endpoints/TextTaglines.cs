@@ -85,6 +85,26 @@ internal static class TextTaglines
                 "Олександрійський кодекс V століття, переписаний так, як його написав писар.",
                 "Der Codex Alexandrinus aus dem fünften Jahrhundert, so transkribiert, wie sein Schreiber ihn schrieb.",
                 "El Códice Alejandrino del siglo V, transcrito tal como lo escribió su copista."),
+            ["CSLELIZABETH"] = Say(
+                "The Church Slavonic Bible of 1751, still read in Orthodox worship, in modern spelling.",
+                "Церковнослов'янська Біблія 1751 року, яку й досі читають у православному богослужінні, сучасним правописом.",
+                "Die kirchenslawische Bibel von 1751, bis heute im orthodoxen Gottesdienst gelesen, in moderner Schreibweise.",
+                "La Biblia eslava eclesiástica de 1751, leída aún en el culto ortodoxo, con ortografía moderna."),
+            ["SBLGNT"] = Say(
+                "Holmes's critical Greek text of 2010, decided apart from the Nestle line.",
+                "Критичний грецький текст Голмса 2010 року, укладений незалежно від лінії Нестле.",
+                "Holmes' kritischer griechischer Text von 2010, unabhängig von der Nestle-Linie erstellt.",
+                "El texto griego crítico de Holmes de 2010, decidido al margen de la línea de Nestle."),
+            ["SIN"] = Say(
+                "The fourth-century Codex Sinaiticus, its New Testament as its scribe wrote it.",
+                "Синайський кодекс IV століття — його Новий Заповіт так, як його написав писар.",
+                "Der Codex Sinaiticus aus dem vierten Jahrhundert, sein Neues Testament, wie sein Schreiber es schrieb.",
+                "El Códice Sinaítico del siglo IV, su Nuevo Testamento tal como lo escribió su copista."),
+            ["VAT"] = Say(
+                "The fourth-century Codex Vaticanus, its New Testament as far as the codex survives.",
+                "Ватиканський кодекс IV століття — його Новий Заповіт, наскільки кодекс зберігся.",
+                "Der Codex Vaticanus aus dem vierten Jahrhundert, sein Neues Testament, soweit der Kodex erhalten ist.",
+                "El Códice Vaticano del siglo IV, su Nuevo Testamento hasta donde se conserva el códice."),
             ["KJV"] = Say(
                 "The English Bible of 1611, in the modern standard text, with the Apocrypha.",
                 "Англійська Біблія 1611 року в сучасному стандартному тексті, з апокрифами.",

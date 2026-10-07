@@ -144,7 +144,8 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// nothing, although the frame already says which of its verses stands where another text's does.
     /// </summary>
     internal static IReadOnlyList<DeclaredVersePair> DeclaredPairs =>
-        [.. GeezTextSource.VersePairs, .. DeuterocanonTextSource.VersePairs, .. AlexandrinusTextSource.VersePairs];
+        [.. GeezTextSource.VersePairs, .. DeuterocanonTextSource.VersePairs, .. AlexandrinusTextSource.VersePairs,
+        .. CodexTextSource.VersePairs];
 
     private const string LinkImport =
         """
