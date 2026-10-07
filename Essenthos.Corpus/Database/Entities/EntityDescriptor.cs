@@ -552,3 +552,42 @@ public static class DescriptorSubjects
     public static bool Admits(string relation, EntityKind subject) => Of(relation).Contains(subject);
 }
 
+
+/// <summary>
+/// What kind of record a clause's other end has to be, for the relations whose target is not a
+/// place. <see cref="PlacingRelations"/> asks the same of the clauses that put something somewhere.
+///
+/// <para>
+/// A people's own clauses are where a pass turns a verse round: <em>Doeg an Edomite</em> filed Doeg
+/// as the Edomites' people, <em>the daughter of Ethbaal king of the Zidonians</em> made Jezebel the
+/// Sidonians', and a town or a land stood as a people's forebear. Belonging to a people names a
+/// people; descending names a forebear, a man or the people a people came out of
+/// (<em>Casluhim, out of whom came Philistim</em>). The generation harness reads this table out of
+/// the file, so it is written as a plain list of rows.
+/// </para>
+/// </summary>
+public static class DescriptorTargets
+{
+    private static readonly (EntityKind[] Kinds, string[] Relations)[] Table =
+    [
+        ([EntityKind.People],
+        [
+            DescriptorRelations.OfPeople,
+        ]),
+        ([EntityKind.Person, EntityKind.People],
+        [
+            DescriptorRelations.DescendantsOf,
+        ]),
+    ];
+
+    private static readonly IReadOnlyDictionary<string, IReadOnlySet<EntityKind>> ByRelation =
+        Table.SelectMany(row => row.Relations.Select(relation => (relation, row.Kinds)))
+            .ToDictionary(
+                pair => pair.relation,
+                pair => (IReadOnlySet<EntityKind>)pair.Kinds.ToHashSet(),
+                StringComparer.Ordinal);
+
+    /// <summary>Whether a record of this kind can stand at the clause's other end; any can, for a relation the table leaves open.</summary>
+    public static bool Admits(string relation, EntityKind? target) =>
+        !ByRelation.TryGetValue(relation, out var kinds) || (target is { } kind && kinds.Contains(kind));
+}

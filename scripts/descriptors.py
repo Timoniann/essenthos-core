@@ -259,6 +259,7 @@ REGISTER_CLAIMS = {
 }
 REGISTER_CLAIMS_KEPT = 1
 COMPANION = 'companion-of'
+DESCENDANTS = 'descendants-of'
 
 SYSTEM_PROMPT = """\
 You are a Biblical scholar writing the encyclopedia's own description of a person, a place or a
@@ -1279,6 +1280,50 @@ def subject_kinds():
 
 
 @functools.cache
+def target_kinds():
+    """What kind of record each relation can point at, where the loader asks, read out of DescriptorTargets."""
+    text = csharp(RELATION_CONSTANTS)
+    block = csharp_block(text[text.index('class DescriptorTargets'):], ' Table =', RELATION_CONSTANTS)
+    kinds = {}
+    for held, relations in re.findall(r'\(\[([^\]]*)\],\s*\[([^\]]*)\]\)', block):
+        for relation in relation_names(relations):
+            kinds[relation] = {kind.lower() for kind in re.findall(r'EntityKind\.(\w+)', held)}
+    return kinds
+
+
+ARTICLES = {'the', 'an', 'a'}
+
+
+def gentilic_of(word, people):
+    """Whether a King James word is the singular a people's English name is the plural of: Garmite, Garmites."""
+    word, people = word.lower().rstrip('s'), people.lower().rstrip('s')
+    shortest = min(len(word), len(people))
+    common = next((i for i, (a, b) in enumerate(zip(word, people)) if a != b), shortest)
+    return shortest >= 4 and common >= shortest - 1
+
+
+def written_as_member(line, member, people):
+    """
+    Whether the verse writes the man with the people's name straight after his own, an article between
+    at most: *Keilah the Garmite* makes Keilah a Garmite, and never the Garmites' forebear. The loader
+    asks the same of the names settled on the words.
+    """
+    if not member or not people:
+        return False
+    words = WORD.findall(line or '')
+    names = {token.lower() for token in WORD.findall(member)}
+    for at, word in enumerate(words):
+        if word.lower() not in names:
+            continue
+        following = at + 1
+        if following < len(words) and words[following].lower() in ARTICLES:
+            following += 1
+        if following < len(words) and words[following][:1].isupper() and gentilic_of(words[following], people):
+            return True
+    return False
+
+
+@functools.cache
 def accompaniment():
     """The words the loader requires a companion-of verse to contain, read out of the C#."""
     with open(LOADER, encoding='utf-8-sig') as handle:
@@ -1290,12 +1335,16 @@ def accompaniment():
     return set(re.findall(r'"([^"]+)"', text[start:text.index('];', start)]))
 
 
-def refusal(relation, target_kind, line, question, kind):
+def refusal(relation, target_kind, line, question, kind, target_name=None, name=None):
     """Why the loader, or the narrower question a register entity was asked, would refuse a claim."""
     if kind not in subject_kinds().get(relation, ()):
         return 'saying of a record what its kind cannot be'
     if relation in placing_relations() and target_kind != 'place':
         return 'placing something somewhere that is not a place'
+    if relation in target_kinds() and target_kind not in target_kinds()[relation]:
+        return 'giving a person or a place as somebody\'s people, or a place as a people\'s forebear'
+    if relation == DESCENDANTS and written_as_member(line.get('king_james'), target_name, name):
+        return 'making a people\'s forebear of a man the verse calls one of that people'
     if relation == COMPANION and line.get('register'):
         return 'company read out of a register line'
     if relation == COMPANION and not accompaniment() & set(WORD.findall((line.get('king_james') or '').lower())):
@@ -1339,7 +1388,9 @@ def validate(answer, asked, slugs, today, model, kinds):
             if text not in allowed:
                 rejected.append(dict(note, why='reference is not among the verses the entity occurs in'))
                 continue
-        why = refusal(relation, kinds.get(target), lines[text], asked.get('question'), asked['kind'])
+        target_name = next((c.get('name') for c in asked.get('candidates') or [] if c.get('slug') == target), None)
+        why = refusal(relation, kinds.get(target), lines[text], asked.get('question'), asked['kind'],
+                      target_name, asked.get('name'))
         if why is None and asked.get('question') == REGISTER and len(claims) >= REGISTER_CLAIMS_KEPT:
             why = 'a register entity was asked for one claim at most'
         if why:
