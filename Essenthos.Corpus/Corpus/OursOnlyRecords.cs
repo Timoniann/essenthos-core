@@ -132,6 +132,8 @@ internal static class OursOnlyRecords
         var descent = unnamed.Count == 0 ? [] : await Ancestry(db, unnamed, tribes, paternal: false, cancellationToken);
         var both = unnamed.Where(id => !descent.ContainsKey(id)).ToList();
         var fathers = both.Count == 0 ? [] : await Ancestry(db, both, tribes, paternal: true, cancellationToken);
+        var silent = qualifying.Where(id => Sex([.. clauses.Where(c => c.EntityId == id)]) is null).ToList();
+        var grammar = await GrammaticalSexes(db, silent, cancellationToken);
         return qualifying.ToDictionary(
             id => supplied[id],
             id =>
@@ -139,7 +141,7 @@ internal static class OursOnlyRecords
                 var own = clauses.Where(c => c.EntityId == id).ToList();
                 var named = Named(own, tribes);
                 return new OwnFacts(
-                    Sex(own),
+                    Sex(own) ?? grammar.GetValueOrDefault(id),
                     tribes.GetValueOrDefault(id)
                     ?? (named.Count == 1
                         ? named[0]
@@ -151,6 +153,78 @@ internal static class OursOnlyRecords
     /// <summary>A dataset's line, or our own where the record is ours; never the dataset's for a record of ours.</summary>
     public static string? Line(IReadOnlyDictionary<string, OwnFacts> ours, string? slug, string? line) =>
         slug is not null && ours.TryGetValue(slug, out var own) ? own.Line : line;
+
+    /// <summary>
+    /// The sex our own rows state of each of these records, for a record no dataset supplied: the
+    /// gendered word of a relationship it is the subject of, or else the grammar of the name the
+    /// Greek prints for it. A record neither says anything of is left out.
+    /// </summary>
+    public static async Task<Dictionary<int, string>> SexesOf(
+        AppDbContext db,
+        IReadOnlyCollection<int> ids,
+        CancellationToken cancellationToken)
+    {
+        if (ids.Count == 0)
+        {
+            return [];
+        }
+
+        var clauses = await OurClauses(db, ids, cancellationToken);
+        var stated = ids
+            .Select(id => (Id: id, Sex: Sex([.. clauses.Where(c => c.EntityId == id)])))
+            .Where(x => x.Sex is not null)
+            .ToDictionary(x => x.Id, x => x.Sex!);
+        foreach (var (id, sex) in await GrammaticalSexes(db, [.. ids.Where(id => !stated.ContainsKey(id))], cancellationToken))
+        {
+            stated[id] = sex;
+        }
+
+        return stated;
+    }
+
+    /// <summary>The witness whose morphology states the gender of the words that name a record.</summary>
+    private const string GreekWitness = "NESTLE1904";
+
+    /// <summary>
+    /// The sex the Greek's grammar gives a name: the gender Nestle's morphology states of every word of
+    /// its own that names the record, where they agree, and only for a word whose lexicon headword is a
+    /// name. Bernice is Βερνίκη, feminine. Hebrew grammar is not asked, because it is the form's and not
+    /// the bearer's: Hagabah, a man's house, is feminine in BHSA. And a common noun used as a name is not
+    /// asked either, so Legion, Λεγιών, is no woman.
+    /// </summary>
+    private static async Task<Dictionary<int, string>> GrammaticalSexes(
+        AppDbContext db,
+        IReadOnlyCollection<int> ids,
+        CancellationToken cancellationToken)
+    {
+        if (ids.Count == 0)
+        {
+            return [];
+        }
+
+        var rows = await db.Database
+            .SqlQueryRaw<GrammaticalSex>(
+                """
+                SELECT a.entity_id, min(w.morphology->>'gender') AS gender,
+                       count(DISTINCT w.morphology->>'gender')::int AS genders
+                FROM word_entity a
+                JOIN word w ON w.id = a.word_id
+                JOIN text t ON t.id = w.text_id AND t.slug = {0}
+                JOIN strong_entry s ON s.strong_number = w.strong_number
+                WHERE a.entity_id = ANY({1})
+                  AND (a.note IS NULL OR a.note NOT LIKE 'through %')
+                  AND w.morphology->>'gender' IN ('masculine', 'feminine')
+                  AND lower(left(s.lemma, 1)) <> left(s.lemma, 1)
+                GROUP BY a.entity_id
+                """,
+                GreekWitness, ids.ToArray())
+            .ToListAsync(cancellationToken);
+        return rows
+            .Where(row => row.Genders == 1)
+            .ToDictionary(row => row.EntityId, row => row.Gender == "feminine" ? "female" : "male");
+    }
+
+    private sealed record GrammaticalSex(int EntityId, string Gender, int Genders);
 
     private static string? Sex(List<Clause> clauses)
     {

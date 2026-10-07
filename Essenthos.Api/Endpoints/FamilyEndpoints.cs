@@ -42,6 +42,8 @@ internal static class FamilyEndpoints
             .ToListAsync(cancellationToken);
         var ids = people.Select(p => p.Id).ToList();
         var ours = await OursOnlyRecords.Among(db, [.. people.Select(p => p.Slug)], cancellationToken);
+        var stated = await OursOnlyRecords.SexesOf(
+            db, [.. people.Where(p => p.Sex is null && !ours.ContainsKey(p.Slug)).Select(p => p.Id)], cancellationToken);
 
         // Both directions, as the entity page reads them: a father is recorded once, and reading
         // one side only would give Isaac a father and Abraham no son.
@@ -83,7 +85,7 @@ internal static class FamilyEndpoints
                     p.Name,
                     local.GetValueOrDefault(p.Id),
                     OursOnlyRecords.Line(ours, p.Slug, p.Distinguisher),
-                    ours.TryGetValue(p.Slug, out var own) ? own.Sex : p.Sex,
+                    ours.TryGetValue(p.Slug, out var own) ? own.Sex : p.Sex ?? stated.GetValueOrDefault(p.Id),
                     [
                         .. rows.Where(r => r.FromEntityId == p.Id)
                             .Select(r => new FamilyTieResponse(r.Type, false, r.To)
