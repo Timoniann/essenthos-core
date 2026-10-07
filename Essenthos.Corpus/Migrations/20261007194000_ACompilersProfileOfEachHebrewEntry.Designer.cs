@@ -4,6 +4,7 @@ using System.Text.Json;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -12,9 +13,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Essenthos.Core.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261007194000_ACompilersProfileOfEachHebrewEntry")]
+    partial class ACompilersProfileOfEachHebrewEntry
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -3377,64 +3380,6 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("stated_verse_number", (string)null);
                 });
 
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongBook", b =>
-                {
-                    b.Property<int>("WitnessId")
-                        .HasColumnType("integer")
-                        .HasColumnName("witness_id");
-
-                    b.Property<string>("StrongNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("strong_number");
-
-                    b.Property<int>("Book")
-                        .HasColumnType("integer")
-                        .HasColumnName("book");
-
-                    b.Property<int>("Occurrences")
-                        .HasColumnType("integer")
-                        .HasColumnName("occurrences");
-
-                    b.HasKey("WitnessId", "StrongNumber", "Book")
-                        .HasName("pk_strong_book");
-
-                    b.ToTable("strong_book", null, t =>
-                        {
-                            t.HasComment("How often a Strong number stands in one book of an edition of the original, by canonical ordinal. Derived from the words and rebuilt by the load's count of the lexicon's phrases.");
-
-                            t.HasCheckConstraint("ck_strong_book_occurrences", "occurrences > 0");
-                        });
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongBookReach", b =>
-                {
-                    b.Property<int>("TextId")
-                        .HasColumnType("integer")
-                        .HasColumnName("text_id");
-
-                    b.Property<string>("StrongNumber")
-                        .HasColumnType("text")
-                        .HasColumnName("strong_number");
-
-                    b.Property<int>("Book")
-                        .HasColumnType("integer")
-                        .HasColumnName("book");
-
-                    b.Property<int>("Reached")
-                        .HasColumnType("integer")
-                        .HasColumnName("reached");
-
-                    b.HasKey("TextId", "StrongNumber", "Book")
-                        .HasName("pk_strong_book_reach");
-
-                    b.ToTable("strong_book_reach", null, t =>
-                        {
-                            t.HasComment("How many of a Strong number's words in one book of the edition a text is counted over the text's links render. Only books where it renders some; derived and rebuilt with strong_reach.");
-
-                            t.HasCheckConstraint("ck_strong_book_reach_reached", "reached > 0");
-                        });
-                });
-
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongEntry", b =>
                 {
                     b.Property<int>("Id")
@@ -3713,29 +3658,13 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("text")
                         .HasColumnName("strong_number");
 
-                    b.Property<bool?>("Lexical")
-                        .HasColumnType("boolean")
-                        .HasColumnName("lexical");
-
                     b.Property<int>("Occurrences")
                         .HasColumnType("integer")
                         .HasColumnName("occurrences");
 
-                    b.Property<int>("Phrases")
-                        .HasColumnType("integer")
-                        .HasColumnName("phrases");
-
                     b.Property<int>("Reached")
                         .HasColumnType("integer")
                         .HasColumnName("reached");
-
-                    b.Property<int>("RenderingLinks")
-                        .HasColumnType("integer")
-                        .HasColumnName("rendering_links");
-
-                    b.Property<int?>("Renderings")
-                        .HasColumnType("integer")
-                        .HasColumnName("renderings");
 
                     b.Property<int>("WitnessId")
                         .HasColumnType("integer")
@@ -3754,8 +3683,6 @@ namespace Essenthos.Core.Migrations
                             t.HasCheckConstraint("ck_strong_reach_occurrences", "occurrences > 0");
 
                             t.HasCheckConstraint("ck_strong_reach_reached", "reached >= 0 AND reached <= occurrences");
-
-                            t.HasCheckConstraint("ck_strong_reach_renderings", "phrases >= 0 AND rendering_links >= 0 AND (renderings IS NULL OR renderings <= phrases)");
                         });
                 });
 
@@ -5654,30 +5581,6 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_stated_verse_number_verses_verse_id");
 
                     b.Navigation("Verse");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongBook", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Witness")
-                        .WithMany()
-                        .HasForeignKey("WitnessId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_strong_book_texts_witness_id");
-
-                    b.Navigation("Witness");
-                });
-
-            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongBookReach", b =>
-                {
-                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
-                        .WithMany()
-                        .HasForeignKey("TextId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_strong_book_reach_texts_text_id");
-
-                    b.Navigation("Text");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongGentilic", b =>

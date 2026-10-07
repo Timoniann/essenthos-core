@@ -85,8 +85,17 @@ public static partial class GreekFormDerivations
             return null;
         }
 
-        var phrase = derivation[..reference.Index].ToLowerInvariant();
-        return Origin.Any(phrase.Contains) || !Form.Any(phrase.Contains) ? null : reference.Value;
+        return NamesAForm(derivation[..reference.Index]) ? reference.Value : null;
+    }
+
+    /// <summary>
+    /// Whether the words before a reference say this entry is a form of it: one of the form words,
+    /// and none of the origin words.
+    /// </summary>
+    public static bool NamesAForm(string phrase)
+    {
+        phrase = phrase.ToLowerInvariant();
+        return !Origin.Any(phrase.Contains) && Form.Any(phrase.Contains);
     }
 
     /// <summary>

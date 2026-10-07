@@ -106,6 +106,7 @@ builder.Services.AddScoped<SharedWordPass>();
 builder.Services.AddScoped<CorpusCheck>();
 builder.Services.AddScoped<StrongLexiconLoader>();
 builder.Services.AddScoped<StrongGentilicLoader>();
+builder.Services.AddScoped<StrongRelationLoader>();
 builder.Services.AddScoped<StrongTranslationLoader>();
 builder.Services.AddScoped<GreekGlossLoader>();
 builder.Services.AddScoped<GeezLexiconLoader>();

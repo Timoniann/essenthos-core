@@ -164,6 +164,7 @@ internal static partial class ForgeVerbs
             DillmannMeasure),
         new("images", "", "Load the pictures of people and places again.", Images),
         new("spell", "", "Count how each text spells each name.", Spell),
+        new("lexicon-relations", "", "Read what Strong's entries say about each other.", LexiconRelations),
         new("cards", "", "Count how each text renders each Strong number: the lexicon's phrases and the entry page's reach.", Cards),
         new("commandments", "", "Load the 613 commandments.", Commandments),
         new("lands", "", "Load the periods of the lands from PeriodO.", Lands),

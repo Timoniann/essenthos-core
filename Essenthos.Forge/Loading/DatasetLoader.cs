@@ -324,6 +324,7 @@ internal sealed class DatasetLoader(
             new("relations", RelateTheTexts),
             new("lexicon", cancellationToken => LoadTheLexicon(resources, cancellationToken)),
             new("lexicon-translations", cancellationToken => TranslateTheLexicon(resources, cancellationToken)),
+            new("lexicon-relations", cancellationToken => RelateTheLexiconsEntries(resources, cancellationToken)),
             new("syntax", cancellationToken => LoadTheSyntax(Bhsa(), cancellationToken)),
             new("frame", cancellationToken => PlaceInTheFrame(resources, cancellationToken)),
             new("misprints", cancellationToken => CorrectWhatTheirFilesMisprint(resources, cancellationToken)),
@@ -503,6 +504,23 @@ internal sealed class DatasetLoader(
         status.Record(await loader.Load(
             ResourcePaths.File(resources, "Strong", "StrongHebrew.xml"),
             ResourcePaths.File(resources, "Strong", "StrongGreek.xml"),
+            cancellationToken));
+    }
+
+    /// <summary>
+    /// What Strong's entries say about each other, read out of their etymologies. After the lexicon
+    /// it relates; before the gentilics, which read the same prose and must give the same answer.
+    /// </summary>
+    private async Task RelateTheLexiconsEntries(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("what Strong's entries say about each other");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<StrongRelationLoader>();
+        status.Record(await loader.Load(
+            ResourcePaths.File(resources, "Strong", "StrongHebrew.xml"),
+            ResourcePaths.File(resources, "Strong", "StrongGreek.xml"),
+            ResourcePaths.File(resources, "BibleData2026", Strong.CompiledHebrewStrongs.File),
             cancellationToken));
     }
 

@@ -43,7 +43,13 @@ internal static class StrongEndpoints
 
             if (entry is not null)
             {
-                return Results.Ok(Response(entry, await Gentilic(db, canonical, cancellationToken)));
+                var (relations, kin) = await Relations(db, canonical, cancellationToken);
+                return Results.Ok(Response(entry, await Gentilic(db, canonical, cancellationToken)) with
+                {
+                    Relations = relations,
+                    Kin = kin,
+                    Profile = await Profile(db, canonical, cancellationToken),
+                });
             }
 
             // A prefix morpheme is not a missing entry. ETCBC numbers the conjunction, the article
@@ -125,6 +131,7 @@ internal static class StrongEndpoints
         routes.MapGet("/strong/{number}/occurrences", async (
             string number,
             [FromQuery] string? corpus,
+            [FromQuery] int? book,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
@@ -150,6 +157,11 @@ internal static class StrongEndpoints
                 }
 
                 words = words.Where(w => w.TextId == named.Id);
+            }
+
+            if (book is { } ordinal)
+            {
+                words = words.Where(w => w.Verse!.Book!.CanonicalOrdinal == ordinal);
             }
 
             return Results.Ok(await OccurrencePage(db, canonical, words, skip, take, cancellationToken));
@@ -466,6 +478,93 @@ internal static class StrongEndpoints
             stated.People?.Name);
     }
 
+    /// <summary>
+    /// What the entry's etymology says about other entries, in the order its source wrote them, and
+    /// the entries whose etymologies name this one — the words a reader following a root reaches.
+    /// Each carries the other entry's headword and gloss, so it reads as a sentence where the other
+    /// number has no page of its own in this reader's hands.
+    /// </summary>
+    internal static async Task<(IList<StrongRelationResponse> Relations, IList<StrongRelationResponse> Kin)> Relations(
+        AppDbContext db,
+        string canonical,
+        CancellationToken cancellationToken)
+    {
+        var stated = await db.StrongRelations
+            .AsNoTracking()
+            .Where(r => r.FromNumber == canonical || r.ToNumber == canonical)
+            .OrderBy(r => r.Source).ThenBy(r => r.FromNumber).ThenBy(r => r.Position)
+            .ToListAsync(cancellationToken);
+
+        var others = stated
+            .Select(r => r.FromNumber == canonical ? r.ToNumber : r.FromNumber)
+            .OfType<string>()
+            .Distinct()
+            .ToList();
+        var entries = await db.StrongEntries
+            .Where(e => others.Contains(e.StrongNumber))
+            .Select(e => new { e.StrongNumber, e.Lemma, e.Definition })
+            .ToDictionaryAsync(e => e.StrongNumber, cancellationToken);
+
+        StrongRelationResponse Of(Database.Entities.StrongRelation relation, string? other) => new(
+            relation.Kind,
+            other,
+            other is null ? null : entries.GetValueOrDefault(other)?.Lemma,
+            other is null ? null : entries.GetValueOrDefault(other)?.Definition,
+            relation.Hedged,
+            relation.Statement,
+            relation.Source);
+
+        return (
+            [.. stated.Where(r => r.FromNumber == canonical).Select(r => Of(r, r.ToNumber))],
+            [
+                .. stated.Where(r => r.ToNumber == canonical && r.FromNumber != canonical)
+                    .GroupBy(r => r.FromNumber)
+                    .Select(g => g.First())
+                    .Select(r => Of(r, r.FromNumber)),
+            ]);
+    }
+
+    /// <summary>
+    /// A compiler's part of speech, gender and first verse for a Hebrew entry, credited to him. The
+    /// verse is named as BHSA names its book, which is the edition the Hebrew is read in. His count
+    /// is not served: verify compares it with BHSA's own, and a reader shown one would not know the
+    /// other disagrees.
+    /// </summary>
+    internal static async Task<StrongProfileResponse?> Profile(
+        AppDbContext db,
+        string canonical,
+        CancellationToken cancellationToken)
+    {
+        var profile = await db.StrongProfiles.AsNoTracking()
+            .FirstOrDefaultAsync(p => p.StrongNumber == canonical, cancellationToken);
+        if (profile is null)
+        {
+            return null;
+        }
+
+        var book = profile.FirstBook is { } ordinal
+            ? await db.Books
+                .Where(b => b.Text!.Slug == BhsaSlug && b.CanonicalOrdinal == ordinal)
+                .Select(b => new { b.Name, b.Slug })
+                .FirstOrDefaultAsync(cancellationToken)
+            : null;
+
+        return new StrongProfileResponse(
+            profile.Language,
+            profile.PartOfSpeech,
+            profile.Gender,
+            profile.Source)
+        {
+            First = book is null || profile.FirstChapter is null || profile.FirstVerse is null
+                ? null
+                : new StrongFirstVerseResponse(profile.FirstBook!.Value, book.Name, book.Slug,
+                    profile.FirstChapter.Value, profile.FirstVerse.Value),
+        };
+    }
+
+    /// <summary>The edition the Hebrew is read in, whose book names a compiler's first verse.</summary>
+    private const string BhsaSlug = "BHSA";
+
     private static StrongEntryResponse Response(
         Database.Entities.StrongEntry entry,
         StrongGentilicResponse? gentilic) => new(
@@ -551,12 +650,56 @@ internal record StrongEntryResponse(
     public int? Occurrences { get; init; }
 
     /// <summary>
+    /// What this entry's etymology says about other entries, in the order its source wrote them —
+    /// Strong's own reading first, then a compiler's root list where one is loaded. Null on the
+    /// lexicon's list.
+    /// </summary>
+    public IList<StrongRelationResponse>? Relations { get; init; }
+
+    /// <summary>
+    /// The entries whose etymologies name this one, one line each with the first thing its source
+    /// says of it: the words derived from this one, its variants, the Greek borrowed from it. Null
+    /// on the lexicon's list.
+    /// </summary>
+    public IList<StrongRelationResponse>? Kin { get; init; }
+
+    /// <summary>A compiler's part of speech, gender and first verse, for a Hebrew entry he profiles. Null otherwise.</summary>
+    public StrongProfileResponse? Profile { get; init; }
+
+    /// <summary>
     /// The commonest few phrases <see cref="StrongListResponse.Corpus"/> puts where this number
     /// stands, commonest first, counted as the entry page's renderings are. Empty where that text
     /// renders it nowhere; null on a single entry.
     /// </summary>
     public IList<StrongRenderingResponse>? Renderings { get; init; }
 }
+
+/// <param name="Kind">
+/// <c>same-as</c>, <c>from</c>, <c>same-root-as</c>, <c>form-of</c>, <c>variant</c>,
+/// <c>contracted-from</c>, <c>corresponds-to</c>, <c>loan-from</c>, <c>patronymic</c>, <c>patrial</c>,
+/// <c>patronymic-or-patrial</c>, <c>compare</c>, <c>primitive</c>, <c>root</c> or <c>unclassified</c>.
+/// </param>
+/// <param name="Number">The other entry; null where the entry is a primitive and names none.</param>
+/// <param name="Hedged">The source qualified the statement itself — <em>probably</em>, <em>perhaps</em>.</param>
+/// <param name="Statement">The clause the relation was read from, in the source's own words.</param>
+internal record StrongRelationResponse(
+    string Kind,
+    string? Number,
+    string? Lemma,
+    string? Definition,
+    bool Hedged,
+    string Statement,
+    string Source);
+
+/// <param name="Language"><c>hbo</c> or <c>arc</c>.</param>
+/// <param name="Source">Whose analysis it is: a compiler's, never Strong's.</param>
+internal record StrongProfileResponse(string Language, string? PartOfSpeech, string? Gender, string Source)
+{
+    /// <summary>The first verse the compiler finds the word in, on the shared frame.</summary>
+    public StrongFirstVerseResponse? First { get; init; }
+}
+
+internal record StrongFirstVerseResponse(int BookOrdinal, string Book, string BookSlug, int Chapter, int Verse);
 
 internal record StrongListResponse(int Total, IList<StrongEntryResponse> Items)
 {

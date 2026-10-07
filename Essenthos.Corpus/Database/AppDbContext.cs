@@ -1,5 +1,6 @@
 ﻿using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Strong;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -298,6 +299,18 @@ public class AppDbContext : DbContext
     public DbSet<StrongReach> StrongReaches { get; set; } = null!;
 
     public DbSet<StrongReachMethod> StrongReachMethods { get; set; } = null!;
+
+    /// <summary>How often each Strong number stands in each book of an edition, counted once per load.</summary>
+    public DbSet<StrongBook> StrongBooks { get; set; } = null!;
+
+    /// <summary>How many of those each text renders, book by book, counted once per load.</summary>
+    public DbSet<StrongBookReach> StrongBookReaches { get; set; } = null!;
+
+    /// <summary>What one Strong entry's etymology says about another, read from the source's own words.</summary>
+    public DbSet<StrongRelation> StrongRelations { get; set; } = null!;
+
+    /// <summary>A compiler's part of speech, gender, count and first verse for each Hebrew entry, credited to him.</summary>
+    public DbSet<StrongProfile> StrongProfiles { get; set; } = null!;
 
     /// <summary>
     /// Which word names which person, place or people. The encyclopedia says a verse names
@@ -1302,6 +1315,9 @@ public class AppDbContext : DbContext
             {
                 t.HasCheckConstraint("ck_strong_reach_occurrences", "occurrences > 0");
                 t.HasCheckConstraint("ck_strong_reach_reached", "reached >= 0 AND reached <= occurrences");
+                t.HasCheckConstraint(
+                    "ck_strong_reach_renderings",
+                    "phrases >= 0 AND rendering_links >= 0 AND (renderings IS NULL OR renderings <= phrases)");
                 t.HasComment(
                     "How often a Strong number stands in the edition a text is counted over and how many of "
                     + "those places the text's links render, counted by the statements the entry page counts "
@@ -1317,6 +1333,63 @@ public class AppDbContext : DbContext
             {
                 t.HasCheckConstraint("ck_strong_reach_method_links", "links > 0");
                 t.HasComment("The links a strong_reach row counts, by the method that made them.");
+            });
+        });
+
+        modelBuilder.Entity<StrongBook>(entity =>
+        {
+            entity.HasOne(b => b.Witness).WithMany().HasForeignKey(b => b.WitnessId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("strong_book", t =>
+            {
+                t.HasCheckConstraint("ck_strong_book_occurrences", "occurrences > 0");
+                t.HasComment(
+                    "How often a Strong number stands in one book of an edition of the original, by canonical "
+                    + "ordinal. Derived from the words and rebuilt by the load's count of the lexicon's phrases.");
+            });
+        });
+
+        modelBuilder.Entity<StrongBookReach>(entity =>
+        {
+            entity.HasOne(b => b.Text).WithMany().HasForeignKey(b => b.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("strong_book_reach", t =>
+            {
+                t.HasCheckConstraint("ck_strong_book_reach_reached", "reached > 0");
+                t.HasComment(
+                    "How many of a Strong number's words in one book of the edition a text is counted over the "
+                    + "text's links render. Only books where it renders some; derived and rebuilt with strong_reach.");
+            });
+        });
+
+        modelBuilder.Entity<StrongRelation>(entity =>
+        {
+            entity.ToTable("strong_relation", t =>
+            {
+                t.HasCheckConstraint(
+                    "ck_strong_relation_kind",
+                    $"kind IN ({string.Join(", ", StrongRelationKinds.All.Select(kind => $"'{kind}'"))})");
+                t.HasCheckConstraint(
+                    "ck_strong_relation_to_number",
+                    $"(to_number IS NULL) = (kind = '{StrongRelationKinds.Primitive}')");
+                t.HasCheckConstraint("ck_strong_relation_source", "length(statement) > 0 AND length(source) > 0");
+                t.HasComment(
+                    "What one Strong entry's etymology says about another, with the clause it was read from "
+                    + "and whose reading it is. Keyed on numbers: a claim about two words of the language.");
+            });
+        });
+
+        modelBuilder.Entity<StrongProfile>(entity =>
+        {
+            entity.ToTable("strong_profile", t =>
+            {
+                t.HasCheckConstraint("ck_strong_profile_language", "language IN ('hbo', 'arc')");
+                t.HasCheckConstraint("ck_strong_profile_occurrences", "occurrences >= 0");
+                t.HasCheckConstraint(
+                    "ck_strong_profile_first",
+                    "(first_book IS NULL) = (first_chapter IS NULL) AND (first_book IS NULL) = (first_verse IS NULL)");
+                t.HasCheckConstraint("ck_strong_profile_source", "length(source) > 0");
+                t.HasComment(
+                    "A compiler's part of speech, gender, occurrence count and first verse for a Hebrew Strong "
+                    + "entry. His analysis, not Strong's and not this corpus's: verify compares the count with BHSA's.");
             });
         });
     }

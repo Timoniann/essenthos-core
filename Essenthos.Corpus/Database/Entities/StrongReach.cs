@@ -35,6 +35,31 @@ public class StrongReach
     /// <summary>Those of them a link of the text renders.</summary>
     public int Reached { get; set; }
 
+    /// <summary>Every distinct phrase the text writes for the number, as printed.</summary>
+    public int Phrases { get; set; }
+
+    /// <summary>
+    /// The distinct renderings once the words the text's language spends on grammar — pronouns,
+    /// articles, prepositions, auxiliaries — are set aside and the rest reduced to their stems:
+    /// <em>god</em>, <em>thy god</em> and <em>of the gods</em> are one. Null where the language has
+    /// no such list, which is not a count of zero.
+    /// </summary>
+    public int? Renderings { get; set; }
+
+    /// <summary>
+    /// The links whose phrase carries a word of its own, which <see cref="Renderings"/> is counted
+    /// over: a link writing only <em>him</em> for the object marker renders grammar and is outside it.
+    /// </summary>
+    public int RenderingLinks { get; set; }
+
+    /// <summary>
+    /// Whether the editions that state a part of speech call the number's words mostly nouns, names,
+    /// verbs, adjectives or numerals - a word of content - rather than a preposition, a particle, a
+    /// pronoun or the object marker, whose renderings vary with whatever stands beside them. Null
+    /// where no edition states one.
+    /// </summary>
+    public bool? Lexical { get; set; }
+
     public ICollection<StrongReachMethod> Methods { get; set; } = [];
 
     public override string ToString() => $"StrongReach({StrongNumber} in {TextId}: {Reached} of {Occurrences})";

@@ -1,4 +1,5 @@
 using System.Globalization;
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
@@ -67,6 +68,17 @@ internal static partial class ForgeVerbs
     {
         using var cardsScope = forge.Scope();
         Console.WriteLine(await cardsScope.ServiceProvider.GetRequiredService<StrongRenderingLoader>().Load());
+        return 0;
+    }
+
+    /// <summary>The relations between Strong's entries, for a corpus loaded before they were read.</summary>
+    private static async Task<int> LexiconRelations(ForgeRun forge, string[] args)
+    {
+        using var relationsScope = forge.Scope();
+        Console.WriteLine(await relationsScope.ServiceProvider.GetRequiredService<StrongRelationLoader>().Load(
+            ResourcePaths.File(forge.Resources, "Strong", "StrongHebrew.xml"),
+            ResourcePaths.File(forge.Resources, "Strong", "StrongGreek.xml"),
+            ResourcePaths.File(forge.Resources, "BibleData2026", Essenthos.Core.Strong.CompiledHebrewStrongs.File)));
         return 0;
     }
 

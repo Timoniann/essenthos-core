@@ -64,6 +64,30 @@ public sealed class CorpusCheckTests : IDisposable
         (await _db.VerificationRuns.CountAsync()).Should().Be(before + 1);
     }
 
+    /// <summary>
+    /// The compiler counts each Hebrew number and BHSA can count its own; verify names every number
+    /// the two part on, the largest first, and serves neither as the other.
+    /// </summary>
+    [Fact]
+    public async Task ACompilersCountIsComparedWithBhsasOwnForEveryNumber()
+    {
+        _db.StrongProfiles.AddRange(
+            Profile("H7225", 1),
+            Profile("H1254", 3),
+            Profile("H8", 2));
+        await _db.SaveChangesAsync();
+
+        var lexicon = (await _check.Measure()).Lexicon!;
+
+        (lexicon.Numbers, lexicon.Agreeing, lexicon.Disagreeing, lexicon.Absent).Should().Be((3, 1, 2, 1));
+        lexicon.Largest.Should().Equal(new CountDisagreement("H1254", 3, 1), new CountDisagreement("H8", 2, 0));
+    }
+
+    private static StrongProfile Profile(string number, int occurrences) => new()
+    {
+        StrongNumber = number, Language = "hbo", Occurrences = occurrences, Source = "a compiler",
+    };
+
     [Fact]
     public async Task AWordALinkNamesIsRenderedAndAWordNothingNamesIsSilent()
     {
