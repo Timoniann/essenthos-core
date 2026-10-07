@@ -218,7 +218,6 @@ public sealed class EponymNameTests : IDisposable
     private async Task<List<string>> Slugs(Word word) =>
         await _db.WordEntities.AsNoTracking().Where(a => a.WordId == word.Id).Select(a => a.Entity!.Slug).ToListAsync();
 
-
     /// <summary><em>The king of Israel</em> is neither the man nor the tribe, and is left as it was.</summary>
     [Fact]
     public async Task ARealmIsLeftAlone()
