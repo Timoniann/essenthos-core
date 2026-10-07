@@ -97,7 +97,7 @@ public sealed class GreekEntityAnnotationTests : IDisposable
         Named("joda", "Joda", EntityKind.Person, "G2455", "Ἰωδά");
 
         // A name the New Testament never puts in the nominative, so nothing printed matches the
-        // encyclopedia's citation form and only the lexicon's lemma reaches it.
+        // encyclopedia's citation form and only the edition's lemma reaches it.
         Named("jordan", "Jordan", EntityKind.Place, "G2446", "Ἰορδάνης");
 
         Named("matthias", "Matthias", EntityKind.Person, "G3159", "Μαθθίας");
@@ -236,11 +236,28 @@ public sealed class GreekEntityAnnotationTests : IDisposable
     /// only the printed forms would lose the Jordan, Damascus, Sidon and Zebedee.
     /// </summary>
     [Fact]
-    public async Task ANameThePageOnlyEverInflectsIsReachedThroughTheLexiconsLemma()
+    public async Task ANameThePageOnlyEverInflectsIsReachedThroughTheEditionsLemma()
     {
         var named = await Load();
         named.Should().ContainKey(Greek(5).Id).WhoseValue.Should().Be("jordan");
     }
+
+    /// <summary>
+    /// The lexicon's lemma is not a witness: a record built from a lexicon entry spells its name as the
+    /// entry does, so the lemma would attest it by agreeing with itself. A name the text prints only in
+    /// another case, with no lemma beside it, is still the name — Φόρου is Φόρον, Κλαύδην is Κλαύδη —
+    /// and a spelling the text never writes in any case is not attested by the lexicon writing it.
+    /// </summary>
+    [Theory]
+    [InlineData("φορον", "φορου", true)]
+    [InlineData("κλαυδη", "κλαυδην", true)]
+    [InlineData("ιορδανησ", "ιορδανου", true)]
+    [InlineData("ιωδα", "ιουδαν", false)]
+    [InlineData("ιωδα", "ιουδασ", false)]
+    [InlineData("νωε", "νωε", true)]
+    [InlineData("γαδ", "γαζα", false)]
+    public void AGreekNameIsAttestedByWhatTheTextWritesInAnyCaseAndNotByTheLexicon(string claimed, string written, bool attested) =>
+        EntityAnnotationLoader.Attests(new HashSet<string> { claimed }, new HashSet<string> { written }).Should().Be(attested);
 
     /// <summary>
     /// Two editions spelling one apostle two ways is not a reason to doubt either of them, so the
