@@ -1,7 +1,8 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Links;
+using Essenthos.Core.Loading.Links.Evidentia;
 using FluentAssertions;
 using Xunit;
 
@@ -125,6 +126,27 @@ public sealed class DatasetAttributionTests
     [InlineData("luther1912-strong", "NESTLE1904")]
     public void LuthersStrongPairingsAreCreditedToTheTagging(string dataset, string against) =>
         Datasets.Of(TaggedTextLinkLoader.Source(EbibleTextSource.Luther, against)).Should().Be(dataset);
+
+    /// <summary>
+    /// Every claim an EVIDENTIA run leaves on a link is credited to EVIDENTIA, whatever the run, the
+    /// rules' version or the kind of decision, and the declaration says what UDPipe's models oblige.
+    /// </summary>
+    [Theory]
+    [InlineData(5, "1.0.0+ccf24ebb2ca1", "global-review-known-rendering")]
+    [InlineData(16, "1.0.0+65331eb508a9", "attached-word")]
+    [InlineData(6, "1.0.0+f357c04dbe1f", "supplied-article")]
+    public void NoEvidentiaRunIsUndeclared(int run, string rules, string kind)
+    {
+        Datasets.Of(EvidentiaLinkWriter.RuleSource(run, rules, kind)).Should().Be("evidentia");
+        var evidentia = Of("evidentia");
+        evidentia.Links.Should().BeTrue();
+        evidentia.Obliges.Should().Contain("CC BY-SA 4.0").And.Contain("CC BY-NC-SA 4.0");
+        evidentia.Citation.Should().Contain("http://hdl.handle.net/11234/1-3131");
+    }
+
+    [Fact]
+    public void ThePossessivePassIsClaimedAsOurOwn() =>
+        Datasets.Of(PossessivePass.Source).Should().Be(Datasets.Own);
 
     [Fact]
     public void TheSeptuagintLetterAlignmentIsClaimedAsOurOwn() =>

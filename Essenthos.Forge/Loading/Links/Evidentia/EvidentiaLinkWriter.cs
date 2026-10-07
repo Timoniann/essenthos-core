@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -107,6 +107,10 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
 
     /// <summary>A decision's confidence is stored as a real; four digits is all of it that is not rounding noise.</summary>
     private const int ConfidenceDigits = 4;
+
+    /// <summary>The source of the rule's claim: the run, the rules' version and the kind of decision.</summary>
+    internal static string RuleSource(int run, string ruleVersion, string kind) =>
+        $"{Sources.EvidentiaRunPrefix} {run} ({ruleVersion}), {kind}";
 
     private const string WithinNote = "names one word pair of this link";
 
@@ -500,7 +504,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             Confidence = decision.Confidence is { } confidence ? Math.Round(confidence, ConfidenceDigits) : null,
             Provenance = new Provenance
             {
-                Source = $"EVIDENTIA run {run.Id} ({run.RuleVersion}), {decision.Kind}",
+                Source = RuleSource(run.Id, run.RuleVersion, decision.Kind),
                 Note = Joined(
                     ($"decision {decision.Id}, {decision.Tier} tier: {decision.Rationale}"),
                     review.Examined ? null : $"accepted with its tier by {review.Reviewer}, not read one by one"),
