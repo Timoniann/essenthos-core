@@ -116,6 +116,30 @@ internal static class Descriptors
                 target => (IReadOnlyDictionary<string, string>)target.ToDictionary(
                     f => f.GrammaticalCase, f => f.Form, StringComparer.Ordinal));
 
+        // A language that does not decline its names calls a record by the heading spelling of its
+        // own text where no pass produced a form: the Reina Valera's israelitas, not Israelites.
+        // The rule the lists and the record pages name a record by, so a line and a list agree.
+        var missing = targets
+            .Where(t => !forms.TryGetValue(t, out var cases) || !cases.ContainsKey(GrammaticalCases.Nominative))
+            .ToList();
+        var printedNames = missing.Count == 0 || !EntityNames.NamesByThePrintedSpelling(named)
+            ? []
+            : await EntityNames.Of(db, missing, named, cancellationToken);
+        foreach (var (target, printed) in printedNames)
+        {
+            var cases = new Dictionary<string, string>(StringComparer.Ordinal);
+            if (forms.TryGetValue(target, out var held))
+            {
+                foreach (var (grammaticalCase, form) in held)
+                {
+                    cases[grammaticalCase] = form;
+                }
+            }
+
+            cases[GrammaticalCases.Nominative] = printed;
+            forms[target] = cases;
+        }
+
         return clauses
             .GroupBy(c => c.Slug, StringComparer.Ordinal)
             .ToDictionary(

@@ -533,7 +533,8 @@ internal static partial class DescriptorPhrasings
     /// Every language takes the form of that case the pass produced, and the English name where it
     /// produced none — a gap a reader can see, never an inflection guessed here. German and Spanish
     /// add only what their grammar fixes whatever the name: a people is a plural, so its genitive is
-    /// <em>der Israeliten</em> and its Spanish <em>de los israelitas</em>; a name with no German
+    /// <em>der Israeliten</em> and its Spanish <em>de los israelitas</em> — where the name is a plural;
+    /// the Reina Valera's own <em>rey de Israel</em> takes none; a name with no German
     /// genitive is said with <em>von</em> and the name as it stands, which is its dative — <em>Sohn
     /// von Isai</em>; a German place clause takes the dative the pass produced as the locative, or
     /// a bare name unchanged, and joins the preposition to its article. An article the form already
@@ -584,7 +585,8 @@ internal static partial class DescriptorPhrasings
             }
         }
 
-        if (language == Spanish && kind == EntityKind.People && before.EndsWith(" de ", StringComparison.Ordinal))
+        if (language == Spanish && kind == EntityKind.People && before.EndsWith(" de ", StringComparison.Ordinal)
+            && form.EndsWith('s'))
         {
             return (before + "los ", form);
         }

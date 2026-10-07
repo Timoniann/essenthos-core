@@ -307,6 +307,7 @@ public sealed class DescriptorVocabularyTests
     [InlineData("deu", "city-in", "place", "locative=der Ebene Kirjataim", "eine Stadt in der Ebene Kirjataim")]
     [InlineData("spa", "king-of", "people", "nominative=israelitas", "rey de los israelitas")]
     [InlineData("spa", "son-of", "person", "nominative=Isaí", "hijo de Isaí")]
+    [InlineData("spa", "king-of", "people", "nominative=Israel", "rey de Israel")]
     [InlineData("spa", "of-people", "people", "nominative=moabitas", "del pueblo de los moabitas")]
     [InlineData("ukr", "son-of", "person", "genitive=Єссея", "син Єссея")]
     public void ANameIsSaidWithWhatItsLanguageNeedsAroundIt(

@@ -612,6 +612,31 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
+    /// Spanish does not decline its names, so where no pass produced a Spanish form the line names a
+    /// record as the Spanish text prints it, the way its record page and the lists already do:
+    /// <em>hijo de Ragüel</em>, not <em>hijo de Reuel</em>.
+    /// </summary>
+    [Fact]
+    public async Task ASpanishLineNamesARecordAsItsTextPrintsItWhereNoFormWasProduced()
+    {
+        await Load("described");
+        var text = Corpus.Add(_db, "RV1909", TextKind.Translation, "spa", (1, 1, ["Ragüel"]));
+        await _db.SaveChangesAsync();
+        _db.EntityRenderings.Add(new EntityRendering
+        {
+            EntityId = await _db.Entities.Where(e => e.Slug == "reuel-1").Select(e => e.Id).SingleAsync(),
+            TextId = text.Id,
+            Form = "Ragüel",
+            Folded = "raguel",
+            Occurrences = 3,
+            Heading = true,
+        });
+        await _db.SaveChangesAsync();
+
+        Line(await Read("hobab-1", "spa")).Should().StartWith("hijo de Ragüel");
+    }
+
+    /// <summary>
     /// A clause the pass read in the Hebrew says so: the text and the word it rests on are stored with
     /// it and sent with its claim, so a reader can tell a Hebrew reading from an English one.
     /// </summary>
