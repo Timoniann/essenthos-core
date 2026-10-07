@@ -33,6 +33,7 @@ public sealed class EntityAnnotationTests : IDisposable
     private readonly Text _hebrew;
     private readonly Text _english;
     private readonly Text _hindi;
+    private readonly Text _german;
 
     /// <summary>
     /// Genesis 1, one verse per case, so a failure names the case rather than a position. The
@@ -74,6 +75,7 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 20, ["and", "had", "been"]));
 
         _hindi = Corpus.Add(_db, "IRV2019", TextKind.Translation, "hin", (1, 21, ["मूसा", "के", "पुत्र"]));
+        _german = Corpus.Add(_db, "LUTH1912", TextKind.Translation, "deu", (1, 19, ["Moshe", "und", "alles"]));
 
         _db.SaveChanges();
 
@@ -790,6 +792,24 @@ public sealed class EntityAnnotationTests : IDisposable
             [.. _db.Words.Where(w => w.TextId == _english.Id && w.Verse!.Number == 20).Select(w => w.Id)]);
         named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
         named.Should().NotContainKey(postposition.Id);
+    }
+
+    /// <summary>
+    /// The head of a set of one name written twice is no exception: Luther's <em>alles</em> of
+    /// Deuteronomy 5:27 stood last in such a set and was named the LORD, while the name beside it
+    /// was left to the same-word test against it.
+    /// </summary>
+    [Fact]
+    public async Task TheHeadOfASetIsNeverAWordThatIsNeverAName()
+    {
+        var name = _db.WordAt(_german, 1, 19, 1);
+        var all = _db.WordAt(_german, 1, 19, 3);
+        Set([_db.WordAt(_hebrew, 1, 19, 1), _db.WordAt(_hebrew, 1, 19, 2)], [name, _db.WordAt(_german, 1, 19, 2), all]);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(all.Id);
     }
 
     /// <summary>

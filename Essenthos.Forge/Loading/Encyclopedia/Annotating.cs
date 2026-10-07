@@ -197,26 +197,32 @@ internal static class Annotating
     /// of nothing else names nothing.
     /// </para>
     /// </summary>
+    public const string Head =
+        $"""
+         {HeadPeers}
+           AND NOT {NeverAName}{HeadChosen}
+         """;
+
     /// <summary>
     /// Whether the word <c>hw</c> of the text <c>ht</c> is one its language never names anybody
-    /// with: an article, a preposition, a conjunction, an auxiliary, a postposition. A source's table
-    /// puts the phrase that renders a name opposite the name, and the phrase's last word is often
-    /// one of these: the Hindi <em>एसाव के पुत्र</em> is <em>Esau's sons</em>, and its last word
-    /// before <em>sons</em> is the postposition; the Berean's <em>and had been</em> renders the
+    /// with: an article, a preposition, a conjunction, an auxiliary, a postposition, the word for
+    /// <em>all</em>. A source's table puts the phrase that renders a name opposite the name, and the
+    /// phrase's last word is often one of these: the Hindi <em>एसाव के पुत्र</em> is <em>Esau's
+    /// sons</em>, and its last word before <em>sons</em> is the postposition; the Berean's <em>and had been</em> renders the
     /// יָרָבְעָם of 1 Kings 12:2 that it leaves unwritten. The Hebrew and the Greek say it by their
     /// parsing and their numbers. A pronoun is not among them.
     /// </summary>
     private const string NeverAName =
         """
         (CASE ht.language
-            WHEN 'eng' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['a', 'an', 'the', 'of', 'and', 'to', 'in', 'at', 'by', 'for', 'from', 'with', 'into', 'unto', 'upon', 'when', 'then', 'that', 'as', 'but', 'or', 'nor', 'not', 'was', 'were', 'is', 'are', 'be', 'been', 'being', 'had', 'have', 'has', 'hath', 'did', 'do', 'doth', 'shall', 'will', 'should', 'would', 'also', 'there', 'thus', 'so', 'which', 'while'])
-            WHEN 'deu' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['der', 'die', 'das', 'des', 'dem', 'den', 'ein', 'eine', 'einen', 'einem', 'einer', 'eines', 'und', 'von', 'vom', 'zu', 'zum', 'zur', 'in', 'im', 'an', 'am', 'auf', 'aus', 'mit', 'bei', 'nach', 'über', 'unter', 'vor', 'für', 'gegen', 'durch', 'wie', 'als', 'da', 'daß', 'dass', 'war', 'waren', 'ist', 'sind', 'hatte', 'hatten', 'hat', 'ward', 'wurde'])
-            WHEN 'fra' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['le', 'la', 'les', 'l', 'de', 'du', 'des', 'd', 'un', 'une', 'et', 'à', 'au', 'aux', 'en', 'dans', 'par', 'pour', 'avec', 'que', 'qui', 'est', 'était', 'fut'])
-            WHEN 'spa' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['el', 'la', 'los', 'las', 'lo', 'un', 'una', 'de', 'del', 'y', 'e', 'a', 'al', 'en', 'con', 'por', 'para', 'que', 'como', 'fue', 'era', 'es'])
-            WHEN 'por' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['o', 'a', 'os', 'as', 'um', 'uma', 'de', 'do', 'da', 'dos', 'das', 'e', 'em', 'no', 'na', 'nos', 'nas', 'ao', 'aos', 'à', 'com', 'por', 'pelo', 'pela', 'que', 'como', 'foi', 'era', 'é'])
+            WHEN 'eng' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['all', 'a', 'an', 'the', 'of', 'and', 'to', 'in', 'at', 'by', 'for', 'from', 'with', 'into', 'unto', 'upon', 'when', 'then', 'that', 'as', 'but', 'or', 'nor', 'not', 'was', 'were', 'is', 'are', 'be', 'been', 'being', 'had', 'have', 'has', 'hath', 'did', 'do', 'doth', 'shall', 'will', 'should', 'would', 'also', 'there', 'thus', 'so', 'which', 'while'])
+            WHEN 'deu' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['alle', 'alles', 'allen', 'aller', 'der', 'die', 'das', 'des', 'dem', 'den', 'ein', 'eine', 'einen', 'einem', 'einer', 'eines', 'und', 'von', 'vom', 'zu', 'zum', 'zur', 'in', 'im', 'an', 'am', 'auf', 'aus', 'mit', 'bei', 'nach', 'über', 'unter', 'vor', 'für', 'gegen', 'durch', 'wie', 'als', 'da', 'daß', 'dass', 'war', 'waren', 'ist', 'sind', 'hatte', 'hatten', 'hat', 'ward', 'wurde'])
+            WHEN 'fra' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['tout', 'tous', 'toute', 'toutes', 'le', 'la', 'les', 'l', 'de', 'du', 'des', 'd', 'un', 'une', 'et', 'à', 'au', 'aux', 'en', 'dans', 'par', 'pour', 'avec', 'que', 'qui', 'est', 'était', 'fut'])
+            WHEN 'spa' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['todo', 'todos', 'toda', 'todas', 'el', 'la', 'los', 'las', 'lo', 'un', 'una', 'de', 'del', 'y', 'e', 'a', 'al', 'en', 'con', 'por', 'para', 'que', 'como', 'fue', 'era', 'es'])
+            WHEN 'por' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['todo', 'todos', 'toda', 'todas', 'o', 'a', 'os', 'as', 'um', 'uma', 'de', 'do', 'da', 'dos', 'das', 'e', 'em', 'no', 'na', 'nos', 'nas', 'ao', 'aos', 'à', 'com', 'por', 'pelo', 'pela', 'que', 'como', 'foi', 'era', 'é'])
             WHEN 'lat' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['et', 'in', 'de', 'ad', 'ex', 'e', 'cum', 'a', 'ab', 'per', 'est', 'erat', 'ut'])
-            WHEN 'rus' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['и', 'в', 'во', 'к', 'ко', 'от', 'из', 'с', 'со', 'на', 'по', 'о', 'об', 'у', 'за', 'для', 'до', 'при', 'а', 'но', 'же', 'был', 'была', 'было', 'были', 'как', 'что'])
-            WHEN 'ukr' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['і', 'й', 'та', 'в', 'у', 'до', 'від', 'з', 'із', 'зі', 'на', 'по', 'о', 'об', 'за', 'для', 'при', 'а', 'але', 'ж', 'же', 'був', 'була', 'було', 'були', 'як', 'що'])
+            WHEN 'rus' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['весь', 'вся', 'всё', 'все', 'и', 'в', 'во', 'к', 'ко', 'от', 'из', 'с', 'со', 'на', 'по', 'о', 'об', 'у', 'за', 'для', 'до', 'при', 'а', 'но', 'же', 'был', 'была', 'было', 'были', 'как', 'что'])
+            WHEN 'ukr' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['весь', 'вся', 'все', 'всі', 'і', 'й', 'та', 'в', 'у', 'до', 'від', 'з', 'із', 'зі', 'на', 'по', 'о', 'об', 'за', 'для', 'при', 'а', 'але', 'ж', 'же', 'був', 'була', 'було', 'були', 'як', 'що'])
             WHEN 'hin' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['के', 'ने', 'की', 'को', 'का', 'से', 'में', 'पर', 'और', 'तक', 'है', 'था', 'थी', 'थे', 'हैं'])
             WHEN 'urd' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['के', 'ने', 'की', 'को', 'का', 'से', 'में', 'पर', 'और', 'तक', 'है', 'था', 'थी', 'थे', 'हैं', 'کے', 'نے', 'کی', 'کا', 'کو', 'سے', 'میں', 'پر', 'اور'])
             WHEN 'pan' THEN lower(regexp_replace(hw.text, '[[:punct:]]', '', 'g')) = ANY(ARRAY['ਦੇ', 'ਨੇ', 'ਨੂੰ', 'ਦਾ', 'ਦੀ', 'ਤੋਂ', 'ਵਿੱਚ', 'ਅਤੇ', 'ਨਾਲ'])
@@ -224,12 +230,6 @@ internal static class Annotating
             WHEN 'grc' THEN coalesce(hw.strong_number, '') IN ('G3588', 'G2532', 'G1161', 'G1063', 'G3754', 'G1537', 'G1519', 'G1722', 'G575', 'G4314', 'G1223', 'G2596', 'G3326', 'G5228', 'G5259', 'G1909', 'G3844', 'G4012', 'G4862')
             ELSE FALSE END)
         """;
-
-    public const string Head =
-        $"""
-         {HeadPeers}
-           AND NOT {NeverAName}{HeadChosen}
-         """;
 
     /// <summary>
     /// <see cref="Head"/> as it was chosen before the words that are never a name were passed over,
