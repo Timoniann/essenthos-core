@@ -197,6 +197,11 @@ public sealed class TribeNameTests : IDisposable
         (await Shown(Hebrew(7, 14, 2))).Should().Equal("naphtali");
         (await Shown(Hebrew(7, 15, 2))).Should().Contain(["naphtali", "naphtalites"]);
         (await _db.WordEntityClaims.CountAsync(c => c.Source == TribeNameLoader.PeopleSource)).Should().Be(0);
+        var kept = await _db.WordEntities.AsNoTracking().Include(a => a.Claims)
+            .SingleAsync(a => a.WordId == Hebrew(7, 15, 2).Id && a.Entity!.Slug == "naphtalites");
+        kept.Source.Should().Be("a reading of the verse", "the row stands on the claim that is left");
+        kept.Method.Should().Be(LinkMethod.ModelReading);
+        kept.Claims.Should().NotBeEmpty();
         again.AlreadyLoaded.Should().BeTrue();
     }
 
