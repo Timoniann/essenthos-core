@@ -635,7 +635,7 @@ public sealed class DuplicateRecordTests : IDisposable
         var seed = rows.Single(a => a.Word!.TextId == _hebrew.Id);
         seed.Confidence.Should().Be(EntityAnnotationLoader.Corroborated, "the verse list names him in the verse");
         seed.Claims.Select(c => (c.Method, c.Source)).Should().BeEquivalentTo(
-            [(LinkMethod.Manual, DuplicateRecordLoader.Chose), (LinkMethod.Manual, EntityAnnotationLoader.VerseList)]);
+            [(LinkMethod.Manual, DuplicateRecordLoader.Chose), (LinkMethod.StatedBySource, EntityAnnotationLoader.VerseList)]);
         rows.Single(a => a.Word!.TextId == english.Id).Note.Should().StartWith("through BHSA word ");
         (await _loader.Split([keeps])).Kept.Should().Be(0);
         var check = new CorpusCheck(_db, NullLogger<CorpusCheck>.Instance);

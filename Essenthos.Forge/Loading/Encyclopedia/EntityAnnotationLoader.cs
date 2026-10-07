@@ -287,6 +287,29 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     internal const string VerseList =
         "the encyclopedia's own list of the verses each entity is named in";
 
+    /// <summary>
+    /// The verse list's claim said one way wherever an earlier load said it another: as the method
+    /// that produced the annotation, with a number. Where an annotation carries it twice, the
+    /// stated one stays, or else the first.
+    /// </summary>
+    private const string OneVerseListClaim =
+        """
+        WITH ranked AS (
+            SELECT c.id, c.method, c.confidence,
+                   row_number() OVER (PARTITION BY c.word_entity_id ORDER BY (c.method = @stated) DESC, c.id) AS n
+            FROM word_entity_claim c
+            WHERE c.source = @source),
+        gone AS (
+            DELETE FROM word_entity_claim c USING ranked r WHERE c.id = r.id AND r.n > 1
+            RETURNING 1),
+        restated AS (
+            UPDATE word_entity_claim c SET method = @stated, confidence = NULL
+            FROM ranked r
+            WHERE c.id = r.id AND r.n = 1 AND (r.method <> @stated OR r.confidence IS NOT NULL)
+            RETURNING 1)
+        SELECT (SELECT count(*) FROM gone) + (SELECT count(*) FROM restated)
+        """;
+
     /// <summary>What a language answers when nothing of it is loaded, or nothing was asked.</summary>
     private static readonly NameAnswers Nothing = new(0, 0, 0);
 
@@ -911,11 +934,19 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// It is a claim only about the stated half: for a derived name the verse list is not a second
     /// opinion but the very evidence the derivation was read from, and writing it as corroboration
     /// would be the corpus agreeing with itself.
+    ///
+    /// <para>
+    /// What the list states is that the entity is named somewhere in the verse, which is testimony
+    /// and carries no confidence; reaching from the verse to the word is the annotation's own
+    /// inference, and its number is the annotation's. So every loader writes this claim the same
+    /// way, <see cref="LinkMethod.StatedBySource"/> with none, and counting claims by method
+    /// answers about the list under one heading.
+    /// </para>
     /// </summary>
     private const string Agreement =
         """
         INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
-        SELECT a.id, w.method, @confidence * coalesce(w.link, 1.0), @source, a.note
+        SELECT a.id, @stated, NULL, @source, a.note
         FROM word_entity a
         JOIN pending_annotation w ON w.word_id = a.word_id AND w.entity_id = a.entity_id
         WHERE w.source <> @derivation AND w.corroborated
@@ -952,6 +983,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                 "now answers with more than one place, or the word's own verse names a person and " +
                 "no place bearing it, or the reverse, or a Greek name now answers with a second " +
                 "record the Greek reaches", withdrawn);
+        }
+
+        var restated = await Restate(connection, cancellationToken);
+        if (restated > 0)
+        {
+            logger.LogInformation(
+                "Said the verse list's agreement one way on {Rows} claims: stated by the list, with no number",
+                restated);
         }
 
         var unspoken = await db.Entities.CountAsync(
@@ -1008,7 +1047,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             ("written", Written));
         await Run(connection, transaction, Claim, cancellationToken);
         await Run(connection, transaction, Agreement, cancellationToken,
-            ("source", VerseList), ("confidence", Corroborated), ("derivation", Derivation));
+            ("source", VerseList), ("stated", EnumSpelling.Of(LinkMethod.StatedBySource)), ("derivation", Derivation));
 
         var byText = await ByText(connection, transaction, cancellationToken);
         var corroborated = await Corroboration(connection, transaction, VerseList, cancellationToken);
@@ -1231,6 +1270,19 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             ("greek", new[] { GreekResolution, GreekDistinction }), ("carried", Annotating.CarriedNote));
         await transaction.CommitAsync(cancellationToken);
         return withdrawn;
+    }
+
+    /// <summary><see cref="OneVerseListClaim"/>, in a transaction of its own.</summary>
+    private async Task<int> Restate(NpgsqlConnection connection, CancellationToken cancellationToken)
+    {
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var command = new NpgsqlCommand(
+            OneVerseListClaim, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
+        command.Parameters.AddWithValue("source", VerseList);
+        command.Parameters.AddWithValue("stated", EnumSpelling.Of(LinkMethod.StatedBySource));
+        var restated = (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
+        await transaction.CommitAsync(cancellationToken);
+        return restated;
     }
 
     private static async Task<int> Run(

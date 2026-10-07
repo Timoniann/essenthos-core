@@ -550,6 +550,40 @@ public sealed class EntityAnnotationTests : IDisposable
         both.Should().Be(2);
         one.Should().Be(1);
         corroborated.Confidence.Should().BeGreaterThan(alone.Confidence!.Value);
+        var list = await _db.WordEntityClaims.SingleAsync(
+            c => c.WordEntityId == corroborated.Id && c.Source == EntityAnnotationLoader.VerseList);
+        list.Method.Should().Be(LinkMethod.StatedBySource, "the list states the verse, not the word");
+        list.Confidence.Should().BeNull();
+    }
+
+    /// <summary>
+    /// The list's agreement as an earlier load wrote it — under the annotation's own method with a
+    /// number, and on one annotation twice — is said once and as the list states it.
+    /// </summary>
+    [Fact]
+    public async Task TheVerseListsAgreementIsSaidOneWayWhateverAnEarlierLoadWrote()
+    {
+        await _loader.Load();
+        var corroborated = await _db.WordEntities.SingleAsync(a => a.WordId == Hebrew(1).Id);
+        await _db.WordEntityClaims
+            .Where(c => c.WordEntityId == corroborated.Id && c.Source == EntityAnnotationLoader.VerseList)
+            .ExecuteUpdateAsync(c => c.SetProperty(x => x.Method, LinkMethod.StrongNumber).SetProperty(x => x.Confidence, 0.99));
+        _db.WordEntityClaims.Add(new WordEntityClaim
+        {
+            WordEntityId = corroborated.Id, Method = LinkMethod.Lexical, Confidence = 0.99,
+            Source = EntityAnnotationLoader.VerseList,
+        });
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        await _loader.Load();
+
+        var list = await _db.WordEntityClaims.AsNoTracking()
+            .Where(c => c.Source == EntityAnnotationLoader.VerseList && c.WordEntityId == corroborated.Id).ToListAsync();
+        list.Should().ContainSingle().Which.Method.Should().Be(LinkMethod.StatedBySource);
+        list[0].Confidence.Should().BeNull();
+        (await _db.WordEntityClaims.CountAsync(
+            c => c.Source == EntityAnnotationLoader.VerseList && c.Method != LinkMethod.StatedBySource)).Should().Be(0);
     }
 
     /// <summary>

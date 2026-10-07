@@ -448,7 +448,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         foreach (var claim in KeptClaims)
         {
             await Annotating.Run(connection, transaction, claim, cancellationToken,
-                ("corroborated", EntityAnnotationLoader.Corroborated), ("verseList", EntityAnnotationLoader.VerseList));
+                ("stated", EnumSpelling.Of(LinkMethod.StatedBySource)), ("verseList", EntityAnnotationLoader.VerseList));
         }
 
         return given;
@@ -620,7 +620,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         """,
         """
         INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
-        SELECT a.id, p.method, @corroborated * coalesce(p.link, 1.0), @verseList, a.note
+        SELECT a.id, @stated, NULL, @verseList, a.note
         FROM word_entity a
         JOIN pending_annotation p ON p.word_id = a.word_id AND p.entity_id = a.entity_id
         WHERE p.corroborated
