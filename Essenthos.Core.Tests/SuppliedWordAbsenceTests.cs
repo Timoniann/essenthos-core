@@ -84,17 +84,42 @@ public sealed class SuppliedWordAbsenceTests : IDisposable
         (await Fingerprint()).Should().Equal(before);
     }
 
+    /// <summary>
+    /// A word another method renders stays rendered, and is not shown absent from the same witness as
+    /// well: the reader would draw it supplied and rendered at once.
+    /// </summary>
     [Fact]
     public async Task AnotherMethodsRenderingAndAnAlignerLinkThatAlsoNamesAnUnmarkedWordStand()
     {
         var w = Place(("ASV", "RUT 1:1", 1, "there"), ("ASV", "RUT 1:1", 2, "was"), ("ASV", "RUT 1:1", 3, "a"),
-            ("BHSA", "RUT 1:1", 1, "וַיְהִ֥י"), ("BHSA", "RUT 1:1", 2, "רָעָ֖ב"));
-        Mark("ASV", w["was"], w["a"]);
+            ("ASV", "RUT 1:1", 4, "of"), ("BHSA", "RUT 1:1", 1, "וַיְהִ֥י"), ("BHSA", "RUT 1:1", 2, "רָעָ֖ב"));
+        Mark("ASV", w["was"], w["a"], w["of"]);
         var numbered = Link(w["was"], w["וַיְהִ֥י"], LinkMethod.StrongNumber, "the edition's stated numbering");
         var phrase = Link([w["there"], w["a"]], [w["רָעָ֖ב"]], LinkMethod.Aligner, Aligner);
 
-        (await Outcome("ASV")).Should().Be(new SuppliedWordOutcome("ASV", 2, 1, 0, 2));
+        (await Outcome("ASV")).Should().Be(new SuppliedWordOutcome("ASV", 1, 1, 0, 2));
         (await db.Links.Select(l => l.Id).ToListAsync()).Should().Contain([numbered, phrase]);
+        (await db.Links.Include(l => l.Words).SingleAsync(l => l.Relation == LinkRelation.Expands))
+            .Words.Select(word => word.WordId).Should().Equal(w["of"].Id);
+    }
+
+    /// <summary>
+    /// An absence this pass wrote that a source's rendering has since come to contradict is taken back,
+    /// so a later load never leaves a word supplied and rendered at once.
+    /// </summary>
+    [Fact]
+    public async Task AnAbsenceASourcesRenderingNowContradictsIsTakenBack()
+    {
+        var w = Place(("ASV", "RUT 1:1", 1, "was"), ("ASV", "RUT 1:1", 2, "a"), ("ASV", "RUT 1:1", 3, "famine"),
+            ("BHSA", "RUT 1:1", 1, "וַיְהִ֥י"), ("BHSA", "RUT 1:1", 2, "רָעָ֖ב"));
+        Mark("ASV", w["was"], w["a"]);
+        Link(w["famine"], w["רָעָ֖ב"], LinkMethod.Aligner, Aligner);
+        await SuppliedWordAbsences.State(db);
+        Link(w["was"], w["וַיְהִ֥י"], LinkMethod.StatedBySource, "a hand alignment");
+
+        (await Outcome("ASV")).Should().Be(new SuppliedWordOutcome("ASV", 1, 1, 1, 1));
+        (await db.Links.Include(l => l.Words).SingleAsync(l => l.Relation == LinkRelation.Expands))
+            .Words.Select(word => word.WordId).Should().Equal(w["a"].Id);
     }
 
     [Fact]
@@ -118,19 +143,20 @@ public sealed class SuppliedWordAbsenceTests : IDisposable
     {
         var w = Place(
             ("RUSV", "JDG 16:13", 1, "прибьешь"), ("BHSA", "JDG 16:13", 1, "וַתֹּ֣אמֶר"), ("GRCBRENT", "JDG 16:13", 1, "ἐγκρούσῃς"),
-            ("RUSV", "JHN 1:1", 1, "было"), ("NESTLE1904", "JHN 1:1", 1, "ἦν"), ("TR1894", "JHN 1:1", 1, "ην"));
+            ("RUSV", "JHN 1:1", 1, "было"), ("NESTLE1904", "JHN 1:1", 1, "ἦν"), ("TR1894", "JHN 1:1", 1, "ην"),
+            ("RUSV", "JHN 1:1", 2, "Слово"), ("NESTLE1904", "JHN 1:1", 2, "Λόγος"));
         Mark("RUSV", w["прибьешь"]);
         Mark("RUSV", w["было"]);
         Link(w["прибьешь"], w["וַתֹּ֣אמֶר"], LinkMethod.Aligner, Aligner);
         var septuagint = Link(w["прибьешь"], w["ἐγκρούσῃς"], LinkMethod.Aligner, Aligner);
-        Link(w["было"], w["ἦν"], LinkMethod.StrongNumber, "a numbering");
         Link(w["было"], w["ην"], LinkMethod.StrongNumber, "a numbering");
+        Link(w["Слово"], w["Λόγος"], LinkMethod.StrongNumber, "a numbering");
 
-        (await Outcome("RUSV")).Should().Be(new SuppliedWordOutcome("RUSV", 2, 3, 1, 1));
+        (await Outcome("RUSV")).Should().Be(new SuppliedWordOutcome("RUSV", 2, 2, 1, 1));
 
         var absences = await db.Links.Where(l => l.Relation == LinkRelation.Expands)
             .Select(l => l.ToText!.Slug).ToListAsync();
-        absences.Should().BeEquivalentTo(["BHSA", "NESTLE1904", "TR1894"]);
+        absences.Should().BeEquivalentTo(["BHSA", "NESTLE1904"], "TR1894's numbers render было, so it is not absent from TR1894");
         (await db.Links.AnyAsync(l => l.Id == septuagint)).Should().BeTrue();
     }
 
@@ -143,9 +169,9 @@ public sealed class SuppliedWordAbsenceTests : IDisposable
         Mark("BRENTON", w["was"]);
         Mark("BRENTON", w["And"]);
         Link(w["was"], w["הָיְתָ֥ה"], LinkMethod.Aligner, Aligner);
-        Link(w["was"], w["ἦν"], LinkMethod.StrongNumber, "a numbering");
+        Link(w["And"], w["καὶ"], LinkMethod.StrongNumber, "a numbering");
 
-        (await Outcome("BRENTON")).Should().Be(new SuppliedWordOutcome("BRENTON", 1, 1, 0, 1));
+        (await Outcome("BRENTON")).Should().Be(new SuppliedWordOutcome("BRENTON", 1, 1, 0, 0));
         (await db.Links.Where(l => l.Relation == LinkRelation.Expands).Select(l => l.ToText!.Slug).ToListAsync())
             .Should().Equal("GRCBRENT");
     }
@@ -194,12 +220,12 @@ public sealed class SuppliedWordAbsenceTests : IDisposable
         var link = new Link
         {
             FromTextId = from[0].TextId, ToTextId = to[0].TextId, Relation = LinkRelation.Renders,
-            Method = method, Confidence = 0.9, Provenance = new() { Source = source },
+            Method = method, Confidence = method == LinkMethod.StatedBySource ? null : 0.9, Provenance = new() { Source = source },
             Fingerprint = LinkShape.Of([.. from.Select(w => w.Id)], [.. to.Select(w => w.Id)]),
         };
         foreach (var word in from) link.Words.Add(new() { Word = word, Side = LinkSide.From });
         foreach (var word in to) link.Words.Add(new() { Word = word, Side = LinkSide.To });
-        link.Claims.Add(new() { Method = method, Confidence = 0.9, Provenance = link.Provenance });
+        link.Claims.Add(new() { Method = method, Confidence = link.Confidence, Provenance = link.Provenance });
         db.Links.Add(link);
         db.SaveChanges();
         return link.Id;
