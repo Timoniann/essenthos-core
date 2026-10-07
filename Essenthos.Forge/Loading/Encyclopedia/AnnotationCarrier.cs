@@ -79,6 +79,7 @@ internal sealed record CarryOutcome(
 internal sealed class AnnotationCarrier(
     AppDbContext db,
     CrossedNameLoader crossed,
+    ForeignNames foreign,
     ILogger<AnnotationCarrier> logger)
 {
     /// <summary>
@@ -286,6 +287,9 @@ internal sealed class AnnotationCarrier(
         // The links that give two words of one verse each other's names are still crossed, so the
         // carry has just written the crossed answer again.
         logger.LogInformation("{Outcome}", await crossed.Load(cancellationToken));
+
+        // A name a batch carried before the record whose name its word is had reached the word.
+        await foreign.Withdraw(cancellationToken);
         return outcome;
     }
 

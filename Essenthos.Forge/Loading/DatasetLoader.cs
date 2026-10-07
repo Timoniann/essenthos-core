@@ -384,6 +384,7 @@ internal sealed class DatasetLoader(
             new("crossed-names", CrossBackTheNamesGivenToEachOther),
             new("relationship-verses", ListTheVersesTheRelationshipsWereReadFrom),
             new("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
+            new("foreign-names", TakeBackTheNamesCarriedOntoAnothersName),
             new("spellings", CountHowEachTextSpellsEachName),
             new("lexicon-phrases", CountTheLexiconsPhrases),
             new("locations", cancellationToken => PutThePlacesOnTheMap(resources, cancellationToken)),
@@ -2090,6 +2091,20 @@ internal sealed class DatasetLoader(
             cancellationToken: cancellationToken);
         logger.LogInformation("\n{Report}", report);
         status.Record("the words the verses naming each entity share, annotated where nothing else named them");
+    }
+
+    /// <summary>
+    /// A person's name the links carried onto a word the text writes as somebody else's. After every
+    /// pass that carries a name, because the record whose name the word is may reach it only later —
+    /// the titles are written after the names — and before the spellings are counted, so that Satan
+    /// is not counted as spelled <em>Христа</em>.
+    /// </summary>
+    private async Task TakeBackTheNamesCarriedOntoAnothersName(CancellationToken cancellationToken)
+    {
+        status.Starting("the names carried onto another's name");
+
+        using var scope = services.CreateScope();
+        status.Record((await scope.ServiceProvider.GetRequiredService<ForeignNames>().Withdraw(cancellationToken)).ToString());
     }
 
     /// <summary>

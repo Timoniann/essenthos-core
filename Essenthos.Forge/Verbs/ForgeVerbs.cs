@@ -60,10 +60,12 @@ internal static partial class ForgeVerbs
         new("marks", "", "Write what the editions print about their own words as word groups.", Marks),
         new("relations", "", "Make what each text was translated or revised from match the list kept by hand.", Relations),
         new("carry", "", "Carry every annotation a pass carried into another text again over the links as they stand.", Carry),
+        new("foreign-names", "[--dry-run]", "Take back the names carried onto a word the text writes as another's name, and cite the verses again.",
+            ForeignNamesVerb),
 
         // Links between texts.
         new("rejected-renderings", "", "Withdraw the specifically rejected statistical renderings and refresh their carried names.",
-            RejectedRenderingVerb, Relinks: args => Relinked.Of("RUSV", "NESTLE1904", "TR1894")),
+            RejectedRenderingVerb, Relinks: args => Relinked.Of("RUSV", "NESTLE1904", "TR1894", "KJV")),
         new("align", "<from> <to> [--min <confidence>] [--model <model>] [--replace] [--outside <text>]",
             "Align two texts with SIL's statistical aligner and write the result as aligner links.", Align,
             Least: 2, Records: Always, Relinks: Pair),

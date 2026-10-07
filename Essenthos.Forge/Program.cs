@@ -156,6 +156,7 @@ builder.Services.AddScoped<SpelledNameLoader>();
 builder.Services.AddScoped<FixedTitleLoader>();
 builder.Services.AddScoped<PassageReadingLoader>();
 builder.Services.AddScoped<CrossedNameLoader>();
+builder.Services.AddScoped<ForeignNames>();
 builder.Services.AddScoped<AnnotationCarrier>();
 builder.Services.AddScoped<SoleBearerLoader>();
 builder.Services.AddScoped<TermLoader>();

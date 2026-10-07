@@ -71,7 +71,7 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
     public const double Precision = 0.97;
 
     /// <summary>What the written annotations are credited to.</summary>
-    public const string Source = "Essenthos, read from the verses that name it";
+    public const string Source = Essenthos.Core.Corpus.Annotations.Consensus;
 
     private static readonly string[] StatedLinks =
     [

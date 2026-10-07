@@ -235,6 +235,23 @@ internal static partial class ForgeVerbs
     /// Every annotation a pass carried into another text, carried again over the links as they stand.
     /// For a corpus whose links were changed by something that did not carry them itself.
     /// </summary>
+    private static async Task<int> ForeignNamesVerb(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        var db = scope.ServiceProvider.GetRequiredService<Essenthos.Core.Database.AppDbContext>();
+        var write = !args.Contains("--dry-run");
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<ForeignNames>().Withdraw(write: write));
+        if (!write)
+        {
+            return 0;
+        }
+
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load());
+        Console.WriteLine($"{await Microsoft.EntityFrameworkCore.RelationalDatabaseFacadeExtensions.ExecuteSqlRawAsync(db.Database, DatasetLoader.NamingVerses)} verse naming flags refreshed");
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<EntityRenderingLoader>().Load());
+        return 0;
+    }
+
     private static async Task<int> Carry(ForgeRun forge, string[] args)
     {
         using var carryScope = forge.Scope();

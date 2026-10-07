@@ -480,6 +480,13 @@ internal static class Annotating
     /// </para>
     ///
     /// <para>
+    /// A person's name is not carried onto a word the text writes as somebody else's name
+    /// (<see cref="ForeignNames"/>): a link that pairs <em>Христа</em> with <em>Σατανᾶν</em> is
+    /// wrong, and the name would be wrong with it. It is asked before unanimity, so the refused
+    /// answer neither stands nor vetoes another.
+    /// </para>
+    ///
+    /// <para>
     /// The note names the text the seed word stands in rather than a text the caller declares, so
     /// one pass can carry seeds from several witnesses and each row still says where it came from.
     /// Takes <c>@faint</c> and <c>@firm</c>; <see cref="CarryAcrossLinks"/> supplies both.
@@ -532,11 +539,15 @@ internal static class Annotating
             WINDOW verse AS (PARTITION BY r.through, r.text_id, r.verse_id)
         ),
         {Leftover},
+        {ForeignNames.Refusals("judged")},
         supported AS (
             SELECT j.*,
                    min(j.entity_id) OVER word = max(j.entity_id) OVER word AS unanimous
             FROM judged j
             WHERE (j.link >= @faint OR j.best < @firm) AND NOT j.leftover
+              AND NOT EXISTS (SELECT 1 FROM foreign_refused refused
+                              WHERE refused.word_id = j.word_id AND refused.entity_id = j.entity_id
+                                AND refused.through = j.through)
             WINDOW word AS (PARTITION BY j.word_id)
         ),
         strongest AS (
@@ -617,9 +628,12 @@ internal static class Annotating
 
     /// <summary>
     /// The entity each word stands named as, as the common table <c>settled (word_id, entity_id)</c>:
-    /// the annotation of highest claim standing and then confidence, and nothing for a word where
-    /// two of equal standing and equal confidence name two entities, unless the two stand beside
-    /// each other (<see cref="Beside"/>). A title gives way to the record that bears it, whatever
+    /// an annotation read of the word itself before any the links carried onto it or the verses'
+    /// consensus inferred, then the one of highest claim standing and then confidence, and nothing
+    /// for a word where two of equal footing, standing and confidence name two entities, unless the
+    /// two stand beside each other (<see cref="Beside"/>). A carried annotation is a reading of
+    /// another word, so whatever method made it, it does not outrank what was read of this one; the
+    /// rule is <c>Annotations.Settle</c>'s, and the two must say the same. A title gives way to the record that bears it, whatever
     /// their standing: the title says what the word is and the bearer whom it names, so the bearer
     /// is the word's first answer. Every pass that reads an entity's verses off the words reads
     /// them through this, so a verse is never listed on a page for a word the word panel shows
@@ -632,7 +646,8 @@ internal static class Annotating
                     a.entity_id,
                     e.kind,
                     {Standing} AS standing,
-                    coalesce(a.confidence, 1.0) AS confidence
+                    coalesce(a.confidence, 1.0) AS confidence,
+                    coalesce(a.note, '') NOT LIKE '{CarriedNote}' AND a.source <> '{Essenthos.Core.Corpus.Annotations.Consensus}' AS own
              FROM word_entity a
              JOIN entity e ON e.id = a.entity_id
          ),
@@ -642,16 +657,18 @@ internal static class Annotating
                     s.kind,
                     s.standing,
                     s.confidence,
+                    s.own,
                     row_number() OVER settling AS place,
                     count(*) OVER (PARTITION BY s.word_id) AS claims,
                     lead(s.entity_id) OVER settling AS next_entity,
                     lead(s.kind) OVER settling AS next_kind,
                     lead(s.standing) OVER settling AS next_standing,
-                    lead(s.confidence) OVER settling AS next_confidence
+                    lead(s.confidence) OVER settling AS next_confidence,
+                    lead(s.own) OVER settling AS next_own
              FROM standing s
              WINDOW settling AS (
                  PARTITION BY s.word_id
-                 ORDER BY s.standing DESC, s.confidence DESC, s.kind = '{Title}', s.kind COLLATE "C", s.entity_id)
+                 ORDER BY s.own DESC, s.standing DESC, s.confidence DESC, s.kind = '{Title}', s.kind COLLATE "C", s.entity_id)
          ),
          several AS MATERIALIZED (
              SELECT r.word_id, r.entity_id, r.kind, r.place FROM ranked r WHERE r.claims > 1
@@ -672,6 +689,7 @@ internal static class Annotating
              WHERE r.place = 1
                AND (r.claims = 1
                     OR NOT (r.next_entity <> r.entity_id
+                            AND r.next_own = r.own
                             AND r.next_standing = r.standing
                             AND r.next_confidence = r.confidence)
                     OR {Beside("r.kind", "r.entity_id", "r.next_kind", "r.next_entity")})
@@ -814,11 +832,14 @@ internal static class Annotating
         """;
 
     /// <summary><see cref="Carry"/>, with the two thresholds it compares links against.</summary>
-    public static Task CarryAcrossLinks(
+    public static async Task CarryAcrossLinks(
         NpgsqlConnection connection,
         IDbContextTransaction transaction,
-        CancellationToken cancellationToken) =>
-        Run(connection, transaction, Carry, cancellationToken, ("faint", Faint), ("firm", Firm));
+        CancellationToken cancellationToken)
+    {
+        await Run(connection, transaction, ForeignNames.Prepare, cancellationToken);
+        await Run(connection, transaction, Carry, cancellationToken, ("faint", Faint), ("firm", Firm));
+    }
 
     public static async Task Run(
         NpgsqlConnection connection,
