@@ -541,16 +541,17 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          """;
 
     /// <summary>
-    /// What the encyclopedia calls each of those names, beside what the lexicon calls it. One row
-    /// per spelling the encyclopedia offers, so a name it records twice is checked twice.
+    /// What the encyclopedia calls each of those names. One row per spelling the encyclopedia
+    /// offers, so a name it records twice is checked twice. The lexicon's own lemma is not asked:
+    /// a record the place register built from a lexicon entry spells its name as that entry does,
+    /// so the lemma would attest the record by agreeing with itself.
     /// </summary>
     private static readonly string Claimed =
         $"""
-         SELECT DISTINCT resolved.number, n.greek, lexicon.lemma
+         SELECT DISTINCT resolved.number, n.greek
          FROM ({GreekResolvable}) resolved
          JOIN entity_name n ON n.entity_id = resolved.entity_id
               AND n.greek_strong_number = resolved.number AND n.greek IS NOT NULL
-         JOIN strong_entry lexicon ON lexicon.strong_number = resolved.number
          """;
 
     /// <summary>
@@ -1121,7 +1122,6 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                            ("witnesses", EntityCandidates.GreekWitnesses)))
         {
             Remember(claimed, row.GetString(0), row.IsDBNull(1) ? null : row.GetString(1));
-            Remember(writes, row.GetString(0), row.IsDBNull(2) ? null : row.GetString(2));
         }
 
         await foreach (var row in Rows(connection, transaction, Printed, cancellationToken,
@@ -1138,7 +1138,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         }
 
         var attested = claimed
-            .Where(name => writes.TryGetValue(name.Key, out var spellings) && spellings.Overlaps(name.Value))
+            .Where(name => writes.TryGetValue(name.Key, out var spellings) && Attests(name.Value, spellings))
             .Select(name => name.Key)
             .ToArray();
 
@@ -1147,6 +1147,35 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             ("numbers", attested));
 
         return claimed.Count - attested.Length;
+    }
+
+    /// <summary>
+    /// Whether a Greek text writes one of the encyclopedia's spellings of a name, all of them folded:
+    /// the same word, or the same word in another case. A name printed only in an oblique case with
+    /// no lemma beside it — Φόρου for Φόρον, Κλαύδην for Κλαύδη — is the name; Ἰούδας is not Ἰωδά,
+    /// because what is left once the ending is gone differs.
+    /// </summary>
+    internal static bool Attests(IReadOnlySet<string> claimed, IReadOnlySet<string> written) =>
+        claimed.Overlaps(written)
+        || claimed.Select(GreekNameStem).OfType<string>()
+            .Intersect(written.Select(GreekNameStem).OfType<string>(), StringComparer.Ordinal).Any();
+
+    /// <summary>
+    /// The endings a Greek name takes in its cases, folded as <see cref="GreekLetters.Bare"/> folds
+    /// them, final sigma medial, longest first.
+    /// </summary>
+    private static readonly string[] GreekCaseEndings =
+        ["ουσ", "οισ", "ων", "ου", "οσ", "ον", "ησ", "ην", "ασ", "αν", "ει", "ω", "η", "α", "ι", "ν", "σ"];
+
+    /// <summary>The shortest stem compared, so that two short names do not meet on a letter or two.</summary>
+    private const int ShortestGreekStem = 3;
+
+    /// <summary>A folded Greek name without its case ending, or null where too little is left to compare.</summary>
+    private static string? GreekNameStem(string folded)
+    {
+        var ending = GreekCaseEndings.FirstOrDefault(e => folded.EndsWith(e, StringComparison.Ordinal)) ?? "";
+        var stem = folded[..^ending.Length];
+        return stem.Length >= ShortestGreekStem ? stem : null;
     }
 
     private static void Remember(Dictionary<string, HashSet<string>> spellings, string number, string? spelling)

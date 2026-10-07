@@ -77,6 +77,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecords.json" />
         <Content Remove="Loading\Encyclopedia\UnsettledRecordsSecond.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecordsSecond.json" />
+        <Content Remove="Loading\Encyclopedia\UnsettledRecordsThird.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\UnsettledRecordsThird.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\GenealogyRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsSecond.json" />
@@ -92,6 +94,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\SynodalChristTitleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OhienkoAdamRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SynodalChristBearerRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\SeveralPeopleRecordsFifth.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\ReviewNoteRecords.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />

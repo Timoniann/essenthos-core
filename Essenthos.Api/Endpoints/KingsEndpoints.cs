@@ -432,7 +432,7 @@ internal record ProphetFieldResponse(
 internal record ReignPlaceResponse(string Slug, string Name, string? LocalName);
 
 /// <param name="Person">Who was in the ruler's days: a prophet, a foreign ruler, or a king who began to reign.</param>
-/// <param name="Role"><c>prophet</c>, <c>nation</c> or <c>accession</c>.</param>
+/// <param name="Role"><c>prophet</c>, <c>nation</c>, <c>accession</c> or <c>subject</c>.</param>
 /// <param name="Kind">
 /// How the verse says it: <c>superscription</c>, <c>dated</c>, <c>narrative</c>, <c>record</c>, or
 /// <c>concerning</c> for a word about the ruler that does not say it was spoken while he reigned.

@@ -1,0 +1,682 @@
+{
+  "decidedBy": "Essenthos, 2026-10-07, on the portrait briefs' report of person records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, and on the words of a man Strong numbers under two entries that no pass named, under the project owner's decisions of 2026-09-16 that a namesake the text does not identify is a person of his own and that where the text leaves an identification open the record says so",
+  "policy": "A record is one person, and a word names the one its verse names. Where a record held the verses of another man of the name, the occurrences go to the man the verse names, to a record already held where there is one and to a record of his own where there is none; a record keeps the man its line and portrait were made for. Where the text does not say whether two men of one name are one, both are held and each says so.",
+  "method": "manual",
+  "source": "Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "1CH 9:12",
+      "position": 6,
+      "surface": "פַּשְׁח֖וּר",
+      "strongNumber": "H6583",
+      "create": {
+        "slug": "pashhur-the-priest",
+        "name": "Pashhur",
+        "distinguisher": "a priest, son of Malchijah, forefather of priests who served in Jerusalem after the return (1CH 9:12, NEH 11:12)",
+        "notes": "The house of priests called the children of Pashhur came up from Babylon with Zerubbabel (EZR 2:38, NEH 7:41), and some of them had taken foreign wives (EZR 10:22); a Pashhur sealed the covenant among the priests under Nehemiah (NEH 10:3). Whether this priest is the Pashhur son of Malchiah whom King Zedekiah sent to Jeremiah (JER 21:1, 38:1) the text does not say.",
+        "kind": "person"
+      },
+      "why": "'Adaiah the son of Jeroham, the son of Pashur, the son of Malchijah' among the priests who dwelt in Jerusalem (1CH 9:10-13, NEH 11:12): a priest of the line whose house came up from Babylon. The Pashhur son of Malchiah whom Zedekiah sent to Jeremiah (JER 21:1) is named among the princes (JER 38:1-4), and the text does not make the two one.",
+      "corrects": "pashhur"
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 21:1",
+      "position": 17,
+      "surface": "פַּשְׁחוּר֙",
+      "strongNumber": "H6583",
+      "existing": "pashhur",
+      "says": {
+        "distinguisher": "son of Malchiah, whom King Zedekiah sent to Jeremiah, and one of the princes who heard his words (JER 21:1, 38:1)",
+        "notes": "Whether he is the priest Pashhur son of Malchijah of 1 Chronicles 9:12 the text does not say. The Pashhur son of Immer who put Jeremiah in the stocks (JER 20:1-6) and Gedaliah's father (JER 38:1) are other men."
+      },
+      "why": "'when king Zedekiah sent unto him Pashur the son of Melchiah': the envoy of Zedekiah, named again among the princes who heard Jeremiah's words (JER 38:1)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 9:12",
+      "position": 8,
+      "surface": "מַלְכִּיָּ֑ה",
+      "strongNumber": "H4441",
+      "create": {
+        "slug": "malchijah-father-of-pashhur",
+        "name": "Malchijah",
+        "distinguisher": "a priest, father of Pashhur, forefather of priests who served in Jerusalem after the return (1CH 9:12, NEH 11:12)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Pashur, the son of Malchijah' in the line of a priest who dwelt in Jerusalem (1CH 9:12, NEH 11:12): a forefather generations before the Malchijah who stood at Ezra's left hand (NEH 8:4).",
+      "corrects": "malchijah-2"
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 11:12",
+      "position": 27,
+      "surface": "מַלְכִּיָּֽה",
+      "strongNumber": "H4441",
+      "existing": "malchijah-father-of-pashhur",
+      "why": "'Pashur, the son of Malchiah' in the line of Adaiah, as in 1 Chronicles 9:12.",
+      "corrects": "malchijah-2"
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 8:4",
+      "position": 37,
+      "surface": "מַלְכִּיָּ֛ה",
+      "strongNumber": "H4441",
+      "existing": "malchijah-2",
+      "says": {
+        "distinguisher": "stood at Ezra's left hand as he read the law to the people (NEH 8:4)",
+        "notes": "The priest who sealed the covenant (NEH 10:3) and the Malchijah at the dedication of the wall (NEH 12:42) are held apart; the text does not say whether either of them is this man."
+      },
+      "why": "'and on his left hand, Pedaiah, and Mishael, and Malchiah': one of the men who stood at Ezra's left hand as he read the law."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2KI 25:23",
+      "position": 38,
+      "surface": "יַֽאֲזַנְיָ֨הוּ֙",
+      "strongNumber": "H2970",
+      "existing": "jaazaniah",
+      "says": {
+        "distinguisher": "son of a Maachathite, a captain of the forces who came to Gedaliah at Mizpah (2KI 25:23, JER 40:8)",
+        "notes": "Jeremiah 42:1 names Jezaniah the son of Hoshaiah with Johanan among the captains who came to Jeremiah after Gedaliah was killed. Whether he is this man the text does not settle. Both stand beside Johanan in the same story, which reads them as one captain whose father Hoshaiah was a Maachathite. But one is called the son of a Maachathite and the other the son of Hoshaiah, and where Jeremiah 42:1 reads Jezaniah the Septuagint reads Azariah, as Jeremiah 43:2 names Azariah the son of Hoshaiah with Johanan, which reads them as two men."
+      },
+      "why": "'Jaazaniah the son of a Maachathite' among the captains who came to Gedaliah at Mizpah (2KI 25:23, JER 40:8)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 42:1",
+      "position": 12,
+      "surface": "יזַנְיָ֖ה",
+      "strongNumber": "H3153",
+      "existing": "jaazaniah-5",
+      "says": {
+        "distinguisher": "son of Hoshaiah, one of the captains who came with Johanan to Jeremiah after Gedaliah was killed (JER 42:1)",
+        "notes": "Whether he is Jaazaniah the son of a Maachathite, who came to Gedaliah at Mizpah (2KI 25:23, JER 40:8), the text does not settle. Read as one man, his father Hoshaiah was a Maachathite; read as two, the Septuagint names Azariah here, and Jeremiah 43:2 names Azariah the son of Hoshaiah beside Johanan."
+      },
+      "why": "'Johanan the son of Kareah, and Jezaniah the son of Hoshaiah': the verse names his father, and no verse says that Hoshaiah is the Maachathite of 2 Kings 25:23. The owner's rule for a namesake the text does not identify is a record of his own that says what is open.",
+      "corrects": "jaazaniah"
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 42:1",
+      "position": 14,
+      "surface": "הֹושַֽׁעְיָ֑ה",
+      "strongNumber": "H1955",
+      "existing": "hoshaiah-2",
+      "says": {
+        "distinguisher": "father of Jezaniah (JER 42:1) and of Azariah (JER 43:2)"
+      },
+      "why": "'Jezaniah the son of Hoshaiah' (JER 42:1) and 'Azariah the son of Hoshaiah' (JER 43:2) are what the text says of him; that he was a Maachathite is a reading that makes Jezaniah the Maachathite's son of 2 Kings 25:23."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 1:1",
+      "position": 2,
+      "surface": "נְחֶמְיָ֖ה",
+      "strongNumber": "H5166",
+      "existing": "nehemiah",
+      "says": {
+        "distinguisher": "son of Hachaliah, cupbearer to King Artaxerxes and governor of Judah, who rebuilt the wall of Jerusalem (NEH 1:1, 1:11, 8:9)",
+        "notes": "The Nehemiah who came up from Babylon with Zerubbabel (EZR 2:2, NEH 7:7) and Nehemiah the son of Azbuk, who repaired the wall (NEH 3:16), are other men."
+      },
+      "why": "'The words of Nehemiah the son of Hachaliah': the governor; the Nehemiah who came up with Zerubbabel (EZR 2:2, NEH 7:7) is held as nehemiah-3."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 20:7",
+      "position": 7,
+      "surface": "יְהֹ֣ונָתָ֔ן",
+      "strongNumber": "H3083",
+      "existing": "jonathan-4",
+      "says": {
+        "notes": "Jonathan, David's uncle, a counsellor, a wise man and a scribe (1CH 27:32), is another man."
+      },
+      "why": "'Jonathan the son of Shimea David's brother slew him', as 2 Samuel 21:21 tells it. Jonathan David's uncle, the counsellor and scribe of 1 Chronicles 27:32, is held as jonathan-15; the text calls him David's uncle and does not call that a mistake."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 35:9",
+      "position": 2,
+      "surface": "כונניהו",
+      "strongNumber": "H3562",
+      "create": {
+        "slug": "conaniah-chief-of-the-levites",
+        "name": "Conaniah",
+        "distinguisher": "a chief of the Levites under Josiah, who gave the Levites cattle for the passover (2CH 35:9)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Conaniah also, and Shemaiah and Nethaneel, his brethren, and Hashabiah and Jeiel and Jozabad, chief of the Levites' gave the Levites cattle for Josiah's passover; the Cononiah over the offerings in Hezekiah's day (2CH 31:12-13) lived about ninety years earlier.",
+      "corrects": "conaniah"
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 35:9",
+      "position": 11,
+      "surface": "יעִיאֵ֛ל",
+      "strongNumber": "H3273",
+      "create": {
+        "slug": "jeiel-chief-of-the-levites",
+        "name": "Jeiel",
+        "distinguisher": "a chief of the Levites under Josiah, who gave the Levites cattle for the passover (2CH 35:9)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'and Hashabiah and Jeiel and Jozabad, chief of the Levites' at Josiah's passover; the Jeiel of the sons of Elizaphan who cleansed the house in Hezekiah's day (2CH 29:13) lived about ninety years earlier."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 15:24",
+      "position": 12,
+      "surface": "בְנָיָ֤הוּ",
+      "strongNumber": "H1141",
+      "create": {
+        "slug": "benaiah-the-trumpeting-priest",
+        "name": "Benaiah",
+        "distinguisher": "a priest who blew the trumpet before the ark of God (1CH 15:24, 16:6)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'And Shebaniah, and Jehoshaphat, and Nethaneel, and Amasai, and Zechariah, and Benaiah, and Eliezer, the priests, did blow with the trumpets before the ark of God'; the Benaiah of 15:18-20 is a Levite of the second degree with a psaltery.",
+      "corrects": "benaiah-4"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 15:18",
+      "position": 18,
+      "surface": "בְנָיָ֡הוּ",
+      "strongNumber": "H1141",
+      "existing": "benaiah-4",
+      "says": {
+        "distinguisher": "a Levite of the second degree who played the psaltery before the ark (1CH 15:18, 15:20, 16:5)"
+      },
+      "why": "'and with them their brethren of the second degree ... Benaiah' (15:18), who played 'with psalteries on Alamoth' (15:20)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 15:18",
+      "position": 6,
+      "surface": "זְכַרְיָ֡הוּ",
+      "strongNumber": "H2148",
+      "existing": "zechariah-5",
+      "says": {
+        "distinguisher": "a Levite of the second degree who played the psaltery before the ark (1CH 15:18, 15:20, 16:5)"
+      },
+      "why": "'their brethren of the second degree, Zechariah' (15:18), who played 'with psalteries on Alamoth' (15:20); the Zechariah who blew the trumpet among the priests (15:24) is held as zechariah-the-trumpeting-priest."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 16:6",
+      "position": 4,
+      "surface": "יַחֲזִיאֵ֖ל",
+      "strongNumber": "H3166",
+      "create": {
+        "slug": "jahaziel-the-trumpeting-priest",
+        "name": "Jahaziel",
+        "distinguisher": "a priest who blew the trumpet continually before the ark of the covenant (1CH 16:6)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Benaiah also and Jahaziel the priests with trumpets continually before the ark': a priest, and no Levite of the second degree with a psaltery like the Jaaziel of 15:18."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 23:8",
+      "position": 5,
+      "surface": "יְחִיאֵ֛ל",
+      "strongNumber": "H3171",
+      "existing": "jehiel-9",
+      "why": "'The sons of Laadan; the chief was Jehiel': the Gershonite, not the Levite with the psaltery of 15:18-20.",
+      "corrects": "jehiel"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 29:8",
+      "position": 13,
+      "surface": "יְחִיאֵ֖ל",
+      "strongNumber": "H3171",
+      "existing": "jehiel-9",
+      "why": "'to the treasure of the house of the LORD, by the hand of Jehiel the Gershonite'.",
+      "corrects": "jehiel"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 15:18",
+      "position": 13,
+      "surface": "יחִיאֵ֣ל",
+      "strongNumber": "H3171",
+      "existing": "jehiel",
+      "says": {
+        "distinguisher": "a Levite of the second degree who played the psaltery before the ark (1CH 15:18, 15:20, 16:5)",
+        "notes": "Jehiel the Gershonite, the son of Laadan, who kept the treasures of the house of the LORD (1CH 23:8, 29:8), is another man."
+      },
+      "why": "'Jehiel ... the porters' (15:18), with psalteries on Alamoth (15:20) and before the ark (16:5). Jehiel the son of Laadan the Gershonite, over the treasures (1CH 23:8, 26:21-22, 29:8), is held as jehiel-9."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2SA 23:24",
+      "position": 7,
+      "surface": "אֶלְחָנָ֥ן",
+      "strongNumber": "H445",
+      "create": {
+        "slug": "elhanan-son-of-dodo",
+        "name": "Elhanan",
+        "distinguisher": "son of Dodo of Bethlehem, one of David's thirty mighty men (2SA 23:24, 1CH 11:26)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Elhanan the son of Dodo of Bethlehem', one of the thirty (2SA 23:24, 1CH 11:26); the Elhanan who slew a giant of Gath is the son of Jaare-oregim (2SA 21:19), called the son of Jair in 1 Chronicles 20:5.",
+      "corrects": "elhanan"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 11:26",
+      "position": 8,
+      "surface": "אֶלְחָנָ֥ן",
+      "strongNumber": "H445",
+      "existing": "elhanan-son-of-dodo",
+      "why": "'Elhanan the son of Dodo of Bethlehem' among the mighty men, as 2 Samuel 23:24 lists him.",
+      "corrects": "elhanan"
+    },
+    {
+      "text": "BHSA",
+      "reference": "2SA 21:19",
+      "position": 12,
+      "surface": "אֶלְחָנָן֩",
+      "strongNumber": "H445",
+      "existing": "elhanan",
+      "says": {
+        "distinguisher": "son of Jaare-oregim, who slew a giant of Gath in the war with the Philistines (2SA 21:19, 1CH 20:5)",
+        "notes": "Elhanan the son of Dodo of Bethlehem, one of David's thirty (2SA 23:24), is another man."
+      },
+      "why": "'Elhanan the son of Jaare-oregim, a Bethlehemite' slew the Gittite in the war at Gob; 1 Chronicles 20:5 calls him the son of Jair and the man he slew Lahmi the brother of Goliath."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 6:30",
+      "position": 4,
+      "surface": "אֲמַצְיָ֖ה",
+      "strongNumber": "H558",
+      "create": {
+        "slug": "amaziah-the-merarite",
+        "name": "Amaziah",
+        "distinguisher": "son of Hilkiah, in the line of Ethan the Merarite singer (1CH 6:45)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'The son of Hashabiah, the son of Amaziah, the son of Hilkiah' in the line of Ethan the Merarite singer (1CH 6:44-47): a Levite generations before Amos; the priest of Bethel who sent word against Amos (AMO 7:10) keeps amaziah-3.",
+      "corrects": "amaziah-3"
+    },
+    {
+      "text": "BHSA",
+      "reference": "AMO 7:10",
+      "position": 3,
+      "surface": "אֲמַצְיָה֙",
+      "strongNumber": "H558",
+      "existing": "amaziah-3",
+      "says": {
+        "distinguisher": "the priest of Bethel, who sent word to Jeroboam against Amos and bade him flee to Judah (AMO 7:10-14)",
+        "notes": "Amaziah the son of Hilkiah, in the line of Ethan the Merarite (1CH 6:45), is another man."
+      },
+      "why": "'Then Amaziah the priest of Bethel sent to Jeroboam king of Israel': the verses name him by his office, and no word of them made him the Merarite of 1 Chronicles 6:45."
+    },
+    {
+      "text": "BHSA",
+      "reference": "AMO 7:12",
+      "position": 3,
+      "surface": "אֲמַצְיָה֙",
+      "strongNumber": "H558",
+      "existing": "amaziah-3",
+      "why": "'Also Amaziah said unto Amos, O thou seer, go, flee thee away': the priest of Bethel of 7:10."
+    },
+    {
+      "text": "BHSA",
+      "reference": "AMO 7:14",
+      "position": 7,
+      "surface": "אֲמַצְיָ֔ה",
+      "strongNumber": "H558",
+      "existing": "amaziah-3",
+      "why": "'Then answered Amos, and said to Amaziah': the priest of Bethel of 7:10."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 6:21",
+      "position": 4,
+      "surface": "יֹואֵ֔ל",
+      "strongNumber": "H3100",
+      "create": {
+        "slug": "joel-son-of-azariah",
+        "name": "Joel",
+        "distinguisher": "son of Azariah and father of Elkanah, in the line of Heman the singer (1CH 6:36)",
+        "notes": "The line of Kohath in 1 Chronicles 6:22-24 runs Tahath, Uriel, Uzziah, Shaul where Heman's line in 6:36-37 runs Tahath, Zephaniah, Azariah, Joel. Whether Joel is another name of the Shaul of 6:24 the text does not say.",
+        "kind": "person"
+      },
+      "alternatives": [
+        {
+          "slug": "shaul-3",
+          "describes": null,
+          "reason": "He stands where Shaul son of Uzziah stands in the line of Kohath (1CH 6:24), if the two lines are one line under other names."
+        }
+      ],
+      "why": "'The son of Elkanah, the son of Joel, the son of Azariah, the son of Zephaniah' in the line of Heman the singer: a man of that line, whom no held record is. The owner's rule for a namesake the text does not identify is a record of his own."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:42",
+      "position": 16,
+      "surface": "עָ֑זֶר",
+      "strongNumber": "H5829",
+      "create": {
+        "slug": "ezer-at-the-dedication",
+        "name": "Ezer",
+        "distinguisher": "one of those who stood in the house of God at the dedication of the wall (NEH 12:42)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'and Malchijah, and Elam, and Ezer' among those who stood in the house of God at the dedication of the wall: a man of Nehemiah's day, not the son of Hur of 1 Chronicles 4:4 nor the Gadite who came to David (1CH 12:9).",
+      "corrects": "ezer-2"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 2:14",
+      "position": 4,
+      "surface": "Λευεὶν",
+      "strongNumber": "G3018",
+      "create": {
+        "slug": "levi-son-of-alphaeus",
+        "name": "Levi",
+        "distinguisher": "son of Alphaeus, a publican whom Jesus called from the receipt of custom (MRK 2:14, LUK 5:27-29)",
+        "notes": "Matthew 9:9 tells the same calling of a publican named Matthew. Whether Levi is Matthew the text does not say.",
+        "kind": "person"
+      },
+      "alternatives": [
+        {
+          "slug": "matthew",
+          "describes": null,
+          "reason": "Matthew 9:9-10 tells the same calling and the same meal of a publican named Matthew."
+        }
+      ],
+      "why": "'he saw Levi the son of Alphaeus sitting at the receipt of custom': no held record is a Levi son of Alphaeus. The owner's rule for a man the text does not identify is a record of his own that says what is open."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 5:27",
+      "position": 9,
+      "surface": "Λευεὶν",
+      "strongNumber": "G3018",
+      "existing": "levi-son-of-alphaeus",
+      "why": "'a publican, named Levi, sitting at the receipt of custom': the man of Mark 2:14."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 5:29",
+      "position": 5,
+      "surface": "Λευεὶς",
+      "strongNumber": "G3018",
+      "existing": "levi-son-of-alphaeus",
+      "why": "'And Levi made him a great feast in his own house': the publican of 5:27."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ROM 16:23",
+      "position": 13,
+      "surface": "Ἔραστος",
+      "strongNumber": "G2037",
+      "existing": "erastus-2",
+      "says": {
+        "notes": "Whether the Erastus who stayed at Corinth (2TI 4:20) is this treasurer or Paul's helper whom he sent into Macedonia (ACT 19:22) the text does not say."
+      },
+      "why": "'Erastus the chamberlain of the city saluteth you'; the Erastus whom Paul sent into Macedonia (ACT 19:22) is held as erastus."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZR 2:46",
+      "position": 6,
+      "surface": "חָנָֽן",
+      "strongNumber": "H2605",
+      "existing": "hanan-4",
+      "says": {
+        "distinguisher": "forefather of a house of the temple servants who came up from Babylon (EZR 2:46, NEH 7:49)",
+        "notes": "The Levite Hanan who helped the people understand the law (NEH 8:7) is another man."
+      },
+      "why": "'The children of Hagab, the children of Shalmai, the children of Hanan' among the temple servants (EZR 2:43-46): a house named after him. The Levite Hanan of Nehemiah 8:7 is held as hanan-6."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 8:7",
+      "position": 15,
+      "surface": "חָנָ֤ן",
+      "strongNumber": "H2605",
+      "existing": "hanan-6",
+      "says": {
+        "distinguisher": "a Levite who helped the people understand the law (NEH 8:7)",
+        "notes": "A Levite named Hanan sealed the covenant under Nehemiah (NEH 10:10); whether he is this man the text does not say."
+      },
+      "why": "'Hanan, Pelaiah, and the Levites, caused the people to understand the law'.",
+      "corrects": "hanan-4"
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 8:4",
+      "position": 43,
+      "surface": "מְשֻׁלָּֽם",
+      "strongNumber": "H4918",
+      "existing": "meshullam-13",
+      "says": {
+        "distinguisher": "stood at Ezra's left hand as he read the law to the people (NEH 8:4)",
+        "notes": "The priest who sealed the covenant (NEH 10:7), the chief of the people who sealed it (NEH 10:20) and the head of the house of Ginnethon (NEH 12:16) are held apart; the text does not say whether any of them is this man."
+      },
+      "why": "'and on his left hand ... Zechariah, and Meshullam': the last named at Ezra's left hand."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 8:4",
+      "position": 27,
+      "surface": "מַעֲשֵׂיָ֖ה",
+      "strongNumber": "H4641",
+      "existing": "maaseiah-10",
+      "says": {
+        "distinguisher": "stood at Ezra's right hand as he read the law to the people (NEH 8:4)",
+        "notes": "The text does not say whether he is the Levite Maaseiah who helped the people understand the law (NEH 8:7), the chief who sealed the covenant (NEH 10:25) or the Maaseiah at the dedication of the wall (NEH 12:42)."
+      },
+      "why": "'and beside him stood Mattithiah, and Shema, and Anaiah, and Urijah, and Hilkiah, and Maaseiah, on his right hand'."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 5:37",
+      "position": 5,
+      "surface": "אֲמַרְיָ֑ה",
+      "strongNumber": "H568",
+      "existing": "amariah-2",
+      "says": {
+        "distinguisher": "son of Azariah and father of Ahitub, in the line of the high priests (1CH 6:11, EZR 7:3)",
+        "notes": "Whether he is the Amariah whom Jehoshaphat set over all matters of the LORD (2CH 19:11) the text does not say."
+      },
+      "why": "'And Azariah begat Amariah, and Amariah begat Ahitub' in the line of the high priests."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 19:11",
+      "position": 3,
+      "surface": "אֲמַרְיָ֣הוּ",
+      "strongNumber": "H568",
+      "existing": "amariah-9",
+      "says": {
+        "notes": "Whether he is Amariah the son of Azariah, in the line of the high priests (1CH 6:11), the text does not say."
+      },
+      "why": "'Amariah the chief priest is over you in all matters of the LORD': Jehoshaphat's chief priest, whom the verse does not place in a line. The owner's rule for a namesake the text does not identify is a record of his own.",
+      "corrects": "amariah-2"
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 8:7",
+      "position": 13,
+      "surface": "עֲזַרְיָה֩",
+      "strongNumber": "H5838",
+      "existing": "azariah-22",
+      "why": "'Azariah, Jozabad, Hanan, Pelaiah, and the Levites, caused the people to understand the law': a Levite. The verse does not make him Azariah the son of Maaseiah, who repaired the wall beside his house (NEH 3:23).",
+      "corrects": "azariah-16"
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 8:7",
+      "position": 8,
+      "surface": "עַקּ֡וּב",
+      "strongNumber": "H6126",
+      "existing": "akkub-5",
+      "why": "'Jeshua, and Bani, and Sherebiah, Jamin, Akkub, Shabbethai ... and the Levites, caused the people to understand the law': a Levite who taught. The verse does not make him the porter Akkub of the gates (1CH 9:17, NEH 11:19, 12:25), and the owner's rule for a namesake the text does not identify is a record of his own.",
+      "corrects": "akkub-2"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MAT 27:56",
+      "position": 11,
+      "surface": "Ἰακώβου",
+      "strongNumber": "G2385",
+      "create": {
+        "slug": "james-son-of-mary",
+        "name": "James",
+        "distinguisher": "son of Mary, called James the less, whose mother watched at the cross and came to the tomb (MAT 27:56, MRK 15:40, 16:1, LUK 24:10)",
+        "notes": "Matthew 13:55 names a James and a Joses among the brothers of Jesus, and Matthew 27:56 names Mary the mother of James and Joses. Whether these are the same two men the text does not say.",
+        "kind": "person"
+      },
+      "alternatives": [
+        {
+          "slug": "james-3",
+          "describes": null,
+          "reason": "Matthew 13:55 and Mark 6:3 name a James and a Joses among the brothers of Jesus."
+        }
+      ],
+      "why": "'Mary the mother of James and Joses' beside Mary Magdalene at the cross: the verse names her sons and does not make them the Lord's brothers of 13:55, and no verse makes the Lord's brothers Mary's sons. The owner's rule for a namesake the text does not identify is a record of his own that says what is open.",
+      "corrects": "james-3"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 15:40",
+      "position": 17,
+      "surface": "Ἰακώβου",
+      "strongNumber": "G2385",
+      "existing": "james-son-of-mary",
+      "why": "'Mary the mother of James the less and of Joses': her son of Matthew 27:56.",
+      "corrects": "james-3"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 16:1",
+      "position": 12,
+      "surface": "Ἰακώβου",
+      "strongNumber": "G2385",
+      "existing": "james-son-of-mary",
+      "why": "'Mary the mother of James' came to the tomb: her son of 15:40.",
+      "corrects": "james-3"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 24:10",
+      "position": 11,
+      "surface": "Ἰακώβου",
+      "strongNumber": "G2385",
+      "existing": "james-son-of-mary",
+      "why": "'Mary the mother of James' told the apostles: her son of Mark 15:40.",
+      "corrects": "james-3"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 15:40",
+      "position": 21,
+      "surface": "Ἰωσῆτος",
+      "strongNumber": "G2500",
+      "create": {
+        "slug": "joses-son-of-mary",
+        "name": "Joses",
+        "distinguisher": "son of Mary and brother of James the less, whose mother watched at the cross (MAT 27:56, MRK 15:40, 15:47)",
+        "notes": "Matthew 13:55 and Mark 6:3 name a Joses among the brothers of Jesus. Whether he is this son of Mary the text does not say.",
+        "kind": "person"
+      },
+      "alternatives": [
+        {
+          "slug": "joseph-7",
+          "describes": null,
+          "reason": "Matthew 13:55 and Mark 6:3 name a Joses among the brothers of Jesus, beside a James."
+        }
+      ],
+      "why": "'Mary the mother of James the less and of Joses': her second son, whom the verse does not make the Lord's brother.",
+      "corrects": "joseph-7"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MAT 27:56",
+      "position": 13,
+      "surface": "Ἰωσὴφ",
+      "strongNumber": "G2501",
+      "existing": "joses-son-of-mary",
+      "why": "'Mary the mother of James and Joses': her son of Mark 15:40.",
+      "corrects": "joseph-7"
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 15:47",
+      "position": 9,
+      "surface": "Ἰωσῆτος",
+      "strongNumber": "G2500",
+      "existing": "joses-son-of-mary",
+      "why": "'Mary the mother of Joses beheld where he was laid': her son of 15:40.",
+      "corrects": "joseph-7"
+    },
+    {
+      "text": "BHSA",
+      "reference": "EST 1:1",
+      "position": 5,
+      "surface": "אֲחַשְׁוֵרֹ֑ושׁ",
+      "strongNumber": "H325",
+      "existing": "ahasuerus",
+      "says": {
+        "notes": "The Ahasuerus of Daniel 9:1, father of Darius the Mede, is another man."
+      },
+      "why": "'Now it came to pass in the days of Ahasuerus, (this is Ahasuerus which reigned, from India even unto Ethiopia, over an hundred and seven and twenty provinces)': the king of Esther. The Ahasuerus of Daniel 9:1, father of Darius the Mede, is held as ahasuerus-father-of-darius."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DAN 6:27",
+      "position": 18,
+      "surface": "דָֽנִיֵּ֑אל",
+      "strongNumber": "H1841",
+      "existing": "daniel-2",
+      "why": "'that men tremble and fear before the God of Daniel': Darius's decree speaks of the Daniel of the den (6:16-23)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1KI 22:14",
+      "position": 3,
+      "surface": "מִיכָ֑יְהוּ",
+      "strongNumber": "H4321",
+      "existing": "micaiah",
+      "why": "'And Micaiah said, As the LORD liveth': Micaiah the son of Imlah of 22:8-9."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1KI 22:25",
+      "position": 3,
+      "surface": "מִיכָ֔יְהוּ",
+      "strongNumber": "H4321",
+      "existing": "micaiah",
+      "why": "'And Micaiah said, Behold, thou shalt see in that day': Micaiah the son of Imlah of 22:8-9."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 5:36",
+      "position": 5,
+      "surface": "עֲזַרְיָ֑ה",
+      "strongNumber": "H5838",
+      "existing": "azariah",
+      "says": {
+        "distinguisher": "son of Johanan, who executed the priest's office in the temple that Solomon built (1CH 6:10)",
+        "notes": "1 Kings 4:2 names Azariah the son of Zadok the priest first among Solomon's princes; whether he is this priest or Azariah the son of Ahimaaz, Zadok's grandson (1CH 6:9), the text does not say. The Azariah who withstood King Uzziah in the temple (2CH 26:17-20) is held as azariah-20."
+      },
+      "why": "'And Johanan begat Azariah, (he it is that executed the priest's office in the temple that Solomon built)'."
+    }
+  ]
+}

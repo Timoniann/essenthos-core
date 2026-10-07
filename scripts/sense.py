@@ -52,6 +52,13 @@ him and was scored against a list that says otherwise. What a description cites 
 hold is shown beside it as `cited_not_attested`. Under `sense-1` the prose went through whole, so the
 agreement measured under it does not carry over to a run under `sense-2`.
 
+**A place says what it is.** A place candidate used to arrive with the gazetteer's modern site as
+its description, or with nothing where the site was its own name, beside persons described by their
+families -- and four occurrences kept the person after the right place was on the list (Ziph of
+1 Chronicles 2:42, Senaah of Ezra 2:35). Under `sense-3` a place carries its kind (`place_kind`) and
+the site as what it is (`identified_today_with`), and the prompt says how to weigh them, so the
+agreement measured under `sense-2` does not carry over either.
+
 **The model never touches the database.** It is given text and it returns JSON. Every answer is
 written to a file with the model id, the prompt version, the batch and the date, because it is a
 claim about a reading and not a fact about the corpus.
@@ -110,7 +117,7 @@ USER = 'essenthos'
 WITNESS = 'BHSA'
 RENDERING = 'KJV'
 
-PROMPT_VERSION = 'sense-2'
+PROMPT_VERSION = 'sense-3'
 
 # A verse as a record's description cites it: `(NEH 8:7)`, `(EZR 2:2, NEH 7:7)`, in the book codes of
 # BibleData's own book file, in canonical order.
@@ -230,6 +237,11 @@ with its reference, the name type BHSA marks on it, the Hebrew verse with the wo
 marked, the King James rendering of the same verse with the verse before and after it, and the King
 James words that the alignment says stand for this Hebrew word.
 
+A candidate whose kind is "place" is a place: a town, a land, a river, a mountain, as its
+"place_kind" says, even where it has no description. "identified_today_with" is where scholarship
+puts it on a modern map, not something the text says about it; weigh a place by its kind and the
+verses it is attested in, as you weigh a person by his family.
+
 A candidate's description and its attestation list come from the same dataset and do not always
 agree. Where the description cites a verse its own list does not hold, that verse is listed under
 "cited_not_attested": one of the two is wrong there, and the text decides which, not the description.
@@ -339,10 +351,12 @@ def candidates(numbers):
         SELECT coalesce(json_agg(json_build_object(
                    'number', c.number, 'entity_id', c.entity_id, 'key', c.slug,
                    'kind', c.kind, 'name', c.name, 'distinguisher', c.distinguisher,
+                   'place_kind', c.place_kind, 'site', c.modern_equivalent,
                    'label', c.label, 'meaning', c.meaning, 'attested', c.attested)
                    ORDER BY c.number, c.slug), '[]')
         FROM (
             SELECT n.number, e.id AS entity_id, e.slug, e.kind, e.name, e.distinguisher,
+                   e.place_kind, e.modern_equivalent,
                    coalesce(min(en.label), e.name) AS label, min(en.meaning) AS meaning,
                    (SELECT coalesce(json_agg(json_build_array(
                                 ev.canonical_book, ev.canonical_chapter, ev.canonical_verse)), '[]')
@@ -351,7 +365,7 @@ def candidates(numbers):
             JOIN entity e ON e.id = n.entity_id
             LEFT JOIN entity_name en ON en.entity_id = e.id AND en.hebrew_strong_number = n.number
             WHERE n.number IN ({quoted(numbers)})
-            GROUP BY 1, 2, 3, 4, 5, 6
+            GROUP BY 1, 2, 3, 4, 5, 6, 7, 8
         ) c
     """)
 
@@ -624,16 +638,20 @@ def shown(candidate, asked):
     cites and the list does not hold is listed beside it, so the model sees where the dataset
     disagrees with itself instead of taking the prose as settled.
     """
-    attested = [tuple(a) for a in candidate['attested']]
+    attested = list(dict.fromkeys(tuple(a) for a in candidate['attested']))
     withheld = [a for a in attested if a in asked]
     keep = [a for a in attested if a not in asked]
     step = max(1, len(keep) // ATTESTATION_SHOWN + (1 if len(keep) % ATTESTATION_SHOWN else 0))
     listed = set(attested)
+    place = candidate['kind'] == 'place'
     return {
         'key': candidate['key'],
         'kind': candidate['kind'],
         'name': candidate['name'],
-        'distinguisher': described(candidate['distinguisher'], asked),
+        'distinguisher': None if place and candidate['distinguisher'] == candidate.get('site')
+        else described(candidate['distinguisher'], asked),
+        'place_kind': (candidate.get('place_kind') or 'place') if place else None,
+        'identified_today_with': candidate.get('site') if place else None,
         'cited_not_attested': [reference(*address) for address in sorted(
             {address for address, _ in cited(candidate['distinguisher'])
              if address not in listed and address not in asked})],

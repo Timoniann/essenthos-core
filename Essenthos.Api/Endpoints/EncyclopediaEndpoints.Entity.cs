@@ -204,6 +204,10 @@ internal static partial class EncyclopediaEndpoints
                 ],
                 cancellationToken);
             var mine = readByUs.GetValueOrDefault(entity.Slug);
+            var sex = mine is not null ? mine.Sex
+                : entity.Sex ?? (entity.Kind == EntityKind.Person
+                    ? (await OursOnlyRecords.SexesOf(db, [entity.Id], cancellationToken)).GetValueOrDefault(entity.Id)
+                    : null);
             var lines = await EntityDistinguishers.OfSlugs(
                 db,
                 [
@@ -236,7 +240,7 @@ internal static partial class EncyclopediaEndpoints
                 EnumSpelling.Of(entity.Kind),
                 entity.Name,
                 mine is null ? entity.Distinguisher : mine.Line,
-                mine is null ? entity.Sex : mine.Sex,
+                sex,
                 mine is null ? entity.Tribe : mine.Tribe,
                 entity.PlaceKind,
                 entity.ModernEquivalent,

@@ -87,7 +87,13 @@ public static class ReignRoles
     /// <summary>Another king began to reign in them, in the year the verse gives.</summary>
     public const string Accession = "accession";
 
-    public static readonly IReadOnlyList<string> All = [Prophet, Nation, Accession];
+    /// <summary>
+    /// A man or woman of Israel lived under the ruler and the verse dates what they did by his year:
+    /// Nehemiah before Artaxerxes in his twentieth year, Esther taken to Ahasuerus in his seventh.
+    /// </summary>
+    public const string Subject = "subject";
+
+    public static readonly IReadOnlyList<string> All = [Prophet, Nation, Accession, Subject];
 }
 
 /// <summary>How the verse states it.</summary>

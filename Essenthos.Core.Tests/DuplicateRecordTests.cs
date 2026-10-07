@@ -121,6 +121,34 @@ public sealed class DuplicateRecordTests : IDisposable
         (await _db.MergedRecords.AsNoTracking().SingleAsync()).Id.Should().Be(merged.Id);
     }
 
+    /// <summary>
+    /// A place the register wrote under Strong's headword beside the held record of the same place
+    /// folds into the held one, which keeps the name the text prints: the words naming Jobesh name
+    /// Jabesh-gilead, and the register's address still arrives there.
+    /// </summary>
+    [Theory]
+    [InlineData("jobesh", "jabeshgilead")]
+    [InlineData("allonbachuth", "allonbacuth")]
+    [InlineData("padan", "paddanaram")]
+    public async Task APlaceTheRegisterSpeltAsStrongDoesFoldsIntoTheHeldPlace(string alias, string canonical)
+    {
+        var pair = DuplicateRecordLoader.Read().Merges.Single(m => m.Folds == alias);
+        pair.Keeps.Should().Be(canonical);
+        var kept = Record(canonical, $"place:{canonical}", "the held place");
+        var folded = Record(alias, $"essenthos:{alias}", "the register's place");
+        var word = Names(folded, LinkMethod.StrongNumber, 0.9, "the register's number");
+        Cites(folded, 7, 21, 8);
+        await _db.SaveChangesAsync();
+
+        (await _loader.Fold(DuplicateRecordLoader.Read() with { Merges = [pair], Splits = [] })).Folded.Should().Be(1);
+
+        (await _db.Entities.AnyAsync(e => e.Slug == alias)).Should().BeFalse();
+        (await _db.Entities.SingleAsync(e => e.Slug == canonical)).Name.Should().Be(kept.Name);
+        (await _db.WordEntities.AsNoTracking().SingleAsync(a => a.Id == word.Id)).EntityId.Should().Be(kept.Id);
+        (await _db.EntityVerses.AsNoTracking().SingleAsync()).EntityId.Should().Be(kept.Id);
+        (await _db.MergedRecords.AsNoTracking().SingleAsync()).Slug.Should().Be(alias);
+    }
+
     private void Cites(Entity entity, int book, int chapter, int verse) =>
         _db.EntityVerses.Add(new EntityVerse
         {
@@ -728,5 +756,32 @@ public sealed class DuplicateRecordTests : IDisposable
         list.Splits.Select(split => split.From).Should().NotIntersectWith(list.Merges.Select(m => m.Folds));
         list.Splits.SelectMany(split => split.Keeps ?? []).Should().OnlyContain(span => ScriptureSpan.TryParse(span) != null);
         list.Splits.Single(split => split.To == "ahasuerus-father-of-darius").Keeps.Should().Contain("EZR 4:6");
+    }
+
+    /// <summary>
+    /// A record that held several people keeps the man its line and picture were made for, and no
+    /// verse of it is sent to two records or back to the record it leaves: Zedekiah's envoy keeps
+    /// Jeremiah 21:1 and 38:1 while the priest's verses go, and the son of Hoshaiah leaves the
+    /// Maachathite's son only at Jeremiah 42:1.
+    /// </summary>
+    [Fact]
+    public void TheShippedSplitsSendEachVerseOfARecordToOneOtherMan()
+    {
+        var splits = DuplicateRecordLoader.Read().Splits!;
+
+        splits.Should().OnlyContain(split => split.From != split.To && split.Why.Length > 0);
+        splits.SelectMany(split => split.Verses.Select(verse => (split.From, verse)))
+            .Should().OnlyHaveUniqueItems("a verse of one record goes to one other record");
+
+        var priest = splits.Single(split => split.From == "pashhur" && split.To == "pashhur-the-priest").Verses;
+        priest.Should().Contain(["1CH 9:12", "NEH 11:12", "EZR 2:38", "NEH 7:41"]).And.NotContain(["JER 21:1", "JER 38:1"]);
+        splits.Should().ContainSingle(split => split.From == "jaazaniah").Which.Verses.Should().Equal("JER 42:1");
+        splits.Where(split => split.From == "malchijah-2").SelectMany(split => split.Verses)
+            .Should().NotContain("NEH 8:4", "the record keeps the man at Ezra's left hand its portrait shows");
+        foreach (var (brother, son) in new[] { ("james-3", "james-son-of-mary"), ("joseph-7", "joses-son-of-mary") })
+        {
+            splits.Single(split => split.From == brother && split.To == son).Verses
+                .Should().Contain("MAT 27:56").And.NotContain(["MAT 13:55", "MRK 6:3"], "the Lord's brother keeps the verses that name him so");
+        }
     }
 }

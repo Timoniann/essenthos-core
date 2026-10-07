@@ -808,8 +808,143 @@ public sealed class OwnRecordTests : IDisposable
                 .Where(a => a.WordId == _words[correction.Word])
                 .Select(a => a.Entity!.Slug)
                 .ToListAsync();
-            named.Should().Equal(correction.Existing);
+            named.Should().Equal(correction.Create?.Slug ?? correction.Existing);
         }
+    }
+
+    /// <summary>
+    /// The owner's review notes reach the records they are about: Saul's family says both genealogies
+    /// and which is the more natural, Abiah is no longer Machir's daughter in her line, and the
+    /// Manasseh of Judges 18:30 says he is not Joseph's son.
+    /// </summary>
+    [Fact]
+    public async Task WhatTheOwnersReviewNotesAskTheRecordsToSayTheySay()
+    {
+        await Load();
+
+        var records = await _db.Entities
+            .Where(e => new[] { "saul", "kish", "ner", "abner", "abijah-3", "manasseh-2", "orpah", "nebat" }.Contains(e.Slug))
+            .ToDictionaryAsync(e => e.Slug);
+        foreach (var family in new[] { "saul", "kish", "ner", "abner" })
+        {
+            records[family].Notes.Should().Contain("1 Chronicles 8:33").And.Contain("1 Samuel 14:50-51");
+        }
+
+        records["abijah-3"].Distinguisher.Should().NotContain("Machir");
+        records["abijah-3"].Notes.Should().Contain("the text does not say");
+        records["manasseh-2"].Notes.Should().Contain("not Joseph's son");
+        records["orpah"].Distinguisher.Should().NotContain("elimination");
+        records["nebat"].Distinguisher.Should().NotContain("Ephr");
+    }
+
+    /// <summary>
+    /// Esau's wives of Genesis 36:2-3 are each a woman of her own, the words of the second list leave the
+    /// records of the first, and every record of the six names the other reading; Beeri is not Anah.
+    /// </summary>
+    [Fact]
+    public async Task EsausWivesOfTheSecondListAreWomenOfTheirOwnWhoNameTheOtherReading()
+    {
+        var file = SenseReadingFiles.UnsettledThirdRulings();
+        foreach (var held in new[] { "basemath", "judith", "mahalath" })
+        {
+            var record = _db.Entities.Single(e => e.Slug == held);
+            foreach (var ruling in file.Rulings.Where(r => r.Corrects == held))
+            {
+                _db.WordEntities.Add(new WordEntity
+                {
+                    WordId = _words[ruling.Word], EntityId = record.Id, Method = LinkMethod.ModelReading,
+                    Confidence = 0.8, Source = "a reading of the verse",
+                });
+            }
+        }
+
+        await _db.SaveChangesAsync();
+        await Load();
+
+        var wives = new Dictionary<string, string>
+        {
+            ["adah-wife-of-esau"] = "basemath", ["oholibamah-wife-of-esau"] = "judith", ["basemath-daughter-of-ishmael"] = "mahalath",
+        };
+        foreach (var (wife, first) in wives)
+        {
+            var record = await _db.Entities.SingleAsync(e => e.Slug == wife);
+            record.Notes.Should().Contain("the text does not say");
+            (await _db.EntityAlternatives.Where(a => a.EntityId == record.Id).Select(a => a.Alternative!.Slug).ToListAsync())
+                .Should().Equal(first);
+            var words = file.Rulings.Where(r => (r.Create?.Slug ?? r.Existing) == wife).Select(r => _words[r.Word]).ToList();
+            words.Should().HaveCountGreaterThan(3);
+            (await _db.WordEntities.Where(a => words.Contains(a.WordId)).Select(a => a.Entity!.Slug).Distinct().ToListAsync())
+                .Should().Equal(wife);
+            (await _db.Entities.SingleAsync(e => e.Slug == first)).Notes.Should().Contain("the text does not say");
+        }
+
+        var beeri = await _db.Entities.SingleAsync(e => e.Slug == "beeri");
+        beeri.Distinguisher.Should().NotContain("Anah");
+        beeri.Notes.Should().Contain("does not say");
+    }
+
+    /// <summary>
+    /// Two captains of one name in one story, whose fathers the verses name differently: each is a
+    /// record of his own, the word of Jeremiah 42:1 leaves the Maachathite's son, and both records say
+    /// that whether they are one man is open.
+    /// </summary>
+    [Fact]
+    public async Task TheSonOfHoshaiahIsAManOfHisOwnAndBothCaptainsSayTheQuestionIsOpen()
+    {
+        await Load();
+
+        var file = SenseReadingFiles.AllRulings().Single(f => f.Rulings.Any(r => r.Existing == "jaazaniah-5"));
+        var son = file.Rulings.Single(r => r.Existing == "jaazaniah-5");
+        son.Reference.Should().Be("JER 42:1");
+        son.Corrects.Should().Be("jaazaniah");
+        (await _db.WordEntities.Where(a => a.WordId == _words[son.Word]).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("jaazaniah-5");
+
+        var captains = await _db.Entities.Where(e => e.Slug == "jaazaniah" || e.Slug == "jaazaniah-5").ToListAsync();
+        captains.Should().HaveCount(2).And.OnlyContain(e => e.Notes!.Contains("the text does not settle"));
+        captains.Single(e => e.Slug == "jaazaniah").Distinguisher.Should().Contain("Maachathite").And.NotContain("Hoshaiah");
+        captains.Single(e => e.Slug == "jaazaniah-5").Distinguisher.Should().Contain("son of Hoshaiah");
+    }
+
+    /// <summary>
+    /// A record that held two men keeps the one its line and picture were made for, and the other is
+    /// written as a record of his own from the word of his verse, taking it from the record that held
+    /// him: Pashhur the priest of 1 Chronicles 9:12 leaves Zedekiah's envoy, the Merarite Amaziah
+    /// leaves the priest of Bethel, and Levi the publican is a man of his own beside Matthew.
+    /// </summary>
+    [Theory]
+    [InlineData("pashhur-the-priest", "pashhur", "1CH 9:12")]
+    [InlineData("malchijah-father-of-pashhur", "malchijah-2", "1CH 9:12")]
+    [InlineData("amaziah-the-merarite", "amaziah-3", "1CH 6:30")]
+    [InlineData("elhanan-son-of-dodo", "elhanan", "2SA 23:24")]
+    [InlineData("conaniah-chief-of-the-levites", "conaniah", "2CH 35:9")]
+    [InlineData("benaiah-the-trumpeting-priest", "benaiah-4", "1CH 15:24")]
+    public async Task AManARecordHeldBesideAnotherIsWrittenFromHisOwnVerse(string written, string held, string reference)
+    {
+        var ruling = _rulings.Single(r => r.Create?.Slug == written);
+        ruling.Reference.Should().Be(reference);
+        ruling.Corrects.Should().Be(held);
+        var heldRecord = _db.Entities.SingleOrDefault(e => e.Slug == held)
+                         ?? _db.Entities.Add(new Entity
+                         {
+                             Kind = EntityKind.Person, Slug = held, Name = held, SourceId = held, Source = "a test",
+                         }).Entity;
+        await _db.SaveChangesAsync();
+        var heldId = heldRecord.Id;
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = _words[ruling.Word], EntityId = heldId, Method = LinkMethod.ModelReading, Confidence = 0.8,
+            Source = "a reading of the verse",
+        });
+        await _db.SaveChangesAsync();
+
+        await Load();
+
+        var record = await _db.Entities.SingleAsync(e => e.Slug == written);
+        record.Source.Should().StartWith("Essenthos");
+        record.Distinguisher.Should().NotBeNullOrEmpty();
+        (await _db.WordEntities.Where(a => a.WordId == _words[ruling.Word]).Select(a => a.EntityId).ToListAsync())
+            .Should().Equal(record.Id);
     }
 
     /// <summary>

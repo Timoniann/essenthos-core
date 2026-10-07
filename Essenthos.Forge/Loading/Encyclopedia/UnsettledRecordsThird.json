@@ -1,0 +1,270 @@
+{
+  "decidedBy": "the project owner, 2026-09-16, that a namesake the text does not identify is a person of his own and that an identification the text does not settle is shown with every reading, applied to Esau's wives and to Anah on 2026-10-07 by claude-opus-5-5",
+  "policy": "Held as Jerioth and Iezer are: what the text does not settle is said on the record, with every reading. Esau's wives are named twice, in Genesis 26:34 and 28:9 and again in 36:2-3, and the two lists agree in one name and in two fathers and differ in the rest. The encyclopedia had made each woman of the second list a name of a woman of the first, which is one reading of the lists. Each woman the text names is held as a record of her own, and each record says whom she may be and why the text leaves it open. Beeri is not said to be Anah.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's decision of 2026-09-16 that a namesake the text does not identify is a person of his own and that an identification the text does not settle is shown with every reading, applied to Esau's wives of Genesis 36:2-3 and to Anah by claude-opus-5-5, 2026-10-07",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:2",
+      "position": 9,
+      "surface": "עָדָ֗ה",
+      "strongNumber": "H5711",
+      "create": {
+        "slug": "adah-wife-of-esau",
+        "name": "Adah",
+        "distinguisher": "daughter of Elon the Hittite, wife of Esau and mother of Eliphaz (GEN 36:2, 36:4)",
+        "notes": "Genesis 26:34 and 28:9 name Esau's wives Judith the daughter of Beeri the Hittite, Bashemath the daughter of Elon the Hittite and Mahalath the daughter of Ishmael, the sister of Nebajoth; Genesis 36:2-3 names them Adah the daughter of Elon the Hittite, Aholibamah the daughter of Anah the daughter of Zibeon the Hivite, and Bashemath Ishmael's daughter, the sister of Nebajoth. Whether Adah is the Bashemath daughter of Elon of 26:34 under another name, or another daughter of Elon, the text does not say: both lists give her father, and they give her two names.",
+        "kind": "person"
+      },
+      "alternatives": [
+        {
+          "slug": "basemath",
+          "describes": null,
+          "reason": "Genesis 26:34 names Esau's wife the daughter of Elon the Hittite Bashemath; Adah may be the same woman under another name."
+        }
+      ],
+      "why": "'Esau took his wives of the daughters of Canaan; Adah the daughter of Elon the Hittite': the verse names her Adah, and the record of Bashemath of Genesis 26:34 held her word. Which of the readings is right the text does not say.",
+      "corrects": "basemath"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:4",
+      "position": 3,
+      "surface": "עָדָ֛ה",
+      "strongNumber": "H5711",
+      "existing": "adah-wife-of-esau",
+      "why": "'And Adah bare to Esau Eliphaz': the Adah of 36:2.",
+      "corrects": "basemath"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:10",
+      "position": 7,
+      "surface": "עָדָה֙",
+      "strongNumber": "H5711",
+      "existing": "adah-wife-of-esau",
+      "why": "'Eliphaz the son of Adah the wife of Esau': the Adah of 36:2.",
+      "corrects": "basemath"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:12",
+      "position": 17,
+      "surface": "עָדָ֖ה",
+      "strongNumber": "H5711",
+      "existing": "adah-wife-of-esau",
+      "why": "'these were the sons of Adah Esau's wife': the Adah of 36:2.",
+      "corrects": "basemath"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:16",
+      "position": 15,
+      "surface": "עָדָֽה",
+      "strongNumber": "H5711",
+      "existing": "adah-wife-of-esau",
+      "why": "'these were the sons of Adah': the Adah of 36:2.",
+      "corrects": "basemath"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:2",
+      "position": 16,
+      "surface": "אָהֳלִֽיבָמָה֙",
+      "strongNumber": "H173",
+      "create": {
+        "slug": "oholibamah-wife-of-esau",
+        "name": "Oholibamah",
+        "distinguisher": "daughter of Anah, the daughter of Zibeon the Hivite, wife of Esau and mother of Jeush, Jaalam and Korah (GEN 36:2, 36:5)",
+        "notes": "Genesis 26:34 and 28:9 name Esau's wives Judith the daughter of Beeri the Hittite, Bashemath the daughter of Elon the Hittite and Mahalath the daughter of Ishmael, the sister of Nebajoth; Genesis 36:2-3 names them Adah the daughter of Elon the Hittite, Aholibamah the daughter of Anah the daughter of Zibeon the Hivite, and Bashemath Ishmael's daughter, the sister of Nebajoth. Whether Aholibamah is Judith of 26:34 under another name the text does not say: the two lists name her father differently, Beeri the Hittite and Anah the Hivite, and Genesis 36:24 makes Anah the son of Zibeon.",
+        "kind": "person"
+      },
+      "alternatives": [
+        {
+          "slug": "judith",
+          "describes": null,
+          "reason": "Genesis 26:34 names Esau's wife Judith the daughter of Beeri the Hittite; Aholibamah may be the same woman under another name, though her father and her people are named otherwise."
+        }
+      ],
+      "why": "'and Aholibamah the daughter of Anah the daughter of Zibeon the Hivite': the verse names her Aholibamah, and the record of Judith of Genesis 26:34 held her word. Which of the readings is right the text does not say.",
+      "corrects": "judith"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:5",
+      "position": 2,
+      "surface": "אָהֳלִֽיבָמָה֙",
+      "strongNumber": "H173",
+      "existing": "oholibamah-wife-of-esau",
+      "why": "'And Aholibamah bare Jeush, and Jaalam, and Korah': the Aholibamah of 36:2.",
+      "corrects": "judith"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:14",
+      "position": 5,
+      "surface": "אָהֳלִיבָמָ֧ה",
+      "strongNumber": "H173",
+      "existing": "oholibamah-wife-of-esau",
+      "why": "'these were the sons of Aholibamah, the daughter of Anah the daughter of Zibeon, Esau's wife'.",
+      "corrects": "judith"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:18",
+      "position": 4,
+      "surface": "אָהֳלִֽיבָמָה֙",
+      "strongNumber": "H173",
+      "existing": "oholibamah-wife-of-esau",
+      "why": "'these are the sons of Aholibamah Esau's wife': the Aholibamah of 36:2.",
+      "corrects": "judith"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:18",
+      "position": 15,
+      "surface": "אָֽהֳלִיבָמָ֛ה",
+      "strongNumber": "H173",
+      "existing": "oholibamah-wife-of-esau",
+      "why": "'the dukes that came of Aholibamah the daughter of Anah, Esau's wife'.",
+      "corrects": "judith"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:25",
+      "position": 7,
+      "surface": "אָהֳלִיבָמָ֖ה",
+      "strongNumber": "H173",
+      "existing": "oholibamah-wife-of-esau",
+      "why": "'and Aholibamah the daughter of Anah': the daughter of Anah son of Zibeon (36:24).",
+      "corrects": "judith"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:3",
+      "position": 3,
+      "surface": "בָּשְׂמַ֥ת",
+      "strongNumber": "H1315",
+      "create": {
+        "slug": "basemath-daughter-of-ishmael",
+        "name": "Basemath",
+        "distinguisher": "Ishmael's daughter, sister of Nebajoth, wife of Esau and mother of Reuel (GEN 36:3-4)",
+        "notes": "Genesis 26:34 and 28:9 name Esau's wives Judith the daughter of Beeri the Hittite, Bashemath the daughter of Elon the Hittite and Mahalath the daughter of Ishmael, the sister of Nebajoth; Genesis 36:2-3 names them Adah the daughter of Elon the Hittite, Aholibamah the daughter of Anah the daughter of Zibeon the Hivite, and Bashemath Ishmael's daughter, the sister of Nebajoth. Whether this Bashemath is Mahalath of 28:9 under another name the text does not say, though both are Ishmael's daughter and the sister of Nebajoth; the name Bashemath is given in 26:34 to the daughter of Elon.",
+        "kind": "person"
+      },
+      "alternatives": [
+        {
+          "slug": "mahalath",
+          "describes": null,
+          "reason": "Genesis 28:9 names Esau's wife Mahalath the daughter of Ishmael, the sister of Nebajoth: the same father and the same brother."
+        }
+      ],
+      "why": "'And Bashemath Ishmael's daughter, sister of Nebajoth': the verse names her Bashemath, and the record of Mahalath of Genesis 28:9 held her word. Which of the readings is right the text does not say.",
+      "corrects": "mahalath"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:4",
+      "position": 9,
+      "surface": "בָ֣שְׂמַ֔ת",
+      "strongNumber": "H1315",
+      "existing": "basemath-daughter-of-ishmael",
+      "why": "'and Bashemath bare Reuel': Ishmael's daughter of 36:3.",
+      "corrects": "mahalath"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:10",
+      "position": 12,
+      "surface": "בָּשְׂמַ֖ת",
+      "strongNumber": "H1315",
+      "existing": "basemath-daughter-of-ishmael",
+      "why": "'Reuel the son of Bashemath the wife of Esau': Ishmael's daughter of 36:3.",
+      "corrects": "mahalath"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:13",
+      "position": 14,
+      "surface": "בָשְׂמַ֖ת",
+      "strongNumber": "H1315",
+      "existing": "basemath-daughter-of-ishmael",
+      "why": "'these were the sons of Bashemath Esau's wife': Ishmael's daughter of 36:3.",
+      "corrects": "mahalath"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:17",
+      "position": 23,
+      "surface": "בָשְׂמַ֖ת",
+      "strongNumber": "H1315",
+      "existing": "basemath-daughter-of-ishmael",
+      "why": "'these are the sons of Bashemath Esau's wife': Ishmael's daughter of 36:3.",
+      "corrects": "mahalath"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 26:34",
+      "position": 18,
+      "surface": "בָּ֣שְׂמַ֔ת",
+      "strongNumber": "H1315",
+      "existing": "basemath",
+      "says": {
+        "distinguisher": "daughter of Elon the Hittite, wife of Esau (GEN 26:34)",
+        "notes": "Genesis 26:34 and 28:9 name Esau's wives Judith the daughter of Beeri the Hittite, Bashemath the daughter of Elon the Hittite and Mahalath the daughter of Ishmael, the sister of Nebajoth; Genesis 36:2-3 names them Adah the daughter of Elon the Hittite, Aholibamah the daughter of Anah the daughter of Zibeon the Hivite, and Bashemath Ishmael's daughter, the sister of Nebajoth. Whether Bashemath is the Adah daughter of Elon of 36:2 under another name the text does not say."
+      },
+      "why": "'Bashemath the daughter of Elon the Hittite', Esau's wife at forty."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 26:34",
+      "position": 11,
+      "surface": "יְהוּדִ֔ית",
+      "strongNumber": "H3067",
+      "existing": "judith",
+      "says": {
+        "notes": "Genesis 26:34 and 28:9 name Esau's wives Judith the daughter of Beeri the Hittite, Bashemath the daughter of Elon the Hittite and Mahalath the daughter of Ishmael, the sister of Nebajoth; Genesis 36:2-3 names them Adah the daughter of Elon the Hittite, Aholibamah the daughter of Anah the daughter of Zibeon the Hivite, and Bashemath Ishmael's daughter, the sister of Nebajoth. Whether Judith is Aholibamah of 36:2 under another name the text does not say."
+      },
+      "why": "'Judith the daughter of Beeri the Hittite', Esau's wife at forty."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 28:9",
+      "position": 9,
+      "surface": "מָחֲלַ֣ת",
+      "strongNumber": "H4258",
+      "existing": "mahalath",
+      "says": {
+        "notes": "Genesis 26:34 and 28:9 name Esau's wives Judith the daughter of Beeri the Hittite, Bashemath the daughter of Elon the Hittite and Mahalath the daughter of Ishmael, the sister of Nebajoth; Genesis 36:2-3 names them Adah the daughter of Elon the Hittite, Aholibamah the daughter of Anah the daughter of Zibeon the Hivite, and Bashemath Ishmael's daughter, the sister of Nebajoth. Whether Mahalath is the Bashemath of 36:3 under another name the text does not say, though both are Ishmael's daughter and the sister of Nebajoth."
+      },
+      "why": "'Mahalath the daughter of Ishmael Abraham's son, the sister of Nebajoth'."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 26:34",
+      "position": 13,
+      "surface": "בְּאֵרִ֖י",
+      "strongNumber": "H882",
+      "existing": "beeri",
+      "says": {
+        "distinguisher": "the Hittite, father of Judith, Esau's wife (GEN 26:34)",
+        "notes": "Whether he is Anah the son of Zibeon, whose daughter Aholibamah Esau married (GEN 36:2, 36:24-25), the text does not say: Beeri is called a Hittite and Anah's line Hivite and Horite."
+      },
+      "why": "'Judith the daughter of Beeri the Hittite': the verse names her father Beeri and his people; it does not call him Anah."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 36:20",
+      "position": 15,
+      "surface": "עֲנָֽה",
+      "strongNumber": "H6034",
+      "existing": "anah",
+      "says": {
+        "distinguisher": "son of Seir the Horite (GEN 36:20) and a duke of the Horites (GEN 36:29)",
+        "notes": "Anah the son of Zibeon, who found the mules in the wilderness (GEN 36:24) and whose daughter Aholibamah Esau married (GEN 36:25), is his nephew."
+      },
+      "why": "'These are the sons of Seir the Horite ... Lotan, and Shobal, and Zibeon, and Anah': Seir's son. The Anah who found the mules as he fed the asses of Zibeon his father (36:24) is Zibeon's son, held as anah-son-of-zibeon."
+    }
+  ]
+}

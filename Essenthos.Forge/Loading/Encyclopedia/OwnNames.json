@@ -38,6 +38,28 @@
       "hebrewStrongNumber": "H6696",
       "greekStrongNumber": "G500",
       "why": "G5000 is Tabitha; antichristos is G500, and the dataset's number has a digit too many. Left as it was, two records bear Tabitha's number and her name in Acts 9:36 and 9:40 names nobody."
+    },
+    {
+      "entities": [
+        "gomer-2"
+      ],
+      "label": "Gomer",
+      "was": {
+        "hebrew": "H1584"
+      },
+      "hebrewStrongNumber": "H1586",
+      "why": "H1584 is gamar, to come to an end; the name is H1586, which Strong heads for Japheth's son and for Hosea's wife. Left as it was, the name in Hosea 1:3 resolves to Japheth's son alone, the only record bearing H1586."
+    },
+    {
+      "entities": [
+        "jaazaniah-5"
+      ],
+      "label": "Jaazaniah",
+      "was": {
+        "hebrew": "H2970"
+      },
+      "hebrewStrongNumber": "H3153",
+      "why": "Jeremiah 42:1 writes his name Jezaniah, H3153, the number of the word that names him. Left as it was, that word resolves to Jaazaniah the Maachathite's son alone, the only record bearing H3153."
     }
   ]
 }

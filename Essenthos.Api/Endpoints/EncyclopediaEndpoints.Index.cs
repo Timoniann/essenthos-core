@@ -32,7 +32,7 @@ internal static partial class EncyclopediaEndpoints
                     $"\"{sort}\" is not an order for this index. Try {string.Join(", ", Sorts)}."));
             }
 
-            var entities = db.Entities.AsQueryable();
+            var entities = Listed(db.Entities);
 
             if (!OfKind(ref entities, kind, out var refusal))
             {
@@ -134,7 +134,7 @@ internal static partial class EncyclopediaEndpoints
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
-            var entities = db.Entities.AsQueryable();
+            var entities = Listed(db.Entities);
             return OfKind(ref entities, kind, out var refusal)
                 ? Results.Ok(await Letters(EntityNames.Localised(db, entities, language), language, cancellationToken))
                 : refusal!;
