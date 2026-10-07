@@ -519,6 +519,23 @@ public static class Datasets
                 + "The FDL does not say whether correspondences derived from the numbers are a modified version "
                 + "of them."),
 
+        // Read the way the Synodal's numbering is: for one run, never stored or served. eBible republishes
+        // the tagging under a public-domain line without his name; his own terms are that it is given to
+        // software publishers and kept locked. The owner ruled on 2026-09-20 that it may be used for the
+        // mapping alone; Resources/ReinaValera1909/LICENCE.md has the comparison, his terms and the ruling.
+        new("gomez-rv1909-strong", "Strong numbering of the Reina-Valera 1909",
+            "Rubén Gómez, 2012; the copy read is the one eBible.org carries in spaRV1909, which does not name him",
+            "Copyrighted; given by its author to software publishers, locked — his announcement of 2012-03-28",
+            "http://www.bsreview.org/blog/2012/03/reina-valera-1909-con-numeros-de-strong.html",
+            "https://ebible.org/spaRV1909/",
+            "Which word of the Reina-Valera 1909 renders which Hebrew or Greek word, matched within the verse on "
+            + "the Strong numbers Rubén Gómez keyed to its words. The numbering is read for the length of one run "
+            + "and never stored or served: the corpus holds only the links drawn from it, each carrying a "
+            + "confidence, and only on the words Clear Bible's hand-made alignment leaves.",
+            Sources.ReinaValeraStrongCredit, Links: true,
+            Obliges: "Used for the mapping alone, by the owner's ruling of 2026-09-20: the numbers are shown nowhere "
+                + "and the tagged text is not copied; Gómez is credited on every link drawn from them."),
+
         // Read the way FHL's numbers are: for one run, never stored. CrossWire's terms for the Segond
         // module are a permission to CrossWire; the owner approved taking the numbering for the mapping
         // on 2026-10-01, and Resources/Segond1910Strong/LICENCE.md has the statement and the reading.

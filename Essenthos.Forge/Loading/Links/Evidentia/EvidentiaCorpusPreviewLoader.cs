@@ -436,6 +436,7 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                     absenceVerdicts.GetValueOrDefault(absence.Word.Token.Id)))]
                 : [])
         {
+            GlossLicensed = EvidentiaTierScore.Of(finalProposals.Where(EvidentiaGlossLicence.ReadsTheWitnessGloss), gold, covered),
             Routes = routes,
             States = states,
             KeyDoubts = options.RecordKeyDoubts
@@ -1247,6 +1248,7 @@ internal sealed record EvidentiaBookMeasurement(
     public EvidentiaTierScore AttachedWords => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.AttachedWords));
     public EvidentiaTierScore WithAttachedWords => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.WithAttachedWords));
     public EvidentiaTierScore SafeTier => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.SafeTier));
+    public EvidentiaTierScore GlossLicensed => EvidentiaTierScore.Total(Chapters.Select(chapter => chapter.GlossLicensed));
     public int FallbackVerses => Chapters.Sum(chapter => chapter.FallbackVerses);
     public int ContentSourceWords => Chapters.Sum(chapter => chapter.ContentSourceWords);
     public int FinalProposedSourceWords => Chapters.Sum(chapter => chapter.FinalProposedSourceWords);
@@ -1313,6 +1315,7 @@ internal sealed record EvidentiaBookMeasurement(
                AttachedWords.Report("attached grammatical words", GoldPairs) + "\n" +
                WithAttachedWords.Report("global review + syntax-gated target gloss + attached grammatical words", GoldPairs) + "\n" +
                SafeTier.Report(EvidentiaChapterMeasurement.SafeTierName, GoldPairs) + "\n" +
+               GlossLicensed.Report(EvidentiaChapterMeasurement.GlossLicensedName, GoldPairs) + "\n" +
                $"learned index reach: {IndexAnsweredForms.Count:N0}/{IndexAskedForms.Count:N0} " +
                "distinct content source forms have an entry\n" +
                $"final abstention: {ContentSourceWords - FinalProposedSourceWords:N0}/{ContentSourceWords:N0} " +
@@ -1448,8 +1451,13 @@ internal sealed record EvidentiaChapterMeasurement(
     /// <summary>What a stored run marks safe: the final proposals the safe renderings and their attached words hold.</summary>
     public const string SafeTierName = "safe tier";
 
+    public const string GlossLicensedName = "licensed by the witness's gloss";
+
     /// <summary>How far the final links agree with each route text asked for; empty where none was.</summary>
     public IReadOnlyList<EvidentiaRouteAgreement> Routes { get; init; } = [];
+
+    /// <summary>The final placements the witness's own gloss licenses (<see cref="EvidentiaGlossLicence"/>).</summary>
+    public EvidentiaTierScore GlossLicensed { get; init; }
 
     public EvidentiaSecondPassAccount SecondPass { get; init; }
 
@@ -1509,6 +1517,7 @@ internal sealed record EvidentiaChapterMeasurement(
               AttachedWords.Report("attached grammatical words", GoldPairs) + "\n" +
               WithAttachedWords.Report("global review + syntax-gated target gloss + attached grammatical words", GoldPairs) + "\n" +
               SafeTier.Report(SafeTierName, GoldPairs) + "\n" +
+              GlossLicensed.Report(GlossLicensedName, GoldPairs) + "\n" +
               Unambiguous.Report("single-candidate graph", GoldPairs);
 
         return $"EVIDENTIA measurement {From} → {To}; mode: " +

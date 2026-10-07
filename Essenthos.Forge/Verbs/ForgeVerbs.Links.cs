@@ -311,6 +311,33 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    private static async Task<int> ReinaValeraStrong(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        string[] witnesses = args.Length > 1 ? [.. args[1..].Select(Identifier)] : ReinaValeraStrongLinkLoader.Witnesses;
+        foreach (var outcome in await scope.ServiceProvider.GetRequiredService<ReinaValeraStrongLinkLoader>()
+                     .Load(Path.Combine([forge.Resources, .. ReinaValeraStrongLinkLoader.EditionFolder]), witnesses))
+        {
+            forge.Logger.LogInformation("{Outcome}", outcome);
+        }
+
+        forge.Logger.LogInformation("{Outcome}", await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+        await scope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+        return 0;
+    }
+
+    private static async Task<int> ReinaValeraStrongScore(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        foreach (var score in await scope.ServiceProvider.GetRequiredService<ReinaValeraStrongLinkLoader>()
+                     .Score(Path.Combine([forge.Resources, .. ReinaValeraStrongLinkLoader.EditionFolder])))
+        {
+            forge.Logger.LogInformation("{Score}", score);
+        }
+
+        return 0;
+    }
+
     /// <summary>The CrossWire modules FHL tagged with Strong numbers, by text, each with its folder.</summary>
     private static Dictionary<string, string> TaggedModules(string resources) =>
         SwordTextSource.Texts.Values

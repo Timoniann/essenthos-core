@@ -74,6 +74,8 @@ import sys
 import threading
 import time
 
+import sense
+
 sys.stdout.reconfigure(encoding='utf-8')
 
 # The rebuild's own Postgres. The frozen API's container still holds an older copy of this database
@@ -1046,6 +1048,11 @@ def register(args):
                     'promptVersion': checked['prompt_version'],
                     'askedAt': checked['asked']},
             })
+
+    # The register names each word by its address; the id is good only for this session's corpus.
+    placed = sense.addresses([r['wordId'] for r in records])
+    records = [{**{k: v for k, v in r.items() if k != 'wordId'}, 'address': placed[r['wordId']]}
+               for r in records if r['wordId'] in placed]
 
     with open(os.path.join(args.dir, 'register.json'), 'w', encoding='utf-8') as handle:
         json.dump(records, handle, ensure_ascii=False, indent=1)

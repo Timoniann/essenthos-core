@@ -86,6 +86,13 @@ internal sealed record UsfmWord(string Surface, string Trailer)
     public string? StrongNumber { get; init; }
 
     /// <summary>
+    /// Which <c>\w</c> element of its book the word stands in, counting from one, and null outside one
+    /// or across two: <c>\w EN el principio|strong="H7225"\w*</c> is three words and one tag, and
+    /// the three render the number together rather than each on its own.
+    /// </summary>
+    public int? TagUnit { get; init; }
+
+    /// <summary>
     /// Which of its verse's <c>\add</c> spans this word stands in, counting from one, and null
     /// where the edition marks nothing. The same field the Synodal's square brackets fill.
     /// </summary>
@@ -576,7 +583,11 @@ internal static partial class UsfmReader
 
         private int spans;
 
+        private int tags;
+
         public int? Current { get; private set; }
+
+        public int NextTag() => ++tags;
 
         public bool OpensBefore { get; private set; }
 
@@ -645,15 +656,17 @@ internal static partial class UsfmReader
         var plain = new System.Text.StringBuilder(scripture.Length);
         var numbers = new List<string?>(scripture.Length);
         var spans = new List<int?>(scripture.Length);
+        var units = new List<int?>(scripture.Length);
         var read = 0;
 
-        void Keep(ReadOnlySpan<char> run, string? number)
+        void Keep(ReadOnlySpan<char> run, string? number, int? unit = null)
         {
             foreach (var character in run)
             {
                 plain.Append(character);
                 numbers.Add(number);
                 spans.Add(running.Current);
+                units.Add(unit);
             }
         }
 
@@ -664,7 +677,7 @@ internal static partial class UsfmReader
 
             if (element.Groups["surface"].Success)
             {
-                Keep(element.Groups["surface"].ValueSpan, StrongNumbers.Normalize(element.Groups["strong"].Value));
+                Keep(element.Groups["surface"].ValueSpan, StrongNumbers.Normalize(element.Groups["strong"].Value), running.NextTag());
             }
             else if (element.Groups["chapter"].Success)
             {
@@ -683,7 +696,7 @@ internal static partial class UsfmReader
         }
 
         Keep(scripture.AsSpan(read), null);
-        Split(plain.ToString(), numbers, spans, into);
+        Split(plain.ToString(), numbers, spans, units, into);
     }
 
     /// <summary>
@@ -724,7 +737,7 @@ internal static partial class UsfmReader
             anchorWordPosition);
     }
 
-    private static void Split(string text, List<string?> numbers, List<int?> spans, List<UsfmWord> into)
+    private static void Split(string text, List<string?> numbers, List<int?> spans, List<int?> units, List<UsfmWord> into)
     {
         if (text.Contains('\\', StringComparison.Ordinal))
         {
@@ -776,6 +789,7 @@ internal static partial class UsfmReader
             {
                 StrongNumber = Only(numbers, start, start + end),
                 SuppliedSpan = Only(spans, start, start + end),
+                TagUnit = Only(units, start, start + end),
             });
         }
     }

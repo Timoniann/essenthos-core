@@ -830,7 +830,9 @@ internal sealed class PeopleLoader(
             return (0, 0, 0);
         }
 
-        var (readings, _, _, _, _) = SenseReadingFiles.Read(directory);
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var readings = (await SenseReadingFiles.Place(
+            (NpgsqlConnection)db.Database.GetDbConnection(), directory, cancellationToken)).Readings;
         var seed = new List<(long, int, double?, bool, string)>();
         var undecided = 0;
 

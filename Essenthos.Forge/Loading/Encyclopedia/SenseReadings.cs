@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
@@ -12,9 +13,18 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// beside it. That is not redundancy — a run directory is a folder somebody can copy a file into,
 /// and an answer whose provenance lives in a sibling file is an answer that arrives unattributed
 /// the first time the two are separated. Every field here ends up on the claim.
+///
+/// <para>
+/// The word is named by its address (<see cref="RuledWord"/>), never by its row id, which a rebuilt
+/// corpus gives to another word. <see cref="WordId"/> is where the address stands in the corpus being
+/// loaded, found by <see cref="SenseReadingFiles.Place"/>, and is never read from the file.
+/// </para>
 /// </summary>
 internal sealed record SenseReading(
-    [property: JsonPropertyName("word_id")] long WordId,
+    [property: JsonPropertyName("text")] string Text,
+    [property: JsonPropertyName("reference")] string Reference,
+    [property: JsonPropertyName("position")] int Position,
+    [property: JsonPropertyName("surface")] string Surface,
     [property: JsonPropertyName("strong_number")] string StrongNumber,
     [property: JsonPropertyName("referent")] string Referent,
     [property: JsonPropertyName("names")] string? Names,
@@ -34,6 +44,12 @@ internal sealed record SenseReading(
     public const string Unclear = "unclear";
 
     public bool NamesAnEntity => Referent is not (Unlisted or Unclear);
+
+    [JsonIgnore]
+    public RuledWord Word => new(Text, Reference, Position, Surface);
+
+    [JsonIgnore]
+    public long WordId { get; init; }
 }
 
 /// <summary>
@@ -54,16 +70,36 @@ internal sealed record SenseReading(
 /// </para>
 /// </summary>
 internal sealed record RefusedReading(
-    long WordId,
+    string Text,
+    string Reference,
+    int Position,
+    string Surface,
     string StrongNumber,
-    string? Reference,
     string Reading,
     string Verdict,
     string? Instead,
     string Review,
-    string Why);
+    string Why)
+{
+    [JsonIgnore]
+    public RuledWord Word => new(Text, Reference, Position, Surface);
+
+    [JsonIgnore]
+    public long WordId { get; init; }
+}
 
 internal sealed record RefusedReadings(string Reviewed, IReadOnlyList<RefusedReading> Readings);
+
+/// <summary>The answers and refusals placed on the corpus being loaded.</summary>
+/// <param name="Lost">Addresses that name no word in it, or a word that reads otherwise now.</param>
+internal sealed record PlacedReadings(
+    IReadOnlyList<SenseReading> Readings,
+    IReadOnlySet<long> Contradicted,
+    IReadOnlyList<RefusedReading> Refused,
+    int Answers,
+    int Runs,
+    int Superseded,
+    IReadOnlyList<RuledWord> Lost);
 
 /// <summary>
 /// One answer a later run replaced, and what it replaced it with.
@@ -85,12 +121,19 @@ internal sealed record RefusedReadings(string Reviewed, IReadOnlyList<RefusedRea
 /// </para>
 /// </summary>
 internal sealed record SupersededReading(
-    long WordId,
+    string Text,
+    string Reference,
+    int Position,
+    string Surface,
     string StrongNumber,
     string Was,
     string Now,
     string Confidence,
-    string? Reason);
+    string? Reason)
+{
+    [JsonIgnore]
+    public RuledWord Word => new(Text, Reference, Position, Surface);
+}
 
 internal sealed record SupersededReadings(
     string AskedAgain,
@@ -404,11 +447,11 @@ internal static class SenseReadingFiles
     /// files are on this disk.
     /// </para>
     /// </summary>
-    public static (IReadOnlyList<SenseReading> Readings, IReadOnlySet<long> Contradicted, int Answers, int Runs, int Superseded)
+    public static (IReadOnlyList<SenseReading> Readings, IReadOnlySet<RuledWord> Contradicted, int Answers, int Runs, int Superseded)
         Read(string directory)
     {
-        var byWord = new Dictionary<long, SenseReading>();
-        var contradicted = new HashSet<long>();
+        var byWord = new Dictionary<RuledWord, SenseReading>();
+        var contradicted = new HashSet<RuledWord>();
         var answers = 0;
         var runs = 0;
 
@@ -427,19 +470,27 @@ internal static class SenseReadingFiles
                 var reading = JsonSerializer.Deserialize<SenseReading>(line, Shape)
                               ?? throw new InvalidDataException(
                                   $"A line of {file} is not an answer. Each line must be one JSON object " +
-                                  "with word_id, referent, confidence, prompt_version, model and run.");
+                                  "with text, reference, position, surface, referent, confidence, prompt_version, model and run.");
+
+                if (string.IsNullOrEmpty(reading.Text) || string.IsNullOrEmpty(reading.Reference))
+                {
+                    throw new InvalidDataException(
+                        $"A line of {file} names its word by row id or not at all. An answer names its word by text, "
+                        + "reference, position and surface; convert the files once with "
+                        + "scripts/address-word-ids.py before loading them.");
+                }
 
                 answers++;
-                if (byWord.TryGetValue(reading.WordId, out var already))
+                if (byWord.TryGetValue(reading.Word, out var already))
                 {
                     if (already.Referent != reading.Referent)
                     {
-                        contradicted.Add(reading.WordId);
+                        contradicted.Add(reading.Word);
                     }
                 }
                 else
                 {
-                    byWord[reading.WordId] = reading;
+                    byWord[reading.Word] = reading;
                 }
             }
         }
@@ -448,7 +499,7 @@ internal static class SenseReadingFiles
         var superseded = 0;
         foreach (var replacement in later.Readings)
         {
-            if (!byWord.TryGetValue(replacement.WordId, out var earlier))
+            if (!byWord.TryGetValue(replacement.Word, out var earlier))
             {
                 continue;
             }
@@ -456,7 +507,7 @@ internal static class SenseReadingFiles
             // A word the second campaign answered has been answered, whatever the first campaign
             // did with it — including answering it two ways, which is what the second campaign was
             // asked to settle.
-            contradicted.Remove(replacement.WordId);
+            contradicted.Remove(replacement.Word);
             if (earlier.Referent == replacement.Now)
             {
                 continue;
@@ -467,7 +518,7 @@ internal static class SenseReadingFiles
             // The description a model gives for a referent nobody holds is not carried in the
             // record of what changed, so it is dropped rather than kept from the answer it
             // replaced: a sentence about the earlier referent is not a description of this one.
-            byWord[replacement.WordId] = earlier with
+            byWord[replacement.Word] = earlier with
             {
                 Referent = replacement.Now,
                 Names = null,
@@ -480,6 +531,34 @@ internal static class SenseReadingFiles
         }
 
         return ([.. byWord.Values], contradicted, answers, runs, superseded);
+    }
+
+    /// <summary>
+    /// Every answer and every refusal under a directory, each on the word its address names in the
+    /// corpus the connection reads. An address that names no word there, or a word that no longer
+    /// reads as it did, is not placed on whatever stands there now; it is counted in
+    /// <see cref="PlacedReadings.Lost"/>.
+    /// </summary>
+    public static async Task<PlacedReadings> Place(
+        NpgsqlConnection connection,
+        string directory,
+        CancellationToken cancellationToken = default)
+    {
+        var (readings, contradicted, answers, runs, superseded) = Read(directory);
+        var refused = Refused().Readings;
+        var (found, lost) = await RuledWords.Find(
+            connection,
+            readings.Select(r => r.Word).Concat(contradicted).Concat(refused.Select(r => r.Word)),
+            cancellationToken);
+
+        return new PlacedReadings(
+            [.. readings.Where(r => found.ContainsKey(r.Word)).Select(r => r with { WordId = found[r.Word] })],
+            contradicted.Where(found.ContainsKey).Select(word => found[word]).ToHashSet(),
+            [.. refused.Where(r => found.ContainsKey(r.Word)).Select(r => r with { WordId = found[r.Word] })],
+            answers,
+            runs,
+            superseded,
+            lost);
     }
 
     public static RefusedReadings Refused() => Embedded<RefusedReadings>(RefusedResource);

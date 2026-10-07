@@ -249,7 +249,16 @@ internal sealed class SiteSplitLoader(
         }
 
         var started = Stopwatch.StartNew();
-        var records = SiteRegisterFiles.Read(directory);
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var (records, lost) = await SiteRegisterFiles.Place(
+            (NpgsqlConnection)db.Database.GetDbConnection(), SiteRegisterFiles.Read(directory), cancellationToken);
+        if (lost.Count > 0)
+        {
+            logger.LogWarning(
+                "{Lost} of the register's occurrences name a word that is not where their address says, and "
+                + "were not annotated: {First}", lost.Count, string.Join("; ", lost.Take(10)));
+        }
+
         var settled = records.Where(r => r.Referent is { Length: > 0 } && r.Standing is not null)
             .ToList();
         var unsettled = records.Count - settled.Count;

@@ -251,6 +251,21 @@ internal sealed class GermanLanguagePack() : StemmedLanguagePack("deu", Function
         "uns", "euch", "sich", "ist", "war", "sind", "waren", "wird", "werden", "ward", "wurde", "hat", "haben", "hatte",
         "nicht", "auch",
     };
+
+    /// <summary>
+    /// The possessive determiners, which the parse does not always call possessive (<em>dein</em> as a
+    /// determiner of another kind, <em>euer</em> as an adjective). They stay content words: most of the
+    /// time the index places them on the genitive pronoun they write. <em>sein</em> is the verb as well.
+    /// </summary>
+    internal static readonly IReadOnlySet<string> Possessives = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "mein", "meine", "meinen", "meinem", "meiner", "meines",
+        "dein", "deine", "deinen", "deinem", "deiner", "deines",
+        "sein", "seine", "seinen", "seinem", "seiner", "seines",
+        "ihr", "ihre", "ihren", "ihrem", "ihrer", "ihres",
+        "unser", "unsere", "unseren", "unserem", "unserer", "unseres", "unsre", "unsren", "unsrem", "unsrer", "unsres", "unsern", "unserm",
+        "euer", "eure", "euren", "eurem", "eurer", "eures", "euern", "euerm",
+    };
 }
 
 /// <summary>The Reina-Valera's Spanish of 1909, which still writes <em>á</em> and <em>fué</em>.</summary>
@@ -263,6 +278,13 @@ internal sealed class SpanishLanguagePack() : StemmedLanguagePack("spa", Functio
         "él", "ella", "ellos", "ellas", "yo", "tú", "nosotros", "vosotros", "le", "les", "se", "me", "te", "nos", "os",
         "su", "sus", "mi", "mis", "tu", "tus", "es", "fué", "fue", "era", "son", "ha", "han", "había", "no", "ni",
         "como", "cuando", "si",
+    };
+
+    /// <summary>The possessive determiners; the short ones are function words as well.</summary>
+    internal static readonly IReadOnlySet<string> Possessives = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "mi", "mis", "tu", "tus", "su", "sus",
+        "nuestro", "nuestra", "nuestros", "nuestras", "vuestro", "vuestra", "vuestros", "vuestras",
     };
 }
 

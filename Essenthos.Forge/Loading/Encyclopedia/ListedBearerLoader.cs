@@ -227,15 +227,15 @@ internal sealed class ListedBearerLoader(
         }
 
         var started = Stopwatch.StartNew();
-        var (readings, contradicted, _, _, _) = SenseReadingFiles.Read(directory);
-        var answered = readings.Select(r => r.WordId)
-            .Concat(contradicted)
-            .Concat(SenseReadingFiles.Refused().Readings.Select(r => r.WordId))
-            .Distinct()
-            .ToArray();
-
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        var placed = await SenseReadingFiles.Place(connection, directory, cancellationToken);
+        var answered = placed.Readings.Select(r => r.WordId)
+            .Concat(placed.Contradicted)
+            .Concat(placed.Refused.Select(r => r.WordId))
+            .Distinct()
+            .ToArray();
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await Annotating.Run(connection, transaction, Workspace, cancellationToken);

@@ -292,6 +292,59 @@ def reference(book, chapter, verse):
     return f'{name} {chapter}:{verse}'
 
 
+# The book codes a word's address is written in, in canonical order: the corpus's BookCodes.
+ADDRESS_BOOKS = CITED_BOOKS + [
+    'MAT', 'MRK', 'LUK', 'JHN', 'ACT', 'ROM', '1CO', '2CO', 'GAL', 'EPH', 'PHP', 'COL', '1TH', '2TH',
+    '1TI', '2TI', 'TIT', 'PHM', 'HEB', 'JAS', '1PE', '2PE', '1JN', '2JN', '3JN', 'JUD', 'REV',
+]
+
+ADDRESS_CODE = "(ARRAY[" + ', '.join(f"'{code}'" for code in ADDRESS_BOOKS) + "])[b.canonical_ordinal]"
+
+
+def addresses(word_ids):
+    """
+    Each word's address, which is how a stored answer names it: the text, the verse as that text
+    numbers it, the position and the word as it reads. A row id is only good for the session that
+    read it -- a rebuilt corpus gives it to another word.
+    """
+    ids = ', '.join(str(int(i)) for i in word_ids) or 'NULL'
+    found = psql(f"""
+        SELECT coalesce(json_object_agg(w.id, json_build_object(
+                   'text', t.slug,
+                   'reference', {ADDRESS_CODE} || ' ' || v.chapter_number || ':' || v.number || v.label,
+                   'position', w.position, 'surface', w.text)), '{{}}')
+        FROM word w JOIN verse v ON v.id = w.verse_id JOIN book b ON b.id = v.book_id
+        JOIN text t ON t.id = w.text_id
+        WHERE w.id IN ({ids}) AND b.canonical_ordinal <= {len(ADDRESS_BOOKS)}
+    """)
+    return {int(k): v for k, v in found.items()}
+
+
+def word_ids(rows):
+    """
+    The word each stored answer's address names in the corpus read now, by address; an address that
+    names nothing there, or a word that reads otherwise, is left out.
+    """
+    wanted = {(r['text'], r['reference'], int(r['position']), r['surface']) for r in rows}
+    if not wanted:
+        return {}
+    values = ', '.join(
+        "(" + ', '.join("'" + str(x).replace("'", "''") + "'" if not isinstance(x, int) else str(x) for x in w) + ")"
+        for w in sorted(wanted))
+    found = psql(f"""
+        SELECT coalesce(json_agg(json_build_array(x.text, x.reference, x.position, x.surface, w.id)), '[]')
+        FROM (VALUES {values}) AS x(text, reference, position, surface)
+        JOIN text t ON t.slug = x.text
+        JOIN book b ON b.text_id = t.id
+             AND {ADDRESS_CODE} = split_part(x.reference, ' ', 1)
+        JOIN verse v ON v.book_id = b.id
+             AND v.chapter_number = split_part(split_part(x.reference, ' ', 2), ':', 1)::int
+             AND v.number || v.label = split_part(split_part(x.reference, ' ', 2), ':', 2)
+        JOIN word w ON w.verse_id = v.id AND w.position = x.position AND w.text = x.surface
+    """)
+    return {(a, b, c, d): i for a, b, c, d, i in found}
+
+
 def quoted(numbers):
     return ', '.join("'" + n.replace("'", "''") + "'" for n in numbers)
 
@@ -778,17 +831,18 @@ def ask(args):
             print(f'{name}: no JSON array in the reply')
             continue
 
+        placed = addresses(by_word)
         rows, seen = [], set()
         for answer in answers:
             word_id = answer.get('word_id')
-            if word_id not in by_word or word_id in seen:
+            if word_id not in by_word or word_id in seen or word_id not in placed:
                 continue
             seen.add(word_id)
             referent = answer.get('referent')
             if referent not in keys and referent not in (ANSWER_UNCLEAR, ANSWER_UNLISTED):
                 referent, answer['names'] = ANSWER_UNCLEAR, answer.get('names')
             rows.append({
-                'word_id': word_id,
+                **placed[word_id],
                 'strong_number': by_word[word_id],
                 'referent': referent,
                 'names': answer.get('names'),

@@ -73,3 +73,21 @@ internal sealed class EvidentiaTargetGlossProposalResolver
         && candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.TargetGloss);
 
 }
+
+/// <summary>
+/// The placements the witness's own word gloss licenses: the unique target gloss, the dictionary sense
+/// the gloss confirms, and the one free word between placed neighbours where the gloss is what names it.
+/// The gloss is a publisher's rendering - ETCBC's on BHSA, the Berean Interlinear's on Nestle 1904 - so
+/// measured against a key from the same publisher these placements read the key's own words, and are
+/// scored apart from the rest.
+/// </summary>
+internal static class EvidentiaGlossLicence
+{
+    public static bool ReadsTheWitnessGloss(EvidentiaProposal proposal) => proposal.Kind switch
+    {
+        EvidentiaProposalKind.UniqueTargetGlossReview or EvidentiaProposalKind.DictionaryAndGlossReview => true,
+        EvidentiaProposalKind.AnchoredGapReview =>
+            proposal.Trace?.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.TargetGloss) == true,
+        _ => false,
+    };
+}

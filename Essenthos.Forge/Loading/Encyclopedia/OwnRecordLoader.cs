@@ -774,7 +774,9 @@ internal sealed class OwnRecordLoader(
             return 0;
         }
 
-        var (readings, _, _, _, _) = SenseReadingFiles.Read(directory);
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var readings = (await SenseReadingFiles.Place(
+            (NpgsqlConnection)db.Database.GetDbConnection(), directory, cancellationToken)).Readings;
         var groups = readings
             .Where(r => r.Referent == SenseReading.Unlisted && !string.IsNullOrWhiteSpace(r.Names))
             .GroupBy(r => (r.StrongNumber, Description: r.Names!.Trim()), TupleComparer.Instance)

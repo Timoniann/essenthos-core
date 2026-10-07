@@ -157,6 +157,11 @@ internal static class Recipe
                     ? "the Union Version's Strong numbering is already linked"
                     : null;
 
+            case "reina-valera-strong":
+                return await Exists(connection, BySource, null, null, ReinaValeraStrongLinkLoader.Credit, cancellationToken)
+                    ? "the Reina-Valera's Strong numbering is already linked"
+                    : null;
+
             case "crosswire-strong":
                 foreach (var numbering in CrossWireStrongLinkLoader.Named(step.Arguments))
                 {

@@ -131,6 +131,11 @@ public class EvidentiaTranslationArticleTests
     [InlineData("los", "spa", true)]
     [InlineData("á", "spa", true)]
     [InlineData("casa", "spa", false)]
+    [InlineData("seine", "deu", false)]
+    [InlineData("sondern", "deu", false)]
+    [InlineData("weil", "deu", false)]
+    [InlineData("nuestro", "spa", false)]
+    [InlineData("sino", "spa", false)]
     public void EachLanguageIsFilteredByItsOwnFunctionWords(string surface, string language, bool function)
     {
         Packs.TryAnalyse(new EvidentiaToken(1, Genesis27, 1, surface, language), out var analysis).Should().BeTrue();

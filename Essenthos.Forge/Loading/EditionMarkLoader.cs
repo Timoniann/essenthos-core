@@ -41,8 +41,9 @@ internal sealed record EditionMarkOutcome(string Text, WordGroupKind? Kind, int 
 /// The Greek editions' brackets are marks of a different kind and were stored as characters of the
 /// words. They are taken out of the words and kept as structure: Nestle's <c>[[…]]</c> and <c>[…]</c>
 /// as doubtful text with the degree in the features, the Textus Receptus' <c>[προς …]</c> as a
-/// subscription. Brenton's two are only taken out: nothing Brenton's distributed files carry says
-/// what they mean, so nothing is claimed for them.
+/// subscription. The two in Brenton's Greek are only taken out: nothing its distributed files carry
+/// says what they mean, so nothing is claimed for them. (His English prints its supplied words in
+/// italics, which its reader loads as supplied groups like any other edition's.)
 /// </para>
 ///
 /// Every step replaces what it wrote before, so running it again changes nothing.

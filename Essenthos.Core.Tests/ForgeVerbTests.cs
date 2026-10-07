@@ -17,7 +17,7 @@ public sealed class ForgeVerbTests
     [Fact]
     public void TheVerbsThatWriteWhatTheLoadDoesNotAreTheOnesTheRecipeRecords() =>
         ForgeVerbs.All.Where(verb => verb.Records is not null).Select(verb => verb.Name).Should().BeEquivalentTo(
-            "align", "compose", "names", "possessives", "unshare", "strong", "synodal-strong", "union-strong",
+            "align", "compose", "names", "possessives", "unshare", "strong", "synodal-strong", "union-strong", "reina-valera-strong",
             "crosswire-strong", "ohb-cuv", "interlinear-join", "correct", "reload", "edition-boundaries");
 
     [Theory]

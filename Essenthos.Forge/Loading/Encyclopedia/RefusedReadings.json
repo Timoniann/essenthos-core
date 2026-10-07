@@ -2,9 +2,11 @@
   "reviewed": "2026-09-06",
   "readings": [
     {
-      "wordId": 6855562,
+      "text": "BHSA",
+      "reference": "NEH 10:15",
+      "position": 8,
+      "surface": "בָּנִֽי",
       "strongNumber": "H1137",
-      "reference": "Nehemiah 10:14",
       "reading": "bani-3",
       "verdict": "both-wrong",
       "instead": "bani-4",
@@ -12,9 +14,11 @@
       "why": "Parosh, Pahath-moab, Elam, Zattu, Bani is the order of Ezra 2:3-10, so this is the lay house of Ezra 2:10, which BibleData holds as bani-4 — a record neither side named. bani-6 is a Levite line and cannot stand in the lay block; bani-3 is the pre-exilic Judahite of 1 Chronicles 9:4 whose own verse list disowns the distinguisher's claim to this verse."
     },
     {
-      "wordId": 6667754,
+      "text": "BHSA",
+      "reference": "2KI 9:31",
+      "position": 11,
+      "surface": "זִמְרִ֖י",
       "strongNumber": "H2174",
-      "reference": "2 Kings 9:31",
       "reading": "zimri-2",
       "verdict": "contested",
       "instead": "undecided",
@@ -22,9 +26,11 @@
       "why": "Jezebel's words can be read as naming the historical usurper Zimri or as addressing Jehu himself as a second Zimri, and the vocative reading is what BibleData has recorded by giving Jehu a Zimri name label."
     },
     {
-      "wordId": 6596381,
+      "text": "BHSA",
+      "reference": "JDG 4:11",
+      "position": 10,
+      "surface": "חֹבָ֖ב",
       "strongNumber": "H2246",
-      "reference": "Judges 4:11",
       "reading": "hobab",
       "verdict": "contested",
       "instead": "undecided",
@@ -32,9 +38,11 @@
       "why": "Judges 4:11 calls Hobab Moses' father-in-law while Numbers 10:29 calls Hobab the son of Reuel and Exodus 2:18 calls Reuel the father-in-law. The Hebrew chothen is read as father-in-law or as brother-in-law, and the question is old and unresolved."
     },
     {
-      "wordId": 6855548,
+      "text": "BHSA",
+      "reference": "NEH 10:12",
+      "position": 3,
+      "surface": "חֲשַׁבְיָֽה",
       "strongNumber": "H2811",
-      "reference": "Nehemiah 10:11",
       "reading": "hashabiah",
       "verdict": "model-wrong",
       "instead": "hashabiah-4",
@@ -42,9 +50,11 @@
       "why": "hashabiah is the Merarite son of Amaziah of 1 Chronicles 6:45, an ancestor of the exile, and cannot seal Nehemiah's covenant. The model followed BibleData's distinguisher, which cites Nehemiah 10:11 although its verse list does not."
     },
     {
-      "wordId": 6886221,
+      "text": "BHSA",
+      "reference": "2CH 25:23",
+      "position": 9,
+      "surface": "יְהֹואָחָ֗ז",
       "strongNumber": "H3059",
-      "reference": "2 Chronicles 25:23",
       "reading": "jehoahaz",
       "verdict": "model-wrong",
       "instead": "ahaziah-2",
@@ -52,9 +62,11 @@
       "why": "Amaziah of Judah's father was Joash of Judah and his grandfather Ahaziah, whom the Chronicler spells Jehoahaz here and at 21:17. Jehoahaz of Israel is the father of the Joash who took Amaziah captive, not Amaziah's own grandfather."
     },
     {
-      "wordId": 6856585,
+      "text": "BHSA",
+      "reference": "NEH 12:8",
+      "position": 4,
+      "surface": "יֵשׁ֧וּעַ",
       "strongNumber": "H3442",
-      "reference": "Nehemiah 12:8",
       "reading": "jeshua-7",
       "verdict": "model-wrong",
       "instead": "jeshua-5",
@@ -62,9 +74,11 @@
       "why": "Ezra 2:40 pairs Jeshua and Kadmiel as the returning Levite houses, exactly as Nehemiah 12:8 does. jeshua-7 is the Levite of Nehemiah 8:7 and 9:4."
     },
     {
-      "wordId": 6860944,
+      "text": "BHSA",
+      "reference": "1CH 6:11",
+      "position": 1,
+      "surface": "אֶלְקָנָ֑ה",
       "strongNumber": "H511",
-      "reference": "1 Chronicles 6:26",
       "reading": "elkanah-4",
       "verdict": "model-wrong",
       "instead": "elkanah-5",
@@ -72,9 +86,11 @@
       "why": "The ascending line of 1 Chronicles 6:35 runs Zuph, Elkanah, Mahath, Amasai, Elkanah, so the Elkanah whose son is Zophai stands one generation below Amasai's father. elkanah-4 is that father."
     },
     {
-      "wordId": 6881451,
+      "text": "BHSA",
+      "reference": "2CH 17:7",
+      "position": 14,
+      "surface": "עֹבַדְיָ֣ה",
       "strongNumber": "H5662",
-      "reference": "2 Chronicles 17:7",
       "reading": "obadiah",
       "verdict": "both-wrong",
       "instead": "none",
@@ -82,9 +98,11 @@
       "why": "The Obadiah of 2 Chronicles 17:7 is a prince of Judah sent to teach; obadiah is Ahab's steward in the northern kingdom and obadiah-5 a post-exilic Levite. Strong keeps the prince as a separate man and the encyclopedia does not hold him."
     },
     {
-      "wordId": 6854130,
+      "text": "BHSA",
+      "reference": "NEH 8:7",
+      "position": 13,
+      "surface": "עֲזַרְיָה֩",
       "strongNumber": "H5838",
-      "reference": "Nehemiah 8:7",
       "reading": "azariah-7",
       "verdict": "model-wrong",
       "instead": "azariah-16",
@@ -92,9 +110,11 @@
       "why": "azariah-7 is the son of Hilkiah of 1 Chronicles 6:13, father of the Seraiah killed at the fall of Jerusalem; he cannot stand in Ezra's assembly. The model was reading BibleData's distinguisher, which cites Nehemiah 8:7 although its own verse list does not."
     },
     {
-      "wordId": 6855504,
+      "text": "BHSA",
+      "reference": "NEH 10:3",
+      "position": 2,
+      "surface": "עֲזַרְיָ֖ה",
       "strongNumber": "H5838",
-      "reference": "Nehemiah 10:2",
       "reading": "azariah-7",
       "verdict": "both-wrong",
       "instead": "none",
@@ -102,9 +122,11 @@
       "why": "azariah-15 is Hezekiah's chief priest and cannot seal Nehemiah's covenant; azariah-7 is older still. The Azariah of Nehemiah 10:2 is a post-exilic priest the encyclopedia does not hold."
     },
     {
-      "wordId": 6856923,
+      "text": "BHSA",
+      "reference": "NEH 12:33",
+      "position": 2,
+      "surface": "עֲזַרְיָ֥ה",
       "strongNumber": "H5838",
-      "reference": "Nehemiah 12:33",
       "reading": "azariah-7",
       "verdict": "both-wrong",
       "instead": "undecided",
@@ -112,9 +134,11 @@
       "why": "azariah-7 is pre-exilic and cannot march in Nehemiah's dedication. But seraiah-6 is the head who returned in 538, and BibleData's own graph makes his son Meraiah head of the house in Joiakim's day, so the father walking in 445 is implausible too. Whether the names in Nehemiah 12:33-34 are lay princes or priestly houses is what would decide it, and the text does not say."
     },
     {
-      "wordId": 6854125,
+      "text": "BHSA",
+      "reference": "NEH 8:7",
+      "position": 8,
+      "surface": "עַקּ֡וּב",
       "strongNumber": "H6126",
-      "reference": "Nehemiah 8:7",
       "reading": "akkub-3",
       "verdict": "model-wrong",
       "instead": "akkub-2",
@@ -122,9 +146,11 @@
       "why": "Ezra 2 separates the returnees by class, and akkub-3 is a head of Nethinim at 2:45 — temple servants, not Levites — so he cannot be one of the Levites expounding the law in Nehemiah's day. The model followed akkub-3's distinguisher, which cites Nehemiah 8:7 against its own verse list. akkub-2 the gatekeeper is a Levite of the right generation and the only record that fits, though Strong keeps the law-expounder as a separate man and the encyclopedia may simply not hold him."
     },
     {
-      "wordId": 6855551,
+      "text": "BHSA",
+      "reference": "NEH 10:13",
+      "position": 3,
+      "surface": "שְׁבַנְיָֽה",
       "strongNumber": "H7645",
-      "reference": "Nehemiah 10:12",
       "reading": "shebaniah-4",
       "verdict": "model-wrong",
       "instead": "shebaniah-2",
@@ -132,9 +158,11 @@
       "why": "BibleData partitions the four Shebaniahs of Nehemiah 10 cleanly — the priest at 10:4, shebaniah-4 at 10:10, shebaniah-2 at 10:12 — and the parenthetical *(v10 and v12)* in shebaniah-4's distinguisher reads more naturally as *the two Levite Shebaniahs are at v10 and v12, and this is the other one* than as a claim to both. The model's reading puts two records on one word. What the text does not settle is which of the two sealers is the Levite of Nehemiah 9:4, and BibleData's answer to that is a convention rather than a demonstration."
     },
     {
-      "wordId": 6536500,
+      "text": "BHSA",
+      "reference": "NUM 1:11",
+      "position": 2,
+      "surface": "בִ֨נְיָמִ֔ן",
       "strongNumber": "H1144",
-      "reference": null,
       "reading": "benjamin",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -142,9 +170,11 @@
       "why": "Bare name stands for the census tribe whose chief is Abidan, not Jacob's son. The audit names the referent as: tribe of Benjamin."
     },
     {
-      "wordId": 6536863,
+      "text": "BHSA",
+      "reference": "NUM 1:36",
+      "position": 3,
+      "surface": "בִנְיָמִ֔ן",
       "strongNumber": "H1144",
-      "reference": null,
       "reading": "benjamin",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -152,9 +182,11 @@
       "why": "Census of the Benjaminites by families and fathers' houses; the referent is the tribe. The audit names the referent as: tribe of Benjamin."
     },
     {
-      "wordId": 6536885,
+      "text": "BHSA",
+      "reference": "NUM 1:37",
+      "position": 4,
+      "surface": "בִנְיָמִ֑ן",
       "strongNumber": "H1144",
-      "reference": null,
       "reading": "benjamin",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -162,9 +194,11 @@
       "why": "\"Tribe of Benjamin\" numbering 35,400 is the collective, absent from the candidate list. The audit names the referent as: tribe of Benjamin."
     },
     {
-      "wordId": 6537478,
+      "text": "BHSA",
+      "reference": "NUM 2:22",
+      "position": 3,
+      "surface": "בִּנְיָמִ֑ן",
       "strongNumber": "H1144",
-      "reference": null,
       "reading": "benjamin",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -172,9 +206,11 @@
       "why": "Camp arrangement names the tribe (maṭṭeh), a group no listed person-candidate covers. The audit names the referent as: tribe of Benjamin."
     },
     {
-      "wordId": 6537483,
+      "text": "BHSA",
+      "reference": "NUM 2:22",
+      "position": 8,
+      "surface": "בִנְיָמִ֔ן",
       "strongNumber": "H1144",
-      "reference": null,
       "reading": "benjamin",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -182,9 +218,11 @@
       "why": "\"Sons of Benjamin\" here is the tribe Abidan leads, not the patriarch's own sons. The audit names the referent as: tribe of Benjamin."
     },
     {
-      "wordId": 6541534,
+      "text": "BHSA",
+      "reference": "NUM 7:60",
+      "position": 9,
+      "surface": "בִנְיָמִ֑ן",
       "strongNumber": "H1144",
-      "reference": null,
       "reading": "benjamin",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -192,9 +230,11 @@
       "why": "Abidan is prince over the tribal body; the name denotes the tribe at the offering. The audit names the referent as: tribe of Benjamin."
     },
     {
-      "wordId": 6543364,
+      "text": "BHSA",
+      "reference": "NUM 10:24",
+      "position": 6,
+      "surface": "בִנְיָמִ֑ן",
       "strongNumber": "H1144",
-      "reference": null,
       "reading": "benjamin",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -202,9 +242,11 @@
       "why": "Marching order of the tribe's host; referent is the collective, unlisted in the encyclopedia. The audit names the referent as: tribe of Benjamin."
     },
     {
-      "wordId": 6544707,
+      "text": "BHSA",
+      "reference": "NUM 13:9",
+      "position": 3,
+      "surface": "בִנְיָמִ֔ן",
       "strongNumber": "H1144",
-      "reference": null,
       "reading": "benjamin",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -212,9 +254,11 @@
       "why": "Spy list by tribe; Palti represents the tribe of Benjamin, not the individual patriarch. The audit names the referent as: tribe of Benjamin."
     },
     {
-      "wordId": 6859133,
+      "text": "BHSA",
+      "reference": "1CH 2:42",
+      "position": 10,
+      "surface": "זִ֑יף",
       "strongNumber": "H2128",
-      "reference": null,
       "reading": "ziph",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -222,9 +266,11 @@
       "why": "Calebite genealogy is eponymous: parallel \"father of Mareshah/Hebron\" names towns, and BHSA marks topo. The audit names the referent as: the Judahite town Ziph, near Hebron."
     },
     {
-      "wordId": 6866217,
+      "text": "BHSA",
+      "reference": "1CH 15:24",
+      "position": 10,
+      "surface": "זְכַרְיָהוּ",
       "strongNumber": "H2148",
-      "reference": null,
       "reading": "zechariah-5",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -232,9 +278,11 @@
       "why": "Verse marks this group as priests, distinct from the second-degree Levite singers of vv.18-20. The audit names the referent as: a priest who blew trumpets before the ark."
     },
     {
-      "wordId": 6886428,
+      "text": "BHSA",
+      "reference": "2CH 26:5",
+      "position": 8,
+      "surface": "זְכַרְיָ֔הוּ",
       "strongNumber": "H2148",
-      "reference": null,
       "reading": "zechariah-13",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -242,9 +290,11 @@
       "why": "Uzziah's counsellor lived two centuries before the post-exilic prophet; the record conflates two distinct men. The audit names the referent as: Uzziah's pre-exilic mentor, understanding in visions of God."
     },
     {
-      "wordId": 6887990,
+      "text": "BHSA",
+      "reference": "2CH 29:12",
+      "position": 33,
+      "surface": "זִמָּ֔ה",
       "strongNumber": "H2155",
-      "reference": null,
       "reading": "zimmah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -252,9 +302,11 @@
       "why": "Joah here is Hezekiah's contemporary; the Zimmah of 1CH 6:20 stands many generations earlier, so this is another man. The audit names the referent as: a later Gershonite Levite, father of the Joah serving under Hezekiah."
     },
     {
-      "wordId": 6879766,
+      "text": "BHSA",
+      "reference": "2CH 13:2",
+      "position": 11,
+      "surface": "אוּרִיאֵ֖ל",
       "strongNumber": "H222",
-      "reference": null,
       "reading": "abishalom",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -262,9 +314,11 @@
       "why": "Uriel of Gibeah is a distinct man from Abishalom, whose daughter's line Kings traces; encyclopedia merged two names. The audit names the referent as: Uriel of Gibeah, father of Michaiah/Maacah, Abijah's maternal grandfather."
     },
     {
-      "wordId": 6854048,
+      "text": "BHSA",
+      "reference": "NEH 8:4",
+      "position": 25,
+      "surface": "חִלְקִיָּ֛ה",
       "strongNumber": "H2518",
-      "reference": null,
       "reading": "hilkiah-3",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -272,9 +326,11 @@
       "why": "A contemporary of Ezra, not Ezra's pre-exilic great-grandfather; the record wrongly merges the two. The audit names the referent as: a man standing at Ezra's right at the Law reading."
     },
     {
-      "wordId": 6864390,
+      "text": "BHSA",
+      "reference": "1CH 11:36",
+      "position": 1,
+      "surface": "חֵ֚פֶר",
       "strongNumber": "H2660",
-      "reference": null,
       "reading": "eliam-2",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -282,9 +338,11 @@
       "why": "In 2SA 23:34 Eliam matches Ahijah the Pelonite, the next name here; Hepher answers to Eliphelet's Maachathite epithet. The audit names the referent as: Hepher the Mecherathite, one of David's warriors."
     },
     {
-      "wordId": 6856687,
+      "text": "BHSA",
+      "reference": "NEH 12:19",
+      "position": 6,
+      "surface": "ידַֽעְיָ֖ה",
       "strongNumber": "H3048",
-      "reference": null,
       "reading": "jedaiah-2",
       "verdict": "wrong",
       "instead": "jedaiah-5",
@@ -292,9 +350,11 @@
       "why": "Neh 12:12-21 follows 12:1-7 order exactly; the Jedaiah after Joiarib here answers to 12:6, not 12:7."
     },
     {
-      "wordId": 6856699,
+      "text": "BHSA",
+      "reference": "NEH 12:21",
+      "position": 5,
+      "surface": "ידַֽעְיָ֖ה",
       "strongNumber": "H3048",
-      "reference": null,
       "reading": "jedaiah-5",
       "verdict": "wrong",
       "instead": "jedaiah-2",
@@ -302,9 +362,11 @@
       "why": "By the same parallel order, the Jedaiah after Hilkiah answers to 12:7, the Jeshua-house Jedaiah."
     },
     {
-      "wordId": 6537297,
+      "text": "BHSA",
+      "reference": "NUM 2:9",
+      "position": 6,
+      "surface": "יְהוּדָ֗ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -312,9 +374,11 @@
       "why": "The mustered camp of Judah is the tribal division, not the patriarch; no tribe record among candidates. The audit names the referent as: the tribe of Judah (its camp division)."
     },
     {
-      "wordId": 6540887,
+      "text": "BHSA",
+      "reference": "NUM 7:12",
+      "position": 17,
+      "surface": "יְהוּדָֽה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -322,9 +386,11 @@
       "why": "מטה יהודה names the tribe Nahshon represents; every listed candidate is an individual person. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6543247,
+      "text": "BHSA",
+      "reference": "NUM 10:14",
+      "position": 6,
+      "surface": "יְהוּדָ֛ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -332,9 +398,11 @@
       "why": "The standard of the marching camp designates the tribe, not Jacob's son; no tribal record exists. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6544689,
+      "text": "BHSA",
+      "reference": "NUM 13:6",
+      "position": 3,
+      "surface": "יְהוּדָ֔ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -342,9 +410,11 @@
       "why": "Caleb is sent as the tribe's representative; the construct names the tribe, not the patriarch. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6558478,
+      "text": "BHSA",
+      "reference": "NUM 34:19",
+      "position": 8,
+      "surface": "יְהוּדָ֔ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -352,9 +422,11 @@
       "why": "Caleb apportions land as prince of the tribe; the word names the tribe, all candidates persons. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6579074,
+      "text": "BHSA",
+      "reference": "DEU 33:7",
+      "position": 4,
+      "surface": "יהוּדָה֮",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -362,9 +434,11 @@
       "why": "Moses' blessing addresses tribes, not the patriarch; encyclopedia lists no tribe/territory record under this name. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6579080,
+      "text": "BHSA",
+      "reference": "DEU 33:7",
+      "position": 10,
+      "surface": "יְהוּדָ֔ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -372,9 +446,11 @@
       "why": "\"Hear the voice of Judah, bring him to his people\" is the tribe, not Jacob's son. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6582858,
+      "text": "BHSA",
+      "reference": "JOS 7:1",
+      "position": 20,
+      "surface": "יְהוּדָה֙",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -382,9 +458,11 @@
       "why": "מטה יהודה is the tribe Achan belonged to; every candidate is a person. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6583274,
+      "text": "BHSA",
+      "reference": "JOS 7:16",
+      "position": 16,
+      "surface": "יְהוּדָֽה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -392,9 +470,11 @@
       "why": "שבט יהודה taken by lot among Israel's tribes; no tribal record exists among the candidates. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6583279,
+      "text": "BHSA",
+      "reference": "JOS 7:17",
+      "position": 5,
+      "surface": "יְהוּדָ֔ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -402,9 +482,11 @@
       "why": "משפחת יהודה is the tribal division brought forward by lot, not the patriarch. The audit names the referent as: the clan-group of the tribe of Judah."
     },
     {
-      "wordId": 6583316,
+      "text": "BHSA",
+      "reference": "JOS 7:18",
+      "position": 19,
+      "surface": "יְהוּדָֽה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -412,9 +494,11 @@
       "why": "\"of the tribe of Judah\" qualifies Achan's descent group, not the man Judah. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6587876,
+      "text": "BHSA",
+      "reference": "JOS 14:6",
+      "position": 4,
+      "surface": "יְהוּדָ֤ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -422,9 +506,11 @@
       "why": "The tribe's representatives approach Joshua at Gilgal; no collective record is listed. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6588157,
+      "text": "BHSA",
+      "reference": "JOS 15:1",
+      "position": 8,
+      "surface": "יְהוּדָ֖ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -432,9 +518,11 @@
       "why": "Tribal lot with borders by families; the referent is the tribe, not the patriarch. The audit names the referent as: the tribe of Judah and its allotment."
     },
     {
-      "wordId": 6588431,
+      "text": "BHSA",
+      "reference": "JOS 15:12",
+      "position": 13,
+      "surface": "יְהוּדָ֛ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -442,9 +530,11 @@
       "why": "Boundary summary of the tribe's land; candidates hold only persons. The audit names the referent as: the tribe of Judah and its territory."
     },
     {
-      "wordId": 6588445,
+      "text": "BHSA",
+      "reference": "JOS 15:13",
+      "position": 11,
+      "surface": "יְהוּדָ֔ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -452,9 +542,11 @@
       "why": "Caleb receives a portion among the living tribe, centuries after Jacob's son. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6588577,
+      "text": "BHSA",
+      "reference": "JOS 15:20",
+      "position": 5,
+      "surface": "יְהוּדָ֖ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -462,9 +554,11 @@
       "why": "Inheritance of the tribe by families; no tribal or territorial candidate is offered. The audit names the referent as: the tribe of Judah and its inheritance."
     },
     {
-      "wordId": 6588589,
+      "text": "BHSA",
+      "reference": "JOS 15:21",
+      "position": 10,
+      "surface": "יְהוּדָ֔ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -472,9 +566,11 @@
       "why": "Cities at the edge of the tribe's allotment toward Edom; the referent is collective. The audit names the referent as: the tribe of Judah and its territory."
     },
     {
-      "wordId": 6588926,
+      "text": "BHSA",
+      "reference": "JOS 15:63",
+      "position": 10,
+      "surface": "יְהוּדָ֖ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -482,9 +578,11 @@
       "why": "The tribe could not dispossess the Jebusites; a person cannot be the subject here. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6588935,
+      "text": "BHSA",
+      "reference": "JOS 15:63",
+      "position": 19,
+      "surface": "יְהוּדָה֙",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -492,9 +590,11 @@
       "why": "Jebusites dwell with the tribe in Jerusalem to this day; collective referent. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6589870,
+      "text": "BHSA",
+      "reference": "JOS 18:11",
+      "position": 15,
+      "surface": "יְהוּדָ֔ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -502,9 +602,11 @@
       "why": "Benjamin's lot falls between two tribal territories, not between two men. The audit names the referent as: the tribe of Judah and its territory."
     },
     {
-      "wordId": 6589960,
+      "text": "BHSA",
+      "reference": "JOS 18:14",
+      "position": 28,
+      "surface": "יְהוּדָ֑ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -512,9 +614,11 @@
       "why": "Kirjath-jearim is a city of the tribe; no tribe or territory record is listed. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6590195,
+      "text": "BHSA",
+      "reference": "JOS 19:1",
+      "position": 22,
+      "surface": "יְהוּדָֽה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -522,9 +626,11 @@
       "why": "Simeon's inheritance lies within the tribe's land; the referent is the tribe. The audit names the referent as: the tribe of Judah and its inheritance."
     },
     {
-      "wordId": 6590268,
+      "text": "BHSA",
+      "reference": "JOS 19:9",
+      "position": 4,
+      "surface": "יְהוּדָ֔ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -532,9 +638,11 @@
       "why": "\"Out of the portion of the children of Judah\" is tribal land, not a person. The audit names the referent as: the tribe of Judah and its territory."
     },
     {
-      "wordId": 6590276,
+      "text": "BHSA",
+      "reference": "JOS 19:9",
+      "position": 12,
+      "surface": "יְהוּדָה֙",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -542,9 +650,11 @@
       "why": "The tribe's share was too large for them; plural collective, no listed record. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6591245,
+      "text": "BHSA",
+      "reference": "JOS 21:4",
+      "position": 21,
+      "surface": "יְ֠הוּדָה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -552,9 +662,11 @@
       "why": "Levitical cities drawn from the tribe alongside Simeon and Benjamin; tribe, not patriarch. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6591364,
+      "text": "BHSA",
+      "reference": "JOS 21:9",
+      "position": 6,
+      "surface": "יְהוּדָ֔ה",
       "strongNumber": "H3063",
-      "reference": null,
       "reading": "judah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -562,9 +674,11 @@
       "why": "Cities given out of the tribe; the encyclopedia holds no tribal record here. The audit names the referent as: the tribe of Judah."
     },
     {
-      "wordId": 6872241,
+      "text": "BHSA",
+      "reference": "1CH 27:34",
+      "position": 4,
+      "surface": "יְהֹויָדָ֤ע",
       "strongNumber": "H3077",
-      "reference": null,
       "reading": "jehoiada",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -572,9 +686,11 @@
       "why": "Verse names Jehoiada as son of Benaiah, not his father; a distinct man in the counsellor list. The audit names the referent as: Jehoiada son of Benaiah, David's later counsellor."
     },
     {
-      "wordId": 6859460,
+      "text": "BHSA",
+      "reference": "1CH 3:15",
+      "position": 6,
+      "surface": "יֹוחָנָ֔ן",
       "strongNumber": "H3110",
-      "reference": null,
       "reading": "jehoahaz-2",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -582,9 +698,11 @@
       "why": "Jehoahaz is Shallum, listed fourth in this same verse (Jer 22:11); the firstborn Johanan is otherwise unknown. The audit names the referent as: Johanan, eldest son of Josiah who never reigned."
     },
     {
-      "wordId": 6892325,
+      "text": "BHSA",
+      "reference": "2CH 35:8",
+      "position": 20,
+      "surface": "יחִיאֵ֗ל",
       "strongNumber": "H3171",
-      "reference": null,
       "reading": "jehiel-4",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -592,9 +710,11 @@
       "why": "Josiah's Passover is some ninety years after Hezekiah's cleansing, and these rulers give to the priests. The audit names the referent as: a ruler of the temple (priest) under Josiah, distinct from the Hemanite Levite."
     },
     {
-      "wordId": 6866462,
+      "text": "BHSA",
+      "reference": "1CH 16:5",
+      "position": 7,
+      "surface": "יְעִיאֵ֡ל",
       "strongNumber": "H3273",
-      "reference": null,
       "reading": "jeiel-4",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -602,9 +722,11 @@
       "why": "Verse names Jeiel twice, so two men; this first one stands in Jaaziel/Aziel's slot after Zechariah. The audit names the referent as: Jaaziel/Aziel, the Alamoth psaltery player of 1CH 15:18,20."
     },
     {
-      "wordId": 6846111,
+      "text": "BHSA",
+      "reference": "EZR 3:9",
+      "position": 3,
+      "surface": "יֵשׁ֡וּעַ",
       "strongNumber": "H3442",
-      "reference": null,
       "reading": "jeshua-3",
       "verdict": "wrong",
       "instead": "jeshua-5",
@@ -612,9 +734,11 @@
       "why": "Paired with Kadmiel and sons of Judah/Hodaviah among Levites, as in Ezra 2:40 — not the high priest."
     },
     {
-      "wordId": 6738997,
+      "text": "BHSA",
+      "reference": "EZK 17:4",
+      "position": 9,
+      "surface": "כְּנַ֔עַן",
       "strongNumber": "H3667",
-      "reference": null,
       "reading": "canaan-2",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -622,9 +746,11 @@
       "why": "The eagle carries Jehoiachin to Babylon (17:12); 'land of traders, city of merchants' is Babylon, not Canaan. The audit names the referent as: Babylonia, figuratively 'a land of merchants'."
     },
     {
-      "wordId": 6632950,
+      "text": "BHSA",
+      "reference": "2SA 11:21",
+      "position": 4,
+      "surface": "אֲבִימֶ֣לֶךְ",
       "strongNumber": "H40",
-      "reference": null,
       "reading": "abimelech-3",
       "verdict": "wrong",
       "instead": "abimelech-2",
@@ -632,9 +758,11 @@
       "why": "Son of Jerubbesheth, millstone, death at Thebez — the same man as Judges 9; abimelech-3 is a duplicate record."
     },
     {
-      "wordId": 6887962,
+      "text": "BHSA",
+      "reference": "2CH 29:12",
+      "position": 5,
+      "surface": "מַ֣חַת",
       "strongNumber": "H4287",
-      "reference": null,
       "reading": "mahath",
       "verdict": "wrong",
       "instead": "mahath-2",
@@ -642,9 +770,11 @@
       "why": "Hezekiah-era Levite cannot be Samuel's pre-Davidic ancestor; same patronymic is clan repetition, matching the 2CH 31:13 man."
     },
     {
-      "wordId": 6860439,
+      "text": "BHSA",
+      "reference": "1CH 5:14",
+      "position": 11,
+      "surface": "מִיכָאֵ֛ל",
       "strongNumber": "H4317",
-      "reference": null,
       "reading": "michael-2",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -652,9 +782,11 @@
       "why": "This Michael stands generations back in Abihail's pedigree, not the contemporary brother the record is anchored to in v.13. The audit names the referent as: an earlier Gadite, son of Jeshishai and ancestor of Abihail."
     },
     {
-      "wordId": 6744771,
+      "text": "BHSA",
+      "reference": "EZK 27:13",
+      "position": 4,
+      "surface": "מֶ֔שֶׁךְ",
       "strongNumber": "H4902",
-      "reference": null,
       "reading": "meshech",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -662,9 +794,11 @@
       "why": "Javan, Tubal and Meshech here are trading peoples of Tyre's market, not the individual son of Japheth. The audit names the referent as: the nation/land of Meshech trading with Tyre."
     },
     {
-      "wordId": 6856178,
+      "text": "BHSA",
+      "reference": "NEH 11:11",
+      "position": 5,
+      "surface": "מְשֻׁלָּ֣ם",
       "strongNumber": "H4918",
-      "reference": null,
       "reading": "meshullam-15",
       "verdict": "wrong",
       "instead": "shallum-6",
@@ -672,9 +806,11 @@
       "why": "Parallel 1 Chr 9:11 has identical chain Hilkiah–Meshullam–Zadok–Meraioth–Ahitub, held under Shallum son of Zadok."
     },
     {
-      "wordId": 6845458,
+      "text": "BHSA",
+      "reference": "EZR 2:35",
+      "position": 2,
+      "surface": "סְנָאָ֔ה",
       "strongNumber": "H5570",
-      "reference": null,
       "reading": "senaah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -682,9 +818,11 @@
       "why": "Verse sits in Ezra 2's run of town names (Lod, Hadid, Ono, Jericho); no ancestor is meant. The audit names the referent as: Senaah, a locality near Jericho whose people returned."
     },
     {
-      "wordId": 6851078,
+      "text": "BHSA",
+      "reference": "NEH 3:3",
+      "position": 9,
+      "surface": "סְּנָאָ֑ה",
       "strongNumber": "H5570",
-      "reference": null,
       "reading": "hassenaah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -692,9 +830,11 @@
       "why": "Definite article ha-Senaah and Neh 3's town-based builder groups (men of Jericho, Tekoa) point to a place, not a man. The audit names the referent as: the Senaah locality/clan, same group as Ezra 2:35."
     },
     {
-      "wordId": 6853501,
+      "text": "BHSA",
+      "reference": "NEH 7:38",
+      "position": 2,
+      "surface": "סְנָאָ֔ה",
       "strongNumber": "H5570",
-      "reference": null,
       "reading": "senaah",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -702,9 +842,11 @@
       "why": "Parallel of Ezra 2:35, closing Neh 7's geographic sequence (Lod, Hadid, Ono); a settlement, not an ancestor. The audit names the referent as: Senaah, a locality near Jericho whose people returned."
     },
     {
-      "wordId": 6887977,
+      "text": "BHSA",
+      "reference": "2CH 29:12",
+      "position": 20,
+      "surface": "קִ֚ישׁ",
       "strongNumber": "H7027",
-      "reference": null,
       "reading": "kishi",
       "verdict": "wrong",
       "instead": "unlisted",
@@ -712,9 +854,11 @@
       "why": "Kishi son of Abdi fathered Ethan the singer under David; Hezekiah's Kish is centuries later, a distinct man. The audit names the referent as: a Merarite Levite, son of Abdi, in Hezekiah's day."
     },
     {
-      "wordId": 6721265,
+      "text": "BHSA",
+      "reference": "JER 36:11",
+      "position": 7,
+      "surface": "שָׁפָ֛ן",
       "strongNumber": "H8227",
-      "reference": null,
       "reading": "shaphan-2",
       "verdict": "wrong",
       "instead": "shaphan",
@@ -722,9 +866,11 @@
       "why": "Preceding verse calls Gemariah's father 'Shaphan the scribe', identifying him with Josiah's secretary."
     },
     {
-      "wordId": 6721304,
+      "text": "BHSA",
+      "reference": "JER 36:12",
+      "position": 31,
+      "surface": "שָׁפָ֛ן",
       "strongNumber": "H8227",
-      "reference": null,
       "reading": "shaphan-2",
       "verdict": "wrong",
       "instead": "shaphan",
@@ -732,9 +878,11 @@
       "why": "Same Gemariah ben Shaphan whose father is titled the scribe in 36:10."
     },
     {
-      "wordId": 6859829,
+      "text": "BHSA",
+      "reference": "1CH 4:17",
+      "position": 22,
+      "surface": "אֶשְׁתְּמֹֽעַ",
       "strongNumber": "H851",
-      "reference": null,
       "reading": "eshtemoa",
       "verdict": "wrong",
       "instead": "unlisted",

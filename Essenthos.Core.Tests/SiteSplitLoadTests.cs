@@ -71,6 +71,30 @@ public sealed class SiteSplitLoadTests : IDisposable
     }
 
     [Fact]
+    public async Task A_register_naming_its_word_by_row_id_is_refused_with_the_converter_named()
+    {
+        File.WriteAllText(Path.Combine(_folder, "register-0000.jsonl"),
+            JsonSerializer.Serialize(new { number = Number, name = "Jericho", wordId = _db.WordAt(_witness, 1, 1, 1).Id, why = "a test" }) + "\n");
+
+        var load = () => Load();
+
+        await load.Should().ThrowAsync<InvalidDataException>().WithMessage("*address-word-ids.py*");
+    }
+
+    [Fact]
+    public async Task An_occurrence_whose_word_reads_otherwise_now_is_not_annotated()
+    {
+        Register(Occurrence(1, "jericho", SiteRegisterFiles.ByBoth));
+        var word = _db.WordAt(_witness, 1, 1, 1);
+        word.Surface = "another reading";
+        _db.SaveChanges();
+
+        await Load();
+
+        (await _db.WordEntities.AnyAsync(a => a.WordId == word.Id)).Should().BeFalse();
+    }
+
+    [Fact]
     public async Task An_occurrence_both_accounts_agree_about_is_written_as_an_inference_naming_the_model()
     {
         Register(Occurrence(1, "jericho", SiteRegisterFiles.ByBoth));
@@ -265,7 +289,7 @@ public sealed class SiteSplitLoadTests : IDisposable
         {
             number = Number,
             name = "Jericho",
-            wordId = _db.WordAt(_witness, 1, verse, 1).Id,
+            address = _db.Address(_db.WordAt(_witness, 1, verse, 1).Id),
             witness = EntityCandidates.Witness,
             reference = $"GEN 1:{verse}",
             spelling = "יריחו",

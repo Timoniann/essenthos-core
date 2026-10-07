@@ -173,8 +173,19 @@ internal sealed class SenseReadingLoader(
         }
 
         var started = Stopwatch.StartNew();
-        var (readings, contradicted, answers, runs, superseded) = SenseReadingFiles.Read(directory);
-        var refused = SenseReadingFiles.Refused().Readings.ToDictionary(r => r.WordId);
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var placed = await SenseReadingFiles.Place(
+            (NpgsqlConnection)db.Database.GetDbConnection(), directory, cancellationToken);
+        var (readings, contradicted, answers, runs, superseded) =
+            (placed.Readings, placed.Contradicted, placed.Answers, placed.Runs, placed.Superseded);
+        if (placed.Lost.Count > 0)
+        {
+            logger.LogWarning(
+                "{Lost} answers name a word that is not where their address says, and are not loaded: {First}",
+                placed.Lost.Count, string.Join("; ", placed.Lost.Take(10)));
+        }
+
+        var refused = placed.Refused.ToDictionary(r => r.WordId);
         var ruled = await Ruled(cancellationToken);
 
         var wanted = new List<SenseReading>(readings.Count);
