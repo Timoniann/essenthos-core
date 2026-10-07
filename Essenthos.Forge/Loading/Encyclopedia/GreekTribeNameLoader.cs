@@ -7,7 +7,10 @@ using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
-/// <param name="Tribes">Greek names standing after the word for a tribe that one ancestor bears.</param>
+/// <param name="Tribes">
+/// Greek names standing after the word for a tribe, or that the verse goes on to call a tribe, that
+/// one ancestor bears.
+/// </param>
 /// <param name="Realms">Greek names standing after a land, a border, a city or a king that one people bears.</param>
 /// <param name="Unheld">Names in either construct that no ancestor or people bears, which this pass cannot answer.</param>
 /// <param name="Written">Annotations written under the two sources, the carried ones included.</param>
@@ -50,6 +53,12 @@ internal sealed record GreekTribeNameOutcome(
 /// </para>
 ///
 /// <para>
+/// <strong>A name the verse goes on to call a tribe is the ancestor too</strong>: <em>ἐξ Ἰούδα
+/// ἀνατέταλκεν ὁ κύριος ἡμῶν, εἰς ἣν φυλήν</em> — out of Judah, of which tribe — in Hebrews 7:14,
+/// where the relative and φυλή follow the name with no other name between.
+/// </para>
+///
+/// <para>
 /// <strong>After a land, a border, a city or a king the name is the people</strong>, on the owner's
 /// ruling of 2026-09-28 for the Hebrew, which this reads in the Greek: <em>γῆ Νεφθαλείμ</em> is the
 /// land the Naphtalites hold. A name joined to one of these by <em>καί</em> is in the same phrase —
@@ -69,6 +78,11 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
         "Essenthos, on the project owner's reading of 2026-10-04 that a name standing after the Greek " +
         "word for a tribe is the ancestor the tribe is named after";
 
+    public const string AntecedentSource =
+        "Essenthos, on the project owner's reading of 2026-10-04 that a name standing after the Greek " +
+        "word for a tribe is the ancestor the tribe is named after, read where the verse goes on to call " +
+        "the name a tribe";
+
     public const string RealmSource =
         "Essenthos, on the project owner's ruling of 2026-09-28 that a people's name standing after a " +
         "king, a land, a city, a border and the like names the people, read in the Greek";
@@ -78,6 +92,9 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
 
     /// <summary>A king, a kingdom, a land, a country, a city, a border, a field, a mountain.</summary>
     internal static readonly string[] Realm = ["G935", "G932", "G1093", "G5561", "G4172", "G3725", "G68", "G3735"];
+
+    /// <summary>The relative pronoun, which with φυλή after it calls the name before it a tribe.</summary>
+    private const string Relative = "G3739";
 
     /// <summary>The article and <em>sons</em>, which may stand between the governing word and the name.</summary>
     internal static readonly string[] Between = ["G3588", "G5207"];
@@ -130,7 +147,7 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
          """;
 
     /// <summary>The one ancestor a people bearing the Hebrew name descends from and who bears it himself.</summary>
-    private static string Ancestor(string hebrew) =>
+    internal static string Ancestor(string hebrew) =>
         $"""
          (SELECT CASE WHEN count(DISTINCT a.id) = 1 THEN min(a.id) END
           FROM entity p
@@ -154,6 +171,24 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
     /// <summary>Whether a word of a Greek witness stands after the word for a tribe.</summary>
     internal static string AfterATribe(string word) => In(word, [Tribe]);
 
+    /// <summary>
+    /// Whether the verse goes on to call a word a tribe: a relative pronoun with φυλή after it
+    /// follows the word, and no other name stands between.
+    /// </summary>
+    internal static string CalledATribe(string word) =>
+        $"""
+         EXISTS (SELECT 1 FROM word relative
+                 JOIN word tribe ON tribe.verse_id = relative.verse_id AND tribe.position = relative.position + 1
+                      AND tribe.strong_number = '{Tribe}'
+                 WHERE relative.verse_id = {word}.verse_id AND relative.position > {word}.position
+                   AND relative.strong_number = '{Relative}'
+                   AND NOT EXISTS (SELECT 1 FROM word other
+                                   JOIN strong_entry lexicon ON lexicon.strong_number = other.strong_number
+                                   WHERE other.verse_id = {word}.verse_id
+                                     AND other.position > {word}.position AND other.position < relative.position
+                                     AND {EntityAnnotationLoader.GreekName}))
+         """;
+
     /// <summary>Whether a word of a Greek witness stands after a land, a border, a city or a king.</summary>
     internal static string AfterARealm(string word) => In(word, Realm);
 
@@ -164,7 +199,7 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
     /// </summary>
     internal static string Answer(string word) =>
         $"""
-         CASE WHEN {AfterATribe(word)} THEN {Ancestor(Hebrew($"{word}.strong_number"))}
+         CASE WHEN {AfterATribe(word)} OR {CalledATribe(word)} THEN {Ancestor(Hebrew($"{word}.strong_number"))}
               WHEN {AfterARealm(word)} THEN {People(Hebrew($"{word}.strong_number"))} END
          """;
 
@@ -173,41 +208,47 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
          CREATE TEMP TABLE occurrence (
              word_id bigint PRIMARY KEY,
              number text NOT NULL,
-             tribe boolean NOT NULL,
+             construct text NOT NULL,
              entity_id integer)
          ON COMMIT DROP;
-         INSERT INTO occurrence (word_id, number, tribe, entity_id)
-         SELECT w.id, w.strong_number, {AfterATribe("w")}, {Answer("w")}
+         INSERT INTO occurrence (word_id, number, construct, entity_id)
+         SELECT w.id, w.strong_number,
+                CASE WHEN {AfterATribe("w")} THEN 'tribe' WHEN {CalledATribe("w")} THEN 'antecedent' ELSE 'realm' END,
+                {Answer("w")}
          FROM word w
          JOIN text t ON t.id = w.text_id AND t.slug = ANY(@witnesses)
          JOIN strong_entry lexicon ON lexicon.strong_number = w.strong_number
          WHERE {EntityAnnotationLoader.GreekName}
-           AND ({AfterATribe("w")} OR {AfterARealm("w")})
+           AND ({AfterATribe("w")} OR {CalledATribe("w")} OR {AfterARealm("w")})
          """;
 
     private const string Seed =
         """
         INSERT INTO pending_annotation (word_id, entity_id, confidence, corroborated, note)
         SELECT o.word_id, o.entity_id, @confidence, FALSE,
-               o.number || CASE WHEN o.tribe THEN ', standing after the word for a tribe, so the ancestor the tribe is named after'
-                                ELSE ', standing after a land, a border, a city or a king, so the people of that name' END
+               o.number || CASE o.construct
+                   WHEN 'tribe' THEN ', standing after the word for a tribe, so the ancestor the tribe is named after'
+                   WHEN 'antecedent' THEN ', which the verse goes on to call a tribe, so the ancestor the tribe is named after'
+                   ELSE ', standing after a land, a border, a city or a king, so the people of that name' END
         FROM occurrence o
-        WHERE o.entity_id IS NOT NULL AND o.tribe = @tribe
+        WHERE o.entity_id IS NOT NULL AND o.construct = @construct
         """;
 
     private const string Tally =
         """
-        SELECT count(*) FILTER (WHERE tribe AND entity_id IS NOT NULL),
-               count(*) FILTER (WHERE NOT tribe AND entity_id IS NOT NULL),
+        SELECT count(*) FILTER (WHERE construct <> 'realm' AND entity_id IS NOT NULL),
+               count(*) FILTER (WHERE construct = 'realm' AND entity_id IS NOT NULL),
                count(*) FILTER (WHERE entity_id IS NULL)
         FROM occurrence
         """;
 
     public async Task<GreekTribeNameOutcome> Load(CancellationToken cancellationToken = default)
     {
-        var tribesWritten = await db.WordEntities.AnyAsync(a => a.Source == TribeSource, cancellationToken);
-        var realmsWritten = await db.WordEntities.AnyAsync(a => a.Source == RealmSource, cancellationToken);
-        if (tribesWritten && realmsWritten)
+        var sources = new[] { ("tribe", TribeSource), ("antecedent", AntecedentSource), ("realm", RealmSource) };
+        var written = await db.WordEntities
+            .Where(a => a.Source == TribeSource || a.Source == AntecedentSource || a.Source == RealmSource)
+            .Select(a => a.Source).Distinct().ToListAsync(cancellationToken);
+        if (sources.All(construct => written.Contains(construct.Item2)))
         {
             logger.LogInformation("The Greek names standing after a tribe or a land are already named; nothing to do");
             return new GreekTribeNameOutcome(true, 0, 0, 0, 0, [], TimeSpan.Zero);
@@ -221,19 +262,23 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
         await Annotating.Run(connection, transaction, Occurrences, cancellationToken,
             ("witnesses", FixedTitles.GreekWitnesses.ToArray()));
         var (tribes, realms, unheld) = await Counted(connection, transaction, cancellationToken);
+        var answered = await Answered(connection, transaction, cancellationToken);
+        var pending = sources.Where(construct => answered.Contains(construct.Item1) && !written.Contains(construct.Item2))
+            .ToList();
+        if (pending.Count == 0)
+        {
+            logger.LogInformation("The Greek names standing after a tribe or a land are already named; nothing to do");
+            return new GreekTribeNameOutcome(true, 0, 0, 0, 0, [], TimeSpan.Zero);
+        }
 
         var method = EnumSpelling.Of(LinkMethod.RuleBased);
-        foreach (var (tribe, source, written) in new[] { (true, TribeSource, tribesWritten), (false, RealmSource, realmsWritten) })
+        foreach (var (construct, source) in pending)
         {
-            if (written)
-            {
-                continue;
-            }
 
             await Annotating.Run(connection, transaction, "DROP TABLE IF EXISTS pending_annotation", cancellationToken);
             await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
             await Annotating.Run(connection, transaction, Seed, cancellationToken,
-                ("confidence", ByThePhrase), ("tribe", tribe));
+                ("confidence", ByThePhrase), ("construct", construct));
             await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
             await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,
                 ("method", method), ("source", source));
@@ -242,6 +287,7 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
         }
 
         var byText = (await Annotating.ByText(connection, transaction, TribeSource, cancellationToken))
+            .Concat(await Annotating.ByText(connection, transaction, AntecedentSource, cancellationToken))
             .Concat(await Annotating.ByText(connection, transaction, RealmSource, cancellationToken))
             .GroupBy(t => t.Text)
             .Select(g => (g.Key, g.Sum(t => t.Words)))
@@ -253,6 +299,25 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
             false, tribes, realms, unheld, byText.Sum(t => t.Item2), byText, started.Elapsed);
         logger.LogInformation("Named the Greek tribes and lands: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>The constructs some occurrence of which the encyclopedia answers.</summary>
+    private static async Task<HashSet<string>> Answered(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(
+            "SELECT DISTINCT construct FROM occurrence WHERE entity_id IS NOT NULL",
+            connection, (NpgsqlTransaction)transaction.GetDbTransaction());
+        var answered = new HashSet<string>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            answered.Add(reader.GetString(0));
+        }
+
+        return answered;
     }
 
     private static async Task<(int Tribes, int Realms, int Unheld)> Counted(
