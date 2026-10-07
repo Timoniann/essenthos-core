@@ -107,6 +107,27 @@ public sealed class EntityLetterTests : IDisposable
         letters.Total.Should().Be(4);
     }
 
+    /// <summary>
+    /// A record no verse stands behind is not offered by the index or counted under its letter:
+    /// Aaron is cited by a verse, and Abraham, here cited by none, drops out of A.
+    /// </summary>
+    [Fact]
+    public async Task ARecordNoVerseStandsBehindIsNotListed()
+    {
+        var aaron = _db.Entities.Single(e => e.Slug == "aaron");
+        _db.EntityVerses.Add(new EntityVerse
+        {
+            EntityId = aaron.Id, CanonicalBook = 2, CanonicalChapter = 4, CanonicalVerse = 14, Source = "a test",
+        });
+        _db.SaveChanges();
+
+        var letters = await EncyclopediaEndpoints.Letters(Localised(EncyclopediaEndpoints.Listed(_db.Entities)));
+
+        Count(letters, "A").Should().Be(1);
+        letters.Total.Should().Be(1);
+        (await EncyclopediaEndpoints.Listed(_db.Entities).Select(e => e.Slug).ToListAsync()).Should().Equal("aaron");
+    }
+
     private static int Count(EntityLettersResponse letters, string letter) =>
         letters.Letters.Single(l => l.Letter == letter).Count;
 

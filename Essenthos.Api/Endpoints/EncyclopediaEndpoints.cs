@@ -356,6 +356,14 @@ internal static partial class EncyclopediaEndpoints
     }
 
     /// <summary>
+    /// The records the index offers: those a verse stands behind. A record no verse names or speaks
+    /// of — a bearer a lexicon enumerates whom no word of the text was found to name — keeps its
+    /// page and its address, and is not listed among the people and places the text speaks of.
+    /// Shared by the index and its letter counts, so the two count the same records.
+    /// </summary>
+    internal static IQueryable<Entity> Listed(IQueryable<Entity> entities) => entities.Where(e => e.Verses.Any());
+
+    /// <summary>
     /// The entities of one kind, or a refusal naming the kinds there are. Shared by the index and
     /// its letter counts, so the two accept exactly the same words.
     /// </summary>
