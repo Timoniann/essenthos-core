@@ -329,8 +329,11 @@ internal sealed class EntityDescriptorLoader(
                 //
                 // A necessary condition and not a sufficient one: it removes the list-shaped
                 // reading, which is the whole of the measured failure, and leaves the judgement of
-                // a verse that does speak of company to the pass and to its confidence.
+                // a verse that does speak of company to the pass and to its confidence. A verse can
+                // state company in none of these words -- *there remained two of the men in the camp,
+                // ... Eldad, and ... Medad* -- and a person reading it can say so: a decision stands.
                 if (claim.Relation == DescriptorRelations.CompanionOf
+                    && !decided
                     && accompanied is not null
                     && !accompanied.Contains((verse.Book, verse.Chapter, verse.Verse)))
                 {

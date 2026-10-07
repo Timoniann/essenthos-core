@@ -570,6 +570,27 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
+    /// A verse can state company in none of the guard's words: <em>there remained two of the men in the
+    /// camp, ... Eldad, and ... Medad</em>. A person who read it and decided the clause is taken at
+    /// their word; the pass's own reading of the same verse is still refused.
+    /// </summary>
+    [Fact]
+    public async Task ACompanionAPersonDecidedStandsWhereTheGuardsWordsAreAbsent()
+    {
+        Corpus.Add(_db, Bible4uTextSource.KingJames, TextKind.Translation, "eng",
+            (5, 3, ["there", "remained", "two", "of", "the", "men", "in", "the", "camp", "Eldad", "Medad"]));
+        Add("eldad-1", EntityKind.Person, "Eldad", null, (1, 5, 3));
+        Add("medad-1", EntityKind.Person, "Medad", null, (1, 5, 3));
+        await _db.SaveChangesAsync();
+
+        var outcome = await Load("companions-decided");
+
+        outcome.Refused.Unaccompanied.Should().Be(1, "the pass's reading still needs the verse's words");
+        (await _db.EntityDescriptors.Select(d => d.Entity!.Slug + " " + d.Method).ToListAsync())
+            .Should().Equal("medad-1 manual");
+    }
+
+    /// <summary>
     /// A brook is nobody's companion: <em>David ... came to the brook Besor</em> (1SA 30:9) names a
     /// place where he was, and a relation of company is said of someone. The man beside him at the
     /// same verse is kept.
