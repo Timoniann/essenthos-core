@@ -1,5 +1,6 @@
 ﻿using System.Globalization;
 using System.Text.Json;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -703,6 +704,24 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         // twice is not two witnesses: the reader joins the verses twice and the verse-pair counts read
         // both. The verse links' own step removes them on every load, so a count here is a writer that
         // went round it.
+        // A relationship read from Scripture is a descriptor clause put where the page draws it,
+        // and is only as good as the clause still standing behind it: same two records, same
+        // relation, same verse. The relationships' own step settles them against the clauses on
+        // every load, so a row here is one a later writer moved, kept or wrote twice without its
+        // clause.
+        ("relationships read from Scripture that no clause states, or that say again what another says",
+            $"""
+             SELECT (SELECT count(*) FROM entity_relationship r
+                     WHERE r.source LIKE '{Sources.DescriptorReadingPrefix}%'
+                       AND NOT EXISTS (
+                           SELECT 1 FROM entity_descriptor d
+                           WHERE d.entity_id = r.from_entity_id AND d.target_entity_id = r.to_entity_id
+                             AND d.relation = r.type AND d.canonical_book = r.canonical_book
+                             AND d.canonical_chapter = r.canonical_chapter AND d.canonical_verse = r.canonical_verse))
+                  + (SELECT count(*) - count(DISTINCT (from_entity_id, to_entity_id, type))
+                     FROM entity_relationship WHERE source LIKE '{Sources.DescriptorReadingPrefix}%')
+             """),
+
         ("verse links saying again what another link of the same pair says",
             $"""
              SELECT count(*) - count(DISTINCT (s.from_text_id, s.to_text_id, s.relation, s.method, s.confidence,

@@ -1,4 +1,4 @@
-using System.Text.Json;
+﻿using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -93,6 +93,22 @@ public sealed class OwnRecordTests : IDisposable
 
     private Task<OwnRecordOutcome> Load() =>
         Loader().Load(Path.Combine(Path.GetTempPath(), $"absent-{Guid.NewGuid():N}"));
+
+    /// <summary>
+    /// On a corpus built from nothing the titles are written after these rulings, so the Anointed is
+    /// not held yet when the Synodal's companion ruling is checked. The owner decided it is a title,
+    /// and that is what the ruling beside it rests on.
+    /// </summary>
+    [Fact]
+    public async Task ACompanionRulingStandsBesideATitleTheOwnerDecidedBeforeTheTitleIsWritten()
+    {
+        await _db.Entities.Where(e => e.Slug == "anointed").ExecuteDeleteAsync();
+        _db.ChangeTracker.Clear();
+
+        var loading = async () => await Load();
+
+        await loading.Should().NotThrowAsync();
+    }
 
     [Fact]
     public async Task SynodalAddedChristNamesTheTitleAndJesusLocallyWithoutChangingSatan()

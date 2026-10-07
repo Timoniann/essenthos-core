@@ -700,6 +700,30 @@ public static class Datasets
                 + "form of which entry, and anything made from the entries, is shared under CC BY-NC-SA 4.0 "
                 + "too."),
 
+        // The links an EVIDENTIA run proposed and a reviewer accepted. The rules are this project's;
+        // the lemma, part of speech and parse they read off a translation's words come from UDPipe
+        // where the text has no tagging of its own, and the owner accepted the ShareAlike of those
+        // models for what is derived from them.
+        new("evidentia", "EVIDENTIA", "this project, reading the words with UDPipe and the UD models of "
+            + "Milan Straka and Jana Straková (ÚFAL, Charles University) and of bnosac",
+            "CC BY-SA 4.0; CC BY-NC-SA 4.0 where the Ukrainian, Russian, German or Spanish model analysed the words",
+            "https://creativecommons.org/licenses/by-nc-sa/4.0/",
+            "http://hdl.handle.net/11234/1-3131",
+            "Word correspondences between a translation and its original that this project's rules "
+            + "proposed and a reviewer accepted, each with the rule that proposed it, the confidence of "
+            + "its tier and the run it came from. Where a translation carries no tagging of its own, the "
+            + "rules read its words through UDPipe: the dictionary form, the part of speech and the "
+            + "parse of each word are the analyser's, and the correspondence is ours.",
+            Sources.EvidentiaRunPrefix, Links: true,
+            Citation: "Straka, Milan and Straková, Jana, 2019, Universal Dependencies 2.5 Models for UDPipe "
+                + "(2019-12-06), LINDAT/CLARIAH-CZ digital library at the Institute of Formal and Applied "
+                + "Linguistics (ÚFAL), Faculty of Mathematics and Physics, Charles University, "
+                + "http://hdl.handle.net/11234/1-3131.",
+            Obliges: "ShareAlike: the lemmas, parts of speech and parses UDPipe gave, and the links they "
+                + "stand as evidence under, are offered under CC BY-SA 4.0 in turn; anything derived from "
+                + "the Ukrainian, Russian, German or Spanish model also under CC BY-NC-SA 4.0, so it may not "
+                + "be used commercially. The model that analysed each word is recorded with its run."),
+
         // What this project asserts itself, and it belongs in the list precisely because it is
         // ours: a claim of our own, printed beside the ones we merely carry. The links are nearly
         // all of it — correspondences nobody states, which read exactly like an undeclared third
@@ -724,6 +748,7 @@ public static class Datasets
                 "the consonants both Hebrew witnesses write",
                 "the letters both Greek editions print",
                 Sources.VerseReadingPrefix,
+                "the possessive beside a word linked to a Hebrew word with a pronominal suffix",
                 "records written for people a verse names and no dataset holds, each with the verse "
                 + "it rests on and, where the identification is open, who else it might be",
                 "a second reader's judgement, where a review of the readings overturned one and "

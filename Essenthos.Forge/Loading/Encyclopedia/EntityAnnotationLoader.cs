@@ -42,8 +42,8 @@ internal sealed record NameAnswers(int Resolved, int Contested, int Unanswered)
 /// Zero on a cold corpus and zero on every boot after the one the second place arrived on.
 /// </param>
 /// <param name="Written">
-/// What this pass added, which is every annotation on a cold corpus and only the records nothing
-/// had spoken for on any boot after it.
+/// What this pass added, which is every annotation on a cold corpus and only what the seeds find
+/// outstanding on any load after it.
 /// </param>
 /// <param name="ByText">What each text ended up with, so the reach is a count rather than a hope.</param>
 internal sealed record AnnotationOutcome(
@@ -287,8 +287,28 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     internal const string VerseList =
         "the encyclopedia's own list of the verses each entity is named in";
 
-    /// <summary>What a language answers when nothing of it is loaded, or nothing was asked.</summary>
-    private static readonly NameAnswers Nothing = new(0, 0, 0);
+    /// <summary>
+    /// The verse list's claim said one way wherever an earlier load said it another: as the method
+    /// that produced the annotation, with a number. Where an annotation carries it twice, the
+    /// stated one stays, or else the first.
+    /// </summary>
+    private const string OneVerseListClaim =
+        """
+        WITH ranked AS (
+            SELECT c.id, c.method, c.confidence,
+                   row_number() OVER (PARTITION BY c.word_entity_id ORDER BY (c.method = @stated) DESC, c.id) AS n
+            FROM word_entity_claim c
+            WHERE c.source = @source),
+        gone AS (
+            DELETE FROM word_entity_claim c USING ranked r WHERE c.id = r.id AND r.n > 1
+            RETURNING 1),
+        restated AS (
+            UPDATE word_entity_claim c SET method = @stated, confidence = NULL
+            FROM ranked r
+            WHERE c.id = r.id AND r.n = 1 AND (r.method <> @stated OR r.confidence IS NOT NULL)
+            RETURNING 1)
+        SELECT (SELECT count(*) FROM gone) + (SELECT count(*) FROM restated)
+        """;
 
     /// <summary>
     /// Where a verse list is this corpus's own. Every one of them is written under a source that
@@ -586,8 +606,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          """;
 
     /// <summary>
-    /// Whether this word does not already name this record. It is the unit of work, and it is the
-    /// pair because the pair is what gets written: a pass that asked only whether it had ever run
+    /// Whether this pass has not already named this record at this word. It is the unit of work, and
+    /// it is the pair because the pair is what gets written: a pass that asked only whether it had ever run
     /// would leave every record added after it — the peoples, the records this corpus writes for
     /// itself, the place register — with no words and no verses.
     ///
@@ -601,9 +621,12 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </para>
     ///
     /// <para>
-    /// A word another source has already annotated with this record is left alone rather than
-    /// seeded and discarded at the insert: seeding it would carry it across the links a second time
-    /// and claim it a second time, both of which are work and one of which is visible.
+    /// A word another source has already annotated with this record is seeded all the same. The
+    /// annotation stays the other source's, confidence and all, since <see cref="Settle"/> leaves a
+    /// pair already written alone; what the seed adds is this pass's claim on it, because two
+    /// accounts agreeing is what the claims are for, and a model's reading of a name the number
+    /// also resolves would otherwise say nothing of the number. <see cref="Unlent"/> takes the claim
+    /// back once the number stops resolving it.
     /// </para>
     ///
     /// <para>
@@ -617,7 +640,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private const string Unspoken =
         """
         NOT EXISTS (SELECT 1 FROM word_entity spoken
-                    WHERE spoken.word_id = w.id AND spoken.entity_id = resolved.entity_id)
+                    WHERE spoken.word_id = w.id AND spoken.entity_id = resolved.entity_id
+                      AND spoken.source = ANY(@written))
         """;
 
     private const string Workspace =
@@ -906,16 +930,42 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         """;
 
     /// <summary>
+    /// This pass's claim on an annotation another source wrote at a word of the witnesses it reads,
+    /// taken back where the number no longer resolves the word to that record: every such pair is
+    /// seeded on every run, so what this run did not seed it no longer says.
+    /// </summary>
+    private const string Unlent =
+        """
+        DELETE FROM word_entity_claim c
+        USING word_entity a, word w, text t
+        WHERE c.word_entity_id = a.id
+          AND w.id = a.word_id AND t.id = w.text_id
+          AND (t.slug = @witness OR t.slug = ANY(@witnesses))
+          AND c.source = ANY(@written)
+          AND NOT (a.source = ANY(@written))
+          AND NOT EXISTS (SELECT 1 FROM pending_annotation p
+                          WHERE p.word_id = a.word_id AND p.entity_id = a.entity_id)
+        """;
+
+    /// <summary>
     /// The verse list's claim, where it agrees.
     ///
     /// It is a claim only about the stated half: for a derived name the verse list is not a second
     /// opinion but the very evidence the derivation was read from, and writing it as corroboration
     /// would be the corpus agreeing with itself.
+    ///
+    /// <para>
+    /// What the list states is that the entity is named somewhere in the verse, which is testimony
+    /// and carries no confidence; reaching from the verse to the word is the annotation's own
+    /// inference, and its number is the annotation's. So every loader writes this claim the same
+    /// way, <see cref="LinkMethod.StatedBySource"/> with none, and counting claims by method
+    /// answers about the list under one heading.
+    /// </para>
     /// </summary>
     private const string Agreement =
         """
         INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
-        SELECT a.id, w.method, @confidence * coalesce(w.link, 1.0), @source, a.note
+        SELECT a.id, @stated, NULL, @source, a.note
         FROM word_entity a
         JOIN pending_annotation w ON w.word_id = a.word_id AND w.entity_id = a.entity_id
         WHERE w.source <> @derivation AND w.corroborated
@@ -923,14 +973,16 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         """;
 
     /// <summary>
-    /// Everything this loader writes into <c>word_entity</c>, which is what its idempotence is
-    /// asked about.
+    /// Everything this loader writes into <c>word_entity</c>: what it settles beside and what its
+    /// withdrawal takes back.
     ///
-    /// Asking whether <em>anything</em> is annotated answers yes on a corpus where the peoples have
-    /// been written, because they are annotated onto the gentilic words a step earlier — so on a
-    /// cold database this loader would find rows it did not write and skip the whole pass, and the
-    /// corpus would come up with no name resolutions in it and nothing saying so. Its own rows are
-    /// the only question it can ask, and it is the question <c>SenseReadingLoader</c> already asks.
+    /// <para>
+    /// The pass has no early exit. What is outstanding is a (word, record) pair the seeds select, not
+    /// a record nothing has spoken for yet — a resolution that changes reaches words of records
+    /// already annotated — and the seeds and counts over a corpus with nothing to write cost
+    /// seconds, so asking any cheaper question first would only be a way of skipping work a corpus
+    /// built from nothing would do.
+    /// </para>
     /// </summary>
     internal static readonly string[] Written =
         [Resolution, GreekResolution, GreekDistinction, Derivation];
@@ -954,15 +1006,12 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
                 "record the Greek reaches", withdrawn);
         }
 
-        var unspoken = await db.Entities.CountAsync(
-            e => !db.WordEntities.Any(a => a.EntityId == e.Id && Written.Contains(a.Source)),
-            cancellationToken);
-
-        if (unspoken == 0)
+        var restated = await Restate(connection, cancellationToken);
+        if (restated > 0)
         {
-            logger.LogInformation("Every record this pass could reach already names its words; nothing to do");
-            return new AnnotationOutcome(
-                true, Nothing, Nothing, 0, withdrawn, 0, 0, 0, 0, [], started.Elapsed);
+            logger.LogInformation(
+                "Said the verse list's agreement one way on {Rows} claims: stated by the list, with no number",
+                restated);
         }
 
         var hebrew = await Answers(connection, HebrewNumbers, EntityCandidates.Naming,
@@ -987,14 +1036,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             ("witness", Witness), ("rendering", Rendering), ("source", Resolution),
             ("derivation", Derivation), ("resolution", NameResolution), ("derived", DerivedName),
             ("method", EnumSpelling.Of(LinkMethod.StrongNumber)), ("form", EnumSpelling.Of(ByTheForm)),
-            ("corroborated", Corroborated));
+            ("corroborated", Corroborated), ("written", Written));
 
         var refused = await Attest(connection, transaction, cancellationToken);
         await Run(connection, transaction, GreekSeed, cancellationToken,
             ("witnesses", EntityCandidates.GreekWitnesses), ("source", GreekResolution),
             ("distinction", GreekDistinction), ("resolution", GreekNameResolution),
             ("method", EnumSpelling.Of(LinkMethod.StrongNumber)), ("form", EnumSpelling.Of(ByTheForm)),
-            ("corroborated", Corroborated));
+            ("corroborated", Corroborated), ("written", Written));
 
         await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
         await Run(connection, transaction, DistinguishCarried, cancellationToken,
@@ -1007,8 +1056,10 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         var settled = await Run(connection, transaction, Settle, cancellationToken,
             ("written", Written));
         await Run(connection, transaction, Claim, cancellationToken);
+        await Run(connection, transaction, Unlent, cancellationToken, ("written", Written),
+            ("witness", Witness), ("witnesses", EntityCandidates.GreekWitnesses));
         await Run(connection, transaction, Agreement, cancellationToken,
-            ("source", VerseList), ("confidence", Corroborated), ("derivation", Derivation));
+            ("source", VerseList), ("stated", EnumSpelling.Of(LinkMethod.StatedBySource)), ("derivation", Derivation));
 
         var byText = await ByText(connection, transaction, cancellationToken);
         var corroborated = await Corroboration(connection, transaction, VerseList, cancellationToken);
@@ -1231,6 +1282,19 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             ("greek", new[] { GreekResolution, GreekDistinction }), ("carried", Annotating.CarriedNote));
         await transaction.CommitAsync(cancellationToken);
         return withdrawn;
+    }
+
+    /// <summary><see cref="OneVerseListClaim"/>, in a transaction of its own.</summary>
+    private async Task<int> Restate(NpgsqlConnection connection, CancellationToken cancellationToken)
+    {
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await using var command = new NpgsqlCommand(
+            OneVerseListClaim, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
+        command.Parameters.AddWithValue("source", VerseList);
+        command.Parameters.AddWithValue("stated", EnumSpelling.Of(LinkMethod.StatedBySource));
+        var restated = (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!;
+        await transaction.CommitAsync(cancellationToken);
+        return restated;
     }
 
     private static async Task<int> Run(

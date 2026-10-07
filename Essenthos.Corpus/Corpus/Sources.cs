@@ -108,6 +108,12 @@ internal static class Sources
     public const string StrongTranslationPrefix = "a translation of the Strong lexicon by";
 
     /// <summary>
+    /// How the rule's claim on a link an EVIDENTIA run proposed and a reviewer accepted begins. The
+    /// row goes on to name the run, the rules' version and the kind of decision.
+    /// </summary>
+    public const string EvidentiaRunPrefix = "EVIDENTIA run";
+
+    /// <summary>
     /// How a descriptor read off the text begins. The row names the model and the day it was asked,
     /// so the pass is identifiable and removable.
     /// </summary>
