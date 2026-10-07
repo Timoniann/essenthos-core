@@ -1,0 +1,28 @@
+{
+ "answers": [
+  {
+   "slug": "ura",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "Ura is located near Bayburt in Anatolia; none of the candidates identifies that settlement. Ur at Tell el Muqayyar and Dura at Tulul Dura are different locations."
+  },
+  {
+   "slug": "barsabbas",
+   "verdict": "same",
+   "fold_into": "joseph-11",
+   "confidence": 1,
+   "reason": "The distinguisher identifies Joseph called Barsabbas, surnamed Justus, the candidate to replace Judas Iscariot in ACT 1:23."
+  },
+  {
+   "slug": "barsabbas-2",
+   "verdict": "same",
+   "fold_into": "judas-5",
+   "confidence": 1,
+   "reason": "The distinguisher identifies Judas called Barsabbas, sent with Silas to Antioch in ACT 15:22–32. Joseph also bears G923 but is a different person."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:17:11+00:00"
+}

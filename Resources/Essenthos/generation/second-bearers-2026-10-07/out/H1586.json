@@ -1,0 +1,25 @@
+{
+ "strong": "H1586",
+ "record": {
+  "kind": "person",
+  "name": "Gomer",
+  "slug": "gomer",
+  "distinguisher": "son of Japheth (GEN 10:2)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Gomer",
+   "who": "the unfaithful wife of the prophet Hosea",
+   "verses": [
+    "HOS 1:3"
+   ],
+   "confidence": 1
+  }
+ ],
+ "note": "EZK 38:6 refers to Gomer as a people rather than a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:01+00:00"
+}

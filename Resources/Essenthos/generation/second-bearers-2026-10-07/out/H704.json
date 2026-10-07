@@ -1,0 +1,15 @@
+{
+ "strong": "H704",
+ "record": {
+  "kind": "person",
+  "name": "Arba",
+  "slug": "arba",
+  "distinguisher": "the greatest man among the Anakims, after whom Kirjath-arba was named (JOS 14:15)"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "Sense 2 refers to the city of Arba, not a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:46+00:00"
+}

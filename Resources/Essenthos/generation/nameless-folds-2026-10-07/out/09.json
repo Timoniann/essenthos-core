@@ -1,0 +1,77 @@
+{
+ "answers": [
+  {
+   "slug": "sutu",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Sutu is a people group near the Tigris mouth; the candidates are southern regions or settlements named Succoth."
+  },
+  {
+   "slug": "tartessos",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Tartessos is located at Huelva in Spain, whereas Assos and Tarsus are separate cities in Anatolia."
+  },
+  {
+   "slug": "tegarama",
+   "verdict": "same",
+   "fold_into": "bethtogarmah",
+   "confidence": 0.99,
+   "reason": "Beth-togarmah explicitly identifies its modern referent as another name for Tegarama and is likewise classified as a settlement. Togarmah has the same Ezekiel passages but lacks this explicit settlement identification."
+  },
+  {
+   "slug": "thapsacus",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Thapsacus at Dibseh is an Euphrates settlement, geographically distinct from Tarsus, Damascus and Syracuse."
+  },
+  {
+   "slug": "thelme",
+   "verdict": "unsure",
+   "fold_into": "telmelah",
+   "confidence": 0.7,
+   "reason": "Tel-melah is the likeliest candidate as another Babylonian settlement, but its supplied location near Nippur differs from Thelme's Samawah location. The information does not establish that they are the same town."
+  },
+  {
+   "slug": "thisbe",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "Thisbe is the northern settlement associated with Tobit, between Kedesh-naphtali and Hazor. The Tishbe candidate instead represents Elijah's designation in Kings and is explicitly marked as a social class."
+  },
+  {
+   "slug": "tjaru",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Tjaru at Tel Habuwa is an Egyptian settlement; none of the candidates identifies that site."
+  },
+  {
+   "slug": "ummanmanda",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "The record explicitly identifies Umman Manda with Media. Both candidates are the Camp of Dan in Judges, a different referent."
+  },
+  {
+   "slug": "upu",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.97,
+   "reason": "Upu is an ancient Syrian region associated with Damascus, whereas the candidate Put is explicitly identified with Libya."
+  },
+  {
+   "slug": "uqnu",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1,
+   "reason": "The record identifies the Karkheh River, and no candidate is supplied to fold it into."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:17:54+00:00"
+}

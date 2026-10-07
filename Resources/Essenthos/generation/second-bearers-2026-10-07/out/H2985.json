@@ -1,0 +1,30 @@
+{
+ "strong": "H2985",
+ "record": {
+  "kind": "person",
+  "name": "Jabin",
+  "slug": "jabin",
+  "distinguisher": "King of Hazor (JOS 11:1), one of thirty-one kings (JOS 12:19) defeated by Joshua (JOS 12:7)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Jabin",
+   "who": "Another king of Hazor whose general, Sisera, was defeated by Barak",
+   "verses": [
+    "PSA 83:9",
+    "JDG 4:17",
+    "JDG 4:2",
+    "JDG 4:23",
+    "JDG 4:24",
+    "JDG 4:7"
+   ],
+   "confidence": 1
+  }
+ ],
+ "note": "The existing record is Joshua's opponent; the missing Jabin is the later king associated with Sisera and the river Kishon.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:32+00:00"
+}

@@ -1,0 +1,143 @@
+{
+ "source": "proposed by gpt-6.1-sol (Codex, reasoning high) 2026-10-07 from candidates by name similarity and shared Strong number; every fold read by Claude (lead), all 23 accepted; 4 unsure (bether-2, hermons, magdolum, thelme) and 76 distinct left unfolded",
+ "folds": [
+  {
+   "record": "gomorrha",
+   "into": "gomorrah",
+   "confidence": 1.0,
+   "reason": "Gomorrha is the Greek NT spelling of Gomorrah, as in MAT 10:15. Both records explicitly share G1116."
+  },
+  {
+   "record": "juda",
+   "into": "judah-6",
+   "confidence": 0.94,
+   "reason": "G2455 includes Judah as the tribe named in HEB 7:14 and HEB 8:8, both attached to judah-6. The Judea candidates represent the geographic region under different headwords."
+  },
+  {
+   "record": "sychem",
+   "into": "shechem-4",
+   "confidence": 1.0,
+   "reason": "Sychem is the Greek NT spelling of Shechem in ACT 7:16. The Tell Balatah candidate explicitly shares G4966."
+  },
+  {
+   "record": "chaldaean",
+   "into": "chaldea",
+   "confidence": 0.99,
+   "reason": "Chaldaean G5466 is the gentilic used in 'land of the Chaldaeans' in ACT 7:4. The Chaldea candidate explicitly includes this Greek headword and Strong number."
+  },
+  {
+   "record": "charran",
+   "into": "haran-4",
+   "confidence": 1,
+   "reason": "Charran is the Greek NT spelling of Haran in ACT 7:2,4. Both records share G5488 and refer to Harran."
+  },
+  {
+   "record": "ishtob",
+   "into": "tob",
+   "confidence": 0.94,
+   "reason": "Ish-tob (H382) in 2SA 10:6,8 is commonly understood as 'men of Tob,' referring to the land of Tob known from JDG 11:3,5."
+  },
+  {
+   "record": "allonbachuth",
+   "into": "allonbacuth",
+   "confidence": 1,
+   "reason": "Alternate spelling of the Oak of Weeping where Deborah was buried, GEN 35:8. Both records share H439."
+  },
+  {
+   "record": "danjaan",
+   "into": "dan-2",
+   "confidence": 0.88,
+   "reason": "Dan-jaan in 2SA 24:6 is conventionally identified with northern Dan. The Tel Dan candidate explicitly includes the alias Dan Jaan, although the geographical identification is debated."
+  },
+  {
+   "record": "hamogog",
+   "into": "valleyofhamongog",
+   "confidence": 0.99,
+   "reason": "H1996 denotes Hamon-gog, the burial valley named in EZK 39:11 and 39:15. Those are exactly the candidate valley's references."
+  },
+  {
+   "record": "bashanhavothjair",
+   "into": "havvothjair",
+   "confidence": 0.98,
+   "reason": "Bashan-Havoth-jair is the fuller regional name for Jair's settlements in DEU 3:14. The candidate includes that verse and the corresponding Havoth-jair aliases."
+  },
+  {
+   "record": "hazarhatticon",
+   "into": "hazerhatticon",
+   "confidence": 0.99,
+   "reason": "Hazar-hatticon and Hazer-hatticon are spelling variants of the border locality in EZK 47:16. The candidate includes the exact Hazar Hatticon alias."
+  },
+  {
+   "record": "charashim",
+   "into": "geharashim",
+   "confidence": 0.99,
+   "reason": "Charashim (H2798) names the craftsmen’s valley in 1 Chronicles 4:14; Ge-harashim explicitly includes the alias 'valley of Charashim' and that verse."
+  },
+  {
+   "record": "carmelite",
+   "into": "carmel",
+   "confidence": 0.97,
+   "reason": "Carmelite (H3761) is the gentilic of the town Carmel, used for Nabal in 1 Samuel 30:5. The settlement candidate also carries 'Carmelitess'; Mount Carmel is a separate geographical referent."
+  },
+  {
+   "record": "ittahkazin",
+   "into": "ethkazin",
+   "confidence": 1.0,
+   "reason": "Ittah-kazin is an alternative spelling of Eth-kazin, the Zebulun boundary settlement in JOS 19:13. The candidate explicitly includes the label Ittah-kazin."
+  },
+  {
+   "record": "padan",
+   "into": "paddanaram",
+   "confidence": 1.0,
+   "reason": "Padan is the shortened form of Paddan-aram used in GEN 48:7. Both records identify H6307, and the candidate includes Paddan as an alias."
+  },
+  {
+   "record": "kirjatharba",
+   "into": "hebron-3",
+   "confidence": 1.0,
+   "reason": "Kirjath-arba is the former name of Hebron, explicitly identified in GEN 23:2 and JOS 14:15. The Hebron candidate includes Kiriath-arba and shares H7153."
+  },
+  {
+   "record": "shebah",
+   "into": "shiba",
+   "confidence": 1.0,
+   "reason": "Shebah and Shiba are alternative renderings of the well named by Isaac in GEN 26:33. Both records identify H7656."
+  },
+  {
+   "record": "tophet",
+   "into": "topheth",
+   "confidence": 0.98,
+   "reason": "H8613 is the Tophet form used in ISA 30:33, a variant associated with Topheth in the Valley of Hinnom. The candidate already includes ISA 30:33 among its occurrences."
+  },
+  {
+   "record": "nahuru",
+   "into": "nahor-3",
+   "confidence": 0.99,
+   "reason": "The Nahor candidate explicitly identifies its location as Nahuru, matching the settlement near Haran associated with GEN 24:10."
+  },
+  {
+   "record": "pitru",
+   "into": "pethor",
+   "confidence": 0.99,
+   "reason": "The Pethor candidate explicitly gives Pitru as another name, matching the Mesopotamian settlement associated with Balaam in NUM 22:5 and DEU 23:4."
+  },
+  {
+   "record": "tegarama",
+   "into": "bethtogarmah",
+   "confidence": 0.99,
+   "reason": "Beth-togarmah explicitly identifies its modern referent as another name for Tegarama and is likewise classified as a settlement. Togarmah has the same Ezekiel passages but lacks this explicit settlement identification."
+  },
+  {
+   "record": "barsabbas",
+   "into": "joseph-11",
+   "confidence": 1,
+   "reason": "The distinguisher identifies Joseph called Barsabbas, surnamed Justus, the candidate to replace Judas Iscariot in ACT 1:23."
+  },
+  {
+   "record": "barsabbas-2",
+   "into": "judas-5",
+   "confidence": 1,
+   "reason": "The distinguisher identifies Judas called Barsabbas, sent with Silas to Antioch in ACT 15:22–32. Joseph also bears G923 but is a different person."
+  }
+ ]
+}

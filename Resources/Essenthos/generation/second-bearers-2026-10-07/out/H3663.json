@@ -1,0 +1,15 @@
+{
+ "strong": "H3663",
+ "record": {
+  "kind": "person",
+  "name": "Chenaniah",
+  "slug": "chenaniah",
+  "distinguisher": "chief of the Levites (1CH 15:22), descendant of Izhar (1CH 26:29)"
+ },
+ "record_is": "1, 2",
+ "missing": [],
+ "note": "The site's record explicitly combines both enumerated senses; the definition distinguishes them, but the supplied verses do not establish whether they are different men.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:13+00:00"
+}

@@ -1,0 +1,15 @@
+{
+ "strong": "H152",
+ "record": {
+  "kind": "person",
+  "name": "Adrammelech",
+  "slug": "adrammelech",
+  "distinguisher": "killed King Sennacherib of Assyria (2KI 19:37)"
+ },
+ "record_is": "2",
+ "missing": [],
+ "note": "Sense 1 is a deity, not a distinct human person; the record represents sense 2.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:54:55+00:00"
+}

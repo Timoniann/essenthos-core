@@ -1,0 +1,15 @@
+{
+ "strong": "H5305",
+ "record": {
+  "kind": "person",
+  "name": "Naphish",
+  "slug": "naphish",
+  "distinguisher": "eleventh-born son of Ishmael (GEN 25:15)"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "Sense 1 is already represented by the record; sense 2 is an Arabian tribe, not a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:21+00:00"
+}

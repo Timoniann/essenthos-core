@@ -1,0 +1,15 @@
+{
+ "strong": "H813",
+ "record": {
+  "kind": "person",
+  "name": "Ashkenaz",
+  "slug": "ashkenaz",
+  "distinguisher": "son of Gomer (GEN 10:3)"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "The record covers the descendant of Japheth; sense 2 denotes a people, not a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:55+00:00"
+}

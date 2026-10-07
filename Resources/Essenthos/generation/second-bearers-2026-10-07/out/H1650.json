@@ -1,0 +1,15 @@
+{
+ "strong": "H1650",
+ "record": {
+  "kind": "place",
+  "name": "Geshur",
+  "slug": "geshur",
+  "distinguisher": null
+ },
+ "record_is": "2",
+ "missing": [],
+ "note": "Sense 1 is a people and sense 2 is a land; neither is a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:05+00:00"
+}

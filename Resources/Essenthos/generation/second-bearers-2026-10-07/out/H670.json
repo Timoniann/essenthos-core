@@ -1,0 +1,15 @@
+{
+ "strong": "H670",
+ "record": {
+  "kind": "place",
+  "name": "Apharsite",
+  "slug": "apharsite",
+  "distinguisher": null
+ },
+ "record_is": "",
+ "missing": [],
+ "note": "The numbered senses describe an office or officials collectively, not distinct persons, and do not support the record's place classification.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:16+00:00"
+}

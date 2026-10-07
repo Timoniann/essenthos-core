@@ -1,0 +1,26 @@
+{
+ "strong": "H445",
+ "record": {
+  "kind": "person",
+  "name": "Elhanan",
+  "slug": "elhanan",
+  "distinguisher": "son of Jaare-oregim (2SA 21:19), seventh of \"the thirty\" of David's men (2SA 23:24)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Elhanan",
+   "who": "Dodo's son who was a chief of David",
+   "verses": [
+    "2SA 23:24",
+    "1CH 11:26"
+   ],
+   "confidence": 0.99
+  }
+ ],
+ "note": "The existing record conflates sense 1, the son of Jaare-oregim/Jair, with sense 2, the son of Dodo among David's thirty.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:27+00:00"
+}

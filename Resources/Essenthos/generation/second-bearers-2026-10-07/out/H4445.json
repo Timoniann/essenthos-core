@@ -1,0 +1,15 @@
+{
+ "strong": "H4445",
+ "record": {
+  "kind": "person",
+  "name": "Malcam",
+  "slug": "malcam",
+  "distinguisher": "son of Shaharaim (1CH 8:9)"
+ },
+ "record_is": "2",
+ "missing": [],
+ "note": "Sense 1 denotes the deity Milcom (also Molech), not a man or woman; sense 2 is the existing Malcam record.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:17+00:00"
+}

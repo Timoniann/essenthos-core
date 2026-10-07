@@ -1,0 +1,77 @@
+{
+ "answers": [
+  {
+   "slug": "charran",
+   "verdict": "same",
+   "fold_into": "haran-4",
+   "confidence": 1,
+   "reason": "Charran is the Greek NT spelling of Haran in ACT 7:2,4. Both records share G5488 and refer to Harran."
+  },
+  {
+   "slug": "ishtob",
+   "verdict": "same",
+   "fold_into": "tob",
+   "confidence": 0.94,
+   "reason": "Ish-tob (H382) in 2SA 10:6,8 is commonly understood as 'men of Tob,' referring to the land of Tob known from JDG 11:3,5."
+  },
+  {
+   "slug": "allonbachuth",
+   "verdict": "same",
+   "fold_into": "allonbacuth",
+   "confidence": 1,
+   "reason": "Alternate spelling of the Oak of Weeping where Deborah was buried, GEN 35:8. Both records share H439."
+  },
+  {
+   "slug": "apharsite",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Apharsites (H670) are a people listed in EZR 4:9. None of the candidates represents that people."
+  },
+  {
+   "slug": "arphaxad",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "H775 denotes Arphaxad/Arpachshad, Shem's son in GEN 10:22, and potentially his associated territory. It is unrelated to Arpad (H774), Arad, or the other candidates."
+  },
+  {
+   "slug": "ashdothpisgah",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.96,
+   "reason": "Ashdoth-pisgah (H798) denotes the slopes of Pisgah, as in DEU 3:17 and JOS 12:3. The slopes are a specific geographic feature rather than the mountain or peak represented by pisgah."
+  },
+  {
+   "slug": "ashurites",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "Ashurites (H805) names a people in Ish-bosheth's realm, 2SA 2:9, whose identification is disputed. It does not identify the city Asshur (H804) or either other candidate."
+  },
+  {
+   "slug": "bajith",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Bajith (H1006) occurs in ISA 15:2 in the Moab oracle, interpreted as a place or temple. None of the candidates is an established equivalent."
+  },
+  {
+   "slug": "bethhammerchak",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Beth-ham-Merchak (H1023) is the 'far house' where David stopped while leaving Jerusalem, 2SA 15:17. None of the candidates denotes that location."
+  },
+  {
+   "slug": "baalebamoth",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Baale-Bamoth (H1181) denotes the 'lords of the high places' of Arnon in NUM 21:28. None of the listed candidates represents that designation or its referent."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:15:24+00:00"
+}

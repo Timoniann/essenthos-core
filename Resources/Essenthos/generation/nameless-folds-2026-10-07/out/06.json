@@ -1,0 +1,77 @@
+{
+ "answers": [
+  {
+   "slug": "chalcis",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Chalcis is identified with Anjar; none of the candidates denotes that settlement. Salamis, Chios and the listed Israelite towns have different locations."
+  },
+  {
+   "slug": "charmande",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Charmande is identified with Hit on the Euphrates. None of the candidates shares that identification; Haran is Harran and Kartan is Khirbet el Qureiyeh."
+  },
+  {
+   "slug": "eridu",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Eridu is the Mesopotamian settlement at Tell Abu Shahrain. None of the candidates denotes that site; even the Babylonian Cherub has no evidence identifying it with Eridu."
+  },
+  {
+   "slug": "etruria",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1.0,
+   "reason": "Etruria is a region of Italy. It is geographically distinct from Persia and from the Judean settlement Beth-zur."
+  },
+  {
+   "slug": "gathpadalla",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Gath-padalla is identified with Jett, whereas Gadara is Umm Qais. These are separate settlements, with no evidence of an alternate-name relationship."
+  },
+  {
+   "slug": "gergesa",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Gergesa at Kursi and Gerasa at Jerash are separate settlements. Variant Gospel readings involving Gergesenes and Gerasenes do not make those towns the same referent."
+  },
+  {
+   "slug": "gutium",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Gutium is a Mesopotamian/Zagros region. Gittaim is a settlement in Israel, and Rhegium is Reggio Calabria in Italy."
+  },
+  {
+   "slug": "halahha",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.92,
+   "reason": "Halahha denotes the settlement identified with Al Abbasiyah. The supplied Halah record denotes a wider area about 60 km around Halahha, so geographic association does not establish identical referents."
+  },
+  {
+   "slug": "harhar",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.93,
+   "reason": "Harhar is identified with Nahavand. The closest candidate, Hara in 1 Chronicles 5:26, is explicitly represented here as a generic expression for mountains or cities, with no identification with Nahavand."
+  },
+  {
+   "slug": "hatti",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Hatti denotes the historical Hittite land or region. None of the candidates denotes that region; Attalia, Jattir and Hamath are separate settlements."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:16:58+00:00"
+}

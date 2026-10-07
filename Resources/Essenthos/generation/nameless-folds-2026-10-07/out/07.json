@@ -1,0 +1,77 @@
+{
+ "answers": [
+  {
+   "slug": "heracleopolismagna",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Heracleopolis Magna is the Egyptian settlement at Ihnasiyyah al Madinah; Hierapolis in COL 4:13 is in Phrygia."
+  },
+  {
+   "slug": "heracleopolisparva",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Heracleopolis Parva is the Egyptian settlement identified here with Tell Belim; Hierapolis in COL 4:13 is in Phrygia."
+  },
+  {
+   "slug": "herodspalace",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1,
+   "reason": "Herod’s palace in Jerusalem is a royal palace, whereas both candidates denote sanctuary rooms."
+  },
+  {
+   "slug": "hilakku",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1,
+   "reason": "The record explicitly identifies Hilakku with Cilicia. Lakkum is a settlement on Naphtali’s boundary in JOS 19:33."
+  },
+  {
+   "slug": "janua",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.95,
+   "reason": "Janua is identified with Yamun, a different settlement from both Khirbet Yanun (JOS 16:6–7) and Yanouh (2KI 15:29). None of the other candidates matches its location or identity."
+  },
+  {
+   "slug": "kumidi",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Kumidi at Kamid el Loz is a settlement in the Beqaa Valley. It is distinct from the Midian region east of Aqaba and Middin in Judah (JOS 15:61)."
+  },
+  {
+   "slug": "laash",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.97,
+   "reason": "Laash is located near Hamath in Syria. The candidates identify other places, including Lasha at Callirrhoe and Laish/Dan farther south; spelling similarity does not establish identity."
+  },
+  {
+   "slug": "madiama",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Madiama is identified with Al Bad in northwestern Arabia. None of the candidates denotes that settlement; Media is a separate region despite the similar name."
+  },
+  {
+   "slug": "magdalsenna",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "Magdalsenna is identified with Khirbat al Beiyudat in the Jordan Valley. Magdala/Magadan and the other candidates denote different settlements."
+  },
+  {
+   "slug": "magdolum",
+   "verdict": "unsure",
+   "fold_into": "migdol-2",
+   "confidence": 0.8,
+   "reason": "Magdolum at Tell el Herr likely corresponds to the Egyptian Migdol of JER 44:1 and 46:14. However, both migdol and migdol-2 explicitly identify Tell el Herr, and migdol-3 aliases the latter, so the supplied data does not establish exactly one target."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:16:58+00:00"
+}

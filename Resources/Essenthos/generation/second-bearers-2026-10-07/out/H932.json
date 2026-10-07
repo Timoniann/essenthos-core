@@ -1,0 +1,15 @@
+{
+ "strong": "H932",
+ "record": {
+  "kind": "person",
+  "name": "Bohan",
+  "slug": "bohan",
+  "distinguisher": "son of Reuben whose border stone marked one corner of Judah's portion of the Land (JOS 15:6)"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "Sense 2 is a boundary marker, not a distinct person; both verses name Bohan the son of Reuben.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:58:14+00:00"
+}

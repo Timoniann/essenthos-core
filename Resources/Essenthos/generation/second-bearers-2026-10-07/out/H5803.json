@@ -1,0 +1,25 @@
+{
+ "strong": "H5803",
+ "record": {
+  "kind": "person",
+  "name": "Azgad",
+  "slug": "azgad",
+  "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:12)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Azgad",
+   "who": "a man who sealed the covenant with Nehemiah",
+   "verses": [
+    "NEH 10:15"
+   ],
+   "confidence": 1
+  }
+ ],
+ "note": "The existing record represents the family ancestor; sense 2 identifies the covenant signer.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:47+00:00"
+}

@@ -1,0 +1,77 @@
+{
+ "answers": [
+  {
+   "slug": "abilalysaniou",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1.0,
+   "reason": "Abila Lysaniou is the settlement identified with Souq Wadi Barada. No candidate is supplied."
+  },
+  {
+   "slug": "adasa",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Adasa, the battle site in 1 Maccabees 7:40, is identified here with Khirbet Adasa. Hadashah in Joshua 15:37 is a different settlement in the Judah lowlands."
+  },
+  {
+   "slug": "adulis",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Adulis is the ancient Red Sea port in present-day Eritrea. None of the candidates denotes that settlement."
+  },
+  {
+   "slug": "ama",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "The supplied location places Ama along the Uqnu in Mesopotamia. Amad and Amam are settlements in Israel, while Amaw is explicitly a region between Aleppo and Carchemish."
+  },
+  {
+   "slug": "amate",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "Amate is located along the Uqnu, unlike Hamath at Hama or Hammath at Tiberias. No candidate has the same geographic identification."
+  },
+  {
+   "slug": "arbela",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.96,
+   "reason": "Arbela is explicitly identified with Horbat Arbel in Galilee. The candidate Beth-arbel is identified with Tall Irbid, a different site."
+  },
+  {
+   "slug": "arsinoe",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "This Arsinoe is an Egyptian settlement in the region between Maghfar and Lake Timsah. Syene is Aswan, and none of the other candidates denotes the supplied location."
+  },
+  {
+   "slug": "batanea",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Batanea is a historical region associated with Bashan, east of the Sea of Galilee. Ecbatana is a city in Media, and no Bashan candidate is supplied."
+  },
+  {
+   "slug": "belamon",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1.0,
+   "reason": "The supplied identification makes Belamon another name for Abel-beth-maacah. That referent is absent from the candidates; Baal-hamon and the Baal-meon aliases are different places."
+  },
+  {
+   "slug": "carthage",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1.0,
+   "reason": "Carthage is the ancient North African city near modern Tunis. None of the candidates denotes that city."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:16:44+00:00"
+}

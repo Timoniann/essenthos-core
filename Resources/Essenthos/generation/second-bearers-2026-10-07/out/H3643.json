@@ -1,0 +1,15 @@
+{
+ "strong": "H3643",
+ "record": {
+  "kind": "person",
+  "name": "Chimham",
+  "slug": "chimham",
+  "distinguisher": "the servant of Barzillai (2SA 19:37)"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "Sense 1 is the existing person record; sense 2 denotes the inn or habitation near Bethlehem, not a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:47+00:00"
+}

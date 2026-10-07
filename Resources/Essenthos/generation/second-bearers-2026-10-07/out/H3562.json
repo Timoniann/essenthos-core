@@ -1,0 +1,25 @@
+{
+ "strong": "H3562",
+ "record": {
+  "kind": "person",
+  "name": "Conaniah",
+  "slug": "conaniah",
+  "distinguisher": "officer in charge of the consecrated things (2CH 31:12)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Conaniah",
+   "who": "a Levite chief in the time of Josiah",
+   "verses": [
+    "2CH 35:9"
+   ],
+   "confidence": 1
+  }
+ ],
+ "note": "The existing record is Hezekiah's Levite ruler; sense 2 is the Levite chief associated with Josiah's Passover.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:40+00:00"
+}

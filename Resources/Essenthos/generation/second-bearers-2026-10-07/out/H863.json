@@ -1,0 +1,26 @@
+{
+ "strong": "H863",
+ "record": {
+  "kind": "person",
+  "name": "Ittai",
+  "slug": "ittai",
+  "distinguisher": "the Gittite (2SA 15:19), seventeenth of \"the thirty\" of David's men (2SA 23:29)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Ittai (Ithai)",
+   "who": "One of David's 30 mighty warriors, a Benjamite",
+   "verses": [
+    "2SA 23:29",
+    "1CH 11:31"
+   ],
+   "confidence": 1
+  }
+ ],
+ "note": "The record's distinguisher conflates Ittai the Gittite with Ittai son of Ribai, the Benjamite warrior.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:58:11+00:00"
+}

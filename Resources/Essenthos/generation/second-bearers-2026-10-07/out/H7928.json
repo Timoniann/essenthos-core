@@ -1,0 +1,25 @@
+{
+ "strong": "H7928",
+ "record": {
+  "kind": "person",
+  "name": "Shechem",
+  "slug": "shechem-2",
+  "distinguisher": "son of Gilead (NUM 26:30-31)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Shechem",
+   "who": "a Manassite, son of Shemida",
+   "verses": [
+    "1CH 7:19"
+   ],
+   "confidence": 1
+  }
+ ],
+ "note": "1CH 7:19 explicitly identifies the missing Shechem as a son of Shemidah.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:50+00:00"
+}

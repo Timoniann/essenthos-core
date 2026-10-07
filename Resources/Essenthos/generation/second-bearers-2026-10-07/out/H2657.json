@@ -1,0 +1,15 @@
+{
+ "strong": "H2657",
+ "record": {
+  "kind": "person",
+  "name": "Hephzibah",
+  "slug": "hephzibah",
+  "distinguisher": "mother of King Manasseh (2KI 21:1)"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "Sense 1 is already represented; sense 2 is a figurative name for Jerusalem, not a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:17+00:00"
+}

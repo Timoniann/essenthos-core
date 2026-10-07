@@ -1,0 +1,15 @@
+{
+ "strong": "H8422",
+ "record": {
+  "kind": "person",
+  "name": "Tubal",
+  "slug": "tubal",
+  "distinguisher": "son of Japheth (GEN 10:2)"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "The record represents Tubal, son of Japheth; sense 2 is a region, not a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:55+00:00"
+}

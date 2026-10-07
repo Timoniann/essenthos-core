@@ -1,0 +1,15 @@
+{
+ "strong": "H6938",
+ "record": {
+  "kind": "person",
+  "name": "Kedar",
+  "slug": "kedar",
+  "distinguisher": "second-born son of Ishmael (GEN 25:13)"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "The record represents Kedar, son of Ishmael; sense 2 denotes his descendants as a people, not a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:35+00:00"
+}

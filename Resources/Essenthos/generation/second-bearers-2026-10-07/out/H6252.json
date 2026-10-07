@@ -1,0 +1,15 @@
+{
+ "strong": "H6252",
+ "record": {
+  "kind": "place",
+  "name": "Ashtaroth",
+  "slug": "ashtaroth",
+  "distinguisher": null
+ },
+ "record_is": "2",
+ "missing": [],
+ "note": "Sense 1 denotes Canaanite goddesses, not a distinct human person; sense 2 is the recorded city.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:57+00:00"
+}

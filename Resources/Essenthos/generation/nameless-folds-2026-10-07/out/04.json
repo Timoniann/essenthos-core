@@ -1,0 +1,77 @@
+{
+ "answers": [
+  {
+   "slug": "sabta",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Sabta (H5454) is a Cushite name in GEN 10:7 and 1CH 1:9, also associated with a people or territory. None of the candidates represents that referent."
+  },
+  {
+   "slug": "sabtecha",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Sabtecha (H5455) is a Cushite name in GEN 10:7 and 1CH 1:9, also associated with a people or territory. None of the candidates represents that referent."
+  },
+  {
+   "slug": "selahammalekoth",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1.0,
+   "reason": "Sela-hammalekoth (H5555) is the rock or landmark near Maon where Saul stopped pursuing David in 1SA 23:28. None of the candidates is that location."
+  },
+  {
+   "slug": "ittahkazin",
+   "verdict": "same",
+   "fold_into": "ethkazin",
+   "confidence": 1.0,
+   "reason": "Ittah-kazin is an alternative spelling of Eth-kazin, the Zebulun boundary settlement in JOS 19:13. The candidate explicitly includes the label Ittah-kazin."
+  },
+  {
+   "slug": "padan",
+   "verdict": "same",
+   "fold_into": "paddanaram",
+   "confidence": 1.0,
+   "reason": "Padan is the shortened form of Paddan-aram used in GEN 48:7. Both records identify H6307, and the candidate includes Paddan as an alias."
+  },
+  {
+   "slug": "kirjatharba",
+   "verdict": "same",
+   "fold_into": "hebron-3",
+   "confidence": 1.0,
+   "reason": "Kirjath-arba is the former name of Hebron, explicitly identified in GEN 23:2 and JOS 14:15. The Hebron candidate includes Kiriath-arba and shares H7153."
+  },
+  {
+   "slug": "ramathofthesouth",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1.0,
+   "reason": "Ramath of the south (H7418), also called Ramath-negeb, is mentioned in JOS 19:8. No candidates are supplied for a possible fold."
+  },
+  {
+   "slug": "shebah",
+   "verdict": "same",
+   "fold_into": "shiba",
+   "confidence": 1.0,
+   "reason": "Shebah and Shiba are alternative renderings of the well named by Isaac in GEN 26:33. Both records identify H7656."
+  },
+  {
+   "slug": "tophet",
+   "verdict": "same",
+   "fold_into": "topheth",
+   "confidence": 0.98,
+   "reason": "H8613 is the Tophet form used in ISA 30:33, a variant associated with Topheth in the Valley of Hinnom. The candidate already includes ISA 30:33 among its occurrences."
+  },
+  {
+   "slug": "abila",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "The record identifies a settlement at Merj Ekkeh, and none of the candidates identifies that settlement. Abilene in LUK 3:1 is a region, a separate geographic referent from a town named Abila."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:16:03+00:00"
+}

@@ -1,0 +1,77 @@
+{
+ "answers": [
+  {
+   "slug": "nahuru",
+   "verdict": "same",
+   "fold_into": "nahor-3",
+   "confidence": 0.99,
+   "reason": "The Nahor candidate explicitly identifies its location as Nahuru, matching the settlement near Haran associated with GEN 24:10."
+  },
+  {
+   "slug": "nuhashe",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "Nuhashe (Nuhashshe) is a region of northern Syria. None of the candidates denotes that region; Ir-nahash is a settlement associated with Judah."
+  },
+  {
+   "slug": "pitru",
+   "verdict": "same",
+   "fold_into": "pethor",
+   "confidence": 0.99,
+   "reason": "The Pethor candidate explicitly gives Pitru as another name, matching the Mesopotamian settlement associated with Balaam in NUM 22:5 and DEU 23:4."
+  },
+  {
+   "slug": "punt",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.94,
+   "reason": "Punt is the ancient trading region associated with the southern Red Sea. The Put candidate explicitly denotes Libya, and the other candidates are unrelated places."
+  },
+  {
+   "slug": "ragmat",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Ragmat is identified here with Najran in southern Arabia. None of the Hamath or Ramah candidates has that location."
+  },
+  {
+   "slug": "salona",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Salona is the ancient city in Dalmatia near modern Split. It is distinct from the Cretan promontory Salmone and all the other candidate settlements."
+  },
+  {
+   "slug": "saparda",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "Saparda is placed in Asia Minor, whereas the candidates denote places in the Levant. No candidate identifies this settlement."
+  },
+  {
+   "slug": "saparre",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Saparre is located near Nippur in Babylonia. Sahar, Jerusalem's Parbar, and the Pharpar River near Damascus are different referents."
+  },
+  {
+   "slug": "scythia",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1.0,
+   "reason": "Scythia denotes the region associated with the Scythians around and beyond the northern Black Sea. None of the candidates denotes that region."
+  },
+  {
+   "slug": "sparta",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1.0,
+   "reason": "Sparta is the Greek city in Laconia associated with the Spartans in 1 Maccabees. Sarepta, Patara, and the other candidates are different places."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:17:03+00:00"
+}

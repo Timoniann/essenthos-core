@@ -1,0 +1,15 @@
+{
+ "strong": "H4076",
+ "record": {
+  "kind": "place",
+  "name": "Mede",
+  "slug": "mede",
+  "distinguisher": null
+ },
+ "record_is": "2",
+ "missing": [],
+ "note": "Sense 1 is an ethnic designation for an inhabitant of Media, not a distinct named person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:57+00:00"
+}

@@ -1,0 +1,25 @@
+{
+ "strong": "H6551",
+ "record": {
+  "kind": "person",
+  "name": "Parosh",
+  "slug": "parosh",
+  "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:3)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Parosh",
+   "who": "a leader of the people who signed the covenant with Nehemiah",
+   "verses": [
+    "NEH 10:14"
+   ],
+   "confidence": 0.99
+  }
+ ],
+ "note": "NEH 3:25 names Pedaiah's father Parosh but does not establish that he is the covenant signer.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:14+00:00"
+}

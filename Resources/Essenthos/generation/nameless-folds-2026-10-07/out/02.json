@@ -1,0 +1,77 @@
+{
+ "answers": [
+  {
+   "slug": "berites",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "H1276 denotes the Berites, a people or clan mentioned in 2SA 20:14. None of the candidates represents that group."
+  },
+  {
+   "slug": "berachah",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "H1294 is the Valley of Berachah in 2CH 20:26. None of the candidates is that valley."
+  },
+  {
+   "slug": "bithron",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "H1338 denotes Bithron in Abner's journey through Transjordan to Mahanaim, 2SA 2:29. It is unrelated to the similarly named candidate towns and waterways."
+  },
+  {
+   "slug": "danjaan",
+   "verdict": "same",
+   "fold_into": "dan-2",
+   "confidence": 0.88,
+   "reason": "Dan-jaan in 2SA 24:6 is conventionally identified with northern Dan. The Tel Dan candidate explicitly includes the alias Dan Jaan, although the geographical identification is debated."
+  },
+  {
+   "slug": "hamogog",
+   "verdict": "same",
+   "fold_into": "valleyofhamongog",
+   "confidence": 0.99,
+   "reason": "H1996 denotes Hamon-gog, the burial valley named in EZK 39:11 and 39:15. Those are exactly the candidate valley's references."
+  },
+  {
+   "slug": "vedan",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.9,
+   "reason": "Vedan, H2051, is the obscure trading locality in EZK 27:19, often associated with Arabia. Its identification with northern Dan is unestablished, and it is not an alternate spelling of Dedan."
+  },
+  {
+   "slug": "bashanhavothjair",
+   "verdict": "same",
+   "fold_into": "havvothjair",
+   "confidence": 0.98,
+   "reason": "Bashan-Havoth-jair is the fuller regional name for Jair's settlements in DEU 3:14. The candidate includes that verse and the corresponding Havoth-jair aliases."
+  },
+  {
+   "slug": "hazarhatticon",
+   "verdict": "same",
+   "fold_into": "hazerhatticon",
+   "confidence": 0.99,
+   "reason": "Hazar-hatticon and Hazer-hatticon are spelling variants of the border locality in EZK 47:16. The candidate includes the exact Hazar Hatticon alias."
+  },
+  {
+   "slug": "hazerim",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "H2699 refers to Hazerim, or the villages occupied by the Avvim toward Gaza, in DEU 2:23. None of the candidates denotes those settlements; Hazeroth is a different wilderness locality."
+  },
+  {
+   "slug": "hermons",
+   "verdict": "unsure",
+   "fold_into": "harmon",
+   "confidence": 0.61,
+   "reason": "H2769 is the plural designation of Hermon's heights in PSA 42:6. Harmon is identified with Mount Hermon in the supplied metadata, but its AMO 4:3 identification is disputed, and Baal-hermon introduces another possible mountain-related referent."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:16:10+00:00"
+}

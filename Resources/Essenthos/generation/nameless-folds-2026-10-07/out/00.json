@@ -1,0 +1,77 @@
+{
+ "answers": [
+  {
+   "slug": "gederathites",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "H1452 derives from Gederah (H1449), whereas Gederites H1451 derives from Geder (H1445). None of the candidates denotes the inhabitants of Gederah."
+  },
+  {
+   "slug": "calebites",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Calebites H3614 denotes the clan associated with Caleb H3612. None of the candidates represents that clan."
+  },
+  {
+   "slug": "macbannites",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Macbannites H4344 derives from Machbenah H4343. The candidates have different ancestral or geographic origins."
+  },
+  {
+   "slug": "bether-2",
+   "verdict": "unsure",
+   "fold_into": "bether",
+   "confidence": 0.65,
+   "reason": "Both carry H1336, but Khirbet al Yahud is a proposed settlement identification while the candidate explicitly treats Bether in SNG 2:17 as an adjective. These competing interpretations do not establish a shared geographic referent."
+  },
+  {
+   "slug": "gomorrha",
+   "verdict": "same",
+   "fold_into": "gomorrah",
+   "confidence": 1.0,
+   "reason": "Gomorrha is the Greek NT spelling of Gomorrah, as in MAT 10:15. Both records explicitly share G1116."
+  },
+  {
+   "slug": "olivet",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1.0,
+   "reason": "Olivet G1638 names the Mount of Olives in ACT 1:12. No candidate is supplied."
+  },
+  {
+   "slug": "zabulon",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "Zabulon G2194 denotes Zebulun as a tribe or its territory, including MAT 4:13–15. The candidate zebulun-2 is the town where Elon was buried in JDG 12:12."
+  },
+  {
+   "slug": "juda",
+   "verdict": "same",
+   "fold_into": "judah-6",
+   "confidence": 0.94,
+   "reason": "G2455 includes Judah as the tribe named in HEB 7:14 and HEB 8:8, both attached to judah-6. The Judea candidates represent the geographic region under different headwords."
+  },
+  {
+   "slug": "sychem",
+   "verdict": "same",
+   "fold_into": "shechem-4",
+   "confidence": 1.0,
+   "reason": "Sychem is the Greek NT spelling of Shechem in ACT 7:16. The Tell Balatah candidate explicitly shares G4966."
+  },
+  {
+   "slug": "chaldaean",
+   "verdict": "same",
+   "fold_into": "chaldea",
+   "confidence": 0.99,
+   "reason": "Chaldaean G5466 is the gentilic used in 'land of the Chaldaeans' in ACT 7:4. The Chaldea candidate explicitly includes this Greek headword and Strong number."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:15:33+00:00"
+}

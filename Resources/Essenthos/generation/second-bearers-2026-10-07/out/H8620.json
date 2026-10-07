@@ -1,0 +1,26 @@
+{
+ "strong": "H8620",
+ "record": {
+  "kind": "place",
+  "name": "Tekoa",
+  "slug": "tekoa-2",
+  "distinguisher": null
+ },
+ "record_is": "2",
+ "missing": [
+  {
+   "sense": "1",
+   "name": "Tekoa",
+   "who": "A Judaite, son of Ashur and grandson of Hezron",
+   "verses": [
+    "1CH 2:24",
+    "1CH 4:5"
+   ],
+   "confidence": 0.98
+  }
+ ],
+ "note": "Sense 3 denotes a wilderness area, not a person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:58:05+00:00"
+}

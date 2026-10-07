@@ -1,0 +1,23 @@
+{
+ "strong": "H7433",
+ "record": {
+  "kind": "place",
+  "name": "Ramoth-gilead",
+  "slug": "ramothgilead",
+  "distinguisher": null
+ },
+ "record_is": "2",
+ "missing": [
+  {
+   "sense": "1",
+   "name": "Ramoth",
+   "who": "an Israelite who had a foreign wife in the time of Ezra",
+   "verses": [],
+   "confidence": 1
+  }
+ ],
+ "note": "All listed verses refer to the place Ramoth-gilead; none identifies the person in sense 1.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:47+00:00"
+}

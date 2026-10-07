@@ -1,0 +1,25 @@
+{
+ "strong": "H151",
+ "record": {
+  "kind": "person",
+  "name": "Adoram",
+  "slug": "adoram",
+  "distinguisher": "over the forced labor (2SA 20:24)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Adoram",
+   "who": "an officer of Rehoboam",
+   "verses": [
+    "1KI 12:18"
+   ],
+   "confidence": 0.99
+  }
+ ],
+ "note": "The dictionary distinguishes these senses, though they may refer to the same official serving successive kings.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:54:52+00:00"
+}

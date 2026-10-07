@@ -1,0 +1,15 @@
+{
+ "strong": "H4407",
+ "record": {
+  "kind": "place",
+  "name": "Millo",
+  "slug": "millo",
+  "distinguisher": null
+ },
+ "record_is": "",
+ "missing": [],
+ "note": "Both senses are places; the undistinguished Millo record cannot be assigned confidently to either sense.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:09+00:00"
+}

@@ -1,0 +1,15 @@
+{
+ "strong": "H2043",
+ "record": {
+  "kind": "people",
+  "name": "Hararites",
+  "slug": "hararites",
+  "distinguisher": "{Hararite}, as Strong's Dictionary describes them"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "Hararite is a descriptive epithet; senses 2–4 are incidental applications to named men rather than distinct personal meanings.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:33+00:00"
+}

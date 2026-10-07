@@ -1,0 +1,15 @@
+{
+ "strong": "H1075",
+ "record": {
+  "kind": "person",
+  "name": "Bichri",
+  "slug": "bichri",
+  "distinguisher": "father of Sheba (2SA 20:6)"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "Sense 1 is already represented by Bichri, father of Sheba; sense 2 denotes the Bichrites, not a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:54:34+00:00"
+}

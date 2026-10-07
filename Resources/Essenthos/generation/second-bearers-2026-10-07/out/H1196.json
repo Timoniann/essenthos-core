@@ -1,0 +1,47 @@
+{
+ "strong": "H1196",
+ "record": {
+  "kind": "person",
+  "name": "Baanah",
+  "slug": "baanah-2",
+  "distinguisher": "father of Heleb, one of David's mighty men (2SA 23:29)"
+ },
+ "record_is": "2",
+ "missing": [
+  {
+   "sense": "1",
+   "name": "Baanah",
+   "who": "Benjamite son of Rimmon who, with his brother Rechab, murdered Ish-bosheth",
+   "verses": [
+    "2SA 4:2",
+    "2SA 4:5",
+    "2SA 4:6",
+    "2SA 4:9"
+   ],
+   "confidence": 1
+  },
+  {
+   "sense": "3",
+   "name": "Baanah",
+   "who": "Head of a family of exiles returning with Zerubbabel",
+   "verses": [
+    "EZR 2:2",
+    "NEH 7:7"
+   ],
+   "confidence": 1
+  },
+  {
+   "sense": "4",
+   "name": "Baanah",
+   "who": "A chief of the people",
+   "verses": [
+    "NEH 10:27"
+   ],
+   "confidence": 0.97
+  }
+ ],
+ "note": "NEH 10:27 gives no patronymic, so the relationship between senses 3 and 4 is uncertain.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:54:48+00:00"
+}

@@ -1,0 +1,25 @@
+{
+ "strong": "H6981",
+ "record": {
+  "kind": "person",
+  "name": "Kore",
+  "slug": "kore",
+  "distinguisher": "father of Shallum, descendant of Korah (1CH 9:19)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Kore",
+   "who": "a Levite, son of Imnah, in the reign of king Hezekiah of Judah",
+   "verses": [
+    "2CH 31:14"
+   ],
+   "confidence": 1
+  }
+ ],
+ "note": "The existing record represents sense 1; the son of Imnah is a distinct person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:36+00:00"
+}

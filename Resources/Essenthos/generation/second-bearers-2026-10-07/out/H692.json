@@ -1,0 +1,26 @@
+{
+ "strong": "H692",
+ "record": {
+  "kind": "people",
+  "name": "Arelites",
+  "slug": "arelites",
+  "distinguisher": "Areli (or an Arelite, collectively), an Israelite and his descendants, as Strong's Dictionary describes them"
+ },
+ "record_is": "2",
+ "missing": [
+  {
+   "sense": "1",
+   "name": "Areli",
+   "who": "a son of Gad",
+   "verses": [
+    "GEN 46:16",
+    "NUM 26:17"
+   ],
+   "confidence": 1
+  }
+ ],
+ "note": "The existing record represents Areli's descendants collectively; Areli himself is named as Gad's son and the ancestor of the Arelites.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:41+00:00"
+}

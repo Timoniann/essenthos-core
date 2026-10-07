@@ -1,0 +1,23 @@
+{
+ "strong": "H3850",
+ "record": {
+  "kind": "place",
+  "name": "Lod",
+  "slug": "lod",
+  "distinguisher": null
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Lod",
+   "who": "head of a family of returning exiles",
+   "verses": [],
+   "confidence": 0.8
+  }
+ ],
+ "note": "The 'children of Lod' in Ezra 2:33 and Nehemiah 7:37 may be inhabitants of the city; neither verse clearly identifies a personal ancestor.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:56+00:00"
+}

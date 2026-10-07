@@ -1,0 +1,25 @@
+{
+ "strong": "H3620",
+ "record": {
+  "kind": "person",
+  "name": "Chelub",
+  "slug": "chelub",
+  "distinguisher": "brother of Shuhah (1CH 4:11)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Chelub",
+   "who": "father of Ezri, one of David's officers",
+   "verses": [
+    "1CH 27:26"
+   ],
+   "confidence": 1
+  }
+ ],
+ "note": "The existing record is Chelub, brother of Shuah; the missing sense is Chelub, father of Ezri.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:44+00:00"
+}

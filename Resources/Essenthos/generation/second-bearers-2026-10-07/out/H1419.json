@@ -1,0 +1,15 @@
+{
+ "strong": "H1419",
+ "record": {
+  "kind": "person",
+  "name": "Haggedolim",
+  "slug": "haggedolim",
+  "distinguisher": "father of Zabdiel (NEH 11:14)"
+ },
+ "record_is": "1j",
+ "missing": [],
+ "note": "The entry is primarily a common adjective; its sole distinct person sense, Haggedolim, is already represented by the record.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:54:47+00:00"
+}

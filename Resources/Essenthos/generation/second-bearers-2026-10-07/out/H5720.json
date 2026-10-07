@@ -1,0 +1,25 @@
+{
+ "strong": "H5720",
+ "record": {
+  "kind": "person",
+  "name": "Adin",
+  "slug": "adin",
+  "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:15)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Adin",
+   "who": "a chief among the returned exiles who signed the covenant with Nehemiah",
+   "verses": [
+    "NEH 10:16"
+   ],
+   "confidence": 0.99
+  }
+ ],
+ "note": "The occurrences in Ezra and Nehemiah 7 name descendants of the ancestor in sense 1; NEH 10:16 names the covenant signer in sense 2.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:37+00:00"
+}

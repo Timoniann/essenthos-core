@@ -1,0 +1,15 @@
+{
+ "strong": "H5353",
+ "record": {
+  "kind": "person",
+  "name": "Nekoda",
+  "slug": "nekoda",
+  "distinguisher": "forefather of a family of the Nethinims who returned, and of a family that could not show its descent (EZR 2:48, 60)"
+ },
+ "record_is": "1, 2",
+ "missing": [],
+ "note": "The existing record explicitly combines both enumerated senses, so neither is missing, though the definition distinguishes two family heads.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:41+00:00"
+}

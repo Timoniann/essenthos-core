@@ -1,0 +1,26 @@
+{
+ "strong": "H6649",
+ "record": {
+  "kind": "person",
+  "name": "Zibeon",
+  "slug": "zibeon-2",
+  "distinguisher": "son of Seir (GEN 36:20) and chief in Edom (GEN 36:29)"
+ },
+ "record_is": "2",
+ "missing": [
+  {
+   "sense": "1",
+   "name": "Zibeon",
+   "who": "father of Anah, whose daughter Aholibamah married Esau",
+   "verses": [
+    "GEN 36:14",
+    "GEN 36:2"
+   ],
+   "confidence": 0.85
+  }
+ ],
+ "note": "Senses 1 and 2 may be the same man, as the definition explicitly allows.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:25+00:00"
+}

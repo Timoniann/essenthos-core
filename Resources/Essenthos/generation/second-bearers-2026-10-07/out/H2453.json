@@ -1,0 +1,25 @@
+{
+ "strong": "H2453",
+ "record": {
+  "kind": "person",
+  "name": "Hachmoni",
+  "slug": "hachmoni",
+  "distinguisher": "father of Jehiel, the tutor of David's sons (1CH 27:32)"
+ },
+ "record_is": "2",
+ "missing": [
+  {
+   "sense": "1",
+   "name": "Hachmoni",
+   "who": "father of one of David's mighty warriors",
+   "verses": [
+    "1CH 11:11"
+   ],
+   "confidence": 0.9
+  }
+ ],
+ "note": "Sense 3 denotes a family rather than a distinct person, and senses 1 and 2 may refer to the same man.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:22+00:00"
+}

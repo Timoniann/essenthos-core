@@ -1,0 +1,77 @@
+{
+ "answers": [
+  {
+   "slug": "charashim",
+   "verdict": "same",
+   "fold_into": "geharashim",
+   "confidence": 0.99,
+   "reason": "Charashim (H2798) names the craftsmen’s valley in 1 Chronicles 4:14; Ge-harashim explicitly includes the alias 'valley of Charashim' and that verse."
+  },
+  {
+   "slug": "tarpelites",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1,
+   "reason": "Tarpelites (H2967) are a people mentioned in Ezra 4:9. No candidate is supplied."
+  },
+  {
+   "slug": "jegarsahadutha",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1,
+   "reason": "Jegar-Sahadutha (H3026) is Laban’s Aramaic name for the witness heap called Galeed by Jacob in Genesis 31:47. No candidate is supplied."
+  },
+  {
+   "slug": "jehovahjireh",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 1,
+   "reason": "Jehovah-jireh (H3070) names the site of Abraham’s sacrifice in Genesis 22:14. No candidate is supplied."
+  },
+  {
+   "slug": "jehovahshammah",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Jehovah-shammah (H3074) is the name assigned to Ezekiel’s envisioned city in Ezekiel 48:35. Jeshanah is a separate settlement mentioned in 2 Chronicles 13:19."
+  },
+  {
+   "slug": "chidon",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Chidon (H3592) identifies the threshing floor where Uzzah died in 1 Chronicles 13:9. None of the candidates identifies that threshing floor; Kidron is a different name and a river."
+  },
+  {
+   "slug": "carmelite",
+   "verdict": "same",
+   "fold_into": "carmel",
+   "confidence": 0.97,
+   "reason": "Carmelite (H3761) is the gentilic of the town Carmel, used for Nabal in 1 Samuel 30:5. The settlement candidate also carries 'Carmelitess'; Mount Carmel is a separate geographical referent."
+  },
+  {
+   "slug": "maktesh",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Maktesh (H4389) is the district addressed in Zephaniah 1:11, generally understood as a quarter of Jerusalem. None of the candidates represents that district."
+  },
+  {
+   "slug": "miphkad",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.99,
+   "reason": "Miphkad (H4663) names a gate of Jerusalem in Nehemiah 3:31. The candidates are separate settlements or a wilderness campsite."
+  },
+  {
+   "slug": "mesobaite",
+   "verdict": "distinct",
+   "fold_into": "",
+   "confidence": 0.98,
+   "reason": "Mesobaite (H4677) is Jasiel’s gentilic in 1 Chronicles 11:47. Neither Nebaioth nor Mesopotamia is an equivalent referent; the resemblance is only in spelling."
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:15:50+00:00"
+}

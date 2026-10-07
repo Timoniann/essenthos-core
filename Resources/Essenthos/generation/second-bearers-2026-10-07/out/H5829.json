@@ -1,0 +1,34 @@
+{
+ "strong": "H5829",
+ "record": {
+  "kind": "person",
+  "name": "Ezer",
+  "slug": "ezer-2",
+  "distinguisher": "son of Hur (1CH 4:4)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Ezer",
+   "who": "a Gadite chief who fought with David",
+   "verses": [
+    "1CH 12:9"
+   ],
+   "confidence": 0.99
+  },
+  {
+   "sense": "3",
+   "name": "Ezer",
+   "who": "a Levite who aided in repairing the wall of Jerusalem in the time of Nehemiah",
+   "verses": [
+    "NEH 3:19"
+   ],
+   "confidence": 0.99
+  }
+ ],
+ "note": "NEH 12:42 names Ezer among the singers but does not establish that he is the wall repairer of sense 3.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:59+00:00"
+}

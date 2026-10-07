@@ -1,0 +1,15 @@
+{
+ "strong": "H8489",
+ "record": {
+  "kind": "people",
+  "name": "Temanites",
+  "slug": "temanites",
+  "distinguisher": "patronymic of H8487, as Strong's Dictionary derives it"
+ },
+ "record_is": "2",
+ "missing": [],
+ "note": "Both senses are gentilic designations, not distinct persons; in Job, Temanite describes Eliphaz rather than naming another person.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:58:03+00:00"
+}

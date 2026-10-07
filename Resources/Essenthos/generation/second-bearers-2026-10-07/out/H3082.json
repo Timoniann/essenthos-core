@@ -1,0 +1,25 @@
+{
+ "strong": "H3082",
+ "record": {
+  "kind": "person",
+  "name": "Jehonadab",
+  "slug": "jehonadab",
+  "distinguisher": "son of Rechab (2KI 10:15)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Jonadab",
+   "who": "a nephew of David",
+   "verses": [
+    "2SA 13:5"
+   ],
+   "confidence": 0.99
+  }
+ ],
+ "note": "The remaining listed verses refer to Jonadab son of Rechab, already represented by the record.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:42+00:00"
+}

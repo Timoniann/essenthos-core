@@ -1,0 +1,27 @@
+{
+ "strong": "H5369",
+ "record": {
+  "kind": "person",
+  "name": "Ner",
+  "slug": "ner",
+  "distinguisher": "father of Abner (1SA 14:50)"
+ },
+ "record_is": "2",
+ "missing": [
+  {
+   "sense": "1",
+   "name": "Ner",
+   "who": "son of Jehiel, father of Kish, and grandfather of king Saul",
+   "verses": [
+    "1CH 8:33",
+    "1CH 9:36",
+    "1CH 9:39"
+   ],
+   "confidence": 0.9
+  }
+ ],
+ "note": "Senses 1 and 2 may be the same man, as the definition notes in 2a; 1CH 9:36 is less explicit about his identity.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:56:45+00:00"
+}

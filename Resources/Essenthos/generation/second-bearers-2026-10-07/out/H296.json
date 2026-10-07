@@ -1,0 +1,15 @@
+{
+ "strong": "H296",
+ "record": {
+  "kind": "person",
+  "name": "Ahikam",
+  "slug": "ahikam",
+  "distinguisher": "son of Shaphan (2KI 22:12)"
+ },
+ "record_is": "1",
+ "missing": [],
+ "note": "Senses 1, 2, and 3 describe the same Ahikam, son of Shaphan, protector of Jeremiah and father of Gedaliah.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:28+00:00"
+}

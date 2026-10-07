@@ -1,0 +1,25 @@
+{
+ "strong": "H6727",
+ "record": {
+  "kind": "person",
+  "name": "Ziha",
+  "slug": "ziha",
+  "distinguisher": "temple servant (EZR 2:43)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Ziha",
+   "who": "a chief of the temple slaves in Ophel in the time of Nehemiah",
+   "verses": [
+    "NEH 11:21"
+   ],
+   "confidence": 1
+  }
+ ],
+ "note": "The record corresponds to the ancestor named in EZR 2:43 and NEH 7:46; NEH 11:21 names the chief over the Nethinims.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:27+00:00"
+}

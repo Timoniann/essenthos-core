@@ -1,0 +1,25 @@
+{
+ "strong": "H1559",
+ "record": {
+  "kind": "person",
+  "name": "Galal",
+  "slug": "galal",
+  "distinguisher": "counted among the Levites carried into exile (1CH 9:15)- son of Jeduthun (1CH 9:16)"
+ },
+ "record_is": "2",
+ "missing": [
+  {
+   "sense": "1",
+   "name": "Galal",
+   "who": "a Levite, one of the sons of Asaph",
+   "verses": [
+    "1CH 9:15"
+   ],
+   "confidence": 0.95
+  }
+ ],
+ "note": "The record's distinguisher conflates the Galal listed in 1CH 9:15 with Galal son of Jeduthun in 1CH 9:16 and NEH 11:17.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:55:06+00:00"
+}

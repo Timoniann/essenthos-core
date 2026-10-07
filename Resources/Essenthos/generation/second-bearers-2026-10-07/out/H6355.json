@@ -1,0 +1,26 @@
+{
+ "strong": "H6355",
+ "record": {
+  "kind": "person",
+  "name": "Pahath-moab",
+  "slug": "pahathmoab",
+  "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:5)"
+ },
+ "record_is": "1",
+ "missing": [
+  {
+   "sense": "2",
+   "name": "Pahath-moab",
+   "who": "Leader of the people, father of Hashub the wall rebuilder, and covenant signer with Nehemiah",
+   "verses": [
+    "NEH 10:14",
+    "NEH 3:11"
+   ],
+   "confidence": 0.97
+  }
+ ],
+ "note": "The existing record's reference to EZR 2:5 should be EZR 2:6.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "at": "2026-10-07T19:57:05+00:00"
+}
