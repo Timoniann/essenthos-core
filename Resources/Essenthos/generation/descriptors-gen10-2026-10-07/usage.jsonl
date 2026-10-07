@@ -1,0 +1,4 @@
+{"batch": "batch-0001", "entities": 1, "answered": 1, "prompt_version": "descriptor-3", "cost": 0.16479480000000002, "input_tokens": 44776, "output_tokens": 243}
+{"batch": "batch-0003", "entities": 3, "answered": 3, "prompt_version": "descriptor-3", "cost": 0.18448799999999999, "input_tokens": 43878, "output_tokens": 898}
+{"batch": "batch-0002", "entities": 3, "answered": 3, "prompt_version": "descriptor-3", "cost": 0.2614668, "input_tokens": 67164, "output_tokens": 955}
+{"batch": "batch-0000", "entities": 6, "answered": 6, "prompt_version": "descriptor-3", "cost": 0.2764708, "input_tokens": 69110, "output_tokens": 1677}

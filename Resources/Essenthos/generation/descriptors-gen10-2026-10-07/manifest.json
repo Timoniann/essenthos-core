@@ -1,0 +1,56 @@
+{
+ "prompt_version": "descriptor-3",
+ "database": "essenthos_core",
+ "extracted": "2026-10-07T14:20:17+00:00",
+ "selection": {
+  "kind": "named",
+  "kinds": [
+   "people",
+   "person",
+   "place"
+  ],
+  "drawn": 13,
+  "only": "gen10.txt",
+  "context": true
+ },
+ "batches": [
+  {
+   "batch": "batch-0000",
+   "entities": [
+    "amorites",
+    "arkites",
+    "arvadites",
+    "casluhim",
+    "girgashites",
+    "hamathites"
+   ],
+   "verses": 32
+  },
+  {
+   "batch": "batch-0001",
+   "entities": [
+    "hivites"
+   ],
+   "verses": 17
+  },
+  {
+   "batch": "batch-0002",
+   "entities": [
+    "jebusites",
+    "kittim-h3794",
+    "pathrusim"
+   ],
+   "verses": 35
+  },
+  {
+   "batch": "batch-0003",
+   "entities": [
+    "philistines",
+    "sinites",
+    "zemarites"
+   ],
+   "verses": 20
+  }
+ ],
+ "amended": "2026-10-07, batch D: the nine Canaanite peoples were also shown GEN 10:15 / 1CH 1:13 (the heading verse naming Canaan) as context and Canaan (person) as a candidate, because the register test did not show the heading their own verses stand under (PRB-0896 follow-up)."
+}
