@@ -31,7 +31,8 @@ public sealed class SenseReadingTests : IDisposable
     /// audit read as the tribe of Benjamin rather than as Jacob's son, and the encyclopedia holds no
     /// record a tribe could point at, so nothing is loaded for it either way.
     /// </summary>
-    private const long RefusedWord = 6536500;
+    private static readonly RuledWord RefusedWord = SenseReadingFiles.Refused().Readings
+        .Single(r => r.Reference == "NUM 1:11" && r.Reading == "benjamin").Word;
 
     /// <summary>The answer the review overturned there, which is what the verdict is about.</summary>
     private const string RefusedAnswer = "benjamin";
@@ -42,7 +43,8 @@ public sealed class SenseReadingTests : IDisposable
     /// name a record because none was on offer; the re-ask names <c>eshtemoa-3</c>, which is the
     /// answer that must load.
     /// </summary>
-    private const long ReaskedWord = 6859829;
+    private static readonly RuledWord ReaskedWord = SenseReadingFiles.Superseded().Readings
+        .Single(r => r.Reference == "1CH 4:17" && r.Was == "eshtemoa").Word;
 
     /// <summary>What the first campaign answered there, and what the review overturned.</summary>
     private const string ReaskedFirstAnswer = "eshtemoa";
@@ -148,17 +150,16 @@ public sealed class SenseReadingTests : IDisposable
     /// <summary>One answer, written the way a run writes them.</summary>
     private void Answer(long wordId, string referent, string confidence, string? reason = null)
     {
-        var row = JsonSerializer.Serialize(new
+        var row = JsonSerializer.Serialize(new Dictionary<string, object?>(_db.AddressFields(wordId))
         {
-            word_id = wordId,
-            strong_number = "H2148",
-            referent,
-            names = (string?)null,
-            confidence,
-            reason = reason ?? "the verse decides it",
-            prompt_version = "sense-1",
-            model = "a-model",
-            run = "2026-09-05T21:35:25+00:00",
+            ["strong_number"] = "H2148",
+            ["referent"] = referent,
+            ["names"] = null,
+            ["confidence"] = confidence,
+            ["reason"] = reason ?? "the verse decides it",
+            ["prompt_version"] = "sense-1",
+            ["model"] = "a-model",
+            ["run"] = "2026-09-05T21:35:25+00:00",
         });
 
         File.AppendAllText(
@@ -266,11 +267,11 @@ public sealed class SenseReadingTests : IDisposable
     [Fact]
     public async Task AReadingASecondPassFoundWrongIsRefused()
     {
-        _db.Database.ExecuteSqlRaw("UPDATE word SET id = {0} WHERE id = {1}", RefusedWord, Hebrew(1).Id);
-        Answer(RefusedWord, RefusedAnswer, "high");
+        var refused = _db.Place([RefusedWord], new Dictionary<string, Text> { [_hebrew.Slug] = _hebrew })[RefusedWord].Id;
+        Answer(refused, RefusedAnswer, "high");
 
         var named = await Load();
-        named.Should().NotContainKey(RefusedWord);
+        named.Should().NotContainKey(refused);
     }
 
     /// <summary>
@@ -282,11 +283,11 @@ public sealed class SenseReadingTests : IDisposable
     [Fact]
     public async Task AnAnswerALaterRunReplacedIsTheOneThatLoads()
     {
-        _db.Database.ExecuteSqlRaw("UPDATE word SET id = {0} WHERE id = {1}", ReaskedWord, Hebrew(1).Id);
-        Answer(ReaskedWord, ReaskedFirstAnswer, "high");
+        var reasked = _db.Place([ReaskedWord], new Dictionary<string, Text> { [_hebrew.Slug] = _hebrew })[ReaskedWord].Id;
+        Answer(reasked, ReaskedFirstAnswer, "high");
 
         var named = await Load();
-        named.Should().ContainKey(ReaskedWord)
+        named.Should().ContainKey(reasked)
             .WhoseValue.Entity!.Slug.Should().Be("eshtemoa-3");
     }
 
@@ -320,12 +321,12 @@ public sealed class SenseReadingTests : IDisposable
         refused.Count(r => r.Verdict == "model-wrong").Should().Be(7);
         refused.Count(r => r.Verdict == "both-wrong").Should().Be(4);
         refused.Count(r => r.Verdict == "contested").Should().Be(2);
-        refused.Select(r => r.WordId).Should().OnlyHaveUniqueItems();
+        refused.Select(r => r.Word).Should().OnlyHaveUniqueItems();
         refused.Should().OnlyContain(r => r.Why.Length > 0);
 
         var review = SenseReadingFiles.ReviewRulings().Rulings;
         var owner = SenseReadingFiles.Rulings().Rulings;
-        var replaced = SenseReadingFiles.Superseded().Readings.ToDictionary(r => r.WordId);
+        var replaced = SenseReadingFiles.Superseded().Readings.ToDictionary(r => r.Word);
 
         review.Should().HaveCount(33);
         review.Count(r => r.Existing is not null).Should().Be(21);
@@ -335,11 +336,10 @@ public sealed class SenseReadingTests : IDisposable
         // Every overturned reading is disposed of, and none of the four ways is silence: a later run
         // replaced the answer the verdict was about, a ruling of the review names the referent, the
         // owner ruled on it, or the referent is the tribe of Benjamin, which the peoples' rulings give
-        // it. The rulings name their words by address and the readings by the id the run was asked
-        // about, so which ruling answers which reading is asked of a corpus; here the counts are held.
+        // it. Which ruling answers which reading is asked of the words both name; here the counts are held.
         // The owner ruled on five of the overturned words, and the re-ask replaced one of those too.
         const int ruledByTheOwner = 4;
-        var standing = refused.Where(r => !replaced.ContainsKey(r.WordId)).ToList();
+        var standing = refused.Where(r => !replaced.ContainsKey(r.Word)).ToList();
         var tribe = PeopleFiles.Read().Rulings;
 
         standing.Should().HaveCount(review.Count + ruledByTheOwner + tribe.Count);
@@ -357,10 +357,43 @@ public sealed class SenseReadingTests : IDisposable
         var replaced = SenseReadingFiles.Superseded();
 
         replaced.Readings.Should().HaveCount(480);
-        replaced.Readings.Select(r => r.WordId).Should().OnlyHaveUniqueItems();
+        replaced.Readings.Select(r => r.Word).Should().OnlyHaveUniqueItems();
         replaced.Readings.Should().OnlyContain(r => r.Was != r.Now);
         replaced.Model.Should().NotBeEmpty();
         replaced.PromptVersion.Should().NotBeEmpty();
+    }
+
+    /// <summary>
+    /// An answer names its word by address. One that names it by row id would land on whatever word a
+    /// rebuilt corpus gave that number, so a file not yet converted is refused, saying how to convert it.
+    /// </summary>
+    [Fact]
+    public async Task AnAnswerNamingItsWordByRowIdIsRefused()
+    {
+        File.AppendAllText(
+            Path.Combine(_readings, "run-1", SenseReadingFiles.AnswersFileName),
+            $$"""{"word_id": {{Hebrew(1).Id}}, "strong_number": "H2148", "referent": "zechariah-2", "confidence": "high", "prompt_version": "sense-1", "model": "a-model", "run": "2026-09-05"}""" + "\n");
+
+        var load = () => Load();
+
+        await load.Should().ThrowAsync<InvalidDataException>().WithMessage("*address-sense-readings.py*");
+    }
+
+    /// <summary>
+    /// The address the loader reads is the word's own, and a word that no longer reads as it did is not
+    /// annotated: the answer was about the word that stood there.
+    /// </summary>
+    [Fact]
+    public async Task AnAnswerWhoseWordReadsOtherwiseNowIsNotLoaded()
+    {
+        var word = Hebrew(1);
+        Answer(word.Id, "zechariah-2", "high");
+        word.Surface = "another reading";
+        _db.SaveChanges();
+
+        var named = await Load();
+
+        named.Should().NotContainKey(word.Id);
     }
 
     /// <summary>

@@ -81,9 +81,14 @@ public sealed class ContextBearerLoaderTests : IDisposable
         });
         _db.SaveChanges();
 
+        string Unlisted(Word word, string number) => System.Text.Json.JsonSerializer.Serialize(
+            new Dictionary<string, object?>(_db.AddressFields(word.Id))
+            {
+                ["strong_number"] = number, ["referent"] = "unlisted", ["names"] = null, ["confidence"] = "high",
+                ["reason"] = "a test", ["prompt_version"] = "sense-1", ["model"] = "a test", ["run"] = "2026-09-29",
+            });
         File.WriteAllText(Path.Combine(_resources, SenseReadingFiles.DefaultFolder, "run-1", SenseReadingFiles.AnswersFileName),
-            $$"""{"word_id": {{Hebrew(20, 4).Id}}, "strong_number": "{{Jonathan}}", "referent": "unlisted", "names": null, "confidence": "high", "reason": "a test", "prompt_version": "sense-1", "model": "a test", "run": "2026-09-29"}""" + "\n" +
-            $$"""{"word_id": {{Hebrew(20, 6).Id}}, "strong_number": "{{ShortJonathan}}", "referent": "unlisted", "names": null, "confidence": "high", "reason": "a test", "prompt_version": "sense-1", "model": "a test", "run": "2026-09-29"}""" + "\n");
+            Unlisted(Hebrew(20, 4), Jonathan) + "\n" + Unlisted(Hebrew(20, 6), ShortJonathan) + "\n");
     }
 
     public void Dispose()

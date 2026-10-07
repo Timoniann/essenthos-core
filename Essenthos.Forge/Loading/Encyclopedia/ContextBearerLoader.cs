@@ -171,14 +171,15 @@ internal sealed class ContextBearerLoader(
             return new ContextBearerOutcome(false, true, measured, agreed, 0, 0, 0, 0, 0, [], started.Elapsed);
         }
 
-        var (readings, contradicted, _, _, _) = SenseReadingFiles.Read(directory);
+        var placed = await SenseReadingFiles.Place(connection, directory, cancellationToken);
+        var (readings, contradicted) = (placed.Readings, placed.Contradicted);
         var foundNobodyListed = readings.Where(r => r.Referent == SenseReading.Unlisted)
             .Select(r => r.WordId)
             .Except(contradicted)
             .ToHashSet();
         var answeredByReading = readings.Select(r => r.WordId)
             .Concat(contradicted)
-            .Concat(SenseReadingFiles.Refused().Readings.Select(r => r.WordId))
+            .Concat(placed.Refused.Select(r => r.WordId))
             .ToHashSet();
 
         var words = await Read(connection, Unnamed, reader => new UnnamedWord(

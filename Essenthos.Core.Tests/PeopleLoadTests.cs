@@ -408,10 +408,10 @@ public sealed class PeopleLoadTests : IDisposable
         await File.WriteAllLinesAsync(
             Path.Combine(run.FullName, SenseReadingFiles.AnswersFileName),
             [
-                Answer(words[0], "the tribe of Judah", "Census of the tribe.", "high"),
-                Answer(words[1], "the kingdom of Judah", "Asa reigned over it.", "high"),
-                Answer(words[2], null, "'Camp of Judah' names the tribal division, not the patriarch.", "high"),
-                Answer(words[3], "the tribe of Judah", "Nothing decides it.", "low"),
+                Answer(_db.AddressFields(words[0]), "the tribe of Judah", "Census of the tribe.", "high"),
+                Answer(_db.AddressFields(words[1]), "the kingdom of Judah", "Asa reigned over it.", "high"),
+                Answer(_db.AddressFields(words[2]), null, "'Camp of Judah' names the tribal division, not the patriarch.", "high"),
+                Answer(_db.AddressFields(words[3]), "the tribe of Judah", "Nothing decides it.", "low"),
             ]);
 
         try
@@ -438,10 +438,9 @@ public sealed class PeopleLoadTests : IDisposable
         }
     }
 
-    private static string Answer(long word, string? names, string reason, string confidence) =>
-        JsonSerializer.Serialize(new Dictionary<string, object?>
+    private static string Answer(Dictionary<string, object?> word, string? names, string reason, string confidence) =>
+        JsonSerializer.Serialize(new Dictionary<string, object?>(word)
         {
-            ["word_id"] = word,
             ["strong_number"] = Judah,
             ["referent"] = SenseReading.Unlisted,
             ["names"] = names,

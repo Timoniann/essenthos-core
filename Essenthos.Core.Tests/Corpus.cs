@@ -2,6 +2,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Frame;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Tests;
@@ -184,6 +185,28 @@ internal static class Corpus
             w.Verse!.ChapterNumber == chapter &&
             w.Verse.Number == verse &&
             w.Position == position);
+
+    /// <summary>A word's address, the way a stored answer or ruling names it.</summary>
+    public static RuledWord Address(this AppDbContext db, long wordId)
+    {
+        var word = db.Words.Include(w => w.Text).Include(w => w.Verse).ThenInclude(v => v!.Book).Single(w => w.Id == wordId);
+        return new RuledWord(
+            word.Text!.Slug,
+            $"{BookCodes.Code(word.Verse!.Book!.CanonicalOrdinal)} {word.Verse.ChapterNumber}:{word.Verse.Number}{word.Verse.Label}",
+            word.Position,
+            word.Surface);
+    }
+
+    /// <summary>The four fields an answer names its word by, to stand in its JSON.</summary>
+    public static Dictionary<string, object?> AddressFields(this AppDbContext db, long wordId)
+    {
+        var address = db.Address(wordId);
+        return new Dictionary<string, object?>
+        {
+            ["text"] = address.Text, ["reference"] = address.Reference,
+            ["position"] = address.Position, ["surface"] = address.Surface,
+        };
+    }
 
     public static Verse VerseAt(this AppDbContext db, Text text, int chapter, int verse) =>
         db.Verses.Single(v => v.TextId == text.Id && v.ChapterNumber == chapter && v.Number == verse);

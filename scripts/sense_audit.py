@@ -234,20 +234,26 @@ def read_answers(directory):
     scores rather than the words counts that overlap twice. The later answer wins here, and the
     collisions are counted so the report can say how big the double count was.
     """
+    read = [json.loads(line)
+            for path in sorted(glob.glob(os.path.join(directory, '*.jsonl')))
+            for line in open(path, encoding='utf-8') if line.strip()]
+    # The answers name their words by address; the audit works on the ids the corpus gives them now.
+    placed = sense.word_ids([r for r in read if 'word_id' not in r])
     rows, repeated, differing = {}, 0, []
-    for path in sorted(glob.glob(os.path.join(directory, '*.jsonl'))):
-        for line in open(path, encoding='utf-8'):
-            if not line.strip():
+    for row in read:
+        if 'word_id' not in row:
+            key = (row['text'], row['reference'], int(row['position']), row['surface'])
+            if key not in placed:
                 continue
-            row = json.loads(line)
-            previous = rows.get(row['word_id'])
-            if previous:
-                repeated += 1
-                if previous['referent'] != row['referent']:
-                    differing.append({'word_id': row['word_id'],
-                                      'strong_number': row['strong_number'],
-                                      'answers': [previous['referent'], row['referent']]})
-            rows[row['word_id']] = row
+            row = {**row, 'word_id': placed[key]}
+        previous = rows.get(row['word_id'])
+        if previous:
+            repeated += 1
+            if previous['referent'] != row['referent']:
+                differing.append({'word_id': row['word_id'],
+                                  'strong_number': row['strong_number'],
+                                  'answers': [previous['referent'], row['referent']]})
+        rows[row['word_id']] = row
     return rows, repeated, differing
 
 

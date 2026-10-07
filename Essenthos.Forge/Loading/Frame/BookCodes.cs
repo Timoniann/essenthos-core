@@ -65,6 +65,10 @@ internal static class BookCodes
 
     public static bool TryGetOrdinal(string code, out int ordinal) => Canonical.TryGetValue(code, out ordinal);
 
+    /// <summary>The code a book is written by in an address, upper case, or null for a book with none.</summary>
+    public static string? Code(int ordinal) =>
+        Canonical.Where(pair => pair.Value == ordinal).Select(pair => pair.Key.ToUpperInvariant()).FirstOrDefault();
+
     public static bool IsBeyondTheCanon(string code) => BeyondTheCanon.Contains(code);
 
     /// <summary>

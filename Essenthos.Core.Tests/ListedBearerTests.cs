@@ -260,17 +260,16 @@ public sealed class ListedBearerTests : IDisposable
     [Fact]
     public async Task AWordAReadingAnsweredIsLeftAlone()
     {
-        var row = JsonSerializer.Serialize(new
+        var row = JsonSerializer.Serialize(new Dictionary<string, object?>(_db.AddressFields(Hebrew(1, 2).Id))
         {
-            word_id = Hebrew(1, 2).Id,
-            strong_number = Ham,
-            referent = "unlisted",
-            names = (string?)null,
-            confidence = "high",
-            reason = "the verse decides it",
-            prompt_version = "sense-1",
-            model = "a-model",
-            run = "2026-09-05T21:35:25+00:00",
+            ["strong_number"] = Ham,
+            ["referent"] = "unlisted",
+            ["names"] = null,
+            ["confidence"] = "high",
+            ["reason"] = "the verse decides it",
+            ["prompt_version"] = "sense-1",
+            ["model"] = "a-model",
+            ["run"] = "2026-09-05T21:35:25+00:00",
         });
         await File.WriteAllTextAsync(
             Path.Combine(_readings, "run-1", SenseReadingFiles.AnswersFileName), row + Environment.NewLine);
