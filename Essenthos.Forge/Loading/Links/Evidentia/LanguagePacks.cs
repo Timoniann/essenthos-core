@@ -250,16 +250,21 @@ internal sealed class GermanLanguagePack() : StemmedLanguagePack("deu", Function
         "ich", "du", "er", "sie", "es", "wir", "ihr", "mich", "dich", "mir", "dir", "ihn", "ihm", "ihnen",
         "uns", "euch", "sich", "ist", "war", "sind", "waren", "wird", "werden", "ward", "wurde", "hat", "haben", "hatte",
         "nicht", "auch",
-        // The possessive determiners write the original's suffix or genitive pronoun, which is never
-        // where a learned rendering puts them: seine Knechte is not αὐτῷ.
+    };
+
+    /// <summary>
+    /// The possessive determiners, which the parse does not always call possessive (<em>dein</em> as a
+    /// determiner of another kind, <em>euer</em> as an adjective). They stay content words: most of the
+    /// time the index places them on the genitive pronoun they write. <em>sein</em> is the verb as well.
+    /// </summary>
+    internal static readonly IReadOnlySet<string> Possessives = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
         "mein", "meine", "meinen", "meinem", "meiner", "meines",
         "dein", "deine", "deinen", "deinem", "deiner", "deines",
         "sein", "seine", "seinen", "seinem", "seiner", "seines",
-        "ihre", "ihren", "ihrem", "ihrer", "ihres",
+        "ihr", "ihre", "ihren", "ihrem", "ihrer", "ihres",
         "unser", "unsere", "unseren", "unserem", "unserer", "unseres", "unsre", "unsren", "unsrem", "unsrer", "unsres", "unsern", "unserm",
         "euer", "eure", "euren", "eurem", "eurer", "eures", "euern", "euerm",
-        "sondern", "weil", "indem", "damit", "nachdem", "obgleich", "obwohl", "ehe", "bevor", "sobald", "solange",
-        "wider", "gen",
     };
 }
 
@@ -272,7 +277,13 @@ internal sealed class SpanishLanguagePack() : StemmedLanguagePack("spa", Functio
         "de", "del", "a", "á", "al", "en", "con", "por", "para", "sin", "sobre", "entre", "hasta", "desde",
         "él", "ella", "ellos", "ellas", "yo", "tú", "nosotros", "vosotros", "le", "les", "se", "me", "te", "nos", "os",
         "su", "sus", "mi", "mis", "tu", "tus", "es", "fué", "fue", "era", "son", "ha", "han", "había", "no", "ni",
-        "como", "cuando", "si", "sino", "porque",
+        "como", "cuando", "si",
+    };
+
+    /// <summary>The possessive determiners; the short ones are function words as well.</summary>
+    internal static readonly IReadOnlySet<string> Possessives = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+    {
+        "mi", "mis", "tu", "tus", "su", "sus",
         "nuestro", "nuestra", "nuestros", "nuestras", "vuestro", "vuestra", "vuestros", "vuestras",
     };
 }

@@ -35,10 +35,11 @@ internal enum EvidentiaAuxiliaryRole
 /// <em>out</em> on מִן as often as the phrases did, and the one-to-one assignment would otherwise hand
 /// such a form whichever occurrence of the habit is free in the verse.
 ///
-/// <para>Deliberately not covered: possessive and reflexive pronouns, which a Hebrew suffix on a noun
-/// or a preposition carries; object pronouns onto a Hebrew preposition, which is where the suffix
-/// stands; position relative to the host word; and every source language but English,
-/// since the roles come from the English UDPipe parse.</para>
+/// <para>Deliberately not covered: English possessive and reflexive pronouns, which a Hebrew suffix on
+/// a noun or a preposition carries; object pronouns onto a Hebrew preposition, which is where the
+/// suffix stands; position relative to the host word; and every source language but English for the
+/// roles, which come from the English UDPipe parse. A German or Spanish possessive is held to the case
+/// and class it can render, and to nothing more.</para>
 /// </summary>
 internal static class EvidentiaAuxiliaryWords
 {
@@ -106,7 +107,7 @@ internal static class EvidentiaAuxiliaryWords
             return true;
         }
 
-        if (DisagreesAsAPersonalPronoun(source, target))
+        if (DisagreesAsAPersonalPronoun(source, target) || DisagreesAsAPossessive(source, target))
         {
             return true;
         }
@@ -243,6 +244,35 @@ internal static class EvidentiaAuxiliaryWords
                && Number(target) is { } targetNumber
                && sourceNumber != targetNumber;
     }
+
+    /// <summary>
+    /// A German or Spanish possessive determiner writes what the original writes as a genitive pronoun
+    /// or a suffix, so it is not a Greek pronoun of another case (<em>seine Knechte</em> is not
+    /// αὐτῷ) and not a Hebrew preposition, conjunction or article (<em>zu meinem Herrn</em> is not אֶל,
+    /// whose suffix-bearing noun it belongs to).
+    /// </summary>
+    private static bool DisagreesAsAPossessive(EvidentiaAnalysis source, EvidentiaAnalysis target)
+    {
+        if (!IsPossessive(source.Token))
+        {
+            return false;
+        }
+
+        var targetClass = EvidentiaMorphologyLabels.PartOfSpeech(target.PartOfSpeech, target.Token.Language);
+        return target.Token.Language.ToLowerInvariant() switch
+        {
+            "grc" => targetClass == "pron" && Case(target) is { } targetCase && targetCase != "gen",
+            "hbo" or "arc" => targetClass is "adp" or "conj" or "det",
+            _ => false,
+        };
+    }
+
+    private static bool IsPossessive(EvidentiaToken token) => token.Language.ToLowerInvariant() switch
+    {
+        "deu" => GermanLanguagePack.Possessives.Contains(token.Surface) || Feature(token, "Poss") == "Yes",
+        "spa" => SpanishLanguagePack.Possessives.Contains(token.Surface) || Feature(token, "Poss") == "Yes",
+        _ => false,
+    };
 
     private static string? Number(EvidentiaAnalysis analysis) =>
         EvidentiaMorphologyLabels.Feature(Feature(analysis.Token, "number"), analysis.Token.Language);
