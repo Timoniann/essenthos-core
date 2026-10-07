@@ -572,6 +572,30 @@
       "why": "Both records are Azzur the father of Jaazaniah, a prince of the people against whom Ezekiel prophesied (EZK 11:1); the second holds no verse, word or relationship of its own.",
       "confidence": 0.95,
       "source": "Essenthos, on the portrait briefs' report of records holding several people and on the readings of the verses only a dataset listed, each occurrence read against its verse by claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H3003",
+      "keeps": "jabeshgilead",
+      "folds": "jobesh",
+      "why": "Both records are the city of Gilead the text calls Jabesh and Jabesh-gilead (JDG 21:8-14, 1SA 11:1-10, 31:11-13, 2SA 2:4-5, 21:12, 1CH 10:11-12). The register wrote it under Strong's headword Jobesh and carries every word that names it; the held record carries the city's own name and none of its words.",
+      "confidence": 0.98,
+      "source": "Essenthos: the places the register wrote under Strong's spelling beside a held record of the same place, each read against its verses by claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H439",
+      "keeps": "allonbacuth",
+      "folds": "allonbachuth",
+      "why": "Both records are the oak below Bethel where Deborah, Rebekah's nurse, was buried (GEN 35:8); the register's Allon-bachuth holds no word, verse or relationship of its own.",
+      "confidence": 0.98,
+      "source": "Essenthos: the places the register wrote under Strong's spelling beside a held record of the same place, each read against its verses by claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H6307",
+      "keeps": "paddanaram",
+      "folds": "padan",
+      "why": "Padan of Genesis 48:7 is Paddan-aram, where Jacob was when Rachel died on the way back (GEN 35:9, 48:7); the register's Padan holds no word, verse or relationship of its own.",
+      "confidence": 0.95,
+      "source": "Essenthos: the places the register wrote under Strong's spelling beside a held record of the same place, each read against its verses by claude-opus-5-5, 2026-10-07"
     }
   ],
   "declined": [

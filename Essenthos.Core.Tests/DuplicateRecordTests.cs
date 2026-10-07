@@ -121,6 +121,34 @@ public sealed class DuplicateRecordTests : IDisposable
         (await _db.MergedRecords.AsNoTracking().SingleAsync()).Id.Should().Be(merged.Id);
     }
 
+    /// <summary>
+    /// A place the register wrote under Strong's headword beside the held record of the same place
+    /// folds into the held one, which keeps the name the text prints: the words naming Jobesh name
+    /// Jabesh-gilead, and the register's address still arrives there.
+    /// </summary>
+    [Theory]
+    [InlineData("jobesh", "jabeshgilead")]
+    [InlineData("allonbachuth", "allonbacuth")]
+    [InlineData("padan", "paddanaram")]
+    public async Task APlaceTheRegisterSpeltAsStrongDoesFoldsIntoTheHeldPlace(string alias, string canonical)
+    {
+        var pair = DuplicateRecordLoader.Read().Merges.Single(m => m.Folds == alias);
+        pair.Keeps.Should().Be(canonical);
+        var kept = Record(canonical, $"place:{canonical}", "the held place");
+        var folded = Record(alias, $"essenthos:{alias}", "the register's place");
+        var word = Names(folded, LinkMethod.StrongNumber, 0.9, "the register's number");
+        Cites(folded, 7, 21, 8);
+        await _db.SaveChangesAsync();
+
+        (await _loader.Fold(DuplicateRecordLoader.Read() with { Merges = [pair], Splits = [] })).Folded.Should().Be(1);
+
+        (await _db.Entities.AnyAsync(e => e.Slug == alias)).Should().BeFalse();
+        (await _db.Entities.SingleAsync(e => e.Slug == canonical)).Name.Should().Be(kept.Name);
+        (await _db.WordEntities.AsNoTracking().SingleAsync(a => a.Id == word.Id)).EntityId.Should().Be(kept.Id);
+        (await _db.EntityVerses.AsNoTracking().SingleAsync()).EntityId.Should().Be(kept.Id);
+        (await _db.MergedRecords.AsNoTracking().SingleAsync()).Slug.Should().Be(alias);
+    }
+
     private void Cites(Entity entity, int book, int chapter, int verse) =>
         _db.EntityVerses.Add(new EntityVerse
         {
