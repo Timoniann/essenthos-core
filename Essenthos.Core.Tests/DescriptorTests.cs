@@ -687,6 +687,7 @@ public sealed class DescriptorTests : IDisposable
 
         outcome.Refused.Mistargeted.Should().Be(2, "Doeg is a man and Edom here a land");
         outcome.Refused.Members.Should().Be(1, "Keilah the Garmite is one of the Garmites");
+        outcome.Refused.UnknownRelation.Should().Be(1, "a claim the pass wrote with no relation is refused, not a failure");
         (await _db.EntityDescriptors.Select(d => d.Entity!.Slug + " " + d.Relation + " " + d.Target!.Slug).ToListAsync())
             .Should().BeEquivalentTo(
                 "doeg-1 of-people edomites",

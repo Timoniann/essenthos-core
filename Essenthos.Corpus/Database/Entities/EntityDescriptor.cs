@@ -600,6 +600,7 @@ public static class DescriptorTargets
                 StringComparer.Ordinal);
 
     /// <summary>Whether a record of this kind can stand at the clause's other end; any can, for a relation the table leaves open.</summary>
-    public static bool Admits(string relation, EntityKind? target) =>
-        !ByRelation.TryGetValue(relation, out var kinds) || (target is { } kind && kinds.Contains(kind));
+    public static bool Admits(string? relation, EntityKind? target) =>
+        relation is null || !ByRelation.TryGetValue(relation, out var kinds)
+            || (target is { } kind && kinds.Contains(kind));
 }

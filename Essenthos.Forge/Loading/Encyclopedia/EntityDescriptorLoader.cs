@@ -640,7 +640,7 @@ internal sealed class EntityDescriptorLoader(
 
             foreach (var claim in record.Claims ?? [])
             {
-                if (!entities.TryGetValue(claim.Target, out var targetId))
+                if (claim.Relation is null || claim.Target is null || !entities.TryGetValue(claim.Target, out var targetId))
                 {
                     continue;
                 }
@@ -683,6 +683,7 @@ internal sealed class EntityDescriptorLoader(
             foreach (var claim in record.Claims ?? [])
             {
                 if (claim.Relation == DescriptorRelations.DescendantsOf
+                    && claim.Target is not null
                     && entities.TryGetValue(claim.Target, out var member)
                     && Citation.Parse(claim.Reference) is { } citation)
                 {
@@ -794,7 +795,8 @@ internal sealed class EntityDescriptorLoader(
 
             foreach (var claim in record.Claims ?? [])
             {
-                if (!string.IsNullOrWhiteSpace(claim.Witness) && entities.TryGetValue(claim.Target, out var targetId))
+                if (!string.IsNullOrWhiteSpace(claim.Witness) && claim.Relation is not null && claim.Target is not null
+                    && entities.TryGetValue(claim.Target, out var targetId))
                 {
                     witnessed.Add((entityId, claim.Relation, targetId));
                 }
