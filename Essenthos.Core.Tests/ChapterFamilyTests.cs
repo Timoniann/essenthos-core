@@ -81,6 +81,27 @@ public sealed class ChapterFamilyTreesTests
         trees[0].Between.Should().Equal(2, 4, 5);
     }
 
+    /// <summary>
+    /// Revelation 7 names Naphtali, Reuben and Judah and not Dan: Jacob and Leah are drawn as parents
+    /// two of them share, and Bilhah, Naphtali's mother with no other son on the tree, is drawn beside
+    /// Jacob too rather than being the one mother left out.
+    /// </summary>
+    [Fact]
+    public void AChildDrawnUnderOneParentIsDrawnWithTheOther()
+    {
+        const int jacob = 1, bilhah = 2, naphtali = 3, leah = 4, reuben = 5, judah = 6;
+        var trees = ChapterFamily.Trees(
+            new HashSet<int> { naphtali, reuben, judah },
+            [
+                Parent(jacob, naphtali), Parent(bilhah, naphtali), Parent(jacob, reuben), Parent(jacob, judah),
+                Parent(leah, reuben), Parent(leah, judah), Side(bilhah, jacob), Side(leah, jacob),
+            ]);
+
+        trees.Should().ContainSingle();
+        trees[0].Named.Should().Equal(naphtali, reuben, judah);
+        trees[0].Between.Should().Equal(jacob, bilhah, leah);
+    }
+
     [Fact]
     public void UnconnectedFamiliesAreTreesOfTheirOwnAndALoneManIsInNone()
     {

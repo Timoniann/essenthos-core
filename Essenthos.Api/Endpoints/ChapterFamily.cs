@@ -164,6 +164,7 @@ internal static class ChapterFamily
         var next = new Dictionary<int, HashSet<int>>();
         var parents = new Dictionary<int, HashSet<int>>();
         var children = new Dictionary<int, HashSet<int>>();
+        var sides = new Dictionary<int, HashSet<int>>();
         foreach (var tie in ties)
         {
             if (tie.A == tie.B)
@@ -173,7 +174,12 @@ internal static class ChapterFamily
 
             Neighbours(next, tie.A).Add(tie.B);
             Neighbours(next, tie.B).Add(tie.A);
-            if (tie.Descent != 0)
+            if (tie.Descent == 0)
+            {
+                Neighbours(sides, tie.A).Add(tie.B);
+                Neighbours(sides, tie.B).Add(tie.A);
+            }
+            else
             {
                 var (parent, child) = tie.Descent > 0 ? (tie.A, tie.B) : (tie.B, tie.A);
                 Neighbours(parents, child).Add(parent);
@@ -262,8 +268,23 @@ internal static class ChapterFamily
                 .Where(parent => !drawn.Contains(parent))
                 .GroupBy(parent => parent)
                 .Where(children => children.Count() >= 2)
-                .Select(children => children.Key);
+                .Select(children => children.Key)
+                .ToList();
             between.UnionWith(shared);
+            drawn.UnionWith(shared);
+
+            // A child drawn under one parent is drawn with that parent's wife or husband who is the
+            // child's other parent. Revelation 7 names Naphtali and not Dan, so Bilhah has one son on
+            // the tree where Leah, Rachel and Zilpah have two or more, and the shared-parent rule alone
+            // left her the one mother missing under Jacob. A second father the text gives instead
+            // (Jacob or Heli) is no spouse of the first and stays out, as before.
+            var partners = drawn
+                .SelectMany(member => (parents.GetValueOrDefault(member) ?? [])
+                    .Where(parent => !drawn.Contains(parent)
+                                     && (parents.GetValueOrDefault(member) ?? [])
+                                         .Any(other => drawn.Contains(other) && (sides.GetValueOrDefault(other) ?? []).Contains(parent))))
+                .ToList();
+            between.UnionWith(partners);
         }
 
         return
