@@ -2,4 +2,14 @@
   <PropertyGroup>
     <DefaultItemExcludes>$(DefaultItemExcludes);**/bin/**;**/obj/**</DefaultItemExcludes>
   </PropertyGroup>
+
+  <!--
+    A build given its own output folder (-p:BaseOutputPath=bin/<label>/) also gets its own
+    intermediate folder, obj/<label>/. Two builds of one checkout with different labels otherwise
+    share obj/, and the second fails on the first's lock of the file lists it writes there.
+  -->
+  <PropertyGroup Condition="'$(BaseOutputPath)' != '' and '$(BaseIntermediateOutputPath)' == ''">
+    <_OutputLabel>$([System.IO.Path]::GetFileName($(BaseOutputPath.Replace('\', '/').TrimEnd('/'))))</_OutputLabel>
+    <BaseIntermediateOutputPath Condition="'$(_OutputLabel)' != '' and '$(_OutputLabel)' != 'bin'">obj/$(_OutputLabel)/</BaseIntermediateOutputPath>
+  </PropertyGroup>
 </Project>
