@@ -645,9 +645,12 @@ internal sealed class DatasetLoader(
         {
             var divisions = scope.ServiceProvider.GetRequiredService<BrentonDivisionLoader>();
             var divided = await divisions.Load(cancellationToken);
-            if (divided.Divisions > 0)
+            var edited = await scope.ServiceProvider.GetRequiredService<BrentonEditLoader>()
+                .Load(Path.Combine(resources, "Septuagint"), cancellationToken);
+            if (divided.Divisions > 0 || edited.Verses > 0)
             {
                 status.Record(divided.ToString());
+                status.Record(edited.ToString());
                 relinked = true;
 
                 // How long a verse is decides which scheme of its tradition an edition follows, so the
@@ -666,7 +669,7 @@ internal sealed class DatasetLoader(
 
                 // Swete's editions are linked to Brenton's by the letters both print within each address,
                 // book by book, which is the load's own pass: the books the divisions touched are drawn again.
-                var books = divided.Verses.Select(verse => verse.Book).ToHashSet();
+                var books = divided.Verses.Select(verse => verse.Book).Concat(edited.Books).ToHashSet();
                 foreach (var slug in (string[])[SweteTextSource.Slug, SweteOldGreekTextSource.Slug])
                 {
                     if (await db.Texts.SingleOrDefaultAsync(t => t.Slug == slug, cancellationToken) is not { } swete)
@@ -1265,7 +1268,7 @@ internal sealed class DatasetLoader(
         }
 
         // The Van Dyck and the Indian Revised Version mark a title as one, and the reader hands it to
-        // the psalm's first verse.
+        // the psalm's first verse; Luther's prints it there and opens the verse with it.
         foreach (var (folder, _) in EbibleTextSource.Definitions)
         {
             using var scope = services.CreateScope();
@@ -1275,6 +1278,11 @@ internal sealed class DatasetLoader(
             if (outcome.Verses > 0)
             {
                 status.Record(outcome.ToString());
+            }
+
+            if (outcome.PlacedVerses is { Count: > 0 } placed)
+            {
+                await MatchTheTitleWordsAgain(outcome.Slug, placed, cancellationToken);
             }
         }
 
@@ -1313,6 +1321,37 @@ internal sealed class DatasetLoader(
             {
                 status.Record(outcome.ToString());
             }
+        }
+    }
+
+    /// <summary>
+    /// A text already linked by its Strong numbers to a witness holding the psalms, whose first verses
+    /// have just been given the title's row as well: the words of those verses are matched again, so
+    /// that a title word the numbers name reaches the witness's title verse, and only they are
+    /// written. A text not yet linked is linked whole by its own step later, title rows included.
+    /// </summary>
+    private async Task MatchTheTitleWordsAgain(string slug, IReadOnlyList<int> verses, CancellationToken cancellationToken)
+    {
+        using var scope = services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        var witnesses = await db.Links
+            .Where(link => link.FromText!.Slug == slug && link.Method == LinkMethod.StrongNumber
+                           && db.Books.Any(book => book.TextId == link.ToTextId && book.CanonicalOrdinal == PsalmsOrdinal))
+            .Select(link => link.ToText!.Slug)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+        if (witnesses.Count == 0)
+        {
+            return;
+        }
+
+        var words = (await db.Words.Where(word => verses.Contains(word.VerseId)).Select(word => word.Id)
+            .ToListAsync(cancellationToken)).ToHashSet();
+        foreach (var witness in witnesses)
+        {
+            var outcome = await scope.ServiceProvider.GetRequiredService<TaggedTextLinkLoader>()
+                .Load(slug, witness, null, cancellationToken, words);
+            status.Record($"{slug} to {witness}, the psalm titles' words matched again: {outcome}");
         }
     }
 

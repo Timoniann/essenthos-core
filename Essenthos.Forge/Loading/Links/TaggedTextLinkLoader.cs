@@ -341,6 +341,33 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     }
 
     /// <summary>
+    /// The words of the translation's verses no link of these numbers reaches the witness from, to be
+    /// matched as <c>only</c> after the witness gained numbers it lacked when the pair was linked —
+    /// BHSA's 512 verses that had none. A verse a link already reaches is left as its first run drew
+    /// it, links, settled guesses and all; a verse none reaches has nothing of these numbers to undo,
+    /// so matching it now only adds, and the aligner's guesses about its words are settled the way the
+    /// first run settled the rest. A verse that still matches nothing writes nothing again.
+    /// </summary>
+    public async Task<IReadOnlySet<long>> Unreached(
+        string fromSlug,
+        string toSlug,
+        EditionNumbers? edition,
+        CancellationToken cancellationToken = default)
+    {
+        var (from, to) = await Pair(fromSlug, toSlug, cancellationToken);
+        var written = Written(fromSlug, toSlug, edition);
+        var reached = db.LinkWords
+            .Where(lw => lw.Side == LinkSide.From && lw.Link!.FromTextId == from.Id && lw.Link.ToTextId == to.Id
+                         && lw.Link.Method == LinkMethod.StrongNumber && written.Contains(lw.Link.Provenance!.Source))
+            .Select(lw => lw.Word!.VerseId);
+        return (await db.Words
+                .Where(w => w.TextId == from.Id && !reached.Contains(w.VerseId))
+                .Select(w => w.Id)
+                .ToListAsync(cancellationToken))
+            .ToHashSet();
+    }
+
+    /// <summary>
     /// The pair's links matched again where the object marker made them, after the rule for it changed
     /// (<see cref="ObjectMarker"/>), and changed in place to what a load would draw now.
     ///

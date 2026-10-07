@@ -125,6 +125,92 @@ public sealed class GeezVerseLinkTests : IDisposable
         (await _db.VerseLinks.CountAsync()).Should().Be(links.Count, "a second load reads the map again and adds nothing");
     }
 
+    /// <summary>
+    /// A corpus joined before the Song was read keeps its other readings as they are, and the Song's
+    /// lines are joined beside them, under the name of the model that read them.
+    /// </summary>
+    [Fact]
+    public async Task ABookReadLaterIsJoinedBesideTheBooksReadBefore()
+    {
+        const int Song = 22;
+        var geez = GeezTextSource.Read(TestResources.Folder(GeezTextSource.Folder));
+        await Load(new TextSource(geez.Definition,
+            [.. geez.Books.Where(book => book.CanonicalOrdinal is LetterOfJeremiah or Song)
+                .Select(book => book with { Chapters = [book.Chapters[0]] })]));
+        await Load(Tiny(SeptuagintTextSource.Definition(), (LetterOfJeremiah, 73), (Song, 17)));
+
+        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var placer = new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance);
+        foreach (var text in await _db.Texts.ToListAsync())
+        {
+            await placer.Place(text, rules);
+        }
+
+        var loader = new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance);
+        await loader.Load();
+        var letter = await _db.VerseLinks.Where(link => link.Source == GeezVerseMap.Source).Select(link => link.Id).ToListAsync();
+        await _db.VerseLinks.Where(link => link.Source == GeezVerseMap.WisdomSource).ExecuteDeleteAsync();
+
+        await loader.Load();
+
+        var song = await _db.VerseLinks
+            .Where(link => link.Source == GeezVerseMap.WisdomSource)
+            .Select(link => new
+            {
+                link.Method,
+                Books = link.Verses.Select(member => member.Verse!.Book!.CanonicalOrdinal).Distinct().ToList(),
+            })
+            .ToListAsync();
+        song.Should().NotBeEmpty().And.OnlyContain(link => link.Method == LinkMethod.ModelReading && link.Books.Single() == Song);
+        (await _db.VerseLinks.Where(link => link.Source == GeezVerseMap.Source).Select(link => link.Id).ToListAsync())
+            .Should().BeEquivalentTo(letter, "the readings already joined are not drawn again");
+        (await _db.VerseLinks.CountAsync(link => link.Method == LinkMethod.StatedBySource
+                                                 && link.Verses.Any(member => member.Verse!.Book!.CanonicalOrdinal == Song)))
+            .Should().Be(0, "the Song's frame rows are not its correspondence");
+    }
+
+    /// <summary>
+    /// A pair the aligner has linked word by word is joined wherever the frame puts its verses — but
+    /// never in a book the Ge'ez divides its own way, where the frame's address is only the number it prints.
+    /// </summary>
+    [Fact]
+    public async Task ABookDividedItsOwnWayIsNotJoinedByTheFrameEvenWhenThePairIsAligned()
+    {
+        const int Song = 22;
+        var geez = GeezTextSource.Read(TestResources.Folder(GeezTextSource.Folder));
+        await Load(new TextSource(geez.Definition,
+            [.. geez.Books.Where(book => book.CanonicalOrdinal is Genesis or Song)
+                .Select(book => book with { Chapters = [book.Chapters[0]] })]));
+        await Load(Tiny(SeptuagintTextSource.Definition(), (Genesis, 31), (Song, 17)));
+
+        var rules = TvtmsReader.Read(TestResources.Tvtms);
+        var placer = new CanonicalFrameLoader(_db, NullLogger<CanonicalFrameLoader>.Instance);
+        foreach (var text in await _db.Texts.ToListAsync())
+        {
+            await placer.Place(text, rules);
+        }
+
+        var ethiopic = await _db.Words.FirstAsync(w => w.Text!.Slug == GeezTextSource.Slug && w.Verse!.Book!.CanonicalOrdinal == Genesis);
+        var greek = await _db.Words.FirstAsync(w => w.Text!.Slug == SeptuagintTextSource.Slug && w.Verse!.Book!.CanonicalOrdinal == Genesis);
+        _db.Links.Add(new Database.Entities.Link
+        {
+            FromTextId = ethiopic.TextId, ToTextId = greek.TextId, Relation = LinkRelation.Renders, Method = LinkMethod.Aligner,
+            Confidence = 0.5, Provenance = new() { Source = "a model guess" },
+            Words = [new() { WordId = ethiopic.Id, Side = LinkSide.From }, new() { WordId = greek.Id, Side = LinkSide.To }],
+        });
+        await _db.SaveChangesAsync();
+
+        await new VerseLinkLoader(_db, NullLogger<VerseLinkLoader>.Instance).Load();
+
+        var stated = await _db.VerseLinkVerses
+            .Where(member => member.Verse!.Text!.Slug == GeezTextSource.Slug && member.VerseLink!.Method == LinkMethod.StatedBySource)
+            .Select(member => member.Verse!.Book!.CanonicalOrdinal)
+            .Distinct()
+            .ToListAsync();
+        stated.Should().Equal(Genesis);
+        (await _db.VerseLinks.AnyAsync(link => link.Method == LinkMethod.ModelReading)).Should().BeTrue();
+    }
+
     private async Task Load(TextSource source) =>
         await new CorpusLoader(_db, NullLogger<CorpusLoader>.Instance).Load(source);
 

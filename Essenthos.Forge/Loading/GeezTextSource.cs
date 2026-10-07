@@ -64,8 +64,9 @@ internal static class GeezTextSource
     /// leave their first chapter empty and begin at 2.
     /// </param>
     /// <param name="OwnDivision">
-    /// Divided in a way no mapping to another text's verses has been established for, so no verse of
-    /// it is joined to another text's.
+    /// Divided in a way no versification scheme describes, so the frame's rows, which place it at its
+    /// own numbers, are not where its verses answer the Greek: none of them is joined to another text's
+    /// through the frame, only through <see cref="GeezVerseMap"/>'s reading of it.
     /// </param>
     internal sealed record GeezBook(
         string File,
@@ -111,13 +112,13 @@ internal static class GeezTextSource
         new("LIT1819Maccab.xml", 87, Origin.ChurchPrintedBible),
         new("LIT5840SecondEthioMaccabees.xml", 88, Origin.ChurchPrintedBible),
         new("LIT5839ThirdEthioMaccabees.xml", 89, Origin.ChurchPrintedBible),
-        new("LIT1688Job.xml", 18, Origin.ChurchPrintedBible),
-        new("LIT2000Mazmur.xml", 19, Origin.LudolfByHaCohen, Layout: GeezLayout.Psalter),
+        new("LIT1688Job.xml", 18, Origin.ChurchPrintedBible, OwnDivision: true),
+        new("LIT2000Mazmur.xml", 19, Origin.LudolfByHaCohen, Layout: GeezLayout.Psalter, OwnDivision: true),
         new("LIT3927Messale.xml", 91, Origin.ChurchPrintedBible),
         new("LIT2396Tagsas.xml", 92, Origin.ChurchPrintedBible),
         new("LIT2516Wisdom.xml", Wisdom, Origin.DillmannByJerabek, Edition: "ed1", OwnDivision: true),
         new("LIT1320Eccles.xml", 21, Origin.ChurchPrintedBible, Edition: "EOTCed"),
-        new("LIT2362Songof.xml", 22, Origin.ChurchPrintedBible, Edition: "EOTCed"),
+        new("LIT2362Songof.xml", 22, Origin.ChurchPrintedBible, Edition: "EOTCed", OwnDivision: true),
         new("LIT2358Sirach.xml", 72, Origin.ChurchPrintedBible),
         new("LIT1672Isaiah.xml", 23, Origin.ChurchPrintedBible),
         new("LIT1685Bookof.xml", 24, Origin.ChurchPrintedBible),
@@ -179,7 +180,7 @@ internal static class GeezTextSource
         {
             BhsaTextSource.Slug, SeptuagintTextSource.Slug, SweteTextSource.Slug, NestleTextSource.Slug,
             ByzantineTextSource.Slug,
-        }.Select(to => new DeclaredVersePair(Slug, to, UnlinkedBooks)),
+        }.Select(to => new DeclaredVersePair(Slug, to, UnlinkedBooks) { Never = UnlinkedBooks }),
     ];
 
     /// <summary>
@@ -209,22 +210,11 @@ internal static class GeezTextSource
         .. Enumerable.Range(1, 10).Select(chapter => (Esther, chapter)),
     ];
 
-    /// <summary>
-    /// The books whose verses the church's text or Ludolf's Psalter divide otherwise than the Greek
-    /// inside the chapter, so that a row of the frame holds the Greek of the verse before or after:
-    /// Ludolf gives a psalm's title and first verse as one and splits others, and Job and the Song
-    /// drift the same way. Aligned by row, fewer than a third of their words reach the Greek at 0.4
-    /// against half elsewhere, and the pairs that do are mostly the wrong verse's. Left out until
-    /// they are mapped as Esther and Wisdom are.
-    /// </summary>
-    private static readonly HashSet<int> DividedWithinChapters = [18, 19, 22];
-
-    /// <summary>Whether a Ge'ez verse at this row of the frame is aligned against this text.</summary>
+    /// <summary>Whether a Ge'ez verse read at this row of the frame is aligned against this text.</summary>
     public static bool Aligns(string to, int book, int chapter, int verse) =>
-        !DividedWithinChapters.Contains(book)
-        && (to != SweteTextSource.Slug || !SweteOffTheFrame.Contains((book, chapter)));
+        to != SweteTextSource.Slug || !SweteOffTheFrame.Contains((book, chapter));
 
-    /// <summary>The books placed at their own numbers and joined to nothing verse by verse.</summary>
+    /// <summary>The books placed at their own numbers, joined verse by verse through the map and never through the frame.</summary>
     public static IReadOnlySet<int> UnlinkedBooks { get; } =
         Books.Where(book => book.OwnDivision).Select(book => book.Canonical).ToHashSet();
 

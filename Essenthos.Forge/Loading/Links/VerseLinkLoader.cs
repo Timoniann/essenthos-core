@@ -71,6 +71,14 @@ internal sealed record DeclaredVersePair(string From, string To, IReadOnlySet<in
     /// otherwise would pair every verse after the first difference with the wrong one.
     /// </summary>
     public bool AgreeingChaptersOnly { get; init; }
+
+    /// <summary>
+    /// Books of <see cref="From"/> never joined through the frame, whatever word links the pair holds:
+    /// divided as no versification scheme describes, so the frame stands them at their own numbers and
+    /// a shared address says nothing. <see cref="Without"/> gives way once the pair is linked word by
+    /// word; these do not, and a reading of the book (the Ge'ez verse map) joins them instead.
+    /// </summary>
+    public IReadOnlySet<int> Never { get; init; } = new HashSet<int>();
 }
 
 /// <summary>
@@ -392,10 +400,11 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// joined wherever those links reach, as every linked pair is, and its declaration only adds the
     /// books it names: the Synodal is declared against the King James for the books it gains, and read
     /// as the declaration alone its sixty-six were left unjoined the first time the pair was built
-    /// afresh, beneath half a million word links.
+    /// afresh, beneath half a million word links. Its <see cref="DeclaredVersePair.Never"/> books are
+    /// left out either way.
     /// </summary>
     private static IReadOnlySet<int> Outside(DeclaredVersePair declaration, bool linked) =>
-        linked ? new HashSet<int>() : declaration.Without;
+        linked ? declaration.Never : declaration.Without.Union(declaration.Never).ToHashSet();
 
     /// <summary>
     /// The two texts' addresses without the chapters, in books the frame has no rules for, that the
@@ -556,39 +565,55 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
         foreach (var pair in pairs)
         {
-            if (await db.VerseLinks.AnyAsync(
-                    link => link.FromTextId == pair.FromTextId && link.ToTextId == pair.ToTextId
-                            && link.Method == LinkMethod.ModelReading,
-                    cancellationToken))
-            {
-                continue;
-            }
-
-            var there = await Addressed(addresses, pair.ToTextId, cancellationToken);
-            var components = new List<(Component Verses, double Confidence)>();
-            foreach (var line in GeezVerseMap.Lines)
-            {
-                var from = line.From
-                    .Select(verse => own.GetValueOrDefault((line.Book, verse.Chapter, verse.Verse)))
-                    .Where(id => id != 0)
-                    .ToList();
-                var to = line.To
-                    .Where(address => GeezTextSource.Aligns(slugs[pair.ToTextId], address.Book, address.Chapter, address.Verse))
-                    .SelectMany(address => there.GetValueOrDefault(address) ?? [])
+            // A book read is joined once; a book whose reading came later is joined beside the ones before.
+            var read = (await db.VerseLinkVerses
+                    .Where(side => side.Side == LinkSide.From && side.VerseLink!.FromTextId == pair.FromTextId
+                                   && side.VerseLink.ToTextId == pair.ToTextId
+                                   && side.VerseLink.Method == LinkMethod.ModelReading)
+                    .Select(side => side.Verse!.Book!.CanonicalOrdinal)
                     .Distinct()
-                    .ToList();
-                if (from.Count > 0 && to.Count > 0)
-                {
-                    components.Add((new Component(from, to), line.Confidence));
-                }
+                    .ToListAsync(cancellationToken))
+                .ToHashSet();
+            var there = await Addressed(addresses, pair.ToTextId, cancellationToken);
+            foreach (var book in GeezVerseMap.Lines.Select(line => line.Book).Distinct().Where(book => !read.Contains(book)))
+            {
+                written += await Mapped(pair, book, own, there, slugs, cancellationToken);
             }
-
-            await Write(pair.FromTextId, pair.ToTextId, [.. components.Select(c => c.Verses)], cancellationToken,
-                new MappedVerses([.. components.Select(c => c.Confidence)], GeezVerseMap.Source));
-            written += components.Count;
         }
 
         return written;
+    }
+
+    /// <summary>The verse links one Ge'ez book's lines of the map draw for one pair.</summary>
+    private async Task<int> Mapped(
+        (int FromTextId, int ToTextId) pair,
+        int book,
+        Dictionary<(int, int, int), int> own,
+        Dictionary<(int, int, int), List<int>> there,
+        Dictionary<int, string> slugs,
+        CancellationToken cancellationToken)
+    {
+        var components = new List<(Component Verses, double Confidence)>();
+        foreach (var line in GeezVerseMap.Lines.Where(line => line.Book == book))
+        {
+            var from = line.From
+                .Select(verse => own.GetValueOrDefault((line.Book, verse.Chapter, verse.Verse)))
+                .Where(id => id != 0)
+                .ToList();
+            var to = line.To
+                .Where(address => GeezTextSource.Aligns(slugs[pair.ToTextId], address.Book, address.Chapter, address.Verse))
+                .SelectMany(address => there.GetValueOrDefault(address) ?? [])
+                .Distinct()
+                .ToList();
+            if (from.Count > 0 && to.Count > 0)
+            {
+                components.Add((new Component(from, to), line.Confidence));
+            }
+        }
+
+        await Write(pair.FromTextId, pair.ToTextId, [.. components.Select(c => c.Verses)], cancellationToken,
+            new MappedVerses([.. components.Select(c => c.Confidence)], GeezVerseMap.SourceOf(book)));
+        return components.Count;
     }
 
     /// <summary>How a set of verse links was established, where it is not the frame's statement.</summary>

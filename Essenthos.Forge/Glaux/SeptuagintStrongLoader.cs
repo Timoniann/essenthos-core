@@ -80,7 +80,7 @@ internal sealed class SeptuagintStrongLoader(AppDbContext db, ILogger<Septuagint
     /// </summary>
     internal static double Shared(int candidates) => Single / candidates;
 
-    private const string Source =
+    internal const string Source =
         "the lemma GLAUx gives the word, matched against Strong's Greek entries by their own lemma";
 
     private const string Import =

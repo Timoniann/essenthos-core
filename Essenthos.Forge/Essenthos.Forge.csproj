@@ -141,6 +141,8 @@
         <EmbeddedResource Include="Swete\SweteCorrections.json" />
         <Content Remove="Swete\SwetePage.json" />
         <EmbeddedResource Include="Swete\SwetePage.json" />
+        <Content Remove="Swete\SweteSettled.json" />
+        <EmbeddedResource Include="Swete\SweteSettled.json" />
 
         <!-- What each text was translated from, revised from or shares a tradition with, kept by hand. -->
         <Content Remove="Loading\TextRelations.json" />

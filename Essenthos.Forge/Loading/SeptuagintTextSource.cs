@@ -84,7 +84,7 @@ internal static class SeptuagintTextSource
         Editors = "Sir Lancelot Charles Lee Brenton",
         Edition = SeptuagintEdition,
         About = SeptuagintAbout,
-        RightsNote = BrentonDivisions.Note,
+        RightsNote = $"{BrentonDivisions.Note} {BrentonEdits.Note}",
     };
 
     /// <summary>
@@ -132,7 +132,11 @@ internal static class SeptuagintTextSource
         public const int LastEzraChapter = 10;
     }
 
-    public static TextSource Read(string folder)
+    /// <param name="edited">
+    /// False for the file's words as it prints them, without <see cref="BrentonEdits"/>: what a corpus
+    /// loaded before them holds. Its verses are divided as Brenton's either way.
+    /// </param>
+    public static TextSource Read(string folder, bool edited = true)
     {
         var files = Directory.GetFiles(folder, "*.usfm")
             .ToDictionary(path => Code(Path.GetFileName(path)), path => path);
@@ -159,9 +163,9 @@ internal static class SeptuagintTextSource
 
             if (code == SecondEsdras.Code)
             {
-                books.Add(Book(SecondEsdras.Ezra, ++position,
+                books.Add(Book(SecondEsdras.Ezra, ++position, edited,
                     [.. chapters.Where(chapter => chapter.Number <= SecondEsdras.LastEzraChapter)]));
-                books.Add(Book(SecondEsdras.Nehemiah, ++position,
+                books.Add(Book(SecondEsdras.Nehemiah, ++position, edited,
                     [.. chapters
                         .Where(chapter => chapter.Number > SecondEsdras.LastEzraChapter)
                         .Select(chapter => chapter with
@@ -171,20 +175,25 @@ internal static class SeptuagintTextSource
                 continue;
             }
 
-            books.Add(Book(canonical, ++position, chapters));
+            books.Add(Book(canonical, ++position, edited, chapters));
         }
 
         return new TextSource(Definition(), books);
     }
 
-    /// <summary>A book as Brenton divides it, which is not everywhere where the file does: see <see cref="BrentonDivisions"/>.</summary>
-    private static BookDraft Book(int canonical, int position, IReadOnlyList<ChapterDraft> chapters) => new(
+    /// <summary>
+    /// A book as Brenton divides it, which is not everywhere where the file does, and with the words the
+    /// file repeats or lost read once and whole: see <see cref="BrentonDivisions"/> and <see cref="BrentonEdits"/>.
+    /// </summary>
+    private static BookDraft Book(int canonical, int position, bool edited, IReadOnlyList<ChapterDraft> chapters) => new(
         CanonicalOrdinal: canonical,
         Position: position,
         Name: BookReferences.Name(canonical),
         Slug: BookReferences.Slug(canonical),
         Abbreviation: BookReferences.Abbreviation(canonical),
-        Chapters: BrentonDivisions.Apply(canonical, chapters));
+        Chapters: edited
+            ? BrentonEdits.Apply(canonical, BrentonDivisions.Apply(canonical, chapters))
+            : BrentonDivisions.Apply(canonical, chapters));
 
     private static ChapterDraft Chapter(UsfmChapter chapter) => new(
         chapter.Number,

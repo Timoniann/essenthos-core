@@ -455,3 +455,50 @@ public class EbibleBookNameTests
     public void AMisprintedBookNameIsReadCorrected(string? printed, string? read) =>
         EbibleTextSource.Corrected(printed).Should().Be(read);
 }
+
+/// <summary>
+/// Luther's psalm titles, which eBible prints inside the first verse with nothing marking them: the
+/// verse says it holds one by opening with the words that name what the psalm is.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public class LutherPsalmTitleTests(Ebible ebible) : IClassFixture<Ebible>
+{
+    private const int Psalms = 19;
+
+    [Theory]
+    [InlineData(3)]
+    [InlineData(7)]
+    [InlineData(18)]
+    [InlineData(51)]
+    [InlineData(60)]
+    [InlineData(92)]
+    public void AFirstVerseOpeningWithItsTitleSaysSo(int psalm) =>
+        ebible.Verse(ebible.Luther, Psalms, psalm, 1).MarksASuperscription.Should().BeTrue();
+
+    [Theory]
+    [InlineData(1)]
+    [InlineData(2)]
+    [InlineData(33)]
+    [InlineData(96)]
+    public void APsalmWithNoTitleSaysNothing(int psalm) =>
+        ebible.Verse(ebible.Luther, Psalms, psalm, 1).MarksASuperscription.Should().BeFalse();
+
+    /// <summary>The 64 psalms the frame holds a title row for, the ones the Hebrew numbers a title apart: every one says so.</summary>
+    [Fact]
+    public void EveryPsalmTheHebrewTitlesApartOpensWithItsTitle()
+    {
+        int[] titled = [3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 18, 19, 20, 21, 22, 30, 31, 34, 36, 38, 39, 40, 41, 42, 44, 45, 46, 47, 48, 49, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 67, 68, 69, 70, 75, 76, 77, 80, 81, 83, 84, 85, 88, 89, 92, 102, 108, 140, 142];
+
+        titled.Should().HaveCount(64).And.OnlyContain(psalm => ebible.Verse(ebible.Luther, Psalms, psalm, 1).MarksASuperscription);
+    }
+
+    [Fact]
+    public void OnlyThePsalmsFirstVersesAndOnlyLuthers()
+    {
+        ebible.Luther.Books.Where(book => book.CanonicalOrdinal != Psalms)
+            .SelectMany(book => book.Chapters).SelectMany(chapter => chapter.Verses)
+            .Should().NotContain(verse => verse.MarksASuperscription);
+        ebible.Verse(ebible.Luther, Psalms, 3, 2).MarksASuperscription.Should().BeFalse();
+        ebible.Verse(ebible.Elberfelder, Psalms, 3, 1).MarksASuperscription.Should().BeFalse();
+    }
+}

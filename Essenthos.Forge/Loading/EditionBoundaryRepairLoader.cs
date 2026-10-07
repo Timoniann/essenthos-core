@@ -65,13 +65,19 @@ internal sealed class EditionBoundaryRepairLoader(AppDbContext db)
             var marked = SweteTextSource.Read(folder, chapterMarkers: false);
 
             var (split, marker) = await OpenSecondSamuelNineteenFortyThree(swete, folder, reading, marked, cancellationToken);
+            var opened = await OpenChaptersRunIntoTheVerseBefore(swete, reading, cancellationToken);
             var (taken, kept) = await TakeChapterMarkers(swete, reading, marked, cancellationToken);
-            moved += split;
+            moved += split + opened;
             removed += marker + taken;
             rewritten += kept;
-            if (split + marker + taken + kept > 0)
+            if (split + opened + marker + taken + kept > 0)
             {
                 changed.Add(swete.Slug);
+            }
+
+            if (opened > 0 && swete.RightsNote?.Contains(SweteSettled.Note, StringComparison.Ordinal) != true)
+            {
+                swete.RightsNote = $"{swete.RightsNote} {SweteSettled.Note}".Trim();
             }
 
             if (marker + taken + kept > 0)
@@ -222,6 +228,68 @@ internal sealed class EditionBoundaryRepairLoader(AppDbContext db)
         await RemovedWordEvidence.Remove(db, [last[^1].Id], cancellationToken);
         return (tail.Length, 1);
     }
+
+    /// <summary>
+    /// A chapter's first verse that <see cref="SweteDivisions"/> opens out of the verse before it, where
+    /// the transcription ran its words into the last verse of the chapter before and left the verse
+    /// itself nothing but the chapter's number: 3 Kingdoms 16:1, in 15:34. A corpus loaded before the
+    /// division holds the words at the end of 15:34, with the number after them or, once this pass took
+    /// the numbers out, without, and 16:1 empty or holding the number alone. The words are moved, rows
+    /// and all, to the head of 16:1, the numbers with them, so that the verse then reads as the edition
+    /// with its numbers or without and <see cref="TakeChapterMarkers"/> finishes it. A corpus whose 16:1
+    /// holds words already has nothing for this to do.
+    /// </summary>
+    private async Task<int> OpenChaptersRunIntoTheVerseBefore(Text swete, TextSource reading, CancellationToken cancellationToken)
+    {
+        var moved = 0;
+        foreach (var (canonical, (fromChapter, fromVerse), (toChapter, toVerse)) in new[] { (11, (15, 34), (16, 1)) })
+        {
+            var from = await db.Verses.SingleOrDefaultAsync(v => v.TextId == swete.Id && v.Book!.CanonicalOrdinal == canonical
+                && v.ChapterNumber == fromChapter && v.Number == fromVerse && v.Label == "", cancellationToken);
+            var to = await db.Verses.SingleOrDefaultAsync(v => v.TextId == swete.Id && v.Book!.CanonicalOrdinal == canonical
+                && v.ChapterNumber == toChapter && v.Number == toVerse && v.Label == "", cancellationToken);
+            if (from is null || to is null)
+            {
+                continue;
+            }
+
+            var opening = await Stored(to.Id, cancellationToken);
+            if (opening.Any(w => !Roman(w.Surface)))
+            {
+                continue;
+            }
+
+            var book = reading.Books.Single(b => b.CanonicalOrdinal == canonical);
+            var head = Read(book, fromChapter, fromVerse);
+            var words = Read(book, toChapter, toVerse);
+            var closing = await Stored(from.Id, cancellationToken);
+            var tail = closing.Skip(head.Count).ToList();
+            var numerals = tail.Skip(words.Count).ToList();
+            if (!Matches(closing.Take(head.Count), head) || !Matches(tail.Take(words.Count), words)
+                || numerals.Any(w => !Roman(w.Surface)))
+            {
+                throw new InvalidOperationException(
+                    $"SWETE {BookReferences.Name(canonical)} {fromChapter}:{fromVerse} is neither the verse the edition prints "
+                    + $"nor that verse with the words of {toChapter}:{toVerse} run into it; nothing changed.");
+            }
+
+            await db.Words.Where(w => w.VerseId == to.Id).ExecuteUpdateAsync(setters => setters
+                .SetProperty(w => w.Position, w => -w.Position - tail.Count), cancellationToken);
+            var ids = tail.Select(w => w.Id).ToArray();
+            await db.Words.Where(w => ids.Contains(w.Id)).ExecuteUpdateAsync(setters => setters
+                .SetProperty(w => w.VerseId, to.Id)
+                .SetProperty(w => w.Position, w => w.Position - head.Count), cancellationToken);
+            await db.Words.Where(w => w.VerseId == to.Id && w.Position < 0).ExecuteUpdateAsync(setters => setters
+                .SetProperty(w => w.Position, w => -w.Position), cancellationToken);
+            moved += words.Count;
+        }
+
+        return moved;
+    }
+
+    private static List<(string Surface, string Trailer)> Read(BookDraft book, int chapter, int verse) =>
+        [.. book.Chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse && v.Label == "").Words
+            .Select(w => (w.Surface, w.Trailer))];
 
     /// <summary>
     /// The chapter numbers <see cref="SweteReader"/> takes out of the text, taken out of a corpus that

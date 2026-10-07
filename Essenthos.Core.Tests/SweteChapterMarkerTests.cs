@@ -142,22 +142,42 @@ public class SweteChapterMarkerTests(ITestOutputHelper output)
             output.WriteLine(line);
         }
 
-        removed.Should().HaveCount(61);
+        removed.Should().HaveCount(59);
         kept.Should().Equal("Judges 7:1 VIIἸαρβάλ → Ἰαρβάλ", "1 Samuel 9:1 IXἈρὲδ → Ἀρὲδ", "1 Kings 15:1 XVαβὰθ → αβὰθ");
         removed.Should().Contain(["2 Samuel 11:27 XII", "2 Samuel 15:37 XVI", "2 Samuel 16:23 XVII", "Exodus 19:25 XX",
-            "Numbers 17:1 XVII", "Numbers 19:1 XIX", "1 Kings 14:1 XIV", "1 Kings 16:1 XVI"]);
+            "Numbers 16:50 XVII", "Numbers 18:32 XIX", "1 Kings 14:1 XIV", "1 Kings 16:1 XVI"]);
+        removed.Count(line => line == "1 Kings 16:1 XVI").Should().Be(2, "the number closing 15:34 goes with the words it closed");
     }
 
-    [Theory]
-    [InlineData(4, 17, 1)]
-    [InlineData(4, 19, 1)]
-    [InlineData(11, 14, 1)]
-    [InlineData(11, 16, 1)]
-    public void AVerseThatHeldOnlyItsChapterNumberStaysEmpty(int book, int chapter, int verse)
+    /// <summary>
+    /// 3 Kingdoms 14:1 is empty in the edition itself: Vaticanus has no 14:1-20, and Swete prints XIV and
+    /// then 21.
+    /// </summary>
+    [Fact]
+    public void AVerseThatHeldOnlyItsChapterNumberStaysEmpty()
     {
         var read = SweteTextSource.Read(TestResources.SweteFolder);
-        read.Books.Single(b => b.CanonicalOrdinal == book).Chapters.Single(c => c.Number == chapter)
-            .Verses.Single(v => v.Number == verse).Words.Should().BeEmpty();
+        read.Books.Single(b => b.CanonicalOrdinal == 11).Chapters.Single(c => c.Number == 14)
+            .Verses.Single(v => v.Number == 1).Words.Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// The chapters whose opening line the transcription lost with its number, read from the page; and
+    /// 3 Kingdoms 16:1, whose line it ran into 15:34.
+    /// </summary>
+    [Theory]
+    [InlineData(4, 17, 1, "Καὶ ἐλάλησεν Κύριος πρὸς Μωυσῆν λέγων")]
+    [InlineData(4, 19, 1, "Καὶ ἐλάλησεν Κύριος πρὸς Μωυσῆν καὶ Ἀαρὼν λέγων")]
+    [InlineData(11, 16, 1, "καὶ ἐγένετο λόγος Κυρίου ἐν χειρὶ Εἰοὺ υἱοῦ Ἁνανεὶ πρὸς Βααςά")]
+    public void AChapterOpensWithTheLineThePagePrintsBesideItsNumber(int book, int chapter, int verse, string printed)
+    {
+        var read = SweteTextSource.Read(TestResources.SweteFolder);
+        var chapters = read.Books.Single(b => b.CanonicalOrdinal == book).Chapters;
+        string.Concat(chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse).Words
+                .Select(w => w.Surface + w.Trailer)).TrimEnd()
+            .Should().Be(printed);
+        chapters.Single(c => c.Number == chapter - 1).Verses[^1].Words[^1].Surface.Should()
+            .NotStartWith("X", "the chapter before closes with its own words, not this one's number");
     }
 
     [Fact]

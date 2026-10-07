@@ -18,7 +18,8 @@ internal sealed record GeezVerseMapLine(
 
 /// <summary>
 /// Which verses of the Ge'ez books divided their own way hold the passage a verse of the Greek
-/// holds: Esther, Wisdom, the Letter of Jeremiah, and Messale and Tägsas against Proverbs.
+/// holds: Esther, Wisdom, the Letter of Jeremiah, Messale and Tägsas against Proverbs, and Job,
+/// Ludolf's Psalter and the Song of Songs.
 ///
 /// <para>
 /// **Nobody states this.** No versification scheme knows the church's division of these books, and
@@ -47,8 +48,20 @@ internal static class GeezVerseMap
         "division of this book is not in any versification scheme, so no source states which Greek " +
         "verse a verse of it answers";
 
+    /// <summary>What a verse link drawn from the map's lines for Job, the Psalter and the Song says about where it came from.</summary>
+    public const string WisdomSource =
+        "read verse by verse against Brenton's Greek by gpt-6.1-sol, a language model of OpenAI, in October 2026, " +
+        "and its uncertain lines read again by Claude, a language model of Anthropic: Ludolf's Psalter and the " +
+        "church's Job and Song divide their verses otherwise than the Greek, and no source states which Greek " +
+        "verse a verse of them answers";
+
+    private static readonly HashSet<int> ReadByGpt = [18, 19, 22];
+
     /// <summary>The Ge'ez books the map is the only placement for: a verse of them it has no line for is joined to nothing.</summary>
-    public static IReadOnlySet<int> Books { get; } = new HashSet<int> { 17, 75, 76, 91, 92 };
+    public static IReadOnlySet<int> Books { get; } = new HashSet<int> { 17, 18, 19, 22, 75, 76, 91, 92 };
+
+    /// <summary>Who read the map's lines for this Ge'ez book.</summary>
+    public static string SourceOf(int book) => ReadByGpt.Contains(book) ? WisdomSource : Source;
 
     public static IReadOnlyList<GeezVerseMapLine> Lines { get; } = Read();
 

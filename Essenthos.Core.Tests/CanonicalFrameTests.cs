@@ -397,6 +397,25 @@ public class LetteredEditionFrameTests
     }
 
     /// <summary>
+    /// A verse eBible letters after the one before it, in Brenton's Greek and English alike, where the
+    /// standard and the Hebrew have the same words as the next verse and the edition no verse of that
+    /// number, stands where its words do; the verse whose number it borrows stays where it stood.
+    /// </summary>
+    [Theory]
+    [InlineData(1, 31, 50, 31, 51)]
+    [InlineData(2, 25, 5, 25, 6)]
+    [InlineData(13, 16, 23, 16, 24)]
+    [InlineData(16, 3, 6, 3, 7)]
+    [InlineData(19, 115, 4, 116, 14)]
+    public void BrentonsLetteredNextVerseStandsWhereItsWordsDo(int book, int chapter, int verse, int toChapter, int toVerse)
+    {
+        Brenton.Resolve(book, chapter, verse, lettered: true, "a")
+            .Should().Equal(new CanonicalReference(book, toChapter, toVerse));
+        Brenton.Resolve(book, chapter, verse, lettered: false, string.Empty)
+            .Should().NotContain(new CanonicalReference(book, toChapter, toVerse));
+    }
+
+    /// <summary>
     /// A verse at a seam of the misplaced quires prints the end of one standard verse and the start of
     /// another, and stands at both, the one it prints most of first.
     /// </summary>

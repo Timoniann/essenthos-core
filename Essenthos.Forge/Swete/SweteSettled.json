@@ -1,0 +1,93 @@
+[
+  {
+    "book": "04.Numeri",
+    "chapter": 16,
+    "verse": 50,
+    "digitised": "καὶ ἡ θραῦσις.",
+    "printed": "καὶ ἐκόπασεν ἡ θραῦσις.",
+    "page": "293",
+    "leaf": 325,
+    "what": "The transcription lost ἐκόπασεν at the end of the line; Brenton reads it too.",
+    "volume": 1,
+    "printing": "1901",
+    "scan": "oldtestamentingr0001henr"
+  },
+  {
+    "book": "04.Numeri",
+    "chapter": 17,
+    "verse": 1,
+    "digitised": "XVII",
+    "printed": "Καὶ ἐλάλησεν Κύριος πρὸς Μωυσῆν λέγων",
+    "page": "293",
+    "leaf": 325,
+    "what": "The chapter's opening line, beside its number, which is all the transcription kept; Brenton reads the same words.",
+    "volume": 1,
+    "printing": "1901",
+    "scan": "oldtestamentingr0001henr"
+  },
+  {
+    "book": "04.Numeri",
+    "chapter": 19,
+    "verse": 1,
+    "digitised": "XIX",
+    "printed": "Καὶ ἐλάλησεν Κύριος πρὸς Μωυσῆν καὶ Ἀαρὼν λέγων",
+    "page": "297",
+    "leaf": 329,
+    "what": "The chapter's opening line, beside its number, which is all the transcription kept; Brenton reads the same words.",
+    "volume": 1,
+    "printing": "1901",
+    "scan": "oldtestamentingr0001henr"
+  },
+  {
+    "book": "08.Judices",
+    "chapter": 18,
+    "verse": 8,
+    "digitised": "Tt Μειχα Α | αγαθυνει ἠγαθοποίησεν Α | κύριος ἐμοὶ με κݲςݲ Α XVIII εζητει η φ. του Δὰν Α | εαυτη Α | κατοικησαι του κατοικεῖν Α | τῆς ἠμ’. ἐκείνης τωι ημερων εκεινων Α ἐξαπέστειλαν Α | ἄπο δημων ἐκ τῶν συγγενειων Α | ανδρας + ἄπο μέρους ἀυτῶν Α | ἄπο Σαραα ἐξ Αραα Α | om ἄπο Α | Εσθαοᾶ Bb | εξιχνιασατε εξεραυνησατε Α | θον ἕως ὄρους παρεγένοντο εἶ ὄρος Α | Μειχα Α Ι ηὐλίσθησαν κατέπαυσαν Α | om αὐτοὶ Α ἐν ἀυτῶν ὄντων πάρα τὼ Α | Μειχα Α | νεανίσκου παι· δαριου του νεωτέρου Α | Λευιτου Α | ξμεγλεμ ἤγαγεν Α | om σὺ Α | ἐν τὼ τόπω τούτω ἐνταῦθα Α | σοι + ἐστιν Α Μειχα Α | εγενομην ἐγενήθην Α εὐοδωθήσεται κατευοδοῖ Α | ἐν η ἢν Α | ἐν αυτη ἐπ’ ἀύτης Α πορεύεσθε πορεύεσθαι Α) + καὶ Α | ἐν εἰρήνηι εἰς εἰρήνην Α | ἐν η καθ’ ἢν ὑμεῖς Α ληθον παρεγενοντο Α | ειδαν ἴδον Α | ἐν μέσω αυτης κατοικοῦντα ev ἀυτὴ Α | επ ἐν Α | ως κρίσις Σιδωνίων Σειδ. B* Σιδ. Bb) ἡσυχάζουσα κάτα ἡ· σύγκρισιν τῶν Σιδω νιων ησυχαζοντας ἐν ελπιδι | Α | οὐκ ἐστιν διατρέπων η καταισχ. λόγον μὴ δυναμένους λαλήσαι ῥῆμα Α | om κλῆρον. ἐκπιέζων θησαυροῦ Α | καὶ ὅτι Α | Σιδωνίων Σειδ. Σιδῶνος Α | λόγον οὐκ εχουσιν πρὸς ανθρ. λόγος οὑ ἢν αὐτοῖς μέτα Συριας Α ἦλθον παρεγένοντο Α | εἶπον τοι, αδελφοις ελεγον αὐτοῖς οἱ ἀδελφοὶ Α",
+    "printed": "Τί",
+    "page": "524",
+    "leaf": 556,
+    "what": "The page ends with Τί and the next opens with ὑμεῖς κάθησθε; between them the transcription read the foot of the page, the apparatus of Alexandrinus, into the verse.",
+    "volume": 1,
+    "printing": "1901",
+    "scan": "oldtestamentingr0001henr"
+  },
+  {
+    "book": "11.Regnorum_I",
+    "chapter": 8,
+    "verse": 2,
+    "digitised": "’ ΑΣ1ΛΕmΝ Α VIII",
+    "printed": "Ἀβιά, δικασταὶ",
+    "page": "558",
+    "leaf": 590,
+    "what": "The page ends with Ἀβιά, δικασταὶ and the next opens with ἐν Βηρσάβεε; the transcription lost the two words and read the next page's running head, ΒΑΣΙΛΕΙΩΝ Α VIII, in their place.",
+    "volume": 1,
+    "printing": "1901",
+    "scan": "oldtestamentingr0001henr"
+  },
+  {
+    "book": "11.Regnorum_I",
+    "chapter": 11,
+    "verse": 11,
+    "digitised": "εἰς ἀρχάς,",
+    "printed": "εἰς τρεῖς ἀρχάς,",
+    "page": "565",
+    "leaf": 597,
+    "what": "The transcription lost τρεῖς; Brenton reads it too.",
+    "volume": 1,
+    "printing": "1901",
+    "scan": "oldtestamentingr0001henr"
+  },
+  {
+    "book": "11.Regnorum_I",
+    "chapter": 11,
+    "verse": 11,
+    "digitised": "οι υπολελιμμενοι οιεσπαρησαν, καὶ XI Αμανιτης Α παρεμβαλεῖ Α fTrt ἐπ’ Α εἶπον εἶπαν Α Αμανιτην Α Α σαν",
+    "printed": "καὶ ἐγενήθησαν, οἱ ὑπολελιμμένοι διεσπάρησαν, καὶ οὐχ ὑπελείφθησαν",
+    "page": "565",
+    "leaf": 597,
+    "what": "The page's last line, read without its marks and short of its first two words, and then the foot of the page, the apparatus of Alexandrinus, before the end of ὑπελείφθησαν on the next.",
+    "volume": 1,
+    "printing": "1901",
+    "scan": "oldtestamentingr0001henr"
+  }
+]

@@ -187,7 +187,7 @@ internal static class SweteTextSource
                      + "credit and to share alike anything derived from these files. "
                      + SweteRestorations.Note + " " + SweteCorrections.Note + " " + SwetePage.Note + " "
                      + SweteCorrections.FiguresNote + " " + SweteDivisions.Note + " " + SweteIsaiah.Note + " "
-                     + SweteOdes.Note + " " + SweteRestorations.ChapterMarkersNote,
+                     + SweteOdes.Note + " " + SweteRestorations.ChapterMarkersNote + " " + SweteSettled.Note,
         Citation = "Henry Barclay Swete (ed.), The Old Testament in Greek according to the Septuagint, "
                    + "Cambridge University Press, 1887-1894, in the digital edition of Nathan D. Smith "
                    + "(nathans/lxx-swete) derived from the Open Greek and Latin First1KGreek transcription "

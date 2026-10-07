@@ -39,13 +39,12 @@ internal sealed record SweteRestorationOutcome(int Verses, int Words, TimeSpan E
 internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteRestorationLoader> logger)
 {
     /// <summary>
-    /// Moves the words after the rewritten stretch out of the way before they are placed again.
-    /// Negative first, as the psalm openings do, so the unique index on (verse, position) holds
-    /// after each statement.
+    /// Moves the verse's words out of the way before they are placed again. Negative first, as the
+    /// psalm openings do, so the unique index on (verse, position) holds after each statement.
     /// </summary>
-    private const string FreeTheTail =
+    private const string FreeTheVerse =
         """
-        UPDATE word SET "position" = -"position" WHERE verse_id = @verseId AND "position" > @after;
+        UPDATE word SET "position" = -"position" WHERE verse_id = @verseId;
         """;
 
     private const string Place =
@@ -89,9 +88,10 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
             var digitised = SweteReader.Read(Lines(book, path), keepChapterMarkers: true);
             var restored = SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path)), keepChapterMarkers: true);
             var cold = SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path)));
-            var earlier = SweteRestorations.Earlier
-                .Select(set => SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path), set), keepChapterMarkers: true))
-                .ToList();
+            // What a warm corpus may hold: the transcription, or an earlier pass's restorations, with the
+            // chapter numbers or, once the boundary pass has taken them out, without.
+            var numbered = Readings(book, path, keepChapterMarkers: true);
+            var unnumbered = Readings(book, path, keepChapterMarkers: false);
 
             foreach (var here in SweteRestorations.All
                          .Where(r => r.Book == book)
@@ -122,24 +122,42 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                     continue;
                 }
 
-                if (!Same(stored, before) && !earlier.Any(pass => Same(stored, Words(pass, chapter, verse, label))))
-                {
-                    throw new InvalidOperationException(
-                        $"{text.Slug} {BookReferences.Name(canonical)} {placed}:{verse}{label} reads neither as the " +
-                        $"transcription nor as its restoration: \"{string.Concat(stored.Select(w => w.Surface + w.Trailer))}\". " +
-                        "The corpus holds a Swete loaded from other files; load the text again from these before " +
-                        "restoring anything in it. Nothing was changed.");
-                }
+                var verseId = stored.Count > 0
+                    ? stored[0].VerseId
+                    : await db.Verses
+                          .Where(v => v.TextId == text.Id && v.Book!.CanonicalOrdinal == canonical
+                                      && v.ChapterNumber == placed && v.Number == verse && v.Label == label)
+                          .Select(v => (int?)v.Id)
+                          .SingleOrDefaultAsync(cancellationToken)
+                      ?? throw new InvalidOperationException(
+                          $"{text.Slug} {BookReferences.Name(canonical)} {placed}:{verse}{label} is not a verse of the corpus, "
+                          + "which every reading of the edition numbers. Nothing was changed.");
 
-                added += await Write(text, stored, after, here.All(SweteCorrections.KeepsTheWord), cancellationToken);
-                await EnsureRebuilds(stored[0].VerseId, after, $"{placed}:{verse}{label}", cancellationToken);
+                // A verse the boundary pass has already taken the numbers out of is brought to the
+                // restored reading without them, so that none is written back only to be taken out again.
+                var target = Same(stored, before) || numbered.Any(pass => Same(stored, Words(pass, chapter, verse, label)))
+                    ? after
+                    : unnumbered.Any(pass => Same(stored, Words(pass, chapter, verse, label)))
+                        ? Words(cold, chapter, verse, label)
+                        : throw new InvalidOperationException(
+                            $"{text.Slug} {BookReferences.Name(canonical)} {placed}:{verse}{label} reads neither as the " +
+                            $"transcription nor as its restoration: \"{string.Concat(stored.Select(w => w.Surface + w.Trailer))}\". " +
+                            "The corpus holds a Swete loaded from other files; load the text again from these before " +
+                            "restoring anything in it. Nothing was changed.");
+
+                added += await Write(text, verseId, stored, target, here.All(SweteCorrections.KeepsTheWord), cancellationToken);
+                await EnsureRebuilds(verseId, target, $"{placed}:{verse}{label}", cancellationToken);
                 verses++;
             }
         }
 
         if (verses > 0)
         {
-            foreach (var note in new[] { SweteRestorations.Note, SweteCorrections.Note, SwetePage.Note, SweteCorrections.FiguresNote })
+            foreach (var note in new[]
+                     {
+                         SweteRestorations.Note, SweteCorrections.Note, SwetePage.Note, SweteCorrections.FiguresNote,
+                         SweteSettled.Note,
+                     })
             {
                 if (text.RightsNote?.Contains(note, StringComparison.Ordinal) != true)
                 {
@@ -167,6 +185,14 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
     /// </summary>
     private static IEnumerable<string> Lines(string book, string path) => SweteDivisions.Lines(book, File.ReadLines(path));
 
+    /// <summary>The transcription and each earlier pass's restorations of it, read with or without the chapter numbers.</summary>
+    private static List<SweteBook> Readings(string book, string path, bool keepChapterMarkers) =>
+    [
+        SweteReader.Read(Lines(book, path), keepChapterMarkers),
+        .. SweteRestorations.Earlier.Select(set =>
+            SweteReader.Read(SweteRestorations.Apply(book, Lines(book, path), set), keepChapterMarkers)),
+    ];
+
     private static IReadOnlyList<SweteWord> Words(SweteBook book, int chapter, int verse, string label) =>
         book.Chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse && v.Label == label).Words;
 
@@ -176,46 +202,34 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                                          && pair.First.Trailer == pair.Second.Trailer);
 
     /// <summary>
-    /// The stretch between what the two readings share at the head and at the tail is what differs.
     /// Where every change to the verse corrects a word's letters — a Latin letter, a margin number —
-    /// each row is rewritten in place and keeps its links, since it is the same word. Otherwise
-    /// its digitised rows go — a misread token is not a word the edition prints, so a matcher's link on
-    /// it alone goes with it, and anything more refuses — and the printed words are written in their
-    /// place. Returns how many words the verse gained.
+    /// each row is rewritten in place and keeps its links, since it is the same word. Otherwise the
+    /// words the two readings share, in order, keep their rows and with them every link and annotation,
+    /// taking the printed trailer where it differs; every other digitised row goes — a misread token is
+    /// not a word the edition prints, so a matcher's link on it alone goes with it, and anything more
+    /// refuses — and the printed words are written in their places. Returns how many words the verse
+    /// gained.
     /// </summary>
     private async Task<int> Write(
         Text text,
+        int verseId,
         List<StoredWord> stored,
         IReadOnlyList<SweteWord> after,
         bool inPlace,
         CancellationToken cancellationToken)
     {
-        var head = 0;
-        while (head < stored.Count && head < after.Count
-               && stored[head].Surface == after[head].Surface && stored[head].Trailer == after[head].Trailer)
+        if (inPlace && stored.Count == after.Count)
         {
-            head++;
-        }
-
-        var tail = 0;
-        while (tail < stored.Count - head && tail < after.Count - head
-               && stored[^(tail + 1)].Surface == after[^(tail + 1)].Surface
-               && stored[^(tail + 1)].Trailer == after[^(tail + 1)].Trailer)
-        {
-            tail++;
-        }
-
-        var old = stored.Count - head - tail;
-        var now = after.Count - head - tail;
-        var verseId = stored[0].VerseId;
-
-        if (inPlace && old == now)
-        {
-            for (var i = 0; i < old; i++)
+            for (var i = 0; i < stored.Count; i++)
             {
-                var word = after[head + i];
+                var word = after[i];
+                if (stored[i].Surface == word.Surface && stored[i].Trailer == word.Trailer)
+                {
+                    continue;
+                }
+
                 await Execute(Rewrite, cancellationToken,
-                    ("id", stored[head + i].Id),
+                    ("id", stored[i].Id),
                     ("surface", word.Surface),
                     ("trailer", word.Trailer),
                     ("normalised", WordFolding.Fold(word.Surface, text.Language)));
@@ -224,26 +238,36 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
             return 0;
         }
 
-        await RemovedWordEvidence.Remove(db, [.. stored.Skip(head).Take(old).Select(w => w.Id)], cancellationToken);
+        var kept = SharedWords.Of([.. stored.Select(w => w.Surface)], [.. after.Select(w => w.Surface)]);
+        var keptRows = kept.Where(k => k >= 0).ToHashSet();
+        await RemovedWordEvidence.Remove(db,
+            [.. stored.Where((_, index) => !keptRows.Contains(index)).Select(w => w.Id)], cancellationToken);
+        await Execute(FreeTheVerse, cancellationToken, ("verseId", verseId));
 
-        if (now != old)
+        for (var i = 0; i < after.Count; i++)
         {
-            await Execute(FreeTheTail, cancellationToken, ("verseId", verseId), ("after", head + old));
-            var tailRows = stored.Skip(stored.Count - tail).ToList();
-            for (var i = 0; i < tailRows.Count; i++)
+            var word = after[i];
+            if (kept[i] >= 0)
             {
-                await Execute(Place, cancellationToken, ("id", tailRows[i].Id), ("position", head + now + i + 1));
-            }
-        }
+                var row = stored[kept[i]];
+                await Execute(Place, cancellationToken, ("id", row.Id), ("position", i + 1));
+                if (row.Trailer != word.Trailer)
+                {
+                    await Execute(Rewrite, cancellationToken,
+                        ("id", row.Id),
+                        ("surface", word.Surface),
+                        ("trailer", word.Trailer),
+                        ("normalised", WordFolding.Fold(word.Surface, text.Language)));
+                }
 
-        for (var i = 0; i < now; i++)
-        {
-            var word = after[head + i];
+                continue;
+            }
+
             db.Words.Add(new Word
             {
                 TextId = text.Id,
                 VerseId = verseId,
-                Position = head + i + 1,
+                Position = i + 1,
                 Surface = word.Surface,
                 Trailer = word.Trailer,
                 NormalisedText = WordFolding.Fold(word.Surface, text.Language),
@@ -251,7 +275,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
         }
 
         await db.SaveChangesAsync(cancellationToken);
-        return now - old;
+        return after.Count - stored.Count;
     }
 
     /// <summary>The words in order must give back the restored verse, checked inside the transaction.</summary>

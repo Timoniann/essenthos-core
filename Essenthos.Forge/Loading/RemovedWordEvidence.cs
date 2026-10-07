@@ -1,5 +1,6 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Glaux;
 using Essenthos.Core.Loading.Links;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -9,7 +10,8 @@ namespace Essenthos.Core.Loading;
 
 /// <summary>
 /// What may go with a word a loader takes out of a text because the edition does not print it — a
-/// chapter number the transcription let in, a heading an editor set above a verse.
+/// chapter number the transcription let in, a heading an editor set above a verse, a word a file
+/// printed twice.
 ///
 /// <para>
 /// A row deleted from <c>word</c> takes with it, by cascade, everything that stands on it: its
@@ -114,11 +116,18 @@ internal static class RemovedWordEvidence
         var held = new List<string>();
         foreach (var (table, column) in columns.Where(c => !(c.Table == "link_word" && c.Column == "word_id")))
         {
-            // A link word headed by a removed word goes with it when it is removed too.
-            var others = table == "link_word" ? " AND word_id <> ALL (@ids)" : string.Empty;
+            // A link word headed by a removed word goes with it when it is removed too, and a Strong number
+            // read off the word's own lemma is that lemma's projection rather than anybody's statement.
+            var others = table switch
+            {
+                "link_word" => " AND word_id <> ALL (@ids)",
+                "word_strong" => $" AND NOT (method = '{EnumSpelling.Of(LinkMethod.Lexical)}' AND source = @lemma)",
+                _ => string.Empty,
+            };
             await using var command = new NpgsqlCommand(
                 $"SELECT EXISTS (SELECT 1 FROM {table} WHERE \"{column}\" = ANY (@ids){others})", connection, transaction);
             command.Parameters.AddWithValue("ids", ids);
+            command.Parameters.AddWithValue("lemma", SeptuagintStrongLoader.Source);
             if ((bool)(await command.ExecuteScalarAsync(token))!)
             {
                 held.Add($"{table}.{column}");

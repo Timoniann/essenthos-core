@@ -186,9 +186,10 @@ public class GeezAlignmentScopeTests
     [InlineData("SWETE", 76, 1, 1, false)]
     [InlineData("SWETE", 17, 4, 1, false)]
     [InlineData("GRCBRENT", 17, 4, 1, true)]
-    [InlineData("GRCBRENT", 19, 23, 1, false)]
+    [InlineData("GRCBRENT", 19, 23, 1, true)]
+    [InlineData("GRCBRENT", 18, 39, 26, true)]
     [InlineData("NESTLE1904", 40, 1, 1, true)]
-    public void SweteAnswersOnlyWhereItStandsOnTheFramesRowsAndThePsalterNowhere(
+    public void SweteAnswersOnlyWhereItStandsOnTheFramesRows(
         string greek, int book, int chapter, int verse, bool aligned)
     {
         GeezTextSource.Aligns(greek, book, chapter, verse).Should().Be(aligned);
@@ -220,6 +221,22 @@ public class GeezAlignmentScopeTests
         frame.Resolve(72, chapter, verse, lettered: false, string.Empty)[0]
             .Should().Be(new CanonicalReference(72, toChapter, toVerse));
         GeezTextSource.Aligns("GRCBRENT", 72, toChapter, toVerse).Should().BeTrue();
+    }
+
+    /// <summary>
+    /// Ludolf's Psalter, Job and the Song are read against the rows the frame places Brenton's verses
+    /// at: the Ge'ez Psalm 115:5 is Brenton's 115:4a, the vows, at 116:14, and the death of the saints;
+    /// the Ge'ez closes Song 6 with the first half of Brenton's 7:1, which the frame puts at 6:13.
+    /// </summary>
+    [Fact]
+    public void TheWisdomBooksAreReadByTheirOwnReader()
+    {
+        GeezVerseMap.Books.Should().Contain([18, 19, 22]);
+        GeezTextSource.UnlinkedBooks.Should().Contain([18, 19, 22]);
+        GeezVerseMap.SourceOf(19).Should().Be(GeezVerseMap.WisdomSource);
+        GeezVerseMap.SourceOf(17).Should().Be(GeezVerseMap.Source);
+        GeezVerseMap.Addresses[(19, 115, 5)].Should().Equal((19, 116, 14), (19, 116, 15));
+        GeezVerseMap.Addresses[(22, 6, 14)].Should().Equal((22, 6, 13));
     }
 
     /// <summary>Every verse of the books the church divides its own way is read, and read once.</summary>
@@ -497,7 +514,7 @@ public class GeezTextTests
     [Fact]
     public void OnlyTheBooksDividedInTheirOwnWayAreKeptApart()
     {
-        GeezTextSource.UnlinkedBooks.Should().BeEquivalentTo([17, 75, 76]);
+        GeezTextSource.UnlinkedBooks.Should().BeEquivalentTo([17, 18, 19, 22, 75, 76]);
     }
 
     /// <summary>

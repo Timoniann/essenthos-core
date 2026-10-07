@@ -99,6 +99,16 @@ internal static class LetteredEditions
 
     private const int Daniel = 27;
 
+    private const int Genesis = 1;
+
+    private const int Exodus = 2;
+
+    private const int FirstChronicles = 13;
+
+    private const int Nehemiah = 16;
+
+    private const int Psalms = 19;
+
     private const char None = '\0';
 
     /// <param name="Tests">What tells the edition apart, in the versification data's own form.</param>
@@ -169,7 +179,25 @@ internal static class LetteredEditions
             .. Moved(Sirach, 36, 1, 15, 33, 1),
             Printed(Sirach, 36, 16, (36, 11), (33, 16)),
             .. Moved(Sirach, 36, 17, 31, 36, 12),
+            .. NextVerseLettered(),
         ]);
+
+    /// <summary>
+    /// Five verses eBible prints with the letter <c>a</c> after the verse before them, in Brenton's Greek and
+    /// his English alike, where the standard numbering and the Hebrew have the same words as the next verse
+    /// and the edition no verse of that number: Laban's heap and pillar as witness (Genesis 31:51), the oil
+    /// for the light (Exodus 25:6), declaring his glory among the nations (1 Chronicles 16:24), Melatiah the
+    /// Gibeonite at the wall (Nehemiah 3:7) and the vows paid before all his people (Psalm 116:14, the
+    /// Greek's 115:5). Each stands where its words do, not at the verse whose number it borrows.
+    /// </summary>
+    private static IEnumerable<(PrintedAddress, CanonicalReference[])> NextVerseLettered() =>
+    [
+        Printed(Genesis, 31, 50, "a", (31, 51)),
+        Printed(Exodus, 25, 5, "a", (25, 6)),
+        Printed(FirstChronicles, 16, 23, "a", (16, 24)),
+        Printed(Nehemiah, 3, 6, "a", (3, 7)),
+        Printed(Psalms, 115, 4, "a", (116, 14)),
+    ];
 
     /// <summary>
     /// Brenton's Greek where it divides otherwise than his English: its Sirach 33:7 runs the end of the
