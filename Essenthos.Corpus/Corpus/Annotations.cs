@@ -62,7 +62,11 @@ internal static class Annotations
             .Where(a => ids.Contains(a.WordId))
             .Select(a => new Claimed(
                 a.WordId, a.Method, a.Confidence, a.Source, a.Note,
-                a.Entity!.Kind, a.Entity.Slug, a.Entity.Name) { EntityId = a.EntityId })
+                a.Entity!.Kind, a.Entity.Slug, a.Entity.Name)
+            {
+                EntityId = a.EntityId,
+                Held = a.Claims.Where(c => c.Method != LinkMethod.StatedBySource).Select(c => c.Method).Distinct().ToList(),
+            })
             .ToListAsync(cancellationToken);
 
         var settled = Settle(rows, await Bearers(db, rows, cancellationToken));
@@ -239,6 +243,8 @@ internal static class Annotations
                         annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name)
                     {
                         EntityId = annotation.EntityId,
+                        Held = annotation.Claims.Where(c => c.Method != LinkMethod.StatedBySource)
+                            .Select(c => c.Method).Distinct().ToList(),
                     },
                 })
             .ToListAsync(cancellationToken);
@@ -287,6 +293,8 @@ internal static class Annotations
                         annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name)
                     {
                         EntityId = annotation.EntityId,
+                        Held = annotation.Claims.Where(c => c.Method != LinkMethod.StatedBySource)
+                            .Select(c => c.Method).Distinct().ToList(),
                     },
                 })
             .ToListAsync(cancellationToken);
@@ -338,7 +346,9 @@ internal static class Annotations
     /// word and does not come first: where it disagrees with a carried answer, the measured
     /// cases are namesakes it confused, and the carried ruling was right. Then by standing and by confidence within it, so a hand correction beats a
     /// resolution however sure the resolution was — the standing is what the method knew before it
-    /// started, and no confidence can make a guess into a reading. Where all three are equal the
+    /// started — an answer's standing is that of its strongest claim, so a ruling that arrived at an
+    /// answer a resolution had already written stands as a ruling — and no confidence can make a
+    /// guess into a reading. Where all three are equal the
     /// record that is not a title stands first, so the order is the same on every read.
     ///
     /// <para>
@@ -358,7 +368,7 @@ internal static class Annotations
                 group.Key,
                 Ranked = group
                     .OrderByDescending(row => row.ReadHere)
-                    .ThenByDescending(row => ClaimStanding.Of(row.Method))
+                    .ThenByDescending(row => row.Standing)
                     .ThenByDescending(row => row.Confidence ?? 1)
                     .ThenBy(row => row.Kind == EntityKind.Title)
                     .ThenBy(row => EnumSpelling.Of(row.Kind), StringComparer.Ordinal)
@@ -378,7 +388,7 @@ internal static class Annotations
     private static bool Disputed(Claimed best, Claimed next) =>
         best.Slug != next.Slug
         && best.ReadHere == next.ReadHere
-        && ClaimStanding.Of(best.Method) == ClaimStanding.Of(next.Method)
+        && best.Standing == next.Standing
         && (best.Confidence ?? 1) == (next.Confidence ?? 1);
 
     /// <summary>
@@ -412,6 +422,15 @@ internal static class Annotations
     {
         /// <summary>The record's row, which is what a title's bearers and a record's names are joined by.</summary>
         public int EntityId { get; init; }
+
+        /// <summary>
+        /// The methods of the claims the answer holds, other than a source's testimony about the
+        /// verse: a ruling that arrived at an answer the word already had is one of them.
+        /// </summary>
+        public IReadOnlyList<LinkMethod> Held { get; init; } = [];
+
+        /// <summary>The standing of the strongest of the answer's own method and its claims'.</summary>
+        public int Standing => Held.Select(ClaimStanding.Of).Append(ClaimStanding.Of(Method)).Max();
 
         /// <summary>
         /// Whether this answer was read of this word, rather than carried here by the links from a

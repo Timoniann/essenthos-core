@@ -738,16 +738,26 @@ internal static class Annotating
          """;
 
     /// <summary>
-    /// How much each method knew before it started, written out of <see cref="ClaimStanding"/> so
+    /// How much the answer's strongest claim knew before it started — a ruling or a rule that arrives
+    /// at an answer a word already has is held as a claim on that row, and it stands at the ruling's
+    /// standing, not at the first method's; a source's testimony about the verse is not a claim about
+    /// the word and is left out. Written out of <see cref="ClaimStanding"/> so
     /// that renumbering it moves this statement too. A second copy of those ordinals is a second
     /// answer to <em>who does this word name</em>, and the whole point of deriving the references
     /// from the annotations is that a page and a word cannot disagree.
     /// </summary>
     private static string Standing =>
-        "CASE a.method "
-        + string.Concat(Enum.GetValues<LinkMethod>().Select(method =>
-            $"WHEN '{EnumSpelling.Of(method)}' THEN "
-            + ClaimStanding.Of(method).ToString(CultureInfo.InvariantCulture) + " "))
+        $"""
+         greatest({StandingOf("a.method")}, coalesce(
+             (SELECT max({StandingOf("held.method")}) FROM word_entity_claim held
+              WHERE held.word_entity_id = a.id AND held.method <> '{EnumSpelling.Of(LinkMethod.StatedBySource)}'), 0))
+         """;
+
+    private static string StandingOf(string method) =>
+        $"CASE {method} "
+        + string.Concat(Enum.GetValues<LinkMethod>().Select(each =>
+            $"WHEN '{EnumSpelling.Of(each)}' THEN "
+            + ClaimStanding.Of(each).ToString(CultureInfo.InvariantCulture) + " "))
         + "ELSE 0 END";
 
     /// <summary>
