@@ -21,8 +21,9 @@ public sealed class RenderingRuleTests
         new Dictionary<(int, string), string>();
 
     private static NamedWord Word(int verse, int position, string surface, string language = "ukr", string? lemma = null,
-        int entity = 1, int text = 1, string trailer = " ", string? renders = null, double? guess = null) =>
-        new(entity, text, verse, position, surface, trailer, lemma, language, renders, guess);
+        int entity = 1, int text = 1, string trailer = " ", string? renders = null, double? guess = null,
+        bool thing = false) =>
+        new(entity, text, verse, position, surface, trailer, lemma, language, renders, guess, thing);
 
     private static List<Rendering> Of(IReadOnlyDictionary<(int, string), string>? nominatives, params NamedWord[] words) =>
         [.. Renderings.Of(words, nominatives ?? NoNominatives)];
@@ -42,6 +43,24 @@ public sealed class RenderingRuleTests
         renderings.Single(r => r.Heading).Form.Should().Be("Аарон");
         renderings.Select(r => (r.Form, r.Occurrences)).Should().BeEquivalentTo(
             [("Аарона", 3), ("Аарон", 2), ("Ааронові", 1)]);
+    }
+
+    /// <summary>
+    /// A thing's rendering is a common noun the text prints in lower case: the Ohienko Bible's ark
+    /// is <em>ковчег</em>, and the capitalised <em>Мій</em> of <em>My house</em> an annotation reached
+    /// opens like nothing it is called. A person's lower-case word is still no spelling of them.
+    /// </summary>
+    [Fact]
+    public void AThingIsSpeltByTheCommonNounThatRendersIt()
+    {
+        var thing = Of(null,
+            Word(1, 2, "ковчег", thing: true), Word(2, 3, "ковчега", thing: true), Word(3, 4, "ковчег", thing: true),
+            Word(4, 1, "Мій", thing: true));
+        var person = Of(null, Word(1, 2, "ковчег", entity: 2), Word(2, 2, "ковчег", entity: 2));
+
+        thing.Single(r => r.Heading).Form.Should().Be("ковчег");
+        thing.Select(r => r.Form).Should().BeEquivalentTo(["ковчег", "ковчега"]);
+        person.Should().BeEmpty();
     }
 
     /// <summary>The nominative this corpus already holds wins, when the text prints it.</summary>
