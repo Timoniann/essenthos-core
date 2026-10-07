@@ -224,6 +224,26 @@
     },
     {
       "text": "BHSA",
+      "reference": "1CH 23:8",
+      "position": 5,
+      "surface": "יְחִיאֵ֛ל",
+      "strongNumber": "H3171",
+      "existing": "jehiel-9",
+      "why": "'The sons of Laadan; the chief was Jehiel': the Gershonite, not the Levite with the psaltery of 15:18-20.",
+      "corrects": "jehiel"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 29:8",
+      "position": 13,
+      "surface": "יְחִיאֵ֖ל",
+      "strongNumber": "H3171",
+      "existing": "jehiel-9",
+      "why": "'to the treasure of the house of the LORD, by the hand of Jehiel the Gershonite'.",
+      "corrects": "jehiel"
+    },
+    {
+      "text": "BHSA",
       "reference": "1CH 15:18",
       "position": 13,
       "surface": "יחִיאֵ֣ל",
@@ -565,10 +585,10 @@
     },
     {
       "text": "NESTLE1904",
-      "reference": "MAT 27:56",
-      "position": 13,
-      "surface": "Ἰωσὴφ",
-      "strongNumber": "G2501",
+      "reference": "MRK 15:40",
+      "position": 21,
+      "surface": "Ἰωσῆτος",
+      "strongNumber": "G2500",
       "create": {
         "slug": "joses-son-of-mary",
         "name": "Joses",
@@ -583,17 +603,17 @@
           "reason": "Matthew 13:55 and Mark 6:3 name a Joses among the brothers of Jesus, beside a James."
         }
       ],
-      "why": "'Mary the mother of James and Joses': her second son, whom the verse does not make the Lord's brother.",
+      "why": "'Mary the mother of James the less and of Joses': her second son, whom the verse does not make the Lord's brother.",
       "corrects": "joseph-7"
     },
     {
       "text": "NESTLE1904",
-      "reference": "MRK 15:40",
-      "position": 21,
-      "surface": "Ἰωσῆτος",
-      "strongNumber": "G2500",
+      "reference": "MAT 27:56",
+      "position": 13,
+      "surface": "Ἰωσὴφ",
+      "strongNumber": "G2501",
       "existing": "joses-son-of-mary",
-      "why": "'Mary the mother of James the less and of Joses': her son of Matthew 27:56.",
+      "why": "'Mary the mother of James and Joses': her son of Mark 15:40.",
       "corrects": "joseph-7"
     },
     {
