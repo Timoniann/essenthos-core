@@ -96,6 +96,31 @@ public sealed class ReinaValeraStrongLinkTests : IDisposable
         (await _db.WordStrongs.AnyAsync(s => s.Word!.TextId == _spanish.Id)).Should().BeFalse();
     }
 
+    /// <summary>
+    /// A word the pair already says has no counterpart is left out of the number its phrase carries:
+    /// the article a verdict found supplied is not rendered by the H7225 on <em>EN el principio</em>.
+    /// </summary>
+    [Fact]
+    public async Task AWordStatedAbsentIsLeftOutOfItsPhrasesMatch()
+    {
+        var absence = new Link
+        {
+            FromTextId = _spanish.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Expands,
+            Method = LinkMethod.RuleBased, Confidence = 0.95, Provenance = new() { Source = "a verdict under test" },
+        };
+        absence.Words.Add(new LinkWord { WordId = Spanish(2).Id, Side = LinkSide.From });
+        absence.Claims.Add(new LinkClaim { Method = LinkMethod.RuleBased, Confidence = 0.95, Provenance = absence.Provenance });
+        _db.Links.Add(absence);
+        _db.SaveChanges();
+
+        await _loader.Load(_folder, [_hebrew.Slug]);
+
+        var beginning = await _db.Links.Include(l => l.Words)
+            .SingleAsync(l => l.Method == LinkMethod.StrongNumber && l.Words.Any(w => w.WordId == Hebrew(2).Id));
+        beginning.Words.Where(w => w.Side == LinkSide.From).Select(w => w.WordId)
+            .Should().BeEquivalentTo([Spanish(1).Id, Spanish(3).Id]);
+    }
+
     [Fact]
     public async Task AWordTheHandAlignmentNamesIsScoredAgainstItAndNotWrittenOver()
     {

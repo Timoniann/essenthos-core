@@ -325,6 +325,8 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             drafts = [.. drafts.Where(draft => draft.From.Any(only.Contains))];
         }
 
+        drafts = await Present(from.Id, to.Id, drafts, cancellationToken);
+
         var testimony = await Drawn(from.Id, to.Id, LinkMethod.StatedBySource, cancellationToken);
         testimony.AddRange(await Drawn(from.Id, to.Id, LinkMethod.Manual, cancellationToken));
         var (kept, corroborations) = YieldToTestimony(drafts, testimony, source);
@@ -968,6 +970,33 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     }
 
     /// <summary>The links one method already drew between the two texts, with the words on each side.</summary>
+    /// <summary>
+    /// The matches without the words the pair already says have no counterpart: an edition's supplied
+    /// word, an absence a verdict stated. A number the edition puts on a phrase reaches every word of it,
+    /// <em>EN el principio</em> for רֵאשִׁית, and the article a verdict found supplied is not rendered by
+    /// the number its phrase carries; a word shown absent and rendered at once is a contradiction.
+    /// </summary>
+    private async Task<List<Draft>> Present(int fromTextId, int toTextId, List<Draft> drafts, CancellationToken cancellationToken)
+    {
+        var absent = (await db.LinkWords
+                .Where(lw => lw.Side == LinkSide.From && lw.Link!.FromTextId == fromTextId && lw.Link.ToTextId == toTextId
+                             && lw.Link.Relation == LinkRelation.Expands)
+                .Select(lw => lw.WordId)
+                .ToListAsync(cancellationToken))
+            .ToHashSet();
+        if (absent.Count == 0)
+        {
+            return drafts;
+        }
+
+        return
+        [
+            .. drafts
+                .Select(draft => draft.From.Any(absent.Contains) ? draft with { From = [.. draft.From.Where(word => !absent.Contains(word))] } : draft)
+                .Where(draft => draft.From.Count > 0),
+        ];
+    }
+
     /// <param name="sources">Only the links carrying one of these sources; null takes every one.</param>
     private async Task<List<DrawnLink>> Drawn(
         int fromTextId,
