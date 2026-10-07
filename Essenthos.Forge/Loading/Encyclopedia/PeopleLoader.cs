@@ -343,15 +343,24 @@ internal sealed class PeopleLoader(
             .OrderBy(g => g.StrongNumber)
             .ToListAsync(cancellationToken);
 
-        var named = await db.EntityNames
+        var bearers = await db.EntityNames
             .Where(n => n.Kind == GentilicName && n.Entity!.Kind == EntityKind.People && n.HebrewStrongNumber != null)
-            .Select(n => n.HebrewStrongNumber!)
+            .Select(n => new { Number = n.HebrewStrongNumber!, n.EntityId })
             .ToListAsync(cancellationToken);
+        var named = bearers.Select(b => b.Number).ToList();
+
+        // A people already holding the number as one of its gentilic names is that number's people:
+        // a dictionary claim read after the record was made from BHSA's analysis or the tribes joins
+        // it instead of making a second page of the same name.
+        var bearer = bearers
+            .GroupBy(b => b.Number, StringComparer.Ordinal)
+            .ToDictionary(g => g.Key, g => g.Min(b => b.EntityId), StringComparer.Ordinal);
         var nations = (file.Nations ?? [])
             .Where(n => !named.Contains(n.Number, StringComparer.Ordinal) && !claimed.ContainsKey(n.Number))
             .ToList();
 
-        var analysed = await Analysed(named, claimed, cancellationToken);
+        var analysed = await Analysed(
+            [.. named, .. unjoined.Select(g => g.StrongNumber)], claimed, cancellationToken);
         if (peoples.Count == 0 && unjoined.Count == 0 && nations.Count == 0 && analysed.Count == 0)
         {
             return new PeopleWriting(peoples, [], 0, 0);
@@ -371,6 +380,12 @@ internal sealed class PeopleLoader(
             if (claimed.TryGetValue(gentilic.StrongNumber, out var already))
             {
                 gentilic.People = already;
+                continue;
+            }
+
+            if (bearer.TryGetValue(gentilic.StrongNumber, out var bearing))
+            {
+                gentilic.PeopleEntityId = bearing;
                 continue;
             }
 
