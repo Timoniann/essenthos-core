@@ -65,3 +65,26 @@
 {"entity": "wildgoatsrocks", "names": {"deu": {"genitive": "der Felsen der Gemsen"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-16"}
 {"entity": "youngeroflot", "names": {"deu": {"genitive": "der Jüngeren"}}, "model": "claude-sonnet-5", "askedAt": "2026-09-09"}
 {"entity": "yhvh", "names": {"deu": {"genitive": "des HERRN"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mounthermon", "names": {"deu": {"genitive": "des Berges Hermon", "locative": "dem Berge Hermon"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mountephraim", "names": {"deu": {"locative": "dem Gebirge Ephraim"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "valleyofthejordan", "names": {"deu": {"locative": "der Jordangegend"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "broadwall", "names": {"deu": {"locative": "der breiten Mauer"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "secondquarter", "names": {"deu": {"locative": "dem zweiten Stadtbezirk"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "uppergulloth", "names": {"deu": {"locative": "den oberen Quellen"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "upperpool", "names": {"deu": {"locative": "dem oberen Teich"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "valleyofachor", "names": {"deu": {"genitive": "des Tals Achor", "locative": "dem Tal Achor"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mountzion", "names": {"deu": {"genitive": "des Berges Zion", "locative": "dem Berge Zion"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "holyplace", "names": {"deu": {"locative": "dem Heiligen"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "holyplace-2", "names": {"deu": {"locative": "dem Heiligen"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "lowergulloth", "names": {"deu": {"locative": "den unteren Quellen"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mostholyplace", "names": {"deu": {"locative": "dem Allerheiligsten"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mostholyplace-2", "names": {"deu": {"locative": "dem Allerheiligsten"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mountlebanon", "names": {"deu": {"genitive": "des Berges Libanon"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mounthor", "names": {"deu": {"genitive": "des Berges Hor"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mountgerizim", "names": {"deu": {"genitive": "des Berges Garizim"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mountjearim", "names": {"deu": {"genitive": "des Berges Jearim"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mountephron", "names": {"deu": {"genitive": "des Gebirges Ephron"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "mounthalak", "names": {"deu": {"genitive": "des Gebirges Halak"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "towerofhananel", "names": {"deu": {"genitive": "des Turms Hananeel"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "wildernessofziph", "names": {"deu": {"genitive": "der Wüste Sif"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
+{"entity": "firstbornoflot", "names": {"deu": {"genitive": "der Älteren"}}, "model": "claude-opus-5-5", "askedAt": "2026-10-07"}
