@@ -557,6 +557,46 @@ public sealed class EntityAnnotationTests : IDisposable
     }
 
     /// <summary>
+    /// A model read Jerusalem at the word before this pass resolved it. The annotation stays the
+    /// reading's, number and all, and the resolution stands beside it as a claim; a second run says
+    /// nothing more, and once a second place bears the number the claim is taken back and the
+    /// reading's row stays.
+    /// </summary>
+    [Fact]
+    public async Task AResolutionAgreeingWithAReadingIsAClaimOnIt()
+    {
+        const string reading = "a reading of the verse by a test model";
+        var jerusalem = await _db.Entities.SingleAsync(e => e.Slug == "jerusalem");
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = Hebrew(3).Id, EntityId = jerusalem.Id, Method = LinkMethod.ModelReading, Confidence = 0.8,
+            Source = reading, Claims = [new WordEntityClaim { Method = LinkMethod.ModelReading, Confidence = 0.8, Source = reading }],
+        });
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        await _loader.Load();
+
+        var row = await _db.WordEntities.AsNoTracking().Include(a => a.Claims).SingleAsync(a => a.WordId == Hebrew(3).Id);
+        (row.Source, row.Method, row.Confidence).Should().Be((reading, LinkMethod.ModelReading, 0.8));
+        row.Claims.Should().ContainSingle(c => EntityAnnotationLoader.Written.Contains(c.Source))
+            .Which.Method.Should().Be(LinkMethod.StrongNumber);
+        var claims = await _db.WordEntityClaims.CountAsync();
+
+        (await _loader.Load()).AlreadyLoaded.Should().BeTrue();
+        (await _db.WordEntityClaims.CountAsync()).Should().Be(claims);
+
+        Place("jerusalem-2", "Jerusalem", "H3389");
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+        await _loader.Load();
+
+        row = await _db.WordEntities.AsNoTracking().Include(a => a.Claims).SingleAsync(a => a.WordId == Hebrew(3).Id);
+        row.Source.Should().Be(reading);
+        row.Claims.Should().ContainSingle().Which.Source.Should().Be(reading);
+    }
+
+    /// <summary>
     /// The list's agreement as an earlier load wrote it — under the annotation's own method with a
     /// number, and on one annotation twice — is said once and as the list states it.
     /// </summary>

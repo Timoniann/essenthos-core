@@ -606,8 +606,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
          """;
 
     /// <summary>
-    /// Whether this word does not already name this record. It is the unit of work, and it is the
-    /// pair because the pair is what gets written: a pass that asked only whether it had ever run
+    /// Whether this pass has not already named this record at this word. It is the unit of work, and
+    /// it is the pair because the pair is what gets written: a pass that asked only whether it had ever run
     /// would leave every record added after it — the peoples, the records this corpus writes for
     /// itself, the place register — with no words and no verses.
     ///
@@ -621,9 +621,12 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     /// </para>
     ///
     /// <para>
-    /// A word another source has already annotated with this record is left alone rather than
-    /// seeded and discarded at the insert: seeding it would carry it across the links a second time
-    /// and claim it a second time, both of which are work and one of which is visible.
+    /// A word another source has already annotated with this record is seeded all the same. The
+    /// annotation stays the other source's, confidence and all, since <see cref="Settle"/> leaves a
+    /// pair already written alone; what the seed adds is this pass's claim on it, because two
+    /// accounts agreeing is what the claims are for, and a model's reading of a name the number
+    /// also resolves would otherwise say nothing of the number. <see cref="Unlent"/> takes the claim
+    /// back once the number stops resolving it.
     /// </para>
     ///
     /// <para>
@@ -637,7 +640,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
     private const string Unspoken =
         """
         NOT EXISTS (SELECT 1 FROM word_entity spoken
-                    WHERE spoken.word_id = w.id AND spoken.entity_id = resolved.entity_id)
+                    WHERE spoken.word_id = w.id AND spoken.entity_id = resolved.entity_id
+                      AND spoken.source = ANY(@written))
         """;
 
     private const string Workspace =
@@ -926,6 +930,24 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         """;
 
     /// <summary>
+    /// This pass's claim on an annotation another source wrote at a word of the witnesses it reads,
+    /// taken back where the number no longer resolves the word to that record: every such pair is
+    /// seeded on every run, so what this run did not seed it no longer says.
+    /// </summary>
+    private const string Unlent =
+        """
+        DELETE FROM word_entity_claim c
+        USING word_entity a, word w, text t
+        WHERE c.word_entity_id = a.id
+          AND w.id = a.word_id AND t.id = w.text_id
+          AND (t.slug = @witness OR t.slug = ANY(@witnesses))
+          AND c.source = ANY(@written)
+          AND NOT (a.source = ANY(@written))
+          AND NOT EXISTS (SELECT 1 FROM pending_annotation p
+                          WHERE p.word_id = a.word_id AND p.entity_id = a.entity_id)
+        """;
+
+    /// <summary>
     /// The verse list's claim, where it agrees.
     ///
     /// It is a claim only about the stated half: for a derived name the verse list is not a second
@@ -1014,14 +1036,14 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
             ("witness", Witness), ("rendering", Rendering), ("source", Resolution),
             ("derivation", Derivation), ("resolution", NameResolution), ("derived", DerivedName),
             ("method", EnumSpelling.Of(LinkMethod.StrongNumber)), ("form", EnumSpelling.Of(ByTheForm)),
-            ("corroborated", Corroborated));
+            ("corroborated", Corroborated), ("written", Written));
 
         var refused = await Attest(connection, transaction, cancellationToken);
         await Run(connection, transaction, GreekSeed, cancellationToken,
             ("witnesses", EntityCandidates.GreekWitnesses), ("source", GreekResolution),
             ("distinction", GreekDistinction), ("resolution", GreekNameResolution),
             ("method", EnumSpelling.Of(LinkMethod.StrongNumber)), ("form", EnumSpelling.Of(ByTheForm)),
-            ("corroborated", Corroborated));
+            ("corroborated", Corroborated), ("written", Written));
 
         await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
         await Run(connection, transaction, DistinguishCarried, cancellationToken,
@@ -1034,6 +1056,8 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         var settled = await Run(connection, transaction, Settle, cancellationToken,
             ("written", Written));
         await Run(connection, transaction, Claim, cancellationToken);
+        await Run(connection, transaction, Unlent, cancellationToken, ("written", Written),
+            ("witness", Witness), ("witnesses", EntityCandidates.GreekWitnesses));
         await Run(connection, transaction, Agreement, cancellationToken,
             ("source", VerseList), ("stated", EnumSpelling.Of(LinkMethod.StatedBySource)), ("derivation", Derivation));
 
