@@ -129,6 +129,43 @@ public sealed class StrongRenderingLoaderTests : IDisposable
         floored.Total.Should().Be(1);
     }
 
+    /// <summary>
+    /// The map of where a word stands: the edition's words book by book, a text's reach in each, and a
+    /// book a text does not hold or has no links into said as such, never as a count of zero.
+    /// </summary>
+    [Fact]
+    public async Task WhereAWordStandsIsCountedBookByBookAndABookNotHeldIsNotAZero()
+    {
+        var unlinked = Corpus.Add(_db, "UNLINKED", TextKind.Translation, "en", (1, 1, ["God"]));
+        var exodus = Corpus.Add(_db, "EXODUS", TextKind.Translation, "en", (1, 1, ["x"]));
+        _db.Books.Local.Single(b => b.Text == exodus).CanonicalOrdinal = 2;
+        await _db.SaveChangesAsync();
+        await _loader.Load();
+
+        (await _db.StrongBooks.AsNoTracking().Where(b => b.StrongNumber == God).Select(b => new { b.Book, b.Occurrences }).SingleAsync())
+            .Should().BeEquivalentTo(new { Book = 1, Occurrences = 2 });
+        (await _db.StrongBookReaches.AsNoTracking().Where(b => b.TextId == _english.Id && b.StrongNumber == God).Select(b => b.Reached).SingleAsync())
+            .Should().Be(2);
+
+        var map = await StrongBookEndpoints.Map(_db, God,
+            [Entry(_english), Entry(unlinked)], CancellationToken.None);
+        map.Edition.Should().Be("BHSA");
+        map.Books.Should().ContainSingle().Which.Should().Be(new StrongBookRowResponse(1, "Genesis", "genesis", 2, 3));
+        map.Texts.Select(t => (t.Corpus, t.Cells.Single().State, t.Cells.Single().Reached)).Should().Equal(
+            (_english.Slug, StrongBookState.Counted, (int?)2),
+            ("UNLINKED", StrongBookState.NotLinked, null));
+
+        var genesis = await StrongBookEndpoints.InBook(_db, God, 1, _english.Id, _english.Slug, CancellationToken.None);
+        (genesis.Witness, genesis.Reached).Should().Be(("BHSA", 2));
+        genesis.Renderings.Should().Equal(new StrongRenderingResponse("god", 1), new StrongRenderingResponse("thy god", 1));
+        (await StrongBookEndpoints.InBook(_db, God, 2, _english.Id, _english.Slug, CancellationToken.None)).Renderings.Should().BeEmpty();
+
+        var elsewhere = await StrongBookEndpoints.Map(_db, God, [Entry(_english), Entry(exodus)], CancellationToken.None);
+        elsewhere.Texts[1].Cells.Single().State.Should().Be(StrongBookState.NotHeld);
+    }
+
+    private TextEntry Entry(Text text) => new(text.Id, text.Slug, [1], true);
+
     /// <summary>A language with no list of its grammar words is not counted, which is not a count of one.</summary>
     [Fact]
     public async Task ALanguageWithNoListOfItsGrammarIsNotCounted()

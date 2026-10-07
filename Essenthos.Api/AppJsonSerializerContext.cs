@@ -90,6 +90,8 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(StrongGentilicResponse))]
 [JsonSerializable(typeof(StrongRelationResponse))]
 [JsonSerializable(typeof(VariedRenderingsResponse))]
+[JsonSerializable(typeof(StrongBookMapResponse))]
+[JsonSerializable(typeof(StrongBookPhrasesResponse))]
 [JsonSerializable(typeof(VariedRenderingResponse))]
 [JsonSerializable(typeof(StrongProfileResponse))]
 [JsonSerializable(typeof(StrongFirstVerseResponse))]

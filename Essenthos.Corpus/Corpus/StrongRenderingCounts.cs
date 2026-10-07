@@ -28,7 +28,13 @@ internal sealed record StrongTextCount(
     IReadOnlyList<StrongReachCount> Reach)
 {
     public IReadOnlyList<StrongRenderingCount> Everything { get; init; } = Renderings;
+
+    /// <summary>How many of each number's words the text renders in each book of the edition, where it renders some.</summary>
+    public IReadOnlyList<StrongBookCount> ByBook { get; init; } = [];
 }
+
+/// <summary>A number's words in one book of an edition, as a count: occurrences there, or those a text renders.</summary>
+internal sealed record StrongBookCount(string Number, int Book, int Count);
 
 /// <summary>
 /// The whole phrase each link renders, not each word of it separately, and the commonest few of them
@@ -168,6 +174,40 @@ internal static class StrongRenderingCounts
     private const string Methods =
         $"SELECT number, method, count(DISTINCT link_id) FROM strong_side WHERE {Counted} GROUP BY number, method";
 
+    /// <summary>The words reached, book by book of the edition they stand in.</summary>
+    private const string ReachedByBook =
+        $"""
+         SELECT s.number, b.canonical_ordinal, count(DISTINCT s.word_id)
+         FROM strong_side s
+         JOIN word w ON w.id = s.word_id
+         JOIN verse v ON v.id = w.verse_id
+         JOIN book b ON b.id = v.book_id
+         WHERE s.witness_id = CASE WHEN s.number LIKE 'G%' THEN @greek ELSE @hebrew END
+         GROUP BY s.number, b.canonical_ordinal
+         """;
+
+    /// <summary>Every numbered word of an edition, book by book.</summary>
+    private const string OccurrencesByBook =
+        """
+        SELECT w.strong_number, b.canonical_ordinal, count(*)
+        FROM word w
+        JOIN verse v ON v.id = w.verse_id
+        JOIN book b ON b.id = v.book_id
+        WHERE w.text_id = @witness AND w.strong_number IS NOT NULL
+        GROUP BY w.strong_number, b.canonical_ordinal
+        """;
+
+    /// <summary>How often each number stands in each book of one edition.</summary>
+    public static async Task<List<StrongBookCount>> CountBooks(AppDbContext db, int witnessId, CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(OccurrencesByBook, await Open(db, cancellationToken));
+        command.Parameters.AddWithValue("witness", witnessId);
+        return await Read(command, Book, cancellationToken);
+    }
+
+    private static StrongBookCount Book(NpgsqlDataReader reader) =>
+        new(reader.GetString(0), reader.GetInt32(1), (int)reader.GetInt64(2));
+
     /// <summary>The commonest <paramref name="take"/> phrases for each of <paramref name="numbers"/>.</summary>
     public static async Task<List<StrongRenderingCount>> Count(
         AppDbContext db,
@@ -226,10 +266,12 @@ internal static class StrongRenderingCounts
             await using var occurrences = Command(Occurrences);
             await using var reached = Command(Reached);
             await using var methods = Command(Methods);
+            await using var byBook = Command(ReachedByBook);
 
             var everything = await Read(phrases, Phrase, cancellationToken);
             var standing = await Read(occurrences, Tally, cancellationToken);
             var reach = (await Read(reached, Tally, cancellationToken)).ToDictionary(row => row.Number, row => row.Count);
+            var books = await Read(byBook, Book, cancellationToken);
             var made = (await Read(methods, reader => (
                     Number: reader.GetString(0),
                     Method: EnumSpelling.ToLinkMethod(reader.GetString(1)),
@@ -248,6 +290,7 @@ internal static class StrongRenderingCounts
                 ])
             {
                 Everything = everything,
+                ByBook = books,
             };
         }
         finally

@@ -131,6 +131,7 @@ internal static class StrongEndpoints
         routes.MapGet("/strong/{number}/occurrences", async (
             string number,
             [FromQuery] string? corpus,
+            [FromQuery] int? book,
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
@@ -156,6 +157,11 @@ internal static class StrongEndpoints
                 }
 
                 words = words.Where(w => w.TextId == named.Id);
+            }
+
+            if (book is { } ordinal)
+            {
+                words = words.Where(w => w.Verse!.Book!.CanonicalOrdinal == ordinal);
             }
 
             return Results.Ok(await OccurrencePage(db, canonical, words, skip, take, cancellationToken));

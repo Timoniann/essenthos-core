@@ -95,9 +95,11 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
 
         int counted = 0, numbers = 0, renderings = 0;
         var written = false;
+        var editions = new HashSet<int>();
         foreach (var text in texts)
         {
             var primary = LinkedOriginals.Primary(await LinkedOriginals.Of(db, text.Id, cancellationToken));
+            editions.UnionWith(primary.Select(original => original.Id));
             var count = primary.Count == 0
                 ? new StrongTextCount([], [])
                 : await StrongRenderingCounts.CountText(db, text.Id, primary, cancellationToken);
@@ -123,9 +125,55 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
                 text.Slug, count.Renderings.Count, count.Reach.Count);
         }
 
+        foreach (var edition in editions.Order())
+        {
+            written |= await CountTheBooks(edition, cancellationToken);
+        }
+
         var outcome = new StrongRenderingOutcome(!written, counted, numbers, renderings, started.Elapsed);
         logger.LogInformation("The lexicon's phrases: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// How often each number stands in each book of one edition, written only where it changed: the
+    /// words of an edition move far less often than the links a text's count rests on.
+    /// </summary>
+    private async Task<bool> CountTheBooks(int witnessId, CancellationToken cancellationToken)
+    {
+        var counted = await StrongRenderingCounts.CountBooks(db, witnessId, cancellationToken);
+        var held = await db.StrongBooks.AsNoTracking()
+            .Where(b => b.WitnessId == witnessId)
+            .Select(b => new StrongBookCount(b.StrongNumber, b.Book, b.Occurrences))
+            .ToListAsync(cancellationToken);
+        if (held.ToHashSet().SetEquals(counted))
+        {
+            return false;
+        }
+
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await db.StrongBooks.Where(b => b.WitnessId == witnessId).ExecuteDeleteAsync(cancellationToken);
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY strong_book (witness_id, strong_number, book, occurrences) FROM STDIN (FORMAT BINARY)",
+                         cancellationToken))
+        {
+            foreach (var row in counted)
+            {
+                await writer.StartRowAsync(cancellationToken);
+                await writer.WriteAsync(witnessId, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(row.Number, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(row.Book, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(row.Count, NpgsqlDbType.Integer, cancellationToken);
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await transaction.CommitAsync(cancellationToken);
+        logger.LogInformation("Counted the books of edition {Witness}: {Rows} numbers by book", witnessId, counted.Count);
+        return true;
     }
 
     /// <summary>Whether what is kept for the text is exactly what was counted.</summary>
@@ -155,6 +203,15 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
             return false;
         }
 
+        var books = await db.StrongBookReaches
+            .Where(b => b.TextId == textId)
+            .Select(b => new StrongBookCount(b.StrongNumber, b.Book, b.Reached))
+            .ToListAsync(cancellationToken);
+        if (!books.ToHashSet().SetEquals(count.ByBook))
+        {
+            return false;
+        }
+
         var methods = await db.StrongReachMethods
             .Where(m => m.TextId == textId)
             .Select(m => new { m.StrongNumber, m.Method, m.Links })
@@ -179,6 +236,7 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
         await db.StrongRenderings.Where(r => r.TextId == textId).ExecuteDeleteAsync(cancellationToken);
         await db.StrongReachMethods.Where(m => m.TextId == textId).ExecuteDeleteAsync(cancellationToken);
         await db.StrongReaches.Where(r => r.TextId == textId).ExecuteDeleteAsync(cancellationToken);
+        await db.StrongBookReaches.Where(b => b.TextId == textId).ExecuteDeleteAsync(cancellationToken);
 
         await using (var writer = await connection.BeginBinaryImportAsync(
                          "COPY strong_rendering (strong_number, text_id, rank, phrase, uses) FROM STDIN (FORMAT BINARY)",
@@ -238,6 +296,22 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
                 await writer.WriteAsync(number, NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(EnumSpelling.Of(method), NpgsqlDbType.Text, cancellationToken);
                 await writer.WriteAsync(links, NpgsqlDbType.Integer, cancellationToken);
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await using (var writer = await connection.BeginBinaryImportAsync(
+                         "COPY strong_book_reach (text_id, strong_number, book, reached) FROM STDIN (FORMAT BINARY)",
+                         cancellationToken))
+        {
+            foreach (var row in count.ByBook)
+            {
+                await writer.StartRowAsync(cancellationToken);
+                await writer.WriteAsync(textId, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(row.Number, NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(row.Book, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(row.Count, NpgsqlDbType.Integer, cancellationToken);
             }
 
             await writer.CompleteAsync(cancellationToken);
