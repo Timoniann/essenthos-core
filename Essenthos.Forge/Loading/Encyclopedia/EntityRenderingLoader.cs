@@ -45,12 +45,13 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
     /// Every named word, and for a translation's word the lemma of an original word it is linked to
     /// that names the same entity — which of the entity's names in the original it translates.
     /// And how sure the annotation is where an aligner's link carried it, which decides whether the
-    /// spelling it gives is believed.
+    /// spelling it gives is believed, and whether the entity is a thing. A word its language never
+    /// names anybody with is no spelling of anything (<see cref="Annotating.NeverAName"/>).
     /// </summary>
     private const string Named =
-        """
-        SELECT a.entity_id, w.text_id, w.verse_id, w.position, w.text, w.trailer, w.lemma, t.language,
-               CASE WHEN t.language = ANY(@originals) THEN NULL ELSE (
+        $"""
+        SELECT a.entity_id, hw.text_id, hw.verse_id, hw.position, hw.text, hw.trailer, hw.lemma, ht.language,
+               CASE WHEN ht.language = ANY(@originals) THEN NULL ELSE (
                    SELECT min(theirs_word.lemma)
                    FROM link_word mine
                    JOIN link_word theirs ON theirs.link_id = mine.link_id AND theirs.side <> mine.side
@@ -58,11 +59,14 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
                    JOIN text theirs_text ON theirs_text.id = theirs_word.text_id
                         AND theirs_text.language = ANY(@originals)
                    JOIN word_entity same ON same.word_id = theirs_word.id AND same.entity_id = a.entity_id
-                   WHERE mine.word_id = w.id) END AS renders,
-               CASE WHEN a.note LIKE @guessed THEN a.confidence END AS guess
+                   WHERE mine.word_id = hw.id) END AS renders,
+               CASE WHEN a.note LIKE @guessed THEN a.confidence END AS guess,
+               e.kind IN ('object', 'observance', 'title') AS thing
         FROM word_entity a
-        JOIN word w ON w.id = a.word_id
-        JOIN text t ON t.id = w.text_id
+        JOIN entity e ON e.id = a.entity_id
+        JOIN word hw ON hw.id = a.word_id
+        JOIN text ht ON ht.id = hw.text_id
+        WHERE NOT {Annotating.NeverAName}
         """;
 
     public async Task<EntityRenderingOutcome> Load(CancellationToken cancellationToken = default)
@@ -149,7 +153,8 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
                 reader.IsDBNull(6) ? null : reader.GetString(6),
                 reader.GetString(7),
                 reader.IsDBNull(8) ? null : reader.GetString(8),
-                reader.IsDBNull(9) ? null : reader.GetDouble(9)));
+                reader.IsDBNull(9) ? null : reader.GetDouble(9),
+                reader.GetBoolean(10)));
         }
 
         return words;

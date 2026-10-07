@@ -753,7 +753,11 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, IL
         return words;
     }
 
-    /// <summary>Moves each row to its people, or drops it where the people already holds the same row.</summary>
+    /// <summary>
+    /// Moves each row to its people, or drops it where the people already holds a row of the same
+    /// source at that verse — whatever its label, since a record holds one row per source and verse —
+    /// or where another row moving there already brings one.
+    /// </summary>
     private async Task Move(List<Row> rows, CancellationToken cancellationToken)
     {
         if (rows.Count == 0)
@@ -764,12 +768,19 @@ internal sealed class MisfiledVerseLoader(AppDbContext db, ReviewLists lists, IL
         const string sql =
             """
             WITH m AS (SELECT * FROM unnest(@ids, @peoples) AS m(id, people)),
+            moving AS (
+                SELECT m.id, m.people, v.source, v.canonical_book, v.canonical_chapter, v.canonical_verse,
+                       row_number() OVER (PARTITION BY m.people, v.source, v.canonical_book, v.canonical_chapter,
+                                                       v.canonical_verse ORDER BY m.id) AS rank
+                FROM m JOIN entity_verse v ON v.id = m.id),
             held AS (
-                DELETE FROM entity_verse v USING m, entity_verse kept
-                WHERE v.id = m.id AND kept.entity_id = m.people AND kept.source = v.source
-                  AND kept.label IS NOT DISTINCT FROM v.label
-                  AND (kept.canonical_book, kept.canonical_chapter, kept.canonical_verse)
-                    = (v.canonical_book, v.canonical_chapter, v.canonical_verse)
+                DELETE FROM entity_verse v USING moving t
+                WHERE v.id = t.id
+                  AND (t.rank > 1 OR EXISTS (
+                      SELECT 1 FROM entity_verse kept
+                      WHERE kept.entity_id = t.people AND kept.source = t.source
+                        AND (kept.canonical_book, kept.canonical_chapter, kept.canonical_verse)
+                          = (t.canonical_book, t.canonical_chapter, t.canonical_verse)))
                 RETURNING v.id)
             UPDATE entity_verse v SET entity_id = m.people
             FROM m WHERE v.id = m.id AND v.id NOT IN (SELECT id FROM held)

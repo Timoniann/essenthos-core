@@ -39,7 +39,7 @@ public sealed class ForeignNameTests : IDisposable
         _foreign = new ForeignNames(_db, NullLogger<ForeignNames>.Instance);
         _carrier = new AnnotationCarrier(
             _db, new CrossedNameLoader(_db, NullLogger<CrossedNameLoader>.Instance), _foreign,
-            NullLogger<AnnotationCarrier>.Instance);
+            new EqualTwinNames(_db, NullLogger<EqualTwinNames>.Instance), NullLogger<AnnotationCarrier>.Instance);
 
         _greek = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc",
             (16, 20, ["Σατανᾶν", "Ἰησοῦ", "Χριστοῦ"]),

@@ -80,6 +80,7 @@ internal sealed class AnnotationCarrier(
     AppDbContext db,
     CrossedNameLoader crossed,
     ForeignNames foreign,
+    EqualTwinNames twins,
     ILogger<AnnotationCarrier> logger)
 {
     /// <summary>
@@ -290,6 +291,9 @@ internal sealed class AnnotationCarrier(
 
         // A name a batch carried before the record whose name its word is had reached the word.
         await foreign.Withdraw(cancellationToken);
+
+        // The other editions' twins of the words just named, which no link from a seed reaches.
+        logger.LogInformation("{Outcome}", await twins.Load(cancellationToken));
         return outcome;
     }
 
@@ -315,11 +319,11 @@ internal sealed class AnnotationCarrier(
             groups.Add((resolution, true));
         }
 
-        // The crossed-back rows stand on translated words and are derived from the links rather
-        // than from a seed, so carrying them would spread a Russian word's name along Russian links.
-        // They are written again from scratch once the carry is done.
+        // The crossed-back rows and the editions' twins stand on words reached from no seed, so
+        // carrying them would spread a name along links it never crossed; both are written again
+        // from scratch once the carry is done.
         groups.AddRange(present
-            .Except([.. EntityAnnotationLoader.Written, CrossedNameLoader.Source,
+            .Except([.. EntityAnnotationLoader.Written, CrossedNameLoader.Source, EqualTwinNames.Source,
                 .. SenseReadingFiles.AllRulings().Where(file => !file.Carry).Select(file => file.Source)], StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .Select(source => (new[] { source }, false)));

@@ -23,6 +23,11 @@ public class NameListTests
     [InlineData("Рувим", "rus", "ראובן", null)]
     [InlineData("Arphaxad", null, "Arpachshad", null)]
     [InlineData("Давидів", "ukr", "David", null)]
+    [InlineData("Καζηρὰ", null, "Gazera", null)]
+    [InlineData("Кир-Моав", "rus", "Moab", null)]
+    [InlineData("Саулова", "rus", "Saul's", null)]
+    [InlineData("Ῥαχὴλ", null, "Rachel's", null)]
+    [InlineData("Ῥώμην", null, "Rome", null)]
     public void ATransliteratedNameIsAlikeInEveryScript(
         string one,
         string? oneLanguage,
@@ -38,6 +43,25 @@ public class NameListTests
     [InlineData("Ἰεοὺλ", "רעואל")]
     public void DifferentNamesAreNot(string one, string other) =>
         NameLists.Alike(NameLists.Skeleton(one), NameLists.Skeleton(other))
+            .Should().BeLessThan(NameLists.LeastLikeness);
+
+    /// <summary>
+    /// Short names that share two consonants out of place and begin differently: Христа is RST and
+    /// Σατανᾶν STN, which drew Christ onto Satan in 1 Corinthians 5:5.
+    /// </summary>
+    [Theory]
+    [InlineData("Христа", "rus", "Σατανᾶν", null)]
+    [InlineData("Христа", "rus", "Satan", null)]
+    [InlineData("Иерусалим", "rus", "Silas", null)]
+    [InlineData("Израиля", "rus", "Eleazar", null)]
+    [InlineData("Syria", null, "מצרים", null)]
+    [InlineData("Rephaim", null, "Ephraim", null)]
+    public void ShortNamesSharingLettersOutOfPlaceAreNot(
+        string one,
+        string? oneLanguage,
+        string other,
+        string? otherLanguage) =>
+        NameLists.Alike(NameLists.Skeleton(one, oneLanguage), NameLists.Skeleton(other, otherLanguage))
             .Should().BeLessThan(NameLists.LeastLikeness);
 
     [Fact]
@@ -267,7 +291,43 @@ public sealed class NameListPassTests : IDisposable
         (await _db.LinkClaims.CountAsync()).Should().Be(links.Count);
     }
 
-    private Link Link(int greek, int hebrew)
+    /// <summary>
+    /// A pair the names alone wrote under a looser rule is taken back once the letters no longer read
+    /// it as one name: RST against STN, as Христа against Satan. A pair they still read so stays, and
+    /// so does one another method also claims.
+    /// </summary>
+    [Fact]
+    public async Task APairTheLettersNoLongerReadAsOneNameIsTakenBack()
+    {
+        var greek = await _db.Words.SingleAsync(w => w.TextId == _greek.Id && w.Position == 10);
+        greek.Surface = "Ῥίστα";
+        var hebrew = await _db.Words.SingleAsync(w => w.TextId == _hebrew.Id && w.Position == 9);
+        hebrew.Morphology = JsonDocument.Parse("""{"pos": "nmpr", "consonantal": "סתן"}""");
+        await _db.SaveChangesAsync();
+        NameLists.Likeness("RST", "STN").Should().BeGreaterThanOrEqualTo(NameLists.LeastLikeness);
+
+        var added = $"SIL.Machine ibm4, symmetrised och, {NameLists.AddedSource}";
+        var unlike = Link(10, 9, added);
+        var alike = Link(6, 5, NameListPass.Source);
+        var held = Link(3, 9, added);
+        _db.LinkClaims.Add(new LinkClaim
+        {
+            Link = held, Method = LinkMethod.Manual, Provenance = new() { Source = "a reader's ruling" },
+        });
+        var model = Link(8, 9);
+        await _db.SaveChangesAsync();
+
+        var report = await NameListPass.WithdrawUnlike(_db);
+        var again = await NameListPass.WithdrawUnlike(_db);
+
+        report.Should().Contain("1 whose words").And.Contain("1 such held");
+        again.Should().Contain("0 whose words");
+        var left = await _db.Links.Select(link => link.Id).ToListAsync();
+        left.Should().BeEquivalentTo([alike.Id, held.Id, model.Id]);
+        left.Should().NotContain(unlike.Id);
+    }
+
+    private Link Link(int greek, int hebrew, string source = "SIL.Machine, aligned as written")
     {
         var link = new Link
         {
@@ -276,7 +336,7 @@ public sealed class NameListPassTests : IDisposable
             Relation = LinkRelation.Renders,
             Method = LinkMethod.Aligner,
             Confidence = 0.98,
-            Provenance = new() { Source = "SIL.Machine, aligned as written" },
+            Provenance = new() { Source = source },
         };
         _db.Links.Add(link);
         _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(_greek, 46, 16, greek), Side = LinkSide.From });

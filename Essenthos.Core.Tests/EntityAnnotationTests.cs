@@ -32,6 +32,8 @@ public sealed class EntityAnnotationTests : IDisposable
     private readonly EntityAnnotationLoader _loader;
     private readonly Text _hebrew;
     private readonly Text _english;
+    private readonly Text _hindi;
+    private readonly Text _german;
 
     /// <summary>
     /// Genesis 1, one verse per case, so a failure names the case rather than a position. The
@@ -69,7 +71,11 @@ public sealed class EntityAnnotationTests : IDisposable
             (1, 13, ["Moses’s", "lifetime"]),
             (1, 14, ["Moses", "and", "Aaron"]),
             (1, 15, ["set", "out"]),
-            (1, 19, ["Moses", "and", "Moses"]));
+            (1, 19, ["Moses", "and", "Moses"]),
+            (1, 20, ["and", "had", "been"]));
+
+        _hindi = Corpus.Add(_db, "IRV2019", TextKind.Translation, "hin", (1, 21, ["मूसा", "के", "पुत्र"]));
+        _german = Corpus.Add(_db, "LUTH1912", TextKind.Translation, "deu", (1, 19, ["Moshe", "und", "alles"]));
 
         _db.SaveChanges();
 
@@ -838,6 +844,85 @@ public sealed class EntityAnnotationTests : IDisposable
 
         (await _db.WordEntities.AnyAsync(a => a.Word!.TextId == _english.Id && a.Word.Verse!.Number == 19))
             .Should().BeFalse("which of the two the head renders is as much a choice as any other word");
+    }
+
+    /// <summary>
+    /// A word its language never names anybody with is no head. The Berean renders the second
+    /// יָרָבְעָם of 1 Kings 12:2 by <em>and had been</em>, which names nobody, and the Hindi's
+    /// <em>मूसा के पुत्र</em> puts the postposition after the name, where the last word of the
+    /// phrase would be.
+    /// </summary>
+    [Fact]
+    public async Task AWordThatIsNeverANameIsNoHead()
+    {
+        Phrase(Hebrew(1), _db.WordAt(_english, 1, 20, 1), _db.WordAt(_english, 1, 20, 2), _db.WordAt(_english, 1, 20, 3));
+        var name = _db.WordAt(_hindi, 1, 21, 1);
+        var postposition = _db.WordAt(_hindi, 1, 21, 2);
+        Phrase(Hebrew(1), name, postposition);
+
+        var named = await Load();
+
+        named.Keys.Should().NotIntersectWith(
+            [.. _db.Words.Where(w => w.TextId == _english.Id && w.Verse!.Number == 20).Select(w => w.Id)]);
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(postposition.Id);
+    }
+
+    /// <summary>
+    /// The Hindi's postposition follows the noun it governs, so in <em>मूसा के पुत्र</em> the name is
+    /// the word before the genitive and not the sons at the end of the phrase.
+    /// </summary>
+    [Fact]
+    public async Task AHindiPostpositionClosesTheNameBeforeIt()
+    {
+        var name = _db.WordAt(_hindi, 1, 21, 1);
+        var sons = _db.WordAt(_hindi, 1, 21, 3);
+        Phrase(Hebrew(1), name, _db.WordAt(_hindi, 1, 21, 2), sons);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(sons.Id);
+    }
+
+    /// <summary>
+    /// A Greek edition that carries no Strong numbers, as the Septuagints here do not, still says its
+    /// article by its letters.
+    /// </summary>
+    [Fact]
+    public async Task AGreekArticleWithoutANumberIsNoHeadEither()
+    {
+        var greek = Corpus.Add(_db, "GRCBRENT", TextKind.Translation, "grc", (1, 22, ["Μωυσῆς", "τοῦ"]));
+        _db.SaveChanges();
+        var name = _db.WordAt(greek, 1, 22, 1);
+        var article = _db.WordAt(greek, 1, 22, 2);
+        name.NormalisedText = "μωυσησ";
+        article.NormalisedText = "του";
+        _db.SaveChanges();
+        Phrase(Hebrew(1), name, article);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(article.Id);
+    }
+
+    /// <summary>
+    /// The head of a set of one name written twice is no exception: Luther's <em>alles</em> of
+    /// Deuteronomy 5:27 stood last in such a set and was named the LORD, while the name beside it
+    /// was left to the same-word test against it.
+    /// </summary>
+    [Fact]
+    public async Task TheHeadOfASetIsNeverAWordThatIsNeverAName()
+    {
+        var name = _db.WordAt(_german, 1, 19, 1);
+        var all = _db.WordAt(_german, 1, 19, 3);
+        Set([_db.WordAt(_hebrew, 1, 19, 1), _db.WordAt(_hebrew, 1, 19, 2)], [name, _db.WordAt(_german, 1, 19, 2), all]);
+
+        var named = await Load();
+
+        named.Should().ContainKey(name.Id).WhoseValue.Should().Be("moses");
+        named.Should().NotContainKey(all.Id);
     }
 
     /// <summary>

@@ -1,3 +1,4 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -11,7 +12,8 @@ namespace Essenthos.Core.Tests;
 
 /// <summary>
 /// 1 Kings 7:14, <em>of the tribe of Naphtali</em>, where the name after the word for a tribe named
-/// nobody because the man, the tribe and the territory all bear its number.
+/// nobody because the man, the tribe and the territory all bear its number. The phrase says
+/// <em>tribe</em>, so the name in it is the man the tribe is named after.
 ///
 /// Each case here is one thing that has to be true of the phrase and of the encyclopedia before the
 /// word is taken to be the tribe.
@@ -69,11 +71,11 @@ public sealed class TribeNameTests : IDisposable
     private void Number(int chapter, int verse, int position, string number) =>
         _db.WordAt(_hebrew, chapter, verse, position).StrongNumber = number;
 
-    private Entity Record(string slug, EntityKind kind, string label)
+    private Entity Record(string slug, EntityKind kind, string label, Entity? origin = null)
     {
         var entity = new Entity
         {
-            Kind = kind, Slug = slug, Name = slug, SourceId = slug, Source = "a test",
+            Kind = kind, Slug = slug, Name = slug, SourceId = slug, Source = "a test", Origin = origin,
             Names = [new EntityName { Label = label, HebrewStrongNumber = Naphtali, Kind = label }],
         };
         _db.Entities.Add(entity);
@@ -87,18 +89,28 @@ public sealed class TribeNameTests : IDisposable
     private async Task<Dictionary<long, WordEntity>> Named() =>
         await _db.WordEntities.AsNoTracking().Include(a => a.Entity).ToDictionaryAsync(a => a.WordId);
 
-    [Fact]
-    public async Task TheNameAfterTheWordForATribeIsTheTribe()
+    private async Task<List<string>> Shown(Word word) =>
+        [.. (await Annotations.AllOf(_db, word.Id, CancellationToken.None)).Select(entity => entity.Slug)];
+
+    /// <summary>The man and the tribe that descends from him, as the encyclopedia holds them.</summary>
+    private Entity ManAndTribe()
     {
-        Record("naphtali", EntityKind.Person, "proper name");
-        Record("naphtalites", EntityKind.People, "collective");
+        var man = Record("naphtali", EntityKind.Person, "proper name");
+        Record("naphtalites", EntityKind.People, "collective", man);
+        return man;
+    }
+
+    [Fact]
+    public async Task TheNameAfterTheWordForATribeIsTheAncestor()
+    {
+        ManAndTribe();
 
         var outcome = await _loader.Load();
 
         var named = await Named();
-        named[Hebrew(7, 14, 2).Id].Entity!.Slug.Should().Be("naphtalites");
-        named[Hebrew(7, 14, 2).Id].Method.Should().Be(LinkMethod.Lexical,
-            "the phrase is what said so, not a source naming the tribe");
+        named[Hebrew(7, 14, 2).Id].Entity!.Slug.Should().Be("naphtali");
+        named[Hebrew(7, 14, 2).Id].Method.Should().Be(LinkMethod.RuleBased,
+            "the phrase is what said so, not a source naming the man");
         named[Hebrew(7, 14, 2).Id].Confidence.Should().Be(0.9);
         outcome.Settled.Should().Be(2);
     }
@@ -107,12 +119,11 @@ public sealed class TribeNameTests : IDisposable
     [Fact]
     public async Task TheSecondWordForATribeCountsToo()
     {
-        Record("naphtali", EntityKind.Person, "proper name");
-        Record("naphtalites", EntityKind.People, "collective");
+        ManAndTribe();
 
         await _loader.Load();
 
-        (await Named())[Hebrew(7, 15, 2).Id].Entity!.Slug.Should().Be("naphtalites");
+        (await Named())[Hebrew(7, 15, 2).Id].Entity!.Slug.Should().Be("naphtali");
     }
 
     /// <summary>
@@ -122,8 +133,7 @@ public sealed class TribeNameTests : IDisposable
     [Fact]
     public async Task TheSameNameElsewhereInTheVerseIsLeftAlone()
     {
-        Record("naphtali", EntityKind.Person, "proper name");
-        Record("naphtalites", EntityKind.People, "collective");
+        ManAndTribe();
 
         await _loader.Load();
 
@@ -132,24 +142,67 @@ public sealed class TribeNameTests : IDisposable
 
     /// <summary>
     /// A reading of the verse stands above a rule about the shape of a phrase, so a word something
-    /// has already named keeps its answer.
+    /// has already read keeps that answer first, and the rule's stands beside it.
     /// </summary>
     [Fact]
-    public async Task AWordAlreadyNamedIsNotContested()
+    public async Task AReadingOfTheVerseStillComesFirst()
     {
-        var man = Record("naphtali", EntityKind.Person, "proper name");
-        Record("naphtalites", EntityKind.People, "collective");
+        ManAndTribe();
+        var people = await _db.Entities.SingleAsync(e => e.Slug == "naphtalites");
         _db.WordEntities.Add(new WordEntity
         {
-            Word = Hebrew(7, 14, 2), Entity = man, Method = LinkMethod.ModelReading, Confidence = 0.99,
+            Word = Hebrew(7, 14, 2), Entity = people, Method = LinkMethod.ModelReading, Confidence = 0.99,
             Source = "a reading of the verse",
+            Claims = [new WordEntityClaim { Method = LinkMethod.ModelReading, Confidence = 0.99, Source = "a reading of the verse" }],
         });
         await _db.SaveChangesAsync();
 
         var outcome = await _loader.Load();
 
-        (await Named())[Hebrew(7, 14, 2).Id].Entity!.Slug.Should().Be("naphtali");
+        (await Shown(Hebrew(7, 14, 2))).Should().Equal("naphtalites", "naphtali");
         outcome.Spoken.Should().Be(1);
+    }
+
+    /// <summary>
+    /// What the rule wrote when it read the construct as the people goes: a row only it claimed is
+    /// replaced by the ancestor, and a row a reading also claims keeps the reading's claim alone.
+    /// </summary>
+    [Fact]
+    public async Task WhatTheConstructWroteAsThePeopleIsTakenBack()
+    {
+        ManAndTribe();
+        var people = await _db.Entities.SingleAsync(e => e.Slug == "naphtalites");
+        foreach (var (word, read) in new[] { (Hebrew(7, 14, 2), false), (Hebrew(7, 15, 2), true) })
+        {
+            var row = new WordEntity
+            {
+                Word = word, Entity = people, Method = LinkMethod.Lexical, Confidence = 0.9,
+                Source = TribeNameLoader.PeopleSource,
+                Claims = [new WordEntityClaim { Method = LinkMethod.Lexical, Confidence = 0.9, Source = TribeNameLoader.PeopleSource }],
+            };
+            if (read)
+            {
+                row.Claims.Add(new WordEntityClaim { Method = LinkMethod.ModelReading, Confidence = 0.95, Source = "a reading of the verse" });
+            }
+
+            _db.WordEntities.Add(row);
+        }
+
+        await _db.SaveChangesAsync();
+
+        var outcome = await _loader.Load();
+        var again = await _loader.Load();
+
+        outcome.Withdrawn.Should().Be(1);
+        (await Shown(Hebrew(7, 14, 2))).Should().Equal("naphtali");
+        (await Shown(Hebrew(7, 15, 2))).Should().Contain(["naphtali", "naphtalites"]);
+        (await _db.WordEntityClaims.CountAsync(c => c.Source == TribeNameLoader.PeopleSource)).Should().Be(0);
+        var kept = await _db.WordEntities.AsNoTracking().Include(a => a.Claims)
+            .SingleAsync(a => a.WordId == Hebrew(7, 15, 2).Id && a.Entity!.Slug == "naphtalites");
+        kept.Source.Should().Be("a reading of the verse", "the row stands on the claim that is left");
+        kept.Method.Should().Be(LinkMethod.ModelReading);
+        kept.Claims.Should().NotBeEmpty();
+        again.AlreadyLoaded.Should().BeTrue();
     }
 
     /// <summary>Two peoples of one name is a choice, and this rule makes none.</summary>
@@ -166,7 +219,7 @@ public sealed class TribeNameTests : IDisposable
     }
 
     [Fact]
-    public async Task ANameNoPeopleBearsIsCounted()
+    public async Task ANameNoAncestorBearsIsCounted()
     {
         Record("naphtali", EntityKind.Person, "proper name");
 
@@ -177,9 +230,9 @@ public sealed class TribeNameTests : IDisposable
     }
 
     [Fact]
-    public async Task TheTribeTravelsToTheTranslationTheLinksReach()
+    public async Task TheAncestorTravelsToTheTranslationTheLinksReach()
     {
-        Record("naphtalites", EntityKind.People, "collective");
+        ManAndTribe();
         var rendering = _db.WordAt(_russian, 7, 14, 2);
         var link = new Link
         {
@@ -193,13 +246,13 @@ public sealed class TribeNameTests : IDisposable
 
         await _loader.Load();
 
-        (await Named())[rendering.Id].Entity!.Slug.Should().Be("naphtalites");
+        (await Named())[rendering.Id].Entity!.Slug.Should().Be("naphtali");
     }
 
     [Fact]
     public async Task ASecondRunDoesNothing()
     {
-        Record("naphtalites", EntityKind.People, "collective");
+        ManAndTribe();
 
         await _loader.Load();
         var again = await _loader.Load();

@@ -34,18 +34,22 @@ public sealed class GreekTribeNameTests : IDisposable
             (5, 5, ["τῆς", "φυλῆς", "Ἰούδα"]),
             (7, 6, ["ἐκ", "φυλῆς", "Μανασσῆ"]),
             (7, 7, ["ὁ", "Μανασσῆ"]));
+        _db.AddBook(_greek, 58, "Hebrews",
+            (7, 14, ["ἐξ", "Ἰούδα", "ἀνατέταλκεν", "ὁ", "Κύριος", "ἡμῶν", "εἰς", "ἣν", "φυλὴν", "περὶ", "ἱερέων", "Μωϋσῆς"]));
         _db.SaveChanges();
         _db.Database.ExecuteSqlRaw(
             """
             UPDATE word SET normalised_text = lower(text), strong_number = CASE text
                 WHEN 'ὁρίοις' THEN 'G3725' WHEN 'Ζαβουλὼν' THEN 'G2194' WHEN 'καὶ' THEN 'G2532'
                 WHEN 'Νεφθαλείμ' THEN 'G3508' WHEN 'τῆς' THEN 'G3588' WHEN 'φυλῆς' THEN 'G5443'
-                WHEN 'Ἰούδα' THEN 'G2448' WHEN 'ἐκ' THEN 'G1537' WHEN 'Μανασσῆ' THEN 'G3128' WHEN 'ὁ' THEN 'G3588' END
+                WHEN 'Ἰούδα' THEN 'G2448' WHEN 'ἐκ' THEN 'G1537' WHEN 'Μανασσῆ' THEN 'G3128' WHEN 'ὁ' THEN 'G3588'
+                WHEN 'ἐξ' THEN 'G1537' WHEN 'Κύριος' THEN 'G2962' WHEN 'εἰς' THEN 'G1519' WHEN 'ἣν' THEN 'G3739'
+                WHEN 'φυλὴν' THEN 'G5443' WHEN 'Μωϋσῆς' THEN 'G3475' END
             """);
         foreach (var (number, lemma, origin) in new[]
                  {
                      ("G3128", "Μανασσῆς", "H4519"), ("G2448", "Ἰουδά", "H3063 or perhaps H3194"),
-                     ("G3508", "Νεφθαλείμ", "H5321"), ("G2194", "Ζαβουλών", "H2074"),
+                     ("G3508", "Νεφθαλείμ", "H5321"), ("G2194", "Ζαβουλών", "H2074"), ("G3475", "Μωϋσῆς", "H4872"),
                  })
         {
             _db.StrongEntries.Add(new StrongEntry
@@ -119,10 +123,25 @@ public sealed class GreekTribeNameTests : IDisposable
         (await Shown(Word(40, 4, 13, 2))).Should().Equal("zebulonites");
         (await Shown(Word(40, 4, 13, 4))).Should().Equal(["naphtalites"], "a name joined by καί stands in the same phrase");
         (await Shown(Word(66, 7, 7, 2))).Should().BeEmpty("a name outside the phrase is the number's to settle");
-        first.Tribes.Should().Be(2);
+        first.Tribes.Should().Be(3, "two after φυλή and Hebrews 7:14's Judah");
         first.Realms.Should().Be(2);
 
         (await Loader().Load()).AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>
+    /// Hebrews 7:14, <em>out of Judah … of which tribe</em>: the relative and φυλή after the name
+    /// call it a tribe, and the name further on is not in the phrase.
+    /// </summary>
+    [Fact]
+    public async Task ANameTheVerseGoesOnToCallATribeIsTheAncestor()
+    {
+        var first = await Loader().Load();
+
+        (await Shown(Word(58, 7, 14, 2))).Should().Equal("judah");
+        (await Shown(Word(58, 7, 14, 12))).Should().BeEmpty("a name after the relative is not the one it calls a tribe");
+        first.Tribes.Should().Be(3);
+        (await _db.WordEntities.CountAsync(a => a.Source == GreekTribeNameLoader.AntecedentSource)).Should().Be(1);
     }
 
     [Fact]

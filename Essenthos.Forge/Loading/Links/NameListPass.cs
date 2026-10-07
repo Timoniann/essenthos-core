@@ -66,6 +66,77 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
 {
     internal const string Source = "the names of the verse, paired by spelling and order";
 
+    /// <summary>
+    /// The links only the names wrote — this pass's, and the pairs the aligner added for the names
+    /// alone — whose two words the letters no longer read as one name, taken back. An alignment
+    /// replayed on an empty corpus settles its names by the rule as it stands; this brings a corpus
+    /// whose names were settled by an earlier rule to the same links, without aligning again. A link
+    /// any other method also claims, or a review has looked at, is left where it is.
+    /// </summary>
+    public static async Task<string> WithdrawUnlike(AppDbContext db, CancellationToken cancellationToken = default)
+    {
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        var unlike = new List<long>();
+        var held = 0;
+        var read = 0;
+
+        await using (var command = new NpgsqlCommand(
+                         """
+                         WITH named AS MATERIALIZED (
+                             SELECT l.id, l.from_text_id, l.to_text_id
+                             FROM link l
+                             WHERE l.method = 'aligner'
+                               AND l.provenance_id IN (SELECT p.id FROM provenance p
+                                                       WHERE starts_with(p.source, @pass) OR strpos(p.source, @added) > 0)
+                         )
+                         SELECT n.id,
+                                fw.text, fw.morphology ->> 'consonantal', ft.language,
+                                tw.text, tw.morphology ->> 'consonantal', tt.language,
+                                EXISTS (SELECT 1 FROM link_claim c WHERE c.link_id = n.id AND c.method <> 'aligner')
+                                OR EXISTS (SELECT 1 FROM evidentia_review r WHERE r.link_id = n.id)
+                         FROM named n
+                         JOIN link_word f ON f.link_id = n.id AND f.side = 'from'
+                         JOIN word fw ON fw.id = f.word_id
+                         JOIN text ft ON ft.id = n.from_text_id
+                         JOIN link_word t ON t.link_id = n.id AND t.side = 'to'
+                         JOIN word tw ON tw.id = t.word_id
+                         JOIN text tt ON tt.id = n.to_text_id
+                         WHERE (SELECT count(*) FROM link_word w WHERE w.link_id = n.id) = 2
+                         """, connection, (NpgsqlTransaction)transaction.GetDbTransaction()))
+        {
+            command.Parameters.AddWithValue("pass", Source);
+            command.Parameters.AddWithValue("added", NameLists.AddedSource);
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                read++;
+                var from = NameLists.Skeleton(
+                    reader.IsDBNull(2) ? reader.GetString(1) : reader.GetString(2), reader.GetString(3));
+                var to = NameLists.Skeleton(
+                    reader.IsDBNull(5) ? reader.GetString(4) : reader.GetString(5), reader.GetString(6));
+                if (NameLists.Alike(from, to) >= NameLists.LeastLikeness)
+                {
+                    continue;
+                }
+
+                if (reader.GetBoolean(7))
+                {
+                    held++;
+                }
+                else
+                {
+                    unlike.Add(reader.GetInt64(0));
+                }
+            }
+        }
+
+        var withdrawn = await db.Links.Where(link => unlike.Contains(link.Id)).ExecuteDeleteAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        return $"Of {read} links the names alone wrote, {withdrawn} whose words the letters no longer read as one " +
+               $"name withdrawn, and {held} such held by another method or a review";
+    }
+
     /// <param name="chapters">
     /// Chapters to report on apart from the whole, as canonical book and chapter. Applying always
     /// covers every verse read.

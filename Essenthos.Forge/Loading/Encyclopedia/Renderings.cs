@@ -11,6 +11,10 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// How sure the annotation naming the word is, where it reached the word across a link the aligner
 /// guessed; null where a source states it or a number, a lexicon or a rule carried it.
 /// </param>
+/// <param name="Thing">
+/// The entity is a thing, a feast or a title, whose rendering is a common noun a text prints in
+/// lower case — <em>the mercy seat</em>, <em>віко</em>, <em>ковчег</em>.
+/// </param>
 internal readonly record struct NamedWord(
     int EntityId,
     int TextId,
@@ -21,7 +25,8 @@ internal readonly record struct NamedWord(
     string? Lemma,
     string Language,
     string? Renders = null,
-    double? Guess = null);
+    double? Guess = null,
+    bool Thing = false);
 
 /// <summary>One spelling of one entity in one text, counted, and whether a list heads with it.</summary>
 internal sealed record Rendering(int EntityId, int TextId, string Form, string Folded, int Occurrences, bool Heading);
@@ -278,7 +283,9 @@ internal static class Renderings
     /// <summary>
     /// One run as a name, or null when nothing in it is a name. A lower-case word in a script that
     /// has capitals is not part of one — <em>he</em>, <em>und</em>, or the noun Brenton prints
-    /// straight after <em>Ἀαρών</em> that an annotation spilled onto.
+    /// straight after <em>Ἀαρών</em> that an annotation spilled onto. A thing's rendering is the
+    /// exception: it is a common noun, and the text prints it as one, so its case says nothing and
+    /// the words that open like its commonest spelling are what keep the stray one out.
     /// </summary>
     internal static string? Spelled(IReadOnlyList<NamedWord> run)
     {
@@ -286,7 +293,7 @@ internal static class Renderings
         foreach (var word in run)
         {
             var part = Trimmed(Printed(word));
-            if (part.Length > 0 && !char.IsLower(part[0]))
+            if (part.Length > 0 && (word.Thing || !char.IsLower(part[0])))
             {
                 parts.Add(part);
             }
