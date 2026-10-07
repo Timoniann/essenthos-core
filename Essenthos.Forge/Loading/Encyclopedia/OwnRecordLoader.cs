@@ -180,8 +180,15 @@ internal sealed class OwnRecordLoader(
         return outcome;
     }
 
+    /// <summary>
+    /// A ruling naming a person beside a title stands on the title's own ruling, in a manual file of
+    /// this edition, and on a held person. The title is held as one, or is one of the owner's
+    /// decided titles: on a corpus built from nothing those are written by a later step, and the
+    /// record may not exist yet or still be held as the person it was.
+    /// </summary>
     private async Task ValidateCompanions(IReadOnlyList<OwnRecordRulings> files, CancellationToken cancellationToken)
     {
+        var decided = SenseReadingFiles.Titles().Titles.Select(title => title.Slug).ToHashSet(StringComparer.Ordinal);
         foreach (var file in files)
         foreach (var ruling in file.Rulings.Where(r => r.Alongside is not null))
         {
@@ -189,7 +196,8 @@ internal sealed class OwnRecordLoader(
                 .SelectMany(f => f.Rulings).SingleOrDefault(r => r.Word == ruling.Word && r.Existing == ruling.Alongside);
             if (file.Carry || file.Method != "manual" || ruling.Corrects is not null
                 || companion is null || ruling.Existing is null
-                || !await db.Entities.AnyAsync(e => e.Slug == ruling.Alongside && e.Kind == EntityKind.Title, cancellationToken)
+                || (!decided.Contains(ruling.Alongside!)
+                    && !await db.Entities.AnyAsync(e => e.Slug == ruling.Alongside && e.Kind == EntityKind.Title, cancellationToken))
                 || !await db.Entities.AnyAsync(e => e.Slug == ruling.Existing && e.Kind == EntityKind.Person, cancellationToken))
                 throw new InvalidDataException($"The companion ruling on {ruling.Word} must name a held person beside an explicitly ruled, edition-local title.");
         }
