@@ -1,0 +1,44 @@
+{
+ "ticket": "PRB-0973",
+ "text": "SWETE",
+ "verse": "GEN 11:4",
+ "code": "GEN",
+ "book": 1,
+ "chapter": 11,
+ "v": 4,
+ "printed_pages": [
+  "17"
+ ],
+ "leaves": [
+  49
+ ],
+ "images": [
+  "oldtestamentingr01swetuoft-48.jpg",
+  "oldtestamentingr01swetuoft-49.jpg",
+  "oldtestamentingr01swetuoft-50.jpg"
+ ],
+ "known": "a stray Latin token 'L' in the verse",
+ "ours": {
+  "SWETE GEN 11:3": "καὶ εἶπεν ἄνθρωπος τῷ πλίνθους καὶ ὀπτήσωμεν αὐτὰς πυρί. καὶ ἐγένετο αὐτοῖς ἡ πλίνθος εἰς λίθον, καὶ ἄσφαλτος ἦν αὐοῖς ὁ πηλός. ",
+  "SWETE GEN 11:4": "καὶ εἶπαν Δεῦτε οἰκοδομήσωμεν ἐαυτοῖς πόλιν καὶ πύργον, οὗ ἡ κεφαλὴ ἔσται ἕως τοῦ οὐρανοῦ, καὶ ποιήσομεν ἑαυτῶν ὄνομα πρὸ τοῦ διασπαρῆναι ἐπὶ προσώπου πάσης L τῆς γῆς. ",
+  "SWETE GEN 11:5": "καὶ κατέβη κύριος ἰδεῖν τὴν πόλιν καὶ τὸν πύργον ὃν ᾠκοδόμησαν οἱ υἱοὶ τῶν ἀνθρώπων. "
+ },
+ "image": "oldtestamentingr01swetuoft-49.jpg",
+ "printed": "καὶ εἶπαν Δεῦτε οἰκοδομήσωμεν ἑαυτοῖς πόλιν καὶ πύργον, οὗ ἡ κεφαλὴ ἔσται ἕως τοῦ οὐρανοῦ, καὶ ποιήσομεν ἑαυτῶν ὄνομα πρὸ τοῦ διασπαρῆναι ἐπὶ προσώπου πάσης τῆς γῆς.",
+ "corrections": [
+  {
+   "ours": "ἐαυτοῖς",
+   "printed": "ἑαυτοῖς",
+   "why": "The printed word has a rough breathing, not a smooth breathing."
+  },
+  {
+   "ours": "L",
+   "printed": "",
+   "why": "Stray Latin token; the marginal § D beside πάσης is not part of the Greek text."
+  }
+ ],
+ "note": "The verse begins on printed page 17 and continues onto the following line of the same page.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:55:56+00:00"
+}

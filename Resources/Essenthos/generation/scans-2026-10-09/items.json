@@ -1,0 +1,427 @@
+[
+ {
+  "ticket": "PRB-0973",
+  "text": "SWETE",
+  "verse": "GEN 11:4",
+  "code": "GEN",
+  "book": 1,
+  "chapter": 11,
+  "v": 4,
+  "printed_pages": [
+   "17"
+  ],
+  "leaves": [
+   49
+  ],
+  "images": [
+   "oldtestamentingr01swetuoft-48.jpg",
+   "oldtestamentingr01swetuoft-49.jpg",
+   "oldtestamentingr01swetuoft-50.jpg"
+  ],
+  "known": "a stray Latin token 'L' in the verse",
+  "ours": {
+   "SWETE GEN 11:3": "καὶ εἶπεν ἄνθρωπος τῷ πλίνθους καὶ ὀπτήσωμεν αὐτὰς πυρί. καὶ ἐγένετο αὐτοῖς ἡ πλίνθος εἰς λίθον, καὶ ἄσφαλτος ἦν αὐοῖς ὁ πηλός. ",
+   "SWETE GEN 11:4": "καὶ εἶπαν Δεῦτε οἰκοδομήσωμεν ἐαυτοῖς πόλιν καὶ πύργον, οὗ ἡ κεφαλὴ ἔσται ἕως τοῦ οὐρανοῦ, καὶ ποιήσομεν ἑαυτῶν ὄνομα πρὸ τοῦ διασπαρῆναι ἐπὶ προσώπου πάσης L τῆς γῆς. ",
+   "SWETE GEN 11:5": "καὶ κατέβη κύριος ἰδεῖν τὴν πόλιν καὶ τὸν πύργον ὃν ᾠκοδόμησαν οἱ υἱοὶ τῶν ἀνθρώπων. "
+  }
+ },
+ {
+  "ticket": "PRB-0973",
+  "text": "SWETE",
+  "verse": "DEU 21:1",
+  "code": "DEU",
+  "book": 5,
+  "chapter": 21,
+  "v": 1,
+  "printed_pages": [
+   "384"
+  ],
+  "leaves": [
+   416
+  ],
+  "images": [
+   "oldtestamentingr01swetuoft-415.jpg",
+   "oldtestamentingr01swetuoft-416.jpg",
+   "oldtestamentingr01swetuoft-417.jpg"
+  ],
+  "known": "a stray Latin token 'X' in the verse",
+  "ours": {
+   "SWETE DEU 21:0": null,
+   "SWETE DEU 21:1": "Ἐὰν δὲ εὑρεθῇ τραυματίας ἐν τῇ γῇ ᾗ κύριος ὁ θεός σου δίσοι X κληρονομῆσαι, πεπτωκὼς ἐν τῷ πεδίῳ, καὶ οὐκ οἴδασιν τὸν πατάξαντα, ",
+   "SWETE DEU 21:2": "ἐξελεύσεται ἡ γερουσία σου καὶ οἱ κριταί σου, κα ἐκμετρήσουσιν ἐπὶ τὰς πόλεις τὰς κύκλῳ τοῦ τραυματίου· "
+  }
+ },
+ {
+  "ticket": "PRB-0973",
+  "text": "SWETE",
+  "verse": "1SA 25:28",
+  "code": "1SA",
+  "book": 9,
+  "chapter": 25,
+  "v": 28,
+  "printed_pages": [
+   "598",
+   "599"
+  ],
+  "leaves": [
+   630,
+   631
+  ],
+  "images": [
+   "oldtestamentingr01swetuoft-629.jpg",
+   "oldtestamentingr01swetuoft-630.jpg",
+   "oldtestamentingr01swetuoft-631.jpg",
+   "oldtestamentingr01swetuoft-632.jpg"
+  ],
+  "known": "a stray Latin token 'V' in the verse",
+  "ours": {
+   "SWETE 1SA 25:27": "καὶ νῦν λάβε τὴν εὐλογίαν ἢν ἐνήνοχεν ἡ δούλη σου τῷ κυρίῳ μου, καὶ δώσεις τοῖς παιδαρίοις τοῖς παρεστηκόσιν τῷ κυρίῳ μου. ",
+   "SWETE 1SA 25:28": "ἆρον δὴ τὸ ια τῆς δούλης σου, ὅτι ποιῶν ποιήσει κύριος τῷ κυρίῳ μου οἶκον πιστόν, ὅτι πόλεμον κυρίου μου ὁ κύριος πολεμεῖ, καὶ κακία V οὐχ εὑρεθήσεται ἐν σοὶ πώποτε. ",
+   "SWETE 1SA 25:29": "καὶ ἀναστήσεται ἄνθρωπος καταδιώκων σε καὶ ζητῶν τὴν ψυχήν σου, κ δεμένη ἐν δεσμῷ τῆς ζωῆς παρὰ κυρίῳ τῷ θεῷ, καὶ ψυχὴν ἐχθρῶν σου σφενδονήσεις ἐν μέσῳ τῆς σφενδόνης. "
+  }
+ },
+ {
+  "ticket": "PRB-0973",
+  "text": "SWETE",
+  "verse": "PRO 22:17",
+  "code": "PRO",
+  "book": 20,
+  "chapter": 22,
+  "v": 17,
+  "printed_pages": [
+   "458"
+  ],
+  "leaves": [
+   476
+  ],
+  "images": [
+   "oldtestamentingr02swetuoft-475.jpg",
+   "oldtestamentingr02swetuoft-476.jpg",
+   "oldtestamentingr02swetuoft-477.jpg"
+  ],
+  "known": "a stray Latin token 'C' in the verse",
+  "ours": {
+   "SWETE PRO 22:16": "ὁ συκοφαντῶν πένητα πολλὰ ποιεῖ τὰ ἑαυτοῦ· δίδωσιν δὲ πλουσίῳ ἐπʼ ἐλάσσονι. ",
+   "SWETE PRO 22:17": "Λόγοις σοφῶν παράβαλλε σὸν οὖς καὶ ἄκουε ἐμὸν λόγον, C τὴν δὲ σὴν καρδίαν ἐπίστησον, ἵνα γνῷς ὅτι καλοί εἰσιν. ",
+   "SWETE PRO 22:18": "καὶ ἐὰν ἐμβάλῃς αὐτοὺς εἰς τὴν καρδίαν σου, εὐφρανοῦσίν σε ἅμα ἐπὶ σοῖς χείλεσιν· "
+  }
+ },
+ {
+  "ticket": "PRB-0973",
+  "text": "SWETE",
+  "verse": "WIS 12:10",
+  "code": "WIS",
+  "book": 75,
+  "chapter": 12,
+  "v": 10,
+  "printed_pages": [
+   "625"
+  ],
+  "leaves": [
+   643
+  ],
+  "images": [
+   "oldtestamentingr02swetuoft-642.jpg",
+   "oldtestamentingr02swetuoft-643.jpg",
+   "oldtestamentingr02swetuoft-644.jpg"
+  ],
+  "known": "a stray Latin token 'C' in the verse",
+  "ours": {
+   "SWETE WIS 12:9": "οὐκ ἀδυνατῶν ἐν παρατάξει ἀσεβεῖς δικαίοις ὑποχειρίους δοῦναι, ἢ θηρίοις δεινοῖς, ἢ λόγῳ ἀποτόμῳ ὑφʼ ἓν ἐκτρῖψαι ",
+   "SWETE WIS 12:10": "κρίνων δὲ κατὰ βραχὺ ἐδίδους τόπον μετανοίας, C οὐκ ἀγνοῶν ὅτι πονηρὰ ἡ γένεσις αὐτῶν καὶ ἔμφυτος ἡ κακία αὐτῶν, καὶ ὅτι οὐ μὴ ἀλλαγῇ ὁ λογισμὸς αὐτῶν εἰς τὸν αἰῶνα, ",
+   "SWETE WIS 12:11": "σπέρμα γὰρ ἦν κατηραμένον ἀπʼ ἀρχῆς· οὐδὲ εὐλαβούμενός τινα ἐφʼ οἷς ἡμάρτανον ἄδειαν ἐδίδους. "
+  }
+ },
+ {
+  "ticket": "PRB-0973",
+  "text": "SWETE",
+  "verse": "WIS 14:19",
+  "code": "WIS",
+  "book": 75,
+  "chapter": 14,
+  "v": 19,
+  "printed_pages": [
+   "630"
+  ],
+  "leaves": [
+   648
+  ],
+  "images": [
+   "oldtestamentingr02swetuoft-647.jpg",
+   "oldtestamentingr02swetuoft-648.jpg",
+   "oldtestamentingr02swetuoft-649.jpg"
+  ],
+  "known": "a stray Latin token 'C' in the verse",
+  "ours": {
+   "SWETE WIS 14:18": "εἰς ἐπίτασιν δὲ θρησκείας καὶ τοὺς ἀγνοοῦντας ἡ τοῦ τεχνίτου προετρέψατο φιλοτιμία. ",
+   "SWETE WIS 14:19": "C ὁ μὲν γὰρ τάχα κρατοῦντι βουλόμενος ἀρέσαι ἐξεβιάσατο τῇ τέχνῃ τὴν ὁμοιότητα ἐπὶ τὸ κάλλιον· ",
+   "SWETE WIS 14:20": "τὸ δὲ πλῆθος ἐφελκόμενον διὰ τὸ εὔχαρι τῆς ἐργασίας τὸν πρὸ ὀλίγου τιμηθέντα ἄνθρωπον νῦν σέβασμα ἐλογισαντο. "
+  }
+ },
+ {
+  "ticket": "PRB-0973",
+  "text": "SWETE",
+  "verse": "MAL 2:12",
+  "code": "MAL",
+  "book": 39,
+  "chapter": 2,
+  "v": 12,
+  "printed_pages": [
+   "96"
+  ],
+  "leaves": [
+   120
+  ],
+  "images": [
+   "theoldtestamenti03swetuoft-119.jpg",
+   "theoldtestamenti03swetuoft-120.jpg",
+   "theoldtestamenti03swetuoft-121.jpg"
+  ],
+  "known": "a token 'IΙαντοκράτωρ' with a Latin I fused to the word",
+  "ours": {
+   "SWETE MAL 2:11": "ἐνκατελίφθη Ἰούδας, καὶ βδέλυγμα ἐγένετο ἐν τῷ Ἰσραὴλ καὶ ἐν Ἰερουσαλήμ, διότι ἐβεβήλωσεν Ἰούδας τὰ ἅγια Κυρίου, ἐν οἷς ἠγάπησεν καὶ ἐπετήδευσεν εἰς θεοὺς ἀλλοτρίους. ",
+   "SWETE MAL 2:12": "ἐξολεθρεύσει Κύριος τὸν ἄνθρωπον τὸν ποιοῦντα ταῦτα, ἕως καὶ ταπεινωθῇ ἐκ σκηνωμάτωI Ἰακὼβ καὶ ἐκ προσαγόντων θυσίαν τῷ κυρίῳ IΙαντοκράτορι. ",
+   "SWETE MAL 2:13": "καὶ ταῦτα ἄ ἐμίσουν, ἐποιεῖτε· ἐκαλύπτετε δάκρυσιν τὸ θυσιαστήριον Κυρίου καὶ κλαυθμῷ καὶ στεναγμῷ ἐκ κόπων. ἔτι ἄξιον ἐπιβλέψαι εἰς θυσίαν ἡ λαβεῖν δεκτὸν ἐκ τῶν χειροῖν ὑμῶν; "
+  }
+ },
+ {
+  "ticket": "PRB-0973",
+  "text": "SWETE",
+  "verse": "MAL 3:17",
+  "code": "MAL",
+  "book": 39,
+  "chapter": 3,
+  "v": 17,
+  "printed_pages": [
+   "99"
+  ],
+  "leaves": [
+   123
+  ],
+  "images": [
+   "theoldtestamenti03swetuoft-122.jpg",
+   "theoldtestamenti03swetuoft-123.jpg",
+   "theoldtestamenti03swetuoft-124.jpg"
+  ],
+  "known": "a token 'IΙαντοκράτωρ' with a Latin I fused to the word",
+  "ours": {
+   "SWETE MAL 3:16": "Τhῦτα κατελάλησαν οἱ φοβούμενοι τὸν κύριον, ἕκαστος πρὸς τὸν πλησίον αὐτοῦ· καὶ προσέσχεν Κύριος καὶ εἰσήκουσεν, καὶ ἔγραψεν βιβλίον μνημοσύνου ἐνώπιον αὐτοῦ τοῖς φοβουμένοις τὸν τν κύριον καὶ εὐλαβουμένοις τὸ ὄνομα αὐτοῦ. ",
+   "SWETE MAL 3:17": "Καὶ ἔσονταί μοι, λέγει Κύριος IΙαντοκράτωρ, εἰς ἡμέραν ἣν ἐγὼ ποιῶ εἰς περιποίησιν, καὶ αἱρετιῶ αὐτοὺς ὃν τρόπον αἱρετίζει ἄνθρωπος τὸν υἱὸν αὐτοῦ τὸν δουλεύοντα αὐτῷ. ",
+   "SWETE MAL 3:18": "καὶ ἐπιστραφήσεσθε καὶ ὄψεσθε ἀνὰ μέσον δικαίου καὶ ἀνὰ μέσον ἀνόμου, καὶ ἀνὰ μέσον τοῦ δουλεύοντος θεῷ καὶ τοῦ μὴ δουλεύοντος. "
+  }
+ },
+ {
+  "ticket": "PRB-0973",
+  "text": "SWETE",
+  "verse": "EZK 34:12",
+  "code": "EZK",
+  "book": 26,
+  "chapter": 34,
+  "v": 12,
+  "printed_pages": [
+   "459"
+  ],
+  "leaves": [
+   483
+  ],
+  "images": [
+   "theoldtestamenti03swetuoft-482.jpg",
+   "theoldtestamenti03swetuoft-483.jpg",
+   "theoldtestamenti03swetuoft-484.jpg"
+  ],
+  "known": "a token 'Xώσπερ' with a Latin X fused to the word",
+  "ours": {
+   "SWETE EZK 34:11": "διότι τάδε λέγει Κύριος Ἰδοὺ ἐγὼ ἐκζητήσω τὰ πρόβατά μου καὶ ἐπισκέψομαι αὐτά. ",
+   "SWETE EZK 34:12": "Xώσπερ ζητεῖ ὁ ποιμὴν τὸ ποίμνιον αὐτοῦ ἐν ἡμέρᾳ ὅταν ᾖ γνόφος καὶ νεφέλη ἐν μέσῳ προβάτων διακεχυρισμέναων, οὕτως ἐκζητήσω τὰ πρόβατά μου καὶ ἀπελάσω αὐτὰ ἀπὸ παντὸς τόπου οὗ διεσ πάρησαν ἐκεῖ ἐν ἡμέρᾳ νεφέλης καὶ γνόφου. ",
+   "SWETE EZK 34:13": "καὶ ἐξάξω αὐτοὺς ἐκ τῶν ἐθνῶν καὶ συνάξω αὐτοὺς ἀπὸ τῶν χωρῶν, καὶ εἰσάξω αὐτοὺς εἰς τὴν γῆν αὐτῶν, καὶ βοσκήσω αὐτοὺς ἐπὶ τὰ ὄρη Ἰσραὴλ καὶ ἐν ταῖς φάραγξιν καὶ ἐν πάσῃ κατοικίᾳ τῆς γῆς· "
+  }
+ },
+ {
+  "ticket": "PRB-0712",
+  "text": "OTTLEY",
+  "verse": "ISA 5:5",
+  "code": "ISA",
+  "book": 23,
+  "chapter": 5,
+  "v": 5,
+  "printed_pages": [
+   "7"
+  ],
+  "leaves": [
+   388
+  ],
+  "images": [
+   "IsaiahAccordingToTheSeptuagint-387.jpg",
+   "IsaiahAccordingToTheSeptuagint-388.jpg",
+   "IsaiahAccordingToTheSeptuagint-389.jpg"
+  ],
+  "known": "the verse's last word was an undecoded character reference and is missing",
+  "ours": {
+   "OTTLEY ISA 5:4": "τί ποιήσω ἔτι κρίνατε ἐν ἐμοὶ καὶ ἀνὰ, μέσον τοῦ ἀμπελῶνός μου. τῷ ἀμπελῶνί μου, καὶ οὔκ ἐποίησα αὐτῷ; διότι ἔμεινα τοῦ ποιῆσαι σταφυλήν, ἐποίησεν δὲ ἀκάνθας. ",
+   "OTTLEY ISA 5:5": "νῦν δὲ ἀναγγελῶ ὑμῖν τί ποιήσω τῷ ἀμπελῶνί μου. ἀφελῶ τὸν φραγμὸν αὐτοῦ καὶ ἔσται εἷς διαρπαγήν, καὶ καθελῶ τὸν τοῖχον αὐτοῦ καὶ ἔσται εἷς καταπάτημα ",
+   "OTTLEY ISA 5:6": "καὶ ἀνήσω τὸν ἀμπελῶνά μου, καὶ οὔ μὴ τμηθῇ οὐδὲ μὴ σκαφῇ, καὶ ἀναβήσεται εἷς αὐτὸν ὡς εἷς χέρσον ἄκανθα. καὶ ταῖς νεφέλαις ἐντελοῦμαι τοῦ μὴ βρέξαι εἷς αὐτὸν ὑετόν. "
+  }
+ },
+ {
+  "ticket": "PRB-0712",
+  "text": "OTTLEY",
+  "verse": "ISA 34:11",
+  "code": "ISA",
+  "book": 23,
+  "chapter": 34,
+  "v": 11,
+  "printed_pages": [
+   "53"
+  ],
+  "leaves": [
+   434
+  ],
+  "images": [
+   "IsaiahAccordingToTheSeptuagint-433.jpg",
+   "IsaiahAccordingToTheSeptuagint-434.jpg",
+   "IsaiahAccordingToTheSeptuagint-435.jpg"
+  ],
+  "known": "a word was the placeholder ABBREV and is missing",
+  "ours": {
+   "OTTLEY ISA 34:10": "νυκτὸς νυκτὸς καὶ ἡμέρας, καὶ οὐ σβεσθήσεται εἷς τὸν αἰῶνα χρόνον, καὶ ἀναβήσεται ὁ καπνὸς αὐτῆς ἄνω, εἷς γενεὰς ἐρημωθήσεται. ",
+   "OTTLEY ISA 34:11": "καὶ καὶ κατοικήσονται ἐν αὐτῇ ὄρνεα καὶ ἐχῖνοι καὶ ἴβεις καὶ κόρακες· καὶ ἐπιβληθήσεται ἐπ’ αὐτῇ σπαρτίον γεωμετρίας ἐρήμου, καὶ ὀνοκένταυροι οἰκήσουσιν ἐν αὐτῇ. ",
+   "OTTLEY ISA 34:12": "οἶ ἄρχοντες αὐτῆς οὔκ ἔσονται· οἱ γὰρ βασιλεῖς αὐτῆς καὶ οἱ ἄρχοντες αὐτῆς καὶ οἶ μεγιστᾶνες αὐτῆς ἔσονται εἰς ἀπώλειαν. "
+  }
+ },
+ {
+  "ticket": "PRB-0712",
+  "text": "OTTLEY",
+  "verse": "ISA 35:3",
+  "code": "ISA",
+  "book": 23,
+  "chapter": 35,
+  "v": 3,
+  "printed_pages": [
+   "54"
+  ],
+  "leaves": [
+   435
+  ],
+  "images": [
+   "IsaiahAccordingToTheSeptuagint-434.jpg",
+   "IsaiahAccordingToTheSeptuagint-435.jpg",
+   "IsaiahAccordingToTheSeptuagint-436.jpg"
+  ],
+  "known": "'γόνατα παραλεφοβεῖσθε' fuses παραλελυμένα with the start of 35:4",
+  "ours": {
+   "OTTLEY ISA 35:2": "καὶ ἐξανθήσει καὶ ἀγαλλιάσεται τὰ ἔρημα τοῦ Ἰορδάνου· καὶ ἡ δόξα τοῦ Λιβάνου ἐδόθη αὐτῇ καὶ ἡ τιμὴ τοῦ Καρμήλου, καὶ ὃ λαός μου ὄψεται τὴν δόξαν Κυρίου καὶ τὸ ὕψος τοῦ θεοῦ. ",
+   "OTTLEY ISA 35:3": "ἰσχύσατε, χεῖρες ἀνειμέναι καὶ γόνατα παραλελυμένα ",
+   "OTTLEY ISA 35:4": "παρακαλέσατε, οἱ ὀλιγόψυχοι τῇ διανοίᾳ· ἰσχύσατε, μὴ φοβεῖσθε· ἰδοὺ ὃ θεὸς ἡμῶν κρίσιν ἀνταποδώσει καὶ ἀνταποδώσει, αὐτὸς ἥξει καὶ σώσει "
+  }
+ },
+ {
+  "ticket": "PRB-0712",
+  "text": "OTTLEY",
+  "verse": "ISA 35:4",
+  "code": "ISA",
+  "book": 23,
+  "chapter": 35,
+  "v": 4,
+  "printed_pages": [
+   "54"
+  ],
+  "leaves": [
+   435
+  ],
+  "images": [
+   "IsaiahAccordingToTheSeptuagint-434.jpg",
+   "IsaiahAccordingToTheSeptuagint-435.jpg",
+   "IsaiahAccordingToTheSeptuagint-436.jpg"
+  ],
+  "known": "begins mid-sentence and ends σώσει without ἡμᾶς",
+  "ours": {
+   "OTTLEY ISA 35:3": "ἰσχύσατε, χεῖρες ἀνειμέναι καὶ γόνατα παραλελυμένα ",
+   "OTTLEY ISA 35:4": "παρακαλέσατε, οἱ ὀλιγόψυχοι τῇ διανοίᾳ· ἰσχύσατε, μὴ φοβεῖσθε· ἰδοὺ ὃ θεὸς ἡμῶν κρίσιν ἀνταποδώσει καὶ ἀνταποδώσει, αὐτὸς ἥξει καὶ σώσει ",
+   "OTTLEY ISA 35:5": "τότε ἀνοιχθήσονται ὀφθαλμοὶ τυφλῶν, καὶ ὦτα κωφῶν ἀκούσονται. "
+  }
+ },
+ {
+  "ticket": "PRB-0712",
+  "text": "OTTLEY",
+  "verse": "ISA 2:19",
+  "code": "ISA",
+  "book": 23,
+  "chapter": 2,
+  "v": 19,
+  "printed_pages": [
+   "4",
+   "5"
+  ],
+  "leaves": [
+   385,
+   386
+  ],
+  "images": [
+   "IsaiahAccordingToTheSeptuagint-384.jpg",
+   "IsaiahAccordingToTheSeptuagint-385.jpg",
+   "IsaiahAccordingToTheSeptuagint-386.jpg",
+   "IsaiahAccordingToTheSeptuagint-387.jpg"
+  ],
+  "known": "2:19-21 interleaved in the transcription (2:20-22 have no verse of their own there), letter misreadings such as ἅνθριιηνος for ἄνθρωπος",
+  "ours": {
+   "OTTLEY ISA 2:18": "καὶ τὸ, χειροποίητα πάντα κατακρύψουσιν, ",
+   "OTTLEY ISA 2:19": "εἰσενέγκαντες εἷς τὸ. σπήλαια καὶ εἷς τὰς σχισμὸς τῶν πετρῶν καὶ εἷς τὰς τρώγλας τῆς γῆς, ἀπὸ προσώπου τοῦ φόβου Κυρίου καὶ ἀπὸ τῆς δόξης τῆς ἰσχύος αὐτοῦ, ὅταν ἀναστῇ θραῦσαι τὴν γῆν. ",
+   "OTTLEY ISA 2:20": "τῇ ἡμέρᾳ ἐκείνῃ ἐκβαλεῖ ἅνθριιηνος τὰ βδελύγματα αὑτοῦ τὸ. ἀργυρᾶ καὶ τὰ χρυσᾶ, οἳ ἐποίησεν προσκυνεῖν, τοῖς ματαίοις καὶ ταῖς νυκτερίσιν, "
+  }
+ },
+ {
+  "ticket": "PRB-0712",
+  "text": "OTTLEY",
+  "verse": "ISA 53:1",
+  "code": "ISA",
+  "book": 23,
+  "chapter": 53,
+  "v": 1,
+  "printed_pages": [
+   "84"
+  ],
+  "leaves": [
+   465
+  ],
+  "images": [
+   "IsaiahAccordingToTheSeptuagint-464.jpg",
+   "IsaiahAccordingToTheSeptuagint-465.jpg",
+   "IsaiahAccordingToTheSeptuagint-466.jpg"
+  ],
+  "known": "βραχίων was lost (repaired from the apparatus; confirm) and ὃ for ὁ",
+  "ours": {
+   "OTTLEY ISA 53:0": null,
+   "OTTLEY ISA 53:1": "Κύριε, τίς ἐπίστευσεν τῇ ἀκοῇ ἡμῶν; καὶ ὃ βραχίων Κυρίου τίνι ἀπεκαλύφθη; ",
+   "OTTLEY ISA 53:2": "ἀνηγγείλαμεν ἐναντίον αὑτοῦ ὡς παιδίον, ὡς ῥίζα ἐν γῇ διψώσῃ· οὐκ ἔστιν εἶδος αὐτῷ οὐδὲ δόξα. καὶ ἴδομεν· αὐτόν, καὶ οὒκ εἶχεν εἶδος οὐδὲ κάλλος, "
+  }
+ },
+ {
+  "ticket": "PRB-0712",
+  "text": "OTTLEY",
+  "verse": "ISA 35:9",
+  "code": "ISA",
+  "book": 23,
+  "chapter": 35,
+  "v": 9,
+  "printed_pages": [
+   "54",
+   "55"
+  ],
+  "leaves": [
+   435,
+   436
+  ],
+  "images": [
+   "IsaiahAccordingToTheSeptuagint-434.jpg",
+   "IsaiahAccordingToTheSeptuagint-435.jpg",
+   "IsaiahAccordingToTheSeptuagint-436.jpg",
+   "IsaiahAccordingToTheSeptuagint-437.jpg"
+  ],
+  "known": "πορεύευρον σονται was repaired to πορεύσονται; confirm",
+  "ours": {
+   "OTTLEY ISA 35:8": "ἐκεῖ ἔσται ὁδὸς καθαρά, καὶ ὁδὸς ἁγία κληθήσεται, καὶ οὐ μὴ παρέλθῃ ἐκεῖ ἀκάθαρτος, οὐδὲ ἐκεῖ ἔσται ὁδὸς ἀκάθαρτος· οἶ δὲ διεσπαρμένοι πορεύσονται ἐπ’ αὐτῆς, καὶ οὗ μὴ πλανηθῶσιν. ",
+   "OTTLEY ISA 35:9": "καὶ οὔκ ἔσται ἐκεῖ λέων, οὐδὲ τῶν θηρίων τῶν πονηρῶν οὗ μὴ ἀναβῇ ἐπ’ αὐτὴν οὐδὲ μὴ εὑρεθῇ ἐκεῖ, ἀλλὰ πορεύσονται ἐν αὐτῇ λελυτρωμένοι ",
+   "OTTLEY ISA 35:10": "καὶ συνηγμένοι διὰ Κύριον· ἀποστραφήσονται καὶ ἥξουσιν εἰς Σιὼν μετ’ εὐφροσύνης, καί εὐφροσύνη αἰώνιος ὑπὲρ κεφαλῆς αὐτῶν· ἐπὶ γὰρ κεφαλῆς αὐτῶν αἴνεσις καὶ ἀγαλλίαμα, καὶ καταλήμψεται αὐτούς· ἀπέδρα ὀδύνη καὶ λύπη καὶ στεναγμός. "
+  }
+ }
+]
