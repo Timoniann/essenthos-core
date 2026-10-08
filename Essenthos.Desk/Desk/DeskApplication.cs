@@ -43,6 +43,7 @@ internal static class DeskApplication
         builder.Services.AddSingleton<Avioniq>();
         builder.Services.AddSingleton<ChangeLog>();
         builder.Services.AddSingleton<ThingReview>();
+        builder.Services.AddSingleton<WikipediaReview>();
         builder.Services.AddSingleton<PictureChoices>();
         builder.Services.AddSingleton<SiteSwitches>();
         builder.Services.AddScoped<PortraitBoard>();
@@ -76,6 +77,7 @@ internal static class DeskApplication
         desk.MapHistory();
         desk.MapSettings();
         desk.MapThingReview();
+        desk.MapWikipediaReview();
         desk.MapPortraits();
         desk.MapOperations();
         desk.MapTexts();

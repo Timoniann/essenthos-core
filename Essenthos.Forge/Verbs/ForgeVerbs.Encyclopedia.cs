@@ -55,6 +55,17 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>
+    /// The Wikipedia articles of the records, drawn again from the Wikidata items and the owner's answers
+    /// on the records the matching could not tell from a namesake.
+    /// </summary>
+    private static async Task<int> Wikipedia(ForgeRun forge, string[] args)
+    {
+        using var wikipediaScope = forge.Scope();
+        Console.WriteLine(await wikipediaScope.ServiceProvider.GetRequiredService<WikipediaLinkLoader>().Load(forge.Resources));
+        return 0;
+    }
+
     /// <summary>How each text spells each name, counted again from the words that name it.</summary>
     private static async Task<int> Spell(ForgeRun forge, string[] args)
     {

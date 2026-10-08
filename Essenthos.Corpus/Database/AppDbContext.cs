@@ -238,6 +238,9 @@ public class AppDbContext : DbContext
 
     public DbSet<EntityDistinguisher> EntityDistinguishers { get; set; } = null!;
 
+    /// <summary>The article each language's Wikipedia has on a record, and what tied the record to it.</summary>
+    public DbSet<EntityWikipedia> EntityWikipedia { get; set; } = null!;
+
     /// <summary>The notes of our own records in a reader's language, keyed by the English they render.</summary>
     public DbSet<EntityNoteTranslation> EntityNoteTranslations { get; set; } = null!;
 
@@ -486,6 +489,25 @@ public class AppDbContext : DbContext
 
             entity.ToTable("entity_image_caption", t =>
                 t.HasCheckConstraint("ck_entity_image_caption_text", "length(caption) > 0"));
+        });
+
+        modelBuilder.Entity<EntityWikipedia>(entity =>
+        {
+            entity.HasOne(w => w.Entity)
+                .WithMany(e => e.Wikipedia)
+                .HasForeignKey(w => w.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("entity_wikipedia", t =>
+            {
+                t.HasCheckConstraint("ck_entity_wikipedia_language", "language IN ('en', 'uk', 'de', 'es')");
+                t.HasCheckConstraint(
+                    "ck_entity_wikipedia_matched_by",
+                    "matched_by IN ('owner', 'verse', 'kin', 'chapter', 'name', 'identification')");
+                t.HasCheckConstraint("ck_entity_wikipedia_confidence", "confidence BETWEEN 0 AND 1");
+                t.HasCheckConstraint("ck_entity_wikipedia_title", "length(title) > 0");
+                t.HasCheckConstraint("ck_entity_wikipedia_qid", "qid ~ '^Q[0-9]+$'");
+            });
         });
 
         modelBuilder.Entity<EntityDistinguisher>(entity =>

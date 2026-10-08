@@ -203,6 +203,13 @@ internal record EntityResponse(
     public EntityTribeResponse? TribeRecord { get; init; }
 
     /// <summary>
+    /// The article the Wikipedia of the reader's own language has on this record, where the record could
+    /// be tied to one. Null when it could not, or when that Wikipedia has none: a reader is never sent to
+    /// another language's article under a link that reads as their own.
+    /// </summary>
+    public EntityWikipediaResponse? Wikipedia { get; init; }
+
+    /// <summary>
     /// What this corpus says the entity is: the pieces of a line, each name among them carrying the
     /// entity it names complete enough to be linked, and the claims the line was made of with the
     /// verse each was read from. <see cref="EntityDescriptorResponse.Language"/> says which language
@@ -354,6 +361,14 @@ internal record EntityClaimResponse(
 internal record EntityOriginResponse(string Slug, string Kind, string Name, string? Distinguisher);
 
 internal record EntityTribeResponse(string Slug, string Kind, string Name, string? LocalName);
+
+/// <summary>
+/// The article one language's Wikipedia has on a record, for a reader of that language.
+/// </summary>
+/// <param name="Language">The two-letter language of the Wikipedia: <c>en</c>, <c>uk</c>, <c>de</c>, <c>es</c>.</param>
+/// <param name="Title">The article's title, as a link's text would show it.</param>
+/// <param name="Url">The article's address.</param>
+internal record EntityWikipediaResponse(string Language, string Title, string Url);
 
 /// <param name="Slug">
 /// The alternative's own page, where the encyclopedia holds one. Null where it does not, in which
