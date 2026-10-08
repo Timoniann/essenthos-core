@@ -13,6 +13,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Linked">Records tied to an item, by what tied them.</param>
 /// <param name="Ambiguous">Records with more than one item it might be, or one the evidence does not clear.</param>
 /// <param name="Questions">Of those, the records listed for the owner: the ones an item with an article might be.</param>
+/// <param name="Ties">The records the matching tied on its own that the owner's list also holds, to confirm or take back.</param>
 /// <param name="Unmatched">Records no item goes by the name of.</param>
 /// <param name="Decided">Records settled by the owner's word.</param>
 /// <param name="Rows">Article links held: one per record and language.</param>
@@ -28,13 +29,14 @@ internal sealed record WikipediaOutcome(
     int Written,
     int Removed,
     TimeSpan Elapsed,
-    IReadOnlyDictionary<string, (int Tied, int Ambiguous, int Unmatched)>? ByKind = null)
+    IReadOnlyDictionary<string, (int Tied, int Ambiguous, int Unmatched)>? ByKind = null,
+    int Ties = 0)
 {
     public override string ToString() =>
         Skipped
             ? "the Wikipedia links are as they were, because the Wikidata items are not here"
             : $"{Linked.Values.Sum()} records tied to a Wikidata item ({string.Join(", ", Linked.OrderByDescending(l => l.Value).Select(l => $"{l.Value} by {l.Key}"))}), " +
-              $"{Ambiguous} left because the evidence does not tell them from a namesake ({Questions} listed for the owner), " +
+              $"{Ambiguous} left because the evidence does not tell them from a namesake ({Questions} listed for the owner, and {Ties} ties of the matching beside them), " +
               $"{Unmatched} that no item goes by the name of, {Decided} settled by the owner; {Rows} article links held " +
               $"({Written} written, {Removed} removed) in {Elapsed}" +
               (ByKind is null
@@ -151,7 +153,7 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
         }
 
         var taken = chosen.Values.Select(c => c.Item.Id).ToHashSet(StringComparer.Ordinal);
-        var questions = Questions(records, matches, taken);
+        var questions = Questions(records, matches, taken, answers);
 
         var (rows, written, removed) = await Replace(chosen, cancellationToken);
 
@@ -174,29 +176,46 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
         }
 
         var outcome = new WikipediaOutcome(
-            false, linked, ambiguous, questions.Count, unmatched, decided, rows, written, removed, started.Elapsed, byKind);
+            false, linked, ambiguous, questions.Count(q => q.Tied is null), unmatched, decided, rows, written, removed,
+            started.Elapsed, byKind, questions.Count(q => q.Tied is not null));
         logger.LogInformation("Linked the records to Wikipedia: {Outcome}", outcome);
         return outcome;
     }
 
     /// <summary>
-    /// The open questions: each ambiguous record an item with an article might be, offering the items
-    /// with an article that no other record is already tied to. Those with most verses first.
+    /// The entries of the owner's list: each ambiguous record an item with an article might be, and
+    /// each record the matching tied on its own, so that he can take the tie back or set it to
+    /// another item. Each offers the items with an article that no other record is already tied to,
+    /// the tied item first, and always the item he chose. Those with most verses first.
     /// </summary>
     private static List<WikipediaQuestion> Questions(
         IReadOnlyList<WikipediaRecord> records,
         Dictionary<int, WikipediaMatch> matches,
-        HashSet<string> taken)
+        HashSet<string> taken,
+        IReadOnlyDictionary<string, WikipediaDecision> answers)
     {
         var questions = new List<(WikipediaQuestion Question, int Verses)>();
         foreach (var record in records)
         {
-            if (matches[record.Id] is not WikipediaMatch.Ambiguous ambiguous)
+            IReadOnlyList<WikipediaCandidate> candidates;
+            WikipediaTie? tie = null;
+            switch (matches[record.Id])
             {
-                continue;
+                case WikipediaMatch.Ambiguous ambiguous:
+                    candidates = ambiguous.Candidates;
+                    break;
+                case WikipediaMatch.Linked { Candidates: { } all } linked:
+                    candidates = all;
+                    tie = new WikipediaTie(linked.Item.Id, linked.By);
+                    break;
+                default:
+                    continue;
             }
 
-            var free = ambiguous.Candidates.Where(c => !taken.Contains(c.Item.Id)).ToList();
+            var chosen = answers.TryGetValue(record.Slug, out var answer) ? answer.Answer : null;
+            var free = candidates
+                .Where(c => !taken.Contains(c.Item.Id) || c.Item.Id == tie?.Qid || c.Item.Id == chosen)
+                .ToList();
             var offers = free.Where(c => c.Item.HasArticle).ToList();
             if (offers.Count == 0)
             {
@@ -212,7 +231,8 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
                     [.. record.Verses.OrderBy(v => v).Take(MostReferencesShown).Select(Reference)],
                     [
                         .. offers
-                            .OrderByDescending(c => c.Evidence.Named().Count())
+                            .OrderByDescending(c => c.Item.Id == tie?.Qid)
+                            .ThenByDescending(c => c.Evidence.Named().Count())
                             .ThenByDescending(c => c.Item.Articles.Count)
                             .ThenBy(c => c.Item.Id.Length).ThenBy(c => c.Item.Id, StringComparer.Ordinal)
                             .Select(c => new WikipediaOffer(
@@ -222,7 +242,8 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
                                 c.Item.Articles,
                                 [.. c.Evidence.Named()])),
                     ],
-                    free.Count - offers.Count),
+                    free.Count - offers.Count,
+                    tie),
                 record.Verses.Count));
         }
 

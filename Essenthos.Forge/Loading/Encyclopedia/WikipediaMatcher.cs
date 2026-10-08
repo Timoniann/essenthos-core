@@ -77,7 +77,8 @@ internal abstract record WikipediaMatch
 {
     /// <summary>Tied to one item, by <see cref="By"/>.</summary>
     /// <param name="By">One of <see cref="EntityWikipedia.Evidence"/> that is not the owner's.</param>
-    public sealed record Linked(WikidataItem Item, string By) : WikipediaMatch;
+    /// <param name="Candidates">Every item that goes by one of its names, the tied one among them, for the owner to choose another.</param>
+    public sealed record Linked(WikidataItem Item, string By, IReadOnlyList<WikipediaCandidate>? Candidates = null) : WikipediaMatch;
 
     /// <summary>Two or more items it might be, or one that the evidence does not clear. Not guessed.</summary>
     public sealed record Ambiguous(IReadOnlyList<WikipediaCandidate> Candidates) : WikipediaMatch;
@@ -197,10 +198,11 @@ internal sealed class WikipediaMatcher
             }
 
             var linked = TieredMatch(record, items, byItem, EvidenceFor) ?? SoleMatch(record, items, byItem, EvidenceFor);
+            IReadOnlyList<WikipediaCandidate> all =
+                [.. items.Select(item => new WikipediaCandidate(item, EvidenceFor(record, item)))];
             matches[record.Id] = linked is not null
-                ? new WikipediaMatch.Linked(linked.Value.Item, linked.Value.By)
-                : new WikipediaMatch.Ambiguous(
-                    [.. items.Select(item => new WikipediaCandidate(item, EvidenceFor(record, item)))]);
+                ? new WikipediaMatch.Linked(linked.Value.Item, linked.Value.By, all)
+                : new WikipediaMatch.Ambiguous(all);
         }
 
         return matches;
