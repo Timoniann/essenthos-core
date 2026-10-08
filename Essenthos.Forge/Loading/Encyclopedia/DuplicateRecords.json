@@ -812,6 +812,174 @@
       "why": "Ezra's line Azariah, Amariah, Ahitub, Zadok, Shallum (EZR 7:2-3) is the line of 1CH 6:10-12, where this Azariah is the son of Johanan; Ezra passes over the generations between him and Meraioth.",
       "confidence": 0.96,
       "source": "Essenthos: the family relationships that contradicted themselves, each pair read against the Hebrew of its verses by gpt-6.1-sol (Codex, reasoning high) and checked by claude-opus-5-5, 2026-10-08"
+    },
+    {
+      "strongNumber": "H7586",
+      "keeps": "saul",
+      "folds": "shaul-4",
+      "why": "Shaul-4 is the Benjamite son of Kish, the first king of Israel (1SA 9:2, 11:15), which is the kept record's whole line; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H2585",
+      "keeps": "enoch",
+      "folds": "hanoch-3",
+      "why": "Hanoch-3 is the eldest son of Cain, the Enoch of Genesis 4:17-18, whom the kept record holds at GEN 4:17; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.98,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H2585",
+      "keeps": "enoch-2",
+      "folds": "hanoch-4",
+      "why": "Hanoch-4 is the son of Jared who walked with God and was taken (GEN 5:18-24), which is the kept record's man; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H2585",
+      "keeps": "hanoch",
+      "folds": "enoch-4",
+      "why": "Enoch-4 is the third son of Midian, the Hanoch of Genesis 25:4, where the kept record holds him; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.98,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H2585",
+      "keeps": "hanoch-2",
+      "folds": "enoch-5",
+      "why": "Enoch-5 is the eldest son of Reuben, the Hanoch of Genesis 46:9, where the kept record holds him; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.98,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H7586",
+      "keeps": "shaul",
+      "folds": "saul-3",
+      "why": "Saul-3 is the king of Edom who succeeded Samlah, Shaul of Rehoboth by the river (GEN 36:37, 1CH 1:48), whom the kept record holds; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.98,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H7586",
+      "keeps": "shaul-2",
+      "folds": "saul-4",
+      "why": "Saul-4 is the son of Simeon by a Canaanite woman, Shaul of Genesis 46:10, whom the kept record holds; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.97,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H7586",
+      "keeps": "shaul-3",
+      "folds": "saul-5",
+      "why": "Saul-5 is the Levite son of Uzziah of 1 Chronicles 6:24, whom the kept record holds; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.97,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H531",
+      "keeps": "amoz",
+      "folds": "amos-3",
+      "why": "Amos-3 is the father of the prophet Isaiah, whom the kept record holds as Amoz (2KI 19:2); the Hebrew name is Amoz, not the prophet Amos's, and the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.97,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H3470",
+      "keeps": "isaiah",
+      "folds": "jeshaiah-6",
+      "why": "Jeshaiah-6 is the major prophet, son of Amoz and author of Isaiah, who is the kept record (2KI 19:2); the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H1954",
+      "keeps": "hosea",
+      "folds": "hoshea-4",
+      "why": "Hoshea-4 is the son of Beeri who prophesied to the northern kingdom under Jeroboam II, the prophet of the book of Hosea (HOS 1:1) whom the kept record holds; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.98,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H3500",
+      "keeps": "reuel-2",
+      "folds": "jether-4",
+      "why": "Jether-4 is the father-in-law of Moses whom Exodus 4:18 calls Jethro in the King James; the kept record holds Moses' father-in-law (EXO 2:18, NUM 10:29) under Reuel and Jethro, and the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.93,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H4320",
+      "keeps": "micah-4",
+      "folds": "micaiah-7",
+      "why": "Micaiah-7 is the prophet of Moresheth who prophesied under Jotham, Ahaz and Hezekiah (JER 26:18, MIC 1:1), whom the kept record holds as Micah; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.97,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H4318",
+      "keeps": "micaiah",
+      "folds": "micah-5",
+      "why": "Micah-5 is the son of Imlah, the prophet of Samaria who foretold Ahab's death (1KI 22:8, 2CH 18:7), whom the kept record holds as Micaiah; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.98,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H4318",
+      "keeps": "micaiah-3",
+      "folds": "micah-6",
+      "why": "Micah-6 is the prince Jehoshaphat sent to teach the law in the cities of Judah (2CH 17:7), whom the kept record holds as Micaiah; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.96,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H3076",
+      "keeps": "johanan-6",
+      "folds": "jehohanan-6",
+      "why": "Jehohanan-6 is the Korhite Levite doorkeeper of David's time, Meshelemiah's sixth son (1CH 26:1-3), whom the kept record holds; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.97,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H3076",
+      "keeps": "johanan-7",
+      "folds": "jehohanan-7",
+      "why": "Jehohanan-7 is the captain of Judah under Jehoshaphat who commanded 280,000 (2CH 17:15), whom the kept record holds; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.97,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H3076",
+      "keeps": "johanan-9",
+      "folds": "jehohanan-8",
+      "why": "Jehohanan-8 is the Ephraimite whose son Azariah stood up against those who came from the war (2CH 28:12), whom the kept record holds; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.96,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H3076",
+      "keeps": "johanan",
+      "folds": "jehohanan-9",
+      "why": "Jehohanan-9 is the Jewish captain after the fall of Jerusalem, Johanan son of Kareah (2KI 25:23, JER 40:8), whom the kept record holds; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.95,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H3076",
+      "keeps": "johanan-3",
+      "folds": "jehohanan-12",
+      "why": "Jehohanan-12 is the father of the priest Azariah who served in the temple Solomon built, Johanan of 1 Chronicles 6:9-10, whom the kept record holds; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.95,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H3076",
+      "keeps": "jehohanan-3",
+      "folds": "johanan-13",
+      "why": "Johanan-13 is the son of Tobiah the Ammonite who married the daughter of Meshullam (NEH 6:18), whom the kept record holds as Jehohanan; the register's bearer holds no word, verse or relationship of its own.",
+      "confidence": 0.98,
+      "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
     }
   ],
   "declined": [

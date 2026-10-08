@@ -1,0 +1,271 @@
+{
+  "decidedBy": "an agent, 2026-10-08, writing each register line without the sentences that talk about this corpus's verses, other bearers of the name or the lexicon's enumeration",
+  "policy": "A person register line says who the man is. The reading pass also wrote sentences about our own process into it (no verse of this set attests him, not in this corpus, distinct from item 6); a reader of the page is told nothing by them, so the loader writes the line below in place of the register's. A record whose line is not listed keeps the register's.",
+  "lines": [
+    {
+      "sourceId": "essenthos:ahi3",
+      "was": "Son of Benjamin (per lexicon); no verse in this corpus attests him",
+      "line": "Son of Benjamin"
+    },
+    {
+      "sourceId": "essenthos:ahijah8",
+      "was": "Levite over the treasuries in David's reign; no verse of this set attests him",
+      "line": "Levite over the treasuries in David's reign"
+    },
+    {
+      "sourceId": "essenthos:ahijah9",
+      "was": "Chief man who sealed the covenant under Nehemiah; no verse of this set attests him",
+      "line": "Chief man who sealed the covenant under Nehemiah"
+    },
+    {
+      "sourceId": "essenthos:ariel3",
+      "was": "Officer of king Pekahiah; no supplied verse attests this bearer.",
+      "line": "Officer of king Pekahiah"
+    },
+    {
+      "sourceId": "essenthos:assir3",
+      "was": "Son of King Jeconiah, of the royal line of Judah; not attested among given verses",
+      "line": "Son of King Jeconiah, of the royal line of Judah"
+    },
+    {
+      "sourceId": "essenthos:azarel6",
+      "was": "Priest and musician under Nehemiah; no verse prints his name distinctly",
+      "line": "Priest and musician under Nehemiah"
+    },
+    {
+      "sourceId": "essenthos:azariah6",
+      "was": "Second son of Jehoshaphat also named Azariah, named alongside item 5 in the same verse.",
+      "line": "Second son of Jehoshaphat, also named Azariah"
+    },
+    {
+      "sourceId": "essenthos:azariah11",
+      "was": "Merarite Levite, son of Jehalelel, named after item 10 in the same verse (no separate reference by rule).",
+      "line": "Merarite Levite, son of Jehalelel"
+    },
+    {
+      "sourceId": "essenthos:azariah22",
+      "was": "Priest, son of Johanan; lexicon entry duplicates item 7's genealogy, no independent verse available.",
+      "line": "Priest, son of Johanan"
+    },
+    {
+      "sourceId": "essenthos:edom1",
+      "was": "Iddo (H112), a chief Israelite of the resettlement; distinct Hebrew word, unattested among these verses.",
+      "line": "A chief Israelite of the resettlement, also written Iddo"
+    },
+    {
+      "sourceId": "essenthos:elasah1",
+      "was": "Descendant of Judah, son of Helez; not attested in given verses.",
+      "line": "Descendant of Judah, son of Helez"
+    },
+    {
+      "sourceId": "essenthos:elasah4",
+      "was": "Benjamite, son of Rapha, father of Azel; not attested in given verses.",
+      "line": "Benjamite, son of Rapha, father of Azel"
+    },
+    {
+      "sourceId": "essenthos:elihu2",
+      "was": "Benjamite son of Jeroham; no supplied verse names him distinctly.",
+      "line": "Benjamite son of Jeroham"
+    },
+    {
+      "sourceId": "essenthos:hakkoz1",
+      "was": "Descendant of Judah (1 Chr 4:8, Coz); no verse of this occurrence set names him.",
+      "line": "Descendant of Judah (1 Chr 4:8, Coz)"
+    },
+    {
+      "sourceId": "essenthos:heber6",
+      "was": "a Gadite of this name; no verse among those supplied attests him",
+      "line": "A Gadite"
+    },
+    {
+      "sourceId": "essenthos:hezekiah3",
+      "was": "Son of Neariah, a royal descendant of David; not attested in this verse set",
+      "line": "Son of Neariah, a royal descendant of David"
+    },
+    {
+      "sourceId": "essenthos:hur5",
+      "was": "Father of Ben-Hur, Solomon's commissariat officer in Mount Ephraim; no verse cited here",
+      "line": "Father of Ben-Hur, Solomon's commissariat officer in Mount Ephraim"
+    },
+    {
+      "sourceId": "essenthos:ishi2",
+      "was": "Chief of Manasseh east of Jordan; not attested in the given verses",
+      "line": "Chief of Manasseh east of Jordan"
+    },
+    {
+      "sourceId": "essenthos:ishmaiah1",
+      "was": "Gibeonite mighty warrior; named 'Ismaiah' at 1CH 12:4, but that verse is not flagged as printing the name.",
+      "line": "Gibeonite mighty warrior, named Ismaiah at 1CH 12:4"
+    },
+    {
+      "sourceId": "essenthos:isshiah5",
+      "was": "Descendant of Harim who married a foreign wife (Ezra, not among given occurrences)",
+      "line": "Descendant of Harim who married a foreign wife in Ezra's time"
+    },
+    {
+      "sourceId": "essenthos:jehohanan10",
+      "was": "Eldest son of King Josiah; not in this corpus",
+      "line": "Eldest son of King Josiah"
+    },
+    {
+      "sourceId": "essenthos:jehohanan11",
+      "was": "Post-exilic prince of the line of David; not in this corpus",
+      "line": "Post-exilic prince of the line of David"
+    },
+    {
+      "sourceId": "essenthos:jehohanan13",
+      "was": "Benjamite among David's mighty warriors; not in this corpus",
+      "line": "Benjamite among David's mighty warriors"
+    },
+    {
+      "sourceId": "essenthos:jehohanan14",
+      "was": "Gadite among David's mighty warriors; not in this corpus",
+      "line": "Gadite among David's mighty warriors"
+    },
+    {
+      "sourceId": "essenthos:jehohanan15",
+      "was": "A returning exile; not in this corpus",
+      "line": "A returning exile"
+    },
+    {
+      "sourceId": "essenthos:jehoshaphat5",
+      "was": "Priest and trumpeter before the ark in David's time; no attested verse here.",
+      "line": "Priest and trumpeter before the ark in David's time"
+    },
+    {
+      "sourceId": "essenthos:jeiel1",
+      "was": "Son of Zerah, chief man of Judah; no surviving occurrence text names him distinctly.",
+      "line": "Son of Zerah, chief man of Judah"
+    },
+    {
+      "sourceId": "essenthos:jeiel2",
+      "was": "Son of Adonikam who returned from exile with Ezra; not among the given occurrences.",
+      "line": "Son of Adonikam who returned from exile with Ezra"
+    },
+    {
+      "sourceId": "essenthos:johanan1",
+      "was": "Priest under high priest Joiakim who returned with Zerubbabel; no attesting verse in this set",
+      "line": "Priest under high priest Joiakim who returned with Zerubbabel"
+    },
+    {
+      "sourceId": "essenthos:johanan3",
+      "was": "Levite priest at Nehemiah's wall dedication; no attesting verse in this set",
+      "line": "Levite priest at Nehemiah's wall dedication"
+    },
+    {
+      "sourceId": "essenthos:johanan8",
+      "was": "Israelite with a foreign wife in Ezra's time; no attesting verse in this set",
+      "line": "Israelite with a foreign wife in Ezra's time"
+    },
+    {
+      "sourceId": "essenthos:jozabad3",
+      "was": "Second Manassite captain named Jozabad, listed alongside the first in the same verse",
+      "line": "Captain of thousands of Manasseh who joined David (1CH 12:20), the second Jozabad named there"
+    },
+    {
+      "sourceId": "essenthos:kolaiah3",
+      "was": "A Levite in the time of Ezra; no surviving reference in this corpus",
+      "line": "A Levite in the time of Ezra"
+    },
+    {
+      "sourceId": "essenthos:maacah1",
+      "was": "Father of Achish, king of Gath; neither verse naming him actually prints \"Maachah\".",
+      "line": "Father of Achish, king of Gath"
+    },
+    {
+      "sourceId": "essenthos:maaseiah20",
+      "was": "Ancestor of Baruch and Seraiah the sons of Neriah; no supplied verse attests him",
+      "line": "Ancestor of Baruch and Seraiah the sons of Neriah"
+    },
+    {
+      "sourceId": "essenthos:malchijah10",
+      "was": "Second man of this name among the sons of Parosh in Ezra 10:25, distinct from item 6",
+      "line": "The second Malchijah among the sons of Parosh (EZR 10:25)"
+    },
+    {
+      "sourceId": "essenthos:meshullam21",
+      "was": "Priest, head of the family of Ezra in Joiakim's days, distinct from item 14's Ginnethon line",
+      "line": "Priest, head of the family of Ezra in Joiakim's days"
+    },
+    {
+      "sourceId": "essenthos:micah9",
+      "was": "Daughter of Uriel of Gibeah, wife of Rehoboam, mother of Abijah; no verses in this corpus",
+      "line": "Daughter of Uriel of Gibeah, wife of Rehoboam, mother of Abijah"
+    },
+    {
+      "sourceId": "essenthos:nethanel5",
+      "was": "Priest of Pashur's family with a foreign wife, time of Ezra; no verse given here.",
+      "line": "Priest of Pashur's family with a foreign wife, time of Ezra"
+    },
+    {
+      "sourceId": "essenthos:nethanel8",
+      "was": "Chief of the Levites under Josiah; only mention lacks the name-spelling flag.",
+      "line": "Chief of the Levites under Josiah"
+    },
+    {
+      "sourceId": "essenthos:nethanel10",
+      "was": "Asaphite Levite musician at the wall's dedication; only mention lacks the name-spelling flag.",
+      "line": "Asaphite Levite musician at the wall's dedication"
+    },
+    {
+      "sourceId": "essenthos:raphah2",
+      "was": "Son of Benjamin per the lexicon's enumeration; no supplied occurrence attests him.",
+      "line": "Son of Benjamin"
+    },
+    {
+      "sourceId": "essenthos:sallu2",
+      "was": "Father of Zimri the Simeonite prince slain by Phinehas; no supplied verse attests him",
+      "line": "Father of Zimri the Simeonite prince slain by Phinehas"
+    },
+    {
+      "sourceId": "essenthos:shammah1",
+      "was": "Asherite, son of Zophar; not attested in the supplied occurrences (cf. 1CH 7:37).",
+      "line": "Asherite, son of Zophar (1CH 7:37)"
+    },
+    {
+      "sourceId": "essenthos:shebaniah3",
+      "was": "Second Levite of this name in the same covenant-sealing list, distinct from the first",
+      "line": "Second Levite of this name among those who sealed the covenant"
+    },
+    {
+      "sourceId": "essenthos:shemaiah26",
+      "was": "Another priest with trumpets at the wall's dedication, alongside item 25",
+      "line": "Another priest with trumpets at the wall's dedication"
+    },
+    {
+      "sourceId": "essenthos:shemer4",
+      "was": "Benjamite, son of Elpaal, builder of Ono and Lod; no verses given here",
+      "line": "Benjamite, son of Elpaal, builder of Ono and Lod"
+    },
+    {
+      "sourceId": "essenthos:simeon2",
+      "was": "Israelite of the sons of Bani with a foreign wife in Ezra's time; not attested in this corpus",
+      "line": "Israelite of the sons of Bani with a foreign wife in Ezra's time"
+    },
+    {
+      "sourceId": "essenthos:tahath4",
+      "was": "Son of Eladah, grandson of bearer 3, named second in same verse as bearer 3",
+      "line": "Son of Eladah, grandson of the Tahath named before him (1CH 7:20)"
+    },
+    {
+      "sourceId": "essenthos:tobiah3",
+      "was": "Levite sent by Jehoshaphat to teach the law, not named in given occurrences",
+      "line": "Levite sent by Jehoshaphat to teach the law"
+    },
+    {
+      "sourceId": "essenthos:uzza2",
+      "was": "A Benjamite descendant of Ehud; no verse in this corpus names him",
+      "line": "A Benjamite descendant of Ehud"
+    },
+    {
+      "sourceId": "essenthos:zimri5",
+      "was": "Obscure name in Jeremiah among 'mingled people'; possibly same as Zimran; no verse supplied here",
+      "line": "A name among the mingled peoples in Jeremiah, possibly the same as Zimran"
+    },
+    {
+      "sourceId": "essenthos:zohar1",
+      "was": "Judaite, son of Ashur by his wife Helah; not attested in the supplied verses",
+      "line": "Judaite, son of Ashur by his wife Helah"
+    }
+  ]
+}
