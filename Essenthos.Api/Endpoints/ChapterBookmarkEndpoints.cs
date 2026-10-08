@@ -127,10 +127,15 @@ internal static class ChapterBookmarkEndpoints
             }
 
             var account = context.User.AccountId();
-            var removed = await db.ChapterBookmarks
-                .Where(b => b.AccountId == account && b.Book == ordinal && b.Chapter == chapter)
-                .ExecuteDeleteAsync(context.RequestAborted);
-            return removed == 0 ? Results.NotFound(new ProblemResponse("There is no such bookmark.")) : Results.NoContent();
+            if (await db.ChapterBookmarks.FirstOrDefaultAsync(
+                    b => b.AccountId == account && b.Book == ordinal && b.Chapter == chapter, context.RequestAborted) is not { } bookmark)
+            {
+                return Results.NotFound(new ProblemResponse("There is no such bookmark."));
+            }
+
+            db.ChapterBookmarks.Remove(bookmark);
+            await db.SaveChangesAsync(context.RequestAborted);
+            return Results.NoContent();
         });
 
         bookmarks.MapPut("/order", async (HttpContext context, AccountsDbContext db, ChapterBookmarkOrder order) =>

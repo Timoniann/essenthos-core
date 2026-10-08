@@ -9,7 +9,7 @@ namespace Essenthos.Core.Accounts;
 /// Addressed canonically, as a bookmark is — book and chapter in the shared frame, never a corpus row
 /// id — and there is one per chapter per account.
 /// </summary>
-public class ChapterBookmark : IRevised
+public class ChapterBookmark : ISoftDeleted
 {
     public Guid Id { get; set; }
 
@@ -37,6 +37,18 @@ public class ChapterBookmark : IRevised
     public DateTimeOffset UpdatedAt { get; set; }
 
     public long Revision { get; set; }
+
+    /// <summary>When the reader removed the bookmark; null while it is one of theirs.</summary>
+    public DateTimeOffset? DeletedAt { get; set; }
+
+    Guid IRevised.Owner => AccountId;
+
+    public void Forget(DateTimeOffset at)
+    {
+        DeletedAt = at;
+        Verse = null;
+        Texts = [];
+    }
 
     public override string ToString() => $"ChapterBookmark({Id}, {Book} {Chapter}, {Color})";
 }

@@ -206,8 +206,15 @@ internal static class DeviceEndpoints
         {
             var account = context.User.AccountId();
             await db.Sessions.Where(s => s.DeviceId == id && s.AccountId == account).ExecuteDeleteAsync(context.RequestAborted);
-            var removed = await db.Devices.Where(d => d.Id == id && d.AccountId == account).ExecuteDeleteAsync(context.RequestAborted);
-            return removed == 0 ? Results.NotFound(new ProblemResponse("No such device.")) : Results.NoContent();
+            if (await db.Devices.FirstOrDefaultAsync(d => d.Id == id && d.AccountId == account, context.RequestAborted) is not { } device)
+            {
+                return Results.NotFound(new ProblemResponse("No such device."));
+            }
+
+            await db.Readings.Where(r => r.DeviceId == id && r.AccountId == account).ExecuteDeleteAsync(context.RequestAborted);
+            db.Devices.Remove(device);
+            await db.SaveChangesAsync(context.RequestAborted);
+            return Results.NoContent();
         });
 
         me.MapPost("/devices/{id:guid}/sign-out", async (HttpContext context, AccountsDbContext db, Guid id) =>

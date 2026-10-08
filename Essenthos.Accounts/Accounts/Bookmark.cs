@@ -14,7 +14,7 @@ namespace Essenthos.Core.Accounts;
 /// The range is inside one book. It can cross a chapter — John 7:53–8:11 is one passage — which is why
 /// the end carries its own chapter.
 /// </summary>
-public class Bookmark : IRevised
+public class Bookmark : ISoftDeleted
 {
     public Guid Id { get; set; }
 
@@ -51,6 +51,17 @@ public class Bookmark : IRevised
     public DateTimeOffset UpdatedAt { get; set; }
 
     public long Revision { get; set; }
+
+    /// <summary>When the reader removed the bookmark; null while it is one of theirs.</summary>
+    public DateTimeOffset? DeletedAt { get; set; }
+
+    Guid IRevised.Owner => AccountId;
+
+    public void Forget(DateTimeOffset at)
+    {
+        DeletedAt = at;
+        Comment = null;
+    }
 
     /// <summary>The colours a bookmark can be. The first is what one gets when none is named.</summary>
     public static readonly IReadOnlyList<string> Colors = ["amber", "green", "blue", "rose", "violet"];

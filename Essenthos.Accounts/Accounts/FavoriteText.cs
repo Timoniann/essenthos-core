@@ -7,7 +7,7 @@ namespace Essenthos.Core.Accounts;
 /// The text is named by its canonical slug — <c>KJV</c> — as a bookmark names one, never by a corpus
 /// row id, and an account has it once.
 /// </summary>
-public class FavoriteText : IRevised
+public class FavoriteText : ISoftDeleted
 {
     public Guid Id { get; set; }
 
@@ -24,6 +24,13 @@ public class FavoriteText : IRevised
     public DateTimeOffset UpdatedAt { get; set; }
 
     public long Revision { get; set; }
+
+    /// <summary>When the reader removed the text from their favourites; null while it is one.</summary>
+    public DateTimeOffset? DeletedAt { get; set; }
+
+    Guid IRevised.Owner => AccountId;
+
+    public void Forget(DateTimeOffset at) => DeletedAt = at;
 
     public override string ToString() => $"FavoriteText({Id}, {Text}, {Position})";
 }

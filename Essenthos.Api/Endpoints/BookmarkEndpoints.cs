@@ -152,8 +152,14 @@ internal static class BookmarkEndpoints
         bookmarks.MapDelete("/{id:guid}", async (Guid id, HttpContext context, AccountsDbContext db) =>
         {
             var account = context.User.AccountId();
-            var removed = await db.Bookmarks.Where(b => b.Id == id && b.AccountId == account).ExecuteDeleteAsync(context.RequestAborted);
-            return removed == 0 ? Results.NotFound(new ProblemResponse("There is no such bookmark.")) : Results.NoContent();
+            if (await db.Bookmarks.FirstOrDefaultAsync(b => b.Id == id && b.AccountId == account, context.RequestAborted) is not { } bookmark)
+            {
+                return Results.NotFound(new ProblemResponse("There is no such bookmark."));
+            }
+
+            db.Bookmarks.Remove(bookmark);
+            await db.SaveChangesAsync(context.RequestAborted);
+            return Results.NoContent();
         });
     }
 

@@ -62,6 +62,14 @@ public sealed class BookmarksTests
     }
 
     [Fact]
+    public void ARemovedBookmarkIsNotAnAnchorThatHasToSurviveTheRelease()
+    {
+        BookmarkAnchors.Anchors(tombstones: true).Should().Contain("FROM bookmark WHERE deleted_at IS NULL")
+            .And.Subject.Split("UNION").Should().OnlyContain(part => part.Contains("deleted_at IS NULL"));
+        BookmarkAnchors.Anchors(tombstones: false).Should().NotContain("deleted_at", "an accounts database without tombstones has none");
+    }
+
+    [Fact]
     public void TheCheckAsksForTheNamedTextOrAnyAndQuotesWhatItIsGiven()
     {
         var query = BookmarkAnchors.Query([new BookmarkAnchors.Point("", 43, 3, 16), new BookmarkAnchors.Point("K'JV", 1, 1, 1)]);
