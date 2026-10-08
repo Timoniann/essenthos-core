@@ -105,6 +105,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\KinshipRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PeoplesNamedRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\FamilyTailsRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\NamesakeReadingRecords.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />
