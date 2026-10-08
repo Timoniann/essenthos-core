@@ -819,6 +819,7 @@ public sealed class DuplicateRecordTests : IDisposable
     [InlineData("barsabbas-2", "judas-5")]
     [InlineData("hermons", "mounthermon")]
     [InlineData("thelme", "telmelah")]
+    [InlineData("olivet", "mountofolives")]
     public void ARegisterSpellingNoReadersTextWritesFoldsIntoTheRecordTheTextNames(string folds, string keeps)
     {
         var merge = DuplicateRecordLoader.Read().Merges.Should().ContainSingle(m => m.Folds == folds).Subject;

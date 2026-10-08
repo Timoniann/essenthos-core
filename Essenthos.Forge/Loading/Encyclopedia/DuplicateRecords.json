@@ -1204,6 +1204,14 @@
       "why": "OpenBible's own record of Tel-melah (EZR 2:59, NEH 7:61) lists 'another name for Thelme' among its identifications, naming this very record; the Greek and Latin texts spell the town Thelmelech, Thelmeleth and Thelmela in the same lists. The two sites the gazetteer gives (near Nippur, at Samawah) are both guesses at one Babylonian town, and the register's Thelme holds no word, verse or relationship of its own.",
       "confidence": 0.8,
       "source": "Essenthos: the four folds the Codex pass left unsure, each read against its source record, the held texts and the dataset's own identifications by claude-sonnet-5-5, 2026-10-08"
+    },
+    {
+      "strongNumber": "G1638",
+      "keeps": "mountofolives",
+      "folds": "olivet",
+      "why": "Acts 1:12 says the apostles returned 'from the mount called Olivet', which is the Mount of Olives the Gospels name; the kept record holds ACT 1:12 and has 'mount Olivet' among its names, and the register's Olivet holds no word, verse or relationship of its own.",
+      "confidence": 0.95,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, found since the Codex pass by claude-sonnet-5-5 reading the held record of the same place against its verses, 2026-10-08"
     }
   ],
   "declined": [
