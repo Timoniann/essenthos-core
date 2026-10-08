@@ -527,8 +527,10 @@ public partial class StrongXmlParser
 
     /// <summary>
     /// Extracts text from a Hebrew note element, replacing inline &lt;w&gt; elements
-    /// with their lemma text and Strong's reference (from src attribute), and &lt;hi&gt;
-    /// elements with their text content.
+    /// with their lemma text and Strong's reference (from src attribute), and other inline elements
+    /// with their text content. A nested <c>&lt;note&gt;</c> is the file editor's remark on a
+    /// correction made to the entry (<c>lemma אי missing vowel, corrected to אִי</c>), not Strong's
+    /// sentence, and is left out.
     /// E.g. &lt;w lemma="אָבִיב" src="24"/&gt; becomes "אָבִיב (H24)".
     /// </summary>
     private static string? GetHebrewNoteText(XElement? element, XNamespace ns)
@@ -554,9 +556,9 @@ public partial class StrongXmlParser
                     if (!string.IsNullOrEmpty(src))
                         sb.Append(" (H" + src + ")");
                 }
-                else if (localName == "hi")
+                else if (localName == "note")
                 {
-                    sb.Append(child.Value);
+                    continue;
                 }
                 else
                 {

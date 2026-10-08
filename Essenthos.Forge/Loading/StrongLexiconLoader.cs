@@ -54,6 +54,7 @@ internal sealed class StrongLexiconLoader(AppDbContext db, ILogger<StrongLexicon
         if (await db.StrongEntries.AnyAsync(cancellationToken))
         {
             await ReferWhatWasLoadedBare(greekPath, cancellationToken);
+            await DropTheEditorsRemarks(hebrewPath, cancellationToken);
             logger.LogInformation("The Strong lexicon is already loaded; nothing to do");
             return new LexiconOutcome(true, 0, 0, 0, TimeSpan.Zero);
         }
@@ -115,6 +116,45 @@ internal sealed class StrongLexiconLoader(AppDbContext db, ILogger<StrongLexicon
         {
             await db.SaveChangesAsync(cancellationToken);
             logger.LogInformation("{Corrected} Greek entries had their bare cross-references written as references", corrected);
+        }
+    }
+
+    /// <summary>
+    /// The Hebrew entries loaded with the file editor's correction remarks read into Strong's own
+    /// sentence (<c>from אִי (H336)lemma אי missing vowel, corrected to אִי and …</c>), corrected in
+    /// place from the file.
+    /// </summary>
+    private async Task DropTheEditorsRemarks(string hebrewPath, CancellationToken cancellationToken)
+    {
+        const string remark = " corrected to ";
+        var stale = await db.StrongEntries
+            .Where(e => e.StrongNumber.StartsWith("H")
+                        && (e.Derivation!.Contains(remark) || e.Definition!.Contains(remark) || e.KjvDefinition!.Contains(remark)))
+            .ToListAsync(cancellationToken);
+        if (stale.Count == 0 || !File.Exists(hebrewPath))
+        {
+            return;
+        }
+
+        var parsed = new StrongXmlParser().ParseHebrew(await File.ReadAllTextAsync(hebrewPath, cancellationToken))
+            .ToDictionary(e => e.StrongNumber);
+        var corrected = 0;
+        foreach (var entry in stale)
+        {
+            if (!parsed.TryGetValue(entry.StrongNumber, out var read)
+                || (entry.Definition == read.Definition && entry.Derivation == read.Derivation && entry.KjvDefinition == read.KjvDefinition))
+            {
+                continue;
+            }
+
+            (entry.Definition, entry.Derivation, entry.KjvDefinition) = (read.Definition, read.Derivation, read.KjvDefinition);
+            corrected++;
+        }
+
+        if (corrected > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+            logger.LogInformation("{Corrected} Hebrew entries had the file editor's remarks taken out of Strong's sentence", corrected);
         }
     }
 

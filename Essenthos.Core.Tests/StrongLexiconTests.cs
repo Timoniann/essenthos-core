@@ -146,6 +146,26 @@ public sealed class StrongLexiconTests : IDisposable
         entry.SeeAlso.Should().Contain("G2596").And.Contain("G5368");
     }
 
+    /// <summary>A lexicon loaded while the editor's correction remarks were read into a derivation is corrected in place.</summary>
+    [Fact]
+    public async Task AnEditorsRemarkReadIntoAHebrewDerivationIsTakenOutInPlace()
+    {
+        _db.StrongEntries.Add(new StrongEntry
+        {
+            StrongNumber = "H348", Lemma = "אֵיזֶבֶל",
+            Derivation = "from אִי (H336)lemma אי missing vowel, corrected to אִי and זְבֻל (H2083);",
+            Definition = "Jezebel",
+        });
+        _db.SaveChanges();
+
+        var outcome = await _loader.Load(
+            TestResources.Path("Strong", "StrongHebrew.xml"), TestResources.Path("Strong", "StrongGreek.xml"));
+
+        outcome.AlreadyLoaded.Should().BeTrue();
+        var entry = await _db.StrongEntries.AsNoTracking().SingleAsync(e => e.StrongNumber == "H348");
+        entry.Derivation.Should().Be("from אִי (H336) and זְבֻל (H2083);");
+    }
+
     private void Entry(string strong)
     {
         _db.StrongEntries.Add(new StrongEntry { StrongNumber = strong, Lemma = strong, Definition = "a gloss" });

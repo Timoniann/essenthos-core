@@ -310,6 +310,39 @@ public class StrongXmlParserTests
     }
 
     [Fact]
+    public void ParseHebrew_AnEditorsCorrectionNoteInTheDerivation_IsNotStrongsSentence()
+    {
+        var xml = """
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <osis xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
+                  <osisText>
+                  <div type="glossary">
+                  <div type="entry" n="348">
+                    <w lemma="אֵיזֶבֶל" morph="n-pr-f" POS="ay-zeh'-bel" xlit="ʼÎyzebel" ID="H348" xml:lang="heb">איזבל</w>
+                    <note type="exegesis">from <w lemma="אִי" POS="ee" src="336" xlit="ʼîy"/><note type="x-typo">lemma אי missing vowel, corrected to <catchWord>אִי</catchWord></note> and <w lemma="זְבֻל" POS="zeb-ool'" src="2083" xlit="Zᵉbul"/>;</note>
+                  </div>
+                  </div>
+                  </osisText>
+                  </osis>
+                  """;
+
+        var e = _parser.ParseHebrew(xml).Single();
+
+        e.Derivation.Should().Be("from אִי (H336) and זְבֻל (H2083);");
+    }
+
+    [Fact]
+    public void ParseHebrew_NoDerivationInTheFile_CarriesAnEditorsRemark()
+    {
+        var entries = _parser.ParseHebrew(File.ReadAllText(TestResources.Path("Strong", "StrongHebrew.xml")));
+
+        entries.Should().NotContain(e => (e.Derivation ?? "").Contains(" corrected to ")
+                                         || (e.Definition ?? "").Contains(" corrected to ")
+                                         || (e.KjvDefinition ?? "").Contains(" corrected to "));
+        Entry(entries, "H348").Derivation.Should().NotContain("lemma");
+    }
+
+    [Fact]
     public void ParseHebrew_ExegesisWithWordRefs_PreservesStrongReferences()
     {
         var xml = """
