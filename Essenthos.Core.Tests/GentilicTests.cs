@@ -309,7 +309,10 @@ public sealed class StatedGentilicCoverageTests : IClassFixture<BibleDataCorpus>
         var reached = stated.Count(claim => origins.ContainsKey((claim.OriginNumber, claim.Kind)));
         _output.WriteLine($"{reached} of {stated.Count} stated origins reach exactly one entity");
 
-        reached.Should().Be(50);
+        // The Sardites (H5624) are the 51st: Strong's abbreviation "patron" is read as the
+        // patronymic it stands for, and Sered is the one person who answers to the origin.
+        reached.Should().Be(51);
+        origins.Should().ContainKey(("H5624", GentilicKinds.Patronymic));
 
         // Moab is two entities under one number, the man and the land, and the word Strong chose is
         // what tells them apart: a Moabite is patronymically from Moab, so the page is the man's.
