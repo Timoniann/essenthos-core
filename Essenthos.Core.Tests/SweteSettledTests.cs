@@ -48,7 +48,7 @@ public class SweteSettledTests(Swete swete) : IClassFixture<Swete>
     [Fact]
     public void EverySettlementChangesSomethingAndCitesItsPage() =>
         SweteSettled.All.Should().NotBeEmpty().And.OnlyContain(r =>
-            r.Digitised != r.Printed && r.Why.Contains("vol. 1", StringComparison.Ordinal)
+            r.Digitised != r.Printed && r.Why.StartsWith("Printed in Swete, vol. ", StringComparison.Ordinal)
                                      && r.Why.Contains("scan leaf", StringComparison.Ordinal));
 }
 
@@ -95,6 +95,9 @@ public sealed class SweteSettledLoadTests : IDisposable
     private static IReadOnlyList<SweteWord> Words(SweteBook book, int chapter, int verse) =>
         book.Chapters.Single(c => c.Number == chapter).Verses.Single(v => v.Number == verse && v.Label.Length == 0).Words;
 
+    /// <summary>The pass before the verses were settled one by one.</summary>
+    private static IReadOnlyList<SweteRestoration> Unsettled => SweteRestorations.Earlier[^2];
+
     /// <summary>Every restored verse of the three books as the last pass before these left it, numbers out.</summary>
     private Text Loaded()
     {
@@ -102,7 +105,7 @@ public sealed class SweteSettledLoadTests : IDisposable
         _db.Texts.Add(text);
         foreach (var (file, canonical, name) in Books)
         {
-            var earlier = Read(file, SweteRestorations.Earlier[^1], keepChapterMarkers: false);
+            var earlier = Read(file, Unsettled, keepChapterMarkers: false);
             _db.AddBook(text, canonical, name, [.. Restored(file).Select(at =>
                 (at.Chapter, at.Verse, Words(earlier, at.Chapter, at.Verse).Select(w => w.Surface).ToArray()))]);
         }
@@ -110,7 +113,7 @@ public sealed class SweteSettledLoadTests : IDisposable
         _db.SaveChanges();
         foreach (var (file, canonical, _) in Books)
         {
-            var earlier = Read(file, SweteRestorations.Earlier[^1], keepChapterMarkers: false);
+            var earlier = Read(file, Unsettled, keepChapterMarkers: false);
             foreach (var (chapter, verse) in Restored(file))
             {
                 var words = Words(earlier, chapter, verse);
@@ -159,7 +162,8 @@ public sealed class SweteSettledLoadTests : IDisposable
 
         var outcome = await _loader.Load(TestResources.SweteFolder);
 
-        outcome.Verses.Should().Be(SweteSettled.All.Select(r => (r.Book, r.Chapter, r.Verse)).Distinct().Count(),
+        outcome.Verses.Should().Be(SweteSettled.All.Where(r => Books.Any(b => b.File == r.Book))
+                .Select(r => (r.Book, r.Chapter, r.Verse)).Distinct().Count(),
             "the earlier restorations are already there");
         foreach (var (file, canonical, _) in Books)
         {

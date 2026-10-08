@@ -181,7 +181,7 @@ public sealed class SweteRestorationLoadTests : IDisposable
         var row = await _db.Texts.AsNoTracking().SingleAsync(t => t.Id == text.Id);
         row.RightsNote.Should().Be(
             $"CC BY-SA 4.0. {SweteRestorations.Note} {SweteCorrections.Note} {SwetePage.Note} {SweteCorrections.FiguresNote} "
-            + SweteSettled.Note);
+            + $"{SweteSettled.Note} {SweteSettled.MarginNote}");
         var restored = await _db.Words.AsNoTracking().SingleAsync(w => w.TextId == text.Id && w.Surface == "πεντήκοντα"
                                                                        && w.Verse!.ChapterNumber == 9);
         restored.NormalisedText.Should().Be("πεντηκοντα", "a word written here is searchable at once");

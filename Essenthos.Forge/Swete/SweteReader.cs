@@ -68,7 +68,8 @@ internal sealed record SweteChapterMarker(string Chapter, string Verse, string T
 /// front of a chapter's first word, naming the chapter the one before closes with, is taken off the
 /// word, which stays. Nothing
 /// else is touched: a Latin letter elsewhere is a misreading <see cref="SweteCorrections"/> settles
-/// or leaves, and a numeral that names no chapter beside it is not a chapter's number. A verse whose
+/// or leaves, or a letter of the margin the page settles (<see cref="SweteSettled"/>), and a numeral
+/// that names no chapter beside it is not a chapter's number. A verse whose
 /// only token was the numeral stays, empty: the edition numbers it, and the transcription has none
 /// of its words.
 /// </para>
@@ -440,7 +441,7 @@ internal static class SweteReader
     /// in more than one block: a psalm's title is one, its first verse is another, and a mark
     /// opening the second belongs to the last word of the first.
     /// </summary>
-    private static List<SweteWord> Words(IReadOnlyList<string> tokens)
+    internal static List<SweteWord> Words(IReadOnlyList<string> tokens)
     {
         var words = new List<SweteWord>(tokens.Count);
         foreach (var token in tokens)

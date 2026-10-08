@@ -83,13 +83,6 @@ internal static class SweteCorrections
     public static readonly IReadOnlyList<SweteRestoration> First =
         [.. Entries.Where(entry => FirstKinds.Contains(entry.Kind)).Select(Restoration)];
 
-    /// <summary>
-    /// Whether the correction leaves the word the one the transcription had, with its letters put
-    /// right, rather than making another word of it.
-    /// </summary>
-    public static bool KeepsTheWord(SweteRestoration correction) =>
-        SameWord.Any(kind => correction.Why == Why[kind]);
-
     private static IReadOnlyList<Entry> Read()
     {
         using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Resource)
@@ -111,7 +104,8 @@ internal static class SweteCorrections
                 : throw new InvalidOperationException(
                     $"{Resource} names a kind of correction, \"{entry.Kind}\", that nothing here explains. " +
                     $"Give it its reason in {nameof(SweteCorrections)}.{nameof(Why)} or regenerate the list."),
-            entry.Verse[digits..]);
+            entry.Verse[digits..],
+            SameWord.Contains(entry.Kind));
     }
 
     private sealed record Entry(string Book, string Chapter, string Verse, string Kind, string Digitised, string Printed);

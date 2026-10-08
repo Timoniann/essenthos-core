@@ -9,6 +9,11 @@ namespace Essenthos.Core.Swete;
 /// <param name="Printed">What the edition prints in their place, in the same form.</param>
 /// <param name="Why">What establishes the printed words, which is the whole of the claim.</param>
 /// <param name="Label">The letter after the verse number, where the edition prints one.</param>
+/// <param name="SameWord">
+/// Whether each printed word is the digitised word standing in its place with its letters put right,
+/// rather than another word: a corpus that holds the verse keeps the word's row, and with it what
+/// stands on it.
+/// </param>
 internal sealed record SweteRestoration(
     string Book,
     int Chapter,
@@ -16,7 +21,8 @@ internal sealed record SweteRestoration(
     string Digitised,
     string Printed,
     string Why,
-    string Label = "");
+    string Label = "",
+    bool SameWord = false);
 
 /// <summary>
 /// Words Swete printed and the transcription lost, put back where two witnesses independent of the
@@ -94,7 +100,8 @@ internal static class SweteRestorations
     /// <summary>
     /// The restorations as earlier passes made them, oldest first: the Genesis words alone, then with
     /// the letter corrections, then with the words read off the page, before the figures were taken
-    /// out, then before the lost chapter openings, then before the verses settled one by one. A corpus
+    /// out, then before the lost chapter openings, then before the verses settled one by one, then before
+    /// the margin's letters were read off the page. A corpus
     /// restored by one of them reads as that set and not as the transcription, and the pass carries it
     /// on to <see cref="All"/> rather than refusing it.
     /// </summary>
@@ -105,6 +112,7 @@ internal static class SweteRestorations
         [.. Lost(), .. SweteCorrections.First, .. SwetePage.All],
         [.. Lost(), .. SweteCorrections.All, .. SwetePage.All],
         [.. Lost(), .. SweteCorrections.All, .. SwetePage.All, .. Openings()],
+        [.. Lost(), .. SweteCorrections.All, .. SwetePage.All, .. Openings(), .. SweteSettled.First],
     ];
 
     private static IReadOnlyList<SweteRestoration> Lost() =>
