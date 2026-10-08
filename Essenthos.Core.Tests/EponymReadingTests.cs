@@ -89,6 +89,7 @@ public sealed class EponymReadingTests : IDisposable
         _db.Database.ExecuteSqlRaw("DELETE FROM link");
         _db.Database.ExecuteSqlRaw("DELETE FROM text");
         _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        _db.Database.ExecuteSqlRaw("DELETE FROM strong_entry");
     }
 
     private Word At(Text text, int book, int chapter, int verse, int position) =>
@@ -332,6 +333,74 @@ public sealed class EponymReadingTests : IDisposable
         (await Loader().Load(later)).ReadAsTheMan.Should().Be(1);
         (await Shown(ephraim)).Should().Equal("ephraim");
         (await Loader().Load(later)).AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>
+    /// Hebrews 11:21, <em>Jacob blessed each of the sons of Joseph</em>: his own two sons, so υἱῶν names
+    /// nobody, as בְּנֵי does in Genesis 46; in 11:22, <em>the departing of the sons of Israel</em>, the people.
+    /// </summary>
+    [Fact]
+    public async Task HisOwnSonsInTheGreekAreNotThePeopleEither()
+    {
+        var (blessed, departing) = Hebrews();
+
+        await Loader().Load(Read());
+
+        (await Shown(blessed[0])).Should().BeEmpty();
+        (await Shown(blessed[1])).Should().Equal("joseph");
+        (await Shown(departing[0])).Should().Equal("israelites");
+        (await Shown(departing[1])).Should().Equal("jacob");
+    }
+
+    /// <summary>
+    /// What the rule wrote on an earlier load and no longer gives — the people on <em>sons</em> of Hebrews
+    /// 11:21, and the same carried into a translation — is taken back, and the load after writes nothing.
+    /// </summary>
+    [Fact]
+    public async Task WhatTheRuleNoLongerGivesIsTakenBackWithWhatItCarried()
+    {
+        var (blessed, _) = Hebrews();
+        await Loader().Load(Read());
+        var kjv = _english;
+        _db.AddBook(kjv, 58, "Hebrews", (11, 21, ["the", "sons", "of", "Joseph"]));
+        await _db.SaveChangesAsync();
+        var sons = At(kjv, 58, 11, 21, 2);
+        Annotate(blessed[0], "josephites", LinkMethod.RuleBased, EponymReadingLoader.Source, 0.9,
+            "G5207, sons of G2501, so the people of that name");
+        Annotate(sons, "josephites", LinkMethod.RuleBased, EponymReadingLoader.Source, 0.9,
+            $"through NESTLE1904 word {blessed[0].Id}, linked by stated-by-source");
+
+        var outcome = await Loader().Load(Read());
+
+        outcome.AlreadyLoaded.Should().BeFalse();
+        outcome.Outdated.Should().Be(2);
+        (await Shown(blessed[0])).Should().BeEmpty();
+        (await Shown(sons)).Should().BeEmpty();
+        (await Loader().Load(Read())).AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>Hebrews 11:21 and 11:22 in the Nestle text: υἱῶν Ἰωσὴφ and υἱῶν Ἰσραὴλ.</summary>
+    private (Word[] Blessed, Word[] Departing) Hebrews()
+    {
+        var nestle = Corpus.Add(_db, "NESTLE1904", TextKind.CriticalEdition, "grc", (1, 1, ["x"]));
+        _db.AddBook(nestle, 58, "Hebrews", (11, 21, ["υἱῶν", "Ἰωσὴφ"]), (11, 22, ["υἱῶν", "Ἰσραὴλ"]));
+        _db.StrongEntries.Add(new StrongEntry { StrongNumber = "G2501", Lemma = "Ἰωσήφ", Derivation = "of Hebrew origin (H3130)" });
+        _db.StrongEntries.Add(new StrongEntry { StrongNumber = "G2474", Lemma = "Ἰσραήλ", Derivation = "of Hebrew origin (H3478)" });
+        _db.SaveChanges();
+
+        Word[] Verse(int verse, string name)
+        {
+            var words = new[] { At(nestle, 58, 11, verse, 1), At(nestle, 58, 11, verse, 2) };
+            words[0].StrongNumber = "G5207";
+            words[0].Morphology = JsonDocument.Parse("""{"form": "N-GPM"}""");
+            words[1].StrongNumber = name;
+            return words;
+        }
+
+        var blessed = Verse(21, "G2501");
+        var departing = Verse(22, "G2474");
+        _db.SaveChanges();
+        return (blessed, departing);
     }
 
     /// <summary>The readings shipped with the loader name only the two candidates of each word.</summary>
