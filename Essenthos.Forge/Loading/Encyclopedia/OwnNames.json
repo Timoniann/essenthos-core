@@ -130,17 +130,6 @@
       },
       "hebrewStrongNumber": "H7928",
       "why": "H7927 is the town of Shechem; Shemida's son (1CH 7:19) is H7928, the number of the word that names him, which Strong heads for him and for Gilead's son."
-    },
-    {
-      "entities": [
-        "tekoa"
-      ],
-      "label": "Tekoa",
-      "was": {
-        "hebrew": "H8619"
-      },
-      "hebrewStrongNumber": "H8620",
-      "why": "H8619 is taqowa, a trumpet; Ashur's son Tekoa (1CH 2:24, 4:5) is H8620, the number of the words that name him, which Strong heads for the man and the town. Left as it was, those words resolve to the town alone."
     }
   ]
 }

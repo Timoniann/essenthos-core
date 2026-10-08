@@ -846,7 +846,7 @@ public sealed class OwnRecordTests : IDisposable
     public async Task SecondBearersAreMenOfTheirOwnAndTheirWordsLeaveTheRecordTheyWereReadAs()
     {
         var file = SenseReadingFiles.AllRulings().Single(f => f.Rulings.Any(r => r.Create?.Slug == "jabin-king-of-canaan"));
-        foreach (var ruling in file.Rulings)
+        foreach (var ruling in file.Rulings.Where(r => r.Corrects is not null))
         {
             var old = _db.Entities.Local.FirstOrDefault(e => e.Slug == ruling.Corrects)
                       ?? _db.Entities.SingleOrDefault(e => e.Slug == ruling.Corrects);
@@ -867,7 +867,7 @@ public sealed class OwnRecordTests : IDisposable
         await _db.SaveChangesAsync();
         await Load();
 
-        file.Rulings.Should().HaveCount(12);
+        file.Rulings.Should().HaveCount(22);
         foreach (var ruling in file.Rulings)
         {
             var named = ruling.Create?.Slug ?? ruling.Existing;
