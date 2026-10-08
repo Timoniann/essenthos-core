@@ -122,6 +122,14 @@
       "why": "Strong derives no gentilic from H4519, so this record rests on the corpus's own witness alone: BHSA marks 145 occurrences of the name pers and gens together. The name is the King James's own word for them."
     },
     {
+      "slug": "josephites",
+      "name": "Josephites",
+      "distinguisher": "the tribe descended from Joseph, Jacob's eleventh son, which the text counts as Ephraim and Manasseh",
+      "origin": "joseph",
+      "collectiveNumber": null,
+      "why": "The text calls the two tribes of Ephraim and Manasseh together the sons of Joseph and the tribe of Joseph (Numbers 1:10, 13:11, 36:5; Joshua 16:1, 17:14). On the project owner's ruling of 2026-10-08 the word sons in the sons of Joseph names this people. It is given no number of its own: Joseph's name is every Joseph's, and the word that stands for the tribe is sons, not the name."
+    },
+    {
       "slug": "benjaminites",
       "name": "Benjaminites",
       "distinguisher": "the tribe descended from Benjamin, Jacob's twelfth son",

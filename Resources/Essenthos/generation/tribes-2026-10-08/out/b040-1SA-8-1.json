@@ -1,0 +1,135 @@
+{
+ "batch": "b040-1SA-8-1",
+ "answers": [
+  {
+   "key": "BHSA 1SA 8:1 #13",
+   "answer": "people",
+   "why": "Samuel appoints his sons as judges over the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 8:4 #5",
+   "answer": "people",
+   "why": "Israel's elders assemble and request a king to judge them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 8:22 #18",
+   "answer": "people",
+   "why": "Samuel sends the men of Israel back to their respective cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 9:9 #4",
+   "answer": "people",
+   "why": "The verse describes the former custom of consulting seers among Israelites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 9:16 #17",
+   "answer": "people",
+   "why": "God calls Israel his people whom Saul will govern and save from the Philistines.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 9:20 #25",
+   "answer": "people",
+   "why": "Samuel speaks of Israel's collective desire concerning Saul and his household.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 10:18 #10",
+   "answer": "people",
+   "why": "The God of Israel addresses the assembled nation about its deliverance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 10:18 #14",
+   "answer": "people",
+   "why": "Israel is the people brought out of Egypt and addressed as plural 'you.'",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 11:2 #22",
+   "answer": "people",
+   "why": "Nahash intends the mutilation of Jabesh's inhabitants to disgrace all Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 11:13 #19",
+   "answer": "people",
+   "why": "Saul describes the LORD's victory as deliverance for Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 12:1 #6",
+   "answer": "people",
+   "why": "Samuel addresses all Israel as those who requested and received a king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 13:1 #11",
+   "answer": "people",
+   "why": "Israel is the nation over which Saul reigns.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 13:2 #8",
+   "answer": "people",
+   "why": "Saul selects three thousand soldiers from Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 13:2 #27",
+   "answer": "people",
+   "why": "Gibeah of Benjamin identifies a town in Benjamin's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 13:4 #3",
+   "answer": "people",
+   "why": "All Israel hears the report and the people assemble behind Saul.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 13:4 #15",
+   "answer": "people",
+   "why": "Israel is the nation that has become odious to the Philistines.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 13:5 #7",
+   "answer": "people",
+   "why": "The Philistine army gathers to wage war against Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 13:6 #3",
+   "answer": "people",
+   "why": "The men of Israel see their distress and hide from the Philistines.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 13:13 #22",
+   "answer": "people",
+   "why": "Samuel speaks of establishing Saul's kingdom over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 13:15 #10",
+   "answer": "people",
+   "why": "Samuel travels to Gibeah in Benjamin's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 13:20 #4",
+   "answer": "people",
+   "why": "All Israel goes to the Philistines, each man to sharpen his tools.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:34:30+00:00"
+}

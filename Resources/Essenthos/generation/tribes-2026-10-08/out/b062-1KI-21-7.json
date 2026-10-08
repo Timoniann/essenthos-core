@@ -1,0 +1,93 @@
+{
+ "batch": "b062-1KI-21-7",
+ "answers": [
+  {
+   "key": "BHSA 1KI 21:7 #11",
+   "answer": "people",
+   "why": "Jezebel speaks of Ahab exercising kingship over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 21:21 #20",
+   "answer": "people",
+   "why": "Ahab's descendants are to be cut off within Israel's kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 21:22 #24",
+   "answer": "people",
+   "why": "Ahab has caused the nation Israel to sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 22:1 #11",
+   "answer": "people",
+   "why": "Israel and Aram are kingdoms between which there has been no war.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 22:17 #6",
+   "answer": "people",
+   "why": "All Israel are scattered like sheep and told to return each to his house.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 22:41 #7",
+   "answer": "people",
+   "why": "Jehoshaphat begins reigning over the kingdom of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 22:52 #6",
+   "answer": "people",
+   "why": "Ahaziah begins reigning over Israel from Samaria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 22:52 #20",
+   "answer": "people",
+   "why": "Israel is the kingdom over which Ahaziah reigns for two years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 22:53 #26",
+   "answer": "people",
+   "why": "Jeroboam caused the nation Israel to sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 22:54 #14",
+   "answer": "people",
+   "why": "The LORD is called Israel's God in the account of Ahaziah's Baal worship.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 1:1 #5",
+   "answer": "people",
+   "why": "Moab rebels against Israel's kingdom after Ahab's death.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 1:3 #25",
+   "answer": "people",
+   "why": "Elijah asks whether there is no God in Israel's nation to consult.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 1:6 #31",
+   "answer": "people",
+   "why": "The messengers repeat the question about God's presence in Israel's nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 1:16 #24",
+   "answer": "people",
+   "why": "Elijah rebukes the king for seeking Ekron's god instead of consulting God in Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:37:13+00:00"
+}

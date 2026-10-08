@@ -1,0 +1,81 @@
+{
+ "batch": "b064-2KI-7-13",
+ "answers": [
+  {
+   "key": "BHSA 2KI 7:13 #24",
+   "answer": "people",
+   "why": "Israel denotes the multitude remaining in the besieged city.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 7:13 #32",
+   "answer": "people",
+   "why": "Israel denotes the multitude already consumed during the siege.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 8:19 #8",
+   "answer": "people",
+   "why": "The LORD preserves the kingdom of Judah for David's sake.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 8:20 #8",
+   "answer": "people",
+   "why": "Edom revolts from the rule of the kingdom of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 8:22 #7",
+   "answer": "people",
+   "why": "Edom remains in revolt against Judah's political authority.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 9:3 #19",
+   "answer": "people",
+   "why": "Jehu is anointed king over the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 9:6 #20",
+   "answer": "people",
+   "why": "The LORD is identified as the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 9:6 #28",
+   "answer": "people",
+   "why": "Israel is explicitly identified as the LORD's people over whom Jehu will reign.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 9:8 #18",
+   "answer": "people",
+   "why": "Ahab's descendants are to be cut off within the kingdom of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 9:12 #25",
+   "answer": "people",
+   "why": "Jehu reports his anointing as king over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 9:14 #20",
+   "answer": "people",
+   "why": "All Israel joins Joram in defending Ramothgilead against Hazael.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 9:29 #14",
+   "answer": "people",
+   "why": "Ahaziah begins reigning over the kingdom of Judah.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:37:32+00:00"
+}

@@ -1,0 +1,105 @@
+{
+ "batch": "b081-2CH-6-29",
+ "answers": [
+  {
+   "key": "BHSA 2CH 6:29 #15",
+   "answer": "people",
+   "why": "Israel is explicitly called God's people, whose members offer prayers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:32 #10",
+   "answer": "people",
+   "why": "The foreigner is distinguished from God's people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:33 #33",
+   "answer": "people",
+   "why": "God's people Israel are compared with all the peoples of the earth.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 7:6 #39",
+   "answer": "people",
+   "why": "All Israel stand together at Solomon's temple dedication.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 7:8 #16",
+   "answer": "people",
+   "why": "All Israel form a very great congregation keeping the feast with Solomon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 7:10 #35",
+   "answer": "people",
+   "why": "Israel is explicitly called God's people, sent home after the feast.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 7:18 #20",
+   "answer": "people",
+   "why": "God promises David's line a continuing ruler in Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 8:7 #24",
+   "answer": "people",
+   "why": "The remaining foreign peoples are identified as not belonging to Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 9:8 #21",
+   "answer": "people",
+   "why": "God's love for Israel leads him to appoint Solomon king over them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 9:30 #8",
+   "answer": "people",
+   "why": "Solomon reigns over all Israel for forty years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 10:1 #9",
+   "answer": "people",
+   "why": "All Israel gather at Shechem to make Rehoboam king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 10:3 #11",
+   "answer": "people",
+   "why": "All Israel join Jeroboam in addressing Rehoboam about their burdens.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 10:16 #3",
+   "answer": "people",
+   "why": "All Israel are the people whom the king refuses to hear.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 10:16 #33",
+   "answer": "people",
+   "why": "Israel is addressed collectively with the command for every man to return to his tent.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 10:16 #41",
+   "answer": "people",
+   "why": "All Israel depart to their tents after rejecting David's dynasty.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 10:19 #3",
+   "answer": "people",
+   "why": "Israel collectively rebel against the house of David.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:39:32+00:00"
+}

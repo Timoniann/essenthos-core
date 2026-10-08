@@ -1,0 +1,159 @@
+{
+ "batch": "b020-DEU-29-2",
+ "answers": [
+  {
+   "key": "BHSA DEU 29:1 #6",
+   "answer": "people",
+   "why": "Moses calls all Israel and addresses them as witnesses of the events in Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 29:9 #17",
+   "answer": "people",
+   "why": "Israel comprises the men assembled with their tribal leaders, elders, and officers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 31:1 #13",
+   "answer": "people",
+   "why": "Moses speaks to all Israel and then addresses them in the plural.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 31:7 #12",
+   "answer": "people",
+   "why": "All Israel witnesses Moses commissioning Joshua to lead this people into their land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 31:9 #26",
+   "answer": "people",
+   "why": "The elders of Israel receive the law from Moses alongside the priests.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 31:11 #4",
+   "answer": "people",
+   "why": "All Israel assembles before the LORD at the appointed festival.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 31:11 #24",
+   "answer": "people",
+   "why": "The law is read in their hearing, with men, women, and children gathered.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 32:45 #14",
+   "answer": "people",
+   "why": "Moses finishes addressing the people and tells them to instruct their children.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:6 #2",
+   "answer": "people",
+   "why": "Moses blesses Reuben's survival and the number of its men among the gathered tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:8 #3",
+   "answer": "people",
+   "why": "Moses blesses Levi's priestly role, and the following verse describes their covenant obedience.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:10 #8",
+   "answer": "people",
+   "why": "The Levites will teach Israel the law as their national priestly duty.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:12 #2",
+   "answer": "people",
+   "why": "Moses blesses Benjamin with secure dwelling in his blessing of the tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:17 #18",
+   "answer": "people",
+   "why": "Ephraim's ten thousands are the collective force that pushes other peoples.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:17 #22",
+   "answer": "people",
+   "why": "Manasseh's thousands form part of the collective force described in Joseph's blessing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:18 #3",
+   "answer": "people",
+   "why": "Moses introduces Zebulun's tribal blessing, followed by collective activities in the next verse.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:18 #6",
+   "answer": "people",
+   "why": "Zebulun is addressed collectively, with the next verse describing what they will do.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:20 #3",
+   "answer": "people",
+   "why": "Moses introduces Gad's tribal blessing concerning expansion and military strength.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:20 #7",
+   "answer": "people",
+   "why": "Gad is enlarged and depicted as a fighting lion in the tribal blessing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:21 #20",
+   "answer": "people",
+   "why": "Gad acts with the leaders of the people and carries out the LORD's judgments with Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:23 #3",
+   "answer": "people",
+   "why": "Moses introduces Naphtali's tribal blessing and commands possession of territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:23 #5",
+   "answer": "people",
+   "why": "Naphtali is addressed as the tribe that will possess the west and south.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:24 #3",
+   "answer": "people",
+   "why": "Moses introduces Asher's blessing among the other tribal blessings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:24 #8",
+   "answer": "people",
+   "why": "Asher receives a tribal blessing of favor among its brothers and abundance of oil.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:28 #3",
+   "answer": "people",
+   "why": "Israel dwells securely in fertile land after its enemies are driven out.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 33:29 #2",
+   "answer": "people",
+   "why": "Israel is explicitly called a people saved by the LORD.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:31:42+00:00"
+}

@@ -1,0 +1,81 @@
+{
+ "batch": "b044-1SA-26-2",
+ "answers": [
+  {
+   "key": "BHSA 1SA 26:2 #15",
+   "answer": "people",
+   "why": "Saul takes three thousand chosen men from Israel to seek David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 26:15 #14",
+   "answer": "people",
+   "why": "David compares Abner with others in the nation of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 27:10 #13",
+   "answer": "people",
+   "why": "David names the southern territory of Judah as the place raided.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 27:12 #13",
+   "answer": "people",
+   "why": "Achish explicitly identifies Israel as David's people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 28:1 #19",
+   "answer": "people",
+   "why": "The Philistine armies gather to wage war against Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 28:3 #8",
+   "answer": "people",
+   "why": "All Israel collectively mourns Samuel and buries him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 28:4 #15",
+   "answer": "people",
+   "why": "Saul gathers all Israel, and they camp at Gilboa.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 28:19 #6",
+   "answer": "people",
+   "why": "Israel will be delivered with Saul into the Philistines' hands.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 28:19 #20",
+   "answer": "people",
+   "why": "The verse speaks of Israel's army being delivered to the Philistines.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 29:1 #9",
+   "answer": "people",
+   "why": "Israel camps collectively by the spring in Jezreel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 30:14 #10",
+   "answer": "people",
+   "why": "The raiders attack territory belonging to the tribe of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 30:25 #18",
+   "answer": "people",
+   "why": "David establishes the division of spoil as an ordinance for Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:34:54+00:00"
+}

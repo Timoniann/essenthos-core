@@ -1,0 +1,159 @@
+{
+ "batch": "b055-1KI-5-13",
+ "answers": [
+  {
+   "key": "BHSA 1KI 5:27 #9",
+   "answer": "people",
+   "why": "Solomon raises thirty thousand men as a levy from all Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 6:1 #34",
+   "answer": "people",
+   "why": "Solomon reigns over Israel as its king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 6:13 #12",
+   "answer": "people",
+   "why": "God explicitly calls Israel his people whom he will not forsake.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:1 #6",
+   "answer": "people",
+   "why": "Solomon assembles Israel's elders alongside the heads of its tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:2 #9",
+   "answer": "people",
+   "why": "All the men of Israel gather to Solomon for the feast.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:3 #5",
+   "answer": "people",
+   "why": "Israel's elders come to the gathering where the priests carry the ark.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:5 #8",
+   "answer": "people",
+   "why": "Israel is the congregation assembled with Solomon before the ark.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:14 #12",
+   "answer": "people",
+   "why": "The king blesses the entire congregation of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:14 #16",
+   "answer": "people",
+   "why": "The entire congregation of Israel stands during the king's blessing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:15 #6",
+   "answer": "people",
+   "why": "Solomon praises the nation's God before Israel's assembled congregation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:16 #9",
+   "answer": "people",
+   "why": "God identifies Israel as his people brought out of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:16 #35",
+   "answer": "people",
+   "why": "God chooses David to rule over his people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:17 #14",
+   "answer": "people",
+   "why": "David intends to build a temple for the God of the people he rules.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:20 #17",
+   "answer": "people",
+   "why": "Solomon succeeds David on the throne of Israel's kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:20 #30",
+   "answer": "people",
+   "why": "Solomon builds the temple for the God of the nation whose throne he occupies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:22 #11",
+   "answer": "people",
+   "why": "Solomon stands before the entire congregation of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:23 #5",
+   "answer": "people",
+   "why": "Solomon addresses the nation's God in front of Israel's congregation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:25 #5",
+   "answer": "people",
+   "why": "Solomon invokes Israel's God concerning David's royal succession.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:25 #27",
+   "answer": "people",
+   "why": "The promised descendants of David will occupy Israel's royal throne.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:26 #4",
+   "answer": "people",
+   "why": "Solomon asks the nation's God to fulfill his promise to David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:30 #8",
+   "answer": "people",
+   "why": "Israel is explicitly God's people who pray toward the temple.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:33 #4",
+   "answer": "people",
+   "why": "God's people Israel suffer defeat by an enemy because they have sinned.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:34 #11",
+   "answer": "people",
+   "why": "Solomon asks forgiveness for God's people Israel and their return to their land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:36 #13",
+   "answer": "people",
+   "why": "Israel is God's people whose inherited land needs rain.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:38 #14",
+   "answer": "people",
+   "why": "Israel is explicitly all God's people who offer prayers toward the temple.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:36:30+00:00"
+}

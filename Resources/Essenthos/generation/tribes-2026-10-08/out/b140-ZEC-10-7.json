@@ -1,0 +1,81 @@
+{
+ "batch": "b140-ZEC-10-7",
+ "answers": [
+  {
+   "key": "BHSA ZEC 10:7 #5",
+   "answer": "people",
+   "why": "Ephraim has plural hearts and children and is promised collective restoration.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 11:14 #19",
+   "answer": "people",
+   "why": "The broken brotherhood is between the communities of Judah and Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 12:1 #5",
+   "answer": "people",
+   "why": "The oracle concerns Israel in the coming siege of Jerusalem and Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 12:2 #16",
+   "answer": "people",
+   "why": "Judah is involved in the siege against Jerusalem as a territory and community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 12:7 #21",
+   "answer": "people",
+   "why": "Judah is the community whose tents are saved and whose glory Jerusalem must not surpass.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 12:13 #3",
+   "answer": "people",
+   "why": "The house of Levi mourns as a family group with their wives.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA ZEC 14:10 #22",
+   "answer": "people",
+   "why": "Benjamin names a gate associated with the tribal territory in Jerusalem's geographical boundaries.",
+   "confidence": 0.97
+  },
+  {
+   "key": "BHSA MAL 1:1 #5",
+   "answer": "people",
+   "why": "Malachi delivers the oracle to Israel, addressed collectively as 'you' in the next verse.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MAL 2:4 #15",
+   "answer": "people",
+   "why": "The command addresses the priests collectively to preserve God's covenant with Levi's priestly community.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA MAL 2:11 #7",
+   "answer": "people",
+   "why": "Israel is the community in which an abomination is committed, alongside Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MAL 2:16 #7",
+   "answer": "people",
+   "why": "The God of Israel addresses the community about marital treachery.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MAL 3:22 #12",
+   "answer": "people",
+   "why": "All Israel received the law commanded through Moses at Horeb.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:22:58+00:00"
+}

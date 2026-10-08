@@ -1,0 +1,153 @@
+{
+ "batch": "b002-GEN-33-20",
+ "answers": [
+  {
+   "key": "BHSA GEN 33:20 #10",
+   "answer": "man",
+   "why": "Jacob names his altar for God as the God of Israel, his own newly given name.",
+   "confidence": 0.96
+  },
+  {
+   "key": "BHSA GEN 34:7 #22",
+   "answer": "people",
+   "why": "The phrase 'folly in Israel' describes an outrage within the community rather than an act within Jacob personally.",
+   "confidence": 0.94
+  },
+  {
+   "key": "BHSA GEN 34:25 #16",
+   "answer": "man",
+   "why": "Simeon is one of Jacob's two sons and Dinah's brothers who each take a sword.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 34:25 #18",
+   "answer": "man",
+   "why": "Levi is one of Jacob's two sons and Dinah's brothers who each take a sword.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 34:30 #5",
+   "answer": "man",
+   "why": "Jacob directly rebukes his son Simeon for the attack on the city.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 34:30 #8",
+   "answer": "man",
+   "why": "Jacob directly rebukes his son Levi for the attack on the city.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:10 #14",
+   "answer": "man",
+   "why": "God tells Jacob that Israel shall be his personal name.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:10 #21",
+   "answer": "man",
+   "why": "God explicitly gives Jacob the name Israel.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:18 #16",
+   "answer": "man",
+   "why": "The father names Rachel's newborn son Benjamin.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:21 #3",
+   "answer": "man",
+   "why": "Israel journeys and pitches his tent after burying Rachel.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:22 #5",
+   "answer": "man",
+   "why": "Israel is Jacob dwelling in the land when his son sleeps with his concubine.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:22 #13",
+   "answer": "man",
+   "why": "Reuben personally sleeps with Bilhah, his father's concubine.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:22 #22",
+   "answer": "man",
+   "why": "Israel is the father who hears what Reuben has done with his concubine.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:23 #5",
+   "answer": "man",
+   "why": "Reuben is listed as Leah's son and Jacob's firstborn.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:23 #7",
+   "answer": "man",
+   "why": "Simeon is listed among Leah's literal sons in Jacob's household.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:23 #9",
+   "answer": "man",
+   "why": "Levi is listed among Leah's literal sons in Jacob's household.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:23 #11",
+   "answer": "man",
+   "why": "Judah is listed among Leah's literal sons in Jacob's household.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:23 #13",
+   "answer": "man",
+   "why": "Issachar is listed among Leah's literal sons in Jacob's household.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:23 #15",
+   "answer": "man",
+   "why": "Zebulun is listed among Leah's literal sons in Jacob's household.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:24 #5",
+   "answer": "man",
+   "why": "Benjamin is listed with Joseph as Rachel's son.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:25 #6",
+   "answer": "man",
+   "why": "Dan is listed as a son of Bilhah, Rachel's handmaid.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:25 #8",
+   "answer": "man",
+   "why": "Naphtali is listed as a son of Bilhah, Rachel's handmaid.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:26 #6",
+   "answer": "man",
+   "why": "Gad is listed as Zilpah's son among the sons born to Jacob.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA GEN 35:26 #8",
+   "answer": "man",
+   "why": "Asher is listed as Zilpah's son among the sons born to Jacob.",
+   "confidence": 1.0
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:29:22+00:00"
+}

@@ -1,0 +1,93 @@
+{
+ "batch": "b139-ZEP-1-4",
+ "answers": [
+  {
+   "key": "BHSA ZEP 1:4 #5",
+   "answer": "people",
+   "why": "Judah is judged alongside all the inhabitants of Jerusalem for their idolatry.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEP 2:9 #8",
+   "answer": "people",
+   "why": "The God of Israel defends his people against Moab and Ammon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEP 3:13 #2",
+   "answer": "people",
+   "why": "Israel has a remnant described with plural verbs and pronouns.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEP 3:14 #5",
+   "answer": "people",
+   "why": "Israel is commanded to shout alongside Zion and Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HAG 1:1 #32",
+   "answer": "people",
+   "why": "Zerubbabel is governor of Judah, the province and its people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HAG 1:14 #10",
+   "answer": "people",
+   "why": "Judah is the community governed by Zerubbabel as the people rebuild the temple.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HAG 2:2 #8",
+   "answer": "people",
+   "why": "Zerubbabel governs Judah and is addressed alongside the remnant of the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HAG 2:21 #5",
+   "answer": "people",
+   "why": "Judah names the province governed by Zerubbabel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 2:2 #22",
+   "answer": "people",
+   "why": "The horns scattered Israel alongside Judah and Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 2:16 #5",
+   "answer": "people",
+   "why": "The LORD inherits Judah as his portion in the holy land alongside restored Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 9:7 #22",
+   "answer": "people",
+   "why": "The Philistine remnant becomes like a governor within Judah's community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 9:10 #5",
+   "answer": "people",
+   "why": "Chariots are removed from Ephraim's territory in parallel with horses from Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 9:13 #4",
+   "answer": "people",
+   "why": "Judah is pictured as God's bow in the conflict of Zion's sons against Greece's sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ZEC 9:13 #7",
+   "answer": "people",
+   "why": "Ephraim fills God's bow as part of the forces raised against Greece.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:22:57+00:00"
+}

@@ -1,0 +1,129 @@
+{
+ "batch": "b029-JDG-4-4",
+ "answers": [
+  {
+   "key": "BHSA JDG 4:4 #10",
+   "answer": "people",
+   "why": "Deborah judged the Israelite people at that time.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 4:6 #11",
+   "answer": "people",
+   "why": "Kedesh is located in Naphtali's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 4:6 #20",
+   "answer": "people",
+   "why": "The LORD is Israel's national God, commanding Barak to mobilize tribal troops.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 4:10 #5",
+   "answer": "people",
+   "why": "Barak summoned Zebulun's tribal fighters to Kedesh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 4:10 #8",
+   "answer": "people",
+   "why": "Barak summoned Naphtali's tribal fighters, who joined his ten thousand men.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:2 #5",
+   "answer": "people",
+   "why": "The song celebrates Israel's mobilization as the people volunteered.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:3 #14",
+   "answer": "people",
+   "why": "Deborah praises the LORD as the God of the Israelite nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:5 #12",
+   "answer": "people",
+   "why": "The LORD is called Israel's God in the account of his manifestation at Sinai.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:7 #4",
+   "answer": "people",
+   "why": "Village life ceased among the Israelites before Deborah arose.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:7 #14",
+   "answer": "people",
+   "why": "Deborah arose as a mother among the Israelite people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:8 #16",
+   "answer": "people",
+   "why": "The verse speaks of forty thousand people in Israel lacking shields and spears.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:9 #4",
+   "answer": "people",
+   "why": "Israel has leaders who volunteered among the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:11 #13",
+   "answer": "people",
+   "why": "The song recounts the LORD's righteous acts for Israel's villagers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:14 #2",
+   "answer": "people",
+   "why": "Ephraim supplies participants in the battle described by the song.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:14 #16",
+   "answer": "people",
+   "why": "Men handling the writer's staff came from Zebulun.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:15 #19",
+   "answer": "people",
+   "why": "Reuben's divisions deliberated while other tribes joined Deborah and Barak.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:16 #12",
+   "answer": "people",
+   "why": "Reuben's divisions remained among the sheepfolds instead of joining the battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:17 #12",
+   "answer": "people",
+   "why": "Asher remained in its coastal territory during the tribal mobilization.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:18 #1",
+   "answer": "people",
+   "why": "Zebulun is explicitly called a people who risked their lives in battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 5:18 #8",
+   "answer": "people",
+   "why": "Naphtali joined Zebulun in risking their lives on the battlefield.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:33:06+00:00"
+}

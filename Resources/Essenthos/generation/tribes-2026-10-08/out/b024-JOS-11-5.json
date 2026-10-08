@@ -1,0 +1,87 @@
+{
+ "batch": "b024-JOS-11-5",
+ "answers": [
+  {
+   "key": "BHSA JOS 11:5 #19",
+   "answer": "people",
+   "why": "The assembled kings come to fight Israel, Joshua's people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 11:6 #24",
+   "answer": "people",
+   "why": "God promises Joshua to deliver the enemy slain before Israel's army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 11:8 #6",
+   "answer": "people",
+   "why": "Israel defeats and pursues the enemies with plural verbs.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 11:13 #11",
+   "answer": "people",
+   "why": "Israel is the conquering force that leaves the cities unburned except Hazor.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 11:20 #15",
+   "answer": "people",
+   "why": "The cities come against Israel in battle during Joshua's conquest.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 11:23 #21",
+   "answer": "people",
+   "why": "Joshua gives Israel land according to their divisions and tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 12:6 #26",
+   "answer": "people",
+   "why": "Moses gives the territory to the half tribe of Manasseh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 13:6 #21",
+   "answer": "people",
+   "why": "Joshua is commanded to allot the land to Israel as an inheritance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 13:7 #20",
+   "answer": "people",
+   "why": "The half tribe of Manasseh receives land alongside the nine tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 13:13 #20",
+   "answer": "people",
+   "why": "The Geshurites and Maachathites dwell among Israel until the narrator's day.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 13:14 #12",
+   "answer": "people",
+   "why": "The God of Israel provides the Levite tribe's inheritance through sacrifices.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 13:31 #19",
+   "answer": "man",
+   "why": "Manasseh is named as Machir's father in 'Machir the son of Manasseh.'",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 13:33 #12",
+   "answer": "people",
+   "why": "The LORD God of Israel is the Levite tribe's inheritance.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:32:13+00:00"
+}

@@ -1,0 +1,81 @@
+{
+ "batch": "b087-2CH-22-8",
+ "answers": [
+  {
+   "key": "BHSA 2CH 22:8 #13",
+   "answer": "people",
+   "why": "Judah's princes are officials of the kingdom serving in Ahaziah's time.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 23:2 #4",
+   "answer": "people",
+   "why": "They travel through Judah to gather Levites from its cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 23:2 #19",
+   "answer": "people",
+   "why": "Israel's family heads gather at Jerusalem for the covenant with the king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 24:5 #20",
+   "answer": "people",
+   "why": "All Israel is asked to contribute money for repairing the temple.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 24:6 #21",
+   "answer": "people",
+   "why": "The collection is to be brought from Judah and Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 24:6 #34",
+   "answer": "people",
+   "why": "Israel is the congregation associated with Moses' collection for the tabernacle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 24:9 #5",
+   "answer": "people",
+   "why": "The proclamation goes throughout Judah and Jerusalem to collect contributions.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 24:9 #19",
+   "answer": "people",
+   "why": "Moses imposed the collection on Israel in the wilderness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 24:16 #13",
+   "answer": "people",
+   "why": "Jehoiada had done good among Israel through his service to God and the temple.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 24:17 #7",
+   "answer": "people",
+   "why": "Judah's princes approach the reigning king after Jehoiada's death.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 24:18 #21",
+   "answer": "people",
+   "why": "Wrath comes upon Judah and Jerusalem for their collective idolatry.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 24:23 #14",
+   "answer": "people",
+   "why": "The Syrian army invades Judah and Jerusalem and destroys their leaders.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:40:17+00:00"
+}

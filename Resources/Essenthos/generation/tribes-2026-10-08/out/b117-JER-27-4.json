@@ -1,0 +1,105 @@
+{
+ "batch": "b117-JER-27-4",
+ "answers": [
+  {
+   "key": "BHSA JER 27:4 #13",
+   "answer": "people",
+   "why": "The title 'God of Israel' identifies the nation's God in a message to contemporary kings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 27:21 #7",
+   "answer": "people",
+   "why": "'God of Israel' introduces a prophecy about Jerusalem's remaining temple and royal vessels.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 28:2 #6",
+   "answer": "people",
+   "why": "'God of Israel' introduces a claim about breaking Babylon's yoke over the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 28:14 #7",
+   "answer": "people",
+   "why": "'God of Israel' speaks about the nations' subjection to Nebuchadnezzar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 29:2 #13",
+   "answer": "people",
+   "why": "Judah is the kingdom whose princes departed from Jerusalem with Jeconiah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 29:4 #6",
+   "answer": "people",
+   "why": "'God of Israel' addresses the community deported from Jerusalem to Babylon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 29:8 #7",
+   "answer": "people",
+   "why": "'God of Israel' warns the exiled people against prophets and diviners among them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 29:21 #6",
+   "answer": "people",
+   "why": "'God of Israel' announces judgment on false prophets before the exiles' eyes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 29:23 #6",
+   "answer": "people",
+   "why": "The prophets committed adultery and spoke lies within the Israelite community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 29:25 #6",
+   "answer": "people",
+   "why": "'God of Israel' addresses letters sent to Jerusalem's people and priests.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 30:2 #5",
+   "answer": "people",
+   "why": "'God of Israel' introduces promises concerning the restoration of his people Israel and Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 30:3 #12",
+   "answer": "people",
+   "why": "Israel is explicitly called God's people whose captivity and ancestral land will be restored.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 30:3 #14",
+   "answer": "people",
+   "why": "Judah shares the promised restoration from captivity to the land given to their fathers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 30:4 #9",
+   "answer": "people",
+   "why": "The words address Israel, whose restoration from captivity was promised in the preceding verse.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 30:4 #12",
+   "answer": "people",
+   "why": "The words address Judah alongside Israel as the peoples promised restoration from captivity.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 30:10 #12",
+   "answer": "people",
+   "why": "Israel is addressed as a scattered people to be saved from captivity and returned to peace.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:19:56+00:00"
+}

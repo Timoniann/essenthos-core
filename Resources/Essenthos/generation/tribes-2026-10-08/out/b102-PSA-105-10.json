@@ -1,0 +1,81 @@
+{
+ "batch": "b102-PSA-105-10",
+ "answers": [
+  {
+   "key": "BHSA PSA 105:10 #8",
+   "answer": "man",
+   "why": "Israel parallels Jacob in the covenant sequence naming Abraham and Isaac.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA PSA 105:23 #3",
+   "answer": "man",
+   "why": "Israel's arrival in Egypt parallels Jacob's personal sojourn in the land of Ham.",
+   "confidence": 0.93
+  },
+  {
+   "key": "BHSA PSA 106:48 #4",
+   "answer": "people",
+   "why": "The nation's God is praised by all the people after their prayer for gathering from the nations.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 108:9 #4",
+   "answer": "people",
+   "why": "Manasseh is named alongside Gilead among the territories belonging to God.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 108:9 #6",
+   "answer": "people",
+   "why": "Ephraim represents tribal strength alongside other territories and peoples.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 114:1 #3",
+   "answer": "people",
+   "why": "Israel leaves Egypt as the house of Jacob in the national exodus.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 114:2 #2",
+   "answer": "people",
+   "why": "Judah becomes God's sanctuary alongside Israel as his dominion after the exodus.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 114:2 #5",
+   "answer": "people",
+   "why": "Israel is God's dominion in the account of the nation's exodus.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 115:9 #1",
+   "answer": "people",
+   "why": "Israel is addressed collectively, with God called their help and shield.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 118:2 #3",
+   "answer": "people",
+   "why": "Israel is summoned to praise alongside the house of Aaron.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 121:4 #8",
+   "answer": "people",
+   "why": "The LORD is the enduring keeper of Israel and of the worshipper addressed in the surrounding verses.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA PSA 122:4 #9",
+   "answer": "people",
+   "why": "Israel is the nation whose tribes go up to Jerusalem to give thanks.",
+   "confidence": 1.0
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:18:15+00:00"
+}

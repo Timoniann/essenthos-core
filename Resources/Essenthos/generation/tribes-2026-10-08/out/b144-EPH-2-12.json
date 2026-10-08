@@ -1,0 +1,21 @@
+{
+ "batch": "b144-EPH-2-12",
+ "answers": [
+  {
+   "key": "NESTLE1904 EPH 2:12 #12",
+   "answer": "people",
+   "why": "The commonwealth of Israel is the national community from which the Gentiles were alienated.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 PHP 3:5 #5",
+   "answer": "people",
+   "why": "Paul identifies his Israelite ancestry alongside his tribe of Benjamin and Hebrew identity.",
+   "confidence": 0.99
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:23:18+00:00"
+}

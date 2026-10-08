@@ -1,0 +1,99 @@
+{
+ "batch": "b086-2CH-18-16",
+ "answers": [
+  {
+   "key": "BHSA 2CH 18:16 #6",
+   "answer": "people",
+   "why": "All Israel are scattered like sheep and told to return each to his house.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 19:8 #19",
+   "answer": "people",
+   "why": "Jehoshaphat appoints heads of Israel's families to administer judgment in Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 19:11 #20",
+   "answer": "people",
+   "why": "Zebadiah governs the house of Judah in the king's matters.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 20:3 #17",
+   "answer": "people",
+   "why": "Jehoshaphat proclaims a fast throughout all Judah, whose inhabitants then gather.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 20:7 #16",
+   "answer": "people",
+   "why": "Israel is explicitly called God's people, before whom he displaced the land's inhabitants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 20:10 #15",
+   "answer": "people",
+   "why": "Israel came out of Egypt and refrained from invading the neighboring peoples.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 20:19 #19",
+   "answer": "people",
+   "why": "The assembled Levites praise the LORD as the God of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 20:22 #22",
+   "answer": "people",
+   "why": "The enemy armies come against Judah in the battle under Jehoshaphat.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 20:29 #17",
+   "answer": "people",
+   "why": "The surrounding kingdoms hear that the LORD fought Israel's enemies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 20:31 #5",
+   "answer": "people",
+   "why": "Jehoshaphat reigns over Judah from Jerusalem for twenty-five years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 21:3 #19",
+   "answer": "people",
+   "why": "Judah is the territory containing the fortified cities given to Jehoshaphat's sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 21:4 #21",
+   "answer": "people",
+   "why": "Jehoram kills princes of Israel after securing his father's kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 21:8 #8",
+   "answer": "people",
+   "why": "Edom rebels against Judah's dominion and appoints its own king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 21:10 #7",
+   "answer": "people",
+   "why": "Edom's revolt ends its subjection to the kingdom of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 21:17 #4",
+   "answer": "people",
+   "why": "The Philistines and Arabians invade Judah and plunder the king's household.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:40:18+00:00"
+}

@@ -1,0 +1,153 @@
+{
+ "batch": "b092-2CH-33-8",
+ "answers": [
+  {
+   "key": "BHSA 2CH 33:8 #8",
+   "answer": "people",
+   "why": "Israel is the nation promised continued residence in its ancestral land if it obeys Moses' law.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 33:9 #5",
+   "answer": "people",
+   "why": "Manasseh leads Judah and Jerusalem's inhabitants into wrongdoing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 33:14 #42",
+   "answer": "people",
+   "why": "Judah is the territory containing the fortified cities where military commanders are stationed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 33:16 #16",
+   "answer": "people",
+   "why": "Manasseh commands the people of Judah to serve the LORD.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 33:16 #22",
+   "answer": "people",
+   "why": "The LORD is called Israel's God as Judah is commanded to worship him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 33:18 #20",
+   "answer": "people",
+   "why": "The seers speak in the name of the LORD, the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:3 #27",
+   "answer": "people",
+   "why": "Josiah purges Judah and Jerusalem of idolatrous shrines and images.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:5 #10",
+   "answer": "people",
+   "why": "Judah is the kingdom Josiah cleanses alongside Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:6 #6",
+   "answer": "people",
+   "why": "Ephraim names a tribal territory whose cities undergo Josiah's cleansing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:6 #8",
+   "answer": "people",
+   "why": "Simeon names a tribal territory whose cities undergo Josiah's cleansing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:6 #11",
+   "answer": "people",
+   "why": "Josiah's cleansing extends as far as the tribal territory of Naphtali.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:9 #27",
+   "answer": "people",
+   "why": "The Levites collect temple contributions from the people of Manasseh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:9 #29",
+   "answer": "people",
+   "why": "The Levites collect temple contributions from the people of Ephraim.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:9 #34",
+   "answer": "people",
+   "why": "The remnant of Israel contributes money for repairing the temple.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:9 #38",
+   "answer": "people",
+   "why": "All Judah is included among the communities contributing temple funds.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:9 #40",
+   "answer": "people",
+   "why": "Benjamin is included with Judah among the communities contributing temple funds.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:21 #11",
+   "answer": "people",
+   "why": "Josiah seeks guidance for the survivors remaining in Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:21 #14",
+   "answer": "people",
+   "why": "Josiah seeks guidance for the survivors remaining in Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:23 #8",
+   "answer": "people",
+   "why": "Huldah introduces the national oracle as a message from the LORD God of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:26 #19",
+   "answer": "people",
+   "why": "The LORD God of Israel addresses Judah's king concerning the nation's judgment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:29 #10",
+   "answer": "people",
+   "why": "The king gathers the elders of Judah together with those of Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:30 #10",
+   "answer": "people",
+   "why": "All the men of Judah assemble to hear the covenant read.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:32 #10",
+   "answer": "people",
+   "why": "Benjamin is the tribal territory whose residents are made to uphold the covenant.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 34:33 #23",
+   "answer": "people",
+   "why": "Josiah makes everyone present in Israel serve the LORD their God.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:41:14+00:00"
+}

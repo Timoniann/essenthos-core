@@ -1,0 +1,93 @@
+{
+ "batch": "b106-ISA-8-8",
+ "answers": [
+  {
+   "key": "BHSA ISA 8:8 #4",
+   "answer": "people",
+   "why": "The Assyrian invasion passes through Judah and fills the breadth of its land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 8:18 #16",
+   "answer": "people",
+   "why": "Isaiah and his children are signs among the people of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 9:7 #9",
+   "answer": "people",
+   "why": "The word falls upon Israel, identified next as the people of Ephraim and Samaria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 9:8 #6",
+   "answer": "people",
+   "why": "Ephraim is explicitly included among all the people alongside Samaria's inhabitants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 9:11 #11",
+   "answer": "people",
+   "why": "Syrians and Philistines devour Israel, whose people then fail to return to the LORD.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 9:13 #5",
+   "answer": "people",
+   "why": "Israel's head and tail are explained as its elders and false prophets.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 9:20 #1",
+   "answer": "people",
+   "why": "Manasseh attacks Ephraim in communal strife, and both oppose Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 9:20 #3",
+   "answer": "people",
+   "why": "Ephraim is the community attacked by Manasseh in the described strife.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 9:20 #5",
+   "answer": "people",
+   "why": "Ephraim attacks Manasseh, and the two communities unite against Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 9:20 #7",
+   "answer": "people",
+   "why": "Manasseh is the community attacked by Ephraim before both oppose Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 9:20 #11",
+   "answer": "people",
+   "why": "Judah is the kingdom opposed jointly by Manasseh and Ephraim.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 10:17 #4",
+   "answer": "people",
+   "why": "The light of Israel parallels its Holy One, referring to the nation's God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 10:20 #26",
+   "answer": "people",
+   "why": "The surviving national remnant relies upon the LORD, the Holy One of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 10:22 #5",
+   "answer": "people",
+   "why": "Israel is addressed as a multitude like the sea's sand from which a remnant returns.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:18:40+00:00"
+}

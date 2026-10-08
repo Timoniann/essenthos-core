@@ -1,0 +1,81 @@
+{
+ "batch": "b111-ISA-45-3",
+ "answers": [
+  {
+   "key": "BHSA ISA 45:3 #19",
+   "answer": "people",
+   "why": "The LORD identifies himself as the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 45:4 #5",
+   "answer": "people",
+   "why": "Israel is God's chosen people for whose sake he calls the ruler by name.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA ISA 45:11 #5",
+   "answer": "people",
+   "why": "The Holy One of Israel is the nation's maker, speaking concerning his children.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 45:15 #6",
+   "answer": "people",
+   "why": "The God of Israel is invoked as the nation's saviour.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 45:17 #1",
+   "answer": "people",
+   "why": "Israel's salvation is followed by plural assurances that its people will not be ashamed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 46:13 #15",
+   "answer": "people",
+   "why": "God promises salvation in Zion for Israel as his glory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 47:4 #6",
+   "answer": "people",
+   "why": "The collective phrase 'our redeemer' identifies the Holy One of Israel as the people's God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 48:1 #13",
+   "answer": "man",
+   "why": "Coming forth from Judah's waters describes descent from the ancestor Judah.",
+   "confidence": 0.91
+  },
+  {
+   "key": "BHSA ISA 48:1 #23",
+   "answer": "people",
+   "why": "The house of Jacob invokes the God of Israel as its national God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 48:2 #10",
+   "answer": "people",
+   "why": "Those claiming the holy city rely upon the God of their nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 48:12 #5",
+   "answer": "people",
+   "why": "God addresses his called people collectively as Jacob and Israel.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA ISA 48:17 #6",
+   "answer": "people",
+   "why": "The Holy One of Israel addresses the nation as its redeemer and teacher.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:19:18+00:00"
+}

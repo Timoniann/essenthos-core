@@ -1,0 +1,123 @@
+{
+ "batch": "b015-NUM-22-2",
+ "answers": [
+  {
+   "key": "BHSA NUM 22:2 #10",
+   "answer": "people",
+   "why": "Balak sees the nation's victories over the Amorites, and Moab fears its numerous people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 23:7 #22",
+   "answer": "people",
+   "why": "Balak asks Balaam to curse the Israelite people confronting Moab.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 23:10 #9",
+   "answer": "people",
+   "why": "The innumerable fourth part of Israel refers to the people described in the preceding verse.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 23:21 #11",
+   "answer": "people",
+   "why": "Israel is the community with God among them, whom he brought out of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 23:23 #10",
+   "answer": "people",
+   "why": "The protected Israel is the people whom God brought out of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 23:23 #19",
+   "answer": "people",
+   "why": "God's deeds concern the same people described as rising like a lion in the next verse.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 24:1 #12",
+   "answer": "people",
+   "why": "The Israel whom God blesses is seen in the next verse encamped by tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 24:2 #9",
+   "answer": "people",
+   "why": "Balaam sees Israel dwelling according to its tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 24:5 #6",
+   "answer": "people",
+   "why": "Balaam praises the tents and dwellings of the encamped nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 24:17 #17",
+   "answer": "people",
+   "why": "A future ruler arises from Israel to defeat Moab, followed by Israel's national victory.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA NUM 24:18 #11",
+   "answer": "people",
+   "why": "Israel acts valiantly as Edom and Seir become conquered possessions.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 25:1 #3",
+   "answer": "people",
+   "why": "Israel's stay at Shittim is immediately described as the people's involvement with Moabite women.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 25:3 #3",
+   "answer": "people",
+   "why": "Israel joining Baalpeor continues the account of the people worshipping Moabite gods.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 25:3 #11",
+   "answer": "people",
+   "why": "The LORD's anger falls on the people who joined in Baalpeor worship.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 25:4 #26",
+   "answer": "people",
+   "why": "Punishing the people's leaders is intended to turn the LORD's anger away from the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 25:5 #6",
+   "answer": "people",
+   "why": "Moses addresses the nation's judges and commands them to punish their men.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 25:8 #5",
+   "answer": "people",
+   "why": "The man of Israel is a member of the Israelite community whom Phinehas pursues.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 25:8 #15",
+   "answer": "people",
+   "why": "Israel identifies the national membership of the man slain with the woman.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 25:14 #4",
+   "answer": "people",
+   "why": "The Israelite slain is identified as Zimri, a leader among the Simeonites.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:31:08+00:00"
+}

@@ -1,0 +1,81 @@
+{
+ "batch": "b095-EZR-6-21",
+ "answers": [
+  {
+   "key": "BHSA EZR 6:21 #25",
+   "answer": "people",
+   "why": "The returned exiles seek the LORD as the God of their nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 6:22 #27",
+   "answer": "people",
+   "why": "The God of Israel is worshipped in the temple the returned community is rebuilding.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 7:6 #17",
+   "answer": "people",
+   "why": "The LORD God of Israel gave the law of Moses to the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 7:10 #17",
+   "answer": "people",
+   "why": "Ezra prepares to teach statutes and judgments among the people of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 7:11 #24",
+   "answer": "people",
+   "why": "The LORD's commandments and statutes apply to the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 7:28 #30",
+   "answer": "people",
+   "why": "Ezra gathers chief men from the Israelite community to travel with him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 8:18 #16",
+   "answer": "man",
+   "why": "The genealogy names Levi as Mahli's ancestor and Israel's son.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 8:18 #18",
+   "answer": "man",
+   "why": "Israel is named as Levi's father in the genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 8:25 #28",
+   "answer": "people",
+   "why": "All Israel present joins the king and his officials in making offerings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 8:29 #19",
+   "answer": "people",
+   "why": "Israel has family heads at Jerusalem before whom the offerings will be weighed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 8:35 #13",
+   "answer": "people",
+   "why": "The returned exiles offer sacrifices to the God of their nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 8:35 #19",
+   "answer": "people",
+   "why": "Twelve bullocks are offered on behalf of all Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:41:28+00:00"
+}

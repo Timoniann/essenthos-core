@@ -226,6 +226,42 @@ public sealed class VerseReadingLoaderTests : IDisposable
         row.Source.Should().Contain("a third time where the two differed").And.EndWith("the name in the verse names the record");
     }
 
+    /// <summary>
+    /// Where the pass telling the man from the people has read the name as the man, the people is not
+    /// written beside him, and a second run agrees with the first.
+    /// </summary>
+    [Fact]
+    public async Task ANameReadAsTheManIsNotGivenThePeopleBesideHim()
+    {
+        var hebrew = _db.WordAt(_hebrew, 39, 23, 2).Id;
+        await _db.WordEntities.Where(a => a.WordId == hebrew)
+            .ExecuteUpdateAsync(set => set.SetProperty(a => a.Source, EponymReadingLoader.ReadingSource));
+
+        var outcome = await Loader().Load(File(TheHouseOfIsrael()));
+        var again = await Loader().Load(File(TheHouseOfIsrael()));
+
+        (await Named()).Should().NotContain((hebrew, _israelites.Id));
+        outcome.Named.Should().Be(1);
+        again.AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>The same where the reading only stands as a claim on a row another pass wrote.</summary>
+    [Fact]
+    public async Task ANameReadAsTheManOnAnotherPassesRowIsNotGivenThePeopleEither()
+    {
+        var hebrew = _db.WordAt(_hebrew, 39, 23, 2).Id;
+        var row = await _db.WordEntities.SingleAsync(a => a.WordId == hebrew);
+        _db.WordEntityClaims.Add(new WordEntityClaim
+        {
+            WordEntityId = row.Id, Method = LinkMethod.ModelReading, Confidence = 0.9,
+            Source = EponymReadingLoader.ReadingSource,
+        });
+        await _db.SaveChangesAsync();
+
+        (await Loader().Load(File(TheHouseOfIsrael()))).Named.Should().Be(1);
+        (await Named()).Should().NotContain((hebrew, _israelites.Id));
+    }
+
     /// <summary>The Philistine: the word keeps the people and gains the man it stands for.</summary>
     [Fact]
     public async Task AManStandsBesideThePeopleTheWordNames()

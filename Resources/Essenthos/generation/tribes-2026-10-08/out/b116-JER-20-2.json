@@ -1,0 +1,81 @@
+{
+ "batch": "b116-JER-20-2",
+ "answers": [
+  {
+   "key": "BHSA JER 20:2 #17",
+   "answer": "people",
+   "why": "The Benjamin gate is a geographical designation associated with Benjamin's tribe, not the patriarch himself.",
+   "confidence": 0.96
+  },
+  {
+   "key": "BHSA JER 21:4 #5",
+   "answer": "people",
+   "why": "The God of Israel addresses the nation's king and defenders during the Babylonian siege.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA JER 22:30 #30",
+   "answer": "people",
+   "why": "Ruling in Judah refers to governing the kingdom from David's throne.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA JER 23:2 #6",
+   "answer": "people",
+   "why": "The God of Israel condemns the shepherds who have scattered his people.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA JER 23:6 #4",
+   "answer": "people",
+   "why": "Judah is the people promised salvation under the coming king.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA JER 23:6 #6",
+   "answer": "people",
+   "why": "Israel is the nation promised safe dwelling under the coming king.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA JER 23:13 #16",
+   "answer": "people",
+   "why": "Israel is explicitly called God's people whom Samaria's prophets led astray.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA JER 24:1 #27",
+   "answer": "people",
+   "why": "Judah names the kingdom whose princes were deported from Jerusalem to Babylon.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA JER 24:5 #5",
+   "answer": "people",
+   "why": "The God of Israel promises care and restoration for the exiled people of Judah.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA JER 25:15 #6",
+   "answer": "people",
+   "why": "The God of Israel is the national divine title in this judgment against nations.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA JER 25:27 #9",
+   "answer": "people",
+   "why": "The God of Israel is the nation's God who commands the kingdoms to drink the cup of judgment.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA JER 26:10 #4",
+   "answer": "people",
+   "why": "Judah names the kingdom whose officials leave the royal palace to hear Jeremiah's case.",
+   "confidence": 1.0
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:19:51+00:00"
+}

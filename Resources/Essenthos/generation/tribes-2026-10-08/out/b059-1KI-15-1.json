@@ -1,0 +1,81 @@
+{
+ "batch": "b059-1KI-15-1",
+ "answers": [
+  {
+   "key": "BHSA 1KI 15:1 #15",
+   "answer": "people",
+   "why": "Abijam reigns over the kingdom of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:17 #7",
+   "answer": "people",
+   "why": "Baasha attacks Judah during his war with King Asa.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:22 #8",
+   "answer": "people",
+   "why": "Asa summons all Judah, and they carry away Ramah's building materials.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:22 #31",
+   "answer": "people",
+   "why": "Geba is identified as belonging to Benjamin's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:25 #7",
+   "answer": "people",
+   "why": "Nadab begins to reign over the kingdom of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:25 #18",
+   "answer": "people",
+   "why": "Nadab reigns over Israel for two years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:26 #19",
+   "answer": "people",
+   "why": "The king's inherited sin leads the people of Israel into sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:27 #23",
+   "answer": "people",
+   "why": "All Israel joins Nadab in besieging Gibbethon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:30 #10",
+   "answer": "people",
+   "why": "Jeroboam's sins cause the people of Israel to sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:30 #18",
+   "answer": "people",
+   "why": "The LORD is called the God of the nation Israel that Jeroboam led into sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:33 #14",
+   "answer": "people",
+   "why": "Baasha reigns over all Israel from Tirzah for twenty-four years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 15:34 #19",
+   "answer": "people",
+   "why": "Baasha follows Jeroboam's sin that led the people of Israel into sin.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:36:50+00:00"
+}

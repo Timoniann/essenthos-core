@@ -1,0 +1,117 @@
+{
+ "batch": "b099-PSA-22-3",
+ "answers": [
+  {
+   "key": "BHSA PSA 22:4 #6",
+   "answer": "people",
+   "why": "Israel's praises and the trust of 'our fathers' describe the worshipping nation.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA PSA 25:22 #4",
+   "answer": "people",
+   "why": "The prayer asks God to redeem the nation Israel from all its troubles.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA PSA 41:14 #4",
+   "answer": "people",
+   "why": "'God of Israel' names the God of the nation in this closing blessing.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 48:12 #6",
+   "answer": "people",
+   "why": "The daughters of Judah rejoice alongside Zion, referring to Judah's towns or inhabitants.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA PSA 50:7 #5",
+   "answer": "people",
+   "why": "God explicitly addresses Israel as 'my people.'",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 53:7 #6",
+   "answer": "people",
+   "why": "Israel's salvation is explained as God restoring his people's fortunes.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 53:7 #15",
+   "answer": "people",
+   "why": "Israel rejoices when God brings back the captivity of his people.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 59:6 #7",
+   "answer": "people",
+   "why": "'God of Israel' identifies the nation's God in a prayer concerning the nations.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 60:9 #5",
+   "answer": "people",
+   "why": "Manasseh appears among territories and tribes claimed by God.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 60:9 #7",
+   "answer": "people",
+   "why": "Ephraim represents tribal strength in a declaration about territories and nations.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 63:1 #8",
+   "answer": "people",
+   "why": "The wilderness of Judah is the territory bearing the tribe's name.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 68:9 #15",
+   "answer": "people",
+   "why": "The God of Israel marches before his people through the wilderness at Sinai.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 68:27 #8",
+   "answer": "people",
+   "why": "Israel names the community whose worshipping congregations include the tribes listed next.",
+   "confidence": 0.94
+  },
+  {
+   "key": "BHSA PSA 68:28 #2",
+   "answer": "people",
+   "why": "Benjamin participates in the procession alongside the princes of other tribes.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 68:28 #9",
+   "answer": "people",
+   "why": "The princes of Zebulun represent their tribe in the assembled procession.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 68:28 #11",
+   "answer": "people",
+   "why": "The princes of Naphtali represent their tribe in the assembled procession.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 68:35 #6",
+   "answer": "people",
+   "why": "God's majesty is over Israel, identified next as the people receiving his strength.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA PSA 68:36 #6",
+   "answer": "people",
+   "why": "The God of Israel gives strength and power to his people.",
+   "confidence": 1.0
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:17:55+00:00"
+}

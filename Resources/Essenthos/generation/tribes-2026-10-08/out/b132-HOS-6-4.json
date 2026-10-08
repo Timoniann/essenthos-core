@@ -1,0 +1,81 @@
+{
+ "batch": "b132-HOS-6-4",
+ "answers": [
+  {
+   "key": "BHSA HOS 6:4 #4",
+   "answer": "people",
+   "why": "Ephraim is addressed for fleeting faithfulness alongside Judah, with plural 'your goodness.'",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 6:4 #8",
+   "answer": "people",
+   "why": "Judah shares the collective rebuke with Ephraim for their fleeting faithfulness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 6:10 #3",
+   "answer": "people",
+   "why": "The house of Israel is the community in which the prophet sees wickedness and defilement.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 6:10 #9",
+   "answer": "people",
+   "why": "Ephraim's whoredom describes the nation's unfaithfulness that defiles Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 6:10 #11",
+   "answer": "people",
+   "why": "Israel is defiled by the collective wickedness and whoredom described in the verse.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 6:11 #2",
+   "answer": "people",
+   "why": "Judah is assigned a harvest in the context of restoring the fortunes of God's people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 7:1 #4",
+   "answer": "people",
+   "why": "Healing Israel exposes collective wrongdoing associated with Ephraim and Samaria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 7:1 #8",
+   "answer": "people",
+   "why": "Ephraim's iniquity parallels Samaria's wickedness, followed by plural 'they commit falsehood.'",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 7:8 #1",
+   "answer": "people",
+   "why": "Ephraim mixes among other peoples in a context concerning its judges and kings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 7:8 #7",
+   "answer": "people",
+   "why": "The unturned cake metaphor describes the same Ephraim whose national strength strangers consume.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 7:10 #4",
+   "answer": "people",
+   "why": "Israel's pride accompanies the people's refusal to return to the LORD their God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 7:11 #3",
+   "answer": "people",
+   "why": "Ephraim seeks Egypt and Assyria, with plural verbs describing the nation's actions.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:21:58+00:00"
+}

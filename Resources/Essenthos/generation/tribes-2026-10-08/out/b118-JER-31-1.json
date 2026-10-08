@@ -1,0 +1,93 @@
+{
+ "batch": "b118-JER-31-1",
+ "answers": [
+  {
+   "key": "BHSA JER 31:1 #14",
+   "answer": "people",
+   "why": "Israel's families collectively become the LORD's people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 31:2 #15",
+   "answer": "people",
+   "why": "Israel is identified as the people who survived the sword.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 31:4 #6",
+   "answer": "people",
+   "why": "The virgin Israel personifies the nation restored to rejoicing and planting vineyards.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 31:7 #25",
+   "answer": "people",
+   "why": "The remnant of Israel is explicitly called God's people and gathered from exile.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 31:9 #21",
+   "answer": "people",
+   "why": "God calls himself Israel's father while leading the returning company of exiles.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 31:9 #25",
+   "answer": "people",
+   "why": "Ephraim is God's figurative firstborn in the restoration of the exiled people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 31:10 #15",
+   "answer": "people",
+   "why": "Israel is the scattered people whom God gathers and guards like a flock.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 31:18 #3",
+   "answer": "people",
+   "why": "Ephraim personifies the chastised people whose children will return to their territory.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA JER 31:20 #5",
+   "answer": "people",
+   "why": "God describes repentant Ephraim as a dear child before calling Israel back to its cities.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA JER 31:21 #16",
+   "answer": "people",
+   "why": "The virgin Israel is summoned to return to its cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 31:23 #6",
+   "answer": "people",
+   "why": "The God of Israel promises restoration from captivity to the nation's land and cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 31:24 #4",
+   "answer": "people",
+   "why": "Judah and its cities are inhabited by farmers and shepherds after restoration.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 31:36 #14",
+   "answer": "people",
+   "why": "Israel's continuing offspring are explicitly described as a nation before God.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA JER 31:37 #22",
+   "answer": "people",
+   "why": "Israel's offspring are the enduring national community whose deeds God addresses.",
+   "confidence": 0.98
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:20:08+00:00"
+}

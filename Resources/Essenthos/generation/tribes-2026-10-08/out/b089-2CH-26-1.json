@@ -1,0 +1,93 @@
+{
+ "batch": "b089-2CH-26-1",
+ "answers": [
+  {
+   "key": "BHSA 2CH 26:1 #5",
+   "answer": "people",
+   "why": "The people of Judah make Uzziah their king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 26:2 #8",
+   "answer": "people",
+   "why": "Eloth is restored to the kingdom of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 27:7 #17",
+   "answer": "people",
+   "why": "Judah names the kingdom whose kings' records contain Jotham's acts.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:6 #7",
+   "answer": "people",
+   "why": "Pekah kills 120,000 warriors in Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:7 #5",
+   "answer": "people",
+   "why": "Zichri is a warrior belonging to Ephraim.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:9 #29",
+   "answer": "people",
+   "why": "Judah is the population delivered into the army's hands and slaughtered.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:13 #32",
+   "answer": "people",
+   "why": "Ephraim's leaders describe divine wrath against their sinful nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:17 #8",
+   "answer": "people",
+   "why": "The Edomites attack Judah and carry away captives.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:18 #12",
+   "answer": "people",
+   "why": "The invaded cities belong to Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:19 #5",
+   "answer": "people",
+   "why": "The LORD humbles Judah because of King Ahaz's conduct.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:19 #14",
+   "answer": "people",
+   "why": "Ahaz brings disorder upon Judah during his reign.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:23 #31",
+   "answer": "people",
+   "why": "Ahaz's foreign gods bring ruin upon him and all Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:25 #8",
+   "answer": "people",
+   "why": "Ahaz establishes high places throughout the cities belonging to Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 28:26 #19",
+   "answer": "people",
+   "why": "Israel names a kingdom whose royal records recount Ahaz's acts.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:40:40+00:00"
+}

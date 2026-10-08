@@ -1,0 +1,87 @@
+{
+ "batch": "b074-1CH-13-2",
+ "answers": [
+  {
+   "key": "BHSA 1CH 13:2 #7",
+   "answer": "people",
+   "why": "David addresses the whole congregation of Israel about gathering their brethren.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 13:5 #6",
+   "answer": "people",
+   "why": "David gathers all Israel from across the country to bring the ark.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 13:6 #6",
+   "answer": "people",
+   "why": "All Israel accompanies David to bring up the ark.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 13:6 #12",
+   "answer": "people",
+   "why": "Kirjathjearim belongs to Judah's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 13:8 #5",
+   "answer": "people",
+   "why": "All Israel celebrates before God with David and musical instruments.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 14:2 #10",
+   "answer": "people",
+   "why": "The LORD establishes David as king over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 14:2 #19",
+   "answer": "people",
+   "why": "Israel is explicitly called his people, for whose sake David's kingdom is exalted.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 14:8 #11",
+   "answer": "people",
+   "why": "David is anointed king over all Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 15:3 #6",
+   "answer": "people",
+   "why": "David gathers all Israel to Jerusalem to bring up the ark.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 15:12 #21",
+   "answer": "people",
+   "why": "The LORD is called Israel's God as David instructs the Levites to carry the ark.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 15:14 #14",
+   "answer": "people",
+   "why": "The priests and Levites prepare to carry the ark of the nation's God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 15:25 #6",
+   "answer": "people",
+   "why": "Israel's elders accompany David and the captains to bring up the ark.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 15:28 #3",
+   "answer": "people",
+   "why": "All Israel brings up the ark with shouting and musical instruments.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:38:39+00:00"
+}

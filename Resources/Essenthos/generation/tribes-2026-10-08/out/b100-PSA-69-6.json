@@ -1,0 +1,81 @@
+{
+ "batch": "b100-PSA-69-6",
+ "answers": [
+  {
+   "key": "BHSA PSA 69:7 #13",
+   "answer": "people",
+   "why": "“God of Israel” names the God of the nation whose members seek him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 71:22 #14",
+   "answer": "people",
+   "why": "“Holy One of Israel” identifies God in relation to the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 72:18 #5",
+   "answer": "people",
+   "why": "The blessing praises the LORD as the nation's “God of Israel.”",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 73:1 #7",
+   "answer": "people",
+   "why": "Israel is described collectively as those who are pure in heart.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 76:2 #3",
+   "answer": "people",
+   "why": "“In Judah” denotes the people's territory, alongside Salem and Zion.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 76:2 #6",
+   "answer": "people",
+   "why": "God's name is great among Israel, parallel to his being known in Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 78:5 #10",
+   "answer": "people",
+   "why": "The law in Israel is entrusted to fathers to teach successive generations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 78:21 #16",
+   "answer": "people",
+   "why": "God's anger falls on the wilderness people because “they believed not.”",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 78:31 #12",
+   "answer": "people",
+   "why": "Israel's young men are struck down among the people eating in the wilderness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 78:41 #8",
+   "answer": "people",
+   "why": "The wilderness people provoke their God, called the “Holy One of Israel.”",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 78:59 #9",
+   "answer": "people",
+   "why": "God rejects Israel because of their high places and graven images.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 78:71 #12",
+   "answer": "people",
+   "why": "Israel is God's inheritance whom David shepherds, parallel to “Jacob his people.”",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:17:51+00:00"
+}

@@ -1,0 +1,81 @@
+{
+ "batch": "b101-PSA-80-1",
+ "answers": [
+  {
+   "key": "BHSA PSA 80:2 #2",
+   "answer": "people",
+   "why": "Israel is the flock shepherded by God in a communal plea for salvation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 80:3 #3",
+   "answer": "people",
+   "why": "Ephraim is one of the tribes asking God to come and save them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 80:3 #5",
+   "answer": "people",
+   "why": "Benjamin is named alongside Ephraim and Manasseh in the communal plea to save us.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 80:3 #7",
+   "answer": "people",
+   "why": "Manasseh is named with two other tribes seeking God's saving strength.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 81:5 #4",
+   "answer": "people",
+   "why": "Israel is the community bound by the statute governing the communal feast.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 81:9 #6",
+   "answer": "people",
+   "why": "God addresses Israel as my people, recalling their testing at Meribah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 81:12 #8",
+   "answer": "people",
+   "why": "Israel parallels my people who refused God's voice after being brought out of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 81:14 #5",
+   "answer": "people",
+   "why": "Israel parallels my people and takes the plural verb walk in the Hebrew.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 83:5 #11",
+   "answer": "people",
+   "why": "The enemies seek to destroy Israel as a nation and erase its name.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 89:19 #8",
+   "answer": "people",
+   "why": "The Holy One of Israel is the God of the community speaking of our shield and king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 97:8 #8",
+   "answer": "people",
+   "why": "The daughters of Judah are its towns or communities rejoicing alongside Zion.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 98:3 #7",
+   "answer": "people",
+   "why": "The house of Israel is the nation receiving God's mercy and faithfulness before the world.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:17:56+00:00"
+}

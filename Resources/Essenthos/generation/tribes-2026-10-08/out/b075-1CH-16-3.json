@@ -1,0 +1,87 @@
+{
+ "batch": "b075-1CH-16-3",
+ "answers": [
+  {
+   "key": "BHSA 1CH 16:3 #6",
+   "answer": "people",
+   "why": "David distributes food to every Israelite, both men and women.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 16:4 #23",
+   "answer": "people",
+   "why": "The Levites praise the LORD as the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 16:17 #8",
+   "answer": "man",
+   "why": "Israel parallels Jacob as the patriarch receiving the covenant after Abraham and Isaac.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA 1CH 16:36 #4",
+   "answer": "people",
+   "why": "All the people bless the God of Israel after praying for deliverance from the nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 16:40 #29",
+   "answer": "people",
+   "why": "Israel is the community commanded to observe the LORD's written law and sacrifices.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 17:5 #12",
+   "answer": "people",
+   "why": "God recalls bringing up Israel and accompanying the people in the tabernacle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 17:6 #7",
+   "answer": "people",
+   "why": "God describes walking with all Israel during the time of its judges.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 17:6 #14",
+   "answer": "people",
+   "why": "Israel has judges whom God commanded to shepherd his people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 17:7 #27",
+   "answer": "people",
+   "why": "God appointed David ruler over his people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 17:9 #6",
+   "answer": "people",
+   "why": "God promises his people Israel a settled place safe from oppression.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 17:10 #10",
+   "answer": "people",
+   "why": "God appointed judges over his people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 17:21 #5",
+   "answer": "people",
+   "why": "Israel is explicitly called a nation redeemed from Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 17:22 #5",
+   "answer": "people",
+   "why": "Israel is explicitly God's people, and God became their God.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:38:53+00:00"
+}

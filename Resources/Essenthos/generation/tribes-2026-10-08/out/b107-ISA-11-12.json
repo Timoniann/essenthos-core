@@ -1,0 +1,93 @@
+{
+ "batch": "b107-ISA-11-12",
+ "answers": [
+  {
+   "key": "BHSA ISA 11:12 #10",
+   "answer": "people",
+   "why": "Israel's outcasts are gathered from among the nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 11:12 #13",
+   "answer": "people",
+   "why": "Judah's dispersed people are gathered from the four corners of the earth.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 11:13 #4",
+   "answer": "people",
+   "why": "Ephraim's envy ends as the scattered peoples are restored and united.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 11:13 #7",
+   "answer": "people",
+   "why": "Judah's adversaries are removed in the restoration of the divided peoples.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 11:13 #9",
+   "answer": "people",
+   "why": "Ephraim ceases envying Judah, and they subsequently fight neighboring peoples together.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 11:13 #13",
+   "answer": "people",
+   "why": "Judah is the people whom Ephraim will no longer envy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 11:13 #15",
+   "answer": "people",
+   "why": "Judah ceases hostility toward Ephraim as the two peoples become united.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 11:13 #19",
+   "answer": "people",
+   "why": "Ephraim is the people whom Judah will no longer vex.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 11:16 #15",
+   "answer": "people",
+   "why": "Israel's coming up from Egypt recalls the nation's exodus.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 12:6 #11",
+   "answer": "people",
+   "why": "The Holy One of Israel dwells among the inhabitants of Zion.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 14:2 #11",
+   "answer": "people",
+   "why": "The house of Israel returns to its land and rules over former oppressors.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 17:3 #5",
+   "answer": "people",
+   "why": "Fortifications cease from Ephraim in parallel with the kingdom disappearing from Damascus.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 17:6 #22",
+   "answer": "people",
+   "why": "The God of Israel announces the survival of a small remnant of the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 17:7 #15",
+   "answer": "people",
+   "why": "The Holy One of Israel is the nation's God, toward whom people turn from idols.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:18:40+00:00"
+}

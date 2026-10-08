@@ -57,8 +57,9 @@ internal sealed record VerseReadingOutcome(
 /// **Where a noun or a name stands for the record, the word is annotated too**, on the original and
 /// across the links, as a reading with its confidence. A word that already names another record is
 /// never touched, with one exception the corpus already makes everywhere: a people stands beside the
-/// person it is named after, so <em>Israel</em> in <em>the house of Israel</em> keeps Jacob and gains
-/// the Israelites, and <em>the Philistine</em> keeps the Philistines and gains Goliath.
+/// person it is named after, so <em>the Philistine</em> keeps the Philistines and gains Goliath. A
+/// tribe's name the man-or-people pass has answered (<see cref="EponymReadingLoader"/>) is not given
+/// the other of the two beside it.
 /// </para>
 ///
 /// <para>
@@ -69,10 +70,15 @@ internal sealed record VerseReadingOutcome(
 /// </summary>
 internal sealed class VerseReadingLoader(AppDbContext db, ILogger<VerseReadingLoader> logger)
 {
-    /// <summary>Each word a reading points at, with every record it already names and that record's kind.</summary>
+    /// <summary>
+    /// Each word a reading points at, with every record it already names, that record's kind, and
+    /// whether the man-or-people pass stands behind the answer.
+    /// </summary>
     private const string Words =
         """
-        SELECT x.n, w.id, coalesce(w.strong_number, ''), a.entity_id, e.kind, a.source
+        SELECT x.n, w.id, coalesce(w.strong_number, ''), a.entity_id, e.kind, a.source,
+               a.source = ANY(@decided) OR EXISTS (SELECT 1 FROM word_entity_claim c
+                                                   WHERE c.word_entity_id = a.id AND c.source = ANY(@decided))
         FROM unnest(@texts, @books, @chapters, @verses, @positions) WITH ORDINALITY AS x(slug, b, c, v, p, n)
         JOIN text t ON t.slug = x.slug
         JOIN verse_reference r ON r.canonical_book = x.b AND r.canonical_chapter = x.c
@@ -235,7 +241,7 @@ internal sealed class VerseReadingLoader(AppDbContext db, ILogger<VerseReadingLo
             return (seeds, 0, 0);
         }
 
-        var found = new Dictionary<long, (long Id, string Strong, List<(int Entity, string Kind)> Names)>();
+        var found = new Dictionary<long, (long Id, string Strong, List<(int Entity, string Kind, bool Decided)> Names)>();
         var ours = file.WordSources.ToHashSet(StringComparer.Ordinal);
         await using (var command = new NpgsqlCommand(Words, connection))
         {
@@ -244,6 +250,7 @@ internal sealed class VerseReadingLoader(AppDbContext db, ILogger<VerseReadingLo
             command.Parameters.AddWithValue("chapters", pointed.Select(p => p.At.Chapter).ToArray());
             command.Parameters.AddWithValue("verses", pointed.Select(p => p.At.Verse).ToArray());
             command.Parameters.AddWithValue("positions", pointed.Select(p => p.Word.Position).ToArray());
+            command.Parameters.AddWithValue("decided", EponymReadingLoader.Sources);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
@@ -255,7 +262,7 @@ internal sealed class VerseReadingLoader(AppDbContext db, ILogger<VerseReadingLo
 
                 if (!reader.IsDBNull(3) && !ours.Contains(reader.GetString(5)))
                 {
-                    word.Names.Add((reader.GetInt32(3), reader.GetString(4)));
+                    word.Names.Add((reader.GetInt32(3), reader.GetString(4), reader.GetBoolean(6)));
                 }
             }
         }
@@ -272,7 +279,7 @@ internal sealed class VerseReadingLoader(AppDbContext db, ILogger<VerseReadingLo
                 continue;
             }
 
-            if (word.Names.Any(other => other.Entity != record.Id && !Beside(record.Kind, other.Kind))
+            if (word.Names.Any(other => other.Entity != record.Id && (other.Decided || !Beside(record.Kind, other.Kind)))
                 || !taken.Add(word.Id))
             {
                 named++;

@@ -1,0 +1,147 @@
+{
+ "batch": "b039-1SA-5-7",
+ "answers": [
+  {
+   "key": "BHSA 1SA 5:7 #13",
+   "answer": "people",
+   "why": "The Philistines identify the ark with Israel's national God, contrasting him with Dagon their god.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 5:8 #17",
+   "answer": "people",
+   "why": "The Philistine lords discuss what to do with the ark of Israel's national God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 5:8 #24",
+   "answer": "people",
+   "why": "The ark being sent to Gath belongs to the God of the Israelite nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 5:8 #30",
+   "answer": "people",
+   "why": "They transport the ark of the God worshipped by the Israelite nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 5:10 #27",
+   "answer": "people",
+   "why": "The Ekronites fear the ark of Israel's national God will kill their people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 5:11 #15",
+   "answer": "people",
+   "why": "The Philistines ask to return the ark of Israel's national God to its own place.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 6:3 #8",
+   "answer": "people",
+   "why": "The Philistine priests prescribe an offering when returning the ark of Israel's national God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 6:5 #17",
+   "answer": "people",
+   "why": "The Philistines must honor Israel's national God so he will spare them, their gods, and their land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:2 #22",
+   "answer": "people",
+   "why": "All the house of Israel collectively laments after the LORD in Samuel's time.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:3 #7",
+   "answer": "people",
+   "why": "Samuel addresses the whole house of Israel with plural commands to remove idols.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:5 #7",
+   "answer": "people",
+   "why": "Samuel commands all Israel to assemble at Mizpeh and promises to pray for them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:7 #15",
+   "answer": "people",
+   "why": "The Philistine lords advance against the Israelites assembled at Mizpeh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:9 #19",
+   "answer": "people",
+   "why": "Samuel cries to the LORD on behalf of the Israelites threatened by the Philistines.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:10 #14",
+   "answer": "people",
+   "why": "The Philistines approach to fight the assembled Israelite people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:10 #34",
+   "answer": "people",
+   "why": "The Philistines are defeated before the Israelites, who then pursue them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:11 #4",
+   "answer": "people",
+   "why": "The men of Israel leave Mizpeh and pursue the Philistines as a fighting force.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:14 #10",
+   "answer": "people",
+   "why": "The Philistines had taken cities from the Israelite nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:14 #12",
+   "answer": "people",
+   "why": "The captured cities are restored to the Israelite nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:14 #22",
+   "answer": "people",
+   "why": "Israel collectively recovers the cities' territory from the Philistines.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:14 #30",
+   "answer": "people",
+   "why": "Peace exists between the Israelite people and the Amorites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:15 #5",
+   "answer": "people",
+   "why": "Samuel serves as judge over the Israelite nation throughout his life.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:16 #20",
+   "answer": "people",
+   "why": "Samuel travels among several towns to judge the Israelite people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 7:17 #12",
+   "answer": "people",
+   "why": "Samuel judges the Israelite people at Ramah, where he lives.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:34:36+00:00"
+}

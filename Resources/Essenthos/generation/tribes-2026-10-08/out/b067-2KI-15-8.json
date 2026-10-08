@@ -1,0 +1,153 @@
+{
+ "batch": "b067-2KI-15-8",
+ "answers": [
+  {
+   "key": "BHSA 2KI 15:8 #16",
+   "answer": "people",
+   "why": "Zachariah reigns over Israel in Samaria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 15:9 #22",
+   "answer": "people",
+   "why": "Jeroboam made the nation of Israel sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 15:12 #16",
+   "answer": "people",
+   "why": "Jehu's descendants occupy the throne of the kingdom of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 15:17 #16",
+   "answer": "people",
+   "why": "Menahem reigns over Israel for ten years in Samaria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 15:18 #19",
+   "answer": "people",
+   "why": "Jeroboam led Israel's people into sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 15:20 #8",
+   "answer": "people",
+   "why": "Menahem levies money on Israel's wealthy men.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 15:23 #14",
+   "answer": "people",
+   "why": "Pekahiah reigns over Israel in Samaria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 15:24 #18",
+   "answer": "people",
+   "why": "Jeroboam made the nation of Israel sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 15:27 #16",
+   "answer": "people",
+   "why": "Pekah reigns over Israel in Samaria for twenty years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 15:28 #18",
+   "answer": "people",
+   "why": "Jeroboam made Israel's people sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 15:37 #11",
+   "answer": "people",
+   "why": "The LORD sends Rezin and Pekah against the kingdom of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:1 #16",
+   "answer": "people",
+   "why": "Hoshea reigns over Israel in Samaria for nine years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:6 #15",
+   "answer": "people",
+   "why": "Assyria deports Israel and settles them in several places.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:13 #5",
+   "answer": "people",
+   "why": "The prophets call Israel to abandon their evil ways and obey God's commandments.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:13 #8",
+   "answer": "people",
+   "why": "Judah receives the prophets' call to turn from evil and keep God's law.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:18 #6",
+   "answer": "people",
+   "why": "The LORD removes Israel, leaving only the tribe of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:19 #2",
+   "answer": "people",
+   "why": "Judah disobeys the commandments of the LORD their God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:19 #13",
+   "answer": "people",
+   "why": "Judah follows the statutes that Israel's people made.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:20 #7",
+   "answer": "man",
+   "why": "Israel names the ancestor whose descendants are called 'all the seed of Israel.'",
+   "confidence": 0.96
+  },
+  {
+   "key": "BHSA 2KI 17:21 #3",
+   "answer": "people",
+   "why": "Israel is separated from David's dynasty and makes Jeroboam king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:21 #18",
+   "answer": "people",
+   "why": "Jeroboam drives Israel away from following the LORD and makes them sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:23 #6",
+   "answer": "people",
+   "why": "The LORD removes the disobedient nation as the prophets foretold.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:23 #21",
+   "answer": "people",
+   "why": "Israel is exiled from its land to Assyria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 17:34 #42",
+   "answer": "man",
+   "why": "The verse explicitly says that God named Jacob Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:38:07+00:00"
+}

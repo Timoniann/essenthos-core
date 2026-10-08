@@ -1,0 +1,159 @@
+{
+ "batch": "b080-2CH-2-4",
+ "answers": [
+  {
+   "key": "BHSA 2CH 2:3 #46",
+   "answer": "people",
+   "why": "The continuing ordinance of temple offerings applies to the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 2:6 #43",
+   "answer": "people",
+   "why": "The craftsmen are located in Judah alongside Jerusalem, identifying Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 2:11 #7",
+   "answer": "people",
+   "why": "The God of Israel is the God of the people over whom Solomon was made king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 5:2 #6",
+   "answer": "people",
+   "why": "Solomon assembles Israel's national elders together with the tribal heads.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 5:3 #8",
+   "answer": "people",
+   "why": "All the men of Israel gather before the king for the feast.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 5:4 #5",
+   "answer": "people",
+   "why": "Israel's elders arrive for the bringing up of the ark.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 5:6 #8",
+   "answer": "people",
+   "why": "Israel is the congregation assembled with Solomon to offer sacrifices.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:3 #12",
+   "answer": "people",
+   "why": "The king blesses the whole congregation of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:3 #16",
+   "answer": "people",
+   "why": "The whole congregation of Israel stands before the king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:4 #6",
+   "answer": "people",
+   "why": "Solomon praises the nation's God before Israel's assembled congregation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:5 #36",
+   "answer": "people",
+   "why": "God calls Israel his people, over whom a ruler would be appointed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:6 #17",
+   "answer": "people",
+   "why": "God chooses David to rule over his people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:7 #14",
+   "answer": "people",
+   "why": "David intends to build a temple for the God of the nation he rules.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:10 #17",
+   "answer": "people",
+   "why": "Solomon succeeds David on Israel's royal throne.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:10 #30",
+   "answer": "people",
+   "why": "Solomon builds the temple for the God of the nation whose throne he occupies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:12 #10",
+   "answer": "people",
+   "why": "Solomon stands before the altar in the presence of Israel's whole congregation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:13 #33",
+   "answer": "people",
+   "why": "Solomon kneels before the whole congregation of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:14 #5",
+   "answer": "people",
+   "why": "Solomon addresses Israel's God while praying before the national congregation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:16 #5",
+   "answer": "people",
+   "why": "Solomon petitions the nation's God to preserve David's royal succession.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:16 #27",
+   "answer": "people",
+   "why": "Israel names the kingdom whose throne David's descendants are promised.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:17 #5",
+   "answer": "people",
+   "why": "Solomon asks Israel's God to fulfill his promise to King David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:21 #8",
+   "answer": "people",
+   "why": "Israel is explicitly God's people who pray toward the temple.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:24 #5",
+   "answer": "people",
+   "why": "God's people Israel suffer defeat by an enemy because of their sins.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:25 #12",
+   "answer": "people",
+   "why": "God's people Israel are to be forgiven and restored to their land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 6:27 #13",
+   "answer": "people",
+   "why": "Israel is God's people whose inherited land needs rain.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:39:33+00:00"
+}

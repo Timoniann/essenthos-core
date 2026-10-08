@@ -1,0 +1,93 @@
+{
+ "batch": "b037-RUT-1-1",
+ "answers": [
+  {
+   "key": "BHSA RUT 1:1 #19",
+   "answer": "people",
+   "why": "Judah locates Bethlehem within the tribe's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA RUT 1:2 #20",
+   "answer": "people",
+   "why": "The family comes from Bethlehem in Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA RUT 2:12 #12",
+   "answer": "people",
+   "why": "Boaz invokes the God of the people Ruth has joined.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA RUT 4:7 #6",
+   "answer": "people",
+   "why": "The verse describes a former redemption custom among the Israelites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA RUT 4:7 #30",
+   "answer": "people",
+   "why": "Giving a shoe served as testimony within the Israelite community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA RUT 4:11 #33",
+   "answer": "man",
+   "why": "Rachel and Leah built their husband Jacob's household by bearing children.",
+   "confidence": 0.94
+  },
+  {
+   "key": "BHSA RUT 4:12 #11",
+   "answer": "man",
+   "why": "Tamar bore Perez to Judah as his literal son.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA RUT 4:14 #20",
+   "answer": "people",
+   "why": "The women wish the child's name to become famous among the Israelites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 1:17 #11",
+   "answer": "people",
+   "why": "Eli invokes Israel's national God to grant Hannah's petition.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 2:14 #31",
+   "answer": "people",
+   "why": "Israel denotes all the worshippers coming to Shiloh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 2:22 #14",
+   "answer": "people",
+   "why": "Eli hears what his sons have done to all the Israelite people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 2:29 #22",
+   "answer": "people",
+   "why": "Israel is explicitly called God's people who bring offerings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 2:30 #5",
+   "answer": "people",
+   "why": "The God of Israel speaks concerning the priestly household serving his people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 2:32 #10",
+   "answer": "people",
+   "why": "Israel is the nation receiving future prosperity while Eli's household suffers.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:34:07+00:00"
+}

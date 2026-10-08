@@ -1,0 +1,117 @@
+{
+ "batch": "b076-1CH-18-14",
+ "answers": [
+  {
+   "key": "BHSA 1CH 18:14 #6",
+   "answer": "people",
+   "why": "David reigns over all Israel and administers justice to all his people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 19:10 #19",
+   "answer": "people",
+   "why": "Joab selects fighting men from Israel to face the Syrians.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 19:16 #8",
+   "answer": "people",
+   "why": "The Syrians have been defeated before Israel in battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 19:17 #9",
+   "answer": "people",
+   "why": "David gathers all Israel and leads them across the Jordan into battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 19:18 #7",
+   "answer": "people",
+   "why": "The Syrians flee before Israel's forces under David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 19:19 #9",
+   "answer": "people",
+   "why": "Hadarezer's servants make peace with David after their defeat before Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 20:7 #4",
+   "answer": "people",
+   "why": "The giant defies Israel during a war and is killed by David's nephew.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:1 #5",
+   "answer": "people",
+   "why": "Satan opposes Israel by provoking David to take a census of the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:1 #13",
+   "answer": "people",
+   "why": "David is provoked to count Israel's population.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:2 #14",
+   "answer": "people",
+   "why": "David orders Israel counted from Beersheba to Dan.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:3 #30",
+   "answer": "people",
+   "why": "Joab warns that counting the king's servants will bring guilt upon Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:4 #15",
+   "answer": "people",
+   "why": "Joab travels throughout Israel to conduct the census.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:5 #14",
+   "answer": "people",
+   "why": "Israel's census total comprises over a million men who draw the sword.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:6 #2",
+   "answer": "people",
+   "why": "Joab excludes the tribe of Levi from the population count.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:6 #4",
+   "answer": "people",
+   "why": "Joab excludes the tribe of Benjamin from the population count.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:7 #15",
+   "answer": "people",
+   "why": "God strikes Israel because of David's census of the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:14 #6",
+   "answer": "people",
+   "why": "The LORD sends a pestilence among Israel's population.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 21:14 #10",
+   "answer": "people",
+   "why": "Seventy thousand men die from among Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:39:06+00:00"
+}

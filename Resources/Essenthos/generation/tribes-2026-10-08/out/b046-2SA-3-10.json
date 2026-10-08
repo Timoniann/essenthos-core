@@ -1,0 +1,123 @@
+{
+ "batch": "b046-2SA-3-10",
+ "answers": [
+  {
+   "key": "BHSA 2SA 3:10 #15",
+   "answer": "people",
+   "why": "David's throne is to be established over Israel and Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 3:12 #27",
+   "answer": "people",
+   "why": "Abner offers to bring all Israel into allegiance to David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 3:17 #7",
+   "answer": "people",
+   "why": "Israel's elders had sought David as king over them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 3:18 #18",
+   "answer": "people",
+   "why": "The LORD calls Israel his people whom David will save from their enemies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 3:19 #25",
+   "answer": "people",
+   "why": "Abner reports what Israel and the whole house of Benjamin approve.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 3:21 #17",
+   "answer": "people",
+   "why": "All Israel will gather and make a covenant with David as king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 3:37 #8",
+   "answer": "people",
+   "why": "All Israel learns that the king did not order Abner's death.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 3:38 #20",
+   "answer": "people",
+   "why": "David says that Abner, a great leader, has fallen among Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 4:1 #15",
+   "answer": "people",
+   "why": "All Israel is troubled by the news of Abner's death.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 4:2 #30",
+   "answer": "people",
+   "why": "Beeroth is reckoned as belonging to Benjamin's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 5:2 #18",
+   "answer": "people",
+   "why": "David led Israel out and brought them in while Saul was king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 5:2 #28",
+   "answer": "people",
+   "why": "The LORD identifies Israel as his people whom David will shepherd.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 5:2 #35",
+   "answer": "people",
+   "why": "David is appointed ruler over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 5:3 #5",
+   "answer": "people",
+   "why": "Israel's elders come to Hebron to covenant with David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 5:3 #29",
+   "answer": "people",
+   "why": "The elders anoint David king over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 5:5 #21",
+   "answer": "people",
+   "why": "David reigns in Jerusalem over all Israel and Judah for thirty-three years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 5:12 #10",
+   "answer": "people",
+   "why": "The LORD establishes David as king over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 5:12 #18",
+   "answer": "people",
+   "why": "The LORD exalts David's kingdom for the sake of his people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 5:17 #11",
+   "answer": "people",
+   "why": "The Philistines hear that David has been anointed king over Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:35:14+00:00"
+}

@@ -1,0 +1,159 @@
+{
+ "batch": "b090-2CH-29-7",
+ "answers": [
+  {
+   "key": "BHSA 2CH 29:7 #24",
+   "answer": "people",
+   "why": "The temple offerings are offered to the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 29:8 #6",
+   "answer": "people",
+   "why": "Judah and Jerusalem suffer divine wrath, with their families taken captive.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 29:10 #10",
+   "answer": "people",
+   "why": "Hezekiah seeks a covenant with Israel's God to turn wrath away from the community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 29:21 #26",
+   "answer": "people",
+   "why": "The sin offering is for the kingdom, sanctuary, and people of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 29:24 #15",
+   "answer": "people",
+   "why": "The priests make atonement for all Israel as a community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 29:24 #19",
+   "answer": "people",
+   "why": "The king commands offerings on behalf of all Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:1 #6",
+   "answer": "people",
+   "why": "Hezekiah sends a Passover invitation to all Israel and Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:1 #8",
+   "answer": "people",
+   "why": "Judah is a community invited to gather at Jerusalem for Passover.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:1 #14",
+   "answer": "people",
+   "why": "Letters invite the tribe of Ephraim to celebrate Passover at Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:1 #16",
+   "answer": "people",
+   "why": "Letters invite the tribe of Manasseh to celebrate Passover at Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:1 #30",
+   "answer": "people",
+   "why": "The Passover is celebrated unto the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:5 #9",
+   "answer": "people",
+   "why": "The proclamation goes throughout Israel from Beersheba to Dan.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:5 #24",
+   "answer": "people",
+   "why": "The national Passover celebration honors the God of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:6 #16",
+   "answer": "people",
+   "why": "The messengers carry letters throughout the communities of Israel and Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:6 #18",
+   "answer": "people",
+   "why": "Judah is the community through which the king's messengers travel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:6 #35",
+   "answer": "man",
+   "why": "Israel is named alongside Abraham and Isaac as one of the patriarchs.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:10 #14",
+   "answer": "people",
+   "why": "The messengers pass through cities in Manasseh's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:10 #17",
+   "answer": "people",
+   "why": "Zebulun marks the tribal territory reached by the messengers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:11 #4",
+   "answer": "people",
+   "why": "Men from the tribe of Asher humble themselves and come to Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:11 #6",
+   "answer": "people",
+   "why": "Men from the tribe of Manasseh humble themselves and come to Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:11 #9",
+   "answer": "people",
+   "why": "Men from the tribe of Zebulun humble themselves and come to Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:12 #3",
+   "answer": "people",
+   "why": "God gives the people in Judah one heart to obey the king's command.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:18 #7",
+   "answer": "people",
+   "why": "Many members of Ephraim eat the Passover without having purified themselves.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:18 #9",
+   "answer": "people",
+   "why": "Many members of Manasseh eat the Passover without having purified themselves.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:18 #12",
+   "answer": "people",
+   "why": "Many members of Zebulun eat the Passover without having purified themselves.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:40:46+00:00"
+}

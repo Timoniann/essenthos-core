@@ -1,0 +1,81 @@
+{
+ "batch": "b021-DEU-34-2",
+ "answers": [
+  {
+   "key": "BHSA DEU 34:2 #4",
+   "answer": "people",
+   "why": "All Naphtali is territory shown to Moses as part of the land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 34:2 #10",
+   "answer": "people",
+   "why": "Manasseh shares the reference to tribal land shown to Moses.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 34:10 #7",
+   "answer": "people",
+   "why": "A prophet arising in Israel means arising among the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 34:12 #21",
+   "answer": "people",
+   "why": "All Israel is the community that witnessed Moses' mighty deeds.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 1:12 #14",
+   "answer": "people",
+   "why": "Joshua addresses half the tribe of Manasseh about their allotted land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 3:7 #15",
+   "answer": "people",
+   "why": "All Israel will recognize Joshua's authority, expressed with the plural 'they may know.'",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 3:17 #20",
+   "answer": "people",
+   "why": "All Israel crosses the Jordan and is identified as the whole nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 4:12 #12",
+   "answer": "people",
+   "why": "Half the tribe of Manasseh crosses armed for battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 4:14 #13",
+   "answer": "people",
+   "why": "All Israel witnesses Joshua's elevation and fears him as they feared Moses.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 4:22 #11",
+   "answer": "people",
+   "why": "Israel is the people whose crossing of the Jordan their children will commemorate.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 6:23 #36",
+   "answer": "people",
+   "why": "Rahab's family is placed outside the camp of the Israelite community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 6:25 #21",
+   "answer": "people",
+   "why": "Rahab dwells among Israel after Joshua saves her at Jericho.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:31:54+00:00"
+}

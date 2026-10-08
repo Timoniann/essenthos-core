@@ -1,0 +1,81 @@
+{
+ "batch": "b053-1KI-1-20",
+ "answers": [
+  {
+   "key": "BHSA 1KI 1:20 #8",
+   "answer": "people",
+   "why": "All Israel looks to David to announce who will succeed him as king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 1:30 #9",
+   "answer": "people",
+   "why": "David swears by the LORD God of Israel concerning Solomon's succession to the throne.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 1:34 #15",
+   "answer": "people",
+   "why": "Solomon is to be anointed king over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 1:35 #21",
+   "answer": "people",
+   "why": "David appoints Solomon ruler over Israel and Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 1:35 #24",
+   "answer": "people",
+   "why": "Judah is the population over which Solomon is appointed ruler alongside Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 1:48 #10",
+   "answer": "people",
+   "why": "David blesses the LORD God of Israel for providing a successor to his throne.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 2:4 #38",
+   "answer": "people",
+   "why": "The throne of Israel is the national throne promised to David's descendants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 2:5 #18",
+   "answer": "people",
+   "why": "Abner and Amasa are described as captains of Israel's armies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 2:11 #8",
+   "answer": "people",
+   "why": "Israel is the nation over which David reigned forty years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 2:15 #14",
+   "answer": "people",
+   "why": "All Israel had looked to Adonijah to become king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 2:32 #33",
+   "answer": "people",
+   "why": "Abner commanded the army of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 2:32 #41",
+   "answer": "people",
+   "why": "Amasa commanded the army of Judah.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:36:02+00:00"
+}

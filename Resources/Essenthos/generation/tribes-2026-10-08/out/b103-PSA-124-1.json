@@ -1,0 +1,81 @@
+{
+ "batch": "b103-PSA-124-1",
+ "answers": [
+  {
+   "key": "BHSA PSA 124:1 #13",
+   "answer": "people",
+   "why": "Israel is invited to recount how the LORD protected us from attackers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 125:5 #13",
+   "answer": "people",
+   "why": "Peace upon Israel blesses the community contrasted with workers of iniquity.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 128:6 #8",
+   "answer": "people",
+   "why": "Peace upon Israel extends the blessing of Jerusalem to the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 129:1 #10",
+   "answer": "people",
+   "why": "Israel speaks collectively of repeated affliction from its youth.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA PSA 130:7 #2",
+   "answer": "people",
+   "why": "Israel is urged to hope in the LORD who will redeem the nation from its iniquities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 130:8 #5",
+   "answer": "people",
+   "why": "Israel is the community just urged to hope in the LORD for redemption.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 131:3 #2",
+   "answer": "people",
+   "why": "Israel is exhorted collectively to hope in the LORD forever.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 135:4 #6",
+   "answer": "people",
+   "why": "Israel is chosen as the LORD's treasured possession, describing his covenant people.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA PSA 135:12 #7",
+   "answer": "people",
+   "why": "Israel is explicitly called his people and receives conquered lands as an inheritance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 136:11 #3",
+   "answer": "people",
+   "why": "Israel is brought out of Egypt after the striking of its firstborn.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 136:14 #3",
+   "answer": "people",
+   "why": "Israel passes through the divided Red Sea while Pharaoh's army is overthrown.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 136:22 #3",
+   "answer": "people",
+   "why": "Israel receives the conquered land as an inheritance and speaks collectively as us afterward.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:18:17+00:00"
+}

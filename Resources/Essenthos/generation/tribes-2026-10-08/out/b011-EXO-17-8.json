@@ -1,0 +1,93 @@
+{
+ "batch": "b011-EXO-17-8",
+ "answers": [
+  {
+   "key": "BHSA EXO 17:8 #7",
+   "answer": "people",
+   "why": "Israel is the people whom Amalek attacks at Rephidim.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 17:11 #10",
+   "answer": "people",
+   "why": "Israel is the fighting force that prevails when Moses raises his hand.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 18:1 #17",
+   "answer": "people",
+   "why": "Israel is explicitly called God's people alongside Moses.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 18:1 #23",
+   "answer": "people",
+   "why": "Israel is the people the LORD brought out of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 18:8 #18",
+   "answer": "people",
+   "why": "Israel refers to those delivered from Pharaoh and rescued through their hardships on the journey.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 18:9 #12",
+   "answer": "people",
+   "why": "Israel is the people delivered from Egyptian power, as the next verse explicitly states.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 18:12 #17",
+   "answer": "people",
+   "why": "The elders of Israel are leaders of the people gathered with Aaron and Moses.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 18:25 #8",
+   "answer": "people",
+   "why": "Moses selects able men from all Israel to govern the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 19:2 #17",
+   "answer": "people",
+   "why": "Israel is the people who depart Rephidim and camp before Mount Sinai.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 24:10 #5",
+   "answer": "people",
+   "why": "The God of Israel is the God seen by Moses and the nation's elders.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 32:4 #19",
+   "answer": "people",
+   "why": "The proclamation addresses the people brought out of Egypt as Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 32:8 #22",
+   "answer": "people",
+   "why": "Israel addresses the people who made and worshipped the calf after leaving Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 32:13 #8",
+   "answer": "man",
+   "why": "Israel is named with Abraham and Isaac as a servant promised numerous descendants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 32:27 #8",
+   "answer": "people",
+   "why": "The LORD is called Israel's God while issuing commands concerning the people's camp.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:30:16+00:00"
+}

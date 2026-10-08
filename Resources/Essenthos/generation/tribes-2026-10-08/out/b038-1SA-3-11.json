@@ -1,0 +1,93 @@
+{
+ "batch": "b038-1SA-3-11",
+ "answers": [
+  {
+   "key": "BHSA 1SA 3:11 #11",
+   "answer": "people",
+   "why": "The LORD will do something in Israel that will shock everyone who hears it.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 3:20 #4",
+   "answer": "people",
+   "why": "All Israel from Dan to Beersheba recognizes Samuel as the LORD's prophet.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:1 #7",
+   "answer": "people",
+   "why": "Samuel's word comes to all Israel, the national community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:1 #10",
+   "answer": "people",
+   "why": "Israel goes out to battle the Philistines and encamps beside Ebenezer.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:2 #6",
+   "answer": "people",
+   "why": "The Philistines array their forces against Israel in battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:2 #13",
+   "answer": "people",
+   "why": "Israel suffers defeat with about four thousand men killed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:3 #11",
+   "answer": "people",
+   "why": "Israel's elders discuss the people's defeat and seek the ark for their camp.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:5 #14",
+   "answer": "people",
+   "why": "All Israel shouts when the ark enters the military camp.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:10 #6",
+   "answer": "people",
+   "why": "Israel is defeated by the Philistines and its men flee to their tents.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:10 #21",
+   "answer": "people",
+   "why": "Thirty thousand foot soldiers fall from Israel in battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:17 #8",
+   "answer": "people",
+   "why": "The messenger reports Israel's flight and a great slaughter among the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:18 #35",
+   "answer": "people",
+   "why": "Eli had judged Israel for forty years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:21 #12",
+   "answer": "people",
+   "why": "Glory departs from Israel because the nation's ark has been captured.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 4:22 #6",
+   "answer": "people",
+   "why": "The capture of God's ark explains why glory has departed from Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:34:10+00:00"
+}

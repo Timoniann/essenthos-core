@@ -1,0 +1,81 @@
+{
+ "batch": "b063-2KI-2-12",
+ "answers": [
+  {
+   "key": "BHSA 2KI 2:12 #10",
+   "answer": "people",
+   "why": "Elisha calls Elijah the chariot and horsemen of Israel, the nation's defense.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 3:1 #7",
+   "answer": "people",
+   "why": "Jehoram reigns over Israel in Samaria, identifying the kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 3:3 #10",
+   "answer": "people",
+   "why": "Jeroboam caused Israel's people to sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 3:6 #17",
+   "answer": "people",
+   "why": "Jehoram musters all Israel for war against Moab.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 3:24 #5",
+   "answer": "people",
+   "why": "The camp belongs to Israel's army fighting Moab.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 3:24 #8",
+   "answer": "people",
+   "why": "Israel rises and strikes Moab with plural verbs describing the soldiers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 3:27 #21",
+   "answer": "people",
+   "why": "Indignation falls upon Israel's forces, who withdraw to their land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 5:8 #34",
+   "answer": "people",
+   "why": "Elisha says there is a prophet in Israel, the nation where he lives.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 5:12 #12",
+   "answer": "people",
+   "why": "Naaman compares Damascus's rivers with the waters of Israel's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 5:15 #32",
+   "answer": "people",
+   "why": "Naaman contrasts all the earth with Israel as the place where God is known.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 6:8 #7",
+   "answer": "people",
+   "why": "The king of Syria wages war against Israel's kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 6:12 #16",
+   "answer": "people",
+   "why": "Elisha is a prophet living in Israel, whose king receives his warnings.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:37:15+00:00"
+}
