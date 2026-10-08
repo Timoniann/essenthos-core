@@ -389,6 +389,7 @@ internal sealed class DatasetLoader(
             new("misplaced-annotations", TakeTheMisplacedNamesOffTheirRecords),
             new("own-references", CiteTheVersesOurOwnWordsName),
             new("misfiled-verses", cancellationToken => GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, cancellationToken)),
+            new("register-rematch-verses", cancellationToken => MatchTheRegisterToTheMovedVerses(resources, cancellationToken)),
             new("descriptors", cancellationToken => DescribeTheEntitiesInOurOwnWords(resources, cancellationToken)),
             new("name-forms", cancellationToken => DeclineTheNamesThoseLinesName(resources, cancellationToken)),
             new("fold-records", FoldTheRecordsWrittenTwice),
@@ -1708,6 +1709,21 @@ internal sealed class DatasetLoader(
     private async Task MatchTheRegisterToTheOwnRecords(string resources, CancellationToken cancellationToken)
     {
         status.Starting("the person register against the records this corpus writes for itself");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<PersonRegisterLoader>();
+        status.Record($"Matched the person register again: {await loader.Settle(resources, cancellationToken)}");
+    }
+
+    /// <summary>
+    /// The person register matched once more now that the verses a dataset filed under a namesake have
+    /// been given to the man they name. A bearer the register added while his verse was still filed
+    /// under another man reaches the record he is on only with the verse where it belongs, which the
+    /// load after would have seen at its start.
+    /// </summary>
+    private async Task MatchTheRegisterToTheMovedVerses(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the person register against the verses given to their men");
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<PersonRegisterLoader>();
