@@ -11,8 +11,9 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// Reuben and Israel where nothing says whether the sentence means the man or the tribe: the
-/// ancestor, on the owner's ruling, and the children of Israel the people.
+/// Reuben and Israel standing alone, where nothing says whether the sentence means the man or the
+/// tribe: the ancestor, on the owner's ruling, and Israel outside Genesis the nation. The name after
+/// <em>sons of</em> is left to the reading (<see cref="EponymReadingTests"/>).
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class EponymNameTests : IDisposable
@@ -43,9 +44,9 @@ public sealed class EponymNameTests : IDisposable
         _db.AddBook(_hebrew, 13, "1 Chronicles", (5, 1, ["בכור", "ישראל"]));
         _db.SaveChanges();
 
-        Word(1, 20, 1, Son, "subs");
+        Sons(Hebrew(1, 20, 1));
         Word(1, 20, 2, Reuben, "nmpr");
-        Word(1, 21, 1, Son, "subs");
+        Sons(Hebrew(1, 21, 1));
         Word(1, 21, 2, Israel, "nmpr");
         Word(1, 21, 3, King, "subs");
         Word(1, 21, 4, Israel, "nmpr");
@@ -83,6 +84,12 @@ public sealed class EponymNameTests : IDisposable
         _db.Words.Single(w => w.TextId == _hebrew.Id && w.Verse!.Book!.CanonicalOrdinal == book
                               && w.Verse.ChapterNumber == chapter && w.Verse.Number == verse && w.Position == position);
 
+    private static void Sons(Word word)
+    {
+        word.StrongNumber = Son;
+        word.Morphology = JsonDocument.Parse("""{"pos": "subs", "state": "c", "number": "pl"}""");
+    }
+
     private static void Word(Word word, string number, string pos)
     {
         word.StrongNumber = number;
@@ -106,27 +113,31 @@ public sealed class EponymNameTests : IDisposable
     private async Task<Dictionary<long, WordEntity>> Named() =>
         await _db.WordEntities.AsNoTracking().Include(a => a.Entity).ToDictionaryAsync(a => a.WordId);
 
-    /// <summary><em>The children of Reuben</em> of Numbers 1:20 are counted as a tribe and are Reuben's.</summary>
+    /// <summary>A tribe's name standing alone is its ancestor until the sentence is read.</summary>
     [Fact]
     public async Task ATribesNameIsItsAncestorForNow()
     {
         var outcome = await _loader.Load();
 
         var named = await Named();
-        named[Hebrew(1, 20, 2).Id].Entity!.Slug.Should().Be("reuben");
-        named[Hebrew(1, 20, 2).Id].Method.Should().Be(LinkMethod.RuleBased);
         named[Hebrew(1, 21, 5).Id].Entity!.Slug.Should().Be("jacob", "in Genesis Israel is the man");
-        outcome.Eponyms.Should().Be(4);
+        named[Hebrew(1, 21, 5).Id].Method.Should().Be(LinkMethod.RuleBased);
+        outcome.Eponyms.Should().Be(3);
+        outcome.Children.Should().Be(1, "the nation of 1 Kings 12:16");
     }
 
-    /// <summary>The one phrase the ruling names otherwise: the children of Israel are the people.</summary>
+    /// <summary>
+    /// The name after <em>sons of</em> is the man and <em>sons</em> the people, on the owner's ruling
+    /// of 2026-10-08, which a later pass writes; this one leaves both alone.
+    /// </summary>
     [Fact]
-    public async Task TheChildrenOfIsraelAreThePeople()
+    public async Task TheNameAfterSonsOfIsLeftToTheLaterPass()
     {
-        var outcome = await _loader.Load();
+        await _loader.Load();
 
-        (await Named())[Hebrew(1, 21, 2).Id].Entity!.Slug.Should().Be("israelites");
-        outcome.Children.Should().Be(2, "the children of Israel, and the nation of 1 Kings 12:16");
+        var named = await Named();
+        named.Should().NotContainKey(Hebrew(1, 20, 2).Id);
+        named.Should().NotContainKey(Hebrew(1, 21, 2).Id);
     }
 
     /// <summary>
@@ -144,79 +155,35 @@ public sealed class EponymNameTests : IDisposable
         named[In(13, 5, 1, 2).Id].Entity!.Slug.Should().Be("jacob", "Reuben is the firstborn of the man");
     }
 
-    /// <summary>What the rule wrote as the man on the nation is taken back and written again as the people.</summary>
+    /// <summary>
+    /// What the rule wrote while it read <em>the children of Israel</em> as the people is taken back,
+    /// and the words it named are named again under the rule as it stands; a second load writes nothing.
+    /// </summary>
     [Fact]
-    public async Task TheManWrittenOnTheNationIsTakenBack()
+    public async Task WhatTheFormerRuleWroteIsTakenBack()
     {
-        await _loader.Load();
-        var word = In(11, 12, 16, 2);
-        var jacob = await _db.Entities.SingleAsync(e => e.Slug == "jacob");
-        await _db.WordEntities.Where(a => a.WordId == word.Id).ExecuteDeleteAsync();
-        _db.WordEntities.Add(new WordEntity
+        var israelites = await _db.Entities.SingleAsync(e => e.Slug == "israelites");
+        foreach (var word in new[] { Hebrew(1, 21, 2), In(11, 12, 16, 2) })
         {
-            WordId = word.Id, EntityId = jacob.Id, Method = LinkMethod.RuleBased, Confidence = 0.7,
-            Source = EponymNameLoader.Source, Note = "H3478, a name the tribe shares with its ancestor, so the ancestor",
-        });
+            _db.WordEntities.Add(new WordEntity
+            {
+                WordId = word.Id, EntityId = israelites.Id, Method = LinkMethod.RuleBased, Confidence = 0.9,
+                Source = EponymNameLoader.FormerSource, Note = "H3478, the children of Israel or the nation, so the people",
+            });
+        }
+
         await _db.SaveChangesAsync();
 
         var outcome = await _loader.Load();
         var again = await _loader.Load();
 
         outcome.AlreadyLoaded.Should().BeFalse();
-        (await Named())[word.Id].Entity!.Slug.Should().Be("israelites");
+        var named = await Named();
+        named.Should().NotContainKey(Hebrew(1, 21, 2).Id);
+        named[In(11, 12, 16, 2).Id].Entity!.Slug.Should().Be("israelites");
+        named[In(11, 12, 16, 2).Id].Source.Should().Be(EponymNameLoader.Source);
         again.AlreadyLoaded.Should().BeTrue();
     }
-
-    /// <summary>
-    /// The verses' consensus found the man on the nation's word before the rule named it the people,
-    /// in the Hebrew and in the King James word linked to it, and those rows kept citing him for the
-    /// verse. They go with the rule's own.
-    /// </summary>
-    [Fact]
-    public async Task WhatTheConsensusWroteAsTheManOnTheNationGoesToo()
-    {
-        var word = In(11, 12, 16, 2);
-        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["x"]));
-        _db.AddBook(english, 11, "1 Kings", (12, 16, ["O", "Israel"]));
-        _db.SaveChanges();
-        var rendering = _db.Words.Single(w => w.TextId == english.Id && w.Surface == "Israel");
-        var link = new Link
-        {
-            FromTextId = english.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Renders,
-            Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
-        };
-        _db.Links.Add(link);
-        _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.From });
-        _db.LinkWords.Add(new LinkWord { Link = link, Word = word, Side = LinkSide.To });
-        var jacob = await _db.Entities.SingleAsync(e => e.Slug == "jacob");
-        _db.WordEntities.Add(new WordEntity
-        {
-            WordId = rendering.Id, EntityId = jacob.Id, Method = LinkMethod.RuleBased, Confidence = 0.99,
-            Source = NameConsensusPass.Source, Note = "the word its verses share in this text: israel",
-        });
-        await _db.SaveChangesAsync();
-
-        // From empty: the rule names the people and the consensus's row is not its to take back.
-        await _loader.Load();
-        (await Slugs(rendering)).Should().Contain("jacob");
-
-        // A corpus loaded before the rule read the nation: the man on the Hebrew word, the consensus's beside it.
-        await _db.WordEntities.Where(a => a.WordId == word.Id).ExecuteDeleteAsync();
-        _db.WordEntities.Add(new WordEntity
-        {
-            WordId = word.Id, EntityId = jacob.Id, Method = LinkMethod.RuleBased, Confidence = 0.7,
-            Source = EponymNameLoader.Source, Note = "H3478, a name the tribe shares with its ancestor, so the ancestor",
-        });
-        await _db.SaveChangesAsync();
-
-        await _loader.Load();
-
-        (await Slugs(word)).Should().Equal("israelites");
-        (await Slugs(rendering)).Should().NotContain("jacob");
-    }
-
-    private async Task<List<string>> Slugs(Word word) =>
-        await _db.WordEntities.AsNoTracking().Where(a => a.WordId == word.Id).Select(a => a.Entity!.Slug).ToListAsync();
 
     /// <summary><em>The king of Israel</em> is neither the man nor the tribe, and is left as it was.</summary>
     [Fact]

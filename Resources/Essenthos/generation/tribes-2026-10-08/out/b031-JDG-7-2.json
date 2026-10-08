@@ -1,0 +1,93 @@
+{
+ "batch": "b031-JDG-7-2",
+ "answers": [
+  {
+   "key": "BHSA JDG 7:2 #20",
+   "answer": "people",
+   "why": "Israel could boast that its own hand saved it from Midian.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 7:8 #16",
+   "answer": "people",
+   "why": "Gideon sends the remaining Israelite soldiers to their tents.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 7:14 #15",
+   "answer": "people",
+   "why": "Gideon is identified as a man belonging to Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 7:15 #19",
+   "answer": "people",
+   "why": "Gideon returns to Israel's military camp and addresses its soldiers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 7:23 #4",
+   "answer": "people",
+   "why": "Israel's men assemble from several tribes and pursue Midian.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 7:23 #6",
+   "answer": "people",
+   "why": "Soldiers gather from Naphtali to pursue Midian.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 7:23 #9",
+   "answer": "people",
+   "why": "Soldiers gather from Asher to pursue Midian.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 7:23 #13",
+   "answer": "people",
+   "why": "Soldiers gather from all Manasseh to pursue Midian.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 7:24 #31",
+   "answer": "people",
+   "why": "Ephraim's men assemble and seize the waters and Jordan.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 8:1 #5",
+   "answer": "people",
+   "why": "Ephraim's men complain that Gideon did not summon them to battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 8:2 #12",
+   "answer": "people",
+   "why": "Ephraim's gleanings represent the tribe's capture of Midian's princes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 8:22 #4",
+   "answer": "people",
+   "why": "Israel's men ask Gideon to rule over them after their deliverance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 8:27 #17",
+   "answer": "people",
+   "why": "All Israel goes after the ephod Gideon placed in Ophrah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 8:35 #16",
+   "answer": "people",
+   "why": "Israel is the people to whom Gideon showed goodness through his deliverance.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:33:21+00:00"
+}

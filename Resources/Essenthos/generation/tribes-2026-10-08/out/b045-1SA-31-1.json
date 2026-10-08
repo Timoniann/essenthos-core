@@ -1,0 +1,87 @@
+{
+ "batch": "b045-1SA-31-1",
+ "answers": [
+  {
+   "key": "BHSA 1SA 31:1 #5",
+   "answer": "people",
+   "why": "The Philistines fight against Israel's army at Gilboa.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 31:1 #9",
+   "answer": "people",
+   "why": "The men of Israel flee from the Philistines and fall slain.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 31:7 #4",
+   "answer": "people",
+   "why": "Israel's inhabitants beyond the valley and Jordan abandon their cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 31:7 #19",
+   "answer": "people",
+   "why": "The men of Israel are soldiers who flee when Saul's army is defeated.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 1:3 #14",
+   "answer": "people",
+   "why": "The messenger escapes from Israel's military camp under Saul.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 1:12 #23",
+   "answer": "people",
+   "why": "The house of Israel is mourned because its people fell by the sword.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 1:19 #3",
+   "answer": "people",
+   "why": "The lament addresses Israel over its mighty warriors slain on its heights.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 1:24 #2",
+   "answer": "people",
+   "why": "Israel's women are called to weep over Saul, who clothed them richly.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 2:9 #15",
+   "answer": "people",
+   "why": "Ishbosheth is made king over Ephraim alongside other tribal territories.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 2:9 #21",
+   "answer": "people",
+   "why": "Abner makes Ishbosheth king over all Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 2:10 #10",
+   "answer": "people",
+   "why": "Ishbosheth reigns over Israel while the house of Judah follows David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 2:17 #18",
+   "answer": "people",
+   "why": "The men of Israel fight under Abner and are defeated by David's servants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 2:28 #17",
+   "answer": "people",
+   "why": "Joab's troops stop pursuing Israel, identified nearby as Abner and his men.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:35:09+00:00"
+}

@@ -1,0 +1,81 @@
+{
+ "batch": "b105-ISA-4-2",
+ "answers": [
+  {
+   "key": "BHSA ISA 4:2 #25",
+   "answer": "people",
+   "why": "Israel's survivors are those remaining in Zion and Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 5:3 #7",
+   "answer": "people",
+   "why": "The men of Judah are addressed alongside the inhabitants of Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 5:7 #9",
+   "answer": "people",
+   "why": "The men of Judah are God's planting alongside the house of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 5:19 #14",
+   "answer": "people",
+   "why": "The Holy One of Israel is the God whose counsel the sinful people challenge.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 5:24 #32",
+   "answer": "people",
+   "why": "The people despise the Holy One of Israel's word, provoking anger against his people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 7:2 #11",
+   "answer": "people",
+   "why": "Ephraim is the kingdom allied with Syria against Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 7:5 #7",
+   "answer": "people",
+   "why": "Ephraim joins Syria and Remaliah's son in plotting against Ahaz.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 7:6 #3",
+   "answer": "people",
+   "why": "Judah is the kingdom they plan to invade and place a king over.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 7:8 #17",
+   "answer": "people",
+   "why": "Ephraim will be broken so that it ceases to be a people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 7:9 #3",
+   "answer": "people",
+   "why": "Samaria is named as Ephraim's capital under Remaliah's son.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 7:17 #19",
+   "answer": "people",
+   "why": "Ephraim's departure from Judah refers to the division of the kingdoms.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 7:17 #22",
+   "answer": "people",
+   "why": "Judah is the kingdom from which Ephraim separated.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:18:35+00:00"
+}

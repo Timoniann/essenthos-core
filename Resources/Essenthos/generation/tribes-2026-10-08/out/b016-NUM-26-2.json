@@ -1,0 +1,111 @@
+{
+ "batch": "b016-NUM-26-2",
+ "answers": [
+  {
+   "key": "BHSA NUM 26:2 #21",
+   "answer": "people",
+   "why": "Israel is the community whose men eligible for military service are counted.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 26:5 #1",
+   "answer": "man",
+   "why": "Reuben is identified as Israel's firstborn before his descendants are listed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 26:5 #3",
+   "answer": "man",
+   "why": "Israel is named as the father whose firstborn is Reuben.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 26:28 #5",
+   "answer": "man",
+   "why": "Manasseh is named alongside Ephraim as Joseph's sons introducing their family lines.",
+   "confidence": 0.93
+  },
+  {
+   "key": "BHSA NUM 26:28 #7",
+   "answer": "man",
+   "why": "Ephraim is named alongside Manasseh as Joseph's sons introducing their family lines.",
+   "confidence": 0.93
+  },
+  {
+   "key": "BHSA NUM 26:34 #3",
+   "answer": "people",
+   "why": "Manasseh denotes the tribal families whose census totals 52,700.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA NUM 26:46 #4",
+   "answer": "man",
+   "why": "Asher is identified as the father of the named daughter Serah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 26:59 #7",
+   "answer": "man",
+   "why": "Levi is identified as Jochebed's father, to whom she was born in Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 26:59 #12",
+   "answer": "man",
+   "why": "Jochebed's mother bore her to Levi in Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 27:1 #12",
+   "answer": "man",
+   "why": "Manasseh is named as Machir's father in Zelophehad's genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 27:1 #15",
+   "answer": "man",
+   "why": "Manasseh is explicitly identified as Joseph's son, whose families are mentioned.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA NUM 32:13 #6",
+   "answer": "people",
+   "why": "Israel is the generation made to wander in the wilderness for forty years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 32:14 #17",
+   "answer": "people",
+   "why": "The warning concerns God's anger toward the people whose fathers wandered in the wilderness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 32:22 #18",
+   "answer": "people",
+   "why": "The warriors will be guiltless before Israel after helping subdue the land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 32:39 #6",
+   "answer": "man",
+   "why": "Manasseh is named as Machir's father in the ancestry of the conquering descendants.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA NUM 32:40 #10",
+   "answer": "man",
+   "why": "Manasseh identifies Machir's father in the designation of those receiving Gilead.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA NUM 32:41 #4",
+   "answer": "man",
+   "why": "Manasseh is named as Jair's ancestor in the expression 'son of Manasseh.'",
+   "confidence": 0.96
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:31:07+00:00"
+}

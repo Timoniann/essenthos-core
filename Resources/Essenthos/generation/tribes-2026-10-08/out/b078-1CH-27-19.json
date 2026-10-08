@@ -1,0 +1,81 @@
+{
+ "batch": "b078-1CH-27-19",
+ "answers": [
+  {
+   "key": "BHSA 1CH 27:19 #2",
+   "answer": "people",
+   "why": "Ishmaiah is listed as the official over the tribe of Zebulun.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 27:19 #7",
+   "answer": "people",
+   "why": "Jerimoth is listed as the official over the tribe of Naphtali.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 27:21 #4",
+   "answer": "people",
+   "why": "The half of Manasseh in Gilead has Iddo as its official.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 27:21 #10",
+   "answer": "people",
+   "why": "Jaasiel is listed among tribal officials as the official over Benjamin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 27:23 #20",
+   "answer": "people",
+   "why": "The promise to multiply Israel explains David's treatment of the population census.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 27:24 #16",
+   "answer": "people",
+   "why": "Wrath falls upon Israel because Joab began numbering the population.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 28:1 #7",
+   "answer": "people",
+   "why": "David assembles Israel's officials, including the princes of its tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 28:4 #5",
+   "answer": "people",
+   "why": "The LORD is called the God of the nation over which David was chosen to reign.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 28:4 #16",
+   "answer": "people",
+   "why": "David was chosen to be king over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 28:4 #41",
+   "answer": "people",
+   "why": "David says God chose him to reign over all Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 28:5 #23",
+   "answer": "people",
+   "why": "Solomon is chosen to occupy the royal throne over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 28:8 #6",
+   "answer": "people",
+   "why": "All Israel is explicitly identified as the congregation of the LORD.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:39:12+00:00"
+}

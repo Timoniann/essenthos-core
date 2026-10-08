@@ -1,0 +1,111 @@
+{
+ "batch": "b091-2CH-30-25",
+ "answers": [
+  {
+   "key": "BHSA 2CH 30:25 #19",
+   "answer": "people",
+   "why": "The congregation came from Israel to celebrate in Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 30:25 #32",
+   "answer": "people",
+   "why": "Judah is the territory where the rejoicing residents dwelt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 31:1 #8",
+   "answer": "people",
+   "why": "All Israel present went out together to destroy idols.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 31:1 #33",
+   "answer": "people",
+   "why": "Judah is the territory from which the altars were removed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 31:1 #35",
+   "answer": "people",
+   "why": "Benjamin names a tribal territory where the altars were destroyed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 31:1 #38",
+   "answer": "people",
+   "why": "Ephraim names a tribal territory where the religious sites were destroyed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 31:1 #40",
+   "answer": "people",
+   "why": "Manasseh names a tribal territory included in the destruction of altars.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 31:6 #5",
+   "answer": "people",
+   "why": "Judah's descendants living in its cities brought tithes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 31:8 #19",
+   "answer": "people",
+   "why": "Israel is explicitly called the LORD's people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 31:20 #8",
+   "answer": "people",
+   "why": "Hezekiah carried out these arrangements throughout Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 32:1 #16",
+   "answer": "people",
+   "why": "Sennacherib entered Judah's territory and besieged its fortified cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 32:9 #24",
+   "answer": "people",
+   "why": "All Judah in Jerusalem received Sennacherib's message.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 32:12 #14",
+   "answer": "people",
+   "why": "Hezekiah commanded Judah's people to worship before one altar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 32:17 #9",
+   "answer": "people",
+   "why": "The God of Israel is described as the God who delivers his people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 32:25 #17",
+   "answer": "people",
+   "why": "Wrath threatened Judah and Jerusalem because of Hezekiah's pride.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 32:32 #21",
+   "answer": "people",
+   "why": "Israel names the kingdom whose kings are recorded alongside Judah's.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 32:33 #20",
+   "answer": "people",
+   "why": "All Judah joined Jerusalem's inhabitants in honoring Hezekiah at his death.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:40:49+00:00"
+}

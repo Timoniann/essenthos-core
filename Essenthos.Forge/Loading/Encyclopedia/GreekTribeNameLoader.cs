@@ -134,7 +134,7 @@ internal sealed class GreekTribeNameLoader(AppDbContext db, ILogger<GreekTribeNa
          """;
 
     /// <summary>The Hebrew name Strong derives a Greek name from, directly or through the Greek name it shares a source with.</summary>
-    private static string Hebrew(string number) =>
+    internal static string Hebrew(string number) =>
         $"""
          coalesce(
              (SELECT (regexp_match(origin.derivation, '^of Hebrew origin \((H[0-9]+)'))[1]

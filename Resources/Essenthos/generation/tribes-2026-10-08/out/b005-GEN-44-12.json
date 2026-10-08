@@ -1,0 +1,117 @@
+{
+ "batch": "b005-GEN-44-12",
+ "answers": [
+  {
+   "key": "BHSA GEN 44:12 #18",
+   "answer": "man",
+   "why": "The cup is found in Benjamin's own sack among the brothers' sacks.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 44:14 #3",
+   "answer": "man",
+   "why": "Judah comes with his brothers to Joseph's house and bows before him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 44:16 #3",
+   "answer": "man",
+   "why": "Judah personally answers Joseph on behalf of his brothers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 44:18 #4",
+   "answer": "man",
+   "why": "Judah approaches Joseph and asks permission to speak to him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 45:12 #8",
+   "answer": "man",
+   "why": "Joseph identifies Benjamin as his brother whose eyes see him speaking.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 45:14 #5",
+   "answer": "man",
+   "why": "Joseph falls upon the neck of his brother Benjamin and weeps.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 45:14 #10",
+   "answer": "man",
+   "why": "Benjamin personally weeps upon Joseph's neck.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 45:22 #11",
+   "answer": "man",
+   "why": "Joseph gives Benjamin silver and five changes of clothing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 45:28 #3",
+   "answer": "man",
+   "why": "Israel calls Joseph his son and wishes to see him before dying.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 46:1 #3",
+   "answer": "man",
+   "why": "Israel journeys with his possessions and sacrifices to the God of his father Isaac.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 46:2 #5",
+   "answer": "man",
+   "why": "God addresses Israel as Jacob in a night vision, and he answers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 46:8 #14",
+   "answer": "man",
+   "why": "Reuben is explicitly identified as Jacob's firstborn in the family entering Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 46:19 #7",
+   "answer": "man",
+   "why": "Benjamin is listed with Joseph as a son of Rachel, Jacob's wife.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 46:20 #17",
+   "answer": "man",
+   "why": "Manasseh is named as a son whom Asenath bore to Joseph in Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 46:20 #20",
+   "answer": "man",
+   "why": "Ephraim is named as a son whom Asenath bore to Joseph in Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 46:28 #3",
+   "answer": "man",
+   "why": "Jacob sends Judah ahead to Joseph to direct the journey toward Goshen.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 46:29 #9",
+   "answer": "man",
+   "why": "Joseph goes to meet Israel, explicitly called his father, and embraces him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 46:30 #3",
+   "answer": "man",
+   "why": "Israel tells Joseph he can now die after seeing him alive.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:29:48+00:00"
+}

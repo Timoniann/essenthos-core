@@ -1,0 +1,111 @@
+{
+ "batch": "b133-HOS-8-2",
+ "answers": [
+  {
+   "key": "BHSA HOS 8:2 #5",
+   "answer": "people",
+   "why": "Israel cries to God with the plural declaration that they know him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 8:3 #2",
+   "answer": "people",
+   "why": "Israel rejects good, and the following verse describes their appointing kings and making idols.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 8:6 #3",
+   "answer": "people",
+   "why": "Israel is the source of Samaria's calf idol, which a craftsman made.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 8:8 #2",
+   "answer": "people",
+   "why": "Israel is swallowed up and described in the plural as being among the nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 8:9 #8",
+   "answer": "people",
+   "why": "Ephraim hires lovers as the people seek Assyria and alliances among the nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 8:11 #3",
+   "answer": "people",
+   "why": "Ephraim multiplies sinful altars and treats God's law as foreign.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 8:14 #3",
+   "answer": "people",
+   "why": "Israel builds temples after forgetting its Maker, alongside Judah's fortified cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 8:14 #10",
+   "answer": "people",
+   "why": "Judah multiplies fortified cities whose palaces face destruction by fire.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 9:1 #3",
+   "answer": "people",
+   "why": "Israel is addressed alongside other peoples and accused of unfaithfulness to its God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 9:3 #8",
+   "answer": "people",
+   "why": "Ephraim faces exile to Egypt, and the plural subjects eat unclean food in Assyria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 9:7 #10",
+   "answer": "people",
+   "why": "Israel will experience national punishment for its many sins amid destruction and displacement.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 9:8 #2",
+   "answer": "people",
+   "why": "Ephraim is the community associated with the prophetic watchman and the surrounding collective corruption.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA HOS 9:10 #7",
+   "answer": "people",
+   "why": "Israel is identified with the ancestral wilderness generation that went to Baalpeor.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 9:11 #1",
+   "answer": "people",
+   "why": "Ephraim has plural possessors of glory and children whom God threatens to take away.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 9:13 #1",
+   "answer": "people",
+   "why": "Ephraim is pictured as a planted community whose children face slaughter.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 9:13 #11",
+   "answer": "people",
+   "why": "Ephraim brings its children to slaughter amid a collective threat of bereavement.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 9:16 #2",
+   "answer": "people",
+   "why": "Ephraim's plural members lose their offspring and become wanderers among the nations.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:22:12+00:00"
+}

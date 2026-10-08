@@ -1,0 +1,123 @@
+{
+ "batch": "b057-1KI-10-9",
+ "answers": [
+  {
+   "key": "BHSA 1KI 10:9 #12",
+   "answer": "people",
+   "why": "Solomon is placed on the throne of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 10:9 #17",
+   "answer": "people",
+   "why": "The LORD's love for Israel explains his appointing Solomon as its king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 11:9 #13",
+   "answer": "people",
+   "why": "The LORD is called the God of Israel in the account of Solomon's disobedience.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 11:16 #9",
+   "answer": "people",
+   "why": "All Israel remains with Joab during the military campaign in Edom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 11:25 #5",
+   "answer": "people",
+   "why": "Rezon is an adversary to Israel throughout Solomon's reign.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 11:25 #18",
+   "answer": "people",
+   "why": "The ruler of Aram abhors Israel as an opposing nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 11:31 #14",
+   "answer": "people",
+   "why": "The God of Israel announces the division of Solomon's kingdom into tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 11:37 #15",
+   "answer": "people",
+   "why": "Jeroboam is promised kingship over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 11:38 #46",
+   "answer": "people",
+   "why": "God promises to give Israel to Jeroboam as his kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 11:42 #11",
+   "answer": "people",
+   "why": "Solomon reigns over all Israel for forty years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 12:1 #9",
+   "answer": "people",
+   "why": "All Israel gathers at Shechem to make Rehoboam king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 12:3 #12",
+   "answer": "people",
+   "why": "Israel's congregation comes with Jeroboam to petition Rehoboam.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 12:18 #15",
+   "answer": "people",
+   "why": "All Israel stones Rehoboam's tribute official to death.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 12:19 #3",
+   "answer": "people",
+   "why": "Israel rebels against the Davidic dynasty.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 12:20 #6",
+   "answer": "people",
+   "why": "All Israel hears of Jeroboam's return and summons him to the assembly.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 12:20 #23",
+   "answer": "people",
+   "why": "The assembled people make Jeroboam king over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 12:23 #14",
+   "answer": "people",
+   "why": "Benjamin is addressed alongside the house of Judah as people preparing for war.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 12:28 #20",
+   "answer": "people",
+   "why": "Jeroboam addresses Israel as the people brought out of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 12:32 #22",
+   "answer": "people",
+   "why": "Jeroboam models his festival on the feast celebrated in the kingdom of Judah.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:36:35+00:00"
+}

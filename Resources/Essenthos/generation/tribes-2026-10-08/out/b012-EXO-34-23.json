@@ -1,0 +1,123 @@
+{
+ "batch": "b012-EXO-34-23",
+ "answers": [
+  {
+   "key": "BHSA EXO 34:23 #15",
+   "answer": "people",
+   "why": "The God of Israel is the God before whom all the nation's males must appear.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 34:27 #25",
+   "answer": "people",
+   "why": "God makes this covenant with Moses and the Israelite community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA LEV 20:2 #18",
+   "answer": "people",
+   "why": "Strangers sojourn among Israel, the community governed by this law.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA LEV 22:18 #19",
+   "answer": "people",
+   "why": "The house of Israel denotes the community whose members offer sacrifices.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA LEV 22:18 #25",
+   "answer": "people",
+   "why": "The strangers in Israel live among the nation and may offer sacrifices.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA LEV 23:42 #11",
+   "answer": "people",
+   "why": "All native members of Israel must dwell in booths for seven days.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:3 #11",
+   "answer": "people",
+   "why": "Israel is the nation whose military-age men Moses and Aaron must count.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:5 #10",
+   "answer": "people",
+   "why": "Elizur represents Reuben in the list appointing one census leader per tribe.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:6 #2",
+   "answer": "people",
+   "why": "Shelumiel is appointed as Simeon's tribal representative for the census.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:9 #2",
+   "answer": "people",
+   "why": "Eliab is appointed as Zebulun's tribal representative for the census.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:10 #5",
+   "answer": "people",
+   "why": "Elishama represents the tribe of Ephraim in the census leadership list.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:10 #10",
+   "answer": "people",
+   "why": "Gamaliel represents the tribe of Manasseh in the census leadership list.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:13 #2",
+   "answer": "people",
+   "why": "Pagiel is appointed as Asher's tribal representative for the census.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:14 #2",
+   "answer": "people",
+   "why": "Eliasaph is appointed as Gad's tribal representative for the census.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:15 #2",
+   "answer": "people",
+   "why": "Ahira represents Naphtali among the men identified as tribal princes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:16 #10",
+   "answer": "people",
+   "why": "These tribal princes are heads of thousands within the Israelite nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:20 #6",
+   "answer": "man",
+   "why": "Reuben is identified as Israel's firstborn son, naming Jacob as his father.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:44 #11",
+   "answer": "people",
+   "why": "Israel has twelve tribal princes who assist Moses and Aaron with the census.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 1:45 #20",
+   "answer": "people",
+   "why": "Israel is the nation whose men eligible for military service are counted.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:30:40+00:00"
+}

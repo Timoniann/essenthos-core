@@ -1,0 +1,87 @@
+{
+ "batch": "b119-JER-32-14",
+ "answers": [
+  {
+   "key": "BHSA JER 32:14 #6",
+   "answer": "people",
+   "why": "The God of Israel directs the preservation of deeds for the nation's future restoration.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 32:15 #7",
+   "answer": "people",
+   "why": "The God of Israel promises renewed possession of houses, fields, and vineyards in the land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 32:20 #16",
+   "answer": "people",
+   "why": "Signs and wonders occur in Israel up to Jeremiah's day, among the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 32:21 #6",
+   "answer": "people",
+   "why": "Israel is explicitly God's people brought out of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 32:35 #38",
+   "answer": "people",
+   "why": "The worship of Molech causes the people of Judah to sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 32:36 #8",
+   "answer": "people",
+   "why": "The God of Israel speaks about the besieged city and the gathering of its exiled people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 33:4 #6",
+   "answer": "people",
+   "why": "The God of Israel addresses the destruction of the city's houses during war.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 33:7 #5",
+   "answer": "people",
+   "why": "Judah's captivity will be reversed and its people rebuilt as before.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 33:7 #9",
+   "answer": "people",
+   "why": "Israel's captivity will be reversed alongside Judah's captivity.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 33:16 #7",
+   "answer": "people",
+   "why": "Judah will be saved while Jerusalem dwells safely.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 34:2 #5",
+   "answer": "people",
+   "why": "The God of Israel announces Jerusalem's fall to Zedekiah, king of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 34:13 #5",
+   "answer": "people",
+   "why": "The God of Israel recalls the covenant with the people's ancestors brought out of Egyptian slavery.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 34:19 #2",
+   "answer": "people",
+   "why": "Judah has princes listed alongside Jerusalem's princes and the people of the land.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:20:15+00:00"
+}

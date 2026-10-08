@@ -1,0 +1,93 @@
+{
+ "batch": "b008-GEN-50-2",
+ "answers": [
+  {
+   "key": "BHSA GEN 50:2 #18",
+   "answer": "man",
+   "why": "The physicians embalm Joseph's father, Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 50:23 #5",
+   "answer": "man",
+   "why": "Joseph sees the third generation of his son Ephraim's children.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 50:23 #12",
+   "answer": "man",
+   "why": "Manasseh is named as Machir's father in Joseph's family.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:2 #1",
+   "answer": "man",
+   "why": "Reuben is listed among the men who came to Egypt with Jacob and their households.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:2 #2",
+   "answer": "man",
+   "why": "Simeon is listed among the men who came to Egypt with Jacob and their households.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:2 #3",
+   "answer": "man",
+   "why": "Levi is listed among the men who came to Egypt with Jacob and their households.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:2 #5",
+   "answer": "man",
+   "why": "Judah is listed among the men who came to Egypt with Jacob and their households.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:3 #1",
+   "answer": "man",
+   "why": "Issachar belongs to the list of Jacob's sons who came to Egypt with their households.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:3 #2",
+   "answer": "man",
+   "why": "Zebulun belongs to the list of Jacob's sons who came to Egypt with their households.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:3 #4",
+   "answer": "man",
+   "why": "Benjamin belongs to the list of Jacob's sons who came to Egypt with their households.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:4 #1",
+   "answer": "man",
+   "why": "Dan is named in the family list followed by the count of Jacob's seventy descendants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:4 #3",
+   "answer": "man",
+   "why": "Naphtali is named in the family list followed by the count of Jacob's seventy descendants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:4 #4",
+   "answer": "man",
+   "why": "Gad is named in the family list followed by the count of Jacob's seventy descendants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 1:4 #6",
+   "answer": "man",
+   "why": "Asher is named in the family list followed by the count of Jacob's seventy descendants.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:29:54+00:00"
+}

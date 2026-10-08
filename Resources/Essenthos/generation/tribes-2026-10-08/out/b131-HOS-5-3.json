@@ -1,0 +1,123 @@
+{
+ "batch": "b131-HOS-5-3",
+ "answers": [
+  {
+   "key": "BHSA HOS 5:3 #3",
+   "answer": "people",
+   "why": "Ephraim is the sinful community whose deeds prevent returning to their God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:3 #5",
+   "answer": "people",
+   "why": "Israel is the nation whose defilement and collective wrongdoing God knows.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:3 #12",
+   "answer": "people",
+   "why": "God addresses Ephraim's collective unfaithfulness, followed by plural references to their deeds.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:3 #14",
+   "answer": "people",
+   "why": "Israel's defilement is explained by the people's unfaithfulness and ignorance of the LORD.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:5 #4",
+   "answer": "people",
+   "why": "Israel's pride testifies against the nation described as refusing to return to God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:5 #8",
+   "answer": "people",
+   "why": "Israel and Ephraim fall together in their collective iniquity.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:5 #10",
+   "answer": "people",
+   "why": "Ephraim falls alongside Israel and Judah in a judgment on the peoples.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:5 #16",
+   "answer": "people",
+   "why": "Judah falls with Israel and Ephraim in the same national judgment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:8 #13",
+   "answer": "people",
+   "why": "The alarm at Gibeah and Ramah addresses Benjamin's tribe in the threatened region.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:9 #1",
+   "answer": "people",
+   "why": "Ephraim faces desolation in a judgment announced among Israel's tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:10 #3",
+   "answer": "people",
+   "why": "Judah has princes condemned for behaving like boundary movers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:11 #2",
+   "answer": "people",
+   "why": "Ephraim is the community oppressed and crushed under judgment for its disobedience.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:12 #7",
+   "answer": "people",
+   "why": "God's moth-like destruction targets Ephraim alongside the house of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:12 #14",
+   "answer": "people",
+   "why": "The house of Judah is the collective target of God's destructive judgment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:13 #3",
+   "answer": "people",
+   "why": "Ephraim's sickness represents the nation's distress that prompts seeking Assyrian help.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:13 #7",
+   "answer": "people",
+   "why": "Judah's wound parallels Ephraim's national sickness, with both addressed by plural pronouns.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:13 #12",
+   "answer": "people",
+   "why": "Ephraim seeks Assyria and its king for help with the nation's distress.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:14 #7",
+   "answer": "people",
+   "why": "God threatens Ephraim like a lion, and the following verse describes their collective repentance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 5:14 #14",
+   "answer": "people",
+   "why": "The house of Judah faces judgment alongside Ephraim until they acknowledge their offense.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:21:47+00:00"
+}

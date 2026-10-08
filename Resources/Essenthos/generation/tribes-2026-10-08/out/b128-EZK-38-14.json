@@ -1,0 +1,93 @@
+{
+ "batch": "b128-EZK-38-14",
+ "answers": [
+  {
+   "key": "BHSA EZK 38:14 #23",
+   "answer": "people",
+   "why": "Israel is explicitly God's people dwelling safely.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 38:16 #5",
+   "answer": "people",
+   "why": "Gog comes against God's people Israel and their land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 38:17 #17",
+   "answer": "people",
+   "why": "Israel is the nation whose prophets foretold Gog's attack against them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 39:7 #9",
+   "answer": "people",
+   "why": "God makes his holy name known among his people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 39:7 #26",
+   "answer": "people",
+   "why": "God is holy in Israel, the nation contrasted with the other nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 39:11 #15",
+   "answer": "people",
+   "why": "The burial place in Israel lies in the nation's land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 39:25 #15",
+   "answer": "people",
+   "why": "God promises mercy to the whole house of Israel after their captivity.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 43:2 #5",
+   "answer": "people",
+   "why": "The God of Israel is the nation's God whose glory approaches the sanctuary.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 43:7 #28",
+   "answer": "people",
+   "why": "The house of Israel and their kings have defiled God's holy name.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 44:2 #21",
+   "answer": "people",
+   "why": "The LORD is called the God of Israel in the nation's sanctuary.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 44:10 #11",
+   "answer": "people",
+   "why": "Israel went astray after their idols alongside the Levites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 44:12 #12",
+   "answer": "people",
+   "why": "The Levites caused the house of Israel to fall into iniquity through idolatry.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 44:28 #14",
+   "answer": "people",
+   "why": "The priests receive no landed possession within Israel's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 44:29 #15",
+   "answer": "people",
+   "why": "Dedicated things throughout Israel belong to the priests.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:21:19+00:00"
+}

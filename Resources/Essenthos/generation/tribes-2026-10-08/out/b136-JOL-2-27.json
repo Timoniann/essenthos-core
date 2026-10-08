@@ -1,0 +1,81 @@
+{
+ "batch": "b136-JOL-2-27",
+ "answers": [
+  {
+   "key": "BHSA JOL 2:27 #6",
+   "answer": "people",
+   "why": "God is in Israel's midst and calls those addressed 'my people.'",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOL 4:1 #18",
+   "answer": "people",
+   "why": "Judah's captivity is restored together with Jerusalem's.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOL 4:2 #20",
+   "answer": "people",
+   "why": "Israel is God's people scattered among the nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOL 4:18 #20",
+   "answer": "people",
+   "why": "Judah names the territory whose streams will flow with water.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOL 4:20 #2",
+   "answer": "people",
+   "why": "Judah will remain inhabited forever, parallel to Jerusalem through the generations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 1:1 #13",
+   "answer": "people",
+   "why": "Amos's vision concerns Israel during the reigns of Uzziah and Jeroboam.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 2:4 #7",
+   "answer": "people",
+   "why": "Judah's inhabitants collectively rejected God's law and followed their fathers' lies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 2:5 #5",
+   "answer": "people",
+   "why": "Fire upon Judah will consume Jerusalem's palaces.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 2:6 #7",
+   "answer": "people",
+   "why": "Israel is condemned for collectively selling the righteous and the poor.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 3:14 #6",
+   "answer": "people",
+   "why": "Punishment for Israel's transgressions includes destruction of Bethel's altars.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 4:12 #5",
+   "answer": "people",
+   "why": "Israel is the nation threatened after its people failed to return to God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 4:12 #15",
+   "answer": "people",
+   "why": "The same unrepentant nation is summoned to prepare to meet its God.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:22:34+00:00"
+}

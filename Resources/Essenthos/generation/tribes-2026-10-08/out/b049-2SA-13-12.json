@@ -1,0 +1,81 @@
+{
+ "batch": "b049-2SA-13-12",
+ "answers": [
+  {
+   "key": "BHSA 2SA 13:12 #13",
+   "answer": "people",
+   "why": "Tamar says such an act must not be done within the nation of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 13:13 #15",
+   "answer": "people",
+   "why": "Amnon would become one of the fools among Israel's people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 13:23 #15",
+   "answer": "people",
+   "why": "Ephraim locates Baalhazor geographically, referring to a place associated with the tribe.",
+   "confidence": 0.97
+  },
+  {
+   "key": "BHSA 2SA 14:25 #10",
+   "answer": "people",
+   "why": "Absalom's beauty is compared with that of everyone in Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 15:6 #11",
+   "answer": "people",
+   "why": "All Israel refers to the people coming to the king for judgment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 15:6 #26",
+   "answer": "people",
+   "why": "Absalom steals the hearts of Israel's men.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 15:13 #12",
+   "answer": "people",
+   "why": "Israel's men have transferred their allegiance to Absalom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 16:3 #26",
+   "answer": "people",
+   "why": "The house of Israel is the people expected to restore Mephibosheth's ancestral kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 16:15 #8",
+   "answer": "people",
+   "why": "Israel's men accompany Absalom into Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 16:18 #19",
+   "answer": "people",
+   "why": "All Israel's men are described as choosing the king whom Hushai will serve.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 16:21 #19",
+   "answer": "people",
+   "why": "All Israel will hear that Absalom has become offensive to his father.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 16:22 #19",
+   "answer": "people",
+   "why": "Absalom's act occurs publicly in the sight of all Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:35:34+00:00"
+}

@@ -1,0 +1,81 @@
+{
+ "batch": "b069-2KI-23-1",
+ "answers": [
+  {
+   "key": "BHSA 2KI 23:1 #10",
+   "answer": "people",
+   "why": "The king gathers the elders of Judah alongside those of Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 23:2 #10",
+   "answer": "people",
+   "why": "All the men of Judah accompany the king and Jerusalem's inhabitants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 23:15 #19",
+   "answer": "people",
+   "why": "Jeroboam made Israel sin through the high place at Bethel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 23:17 #25",
+   "answer": "people",
+   "why": "The man of God came from Judah, identifying his homeland.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 23:22 #16",
+   "answer": "people",
+   "why": "Israel is the people governed by the judges.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 23:26 #14",
+   "answer": "people",
+   "why": "The LORD's anger burns against Judah because of Manasseh's provocations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 23:27 #6",
+   "answer": "people",
+   "why": "The LORD will remove Judah and reject Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 23:27 #15",
+   "answer": "people",
+   "why": "Israel is the nation already removed from the LORD's sight.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 24:2 #24",
+   "answer": "people",
+   "why": "Foreign raiding bands are sent against Judah to destroy it.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 24:3 #7",
+   "answer": "people",
+   "why": "Judgment comes upon Judah to remove its people from the LORD's sight.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 24:20 #10",
+   "answer": "people",
+   "why": "Judah is paired with Jerusalem as the community cast from the LORD's presence.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 1:34 #10",
+   "answer": "man",
+   "why": "Israel is named alongside Esau as a son of Isaac.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:38:01+00:00"
+}

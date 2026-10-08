@@ -1,0 +1,87 @@
+{
+ "batch": "b070-1CH-2-1",
+ "answers": [
+  {
+   "key": "BHSA 1CH 2:1 #4",
+   "answer": "man",
+   "why": "Reuben is listed among Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:1 #5",
+   "answer": "man",
+   "why": "Simeon is listed among Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:1 #6",
+   "answer": "man",
+   "why": "Levi is listed among Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:1 #8",
+   "answer": "man",
+   "why": "Judah is listed among Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:1 #9",
+   "answer": "man",
+   "why": "Issachar is listed among Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:1 #11",
+   "answer": "man",
+   "why": "Zebulun is listed among Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:2 #1",
+   "answer": "man",
+   "why": "Dan continues the preceding verse's list of Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:2 #4",
+   "answer": "man",
+   "why": "Benjamin continues the preceding verse's list of Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:2 #5",
+   "answer": "man",
+   "why": "Naphtali continues the preceding verse's list of Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:2 #6",
+   "answer": "man",
+   "why": "Gad continues the preceding verse's list of Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:2 #8",
+   "answer": "man",
+   "why": "Asher continues the preceding verse's list of Israel's literal sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:3 #20",
+   "answer": "man",
+   "why": "Er is Judah's firstborn, one of three sons born to him by Shua's daughter.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 2:7 #6",
+   "answer": "people",
+   "why": "Achar troubled Israel through his transgression concerning the devoted thing.",
+   "confidence": 0.99
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:38:17+00:00"
+}

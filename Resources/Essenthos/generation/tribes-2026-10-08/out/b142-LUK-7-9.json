@@ -1,0 +1,87 @@
+{
+ "batch": "b142-LUK-7-9",
+ "answers": [
+  {
+   "key": "NESTLE1904 LUK 7:9 #20",
+   "answer": "people",
+   "why": "Jesus compares the centurion's faith with faith found among Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 LUK 24:21 #11",
+   "answer": "people",
+   "why": "The disciples hoped Jesus would redeem the nation of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 JHN 1:31 #9",
+   "answer": "people",
+   "why": "John baptizes so that Jesus may be revealed to Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 JHN 3:10 #11",
+   "answer": "people",
+   "why": "Nicodemus is called the teacher of Israel, the people he teaches.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ACT 2:36 #6",
+   "answer": "people",
+   "why": "Peter addresses all the house of Israel concerning Jesus whom they crucified.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ACT 4:10 #9",
+   "answer": "people",
+   "why": "The announcement explicitly addresses all the people of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ACT 4:27 #26",
+   "answer": "people",
+   "why": "Israel's people gathered with Gentiles, Herod, and Pilate against Jesus.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ACT 5:31 #15",
+   "answer": "people",
+   "why": "The exalted Jesus grants repentance and forgiveness to Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ACT 7:42 #31",
+   "answer": "people",
+   "why": "The house of Israel is addressed about its forty years in the wilderness.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ACT 9:15 #26",
+   "answer": "people",
+   "why": "Paul will bear Jesus' name before Israel's descendants alongside Gentiles and kings.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ACT 13:17 #6",
+   "answer": "people",
+   "why": "Israel explicitly names the people whom God brought out of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ACT 13:23 #11",
+   "answer": "people",
+   "why": "God brings Jesus, David's descendant, to Israel as its Savior.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ACT 13:24 #13",
+   "answer": "people",
+   "why": "John preached repentance to all the people of Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:23:18+00:00"
+}

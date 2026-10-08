@@ -1,0 +1,159 @@
+{
+ "batch": "b035-JDG-19-1",
+ "answers": [
+  {
+   "key": "BHSA JDG 19:1 #12",
+   "answer": "people",
+   "why": "The absence of a king in Israel describes the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 19:1 #29",
+   "answer": "people",
+   "why": "Judah identifies the tribal territory containing Bethlehem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 19:2 #14",
+   "answer": "people",
+   "why": "Judah locates Bethlehem, where the woman's father lives, in tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 19:14 #15",
+   "answer": "people",
+   "why": "Gibeah belongs to Benjamin's tribe and territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 19:18 #8",
+   "answer": "people",
+   "why": "Judah identifies the tribal territory of Bethlehem, their departure point.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 19:18 #20",
+   "answer": "people",
+   "why": "Judah identifies the tribal territory of Bethlehem, which the speaker visited.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:4 #18",
+   "answer": "people",
+   "why": "The Levite identifies Gibeah as belonging to Benjamin's tribe.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:6 #13",
+   "answer": "people",
+   "why": "Israel's inheritance is the national territory throughout which the pieces were sent.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:6 #20",
+   "answer": "people",
+   "why": "The crime was committed within the Israelite nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:10 #34",
+   "answer": "people",
+   "why": "Benjamin identifies the tribal territory containing the city targeted by the army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:10 #42",
+   "answer": "people",
+   "why": "The folly was committed among the people of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:11 #5",
+   "answer": "people",
+   "why": "Israel's men gather against the city as a united army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:13 #19",
+   "answer": "people",
+   "why": "Executing the offenders would remove evil from the Israelite community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:17 #3",
+   "answer": "people",
+   "why": "Israel's fighting men are numbered as four hundred thousand, excluding Benjamin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:20 #4",
+   "answer": "people",
+   "why": "Israel's men go out to battle against the tribe of Benjamin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:20 #14",
+   "answer": "people",
+   "why": "Israel's men arrange themselves for battle at Gibeah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:21 #11",
+   "answer": "people",
+   "why": "Benjamin kills twenty-two thousand men among the Israelites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:22 #6",
+   "answer": "people",
+   "why": "The people identified as Israel's men regroup for battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:29 #3",
+   "answer": "people",
+   "why": "Israel deploys ambush troops around Gibeah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:31 #42",
+   "answer": "people",
+   "why": "About thirty men are killed among the Israelite forces.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:33 #4",
+   "answer": "people",
+   "why": "All Israel's men rise and form their battle lines at Baaltamar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:33 #14",
+   "answer": "people",
+   "why": "Israel's ambush force emerges from its position near Gibeah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:34 #14",
+   "answer": "people",
+   "why": "Ten thousand selected soldiers come from all Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:35 #8",
+   "answer": "people",
+   "why": "The LORD defeats Benjamin before the opposing Israelite army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:36 #10",
+   "answer": "people",
+   "why": "Israel's men give ground to Benjamin while trusting their ambush force.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:34:04+00:00"
+}

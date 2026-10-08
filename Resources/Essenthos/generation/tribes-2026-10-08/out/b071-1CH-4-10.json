@@ -1,0 +1,93 @@
+{
+ "batch": "b071-1CH-4-10",
+ "answers": [
+  {
+   "key": "BHSA 1CH 4:10 #6",
+   "answer": "people",
+   "why": "Jabez invokes the God of Israel, the nation's God.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA 1CH 4:21 #4",
+   "answer": "man",
+   "why": "Judah is named as Shelah's father in the genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 5:1 #5",
+   "answer": "man",
+   "why": "Reuben is Israel's firstborn who defiled his father's bed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 5:1 #21",
+   "answer": "man",
+   "why": "Israel is explicitly named as Joseph's father.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 5:2 #2",
+   "answer": "man",
+   "why": "The birthright account compares Judah with his brothers and identifies him as the ruler's ancestor.",
+   "confidence": 0.88
+  },
+  {
+   "key": "BHSA 1CH 5:3 #4",
+   "answer": "man",
+   "why": "Israel is the father whose firstborn is Reuben.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 5:26 #4",
+   "answer": "people",
+   "why": "The God of Israel brings judgment upon the tribes through Assyrian deportation.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA 1CH 5:41 #8",
+   "answer": "people",
+   "why": "Judah and Jerusalem are carried into captivity by Nebuchadnezzar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 6:23 #6",
+   "answer": "man",
+   "why": "Levi is named as Kohath's father in a chain of ancestors.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 6:23 #8",
+   "answer": "man",
+   "why": "Israel is named as Levi's father in the genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 6:28 #6",
+   "answer": "man",
+   "why": "Levi is named as Gershom's father in the genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 6:32 #8",
+   "answer": "man",
+   "why": "Levi is named as Merari's father in the genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 6:34 #25",
+   "answer": "people",
+   "why": "Aaron and his sons make atonement for Israel under Moses' commands.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 6:46 #15",
+   "answer": "people",
+   "why": "The half tribe of Manasseh supplies ten cities to the Kohathites.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:38:23+00:00"
+}

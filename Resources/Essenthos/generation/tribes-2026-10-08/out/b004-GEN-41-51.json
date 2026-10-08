@@ -1,0 +1,123 @@
+{
+ "batch": "b004-GEN-41-51",
+ "answers": [
+  {
+   "key": "BHSA GEN 41:51 #8",
+   "answer": "man",
+   "why": "Joseph names his firstborn son Manasseh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 41:52 #7",
+   "answer": "man",
+   "why": "Joseph names his second son Ephraim.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 42:4 #3",
+   "answer": "man",
+   "why": "Jacob keeps Benjamin, Joseph's brother, from traveling with his brothers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 42:22 #3",
+   "answer": "man",
+   "why": "Reuben personally reminds his brothers of his warning about Joseph.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 42:24 #18",
+   "answer": "man",
+   "why": "Joseph takes Simeon from his brothers and binds him before their eyes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 42:36 #11",
+   "answer": "man",
+   "why": "Jacob laments the absence of his son Simeon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 42:36 #15",
+   "answer": "man",
+   "why": "Jacob fears his sons will also take Benjamin away from him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 42:37 #3",
+   "answer": "man",
+   "why": "Reuben speaks to his father and pledges his own two sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:3 #4",
+   "answer": "man",
+   "why": "Judah speaks to his father about bringing their brother to Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:6 #3",
+   "answer": "man",
+   "why": "Israel personally asks his sons why they disclosed their other brother.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:8 #3",
+   "answer": "man",
+   "why": "Judah asks his father to send the lad with him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:8 #5",
+   "answer": "man",
+   "why": "Israel is explicitly identified as Judah's father.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:11 #4",
+   "answer": "man",
+   "why": "Israel, their father, instructs his sons to carry a present to Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:14 #19",
+   "answer": "man",
+   "why": "Jacob hopes Benjamin and their other brother will be released to them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:15 #18",
+   "answer": "man",
+   "why": "The brothers take Benjamin with them to Egypt and stand before Joseph.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:16 #6",
+   "answer": "man",
+   "why": "Joseph sees Benjamin accompanying his brothers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:23 #23",
+   "answer": "man",
+   "why": "The steward brings Simeon out to his brothers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:29 #7",
+   "answer": "man",
+   "why": "Benjamin is identified as Joseph's brother and his mother's son.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 43:34 #11",
+   "answer": "man",
+   "why": "Benjamin receives a meal portion five times larger than his brothers' portions.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:29:32+00:00"
+}

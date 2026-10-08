@@ -1,0 +1,99 @@
+{
+ "batch": "b109-ISA-30-11",
+ "answers": [
+  {
+   "key": "BHSA ISA 30:11 #12",
+   "answer": "people",
+   "why": "The rebellious people demand that the Holy One of Israel cease confronting them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 30:12 #5",
+   "answer": "people",
+   "why": "The Holy One of Israel addresses the people who despise his word and trust oppression.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 30:15 #7",
+   "answer": "people",
+   "why": "The Holy One of Israel offers salvation to the people who refuse returning and rest.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 30:29 #25",
+   "answer": "people",
+   "why": "The people approach the LORD's mountain to worship Israel's Rock.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 31:1 #27",
+   "answer": "people",
+   "why": "The Holy One of Israel is the nation's God whom those seeking Egyptian help neglect.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 36:7 #23",
+   "answer": "people",
+   "why": "Hezekiah commands Judah and Jerusalem to worship before this altar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 37:16 #4",
+   "answer": "people",
+   "why": "Hezekiah invokes the God of Israel while praying for deliverance from Assyria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 37:21 #14",
+   "answer": "people",
+   "why": "The LORD God of Israel responds to Hezekiah's prayer against Assyria's king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 37:23 #17",
+   "answer": "people",
+   "why": "Sennacherib's reproach against Jerusalem challenges the nation's Holy One.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 40:27 #6",
+   "answer": "people",
+   "why": "Jacob and Israel name the people complaining that God overlooks their cause.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA ISA 41:8 #3",
+   "answer": "people",
+   "why": "Israel is God's chosen servant, Abraham's offspring gathered from the ends of the earth.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA ISA 41:14 #14",
+   "answer": "people",
+   "why": "The Holy One of Israel promises to redeem the people addressed as Jacob and Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 41:16 #16",
+   "answer": "people",
+   "why": "The people will rejoice in the LORD and glory in their Holy One.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 41:17 #19",
+   "answer": "people",
+   "why": "The God of Israel promises not to forsake the poor and needy seeking water.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 41:20 #17",
+   "answer": "people",
+   "why": "The Holy One of Israel transforms the wilderness so the people recognize his work.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:19:03+00:00"
+}

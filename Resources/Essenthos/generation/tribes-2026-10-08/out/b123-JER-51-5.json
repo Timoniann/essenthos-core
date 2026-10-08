@@ -1,0 +1,81 @@
+{
+ "batch": "b123-JER-51-5",
+ "answers": [
+  {
+   "key": "BHSA JER 51:5 #4",
+   "answer": "people",
+   "why": "Israel and Judah are communities whose land is filled with guilt and whom God has not forsaken.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 51:5 #6",
+   "answer": "people",
+   "why": "Judah is paired with Israel as a community not forsaken by God despite its land's guilt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 51:5 #18",
+   "answer": "people",
+   "why": "The Holy One of Israel is the God against whom the nation's land has sinned.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 51:33 #7",
+   "answer": "people",
+   "why": "The God of Israel announces judgment against Babylon, which has oppressed his people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 51:49 #6",
+   "answer": "people",
+   "why": "Israel's slain are the people whom Babylon caused to fall.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 52:3 #9",
+   "answer": "people",
+   "why": "Judah is paired with Jerusalem as the kingdom whose inhabitants God cast from his presence.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 52:10 #15",
+   "answer": "people",
+   "why": "Judah's princes are officials of the kingdom executed by Babylon's king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 52:27 #15",
+   "answer": "people",
+   "why": "Judah is deported from its land, and the next verse counts the captive Jews.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA LAM 1:3 #2",
+   "answer": "people",
+   "why": "Judah has gone into exile and dwells among the nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA LAM 2:1 #14",
+   "answer": "people",
+   "why": "Israel's splendor is cast down in the destruction of Zion and its kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA LAM 2:3 #7",
+   "answer": "people",
+   "why": "Israel's power is cut off before the enemy amid the destruction of the kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA LAM 2:5 #6",
+   "answer": "people",
+   "why": "Israel is swallowed up along with its palaces and strongholds.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:20:37+00:00"
+}

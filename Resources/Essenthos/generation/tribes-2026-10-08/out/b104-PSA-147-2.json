@@ -1,0 +1,81 @@
+{
+ "batch": "b104-PSA-147-2",
+ "answers": [
+  {
+   "key": "BHSA PSA 147:2 #5",
+   "answer": "people",
+   "why": "Israel's outcasts are gathered as the LORD rebuilds Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 147:19 #9",
+   "answer": "people",
+   "why": "Israel receives statutes and judgments in contrast to other nations in the next verse.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 149:2 #2",
+   "answer": "people",
+   "why": "Israel parallels the children of Zion rejoicing in their King.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ECC 1:12 #6",
+   "answer": "people",
+   "why": "The Preacher rules over Israel as king in Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA SNG 3:7 #12",
+   "answer": "people",
+   "why": "Israel is the nation supplying the warriors who surround Solomon's bed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 1:1 #8",
+   "answer": "people",
+   "why": "Judah and Jerusalem are the subjects of Isaiah's vision during the reigns of Judah's kings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 1:3 #8",
+   "answer": "people",
+   "why": "Israel is explicitly paralleled with God's people who do not understand.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 1:4 #17",
+   "answer": "people",
+   "why": "The sinful nation has provoked its God, the Holy One of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 1:24 #8",
+   "answer": "people",
+   "why": "The mighty One of Israel announces judgment against the community with rebellious princes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 2:1 #9",
+   "answer": "people",
+   "why": "Isaiah's prophecy concerns Judah together with Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 3:1 #12",
+   "answer": "people",
+   "why": "Judah and Jerusalem lose their supplies of bread and water and their leaders.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 3:8 #5",
+   "answer": "people",
+   "why": "Judah falls alongside Jerusalem because their speech and deeds oppose the LORD.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:18:17+00:00"
+}

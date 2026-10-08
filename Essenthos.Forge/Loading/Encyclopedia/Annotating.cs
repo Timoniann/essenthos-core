@@ -931,6 +931,60 @@ internal static class Annotating
              ELSE l.confidence END
         """;
 
+    /// <summary>
+    /// What a pass wrote under a source it no longer writes under, taken back: the rows it concluded that
+    /// nothing else claims, then its claims on rows something else also claims, which stand on those
+    /// (<see cref="StandOnTheRest"/>). Takes <c>@former</c>.
+    /// </summary>
+    private const string WithdrawFormer =
+        """
+        DELETE FROM word_entity a
+        WHERE a.source = @former
+          AND NOT EXISTS (SELECT 1 FROM word_entity_claim c WHERE c.word_entity_id = a.id AND c.source <> @former)
+        """;
+
+    /// <summary>
+    /// A row the former source concluded that another pass also claims stands on that claim now: it
+    /// takes the claim's source, method, confidence and note, so the carry and every later pass read
+    /// it as that pass's row and not as one of a source that has been taken back.
+    /// </summary>
+    private const string StandOnTheRest =
+        """
+        UPDATE word_entity a
+        SET source = rest.source, method = rest.method, confidence = rest.confidence, note = rest.note
+        FROM (SELECT DISTINCT ON (c.word_entity_id) c.word_entity_id, c.source, c.method, c.confidence, c.note
+              FROM word_entity_claim c
+              JOIN word_entity owner ON owner.id = c.word_entity_id AND owner.source = @former
+              WHERE c.source <> @former
+              ORDER BY c.word_entity_id, c.method = 'stated-by-source', coalesce(c.confidence, 1.0) DESC, c.id) rest
+        WHERE a.id = rest.word_entity_id
+        """;
+
+    private const string WithdrawFormerClaims = "DELETE FROM word_entity_claim c WHERE c.source = @former";
+
+    /// <summary>
+    /// Everything written under <paramref name="former"/> taken back, a row another pass also claims
+    /// kept on that pass's claim. Returns the rows deleted.
+    /// </summary>
+    public static async Task<int> Withdraw(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        string former,
+        CancellationToken cancellationToken)
+    {
+        var withdrawn = 0;
+        foreach (var statement in new[] { WithdrawFormer, StandOnTheRest, WithdrawFormerClaims })
+        {
+            await using var command = new NpgsqlCommand(
+                statement, connection, (NpgsqlTransaction)transaction.GetDbTransaction());
+            command.Parameters.AddWithValue("former", former);
+            var deleted = await command.ExecuteNonQueryAsync(cancellationToken);
+            withdrawn = statement == WithdrawFormer ? deleted : withdrawn;
+        }
+
+        return withdrawn;
+    }
+
     /// <summary><see cref="Carry"/>, with the two thresholds it compares links against.</summary>
     public static async Task CarryAcrossLinks(
         NpgsqlConnection connection,

@@ -1,0 +1,81 @@
+{
+ "batch": "b010-EXO-9-4",
+ "answers": [
+  {
+   "key": "BHSA EXO 9:4 #6",
+   "answer": "people",
+   "why": "Israel's cattle are distinguished from Egypt's cattle during the plague.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 9:7 #10",
+   "answer": "people",
+   "why": "Israel owns the spared cattle, and Pharaoh refuses to release the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 11:7 #25",
+   "answer": "people",
+   "why": "The LORD distinguishes Egypt from Israel, whose people and beasts are protected.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 12:15 #26",
+   "answer": "people",
+   "why": "Anyone eating leaven is cut off from the community of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 12:21 #7",
+   "answer": "people",
+   "why": "Moses summons Israel's elders to give Passover instructions for their families.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 14:5 #27",
+   "answer": "people",
+   "why": "Pharaoh identifies Israel as the people released from serving Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 14:19 #11",
+   "answer": "people",
+   "why": "Israel is the camp before which the angel goes and behind which he moves.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 14:25 #16",
+   "answer": "people",
+   "why": "The Egyptians flee from Israel because the LORD fights for them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 14:30 #10",
+   "answer": "people",
+   "why": "The LORD saves the people who crossed the sea from Egypt's power.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 14:30 #16",
+   "answer": "people",
+   "why": "The rescued Israelites see the Egyptians dead on the seashore.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 14:31 #3",
+   "answer": "people",
+   "why": "Israel sees the LORD's mighty work, and the same people fear and believe him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 15:22 #5",
+   "answer": "people",
+   "why": "Moses leads Israel from the sea, and they travel together through the wilderness.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:30:14+00:00"
+}

@@ -156,6 +156,7 @@ builder.Services.AddScoped<TribeNameLoader>();
 builder.Services.AddScoped<GreekTribeNameLoader>();
 builder.Services.AddScoped<ConsensusNamesakes>();
 builder.Services.AddScoped<EponymNameLoader>();
+builder.Services.AddScoped<EponymReadingLoader>();
 builder.Services.AddScoped<RealmNameLoader>();
 builder.Services.AddScoped<ContextBearerLoader>();
 builder.Services.AddScoped<SpelledNameLoader>();

@@ -1,0 +1,93 @@
+{
+ "batch": "b030-JDG-6-2",
+ "answers": [
+  {
+   "key": "BHSA JDG 6:2 #6",
+   "answer": "people",
+   "why": "Midian oppresses Israel, whose people make mountain shelters.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:3 #5",
+   "answer": "people",
+   "why": "Israel sows crops that invading peoples attack and destroy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:4 #18",
+   "answer": "people",
+   "why": "The invaders destroy the country's crops and leave Israel without sustenance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:6 #3",
+   "answer": "people",
+   "why": "Impoverished Israel is identified with the children of Israel crying to the LORD.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:8 #16",
+   "answer": "people",
+   "why": "The God of Israel addresses the people he brought out of Egyptian bondage.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:14 #14",
+   "answer": "people",
+   "why": "Gideon is commissioned to deliver Israel from Midian's oppression.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:15 #10",
+   "answer": "people",
+   "why": "Gideon asks how he can deliver Israel from the Midianites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:15 #16",
+   "answer": "people",
+   "why": "Gideon locates his clan within the tribe of Manasseh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:35 #6",
+   "answer": "people",
+   "why": "Messengers go throughout Manasseh, which musters behind Gideon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:35 #16",
+   "answer": "people",
+   "why": "Asher receives Gideon's messengers and joins the assembled fighting forces.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:35 #19",
+   "answer": "people",
+   "why": "Zebulun receives Gideon's messengers and comes up to join the forces.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:35 #22",
+   "answer": "people",
+   "why": "Naphtali receives Gideon's messengers and comes up to join the forces.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:36 #13",
+   "answer": "people",
+   "why": "Gideon asks whether God will deliver Israel through him after the tribes muster.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 6:37 #32",
+   "answer": "people",
+   "why": "The fleece is a sign that God will deliver Israel through Gideon.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:33:02+00:00"
+}

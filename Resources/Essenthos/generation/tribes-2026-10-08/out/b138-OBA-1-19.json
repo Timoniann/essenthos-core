@@ -1,0 +1,81 @@
+{
+ "batch": "b138-OBA-1-19",
+ "answers": [
+  {
+   "key": "BHSA OBA 1:19 #23",
+   "answer": "people",
+   "why": "Benjamin will possess Gilead as a tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MIC 1:5 #20",
+   "answer": "people",
+   "why": "Judah's high places are identified with Jerusalem, referring to the kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MIC 1:9 #7",
+   "answer": "people",
+   "why": "The calamity reaches Judah and Jerusalem, describing the kingdom and its capital.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MIC 1:13 #19",
+   "answer": "people",
+   "why": "Israel's transgressions are found in Lachish amid judgment on cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MIC 1:15 #12",
+   "answer": "people",
+   "why": "Israel's glory reaches Adullam in a passage about conquest and captivity.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA MIC 2:12 #8",
+   "answer": "people",
+   "why": "Israel's remnant is gathered as a flock containing a multitude of people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MIC 3:8 #20",
+   "answer": "people",
+   "why": "Israel's sin is declared to the nation whose leaders are addressed next.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MIC 4:14 #17",
+   "answer": "people",
+   "why": "Israel has a judge who is struck during a siege against the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MIC 5:1 #18",
+   "answer": "people",
+   "why": "A ruler will come from Bethlehem to govern Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA MIC 6:2 #19",
+   "answer": "people",
+   "why": "Israel is explicitly parallel to the LORD's people in his controversy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NAM 2:1 #10",
+   "answer": "people",
+   "why": "Judah is commanded to celebrate its feasts after an enemy is cut off.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NAM 2:3 #9",
+   "answer": "people",
+   "why": "Israel has been plundered and its vine branches ruined by attackers.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:22:42+00:00"
+}

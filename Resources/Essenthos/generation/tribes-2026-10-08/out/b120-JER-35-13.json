@@ -1,0 +1,87 @@
+{
+ "batch": "b120-JER-35-13",
+ "answers": [
+  {
+   "key": "BHSA JER 35:13 #6",
+   "answer": "people",
+   "why": "“The God of Israel” identifies the God of the nation addressed through Jeremiah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 35:13 #12",
+   "answer": "people",
+   "why": "The men of Judah are addressed alongside the inhabitants of Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 35:17 #8",
+   "answer": "people",
+   "why": "“The God of Israel” refers to the nation's God pronouncing judgment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 35:17 #12",
+   "answer": "people",
+   "why": "Judah and Jerusalem's inhabitants face judgment because they have not listened.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 35:18 #13",
+   "answer": "people",
+   "why": "“The God of Israel” names the nation's God speaking to the Rechabites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 35:19 #7",
+   "answer": "people",
+   "why": "“The God of Israel” identifies the nation's God promising descendants to Jonadab.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 36:2 #16",
+   "answer": "people",
+   "why": "Israel is grouped with Judah and all the nations as the subject of Jeremiah's prophecies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 36:2 #19",
+   "answer": "people",
+   "why": "Judah is grouped with Israel and all the nations receiving prophetic warnings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 36:6 #30",
+   "answer": "people",
+   "why": "All Judah denotes the people coming from their cities to hear the scroll.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 37:7 #5",
+   "answer": "people",
+   "why": "“The God of Israel” identifies the nation's God addressing Judah's king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 37:13 #6",
+   "answer": "people",
+   "why": "The gate of Benjamin is a place associated with Benjamin's territory, where Jeremiah is arrested.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA JER 38:7 #27",
+   "answer": "people",
+   "why": "Benjamin names the gate associated with the tribal territory where the king is sitting.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA JER 38:17 #12",
+   "answer": "people",
+   "why": "“The God of Israel” identifies the nation's God giving Zedekiah instructions concerning Jerusalem.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:20:17+00:00"
+}

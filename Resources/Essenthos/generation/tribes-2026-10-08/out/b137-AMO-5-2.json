@@ -1,0 +1,81 @@
+{
+ "batch": "b137-AMO-5-2",
+ "answers": [
+  {
+   "key": "BHSA AMO 5:2 #6",
+   "answer": "people",
+   "why": "Israel is personified as a fallen virgin forsaken upon her land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 5:25 #13",
+   "answer": "people",
+   "why": "The house of Israel is addressed as those who spent forty years in the wilderness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 7:8 #21",
+   "answer": "people",
+   "why": "God explicitly calls Israel his people and announces judgment upon them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 7:9 #7",
+   "answer": "people",
+   "why": "Israel's sanctuaries will be destroyed in judgment against Jeroboam's kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 7:10 #18",
+   "answer": "people",
+   "why": "Amos is accused of conspiracy within the house of Israel under King Jeroboam.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 7:11 #11",
+   "answer": "people",
+   "why": "Israel will be exiled from its land alongside judgment upon Jeroboam.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 7:15 #16",
+   "answer": "people",
+   "why": "God commands Amos to prophesy to his people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 7:16 #11",
+   "answer": "people",
+   "why": "The forbidden prophecy concerns the people Israel named in the preceding verse.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 7:17 #31",
+   "answer": "people",
+   "why": "Israel is sentenced to exile from its land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 8:2 #20",
+   "answer": "people",
+   "why": "God explicitly names Israel as his people upon whom the end has come.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 9:7 #15",
+   "answer": "people",
+   "why": "Israel's departure from Egypt is compared with the migrations of the Philistines and Syrians.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA AMO 9:14 #6",
+   "answer": "people",
+   "why": "God restores his people Israel, who rebuild cities and plant vineyards.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:22:33+00:00"
+}

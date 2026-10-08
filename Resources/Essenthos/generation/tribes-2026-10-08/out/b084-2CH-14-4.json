@@ -1,0 +1,129 @@
+{
+ "batch": "b084-2CH-14-4",
+ "answers": [
+  {
+   "key": "BHSA 2CH 14:3 #4",
+   "answer": "people",
+   "why": "Asa commands Judah to seek the God of their fathers and obey the law.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 14:5 #6",
+   "answer": "people",
+   "why": "Asa builds fortified cities in Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 14:6 #4",
+   "answer": "people",
+   "why": "Asa addresses Judah collectively about building cities, and they build them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 14:7 #11",
+   "answer": "people",
+   "why": "Judah supplies three hundred thousand soldiers to Asa's army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 14:7 #17",
+   "answer": "people",
+   "why": "Benjamin supplies two hundred eighty thousand soldiers to Asa's army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 14:11 #13",
+   "answer": "people",
+   "why": "Judah fights alongside Asa, and the following verse calls them the people with him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:2 #13",
+   "answer": "people",
+   "why": "Azariah addresses all Judah alongside Asa with plural commands and pronouns.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:2 #15",
+   "answer": "people",
+   "why": "Benjamin is addressed collectively alongside all Judah and Asa.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:3 #5",
+   "answer": "people",
+   "why": "Israel lacks a teaching priest and law, and the next verse describes their collective return to God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:4 #10",
+   "answer": "people",
+   "why": "The God of Israel is the LORD whom the distressed people seek and find.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:8 #25",
+   "answer": "people",
+   "why": "Benjamin names the tribal territory from which Asa removes idols.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:9 #5",
+   "answer": "people",
+   "why": "Asa gathers all Judah for the assembly at Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:9 #7",
+   "answer": "people",
+   "why": "Asa gathers Benjamin together with Judah and resident outsiders.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:9 #13",
+   "answer": "people",
+   "why": "Ephraim is the tribal community from which some assembled residents come.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:9 #15",
+   "answer": "people",
+   "why": "Manasseh is the tribal community from which some assembled residents come.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:9 #18",
+   "answer": "people",
+   "why": "Simeon is the tribal community from which some assembled residents come.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:9 #23",
+   "answer": "people",
+   "why": "People come over to Asa from Israel in large numbers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:13 #9",
+   "answer": "people",
+   "why": "The assembled community requires everyone to seek the LORD, the God of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:15 #4",
+   "answer": "people",
+   "why": "All Judah rejoices because they have collectively sworn the oath.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 15:17 #7",
+   "answer": "people",
+   "why": "Israel names the national territory where high places remain during Asa's reign.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:39:59+00:00"
+}

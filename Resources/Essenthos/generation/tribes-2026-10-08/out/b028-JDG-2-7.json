@@ -1,0 +1,81 @@
+{
+ "batch": "b028-JDG-2-7",
+ "answers": [
+  {
+   "key": "BHSA JDG 2:7 #31",
+   "answer": "people",
+   "why": "Israel is the people for whom the LORD performed the works witnessed by Joshua's generation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 2:10 #29",
+   "answer": "people",
+   "why": "The new generation did not know the works the LORD had done for their people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 2:14 #6",
+   "answer": "people",
+   "why": "Israel is delivered to plunderers and described with plural pronouns as facing their enemies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 2:20 #6",
+   "answer": "people",
+   "why": "The LORD explicitly calls Israel this nation that transgressed his covenant.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 2:22 #5",
+   "answer": "people",
+   "why": "Israel is tested to see whether they will obey as their fathers did.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 3:1 #12",
+   "answer": "people",
+   "why": "Israel comprises those who had not experienced the wars of Canaan.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 3:4 #7",
+   "answer": "people",
+   "why": "Israel is tested for obedience to commandments given to their fathers through Moses.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 3:10 #9",
+   "answer": "people",
+   "why": "Othniel judges Israel and goes to war to deliver the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 3:12 #20",
+   "answer": "people",
+   "why": "Eglon is strengthened against Israel because the Israelites had done evil.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 3:13 #14",
+   "answer": "people",
+   "why": "Eglon's allied forces defeat Israel and occupy the city of palm trees.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 3:30 #11",
+   "answer": "people",
+   "why": "Moab is subdued under Israel after the Israelites defeat its warriors.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 3:31 #23",
+   "answer": "people",
+   "why": "Shamgar delivers Israel by killing six hundred Philistines.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:33:00+00:00"
+}

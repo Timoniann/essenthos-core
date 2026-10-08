@@ -1,0 +1,81 @@
+{
+ "batch": "b054-1KI-3-28",
+ "answers": [
+  {
+   "key": "BHSA 1KI 3:28 #4",
+   "answer": "people",
+   "why": "All Israel hears Solomon's judgment and fears the king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 4:1 #9",
+   "answer": "people",
+   "why": "Solomon reigns over all Israel as its king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 4:7 #9",
+   "answer": "people",
+   "why": "Solomon's twelve officers administer all Israel and provide for his household.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 4:13 #10",
+   "answer": "man",
+   "why": "Manasseh is named as Jair's ancestor in the phrase 'Jair the son of Manasseh.'",
+   "confidence": 0.96
+  },
+  {
+   "key": "BHSA 1KI 4:15 #3",
+   "answer": "people",
+   "why": "Ahimaaz serves in Naphtali's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 4:16 #5",
+   "answer": "people",
+   "why": "Baanah serves in Asher's tribal territory and Aloth.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 4:17 #5",
+   "answer": "people",
+   "why": "Jehoshaphat serves in Issachar's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 4:18 #5",
+   "answer": "people",
+   "why": "Shimei serves in Benjamin's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 4:20 #1",
+   "answer": "people",
+   "why": "Judah is a multitude eating, drinking, and rejoicing under Solomon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 4:20 #3",
+   "answer": "people",
+   "why": "Israel is numerous as the sand, eating, drinking, and rejoicing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 5:5 #3",
+   "answer": "people",
+   "why": "Judah's inhabitants dwell safely under their vines and fig trees during Solomon's reign.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 5:5 #5",
+   "answer": "people",
+   "why": "Israel's inhabitants dwell safely from Dan to Beersheba during Solomon's reign.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:36:09+00:00"
+}

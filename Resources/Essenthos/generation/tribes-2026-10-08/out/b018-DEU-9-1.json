@@ -1,0 +1,81 @@
+{
+ "batch": "b018-DEU-9-1",
+ "answers": [
+  {
+   "key": "BHSA DEU 9:1 #2",
+   "answer": "people",
+   "why": "Israel is addressed as the people about to cross Jordan and possess nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 10:12 #3",
+   "answer": "people",
+   "why": "Moses addresses Israel as the people commanded to serve God and keep his commandments.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 11:6 #12",
+   "answer": "man",
+   "why": "Reuben is named as Eliab's ancestral father in the genealogy of Dathan and Abiram.",
+   "confidence": 0.97
+  },
+  {
+   "key": "BHSA DEU 11:6 #38",
+   "answer": "people",
+   "why": "The households were swallowed in the midst of the whole Israelite community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 13:12 #3",
+   "answer": "people",
+   "why": "All Israel will hear of the punishment and fear committing such wickedness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 17:4 #21",
+   "answer": "people",
+   "why": "The abomination occurs within Israel's community and is subject to its judicial proceedings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 17:12 #37",
+   "answer": "people",
+   "why": "Executing the presumptuous offender removes evil from the Israelite community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 17:20 #27",
+   "answer": "people",
+   "why": "The king and his children reign in the midst of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 18:1 #15",
+   "answer": "people",
+   "why": "The Levites receive no territorial inheritance alongside the other Israelites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 18:6 #11",
+   "answer": "people",
+   "why": "The Levite comes from one of the towns throughout Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 19:13 #11",
+   "answer": "people",
+   "why": "Punishing the murderer removes innocent bloodguilt from the Israelite community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 20:3 #5",
+   "answer": "people",
+   "why": "The priest addresses Israel's people as they approach battle against their enemies.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:31:33+00:00"
+}

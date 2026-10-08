@@ -1,0 +1,87 @@
+{
+ "batch": "b036-JDG-20-38",
+ "answers": [
+  {
+   "key": "BHSA JDG 20:38 #7",
+   "answer": "people",
+   "why": "The men of Israel arrange a battle signal with the ambush force.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:39 #4",
+   "answer": "people",
+   "why": "The men of Israel retreat during the battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:39 #16",
+   "answer": "people",
+   "why": "Benjamin kills about thirty men of Israel in battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:41 #3",
+   "answer": "people",
+   "why": "The men of Israel turn back against the Benjamites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:42 #6",
+   "answer": "people",
+   "why": "The Benjamites flee before the men of Israel toward the wilderness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 20:48 #3",
+   "answer": "people",
+   "why": "The men of Israel attack Benjamin's cities and burn them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 21:1 #3",
+   "answer": "people",
+   "why": "The men of Israel swear at Mizpah not to give their daughters to Benjamin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 21:3 #6",
+   "answer": "people",
+   "why": "The assembled people address the LORD as the God of their nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 21:3 #10",
+   "answer": "people",
+   "why": "The calamity occurring in Israel is the loss of one of its tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 21:3 #16",
+   "answer": "people",
+   "why": "Israel is the nation from which one tribe is now lacking.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 21:6 #16",
+   "answer": "people",
+   "why": "The people lament that one tribe has been cut off from Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 21:17 #12",
+   "answer": "people",
+   "why": "Preserving Benjamin's survivors prevents a tribe from disappearing from Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 21:25 #9",
+   "answer": "people",
+   "why": "Israel is the nation that has no king in those days.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:33:51+00:00"
+}

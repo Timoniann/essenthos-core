@@ -1,0 +1,117 @@
+{
+ "batch": "b065-2KI-10-21",
+ "answers": [
+  {
+   "key": "BHSA 2KI 10:21 #6",
+   "answer": "people",
+   "why": "Jehu sends throughout Israel to gather all the worshippers of Baal.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 10:28 #8",
+   "answer": "people",
+   "why": "Jehu removes Baal worship from the nation of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 10:29 #9",
+   "answer": "people",
+   "why": "Jeroboam led Israel into sin through the golden calves.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 10:30 #30",
+   "answer": "people",
+   "why": "Jehu's descendants will occupy the throne of the kingdom of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 10:31 #11",
+   "answer": "people",
+   "why": "The LORD is identified as the God of the nation Israel under Jehu.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 10:31 #24",
+   "answer": "people",
+   "why": "Jeroboam's sins caused the people of Israel to sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 10:32 #11",
+   "answer": "people",
+   "why": "Hazael attacks them as the LORD begins reducing Israel's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 10:36 #8",
+   "answer": "people",
+   "why": "Jehu reigns over Israel from Samaria for twenty-eight years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 13:1 #18",
+   "answer": "people",
+   "why": "Jehoahaz reigns over the kingdom of Israel in Samaria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 13:2 #18",
+   "answer": "people",
+   "why": "Jeroboam caused the nation ruled by Jehoahaz to sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 13:3 #6",
+   "answer": "people",
+   "why": "The LORD delivers Israel into Syrian hands, referring to them collectively.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 13:4 #15",
+   "answer": "people",
+   "why": "The king of Syria oppresses Israel, explicitly described as them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 13:5 #5",
+   "answer": "people",
+   "why": "Israel receives a deliverer and the people escape Syrian control.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 13:6 #11",
+   "answer": "people",
+   "why": "Israel continues in the sins introduced by Jeroboam's house.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 13:10 #16",
+   "answer": "people",
+   "why": "Jehoash reigns over the kingdom of Israel from Samaria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 13:11 #19",
+   "answer": "people",
+   "why": "Jeroboam made the people of Israel sin through practices Jehoash continues.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 13:14 #24",
+   "answer": "people",
+   "why": "Joash calls Elisha Israel's chariot and horsemen, invoking the nation's military protection.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 13:22 #7",
+   "answer": "people",
+   "why": "Hazael oppresses Israel throughout Jehoahaz's reign.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:37:41+00:00"
+}

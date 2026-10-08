@@ -1,0 +1,87 @@
+{
+ "batch": "b056-1KI-8-41",
+ "answers": [
+  {
+   "key": "BHSA 1KI 8:41 #10",
+   "answer": "people",
+   "why": "Israel is explicitly God's people, from whom the foreigner is distinguished.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:43 #29",
+   "answer": "people",
+   "why": "Israel is God's people whose fear of him is compared with that of other peoples.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:52 #12",
+   "answer": "people",
+   "why": "Israel is God's people, whose supplications he is asked to hear.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:55 #8",
+   "answer": "people",
+   "why": "Solomon blesses the whole congregation of Israel assembled before him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:56 #8",
+   "answer": "people",
+   "why": "God has given rest to his people Israel according to his promises through Moses.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:59 #24",
+   "answer": "people",
+   "why": "Solomon asks God to maintain the cause of his people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:62 #6",
+   "answer": "people",
+   "why": "All Israel joins the king in offering sacrifices.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:65 #14",
+   "answer": "people",
+   "why": "All Israel is a great congregation gathered from Hamath to the river of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 8:66 #35",
+   "answer": "people",
+   "why": "Israel is explicitly God's people, who return to their tents rejoicing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 9:5 #7",
+   "answer": "people",
+   "why": "God promises to establish Solomon's royal throne over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 9:5 #25",
+   "answer": "people",
+   "why": "The throne of Israel is the national throne occupied by David's successors.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 9:7 #4",
+   "answer": "people",
+   "why": "Israel will be removed from the land God gave them, using a plural pronoun.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 9:7 #27",
+   "answer": "people",
+   "why": "Israel will become a proverb and a byword among all peoples.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:36:25+00:00"
+}

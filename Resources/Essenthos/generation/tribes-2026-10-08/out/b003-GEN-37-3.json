@@ -1,0 +1,135 @@
+{
+ "batch": "b003-GEN-37-3",
+ "answers": [
+  {
+   "key": "BHSA GEN 37:3 #2",
+   "answer": "man",
+   "why": "Israel loves Joseph as the son of his old age and makes him a coat.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 37:13 #3",
+   "answer": "man",
+   "why": "Israel speaks to his son Joseph and sends him to his brothers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 37:21 #3",
+   "answer": "man",
+   "why": "Reuben hears his brothers' plan and intervenes to save Joseph.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 37:22 #4",
+   "answer": "man",
+   "why": "Reuben tells his brothers not to shed Joseph's blood, intending to restore him to his father.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 37:26 #3",
+   "answer": "man",
+   "why": "Judah speaks to his brothers about their brother Joseph.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 37:29 #3",
+   "answer": "man",
+   "why": "Reuben returns to the pit and tears his clothes when Joseph is missing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:1 #10",
+   "answer": "man",
+   "why": "Judah leaves his brothers and visits Hirah the Adullamite.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:2 #4",
+   "answer": "man",
+   "why": "Judah takes Shuah's daughter as his wife and sleeps with her.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:6 #3",
+   "answer": "man",
+   "why": "Judah obtains Tamar as a wife for his firstborn son Er.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:7 #5",
+   "answer": "man",
+   "why": "Er is identified as Judah's firstborn son.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:8 #3",
+   "answer": "man",
+   "why": "Judah instructs his son Onan to marry his deceased brother's wife.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:11 #3",
+   "answer": "man",
+   "why": "Judah tells his daughter-in-law Tamar to wait until his son Shelah grows up.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:12 #10",
+   "answer": "man",
+   "why": "The woman who dies is identified as Judah's wife.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:12 #13",
+   "answer": "man",
+   "why": "Judah is comforted after his wife's death and travels with his friend Hirah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:15 #3",
+   "answer": "man",
+   "why": "Judah sees the veiled Tamar and mistakes her for a prostitute.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:20 #3",
+   "answer": "man",
+   "why": "Judah sends a young goat through his friend to recover his personal pledge.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:22 #4",
+   "answer": "man",
+   "why": "His friend returns to Judah and reports that he could not find the woman.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:23 #3",
+   "answer": "man",
+   "why": "Judah tells his friend to let the woman keep the pledge he left her.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:24 #10",
+   "answer": "man",
+   "why": "Judah receives a report about Tamar, explicitly called his daughter-in-law.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:24 #24",
+   "answer": "man",
+   "why": "Judah personally orders that his daughter-in-law Tamar be brought out and burned.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 38:26 #3",
+   "answer": "man",
+   "why": "Judah recognizes his belongings and admits withholding Tamar from his son Shelah.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:29:22+00:00"
+}

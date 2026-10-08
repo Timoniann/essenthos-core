@@ -1,0 +1,87 @@
+{
+ "batch": "b047-2SA-6-1",
+ "answers": [
+  {
+   "key": "BHSA 2SA 6:1 #9",
+   "answer": "people",
+   "why": "David gathers thirty thousand chosen men from Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 6:5 #6",
+   "answer": "people",
+   "why": "All the house of Israel celebrates with David before the LORD.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 6:15 #6",
+   "answer": "people",
+   "why": "All the house of Israel brings up the ark with David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 6:19 #10",
+   "answer": "people",
+   "why": "The multitude of Israel includes men and women receiving food from David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 6:21 #26",
+   "answer": "people",
+   "why": "Israel is identified as the LORD's people over whom David is appointed ruler.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 7:7 #23",
+   "answer": "people",
+   "why": "God explicitly calls Israel his people whom leaders were commanded to shepherd.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 7:8 #28",
+   "answer": "people",
+   "why": "David is appointed ruler over God's people, Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 7:10 #7",
+   "answer": "people",
+   "why": "God promises his people Israel a settled place free from oppression.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 7:11 #11",
+   "answer": "people",
+   "why": "God appointed judges over his people Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 7:23 #6",
+   "answer": "people",
+   "why": "Israel is explicitly called a nation redeemed from Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 7:24 #6",
+   "answer": "people",
+   "why": "Israel is established as God's people forever, and he becomes their God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 7:26 #12",
+   "answer": "people",
+   "why": "The LORD is proclaimed God over Israel in the context of his people and David's dynasty.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 7:27 #6",
+   "answer": "people",
+   "why": "David addresses the LORD as the God of Israel, the nation discussed in his prayer.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:35:23+00:00"
+}

@@ -1,0 +1,93 @@
+{
+ "batch": "b122-JER-45-2",
+ "answers": [
+  {
+   "key": "BHSA JER 45:2 #5",
+   "answer": "people",
+   "why": "The title 'God of Israel' identifies the nation's God speaking to Baruch.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 46:25 #5",
+   "answer": "people",
+   "why": "'God of Israel' names the nation's God announcing judgment on Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 46:27 #10",
+   "answer": "people",
+   "why": "Israel is promised deliverance from captivity and return from the nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 48:1 #8",
+   "answer": "people",
+   "why": "'God of Israel' identifies the nation's God pronouncing judgment on Moab.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 48:27 #8",
+   "answer": "people",
+   "why": "Moab mocked Israel, the neighboring people addressed in this national judgment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 49:1 #11",
+   "answer": "people",
+   "why": "Israel's heirs are invoked against Ammon's occupation of Gad's cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 49:1 #20",
+   "answer": "people",
+   "why": "Gad is the tribal territory occupied by Ammon and its people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 49:2 #28",
+   "answer": "people",
+   "why": "Israel will dispossess those who occupied its territory after judgment on Ammon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 50:17 #3",
+   "answer": "people",
+   "why": "Israel is the scattered people attacked by the kings of Assyria and Babylon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 50:18 #7",
+   "answer": "people",
+   "why": "'God of Israel' refers to the God of the people scattered by Assyria and Babylon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 50:19 #4",
+   "answer": "people",
+   "why": "Israel will be restored to its homeland after being scattered by foreign kings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 50:20 #17",
+   "answer": "people",
+   "why": "Israel's collective iniquity will be forgiven when God pardons the surviving remnant.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 50:20 #23",
+   "answer": "people",
+   "why": "Judah's collective sins will be forgiven alongside Israel's iniquity.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 50:29 #31",
+   "answer": "people",
+   "why": "'Holy One of Israel' names the nation's God against whom Babylon acted proudly.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:20:48+00:00"
+}

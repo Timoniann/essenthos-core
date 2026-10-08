@@ -1,0 +1,117 @@
+{
+ "batch": "b027-JOS-23-1",
+ "answers": [
+  {
+   "key": "BHSA JOS 23:1 #11",
+   "answer": "people",
+   "why": "The LORD gave Israel rest from their surrounding enemies in Joshua's lifetime.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 23:2 #6",
+   "answer": "people",
+   "why": "Joshua summons all Israel together with their elders, heads, judges, and officers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 24:1 #13",
+   "answer": "people",
+   "why": "Joshua calls Israel's elders and other leaders to the national assembly at Shechem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 24:2 #12",
+   "answer": "people",
+   "why": "Joshua addresses all the people with a declaration from the LORD, their national God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 24:9 #11",
+   "answer": "people",
+   "why": "Balak fought against Israel and summoned Balaam to curse the people addressed as you.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 24:23 #18",
+   "answer": "people",
+   "why": "Joshua urges the people to turn their hearts to the LORD, whom they call our God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 24:31 #3",
+   "answer": "people",
+   "why": "Israel served the LORD throughout Joshua's lifetime and that of the surviving elders.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 24:31 #29",
+   "answer": "people",
+   "why": "The elders knew the works the LORD had done for Israel during Joshua's era.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 1:3 #5",
+   "answer": "people",
+   "why": "Judah invites Simeon to fight the Canaanites in their allotted tribal territories.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 1:3 #26",
+   "answer": "people",
+   "why": "Simeon joins Judah in the campaign to conquer their tribal allotments.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 1:16 #15",
+   "answer": "people",
+   "why": "The wilderness of Judah is the territory where the Kenites settle with Judah's descendants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 1:17 #5",
+   "answer": "people",
+   "why": "Simeon accompanies Judah, and together they destroy the Canaanite inhabitants of Zephath.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 1:27 #4",
+   "answer": "people",
+   "why": "Manasseh fails to dispossess the Canaanite inhabitants of towns in its tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 1:28 #5",
+   "answer": "people",
+   "why": "Israel becomes strong and subjects the remaining Canaanites to forced labor.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 1:29 #2",
+   "answer": "people",
+   "why": "Ephraim fails to drive out Gezer's Canaanites, who remain among the tribe.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 1:30 #1",
+   "answer": "people",
+   "why": "Zebulun leaves Canaanite inhabitants in its towns and makes them tributaries.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 1:31 #1",
+   "answer": "people",
+   "why": "Asher fails to expel the towns' inhabitants, and the next verse identifies the settlers as Asherites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 1:33 #1",
+   "answer": "people",
+   "why": "Naphtali lives among the Canaanites and receives tribute from the remaining towns' inhabitants.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:32:40+00:00"
+}

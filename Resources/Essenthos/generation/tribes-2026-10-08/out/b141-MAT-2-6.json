@@ -1,0 +1,87 @@
+{
+ "batch": "b141-MAT-2-6",
+ "answers": [
+  {
+   "key": "NESTLE1904 MAT 2:6 #24",
+   "answer": "people",
+   "why": "Israel is explicitly called God's people whom the coming ruler will shepherd.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 MAT 8:10 #19",
+   "answer": "people",
+   "why": "Jesus compares the centurion's faith with faith found among Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 MAT 9:33 #18",
+   "answer": "people",
+   "why": "The crowds say such a miracle has never been seen among Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 MAT 15:31 #20",
+   "answer": "people",
+   "why": "The healed crowds glorify the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 MRK 12:29 #8",
+   "answer": "people",
+   "why": "The command 'Hear, O Israel' addresses the nation concerning our God.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 LUK 1:54 #2",
+   "answer": "people",
+   "why": "God helps Israel collectively as his servant in fulfillment of mercy promised to Abraham and his seed.",
+   "confidence": 0.99
+  },
+  {
+   "key": "NESTLE1904 LUK 1:68 #6",
+   "answer": "people",
+   "why": "The God of Israel has visited and redeemed his people.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 LUK 1:80 #19",
+   "answer": "people",
+   "why": "John grows up until his public manifestation to Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 LUK 2:25 #20",
+   "answer": "people",
+   "why": "Simeon awaits Israel's consolation through the coming Messiah.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 LUK 2:32 #9",
+   "answer": "people",
+   "why": "Israel is explicitly identified as God's people alongside the Gentiles.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 LUK 2:34 #22",
+   "answer": "people",
+   "why": "The child will cause the fall and rising of many people within Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 LUK 4:25 #15",
+   "answer": "people",
+   "why": "Israel is the nation where many widows lived during Elijah's famine.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 LUK 4:27 #7",
+   "answer": "people",
+   "why": "Israel contains many lepers in Elisha's time and is contrasted with Naaman the Syrian.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:23:05+00:00"
+}

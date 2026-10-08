@@ -1,0 +1,81 @@
+{
+ "batch": "b143-ACT-28-20",
+ "answers": [
+  {
+   "key": "NESTLE1904 ACT 28:20 #16",
+   "answer": "people",
+   "why": "Paul's chain concerns the hope of his nation, Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ROM 9:6 #15",
+   "answer": "man",
+   "why": "Those descended from Israel trace their ancestry to Jacob, paralleling Abraham's seed in the next verse.",
+   "confidence": 0.93
+  },
+  {
+   "key": "NESTLE1904 ROM 9:6 #17",
+   "answer": "people",
+   "why": "Israel here names the collective to which not all physical descendants belong.",
+   "confidence": 0.99
+  },
+  {
+   "key": "NESTLE1904 ROM 9:31 #1",
+   "answer": "people",
+   "why": "Israel is contrasted with the Gentiles and described as pursuing righteousness through the law.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ROM 10:19 #4",
+   "answer": "people",
+   "why": "Moses' words address Israel collectively as those provoked by another nation.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ROM 10:21 #4",
+   "answer": "people",
+   "why": "The sentence explicitly describes Israel as a disobedient and contradicting people.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ROM 11:2 #25",
+   "answer": "people",
+   "why": "Elijah complains against the people who killed God's prophets and destroyed his altars.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ROM 11:7 #5",
+   "answer": "people",
+   "why": "Israel comprises the elect who obtained what they sought and the rest who were hardened.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ROM 11:25 #21",
+   "answer": "people",
+   "why": "Partial hardening affects Israel collectively until the fullness of the Gentiles enters.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 ROM 11:26 #4",
+   "answer": "people",
+   "why": "All Israel is a collective whose sins God promises to remove in the following verse.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 1CO 10:18 #3",
+   "answer": "people",
+   "why": "Israel according to the flesh comprises those who eat sacrifices and share in the altar.",
+   "confidence": 1
+  },
+  {
+   "key": "NESTLE1904 GAL 6:16 #15",
+   "answer": "people",
+   "why": "The Israel of God is a community receiving Paul's blessing of peace and mercy.",
+   "confidence": 0.99
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:23:20+00:00"
+}

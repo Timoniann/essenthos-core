@@ -1,0 +1,87 @@
+{
+ "batch": "b098-NEH-12-31",
+ "answers": [
+  {
+   "key": "BHSA NEH 12:31 #5",
+   "answer": "people",
+   "why": "Judah names the community whose princes join the wall procession.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 12:32 #8",
+   "answer": "people",
+   "why": "Judah names the community represented by these princes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 12:34 #3",
+   "answer": "man",
+   "why": "Benjamin is an individual listed with Azariah, Ezra, Meshullam, Shemaiah and Jeremiah, though a namesake rather than the patriarch.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA NEH 12:39 #6",
+   "answer": "people",
+   "why": "The gate of Ephraim bears the name of the tribal territory.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA NEH 12:47 #3",
+   "answer": "people",
+   "why": "All Israel supplies daily portions for singers and gatekeepers in Zerubbabel's and Nehemiah's days.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 13:3 #13",
+   "answer": "people",
+   "why": "The mixed multitude is separated from the Israelite community after the law is heard.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 13:12 #3",
+   "answer": "people",
+   "why": "All Judah collectively brings agricultural tithes to the treasuries.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 13:15 #8",
+   "answer": "people",
+   "why": "Judah is the territory where Nehemiah sees people working winepresses on the sabbath.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 13:17 #5",
+   "answer": "people",
+   "why": "Judah names the community whose nobles Nehemiah rebukes for profaning the sabbath.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 13:18 #27",
+   "answer": "people",
+   "why": "Sabbath violations bring further wrath upon the nation and its city.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 13:26 #30",
+   "answer": "people",
+   "why": "God made Solomon king over all Israel, the nation he ruled.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 14:7 #6",
+   "answer": "people",
+   "why": "Israel's salvation is linked to the LORD restoring his people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA PSA 14:7 #15",
+   "answer": "people",
+   "why": "Israel rejoices when the LORD restores his people, identifying the rejoicing subject as the nation.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:17:33+00:00"
+}

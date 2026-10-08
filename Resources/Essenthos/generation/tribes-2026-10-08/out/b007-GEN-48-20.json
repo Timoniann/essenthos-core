@@ -1,0 +1,129 @@
+{
+ "batch": "b007-GEN-48-20",
+ "answers": [
+  {
+   "key": "BHSA GEN 48:20 #12",
+   "answer": "people",
+   "why": "Israel will use Ephraim and Manasseh as examples in future blessings.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA GEN 48:20 #18",
+   "answer": "man",
+   "why": "The blessing names the boy Ephraim as an example for others.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA GEN 48:20 #21",
+   "answer": "man",
+   "why": "The blessing names the boy Manasseh as an example for others.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA GEN 48:20 #25",
+   "answer": "man",
+   "why": "Jacob gives the younger boy Ephraim precedence in his blessing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:20 #28",
+   "answer": "man",
+   "why": "Manasseh is the older boy placed after Ephraim in Jacob's blessing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:21 #3",
+   "answer": "man",
+   "why": "Israel personally tells Joseph, 'Behold, I die.'",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 49:2 #9",
+   "answer": "man",
+   "why": "Israel identifies himself as the father speaking to his gathered sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 49:3 #1",
+   "answer": "man",
+   "why": "Jacob addresses Reuben personally as 'my firstborn.'",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 49:5 #1",
+   "answer": "man",
+   "why": "Jacob names Simeon as Levi's brother and recalls their violent actions.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA GEN 49:5 #3",
+   "answer": "man",
+   "why": "Jacob names Levi alongside his brother Simeon and recalls their violent actions.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA GEN 49:7 #15",
+   "answer": "people",
+   "why": "Scattering Simeon and Levi 'in Israel' means dispersing their descendants throughout the nation.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA GEN 49:8 #1",
+   "answer": "man",
+   "why": "Jacob addresses Judah personally and speaks of his brothers and father's sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 49:9 #3",
+   "answer": "man",
+   "why": "Jacob calls Judah 'my son' within the lion comparison.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 49:10 #5",
+   "answer": "man",
+   "why": "Jacob continues his blessing of his son Judah by promising enduring rule through him.",
+   "confidence": 0.91
+  },
+  {
+   "key": "BHSA GEN 49:13 #1",
+   "answer": "man",
+   "why": "Jacob blesses his son Zebulun by describing his future dwelling and border.",
+   "confidence": 0.93
+  },
+  {
+   "key": "BHSA GEN 49:19 #1",
+   "answer": "man",
+   "why": "Jacob's blessing names his son Gad and foretells his overcoming raiders.",
+   "confidence": 0.96
+  },
+  {
+   "key": "BHSA GEN 49:20 #2",
+   "answer": "man",
+   "why": "Jacob blesses his son Asher with rich food and royal delicacies.",
+   "confidence": 0.95
+  },
+  {
+   "key": "BHSA GEN 49:21 #1",
+   "answer": "man",
+   "why": "Jacob describes his son Naphtali as a released hind in his blessing.",
+   "confidence": 0.97
+  },
+  {
+   "key": "BHSA GEN 49:24 #18",
+   "answer": "man",
+   "why": "Israel parallels Jacob, whose God the next verse calls 'the God of thy father.'",
+   "confidence": 0.86
+  },
+  {
+   "key": "BHSA GEN 49:27 #1",
+   "answer": "man",
+   "why": "Jacob blesses his son Benjamin with the image of a wolf dividing spoil.",
+   "confidence": 0.97
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:29:56+00:00"
+}

@@ -1,0 +1,141 @@
+{
+ "batch": "b033-JDG-11-23",
+ "answers": [
+  {
+   "key": "BHSA JDG 11:23 #5",
+   "answer": "people",
+   "why": "The LORD is the God of the nation whose enemies he dispossessed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:23 #13",
+   "answer": "people",
+   "why": "Israel is explicitly called his people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:25 #17",
+   "answer": "people",
+   "why": "Israel is the people against whom Balak might have fought, referred to as them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:26 #3",
+   "answer": "people",
+   "why": "Israel occupied Heshbon and the surrounding towns for three hundred years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:39 #27",
+   "answer": "people",
+   "why": "The custom in Israel is observed yearly by Israelite women.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:40 #6",
+   "answer": "people",
+   "why": "The daughters of Israel are the nation's women observing the annual lament.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:1 #4",
+   "answer": "people",
+   "why": "The men of Ephraim assemble and collectively threaten Jephthah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:4 #11",
+   "answer": "people",
+   "why": "Jephthah and the men of Gilead fight the Ephraimite tribe.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:4 #17",
+   "answer": "people",
+   "why": "The men of Gilead strike the Ephraimite forces.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:4 #21",
+   "answer": "people",
+   "why": "The accusation calls the Gileadites fugitives of the Ephraimite tribe.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:4 #26",
+   "answer": "people",
+   "why": "The accusation places Gilead among Ephraim's tribal population or territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:4 #29",
+   "answer": "people",
+   "why": "Manasseh names the tribe among whom Gilead is situated.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:5 #9",
+   "answer": "people",
+   "why": "Gilead captures the Jordan crossings to intercept the Ephraimites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:5 #15",
+   "answer": "people",
+   "why": "The fugitives of Ephraim are escaping members of the defeated tribe.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:6 #33",
+   "answer": "people",
+   "why": "Forty-two thousand members of Ephraim fall at the crossings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:7 #5",
+   "answer": "people",
+   "why": "Jephthah judges the nation of Israel for six years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:8 #5",
+   "answer": "people",
+   "why": "Ibzan succeeds Jephthah as judge over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:9 #24",
+   "answer": "people",
+   "why": "Ibzan judges the nation of Israel for seven years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:11 #5",
+   "answer": "people",
+   "why": "Elon succeeds Ibzan as judge over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:11 #12",
+   "answer": "people",
+   "why": "Elon judges the nation of Israel for ten years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:13 #5",
+   "answer": "people",
+   "why": "Abdon succeeds Elon as judge over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 12:14 #17",
+   "answer": "people",
+   "why": "Abdon judges the nation of Israel for eight years.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:33:32+00:00"
+}

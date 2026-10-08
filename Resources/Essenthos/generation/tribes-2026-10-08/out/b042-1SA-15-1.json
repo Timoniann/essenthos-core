@@ -1,0 +1,159 @@
+{
+ "batch": "b042-1SA-15-1",
+ "answers": [
+  {
+   "key": "BHSA 1SA 15:1 #16",
+   "answer": "people",
+   "why": "Israel is explicitly God's people, over whom Saul is anointed king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 15:2 #11",
+   "answer": "people",
+   "why": "Amalek attacked Israel as the nation came up from Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 15:17 #21",
+   "answer": "people",
+   "why": "Saul is anointed king over the nation whose tribes he heads.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 15:26 #21",
+   "answer": "people",
+   "why": "God rejects Saul from being king over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 15:28 #9",
+   "answer": "people",
+   "why": "Israel names the kingdom God takes away from Saul.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 15:29 #4",
+   "answer": "people",
+   "why": "The Strength of Israel names the God of the nation whose kingdom is being transferred.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA 1SA 15:30 #12",
+   "answer": "people",
+   "why": "Saul asks to be honoured before his people's elders and before Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 15:35 #25",
+   "answer": "people",
+   "why": "Israel is the nation over which God made Saul king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 16:1 #18",
+   "answer": "people",
+   "why": "God has rejected Saul from reigning over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:1 #14",
+   "answer": "people",
+   "why": "Shochoh belongs to Judah's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:2 #5",
+   "answer": "people",
+   "why": "The men of Israel gather with Saul for battle against the Philistines.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:3 #10",
+   "answer": "people",
+   "why": "Israel's troops stand opposite the Philistines across the valley.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:8 #7",
+   "answer": "people",
+   "why": "Goliath addresses Israel's battle ranks as Saul's servants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:10 #9",
+   "answer": "people",
+   "why": "Goliath defies Israel's armies and demands an opponent.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:11 #6",
+   "answer": "people",
+   "why": "All Israel hears Goliath's words with Saul and becomes afraid.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:12 #10",
+   "answer": "people",
+   "why": "Judah identifies the tribal territory containing Jesse's Bethlehem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:19 #8",
+   "answer": "people",
+   "why": "The men of Israel are fighting the Philistines alongside Saul.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:21 #3",
+   "answer": "people",
+   "why": "Israel and the Philistines arrange their armies for battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:24 #4",
+   "answer": "people",
+   "why": "The men of Israel flee when they see Goliath.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:25 #4",
+   "answer": "people",
+   "why": "The men of Israel discuss Goliath and the king's promised reward.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:25 #17",
+   "answer": "people",
+   "why": "Goliath comes up to defy the Israelite nation and its army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:25 #42",
+   "answer": "people",
+   "why": "The king promises the victor's household freedom within Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:26 #29",
+   "answer": "people",
+   "why": "Defeating Goliath would remove reproach from the Israelite nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:45 #28",
+   "answer": "people",
+   "why": "David invokes the God of Israel's armies, which Goliath has defied.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 17:46 #44",
+   "answer": "people",
+   "why": "Victory will show the whole earth that Israel has a God.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:35:04+00:00"
+}

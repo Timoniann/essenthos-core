@@ -1,0 +1,93 @@
+{
+ "batch": "b068-2KI-18-5",
+ "answers": [
+  {
+   "key": "BHSA 2KI 18:5 #4",
+   "answer": "people",
+   "why": "Hezekiah trusts in the LORD as the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 18:11 #6",
+   "answer": "people",
+   "why": "Assyria carries Israel away and settles them in several places.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 18:22 #23",
+   "answer": "people",
+   "why": "Hezekiah commands Judah and Jerusalem to worship before the altar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 19:15 #11",
+   "answer": "people",
+   "why": "Hezekiah addresses the nation's God, who dwells between the cherubim.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 19:20 #14",
+   "answer": "people",
+   "why": "The God of Israel answers Hezekiah's prayer against the Assyrian king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 19:22 #17",
+   "answer": "people",
+   "why": "The Holy One of Israel is the nation's God whom Sennacherib reproached.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 21:8 #7",
+   "answer": "people",
+   "why": "Israel has fathers who received the land and must obey the law Moses commanded them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 21:11 #25",
+   "answer": "people",
+   "why": "Manasseh makes the people of Judah sin through his idols.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 21:12 #6",
+   "answer": "people",
+   "why": "The God of Israel announces judgment upon Jerusalem and Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 21:12 #13",
+   "answer": "people",
+   "why": "Judah is the kingdom threatened with disaster alongside Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 21:16 #24",
+   "answer": "people",
+   "why": "Manasseh causes Judah to do evil in the LORD's sight.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 22:13 #13",
+   "answer": "people",
+   "why": "The king requests inquiry for the people and for all Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 22:15 #8",
+   "answer": "people",
+   "why": "Huldah speaks for the God of Israel concerning judgment on the place and its inhabitants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 22:18 #19",
+   "answer": "people",
+   "why": "The God of Israel sends a message to Judah's reigning king.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:37:59+00:00"
+}

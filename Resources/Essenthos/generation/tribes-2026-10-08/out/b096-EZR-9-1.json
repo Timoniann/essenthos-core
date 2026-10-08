@@ -1,0 +1,81 @@
+{
+ "batch": "b096-EZR-9-1",
+ "answers": [
+  {
+   "key": "BHSA EZR 9:1 #15",
+   "answer": "people",
+   "why": "Israel is explicitly the people who have not separated themselves from the surrounding peoples.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 9:4 #9",
+   "answer": "people",
+   "why": "The God of Israel addresses the returned community whose transgression causes trembling.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 9:9 #38",
+   "answer": "people",
+   "why": "Judah is the territory where the returned community receives protection alongside Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 9:15 #3",
+   "answer": "people",
+   "why": "The surviving community confesses its collective guilt before the God of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 10:1 #19",
+   "answer": "people",
+   "why": "A congregation of men, women, and children gathers from Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 10:2 #30",
+   "answer": "people",
+   "why": "Hope for Israel concerns the community that has taken foreign wives.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 10:5 #14",
+   "answer": "people",
+   "why": "All Israel swears an oath together with the priests and Levites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 10:7 #5",
+   "answer": "people",
+   "why": "The proclamation goes throughout Judah and Jerusalem to summon the returned exiles.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 10:9 #7",
+   "answer": "people",
+   "why": "The men of Benjamin gather with the men of Judah in Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 10:10 #19",
+   "answer": "people",
+   "why": "The assembled community's foreign marriages increase Israel's collective guilt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 10:25 #3",
+   "answer": "people",
+   "why": "Israel introduces the lay Israelites listed after the singers and gatekeepers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 1:2 #11",
+   "answer": "people",
+   "why": "The men come from Judah, the province where the surviving Jews live.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:17:24+00:00"
+}

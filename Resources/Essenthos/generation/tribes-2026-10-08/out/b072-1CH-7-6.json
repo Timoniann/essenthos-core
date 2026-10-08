@@ -1,0 +1,81 @@
+{
+ "batch": "b072-1CH-7-6",
+ "answers": [
+  {
+   "key": "BHSA 1CH 7:6 #1",
+   "answer": "man",
+   "why": "The genealogy names Bela, Becher, and Jediael as Benjamin's three sons.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA 1CH 7:17 #11",
+   "answer": "man",
+   "why": "Manasseh is named as Machir's father in the genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 7:22 #3",
+   "answer": "man",
+   "why": "Ephraim mourns as their father, receives comfort from his brothers, and then fathers another son.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 7:29 #24",
+   "answer": "man",
+   "why": "Israel is identified as Joseph's father.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 8:1 #2",
+   "answer": "man",
+   "why": "Benjamin begets Bela his firstborn and other named sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 9:1 #3",
+   "answer": "people",
+   "why": "All Israel are collectively registered by genealogies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 9:1 #13",
+   "answer": "people",
+   "why": "Judah's people are exiled to Babylon for their transgression.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 9:3 #17",
+   "answer": "people",
+   "why": "Manasseh belongs to the list of tribal populations dwelling in Jerusalem.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA 1CH 9:4 #14",
+   "answer": "man",
+   "why": "Judah is named as the father of Perez in Uthai's ancestry.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 10:1 #5",
+   "answer": "people",
+   "why": "The Philistines fight Israel's forces in the battle involving Saul.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 10:1 #9",
+   "answer": "people",
+   "why": "The men of Israel flee from the Philistines and fall slain at Gilboa.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 10:7 #5",
+   "answer": "people",
+   "why": "Israel's men in the valley abandon their cities after Saul and his sons die.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:38:31+00:00"
+}

@@ -1,0 +1,93 @@
+{
+ "batch": "b061-1KI-17-1",
+ "answers": [
+  {
+   "key": "BHSA 1KI 17:1 #14",
+   "answer": "people",
+   "why": "Elijah invokes the LORD as the God of the nation Israel before Ahab.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 17:14 #6",
+   "answer": "people",
+   "why": "The LORD is called the God of Israel, identifying the nation's God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 18:17 #16",
+   "answer": "people",
+   "why": "Ahab accuses Elijah of troubling the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 18:18 #6",
+   "answer": "people",
+   "why": "Elijah says Ahab and his father's house have troubled Israel by forsaking the LORD's commandments.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 18:19 #8",
+   "answer": "people",
+   "why": "Elijah commands Ahab to gather all Israel at Mount Carmel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 18:31 #19",
+   "answer": "man",
+   "why": "The verse recalls God telling Jacob personally that Israel would be his name.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 18:36 #19",
+   "answer": "man",
+   "why": "Israel is named alongside Abraham and Isaac as one of the patriarchs.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 18:36 #27",
+   "answer": "people",
+   "why": "Elijah asks that the LORD be recognized as God in Israel by the assembled people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 19:3 #15",
+   "answer": "people",
+   "why": "Beersheba belongs to Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 19:16 #10",
+   "answer": "people",
+   "why": "Jehu is to be anointed king over the kingdom of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 19:18 #4",
+   "answer": "people",
+   "why": "God preserves seven thousand people in Israel who have not worshipped Baal.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 20:20 #10",
+   "answer": "people",
+   "why": "Israel's army pursues the fleeing Syrians.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 20:26 #19",
+   "answer": "people",
+   "why": "Benhadad gathers the Syrian army to fight against Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 20:31 #11",
+   "answer": "people",
+   "why": "The kings of the house of Israel are rulers of the nation described as merciful.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:37:13+00:00"
+}

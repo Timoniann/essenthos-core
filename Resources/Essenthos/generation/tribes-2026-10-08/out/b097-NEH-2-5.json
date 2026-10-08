@@ -1,0 +1,99 @@
+{
+ "batch": "b097-NEH-2-5",
+ "answers": [
+  {
+   "key": "BHSA NEH 2:5 #20",
+   "answer": "people",
+   "why": "Nehemiah asks to travel to Judah, the territory containing his fathers' burial city.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 2:7 #25",
+   "answer": "people",
+   "why": "Judah is the territorial destination of Nehemiah's journey through the governors' jurisdictions.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 6:7 #14",
+   "answer": "people",
+   "why": "The allegation concerns a king ruling in Judah, the Jewish territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 6:18 #4",
+   "answer": "people",
+   "why": "Many inhabitants in Judah are bound by oath to Tobiah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 7:6 #22",
+   "answer": "people",
+   "why": "The returning exiles go to Jerusalem and Judah, each to his own city.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 7:7 #19",
+   "answer": "people",
+   "why": "Israel names the people whose returning members are being counted.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 7:61 #23",
+   "answer": "people",
+   "why": "The returnees cannot establish whether their ancestry qualifies them as members of Israel.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA NEH 7:72 #23",
+   "answer": "people",
+   "why": "Israel refers to the returned community living in their cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 8:1 #34",
+   "answer": "people",
+   "why": "Israel is the nation commanded to observe the law of Moses.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 8:16 #33",
+   "answer": "people",
+   "why": "Ephraim names the tribal territory associated with Jerusalem's gate of Ephraim.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA NEH 10:34 #32",
+   "answer": "people",
+   "why": "The communal sin offerings make atonement for the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 11:20 #3",
+   "answer": "people",
+   "why": "The remaining Israelites live in Judah's cities, each on his inheritance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 11:24 #9",
+   "answer": "man",
+   "why": "Judah is identified as the father of Zerah in Pethahiah's genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 11:36 #6",
+   "answer": "people",
+   "why": "Judah identifies the tribal territory associated with divisions of Levites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NEH 11:36 #8",
+   "answer": "people",
+   "why": "Benjamin identifies the tribal territory where divisions of Levites are assigned.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:17:30+00:00"
+}
