@@ -44,6 +44,11 @@ namespace Essenthos.Core.Publishing;
 /// The environment's accounts database, whose bookmarks must all still find their verse in a release
 /// before it is swapped in. Unset for a target that has none.
 /// </param>
+/// <param name="Downloads">
+/// The folder under the data root that holds the files <c>forge export</c> wrote, which the target's
+/// proxy serves read-only at <c>/downloads</c> and its API lists from. Unset, it is <c>downloads</c>, or
+/// <c>downloads_dev</c> for a corpus whose database name ends <c>_dev</c>, beside the pictures.
+/// </param>
 internal sealed record ReleaseTarget(
     string Name,
     bool Local,
@@ -57,8 +62,13 @@ internal sealed record ReleaseTarget(
     string ApiContainer,
     string? After,
     string? Password,
-    string? AppDatabase = null)
+    string? AppDatabase = null,
+    string? Downloads = null)
 {
+    public string DownloadsName => Downloads is { Length: > 0 }
+        ? Downloads
+        : Database.EndsWith("_dev", StringComparison.Ordinal) ? "downloads_dev" : "downloads";
+
     public bool IsRemote => !Local;
 
     public string Incoming => $"{Database}_incoming";
@@ -130,6 +140,7 @@ internal sealed record ReleaseTarget(
             Required("ApiContainer"),
             section["After"] is { Length: > 0 } after ? after : null,
             section["Password"] is { Length: > 0 } password ? password : FromEnvFile(section["EnvFile"], repository),
-            section["AppDatabase"] is { Length: > 0 } app ? app : null);
+            section["AppDatabase"] is { Length: > 0 } app ? app : null,
+            section["Downloads"] is { Length: > 0 } downloads ? downloads : null);
     }
 }

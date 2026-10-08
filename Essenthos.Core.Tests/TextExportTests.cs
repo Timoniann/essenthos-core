@@ -119,7 +119,7 @@ public sealed class TextExportTests : IDisposable
 
         var manifest = await Exporter().Write(Path.Combine(_root, "out"), [text], [], CancellationToken.None);
 
-        var lines = await Lines(Path.Combine(_root, "out"), "XPD");
+        var lines = await Lines(Path.Combine(_root, "out"), manifest.Texts.Single().File.Path);
         lines.Select(l => l.GetProperty("verse").GetInt32()).Should().Equal(1, 2, 4);
         lines[1].GetProperty("text").GetString().Should().Be("And the earth");
         lines[0].GetProperty("book").GetString().Should().Be("gen");
@@ -213,10 +213,34 @@ public sealed class TextExportTests : IDisposable
         (await Exporter().Export(target, dryRun: false, CancellationToken.None)).Should().Be(0);
 
         Directory.Exists(Path.Combine(target, "texts", "GONE")).Should().BeFalse();
-        File.Exists(Path.Combine(target, "texts", "XPD", "XPD.jsonl.gz")).Should().BeTrue();
-        File.Exists(Path.Combine(target, DownloadsManifest.FileName)).Should().BeTrue();
+        var written = DownloadsManifest.Parse(await File.ReadAllTextAsync(Path.Combine(target, DownloadsManifest.FileName)))!;
+        File.Exists(Path.Combine(target, written.Texts.Single().File.Path)).Should().BeTrue();
+        Directory.EnumerateFiles(Path.Combine(target, "texts", "XPD")).Should().HaveCount(2, "a finished export leaves no part of a file behind");
         Directory.Exists(target + ".writing").Should().BeFalse();
         Directory.Exists(target + ".previous").Should().BeFalse();
+    }
+
+    /// <summary>
+    /// A name that never means other bytes is what lets a server keep a copy of the file for good, and
+    /// leave an earlier export's files beside a later one's until nothing names them.
+    /// </summary>
+    [Fact]
+    public async Task EachFileIsNamedByItsOwnChecksumSoAChangedTextIsANewName()
+    {
+        var text = Add("XPD", Redistribution.PublicDomain);
+        var first = (await Exporter().Write(Path.Combine(_root, "one"), [text], [], CancellationToken.None)).Texts.Single();
+
+        first.File.Path.Should().Be($"texts/XPD/XPD.{first.File.Sha256[..TextExporter.NameDigits]}.jsonl.gz");
+        first.Attribution.Path.Should().Be($"texts/XPD/ATTRIBUTION.{first.Attribution.Sha256[..TextExporter.NameDigits]}.txt");
+        (await File.ReadAllTextAsync(Path.Combine(_root, "one", first.Attribution.Path)))
+            .Should().Contain($"{Path.GetFileName(first.File.Path)} holds the text verse by verse");
+
+        _db.Words.First(w => w.TextId == text.Id).Surface = "Changed";
+        _db.SaveChanges();
+        var changed = (await Exporter().Write(Path.Combine(_root, "two"), [text], [], CancellationToken.None)).Texts.Single();
+
+        changed.File.Path.Should().NotBe(first.File.Path);
+        changed.Attribution.Path.Should().NotBe(first.Attribution.Path, "the attribution names the file, so it is another file too");
     }
 
     [Fact]
@@ -234,8 +258,8 @@ public sealed class TextExportTests : IDisposable
         served.Fingerprint.Should().Be(manifest.Fingerprint);
         var listed = served.Texts.Single();
         listed.Id.Should().Be("XPD");
-        listed.File.Url.Should().Be("https://files.example.org/dl/texts/XPD/XPD.jsonl.gz");
-        listed.Attribution.Url.Should().Be("https://files.example.org/dl/texts/XPD/ATTRIBUTION.txt");
+        listed.File.Url.Should().Be($"https://files.example.org/dl/{manifest.Texts.Single().File.Path}");
+        listed.Attribution.Url.Should().Be($"https://files.example.org/dl/{manifest.Texts.Single().Attribution.Path}");
         listed.File.Sha256.Should().Be(manifest.Texts.Single().File.Sha256);
         unplaced.Texts.Single().File.Url.Should().BeNull();
         absent.Texts.Should().BeEmpty();
@@ -263,7 +287,7 @@ public sealed class TextExportTests : IDisposable
     {
         var text = Add("XPD", Redistribution.PublicDomain);
         var folder = Path.Combine(_root, "served");
-        await Exporter().Write(folder, [text], [], CancellationToken.None);
+        var written = await Exporter().Write(folder, [text], [], CancellationToken.None);
 
         var builder = WebApplication.CreateSlimBuilder(["--urls=http://127.0.0.1:0"]);
         builder.Services.ConfigureHttpJsonOptions(options =>
@@ -282,14 +306,14 @@ public sealed class TextExportTests : IDisposable
         var entry = json.RootElement.GetProperty("texts").EnumerateArray().Single();
         entry.GetProperty("id").GetString().Should().Be("XPD");
         entry.GetProperty("licence").GetString().Should().Be("Public Domain");
-        entry.GetProperty("file").GetProperty("url").GetString().Should().Be("/files/texts/XPD/XPD.jsonl.gz");
+        entry.GetProperty("file").GetProperty("url").GetString().Should().Be($"/files/{written.Texts.Single().File.Path}");
         entry.GetProperty("file").GetProperty("sha256").GetString().Should().HaveLength(64);
         json.RootElement.GetProperty("fingerprint").GetString().Should().HaveLength(64);
     }
 
-    private static async Task<List<JsonElement>> Lines(string folder, string slug)
+    private static async Task<List<JsonElement>> Lines(string folder, string path)
     {
-        await using var file = File.OpenRead(Path.Combine(folder, "texts", slug, $"{slug}.jsonl.gz"));
+        await using var file = File.OpenRead(Path.Combine(folder, path));
         await using var gzip = new GZipStream(file, CompressionMode.Decompress);
         using var reader = new StreamReader(gzip);
         var lines = new List<JsonElement>();

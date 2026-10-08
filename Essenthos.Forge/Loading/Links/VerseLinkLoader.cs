@@ -35,6 +35,11 @@ namespace Essenthos.Core.Loading.Links;
 /// Verse links removed because an earlier one of the same pair states exactly the same of exactly the
 /// same verses. Zero on every load of a corpus that has none.
 /// </param>
+/// <param name="Withdrawn">
+/// Statistical word links taken away because they join two verses no verse link joins, which a verse
+/// the frame moved leaves behind when the aligner drew the link by the address it stood at. Zero on
+/// every load after the one that took them.
+/// </param>
 internal sealed record VerseLinkOutcome(
     bool AlreadyLoaded,
     int Pairs,
@@ -45,17 +50,20 @@ internal sealed record VerseLinkOutcome(
     int Covered,
     int Stated,
     TimeSpan Elapsed,
-    int Repeated = 0)
+    int Repeated = 0,
+    int Withdrawn = 0)
 {
     public override string ToString() => (AlreadyLoaded, Covered) switch
     {
-        (true, 0) when Stated == 0 && Repeated == 0 => "the verse links are already loaded",
+        (true, 0) when Stated == 0 && Repeated == 0 && Withdrawn == 0 => "the verse links are already loaded",
         (true, _) => $"the verse links are already loaded; {Covered} verses joined at an address " +
-                     $"another verse covers, {Stated} pairs a source states, {Repeated} repeated links removed",
+                     $"another verse covers, {Stated} pairs a source states, {Repeated} repeated links removed, " +
+                     $"{Withdrawn} statistical word links across unjoined verses withdrawn",
         _ => $"{Links} verse links over {Pairs} text pairs in {Elapsed}: {Straight} one verse against " +
              $"one, {Divided} where the two divide the passage differently, {Alone} verses with no " +
              $"counterpart at all, {Covered} joined at an address another verse covers, {Stated} " +
-             $"stated by a source through its own word links, {Repeated} repeated links removed",
+             $"stated by a source through its own word links, {Repeated} repeated links removed, " +
+             $"{Withdrawn} statistical word links across unjoined verses withdrawn",
     };
 }
 
@@ -278,6 +286,52 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         SELECT count(*) FROM stated_verse_pair;
         """;
 
+    /// <summary>
+    /// The statistical word links that join two verses no verse link joins. The aligner pairs the
+    /// verses standing at one canonical address, so when the frame moves a verse afterwards the
+    /// links it drew by the old address now name a verse that is no longer its counterpart: the
+    /// aligner's guess crossing a boundary the corpus does not believe in, which no source
+    /// testifies to. A link any other method also stands on is left, and is what the integrity
+    /// check goes on reporting.
+    ///
+    /// Gathered the way the integrity check gathers them, the verse pairs first and each looked up
+    /// once. <c>@texts</c> limits it to links of the texts a refresh redrew unless <c>@every</c> is set.
+    /// </summary>
+    private const string StatisticalCrossings =
+        """
+        WITH crossing AS MATERIALIZED (
+            SELECT DISTINCT l.id AS link_id, fw.verse_id AS from_verse, tw.verse_id AS to_verse
+            FROM link l
+            JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
+            JOIN word fw ON fw.id = f.word_id
+            JOIN link_word t ON t.link_id = l.id AND t.side = 'to'
+            JOIN word tw ON tw.id = t.word_id
+            JOIN verse_reference fr ON fr.verse_id = fw.verse_id AND fr.is_primary
+            JOIN verse_reference tr ON tr.verse_id = tw.verse_id AND tr.is_primary
+            WHERE l.method = 'aligner'
+              AND (@every OR l.from_text_id = ANY(@texts) OR l.to_text_id = ANY(@texts))
+              AND (fr.canonical_book, fr.canonical_chapter, fr.canonical_verse)
+               <> (tr.canonical_book, tr.canonical_chapter, tr.canonical_verse)
+        ),
+        unjoined AS (
+            SELECT p.from_verse, p.to_verse
+            FROM (SELECT DISTINCT from_verse, to_verse FROM crossing) p
+            WHERE NOT EXISTS (
+                SELECT 1 FROM verse_link_verse a
+                JOIN verse_link_verse b ON b.verse_link_id = a.verse_link_id AND b.verse_id = p.to_verse
+                WHERE a.verse_id = p.from_verse)
+        ),
+        stray AS (
+            SELECT DISTINCT c.link_id
+            FROM crossing c
+            JOIN unjoined u ON u.from_verse = c.from_verse AND u.to_verse = c.to_verse
+        )
+        DELETE FROM link l
+        USING stray s
+        WHERE l.id = s.link_id
+          AND NOT EXISTS (SELECT 1 FROM link_claim c WHERE c.link_id = l.id AND c.method <> 'aligner')
+        """;
+
     public async Task<VerseLinkOutcome> Refresh(IReadOnlySet<string> texts, CancellationToken cancellationToken = default)
     {
         var ids = await db.Texts.Where(t => texts.Contains(t.Slug)).Select(t => t.Id).ToArrayAsync(cancellationToken);
@@ -291,6 +345,34 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     }
 
     public async Task<VerseLinkOutcome> Load(CancellationToken cancellationToken = default, IReadOnlySet<int>? refresh = null)
+    {
+        var outcome = await Join(cancellationToken, refresh);
+        var withdrawn = await WithdrawStatisticalCrossings(refresh, cancellationToken);
+        return withdrawn == 0 ? outcome : outcome with { Withdrawn = withdrawn };
+    }
+
+    /// <summary>
+    /// Takes away the aligner's links that cross a verse pair nothing joins, once the verse links
+    /// say which pairs those are. Nothing here writes one.
+    /// </summary>
+    public async Task<int> WithdrawStatisticalCrossings(
+        IReadOnlySet<int>? texts = null, CancellationToken cancellationToken = default)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        await using var command = new NpgsqlCommand(StatisticalCrossings, (NpgsqlConnection)db.Database.GetDbConnection());
+        command.Parameters.AddWithValue("every", texts is null);
+        command.Parameters.AddWithValue("texts", texts?.ToArray() ?? []);
+        var removed = await command.ExecuteNonQueryAsync(cancellationToken);
+        if (removed > 0)
+        {
+            logger.LogInformation(
+                "{Removed} statistical word links that joined two verses no verse link joins were withdrawn", removed);
+        }
+
+        return removed;
+    }
+
+    private async Task<VerseLinkOutcome> Join(CancellationToken cancellationToken, IReadOnlySet<int>? refresh)
     {
         var started = Stopwatch.StartNew();
         var repeated = await Unrepeat(cancellationToken);

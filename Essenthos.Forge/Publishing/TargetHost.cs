@@ -87,10 +87,68 @@ internal sealed class TargetHost(ReleaseTarget target)
 
     /// <summary>
     /// Puts <paramref name="files"/>, paths under <paramref name="source"/>, into the target's images
-    /// folder. Remote, they go as one tar through scp and are unpacked there, because a thousand
-    /// separate copies over ssh take minutes where one archive takes seconds.
+    /// folder.
     /// </summary>
-    public async Task SendImages(string source, IReadOnlyList<string> files, CancellationToken cancellationToken)
+    public Task SendImages(string source, IReadOnlyList<string> files, CancellationToken cancellationToken) =>
+        SendFiles(source, files, ImagesFolder, cancellationToken);
+
+    /// <summary>
+    /// Where the target's proxy serves the downloads from and its API lists them: the data root's
+    /// downloads folder, mounted read-only into both.
+    /// </summary>
+    public string DownloadsFolder => target.IsRemote
+        ? $"{target.DataRoot.TrimEnd('/')}/{target.DownloadsName}"
+        : Path.Combine(target.DataRoot, target.DownloadsName);
+
+    /// <summary>Every file the target serves as a download, by path, with its SHA-256; none where the folder is not there yet.</summary>
+    public async Task<Dictionary<string, string>> Downloads(CancellationToken cancellationToken)
+    {
+        if (!target.IsRemote)
+        {
+            return ImageManifest.Read(DownloadsFolder, extensions: null);
+        }
+
+        var folder = Shell.QuoteForRemote(DownloadsFolder);
+        var listing = await Shell.Run(
+            "ssh", [.. SshOptions, target.Ssh, $"mkdir -p {folder} && cd {folder} && find . -type f -exec sha256sum {{}} +"],
+            cancellationToken);
+        return ImageManifest.Parse(listing);
+    }
+
+    /// <summary>Puts <paramref name="files"/>, paths under <paramref name="source"/>, into the target's downloads folder.</summary>
+    public Task SendDownloads(string source, IReadOnlyList<string> files, CancellationToken cancellationToken) =>
+        SendFiles(source, files, DownloadsFolder, cancellationToken);
+
+    /// <summary>
+    /// Puts one file into the downloads folder as another name first and then in place under its own,
+    /// so a reader fetching it, or the API reading it, never meets it half written.
+    /// </summary>
+    public async Task ReplaceDownload(string source, string file, CancellationToken cancellationToken)
+    {
+        if (!target.IsRemote)
+        {
+            var destination = Path.Combine(DownloadsFolder, file);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            var arriving = destination + ".incoming";
+            File.Copy(Path.Combine(source, file), arriving, overwrite: true);
+            File.Move(arriving, destination, overwrite: true);
+            return;
+        }
+
+        var remote = $"{DownloadsFolder}/{file}";
+        var incoming = Shell.QuoteForRemote(remote + ".incoming");
+        await Shell.Run("ssh", [.. SshOptions, target.Ssh, "mkdir", "-p", Shell.QuoteForRemote(DownloadsFolder)], cancellationToken);
+        await Shell.Run("scp", ["-q", .. SshOptions, Path.Combine(source, file), $"{target.Ssh}:{remote}.incoming"], cancellationToken);
+        await Shell.Run(
+            "ssh", [.. SshOptions, target.Ssh, $"chmod 644 {incoming} && mv -f {incoming} {Shell.QuoteForRemote(remote)}"],
+            cancellationToken);
+    }
+
+    /// <summary>
+    /// Takes <paramref name="files"/>, paths under the downloads folder, away, and the folders that
+    /// leave empty.
+    /// </summary>
+    public async Task RemoveDownloads(IReadOnlyList<string> files, CancellationToken cancellationToken)
     {
         if (files.Count == 0)
         {
@@ -101,9 +159,56 @@ internal sealed class TargetHost(ReleaseTarget target)
         {
             foreach (var file in files)
             {
-                var destination = Path.Combine(ImagesFolder, file);
-                Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
-                File.Copy(Path.Combine(source, file), destination, overwrite: true);
+                File.Delete(Path.Combine(DownloadsFolder, file));
+            }
+
+            foreach (var folder in Directory.EnumerateDirectories(DownloadsFolder, "*", SearchOption.AllDirectories)
+                         .OrderByDescending(folder => folder.Length)
+                         .Where(folder => !Directory.EnumerateFileSystemEntries(folder).Any()))
+            {
+                Directory.Delete(folder);
+            }
+
+            return;
+        }
+
+        var list = Path.GetTempFileName();
+        try
+        {
+            await File.WriteAllLinesAsync(list, files, cancellationToken);
+            var folder = Shell.QuoteForRemote(DownloadsFolder);
+            var remote = Shell.QuoteForRemote($"{target.DataRoot.TrimEnd('/')}/{target.DownloadsName}.remove.txt");
+            await Shell.Run("scp", ["-q", .. SshOptions, list, $"{target.Ssh}:{remote}"], cancellationToken);
+            await Shell.Run(
+                "ssh", [.. SshOptions, target.Ssh,
+                    $"cd {folder} && tr -d '\\r' < {remote} | xargs -d '\\n' rm -f -- && rm -f {remote} && find . -mindepth 1 -type d -empty -delete"],
+                cancellationToken);
+        }
+        finally
+        {
+            File.Delete(list);
+        }
+    }
+
+    /// <summary>
+    /// Puts <paramref name="files"/>, paths under <paramref name="source"/>, into <paramref name="destination"/>.
+    /// Remote, they go as one tar through scp and are unpacked there, because a thousand separate copies
+    /// over ssh take minutes where one archive takes seconds.
+    /// </summary>
+    private async Task SendFiles(string source, IReadOnlyList<string> files, string destination, CancellationToken cancellationToken)
+    {
+        if (files.Count == 0)
+        {
+            return;
+        }
+
+        if (!target.IsRemote)
+        {
+            foreach (var file in files)
+            {
+                var path = Path.Combine(destination, file);
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                File.Copy(Path.Combine(source, file), path, overwrite: true);
             }
 
             return;
@@ -115,8 +220,8 @@ internal sealed class TargetHost(ReleaseTarget target)
         {
             await File.WriteAllLinesAsync(list, files, cancellationToken);
             await Shell.Run("tar", ["-cf", archive, "-C", source, "-T", list], cancellationToken);
-            var folder = Shell.QuoteForRemote(ImagesFolder);
-            var remote = $"{target.DataRoot.TrimEnd('/')}/images/{target.Database}.incoming.tar";
+            var folder = Shell.QuoteForRemote(destination);
+            var remote = $"{destination}.incoming.tar";
             await Shell.Run("scp", ["-q", .. SshOptions, archive, $"{target.Ssh}:{remote}"], cancellationToken);
             var quoted = Shell.QuoteForRemote(remote);
             await Shell.Run(

@@ -57,25 +57,33 @@ internal sealed class PronounReferents(AppDbContext db, ILogger<PronounReferents
     /// <summary>Who a capitalised pronoun in the middle of a sentence can be.</summary>
     private const string Capitalised = "'yhvh', 'jesus', 'holy-spirit'";
 
-    private static readonly string Judge =
+    /// <summary>
+    /// The rows carried onto pronouns that are not clear, as temp tables the caller reads.
+    /// </summary>
+    /// <param name="candidates">
+    /// A query of (row_id, word_id, entity_id): the carried rows to judge. Their ids are what the caller
+    /// takes back by.
+    /// </param>
+    /// <param name="named">
+    /// A relation of (word_id, entity_id) holding the names the verses carry, which says who is named
+    /// near a pronoun.
+    /// </param>
+    private static string Judge(string candidates, string named) =>
         $"""
+         DROP TABLE IF EXISTS pronoun_judged, pronoun_named, pronoun_carried;
          CREATE TEMP TABLE pronoun_carried ON COMMIT DROP AS
-         SELECT a.id AS row_id, a.entity_id, w.id AS word_id, w.text AS surface, w.position, w.verse_id, w.text_id,
+         SELECT a.row_id, a.entity_id, w.id AS word_id, w.text AS surface, w.position, w.verse_id, w.text_id,
                 t.slug AS text_slug, t.language, v.book_id, v.chapter_number, v.number,
                 e.slug AS person, e.sex, pronoun.sex AS says,
                 before.trailer AS before
-         FROM word_entity a
+         FROM ({candidates}) a
          JOIN entity e ON e.id = a.entity_id AND e.kind IN ('person', 'title')
          JOIN word w ON w.id = a.word_id
          JOIN text t ON t.id = w.text_id
          JOIN verse v ON v.id = w.verse_id
          JOIN {Pronouns.Rows()} ON pronoun.language = t.language
               AND pronoun.word = lower(regexp_replace(w.text, '[[:punct:]]', '', 'g'))
-         LEFT JOIN word before ON before.verse_id = w.verse_id AND before.position = w.position - 1
-         WHERE a.confidence IS NOT NULL
-           AND NOT EXISTS (SELECT 1 FROM word_entity_claim c
-                           WHERE c.word_entity_id = a.id AND c.method <> 'stated-by-source'
-                             AND coalesce(c.note, '') NOT LIKE @carried);
+         LEFT JOIN word before ON before.verse_id = w.verse_id AND before.position = w.position - 1;
 
          CREATE TEMP TABLE pronoun_named ON COMMIT DROP AS
          SELECT DISTINCT p.row_id, a.entity_id, e.sex
@@ -83,7 +91,7 @@ internal sealed class PronounReferents(AppDbContext db, ILogger<PronounReferents
          JOIN verse around ON around.text_id = p.text_id AND around.book_id = p.book_id
               AND around.chapter_number = p.chapter_number AND around.number IN (p.number, p.number - 1)
          JOIN word w ON w.verse_id = around.id
-         JOIN word_entity a ON a.word_id = w.id
+         JOIN {named} a ON a.word_id = w.id
          JOIN entity e ON e.id = a.entity_id AND e.kind IN ('person', 'title')
          WHERE NOT EXISTS (SELECT 1 FROM {Pronouns.Rows()}
                            WHERE pronoun.language = p.language
@@ -103,12 +111,69 @@ internal sealed class PronounReferents(AppDbContext db, ILogger<PronounReferents
                                     WHERE n.row_id = p.row_id AND n.entity_id <> p.entity_id
                                       AND (n.sex IS NULL OR n.sex = p.says))
                     AND NOT EXISTS (SELECT 1 FROM word beside
-                                    JOIN word_entity named ON named.word_id = beside.id
+                                    JOIN {named} named ON named.word_id = beside.id
                                     WHERE beside.verse_id = p.verse_id
                                       AND beside.position IN (p.position - 1, p.position + 1)
                                       AND named.entity_id = p.entity_id)) AS clear
          FROM pronoun_carried p
          """;
+
+    /// <summary>The carried rows a pronoun's person may be taken back from: the ones nobody ruled on.</summary>
+    private const string Written =
+        """
+        SELECT a.id AS row_id, a.word_id, a.entity_id
+        FROM word_entity a
+        WHERE a.confidence IS NOT NULL
+          AND NOT EXISTS (SELECT 1 FROM word_entity_claim c
+                          WHERE c.word_entity_id = a.id AND c.method <> 'stated-by-source'
+                            AND coalesce(c.note, '') NOT LIKE @carried)
+        """;
+
+    /// <summary>
+    /// The rows a carry is about to write, which no row holds yet. A word has one expected row, so the
+    /// word stands for the row.
+    /// </summary>
+    private const string NotYetWritten =
+        """
+        SELECT x.word_id AS row_id, x.word_id, x.entity_id
+        FROM expected x
+        WHERE x.confidence IS NOT NULL
+          AND NOT EXISTS (SELECT 1 FROM word_entity a WHERE a.word_id = x.word_id AND a.entity_id = x.entity_id)
+        """;
+
+    /// <summary>The names the corpus holds and the carry is about to write.</summary>
+    private const string NamesWithTheExpected =
+        "(SELECT word_id, entity_id FROM word_entity UNION ALL SELECT word_id, entity_id FROM expected)";
+
+    private static readonly string JudgeWritten = Judge(Written, "word_entity");
+
+    private static readonly string JudgeNew = Judge(NotYetWritten, NamesWithTheExpected);
+
+    /// <summary>
+    /// Leaves out of a carry's expected rows the ones that would be written only to be taken back at
+    /// once: a person the verse does not settle on a pronoun. Written and withdrawn on every load, such a
+    /// row burns an id each time and leaves nothing behind. The rows already in the corpus are not
+    /// touched here; <see cref="Withdraw"/> takes them back.
+    /// </summary>
+    /// <returns>How many expected rows were left out.</returns>
+    public async Task<int> LeaveOut(NpgsqlConnection connection, NpgsqlTransaction transaction, CancellationToken cancellationToken)
+    {
+        await using (var judge = new NpgsqlCommand(JudgeNew, connection, transaction))
+        {
+            await judge.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        await using var delete = new NpgsqlCommand(
+            "DELETE FROM expected x USING pronoun_judged j WHERE x.word_id = j.row_id AND NOT j.clear",
+            connection, transaction);
+        var left = await delete.ExecuteNonQueryAsync(cancellationToken);
+        if (left > 0)
+        {
+            logger.LogInformation("{Left} carried names on pronouns the verse does not settle were not written", left);
+        }
+
+        return left;
+    }
 
     /// <param name="write">False to count what would be taken back and take back nothing.</param>
     public async Task<PronounReferentOutcome> Withdraw(CancellationToken cancellationToken = default, bool write = true)
@@ -118,7 +183,7 @@ internal sealed class PronounReferents(AppDbContext db, ILogger<PronounReferents
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
         await using var transaction = await connection.BeginTransactionAsync(cancellationToken);
 
-        await using (var judge = new NpgsqlCommand(Judge, connection, transaction))
+        await using (var judge = new NpgsqlCommand(JudgeWritten, connection, transaction))
         {
             judge.Parameters.AddWithValue("carried", Annotating.CarriedNote);
             await judge.ExecuteNonQueryAsync(cancellationToken);

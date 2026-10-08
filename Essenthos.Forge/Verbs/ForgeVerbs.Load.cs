@@ -99,6 +99,16 @@ internal static partial class ForgeVerbs
             dryRun: args.Contains("--dry-run"));
     }
 
+    private static async Task<int> PublishDownloads(ForgeRun forge, string[] args)
+    {
+        using var downloadsScope = forge.Scope();
+        return await downloadsScope.ServiceProvider.GetRequiredService<Publisher>().PublishDownloads(
+            Option(args, "--to") ?? throw new InvalidOperationException("forge publish-downloads --to <target> [--from <folder>]"),
+            Option(args, "--from"),
+            args.Contains("--dry-run"),
+            CancellationToken.None);
+    }
+
     private static async Task<int> Rollback(ForgeRun forge, string[] args)
     {
         using var rollbackScope = forge.Scope();

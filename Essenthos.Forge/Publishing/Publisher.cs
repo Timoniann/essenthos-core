@@ -264,6 +264,11 @@ internal sealed class Publisher(
 
         var pictures = await SendImages(host, cancellationToken);
 
+        if (!await SendDownloads(host, null, cancellationToken))
+        {
+            return 1;
+        }
+
         if (await host.Sql("postgres", $"SELECT 1 FROM pg_roles WHERE rolname = {TargetHost.Literal(target.Reader)}", cancellationToken) != "1")
         {
             logger.LogError("{Target} has no role {Reader}; the server's database was not initialised", target.Name, target.Reader);
@@ -378,6 +383,7 @@ internal sealed class Publisher(
         logger.LogInformation("Dry run: publishing release {Name} ({Bytes:N0} bytes, built {BuiltAt:u}) to {Target} on {Where} would", record.Name, record.Bytes, record.BuiltAt, target.Name, where);
         logger.LogInformation("  1. check the dump's SHA-256 against its record, and upload it unless {Target} already has it", target.Name);
         logger.LogInformation("  2. send whichever of the {Count:N0} pictures here {Target} lacks or has with other bytes, into {Folder}", count, target.Name, host.ImagesFolder);
+        logger.LogInformation("  2b. check the export in {Export} against its manifest and send what {Target} lacks into {Downloads}, put the manifest in place, and only then take away the files no manifest names", ExportFolder, target.Name, host.DownloadsFolder);
         logger.LogInformation("  3. restore it into {Incoming} in {Container}, which nothing reads, and check its label", target.Incoming, target.Container);
         logger.LogInformation("  4. check every picture it names is on {Target}, run the gate against it there, and check every bookmark finds its verse", target.Name);
         logger.LogInformation("  5. grant {Reader} reading and nothing else, stop {Api}, rename {Incoming} to {Database} and {Database} to {Previous}, start {Api}",
@@ -412,6 +418,98 @@ internal sealed class Publisher(
         }
 
         return there;
+    }
+
+    /// <summary>Where <c>forge export</c> writes when it is not told: <c>Export:Path</c>, otherwise <c>.exports</c> in the checkout.</summary>
+    private string ExportFolder => configuration["Export:Path"] is { Length: > 0 } configured
+        ? Path.GetFullPath(configured)
+        : Path.Combine(Repository, ".exports");
+
+    /// <summary>
+    /// The export, sent where the target's proxy serves it and its API lists it. Only what the target lacks
+    /// travels; the manifest goes in place after every file it names is there, and files no manifest names
+    /// any more are taken away last. An export that does not match its own manifest is refused before
+    /// anything is sent. Where there is no export at all and none was asked for, the target's downloads
+    /// are left as they are.
+    /// </summary>
+    /// <param name="from">The export to send, or null for the one <c>forge export</c> writes by default.</param>
+    public async Task<bool> SendDownloads(TargetHost host, string? from, CancellationToken cancellationToken, bool dryRun = false)
+    {
+        var source = from is { Length: > 0 } ? Path.GetFullPath(from) : ExportFolder;
+        var target = host.Target;
+        if (from is null && !File.Exists(Path.Combine(source, DownloadsManifest.FileName)))
+        {
+            logger.LogInformation(
+                "No export in {Folder} (`forge export` writes one), so the downloads on {Target} are left as they are", source, target.Name);
+            return true;
+        }
+
+        var (manifest, problems) = DownloadsPublication.Check(source);
+        if (manifest is null)
+        {
+            foreach (var problem in problems.Take(20))
+            {
+                logger.LogError("The export cannot be published: {Problem}", problem);
+            }
+
+            logger.LogError("Nothing was sent to {Target}'s downloads", target.Name);
+            return false;
+        }
+
+        var files = DownloadsPublication.Files(manifest);
+        if (dryRun)
+        {
+            logger.LogInformation(
+                "Dry run: the export in {Folder} is whole ({Files} files, fingerprint {Fingerprint}); it would go to {Downloads} on {Target}",
+                source, files.Count, manifest.Fingerprint[..16], host.DownloadsFolder, target.Name);
+            return true;
+        }
+
+        var there = await host.Downloads(cancellationToken);
+        var plan = DownloadsPublication.Plan(manifest, there);
+        var manifestHere = Convert.ToHexStringLower(SHA256.HashData(await File.ReadAllBytesAsync(Path.Combine(source, DownloadsManifest.FileName), cancellationToken)));
+        var manifestCurrent = there.TryGetValue(DownloadsManifest.FileName, out var manifestThere) && manifestThere == manifestHere;
+        if (plan.Send.Count == 0 && plan.Remove.Count == 0 && manifestCurrent)
+        {
+            logger.LogInformation("The {Count} downloads in {Folder} on {Target} are current", files.Count, host.DownloadsFolder, target.Name);
+            return true;
+        }
+
+        var bytes = plan.Send.Sum(file => new FileInfo(Path.Combine(source, file)).Length);
+        logger.LogInformation(
+            "Sending {Count:N0} downloads, {Bytes:N0} bytes, to {Folder} on {Target}", plan.Send.Count, bytes, host.DownloadsFolder, target.Name);
+        await host.SendDownloads(source, plan.Send, cancellationToken);
+
+        // The manifest is only put in place over files that arrived as the manifest says.
+        var arrived = await host.Downloads(cancellationToken);
+        var wrong = files.Where(file => !arrived.TryGetValue(file.Path, out var hash) || !string.Equals(hash, file.Sha256, StringComparison.OrdinalIgnoreCase)).ToList();
+        if (wrong.Count > 0)
+        {
+            foreach (var file in wrong.Take(20))
+            {
+                logger.LogError("{File} on {Target} is not the file the export describes; the manifest there was not replaced", file.Path, target.Name);
+            }
+
+            return false;
+        }
+
+        if (!manifestCurrent)
+        {
+            await host.ReplaceDownload(source, DownloadsManifest.FileName, cancellationToken);
+        }
+
+        await host.RemoveDownloads(plan.Remove, cancellationToken);
+        logger.LogInformation(
+            "{Target} lists {Count} downloads (fingerprint {Fingerprint}); {Removed} files no manifest names any more were taken away",
+            target.Name, files.Count, manifest.Fingerprint[..16], plan.Remove.Count);
+        return true;
+    }
+
+    /// <summary>Sends an export to a target without publishing a release: <c>forge publish-downloads</c>.</summary>
+    public async Task<int> PublishDownloads(string targetName, string? from, bool dryRun, CancellationToken cancellationToken)
+    {
+        var host = new TargetHost(ReleaseTarget.Read(configuration, targetName, Repository));
+        return await SendDownloads(host, from ?? ExportFolder, cancellationToken, dryRun) ? 0 : 1;
     }
 
     /// <summary>
