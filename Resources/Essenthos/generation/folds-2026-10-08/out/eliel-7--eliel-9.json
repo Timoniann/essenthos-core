@@ -1,0 +1,66 @@
+{
+ "pair": [
+  "eliel-7",
+  "eliel-9"
+ ],
+ "case": {
+  "name": "Eliel",
+  "A": {
+   "name": "Eliel",
+   "line": "chief of the sons of Hebron (1CH 15:9)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "descendant-of hebron (Hebron, son of Kohath (EXO 6:18))",
+    "of-people levites (Levites, the tribe descended from Levi, Jacob's third son, set apart )"
+   ],
+   "named_by": [
+    "hebron (Hebron, son of Kohath (EXO 6:18)) ancestor-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "1CH 15:9",
+    "1CH 15:11"
+   ],
+   "kjv": {
+    "1CH 15:9": "Of the sons of Hebron; Eliel the chief, and his brethren fourscore:",
+    "1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,"
+   }
+  },
+  "B": {
+   "name": "Eliel",
+   "line": "Chief of the sons of Hebron, a Kohathite, over eighty brethren, at the ark's removal",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of hebron (Hebron, son of Kohath (EXO 6:18))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 15:9"
+   ],
+   "kjv": {
+    "1CH 15:9": "Of the sons of Hebron; Eliel the chief, and his brethren fourscore:"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 15:9": "לִבְנֵ֖י חֶבְרֹ֑ון אֱלִיאֵ֥ל הַשָּׂ֖ר וְאֶחָ֥יו שְׁמֹונִֽים׃ ס ",
+   "KJV 1CH 15:9": "Of the sons of Hebron; Eliel the chief, and his brethren fourscore:"
+  },
+  "first_reader_said": [
+   "1CH 15:9: Both records are Eliel chief of the sons of Hebron with eighty brethren."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "Both records identify the same Eliel in 1CH 15:9: chief of the sons of Hebron, with eighty brethren. A also includes 1CH 15:11, where David summons Eliel among the Levite leaders; B is a thinner duplicate with the same ancestry and office.",
+ "confidence": 1,
+ "verses_of_other": [],
+ "keep_slug": "eliel-7",
+ "fold_slug": "eliel-9",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:32:37+00:00"
+}

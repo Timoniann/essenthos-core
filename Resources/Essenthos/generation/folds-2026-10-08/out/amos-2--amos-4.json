@@ -1,0 +1,68 @@
+{
+ "pair": [
+  "amos-2",
+  "amos-4"
+ ],
+ "case": {
+  "name": "Amos",
+  "A": {
+   "name": "Amos",
+   "line": "in the lineage of Messiah (LUK 3:25)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of nahum-2 (Nahum, in the lineage of Messiah (LUK 3:25))",
+    "father-of mattathias (Mattathias, in the lineage of Messiah (LUK 3:25))"
+   ],
+   "named_by": [
+    "mattathias (Mattathias, in the lineage of Messiah (LUK 3:25)) son-of",
+    "nahum-2 (Nahum, in the lineage of Messiah (LUK 3:25)) father-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "MAT 1:10",
+    "LUK 3:25"
+   ],
+   "kjv": {
+    "MAT 1:10": "And Ezekias begat Manasses; and Manasses begat Amon; and Amon begat Josias;",
+    "LUK 3:25": "Which was the son of Mattathias, which was the son of Amos, which was the son of Naum, which was the son of Esli, which was the son of Nagge,"
+   }
+  },
+  "B": {
+   "name": "Amos",
+   "line": "Ancestor of Jesus in Luke's genealogy, son of Naum, father of Mattathias.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of mattathias (Mattathias, in the lineage of Messiah (LUK 3:25))",
+    "son-of nahum-2 (Nahum, in the lineage of Messiah (LUK 3:25))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "LUK 3:25"
+   ],
+   "kjv": {
+    "LUK 3:25": "Which was the son of Mattathias, which was the son of Amos, which was the son of Naum, which was the son of Esli, which was the son of Nagge,"
+   }
+  },
+  "disputed_verses": {
+   "NESTLE1904 LUK 3:25": "τοῦ Ματταθίου τοῦ Ἀμὼς τοῦ Ναοὺμ τοῦ Ἐσλεὶ τοῦ Ναγγαὶ ",
+   "KJV LUK 3:25": "Which was the son of Mattathias, which was the son of Amos, which was the son of Naum, which was the son of Esli, which was the son of Nagge,"
+  },
+  "first_reader_said": [
+   "LUK 3:25: Both records are Amos, son of Naum and father of Mattathias, at the same place in Luke's genealogy."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "Both records identify the Amos of LUK 3:25 as son of Naum and father of Mattathias, occupying the same place in Luke’s genealogy. Keep B because its verse attribution is correct: MAT 1:10 names Amon, son of Manasses and father of Josias, and is wrongly attached to A.",
+ "confidence": 0.99,
+ "verses_of_other": [],
+ "keep_slug": "amos-4",
+ "fold_slug": "amos-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:35:18+00:00"
+}

@@ -1,0 +1,514 @@
+[
+ {
+  "pair": [
+   "akkub-2",
+   "akkub-4"
+  ],
+  "name": "Akkub",
+  "codex": "one",
+  "codex_keep": "akkub-2",
+  "codex_confidence": 0.99,
+  "codex_why": "Both records identify the same Akkub in the same gatekeeper list with Shallum, Talmon, and Ahiman (1CH 9:17); B supplies no independent lineage or occurrence distinguishing another person. A preserves that occurrence and the additional gatekeeper references, including the children of Akkub in EZR 2:42 and NEH 7:45, so B is a thinner duplicate of A.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "akkub-2",
+  "judge_why": "B is only the porter Akkub of 1CH 9:17, which A already holds and names first in its line; 1CH 9:17 parallels NEH 11:19 (Akkub, Talmon at the gates), so nothing in B differs from A.",
+  "keep": "akkub-2",
+  "fold": "akkub-4"
+ },
+ {
+  "pair": [
+   "akkub-2",
+   "akkub-6"
+  ],
+  "name": "Akkub",
+  "codex": "one",
+  "codex_keep": "akkub-2",
+  "codex_confidence": 0.98,
+  "codex_why": "B is a thinner copy of A: both identify Akkub as the gatekeeper named with Talmon in NEH 11:19 and NEH 12:25. A also includes the related gatekeeper listing in 1CH 9:17 and the children of Akkub in EZR 2:42 and NEH 7:45; those descendant lists do not establish a second individual represented by B. No supplied father, family tie, or verse distinguishes B from A.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "akkub-2",
+  "judge_why": "B covers NEH 11:19 and NEH 12:25, both already in A, and describes the same Levite porter beside Talmon; B is a thinner copy of A.",
+  "keep": "akkub-2",
+  "fold": "akkub-6"
+ },
+ {
+  "pair": [
+   "amaziah-4",
+   "amaziah-the-merarite"
+  ],
+  "name": "Amaziah",
+  "codex": "one",
+  "codex_keep": "amaziah-the-merarite",
+  "codex_confidence": 0.99,
+  "codex_why": "Both records identify the same Amaziah in 1CH 6:45: son of Hilkiah and father of Hashabiah, with identical family links and the same sole naming verse. B preserves the fuller reciprocal links and correctly identifies Ethan’s Merarite line; A’s Kohathite label does not establish another person.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "amaziah-the-merarite",
+  "judge_why": "Both are the single Amaziah of 1CH 6:45, son of Hilkiah and father of Hashabiah, with identical ties. B also has the ties pointing back, and it reads the line correctly as Ethan the Merarite's (1CH 6:44-45), where A calls it Kohathite.",
+  "keep": "amaziah-the-merarite",
+  "fold": "amaziah-4"
+ },
+ {
+  "pair": [
+   "amos-2",
+   "amos-4"
+  ],
+  "name": "Amos",
+  "codex": "one",
+  "codex_keep": "amos-4",
+  "codex_confidence": 0.99,
+  "codex_why": "Both records identify the Amos of LUK 3:25 as son of Naum and father of Mattathias, occupying the same place in Luke’s genealogy. Keep B because its verse attribution is correct: MAT 1:10 names Amon, son of Manasses and father of Josias, and is wrongly attached to A.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "amos-2",
+  "judge_why": "Both are Amos of LUK 3:25, son of Naum and father of Mattathias, with identical ties. A's MAT 1:10 is a wrong verse: there the Greek Amos is king Amon, son of Manasseh, and that verse should be dropped.",
+  "keep": "amos-2",
+  "fold": "amos-4",
+  "keep_decided_by": "the lead: the fuller record"
+ },
+ {
+  "pair": [
+   "asaiah-3",
+   "asaiah-5"
+  ],
+  "name": "Asaiah",
+  "codex": "one",
+  "codex_keep": "asaiah-3",
+  "codex_confidence": 0.98,
+  "codex_why": "Both records identify the Asaiah who is Haggiah’s son in the same Merarite genealogy at 1CH 6:30. A’s additional references identify Asaiah as chief of Merari’s sons and a Levite summoned by David (1CH 15:6, 15:11), which fits that lineage. B is a thinner duplicate with no distinguishing ancestry, generation, or role.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "asaiah-3",
+  "judge_why": "B is Asaiah son of Haggiah in the Merarite line of 1CH 6:30, which A already holds with the same father and ties, and also identifies with the chief of Merari in 1CH 15:6.",
+  "keep": "asaiah-3",
+  "fold": "asaiah-5"
+ },
+ {
+  "pair": [
+   "azariah",
+   "azariah-24"
+  ],
+  "name": "Azariah",
+  "codex": "one",
+  "codex_keep": "azariah",
+  "codex_confidence": 0.94,
+  "codex_why": "Ezra 7:3 gives Azariah as the ancestor of Amariah in an abbreviated priestly genealogy, matching the Azariah who is Johanan's son and Amariah's father in 1 Chronicles 6:10–11. Meraioth is an earlier ancestor in that line, so Ezra's wording does not establish a different immediate father. B duplicates this occurrence; A's direct father links to Meraioth and Zadok need qualification, and its identification with the Azariah of 1 Kings 4:2 remains uncertain.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "azariah",
+  "judge_why": "EZR 7:3 shortens the high-priestly line of 1CH 6:7-11, going from Azariah, father of the second Amariah, straight back to Meraioth. So the Azariah of EZR 7:3 is the one of 1CH 6:10-11, and A already holds EZR 7:3 with the same ties.",
+  "keep": "azariah",
+  "fold": "azariah-24"
+ },
+ {
+  "pair": [
+   "benaiah-12",
+   "benaiah-4"
+  ],
+  "name": "Benaiah",
+  "codex": "one",
+  "codex_keep": "benaiah-4",
+  "codex_confidence": 0.99,
+  "codex_why": "Both records identify the same Benaiah in the second-degree Levite list in 1CH 15:18 and among those playing psalteries on Alamoth in 1CH 15:20. B adds the consistent continuation in 1CH 16:5, where Benaiah serves alongside several of the same musicians, and preserves fuller compatible ties to Levi and Eliab.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "benaiah-4",
+  "judge_why": "Both are the second-degree Levite with the psaltery in 1CH 15:18 and 15:20. B also carries 1CH 16:5 and the Levi and Eliab ties.",
+  "keep": "benaiah-4",
+  "fold": "benaiah-12"
+ },
+ {
+  "pair": [
+   "elam-4",
+   "elam-7"
+  ],
+  "name": "Elam",
+  "codex": "one",
+  "codex_keep": "elam-4",
+  "codex_confidence": 0.98,
+  "codex_why": "Both records identify the ancestor of the same 1,254 returning descendants in EZR 2:7 and NEH 7:12; B is a thinner duplicate with no distinguishing genealogy. A supplies further descendant connections in EZR 8:7, EZR 10:2, and EZR 10:26. The chief in NEH 10:14 and singer in NEH 12:42 are not securely identified with that ancestor merely by name, but neither establishes a separate identity for B.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "elam-4",
+  "judge_why": "B is the forefather of the 1,254 'children of Elam' (EZR 2:7, NEH 7:12), which is exactly A's line; B is a thinner copy. A's NEH 12:42 (an Elam among the singers at the dedication) is a different man and should be dropped.",
+  "keep": "elam-4",
+  "fold": "elam-7"
+ },
+ {
+  "pair": [
+   "eliel-7",
+   "eliel-9"
+  ],
+  "name": "Eliel",
+  "codex": "one",
+  "codex_keep": "eliel-7",
+  "codex_confidence": 1,
+  "codex_why": "Both records identify the same Eliel in 1CH 15:9: chief of the sons of Hebron, with eighty brethren. A also includes 1CH 15:11, where David summons Eliel among the Levite leaders; B is a thinner duplicate with the same ancestry and office.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "eliel-7",
+  "judge_why": "Both are Eliel, chief of the sons of Hebron with 80 brethren (1CH 15:9). A also has 1CH 15:11 and the tie back from Hebron.",
+  "keep": "eliel-7",
+  "fold": "eliel-9"
+ },
+ {
+  "pair": [
+   "elnathan",
+   "elnathan-5"
+  ],
+  "name": "Elnathan",
+  "codex": "one",
+  "codex_keep": "elnathan",
+  "codex_confidence": 0.97,
+  "codex_why": "Both records identify Elnathan of Jerusalem as Nehushta’s father in 2KI 24:8; B contains no separate lineage, family, or occurrence. A additionally identifies him as Achbor’s son and a royal official under Jehoiakim (JER 26:22; 36:12, 25), which is compatible with that family and period. B is a thinner copy of A, whose family ties and verse coverage are fuller.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "elnathan",
+  "judge_why": "B is Elnathan of Jerusalem, father of Nehushta (2KI 24:8), which A already holds. A's link to Elnathan son of Achbor, Jehoiakim's official (JER 26:22, 36:12), fits the same generation.",
+  "keep": "elnathan",
+  "fold": "elnathan-5"
+ },
+ {
+  "pair": [
+   "ethan",
+   "ethan-4"
+  ],
+  "name": "Ethan",
+  "codex": "one",
+  "codex_keep": "ethan",
+  "codex_confidence": 0.98,
+  "codex_why": "Both records identify Ethan the Ezrahite named in 1KI 4:31, and B supplies no separate father, generation, or role. A additionally associates him with Zerah’s son Ethan (1CH 2:6) and Ethan’s son Azariah (1CH 2:8); that identification is uncertain, but it does not distinguish B as another man. B is a thinner duplicate of A’s Ezrahite record.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "ethan",
+  "judge_why": "B is only Ethan the Ezrahite of 1KI 4:31, which is A's line. A adds the 1CH 2:6 identification, which its notes argue.",
+  "keep": "ethan",
+  "fold": "ethan-4"
+ },
+ {
+  "pair": [
+   "ezer-2",
+   "ezer-6"
+  ],
+  "name": "Ezer",
+  "codex": "one",
+  "codex_keep": "ezer-2",
+  "codex_confidence": 0.99,
+  "codex_why": "1CH 4:4 names a single Ezer, father of Hushah, among the sons of Hur; both records have exactly these relationships and this sole verse. A is fuller, including the reciprocal relationship from Hushah and explicit sex and tribe, so B should be folded into A.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "ezer-2",
+  "judge_why": "Both are Ezer, father of Hushah, among the sons of Hur (1CH 4:4), with identical ties. A also has the tie back from Hushah.",
+  "keep": "ezer-2",
+  "fold": "ezer-6"
+ },
+ {
+  "pair": [
+   "gaius",
+   "gaius-3"
+  ],
+  "name": "Gaius",
+  "codex": "one",
+  "codex_keep": "gaius",
+  "codex_confidence": 0.98,
+  "codex_why": "ACT 19:29 identifies both records as the Macedonian Gaius seized with Aristarchus, Paul's traveling companion; their place and companion ties are identical. ROM 16:23, 1CO 1:14, and 3JN 1:1 do not establish a distinction between A and B, though those verses alone do not prove that every Gaius mentioned is this Macedonian. B is a thinner duplicate of A's explicitly identified ACT 19:29 person.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "gaius",
+  "judge_why": "Both are the Macedonian Gaius seized with Aristarchus at Ephesus (ACT 19:29), with identical ties. A's ROM 16:23, 1CO 1:14 and 3JN 1:1 are probably other men (Gaius of Corinth, the elder's friend) and should be reviewed.",
+  "keep": "gaius",
+  "fold": "gaius-3"
+ },
+ {
+  "pair": [
+   "gera",
+   "gera-5"
+  ],
+  "name": "Gera",
+  "codex": "one",
+  "codex_keep": "gera",
+  "codex_confidence": 0.99,
+  "codex_why": "Both records identify the same Gera, son of Bela, named alongside Addar and Abihud in 1CH 8:3. A also includes Gera among Benjamin’s descendants in GEN 46:21 and preserves the fuller family ties; B contains no distinguishing information.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "gera",
+  "judge_why": "B is Gera son of Bela (1CH 8:3), which A already holds. GEN 46:21 lists grandsons such as Ard and Naaman as Benjamin's sons (compare NUM 26:40), so A's identification with GEN 46:21 holds.",
+  "keep": "gera",
+  "fold": "gera-5"
+ },
+ {
+  "pair": [
+   "hananiah-14",
+   "hananiah-7"
+  ],
+  "name": "Hananiah",
+  "codex": "one",
+  "codex_keep": "hananiah-7",
+  "codex_confidence": 0.98,
+  "codex_why": "Both records identify the same wall repairer, Hananiah son of Shelemiah, in NEH 3:30, with identical father links. B is fuller, retaining the reciprocal family tie and NEH 10:23; that verse supplies no patronymic proving the identification, but nothing in it distinguishes another person.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "hananiah-7",
+  "judge_why": "Both are Hananiah son of Shelemiah, who repaired the wall (NEH 3:30), with the same father. B's link to the sealer of NEH 10:23 is the same generation but unproven.",
+  "keep": "hananiah-7",
+  "fold": "hananiah-14"
+ },
+ {
+  "pair": [
+   "iddo-5",
+   "iddo-7"
+  ],
+  "name": "Iddo",
+  "codex": "one",
+  "codex_keep": "iddo-5",
+  "codex_confidence": 0.95,
+  "codex_why": "Both records identify the Iddo of NEH 12:4 whose priestly house was headed by Zechariah in NEH 12:16; B repeats information already present in A's notes and family ties. ZEC 1:1 and 1:7 give A's fuller ancestry through Berechiah, compatible with the shortened designation in EZR 5:1 and 6:14. No supplied verse distinguishes B by a different father, generation, or office, so A is the fuller record to retain.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "iddo-5",
+  "judge_why": "B is the priestly house head Iddo who came up with Zerubbabel (NEH 12:4), with Zechariah heading his house under Joiakim (NEH 12:16). A holds both verses, and the usual identification of that Zechariah with the prophet 'son of Iddo' (EZR 5:1, ZEC 1:1) makes them one.",
+  "keep": "iddo-5",
+  "fold": "iddo-7"
+ },
+ {
+  "pair": [
+   "jarib",
+   "jarib-2"
+  ],
+  "name": "Jarib",
+  "codex": "one",
+  "codex_keep": "jarib",
+  "codex_confidence": 0.99,
+  "codex_why": "Both records identify the same Jarib in EZR 10:18, a priest of the family of Jeshua son of Jozadak who married a foreign wife. B is a thinner copy of A, and A’s additional appearance among Ezra’s chief men in EZR 8:16 introduces no conflicting family, time, or role.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "jarib",
+  "judge_why": "Both are the priest Jarib of the sons of Jeshua son of Jozadak who had a foreign wife (EZR 10:18), with the same tie. A's added EZR 8:16 is the same year and plausible.",
+  "keep": "jarib",
+  "fold": "jarib-2"
+ },
+ {
+  "pair": [
+   "jeiel-12",
+   "jeiel-7"
+  ],
+  "name": "Jeiel",
+  "codex": "one",
+  "codex_keep": "jeiel-7",
+  "codex_confidence": 0.99,
+  "codex_why": "Both records identify Jeiel alongside Shimri among the sons of Elizaphan in 2CH 29:13, with identical ancestry and verse attribution. A's Gershonite label is erroneous: Elizaphan is descended through Uzziel (EXO 6:22), of the Kohathite line correctly recorded in B. B therefore preserves the fuller, correct identification.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "jeiel-7",
+  "judge_why": "Both are Jeiel of the sons of Elizaphan (2CH 29:13), with the same tie. B rightly calls him a Kohathite (Elizaphan son of Uzziel, EXO 6:22), where A's 'Gershonite' is wrong.",
+  "keep": "jeiel-7",
+  "fold": "jeiel-12"
+ },
+ {
+  "pair": [
+   "jeremiah-7",
+   "jeremiah-9"
+  ],
+  "name": "Jeremiah",
+  "codex": "one",
+  "codex_keep": "jeremiah-7",
+  "codex_confidence": 0.96,
+  "codex_why": "Both records identify the Jeremiah who returned with Zerubbabel and Jeshua in NEH 12:1, whose priestly house was represented by Hananiah under Joiakim in NEH 12:12. B repeats A's verses and family links without identifying a separate person. NEH 10:2 and NEH 12:34 supply no contrasting father or lineage that distinguishes these records; A preserves the fuller account.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "jeremiah-7",
+  "judge_why": "B is the priest who went up with Zerubbabel and whose house Hananiah led under Joiakim (NEH 12:1, 12:12). A holds both verses with the identical three ties. A's sealer (NEH 10:2) and procession (NEH 12:34) Jeremiahs are 90 years later and probably other men.",
+  "keep": "jeremiah-7",
+  "fold": "jeremiah-9"
+ },
+ {
+  "pair": [
+   "joel-12",
+   "joel-6"
+  ],
+  "name": "Joel",
+  "codex": "one",
+  "codex_keep": "joel-6",
+  "codex_confidence": 0.97,
+  "codex_why": "Joel the Gershomite chief in 1CH 15:7 is the Joel David summons among the Levite chiefs in 1CH 15:11, the sole verse assigned to A. The associations with Zetham and the Laadan/Jehieli family in 1CH 23:8 and 26:22 supply further information without distinguishing another person represented by A. A is a thinner duplicate of B.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "joel-6",
+  "judge_why": "1CH 15:11 calls the chiefs just listed in 15:5-10 in order (Uriel, Asaiah, Joel, Shemaiah, Eliel, Amminadab), so its Joel is the Gershomite chief of 1CH 15:7, whom B holds with both verses.",
+  "keep": "joel-6",
+  "fold": "joel-12"
+ },
+ {
+  "pair": [
+   "joel-13",
+   "joel-6"
+  ],
+  "name": "Joel",
+  "codex": "one",
+  "codex_keep": "joel-6",
+  "codex_confidence": 0.96,
+  "codex_why": "Both records identify the same Joel, chief of the Gershonites, in 1CH 15:7; 1CH 15:11 names him again among David's summoned Levites. B's additional references place Joel alongside Zetham in Laadan's family (1CH 23:8) and identify him as Zetham's brother in the treasury service (1CH 26:22). A contains no distinguishing lineage or chronological information and is a thinner copy of B.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "joel-6",
+  "judge_why": "Both are Joel, chief of the sons of Gershom with 130 brethren (1CH 15:7). B has that verse, its fuller Gershonite ties and the Laadan line.",
+  "keep": "joel-6",
+  "fold": "joel-13"
+ },
+ {
+  "pair": [
+   "meshullam-13",
+   "meshullam-19"
+  ],
+  "name": "Meshullam",
+  "codex": "one",
+  "codex_keep": "meshullam-19",
+  "codex_confidence": 0.99,
+  "codex_why": "Both records identify the same Meshullam, named last among those standing at Ezra’s left hand in NEH 8:4. Keep B because its association with Ezra is supported by that verse, whereas A’s attribution to Levi is not established there.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "meshullam-19",
+  "judge_why": "Both are the Meshullam on Ezra's left hand at the reading of the law (NEH 8:4), with no other verse. B has the tie to Ezra, and A's 'Levi' tribe is not stated there.",
+  "keep": "meshullam-19",
+  "fold": "meshullam-13"
+ },
+ {
+  "pair": [
+   "meshullam-16",
+   "meshullam-20"
+  ],
+  "name": "Meshullam",
+  "codex": "one",
+  "codex_keep": "meshullam-20",
+  "codex_confidence": 0.96,
+  "codex_why": "Both records identify the same Meshullam, head of Ezra’s priestly house in Joiakim’s days (NEH 12:12–13). B correctly identifies the ancestral Ezra as the priest who returned with Zerubbabel (NEH 12:1); A’s link to Ezra the scribe is mistaken. NEH 12:33 gives no father or other distinguishing detail requiring a separate person, although its identification with this Meshullam remains uncertain.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "meshullam-16",
+  "judge_why": "Both are Meshullam, head of the priestly house of Ezra under Joiakim (NEH 12:13). A has the tie back from ezra-3, but its own descendant-of tie points at Ezra the scribe and should be ezra-3, the priest of NEH 12:1, as B has it.",
+  "keep": "meshullam-16",
+  "fold": "meshullam-20",
+  "keep_decided_by": "the lead: the fuller record"
+ },
+ {
+  "pair": [
+   "seraiah-11",
+   "seraiah-2"
+  ],
+  "name": "Seraiah",
+  "codex": "one",
+  "codex_keep": "seraiah-2",
+  "codex_confidence": 0.98,
+  "codex_why": "EZR 7:1 identifies Seraiah through Azariah and Hilkiah, matching the priestly lineage of B; 1CH 6:14 also names Seraiah as Azariah’s son and Jehozadak’s father. Ezra’s later appearance does not require another Seraiah, since the genealogy can identify an ancestor rather than an immediate father. A is a thinner copy of B, which also includes the chief priest named in 2KI 25:18 and JER 52:24.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "seraiah-2",
+  "judge_why": "The Seraiah son of Azariah son of Hilkiah in Ezra's line (EZR 7:1) is the chief priest of 1CH 6:14 and 2KI 25:18, here as Ezra's ancestor. Both records give the same father and the tie to Ezra, and B is far fuller.",
+  "keep": "seraiah-2",
+  "fold": "seraiah-11"
+ },
+ {
+  "pair": [
+   "shaphan",
+   "shaphan-4"
+  ],
+  "name": "Shaphan",
+  "codex": "one",
+  "codex_keep": "shaphan",
+  "codex_confidence": 1,
+  "codex_why": "Both records identify Josiah's scribe Shaphan, son of Azaliah and grandson of Meshullam, performing the same mission in Josiah's eighteenth year (2KI 22:3; 2CH 34:8). Their accounts of receiving and reading the law-book describe the same events (2KI 22:8–10; 2CH 34:15–18), and every verse on B also appears on A. A preserves the fuller compatible family evidence: Ahikam his son, Gedaliah his grandson, and Gemariah explicitly son of Shaphan the scribe (2KI 22:12; 25:22; JER 36:10). A's description of Gedaliah as king should be corrected to governor or ruler (JER 40:5; 2KI 25:22).",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "shaphan",
+  "judge_why": "Both are Shaphan son of Azaliah son of Meshullam, Josiah's scribe who read the found book (2KI 22:3-14, 2CH 34:8-18). All of B's nine verses are in A's 23.",
+  "keep": "shaphan",
+  "fold": "shaphan-4"
+ },
+ {
+  "pair": [
+   "shephatiah-10",
+   "shephatiah-5"
+  ],
+  "name": "Shephatiah",
+  "codex": "one",
+  "codex_keep": "shephatiah-5",
+  "codex_confidence": 0.97,
+  "codex_why": "Both records identify Shephatiah as the ancestor of Zebadiah son of Michael in Ezra 8:8, and A supplies no distinguishing information. Ezra 2:4 and Nehemiah 7:9 repeat the same ancestral family of 372 returnees; the later return of descendants in Ezra 8:8 fits that family, so B preserves the fuller record.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "shephatiah-5",
+  "judge_why": "The 'sons of Shephatiah' who came with Ezra (EZR 8:8) are the same family as in EZR 2:4 and NEH 7:9: EZR 8 lists the return families of EZR 2 again. B holds all three verses and the ties.",
+  "keep": "shephatiah-5",
+  "fold": "shephatiah-10"
+ },
+ {
+  "pair": [
+   "shobal-2",
+   "shobal-3"
+  ],
+  "name": "Shobal",
+  "codex": "one",
+  "codex_keep": "shobal-2",
+  "codex_confidence": 0.95,
+  "codex_why": "1CH 4:1 lists Judah's descendants collectively, so it does not establish Judah as Shobal's immediate father or distinguish him from the Shobal in Hur's line in 1CH 2:50. Shobal's family in 1CH 2:52 is compatible with his being Reaiah's father in 1CH 4:2. B repeats A's Reaiah relationship and verses without supplying a distinct generation or identity; A is the fuller record.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "shobal-2",
+  "judge_why": "1CH 4:1 is a descending line (Pharez, Hezron, Carmi, Hur, Shobal), so its Shobal is Hur's son of 1CH 2:50, father of Reaiah (4:2, 'Haroeh' in 2:52). A holds all four verses; B's 'son of Judah' misreads 4:1.",
+  "keep": "shobal-2",
+  "fold": "shobal-3"
+ },
+ {
+  "pair": [
+   "tahath",
+   "tahath-5"
+  ],
+  "name": "Tahath",
+  "codex": "one",
+  "codex_keep": "tahath",
+  "codex_confidence": 0.97,
+  "codex_why": "The ancestry in 1CH 6:37—Tahath, Assir, Ebiasaph, Korah—matches A's family line in 1CH 6:23–24. B repeats this same identification, and its description of Tahath as Zephaniah's father does not conflict with his also having Uriel as a son in 1CH 6:24. A preserves the fuller family ties and both verse references.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "tahath",
+  "judge_why": "Tahath son of Assir son of Ebiasaph son of Korah (1CH 6:37) is the Tahath of the Kohathite line in 1CH 6:22-24, with the same father. A holds both verses, and the two sons (Uriel, Zephaniah) are different branches from one Tahath.",
+  "keep": "tahath",
+  "fold": "tahath-5"
+ },
+ {
+  "pair": [
+   "timna",
+   "timna-3"
+  ],
+  "name": "Timna",
+  "codex": "one",
+  "codex_keep": "timna",
+  "codex_confidence": 0.98,
+  "codex_why": "Both records identify Timna as Lotan’s sister in GEN 36:22 and 1CH 1:39, where the Hebrew explicitly gives that relationship. B is a thinner copy of A, with no conflicting family ties or chronology. A additionally preserves her relationship to Eliphaz and motherhood of Amalek in GEN 36:12, consistent with Timna and Amalek appearing in Eliphaz’s list in 1CH 1:36.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "timna",
+  "judge_why": "B is Timna, Lotan's sister (GEN 36:22, 1CH 1:39), which A holds. A's further identification with Eliphaz's concubine (GEN 36:12) is traditional, not stated, and worth a note.",
+  "keep": "timna",
+  "fold": "timna-3"
+ },
+ {
+  "pair": [
+   "zaccur-6",
+   "zaccur-7"
+  ],
+  "name": "Zaccur",
+  "codex": "one",
+  "codex_keep": "zaccur-6",
+  "codex_confidence": 0.97,
+  "codex_why": "NEH 13:13 gives both records the identical identity: Zaccur, son of Mattaniah and father of Hanan. B is a thinner copy of that entry, while A also includes NEH 10:12; the supplied verses show no conflicting parentage, generation, or separate individual.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "zaccur-6",
+  "judge_why": "B is Zaccur son of Mattaniah, father of Hanan the treasurer (NEH 13:13), with exactly A's ties. A's link to the Levite sealer Zaccur (NEH 10:12) is the same generation but unproven.",
+  "keep": "zaccur-6",
+  "fold": "zaccur-7"
+ }
+]

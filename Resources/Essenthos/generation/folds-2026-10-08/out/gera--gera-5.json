@@ -1,0 +1,66 @@
+{
+ "pair": [
+  "gera",
+  "gera-5"
+ ],
+ "case": {
+  "name": "Gera",
+  "A": {
+   "name": "Gera",
+   "line": "(grand?)son of Benjamin (GEN 46:21), son of Bela (1CH 8:3)",
+   "sex": "male",
+   "tribe": "Benjamin",
+   "notes": "from the list of \"sons of Israel\" who \"went to Egypt\" (GEN 46:8-27)",
+   "family": [
+    "son-of benjamin (Benjamin, twelfth-born son of Jacob and Rachel (GEN 35:18))",
+    "son-of bela-2 (Bela, son of Benjamin (GEN 46:21))"
+   ],
+   "named_by": [
+    "abihud (Abihud, son of Bela (1CH 8:3)) brother-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "GEN 46:21",
+    "1CH 8:3"
+   ],
+   "kjv": {
+    "GEN 46:21": "And the sons of Benjamin were Belah, and Becher, and Ashbel, Gera, and Naaman, Ehi, and Rosh, Muppim, and Huppim, and Ard.",
+    "1CH 8:3": "And the sons of Bela were, Addar, and Gera, and Abihud,"
+   }
+  },
+  "B": {
+   "name": "Gera",
+   "line": "Son of Bela, grandson of Benjamin, in the Chronicles genealogy.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of bela-2 (Bela, son of Benjamin (GEN 46:21))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 8:3"
+   ],
+   "kjv": {
+    "1CH 8:3": "And the sons of Bela were, Addar, and Gera, and Abihud,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 8:3": "וַיִּהְי֥וּ בָנִ֖ים לְבָ֑לַע אַדָּ֥ר וְגֵרָ֖א וַאֲבִיהֽוּד׃ ",
+   "KJV 1CH 8:3": "And the sons of Bela were, Addar, and Gera, and Abihud,"
+  },
+  "first_reader_said": [
+   "1CH 8:3: Both records are Gera son of Bela in this list."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "Both records identify the same Gera, son of Bela, named alongside Addar and Abihud in 1CH 8:3. A also includes Gera among Benjamin’s descendants in GEN 46:21 and preserves the fuller family ties; B contains no distinguishing information.",
+ "confidence": 0.99,
+ "verses_of_other": [],
+ "keep_slug": "gera",
+ "fold_slug": "gera-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:33:36+00:00"
+}

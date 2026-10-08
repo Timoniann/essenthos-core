@@ -1,0 +1,66 @@
+{
+ "pair": [
+  "rehum-3",
+  "rehum-5"
+ ],
+ "case": {
+  "name": "Rehum",
+  "A": {
+   "name": "Rehum",
+   "line": "supervised the Levites' repairs to the wall (NEH 3:17)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:25)",
+   "family": [
+    "son-of bani-6 (Bani, father of Rehum (NEH 3:17))",
+    "of-tribe levites (Levites, the tribe descended from Levi, Jacob's third son, set apart )"
+   ],
+   "named_by": [
+    "bani-6 (Bani, father of Rehum (NEH 3:17)) father-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "NEH 3:17",
+    "NEH 10:25"
+   ],
+   "kjv": {
+    "NEH 3:17": "After him repaired the Levites, Rehum the son of Bani. Next unto him repaired Hashabiah, the ruler of the half part of Keilah, in his part.",
+    "NEH 10:25": "Rehum, Hashabnah, Maaseiah,"
+   }
+  },
+  "B": {
+   "name": "Rehum",
+   "line": "Chief of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 10:25"
+   ],
+   "kjv": {
+    "NEH 10:25": "Rehum, Hashabnah, Maaseiah,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 10:25": "רְח֥וּם חֲשַׁבְנָ֖ה מַעֲשֵׂיָֽה׃ ",
+   "KJV NEH 10:25": "Rehum, Hashabnah, Maaseiah,"
+  },
+  "first_reader_said": [
+   "NEH 10:25: A's notes already place Rehum on the sealed document at 10:25, and B is that same sealer with nothing added."
+  ]
+ },
+ "verdict": "two",
+ "keep": "none",
+ "why": "NEH 3:17 identifies A as Rehum son of Bani, a Levite. NEH 10:25 names Rehum among the chiefs of the people, whose list begins at NEH 10:14, separately from the Levites in NEH 10:9–13. This distinction supports two men; A's assignment of NEH 10:25 belongs to B.",
+ "confidence": 0.88,
+ "verses_of_other": [
+  "NEH 10:25"
+ ],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:36:28+00:00"
+}

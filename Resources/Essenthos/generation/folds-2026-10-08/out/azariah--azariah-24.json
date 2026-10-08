@@ -1,0 +1,75 @@
+{
+ "pair": [
+  "azariah",
+  "azariah-24"
+ ],
+ "case": {
+  "name": "Azariah",
+  "A": {
+   "name": "Azariah",
+   "line": "son of Johanan, who executed the priest's office in the temple that Solomon built (1CH 6:10)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "1 Kings 4:2 names Azariah the son of Zadok the priest first among Solomon's princes; whether he is this priest or Azariah the son of Ahimaaz, Zadok's grandson (1CH 6:9), the text does not say. The Azariah who withstood King Uzziah in the temple (2CH 26:17-20) is held as azariah-20.",
+   "family": [
+    "son-of zadok (Zadok, son of Ahitub and priest during King David's reign (2SA 8:17)",
+    "son-of johanan-3 (Johanan, son of Azariah (1CH 6:9) and father of Azariah (1CH 6:10))",
+    "father-of amariah-2 (Amariah, son of Azariah and father of Ahitub, in the line of the high)",
+    "son-of meraioth (Meraioth, father of Amariah (1CH 6:7), Levite (1CH 6:1))"
+   ],
+   "named_by": [
+    "amariah-2 (Amariah, son of Azariah and father of Ahitub, in the line of the high) son-of",
+    "johanan-3 (Johanan, son of Azariah (1CH 6:9) and father of Azariah (1CH 6:10)) father-of",
+    "meraioth (Meraioth, father of Amariah (1CH 6:7), Levite (1CH 6:1)) father-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "1KI 4:2",
+    "1CH 6:10",
+    "1CH 6:11",
+    "EZR 7:3"
+   ],
+   "kjv": {
+    "1KI 4:2": "And these were the princes which he had; Azariah the son of Zadok the priest,",
+    "1CH 6:10": "And Johanan begat Azariah, (he it is that executed the priest's office in the temple that Solomon built in Jerusalem:)",
+    "1CH 6:11": "And Azariah begat Amariah, and Amariah begat Ahitub,",
+    "EZR 7:3": "The son of Amariah, the son of Azariah, the son of Meraioth,"
+   }
+  },
+  "B": {
+   "name": "Azariah",
+   "line": "Priest, son of Meraioth, father of Amariah, in Ezra's genealogy.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of meraioth (Meraioth, father of Amariah (1CH 6:7), Levite (1CH 6:1))",
+    "father-of amariah-2 (Amariah, son of Azariah and father of Ahitub, in the line of the high)"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "EZR 7:3"
+   ],
+   "kjv": {
+    "EZR 7:3": "The son of Amariah, the son of Azariah, the son of Meraioth,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA EZR 7:3": "בֶּן־אֲמַרְיָ֥ה בֶן־עֲזַרְיָ֖ה בֶּן־מְרָיֹֽות׃ ",
+   "KJV EZR 7:3": "The son of Amariah, the son of Azariah, the son of Meraioth,"
+  },
+  "first_reader_said": [
+   "EZR 7:3: Both records hold the Azariah who is father of Amariah-2 and descendant of Meraioth in this shortened high-priestly line."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "Ezra 7:3 gives Azariah as the ancestor of Amariah in an abbreviated priestly genealogy, matching the Azariah who is Johanan's son and Amariah's father in 1 Chronicles 6:10–11. Meraioth is an earlier ancestor in that line, so Ezra's wording does not establish a different immediate father. B duplicates this occurrence; A's direct father links to Meraioth and Zadok need qualification, and its identification with the Azariah of 1 Kings 4:2 remains uncertain.",
+ "confidence": 0.94,
+ "verses_of_other": [],
+ "keep_slug": "azariah",
+ "fold_slug": "azariah-24",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:35:32+00:00"
+}

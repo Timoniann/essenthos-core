@@ -1,0 +1,64 @@
+{
+ "pair": [
+  "baanah-3",
+  "baanah-4"
+ ],
+ "case": {
+  "name": "Baanah",
+  "A": {
+   "name": "Baanah",
+   "line": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:27)",
+   "family": [
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "named_by": null,
+   "verse_count": 3,
+   "verses": [
+    "EZR 2:2",
+    "NEH 7:7",
+    "NEH 10:27"
+   ],
+   "kjv": {
+    "EZR 2:2": "Which came with Zerubbabel: Jeshua, Nehemiah, Seraiah, Reelaiah, Mordecai, Bilshan, Mizpar, Bigvai, Rehum, Baanah. The number of the men of the people of Israel:",
+    "NEH 7:7": "Who came with Zerubbabel, Jeshua, Nehemiah, Azariah, Raamiah, Nahamani, Mordecai, Bilshan, Mispereth, Bigvai, Nehum, Baanah. The number, I say, of the men of the people of Israel was this;",
+    "NEH 10:27": "Malluch, Harim, Baanah."
+   }
+  },
+  "B": {
+   "name": "Baanah",
+   "line": "chief of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 10:27"
+   ],
+   "kjv": {
+    "NEH 10:27": "Malluch, Harim, Baanah."
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 10:27": "מַלּ֥וּךְ חָרִ֖ם בַּעֲנָֽה׃ ",
+   "KJV NEH 10:27": "Malluch, Harim, Baanah."
+  },
+  "first_reader_said": [
+   "NEH 10:27: A's notes already place Baanah on the sealed document at 10:27, and B is that same sealer with nothing added."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "B contains only the covenant sealer named in NEH 10:27, whom A already explicitly includes in its notes and verses. A also supplies EZR 2:2 and NEH 7:7 and fuller family associations; B adds no distinct father, generation, or other identifying detail.",
+ "confidence": 0.97,
+ "verses_of_other": [],
+ "keep_slug": "baanah-3",
+ "fold_slug": "baanah-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:36:02+00:00"
+}

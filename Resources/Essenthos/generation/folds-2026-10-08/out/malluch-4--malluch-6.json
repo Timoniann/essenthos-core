@@ -1,0 +1,70 @@
+{
+ "pair": [
+  "malluch-4",
+  "malluch-6"
+ ],
+ "case": {
+  "name": "Malluch",
+  "A": {
+   "name": "Malluch",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:4)",
+   "family": [
+    "ancestor-of jonathan-11 (Jonathan, son of Malluch [Malluchi] (NEH 12:14))"
+   ],
+   "named_by": [
+    "jonathan-11 (Jonathan, son of Malluch [Malluchi] (NEH 12:14)) descendant-of"
+   ],
+   "verse_count": 3,
+   "verses": [
+    "NEH 10:4",
+    "NEH 12:2",
+    "NEH 12:14"
+   ],
+   "kjv": {
+    "NEH 10:4": "Hattush, Shebaniah, Malluch,",
+    "NEH 12:2": "Amariah, Malluch, Hattush,",
+    "NEH 12:14": "Of Melicu, Jonathan; of Shebaniah, Joseph;"
+   }
+  },
+  "B": {
+   "name": "Malluch",
+   "line": "Priest who returned with Zerubbabel; his house head later called Melicu/Jonathan",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "NEH 12:2",
+    "NEH 12:14"
+   ],
+   "kjv": {
+    "NEH 12:2": "Amariah, Malluch, Hattush,",
+    "NEH 12:14": "Of Melicu, Jonathan; of Shebaniah, Joseph;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:2": "אֲמַרְיָ֥ה מַלּ֖וּךְ חַטּֽוּשׁ׃ ",
+   "KJV NEH 12:2": "Amariah, Malluch, Hattush,"
+  },
+  "first_reader_said": [
+   "NEH 12:2: Both records are the priest Malluch whose house (Melicu/Malluchi) Jonathan headed, which A records through ancestor-of jonathan-11."
+  ]
+ },
+ "verdict": "two",
+ "keep": "none",
+ "why": "NEH 12:2 places Malluch among the priests who returned with Zerubbabel and Jeshua (NEH 12:1), while NEH 10:4 names a covenant signer in Nehemiah’s much later generation. NEH 12:14 identifies Jonathan as head of the earlier Malluch/Melicu priestly house in Joiakim’s days; it does not identify the later signer with that house’s founder. A’s references to NEH 12:2 and NEH 12:14 therefore belong to B.",
+ "confidence": 0.9,
+ "verses_of_other": [
+  "NEH 12:2",
+  "NEH 12:14"
+ ],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:37:33+00:00"
+}

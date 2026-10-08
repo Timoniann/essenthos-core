@@ -1,0 +1,69 @@
+{
+ "pair": [
+  "shephatiah-10",
+  "shephatiah-5"
+ ],
+ "case": {
+  "name": "Shephatiah",
+  "A": {
+   "name": "Shephatiah",
+   "line": "Ancestor whose sons (fourscore males) returned to Jerusalem with Ezra",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of zebadiah-8 (Zebadiah, descendant of Shephatiah, son of Michael who went up with Ez)"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "EZR 8:8"
+   ],
+   "kjv": {
+    "EZR 8:8": "And of the sons of Shephatiah; Zebadiah the son of Michael, and with him fourscore males."
+   }
+  },
+  "B": {
+   "name": "Shephatiah",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:4)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of zebadiah-8 (Zebadiah, descendant of Shephatiah, son of Michael who went up with Ez)",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "named_by": [
+    "michael-8 (Michael, father of Zebadiah who went up with Ezra (EZR 8:8)) descendant-of",
+    "zebadiah-8 (Zebadiah, descendant of Shephatiah, son of Michael who went up with Ez) descendant-of"
+   ],
+   "verse_count": 3,
+   "verses": [
+    "EZR 2:4",
+    "EZR 8:8",
+    "NEH 7:9"
+   ],
+   "kjv": {
+    "EZR 2:4": "The children of Shephatiah, three hundred seventy and two.",
+    "EZR 8:8": "And of the sons of Shephatiah; Zebadiah the son of Michael, and with him fourscore males.",
+    "NEH 7:9": "The children of Shephatiah, three hundred seventy and two."
+   }
+  },
+  "disputed_verses": {
+   "BHSA EZR 8:8": "וּמִבְּנֵ֣י שְׁפַטְיָ֔ה זְבַדְיָ֖ה בֶּן־מִֽיכָאֵ֑ל וְעִמֹּ֖ו שְׁמֹנִ֥ים הַזְּכָרִֽים׃ ס ",
+   "KJV EZR 8:8": "And of the sons of Shephatiah; Zebadiah the son of Michael, and with him fourscore males."
+  },
+  "first_reader_said": [
+   "EZR 8:8: Both records are the family head Shephatiah whose descendant Zebadiah ben Michael went up with Ezra, with the same ancestor-of link."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "Both records identify Shephatiah as the ancestor of Zebadiah son of Michael in Ezra 8:8, and A supplies no distinguishing information. Ezra 2:4 and Nehemiah 7:9 repeat the same ancestral family of 372 returnees; the later return of descendants in Ezra 8:8 fits that family, so B preserves the fuller record.",
+ "confidence": 0.97,
+ "verses_of_other": [],
+ "keep_slug": "shephatiah-5",
+ "fold_slug": "shephatiah-10",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:35:07+00:00"
+}

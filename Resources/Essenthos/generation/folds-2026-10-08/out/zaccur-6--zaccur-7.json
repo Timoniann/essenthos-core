@@ -1,0 +1,69 @@
+{
+ "pair": [
+  "zaccur-6",
+  "zaccur-7"
+ ],
+ "case": {
+  "name": "Zaccur",
+  "A": {
+   "name": "Zaccur",
+   "line": "a Levite (NEH 10:9)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:12)",
+   "family": [
+    "son-of mattaniah-10 (Mattaniah, grandfather of Hanan (NEH 13:13))",
+    "father-of hanan-7 (Hanan, distributed portions to their kinsmen (NEH 13:13))",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "named_by": [
+    "hanan-7 (Hanan, distributed portions to their kinsmen (NEH 13:13)) son-of",
+    "mattaniah-10 (Mattaniah, grandfather of Hanan (NEH 13:13)) father-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "NEH 10:12",
+    "NEH 13:13"
+   ],
+   "kjv": {
+    "NEH 10:12": "Zaccur, Sherebiah, Shebaniah,",
+    "NEH 13:13": "And I made treasurers over the treasuries, Shelemiah the priest, and Zadok the scribe, and of the Levites, Pedaiah: and next to them was Hanan the son of Zaccur, the son of Mattaniah: for they were counted faithful, and their office was to distribute unto their brethren."
+   }
+  },
+  "B": {
+   "name": "Zaccur",
+   "line": "Son of Mattaniah, father of Hanan the treasury official",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of hanan-7 (Hanan, distributed portions to their kinsmen (NEH 13:13))",
+    "son-of mattaniah-10 (Mattaniah, grandfather of Hanan (NEH 13:13))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 13:13"
+   ],
+   "kjv": {
+    "NEH 13:13": "And I made treasurers over the treasuries, Shelemiah the priest, and Zadok the scribe, and of the Levites, Pedaiah: and next to them was Hanan the son of Zaccur, the son of Mattaniah: for they were counted faithful, and their office was to distribute unto their brethren."
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 13:13": "וָאֹוצְרָ֣ה עַל־אֹ֠וצָרֹות שֶׁלֶמְיָ֨ה הַכֹּהֵ֜ן וְצָדֹ֣וק הַסֹּופֵ֗ר וּפְדָיָה֙ מִן־הַלְוִיִּ֔ם וְעַל־יָדָ֔ם חָנָ֥ן בֶּן־זַכּ֖וּר בֶּן־מַתַּנְיָ֑ה כִּ֤י נֶאֱמָנִים֙ נֶחְשָׁ֔בוּ וַעֲלֵיהֶ֖ם לַחֲלֹ֥ק לַאֲחֵיהֶֽם׃ פ ",
+   "KJV NEH 13:13": "And I made treasurers over the treasuries, Shelemiah the priest, and Zadok the scribe, and of the Levites, Pedaiah: and next to them was Hanan the son of Zaccur, the son of Mattaniah: for they were counted faithful, and their office was to distribute unto their brethren."
+  },
+  "first_reader_said": [
+   "NEH 13:13: Both records are Zaccur, son of Mattaniah and father of Hanan the treasurer, with identical family links."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "NEH 13:13 gives both records the identical identity: Zaccur, son of Mattaniah and father of Hanan. B is a thinner copy of that entry, while A also includes NEH 10:12; the supplied verses show no conflicting parentage, generation, or separate individual.",
+ "confidence": 0.97,
+ "verses_of_other": [],
+ "keep_slug": "zaccur-6",
+ "fold_slug": "zaccur-7",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:38:05+00:00"
+}

@@ -1,0 +1,80 @@
+{
+ "pair": [
+  "jedaiah-2",
+  "jedaiah-7"
+ ],
+ "case": {
+  "name": "Jedaiah",
+  "A": {
+   "name": "Jedaiah",
+   "line": "priest (1CH 9:10, NEH 7:39, NEH 12:6), of the house of Jeshua (EZR 2:36)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "ancestor-of uzzi-6 (Uzzi, son of Jedaiah (NEH 12:19))",
+    "priest-of yhvh (YHVH, the God of Israel)",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "named_by": [
+    "uzzi-6 (Uzzi, son of Jedaiah (NEH 12:19)) descendant-of"
+   ],
+   "verse_count": 6,
+   "verses": [
+    "1CH 9:10",
+    "EZR 2:36",
+    "NEH 7:39",
+    "NEH 12:6",
+    "NEH 12:7",
+    "NEH 12:19"
+   ],
+   "kjv": {
+    "1CH 9:10": "And of the priests; Jedaiah, and Jehoiarib, and Jachin,",
+    "EZR 2:36": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+    "NEH 7:39": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+    "NEH 12:6": "Shemaiah, and Joiarib, Jedaiah,",
+    "NEH 12:7": "Sallu, Amok, Hilkiah, Jedaiah. These were the chief of the priests and of their brethren in the days of Jeshua.",
+    "NEH 12:19": "And of Joiarib, Mattenai; of Jedaiah, Uzzi;"
+   }
+  },
+  "B": {
+   "name": "Jedaiah",
+   "line": "Priestly family head whose descendants returned with Zerubbabel, house of Jeshua",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of jeshua (Jeshua, ninth-chosen priest for the twenty-four courses (1CH 24:11))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "EZR 2:36",
+    "NEH 7:39"
+   ],
+   "kjv": {
+    "EZR 2:36": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+    "NEH 7:39": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three."
+   }
+  },
+  "disputed_verses": {
+   "BHSA EZR 2:36": "הַֽכֹּהֲנִ֑ים בְּנֵ֤י יְדַֽעְיָה֙ לְבֵ֣ית יֵשׁ֔וּעַ תְּשַׁ֥ע מֵאֹ֖ות שִׁבְעִ֥ים וּשְׁלֹשָֽׁה׃ ס ",
+   "KJV EZR 2:36": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+   "BHSA NEH 7:39": "הַֽכֹּהֲנִ֑ים בְּנֵ֤י יְדַֽעְיָה֙ לְבֵ֣ית יֵשׁ֔וּעַ תְּשַׁ֥ע מֵאֹ֖ות שִׁבְעִ֥ים וּשְׁלֹשָֽׁה׃ ס ",
+   "KJV NEH 7:39": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three."
+  },
+  "first_reader_said": [
+   "EZR 2:36: Both records hold the priestly family head Jedaiah of the house of Jeshua in this list.",
+   "NEH 7:39: Both records are the priestly house of Jedaiah 'of the house of Jeshua' in the return list; A already cites NEH 7:39."
+  ]
+ },
+ "verdict": "unclear",
+ "keep": "none",
+ "why": "EZR 2:36 and NEH 7:39 give the identical priestly family entry in both records, supporting duplication there. However, NEH 12:6 and NEH 12:7 list two distinct Jedaiahs, both currently assigned to A, so A already combines different people. The supplied text does not identify which Jedaiah corresponds to B’s family head, and “of the house of Jeshua” does not establish descent from the ninth-course priest.",
+ "confidence": 0.93,
+ "verses_of_other": [],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:34:54+00:00"
+}

@@ -1,0 +1,73 @@
+{
+ "pair": [
+  "mattaniah-12",
+  "mattaniah-4"
+ ],
+ "case": {
+  "name": "Mattaniah",
+  "A": {
+   "name": "Mattaniah",
+   "line": "Levite ancestor of Zechariah the trumpeter, named in Nehemiah's priestly genealogy.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of micaiah-4 (Micaiah, son of Zaccur (NEH 12:35))",
+    "father-of shemaiah-26 (Shemaiah, Grandfather of the priest Zechariah, in the trumpeters' gene)"
+   ],
+   "named_by": [
+    "shemaiah-26 (Shemaiah, Grandfather of the priest Zechariah, in the trumpeters' gene) son-of"
+   ],
+   "verse_count": 1,
+   "verses": [
+    "NEH 12:35"
+   ],
+   "kjv": {
+    "NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+   }
+  },
+  "B": {
+   "name": "Mattaniah",
+   "line": "descendant of Asaph (2CH 29:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Gershonites (Gershomites), from Gershon, son of Levi",
+   "family": [
+    "descendant-of asaph-2 (Asaph, son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9))",
+    "son-of micaiah-4 (Micaiah, son of Zaccur (NEH 12:35))",
+    "father-of shemaiah-14 (Shemaiah, Levite Ezra sent to Iddo (EZR 8:16))"
+   ],
+   "named_by": [
+    "micaiah-4 (Micaiah, son of Zaccur (NEH 12:35)) father-of",
+    "shemaiah-14 (Shemaiah, Levite Ezra sent to Iddo (EZR 8:16)) son-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "2CH 29:13",
+    "NEH 12:35"
+   ],
+   "kjv": {
+    "2CH 29:13": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:",
+    "NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:35": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ ",
+   "KJV NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+  },
+  "first_reader_said": [
+   "NEH 12:35: Both records are Mattaniah ben Micaiah, father of Shemaiah, at the same point of the Asaphite pedigree in 12:35."
+  ]
+ },
+ "verdict": "two",
+ "keep": "none",
+ "why": "2CH 29:13 names an Asaphite Levite serving in Hezekiah’s time, centuries before the Nehemiah-era Zechariah whose great-grandfather Mattaniah appears in NEH 12:35. NEH 12:35 supplies A’s Micaiah–Mattaniah–Shemaiah genealogy; B’s matching father comes from its misplaced assignment of that same verse, rather than independent evidence identifying the two men.",
+ "confidence": 0.96,
+ "verses_of_other": [
+  "NEH 12:35"
+ ],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:37:47+00:00"
+}

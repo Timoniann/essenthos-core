@@ -1,0 +1,88 @@
+{
+ "pair": [
+  "elam-4",
+  "elam-7"
+ ],
+ "case": {
+  "name": "Elam",
+  "A": {
+   "name": "Elam",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:7)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "father of Jehiel (EZR 10:2), named on the sealed document of NEH 10:1-27 (NEH 10:14)",
+   "family": [
+    "ancestor-of jeshaiah-3 (Jeshaiah, descendant of Elam, son of Athaliah who went up with Ezra (E)",
+    "ancestor-of shecaniah-5 (Shecaniah, son of Jehiel (EZR 10:2))",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "named_by": [
+    "athaliah-3 (Athaliah, father of Jeshaiah who went up with Ezra (EZR 8:7)) descendant-of",
+    "abdi-2 (Abdi, descendant of Elam who had married a foreign wife (EZR 10:26) descendant-of",
+    "elijah-4 (Elijah, descendant of Elam who had married a foreign wife (EZR 10:26) descendant-of",
+    "jehiel-8 (Jehiel, descendant of Elam who had married a foreign wife (EZR 10:26) descendant-of",
+    "jeremoth-5 (Jeremoth, descendant of Elam who had married a foreign wife (EZR 10:26) descendant-of",
+    "jeshaiah-3 (Jeshaiah, descendant of Elam, son of Athaliah who went up with Ezra (E) descendant-of",
+    "mattaniah-5 (Mattaniah, descendant of Elam who had married a foreign wife (EZR 10:26) descendant-of",
+    "shecaniah-5 (Shecaniah, son of Jehiel (EZR 10:2)) descendant-of",
+    "zechariah-18 (Zechariah, descendant of Elam who had married a foreign wife (EZR 10:26) descendant-of"
+   ],
+   "verse_count": 7,
+   "verses": [
+    "EZR 2:7",
+    "EZR 8:7",
+    "EZR 10:2",
+    "EZR 10:26",
+    "NEH 7:12",
+    "NEH 10:14",
+    "NEH 12:42"
+   ],
+   "kjv": {
+    "EZR 2:7": "The children of Elam, a thousand two hundred fifty and four.",
+    "EZR 8:7": "And of the sons of Elam; Jeshaiah the son of Athaliah, and with him seventy males.",
+    "EZR 10:2": "And Shechaniah the son of Jehiel, one of the sons of Elam, answered and said unto Ezra, We have trespassed against our God, and have taken strange wives of the people of the land: yet now there is hope in Israel concerning this thing.",
+    "EZR 10:26": "And of the sons of Elam; Mattaniah, Zechariah, and Jehiel, and Abdi, and Jeremoth, and Eliah.",
+    "NEH 7:12": "The children of Elam, a thousand two hundred fifty and four.",
+    "NEH 10:14": "The chief of the people; Parosh, Pahathmoab, Elam, Zatthu, Bani,",
+    "NEH 12:42": "And Maaseiah, and Shemaiah, and Eleazar, and Uzzi, and Jehohanan, and Malchijah, and Elam, and Ezer. And the singers sang loud, with Jezrahiah their overseer."
+   }
+  },
+  "B": {
+   "name": "Elam",
+   "line": "Ancestor of 1,254 exiles who returned with Zerubbabel",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "EZR 2:7",
+    "NEH 7:12"
+   ],
+   "kjv": {
+    "EZR 2:7": "The children of Elam, a thousand two hundred fifty and four.",
+    "NEH 7:12": "The children of Elam, a thousand two hundred fifty and four."
+   }
+  },
+  "disputed_verses": {
+   "BHSA EZR 2:7": "בְּנֵ֣י עֵילָ֔ם אֶ֕לֶף מָאתַ֖יִם חֲמִשִּׁ֥ים וְאַרְבָּעָֽה׃ ס ",
+   "KJV EZR 2:7": "The children of Elam, a thousand two hundred fifty and four.",
+   "BHSA NEH 7:12": "בְּנֵ֣י עֵילָ֔ם אֶ֕לֶף מָאתַ֖יִם חֲמִשִּׁ֥ים וְאַרְבָּעָֽה׃ ס ",
+   "KJV NEH 7:12": "The children of Elam, a thousand two hundred fifty and four."
+  },
+  "first_reader_said": [
+   "EZR 2:7: Both records hold Elam whose 1,254 descendants returned in this list.",
+   "NEH 7:12: Both records are the ancestor of the 1,254 'children of Elam' in the return list (EZR 2:7 = NEH 7:12)."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "Both records identify the ancestor of the same 1,254 returning descendants in EZR 2:7 and NEH 7:12; B is a thinner duplicate with no distinguishing genealogy. A supplies further descendant connections in EZR 8:7, EZR 10:2, and EZR 10:26. The chief in NEH 10:14 and singer in NEH 12:42 are not securely identified with that ancestor merely by name, but neither establishes a separate identity for B.",
+ "confidence": 0.98,
+ "verses_of_other": [],
+ "keep_slug": "elam-4",
+ "fold_slug": "elam-7",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:34:51+00:00"
+}
