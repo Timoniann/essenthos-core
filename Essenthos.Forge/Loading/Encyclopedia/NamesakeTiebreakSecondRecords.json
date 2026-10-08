@@ -1,0 +1,33 @@
+{
+  "decidedBy": "the lead, 2026-10-09, on PRB-0490: the last two verses the tie-break of 2026-10-08 left, a doorkeeper of the ark whom neither Berechiah record is and a Jedaiah who follows the verse his house is named again in; each ruling says what it rests on; no person has reviewed these rulings",
+  "policy": "A word names the man its verse names. Where the verse gives a man an office and no record of the name is he, he is a person of his own; where a list names a house again in the same order, the word follows the record the repeated name was ruled onto, and an earlier answer naming another man is corrected.",
+  "method": "manual",
+  "source": "Essenthos, two verses the tie-break of 2026-10-08 left on PRB-0490, decided by the lead from the readings of gpt-6.1-sol, a blind judge and claude-fable-5-1, 2026-10-09",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "1CH 15:23",
+      "position": 2,
+      "surface": "בֶֽרֶכְיָה֙",
+      "strongNumber": "H1296",
+      "create": {
+        "slug": "berechiah-doorkeeper-of-the-ark",
+        "kind": "person",
+        "name": "Berechiah",
+        "distinguisher": "a Levite doorkeeper for the ark when David brought it up to Jerusalem (1CH 15:23)",
+        "notes": "Whether he is Berechiah the father of Asaph (1CH 15:17) or Berechiah the son of Asa (1CH 9:16) the text does not say."
+      },
+      "why": "1CH 15:23 (Berechiah): 'Berechiah and Elkanah were doorkeepers for the ark' when David brought it up gives him an office and no father, and Elkanah beside him is already a record of his own. Which of the Levites Berechiah, if either, he is, the father of Asaph of 15:17 or the son of Asa of 1CH 9:16, two readings of the verse could not tell, so he is a person of his own, as Fable (claude-fable-5-1) read him; the lead decided it on 2026-10-09."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:7",
+      "position": 4,
+      "surface": "יְדַֽעְיָ֑ה",
+      "strongNumber": "H3048",
+      "existing": "jedaiah-8",
+      "why": "NEH 12:7 (Jedaiah): 12:6 and 12:7 name two Jedaiahs among the chiefs of the priests who came up with Zerubbabel, and NEH 12:12-21 names the heads of their houses in the same order: 'of Jedaiah, Uzzi' (12:19) for the first, after Joiarib, and 'of Hilkiah, Hashabiah; of Jedaiah, Nethaneel' (12:21) for the second, after Hilkiah, as 12:7 has 'Hilkiah, Jedaiah'. So 12:7 names the second Jedaiah house, which is jedaiah-8, as 12:21 does; jedaiah-5 is the Jerusalem priest 'Jedaiah the son of Joiarib' of NEH 11:10. The tie-break's three readers read 12:21 so and said 12:7 should follow; the lead decided it on 2026-10-09.",
+      "corrects": "jedaiah-5"
+    }
+  ]
+}
