@@ -281,6 +281,7 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
     /// </summary>
     private async Task<int> NameTheAliases(List<Place> places, CancellationToken cancellationToken)
     {
+        var byId = places.ToDictionary(p => p.Id, StringComparer.Ordinal);
         var aliases = places.Where(p => p.AnotherNameFor is not null).ToDictionary(p => p.Id, StringComparer.Ordinal);
         if (aliases.Count == 0)
         {
@@ -311,7 +312,7 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
 
             if (entity.Distinguisher?.StartsWith(OtherName, StringComparison.OrdinalIgnoreCase) == true)
             {
-                entity.Distinguisher = alias.Identification ?? Resolved(target);
+                entity.Distinguisher = alias.Identification ?? Resolved(target.Name, byId.GetValueOrDefault(alias.AnotherNameFor!));
             }
 
             if (before != (entity.AnotherNameForEntityId, entity.ModernEquivalent, entity.Distinguisher))
@@ -332,12 +333,13 @@ internal sealed partial class OpenBiblePlaceLoader(AppDbContext db, ILogger<Open
     /// <summary>
     /// What tells an alias from its namesakes when the gazetteer gives it no site: the phrase with the
     /// place it names written out, <em>another name for Aroer (Khirbet Arair)</em>, where the
-    /// source's own phrase named it by a catalogue index.
+    /// source's own phrase named it by a catalogue index. It is read from the file and not from the
+    /// target's stored line, so it does not depend on the order the places are visited in.
     /// </summary>
-    private static string Resolved(Entity target) =>
-        target.ModernEquivalent is { Length: > 0 } site && !site.StartsWith(OtherName, StringComparison.OrdinalIgnoreCase)
-            ? $"{OtherName} {target.Name} ({site})"
-            : $"{OtherName} {target.Name}";
+    private static string Resolved(string name, Place? target) =>
+        target?.Identification is { Length: > 0 } site && site != target.Name
+            ? $"{OtherName} {name} ({site})"
+            : $"{OtherName} {name}";
 
     /// <summary>What a name row this source adds is: a spelling some English translation prints.</summary>
     internal const string SpellingKind = "spelling";

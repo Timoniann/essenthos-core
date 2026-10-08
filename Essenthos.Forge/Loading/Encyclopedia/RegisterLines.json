@@ -266,6 +266,21 @@
       "sourceId": "essenthos:zohar1",
       "was": "Judaite, son of Ashur by his wife Helah; not attested in the supplied verses",
       "line": "Judaite, son of Ashur by his wife Helah"
+    },
+    {
+      "sourceId": "essenthos:shobal3",
+      "was": "Listed among sons of Judah, father of Reaiah, ancestor of Zorathites; may duplicate bearer 2",
+      "line": "Listed among the sons of Judah, father of Reaiah, ancestor of the Zorathites"
+    },
+    {
+      "sourceId": "essenthos:tahath2",
+      "was": "Kohathite Levite, son of Assir, father of Zephaniah (Heman's ancestry); possibly same as bearer 1",
+      "line": "Kohathite Levite, son of Assir, father of Zephaniah (Heman's ancestry)"
+    },
+    {
+      "sourceId": "essenthos:uzzi7",
+      "was": "Priest who sang at Ezra's wall dedication, possibly same as #6",
+      "line": "Priest who sang at the dedication of the wall"
     }
   ]
 }

@@ -66,16 +66,6 @@
     },
     {
       "text": "BHSA",
-      "reference": "1CH 8:5",
-      "position": 2,
-      "surface": "גֵרָ֥א",
-      "strongNumber": "H1617",
-      "existing": "gera-6",
-      "corrects": "gera-3",
-      "why": "1CH 8:5 (Gera): This is the second Gera among Bela's sons (B); A's identification of him with the father of Shimei who cursed David, centuries later, has no support in the text. Codex gpt-6.1-sol and a blind Opus judge named the same man."
-    },
-    {
-      "text": "BHSA",
       "reference": "1CH 9:16",
       "position": 14,
       "surface": "אֶלְקָנָ֔ה",

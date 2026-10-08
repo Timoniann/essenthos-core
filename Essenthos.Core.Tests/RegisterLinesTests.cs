@@ -13,7 +13,7 @@ namespace Essenthos.Core.Tests;
 public sealed class RegisterLinesTests
 {
     private static readonly Regex Process = new(
-        @"(attest|supplied|given (verses|occurrences)|in this corpus|this (verse )?set|these verses|occurrence set|no verses? (here|given|cited)|no surviving|name-spelling flag|\bitem \d|\bbearer \d|\blexicon\b|enumeration)",
+        @"(attest|supplied|given (verses|occurrences)|in this corpus|this (verse )?set|these verses|occurrence set|no verses? (here|given|cited)|no surviving|name-spelling flag|\bitem \d|\bbearer \d|#\d|possibly same|may duplicate|\blexicon\b|enumeration)",
         RegexOptions.IgnoreCase);
 
     [Fact]
