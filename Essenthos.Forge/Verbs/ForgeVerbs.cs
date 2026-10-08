@@ -43,6 +43,8 @@ internal static partial class ForgeVerbs
             "Write the texts that may be passed on, one file each with its licence and attribution, and a manifest of checksums.", Export),
         new("publish", "--to <target> [--release <name>] [--without-rehearsal] [--dry-run]",
             "Restore a release on a target, verify it there and swap it in.", Publish),
+        new("publish-downloads", "--to <target> [--from <folder>] [--dry-run]",
+            "Send the export to a target's downloads: what it lacks, then the manifest, then away with the files no manifest names.", PublishDownloads),
         new("rollback", "--to <target> [--dry-run]", "Swap a target's live corpus with the previous release.", Rollback),
         new("releases", "[--on <target>]", "The releases this machine has built, and where each was published.", Releases),
         new("recipe", "[--run]", "List the recorded Forge runs the load replays, or run the ones the corpus lacks.", RecipeVerb,

@@ -28,7 +28,10 @@ internal static class ImageManifest
     };
 
     /// <summary>Every picture under <paramref name="folder"/> by its path there, with forward slashes, and its SHA-256.</summary>
-    public static Dictionary<string, string> Read(string folder)
+    public static Dictionary<string, string> Read(string folder) => Read(folder, PictureExtensions);
+
+    /// <summary>The same for every file under the folder when <paramref name="extensions"/> is null.</summary>
+    public static Dictionary<string, string> Read(string folder, IReadOnlySet<string>? extensions)
     {
         var manifest = new Dictionary<string, string>(StringComparer.Ordinal);
         if (!Directory.Exists(folder))
@@ -37,7 +40,7 @@ internal static class ImageManifest
         }
 
         foreach (var file in Directory.EnumerateFiles(folder, "*", SearchOption.AllDirectories)
-                     .Where(file => PictureExtensions.Contains(Path.GetExtension(file))))
+                     .Where(file => extensions is null || extensions.Contains(Path.GetExtension(file))))
         {
             using var stream = File.OpenRead(file);
             manifest[Relative(folder, file)] = Convert.ToHexStringLower(SHA256.HashData(stream));

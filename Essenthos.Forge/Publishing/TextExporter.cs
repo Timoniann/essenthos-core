@@ -200,21 +200,28 @@ internal sealed partial class TextExporter(
         var relative = $"texts/{text.Slug}";
         Directory.CreateDirectory(Path.Combine(folder, "texts", text.Slug));
 
-        var dataPath = $"{relative}/{text.Slug}.jsonl.gz";
-        var (books, verses) = await WriteVerses(Path.Combine(folder, dataPath), text, cancellationToken);
+        var (books, verses) = await WriteVerses(Path.Combine(folder, relative, $"{text.Slug}.jsonl.gz{Part}"), text, cancellationToken);
+        var data = await Seal(folder, $"{relative}/{text.Slug}", ".jsonl.gz", cancellationToken);
 
-        var attributionPath = $"{relative}/ATTRIBUTION.txt";
+        // The attribution names the file it travels with, by the name that file now has.
         await File.WriteAllTextAsync(
-            Path.Combine(folder, attributionPath), Attribution(text, dataPath), new UTF8Encoding(false), cancellationToken);
+            Path.Combine(folder, relative, $"ATTRIBUTION.txt{Part}"), Attribution(text, data.Path), new UTF8Encoding(false), cancellationToken);
+        var attribution = await Seal(folder, $"{relative}/ATTRIBUTION", ".txt", cancellationToken);
 
         logger.LogInformation("{Slug}: {Books} books, {Verses} verses", text.Slug, books, verses);
         return new ExportedText(
             text.Slug, text.Name, text.NameNative, text.Language, EnumSpelling.Of(text.Kind), EnumSpelling.Of(text.Redistribution),
             text.Licence, text.LicenceUrl, text.RightsHolder, text.Citation,
             books, verses,
-            await Describe(folder, dataPath, cancellationToken),
-            await Describe(folder, attributionPath, cancellationToken));
+            data,
+            attribution);
     }
+
+    /// <summary>The ending of a file still being written, which no manifest names.</summary>
+    private const string Part = ".part";
+
+    /// <summary>How many hex digits of its SHA-256 a file carries in its name.</summary>
+    internal const int NameDigits = 12;
 
     /// <summary>
     /// One line a verse, in the text's own order and numbering, and each address by what names a book in
@@ -286,11 +293,25 @@ internal sealed partial class TextExporter(
         await buffer.CopyToAsync(output, cancellationToken);
     }
 
-    private static async Task<ExportedFile> Describe(string folder, string relative, CancellationToken cancellationToken)
+    /// <summary>
+    /// A finished file takes the name <c>&lt;stem&gt;.&lt;first digits of its SHA-256&gt;&lt;extension&gt;</c>:
+    /// the bytes behind a name never change, so a server may let every copy of it be kept for good, and
+    /// an earlier export's files stand beside a later one's until nothing names them.
+    /// </summary>
+    private static async Task<ExportedFile> Seal(string folder, string stem, string extension, CancellationToken cancellationToken)
     {
-        await using var stream = File.OpenRead(Path.Combine(folder, relative));
-        var hash = Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, cancellationToken));
-        return new ExportedFile(relative, stream.Length, hash);
+        var written = Path.Combine(folder, stem + extension + Part);
+        string hash;
+        long bytes;
+        await using (var stream = File.OpenRead(written))
+        {
+            bytes = stream.Length;
+            hash = Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, cancellationToken));
+        }
+
+        var relative = $"{stem}.{hash[..NameDigits]}{extension}";
+        File.Move(written, Path.Combine(folder, relative), overwrite: true);
+        return new ExportedFile(relative, bytes, hash);
     }
 
     /// <summary>The export's fingerprint: every file's path and checksum, in path order, hashed once.</summary>
