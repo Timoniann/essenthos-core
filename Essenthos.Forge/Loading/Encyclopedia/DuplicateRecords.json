@@ -596,6 +596,182 @@
       "why": "Padan of Genesis 48:7 is Paddan-aram, where Jacob was when Rachel died on the way back (GEN 35:9, 48:7); the register's Padan holds no word, verse or relationship of its own.",
       "confidence": 0.95,
       "source": "Essenthos: the places the register wrote under Strong's spelling beside a held record of the same place, each read against its verses by claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "G1116",
+      "keeps": "gomorrah",
+      "folds": "gomorrha",
+      "why": "Gomorrha is the Greek spelling of Gomorrah, the city destroyed with Sodom, that the New Testament writes (MAT 10:15, ROM 9:29, 2PE 2:6); both records carry G1116, and the register's Gomorrha holds no word, verse or relationship of its own.",
+      "confidence": 1.0,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "G2455",
+      "keeps": "judah-6",
+      "folds": "juda",
+      "why": "Juda of the Greek New Testament is the tribe of Judah: 'our Lord sprang out of Juda' (HEB 7:14) and 'the house of Juda' (HEB 8:8), verses the kept record already holds; the register's Juda holds no word, verse or relationship of its own.",
+      "confidence": 0.94,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "G4966",
+      "keeps": "shechem-4",
+      "folds": "sychem",
+      "why": "Sychem is the Greek spelling of Shechem, where Jacob's sons were laid in the sepulchre Abraham bought (ACT 7:16); both records carry G4966, and the register's Sychem holds no word, verse or relationship of its own.",
+      "confidence": 1.0,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "G5466",
+      "keeps": "chaldea",
+      "folds": "chaldaean",
+      "why": "'the land of the Chaldaeans' Abraham came out of (ACT 7:4) is Chaldea, and the kept record already carries G5466; the register's Chaldaean holds no word, verse or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "G5488",
+      "keeps": "haran-4",
+      "folds": "charran",
+      "why": "Charran is the Greek spelling of Haran, where Abraham dwelt before Canaan (ACT 7:2, 7:4); both records carry G5488, and the register's Charran holds no word, verse or relationship of its own.",
+      "confidence": 1.0,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H382",
+      "keeps": "tob",
+      "folds": "ishtob",
+      "why": "Ish-tob of 2 Samuel 10:6 and 10:8 is the men of Tob, the land Jephthah fled to (JDG 11:3, 11:5), hired by the children of Ammon; the register's Ish-tob holds no word, verse or relationship of its own.",
+      "confidence": 0.94,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H1842",
+      "keeps": "dan-2",
+      "folds": "danjaan",
+      "why": "Joab's census went 'to Danjaan, and about to Zidon' (2SA 24:6), Dan in the north of the land; the kept record already holds the name Dan Jaan, and the register's Danjaan holds no word, verse or relationship of its own.",
+      "confidence": 0.88,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H1996",
+      "keeps": "valleyofhamongog",
+      "folds": "hamogog",
+      "why": "Hamon-gog is the valley where Gog and his multitude are buried (EZK 39:11, 39:15), the verses the kept record holds; the register's Hamon-gog holds no word, verse or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H2334",
+      "keeps": "havvothjair",
+      "folds": "bashanhavothjair",
+      "why": "Jair 'called them after his own name, Bashanhavothjair' (DEU 3:14): the towns of Jair, which the kept record holds; the register's Bashan-havoth-jair holds no word, verse or relationship of its own.",
+      "confidence": 0.98,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H2694",
+      "keeps": "hazerhatticon",
+      "folds": "hazarhatticon",
+      "why": "Hazar-hatticon by the coast of Hauran (EZK 47:16) is the place the kept record holds, spelled otherwise; the register's Hazar-hatticon holds no word, verse or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H2798",
+      "keeps": "geharashim",
+      "folds": "charashim",
+      "why": "'the valley of Charashim; for they were craftsmen' (1CH 4:14) is Ge-harashim, which the kept record holds with that verse; the register's Charashim holds no word, verse or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H3761",
+      "keeps": "carmel",
+      "folds": "carmelite",
+      "why": "The Carmelite of Nabal and Abigail (1SA 30:5, 2SA 2:2) is of Carmel in Judah, where Nabal's possessions were (1SA 25:2), a verse the kept record holds; the register's Carmelite holds no word, verse or relationship of its own.",
+      "confidence": 0.97,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H6278",
+      "keeps": "ethkazin",
+      "folds": "ittahkazin",
+      "why": "Ittah-kazin on the border of Zebulun (JOS 19:13) is the place the kept record holds as Eth-kazin; the register's Ittah-kazin holds no word, verse or relationship of its own.",
+      "confidence": 1.0,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H7153",
+      "keeps": "hebron-3",
+      "folds": "kirjatharba",
+      "why": "'Kirjatharba; the same is Hebron' (GEN 23:2, JOS 14:15): the kept record already carries H7153, and the register's Kirjath-arba holds no word, verse or relationship of its own.",
+      "confidence": 1.0,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H7656",
+      "keeps": "shiba",
+      "folds": "shebah",
+      "why": "The well Isaac called Shebah (GEN 26:33) is the record held as Shiba; both carry H7656, and the register's Shebah holds no word, verse or relationship of its own.",
+      "confidence": 1.0,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H8613",
+      "keeps": "topheth",
+      "folds": "tophet",
+      "why": "'For Tophet is ordained of old' (ISA 30:33) is Topheth in the valley of the son of Hinnom, and the kept record holds that verse; the register's Tophet holds no word, verse or relationship of its own.",
+      "confidence": 0.98,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H5152",
+      "keeps": "nahor-3",
+      "folds": "nahuru",
+      "why": "The city of Nahor in Mesopotamia, where Abraham's servant went for Isaac's wife (GEN 24:10), is the place the kept record holds and names Nahuru; the geocoding's Nahuru holds no word, verse or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H6604",
+      "keeps": "pethor",
+      "folds": "pitru",
+      "why": "Pethor by the river, Balaam's town (NUM 22:5, DEU 23:4), is the place the kept record holds and names Pitru; the geocoding's Pitru holds no word, verse or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H8425",
+      "keeps": "bethtogarmah",
+      "folds": "tegarama",
+      "why": "The house of Togarmah (EZK 27:14, 38:6) is the place the kept record holds and names Tegarama; the geocoding's Tegarama holds no word, verse or relationship of its own.",
+      "confidence": 0.99,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "G923",
+      "keeps": "joseph-11",
+      "folds": "barsabbas",
+      "why": "'Joseph called Barsabas, who was surnamed Justus', put forward with Matthias (ACT 1:23), is the kept record; the register's Barsabbas holds no word, verse or relationship of its own.",
+      "confidence": 1.0,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "G923",
+      "keeps": "judas-5",
+      "folds": "barsabbas-2",
+      "why": "'Judas surnamed Barsabas', sent with Silas to Antioch (ACT 15:22, 15:27, 15:32), is the kept record; the register's second Barsabbas holds no word, verse or relationship of its own. Joseph Barsabbas of Acts 1:23 is another man.",
+      "confidence": 1.0,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, each compared with the held record of the same place or man by gpt-6.1-sol (Codex, reasoning high) and read against its verses by the lead, claude-opus-5-5, 2026-10-07"
+    },
+    {
+      "strongNumber": "H5829",
+      "keeps": "ezer-2",
+      "folds": "ezer-6",
+      "why": "Both records are Ezer son of Hur, the father of Hushah, of Judah (1CH 4:4); the register's second one holds no word, verse or relationship of its own.",
+      "confidence": 1.0,
+      "source": "Essenthos: the person register's records written twice for a man Strong numbers once, read against the verse by claude-opus-5-5, 2026-10-08"
     }
   ],
   "declined": [
@@ -1790,6 +1966,102 @@
         "MRK 15:47"
       ],
       "why": "These verses name Joses the son of the other Mary; they do not make him the Lord's brother of Matthew 13:55, and no verse makes the Lord's brothers Mary's sons."
+    },
+    {
+      "from": "galal",
+      "to": "galal-who-dwelt-in-jerusalem",
+      "name": null,
+      "verses": [
+        "1CH 9:15"
+      ],
+      "why": "1 Chronicles 9:15 is a Galal named among the Levites who dwelt in Jerusalem; the son of Jeduthun of 9:16 is not said to be him."
+    },
+    {
+      "from": "hachmoni",
+      "to": "hachmoni-father-of-jashobeam",
+      "name": null,
+      "verses": [
+        "1CH 11:11"
+      ],
+      "why": "1 Chronicles 11:11 is the Hachmoni whose son Jashobeam was chief of David's captains; the father of Jehiel of 27:32 is not said to be him."
+    },
+    {
+      "from": "jabin",
+      "to": "jabin-king-of-canaan",
+      "name": null,
+      "verses": [
+        "JDG 4:2",
+        "JDG 4:7",
+        "JDG 4:17",
+        "JDG 4:23",
+        "JDG 4:24",
+        "PSA 83:9"
+      ],
+      "why": "Judges 4 and Psalm 83:9 are the Jabin who oppressed Israel in Deborah's day, whose captain was Sisera; the king of Hazor of Joshua 11 was slain and his city burnt (JOS 11:10-11)."
+    },
+    {
+      "from": "chelub",
+      "to": "chelub-father-of-ezri",
+      "name": null,
+      "verses": [
+        "1CH 27:26"
+      ],
+      "why": "1 Chronicles 27:26 is Ezri's father, the father of an officer of David; the Chelub of 4:11 is not said to be him."
+    },
+    {
+      "from": "adin",
+      "to": "adin-who-sealed-the-covenant",
+      "name": null,
+      "verses": [
+        "NEH 10:16"
+      ],
+      "why": "Nehemiah 10:16 is a chief of the people who sealed the covenant in Nehemiah's day; the forefather of the children of Adin (EZR 2:15) is not said to be him."
+    },
+    {
+      "from": "azgad",
+      "to": "azgad-who-sealed-the-covenant",
+      "name": null,
+      "verses": [
+        "NEH 10:15"
+      ],
+      "why": "Nehemiah 10:15 is a chief of the people who sealed the covenant in Nehemiah's day; the forefather of the children of Azgad (EZR 2:12) is not said to be him."
+    },
+    {
+      "from": "pahathmoab",
+      "to": "pahath-moab-who-sealed-the-covenant",
+      "name": null,
+      "verses": [
+        "NEH 10:14"
+      ],
+      "why": "Nehemiah 10:14 is a chief of the people who sealed the covenant in Nehemiah's day; the forefather of the children of Pahath-moab (EZR 2:6) is not said to be him."
+    },
+    {
+      "from": "parosh",
+      "to": "parosh-who-sealed-the-covenant",
+      "name": null,
+      "verses": [
+        "NEH 10:14"
+      ],
+      "why": "Nehemiah 10:14 is the first of the chiefs of the people who sealed the covenant in Nehemiah's day; the forefather of the children of Parosh (EZR 2:3) is not said to be him."
+    },
+    {
+      "from": "ziha",
+      "to": "ziha-over-the-nethinims",
+      "name": null,
+      "verses": [
+        "NEH 11:21"
+      ],
+      "why": "Nehemiah 11:21 is a man set over the Nethinims in Ophel; the children of Ziha of Ezra 2:43 are a house of them."
+    },
+    {
+      "from": "ittai",
+      "to": "ittai-son-of-ribai",
+      "name": null,
+      "verses": [
+        "2SA 23:29",
+        "1CH 11:31"
+      ],
+      "why": "2 Samuel 23:29 and 1 Chronicles 11:31 are Ittai son of Ribai of Gibeah of Benjamin, one of the thirty; the Ittai of 2 Samuel 15 and 18 is a Gittite."
     }
   ]
 }

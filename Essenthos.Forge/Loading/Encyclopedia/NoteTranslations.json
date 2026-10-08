@@ -2236,5 +2236,137 @@
   "effort": "medium",
   "at": "2026-10-07T17:31:50+00:00",
   "corrected": "second reading by Claude (Anthropic), names checked against the corpus's Ohienko, Luther 1912 and Reina-Valera 1909"
- }
+ },
+{
+ "file": "NoNameRecords.json",
+ "slug": "zabdiel-2",
+ "sha256": "111be7fe4ee2ffea3b7bc7d4221118266343e28bb91b8bdfd539903a59bc4f08",
+ "english": "The son of one of the great men (NEH 11:14); the text does not give his father's name.",
+ "ukr": "Син одного з великих мужів (NEH 11:14); текст не називає імені його батька.",
+ "deu": "Der Sohn eines der Großen (NEH 11:14); der Text nennt den Namen seines Vaters nicht.",
+ "spa": "Hijo de uno de los grandes (NEH 11:14); el texto no da el nombre de su padre.",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T14:00:00+00:00"
+},
+{
+ "file": "SecondBearerRecords.json",
+ "slug": "galal-who-dwelt-in-jerusalem",
+ "sha256": "50201b05406d2470570b9a742755a98435b4367eea9a88f11c54c3f6f622cbe9",
+ "english": "Whether he is the man of that name in 1CH 9:16 the text does not say.",
+ "ukr": "Чи він той самий чоловік із цим ім'ям, що в 1CH 9:16, текст не каже.",
+ "deu": "Ob er der gleichnamige Mann in 1CH 9:16 ist, sagt der Text nicht.",
+ "spa": "El texto no dice si es el hombre del mismo nombre de 1CH 9:16.",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:00:00+00:00"
+},
+{
+ "file": "SecondBearerRecords.json",
+ "slug": "hachmoni-father-of-jashobeam",
+ "sha256": "2b45b58038bfaf8fde453bc32db2b41667aad9f2c6170d52d1c1b9c091a8d59a",
+ "english": "Whether he is the man of that name in 1CH 27:32 the text does not say.",
+ "ukr": "Чи він той самий чоловік із цим ім'ям, що в 1CH 27:32, текст не каже.",
+ "deu": "Ob er der gleichnamige Mann in 1CH 27:32 ist, sagt der Text nicht.",
+ "spa": "El texto no dice si es el hombre del mismo nombre de 1CH 27:32.",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:00:00+00:00"
+},
+{
+ "file": "SecondBearerRecords.json",
+ "slug": "jabin-king-of-canaan",
+ "sha256": "27749772ec9afe59a22b3895a322b49d7c6269c1cdda724b0be72e52ced8a2c3",
+ "english": "Not the king of JOS 11:1, who was slain when his city was taken (JOS 11:10).",
+ "ukr": "Не той цар із JOS 11:1, якого вбито, коли його місто було здобуто (JOS 11:10).",
+ "deu": "Nicht der König aus JOS 11:1, der erschlagen wurde, als seine Stadt eingenommen wurde (JOS 11:10).",
+ "spa": "No es el rey de JOS 11:1, que fue muerto cuando su ciudad fue tomada (JOS 11:10).",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:00:00+00:00"
+},
+{
+ "file": "SecondBearerRecords.json",
+ "slug": "chelub-father-of-ezri",
+ "sha256": "64162ee0ac598358e28258a54ad4e9dd7421bf4a21755e746d6c01f00b929b52",
+ "english": "Whether he is the man of that name in 1CH 4:11 the text does not say.",
+ "ukr": "Чи він той самий чоловік із цим ім'ям, що в 1CH 4:11, текст не каже.",
+ "deu": "Ob er der gleichnamige Mann in 1CH 4:11 ist, sagt der Text nicht.",
+ "spa": "El texto no dice si es el hombre del mismo nombre de 1CH 4:11.",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:00:00+00:00"
+},
+{
+ "file": "SecondBearerRecords.json",
+ "slug": "adin-who-sealed-the-covenant",
+ "sha256": "4e862347b3dc68492157e500c21e0ece6245370f7cf6efdae0b7d81639ce86fd",
+ "english": "Whether he is the forefather of the house of that name whose children came up from Babylon (EZR 2:15, NEH 7:20) the text does not say.",
+ "ukr": "Чи він праотець однойменного роду, нащадки якого вийшли з Вавилону (EZR 2:15, NEH 7:20), текст не каже.",
+ "deu": "Ob er der Stammvater des gleichnamigen Hauses ist, dessen Söhne aus Babel heraufzogen (EZR 2:15, NEH 7:20), sagt der Text nicht.",
+ "spa": "El texto no dice si es el antepasado de la casa de ese nombre cuyos hijos subieron de Babilonia (EZR 2:15, NEH 7:20).",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:00:00+00:00"
+},
+{
+ "file": "SecondBearerRecords.json",
+ "slug": "azgad-who-sealed-the-covenant",
+ "sha256": "31f6d1005d81d21786e9e5ae5067eb8c188f27df28e92e4f583218dbb0d32d80",
+ "english": "Whether he is the forefather of the house of that name whose children came up from Babylon (EZR 2:12, NEH 7:17) the text does not say.",
+ "ukr": "Чи він праотець однойменного роду, нащадки якого вийшли з Вавилону (EZR 2:12, NEH 7:17), текст не каже.",
+ "deu": "Ob er der Stammvater des gleichnamigen Hauses ist, dessen Söhne aus Babel heraufzogen (EZR 2:12, NEH 7:17), sagt der Text nicht.",
+ "spa": "El texto no dice si es el antepasado de la casa de ese nombre cuyos hijos subieron de Babilonia (EZR 2:12, NEH 7:17).",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:00:00+00:00"
+},
+{
+ "file": "SecondBearerRecords.json",
+ "slug": "pahath-moab-who-sealed-the-covenant",
+ "sha256": "01172298345b66549cf2244de5cc757b46044afca6dd062bf05f116cc3c9fe32",
+ "english": "Whether he is the forefather of the house of that name whose children came up from Babylon (EZR 2:6, NEH 7:11) the text does not say.",
+ "ukr": "Чи він праотець однойменного роду, нащадки якого вийшли з Вавилону (EZR 2:6, NEH 7:11), текст не каже.",
+ "deu": "Ob er der Stammvater des gleichnamigen Hauses ist, dessen Söhne aus Babel heraufzogen (EZR 2:6, NEH 7:11), sagt der Text nicht.",
+ "spa": "El texto no dice si es el antepasado de la casa de ese nombre cuyos hijos subieron de Babilonia (EZR 2:6, NEH 7:11).",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:00:00+00:00"
+},
+{
+ "file": "SecondBearerRecords.json",
+ "slug": "parosh-who-sealed-the-covenant",
+ "sha256": "7effb275d1bd1992d39d0fe5018beaff077ff8c78a2795f832b22c9ade0427b7",
+ "english": "Whether he is the forefather of the house of that name whose children came up from Babylon (EZR 2:3, NEH 7:8) the text does not say.",
+ "ukr": "Чи він праотець однойменного роду, нащадки якого вийшли з Вавилону (EZR 2:3, NEH 7:8), текст не каже.",
+ "deu": "Ob er der Stammvater des gleichnamigen Hauses ist, dessen Söhne aus Babel heraufzogen (EZR 2:3, NEH 7:8), sagt der Text nicht.",
+ "spa": "El texto no dice si es el antepasado de la casa de ese nombre cuyos hijos subieron de Babilonia (EZR 2:3, NEH 7:8).",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:00:00+00:00"
+},
+{
+ "file": "SecondBearerRecords.json",
+ "slug": "ziha-over-the-nethinims",
+ "sha256": "7ef4921e75a42b5f37a9bd7898e233dc95e07717960ce867df1065f5290bd220",
+ "english": "Whether he is the forefather of the house of that name whose children came up from Babylon (EZR 2:43, NEH 7:46) the text does not say.",
+ "ukr": "Чи він праотець однойменного роду, нащадки якого вийшли з Вавилону (EZR 2:43, NEH 7:46), текст не каже.",
+ "deu": "Ob er der Stammvater des gleichnamigen Hauses ist, dessen Söhne aus Babel heraufzogen (EZR 2:43, NEH 7:46), sagt der Text nicht.",
+ "spa": "El texto no dice si es el antepasado de la casa de ese nombre cuyos hijos subieron de Babilonia (EZR 2:43, NEH 7:46).",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:00:00+00:00"
+},
+{
+ "file": "SecondBearerRecords.json",
+ "slug": "ittai-son-of-ribai",
+ "sha256": "9a4919a31e8002684d0d60b7a67db05dc7e5288462d6c09c4dab81ebd68bc415",
+ "english": "Another man than the one of that name from Gath (2SA 15:19-22).",
+ "ukr": "Інший чоловік, ніж однойменний із Ґату (2SA 15:19-22).",
+ "deu": "Ein anderer Mann als der gleichnamige aus Gath (2SA 15:19-22).",
+ "spa": "Otro hombre que el del mismo nombre de Gath (2SA 15:19-22).",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:00:00+00:00"
+}
 ]

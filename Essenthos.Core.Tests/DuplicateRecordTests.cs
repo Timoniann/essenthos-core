@@ -759,6 +759,43 @@ public sealed class DuplicateRecordTests : IDisposable
     }
 
     /// <summary>
+    /// The register's spellings no held text writes in a reader's language — the Greek New Testament's
+    /// Gomorrha and Charran, Kirjath-arba, the two Barsabbas records — fold into the record the text
+    /// names under the Hebrew or Greek, and are folded nowhere else.
+    /// </summary>
+    [Theory]
+    [InlineData("gomorrha", "gomorrah")]
+    [InlineData("juda", "judah-6")]
+    [InlineData("sychem", "shechem-4")]
+    [InlineData("chaldaean", "chaldea")]
+    [InlineData("charran", "haran-4")]
+    [InlineData("ishtob", "tob")]
+    [InlineData("allonbachuth", "allonbacuth")]
+    [InlineData("danjaan", "dan-2")]
+    [InlineData("hamogog", "valleyofhamongog")]
+    [InlineData("bashanhavothjair", "havvothjair")]
+    [InlineData("hazarhatticon", "hazerhatticon")]
+    [InlineData("charashim", "geharashim")]
+    [InlineData("carmelite", "carmel")]
+    [InlineData("ittahkazin", "ethkazin")]
+    [InlineData("padan", "paddanaram")]
+    [InlineData("kirjatharba", "hebron-3")]
+    [InlineData("shebah", "shiba")]
+    [InlineData("tophet", "topheth")]
+    [InlineData("nahuru", "nahor-3")]
+    [InlineData("pitru", "pethor")]
+    [InlineData("tegarama", "bethtogarmah")]
+    [InlineData("barsabbas", "joseph-11")]
+    [InlineData("barsabbas-2", "judas-5")]
+    public void ARegisterSpellingNoReadersTextWritesFoldsIntoTheRecordTheTextNames(string folds, string keeps)
+    {
+        var merge = DuplicateRecordLoader.Read().Merges.Should().ContainSingle(m => m.Folds == folds).Subject;
+
+        merge.Keeps.Should().Be(keeps);
+        merge.AcrossKinds.Should().BeFalse();
+    }
+
+    /// <summary>
     /// A record that held several people keeps the man its line and picture were made for, and no
     /// verse of it is sent to two records or back to the record it leaves: Zedekiah's envoy keeps
     /// Jeremiah 21:1 and 38:1 while the priest's verses go, and the son of Hoshaiah leaves the

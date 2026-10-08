@@ -838,6 +838,52 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
+    /// The second men Strong numbers under a name the corpus held one record for: Jabin of Judges 4, the
+    /// chiefs who sealed Nehemiah's covenant, Ittai son of Ribai and the rest are records of their own,
+    /// and every word of the file names its own man and not the record it was read as before.
+    /// </summary>
+    [Fact]
+    public async Task SecondBearersAreMenOfTheirOwnAndTheirWordsLeaveTheRecordTheyWereReadAs()
+    {
+        var file = SenseReadingFiles.AllRulings().Single(f => f.Rulings.Any(r => r.Create?.Slug == "jabin-king-of-canaan"));
+        foreach (var ruling in file.Rulings.Where(r => r.Corrects is not null))
+        {
+            var old = _db.Entities.Local.FirstOrDefault(e => e.Slug == ruling.Corrects)
+                      ?? _db.Entities.SingleOrDefault(e => e.Slug == ruling.Corrects);
+            if (old is null)
+            {
+                old = new Entity { Kind = EntityKind.Person, Slug = ruling.Corrects!, Name = ruling.Corrects!, SourceId = ruling.Corrects!, Source = "a test" };
+                _db.Entities.Add(old);
+                await _db.SaveChangesAsync();
+            }
+
+            _db.WordEntities.Add(new WordEntity
+            {
+                WordId = _words[ruling.Word], EntityId = old.Id, Method = LinkMethod.StrongNumber,
+                Confidence = 0.9, Source = "a resolution by number",
+            });
+        }
+
+        await _db.SaveChangesAsync();
+        await Load();
+
+        file.Rulings.Should().HaveCount(22);
+        foreach (var ruling in file.Rulings)
+        {
+            var named = ruling.Create?.Slug ?? ruling.Existing;
+            (await _db.WordEntities.Where(a => a.WordId == _words[ruling.Word]).Select(a => a.Entity!.Slug).ToListAsync())
+                .Should().Equal([named], "{0} names {1}", ruling.Word, named);
+        }
+
+        foreach (var created in file.Rulings.Where(r => r.Create is not null))
+        {
+            var record = await _db.Entities.SingleAsync(e => e.Slug == created.Create!.Slug);
+            record.Kind.Should().Be(EntityKind.Person);
+            record.Notes.Should().MatchRegex("the text does not say|^Another man|^Not the king");
+        }
+    }
+
+    /// <summary>
     /// Esau's wives of Genesis 36:2-3 are each a woman of her own, the words of the second list leave the
     /// records of the first, and every record of the six names the other reading; Beeri is not Anah.
     /// </summary>

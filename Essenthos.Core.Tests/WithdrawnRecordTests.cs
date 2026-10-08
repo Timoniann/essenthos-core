@@ -136,6 +136,36 @@ public sealed class WithdrawnRecordTests : IDisposable
         outcome.Kept.Should().BeEmpty();
     }
 
+    [Fact]
+    public void TheGreatMenAndHisSonAreRuledOutAsNoName()
+    {
+        var listed = WithdrawnRecordLoader.Read().ToDictionary(record => record.Slug);
+
+        listed["haggedolim"].OwnerRuled.Should().NotBeNullOrWhiteSpace();
+        listed["beno"].OwnerRuled.Should().NotBeNullOrWhiteSpace();
+    }
+
+    [Fact]
+    public void NoDecisionInTheDescriptorFilesStandsOnARecordRuledOutAsNoName()
+    {
+        var ruledOut = WithdrawnRecordLoader.Read()
+            .Where(record => record.OwnerRuled is not null)
+            .Select(record => record.Slug)
+            .ToHashSet();
+        var (records, _, _) = DescriptorFiles.Read(TestResources.Folder(Path.Combine("Essenthos", "descriptors")));
+
+        var standing = records
+            .SelectMany(record => (record.Claims ?? []).Select(claim => (record.Entity, Claim: claim)))
+            .Where(pair => pair.Claim.DecidedBy is not null
+                && (ruledOut.Contains(pair.Entity) || ruledOut.Contains(pair.Claim.Target)))
+            .Select(pair => $"{pair.Entity} {pair.Claim.Relation} {pair.Claim.Target}");
+
+        standing.Should().BeEmpty("a decision on a record that is no name has to stand on the man the verse names");
+        records.Single(record => record.Entity == "zabdiel-2").Claims.Should().ContainSingle(claim =>
+            claim.Relation == "descendant-of" && claim.Target == "aaron" && claim.DecidedBy != null);
+        records.Single(record => record.Entity == "jaaziah").Claims.Should().NotContain(claim => claim.Target == "beno");
+    }
+
     private WithdrawnRecordLoader Loader() => new(_db, NullLogger<WithdrawnRecordLoader>.Instance);
 
     private async Task<List<string>> Slugs() => await _db.Entities.Select(e => e.Slug).ToListAsync();

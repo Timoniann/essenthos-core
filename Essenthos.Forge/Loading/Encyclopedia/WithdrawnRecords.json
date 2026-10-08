@@ -70,12 +70,14 @@
     {
       "slug": "haggedolim",
       "sourceId": "person:Haggedolim_1",
-      "why": "Withdrawn as claude-opus-5-5 read Nehemiah 11:14 on 2026-10-07: 'Zabdiel, the son of one of the great men'. Ben-haggedolim has the article and a plural adjective; it is no name."
+      "why": "Nehemiah 11:14 reads 'Zabdiel, the son of one of the great men': ben-haggedolim has the article and a plural adjective, which a personal name does not take, and the Septuagint reads υἱὸς τῶν μεγάλων. It is no name. The owner's 'descendant of Aaron' stands on Zabdiel, and Zabdiel's notes say whose son the verse calls him.",
+      "ownerRuled": "the lead, 2026-10-07, on the project owner's instruction to withdraw it unless the Hebrew shows a name, although this corpus held its own rows on the record"
     },
     {
       "slug": "beno",
       "sourceId": "person:Beno_1",
-      "why": "Withdrawn as claude-opus-5-5 read 1 Chronicles 24:26-27 on 2026-10-07: the Hebrew reads 'his son', and only the King James prints Beno as a name."
+      "why": "1 Chronicles 24:26-27 reads בְנוֹ, 'his son', and the Septuagint υἱοὶ αὐτοῦ: Jaaziah is the son of Merari, and Shoham, Zaccur and Ibri are Jaaziah's sons. Only the King James prints Beno as a name.",
+      "ownerRuled": "the lead, 2026-10-07, on the project owner's instruction to withdraw it unless the Hebrew and the Septuagint show a man, although this corpus held its own rows on the record"
     }
   ]
 }

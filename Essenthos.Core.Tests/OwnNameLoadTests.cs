@@ -178,6 +178,32 @@ public sealed class OwnNameLoadTests : IDisposable
         (await new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance).Correct([Deborah], default)).Should().Be(0);
     }
 
+    /// <summary>
+    /// Men the dataset numbered by another word get the number of the words that name them, so each is
+    /// one of the bearers of his name rather than nobody's: Ish-bosheth's captain Baanah, the repairer
+    /// Ezer, Hezekiah's porter Kore, and Shemida's son Shechem among them.
+    /// </summary>
+    [Theory]
+    [InlineData("baanah", "H1195", "H1196")]
+    [InlineData("baanah-3", "H1195", "H1196")]
+    [InlineData("baanah-4", "H1195", "H1196")]
+    [InlineData("ezer-4", "H5827", "H5829")]
+    [InlineData("ezer-5", "H5827", "H5829")]
+    [InlineData("areli", "H6929", "H692")]
+    [InlineData("kore-2", "H7124", "H6981")]
+    [InlineData("shechem-3", "H7927", "H7928")]
+    public async Task ASecondBearerNumberedByAnotherWordGetsHisNamesNumber(string slug, string was, string number)
+    {
+        await using var stream = typeof(OwnNameLoader).Assembly
+            .GetManifestResourceStream("Essenthos.Core.Loading.Encyclopedia.OwnNames.json");
+        using var list = await JsonDocument.ParseAsync(stream!);
+
+        list.RootElement.GetProperty("numbers").EnumerateArray()
+            .Where(entry => entry.GetProperty("entities").EnumerateArray().Any(e => e.GetString() == slug))
+            .Select(entry => (entry.GetProperty("was").GetProperty("hebrew").GetString(), entry.GetProperty("hebrewStrongNumber").GetString()))
+            .Should().Equal((was, number));
+    }
+
     /// <summary>The list ships inside the loader, so a build that dropped it would load nothing silently.</summary>
     [Fact]
     public async Task TheEmbeddedListIsRead()
