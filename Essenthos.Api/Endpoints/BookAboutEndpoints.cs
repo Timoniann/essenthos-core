@@ -109,14 +109,23 @@ internal static class BookAboutEndpoints
         string? language,
         CancellationToken cancellationToken)
     {
-        var verses = await Annotations.InBook(db, book, cancellationToken);
+        var (verses, withheld) = await Annotations.InBookApart(db, book, cancellationToken);
         var listed = await db.EntityVerses.Shown()
             .Where(v => v.CanonicalBook == book && !v.Disputed)
-            .Select(v => new { v.Entity!.Slug, v.CanonicalChapter, v.CanonicalVerse })
+            .Select(v => new { v.Entity!.Slug, v.CanonicalChapter, v.CanonicalVerse, v.Source })
             .Distinct()
             .ToListAsync(cancellationToken);
         foreach (var row in listed)
         {
+            // The verse list is read off the same words, so it holds the verse the ranking leaves to the
+            // people; a record some other word in the verse names keeps it.
+            if (ChapterSalience.FromTheWords(row.Source)
+                && withheld.GetValueOrDefault(row.Slug)?.Contains((row.CanonicalChapter, row.CanonicalVerse)) == true
+                && verses.GetValueOrDefault(row.Slug)?.Contains((row.CanonicalChapter, row.CanonicalVerse)) != true)
+            {
+                continue;
+            }
+
             if (!verses.TryGetValue(row.Slug, out var at))
             {
                 verses[row.Slug] = at = [];
