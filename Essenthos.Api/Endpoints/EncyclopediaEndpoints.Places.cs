@@ -62,7 +62,9 @@ internal static partial class EncyclopediaEndpoints
             .GroupBy(row => row.Slug)
             .ToDictionary(group => group.Key, group => group.Select(row => row.Chapter).Order().ToList());
 
-        var local = await EntityNames.Of(db, [.. places.Select(p => p.EntityId)], language, cancellationToken);
+        var ids = places.Select(p => p.EntityId).ToList();
+        var local = await EntityNames.Of(db, ids, language, cancellationToken);
+        var bySource = await EntityNames.NamedOnlyBySource(db, ids, language, local, cancellationToken);
 
         return new PlaceMapResponse(
             places.Count,
@@ -74,6 +76,7 @@ internal static partial class EncyclopediaEndpoints
                 {
                     PlaceKind = p.PlaceKind,
                     LocalName = local.GetValueOrDefault(p.EntityId),
+                    NameFromSource = bySource.Contains(p.EntityId),
                 }),
             ]);
     }

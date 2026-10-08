@@ -236,6 +236,13 @@ internal record EntityResponse(
     /// <summary>The name in the language asked for, as on the index; null where there is none.</summary>
     public string? LocalName { get; init; }
 
+    /// <summary>
+    /// True where the name is the source's alone: a language other than English was asked for, the
+    /// corpus holds no name for the record in it, and no verse stands behind the record. A client
+    /// shows the English headword, marked as the source's.
+    /// </summary>
+    public bool NameFromSource { get; init; }
+
     /// <summary>The line under the name in the language asked for, as on the index; null where there is none.</summary>
     public string? LocalDistinguisher { get; init; }
 
@@ -338,6 +345,13 @@ internal record PlacePointResponse(
 
     /// <summary>The name in the language asked for, as on the index; null where there is none.</summary>
     public string? LocalName { get; init; }
+
+    /// <summary>
+    /// True where the name is the source's alone: a language other than English was asked for, the
+    /// corpus holds no name for the place in it, and no verse stands behind the place. A client shows
+    /// the English headword, marked as the source's.
+    /// </summary>
+    public bool NameFromSource { get; init; }
 }
 
 /// <param name="Datasets">Whose points these are, as declared dataset ids, for the credit a map owes.</param>
