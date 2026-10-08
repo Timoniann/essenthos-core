@@ -56,7 +56,7 @@ internal static partial class ForgeVerbs
         new("frame", "", "Recompute every text's canonical frame and report which texts changed.", Reframe),
         new("verse-links", "", "Complete verse correspondences from the current frame and sourced word links.", VerseLinks),
         new("verse-refresh", "<text,...>", "Refresh only the frame's verse correspondences involving these texts, preserving other testimony.",
-            VerseRefresh, Least: 1, Most: 1),
+            VerseRefresh, Least: 1, Most: 1, Relinks: args => Relinked.Of(args[1].Split(','))),
         new("septuagint-refresh", "<from> <to> <book,...>", "Refresh this Greek pair's own derived claims in selected books while retaining other testimony.",
             SeptuagintRefresh, Least: 3, Most: 3, Relinks: Pair),
         new("marks", "", "Write what the editions print about their own words as word groups.", Marks),
