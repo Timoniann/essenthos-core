@@ -358,7 +358,7 @@ internal sealed class DatasetLoader(
             new("supplied-words", StateWhatTheEditionsSupplied),
             new("encyclopedia", cancellationToken => LoadTheEncyclopedia(resources, cancellationToken)),
             new("miswritten-numbers", CorrectTheNumbersADatasetMiswrote),
-            new("gentilics", ReadTheStatedKinship),
+            new("gentilics", cancellationToken => ReadTheStatedKinship(resources, cancellationToken)),
             new("peoples", cancellationToken => NameThePeoples(resources, cancellationToken)),
             new("place-register", cancellationToken => MakeThePlacesOurs(resources, cancellationToken)),
             new("person-register", cancellationToken => TellTheNamesakesApart(resources, cancellationToken)),
@@ -1581,11 +1581,17 @@ internal sealed class DatasetLoader(
     /// loads because it reads both halves: the lexicon for the claim and the entities for the page
     /// each claim points at.
     /// </summary>
-    private async Task ReadTheStatedKinship(CancellationToken cancellationToken)
+    private async Task ReadTheStatedKinship(string resources, CancellationToken cancellationToken)
     {
         status.Starting("the gentilics Strong states");
 
         using var scope = services.CreateScope();
+
+        // The derivations are read from the stored lexicon, so a corpus loaded while the file
+        // editor's remarks were read into them is corrected before they are.
+        await scope.ServiceProvider.GetRequiredService<StrongLexiconLoader>().DropTheEditorsRemarks(
+            ResourcePaths.File(resources, "Strong", "StrongHebrew.xml"), cancellationToken);
+
         var loader = scope.ServiceProvider.GetRequiredService<StrongGentilicLoader>();
         status.Record(await loader.Load(cancellationToken));
     }

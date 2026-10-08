@@ -124,7 +124,7 @@ internal sealed class StrongLexiconLoader(AppDbContext db, ILogger<StrongLexicon
     /// sentence (<c>from אִי (H336)lemma אי missing vowel, corrected to אִי and …</c>), corrected in
     /// place from the file.
     /// </summary>
-    private async Task DropTheEditorsRemarks(string hebrewPath, CancellationToken cancellationToken)
+    internal async Task DropTheEditorsRemarks(string hebrewPath, CancellationToken cancellationToken)
     {
         const string remark = " corrected to ";
         var stale = await db.StrongEntries
