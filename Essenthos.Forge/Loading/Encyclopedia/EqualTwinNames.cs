@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging.Abstractions;
 using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
@@ -49,8 +50,13 @@ internal sealed record EqualTwinNameOutcome(
 /// back, what it would give and has not is written, and a second run changes nothing.
 /// </para>
 /// </summary>
-internal sealed class EqualTwinNames(AppDbContext db, ILogger<EqualTwinNames> logger)
+internal sealed class EqualTwinNames(
+    AppDbContext db,
+    ILogger<EqualTwinNames> logger,
+    PronounReferents? pronouns = null)
 {
+    private readonly PronounReferents _pronouns = pronouns ?? new PronounReferents(db, NullLogger<PronounReferents>.Instance);
+
     public const string Source = "Essenthos, the name the same word carries in another edition of the text";
 
     private static readonly string Wanted =
@@ -131,6 +137,7 @@ internal sealed class EqualTwinNames(AppDbContext db, ILogger<EqualTwinNames> lo
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         await Run(connection, transaction, Wanted, cancellationToken);
+        await LeaveOutPronouns(connection, transaction, cancellationToken);
         var withdrawn = await Run(connection, transaction, TakeBack, cancellationToken);
         var written = await Run(connection, transaction, Give, cancellationToken);
         await Run(connection, transaction, Claim, cancellationToken);
@@ -142,6 +149,26 @@ internal sealed class EqualTwinNames(AppDbContext db, ILogger<EqualTwinNames> lo
         var outcome = new EqualTwinNameOutcome(written, withdrawn, byText, started.Elapsed);
         logger.LogInformation("Named the words other editions print the same: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// A pronoun is given no name its verse does not settle, by the rule the pronoun pass takes names
+    /// back by: a twin of a pronoun carries the person its twin was read to mean, which the pronoun's own
+    /// verse may not. Given anyway, the pass after takes it back on the next load and this one gives it
+    /// again, burning an id for the same row each time.
+    /// </summary>
+    private async Task LeaveOutPronouns(NpgsqlConnection connection, IDbContextTransaction transaction, CancellationToken cancellationToken)
+    {
+        await Run(connection, transaction,
+            "CREATE TEMP TABLE expected ON COMMIT DROP AS SELECT word_id, entity_id, confidence FROM twin_name",
+            cancellationToken);
+        var left = await _pronouns.LeaveOut(connection, (NpgsqlTransaction)transaction.GetDbTransaction(), cancellationToken);
+        if (left > 0)
+        {
+            await Run(connection, transaction,
+                "DELETE FROM twin_name t WHERE NOT EXISTS (SELECT 1 FROM expected x WHERE x.word_id = t.word_id AND x.entity_id = t.entity_id)",
+                cancellationToken);
+        }
     }
 
     private static async Task<int> Run(

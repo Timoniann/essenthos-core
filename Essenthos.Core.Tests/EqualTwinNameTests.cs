@@ -143,6 +143,37 @@ public sealed class EqualTwinNameTests : IDisposable
         (await Named(_swete)).Should().BeEmpty();
     }
 
+    /// <summary>
+    /// A twin of a pronoun is given the person only where its own verse settles it: otherwise the pronoun
+    /// pass would take the name back on the next load and this pass give it again, an id burnt for the same
+    /// row every time.
+    /// </summary>
+    [Fact]
+    public async Task ATwinPronounGetsTheNameOnlyWhereItsVerseSettlesIt()
+    {
+        Brenton(3).Surface = "αὐτῷ";
+        Swete(3).Surface = "αὐτῷ";
+        Name(Brenton(3), _moses);
+        await _db.SaveChangesAsync();
+
+        var first = await Pass().Load();
+
+        first.Written.Should().Be(0, "nobody in the verse is named but the pronoun itself");
+        (await Named(_swete)).Should().BeEmpty();
+
+        Name(Brenton(1), _moses);
+        await _db.SaveChangesAsync();
+
+        var second = await Pass().Load();
+        var third = await Pass().Load();
+
+        second.Written.Should().Be(2, "Moses is now named in the verse the pronoun stands in");
+        var named = await Named(_swete);
+        named.Keys.Should().BeEquivalentTo([Swete(1).Id, Swete(3).Id]);
+        third.Written.Should().Be(0);
+        third.Withdrawn.Should().Be(0);
+    }
+
     [Fact]
     public async Task ANameTheTwinNoLongerCarriesIsTakenBack()
     {
