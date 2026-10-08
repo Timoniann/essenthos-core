@@ -496,6 +496,39 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         FROM counted
         """;
 
+    private static string Listed(IEnumerable<string> relations) =>
+        string.Join(", ", relations.Order(StringComparer.Ordinal).Select(r => $"'{r}'"));
+
+    private static readonly string People =
+        $"'{EnumSpelling.Of(EntityKind.Person)}', '{EnumSpelling.Of(EntityKind.Title)}'";
+
+    /// <summary>Every parent and child the relationships state, from either end.</summary>
+    private static readonly string ParentSql =
+        $"""
+         parent AS (
+             SELECT from_entity_id parent, to_entity_id child FROM entity_relationship
+             WHERE type IN ({Listed(KinRelations.ParentOf)})
+             UNION
+             SELECT to_entity_id, from_entity_id FROM entity_relationship
+             WHERE type IN ({Listed(KinRelations.ChildOf)}))
+         """;
+
+    /// <summary>
+    /// <see cref="TwoParents"/>: everybody stated as the child of two fathers or two mothers. Most
+    /// are the text's own variants — Joseph is Jacob's son in Matthew and Heli's in Luke — and the
+    /// rest are one man held as two records, or two men held as one.
+    /// </summary>
+    private static readonly string TwoParentsSql =
+        $"""
+         WITH {ParentSql}
+         SELECT c.slug, s.sex, array_agg(s.slug ORDER BY s.slug)
+         FROM parent p JOIN entity c ON c.id = p.child JOIN entity s ON s.id = p.parent
+         WHERE s.sex IS NOT NULL
+         GROUP BY c.slug, s.sex
+         HAVING count(*) > 1
+         ORDER BY c.slug, s.sex
+         """;
+
     /// <summary>
     /// Each of these should return nothing. They are the shapes the schema cannot forbid but that
     /// no correct load produces, so a count above zero is a defect and not a measurement.
@@ -722,6 +755,47 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                      FROM entity_relationship WHERE source LIKE '{Sources.DescriptorReadingPrefix}%')
              """),
 
+        ("relationships of a record with itself",
+            "SELECT count(*) FROM entity_relationship WHERE from_entity_id = to_entity_id"),
+
+        // A man as somebody's mother is a reading of "the wife of Hodiah" that lost the wife.
+        ("family relationships saying of a man what only a woman is, or of a woman what only a man is",
+            $"""
+             SELECT count(*) FROM entity_relationship r JOIN entity f ON f.id = r.from_entity_id
+             WHERE (r.type IN ({Listed(KinRelations.SaidOfAMan)}) AND f.sex = 'female')
+                OR (r.type IN ({Listed(KinRelations.SaidOfAWoman)}) AND f.sex = 'male')
+             """),
+
+        // "Mizraim begat Lehabim" is a people's descent and "the father of Bethlehem" its founder;
+        // neither is a son or a father. A decision stands as decided, as it does in the loader.
+        ("family relationships with a place, a people or anything but a person at either end, that nobody decided",
+            $"""
+             SELECT count(*) FROM entity_relationship r
+             JOIN entity f ON f.id = r.from_entity_id JOIN entity t ON t.id = r.to_entity_id
+             WHERE r.type IN ({Listed(KinRelations.All)})
+               AND r.method <> '{EnumSpelling.Of(LinkMethod.Manual)}'
+               AND (f.kind NOT IN ({People}) OR t.kind NOT IN ({People}))
+             """),
+
+        ("people who are their own forebear, one or two generations up",
+            $"""
+             WITH {ParentSql}
+             SELECT count(DISTINCT p1.parent) FROM parent p1
+             JOIN parent p2 ON p2.parent = p1.child
+             LEFT JOIN parent p3 ON p3.parent = p2.child
+             WHERE p2.child = p1.parent OR p3.child = p1.parent
+             """),
+
+        ("two people stated as parent and child and as siblings at once",
+            $"""
+             WITH {ParentSql},
+             sibling AS (SELECT from_entity_id a, to_entity_id b FROM entity_relationship
+                         WHERE type IN ({Listed(KinRelations.SiblingOf)}))
+             SELECT count(DISTINCT (LEAST(p.parent, p.child), GREATEST(p.parent, p.child)))
+             FROM parent p JOIN sibling s
+               ON (s.a = p.parent AND s.b = p.child) OR (s.a = p.child AND s.b = p.parent)
+             """),
+
         ("verse links saying again what another link of the same pair says",
             $"""
              SELECT count(*) - count(DISTINCT (s.from_text_id, s.to_text_id, s.relation, s.method, s.confidence,
@@ -917,9 +991,20 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
 
         var variation = await TheVariation(connection, cancellationToken);
 
+        var parents = await Read(connection, TwoParentsSql, cancellationToken, reader => new TwoParents(
+            reader.GetString(0), reader.GetString(1), reader.GetFieldValue<string[]>(2)));
+        if (parents.Count > 0)
+        {
+            logger.LogWarning(
+                "{Count} people are stated as the child of two fathers or two mothers. Most are the text's own variants; "
+                + "any other is one man held as two records or two men held as one: {Children}",
+                parents.Count,
+                string.Join("; ", parents.Select(p => $"{p.Child} ({string.Join(", ", p.Parents)})")));
+        }
+
         return new CorpusMeasures(
             coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity, shared, unaligned,
-            stranded, variation, lexicon);
+            stranded, variation, lexicon, parents);
     }
 
     /// <summary>The editions whose places of variation are counted against each text they are joined to by their letters.</summary>

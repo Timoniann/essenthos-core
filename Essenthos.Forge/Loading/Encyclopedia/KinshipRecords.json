@@ -1,0 +1,24 @@
+{
+  "decidedBy": "Essenthos, 2026-10-08, on the family relationships that contradicted themselves: each read against the Hebrew of its verse by gpt-6.1-sol (Codex, reasoning high) and checked by claude-opus-5-5, under the project owner's decision of 2026-09-16 that a namesake the text does not identify is a person of his own and that where the text leaves an identification open the record says so",
+  "policy": "A record is one man, and a word names the one its verse names. Where one record held a man whose father the verse names otherwise, his occurrence goes to a record of his own.",
+  "method": "manual",
+  "source": "Essenthos, on the family relationships that contradicted themselves, each read against its verse by gpt-6.1-sol (Codex) and claude-opus-5-5, 2026-10-08",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:24",
+      "position": 8,
+      "surface": "יֵשׁ֤וּעַ",
+      "strongNumber": "H3442",
+      "create": {
+        "slug": "jeshua-son-of-kadmiel",
+        "name": "Jeshua",
+        "distinguisher": "son of Kadmiel, one of the chiefs of the Levites in the days of Joiakim (NEH 12:24)",
+        "notes": "Whether he is Jeshua the son of Azaniah of NEH 10:9 the text does not say.",
+        "kind": "person"
+      },
+      "why": "'And the chief of the Levites: Hashabiah, Sherebiah, and Jeshua the son of Kadmiel' (וְיֵשׁוּעַ בֶּן־קַדְמִיאֵל); the Levite Jeshua who sealed the covenant is the son of Azaniah (NEH 10:9), and the text does not make the two one.",
+      "corrects": "jeshua-7"
+    }
+  ]
+}

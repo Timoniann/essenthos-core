@@ -400,6 +400,15 @@ internal sealed record LexiconCounts(
 internal sealed record CountDisagreement(string Number, int Stated, int Counted);
 
 /// <summary>
+/// Somebody the relationships make the child of two fathers, or of two mothers. A warning and not a
+/// break: Joseph is Jacob's son in Matthew and Heli's in Luke, and the corpus says both because the
+/// text does. Listed by child so that the one which is not a variant — a man held as two records,
+/// or two men as one — can be found among them.
+/// </summary>
+/// <param name="Sex">The parents' sex: two fathers, or two mothers.</param>
+internal sealed record TwoParents(string Child, string Sex, IReadOnlyList<string> Parents);
+
+/// <summary>
 /// What one load produced. Every field is a query, and the point of storing it is that the next
 /// load can be compared with it.
 /// </summary>
@@ -417,7 +426,8 @@ internal sealed record CorpusMeasures(
     IReadOnlyList<Unaligned> Unaligned,
     IReadOnlyList<Stranded>? Stranded = null,
     IReadOnlyList<Variation>? Variation = null,
-    LexiconCounts? Lexicon = null)
+    LexiconCounts? Lexicon = null,
+    IReadOnlyList<TwoParents>? TwoParents = null)
 {
     /// <summary>
     /// The share of links more than one method claims. It is the number the corpus could not
@@ -611,6 +621,12 @@ internal sealed record CorpusMeasures(
             {
                 report.AppendLine($"  {d.Number,-8} BibleData {d.Stated,6}   BHSA {d.Counted,6}");
             }
+        }
+
+        report.AppendLine("parents       people stated as the child of two fathers or two mothers, each a variant of the text or a record to settle");
+        foreach (var p in TwoParents ?? [])
+        {
+            report.AppendLine($"  {p.Child,-24} {p.Sex,-7} {string.Join(", ", p.Parents)}");
         }
 
         report.AppendLine("integrity     every one of these should be zero");

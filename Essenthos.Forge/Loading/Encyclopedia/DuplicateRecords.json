@@ -772,6 +772,46 @@
       "why": "Both records are Ezer son of Hur, the father of Hushah, of Judah (1CH 4:4); the register's second one holds no word, verse or relationship of its own.",
       "confidence": 1.0,
       "source": "Essenthos: the person register's records written twice for a man Strong numbers once, read against the verse by claude-opus-5-5, 2026-10-08"
+    },
+    {
+      "strongNumber": "H3378",
+      "keeps": "gideon",
+      "folds": "jerubbesheth",
+      "why": "2 Samuel 11:21 asks 'Who smote Abimelech the son of Jerubbesheth? did not a woman cast a piece of a millstone upon him from the wall, that he died in Thebez?': the Abimelech of Judges 9:53, son of Jerubbaal (Judges 9:1), who is Gideon (Judges 6:32). Jerubbesheth is the same name with 'shame' for 'Baal'.",
+      "confidence": 0.99,
+      "source": "Essenthos: the family relationships that contradicted themselves, each pair read against the Hebrew of its verses by gpt-6.1-sol (Codex, reasoning high) and checked by claude-opus-5-5, 2026-10-08"
+    },
+    {
+      "strongNumber": "H1617",
+      "keeps": "gera",
+      "folds": "gera-5",
+      "why": "Both records are the Gera named between Addar and Abihud among the sons of Bela (1CH 8:3); the second holds no verse but that one.",
+      "confidence": 0.99,
+      "source": "Essenthos: the family relationships that contradicted themselves, each pair read against the Hebrew of its verses by gpt-6.1-sol (Codex, reasoning high) and checked by claude-opus-5-5, 2026-10-08"
+    },
+    {
+      "strongNumber": "H1617",
+      "keeps": "gera-3",
+      "folds": "gera-6",
+      "why": "Both records are the Gera named before Shephuphan and Huram among the sons of Bela (1CH 8:5); the second holds no verse but that one.",
+      "confidence": 0.99,
+      "source": "Essenthos: the family relationships that contradicted themselves, each pair read against the Hebrew of its verses by gpt-6.1-sol (Codex, reasoning high) and checked by claude-opus-5-5, 2026-10-08"
+    },
+    {
+      "strongNumber": "H558",
+      "keeps": "amaziah-the-merarite",
+      "folds": "amaziah-4",
+      "why": "Both records are Amaziah son of Hilkiah and father of Hashabiah in the line of Ethan the Merarite singer (1CH 6:44-45); each holds that verse alone.",
+      "confidence": 0.99,
+      "source": "Essenthos: the family relationships that contradicted themselves, each pair read against the Hebrew of its verses by gpt-6.1-sol (Codex, reasoning high) and checked by claude-opus-5-5, 2026-10-08"
+    },
+    {
+      "strongNumber": "H5838",
+      "keeps": "azariah",
+      "folds": "azariah-24",
+      "why": "Ezra's line Azariah, Amariah, Ahitub, Zadok, Shallum (EZR 7:2-3) is the line of 1CH 6:10-12, where this Azariah is the son of Johanan; Ezra passes over the generations between him and Meraioth.",
+      "confidence": 0.96,
+      "source": "Essenthos: the family relationships that contradicted themselves, each pair read against the Hebrew of its verses by gpt-6.1-sol (Codex, reasoning high) and checked by claude-opus-5-5, 2026-10-08"
     }
   ],
   "declined": [
@@ -2062,6 +2102,33 @@
         "1CH 11:31"
       ],
       "why": "2 Samuel 23:29 and 1 Chronicles 11:31 are Ittai son of Ribai of Gibeah of Benjamin, one of the thirty; the Ittai of 2 Samuel 15 and 18 is a Gittite."
+    },
+    {
+      "from": "mahath",
+      "to": "mahath-2",
+      "name": null,
+      "verses": [
+        "2CH 29:12"
+      ],
+      "why": "2 Chronicles 29:12 is Mahath the son of Amasai, a Kohathite Levite in Hezekiah's day, who is the overseer of 2CH 31:13, held as mahath-2; the Mahath of 1CH 6:35 is a forefather of Samuel."
+    },
+    {
+      "from": "hashabiah-2",
+      "to": "hashabiah-11",
+      "name": null,
+      "verses": [
+        "NEH 11:15"
+      ],
+      "why": "Nehemiah 11:15 is Hashabiah the son of Bunni, a Merarite and forefather of Shemaiah (1CH 9:14), held as hashabiah-11; the singer Hashabiah is the son of Jeduthun (1CH 25:3)."
+    },
+    {
+      "from": "jeshua-7",
+      "to": "jeshua-son-of-kadmiel",
+      "name": null,
+      "verses": [
+        "NEH 12:24"
+      ],
+      "why": "Nehemiah 12:24 is Jeshua the son of Kadmiel among the chiefs of the Levites; the Jeshua who sealed the covenant is the son of Azaniah (NEH 10:9), and the text does not make the two one."
     }
   ]
 }

@@ -35,7 +35,7 @@ internal sealed record DescriptorRefusals(
         $"{Misplaced} placing something somewhere that is not a place, and " +
         $"{Inadmissible} saying of a record what its kind cannot be, and " +
         $"{Reversed} reading a line of descent the wrong way round against a reading of equal or higher standing, and " +
-        $"{Mistargeted} giving a person or a place as somebody's people, or a place as a people's forebear, and " +
+        $"{Mistargeted} giving a person or a place as somebody's people, a place as a people's forebear, a place or a people as somebody's kin, or something not a place as what a man founded, and " +
         $"{Members} making a people's forebear of a man the verse calls one of that people";
 }
 

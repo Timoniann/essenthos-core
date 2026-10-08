@@ -192,6 +192,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.CompanionOf] = new("companion of ", Nominative),
             [DescriptorRelations.TeacherOf] = new("teacher of ", Nominative),
             [DescriptorRelations.AllyOf] = new("ally of ", Nominative),
+            [DescriptorRelations.FounderOf] = new("founder of ", Nominative),
             [DescriptorRelations.KilledBy] = new("killed by ", Nominative),
             [DescriptorRelations.KillerOf] = new("killer of ", Nominative),
             [DescriptorRelations.RapedBy] = new("raped by ", Nominative),
@@ -275,6 +276,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.CompanionOf] = new("товариш ", Genitive),
             [DescriptorRelations.TeacherOf] = new("учитель ", Genitive),
             [DescriptorRelations.AllyOf] = new("союзник ", Genitive),
+            [DescriptorRelations.FounderOf] = new("засновник ", Genitive),
 
             // "Загинув від руки X" rather than the instrumental "убитий X" the phrase would
             // otherwise want: the instrumental is a case no pass has produced a form in, and a
@@ -377,6 +379,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.CompanionOf] = new("Gefährte ", Genitive),
             [DescriptorRelations.TeacherOf] = new("Lehrer ", Genitive),
             [DescriptorRelations.AllyOf] = new("Verbündeter ", Genitive),
+            [DescriptorRelations.FounderOf] = new("Gründer ", Genitive),
 
             // Neither homicide clause calls the killing a crime, because the relation does not:
             // Mörder would convict David of Goliath. The plain verb states what happened and
@@ -466,6 +469,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.CompanionOf] = new("compañero de ", Nominative),
             [DescriptorRelations.TeacherOf] = new("maestro de ", Nominative),
             [DescriptorRelations.AllyOf] = new("aliado de ", Nominative),
+            [DescriptorRelations.FounderOf] = new("fundador de ", Nominative),
             [DescriptorRelations.KilledBy] = new("muerto a manos de ", Nominative),
             [DescriptorRelations.KillerOf] = new("dio muerte a ", Nominative),
             [DescriptorRelations.RapedBy] = new("violada por ", Nominative),
