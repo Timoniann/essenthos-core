@@ -1,0 +1,11 @@
+{
+ "case": "parents-zadok-3",
+ "question": "zadok-3 is recorded with more than one father: ahitub-3, meraioth-2.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "1CH 6:12 explicitly says Ahitub begot Zadok (הוֹלִיד), while 1CH 9:11 and NEH 11:11 place Meraioth between them. The supplied texts do not determine whether this reflects genealogical compression or differing traditions, so they do not justify changing either recorded line.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:37:56+00:00"
+}

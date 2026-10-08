@@ -1,0 +1,11 @@
+{
+ "case": "parents-kish",
+ "question": "kish is recorded with more than one father: abiel, ner.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "1SA 9:1 calls Kish son of Abiel (בֶּן־אֲבִיאֵל), while 1CH 8:33 explicitly says Ner begat Kish (הוֹלִיד אֶת־קִישׁ), so both relationships reflect their cited genealogies. The supplied passages do not establish whether the Ner occurrences are namesakes or justify harmonizing these genealogies; retain the rows, including owner ruling 106912.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:36:13+00:00"
+}

@@ -1,0 +1,11 @@
+{
+ "case": "parents-amasai",
+ "question": "amasai is recorded with more than one father: elkanah, elkanah-4.",
+ "verdict": "mixed",
+ "actions": [],
+ "note": "The Hebrew chain in 1CH 6:35–36 distinguishes Elkanah son of Mahath from Elkanah son of Joel, father of Amasai; protected owner row 107213 assigns the former relationship to the latter record and cannot be changed. 1CH 6:25 does not identify Elkanah's father, so it alone cannot resolve the competing father links; protected owner rows 105596 and 105603 also remain untouched.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:32:08+00:00"
+}

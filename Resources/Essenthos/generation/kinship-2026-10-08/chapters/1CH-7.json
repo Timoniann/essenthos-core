@@ -1,0 +1,164 @@
+{
+ "chapter": "1CH 7",
+ "rows": 221,
+ "wrong": [
+  {
+   "kind": "retarget",
+   "rows": [
+    98169
+   ],
+   "new_type": "",
+   "new_to": "ashbel",
+   "verse": "1CH 7:10",
+   "why": "This Jediael belongs to Benjamin's genealogy and is identified with Ashbel in Bilhan's supplied record, whereas jediael denotes Shimri's son.",
+   "confidence": 0.97
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    98523
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 7:12",
+   "why": "The Hebrew names Aher as Hushim's father and does not identify him as Ehi.",
+   "confidence": 0.98
+  },
+  {
+   "kind": "retype",
+   "rows": [
+    102725
+   ],
+   "new_type": "descendant-of",
+   "new_to": "",
+   "verse": "1CH 7:13",
+   "why": "Shallum is explicitly among Naphtali's sons, so the concluding sons-of-Bilhah designation describes ancestry through the named intervening generation.",
+   "confidence": 0.98
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    101952,
+    101953
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 7:16",
+   "why": "The Hebrew names Sheresh immediately before 'his sons, Ulam and Rakem,' assigning those sons to Sheresh rather than Peresh.",
+   "confidence": 0.98
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    102091,
+    103136
+   ],
+   "new_type": "",
+   "new_to": "sheresh",
+   "verse": "1CH 7:16",
+   "why": "Ulam and Rakem are named as the sons of the immediately preceding Sheresh rather than Peresh.",
+   "confidence": 0.98
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    102176
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 7:25",
+   "why": "Resheph is coordinated with Rephah without a following 'his son,' so the verse does not make Resheph Rephah's son.",
+   "confidence": 0.97
+  },
+  {
+   "kind": "retype",
+   "rows": [
+    102729
+   ],
+   "new_type": "brother-of",
+   "new_to": "",
+   "verse": "1CH 7:37",
+   "why": "Shilshah and Beera both occur in Zophah's list of sons, with no statement that Shilshah descends from Beera.",
+   "confidence": 1
+  }
+ ],
+ "missing": [
+  {
+   "from": "jahzeel",
+   "type": "descendant-of",
+   "to": "bilhah",
+   "verse": "1CH 7:13",
+   "why": "The verse includes Jahziel in Naphtali's named sons and identifies that lineage as sons of Bilhah.",
+   "confidence": 0.98
+  },
+  {
+   "from": "guni",
+   "type": "descendant-of",
+   "to": "bilhah",
+   "verse": "1CH 7:13",
+   "why": "The verse includes Guni in Naphtali's named sons and identifies that lineage as sons of Bilhah.",
+   "confidence": 0.98
+  },
+  {
+   "from": "jezer",
+   "type": "descendant-of",
+   "to": "bilhah",
+   "verse": "1CH 7:13",
+   "why": "The verse includes Jezer in Naphtali's named sons and identifies that lineage as sons of Bilhah.",
+   "confidence": 0.98
+  },
+  {
+   "from": "zabad-2",
+   "type": "son-of",
+   "to": "tahath-3",
+   "verse": "1CH 7:21",
+   "why": "Zabad 'his son' continues the genealogy immediately after the second Tahath in verse 20.",
+   "confidence": 1
+  },
+  {
+   "from": "ladan",
+   "type": "son-of",
+   "to": "tahan",
+   "verse": "1CH 7:26",
+   "why": "Laadan 'his son' continues the genealogy immediately after Tahan in verse 25.",
+   "confidence": 1
+  },
+  {
+   "from": "nun",
+   "type": "son-of",
+   "to": "elishama",
+   "verse": "1CH 7:27",
+   "why": "Non 'his son' continues the genealogy immediately after Elishama in verse 26.",
+   "confidence": 1
+  },
+  {
+   "from": "serah",
+   "type": "sister-of",
+   "to": "imnah",
+   "verse": "1CH 7:30",
+   "why": "Serah is explicitly called the sister of the listed sons of Asher, including Imnah.",
+   "confidence": 1
+  },
+  {
+   "from": "arah",
+   "type": "son-of",
+   "to": "jephunneh-2",
+   "verse": "1CH 7:39",
+   "why": "Arah is explicitly listed as Ulla's son, with Ulla identified as Jephunneh in Arah's supplied record.",
+   "confidence": 0.95
+  },
+  {
+   "from": "rizia",
+   "type": "son-of",
+   "to": "jephunneh-2",
+   "verse": "1CH 7:39",
+   "why": "Rezia is explicitly listed as Ulla's son, with Ulla identified as Jephunneh in Rizia's supplied record.",
+   "confidence": 0.95
+  }
+ ],
+ "note": "Owner rows 105599 and 107190 identify Helem with Hotham, and owner row 105726 identifies Ulla with Jephunneh; this chapter does not explicitly establish those identifications, and the rulings are retained. The ambiguous wording of 1CH 7:15 and the unresolved Abiezer–Iezer identification in 1CH 7:18 do not justify additional corrections or links.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:25:56+00:00"
+}

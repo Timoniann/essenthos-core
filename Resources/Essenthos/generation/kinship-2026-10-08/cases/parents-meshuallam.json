@@ -1,0 +1,11 @@
+{
+ "case": "parents-meshuallam",
+ "question": "meshuallam is recorded with more than one father: hodaviah-4, joed.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "The Hebrew explicitly gives Sallu–Meshullam–Hodaviah–Hassenuah in 1CH 9:7 and Sallu–Meshullam–Joed–Pedaiah in NEH 11:7. Both relationships reflect their respective genealogies; the supplied verses do not establish omitted generations or separate namesakes that would justify changing the rows.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:36:10+00:00"
+}

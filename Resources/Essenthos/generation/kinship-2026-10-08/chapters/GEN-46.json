@@ -1,0 +1,48 @@
+{
+ "chapter": "GEN 46",
+ "rows": 102,
+ "wrong": [
+  {
+   "kind": "retype",
+   "rows": [
+    101084
+   ],
+   "new_type": "grandson-of",
+   "new_to": "asher",
+   "verse": "GEN 46:17",
+   "why": "The Hebrew lists Beriah among Asher's sons and Malchiel among Beriah's sons, establishing Malchiel as Asher's grandson.",
+   "confidence": 0.97
+  }
+ ],
+ "missing": [
+  {
+   "from": "serah",
+   "type": "sister-of",
+   "to": "imnah",
+   "verse": "GEN 46:17",
+   "why": "The Hebrew calls Serah 'their sister' after listing Imnah, Ishvah, Ishvi, and Beriah.",
+   "confidence": 1
+  },
+  {
+   "from": "ard",
+   "type": "son-of",
+   "to": "benjamin",
+   "verse": "GEN 46:21",
+   "why": "The Hebrew explicitly includes Ard among Benjamin's sons, while the recorded descendant relationship does not express this specific statement.",
+   "confidence": 0.99
+  },
+  {
+   "from": "naaman",
+   "type": "son-of",
+   "to": "benjamin",
+   "verse": "GEN 46:21",
+   "why": "The Hebrew explicitly includes Naaman among Benjamin's sons, while the recorded descendant relationship does not express this specific statement.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The broader descendant relationships for Ard and Naaman remain supported, and their parentage recorded from other chapters is retained as a variant. Serah's record describes her as a son, although GEN 46:17 explicitly calls her 'their sister'.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:18:11+00:00"
+}

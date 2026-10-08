@@ -1,0 +1,11 @@
+{
+ "case": "parents-ithran",
+ "question": "ithran is recorded with more than one father: dishon, dishon-2.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "The supplied verses do not conclusively distinguish which Dishon fathered Ithran: 1CH 1:41 repeats the name after naming Anah’s son, while the surrounding genealogy also names Seir’s son Dishon. GEN 36:26 reads Dishan in the Hebrew but Dishon in the KJV, so the apparent conflict cannot safely be resolved by merging or retargeting these records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:35:20+00:00"
+}

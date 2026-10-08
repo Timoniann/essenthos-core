@@ -1,0 +1,64 @@
+{
+ "chapter": "GEN 36",
+ "rows": 140,
+ "wrong": [
+  {
+   "kind": "retype",
+   "rows": [
+    101469
+   ],
+   "new_type": "grandson-of",
+   "new_to": "",
+   "verse": "GEN 36:13",
+   "why": "Mizzah is listed as Reuel's son, while verses 4 and 10 identify Reuel as Bashemath's son, explicitly naming the intervening generation.",
+   "confidence": 1
+  }
+ ],
+ "missing": [
+  {
+   "from": "adah-wife-of-esau",
+   "type": "daughter-of",
+   "to": "elon",
+   "verse": "GEN 36:2",
+   "why": "Adah is explicitly called the daughter of Elon the Hittite.",
+   "confidence": 1
+  },
+  {
+   "from": "basemath-daughter-of-ishmael",
+   "type": "daughter-of",
+   "to": "ishmael",
+   "verse": "GEN 36:3",
+   "why": "Bashemath is explicitly called Ishmael's daughter.",
+   "confidence": 1
+  },
+  {
+   "from": "basemath-daughter-of-ishmael",
+   "type": "sister-of",
+   "to": "nebaioth",
+   "verse": "GEN 36:3",
+   "why": "Bashemath is explicitly called the sister of Nebajoth.",
+   "confidence": 1
+  },
+  {
+   "from": "basemath-daughter-of-ishmael",
+   "type": "wife-of",
+   "to": "esau",
+   "verse": "GEN 36:10",
+   "why": "Bashemath is explicitly identified as Esau's wife.",
+   "confidence": 1
+  },
+  {
+   "from": "oholibamah-wife-of-esau",
+   "type": "wife-of",
+   "to": "esau",
+   "verse": "GEN 36:14",
+   "why": "Aholibamah is explicitly identified as Esau's wife.",
+   "confidence": 1
+  }
+ ],
+ "note": "The Hebrew of GEN 36:26 reads Dishan where the KJV reads Dishon, so I have not imposed a definite namesake correction on those parentage rows. Both timna and timna-3 identify Lotan's sister in the supplied records, so GEN 36:22 alone cannot establish a wrong target between them.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:18:55+00:00"
+}

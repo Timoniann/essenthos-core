@@ -1,0 +1,25 @@
+{
+ "case": "parents-bilhan-2",
+ "question": "bilhan-2 is recorded with more than one father: ashbel, jediael.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "delete-row",
+   "rows": [
+    98172
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 7:10",
+   "why": "The Hebrew names Bilhan as a son of Jediael, not Ashbel. None of the supplied verses identifies Jediael with Ashbel.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Bilhan's stated parent is Jediael; the distinguisher's claim that Jediael is also called Ashbel is unsupported. The supplied verses do not establish whether this Jediael is the son of Shimri in 1CH 11:45, so that record's identity remains unresolved.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:32:42+00:00"
+}

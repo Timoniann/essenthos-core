@@ -1,0 +1,75 @@
+== 1. the from-side sex contradicts the relation (a woman as father/son/brother/husband, a man as mother/daughter/sister/wife)
+type | fs | fsex | ts | vref | src
+mother-of | hodiah | male | keilah | 13 4:19 | read from Scripture by claude-sonnet-5, 
+mother-of | hodiah | male | eshtemoa-2 | 13 4:19 | read from Scripture by claude-sonnet-5, 
+== 2. the to-side sex contradicts the relation (husband of a man, wife of a woman)
+type | fs | ts | tsex | vref | src
+== 3. self-relations
+type | fs | vref | src
+== 4. two kinds of kin at once between the same two people (parent and sibling, parent and spouse, child and sibling ...)
+x | y | kinds | rows
+abram | sarai | sibling + spouse | abram half-brother-of sarai @1 20:12; abram husband-of sarai @1 11:29; sarai wife-of abram @1 11:29
+rephah | resheph | sibling + x parent of y | rephah brother-of resheph @13 7:25; resheph son-of rephah @13 7:25
+== 5. kin relations to something that is not a person
+type | fs | fk | ts | tk | vref | src
+brother-of | naphtuh | person | lehabim | people | 1 10:13 | read from Scripture by claude-sonnet-5, 
+brother-of | naphtuh | person | anamim | people | 1 10:13 | read from Scripture by claude-sonnet-5, 
+father-of | amalek | person | amalek-2 | place | 9 15:2 | read from Scripture by claude-sonnet-5, 
+father-of | dedan-2 | person | ashurites-h805 | people | 1 25:3 | read from Scripture by claude-sonnet-5, 
+father-of | hareph | person | bethgader | place | 13 2:51 | read from Scripture by claude-sonnet-5, 
+father-of | javan | person | kittim-h3794 | people | 1 10:4 | read from Scripture by claude-sonnet-5, 
+father-of | joab-2 | person | geharashim | place | 13 4:14 | read from Scripture by claude-sonnet-5, 
+father-of | mizraim | person | lehabim | people | 1 10:13 | read from Scripture by claude-sonnet-5, 
+father-of | mizraim | person | anamim | people | 1 10:13 | read from Scripture by claude-sonnet-5, 
+father-of | salma | person | atrothbethjoab | place | 13 2:54 | read from Scripture by claude-sonnet-5, 
+father-of | salma | person | bethlehem | place | 13 2:51 | read from Scripture by claude-sonnet-5, 
+father-of | shobal-2 | person | kiriathjearim | place | 13 2:50 | read from Scripture by claude-sonnet-5, 
+father-of | tehinnah | person | irnahash | place | 13 4:12 | read from Scripture by claude-sonnet-5, 
+son-of | caphthorim | people | mizraim | person | 1 10:14 | read from Scripture by the project owner
+== 6. someone with two different fathers or two different mothers (stated as son-of/daughter-of or father-of/mother-of)
+child | psex | parents
+abiasaph | male | korah-3, elkanah
+abimelech-2 | male | gideon, jerubbesheth
+achsah | male | caleb, chelubai
+ahimoth | male | elkanah, elkanah-4
+amasai | male | elkanah, elkanah-4
+amminadab | male | ram, admin
+attai | male | sheshan, jarha
+azariah | male | zadok, meraioth, johanan-3
+azariah-11 | male | jeroham-6, obed-5
+azrikam-3 | male | hashabiah, hashabiah-2
+bilhan-2 | male | ashbel, jediael
+cheran | male | dishon, dishon-2
+dan | female | rachel, bilhah
+eshtemoa-2 | male | hodiah, naham
+gazez-2 | male | chelubai, haran-2
+gera | male | benjamin, bela-2
+hashabiah-2 | male | jeduthun, bunni-2
+huppim | male | benjamin, iri
+ithran | male | dishon, dishon-2
+jahath-2 | male | gershon, libni
+jeshua-7 | male | kadmiel, kadmiel-2, azaniah
+joseph-6 | male | jacob-2, eli-2
+jozabad-5 | male | jeshua-3, jeshua-5
+keilah | male | hodiah, naham
+kish | male | abiel, ner
+meshuallam | male | hodaviah-4, joed
+muppim | male | benjamin, iri
+rakem | male | peresh, sheresh
+resheph | male | ephraim, rephah
+shecaniah-7 | male | arah-2, arah-3
+shelah | male | arpachshad, cainan
+shimei-4 | male | ela, pedaiah-2
+tahan | male | ephraim, telah
+ulam | male | peresh, sheresh
+zadok-3 | male | ahitub-3, meraioth-2
+zerah-4 | male | iddo-2, adaiah-2
+zerubbabel-2 | male | pedaiah-2, shealtiel-2
+zimmah | male | jahath-2, shimei-8
+== 7. a parent cycle (a is the parent of b and b the parent of a, or through one more generation)
+a | b | c
+amasai | mahath | amasai
+mahath | elkanah-4 | mahath
+elkanah-4 | amasai | elkanah-4
+== 8. siblings who are also parent and child through the tree (a sibling of b, and a parent of b's parent or of b)
+a | b | why

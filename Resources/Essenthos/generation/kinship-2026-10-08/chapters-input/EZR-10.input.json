@@ -1,0 +1,1984 @@
+{
+ "chapter": "EZR 10",
+ "text": {
+  "EZR 10:1": {
+   "KJV": "Now when Ezra had prayed, and when he had confessed, weeping and casting himself down before the house of God, there assembled unto him out of Israel a very great congregation of men and women and children: for the people wept very sore.",
+   "BHSA": "וּכְהִתְפַּלֵּ֤ל עֶזְרָא֙ וּכְ֨הִתְוַדֹּתֹ֔ו בֹּכֶה֙ וּמִתְנַפֵּ֔ל לִפְנֵ֖י בֵּ֣ית הָאֱלֹהִ֑ים נִקְבְּצוּ֩ אֵלָ֨יו מִיִּשְׂרָאֵ֜ל קָהָ֣ל רַב־מְאֹ֗ד אֲנָשִׁ֤ים וְנָשִׁים֙ וִֽילָדִ֔ים כִּֽי־בָכ֥וּ הָעָ֖ם הַרְבֵּה־בֶֽכֶה׃ ס "
+  },
+  "EZR 10:2": {
+   "KJV": "And Shechaniah the son of Jehiel, one of the sons of Elam, answered and said unto Ezra, We have trespassed against our God, and have taken strange wives of the people of the land: yet now there is hope in Israel concerning this thing.",
+   "BHSA": "וַיַּעַן֩ שְׁכַנְיָ֨ה בֶן־יְחִיאֵ֜ל מִבְּנֵ֤י עולם וַיֹּ֣אמֶר לְעֶזְרָ֔א אֲנַ֨חְנוּ֙ מָעַ֣לְנוּ בֵאלֹהֵ֔ינוּ וַנֹּ֛שֶׁב נָשִׁ֥ים נָכְרִיֹּ֖ות מֵעַמֵּ֣י הָאָ֑רֶץ וְעַתָּ֛ה יֵשׁ־מִקְוֶ֥ה לְיִשְׂרָאֵ֖ל עַל־זֹֽאת׃ "
+  },
+  "EZR 10:3": {
+   "KJV": "Now therefore let us make a covenant with our God to put away all the wives, and such as are born of them, according to the counsel of my lord, and of those that tremble at the commandment of our God; and let it be done according to the law.",
+   "BHSA": "וְעַתָּ֣ה נִֽכְרָת־בְּרִ֣ית לֵ֠אלֹהֵינוּ לְהֹוצִ֨יא כָל־נָשִׁ֜ים וְהַנֹּולָ֤ד מֵהֶם֙ בַּעֲצַ֣ת אֲדֹנָ֔י וְהַחֲרֵדִ֖ים בְּמִצְוַ֣ת אֱלֹהֵ֑ינוּ וְכַתֹּורָ֖ה יֵעָשֶֽׂה׃ "
+  },
+  "EZR 10:4": {
+   "KJV": "Arise; for this matter belongeth unto thee: we also will be with thee: be of good courage, and do it.",
+   "BHSA": "ק֛וּם כִּֽי־עָלֶ֥יךָ הַדָּבָ֖ר וַאֲנַ֣חְנוּ עִמָּ֑ךְ חֲזַ֖ק וַעֲשֵֽׂה׃ פ "
+  },
+  "EZR 10:5": {
+   "KJV": "Then arose Ezra, and made the chief priests, the Levites, and all Israel, to swear that they should do according to this word. And they sware.",
+   "BHSA": "וַיָּ֣קָם עֶזְרָ֡א וַיַּשְׁבַּ֣ע אֶת־שָׂרֵי֩ הַכֹּהֲנִ֨ים הַלְוִיִּ֜ם וְכָל־יִשְׂרָאֵ֗ל לַעֲשֹׂ֛ות כַּדָּבָ֥ר הַזֶּ֖ה וַיִּשָּׁבֵֽעוּ׃ "
+  },
+  "EZR 10:6": {
+   "KJV": "Then Ezra rose up from before the house of God, and went into the chamber of Johanan the son of Eliashib: and when he came thither, he did eat no bread, nor drink water: for he mourned because of the transgression of them that had been carried away.",
+   "BHSA": "וַיָּ֣קָם עֶזְרָ֗א מִלִּפְנֵי֙ בֵּ֣ית הָֽאֱלֹהִ֔ים וַיֵּ֕לֶךְ אֶל־לִשְׁכַּ֖ת יְהֹוחָנָ֣ן בֶּן־אֶלְיָשִׁ֑יב וַיֵּ֣לֶךְ שָׁ֗ם לֶ֤חֶם לֹֽא־אָכַל֙ וּמַ֣יִם לֹֽא־שָׁתָ֔ה כִּ֥י מִתְאַבֵּ֖ל עַל־מַ֥עַל הַגֹּולָֽה׃ ס "
+  },
+  "EZR 10:7": {
+   "KJV": "And they made proclamation throughout Judah and Jerusalem unto all the children of the captivity, that they should gather themselves together unto Jerusalem;",
+   "BHSA": "וַיַּעֲבִ֨ירוּ קֹ֜ול בִּיהוּדָ֣ה וִירֽוּשָׁלִַ֗ם לְכֹל֙ בְּנֵ֣י הַגֹּולָ֔ה לְהִקָּבֵ֖ץ יְרוּשָׁלִָֽם׃ "
+  },
+  "EZR 10:8": {
+   "KJV": "And that whosoever would not come within three days, according to the counsel of the princes and the elders, all his substance should be forfeited, and himself separated from the congregation of those that had been carried away.",
+   "BHSA": "וְכֹל֩ אֲשֶׁ֨ר לֹֽא־יָבֹ֜וא לִשְׁלֹ֣שֶׁת הַיָּמִ֗ים כַּעֲצַ֤ת הַשָּׂרִים֙ וְהַזְּקֵנִ֔ים יָחֳרַ֖ם כָּל־רְכוּשֹׁ֑ו וְה֥וּא יִבָּדֵ֖ל מִקְּהַ֥ל הַגֹּולָֽה׃ ס "
+  },
+  "EZR 10:9": {
+   "KJV": "Then all the men of Judah and Benjamin gathered themselves together unto Jerusalem within three days. It was the ninth month, on the twentieth day of the month; and all the people sat in the street of the house of God, trembling because of this matter, and for the great rain.",
+   "BHSA": "וַיִּקָּבְצ֣וּ כָל־אַנְשֵֽׁי־יְהוּדָה֩ וּבִנְיָמִ֨ן׀ יְרוּשָׁלִַ֜ם לִשְׁלֹ֣שֶׁת הַיָּמִ֗ים ה֛וּא חֹ֥דֶשׁ הַתְּשִׁיעִ֖י בְּעֶשְׂרִ֣ים בַּחֹ֑דֶשׁ וַיֵּשְׁב֣וּ כָל־הָעָ֗ם בִּרְחֹוב֙ בֵּ֣ית הָאֱלֹהִ֔ים מַרְעִידִ֥ים עַל־הַדָּבָ֖ר וּמֵהַגְּשָׁמִֽים׃ פ "
+  },
+  "EZR 10:10": {
+   "KJV": "And Ezra the priest stood up, and said unto them, Ye have transgressed, and have taken strange wives, to increase the trespass of Israel.",
+   "BHSA": "וַיָּ֨קָם עֶזְרָ֤א הַכֹּהֵן֙ וַיֹּ֣אמֶר אֲלֵהֶ֔ם אַתֶּ֣ם מְעַלְתֶּ֔ם וַתֹּשִׁ֖יבוּ נָשִׁ֣ים נָכְרִיֹּ֑ות לְהֹוסִ֖יף עַל־אַשְׁמַ֥ת יִשְׂרָאֵֽל׃ "
+  },
+  "EZR 10:11": {
+   "KJV": "Now therefore make confession unto the LORD God of your fathers, and do his pleasure: and separate yourselves from the people of the land, and from the strange wives.",
+   "BHSA": "וְעַתָּ֗ה תְּנ֥וּ תֹודָ֛ה לַיהוָ֥ה אֱלֹהֵֽי־אֲבֹתֵיכֶ֖ם וַעֲשׂ֣וּ רְצֹונֹ֑ו וְהִבָּֽדְלוּ֙ מֵעַמֵּ֣י הָאָ֔רֶץ וּמִן־הַנָּשִׁ֖ים הַנָּכְרִיֹּֽות׃ "
+  },
+  "EZR 10:12": {
+   "KJV": "Then all the congregation answered and said with a loud voice, As thou hast said, so must we do.",
+   "BHSA": "וַיַּֽעְנ֧וּ כָֽל־הַקָּהָ֛ל וַיֹּאמְר֖וּ קֹ֣ול גָּדֹ֑ול כֵּ֛ן כדבריך עָלֵ֖ינוּ לַעֲשֹֽׂות׃ "
+  },
+  "EZR 10:13": {
+   "KJV": "But the people are many, and it is a time of much rain, and we are not able to stand without, neither is this a work of one day or two: for we are many that have transgressed in this thing.",
+   "BHSA": "אֲבָ֞ל הָעָ֥ם רָב֙ וְהָעֵ֣ת גְּשָׁמִ֔ים וְאֵ֥ין כֹּ֖חַ לַעֲמֹ֣וד בַּח֑וּץ וְהַמְּלָאכָ֗ה לֹֽא־לְיֹ֤ום אֶחָד֙ וְלֹ֣א לִשְׁנַ֔יִם כִּֽי־הִרְבִּ֥ינוּ לִפְשֹׁ֖עַ בַּדָּבָ֥ר הַזֶּֽה׃ "
+  },
+  "EZR 10:14": {
+   "KJV": "Let now our rulers of all the congregation stand, and let all them which have taken strange wives in our cities come at appointed times, and with them the elders of every city, and the judges thereof, until the fierce wrath of our God for this matter be turned from us.",
+   "BHSA": "יַֽעֲמְדוּ־נָ֣א שָׂ֠רֵינוּ לְֽכָל־הַקָּהָ֞ל וְכֹ֣ל׀ אֲשֶׁ֣ר בֶּעָרֵ֗ינוּ הַהֹשִׁ֞יב נָשִׁ֤ים נָכְרִיֹּות֙ יָבֹא֙ לְעִתִּ֣ים מְזֻמָּנִ֔ים וְעִמָּהֶ֛ם זִקְנֵי־עִ֥יר וָעִ֖יר וְשֹׁפְטֶ֑יהָ עַ֠ד לְהָשִׁ֞יב חֲרֹ֤ון אַף־אֱלֹהֵ֨ינוּ֙ מִמֶּ֔נּוּ עַ֖ד לַדָּבָ֥ר הַזֶּֽה׃ פ "
+  },
+  "EZR 10:15": {
+   "KJV": "Only Jonathan the son of Asahel and Jahaziah the son of Tikvah were employed about this matter: and Meshullam and Shabbethai the Levite helped them.",
+   "BHSA": "אַ֣ךְ יֹונָתָ֧ן בֶּן־עֲשָׂהאֵ֛ל וְיַחְזְיָ֥ה בֶן־תִּקְוָ֖ה עָמְד֣וּ עַל־זֹ֑את וּמְשֻׁלָּ֛ם וְשַׁבְּתַ֥י הַלֵּוִ֖י עֲזָרֻֽם׃ "
+  },
+  "EZR 10:16": {
+   "KJV": "And the children of the captivity did so. And Ezra the priest, with certain chief of the fathers, after the house of their fathers, and all of them by their names, were separated, and sat down in the first day of the tenth month to examine the matter.",
+   "BHSA": "וַיַּֽעֲשׂוּ־כֵן֮ בְּנֵ֣י הַגֹּולָה֒ וַיִּבָּדְלוּ֩ עֶזְרָ֨א הַכֹּהֵ֜ן אֲנָשִׁ֨ים רָאשֵׁ֧י הָאָבֹ֛ות לְבֵ֥ית אֲבֹתָ֖ם וְכֻלָּ֣ם בְּשֵׁמֹ֑ות וַיֵּשְׁב֗וּ בְּיֹ֤ום אֶחָד֙ לַחֹ֣דֶשׁ הָעֲשִׂירִ֔י לְדַרְיֹ֖ושׁ הַדָּבָֽר׃ "
+  },
+  "EZR 10:17": {
+   "KJV": "And they made an end with all the men that had taken strange wives by the first day of the first month.",
+   "BHSA": "וַיְכַלּ֣וּ בַכֹּ֔ל אֲנָשִׁ֕ים הַהֹשִׁ֖יבוּ נָשִׁ֣ים נָכְרִיֹּ֑ות עַ֛ד יֹ֥ום אֶחָ֖ד לַחֹ֥דֶשׁ הָרִאשֹֽׁון׃ פ "
+  },
+  "EZR 10:18": {
+   "KJV": "And among the sons of the priests there were found that had taken strange wives: namely, of the sons of Jeshua the son of Jozadak, and his brethren; Maaseiah, and Eliezer, and Jarib, and Gedaliah.",
+   "BHSA": "וַיִּמָּצֵא֙ מִבְּנֵ֣י הַכֹּהֲנִ֔ים אֲשֶׁ֥ר הֹשִׁ֖יבוּ נָשִׁ֣ים נָכְרִיֹּ֑ות מִבְּנֵי֙ יֵשׁ֤וּעַ בֶּן־יֹֽוצָדָק֙ וְאֶחָ֔יו מַֽעֲשֵׂיָה֙ וֶֽאֱלִיעֶ֔זֶר וְיָרִ֖יב וּגְדַלְיָֽה׃ "
+  },
+  "EZR 10:19": {
+   "KJV": "And they gave their hands that they would put away their wives; and being guilty, they offered a ram of the flock for their trespass.",
+   "BHSA": "וַיִּתְּנ֥וּ יָדָ֖ם לְהֹוצִ֣יא נְשֵׁיהֶ֑ם וַאֲשֵׁמִ֥ים אֵֽיל־צֹ֖אן עַל־אַשְׁמָתָֽם׃ ס "
+  },
+  "EZR 10:20": {
+   "KJV": "And of the sons of Immer; Hanani, and Zebadiah.",
+   "BHSA": "וּמִבְּנֵ֣י אִמֵּ֔ר חֲנָ֖נִי וּזְבַדְיָֽה׃ ס "
+  },
+  "EZR 10:21": {
+   "KJV": "And of the sons of Harim; Maaseiah, and Elijah, and Shemaiah, and Jehiel, and Uzziah.",
+   "BHSA": "וּמִבְּנֵ֖י חָרִ֑ם מַעֲשֵׂיָ֤ה וְאֵֽלִיָּה֙ וּֽשְׁמַֽעְיָ֔ה וִיחִיאֵ֖ל וְעֻזִיָּֽה׃ "
+  },
+  "EZR 10:22": {
+   "KJV": "And of the sons of Pashur; Elioenai, Maaseiah, Ishmael, Nethaneel, Jozabad, and Elasah.",
+   "BHSA": "וּמִבְּנֵ֖י פַּשְׁח֑וּר אֶלְיֹועֵינַ֤י מַֽעֲשֵׂיָה֙ יִשְׁמָעֵ֣אל נְתַנְאֵ֔ל יֹוזָבָ֖ד וְאֶלְעָשָֽׂה׃ ס "
+  },
+  "EZR 10:23": {
+   "KJV": "Also of the Levites; Jozabad, and Shimei, and Kelaiah, (the same is Kelita,) Pethahiah, Judah, and Eliezer.",
+   "BHSA": "וּמִֽן־הַלְוִיִּ֑ם יֹוזָבָ֣ד וְשִׁמְעִ֗י וְקֵֽלָיָה֙ ה֣וּא קְלִיטָ֔א פְּתַֽחְיָ֥ה יְהוּדָ֖ה וֶאֱלִיעֶֽזֶר׃ ס "
+  },
+  "EZR 10:24": {
+   "KJV": "Of the singers also; Eliashib: and of the porters; Shallum, and Telem, and Uri.",
+   "BHSA": "וּמִן־הַמְשֹׁרְרִ֖ים אֶלְיָשִׁ֑יב וּמִן־הַשֹּׁ֣עֲרִ֔ים שַׁלֻּ֥ם וָטֶ֖לֶם וְאוּרִֽי׃ ס "
+  },
+  "EZR 10:25": {
+   "KJV": "Moreover of Israel: of the sons of Parosh; Ramiah, and Jeziah, and Malchiah, and Miamin, and Eleazar, and Malchijah, and Benaiah.",
+   "BHSA": "וּמִֽיִּשְׂרָאֵ֑ל מִבְּנֵ֣י פַרְעֹ֡שׁ רַ֠מְיָה וְיִזִּיָּ֤ה וּמַלְכִּיָּה֙ וּמִיָּמִ֣ן וְאֶלְעָזָ֔ר וּמַלְכִּיָּ֖ה וּבְנָיָֽה׃ ס "
+  },
+  "EZR 10:26": {
+   "KJV": "And of the sons of Elam; Mattaniah, Zechariah, and Jehiel, and Abdi, and Jeremoth, and Eliah.",
+   "BHSA": "וּמִבְּנֵ֖י עֵילָ֑ם מַתַּנְיָ֤ה זְכַרְיָה֙ וִיחִיאֵ֣ל וְעַבְדִּ֔י וִירֵמֹ֖ות וְאֵלִיָּֽה׃ ס "
+  },
+  "EZR 10:27": {
+   "KJV": "And of the sons of Zattu; Elioenai, Eliashib, Mattaniah, and Jeremoth, and Zabad, and Aziza.",
+   "BHSA": "וּמִבְּנֵ֖י זַתּ֑וּא אֶלְיֹועֵנַ֤י אֶלְיָשִׁיב֙ מַתַּנְיָ֣ה וִֽירֵמֹ֔ות וְזָבָ֖ד וַעֲזִיזָֽא׃ ס "
+  },
+  "EZR 10:28": {
+   "KJV": "Of the sons also of Bebai; Jehohanan, Hananiah, Zabbai, and Athlai.",
+   "BHSA": "וּמִבְּנֵ֖י בֵּבָ֑י יְהֹוחָנָ֥ן חֲנַנְיָ֖ה זַבַּ֥י עַתְלָֽי׃ ס "
+  },
+  "EZR 10:29": {
+   "KJV": "And of the sons of Bani; Meshullam, Malluch, and Adaiah, Jashub, and Sheal, and Ramoth.",
+   "BHSA": "וּמִבְּנֵ֖י בָּנִ֑י מְשֻׁלָּ֤ם מַלּוּךְ֙ וַעֲדָיָ֔ה יָשׁ֖וּב וּשְׁאָ֥ל ירמות׃ "
+  },
+  "EZR 10:30": {
+   "KJV": "And of the sons of Pahathmoab; Adna, and Chelal, Benaiah, Maaseiah, Mattaniah, Bezaleel, and Binnui, and Manasseh.",
+   "BHSA": "וּמִבְּנֵ֛י פַּחַ֥ת מֹואָ֖ב עַדְנָ֣א וּכְלָ֑ל בְּנָיָ֤ה מַעֲשֵׂיָה֙ מַתַּנְיָ֣ה בְצַלְאֵ֔ל וּבִנּ֖וּי וּמְנַשֶּֽׁה׃ ס "
+  },
+  "EZR 10:31": {
+   "KJV": "And of the sons of Harim; Eliezer, Ishijah, Malchiah, Shemaiah, Shimeon,",
+   "BHSA": "וּבְנֵ֖י חָרִ֑ם אֱלִיעֶ֧זֶר יִשִּׁיָּ֛ה מַלְכִּיָּ֖ה שְׁמַֽעְיָ֥ה שִׁמְעֹֽון׃ "
+  },
+  "EZR 10:32": {
+   "KJV": "Benjamin, Malluch, and Shemariah.",
+   "BHSA": "בְּנְיָמִ֥ן מַלּ֖וּךְ שְׁמַרְיָֽה׃ ס "
+  },
+  "EZR 10:33": {
+   "KJV": "Of the sons of Hashum; Mattenai, Mattathah, Zabad, Eliphelet, Jeremai, Manasseh, and Shimei.",
+   "BHSA": "מִבְּנֵ֖י חָשֻׁ֑ם מַתְּנַ֤י מַתַּתָּה֙ זָבָ֣ד אֱלִיפֶ֔לֶט יְרֵמַ֥י מְנַשֶּׁ֖ה שִׁמְעִֽי׃ ס "
+  },
+  "EZR 10:34": {
+   "KJV": "Of the sons of Bani; Maadai, Amram, and Uel,",
+   "BHSA": "מִבְּנֵ֣י בָנִ֔י מַעֲדַ֥י עַמְרָ֖ם וְאוּאֵֽל׃ ס "
+  },
+  "EZR 10:35": {
+   "KJV": "Benaiah, Bedeiah, Chelluh,",
+   "BHSA": "בְּנָיָ֥ה בֵדְיָ֖ה כלהי׃ "
+  },
+  "EZR 10:36": {
+   "KJV": "Vaniah, Meremoth, Eliashib,",
+   "BHSA": "וַנְיָ֥ה מְרֵמֹ֖ות אֶלְיָשִֽׁיב׃ "
+  },
+  "EZR 10:37": {
+   "KJV": "Mattaniah, Mattenai, and Jaasau,",
+   "BHSA": "מַתַּנְיָ֥ה מַתְּנַ֖י ויעשׂו׃ "
+  },
+  "EZR 10:38": {
+   "KJV": "And Bani, and Binnui, Shimei,",
+   "BHSA": "וּבָנִ֥י וּבִנּ֖וּי שִׁמְעִֽי׃ "
+  },
+  "EZR 10:39": {
+   "KJV": "And Shelemiah, and Nathan, and Adaiah,",
+   "BHSA": "וְשֶֽׁלֶמְיָ֥ה וְנָתָ֖ן וַעֲדָיָֽה׃ "
+  },
+  "EZR 10:40": {
+   "KJV": "Machnadebai, Shashai, Sharai,",
+   "BHSA": "מַכְנַדְבַ֥י שָׁשַׁ֖י שָׁרָֽי׃ "
+  },
+  "EZR 10:41": {
+   "KJV": "Azareel, and Shelemiah, Shemariah,",
+   "BHSA": "עֲזַרְאֵ֥ל וְשֶׁלֶמְיָ֖הוּ שְׁמַרְיָֽה׃ "
+  },
+  "EZR 10:42": {
+   "KJV": "Shallum, Amariah, and Joseph.",
+   "BHSA": "שַׁלּ֥וּם אֲמַרְיָ֖ה יֹוסֵֽף׃ ס "
+  },
+  "EZR 10:43": {
+   "KJV": "Of the sons of Nebo; Jeiel, Mattithiah, Zabad, Zebina, Jadau, and Joel, Benaiah.",
+   "BHSA": "מִבְּנֵ֖י נְבֹ֑ו יְעִיאֵ֤ל מַתִּתְיָה֙ זָבָ֣ד זְבִינָ֔א ידו וְיֹואֵ֖ל בְּנָיָֽה׃ "
+  },
+  "EZR 10:44": {
+   "KJV": "All these had taken strange wives: and some of them had wives by whom they had children.",
+   "BHSA": "כָּל־אֵ֕לֶּה נשׂאו נָשִׁ֣ים נָכְרִיֹּ֑ות וְיֵ֣שׁ מֵהֶ֣ם נָשִׁ֔ים וַיָּשִׂ֖ימוּ בָּנִֽים׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "abdi-2",
+   "name": "Abdi",
+   "distinguisher": "descendant of Elam who had married a foreign wife (EZR 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "adaiah-6",
+   "name": "Adaiah",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "adaiah-7",
+   "name": "Adaiah",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:39)",
+   "sex": "male"
+  },
+  {
+   "slug": "adna",
+   "name": "Adna",
+   "distinguisher": "descendant of Pahath-moab who had married a foreign wife (EZR 10:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "amariah-5",
+   "name": "Amariah",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:42)",
+   "sex": "male"
+  },
+  {
+   "slug": "amram-2",
+   "name": "Amram",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "asahel-4",
+   "name": "Asahel",
+   "distinguisher": "opposed Israel's decision to set apart foreign wives (EZR 10:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "athlai",
+   "name": "Athlai",
+   "distinguisher": "descendant of Bebai who had married a foreign wife (EZR 10:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "azarel-3",
+   "name": "Azarel",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "aziza",
+   "name": "Aziza",
+   "distinguisher": "descendant of Zattu who had married a foreign wife (EZR 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "bani",
+   "name": "Bani",
+   "distinguisher": "the Gadite, thirty-second of \"the thirty\" of David's men (2SA 23:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "bani-4",
+   "name": "Bani",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "bani-5",
+   "name": "Bani",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "bebai",
+   "name": "Bebai",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "bedeiah",
+   "name": "Bedeiah",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "benaiah-10",
+   "name": "Benaiah",
+   "distinguisher": "descendant of Nebo who had married a foreign wife (EZR 10:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "benaiah-7",
+   "name": "Benaiah",
+   "distinguisher": "descendant of Parosh who had married a foreign wife (EZR 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "benaiah-8",
+   "name": "Benaiah",
+   "distinguisher": "descendant of Pahath-moab who had married a foreign wife (EZR 10:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "benaiah-9",
+   "name": "Benaiah",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin",
+   "name": "Benjamin",
+   "distinguisher": "twelfth-born son of Jacob and Rachel (GEN 35:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin-3",
+   "name": "Benjamin",
+   "distinguisher": "descendant of Harim who had married a foreign wife (EZR 10:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "bezalel-2",
+   "name": "Bezalel",
+   "distinguisher": "descendant of Pahath-moab who had married a foreign wife (EZR 10:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "binnui-2",
+   "name": "Binnui",
+   "distinguisher": "descendant of Pahath-moab who had married a foreign wife (EZR 10:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "binnui-3",
+   "name": "Binnui",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "chelal",
+   "name": "Chelal",
+   "distinguisher": "descendant of Pahath-moab who had married a foreign wife (EZR 10:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "cheluhi",
+   "name": "Cheluhi",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "elam-4",
+   "name": "Elam",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "elasah",
+   "name": "Elasah",
+   "distinguisher": "son of Pashhur who had married a foreign wife (EZR 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar-7",
+   "name": "Eleazar",
+   "distinguisher": "descendant of Parosh who had married a foreign wife (EZR 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliashib-3",
+   "name": "Eliashib",
+   "distinguisher": "father of Jehohanan in whose house Ezra mourned (EZR 10:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliashib-4",
+   "name": "Eliashib",
+   "distinguisher": "Levite singer who had married a foreign wife (EZR 10:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliashib-5",
+   "name": "Eliashib",
+   "distinguisher": "descendant of Zattu who had married a foreign wife (EZR 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliashib-6",
+   "name": "Eliashib",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliashib-7",
+   "name": "Eliashib",
+   "distinguisher": "the high priest with Nehemiah during the reconstruction of Jerusalem (NEH 3:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliezer-10",
+   "name": "Eliezer",
+   "distinguisher": "Priest, of the sons of Jeshua's family, who had married a foreign wife.",
+   "sex": null
+  },
+  {
+   "slug": "eliezer-11",
+   "name": "Eliezer",
+   "distinguisher": "A Levite who had married a foreign wife, distinct from the priestly and Harim Eliezers.",
+   "sex": null
+  },
+  {
+   "slug": "eliezer-7",
+   "name": "Eliezer",
+   "distinguisher": "Priest Ezra sent to Iddo (EZR 8:16), married a foreign wife (EZR 10:18, EZ 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliezer-8",
+   "name": "Eliezer",
+   "distinguisher": "descendant of Harim who had married a foreign wife (EZR 10:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "elijah-3",
+   "name": "Elijah",
+   "distinguisher": "son of Harim who had married a foreign wife (EZR 10:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "elijah-4",
+   "name": "Elijah",
+   "distinguisher": "descendant of Elam who had married a foreign wife (EZR 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "elioenai-4",
+   "name": "Elioenai",
+   "distinguisher": "son of Pashhur who had married a foreign wife (EZR 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "elioenai-5",
+   "name": "Elioenai",
+   "distinguisher": "descendant of Zattu who had married a foreign wife (EZR 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliphelet-6",
+   "name": "Eliphelet",
+   "distinguisher": "descendant of Hashum who had married a foreign wife (EZR 10:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "ezra",
+   "name": "Ezra",
+   "distinguisher": "son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "gedaliah-3",
+   "name": "Gedaliah",
+   "distinguisher": "priest who had married a foreign wife (EZR 10:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanani-3",
+   "name": "Hanani",
+   "distinguisher": "son of Immer who had married a foreign wife (EZR 10:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "hananiah-5",
+   "name": "Hananiah",
+   "distinguisher": "descendant of Bebai who had married a foreign wife (EZR 10:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "harim-2",
+   "name": "Harim",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "harim-3",
+   "name": "Harim",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:39)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashum",
+   "name": "Hashum",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashum-2",
+   "name": "Hashum",
+   "distinguisher": "stood on Ezra's left hand as he read from the Law (NEH 8:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "immer",
+   "name": "Immer",
+   "distinguisher": "father of Meshillemith (1CH 9:12), priest (EZR 2:37, NEH 7:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishmael-6",
+   "name": "Ishmael",
+   "distinguisher": "son of Pashhur who had married a foreign wife (EZR 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "isshijah",
+   "name": "Isshijah",
+   "distinguisher": "descendant of Harim who had married a foreign wife (EZR 10:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "izziah",
+   "name": "Izziah",
+   "distinguisher": "descendant of Parosh who had married a foreign wife (EZR 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "jaasu",
+   "name": "Jaasu",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "jaddai",
+   "name": "Jaddai",
+   "distinguisher": "descendant of Nebo who had married a foreign wife (EZR 10:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahzeiah",
+   "name": "Jahzeiah",
+   "distinguisher": "opposed Israel's decision to set apart foreign wives (EZR 10:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "jarib",
+   "name": "Jarib",
+   "distinguisher": "Priest Ezra sent to Iddo (EZR 8:16), married a foreign wife (EZR 10:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "jarib-2",
+   "name": "Jarib",
+   "distinguisher": "Priest, descendant of Jeshua son of Jozadak, put away his foreign wife.",
+   "sex": null
+  },
+  {
+   "slug": "jashub",
+   "name": "Jashub",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehiel-6",
+   "name": "Jehiel",
+   "distinguisher": "son of Elam and father of Shecaniah (EZR 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehiel-7",
+   "name": "Jehiel",
+   "distinguisher": "son of Harim who had married a foreign wife (EZR 10:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehiel-8",
+   "name": "Jehiel",
+   "distinguisher": "descendant of Elam who had married a foreign wife (EZR 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehohanan",
+   "name": "Jehohanan",
+   "distinguisher": "in his house, Ezra mourned over the unfaithfulness of Israel (EZR 10:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehohanan-2",
+   "name": "Jehohanan",
+   "distinguisher": "descendant of Bebai who had married a foreign wife (EZR 10:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeiel-8",
+   "name": "Jeiel",
+   "distinguisher": "descendant of Nebo who had married a foreign wife (EZR 10:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremai",
+   "name": "Jeremai",
+   "distinguisher": "descendant of Hashum who had married a foreign wife (EZR 10:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremoth-5",
+   "name": "Jeremoth",
+   "distinguisher": "descendant of Elam who had married a foreign wife (EZR 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremoth-6",
+   "name": "Jeremoth",
+   "distinguisher": "descendant of Zattu who had married a foreign wife (EZR 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremoth-7",
+   "name": "Jeremoth",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshua-3",
+   "name": "Jeshua",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "joel-9",
+   "name": "Joel",
+   "distinguisher": "descendant of Nebo who had married a foreign wife (EZR 10:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "jonathan-9",
+   "name": "Jonathan",
+   "distinguisher": "opposed Israel's decision to set apart foreign wives (EZR 10:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "joseph-4",
+   "name": "Joseph",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:42)",
+   "sex": "male"
+  },
+  {
+   "slug": "jozabad-6",
+   "name": "Jozabad",
+   "distinguisher": "son of Pashhur who had married a foreign wife (EZR 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "jozabad-7",
+   "name": "Jozabad",
+   "distinguisher": "Levite who had married a foreign wife (EZR 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "jozadak",
+   "name": "Jozadak",
+   "distinguisher": "father of Jeshua who built the altar (EZR 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "judah-2",
+   "name": "Judah",
+   "distinguisher": "Levite who had married a foreign wife (EZR 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "kelaiah",
+   "name": "Kelaiah",
+   "distinguisher": "Levite who had married a foreign wife (EZR 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "kelita",
+   "name": "Kelita",
+   "distinguisher": "explained the law to the people (NEH 8:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "levi",
+   "name": "Levi",
+   "distinguisher": "third-born son of Jacob (GEN 29:34), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "maadai",
+   "name": "Maadai",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "maaseiah-15",
+   "name": "Maaseiah",
+   "distinguisher": "Priest of the sons of Harim with a foreign wife",
+   "sex": null
+  },
+  {
+   "slug": "maaseiah-6",
+   "name": "Maaseiah",
+   "distinguisher": "priest who had married a foreign wife (EZR 10:18), son of Harim (EZR 10:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "maaseiah-7",
+   "name": "Maaseiah",
+   "distinguisher": "son of Pashhur who had married a foreign wife (EZR 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "maaseiah-8",
+   "name": "Maaseiah",
+   "distinguisher": "descendant of Pahath-moab who had married a foreign wife (EZR 10:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "machnadebai",
+   "name": "Machnadebai",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "malchijah-4",
+   "name": "Malchijah",
+   "distinguisher": "descendant of Parosh who had married a foreign wife (EZR 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "malchijah-5",
+   "name": "Malchijah",
+   "distinguisher": "descendant of Parosh who had married a foreign wife (EZR 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "malchijah-6",
+   "name": "Malchijah",
+   "distinguisher": "descendant of Harim who had married a foreign wife (EZR 10:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "malluch-2",
+   "name": "Malluch",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "malluch-3",
+   "name": "Malluch",
+   "distinguisher": "descendant of Harim who had married a foreign wife (EZR 10:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh-4",
+   "name": "Manasseh",
+   "distinguisher": "descendant of Pahath-moab who had married a foreign wife (EZR 10:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh-5",
+   "name": "Manasseh",
+   "distinguisher": "descendant of Hashum who had married a foreign wife (EZR 10:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattaniah-5",
+   "name": "Mattaniah",
+   "distinguisher": "descendant of Elam who had married a foreign wife (EZR 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattaniah-6",
+   "name": "Mattaniah",
+   "distinguisher": "descendant of Zattu who had married a foreign wife (EZR 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattaniah-7",
+   "name": "Mattaniah",
+   "distinguisher": "descendant of Pahath-moab who had married a foreign wife (EZR 10:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattaniah-8",
+   "name": "Mattaniah",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattattah",
+   "name": "Mattattah",
+   "distinguisher": "descendant of Hashum who had married a foreign wife (EZR 10:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattenai",
+   "name": "Mattenai",
+   "distinguisher": "descendant of Hashum who had married a foreign wife (EZR 10:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattenai-2",
+   "name": "Mattenai",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattithiah-4",
+   "name": "Mattithiah",
+   "distinguisher": "descendant of Nebo who had married a foreign wife (EZR 10:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "meremoth-2",
+   "name": "Meremoth",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshullam-10",
+   "name": "Meshullam",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshullam-8",
+   "name": "Meshullam",
+   "distinguisher": "Levite Ezra sent to Iddo (EZR 8:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "mijamin-2",
+   "name": "Mijamin",
+   "distinguisher": "descendant of Parosh who had married a foreign wife (EZR 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "nathan-8",
+   "name": "Nathan",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:39)",
+   "sex": "male"
+  },
+  {
+   "slug": "nebo",
+   "name": "Nebo",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "netanel",
+   "name": "Netanel",
+   "distinguisher": "son of Pashhur who had married a foreign wife (EZR 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "pahathmoab",
+   "name": "Pahath-moab",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "parosh",
+   "name": "Parosh",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "pashhur-the-priest",
+   "name": "Pashhur",
+   "distinguisher": "a priest, son of Malchijah, forefather of priests who served in Jerusalem after the return (1CH 9:12, NEH 11:12)",
+   "sex": null
+  },
+  {
+   "slug": "pethahiah-2",
+   "name": "Pethahiah",
+   "distinguisher": "Levite who had married a foreign wife (EZR 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "ramiah",
+   "name": "Ramiah",
+   "distinguisher": "descendant of Parosh who had married a foreign wife (EZR 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "shabbethai-2",
+   "name": "Shabbethai",
+   "distinguisher": "explained the law to the people (NEH 8:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum-10",
+   "name": "Shallum",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:42)",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum-9",
+   "name": "Shallum",
+   "distinguisher": "Levite singer who had married a foreign wife (EZR 10:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "sharai",
+   "name": "Sharai",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "shashai",
+   "name": "Shashai",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "sheal",
+   "name": "Sheal",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "shecaniah-5",
+   "name": "Shecaniah",
+   "distinguisher": "son of Jehiel (EZR 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelemiah",
+   "name": "Shelemiah",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:39)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelemiah-2",
+   "name": "Shelemiah",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-15",
+   "name": "Shemaiah",
+   "distinguisher": "son of Harim who had married a foreign wife (EZR 10:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-16",
+   "name": "Shemaiah",
+   "distinguisher": "descendant of Harim who had married a foreign wife (EZR 10:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemariah-3",
+   "name": "Shemariah",
+   "distinguisher": "descendant of Harim who had married a foreign wife (EZR 10:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemariah-4",
+   "name": "Shemariah",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei-14",
+   "name": "Shimei",
+   "distinguisher": "Levite who had married a foreign wife (EZR 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei-15",
+   "name": "Shimei",
+   "distinguisher": "descendant of Hashum who had married a foreign wife (EZR 10:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei-16",
+   "name": "Shimei",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimeon",
+   "name": "Shimeon",
+   "distinguisher": "descendant of Harim who had married a foreign wife (EZR 10:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "telem",
+   "name": "Telem",
+   "distinguisher": "Levite gatekeeper who had married a foreign wife (EZR 10:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "tikvah-2",
+   "name": "Tikvah",
+   "distinguisher": "opposed Israel's decision to set apart foreign wives (EZR 10:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "uel",
+   "name": "Uel",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "uri-3",
+   "name": "Uri",
+   "distinguisher": "Levite gatekeeper who had married a foreign wife (EZR 10:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzziah-2",
+   "name": "Uzziah",
+   "distinguisher": "son of Harim who had married a foreign wife (EZR 10:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "vaniah",
+   "name": "Vaniah",
+   "distinguisher": "descendant of Bani who had married a foreign wife (EZR 10:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zabad-4",
+   "name": "Zabad",
+   "distinguisher": "descendant of Zattu who had married a foreign wife (EZR 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "zabad-5",
+   "name": "Zabad",
+   "distinguisher": "descendant of Hashum who had married a foreign wife (EZR 10:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "zabad-6",
+   "name": "Zabad",
+   "distinguisher": "descendant of Nebo who had married a foreign wife (EZR 10:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "zabbai",
+   "name": "Zabbai",
+   "distinguisher": "descendant of Bebai who had married a foreign wife (EZR 10:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "zattu",
+   "name": "Zattu",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "zebadiah-9",
+   "name": "Zebadiah",
+   "distinguisher": "son of Immer who had married a foreign wife (EZR 10:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "zebina",
+   "name": "Zebina",
+   "distinguisher": "descendant of Nebo who had married a foreign wife (EZR 10:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "zechariah-18",
+   "name": "Zechariah",
+   "distinguisher": "descendant of Elam who had married a foreign wife (EZR 10:26)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 100106,
+   "row": "jehiel-6 father-of shecaniah-5",
+   "verse": "EZR 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102528,
+   "row": "shecaniah-5 son-of jehiel-6",
+   "verse": "EZR 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102529,
+   "row": "shecaniah-5 descendant-of elam-4",
+   "verse": "EZR 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 104684,
+   "row": "elam-4 ancestor-of shecaniah-5",
+   "verse": "EZR 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98631,
+   "row": "eliashib-3 father-of jehohanan",
+   "verse": "EZR 10:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100126,
+   "row": "jehohanan son-of eliashib-3",
+   "verse": "EZR 10:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97626,
+   "row": "asahel-4 father-of jonathan-9",
+   "verse": "EZR 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99973,
+   "row": "jahzeiah son-of tikvah-2",
+   "verse": "EZR 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100542,
+   "row": "jonathan-9 son-of asahel-4",
+   "verse": "EZR 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101315,
+   "row": "meshullam-8 supporter-of jonathan-9",
+   "verse": "EZR 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-16"
+  },
+  {
+   "id": 101316,
+   "row": "meshullam-8 supporter-of jahzeiah",
+   "verse": "EZR 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-16"
+  },
+  {
+   "id": 103063,
+   "row": "tikvah-2 father-of jahzeiah",
+   "verse": "EZR 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106231,
+   "row": "shabbethai-2 descendant-of levi",
+   "verse": "EZR 10:15",
+   "source": "read from Scripture by an agent reading EZR 10:15 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 100037,
+   "row": "jarib descendant-of jeshua-3",
+   "verse": "EZR 10:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103641,
+   "row": "eliezer-10 descendant-of jeshua-3",
+   "verse": "EZR 10:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103682,
+   "row": "jarib-2 descendant-of jeshua-3",
+   "verse": "EZR 10:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105672,
+   "row": "eliezer-7 descendant-of jeshua-3",
+   "verse": "EZR 10:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105674,
+   "row": "eliezer-7 descendant-of levi",
+   "verse": "EZR 10:18",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 106506,
+   "row": "gedaliah-3 descendant-of jeshua-3",
+   "verse": "EZR 10:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106507,
+   "row": "gedaliah-3 descendant-of aaron",
+   "verse": "EZR 10:18",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106678,
+   "row": "maaseiah-6 descendant-of jeshua-3",
+   "verse": "EZR 10:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106680,
+   "row": "maaseiah-6 descendant-of harim-3",
+   "verse": "EZR 10:18",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 105167,
+   "row": "hanani-3 descendant-of immer",
+   "verse": "EZR 10:20",
+   "source": "read from Scripture by an agent reading EZR 10:20 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 106731,
+   "row": "zebadiah-9 descendant-of immer",
+   "verse": "EZR 10:20",
+   "source": "read from Scripture by an agent reading EZR 10:20 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 103712,
+   "row": "maaseiah-15 descendant-of harim-3",
+   "verse": "EZR 10:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105151,
+   "row": "elijah-3 descendant-of harim-3",
+   "verse": "EZR 10:21",
+   "source": "read from Scripture by an agent reading EZR 10:21 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 106515,
+   "row": "jehiel-7 descendant-of harim-3",
+   "verse": "EZR 10:21",
+   "source": "read from Scripture by an agent reading EZR 10:21 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 107090,
+   "row": "shemaiah-15 descendant-of harim-3",
+   "verse": "EZR 10:21",
+   "source": "read from Scripture by an agent reading EZR 10:21 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 107148,
+   "row": "uzziah-2 descendant-of harim-3",
+   "verse": "EZR 10:21",
+   "source": "read from Scripture by an agent reading EZR 10:21 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 98553,
+   "row": "elasah descendant-of pashhur-the-priest",
+   "verse": "EZR 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98693,
+   "row": "elioenai-4 descendant-of pashhur-the-priest",
+   "verse": "EZR 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99790,
+   "row": "ishmael-6 descendant-of pashhur-the-priest",
+   "verse": "EZR 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100635,
+   "row": "jozabad-6 descendant-of pashhur-the-priest",
+   "verse": "EZR 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100995,
+   "row": "maaseiah-7 descendant-of pashhur-the-priest",
+   "verse": "EZR 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101718,
+   "row": "netanel descendant-of pashhur-the-priest",
+   "verse": "EZR 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105931,
+   "row": "jozabad-7 descendant-of levi",
+   "verse": "EZR 10:23",
+   "source": "read from Scripture by an agent reading EZR 10:23 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 105946,
+   "row": "judah-2 descendant-of levi",
+   "verse": "EZR 10:23",
+   "source": "read from Scripture by an agent reading EZR 10:23 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 105963,
+   "row": "kelaiah descendant-of levi",
+   "verse": "EZR 10:23",
+   "source": "read from Scripture by an agent reading EZR 10:23 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 106711,
+   "row": "shimei-14 descendant-of levi",
+   "verse": "EZR 10:23",
+   "source": "read from Scripture by an agent reading EZR 10:23 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 107022,
+   "row": "pethahiah-2 descendant-of levi",
+   "verse": "EZR 10:23",
+   "source": "read from Scripture by an agent reading EZR 10:23 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 105667,
+   "row": "eliashib-4 descendant-of levi",
+   "verse": "EZR 10:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 106235,
+   "row": "shallum-9 descendant-of levi",
+   "verse": "EZR 10:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 107118,
+   "row": "telem descendant-of levi",
+   "verse": "EZR 10:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 107145,
+   "row": "uri-3 descendant-of levi",
+   "verse": "EZR 10:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 98004,
+   "row": "benaiah-7 descendant-of parosh",
+   "verse": "EZR 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98582,
+   "row": "eleazar-7 descendant-of parosh",
+   "verse": "EZR 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99877,
+   "row": "izziah descendant-of parosh",
+   "verse": "EZR 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101089,
+   "row": "malchijah-4 descendant-of parosh",
+   "verse": "EZR 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101090,
+   "row": "malchijah-5 descendant-of parosh",
+   "verse": "EZR 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101411,
+   "row": "mijamin-2 descendant-of parosh",
+   "verse": "EZR 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102109,
+   "row": "ramiah descendant-of parosh",
+   "verse": "EZR 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106149,
+   "row": "parosh ancestor-of ramiah",
+   "verse": "EZR 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97000,
+   "row": "abdi-2 descendant-of elam-4",
+   "verse": "EZR 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98683,
+   "row": "elijah-4 descendant-of elam-4",
+   "verse": "EZR 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100108,
+   "row": "jehiel-8 descendant-of elam-4",
+   "verse": "EZR 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100251,
+   "row": "jeremoth-5 descendant-of elam-4",
+   "verse": "EZR 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101178,
+   "row": "mattaniah-5 descendant-of elam-4",
+   "verse": "EZR 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103398,
+   "row": "zechariah-18 descendant-of elam-4",
+   "verse": "EZR 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97788,
+   "row": "aziza descendant-of zattu",
+   "verse": "EZR 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98632,
+   "row": "eliashib-5 descendant-of zattu",
+   "verse": "EZR 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98694,
+   "row": "elioenai-5 descendant-of zattu",
+   "verse": "EZR 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100252,
+   "row": "jeremoth-6 descendant-of zattu",
+   "verse": "EZR 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101179,
+   "row": "mattaniah-6 descendant-of zattu",
+   "verse": "EZR 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103286,
+   "row": "zabad-4 descendant-of zattu",
+   "verse": "EZR 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107157,
+   "row": "zattu ancestor-of elioenai-5",
+   "verse": "EZR 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97709,
+   "row": "athlai descendant-of bebai",
+   "verse": "EZR 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99303,
+   "row": "hananiah-5 descendant-of bebai",
+   "verse": "EZR 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100127,
+   "row": "jehohanan-2 descendant-of bebai",
+   "verse": "EZR 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103289,
+   "row": "zabbai descendant-of bebai",
+   "verse": "EZR 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103927,
+   "row": "bebai ancestor-of jehohanan-2",
+   "verse": "EZR 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103928,
+   "row": "bebai ancestor-of hananiah-5",
+   "verse": "EZR 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103929,
+   "row": "bebai ancestor-of zabbai",
+   "verse": "EZR 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103930,
+   "row": "bebai ancestor-of athlai",
+   "verse": "EZR 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97163,
+   "row": "adaiah-6 descendant-of bani-4",
+   "verse": "EZR 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100044,
+   "row": "jashub descendant-of bani-4",
+   "verse": "EZR 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100253,
+   "row": "jeremoth-7 descendant-of bani-4",
+   "verse": "EZR 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101106,
+   "row": "malluch-2 descendant-of bani-4",
+   "verse": "EZR 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101300,
+   "row": "meshullam-10 descendant-of bani-4",
+   "verse": "EZR 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102490,
+   "row": "sheal descendant-of bani-4",
+   "verse": "EZR 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103913,
+   "row": "bani-4 ancestor-of meshullam-10",
+   "verse": "EZR 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97189,
+   "row": "adna descendant-of pahathmoab",
+   "verse": "EZR 10:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98005,
+   "row": "benaiah-8 descendant-of pahathmoab",
+   "verse": "EZR 10:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98147,
+   "row": "bezalel-2 descendant-of pahathmoab",
+   "verse": "EZR 10:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98181,
+   "row": "binnui-2 descendant-of pahathmoab",
+   "verse": "EZR 10:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98271,
+   "row": "chelal descendant-of pahathmoab",
+   "verse": "EZR 10:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100996,
+   "row": "maaseiah-8 descendant-of pahathmoab",
+   "verse": "EZR 10:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101130,
+   "row": "manasseh-4 descendant-of pahathmoab",
+   "verse": "EZR 10:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101180,
+   "row": "mattaniah-7 descendant-of pahathmoab",
+   "verse": "EZR 10:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105150,
+   "row": "eliezer-8 descendant-of harim-2",
+   "verse": "EZR 10:31",
+   "source": "read from Scripture by an agent reading EZR 10:31 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 105777,
+   "row": "isshijah descendant-of harim-2",
+   "verse": "EZR 10:31",
+   "source": "read from Scripture by an agent reading EZR 10:31 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 106714,
+   "row": "shimeon descendant-of harim-2",
+   "verse": "EZR 10:31",
+   "source": "read from Scripture by an agent reading EZR 10:31 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 107091,
+   "row": "shemaiah-16 descendant-of harim-2",
+   "verse": "EZR 10:31",
+   "source": "read from Scripture by an agent reading EZR 10:31 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 98033,
+   "row": "benjamin-3 descendant-of harim-2",
+   "verse": "EZR 10:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101107,
+   "row": "malluch-3 descendant-of harim-2",
+   "verse": "EZR 10:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102664,
+   "row": "shemariah-3 descendant-of hashum-2",
+   "verse": "EZR 10:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102665,
+   "row": "shemariah-3 descendant-of harim-2",
+   "verse": "EZR 10:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98712,
+   "row": "eliphelet-6 descendant-of hashum",
+   "verse": "EZR 10:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100234,
+   "row": "jeremai descendant-of hashum",
+   "verse": "EZR 10:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101131,
+   "row": "manasseh-5 descendant-of hashum",
+   "verse": "EZR 10:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101190,
+   "row": "mattattah descendant-of hashum",
+   "verse": "EZR 10:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101191,
+   "row": "mattenai descendant-of hashum",
+   "verse": "EZR 10:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102752,
+   "row": "shimei-15 descendant-of hashum",
+   "verse": "EZR 10:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103287,
+   "row": "zabad-5 descendant-of hashum",
+   "verse": "EZR 10:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106822,
+   "row": "hashum ancestor-of mattenai",
+   "verse": "EZR 10:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106823,
+   "row": "hashum ancestor-of eliphelet-6",
+   "verse": "EZR 10:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106824,
+   "row": "hashum ancestor-of zabad-5",
+   "verse": "EZR 10:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97477,
+   "row": "amram-2 descendant-of bani-4",
+   "verse": "EZR 10:34",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100974,
+   "row": "maadai descendant-of bani-4",
+   "verse": "EZR 10:34",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103133,
+   "row": "uel descendant-of bani-4",
+   "verse": "EZR 10:34",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103914,
+   "row": "bani-4 ancestor-of uel",
+   "verse": "EZR 10:34",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97945,
+   "row": "bedeiah descendant-of bani-4",
+   "verse": "EZR 10:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98006,
+   "row": "benaiah-9 descendant-of bani-4",
+   "verse": "EZR 10:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98280,
+   "row": "cheluhi descendant-of bani-4",
+   "verse": "EZR 10:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98633,
+   "row": "eliashib-6 descendant-of bani-4",
+   "verse": "EZR 10:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101273,
+   "row": "meremoth-2 descendant-of vaniah",
+   "verse": "EZR 10:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101274,
+   "row": "meremoth-2 descendant-of bani-4",
+   "verse": "EZR 10:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103250,
+   "row": "vaniah descendant-of bani-4",
+   "verse": "EZR 10:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99884,
+   "row": "jaasu descendant-of bani-4",
+   "verse": "EZR 10:37",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101181,
+   "row": "mattaniah-8 descendant-of bani-4",
+   "verse": "EZR 10:37",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101192,
+   "row": "mattenai-2 descendant-of bani-4",
+   "verse": "EZR 10:37",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97881,
+   "row": "bani-5 descendant-of bani-4",
+   "verse": "EZR 10:38",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98182,
+   "row": "binnui-3 descendant-of bani-4",
+   "verse": "EZR 10:38",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106712,
+   "row": "shimei-16 descendant-of bani-5",
+   "verse": "EZR 10:38",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106713,
+   "row": "shimei-16 descendant-of bani-4",
+   "verse": "EZR 10:38",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 97164,
+   "row": "adaiah-7 descendant-of bani-4",
+   "verse": "EZR 10:39",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101658,
+   "row": "nathan-8 descendant-of bani-4",
+   "verse": "EZR 10:39",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102559,
+   "row": "shelemiah descendant-of bani-4",
+   "verse": "EZR 10:39",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101015,
+   "row": "machnadebai descendant-of bani",
+   "verse": "EZR 10:40",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101016,
+   "row": "machnadebai descendant-of bani-4",
+   "verse": "EZR 10:40",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102468,
+   "row": "sharai descendant-of bani-4",
+   "verse": "EZR 10:40",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102477,
+   "row": "shashai descendant-of bani-4",
+   "verse": "EZR 10:40",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97726,
+   "row": "azarel-3 descendant-of bani-4",
+   "verse": "EZR 10:41",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102560,
+   "row": "shelemiah-2 descendant-of bani-4",
+   "verse": "EZR 10:41",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102666,
+   "row": "shemariah-4 descendant-of bani-4",
+   "verse": "EZR 10:41",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97405,
+   "row": "amariah-5 descendant-of bani-4",
+   "verse": "EZR 10:42",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 100577,
+   "row": "joseph-4 descendant-of amariah-5",
+   "verse": "EZR 10:42",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 100578,
+   "row": "joseph-4 descendant-of bani-4",
+   "verse": "EZR 10:42",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102404,
+   "row": "shallum-10 descendant-of bani-4",
+   "verse": "EZR 10:42",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97995,
+   "row": "benaiah-10 descendant-of nebo",
+   "verse": "EZR 10:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99926,
+   "row": "jaddai descendant-of nebo",
+   "verse": "EZR 10:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100197,
+   "row": "jeiel-8 descendant-of nebo",
+   "verse": "EZR 10:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100451,
+   "row": "joel-9 descendant-of nebo",
+   "verse": "EZR 10:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101204,
+   "row": "mattithiah-4 descendant-of nebo",
+   "verse": "EZR 10:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101673,
+   "row": "nebo ancestor-of jeiel-8",
+   "verse": "EZR 10:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101674,
+   "row": "nebo ancestor-of mattithiah-4",
+   "verse": "EZR 10:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101675,
+   "row": "nebo ancestor-of zabad-6",
+   "verse": "EZR 10:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103288,
+   "row": "zabad-6 descendant-of nebo",
+   "verse": "EZR 10:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103371,
+   "row": "zebina descendant-of nebo",
+   "verse": "EZR 10:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "ezra priest-of yhvh (EZR 7:11)",
+  "ezra scribe-of yhvh (EZR 7:12)",
+  "hashum-2 companion-of ezra (NEH 8:4)",
+  "benjamin half-brother-of levi (GEN 35:18)",
+  "benjamin half-brother-of judah (GEN 35:18)",
+  "immer descendant-of aaron (1CH 24:14)",
+  "jeshua-3 son-of jozadak (EZR 3:2)",
+  "jozadak descendant-of aaron (EZR 3:2)",
+  "judah brother-of levi (GEN 29:35)",
+  "kelita descendant-of levi (NEH 8:7)",
+  "eliashib-7 high-priest-of yhvh (NEH 3:1)",
+  "eliashib-7 descendant-of aaron (NEH 3:1)",
+  "malchijah-6 son-of harim-2 (NEH 3:11)",
+  "harim-3 descendant-of aaron (1CH 24:8)"
+ ]
+}

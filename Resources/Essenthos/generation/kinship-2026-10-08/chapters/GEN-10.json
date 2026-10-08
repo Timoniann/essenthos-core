@@ -1,0 +1,34 @@
+{
+ "chapter": "GEN 10",
+ "rows": 135,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    99209
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "GEN 10:27",
+   "why": "Hadoram appears in Joktan's offspring list, and the chapter states no genealogical relationship between Hadoram and YHVH.",
+   "confidence": 1
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    107058
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "GEN 10:28",
+   "why": "Sheba in Joktan's offspring list is distinct from Raamah's son Sheba in verse 7, and the chapter states no descent between them.",
+   "confidence": 1
+  }
+ ],
+ "missing": [],
+ "note": "All plain family statements between the supplied records are already recorded in this chapter or elsewhere. Owner row 107059 correctly identifies sheba-2 as Joktan's son.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:15:56+00:00"
+}

@@ -1,0 +1,67 @@
+{
+ "chapter": "EZR 8",
+ "rows": 71,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    106256,
+    106257
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "EZR 8:3",
+   "why": "The Hebrew does not identify the priest shecaniah-2 as either a descendant of Parosh or an ancestor of Zechariah.",
+   "confidence": 0.96
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    107156
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "EZR 8:5",
+   "why": "The supplied Hebrew names Shecaniah and Jahaziel but does not name Zattu or state this ancestry.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    102590,
+    103912
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "EZR 8:10",
+   "why": "The supplied Hebrew names Shelomith and Josiphiah but does not name Bani or state this ancestry.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    105927
+   ],
+   "new_type": "",
+   "new_to": "jeshua-5",
+   "verse": "EZR 8:33",
+   "why": "The verse identifies Jozabad as a Levite and son of Jeshua, matching the Levite jeshua-5 identified by the owner's ruling.",
+   "confidence": 0.95
+  }
+ ],
+ "missing": [
+  {
+   "from": "hattush",
+   "type": "descendant-of",
+   "to": "shecaniah",
+   "verse": "EZR 8:3",
+   "why": "The opening Hebrew phrase 'of the sons of Shecaniah' continues Hattush's identification before the separate Parosh entry.",
+   "confidence": 0.9
+  }
+ ],
+ "note": "Owner rows 106846 and 105917 invoke Zattu and Bani, respectively, although neither appears in the supplied Hebrew or KJV wording; both are retained as rulings. The overlapping Jeiel/Jeuel and Shephatiah records do not provide sufficient evidence for namesake corrections.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:29:54+00:00"
+}

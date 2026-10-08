@@ -1,0 +1,44 @@
+{
+ "chapter": "GEN 25",
+ "rows": 65,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "sheba-3",
+   "type": "descendant-of",
+   "to": "keturah",
+   "verse": "GEN 25:4",
+   "why": "The concluding statement 'all these were the children of Keturah' includes Sheba in the preceding genealogy.",
+   "confidence": 0.95
+  },
+  {
+   "from": "dedan-2",
+   "type": "descendant-of",
+   "to": "keturah",
+   "verse": "GEN 25:4",
+   "why": "The concluding statement 'all these were the children of Keturah' includes Dedan in the preceding genealogy.",
+   "confidence": 0.95
+  },
+  {
+   "from": "letush",
+   "type": "descendant-of",
+   "to": "keturah",
+   "verse": "GEN 25:4",
+   "why": "The concluding statement 'all these were the children of Keturah' includes Letushim in the preceding genealogy.",
+   "confidence": 0.93
+  },
+  {
+   "from": "leum",
+   "type": "descendant-of",
+   "to": "keturah",
+   "verse": "GEN 25:4",
+   "why": "The concluding statement 'all these were the children of Keturah' includes Leummim in the preceding genealogy.",
+   "confidence": 0.93
+  }
+ ],
+ "note": "No supplied chapter row contradicts the text. The owner's Tema son-of Ishmael ruling agrees with the Hebrew list in GEN 25:13–16.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:16:45+00:00"
+}

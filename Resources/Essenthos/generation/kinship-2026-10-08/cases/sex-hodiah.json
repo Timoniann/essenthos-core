@@ -1,0 +1,54 @@
+{
+ "case": "sex-hodiah",
+ "question": "hodiah is recorded male and is the mother-of keilah and eshtemoa-2 (1 Chronicles 4:19).",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "retype-row",
+   "rows": [
+    106646,
+    106647
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "grandfather-of",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "Hebrew אשת הודיה means 'wife of Hodiah.' Her sons are identified as the fathers of Keilah and Eshtemoa, supporting a grandfather relationship for Hodiah rather than motherhood.",
+   "confidence": 0.9
+  },
+  {
+   "kind": "delete-row",
+   "rows": [
+    100710,
+    106685,
+    106686
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "Naham is identified as the brother of Hodiah's wife. The father designation belongs to the genealogy of her sons and does not establish Naham as either man's father.",
+   "confidence": 0.96
+  },
+  {
+   "kind": "delete-row",
+   "rows": [
+    98894
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "The verse associates Keilah and Eshtemoa with the sons of Hodiah's wife but does not identify them as brothers or give them one shared father.",
+   "confidence": 0.97
+  }
+ ],
+ "note": "Hodiah should remain male: the Hebrew identifies his wife as Naham's sister. The owner's brother-in-law ruling, row 106648, is supported and remains unchanged.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:38:40+00:00"
+}

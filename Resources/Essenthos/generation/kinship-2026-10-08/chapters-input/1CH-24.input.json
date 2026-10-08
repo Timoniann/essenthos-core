@@ -1,0 +1,863 @@
+{
+ "chapter": "1CH 24",
+ "text": {
+  "1CH 24:1": {
+   "KJV": "Now these are the divisions of the sons of Aaron. The sons of Aaron; Nadab, and Abihu, Eleazar, and Ithamar.",
+   "BHSA": "וְלִבְנֵ֥י אַהֲרֹ֖ן מַחְלְקֹותָ֑ם בְּנֵ֣י אַהֲרֹ֔ן נָדָב֙ וַאֲבִיה֔וּא אֶלְעָזָ֖ר וְאִיתָמָֽר׃ "
+  },
+  "1CH 24:2": {
+   "KJV": "But Nadab and Abihu died before their father, and had no children: therefore Eleazar and Ithamar executed the priest's office.",
+   "BHSA": "וַיָּ֨מָת נָדָ֤ב וַאֲבִיהוּא֙ לִפְנֵ֣י אֲבִיהֶ֔ם וּבָנִ֖ים לֹא־הָי֣וּ לָהֶ֑ם וַֽיְכַהֲנ֔וּ אֶלְעָזָ֖ר וְאִיתָמָֽר׃ "
+  },
+  "1CH 24:3": {
+   "KJV": "And David distributed them, both Zadok of the sons of Eleazar, and Ahimelech of the sons of Ithamar, according to their offices in their service.",
+   "BHSA": "וַיֶּֽחָלְקֵ֣ם דָּוִ֔יד וְצָדֹוק֙ מִן־בְּנֵ֣י אֶלְעָזָ֔ר וַאֲחִימֶ֖לֶךְ מִן־בְּנֵ֣י אִיתָמָ֑ר לִפְקֻדָּתָ֖ם בַּעֲבֹדָתָֽם׃ "
+  },
+  "1CH 24:4": {
+   "KJV": "And there were more chief men found of the sons of Eleazar than of the sons of Ithamar, and thus were they divided. Among the sons of Eleazar there were sixteen chief men of the house of their fathers, and eight among the sons of Ithamar according to the house of their fathers.",
+   "BHSA": "וַיִּמָּצְא֣וּ בְֽנֵי־אֶלְעָזָ֡ר רַבִּ֞ים לְרָאשֵׁ֧י הַגְּבָרִ֛ים מִן־בְּנֵ֥י אִיתָמָ֖ר וַֽיַּחְלְק֑וּם לִבְנֵ֨י אֶלְעָזָ֜ר רָאשִׁ֤ים לְבֵית־אָבֹות֙ שִׁשָּׁ֣ה עָשָׂ֔ר וְלִבְנֵ֧י אִיתָמָ֛ר לְבֵ֥ית אֲבֹותָ֖ם שְׁמֹונָֽה׃ "
+  },
+  "1CH 24:5": {
+   "KJV": "Thus were they divided by lot, one sort with another; for the governors of the sanctuary, and governors of the house of God, were of the sons of Eleazar, and of the sons of Ithamar.",
+   "BHSA": "וַיַּחְלְק֥וּם בְּגֹורָלֹ֖ות אֵ֣לֶּה עִם־אֵ֑לֶּה כִּי־הָי֤וּ שָֽׂרֵי־קֹ֨דֶשׁ֙ וְשָׂרֵ֣י הָאֱלֹהִ֔ים מִבְּנֵ֥י אֶלְעָזָ֖ר וּבִבְנֵ֥י אִיתָמָֽר׃ ס "
+  },
+  "1CH 24:6": {
+   "KJV": "And Shemaiah the son of Nethaneel the scribe, one of the Levites, wrote them before the king, and the princes, and Zadok the priest, and Ahimelech the son of Abiathar, and before the chief of the fathers of the priests and Levites: one principal household being taken for Eleazar, and one taken for Ithamar.",
+   "BHSA": "וַֽיִּכְתְּבֵ֡ם שְֽׁמַֽעְיָה֩ בֶן־נְתַנְאֵ֨ל הַסֹּופֵ֜ר מִן־הַלֵּוִ֗י לִפְנֵ֨י הַמֶּ֤לֶךְ וְהַשָּׂרִים֙ וְצָדֹ֣וק הַכֹּהֵ֗ן וַאֲחִימֶ֨לֶךְ֙ בֶּן־אֶבְיָתָ֔ר וְרָאשֵׁי֙ הָֽאָבֹ֔ות לַכֹּהֲנִ֖ים וְלַלְוִיִּ֑ם בֵּֽית־אָ֣ב אֶחָ֗ד אָחֻז֙ לְאֶלְעָזָ֔ר וְאָחֻ֥ז׀ אָחֻ֖ז לְאִיתָמָֽר׃ פ "
+  },
+  "1CH 24:7": {
+   "KJV": "Now the first lot came forth to Jehoiarib, the second to Jedaiah,",
+   "BHSA": "וַיֵּצֵ֞א הַגֹּורָ֤ל הָרִאשֹׁון֙ לִיהֹ֣ויָרִ֔יב לִֽידַעְיָ֖ה הַשֵּׁנִֽי׃ "
+  },
+  "1CH 24:8": {
+   "KJV": "The third to Harim, the fourth to Seorim,",
+   "BHSA": "לְחָרִם֙ הַשְּׁלִישִׁ֔י לִשְׂעֹרִ֖ים הָרְבִעִֽי׃ "
+  },
+  "1CH 24:9": {
+   "KJV": "The fifth to Malchijah, the sixth to Mijamin,",
+   "BHSA": "לְמַלְכִּיָּה֙ הַחֲמִישִׁ֔י לְמִיָּמִ֖ן הַשִּׁשִּֽׁי׃ "
+  },
+  "1CH 24:10": {
+   "KJV": "The seventh to Hakkoz, the eighth to Abijah,",
+   "BHSA": "לְהַקֹּוץ֙ הַשְּׁבִעִ֔י לַאֲבִיָּ֖ה הַשְּׁמִינִֽי׃ "
+  },
+  "1CH 24:11": {
+   "KJV": "The ninth to Jeshuah, the tenth to Shecaniah,",
+   "BHSA": "לְיֵשׁ֨וּעַ֙ הַתְּשִׁעִ֔י לִשְׁכַנְיָ֖הוּ הָעֲשִׂרִֽי׃ "
+  },
+  "1CH 24:12": {
+   "KJV": "The eleventh to Eliashib, the twelfth to Jakim,",
+   "BHSA": "לְאֶלְיָשִׁיב֙ עַשְׁתֵּ֣י עָשָׂ֔ר לְיָקִ֖ים שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 24:13": {
+   "KJV": "The thirteenth to Huppah, the fourteenth to Jeshebeab,",
+   "BHSA": "לְחֻפָּה֙ שְׁלֹשָׁ֣ה עָשָׂ֔ר לְיֶֽשֶׁבְאָ֖ב אַרְבָּעָ֥ה עָשָֽׂר׃ "
+  },
+  "1CH 24:14": {
+   "KJV": "The fifteenth to Bilgah, the sixteenth to Immer,",
+   "BHSA": "לְבִלְגָּה֙ חֲמִשָּׁ֣ה עָשָׂ֔ר לְאִמֵּ֖ר שִׁשָּׁ֥ה עָשָֽׂר׃ "
+  },
+  "1CH 24:15": {
+   "KJV": "The seventeenth to Hezir, the eighteenth to Aphses,",
+   "BHSA": "לְחֵזִיר֙ שִׁבְעָ֣ה עָשָׂ֔ר לְהַפִּצֵּ֖ץ שְׁמֹונָ֥ה עָשָֽׂר׃ "
+  },
+  "1CH 24:16": {
+   "KJV": "The nineteenth to Pethahiah, the twentieth to Jehezekel,",
+   "BHSA": "לִֽפְתַחְיָה֙ תִּשְׁעָ֣ה עָשָׂ֔ר לִֽיחֶזְקֵ֖אל הָעֶשְׂרִֽים׃ "
+  },
+  "1CH 24:17": {
+   "KJV": "The one and twentieth to Jachin, the two and twentieth to Gamul,",
+   "BHSA": "לְיָכִין֙ אֶחָ֣ד וְעֶשְׂרִ֔ים לְגָמ֖וּל שְׁנַ֥יִם וְעֶשְׂרִֽים׃ "
+  },
+  "1CH 24:18": {
+   "KJV": "The three and twentieth to Delaiah, the four and twentieth to Maaziah.",
+   "BHSA": "לִדְלָיָ֨הוּ֙ שְׁלֹשָׁ֣ה וְעֶשְׂרִ֔ים לְמַֽעַזְיָ֖הוּ אַרְבָּעָ֥ה וְעֶשְׂרִֽים׃ פ "
+  },
+  "1CH 24:19": {
+   "KJV": "These were the orderings of them in their service to come into the house of the LORD, according to their manner, under Aaron their father, as the LORD God of Israel had commanded him.",
+   "BHSA": "אֵ֣לֶּה פְקֻדָּתָ֞ם לַעֲבֹדָתָ֗ם לָבֹ֤וא לְבֵית־יְהוָה֙ כְּמִשְׁפָּטָ֔ם בְּיַ֖ד אַהֲרֹ֣ן אֲבִיהֶ֑ם כַּאֲשֶׁ֣ר צִוָּ֔הוּ יְהוָ֖ה אֱלֹהֵ֥י יִשְׂרָאֵֽל׃ פ "
+  },
+  "1CH 24:20": {
+   "KJV": "And the rest of the sons of Levi were these: Of the sons of Amram; Shubael: of the sons of Shubael; Jehdeiah.",
+   "BHSA": "וְלִבְנֵ֥י לֵוִ֖י הַנֹּותָרִ֑ים לִבְנֵ֤י עַמְרָם֙ שֽׁוּבָאֵ֔ל לִבְנֵ֥י שׁוּבָאֵ֖ל יֶחְדְּיָֽהוּ׃ "
+  },
+  "1CH 24:21": {
+   "KJV": "Concerning Rehabiah: of the sons of Rehabiah, the first was Isshiah.",
+   "BHSA": "לִרְחַבְיָ֑הוּ לִבְנֵ֣י רְחַבְיָ֔הוּ הָרֹ֖אשׁ יִשִּׁיָּֽה׃ "
+  },
+  "1CH 24:22": {
+   "KJV": "Of the Izharites; Shelomoth: of the sons of Shelomoth; Jahath.",
+   "BHSA": "לַיִּצְהָרִ֣י שְׁלֹמֹ֔ות לִבְנֵ֥י שְׁלֹמֹ֖ות יָֽחַת׃ "
+  },
+  "1CH 24:23": {
+   "KJV": "And the sons of Hebron; Jeriah the first, Amariah the second, Jahaziel the third, Jekameam the fourth.",
+   "BHSA": "וּבְנָ֖י יְרִיָּ֑הוּ אֲמַרְיָ֨הוּ֙ הַשֵּׁנִ֔י יַחֲזִיאֵל֙ הַשְּׁלִישִׁ֔י יְקַמְעָ֖ם הָרְבִיעִֽי׃ "
+  },
+  "1CH 24:24": {
+   "KJV": "Of the sons of Uzziel; Michah: of the sons of Michah; Shamir.",
+   "BHSA": "בְּנֵ֤י עֻזִּיאֵל֙ מִיכָ֔ה לִבְנֵ֥י מִיכָ֖ה שׁמור׃ "
+  },
+  "1CH 24:25": {
+   "KJV": "The brother of Michah was Isshiah: of the sons of Isshiah; Zechariah.",
+   "BHSA": "אֲחִ֤י מִיכָה֙ יִשִּׁיָּ֔ה לִבְנֵ֥י יִשִּׁיָּ֖ה זְכַרְיָֽהוּ׃ "
+  },
+  "1CH 24:26": {
+   "KJV": "The sons of Merari were Mahli and Mushi: the sons of Jaaziah; Beno.",
+   "BHSA": "בְּנֵ֤י מְרָרִי֙ מַחְלִ֣י וּמוּשִׁ֔י בְּנֵ֖י יַעֲזִיָּ֥הֽוּ בְנֹֽו׃ "
+  },
+  "1CH 24:27": {
+   "KJV": "The sons of Merari by Jaaziah; Beno, and Shoham, and Zaccur, and Ibri.",
+   "BHSA": "בְּנֵ֖י מְרָרִ֑י לְיַֽעֲזִיָּ֣הֽוּ בְנֹ֔ו וְשֹׁ֥הַם וְזַכּ֖וּר וְעִבְרִֽי׃ "
+  },
+  "1CH 24:28": {
+   "KJV": "Of Mahli came Eleazar, who had no sons.",
+   "BHSA": "לְמַחְלִי֙ אֶלְעָזָ֔ר וְלֹא־הָ֥יָה לֹ֖ו בָּנִֽים׃ "
+  },
+  "1CH 24:29": {
+   "KJV": "Concerning Kish: the son of Kish was Jerahmeel.",
+   "BHSA": "לְקִ֖ישׁ בְּנֵי־קִ֥ישׁ יְרַחְמְאֵֽל׃ "
+  },
+  "1CH 24:30": {
+   "KJV": "The sons also of Mushi; Mahli, and Eder, and Jerimoth. These were the sons of the Levites after the house of their fathers.",
+   "BHSA": "וּבְנֵ֣י מוּשִׁ֔י מַחְלִ֥י וְעֵ֖דֶר וִירִימֹ֑ות אֵ֛לֶּה בְּנֵ֥י הַלְוִיִּ֖ם לְבֵ֥ית אֲבֹתֵיהֶֽם׃ "
+  },
+  "1CH 24:31": {
+   "KJV": "These likewise cast lots over against their brethren the sons of Aaron in the presence of David the king, and Zadok, and Ahimelech, and the chief of the fathers of the priests and Levites, even the principal fathers over against their younger brethren.",
+   "BHSA": "וַיַּפִּילוּ֩ גַם־הֵ֨ם גֹּורָלֹ֜ות לְעֻמַּ֣ת׀ אֲחֵיהֶ֣ם בְּנֵֽי־אַהֲרֹ֗ן לִפְנֵ֨י דָוִ֤יד הַמֶּ֨לֶךְ֙ וְצָדֹ֣וק וַאֲחִימֶ֔לֶךְ וְרָאשֵׁי֙ הָֽאָבֹ֔ות לַכֹּהֲנִ֖ים וְלַלְוִיִּ֑ם אָבֹ֣ות הָרֹ֔אשׁ לְעֻמַּ֖ת אָחִ֥יו הַקָּטָֽן׃ ס "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "abiathar",
+   "name": "Abiathar",
+   "distinguisher": "son of Ahimelech, the priest (1SA 22:20), counselor to David (1CH 27:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "abihu",
+   "name": "Abihu",
+   "distinguisher": "son of Aaron (EXO 6:23), died for offering strange fire to the LORD (NUM 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "abijah-5",
+   "name": "Abijah",
+   "distinguisher": "eighth-chosen priest for the twenty-four courses (1CH 24:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahimelech-3",
+   "name": "Ahimelech",
+   "distinguisher": "son of Abiathar (2SA 8:17, 1CH 24:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "amariah-3",
+   "name": "Amariah",
+   "distinguisher": "descendant of Hebron (1CH 23:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "amram",
+   "name": "Amram",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "beno",
+   "name": "Beno",
+   "distinguisher": "son of Jaaziah (1CH 24:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "bilgah",
+   "name": "Bilgah",
+   "distinguisher": "fifteenth-chosen priest for the twenty-four courses (1CH 24:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "delaiah-2",
+   "name": "Delaiah",
+   "distinguisher": "twenty-third-chosen priest for the twenty-four courses (1CH 24:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "eder-2",
+   "name": "Eder",
+   "distinguisher": "descendant of Mushi (1CH 23:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar",
+   "name": "Eleazar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar-4",
+   "name": "Eleazar",
+   "distinguisher": "descendant of Mahli (1CH 23:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliashib-2",
+   "name": "Eliashib",
+   "distinguisher": "eleventh-chosen priest for the twenty-four courses (1CH 24:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "gamul",
+   "name": "Gamul",
+   "distinguisher": "twenty-second-chosen priest for the twenty-four courses (1CH 24:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "hakkoz",
+   "name": "Hakkoz",
+   "distinguisher": "seventh-chosen priest for the twenty-four courses (1CH 24:10), his descendants could not show proof of lineage (NEH 7:63)",
+   "sex": "male"
+  },
+  {
+   "slug": "happizzez",
+   "name": "Happizzez",
+   "distinguisher": "eighteenth-chosen priest for the twenty-four courses (1CH 24:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "harim-3",
+   "name": "Harim",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:39)",
+   "sex": "male"
+  },
+  {
+   "slug": "hezir",
+   "name": "Hezir",
+   "distinguisher": "seventeenth-chosen priest for the twenty-four courses (1CH 24:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "huppah",
+   "name": "Huppah",
+   "distinguisher": "thirteenth-chosen priest for the twenty-four courses (1CH 24:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "ibri",
+   "name": "Ibri",
+   "distinguisher": "son of Jaaziah (1CH 24:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "immer",
+   "name": "Immer",
+   "distinguisher": "father of Meshillemith (1CH 9:12), priest (EZR 2:37, NEH 7:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "isshiah-3",
+   "name": "Isshiah",
+   "distinguisher": "descendant of Uzziel (1CH 23:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "isshiah-4",
+   "name": "Isshiah",
+   "distinguisher": "son of Rehabiah, son of Eliezer, son of Moses (1CH 24:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "ithamar",
+   "name": "Ithamar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "jaaziah",
+   "name": "Jaaziah",
+   "distinguisher": "descendant of Merari (1CH 24:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "jachin-3",
+   "name": "Jachin",
+   "distinguisher": "twenty-first-chosen priest for the twenty-four courses (1CH 24:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahath-5",
+   "name": "Jahath",
+   "distinguisher": "son of Shelomith (Shelomoth), son of Izhar (1CH 24:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahaziel-2",
+   "name": "Jahaziel",
+   "distinguisher": "descendant of Hebron (1CH 23:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "jakim-2",
+   "name": "Jakim",
+   "distinguisher": "twelfth-chosen priest for the twenty-four courses (1CH 24:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "jedaiah-3",
+   "name": "Jedaiah",
+   "distinguisher": "second-chosen priest for the twenty-four courses (1CH 24:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehdeiah",
+   "name": "Jehdeiah",
+   "distinguisher": "son of Shebuel (Shubael), son of Gershom, son of Moses (1CH 24:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehezkel",
+   "name": "Jehezkel",
+   "distinguisher": "twentieth-chosen priest for the twenty-four courses (1CH 24:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoiarib-2",
+   "name": "Jehoiarib",
+   "distinguisher": "first-chosen priest for the twenty-four courses (1CH 24:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "jekameam",
+   "name": "Jekameam",
+   "distinguisher": "descendant of Hebron (1CH 23:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "jerahmeel-2",
+   "name": "Jerahmeel",
+   "distinguisher": "son of Kish, descendant of Mahli (1CH 24:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremoth-3",
+   "name": "Jeremoth",
+   "distinguisher": "descendant of Mushi (1CH 23:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeriah",
+   "name": "Jeriah",
+   "distinguisher": "descendant of Hebron (1CH 23:19), chief among the Hebronites from Jazer of Gilead (1CH 26:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshebeab",
+   "name": "Jeshebeab",
+   "distinguisher": "fourteenth-chosen priest for the twenty-four courses (1CH 24:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshua",
+   "name": "Jeshua",
+   "distinguisher": "ninth-chosen priest for the twenty-four courses (1CH 24:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "kish-3",
+   "name": "Kish",
+   "distinguisher": "descendant of Mahli (1CH 23:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "levi",
+   "name": "Levi",
+   "distinguisher": "third-born son of Jacob (GEN 29:34), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "maaziah",
+   "name": "Maaziah",
+   "distinguisher": "twenty-fourth-chosen priest for the twenty-four courses (1CH 24:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "mahli",
+   "name": "Mahli",
+   "distinguisher": "son of Merari (EXO 6:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "mahli-3",
+   "name": "Mahli",
+   "distinguisher": "descendant of Mushi (1CH 23:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "malchijah-3",
+   "name": "Malchijah",
+   "distinguisher": "fifth-chosen priest for the twenty-four courses (1CH 24:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "merari",
+   "name": "Merari",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "micah-3",
+   "name": "Micah",
+   "distinguisher": "descendant of Uzziel (1CH 23:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "mijamin",
+   "name": "Mijamin",
+   "distinguisher": "sixth-chosen priest for the twenty-four courses (1CH 24:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "mushi",
+   "name": "Mushi",
+   "distinguisher": "son of Merari (EXO 6:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "nadab",
+   "name": "Nadab",
+   "distinguisher": "son of Aaron (EXO 6:23), died for offering strange fire to the LORD (NUM 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "nethanel-4",
+   "name": "Nethanel",
+   "distinguisher": "the scribe, father of Shemaiah (1CH 24:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "pethahiah",
+   "name": "Pethahiah",
+   "distinguisher": "nineteenth-chosen priest for the twenty-four courses (1CH 24:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "rehabiah",
+   "name": "Rehabiah",
+   "distinguisher": "descendant of Eliezer (1CH 23:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "seorim",
+   "name": "Seorim",
+   "distinguisher": "fourth-chosen priest for the twenty-four courses (1CH 24:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "shamir",
+   "name": "Shamir",
+   "distinguisher": "son of Micah, son of Uzziel (1CH 24:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "shebuel",
+   "name": "Shebuel",
+   "distinguisher": "descendant of Gershom (1CH 23:16), officer over the treasures (1CH 26:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "shecaniah-2",
+   "name": "Shecaniah",
+   "distinguisher": "tenth-chosen priest for the twenty-four courses (1CH 24:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelomith-3",
+   "name": "Shelomith",
+   "distinguisher": "descendant of Izhar (1CH 23:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-8",
+   "name": "Shemaiah",
+   "distinguisher": "son of Nethanel the scribe (1CH 24:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "shoham",
+   "name": "Shoham",
+   "distinguisher": "son of Jaaziah (1CH 24:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzziel",
+   "name": "Uzziel",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zaccur-3",
+   "name": "Zaccur",
+   "distinguisher": "son of Jaaziah (1CH 24:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "zadok",
+   "name": "Zadok",
+   "distinguisher": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "zechariah-6",
+   "name": "Zechariah",
+   "distinguisher": "son of Isshiah (1CH 24:25)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 97295,
+   "row": "ahimelech-3 descendant-of ithamar",
+   "verse": "1CH 24:3",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 99834,
+   "row": "ithamar ancestor-of ahimelech-3",
+   "verse": "1CH 24:3",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 101724,
+   "row": "nethanel-4 father-of shemaiah-8",
+   "verse": "1CH 24:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102650,
+   "row": "shemaiah-8 son-of nethanel-4",
+   "verse": "1CH 24:6",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 102652,
+   "row": "shemaiah-8 scribe-of david",
+   "verse": "1CH 24:6",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 105818,
+   "row": "jedaiah-3 descendant-of aaron",
+   "verse": "1CH 24:7",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105829,
+   "row": "jehoiarib-2 descendant-of aaron",
+   "verse": "1CH 24:7",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 106216,
+   "row": "seorim descendant-of aaron",
+   "verse": "1CH 24:8",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 107238,
+   "row": "harim-3 descendant-of aaron",
+   "verse": "1CH 24:8",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 106032,
+   "row": "malchijah-3 descendant-of aaron",
+   "verse": "1CH 24:9",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 106064,
+   "row": "mijamin descendant-of aaron",
+   "verse": "1CH 24:9",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105592,
+   "row": "abijah-5 descendant-of aaron",
+   "verse": "1CH 24:10",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105711,
+   "row": "hakkoz descendant-of aaron",
+   "verse": "1CH 24:10",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 106258,
+   "row": "shecaniah-2 descendant-of aaron",
+   "verse": "1CH 24:11",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 107239,
+   "row": "jeshua descendant-of aaron",
+   "verse": "1CH 24:11",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105666,
+   "row": "eliashib-2 descendant-of aaron",
+   "verse": "1CH 24:12",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105815,
+   "row": "jakim-2 descendant-of aaron",
+   "verse": "1CH 24:12",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105744,
+   "row": "huppah descendant-of aaron",
+   "verse": "1CH 24:13",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105871,
+   "row": "jeshebeab descendant-of aaron",
+   "verse": "1CH 24:13",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105624,
+   "row": "bilgah descendant-of aaron",
+   "verse": "1CH 24:14",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105753,
+   "row": "immer descendant-of aaron",
+   "verse": "1CH 24:14",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105727,
+   "row": "happizzez descendant-of aaron",
+   "verse": "1CH 24:15",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105737,
+   "row": "hezir descendant-of aaron",
+   "verse": "1CH 24:15",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105819,
+   "row": "jehezkel descendant-of aaron",
+   "verse": "1CH 24:16",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 106166,
+   "row": "pethahiah descendant-of aaron",
+   "verse": "1CH 24:16",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105678,
+   "row": "gamul descendant-of aaron",
+   "verse": "1CH 24:17",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105798,
+   "row": "jachin-3 descendant-of aaron",
+   "verse": "1CH 24:17",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 105641,
+   "row": "delaiah-2 descendant-of aaron",
+   "verse": "1CH 24:18",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 106018,
+   "row": "maaziah descendant-of aaron",
+   "verse": "1CH 24:18",
+   "source": "read from Scripture by the project owner, decided in the console 2026-09-28"
+  },
+  {
+   "id": 100097,
+   "row": "jehdeiah son-of shebuel",
+   "verse": "1CH 24:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99943,
+   "row": "jahath-5 son-of shelomith-3",
+   "verse": "1CH 24:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101343,
+   "row": "micah-3 father-of shamir",
+   "verse": "1CH 24:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99826,
+   "row": "isshiah-3 brother-of micah-3",
+   "verse": "1CH 24:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99827,
+   "row": "isshiah-3 father-of zechariah-6",
+   "verse": "1CH 24:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101342,
+   "row": "micah-3 brother-of isshiah-3",
+   "verse": "1CH 24:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98038,
+   "row": "beno son-of jaaziah",
+   "verse": "1CH 24:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99890,
+   "row": "jaaziah father-of beno",
+   "verse": "1CH 24:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99679,
+   "row": "ibri son-of jaaziah",
+   "verse": "1CH 24:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99680,
+   "row": "ibri descendant-of merari",
+   "verse": "1CH 24:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99891,
+   "row": "jaaziah son-of merari",
+   "verse": "1CH 24:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102819,
+   "row": "shoham descendant-of merari",
+   "verse": "1CH 24:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102820,
+   "row": "shoham son-of jaaziah",
+   "verse": "1CH 24:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103304,
+   "row": "zaccur-3 son-of jaaziah",
+   "verse": "1CH 24:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103305,
+   "row": "zaccur-3 descendant-of merari",
+   "verse": "1CH 24:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100229,
+   "row": "jerahmeel-2 son-of kish-3",
+   "verse": "1CH 24:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100799,
+   "row": "kish-3 father-of jerahmeel-2",
+   "verse": "1CH 24:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron son-of amram (EXO 6:20)",
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "abiathar priest-of yhvh (1KI 2:27)",
+  "abihu son-of aaron (EXO 6:23)",
+  "abihu brother-of nadab (EXO 6:23)",
+  "abihu priest-of yhvh (EXO 28:1)",
+  "ahimelech-3 son-of abiathar (2SA 8:17)",
+  "ahimelech-3 priest-of yhvh (2SA 8:17)",
+  "amariah-3 brother-of jeriah (1CH 23:19)",
+  "amram father-of aaron (EXO 6:20)",
+  "david servant-of yhvh (2SA 3:18)",
+  "eder-2 son-of mushi (1CH 23:23)",
+  "eleazar son-of aaron (EXO 6:23)",
+  "eleazar priest-of yhvh (NUM 16:39)",
+  "eleazar-4 son-of mahli (1CH 23:21)",
+  "eleazar-4 brother-of kish-3 (1CH 23:21)",
+  "isshiah-3 son-of uzziel (1CH 23:20)",
+  "isshiah-4 son-of rehabiah (1CH 26:25)",
+  "ithamar son-of aaron (EXO 6:23)",
+  "ithamar brother-of eleazar (EXO 6:23)",
+  "ithamar priest-of yhvh (NUM 3:4)",
+  "jahaziel-2 brother-of jeriah (1CH 23:19)",
+  "jahaziel-2 brother-of amariah-3 (1CH 23:19)",
+  "jahaziel-2 brother-of jekameam (1CH 23:19)",
+  "jekameam brother-of jeriah (1CH 23:19)",
+  "jeremoth-3 son-of mushi (1CH 23:23)",
+  "kish-3 son-of mahli (1CH 23:21)",
+  "kish-3 brother-of eleazar-4 (1CH 23:21)",
+  "mahli son-of merari (EXO 6:19)",
+  "mahli brother-of mushi (EXO 6:19)",
+  "mahli father-of eleazar-4 (1CH 23:21)",
+  "mahli father-of kish-3 (1CH 23:21)",
+  "mahli descendant-of levi (EZR 8:18)",
+  "micah-3 son-of uzziel (1CH 23:20)",
+  "mushi son-of merari (EXO 6:19)",
+  "mushi father-of eder-2 (1CH 23:23)",
+  "mushi father-of jeremoth-3 (1CH 23:23)",
+  "nadab son-of aaron (NUM 3:2)",
+  "nadab brother-of abihu (EXO 6:23)",
+  "nadab priest-of yhvh (EXO 28:1)",
+  "uzziel brother-of amram (EXO 6:18)",
+  "uzziel uncle-of aaron (LEV 10:4)",
+  "zadok priest-of yhvh (1KI 1:8)",
+  "merari son-of levi (GEN 46:11)",
+  "merari father-of mahli (EXO 6:19)",
+  "merari father-of mushi (EXO 6:19)",
+  "levi father-of merari (GEN 46:11)",
+  "mahli-3 brother-of eder-2 (1CH 23:23)",
+  "mahli-3 brother-of jeremoth-3 (1CH 23:23)",
+  "mahli-3 son-of mushi (1CH 6:47)"
+ ]
+}

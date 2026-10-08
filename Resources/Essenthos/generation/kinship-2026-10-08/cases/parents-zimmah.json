@@ -1,0 +1,11 @@
+{
+ "case": "parents-zimmah",
+ "question": "zimmah is recorded with more than one father: jahath-2, shimei-8.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "The Hebrew gives Gershom–Libni–Jahath–Zimmah in 1CH 6:20 and Gershom–Jahath–Shimei–Zimmah in 1CH 6:42–43. The supplied verses do not establish whether these differences reflect omitted generations or namesakes, so they do not justify changing the recorded relationships.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:38:12+00:00"
+}

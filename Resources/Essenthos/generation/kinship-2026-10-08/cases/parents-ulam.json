@@ -1,0 +1,40 @@
+{
+ "case": "parents-ulam",
+ "question": "ulam is recorded with more than one father: peresh, sheresh.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "delete-row",
+   "rows": [
+    101952,
+    101953
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 7:16",
+   "why": "The Hebrew names Sheresh immediately before וּבָנָיו ('and his sons'), whose natural antecedent is Sheresh. The existing Sheresh father-of rows should remain.",
+   "confidence": 0.94
+  },
+  {
+   "kind": "retarget-row",
+   "rows": [
+    102091,
+    103136
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "sheresh",
+   "verse": "1CH 7:16",
+   "why": "Ulam and Rakem are listed as 'his sons' immediately after Sheresh, supporting Sheresh as their father rather than Peresh.",
+   "confidence": 0.94
+  }
+ ],
+ "note": "The contradiction comes from assigning the same possessive clause to both brothers; Sheresh is its natural antecedent. Ulam’s and Rakem’s distinguishers should also be updated to reflect this reading.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:37:28+00:00"
+}

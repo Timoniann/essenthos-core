@@ -1,0 +1,11 @@
+{
+ "chapter": "NEH 10",
+ "rows": 35,
+ "wrong": [],
+ "missing": [],
+ "note": "All explicit named parentage is already recorded; 'their brethren' in NEH 10:10 does not establish biological sibling pairs. Owner row 106630 is retained, although Zidkijah's identification as an Aaronic priest is uncertain in this chapter.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:28:21+00:00"
+}

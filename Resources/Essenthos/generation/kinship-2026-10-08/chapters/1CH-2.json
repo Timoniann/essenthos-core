@@ -1,0 +1,161 @@
+{
+ "chapter": "1CH 2",
+ "rows": 252,
+ "wrong": [
+  {
+   "kind": "retype",
+   "rows": [
+    97333
+   ],
+   "new_type": "daughter-of",
+   "new_to": "",
+   "verse": "1CH 2:31",
+   "why": "Ahlai is listed among Sheshan's children, and verse 34 specifies that Sheshan had daughters but no sons.",
+   "confidence": 0.94
+  },
+  {
+   "kind": "retype",
+   "rows": [
+    102709
+   ],
+   "new_type": "grandfather-of",
+   "new_to": "",
+   "verse": "1CH 2:35",
+   "why": "Sheshan's daughter bore Attai to Jarha, making Sheshan Attai's grandfather.",
+   "confidence": 1
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    101139
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 2:42",
+   "why": "The verse names Mesha as Caleb's firstborn and Mareshah as Hebron's father, but does not identify Mareshah as Caleb's son.",
+   "confidence": 0.9
+  },
+  {
+   "kind": "retype",
+   "rows": [
+    99034
+   ],
+   "new_type": "grandson-of",
+   "new_to": "",
+   "verse": "1CH 2:46",
+   "why": "The second Gazez was begotten by Haran, who was Caleb's son by Ephah.",
+   "confidence": 1
+  }
+ ],
+ "missing": [
+  {
+   "from": "bathshua",
+   "type": "daughter-of",
+   "to": "shua",
+   "verse": "1CH 2:3",
+   "why": "The mother of Judah's first three sons is explicitly called the daughter of Shua.",
+   "confidence": 1
+  },
+  {
+   "from": "zeruiah",
+   "type": "sister-of",
+   "to": "eliab-3",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Eliab.",
+   "confidence": 1
+  },
+  {
+   "from": "zeruiah",
+   "type": "sister-of",
+   "to": "abinadab-2",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Abinadab.",
+   "confidence": 1
+  },
+  {
+   "from": "zeruiah",
+   "type": "sister-of",
+   "to": "shammah-2",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Shimma.",
+   "confidence": 1
+  },
+  {
+   "from": "zeruiah",
+   "type": "sister-of",
+   "to": "nethanel-2",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Nethaneel.",
+   "confidence": 1
+  },
+  {
+   "from": "zeruiah",
+   "type": "sister-of",
+   "to": "raddai",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Raddai.",
+   "confidence": 1
+  },
+  {
+   "from": "zeruiah",
+   "type": "sister-of",
+   "to": "ozem",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Ozem.",
+   "confidence": 1
+  },
+  {
+   "from": "abigail-2",
+   "type": "sister-of",
+   "to": "eliab-3",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Eliab.",
+   "confidence": 1
+  },
+  {
+   "from": "abigail-2",
+   "type": "sister-of",
+   "to": "abinadab-2",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Abinadab.",
+   "confidence": 1
+  },
+  {
+   "from": "abigail-2",
+   "type": "sister-of",
+   "to": "shammah-2",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Shimma.",
+   "confidence": 1
+  },
+  {
+   "from": "abigail-2",
+   "type": "sister-of",
+   "to": "nethanel-2",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Nethaneel.",
+   "confidence": 1
+  },
+  {
+   "from": "abigail-2",
+   "type": "sister-of",
+   "to": "raddai",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Raddai.",
+   "confidence": 1
+  },
+  {
+   "from": "abigail-2",
+   "type": "sister-of",
+   "to": "ozem",
+   "verse": "1CH 2:16",
+   "why": "The Hebrew calls Zeruiah and Abigail the sisters of Jesse's seven sons, including Ozem.",
+   "confidence": 1
+  }
+ ],
+ "note": "None of the owner rows plainly conflicts with this chapter. Jerioth's role in 1CH 2:18 and the Caleb/Hur wording in 1CH 2:50 are ambiguous, so no additional relationships are proposed from them.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:15:21+00:00"
+}

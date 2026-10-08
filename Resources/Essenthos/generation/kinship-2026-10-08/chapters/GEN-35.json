@@ -1,0 +1,20 @@
+{
+ "chapter": "GEN 35",
+ "rows": 41,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "bilhah",
+   "type": "concubine-of",
+   "to": "jacob",
+   "verse": "GEN 35:22",
+   "why": "Bilhah is explicitly called the concubine of Reuben's father, Jacob.",
+   "confidence": 1
+  }
+ ],
+ "note": "Owner row 105052 (Benjamin half-brother-of Dinah) is not stated in this chapter, which does not mention Dinah; it is retained as an owner ruling.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:17:00+00:00"
+}

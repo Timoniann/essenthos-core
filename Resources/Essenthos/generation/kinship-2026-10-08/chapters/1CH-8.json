@@ -1,0 +1,99 @@
+{
+ "chapter": "1CH 8",
+ "rows": 238,
+ "wrong": [
+  {
+   "kind": "retarget",
+   "rows": [
+    102454
+   ],
+   "new_type": "",
+   "new_to": "jeroham-father-of-jaresiah",
+   "verse": "1CH 8:26",
+   "why": "Shamsherai belongs to the list ending in verse 27 with 'sons of Jeroham,' rather than Jeremoth.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    102550
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 8:26",
+   "why": "Shehariah is listed among Jeroham's sons in verses 26–27, and the chapter gives no ancestry connecting him to Shashak.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "ahio-2",
+   "type": "son-of",
+   "to": "beriah-3",
+   "verse": "1CH 8:14",
+   "why": "Ahio appears in the list in verses 14–16 that concludes with 'sons of Beriah.'",
+   "confidence": 0.96
+  },
+  {
+   "from": "shashak",
+   "type": "son-of",
+   "to": "beriah-3",
+   "verse": "1CH 8:14",
+   "why": "Shashak appears in the list in verses 14–16 that concludes with 'sons of Beriah.'",
+   "confidence": 0.96
+  },
+  {
+   "from": "jeremoth-2",
+   "type": "son-of",
+   "to": "beriah-3",
+   "verse": "1CH 8:14",
+   "why": "Jeremoth appears in the list in verses 14–16 that concludes with 'sons of Beriah.'",
+   "confidence": 0.96
+  },
+  {
+   "from": "shehariah",
+   "type": "son-of",
+   "to": "jeroham-father-of-jaresiah",
+   "verse": "1CH 8:26",
+   "why": "Shehariah appears in the list in verses 26–27 that concludes with 'sons of Jeroham.'",
+   "confidence": 0.99
+  },
+  {
+   "from": "athaliah-2",
+   "type": "son-of",
+   "to": "jeroham-father-of-jaresiah",
+   "verse": "1CH 8:26",
+   "why": "Athaliah appears in the list in verses 26–27 that concludes with 'sons of Jeroham.'",
+   "confidence": 0.99
+  },
+  {
+   "from": "jaareshiah",
+   "type": "son-of",
+   "to": "jeroham-father-of-jaresiah",
+   "verse": "1CH 8:27",
+   "why": "Verse 27 explicitly includes Jaresiah among Jeroham's sons.",
+   "confidence": 1
+  },
+  {
+   "from": "elijah-2",
+   "type": "son-of",
+   "to": "jeroham-father-of-jaresiah",
+   "verse": "1CH 8:27",
+   "why": "Verse 27 explicitly includes Eliah among Jeroham's sons.",
+   "confidence": 1
+  },
+  {
+   "from": "zichri-4",
+   "type": "son-of",
+   "to": "jeroham-father-of-jaresiah",
+   "verse": "1CH 8:27",
+   "why": "Verse 27 explicitly includes Zichri among Jeroham's sons.",
+   "confidence": 1
+  }
+ ],
+ "note": "No project-owner row is clearly contradicted by this chapter. The overlapping Gera records cannot be distinguished from this chapter alone.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:25:35+00:00"
+}

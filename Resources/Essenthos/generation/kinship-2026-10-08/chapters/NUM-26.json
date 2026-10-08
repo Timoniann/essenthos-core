@@ -1,0 +1,11 @@
+{
+ "chapter": "NUM 26",
+ "rows": 55,
+ "wrong": [],
+ "missing": [],
+ "note": "The Hebrew text supports all supplied chapter-derived rows, and every plain family statement between securely identified supplied people is already recorded here or in another chapter. Nemuel son of Simeon in NUM 26:12 must not be confused with the supplied nemuel record, son of Eliab.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:18:56+00:00"
+}

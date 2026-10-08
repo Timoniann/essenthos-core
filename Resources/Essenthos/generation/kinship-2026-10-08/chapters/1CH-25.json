@@ -1,0 +1,23 @@
+{
+ "chapter": "1CH 25",
+ "rows": 27,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    102747
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 25:3",
+   "why": "The Hebrew names five sons of Jeduthun without naming Shimei, whose appearance in verse 17 gives no father.",
+   "confidence": 0.97
+  }
+ ],
+ "missing": [],
+ "note": "Verse 3 says six sons but names only five; identifying Shimei as the unnamed sixth requires an inference. All explicitly named father–son relationships are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:26:04+00:00"
+}

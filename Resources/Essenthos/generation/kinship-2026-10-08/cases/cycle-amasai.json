@@ -1,0 +1,28 @@
+{
+ "case": "cycle-amasai",
+ "question": "amasai, mahath and elkanah-4 are each recorded as an ancestor of the other: a cycle.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "split-record",
+   "rows": [
+    98756,
+    101045,
+    101046,
+    105602
+   ],
+   "record": "mahath",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "2CH 29:12",
+   "why": "The genealogical Mahath son of amasai in 1CH 6:35 belongs to rows 98756, 101045 and 101046; the Mahath son of amasai-3 in Hezekiah's reign belongs to row 105602. Separate these namesakes while leaving protected row 107213 unchanged.",
+   "confidence": 0.97
+  }
+ ],
+ "note": "The cycle comes from protected row 107213: 1CH 6:35 makes elkanah-5 the son of Mahath, whereas the continuing Hebrew chain in 6:36 makes elkanah-4 the father of Amasai. That owner ruling must remain untouched, so splitting the two Mahaths will not itself remove the cycle.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:30:43+00:00"
+}

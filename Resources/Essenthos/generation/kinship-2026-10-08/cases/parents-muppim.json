@@ -1,0 +1,11 @@
+{
+ "case": "parents-muppim",
+ "question": "muppim is recorded with more than one father: benjamin, iri.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "GEN 46:21 lists Muppim among Benjamin’s sons; 1CH 7:12 names Shuppim and Huppim as sons of Ir. The supplied Hebrew does not explicitly establish Muppim as Shuppim or Ir as Iri, so the apparent contradiction remains undecided and does not warrant a relationship change.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:36:41+00:00"
+}

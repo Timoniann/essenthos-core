@@ -1,0 +1,1423 @@
+{
+ "chapter": "NUM 26",
+ "text": {
+  "NUM 26:1": {
+   "KJV": "And it came to pass after the plague, that the LORD spake unto Moses and unto Eleazar the son of Aaron the priest, saying,",
+   "BHSA": "וַיֹּ֤אמֶר יְהוָה֙ אֶל־מֹשֶׁ֔ה וְאֶ֧ל אֶלְעָזָ֛ר בֶּן־אַהֲרֹ֥ן הַכֹּהֵ֖ן לֵאמֹֽר׃ "
+  },
+  "NUM 26:2": {
+   "KJV": "Take the sum of all the congregation of the children of Israel, from twenty years old and upward, throughout their fathers' house, all that are able to go to war in Israel.",
+   "BHSA": "שְׂא֞וּ אֶת־רֹ֣אשׁ׀ כָּל־עֲדַ֣ת בְּנֵי־יִשְׂרָאֵ֗ל מִבֶּ֨ן עֶשְׂרִ֥ים שָׁנָ֛ה וָמַ֖עְלָה לְבֵ֣ית אֲבֹתָ֑ם כָּל־יֹצֵ֥א צָבָ֖א בְּיִשְׂרָאֵֽל׃ "
+  },
+  "NUM 26:3": {
+   "KJV": "And Moses and Eleazar the priest spake with them in the plains of Moab by Jordan near Jericho, saying,",
+   "BHSA": "וַיְדַבֵּ֨ר מֹשֶׁ֜ה וְאֶלְעָזָ֧ר הַכֹּהֵ֛ן אֹתָ֖ם בְּעַֽרְבֹ֣ת מֹואָ֑ב עַל־יַרְדֵּ֥ן יְרֵחֹ֖ו לֵאמֹֽר׃ "
+  },
+  "NUM 26:4": {
+   "KJV": "Take the sum of the people, from twenty years old and upward; as the LORD commanded Moses and the children of Israel, which went forth out of the land of Egypt.",
+   "BHSA": "מִבֶּ֛ן עֶשְׂרִ֥ים שָׁנָ֖ה וָמָ֑עְלָה כַּאֲשֶׁר֩ צִוָּ֨ה יְהוָ֤ה אֶת־מֹשֶׁה֙ וּבְנֵ֣י יִשְׂרָאֵ֔ל הַיֹּצְאִ֖ים מֵאֶ֥רֶץ מִצְרָֽיִם׃ "
+  },
+  "NUM 26:5": {
+   "KJV": "Reuben, the eldest son of Israel: the children of Reuben; Hanoch, of whom cometh the family of the Hanochites: of Pallu, the family of the Palluites:",
+   "BHSA": "רְאוּבֵ֖ן בְּכֹ֣ור יִשְׂרָאֵ֑ל בְּנֵ֣י רְאוּבֵ֗ן חֲנֹוךְ֙ מִשְׁפַּ֣חַת הַחֲנֹכִ֔י לְפַלּ֕וּא מִשְׁפַּ֖חַת הַפַּלֻּאִֽי׃ "
+  },
+  "NUM 26:6": {
+   "KJV": "Of Hezron, the family of the Hezronites: of Carmi, the family of the Carmites.",
+   "BHSA": "לְחֶצְרֹ֕ן מִשְׁפַּ֖חַת הַֽחֶצְרֹונִ֑י לְכַרְמִ֕י מִשְׁפַּ֖חַת הַכַּרְמִֽי׃ "
+  },
+  "NUM 26:7": {
+   "KJV": "These are the families of the Reubenites: and they that were numbered of them were forty and three thousand and seven hundred and thirty.",
+   "BHSA": "אֵ֖לֶּה מִשְׁפְּחֹ֣ת הָרֻֽאוּבֵנִ֑י וַיִּהְי֣וּ פְקֻדֵיהֶ֗ם שְׁלֹשָׁ֤ה וְאַרְבָּעִים֙ אֶ֔לֶף וּשְׁבַ֥ע מֵאֹ֖ות וּשְׁלֹשִֽׁים׃ "
+  },
+  "NUM 26:8": {
+   "KJV": "And the sons of Pallu; Eliab.",
+   "BHSA": "וּבְנֵ֥י פַלּ֖וּא אֱלִיאָֽב׃ "
+  },
+  "NUM 26:9": {
+   "KJV": "And the sons of Eliab; Nemuel, and Dathan, and Abiram. This is that Dathan and Abiram, which were famous in the congregation, who strove against Moses and against Aaron in the company of Korah, when they strove against the LORD:",
+   "BHSA": "וּבְנֵ֣י אֱלִיאָ֔ב נְמוּאֵ֖ל וְדָתָ֣ן וַאֲבִירָ֑ם הֽוּא־דָתָ֨ן וַאֲבִירָ֜ם קרואי הָעֵדָ֗ה אֲשֶׁ֨ר הִצּ֜וּ עַל־מֹשֶׁ֤ה וְעַֽל־אַהֲרֹן֙ בַּעֲדַת־קֹ֔רַח בְּהַצֹּתָ֖ם עַל־יְהוָֽה׃ "
+  },
+  "NUM 26:10": {
+   "KJV": "And the earth opened her mouth, and swallowed them up together with Korah, when that company died, what time the fire devoured two hundred and fifty men: and they became a sign.",
+   "BHSA": "וַתִּפְתַּ֨ח הָאָ֜רֶץ אֶת־פִּ֗יהָ וַתִּבְלַ֥ע אֹתָ֛ם וְאֶת־קֹ֖רַח בְּמֹ֣ות הָעֵדָ֑ה בַּאֲכֹ֣ל הָאֵ֗שׁ אֵ֣ת חֲמִשִּׁ֤ים וּמָאתַ֨יִם֙ אִ֔ישׁ וַיִּהְי֖וּ לְנֵֽס׃ "
+  },
+  "NUM 26:11": {
+   "KJV": "Notwithstanding the children of Korah died not.",
+   "BHSA": "וּבְנֵי־קֹ֖רַח לֹא־מֵֽתוּ׃ ס "
+  },
+  "NUM 26:12": {
+   "KJV": "The sons of Simeon after their families: of Nemuel, the family of the Nemuelites: of Jamin, the family of the Jaminites: of Jachin, the family of the Jachinites:",
+   "BHSA": "בְּנֵ֣י שִׁמְעֹון֮ לְמִשְׁפְּחֹתָם֒ לִנְמוּאֵ֗ל מִשְׁפַּ֨חַת֙ הַנְּמ֣וּאֵלִ֔י לְיָמִ֕ין מִשְׁפַּ֖חַת הַיָּמִינִ֑י לְיָכִ֕ין מִשְׁפַּ֖חַת הַיָּכִינִֽי׃ "
+  },
+  "NUM 26:13": {
+   "KJV": "Of Zerah, the family of the Zarhites: of Shaul, the family of the Shaulites.",
+   "BHSA": "לְזֶ֕רַח מִשְׁפַּ֖חַת הַזַּרְחִ֑י לְשָׁא֕וּל מִשְׁפַּ֖חַת הַשָּׁאוּלִֽי׃ "
+  },
+  "NUM 26:14": {
+   "KJV": "These are the families of the Simeonites, twenty and two thousand and two hundred.",
+   "BHSA": "אֵ֖לֶּה מִשְׁפְּחֹ֣ת הַשִּׁמְעֹנִ֑י שְׁנַ֧יִם וְעֶשְׂרִ֛ים אֶ֖לֶף וּמָאתָֽיִם׃ ס "
+  },
+  "NUM 26:15": {
+   "KJV": "The children of Gad after their families: of Zephon, the family of the Zephonites: of Haggi, the family of the Haggites: of Shuni, the family of the Shunites:",
+   "BHSA": "בְּנֵ֣י גָד֮ לְמִשְׁפְּחֹתָם֒ לִצְפֹ֗ון מִשְׁפַּ֨חַת֙ הַצְּפֹונִ֔י לְחַגִּ֕י מִשְׁפַּ֖חַת הַֽחַגִּ֑י לְשׁוּנִ֕י מִשְׁפַּ֖חַת הַשּׁוּנִֽי׃ "
+  },
+  "NUM 26:16": {
+   "KJV": "Of Ozni, the family of the Oznites: of Eri, the family of the Erites:",
+   "BHSA": "לְאָזְנִ֕י מִשְׁפַּ֖חַת הָאָזְנִ֑י לְעֵרִ֕י מִשְׁפַּ֖חַת הָעֵרִֽי׃ "
+  },
+  "NUM 26:17": {
+   "KJV": "Of Arod, the family of the Arodites: of Areli, the family of the Arelites.",
+   "BHSA": "לַאֲרֹ֕וד מִשְׁפַּ֖חַת הָאֲרֹודִ֑י לְאַ֨רְאֵלִ֔י מִשְׁפַּ֖חַת הָאַרְאֵלִֽי׃ "
+  },
+  "NUM 26:18": {
+   "KJV": "These are the families of the children of Gad according to those that were numbered of them, forty thousand and five hundred.",
+   "BHSA": "אֵ֛לֶּה מִשְׁפְּחֹ֥ת בְּנֵֽי־גָ֖ד לִפְקֻדֵיהֶ֑ם אַרְבָּעִ֥ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֹֽות׃ ס "
+  },
+  "NUM 26:19": {
+   "KJV": "The sons of Judah were Er and Onan: and Er and Onan died in the land of Canaan.",
+   "BHSA": "בְּנֵ֥י יְהוּדָ֖ה עֵ֣ר וְאֹונָ֑ן וַיָּ֥מָת עֵ֛ר וְאֹונָ֖ן בְּאֶ֥רֶץ כְּנָֽעַן׃ "
+  },
+  "NUM 26:20": {
+   "KJV": "And the sons of Judah after their families were; of Shelah, the family of the Shelanites: of Pharez, the family of the Pharzites: of Zerah, the family of the Zarhites.",
+   "BHSA": "וַיִּהְי֣וּ בְנֵי־יְהוּדָה֮ לְמִשְׁפְּחֹתָם֒ לְשֵׁלָ֗ה מִשְׁפַּ֨חַת֙ הַשֵּׁ֣לָנִ֔י לְפֶ֕רֶץ מִשְׁפַּ֖חַת הַפַּרְצִ֑י לְזֶ֕רַח מִשְׁפַּ֖חַת הַזַּרְחִֽי׃ "
+  },
+  "NUM 26:21": {
+   "KJV": "And the sons of Pharez were; of Hezron, the family of the Hezronites: of Hamul, the family of the Hamulites.",
+   "BHSA": "וַיִּהְי֣וּ בְנֵי־פֶ֔רֶץ לְחֶצְרֹ֕ן מִשְׁפַּ֖חַת הַֽחֶצְרֹנִ֑י לְחָמ֕וּל מִשְׁפַּ֖חַת הֶחָמוּלִֽי׃ "
+  },
+  "NUM 26:22": {
+   "KJV": "These are the families of Judah according to those that were numbered of them, threescore and sixteen thousand and five hundred.",
+   "BHSA": "אֵ֛לֶּה מִשְׁפְּחֹ֥ת יְהוּדָ֖ה לִפְקֻדֵיהֶ֑ם שִׁשָּׁ֧ה וְשִׁבְעִ֛ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֹֽות׃ ס "
+  },
+  "NUM 26:23": {
+   "KJV": "Of the sons of Issachar after their families: of Tola, the family of the Tolaites: of Pua, the family of the Punites:",
+   "BHSA": "בְּנֵ֤י יִשָּׂשכָר֙ לְמִשְׁפְּחֹתָ֔ם תֹּולָ֕ע מִשְׁפַּ֖חַת הַתֹּולָעִ֑י לְפֻוָ֕ה מִשְׁפַּ֖חַת הַפּוּנִֽי׃ "
+  },
+  "NUM 26:24": {
+   "KJV": "Of Jashub, the family of the Jashubites: of Shimron, the family of the Shimronites.",
+   "BHSA": "לְיָשׁ֕וּב מִשְׁפַּ֖חַת הַיָּשׁוּבִ֑י לְשִׁמְרֹ֕ן מִשְׁפַּ֖חַת הַשִּׁמְרֹנִֽי׃ "
+  },
+  "NUM 26:25": {
+   "KJV": "These are the families of Issachar according to those that were numbered of them, threescore and four thousand and three hundred.",
+   "BHSA": "אֵ֛לֶּה מִשְׁפְּחֹ֥ת יִשָּׂשכָ֖ר לִפְקֻדֵיהֶ֑ם אַרְבָּעָ֧ה וְשִׁשִּׁ֛ים אֶ֖לֶף וּשְׁלֹ֥שׁ מֵאֹֽות׃ ס "
+  },
+  "NUM 26:26": {
+   "KJV": "Of the sons of Zebulun after their families: of Sered, the family of the Sardites: of Elon, the family of the Elonites: of Jahleel, the family of the Jahleelites.",
+   "BHSA": "בְּנֵ֣י זְבוּלֻן֮ לְמִשְׁפְּחֹתָם֒ לְסֶ֗רֶד מִשְׁפַּ֨חַת֙ הַסַּרְדִּ֔י לְאֵלֹ֕ון מִשְׁפַּ֖חַת הָאֵלֹנִ֑י לְיַ֨חְלְאֵ֔ל מִשְׁפַּ֖חַת הַיַּחְלְאֵלִֽי׃ "
+  },
+  "NUM 26:27": {
+   "KJV": "These are the families of the Zebulunites according to those that were numbered of them, threescore thousand and five hundred.",
+   "BHSA": "אֵ֛לֶּה מִשְׁפְּחֹ֥ת הַזְּבוּלֹנִ֖י לִפְקֻדֵיהֶ֑ם שִׁשִּׁ֥ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֹֽות׃ ס "
+  },
+  "NUM 26:28": {
+   "KJV": "The sons of Joseph after their families were Manasseh and Ephraim.",
+   "BHSA": "בְּנֵ֥י יֹוסֵ֖ף לְמִשְׁפְּחֹתָ֑ם מְנַשֶּׁ֖ה וְאֶפְרָֽיִם׃ "
+  },
+  "NUM 26:29": {
+   "KJV": "Of the sons of Manasseh: of Machir, the family of the Machirites: and Machir begat Gilead: of Gilead come the family of the Gileadites.",
+   "BHSA": "בְּנֵ֣י מְנַשֶּׁ֗ה לְמָכִיר֙ מִשְׁפַּ֣חַת הַמָּכִירִ֔י וּמָכִ֖יר הֹולִ֣יד אֶת־גִּלְעָ֑ד לְגִלְעָ֕ד מִשְׁפַּ֖חַת הַגִּלְעָדִֽי׃ "
+  },
+  "NUM 26:30": {
+   "KJV": "These are the sons of Gilead: of Jeezer, the family of the Jeezerites: of Helek, the family of the Helekites:",
+   "BHSA": "אֵ֚לֶּה בְּנֵ֣י גִלְעָ֔ד אִיעֶ֕זֶר מִשְׁפַּ֖חַת הָאִֽיעֶזְרִ֑י לְחֵ֕לֶק מִשְׁפַּ֖חַת הַֽחֶלְקִֽי׃ "
+  },
+  "NUM 26:31": {
+   "KJV": "And of Asriel, the family of the Asrielites: and of Shechem, the family of the Shechemites:",
+   "BHSA": "וְאַ֨שְׂרִיאֵ֔ל מִשְׁפַּ֖חַת הָֽאַשְׂרִֽאֵלִ֑י וְשֶׁ֕כֶם מִשְׁפַּ֖חַת הַשִּׁכְמִֽי׃ "
+  },
+  "NUM 26:32": {
+   "KJV": "And of Shemida, the family of the Shemidaites: and of Hepher, the family of the Hepherites.",
+   "BHSA": "וּשְׁמִידָ֕ע מִשְׁפַּ֖חַת הַשְּׁמִידָעִ֑י וְחֵ֕פֶר מִשְׁפַּ֖חַת הַֽחֶפְרִֽי׃ "
+  },
+  "NUM 26:33": {
+   "KJV": "And Zelophehad the son of Hepher had no sons, but daughters: and the names of the daughters of Zelophehad were Mahlah, and Noah, Hoglah, Milcah, and Tirzah.",
+   "BHSA": "וּצְלָפְחָ֣ד בֶּן־חֵ֗פֶר לֹא־הָ֥יוּ לֹ֛ו בָּנִ֖ים כִּ֣י אִם־בָּנֹ֑ות וְשֵׁם֙ בְּנֹ֣ות צְלָפְחָ֔ד מַחְלָ֣ה וְנֹעָ֔ה חָגְלָ֥ה מִלְכָּ֖ה וְתִרְצָֽה׃ "
+  },
+  "NUM 26:34": {
+   "KJV": "These are the families of Manasseh, and those that were numbered of them, fifty and two thousand and seven hundred.",
+   "BHSA": "אֵ֖לֶּה מִשְׁפְּחֹ֣ת מְנַשֶּׁ֑ה וּפְקֻ֣דֵיהֶ֔ם שְׁנַ֧יִם וַחֲמִשִּׁ֛ים אֶ֖לֶף וּשְׁבַ֥ע מֵאֹֽות׃ ס "
+  },
+  "NUM 26:35": {
+   "KJV": "These are the sons of Ephraim after their families: of Shuthelah, the family of the Shuthalhites: of Becher, the family of the Bachrites: of Tahan, the family of the Tahanites.",
+   "BHSA": "אֵ֣לֶּה בְנֵי־אֶפְרַיִם֮ לְמִשְׁפְּחֹתָם֒ לְשׁוּתֶ֗לַח מִשְׁפַּ֨חַת֙ הַשֻּׁ֣תַלְחִ֔י לְבֶ֕כֶר מִשְׁפַּ֖חַת הַבַּכְרִ֑י לְתַ֕חַן מִשְׁפַּ֖חַת הַֽתַּחֲנִֽי׃ "
+  },
+  "NUM 26:36": {
+   "KJV": "And these are the sons of Shuthelah: of Eran, the family of the Eranites.",
+   "BHSA": "וְאֵ֖לֶּה בְּנֵ֣י שׁוּתָ֑לַח לְעֵרָ֕ן מִשְׁפַּ֖חַת הָעֵרָנִֽי׃ "
+  },
+  "NUM 26:37": {
+   "KJV": "These are the families of the sons of Ephraim according to those that were numbered of them, thirty and two thousand and five hundred. These are the sons of Joseph after their families.",
+   "BHSA": "אֵ֣לֶּה מִשְׁפְּחֹ֤ת בְּנֵי־אֶפְרַ֨יִם֙ לִפְקֻ֣דֵיהֶ֔ם שְׁנַ֧יִם וּשְׁלֹשִׁ֛ים אֶ֖לֶף וַחֲמֵ֣שׁ מֵאֹ֑ות אֵ֥לֶּה בְנֵי־יֹוסֵ֖ף לְמִשְׁפְּחֹתָֽם׃ ס "
+  },
+  "NUM 26:38": {
+   "KJV": "The sons of Benjamin after their families: of Bela, the family of the Belaites: of Ashbel, the family of the Ashbelites: of Ahiram, the family of the Ahiramites:",
+   "BHSA": "בְּנֵ֣י בִנְיָמִן֮ לְמִשְׁפְּחֹתָם֒ לְבֶ֗לַע מִשְׁפַּ֨חַת֙ הַבַּלְעִ֔י לְאַשְׁבֵּ֕ל מִשְׁפַּ֖חַת הָֽאַשְׁבֵּלִ֑י לַאֲחִירָ֕ם מִשְׁפַּ֖חַת הָאֲחִירָמִֽי׃ "
+  },
+  "NUM 26:39": {
+   "KJV": "Of Shupham, the family of the Shuphamites: of Hupham, the family of the Huphamites.",
+   "BHSA": "לִשְׁפוּפָ֕ם מִשְׁפַּ֖חַת הַשּׁוּפָמִ֑י לְחוּפָ֕ם מִשְׁפַּ֖חַת הַחוּפָמִֽי׃ "
+  },
+  "NUM 26:40": {
+   "KJV": "And the sons of Bela were ard and Naaman: of Ard, the family of the Ardites: and of Naaman, the family of the Naamites.",
+   "BHSA": "וַיִּהְי֥וּ בְנֵי־בֶ֖לַע אַ֣רְדְּ וְנַעֲמָ֑ן מִשְׁפַּ֨חַת֙ הָֽאַרְדִּ֔י לְנַֽעֲמָ֔ן מִשְׁפַּ֖חַת הַֽנַּעֲמִֽי׃ "
+  },
+  "NUM 26:41": {
+   "KJV": "These are the sons of Benjamin after their families: and they that were numbered of them were forty and five thousand and six hundred.",
+   "BHSA": "אֵ֥לֶּה בְנֵי־בִנְיָמִ֖ן לְמִשְׁפְּחֹתָ֑ם וּפְקֻ֣דֵיהֶ֔ם חֲמִשָּׁ֧ה וְאַרְבָּעִ֛ים אֶ֖לֶף וְשֵׁ֥שׁ מֵאֹֽות׃ ס "
+  },
+  "NUM 26:42": {
+   "KJV": "These are the sons of Dan after their families: of Shuham, the family of the Shuhamites. These are the families of Dan after their families.",
+   "BHSA": "אֵ֤לֶּה בְנֵי־דָן֙ לְמִשְׁפְּחֹתָ֔ם לְשׁוּחָ֕ם מִשְׁפַּ֖חַת הַשּׁוּחָמִ֑י אֵ֛לֶּה מִשְׁפְּחֹ֥ת דָּ֖ן לְמִשְׁפְּחֹתָֽם׃ "
+  },
+  "NUM 26:43": {
+   "KJV": "All the families of the Shuhamites, according to those that were numbered of them, were threescore and four thousand and four hundred.",
+   "BHSA": "כָּל־מִשְׁפְּחֹ֥ת הַשּׁוּחָמִ֖י לִפְקֻדֵיהֶ֑ם אַרְבָּעָ֧ה וְשִׁשִּׁ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ ס "
+  },
+  "NUM 26:44": {
+   "KJV": "Of the children of Asher after their families: of Jimna, the family of the Jimnites: of Jesui, the family of the Jesuites: of Beriah, the family of the Beriites.",
+   "BHSA": "בְּנֵ֣י אָשֵׁר֮ לְמִשְׁפְּחֹתָם֒ לְיִמְנָ֗ה מִשְׁפַּ֨חַת֙ הַיִּמְנָ֔ה לְיִשְׁוִ֕י מִשְׁפַּ֖חַת הַיִּשְׁוִ֑י לִבְרִיעָ֕ה מִשְׁפַּ֖חַת הַבְּרִיעִֽי׃ "
+  },
+  "NUM 26:45": {
+   "KJV": "Of the sons of Beriah: of Heber, the family of the Heberites: of Malchiel, the family of the Malchielites.",
+   "BHSA": "לִבְנֵ֣י בְרִיעָ֔ה לְחֶ֕בֶר מִשְׁפַּ֖חַת הַֽחֶבְרִ֑י לְמַ֨לְכִּיאֵ֔ל מִשְׁפַּ֖חַת הַמַּלְכִּיאֵלִֽי׃ "
+  },
+  "NUM 26:46": {
+   "KJV": "And the name of the daughter of Asher was Sarah.",
+   "BHSA": "וְשֵׁ֥ם בַּת־אָשֵׁ֖ר שָֽׂרַח׃ "
+  },
+  "NUM 26:47": {
+   "KJV": "These are the families of the sons of Asher according to those that were numbered of them; who were fifty and three thousand and four hundred.",
+   "BHSA": "אֵ֛לֶּה מִשְׁפְּחֹ֥ת בְּנֵי־אָשֵׁ֖ר לִפְקֻדֵיהֶ֑ם שְׁלֹשָׁ֧ה וַחֲמִשִּׁ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ ס "
+  },
+  "NUM 26:48": {
+   "KJV": "Of the sons of Naphtali after their families: of Jahzeel, the family of the Jahzeelites: of Guni, the family of the Gunites:",
+   "BHSA": "בְּנֵ֤י נַפְתָּלִי֙ לְמִשְׁפְּחֹתָ֔ם לְיַ֨חְצְאֵ֔ל מִשְׁפַּ֖חַת הַיַּחְצְאֵלִ֑י לְגוּנִ֕י מִשְׁפַּ֖חַת הַגּוּנִֽי׃ "
+  },
+  "NUM 26:49": {
+   "KJV": "Of Jezer, the family of the Jezerites: of Shillem, the family of the Shillemites.",
+   "BHSA": "לְיֵ֕צֶר מִשְׁפַּ֖חַת הַיִּצְרִ֑י לְשִׁלֵּ֕ם מִשְׁפַּ֖חַת הַשִּׁלֵּמִֽי׃ "
+  },
+  "NUM 26:50": {
+   "KJV": "These are the families of Naphtali according to their families: and they that were numbered of them were forty and five thousand and four hundred.",
+   "BHSA": "אֵ֛לֶּה מִשְׁפְּחֹ֥ת נַפְתָּלִ֖י לְמִשְׁפְּחֹתָ֑ם וּפְקֻ֣דֵיהֶ֔ם חֲמִשָּׁ֧ה וְאַרְבָּעִ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ "
+  },
+  "NUM 26:51": {
+   "KJV": "These were the numbered of the children of Israel, six hundred thousand and a thousand seven hundred and thirty.",
+   "BHSA": "אֵ֗לֶּה פְּקוּדֵי֙ בְּנֵ֣י יִשְׂרָאֵ֔ל שֵׁשׁ־מֵאֹ֥ות אֶ֖לֶף וָאָ֑לֶף שְׁבַ֥ע מֵאֹ֖ות וּשְׁלֹשִֽׁים׃ פ "
+  },
+  "NUM 26:52": {
+   "KJV": "And the LORD spake unto Moses, saying,",
+   "BHSA": "וַיְדַבֵּ֥ר יְהוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃ "
+  },
+  "NUM 26:53": {
+   "KJV": "Unto these the land shall be divided for an inheritance according to the number of names.",
+   "BHSA": "לָאֵ֗לֶּה תֵּחָלֵ֥ק הָאָ֛רֶץ בְּנַחֲלָ֖ה בְּמִסְפַּ֥ר שֵׁמֹֽות׃ "
+  },
+  "NUM 26:54": {
+   "KJV": "To many thou shalt give the more inheritance, and to few thou shalt give the less inheritance: to every one shall his inheritance be given according to those that were numbered of him.",
+   "BHSA": "לָרַ֗ב תַּרְבֶּה֙ נַחֲלָתֹ֔ו וְלַמְעַ֕ט תַּמְעִ֖יט נַחֲלָתֹ֑ו אִ֚ישׁ לְפִ֣י פְקֻדָ֔יו יֻתַּ֖ן נַחֲלָתֹֽו׃ "
+  },
+  "NUM 26:55": {
+   "KJV": "Notwithstanding the land shall be divided by lot: according to the names of the tribes of their fathers they shall inherit.",
+   "BHSA": "אַךְ־בְּגֹורָ֕ל יֵחָלֵ֖ק אֶת־הָאָ֑רֶץ לִשְׁמֹ֥ות מַטֹּות־אֲבֹתָ֖ם יִנְחָֽלוּ׃ "
+  },
+  "NUM 26:56": {
+   "KJV": "According to the lot shall the possession thereof be divided between many and few.",
+   "BHSA": "עַל־פִּי֙ הַגֹּורָ֔ל תֵּחָלֵ֖ק נַחֲלָתֹ֑ו בֵּ֥ין רַ֖ב לִמְעָֽט׃ ס "
+  },
+  "NUM 26:57": {
+   "KJV": "And these are they that were numbered of the Levites after their families: of Gershon, the family of the Gershonites: of Kohath, the family of the Kohathites: of Merari, the family of the Merarites.",
+   "BHSA": "וְאֵ֨לֶּה פְקוּדֵ֣י הַלֵּוִי֮ לְמִשְׁפְּחֹתָם֒ לְגֵרְשֹׁ֗ון מִשְׁפַּ֨חַת֙ הַגֵּ֣רְשֻׁנִּ֔י לִקְהָ֕ת מִשְׁפַּ֖חַת הַקְּהָתִ֑י לִמְרָרִ֕י מִשְׁפַּ֖חַת הַמְּרָרִֽי׃ "
+  },
+  "NUM 26:58": {
+   "KJV": "These are the families of the Levites: the family of the Libnites, the family of the Hebronites, the family of the Mahlites, the family of the Mushites, the family of the Korathites. And Kohath begat Amram.",
+   "BHSA": "אֵ֣לֶּה׀ מִשְׁפְּחֹ֣ת לֵוִ֗י מִשְׁפַּ֨חַת הַלִּבְנִ֜י מִשְׁפַּ֤חַת הַֽחֶבְרֹנִי֙ מִשְׁפַּ֤חַת הַמַּחְלִי֙ מִשְׁפַּ֣חַת הַמּוּשִׁ֔י מִשְׁפַּ֖חַת הַקָּרְחִ֑י וּקְהָ֖ת הֹולִ֥ד אֶת־עַמְרָֽם׃ "
+  },
+  "NUM 26:59": {
+   "KJV": "And the name of Amram's wife was Jochebed, the daughter of Levi, whom her mother bare to Levi in Egypt: and she bare unto Amram Aaron and Moses, and Miriam their sister.",
+   "BHSA": "וְשֵׁ֣ם׀ אֵ֣שֶׁת עַמְרָ֗ם יֹוכֶ֨בֶד֙ בַּת־לֵוִ֔י אֲשֶׁ֨ר יָלְדָ֥ה אֹתָ֛הּ לְלֵוִ֖י בְּמִצְרָ֑יִם וַתֵּ֣לֶד לְעַמְרָ֗ם אֶֽת־אַהֲרֹן֙ וְאֶת־מֹשֶׁ֔ה וְאֵ֖ת מִרְיָ֥ם אֲחֹתָֽם׃ "
+  },
+  "NUM 26:60": {
+   "KJV": "And unto Aaron was born Nadab, and Abihu, Eleazar, and Ithamar.",
+   "BHSA": "וַיִּוָּלֵ֣ד לְאַהֲרֹ֔ן אֶת־נָדָ֖ב וְאֶת־אֲבִיה֑וּא אֶת־אֶלְעָזָ֖ר וְאֶת־אִיתָמָֽר׃ "
+  },
+  "NUM 26:61": {
+   "KJV": "And Nadab and Abihu died, when they offered strange fire before the LORD.",
+   "BHSA": "וַיָּ֥מָת נָדָ֖ב וַאֲבִיה֑וּא בְּהַקְרִיבָ֥ם אֵשׁ־זָרָ֖ה לִפְנֵ֥י יְהוָֽה׃ "
+  },
+  "NUM 26:62": {
+   "KJV": "And those that were numbered of them were twenty and three thousand, all males from a month old and upward: for they were not numbered among the children of Israel, because there was no inheritance given them among the children of Israel.",
+   "BHSA": "וַיִּהְי֣וּ פְקֻדֵיהֶ֗ם שְׁלֹשָׁ֤ה וְעֶשְׂרִים֙ אֶ֔לֶף כָּל־זָכָ֖ר מִבֶּן־חֹ֣דֶשׁ וָמָ֑עְלָה כִּ֣י׀ לֹ֣א הָתְפָּקְד֗וּ בְּתֹוךְ֙ בְּנֵ֣י יִשְׂרָאֵ֔ל כִּ֠י לֹא־נִתַּ֤ן לָהֶם֙ נַחֲלָ֔ה בְּתֹ֖וךְ בְּנֵ֥י יִשְׂרָאֵֽל׃ "
+  },
+  "NUM 26:63": {
+   "KJV": "These are they that were numbered by Moses and Eleazar the priest, who numbered the children of Israel in the plains of Moab by Jordan near Jericho.",
+   "BHSA": "אֵ֚לֶּה פְּקוּדֵ֣י מֹשֶׁ֔ה וְאֶלְעָזָ֖ר הַכֹּהֵ֑ן אֲשֶׁ֨ר פָּֽקְד֜וּ אֶת־בְּנֵ֤י יִשְׂרָאֵל֙ בְּעַֽרְבֹ֣ת מֹואָ֔ב עַ֖ל יַרְדֵּ֥ן יְרֵחֹֽו׃ "
+  },
+  "NUM 26:64": {
+   "KJV": "But among these there was not a man of them whom Moses and Aaron the priest numbered, when they numbered the children of Israel in the wilderness of Sinai.",
+   "BHSA": "וּבְאֵ֨לֶּה֙ לֹא־הָ֣יָה אִ֔ישׁ מִפְּקוּדֵ֣י מֹשֶׁ֔ה וְאַהֲרֹ֖ן הַכֹּהֵ֑ן אֲשֶׁ֥ר פָּקְד֛וּ אֶת־בְּנֵ֥י יִשְׂרָאֵ֖ל בְּמִדְבַּ֥ר סִינָֽי׃ "
+  },
+  "NUM 26:65": {
+   "KJV": "For the LORD had said of them, They shall surely die in the wilderness. And there was not left a man of them, save Caleb the son of Jephunneh, and Joshua the son of Nun.",
+   "BHSA": "כִּֽי־אָמַ֤ר יְהוָה֙ לָהֶ֔ם מֹ֥ות יָמֻ֖תוּ בַּמִּדְבָּ֑ר וְלֹא־נֹותַ֤ר מֵהֶם֙ אִ֔ישׁ כִּ֚י אִם־כָּלֵ֣ב בֶּן־יְפֻנֶּ֔ה וִיהֹושֻׁ֖עַ בִּן־נֽוּן׃ ס "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "abihu",
+   "name": "Abihu",
+   "distinguisher": "son of Aaron (EXO 6:23), died for offering strange fire to the LORD (NUM 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "abiram",
+   "name": "Abiram",
+   "distinguisher": "rebelled against Moses with Korah (NUM 16:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "amram",
+   "name": "Amram",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "ard",
+   "name": "Ard",
+   "distinguisher": "(grand?)son of Benjamin (GEN 46:21), son of Bela (NUM 26:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "areli",
+   "name": "Areli",
+   "distinguisher": "son of Gad (GEN 46:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "ashbel",
+   "name": "Ashbel",
+   "distinguisher": "son of Benjamin (GEN 46:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "asher",
+   "name": "Asher",
+   "distinguisher": "eighth-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "asriel",
+   "name": "Asriel",
+   "distinguisher": "son of Gilead (NUM 26:30-31)",
+   "sex": "male"
+  },
+  {
+   "slug": "becher-2",
+   "name": "Becher",
+   "distinguisher": "descendant of Ephraim (NUM 26:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "bela-2",
+   "name": "Bela",
+   "distinguisher": "son of Benjamin (GEN 46:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin",
+   "name": "Benjamin",
+   "distinguisher": "twelfth-born son of Jacob and Rachel (GEN 35:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "beriah",
+   "name": "Beriah",
+   "distinguisher": "son of Asher (GEN 46:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "caleb",
+   "name": "Caleb",
+   "distinguisher": "1 of the 12 spies- from Judah (NUM 13:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "carmi",
+   "name": "Carmi",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "dathan",
+   "name": "Dathan",
+   "distinguisher": "rebelled against Moses with Korah (NUM 16:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "ehi",
+   "name": "Ehi",
+   "distinguisher": "son of Benjamin (GEN 46:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar",
+   "name": "Eleazar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliab-2",
+   "name": "Eliab",
+   "distinguisher": "father of Dathan and Abiram from the tribe of Reuben (NUM 16:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "elon-2",
+   "name": "Elon",
+   "distinguisher": "son of Zebulun (GEN 46:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "ephraim",
+   "name": "Ephraim",
+   "distinguisher": "second son of Joseph (GEN 41:52)",
+   "sex": "male"
+  },
+  {
+   "slug": "er",
+   "name": "Er",
+   "distinguisher": "firstborn son of Judah (GEN 38:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "eran",
+   "name": "Eran",
+   "distinguisher": "son of Shuthelah (NUM 26:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "eri",
+   "name": "Eri",
+   "distinguisher": "son of Gad (GEN 46:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "ezbon",
+   "name": "Ezbon",
+   "distinguisher": "son of Gad (GEN 46:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "gad",
+   "name": "Gad",
+   "distinguisher": "seventh-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "gershon",
+   "name": "Gershon",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "gilead",
+   "name": "Gilead",
+   "distinguisher": "a son of Machir, grandson of Manasseh (NUM 26:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "guni",
+   "name": "Guni",
+   "distinguisher": "son of Naphtali (GEN 46:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "haggi",
+   "name": "Haggi",
+   "distinguisher": "son of Gad (GEN 46:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "hamul",
+   "name": "Hamul",
+   "distinguisher": "son of Perez and grandson of Judah (GEN 46:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanoch-2",
+   "name": "Hanoch",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "heber",
+   "name": "Heber",
+   "distinguisher": "son of Beriah (GEN 46:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "helek",
+   "name": "Helek",
+   "distinguisher": "son of Gilead (NUM 26:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "hepher",
+   "name": "Hepher",
+   "distinguisher": "son of Gilead (NUM 26:30-32)",
+   "sex": "male"
+  },
+  {
+   "slug": "hezron",
+   "name": "Hezron",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "hezron-2",
+   "name": "Hezron",
+   "distinguisher": "son of Perez and grandson of Judah (GEN 46:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "hoglah",
+   "name": "Hoglah",
+   "distinguisher": "daughter of Zelophehad (NUM 26:33)",
+   "sex": "female"
+  },
+  {
+   "slug": "huppim",
+   "name": "Huppim",
+   "distinguisher": "(grand?)son of Benjamin (GEN 46:21), son of Bela (1CH 7:12, 8:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "hushim",
+   "name": "Hushim",
+   "distinguisher": "son of Dan (GEN 46:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "iezer",
+   "name": "Iezer",
+   "distinguisher": "named among the sons of Gilead (NUM 26:30) and called Abiezer in JOS 17:2; whether he is the Abiezer whom Gilead's sister Hammolecheth bore (1CH 7:18) the text does not settle",
+   "sex": "male"
+  },
+  {
+   "slug": "imnah",
+   "name": "Imnah",
+   "distinguisher": "son of Asher (GEN 46:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "iob",
+   "name": "Iob",
+   "distinguisher": "son of Issachar (GEN 46:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishvah",
+   "name": "Ishvah",
+   "distinguisher": "son of Asher (GEN 46:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishvi",
+   "name": "Ishvi",
+   "distinguisher": "son of Asher (GEN 46:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "ithamar",
+   "name": "Ithamar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "jachin",
+   "name": "Jachin",
+   "distinguisher": "son of Simeon (GEN 46:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahleel",
+   "name": "Jahleel",
+   "distinguisher": "son of Zebulun (GEN 46:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahzeel",
+   "name": "Jahzeel",
+   "distinguisher": "son of Naphtali (GEN 46:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "jamin",
+   "name": "Jamin",
+   "distinguisher": "son of Simeon (GEN 46:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jemuel",
+   "name": "Jemuel",
+   "distinguisher": "son of Simeon (GEN 46:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jephunneh",
+   "name": "Jephunneh",
+   "distinguisher": "father of Caleb (NUM 13:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "jezer",
+   "name": "Jezer",
+   "distinguisher": "son of Naphtali (GEN 46:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "jochebed",
+   "name": "Jochebed",
+   "distinguisher": "aunt and wife of Amram, mother of Moses (EXO 6:20)",
+   "sex": "female"
+  },
+  {
+   "slug": "joseph",
+   "name": "Joseph",
+   "distinguisher": "eleventh-born son of Jacob and Rachel (GEN 30:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "joshua",
+   "name": "Joshua",
+   "distinguisher": "1 of the 12 spies (called Hoshea)- from Ephraim (NUM 13:8), servant of Moses (EXO 17:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "kohath",
+   "name": "Kohath",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "korah-3",
+   "name": "Korah",
+   "distinguisher": "son of Izhar (EXO 6:21) who rebelled against G-d and Moses (Numbers chapter 16)",
+   "sex": "male"
+  },
+  {
+   "slug": "levi",
+   "name": "Levi",
+   "distinguisher": "third-born son of Jacob (GEN 29:34), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "machir",
+   "name": "Machir",
+   "distinguisher": "son of Manasseh (GEN 50:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "mahlah",
+   "name": "Mahlah",
+   "distinguisher": "daughter of Zelophehad (NUM 26:33)",
+   "sex": "female"
+  },
+  {
+   "slug": "malchiel",
+   "name": "Malchiel",
+   "distinguisher": "son of Beriah (GEN 46:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh",
+   "name": "Manasseh",
+   "distinguisher": "firstborn son of Joseph (GEN 41:51)",
+   "sex": "male"
+  },
+  {
+   "slug": "merari",
+   "name": "Merari",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "milcah-2",
+   "name": "Milcah",
+   "distinguisher": "daughter of Zelophehad (NUM 26:33)",
+   "sex": "female"
+  },
+  {
+   "slug": "miriam",
+   "name": "Miriam",
+   "distinguisher": "sister of Moses (EXO 15:20)",
+   "sex": "female"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "muppim",
+   "name": "Muppim",
+   "distinguisher": "(grand?)son of Benjamin (GEN 46:21), son of Bela (1CH 7:12, 8:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "naaman",
+   "name": "Naaman",
+   "distinguisher": "(grand?)son of Benjamin (GEN 46:21), son of Bela (NUM 26:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "nadab",
+   "name": "Nadab",
+   "distinguisher": "son of Aaron (EXO 6:23), died for offering strange fire to the LORD (NUM 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "naphtali",
+   "name": "Naphtali",
+   "distinguisher": "sixth-born son of Jacob (GEN 30:7), son of Bilhah, Rachel's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "nemuel",
+   "name": "Nemuel",
+   "distinguisher": "son of Eliab, son of Pallu (NUM 26:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "noah-2",
+   "name": "Noah",
+   "distinguisher": "daughter of Zelophehad (NUM 26:33)",
+   "sex": "female"
+  },
+  {
+   "slug": "nun",
+   "name": "Nun",
+   "distinguisher": "father of Joshua (EXO 33:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "onan",
+   "name": "Onan",
+   "distinguisher": "second-born son of Judah (GEN 38:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "pallu",
+   "name": "Pallu",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "perez",
+   "name": "Perez",
+   "distinguisher": "son of Judah and Tamar (GEN 38:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "puvvah",
+   "name": "Puvvah",
+   "distinguisher": "son of Issachar (GEN 46:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "reuben",
+   "name": "Reuben",
+   "distinguisher": "firstborn son of Jacob (GEN 29:32), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "serah",
+   "name": "Serah",
+   "distinguisher": "son of Asher (GEN 46:17)",
+   "sex": "female"
+  },
+  {
+   "slug": "sered",
+   "name": "Sered",
+   "distinguisher": "son of Zebulun (GEN 46:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "shaul-2",
+   "name": "Shaul",
+   "distinguisher": "son of Simeon and a Canaanite woman (GEN 46:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "shechem-2",
+   "name": "Shechem",
+   "distinguisher": "son of Gilead (NUM 26:30-31)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelah-2",
+   "name": "Shelah",
+   "distinguisher": "third-born son of Judah (GEN 38:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemida",
+   "name": "Shemida",
+   "distinguisher": "son of Gilead (NUM 26:30-32)",
+   "sex": "male"
+  },
+  {
+   "slug": "shillem",
+   "name": "Shillem",
+   "distinguisher": "son of Naphtali (GEN 46:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimron",
+   "name": "Shimron",
+   "distinguisher": "son of Issachar (GEN 46:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "shuni",
+   "name": "Shuni",
+   "distinguisher": "son of Gad (GEN 46:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "shuthelah",
+   "name": "Shuthelah",
+   "distinguisher": "descendant of Ephraim (NUM 26:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "simeon",
+   "name": "Simeon",
+   "distinguisher": "second-born son of Jacob (GEN 29:33), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "tahan",
+   "name": "Tahan",
+   "distinguisher": "descendant of Ephraim (NUM 26:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "tirzah",
+   "name": "Tirzah",
+   "distinguisher": "daughter of Zelophehad (NUM 26:33)",
+   "sex": "female"
+  },
+  {
+   "slug": "tola",
+   "name": "Tola",
+   "distinguisher": "son of Issachar (GEN 46:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zebulun",
+   "name": "Zebulun",
+   "distinguisher": "tenth-born son of Jacob (GEN 30:19), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "zelophehad",
+   "name": "Zelophehad",
+   "distinguisher": "son of Hepher who had only daughters (NUM 26:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "zerah-3",
+   "name": "Zerah",
+   "distinguisher": "son of Judah and Tamar (GEN 38:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "ziphion",
+   "name": "Ziphion",
+   "distinguisher": "son of Gad (GEN 46:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "zohar-2",
+   "name": "Zohar",
+   "distinguisher": "son of Simeon (GEN 46:10)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 98597,
+   "row": "eliab-2 son-of pallu",
+   "verse": "NUM 26:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101870,
+   "row": "pallu father-of eliab-2",
+   "verse": "NUM 26:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98598,
+   "row": "eliab-2 father-of dathan",
+   "verse": "NUM 26:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98599,
+   "row": "eliab-2 father-of abiram",
+   "verse": "NUM 26:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101696,
+   "row": "nemuel son-of eliab-2",
+   "verse": "NUM 26:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101697,
+   "row": "nemuel brother-of dathan",
+   "verse": "NUM 26:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101698,
+   "row": "nemuel brother-of abiram",
+   "verse": "NUM 26:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99124,
+   "row": "gilead son-of machir",
+   "verse": "NUM 26:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99473,
+   "row": "helek son-of gilead",
+   "verse": "NUM 26:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99697,
+   "row": "iezer son-of gilead",
+   "verse": "NUM 26:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97677,
+   "row": "asriel son-of gilead",
+   "verse": "NUM 26:31",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102540,
+   "row": "shechem-2 son-of gilead",
+   "verse": "NUM 26:31",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102678,
+   "row": "shemida son-of gilead",
+   "verse": "NUM 26:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99495,
+   "row": "hepher father-of zelophehad",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99591,
+   "row": "hoglah sister-of mahlah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99592,
+   "row": "hoglah sister-of noah-2",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99593,
+   "row": "hoglah sister-of milcah-2",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99594,
+   "row": "hoglah sister-of tirzah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101050,
+   "row": "mahlah daughter-of zelophehad",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101051,
+   "row": "mahlah sister-of hoglah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101052,
+   "row": "mahlah sister-of milcah-2",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101053,
+   "row": "mahlah sister-of noah-2",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101054,
+   "row": "mahlah sister-of tirzah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101419,
+   "row": "milcah-2 daughter-of zelophehad",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101420,
+   "row": "milcah-2 sister-of mahlah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101421,
+   "row": "milcah-2 sister-of hoglah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101422,
+   "row": "milcah-2 sister-of tirzah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101423,
+   "row": "milcah-2 sister-of noah-2",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101751,
+   "row": "noah-2 daughter-of zelophehad",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101752,
+   "row": "noah-2 sister-of hoglah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101753,
+   "row": "noah-2 sister-of mahlah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101754,
+   "row": "noah-2 sister-of milcah-2",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101755,
+   "row": "noah-2 sister-of tirzah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103429,
+   "row": "zelophehad son-of hepher",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103431,
+   "row": "zelophehad father-of mahlah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103432,
+   "row": "zelophehad father-of noah-2",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103433,
+   "row": "zelophehad father-of hoglah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103434,
+   "row": "zelophehad father-of milcah-2",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103435,
+   "row": "zelophehad father-of tirzah",
+   "verse": "NUM 26:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97939,
+   "row": "becher-2 son-of ephraim",
+   "verse": "NUM 26:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 102960,
+   "row": "tahan son-of ephraim",
+   "verse": "NUM 26:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98862,
+   "row": "eran son-of shuthelah",
+   "verse": "NUM 26:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97571,
+   "row": "ard son-of bela-2",
+   "verse": "NUM 26:40",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97975,
+   "row": "bela-2 father-of ard",
+   "verse": "NUM 26:40",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97976,
+   "row": "bela-2 father-of naaman",
+   "verse": "NUM 26:40",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101564,
+   "row": "naaman son-of bela-2",
+   "verse": "NUM 26:40",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102359,
+   "row": "serah daughter-of asher",
+   "verse": "NUM 26:46",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97472,
+   "row": "amram son-of kohath",
+   "verse": "NUM 26:58",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100812,
+   "row": "kohath father-of amram",
+   "verse": "NUM 26:58",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97476,
+   "row": "amram father-of miriam",
+   "verse": "NUM 26:59",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101428,
+   "row": "miriam daughter-of amram",
+   "verse": "NUM 26:59",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 101429,
+   "row": "miriam daughter-of jochebed",
+   "verse": "NUM 26:59",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 101497,
+   "row": "moses brother-of miriam",
+   "verse": "NUM 26:59",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 106885,
+   "row": "jochebed daughter-of levi",
+   "verse": "NUM 26:59",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106886,
+   "row": "jochebed mother-of miriam",
+   "verse": "NUM 26:59",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron brother-of moses (EXO 4:14)",
+  "aaron son-of amram (EXO 6:20)",
+  "aaron son-of jochebed (EXO 6:20)",
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "abihu son-of aaron (EXO 6:23)",
+  "abihu brother-of nadab (EXO 6:23)",
+  "abihu priest-of yhvh (EXO 28:1)",
+  "abiram son-of eliab-2 (NUM 16:1)",
+  "abiram brother-of dathan (NUM 16:1)",
+  "abiram of-tribe reuben (NUM 16:1)",
+  "amram husband-of jochebed (EXO 6:20)",
+  "amram father-of moses (EXO 6:20)",
+  "amram father-of aaron (EXO 6:20)",
+  "ard descendant-of benjamin (GEN 46:21)",
+  "areli son-of gad (GEN 46:16)",
+  "ashbel son-of benjamin (1CH 8:1)",
+  "ashbel brother-of bela-2 (1CH 8:1)",
+  "asriel descendant-of manasseh (JOS 17:2)",
+  "bela-2 son-of benjamin (1CH 8:1)",
+  "beriah son-of asher (GEN 46:17)",
+  "beriah father-of heber (GEN 46:17)",
+  "beriah father-of malchiel (GEN 46:17)",
+  "caleb son-of jephunneh (NUM 13:6)",
+  "caleb of-tribe judah (NUM 13:6)",
+  "caleb servant-of yhvh (NUM 14:24)",
+  "carmi son-of reuben (GEN 46:9)",
+  "dathan son-of eliab-2 (NUM 16:1)",
+  "dathan brother-of abiram (NUM 16:1)",
+  "dathan descendant-of reuben (NUM 16:1)",
+  "ehi son-of benjamin (GEN 46:21)",
+  "eleazar son-of aaron (EXO 6:23)",
+  "eleazar priest-of yhvh (NUM 16:39)",
+  "eliab-2 descendant-of reuben (DEU 11:6)",
+  "elon-2 son-of zebulun (GEN 46:14)",
+  "ephraim son-of joseph (GEN 46:20)",
+  "ephraim brother-of manasseh (GEN 48:5)",
+  "er son-of judah (GEN 38:6)",
+  "er killed-by yhvh (GEN 38:7)",
+  "er brother-of onan (GEN 46:12)",
+  "eri son-of gad (GEN 46:16)",
+  "ezbon son-of gad (GEN 46:16)",
+  "gershon son-of levi (GEN 46:11)",
+  "gilead father-of hepher (NUM 27:1)",
+  "gilead grandfather-of zelophehad (NUM 27:1)",
+  "guni son-of naphtali (GEN 46:24)",
+  "haggi son-of gad (GEN 46:16)",
+  "hamul son-of perez (1CH 2:5)",
+  "hamul brother-of hezron-2 (GEN 46:12)",
+  "hanoch-2 son-of reuben (GEN 46:9)",
+  "hanoch-2 brother-of pallu (GEN 46:9)",
+  "heber son-of beriah (GEN 46:17)",
+  "helek descendant-of manasseh (JOS 17:2)",
+  "hepher son-of gilead (NUM 27:1)",
+  "hezron son-of reuben (GEN 46:9)",
+  "hezron-2 son-of perez (GEN 46:12)",
+  "hezron-2 son-in-law-of machir (1CH 2:21)",
+  "hoglah daughter-of zelophehad (NUM 27:1)",
+  "huppim son-of benjamin (GEN 46:21)",
+  "imnah son-of asher (GEN 46:17)",
+  "imnah brother-of beriah (GEN 46:17)",
+  "imnah brother-of ishvah (GEN 46:17)",
+  "iob brother-of tola (GEN 46:13)",
+  "iob brother-of shimron (GEN 46:13)",
+  "ishvah son-of asher (GEN 46:17)",
+  "ishvah brother-of beriah (GEN 46:17)",
+  "ishvah brother-of serah (GEN 46:17)",
+  "ishvi son-of asher (GEN 46:17)",
+  "ishvi brother-of beriah (GEN 46:17)",
+  "ishvi brother-of serah (GEN 46:17)",
+  "ithamar son-of aaron (EXO 6:23)",
+  "ithamar brother-of eleazar (EXO 6:23)",
+  "ithamar priest-of yhvh (NUM 3:4)",
+  "jachin son-of simeon (GEN 46:10)",
+  "jahleel son-of zebulun (GEN 46:14)",
+  "jahzeel son-of naphtali (GEN 46:24)",
+  "jamin son-of simeon (GEN 46:10)",
+  "jamin brother-of jachin (GEN 46:10)",
+  "jemuel son-of simeon (GEN 46:10)",
+  "jemuel brother-of jamin (GEN 46:10)",
+  "jezer son-of naphtali (GEN 46:24)",
+  "joshua son-of nun (EXO 33:11)",
+  "joshua of-tribe ephraim (NUM 13:8)",
+  "joshua servant-of moses (EXO 24:13)",
+  "kohath son-of levi (GEN 46:11)",
+  "kohath brother-of gershon (GEN 46:11)",
+  "korah-3 descendant-of levi (NUM 16:1)",
+  "machir son-of manasseh (JOS 17:1)",
+  "machir father-of gilead (JOS 17:1)",
+  "machir descendant-of joseph (JOS 17:1)",
+  "machir father-in-law-of hezron-2 (1CH 2:21)",
+  "malchiel son-of beriah (GEN 46:17)",
+  "malchiel of-tribe asher (GEN 46:17)",
+  "miriam sister-of aaron (EXO 15:20)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "moses priest-of yhvh (PSA 99:6)",
+  "muppim son-of benjamin (GEN 46:21)",
+  "muppim brother-of huppim (GEN 46:21)",
+  "naaman descendant-of benjamin (GEN 46:21)",
+  "nadab son-of aaron (NUM 3:2)",
+  "nadab brother-of abihu (EXO 6:23)",
+  "nadab priest-of yhvh (EXO 28:1)",
+  "pallu son-of reuben (GEN 46:9)",
+  "puvvah brother-of tola (1CH 7:1)",
+  "reuben son-of jacob (GEN 35:23)",
+  "serah sister-of beriah (GEN 46:17)",
+  "sered son-of zebulun (GEN 46:14)",
+  "sered brother-of elon-2 (GEN 46:14)",
+  "sered brother-of jahleel (GEN 46:14)",
+  "shaul-2 son-of simeon (GEN 46:10)",
+  "shechem-2 descendant-of manasseh (JOS 17:2)",
+  "shelah-2 son-of judah (1CH 2:3)",
+  "shemida descendant-of manasseh (JOS 17:2)",
+  "shillem son-of naphtali (GEN 46:24)",
+  "shuni son-of gad (GEN 46:16)",
+  "shuthelah son-of ephraim (1CH 7:20)",
+  "tirzah daughter-of zelophehad (NUM 27:1)",
+  "tirzah granddaughter-of hepher (NUM 27:1)",
+  "zelophehad of-tribe manasseh (NUM 27:1)",
+  "zerah-3 son-of judah (GEN 46:12)",
+  "zerah-3 brother-of perez (GEN 38:30)",
+  "ziphion son-of gad (GEN 46:16)",
+  "zohar-2 son-of simeon (GEN 46:10)",
+  "benjamin son-of jacob (GEN 35:18)",
+  "benjamin brother-of joseph (GEN 35:24)",
+  "benjamin half-brother-of reuben (GEN 35:18)",
+  "benjamin half-brother-of levi (GEN 35:18)",
+  "benjamin half-brother-of judah (GEN 35:18)",
+  "benjamin half-brother-of naphtali (GEN 35:18)",
+  "benjamin half-brother-of gad (GEN 35:18)",
+  "benjamin half-brother-of asher (GEN 35:18)",
+  "benjamin half-brother-of zebulun (GEN 35:18)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "jacob father-of naphtali (GEN 35:22)",
+  "jephunneh father-of caleb (NUM 13:6)",
+  "jephunneh descendant-of judah (NUM 13:6)",
+  "judah son-of jacob (GEN 35:23)",
+  "judah father-of er (GEN 38:6)",
+  "judah brother-of simeon (GEN 35:23)",
+  "judah brother-of reuben (GEN 29:35)",
+  "judah brother-of levi (GEN 29:35)",
+  "merari son-of levi (GEN 46:11)",
+  "nun father-of joshua (EXO 33:11)",
+  "nun descendant-of ephraim (NUM 13:8)",
+  "gad son-of jacob (GEN 35:26)",
+  "gad brother-of asher (GEN 35:26)",
+  "gad half-brother-of reuben (GEN 30:11)",
+  "gad half-brother-of simeon (GEN 30:11)",
+  "gad half-brother-of levi (GEN 30:11)",
+  "gad half-brother-of judah (GEN 30:11)",
+  "gad half-brother-of naphtali (GEN 30:11)",
+  "joseph son-of jacob (GEN 37:3)",
+  "joseph father-of manasseh (NUM 36:12)",
+  "joseph half-brother-of reuben (GEN 30:24)",
+  "joseph half-brother-of simeon (GEN 30:24)",
+  "joseph half-brother-of levi (GEN 30:24)",
+  "joseph half-brother-of judah (GEN 30:24)",
+  "joseph half-brother-of naphtali (GEN 30:24)",
+  "joseph half-brother-of gad (GEN 30:24)",
+  "joseph half-brother-of asher (GEN 30:24)",
+  "joseph half-brother-of zebulun (GEN 30:24)",
+  "manasseh son-of joseph (GEN 41:51)",
+  "manasseh brother-of ephraim (GEN 48:5)",
+  "manasseh father-of machir (GEN 50:23)",
+  "naphtali father-of jahzeel (GEN 46:24)",
+  "naphtali father-of guni (GEN 46:24)",
+  "naphtali father-of jezer (GEN 46:24)",
+  "naphtali father-of shillem (GEN 46:24)",
+  "naphtali half-brother-of reuben (GEN 30:8)",
+  "naphtali half-brother-of simeon (GEN 30:8)",
+  "naphtali half-brother-of levi (GEN 30:8)",
+  "naphtali half-brother-of judah (GEN 30:8)",
+  "simeon brother-of levi (GEN 49:5)",
+  "simeon father-of jachin (GEN 46:10)",
+  "simeon father-of jamin (GEN 46:10)",
+  "simeon father-of zohar-2 (GEN 46:10)",
+  "simeon son-of jacob (GEN 35:23)",
+  "simeon brother-of reuben (GEN 29:33)",
+  "simeon half-brother-of benjamin (GEN 35:22)",
+  "zebulun son-of jacob (GEN 35:23)",
+  "zebulun father-of sered (GEN 46:14)",
+  "zebulun father-of elon-2 (GEN 46:14)",
+  "zebulun father-of jahleel (GEN 46:14)",
+  "zebulun brother-of reuben (GEN 30:20)",
+  "zebulun brother-of simeon (GEN 30:20)",
+  "zebulun brother-of judah (GEN 30:20)",
+  "zebulun half-brother-of naphtali (GEN 30:20)",
+  "zebulun half-brother-of gad (GEN 30:20)",
+  "zebulun half-brother-of asher (GEN 30:20)",
+  "asher son-of jacob (GEN 35:26)",
+  "asher father-of beriah (GEN 46:17)",
+  "asher father-of serah (GEN 46:17)",
+  "asher father-of imnah (GEN 46:17)",
+  "asher half-brother-of reuben (GEN 30:13)",
+  "asher half-brother-of simeon (GEN 30:13)",
+  "asher half-brother-of levi (GEN 30:13)",
+  "asher half-brother-of judah (GEN 30:13)",
+  "asher half-brother-of naphtali (GEN 30:13)",
+  "jochebed wife-of amram (EXO 6:20)",
+  "jochebed mother-of aaron (EXO 6:20)",
+  "jochebed mother-of moses (EXO 6:20)",
+  "jochebed sister-of kohath (EXO 6:20)",
+  "levi son-of jacob (GEN 35:23)",
+  "levi brother-of simeon (GEN 34:25)",
+  "levi father-of gershon (GEN 46:11)",
+  "levi father-of kohath (GEN 46:11)",
+  "levi father-of merari (GEN 46:11)",
+  "levi brother-of zebulun (GEN 35:23)",
+  "levi brother-of reuben (GEN 29:34)",
+  "onan son-of judah (GEN 38:4)",
+  "onan brother-of er (GEN 46:12)",
+  "onan brother-of shelah-2 (1CH 2:3)",
+  "onan killed-by yhvh (GEN 38:9)",
+  "perez son-of judah (RUT 4:12)",
+  "perez brother-of zerah-3 (GEN 46:12)",
+  "perez father-of hezron-2 (GEN 46:12)",
+  "perez father-of hamul (GEN 46:12)"
+ ]
+}

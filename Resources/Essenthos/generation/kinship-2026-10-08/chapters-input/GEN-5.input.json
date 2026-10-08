@@ -1,0 +1,372 @@
+{
+ "chapter": "GEN 5",
+ "text": {
+  "GEN 5:1": {
+   "KJV": "This is the book of the generations of Adam. In the day that God created man, in the likeness of God made he him;",
+   "BHSA": "זֶ֣ה סֵ֔פֶר תֹּולְדֹ֖ת אָדָ֑ם בְּיֹ֗ום בְּרֹ֤א אֱלֹהִים֙ אָדָ֔ם בִּדְמ֥וּת אֱלֹהִ֖ים עָשָׂ֥ה אֹתֹֽו׃ "
+  },
+  "GEN 5:2": {
+   "KJV": "Male and female created he them; and blessed them, and called their name Adam, in the day when they were created.",
+   "BHSA": "זָכָ֥ר וּנְקֵבָ֖ה בְּרָאָ֑ם וַיְבָ֣רֶךְ אֹתָ֗ם וַיִּקְרָ֤א אֶת־שְׁמָם֙ אָדָ֔ם בְּיֹ֖ום הִבָּֽרְאָֽם׃ ס "
+  },
+  "GEN 5:3": {
+   "KJV": "And Adam lived an hundred and thirty years, and begat a son in his own likeness, after his image; and called his name Seth:",
+   "BHSA": "וַֽיְחִ֣י אָדָ֗ם שְׁלֹשִׁ֤ים וּמְאַת֙ שָׁנָ֔ה וַיֹּ֥ולֶד בִּדְמוּתֹ֖ו כְּצַלְמֹ֑ו וַיִּקְרָ֥א אֶת־שְׁמֹ֖ו שֵֽׁת׃ "
+  },
+  "GEN 5:4": {
+   "KJV": "And the days of Adam after he had begotten Seth were eight hundred years: and he begat sons and daughters:",
+   "BHSA": "וַיִּֽהְי֣וּ יְמֵי־אָדָ֗ם אַֽחֲרֵי֙ הֹולִידֹ֣ו אֶת־שֵׁ֔ת שְׁמֹנֶ֥ה מֵאֹ֖ת שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ "
+  },
+  "GEN 5:5": {
+   "KJV": "And all the days that Adam lived were nine hundred and thirty years: and he died.",
+   "BHSA": "וַיִּֽהְי֞וּ כָּל־יְמֵ֤י אָדָם֙ אֲשֶׁר־חַ֔י תְּשַׁ֤ע מֵאֹות֙ שָׁנָ֔ה וּשְׁלֹשִׁ֖ים שָׁנָ֑ה וַיָּמֹֽת׃ ס "
+  },
+  "GEN 5:6": {
+   "KJV": "And Seth lived an hundred and five years, and begat Enos:",
+   "BHSA": "וַֽיְחִי־שֵׁ֕ת חָמֵ֥שׁ שָׁנִ֖ים וּמְאַ֣ת שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־אֱנֹֽושׁ׃ "
+  },
+  "GEN 5:7": {
+   "KJV": "And Seth lived after he begat Enos eight hundred and seven years, and begat sons and daughters:",
+   "BHSA": "וַֽיְחִי־שֵׁ֗ת אַֽחֲרֵי֙ הֹולִידֹ֣ו אֶת־אֱנֹ֔ושׁ שֶׁ֣בַע שָׁנִ֔ים וּשְׁמֹנֶ֥ה מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ "
+  },
+  "GEN 5:8": {
+   "KJV": "And all the days of Seth were nine hundred and twelve years: and he died.",
+   "BHSA": "וַיִּֽהְיוּ֙ כָּל־יְמֵי־שֵׁ֔ת שְׁתֵּ֤ים עֶשְׂרֵה֙ שָׁנָ֔ה וּתְשַׁ֥ע מֵאֹ֖ות שָׁנָ֑ה וַיָּמֹֽת׃ ס "
+  },
+  "GEN 5:9": {
+   "KJV": "And Enos lived ninety years, and begat Cainan:",
+   "BHSA": "וַֽיְחִ֥י אֱנֹ֖ושׁ תִּשְׁעִ֣ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־קֵינָֽן׃ "
+  },
+  "GEN 5:10": {
+   "KJV": "And Enos lived after he begat Cainan eight hundred and fifteen years, and begat sons and daughters:",
+   "BHSA": "וַֽיְחִ֣י אֱנֹ֗ושׁ אַֽחֲרֵי֙ הֹולִידֹ֣ו אֶת־קֵינָ֔ן חֲמֵ֤שׁ עֶשְׂרֵה֙ שָׁנָ֔ה וּשְׁמֹנֶ֥ה מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ "
+  },
+  "GEN 5:11": {
+   "KJV": "And all the days of Enos were nine hundred and five years: and he died.",
+   "BHSA": "וַיִּֽהְיוּ֙ כָּל־יְמֵ֣י אֱנֹ֔ושׁ חָמֵ֣שׁ שָׁנִ֔ים וּתְשַׁ֥ע מֵאֹ֖ות שָׁנָ֑ה וַיָּמֹֽת׃ ס "
+  },
+  "GEN 5:12": {
+   "KJV": "And Cainan lived seventy years and begat Mahalaleel:",
+   "BHSA": "וַֽיְחִ֥י קֵינָ֖ן שִׁבְעִ֣ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־מַֽהֲלַלְאֵֽל׃ "
+  },
+  "GEN 5:13": {
+   "KJV": "And Cainan lived after he begat Mahalaleel eight hundred and forty years, and begat sons and daughters:",
+   "BHSA": "וַיְחִ֣י קֵינָ֗ן אַחֲרֵי֙ הֹולִידֹ֣ו אֶת־מַֽהֲלַלְאֵ֔ל אַרְבָּעִ֣ים שָׁנָ֔ה וּשְׁמֹנֶ֥ה מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ "
+  },
+  "GEN 5:14": {
+   "KJV": "And all the days of Cainan were nine hundred and ten years: and he died.",
+   "BHSA": "וַיִּֽהְיוּ֙ כָּל־יְמֵ֣י קֵינָ֔ן עֶ֣שֶׂר שָׁנִ֔ים וּתְשַׁ֥ע מֵאֹ֖ות שָׁנָ֑ה וַיָּמֹֽת׃ ס "
+  },
+  "GEN 5:15": {
+   "KJV": "And Mahalaleel lived sixty and five years, and begat Jared:",
+   "BHSA": "וַֽיְחִ֣י מַֽהֲלַלְאֵ֔ל חָמֵ֥שׁ שָׁנִ֖ים וְשִׁשִּׁ֣ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־יָֽרֶד׃ "
+  },
+  "GEN 5:16": {
+   "KJV": "And Mahalaleel lived after he begat Jared eight hundred and thirty years, and begat sons and daughters:",
+   "BHSA": "וַֽיְחִ֣י מַֽהֲלַלְאֵ֗ל אַֽחֲרֵי֙ הֹולִידֹ֣ו אֶת־יֶ֔רֶד שְׁלֹשִׁ֣ים שָׁנָ֔ה וּשְׁמֹנֶ֥ה מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ "
+  },
+  "GEN 5:17": {
+   "KJV": "And all the days of Mahalaleel were eight hundred ninety and five years: and he died.",
+   "BHSA": "וַיִּהְיוּ֙ כָּל־יְמֵ֣י מַהֲלַלְאֵ֔ל חָמֵ֤שׁ וְתִשְׁעִים֙ שָׁנָ֔ה וּשְׁמֹנֶ֥ה מֵאֹ֖ות שָׁנָ֑ה וַיָּמֹֽת׃ ס "
+  },
+  "GEN 5:18": {
+   "KJV": "And Jared lived an hundred sixty and two years, and he begat Enoch:",
+   "BHSA": "וַֽיְחִי־יֶ֕רֶד שְׁתַּ֧יִם וְשִׁשִּׁ֛ים שָׁנָ֖ה וּמְאַ֣ת שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־חֲנֹֽוךְ׃ "
+  },
+  "GEN 5:19": {
+   "KJV": "And Jared lived after he begat Enoch eight hundred years, and begat sons and daughters:",
+   "BHSA": "וַֽיְחִי־יֶ֗רֶד אַֽחֲרֵי֙ הֹולִידֹ֣ו אֶת־חֲנֹ֔וךְ שְׁמֹנֶ֥ה מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ "
+  },
+  "GEN 5:20": {
+   "KJV": "And all the days of Jared were nine hundred sixty and two years: and he died.",
+   "BHSA": "וַיִּֽהְיוּ֙ כָּל־יְמֵי־יֶ֔רֶד שְׁתַּ֤יִם וְשִׁשִּׁים֙ שָׁנָ֔ה וּתְשַׁ֥ע מֵאֹ֖ות שָׁנָ֑ה וַיָּמֹֽת׃ פ "
+  },
+  "GEN 5:21": {
+   "KJV": "And Enoch lived sixty and five years, and begat Methuselah:",
+   "BHSA": "וַֽיְחִ֣י חֲנֹ֔וךְ חָמֵ֥שׁ וְשִׁשִּׁ֖ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־מְתוּשָֽׁלַח׃ "
+  },
+  "GEN 5:22": {
+   "KJV": "And Enoch walked with God after he begat Methuselah three hundred years, and begat sons and daughters:",
+   "BHSA": "וַיִּתְהַלֵּ֨ךְ חֲנֹ֜וךְ אֶת־הָֽאֱלֹהִ֗ים אַֽחֲרֵי֙ הֹולִידֹ֣ו אֶת־מְתוּשֶׁ֔לַח שְׁלֹ֥שׁ מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ "
+  },
+  "GEN 5:23": {
+   "KJV": "And all the days of Enoch were three hundred sixty and five years:",
+   "BHSA": "וַיְהִ֖י כָּל־יְמֵ֣י חֲנֹ֑וךְ חָמֵ֤שׁ וְשִׁשִּׁים֙ שָׁנָ֔ה וּשְׁלֹ֥שׁ מֵאֹ֖ות שָׁנָֽה׃ "
+  },
+  "GEN 5:24": {
+   "KJV": "And Enoch walked with God: and he was not; for God took him.",
+   "BHSA": "וַיִּתְהַלֵּ֥ךְ חֲנֹ֖וךְ אֶת־הָֽאֱלֹהִ֑ים וְאֵינֶ֕נּוּ כִּֽי־לָקַ֥ח אֹתֹ֖ו אֱלֹהִֽים׃ פ "
+  },
+  "GEN 5:25": {
+   "KJV": "And Methuselah lived an hundred eighty and seven years, and begat Lamech.",
+   "BHSA": "וַיְחִ֣י מְתוּשֶׁ֔לַח שֶׁ֧בַע וּשְׁמֹנִ֛ים שָׁנָ֖ה וּמְאַ֣ת שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־לָֽמֶךְ׃ "
+  },
+  "GEN 5:26": {
+   "KJV": "And Methuselah lived after he begat Lamech seven hundred eighty and two years, and begat sons and daughters:",
+   "BHSA": "וַֽיְחִ֣י מְתוּשֶׁ֗לַח אַֽחֲרֵי֙ הֹולִידֹ֣ו אֶת־לֶ֔מֶךְ שְׁתַּ֤יִם וּשְׁמֹונִים֙ שָׁנָ֔ה וּשְׁבַ֥ע מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ "
+  },
+  "GEN 5:27": {
+   "KJV": "And all the days of Methuselah were nine hundred sixty and nine years: and he died.",
+   "BHSA": "וַיִּהְיוּ֙ כָּל־יְמֵ֣י מְתוּשֶׁ֔לַח תֵּ֤שַׁע וְשִׁשִּׁים֙ שָׁנָ֔ה וּתְשַׁ֥ע מֵאֹ֖ות שָׁנָ֑ה וַיָּמֹֽת׃ פ "
+  },
+  "GEN 5:28": {
+   "KJV": "And Lamech lived an hundred eighty and two years, and begat a son:",
+   "BHSA": "וַֽיְחִי־לֶ֕מֶךְ שְׁתַּ֧יִם וּשְׁמֹנִ֛ים שָׁנָ֖ה וּמְאַ֣ת שָׁנָ֑ה וַיֹּ֖ולֶד בֵּֽן׃ "
+  },
+  "GEN 5:29": {
+   "KJV": "And he called his name Noah, saying, This same shall comfort us concerning our work and toil of our hands, because of the ground which the LORD hath cursed.",
+   "BHSA": "וַיִּקְרָ֧א אֶת־שְׁמֹ֛ו נֹ֖חַ לֵאמֹ֑ר זֶ֞֠ה יְנַחֲמֵ֤נוּ מִֽמַּעֲשֵׂ֨נוּ֙ וּמֵעִצְּבֹ֣ון יָדֵ֔ינוּ מִן־הָ֣אֲדָמָ֔ה אֲשֶׁ֥ר אֵֽרְרָ֖הּ יְהוָֽה׃ "
+  },
+  "GEN 5:30": {
+   "KJV": "And Lamech lived after he begat Noah five hundred ninety and five years, and begat sons and daughters:",
+   "BHSA": "וַֽיְחִי־לֶ֗מֶךְ אַֽחֲרֵי֙ הֹולִידֹ֣ו אֶת־נֹ֔חַ חָמֵ֤שׁ וְתִשְׁעִים֙ שָׁנָ֔ה וַחֲמֵ֥שׁ מֵאֹ֖ת שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ "
+  },
+  "GEN 5:31": {
+   "KJV": "And all the days of Lamech were seven hundred seventy and seven years: and he died.",
+   "BHSA": "וַֽיְהִי֙ כָּל־יְמֵי־לֶ֔מֶךְ שֶׁ֤בַע וְשִׁבְעִים֙ שָׁנָ֔ה וּשְׁבַ֥ע מֵאֹ֖ות שָׁנָ֑ה וַיָּמֹֽת׃ ס "
+  },
+  "GEN 5:32": {
+   "KJV": "And Noah was five hundred years old: and Noah begat Shem, Ham, and Japheth.",
+   "BHSA": "וַֽיְהִי־נֹ֕חַ בֶּן־חֲמֵ֥שׁ מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֣ולֶד נֹ֔חַ אֶת־שֵׁ֖ם אֶת־חָ֥ם וְאֶת־יָֽפֶת׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "adam",
+   "name": "Adam",
+   "distinguisher": "first man (1CO 15:45)",
+   "sex": "male"
+  },
+  {
+   "slug": "enoch-2",
+   "name": "Enoch",
+   "distinguisher": "son of Jared (GEN 5:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "enosh",
+   "name": "Enosh",
+   "distinguisher": "son of Seth (GEN 4:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "ham",
+   "name": "Ham",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "japheth",
+   "name": "Japheth",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "jared",
+   "name": "Jared",
+   "distinguisher": "son of Mahalael (GEN 5:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "kenan",
+   "name": "Kenan",
+   "distinguisher": "son of Enosh (GEN 5:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "lamech-2",
+   "name": "Lamech",
+   "distinguisher": "son of Methuselah (GEN 5:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "mahalalel",
+   "name": "Mahalalel",
+   "distinguisher": "son of Kenan (GEN 5:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "methuselah",
+   "name": "Methuselah",
+   "distinguisher": "son of Enoch (GEN 5:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "noah",
+   "name": "Noah",
+   "distinguisher": "son of Lamech (GEN 5:28-29)",
+   "sex": "male"
+  },
+  {
+   "slug": "seth",
+   "name": "Seth",
+   "distinguisher": "son of Adam (GEN 4:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "shem",
+   "name": "Shem",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 105116,
+   "row": "adam father-of seth",
+   "verse": "GEN 5:3",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-27"
+  },
+  {
+   "id": 106590,
+   "row": "seth son-of adam",
+   "verse": "GEN 5:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98803,
+   "row": "enosh son-of seth",
+   "verse": "GEN 5:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106591,
+   "row": "seth father-of enosh",
+   "verse": "GEN 5:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98804,
+   "row": "enosh father-of kenan",
+   "verse": "GEN 5:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100719,
+   "row": "kenan son-of enosh",
+   "verse": "GEN 5:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100720,
+   "row": "kenan father-of mahalalel",
+   "verse": "GEN 5:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101028,
+   "row": "mahalalel son-of kenan",
+   "verse": "GEN 5:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100032,
+   "row": "jared son-of mahalalel",
+   "verse": "GEN 5:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101029,
+   "row": "mahalalel father-of jared",
+   "verse": "GEN 5:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98799,
+   "row": "enoch-2 son-of jared",
+   "verse": "GEN 5:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100033,
+   "row": "jared father-of enoch-2",
+   "verse": "GEN 5:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98800,
+   "row": "enoch-2 father-of methuselah",
+   "verse": "GEN 5:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101321,
+   "row": "methuselah son-of enoch-2",
+   "verse": "GEN 5:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100871,
+   "row": "lamech-2 son-of methuselah",
+   "verse": "GEN 5:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101322,
+   "row": "methuselah father-of lamech-2",
+   "verse": "GEN 5:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100872,
+   "row": "lamech-2 father-of noah",
+   "verse": "GEN 5:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101747,
+   "row": "noah son-of lamech-2",
+   "verse": "GEN 5:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99232,
+   "row": "ham son-of noah",
+   "verse": "GEN 5:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100016,
+   "row": "japheth son-of noah",
+   "verse": "GEN 5:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101748,
+   "row": "noah father-of shem",
+   "verse": "GEN 5:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101749,
+   "row": "noah father-of ham",
+   "verse": "GEN 5:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101750,
+   "row": "noah father-of japheth",
+   "verse": "GEN 5:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102597,
+   "row": "shem son-of noah",
+   "verse": "GEN 5:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "enoch-2 descendant-of adam (JUD 1:14)",
+  "enosh descendant-of adam (1CH 1:1)",
+  "japheth brother-of shem (GEN 10:21)",
+  "shem brother-of japheth (GEN 10:21)",
+  "yhvh creator-of adam (GEN 2:7)"
+ ]
+}

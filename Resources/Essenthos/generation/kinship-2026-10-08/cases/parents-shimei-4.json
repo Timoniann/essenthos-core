@@ -1,0 +1,11 @@
+{
+ "case": "parents-shimei-4",
+ "question": "shimei-4 is recorded with more than one father: ela, pedaiah-2.",
+ "verdict": "mixed",
+ "actions": [],
+ "note": "The Hebrew of 1KI 4:18 identifies shimei-3 as Ela's son; 1CH 3:19 identifies shimei-4 as Pedaiah's son. Row 104682 appears to conflate these distinct people, but it is the project owner's ruling and must remain unchanged; the other relationships can stand.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:37:02+00:00"
+}

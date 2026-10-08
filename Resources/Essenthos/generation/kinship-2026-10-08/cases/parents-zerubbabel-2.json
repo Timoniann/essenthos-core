@@ -1,0 +1,11 @@
+{
+ "case": "parents-zerubbabel-2",
+ "question": "zerubbabel-2 is recorded with more than one father: pedaiah-2, shealtiel-2.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "The Hebrew of 1CH 3:19 explicitly lists Zerubbabel among Pedaiah's sons, while EZR 3:2 explicitly calls him son of Shealtiel, corroborated by HAG 1:12, HAG 2:23 and NEH 12:1. Preserve both relationships: the supplied texts do not explain the differing parentage or establish biological versus legal fatherhood.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:37:39+00:00"
+}

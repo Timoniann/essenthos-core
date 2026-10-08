@@ -1,0 +1,11 @@
+{
+ "chapter": "EZR 2",
+ "rows": 53,
+ "wrong": [],
+ "missing": [],
+ "note": "No additional plain family statements between the supplied records are missing. Owner rows 105609, 106599, and 106828 assert descent from Levi, whereas EZR 2:42 identifies gatekeeper families without explicitly establishing that ancestry; these rulings are retained.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:27:08+00:00"
+}

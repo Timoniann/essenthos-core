@@ -1,0 +1,40 @@
+{
+ "case": "parents-rakem",
+ "question": "rakem is recorded with more than one father: peresh, sheresh.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "delete-row",
+   "rows": [
+    101952,
+    101953
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 7:16",
+   "why": "The Hebrew names Sheresh immediately before וּבָנָיו, 'and his sons,' identifying Ulam and Rakem as Sheresh's sons. The corresponding Sheresh father-of rows already exist.",
+   "confidence": 0.95
+  },
+  {
+   "kind": "retarget-row",
+   "rows": [
+    102091,
+    103136
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "sheresh",
+   "verse": "1CH 7:16",
+   "why": "The antecedent of וּבָנָיו, 'and his sons,' is Sheresh. Rakem and Ulam should therefore point to Sheresh as their father.",
+   "confidence": 0.95
+  }
+ ],
+ "note": "Retain the existing Sheresh father-of rows and the sibling relationships. Rakem's and Ulam's record distinguishers should also be updated to identify them as sons of Sheresh.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:36:40+00:00"
+}

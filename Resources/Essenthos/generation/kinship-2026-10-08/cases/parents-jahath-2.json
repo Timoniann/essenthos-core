@@ -1,0 +1,11 @@
+{
+ "case": "parents-jahath-2",
+ "question": "jahath-2 is recorded with more than one father: gershon, libni.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "The Hebrew of 1CH 6:20 gives Gershom → Libni → Jahath, while 1CH 6:43 gives Jahath → Gershom → Levi. These genealogies differ in their stated links; the supplied text does not establish whether this reflects an omitted generation or differing traditions, and row 107218 is a protected owner ruling.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:34:41+00:00"
+}

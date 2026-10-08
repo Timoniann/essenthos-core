@@ -1,0 +1,23 @@
+{
+ "case": "parents-abimelech-2",
+ "question": "abimelech-2 is recorded with more than one father: gideon, jerubbesheth.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "fold-records",
+   "rows": [],
+   "record": "gideon",
+   "other": "jerubbesheth",
+   "new_type": "",
+   "new_to": "",
+   "verse": "2SA 11:21",
+   "why": "The Hebrew identifies Abimelech son of Jerubbesheth by his distinctive death from a woman's millstone at Thebez, identifying the same Abimelech recorded here. Jerubbesheth is another name for his father Gideon (Jerubbaal), whom JDG 9:1 names as his father.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The apparent second father results from separate records for the same man. Preserve the owner's relationship ruling in row 106757 when merging the records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:31:09+00:00"
+}

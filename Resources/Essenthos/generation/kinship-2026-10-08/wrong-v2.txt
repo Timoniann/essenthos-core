@@ -1,0 +1,63 @@
+1CH 1 | retarget dishon-2 | anah-son-of-zibeon father-of dishon | 0.99 | Anah's son Dishon is represented by dishon-2, whereas dishon is listed as Seir's son in verse 38.
+1CH 1 | retarget dishon-2 | cheran son-of dishon; ithran son-of dishon | 0.9 | The verse names Ithran and Cheran among the sons of the Dishon just identified as Anah's son.
+1CH 2 | retype daughter-of | ahlai son-of sheshan | 0.94 | Ahlai is listed among Sheshan's children, and verse 34 specifies that Sheshan had daughters but no sons.
+1CH 2 | retype grandfather-of | sheshan father-of attai | 1 | Sheshan's daughter bore Attai to Jarha, making Sheshan Attai's grandfather.
+1CH 2 | delete  | mareshah son-of chelubai | 0.9 | The verse names Mesha as Caleb's firstborn and Mareshah as Hebron's father, but does not identify Mareshah as 
+1CH 2 | retype grandson-of | gazez-2 son-of chelubai | 1 | The second Gazez was begotten by Haran, who was Caleb's son by Ephah.
+1CH 24 | delete  | shemaiah-8 scribe-of david | 0.9 | Shemaiah records the divisions before the king and other officials, but the verse does not identify him as Dav
+1CH 25 | delete  | shimei-10 son-of jeduthun | 0.97 | The Hebrew names five sons of Jeduthun without naming Shimei, whose appearance in verse 17 gives no father.
+1CH 26 | delete  | shuppim companion-of hosah | 0.88 | The verse assigns Shuppim and Hosah to the west gate but does not state that they were companions.
+1CH 3 | retarget son-of | zedekiah-2 son-of eliakim-2 | 0.85 | The successive Hebrew clauses name Jeconiah as Jehoiakim's son and then Zedekiah as Jeconiah's son.
+1CH 3 | retype son-of | zedekiah-2 brother-of jehoiachin | 0.85 | Zedekiah follows Jeconiah with the designation 'his son,' continuing the genealogical sequence rather than exp
+1CH 3 | delete  | arnan descendant-of rephaiah | 0.98 | The Hebrew lists 'sons of Rephaiah' and 'sons of Arnan' without saying that Arnan descends from Rephaiah.
+1CH 3 | delete  | arnan ancestor-of obadiah-2 | 0.98 | The Hebrew lists 'sons of Arnan' and 'sons of Obadiah' without saying that Obadiah descends from Arnan.
+1CH 4 | delete  | etam father-of jezreel; etam father-of ishma; etam father-of idbash; etam father-of hazzelelponi; idbash son-of etam; ishma son-of etam; jezreel son-of etam | 0.96 | The Hebrew refers to the father of Etam and identifies Hazzelelponi as the listed men's sister, without statin
+1CH 4 | delete  | hodiah mother-of keilah; hodiah mother-of eshtemoa-2 | 1 | The Hebrew speaks of Hodiah's wife and her sons, not of Hodiah as the mother of Keilah or Eshtemoa.
+1CH 4 | delete  | keilah son-of naham; naham father-of keilah; naham father-of eshtemoa-2 | 0.9 | Naham identifies the brother of Hodiah's wife, while the following genealogy concerns her sons rather than nam
+1CH 4 | delete  | eshtemoa-2 brother-of keilah | 0.94 | The verse associates Keilah and Eshtemoa with the sons of Hodiah's wife but does not identify them as brothers
+1CH 4 | delete  | meshobab descendant-of amaziah-2 | 1 | The phrase son of Amaziah qualifies Joshah alone, while Meshobab is a separate name in the list.
+1CH 4 | retarget ishi-the-simeonite | neariah-2 son-of ishi-2; pelatiah-2 son-of ishi-2; rephaiah-2 son-of ishi-2; uzziel-2 son-of ishi-2 | 0.99 | The four captains are explicitly sons of the Simeonite Ishi represented by ishi-the-simeonite, rather than the
+1CH 5 | delete  | jeiel brother-of zechariah-3; zechariah-3 brother-of jeiel | 0.92 | The Hebrew describes Beerah's kinsmen by their families, without identifying Jeiel and Zechariah as brothers o
+1CH 5 | delete  | michael-2 son-of jeshishai; michael-2 father-of gilead-3 | 0.99 | The Michael who is Jeshishai's son and Gilead's father belongs to Abihail's ancestral chain, whereas michael-2
+1CH 6 | retarget elihu | tohu father-of eliel | 0.92 | Eliel is placed between Jeroham and Toah in Samuel's Kohathite ancestry, corresponding to elihu rather than th
+1CH 7 | retarget ashbel | bilhan-2 son-of jediael | 0.97 | This Jediael belongs to Benjamin's genealogy and is identified with Ashbel in Bilhan's supplied record, wherea
+1CH 7 | delete  | ehi father-of hushim-2 | 0.98 | The Hebrew names Aher as Hushim's father and does not identify him as Ehi.
+1CH 7 | retype descendant-of | shillem son-of bilhah | 0.98 | Shallum is explicitly among Naphtali's sons, so the concluding sons-of-Bilhah designation describes ancestry t
+1CH 7 | delete  | peresh father-of ulam; peresh father-of rakem | 0.98 | The Hebrew names Sheresh immediately before 'his sons, Ulam and Rakem,' assigning those sons to Sheresh rather
+1CH 7 | retarget sheresh | rakem son-of peresh; ulam son-of peresh | 0.98 | Ulam and Rakem are named as the sons of the immediately preceding Sheresh rather than Peresh.
+1CH 7 | delete  | resheph son-of rephah | 0.97 | Resheph is coordinated with Rephah without a following 'his son,' so the verse does not make Resheph Rephah's 
+1CH 7 | retype brother-of | shilshah descendant-of beera | 1 | Shilshah and Beera both occur in Zophah's list of sons, with no statement that Shilshah descends from Beera.
+1CH 8 | retarget jeroham-father-of-jaresiah | shamsherai son-of jeremoth-2 | 0.99 | Shamsherai belongs to the list ending in verse 27 with 'sons of Jeroham,' rather than Jeremoth.
+1CH 8 | delete  | shehariah descendant-of shashak | 0.99 | Shehariah is listed among Jeroham's sons in verses 26–27, and the chapter gives no ancestry connecting him to 
+EZR 10 | delete  | shemariah-3 descendant-of hashum-2 | 1 | Shemariah continues the sons-of-Harim list begun in verse 31, whereas the Hashum list begins in verse 33.
+EZR 10 | delete  | meremoth-2 descendant-of vaniah | 1 | Vaniah and Meremoth are successive members of Bani's list, with no statement that Meremoth descends from Vania
+EZR 10 | retarget bani-4 | shimei-16 descendant-of bani-5 | 0.99 | Shimei belongs to the sons-of-Bani list begun in verse 34, while bani-5 is another member listed alongside him
+EZR 10 | retarget bani-4 | machnadebai descendant-of bani | 0.99 | Machnadebai continues the returned family of Bani's list begun in verse 34, which does not identify David's Ga
+EZR 10 | delete  | joseph-4 descendant-of amariah-5 | 1 | Amariah and Joseph are successive members of Bani's list, with no statement that Joseph descends from Amariah.
+EZR 8 | delete  | shecaniah-2 descendant-of parosh; shecaniah-2 ancestor-of zechariah-16 | 0.96 | The Hebrew does not identify the priest shecaniah-2 as either a descendant of Parosh or an ancestor of Zechari
+EZR 8 | delete  | zattu ancestor-of shecaniah-4 | 0.99 | The supplied Hebrew names Shecaniah and Jahaziel but does not name Zattu or state this ancestry.
+EZR 8 | delete  | shelomith-5 descendant-of bani-4; bani-4 ancestor-of shelomith-5 | 0.99 | The supplied Hebrew names Shelomith and Josiphiah but does not name Bani or state this ancestry.
+EZR 8 | retarget jeshua-5 | jozabad-5 son-of jeshua-3 | 0.95 | The verse identifies Jozabad as a Levite and son of Jeshua, matching the Levite jeshua-5 identified by the own
+GEN 10 | delete  | hadoram descendant-of yhvh | 1 | Hadoram appears in Joktan's offspring list, and the chapter states no genealogical relationship between Hadora
+GEN 10 | delete  | sheba-2 descendant-of sheba | 1 | Sheba in Joktan's offspring list is distinct from Raamah's son Sheba in verse 7, and the chapter states no des
+GEN 36 | retype grandson-of | mizzah son-of basemath-daughter-of-ishmael | 1 | Mizzah is listed as Reuel's son, while verses 4 and 10 identify Reuel as Bashemath's son, explicitly naming th
+GEN 4 | delete  | zillah mother-of naamah | 0.94 | The Hebrew says Zillah bore Tubal-cain and names Naamah as his sister, without identifying Naamah's mother.
+GEN 46 | retype grandson-of | malchiel of-tribe asher | 0.97 | The Hebrew lists Beriah among Asher's sons and Malchiel among Beriah's sons, establishing Malchiel as Asher's 
+LUK 3 | delete  | admin son-of ram | 0.93 | The Greek makes Admin the son of Arni, while the KJV makes Aminadab the son of Aram without naming Admin, so n
+MAT 1 | delete  | rahab wife-of salmon; salmon husband-of rahab | 0.99 | The text says Salmon begat Boaz by Rahab but does not state that Salmon and Rahab were married.
+NEH 12 | delete  | jeremiah-7 ancestor-of hananiah-9 | 0.85 | The Jeremiah whose house Hananiah heads is the returning priestly house represented by jeremiah-9, not the sep
+NEH 12 | delete  | amariah-6 ancestor-of jehohanan-4 | 0.85 | Jehohanan heads the house of the returning Amariah represented by amariah-priest-with-zerubbabel, rather than 
+NEH 12 | retarget amariah-priest-with-zerubbabel | jehohanan-4 descendant-of amariah-6 | 0.85 | The list names Jehohanan as head of the Amariah house introduced among the returning priests in verse 2.
+NEH 12 | retarget ezra-3 | meshullam-16 descendant-of ezra | 0.97 | Meshullam heads the house of the returning priest Ezra from verse 1, rather than Ezra the scribe named in vers
+NEH 12 | retarget malluch-6 | jonathan-11 descendant-of malluch-4 | 0.86 | Jonathan heads the Melicu or Malluch house corresponding to the returning priest Malluch in verse 2.
+NEH 12 | delete  | malluch-4 ancestor-of jonathan-11 | 0.86 | This verse associates Jonathan with the returning Malluch house represented by malluch-6, not the separately r
+NEH 12 | retarget iddo-7 | zechariah-25 descendant-of iddo-5 | 0.86 | Zechariah heads the returning priestly house of Iddo represented by iddo-7, while the verse does not identify 
+NEH 12 | retarget shemaiah-24 | jehonathan-2 descendant-of shemaiah-19 | 0.88 | Jehonathan heads the house of the returning priest Shemaiah from verse 6, represented by shemaiah-24.
+NEH 12 | delete  | shemaiah-19 ancestor-of jehonathan-2 | 0.88 | The Shemaiah house associated with Jehonathan is represented by shemaiah-24 rather than the separately recorde
+NEH 12 | retarget jedaiah-8 | nethanel-7 descendant-of jedaiah-5 | 0.95 | Nethaneel heads the second Jedaiah house, following Hilkiah in the order of verses 7 and 21, represented by je
+NEH 12 | retarget shemaiah-26 | jonathan-12 son-of shemaiah-14 | 0.99 | The genealogy makes Jonathan the son of the Shemaiah represented by shemaiah-26, Zechariah's grandfather.
+NEH 12 | delete  | mattaniah-4 son-of micaiah-4; mattaniah-4 father-of shemaiah-14 | 0.99 | The Mattaniah in this genealogy is mattaniah-12, not mattaniah-4 from Hezekiah's time, and his son is shemaiah
+NEH 12 | retarget mattaniah-12 | micaiah-4 father-of mattaniah-4 | 0.99 | The genealogy names Michaiah as father of the Mattaniah represented by mattaniah-12.
+NEH 12 | delete  | shemaiah-14 son-of mattaniah-4; shemaiah-14 father-of jonathan-12 | 0.98 | Jonathan's father in the genealogy is shemaiah-26, son of mattaniah-12, rather than the Levite shemaiah-14 sen
+NEH 12 | delete  | shemaiah-27 brother-of zechariah-22; maai brother-of shemaiah-19; maai brother-of azarel-4; maai brother-of milalai; maai brother-of gilalai | 0.87 | The named musicians are called Zechariah's brethren in the musical procession, without a statement establishin
+NUM 3 | delete  | zuriel commander-of merari | 0.99 | The Hebrew calls Zuriel chief of the ancestral house of Merari's families, not commander of Merari himself.

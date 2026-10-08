@@ -1,0 +1,38 @@
+{
+ "case": "parents-jozabad-5",
+ "question": "jozabad-5 is recorded with more than one father: jeshua-3, jeshua-5.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "delete-row",
+   "rows": [
+    105927
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "EZR 8:33",
+   "why": "The Hebrew names Jozabad son of Jeshua among the Levites; it does not identify his father as the priest Jeshua son of Jozadak. This unsupported identification creates a second father alongside the owner's protected ruling.",
+   "confidence": 0.94
+  },
+  {
+   "kind": "retarget-row",
+   "rows": [
+    105934
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "jeshua-3",
+   "verse": "EZR 3:2",
+   "why": "The Hebrew explicitly identifies the altar-building priest Jeshua as son of Jozadak. That person is jeshua-3; the row incorrectly targets jeshua-5.",
+   "confidence": 1
+  }
+ ],
+ "note": "Preserve the owner's row 105929. Ezra 8:33 names Jozabad's father as Jeshua but does not independently establish that he is the Jeshua of Ezra 2:40.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:35:52+00:00"
+}

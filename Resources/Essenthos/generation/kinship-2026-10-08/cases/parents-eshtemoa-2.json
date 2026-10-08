@@ -1,0 +1,54 @@
+{
+ "case": "parents-eshtemoa-2",
+ "question": "eshtemoa-2 is recorded with more than one father: hodiah, naham.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "retype-row",
+   "rows": [
+    106646,
+    106647
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "ancestor-of",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "Hebrew אשת הודיה means 'the wife of Hodiah'; it does not identify Hodiah as the mother. The compressed genealogy supports an ancestral connection, without securely establishing the precise generation.",
+   "confidence": 0.88
+  },
+  {
+   "kind": "delete-row",
+   "rows": [
+    100710,
+    106685,
+    106686
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "Naham identifies the brother of Hodiah's wife. In the reading that continues the genealogy through her sons, the fatherhood expression does not establish Naham as father of Keilah or Eshtemoa.",
+   "confidence": 0.84
+  },
+  {
+   "kind": "delete-row",
+   "rows": [
+    98894
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "The verse does not explicitly identify Keilah and Eshtemoa as brothers. Their association within this compressed genealogy does not establish shared immediate parents.",
+   "confidence": 0.94
+  }
+ ],
+ "note": "Preserve the owner's ruling 106648: Hodiah's wife is Naham's sister. The Hebrew genealogy is compressed, particularly around singular אבי ('father of'), so an ancestral relationship is safer than definite grandfatherhood.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:33:44+00:00"
+}

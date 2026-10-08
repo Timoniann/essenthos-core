@@ -1,0 +1,1809 @@
+{
+ "chapter": "1CH 1",
+ "text": {
+  "1CH 1:1": {
+   "KJV": "Adam, Sheth, Enosh,",
+   "BHSA": "אָדָ֥ם שֵׁ֖ת אֱנֹֽושׁ׃ "
+  },
+  "1CH 1:2": {
+   "KJV": "Kenan, Mahalaleel, Jered,",
+   "BHSA": "קֵינָ֥ן מַהֲלַלְאֵ֖ל יָֽרֶד׃ "
+  },
+  "1CH 1:3": {
+   "KJV": "Henoch, Methuselah, Lamech,",
+   "BHSA": "חֲנֹ֥וךְ מְתוּשֶׁ֖לַח לָֽמֶךְ׃ "
+  },
+  "1CH 1:4": {
+   "KJV": "Noah, Shem, Ham, and Japheth.",
+   "BHSA": "נֹ֥חַ שֵׁ֖ם חָ֥ם וָיָֽפֶת׃ ס "
+  },
+  "1CH 1:5": {
+   "KJV": "The sons of Japheth; Gomer, and Magog, and Madai, and Javan, and Tubal, and Meshech, and Tiras.",
+   "BHSA": "בְּנֵ֣י יֶ֔פֶת גֹּ֣מֶר וּמָגֹ֔וג וּמָדַ֖י וְיָוָ֣ן וְתֻבָ֑ל וּמֶ֖שֶׁךְ וְתִירָֽס׃ ס "
+  },
+  "1CH 1:6": {
+   "KJV": "And the sons of Gomer; Ashchenaz, and Riphath, and Togarmah.",
+   "BHSA": "וּבְנֵ֖י גֹּ֑מֶר אַשְׁכֲּנַ֥ז וְדִיפַ֖ת וְתֹוגַרְמָֽה׃ "
+  },
+  "1CH 1:7": {
+   "KJV": "And the sons of Javan; Elishah, and Tarshish, Kittim, and Dodanim.",
+   "BHSA": "וּבְנֵ֥י יָוָ֖ן אֱלִישָׁ֣ה וְתַרְשִׁ֑ישָׁה כִּתִּ֖ים וְרֹודָנִֽים׃ ס "
+  },
+  "1CH 1:8": {
+   "KJV": "The sons of Ham; Cush, and Mizraim, Put, and Canaan.",
+   "BHSA": "בְּנֵ֖י חָ֑ם כּ֥וּשׁ וּמִצְרַ֖יִם פּ֥וּט וּכְנָֽעַן׃ "
+  },
+  "1CH 1:9": {
+   "KJV": "And the sons of Cush; Seba, and Havilah, and Sabta, and Raamah, and Sabtecha. And the sons of Raamah; Sheba, and Dedan.",
+   "BHSA": "וּבְנֵ֣י כ֔וּשׁ סְבָא֙ וַחֲוִילָ֔ה וְסַבְתָּ֥א וְרַעְמָ֖א וְסַבְתְּכָ֑א וּבְנֵ֥י רַעְמָ֖א שְׁבָ֥א וּדְדָֽן׃ ס "
+  },
+  "1CH 1:10": {
+   "KJV": "And Cush begat Nimrod: he began to be mighty upon the earth.",
+   "BHSA": "וְכ֖וּשׁ יָלַ֣ד אֶת־נִמְרֹ֑וד ה֣וּא הֵחֵ֔ל לִהְיֹ֥ות גִּבֹּ֖ור בָּאָֽרֶץ׃ ס "
+  },
+  "1CH 1:11": {
+   "KJV": "And Mizraim begat Ludim, and Anamim, and Lehabim, and Naphtuhim,",
+   "BHSA": "וּמִצְרַ֡יִם יָלַ֞ד אֶת־לודיים וְאֶת־עֲנָמִ֛ים וְאֶת־לְהָבִ֖ים וְאֶת־נַפְתֻּחִֽים׃ "
+  },
+  "1CH 1:12": {
+   "KJV": "And Pathrusim, and Casluhim, (of whom came the Philistines,) and Caphthorim.",
+   "BHSA": "וְֽאֶת־פַּתְרֻסִ֞ים וְאֶת־כַּסְלֻחִ֗ים אֲשֶׁ֨ר יָצְא֥וּ מִשָּׁ֛ם פְּלִשְׁתִּ֖ים וְאֶת־כַּפְתֹּרִֽים׃ ס "
+  },
+  "1CH 1:13": {
+   "KJV": "And Canaan begat Zidon his firstborn, and Heth,",
+   "BHSA": "וּכְנַ֗עַן יָלַ֛ד אֶת־צִידֹ֥ון בְּכֹרֹ֖ו וְאֶת־חֵֽת׃ "
+  },
+  "1CH 1:14": {
+   "KJV": "The Jebusite also, and the Amorite, and the Girgashite,",
+   "BHSA": "וְאֶת־הַיְבוּסִי֙ וְאֶת־הָ֣אֱמֹרִ֔י וְאֵ֖ת הַגִּרְגָּשִֽׁי׃ "
+  },
+  "1CH 1:15": {
+   "KJV": "And the Hivite, and the Arkite, and the Sinite,",
+   "BHSA": "וְאֶת־הַחִוִּ֥י וְאֶת־הַֽעַרְקִ֖י וְאֶת־הַסִּינִֽי׃ "
+  },
+  "1CH 1:16": {
+   "KJV": "And the Arvadite, and the Zemarite, and the Hamathite.",
+   "BHSA": "וְאֶת־הָאַרְוָדִ֥י וְאֶת־הַצְּמָרִ֖י וְאֶת־הַֽחֲמָתִֽי׃ ס "
+  },
+  "1CH 1:17": {
+   "KJV": "The sons of Shem; Elam, and Asshur, and Arphaxad, and Lud, and Aram, and Uz, and Hul, and Gether, and Meshech.",
+   "BHSA": "בְּנֵ֣י שֵׁ֔ם עֵילָ֣ם וְאַשּׁ֔וּר וְאַרְפַּכְשַׁ֖ד וְל֣וּד וַאֲרָ֑ם וְע֥וּץ וְח֖וּל וְגֶ֥תֶר וָמֶֽשֶׁךְ׃ ס "
+  },
+  "1CH 1:18": {
+   "KJV": "And Arphaxad begat Shelah, and Shelah begat Eber.",
+   "BHSA": "וְאַרְפַּכְשַׁ֖ד יָלַ֣ד אֶת־שָׁ֑לַח וְשֶׁ֖לַח יָלַ֥ד אֶת־עֵֽבֶר׃ "
+  },
+  "1CH 1:19": {
+   "KJV": "And unto Eber were born two sons: the name of the one was Peleg; because in his days the earth was divided: and his brother's name was Joktan.",
+   "BHSA": "וּלְעֵ֥בֶר יֻלַּ֖ד שְׁנֵ֣י בָנִ֑ים שֵׁ֣ם הָאֶחָ֞ד פֶּ֗לֶג כִּ֤י בְיָמָיו֙ נִפְלְגָ֣ה הָאָ֔רֶץ וְשֵׁ֥ם אָחִ֖יו יָקְטָֽן׃ "
+  },
+  "1CH 1:20": {
+   "KJV": "And Joktan begat Almodad, and Sheleph, and Hazarmaveth, and Jerah,",
+   "BHSA": "וְיָקְטָ֣ן יָלַ֔ד אֶת־אַלְמֹודָ֖ד וְאֶת־שָׁ֑לֶף וְאֶת־חֲצַרְמָ֖וֶת וְאֶת־יָֽרַח׃ "
+  },
+  "1CH 1:21": {
+   "KJV": "Hadoram also, and Uzal, and Diklah,",
+   "BHSA": "וְאֶת־הֲדֹורָ֥ם וְאֶת־אוּזָ֖ל וְאֶת־דִּקְלָֽה׃ "
+  },
+  "1CH 1:22": {
+   "KJV": "And Ebal, and Abimael, and Sheba,",
+   "BHSA": "וְאֶת־עֵיבָ֥ל וְאֶת־אֲבִימָאֵ֖ל וְאֶת־שְׁבָֽא׃ "
+  },
+  "1CH 1:23": {
+   "KJV": "And Ophir, and Havilah, and Jobab. All these were the sons of Joktan.",
+   "BHSA": "וְאֶת־אֹופִ֥יר וְאֶת־חֲוִילָ֖ה וְאֶת־יֹובָ֑ב כָּל־אֵ֖לֶּה בְּנֵ֥י יָקְטָֽן׃ ס "
+  },
+  "1CH 1:24": {
+   "KJV": "Shem, Arphaxad, Shelah,",
+   "BHSA": "שֵׁ֥ם׀ אַרְפַּכְשַׁ֖ד שָֽׁלַח׃ "
+  },
+  "1CH 1:25": {
+   "KJV": "Eber, Peleg, Reu,",
+   "BHSA": "עֵ֥בֶר פֶּ֖לֶג רְעֽוּ׃ "
+  },
+  "1CH 1:26": {
+   "KJV": "Serug, Nahor, Terah,",
+   "BHSA": "שְׂר֥וּג נָחֹ֖ור תָּֽרַח׃ "
+  },
+  "1CH 1:27": {
+   "KJV": "Abram; the same is Abraham.",
+   "BHSA": "אַבְרָ֖ם ה֥וּא אַבְרָהָֽם׃ ס "
+  },
+  "1CH 1:28": {
+   "KJV": "The sons of Abraham; Isaac, and Ishmael.",
+   "BHSA": "בְּנֵי֙ אַבְרָהָ֔ם יִצְחָ֖ק וְיִשְׁמָעֵֽאל׃ ס "
+  },
+  "1CH 1:29": {
+   "KJV": "These are their generations: The firstborn of Ishmael, Nebaioth; then Kedar, and Adbeel, and Mibsam,",
+   "BHSA": "אֵ֖לֶּה תֹּלְדֹותָ֑ם בְּכֹ֤ור יִשְׁמָעֵאל֙ נְבָיֹ֔ות וְקֵדָ֥ר וְאַדְבְּאֵ֖ל וּמִבְשָֽׂם׃ "
+  },
+  "1CH 1:30": {
+   "KJV": "Mishma, and Dumah, Massa, Hadad, and Tema,",
+   "BHSA": "מִשְׁמָ֣ע וְדוּמָ֔ה מַשָּׂ֖א חֲדַ֥ד וְתֵימָֽא׃ "
+  },
+  "1CH 1:31": {
+   "KJV": "Jetur, Naphish, and Kedemah. These are the sons of Ishmael.",
+   "BHSA": "יְט֥וּר נָפִ֖ישׁ וָקֵ֑דְמָה אֵ֥לֶּה הֵ֖ם בְּנֵ֥י יִשְׁמָעֵֽאל׃ ס "
+  },
+  "1CH 1:32": {
+   "KJV": "Now the sons of Keturah, Abraham's concubine: she bare Zimran, and Jokshan, and Medan, and Midian, and Ishbak, and Shuah. And the sons of Jokshan; Sheba, and Dedan.",
+   "BHSA": "וּבְנֵ֨י קְטוּרָ֜ה פִּילֶ֣גֶשׁ אַבְרָהָ֗ם יָלְדָ֞ה אֶת־זִמְרָ֧ן וְיָקְשָׁ֛ן וּמְדָ֥ן וּמִדְיָ֖ן וְיִשְׁבָּ֣ק וְשׁ֑וּחַ וּבְנֵ֥י יָקְשָׁ֖ן שְׁבָ֥א וּדְדָֽן׃ ס "
+  },
+  "1CH 1:33": {
+   "KJV": "And the sons of Midian; Ephah, and Epher, and Henoch, and Abida, and Eldaah. All these are the sons of Keturah.",
+   "BHSA": "וּבְנֵ֣י מִדְיָ֗ן עֵיפָ֤ה וָעֵ֨פֶר֙ וַחֲנֹ֔וךְ וַאֲבִידָ֖ע וְאֶלְדָּעָ֑ה כָּל־אֵ֖לֶּה בְּנֵ֥י קְטוּרָֽה׃ ס "
+  },
+  "1CH 1:34": {
+   "KJV": "And Abraham begat Isaac. The sons of Isaac; Esau and Israel.",
+   "BHSA": "וַיֹּ֥ולֶד אַבְרָהָ֖ם אֶת־יִצְחָ֑ק ס בְּנֵ֣י יִצְחָ֔ק עֵשָׂ֖ו וְיִשְׂרָאֵֽל׃ ס "
+  },
+  "1CH 1:35": {
+   "KJV": "The sons of Esau; Eliphaz, Reuel, and Jeush, and Jaalam, and Korah.",
+   "BHSA": "בְּנֵ֖י עֵשָׂ֑ו אֱלִיפַ֛ז רְעוּאֵ֥ל וִיע֖וּשׁ וְיַעְלָ֥ם וְקֹֽרַח׃ ס "
+  },
+  "1CH 1:36": {
+   "KJV": "The sons of Eliphaz; Teman, and Omar, Zephi, and Gatam, Kenaz, and Timna, and Amalek.",
+   "BHSA": "בְּנֵ֖י אֱלִיפָ֑ז תֵּימָ֤ן וְאֹומָר֙ צְפִ֣י וְגַעְתָּ֔ם קְנַ֖ז וְתִמְנָ֥ע וַעֲמָלֵֽק׃ ס "
+  },
+  "1CH 1:37": {
+   "KJV": "The sons of Reuel; Nahath, Zerah, Shammah, and Mizzah.",
+   "BHSA": "בְּנֵ֖י רְעוּאֵ֑ל נַ֥חַת זֶ֖רַח שַׁמָּ֥ה וּמִזָּֽה׃ ס "
+  },
+  "1CH 1:38": {
+   "KJV": "And the sons of Seir; Lotan, and Shobal, and Zibeon, and Anah, and Dishon, and Ezar, and Dishan.",
+   "BHSA": "וּבְנֵ֣י שֵׂעִ֔יר לֹוטָ֥ן וְשֹׁובָ֖ל וְצִבְעֹ֣ון וַֽעֲנָ֑ה וְדִישֹׁ֥ן וְאֵ֖צֶר וְדִישָֽׁן׃ "
+  },
+  "1CH 1:39": {
+   "KJV": "And the sons of Lotan; Hori, and Homam: and Timna was Lotan's sister.",
+   "BHSA": "וּבְנֵ֥י לֹוטָ֖ן חֹרִ֣י וְהֹומָ֑ם וַאֲחֹ֥ות לֹוטָ֖ן תִּמְנָֽע׃ ס "
+  },
+  "1CH 1:40": {
+   "KJV": "The sons of Shobal; Alian, and Manahath, and Ebal, Shephi, and Onam. and the sons of Zibeon; Aiah, and Anah.",
+   "BHSA": "בְּנֵ֣י שֹׁובָ֔ל עַלְיָ֧ן וּמָנַ֛חַת וְעֵיבָ֖ל שְׁפִ֣י וְאֹונָ֑ם ס וּבְנֵ֥י צִבְעֹ֖ון אַיָּ֥ה וַעֲנָֽה׃ "
+  },
+  "1CH 1:41": {
+   "KJV": "The sons of Anah; Dishon. And the sons of Dishon; Amram, and Eshban, and Ithran, and Cheran.",
+   "BHSA": "בְּנֵ֥י עֲנָ֖ה דִּישֹׁ֑ון ס וּבְנֵ֣י דִישֹׁ֔ון חַמְרָ֥ן וְאֶשְׁבָּ֖ן וְיִתְרָ֥ן וּכְרָֽן׃ ס "
+  },
+  "1CH 1:42": {
+   "KJV": "The sons of Ezer; Bilhan, and Zavan, and Jakan. The sons of Dishan; Uz, and Aran.",
+   "BHSA": "בְּֽנֵי־אֵ֔צֶר בִּלְהָ֥ן וְזַעֲוָ֖ן יַעֲקָ֑ן בְּנֵ֥י דִישֹׁ֖ון ע֥וּץ וַאֲרָֽן׃ פ "
+  },
+  "1CH 1:43": {
+   "KJV": "Now these are the kings that reigned in the land of Edom before any king reigned over the children of Israel; Bela the son of Beor: and the name of his city was Dinhabah.",
+   "BHSA": "וְאֵ֣לֶּה הַמְּלָכִ֗ים אֲשֶׁ֤ר מָלְכוּ֙ בְּאֶ֣רֶץ אֱדֹ֔ום לִפְנֵ֥י מְלָךְ־מֶ֖לֶךְ לִבְנֵ֣י יִשְׂרָאֵ֑ל בֶּ֚לַע בֶּן־בְּעֹ֔ור וְשֵׁ֥ם עִירֹ֖ו דִּנְהָֽבָה׃ "
+  },
+  "1CH 1:44": {
+   "KJV": "And when Bela was dead, Jobab the son of Zerah of Bozrah reigned in his stead.",
+   "BHSA": "וַיָּ֖מָת בָּ֑לַע וַיִּמְלֹ֣ךְ תַּחְתָּ֔יו יֹובָ֥ב בֶּן־זֶ֖רַח מִבָּצְרָֽה׃ "
+  },
+  "1CH 1:45": {
+   "KJV": "And when Jobab was dead, Husham of the land of the Temanites reigned in his stead.",
+   "BHSA": "וַיָּ֖מָת יֹובָ֑ב וַיִּמְלֹ֣ךְ תַּחְתָּ֔יו חוּשָׁ֖ם מֵאֶ֥רֶץ הַתֵּימָנִֽי׃ "
+  },
+  "1CH 1:46": {
+   "KJV": "And when Husham was dead, Hadad the son of Bedad, which smote Midian in the field of Moab, reigned in his stead: and the name of his city was Avith.",
+   "BHSA": "וַיָּ֖מָת חוּשָׁ֑ם וַיִּמְלֹ֨ךְ תַּחְתָּ֜יו הֲדַ֣ד בֶּן־בְּדַ֗ד הַמַּכֶּ֤ה אֶת־מִדְיָן֙ בִּשְׂדֵ֣ה מֹואָ֔ב וְשֵׁ֥ם עִירֹ֖ו עיות׃ "
+  },
+  "1CH 1:47": {
+   "KJV": "And when Hadad was dead, Samlah of Masrekah reigned in his stead.",
+   "BHSA": "וַיָּ֖מָת הֲדָ֑ד וַיִּמְלֹ֣ךְ תַּחְתָּ֔יו שַׂמְלָ֖ה מִמַּשְׂרֵקָֽה׃ "
+  },
+  "1CH 1:48": {
+   "KJV": "And when Samlah was dead, Shaul of Rehoboth by the river reigned in his stead.",
+   "BHSA": "וַיָּ֖מָת שַׂמְלָ֑ה וַיִּמְלֹ֣ךְ תַּחְתָּ֔יו שָׁא֖וּל מֵרְחֹבֹ֥ות הַנָּהָֽר׃ "
+  },
+  "1CH 1:49": {
+   "KJV": "And when Shaul was dead, Baalhanan the son of Achbor reigned in his stead.",
+   "BHSA": "וַיָּ֖מָת שָׁא֑וּל וַיִּמְלֹ֣ךְ תַּחְתָּ֔יו בַּ֥עַל חָנָ֖ן בֶּן־עַכְבֹּֽור׃ "
+  },
+  "1CH 1:50": {
+   "KJV": "And when Baalhanan was dead, Hadad reigned in his stead: and the name of his city was Pai; and his wife's name was Mehetabel, the daughter of Matred, the daughter of Mezahab.",
+   "BHSA": "וַיָּ֨מָת֙ בַּ֣עַל חָנָ֔ן וַיִּמְלֹ֤ךְ תַּחְתָּיו֙ הֲדַ֔ד וְשֵׁ֥ם עִירֹ֖ו פָּ֑עִי וְשֵׁ֨ם אִשְׁתֹּ֤ו מְהֵיטַבְאֵל֙ בַּת־מַטְרֵ֔ד בַּ֖ת מֵ֥י זָהָֽב׃ "
+  },
+  "1CH 1:51": {
+   "KJV": "Hadad died also. And the dukes of Edom were; duke Timnah, duke Aliah, duke Jetheth,",
+   "BHSA": "וַיָּ֖מָת הֲדָ֑ד ס וַיִּהְיוּ֙ אַלּוּפֵ֣י אֱדֹ֔ום אַלּ֥וּף תִּמְנָ֛ע אַלּ֥וּף עליה אַלּ֥וּף יְתֵֽת׃ "
+  },
+  "1CH 1:52": {
+   "KJV": "Duke Aholibamah, duke Elah, duke Pinon,",
+   "BHSA": "אַלּ֧וּף אָהֳלִיבָמָ֛ה אַלּ֥וּף אֵלָ֖ה אַלּ֥וּף פִּינֹֽן׃ "
+  },
+  "1CH 1:53": {
+   "KJV": "Duke Kenaz, duke Teman, duke Mibzar,",
+   "BHSA": "אַלּ֥וּף קְנַ֛ז אַלּ֥וּף תֵּימָ֖ן אַלּ֣וּף מִבְצָֽר׃ "
+  },
+  "1CH 1:54": {
+   "KJV": "Duke Magdiel, duke Iram. These are the dukes of Edom.",
+   "BHSA": "אַלּ֥וּף מַגְדִּיאֵ֖ל אַלּ֣וּף עִירָ֑ם אֵ֖לֶּה אַלּוּפֵ֥י אֱדֹֽום׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abida",
+   "name": "Abida",
+   "distinguisher": "son of Midian and grandson of Abraham through Keturah (GEN 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "abimael",
+   "name": "Abimael",
+   "distinguisher": "son of Joktan (GEN 10:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "abram",
+   "name": "Abram",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "achbor",
+   "name": "Achbor",
+   "distinguisher": "father of Baal-hanan (GEN 36:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "adam",
+   "name": "Adam",
+   "distinguisher": "first man (1CO 15:45)",
+   "sex": "male"
+  },
+  {
+   "slug": "adbeel",
+   "name": "Adbeel",
+   "distinguisher": "third-born son of Ishmael (GEN 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "aiah",
+   "name": "Aiah",
+   "distinguisher": "son of Zibeon (GEN 36:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "akan",
+   "name": "Akan",
+   "distinguisher": "son of Ezer (GEN 36:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "almodad",
+   "name": "Almodad",
+   "distinguisher": "son of Joktan (GEN 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "alvah",
+   "name": "Alvah",
+   "distinguisher": "chief of Edom (GEN 36:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "alvan",
+   "name": "Alvan",
+   "distinguisher": "son of Shobal (GEN 36:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "amalek",
+   "name": "Amalek",
+   "distinguisher": "son of Eliphaz (GEN 36:12) and chief of Edom (GEN 36:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "anah",
+   "name": "Anah",
+   "distinguisher": "son of Seir the Horite (GEN 36:20) and a duke of the Horites (GEN 36:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "anah-son-of-zibeon",
+   "name": "Anah",
+   "distinguisher": "son of Zibeon (GEN 36:24), father of Aholibamah, Esau's wife (GEN 36:25)",
+   "sex": null
+  },
+  {
+   "slug": "aram",
+   "name": "Aram",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "aran",
+   "name": "Aran",
+   "distinguisher": "son of Dishan (GEN 36:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "arpachshad",
+   "name": "Arpachshad",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "ashkenaz",
+   "name": "Ashkenaz",
+   "distinguisher": "son of Gomer (GEN 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "asshur",
+   "name": "Asshur",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "baalhanan",
+   "name": "Baal-hanan",
+   "distinguisher": "King of Edom, successor to Shaul (GEN 36:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "bedad",
+   "name": "Bedad",
+   "distinguisher": "defeated Midian in the field of Moab (GEN 36:35, 1CH 1:46)",
+   "sex": "male"
+  },
+  {
+   "slug": "bela",
+   "name": "Bela",
+   "distinguisher": "King of Edom, his city was Dinhabah (GEN 36:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "beor",
+   "name": "Beor",
+   "distinguisher": "father of Bela, King of Edom (GEN 36:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "bilhan",
+   "name": "Bilhan",
+   "distinguisher": "son of Ezer (GEN 36:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "canaan",
+   "name": "Canaan",
+   "distinguisher": "son of Ham (GEN 9:18), cursed by Noah (GEN 9:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "cheran",
+   "name": "Cheran",
+   "distinguisher": "son of Dishon (GEN 36:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "cush",
+   "name": "Cush",
+   "distinguisher": "son of Ham (GEN 10:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "dedan",
+   "name": "Dedan",
+   "distinguisher": "son of Raamah (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "dedan-2",
+   "name": "Dedan",
+   "distinguisher": "son of Jokshan (GEN 25:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "diklah",
+   "name": "Diklah",
+   "distinguisher": "son of Joktan (GEN 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "dishan",
+   "name": "Dishan",
+   "distinguisher": "son of Seir (GEN 36:21) and chief in Edom (GEN 36:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "dishon",
+   "name": "Dishon",
+   "distinguisher": "son of Seir (GEN 36:21) and chief in Edom (GEN 36:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "dishon-2",
+   "name": "Dishon",
+   "distinguisher": "son of Anah (GEN 36:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "dumah",
+   "name": "Dumah",
+   "distinguisher": "sixth-born son of Ishmael (GEN 25:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "ebal",
+   "name": "Ebal",
+   "distinguisher": "son of Shobal (GEN 36:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "eber",
+   "name": "Eber",
+   "distinguisher": "descendant of Shem (GEN 10:21), son of Shelah (GEN 10:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "elah",
+   "name": "Elah",
+   "distinguisher": "chief of Edom (GEN 36:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "elam",
+   "name": "Elam",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "eldaah",
+   "name": "Eldaah",
+   "distinguisher": "son of Midian and grandson of Abraham through Keturah (GEN 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliphaz",
+   "name": "Eliphaz",
+   "distinguisher": "son of Esau (GEN 36:4, 10, 15)",
+   "sex": "male"
+  },
+  {
+   "slug": "elishah",
+   "name": "Elishah",
+   "distinguisher": "son of Javan (GEN 10:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "enoch-2",
+   "name": "Enoch",
+   "distinguisher": "son of Jared (GEN 5:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "enosh",
+   "name": "Enosh",
+   "distinguisher": "son of Seth (GEN 4:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "ephah",
+   "name": "Ephah",
+   "distinguisher": "son of Midian and grandson of Abraham through Keturah (GEN 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "epher",
+   "name": "Epher",
+   "distinguisher": "son of Midian and grandson of Abraham through Keturah (GEN 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "esau",
+   "name": "Esau",
+   "distinguisher": "firstborn son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "eshban",
+   "name": "Eshban",
+   "distinguisher": "son of Dishon (GEN 36:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "ezer",
+   "name": "Ezer",
+   "distinguisher": "son of Seir (GEN 36:21) and chief in Edom (GEN 36:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "gatam",
+   "name": "Gatam",
+   "distinguisher": "son of Eliphaz (GEN 36:11) and chief of Edom (GEN 36:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "gether",
+   "name": "Gether",
+   "distinguisher": "son of Aram (GEN 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "gomer",
+   "name": "Gomer",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "hadad",
+   "name": "Hadad",
+   "distinguisher": "eighth-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "hadad-2",
+   "name": "Hadad",
+   "distinguisher": "King of Edom, successor to Husham, his city was Avith (GEN 36:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "hadar",
+   "name": "Hadar",
+   "distinguisher": "King of Edom, successor to Baal-hanan, his city was Pau (GEN 36:39)",
+   "sex": "male"
+  },
+  {
+   "slug": "hadoram",
+   "name": "Hadoram",
+   "distinguisher": "son of Joktan (GEN 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "ham",
+   "name": "Ham",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanoch",
+   "name": "Hanoch",
+   "distinguisher": "son of Midian and grandson of Abraham through Keturah (GEN 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "havilah",
+   "name": "Havilah",
+   "distinguisher": "son of Cush (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "havilah-2",
+   "name": "Havilah",
+   "distinguisher": "son of Joktan (GEN 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "hazarmaveth",
+   "name": "Hazarmaveth",
+   "distinguisher": "son of Joktan (GEN 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "hemam",
+   "name": "Hemam",
+   "distinguisher": "son of Lotan (GEN 36:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "hemdan",
+   "name": "Hemdan",
+   "distinguisher": "son of Dishon (GEN 36:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "heth",
+   "name": "Heth",
+   "distinguisher": "son of Canaan (GEN 10:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "hori",
+   "name": "Hori",
+   "distinguisher": "son of Lotan (GEN 36:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "hul",
+   "name": "Hul",
+   "distinguisher": "son of Aram (GEN 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "husham",
+   "name": "Husham",
+   "distinguisher": "King of Edom, successor to Jobab, from the land of the Temanites (GEN 36:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "iram",
+   "name": "Iram",
+   "distinguisher": "chief of Edom (GEN 36:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "isaac",
+   "name": "Isaac",
+   "distinguisher": "son of Abraham and Sarah (GEN 17:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishbak",
+   "name": "Ishbak",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishmael",
+   "name": "Ishmael",
+   "distinguisher": "son of Abram and Hagar (GEN 16:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "ithran",
+   "name": "Ithran",
+   "distinguisher": "son of Dishon (GEN 36:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jalam",
+   "name": "Jalam",
+   "distinguisher": "son of Esau (GEN 36:5) and chief of Edom (GEN 36:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "japheth",
+   "name": "Japheth",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "jared",
+   "name": "Jared",
+   "distinguisher": "son of Mahalael (GEN 5:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "javan",
+   "name": "Javan",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "jerah",
+   "name": "Jerah",
+   "distinguisher": "son of Joktan (GEN 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jetheth",
+   "name": "Jetheth",
+   "distinguisher": "chief of Edom (GEN 36:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "jetur",
+   "name": "Jetur",
+   "distinguisher": "tenth-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeush",
+   "name": "Jeush",
+   "distinguisher": "son of Esau (GEN 36:5) and chief of Edom (GEN 36:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "jobab",
+   "name": "Jobab",
+   "distinguisher": "son of Joktan (GEN 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "jobab-2",
+   "name": "Jobab",
+   "distinguisher": "King of Edom, successor to Bela (GEN 36:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "jokshan",
+   "name": "Jokshan",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "joktan",
+   "name": "Joktan",
+   "distinguisher": "son of Eber (GEN 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "kedar",
+   "name": "Kedar",
+   "distinguisher": "second-born son of Ishmael (GEN 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "kedemah",
+   "name": "Kedemah",
+   "distinguisher": "twelfth-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "kenan",
+   "name": "Kenan",
+   "distinguisher": "son of Enosh (GEN 5:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "kenaz",
+   "name": "Kenaz",
+   "distinguisher": "son of Eliphaz (GEN 36:11) and chief of Edom (GEN 36:15, 42)",
+   "sex": "male"
+  },
+  {
+   "slug": "keturah",
+   "name": "Keturah",
+   "distinguisher": "Abraham's second wife after Sarah died (GEN 25:1)",
+   "sex": "female"
+  },
+  {
+   "slug": "korah",
+   "name": "Korah",
+   "distinguisher": "son of Esau (GEN 36:5) and chief of Edom (GEN 36:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "lamech-2",
+   "name": "Lamech",
+   "distinguisher": "son of Methuselah (GEN 5:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "lotan",
+   "name": "Lotan",
+   "distinguisher": "son of Seir (GEN 36:20) and chief in Edom (GEN 36:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "lud",
+   "name": "Lud",
+   "distinguisher": "son of Mizraim (GEN 10:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "lud-2",
+   "name": "Lud",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "madai",
+   "name": "Madai",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "magdiel",
+   "name": "Magdiel",
+   "distinguisher": "chief of Edom (GEN 36:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "magog",
+   "name": "Magog",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "mahalalel",
+   "name": "Mahalalel",
+   "distinguisher": "son of Kenan (GEN 5:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "manahath",
+   "name": "Manahath",
+   "distinguisher": "son of Shobal (GEN 36:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "mash",
+   "name": "Mash",
+   "distinguisher": "son of Aram (GEN 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "massa",
+   "name": "Massa",
+   "distinguisher": "seventh-born son of Ishmael (GEN 25:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "matred",
+   "name": "Matred",
+   "distinguisher": "mother of Mehetabel (GEN 36:39)",
+   "sex": "female"
+  },
+  {
+   "slug": "medan",
+   "name": "Medan",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "mehetabel",
+   "name": "Mehetabel",
+   "distinguisher": "wife of King Hadar (GEN 36:39)",
+   "sex": "female"
+  },
+  {
+   "slug": "meshech",
+   "name": "Meshech",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "methuselah",
+   "name": "Methuselah",
+   "distinguisher": "son of Enoch (GEN 5:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "mezahab",
+   "name": "Mezahab",
+   "distinguisher": "mother of Matred (GEN 36:39)",
+   "sex": "female"
+  },
+  {
+   "slug": "mibsam",
+   "name": "Mibsam",
+   "distinguisher": "fourth-born son of Ishmael (GEN 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "mibzar",
+   "name": "Mibzar",
+   "distinguisher": "chief of Edom (GEN 36:42)",
+   "sex": "male"
+  },
+  {
+   "slug": "midian",
+   "name": "Midian",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "mishma",
+   "name": "Mishma",
+   "distinguisher": "fifth-born son of Ishmael (GEN 25:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "mizraim",
+   "name": "Mizraim",
+   "distinguisher": "son of Ham (GEN 10:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "mizzah",
+   "name": "Mizzah",
+   "distinguisher": "son of Reuel (GEN 36:13) and chief of Edom (GEN 36:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "nahath",
+   "name": "Nahath",
+   "distinguisher": "son of Reuel (GEN 36:13) and chief of Edom (GEN 36:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "nahor",
+   "name": "Nahor",
+   "distinguisher": "son of Serug (GEN 11:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "naphish",
+   "name": "Naphish",
+   "distinguisher": "eleventh-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "naphtuh",
+   "name": "Naphtuh",
+   "distinguisher": "son of Mizraim (GEN 10:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "nebaioth",
+   "name": "Nebaioth",
+   "distinguisher": "firstborn son of Ishmael (GEN 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "nimrod",
+   "name": "Nimrod",
+   "distinguisher": "son of Cush (GEN 10:8), a mighty hunter before the LORD (GEN 10:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "noah",
+   "name": "Noah",
+   "distinguisher": "son of Lamech (GEN 5:28-29)",
+   "sex": "male"
+  },
+  {
+   "slug": "obal",
+   "name": "Obal",
+   "distinguisher": "son of Joktan (GEN 10:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "oholibamah",
+   "name": "Oholibamah",
+   "distinguisher": "chief of Edom (GEN 36:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "omar",
+   "name": "Omar",
+   "distinguisher": "son of Eliphaz (GEN 36:11) and chief of Edom (GEN 36:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "onam",
+   "name": "Onam",
+   "distinguisher": "son of Shobal (GEN 36:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "ophir",
+   "name": "Ophir",
+   "distinguisher": "son of Joktan (GEN 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "peleg",
+   "name": "Peleg",
+   "distinguisher": "son of Eber, in his days the earth was divided (GEN 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "pinon",
+   "name": "Pinon",
+   "distinguisher": "chief of Edom (GEN 36:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "put",
+   "name": "Put",
+   "distinguisher": "son of Ham (GEN 10:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "raamah",
+   "name": "Raamah",
+   "distinguisher": "son of Cush (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "reu",
+   "name": "Reu",
+   "distinguisher": "son of Peleg (GEN 11:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "reuel",
+   "name": "Reuel",
+   "distinguisher": "son of Esau (GEN 36:4, 10, 17)",
+   "sex": "male"
+  },
+  {
+   "slug": "riphath",
+   "name": "Riphath",
+   "distinguisher": "son of Gomer (GEN 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "sabtah",
+   "name": "Sabtah",
+   "distinguisher": "son of Cush (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "sabteca",
+   "name": "Sabteca",
+   "distinguisher": "son of Cush (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "samlah",
+   "name": "Samlah",
+   "distinguisher": "King of Edom, successor to Hadad, from Masrekah (GEN 36:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "seba",
+   "name": "Seba",
+   "distinguisher": "son of Cush (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "seir",
+   "name": "Seir",
+   "distinguisher": "the Horite (dwelt near Mt. Hor- GEN 36:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "serug",
+   "name": "Serug",
+   "distinguisher": "son of Reu (GEN 11:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "seth",
+   "name": "Seth",
+   "distinguisher": "son of Adam (GEN 4:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "shammah",
+   "name": "Shammah",
+   "distinguisher": "son of Reuel (GEN 36:13) and chief of Edom (GEN 36:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "shaul",
+   "name": "Shaul",
+   "distinguisher": "King of Edom, successor to Samlah, from Rehoboth on the [Euphrates] river (GEN 36:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "sheba",
+   "name": "Sheba",
+   "distinguisher": "son of Raamah (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "sheba-2",
+   "name": "Sheba",
+   "distinguisher": "son of Joktan (GEN 10:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "sheba-3",
+   "name": "Sheba",
+   "distinguisher": "son of Jokshan (GEN 25:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelah",
+   "name": "Shelah",
+   "distinguisher": "son of Arpachshad (GEN 10:24, GEN 11:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "sheleph",
+   "name": "Sheleph",
+   "distinguisher": "son of Joktan (GEN 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "shem",
+   "name": "Shem",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "shepho",
+   "name": "Shepho",
+   "distinguisher": "son of Shobal (GEN 36:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "shobal",
+   "name": "Shobal",
+   "distinguisher": "son of Seir (GEN 36:20) and chief in Edom (GEN 36:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "shuah",
+   "name": "Shuah",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "sidon",
+   "name": "Sidon",
+   "distinguisher": "son of Canaan (GEN 10:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "tarshish",
+   "name": "Tarshish",
+   "distinguisher": "son of Javan (GEN 10:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "tema",
+   "name": "Tema",
+   "distinguisher": "ninth-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "teman",
+   "name": "Teman",
+   "distinguisher": "son of Eliphaz (GEN 36:11) and chief of Edom (GEN 36:15, 42)",
+   "sex": "male"
+  },
+  {
+   "slug": "terah",
+   "name": "Terah",
+   "distinguisher": "son of Nahor(GEN 11:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "timna",
+   "name": "Timna",
+   "distinguisher": "concubine of Esau's son Eliphaz (GEN 36:12) and sister of Lotan (GEN 36:22)",
+   "sex": "female"
+  },
+  {
+   "slug": "timna-2",
+   "name": "Timna",
+   "distinguisher": "chief of Edom (GEN 36:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "timna-3",
+   "name": "Timna",
+   "distinguisher": "Daughter of Seir the Horite, sister of Lotan",
+   "sex": null
+  },
+  {
+   "slug": "tiras",
+   "name": "Tiras",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "togarmah",
+   "name": "Togarmah",
+   "distinguisher": "son of Gomer (GEN 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "tubal",
+   "name": "Tubal",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "uz",
+   "name": "Uz",
+   "distinguisher": "son of Aram (GEN 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "uz-3",
+   "name": "Uz",
+   "distinguisher": "son of Dishan (GEN 36:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzal",
+   "name": "Uzal",
+   "distinguisher": "son of Joktan (GEN 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "zaavan",
+   "name": "Zaavan",
+   "distinguisher": "son of Ezer (GEN 36:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "zepho",
+   "name": "Zepho",
+   "distinguisher": "son of Eliphaz (GEN 36:11) and chief of Edom (GEN 36:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "zerah",
+   "name": "Zerah",
+   "distinguisher": "son of Reuel (GEN 36:13) and chief of Edom (GEN 36:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "zerah-2",
+   "name": "Zerah",
+   "distinguisher": "of Bozrah (GEN 36:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "zibeon-2",
+   "name": "Zibeon",
+   "distinguisher": "son of Seir (GEN 36:20) and chief in Edom (GEN 36:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "zimran",
+   "name": "Zimran",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 98805,
+   "row": "enosh descendant-of adam",
+   "verse": "1CH 1:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99096,
+   "row": "gether descendant-of shem",
+   "verse": "1CH 1:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99642,
+   "row": "hul descendant-of shem",
+   "verse": "1CH 1:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101161,
+   "row": "mash descendant-of shem",
+   "verse": "1CH 1:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100700,
+   "row": "kedar brother-of nebaioth",
+   "verse": "1CH 1:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99187,
+   "row": "hadad brother-of tema",
+   "verse": "1CH 1:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99189,
+   "row": "hadad brother-of dumah",
+   "verse": "1CH 1:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 100343,
+   "row": "jetur son-of ishmael",
+   "verse": "1CH 1:31",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100344,
+   "row": "jetur brother-of naphish",
+   "verse": "1CH 1:31",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100702,
+   "row": "kedemah son-of ishmael",
+   "verse": "1CH 1:31",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100703,
+   "row": "kedemah brother-of naphish",
+   "verse": "1CH 1:31",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101636,
+   "row": "naphish son-of ishmael",
+   "verse": "1CH 1:31",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98403,
+   "row": "dedan-2 son-of jokshan",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99764,
+   "row": "ishbak son-of keturah",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99765,
+   "row": "ishbak son-of abram",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100498,
+   "row": "jokshan son-of abram",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100499,
+   "row": "jokshan son-of keturah",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100735,
+   "row": "keturah mother-of zimran",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100736,
+   "row": "keturah mother-of jokshan",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100737,
+   "row": "keturah mother-of medan",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100738,
+   "row": "keturah mother-of midian",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100739,
+   "row": "keturah mother-of ishbak",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100740,
+   "row": "keturah mother-of shuah",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101207,
+   "row": "medan son-of keturah",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102505,
+   "row": "sheba-3 descendant-of abram",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103538,
+   "row": "zimran son-of keturah",
+   "verse": "1CH 1:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97035,
+   "row": "abida descendant-of keturah",
+   "verse": "1CH 1:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100347,
+   "row": "jeush son-of esau",
+   "verse": "1CH 1:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98442,
+   "row": "dishon son-of seir",
+   "verse": "1CH 1:38",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98473,
+   "row": "ebal brother-of manahath",
+   "verse": "1CH 1:40",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97485,
+   "row": "anah-son-of-zibeon father-of dishon",
+   "verse": "1CH 1:41",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98289,
+   "row": "cheran son-of dishon",
+   "verse": "1CH 1:41",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99844,
+   "row": "ithran son-of dishon",
+   "verse": "1CH 1:41",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "abida son-of midian (GEN 25:4)",
+  "abida brother-of epher (GEN 25:4)",
+  "abimael brother-of obal (GEN 10:28)",
+  "abimael brother-of sheba-2 (GEN 10:28)",
+  "abimael son-of joktan (GEN 10:28)",
+  "achbor father-of baalhanan (GEN 36:38)",
+  "adbeel son-of ishmael (GEN 25:13)",
+  "adbeel brother-of kedar (GEN 25:13)",
+  "aiah son-of zibeon-2 (GEN 36:24)",
+  "akan son-of ezer (GEN 36:27)",
+  "akan brother-of bilhan (GEN 36:27)",
+  "akan brother-of zaavan (GEN 36:27)",
+  "almodad son-of joktan (GEN 10:26)",
+  "alvah descendant-of esau (GEN 36:40)",
+  "alvan son-of shobal (GEN 36:23)",
+  "amalek son-of eliphaz (GEN 36:12)",
+  "anah son-of seir (GEN 36:20)",
+  "aram son-of shem (GEN 10:22)",
+  "aram father-of uz (GEN 10:23)",
+  "aram father-of hul (GEN 10:23)",
+  "aram father-of gether (GEN 10:23)",
+  "aram father-of mash (GEN 10:23)",
+  "aran son-of dishan (GEN 36:28)",
+  "arpachshad son-of shem (GEN 11:10)",
+  "arpachshad father-of shelah (GEN 11:12)",
+  "arpachshad grandfather-of eber (GEN 10:24)",
+  "ashkenaz son-of gomer (GEN 10:3)",
+  "ashkenaz brother-of riphath (GEN 10:3)",
+  "ashkenaz brother-of togarmah (GEN 10:3)",
+  "asshur son-of shem (GEN 10:22)",
+  "baalhanan son-of achbor (GEN 36:38)",
+  "bedad father-of hadad-2 (GEN 36:35)",
+  "bela son-of beor (GEN 36:32)",
+  "beor father-of bela (GEN 36:32)",
+  "bilhan son-of ezer (GEN 36:27)",
+  "canaan son-of ham (GEN 9:18)",
+  "canaan father-of sidon (GEN 10:15)",
+  "canaan father-of heth (GEN 10:15)",
+  "cheran son-of dishon-2 (GEN 36:26)",
+  "cush son-of ham (GEN 10:6)",
+  "cush father-of nimrod (GEN 10:8)",
+  "cush father-of seba (GEN 10:7)",
+  "cush father-of havilah (GEN 10:7)",
+  "cush father-of sabtah (GEN 10:7)",
+  "cush father-of raamah (GEN 10:7)",
+  "cush father-of sabteca (GEN 10:7)",
+  "dedan son-of raamah (GEN 10:7)",
+  "dedan brother-of sheba (GEN 10:7)",
+  "diklah brother-of hadoram (GEN 10:27)",
+  "diklah brother-of uzal (GEN 10:27)",
+  "diklah son-of joktan (GEN 10:27)",
+  "dishan son-of seir (GEN 36:21)",
+  "dishan father-of uz-3 (GEN 36:28)",
+  "dishan father-of aran (GEN 36:28)",
+  "dishon-2 son-of anah-son-of-zibeon (GEN 36:25)",
+  "dishon-2 father-of hemdan (GEN 36:26)",
+  "dishon-2 father-of eshban (GEN 36:26)",
+  "dishon-2 father-of ithran (GEN 36:26)",
+  "dishon-2 father-of cheran (GEN 36:26)",
+  "dumah son-of ishmael (GEN 25:14)",
+  "ebal son-of shobal (GEN 36:23)",
+  "ebal brother-of onam (GEN 36:23)",
+  "eber son-of shelah (GEN 10:24)",
+  "eber father-of peleg (GEN 10:25)",
+  "eber father-of joktan (GEN 10:25)",
+  "elah descendant-of esau (GEN 36:41)",
+  "elam son-of shem (GEN 10:22)",
+  "elam brother-of asshur (GEN 10:22)",
+  "eldaah son-of midian (GEN 25:4)",
+  "eldaah descendant-of keturah (GEN 25:4)",
+  "eliphaz son-of esau (GEN 36:10)",
+  "eliphaz father-of amalek (GEN 36:12)",
+  "eliphaz father-of teman (GEN 36:11)",
+  "eliphaz father-of kenaz (GEN 36:11)",
+  "eliphaz father-of omar (GEN 36:11)",
+  "eliphaz father-of zepho (GEN 36:11)",
+  "eliphaz father-of gatam (GEN 36:11)",
+  "elishah son-of javan (GEN 10:4)",
+  "enoch-2 son-of jared (GEN 5:18)",
+  "enoch-2 father-of methuselah (GEN 5:21)",
+  "enoch-2 descendant-of adam (JUD 1:14)",
+  "enosh son-of seth (GEN 5:6)",
+  "enosh father-of kenan (GEN 5:9)",
+  "ephah son-of midian (GEN 25:4)",
+  "ephah descendant-of keturah (GEN 25:4)",
+  "epher son-of midian (GEN 25:4)",
+  "epher descendant-of keturah (GEN 25:4)",
+  "esau son-of isaac (GEN 27:1)",
+  "esau brother-of jacob (GEN 27:41)",
+  "eshban son-of dishon-2 (GEN 36:26)",
+  "ezer son-of seir (GEN 36:21)",
+  "ezer father-of bilhan (GEN 36:27)",
+  "ezer father-of zaavan (GEN 36:27)",
+  "ezer father-of akan (GEN 36:27)",
+  "gatam son-of eliphaz (GEN 36:11)",
+  "gether son-of aram (GEN 10:23)",
+  "gomer son-of japheth (GEN 10:2)",
+  "gomer father-of ashkenaz (GEN 10:3)",
+  "gomer father-of riphath (GEN 10:3)",
+  "gomer father-of togarmah (GEN 10:3)",
+  "hadad brother-of jetur (GEN 25:15)",
+  "hadad son-of ishmael (GEN 25:15)",
+  "hadad-2 son-of bedad (GEN 36:35)",
+  "hadar husband-of mehetabel (GEN 36:39)",
+  "hadoram brother-of uzal (GEN 10:27)",
+  "hadoram brother-of diklah (GEN 10:27)",
+  "hadoram son-of joktan (GEN 10:27)",
+  "ham son-of noah (GEN 5:32)",
+  "ham father-of canaan (GEN 9:18)",
+  "ham father-of cush (GEN 10:6)",
+  "ham father-of mizraim (GEN 10:6)",
+  "ham father-of put (GEN 10:6)",
+  "hanoch son-of midian (GEN 25:4)",
+  "hanoch descendant-of keturah (GEN 25:4)",
+  "hanoch brother-of ephah (GEN 25:4)",
+  "havilah son-of cush (GEN 10:7)",
+  "havilah-2 son-of joktan (GEN 10:29)",
+  "hazarmaveth son-of joktan (GEN 10:26)",
+  "hazarmaveth brother-of almodad (GEN 10:26)",
+  "hazarmaveth brother-of sheleph (GEN 10:26)",
+  "hazarmaveth brother-of jerah (GEN 10:26)",
+  "hemam son-of lotan (GEN 36:22)",
+  "hemam brother-of hori (GEN 36:22)",
+  "hemdan son-of dishon-2 (GEN 36:26)",
+  "hemdan brother-of eshban (GEN 36:26)",
+  "hemdan brother-of ithran (GEN 36:26)",
+  "heth son-of canaan (GEN 10:15)",
+  "heth brother-of sidon (GEN 10:15)",
+  "hori son-of lotan (GEN 36:22)",
+  "hori brother-of hemam (GEN 36:22)",
+  "hul son-of aram (GEN 10:23)",
+  "iram descendant-of esau (GEN 36:43)",
+  "isaac son-of abram (GEN 21:3)",
+  "isaac father-of jacob (GEN 27:26)",
+  "isaac father-of esau (GEN 35:29)",
+  "ishmael son-of abram (GEN 16:15)",
+  "ishmael brother-of isaac (GEN 25:9)",
+  "ishmael father-of nebaioth (GEN 25:13)",
+  "ithran son-of dishon-2 (GEN 36:26)",
+  "jalam son-of esau (GEN 36:5)",
+  "jalam brother-of jeush (GEN 36:5)",
+  "jalam brother-of korah (GEN 36:5)",
+  "japheth son-of noah (GEN 5:32)",
+  "japheth brother-of shem (GEN 10:21)",
+  "japheth father-of gomer (GEN 10:2)",
+  "japheth father-of magog (GEN 10:2)",
+  "japheth father-of madai (GEN 10:2)",
+  "japheth father-of javan (GEN 10:2)",
+  "japheth father-of tubal (GEN 10:2)",
+  "japheth father-of meshech (GEN 10:2)",
+  "japheth father-of tiras (GEN 10:2)",
+  "jared son-of mahalalel (GEN 5:15)",
+  "jared father-of enoch-2 (GEN 5:18)",
+  "javan son-of japheth (GEN 10:2)",
+  "javan father-of elishah (GEN 10:4)",
+  "javan father-of tarshish (GEN 10:4)",
+  "jerah son-of joktan (GEN 10:26)",
+  "jerah brother-of sheleph (GEN 10:26)",
+  "jerah brother-of hazarmaveth (GEN 10:26)",
+  "jetheth descendant-of esau (GEN 36:40)",
+  "jeush brother-of jalam (GEN 36:5)",
+  "jeush brother-of korah (GEN 36:5)",
+  "jobab son-of joktan (GEN 10:29)",
+  "jobab-2 son-of zerah-2 (GEN 36:33)",
+  "jokshan father-of sheba-3 (GEN 25:3)",
+  "jokshan father-of dedan-2 (GEN 25:3)",
+  "joktan son-of eber (GEN 10:25)",
+  "joktan brother-of peleg (GEN 10:25)",
+  "joktan father-of almodad (GEN 10:26)",
+  "joktan father-of sheleph (GEN 10:26)",
+  "joktan father-of hazarmaveth (GEN 10:26)",
+  "joktan father-of jerah (GEN 10:26)",
+  "joktan father-of ophir (GEN 10:29)",
+  "joktan father-of havilah-2 (GEN 10:29)",
+  "joktan father-of jobab (GEN 10:29)",
+  "kedar son-of ishmael (GEN 25:13)",
+  "kenan son-of enosh (GEN 5:9)",
+  "kenan father-of mahalalel (GEN 5:12)",
+  "kenaz son-of eliphaz (GEN 36:11)",
+  "kenaz descendant-of esau (GEN 36:15)",
+  "keturah wife-of abram (GEN 25:1)",
+  "korah son-of esau (GEN 36:5)",
+  "korah brother-of jeush (GEN 36:5)",
+  "korah brother-of jalam (GEN 36:5)",
+  "lamech-2 son-of methuselah (GEN 5:25)",
+  "lamech-2 father-of noah (GEN 5:30)",
+  "lotan son-of seir (GEN 36:20)",
+  "lotan father-of hori (GEN 36:22)",
+  "lotan father-of hemam (GEN 36:22)",
+  "lotan brother-of timna (GEN 36:22)",
+  "lud son-of mizraim (GEN 10:13)",
+  "lud-2 son-of shem (GEN 10:22)",
+  "madai son-of japheth (GEN 10:2)",
+  "magdiel descendant-of esau (GEN 36:43)",
+  "magog son-of japheth (GEN 10:2)",
+  "magog brother-of gomer (GEN 10:2)",
+  "mahalalel son-of kenan (GEN 5:12)",
+  "mahalalel father-of jared (GEN 5:15)",
+  "manahath son-of shobal (GEN 36:23)",
+  "manahath brother-of alvan (GEN 36:23)",
+  "manahath brother-of ebal (GEN 36:23)",
+  "mash son-of aram (GEN 10:23)",
+  "massa son-of ishmael (GEN 25:14)",
+  "matred mother-of mehetabel (GEN 36:39)",
+  "matred daughter-of mezahab (GEN 36:39)",
+  "medan son-of abram (GEN 25:2)",
+  "medan brother-of midian (GEN 25:2)",
+  "medan brother-of zimran (GEN 25:2)",
+  "medan brother-of jokshan (GEN 25:2)",
+  "medan brother-of ishbak (GEN 25:2)",
+  "medan brother-of shuah (GEN 25:2)",
+  "mehetabel wife-of hadar (GEN 36:39)",
+  "mehetabel daughter-of matred (GEN 36:39)",
+  "meshech son-of japheth (GEN 10:2)",
+  "methuselah son-of enoch-2 (GEN 5:21)",
+  "methuselah father-of lamech-2 (GEN 5:25)",
+  "mezahab mother-of matred (GEN 36:39)",
+  "mezahab grandmother-of mehetabel (GEN 36:39)",
+  "mibsam son-of ishmael (GEN 25:13)",
+  "mibzar descendant-of esau (GEN 36:42)",
+  "midian son-of keturah (GEN 25:2)",
+  "midian brother-of zimran (GEN 25:2)",
+  "midian brother-of jokshan (GEN 25:2)",
+  "midian brother-of medan (GEN 25:2)",
+  "midian brother-of ishbak (GEN 25:2)",
+  "midian brother-of shuah (GEN 25:2)",
+  "midian father-of ephah (GEN 25:4)",
+  "midian father-of epher (GEN 25:4)",
+  "midian father-of hanoch (GEN 25:4)",
+  "midian father-of abida (GEN 25:4)",
+  "midian father-of eldaah (GEN 25:4)",
+  "midian son-of abram (GEN 25:2)",
+  "mishma son-of ishmael (GEN 25:14)",
+  "mizraim son-of ham (GEN 10:6)",
+  "mizraim father-of lud (GEN 10:13)",
+  "mizraim father-of naphtuh (GEN 10:13)",
+  "mizzah son-of reuel (GEN 36:13)",
+  "mizzah descendant-of esau (GEN 36:17)",
+  "nahath son-of reuel (GEN 36:13)",
+  "nahath descendant-of esau (GEN 36:17)",
+  "nahath brother-of zerah (GEN 36:13)",
+  "nahor son-of serug (GEN 11:22)",
+  "nahor father-of terah (GEN 11:24)",
+  "nahor ancestor-of abram (LUK 3:34)",
+  "naphtuh son-of mizraim (GEN 10:13)",
+  "naphtuh brother-of lud (GEN 10:13)",
+  "nebaioth son-of ishmael (GEN 25:13)",
+  "nebaioth brother-of kedar (GEN 25:13)",
+  "nimrod son-of cush (GEN 10:8)",
+  "noah son-of lamech-2 (GEN 5:30)",
+  "noah father-of shem (GEN 5:32)",
+  "noah father-of ham (GEN 5:32)",
+  "noah father-of japheth (GEN 5:32)",
+  "obal brother-of abimael (GEN 10:28)",
+  "obal brother-of sheba-2 (GEN 10:28)",
+  "obal son-of joktan (GEN 10:28)",
+  "oholibamah descendant-of esau (GEN 36:41)",
+  "omar son-of eliphaz (GEN 36:11)",
+  "omar brother-of teman (GEN 36:11)",
+  "onam son-of shobal (GEN 36:23)",
+  "ophir son-of joktan (GEN 10:29)",
+  "peleg son-of eber (GEN 11:16)",
+  "peleg father-of reu (GEN 11:18)",
+  "peleg brother-of joktan (GEN 10:25)",
+  "pinon descendant-of esau (GEN 36:41)",
+  "put son-of ham (GEN 10:6)",
+  "put brother-of cush (GEN 10:6)",
+  "raamah son-of cush (GEN 10:7)",
+  "raamah father-of sheba (GEN 10:7)",
+  "raamah father-of dedan (GEN 10:7)",
+  "reu son-of peleg (GEN 11:18)",
+  "reu father-of serug (GEN 11:20)",
+  "reuel son-of esau (GEN 36:10)",
+  "reuel father-of nahath (GEN 36:13)",
+  "riphath son-of gomer (GEN 10:3)",
+  "sabtah son-of cush (GEN 10:7)",
+  "sabteca son-of cush (GEN 10:7)",
+  "seba son-of cush (GEN 10:7)",
+  "seba brother-of raamah (GEN 10:7)",
+  "seir father-of lotan (GEN 36:20)",
+  "seir father-of shobal (GEN 36:20)",
+  "seir father-of zibeon-2 (GEN 36:20)",
+  "seir father-of anah (GEN 36:20)",
+  "seir father-of dishon (GEN 36:21)",
+  "seir father-of ezer (GEN 36:21)",
+  "seir father-of dishan (GEN 36:21)",
+  "serug son-of reu (GEN 11:20)",
+  "serug father-of nahor (GEN 11:22)",
+  "shammah son-of reuel (GEN 36:13)",
+  "shammah descendant-of esau (GEN 36:17)",
+  "sheba son-of raamah (GEN 10:7)",
+  "sheba brother-of dedan (GEN 10:7)",
+  "sheba descendant-of cush (GEN 10:7)",
+  "sheba-3 son-of jokshan (GEN 25:3)",
+  "sheba-3 brother-of dedan-2 (GEN 25:3)",
+  "shelah son-of arpachshad (GEN 10:24)",
+  "shelah father-of eber (GEN 10:24)",
+  "sheleph son-of joktan (GEN 10:26)",
+  "sheleph brother-of almodad (GEN 10:26)",
+  "sheleph brother-of hazarmaveth (GEN 10:26)",
+  "sheleph brother-of jerah (GEN 10:26)",
+  "shem son-of noah (GEN 5:32)",
+  "shem father-of arpachshad (GEN 11:10)",
+  "shem brother-of japheth (GEN 10:21)",
+  "shem ancestor-of eber (GEN 10:21)",
+  "shepho son-of shobal (GEN 36:23)",
+  "shobal son-of seir (GEN 36:20)",
+  "shobal father-of manahath (GEN 36:23)",
+  "shobal father-of onam (GEN 36:23)",
+  "shuah son-of keturah (GEN 25:2)",
+  "shuah brother-of zimran (GEN 25:2)",
+  "shuah brother-of jokshan (GEN 25:2)",
+  "shuah brother-of medan (GEN 25:2)",
+  "shuah brother-of midian (GEN 25:2)",
+  "shuah brother-of ishbak (GEN 25:2)",
+  "shuah son-of abram (GEN 25:2)",
+  "sidon son-of canaan (GEN 10:15)",
+  "sidon brother-of heth (GEN 10:15)",
+  "tarshish son-of javan (GEN 10:4)",
+  "teman son-of eliphaz (GEN 36:11)",
+  "teman descendant-of esau (GEN 36:15)",
+  "terah father-of abram (GEN 11:26)",
+  "terah son-of nahor (GEN 11:24)",
+  "timna-2 descendant-of esau (GEN 36:40)",
+  "tiras son-of japheth (GEN 10:2)",
+  "togarmah son-of gomer (GEN 10:3)",
+  "togarmah brother-of ashkenaz (GEN 10:3)",
+  "togarmah brother-of riphath (GEN 10:3)",
+  "tubal son-of japheth (GEN 10:2)",
+  "uz son-of aram (GEN 10:23)",
+  "uz-3 son-of dishan (GEN 36:28)",
+  "uz-3 brother-of aran (GEN 36:28)",
+  "uzal brother-of hadoram (GEN 10:27)",
+  "uzal brother-of diklah (GEN 10:27)",
+  "uzal son-of joktan (GEN 10:27)",
+  "zaavan son-of ezer (GEN 36:27)",
+  "zaavan brother-of bilhan (GEN 36:27)",
+  "zaavan brother-of akan (GEN 36:27)",
+  "zepho son-of eliphaz (GEN 36:11)",
+  "zepho descendant-of esau (GEN 36:15)",
+  "zerah son-of reuel (GEN 36:13)",
+  "zerah brother-of nahath (GEN 36:13)",
+  "zerah-2 father-of jobab-2 (GEN 36:33)",
+  "zibeon-2 son-of seir (GEN 36:20)",
+  "zibeon-2 father-of anah-son-of-zibeon (GEN 36:24)",
+  "zibeon-2 father-of aiah (GEN 36:24)",
+  "zimran son-of abram (GEN 25:2)",
+  "timna-3 sister-of lotan (GEN 36:22)",
+  "adam father-of seth (GEN 5:3)",
+  "jacob son-of isaac (GEN 25:26)",
+  "jacob brother-of esau (GEN 25:26)",
+  "abram son-of terah (GEN 11:26)",
+  "seth son-of adam (GEN 5:3)",
+  "seth father-of enosh (GEN 5:6)",
+  "sheba-2 brother-of abimael (GEN 10:28)",
+  "sheba-2 brother-of obal (GEN 10:28)",
+  "sheba-2 descendant-of sheba (GEN 10:28)",
+  "sheba-2 son-of joktan (GEN 10:28)",
+  "tema son-of ishmael (GEN 25:15)",
+  "timna mother-of amalek (GEN 36:12)",
+  "timna sister-of lotan (GEN 36:22)",
+  "timna concubine-of eliphaz (GEN 36:12)",
+  "anah-son-of-zibeon son-of zibeon-2 (GEN 36:24)",
+  "anah-son-of-zibeon father-of dishon-2 (GEN 36:25)"
+ ]
+}

@@ -1,0 +1,25 @@
+{
+ "case": "parents-achsah",
+ "question": "achsah is recorded with more than one father: caleb, chelubai.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "retarget-row",
+   "rows": [
+    99034
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "haran-2",
+   "verse": "1CH 2:46",
+   "why": "The Hebrew explicitly says that Haran begat Gazez. This second Gazez occurrence belongs to Haran, whereas the first is among Ephah's children by Caleb.",
+   "confidence": 1
+  }
+ ],
+ "note": "Joshua 15:16 and 1 Chronicles 2:49 both explicitly call Achsah Caleb's daughter, but Chronicles places her in Caleb/Chelubai's genealogy; preserve these textual traditions without merging the Caleb records. The owner's Achsah ruling remains unchanged; the clear defect is Gazez-2's incorrectly assigned father.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:31:19+00:00"
+}

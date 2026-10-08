@@ -1,0 +1,11 @@
+{
+ "case": "parents-shelah",
+ "question": "shelah is recorded with more than one father: arpachshad, cainan.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "Hebrew GEN 10:24 and GEN 11:12 explicitly state that Arpachshad begat Shelah; GEN 10:24 also supports Arpachshad as Eber's grandfather. LUK 3:35–36 places Cainan between Shelah and Arpachshad, so the rows accurately preserve differing genealogies.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:36:53+00:00"
+}

@@ -1,0 +1,76 @@
+{
+ "chapter": "1CH 1",
+ "rows": 33,
+ "wrong": [
+  {
+   "kind": "retarget",
+   "rows": [
+    97485
+   ],
+   "new_type": "",
+   "new_to": "dishon-2",
+   "verse": "1CH 1:41",
+   "why": "Anah's son Dishon is represented by dishon-2, whereas dishon is listed as Seir's son in verse 38.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    98289,
+    99844
+   ],
+   "new_type": "",
+   "new_to": "dishon-2",
+   "verse": "1CH 1:41",
+   "why": "The verse names Ithran and Cheran among the sons of the Dishon just identified as Anah's son.",
+   "confidence": 0.9
+  }
+ ],
+ "missing": [
+  {
+   "from": "uz",
+   "type": "son-of",
+   "to": "shem",
+   "verse": "1CH 1:17",
+   "why": "The Hebrew lists Uz among the sons of Shem.",
+   "confidence": 0.99
+  },
+  {
+   "from": "hul",
+   "type": "son-of",
+   "to": "shem",
+   "verse": "1CH 1:17",
+   "why": "The Hebrew lists Hul among the sons of Shem, while the existing descendant relationship is less specific.",
+   "confidence": 0.99
+  },
+  {
+   "from": "gether",
+   "type": "son-of",
+   "to": "shem",
+   "verse": "1CH 1:17",
+   "why": "The Hebrew lists Gether among the sons of Shem, while the existing descendant relationship is less specific.",
+   "confidence": 0.99
+  },
+  {
+   "from": "mash",
+   "type": "son-of",
+   "to": "shem",
+   "verse": "1CH 1:17",
+   "why": "The Hebrew lists Meshech, the name variant corresponding to Mash in this genealogy, among the sons of Shem.",
+   "confidence": 0.95
+  },
+  {
+   "from": "keturah",
+   "type": "concubine-of",
+   "to": "abram",
+   "verse": "1CH 1:32",
+   "why": "The Hebrew explicitly calls Keturah Abraham's concubine.",
+   "confidence": 1
+  }
+ ],
+ "note": "The differing Genesis parentage statements are retained as recorded variants, and the broader descendant relationships remain supported. Verse 36's Timna cannot be confidently assigned among the supplied namesakes, so no parent relationship is proposed for that name.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:21:10+00:00"
+}

@@ -1,0 +1,28 @@
+{
+ "chapter": "GEN 11",
+ "rows": 31,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "terah",
+   "type": "grandfather-of",
+   "to": "lot",
+   "verse": "GEN 11:31",
+   "why": "Lot is explicitly called Terah's son's son (בֶּן־בְּנוֹ).",
+   "confidence": 1
+  },
+  {
+   "from": "terah",
+   "type": "father-in-law-of",
+   "to": "sarai",
+   "verse": "GEN 11:31",
+   "why": "Sarai is explicitly called Terah's daughter-in-law (כַּלָּתוֹ), the wife of his son Abram.",
+   "confidence": 1
+  }
+ ],
+ "note": "The recorded sibling relationships are supported by the shared fathers named in the chapter, and the two Nahors are correctly distinguished.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:16:04+00:00"
+}

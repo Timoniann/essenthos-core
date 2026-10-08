@@ -1,0 +1,446 @@
+{
+ "chapter": "NUM 3",
+ "text": {
+  "NUM 3:1": {
+   "KJV": "These also are the generations of Aaron and Moses in the day that the LORD spake with Moses in mount Sinai.",
+   "BHSA": "וְאֵ֛לֶּה תֹּולְדֹ֥ת אַהֲרֹ֖ן וּמֹשֶׁ֑ה בְּיֹ֗ום דִּבֶּ֧ר יְהוָ֛ה אֶת־מֹשֶׁ֖ה בְּהַ֥ר סִינָֽי׃ "
+  },
+  "NUM 3:2": {
+   "KJV": "And these are the names of the sons of Aaron; Nadab the firstborn, and Abihu, Eleazar, and Ithamar.",
+   "BHSA": "וְאֵ֛לֶּה שְׁמֹ֥ות בְּֽנֵי־אַהֲרֹ֖ן הַבְּכֹ֣ור׀ נָדָ֑ב וַאֲבִיה֕וּא אֶלְעָזָ֖ר וְאִיתָמָֽר׃ "
+  },
+  "NUM 3:3": {
+   "KJV": "These are the names of the sons of Aaron, the priests which were anointed, whom he consecrated to minister in the priest's office.",
+   "BHSA": "אֵ֗לֶּה שְׁמֹות֙ בְּנֵ֣י אַהֲרֹ֔ן הַכֹּהֲנִ֖ים הַמְּשֻׁחִ֑ים אֲשֶׁר־מִלֵּ֥א יָדָ֖ם לְכַהֵֽן׃ "
+  },
+  "NUM 3:4": {
+   "KJV": "And Nadab and Abihu died before the LORD, when they offered strange fire before the LORD, in the wilderness of Sinai, and they had no children: and Eleazar and Ithamar ministered in the priest's office in the sight of Aaron their father.",
+   "BHSA": "וַיָּ֣מָת נָדָ֣ב וַאֲבִיה֣וּא לִפְנֵ֣י יְהוָ֡ה בְּֽהַקְרִבָם֩ אֵ֨שׁ זָרָ֜ה לִפְנֵ֤י יְהוָה֙ בְּמִדְבַּ֣ר סִינַ֔י וּבָנִ֖ים לֹא־הָי֣וּ לָהֶ֑ם וַיְכַהֵ֤ן אֶלְעָזָר֙ וְאִ֣יתָמָ֔ר עַל־פְּנֵ֖י אַהֲרֹ֥ן אֲבִיהֶֽם׃ פ "
+  },
+  "NUM 3:5": {
+   "KJV": "And the LORD spake unto Moses, saying,",
+   "BHSA": "וַיְדַבֵּ֥ר יְהוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃ "
+  },
+  "NUM 3:6": {
+   "KJV": "Bring the tribe of Levi near, and present them before Aaron the priest, that they may minister unto him.",
+   "BHSA": "הַקְרֵב֙ אֶת־מַטֵּ֣ה לֵוִ֔י וְֽהַעֲמַדְתָּ֣ אֹתֹ֔ו לִפְנֵ֖י אַהֲרֹ֣ן הַכֹּהֵ֑ן וְשֵׁרְת֖וּ אֹתֹֽו׃ "
+  },
+  "NUM 3:7": {
+   "KJV": "And they shall keep his charge, and the charge of the whole congregation before the tabernacle of the congregation, to do the service of the tabernacle.",
+   "BHSA": "וְשָׁמְר֣וּ אֶת־מִשְׁמַרְתֹּ֗ו וְאֶת־מִשְׁמֶ֨רֶת֙ כָּל־הָ֣עֵדָ֔ה לִפְנֵ֖י אֹ֣הֶל מֹועֵ֑ד לַעֲבֹ֖ד אֶת־עֲבֹדַ֥ת הַמִּשְׁכָּֽן׃ "
+  },
+  "NUM 3:8": {
+   "KJV": "And they shall keep all the instruments of the tabernacle of the congregation, and the charge of the children of Israel, to do the service of the tabernacle.",
+   "BHSA": "וְשָׁמְר֗וּ אֶֽת־כָּל־כְּלֵי֙ אֹ֣הֶל מֹועֵ֔ד וְאֶת־מִשְׁמֶ֖רֶת בְּנֵ֣י יִשְׂרָאֵ֑ל לַעֲבֹ֖ד אֶת־עֲבֹדַ֥ת הַמִּשְׁכָּֽן׃ "
+  },
+  "NUM 3:9": {
+   "KJV": "And thou shalt give the Levites unto Aaron and to his sons: they are wholly given unto him out of the children of Israel.",
+   "BHSA": "וְנָתַתָּה֙ אֶת־הַלְוִיִּ֔ם לְאַהֲרֹ֖ן וּלְבָנָ֑יו נְתוּנִ֨ם נְתוּנִ֥ם הֵ֨מָּה֙ לֹ֔ו מֵאֵ֖ת בְּנֵ֥י יִשְׂרָאֵֽל׃ "
+  },
+  "NUM 3:10": {
+   "KJV": "And thou shalt appoint Aaron and his sons, and they shall wait on their priest's office: and the stranger that cometh nigh shall be put to death.",
+   "BHSA": "וְאֶת־אַהֲרֹ֤ן וְאֶת־בָּנָיו֙ תִּפְקֹ֔ד וְשָׁמְר֖וּ אֶת־כְּהֻנָּתָ֑ם וְהַזָּ֥ר הַקָּרֵ֖ב יוּמָֽת׃ פ "
+  },
+  "NUM 3:11": {
+   "KJV": "And the LORD spake unto Moses, saying,",
+   "BHSA": "וַיְדַבֵּ֥ר יְהוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃ "
+  },
+  "NUM 3:12": {
+   "KJV": "And I, behold, I have taken the Levites from among the children of Israel instead of all the firstborn that openeth the matrix among the children of Israel: therefore the Levites shall be mine;",
+   "BHSA": "וַאֲנִ֞י הִנֵּ֧ה לָקַ֣חְתִּי אֶת־הַלְוִיִּ֗ם מִתֹּוךְ֙ בְּנֵ֣י יִשְׂרָאֵ֔ל תַּ֧חַת כָּל־בְּכֹ֛ור פֶּ֥טֶר רֶ֖חֶם מִבְּנֵ֣י יִשְׂרָאֵ֑ל וְהָ֥יוּ לִ֖י הַלְוִיִּֽם׃ "
+  },
+  "NUM 3:13": {
+   "KJV": "Because all the firstborn are mine; for on the day that I smote all the firstborn in the land of Egypt I hallowed unto me all the firstborn in Israel, both man and beast: mine shall they be: I am the LORD.",
+   "BHSA": "כִּ֣י לִי֮ כָּל־בְּכֹור֒ בְּיֹום֩ הַכֹּתִ֨י כָל־בְּכֹ֜ור בְּאֶ֣רֶץ מִצְרַ֗יִם הִקְדַּ֨שְׁתִּי לִ֤י כָל־בְּכֹור֙ בְּיִשְׂרָאֵ֔ל מֵאָדָ֖ם עַד־בְּהֵמָ֑ה לִ֥י יִהְי֖וּ אֲנִ֥י יְהוָֽה׃ ס "
+  },
+  "NUM 3:14": {
+   "KJV": "And the LORD spake unto Moses in the wilderness of Sinai, saying,",
+   "BHSA": "וַיְדַבֵּ֤ר יְהוָה֙ אֶל־מֹשֶׁ֔ה בְּמִדְבַּ֥ר סִינַ֖י לֵאמֹֽר׃ "
+  },
+  "NUM 3:15": {
+   "KJV": "Number the children of Levi after the house of their fathers, by their families: every male from a month old and upward shalt thou number them.",
+   "BHSA": "פְּקֹד֙ אֶת־בְּנֵ֣י לֵוִ֔י לְבֵ֥ית אֲבֹתָ֖ם לְמִשְׁפְּחֹתָ֑ם כָּל־זָכָ֛ר מִבֶּן־חֹ֥דֶשׁ וָמַ֖עְלָה תִּפְקְדֵֽם׃ "
+  },
+  "NUM 3:16": {
+   "KJV": "And Moses numbered them according to the word of the LORD, as he was commanded.",
+   "BHSA": "וַיִּפְקֹ֥ד אֹתָ֛ם מֹשֶׁ֖ה עַל־פִּ֣י יְהוָ֑ה כַּאֲשֶׁ֖ר צֻוָּֽה׃ "
+  },
+  "NUM 3:17": {
+   "KJV": "And these were the sons of Levi by their names; Gershon, and Kohath, and Merari.",
+   "BHSA": "וַיִּֽהְיוּ־אֵ֥לֶּה בְנֵֽי־לֵוִ֖י בִּשְׁמֹתָ֑ם גֵּרְשֹׁ֕ון וּקְהָ֖ת וּמְרָרִֽי׃ "
+  },
+  "NUM 3:18": {
+   "KJV": "And these are the names of the sons of Gershon by their families; Libni, and Shimei.",
+   "BHSA": "וְאֵ֛לֶּה שְׁמֹ֥ות בְּֽנֵי־גֵרְשֹׁ֖ון לְמִשְׁפְּחֹתָ֑ם לִבְנִ֖י וְשִׁמְעִֽי׃ "
+  },
+  "NUM 3:19": {
+   "KJV": "And the sons of Kohath by their families; Amram, and Izehar, Hebron, and Uzziel.",
+   "BHSA": "וּבְנֵ֥י קְהָ֖ת לְמִשְׁפְּחֹתָ֑ם עַמְרָ֣ם וְיִצְהָ֔ר חֶבְרֹ֖ון וְעֻזִּיאֵֽל׃ "
+  },
+  "NUM 3:20": {
+   "KJV": "And the sons of Merari by their families; Mahli, and Mushi. These are the families of the Levites according to the house of their fathers.",
+   "BHSA": "וּבְנֵ֧י מְרָרִ֛י לְמִשְׁפְּחֹתָ֖ם מַחְלִ֣י וּמוּשִׁ֑י אֵ֥לֶּה הֵ֛ם מִשְׁפְּחֹ֥ת הַלֵּוִ֖י לְבֵ֥ית אֲבֹתָֽם׃ "
+  },
+  "NUM 3:21": {
+   "KJV": "Of Gershon was the family of the Libnites, and the family of the Shimites: these are the families of the Gershonites.",
+   "BHSA": "לְגֵ֣רְשֹׁ֔ון מִשְׁפַּ֨חַת֙ הַלִּבְנִ֔י וּמִשְׁפַּ֖חַת הַשִּׁמְעִ֑י אֵ֣לֶּה הֵ֔ם מִשְׁפְּחֹ֖ת הַגֵּרְשֻׁנִּֽי׃ "
+  },
+  "NUM 3:22": {
+   "KJV": "Those that were numbered of them, according to the number of all the males, from a month old and upward, even those that were numbered of them were seven thousand and five hundred.",
+   "BHSA": "פְּקֻדֵיהֶם֙ בְּמִסְפַּ֣ר כָּל־זָכָ֔ר מִבֶּן־חֹ֖דֶשׁ וָמָ֑עְלָה פְּקֻ֣דֵיהֶ֔ם שִׁבְעַ֥ת אֲלָפִ֖ים וַחֲמֵ֥שׁ מֵאֹֽות׃ "
+  },
+  "NUM 3:23": {
+   "KJV": "The families of the Gershonites shall pitch behind the tabernacle westward.",
+   "BHSA": "מִשְׁפְּחֹ֖ת הַגֵּרְשֻׁנִּ֑י אַחֲרֵ֧י הַמִּשְׁכָּ֛ן יַחֲנ֖וּ יָֽמָּה׃ "
+  },
+  "NUM 3:24": {
+   "KJV": "And the chief of the house of the father of the Gershonites shall be Eliasaph the son of Lael.",
+   "BHSA": "וּנְשִׂ֥יא בֵֽית־אָ֖ב לַגֵּרְשֻׁנִּ֑י אֶלְיָסָ֖ף בֶּן־לָאֵֽל׃ "
+  },
+  "NUM 3:25": {
+   "KJV": "And the charge of the sons of Gershon in the tabernacle of the congregation shall be the tabernacle, and the tent, the covering thereof, and the hanging for the door of the tabernacle of the congregation,",
+   "BHSA": "וּמִשְׁמֶ֤רֶת בְּנֵֽי־גֵרְשֹׁון֙ בְּאֹ֣הֶל מֹועֵ֔ד הַמִּשְׁכָּ֖ן וְהָאֹ֑הֶל מִכְסֵ֕הוּ וּמָסַ֕ךְ פֶּ֖תַח אֹ֥הֶל מֹועֵֽד׃ "
+  },
+  "NUM 3:26": {
+   "KJV": "And the hangings of the court, and the curtain for the door of the court, which is by the tabernacle, and by the altar round about, and the cords of it for all the service thereof.",
+   "BHSA": "וְקַלְעֵ֣י הֶֽחָצֵ֗ר וְאֶת־מָסַךְ֙ פֶּ֣תַח הֶֽחָצֵ֔ר אֲשֶׁ֧ר עַל־הַמִּשְׁכָּ֛ן וְעַל־הַמִּזְבֵּ֖חַ סָבִ֑יב וְאֵת֙ מֵֽיתָרָ֔יו לְכֹ֖ל עֲבֹדָתֹֽו׃ "
+  },
+  "NUM 3:27": {
+   "KJV": "And of Kohath was the family of the Amramites, and the family of the Izeharites, and the family of the Hebronites, and the family of the Uzzielites: these are the families of the Kohathites.",
+   "BHSA": "וְלִקְהָ֗ת מִשְׁפַּ֤חַת הַֽעַמְרָמִי֙ וּמִשְׁפַּ֣חַת הַיִּצְהָרִ֔י וּמִשְׁפַּ֨חַת֙ הַֽחֶבְרֹנִ֔י וּמִשְׁפַּ֖חַת הָֽעָזִּיאֵלִ֑י אֵ֥לֶּה הֵ֖ם מִשְׁפְּחֹ֥ת הַקְּהָתִֽי׃ "
+  },
+  "NUM 3:28": {
+   "KJV": "In the number of all the males, from a month old and upward, were eight thousand and six hundred, keeping the charge of the sanctuary.",
+   "BHSA": "בְּמִסְפַּר֙ כָּל־זָכָ֔ר מִבֶּן־חֹ֖דֶשׁ וָמָ֑עְלָה שְׁמֹנַ֤ת אֲלָפִים֙ וְשֵׁ֣שׁ מֵאֹ֔ות שֹׁמְרֵ֖י מִשְׁמֶ֥רֶת הַקֹּֽדֶשׁ׃ "
+  },
+  "NUM 3:29": {
+   "KJV": "The families of the sons of Kohath shall pitch on the side of the tabernacle southward.",
+   "BHSA": "מִשְׁפְּחֹ֥ת בְּנֵי־קְהָ֖ת יַחֲנ֑וּ עַ֛ל יֶ֥רֶךְ הַמִּשְׁכָּ֖ן תֵּימָֽנָה׃ "
+  },
+  "NUM 3:30": {
+   "KJV": "And the chief of the house of the father of the families of the Kohathites shall be Elizaphan the son of Uzziel.",
+   "BHSA": "וּנְשִׂ֥יא בֵֽית־אָ֖ב לְמִשְׁפְּחֹ֣ת הַקְּהָתִ֑י אֶלִיצָפָ֖ן בֶּן־עֻזִּיאֵֽל׃ "
+  },
+  "NUM 3:31": {
+   "KJV": "And their charge shall be the ark, and the table, and the candlestick, and the altars, and the vessels of the sanctuary wherewith they minister, and the hanging, and all the service thereof.",
+   "BHSA": "וּמִשְׁמַרְתָּ֗ם הָאָרֹ֤ן וְהַשֻּׁלְחָן֙ וְהַמְּנֹרָ֣ה וְהַֽמִּזְבְּחֹ֔ת וּכְלֵ֣י הַקֹּ֔דֶשׁ אֲשֶׁ֥ר יְשָׁרְת֖וּ בָּהֶ֑ם וְהַ֨מָּסָ֔ךְ וְכֹ֖ל עֲבֹדָתֹֽו׃ "
+  },
+  "NUM 3:32": {
+   "KJV": "And Eleazar the son of Aaron the priest shall be chief over the chief of the Levites, and have the oversight of them that keep the charge of the sanctuary.",
+   "BHSA": "וּנְשִׂיא֙ נְשִׂיאֵ֣י הַלֵּוִ֔י אֶלְעָזָ֖ר בֶּן־אַהֲרֹ֣ן הַכֹּהֵ֑ן פְּקֻדַּ֕ת שֹׁמְרֵ֖י מִשְׁמֶ֥רֶת הַקֹּֽדֶשׁ׃ "
+  },
+  "NUM 3:33": {
+   "KJV": "Of Merari was the family of the Mahlites, and the family of the Mushites: these are the families of Merari.",
+   "BHSA": "לִמְרָרִ֕י מִשְׁפַּ֨חַת֙ הַמַּחְלִ֔י וּמִשְׁפַּ֖חַת הַמּוּשִׁ֑י אֵ֥לֶּה הֵ֖ם מִשְׁפְּחֹ֥ת מְרָרִֽי׃ "
+  },
+  "NUM 3:34": {
+   "KJV": "And those that were numbered of them, according to the number of all the males, from a month old and upward, were six thousand and two hundred.",
+   "BHSA": "וּפְקֻדֵיהֶם֙ בְּמִסְפַּ֣ר כָּל־זָכָ֔ר מִבֶּן־חֹ֖דֶשׁ וָמָ֑עְלָה שֵׁ֥שֶׁת אֲלָפִ֖ים וּמָאתָֽיִם׃ "
+  },
+  "NUM 3:35": {
+   "KJV": "And the chief of the house of the father of the families of Merari was Zuriel the son of Abihail: these shall pitch on the side of the tabernacle northward.",
+   "BHSA": "וּנְשִׂ֤יא בֵֽית־אָב֙ לְמִשְׁפְּחֹ֣ת מְרָרִ֔י צוּרִיאֵ֖ל בֶּן־אֲבִיחָ֑יִל עַ֣ל יֶ֧רֶךְ הַמִּשְׁכָּ֛ן יַחֲנ֖וּ צָפֹֽנָה׃ "
+  },
+  "NUM 3:36": {
+   "KJV": "And under the custody and charge of the sons of Merari shall be the boards of the tabernacle, and the bars thereof, and the pillars thereof, and the sockets thereof, and all the vessels thereof, and all that serveth thereto,",
+   "BHSA": "וּפְקֻדַּ֣ת מִשְׁמֶרֶת֮ בְּנֵ֣י מְרָרִי֒ קַרְשֵׁי֙ הַמִּשְׁכָּ֔ן וּבְרִיחָ֖יו וְעַמֻּדָ֣יו וַאֲדָנָ֑יו וְכָל־כֵּלָ֔יו וְכֹ֖ל עֲבֹדָתֹֽו׃ "
+  },
+  "NUM 3:37": {
+   "KJV": "And the pillars of the court round about, and their sockets, and their pins, and their cords.",
+   "BHSA": "וְעַמֻּדֵ֧י הֶחָצֵ֛ר סָבִ֖יב וְאַדְנֵיהֶ֑ם וִיתֵדֹתָ֖ם וּמֵֽיתְרֵיהֶֽם׃ "
+  },
+  "NUM 3:38": {
+   "KJV": "But those that encamp before the tabernacle toward the east, even before the tabernacle of the congregation eastward, shall be Moses, and Aaron and his sons, keeping the charge of the sanctuary for the charge of the children of Israel; and the stranger that cometh nigh shall be put to death.",
+   "BHSA": "וְהַחֹנִ֣ים לִפְנֵ֣י הַמִּשְׁכָּ֡ן קֵ֣דְמָה לִפְנֵי֩ אֹֽהֶל־מֹועֵ֨ד׀ מִזְרָ֜חָה מֹשֶׁ֣ה׀ וְאַהֲרֹ֣ן וּבָנָ֗יו שֹֽׁמְרִים֙ מִשְׁמֶ֣רֶת הַמִּקְדָּ֔שׁ לְמִשְׁמֶ֖רֶת בְּנֵ֣י יִשְׂרָאֵ֑ל וְהַזָּ֥ר הַקָּרֵ֖ב יוּמָֽת׃ "
+  },
+  "NUM 3:39": {
+   "KJV": "All that were numbered of the Levites, which Moses and Aaron numbered at the commandment of the LORD, throughout their families, all the males from a month old and upward, were twenty and two thousand.",
+   "BHSA": "כָּל־פְּקוּדֵ֨י הַלְוִיִּ֜ם אֲשֶׁר֩ פָּקַ֨ד מֹשֶׁ֧ה וְׄאַׄהֲׄרֹ֛ׄןׄ עַל־פִּ֥י יְהוָ֖ה לְמִשְׁפְּחֹתָ֑ם כָּל־זָכָר֙ מִבֶּן־חֹ֣דֶשׁ וָמַ֔עְלָה שְׁנַ֥יִם וְעֶשְׂרִ֖ים אָֽלֶף׃ ס "
+  },
+  "NUM 3:40": {
+   "KJV": "And the LORD said unto Moses, Number all the firstborn of the males of the children of Israel from a month old and upward, and take the number of their names.",
+   "BHSA": "וַיֹּ֨אמֶר יְהוָ֜ה אֶל־מֹשֶׁ֗ה פְּקֹ֨ד כָּל־בְּכֹ֤ר זָכָר֙ לִבְנֵ֣י יִשְׂרָאֵ֔ל מִבֶּן־חֹ֖דֶשׁ וָמָ֑עְלָה וְשָׂ֕א אֵ֖ת מִסְפַּ֥ר שְׁמֹתָֽם׃ "
+  },
+  "NUM 3:41": {
+   "KJV": "And thou shalt take the Levites for me (I am the LORD) instead of all the firstborn among the children of Israel; and the cattle of the Levites instead of all the firstlings among the cattle of the children of Israel.",
+   "BHSA": "וְלָקַחְתָּ֨ אֶת־הַלְוִיִּ֥ם לִי֙ אֲנִ֣י יְהוָ֔ה תַּ֥חַת כָּל־בְּכֹ֖ר בִּבְנֵ֣י יִשְׂרָאֵ֑ל וְאֵת֙ בֶּהֱמַ֣ת הַלְוִיִּ֔ם תַּ֣חַת כָּל־בְּכֹ֔ור בְּבֶהֱמַ֖ת בְּנֵ֥י יִשְׂרָאֵֽל׃ "
+  },
+  "NUM 3:42": {
+   "KJV": "And Moses numbered, as the LORD commanded him, all the firstborn among the children of Israel.",
+   "BHSA": "וַיִּפְקֹ֣ד מֹשֶׁ֔ה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהוָ֖ה אֹתֹ֑ו אֶֽת־כָּל־בְּכֹ֖ר בִּבְנֵ֥י יִשְׂרָאֵֽל׃ "
+  },
+  "NUM 3:43": {
+   "KJV": "And all the firstborn males by the number of names, from a month old and upward, of those that were numbered of them, were twenty and two thousand two hundred and threescore and thirteen.",
+   "BHSA": "וַיְהִי֩ כָל־בְּכֹ֨ור זָכָ֜ר בְּמִסְפַּ֥ר שֵׁמֹ֛ות מִבֶּן־חֹ֥דֶשׁ וָמַ֖עְלָה לִפְקֻדֵיהֶ֑ם שְׁנַ֤יִם וְעֶשְׂרִים֙ אֶ֔לֶף שְׁלֹשָׁ֥ה וְשִׁבְעִ֖ים וּמָאתָֽיִם׃ פ "
+  },
+  "NUM 3:44": {
+   "KJV": "And the LORD spake unto Moses, saying,",
+   "BHSA": "וַיְדַבֵּ֥ר יְהוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃ "
+  },
+  "NUM 3:45": {
+   "KJV": "Take the Levites instead of all the firstborn among the children of Israel, and the cattle of the Levites instead of their cattle; and the Levites shall be mine: I am the LORD.",
+   "BHSA": "קַ֣ח אֶת־הַלְוִיִּ֗ם תַּ֤חַת כָּל־בְּכֹור֙ בִּבְנֵ֣י יִשְׂרָאֵ֔ל וְאֶת־בֶּהֱמַ֥ת הַלְוִיִּ֖ם תַּ֣חַת בְּהֶמְתָּ֑ם וְהָיוּ־לִ֥י הַלְוִיִּ֖ם אֲנִ֥י יְהוָֽה׃ "
+  },
+  "NUM 3:46": {
+   "KJV": "And for those that are to be redeemed of the two hundred and threescore and thirteen of the firstborn of the children of Israel, which are more than the Levites;",
+   "BHSA": "וְאֵת֙ פְּדוּיֵ֣י הַשְּׁלֹשָׁ֔ה וְהַשִּׁבְעִ֖ים וְהַמָּאתָ֑יִם הָעֹֽדְפִים֙ עַל־הַלְוִיִּ֔ם מִבְּכֹ֖ור בְּנֵ֥י יִשְׂרָאֵֽל׃ "
+  },
+  "NUM 3:47": {
+   "KJV": "Thou shalt even take five shekels apiece by the poll, after the shekel of the sanctuary shalt thou take them: (the shekel is twenty gerahs:)",
+   "BHSA": "וְלָקַחְתָּ֗ חֲמֵ֧שֶׁת חֲמֵ֛שֶׁת שְׁקָלִ֖ים לַגֻּלְגֹּ֑לֶת בְּשֶׁ֤קֶל הַקֹּ֨דֶשׁ֙ תִּקָּ֔ח עֶשְׂרִ֥ים גֵּרָ֖ה הַשָּֽׁקֶל׃ "
+  },
+  "NUM 3:48": {
+   "KJV": "And thou shalt give the money, wherewith the odd number of them is to be redeemed, unto Aaron and to his sons.",
+   "BHSA": "וְנָתַתָּ֣ה הַכֶּ֔סֶף לְאַהֲרֹ֖ן וּלְבָנָ֑יו פְּדוּיֵ֕י הָעֹדְפִ֖ים בָּהֶֽם׃ "
+  },
+  "NUM 3:49": {
+   "KJV": "And Moses took the redemption money of them that were over and above them that were redeemed by the Levites:",
+   "BHSA": "וַיִּקַּ֣ח מֹשֶׁ֔ה אֵ֖ת כֶּ֣סֶף הַפִּדְיֹ֑ום מֵאֵת֙ הָעֹ֣דְפִ֔ים עַ֖ל פְּדוּיֵ֥י הַלְוִיִּֽם׃ "
+  },
+  "NUM 3:50": {
+   "KJV": "Of the firstborn of the children of Israel took he the money; a thousand three hundred and threescore and five shekels, after the shekel of the sanctuary:",
+   "BHSA": "מֵאֵ֗ת בְּכֹ֛ור בְּנֵ֥י יִשְׂרָאֵ֖ל לָקַ֣ח אֶת־הַכָּ֑סֶף חֲמִשָּׁ֨ה וְשִׁשִּׁ֜ים וּשְׁלֹ֥שׁ מֵאֹ֛ות וָאֶ֖לֶף בְּשֶׁ֥קֶל הַקֹּֽדֶשׁ׃ "
+  },
+  "NUM 3:51": {
+   "KJV": "And Moses gave the money of them that were redeemed unto Aaron and to his sons, according to the word of the LORD, as the LORD commanded Moses.",
+   "BHSA": "וַיִּתֵּ֨ן מֹשֶׁ֜ה אֶת־כֶּ֧סֶף הַפְּדֻיִ֛ם לְאַהֲרֹ֥ן וּלְבָנָ֖יו עַל־פִּ֣י יְהוָ֑ה כַּאֲשֶׁ֛ר צִוָּ֥ה יְהוָ֖ה אֶת־מֹשֶֽׁה׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "abihail",
+   "name": "Abihail",
+   "distinguisher": "father of Zuriel (NUM 3:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "abihu",
+   "name": "Abihu",
+   "distinguisher": "son of Aaron (EXO 6:23), died for offering strange fire to the LORD (NUM 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "amram",
+   "name": "Amram",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar",
+   "name": "Eleazar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliasaph-2",
+   "name": "Eliasaph",
+   "distinguisher": "leader of the Gershonites (NUM 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "elzaphan",
+   "name": "Elzaphan",
+   "distinguisher": "son of Uzziel (EXO 6:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "gershon",
+   "name": "Gershon",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "hebron",
+   "name": "Hebron",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "ithamar",
+   "name": "Ithamar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "izhar",
+   "name": "Izhar",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "kohath",
+   "name": "Kohath",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "lael",
+   "name": "Lael",
+   "distinguisher": "father of Eliasaph (NUM 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "libni",
+   "name": "Libni",
+   "distinguisher": "son of Gershon (EXO 6:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "mahli",
+   "name": "Mahli",
+   "distinguisher": "son of Merari (EXO 6:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "merari",
+   "name": "Merari",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "mushi",
+   "name": "Mushi",
+   "distinguisher": "son of Merari (EXO 6:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "nadab",
+   "name": "Nadab",
+   "distinguisher": "son of Aaron (EXO 6:23), died for offering strange fire to the LORD (NUM 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei",
+   "name": "Shimei",
+   "distinguisher": "son of Gershon (EXO 6:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzziel",
+   "name": "Uzziel",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zuriel",
+   "name": "Zuriel",
+   "distinguisher": "leader of the families of Merari (NUM 3:35)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 101583,
+   "row": "nadab son-of aaron",
+   "verse": "NUM 3:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99835,
+   "row": "ithamar priest-of yhvh",
+   "verse": "NUM 3:4",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 98628,
+   "row": "eliasaph-2 son-of lael",
+   "verse": "NUM 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 106922,
+   "row": "lael father-of eliasaph-2",
+   "verse": "NUM 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106924,
+   "row": "lael descendant-of gershon",
+   "verse": "NUM 3:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 98787,
+   "row": "elzaphan son-of uzziel",
+   "verse": "NUM 3:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103599,
+   "row": "zuriel son-of abihail",
+   "verse": "NUM 3:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103600,
+   "row": "zuriel commander-of merari",
+   "verse": "NUM 3:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103810,
+   "row": "abihail father-of zuriel",
+   "verse": "NUM 3:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103811,
+   "row": "abihail descendant-of merari",
+   "verse": "NUM 3:35",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron brother-of moses (EXO 4:14)",
+  "aaron son-of amram (EXO 6:20)",
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "abihu son-of aaron (EXO 6:23)",
+  "abihu brother-of nadab (EXO 6:23)",
+  "abihu priest-of yhvh (EXO 28:1)",
+  "amram son-of kohath (NUM 26:58)",
+  "amram father-of moses (EXO 6:20)",
+  "amram father-of aaron (EXO 6:20)",
+  "eleazar son-of aaron (EXO 6:23)",
+  "eleazar priest-of yhvh (NUM 16:39)",
+  "gershon father-of libni (EXO 6:17)",
+  "hebron son-of kohath (EXO 6:18)",
+  "ithamar son-of aaron (EXO 6:23)",
+  "ithamar brother-of eleazar (EXO 6:23)",
+  "izhar son-of kohath (EXO 6:18)",
+  "kohath father-of amram (NUM 26:58)",
+  "kohath brother-of gershon (GEN 46:11)",
+  "libni son-of gershon (EXO 6:17)",
+  "libni brother-of shimei (EXO 6:17)",
+  "mahli son-of merari (EXO 6:19)",
+  "mahli brother-of mushi (EXO 6:19)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "moses priest-of yhvh (PSA 99:6)",
+  "mushi son-of merari (EXO 6:19)",
+  "nadab brother-of abihu (EXO 6:23)",
+  "nadab priest-of yhvh (EXO 28:1)",
+  "shimei son-of gershon (EXO 6:17)",
+  "uzziel son-of kohath (EXO 6:18)",
+  "uzziel brother-of amram (EXO 6:18)",
+  "uzziel uncle-of aaron (LEV 10:4)",
+  "merari father-of mahli (EXO 6:19)",
+  "merari father-of mushi (EXO 6:19)"
+ ]
+}

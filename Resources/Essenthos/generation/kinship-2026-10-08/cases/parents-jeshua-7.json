@@ -1,0 +1,23 @@
+{
+ "case": "parents-jeshua-7",
+ "question": "jeshua-7 is recorded with more than one father: kadmiel, kadmiel-2, azaniah.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "split-record",
+   "rows": [],
+   "record": "jeshua-7",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 12:24",
+   "why": "Separate the Jeshua explicitly called son of Kadmiel in NEH 12:24, represented by rows 106872 and 106873, from Jeshua son of Azaniah in NEH 10:9. Keep jeshuа-7 for the latter and leave the owner's rows 106874 and 106875 unchanged.",
+   "confidence": 0.9
+  }
+ ],
+ "note": "The supplied verses do not determine which Kadmiel record is the father in NEH 12:24, so neither father record should be merged or selected on this evidence alone. Rows 106874 and 106875 must remain unchanged.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 2,
+ "at": "2026-10-08T07:35:55+00:00"
+}

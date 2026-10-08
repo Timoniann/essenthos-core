@@ -1,0 +1,439 @@
+{
+ "chapter": "GEN 11",
+ "text": {
+  "GEN 11:1": {
+   "KJV": "And the whole earth was of one language, and of one speech.",
+   "BHSA": "וַֽיְהִ֥י כָל־הָאָ֖רֶץ שָׂפָ֣ה אֶחָ֑ת וּדְבָרִ֖ים אֲחָדִֽים׃ "
+  },
+  "GEN 11:2": {
+   "KJV": "And it came to pass, as they journeyed from the east, that they found a plain in the land of Shinar; and they dwelt there.",
+   "BHSA": "וַֽיְהִ֖י בְּנָסְעָ֣ם מִקֶּ֑דֶם וַֽיִּמְצְא֥וּ בִקְעָ֛ה בְּאֶ֥רֶץ שִׁנְעָ֖ר וַיֵּ֥שְׁבוּ שָֽׁם׃ "
+  },
+  "GEN 11:3": {
+   "KJV": "And they said one to another, Go to, let us make brick, and burn them thoroughly. And they had brick for stone, and slime had they for morter.",
+   "BHSA": "וַיֹּאמְר֞וּ אִ֣ישׁ אֶל־רֵעֵ֗הוּ הָ֚בָה נִלְבְּנָ֣ה לְבֵנִ֔ים וְנִשְׂרְפָ֖ה לִשְׂרֵפָ֑ה וַתְּהִ֨י לָהֶ֤ם הַלְּבֵנָה֙ לְאָ֔בֶן וְהַ֣חֵמָ֔ר הָיָ֥ה לָהֶ֖ם לַחֹֽמֶר׃ "
+  },
+  "GEN 11:4": {
+   "KJV": "And they said, Go to, let us build us a city and a tower, whose top may reach unto heaven; and let us make us a name, lest we be scattered abroad upon the face of the whole earth.",
+   "BHSA": "וַיֹּאמְר֞וּ הָ֣בָה׀ נִבְנֶה־לָּ֣נוּ עִ֗יר וּמִגְדָּל֙ וְרֹאשֹׁ֣ו בַשָּׁמַ֔יִם וְנַֽעֲשֶׂה־לָּ֖נוּ שֵׁ֑ם פֶּן־נָפ֖וּץ עַל־פְּנֵ֥י כָל־הָאָֽרֶץ׃ "
+  },
+  "GEN 11:5": {
+   "KJV": "And the LORD came down to see the city and the tower, which the children of men builded.",
+   "BHSA": "וַיֵּ֣רֶד יְהוָ֔ה לִרְאֹ֥ת אֶת־הָעִ֖יר וְאֶת־הַמִּגְדָּ֑ל אֲשֶׁ֥ר בָּנ֖וּ בְּנֵ֥י הָאָדָֽם׃ "
+  },
+  "GEN 11:6": {
+   "KJV": "And the LORD said, Behold, the people is one, and they have all one language; and this they begin to do: and now nothing will be restrained from them, which they have imagined to do.",
+   "BHSA": "וַיֹּ֣אמֶר יְהוָ֗ה הֵ֣ן עַ֤ם אֶחָד֙ וְשָׂפָ֤ה אַחַת֙ לְכֻלָּ֔ם וְזֶ֖ה הַחִלָּ֣ם לַעֲשֹׂ֑ות וְעַתָּה֙ לֹֽא־יִבָּצֵ֣ר מֵהֶ֔ם כֹּ֛ל אֲשֶׁ֥ר יָזְמ֖וּ לַֽעֲשֹֽׂות׃ "
+  },
+  "GEN 11:7": {
+   "KJV": "Go to, let us go down, and there confound their language, that they may not understand one another's speech.",
+   "BHSA": "הָ֚בָה נֵֽרְדָ֔ה וְנָבְלָ֥ה שָׁ֖ם שְׂפָתָ֑ם אֲשֶׁר֙ לֹ֣א יִשְׁמְע֔וּ אִ֖ישׁ שְׂפַ֥ת רֵעֵֽהוּ׃ "
+  },
+  "GEN 11:8": {
+   "KJV": "So the LORD scattered them abroad from thence upon the face of all the earth: and they left off to build the city.",
+   "BHSA": "וַיָּ֨פֶץ יְהוָ֥ה אֹתָ֛ם מִשָּׁ֖ם עַל־פְּנֵ֣י כָל־הָאָ֑רֶץ וַֽיַּחְדְּל֖וּ לִבְנֹ֥ת הָעִֽיר׃ "
+  },
+  "GEN 11:9": {
+   "KJV": "Therefore is the name of it called Babel; because the LORD did there confound the language of all the earth: and from thence did the LORD scatter them abroad upon the face of all the earth.",
+   "BHSA": "עַל־כֵּ֞ן קָרָ֤א שְׁמָהּ֙ בָּבֶ֔ל כִּי־שָׁ֛ם בָּלַ֥ל יְהוָ֖ה שְׂפַ֣ת כָּל־הָאָ֑רֶץ וּמִשָּׁם֙ הֱפִיצָ֣ם יְהוָ֔ה עַל־פְּנֵ֖י כָּל־הָאָֽרֶץ׃ פ "
+  },
+  "GEN 11:10": {
+   "KJV": "These are the generations of Shem: Shem was an hundred years old, and begat Arphaxad two years after the flood:",
+   "BHSA": "אֵ֚לֶּה תֹּולְדֹ֣ת שֵׁ֔ם שֵׁ֚ם בֶּן־מְאַ֣ת שָׁנָ֔ה וַיֹּ֖ולֶד אֶת־אַרְפַּכְשָׁ֑ד שְׁנָתַ֖יִם אַחַ֥ר הַמַּבּֽוּל׃ "
+  },
+  "GEN 11:11": {
+   "KJV": "And Shem lived after he begat Arphaxad five hundred years, and begat sons and daughters.",
+   "BHSA": "וַֽיְחִי־שֵׁ֗ם אַֽחֲרֵי֙ הֹולִידֹ֣ו אֶת־אַרְפַּכְשָׁ֔ד חֲמֵ֥שׁ מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ ס "
+  },
+  "GEN 11:12": {
+   "KJV": "And Arphaxad lived five and thirty years, and begat Salah:",
+   "BHSA": "וְאַרְפַּכְשַׁ֣ד חַ֔י חָמֵ֥שׁ וּשְׁלֹשִׁ֖ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־שָֽׁלַח׃ "
+  },
+  "GEN 11:13": {
+   "KJV": "And Arphaxad lived after he begat Salah four hundred and three years, and begat sons and daughters.",
+   "BHSA": "וַֽיְחִ֣י אַרְפַּכְשַׁ֗ד אַֽחֲרֵי֙ הֹולִידֹ֣ו אֶת־שֶׁ֔לַח שָׁלֹ֣שׁ שָׁנִ֔ים וְאַרְבַּ֥ע מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ ס "
+  },
+  "GEN 11:14": {
+   "KJV": "And Salah lived thirty years, and begat Eber:",
+   "BHSA": "וְשֶׁ֥לַח חַ֖י שְׁלֹשִׁ֣ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־עֵֽבֶר׃ "
+  },
+  "GEN 11:15": {
+   "KJV": "And Salah lived after he begat Eber four hundred and three years, and begat sons and daughters.",
+   "BHSA": "וַֽיְחִי־שֶׁ֗לַח אַחֲרֵי֙ הֹולִידֹ֣ו אֶת־עֵ֔בֶר שָׁלֹ֣שׁ שָׁנִ֔ים וְאַרְבַּ֥ע מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ ס "
+  },
+  "GEN 11:16": {
+   "KJV": "And Eber lived four and thirty years, and begat Peleg:",
+   "BHSA": "וַֽיְחִי־עֵ֕בֶר אַרְבַּ֥ע וּשְׁלֹשִׁ֖ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־פָּֽלֶג׃ "
+  },
+  "GEN 11:17": {
+   "KJV": "And Eber lived after he begat Peleg four hundred and thirty years, and begat sons and daughters.",
+   "BHSA": "וַֽיְחִי־עֵ֗בֶר אַחֲרֵי֙ הֹולִידֹ֣ו אֶת־פֶּ֔לֶג שְׁלֹשִׁ֣ים שָׁנָ֔ה וְאַרְבַּ֥ע מֵאֹ֖ות שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ ס "
+  },
+  "GEN 11:18": {
+   "KJV": "And Peleg lived thirty years, and begat Reu:",
+   "BHSA": "וַֽיְחִי־פֶ֖לֶג שְׁלֹשִׁ֣ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־רְעֽוּ׃ "
+  },
+  "GEN 11:19": {
+   "KJV": "And Peleg lived after he begat Reu two hundred and nine years, and begat sons and daughters.",
+   "BHSA": "וַֽיְחִי־פֶ֗לֶג אַחֲרֵי֙ הֹולִידֹ֣ו אֶת־רְע֔וּ תֵּ֥שַׁע שָׁנִ֖ים וּמָאתַ֣יִם שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ ס "
+  },
+  "GEN 11:20": {
+   "KJV": "And Reu lived two and thirty years, and begat Serug:",
+   "BHSA": "וַיְחִ֣י רְע֔וּ שְׁתַּ֥יִם וּשְׁלֹשִׁ֖ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־שְׂרֽוּג׃ "
+  },
+  "GEN 11:21": {
+   "KJV": "And Reu lived after he begat Serug two hundred and seven years, and begat sons and daughters.",
+   "BHSA": "וַיְחִ֣י רְע֗וּ אַחֲרֵי֙ הֹולִידֹ֣ו אֶת־שְׂר֔וּג שֶׁ֥בַע שָׁנִ֖ים וּמָאתַ֣יִם שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ ס "
+  },
+  "GEN 11:22": {
+   "KJV": "And Serug lived thirty years, and begat Nahor:",
+   "BHSA": "וַיְחִ֥י שְׂר֖וּג שְׁלֹשִׁ֣ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־נָחֹֽור׃ "
+  },
+  "GEN 11:23": {
+   "KJV": "And Serug lived after he begat Nahor two hundred years, and begat sons and daughters.",
+   "BHSA": "וַיְחִ֣י שְׂר֗וּג אַחֲרֵ֛י הֹולִידֹ֥ו אֶת־נָחֹ֖ור מָאתַ֣יִם שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ ס "
+  },
+  "GEN 11:24": {
+   "KJV": "And Nahor lived nine and twenty years, and begat Terah:",
+   "BHSA": "וַיְחִ֣י נָחֹ֔ור תֵּ֥שַׁע וְעֶשְׂרִ֖ים שָׁנָ֑ה וַיֹּ֖ולֶד אֶת־תָּֽרַח׃ "
+  },
+  "GEN 11:25": {
+   "KJV": "And Nahor lived after he begat Terah an hundred and nineteen years, and begat sons and daughters.",
+   "BHSA": "וַיְחִ֣י נָחֹ֗ור אַחֲרֵי֙ הֹולִידֹ֣ו אֶת־תֶּ֔רַח תְּשַֽׁע־עֶשְׂרֵ֥ה שָׁנָ֖ה וּמְאַ֣ת שָׁנָ֑ה וַיֹּ֥ולֶד בָּנִ֖ים וּבָנֹֽות׃ ס "
+  },
+  "GEN 11:26": {
+   "KJV": "And Terah lived seventy years, and begat Abram, Nahor, and Haran.",
+   "BHSA": "וַֽיְחִי־תֶ֖רַח שִׁבְעִ֣ים שָׁנָ֑ה וַיֹּ֨ולֶד֙ אֶת־אַבְרָ֔ם אֶת־נָחֹ֖ור וְאֶת־הָרָֽן׃ "
+  },
+  "GEN 11:27": {
+   "KJV": "Now these are the generations of Terah: Terah begat Abram, Nahor, and Haran; and Haran begat Lot.",
+   "BHSA": "וְאֵ֨לֶּה֙ תֹּולְדֹ֣ת תֶּ֔רַח תֶּ֚רַח הֹולִ֣יד אֶת־אַבְרָ֔ם אֶת־נָחֹ֖ור וְאֶת־הָרָ֑ן וְהָרָ֖ן הֹולִ֥יד אֶת־לֹֽוט׃ "
+  },
+  "GEN 11:28": {
+   "KJV": "And Haran died before his father Terah in the land of his nativity, in Ur of the Chaldees.",
+   "BHSA": "וַיָּ֣מָת הָרָ֔ן עַל־פְּנֵ֖י תֶּ֣רַח אָבִ֑יו בְּאֶ֥רֶץ מֹולַדְתֹּ֖ו בְּא֥וּר כַּשְׂדִּֽים׃ "
+  },
+  "GEN 11:29": {
+   "KJV": "And Abram and Nahor took them wives: the name of Abram's wife was Sarai; and the name of Nahor's wife, Milcah, the daughter of Haran, the father of Milcah, and the father of Iscah.",
+   "BHSA": "וַיִּקַּ֨ח אַבְרָ֧ם וְנָחֹ֛ור לָהֶ֖ם נָשִׁ֑ים שֵׁ֤ם אֵֽשֶׁת־אַבְרָם֙ שָׂרָ֔י וְשֵׁ֤ם אֵֽשֶׁת־נָחֹור֙ מִלְכָּ֔ה בַּת־הָרָ֥ן אֲבִֽי־מִלְכָּ֖ה וַֽאֲבִ֥י יִסְכָּֽה׃ "
+  },
+  "GEN 11:30": {
+   "KJV": "But Sarai was barren; she had no child.",
+   "BHSA": "וַתְּהִ֥י שָׂרַ֖י עֲקָרָ֑ה אֵ֥ין לָ֖הּ וָלָֽד׃ "
+  },
+  "GEN 11:31": {
+   "KJV": "And Terah took Abram his son, and Lot the son of Haran his son's son, and Sarai his daughter in law, his son Abram's wife; and they went forth with them from Ur of the Chaldees, to go into the land of Canaan; and they came unto Haran, and dwelt there.",
+   "BHSA": "וַיִּקַּ֨ח תֶּ֜רַח אֶת־אַבְרָ֣ם בְּנֹ֗ו וְאֶת־לֹ֤וט בֶּן־הָרָן֙ בֶּן־בְּנֹ֔ו וְאֵת֙ שָׂרַ֣י כַּלָּתֹ֔ו אֵ֖שֶׁת אַבְרָ֣ם בְּנֹ֑ו וַיֵּצְא֨וּ אִתָּ֜ם מֵא֣וּר כַּשְׂדִּ֗ים לָלֶ֨כֶת֙ אַ֣רְצָה כְּנַ֔עַן וַיָּבֹ֥אוּ עַד־חָרָ֖ן וַיֵּ֥שְׁבוּ שָֽׁם׃ "
+  },
+  "GEN 11:32": {
+   "KJV": "And the days of Terah were two hundred and five years: and Terah died in Haran.",
+   "BHSA": "וַיִּהְי֣וּ יְמֵי־תֶ֔רַח חָמֵ֥שׁ שָׁנִ֖ים וּמָאתַ֣יִם שָׁנָ֑ה וַיָּ֥מָת תֶּ֖רַח בְּחָרָֽן׃ ס "
+  }
+ },
+ "records": [
+  {
+   "slug": "abram",
+   "name": "Abram",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "arpachshad",
+   "name": "Arpachshad",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "eber",
+   "name": "Eber",
+   "distinguisher": "descendant of Shem (GEN 10:21), son of Shelah (GEN 10:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "haran",
+   "name": "Haran",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "iscah",
+   "name": "Iscah",
+   "distinguisher": "daughter of Haran (GEN 11:29)",
+   "sex": "female"
+  },
+  {
+   "slug": "lot",
+   "name": "Lot",
+   "distinguisher": "son of Haran (GEN 11:27), nephew of Abram (GEN 12:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "milcah",
+   "name": "Milcah",
+   "distinguisher": "Nahor's wife (and niece), the daughter of Haran (GEN 11:29)",
+   "sex": "female"
+  },
+  {
+   "slug": "nahor",
+   "name": "Nahor",
+   "distinguisher": "son of Serug (GEN 11:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "nahor-2",
+   "name": "Nahor",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "peleg",
+   "name": "Peleg",
+   "distinguisher": "son of Eber, in his days the earth was divided (GEN 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "reu",
+   "name": "Reu",
+   "distinguisher": "son of Peleg (GEN 11:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "sarai",
+   "name": "Sarai",
+   "distinguisher": "Abram's wife (11:29)",
+   "sex": "female"
+  },
+  {
+   "slug": "serug",
+   "name": "Serug",
+   "distinguisher": "son of Reu (GEN 11:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelah",
+   "name": "Shelah",
+   "distinguisher": "son of Arpachshad (GEN 10:24, GEN 11:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "shem",
+   "name": "Shem",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "terah",
+   "name": "Terah",
+   "distinguisher": "son of Nahor(GEN 11:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 97602,
+   "row": "arpachshad son-of shem",
+   "verse": "GEN 11:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 102598,
+   "row": "shem father-of arpachshad",
+   "verse": "GEN 11:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97603,
+   "row": "arpachshad father-of shelah",
+   "verse": "GEN 11:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101930,
+   "row": "peleg son-of eber",
+   "verse": "GEN 11:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101931,
+   "row": "peleg father-of reu",
+   "verse": "GEN 11:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102179,
+   "row": "reu son-of peleg",
+   "verse": "GEN 11:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102180,
+   "row": "reu father-of serug",
+   "verse": "GEN 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102378,
+   "row": "serug son-of reu",
+   "verse": "GEN 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101614,
+   "row": "nahor son-of serug",
+   "verse": "GEN 11:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102379,
+   "row": "serug father-of nahor",
+   "verse": "GEN 11:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101615,
+   "row": "nahor father-of terah",
+   "verse": "GEN 11:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103037,
+   "row": "terah son-of nahor",
+   "verse": "GEN 11:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101617,
+   "row": "nahor-2 son-of terah",
+   "verse": "GEN 11:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103034,
+   "row": "terah father-of abram",
+   "verse": "GEN 11:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103035,
+   "row": "terah father-of nahor-2",
+   "verse": "GEN 11:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103036,
+   "row": "terah father-of haran",
+   "verse": "GEN 11:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106466,
+   "row": "abram son-of terah",
+   "verse": "GEN 11:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99328,
+   "row": "haran son-of terah",
+   "verse": "GEN 11:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99329,
+   "row": "haran father-of lot",
+   "verse": "GEN 11:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100928,
+   "row": "lot son-of haran",
+   "verse": "GEN 11:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106469,
+   "row": "abram brother-of haran",
+   "verse": "GEN 11:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106470,
+   "row": "abram brother-of nahor-2",
+   "verse": "GEN 11:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99330,
+   "row": "haran father-of milcah",
+   "verse": "GEN 11:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99759,
+   "row": "iscah daughter-of haran",
+   "verse": "GEN 11:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99760,
+   "row": "iscah sister-of milcah",
+   "verse": "GEN 11:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101414,
+   "row": "milcah wife-of nahor-2",
+   "verse": "GEN 11:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101415,
+   "row": "milcah daughter-of haran",
+   "verse": "GEN 11:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101416,
+   "row": "milcah sister-of iscah",
+   "verse": "GEN 11:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101619,
+   "row": "nahor-2 husband-of milcah",
+   "verse": "GEN 11:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106468,
+   "row": "abram husband-of sarai",
+   "verse": "GEN 11:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106706,
+   "row": "sarai wife-of abram",
+   "verse": "GEN 11:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "arpachshad grandfather-of eber (GEN 10:24)",
+  "eber son-of shelah (GEN 10:24)",
+  "eber father-of peleg (GEN 10:25)",
+  "lot nephew-of abram (GEN 12:5)",
+  "nahor ancestor-of abram (LUK 3:34)",
+  "nahor-2 brother-of abram (GEN 22:20)",
+  "shelah son-of arpachshad (GEN 10:24)",
+  "shelah father-of eber (GEN 10:24)",
+  "shem ancestor-of eber (GEN 10:21)",
+  "abram half-brother-of sarai (GEN 20:12)",
+  "abram servant-of yhvh (GEN 26:24)",
+  "sarai daughter-of terah (GEN 20:12)"
+ ]
+}

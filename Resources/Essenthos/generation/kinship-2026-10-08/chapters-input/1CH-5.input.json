@@ -1,0 +1,1022 @@
+{
+ "chapter": "1CH 5",
+ "text": {
+  "1CH 5:1": {
+   "KJV": "Now the sons of Reuben the firstborn of Israel, (for he was the firstborn; but forasmuch as he defiled his father's bed, his birthright was given unto the sons of Joseph the son of Israel: and the genealogy is not to be reckoned after the birthright.",
+   "BHSA": "וּבְנֵ֨י רְאוּבֵ֥ן בְּכֹֽור־יִשְׂרָאֵל֮ כִּ֣י ה֣וּא הַבְּכֹור֒ וּֽבְחַלְּלֹו֙ יְצוּעֵ֣י אָבִ֔יו נִתְּנָה֙ בְּכֹ֣רָתֹ֔ו לִבְנֵ֥י יֹוסֵ֖ף בֶּן־יִשְׂרָאֵ֑ל וְלֹ֥א לְהִתְיַחֵ֖שׂ לַבְּכֹרָֽה׃ "
+  },
+  "1CH 5:2": {
+   "KJV": "For Judah prevailed above his brethren, and of him came the chief ruler; but the birthright was Joseph's:)",
+   "BHSA": "כִּ֤י יְהוּדָה֙ גָּבַ֣ר בְּאֶחָ֔יו וּלְנָגִ֖יד מִמֶּ֑נּוּ וְהַבְּכֹרָ֖ה לְיֹוסֵֽף׃ ס "
+  },
+  "1CH 5:3": {
+   "KJV": "The sons, I say, of Reuben the firstborn of Israel were, Hanoch, and Pallu, Hezron, and Carmi.",
+   "BHSA": "בְּנֵ֥י רְאוּבֵ֖ן בְּכֹ֣ור יִשְׂרָאֵ֑ל חֲנֹ֥וךְ וּפַלּ֖וּא חֶצְרֹ֥ון וְכַרְמִֽי׃ "
+  },
+  "1CH 5:4": {
+   "KJV": "The sons of Joel; Shemaiah his son, Gog his son, Shimei his son,",
+   "BHSA": "בְּנֵ֖י יֹואֵ֑ל שְׁמַֽעְיָ֥ה בְנֹ֛ו גֹּ֥וג בְּנֹ֖ו שִׁמְעִ֥י בְנֹֽו׃ "
+  },
+  "1CH 5:5": {
+   "KJV": "Micah his son, Reaia his son, Baal his son,",
+   "BHSA": "מִיכָ֥ה בְנֹ֛ו רְאָיָ֥ה בְנֹ֖ו בַּ֥עַל בְּנֹֽו׃ "
+  },
+  "1CH 5:6": {
+   "KJV": "Beerah his son, whom Tilgathpilneser king of Assyria carried away captive: he was prince of the Reubenites.",
+   "BHSA": "בְּאֵרָ֣ה בְנֹ֔ו אֲשֶׁ֣ר הֶגְלָ֔ה תִּלְּגַ֥ת פִּלְנְאֶ֖סֶר מֶ֣לֶךְ אַשֻּׁ֑ר ה֥וּא נָשִׂ֖יא לָרֽאוּבֵנִֽי׃ "
+  },
+  "1CH 5:7": {
+   "KJV": "And his brethren by their families, when the genealogy of their generations was reckoned, were the chief, Jeiel, and Zechariah,",
+   "BHSA": "וְאֶחָיו֙ לְמִשְׁפְּחֹתָ֔יו בְּהִתְיַחֵ֖שׂ לְתֹלְדֹותָ֑ם הָרֹ֥אשׁ יְעִיאֵ֖ל וּזְכַרְיָֽהוּ׃ "
+  },
+  "1CH 5:8": {
+   "KJV": "And Bela the son of Azaz, the son of Shema, the son of Joel, who dwelt in Aroer, even unto Nebo and Baalmeon:",
+   "BHSA": "וּבֶ֨לַע֙ בֶּן־עָזָ֔ז בֶּן־שֶׁ֖מַע בֶּן־יֹואֵ֑ל ה֚וּא יֹושֵׁ֣ב בַּעֲרֹעֵ֔ר וְעַד־נְבֹ֖ו וּבַ֥עַל מְעֹֽון׃ "
+  },
+  "1CH 5:9": {
+   "KJV": "And eastward he inhabited unto the entering in of the wilderness from the river Euphrates: because their cattle were multiplied in the land of Gilead.",
+   "BHSA": "וְלַמִּזְרָ֗ח יָשַׁב֙ עַד־לְבֹ֣וא מִדְבָּ֔רָה לְמִן־הַנָּהָ֖ר פְּרָ֑ת כִּ֧י מִקְנֵיהֶ֛ם רָב֖וּ בְּאֶ֥רֶץ גִּלְעָֽד׃ "
+  },
+  "1CH 5:10": {
+   "KJV": "And in the days of Saul they made war with the Hagarites, who fell by their hand: and they dwelt in their tents throughout all the east land of Gilead.",
+   "BHSA": "וּבִימֵ֣י שָׁא֗וּל עָשׂ֤וּ מִלְחָמָה֙ עִם־הַֽהַגְרִאִ֔ים וַֽיִּפְּל֖וּ בְּיָדָ֑ם וַיֵּשְׁבוּ֙ בְּאָ֣הֳלֵיהֶ֔ם עַֽל־כָּל־פְּנֵ֖י מִזְרָ֥ח לַגִּלְעָֽד׃ פ "
+  },
+  "1CH 5:11": {
+   "KJV": "And the children of Gad dwelt over against them, in the land of Bashan unto Salcah:",
+   "BHSA": "וּבְנֵי־גָ֣ד לְנֶגְדָּ֗ם יָֽשְׁב֛וּ בְּאֶ֥רֶץ הַבָּשָׁ֖ן עַד־סַלְכָֽה׃ "
+  },
+  "1CH 5:12": {
+   "KJV": "Joel the chief, and Shapham the next, and Jaanai, and Shaphat in Bashan.",
+   "BHSA": "יֹואֵ֣ל הָרֹ֔אשׁ וְשָׁפָ֖ם הַמִּשְׁנֶ֑ה וְיַעְנַ֥י וְשָׁפָ֖ט בַּבָּשָֽׁן׃ "
+  },
+  "1CH 5:13": {
+   "KJV": "And their brethren of the house of their fathers were, Michael, and Meshullam, and Sheba, and Jorai, and Jachan, and Zia, and Heber, seven.",
+   "BHSA": "וַאֲחֵיהֶ֞ם לְבֵ֣ית אֲבֹותֵיהֶ֗ם מִֽיכָאֵ֡ל וּמְשֻׁלָּ֡ם וְ֠שֶׁבַע וְיֹורַ֧י וְיַעְכָּ֛ן וְזִ֥יעַ וָעֵ֖בֶר שִׁבְעָֽה׃ ס "
+  },
+  "1CH 5:14": {
+   "KJV": "These are the children of Abihail the son of Huri, the son of Jaroah, the son of Gilead, the son of Michael, the son of Jeshishai, the son of Jahdo, the son of Buz;",
+   "BHSA": "אֵ֣לֶּה׀ בְּנֵ֣י אֲבִיחַ֗יִל בֶּן־חוּרִ֡י בֶּן־יָ֠רֹוחַ בֶּן־גִּלְעָ֧ד בֶּן־מִיכָאֵ֛ל בֶּן־יְשִׁישַׁ֥י בֶּן־יַחְדֹּ֖ו בֶּן־בּֽוּז׃ "
+  },
+  "1CH 5:15": {
+   "KJV": "Ahi the son of Abdiel, the son of Guni, chief of the house of their fathers.",
+   "BHSA": "אֲחִי֙ בֶּן־עַבְדִּיאֵ֣ל בֶּן־גּוּנִ֔י רֹ֖אשׁ לְבֵ֥ית אֲבֹותָֽם׃ "
+  },
+  "1CH 5:16": {
+   "KJV": "And they dwelt in Gilead in Bashan, and in her towns, and in all the suburbs of Sharon, upon their borders.",
+   "BHSA": "וַיֵּֽשְׁב֛וּ בַּגִּלְעָ֥ד בַּבָּשָׁ֖ן וּבִבְנֹתֶ֑יהָ וּבְכָֽל־מִגְרְשֵׁ֥י שָׁרֹ֖ון עַל־תֹוצְאֹותָֽם׃ "
+  },
+  "1CH 5:17": {
+   "KJV": "All these were reckoned by genealogies in the days of Jotham king of Judah, and in the days of Jeroboam king of Israel.",
+   "BHSA": "כֻּלָּם֙ הִתְיַחְשׂ֔וּ בִּימֵ֖י יֹותָ֣ם מֶֽלֶךְ־יְהוּדָ֑ה וּבִימֵ֖י יָרָבְעָ֥ם מֶֽלֶךְ־יִשְׂרָאֵֽל׃ פ "
+  },
+  "1CH 5:18": {
+   "KJV": "The sons of Reuben, and the Gadites, and half the tribe of Manasseh, of valiant men, men able to bear buckler and sword, and to shoot with bow, and skilful in war, were four and forty thousand seven hundred and threescore, that went out to the war.",
+   "BHSA": "בְּנֵֽי־רְאוּבֵ֨ן וְגָדִ֜י וַחֲצִ֥י שֵֽׁבֶט־מְנַשֶּׁה֮ מִן־בְּנֵי־חַיִל֒ אֲ֠נָשִׁים נֹשְׂאֵ֨י מָגֵ֤ן וְחֶ֨רֶב֙ וְדֹ֣רְכֵי קֶ֔שֶׁת וּלְמוּדֵ֖י מִלְחָמָ֑ה אַרְבָּעִ֨ים וְאַרְבָּעָ֥ה אֶ֛לֶף וּשְׁבַע־מֵאֹ֥ות וְשִׁשִּׁ֖ים יֹצְאֵ֥י צָבָֽא׃ "
+  },
+  "1CH 5:19": {
+   "KJV": "And they made war with the Hagarites, with Jetur, and Nephish, and Nodab.",
+   "BHSA": "וַיַּעֲשׂ֥וּ מִלְחָמָ֖ה עִם־הַֽהַגְרִיאִ֑ים וִיט֥וּר וְנָפִ֖ישׁ וְנֹודָֽב׃ "
+  },
+  "1CH 5:20": {
+   "KJV": "And they were helped against them, and the Hagarites were delivered into their hand, and all that were with them: for they cried to God in the battle, and he was intreated of them; because they put their trust in him.",
+   "BHSA": "וַיֵּעָזְר֣וּ עֲלֵיהֶ֔ם וַיִּנָּתְנ֤וּ בְיָדָם֙ הַֽהַגְרִיאִ֔ים וְכֹ֖ל שֶׁ֣עִמָּהֶ֑ם כִּ֠י לֵאלֹהִ֤ים זָעֲקוּ֙ בַּמִּלְחָמָ֔ה וְנַעְתֹּ֥ור לָהֶ֖ם כִּי־בָ֥טְחוּ בֹֽו׃ "
+  },
+  "1CH 5:21": {
+   "KJV": "And they took away their cattle; of their camels fifty thousand, and of sheep two hundred and fifty thousand, and of asses two thousand, and of men an hundred thousand.",
+   "BHSA": "וַיִּשְׁבּ֣וּ מִקְנֵיהֶ֗ם גְּֽמַלֵּיהֶ֞ם חֲמִשִּׁ֥ים אֶ֨לֶף֙ וְצֹ֗אן מָאתַ֤יִם וַחֲמִשִּׁים֙ אֶ֔לֶף וַחֲמֹורִ֖ים אַלְפָּ֑יִם וְנֶ֥פֶשׁ אָדָ֖ם מֵ֥אָה אָֽלֶף׃ "
+  },
+  "1CH 5:22": {
+   "KJV": "For there fell down many slain, because the war was of God. And they dwelt in their steads until the captivity.",
+   "BHSA": "כִּֽי־חֲלָלִ֤ים רַבִּים֙ נָפָ֔לוּ כִּ֥י מֵהָאֱלֹהִ֖ים הַמִּלְחָמָ֑ה וַיֵּשְׁב֥וּ תַחְתֵּיהֶ֖ם עַד־הַגֹּלָֽה׃ פ "
+  },
+  "1CH 5:23": {
+   "KJV": "And the children of the half tribe of Manasseh dwelt in the land: they increased from Bashan unto Baalhermon and Senir, and unto mount Hermon.",
+   "BHSA": "וּבְנֵ֗י חֲצִי֙ שֵׁ֣בֶט מְנַשֶּׁ֔ה יָשְׁב֖וּ בָּאָ֑רֶץ מִבָּשָׁ֞ן עַד־בַּ֧עַל חֶרְמֹ֛ון וּשְׂנִ֥יר וְהַר־חֶרְמֹ֖ון הֵ֥מָּה רָבֽוּ׃ "
+  },
+  "1CH 5:24": {
+   "KJV": "And these were the heads of the house of their fathers, even Epher, and Ishi, and Eliel, and Azriel, and Jeremiah, and Hodaviah, and Jahdiel, mighty men of valour, famous men, and heads of the house of their fathers.",
+   "BHSA": "וְאֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹותָ֑ם וְעֵ֡פֶר וְיִשְׁעִ֡י וֶאֱלִיאֵ֡ל וְ֠עַזְרִיאֵל וְיִרְמְיָ֨ה וְהֹודַוְיָ֜ה וְיַחְדִּיאֵ֗ל אֲנָשִׁים֙ גִּבֹּ֣ורֵי חַ֔יִל אַנְשֵׁ֣י שֵׁמֹ֔ות רָאשִׁ֖ים לְבֵ֥ית אֲבֹותָֽם׃ "
+  },
+  "1CH 5:25": {
+   "KJV": "And they transgressed against the God of their fathers, and went a whoring after the gods of the people of the land, whom God destroyed before them.",
+   "BHSA": "וַיִּֽמְעֲל֔וּ בֵּאלֹהֵ֖י אֲבֹותֵיהֶ֑ם וַיִּזְנ֗וּ אַחֲרֵי֙ אֱלֹהֵ֣י עַמֵּי־הָאָ֔רֶץ אֲשֶׁר־הִשְׁמִ֥יד אֱלֹהִ֖ים מִפְּנֵיהֶֽם׃ "
+  },
+  "1CH 5:26": {
+   "KJV": "And the God of Israel stirred up the spirit of Pul king of Assyria, and the spirit of Tilgathpilneser king of Assyria, and he carried them away, even the Reubenites, and the Gadites, and the half tribe of Manasseh, and brought them unto Halah, and Habor, and Hara, and to the river Gozan, unto this day.",
+   "BHSA": "וַיָּעַר֩ אֱלֹהֵ֨י יִשְׂרָאֵ֜ל אֶת־ר֣וּחַ׀ פּ֣וּל מֶֽלֶךְ־אַשּׁ֗וּר וְאֶת־ר֨וּחַ֙ תִּלְּגַ֤ת פִּלְנֶ֨סֶר֙ מֶ֣לֶךְ אַשּׁ֔וּר וַיַּגְלֵם֙ לָראוּבֵנִ֣י וְלַגָּדִ֔י וְלַחֲצִ֖י שֵׁ֣בֶט מְנַשֶּׁ֑ה וַ֠יְבִיאֵם לַחְלַ֨ח וְחָבֹ֤ור וְהָרָא֙ וּנְהַ֣ר גֹּוזָ֔ן עַ֖ד הַיֹּ֥ום הַזֶּֽה׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abdiel",
+   "name": "Abdiel",
+   "distinguisher": "son of Guni (1CH 5:15), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "abihail-3",
+   "name": "Abihail",
+   "distinguisher": "son of Huri (1CH 5:14, Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahi",
+   "name": "Ahi",
+   "distinguisher": "son of Abdiel (1CH 5:15), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "azaz",
+   "name": "Azaz",
+   "distinguisher": "son of Shema (1CH 5:8), Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "azriel",
+   "name": "Azriel",
+   "distinguisher": "head of households (1CH 5:24) in Manasseh (1CH 5:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "baal",
+   "name": "Baal",
+   "distinguisher": "son of Reaiah (1CH 5:5), Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "beerah",
+   "name": "Beerah",
+   "distinguisher": "son of Baal.  Tilgath-pilneser carried him away into exile, leader of Reubenites (1CH 5:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "bela-3",
+   "name": "Bela",
+   "distinguisher": "son of Azaz (1CH 5:8), Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "buz-2",
+   "name": "Buz",
+   "distinguisher": "father of Jahdo (1CH 5:14), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "carmi",
+   "name": "Carmi",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "eber-2",
+   "name": "Eber",
+   "distinguisher": "??? (1CH 5:13), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliel",
+   "name": "Eliel",
+   "distinguisher": "head of households (1CH 5:24) in Manasseh (1CH 5:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "epher-3",
+   "name": "Epher",
+   "distinguisher": "head of households (1CH 5:24) in Manasseh (1CH 5:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "gad",
+   "name": "Gad",
+   "distinguisher": "seventh-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "gilead-3",
+   "name": "Gilead",
+   "distinguisher": "son of Michael (1CH 5:14), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "gog",
+   "name": "Gog",
+   "distinguisher": "son of Shemaiah (1CH 5:4), Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "guni-2",
+   "name": "Guni",
+   "distinguisher": "father of Abdiel (1CH 5:15), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanoch-2",
+   "name": "Hanoch",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "hezron",
+   "name": "Hezron",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "hodaviah-2",
+   "name": "Hodaviah",
+   "distinguisher": "head of households (1CH 5:24) in Manasseh (1CH 5:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "huri",
+   "name": "Huri",
+   "distinguisher": "son of Jaroah (1CH 5:14), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishi-3",
+   "name": "Ishi",
+   "distinguisher": "head of households (1CH 5:24) in Manasseh (1CH 5:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacan",
+   "name": "Jacan",
+   "distinguisher": "??? (1CH 5:13), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahdiel",
+   "name": "Jahdiel",
+   "distinguisher": "head of households (1CH 5:24) in Manasseh (1CH 5:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahdo",
+   "name": "Jahdo",
+   "distinguisher": "son of Buz (1CH 5:14), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "janai",
+   "name": "Janai",
+   "distinguisher": "chief (1CH 5:12) in Bashan, Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "jaroah",
+   "name": "Jaroah",
+   "distinguisher": "son of Gilead (1CH 5:14), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeiel",
+   "name": "Jeiel",
+   "distinguisher": "1CH 5:7, Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremiah-2",
+   "name": "Jeremiah",
+   "distinguisher": "head of households (1CH 5:24) in Manasseh (1CH 5:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeroboam-2",
+   "name": "Jeroboam",
+   "distinguisher": "King of Israel (2KI 13:13), son of Joash [Jehoash] (2KI 14:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshishai",
+   "name": "Jeshishai",
+   "distinguisher": "son of Jahdo (1CH 5:14), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "jetur",
+   "name": "Jetur",
+   "distinguisher": "tenth-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "joel-3",
+   "name": "Joel",
+   "distinguisher": "father of Shemaiah, lived in Aroer (1CH 5:8), Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "joel-4",
+   "name": "Joel",
+   "distinguisher": "chief (1CH 5:12), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "jorai",
+   "name": "Jorai",
+   "distinguisher": "??? (1CH 5:13), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "joseph",
+   "name": "Joseph",
+   "distinguisher": "eleventh-born son of Jacob and Rachel (GEN 30:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "jotham-2",
+   "name": "Jotham",
+   "distinguisher": "King of Judah, son of King Uzziah [Azariah] (2KI 15:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh",
+   "name": "Manasseh",
+   "distinguisher": "firstborn son of Joseph (GEN 41:51)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshullam-3",
+   "name": "Meshullam",
+   "distinguisher": "??? (1CH 5:13), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "micah-2",
+   "name": "Micah",
+   "distinguisher": "son of Shimei (1CH 5:5), Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "michael-2",
+   "name": "Michael",
+   "distinguisher": "(1CH 5:13), son of Jeshishai (1CH 5:14), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "michael-the-gadite-forefather",
+   "name": "Michael",
+   "distinguisher": "an earlier Gadite, son of Jeshishai and forefather of Abihail (1CH 5:14)",
+   "sex": null
+  },
+  {
+   "slug": "naphish",
+   "name": "Naphish",
+   "distinguisher": "eleventh-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "pallu",
+   "name": "Pallu",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "pul",
+   "name": "Pul",
+   "distinguisher": "King of Assyria (2KI 15:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "reaiah-2",
+   "name": "Reaiah",
+   "distinguisher": "son of Micah (1CH 5:5), Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "reuben",
+   "name": "Reuben",
+   "distinguisher": "firstborn son of Jacob (GEN 29:32), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "saul",
+   "name": "Saul",
+   "distinguisher": "son of Kish (1SA 9:2), King of Israel (1SA 11:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "shapham",
+   "name": "Shapham",
+   "distinguisher": "second chief (1CH 5:12), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "shaphat-4",
+   "name": "Shaphat",
+   "distinguisher": "second chief (1CH 5:12) in Bashan, Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "sheba-5",
+   "name": "Sheba",
+   "distinguisher": "??? (1CH 5:13), Gadite (1CH 5:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "shema-2",
+   "name": "Shema",
+   "distinguisher": "son of Joel (1CH 5:8), Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-4",
+   "name": "Shemaiah",
+   "distinguisher": "son of Joel (1CH 5:4), Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei-6",
+   "name": "Shimei",
+   "distinguisher": "son of Gog (1CH 5:4), Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "tiglathpileser",
+   "name": "Tiglath-pileser",
+   "distinguisher": "King of Assyria (2KI 15:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "zechariah-3",
+   "name": "Zechariah",
+   "distinguisher": "1CH 5:7, Reubenite (1CH 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "zia",
+   "name": "Zia",
+   "distinguisher": "??? (1CH 5:13), Gadite (1CH 5:11)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 99147,
+   "row": "gog son-of shemaiah-4",
+   "verse": "1CH 5:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99148,
+   "row": "gog father-of shimei-6",
+   "verse": "1CH 5:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100439,
+   "row": "joel-3 father-of shemaiah-4",
+   "verse": "1CH 5:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102641,
+   "row": "shemaiah-4 son-of joel-3",
+   "verse": "1CH 5:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102642,
+   "row": "shemaiah-4 father-of gog",
+   "verse": "1CH 5:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102764,
+   "row": "shimei-6 son-of gog",
+   "verse": "1CH 5:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97819,
+   "row": "baal son-of reaiah-2",
+   "verse": "1CH 5:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101338,
+   "row": "micah-2 father-of reaiah-2",
+   "verse": "1CH 5:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101339,
+   "row": "micah-2 grandfather-of baal",
+   "verse": "1CH 5:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101340,
+   "row": "micah-2 son-of shimei-6",
+   "verse": "1CH 5:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102120,
+   "row": "reaiah-2 son-of micah-2",
+   "verse": "1CH 5:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102121,
+   "row": "reaiah-2 father-of baal",
+   "verse": "1CH 5:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97953,
+   "row": "beerah son-of baal",
+   "verse": "1CH 5:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105527,
+   "row": "jeiel brother-of zechariah-3",
+   "verse": "1CH 5:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105539,
+   "row": "zechariah-3 brother-of jeiel",
+   "verse": "1CH 5:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97773,
+   "row": "azaz father-of bela-3",
+   "verse": "1CH 5:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97774,
+   "row": "azaz son-of shema-2",
+   "verse": "1CH 5:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97977,
+   "row": "bela-3 son-of azaz",
+   "verse": "1CH 5:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97979,
+   "row": "bela-3 descendant-of shema-2",
+   "verse": "1CH 5:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97980,
+   "row": "bela-3 descendant-of joel-3",
+   "verse": "1CH 5:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100440,
+   "row": "joel-3 father-of shema-2",
+   "verse": "1CH 5:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102604,
+   "row": "shema-2 son-of joel-3",
+   "verse": "1CH 5:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102605,
+   "row": "shema-2 father-of azaz",
+   "verse": "1CH 5:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102456,
+   "row": "shapham descendant-of gad",
+   "verse": "1CH 5:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106243,
+   "row": "shaphat-4 descendant-of gad",
+   "verse": "1CH 5:12",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106860,
+   "row": "janai descendant-of gad",
+   "verse": "1CH 5:12",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106890,
+   "row": "joel-4 descendant-of gad",
+   "verse": "1CH 5:12",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 101359,
+   "row": "michael-2 brother-of meshullam-3",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105143,
+   "row": "eber-2 brother-of michael-2",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105144,
+   "row": "eber-2 brother-of meshullam-3",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105145,
+   "row": "eber-2 brother-of sheba-5",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105146,
+   "row": "eber-2 descendant-of gad",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 105789,
+   "row": "jacan brother-of michael-2",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105790,
+   "row": "jacan brother-of meshullam-3",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105791,
+   "row": "jacan brother-of sheba-5",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105792,
+   "row": "jacan brother-of jorai",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105793,
+   "row": "jacan brother-of zia",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105794,
+   "row": "jacan brother-of eber-2",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105795,
+   "row": "jacan descendant-of gad",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106051,
+   "row": "meshullam-3 brother-of michael-2",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106052,
+   "row": "meshullam-3 descendant-of gad",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106521,
+   "row": "jorai brother-of michael-2",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106522,
+   "row": "jorai brother-of meshullam-3",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106523,
+   "row": "jorai brother-of sheba-5",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106524,
+   "row": "jorai brother-of jacan",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106525,
+   "row": "jorai brother-of zia",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106526,
+   "row": "jorai brother-of eber-2",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106527,
+   "row": "jorai descendant-of gad",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 107060,
+   "row": "sheba-5 brother-of michael-2",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107061,
+   "row": "sheba-5 brother-of meshullam-3",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107062,
+   "row": "sheba-5 brother-of jorai",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107063,
+   "row": "sheba-5 brother-of jacan",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107064,
+   "row": "sheba-5 brother-of zia",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107065,
+   "row": "sheba-5 descendant-of gad",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 107170,
+   "row": "zia brother-of michael-2",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107171,
+   "row": "zia descendant-of gad",
+   "verse": "1CH 5:13",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 97058,
+   "row": "abihail-3 son-of huri",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97059,
+   "row": "abihail-3 descendant-of buz-2",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99128,
+   "row": "gilead-3 son-of michael-the-gadite-forefather",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99129,
+   "row": "gilead-3 father-of jaroah",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99660,
+   "row": "huri father-of abihail-3",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99661,
+   "row": "huri son-of jaroah",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99962,
+   "row": "jahdo son-of buz-2",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99963,
+   "row": "jahdo father-of jeshishai",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100039,
+   "row": "jaroah son-of gilead-3",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100040,
+   "row": "jaroah father-of huri",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100307,
+   "row": "jeshishai son-of jahdo",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100308,
+   "row": "jeshishai father-of michael-the-gadite-forefather",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100309,
+   "row": "jeshishai descendant-of buz-2",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101357,
+   "row": "michael-2 son-of jeshishai",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101358,
+   "row": "michael-2 father-of gilead-3",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101377,
+   "row": "michael-the-gadite-forefather son-of jeshishai",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101378,
+   "row": "michael-the-gadite-forefather father-of gilead-3",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106480,
+   "row": "buz-2 father-of jahdo",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 106481,
+   "row": "buz-2 descendant-of gad",
+   "verse": "1CH 5:14",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 97001,
+   "row": "abdiel son-of guni-2",
+   "verse": "1CH 5:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97002,
+   "row": "abdiel father-of ahi",
+   "verse": "1CH 5:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97251,
+   "row": "ahi son-of abdiel",
+   "verse": "1CH 5:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97252,
+   "row": "ahi descendant-of guni-2",
+   "verse": "1CH 5:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105695,
+   "row": "guni-2 father-of abdiel",
+   "verse": "1CH 5:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105696,
+   "row": "guni-2 grandfather-of ahi",
+   "verse": "1CH 5:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105697,
+   "row": "guni-2 descendant-of gad",
+   "verse": "1CH 5:15",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 104013,
+   "row": "eliel descendant-of manasseh",
+   "verse": "1CH 5:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 104675,
+   "row": "azriel descendant-of manasseh",
+   "verse": "1CH 5:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 105761,
+   "row": "ishi-3 descendant-of manasseh",
+   "verse": "1CH 5:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 105858,
+   "row": "jeremiah-2 descendant-of manasseh",
+   "verse": "1CH 5:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106645,
+   "row": "hodaviah-2 descendant-of manasseh",
+   "verse": "1CH 5:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106807,
+   "row": "epher-3 descendant-of manasseh",
+   "verse": "1CH 5:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106847,
+   "row": "jahdiel descendant-of manasseh",
+   "verse": "1CH 5:24",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "carmi son-of reuben (GEN 46:9)",
+  "hanoch-2 son-of reuben (GEN 46:9)",
+  "hanoch-2 brother-of pallu (GEN 46:9)",
+  "hezron son-of reuben (GEN 46:9)",
+  "jetur brother-of naphish (1CH 1:31)",
+  "jotham-2 king-of judah (2CH 27:1)",
+  "pallu son-of reuben (GEN 46:9)",
+  "reuben son-of jacob (GEN 35:23)",
+  "judah son-of jacob (GEN 35:23)",
+  "judah brother-of reuben (GEN 29:35)",
+  "gad son-of jacob (GEN 35:26)",
+  "gad half-brother-of reuben (GEN 30:11)",
+  "gad half-brother-of judah (GEN 30:11)",
+  "joseph son-of jacob (GEN 37:3)",
+  "joseph father-of manasseh (NUM 36:12)",
+  "joseph half-brother-of reuben (GEN 30:24)",
+  "joseph half-brother-of judah (GEN 30:24)",
+  "joseph half-brother-of gad (GEN 30:24)",
+  "manasseh son-of joseph (GEN 41:51)"
+ ]
+}

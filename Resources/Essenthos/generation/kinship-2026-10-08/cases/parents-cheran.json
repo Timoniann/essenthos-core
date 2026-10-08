@@ -1,0 +1,25 @@
+{
+ "case": "parents-cheran",
+ "question": "cheran is recorded with more than one father: dishon, dishon-2.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "retarget-row",
+   "rows": [
+    97485
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "dishon-2",
+   "verse": "GEN 36:25",
+   "why": "Genesis names Dishon as Anah's son, matching dishon-2. The corresponding clause in 1 Chronicles 1:41 should point to that record rather than the record distinguished as Seir's son.",
+   "confidence": 0.96
+  }
+ ],
+ "note": "The supplied verses do not explicitly distinguish which Dishon fathered Cheran: Genesis 36:26 even vocalizes the name as Dishan, while 1 Chronicles 1:41 reads Dishon. Their genealogical ordering suggests Seir's son, but does not establish that identification securely enough to change the disputed child relationships or merge the records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:34:04+00:00"
+}

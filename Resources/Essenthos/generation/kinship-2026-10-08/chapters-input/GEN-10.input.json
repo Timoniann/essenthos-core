@@ -1,0 +1,1330 @@
+{
+ "chapter": "GEN 10",
+ "text": {
+  "GEN 10:1": {
+   "KJV": "Now these are the generations of the sons of Noah, Shem, Ham, and Japheth: and unto them were sons born after the flood.",
+   "BHSA": "וְאֵ֨לֶּה֙ תֹּולְדֹ֣ת בְּנֵי־נֹ֔חַ שֵׁ֖ם חָ֣ם וָיָ֑פֶת וַיִּוָּלְד֥וּ לָהֶ֛ם בָּנִ֖ים אַחַ֥ר הַמַּבּֽוּל׃ "
+  },
+  "GEN 10:2": {
+   "KJV": "The sons of Japheth; Gomer, and Magog, and Madai, and Javan, and Tubal, and Meshech, and Tiras.",
+   "BHSA": "בְּנֵ֣י יֶ֔פֶת גֹּ֣מֶר וּמָגֹ֔וג וּמָדַ֖י וְיָוָ֣ן וְתֻבָ֑ל וּמֶ֖שֶׁךְ וְתִירָֽס׃ "
+  },
+  "GEN 10:3": {
+   "KJV": "And the sons of Gomer; Ashkenaz, and Riphath, and Togarmah.",
+   "BHSA": "וּבְנֵ֖י גֹּ֑מֶר אַשְׁכֲּנַ֥ז וְרִיפַ֖ת וְתֹגַרְמָֽה׃ "
+  },
+  "GEN 10:4": {
+   "KJV": "And the sons of Javan; Elishah, and Tarshish, Kittim, and Dodanim.",
+   "BHSA": "וּבְנֵ֥י יָוָ֖ן אֱלִישָׁ֣ה וְתַרְשִׁ֑ישׁ כִּתִּ֖ים וְדֹדָנִֽים׃ "
+  },
+  "GEN 10:5": {
+   "KJV": "By these were the isles of the Gentiles divided in their lands; every one after his tongue, after their families, in their nations.",
+   "BHSA": "מֵ֠אֵלֶּה נִפְרְד֞וּ אִיֵּ֤י הַגֹּויִם֙ בְּאַרְצֹתָ֔ם אִ֖ישׁ לִלְשֹׁנֹ֑ו לְמִשְׁפְּחֹתָ֖ם בְּגֹויֵהֶֽם׃ "
+  },
+  "GEN 10:6": {
+   "KJV": "And the sons of Ham; Cush, and Mizraim, and Phut, and Canaan.",
+   "BHSA": "וּבְנֵ֖י חָ֑ם כּ֥וּשׁ וּמִצְרַ֖יִם וּפ֥וּט וּכְנָֽעַן׃ "
+  },
+  "GEN 10:7": {
+   "KJV": "And the sons of Cush; Seba, and Havilah, and Sabtah, and Raamah, and Sabtechah: and the sons of Raamah; Sheba, and Dedan.",
+   "BHSA": "וּבְנֵ֣י כ֔וּשׁ סְבָא֙ וַֽחֲוִילָ֔ה וְסַבְתָּ֥ה וְרַעְמָ֖ה וְסַבְתְּכָ֑א וּבְנֵ֥י רַעְמָ֖ה שְׁבָ֥א וּדְדָֽן׃ "
+  },
+  "GEN 10:8": {
+   "KJV": "And Cush begat Nimrod: he began to be a mighty one in the earth.",
+   "BHSA": "וְכ֖וּשׁ יָלַ֣ד אֶת־נִמְרֹ֑ד ה֣וּא הֵחֵ֔ל לִֽהְיֹ֥ות גִּבֹּ֖ר בָּאָֽרֶץ׃ "
+  },
+  "GEN 10:9": {
+   "KJV": "He was a mighty hunter before the LORD: wherefore it is said, Even as Nimrod the mighty hunter before the LORD.",
+   "BHSA": "הֽוּא־הָיָ֥ה גִבֹּֽר־צַ֖יִד לִפְנֵ֣י יְהוָ֑ה עַל־כֵּן֙ יֵֽאָמַ֔ר כְּנִמְרֹ֛ד גִּבֹּ֥ור צַ֖יִד לִפְנֵ֥י יְהוָֽה׃ "
+  },
+  "GEN 10:10": {
+   "KJV": "And the beginning of his kingdom was Babel, and Erech, and Accad, and Calneh, in the land of Shinar.",
+   "BHSA": "וַתְּהִ֨י רֵאשִׁ֤ית מַמְלַכְתֹּו֙ בָּבֶ֔ל וְאֶ֖רֶךְ וְאַכַּ֣ד וְכַלְנֵ֑ה בְּאֶ֖רֶץ שִׁנְעָֽר׃ "
+  },
+  "GEN 10:11": {
+   "KJV": "Out of that land went forth Asshur, and builded Nineveh, and the city Rehoboth, and Calah,",
+   "BHSA": "מִן־הָאָ֥רֶץ הַהִ֖וא יָצָ֣א אַשּׁ֑וּר וַיִּ֨בֶן֙ אֶת־נִ֣ינְוֵ֔ה וְאֶת־רְחֹבֹ֥ת עִ֖יר וְאֶת־כָּֽלַח׃ "
+  },
+  "GEN 10:12": {
+   "KJV": "And Resen between Nineveh and Calah: the same is a great city.",
+   "BHSA": "וְֽאֶת־רֶ֔סֶן בֵּ֥ין נִֽינְוֵ֖ה וּבֵ֣ין כָּ֑לַח הִ֖וא הָעִ֥יר הַגְּדֹלָֽה׃ "
+  },
+  "GEN 10:13": {
+   "KJV": "And Mizraim begat Ludim, and Anamim, and Lehabim, and Naphtuhim,",
+   "BHSA": "וּמִצְרַ֡יִם יָלַ֞ד אֶת־לוּדִ֧ים וְאֶת־עֲנָמִ֛ים וְאֶת־לְהָבִ֖ים וְאֶת־נַפְתֻּחִֽים׃ "
+  },
+  "GEN 10:14": {
+   "KJV": "And Pathrusim, and Casluhim, (out of whom came Philistim,) and Caphtorim.",
+   "BHSA": "וְֽאֶת־פַּתְרֻסִ֞ים וְאֶת־כַּסְלֻחִ֗ים אֲשֶׁ֨ר יָצְא֥וּ מִשָּׁ֛ם פְּלִשְׁתִּ֖ים וְאֶת־כַּפְתֹּרִֽים׃ ס "
+  },
+  "GEN 10:15": {
+   "KJV": "And Canaan begat Sidon his first born, and Heth,",
+   "BHSA": "וּכְנַ֗עַן יָלַ֛ד אֶת־צִידֹ֥ן בְּכֹרֹ֖ו וְאֶת־חֵֽת׃ "
+  },
+  "GEN 10:16": {
+   "KJV": "And the Jebusite, and the Amorite, and the Girgasite,",
+   "BHSA": "וְאֶת־הַיְבוּסִי֙ וְאֶת־הָ֣אֱמֹרִ֔י וְאֵ֖ת הַגִּרְגָּשִֽׁי׃ "
+  },
+  "GEN 10:17": {
+   "KJV": "And the Hivite, and the Arkite, and the Sinite,",
+   "BHSA": "וְאֶת־הַֽחִוִּ֥י וְאֶת־הַֽעַרְקִ֖י וְאֶת־הַסִּינִֽי׃ "
+  },
+  "GEN 10:18": {
+   "KJV": "And the Arvadite, and the Zemarite, and the Hamathite: and afterward were the families of the Canaanites spread abroad.",
+   "BHSA": "וְאֶת־הָֽאַרְוָדִ֥י וְאֶת־הַצְּמָרִ֖י וְאֶת־הַֽחֲמָתִ֑י וְאַחַ֣ר נָפֹ֔צוּ מִשְׁפְּחֹ֖ות הַֽכְּנַעֲנִֽי׃ "
+  },
+  "GEN 10:19": {
+   "KJV": "And the border of the Canaanites was from Sidon, as thou comest to Gerar, unto Gaza; as thou goest, unto Sodom, and Gomorrah, and Admah, and Zeboim, even unto Lasha.",
+   "BHSA": "וַֽיְהִ֞י גְּב֤וּל הַֽכְּנַעֲנִי֙ מִצִּידֹ֔ן בֹּאֲכָ֥ה גְרָ֖רָה עַד־עַזָּ֑ה בֹּאֲכָ֞ה סְדֹ֧מָה וַעֲמֹרָ֛ה וְאַדְמָ֥ה וּצְבֹיִ֖ם עַד־לָֽשַׁע׃ "
+  },
+  "GEN 10:20": {
+   "KJV": "These are the sons of Ham, after their families, after their tongues, in their countries, and in their nations.",
+   "BHSA": "אֵ֣לֶּה בְנֵי־חָ֔ם לְמִשְׁפְּחֹתָ֖ם לִלְשֹֽׁנֹתָ֑ם בְּאַרְצֹתָ֖ם בְּגֹויֵהֶֽם׃ ס "
+  },
+  "GEN 10:21": {
+   "KJV": "Unto Shem also, the father of all the children of Eber, the brother of Japheth the elder, even to him were children born.",
+   "BHSA": "וּלְשֵׁ֥ם יֻלַּ֖ד גַּם־ה֑וּא אֲבִי֙ כָּל־בְּנֵי־עֵ֔בֶר אֲחִ֖י יֶ֥פֶת הַגָּדֹֽול׃ "
+  },
+  "GEN 10:22": {
+   "KJV": "The children of Shem; Elam, and Asshur, and Arphaxad, and Lud, and Aram.",
+   "BHSA": "בְּנֵ֥י שֵׁ֖ם עֵילָ֣ם וְאַשּׁ֑וּר וְאַרְפַּכְשַׁ֖ד וְל֥וּד וַֽאֲרָֽם׃ "
+  },
+  "GEN 10:23": {
+   "KJV": "And the children of Aram; Uz, and Hul, and Gether, and Mash.",
+   "BHSA": "וּבְנֵ֖י אֲרָ֑ם ע֥וּץ וְח֖וּל וְגֶ֥תֶר וָמַֽשׁ׃ "
+  },
+  "GEN 10:24": {
+   "KJV": "And Arphaxad begat Salah; and Salah begat Eber.",
+   "BHSA": "וְאַרְפַּכְשַׁ֖ד יָלַ֣ד אֶת־שָׁ֑לַח וְשֶׁ֖לַח יָלַ֥ד אֶת־עֵֽבֶר׃ "
+  },
+  "GEN 10:25": {
+   "KJV": "And unto Eber were born two sons: the name of one was Peleg; for in his days was the earth divided; and his brother's name was Joktan.",
+   "BHSA": "וּלְעֵ֥בֶר יֻלַּ֖ד שְׁנֵ֣י בָנִ֑ים שֵׁ֣ם הָֽאֶחָ֞ד פֶּ֗לֶג כִּ֤י בְיָמָיו֙ נִפְלְגָ֣ה הָאָ֔רֶץ וְשֵׁ֥ם אָחִ֖יו יָקְטָֽן׃ "
+  },
+  "GEN 10:26": {
+   "KJV": "And Joktan begat Almodad, and Sheleph, and Hazarmaveth, and Jerah,",
+   "BHSA": "וְיָקְטָ֣ן יָלַ֔ד אֶת־אַלְמֹודָ֖ד וְאֶת־שָׁ֑לֶף וְאֶת־חֲצַרְמָ֖וֶת וְאֶת־יָֽרַח׃ "
+  },
+  "GEN 10:27": {
+   "KJV": "And Hadoram, and Uzal, and Diklah,",
+   "BHSA": "וְאֶת־הֲדֹורָ֥ם וְאֶת־אוּזָ֖ל וְאֶת־דִּקְלָֽה׃ "
+  },
+  "GEN 10:28": {
+   "KJV": "And Obal, and Abimael, and Sheba,",
+   "BHSA": "וְאֶת־עֹובָ֥ל וְאֶת־אֲבִֽימָאֵ֖ל וְאֶת־שְׁבָֽא׃ "
+  },
+  "GEN 10:29": {
+   "KJV": "And Ophir, and Havilah, and Jobab: all these were the sons of Joktan.",
+   "BHSA": "וְאֶת־אֹופִ֥ר וְאֶת־חֲוִילָ֖ה וְאֶת־יֹובָ֑ב כָּל־אֵ֖לֶּה בְּנֵ֥י יָקְטָֽן׃ "
+  },
+  "GEN 10:30": {
+   "KJV": "And their dwelling was from Mesha, as thou goest unto Sephar a mount of the east.",
+   "BHSA": "וַֽיְהִ֥י מֹושָׁבָ֖ם מִמֵּשָׁ֑א בֹּאֲכָ֥ה סְפָ֖רָה הַ֥ר הַקֶּֽדֶם׃ "
+  },
+  "GEN 10:31": {
+   "KJV": "These are the sons of Shem, after their families, after their tongues, in their lands, after their nations.",
+   "BHSA": "אֵ֣לֶּה בְנֵי־שֵׁ֔ם לְמִשְׁפְּחֹתָ֖ם לִלְשֹׁנֹתָ֑ם בְּאַרְצֹתָ֖ם לְגֹויֵהֶֽם׃ "
+  },
+  "GEN 10:32": {
+   "KJV": "These are the families of the sons of Noah, after their generations, in their nations: and by these were the nations divided in the earth after the flood.",
+   "BHSA": "אֵ֣לֶּה מִשְׁפְּחֹ֧ת בְּנֵי־נֹ֛חַ לְתֹולְדֹתָ֖ם בְּגֹויֵהֶ֑ם וּמֵאֵ֜לֶּה נִפְרְד֧וּ הַגֹּויִ֛ם בָּאָ֖רֶץ אַחַ֥ר הַמַּבּֽוּל׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abimael",
+   "name": "Abimael",
+   "distinguisher": "son of Joktan (GEN 10:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "almodad",
+   "name": "Almodad",
+   "distinguisher": "son of Joktan (GEN 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "aram",
+   "name": "Aram",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "arpachshad",
+   "name": "Arpachshad",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "ashkenaz",
+   "name": "Ashkenaz",
+   "distinguisher": "son of Gomer (GEN 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "asshur",
+   "name": "Asshur",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "canaan",
+   "name": "Canaan",
+   "distinguisher": "son of Ham (GEN 9:18), cursed by Noah (GEN 9:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "cush",
+   "name": "Cush",
+   "distinguisher": "son of Ham (GEN 10:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "dedan",
+   "name": "Dedan",
+   "distinguisher": "son of Raamah (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "diklah",
+   "name": "Diklah",
+   "distinguisher": "son of Joktan (GEN 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "dodanim",
+   "name": "Dodanim",
+   "distinguisher": "son of Javan (GEN 10:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "eber",
+   "name": "Eber",
+   "distinguisher": "descendant of Shem (GEN 10:21), son of Shelah (GEN 10:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "elam",
+   "name": "Elam",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "elishah",
+   "name": "Elishah",
+   "distinguisher": "son of Javan (GEN 10:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "elishah-2",
+   "name": "Elishah",
+   "distinguisher": "a son of Japheth whom only the Greek list names (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "gether",
+   "name": "Gether",
+   "distinguisher": "son of Aram (GEN 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "gomer",
+   "name": "Gomer",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "hadoram",
+   "name": "Hadoram",
+   "distinguisher": "son of Joktan (GEN 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "ham",
+   "name": "Ham",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "havilah",
+   "name": "Havilah",
+   "distinguisher": "son of Cush (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "havilah-2",
+   "name": "Havilah",
+   "distinguisher": "son of Joktan (GEN 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "hazarmaveth",
+   "name": "Hazarmaveth",
+   "distinguisher": "son of Joktan (GEN 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "heth",
+   "name": "Heth",
+   "distinguisher": "son of Canaan (GEN 10:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "hul",
+   "name": "Hul",
+   "distinguisher": "son of Aram (GEN 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "japheth",
+   "name": "Japheth",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "javan",
+   "name": "Javan",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "jerah",
+   "name": "Jerah",
+   "distinguisher": "son of Joktan (GEN 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jobab",
+   "name": "Jobab",
+   "distinguisher": "son of Joktan (GEN 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "joktan",
+   "name": "Joktan",
+   "distinguisher": "son of Eber (GEN 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "lud",
+   "name": "Lud",
+   "distinguisher": "son of Mizraim (GEN 10:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "lud-2",
+   "name": "Lud",
+   "distinguisher": "son of Shem (GEN 10:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "madai",
+   "name": "Madai",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "magog",
+   "name": "Magog",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "mash",
+   "name": "Mash",
+   "distinguisher": "son of Aram (GEN 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshech",
+   "name": "Meshech",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "mizraim",
+   "name": "Mizraim",
+   "distinguisher": "son of Ham (GEN 10:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "naphtuh",
+   "name": "Naphtuh",
+   "distinguisher": "son of Mizraim (GEN 10:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "nimrod",
+   "name": "Nimrod",
+   "distinguisher": "son of Cush (GEN 10:8), a mighty hunter before the LORD (GEN 10:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "noah",
+   "name": "Noah",
+   "distinguisher": "son of Lamech (GEN 5:28-29)",
+   "sex": "male"
+  },
+  {
+   "slug": "obal",
+   "name": "Obal",
+   "distinguisher": "son of Joktan (GEN 10:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "ophir",
+   "name": "Ophir",
+   "distinguisher": "son of Joktan (GEN 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "peleg",
+   "name": "Peleg",
+   "distinguisher": "son of Eber, in his days the earth was divided (GEN 10:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "put",
+   "name": "Put",
+   "distinguisher": "son of Ham (GEN 10:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "raamah",
+   "name": "Raamah",
+   "distinguisher": "son of Cush (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "riphath",
+   "name": "Riphath",
+   "distinguisher": "son of Gomer (GEN 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "sabtah",
+   "name": "Sabtah",
+   "distinguisher": "son of Cush (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "sabteca",
+   "name": "Sabteca",
+   "distinguisher": "son of Cush (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "seba",
+   "name": "Seba",
+   "distinguisher": "son of Cush (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "sheba",
+   "name": "Sheba",
+   "distinguisher": "son of Raamah (GEN 10:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "sheba-2",
+   "name": "Sheba",
+   "distinguisher": "son of Joktan (GEN 10:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelah",
+   "name": "Shelah",
+   "distinguisher": "son of Arpachshad (GEN 10:24, GEN 11:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "sheleph",
+   "name": "Sheleph",
+   "distinguisher": "son of Joktan (GEN 10:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "shem",
+   "name": "Shem",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "sidon",
+   "name": "Sidon",
+   "distinguisher": "son of Canaan (GEN 10:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "tarshish",
+   "name": "Tarshish",
+   "distinguisher": "son of Javan (GEN 10:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "tiras",
+   "name": "Tiras",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "togarmah",
+   "name": "Togarmah",
+   "distinguisher": "son of Gomer (GEN 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "tubal",
+   "name": "Tubal",
+   "distinguisher": "son of Japheth (GEN 10:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "uz",
+   "name": "Uz",
+   "distinguisher": "son of Aram (GEN 10:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzal",
+   "name": "Uzal",
+   "distinguisher": "son of Joktan (GEN 10:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 99159,
+   "row": "gomer son-of japheth",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100018,
+   "row": "japheth father-of gomer",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100019,
+   "row": "japheth father-of magog",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100020,
+   "row": "japheth father-of madai",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100021,
+   "row": "japheth father-of javan",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100022,
+   "row": "japheth father-of tubal",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100023,
+   "row": "japheth father-of meshech",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100024,
+   "row": "japheth father-of tiras",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100052,
+   "row": "javan son-of japheth",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101019,
+   "row": "madai son-of japheth",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101026,
+   "row": "magog son-of japheth",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101027,
+   "row": "magog brother-of gomer",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101286,
+   "row": "meshech son-of japheth",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103079,
+   "row": "tiras son-of japheth",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103124,
+   "row": "tubal son-of japheth",
+   "verse": "GEN 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97665,
+   "row": "ashkenaz son-of gomer",
+   "verse": "GEN 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97666,
+   "row": "ashkenaz brother-of riphath",
+   "verse": "GEN 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97667,
+   "row": "ashkenaz brother-of togarmah",
+   "verse": "GEN 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99160,
+   "row": "gomer father-of ashkenaz",
+   "verse": "GEN 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99161,
+   "row": "gomer father-of riphath",
+   "verse": "GEN 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99162,
+   "row": "gomer father-of togarmah",
+   "verse": "GEN 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102216,
+   "row": "riphath son-of gomer",
+   "verse": "GEN 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103096,
+   "row": "togarmah son-of gomer",
+   "verse": "GEN 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103097,
+   "row": "togarmah brother-of ashkenaz",
+   "verse": "GEN 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103098,
+   "row": "togarmah brother-of riphath",
+   "verse": "GEN 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98717,
+   "row": "elishah son-of javan",
+   "verse": "GEN 10:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100053,
+   "row": "javan father-of elishah",
+   "verse": "GEN 10:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100054,
+   "row": "javan father-of tarshish",
+   "verse": "GEN 10:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100056,
+   "row": "javan father-of dodanim",
+   "verse": "GEN 10:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103001,
+   "row": "tarshish son-of javan",
+   "verse": "GEN 10:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98335,
+   "row": "cush son-of ham",
+   "verse": "GEN 10:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99234,
+   "row": "ham father-of cush",
+   "verse": "GEN 10:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99235,
+   "row": "ham father-of mizraim",
+   "verse": "GEN 10:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99236,
+   "row": "ham father-of put",
+   "verse": "GEN 10:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101463,
+   "row": "mizraim son-of ham",
+   "verse": "GEN 10:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102060,
+   "row": "put son-of ham",
+   "verse": "GEN 10:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102061,
+   "row": "put brother-of cush",
+   "verse": "GEN 10:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98337,
+   "row": "cush father-of seba",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98338,
+   "row": "cush father-of havilah",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98339,
+   "row": "cush father-of sabtah",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98340,
+   "row": "cush father-of raamah",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98341,
+   "row": "cush father-of sabteca",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98401,
+   "row": "dedan son-of raamah",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98402,
+   "row": "dedan brother-of sheba",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99396,
+   "row": "havilah son-of cush",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102071,
+   "row": "raamah son-of cush",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102072,
+   "row": "raamah father-of sheba",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102073,
+   "row": "raamah father-of dedan",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102245,
+   "row": "sabtah son-of cush",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102246,
+   "row": "sabteca son-of cush",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102323,
+   "row": "seba son-of cush",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102324,
+   "row": "seba brother-of raamah",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102496,
+   "row": "sheba son-of raamah",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102497,
+   "row": "sheba brother-of dedan",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102498,
+   "row": "sheba descendant-of cush",
+   "verse": "GEN 10:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98336,
+   "row": "cush father-of nimrod",
+   "verse": "GEN 10:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101738,
+   "row": "nimrod son-of cush",
+   "verse": "GEN 10:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100940,
+   "row": "lud son-of mizraim",
+   "verse": "GEN 10:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101464,
+   "row": "mizraim father-of lud",
+   "verse": "GEN 10:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101467,
+   "row": "mizraim father-of naphtuh",
+   "verse": "GEN 10:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101644,
+   "row": "naphtuh son-of mizraim",
+   "verse": "GEN 10:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101645,
+   "row": "naphtuh brother-of lud",
+   "verse": "GEN 10:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98245,
+   "row": "canaan father-of sidon",
+   "verse": "GEN 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98246,
+   "row": "canaan father-of heth",
+   "verse": "GEN 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99519,
+   "row": "heth son-of canaan",
+   "verse": "GEN 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99520,
+   "row": "heth brother-of sidon",
+   "verse": "GEN 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102861,
+   "row": "sidon son-of canaan",
+   "verse": "GEN 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102862,
+   "row": "sidon brother-of heth",
+   "verse": "GEN 10:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100017,
+   "row": "japheth brother-of shem",
+   "verse": "GEN 10:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102599,
+   "row": "shem brother-of japheth",
+   "verse": "GEN 10:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102600,
+   "row": "shem ancestor-of eber",
+   "verse": "GEN 10:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97555,
+   "row": "aram son-of shem",
+   "verse": "GEN 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97680,
+   "row": "asshur son-of shem",
+   "verse": "GEN 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98542,
+   "row": "elam son-of shem",
+   "verse": "GEN 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98543,
+   "row": "elam brother-of asshur",
+   "verse": "GEN 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100941,
+   "row": "lud-2 son-of shem",
+   "verse": "GEN 10:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97556,
+   "row": "aram father-of uz",
+   "verse": "GEN 10:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97557,
+   "row": "aram father-of hul",
+   "verse": "GEN 10:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97558,
+   "row": "aram father-of gether",
+   "verse": "GEN 10:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97559,
+   "row": "aram father-of mash",
+   "verse": "GEN 10:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99095,
+   "row": "gether son-of aram",
+   "verse": "GEN 10:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99641,
+   "row": "hul son-of aram",
+   "verse": "GEN 10:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101160,
+   "row": "mash son-of aram",
+   "verse": "GEN 10:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103171,
+   "row": "uz son-of aram",
+   "verse": "GEN 10:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97604,
+   "row": "arpachshad grandfather-of eber",
+   "verse": "GEN 10:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98481,
+   "row": "eber son-of shelah",
+   "verse": "GEN 10:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 102551,
+   "row": "shelah son-of arpachshad",
+   "verse": "GEN 10:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102552,
+   "row": "shelah father-of eber",
+   "verse": "GEN 10:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98482,
+   "row": "eber father-of peleg",
+   "verse": "GEN 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98483,
+   "row": "eber father-of joktan",
+   "verse": "GEN 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100502,
+   "row": "joktan son-of eber",
+   "verse": "GEN 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100503,
+   "row": "joktan brother-of peleg",
+   "verse": "GEN 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101932,
+   "row": "peleg brother-of joktan",
+   "verse": "GEN 10:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97378,
+   "row": "almodad son-of joktan",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99413,
+   "row": "hazarmaveth son-of joktan",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99414,
+   "row": "hazarmaveth brother-of almodad",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99415,
+   "row": "hazarmaveth brother-of sheleph",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99416,
+   "row": "hazarmaveth brother-of jerah",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100223,
+   "row": "jerah son-of joktan",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100224,
+   "row": "jerah brother-of sheleph",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100225,
+   "row": "jerah brother-of hazarmaveth",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100504,
+   "row": "joktan father-of almodad",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100505,
+   "row": "joktan father-of sheleph",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100506,
+   "row": "joktan father-of hazarmaveth",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100507,
+   "row": "joktan father-of jerah",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102568,
+   "row": "sheleph son-of joktan",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102569,
+   "row": "sheleph brother-of almodad",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102570,
+   "row": "sheleph brother-of hazarmaveth",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102571,
+   "row": "sheleph brother-of jerah",
+   "verse": "GEN 10:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98423,
+   "row": "diklah brother-of hadoram",
+   "verse": "GEN 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98424,
+   "row": "diklah brother-of uzal",
+   "verse": "GEN 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98425,
+   "row": "diklah son-of joktan",
+   "verse": "GEN 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99207,
+   "row": "hadoram brother-of uzal",
+   "verse": "GEN 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99208,
+   "row": "hadoram brother-of diklah",
+   "verse": "GEN 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99209,
+   "row": "hadoram descendant-of yhvh",
+   "verse": "GEN 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99210,
+   "row": "hadoram son-of joktan",
+   "verse": "GEN 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103179,
+   "row": "uzal brother-of hadoram",
+   "verse": "GEN 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103180,
+   "row": "uzal brother-of diklah",
+   "verse": "GEN 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103181,
+   "row": "uzal son-of joktan",
+   "verse": "GEN 10:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97084,
+   "row": "abimael brother-of obal",
+   "verse": "GEN 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97085,
+   "row": "abimael brother-of sheba-2",
+   "verse": "GEN 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97086,
+   "row": "abimael son-of joktan",
+   "verse": "GEN 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101782,
+   "row": "obal brother-of abimael",
+   "verse": "GEN 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101783,
+   "row": "obal brother-of sheba-2",
+   "verse": "GEN 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101784,
+   "row": "obal son-of joktan",
+   "verse": "GEN 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 107056,
+   "row": "sheba-2 brother-of abimael",
+   "verse": "GEN 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107057,
+   "row": "sheba-2 brother-of obal",
+   "verse": "GEN 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107058,
+   "row": "sheba-2 descendant-of sheba",
+   "verse": "GEN 10:28",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107059,
+   "row": "sheba-2 son-of joktan",
+   "verse": "GEN 10:28",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 99397,
+   "row": "havilah-2 son-of joktan",
+   "verse": "GEN 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100417,
+   "row": "jobab son-of joktan",
+   "verse": "GEN 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100508,
+   "row": "joktan father-of ophir",
+   "verse": "GEN 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100509,
+   "row": "joktan father-of havilah-2",
+   "verse": "GEN 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100510,
+   "row": "joktan father-of jobab",
+   "verse": "GEN 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101841,
+   "row": "ophir son-of joktan",
+   "verse": "GEN 10:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "arpachshad son-of shem (GEN 11:10)",
+  "arpachshad father-of shelah (GEN 11:12)",
+  "canaan son-of ham (GEN 9:18)",
+  "gether descendant-of shem (1CH 1:17)",
+  "ham son-of noah (GEN 5:32)",
+  "ham father-of canaan (GEN 9:18)",
+  "hul descendant-of shem (1CH 1:17)",
+  "japheth son-of noah (GEN 5:32)",
+  "mash descendant-of shem (1CH 1:17)",
+  "noah father-of shem (GEN 5:32)",
+  "noah father-of ham (GEN 5:32)",
+  "noah father-of japheth (GEN 5:32)",
+  "peleg son-of eber (GEN 11:16)",
+  "shem son-of noah (GEN 5:32)",
+  "shem father-of arpachshad (GEN 11:10)"
+ ]
+}

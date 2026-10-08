@@ -1,0 +1,99 @@
+{
+ "chapter": "1CH 4",
+ "rows": 261,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    98901,
+    98902,
+    98903,
+    98904,
+    99686,
+    99778,
+    100373
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:3",
+   "why": "The Hebrew refers to the father of Etam and identifies Hazzelelponi as the listed men's sister, without stating that Etam is their parent.",
+   "confidence": 0.96
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    106646,
+    106647
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "The Hebrew speaks of Hodiah's wife and her sons, not of Hodiah as the mother of Keilah or Eshtemoa.",
+   "confidence": 1
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    100710,
+    106685,
+    106686
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "Naham identifies the brother of Hodiah's wife, while the following genealogy concerns her sons rather than naming Naham as the father of Keilah or Eshtemoa.",
+   "confidence": 0.9
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    98894
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "The verse associates Keilah and Eshtemoa with the sons of Hodiah's wife but does not identify them as brothers.",
+   "confidence": 0.94
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    106049
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:34",
+   "why": "The phrase son of Amaziah qualifies Joshah alone, while Meshobab is a separate name in the list.",
+   "confidence": 1
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    101668,
+    101928,
+    102168,
+    103215
+   ],
+   "new_type": "",
+   "new_to": "ishi-the-simeonite",
+   "verse": "1CH 4:42",
+   "why": "The four captains are explicitly sons of the Simeonite Ishi represented by ishi-the-simeonite, rather than the Ishi in the earlier Judahite genealogy.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "hezron-2",
+   "type": "son-of",
+   "to": "judah",
+   "verse": "1CH 4:1",
+   "why": "Hezron is explicitly included in the list introduced as the sons of Judah.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Owner row 106560, meonothai son-of othniel, is not explicitly supported by the supplied Hebrew, which names only Hathath among Othniel's sons in 1CH 4:13; it remains untouched. The difficult wording of 1CH 4:3 and 1CH 4:19 does not justify adding uncertain replacement parentage.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:21:40+00:00"
+}

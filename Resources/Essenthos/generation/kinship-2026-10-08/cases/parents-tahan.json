@@ -1,0 +1,25 @@
+{
+ "case": "parents-tahan",
+ "question": "tahan is recorded with more than one father: ephraim, telah.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "retype-row",
+   "rows": [
+    102960
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "descendant-of",
+   "new_to": "",
+   "verse": "NUM 26:35",
+   "why": "בני־אפרים למשפחתם introduces Ephraim's descendants by their clans; it does not establish Tahan as his immediate son. In 1CH 7:25, ותחן בנו identifies Tahan as Telah's son.",
+   "confidence": 0.96
+  }
+ ],
+ "note": "Keep the Tahan–Telah parentage rows. Reading the census clan list as descent rather than immediate parentage resolves the reported contradiction without requiring a record split.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:37:11+00:00"
+}

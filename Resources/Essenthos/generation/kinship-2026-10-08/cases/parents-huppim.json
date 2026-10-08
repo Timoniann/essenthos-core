@@ -1,0 +1,25 @@
+{
+ "case": "parents-huppim",
+ "question": "huppim is recorded with more than one father: benjamin, iri.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "retype-row",
+   "rows": [
+    99648
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "descendant-of",
+   "new_to": "",
+   "verse": "GEN 46:21",
+   "why": "Huppim is included among Benjamin's בני, which can designate descendants rather than immediate sons. Recording descent preserves this statement without conflicting with the nearer parent named in 1CH 7:12.",
+   "confidence": 0.9
+  }
+ ],
+ "note": "Retain the parent relationship from Chronicles. Its Hebrew names Ir (עיר), while 1CH 7:7 names Iri (עירי); identifying these names is plausible but not explicitly established by the supplied verses.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:34:46+00:00"
+}

@@ -1,0 +1,62 @@
+{
+ "case": "parents-azariah",
+ "question": "azariah is recorded with more than one father: zadok, meraioth, johanan-3.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "fold-records",
+   "rows": [],
+   "record": "azariah",
+   "other": "azariah-24",
+   "new_type": "",
+   "new_to": "",
+   "verse": "EZR 7:3",
+   "why": "Ezra's sequence Azariah–Amariah–Ahitub–Zadok–Shallum matches 1CH 6:10–12, identifying this Azariah with Johanan's son. Ezra abbreviates the generations between Meraioth and Azariah.",
+   "confidence": 0.96
+  },
+  {
+   "kind": "retype-row",
+   "rows": [
+    97733
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "descendant-of",
+   "new_to": "",
+   "verse": "EZR 7:3",
+   "why": "Ezra uses בֶן in an abbreviated genealogy. 1CH 6:7–10 supplies several generations between Meraioth and this Azariah, whose father is Johanan.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retype-row",
+   "rows": [
+    101264
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "ancestor-of",
+   "new_to": "",
+   "verse": "EZR 7:3",
+   "why": "The intervening generations in 1CH 6:7–10 make Meraioth an ancestor of this Azariah rather than his direct father.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete-row",
+   "rows": [
+    103627
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "EZR 7:3",
+   "why": "After merging azariah-24 into azariah, this repeats row 97733's genealogical link. Retain that link with the corrected descendant-of type.",
+   "confidence": 0.96
+  }
+ ],
+ "note": "Johanan's fatherhood is explicit in 1CH 6:10; Meraioth's relationship is ancestral. 1KI 4:2 names an Azariah son of Zadok, but the supplied passages do not establish which Chronicles Azariah he is, so row 97730's record assignment remains unresolved.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:32:47+00:00"
+}

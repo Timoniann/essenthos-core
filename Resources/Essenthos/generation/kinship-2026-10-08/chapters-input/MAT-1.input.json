@@ -1,0 +1,694 @@
+{
+ "chapter": "MAT 1",
+ "text": {
+  "MAT 1:1": {
+   "KJV": "The book of the generation of Jesus Christ, the son of David, the son of Abraham.",
+   "NESTLE1904": "Βίβλος γενέσεως Ἰησοῦ Χριστοῦ υἱοῦ Δαυεὶδ υἱοῦ Ἀβραάμ. "
+  },
+  "MAT 1:2": {
+   "KJV": "Abraham begat Isaac; and Isaac begat Jacob; and Jacob begat Judas and his brethren;",
+   "NESTLE1904": "Ἀβραὰμ ἐγέννησεν τὸν Ἰσαάκ, Ἰσαὰκ δὲ ἐγέννησεν τὸν Ἰακώβ, Ἰακὼβ δὲ ἐγέννησεν τὸν Ἰούδαν καὶ τοὺς ἀδελφοὺς αὐτοῦ, "
+  },
+  "MAT 1:3": {
+   "KJV": "And Judas begat Phares and Zara of Thamar; and Phares begat Esrom; and Esrom begat Aram;",
+   "NESTLE1904": "Ἰούδας δὲ ἐγέννησεν τὸν Φαρὲς καὶ τὸν Ζαρὰ ἐκ τῆς Θάμαρ, Φαρὲς δὲ ἐγέννησεν τὸν Ἐσρώμ, Ἐσρὼμ δὲ ἐγέννησεν τὸν Ἀράμ, "
+  },
+  "MAT 1:4": {
+   "KJV": "And Aram begat Aminadab; and Aminadab begat Naasson; and Naasson begat Salmon;",
+   "NESTLE1904": "Ἀρὰμ δὲ ἐγέννησεν τὸν Ἀμιναδάβ, Ἀμιναδὰβ δὲ ἐγέννησεν τὸν Ναασσών, Ναασσὼν δὲ ἐγέννησεν τὸν Σαλμών, "
+  },
+  "MAT 1:5": {
+   "KJV": "And Salmon begat Booz of Rachab; and Booz begat Obed of Ruth; and Obed begat Jesse;",
+   "NESTLE1904": "Σαλμὼν δὲ ἐγέννησεν τὸν Βόες ἐκ τῆς Ῥαχάβ, Βόες δὲ ἐγέννησεν τὸν Ἰωβὴδ ἐκ τῆς Ῥούθ, Ἰωβὴδ δὲ ἐγέννησεν τὸν Ἰεσσαί, "
+  },
+  "MAT 1:6": {
+   "KJV": "And Jesse begat David the king; and David the king begat Solomon of her that had been the wife of Urias;",
+   "NESTLE1904": "Ἰεσσαὶ δὲ ἐγέννησεν τὸν Δαυεὶδ τὸν βασιλέα. Δαυεὶδ δὲ ἐγέννησεν τὸν Σολομῶνα ἐκ τῆς τοῦ Οὐρίου, "
+  },
+  "MAT 1:7": {
+   "KJV": "And Solomon begat Roboam; and Roboam begat Abia; and Abia begat Asa;",
+   "NESTLE1904": "Σολομὼν δὲ ἐγέννησεν τὸν Ῥοβοάμ, Ῥοβοὰμ δὲ ἐγέννησεν τὸν Ἀβιά, Ἀβιὰ δὲ ἐγέννησεν τὸν Ἀσάφ, "
+  },
+  "MAT 1:8": {
+   "KJV": "And Asa begat Josaphat; and Josaphat begat Joram; and Joram begat Ozias;",
+   "NESTLE1904": "Ἀσὰφ δὲ ἐγέννησεν τὸν Ἰωσαφάτ, Ἰωσαφὰτ δὲ ἐγέννησεν τὸν Ἰωράμ, Ἰωρὰμ δὲ ἐγέννησεν τὸν Ὀζείαν, "
+  },
+  "MAT 1:9": {
+   "KJV": "And Ozias begat Joatham; and Joatham begat Achaz; and Achaz begat Ezekias;",
+   "NESTLE1904": "Ὀζείας δὲ ἐγέννησεν τὸν Ἰωαθάμ, Ἰωαθὰμ δὲ ἐγέννησεν τὸν Ἄχαζ, Ἄχαζ δὲ ἐγέννησεν τὸν Ἐζεκίαν, "
+  },
+  "MAT 1:10": {
+   "KJV": "And Ezekias begat Manasses; and Manasses begat Amon; and Amon begat Josias;",
+   "NESTLE1904": "Ἐζεκίας δὲ ἐγέννησεν τὸν Μανασσῆ, Μανασσῆς δὲ ἐγέννησεν τὸν Ἀμώς, Ἀμὼς δὲ ἐγέννησεν τὸν Ἰωσείαν, "
+  },
+  "MAT 1:11": {
+   "KJV": "And Josias begat Jechonias and his brethren, about the time they were carried away to Babylon:",
+   "NESTLE1904": "Ἰωσείας δὲ ἐγέννησεν τὸν Ἰεχονίαν καὶ τοὺς ἀδελφοὺς αὐτοῦ ἐπὶ τῆς μετοικεσίας Βαβυλῶνος. "
+  },
+  "MAT 1:12": {
+   "KJV": "And after they were brought to Babylon, Jechonias begat Salathiel; and Salathiel begat Zorobabel;",
+   "NESTLE1904": "Μετὰ δὲ τὴν μετοικεσίαν Βαβυλῶνος Ἰεχονίας ἐγέννησεν τὸν Σαλαθιήλ, Σαλαθιὴλ δὲ ἐγέννησεν τὸν Ζοροβαβέλ, "
+  },
+  "MAT 1:13": {
+   "KJV": "And Zorobabel begat Abiud; and Abiud begat Eliakim; and Eliakim begat Azor;",
+   "NESTLE1904": "Ζοροβαβὲλ δὲ ἐγέννησεν τὸν Ἀβιούδ, Ἀβιοὺδ δὲ ἐγέννησεν τὸν Ἐλιακείμ, Ἐλιακεὶμ δὲ ἐγέννησεν τὸν Ἀζώρ, "
+  },
+  "MAT 1:14": {
+   "KJV": "And Azor begat Sadoc; and Sadoc begat Achim; and Achim begat Eliud;",
+   "NESTLE1904": "Ἀζὼρ δὲ ἐγέννησεν τὸν Σαδώκ, Σαδὼκ δὲ ἐγέννησεν τὸν Ἀχείμ, Ἀχεὶμ δὲ ἐγέννησεν τὸν Ἐλιούδ, "
+  },
+  "MAT 1:15": {
+   "KJV": "And Eliud begat Eleazar; and Eleazar begat Matthan; and Matthan begat Jacob;",
+   "NESTLE1904": "Ἐλιοὺδ δὲ ἐγέννησεν τὸν Ἐλεάζαρ, Ἐλεάζαρ δὲ ἐγέννησεν τὸν Μαθθάν, Μαθθὰν δὲ ἐγέννησεν τὸν Ἰακώβ, "
+  },
+  "MAT 1:16": {
+   "KJV": "And Jacob begat Joseph the husband of Mary, of whom was born Jesus, who is called Christ.",
+   "NESTLE1904": "Ἰακὼβ δὲ ἐγέννησεν τὸν Ἰωσὴφ τὸν ἄνδρα Μαρίας, ἐξ ἧς ἐγεννήθη Ἰησοῦς ὁ λεγόμενος Χριστός. "
+  },
+  "MAT 1:17": {
+   "KJV": "So all the generations from Abraham to David are fourteen generations; and from David until the carrying away into Babylon are fourteen generations; and from the carrying away into Babylon unto Christ are fourteen generations.",
+   "NESTLE1904": "Πᾶσαι οὖν αἱ γενεαὶ ἀπὸ Ἀβραὰμ ἕως Δαυεὶδ γενεαὶ δεκατέσσαρες, καὶ ἀπὸ Δαυεὶδ ἕως τῆς μετοικεσίας Βαβυλῶνος γενεαὶ δεκατέσσαρες, καὶ ἀπὸ τῆς μετοικεσίας Βαβυλῶνος ἕως τοῦ Χριστοῦ γενεαὶ δεκατέσσαρες. "
+  },
+  "MAT 1:18": {
+   "KJV": "Now the birth of Jesus Christ was on this wise: When as his mother Mary was espoused to Joseph, before they came together, she was found with child of the Holy Ghost.",
+   "NESTLE1904": "Τοῦ δὲ Ἰησοῦ Χριστοῦ ἡ γένεσις οὕτως ἦν. μνηστευθείσης τῆς μητρὸς αὐτοῦ Μαρίας τῷ Ἰωσήφ, πρὶν ἢ συνελθεῖν αὐτοὺς εὑρέθη ἐν γαστρὶ ἔχουσα ἐκ Πνεύματος Ἁγίου. "
+  },
+  "MAT 1:19": {
+   "KJV": "Then Joseph her husband, being a just man, and not willing to make her a public example, was minded to put her away privily.",
+   "NESTLE1904": "Ἰωσὴφ δὲ ὁ ἀνὴρ αὐτῆς, δίκαιος ὢν καὶ μὴ θέλων αὐτὴν δειγματίσαι, ἐβουλήθη λάθρᾳ ἀπολῦσαι αὐτήν. "
+  },
+  "MAT 1:20": {
+   "KJV": "But while he thought on these things, behold, the angel of the Lord appeared unto him in a dream, saying, Joseph, thou son of David, fear not to take unto thee Mary thy wife: for that which is conceived in her is of the Holy Ghost.",
+   "NESTLE1904": "ταῦτα δὲ αὐτοῦ ἐνθυμηθέντος ἰδοὺ ἄγγελος Κυρίου κατ’ ὄναρ ἐφάνη αὐτῷ λέγων Ἰωσὴφ υἱὸς Δαυείδ, μὴ φοβηθῇς παραλαβεῖν Μαρίαν τὴν γυναῖκά σου, τὸ γὰρ ἐν αὐτῇ γεννηθὲν ἐκ Πνεύματός ἐστιν Ἁγίου· "
+  },
+  "MAT 1:21": {
+   "KJV": "And she shall bring forth a son, and thou shalt call his name JESUS: for he shall save his people from their sins.",
+   "NESTLE1904": "τέξεται δὲ υἱὸν καὶ καλέσεις τὸ ὄνομα αὐτοῦ Ἰησοῦν· αὐτὸς γὰρ σώσει τὸν λαὸν αὐτοῦ ἀπὸ τῶν ἁμαρτιῶν αὐτῶν. "
+  },
+  "MAT 1:22": {
+   "KJV": "Now all this was done, that it might be fulfilled which was spoken of the Lord by the prophet, saying,",
+   "NESTLE1904": "Τοῦτο δὲ ὅλον γέγονεν ἵνα πληρωθῇ τὸ ῥηθὲν ὑπὸ Κυρίου διὰ τοῦ προφήτου λέγοντος "
+  },
+  "MAT 1:23": {
+   "KJV": "Behold, a virgin shall be with child, and shall bring forth a son, and they shall call his name Emmanuel, which being interpreted is, God with us.",
+   "NESTLE1904": "Ἰδοὺ ἡ παρθένος ἐν γαστρὶ ἕξει καὶ τέξεται υἱόν, καὶ καλέσουσιν τὸ ὄνομα αὐτοῦ Ἐμμανουήλ, ὅ ἐστιν μεθερμηνευόμενον Μεθ’ ἡμῶν ὁ Θεός. "
+  },
+  "MAT 1:24": {
+   "KJV": "Then Joseph being raised from sleep did as the angel of the Lord had bidden him, and took unto him his wife:",
+   "NESTLE1904": "ἐγερθεὶς δὲ ὁ Ἰωσὴφ ἀπὸ τοῦ ὕπνου ἐποίησεν ὡς προσέταξεν αὐτῷ ὁ ἄγγελος Κυρίου, καὶ παρέλαβεν τὴν γυναῖκα αὐτοῦ· "
+  },
+  "MAT 1:25": {
+   "KJV": "And knew her not till she had brought forth her firstborn son: and he called his name JESUS.",
+   "NESTLE1904": "καὶ οὐκ ἐγίνωσκεν αὐτὴν ἕως οὗ ἔτεκεν υἱόν· καὶ ἐκάλεσεν τὸ ὄνομα αὐτοῦ Ἰησοῦν. "
+  }
+ },
+ "records": [
+  {
+   "slug": "abihud-2",
+   "name": "Abihud",
+   "distinguisher": "son of Zerubbabel in the lineage of the Messiah (MAT 1:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "abijam",
+   "name": "Abijam",
+   "distinguisher": "King of Judah, son of Rehoboam (1KI 14:31) [Abijah in 2CH 12:16]",
+   "sex": "male"
+  },
+  {
+   "slug": "abram",
+   "name": "Abram",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "achim",
+   "name": "Achim",
+   "distinguisher": "son of Zadok in the lineage of the Messiah (MAT 1:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahaz",
+   "name": "Ahaz",
+   "distinguisher": "King of Judah, son of Jotham (2KI 15:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "amminadab",
+   "name": "Amminadab",
+   "distinguisher": "father of Elisheba (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "amon-2",
+   "name": "Amon",
+   "distinguisher": "King of Judah and son of Manasseh (2KI 21:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "amos-2",
+   "name": "Amos",
+   "distinguisher": "in the lineage of Messiah (LUK 3:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "asa",
+   "name": "Asa",
+   "distinguisher": "King of Judah (1KI 15:9), son of incestuous relationship between Abijah and his mother, Maacah (1KI 15:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "azariah-3",
+   "name": "Azariah",
+   "distinguisher": "[Uzziah] King of Judah, son of Amaziah (2KI 14:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "azor",
+   "name": "Azor",
+   "distinguisher": "son of Eliakim in the lineage of the Messiah (MAT 1:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "bathsheba",
+   "name": "Bathsheba",
+   "distinguisher": "daughter of Eliam and wife of Uriah (2SA 11:3)",
+   "sex": "female"
+  },
+  {
+   "slug": "boaz",
+   "name": "Boaz",
+   "distinguisher": "kinsman of Naomi's husband (RUT 2:1) who redeemed Ruth (RUT 4:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar-9",
+   "name": "Eleazar",
+   "distinguisher": "son of Eliud in the lineage of the Messiah (MAT 1:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliakim-2",
+   "name": "Eliakim",
+   "distinguisher": "King of Judah, son of Josiah (2KI 23:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliakim-4",
+   "name": "Eliakim",
+   "distinguisher": "son of Abihud in the lineage of the Messiah (MAT 1:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliud",
+   "name": "Eliud",
+   "distinguisher": "son of Achim in the lineage of the Messiah (MAT 1:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "hezekiah",
+   "name": "Hezekiah",
+   "distinguisher": "King of Judah, son of Ahaz (2KI 16:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "hezron-2",
+   "name": "Hezron",
+   "distinguisher": "son of Perez and grandson of Judah (GEN 46:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "holy-spirit",
+   "name": "Holy Spirit",
+   "distinguisher": "whom the text calls the Holy Spirit and the Spirit of God (MAT 28:19; 1CO 3:16)",
+   "sex": null
+  },
+  {
+   "slug": "isaac",
+   "name": "Isaac",
+   "distinguisher": "son of Abraham and Sarah (GEN 17:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob-2",
+   "name": "Jacob",
+   "distinguisher": "son of Matthan in the lineage of the Messiah (MAT 1:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoiachin",
+   "name": "Jehoiachin",
+   "distinguisher": "King of Judah, son of Eliakim [Jehoiakim] (2KI 24:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoram",
+   "name": "Jehoram",
+   "distinguisher": "King of Judah and son of Jehoshaphat (1KI 22:50)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoshaphat-3",
+   "name": "Jehoshaphat",
+   "distinguisher": "son of Asa and King of Judah (1KI 15:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "jesse",
+   "name": "Jesse",
+   "distinguisher": "father of David (RUT 4:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "jesus",
+   "name": "Jesus",
+   "distinguisher": "of Nazareth",
+   "sex": "male"
+  },
+  {
+   "slug": "joseph-6",
+   "name": "Joseph",
+   "distinguisher": "son of Jacob in the lineage of the Messiah (MAT 1:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "josiah",
+   "name": "Josiah",
+   "distinguisher": "prophesied son of the house of David (1KI 13:2), King of Judah and son of Amon (2KI 21:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "jotham-2",
+   "name": "Jotham",
+   "distinguisher": "King of Judah, son of King Uzziah [Azariah] (2KI 15:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh-3",
+   "name": "Manasseh",
+   "distinguisher": "King of Judah and son of Hezekiah (2KI 20:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "mary",
+   "name": "Mary",
+   "distinguisher": "wife of Joseph, and mother of the Messiah (MAT 1:16)",
+   "sex": "female"
+  },
+  {
+   "slug": "matthan",
+   "name": "Matthan",
+   "distinguisher": "son of Eleazar in the lineage of the Messiah (MAT 1:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "nahshon",
+   "name": "Nahshon",
+   "distinguisher": "son of Amminadab and brother of Elisheba (EXO 6:23), head of the tribe of Judah during the census (NUM 1:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "obed",
+   "name": "Obed",
+   "distinguisher": "son of Ruth and father of Jesse (RUT 4:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "perez",
+   "name": "Perez",
+   "distinguisher": "son of Judah and Tamar (GEN 38:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "rahab",
+   "name": "Rahab",
+   "distinguisher": "the harlot of Jericho (JOS 2:1)",
+   "sex": "female"
+  },
+  {
+   "slug": "ram",
+   "name": "Ram",
+   "distinguisher": "son of Hezron in the lineage of King David (RUT 4:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "rehoboam",
+   "name": "Rehoboam",
+   "distinguisher": "son of Solomon who became king after him (1KI 11:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "ruth",
+   "name": "Ruth",
+   "distinguisher": "the Moabitess (RUT 1:22)",
+   "sex": "female"
+  },
+  {
+   "slug": "salmon",
+   "name": "Salmon",
+   "distinguisher": "son of Nahshon and father of Boaz in the lineage of King David (RUT 4:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "shealtiel-2",
+   "name": "Shealtiel",
+   "distinguisher": "father of Zerubbabel (EZR 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "solomon",
+   "name": "Solomon",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "tamar",
+   "name": "Tamar",
+   "distinguisher": "wife of Er (GEN 38:6), and mother of Perez (GEN 38:29) and Zerah (GEN 38:30) by Judah",
+   "sex": "female"
+  },
+  {
+   "slug": "theangelofthelord",
+   "name": "the angel of the LORD",
+   "distinguisher": "definite article \"the\" angel (GEN 16:7, GEN 22:11, EXO 3:2, NUM 22:22, JDG 2:1, etc.)",
+   "sex": "male"
+  },
+  {
+   "slug": "uriah",
+   "name": "Uriah",
+   "distinguisher": "the Hittite (2SA 11:3), thirty-seventh of \"the thirty\" of David's men (2SA 23:39)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zadok-7",
+   "name": "Zadok",
+   "distinguisher": "son of Azor in the lineage of the Messiah (MAT 1:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "zerah-3",
+   "name": "Zerah",
+   "distinguisher": "son of Judah and Tamar (GEN 38:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "zerubbabel-2",
+   "name": "Zerubbabel",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7), son of Shealtiel (EZR 3:2)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 100328,
+   "row": "jesus descendant-of david",
+   "verse": "MAT 1:1",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 100329,
+   "row": "jesus descendant-of abram",
+   "verse": "MAT 1:1",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 101786,
+   "row": "obed son-of ruth",
+   "verse": "MAT 1:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102087,
+   "row": "rahab wife-of salmon",
+   "verse": "MAT 1:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102088,
+   "row": "rahab mother-of boaz",
+   "verse": "MAT 1:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102244,
+   "row": "ruth mother-of obed",
+   "verse": "MAT 1:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102266,
+   "row": "salmon husband-of rahab",
+   "verse": "MAT 1:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97069,
+   "row": "abihud-2 son-of zerubbabel-2",
+   "verse": "MAT 1:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97070,
+   "row": "abihud-2 father-of eliakim-4",
+   "verse": "MAT 1:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97797,
+   "row": "azor son-of eliakim-4",
+   "verse": "MAT 1:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98621,
+   "row": "eliakim-4 son-of abihud-2",
+   "verse": "MAT 1:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98622,
+   "row": "eliakim-4 father-of azor",
+   "verse": "MAT 1:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97147,
+   "row": "achim son-of zadok-7",
+   "verse": "MAT 1:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97148,
+   "row": "achim father-of eliud",
+   "verse": "MAT 1:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97798,
+   "row": "azor father-of zadok-7",
+   "verse": "MAT 1:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98737,
+   "row": "eliud son-of achim",
+   "verse": "MAT 1:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103324,
+   "row": "zadok-7 son-of azor",
+   "verse": "MAT 1:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103325,
+   "row": "zadok-7 father-of achim",
+   "verse": "MAT 1:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98584,
+   "row": "eleazar-9 son-of eliud",
+   "verse": "MAT 1:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98585,
+   "row": "eleazar-9 father-of matthan",
+   "verse": "MAT 1:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98738,
+   "row": "eliud father-of eleazar-9",
+   "verse": "MAT 1:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99920,
+   "row": "jacob-2 son-of matthan",
+   "verse": "MAT 1:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101193,
+   "row": "matthan son-of eleazar-9",
+   "verse": "MAT 1:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101194,
+   "row": "matthan father-of jacob-2",
+   "verse": "MAT 1:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99921,
+   "row": "jacob-2 father-of joseph-6",
+   "verse": "MAT 1:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100327,
+   "row": "jesus son-of mary",
+   "verse": "MAT 1:16",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 100579,
+   "row": "joseph-6 husband-of mary",
+   "verse": "MAT 1:16",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 101150,
+   "row": "mary wife-of joseph-6",
+   "verse": "MAT 1:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101151,
+   "row": "mary mother-of jesus",
+   "verse": "MAT 1:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100581,
+   "row": "joseph-6 descendant-of david",
+   "verse": "MAT 1:20",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "abijam son-of rehoboam (1KI 14:31)",
+  "abijam king-of judah (1KI 15:1)",
+  "abijam father-of asa (1KI 15:8)",
+  "ahaz son-of jotham-2 (2KI 16:1)",
+  "ahaz king-of judah (2KI 16:1)",
+  "ahaz father-of hezekiah (2KI 18:1)",
+  "amon-2 son-of manasseh-3 (2KI 21:18)",
+  "amon-2 father-of josiah (1CH 3:14)",
+  "asa son-of abijam (1KI 15:8)",
+  "asa king-of judah (1KI 15:9)",
+  "azariah-3 father-of jotham-2 (2KI 15:7)",
+  "bathsheba wife-of uriah (2SA 11:3)",
+  "bathsheba wife-of david (2SA 12:24)",
+  "bathsheba mother-of solomon (2SA 12:24)",
+  "boaz son-of salmon (RUT 4:21)",
+  "boaz father-of obed (RUT 4:21)",
+  "david son-of jesse (RUT 4:22)",
+  "david father-of solomon (1CH 29:23)",
+  "david descendant-of obed (RUT 4:22)",
+  "david servant-of yhvh (2SA 3:18)",
+  "eliakim-2 son-of josiah (2KI 23:34)",
+  "eliakim-2 king-of judah (2CH 36:4)",
+  "eliakim-2 father-of jehoiachin (2KI 24:6)",
+  "hezekiah son-of ahaz (2KI 18:1)",
+  "hezekiah king-of judah (2KI 18:1)",
+  "hezron-2 son-of perez (GEN 46:12)",
+  "hezron-2 father-of ram (RUT 4:19)",
+  "isaac son-of abram (GEN 21:3)",
+  "isaac father-of jacob (GEN 27:26)",
+  "jehoiachin son-of eliakim-2 (2KI 24:6)",
+  "jehoiachin king-of judah (2KI 24:8)",
+  "jehoshaphat-3 king-of judah (1KI 22:2)",
+  "jehoshaphat-3 son-of asa (1KI 15:24)",
+  "jehoshaphat-3 father-of jehoram (2KI 1:17)",
+  "jesse father-of david (RUT 4:22)",
+  "jesse son-of obed (RUT 4:22)",
+  "jesus high-priest-of yhvh (HEB 4:14)",
+  "joseph-6 father-of jesus (LUK 3:23)",
+  "josiah son-of amon-2 (2KI 21:24)",
+  "josiah descendant-of david (1KI 13:2)",
+  "josiah father-of eliakim-2 (JER 26:1)",
+  "jotham-2 son-of azariah-3 (2KI 15:32)",
+  "jotham-2 king-of judah (2CH 27:1)",
+  "jotham-2 father-of ahaz (2KI 16:1)",
+  "manasseh-3 son-of hezekiah (2KI 20:21)",
+  "manasseh-3 father-of amon-2 (2KI 21:18)",
+  "manasseh-3 king-of judah (2KI 21:1)",
+  "nahshon son-of amminadab (NUM 1:7)",
+  "nahshon father-of salmon (RUT 4:20)",
+  "obed son-of boaz (RUT 4:21)",
+  "obed father-of jesse (RUT 4:22)",
+  "obed ancestor-of david (LUK 3:32)",
+  "ram son-of hezron-2 (RUT 4:19)",
+  "rehoboam son-of solomon (1KI 12:23)",
+  "rehoboam king-of judah (1KI 12:23)",
+  "ruth wife-of boaz (RUT 4:13)",
+  "salmon son-of nahshon (RUT 4:20)",
+  "salmon father-of boaz (RUT 4:21)",
+  "solomon son-of david (1KI 1:13)",
+  "solomon son-of bathsheba (1KI 1:11)",
+  "tamar daughter-in-law-of judah (GEN 38:11)",
+  "tamar mother-of perez (1CH 2:4)",
+  "tamar mother-of zerah-3 (1CH 2:4)",
+  "theangelofthelord angel-of yhvh (GEN 16:7)",
+  "uriah husband-of bathsheba (2SA 11:3)",
+  "uriah servant-of david (2SA 11:9)",
+  "zerah-3 son-of judah (GEN 46:12)",
+  "zerah-3 brother-of perez (GEN 38:30)",
+  "amminadab father-of nahshon (NUM 1:7)",
+  "amminadab son-of ram (RUT 4:19)",
+  "jacob son-of isaac (GEN 25:26)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "jehoram son-of jehoshaphat-3 (2KI 8:16)",
+  "judah son-of jacob (GEN 35:23)",
+  "judah father-in-law-of tamar (GEN 38:11)",
+  "abram servant-of yhvh (GEN 26:24)",
+  "perez son-of judah (RUT 4:12)",
+  "perez son-of tamar (RUT 4:12)",
+  "perez brother-of zerah-3 (GEN 46:12)",
+  "perez father-of hezron-2 (GEN 46:12)",
+  "zerubbabel-2 son-of shealtiel-2 (EZR 3:2)",
+  "zerubbabel-2 servant-of yhvh (HAG 2:23)",
+  "zerubbabel-2 descendant-of jacob (EZR 2:2)",
+  "shealtiel-2 father-of zerubbabel-2 (EZR 3:2)",
+  "shealtiel-2 son-of jehoiachin (1CH 3:17)"
+ ]
+}

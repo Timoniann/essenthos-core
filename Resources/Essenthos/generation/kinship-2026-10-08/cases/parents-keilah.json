@@ -1,0 +1,54 @@
+{
+ "case": "parents-keilah",
+ "question": "keilah is recorded with more than one father: hodiah, naham.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "retype-row",
+   "rows": [
+    106646,
+    106647
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "grandfather-of",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "Hebrew אֵשֶׁת הוֹדִיָּה means the wife of Hodiah, making Hodiah the husband. Her sons supply the father generation of Keilah and Eshtemoa, placing Hodiah one generation above their fathers.",
+   "confidence": 0.87
+  },
+  {
+   "kind": "delete-row",
+   "rows": [
+    100710,
+    106685,
+    106686
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "Naham is identified as the brother of Hodiah's wife. In the genealogical reading, the father designation belongs to her sons, rather than making Naham the father of Keilah or Eshtemoa.",
+   "confidence": 0.89
+  },
+  {
+   "kind": "delete-row",
+   "rows": [
+    98894
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 4:19",
+   "why": "The verse gives Keilah and Eshtemoa ancestral lines through the sons of Hodiah's wife. It does not establish that Keilah and Eshtemoa share a father or are brothers.",
+   "confidence": 0.95
+  }
+ ],
+ "note": "The Hebrew distinguishes Hodiah from his unnamed wife, who is Naham's sister; the KJV wording obscures this distinction. Preserve the owner's brother-in-law ruling, row 106648.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:36:15+00:00"
+}

@@ -1,0 +1,25 @@
+{
+ "case": "parents-gazez-2",
+ "question": "gazez-2 is recorded with more than one father: chelubai, haran-2.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "retype-row",
+   "rows": [
+    99034
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "grandson-of",
+   "new_to": "",
+   "verse": "1CH 2:46",
+   "why": "The Hebrew names Gazez among Ephah's children by Caleb, then separately states that Haran begot Gazez. Gazez-2, Haran's son, is therefore Caleb's grandson.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The two Gazez records represent different generations: Caleb's son and Haran's son. Keep Gazez-2's father relationship to Haran; its relationship to Caleb should be grandson-of.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:33:50+00:00"
+}

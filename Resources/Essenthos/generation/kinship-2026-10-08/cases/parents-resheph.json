@@ -1,0 +1,25 @@
+{
+ "case": "parents-resheph",
+ "question": "resheph is recorded with more than one father: ephraim, rephah.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "delete-row",
+   "rows": [
+    102176
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 7:25",
+   "why": "The Hebrew coordinates Rephah and Resheph (וְרֶפַח בְּנוֹ וְרֶשֶׁף), without calling Resheph Rephah's son; the KJV likewise reads 'also Resheph.' The Rephah-to-Resheph fatherhood is an unsupported extraction.",
+   "confidence": 0.94
+  }
+ ],
+ "note": "Retain the sibling relationship and the existing Ephraim relationships. The following 'Telah his son' supports the Resheph–Telah relationship.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:36:44+00:00"
+}

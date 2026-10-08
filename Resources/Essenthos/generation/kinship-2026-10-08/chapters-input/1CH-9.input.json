@@ -1,0 +1,1811 @@
+{
+ "chapter": "1CH 9",
+ "text": {
+  "1CH 9:1": {
+   "KJV": "So all Israel were reckoned by genealogies; and, behold, they were written in the book of the kings of Israel and Judah, who were carried away to Babylon for their transgression.",
+   "BHSA": "וְכָל־יִשְׂרָאֵל֙ הִתְיַחְשׂ֔וּ וְהִנָּ֣ם כְּתוּבִ֔ים עַל־סֵ֖פֶר מַלְכֵ֣י יִשְׂרָאֵ֑ל וִיהוּדָ֛ה הָגְל֥וּ לְבָבֶ֖ל בְּמַעֲלָֽם׃ ס "
+  },
+  "1CH 9:2": {
+   "KJV": "Now the first inhabitants that dwelt in their possessions in their cities were, the Israelites, the priests, Levites, and the Nethinims.",
+   "BHSA": "וְהַיֹּושְׁבִים֙ הָרִ֣אשֹׁנִ֔ים אֲשֶׁ֥ר בַּאֲחֻזָּתָ֖ם בְּעָרֵיהֶ֑ם יִשְׂרָאֵל֙ הַכֹּ֣הֲנִ֔ים הַלְוִיִּ֖ם וְהַנְּתִינִֽים׃ "
+  },
+  "1CH 9:3": {
+   "KJV": "And in Jerusalem dwelt of the children of Judah, and of the children of Benjamin, and of the children of Ephraim, and Manasseh;",
+   "BHSA": "וּבִירוּשָׁלִַ֨ם֙ יָשְׁב֔וּ מִן־בְּנֵ֥י יְהוּדָ֖ה וּמִן־בְּנֵ֣י בִנְיָמִ֑ן וּמִן־בְּנֵ֥י אֶפְרַ֖יִם וּמְנַשֶּֽׁה׃ "
+  },
+  "1CH 9:4": {
+   "KJV": "Uthai the son of Ammihud, the son of Omri, the son of Imri, the son of Bani, of the children of Pharez the son of Judah.",
+   "BHSA": "עוּתַ֨י בֶּן־עַמִּיה֤וּד בֶּן־עָמְרִי֙ בֶּן־אִמְרִ֣י בֶן־בנימן־בְּנֵי־פֶ֖רֶץ בֶּן־יְהוּדָֽה׃ "
+  },
+  "1CH 9:5": {
+   "KJV": "And of the Shilonites; Asaiah the firstborn, and his sons.",
+   "BHSA": "וּמִן־הַשִּׁ֣ילֹונִ֔י עֲשָׂיָ֥ה הַבְּכֹ֖ור וּבָנָֽיו׃ "
+  },
+  "1CH 9:6": {
+   "KJV": "And of the sons of Zerah; Jeuel, and their brethren, six hundred and ninety.",
+   "BHSA": "וּמִן־בְּנֵי־זֶ֖רַח יְעוּאֵ֑ל וַאֲחֵיהֶ֖ם שֵׁשׁ־מֵאֹ֥ות וְתִשְׁעִֽים׃ "
+  },
+  "1CH 9:7": {
+   "KJV": "And of the sons of Benjamin; Sallu the son of Meshullam, the son of Hodaviah, the son of Hasenuah,",
+   "BHSA": "וּמִן־בְּנֵ֖י בִּנְיָמִ֑ן סַלּוּא֙ בֶּן־מְשֻׁלָּ֔ם בֶּן־הֹודַוְיָ֖ה בֶּן־הַסְּנֻאָֽה׃ "
+  },
+  "1CH 9:8": {
+   "KJV": "And Ibneiah the son of Jeroham, and Elah the son of Uzzi, the son of Michri, and Meshullam the son of Shephathiah, the son of Reuel, the son of Ibnijah;",
+   "BHSA": "וְיִבְנְיָה֙ בֶּן־יְרֹחָ֔ם וְאֵלָ֥ה בֶן־עֻזִּ֖י בֶּן־מִכְרִ֑י וּמְשֻׁלָּם֙ בֶּן־שְׁפַטְיָ֔ה בֶּן־רְעוּאֵ֖ל בֶּן־יִבְנִיָּֽה׃ "
+  },
+  "1CH 9:9": {
+   "KJV": "And their brethren, according to their generations, nine hundred and fifty and six. All these men were chief of the fathers in the house of their fathers.",
+   "BHSA": "וַאֲחֵיהֶם֙ לְתֹ֣לְדֹותָ֔ם תְּשַׁ֥ע מֵאֹ֖ות וַחֲמִשִּׁ֣ים וְשִׁשָּׁ֑ה כָּל־אֵ֣לֶּה אֲנָשִׁ֔ים רָאשֵׁ֥י אָבֹ֖ות לְבֵ֥ית אֲבֹתֵיהֶֽם׃ ס "
+  },
+  "1CH 9:10": {
+   "KJV": "And of the priests; Jedaiah, and Jehoiarib, and Jachin,",
+   "BHSA": "וּמִן־הַֽכֹּהֲנִ֑ים יְדַֽעְיָ֥ה וִיהֹויָרִ֖יב וְיָכִֽין׃ "
+  },
+  "1CH 9:11": {
+   "KJV": "And Azariah the son of Hilkiah, the son of Meshullam, the son of Zadok, the son of Meraioth, the son of Ahitub, the ruler of the house of God;",
+   "BHSA": "וַעֲזַרְיָ֨ה בֶן־חִלְקִיָּ֜ה בֶּן־מְשֻׁלָּ֣ם בֶּן־צָדֹ֗וק בֶּן־מְרָיֹות֙ בֶּן־אֲחִיט֔וּב נְגִ֖יד בֵּ֥ית הָאֱלֹהִֽים׃ ס "
+  },
+  "1CH 9:12": {
+   "KJV": "And Adaiah the son of Jeroham, the son of Pashur, the son of Malchijah, and Maasiai the son of Adiel, the son of Jahzerah, the son of Meshullam, the son of Meshillemith, the son of Immer;",
+   "BHSA": "וַעֲדָיָה֙ בֶּן־יְרֹחָ֔ם בֶּן־פַּשְׁח֖וּר בֶּן־מַלְכִּיָּ֑ה וּמַעְשַׂ֨י בֶּן־עֲדִיאֵ֧ל בֶּן־יַחְזֵ֛רָה בֶּן־מְשֻׁלָּ֥ם בֶּן־מְשִׁלֵּמִ֖ית בֶּן־אִמֵּֽר׃ "
+  },
+  "1CH 9:13": {
+   "KJV": "And their brethren, heads of the house of their fathers, a thousand and seven hundred and threescore; very able men for the work of the service of the house of God.",
+   "BHSA": "וַאֲחֵיהֶ֗ם רָאשִׁים֙ לְבֵ֣ית אֲבֹותָ֔ם אֶ֕לֶף וּשְׁבַ֥ע מֵאֹ֖ות וְשִׁשִּׁ֑ים גִּבֹּ֣ורֵי חֵ֔יל מְלֶ֖אכֶת עֲבֹודַ֥ת בֵּית־הָאֱלֹהִֽים׃ "
+  },
+  "1CH 9:14": {
+   "KJV": "And of the Levites; Shemaiah the son of Hasshub, the son of Azrikam, the son of Hashabiah, of the sons of Merari;",
+   "BHSA": "וּמִֽן־הַלְוִיִּ֑ם שְׁמַֽעְיָ֧ה בֶן־חַשּׁ֛וּב בֶּן־עַזְרִיקָ֥ם בֶּן־חֲשַׁבְיָ֖ה מִן־בְּנֵ֥י מְרָרִֽי׃ "
+  },
+  "1CH 9:15": {
+   "KJV": "And Bakbakkar, Heresh, and Galal, and Mattaniah the son of Micah, the son of Zichri, the son of Asaph;",
+   "BHSA": "וּבַקְבַּקַּ֥ר חֶ֖רֶשׁ וְגָלָ֑ל וּמַתַּנְיָה֙ בֶּן־מִיכָ֔א בֶּן־זִכְרִ֖י בֶּן־אָסָֽף׃ "
+  },
+  "1CH 9:16": {
+   "KJV": "And Obadiah the son of Shemaiah, the son of Galal, the son of Jeduthun, and Berechiah the son of Asa, the son of Elkanah, that dwelt in the villages of the Netophathites.",
+   "BHSA": "וְעֹבַדְיָה֙ בֶּֽן־שְׁמַֽעְיָ֔ה בֶּן־גָּלָ֖ל בֶּן־יְדוּת֑וּן וּבֶרֶכְיָ֤ה בֶן־אָסָא֙ בֶּן־אֶלְקָנָ֔ה הַיֹּושֵׁ֖ב בְּחַצְרֵ֥י נְטֹופָתִֽי׃ "
+  },
+  "1CH 9:17": {
+   "KJV": "And the porters were, Shallum, and Akkub, and Talmon, and Ahiman, and their brethren: Shallum was the chief;",
+   "BHSA": "וְהַשֹּׁעֲרִים֙ שַׁלּ֣וּם וְעַקּ֔וּב וְטַלְמֹ֖ן וַאֲחִימָ֑ן וַאֲחִיהֶ֥ם שַׁלּ֖וּם הָרֹֽאשׁ׃ "
+  },
+  "1CH 9:18": {
+   "KJV": "Who hitherto waited in the king's gate eastward: they were porters in the companies of the children of Levi.",
+   "BHSA": "וְֽעַד־הֵ֔נָּה בְּשַׁ֥עַר הַמֶּ֖לֶךְ מִזְרָ֑חָה הֵ֚מָּה הַשֹּׁ֣עֲרִ֔ים לְמַחֲנֹ֖ות בְּנֵ֥י לֵוִֽי׃ "
+  },
+  "1CH 9:19": {
+   "KJV": "And Shallum the son of Kore, the son of Ebiasaph, the son of Korah, and his brethren, of the house of his father, the Korahites, were over the work of the service, keepers of the gates of the tabernacle: and their fathers, being over the host of the LORD, were keepers of the entry.",
+   "BHSA": "וְשַׁלּ֣וּם בֶּן־קֹ֠ורֵא בֶּן־אֶבְיָסָ֨ף בֶּן־קֹ֜רַח וְֽאֶחָ֧יו לְבֵית־אָבִ֣יו הַקָּרְחִ֗ים עַ֚ל מְלֶ֣אכֶת הָעֲבֹודָ֔ה שֹׁמְרֵ֥י הַסִּפִּ֖ים לָאֹ֑הֶל וַאֲבֹֽתֵיהֶם֙ עַל־מַחֲנֵ֣ה יְהוָ֔ה שֹׁמְרֵ֖י הַמָּבֹֽוא׃ "
+  },
+  "1CH 9:20": {
+   "KJV": "And Phinehas the son of Eleazar was the ruler over them in time past, and the LORD was with him.",
+   "BHSA": "וּפִֽינְחָ֣ס בֶּן־אֶלְעָזָ֗ר נָגִ֨יד הָיָ֧ה עֲלֵיהֶ֛ם לְפָנִ֖ים יְהוָ֥ה׀ עִמֹּֽו׃ "
+  },
+  "1CH 9:21": {
+   "KJV": "And Zechariah the son of Meshelemiah was porter of the door of the tabernacle of the congregation.",
+   "BHSA": "זְכַרְיָה֙ בֶּ֣ן מְשֶֽׁלֶמְיָ֔ה שֹׁעֵ֥ר פֶּ֖תַח לְאֹ֥הֶל מֹועֵֽד׃ "
+  },
+  "1CH 9:22": {
+   "KJV": "All these which were chosen to be porters in the gates were two hundred and twelve. These were reckoned by their genealogy in their villages, whom David and Samuel the seer did ordain in their set office.",
+   "BHSA": "כֻּלָּ֤ם הַבְּרוּרִים֙ לְשֹׁעֲרִ֣ים בַּסִּפִּ֔ים מָאתַ֖יִם וּשְׁנֵ֣ים עָשָׂ֑ר הֵ֤מָּה בְחַצְרֵיהֶם֙ הִתְיַחְשָׂ֔ם הֵ֣מָּה יִסַּ֥ד דָּוִ֛יד וּשְׁמוּאֵ֥ל הָרֹאֶ֖ה בֶּאֱמוּנָתָֽם׃ "
+  },
+  "1CH 9:23": {
+   "KJV": "So they and their children had the oversight of the gates of the house of the LORD, namely, the house of the tabernacle, by wards.",
+   "BHSA": "וְהֵ֨ם וּבְנֵיהֶ֜ם עַל־הַשְּׁעָרִ֧ים לְבֵית־יְהוָ֛ה לְבֵ֥ית־הָאֹ֖הֶל לְמִשְׁמָרֹֽות׃ "
+  },
+  "1CH 9:24": {
+   "KJV": "In four quarters were the porters, toward the east, west, north, and south.",
+   "BHSA": "לְאַרְבַּ֣ע רוּחֹ֔ות יִהְי֖וּ הַשֹּׁעֲרִ֑ים מִזְרָ֥ח יָ֖מָּה צָפֹ֥ונָה וָנֶֽגְבָּה׃ "
+  },
+  "1CH 9:25": {
+   "KJV": "And their brethren, which were in their villages, were to come after seven days from time to time with them.",
+   "BHSA": "וַאֲחֵיהֶ֨ם בְּחַצְרֵיהֶ֜ם לָבֹ֨וא לְשִׁבְעַ֧ת הַיָּמִ֛ים מֵעֵ֥ת אֶל־עֵ֖ת עִם־אֵֽלֶּה׃ "
+  },
+  "1CH 9:26": {
+   "KJV": "For these Levites, the four chief porters, were in their set office, and were over the chambers and treasuries of the house of God.",
+   "BHSA": "כִּ֣י בֶאֱמוּנָ֞ה הֵ֗מָּה אַרְבַּ֨עַת֙ גִּבֹּרֵ֣י הַשֹּׁעֲרִ֔ים הֵ֖ם הַלְוִיִּ֑ם וְהָיוּ֙ עַל־הַלְּשָׁכֹ֔ות וְעַ֥ל הָאֹצְרֹ֖ות בֵּ֥ית הָאֱלֹהִֽים׃ "
+  },
+  "1CH 9:27": {
+   "KJV": "And they lodged round about the house of God, because the charge was upon them, and the opening thereof every morning pertained to them.",
+   "BHSA": "וּסְבִיבֹ֥ות בֵּית־הָאֱלֹהִ֖ים יָלִ֑ינוּ כִּֽי־עֲלֵיהֶ֣ם מִשְׁמֶ֔רֶת וְהֵ֥ם עַל־הַמַּפְתֵּ֖חַ וְלַבֹּ֥קֶר לַבֹּֽקֶר׃ "
+  },
+  "1CH 9:28": {
+   "KJV": "And certain of them had the charge of the ministering vessels, that they should bring them in and out by tale.",
+   "BHSA": "וּמֵהֶ֖ם עַל־כְּלֵ֣י הָעֲבֹודָ֑ה כִּֽי־בְמִסְפָּ֣ר יְבִיא֔וּם וּבְמִסְפָּ֖ר יֹוצִיאֽוּם׃ "
+  },
+  "1CH 9:29": {
+   "KJV": "Some of them also were appointed to oversee the vessels, and all the instruments of the sanctuary, and the fine flour, and the wine, and the oil, and the frankincense, and the spices.",
+   "BHSA": "וּמֵהֶ֗ם מְמֻנִּים֙ עַל־הַכֵּלִ֔ים וְעַ֖ל כָּל־כְּלֵ֣י הַקֹּ֑דֶשׁ וְעַל־הַסֹּ֨לֶת֙ וְהַיַּ֣יִן וְהַשֶּׁ֔מֶן וְהַלְּבֹונָ֖ה וְהַבְּשָׂמִֽים׃ "
+  },
+  "1CH 9:30": {
+   "KJV": "And some of the sons of the priests made the ointment of the spices.",
+   "BHSA": "וּמִן־בְּנֵי֙ הַכֹּ֣הֲנִ֔ים רֹקְחֵ֥י הַמִּרְקַ֖חַת לַבְּשָׂמִֽים׃ "
+  },
+  "1CH 9:31": {
+   "KJV": "And Mattithiah, one of the Levites, who was the firstborn of Shallum the Korahite, had the set office over the things that were made in the pans.",
+   "BHSA": "וּמַתִּתְיָה֙ מִן־הַלְוִיִּ֔ם ה֥וּא הַבְּכֹ֖ור לְשַׁלֻּ֣ם הַקָּרְחִ֑י בֶּאֱמוּנָ֕ה עַ֖ל מַעֲשֵׂ֥ה הַחֲבִתִּֽים׃ "
+  },
+  "1CH 9:32": {
+   "KJV": "And other of their brethren, of the sons of the Kohathites, were over the shewbread, to prepare it every sabbath.",
+   "BHSA": "וּמִן־בְּנֵ֧י הַקְּהָתִ֛י מִן־אֲחֵיהֶ֖ם עַל־לֶ֣חֶם הַֽמַּעֲרָ֑כֶת לְהָכִ֖ין שַׁבַּ֥ת שַׁבָּֽת׃ ס "
+  },
+  "1CH 9:33": {
+   "KJV": "And these are the singers, chief of the fathers of the Levites, who remaining in the chambers were free: for they were employed in that work day and night.",
+   "BHSA": "וְאֵ֣לֶּה הַ֠מְשֹׁרְרִים רָאשֵׁ֨י אָבֹ֧ות לַלְוִיִּ֛ם בַּלְּשָׁכֹ֖ת פטירים כִּֽי־יֹומָ֥ם וָלַ֛יְלָה עֲלֵיהֶ֖ם בַּמְּלָאכָֽה׃ "
+  },
+  "1CH 9:34": {
+   "KJV": "These chief fathers of the Levites were chief throughout their generations; these dwelt at Jerusalem.",
+   "BHSA": "אֵלֶּה֩ רָאשֵׁ֨י הָאָבֹ֧ות לַלְוִיִּ֛ם לְתֹלְדֹותָ֖ם רָאשִׁ֑ים אֵ֖לֶּה יָשְׁב֥וּ בִירוּשָׁלִָֽם׃ פ "
+  },
+  "1CH 9:35": {
+   "KJV": "And in Gibeon dwelt the father of Gibeon, Jehiel, whose wife's name was Maachah:",
+   "BHSA": "וּבְגִבְעֹ֛ון יָשְׁב֥וּ אֲבִֽי־גִבְעֹ֖ון יעואל וְשֵׁ֥ם אִשְׁתֹּ֖ו מַעֲכָֽה׃ "
+  },
+  "1CH 9:36": {
+   "KJV": "And his firstborn son Abdon, then Zur, and Kish, and Baal, and Ner, and Nadab.",
+   "BHSA": "וּבְנֹ֥ו הַבְּכֹ֖ור עַבְדֹּ֑ון וְצ֣וּר וְקִ֔ישׁ וּבַ֥עַל וְנֵ֖ר וְנָדָֽב׃ "
+  },
+  "1CH 9:37": {
+   "KJV": "And Gedor, and Ahio, and Zechariah, and Mikloth.",
+   "BHSA": "וּגְדֹ֣ור וְאַחְיֹ֔ו וּזְכַרְיָ֖ה וּמִקְלֹֽות׃ "
+  },
+  "1CH 9:38": {
+   "KJV": "And Mikloth begat Shimeam. And they also dwelt with their brethren at Jerusalem, over against their brethren.",
+   "BHSA": "וּמִקְלֹ֖ות הֹולִ֣יד אֶת־שִׁמְאָ֑ם וְאַף־הֵ֗ם נֶ֧גֶד אֲחֵיהֶ֛ם יָשְׁב֥וּ בִירֽוּשָׁלִַ֖ם עִם־אֲחֵיהֶֽם׃ ס "
+  },
+  "1CH 9:39": {
+   "KJV": "And Ner begat Kish; and Kish begat Saul; and Saul begat Jonathan, and Malchishua, and Abinadab, and Eshbaal.",
+   "BHSA": "וְנֵר֙ הֹולִ֣יד אֶת־קִ֔ישׁ וְקִ֖ישׁ הֹולִ֣יד אֶת־שָׁא֑וּל וְשָׁא֗וּל הֹולִ֤יד אֶת־יְהֹֽונָתָן֙ וְאֶת־מַלְכִּי־שׁ֔וּעַ וְאֶת־אֲבִינָדָ֖ב וְאֶת־אֶשְׁבָּֽעַל׃ "
+  },
+  "1CH 9:40": {
+   "KJV": "And the son of Jonathan was Meribbaal: and Meribbaal begat Micah.",
+   "BHSA": "וּבֶן־יְהֹונָתָ֖ן מְרִ֣יב בָּ֑עַל וּמְרִי־בַ֖עַל הֹולִ֥יד אֶת־מִיכָֽה׃ "
+  },
+  "1CH 9:41": {
+   "KJV": "And the sons of Micah were, Pithon, and Melech, and Tahrea, and Ahaz.",
+   "BHSA": "וּבְנֵ֖י מִיכָ֑ה פִּיתֹ֥ון וָמֶ֖לֶךְ וְתַחְרֵֽעַ׃ "
+  },
+  "1CH 9:42": {
+   "KJV": "And Ahaz begat Jarah; and Jarah begat Alemeth, and Azmaveth, and Zimri; and Zimri begat Moza;",
+   "BHSA": "וְאָחָז֙ הֹולִ֣יד אֶת־יַעְרָ֔ה וְיַעְרָ֗ה הֹולִ֛יד אֶת־עָלֶ֥מֶת וְאֶת־עַזְמָ֖וֶת וְאֶת־זִמְרִ֑י וְזִמְרִ֖י הֹולִ֥יד אֶת־מֹוצָֽא׃ "
+  },
+  "1CH 9:43": {
+   "KJV": "And Moza begat Binea; and Rephaiah his son, Eleasah his son, Azel his son.",
+   "BHSA": "וּמֹוצָ֖א הֹולִ֣יד אֶת־בִּנְעָ֑א וּרְפָיָ֥ה בְנֹ֛ו אֶלְעָשָׂ֥ה בְנֹ֖ו אָצֵ֥ל בְּנֹֽו׃ "
+  },
+  "1CH 9:44": {
+   "KJV": "And Azel had six sons, whose names are these, Azrikam, Bocheru, and Ishmael, and Sheariah, and Obadiah, and Hanan: these were the sons of Azel.",
+   "BHSA": "וּלְאָצֵל֮ שִׁשָּׁ֣ה בָנִים֒ וְאֵ֣לֶּה שְׁמֹותָ֗ם עַזְרִיקָ֥ם׀ בֹּ֨כְרוּ֙ וְיִשְׁמָעֵ֣אל וּשְׁעַרְיָ֔ה וְעֹבַדְיָ֖ה וְחָנָ֑ן אֵ֖לֶּה בְּנֵ֥י אָצַֽל׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "abdon-3",
+   "name": "Abdon",
+   "distinguisher": "son of Jeiel and Maacah (1CH 8:30), firstborn (1CH 9:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "abiasaph",
+   "name": "Abiasaph",
+   "distinguisher": "son of Korah (EXO 6:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "adaiah-4",
+   "name": "Adaiah",
+   "distinguisher": "son of Jeroham (1CH 9:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "adiel-2",
+   "name": "Adiel",
+   "distinguisher": "son of Jahzerah (1CH 9:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahaz-2",
+   "name": "Ahaz",
+   "distinguisher": "son of Micah (1CH 8:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahiman-2",
+   "name": "Ahiman",
+   "distinguisher": "one of the gatekeepers (1CH 9:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahio-3",
+   "name": "Ahio",
+   "distinguisher": "son of Jeiel and Maacah (1CH 8:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahitub-3",
+   "name": "Ahitub",
+   "distinguisher": "son of Amariah (1CH 6:11), Levite (1CH 6:1), father of Meraioth (1CH 9:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "akkub-2",
+   "name": "Akkub",
+   "distinguisher": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "akkub-4",
+   "name": "Akkub",
+   "distinguisher": "Levite gatekeeper listed among porters with Shallum, Talmon, Ahiman",
+   "sex": null
+  },
+  {
+   "slug": "alemeth-2",
+   "name": "Alemeth",
+   "distinguisher": "son of Jehoadda (1CH 8:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "ammihud-5",
+   "name": "Ammihud",
+   "distinguisher": "son of Omri (1CH 9:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "asa-2",
+   "name": "Asa",
+   "distinguisher": "son of Elkanah (1CH 9:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "asaiah-4",
+   "name": "Asaiah",
+   "distinguisher": "Shilonite living in Jerusalem (1CH 9:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "asaph-2",
+   "name": "Asaph",
+   "distinguisher": "son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "azariah-7",
+   "name": "Azariah",
+   "distinguisher": "son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and priest (EZR 2:2, NEH 7:7, NEH 12:1), explained the law to the people (NEH 8:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "azel",
+   "name": "Azel",
+   "distinguisher": "son of Eleasah (1CH 8:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "azmaveth-2",
+   "name": "Azmaveth",
+   "distinguisher": "son of Jehoadda (1CH 8:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "azrikam-2",
+   "name": "Azrikam",
+   "distinguisher": "son of Azel (1CH 8:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "azrikam-3",
+   "name": "Azrikam",
+   "distinguisher": "son of Hashabiah (1CH 9:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "baal-2",
+   "name": "Baal",
+   "distinguisher": "son of Jeiel and Maacah (1CH 8:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "bakbakkar",
+   "name": "Bakbakkar",
+   "distinguisher": "counted among the Levites carried into exile (1CH 9:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "bani-3",
+   "name": "Bani",
+   "distinguisher": "descendant of Perez (1CH 9:4) and leader during the return (NEH 10:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin",
+   "name": "Benjamin",
+   "distinguisher": "twelfth-born son of Jacob and Rachel (GEN 35:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "berechiah-3",
+   "name": "Berechiah",
+   "distinguisher": "son of Asa (1CH 9:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "binea",
+   "name": "Binea",
+   "distinguisher": "son of Moza (1CH 8:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "bocheru",
+   "name": "Bocheru",
+   "distinguisher": "son of Azel (1CH 8:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "elah-5",
+   "name": "Elah",
+   "distinguisher": "son of Uzzi (1CH 9:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleasah-2",
+   "name": "Eleasah",
+   "distinguisher": "son of Raphah (1CH 8:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar",
+   "name": "Eleazar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "elkanah-4",
+   "name": "Elkanah",
+   "distinguisher": "father of Amasai and Ahimoth (1CH 6:25) and son of Joel (1CH 6:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "elkanah-6",
+   "name": "Elkanah",
+   "distinguisher": "lived in the villages of the Netophathites (1CH 9:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "ephraim",
+   "name": "Ephraim",
+   "distinguisher": "second son of Joseph (GEN 41:52)",
+   "sex": "male"
+  },
+  {
+   "slug": "galal",
+   "name": "Galal",
+   "distinguisher": "counted among the Levites carried into exile (1CH 9:15)- son of Jeduthun (1CH 9:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "gedor-3",
+   "name": "Gedor",
+   "distinguisher": "son of Jeiel and Maacah (1CH 8:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanan-2",
+   "name": "Hanan",
+   "distinguisher": "son of Azel (1CH 8:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashabiah",
+   "name": "Hashabiah",
+   "distinguisher": "son of Amaziah (1CH 6:45), Levite during the return (NEH 10:11, NEH 12:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashabiah-11",
+   "name": "Hashabiah",
+   "distinguisher": "Son of Bunni, father of Azrikam, ancestor of Shemaiah in Nehemiah's day",
+   "sex": null
+  },
+  {
+   "slug": "hashabiah-2",
+   "name": "Hashabiah",
+   "distinguisher": "son of Jeduthun (1CH 25:3), chosen twelfth by lot (1CH 25:19), descendant of Hebron (1CH 26:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "hassenuah",
+   "name": "Hassenuah",
+   "distinguisher": "descendant of Benjamin (1CH 9:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "hasshub",
+   "name": "Hasshub",
+   "distinguisher": "son of Azrikam (1CH 9:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "heresh",
+   "name": "Heresh",
+   "distinguisher": "counted among the Levites carried into exile (1CH 9:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "hilkiah-2",
+   "name": "Hilkiah",
+   "distinguisher": "the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "hodaviah-4",
+   "name": "Hodaviah",
+   "distinguisher": "son of Hassenuah (1CH 9:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "ibneiah",
+   "name": "Ibneiah",
+   "distinguisher": "son of Jeroham (1CH 9:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "ibnijah",
+   "name": "Ibnijah",
+   "distinguisher": "descendant of Benjamin (1CH 9:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "immer",
+   "name": "Immer",
+   "distinguisher": "father of Meshillemith (1CH 9:12), priest (EZR 2:37, NEH 7:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "imri",
+   "name": "Imri",
+   "distinguisher": "son of Bani (1CH 9:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishbosheth",
+   "name": "Ish-bosheth",
+   "distinguisher": "(illegitimate?) son of Saul (2SA 2:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishmael-3",
+   "name": "Ishmael",
+   "distinguisher": "son of Azel (1CH 8:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishvi-2",
+   "name": "Ishvi",
+   "distinguisher": "son of Saul (1SA 14:49)",
+   "sex": "male"
+  },
+  {
+   "slug": "jachin-2",
+   "name": "Jachin",
+   "distinguisher": "priest (1CH 9:10, NEH 11:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahzerah",
+   "name": "Jahzerah",
+   "distinguisher": "son of Meshullam (1CH 9:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "jedaiah-2",
+   "name": "Jedaiah",
+   "distinguisher": "priest (1CH 9:10, NEH 7:39, NEH 12:6), of the house of Jeshua (EZR 2:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "jedaiah-5",
+   "name": "Jedaiah",
+   "distinguisher": "priest, son of Joiarib (NEH 11:10, NEH 12:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeduthun",
+   "name": "Jeduthun",
+   "distinguisher": "father of Galal (1CH 9:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoaddah",
+   "name": "Jehoaddah",
+   "distinguisher": "son of Ahaz (1CH 8:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoiarib",
+   "name": "Jehoiarib",
+   "distinguisher": "priest (1CH 9:10), Joiarib in NEH 12:6",
+   "sex": "male"
+  },
+  {
+   "slug": "jeiel-2",
+   "name": "Jeiel",
+   "distinguisher": "the father of [the city of ] Gibeon (1CH 9:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeroham-2",
+   "name": "Jeroham",
+   "distinguisher": "father of Ibneiah (1CH 9:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeroham-3",
+   "name": "Jeroham",
+   "distinguisher": "son of Pashhur (1CH 9:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeuel",
+   "name": "Jeuel",
+   "distinguisher": "descendant of Zerah (1CH 9:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "jonathan-2",
+   "name": "Jonathan",
+   "distinguisher": "son of King Saul (1SA 13:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "kish",
+   "name": "Kish",
+   "distinguisher": "a mighty man of valor [perhaps wealth or influence] (1SA 9:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "kish-2",
+   "name": "Kish",
+   "distinguisher": "son of Jeiel and Maacah (1CH 8:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "korah-3",
+   "name": "Korah",
+   "distinguisher": "son of Izhar (EXO 6:21) who rebelled against G-d and Moses (Numbers chapter 16)",
+   "sex": "male"
+  },
+  {
+   "slug": "kore",
+   "name": "Kore",
+   "distinguisher": "father of Shallum, descendant of Korah (1CH 9:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "levi",
+   "name": "Levi",
+   "distinguisher": "third-born son of Jacob (GEN 29:34), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "maacah-6",
+   "name": "Maacah",
+   "distinguisher": "wife of Jeiel (1CH 8:29, 1CH 9:35)",
+   "sex": "female"
+  },
+  {
+   "slug": "maasai",
+   "name": "Maasai",
+   "distinguisher": "son of Adiel (1CH 9:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "malchijah-father-of-pashhur",
+   "name": "Malchijah",
+   "distinguisher": "a priest, father of Pashhur, forefather of priests who served in Jerusalem after the return (1CH 9:12, NEH 11:12)",
+   "sex": null
+  },
+  {
+   "slug": "malchishua",
+   "name": "Malchi-shua",
+   "distinguisher": "son of Saul (1SA 14:49)",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh",
+   "name": "Manasseh",
+   "distinguisher": "firstborn son of Joseph (GEN 41:51)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattaniah-9",
+   "name": "Mattaniah",
+   "distinguisher": "descendant of Mica (NEH 11:17), gatekeeper (NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattithiah",
+   "name": "Mattithiah",
+   "distinguisher": "firstborn of Shallum (1CH 9:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "melech",
+   "name": "Melech",
+   "distinguisher": "son of Micah (1CH 8:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "mephibosheth",
+   "name": "Mephibosheth",
+   "distinguisher": "son of Jonathan (2SA 4:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "meraioth-2",
+   "name": "Meraioth",
+   "distinguisher": "son of Ahitub (1CH 9:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "merari",
+   "name": "Merari",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshillemith",
+   "name": "Meshillemith",
+   "distinguisher": "son of Immer (1CH 9:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshuallam",
+   "name": "Meshuallam",
+   "distinguisher": "son of Hodaviah (1CH 9:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshullam-5",
+   "name": "Meshullam",
+   "distinguisher": "son of Shephatiah (1CH 9:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshullam-6",
+   "name": "Meshullam",
+   "distinguisher": "son of Meshillemith (1CH 9:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "mica",
+   "name": "Mica",
+   "distinguisher": "son of Mephibosheth (2SA 9:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "mica-2",
+   "name": "Mica",
+   "distinguisher": "son of Zichri (1CH 9:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "michri",
+   "name": "Michri",
+   "distinguisher": "father of Uzzi (1CH 9:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "mikloth",
+   "name": "Mikloth",
+   "distinguisher": "son of Jeiel and Maacah (1CH 8:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "moza-2",
+   "name": "Moza",
+   "distinguisher": "son of Zimri (1CH 8:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "nadab-4",
+   "name": "Nadab",
+   "distinguisher": "son of Jeiel and Maacah (1CH 8:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "ner",
+   "name": "Ner",
+   "distinguisher": "father of Abner (1SA 14:50)",
+   "sex": "male"
+  },
+  {
+   "slug": "obadiah-4",
+   "name": "Obadiah",
+   "distinguisher": "son of Azel (1CH 8:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "obadiah-5",
+   "name": "Obadiah",
+   "distinguisher": "son of Shemaiah (1CH 9:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "omri-3",
+   "name": "Omri",
+   "distinguisher": "son of Imri (1CH 9:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "pashhur-the-priest",
+   "name": "Pashhur",
+   "distinguisher": "a priest, son of Malchijah, forefather of priests who served in Jerusalem after the return (1CH 9:12, NEH 11:12)",
+   "sex": null
+  },
+  {
+   "slug": "perez",
+   "name": "Perez",
+   "distinguisher": "son of Judah and Tamar (GEN 38:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "phinehas",
+   "name": "Phinehas",
+   "distinguisher": "Eleazar's son, Aaron's grandson (EXO 6:25) given a covenant of peace and perpetual priesthood (NUM 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "pithon",
+   "name": "Pithon",
+   "distinguisher": "son of Micah (1CH 8:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "raphah-2",
+   "name": "Raphah",
+   "distinguisher": "son of Binea (1CH 8:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "reuel-3",
+   "name": "Reuel",
+   "distinguisher": "son of Ibnijah (1CH 9:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "sallu",
+   "name": "Sallu",
+   "distinguisher": "son of Meshullam (1CH 9:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "samuel-2",
+   "name": "Samuel",
+   "distinguisher": "son of Elkanah and Hannah (1SA 1:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "saul",
+   "name": "Saul",
+   "distinguisher": "son of Kish (1SA 9:2), King of Israel (1SA 11:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum-6",
+   "name": "Shallum",
+   "distinguisher": "son of Zadok (1CH 6:12) and father of Hilkiah (1CH 6:13), Levite (1CH 6:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum-7",
+   "name": "Shallum",
+   "distinguisher": "one of the gatekeepers (1CH 9:17), to the east (1CH 26:14), gatekeeper (EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "sheariah",
+   "name": "Sheariah",
+   "distinguisher": "son of Azel (1CH 8:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-5",
+   "name": "Shemaiah",
+   "distinguisher": "son of Hasshub (1CH 9:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-6",
+   "name": "Shemaiah",
+   "distinguisher": "son of Galal (1CH 9:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "shephatiah-2",
+   "name": "Shephatiah",
+   "distinguisher": "son of Reuel (1CH 9:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimeah",
+   "name": "Shimeah",
+   "distinguisher": "son of Mikloth (1CH 8:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "talmon",
+   "name": "Talmon",
+   "distinguisher": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "tarea",
+   "name": "Tarea",
+   "distinguisher": "son of Micah (1CH 8:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "uthai",
+   "name": "Uthai",
+   "distinguisher": "son of Ammihud (1CH 9:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzzi-4",
+   "name": "Uzzi",
+   "distinguisher": "son of Michri (1CH 9:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zadok-3",
+   "name": "Zadok",
+   "distinguisher": "(grand)son of Ahitub and father of Shallum (1CH 6:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "zechariah-4",
+   "name": "Zechariah",
+   "distinguisher": "son of Meshelemiah [Shallum] (1CH 9:21), gatekeeper (1CH 26:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "zecher",
+   "name": "Zecher",
+   "distinguisher": "son of Jeiel and Maacah (1CH 8:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "zerah-3",
+   "name": "Zerah",
+   "distinguisher": "son of Judah and Tamar (GEN 38:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "zichri-5",
+   "name": "Zichri",
+   "distinguisher": "son of Asaph (1CH 9:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "zimri-3",
+   "name": "Zimri",
+   "distinguisher": "son of Jehoadda (1CH 8:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "zur-3",
+   "name": "Zur",
+   "distinguisher": "son of Jeiel and Maacah (1CH 8:30)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 97443,
+   "row": "ammihud-5 father-of uthai",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97444,
+   "row": "ammihud-5 son-of omri-3",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97875,
+   "row": "bani-3 father-of imri",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97876,
+   "row": "bani-3 descendant-of perez",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97877,
+   "row": "bani-3 descendant-of judah",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99725,
+   "row": "imri son-of bani-3",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99726,
+   "row": "imri father-of omri-3",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101822,
+   "row": "omri-3 son-of imri",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101823,
+   "row": "omri-3 father-of ammihud-5",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103168,
+   "row": "uthai son-of ammihud-5",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103169,
+   "row": "uthai descendant-of perez",
+   "verse": "1CH 9:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106761,
+   "row": "asaiah-4 descendant-of judah",
+   "verse": "1CH 9:5",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 100345,
+   "row": "jeuel descendant-of zerah-3",
+   "verse": "1CH 9:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99382,
+   "row": "hassenuah descendant-of benjamin",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99383,
+   "row": "hassenuah of-tribe benjamin",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99384,
+   "row": "hassenuah father-of hodaviah-4",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99579,
+   "row": "hodaviah-4 son-of hassenuah",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99580,
+   "row": "hodaviah-4 father-of meshuallam",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99581,
+   "row": "hodaviah-4 descendant-of benjamin",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102255,
+   "row": "sallu son-of meshuallam",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102256,
+   "row": "sallu descendant-of benjamin",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102257,
+   "row": "sallu descendant-of hodaviah-4",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102258,
+   "row": "sallu descendant-of hassenuah",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106956,
+   "row": "meshuallam father-of sallu",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106957,
+   "row": "meshuallam son-of hodaviah-4",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106958,
+   "row": "meshuallam descendant-of benjamin",
+   "verse": "1CH 9:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98541,
+   "row": "elah-5 son-of uzzi-4",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99677,
+   "row": "ibneiah son-of jeroham-2",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101307,
+   "row": "meshullam-5 son-of shephatiah-2",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101308,
+   "row": "meshullam-5 descendant-of reuel-3",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101309,
+   "row": "meshullam-5 descendant-of ibnijah",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102191,
+   "row": "reuel-3 son-of ibnijah",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102192,
+   "row": "reuel-3 father-of shephatiah-2",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102690,
+   "row": "shephatiah-2 father-of meshullam-5",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102691,
+   "row": "shephatiah-2 son-of reuel-3",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103194,
+   "row": "uzzi-4 father-of elah-5",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103195,
+   "row": "uzzi-4 son-of michri",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105745,
+   "row": "ibnijah father-of reuel-3",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105746,
+   "row": "ibnijah descendant-of benjamin",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 105867,
+   "row": "jeroham-2 father-of ibneiah",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105868,
+   "row": "jeroham-2 descendant-of benjamin",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106964,
+   "row": "michri father-of uzzi-4",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106965,
+   "row": "michri descendant-of benjamin",
+   "verse": "1CH 9:8",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 105796,
+   "row": "jachin-2 priest-of yhvh",
+   "verse": "1CH 9:10",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 105797,
+   "row": "jachin-2 descendant-of aaron",
+   "verse": "1CH 9:10",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 105827,
+   "row": "jehoiarib priest-of yhvh",
+   "verse": "1CH 9:10",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 105828,
+   "row": "jehoiarib descendant-of aaron",
+   "verse": "1CH 9:10",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106862,
+   "row": "jedaiah-2 priest-of yhvh",
+   "verse": "1CH 9:10",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 106863,
+   "row": "jedaiah-2 descendant-of aaron",
+   "verse": "1CH 9:10",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 101265,
+   "row": "meraioth-2 son-of ahitub-3",
+   "verse": "1CH 9:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101266,
+   "row": "meraioth-2 father-of zadok-3",
+   "verse": "1CH 9:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103321,
+   "row": "zadok-3 ancestor-of azariah-7",
+   "verse": "1CH 9:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97161,
+   "row": "adaiah-4 son-of jeroham-3",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97176,
+   "row": "adiel-2 son-of jahzerah",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97177,
+   "row": "adiel-2 father-of maasai",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99974,
+   "row": "jahzerah son-of meshullam-6",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99975,
+   "row": "jahzerah father-of adiel-2",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100980,
+   "row": "maasai son-of adiel-2",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101290,
+   "row": "meshillemith son-of immer",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101291,
+   "row": "meshillemith father-of meshullam-6",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101310,
+   "row": "meshullam-6 father-of jahzerah",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101311,
+   "row": "meshullam-6 son-of meshillemith",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101312,
+   "row": "meshullam-6 grandfather-of adiel-2",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105750,
+   "row": "immer father-of meshillemith",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105751,
+   "row": "immer ancestor-of maasai",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106030,
+   "row": "malchijah-father-of-pashhur father-of pashhur-the-priest",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106031,
+   "row": "malchijah-father-of-pashhur descendant-of aaron",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 106868,
+   "row": "jeroham-3 father-of adaiah-4",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106869,
+   "row": "jeroham-3 son-of pashhur-the-priest",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107228,
+   "row": "pashhur-the-priest son-of malchijah-father-of-pashhur",
+   "verse": "1CH 9:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97805,
+   "row": "azrikam-3 son-of hashabiah",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97806,
+   "row": "azrikam-3 father-of hasshub",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97807,
+   "row": "azrikam-3 descendant-of merari",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99354,
+   "row": "hashabiah father-of azrikam-3",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99355,
+   "row": "hashabiah descendant-of merari",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99386,
+   "row": "hasshub son-of azrikam-3",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99387,
+   "row": "hasshub father-of shemaiah-5",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99388,
+   "row": "hasshub descendant-of merari",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102644,
+   "row": "shemaiah-5 son-of hasshub",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102645,
+   "row": "shemaiah-5 descendant-of merari",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103663,
+   "row": "hashabiah-11 father-of azrikam-3",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103664,
+   "row": "hashabiah-11 descendant-of merari",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106044,
+   "row": "merari ancestor-of hashabiah-2",
+   "verse": "1CH 9:14",
+   "source": "read from Scripture by an agent reading 1CH 9:14 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 101336,
+   "row": "mica-2 son-of zichri-5",
+   "verse": "1CH 9:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103911,
+   "row": "bakbakkar descendant-of levi",
+   "verse": "1CH 9:15",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106764,
+   "row": "asaph-2 descendant-of levi",
+   "verse": "1CH 9:15",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106832,
+   "row": "heresh descendant-of levi",
+   "verse": "1CH 9:15",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106955,
+   "row": "mattaniah-9 son-of mica-2",
+   "verse": "1CH 9:15",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 107179,
+   "row": "zichri-5 father-of mica-2",
+   "verse": "1CH 9:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107180,
+   "row": "zichri-5 son-of asaph-2",
+   "verse": "1CH 9:15",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 97617,
+   "row": "asa-2 son-of elkanah-6",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97618,
+   "row": "asa-2 father-of berechiah-3",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98056,
+   "row": "berechiah-3 son-of asa-2",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99006,
+   "row": "galal son-of jeduthun",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99007,
+   "row": "galal father-of shemaiah-6",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101773,
+   "row": "obadiah-5 son-of shemaiah-6",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101774,
+   "row": "obadiah-5 descendant-of jeduthun",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102646,
+   "row": "shemaiah-6 father-of obadiah-5",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102647,
+   "row": "shemaiah-6 son-of galal",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106797,
+   "row": "elkanah-6 father-of asa-2",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106798,
+   "row": "elkanah-6 grandfather-of berechiah-3",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106799,
+   "row": "elkanah-6 descendant-of levi",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106865,
+   "row": "jeduthun father-of galal",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106867,
+   "row": "jeduthun descendant-of levi",
+   "verse": "1CH 9:16",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 100835,
+   "row": "kore son-of abiasaph",
+   "verse": "1CH 9:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100836,
+   "row": "kore father-of shallum-7",
+   "verse": "1CH 9:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100837,
+   "row": "kore descendant-of korah-3",
+   "verse": "1CH 9:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102418,
+   "row": "shallum-7 son-of kore",
+   "verse": "1CH 9:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106751,
+   "row": "abiasaph father-of kore",
+   "verse": "1CH 9:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103410,
+   "row": "zechariah-4 son-of shallum-7",
+   "verse": "1CH 9:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101202,
+   "row": "mattithiah son-of shallum-7",
+   "verse": "1CH 9:31",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102420,
+   "row": "shallum-7 father-of mattithiah",
+   "verse": "1CH 9:31",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100188,
+   "row": "jeiel-2 husband-of maacah-6",
+   "verse": "1CH 9:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100968,
+   "row": "maacah-6 wife-of jeiel-2",
+   "verse": "1CH 9:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103804,
+   "row": "abdon-3 brother-of ner",
+   "verse": "1CH 9:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103906,
+   "row": "baal-2 brother-of ner",
+   "verse": "1CH 9:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 106683,
+   "row": "nadab-4 brother-of ner",
+   "verse": "1CH 9:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106914,
+   "row": "kish-2 brother-of ner",
+   "verse": "1CH 9:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107198,
+   "row": "zur-3 brother-of ner",
+   "verse": "1CH 9:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103833,
+   "row": "ahio-3 brother-of zecher",
+   "verse": "1CH 9:37",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103834,
+   "row": "ahio-3 brother-of mikloth",
+   "verse": "1CH 9:37",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 106628,
+   "row": "zecher brother-of mikloth",
+   "verse": "1CH 9:37",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98179,
+   "row": "binea ancestor-of azel",
+   "verse": "1CH 9:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98570,
+   "row": "eleasah-2 father-of azel",
+   "verse": "1CH 9:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "ahaz-2 son-of mica (1CH 8:35)",
+  "ahaz-2 father-of jehoaddah (1CH 8:36)",
+  "alemeth-2 son-of jehoaddah (1CH 8:36)",
+  "alemeth-2 brother-of azmaveth-2 (1CH 8:36)",
+  "alemeth-2 brother-of zimri-3 (1CH 8:36)",
+  "azariah-7 son-of hilkiah-2 (1CH 6:13)",
+  "azel son-of eleasah-2 (1CH 8:37)",
+  "azel father-of azrikam-2 (1CH 8:38)",
+  "azel father-of bocheru (1CH 8:38)",
+  "azel father-of ishmael-3 (1CH 8:38)",
+  "azel father-of sheariah (1CH 8:38)",
+  "azel father-of obadiah-4 (1CH 8:38)",
+  "azel father-of hanan-2 (1CH 8:38)",
+  "azmaveth-2 son-of jehoaddah (1CH 8:36)",
+  "azrikam-2 son-of azel (1CH 8:38)",
+  "binea son-of moza-2 (1CH 8:37)",
+  "binea father-of raphah-2 (1CH 8:37)",
+  "bocheru son-of azel (1CH 8:38)",
+  "david servant-of saul (1SA 16:21)",
+  "david servant-of yhvh (2SA 3:18)",
+  "eleasah-2 son-of raphah-2 (1CH 8:37)",
+  "eleazar son-of aaron (EXO 6:23)",
+  "eleazar father-of phinehas (EXO 6:25)",
+  "eleazar priest-of yhvh (NUM 16:39)",
+  "ephraim brother-of manasseh (GEN 48:5)",
+  "hanan-2 son-of azel (1CH 8:38)",
+  "hashabiah-2 son-of jeduthun (1CH 25:3)",
+  "hashabiah-2 father-of azrikam-3 (NEH 11:15)",
+  "ishbosheth son-of saul (2SA 2:8)",
+  "ishbosheth brother-of jonathan-2 (1CH 8:33)",
+  "ishmael-3 son-of azel (1CH 8:38)",
+  "ishvi-2 son-of saul (1SA 14:49)",
+  "ishvi-2 brother-of jonathan-2 (1SA 14:49)",
+  "ishvi-2 brother-of malchishua (1SA 14:49)",
+  "jedaiah-5 priest-of yhvh (NEH 11:10)",
+  "jehoaddah son-of ahaz-2 (1CH 8:36)",
+  "jehoaddah father-of alemeth-2 (1CH 8:36)",
+  "jehoaddah father-of azmaveth-2 (1CH 8:36)",
+  "jehoaddah father-of zimri-3 (1CH 8:36)",
+  "jonathan-2 son-of saul (1SA 14:49)",
+  "korah-3 descendant-of levi (NUM 16:1)",
+  "korah-3 father-of abiasaph (EXO 6:24)",
+  "malchishua son-of saul (1SA 14:49)",
+  "malchishua brother-of jonathan-2 (1SA 14:49)",
+  "malchishua brother-of ishvi-2 (1SA 14:49)",
+  "melech son-of mica (1CH 8:35)",
+  "mephibosheth son-of jonathan-2 (2SA 4:4)",
+  "mephibosheth grandson-of saul (2SA 9:6)",
+  "mephibosheth father-of mica (2SA 9:12)",
+  "mica son-of mephibosheth (2SA 9:12)",
+  "mica father-of pithon (1CH 8:35)",
+  "mica father-of melech (1CH 8:35)",
+  "mica father-of tarea (1CH 8:35)",
+  "mica father-of ahaz-2 (1CH 8:35)",
+  "moza-2 son-of zimri-3 (1CH 8:36)",
+  "moza-2 father-of binea (1CH 8:37)",
+  "ner father-of kish (1CH 8:33)",
+  "ner grandfather-of saul (1CH 8:33)",
+  "obadiah-4 son-of azel (1CH 8:38)",
+  "phinehas son-of eleazar (EXO 6:25)",
+  "phinehas descendant-of aaron (NUM 25:11)",
+  "phinehas priest-of yhvh (JOS 22:30)",
+  "pithon son-of mica (1CH 8:35)",
+  "pithon brother-of melech (1CH 8:35)",
+  "pithon brother-of tarea (1CH 8:35)",
+  "raphah-2 son-of binea (1CH 8:37)",
+  "raphah-2 father-of eleasah-2 (1CH 8:37)",
+  "samuel-2 servant-of yhvh (1SA 2:18)",
+  "saul son-of kish (1SA 9:2)",
+  "saul father-in-law-of david (1SA 25:44)",
+  "shallum-6 son-of zadok-3 (1CH 6:12)",
+  "shallum-6 father-of hilkiah-2 (1CH 6:13)",
+  "sheariah son-of azel (1CH 8:38)",
+  "shimeah son-of mikloth (1CH 8:32)",
+  "tarea son-of mica (1CH 8:35)",
+  "zadok-3 father-of shallum-6 (1CH 6:12)",
+  "zerah-3 son-of judah (GEN 46:12)",
+  "zerah-3 brother-of perez (GEN 38:30)",
+  "zimri-3 son-of jehoaddah (1CH 8:36)",
+  "zimri-3 father-of moza-2 (1CH 8:36)",
+  "zimri-3 brother-of azmaveth-2 (1CH 8:36)",
+  "abdon-3 brother-of zur-3 (1CH 8:30)",
+  "abdon-3 brother-of kish-2 (1CH 8:30)",
+  "abdon-3 brother-of baal-2 (1CH 8:30)",
+  "abdon-3 brother-of nadab-4 (1CH 8:30)",
+  "abdon-3 son-of jeiel-2 (1CH 8:30)",
+  "ahio-3 brother-of gedor-3 (1CH 8:31)",
+  "ahio-3 son-of jeiel-2 (1CH 8:31)",
+  "ahitub-3 descendant-of aaron (NEH 11:11)",
+  "baal-2 brother-of abdon-3 (1CH 8:30)",
+  "baal-2 brother-of zur-3 (1CH 8:30)",
+  "baal-2 brother-of kish-2 (1CH 8:30)",
+  "baal-2 brother-of nadab-4 (1CH 8:30)",
+  "baal-2 son-of jeiel-2 (1CH 8:30)",
+  "benjamin son-of jacob (GEN 35:18)",
+  "benjamin half-brother-of levi (GEN 35:18)",
+  "benjamin half-brother-of judah (GEN 35:18)",
+  "gedor-3 son-of jeiel-2 (1CH 8:31)",
+  "immer descendant-of aaron (1CH 24:14)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "judah son-of jacob (GEN 35:23)",
+  "judah brother-of levi (GEN 29:35)",
+  "merari son-of levi (GEN 46:11)",
+  "manasseh brother-of ephraim (GEN 48:5)",
+  "zecher brother-of gedor-3 (1CH 8:31)",
+  "zecher brother-of ahio-3 (1CH 8:31)",
+  "zecher son-of jeiel-2 (1CH 8:31)",
+  "nadab-4 brother-of abdon-3 (1CH 8:30)",
+  "nadab-4 brother-of kish-2 (1CH 8:30)",
+  "nadab-4 son-of jeiel-2 (1CH 8:30)",
+  "abiasaph son-of korah-3 (EXO 6:24)",
+  "hilkiah-2 high-priest-of yhvh (2KI 22:4)",
+  "hilkiah-2 descendant-of aaron (2KI 22:4)",
+  "jeduthun prophet-to david (2CH 35:15)",
+  "kish father-of saul (1SA 14:51)",
+  "kish of-tribe benjamin (1SA 9:1)",
+  "kish-2 brother-of abdon-3 (1CH 8:30)",
+  "kish-2 son-of jeiel-2 (1CH 8:30)",
+  "levi son-of jacob (GEN 35:23)",
+  "levi father-of merari (GEN 46:11)",
+  "mikloth father-of shimeah (1CH 8:32)",
+  "mikloth son-of jeiel-2 (1CH 8:32)",
+  "perez son-of judah (RUT 4:12)",
+  "perez brother-of zerah-3 (GEN 46:12)",
+  "zur-3 brother-of abdon-3 (1CH 8:30)",
+  "zur-3 brother-of kish-2 (1CH 8:30)",
+  "zur-3 son-of jeiel-2 (1CH 8:30)",
+  "ahitub-3 father-of zadok-3 (1CH 6:12)",
+  "zadok-3 son-of ahitub-3 (1CH 6:12)"
+ ]
+}

@@ -1,0 +1,192 @@
+{
+ "chapter": "NEH 12",
+ "rows": 101,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    105862
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 12:12",
+   "why": "The Jeremiah whose house Hananiah heads is the returning priestly house represented by jeremiah-9, not the separately recorded covenant priest jeremiah-7.",
+   "confidence": 0.85
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    105519
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 12:13",
+   "why": "Jehohanan heads the house of the returning Amariah represented by amariah-priest-with-zerubbabel, rather than the separately recorded amariah-6.",
+   "confidence": 0.85
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    105525
+   ],
+   "new_type": "",
+   "new_to": "amariah-priest-with-zerubbabel",
+   "verse": "NEH 12:13",
+   "why": "The list names Jehohanan as head of the Amariah house introduced among the returning priests in verse 2.",
+   "confidence": 0.85
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    105534
+   ],
+   "new_type": "",
+   "new_to": "ezra-3",
+   "verse": "NEH 12:13",
+   "why": "Meshullam heads the house of the returning priest Ezra from verse 1, rather than Ezra the scribe named in verse 26.",
+   "confidence": 0.97
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    105528
+   ],
+   "new_type": "",
+   "new_to": "malluch-6",
+   "verse": "NEH 12:14",
+   "why": "Jonathan heads the Melicu or Malluch house corresponding to the returning priest Malluch in verse 2.",
+   "confidence": 0.86
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    105531
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 12:14",
+   "why": "This verse associates Jonathan with the returning Malluch house represented by malluch-6, not the separately recorded malluch-4.",
+   "confidence": 0.86
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    103770
+   ],
+   "new_type": "",
+   "new_to": "iddo-7",
+   "verse": "NEH 12:16",
+   "why": "Zechariah heads the returning priestly house of Iddo represented by iddo-7, while the verse does not identify that Iddo as the prophet's grandfather.",
+   "confidence": 0.86
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    105526
+   ],
+   "new_type": "",
+   "new_to": "shemaiah-24",
+   "verse": "NEH 12:18",
+   "why": "Jehonathan heads the house of the returning priest Shemaiah from verse 6, represented by shemaiah-24.",
+   "confidence": 0.88
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    105537
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 12:18",
+   "why": "The Shemaiah house associated with Jehonathan is represented by shemaiah-24 rather than the separately recorded covenant priest shemaiah-19.",
+   "confidence": 0.88
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    105535
+   ],
+   "new_type": "",
+   "new_to": "jedaiah-8",
+   "verse": "NEH 12:21",
+   "why": "Nethaneel heads the second Jedaiah house, following Hilkiah in the order of verses 7 and 21, represented by jedaiah-8.",
+   "confidence": 0.95
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    100524
+   ],
+   "new_type": "",
+   "new_to": "shemaiah-26",
+   "verse": "NEH 12:35",
+   "why": "The genealogy makes Jonathan the son of the Shemaiah represented by shemaiah-26, Zechariah's grandfather.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    101176,
+    101177
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 12:35",
+   "why": "The Mattaniah in this genealogy is mattaniah-12, not mattaniah-4 from Hezekiah's time, and his son is shemaiah-26.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    101352
+   ],
+   "new_type": "",
+   "new_to": "mattaniah-12",
+   "verse": "NEH 12:35",
+   "why": "The genealogy names Michaiah as father of the Mattaniah represented by mattaniah-12.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    102624,
+    102625
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 12:35",
+   "why": "Jonathan's father in the genealogy is shemaiah-26, son of mattaniah-12, rather than the Levite shemaiah-14 sent by Ezra.",
+   "confidence": 0.98
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    103751,
+    106942,
+    106943,
+    106944,
+    106945
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 12:36",
+   "why": "The named musicians are called Zechariah's brethren in the musical procession, without a statement establishing biological sibling relationships.",
+   "confidence": 0.87
+  }
+ ],
+ "missing": [
+  {
+   "from": "jehohanan",
+   "type": "son-of",
+   "to": "eliashib-7",
+   "verse": "NEH 12:23",
+   "why": "The Hebrew explicitly calls Johanan son of Eliashib, continuing the priestly context that names Eliashib in verse 22.",
+   "confidence": 0.86
+  }
+ ],
+ "note": "Verses 12–21 identify heads of priestly houses without plainly stating immediate fatherhood, and the two Kadmiel records cannot be distinguished confidently from verse 24 alone. Owner rows 106650 and 106241 connect Iddo and Shammua respectively with earlier namesakes, identifications this chapter alone does not establish; both rulings are retained.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:32:04+00:00"
+}

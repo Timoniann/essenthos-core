@@ -1,0 +1,11 @@
+{
+ "case": "parents-joseph-6",
+ "question": "joseph-6 is recorded with more than one father: jacob-2, eli-2.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "Matthew 1:16 names Jacob as Joseph’s father, while Luke 3:23 names Heli; preserve both genealogies because the supplied texts do not resolve their difference. Luke qualifies Jesus’ sonship to Joseph with “as was supposed,” so row 100580 represents presumed fatherhood.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:35:15+00:00"
+}

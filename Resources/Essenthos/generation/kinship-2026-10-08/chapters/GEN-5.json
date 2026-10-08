@@ -1,0 +1,11 @@
+{
+ "chapter": "GEN 5",
+ "rows": 24,
+ "wrong": [],
+ "missing": [],
+ "note": "All listed relationships are supported by the Hebrew text, and every explicit relationship between named people in Genesis 5 is already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:15:37+00:00"
+}

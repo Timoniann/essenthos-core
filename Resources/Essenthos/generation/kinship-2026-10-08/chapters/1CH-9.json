@@ -1,0 +1,20 @@
+{
+ "chapter": "1CH 9",
+ "rows": 124,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "ner",
+   "type": "son-of",
+   "to": "jeiel-2",
+   "verse": "1CH 9:36",
+   "why": "Ner is included in the list of sons of Jeiel introduced by 'his firstborn son Abdon.'",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The supplied data assigns Azrikam's father to several Hashabiah records, which this chapter alone cannot confidently distinguish. Row 106044, recorded on the owner's instruction, shares this unresolved identification and merits review.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:24:35+00:00"
+}

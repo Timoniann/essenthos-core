@@ -1,0 +1,36 @@
+{
+ "chapter": "1CH 23",
+ "rows": 64,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "joel-6",
+   "type": "son-of",
+   "to": "libni",
+   "verse": "1CH 23:8",
+   "why": "The Hebrew lists Joel among Laadan's sons, whereas the recorded descendant-of row states only broader descent.",
+   "confidence": 0.99
+  },
+  {
+   "from": "zetham",
+   "type": "son-of",
+   "to": "libni",
+   "verse": "1CH 23:8",
+   "why": "The Hebrew lists Zetham among Laadan's sons, whereas the recorded descendant-of row states only broader descent.",
+   "confidence": 0.99
+  },
+  {
+   "from": "shelomith-3",
+   "type": "son-of",
+   "to": "izhar",
+   "verse": "1CH 23:18",
+   "why": "The Hebrew names Shelomith among Izhar's sons, whereas the recorded descendant-of row states only broader descent.",
+   "confidence": 1
+  }
+ ],
+ "note": "Laadan is identified with Libni consistently with the supplied records and the owner's ruling. No owner row appears wrong; the existing broader descent rows remain supported.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:25:14+00:00"
+}

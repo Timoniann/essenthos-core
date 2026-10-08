@@ -1,0 +1,23 @@
+{
+ "chapter": "NUM 3",
+ "rows": 10,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    103600
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "NUM 3:35",
+   "why": "The Hebrew calls Zuriel chief of the ancestral house of Merari's families, not commander of Merari himself.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [],
+ "note": "All explicit family statements between the supplied people are already recorded. Owner rows 106924 and 103811 are retained; Lael's and Abihail's ancestry is consistent with the clan context but is not explicitly stated.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:18:26+00:00"
+}

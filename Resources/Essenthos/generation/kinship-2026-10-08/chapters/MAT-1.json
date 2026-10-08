@@ -1,0 +1,41 @@
+{
+ "chapter": "MAT 1",
+ "rows": 30,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    102087,
+    102266
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "MAT 1:5",
+   "why": "The text says Salmon begat Boaz by Rahab but does not state that Salmon and Rahab were married.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "jehoram",
+   "type": "father-of",
+   "to": "azariah-3",
+   "verse": "MAT 1:8",
+   "why": "The text explicitly says Joram begat Ozias, identified here as Jehoram and Uzziah/Azariah.",
+   "confidence": 1
+  },
+  {
+   "from": "josiah",
+   "type": "father-of",
+   "to": "jehoiachin",
+   "verse": "MAT 1:11",
+   "why": "The text explicitly says Josias begat Jechonias, identified here as Josiah and Jehoiachin.",
+   "confidence": 1
+  }
+ ],
+ "note": "The begetting statements in verses 8 and 11 stand as written; intervening generations supplied by other chapters do not invalidate them.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:30:33+00:00"
+}

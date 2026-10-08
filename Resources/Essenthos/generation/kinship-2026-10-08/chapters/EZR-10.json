@@ -1,0 +1,76 @@
+{
+ "chapter": "EZR 10",
+ "rows": 148,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    102664
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "EZR 10:32",
+   "why": "Shemariah continues the sons-of-Harim list begun in verse 31, whereas the Hashum list begins in verse 33.",
+   "confidence": 1
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    101273
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "EZR 10:36",
+   "why": "Vaniah and Meremoth are successive members of Bani's list, with no statement that Meremoth descends from Vaniah.",
+   "confidence": 1
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    106712
+   ],
+   "new_type": "",
+   "new_to": "bani-4",
+   "verse": "EZR 10:38",
+   "why": "Shimei belongs to the sons-of-Bani list begun in verse 34, while bani-5 is another member listed alongside him.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    101015
+   ],
+   "new_type": "",
+   "new_to": "bani-4",
+   "verse": "EZR 10:40",
+   "why": "Machnadebai continues the returned family of Bani's list begun in verse 34, which does not identify David's Gadite warrior.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    100577
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "EZR 10:42",
+   "why": "Amariah and Joseph are successive members of Bani's list, with no statement that Joseph descends from Amariah.",
+   "confidence": 1
+  }
+ ],
+ "missing": [
+  {
+   "from": "eliezer-11",
+   "type": "descendant-of",
+   "to": "levi",
+   "verse": "EZR 10:23",
+   "why": "The Hebrew explicitly includes this Eliezer among the Levites.",
+   "confidence": 0.96
+  }
+ ],
+ "note": "Owner row 106680 looks misattributed: verse 18 places Maaseiah in Jeshua's family grouping, while Harim's separate list begins in verse 21; the row is preserved as instructed. The overlapping Jarib and Eliezer records cannot be distinguished conclusively from this chapter alone.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:28:46+00:00"
+}

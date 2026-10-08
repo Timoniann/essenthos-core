@@ -1,0 +1,225 @@
+{
+ "chapter": "1CH 3",
+ "rows": 105,
+ "wrong": [
+  {
+   "kind": "retarget",
+   "rows": [
+    103420
+   ],
+   "new_type": "son-of",
+   "new_to": "jehoiachin",
+   "verse": "1CH 3:16",
+   "why": "The successive Hebrew clauses name Jeconiah as Jehoiakim's son and then Zedekiah as Jeconiah's son.",
+   "confidence": 0.85
+  },
+  {
+   "kind": "retype",
+   "rows": [
+    103421
+   ],
+   "new_type": "son-of",
+   "new_to": "jehoiachin",
+   "verse": "1CH 3:16",
+   "why": "Zedekiah follows Jeconiah with the designation 'his son,' continuing the genealogical sequence rather than explicitly identifying a brother.",
+   "confidence": 0.85
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    97593
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 3:21",
+   "why": "The Hebrew lists 'sons of Rephaiah' and 'sons of Arnan' without saying that Arnan descends from Rephaiah.",
+   "confidence": 0.98
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    97594
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 3:21",
+   "why": "The Hebrew lists 'sons of Arnan' and 'sons of Obadiah' without saying that Obadiah descends from Arnan.",
+   "confidence": 0.98
+  }
+ ],
+ "missing": [
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "chileab",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Daniel, represented here by chileab.",
+   "confidence": 0.98
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "adonijah",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Adonijah.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "shephatiah",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Shephatiah.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "ithream",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Ithream.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "shammua-2",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Shimea, represented here by shammua-2.",
+   "confidence": 0.98
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "shobab",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Shobab.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "nathan",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Nathan.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "solomon",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Solomon.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "ibhar",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Ibhar.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "eliphelet-3",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including the Eliphelet named in verse 6.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "nogah",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Nogah.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "nepheg-2",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Nepheg.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "japhia-2",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Japhia.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "elishama-2",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Elishama.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "eliada",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Eliada.",
+   "confidence": 0.99
+  },
+  {
+   "from": "tamar-2",
+   "type": "sister-of",
+   "to": "eliphelet",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including the Eliphelet named in verse 8.",
+   "confidence": 0.99
+  },
+  {
+   "from": "hashubah",
+   "type": "son-of",
+   "to": "zerubbabel-2",
+   "verse": "1CH 3:20",
+   "why": "Hashubah appears in the continuation of Zerubbabel's children without any new parent being introduced.",
+   "confidence": 0.98
+  },
+  {
+   "from": "ohel",
+   "type": "son-of",
+   "to": "zerubbabel-2",
+   "verse": "1CH 3:20",
+   "why": "Ohel appears in the continuation of Zerubbabel's children without any new parent being introduced.",
+   "confidence": 0.98
+  },
+  {
+   "from": "berechiah",
+   "type": "son-of",
+   "to": "zerubbabel-2",
+   "verse": "1CH 3:20",
+   "why": "Berechiah appears in the continuation of Zerubbabel's children without any new parent being introduced.",
+   "confidence": 0.98
+  },
+  {
+   "from": "hasadiah",
+   "type": "son-of",
+   "to": "zerubbabel-2",
+   "verse": "1CH 3:20",
+   "why": "Hasadiah appears in the continuation of Zerubbabel's children without any new parent being introduced.",
+   "confidence": 0.98
+  },
+  {
+   "from": "jushabhesed",
+   "type": "son-of",
+   "to": "zerubbabel-2",
+   "verse": "1CH 3:20",
+   "why": "Jushab-hesed appears in the continuation of Zerubbabel's children without any new parent being introduced.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "Assir in 1CH 3:17 can mean 'captive,' so no additional relationship involving assir-3 is proposed, and the owner's Shealtiel–Jeconiah ruling is retained. The repeated 'his son' in 1CH 3:16 admits alternative readings, while the first Elishama's identification with elishua is insufficiently explicit here to propose a Tamar relationship for that record.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:21:31+00:00"
+}

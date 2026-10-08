@@ -1,0 +1,1379 @@
+{
+ "chapter": "1CH 3",
+ "text": {
+  "1CH 3:1": {
+   "KJV": "Now these were the sons of David, which were born unto him in Hebron; the firstborn Amnon, of Ahinoam the Jezreelitess; the second Daniel, of Abigail the Carmelitess:",
+   "BHSA": "וְאֵ֤לֶּה הָיוּ֙ בְּנֵ֣י דָויִ֔ד אֲשֶׁ֥ר נֹֽולַד־לֹ֖ו בְּחֶבְרֹ֑ון הַבְּכֹ֣ור׀ אַמְנֹ֗ן לַאֲחִינֹ֨עַם֙ הַיִּזְרְעֵאלִ֔ית שֵׁנִי֙ דָּנִיֵּ֔אל לַאֲבִיגַ֖יִל הַֽכַּרְמְלִֽית׃ "
+  },
+  "1CH 3:2": {
+   "KJV": "The third, Absalom the son of Maachah the daughter of Talmai king of Geshur: the fourth, Adonijah the son of Haggith:",
+   "BHSA": "הַשְּׁלִשִׁי֙ לְאַבְשָׁלֹ֣ום בֶּֽן־מַעֲכָ֔ה בַּת־תַּלְמַ֖י מֶ֣לֶךְ גְּשׁ֑וּר הָרְבִיעִ֖י אֲדֹנִיָּ֥ה בֶן־חַגִּֽית׃ "
+  },
+  "1CH 3:3": {
+   "KJV": "The fifth, Shephatiah of Abital: the sixth, Ithream by Eglah his wife.",
+   "BHSA": "הַחֲמִישִׁ֥י שְׁפַטְיָ֖ה לַאֲבִיטָ֑ל הַשִּׁשִּׁ֥י יִתְרְעָ֖ם לְעֶגְלָ֥ה אִשְׁתֹּֽו׃ "
+  },
+  "1CH 3:4": {
+   "KJV": "These six were born unto him in Hebron; and there he reigned seven years and six months: and in Jerusalem he reigned thirty and three years.",
+   "BHSA": "שִׁשָּׁה֙ נֹֽולַד־לֹ֣ו בְחֶבְרֹ֔ון וַיִּ֨מְלָךְ־שָׁ֔ם שֶׁ֥בַע שָׁנִ֖ים וְשִׁשָּׁ֣ה חֳדָשִׁ֑ים וּשְׁלֹשִׁ֤ים וְשָׁלֹושׁ֙ שָׁנָ֔ה מָלַ֖ךְ בִּירוּשָׁלִָֽם׃ ס "
+  },
+  "1CH 3:5": {
+   "KJV": "And these were born unto him in Jerusalem; Shimea, and Shobab, and Nathan, and Solomon, four, of Bathshua the daughter of Ammiel:",
+   "BHSA": "וְאֵ֥לֶּה נוּלְּדוּ־לֹ֖ו בִּירוּשָׁלָ֑יִם שִׁ֠מְעָא וְשֹׁובָ֞ב וְנָתָ֤ן וּשְׁלֹמֹה֙ אַרְבָּעָ֔ה לְבַת־שׁ֖וּעַ בַּת־עַמִּיאֵֽל׃ "
+  },
+  "1CH 3:6": {
+   "KJV": "Ibhar also, and Elishama, and Eliphelet,",
+   "BHSA": "וְיִבְחָ֥ר וֶאֱלִישָׁמָ֖ע וֶאֱלִיפָֽלֶט׃ "
+  },
+  "1CH 3:7": {
+   "KJV": "And Nogah, and Nepheg, and Japhia,",
+   "BHSA": "וְנֹ֥גַהּ וְנֶ֖פֶג וְיָפִֽיעַ׃ "
+  },
+  "1CH 3:8": {
+   "KJV": "And Elishama, and Eliada, and Eliphelet, nine.",
+   "BHSA": "וֶאֱלִישָׁמָ֧ע וְאֶלְיָדָ֛ע וֶאֱלִיפֶ֖לֶט תִּשְׁעָֽה׃ "
+  },
+  "1CH 3:9": {
+   "KJV": "These were all the sons of David, beside the sons of the concubines, and Tamar their sister.",
+   "BHSA": "כֹּ֖ל בְּנֵ֣י דָוִ֑יד מִלְּבַ֥ד בְּֽנֵי־פִֽילַגְשִׁ֖ים וְתָמָ֥ר אֲחֹותָֽם׃ פ "
+  },
+  "1CH 3:10": {
+   "KJV": "And Solomon's son was Rehoboam, Abia his son, Asa his son, Jehoshaphat his son,",
+   "BHSA": "וּבֶן־שְׁלֹמֹ֖ה רְחַבְעָ֑ם אֲבִיָּ֥ה בְנֹ֛ו אָסָ֥א בְנֹ֖ו יְהֹושָׁפָ֥ט בְּנֹֽו׃ "
+  },
+  "1CH 3:11": {
+   "KJV": "Joram his son, Ahaziah his son, Joash his son,",
+   "BHSA": "יֹורָ֥ם בְּנֹ֛ו אֲחַזְיָ֥הוּ בְנֹ֖ו יֹואָ֥שׁ בְּנֹֽו׃ "
+  },
+  "1CH 3:12": {
+   "KJV": "Amaziah his son, Azariah his son, Jotham his son,",
+   "BHSA": "אֲמַצְיָ֧הוּ בְנֹ֛ו עֲזַרְיָ֥ה בְנֹ֖ו יֹותָ֥ם בְּנֹֽו׃ "
+  },
+  "1CH 3:13": {
+   "KJV": "Ahaz his son, Hezekiah his son, Manasseh his son,",
+   "BHSA": "אָחָ֥ז בְּנֹ֛ו חִזְקִיָּ֥הוּ בְנֹ֖ו מְנַשֶּׁ֥ה בְנֹֽו׃ "
+  },
+  "1CH 3:14": {
+   "KJV": "Amon his son, Josiah his son.",
+   "BHSA": "אָמֹ֥ון בְּנֹ֖ו יֹאשִׁיָּ֥הוּ בְנֹֽו׃ "
+  },
+  "1CH 3:15": {
+   "KJV": "And the sons of Josiah were, the firstborn Johanan, the second Jehoiakim, the third Zedekiah, the fourth Shallum.",
+   "BHSA": "וּבְנֵי֙ יֹאשִׁיָּ֔הוּ הַבְּכֹור֙ יֹוחָנָ֔ן הַשֵּׁנִ֖י יְהֹויָקִ֑ים הַשְּׁלִשִׁי֙ צִדְקִיָּ֔הוּ הָרְבִיעִ֖י שַׁלּֽוּם׃ "
+  },
+  "1CH 3:16": {
+   "KJV": "And the sons of Jehoiakim: Jeconiah his son, Zedekiah his son.",
+   "BHSA": "וּבְנֵ֖י יְהֹויָקִ֑ים יְכָנְיָ֥ה בְנֹ֖ו צִדְקִיָּ֥ה בְנֹֽו׃ "
+  },
+  "1CH 3:17": {
+   "KJV": "And the sons of Jeconiah; Assir, Salathiel his son,",
+   "BHSA": "וּבְנֵי֙ יְכָנְיָ֣ה אַסִּ֔ר שְׁאַלְתִּיאֵ֖ל בְּנֹֽו׃ "
+  },
+  "1CH 3:18": {
+   "KJV": "Malchiram also, and Pedaiah, and Shenazar, Jecamiah, Hoshama, and Nedabiah.",
+   "BHSA": "וּמַלְכִּירָ֥ם וּפְדָיָ֖ה וְשֶׁנְאַצַּ֑ר יְקַמְיָ֥ה הֹושָׁמָ֖ע וּנְדַבְיָֽה׃ "
+  },
+  "1CH 3:19": {
+   "KJV": "And the sons of Pedaiah were, Zerubbabel, and Shimei: and the sons of Zerubbabel; Meshullam, and Hananiah, and Shelomith their sister:",
+   "BHSA": "וּבְנֵ֣י פְדָיָ֔ה זְרֻבָּבֶ֖ל וְשִׁמְעִ֑י וּבֶן־זְרֻבָּבֶל֙ מְשֻׁלָּ֣ם וַחֲנַנְיָ֔ה וּשְׁלֹמִ֖ית אֲחֹותָֽם׃ "
+  },
+  "1CH 3:20": {
+   "KJV": "And Hashubah, and Ohel, and Berechiah, and Hasadiah, Jushabhesed, five.",
+   "BHSA": "וַחֲשֻׁבָ֡ה וָ֠אֹהֶל וּבֶרֶכְיָ֧ה וַֽחֲסַדְיָ֛ה י֥וּשַׁב חֶ֖סֶד חָמֵֽשׁ׃ "
+  },
+  "1CH 3:21": {
+   "KJV": "And the sons of Hananiah; Pelatiah, and Jesaiah: the sons of Rephaiah, the sons of Arnan, the sons of Obadiah, the sons of Shechaniah.",
+   "BHSA": "וּבֶן־חֲנַנְיָ֖ה פְּלַטְיָ֣ה וִישַֽׁעְיָ֑ה בְּנֵ֤י רְפָיָה֙ בְּנֵ֣י אַרְנָ֔ן בְּנֵ֥י עֹבַדְיָ֖ה בְּנֵ֥י שְׁכַנְיָֽה׃ ס "
+  },
+  "1CH 3:22": {
+   "KJV": "And the sons of Shechaniah; Shemaiah: and the sons of Shemaiah; Hattush, and Igeal, and Bariah, and Neariah, and Shaphat, six.",
+   "BHSA": "וּבְנֵ֥י שְׁכַנְיָ֖ה שְׁמַעְיָ֑ה וּבְנֵ֣י שְׁמַעְיָ֗ה חַטּ֡וּשׁ וְ֠יִגְאָל וּבָרִ֧יחַ וּנְעַרְיָ֛ה וְשָׁפָ֖ט שִׁשָּֽׁה׃ "
+  },
+  "1CH 3:23": {
+   "KJV": "And the sons of Neariah; Elioenai, and Hezekiah, and Azrikam, three.",
+   "BHSA": "וּבֶן־נְעַרְיָ֗ה אֶלְיֹועֵינַ֧י וְחִזְקִיָּ֛ה וְעַזְרִיקָ֖ם שְׁלֹשָֽׁה׃ "
+  },
+  "1CH 3:24": {
+   "KJV": "And the sons of Elioenai were, Hodaiah, and Eliashib, and Pelaiah, and Akkub, and Johanan, and Dalaiah, and Anani, seven.",
+   "BHSA": "וּבְנֵ֣י אֶלְיֹועֵינַ֗י הדיוהו וְאֶלְיָשִׁ֡יב וּפְלָיָ֡ה וְ֠עַקּוּב וְיֹוחָנָ֧ן וּדְלָיָ֛ה וַעֲנָ֖נִי שִׁבְעָֽה׃ ס "
+  }
+ },
+ "records": [
+  {
+   "slug": "abigail",
+   "name": "Abigail",
+   "distinguisher": "the Carmelitess (1SA 25:3)",
+   "sex": "female"
+  },
+  {
+   "slug": "abijam",
+   "name": "Abijam",
+   "distinguisher": "King of Judah, son of Rehoboam (1KI 14:31) [Abijah in 2CH 12:16]",
+   "sex": "male"
+  },
+  {
+   "slug": "abital",
+   "name": "Abital",
+   "distinguisher": "wife (concubine?) of King David (2SA 3:4)",
+   "sex": "female"
+  },
+  {
+   "slug": "absalom",
+   "name": "Absalom",
+   "distinguisher": "third-born son of King David (2SA 3:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "adonijah",
+   "name": "Adonijah",
+   "distinguisher": "fourth-born son of King David (2SA 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahaz",
+   "name": "Ahaz",
+   "distinguisher": "King of Judah, son of Jotham (2KI 15:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahaziah-2",
+   "name": "Ahaziah",
+   "distinguisher": "King of Judah, youngest (2CH 21:17) son of Jehoram (2KI 8:24) son of Jehoshapat",
+   "sex": "male"
+  },
+  {
+   "slug": "ahinoam-2",
+   "name": "Ahinoam",
+   "distinguisher": "of Jezreel.  Same as Ahinoam? (see 2SA 12:8)",
+   "sex": "female"
+  },
+  {
+   "slug": "akkub",
+   "name": "Akkub",
+   "distinguisher": "son of Elioenai (1CH 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "amaziah",
+   "name": "Amaziah",
+   "distinguisher": "King of Judah, son of Joash (2KI 12:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "amnon",
+   "name": "Amnon",
+   "distinguisher": "firstborn son of King David (2SA 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "amon-2",
+   "name": "Amon",
+   "distinguisher": "King of Judah and son of Manasseh (2KI 21:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "anani",
+   "name": "Anani",
+   "distinguisher": "son of Elioenai (1CH 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "arnan",
+   "name": "Arnan",
+   "distinguisher": "son of Hananiah (1CH 3:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "asa",
+   "name": "Asa",
+   "distinguisher": "King of Judah (1KI 15:9), son of incestuous relationship between Abijah and his mother, Maacah (1KI 15:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "assir-3",
+   "name": "Assir",
+   "distinguisher": "Son of King Jeconiah, of the royal line of Judah; not attested among given verses",
+   "sex": null
+  },
+  {
+   "slug": "azariah-3",
+   "name": "Azariah",
+   "distinguisher": "[Uzziah] King of Judah, son of Amaziah (2KI 14:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "azrikam",
+   "name": "Azrikam",
+   "distinguisher": "son of Neariah (1CH 3:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "bariah",
+   "name": "Bariah",
+   "distinguisher": "son of Shecaniah (1CH 3:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "bathsheba",
+   "name": "Bathsheba",
+   "distinguisher": "daughter of Eliam and wife of Uriah (2SA 11:3)",
+   "sex": "female"
+  },
+  {
+   "slug": "berechiah",
+   "name": "Berechiah",
+   "distinguisher": "son of Meshullam (1CH 3:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "chileab",
+   "name": "Chileab",
+   "distinguisher": "second-born son of King David (2SA 3:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "delaiah",
+   "name": "Delaiah",
+   "distinguisher": "son of Elioenai (1CH 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "eglah",
+   "name": "Eglah",
+   "distinguisher": "wife of King David (2SA 3:5)",
+   "sex": "female"
+  },
+  {
+   "slug": "eliada",
+   "name": "Eliada",
+   "distinguisher": "son of David (2SA 5:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliakim-2",
+   "name": "Eliakim",
+   "distinguisher": "King of Judah, son of Josiah (2KI 23:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliam",
+   "name": "Eliam",
+   "distinguisher": "Bathsheba's father (2SA 11:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliashib",
+   "name": "Eliashib",
+   "distinguisher": "son of Elioenai (1CH 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "elioenai",
+   "name": "Elioenai",
+   "distinguisher": "son of Neariah (1CH 3:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliphelet",
+   "name": "Eliphelet",
+   "distinguisher": "son of David (2SA 5:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliphelet-3",
+   "name": "Eliphelet",
+   "distinguisher": "son of David (1CH 3:6) [his OTHER son named Eliphelet]",
+   "sex": "male"
+  },
+  {
+   "slug": "elishama-2",
+   "name": "Elishama",
+   "distinguisher": "son of David (2SA 5:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "elishua",
+   "name": "Elishua",
+   "distinguisher": "son of David (2SA 5:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "haggith",
+   "name": "Haggith",
+   "distinguisher": "wife (concubine?) of King David (2SA 3:4)",
+   "sex": "female"
+  },
+  {
+   "slug": "hananiah",
+   "name": "Hananiah",
+   "distinguisher": "son of Zerubbabel (1CH 3:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "hasadiah",
+   "name": "Hasadiah",
+   "distinguisher": "son of Meshullam (1CH 3:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashubah",
+   "name": "Hashubah",
+   "distinguisher": "son of Meshullam (1CH 3:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "hattush",
+   "name": "Hattush",
+   "distinguisher": "son of Shecaniah (1CH 3:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "hezekiah",
+   "name": "Hezekiah",
+   "distinguisher": "King of Judah, son of Ahaz (2KI 16:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "hizkiah",
+   "name": "Hizkiah",
+   "distinguisher": "son of Neariah (1CH 3:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "hodaviah",
+   "name": "Hodaviah",
+   "distinguisher": "son of Elioenai (1CH 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "hodaviah-5",
+   "name": "Hodaviah",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "hoshama",
+   "name": "Hoshama",
+   "distinguisher": "son of Jehoiachin [Jeconiah] (1CH 3:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "ibhar",
+   "name": "Ibhar",
+   "distinguisher": "son of David (2SA 5:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "igal-3",
+   "name": "Igal",
+   "distinguisher": "son of Shecaniah (1CH 3:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "ithream",
+   "name": "Ithream",
+   "distinguisher": "sixth-born son of King David (2SA 3:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "japhia-2",
+   "name": "Japhia",
+   "distinguisher": "son of David (2SA 5:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoahaz-2",
+   "name": "Jehoahaz",
+   "distinguisher": "King of Judah, son of Josiah (2KI 23:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoiachin",
+   "name": "Jehoiachin",
+   "distinguisher": "King of Judah, son of Eliakim [Jehoiakim] (2KI 24:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoram",
+   "name": "Jehoram",
+   "distinguisher": "King of Judah and son of Jehoshaphat (1KI 22:50)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoshaphat-3",
+   "name": "Jehoshaphat",
+   "distinguisher": "son of Asa and King of Judah (1KI 15:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "jekamiah-2",
+   "name": "Jekamiah",
+   "distinguisher": "son of Jehoiachin [Jeconiah] (1CH 3:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshaiah",
+   "name": "Jeshaiah",
+   "distinguisher": "son of Hananiah (1CH 3:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "joash-3",
+   "name": "Joash",
+   "distinguisher": "King of Judah (2KI 11:21), son of Ahaziah (2KI 11:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "johanan-2",
+   "name": "Johanan",
+   "distinguisher": "son of Elioenai (1CH 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "johanan-firstborn-of-josiah",
+   "name": "Johanan",
+   "distinguisher": "the firstborn of Josiah, who never reigned (1CH 3:15)",
+   "sex": null
+  },
+  {
+   "slug": "josiah",
+   "name": "Josiah",
+   "distinguisher": "prophesied son of the house of David (1KI 13:2), King of Judah and son of Amon (2KI 21:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "jotham-2",
+   "name": "Jotham",
+   "distinguisher": "King of Judah, son of King Uzziah [Azariah] (2KI 15:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "jushabhesed",
+   "name": "Jushab-hesed",
+   "distinguisher": "son of Meshullam (1CH 3:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "maacah-2",
+   "name": "Maacah",
+   "distinguisher": "daughter of Talmai, King of Geshur (2SA 3:3)",
+   "sex": "female"
+  },
+  {
+   "slug": "malchiram",
+   "name": "Malchiram",
+   "distinguisher": "son of Jehoiachin [Jeconiah] (1CH 3:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh-3",
+   "name": "Manasseh",
+   "distinguisher": "King of Judah and son of Hezekiah (2KI 20:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattaniah",
+   "name": "Mattaniah",
+   "distinguisher": "King of Judah, uncle of Jehoiachin (2KI 24:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshullam-2",
+   "name": "Meshullam",
+   "distinguisher": "son of Zerubbabel (1CH 3:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "nathan",
+   "name": "Nathan",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "neariah",
+   "name": "Neariah",
+   "distinguisher": "son of Shecaniah (1CH 3:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "nedabiah",
+   "name": "Nedabiah",
+   "distinguisher": "son of Jehoiachin [Jeconiah] (1CH 3:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "nepheg-2",
+   "name": "Nepheg",
+   "distinguisher": "son of David (2SA 5:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "nogah",
+   "name": "Nogah",
+   "distinguisher": "son of David (1CH 3:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "obadiah-2",
+   "name": "Obadiah",
+   "distinguisher": "son of Hananiah (1CH 3:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "ohel",
+   "name": "Ohel",
+   "distinguisher": "son of Meshullam (1CH 3:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "pedaiah-2",
+   "name": "Pedaiah",
+   "distinguisher": "son of Jehoiachin [Jeconiah] (1CH 3:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "pelaiah",
+   "name": "Pelaiah",
+   "distinguisher": "son of Elioenai (1CH 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "pelatiah",
+   "name": "Pelatiah",
+   "distinguisher": "son of Hananiah (1CH 3:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "rehoboam",
+   "name": "Rehoboam",
+   "distinguisher": "son of Solomon who became king after him (1KI 11:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "rephaiah",
+   "name": "Rephaiah",
+   "distinguisher": "son of Hananiah (1CH 3:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "shammua-2",
+   "name": "Shammua",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "shaphat-3",
+   "name": "Shaphat",
+   "distinguisher": "son of Shecaniah (1CH 3:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "shealtiel-2",
+   "name": "Shealtiel",
+   "distinguisher": "father of Zerubbabel (EZR 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "shecaniah",
+   "name": "Shecaniah",
+   "distinguisher": "son of Hananiah (1CH 3:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelomith-2",
+   "name": "Shelomith",
+   "distinguisher": "daughter of Zerubbabel (1CH 3:19)",
+   "sex": "female"
+  },
+  {
+   "slug": "shemaiah-2",
+   "name": "Shemaiah",
+   "distinguisher": "son of Shecaniah (1CH 3:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "shenazzar",
+   "name": "Shenazzar",
+   "distinguisher": "son of Jehoiachin [Jeconiah] (1CH 3:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "shephatiah",
+   "name": "Shephatiah",
+   "distinguisher": "fifth-born son of King David (2SA 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei-4",
+   "name": "Shimei",
+   "distinguisher": "son of Pedaiah (1CH 3:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "shobab",
+   "name": "Shobab",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "solomon",
+   "name": "Solomon",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "talmai-2",
+   "name": "Talmai",
+   "distinguisher": "King of Geshur (2SA 3:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "tamar-2",
+   "name": "Tamar",
+   "distinguisher": "Absalom's sister, daughter of David (2SA 13:1)",
+   "sex": "female"
+  },
+  {
+   "slug": "zedekiah-2",
+   "name": "Zedekiah",
+   "distinguisher": "son of Eliakim [Jehoiakim] (1CH 3:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "zerubbabel-2",
+   "name": "Zerubbabel",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7), son of Shealtiel (EZR 3:2)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 98294,
+   "row": "chileab son-of david",
+   "verse": "1CH 3:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101649,
+   "row": "nathan son-of bathsheba",
+   "verse": "1CH 3:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102449,
+   "row": "shammua-2 son-of bathsheba",
+   "verse": "1CH 3:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102802,
+   "row": "shobab son-of bathsheba",
+   "verse": "1CH 3:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 104016,
+   "row": "eliphelet-3 son-of david",
+   "verse": "1CH 3:6",
+   "source": "read from Scripture by the project owner, decided 2026-09-13"
+  },
+  {
+   "id": 101759,
+   "row": "nogah brother-of nepheg-2",
+   "verse": "1CH 3:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101760,
+   "row": "nogah brother-of japhia-2",
+   "verse": "1CH 3:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101761,
+   "row": "nogah son-of david",
+   "verse": "1CH 3:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97461,
+   "row": "amon-2 father-of josiah",
+   "verse": "1CH 3:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100474,
+   "row": "johanan-firstborn-of-josiah son-of josiah",
+   "verse": "1CH 3:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100475,
+   "row": "johanan-firstborn-of-josiah brother-of eliakim-2",
+   "verse": "1CH 3:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100476,
+   "row": "johanan-firstborn-of-josiah brother-of mattaniah",
+   "verse": "1CH 3:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101168,
+   "row": "mattaniah son-of josiah",
+   "verse": "1CH 3:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101171,
+   "row": "mattaniah brother-of johanan-firstborn-of-josiah",
+   "verse": "1CH 3:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103420,
+   "row": "zedekiah-2 son-of eliakim-2",
+   "verse": "1CH 3:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103421,
+   "row": "zedekiah-2 brother-of jehoiachin",
+   "verse": "1CH 3:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107231,
+   "row": "shealtiel-2 son-of jehoiachin",
+   "verse": "1CH 3:17",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 99625,
+   "row": "hoshama brother-of malchiram",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99626,
+   "row": "hoshama brother-of shenazzar",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99627,
+   "row": "hoshama son-of jehoiachin",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 100203,
+   "row": "jekamiah-2 brother-of pedaiah-2",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 100204,
+   "row": "jekamiah-2 son-of jehoiachin",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101093,
+   "row": "malchiram brother-of pedaiah-2",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101094,
+   "row": "malchiram brother-of shenazzar",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101095,
+   "row": "malchiram brother-of jekamiah-2",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101096,
+   "row": "malchiram brother-of hoshama",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101097,
+   "row": "malchiram brother-of nedabiah",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101098,
+   "row": "malchiram son-of jehoiachin",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101683,
+   "row": "nedabiah brother-of malchiram",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101684,
+   "row": "nedabiah brother-of pedaiah-2",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101685,
+   "row": "nedabiah brother-of shenazzar",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101686,
+   "row": "nedabiah son-of jehoiachin",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101908,
+   "row": "pedaiah-2 son-of jehoiachin",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102684,
+   "row": "shenazzar brother-of pedaiah-2",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102685,
+   "row": "shenazzar son-of jehoiachin",
+   "verse": "1CH 3:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101907,
+   "row": "pedaiah-2 father-of shimei-4",
+   "verse": "1CH 3:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102762,
+   "row": "shimei-4 son-of pedaiah-2",
+   "verse": "1CH 3:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106820,
+   "row": "hananiah son-of zerubbabel-2",
+   "verse": "1CH 3:19",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 106960,
+   "row": "meshullam-2 brother-of hananiah",
+   "verse": "1CH 3:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106961,
+   "row": "meshullam-2 son-of zerubbabel-2",
+   "verse": "1CH 3:19",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 107081,
+   "row": "shelomith-2 sister-of meshullam-2",
+   "verse": "1CH 3:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107082,
+   "row": "shelomith-2 sister-of hananiah",
+   "verse": "1CH 3:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107083,
+   "row": "shelomith-2 daughter-of zerubbabel-2",
+   "verse": "1CH 3:19",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 107164,
+   "row": "zerubbabel-2 son-of pedaiah-2",
+   "verse": "1CH 3:19",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 98050,
+   "row": "berechiah brother-of hashubah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98051,
+   "row": "berechiah brother-of ohel",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98052,
+   "row": "berechiah brother-of hasadiah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98053,
+   "row": "berechiah brother-of jushabhesed",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99350,
+   "row": "hasadiah brother-of hashubah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99351,
+   "row": "hasadiah brother-of ohel",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99352,
+   "row": "hasadiah brother-of berechiah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99374,
+   "row": "hashubah brother-of ohel",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99375,
+   "row": "hashubah brother-of berechiah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99376,
+   "row": "hashubah brother-of hasadiah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99377,
+   "row": "hashubah brother-of jushabhesed",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100681,
+   "row": "jushabhesed brother-of hashubah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100682,
+   "row": "jushabhesed brother-of ohel",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100683,
+   "row": "jushabhesed brother-of berechiah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100684,
+   "row": "jushabhesed brother-of hasadiah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101807,
+   "row": "ohel brother-of berechiah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101808,
+   "row": "ohel brother-of hasadiah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101809,
+   "row": "ohel brother-of hashubah",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101810,
+   "row": "ohel brother-of jushabhesed",
+   "verse": "1CH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97593,
+   "row": "arnan descendant-of rephaiah",
+   "verse": "1CH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97594,
+   "row": "arnan ancestor-of obadiah-2",
+   "verse": "1CH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100294,
+   "row": "jeshaiah son-of hananiah",
+   "verse": "1CH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101922,
+   "row": "pelatiah son-of hananiah",
+   "verse": "1CH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101923,
+   "row": "pelatiah brother-of jeshaiah",
+   "verse": "1CH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106463,
+   "row": "obadiah-2 descendant-of hananiah",
+   "verse": "1CH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106464,
+   "row": "rephaiah descendant-of hananiah",
+   "verse": "1CH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106465,
+   "row": "shecaniah descendant-of hananiah",
+   "verse": "1CH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106818,
+   "row": "hananiah father-of pelatiah",
+   "verse": "1CH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106819,
+   "row": "hananiah father-of jeshaiah",
+   "verse": "1CH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97891,
+   "row": "bariah son-of shemaiah-2",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97892,
+   "row": "bariah brother-of hattush",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97893,
+   "row": "bariah brother-of neariah",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99393,
+   "row": "hattush son-of shemaiah-2",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99704,
+   "row": "igal-3 son-of shemaiah-2",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99705,
+   "row": "igal-3 descendant-of shecaniah",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99706,
+   "row": "igal-3 brother-of hattush",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101660,
+   "row": "neariah son-of shemaiah-2",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102465,
+   "row": "shaphat-3 son-of shemaiah-2",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102630,
+   "row": "shemaiah-2 son-of shecaniah",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102631,
+   "row": "shemaiah-2 father-of hattush",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102632,
+   "row": "shemaiah-2 father-of igal-3",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102633,
+   "row": "shemaiah-2 father-of bariah",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102634,
+   "row": "shemaiah-2 father-of neariah",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102635,
+   "row": "shemaiah-2 father-of shaphat-3",
+   "verse": "1CH 3:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97801,
+   "row": "azrikam son-of neariah",
+   "verse": "1CH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97802,
+   "row": "azrikam brother-of elioenai",
+   "verse": "1CH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97803,
+   "row": "azrikam brother-of hizkiah",
+   "verse": "1CH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99567,
+   "row": "hizkiah son-of neariah",
+   "verse": "1CH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99568,
+   "row": "hizkiah brother-of elioenai",
+   "verse": "1CH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99569,
+   "row": "hizkiah brother-of azrikam",
+   "verse": "1CH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101661,
+   "row": "neariah father-of elioenai",
+   "verse": "1CH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101662,
+   "row": "neariah father-of hizkiah",
+   "verse": "1CH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101663,
+   "row": "neariah father-of azrikam",
+   "verse": "1CH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97366,
+   "row": "akkub son-of elioenai",
+   "verse": "1CH 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98408,
+   "row": "delaiah son-of elioenai",
+   "verse": "1CH 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98630,
+   "row": "eliashib son-of elioenai",
+   "verse": "1CH 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99573,
+   "row": "hodaviah son-of elioenai",
+   "verse": "1CH 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99574,
+   "row": "hodaviah brother-of eliashib",
+   "verse": "1CH 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100465,
+   "row": "johanan-2 son-of elioenai",
+   "verse": "1CH 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101919,
+   "row": "pelaiah son-of elioenai",
+   "verse": "1CH 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103603,
+   "row": "anani son-of elioenai",
+   "verse": "1CH 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "abijam son-of rehoboam (1KI 14:31)",
+  "abijam father-of asa (1KI 15:8)",
+  "adonijah son-of haggith (2SA 3:4)",
+  "adonijah brother-of solomon (1KI 2:21)",
+  "adonijah son-of david (2SA 3:4)",
+  "ahaz son-of jotham-2 (2KI 16:1)",
+  "ahaz father-of hezekiah (2KI 18:1)",
+  "ahaziah-2 son-of jehoram (2KI 8:24)",
+  "ahinoam-2 wife-of david (1SA 25:43)",
+  "ahinoam-2 mother-of amnon (2SA 3:2)",
+  "amon-2 son-of manasseh-3 (2KI 21:18)",
+  "asa son-of abijam (1KI 15:8)",
+  "azariah-3 son-of amaziah (2KI 14:21)",
+  "azariah-3 father-of jotham-2 (2KI 15:7)",
+  "bathsheba daughter-of eliam (2SA 11:3)",
+  "bathsheba wife-of david (2SA 12:24)",
+  "bathsheba mother-of solomon (2SA 12:24)",
+  "chileab son-of abigail (2SA 3:3)",
+  "chileab brother-of absalom (2SA 3:3)",
+  "david father-of solomon (1CH 29:23)",
+  "eglah wife-of david (2SA 3:5)",
+  "eglah mother-of ithream (2SA 3:5)",
+  "eliada son-of david (2SA 5:16)",
+  "eliakim-2 son-of josiah (2KI 23:34)",
+  "eliakim-2 brother-of jehoahaz-2 (2CH 36:4)",
+  "eliakim-2 father-of jehoiachin (2KI 24:6)",
+  "eliam father-of bathsheba (2SA 11:3)",
+  "eliphelet son-of david (2SA 5:16)",
+  "elishama-2 son-of david (2SA 5:16)",
+  "elishua son-of david (2SA 5:15)",
+  "hattush descendant-of david (EZR 8:2)",
+  "hezekiah son-of ahaz (2KI 18:1)",
+  "ibhar son-of david (2SA 5:15)",
+  "ithream son-of david (2SA 3:5)",
+  "ithream son-of eglah (2SA 3:5)",
+  "japhia-2 son-of david (2SA 5:15)",
+  "jehoahaz-2 son-of josiah (2KI 23:30)",
+  "jehoahaz-2 brother-of eliakim-2 (2CH 36:4)",
+  "jehoiachin son-of eliakim-2 (2KI 24:6)",
+  "jehoshaphat-3 son-of asa (1KI 15:24)",
+  "jehoshaphat-3 father-of jehoram (2KI 1:17)",
+  "josiah son-of amon-2 (2KI 21:24)",
+  "josiah descendant-of david (1KI 13:2)",
+  "josiah father-of eliakim-2 (JER 26:1)",
+  "jotham-2 son-of azariah-3 (2KI 15:32)",
+  "jotham-2 father-of ahaz (2KI 16:1)",
+  "manasseh-3 son-of hezekiah (2KI 20:21)",
+  "manasseh-3 father-of amon-2 (2KI 21:18)",
+  "nathan son-of david (LUK 3:31)",
+  "nathan brother-of solomon (2SA 5:14)",
+  "nepheg-2 son-of david (2SA 5:15)",
+  "rehoboam son-of solomon (1KI 12:23)",
+  "shammua-2 brother-of solomon (2SA 5:14)",
+  "shammua-2 son-of david (2SA 5:14)",
+  "shephatiah son-of abital (2SA 3:4)",
+  "shephatiah son-of david (2SA 3:4)",
+  "shobab brother-of solomon (2SA 5:14)",
+  "shobab son-of david (2SA 5:14)",
+  "solomon son-of david (1KI 1:13)",
+  "solomon son-of bathsheba (1KI 1:11)",
+  "solomon brother-of adonijah (1KI 1:10)",
+  "talmai-2 father-of maacah-2 (2SA 3:3)",
+  "amaziah son-of joash-3 (2KI 14:1)",
+  "joash-3 son-of ahaziah-2 (2KI 11:2)",
+  "joash-3 father-of amaziah (2KI 14:1)",
+  "abital mother-of shephatiah (2SA 3:4)",
+  "abital wife-of david (2SA 3:4)",
+  "absalom son-of david (2SA 13:1)",
+  "absalom son-of maacah-2 (2SA 3:3)",
+  "absalom brother-of tamar-2 (2SA 13:1)",
+  "absalom brother-of amnon (2SA 13:4)",
+  "abigail wife-of david (1SA 25:42)",
+  "abigail mother-of chileab (2SA 3:3)",
+  "haggith mother-of adonijah (2SA 3:4)",
+  "haggith wife-of david (2SA 3:4)",
+  "jehoram son-of jehoshaphat-3 (2KI 8:16)",
+  "jehoram father-of ahaziah-2 (2CH 22:1)",
+  "maacah-2 daughter-of talmai-2 (2SA 3:3)",
+  "maacah-2 mother-of absalom (2SA 3:3)",
+  "maacah-2 wife-of david (2SA 3:3)",
+  "tamar-2 sister-of absalom (2SA 13:1)",
+  "tamar-2 sister-of amnon (2SA 13:2)",
+  "tamar-2 daughter-of david (2SA 13:1)",
+  "zerubbabel-2 son-of shealtiel-2 (EZR 3:2)",
+  "amnon son-of david (2SA 3:2)",
+  "amnon raper-of tamar-2 (2SA 13:12)",
+  "amnon brother-of tamar-2 (2SA 13:20)",
+  "amnon brother-of absalom (2SA 13:4)",
+  "amnon killed-by absalom (2SA 13:32)",
+  "shealtiel-2 father-of zerubbabel-2 (EZR 3:2)"
+ ]
+}

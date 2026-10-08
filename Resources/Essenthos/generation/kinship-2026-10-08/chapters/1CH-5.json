@@ -1,0 +1,93 @@
+{
+ "chapter": "1CH 5",
+ "rows": 89,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    105527,
+    105539
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 5:7",
+   "why": "The Hebrew describes Beerah's kinsmen by their families, without identifying Jeiel and Zechariah as brothers of each other.",
+   "confidence": 0.92
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    101357,
+    101358
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 5:14",
+   "why": "The Michael who is Jeshishai's son and Gilead's father belongs to Abihail's ancestral chain, whereas michael-2 belongs to the seven men identified as Abihail's sons.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "michael-2",
+   "type": "son-of",
+   "to": "abihail-3",
+   "verse": "1CH 5:14",
+   "why": "The Hebrew 'these are the sons of Abihail' refers to the seven men listed in verse 13, including Michael.",
+   "confidence": 0.98
+  },
+  {
+   "from": "meshullam-3",
+   "type": "son-of",
+   "to": "abihail-3",
+   "verse": "1CH 5:14",
+   "why": "The Hebrew 'these are the sons of Abihail' refers to the seven men listed in verse 13, including Meshullam.",
+   "confidence": 0.98
+  },
+  {
+   "from": "sheba-5",
+   "type": "son-of",
+   "to": "abihail-3",
+   "verse": "1CH 5:14",
+   "why": "The Hebrew 'these are the sons of Abihail' refers to the seven men listed in verse 13, including Sheba.",
+   "confidence": 0.98
+  },
+  {
+   "from": "jorai",
+   "type": "son-of",
+   "to": "abihail-3",
+   "verse": "1CH 5:14",
+   "why": "The Hebrew 'these are the sons of Abihail' refers to the seven men listed in verse 13, including Jorai.",
+   "confidence": 0.98
+  },
+  {
+   "from": "jacan",
+   "type": "son-of",
+   "to": "abihail-3",
+   "verse": "1CH 5:14",
+   "why": "The Hebrew 'these are the sons of Abihail' refers to the seven men listed in verse 13, including Jachan, represented by jacan.",
+   "confidence": 0.98
+  },
+  {
+   "from": "zia",
+   "type": "son-of",
+   "to": "abihail-3",
+   "verse": "1CH 5:14",
+   "why": "The Hebrew 'these are the sons of Abihail' refers to the seven men listed in verse 13, including Zia.",
+   "confidence": 0.98
+  },
+  {
+   "from": "eber-2",
+   "type": "son-of",
+   "to": "abihail-3",
+   "verse": "1CH 5:14",
+   "why": "The Hebrew 'these are the sons of Abihail' refers to the seven men listed in verse 13, including Heber, represented by eber-2.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "The two Michaels occupy different generations: michael-2 is among Abihail's sons, while michael-the-gadite-forefather is Abihail's ancestor. No owner-recorded row appears inconsistent with the chapter.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:22:32+00:00"
+}

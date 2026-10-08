@@ -1,0 +1,40 @@
+{
+ "chapter": "LUK 3",
+ "rows": 85,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    97188
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "LUK 3:33",
+   "why": "The Greek makes Admin the son of Arni, while the KJV makes Aminadab the son of Aram without naming Admin, so neither supplied text explicitly makes Admin the son of Ram.",
+   "confidence": 0.93
+  }
+ ],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "LUK 3:22",
+   "why": "The heavenly voice addresses Jesus as 'my beloved Son.'",
+   "confidence": 0.99
+  },
+  {
+   "from": "adam",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "LUK 3:38",
+   "why": "The genealogy ends with Adam 'of God,' continuing the sonship construction.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The Amos records describe the same genealogical position, and joseph-14 corresponds to the KJV's Jose where the Greek names Jesus/Joshua; these record overlaps alone do not establish wrong relationships. Jesus' relationship to Joseph is expressly qualified as 'as was supposed.'",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:31:47+00:00"
+}

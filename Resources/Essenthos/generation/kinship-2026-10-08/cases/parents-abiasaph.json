@@ -1,0 +1,11 @@
+{
+ "case": "parents-abiasaph",
+ "question": "abiasaph is recorded with more than one father: korah-3, elkanah.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "EXO 6:24 lists Assir, Elkanah, and Abiasaph as Korah’s sons, while the repeated Hebrew בְנוֹ in 1CH 6:22–23 presents Assir → Elkanah → Ebiasaph → Assir. These are differing genealogical presentations; 1CH 6:37 also calls Ebiasaph son of Korah, so the supplied texts do not justify changing the rows or splitting the record.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:31:10+00:00"
+}

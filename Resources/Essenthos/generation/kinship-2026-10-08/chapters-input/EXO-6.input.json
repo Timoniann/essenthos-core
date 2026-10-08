@@ -1,0 +1,862 @@
+{
+ "chapter": "EXO 6",
+ "text": {
+  "EXO 6:1": {
+   "KJV": "Then the LORD said unto Moses, Now shalt thou see what I will do to Pharaoh: for with a strong hand shall he let them go, and with a strong hand shall he drive them out of his land.",
+   "BHSA": "וַיֹּ֤אמֶר יְהוָה֙ אֶל־מֹשֶׁ֔ה עַתָּ֣ה תִרְאֶ֔ה אֲשֶׁ֥ר אֶֽעֱשֶׂ֖ה לְפַרְעֹ֑ה כִּ֣י בְיָ֤ד חֲזָקָה֙ יְשַׁלְּחֵ֔ם וּבְיָ֣ד חֲזָקָ֔ה יְגָרְשֵׁ֖ם מֵאַרְצֹֽו׃ ס "
+  },
+  "EXO 6:2": {
+   "KJV": "And God spake unto Moses, and said unto him, I am the LORD:",
+   "BHSA": "וַיְדַבֵּ֥ר אֱלֹהִ֖ים אֶל־מֹשֶׁ֑ה וַיֹּ֥אמֶר אֵלָ֖יו אֲנִ֥י יְהוָֽה׃ "
+  },
+  "EXO 6:3": {
+   "KJV": "And I appeared unto Abraham, unto Isaac, and unto Jacob, by the name of God Almighty, but by my name JEHOVAH was I not known to them.",
+   "BHSA": "וָאֵרָ֗א אֶל־אַבְרָהָ֛ם אֶל־יִצְחָ֥ק וְאֶֽל־יַעֲקֹ֖ב בְּאֵ֣ל שַׁדָּ֑י וּשְׁמִ֣י יְהוָ֔ה לֹ֥א נֹודַ֖עְתִּי לָהֶֽם׃ "
+  },
+  "EXO 6:4": {
+   "KJV": "And I have also established my covenant with them, to give them the land of Canaan, the land of their pilgrimage, wherein they were strangers.",
+   "BHSA": "וְגַ֨ם הֲקִמֹ֤תִי אֶת־בְּרִיתִי֙ אִתָּ֔ם לָתֵ֥ת לָהֶ֖ם אֶת־אֶ֣רֶץ כְּנָ֑עַן אֵ֛ת אֶ֥רֶץ מְגֻרֵיהֶ֖ם אֲשֶׁר־גָּ֥רוּ בָֽהּ׃ "
+  },
+  "EXO 6:5": {
+   "KJV": "And I have also heard the groaning of the children of Israel, whom the Egyptians keep in bondage; and I have remembered my covenant.",
+   "BHSA": "וְגַ֣ם׀ אֲנִ֣י שָׁמַ֗עְתִּי אֶֽת־נַאֲקַת֙ בְּנֵ֣י יִשְׂרָאֵ֔ל אֲשֶׁ֥ר מִצְרַ֖יִם מַעֲבִדִ֣ים אֹתָ֑ם וָאֶזְכֹּ֖ר אֶת־בְּרִיתִֽי׃ "
+  },
+  "EXO 6:6": {
+   "KJV": "Wherefore say unto the children of Israel, I am the LORD, and I will bring you out from under the burdens of the Egyptians, and I will rid you out of their bondage, and I will redeem you with a stretched out arm, and with great judgments:",
+   "BHSA": "לָכֵ֞ן אֱמֹ֥ר לִבְנֵֽי־יִשְׂרָאֵל֮ אֲנִ֣י יְהוָה֒ וְהֹוצֵאתִ֣י אֶתְכֶ֗ם מִתַּ֨חַת֙ סִבְלֹ֣ת מִצְרַ֔יִם וְהִצַּלְתִּ֥י אֶתְכֶ֖ם מֵעֲבֹדָתָ֑ם וְגָאַלְתִּ֤י אֶתְכֶם֙ בִּזְרֹ֣ועַ נְטוּיָ֔ה וּבִשְׁפָטִ֖ים גְּדֹלִֽים׃ "
+  },
+  "EXO 6:7": {
+   "KJV": "And I will take you to me for a people, and I will be to you a God: and ye shall know that I am the LORD your God, which bringeth you out from under the burdens of the Egyptians.",
+   "BHSA": "וְלָקַחְתִּ֨י אֶתְכֶ֥ם לִי֙ לְעָ֔ם וְהָיִ֥יתִי לָכֶ֖ם לֵֽאלֹהִ֑ים וִֽידַעְתֶּ֗ם כִּ֣י אֲנִ֤י יְהוָה֙ אֱלֹ֣הֵיכֶ֔ם הַמֹּוצִ֣יא אֶתְכֶ֔ם מִתַּ֖חַת סִבְלֹ֥ות מִצְרָֽיִם׃ "
+  },
+  "EXO 6:8": {
+   "KJV": "And I will bring you in unto the land, concerning the which I did swear to give it to Abraham, to Isaac, and to Jacob; and I will give it you for an heritage: I am the LORD.",
+   "BHSA": "וְהֵבֵאתִ֤י אֶתְכֶם֙ אֶל־הָאָ֔רֶץ אֲשֶׁ֤ר נָשָׂ֨אתִי֙ אֶת־יָדִ֔י לָתֵ֣ת אֹתָ֔הּ לְאַבְרָהָ֥ם לְיִצְחָ֖ק וּֽלְיַעֲקֹ֑ב וְנָתַתִּ֨י אֹתָ֥הּ לָכֶ֛ם מֹורָשָׁ֖ה אֲנִ֥י יְהוָֽה׃ "
+  },
+  "EXO 6:9": {
+   "KJV": "And Moses spake so unto the children of Israel: but they hearkened not unto Moses for anguish of spirit, and for cruel bondage.",
+   "BHSA": "וַיְדַבֵּ֥ר מֹשֶׁ֛ה כֵּ֖ן אֶל־בְּנֵ֣י יִשְׂרָאֵ֑ל וְלֹ֤א שָֽׁמְעוּ֙ אֶל־מֹשֶׁ֔ה מִקֹּ֣צֶר ר֔וּחַ וּמֵעֲבֹדָ֖ה קָשָֽׁה׃ פ "
+  },
+  "EXO 6:10": {
+   "KJV": "And the LORD spake unto Moses, saying,",
+   "BHSA": "וַיְדַבֵּ֥ר יְהוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃ "
+  },
+  "EXO 6:11": {
+   "KJV": "Go in, speak unto Pharaoh king of Egypt, that he let the children of Israel go out of his land.",
+   "BHSA": "בֹּ֣א דַבֵּ֔ר אֶל־פַּרְעֹ֖ה מֶ֣לֶךְ מִצְרָ֑יִם וִֽישַׁלַּ֥ח אֶת־בְּנֵֽי־יִשְׂרָאֵ֖ל מֵאַרְצֹֽו׃ "
+  },
+  "EXO 6:12": {
+   "KJV": "And Moses spake before the LORD, saying, Behold, the children of Israel have not hearkened unto me; how then shall Pharaoh hear me, who am of uncircumcised lips?",
+   "BHSA": "וַיְדַבֵּ֣ר מֹשֶׁ֔ה לִפְנֵ֥י יְהוָ֖ה לֵאמֹ֑ר הֵ֤ן בְּנֵֽי־יִשְׂרָאֵל֙ לֹֽא־שָׁמְע֣וּ אֵלַ֔י וְאֵיךְ֙ יִשְׁמָעֵ֣נִי פַרְעֹ֔ה וַאֲנִ֖י עֲרַ֥ל שְׂפָתָֽיִם׃ פ "
+  },
+  "EXO 6:13": {
+   "KJV": "And the LORD spake unto Moses and unto Aaron, and gave them a charge unto the children of Israel, and unto Pharaoh king of Egypt, to bring the children of Israel out of the land of Egypt.",
+   "BHSA": "וַיְדַבֵּ֣ר יְהוָה֮ אֶל־מֹשֶׁ֣ה וְאֶֽל־אַהֲרֹן֒ וַיְצַוֵּם֙ אֶל־בְּנֵ֣י יִשְׂרָאֵ֔ל וְאֶל־פַּרְעֹ֖ה מֶ֣לֶךְ מִצְרָ֑יִם לְהֹוצִ֥יא אֶת־בְּנֵֽי־יִשְׂרָאֵ֖ל מֵאֶ֥רֶץ מִצְרָֽיִם׃ ס "
+  },
+  "EXO 6:14": {
+   "KJV": "These be the heads of their fathers' houses: The sons of Reuben the firstborn of Israel; Hanoch, and Pallu, Hezron, and Carmi: these be the families of Reuben.",
+   "BHSA": "אֵ֖לֶּה רָאשֵׁ֣י בֵית־אֲבֹתָ֑ם בְּנֵ֨י רְאוּבֵ֜ן בְּכֹ֣ר יִשְׂרָאֵ֗ל חֲנֹ֤וךְ וּפַלּוּא֙ חֶצְרֹ֣ון וְכַרְמִ֔י אֵ֖לֶּה מִשְׁפְּחֹ֥ת רְאוּבֵֽן׃ "
+  },
+  "EXO 6:15": {
+   "KJV": "And the sons of Simeon; Jemuel, and Jamin, and Ohad, and Jachin, and Zohar, and Shaul the son of a Canaanitish woman: these are the families of Simeon.",
+   "BHSA": "וּבְנֵ֣י שִׁמְעֹ֗ון יְמוּאֵ֨ל וְיָמִ֤ין וְאֹ֨הַד֙ וְיָכִ֣ין וְצֹ֔חַר וְשָׁא֖וּל בֶּן־הַֽכְּנַעֲנִ֑ית אֵ֖לֶּה מִשְׁפְּחֹ֥ת שִׁמְעֹֽון׃ "
+  },
+  "EXO 6:16": {
+   "KJV": "And these are the names of the sons of Levi according to their generations; Gershon, and Kohath, and Merari: and the years of the life of Levi were an hundred thirty and seven years.",
+   "BHSA": "וְאֵ֨לֶּה שְׁמֹ֤ות בְּנֵֽי־לֵוִי֙ לְתֹ֣לְדֹתָ֔ם גֵּרְשֹׁ֕ון וּקְהָ֖ת וּמְרָרִ֑י וּשְׁנֵי֙ חַיֵּ֣י לֵוִ֔י שֶׁ֧בַע וּשְׁלֹשִׁ֛ים וּמְאַ֖ת שָׁנָֽה׃ "
+  },
+  "EXO 6:17": {
+   "KJV": "The sons of Gershon; Libni, and Shimi, according to their families.",
+   "BHSA": "בְּנֵ֥י גֵרְשֹׁ֛ון לִבְנִ֥י וְשִׁמְעִ֖י לְמִשְׁפְּחֹתָֽם׃ "
+  },
+  "EXO 6:18": {
+   "KJV": "And the sons of Kohath; Amram, and Izhar, and Hebron, and Uzziel: and the years of the life of Kohath were an hundred thirty and three years.",
+   "BHSA": "וּבְנֵ֣י קְהָ֔ת עַמְרָ֣ם וְיִצְהָ֔ר וְחֶבְרֹ֖ון וְעֻזִּיאֵ֑ל וּשְׁנֵי֙ חַיֵּ֣י קְהָ֔ת שָׁלֹ֧שׁ וּשְׁלֹשִׁ֛ים וּמְאַ֖ת שָׁנָֽה׃ "
+  },
+  "EXO 6:19": {
+   "KJV": "And the sons of Merari; Mahali and Mushi: these are the families of Levi according to their generations.",
+   "BHSA": "וּבְנֵ֥י מְרָרִ֖י מַחְלִ֣י וּמוּשִׁ֑י אֵ֛לֶּה מִשְׁפְּחֹ֥ת הַלֵּוִ֖י לְתֹלְדֹתָֽם׃ "
+  },
+  "EXO 6:20": {
+   "KJV": "And Amram took him Jochebed his father's sister to wife; and she bare him Aaron and Moses: and the years of the life of Amram were an hundred and thirty and seven years.",
+   "BHSA": "וַיִּקַּ֨ח עַמְרָ֜ם אֶת־יֹוכֶ֤בֶד דֹּֽדָתֹו֙ לֹ֣ו לְאִשָּׁ֔ה וַתֵּ֣לֶד לֹ֔ו אֶֽת־אַהֲרֹ֖ן וְאֶת־מֹשֶׁ֑ה וּשְׁנֵי֙ חַיֵּ֣י עַמְרָ֔ם שֶׁ֧בַע וּשְׁלֹשִׁ֛ים וּמְאַ֖ת שָׁנָֽה׃ "
+  },
+  "EXO 6:21": {
+   "KJV": "And the sons of Izhar; Korah, and Nepheg, and Zichri.",
+   "BHSA": "וּבְנֵ֖י יִצְהָ֑ר קֹ֥רַח וָנֶ֖פֶג וְזִכְרִֽי׃ "
+  },
+  "EXO 6:22": {
+   "KJV": "And the sons of Uzziel; Mishael, and Elzaphan, and Zithri.",
+   "BHSA": "וּבְנֵ֖י עֻזִּיאֵ֑ל מִֽישָׁאֵ֥ל וְאֶלְצָפָ֖ן וְסִתְרִֽי׃ "
+  },
+  "EXO 6:23": {
+   "KJV": "And Aaron took him Elisheba, daughter of Amminadab, sister of Naashon, to wife; and she bare him Nadab, and Abihu, Eleazar, and Ithamar.",
+   "BHSA": "וַיִּקַּ֨ח אַהֲרֹ֜ן אֶת־אֱלִישֶׁ֧בַע בַּת־עַמִּינָדָ֛ב אֲחֹ֥ות נַחְשֹׁ֖ון לֹ֣ו לְאִשָּׁ֑ה וַתֵּ֣לֶד לֹ֗ו אֶת־נָדָב֙ וְאֶת־אֲבִיה֔וּא אֶת־אֶלְעָזָ֖ר וְאֶת־אִֽיתָמָֽר׃ "
+  },
+  "EXO 6:24": {
+   "KJV": "And the sons of Korah; Assir, and Elkanah, and Abiasaph: these are the families of the Korhites.",
+   "BHSA": "וּבְנֵ֣י קֹ֔רַח אַסִּ֥יר וְאֶלְקָנָ֖ה וַאֲבִיאָסָ֑ף אֵ֖לֶּה מִשְׁפְּחֹ֥ת הַקָּרְחִֽי׃ "
+  },
+  "EXO 6:25": {
+   "KJV": "And Eleazar Aaron's son took him one of the daughters of Putiel to wife; and she bare him Phinehas: these are the heads of the fathers of the Levites according to their families.",
+   "BHSA": "וְאֶלְעָזָ֨ר בֶּֽן־אַהֲרֹ֜ן לָקַֽח־לֹ֨ו מִבְּנֹ֤ות פּֽוּטִיאֵל֙ לֹ֣ו לְאִשָּׁ֔ה וַתֵּ֥לֶד לֹ֖ו אֶת־פִּֽינְחָ֑ס אֵ֗לֶּה רָאשֵׁ֛י אֲבֹ֥ות הַלְוִיִּ֖ם לְמִשְׁפְּחֹתָֽם׃ "
+  },
+  "EXO 6:26": {
+   "KJV": "These are that Aaron and Moses, to whom the LORD said, Bring out the children of Israel from the land of Egypt according to their armies.",
+   "BHSA": "ה֥וּא אַהֲרֹ֖ן וּמֹשֶׁ֑ה אֲשֶׁ֨ר אָמַ֤ר יְהוָה֙ לָהֶ֔ם הֹוצִ֜יאוּ אֶת־בְּנֵ֧י יִשְׂרָאֵ֛ל מֵאֶ֥רֶץ מִצְרַ֖יִם עַל־צִבְאֹתָֽם׃ "
+  },
+  "EXO 6:27": {
+   "KJV": "These are they which spake to Pharaoh king of Egypt, to bring out the children of Israel from Egypt: these are that Moses and Aaron.",
+   "BHSA": "הֵ֗ם הַֽמְדַבְּרִים֙ אֶל־פַּרְעֹ֣ה מֶֽלֶךְ־מִצְרַ֔יִם לְהֹוצִ֥יא אֶת־בְּנֵֽי־יִשְׂרָאֵ֖ל מִמִּצְרָ֑יִם ה֥וּא מֹשֶׁ֖ה וְאַהֲרֹֽן׃ "
+  },
+  "EXO 6:28": {
+   "KJV": "And it came to pass on the day when the LORD spake unto Moses in the land of Egypt,",
+   "BHSA": "וַיְהִ֗י בְּיֹ֨ום דִּבֶּ֧ר יְהוָ֛ה אֶל־מֹשֶׁ֖ה בְּאֶ֥רֶץ מִצְרָֽיִם׃ פ "
+  },
+  "EXO 6:29": {
+   "KJV": "That the LORD spake unto Moses, saying, I am the LORD: speak thou unto Pharaoh king of Egypt all that I say unto thee.",
+   "BHSA": "וַיְדַבֵּ֧ר יְהוָ֛ה אֶל־מֹשֶׁ֥ה לֵּאמֹ֖ר אֲנִ֣י יְהוָ֑ה דַּבֵּ֗ר אֶל־פַּרְעֹה֙ מֶ֣לֶךְ מִצְרַ֔יִם אֵ֛ת כָּל־אֲשֶׁ֥ר אֲנִ֖י דֹּבֵ֥ר אֵלֶֽיךָ׃ "
+  },
+  "EXO 6:30": {
+   "KJV": "And Moses said before the LORD, Behold, I am of uncircumcised lips, and how shall Pharaoh hearken unto me?",
+   "BHSA": "וַיֹּ֥אמֶר מֹשֶׁ֖ה לִפְנֵ֣י יְהוָ֑ה הֵ֤ן אֲנִי֙ עֲרַ֣ל שְׂפָתַ֔יִם וְאֵ֕יךְ יִשְׁמַ֥ע אֵלַ֖י פַּרְעֹֽה׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "abiasaph",
+   "name": "Abiasaph",
+   "distinguisher": "son of Korah (EXO 6:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "abihu",
+   "name": "Abihu",
+   "distinguisher": "son of Aaron (EXO 6:23), died for offering strange fire to the LORD (NUM 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "abram",
+   "name": "Abram",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "amminadab",
+   "name": "Amminadab",
+   "distinguisher": "father of Elisheba (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "amram",
+   "name": "Amram",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "assir",
+   "name": "Assir",
+   "distinguisher": "son of Korah (EXO 6:24, 1CH 6:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "carmi",
+   "name": "Carmi",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar",
+   "name": "Eleazar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "elisheba",
+   "name": "Elisheba",
+   "distinguisher": "wife of Aaron and daughter of Amminadab (EXO 6:23)",
+   "sex": "female"
+  },
+  {
+   "slug": "elkanah",
+   "name": "Elkanah",
+   "distinguisher": "son of Korah (EXO 6:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "elzaphan",
+   "name": "Elzaphan",
+   "distinguisher": "son of Uzziel (EXO 6:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "gershon",
+   "name": "Gershon",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanoch-2",
+   "name": "Hanoch",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "hebron",
+   "name": "Hebron",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "hezron",
+   "name": "Hezron",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "isaac",
+   "name": "Isaac",
+   "distinguisher": "son of Abraham and Sarah (GEN 17:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "ithamar",
+   "name": "Ithamar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "izhar",
+   "name": "Izhar",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "jachin",
+   "name": "Jachin",
+   "distinguisher": "son of Simeon (GEN 46:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jamin",
+   "name": "Jamin",
+   "distinguisher": "son of Simeon (GEN 46:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jemuel",
+   "name": "Jemuel",
+   "distinguisher": "son of Simeon (GEN 46:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jochebed",
+   "name": "Jochebed",
+   "distinguisher": "aunt and wife of Amram, mother of Moses (EXO 6:20)",
+   "sex": "female"
+  },
+  {
+   "slug": "kohath",
+   "name": "Kohath",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "korah-3",
+   "name": "Korah",
+   "distinguisher": "son of Izhar (EXO 6:21) who rebelled against G-d and Moses (Numbers chapter 16)",
+   "sex": "male"
+  },
+  {
+   "slug": "levi",
+   "name": "Levi",
+   "distinguisher": "third-born son of Jacob (GEN 29:34), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "libni",
+   "name": "Libni",
+   "distinguisher": "son of Gershon (EXO 6:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "mahli",
+   "name": "Mahli",
+   "distinguisher": "son of Merari (EXO 6:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "merari",
+   "name": "Merari",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "mishael",
+   "name": "Mishael",
+   "distinguisher": "son of Uzziel (EXO 6:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "mushi",
+   "name": "Mushi",
+   "distinguisher": "son of Merari (EXO 6:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "nadab",
+   "name": "Nadab",
+   "distinguisher": "son of Aaron (EXO 6:23), died for offering strange fire to the LORD (NUM 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "nahshon",
+   "name": "Nahshon",
+   "distinguisher": "son of Amminadab and brother of Elisheba (EXO 6:23), head of the tribe of Judah during the census (NUM 1:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "nepheg",
+   "name": "Nepheg",
+   "distinguisher": "son of Izhar (EXO 6:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "ohad",
+   "name": "Ohad",
+   "distinguisher": "son of Simeon (GEN 46:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "pallu",
+   "name": "Pallu",
+   "distinguisher": "son of Reuben (GEN 46:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "pharaoh-4",
+   "name": "Pharaoh",
+   "distinguisher": "Pharaoh during Israel's Exodus from Egypt (EXO 3:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "phinehas",
+   "name": "Phinehas",
+   "distinguisher": "Eleazar's son, Aaron's grandson (EXO 6:25) given a covenant of peace and perpetual priesthood (NUM 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "putiel",
+   "name": "Putiel",
+   "distinguisher": "father of Eleazar's wife (EXO 6:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "reuben",
+   "name": "Reuben",
+   "distinguisher": "firstborn son of Jacob (GEN 29:32), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "shaul-2",
+   "name": "Shaul",
+   "distinguisher": "son of Simeon and a Canaanite woman (GEN 46:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei",
+   "name": "Shimei",
+   "distinguisher": "son of Gershon (EXO 6:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "simeon",
+   "name": "Simeon",
+   "distinguisher": "second-born son of Jacob (GEN 29:33), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "sithri",
+   "name": "Sithri",
+   "distinguisher": "son of Uzziel (EXO 6:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzziel",
+   "name": "Uzziel",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zichri",
+   "name": "Zichri",
+   "distinguisher": "son of Izhar (EXO 6:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "zohar-2",
+   "name": "Zohar",
+   "distinguisher": "son of Simeon (GEN 46:10)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 99085,
+   "row": "gershon father-of libni",
+   "verse": "EXO 6:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100912,
+   "row": "libni son-of gershon",
+   "verse": "EXO 6:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100914,
+   "row": "libni brother-of shimei",
+   "verse": "EXO 6:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102742,
+   "row": "shimei son-of gershon",
+   "verse": "EXO 6:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99449,
+   "row": "hebron son-of kohath",
+   "verse": "EXO 6:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99860,
+   "row": "izhar son-of kohath",
+   "verse": "EXO 6:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103207,
+   "row": "uzziel son-of kohath",
+   "verse": "EXO 6:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103208,
+   "row": "uzziel brother-of amram",
+   "verse": "EXO 6:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101056,
+   "row": "mahli son-of merari",
+   "verse": "EXO 6:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101057,
+   "row": "mahli brother-of mushi",
+   "verse": "EXO 6:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101549,
+   "row": "mushi son-of merari",
+   "verse": "EXO 6:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106042,
+   "row": "merari father-of mahli",
+   "verse": "EXO 6:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106043,
+   "row": "merari father-of mushi",
+   "verse": "EXO 6:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 96987,
+   "row": "aaron son-of amram",
+   "verse": "EXO 6:20",
+   "source": "read from Scripture by gpt-5, asked 2026-09-22"
+  },
+  {
+   "id": 96988,
+   "row": "aaron son-of jochebed",
+   "verse": "EXO 6:20",
+   "source": "read from Scripture by gpt-5, asked 2026-09-22"
+  },
+  {
+   "id": 97473,
+   "row": "amram husband-of jochebed",
+   "verse": "EXO 6:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97474,
+   "row": "amram father-of moses",
+   "verse": "EXO 6:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97475,
+   "row": "amram father-of aaron",
+   "verse": "EXO 6:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 106882,
+   "row": "jochebed wife-of amram",
+   "verse": "EXO 6:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106883,
+   "row": "jochebed mother-of aaron",
+   "verse": "EXO 6:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106884,
+   "row": "jochebed mother-of moses",
+   "verse": "EXO 6:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106887,
+   "row": "jochebed sister-of kohath",
+   "verse": "EXO 6:20",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 99862,
+   "row": "izhar father-of korah-3",
+   "verse": "EXO 6:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99863,
+   "row": "izhar father-of nepheg",
+   "verse": "EXO 6:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99864,
+   "row": "izhar father-of zichri",
+   "verse": "EXO 6:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101699,
+   "row": "nepheg son-of izhar",
+   "verse": "EXO 6:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101700,
+   "row": "nepheg brother-of korah-3",
+   "verse": "EXO 6:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101701,
+   "row": "nepheg brother-of zichri",
+   "verse": "EXO 6:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103503,
+   "row": "zichri son-of izhar",
+   "verse": "EXO 6:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103504,
+   "row": "zichri brother-of korah-3",
+   "verse": "EXO 6:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98788,
+   "row": "elzaphan brother-of mishael",
+   "verse": "EXO 6:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101439,
+   "row": "mishael son-of uzziel",
+   "verse": "EXO 6:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101440,
+   "row": "mishael brother-of elzaphan",
+   "verse": "EXO 6:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101441,
+   "row": "mishael brother-of sithri",
+   "verse": "EXO 6:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102913,
+   "row": "sithri son-of uzziel",
+   "verse": "EXO 6:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102914,
+   "row": "sithri brother-of mishael",
+   "verse": "EXO 6:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102915,
+   "row": "sithri brother-of elzaphan",
+   "verse": "EXO 6:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103209,
+   "row": "uzziel father-of mishael",
+   "verse": "EXO 6:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97063,
+   "row": "abihu son-of aaron",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97064,
+   "row": "abihu brother-of nadab",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98571,
+   "row": "eleazar son-of aaron",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 98729,
+   "row": "elisheba wife-of aaron",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98730,
+   "row": "elisheba daughter-of amminadab",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98731,
+   "row": "elisheba sister-of nahshon",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98732,
+   "row": "elisheba mother-of nadab",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98733,
+   "row": "elisheba mother-of abihu",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98734,
+   "row": "elisheba mother-of eleazar",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98735,
+   "row": "elisheba mother-of ithamar",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99831,
+   "row": "ithamar son-of aaron",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 99832,
+   "row": "ithamar brother-of eleazar",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 101584,
+   "row": "nadab brother-of abihu",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105134,
+   "row": "amminadab father-in-law-of aaron",
+   "verse": "EXO 6:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98746,
+   "row": "elkanah son-of korah-3",
+   "verse": "EXO 6:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100828,
+   "row": "korah-3 father-of assir",
+   "verse": "EXO 6:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100829,
+   "row": "korah-3 father-of elkanah",
+   "verse": "EXO 6:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100830,
+   "row": "korah-3 father-of abiasaph",
+   "verse": "EXO 6:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106750,
+   "row": "abiasaph son-of korah-3",
+   "verse": "EXO 6:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 106752,
+   "row": "abiasaph brother-of assir",
+   "verse": "EXO 6:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98572,
+   "row": "eleazar father-of phinehas",
+   "verse": "EXO 6:25",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 102005,
+   "row": "phinehas son-of eleazar",
+   "verse": "EXO 6:25",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 102063,
+   "row": "putiel father-in-law-of eleazar",
+   "verse": "EXO 6:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102064,
+   "row": "putiel grandfather-of phinehas",
+   "verse": "EXO 6:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron brother-of moses (EXO 4:14)",
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "abihu priest-of yhvh (EXO 28:1)",
+  "amram son-of kohath (NUM 26:58)",
+  "assir son-of korah-3 (1CH 6:22)",
+  "carmi son-of reuben (GEN 46:9)",
+  "eleazar priest-of yhvh (NUM 16:39)",
+  "elzaphan son-of uzziel (NUM 3:30)",
+  "gershon son-of levi (GEN 46:11)",
+  "hanoch-2 son-of reuben (GEN 46:9)",
+  "hanoch-2 brother-of pallu (GEN 46:9)",
+  "hezron son-of reuben (GEN 46:9)",
+  "isaac son-of abram (GEN 21:3)",
+  "isaac father-of jacob (GEN 27:26)",
+  "ithamar priest-of yhvh (NUM 3:4)",
+  "izhar descendant-of jacob (1CH 6:38)",
+  "jachin son-of simeon (GEN 46:10)",
+  "jamin son-of simeon (GEN 46:10)",
+  "jamin brother-of jachin (GEN 46:10)",
+  "jemuel son-of simeon (GEN 46:10)",
+  "jemuel brother-of jamin (GEN 46:10)",
+  "kohath son-of levi (GEN 46:11)",
+  "kohath father-of amram (NUM 26:58)",
+  "kohath brother-of gershon (GEN 46:11)",
+  "korah-3 son-of izhar (NUM 16:1)",
+  "korah-3 descendant-of levi (NUM 16:1)",
+  "mahli descendant-of levi (EZR 8:18)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "moses priest-of yhvh (PSA 99:6)",
+  "nadab son-of aaron (NUM 3:2)",
+  "nadab priest-of yhvh (EXO 28:1)",
+  "nahshon son-of amminadab (NUM 1:7)",
+  "ohad son-of simeon (GEN 46:10)",
+  "pallu son-of reuben (GEN 46:9)",
+  "phinehas descendant-of aaron (NUM 25:11)",
+  "phinehas priest-of yhvh (JOS 22:30)",
+  "reuben son-of jacob (GEN 35:23)",
+  "shaul-2 son-of simeon (GEN 46:10)",
+  "uzziel uncle-of aaron (LEV 10:4)",
+  "zohar-2 son-of simeon (GEN 46:10)",
+  "amminadab father-of nahshon (NUM 1:7)",
+  "jacob son-of isaac (GEN 25:26)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "merari son-of levi (GEN 46:11)",
+  "abram servant-of yhvh (GEN 26:24)",
+  "simeon brother-of levi (GEN 49:5)",
+  "simeon father-of jachin (GEN 46:10)",
+  "simeon father-of jamin (GEN 46:10)",
+  "simeon father-of zohar-2 (GEN 46:10)",
+  "simeon son-of jacob (GEN 35:23)",
+  "simeon brother-of reuben (GEN 29:33)",
+  "abiasaph son-of elkanah (1CH 6:23)",
+  "jochebed daughter-of levi (NUM 26:59)",
+  "levi son-of jacob (GEN 35:23)",
+  "levi brother-of simeon (GEN 34:25)",
+  "levi father-of gershon (GEN 46:11)",
+  "levi father-of kohath (GEN 46:11)",
+  "levi father-of merari (GEN 46:11)",
+  "levi brother-of reuben (GEN 29:34)"
+ ]
+}

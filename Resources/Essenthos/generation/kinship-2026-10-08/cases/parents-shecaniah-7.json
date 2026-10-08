@@ -1,0 +1,25 @@
+{
+ "case": "parents-shecaniah-7",
+ "question": "shecaniah-7 is recorded with more than one father: arah-2, arah-3.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "delete-row",
+   "rows": [
+    103862
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 6:18",
+   "why": "Shecaniah is called בֶן־אָרַח, son of Arah, already represented by arah-3. Identifying this father with the Arah whose descendants appear in EZR 2:5 is unsupported by the supplied verses.",
+   "confidence": 0.9
+  }
+ ],
+ "note": "Keep the reciprocal relationships with arah-3 and Shecaniah's father-in-law relationship to Tobiah. The verses do not establish whether arah-2 and arah-3 are the same person, so merging them is unwarranted.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:37:03+00:00"
+}

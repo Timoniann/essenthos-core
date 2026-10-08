@@ -1,0 +1,25 @@
+{
+ "case": "sibling-and-parent-rephah",
+ "question": "rephah is recorded both as the brother of resheph and as his father (resheph son-of rephah).",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "delete-row",
+   "rows": [
+    102176
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 7:25",
+   "why": "The Hebrew coordinates Rephah and Resheph: 'Rephah his son, and Resheph'; it does not call Resheph Rephah's son. The next 'his son' follows Telah, supporting Telah as Resheph's son.",
+   "confidence": 0.97
+  }
+ ],
+ "note": "Retain the Rephah–Resheph sibling relationship and the Resheph–Telah parentage. The conflicting Resheph son-of Rephah row misreads the coordinated names as successive generations.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:38:06+00:00"
+}

@@ -1,0 +1,23 @@
+{
+ "case": "parents-hashabiah-2",
+ "question": "hashabiah-2 is recorded with more than one father: jeduthun, bunni-2.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "split-record",
+   "rows": [],
+   "record": "hashabiah-2",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 11:15",
+   "why": "Separate Hashabiah the singer, explicitly under his father Jeduthun in 1CH 25:3 (row 99358), from Hashabiah son of Bunni and father of Azrikam in NEH 11:15 (rows 99359, 99360, 106478). Row 106044 belongs to the latter: 1CH 9:14 repeats the Shemaiah–Hashub–Azrikam–Hashabiah genealogy and identifies its Merarite ancestry.",
+   "confidence": 0.97
+  }
+ ],
+ "note": "The contradiction results from combining two namesakes in hashabiah-2. Preserve the project owner's rulings; neither requires alteration to separate these identities.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:34:24+00:00"
+}

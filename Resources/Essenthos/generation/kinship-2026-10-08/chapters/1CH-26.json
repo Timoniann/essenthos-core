@@ -1,0 +1,40 @@
+{
+ "chapter": "1CH 26",
+ "rows": 78,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    102849
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 26:16",
+   "why": "The verse assigns Shuppim and Hosah to the west gate but does not state that they were companions.",
+   "confidence": 0.88
+  }
+ ],
+ "missing": [
+  {
+   "from": "zetham",
+   "type": "son-of",
+   "to": "jehiel-9",
+   "verse": "1CH 26:22",
+   "why": "The Hebrew explicitly lists Zetham among the sons of Jehieli.",
+   "confidence": 0.99
+  },
+  {
+   "from": "joel-6",
+   "type": "son-of",
+   "to": "jehiel-9",
+   "verse": "1CH 26:22",
+   "why": "The Hebrew lists Joel, Zetham's brother, among the sons of Jehieli.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The parentage stated in 1CH 26:22 is a variant of the sibling relationships recorded from 1CH 23:8; those other-chapter rows are not judged here.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:27:01+00:00"
+}

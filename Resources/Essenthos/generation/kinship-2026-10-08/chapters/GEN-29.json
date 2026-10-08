@@ -1,0 +1,20 @@
+{
+ "chapter": "GEN 29",
+ "rows": 17,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "laban",
+   "type": "son-of",
+   "to": "nahor-2",
+   "verse": "GEN 29:5",
+   "why": "The Hebrew explicitly identifies Laban as בֶּן־נָחוֹר, son of Nahor, and neither direction of this relationship is recorded.",
+   "confidence": 1
+  }
+ ],
+ "note": "The chapter identifies Jacob as Laban's sister's son, so its broader use of 'brother' does not establish a sibling relationship between them. No owner-recorded row appears wrong.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:16:34+00:00"
+}

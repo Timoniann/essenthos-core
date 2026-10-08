@@ -1,0 +1,47 @@
+{
+ "case": "parents-gera",
+ "question": "gera is recorded with more than one father: benjamin, bela-2.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "retype-row",
+   "rows": [
+    99069
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "grandson-of",
+   "new_to": "",
+   "verse": "1CH 8:3",
+   "why": "The Hebrew names Gera among Bela's sons, and 1CH 8:1 explicitly says Benjamin begot Bela. GEN 46:21's collective בני can include grandchildren, as its inclusion of Ard and Naaman alongside NUM 26:40 demonstrates.",
+   "confidence": 0.94
+  },
+  {
+   "kind": "fold-records",
+   "rows": [],
+   "record": "gera",
+   "other": "gera-5",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 8:3",
+   "why": "Both records represent the same Gera named between Addar and Abihud among Bela's sons in this verse.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "fold-records",
+   "rows": [],
+   "record": "gera-3",
+   "other": "gera-6",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 8:5",
+   "why": "Both records represent the Gera named before Shephuphan and Huram in this verse. Keeping gera-3 preserves the project owner's ruling.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Benjamin's collective descendants list need not give Gera a second direct father. Keep the Gera occurrences in 1CH 8:3 and 8:5 separate; the supplied verses do not establish their identity with each other or establish the identification with Shimei's father.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:34:20+00:00"
+}

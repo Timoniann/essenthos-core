@@ -1,0 +1,48 @@
+{
+ "chapter": "1CH 24",
+ "rows": 46,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    102652
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 24:6",
+   "why": "Shemaiah records the divisions before the king and other officials, but the verse does not identify him as David's personal scribe.",
+   "confidence": 0.9
+  }
+ ],
+ "missing": [
+  {
+   "from": "zadok",
+   "type": "descendant-of",
+   "to": "eleazar",
+   "verse": "1CH 24:3",
+   "why": "The Hebrew explicitly identifies Zadok as belonging to the sons of Eleazar.",
+   "confidence": 1
+  },
+  {
+   "from": "shebuel",
+   "type": "descendant-of",
+   "to": "amram",
+   "verse": "1CH 24:20",
+   "why": "Shubael, represented here by Shebuel, is named among the sons of Amram.",
+   "confidence": 0.99
+  },
+  {
+   "from": "beno",
+   "type": "descendant-of",
+   "to": "merari",
+   "verse": "1CH 24:27",
+   "why": "Under the KJV's reading of Beno as a name, he is explicitly listed among Merari's sons through Jaaziah.",
+   "confidence": 0.88
+  }
+ ],
+ "note": "Hebrew בנו can mean 'his son' rather than the name Beno, so the Beno rows are not definite errors. The owner's Aaron-descendant rulings agree with the chapter's description of the priestly divisions and Aaron as their father in 1CH 24:19.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:26:30+00:00"
+}

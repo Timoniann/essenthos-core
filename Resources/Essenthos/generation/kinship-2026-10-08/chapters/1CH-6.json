@@ -1,0 +1,40 @@
+{
+ "chapter": "1CH 6",
+ "rows": 140,
+ "wrong": [
+  {
+   "kind": "retarget",
+   "rows": [
+    107137
+   ],
+   "new_type": "",
+   "new_to": "elihu",
+   "verse": "1CH 6:34",
+   "why": "Eliel is placed between Jeroham and Toah in Samuel's Kohathite ancestry, corresponding to elihu rather than the supplied Manassite record eliel.",
+   "confidence": 0.92
+  }
+ ],
+ "missing": [
+  {
+   "from": "elkanah",
+   "type": "son-of",
+   "to": "assir",
+   "verse": "1CH 6:23",
+   "why": "Elkanah is called 'his son' immediately after Assir at the end of verse 22.",
+   "confidence": 0.99
+  },
+  {
+   "from": "elkanah-4",
+   "type": "son-of",
+   "to": "joel-son-of-azariah",
+   "verse": "1CH 6:36",
+   "why": "The ancestry explicitly identifies the Elkanah preceding Amasai as the son of Joel.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Owner row 107213 appears to confuse elkanah-4 with elkanah-5 in verse 35, creating a cycle through Amasai and Mahath; it is preserved. Owner rows 105596 and 105603 also appear to conflate the father of Amasai and Ahimoth with the earlier Elkanah identified as Korah's son; they are preserved.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:23:11+00:00"
+}

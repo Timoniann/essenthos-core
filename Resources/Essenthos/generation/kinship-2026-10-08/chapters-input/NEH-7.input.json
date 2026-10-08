@@ -1,0 +1,984 @@
+{
+ "chapter": "NEH 7",
+ "text": {
+  "NEH 7:1": {
+   "KJV": "Now it came to pass, when the wall was built, and I had set up the doors, and the porters and the singers and the Levites were appointed,",
+   "BHSA": "וַיְהִ֗י כַּאֲשֶׁ֤ר נִבְנְתָה֙ הַחֹומָ֔ה וָאַעֲמִ֖יד הַדְּלָתֹ֑ות וַיִּפָּֽקְד֛וּ הַשֹּׁועֲרִ֥ים וְהַמְשֹׁרְרִ֖ים וְהַלְוִיִּֽם׃ "
+  },
+  "NEH 7:2": {
+   "KJV": "That I gave my brother Hanani, and Hananiah the ruler of the palace, charge over Jerusalem: for he was a faithful man, and feared God above many.",
+   "BHSA": "וָאֲצַוֶּ֞ה אֶת־חֲנָ֣נִי אָחִ֗י וְאֶת־חֲנַנְיָ֛ה שַׂ֥ר הַבִּירָ֖ה עַל־יְרוּשָׁלִָ֑ם כִּי־הוּא֙ כְּאִ֣ישׁ אֱמֶ֔ת וְיָרֵ֥א אֶת־הָאֱלֹהִ֖ים מֵרַבִּֽים׃ "
+  },
+  "NEH 7:3": {
+   "KJV": "And I said unto them, Let not the gates of Jerusalem be opened until the sun be hot; and while they stand by, let them shut the doors, and bar them: and appoint watches of the inhabitants of Jerusalem, every one in his watch, and every one to be over against his house.",
+   "BHSA": "ויאמר לָהֶ֗ם לֹ֣א יִפָּֽתְח֞וּ שַׁעֲרֵ֤י יְרוּשָׁלִַ֨ם֙ עַד־חֹ֣ם הַשֶּׁ֔מֶשׁ וְעַ֨ד הֵ֥ם עֹמְדִ֛ים יָגִ֥יפוּ הַדְּלָתֹ֖ות וֶאֱחֹ֑זוּ וְהַעֲמֵ֗יד מִשְׁמְרֹות֙ יֹשְׁבֵ֣י יְרוּשָׁלִַ֔ם אִ֚ישׁ בְּמִשְׁמָרֹ֔ו וְאִ֖ישׁ נֶ֥גֶד בֵּיתֹֽו׃ "
+  },
+  "NEH 7:4": {
+   "KJV": "Now the city was large and great: but the people were few therein, and the houses were not builded.",
+   "BHSA": "וְהָעִ֞יר רַחֲבַ֤ת יָדַ֨יִם֙ וּגְדֹולָ֔ה וְהָעָ֥ם מְעַ֖ט בְּתֹוכָ֑הּ וְאֵ֥ין בָּתִּ֖ים בְּנוּיִֽם׃ "
+  },
+  "NEH 7:5": {
+   "KJV": "And my God put into mine heart to gather together the nobles, and the rulers, and the people, that they might be reckoned by genealogy. And I found a register of the genealogy of them which came up at the first, and found written therein,",
+   "BHSA": "וַיִּתֵּ֤ן אֱלֹהַי֙ אֶל־לִבִּ֔י וָאֶקְבְּצָ֞ה אֶת־הַחֹרִ֧ים וְאֶת־הַסְּגָנִ֛ים וְאֶת־הָעָ֖ם לְהִתְיַחֵ֑שׂ וָֽאֶמְצָ֗א סֵ֤פֶר הַיַּ֨חַשׂ֙ הָעֹולִ֣ים בָּרִאשֹׁונָ֔ה וָאֶמְצָ֖א כָּת֥וּב בֹּֽו׃ פ "
+  },
+  "NEH 7:6": {
+   "KJV": "These are the children of the province, that went up out of the captivity, of those that had been carried away, whom Nebuchadnezzar the king of Babylon had carried away, and came again to Jerusalem and to Judah, every one unto his city;",
+   "BHSA": "אֵ֣לֶּה׀ בְּנֵ֣י הַמְּדִינָ֗ה הָעֹלִים֙ מִשְּׁבִ֣י הַגֹּולָ֔ה אֲשֶׁ֣ר הֶגְלָ֔ה נְבוּכַדְנֶצַּ֖ר מֶ֣לֶךְ בָּבֶ֑ל וַיָּשׁ֧וּבוּ לִֽירוּשָׁלִַ֛ם וְלִיהוּדָ֖ה אִ֥ישׁ לְעִירֹֽו׃ "
+  },
+  "NEH 7:7": {
+   "KJV": "Who came with Zerubbabel, Jeshua, Nehemiah, Azariah, Raamiah, Nahamani, Mordecai, Bilshan, Mispereth, Bigvai, Nehum, Baanah. The number, I say, of the men of the people of Israel was this;",
+   "BHSA": "הַבָּאִ֣ים עִם־זְרֻבָּבֶ֗ל יֵשׁ֡וּעַ נְחֶמְיָ֡ה עֲ֠זַרְיָה רַֽעַמְיָ֨ה נַחֲמָ֜נִי מָרְדֳּכַ֥י בִּלְשָׁ֛ן מִסְפֶּ֥רֶת בִּגְוַ֖י נְח֣וּם בַּעֲנָ֑ה מִסְפַּ֕ר אַנְשֵׁ֖י עַ֥ם יִשְׂרָאֵֽל׃ ס "
+  },
+  "NEH 7:8": {
+   "KJV": "The children of Parosh, two thousand an hundred seventy and two.",
+   "BHSA": "בְּנֵ֣י פַרְעֹ֔שׁ אַלְפַּ֕יִם מֵאָ֖ה וְשִׁבְעִ֥ים וּשְׁנָֽיִם׃ ס "
+  },
+  "NEH 7:9": {
+   "KJV": "The children of Shephatiah, three hundred seventy and two.",
+   "BHSA": "בְּנֵ֣י שְׁפַטְיָ֔ה שְׁלֹ֥שׁ מֵאֹ֖ות שִׁבְעִ֥ים וּשְׁנָֽיִם׃ ס "
+  },
+  "NEH 7:10": {
+   "KJV": "The children of Arah, six hundred fifty and two.",
+   "BHSA": "בְּנֵ֣י אָרַ֔ח שֵׁ֥שׁ מֵאֹ֖ות חֲמִשִּׁ֥ים וּשְׁנָֽיִם׃ ס "
+  },
+  "NEH 7:11": {
+   "KJV": "The children of Pahathmoab, of the children of Jeshua and Joab, two thousand and eight hundred and eighteen.",
+   "BHSA": "בְּנֵֽי־פַחַ֥ת מֹואָ֛ב לִבְנֵ֥י יֵשׁ֖וּעַ וְיֹואָ֑ב אַלְפַּ֕יִם וּשְׁמֹנֶ֥ה מֵאֹ֖ות שְׁמֹנָ֥ה עָשָֽׂר׃ ס "
+  },
+  "NEH 7:12": {
+   "KJV": "The children of Elam, a thousand two hundred fifty and four.",
+   "BHSA": "בְּנֵ֣י עֵילָ֔ם אֶ֕לֶף מָאתַ֖יִם חֲמִשִּׁ֥ים וְאַרְבָּעָֽה׃ ס "
+  },
+  "NEH 7:13": {
+   "KJV": "The children of Zattu, eight hundred forty and five.",
+   "BHSA": "בְּנֵ֣י זַתּ֔וּא שְׁמֹנֶ֥ה מֵאֹ֖ות אַרְבָּעִ֥ים וַחֲמִשָּֽׁה׃ ס "
+  },
+  "NEH 7:14": {
+   "KJV": "The children of Zaccai, seven hundred and threescore.",
+   "BHSA": "בְּנֵ֣י זַכָּ֔י שְׁבַ֥ע מֵאֹ֖ות וְשִׁשִּֽׁים׃ ס "
+  },
+  "NEH 7:15": {
+   "KJV": "The children of Binnui, six hundred forty and eight.",
+   "BHSA": "בְּנֵ֣י בִנּ֔וּי שֵׁ֥שׁ מֵאֹ֖ות אַרְבָּעִ֥ים וּשְׁמֹנָֽה׃ ס "
+  },
+  "NEH 7:16": {
+   "KJV": "The children of Bebai, six hundred twenty and eight.",
+   "BHSA": "בְּנֵ֣י בֵבָ֔י שֵׁ֥שׁ מֵאֹ֖ות עֶשְׂרִ֥ים וּשְׁמֹנָֽה׃ ס "
+  },
+  "NEH 7:17": {
+   "KJV": "The children of Azgad, two thousand three hundred twenty and two.",
+   "BHSA": "בְּנֵ֣י עַזְגָּ֔ד אַלְפַּ֕יִם שְׁלֹ֥שׁ מֵאֹ֖ות עֶשְׂרִ֥ים וּשְׁנָֽיִם׃ ס "
+  },
+  "NEH 7:18": {
+   "KJV": "The children of Adonikam, six hundred threescore and seven.",
+   "BHSA": "בְּנֵי֙ אֲדֹ֣נִיקָ֔ם שֵׁ֥שׁ מֵאֹ֖ות שִׁשִּׁ֥ים וְשִׁבְעָֽה׃ ס "
+  },
+  "NEH 7:19": {
+   "KJV": "The children of Bigvai, two thousand threescore and seven.",
+   "BHSA": "בְּנֵ֣י בִגְוָ֔י אַלְפַּ֖יִם שִׁשִּׁ֥ים וְשִׁבְעָֽה׃ ס "
+  },
+  "NEH 7:20": {
+   "KJV": "The children of Adin, six hundred fifty and five.",
+   "BHSA": "בְּנֵ֣י עָדִ֔ין שֵׁ֥שׁ מֵאֹ֖ות חֲמִשִּׁ֥ים וַחֲמִשָּֽׁה׃ ס "
+  },
+  "NEH 7:21": {
+   "KJV": "The children of Ater of Hezekiah, ninety and eight.",
+   "BHSA": "בְּנֵֽי־אָטֵ֥ר לְחִזְקִיָּ֖ה תִּשְׁעִ֥ים וּשְׁמֹנָֽה׃ ס "
+  },
+  "NEH 7:22": {
+   "KJV": "The children of Hashum, three hundred twenty and eight.",
+   "BHSA": "בְּנֵ֣י חָשֻׁ֔ם שְׁלֹ֥שׁ מֵאֹ֖ות עֶשְׂרִ֥ים וּשְׁמֹנָֽה׃ ס "
+  },
+  "NEH 7:23": {
+   "KJV": "The children of Bezai, three hundred twenty and four.",
+   "BHSA": "בְּנֵ֣י בֵצָ֔י שְׁלֹ֥שׁ מֵאֹ֖ות עֶשְׂרִ֥ים וְאַרְבָּעָֽה׃ ס "
+  },
+  "NEH 7:24": {
+   "KJV": "The children of Hariph, an hundred and twelve.",
+   "BHSA": "בְּנֵ֣י חָרִ֔יף מֵאָ֖ה שְׁנֵ֥ים עָשָֽׂר׃ ס "
+  },
+  "NEH 7:25": {
+   "KJV": "The children of Gibeon, ninety and five.",
+   "BHSA": "בְּנֵ֥י גִבְעֹ֖ון תִּשְׁעִ֥ים וַחֲמִשָּֽׁה׃ ס "
+  },
+  "NEH 7:26": {
+   "KJV": "The men of Bethlehem and Netophah, an hundred fourscore and eight.",
+   "BHSA": "אַנְשֵׁ֤י בֵֽית־לֶ֨חֶם֙ וּנְטֹפָ֔ה מֵאָ֖ה שְׁמֹנִ֥ים וּשְׁמֹנָֽה׃ ס "
+  },
+  "NEH 7:27": {
+   "KJV": "The men of Anathoth, an hundred twenty and eight.",
+   "BHSA": "אַנְשֵׁ֣י עֲנָתֹ֔ות מֵאָ֖ה עֶשְׂרִ֥ים וּשְׁמֹנָֽה׃ ס "
+  },
+  "NEH 7:28": {
+   "KJV": "The men of Bethazmaveth, forty and two.",
+   "BHSA": "אַנְשֵׁ֥י בֵית־עַזְמָ֖וֶת אַרְבָּעִ֥ים וּשְׁנָֽיִם׃ ס "
+  },
+  "NEH 7:29": {
+   "KJV": "The men of Kirjathjearim, Chephirah, and Beeroth, seven hundred forty and three.",
+   "BHSA": "אַנְשֵׁ֨י קִרְיַ֤ת יְעָרִים֙ כְּפִירָ֣ה וּבְאֵרֹ֔ות שְׁבַ֥ע מֵאֹ֖ות אַרְבָּעִ֥ים וּשְׁלֹשָֽׁה׃ ס "
+  },
+  "NEH 7:30": {
+   "KJV": "The men of Ramah and Gaba, six hundred twenty and one.",
+   "BHSA": "אַנְשֵׁ֤י הָֽרָמָה֙ וָגָ֔בַע שֵׁ֥שׁ מֵאֹ֖ות עֶשְׂרִ֥ים וְאֶחָֽד׃ ס "
+  },
+  "NEH 7:31": {
+   "KJV": "The men of Michmas, an hundred and twenty and two.",
+   "BHSA": "אַנְשֵׁ֣י מִכְמָ֔ס מֵאָ֖ה וְעֶשְׂרִ֥ים וּשְׁנָֽיִם׃ ס "
+  },
+  "NEH 7:32": {
+   "KJV": "The men of Bethel and Ai, an hundred twenty and three.",
+   "BHSA": "אַנְשֵׁ֤י בֵֽית־אֵל֙ וְהָעָ֔י מֵאָ֖ה עֶשְׂרִ֥ים וּשְׁלֹשָֽׁה׃ ס "
+  },
+  "NEH 7:33": {
+   "KJV": "The men of the other Nebo, fifty and two.",
+   "BHSA": "אַנְשֵׁ֥י נְבֹ֛ו אַחֵ֖ר חֲמִשִּׁ֥ים וּשְׁנָֽיִם׃ ס "
+  },
+  "NEH 7:34": {
+   "KJV": "The children of the other Elam, a thousand two hundred fifty and four.",
+   "BHSA": "בְּנֵי֙ עֵילָ֣ם אַחֵ֔ר אֶ֕לֶף מָאתַ֖יִם חֲמִשִּׁ֥ים וְאַרְבָּעָֽה׃ ס "
+  },
+  "NEH 7:35": {
+   "KJV": "The children of Harim, three hundred and twenty.",
+   "BHSA": "בְּנֵ֣י חָרִ֔ם שְׁלֹ֥שׁ מֵאֹ֖ות וְעֶשְׂרִֽים׃ ס "
+  },
+  "NEH 7:36": {
+   "KJV": "The children of Jericho, three hundred forty and five.",
+   "BHSA": "בְּנֵ֣י יְרֵחֹ֔ו שְׁלֹ֥שׁ מֵאֹ֖ות אַרְבָּעִ֥ים וַחֲמִשָּֽׁה׃ ס "
+  },
+  "NEH 7:37": {
+   "KJV": "The children of Lod, Hadid, and Ono, seven hundred twenty and one.",
+   "BHSA": "בְּנֵי־לֹד֙ חָדִ֣יד וְאֹונֹ֔ו שְׁבַ֥ע מֵאֹ֖ות וְעֶשְׂרִ֥ים וְאֶחָֽד׃ ס "
+  },
+  "NEH 7:38": {
+   "KJV": "The children of Senaah, three thousand nine hundred and thirty.",
+   "BHSA": "בְּנֵ֣י סְנָאָ֔ה שְׁלֹ֣שֶׁת אֲלָפִ֔ים תְּשַׁ֥ע מֵאֹ֖ות וּשְׁלֹשִֽׁים׃ פ "
+  },
+  "NEH 7:39": {
+   "KJV": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+   "BHSA": "הַֽכֹּהֲנִ֑ים בְּנֵ֤י יְדַֽעְיָה֙ לְבֵ֣ית יֵשׁ֔וּעַ תְּשַׁ֥ע מֵאֹ֖ות שִׁבְעִ֥ים וּשְׁלֹשָֽׁה׃ ס "
+  },
+  "NEH 7:40": {
+   "KJV": "The children of Immer, a thousand fifty and two.",
+   "BHSA": "בְּנֵ֣י אִמֵּ֔ר אֶ֖לֶף חֲמִשִּׁ֥ים וּשְׁנָֽיִם׃ ס "
+  },
+  "NEH 7:41": {
+   "KJV": "The children of Pashur, a thousand two hundred forty and seven.",
+   "BHSA": "בְּנֵ֣י פַשְׁח֔וּר אֶ֕לֶף מָאתַ֖יִם אַרְבָּעִ֥ים וְשִׁבְעָֽה׃ ס "
+  },
+  "NEH 7:42": {
+   "KJV": "The children of Harim, a thousand and seventeen.",
+   "BHSA": "בְּנֵ֣י חָרִ֔ם אֶ֖לֶף שִׁבְעָ֥ה עָשָֽׂר׃ פ "
+  },
+  "NEH 7:43": {
+   "KJV": "The Levites: the children of Jeshua, of Kadmiel, and of the children of Hodevah, seventy and four.",
+   "BHSA": "הַלְוִיִּ֑ם בְּנֵֽי־יֵשׁ֧וּעַ לְקַדְמִיאֵ֛ל לִבְנֵ֥י לְהֹודְוָ֖ה שִׁבְעִ֥ים וְאַרְבָּעָֽה׃ ס "
+  },
+  "NEH 7:44": {
+   "KJV": "The singers: the children of Asaph, an hundred forty and eight.",
+   "BHSA": "הַֽמְשֹׁרְרִ֑ים בְּנֵ֣י אָסָ֔ף מֵאָ֖ה אַרְבָּעִ֥ים וּשְׁמֹנָֽה׃ ס "
+  },
+  "NEH 7:45": {
+   "KJV": "The porters: the children of Shallum, the children of Ater, the children of Talmon, the children of Akkub, the children of Hatita, the children of Shobai, an hundred thirty and eight.",
+   "BHSA": "הַשֹּֽׁעֲרִ֗ים בְּנֵֽי־שַׁלּ֤וּם בְּנֵֽי־אָטֵר֙ בְּנֵֽי־טַלְמֹ֣ן בְּנֵֽי־עַקּ֔וּב בְּנֵ֥י חֲטִיטָ֖א בְּנֵ֣י שֹׁבָ֑י מֵאָ֖ה שְׁלֹשִׁ֥ים וּשְׁמֹנָֽה׃ ס "
+  },
+  "NEH 7:46": {
+   "KJV": "The Nethinims: the children of Ziha, the children of Hashupha, the children of Tabbaoth,",
+   "BHSA": "הַנְּתִינִ֑ים בְּנֵי־צִחָ֥א בְנֵי־חֲשֻׂפָ֖א בְּנֵ֥י טַבָּעֹֽות׃ "
+  },
+  "NEH 7:47": {
+   "KJV": "The children of Keros, the children of Sia, the children of Padon,",
+   "BHSA": "בְּנֵי־קֵירֹ֥ס בְּנֵי־סִיעָ֖א בְּנֵ֥י פָדֹֽון׃ "
+  },
+  "NEH 7:48": {
+   "KJV": "The children of Lebana, the children of Hagaba, the children of Shalmai,",
+   "BHSA": "בְּנֵי־לְבָנָ֥ה בְנֵי־חֲגָבָ֖ה בְּנֵ֥י שַׁלְמָֽי׃ "
+  },
+  "NEH 7:49": {
+   "KJV": "The children of Hanan, the children of Giddel, the children of Gahar,",
+   "BHSA": "בְּנֵי־חָנָ֥ן בְּנֵי־גִדֵּ֖ל בְּנֵי־גָֽחַר׃ "
+  },
+  "NEH 7:50": {
+   "KJV": "The children of Reaiah, the children of Rezin, the children of Nekoda,",
+   "BHSA": "בְּנֵי־רְאָיָ֥ה בְנֵי־רְצִ֖ין בְּנֵ֥י נְקֹודָֽא׃ "
+  },
+  "NEH 7:51": {
+   "KJV": "The children of Gazzam, the children of Uzza, the children of Phaseah,",
+   "BHSA": "בְּנֵי־גַזָּ֥ם בְּנֵי־עֻזָּ֖א בְּנֵ֥י פָסֵֽחַ׃ "
+  },
+  "NEH 7:52": {
+   "KJV": "The children of Besai, the children of Meunim, the children of Nephishesim,",
+   "BHSA": "בְּנֵי־בֵסַ֥י בְּנֵי־מְעוּנִ֖ים בְּנֵ֥י נפושׁסים׃ "
+  },
+  "NEH 7:53": {
+   "KJV": "The children of Bakbuk, the children of Hakupha, the children of Harhur,",
+   "BHSA": "בְּנֵי־בַקְבּ֥וּק בְּנֵֽי־חֲקוּפָ֖א בְּנֵ֥י חַרְחֽוּר׃ "
+  },
+  "NEH 7:54": {
+   "KJV": "The children of Bazlith, the children of Mehida, the children of Harsha,",
+   "BHSA": "בְּנֵי־בַצְלִ֥ית בְּנֵֽי־מְחִידָ֖א בְּנֵ֥י חַרְשָֽׁא׃ "
+  },
+  "NEH 7:55": {
+   "KJV": "The children of Barkos, the children of Sisera, the children of Tamah,",
+   "BHSA": "בְּנֵי־בַרְקֹ֥וס בְּֽנֵי־סִֽיסְרָ֖א בְּנֵי־תָֽמַח׃ "
+  },
+  "NEH 7:56": {
+   "KJV": "The children of Neziah, the children of Hatipha.",
+   "BHSA": "בְּנֵ֥י נְצִ֖יחַ בְּנֵ֥י חֲטִיפָֽא׃ "
+  },
+  "NEH 7:57": {
+   "KJV": "The children of Solomon's servants: the children of Sotai, the children of Sophereth, the children of Perida,",
+   "BHSA": "בְּנֵ֖י עַבְדֵ֣י שְׁלֹמֹ֑ה בְּנֵי־סֹוטַ֥י בְּנֵי־סֹופֶ֖רֶת בְּנֵ֥י פְרִידָֽא׃ "
+  },
+  "NEH 7:58": {
+   "KJV": "The children of Jaala, the children of Darkon, the children of Giddel,",
+   "BHSA": "בְּנֵי־יַעְלָ֥א בְנֵי־דַרְקֹ֖ון בְּנֵ֥י גִדֵּֽל׃ "
+  },
+  "NEH 7:59": {
+   "KJV": "The children of Shephatiah, the children of Hattil, the children of Pochereth of Zebaim, the children of Amon.",
+   "BHSA": "בְּנֵ֧י שְׁפַטְיָ֣ה בְנֵֽי־חַטִּ֗יל בְּנֵ֛י פֹּכֶ֥רֶת הַצְּבָיִ֖ים בְּנֵ֥י אָמֹֽון׃ "
+  },
+  "NEH 7:60": {
+   "KJV": "All the Nethinims, and the children of Solomon's servants, were three hundred ninety and two.",
+   "BHSA": "כָּל־הַ֨נְּתִינִ֔ים וּבְנֵ֖י עַבְדֵ֣י שְׁלֹמֹ֑ה שְׁלֹ֥שׁ מֵאֹ֖ות תִּשְׁעִ֥ים וּשְׁנָֽיִם׃ פ "
+  },
+  "NEH 7:61": {
+   "KJV": "And these were they which went up also from Telmelah, Telharesha, Cherub, Addon, and Immer: but they could not shew their father's house, nor their seed, whether they were of Israel.",
+   "BHSA": "וְאֵ֗לֶּה הָֽעֹולִים֙ מִתֵּ֥ל מֶ֨לַח֙ תֵּ֣ל חַרְשָׁ֔א כְּר֥וּב אַדֹּ֖ון וְאִמֵּ֑ר וְלֹ֣א יָכְל֗וּ לְהַגִּ֤יד בֵּית־אֲבֹותָם֙ וְזַרְעָ֔ם אִ֥ם מִיִּשְׂרָאֵ֖ל הֵֽם׃ "
+  },
+  "NEH 7:62": {
+   "KJV": "The children of Delaiah, the children of Tobiah, the children of Nekoda, six hundred forty and two.",
+   "BHSA": "בְּנֵי־דְלָיָ֥ה בְנֵֽי־טֹובִיָּ֖ה בְּנֵ֣י נְקֹודָ֑א שֵׁ֥שׁ מֵאֹ֖ות וְאַרְבָּעִ֥ים וּשְׁנָֽיִם׃ ס "
+  },
+  "NEH 7:63": {
+   "KJV": "And of the priests: the children of Habaiah, the children of Koz, the children of Barzillai, which took one of the daughters of Barzillai the Gileadite to wife, and was called after their name.",
+   "BHSA": "וּמִן־הַכֹּ֣הֲנִ֔ים בְּנֵ֥י חֳבַיָּ֖ה בְּנֵ֣י הַקֹּ֑וץ בְּנֵ֣י בַרְזִלַּ֗י אֲשֶׁ֣ר לָ֠קַח מִבְּנֹ֞ות בַּרְזִלַּ֤י הַגִּלְעָדִי֙ אִשָּׁ֔ה וַיִּקָּרֵ֖א עַל־שְׁמָֽם׃ "
+  },
+  "NEH 7:64": {
+   "KJV": "These sought their register among those that were reckoned by genealogy, but it was not found: therefore were they, as polluted, put from the priesthood.",
+   "BHSA": "אֵ֗לֶּה בִּקְשׁ֧וּ כְתָבָ֛ם הַמִּתְיַחְשִׂ֖ים וְלֹ֣א נִמְצָ֑א וַיְגֹֽאֲל֖וּ מִן־הַכְּהֻנָּֽה׃ "
+  },
+  "NEH 7:65": {
+   "KJV": "And the Tirshatha said unto them, that they should not eat of the most holy things, till there stood up a priest with Urim and Thummim.",
+   "BHSA": "וַיֹּ֤אמֶר הַתִּרְשָׁ֨תָא֙ לָהֶ֔ם אֲשֶׁ֥ר לֹא־יֹאכְל֖וּ מִקֹּ֣דֶשׁ הַקֳּדָשִׁ֑ים עַ֛ד עֲמֹ֥ד הַכֹּהֵ֖ן לְאוּרִ֥ים וְתוּמִּֽים׃ "
+  },
+  "NEH 7:66": {
+   "KJV": "The whole congregation together was forty and two thousand three hundred and threescore,",
+   "BHSA": "כָּל־הַקָּהָ֖ל כְּאֶחָ֑ד אַרְבַּ֣ע רִבֹּ֔וא אַלְפַּ֖יִם שְׁלֹשׁ־מֵאֹ֥ות וְשִׁשִּֽׁים׃ "
+  },
+  "NEH 7:67": {
+   "KJV": "Beside their manservants and their maidservants, of whom there were seven thousand three hundred thirty and seven: and they had two hundred forty and five singing men and singing women.",
+   "BHSA": "מִ֠לְּבַד עַבְדֵיהֶ֤ם וְאַמְהֹֽתֵיהֶם֙ אֵ֔לֶּה שִׁבְעַ֣ת אֲלָפִ֔ים שְׁלֹ֥שׁ מֵאֹ֖ות שְׁלֹשִׁ֣ים וְשִׁבְעָ֑ה וְלָהֶ֗ם מְשֹֽׁרֲרִים֙ וּמְשֹׁ֣רֲרֹ֔ות מָאתַ֖יִם וְאַרְבָּעִ֥ים וַחֲמִשָּֽׁה׃ ס "
+  },
+  "NEH 7:68": {
+   "KJV": "Their horses, seven hundred thirty and six: their mules, two hundred forty and five:",
+   "BHSA": null
+  },
+  "NEH 7:69": {
+   "KJV": "Their camels, four hundred thirty and five: six thousand seven hundred and twenty asses.",
+   "BHSA": "גְּמַלִּ֕ים אַרְבַּ֥ע מֵאֹ֖ות שְׁלֹשִׁ֣ים וַחֲמִשָּׁ֑ה ס חֲמֹרִ֕ים שֵׁ֣שֶׁת אֲלָפִ֔ים שְׁבַ֥ע מֵאֹ֖ות וְעֶשְׂרִֽים׃ "
+  },
+  "NEH 7:70": {
+   "KJV": "And some of the chief of the fathers gave unto the work. The Tirshatha gave to the treasure a thousand drams of gold, fifty basons, five hundred and thirty priests' garments.",
+   "BHSA": "וּמִקְצָת֙ רָאשֵׁ֣י הָֽאָבֹ֔ות נָתְנ֖וּ לַמְּלָאכָ֑ה הַתִּרְשָׁ֜תָא נָתַ֣ן לָאֹוצָ֗ר זָהָ֞ב דַּרְכְּמֹנִ֥ים אֶ֨לֶף֙ מִזְרָקֹ֣ות חֲמִשִּׁ֔ים כָּתְנֹות֙ כֹּֽהֲנִ֔ים שְׁלֹשִׁ֖ים וַחֲמֵ֥שׁ מֵאֹֽות׃ "
+  },
+  "NEH 7:71": {
+   "KJV": "And some of the chief of the fathers gave to the treasure of the work twenty thousand drams of gold, and two thousand and two hundred pound of silver.",
+   "BHSA": "וּמֵֽרָאשֵׁ֣י הָֽאָבֹ֗ות נָֽתְנוּ֙ לְאֹוצַ֣ר הַמְּלָאכָ֔ה זָהָ֕ב דַּרְכְּמֹונִ֖ים שְׁתֵּ֣י רִבֹּ֑ות וְכֶ֕סֶף מָנִ֖ים אַלְפַּ֥יִם וּמָאתָֽיִם׃ "
+  },
+  "NEH 7:72": {
+   "KJV": "And that which the rest of the people gave was twenty thousand drams of gold, and two thousand pound of silver, and threescore and seven priests' garments.",
+   "BHSA": "וַאֲשֶׁ֣ר נָתְנוּ֮ שְׁאֵרִ֣ית הָעָם֒ זָהָ֗ב דַּרְכְּמֹונִים֙ שְׁתֵּ֣י רִבֹּ֔וא וְכֶ֖סֶף מָנִ֣ים אַלְפָּ֑יִם וְכָתְנֹ֥ת כֹּֽהֲנִ֖ים שִׁשִּׁ֥ים וְשִׁבְעָֽה׃ פ "
+  },
+  "NEH 7:73": {
+   "KJV": "So the priests, and the Levites, and the porters, and the singers, and some of the people, and the Nethinims, and all Israel, dwelt in their cities; and when the seventh month came, the children of Israel were in their cities.",
+   "BHSA": "וַיֵּשְׁב֣וּ הַכֹּהֲנִ֣ים וְהַלְוִיִּ֡ם וְהַשֹּׁועֲרִים֩ וְהַמְשֹׁרְרִ֨ים וּמִן־הָעָ֧ם וְהַנְּתִינִ֛ים וְכָל־יִשְׂרָאֵ֖ל בְּעָרֵיהֶ֑ם וַיִּגַּע֙ הַחֹ֣דֶשׁ הַשְּׁבִיעִ֔י וּבְנֵ֥י יִשְׂרָאֵ֖ל בְּעָרֵיהֶֽם׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "adin",
+   "name": "Adin",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "adonikam",
+   "name": "Adonikam",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "akkub-2",
+   "name": "Akkub",
+   "distinguisher": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "ami",
+   "name": "Ami",
+   "distinguisher": "Solomon's servant (EZR 2:55)",
+   "sex": "male"
+  },
+  {
+   "slug": "arah-2",
+   "name": "Arah",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "asaph-2",
+   "name": "Asaph",
+   "distinguisher": "son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "ater",
+   "name": "Ater",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "ater-2",
+   "name": "Ater",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:42)",
+   "sex": "male"
+  },
+  {
+   "slug": "azgad",
+   "name": "Azgad",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "baanah-2",
+   "name": "Baanah",
+   "distinguisher": "father of Heleb, one of David's mighty men (2SA 23:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "baanah-3",
+   "name": "Baanah",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "bakbuk",
+   "name": "Bakbuk",
+   "distinguisher": "temple servant (EZR 2:51)",
+   "sex": "male"
+  },
+  {
+   "slug": "bani-4",
+   "name": "Bani",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "barkos",
+   "name": "Barkos",
+   "distinguisher": "temple servant (EZR 2:53)",
+   "sex": "male"
+  },
+  {
+   "slug": "barzillai",
+   "name": "Barzillai",
+   "distinguisher": "the Gileadite from Rogelim (2SA 17:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "barzillai-3",
+   "name": "Barzillai",
+   "distinguisher": "man who took a wife from the the daughters of Barzillai and was called by their name (EZR 2:61)",
+   "sex": "male"
+  },
+  {
+   "slug": "bazluth",
+   "name": "Bazluth",
+   "distinguisher": "temple servant (EZR 2:52)",
+   "sex": "male"
+  },
+  {
+   "slug": "bebai",
+   "name": "Bebai",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "besai",
+   "name": "Besai",
+   "distinguisher": "temple servant (EZR 2:49)",
+   "sex": "male"
+  },
+  {
+   "slug": "bezai",
+   "name": "Bezai",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "bigvai",
+   "name": "Bigvai",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "bilshan",
+   "name": "Bilshan",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "darkon",
+   "name": "Darkon",
+   "distinguisher": "Solomon's servant (EZR 2:55)",
+   "sex": "male"
+  },
+  {
+   "slug": "delaiah-3",
+   "name": "Delaiah",
+   "distinguisher": "unable to give evidence if they were from Israel (EZR 2:60)",
+   "sex": "male"
+  },
+  {
+   "slug": "elam-4",
+   "name": "Elam",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "elam-5",
+   "name": "Elam",
+   "distinguisher": "\"the other Elam\" whose sons (descendants) returned to Judah after captivity (EZR 2:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "elam-7",
+   "name": "Elam",
+   "distinguisher": "Ancestor of 1,254 exiles who returned with Zerubbabel",
+   "sex": null
+  },
+  {
+   "slug": "ezra-2",
+   "name": "Ezra",
+   "distinguisher": "one of those who came with Zerubbabel, as the Greek list names him (NEH 7:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "gahar",
+   "name": "Gahar",
+   "distinguisher": "temple servant (EZR 2:47)",
+   "sex": "male"
+  },
+  {
+   "slug": "gazzam",
+   "name": "Gazzam",
+   "distinguisher": "temple servant (EZR 2:48)",
+   "sex": "male"
+  },
+  {
+   "slug": "gibbar",
+   "name": "Gibbar",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "giddel",
+   "name": "Giddel",
+   "distinguisher": "temple servant (EZR 2:47)",
+   "sex": "male"
+  },
+  {
+   "slug": "giddel-2",
+   "name": "Giddel",
+   "distinguisher": "Solomon's servant (EZR 2:55)",
+   "sex": "male"
+  },
+  {
+   "slug": "habaiah",
+   "name": "Habaiah",
+   "distinguisher": "unable to give evidence if they were from the priesthood (EZR 2:61)",
+   "sex": "male"
+  },
+  {
+   "slug": "hagabah",
+   "name": "Hagabah",
+   "distinguisher": "temple servant (EZR 2:45)",
+   "sex": "male"
+  },
+  {
+   "slug": "hakkoz",
+   "name": "Hakkoz",
+   "distinguisher": "seventh-chosen priest for the twenty-four courses (1CH 24:10), his descendants could not show proof of lineage (NEH 7:63)",
+   "sex": "male"
+  },
+  {
+   "slug": "hakupha",
+   "name": "Hakupha",
+   "distinguisher": "temple servant (EZR 2:51)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanan-4",
+   "name": "Hanan",
+   "distinguisher": "forefather of a house of the temple servants who came up from Babylon (EZR 2:46, NEH 7:49)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanani-4",
+   "name": "Hanani",
+   "distinguisher": "brother of Nehemiah (NEH 1:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "hananiah-8",
+   "name": "Hananiah",
+   "distinguisher": "the commander of the fortress in Jerusalem (NEH 7:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "harhur",
+   "name": "Harhur",
+   "distinguisher": "temple servant (EZR 2:51)",
+   "sex": "male"
+  },
+  {
+   "slug": "harim-2",
+   "name": "Harim",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "harim-3",
+   "name": "Harim",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:39)",
+   "sex": "male"
+  },
+  {
+   "slug": "harsha",
+   "name": "Harsha",
+   "distinguisher": "temple servant (EZR 2:52)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashum",
+   "name": "Hashum",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "hassophereth",
+   "name": "Hassophereth",
+   "distinguisher": "Solomon's servant (EZR 2:55)",
+   "sex": "male"
+  },
+  {
+   "slug": "hasupha",
+   "name": "Hasupha",
+   "distinguisher": "temple servant (EZR 2:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "hatipha",
+   "name": "Hatipha",
+   "distinguisher": "temple servant (EZR 2:54)",
+   "sex": "male"
+  },
+  {
+   "slug": "hatita",
+   "name": "Hatita",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:42)",
+   "sex": "male"
+  },
+  {
+   "slug": "hattil",
+   "name": "Hattil",
+   "distinguisher": "Solomon's servant (EZR 2:55)",
+   "sex": "male"
+  },
+  {
+   "slug": "hezekiah-2",
+   "name": "Hezekiah",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "hodaviah-5",
+   "name": "Hodaviah",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "immer",
+   "name": "Immer",
+   "distinguisher": "father of Meshillemith (1CH 9:12), priest (EZR 2:37, NEH 7:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "jaalah",
+   "name": "Jaalah",
+   "distinguisher": "Solomon's servant (EZR 2:55)",
+   "sex": "male"
+  },
+  {
+   "slug": "jedaiah-2",
+   "name": "Jedaiah",
+   "distinguisher": "priest (1CH 9:10, NEH 7:39, NEH 12:6), of the house of Jeshua (EZR 2:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "jedaiah-7",
+   "name": "Jedaiah",
+   "distinguisher": "Priestly family head whose descendants returned with Zerubbabel, house of Jeshua",
+   "sex": null
+  },
+  {
+   "slug": "jeshua",
+   "name": "Jeshua",
+   "distinguisher": "ninth-chosen priest for the twenty-four courses (1CH 24:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshua-3",
+   "name": "Jeshua",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshua-4",
+   "name": "Jeshua",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:6, NEH 7:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshua-5",
+   "name": "Jeshua",
+   "distinguisher": "Levite whose sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshua-7",
+   "name": "Jeshua",
+   "distinguisher": "explained the law to the people (NEH 8:7), stood on the Levites platform (NEH 9:4), and exhorted Israel to bless the Lord (NEH 9:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "joab-3",
+   "name": "Joab",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "jorah",
+   "name": "Jorah",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "kadmiel",
+   "name": "Kadmiel",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "keros",
+   "name": "Keros",
+   "distinguisher": "temple servant (EZR 2:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "lebanah",
+   "name": "Lebanah",
+   "distinguisher": "temple servant (EZR 2:45)",
+   "sex": "male"
+  },
+  {
+   "slug": "mehida",
+   "name": "Mehida",
+   "distinguisher": "temple servant (EZR 2:52)",
+   "sex": "male"
+  },
+  {
+   "slug": "meunim",
+   "name": "Meunim",
+   "distinguisher": "forefather of a family of the Nethinims who returned from the captivity (EZR 2:50)",
+   "sex": "male"
+  },
+  {
+   "slug": "mispar",
+   "name": "Mispar",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7) [called Misperethin NEH 7:7]",
+   "sex": "male"
+  },
+  {
+   "slug": "mordecai",
+   "name": "Mordecai",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "nahamani",
+   "name": "Nahamani",
+   "distinguisher": "returned to Judah after the Babylonian captivity (NEH 7:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "nebo",
+   "name": "Nebo",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "nebuchadnezzar",
+   "name": "Nebuchadnezzar",
+   "distinguisher": "King of Babylon (2KI 23:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "nehemiah-3",
+   "name": "Nehemiah",
+   "distinguisher": "One of twelve heads of the people who returned from exile with Zerubbabel",
+   "sex": null
+  },
+  {
+   "slug": "nekoda",
+   "name": "Nekoda",
+   "distinguisher": "forefather of a family of the Nethinims who returned, and of a family that could not show its descent (EZR 2:48, 60)",
+   "sex": "male"
+  },
+  {
+   "slug": "nephisim",
+   "name": "Nephusim",
+   "distinguisher": "forefather of a family of the Nethinims who returned from the captivity (EZR 2:50, NEH 7:52)",
+   "sex": "male"
+  },
+  {
+   "slug": "neziah",
+   "name": "Neziah",
+   "distinguisher": "temple servant (EZR 2:54)",
+   "sex": "male"
+  },
+  {
+   "slug": "padon",
+   "name": "Padon",
+   "distinguisher": "temple servant (EZR 2:44)",
+   "sex": "male"
+  },
+  {
+   "slug": "pahathmoab",
+   "name": "Pahath-moab",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "parosh",
+   "name": "Parosh",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "paseah-2",
+   "name": "Paseah",
+   "distinguisher": "temple servant (EZR 2:49)",
+   "sex": "male"
+  },
+  {
+   "slug": "pashhur-the-priest",
+   "name": "Pashhur",
+   "distinguisher": "a priest, son of Malchijah, forefather of priests who served in Jerusalem after the return (1CH 9:12, NEH 11:12)",
+   "sex": null
+  },
+  {
+   "slug": "peruda",
+   "name": "Peruda",
+   "distinguisher": "Solomon's servant (EZR 2:55)",
+   "sex": "male"
+  },
+  {
+   "slug": "pocherethhazzebaim",
+   "name": "Pochereth-hazzebaim",
+   "distinguisher": "Solomon's servant (EZR 2:55)",
+   "sex": "male"
+  },
+  {
+   "slug": "reaiah-3",
+   "name": "Reaiah",
+   "distinguisher": "temple servant (EZR 2:47)",
+   "sex": "male"
+  },
+  {
+   "slug": "reelaiah",
+   "name": "Reelaiah",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7) [called Raamiah in NEH 7:7]",
+   "sex": "male"
+  },
+  {
+   "slug": "rehum",
+   "name": "Rehum",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7) [called Nehum NEH 7:7]",
+   "sex": "male"
+  },
+  {
+   "slug": "rezin-2",
+   "name": "Rezin",
+   "distinguisher": "temple servant (EZR 2:48)",
+   "sex": "male"
+  },
+  {
+   "slug": "senaah",
+   "name": "Senaah",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "seraiah-6",
+   "name": "Seraiah",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7) [called Azariah in NEH 7:7]",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum-7",
+   "name": "Shallum",
+   "distinguisher": "one of the gatekeepers (1CH 9:17), to the east (1CH 26:14), gatekeeper (EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "shalmai",
+   "name": "Shalmai",
+   "distinguisher": "temple servant (EZR 2:46)",
+   "sex": "male"
+  },
+  {
+   "slug": "shephatiah-5",
+   "name": "Shephatiah",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "shephatiah-6",
+   "name": "Shephatiah",
+   "distinguisher": "Solomon's servant (EZR 2:55)",
+   "sex": "male"
+  },
+  {
+   "slug": "shobai",
+   "name": "Shobai",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:42)",
+   "sex": "male"
+  },
+  {
+   "slug": "siaha",
+   "name": "Siaha",
+   "distinguisher": "temple servant (EZR 2:44)",
+   "sex": "male"
+  },
+  {
+   "slug": "sisera-2",
+   "name": "Sisera",
+   "distinguisher": "temple servant (EZR 2:53)",
+   "sex": "male"
+  },
+  {
+   "slug": "solomon",
+   "name": "Solomon",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "sotai",
+   "name": "Sotai",
+   "distinguisher": "Solomon's servant (EZR 2:55)",
+   "sex": "male"
+  },
+  {
+   "slug": "tabbaoth",
+   "name": "Tabbaoth",
+   "distinguisher": "temple servant (EZR 2:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "talmon",
+   "name": "Talmon",
+   "distinguisher": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "temah",
+   "name": "Temah",
+   "distinguisher": "temple servant (EZR 2:53)",
+   "sex": "male"
+  },
+  {
+   "slug": "tobiah",
+   "name": "Tobiah",
+   "distinguisher": "unable to give evidence if they were from Israel (EZR 2:60)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzza-2",
+   "name": "Uzza",
+   "distinguisher": "temple servant (EZR 2:49)",
+   "sex": "male"
+  },
+  {
+   "slug": "zaccai",
+   "name": "Zaccai",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "zattu",
+   "name": "Zattu",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "zerubbabel-2",
+   "name": "Zerubbabel",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7), son of Shealtiel (EZR 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "ziha",
+   "name": "Ziha",
+   "distinguisher": "temple servant (EZR 2:43)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 101600,
+   "row": "nahamani companion-of zerubbabel-2",
+   "verse": "NEH 7:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "ater descendant-of hezekiah-2 (EZR 2:16)",
+  "barzillai-3 son-in-law-of barzillai (EZR 2:61)",
+  "hassophereth servant-of solomon (EZR 2:55)",
+  "jeshua-4 descendant-of pahathmoab (EZR 2:6)",
+  "jeshua-5 descendant-of hodaviah-5 (EZR 2:40)",
+  "kadmiel descendant-of hodaviah-5 (EZR 2:40)",
+  "peruda servant-of solomon (EZR 2:55)",
+  "seraiah-6 companion-of zerubbabel-2 (NEH 12:1)",
+  "seraiah-6 companion-of jeshua-3 (NEH 12:1)",
+  "sotai servant-of solomon (EZR 2:55)",
+  "jedaiah-7 descendant-of jeshua (EZR 2:36)",
+  "nehemiah-3 companion-of zerubbabel-2 (EZR 2:2)",
+  "baanah-3 companion-of zerubbabel-2 (EZR 2:2)",
+  "bilshan companion-of zerubbabel-2 (EZR 2:2)",
+  "hezekiah-2 ancestor-of ater (EZR 2:16)",
+  "jeshua-7 son-of kadmiel (NEH 12:24)",
+  "joab-3 descendant-of pahathmoab (EZR 2:6)",
+  "mispar companion-of zerubbabel-2 (EZR 2:2)",
+  "mordecai companion-of zerubbabel-2 (EZR 2:2)",
+  "reelaiah companion-of zerubbabel-2 (EZR 2:2)",
+  "rehum companion-of zerubbabel-2 (EZR 2:2)"
+ ]
+}

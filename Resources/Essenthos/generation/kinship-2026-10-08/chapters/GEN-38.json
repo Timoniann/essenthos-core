@@ -1,0 +1,20 @@
+{
+ "chapter": "GEN 38",
+ "rows": 12,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "shelah-2",
+   "type": "brother-of",
+   "to": "er",
+   "verse": "GEN 38:11",
+   "why": "Judah refers to Shelah's deceased brothers, who in the preceding narrative are Er and Onan.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Owner row 106999 is supported by GEN 38:10, although its recorded verse GEN 38:9 describes Onan's conduct rather than his death.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:17:32+00:00"
+}

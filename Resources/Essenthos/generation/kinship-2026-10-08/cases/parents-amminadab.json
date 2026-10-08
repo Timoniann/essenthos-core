@@ -1,0 +1,11 @@
+{
+ "case": "parents-amminadab",
+ "question": "amminadab is recorded with more than one father: ram, admin.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "RUT 4:19 and 1CH 2:10 explicitly say Ram begat Amminadab, supporting the owner's ruling. The supplied KJV of LUK 3:33 omits Admin, but without the textual reading underlying the Admin rows, the evidence does not decide whether they preserve a genuine variant genealogy or are erroneous.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:31:47+00:00"
+}

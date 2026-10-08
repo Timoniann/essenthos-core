@@ -1,0 +1,32 @@
+{
+ "chapter": "GEN 4",
+ "rows": 38,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    103526
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "GEN 4:22",
+   "why": "The Hebrew says Zillah bore Tubal-cain and names Naamah as his sister, without identifying Naamah's mother.",
+   "confidence": 0.94
+  }
+ ],
+ "missing": [
+  {
+   "from": "jubal",
+   "type": "brother-of",
+   "to": "jabal",
+   "verse": "GEN 4:21",
+   "why": "The Hebrew names Jubal as the brother of Jabal, the preceding verse's subject.",
+   "confidence": 1
+  }
+ ],
+ "note": "Owner rows 105936, 105937, and 106992 are preserved, although Jubal's and Naamah's parentage is inferred from their sibling relationships rather than expressly stated.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:16:11+00:00"
+}

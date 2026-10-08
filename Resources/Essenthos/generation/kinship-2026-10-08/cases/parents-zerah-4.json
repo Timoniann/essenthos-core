@@ -1,0 +1,11 @@
+{
+ "case": "parents-zerah-4",
+ "question": "zerah-4 is recorded with more than one father: iddo-2, adaiah-2.",
+ "verdict": "legitimate",
+ "actions": [],
+ "note": "The Hebrew names Zerah as Iddo’s son in 1CH 6:21 and as Adaiah’s son in 1CH 6:41; the rows accurately preserve both genealogies. The supplied text does not resolve whether these are variant lineages, omitted generations, or different Zerahs, so no correction is justified.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:37:28+00:00"
+}

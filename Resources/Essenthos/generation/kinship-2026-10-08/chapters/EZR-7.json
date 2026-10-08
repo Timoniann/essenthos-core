@@ -1,0 +1,11 @@
+{
+ "chapter": "EZR 7",
+ "rows": 13,
+ "wrong": [],
+ "missing": [],
+ "note": "Every explicit genealogical link is already recorded in at least one direction. This chapter alone does not distinguish the competing Seraiah and Azariah records sufficiently to justify deleting or retargeting their links.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T08:27:21+00:00"
+}

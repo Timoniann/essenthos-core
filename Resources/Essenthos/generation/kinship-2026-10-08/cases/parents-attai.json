@@ -1,0 +1,25 @@
+{
+ "case": "parents-attai",
+ "question": "attai is recorded with more than one father: sheshan, jarha.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "retype-row",
+   "rows": [
+    102709
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "grandfather-of",
+   "new_to": "",
+   "verse": "1CH 2:35",
+   "why": "Sheshan gave his daughter to Jarha as wife, and she bore Attai to Jarha. Sheshan is therefore Attai's maternal grandfather.",
+   "confidence": 1
+  }
+ ],
+ "note": "The Jarha–Attai parentage rows and Attai's descendant-of Sheshan row are correct. Sheshan's daughter is unnamed in 1CH 2:35; identifying her as Ahlai would require an inference.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:30:21+00:00"
+}

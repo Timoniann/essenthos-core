@@ -1,0 +1,1662 @@
+{
+ "chapter": "NEH 12",
+ "text": {
+  "NEH 12:1": {
+   "KJV": "Now these are the priests and the Levites that went up with Zerubbabel the son of Shealtiel, and Jeshua: Seraiah, Jeremiah, Ezra,",
+   "BHSA": "וְאֵ֨לֶּה֙ הַכֹּהֲנִ֣ים וְהַלְוִיִּ֔ם אֲשֶׁ֥ר עָל֛וּ עִם־זְרֻבָּבֶ֥ל בֶּן־שְׁאַלְתִּיאֵ֖ל וְיֵשׁ֑וּעַ שְׂרָיָ֥ה יִרְמְיָ֖ה עֶזְרָֽא׃ "
+  },
+  "NEH 12:2": {
+   "KJV": "Amariah, Malluch, Hattush,",
+   "BHSA": "אֲמַרְיָ֥ה מַלּ֖וּךְ חַטּֽוּשׁ׃ "
+  },
+  "NEH 12:3": {
+   "KJV": "Shechaniah, Rehum, Meremoth,",
+   "BHSA": "שְׁכַנְיָ֥ה רְחֻ֖ם מְרֵמֹֽת׃ "
+  },
+  "NEH 12:4": {
+   "KJV": "Iddo, Ginnetho, Abijah,",
+   "BHSA": "עִדֹּ֥וא גִנְּתֹ֖וי אֲבִיָּֽה׃ "
+  },
+  "NEH 12:5": {
+   "KJV": "Miamin, Maadiah, Bilgah,",
+   "BHSA": "מִיָּמִ֥ין מַֽעַדְיָ֖ה בִּלְגָּֽה׃ "
+  },
+  "NEH 12:6": {
+   "KJV": "Shemaiah, and Joiarib, Jedaiah,",
+   "BHSA": "שְׁמַֽעְיָ֥ה וְיֹויָרִ֖יב יְדַֽעְיָֽה׃ "
+  },
+  "NEH 12:7": {
+   "KJV": "Sallu, Amok, Hilkiah, Jedaiah. These were the chief of the priests and of their brethren in the days of Jeshua.",
+   "BHSA": "סַלּ֣וּ עָמֹ֔וק חִלְקִיָּ֖ה יְדַֽעְיָ֑ה אֵ֣לֶּה רָאשֵׁ֧י הַכֹּהֲנִ֛ים וַאֲחֵיהֶ֖ם בִּימֵ֥י יֵשֽׁוּעַ׃ פ "
+  },
+  "NEH 12:8": {
+   "KJV": "Moreover the Levites: Jeshua, Binnui, Kadmiel, Sherebiah, Judah, and Mattaniah, which was over the thanksgiving, he and his brethren.",
+   "BHSA": "וְהַלְוִיִּ֗ם יֵשׁ֧וּעַ בִּנּ֛וּי קַדְמִיאֵ֥ל שֵׁרֵבְיָ֖ה יְהוּדָ֣ה מַתַּנְיָ֑ה עַֽל־הֻיְּדֹ֖ות ה֥וּא וְאֶחָֽיו׃ "
+  },
+  "NEH 12:9": {
+   "KJV": "Also Bakbukiah and Unni, their brethren, were over against them in the watches.",
+   "BHSA": "וּבַקְבֻּֽקְיָ֨ה וענו אֲחֵיהֶ֛ם לְנֶגְדָּ֖ם לְמִשְׁמָרֹֽות׃ "
+  },
+  "NEH 12:10": {
+   "KJV": "And Jeshua begat Joiakim, Joiakim also begat Eliashib, and Eliashib begat Joiada,",
+   "BHSA": "וְיֵשׁ֖וּעַ הֹולִ֣יד אֶת־יֹֽויָקִ֑ים וְיֹֽויָקִים֙ הֹולִ֣יד אֶת־אֶלְיָשִׁ֔יב וְאֶלְיָשִׁ֖יב אֶת־יֹויָדָֽע׃ "
+  },
+  "NEH 12:11": {
+   "KJV": "And Joiada begat Jonathan, and Jonathan begat Jaddua.",
+   "BHSA": "וְיֹויָדָע֙ הֹולִ֣יד אֶת־יֹונָתָ֔ן וְיֹונָתָ֖ן הֹולִ֥יד אֶת־יַדּֽוּעַ׃ "
+  },
+  "NEH 12:12": {
+   "KJV": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;",
+   "BHSA": "וּבִימֵי֙ יֹֽויָקִ֔ים הָי֥וּ כֹהֲנִ֖ים רָאשֵׁ֣י הָאָבֹ֑ות לִשְׂרָיָ֣ה מְרָיָ֔ה לְיִרְמְיָ֖ה חֲנַנְיָֽה׃ "
+  },
+  "NEH 12:13": {
+   "KJV": "Of Ezra, Meshullam; of Amariah, Jehohanan;",
+   "BHSA": "לְעֶזְרָ֣א מְשֻׁלָּ֔ם לַאֲמַרְיָ֖ה יְהֹוחָנָֽן׃ "
+  },
+  "NEH 12:14": {
+   "KJV": "Of Melicu, Jonathan; of Shebaniah, Joseph;",
+   "BHSA": "למלוכי יֹֽונָתָ֔ן לִשְׁבַנְיָ֖ה יֹוסֵֽף׃ "
+  },
+  "NEH 12:15": {
+   "KJV": "Of Harim, Adna; of Meraioth, Helkai;",
+   "BHSA": "לְחָרִ֣ם עַדְנָ֔א לִמְרָיֹ֖ות חֶלְקָֽי׃ "
+  },
+  "NEH 12:16": {
+   "KJV": "Of Iddo, Zechariah; of Ginnethon, Meshullam;",
+   "BHSA": "לעדיא זְכַרְיָ֖ה לְגִנְּתֹ֥ון מְשֻׁלָּֽם׃ "
+  },
+  "NEH 12:17": {
+   "KJV": "Of Abijah, Zichri; of Miniamin, of Moadiah, Piltai:",
+   "BHSA": "לַאֲבִיָּ֖ה זִכְרִ֑י לְמִ֨נְיָמִ֔ין לְמֹועַדְיָ֖ה פִּלְטָֽי׃ "
+  },
+  "NEH 12:18": {
+   "KJV": "Of Bilgah, Shammua; of Shemaiah, Jehonathan;",
+   "BHSA": "לְבִלְגָּ֣ה שַׁמּ֔וּעַ לִֽשְׁמַעְיָ֖ה יְהֹונָתָֽן׃ "
+  },
+  "NEH 12:19": {
+   "KJV": "And of Joiarib, Mattenai; of Jedaiah, Uzzi;",
+   "BHSA": "וּלְיֹויָרִ֣יב מַתְּנַ֔י לִֽידַֽעְיָ֖ה עֻזִּֽי׃ "
+  },
+  "NEH 12:20": {
+   "KJV": "Of Sallai, Kallai; of Amok, Eber;",
+   "BHSA": "לְסַלַּ֥י קַלָּ֖י לְעָמֹ֥וק עֵֽבֶר׃ "
+  },
+  "NEH 12:21": {
+   "KJV": "Of Hilkiah, Hashabiah; of Jedaiah, Nethaneel.",
+   "BHSA": "לְחִלְקִיָּ֣ה חֲשַׁבְיָ֔ה לִֽידַֽעְיָ֖ה נְתַנְאֵֽל׃ "
+  },
+  "NEH 12:22": {
+   "KJV": "The Levites in the days of Eliashib, Joiada, and Johanan, and Jaddua, were recorded chief of the fathers: also the priests, to the reign of Darius the Persian.",
+   "BHSA": "הַלְוִיִּם֩ בִּימֵ֨י אֶלְיָשִׁ֜יב יֹויָדָ֤ע וְיֹוחָנָן֙ וְיַדּ֔וּעַ כְּתוּבִ֖ים רָאשֵׁ֣י אָבֹ֑ות וְהַכֹּ֣הֲנִ֔ים עַל־מַלְכ֖וּת דָּרְיָ֥וֶשׁ הַפָּֽרְסִֽי׃ פ "
+  },
+  "NEH 12:23": {
+   "KJV": "The sons of Levi, the chief of the fathers, were written in the book of the chronicles, even until the days of Johanan the son of Eliashib.",
+   "BHSA": "בְּנֵ֤י לֵוִי֙ רָאשֵׁ֣י הָֽאָבֹ֔ות כְּתוּבִ֕ים עַל־סֵ֖פֶר דִּבְרֵ֣י הַיָּמִ֑ים וְעַד־יְמֵ֖י יֹֽוחָנָ֥ן בֶּן־אֶלְיָשִֽׁיב׃ "
+  },
+  "NEH 12:24": {
+   "KJV": "And the chief of the Levites: Hashabiah, Sherebiah, and Jeshua the son of Kadmiel, with their brethren over against them, to praise and to give thanks, according to the commandment of David the man of God, ward over against ward.",
+   "BHSA": "וְרָאשֵׁ֣י הַ֠לְוִיִּם חֲשַׁבְיָ֨ה שֵֽׁרֵבְיָ֜ה וְיֵשׁ֤וּעַ בֶּן־קַדְמִיאֵל֙ וַאֲחֵיהֶ֣ם לְנֶגְדָּ֔ם לְהַלֵּ֣ל לְהֹודֹ֔ות בְּמִצְוַ֖ת דָּוִ֣יד אִישׁ־הָאֱלֹהִ֑ים מִשְׁמָ֖ר לְעֻמַּ֥ת מִשְׁמָֽר׃ "
+  },
+  "NEH 12:25": {
+   "KJV": "Mattaniah, and Bakbukiah, Obadiah, Meshullam, Talmon, Akkub, were porters keeping the ward at the thresholds of the gates.",
+   "BHSA": "מַתַּנְיָ֧ה וּבַקְבֻּֽקְיָ֛ה עֹבַדְיָ֥ה מְשֻׁלָּ֖ם טַלְמֹ֣ון עַקּ֑וּב שֹׁמְרִ֤ים שֹֽׁועֲרִים֙ מִשְׁמָ֔ר בַּאֲסֻפֵּ֖י הַשְּׁעָרִֽים׃ "
+  },
+  "NEH 12:26": {
+   "KJV": "These were in the days of Joiakim the son of Jeshua, the son of Jozadak, and in the days of Nehemiah the governor, and of Ezra the priest, the scribe.",
+   "BHSA": "אֵ֕לֶּה בִּימֵ֛י יֹויָקִ֥ים בֶּן־יֵשׁ֖וּעַ בֶּן־יֹוצָדָ֑ק וּבִימֵי֙ נְחֶמְיָ֣ה הַפֶּחָ֔ה וְעֶזְרָ֥א הַכֹּהֵ֖ן הַסֹּופֵֽר׃ פ "
+  },
+  "NEH 12:27": {
+   "KJV": "And at the dedication of the wall of Jerusalem they sought the Levites out of all their places, to bring them to Jerusalem, to keep the dedication with gladness, both with thanksgivings, and with singing, with cymbals, psalteries, and with harps.",
+   "BHSA": "וּבַחֲנֻכַּ֞ת חֹומַ֣ת יְרוּשָׁלִַ֗ם בִּקְשׁ֤וּ אֶת־הַלְוִיִּם֙ מִכָּל־מְקֹ֣ומֹתָ֔ם לַהֲבִיאָ֖ם לִֽירוּשָׁלִָ֑ם לַעֲשֹׂ֨ת חֲנֻכָּ֤ה וְשִׂמְחָה֙ וּבְתֹודֹ֣ות וּבְשִׁ֔יר מְצִלְתַּ֖יִם נְבָלִ֥ים וּבְכִנֹּרֹֽות׃ "
+  },
+  "NEH 12:28": {
+   "KJV": "And the sons of the singers gathered themselves together, both out of the plain country round about Jerusalem, and from the villages of Netophathi;",
+   "BHSA": "וַיֵּאָ֣סְפ֔וּ בְּנֵ֖י הַמְשֹׁרְרִ֑ים וּמִן־הַכִּכָּר֙ סְבִיבֹ֣ות יְרוּשָׁלִַ֔ם וּמִן־חַצְרֵ֖י נְטֹפָתִֽי׃ "
+  },
+  "NEH 12:29": {
+   "KJV": "Also from the house of Gilgal, and out of the fields of Geba and Azmaveth: for the singers had builded them villages round about Jerusalem.",
+   "BHSA": "וּמִבֵּית֙ הַגִּלְגָּ֔ל וּמִשְּׂדֹ֥ות גֶּ֖בַע וְעַזְמָ֑וֶת כִּ֣י חֲצֵרִ֗ים בָּנ֤וּ לָהֶם֙ הַמְשֹׁ֣רֲרִ֔ים סְבִיבֹ֖ות יְרוּשָׁלִָֽם׃ "
+  },
+  "NEH 12:30": {
+   "KJV": "And the priests and the Levites purified themselves, and purified the people, and the gates, and the wall.",
+   "BHSA": "וַיִּֽטַּהֲר֔וּ הַכֹּהֲנִ֖ים וְהַלְוִיִּ֑ם וַֽיְטַהֲרוּ֙ אֶת־הָעָ֔ם וְאֶת־הַשְּׁעָרִ֖ים וְאֶֽת־הַחֹומָֽה׃ "
+  },
+  "NEH 12:31": {
+   "KJV": "Then I brought up the princes of Judah upon the wall, and appointed two great companies of them that gave thanks, whereof one went on the right hand upon the wall toward the dung gate:",
+   "BHSA": "וָאַעֲלֶה֙ אֶת־שָׂרֵ֣י יְהוּדָ֔ה מֵעַ֖ל לַחֹומָ֑ה וָאַעֲמִ֡ידָה שְׁתֵּ֣י תֹודֹת֩ גְּדֹולֹ֨ת וְתַהֲלֻכֹ֤ת לַיָּמִין֙ מֵעַ֣ל לַחֹומָ֔ה לְשַׁ֖עַר הָאַשְׁפֹּֽת׃ "
+  },
+  "NEH 12:32": {
+   "KJV": "And after them went Hoshaiah, and half of the princes of Judah,",
+   "BHSA": "וַיֵּ֤לֶךְ אַחֲרֵיהֶם֙ הֹושַׁ֣עְיָ֔ה וַחֲצִ֖י שָׂרֵ֥י יְהוּדָֽה׃ "
+  },
+  "NEH 12:33": {
+   "KJV": "And Azariah, Ezra, and Meshullam,",
+   "BHSA": "וַעֲזַרְיָ֥ה עֶזְרָ֖א וּמְשֻׁלָּֽם׃ "
+  },
+  "NEH 12:34": {
+   "KJV": "Judah, and Benjamin, and Shemaiah, and Jeremiah,",
+   "BHSA": "יְהוּדָה֙ וּבִנְיָמִ֔ן וּֽשְׁמַֽעְיָ֖ה וְיִרְמְיָֽה׃ ס "
+  },
+  "NEH 12:35": {
+   "KJV": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:",
+   "BHSA": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ "
+  },
+  "NEH 12:36": {
+   "KJV": "And his brethren, Shemaiah, and Azarael, Milalai, Gilalai, Maai, Nethaneel, and Judah, Hanani, with the musical instruments of David the man of God, and Ezra the scribe before them.",
+   "BHSA": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד אִ֣ישׁ הָאֱלֹהִ֑ים וְעֶזְרָ֥א הַסֹּופֵ֖ר לִפְנֵיהֶֽם׃ "
+  },
+  "NEH 12:37": {
+   "KJV": "And at the fountain gate, which was over against them, they went up by the stairs of the city of David, at the going up of the wall, above the house of David, even unto the water gate eastward.",
+   "BHSA": "וְעַל֩ שַׁ֨עַר הָעַ֜יִן וְנֶגְדָּ֗ם עָלוּ֙ עַֽל־מַעֲלֹות֙ עִ֣יר דָּוִ֔יד בַּֽמַּעֲלֶ֖ה לַחֹומָ֑ה מֵעַל֙ לְבֵ֣ית דָּוִ֔יד וְעַ֛ד שַׁ֥עַר הַמַּ֖יִם מִזְרָֽח׃ "
+  },
+  "NEH 12:38": {
+   "KJV": "And the other company of them that gave thanks went over against them, and I after them, and the half of the people upon the wall, from beyond the tower of the furnaces even unto the broad wall;",
+   "BHSA": "וְהַתֹּודָ֧ה הַשֵּׁנִ֛ית הַהֹולֶ֥כֶת לְמֹ֖ואל וַאֲנִ֣י אַחֲרֶ֑יהָ וַחֲצִ֨י הָעָ֜ם מֵעַ֣ל לְהַחֹומָ֗ה מֵעַל֙ לְמִגְדַּ֣ל הַתַּנּוּרִ֔ים וְעַ֖ד הַחֹומָ֥ה הָרְחָבָֽה׃ "
+  },
+  "NEH 12:39": {
+   "KJV": "And from above the gate of Ephraim, and above the old gate, and above the fish gate, and the tower of Hananeel, and the tower of Meah, even unto the sheep gate: and they stood still in the prison gate.",
+   "BHSA": "וּמֵעַ֣ל לְשַֽׁעַר־אֶ֠פְרַיִם וְעַל־שַׁ֨עַר הַיְשָׁנָ֜ה וְעַל־שַׁ֣עַר הַדָּגִ֗ים וּמִגְדַּ֤ל חֲנַנְאֵל֙ וּמִגְדַּ֣ל הַמֵּאָ֔ה וְעַ֖ד שַׁ֣עַר הַצֹּ֑אן וְעָ֣מְד֔וּ בְּשַׁ֖עַר הַמַּטָּרָֽה׃ "
+  },
+  "NEH 12:40": {
+   "KJV": "So stood the two companies of them that gave thanks in the house of God, and I, and the half of the rulers with me:",
+   "BHSA": "וַֽתַּעֲמֹ֛דְנָה שְׁתֵּ֥י הַתֹּודֹ֖ת בְּבֵ֣ית הָאֱלֹהִ֑ים וַאֲנִ֕י וַחֲצִ֥י הַסְּגָנִ֖ים עִמִּֽי׃ "
+  },
+  "NEH 12:41": {
+   "KJV": "And the priests; Eliakim, Maaseiah, Miniamin, Michaiah, Elioenai, Zechariah, and Hananiah, with trumpets;",
+   "BHSA": "וְהַכֹּהֲנִ֡ים אֶלְיָקִ֡ים מַעֲשֵׂיָ֡ה מִ֠נְיָמִין מִיכָיָ֧ה אֶלְיֹועֵינַ֛י זְכַרְיָ֥ה חֲנַנְיָ֖ה בַּחֲצֹצְרֹֽות׃ "
+  },
+  "NEH 12:42": {
+   "KJV": "And Maaseiah, and Shemaiah, and Eleazar, and Uzzi, and Jehohanan, and Malchijah, and Elam, and Ezer. And the singers sang loud, with Jezrahiah their overseer.",
+   "BHSA": "וּמַעֲשֵׂיָ֨ה וּֽשְׁמַֽעְיָ֜ה וְאֶלְעָזָ֧ר וְעֻזִּ֛י וִֽיהֹוחָנָ֥ן וּמַלְכִּיָּ֖ה וְעֵילָ֣ם וָעָ֑זֶר וַיַּשְׁמִ֨יעוּ֙ הַמְשֹׁ֣רְרִ֔ים וְיִֽזְרַחְיָ֖ה הַפָּקִֽיד׃ "
+  },
+  "NEH 12:43": {
+   "KJV": "Also that day they offered great sacrifices, and rejoiced: for God had made them rejoice with great joy: the wives also and the children rejoiced: so that the joy of Jerusalem was heard even afar off.",
+   "BHSA": "וַיִּזְבְּח֣וּ בַיֹּום־הַ֠הוּא זְבָחִ֨ים גְּדֹולִ֜ים וַיִּשְׂמָ֗חוּ כִּ֤י הָאֱלֹהִים֙ שִׂמְּחָם֙ שִׂמְחָ֣ה גְדֹולָ֔ה וְגַ֧ם הַנָּשִׁ֛ים וְהַיְלָדִ֖ים שָׂמֵ֑חוּ וַתִּשָּׁמַ֛ע שִׂמְחַ֥ת יְרוּשָׁלִַ֖ם מֵרָחֹֽוק׃ "
+  },
+  "NEH 12:44": {
+   "KJV": "And at that time were some appointed over the chambers for the treasures, for the offerings, for the firstfruits, and for the tithes, to gather into them out of the fields of the cities the portions of the law for the priests and Levites: for Judah rejoiced for the priests and for the Levites that waited.",
+   "BHSA": "וַיִּפָּקְד֣וּ בַיֹּום֩ הַה֨וּא אֲנָשִׁ֜ים עַל־הַנְּשָׁכֹ֗ות לָאֹ֨וצָרֹ֥ות לַתְּרוּמֹות֮ לָרֵאשִׁ֣ית וְלַמַּֽעַשְׂרֹות֒ לִכְנֹ֨וס בָּהֶ֜ם לִשְׂדֵ֤י הֶעָרִים֙ מְנָאֹ֣ות הַתֹּורָ֔ה לַכֹּהֲנִ֖ים וְלַלְוִיִּ֑ם כִּ֚י שִׂמְחַ֣ת יְהוּדָ֔ה עַל־הַכֹּהֲנִ֥ים וְעַל־הַלְוִיִּ֖ם הָעֹמְדִֽים׃ "
+  },
+  "NEH 12:45": {
+   "KJV": "And both the singers and the porters kept the ward of their God, and the ward of the purification, according to the commandment of David, and of Solomon his son.",
+   "BHSA": "וַֽיִּשְׁמְר֞וּ מִשְׁמֶ֤רֶת אֱלֹֽהֵיהֶם֙ וּמִשְׁמֶ֣רֶת הַֽטָּהֳרָ֗ה וְהַמְשֹׁרְרִ֖ים וְהַשֹּׁעֲרִ֑ים כְּמִצְוַ֥ת דָּוִ֖יד שְׁלֹמֹ֥ה בְנֹֽו׃ "
+  },
+  "NEH 12:46": {
+   "KJV": "For in the days of David and Asaph of old there were chief of the singers, and songs of praise and thanksgiving unto God.",
+   "BHSA": "כִּֽי־בִימֵ֥י דָוִ֛יד וְאָסָ֖ף מִקֶּ֑דֶם ראשׁ הַמְשֹׁ֣רְרִ֔ים וְשִׁיר־תְּהִלָּ֥ה וְהֹדֹ֖ות לֵֽאלֹהִֽים׃ "
+  },
+  "NEH 12:47": {
+   "KJV": "And all Israel in the days of Zerubbabel, and in the days of Nehemiah, gave the portions of the singers and the porters, every day his portion: and they sanctified holy things unto the Levites; and the Levites sanctified them unto the children of Aaron.",
+   "BHSA": "וְכָל־יִשְׂרָאֵל֩ בִּימֵ֨י זְרֻבָּבֶ֜ל וּבִימֵ֣י נְחֶמְיָ֗ה נֹֽתְנִ֛ים מְנָיֹ֛ות הַמְשֹׁרְרִ֥ים וְהַשֹּׁעֲרִ֖ים דְּבַר־יֹ֣ום בְּיֹומֹ֑ו וּמַקְדִּשִׁים֙ לַלְוִיִּ֔ם וְהַלְוִיִּ֔ם מַקְדִּשִׁ֖ים לִבְנֵ֥י אַהֲרֹֽן׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "abijah-6",
+   "name": "Abijah",
+   "distinguisher": "Aaronic priest (NEH 10:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "adna-2",
+   "name": "Adna",
+   "distinguisher": "son of Harim (NEH 12:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "akkub-2",
+   "name": "Akkub",
+   "distinguisher": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "akkub-6",
+   "name": "Akkub",
+   "distinguisher": "Levite gatekeeper serving after the return, named with Talmon at the gates",
+   "sex": null
+  },
+  {
+   "slug": "amariah-6",
+   "name": "Amariah",
+   "distinguisher": "Aaronic priest (NEH 10:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "amariah-priest-with-zerubbabel",
+   "name": "Amariah",
+   "distinguisher": "one of the chief priests who went up with Zerubbabel and Jeshua (NEH 12:2)",
+   "sex": null
+  },
+  {
+   "slug": "amok",
+   "name": "Amok",
+   "distinguisher": "among the priests who came up with Zerubbabel (NEH 12:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "asaph-2",
+   "name": "Asaph",
+   "distinguisher": "son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "azarel-4",
+   "name": "Azarel",
+   "distinguisher": "son of Ahzai (NEH 11:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "azarel-6",
+   "name": "Azarel",
+   "distinguisher": "Priest and musician under Nehemiah; no verse prints his name distinctly",
+   "sex": null
+  },
+  {
+   "slug": "azariah-of-the-wall-dedication",
+   "name": "Azariah",
+   "distinguisher": "walked in the dedication of the wall (NEH 12:33)",
+   "sex": null
+  },
+  {
+   "slug": "bakbukiah",
+   "name": "Bakbukiah",
+   "distinguisher": "second among his brethren (NEH 11:17), gatekeeper (NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin",
+   "name": "Benjamin",
+   "distinguisher": "twelfth-born son of Jacob and Rachel (GEN 35:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin-4",
+   "name": "Benjamin",
+   "distinguisher": "carried out repairs in front of their house (NEH 3:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "bilgah",
+   "name": "Bilgah",
+   "distinguisher": "fifteenth-chosen priest for the twenty-four courses (1CH 24:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "bilgah-2",
+   "name": "Bilgah",
+   "distinguisher": "among the priests who came up with Zerubbabel (NEH 12:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "binnui-4",
+   "name": "Binnui",
+   "distinguisher": "repaired a section of the wall of Jerusalem (NEH 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "binnui-levite-with-zerubbabel",
+   "name": "Binnui",
+   "distinguisher": "a Levite who went up with Zerubbabel and Jeshua (NEH 12:8)",
+   "sex": null
+  },
+  {
+   "slug": "darius-3",
+   "name": "Darius",
+   "distinguisher": "Darius the Persian of Nehemiah's day, most probably Darius II Nothus, contemporary with the priestly line to Jaddua.",
+   "sex": null
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "eber-5",
+   "name": "Eber",
+   "distinguisher": "son of Amok (NEH 12:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "elam-4",
+   "name": "Elam",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "elam-9",
+   "name": "Elam",
+   "distinguisher": "Priest with a trumpet at the dedication of Jerusalem's wall",
+   "sex": null
+  },
+  {
+   "slug": "eleazar-8",
+   "name": "Eleazar",
+   "distinguisher": "with the officials and priests in the house of G-d (NEH 12:42)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliakim-3",
+   "name": "Eliakim",
+   "distinguisher": "priest with a trumpet (NEH 12:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliashib-3",
+   "name": "Eliashib",
+   "distinguisher": "father of Jehohanan in whose house Ezra mourned (EZR 10:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliashib-7",
+   "name": "Eliashib",
+   "distinguisher": "the high priest with Nehemiah during the reconstruction of Jerusalem (NEH 3:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "elioenai-6",
+   "name": "Elioenai",
+   "distinguisher": "priest with a trumpet (NEH 12:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "ephraim",
+   "name": "Ephraim",
+   "distinguisher": "second son of Joseph (GEN 41:52)",
+   "sex": "male"
+  },
+  {
+   "slug": "ezer-at-the-dedication",
+   "name": "Ezer",
+   "distinguisher": "one of those who stood in the house of God at the dedication of the wall (NEH 12:42)",
+   "sex": null
+  },
+  {
+   "slug": "ezra",
+   "name": "Ezra",
+   "distinguisher": "son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "ezra-3",
+   "name": "Ezra",
+   "distinguisher": "Priest who returned with Zerubbabel and Jeshua; ancestor of a priestly house later headed by Meshullam",
+   "sex": null
+  },
+  {
+   "slug": "ezra-4",
+   "name": "Ezra",
+   "distinguisher": "Priest with trumpet in the wall-dedication procession under Nehemiah, distinct from the scribe leading it",
+   "sex": null
+  },
+  {
+   "slug": "gilalai",
+   "name": "Gilalai",
+   "distinguisher": "Levite with music instruments (NEH 12:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "ginnethon",
+   "name": "Ginnethon",
+   "distinguisher": "Aaronic priest (NEH 10:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanani-5",
+   "name": "Hanani",
+   "distinguisher": "Priest, chief musician among Nehemiah's dedication procession",
+   "sex": null
+  },
+  {
+   "slug": "hananiah-9",
+   "name": "Hananiah",
+   "distinguisher": "son of Jeremiah (NEH 12:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "harim-3",
+   "name": "Harim",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:39)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashabiah-4",
+   "name": "Hashabiah",
+   "distinguisher": "Levite sent to Ezra (EZR 8:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashabiah-8",
+   "name": "Hashabiah",
+   "distinguisher": "son of Hilkiah (NEH 12:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "hattush",
+   "name": "Hattush",
+   "distinguisher": "son of Shecaniah (1CH 3:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "hattush-3",
+   "name": "Hattush",
+   "distinguisher": "Aaronic priest (NEH 10:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "helkai",
+   "name": "Helkai",
+   "distinguisher": "son of Meraioth (NEH 12:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "hilkiah-3",
+   "name": "Hilkiah",
+   "distinguisher": "a chief of the priests who came up with Zerubbabel (NEH 12:1, 12:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "hoshaiah",
+   "name": "Hoshaiah",
+   "distinguisher": "followed the choir to the right on top of the wall (NEH 12:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "iddo-5",
+   "name": "Iddo",
+   "distinguisher": "[grand] father of Zechariah the prophet (EZR 5:1, ZEC 1:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "iddo-7",
+   "name": "Iddo",
+   "distinguisher": "Priestly family head returning with Zerubbabel, time of Nehemiah",
+   "sex": null
+  },
+  {
+   "slug": "jaddua-2",
+   "name": "Jaddua",
+   "distinguisher": "son of Jonathan (NEH 12:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "jedaiah-2",
+   "name": "Jedaiah",
+   "distinguisher": "priest (1CH 9:10, NEH 7:39, NEH 12:6), of the house of Jeshua (EZR 2:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "jedaiah-5",
+   "name": "Jedaiah",
+   "distinguisher": "priest, son of Joiarib (NEH 11:10, NEH 12:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "jedaiah-8",
+   "name": "Jedaiah",
+   "distinguisher": "Second priestly course-head named Jedaiah in Jeshua's list, house later headed by Nethaneel",
+   "sex": null
+  },
+  {
+   "slug": "jehohanan",
+   "name": "Jehohanan",
+   "distinguisher": "in his house, Ezra mourned over the unfaithfulness of Israel (EZR 10:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehohanan-4",
+   "name": "Jehohanan",
+   "distinguisher": "son of Amariah (NEH 12:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehohanan-5",
+   "name": "Jehohanan",
+   "distinguisher": "Priest-singer at the dedication of the wall under Nehemiah",
+   "sex": null
+  },
+  {
+   "slug": "jehonathan-2",
+   "name": "Jehonathan",
+   "distinguisher": "son of Shemaiah (NEH 12:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremiah-7",
+   "name": "Jeremiah",
+   "distinguisher": "Aaronic priest (NEH 10:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremiah-9",
+   "name": "Jeremiah",
+   "distinguisher": "Priestly family head from Zerubbabel's return, continuing under Joiakim",
+   "sex": null
+  },
+  {
+   "slug": "jeshua-3",
+   "name": "Jeshua",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshua-5",
+   "name": "Jeshua",
+   "distinguisher": "Levite whose sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshua-7",
+   "name": "Jeshua",
+   "distinguisher": "explained the law to the people (NEH 8:7), stood on the Levites platform (NEH 9:4), and exhorted Israel to bless the Lord (NEH 9:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "jezrahiah",
+   "name": "Jezrahiah",
+   "distinguisher": "the leader of the singers (NEH 12:42)",
+   "sex": "male"
+  },
+  {
+   "slug": "joiada-2",
+   "name": "Joiada",
+   "distinguisher": "son of Eliashib (NEH 12:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "joiakim",
+   "name": "Joiakim",
+   "distinguisher": "son of Jeshua and father of Eliashib (NEH 12:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "joiarib-3",
+   "name": "Joiarib",
+   "distinguisher": "priest, father of Jedaiah (NEH 11:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jonathan-10",
+   "name": "Jonathan",
+   "distinguisher": "son of Joiada (NEH 12:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "jonathan-11",
+   "name": "Jonathan",
+   "distinguisher": "son of Malluch [Malluchi] (NEH 12:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "jonathan-12",
+   "name": "Jonathan",
+   "distinguisher": "son of Shemaiah (NEH 12:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "joseph-5",
+   "name": "Joseph",
+   "distinguisher": "son of Shebaniah (NEH 12:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "jozadak",
+   "name": "Jozadak",
+   "distinguisher": "father of Jeshua who built the altar (EZR 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "judah-4",
+   "name": "Judah",
+   "distinguisher": "among the Levites who came up with Zerubabbel (NEH 12:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah-7",
+   "name": "Judah",
+   "distinguisher": "A priest in Nehemiah's time named among leaders in the dedication procession",
+   "sex": null
+  },
+  {
+   "slug": "kadmiel",
+   "name": "Kadmiel",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male"
+  },
+  {
+   "slug": "kadmiel-2",
+   "name": "Kadmiel",
+   "distinguisher": "stood on the Levites platform (NEH 9:4) and exhorted Israel to bless the Lord (NEH 9:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "kallai",
+   "name": "Kallai",
+   "distinguisher": "son of Sallai (NEH 12:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "levi",
+   "name": "Levi",
+   "distinguisher": "third-born son of Jacob (GEN 29:34), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "maai",
+   "name": "Maai",
+   "distinguisher": "Levite with music instruments (NEH 12:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "maaseiah-13",
+   "name": "Maaseiah",
+   "distinguisher": "priest with a trumpet (NEH 12:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "maaseiah-18",
+   "name": "Maaseiah",
+   "distinguisher": "Second priest/singer at the wall's dedication",
+   "sex": null
+  },
+  {
+   "slug": "maaziah-2",
+   "name": "Maaziah",
+   "distinguisher": "Aaronic priest (NEH 10:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "maaziah-3",
+   "name": "Maaziah",
+   "distinguisher": "Priestly house head, 'Maadiah', listed with returning priests under Joiakim",
+   "sex": null
+  },
+  {
+   "slug": "malchijah-11",
+   "name": "Malchijah",
+   "distinguisher": "Priest at Ezra's law-reading, sealer of the covenant, singer at the wall's dedication under Nehemiah",
+   "sex": null
+  },
+  {
+   "slug": "malluch-4",
+   "name": "Malluch",
+   "distinguisher": "Aaronic priest (NEH 10:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "malluch-6",
+   "name": "Malluch",
+   "distinguisher": "Priest who returned with Zerubbabel; his house head later called Melicu/Jonathan",
+   "sex": null
+  },
+  {
+   "slug": "mattaniah-12",
+   "name": "Mattaniah",
+   "distinguisher": "Levite ancestor of Zechariah the trumpeter, named in Nehemiah's priestly genealogy.",
+   "sex": null
+  },
+  {
+   "slug": "mattaniah-4",
+   "name": "Mattaniah",
+   "distinguisher": "descendant of Asaph (2CH 29:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattaniah-9",
+   "name": "Mattaniah",
+   "distinguisher": "descendant of Mica (NEH 11:17), gatekeeper (NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattenai-3",
+   "name": "Mattenai",
+   "distinguisher": "son of Joiarib (NEH 12:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "meraiah",
+   "name": "Meraiah",
+   "distinguisher": "son of Seraiah (NEH 12:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "meraioth-2",
+   "name": "Meraioth",
+   "distinguisher": "son of Ahitub (1CH 9:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "meremoth",
+   "name": "Meremoth",
+   "distinguisher": "son of Uriah the priest (EZR 8:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "meremoth-3",
+   "name": "Meremoth",
+   "distinguisher": "Priest listed among those who came up with Zerubbabel",
+   "sex": null
+  },
+  {
+   "slug": "meshullam-16",
+   "name": "Meshullam",
+   "distinguisher": "son of Ezra (NEH 12:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshullam-18",
+   "name": "Meshullam",
+   "distinguisher": "Priest, head of the family of Ginnethon in Joiakim's days",
+   "sex": null
+  },
+  {
+   "slug": "meshullam-20",
+   "name": "Meshullam",
+   "distinguisher": "Priest, head of the family of Ezra in Joiakim's days, distinct from item 14's Ginnethon line",
+   "sex": null
+  },
+  {
+   "slug": "micaiah-4",
+   "name": "Micaiah",
+   "distinguisher": "son of Zaccur (NEH 12:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "micaiah-5",
+   "name": "Micaiah",
+   "distinguisher": "priest with a trumpet (NEH 12:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "mijamin-3",
+   "name": "Mijamin",
+   "distinguisher": "Aaronic priest (NEH 10:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "mijamin-4",
+   "name": "Mijamin",
+   "distinguisher": "Priest who returned from exile with Zerubbabel.",
+   "sex": null
+  },
+  {
+   "slug": "milalai",
+   "name": "Milalai",
+   "distinguisher": "Levite with music instruments (NEH 12:36)",
+   "sex": "male"
+  },
+  {
+   "slug": "miniamin-2",
+   "name": "Miniamin",
+   "distinguisher": "ancestor of Piltai (NEH 12:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "miniamin-3",
+   "name": "Miniamin",
+   "distinguisher": "priest with a trumpet (NEH 12:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "moadiah",
+   "name": "Moadiah",
+   "distinguisher": "ancestor of Piltai (NEH 12:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "nehemiah",
+   "name": "Nehemiah",
+   "distinguisher": "son of Hachaliah, cupbearer to King Artaxerxes and governor of Judah, who rebuilt the wall of Jerusalem (NEH 1:1, 1:11, 8:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "nethanel-10",
+   "name": "Nethanel",
+   "distinguisher": "Asaphite Levite musician at the wall's dedication; only mention lacks the name-spelling flag.",
+   "sex": null
+  },
+  {
+   "slug": "nethanel-7",
+   "name": "Nethanel",
+   "distinguisher": "son of Jedaiah (NEH 12:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "obadiah-11",
+   "name": "Obadiah",
+   "distinguisher": "Levite gatekeeper (NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "piltai",
+   "name": "Piltai",
+   "distinguisher": "son of Miniamin (NEH 12:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "rehum-4",
+   "name": "Rehum",
+   "distinguisher": "among the priests who came up with Zerubbabel (NEH 12:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "sallai-2",
+   "name": "Sallai",
+   "distinguisher": "father of Kallai (NEH 12:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "seraiah-6",
+   "name": "Seraiah",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7) [called Azariah in NEH 7:7]",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum-7",
+   "name": "Shallum",
+   "distinguisher": "one of the gatekeepers (1CH 9:17), to the east (1CH 26:14), gatekeeper (EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "shammua-3",
+   "name": "Shammua",
+   "distinguisher": "descendant of Bilgah (NEH 12:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "shealtiel-2",
+   "name": "Shealtiel",
+   "distinguisher": "father of Zerubbabel (EZR 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "shebaniah-3",
+   "name": "Shebaniah",
+   "distinguisher": "Aaronic priest (NEH 10:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "shecaniah-8",
+   "name": "Shecaniah",
+   "distinguisher": "among the priests who came up with Zerubbabel (NEH 12:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-14",
+   "name": "Shemaiah",
+   "distinguisher": "Levite Ezra sent to Iddo (EZR 8:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-19",
+   "name": "Shemaiah",
+   "distinguisher": "Aaronic priest (NEH 10:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-24",
+   "name": "Shemaiah",
+   "distinguisher": "Priest who returned from exile with Zerubbabel, head of a priestly house",
+   "sex": null
+  },
+  {
+   "slug": "shemaiah-25",
+   "name": "Shemaiah",
+   "distinguisher": "Leader of the people processing at the wall's dedication",
+   "sex": null
+  },
+  {
+   "slug": "shemaiah-26",
+   "name": "Shemaiah",
+   "distinguisher": "Grandfather of the priest Zechariah, in the trumpeters' genealogy",
+   "sex": null
+  },
+  {
+   "slug": "shemaiah-27",
+   "name": "Shemaiah",
+   "distinguisher": "Another priest with trumpets at the wall's dedication, alongside item 25",
+   "sex": null
+  },
+  {
+   "slug": "sherebiah-2",
+   "name": "Sherebiah",
+   "distinguisher": "explained the law to the people (NEH 8:7), stood on the Levites platform (NEH 9:4), and exhorted Israel to bless the Lord (NEH 9:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "solomon",
+   "name": "Solomon",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "talmon",
+   "name": "Talmon",
+   "distinguisher": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "unni-2",
+   "name": "Unni",
+   "distinguisher": "among the Levites who came up with Zerubabbel (NEH 12:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzzi-6",
+   "name": "Uzzi",
+   "distinguisher": "son of Jedaiah (NEH 12:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzzi-7",
+   "name": "Uzzi",
+   "distinguisher": "Priest who sang at Ezra's wall dedication, possibly same as #6",
+   "sex": null
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zaccur-4",
+   "name": "Zaccur",
+   "distinguisher": "son of Asaph (1CH 25:2), chosen third by lot (1CH 25:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "zechariah-22",
+   "name": "Zechariah",
+   "distinguisher": "son of Jonathan (NEH 12:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "zechariah-25",
+   "name": "Zechariah",
+   "distinguisher": "head of the priestly house of Iddo in the days of Joiakim (NEH 12:12, 12:16)",
+   "sex": null
+  },
+  {
+   "slug": "zechariah-trumpeter-of-the-second-company",
+   "name": "Zechariah",
+   "distinguisher": "a priest with a trumpet in the second company at the dedication of the wall (NEH 12:41)",
+   "sex": null
+  },
+  {
+   "slug": "zerubbabel-2",
+   "name": "Zerubbabel",
+   "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7), son of Shealtiel (EZR 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "zichri-12",
+   "name": "Zichri",
+   "distinguisher": "son of Abijah (NEH 12:17)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 102371,
+   "row": "seraiah-6 companion-of zerubbabel-2",
+   "verse": "NEH 12:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102372,
+   "row": "seraiah-6 companion-of jeshua-3",
+   "verse": "NEH 12:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103649,
+   "row": "ezra-3 companion-of zerubbabel-2",
+   "verse": "NEH 12:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103692,
+   "row": "jeremiah-9 companion-of zerubbabel-2",
+   "verse": "NEH 12:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103693,
+   "row": "jeremiah-9 companion-of jeshua-3",
+   "verse": "NEH 12:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105860,
+   "row": "jeremiah-7 companion-of zerubbabel-2",
+   "verse": "NEH 12:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105861,
+   "row": "jeremiah-7 companion-of jeshua-3",
+   "verse": "NEH 12:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 107041,
+   "row": "rehum-4 descendant-of aaron",
+   "verse": "NEH 12:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 107069,
+   "row": "shecaniah-8 descendant-of aaron",
+   "verse": "NEH 12:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106650,
+   "row": "iddo-5 descendant-of aaron",
+   "verse": "NEH 12:4",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106784,
+   "row": "bilgah-2 descendant-of aaron",
+   "verse": "NEH 12:5",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 104674,
+   "row": "amok descendant-of aaron",
+   "verse": "NEH 12:7",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106702,
+   "row": "sallai-2 descendant-of aaron",
+   "verse": "NEH 12:7",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 105948,
+   "row": "judah-4 descendant-of levi",
+   "verse": "NEH 12:8",
+   "source": "read from Scripture by an agent reading NEH 12:8 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 107144,
+   "row": "unni-2 descendant-of levi",
+   "verse": "NEH 12:9",
+   "source": "read from Scripture by an agent reading NEH 12:9 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 100491,
+   "row": "joiakim son-of jeshua-3",
+   "verse": "NEH 12:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106796,
+   "row": "eliashib-7 son-of joiakim",
+   "verse": "NEH 12:10",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 106903,
+   "row": "joiada-2 son-of eliashib-7",
+   "verse": "NEH 12:10",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 99927,
+   "row": "jaddua-2 son-of jonathan-10",
+   "verse": "NEH 12:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99928,
+   "row": "jaddua-2 descendant-of joiada-2",
+   "verse": "NEH 12:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100522,
+   "row": "jonathan-10 son-of joiada-2",
+   "verse": "NEH 12:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100523,
+   "row": "jonathan-10 father-of jaddua-2",
+   "verse": "NEH 12:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106902,
+   "row": "joiada-2 father-of jonathan-10",
+   "verse": "NEH 12:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101261,
+   "row": "meraiah priest-of yhvh",
+   "verse": "NEH 12:12",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 103694,
+   "row": "jeremiah-9 ancestor-of hananiah-9",
+   "verse": "NEH 12:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105862,
+   "row": "jeremiah-7 ancestor-of hananiah-9",
+   "verse": "NEH 12:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 107336,
+   "row": "meraiah descendant-of seraiah-6",
+   "verse": "NEH 12:12",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 103648,
+   "row": "ezra-3 ancestor-of meshullam-16",
+   "verse": "NEH 12:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103723,
+   "row": "meshullam-20 descendant-of ezra-3",
+   "verse": "NEH 12:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105519,
+   "row": "amariah-6 ancestor-of jehohanan-4",
+   "verse": "NEH 12:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105525,
+   "row": "jehohanan-4 descendant-of amariah-6",
+   "verse": "NEH 12:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105534,
+   "row": "meshullam-16 descendant-of ezra",
+   "verse": "NEH 12:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105528,
+   "row": "jonathan-11 descendant-of malluch-4",
+   "verse": "NEH 12:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105529,
+   "row": "joseph-5 descendant-of shebaniah-3",
+   "verse": "NEH 12:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105531,
+   "row": "malluch-4 ancestor-of jonathan-11",
+   "verse": "NEH 12:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105536,
+   "row": "shebaniah-3 ancestor-of joseph-5",
+   "verse": "NEH 12:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97190,
+   "row": "adna-2 descendant-of harim-3",
+   "verse": "NEH 12:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103671,
+   "row": "iddo-7 ancestor-of zechariah-25",
+   "verse": "NEH 12:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103721,
+   "row": "meshullam-18 descendant-of ginnethon",
+   "verse": "NEH 12:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103770,
+   "row": "zechariah-25 descendant-of iddo-5",
+   "verse": "NEH 12:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105521,
+   "row": "ginnethon ancestor-of meshullam-18",
+   "verse": "NEH 12:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102026,
+   "row": "piltai descendant-of moadiah",
+   "verse": "NEH 12:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105518,
+   "row": "abijah-6 ancestor-of zichri-12",
+   "verse": "NEH 12:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105540,
+   "row": "zichri-12 descendant-of abijah-6",
+   "verse": "NEH 12:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106972,
+   "row": "miniamin-2 descendant-of aaron",
+   "verse": "NEH 12:17",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 106983,
+   "row": "moadiah ancestor-of piltai",
+   "verse": "NEH 12:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-16"
+  },
+  {
+   "id": 106984,
+   "row": "moadiah descendant-of aaron",
+   "verse": "NEH 12:17",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 103748,
+   "row": "shemaiah-24 ancestor-of jehonathan-2",
+   "verse": "NEH 12:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105526,
+   "row": "jehonathan-2 descendant-of shemaiah-19",
+   "verse": "NEH 12:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105537,
+   "row": "shemaiah-19 ancestor-of jehonathan-2",
+   "verse": "NEH 12:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106240,
+   "row": "shammua-3 descendant-of bilgah-2",
+   "verse": "NEH 12:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106241,
+   "row": "shammua-3 descendant-of bilgah",
+   "verse": "NEH 12:18",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 106783,
+   "row": "bilgah-2 ancestor-of shammua-3",
+   "verse": "NEH 12:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105532,
+   "row": "mattenai-3 descendant-of joiarib-3",
+   "verse": "NEH 12:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105538,
+   "row": "uzzi-6 descendant-of jedaiah-2",
+   "verse": "NEH 12:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106670,
+   "row": "joiarib-3 ancestor-of mattenai-3",
+   "verse": "NEH 12:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106861,
+   "row": "jedaiah-2 ancestor-of uzzi-6",
+   "verse": "NEH 12:19",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 105520,
+   "row": "eber-5 descendant-of amok",
+   "verse": "NEH 12:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105530,
+   "row": "kallai descendant-of sallai-2",
+   "verse": "NEH 12:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106701,
+   "row": "sallai-2 ancestor-of kallai",
+   "verse": "NEH 12:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103685,
+   "row": "jedaiah-8 ancestor-of nethanel-7",
+   "verse": "NEH 12:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105535,
+   "row": "nethanel-7 descendant-of jedaiah-5",
+   "verse": "NEH 12:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106872,
+   "row": "jeshua-7 son-of kadmiel-2",
+   "verse": "NEH 12:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106873,
+   "row": "jeshua-7 son-of kadmiel",
+   "verse": "NEH 12:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106127,
+   "row": "obadiah-11 descendant-of levi",
+   "verse": "NEH 12:25",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 100524,
+   "row": "jonathan-12 son-of shemaiah-14",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100525,
+   "row": "jonathan-12 father-of zechariah-22",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101176,
+   "row": "mattaniah-4 son-of micaiah-4",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101177,
+   "row": "mattaniah-4 father-of shemaiah-14",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101351,
+   "row": "micaiah-4 son-of zaccur-4",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101352,
+   "row": "micaiah-4 father-of mattaniah-4",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102624,
+   "row": "shemaiah-14 son-of mattaniah-4",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102625,
+   "row": "shemaiah-14 father-of jonathan-12",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103307,
+   "row": "zaccur-4 father-of micaiah-4",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103407,
+   "row": "zechariah-22 son-of jonathan-12",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 103717,
+   "row": "mattaniah-12 son-of micaiah-4",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103718,
+   "row": "mattaniah-12 father-of shemaiah-26",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103749,
+   "row": "shemaiah-26 father-of jonathan-12",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103750,
+   "row": "shemaiah-26 son-of mattaniah-12",
+   "verse": "NEH 12:35",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103751,
+   "row": "shemaiah-27 brother-of zechariah-22",
+   "verse": "NEH 12:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105691,
+   "row": "gilalai descendant-of levi",
+   "verse": "NEH 12:36",
+   "source": "read from Scripture by an agent reading NEH 12:36 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 106942,
+   "row": "maai brother-of shemaiah-19",
+   "verse": "NEH 12:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106943,
+   "row": "maai brother-of azarel-4",
+   "verse": "NEH 12:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106944,
+   "row": "maai brother-of milalai",
+   "verse": "NEH 12:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106945,
+   "row": "maai brother-of gilalai",
+   "verse": "NEH 12:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106946,
+   "row": "maai descendant-of levi",
+   "verse": "NEH 12:36",
+   "source": "read from Scripture by an agent reading NEH 12:36 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 106971,
+   "row": "milalai descendant-of levi",
+   "verse": "NEH 12:36",
+   "source": "read from Scripture by an agent reading NEH 12:36 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 99306,
+   "row": "hananiah-9 priest-of yhvh",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 103408,
+   "row": "zechariah-22 priest-of yhvh",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 104688,
+   "row": "eliakim-3 priest-of yhvh",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 104689,
+   "row": "eliakim-3 descendant-of aaron",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 104692,
+   "row": "elioenai-6 priest-of yhvh",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 104693,
+   "row": "elioenai-6 descendant-of aaron",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106056,
+   "row": "micaiah-5 priest-of yhvh",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106057,
+   "row": "micaiah-5 descendant-of aaron",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106676,
+   "row": "maaseiah-13 priest-of yhvh",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 106677,
+   "row": "maaseiah-13 descendant-of aaron",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106973,
+   "row": "miniamin-3 priest-of yhvh",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 106974,
+   "row": "miniamin-3 descendant-of aaron",
+   "verse": "NEH 12:41",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 98583,
+   "row": "eleazar-8 companion-of jehohanan-4",
+   "verse": "NEH 12:42",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106876,
+   "row": "jezrahiah descendant-of levi",
+   "verse": "NEH 12:42",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "david father-of solomon (1CH 29:23)",
+  "david servant-of yhvh (2SA 3:18)",
+  "eliashib-3 father-of jehohanan (EZR 10:6)",
+  "ezra priest-of yhvh (EZR 7:11)",
+  "ezra scribe-of yhvh (EZR 7:12)",
+  "hattush descendant-of david (EZR 8:2)",
+  "jedaiah-5 son-of joiarib-3 (NEH 11:10)",
+  "jedaiah-5 priest-of yhvh (NEH 11:10)",
+  "jehohanan son-of eliashib-3 (EZR 10:6)",
+  "mattaniah-4 descendant-of asaph-2 (2CH 29:13)",
+  "solomon son-of david (1KI 1:13)",
+  "zaccur-4 son-of asaph-2 (1CH 25:2)",
+  "malchijah-11 companion-of ezra (NEH 8:4)",
+  "benjamin half-brother-of levi (GEN 35:18)",
+  "benjamin half-brother-of judah (GEN 35:18)",
+  "bilgah descendant-of aaron (1CH 24:14)",
+  "hashabiah-4 descendant-of levi (NEH 10:11)",
+  "jeremiah-7 descendant-of aaron (NEH 10:2)",
+  "jeshua-3 son-of jozadak (EZR 3:2)",
+  "jozadak father-of jeshua-5 (EZR 3:2)",
+  "jozadak descendant-of aaron (EZR 3:2)",
+  "judah brother-of levi (GEN 29:35)",
+  "kadmiel-2 descendant-of levi (NEH 9:4)",
+  "maaziah-2 descendant-of aaron (NEH 10:8)",
+  "joiarib-3 father-of jedaiah-5 (NEH 11:10)",
+  "joiarib-3 descendant-of aaron (NEH 11:10)",
+  "asaph-2 father-of zaccur-4 (1CH 25:2)",
+  "asaph-2 descendant-of levi (1CH 9:15)",
+  "eliashib-7 high-priest-of yhvh (NEH 3:1)",
+  "eliashib-7 descendant-of aaron (NEH 3:1)",
+  "hattush-3 descendant-of aaron (NEH 10:4)",
+  "jedaiah-2 priest-of yhvh (1CH 9:10)",
+  "jedaiah-2 descendant-of aaron (1CH 9:10)",
+  "jeshua-7 descendant-of levi (NEH 8:7)",
+  "mijamin-3 descendant-of aaron (NEH 10:7)",
+  "sherebiah-2 descendant-of levi (NEH 8:7)",
+  "zerubbabel-2 son-of shealtiel-2 (EZR 3:2)",
+  "zerubbabel-2 servant-of yhvh (HAG 2:23)",
+  "shealtiel-2 father-of zerubbabel-2 (EZR 3:2)",
+  "harim-3 descendant-of aaron (1CH 24:8)"
+ ]
+}

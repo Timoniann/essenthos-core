@@ -1,0 +1,98 @@
+{
+ "case": "parents-azrikam-3",
+ "question": "azrikam-3 is recorded with more than one father: hashabiah, hashabiah-2.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "fold-records",
+   "rows": [],
+   "record": "amaziah-the-merarite",
+   "other": "amaziah-4",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 6:45",
+   "why": "Both records represent Amaziah, son of Hilkiah and father of Hashabiah, in the same genealogy. The preceding verse identifies this as Ethan's Merarite line.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget-row",
+   "rows": [
+    97805
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "hashabiah-11",
+   "verse": "NEH 11:15",
+   "why": "The Hebrew repeats the Shemaiah–Hasshub–Azrikam–Hashabiah chain of 1CH 9:14 and adds Bunni as Hashabiah's father. This identifies the target as the Hashabiah represented by hashabiah-11.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete-row",
+   "rows": [
+    99354,
+    99360
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 11:15",
+   "why": "Azrikam's father in this chain is Hashabiah son of Bunni; neither passage identifies him with the son of Amaziah or the son of Jeduthun. Row 103663 already records the relationship using hashabiah-11.",
+   "confidence": 0.98
+  },
+  {
+   "kind": "delete-row",
+   "rows": [
+    99359
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "NEH 11:15",
+   "why": "Bunni is the father of the Hashabiah in Shemaiah's ancestry. This relationship belongs to hashabiah-11; 1CH 25:3 explicitly names Jeduthun as the father of the singer represented by hashabiah-2.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget-row",
+   "rows": [
+    106478
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "hashabiah-11",
+   "verse": "NEH 11:15",
+   "why": "The Hebrew places son of Bunni immediately after Hashabiah in the ancestry of Shemaiah. The corresponding person record is hashabiah-11.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "add-row",
+   "rows": [],
+   "record": "hashabiah-11",
+   "other": "",
+   "new_type": "son-of",
+   "new_to": "bunni-2",
+   "verse": "NEH 11:15",
+   "why": "The Hebrew explicitly identifies this Hashabiah as son of Bunni.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "add-row",
+   "rows": [],
+   "record": "hashabiah-11",
+   "other": "",
+   "new_type": "descendant-of",
+   "new_to": "merari",
+   "verse": "1CH 9:14",
+   "why": "The Shemaiah–Hasshub–Azrikam–Hashabiah genealogy is identified as belonging to the sons of Merari. This establishes clan descent, not direct fatherhood.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "The repeated Hebrew genealogy identifies Azrikam's father with hashabiah-11; Hashabiah son of Amaziah also has independently supported Merarite descent in 1CH 6:44–45. Row 106044 is retained as an owner-instructed ruling, although 1CH 9:14 does not establish that its Hashabiah is Jeduthun's son.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:33:33+00:00"
+}

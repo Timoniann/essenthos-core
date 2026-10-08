@@ -1,0 +1,23 @@
+{
+ "case": "parents-ahimoth",
+ "question": "ahimoth is recorded with more than one father: elkanah, elkanah-4.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "split-record",
+   "rows": [],
+   "record": "elkanah-4",
+   "other": "",
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 6:36",
+   "why": "The Hebrew genealogy in 1CH 6:35–36 distinguishes Elkanah son of Mahath and grandson of Amasai from Elkanah father of Amasai and son of Joel. Retain elkanah-4 and owner row 107213 for Mahath’s son; assign rows 105594, 105600, 107211 and 107212 to the separate father of Amasai and Ahimoth.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "Owner rows 105596 and 105603 identify the father in 1CH 6:25 with Korah’s son, but the supplied verses do not establish that identification; 1CH 6:36 names Joel as the father of Amasai’s father Elkanah. Preserve all owner rulings unchanged.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:31:57+00:00"
+}

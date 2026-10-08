@@ -1,0 +1,49 @@
+{
+ "case": "parents-dan",
+ "question": "dan is recorded with more than one mother: rachel, bilhah.",
+ "verdict": "mixed",
+ "actions": [
+  {
+   "kind": "retarget-row",
+   "rows": [
+    105634
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "bilhah",
+   "verse": "GEN 35:25",
+   "why": "The Hebrew explicitly lists Dan and Naphtali as sons of Bilhah. GEN 30:5 identifies Bilhah as the woman who conceived and bore Dan.",
+   "confidence": 1
+  },
+  {
+   "kind": "add-row",
+   "rows": [],
+   "record": "rachel",
+   "other": "",
+   "new_type": "adoptive-mother-of",
+   "new_to": "dan",
+   "verse": "GEN 30:3",
+   "why": "Rachel arranges for Bilhah to bear upon her knees so that she may obtain children through her. In GEN 30:6 Rachel claims the resulting son and names him Dan, supporting social rather than biological motherhood.",
+   "confidence": 0.95
+  },
+  {
+   "kind": "retype-row",
+   "rows": [
+    102725
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "grandson-of",
+   "new_to": "",
+   "verse": "1CH 7:13",
+   "why": "The Hebrew first identifies the listed men as sons of Naphtali, then collectively calls them descendants of Bilhah. GEN 35:25 identifies Naphtali as Bilhah's son, making Shillem her grandson.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Bilhah's biological motherhood is explicit; Rachel's claim to Dan reflects motherhood through her handmaid and should use the adoptive relationship. Shillem's relationship to Bilhah also skips a generation; all owner rulings remain unchanged.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:30:27+00:00"
+}

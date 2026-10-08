@@ -1,0 +1,25 @@
+{
+ "case": "parents-azariah-11",
+ "question": "azariah-11 is recorded with more than one father: jeroham-6, obed-5.",
+ "verdict": "defect",
+ "actions": [
+  {
+   "kind": "retarget-row",
+   "rows": [
+    97735
+   ],
+   "record": "",
+   "other": "",
+   "new_type": "",
+   "new_to": "obed-5",
+   "verse": "2CH 23:1",
+   "why": "The Hebrew separately names Azariah son of Jeroham (עֲזַרְיָהוּ בֶן־יְרֹחָם) and Azariah son of Obed (עֲזַרְיָהוּ בֶן־עֹובֵד). The record azariah-11 represents the latter, whose father is Obed.",
+   "confidence": 1
+  }
+ ],
+ "note": "The verse lists two distinct men named Azariah. The other three relationship rows correctly distinguish their fathers.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T07:32:16+00:00"
+}

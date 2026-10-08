@@ -1,0 +1,368 @@
+{
+ "chapter": "EZR 7",
+ "text": {
+  "EZR 7:1": {
+   "KJV": "Now after these things, in the reign of Artaxerxes king of Persia, Ezra the son of Seraiah, the son of Azariah, the son of Hilkiah,",
+   "BHSA": "וְאַחַר֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה בְּמַלְכ֖וּת אַרְתַּחְשַׁ֣סְתְּא מֶֽלֶךְ־פָּרָ֑ס עֶזְרָא֙ בֶּן־שְׂרָיָ֔ה בֶּן־עֲזַרְיָ֖ה בֶּן־חִלְקִיָּֽה׃ "
+  },
+  "EZR 7:2": {
+   "KJV": "The son of Shallum, the son of Zadok, the son of Ahitub,",
+   "BHSA": "בֶּן־שַׁלּ֥וּם בֶּן־צָדֹ֖וק בֶּן־אֲחִיטֽוּב׃ "
+  },
+  "EZR 7:3": {
+   "KJV": "The son of Amariah, the son of Azariah, the son of Meraioth,",
+   "BHSA": "בֶּן־אֲמַרְיָ֥ה בֶן־עֲזַרְיָ֖ה בֶּן־מְרָיֹֽות׃ "
+  },
+  "EZR 7:4": {
+   "KJV": "The son of Zerahiah, the son of Uzzi, the son of Bukki,",
+   "BHSA": "בֶּן־זְרַֽחְיָ֥ה בֶן־עֻזִּ֖י בֶּן־בֻּקִּֽי׃ "
+  },
+  "EZR 7:5": {
+   "KJV": "The son of Abishua, the son of Phinehas, the son of Eleazar, the son of Aaron the chief priest:",
+   "BHSA": "בֶּן־אֲבִישׁ֗וּעַ בֶּן־פִּֽינְחָס֙ בֶּן־אֶלְעָזָ֔ר בֶּן־אַהֲרֹ֥ן הַכֹּהֵ֖ן הָרֹֽאשׁ׃ "
+  },
+  "EZR 7:6": {
+   "KJV": "This Ezra went up from Babylon; and he was a ready scribe in the law of Moses, which the LORD God of Israel had given: and the king granted him all his request, according to the hand of the LORD his God upon him.",
+   "BHSA": "ה֤וּא עֶזְרָא֙ עָלָ֣ה מִבָּבֶ֔ל וְהֽוּא־סֹפֵ֤ר מָהִיר֙ בְּתֹורַ֣ת מֹשֶׁ֔ה אֲשֶׁר־נָתַ֥ן יְהוָ֖ה אֱלֹהֵ֣י יִשְׂרָאֵ֑ל וַיִּתֶּן־לֹ֣ו הַמֶּ֗לֶךְ כְּיַד־יְהוָ֤ה אֱלֹהָיו֙ עָלָ֔יו כֹּ֖ל בַּקָּשָׁתֹֽו׃ פ "
+  },
+  "EZR 7:7": {
+   "KJV": "And there went up some of the children of Israel, and of the priests, and the Levites, and the singers, and the porters, and the Nethinims, unto Jerusalem, in the seventh year of Artaxerxes the king.",
+   "BHSA": "וַיַּֽעֲל֣וּ מִבְּנֵֽי־יִ֠שְׂרָאֵל וּמִן־הַכֹּהֲנִ֨ים וְהַלְוִיִּ֜ם וְהַמְשֹׁרְרִ֧ים וְהַשֹּׁעֲרִ֛ים וְהַנְּתִינִ֖ים אֶל־יְרוּשָׁלִָ֑ם בִּשְׁנַת־שֶׁ֖בַע לְאַרְתַּחְשַׁ֥סְתְּא הַמֶּֽלֶךְ׃ "
+  },
+  "EZR 7:8": {
+   "KJV": "And he came to Jerusalem in the fifth month, which was in the seventh year of the king.",
+   "BHSA": "וַיָּבֹ֥א יְרוּשָׁלִַ֖ם בַּחֹ֣דֶשׁ הַחֲמִישִׁ֑י הִ֛יא שְׁנַ֥ת הַשְּׁבִיעִ֖ית לַמֶּֽלֶךְ׃ "
+  },
+  "EZR 7:9": {
+   "KJV": "For upon the first day of the first month began he to go up from Babylon, and on the first day of the fifth month came he to Jerusalem, according to the good hand of his God upon him.",
+   "BHSA": "כִּ֗י בְּאֶחָד֙ לַחֹ֣דֶשׁ הָרִאשֹׁ֔ון ה֣וּא יְסֻ֔ד הַֽמַּעֲלָ֖ה מִבָּבֶ֑ל וּבְאֶחָ֞ד לַחֹ֣דֶשׁ הַחֲמִישִׁ֗י בָּ֚א אֶל־יְר֣וּשָׁלִַ֔ם כְּיַד־אֱלֹהָ֖יו הַטֹּובָ֥ה עָלָֽיו׃ "
+  },
+  "EZR 7:10": {
+   "KJV": "For Ezra had prepared his heart to seek the law of the LORD, and to do it, and to teach in Israel statutes and judgments.",
+   "BHSA": "כִּ֤י עֶזְרָא֙ הֵכִ֣ין לְבָבֹ֔ו לִדְרֹ֛ושׁ אֶת־תֹּורַ֥ת יְהוָ֖ה וְלַעֲשֹׂ֑ת וּלְלַמֵּ֥ד בְּיִשְׂרָאֵ֖ל חֹ֥ק וּמִשְׁפָּֽט׃ ס "
+  },
+  "EZR 7:11": {
+   "KJV": "Now this is the copy of the letter that the king Artaxerxes gave unto Ezra the priest, the scribe, even a scribe of the words of the commandments of the LORD, and of his statutes to Israel.",
+   "BHSA": "וְזֶ֣ה׀ פַּרְשֶׁ֣גֶן הַֽנִּשְׁתְּוָ֗ן אֲשֶׁ֤ר נָתַן֙ הַמֶּ֣לֶךְ אַרְתַּחְשַׁ֔סְתְּא לְעֶזְרָ֥א הַכֹּהֵ֖ן הַסֹּפֵ֑ר סֹפֵ֞ר דִּבְרֵ֧י מִצְוֹת־יְהוָ֛ה וְחֻקָּ֖יו עַל־יִשְׂרָאֵֽל׃ פ "
+  },
+  "EZR 7:12": {
+   "KJV": "Artaxerxes, king of kings, unto Ezra the priest, a scribe of the law of the God of heaven, perfect peace, and at such a time.",
+   "BHSA": "אַ֨רְתַּחְשַׁ֔סְתְּא מֶ֖לֶךְ מַלְכַיָּ֑א לְעֶזְרָ֣א כָ֠הֲנָא סָפַ֨ר דָּתָ֜א דִּֽי־אֱלָ֧הּ שְׁמַיָּ֛א גְּמִ֖יר וּכְעֶֽנֶת׃ "
+  },
+  "EZR 7:13": {
+   "KJV": "I make a decree, that all they of the people of Israel, and of his priests and Levites, in my realm, which are minded of their own freewill to go up to Jerusalem, go with thee.",
+   "BHSA": "מִנִּי֮ שִׂ֣ים טְעֵם֒ דִּ֣י כָל־מִתְנַדַּ֣ב בְּמַלְכוּתִי֩ מִן־עַמָּ֨ה יִשְׂרָאֵ֜ל וְכָהֲנֹ֣והִי וְלֵוָיֵ֗א לִמְהָ֧ךְ לִֽירוּשְׁלֶ֛ם עִמָּ֖ךְ יְהָֽךְ׃ "
+  },
+  "EZR 7:14": {
+   "KJV": "Forasmuch as thou art sent of the king, and of his seven counsellors, to enquire concerning Judah and Jerusalem, according to the law of thy God which is in thine hand;",
+   "BHSA": "כָּל־קֳבֵ֗ל דִּי֩ מִן־קֳדָ֨ם מַלְכָּ֜א וְשִׁבְעַ֤ת יָעֲטֹ֨הִי֙ שְׁלִ֔יחַ לְבַקָּרָ֥א עַל־יְה֖וּד וְלִֽירוּשְׁלֶ֑ם בְּדָ֥ת אֱלָהָ֖ךְ דִּ֥י בִידָֽךְ׃ "
+  },
+  "EZR 7:15": {
+   "KJV": "And to carry the silver and gold, which the king and his counsellors have freely offered unto the God of Israel, whose habitation is in Jerusalem,",
+   "BHSA": "וּלְהֵיבָלָ֖ה כְּסַ֣ף וּדְהַ֑ב דִּֽי־מַלְכָּ֣א וְיָעֲטֹ֗והִי הִתְנַדַּ֨בוּ֙ לֶאֱלָ֣הּ יִשְׂרָאֵ֔ל דִּ֥י בִֽירוּשְׁלֶ֖ם מִשְׁכְּנֵֽהּ׃ "
+  },
+  "EZR 7:16": {
+   "KJV": "And all the silver and gold that thou canst find in all the province of Babylon, with the freewill offering of the people, and of the priests, offering willingly for the house of their God which is in Jerusalem:",
+   "BHSA": "וְכֹל֙ כְּסַ֣ף וּדְהַ֔ב דִּ֣י תְהַשְׁכַּ֔ח בְּכֹ֖ל מְדִינַ֣ת בָּבֶ֑ל עִם֩ הִתְנַדָּב֨וּת עַמָּ֤א וְכָֽהֲנַיָּא֙ מִֽתְנַדְּבִ֔ין לְבֵ֥ית אֱלָהֲהֹ֖ם דִּ֥י בִירוּשְׁלֶֽם׃ "
+  },
+  "EZR 7:17": {
+   "KJV": "That thou mayest buy speedily with this money bullocks, rams, lambs, with their meat offerings and their drink offerings, and offer them upon the altar of the house of your God which is in Jerusalem.",
+   "BHSA": "כָּל־קֳבֵ֣ל דְּנָה֩ אָסְפַּ֨רְנָא תִקְנֵ֜א בְּכַסְפָּ֣א דְנָ֗ה תֹּורִ֤ין׀ דִּכְרִין֙ אִמְּרִ֔ין וּמִנְחָתְהֹ֖ון וְנִסְכֵּיהֹ֑ון וּתְקָרֵ֣ב הִמֹּ֔ו עַֽל־מַדְבְּחָ֔ה דִּ֛י בֵּ֥ית אֱלָהֲכֹ֖ם דִּ֥י בִירוּשְׁלֶֽם׃ "
+  },
+  "EZR 7:18": {
+   "KJV": "And whatsoever shall seem good to thee, and to thy brethren, to do with the rest of the silver and the gold, that do after the will of your God.",
+   "BHSA": "וּמָ֣ה דִי֩ עליך וְעַל־אחיך יֵיטַ֗ב בִּשְׁאָ֛ר כַּסְפָּ֥א וְדַהֲבָ֖ה לְמֶעְבַּ֑ד כִּרְע֥וּת אֱלָהֲכֹ֖ם תַּעַבְדֽוּן׃ "
+  },
+  "EZR 7:19": {
+   "KJV": "The vessels also that are given thee for the service of the house of thy God, those deliver thou before the God of Jerusalem.",
+   "BHSA": "וּמָֽאנַיָּא֙ דִּֽי־מִתְיַהֲבִ֣ין לָ֔ךְ לְפָלְחָ֖ן בֵּ֣ית אֱלָהָ֑ךְ הַשְׁלֵ֕ם קֳדָ֖ם אֱלָ֥הּ יְרוּשְׁלֶֽם׃ "
+  },
+  "EZR 7:20": {
+   "KJV": "And whatsoever more shall be needful for the house of thy God, which thou shalt have occasion to bestow, bestow it out of the king's treasure house.",
+   "BHSA": "וּשְׁאָ֗ר חַשְׁחוּת֙ בֵּ֣ית אֱלָהָ֔ךְ דִּ֥י יִפֶּל־לָ֖ךְ לְמִנְתַּ֑ן תִּנְתֵּ֕ן מִן־בֵּ֖ית גִּנְזֵ֥י מַלְכָּֽא׃ "
+  },
+  "EZR 7:21": {
+   "KJV": "And I, even I Artaxerxes the king, do make a decree to all the treasurers which are beyond the river, that whatsoever Ezra the priest, the scribe of the law of the God of heaven, shall require of you, it be done speedily,",
+   "BHSA": "וּ֠מִנִּי אֲנָ֞ה אַרְתַּחְשַׁ֤סְתְּא מַלְכָּא֙ שִׂ֣ים טְעֵ֔ם לְכֹל֙ גִּזַּֽבְרַיָּ֔א דִּ֖י בַּעֲבַ֣ר נַהֲרָ֑ה דִּ֣י כָל־דִּ֣י יִ֠שְׁאֲלֶנְכֹון עֶזְרָ֨א כָהֲנָ֜ה סָפַ֤ר דָּתָא֙ דִּֽי־אֱלָ֣הּ שְׁמַיָּ֔א אָסְפַּ֖רְנָא יִתְעֲבִֽד׃ "
+  },
+  "EZR 7:22": {
+   "KJV": "Unto an hundred talents of silver, and to an hundred measures of wheat, and to an hundred baths of wine, and to an hundred baths of oil, and salt without prescribing how much.",
+   "BHSA": "עַד־כְּסַף֮ כַּכְּרִ֣ין מְאָה֒ וְעַד־חִנְטִין֙ כֹּרִ֣ין מְאָ֔ה וְעַד־חֲמַר֙ בַּתִּ֣ין מְאָ֔ה וְעַד־בַּתִּ֥ין מְשַׁ֖ח מְאָ֑ה וּמְלַ֖ח דִּי־לָ֥א כְתָֽב׃ "
+  },
+  "EZR 7:23": {
+   "KJV": "Whatsoever is commanded by the God of heaven, let it be diligently done for the house of the God of heaven: for why should there be wrath against the realm of the king and his sons?",
+   "BHSA": "כָּל־דִּ֗י מִן־טַ֨עַם֙ אֱלָ֣הּ שְׁמַיָּ֔א יִתְעֲבֵד֙ אַדְרַזְדָּ֔א לְבֵ֖ית אֱלָ֣הּ שְׁמַיָּ֑א דִּֽי־לְמָ֤ה לֶֽהֱוֵא֙ קְצַ֔ף עַל־מַלְכ֥וּת מַלְכָּ֖א וּבְנֹֽוהִי׃ "
+  },
+  "EZR 7:24": {
+   "KJV": "Also we certify you, that touching any of the priests and Levites, singers, porters, Nethinims, or ministers of this house of God, it shall not be lawful to impose toll, tribute, or custom, upon them.",
+   "BHSA": "וּלְכֹ֣ם מְהֹודְעִ֗ין דִּ֣י כָל־כָּהֲנַיָּ֣א וְ֠לֵוָיֵא זַמָּ֨רַיָּ֤א תָרָֽעַיָּא֙ נְתִ֣ינַיָּ֔א וּפָ֣לְחֵ֔י בֵּ֖ית אֱלָהָ֣א דְנָ֑ה מִנְדָּ֤ה בְלֹו֙ וַהֲלָ֔ךְ לָ֥א שַׁלִּ֖יט לְמִרְמֵ֥א עֲלֵיהֹֽם׃ "
+  },
+  "EZR 7:25": {
+   "KJV": "And thou, Ezra, after the wisdom of thy God, that is in thine hand, set magistrates and judges, which may judge all the people that are beyond the river, all such as know the laws of thy God; and teach ye them that know them not.",
+   "BHSA": "וְאַ֣נְתְּ עֶזְרָ֗א כְּחָכְמַ֨ת אֱלָהָ֤ךְ דִּֽי־בִידָךְ֙ מֶ֣נִּי שָׁפְטִ֞ין וְדַיָּנִ֗ין דִּי־לֶהֱוֹ֤ן דאנין לְכָל־עַמָּה֙ דִּ֚י בַּעֲבַ֣ר נַהֲרָ֔ה לְכָל־יָדְעֵ֖י דָּתֵ֣י אֱלָהָ֑ךְ וְדִ֧י לָ֦א יָדַ֖ע תְּהֹודְעֽוּן׃ "
+  },
+  "EZR 7:26": {
+   "KJV": "And whosoever will not do the law of thy God, and the law of the king, let judgment be executed speedily upon him, whether it be unto death, or to banishment, or to confiscation of goods, or to imprisonment.",
+   "BHSA": "וְכָל־דִּי־לָא֩ לֶהֱוֵ֨א עָבֵ֜ד דָּתָ֣א דִֽי־אֱלָהָ֗ךְ וְדָתָא֙ דִּ֣י מַלְכָּ֔א אָסְפַּ֕רְנָא דִּינָ֕ה לֶהֱוֵ֥א מִתְעֲבֵ֖ד מִנֵּ֑הּ הֵ֤ן לְמֹות֙ הֵ֣ן לשׁרשׁו הֵן־לַעֲנָ֥שׁ נִכְסִ֖ין וְלֶאֱסוּרִֽין׃ פ "
+  },
+  "EZR 7:27": {
+   "KJV": "Blessed be the LORD God of our fathers, which hath put such a thing as this in the king's heart, to beautify the house of the LORD which is in Jerusalem:",
+   "BHSA": "בָּר֥וּךְ יְהוָ֖ה אֱלֹהֵ֣י אֲבֹותֵ֑ינוּ אֲשֶׁ֨ר נָתַ֤ן כָּזֹאת֙ בְּלֵ֣ב הַמֶּ֔לֶךְ לְפָאֵ֕ר אֶת־בֵּ֥ית יְהוָ֖ה אֲשֶׁ֥ר בִּירוּשָׁלִָֽם׃ "
+  },
+  "EZR 7:28": {
+   "KJV": "And hath extended mercy unto me before the king, and his counsellors, and before all the king's mighty princes. And I was strengthened as the hand of the LORD my God was upon me, and I gathered together out of Israel chief men to go up with me.",
+   "BHSA": "וְעָלַ֣י הִטָּה־חֶ֗סֶד לִפְנֵ֤י הַמֶּ֨לֶךְ֙ וְיֹֽועֲצָ֔יו וּלְכָל־שָׂרֵ֥י הַמֶּ֖לֶךְ הַגִּבֹּרִ֑ים וַאֲנִ֣י הִתְחַזַּ֗קְתִּי כְּיַד־יְהוָ֤ה אֱלֹהַי֙ עָלַ֔י וָאֶקְבְּצָ֧ה מִיִּשְׂרָאֵ֛ל רָאשִׁ֖ים לַעֲלֹ֥ות עִמִּֽי׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "abishua",
+   "name": "Abishua",
+   "distinguisher": "son of Phinehas (1CH 6:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahitub-3",
+   "name": "Ahitub",
+   "distinguisher": "son of Amariah (1CH 6:11), Levite (1CH 6:1), father of Meraioth (1CH 9:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "amariah-2",
+   "name": "Amariah",
+   "distinguisher": "son of Azariah and father of Ahitub, in the line of the high priests (1CH 6:11, EZR 7:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "artaxerxes",
+   "name": "Artaxerxes",
+   "distinguisher": "King of Persia (EZR 4:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "azariah",
+   "name": "Azariah",
+   "distinguisher": "son of Johanan, who executed the priest's office in the temple that Solomon built (1CH 6:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "azariah-24",
+   "name": "Azariah",
+   "distinguisher": "Priest, son of Meraioth, father of Amariah, in Ezra's genealogy.",
+   "sex": null
+  },
+  {
+   "slug": "azariah-7",
+   "name": "Azariah",
+   "distinguisher": "son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and priest (EZR 2:2, NEH 7:7, NEH 12:1), explained the law to the people (NEH 8:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "bukki-2",
+   "name": "Bukki",
+   "distinguisher": "son of Abishua and father of Uzzi (1CH 6:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar",
+   "name": "Eleazar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "ezra",
+   "name": "Ezra",
+   "distinguisher": "son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "hilkiah-2",
+   "name": "Hilkiah",
+   "distinguisher": "the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "meraioth",
+   "name": "Meraioth",
+   "distinguisher": "father of Amariah (1CH 6:7), Levite (1CH 6:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "phinehas",
+   "name": "Phinehas",
+   "distinguisher": "Eleazar's son, Aaron's grandson (EXO 6:25) given a covenant of peace and perpetual priesthood (NUM 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "seraiah-11",
+   "name": "Seraiah",
+   "distinguisher": "Son of Azariah, father of Ezra the priest and scribe.",
+   "sex": null
+  },
+  {
+   "slug": "seraiah-2",
+   "name": "Seraiah",
+   "distinguisher": "the chief priest (2KI 25:18) who was killed by the king of Babylon (2KI 25:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum-6",
+   "name": "Shallum",
+   "distinguisher": "son of Zadok (1CH 6:12) and father of Hilkiah (1CH 6:13), Levite (1CH 6:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzzi",
+   "name": "Uzzi",
+   "distinguisher": "son of Bukki (1CH 6:5) and father of Zerhiah (1CH 6:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zadok-3",
+   "name": "Zadok",
+   "distinguisher": "(grand)son of Ahitub and father of Shallum (1CH 6:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "zerahiah",
+   "name": "Zerahiah",
+   "distinguisher": "father of Meraioth (1CH 6:6)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 98947,
+   "row": "ezra son-of seraiah-2",
+   "verse": "EZR 7:1",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 98948,
+   "row": "ezra descendant-of hilkiah-2",
+   "verse": "EZR 7:1",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 103739,
+   "row": "seraiah-11 father-of ezra",
+   "verse": "EZR 7:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103740,
+   "row": "seraiah-11 son-of azariah-7",
+   "verse": "EZR 7:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106586,
+   "row": "seraiah-2 son-of azariah-7",
+   "verse": "EZR 7:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106587,
+   "row": "seraiah-2 father-of ezra",
+   "verse": "EZR 7:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107334,
+   "row": "azariah-7 father-of seraiah-2",
+   "verse": "EZR 7:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97733,
+   "row": "azariah son-of meraioth",
+   "verse": "EZR 7:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101264,
+   "row": "meraioth father-of azariah",
+   "verse": "EZR 7:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103627,
+   "row": "azariah-24 son-of meraioth",
+   "verse": "EZR 7:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103628,
+   "row": "azariah-24 father-of amariah-2",
+   "verse": "EZR 7:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98950,
+   "row": "ezra priest-of yhvh",
+   "verse": "EZR 7:11",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 98951,
+   "row": "ezra scribe-of yhvh",
+   "verse": "EZR 7:12",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron brother-of moses (EXO 4:14)",
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "abishua son-of phinehas (1CH 6:4)",
+  "abishua father-of bukki-2 (1CH 6:5)",
+  "amariah-2 son-of azariah (1CH 6:11)",
+  "amariah-2 father-of ahitub-3 (1CH 6:11)",
+  "azariah father-of amariah-2 (1CH 6:11)",
+  "azariah-7 son-of hilkiah-2 (1CH 6:13)",
+  "bukki-2 son-of abishua (1CH 6:5)",
+  "bukki-2 father-of uzzi (1CH 6:5)",
+  "eleazar son-of aaron (EXO 6:23)",
+  "eleazar father-of phinehas (EXO 6:25)",
+  "eleazar priest-of yhvh (NUM 16:39)",
+  "meraioth son-of zerahiah (1CH 6:6)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "moses priest-of yhvh (PSA 99:6)",
+  "phinehas son-of eleazar (EXO 6:25)",
+  "phinehas descendant-of aaron (NUM 25:11)",
+  "phinehas father-of abishua (1CH 6:4)",
+  "phinehas priest-of yhvh (JOS 22:30)",
+  "shallum-6 son-of zadok-3 (1CH 6:12)",
+  "shallum-6 father-of hilkiah-2 (1CH 6:13)",
+  "uzzi son-of bukki-2 (1CH 6:5)",
+  "uzzi father-of zerahiah (1CH 6:6)",
+  "zadok-3 father-of shallum-6 (1CH 6:12)",
+  "zadok-3 ancestor-of azariah-7 (1CH 9:11)",
+  "zerahiah son-of uzzi (1CH 6:6)",
+  "zerahiah father-of meraioth (1CH 6:6)",
+  "ahitub-3 son-of amariah-2 (1CH 6:11)",
+  "ahitub-3 descendant-of aaron (NEH 11:11)",
+  "seraiah-2 descendant-of aaron (2KI 25:18)",
+  "hilkiah-2 high-priest-of yhvh (2KI 22:4)",
+  "hilkiah-2 descendant-of aaron (2KI 22:4)",
+  "ahitub-3 father-of zadok-3 (1CH 6:12)",
+  "zadok-3 son-of ahitub-3 (1CH 6:12)"
+ ]
+}

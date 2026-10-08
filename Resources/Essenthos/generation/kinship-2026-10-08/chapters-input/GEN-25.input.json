@@ -1,0 +1,838 @@
+{
+ "chapter": "GEN 25",
+ "text": {
+  "GEN 25:1": {
+   "KJV": "Then again Abraham took a wife, and her name was Keturah.",
+   "BHSA": "וַיֹּ֧סֶף אַבְרָהָ֛ם וַיִּקַּ֥ח אִשָּׁ֖ה וּשְׁמָ֥הּ קְטוּרָֽה׃ "
+  },
+  "GEN 25:2": {
+   "KJV": "And she bare him Zimran, and Jokshan, and Medan, and Midian, and Ishbak, and Shuah.",
+   "BHSA": "וַתֵּ֣לֶד לֹ֗ו אֶת־זִמְרָן֙ וְאֶת־יָקְשָׁ֔ן וְאֶת־מְדָ֖ן וְאֶת־מִדְיָ֑ן וְאֶת־יִשְׁבָּ֖ק וְאֶת־שֽׁוּחַ׃ "
+  },
+  "GEN 25:3": {
+   "KJV": "And Jokshan begat Sheba, and Dedan. And the sons of Dedan were Asshurim, and Letushim, and Leummim.",
+   "BHSA": "וְיָקְשָׁ֣ן יָלַ֔ד אֶת־שְׁבָ֖א וְאֶת־דְּדָ֑ן וּבְנֵ֣י דְדָ֔ן הָי֛וּ אַשּׁוּרִ֥ם וּלְטוּשִׁ֖ים וּלְאֻמִּֽים׃ "
+  },
+  "GEN 25:4": {
+   "KJV": "And the sons of Midian; Ephah, and Epher, and Hanoch, and Abidah, and Eldaah. All these were the children of Keturah.",
+   "BHSA": "וּבְנֵ֣י מִדְיָ֗ן עֵיפָ֤ה וָעֵ֨פֶר֙ וַחֲנֹ֔ךְ וַאֲבִידָ֖ע וְאֶלְדָּעָ֑ה כָּל־אֵ֖לֶּה בְּנֵ֥י קְטוּרָֽה׃ "
+  },
+  "GEN 25:5": {
+   "KJV": "And Abraham gave all that he had unto Isaac.",
+   "BHSA": "וַיִּתֵּ֧ן אַבְרָהָ֛ם אֶת־כָּל־אֲשֶׁר־לֹ֖ו לְיִצְחָֽק׃ "
+  },
+  "GEN 25:6": {
+   "KJV": "But unto the sons of the concubines, which Abraham had, Abraham gave gifts, and sent them away from Isaac his son, while he yet lived, eastward, unto the east country.",
+   "BHSA": "וְלִבְנֵ֤י הַפִּֽילַגְשִׁים֙ אֲשֶׁ֣ר לְאַבְרָהָ֔ם נָתַ֥ן אַבְרָהָ֖ם מַתָּנֹ֑ת וַֽיְשַׁלְּחֵ֞ם מֵעַ֨ל יִצְחָ֤ק בְּנֹו֙ בְּעֹודֶ֣נּוּ חַ֔י קֵ֖דְמָה אֶל־אֶ֥רֶץ קֶֽדֶם׃ "
+  },
+  "GEN 25:7": {
+   "KJV": "And these are the days of the years of Abraham's life which he lived, an hundred threescore and fifteen years.",
+   "BHSA": "וְאֵ֗לֶּה יְמֵ֛י שְׁנֵֽי־חַיֵּ֥י אַבְרָהָ֖ם אֲשֶׁר־חָ֑י מְאַ֥ת שָׁנָ֛ה וְשִׁבְעִ֥ים שָׁנָ֖ה וְחָמֵ֥שׁ שָׁנִֽים׃ "
+  },
+  "GEN 25:8": {
+   "KJV": "Then Abraham gave up the ghost, and died in a good old age, an old man, and full of years; and was gathered to his people.",
+   "BHSA": "וַיִּגְוַ֨ע וַיָּ֧מָת אַבְרָהָ֛ם בְּשֵׂיבָ֥ה טֹובָ֖ה זָקֵ֣ן וְשָׂבֵ֑עַ וַיֵּאָ֖סֶף אֶל־עַמָּֽיו׃ "
+  },
+  "GEN 25:9": {
+   "KJV": "And his sons Isaac and Ishmael buried him in the cave of Machpelah, in the field of Ephron the son of Zohar the Hittite, which is before Mamre;",
+   "BHSA": "וַיִּקְבְּר֨וּ אֹתֹ֜ו יִצְחָ֤ק וְיִשְׁמָעֵאל֙ בָּנָ֔יו אֶל־מְעָרַ֖ת הַמַּכְפֵּלָ֑ה אֶל־שְׂדֵ֞ה עֶפְרֹ֤ן בֶּן־צֹ֨חַר֙ הַֽחִתִּ֔י אֲשֶׁ֖ר עַל־פְּנֵ֥י מַמְרֵֽא׃ "
+  },
+  "GEN 25:10": {
+   "KJV": "The field which Abraham purchased of the sons of Heth: there was Abraham buried, and Sarah his wife.",
+   "BHSA": "הַשָּׂדֶ֛ה אֲשֶׁר־קָנָ֥ה אַבְרָהָ֖ם מֵאֵ֣ת בְּנֵי־חֵ֑ת שָׁ֛מָּה קֻבַּ֥ר אַבְרָהָ֖ם וְשָׂרָ֥ה אִשְׁתֹּֽו׃ "
+  },
+  "GEN 25:11": {
+   "KJV": "And it came to pass after the death of Abraham, that God blessed his son Isaac; and Isaac dwelt by the well Lahairoi.",
+   "BHSA": "וַיְהִ֗י אַחֲרֵי֙ מֹ֣ות אַבְרָהָ֔ם וַיְבָ֥רֶךְ אֱלֹהִ֖ים אֶת־יִצְחָ֣ק בְּנֹ֑ו וַיֵּ֣שֶׁב יִצְחָ֔ק עִם־בְּאֵ֥ר לַחַ֖י רֹאִֽי׃ ס "
+  },
+  "GEN 25:12": {
+   "KJV": "Now these are the generations of Ishmael, Abraham's son, whom Hagar the Egyptian, Sarah's handmaid, bare unto Abraham:",
+   "BHSA": "וְאֵ֛לֶּה תֹּלְדֹ֥ת יִשְׁמָעֵ֖אל בֶּן־אַבְרָהָ֑ם אֲשֶׁ֨ר יָלְדָ֜ה הָגָ֧ר הַמִּצְרִ֛ית שִׁפְחַ֥ת שָׂרָ֖ה לְאַבְרָהָֽם׃ "
+  },
+  "GEN 25:13": {
+   "KJV": "And these are the names of the sons of Ishmael, by their names, according to their generations: the firstborn of Ishmael, Nebajoth; and Kedar, and Adbeel, and Mibsam,",
+   "BHSA": "וְאֵ֗לֶּה שְׁמֹות֙ בְּנֵ֣י יִשְׁמָעֵ֔אל בִּשְׁמֹתָ֖ם לְתֹולְדֹתָ֑ם בְּכֹ֤ר יִשְׁמָעֵאל֙ נְבָיֹ֔ת וְקֵדָ֥ר וְאַדְבְּאֵ֖ל וּמִבְשָֽׂם׃ "
+  },
+  "GEN 25:14": {
+   "KJV": "And Mishma, and Dumah, and Massa,",
+   "BHSA": "וּמִשְׁמָ֥ע וְדוּמָ֖ה וּמַשָּֽׂא׃ "
+  },
+  "GEN 25:15": {
+   "KJV": "Hadar, and Tema, Jetur, Naphish, and Kedemah:",
+   "BHSA": "חֲדַ֣ד וְתֵימָ֔א יְט֥וּר נָפִ֖ישׁ וָקֵֽדְמָה׃ "
+  },
+  "GEN 25:16": {
+   "KJV": "These are the sons of Ishmael, and these are their names, by their towns, and by their castles; twelve princes according to their nations.",
+   "BHSA": "אֵ֣לֶּה הֵ֞ם בְּנֵ֤י יִשְׁמָעֵאל֙ וְאֵ֣לֶּה שְׁמֹתָ֔ם בְּחַצְרֵיהֶ֖ם וּבְטִֽירֹתָ֑ם שְׁנֵים־עָשָׂ֥ר נְשִׂיאִ֖ם לְאֻמֹּתָֽם׃ "
+  },
+  "GEN 25:17": {
+   "KJV": "And these are the years of the life of Ishmael, an hundred and thirty and seven years: and he gave up the ghost and died; and was gathered unto his people.",
+   "BHSA": "וְאֵ֗לֶּה שְׁנֵי֙ חַיֵּ֣י יִשְׁמָעֵ֔אל מְאַ֥ת שָׁנָ֛ה וּשְׁלֹשִׁ֥ים שָׁנָ֖ה וְשֶׁ֣בַע שָׁנִ֑ים וַיִּגְוַ֣ע וַיָּ֔מָת וַיֵּאָ֖סֶף אֶל־עַמָּֽיו׃ "
+  },
+  "GEN 25:18": {
+   "KJV": "And they dwelt from Havilah unto Shur, that is before Egypt, as thou goest toward Assyria: and he died in the presence of all his brethren.",
+   "BHSA": "וַיִּשְׁכְּנ֨וּ מֵֽחֲוִילָ֜ה עַד־שׁ֗וּר אֲשֶׁר֙ עַל־פְּנֵ֣י מִצְרַ֔יִם בֹּאֲכָ֖ה אַשּׁ֑וּרָה עַל־פְּנֵ֥י כָל־אֶחָ֖יו נָפָֽל׃ פ "
+  },
+  "GEN 25:19": {
+   "KJV": "And these are the generations of Isaac, Abraham's son: Abraham begat Isaac:",
+   "BHSA": "וְאֵ֛לֶּה תֹּולְדֹ֥ת יִצְחָ֖ק בֶּן־אַבְרָהָ֑ם אַבְרָהָ֖ם הֹולִ֥יד אֶת־יִצְחָֽק׃ "
+  },
+  "GEN 25:20": {
+   "KJV": "And Isaac was forty years old when he took Rebekah to wife, the daughter of Bethuel the Syrian of Padanaram, the sister to Laban the Syrian.",
+   "BHSA": "וַיְהִ֤י יִצְחָק֙ בֶּן־אַרְבָּעִ֣ים שָׁנָ֔ה בְּקַחְתֹּ֣ו אֶת־רִבְקָ֗ה בַּת־בְּתוּאֵל֙ הָֽאֲרַמִּ֔י מִפַּדַּ֖ן אֲרָ֑ם אֲחֹ֛ות לָבָ֥ן הָאֲרַמִּ֖י לֹ֥ו לְאִשָּֽׁה׃ "
+  },
+  "GEN 25:21": {
+   "KJV": "And Isaac intreated the LORD for his wife, because she was barren: and the LORD was intreated of him, and Rebekah his wife conceived.",
+   "BHSA": "וַיֶּעְתַּ֨ר יִצְחָ֤ק לַֽיהוָה֙ לְנֹ֣כַח אִשְׁתֹּ֔ו כִּ֥י עֲקָרָ֖ה הִ֑וא וַיֵּעָ֤תֶר לֹו֙ יְהוָ֔ה וַתַּ֖הַר רִבְקָ֥ה אִשְׁתֹּֽו׃ "
+  },
+  "GEN 25:22": {
+   "KJV": "And the children struggled together within her; and she said, If it be so, why am I thus? And she went to enquire of the LORD.",
+   "BHSA": "וַיִּתְרֹֽצֲצ֤וּ הַבָּנִים֙ בְּקִרְבָּ֔הּ וַתֹּ֣אמֶר אִם־כֵּ֔ן לָ֥מָּה זֶּ֖ה אָנֹ֑כִי וַתֵּ֖לֶךְ לִדְרֹ֥שׁ אֶת־יְהוָֽה׃ "
+  },
+  "GEN 25:23": {
+   "KJV": "And the LORD said unto her, Two nations are in thy womb, and two manner of people shall be separated from thy bowels; and the one people shall be stronger than the other people; and the elder shall serve the younger.",
+   "BHSA": "וַיֹּ֨אמֶר יְהוָ֜ה לָ֗הּ שְׁנֵ֤י גיים בְּבִטְנֵ֔ךְ וּשְׁנֵ֣י לְאֻמִּ֔ים מִמֵּעַ֖יִךְ יִפָּרֵ֑דוּ וּלְאֹם֙ מִלְאֹ֣ם יֶֽאֱמָ֔ץ וְרַ֖ב יַעֲבֹ֥ד צָעִֽיר׃ "
+  },
+  "GEN 25:24": {
+   "KJV": "And when her days to be delivered were fulfilled, behold, there were twins in her womb.",
+   "BHSA": "וַיִּמְלְא֥וּ יָמֶ֖יהָ לָלֶ֑דֶת וְהִנֵּ֥ה תֹומִ֖ם בְּבִטְנָֽהּ׃ "
+  },
+  "GEN 25:25": {
+   "KJV": "And the first came out red, all over like an hairy garment; and they called his name Esau.",
+   "BHSA": "וַיֵּצֵ֤א הָרִאשֹׁון֙ אַדְמֹונִ֔י כֻּלֹּ֖ו כְּאַדֶּ֣רֶת שֵׂעָ֑ר וַיִּקְרְא֥וּ שְׁמֹ֖ו עֵשָֽׂו׃ "
+  },
+  "GEN 25:26": {
+   "KJV": "And after that came his brother out, and his hand took hold on Esau's heel; and his name was called Jacob: and Isaac was threescore years old when she bare them.",
+   "BHSA": "וְאַֽחֲרֵי־כֵ֞ן יָצָ֣א אָחִ֗יו וְיָדֹ֤ו אֹחֶ֨זֶת֙ בַּעֲקֵ֣ב עֵשָׂ֔ו וַיִּקְרָ֥א שְׁמֹ֖ו יַעֲקֹ֑ב וְיִצְחָ֛ק בֶּן־שִׁשִּׁ֥ים שָׁנָ֖ה בְּלֶ֥דֶת אֹתָֽם׃ "
+  },
+  "GEN 25:27": {
+   "KJV": "And the boys grew: and Esau was a cunning hunter, a man of the field; and Jacob was a plain man, dwelling in tents.",
+   "BHSA": "וַֽיִּגְדְּלוּ֙ הַנְּעָרִ֔ים וַיְהִ֣י עֵשָׂ֗ו אִ֛ישׁ יֹדֵ֥עַ צַ֖יִד אִ֣ישׁ שָׂדֶ֑ה וְיַעֲקֹב֙ אִ֣ישׁ תָּ֔ם יֹשֵׁ֖ב אֹהָלִֽים׃ "
+  },
+  "GEN 25:28": {
+   "KJV": "And Isaac loved Esau, because he did eat of his venison: but Rebekah loved Jacob.",
+   "BHSA": "וַיֶּאֱהַ֥ב יִצְחָ֛ק אֶת־עֵשָׂ֖ו כִּי־צַ֣יִד בְּפִ֑יו וְרִבְקָ֖ה אֹהֶ֥בֶת אֶֽת־יַעֲקֹֽב׃ "
+  },
+  "GEN 25:29": {
+   "KJV": "And Jacob sod pottage: and Esau came from the field, and he was faint:",
+   "BHSA": "וַיָּ֥זֶד יַעֲקֹ֖ב נָזִ֑יד וַיָּבֹ֥א עֵשָׂ֛ו מִן־הַשָּׂדֶ֖ה וְה֥וּא עָיֵֽף׃ "
+  },
+  "GEN 25:30": {
+   "KJV": "And Esau said to Jacob, Feed me, I pray thee, with that same red pottage; for I am faint: therefore was his name called Edom.",
+   "BHSA": "וַיֹּ֨אמֶר עֵשָׂ֜ו אֶֽל־יַעֲקֹ֗ב הַלְעִיטֵ֤נִי נָא֙ מִן־הָאָדֹ֤ם הָאָדֹם֙ הַזֶּ֔ה כִּ֥י עָיֵ֖ף אָנֹ֑כִי עַל־כֵּ֥ן קָרָֽא־שְׁמֹ֖ו אֱדֹֽום׃ "
+  },
+  "GEN 25:31": {
+   "KJV": "And Jacob said, Sell me this day thy birthright.",
+   "BHSA": "וַיֹּ֖אמֶר יַעֲקֹ֑ב מִכְרָ֥ה כַיֹּ֛ום אֶת־בְּכֹֽרָתְךָ֖ לִֽי׃ "
+  },
+  "GEN 25:32": {
+   "KJV": "And Esau said, Behold, I am at the point to die: and what profit shall this birthright do to me?",
+   "BHSA": "וַיֹּ֣אמֶר עֵשָׂ֔ו הִנֵּ֛ה אָנֹכִ֥י הֹולֵ֖ךְ לָמ֑וּת וְלָמָּה־זֶּ֥ה לִ֖י בְּכֹרָֽה׃ "
+  },
+  "GEN 25:33": {
+   "KJV": "And Jacob said, Swear to me this day; and he sware unto him: and he sold his birthright unto Jacob.",
+   "BHSA": "וַיֹּ֣אמֶר יַעֲקֹ֗ב הִשָּׁ֤בְעָה לִּי֙ כַּיֹּ֔ום וַיִּשָּׁבַ֖ע לֹ֑ו וַיִּמְכֹּ֥ר אֶת־בְּכֹרָתֹ֖ו לְיַעֲקֹֽב׃ "
+  },
+  "GEN 25:34": {
+   "KJV": "Then Jacob gave Esau bread and pottage of lentiles; and he did eat and drink, and rose up, and went his way: thus Esau despised his birthright.",
+   "BHSA": "וְיַעֲקֹ֞ב נָתַ֣ן לְעֵשָׂ֗ו לֶ֚חֶם וּנְזִ֣יד עֲדָשִׁ֔ים וַיֹּ֣אכַל וַיֵּ֔שְׁתְּ וַיָּ֖קָם וַיֵּלַ֑ךְ וַיִּ֥בֶז עֵשָׂ֖ו אֶת־הַבְּכֹרָֽה׃ ס "
+  }
+ },
+ "records": [
+  {
+   "slug": "abida",
+   "name": "Abida",
+   "distinguisher": "son of Midian and grandson of Abraham through Keturah (GEN 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "abram",
+   "name": "Abram",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "adbeel",
+   "name": "Adbeel",
+   "distinguisher": "third-born son of Ishmael (GEN 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "bethuel",
+   "name": "Bethuel",
+   "distinguisher": "son of Nahor via his wife, Milcah (GEN 22:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "dedan-2",
+   "name": "Dedan",
+   "distinguisher": "son of Jokshan (GEN 25:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "dumah",
+   "name": "Dumah",
+   "distinguisher": "sixth-born son of Ishmael (GEN 25:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "eldaah",
+   "name": "Eldaah",
+   "distinguisher": "son of Midian and grandson of Abraham through Keturah (GEN 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "ephah",
+   "name": "Ephah",
+   "distinguisher": "son of Midian and grandson of Abraham through Keturah (GEN 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "epher",
+   "name": "Epher",
+   "distinguisher": "son of Midian and grandson of Abraham through Keturah (GEN 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "ephron",
+   "name": "Ephron",
+   "distinguisher": "sold the cave at Machpelah to Abraham (GEN 23:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "esau",
+   "name": "Esau",
+   "distinguisher": "firstborn son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "hadad",
+   "name": "Hadad",
+   "distinguisher": "eighth-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "hagar",
+   "name": "Hagar",
+   "distinguisher": "the Egyptian servant of Sarai (GEN 16:1)",
+   "sex": "female"
+  },
+  {
+   "slug": "hanoch",
+   "name": "Hanoch",
+   "distinguisher": "son of Midian and grandson of Abraham through Keturah (GEN 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "heth",
+   "name": "Heth",
+   "distinguisher": "son of Canaan (GEN 10:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "isaac",
+   "name": "Isaac",
+   "distinguisher": "son of Abraham and Sarah (GEN 17:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishbak",
+   "name": "Ishbak",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishmael",
+   "name": "Ishmael",
+   "distinguisher": "son of Abram and Hagar (GEN 16:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jetur",
+   "name": "Jetur",
+   "distinguisher": "tenth-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "jokshan",
+   "name": "Jokshan",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "kedar",
+   "name": "Kedar",
+   "distinguisher": "second-born son of Ishmael (GEN 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "kedemah",
+   "name": "Kedemah",
+   "distinguisher": "twelfth-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "keturah",
+   "name": "Keturah",
+   "distinguisher": "Abraham's second wife after Sarah died (GEN 25:1)",
+   "sex": "female"
+  },
+  {
+   "slug": "laban",
+   "name": "Laban",
+   "distinguisher": "brother of Rebekah (GEN 24:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "letush",
+   "name": "Letush",
+   "distinguisher": "son of Dedan (GEN 25:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "leum",
+   "name": "Leum",
+   "distinguisher": "son of Dedan (GEN 25:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "massa",
+   "name": "Massa",
+   "distinguisher": "seventh-born son of Ishmael (GEN 25:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "medan",
+   "name": "Medan",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "mibsam",
+   "name": "Mibsam",
+   "distinguisher": "fourth-born son of Ishmael (GEN 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "midian",
+   "name": "Midian",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "mishma",
+   "name": "Mishma",
+   "distinguisher": "fifth-born son of Ishmael (GEN 25:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "naphish",
+   "name": "Naphish",
+   "distinguisher": "eleventh-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "nebaioth",
+   "name": "Nebaioth",
+   "distinguisher": "firstborn son of Ishmael (GEN 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "rebekah",
+   "name": "Rebekah",
+   "distinguisher": "daughter of Bethuel, grandaughter of Nahor (GEN 22:23)",
+   "sex": "female"
+  },
+  {
+   "slug": "sarai",
+   "name": "Sarai",
+   "distinguisher": "Abram's wife (11:29)",
+   "sex": "female"
+  },
+  {
+   "slug": "sheba-3",
+   "name": "Sheba",
+   "distinguisher": "son of Jokshan (GEN 25:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "shuah",
+   "name": "Shuah",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "tema",
+   "name": "Tema",
+   "distinguisher": "ninth-born son of Ishmael (GEN 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zimran",
+   "name": "Zimran",
+   "distinguisher": "son of Abraham through Keturah (GEN 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "zohar",
+   "name": "Zohar",
+   "distinguisher": "father of Ephron who sold the cave at Machpelah to Abraham (GEN 23:8)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 100734,
+   "row": "keturah wife-of abram",
+   "verse": "GEN 25:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101206,
+   "row": "medan son-of abram",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101208,
+   "row": "medan brother-of midian",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101209,
+   "row": "medan brother-of zimran",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101210,
+   "row": "medan brother-of jokshan",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101211,
+   "row": "medan brother-of ishbak",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101212,
+   "row": "medan brother-of shuah",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101388,
+   "row": "midian son-of keturah",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101389,
+   "row": "midian brother-of zimran",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101390,
+   "row": "midian brother-of jokshan",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101391,
+   "row": "midian brother-of medan",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101392,
+   "row": "midian brother-of ishbak",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101393,
+   "row": "midian brother-of shuah",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101399,
+   "row": "midian son-of abram",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102831,
+   "row": "shuah son-of keturah",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102832,
+   "row": "shuah brother-of zimran",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102833,
+   "row": "shuah brother-of jokshan",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102834,
+   "row": "shuah brother-of medan",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102835,
+   "row": "shuah brother-of midian",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102836,
+   "row": "shuah brother-of ishbak",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102837,
+   "row": "shuah son-of abram",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103537,
+   "row": "zimran son-of abram",
+   "verse": "GEN 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98405,
+   "row": "dedan-2 father-of letush",
+   "verse": "GEN 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98406,
+   "row": "dedan-2 father-of leum",
+   "verse": "GEN 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100500,
+   "row": "jokshan father-of sheba-3",
+   "verse": "GEN 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100501,
+   "row": "jokshan father-of dedan-2",
+   "verse": "GEN 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100893,
+   "row": "letush son-of dedan-2",
+   "verse": "GEN 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100894,
+   "row": "leum son-of dedan-2",
+   "verse": "GEN 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102503,
+   "row": "sheba-3 son-of jokshan",
+   "verse": "GEN 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102504,
+   "row": "sheba-3 brother-of dedan-2",
+   "verse": "GEN 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97033,
+   "row": "abida son-of midian",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97034,
+   "row": "abida brother-of epher",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98559,
+   "row": "eldaah son-of midian",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98560,
+   "row": "eldaah descendant-of keturah",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98815,
+   "row": "ephah son-of midian",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98816,
+   "row": "ephah descendant-of keturah",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98823,
+   "row": "epher son-of midian",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98824,
+   "row": "epher descendant-of keturah",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99315,
+   "row": "hanoch son-of midian",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99316,
+   "row": "hanoch descendant-of keturah",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99317,
+   "row": "hanoch brother-of ephah",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101394,
+   "row": "midian father-of ephah",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101395,
+   "row": "midian father-of epher",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101396,
+   "row": "midian father-of hanoch",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101397,
+   "row": "midian father-of abida",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101398,
+   "row": "midian father-of eldaah",
+   "verse": "GEN 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99782,
+   "row": "ishmael brother-of isaac",
+   "verse": "GEN 25:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97170,
+   "row": "adbeel son-of ishmael",
+   "verse": "GEN 25:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97171,
+   "row": "adbeel brother-of kedar",
+   "verse": "GEN 25:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99783,
+   "row": "ishmael father-of nebaioth",
+   "verse": "GEN 25:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100699,
+   "row": "kedar son-of ishmael",
+   "verse": "GEN 25:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101327,
+   "row": "mibsam son-of ishmael",
+   "verse": "GEN 25:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101669,
+   "row": "nebaioth son-of ishmael",
+   "verse": "GEN 25:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101671,
+   "row": "nebaioth brother-of kedar",
+   "verse": "GEN 25:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98465,
+   "row": "dumah son-of ishmael",
+   "verse": "GEN 25:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101162,
+   "row": "massa son-of ishmael",
+   "verse": "GEN 25:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101447,
+   "row": "mishma son-of ishmael",
+   "verse": "GEN 25:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99188,
+   "row": "hadad brother-of jetur",
+   "verse": "GEN 25:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99190,
+   "row": "hadad son-of ishmael",
+   "verse": "GEN 25:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 107119,
+   "row": "tema son-of ishmael",
+   "verse": "GEN 25:15",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 102125,
+   "row": "rebekah wife-of isaac",
+   "verse": "GEN 25:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98879,
+   "row": "esau son-of rebekah",
+   "verse": "GEN 25:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105799,
+   "row": "jacob son-of isaac",
+   "verse": "GEN 25:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105800,
+   "row": "jacob son-of rebekah",
+   "verse": "GEN 25:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105801,
+   "row": "jacob brother-of esau",
+   "verse": "GEN 25:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "abida descendant-of keturah (1CH 1:33)",
+  "bethuel father-of rebekah (GEN 22:23)",
+  "bethuel grandfather-of jacob (GEN 28:2)",
+  "dedan-2 son-of jokshan (1CH 1:32)",
+  "esau son-of isaac (GEN 27:1)",
+  "esau brother-of jacob (GEN 27:41)",
+  "hadad brother-of tema (1CH 1:30)",
+  "hadad brother-of dumah (1CH 1:30)",
+  "isaac son-of abram (GEN 21:3)",
+  "isaac father-of jacob (GEN 27:26)",
+  "isaac father-of esau (GEN 35:29)",
+  "ishbak son-of keturah (1CH 1:32)",
+  "ishbak son-of abram (1CH 1:32)",
+  "ishmael son-of abram (GEN 16:15)",
+  "ishmael son-of hagar (GEN 16:15)",
+  "jetur son-of ishmael (1CH 1:31)",
+  "jetur brother-of naphish (1CH 1:31)",
+  "jokshan son-of abram (1CH 1:32)",
+  "jokshan son-of keturah (1CH 1:32)",
+  "kedar brother-of nebaioth (1CH 1:29)",
+  "kedemah son-of ishmael (1CH 1:31)",
+  "kedemah brother-of naphish (1CH 1:31)",
+  "keturah mother-of zimran (1CH 1:32)",
+  "keturah mother-of jokshan (1CH 1:32)",
+  "keturah mother-of medan (1CH 1:32)",
+  "keturah mother-of midian (1CH 1:32)",
+  "keturah mother-of ishbak (1CH 1:32)",
+  "keturah mother-of shuah (1CH 1:32)",
+  "laban brother-of rebekah (GEN 24:29)",
+  "laban son-of bethuel (GEN 28:5)",
+  "medan son-of keturah (1CH 1:32)",
+  "naphish son-of ishmael (1CH 1:31)",
+  "rebekah daughter-of bethuel (GEN 22:23)",
+  "rebekah sister-of laban (GEN 24:29)",
+  "rebekah mother-of jacob (GEN 27:11)",
+  "sheba-3 descendant-of abram (1CH 1:32)",
+  "zimran son-of keturah (1CH 1:32)",
+  "zohar father-of ephron (GEN 23:8)",
+  "ephron son-of zohar (GEN 23:8)",
+  "ephron descendant-of heth (GEN 23:10)",
+  "hagar concubine-of abram (GEN 16:3)",
+  "hagar mother-of ishmael (GEN 16:15)",
+  "hagar servant-of sarai (GEN 16:1)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "abram half-brother-of sarai (GEN 20:12)",
+  "abram husband-of sarai (GEN 11:29)",
+  "abram servant-of yhvh (GEN 26:24)",
+  "sarai wife-of abram (GEN 11:29)",
+  "sarai mother-of isaac (GEN 21:3)"
+ ]
+}

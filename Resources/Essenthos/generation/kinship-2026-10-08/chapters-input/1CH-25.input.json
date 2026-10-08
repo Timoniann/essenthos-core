@@ -1,0 +1,491 @@
+{
+ "chapter": "1CH 25",
+ "text": {
+  "1CH 25:1": {
+   "KJV": "Moreover David and the captains of the host separated to the service of the sons of Asaph, and of Heman, and of Jeduthun, who should prophesy with harps, with psalteries, and with cymbals: and the number of the workmen according to their service was:",
+   "BHSA": "וַיַּבְדֵּ֣ל דָּוִיד֩ וְשָׂרֵ֨י הַצָּבָ֜א לַעֲבֹדָ֗ה לִבְנֵ֤י אָסָף֙ וְהֵימָ֣ן וִֽידוּת֔וּן הנביאים בְּכִנֹּרֹ֥ות בִּנְבָלִ֖ים וּבִמְצִלְתָּ֑יִם וַֽיְהִי֙ מִסְפָּרָ֔ם אַנְשֵׁ֥י מְלָאכָ֖ה לַעֲבֹדָתָֽם׃ "
+  },
+  "1CH 25:2": {
+   "KJV": "Of the sons of Asaph; Zaccur, and Joseph, and Nethaniah, and Asarelah, the sons of Asaph under the hands of Asaph, which prophesied according to the order of the king.",
+   "BHSA": "לִבְנֵ֣י אָסָ֗ף זַכּ֧וּר וְיֹוסֵ֛ף וּנְתַנְיָ֥ה וַאֲשַׂרְאֵ֖לָה בְּנֵ֣י אָסָ֑ף עַ֚ל יַד־אָסָ֔ף הַנִּבָּ֖א עַל־יְדֵ֥י הַמֶּֽלֶךְ׃ "
+  },
+  "1CH 25:3": {
+   "KJV": "Of Jeduthun: the sons of Jeduthun; Gedaliah, and Zeri, and Jeshaiah, Hashabiah, and Mattithiah, six, under the hands of their father Jeduthun, who prophesied with a harp, to give thanks and to praise the LORD.",
+   "BHSA": "לִידוּת֑וּן בְּנֵ֣י יְדוּת֡וּן גְּדַלְיָ֡הוּ וּצְרִ֡י וִֽ֠ישַׁעְיָהוּ חֲשַׁבְיָ֨הוּ וּמַתִּתְיָ֜הוּ שִׁשָּׁ֗ה עַל֩ יְדֵ֨י אֲבִיהֶ֤ם יְדוּתוּן֙ בַּכִּנֹּ֔ור הַנִּבָּ֕א עַל־הֹדֹ֥ות וְהַלֵּ֖ל לַיהוָֽה׃ ס "
+  },
+  "1CH 25:4": {
+   "KJV": "Of Heman: the sons of Heman: Bukkiah, Mattaniah, Uzziel, Shebuel, and Jerimoth, Hananiah, Hanani, Eliathah, Giddalti, and Romamtiezer, Joshbekashah, Mallothi, Hothir, and Mahazioth:",
+   "BHSA": "לְהֵימָ֑ן בְּנֵ֣י הֵימָ֡ן בֻּקִּיָּ֡הוּ מַתַּנְיָ֡הוּ עֻ֠זִּיאֵל שְׁבוּאֵ֨ל וִֽירִימֹ֜ות חֲנַנְיָ֣ה חֲנָ֗נִי אֱלִיאָ֤תָה גִדַּ֨לְתִּי֙ וְרֹמַ֣מְתִּי עֶ֔זֶר יָשְׁבְּקָ֣שָׁה מַלֹּ֔ותִי הֹותִ֖יר מַחֲזִיאֹֽות׃ "
+  },
+  "1CH 25:5": {
+   "KJV": "All these were the sons of Heman the king's seer in the words of God, to lift up the horn. And God gave to Heman fourteen sons and three daughters.",
+   "BHSA": "כָּל־אֵ֨לֶּה בָנִ֜ים לְהֵימָ֗ן חֹזֵ֥ה הַמֶּ֛לֶךְ בְּדִבְרֵ֥י הָאֱלֹהִ֖ים לְהָרִ֣ים קָ֑רֶן וַיִּתֵּ֨ן הָאֱלֹהִ֜ים לְהֵימָ֗ן בָּנִ֛ים אַרְבָּעָ֥ה עָשָׂ֖ר וּבָנֹ֥ות שָׁלֹֽושׁ׃ "
+  },
+  "1CH 25:6": {
+   "KJV": "All these were under the hands of their father for song in the house of the LORD, with cymbals, psalteries, and harps, for the service of the house of God, according to the king's order to Asaph, Jeduthun, and Heman.",
+   "BHSA": "כָּל־אֵ֣לֶּה עַל־יְדֵי֩ אֲבִיהֶ֨ם בַּשִּׁ֜יר בֵּ֣ית יְהוָ֗ה בִּמְצִלְתַּ֨יִם֙ נְבָלִ֣ים וְכִנֹּרֹ֔ות לַעֲבֹדַ֖ת בֵּ֣ית הָאֱלֹהִ֑ים עַ֚ל יְדֵ֣י הַמֶּ֔לֶךְ ס אָסָ֥ף וִידוּת֖וּן וְהֵימָֽן׃ "
+  },
+  "1CH 25:7": {
+   "KJV": "So the number of them, with their brethren that were instructed in the songs of the LORD, even all that were cunning, was two hundred fourscore and eight.",
+   "BHSA": "וַיְהִ֤י מִסְפָּרָם֙ עִם־אֲחֵיהֶ֔ם מְלֻמְּדֵי־שִׁ֖יר לַיהוָ֑ה כָּל־הַ֨מֵּבִ֔ין מָאתַ֖יִם שְׁמֹונִ֥ים וּשְׁמֹונָֽה׃ "
+  },
+  "1CH 25:8": {
+   "KJV": "And they cast lots, ward against ward, as well the small as the great, the teacher as the scholar.",
+   "BHSA": "וַיַּפִּ֜ילוּ גֹּורָלֹ֣ות מִשְׁמֶ֗רֶת לְעֻמַּת֙ כַּקָּטֹ֣ן כַּגָּדֹ֔ול מֵבִ֖ין עִם־תַּלְמִֽיד׃ פ "
+  },
+  "1CH 25:9": {
+   "KJV": "Now the first lot came forth for Asaph to Joseph: the second to Gedaliah, who with his brethren and sons were twelve:",
+   "BHSA": "וַיֵּצֵ֞א הַגֹּורָ֧ל הָרִאשֹׁ֛ון לְאָסָ֖ף לְיֹוסֵ֑ף גְּדַלְיָ֨הוּ֙ הַשֵּׁנִ֔י הֽוּא־וְאֶחָ֥יו וּבָנָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:10": {
+   "KJV": "The third to Zaccur, he, his sons, and his brethren, were twelve:",
+   "BHSA": "הַשְּׁלִשִׁ֣י זַכּ֔וּר בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:11": {
+   "KJV": "The fourth to Izri, he, his sons, and his brethren, were twelve:",
+   "BHSA": "הָרְבִיעִי֙ לַיִּצְרִ֔י בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:12": {
+   "KJV": "The fifth to Nethaniah, he, his sons, and his brethren, were twelve:",
+   "BHSA": "הַחֲמִישִׁ֣י נְתַנְיָ֔הוּ בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:13": {
+   "KJV": "The sixth to Bukkiah, he, his sons, and his brethren, were twelve:",
+   "BHSA": "הַשִּׁשִּׁ֣י בֻקִּיָּ֔הוּ בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:14": {
+   "KJV": "The seventh to Jesharelah, he, his sons, and his brethren, were twelve:",
+   "BHSA": "הַשְּׁבִעִ֣י יְשַׂרְאֵ֔לָה בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:15": {
+   "KJV": "The eighth to Jeshaiah, he, his sons, and his brethren, were twelve:",
+   "BHSA": "הַשְּׁמִינִ֣י יְשַֽׁעְיָ֔הוּ בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:16": {
+   "KJV": "The ninth to Mattaniah, he, his sons, and his brethren, were twelve:",
+   "BHSA": "הַתְּשִׁיעִ֣י מַתַּנְיָ֔הוּ בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:17": {
+   "KJV": "The tenth to Shimei, he, his sons, and his brethren, were twelve:",
+   "BHSA": "הָעֲשִׂירִ֣י שִׁמְעִ֔י בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:18": {
+   "KJV": "The eleventh to Azareel, he, his sons, and his brethren, were twelve:",
+   "BHSA": "עַשְׁתֵּֽי־עָשָׂ֣ר עֲזַרְאֵ֔ל בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:19": {
+   "KJV": "The twelfth to Hashabiah, he, his sons, and his brethren, were twelve:",
+   "BHSA": "הַשְּׁנֵ֤ים עָשָׂר֙ לַחֲשַׁבְיָ֔ה בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:20": {
+   "KJV": "The thirteenth to Shubael, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לִשְׁלֹשָׁ֤ה עָשָׂר֙ שֽׁוּבָאֵ֔ל בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:21": {
+   "KJV": "The fourteenth to Mattithiah, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לְאַרְבָּעָ֤ה עָשָׂר֙ מַתִּתְיָ֔הוּ בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:22": {
+   "KJV": "The fifteenth to Jeremoth, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לַחֲמִשָּׁ֤ה עָשָׂר֙ לִֽירֵמֹ֔ות בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:23": {
+   "KJV": "The sixteenth to Hananiah, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לְשִׁשָּׁ֤ה עָשָׂר֙ לַחֲנַנְיָ֔הוּ בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:24": {
+   "KJV": "The seventeenth to Joshbekashah, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לְשִׁבְעָ֤ה עָשָׂר֙ לְיָשְׁבְּקָ֔שָׁה בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:25": {
+   "KJV": "The eighteenth to Hanani, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לִשְׁמֹונָ֤ה עָשָׂר֙ לַחֲנָ֔נִי בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:26": {
+   "KJV": "The nineteenth to Mallothi, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לְתִשְׁעָ֤ה עָשָׂר֙ לְמַלֹּ֔ותִי בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:27": {
+   "KJV": "The twentieth to Eliathah, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לְעֶשְׂרִים֙ לֶֽאֱלִיָּ֔תָה בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:28": {
+   "KJV": "The one and twentieth to Hothir, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לְאֶחָ֤ד וְעֶשְׂרִים֙ לְהֹותִ֔יר בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:29": {
+   "KJV": "The two and twentieth to Giddalti, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לִשְׁנַ֤יִם וְעֶשְׂרִים֙ לְגִדַּ֔לְתִּי בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:30": {
+   "KJV": "The three and twentieth to Mahazioth, he, his sons, and his brethren, were twelve:",
+   "BHSA": "לִשְׁלֹשָׁ֤ה וְעֶשְׂרִים֙ לְמַ֣חֲזִיאֹ֔ות בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ "
+  },
+  "1CH 25:31": {
+   "KJV": "The four and twentieth to Romamtiezer, he, his sons, and his brethren, were twelve.",
+   "BHSA": "לְאַרְבָּעָ֤ה וְעֶשְׂרִים֙ לְרֹומַ֣מְתִּי עָ֔זֶר בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "asaph-2",
+   "name": "Asaph",
+   "distinguisher": "son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "asharelah",
+   "name": "Asharelah",
+   "distinguisher": "son of Asaph (1CH 25:2), chosen seventh by lot (1CH 25:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "azarel",
+   "name": "Azarel",
+   "distinguisher": "the Korahite (1CH 12:6), chosen eleventh by lot (1CH 25:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "azarel-5",
+   "name": "Azarel",
+   "distinguisher": "Levite musician of Heman's family, head of the eleventh course",
+   "sex": null
+  },
+  {
+   "slug": "bukkiah",
+   "name": "Bukkiah",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen sixth by lot (1CH 25:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliathah",
+   "name": "Eliathah",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen twentieth by lot (1CH 25:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "gedaliah-2",
+   "name": "Gedaliah",
+   "distinguisher": "son of Jeduthun (1CH 25:3), chosen second by lot (1CH 25:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "giddalti",
+   "name": "Giddalti",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen twenty-second by lot (1CH 25:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanani-2",
+   "name": "Hanani",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen eighteenth by lot (1CH 25:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "hananiah-3",
+   "name": "Hananiah",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen sixteenth by lot (1CH 25:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashabiah-2",
+   "name": "Hashabiah",
+   "distinguisher": "son of Jeduthun (1CH 25:3), chosen twelfth by lot (1CH 25:19), descendant of Hebron (1CH 26:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "heman-2",
+   "name": "Heman",
+   "distinguisher": "the singer, son of Joel, decendant of Kohath (1CH 6:33), father of fourteen sons and three daughter (1CH 25:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "hothir",
+   "name": "Hothir",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen twenty-first by lot (1CH 25:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeduthun",
+   "name": "Jeduthun",
+   "distinguisher": "father of Galal (1CH 9:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremoth-11",
+   "name": "Jeremoth",
+   "distinguisher": "Levite, son of Heman, head of 15th musical course",
+   "sex": null
+  },
+  {
+   "slug": "jerimoth-3",
+   "name": "Jerimoth",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen fifteenth by lot (1CH 25:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshaiah-2",
+   "name": "Jeshaiah",
+   "distinguisher": "son of Jeduthun (1CH 25:3), chosen eighth by lot (1CH 25:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "joseph-3",
+   "name": "Joseph",
+   "distinguisher": "son of Asaph (1CH 25:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "joshbekashah",
+   "name": "Joshbekashah",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen seventeenth by lot (1CH 25:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "mahazioth",
+   "name": "Mahazioth",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen twenty-third by lot (1CH 25:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "mallothi",
+   "name": "Mallothi",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen nineteenth by lot (1CH 25:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattaniah-3",
+   "name": "Mattaniah",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen ninth by lot (1CH 25:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattithiah-3",
+   "name": "Mattithiah",
+   "distinguisher": "son of Jeduthun (1CH 25:3), chosen fourteenth by lot (1CH 25:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "nethaniah-2",
+   "name": "Nethaniah",
+   "distinguisher": "son of Asaph (1CH 25:2), chosen fifth by lot (1CH 25:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "romamtiezer",
+   "name": "Romamti-ezer",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen twenty-fourth by lot (1CH 25:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "shebuel-2",
+   "name": "Shebuel",
+   "distinguisher": "son of Heman_3 (1CH 25:4), chosen thirteenth by lot (1CH 25:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei-10",
+   "name": "Shimei",
+   "distinguisher": "son of Jeduthun (1CH 25:3), chosen tenth by lot (1CH 25:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzziel-4",
+   "name": "Uzziel",
+   "distinguisher": "son of Heman_3 (1CH 25:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zaccur-4",
+   "name": "Zaccur",
+   "distinguisher": "son of Asaph (1CH 25:2), chosen third by lot (1CH 25:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "zeri",
+   "name": "Zeri",
+   "distinguisher": "son of Jeduthun (1CH 25:3), chosen fourth by log (1CH 25:11)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 97640,
+   "row": "asharelah son-of asaph-2",
+   "verse": "1CH 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100575,
+   "row": "joseph-3 son-of asaph-2",
+   "verse": "1CH 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100576,
+   "row": "joseph-3 brother-of zaccur-4",
+   "verse": "1CH 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101729,
+   "row": "nethaniah-2 son-of asaph-2",
+   "verse": "1CH 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103306,
+   "row": "zaccur-4 son-of asaph-2",
+   "verse": "1CH 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106763,
+   "row": "asaph-2 father-of zaccur-4",
+   "verse": "1CH 25:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99045,
+   "row": "gedaliah-2 son-of jeduthun",
+   "verse": "1CH 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99358,
+   "row": "hashabiah-2 son-of jeduthun",
+   "verse": "1CH 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100295,
+   "row": "jeshaiah-2 son-of jeduthun",
+   "verse": "1CH 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101203,
+   "row": "mattithiah-3 son-of jeduthun",
+   "verse": "1CH 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102747,
+   "row": "shimei-10 son-of jeduthun",
+   "verse": "1CH 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103474,
+   "row": "zeri son-of jeduthun",
+   "verse": "1CH 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98211,
+   "row": "bukkiah son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98635,
+   "row": "eliathah son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99114,
+   "row": "giddalti son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99286,
+   "row": "hanani-2 son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99301,
+   "row": "hananiah-3 son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99639,
+   "row": "hothir son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100262,
+   "row": "jerimoth-3 son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100595,
+   "row": "joshbekashah son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101049,
+   "row": "mahazioth son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101103,
+   "row": "mallothi son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101174,
+   "row": "mattaniah-3 son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102235,
+   "row": "romamtiezer son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102524,
+   "row": "shebuel-2 son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103217,
+   "row": "uzziel-4 son-of heman-2",
+   "verse": "1CH 25:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99490,
+   "row": "heman-2 prophet-to david",
+   "verse": "1CH 25:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "david servant-of yhvh (2SA 3:18)",
+  "jeduthun prophet-to david (2CH 35:15)"
+ ]
+}

@@ -1,0 +1,830 @@
+{
+ "chapter": "1CH 23",
+ "text": {
+  "1CH 23:1": {
+   "KJV": "So when David was old and full of days, he made Solomon his son king over Israel.",
+   "BHSA": "וְדָוִ֥יד זָקֵ֖ן וְשָׂבַ֣ע יָמִ֑ים וַיַּמְלֵ֛ךְ אֶת־שְׁלֹמֹ֥ה בְנֹ֖ו עַל־יִשְׂרָאֵֽל׃ "
+  },
+  "1CH 23:2": {
+   "KJV": "And he gathered together all the princes of Israel, with the priests and the Levites.",
+   "BHSA": "וַיֶּאֱסֹף֙ אֶת־כָּל־שָׂרֵ֣י יִשְׂרָאֵ֔ל וְהַכֹּהֲנִ֖ים וְהַלְוִיִּֽם׃ "
+  },
+  "1CH 23:3": {
+   "KJV": "Now the Levites were numbered from the age of thirty years and upward: and their number by their polls, man by man, was thirty and eight thousand.",
+   "BHSA": "וַיִּסָּֽפְרוּ֙ הַלְוִיִּ֔ם מִבֶּ֛ן שְׁלֹשִׁ֥ים שָׁנָ֖ה וָמָ֑עְלָה וַיְהִ֨י מִסְפָּרָ֤ם לְגֻלְגְּלֹתָם֙ לִגְבָרִ֔ים שְׁלֹשִׁ֥ים וּשְׁמֹונָ֖ה אָֽלֶף׃ "
+  },
+  "1CH 23:4": {
+   "KJV": "Of which, twenty and four thousand were to set forward the work of the house of the LORD; and six thousand were officers and judges:",
+   "BHSA": "מֵאֵ֗לֶּה לְנַצֵּ֨חַ֙ עַל־מְלֶ֣אכֶת בֵּית־יְהוָ֔ה עֶשְׂרִ֥ים וְאַרְבָּעָ֖ה אָ֑לֶף וְשֹׁטְרִ֥ים וְשֹׁפְטִ֖ים שֵׁ֥שֶׁת אֲלָפִֽים׃ "
+  },
+  "1CH 23:5": {
+   "KJV": "Moreover four thousand were porters; and four thousand praised the LORD with the instruments which I made, said David, to praise therewith.",
+   "BHSA": "וְאַרְבַּ֥עַת אֲלָפִ֖ים שֹׁעֲרִ֑ים וְאַרְבַּ֤עַת אֲלָפִים֙ מְהַֽלְלִ֣ים לַיהוָ֔ה בַּכֵּלִ֕ים אֲשֶׁ֥ר עָשִׂ֖יתִי לְהַלֵּֽל׃ "
+  },
+  "1CH 23:6": {
+   "KJV": "And David divided them into courses among the sons of Levi, namely, Gershon, Kohath, and Merari.",
+   "BHSA": "וַיֶּֽחָלְקֵ֥ם דָּוִ֖יד מַחְלְקֹ֑ות ס לִבְנֵ֣י לֵוִ֔י לְגֵרְשֹׁ֖ון קְהָ֥ת וּמְרָרִֽי׃ ס "
+  },
+  "1CH 23:7": {
+   "KJV": "Of the Gershonites were, Laadan, and Shimei.",
+   "BHSA": "לַגֵּרְשֻׁנִּ֖י לַעְדָּ֥ן וְשִׁמְעִֽי׃ ס "
+  },
+  "1CH 23:8": {
+   "KJV": "The sons of Laadan; the chief was Jehiel, and Zetham, and Joel, three.",
+   "BHSA": "בְּנֵ֣י לַעְדָּ֗ן הָרֹ֧אשׁ יְחִיאֵ֛ל וְזֵתָ֥ם וְיֹואֵ֖ל שְׁלֹשָֽׁה׃ ס "
+  },
+  "1CH 23:9": {
+   "KJV": "The sons of Shimei; Shelomith, and Haziel, and Haran, three. These were the chief of the fathers of Laadan.",
+   "BHSA": "בְּנֵ֣י שִׁמְעִ֗י שׁלמות וַחֲזִיאֵ֛ל וְהָרָ֖ן שְׁלֹשָׁ֑ה אֵ֛לֶּה רָאשֵׁ֥י הָאָבֹ֖ות לְלַעְדָּֽן׃ ס "
+  },
+  "1CH 23:10": {
+   "KJV": "And the sons of Shimei were, Jahath, Zina, and Jeush, and Beriah. These four were the sons of Shimei.",
+   "BHSA": "וּבְנֵ֣י שִׁמְעִ֔י יַ֣חַת זִינָ֔א וִיע֖וּשׁ וּבְרִיעָ֑ה אֵ֥לֶּה בְנֵי־שִׁמְעִ֖י אַרְבָּעָֽה׃ "
+  },
+  "1CH 23:11": {
+   "KJV": "And Jahath was the chief, and Zizah the second: but Jeush and Beriah had not many sons; therefore they were in one reckoning, according to their father's house.",
+   "BHSA": "וַֽיְהִי־יַ֣חַת הָרֹ֔אשׁ וְזִיזָ֖ה הַשֵּׁנִ֑י וִיע֤וּשׁ וּבְרִיעָה֙ לֹֽא־הִרְבּ֣וּ בָנִ֔ים וַיִּֽהְיוּ֙ לְבֵ֣ית אָ֔ב לִפְקֻדָּ֖ה אֶחָֽת׃ ס "
+  },
+  "1CH 23:12": {
+   "KJV": "The sons of Kohath; Amram, Izhar, Hebron, and Uzziel, four.",
+   "BHSA": "בְּנֵ֣י קְהָ֗ת עַמְרָ֥ם יִצְהָ֛ר חֶבְרֹ֥ון וְעֻזִּיאֵ֖ל אַרְבָּעָֽה׃ ס "
+  },
+  "1CH 23:13": {
+   "KJV": "The sons of Amram; Aaron and Moses: and Aaron was separated, that he should sanctify the most holy things, he and his sons for ever, to burn incense before the LORD, to minister unto him, and to bless in his name for ever.",
+   "BHSA": "בְּנֵ֥י עַמְרָ֖ם אַהֲרֹ֣ן וּמֹשֶׁ֑ה וַיִּבָּדֵ֣ל אַהֲרֹ֡ן לְֽהַקְדִּישֹׁו֩ קֹ֨דֶשׁ קָֽדָשִׁ֤ים הֽוּא־וּבָנָיו֙ עַד־עֹולָ֔ם לְהַקְטִיר֩ לִפְנֵ֨י יְהוָ֧ה לְשָׁרְתֹ֛ו וּלְבָרֵ֥ךְ בִּשְׁמֹ֖ו עַד־עֹולָֽם׃ "
+  },
+  "1CH 23:14": {
+   "KJV": "Now concerning Moses the man of God, his sons were named of the tribe of Levi.",
+   "BHSA": "וּמֹשֶׁ֖ה אִ֣ישׁ הָאֱלֹהִ֑ים בָּנָ֕יו יִקָּרְא֖וּ עַל־שֵׁ֥בֶט הַלֵּוִֽי׃ "
+  },
+  "1CH 23:15": {
+   "KJV": "The sons of Moses were, Gershom, and Eliezer.",
+   "BHSA": "בְּנֵ֣י מֹשֶׁ֔ה גֵּרְשֹׁ֖ם וֶאֱלִיעֶֽזֶר׃ "
+  },
+  "1CH 23:16": {
+   "KJV": "Of the sons of Gershom, Shebuel was the chief.",
+   "BHSA": "בְּנֵ֥י גֵרְשֹׁ֖ום שְׁבוּאֵ֥ל הָרֹֽאשׁ׃ "
+  },
+  "1CH 23:17": {
+   "KJV": "And the sons of Eliezer were, Rehabiah the chief. And Eliezer had none other sons; but the sons of Rehabiah were very many.",
+   "BHSA": "וַיִּֽהְי֥וּ בְנֵי־אֱלִיעֶ֖זֶר רְחַבְיָ֣ה הָרֹ֑אשׁ וְלֹא־הָיָ֤ה לֶאֱלִיעֶ֨זֶר֙ בָּנִ֣ים אֲחֵרִ֔ים וּבְנֵ֥י רְחַבְיָ֖ה רָב֥וּ לְמָֽעְלָה׃ "
+  },
+  "1CH 23:18": {
+   "KJV": "Of the sons of Izhar; Shelomith the chief.",
+   "BHSA": "בְּנֵ֥י יִצְהָ֖ר שְׁלֹמִ֥ית הָרֹֽאשׁ׃ ס "
+  },
+  "1CH 23:19": {
+   "KJV": "Of the sons of Hebron; Jeriah the first, Amariah the second, Jahaziel the third, and Jekameam the fourth.",
+   "BHSA": "בְּנֵ֖י חֶבְרֹ֑ון יְרִיָּ֤הוּ הָרֹאשׁ֙ אֲמַרְיָ֣ה הַשֵּׁנִ֔י יַחֲזִיאֵל֙ הַשְּׁלִישִׁ֔י וִֽיקַמְעָ֖ם הָרְבִיעִֽי׃ "
+  },
+  "1CH 23:20": {
+   "KJV": "Of the sons of Uzziel; Micah the first and Jesiah the second.",
+   "BHSA": "בְּנֵ֖י עֻזִּיאֵ֑ל מִיכָ֣ה הָרֹ֔אשׁ וְיִשִּׁיָּ֖ה הַשֵּׁנִֽי׃ ס "
+  },
+  "1CH 23:21": {
+   "KJV": "The sons of Merari; Mahli, and Mushi. The sons of Mahli; Eleazar, and Kish.",
+   "BHSA": "בְּנֵ֤י מְרָרִי֙ מַחְלִ֣י וּמוּשִׁ֔י בְּנֵ֥י מַחְלִ֖י אֶלְעָזָ֥ר וְקִֽישׁ׃ "
+  },
+  "1CH 23:22": {
+   "KJV": "And Eleazar died, and had no sons, but daughters: and their brethren the sons of Kish took them.",
+   "BHSA": "וַיָּ֨מָת֙ אֶלְעָזָ֔ר וְלֹא־הָ֥יוּ לֹ֛ו בָּנִ֖ים כִּ֣י אִם־בָּנֹ֑ות וַיִּשָּׂא֥וּם בְּנֵי־קִ֖ישׁ אֲחֵיהֶֽם׃ "
+  },
+  "1CH 23:23": {
+   "KJV": "The sons of Mushi; Mahli, and Eder, and Jeremoth, three.",
+   "BHSA": "בְּנֵ֣י מוּשִׁ֗י מַחְלִ֥י וְעֵ֛דֶר וִירֵמֹ֖ות שְׁלֹשָֽׁה׃ "
+  },
+  "1CH 23:24": {
+   "KJV": "These were the sons of Levi after the house of their fathers; even the chief of the fathers, as they were counted by number of names by their polls, that did the work for the service of the house of the LORD, from the age of twenty years and upward.",
+   "BHSA": "אֵ֣לֶּה בְנֵֽי־לֵוִי֩ לְבֵ֨ית אֲבֹתֵיהֶ֜ם רָאשֵׁ֧י הָאָבֹ֣ות לִפְקוּדֵיהֶ֗ם בְּמִסְפַּ֤ר שֵׁמֹות֙ לְגֻלְגְּלֹתָ֔ם עֹשֵׂה֙ הַמְּלָאכָ֔ה לַעֲבֹדַ֖ת בֵּ֣ית יְהוָ֑ה מִבֶּ֛ן עֶשְׂרִ֥ים שָׁנָ֖ה וָמָֽעְלָה׃ "
+  },
+  "1CH 23:25": {
+   "KJV": "For David said, The LORD God of Israel hath given rest unto his people, that they may dwell in Jerusalem for ever:",
+   "BHSA": "כִּ֚י אָמַ֣ר דָּוִ֔יד הֵנִ֛יחַ יְהוָ֥ה אֱלֹהֵֽי־יִשְׂרָאֵ֖ל לְעַמֹּ֑ו וַיִּשְׁכֹּ֥ן בִּירוּשָׁלִַ֖ם עַד־לְעֹולָֽם׃ "
+  },
+  "1CH 23:26": {
+   "KJV": "And also unto the Levites; they shall no more carry the tabernacle, nor any vessels of it for the service thereof.",
+   "BHSA": "וְגַ֖ם לַלְוִיִּ֑ם אֵין־לָשֵׂ֧את אֶת־הַמִּשְׁכָּ֛ן וְאֶת־כָּל־כֵּלָ֖יו לַעֲבֹדָתֹֽו׃ "
+  },
+  "1CH 23:27": {
+   "KJV": "For by the last words of David the Levites were numbered from twenty years old and above:",
+   "BHSA": "כִּ֣י בְדִבְרֵ֤י דָוִיד֙ הָאַ֣חֲרֹנִ֔ים הֵ֖מָּה מִסְפַּ֣ר בְּנֵי־לֵוִ֑י מִבֶּ֛ן עֶשְׂרִ֥ים שָׁנָ֖ה וּלְמָֽעְלָה׃ "
+  },
+  "1CH 23:28": {
+   "KJV": "Because their office was to wait on the sons of Aaron for the service of the house of the LORD, in the courts, and in the chambers, and in the purifying of all holy things, and the work of the service of the house of God;",
+   "BHSA": "כִּ֣י מַעֲמָדָ֞ם לְיַד־בְּנֵ֣י אַהֲרֹ֗ן לַעֲבֹדַת֙ בֵּ֣ית יְהוָ֔ה עַל־הַחֲצֵרֹות֙ וְעַל־הַלְּשָׁכֹ֔ות וְעַֽל־טָהֳרַ֖ת לְכָל־קֹ֑דֶשׁ וּמַֽעֲשֵׂ֔ה עֲבֹדַ֖ת בֵּ֥ית הָאֱלֹהִֽים׃ "
+  },
+  "1CH 23:29": {
+   "KJV": "Both for the shewbread, and for the fine flour for meat offering, and for the unleavened cakes, and for that which is baked in the pan, and for that which is fried, and for all manner of measure and size;",
+   "BHSA": "וּלְלֶ֨חֶם הַֽמַּעֲרֶ֜כֶת וּלְסֹ֤לֶת לְמִנְחָה֙ וְלִרְקִיקֵ֣י הַמַּצֹּ֔ות וְלַֽמַּחֲבַ֖ת וְלַמֻּרְבָּ֑כֶת וּלְכָל־מְשׂוּרָ֖ה וּמִדָּֽה׃ "
+  },
+  "1CH 23:30": {
+   "KJV": "And to stand every morning to thank and praise the LORD, and likewise at even:",
+   "BHSA": "וְלַעֲמֹד֙ בַּבֹּ֣קֶר בַּבֹּ֔קֶר לְהֹדֹ֥ות וּלְהַלֵּ֖ל לַיהוָ֑ה וְכֵ֖ן לָעָֽרֶב׃ "
+  },
+  "1CH 23:31": {
+   "KJV": "And to offer all burnt sacrifices unto the LORD in the sabbaths, in the new moons, and on the set feasts, by number, according to the order commanded unto them, continually before the LORD:",
+   "BHSA": "וּלְכֹ֨ל הַעֲלֹ֤ות עֹלֹות֙ לַיהוָ֔ה לַשַּׁבָּתֹ֔ות לֶחֳדָשִׁ֖ים וְלַמֹּעֲדִ֑ים בְּמִסְפָּ֨ר כְּמִשְׁפָּ֧ט עֲלֵיהֶ֛ם תָּמִ֖יד לִפְנֵ֥י יְהוָֽה׃ "
+  },
+  "1CH 23:32": {
+   "KJV": "And that they should keep the charge of the tabernacle of the congregation, and the charge of the holy place, and the charge of the sons of Aaron their brethren, in the service of the house of the LORD.",
+   "BHSA": "וְשָׁמְר֞וּ אֶת־מִשְׁמֶ֣רֶת אֹֽהֶל־מֹועֵ֗ד וְאֵת֙ מִשְׁמֶ֣רֶת הַקֹּ֔דֶשׁ וּמִשְׁמֶ֕רֶת בְּנֵ֥י אַהֲרֹ֖ן אֲחֵיהֶ֑ם לַעֲבֹדַ֖ת בֵּ֥ית יְהוָֽה׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "amariah-3",
+   "name": "Amariah",
+   "distinguisher": "descendant of Hebron (1CH 23:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "amram",
+   "name": "Amram",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "beriah-4",
+   "name": "Beriah",
+   "distinguisher": "descendant of Shimei (1CH 23:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "eder-2",
+   "name": "Eder",
+   "distinguisher": "descendant of Mushi (1CH 23:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar-4",
+   "name": "Eleazar",
+   "distinguisher": "descendant of Mahli (1CH 23:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliezer-2",
+   "name": "Eliezer",
+   "distinguisher": "Moses' second son (EXO 18:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "gershom",
+   "name": "Gershom",
+   "distinguisher": "Moses' first son (EXO 2:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "gershon",
+   "name": "Gershon",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "haran-3",
+   "name": "Haran",
+   "distinguisher": "son of Shimei within the family of Ladan (1CH 23:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "haziel",
+   "name": "Haziel",
+   "distinguisher": "son of Shimei within the family of Ladan (1CH 23:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "hebron",
+   "name": "Hebron",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "isshiah-3",
+   "name": "Isshiah",
+   "distinguisher": "descendant of Uzziel (1CH 23:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "izhar",
+   "name": "Izhar",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahath-4",
+   "name": "Jahath",
+   "distinguisher": "descendant of Shimei (1CH 23:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahaziel-2",
+   "name": "Jahaziel",
+   "distinguisher": "descendant of Hebron (1CH 23:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehiel-9",
+   "name": "Jehiel",
+   "distinguisher": "Gershonite, son of Laadan, whose house (Jehieli) kept the temple treasures",
+   "sex": null
+  },
+  {
+   "slug": "jekameam",
+   "name": "Jekameam",
+   "distinguisher": "descendant of Hebron (1CH 23:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremoth-3",
+   "name": "Jeremoth",
+   "distinguisher": "descendant of Mushi (1CH 23:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeriah",
+   "name": "Jeriah",
+   "distinguisher": "descendant of Hebron (1CH 23:19), chief among the Hebronites from Jazer of Gilead (1CH 26:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeush-4",
+   "name": "Jeush",
+   "distinguisher": "descendant of Shimei (1CH 23:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "joel-6",
+   "name": "Joel",
+   "distinguisher": "chief of the sons of Gershom (1CH 15:7), son of Ladan (1CH 23:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "kish-3",
+   "name": "Kish",
+   "distinguisher": "descendant of Mahli (1CH 23:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "kohath",
+   "name": "Kohath",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "levi",
+   "name": "Levi",
+   "distinguisher": "third-born son of Jacob (GEN 29:34), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "libni",
+   "name": "Libni",
+   "distinguisher": "son of Gershon (EXO 6:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "mahli",
+   "name": "Mahli",
+   "distinguisher": "son of Merari (EXO 6:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "mahli-3",
+   "name": "Mahli",
+   "distinguisher": "descendant of Mushi (1CH 23:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "merari",
+   "name": "Merari",
+   "distinguisher": "son of Levi (GEN 46:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "micah-3",
+   "name": "Micah",
+   "distinguisher": "descendant of Uzziel (1CH 23:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "mushi",
+   "name": "Mushi",
+   "distinguisher": "son of Merari (EXO 6:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "rehabiah",
+   "name": "Rehabiah",
+   "distinguisher": "descendant of Eliezer (1CH 23:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "shebuel",
+   "name": "Shebuel",
+   "distinguisher": "descendant of Gershom (1CH 23:16), officer over the treasures (1CH 26:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelomith-3",
+   "name": "Shelomith",
+   "distinguisher": "descendant of Izhar (1CH 23:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelomoth",
+   "name": "Shelomoth",
+   "distinguisher": "son of Shimei within the family of Ladan (1CH 23:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei",
+   "name": "Shimei",
+   "distinguisher": "son of Gershon (EXO 6:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei-9",
+   "name": "Shimei",
+   "distinguisher": "son of Ladan [Libni] as he was included in the \"fathers' households of Ladan\" (1CH 23:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "solomon",
+   "name": "Solomon",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzziel",
+   "name": "Uzziel",
+   "distinguisher": "son of Kohath (EXO 6:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zetham",
+   "name": "Zetham",
+   "distinguisher": "son of Ladan [Libni] (1CH 23:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "zina",
+   "name": "Zina",
+   "distinguisher": "descendant of Shimei (1CH 23:10)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 106656,
+   "row": "jehiel-9 brother-of zetham",
+   "verse": "1CH 23:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106657,
+   "row": "jehiel-9 brother-of joel-6",
+   "verse": "1CH 23:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106659,
+   "row": "jehiel-9 son-of libni",
+   "verse": "1CH 23:8",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  },
+  {
+   "id": 106894,
+   "row": "joel-6 descendant-of libni",
+   "verse": "1CH 23:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106895,
+   "row": "joel-6 brother-of jehiel-9",
+   "verse": "1CH 23:8",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 107168,
+   "row": "zetham descendant-of libni",
+   "verse": "1CH 23:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 107169,
+   "row": "zetham brother-of jehiel-9",
+   "verse": "1CH 23:8",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 99335,
+   "row": "haran-3 son-of shimei-9",
+   "verse": "1CH 23:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99420,
+   "row": "haziel son-of shimei-9",
+   "verse": "1CH 23:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99421,
+   "row": "haziel brother-of shelomoth",
+   "verse": "1CH 23:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99422,
+   "row": "haziel brother-of haran-3",
+   "verse": "1CH 23:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102591,
+   "row": "shelomoth son-of shimei-9",
+   "verse": "1CH 23:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102592,
+   "row": "shelomoth descendant-of libni",
+   "verse": "1CH 23:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102593,
+   "row": "shelomoth brother-of haziel",
+   "verse": "1CH 23:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102767,
+   "row": "shimei-9 father-of shelomoth",
+   "verse": "1CH 23:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102768,
+   "row": "shimei-9 father-of haziel",
+   "verse": "1CH 23:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102769,
+   "row": "shimei-9 father-of haran-3",
+   "verse": "1CH 23:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98076,
+   "row": "beriah-4 son-of shimei",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99939,
+   "row": "jahath-4 son-of shimei",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99940,
+   "row": "jahath-4 brother-of beriah-4",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99941,
+   "row": "jahath-4 brother-of jeush-4",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99942,
+   "row": "jahath-4 brother-of zina",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100357,
+   "row": "jeush-4 son-of shimei",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100358,
+   "row": "jeush-4 brother-of jahath-4",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100359,
+   "row": "jeush-4 brother-of beriah-4",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102743,
+   "row": "shimei father-of jahath-4",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102744,
+   "row": "shimei father-of zina",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102745,
+   "row": "shimei father-of jeush-4",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102746,
+   "row": "shimei father-of beriah-4",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103549,
+   "row": "zina son-of shimei",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103550,
+   "row": "zina brother-of jahath-4",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103551,
+   "row": "zina brother-of jeush-4",
+   "verse": "1CH 23:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98077,
+   "row": "beriah-4 brother-of jeush-4",
+   "verse": "1CH 23:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98648,
+   "row": "eliezer-2 son-of moses",
+   "verse": "1CH 23:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98650,
+   "row": "eliezer-2 brother-of gershom",
+   "verse": "1CH 23:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99077,
+   "row": "gershom son-of moses",
+   "verse": "1CH 23:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99079,
+   "row": "gershom brother-of eliezer-2",
+   "verse": "1CH 23:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98649,
+   "row": "eliezer-2 father-of rehabiah",
+   "verse": "1CH 23:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102140,
+   "row": "rehabiah son-of eliezer-2",
+   "verse": "1CH 23:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102582,
+   "row": "shelomith-3 descendant-of izhar",
+   "verse": "1CH 23:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97403,
+   "row": "amariah-3 son-of hebron",
+   "verse": "1CH 23:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97404,
+   "row": "amariah-3 brother-of jeriah",
+   "verse": "1CH 23:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99451,
+   "row": "hebron ancestor-of jeriah",
+   "verse": "1CH 23:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99948,
+   "row": "jahaziel-2 son-of hebron",
+   "verse": "1CH 23:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99949,
+   "row": "jahaziel-2 brother-of jeriah",
+   "verse": "1CH 23:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99950,
+   "row": "jahaziel-2 brother-of amariah-3",
+   "verse": "1CH 23:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99951,
+   "row": "jahaziel-2 brother-of jekameam",
+   "verse": "1CH 23:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100199,
+   "row": "jekameam son-of hebron",
+   "verse": "1CH 23:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100200,
+   "row": "jekameam brother-of jeriah",
+   "verse": "1CH 23:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100254,
+   "row": "jeriah son-of hebron",
+   "verse": "1CH 23:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99825,
+   "row": "isshiah-3 son-of uzziel",
+   "verse": "1CH 23:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101341,
+   "row": "micah-3 son-of uzziel",
+   "verse": "1CH 23:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98579,
+   "row": "eleazar-4 son-of mahli",
+   "verse": "1CH 23:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98580,
+   "row": "eleazar-4 brother-of kish-3",
+   "verse": "1CH 23:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100797,
+   "row": "kish-3 son-of mahli",
+   "verse": "1CH 23:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100798,
+   "row": "kish-3 brother-of eleazar-4",
+   "verse": "1CH 23:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101058,
+   "row": "mahli father-of eleazar-4",
+   "verse": "1CH 23:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101059,
+   "row": "mahli father-of kish-3",
+   "verse": "1CH 23:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98501,
+   "row": "eder-2 son-of mushi",
+   "verse": "1CH 23:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100247,
+   "row": "jeremoth-3 son-of mushi",
+   "verse": "1CH 23:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101550,
+   "row": "mushi father-of eder-2",
+   "verse": "1CH 23:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101551,
+   "row": "mushi father-of jeremoth-3",
+   "verse": "1CH 23:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106948,
+   "row": "mahli-3 brother-of eder-2",
+   "verse": "1CH 23:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106949,
+   "row": "mahli-3 brother-of jeremoth-3",
+   "verse": "1CH 23:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron brother-of moses (EXO 4:14)",
+  "aaron son-of amram (EXO 6:20)",
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "amram son-of kohath (NUM 26:58)",
+  "amram father-of moses (EXO 6:20)",
+  "amram father-of aaron (EXO 6:20)",
+  "david father-of solomon (1CH 29:23)",
+  "david servant-of yhvh (2SA 3:18)",
+  "gershom father-of shebuel (1CH 26:24)",
+  "gershon son-of levi (GEN 46:11)",
+  "gershon father-of libni (EXO 6:17)",
+  "hebron son-of kohath (EXO 6:18)",
+  "isshiah-3 brother-of micah-3 (1CH 24:25)",
+  "izhar son-of kohath (EXO 6:18)",
+  "kohath son-of levi (GEN 46:11)",
+  "kohath father-of amram (NUM 26:58)",
+  "kohath brother-of gershon (GEN 46:11)",
+  "libni son-of gershon (EXO 6:17)",
+  "libni brother-of shimei (EXO 6:17)",
+  "mahli son-of merari (EXO 6:19)",
+  "mahli brother-of mushi (EXO 6:19)",
+  "mahli descendant-of levi (EZR 8:18)",
+  "micah-3 brother-of isshiah-3 (1CH 24:25)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "moses priest-of yhvh (PSA 99:6)",
+  "mushi son-of merari (EXO 6:19)",
+  "shebuel son-of gershom (1CH 26:24)",
+  "shebuel descendant-of moses (1CH 26:24)",
+  "shimei son-of gershon (EXO 6:17)",
+  "solomon son-of david (1KI 1:13)",
+  "uzziel son-of kohath (EXO 6:18)",
+  "uzziel brother-of amram (EXO 6:18)",
+  "uzziel uncle-of aaron (LEV 10:4)",
+  "merari son-of levi (GEN 46:11)",
+  "merari father-of mahli (EXO 6:19)",
+  "merari father-of mushi (EXO 6:19)",
+  "joel-6 brother-of zetham (1CH 26:22)",
+  "joel-6 descendant-of gershon (1CH 15:7)",
+  "levi father-of gershon (GEN 46:11)",
+  "levi father-of kohath (GEN 46:11)",
+  "levi father-of merari (GEN 46:11)",
+  "mahli-3 son-of mushi (1CH 6:47)",
+  "zetham brother-of joel-6 (1CH 26:22)"
+ ]
+}
