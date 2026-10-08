@@ -255,7 +255,9 @@ public static class Datasets
             "https://creativecommons.org/publicdomain/zero/1.0/",
             "https://query.wikidata.org",
             "World history on the same axis: battles, cities founded, dynasties, writing systems "
-            + "and archaeological ages, so the text can be read against what else was happening.",
+            + "and archaeological ages, so the text can be read against what else was happening. "
+            + "It also says which Wikipedia article each person, place and thing is, so a page can "
+            + "send the reader on to it in their own language.",
             "Wikidata"),
 
         // Public domain, and attributed on every band anyway: the period's own authority is named

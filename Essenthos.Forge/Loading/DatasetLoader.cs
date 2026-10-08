@@ -412,6 +412,7 @@ internal sealed class DatasetLoader(
             new("naming-verses", TellTheVersesThatNameFromThoseThatConcern),
             new("images", cancellationToken => PictureThePeopleAndPlaces(resources, cancellationToken)),
             new("withdrawn-records", WithdrawTheRecordsThatAreNoName),
+            new("wikipedia", cancellationToken => LinkTheRecordsToWikipedia(resources, cancellationToken)),
             new("verify", async cancellationToken =>
             {
                 // The index answers from what it read the first time it was asked, and until now that
@@ -2341,6 +2342,20 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EntityImageLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The article each language's Wikipedia has on a person, place or thing, through the Wikidata item
+    /// the record is. After the last step that adds, folds or withdraws a record, because it links the
+    /// records the corpus ends with, and after the owner's answers on the ones it could not tell.
+    /// </summary>
+    private async Task LinkTheRecordsToWikipedia(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the Wikipedia articles of people, places and things");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<WikipediaLinkLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
     }
 

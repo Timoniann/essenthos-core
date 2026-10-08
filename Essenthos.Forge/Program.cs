@@ -137,6 +137,7 @@ builder.Services.AddScoped<UssherAnnalsLoader>();
 builder.Services.AddScoped<OpenBiblePlaceLoader>();
 builder.Services.AddScoped<OpenBibleLocationLoader>();
 builder.Services.AddScoped<EntityImageLoader>();
+builder.Services.AddScoped<WikipediaLinkLoader>();
 builder.Services.AddScoped<WorldHistoryLoader>();
 builder.Services.AddScoped<PeriodOLoader>();
 builder.Services.AddScoped<SeptuagintReckoningLoader>();

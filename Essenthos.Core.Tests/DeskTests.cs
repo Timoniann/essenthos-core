@@ -218,6 +218,89 @@ public sealed class DeskTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task TheWikipediaListIsEmptyUntilALoadHasWrittenIt()
+    {
+        var read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+
+        (read.Written, read.Open).Should().Be((false, 0));
+        read.Entries.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task AnsweringARecordWithAnItemWritesTheChoiceWhereTheLoadReadsItAndLogsIt()
+    {
+        WriteWikipedia();
+
+        var response = await Put("/desk-api/review/wikipedia/zechariah-5", new { answer = "Q3", note = "the prophet" });
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        var entry = JsonFiles.Read(Path.Combine(Review, WikipediaReview.FileName))["entries"]![0]!;
+        var decision = entry["decision"]!;
+        (decision["answer"]!.GetValue<string>(), decision["note"]!.GetValue<string>()).Should().Be(("Q3", "the prophet"));
+        decision["at"]!.GetValue<string>().Should().MatchRegex(@"^\d{4}-\d\d-\d\dT");
+        var logged = Logged().Should().ContainSingle().Which;
+        (logged.Section, logged.Action, logged.Target, logged.Needs, logged.Note).Should().Be(
+            ("wikipedia", "match", "person/zechariah-5", "load", "the prophet"));
+        logged.Before.Should().BeNull();
+        logged.After!.GetValue<string>().Should().Be("Q3 Zechariah");
+
+        var read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+        (read.Written, read.Open, read.Answered).Should().Be((true, 0, 1));
+        var summary = await Json<SummaryResponse>(await _http.GetAsync("/desk-api/summary"));
+        summary.Counts.Single(c => c.Key == "wikipedia").Count.Should().Be(0, "the one record is answered");
+    }
+
+    [Fact]
+    public async Task NoneIsAnAnswerAndTakingAnAnswerBackRemovesIt()
+    {
+        WriteWikipedia();
+
+        (await Put("/desk-api/review/wikipedia/zechariah-5", new { answer = "none", note = "" })).StatusCode.Should().Be(HttpStatusCode.OK);
+        (await Put("/desk-api/review/wikipedia/zechariah-5", new { answer = (string?)null, note = "" })).StatusCode.Should().Be(HttpStatusCode.OK);
+
+        JsonFiles.Read(Path.Combine(Review, WikipediaReview.FileName))["entries"]![0]!["decision"].Should().BeNull();
+        Logged().Select(l => (l.Before?.GetValue<string>(), l.After?.GetValue<string>())).Should().Equal(
+            ((string?)null, "none"), ("none", null));
+    }
+
+    [Fact]
+    public async Task AnItemTheRecordWasNotOfferedIsRefusedAndNothingIsWrittenOrLogged()
+    {
+        WriteWikipedia();
+        var before = File.ReadAllText(Path.Combine(Review, WikipediaReview.FileName));
+
+        (await Put("/desk-api/review/wikipedia/zechariah-5", new { answer = "Q999", note = "" })).StatusCode
+            .Should().Be(HttpStatusCode.UnprocessableEntity);
+        (await Put("/desk-api/review/wikipedia/nobody", new { answer = "none", note = "" })).StatusCode
+            .Should().Be(HttpStatusCode.UnprocessableEntity);
+
+        File.ReadAllText(Path.Combine(Review, WikipediaReview.FileName)).Should().Be(before);
+        Logged().Should().BeEmpty();
+    }
+
+    private void WriteWikipedia() =>
+        File.WriteAllText(Path.Combine(Review, WikipediaReview.FileName),
+            """
+            {
+              "about": "Records whose article could not be told from a namesake's.",
+              "entries": [
+                {
+                  "record": "zechariah-5",
+                  "kind": "person",
+                  "label": "Zechariah",
+                  "line": "son of Jeroboam (2KI 14:29)",
+                  "references": ["2KI 14:29"],
+                  "candidates": [
+                    { "qid": "Q2", "label": "Zechariah", "description": "King of Israel", "articles": { "en": "Zechariah of Israel" }, "evidence": [] },
+                    { "qid": "Q3", "label": "Zechariah", "description": "prophet", "articles": { "en": "Zechariah (prophet)", "uk": "Захарія" }, "evidence": ["chapter"] }
+                  ],
+                  "others": 2
+                }
+              ]
+            }
+            """);
+
+    [Fact]
     public async Task AnsweringAnOccurrenceWithARecordWritesAReviewedRuleTheLoaderReads()
     {
         WriteThings();

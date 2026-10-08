@@ -107,6 +107,9 @@ public class Entity
     /// <summary>The passages a reader is sent to about this entity, and those that command it.</summary>
     public ICollection<EntityPassage> Passages { get; set; } = [];
 
+    /// <summary>The article each language's Wikipedia has on it, where it could be told which.</summary>
+    public ICollection<EntityWikipedia> Wikipedia { get; set; } = [];
+
     /// <summary>Where an observance falls in the year, as the verses that appoint it state.</summary>
     public ICollection<ObservanceTime> Times { get; set; } = [];
 

@@ -34,6 +34,7 @@ internal static class DeskEndpoints
     public static void MapSummary(this RouteGroupBuilder routes) =>
         routes.MapGet("/summary", async (
             ThingReview things,
+            WikipediaReview wikipedia,
             PortraitBoard portraits,
             ChangeLog log,
             CancellationToken cancellationToken) =>
@@ -43,6 +44,7 @@ internal static class DeskEndpoints
                 Count("occurrences", () => things.Exists ? things.Unanswered() : null,
                     "There is no list of open questions in the review folder."),
                 Count("records", () => things.Unreviewed(), null),
+                Count("wikipedia", () => wikipedia.Unanswered(), null),
             };
 
             try
@@ -99,6 +101,17 @@ internal static class DeskEndpoints
             await review.Review(slug, request) is { } reviewed
                 ? Results.Ok(reviewed)
                 : Results.UnprocessableEntity(new ProblemResponse("There is no such record, or no such kind of review.")));
+    }
+
+    public static void MapWikipediaReview(this RouteGroupBuilder routes)
+    {
+        routes.MapGet("/review/wikipedia", (WikipediaReview review) => review.Read());
+
+        routes.MapPut("/review/wikipedia/{slug}", async (string slug, WikipediaAnswerRequest request, WikipediaReview review) =>
+            await review.Answer(slug, request) is { } answered
+                ? Results.Ok(answered)
+                : Results.UnprocessableEntity(new ProblemResponse(
+                    "That record is not in the list, or the answer is not one of its items. Reload the list and answer again.")));
     }
 
     public static void MapPortraits(this RouteGroupBuilder routes)
