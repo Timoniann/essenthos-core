@@ -232,7 +232,7 @@ internal static class ContextEndpoints
             int chapter,
             CancellationToken cancellationToken)
     {
-        var verses = await Annotations.InChapter(db, book, chapter, cancellationToken);
+        var (verses, withheld) = await Annotations.InChapterApart(db, book, chapter, cancellationToken);
         var how = verses.Keys.ToDictionary(slug => slug, _ => new SortedSet<string>(StringComparer.Ordinal) { "words" });
         var spoken = verses.ToDictionary(pair => pair.Key, pair => new SortedSet<int>(pair.Value), StringComparer.Ordinal);
 
@@ -245,6 +245,15 @@ internal static class ContextEndpoints
             .ToListAsync(cancellationToken);
         foreach (var row in stated)
         {
+            // The verse list is read off the same words, so it holds the verse the ranking leaves to the
+            // people; a record some other word in the verse names keeps it.
+            if (ChapterSalience.FromTheWords(row.Source)
+                && withheld.GetValueOrDefault(row.Slug)?.Contains(row.CanonicalVerse) == true
+                && spoken.GetValueOrDefault(row.Slug)?.Contains(row.CanonicalVerse) != true)
+            {
+                continue;
+            }
+
             if (!verses.TryGetValue(row.Slug, out var at))
             {
                 verses[row.Slug] = at = [];

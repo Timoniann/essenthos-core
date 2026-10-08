@@ -211,6 +211,14 @@ internal static class Annotations
     /// </summary>
     internal const string Consensus = "Essenthos, read from the verses that name it";
 
+    /// <summary>
+    /// What the annotations of the owner's ruling on <em>the sons of</em> a tribe's ancestor are credited
+    /// to: the name after the word for <em>sons</em> names the man, the word for <em>sons</em> the people.
+    /// </summary>
+    internal const string SonsOf =
+        "Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the " +
+        "name is the man and 'sons' the people";
+
     /// <summary>The kind a record's own name has, as against its titles and epithets.</summary>
     private const string ProperName = "proper name";
 
@@ -226,7 +234,21 @@ internal static class Annotations
         AppDbContext db,
         int canonicalBook,
         int canonicalChapter,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken) =>
+        (await InChapterApart(db, canonicalBook, canonicalChapter, cancellationToken)).Verses;
+
+    /// <summary>
+    /// <see cref="InChapter"/>, and with it the verses a record is named in only as the name after
+    /// <em>the sons of</em>, which a ranking counts for the people the word for <em>sons</em> names
+    /// rather than for the man (<see cref="ForTheirPeople"/>). The word still names the man, and his
+    /// page and verse list keep the verse; the ranking of a panel does not count it.
+    /// </summary>
+    public static async Task<(Dictionary<string, SortedSet<int>> Verses, Dictionary<string, SortedSet<int>> Withheld)>
+        InChapterApart(
+            AppDbContext db,
+            int canonicalBook,
+            int canonicalChapter,
+            CancellationToken cancellationToken)
     {
         var rows = await (
                 from reference in db.VerseReferences
@@ -238,6 +260,7 @@ internal static class Annotations
                 select new
                 {
                     reference.CanonicalVerse,
+                    reference.VerseId,
                     Claimed = new Claimed(
                         annotation.WordId, annotation.Method, annotation.Confidence, annotation.Source,
                         annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name)
@@ -245,29 +268,66 @@ internal static class Annotations
                         EntityId = annotation.EntityId,
                         Held = annotation.Claims.Where(c => c.Method != LinkMethod.StatedBySource)
                             .Select(c => c.Method).Distinct().ToList(),
+                        BySonsOf = annotation.Source == SonsOf || annotation.Claims.Any(c => c.Source == SonsOf),
                     },
                 })
             .ToListAsync(cancellationToken);
 
         var verseOf = new Dictionary<long, int>();
+        var textVerseOf = new Dictionary<long, long>();
         foreach (var row in rows)
         {
             verseOf[row.Claimed.WordId] = row.CanonicalVerse;
+            textVerseOf[row.Claimed.WordId] = row.VerseId;
         }
 
         var claimed = rows.Select(row => row.Claimed).ToList();
-        var verses = new Dictionary<string, SortedSet<int>>(StringComparer.Ordinal);
-        foreach (var named in Settle(claimed, await Bearers(db, claimed, cancellationToken)).Values.SelectMany(shown => shown))
+        var (counted, withheld) = ForTheirPeople(
+            Settle(claimed, await Bearers(db, claimed, cancellationToken)), textVerseOf);
+        return (Group(counted, c => verseOf[c.WordId]), Group(withheld, c => verseOf[c.WordId]));
+    }
+
+    private static Dictionary<string, SortedSet<T>> Group<T>(IEnumerable<Claimed> named, Func<Claimed, T> at)
+    {
+        var grouped = new Dictionary<string, SortedSet<T>>(StringComparer.Ordinal);
+        foreach (var one in named)
         {
-            if (!verses.TryGetValue(named.Slug, out var at))
+            if (!grouped.TryGetValue(one.Slug, out var set))
             {
-                verses[named.Slug] = at = [];
+                grouped[one.Slug] = set = [];
             }
 
-            at.Add(verseOf[named.WordId]);
+            set.Add(at(one));
         }
 
-        return verses;
+        return grouped;
+    }
+
+    /// <summary>
+    /// Splits what the words of a chapter or a book name into what a ranking counts and what it does
+    /// not. The name after the word for <em>sons</em> — <em>Israel</em> in <em>the children of Israel</em>
+    /// — names the man, and the word for <em>sons</em> in the same verse of the same text names the
+    /// people, so the verse is a mention of the people and not of the man. Where no such word stands in
+    /// the verse the sons are his own, named in the passage, and the name counts for him.
+    /// </summary>
+    private static (List<Claimed> Counted, List<Claimed> Withheld) ForTheirPeople(
+        Dictionary<long, List<Claimed>> settled,
+        IReadOnlyDictionary<long, long> textVerseOf)
+    {
+        var shown = settled.Values.SelectMany(named => named).ToList();
+        var spokenFor = shown
+            .Where(c => c.BySonsOf && c.Kind == EntityKind.People)
+            .Select(c => textVerseOf[c.WordId])
+            .ToHashSet();
+        var counted = new List<Claimed>();
+        var withheld = new List<Claimed>();
+        foreach (var named in shown)
+        {
+            var apart = named.BySonsOf && named.Kind == EntityKind.Person && spokenFor.Contains(textVerseOf[named.WordId]);
+            (apart ? withheld : counted).Add(named);
+        }
+
+        return (counted, withheld);
     }
 
     /// <summary>
@@ -277,7 +337,16 @@ internal static class Annotations
     public static async Task<Dictionary<string, HashSet<(int Chapter, int Verse)>>> InBook(
         AppDbContext db,
         int canonicalBook,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken) =>
+        (await InBookApart(db, canonicalBook, cancellationToken)).Verses;
+
+    /// <summary><see cref="InBook"/>, and the verses a ranking does not count for the man, as <see cref="InChapterApart"/> has them.</summary>
+    public static async Task<(Dictionary<string, HashSet<(int Chapter, int Verse)>> Verses,
+            Dictionary<string, HashSet<(int Chapter, int Verse)>> Withheld)>
+        InBookApart(
+            AppDbContext db,
+            int canonicalBook,
+            CancellationToken cancellationToken)
     {
         var rows = await (
                 from reference in db.VerseReferences
@@ -288,6 +357,7 @@ internal static class Annotations
                 {
                     reference.CanonicalChapter,
                     reference.CanonicalVerse,
+                    reference.VerseId,
                     Claimed = new Claimed(
                         annotation.WordId, annotation.Method, annotation.Confidence, annotation.Source,
                         annotation.Note, annotation.Entity!.Kind, annotation.Entity.Slug, annotation.Entity.Name)
@@ -295,30 +365,28 @@ internal static class Annotations
                         EntityId = annotation.EntityId,
                         Held = annotation.Claims.Where(c => c.Method != LinkMethod.StatedBySource)
                             .Select(c => c.Method).Distinct().ToList(),
+                        BySonsOf = annotation.Source == SonsOf || annotation.Claims.Any(c => c.Source == SonsOf),
                     },
                 })
             .ToListAsync(cancellationToken);
 
         var verseOf = new Dictionary<long, (int, int)>();
+        var textVerseOf = new Dictionary<long, long>();
         foreach (var row in rows)
         {
             verseOf[row.Claimed.WordId] = (row.CanonicalChapter, row.CanonicalVerse);
+            textVerseOf[row.Claimed.WordId] = row.VerseId;
         }
 
         var claimed = rows.Select(row => row.Claimed).ToList();
-        var verses = new Dictionary<string, HashSet<(int Chapter, int Verse)>>(StringComparer.Ordinal);
-        foreach (var named in Settle(claimed, await Bearers(db, claimed, cancellationToken)).Values.SelectMany(shown => shown))
-        {
-            if (!verses.TryGetValue(named.Slug, out var at))
-            {
-                verses[named.Slug] = at = [];
-            }
-
-            at.Add(verseOf[named.WordId]);
-        }
-
-        return verses;
+        var (counted, withheld) = ForTheirPeople(
+            Settle(claimed, await Bearers(db, claimed, cancellationToken)), textVerseOf);
+        return (Hashed(Group(counted, c => verseOf[c.WordId])), Hashed(Group(withheld, c => verseOf[c.WordId])));
     }
+
+    private static Dictionary<string, HashSet<(int Chapter, int Verse)>> Hashed(
+        Dictionary<string, SortedSet<(int, int)>> grouped) =>
+        grouped.ToDictionary(pair => pair.Key, pair => pair.Value.ToHashSet(), StringComparer.Ordinal);
 
     /// <summary>The same for one word, which is what the word panel asks.</summary>
     public static async Task<IReadOnlyList<EntityRefResponse>> AllOf(
@@ -428,6 +496,9 @@ internal static class Annotations
         /// verse: a ruling that arrived at an answer the word already had is one of them.
         /// </summary>
         public IReadOnlyList<LinkMethod> Held { get; init; } = [];
+
+        /// <summary>Whether the owner's ruling on <em>the sons of</em> (<see cref="SonsOf"/>) made or holds this answer.</summary>
+        public bool BySonsOf { get; init; }
 
         /// <summary>The standing of the strongest of the answer's own method and its claims'.</summary>
         public int Standing => Held.Select(ClaimStanding.Of).Append(ClaimStanding.Of(Method)).Max();

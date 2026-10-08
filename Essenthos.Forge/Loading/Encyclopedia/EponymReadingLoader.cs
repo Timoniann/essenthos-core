@@ -95,9 +95,7 @@ internal sealed record EponymReadings(string Model, string Read, IReadOnlyList<E
 /// </summary>
 internal sealed class EponymReadingLoader(AppDbContext db, ILogger<EponymReadingLoader> logger)
 {
-    public const string Source =
-        "Essenthos, on the project owner's ruling of 2026-10-08 that in 'the sons of' a tribe's ancestor the " +
-        "name is the man and 'sons' the people";
+    public const string Source = Essenthos.Core.Corpus.Annotations.SonsOf;
 
     /// <summary>Whose reading of each sentence a name standing alone was given.</summary>
     public const string ReadingSource =
