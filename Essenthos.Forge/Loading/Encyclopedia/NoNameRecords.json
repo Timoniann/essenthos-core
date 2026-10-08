@@ -1,0 +1,20 @@
+{
+  "decidedBy": "the lead, 2026-10-07, on the project owner's instruction to withdraw Haggedolim and Beno unless the Hebrew and the Septuagint show a man, read against BHSA, Brenton's Septuagint and the King James",
+  "policy": "Where a dataset's record headed by a word that is no name is withdrawn, what the text says of the man the word stood beside is said on his own record.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's instruction of 2026-10-07 on Haggedolim and Beno, read against the Hebrew and the Septuagint",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "NEH 11:14",
+      "position": 12,
+      "surface": "זַבְדִּיאֵ֖ל",
+      "strongNumber": "H2068",
+      "existing": "zabdiel-2",
+      "says": {
+        "notes": "The son of one of the great men (NEH 11:14); the text does not give his father's name."
+      },
+      "why": "'and their overseer was Zabdiel, the son of one of the great men': בֶּן הַגְּדוֹלִים has the article and a plural, and Brenton's Septuagint reads υἱὸς τῶν μεγάλων."
+    }
+  ]
+}

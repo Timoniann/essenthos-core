@@ -172,7 +172,7 @@ internal sealed class WithdrawnRecordLoader(AppDbContext db, ILogger<WithdrawnRe
         return ours;
     }
 
-    private static IReadOnlyList<WithdrawnRecord> Read()
+    internal static IReadOnlyList<WithdrawnRecord> Read()
     {
         using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Resource)
                            ?? throw new InvalidOperationException($"{Resource} is not embedded in the Forge assembly.");

@@ -2236,5 +2236,17 @@
   "effort": "medium",
   "at": "2026-10-07T17:31:50+00:00",
   "corrected": "second reading by Claude (Anthropic), names checked against the corpus's Ohienko, Luther 1912 and Reina-Valera 1909"
- }
+ },
+{
+ "file": "NoNameRecords.json",
+ "slug": "zabdiel-2",
+ "sha256": "111be7fe4ee2ffea3b7bc7d4221118266343e28bb91b8bdfd539903a59bc4f08",
+ "english": "The son of one of the great men (NEH 11:14); the text does not give his father's name.",
+ "ukr": "Син одного з великих мужів (NEH 11:14); текст не називає імені його батька.",
+ "deu": "Der Sohn eines der Großen (NEH 11:14); der Text nennt den Namen seines Vaters nicht.",
+ "spa": "Hijo de uno de los grandes (NEH 11:14); el texto no da el nombre de su padre.",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T14:00:00+00:00"
+}
 ]
