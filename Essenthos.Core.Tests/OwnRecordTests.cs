@@ -838,6 +838,39 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
+    /// Jeshua the son of Kadmiel of NEH 12:24 is a man of his own: the Levite who sealed the covenant is
+    /// the son of Azaniah (NEH 10:9), and a record holding both made one man the son of two fathers.
+    /// </summary>
+    [Fact]
+    public async Task JeshuaTheSonOfKadmielIsAManOfHisOwn()
+    {
+        var ruling = SenseReadingFiles.AllRulings().SelectMany(f => f.Rulings)
+            .Single(r => r.Create?.Slug == "jeshua-son-of-kadmiel");
+        var held = await _db.Entities.SingleOrDefaultAsync(e => e.Slug == "jeshua-7");
+        if (held is null)
+        {
+            held = new Entity { Kind = EntityKind.Person, Slug = "jeshua-7", Name = "Jeshua", SourceId = "jeshua-7", Source = "a test" };
+            _db.Entities.Add(held);
+            await _db.SaveChangesAsync();
+        }
+
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = _words[ruling.Word], EntityId = held.Id, Method = LinkMethod.StrongNumber,
+            Confidence = 0.9, Source = "a resolution by number",
+        });
+        await _db.SaveChangesAsync();
+
+        await Load();
+
+        (await _db.WordEntities.Where(a => a.WordId == _words[ruling.Word]).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("jeshua-son-of-kadmiel");
+        var record = await _db.Entities.SingleAsync(e => e.Slug == "jeshua-son-of-kadmiel");
+        record.Notes.Should().Contain("the text does not say");
+        record.Distinguisher.Should().Contain("son of Kadmiel");
+    }
+
+    /// <summary>
     /// The second men Strong numbers under a name the corpus held one record for: Jabin of Judges 4, the
     /// chiefs who sealed Nehemiah's covenant, Ittai son of Ribai and the rest are records of their own,
     /// and every word of the file names its own man and not the record it was read as before.

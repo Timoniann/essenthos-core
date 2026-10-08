@@ -745,6 +745,32 @@ public sealed class DescriptorTests : IDisposable
         again.AlreadyLoaded.Should().BeTrue();
     }
 
+    /// <summary>
+    /// <em>Salma the father of Bethlehem</em> founded the town, and the clause says so with a relation
+    /// that points at a place. A family tie is only between people: <em>Mizraim begat Lehabim</em> is a
+    /// people's descent, which the people's own clause states, and a town is nobody's son. Founding is
+    /// said of a place only.
+    /// </summary>
+    [Fact]
+    public async Task AFounderFoundsAPlaceAndAFamilyTieIsBetweenPeopleOnly()
+    {
+        Corpus.Add(_db, Bible4uTextSource.KingJames, TextKind.Translation, "eng",
+            (6, 1, ["Salma", "the", "father", "of", "Kirjathjearim", "Hur"]),
+            (6, 2, ["Mizraim", "begat", "Lehabim"]));
+        Add("salma-1", EntityKind.Person, "Salma", null, (1, 6, 1));
+        Add("kirjathjearim-1", EntityKind.Place, "Kirjathjearim", null, (1, 6, 1), (1, 6, 2));
+        Add("hur-1", EntityKind.Person, "Hur", null, (1, 6, 1));
+        Add("mizraim-1", EntityKind.Person, "Mizraim", null, (1, 6, 2));
+        Add("lehabim", EntityKind.People, "Lehabim", null, (1, 6, 2));
+        await _db.SaveChangesAsync();
+
+        var outcome = await Load("founded");
+
+        outcome.Refused.Mistargeted.Should().Be(3, "Hur is no town, Lehabim a people and Kirjathjearim a town");
+        (await _db.EntityDescriptors.Select(d => d.Entity!.Slug + " " + d.Relation + " " + d.Target!.Slug).ToListAsync())
+            .Should().BeEquivalentTo("salma-1 founder-of kirjathjearim-1", "lehabim descendants-of mizraim-1");
+    }
+
     private async Task SeedThePeoples()
     {
         Corpus.Add(_db, Bible4uTextSource.KingJames, TextKind.Translation, "eng",

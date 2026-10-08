@@ -341,6 +341,12 @@ public static class DescriptorRelations
     public const string AllyOf = "ally-of";
 
     /// <summary>
+    /// The man Chronicles calls the father of a town: <em>Salma the father of Bethlehem</em>
+    /// (1CH 2:51). The formula names who founded or headed it, not a child, so it points at a place.
+    /// </summary>
+    public const string FounderOf = "founder-of";
+
+    /// <summary>
     /// The children of two siblings, which the text states of Esther and Mordecai: <em>his uncle's
     /// daughter</em> (EST 2:7). One relation for both sexes, because the claim does not say which it
     /// is and a gendered word would have to guess.
@@ -441,7 +447,7 @@ public static class DescriptorRelations
         BrotherInLawOf, SisterInLawOf, ConcubineOf, CousinOf,
         KingOf, QueenOf, ProphetTo, PriestOf, JudgeOf, HighPriestOf,
         CommanderOf, GovernorOf, TetrarchOf, ServantOf, MasterOf,
-        DiscipleOf, ApostleOf, ScribeOf, CompanionOf, TeacherOf, AllyOf,
+        DiscipleOf, ApostleOf, ScribeOf, CompanionOf, TeacherOf, AllyOf, FounderOf,
         KilledBy, KillerOf, RapedBy, RaperOf, AngelOf,
         SupporterOf, SupportedBy, CreatorOf, CreatedBy, HeirOf, InheritedBy, ExilerOf, ExiledBy,
         OfTribe, OfPeople, FromPlace, LivedIn, BuriedIn,
@@ -473,6 +479,65 @@ public static class PlacingRelations
         DescriptorRelations.MountainIn,
         DescriptorRelations.GateOf,
         DescriptorRelations.Near,
+    };
+}
+
+/// <summary>
+/// The relations of a family, which only a person stands in at both ends. A people descends from a
+/// man and a town has a founder; neither is anybody's son, brother or wife, and a row saying so is a
+/// reading of <em>Mizraim begat Lehabim</em> or <em>the father of Bethlehem</em> taken literally.
+/// </summary>
+public static class KinRelations
+{
+    public static readonly IReadOnlySet<string> All = new HashSet<string>(StringComparer.Ordinal)
+    {
+        DescriptorRelations.SonOf, DescriptorRelations.DaughterOf, DescriptorRelations.FatherOf,
+        DescriptorRelations.MotherOf, DescriptorRelations.BrotherOf, DescriptorRelations.SisterOf,
+        DescriptorRelations.HusbandOf, DescriptorRelations.WifeOf, DescriptorRelations.HalfBrotherOf,
+        DescriptorRelations.HalfSisterOf, DescriptorRelations.GrandfatherOf, DescriptorRelations.GrandmotherOf,
+        DescriptorRelations.GrandsonOf, DescriptorRelations.GranddaughterOf, DescriptorRelations.UncleOf,
+        DescriptorRelations.AuntOf, DescriptorRelations.NephewOf, DescriptorRelations.NieceOf,
+        DescriptorRelations.FatherInLawOf, DescriptorRelations.MotherInLawOf, DescriptorRelations.SonInLawOf,
+        DescriptorRelations.DaughterInLawOf, DescriptorRelations.BrotherInLawOf,
+        DescriptorRelations.SisterInLawOf, DescriptorRelations.ConcubineOf, DescriptorRelations.CousinOf,
+    };
+
+    /// <summary>A man as somebody's mother, a woman as somebody's son: the sex a relation says its subject has.</summary>
+    public static readonly IReadOnlySet<string> SaidOfAMan = new HashSet<string>(StringComparer.Ordinal)
+    {
+        DescriptorRelations.SonOf, DescriptorRelations.FatherOf, DescriptorRelations.BrotherOf,
+        DescriptorRelations.HusbandOf, DescriptorRelations.HalfBrotherOf, DescriptorRelations.GrandfatherOf,
+        DescriptorRelations.GrandsonOf, DescriptorRelations.UncleOf, DescriptorRelations.NephewOf,
+        DescriptorRelations.FatherInLawOf, DescriptorRelations.SonInLawOf, DescriptorRelations.BrotherInLawOf,
+    };
+
+    /// <inheritdoc cref="SaidOfAMan"/>
+    public static readonly IReadOnlySet<string> SaidOfAWoman = new HashSet<string>(StringComparer.Ordinal)
+    {
+        DescriptorRelations.DaughterOf, DescriptorRelations.MotherOf, DescriptorRelations.SisterOf,
+        DescriptorRelations.WifeOf, DescriptorRelations.HalfSisterOf, DescriptorRelations.GrandmotherOf,
+        DescriptorRelations.GranddaughterOf, DescriptorRelations.AuntOf, DescriptorRelations.NieceOf,
+        DescriptorRelations.MotherInLawOf, DescriptorRelations.DaughterInLawOf, DescriptorRelations.SisterInLawOf,
+        DescriptorRelations.ConcubineOf,
+    };
+
+    /// <summary>The relations that make the target the subject's parent, and those that make the subject the target's.</summary>
+    public static readonly IReadOnlySet<string> ChildOf = new HashSet<string>(StringComparer.Ordinal)
+    {
+        DescriptorRelations.SonOf, DescriptorRelations.DaughterOf,
+    };
+
+    /// <inheritdoc cref="ChildOf"/>
+    public static readonly IReadOnlySet<string> ParentOf = new HashSet<string>(StringComparer.Ordinal)
+    {
+        DescriptorRelations.FatherOf, DescriptorRelations.MotherOf,
+    };
+
+    /// <summary>Siblings, full or half.</summary>
+    public static readonly IReadOnlySet<string> SiblingOf = new HashSet<string>(StringComparer.Ordinal)
+    {
+        DescriptorRelations.BrotherOf, DescriptorRelations.SisterOf,
+        DescriptorRelations.HalfBrotherOf, DescriptorRelations.HalfSisterOf,
     };
 }
 
@@ -515,7 +580,7 @@ public static class DescriptorSubjects
             DescriptorRelations.MasterOf, DescriptorRelations.DiscipleOf, DescriptorRelations.ApostleOf,
             DescriptorRelations.ScribeOf, DescriptorRelations.CompanionOf, DescriptorRelations.TeacherOf,
             DescriptorRelations.RapedBy, DescriptorRelations.RaperOf, DescriptorRelations.CreatorOf,
-            DescriptorRelations.AngelOf,
+            DescriptorRelations.AngelOf, DescriptorRelations.FounderOf,
         ]),
         ([EntityKind.Person, EntityKind.Title, EntityKind.People],
         [
@@ -589,6 +654,14 @@ public static class DescriptorTargets
         ([EntityKind.Person, EntityKind.People],
         [
             DescriptorRelations.DescendantsOf,
+        ]),
+        ([EntityKind.Place],
+        [
+            DescriptorRelations.FounderOf,
+        ]),
+        ([EntityKind.Person, EntityKind.Title],
+        [
+            .. KinRelations.All,
         ]),
     ];
 

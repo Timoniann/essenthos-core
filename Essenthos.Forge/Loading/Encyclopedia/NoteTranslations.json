@@ -2368,5 +2368,17 @@
  "model": "claude-opus-5-5",
  "effort": "high",
  "at": "2026-10-08T15:00:00+00:00"
+},
+{
+ "file": "KinshipRecords.json",
+ "slug": "jeshua-son-of-kadmiel",
+ "sha256": "9069ba85ad93c53fc2c68dffe52d92ee244c7513464ba05ed248efa237798d39",
+ "english": "Whether he is Jeshua the son of Azaniah of NEH 10:9 the text does not say.",
+ "ukr": "Чи він той самий Єшуа, син Азанії, із NEH 10:9, текст не каже.",
+ "deu": "Ob er Jesua, der Sohn Asanjas, aus NEH 10:9 ist, sagt der Text nicht.",
+ "spa": "El texto no dice si es Jesúa hijo de Azanías de NEH 10:9.",
+ "model": "claude-opus-5-5",
+ "effort": "high",
+ "at": "2026-10-08T15:30:00+00:00"
 }
 ]

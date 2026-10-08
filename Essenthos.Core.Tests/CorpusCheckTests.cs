@@ -550,6 +550,81 @@ public sealed class CorpusCheckTests : IDisposable
         (await Integrity(check)).Should().Be(2);
     }
 
+    /// <summary>
+    /// The family relationships that contradict themselves are breaks: a man as somebody's mother
+    /// (Hodiah of 1CH 4:19), a town as somebody's son, a man his own grandfather, a father who is also
+    /// a brother, and a record related to itself. A decision stands as decided, and a child of two
+    /// fathers is a warning listed by child, because the text itself gives Joseph two.
+    /// </summary>
+    [Fact]
+    public async Task FamilyRelationshipsThatContradictThemselvesAreFound()
+    {
+        const string sex = "family relationships saying of a man what only a woman is, or of a woman what only a man is";
+        const string kind = "family relationships with a place, a people or anything but a person at either end, that nobody decided";
+        const string cycle = "people who are their own forebear, one or two generations up";
+        const string sibling = "two people stated as parent and child and as siblings at once";
+        const string self = "relationships of a record with itself";
+        Entity Record(string slug, EntityKind kind = EntityKind.Person, string? sex = "male") => new()
+        {
+            Kind = kind, Slug = slug, Name = slug, SourceId = slug, Source = "a test", Sex = sex,
+        };
+        var hodiah = Record("hodiah");
+        var keilah = Record("keilah");
+        var salma = Record("salma");
+        var bethlehem = Record("bethlehem", EntityKind.Place, null);
+        var caphthorim = Record("caphthorim", EntityKind.People, null);
+        var mizraim = Record("mizraim");
+        var amasai = Record("amasai");
+        var mahath = Record("mahath");
+        var elkanah = Record("elkanah");
+        var rephah = Record("rephah");
+        var resheph = Record("resheph");
+        var joseph = Record("joseph");
+        var jacob = Record("jacob");
+        var heli = Record("heli");
+        _db.Entities.AddRange(hodiah, keilah, salma, bethlehem, caphthorim, mizraim, amasai, mahath, elkanah,
+            rephah, resheph, joseph, jacob, heli);
+        _db.SaveChanges();
+        void Row(Entity from, string type, Entity to, LinkMethod method = LinkMethod.ModelReading) =>
+            _db.EntityRelationships.Add(new EntityRelationship
+            {
+                FromEntityId = from.Id, ToEntityId = to.Id, Type = type, Category = RelationshipCategories.Read,
+                CanonicalBook = 13, CanonicalChapter = 4, CanonicalVerse = 19, Method = method,
+                Confidence = method == LinkMethod.Manual ? null : 0.9, Source = "read from Scripture by a test",
+            });
+
+        Row(hodiah, DescriptorRelations.GrandfatherOf, keilah);
+        Row(salma, DescriptorRelations.FounderOf, bethlehem);
+        Row(caphthorim, DescriptorRelations.SonOf, mizraim, LinkMethod.Manual);
+        Row(mahath, DescriptorRelations.SonOf, amasai);
+        Row(elkanah, DescriptorRelations.SonOf, mahath);
+        Row(rephah, DescriptorRelations.BrotherOf, resheph);
+        Row(joseph, DescriptorRelations.SonOf, jacob);
+        Row(joseph, DescriptorRelations.SonOf, heli);
+        _db.SaveChanges();
+
+        (await Integrity(sex)).Should().Be(0);
+        (await Integrity(kind)).Should().Be(0, "a founder founds a town, and the owner decided Caphthorim's");
+        (await Integrity(cycle)).Should().Be(0);
+        (await Integrity(sibling)).Should().Be(0);
+        (await Integrity(self)).Should().Be(0);
+        (await _check.Measure()).TwoParents.Should().ContainSingle()
+            .Which.Should().BeEquivalentTo(new TwoParents("joseph", "male", ["heli", "jacob"]));
+
+        Row(hodiah, DescriptorRelations.MotherOf, keilah);
+        Row(salma, DescriptorRelations.FatherOf, bethlehem);
+        Row(amasai, DescriptorRelations.SonOf, elkanah);
+        Row(resheph, DescriptorRelations.SonOf, rephah);
+        Row(jacob, DescriptorRelations.BrotherOf, jacob);
+        _db.SaveChanges();
+
+        (await Integrity(sex)).Should().Be(1);
+        (await Integrity(kind)).Should().Be(1);
+        (await Integrity(cycle)).Should().Be(3, "Amasai, Mahath and Elkanah are each his own great-grandfather");
+        (await Integrity(sibling)).Should().Be(1);
+        (await Integrity(self)).Should().Be(1);
+    }
+
     private void VerseLink(string source) =>
         _db.VerseLinks.Add(new VerseLink
         {
