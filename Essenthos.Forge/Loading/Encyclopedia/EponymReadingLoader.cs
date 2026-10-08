@@ -107,6 +107,17 @@ internal sealed class EponymReadingLoader(AppDbContext db, ILogger<EponymReading
     /// <summary>Both sources, which a pass that runs before this one must not answer against.</summary>
     public static readonly string[] Sources = [Source, ReadingSource];
 
+    /// <summary>
+    /// The owner's earlier rulings by construct — after the word for a tribe the man, after a king, a
+    /// land or a city the people — whose answer this pass keeps alone, so a pass that runs before this
+    /// one must not put the other of the two beside it either.
+    /// </summary>
+    public static readonly string[] ConstructSources =
+    [
+        TribeNameLoader.Source, RealmNameLoader.Source, GreekTribeNameLoader.TribeSource,
+        GreekTribeNameLoader.AntecedentSource, GreekTribeNameLoader.RealmSource,
+    ];
+
     private const string Resource = "Essenthos.Core.Loading.Encyclopedia.EponymReadings.json";
 
     /// <summary>בֵּן in the construct plural, and υἱός.</summary>
@@ -391,11 +402,7 @@ internal sealed class EponymReadingLoader(AppDbContext db, ILogger<EponymReading
             ("whys", read.Select(r => r.Why).ToArray()));
 
         await Annotating.Run(connection, transaction, Constructs, cancellationToken,
-            ("constructs", new[]
-            {
-                TribeNameLoader.Source, RealmNameLoader.Source, GreekTribeNameLoader.TribeSource,
-                GreekTribeNameLoader.AntecedentSource, GreekTribeNameLoader.RealmSource,
-            }));
+            ("constructs", ConstructSources));
 
         var sources = new (string, object?)[]
         {

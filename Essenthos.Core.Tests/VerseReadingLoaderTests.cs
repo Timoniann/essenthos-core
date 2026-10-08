@@ -262,6 +262,30 @@ public sealed class VerseReadingLoaderTests : IDisposable
         (await Named()).Should().NotContain((hebrew, _israelites.Id));
     }
 
+    /// <summary>
+    /// The same where the owner's ruling on the construct — the name after the word for a tribe is the
+    /// man — claims the row: the man-or-people pass keeps that answer alone and would take the people
+    /// back on every load, so it is not written in the first place.
+    /// </summary>
+    [Fact]
+    public async Task ANameTheTribeConstructAnswersIsNotGivenThePeopleBesideIt()
+    {
+        var hebrew = _db.WordAt(_hebrew, 39, 23, 2).Id;
+        var row = await _db.WordEntities.SingleAsync(a => a.WordId == hebrew);
+        _db.WordEntityClaims.Add(new WordEntityClaim
+        {
+            WordEntityId = row.Id, Method = LinkMethod.RuleBased, Confidence = 1.0, Source = TribeNameLoader.Source,
+        });
+        await _db.SaveChangesAsync();
+
+        var outcome = await Loader().Load(File(TheHouseOfIsrael()));
+        var again = await Loader().Load(File(TheHouseOfIsrael()));
+
+        (await Named()).Should().NotContain((hebrew, _israelites.Id));
+        outcome.Named.Should().Be(1);
+        again.AlreadyLoaded.Should().BeTrue();
+    }
+
     /// <summary>The Philistine: the word keeps the people and gains the man it stands for.</summary>
     [Fact]
     public async Task AManStandsBesideThePeopleTheWordNames()

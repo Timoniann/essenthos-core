@@ -58,8 +58,9 @@ internal sealed record VerseReadingOutcome(
 /// across the links, as a reading with its confidence. A word that already names another record is
 /// never touched, with one exception the corpus already makes everywhere: a people stands beside the
 /// person it is named after, so <em>the Philistine</em> keeps the Philistines and gains Goliath. A
-/// tribe's name the man-or-people pass has answered (<see cref="EponymReadingLoader"/>) is not given
-/// the other of the two beside it.
+/// tribe's name the man-or-people pass has answered (<see cref="EponymReadingLoader"/>), or that the
+/// owner's ruling on its construct answers (the name after the word for a tribe, a king, a land), is
+/// not given the other of the two beside it: that pass would take it back on every load.
 /// </para>
 ///
 /// <para>
@@ -72,13 +73,16 @@ internal sealed class VerseReadingLoader(AppDbContext db, ILogger<VerseReadingLo
 {
     /// <summary>
     /// Each word a reading points at, with every record it already names, that record's kind, and
-    /// whether the man-or-people pass stands behind the answer.
+    /// whether the man-or-people pass stands behind the answer or keeps it alone by its construct.
     /// </summary>
     private const string Words =
         """
         SELECT x.n, w.id, coalesce(w.strong_number, ''), a.entity_id, e.kind, a.source,
-               a.source = ANY(@decided) OR EXISTS (SELECT 1 FROM word_entity_claim c
-                                                   WHERE c.word_entity_id = a.id AND c.source = ANY(@decided))
+               a.source = ANY(@decided)
+               OR EXISTS (SELECT 1 FROM word_entity_claim c
+                          WHERE c.word_entity_id = a.id
+                            AND (c.source = ANY(@decided)
+                                 OR (c.source = ANY(@constructs) AND coalesce(a.note, '') NOT LIKE @carried)))
         FROM unnest(@texts, @books, @chapters, @verses, @positions) WITH ORDINALITY AS x(slug, b, c, v, p, n)
         JOIN text t ON t.slug = x.slug
         JOIN verse_reference r ON r.canonical_book = x.b AND r.canonical_chapter = x.c
@@ -251,6 +255,8 @@ internal sealed class VerseReadingLoader(AppDbContext db, ILogger<VerseReadingLo
             command.Parameters.AddWithValue("verses", pointed.Select(p => p.At.Verse).ToArray());
             command.Parameters.AddWithValue("positions", pointed.Select(p => p.Word.Position).ToArray());
             command.Parameters.AddWithValue("decided", EponymReadingLoader.Sources);
+            command.Parameters.AddWithValue("constructs", EponymReadingLoader.ConstructSources);
+            command.Parameters.AddWithValue("carried", Annotating.CarriedNote);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {
