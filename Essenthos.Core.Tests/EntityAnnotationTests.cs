@@ -1163,4 +1163,35 @@ public sealed class EntityAnnotationTests : IDisposable
 
         after.Should().BeEquivalentTo(before);
     }
+
+    /// <summary>
+    /// A name carried onto a pronoun is written only where the verse settles who the pronoun is, by the
+    /// rule the pronoun pass takes names back by. Written anyway, that pass takes it back later in the
+    /// same load and this one writes it again on the next, an id burnt for the same row every time.
+    /// </summary>
+    [Fact]
+    public async Task APronounIsGivenOnlyTheNameItsVerseSettles()
+    {
+        var berean = Corpus.Add(_db, "BSB", TextKind.Translation, "eng",
+            (1, 22, ["told", "him"]),
+            (1, 23, ["Moses", "said", "he"]));
+        await _db.SaveChangesAsync();
+        var unsettled = _db.WordAt(berean, 1, 22, 2);
+        var moses = _db.WordAt(berean, 1, 23, 1);
+        var settled = _db.WordAt(berean, 1, 23, 3);
+        Link(Hebrew(1), unsettled, LinkMethod.StatedBySource, null);
+        Link(_db.WordAt(_hebrew, 1, 19, 1), moses, LinkMethod.StatedBySource, null);
+        Link(_db.WordAt(_hebrew, 1, 19, 2), settled, LinkMethod.StatedBySource, null);
+
+        var named = await Load();
+
+        named.Should().NotContainKey(unsettled.Id, "nobody in the verse is named but the pronoun itself");
+        named.Should().ContainKey(moses.Id).WhoseValue.Should().Be("moses");
+        named.Should().ContainKey(settled.Id).WhoseValue.Should().Be("moses");
+
+        var withdrawn = await new PronounReferents(_db, NullLogger<PronounReferents>.Instance).Withdraw();
+        withdrawn.Withdrawn.Should().Be(0, "nothing written here is the pronoun pass's to take back");
+        var again = await _loader.Load();
+        again.Written.Should().Be(0);
+    }
 }

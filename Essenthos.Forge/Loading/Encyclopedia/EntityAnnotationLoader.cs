@@ -4,6 +4,7 @@ using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Corpus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Logging.Abstractions;
 using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
@@ -184,8 +185,13 @@ internal sealed record AnnotationOutcome(
 /// corpus the seeds put nothing there.
 /// </para>
 /// </summary>
-internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnnotationLoader> logger)
+internal sealed class EntityAnnotationLoader(
+    AppDbContext db,
+    ILogger<EntityAnnotationLoader> logger,
+    PronounReferents? pronouns = null)
 {
+    private readonly PronounReferents _pronouns = pronouns ?? new PronounReferents(db, NullLogger<PronounReferents>.Instance);
+
     private const string Witness = EntityCandidates.Witness;
 
     private const string Rendering = EntityCandidates.Rendering;
@@ -1057,6 +1063,7 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         // A record a verse names wrongly is not named there to be taken off again by the next step.
         await Run(connection, transaction, MisplacedAnnotationLoader.Withhold, cancellationToken,
             await MisplacedAnnotationLoader.Withheld(db, cancellationToken));
+        await LeaveOutPronouns(connection, transaction, cancellationToken);
 
         var settled = await Run(connection, transaction, Settle, cancellationToken,
             ("written", Written));
@@ -1299,6 +1306,33 @@ internal sealed class EntityAnnotationLoader(AppDbContext db, ILogger<EntityAnno
         {
             yield return reader;
         }
+    }
+
+    /// <summary>
+    /// A pronoun the links carried a name onto is given it only where its verse settles who the pronoun
+    /// is, by the rule the pronoun pass takes names back by. Written anyway, that pass takes it back
+    /// later in the same load and this one writes it again on the next, burning an id for the same row
+    /// each time. Only the carried rows are judged, as the pronoun pass judges only those: a seed's own
+    /// claim keeps it.
+    /// </summary>
+    private async Task LeaveOutPronouns(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        CancellationToken cancellationToken)
+    {
+        await Run(connection, transaction,
+            "CREATE TEMP TABLE expected ON COMMIT DROP AS SELECT word_id, entity_id, confidence FROM pending_annotation",
+            cancellationToken);
+        var left = await _pronouns.LeaveOut(connection, (NpgsqlTransaction)transaction.GetDbTransaction(), cancellationToken);
+        if (left > 0)
+        {
+            await Run(connection, transaction,
+                "DELETE FROM pending_annotation p WHERE p.note LIKE @carried " +
+                "AND NOT EXISTS (SELECT 1 FROM expected x WHERE x.word_id = p.word_id)",
+                cancellationToken, ("carried", Annotating.CarriedNote));
+        }
+
+        await Run(connection, transaction, "DROP TABLE expected", cancellationToken);
     }
 
     /// <summary>One statement, and how many rows it wrote.</summary>
