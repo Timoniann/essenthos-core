@@ -1,0 +1,47 @@
+{
+ "ticket": "PRB-0712",
+ "text": "OTTLEY",
+ "verse": "ISA 35:9",
+ "code": "ISA",
+ "book": 23,
+ "chapter": 35,
+ "v": 9,
+ "printed_pages": [
+  "54",
+  "55"
+ ],
+ "leaves": [
+  435,
+  436
+ ],
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-434.jpg",
+  "IsaiahAccordingToTheSeptuagint-435.jpg",
+  "IsaiahAccordingToTheSeptuagint-436.jpg",
+  "IsaiahAccordingToTheSeptuagint-437.jpg"
+ ],
+ "known": "πορεύευρον σονται was repaired to πορεύσονται; confirm",
+ "ours": {
+  "OTTLEY ISA 35:8": "ἐκεῖ ἔσται ὁδὸς καθαρά, καὶ ὁδὸς ἁγία κληθήσεται, καὶ οὐ μὴ παρέλθῃ ἐκεῖ ἀκάθαρτος, οὐδὲ ἐκεῖ ἔσται ὁδὸς ἀκάθαρτος· οἶ δὲ διεσπαρμένοι πορεύσονται ἐπ’ αὐτῆς, καὶ οὗ μὴ πλανηθῶσιν. ",
+  "OTTLEY ISA 35:9": "καὶ οὔκ ἔσται ἐκεῖ λέων, οὐδὲ τῶν θηρίων τῶν πονηρῶν οὗ μὴ ἀναβῇ ἐπ’ αὐτὴν οὐδὲ μὴ εὑρεθῇ ἐκεῖ, ἀλλὰ πορεύσονται ἐν αὐτῇ λελυτρωμένοι ",
+  "OTTLEY ISA 35:10": "καὶ συνηγμένοι διὰ Κύριον· ἀποστραφήσονται καὶ ἥξουσιν εἰς Σιὼν μετ’ εὐφροσύνης, καί εὐφροσύνη αἰώνιος ὑπὲρ κεφαλῆς αὐτῶν· ἐπὶ γὰρ κεφαλῆς αὐτῶν αἴνεσις καὶ ἀγαλλίαμα, καὶ καταλήμψεται αὐτούς· ἀπέδρα ὀδύνη καὶ λύπη καὶ στεναγμός. "
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-436.jpg",
+ "printed": "καὶ οὐκ ἔσται ἐκεῖ λέων, οὐδὲ τῶν θηρίων τῶν πονηρῶν οὐ μὴ ἀναβῇ ἐπ’ αὐτὴν οὐδὲ μὴ εὑρεθῇ ἐκεῖ, ἀλλὰ πορεύσονται ἐν αὐτῇ λελυτρωμένοι",
+ "corrections": [
+  {
+   "ours": "οὔκ",
+   "printed": "οὐκ",
+   "why": "A spurious acute accent was added."
+  },
+  {
+   "ours": "οὗ",
+   "printed": "οὐ",
+   "why": "The smooth breathing was misread as a rough breathing with a circumflex."
+  }
+ ],
+ "note": "Confirmed: πορεύσονται is correct. The printed word is divided across pages as πορεύ- / σονται; the verse continues on IsaiahAccordingToTheSeptuagint-437.jpg.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:59:21+00:00"
+}

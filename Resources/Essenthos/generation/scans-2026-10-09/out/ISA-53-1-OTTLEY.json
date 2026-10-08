@@ -1,0 +1,39 @@
+{
+ "ticket": "PRB-0712",
+ "text": "OTTLEY",
+ "verse": "ISA 53:1",
+ "code": "ISA",
+ "book": 23,
+ "chapter": 53,
+ "v": 1,
+ "printed_pages": [
+  "84"
+ ],
+ "leaves": [
+  465
+ ],
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-464.jpg",
+  "IsaiahAccordingToTheSeptuagint-465.jpg",
+  "IsaiahAccordingToTheSeptuagint-466.jpg"
+ ],
+ "known": "βραχίων was lost (repaired from the apparatus; confirm) and ὃ for ὁ",
+ "ours": {
+  "OTTLEY ISA 53:0": null,
+  "OTTLEY ISA 53:1": "Κύριε, τίς ἐπίστευσεν τῇ ἀκοῇ ἡμῶν; καὶ ὃ βραχίων Κυρίου τίνι ἀπεκαλύφθη; ",
+  "OTTLEY ISA 53:2": "ἀνηγγείλαμεν ἐναντίον αὑτοῦ ὡς παιδίον, ὡς ῥίζα ἐν γῇ διψώσῃ· οὐκ ἔστιν εἶδος αὐτῷ οὐδὲ δόξα. καὶ ἴδομεν· αὐτόν, καὶ οὒκ εἶχεν εἶδος οὐδὲ κάλλος, "
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-466.jpg",
+ "printed": "Κύριε, τίς ἐπίστευσεν τῇ ἀκοῇ ἡμῶν; καὶ ὁ βραχίων Κυρίου τίνι ἀπεκαλύφθη;",
+ "corrections": [
+  {
+   "ours": "ὃ",
+   "printed": "ὁ",
+   "why": "The article’s rough breathing was misread as a smooth breathing with a grave accent."
+  }
+ ],
+ "note": "βραχίων is confirmed in the printed main text; its restoration is correct. No apparatus entry is given for this verse.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:59:09+00:00"
+}

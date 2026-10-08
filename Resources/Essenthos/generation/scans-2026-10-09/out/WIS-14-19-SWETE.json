@@ -1,0 +1,39 @@
+{
+ "ticket": "PRB-0973",
+ "text": "SWETE",
+ "verse": "WIS 14:19",
+ "code": "WIS",
+ "book": 75,
+ "chapter": 14,
+ "v": 19,
+ "printed_pages": [
+  "630"
+ ],
+ "leaves": [
+  648
+ ],
+ "images": [
+  "oldtestamentingr02swetuoft-647.jpg",
+  "oldtestamentingr02swetuoft-648.jpg",
+  "oldtestamentingr02swetuoft-649.jpg"
+ ],
+ "known": "a stray Latin token 'C' in the verse",
+ "ours": {
+  "SWETE WIS 14:18": "εἰς ἐπίτασιν δὲ θρησκείας καὶ τοὺς ἀγνοοῦντας ἡ τοῦ τεχνίτου προετρέψατο φιλοτιμία. ",
+  "SWETE WIS 14:19": "C ὁ μὲν γὰρ τάχα κρατοῦντι βουλόμενος ἀρέσαι ἐξεβιάσατο τῇ τέχνῃ τὴν ὁμοιότητα ἐπὶ τὸ κάλλιον· ",
+  "SWETE WIS 14:20": "τὸ δὲ πλῆθος ἐφελκόμενον διὰ τὸ εὔχαρι τῆς ἐργασίας τὸν πρὸ ὀλίγου τιμηθέντα ἄνθρωπον νῦν σέβασμα ἐλογισαντο. "
+ },
+ "image": "oldtestamentingr02swetuoft-648.jpg",
+ "printed": "ὁ μὲν γὰρ τάχα κρατοῦντι βουλόμενος ἀρέσαι ἐξεβιάσατο τῇ τέχνῃ τὴν ὁμοιότητα ἐπὶ τὸ κάλλιον·",
+ "corrections": [
+  {
+   "ours": "C",
+   "printed": "",
+   "why": "A marginal manuscript siglum (§ C) was read into the verse."
+  }
+ ],
+ "note": "The marginal § C is not part of the main Greek text.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:58:16+00:00"
+}

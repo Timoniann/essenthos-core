@@ -1,0 +1,44 @@
+{
+ "ticket": "PRB-0712",
+ "text": "OTTLEY",
+ "verse": "ISA 35:4",
+ "code": "ISA",
+ "book": 23,
+ "chapter": 35,
+ "v": 4,
+ "printed_pages": [
+  "54"
+ ],
+ "leaves": [
+  435
+ ],
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-434.jpg",
+  "IsaiahAccordingToTheSeptuagint-435.jpg",
+  "IsaiahAccordingToTheSeptuagint-436.jpg"
+ ],
+ "known": "begins mid-sentence and ends σώσει without ἡμᾶς",
+ "ours": {
+  "OTTLEY ISA 35:3": "ἰσχύσατε, χεῖρες ἀνειμέναι καὶ γόνατα παραλελυμένα ",
+  "OTTLEY ISA 35:4": "παρακαλέσατε, οἱ ὀλιγόψυχοι τῇ διανοίᾳ· ἰσχύσατε, μὴ φοβεῖσθε· ἰδοὺ ὃ θεὸς ἡμῶν κρίσιν ἀνταποδώσει καὶ ἀνταποδώσει, αὐτὸς ἥξει καὶ σώσει ",
+  "OTTLEY ISA 35:5": "τότε ἀνοιχθήσονται ὀφθαλμοὶ τυφλῶν, καὶ ὦτα κωφῶν ἀκούσονται. "
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-436.jpg",
+ "printed": "παρακαλέσατε, οἱ ὀλιγόψυχοι τῇ διανοίᾳ· ἰσχύσατε, μὴ φοβεῖσθε· ἰδοὺ ὁ θεὸς ἡμῶν κρίσιν ἀνταποδώσει καὶ ἀνταποδώσει, αὐτὸς ἥξει καὶ σώσει ἡμᾶς.",
+ "corrections": [
+  {
+   "ours": "ὃ",
+   "printed": "ὁ",
+   "why": "The article’s smooth breathing was misread as a rough breathing with a grave accent."
+  },
+  {
+   "ours": "σώσει",
+   "printed": "σώσει ἡμᾶς.",
+   "why": "The final word ἡμᾶς and closing period were lost."
+  }
+ ],
+ "note": "The verse begins at the superscript 4 with παρακαλέσατε; no opening words are missing. Both occurrences of ἀνταποδώσει are printed in the main text. The apparatus records ἀνταποδιδωσιν as a variant for the first occurrence.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:59:03+00:00"
+}

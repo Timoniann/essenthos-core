@@ -1,0 +1,44 @@
+{
+ "ticket": "PRB-0973",
+ "text": "SWETE",
+ "verse": "MAL 2:12",
+ "code": "MAL",
+ "book": 39,
+ "chapter": 2,
+ "v": 12,
+ "printed_pages": [
+  "96"
+ ],
+ "leaves": [
+  120
+ ],
+ "images": [
+  "theoldtestamenti03swetuoft-119.jpg",
+  "theoldtestamenti03swetuoft-120.jpg",
+  "theoldtestamenti03swetuoft-121.jpg"
+ ],
+ "known": "a token 'IΙαντοκράτωρ' with a Latin I fused to the word",
+ "ours": {
+  "SWETE MAL 2:11": "ἐνκατελίφθη Ἰούδας, καὶ βδέλυγμα ἐγένετο ἐν τῷ Ἰσραὴλ καὶ ἐν Ἰερουσαλήμ, διότι ἐβεβήλωσεν Ἰούδας τὰ ἅγια Κυρίου, ἐν οἷς ἠγάπησεν καὶ ἐπετήδευσεν εἰς θεοὺς ἀλλοτρίους. ",
+  "SWETE MAL 2:12": "ἐξολεθρεύσει Κύριος τὸν ἄνθρωπον τὸν ποιοῦντα ταῦτα, ἕως καὶ ταπεινωθῇ ἐκ σκηνωμάτωI Ἰακὼβ καὶ ἐκ προσαγόντων θυσίαν τῷ κυρίῳ IΙαντοκράτορι. ",
+  "SWETE MAL 2:13": "καὶ ταῦτα ἄ ἐμίσουν, ἐποιεῖτε· ἐκαλύπτετε δάκρυσιν τὸ θυσιαστήριον Κυρίου καὶ κλαυθμῷ καὶ στεναγμῷ ἐκ κόπων. ἔτι ἄξιον ἐπιβλέψαι εἰς θυσίαν ἡ λαβεῖν δεκτὸν ἐκ τῶν χειροῖν ὑμῶν; "
+ },
+ "image": "theoldtestamenti03swetuoft-120.jpg",
+ "printed": "ἐξολεθρεύσει Κύριος τὸν ἄνθρωπον τὸν ποιοῦντα ταῦτα, ἕως καὶ ταπεινωθῇ ἐκ σκηνωμάτων Ἰακὼβ καὶ ἐκ προσαγόντων θυσίαν τῷ κυρίῳ Παντοκράτορι.",
+ "corrections": [
+  {
+   "ours": "σκηνωμάτωI",
+   "printed": "σκηνωμάτων",
+   "why": "The final Greek ν was misread as a Latin I."
+  },
+  {
+   "ours": "IΙαντοκράτορι",
+   "printed": "Παντοκράτορι",
+   "why": "The initial Greek Π was misread as two characters, Latin I and Greek Ι."
+  }
+ ],
+ "note": "",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:58:23+00:00"
+}

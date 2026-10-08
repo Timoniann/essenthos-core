@@ -1,0 +1,42 @@
+1SA 25:28 SWETE conf 0.99 img oldtestamentingr01swetuoft-630.jpg
+   'ια' -> 'ἀνόμημα' | The word was truncated, losing most of its letters.
+   'V' -> '' | Stray Latin token absent from the printed main text.
+DEU 21:1 SWETE conf 0.99 img oldtestamentingr01swetuoft-416.jpg
+   'δίσοι' -> 'δίδωσίν σοι' | The printed δίδωσίν is divided across lines as δί- / δωσίν; part of the verb was lost and the remainder fused 
+   'X' -> '' | A stray Latin token, apparently from the marginal chapter numeral, entered the verse.
+EZK 34:12 SWETE conf 0.99 img theoldtestamenti03swetuoft-483.jpg
+   'Xώσπερ' -> 'ὥσπερ' | Stray Latin X fused to the word; the initial omega has a rough breathing and acute accent.
+   'διακεχυρισμέναων' -> 'διακεχωρισμένων' | Misread ω as υ and corrupted the ending -μένων as -μέναων.
+GEN 11:4 SWETE conf 0.99 img oldtestamentingr01swetuoft-49.jpg
+   'ἐαυτοῖς' -> 'ἑαυτοῖς' | The printed word has a rough breathing, not a smooth breathing.
+   'L' -> '' | Stray Latin token; the marginal § D beside πάσης is not part of the Greek text.
+ISA 2:19 OTTLEY conf 0.99 img IsaiahAccordingToTheSeptuagint-386.jpg
+   'εἷς τὸ. σπήλαια' -> 'εἰς τὰ σπήλαια' | Misread breathing and spurious accent on εἰς; misread vowel in τὰ and spurious period.
+   'εἷς τὰς σχισμὸς' -> 'εἰς τὰς σχισμὰς' | Misread breathing and spurious accent on εἰς; misread α as ο in σχισμὰς.
+   'εἷς τὰς τρώγλας' -> 'εἰς τὰς τρώγλας' | Misread breathing and spurious accent on εἰς.
+ISA 34:11 OTTLEY conf 0.99 img IsaiahAccordingToTheSeptuagint-435.jpg
+   'καὶ καὶ' -> 'καὶ' | The opening word is duplicated; the printed verse has only one καὶ.
+ISA 35:3 OTTLEY conf 0.99 img IsaiahAccordingToTheSeptuagint-436.jpg
+   'παραλελυμένα' -> 'παραλελυμένα.' | The verse-ending full stop is missing.
+ISA 35:4 OTTLEY conf 0.99 img IsaiahAccordingToTheSeptuagint-436.jpg
+   'ὃ' -> 'ὁ' | The article’s smooth breathing was misread as a rough breathing with a grave accent.
+   'σώσει' -> 'σώσει ἡμᾶς.' | The final word ἡμᾶς and closing period were lost.
+ISA 35:9 OTTLEY conf 0.99 img IsaiahAccordingToTheSeptuagint-436.jpg
+   'οὔκ' -> 'οὐκ' | A spurious acute accent was added.
+   'οὗ' -> 'οὐ' | The smooth breathing was misread as a rough breathing with a circumflex.
+ISA 5:5 OTTLEY conf 0.99 img IsaiahAccordingToTheSeptuagint-389.jpg
+   'εἷς διαρπαγήν' -> 'εἰς διαρπαγήν' | The smooth breathing was misread as a rough breathing, and a circumflex was added.
+   'εἷς καταπάτημα' -> 'εἰς <καταπάτημα>.' | The breathing and accent of εἰς were misread; the angle brackets around καταπάτημα and the final period were l
+ISA 53:1 OTTLEY conf 0.99 img IsaiahAccordingToTheSeptuagint-466.jpg
+   'ὃ' -> 'ὁ' | The article’s rough breathing was misread as a smooth breathing with a grave accent.
+MAL 2:12 SWETE conf 0.99 img theoldtestamenti03swetuoft-120.jpg
+   'σκηνωμάτωI' -> 'σκηνωμάτων' | The final Greek ν was misread as a Latin I.
+   'IΙαντοκράτορι' -> 'Παντοκράτορι' | The initial Greek Π was misread as two characters, Latin I and Greek Ι.
+MAL 3:17 SWETE conf 0.99 img theoldtestamenti03swetuoft-123.jpg
+   'IΙαντοκράτωρ' -> 'Παντοκράτωρ' | The initial Greek Π was misread as a Latin I followed by Greek Ι.
+PRO 22:17 SWETE conf 0.99 img oldtestamentingr02swetuoft-476.jpg
+   'C' -> '' | The letter belongs to the marginal section marker § C and was mistakenly included in the verse.
+WIS 12:10 SWETE conf 0.99 img oldtestamentingr02swetuoft-643.jpg
+   'C' -> '' | The marginal manuscript siglum C beside a paragraph mark was read into the verse; it is not part of the Greek 
+WIS 14:19 SWETE conf 0.99 img oldtestamentingr02swetuoft-648.jpg
+   'C' -> '' | A marginal manuscript siglum (§ C) was read into the verse.

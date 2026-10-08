@@ -1,0 +1,39 @@
+{
+ "ticket": "PRB-0973",
+ "text": "SWETE",
+ "verse": "PRO 22:17",
+ "code": "PRO",
+ "book": 20,
+ "chapter": 22,
+ "v": 17,
+ "printed_pages": [
+  "458"
+ ],
+ "leaves": [
+  476
+ ],
+ "images": [
+  "oldtestamentingr02swetuoft-475.jpg",
+  "oldtestamentingr02swetuoft-476.jpg",
+  "oldtestamentingr02swetuoft-477.jpg"
+ ],
+ "known": "a stray Latin token 'C' in the verse",
+ "ours": {
+  "SWETE PRO 22:16": "ὁ συκοφαντῶν πένητα πολλὰ ποιεῖ τὰ ἑαυτοῦ· δίδωσιν δὲ πλουσίῳ ἐπʼ ἐλάσσονι. ",
+  "SWETE PRO 22:17": "Λόγοις σοφῶν παράβαλλε σὸν οὖς καὶ ἄκουε ἐμὸν λόγον, C τὴν δὲ σὴν καρδίαν ἐπίστησον, ἵνα γνῷς ὅτι καλοί εἰσιν. ",
+  "SWETE PRO 22:18": "καὶ ἐὰν ἐμβάλῃς αὐτοὺς εἰς τὴν καρδίαν σου, εὐφρανοῦσίν σε ἅμα ἐπὶ σοῖς χείλεσιν· "
+ },
+ "image": "oldtestamentingr02swetuoft-476.jpg",
+ "printed": "Λόγοις σοφῶν παράβαλλε σὸν οὖς καὶ ἄκουε ἐμὸν λόγον, τὴν δὲ σὴν καρδίαν ἐπίστησον, ἵνα γνῷς ὅτι καλοί εἰσιν.",
+ "corrections": [
+  {
+   "ours": "C",
+   "printed": "",
+   "why": "The letter belongs to the marginal section marker § C and was mistakenly included in the verse."
+  }
+ ],
+ "note": "The section marker before the second line and the marginal § C are not part of the Greek verse.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:57:58+00:00"
+}

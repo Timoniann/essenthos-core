@@ -1,0 +1,39 @@
+{
+ "ticket": "PRB-0973",
+ "text": "SWETE",
+ "verse": "WIS 12:10",
+ "code": "WIS",
+ "book": 75,
+ "chapter": 12,
+ "v": 10,
+ "printed_pages": [
+  "625"
+ ],
+ "leaves": [
+  643
+ ],
+ "images": [
+  "oldtestamentingr02swetuoft-642.jpg",
+  "oldtestamentingr02swetuoft-643.jpg",
+  "oldtestamentingr02swetuoft-644.jpg"
+ ],
+ "known": "a stray Latin token 'C' in the verse",
+ "ours": {
+  "SWETE WIS 12:9": "οὐκ ἀδυνατῶν ἐν παρατάξει ἀσεβεῖς δικαίοις ὑποχειρίους δοῦναι, ἢ θηρίοις δεινοῖς, ἢ λόγῳ ἀποτόμῳ ὑφʼ ἓν ἐκτρῖψαι ",
+  "SWETE WIS 12:10": "κρίνων δὲ κατὰ βραχὺ ἐδίδους τόπον μετανοίας, C οὐκ ἀγνοῶν ὅτι πονηρὰ ἡ γένεσις αὐτῶν καὶ ἔμφυτος ἡ κακία αὐτῶν, καὶ ὅτι οὐ μὴ ἀλλαγῇ ὁ λογισμὸς αὐτῶν εἰς τὸν αἰῶνα, ",
+  "SWETE WIS 12:11": "σπέρμα γὰρ ἦν κατηραμένον ἀπʼ ἀρχῆς· οὐδὲ εὐλαβούμενός τινα ἐφʼ οἷς ἡμάρτανον ἄδειαν ἐδίδους. "
+ },
+ "image": "oldtestamentingr02swetuoft-643.jpg",
+ "printed": "κρίνων δὲ κατὰ βραχὺ ἐδίδους τόπον μετανοίας, οὐκ ἀγνοῶν ὅτι πονηρὰ ἡ γένεσις αὐτῶν καὶ ἔμφυτος ἡ κακία αὐτῶν, καὶ ὅτι οὐ μὴ ἀλλαγῇ ὁ λογισμὸς αὐτῶν εἰς τὸν αἰῶνα,",
+ "corrections": [
+  {
+   "ours": "C",
+   "printed": "",
+   "why": "The marginal manuscript siglum C beside a paragraph mark was read into the verse; it is not part of the Greek text."
+  }
+ ],
+ "note": "The paragraph mark following μετανοίας is editorial and is excluded from the transcription.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:58:18+00:00"
+}

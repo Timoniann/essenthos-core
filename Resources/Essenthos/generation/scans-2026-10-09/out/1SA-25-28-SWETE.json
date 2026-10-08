@@ -1,0 +1,47 @@
+{
+ "ticket": "PRB-0973",
+ "text": "SWETE",
+ "verse": "1SA 25:28",
+ "code": "1SA",
+ "book": 9,
+ "chapter": 25,
+ "v": 28,
+ "printed_pages": [
+  "598",
+  "599"
+ ],
+ "leaves": [
+  630,
+  631
+ ],
+ "images": [
+  "oldtestamentingr01swetuoft-629.jpg",
+  "oldtestamentingr01swetuoft-630.jpg",
+  "oldtestamentingr01swetuoft-631.jpg",
+  "oldtestamentingr01swetuoft-632.jpg"
+ ],
+ "known": "a stray Latin token 'V' in the verse",
+ "ours": {
+  "SWETE 1SA 25:27": "καὶ νῦν λάβε τὴν εὐλογίαν ἢν ἐνήνοχεν ἡ δούλη σου τῷ κυρίῳ μου, καὶ δώσεις τοῖς παιδαρίοις τοῖς παρεστηκόσιν τῷ κυρίῳ μου. ",
+  "SWETE 1SA 25:28": "ἆρον δὴ τὸ ια τῆς δούλης σου, ὅτι ποιῶν ποιήσει κύριος τῷ κυρίῳ μου οἶκον πιστόν, ὅτι πόλεμον κυρίου μου ὁ κύριος πολεμεῖ, καὶ κακία V οὐχ εὑρεθήσεται ἐν σοὶ πώποτε. ",
+  "SWETE 1SA 25:29": "καὶ ἀναστήσεται ἄνθρωπος καταδιώκων σε καὶ ζητῶν τὴν ψυχήν σου, κ δεμένη ἐν δεσμῷ τῆς ζωῆς παρὰ κυρίῳ τῷ θεῷ, καὶ ψυχὴν ἐχθρῶν σου σφενδονήσεις ἐν μέσῳ τῆς σφενδόνης. "
+ },
+ "image": "oldtestamentingr01swetuoft-630.jpg",
+ "printed": "ἆρον δὴ τὸ ἀνόμημα τῆς δούλης σου, ὅτι ποιῶν ποιήσει Κύριος τῷ κυρίῳ μου οἶκον πιστόν, ὅτι πόλεμον κυρίου μου ὁ κύριος πολεμεῖ, καὶ κακία οὐχ εὑρεθήσεται ἐν σοὶ πώποτε.",
+ "corrections": [
+  {
+   "ours": "ια",
+   "printed": "ἀνόμημα",
+   "why": "The word was truncated, losing most of its letters."
+  },
+  {
+   "ours": "V",
+   "printed": "",
+   "why": "Stray Latin token absent from the printed main text."
+  }
+ ],
+ "note": "The verse begins on page 598 and continues on page 599 (oldtestamentingr01swetuoft-631.jpg).",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:58:04+00:00"
+}

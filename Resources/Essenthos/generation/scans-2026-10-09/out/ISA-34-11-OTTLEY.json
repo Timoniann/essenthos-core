@@ -1,0 +1,39 @@
+{
+ "ticket": "PRB-0712",
+ "text": "OTTLEY",
+ "verse": "ISA 34:11",
+ "code": "ISA",
+ "book": 23,
+ "chapter": 34,
+ "v": 11,
+ "printed_pages": [
+  "53"
+ ],
+ "leaves": [
+  434
+ ],
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-433.jpg",
+  "IsaiahAccordingToTheSeptuagint-434.jpg",
+  "IsaiahAccordingToTheSeptuagint-435.jpg"
+ ],
+ "known": "a word was the placeholder ABBREV and is missing",
+ "ours": {
+  "OTTLEY ISA 34:10": "νυκτὸς νυκτὸς καὶ ἡμέρας, καὶ οὐ σβεσθήσεται εἷς τὸν αἰῶνα χρόνον, καὶ ἀναβήσεται ὁ καπνὸς αὐτῆς ἄνω, εἷς γενεὰς ἐρημωθήσεται. ",
+  "OTTLEY ISA 34:11": "καὶ καὶ κατοικήσονται ἐν αὐτῇ ὄρνεα καὶ ἐχῖνοι καὶ ἴβεις καὶ κόρακες· καὶ ἐπιβληθήσεται ἐπ’ αὐτῇ σπαρτίον γεωμετρίας ἐρήμου, καὶ ὀνοκένταυροι οἰκήσουσιν ἐν αὐτῇ. ",
+  "OTTLEY ISA 34:12": "οἶ ἄρχοντες αὐτῆς οὔκ ἔσονται· οἱ γὰρ βασιλεῖς αὐτῆς καὶ οἱ ἄρχοντες αὐτῆς καὶ οἶ μεγιστᾶνες αὐτῆς ἔσονται εἰς ἀπώλειαν. "
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-435.jpg",
+ "printed": "καὶ κατοικήσονται ἐν αὐτῇ ὄρνεα καὶ ἐχῖνοι καὶ ἴβεις καὶ κόρακες· καὶ ἐπιβληθήσεται ἐπ’ αὐτῇ σπαρτίον γεωμετρίας ἐρήμου, καὶ ὀνοκένταυροι οἰκήσουσιν ἐν αὐτῇ.",
+ "corrections": [
+  {
+   "ours": "καὶ καὶ",
+   "printed": "καὶ",
+   "why": "The opening word is duplicated; the printed verse has only one καὶ."
+  }
+ ],
+ "note": "All printed words are present in the supplied transcription; no missing ABBREV word is evident. The marginal 12 beside ὀνοκένταυροι is not the verse boundary; verse 12 begins at the superscript before οἱ ἄρχοντες.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:58:53+00:00"
+}

@@ -1,0 +1,39 @@
+{
+ "ticket": "PRB-0712",
+ "text": "OTTLEY",
+ "verse": "ISA 35:3",
+ "code": "ISA",
+ "book": 23,
+ "chapter": 35,
+ "v": 3,
+ "printed_pages": [
+  "54"
+ ],
+ "leaves": [
+  435
+ ],
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-434.jpg",
+  "IsaiahAccordingToTheSeptuagint-435.jpg",
+  "IsaiahAccordingToTheSeptuagint-436.jpg"
+ ],
+ "known": "'γόνατα παραλεφοβεῖσθε' fuses παραλελυμένα with the start of 35:4",
+ "ours": {
+  "OTTLEY ISA 35:2": "καὶ ἐξανθήσει καὶ ἀγαλλιάσεται τὰ ἔρημα τοῦ Ἰορδάνου· καὶ ἡ δόξα τοῦ Λιβάνου ἐδόθη αὐτῇ καὶ ἡ τιμὴ τοῦ Καρμήλου, καὶ ὃ λαός μου ὄψεται τὴν δόξαν Κυρίου καὶ τὸ ὕψος τοῦ θεοῦ. ",
+  "OTTLEY ISA 35:3": "ἰσχύσατε, χεῖρες ἀνειμέναι καὶ γόνατα παραλελυμένα ",
+  "OTTLEY ISA 35:4": "παρακαλέσατε, οἱ ὀλιγόψυχοι τῇ διανοίᾳ· ἰσχύσατε, μὴ φοβεῖσθε· ἰδοὺ ὃ θεὸς ἡμῶν κρίσιν ἀνταποδώσει καὶ ἀνταποδώσει, αὐτὸς ἥξει καὶ σώσει "
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-436.jpg",
+ "printed": "ἰσχύσατε, χεῖρες ἀνειμέναι καὶ γόνατα παραλελυμένα.",
+ "corrections": [
+  {
+   "ours": "παραλελυμένα",
+   "printed": "παραλελυμένα.",
+   "why": "The verse-ending full stop is missing."
+  }
+ ],
+ "note": "The printed word παραλελυμένα is split across lines as παραλε- / λυμένα. The supplied verse text already resolves the reported fusion with 35:4.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:58:49+00:00"
+}

@@ -1,0 +1,44 @@
+{
+ "ticket": "PRB-0712",
+ "text": "OTTLEY",
+ "verse": "ISA 5:5",
+ "code": "ISA",
+ "book": 23,
+ "chapter": 5,
+ "v": 5,
+ "printed_pages": [
+  "7"
+ ],
+ "leaves": [
+  388
+ ],
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-387.jpg",
+  "IsaiahAccordingToTheSeptuagint-388.jpg",
+  "IsaiahAccordingToTheSeptuagint-389.jpg"
+ ],
+ "known": "the verse's last word was an undecoded character reference and is missing",
+ "ours": {
+  "OTTLEY ISA 5:4": "τί ποιήσω ἔτι κρίνατε ἐν ἐμοὶ καὶ ἀνὰ, μέσον τοῦ ἀμπελῶνός μου. τῷ ἀμπελῶνί μου, καὶ οὔκ ἐποίησα αὐτῷ; διότι ἔμεινα τοῦ ποιῆσαι σταφυλήν, ἐποίησεν δὲ ἀκάνθας. ",
+  "OTTLEY ISA 5:5": "νῦν δὲ ἀναγγελῶ ὑμῖν τί ποιήσω τῷ ἀμπελῶνί μου. ἀφελῶ τὸν φραγμὸν αὐτοῦ καὶ ἔσται εἷς διαρπαγήν, καὶ καθελῶ τὸν τοῖχον αὐτοῦ καὶ ἔσται εἷς καταπάτημα ",
+  "OTTLEY ISA 5:6": "καὶ ἀνήσω τὸν ἀμπελῶνά μου, καὶ οὔ μὴ τμηθῇ οὐδὲ μὴ σκαφῇ, καὶ ἀναβήσεται εἷς αὐτὸν ὡς εἷς χέρσον ἄκανθα. καὶ ταῖς νεφέλαις ἐντελοῦμαι τοῦ μὴ βρέξαι εἷς αὐτὸν ὑετόν. "
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-389.jpg",
+ "printed": "νῦν δὲ ἀναγγελῶ ὑμῖν τί ποιήσω τῷ ἀμπελῶνί μου. ἀφελῶ τὸν φραγμὸν αὐτοῦ καὶ ἔσται εἰς διαρπαγήν, καὶ καθελῶ τὸν τοῖχον αὐτοῦ καὶ ἔσται εἰς <καταπάτημα>.",
+ "corrections": [
+  {
+   "ours": "εἷς διαρπαγήν",
+   "printed": "εἰς διαρπαγήν",
+   "why": "The smooth breathing was misread as a rough breathing, and a circumflex was added."
+  },
+  {
+   "ours": "εἷς καταπάτημα",
+   "printed": "εἰς <καταπάτημα>.",
+   "why": "The breathing and accent of εἰς were misread; the angle brackets around καταπάτημα and the final period were lost."
+  }
+ ],
+ "note": "No additional word follows καταπάτημα, which is already present in the supplied transcription. The main text encloses it in angle brackets; the apparatus records διαρπαγήν as the reading of A.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:58:43+00:00"
+}

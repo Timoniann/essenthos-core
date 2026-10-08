@@ -1,0 +1,44 @@
+{
+ "ticket": "PRB-0973",
+ "text": "SWETE",
+ "verse": "DEU 21:1",
+ "code": "DEU",
+ "book": 5,
+ "chapter": 21,
+ "v": 1,
+ "printed_pages": [
+  "384"
+ ],
+ "leaves": [
+  416
+ ],
+ "images": [
+  "oldtestamentingr01swetuoft-415.jpg",
+  "oldtestamentingr01swetuoft-416.jpg",
+  "oldtestamentingr01swetuoft-417.jpg"
+ ],
+ "known": "a stray Latin token 'X' in the verse",
+ "ours": {
+  "SWETE DEU 21:0": null,
+  "SWETE DEU 21:1": "Ἐὰν δὲ εὑρεθῇ τραυματίας ἐν τῇ γῇ ᾗ κύριος ὁ θεός σου δίσοι X κληρονομῆσαι, πεπτωκὼς ἐν τῷ πεδίῳ, καὶ οὐκ οἴδασιν τὸν πατάξαντα, ",
+  "SWETE DEU 21:2": "ἐξελεύσεται ἡ γερουσία σου καὶ οἱ κριταί σου, κα ἐκμετρήσουσιν ἐπὶ τὰς πόλεις τὰς κύκλῳ τοῦ τραυματίου· "
+ },
+ "image": "oldtestamentingr01swetuoft-416.jpg",
+ "printed": "Ἐὰν δὲ εὑρεθῇ τραυματίας ἐν τῇ γῇ ᾗ Κύριος ὁ θεός σου δίδωσίν σοι κληρονομῆσαι, πεπτωκὼς ἐν τῷ πεδίῳ, καὶ οὐκ οἴδασιν τὸν πατάξαντα,",
+ "corrections": [
+  {
+   "ours": "δίσοι",
+   "printed": "δίδωσίν σοι",
+   "why": "The printed δίδωσίν is divided across lines as δί- / δωσίν; part of the verb was lost and the remainder fused with σοι."
+  },
+  {
+   "ours": "X",
+   "printed": "",
+   "why": "A stray Latin token, apparently from the marginal chapter numeral, entered the verse."
+  }
+ ],
+ "note": "The verse begins near the bottom of page 384. The line-break hyphen within δίδωσίν is omitted in the continuous transcription.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:58:05+00:00"
+}

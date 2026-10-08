@@ -1,0 +1,52 @@
+{
+ "ticket": "PRB-0712",
+ "text": "OTTLEY",
+ "verse": "ISA 2:19",
+ "code": "ISA",
+ "book": 23,
+ "chapter": 2,
+ "v": 19,
+ "printed_pages": [
+  "4",
+  "5"
+ ],
+ "leaves": [
+  385,
+  386
+ ],
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-384.jpg",
+  "IsaiahAccordingToTheSeptuagint-385.jpg",
+  "IsaiahAccordingToTheSeptuagint-386.jpg",
+  "IsaiahAccordingToTheSeptuagint-387.jpg"
+ ],
+ "known": "2:19-21 interleaved in the transcription (2:20-22 have no verse of their own there), letter misreadings such as ἅνθριιηνος for ἄνθρωπος",
+ "ours": {
+  "OTTLEY ISA 2:18": "καὶ τὸ, χειροποίητα πάντα κατακρύψουσιν, ",
+  "OTTLEY ISA 2:19": "εἰσενέγκαντες εἷς τὸ. σπήλαια καὶ εἷς τὰς σχισμὸς τῶν πετρῶν καὶ εἷς τὰς τρώγλας τῆς γῆς, ἀπὸ προσώπου τοῦ φόβου Κυρίου καὶ ἀπὸ τῆς δόξης τῆς ἰσχύος αὐτοῦ, ὅταν ἀναστῇ θραῦσαι τὴν γῆν. ",
+  "OTTLEY ISA 2:20": "τῇ ἡμέρᾳ ἐκείνῃ ἐκβαλεῖ ἅνθριιηνος τὰ βδελύγματα αὑτοῦ τὸ. ἀργυρᾶ καὶ τὰ χρυσᾶ, οἳ ἐποίησεν προσκυνεῖν, τοῖς ματαίοις καὶ ταῖς νυκτερίσιν, "
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-386.jpg",
+ "printed": "εἰσενέγκαντες εἰς τὰ σπήλαια καὶ εἰς τὰς σχισμὰς τῶν πετρῶν καὶ εἰς τὰς τρώγλας τῆς γῆς, ἀπὸ προσώπου τοῦ φόβου Κυρίου καὶ ἀπὸ τῆς δόξης τῆς ἰσχύος αὐτοῦ, ὅταν ἀναστῇ θραῦσαι τὴν γῆν.",
+ "corrections": [
+  {
+   "ours": "εἷς τὸ. σπήλαια",
+   "printed": "εἰς τὰ σπήλαια",
+   "why": "Misread breathing and spurious accent on εἰς; misread vowel in τὰ and spurious period."
+  },
+  {
+   "ours": "εἷς τὰς σχισμὸς",
+   "printed": "εἰς τὰς σχισμὰς",
+   "why": "Misread breathing and spurious accent on εἰς; misread α as ο in σχισμὰς."
+  },
+  {
+   "ours": "εἷς τὰς τρώγλας",
+   "printed": "εἰς τὰς τρώγλας",
+   "why": "Misread breathing and spurious accent on εἰς."
+  }
+ ],
+ "note": "Verse 19 ends at γῆν. The following τῇ ἡμέρᾳ ἐκείνῃ begins verse 20; verse 21 begins τοῦ εἰσελθεῖν. Neither belongs to verse 19.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:59:07+00:00"
+}

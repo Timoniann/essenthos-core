@@ -1,0 +1,44 @@
+{
+ "ticket": "PRB-0973",
+ "text": "SWETE",
+ "verse": "EZK 34:12",
+ "code": "EZK",
+ "book": 26,
+ "chapter": 34,
+ "v": 12,
+ "printed_pages": [
+  "459"
+ ],
+ "leaves": [
+  483
+ ],
+ "images": [
+  "theoldtestamenti03swetuoft-482.jpg",
+  "theoldtestamenti03swetuoft-483.jpg",
+  "theoldtestamenti03swetuoft-484.jpg"
+ ],
+ "known": "a token 'Xώσπερ' with a Latin X fused to the word",
+ "ours": {
+  "SWETE EZK 34:11": "διότι τάδε λέγει Κύριος Ἰδοὺ ἐγὼ ἐκζητήσω τὰ πρόβατά μου καὶ ἐπισκέψομαι αὐτά. ",
+  "SWETE EZK 34:12": "Xώσπερ ζητεῖ ὁ ποιμὴν τὸ ποίμνιον αὐτοῦ ἐν ἡμέρᾳ ὅταν ᾖ γνόφος καὶ νεφέλη ἐν μέσῳ προβάτων διακεχυρισμέναων, οὕτως ἐκζητήσω τὰ πρόβατά μου καὶ ἀπελάσω αὐτὰ ἀπὸ παντὸς τόπου οὗ διεσ πάρησαν ἐκεῖ ἐν ἡμέρᾳ νεφέλης καὶ γνόφου. ",
+  "SWETE EZK 34:13": "καὶ ἐξάξω αὐτοὺς ἐκ τῶν ἐθνῶν καὶ συνάξω αὐτοὺς ἀπὸ τῶν χωρῶν, καὶ εἰσάξω αὐτοὺς εἰς τὴν γῆν αὐτῶν, καὶ βοσκήσω αὐτοὺς ἐπὶ τὰ ὄρη Ἰσραὴλ καὶ ἐν ταῖς φάραγξιν καὶ ἐν πάσῃ κατοικίᾳ τῆς γῆς· "
+ },
+ "image": "theoldtestamenti03swetuoft-483.jpg",
+ "printed": "ὥσπερ ζητεῖ ὁ ποιμὴν τὸ ποίμνιον αὐτοῦ ἐν ἡμέρᾳ ὅταν ᾖ γνόφος καὶ νεφέλη ἐν μέσῳ προβάτων διακεχωρισμένων, οὕτως ἐκζητήσω τὰ πρόβατά μου καὶ ἀπελάσω αὐτὰ ἀπὸ παντὸς τόπου οὗ διεσπάρησαν ἐκεῖ ἐν ἡμέρᾳ νεφέλης καὶ γνόφου.",
+ "corrections": [
+  {
+   "ours": "Xώσπερ",
+   "printed": "ὥσπερ",
+   "why": "Stray Latin X fused to the word; the initial omega has a rough breathing and acute accent."
+  },
+  {
+   "ours": "διακεχυρισμέναων",
+   "printed": "διακεχωρισμένων",
+   "why": "Misread ω as υ and corrupted the ending -μένων as -μέναων."
+  }
+ ],
+ "note": "The spacing-only error in ‘διεσ πάρησαν’ is normalized to ‘διεσπάρησαν’ without a separate correction entry.",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T22:58:37+00:00"
+}
