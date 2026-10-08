@@ -1,0 +1,7 @@
+{"wrong": [],
+ "missing": [
+  {"from": "jehoram", "type": "father-of", "to": "azariah-3", "verse": "MAT 1:8", "why": "\"And Joram begat Ozias\", with no generation named between them.", "confidence": 0.5},
+  {"from": "josiah", "type": "father-of", "to": "jehoiachin", "verse": "MAT 1:11", "why": "\"And Josias begat Jechonias and his brethren\", with no generation named between them.", "confidence": 0.5}
+ ],
+ "note": "No wrong rows. The descendant-of rows on MAT 1:1 and MAT 1:20 and the husband/wife rows for Salmon and Rahab are loose or inferred but not contradicted. The two missing rows are begat-links that skip generations; father-of is the chapter's word, but ancestor-of may be the honest type.",
+ "model": "claude-haiku-5-5"}

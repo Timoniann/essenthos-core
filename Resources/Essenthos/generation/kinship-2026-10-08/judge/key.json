@@ -1,0 +1,902 @@
+{
+ "blind-1": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "hattush descendant-of shecaniah",
+  "chapter": "EZR-8"
+ },
+ "blind-2": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 101264,
+  "chapter": "EZR-7"
+ },
+ "blind-3": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "gether son-of shem",
+  "chapter": "1CH-1"
+ },
+ "blind-4": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "azarel-6 brother-of zechariah-22",
+  "chapter": "NEH-12"
+ },
+ "blind-5": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "milalai brother-of zechariah-22",
+  "chapter": "NEH-12"
+ },
+ "blind-6": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "zeruiah sister-of ozem",
+  "chapter": "1CH-2"
+ },
+ "blind-7": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "abigail-2 sister-of raddai",
+  "chapter": "1CH-2"
+ },
+ "blind-8": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 103912,
+  "chapter": "EZR-8"
+ },
+ "blind-9": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "tamar-2 sister-of chileab",
+  "chapter": "1CH-3"
+ },
+ "blind-10": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "sheba-3 descendant-of keturah",
+  "chapter": "GEN-25"
+ },
+ "blind-11": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "hezron-2 son-of judah",
+  "chapter": "1CH-4"
+ },
+ "blind-12": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 107137,
+  "chapter": "1CH-6"
+ },
+ "blind-13": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "jeremoth-2 son-of beriah-3",
+  "chapter": "1CH-8"
+ },
+ "blind-14": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 98581,
+  "chapter": "EZR-8"
+ },
+ "blind-15": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 103420,
+  "chapter": "1CH-3"
+ },
+ "blind-16": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "helkai descendant-of meraioth-2",
+  "chapter": "NEH-12"
+ },
+ "blind-17": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "sheba-5 son-of abihail-3",
+  "chapter": "1CH-5"
+ },
+ "blind-18": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "zia brother-of eber-2",
+  "chapter": "1CH-5"
+ },
+ "blind-19": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "berechiah son-of zerubbabel-2",
+  "chapter": "1CH-3"
+ },
+ "blind-20": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 102703,
+  "chapter": "1CH-7"
+ },
+ "blind-21": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 103826,
+  "chapter": "EZR-8"
+ },
+ "blind-22": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 106257,
+  "chapter": "EZR-8"
+ },
+ "blind-23": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 100373,
+  "chapter": "1CH-4"
+ },
+ "blind-24": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 101469,
+  "chapter": "GEN-36"
+ },
+ "blind-25": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "jahzeel descendant-of bilhah",
+  "chapter": "1CH-7"
+ },
+ "blind-26": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 99359,
+  "chapter": "NEH-11"
+ },
+ "blind-27": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "assir-3 son-of jehoiachin",
+  "chapter": "1CH-3"
+ },
+ "blind-28": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 103364,
+  "chapter": "EZR-8"
+ },
+ "blind-29": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 98947,
+  "chapter": "EZR-7"
+ },
+ "blind-30": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 106945,
+  "chapter": "NEH-12"
+ },
+ "blind-31": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 101357,
+  "chapter": "1CH-5"
+ },
+ "blind-32": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 98894,
+  "chapter": "1CH-4"
+ },
+ "blind-33": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "ahio-2 son-of beriah-3",
+  "chapter": "1CH-8"
+ },
+ "blind-34": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "hul son-of shem",
+  "chapter": "1CH-1"
+ },
+ "blind-35": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "eber-2 son-of abihail-3",
+  "chapter": "1CH-5"
+ },
+ "blind-36": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 107099,
+  "chapter": "EZR-8"
+ },
+ "blind-37": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "zerah son-of basemath-daughter-of-ishmael",
+  "chapter": "GEN-36"
+ },
+ "blind-38": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 102266,
+  "chapter": "MAT-1"
+ },
+ "blind-39": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "jacan son-of abihail-3",
+  "chapter": "1CH-5"
+ },
+ "blind-40": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "shammah son-of basemath-daughter-of-ishmael",
+  "chapter": "GEN-36"
+ },
+ "blind-41": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "uz son-of shem",
+  "chapter": "1CH-1"
+ },
+ "blind-42": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 106685,
+  "chapter": "1CH-4"
+ },
+ "blind-43": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "jushabhesed son-of zerubbabel-2",
+  "chapter": "1CH-3"
+ },
+ "blind-44": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "ard son-of benjamin",
+  "chapter": "GEN-46"
+ },
+ "blind-45": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 102087,
+  "chapter": "MAT-1"
+ },
+ "blind-46": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 100346,
+  "chapter": "EZR-8"
+ },
+ "blind-47": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "hashubah son-of zerubbabel-2",
+  "chapter": "1CH-3"
+ },
+ "blind-48": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 101084,
+  "chapter": "GEN-46"
+ },
+ "blind-49": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "arah son-of jephunneh-2",
+  "chapter": "1CH-7"
+ },
+ "blind-50": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "jahzeel descendant-of bilhah",
+  "chapter": "1CH-7"
+ },
+ "blind-51": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "hanani-5 brother-of zechariah-22",
+  "chapter": "NEH-12"
+ },
+ "blind-52": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 106647,
+  "chapter": "1CH-4"
+ },
+ "blind-53": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 102704,
+  "chapter": "1CH-7"
+ },
+ "blind-54": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "boaz son-of salma",
+  "chapter": "1CH-2"
+ },
+ "blind-55": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 101358,
+  "chapter": "1CH-5"
+ },
+ "blind-56": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 99360,
+  "chapter": "NEH-11"
+ },
+ "blind-57": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 107156,
+  "chapter": "EZR-8"
+ },
+ "blind-58": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 98901,
+  "chapter": "1CH-4"
+ },
+ "blind-59": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 102816,
+  "chapter": "1CH-4"
+ },
+ "blind-60": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "keturah concubine-of abram",
+  "chapter": "1CH-1"
+ },
+ "blind-61": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 100710,
+  "chapter": "1CH-4"
+ },
+ "blind-62": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 105525,
+  "chapter": "NEH-12"
+ },
+ "blind-63": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "mash son-of shem",
+  "chapter": "1CH-1"
+ },
+ "blind-64": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 106586,
+  "chapter": "EZR-7"
+ },
+ "blind-65": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "jeiel brother-of beerah",
+  "chapter": "1CH-5"
+ },
+ "blind-66": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "salma son-of nahshon",
+  "chapter": "1CH-2"
+ },
+ "blind-67": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "shashak son-of beriah-3",
+  "chapter": "1CH-8"
+ },
+ "blind-68": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "shelomith-3 son-of izhar",
+  "chapter": "1CH-23"
+ },
+ "blind-69": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 103526,
+  "chapter": "GEN-4"
+ },
+ "blind-70": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "zia brother-of meshullam-3",
+  "chapter": "1CH-5"
+ },
+ "blind-71": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "nahath son-of basemath-daughter-of-ishmael",
+  "chapter": "GEN-36"
+ },
+ "blind-72": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 105860,
+  "chapter": "NEH-12"
+ },
+ "blind-73": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 98902,
+  "chapter": "1CH-4"
+ },
+ "blind-74": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 101176,
+  "chapter": "NEH-12"
+ },
+ "blind-75": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 106646,
+  "chapter": "1CH-4"
+ },
+ "blind-76": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 107334,
+  "chapter": "EZR-7"
+ },
+ "blind-77": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "eliel father-of jeroham",
+  "chapter": "1CH-6"
+ },
+ "blind-78": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "benjamin father-of jediael",
+  "chapter": "1CH-7"
+ },
+ "blind-79": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "naaman son-of benjamin",
+  "chapter": "GEN-46"
+ },
+ "blind-80": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "abigail-2 sister-of ozem",
+  "chapter": "1CH-2"
+ },
+ "blind-81": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 103600,
+  "chapter": "NUM-3"
+ },
+ "blind-82": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 106944,
+  "chapter": "NEH-12"
+ },
+ "blind-83": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "helkai descendant-of meraioth-2",
+  "chapter": "NEH-12"
+ },
+ "blind-84": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "nethanel-10 brother-of zechariah-22",
+  "chapter": "NEH-12"
+ },
+ "blind-85": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 102118,
+  "chapter": "1CH-4"
+ },
+ "blind-86": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "meshullam-3 son-of abihail-3",
+  "chapter": "1CH-5"
+ },
+ "blind-87": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "mahli son-of levi",
+  "chapter": "EZR-8"
+ },
+ "blind-88": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "michael-2 son-of abihail-3",
+  "chapter": "1CH-5"
+ },
+ "blind-89": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 99778,
+  "chapter": "1CH-4"
+ },
+ "blind-90": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 105861,
+  "chapter": "NEH-12"
+ },
+ "blind-91": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "heman-2 brother-of asaph-2",
+  "chapter": "1CH-6"
+ },
+ "blind-92": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 103770,
+  "chapter": "NEH-12"
+ },
+ "blind-93": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "zechariah-3 brother-of beerah",
+  "chapter": "1CH-5"
+ },
+ "blind-94": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 103421,
+  "chapter": "1CH-3"
+ },
+ "blind-95": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "jahzeel descendant-of bilhah",
+  "chapter": "1CH-7"
+ },
+ "blind-96": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "abigail-2 sister-of abinadab-2",
+  "chapter": "1CH-2"
+ },
+ "blind-97": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 102091,
+  "chapter": "1CH-7"
+ },
+ "blind-98": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "abigail-2 sister-of eliab-3",
+  "chapter": "1CH-2"
+ },
+ "blind-99": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 106587,
+  "chapter": "EZR-7"
+ },
+ "blind-100": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 101952,
+  "chapter": "1CH-7"
+ },
+ "blind-101": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "maai brother-of zechariah-22",
+  "chapter": "NEH-12"
+ },
+ "blind-102": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 102815,
+  "chapter": "1CH-4"
+ },
+ "blind-103": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "gilalai brother-of zechariah-22",
+  "chapter": "NEH-12"
+ },
+ "blind-104": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "rizia son-of jephunneh-2",
+  "chapter": "1CH-7"
+ },
+ "blind-105": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 107129,
+  "chapter": "GEN-36"
+ },
+ "blind-106": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 103404,
+  "chapter": "NEH-11"
+ },
+ "blind-107": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "zeruiah sister-of abinadab-2",
+  "chapter": "1CH-2"
+ },
+ "blind-108": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 105519,
+  "chapter": "NEH-12"
+ },
+ "blind-109": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 97733,
+  "chapter": "EZR-7"
+ },
+ "blind-110": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "jeiel-10 descendant-of adonikam",
+  "chapter": "EZR-8"
+ },
+ "blind-111": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 97188,
+  "chapter": "LUK-3"
+ },
+ "blind-112": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 99686,
+  "chapter": "1CH-4"
+ },
+ "blind-113": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 106478,
+  "chapter": "NEH-11"
+ },
+ "blind-114": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "mattaniah-9 descendant-of asaph-2",
+  "chapter": "NEH-11"
+ },
+ "blind-115": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 98169,
+  "chapter": "1CH-7"
+ },
+ "blind-116": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "judah-7 brother-of zechariah-22",
+  "chapter": "NEH-12"
+ },
+ "blind-117": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 105527,
+  "chapter": "1CH-5"
+ },
+ "blind-118": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 98903,
+  "chapter": "1CH-4"
+ },
+ "blind-119": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 105534,
+  "chapter": "NEH-12"
+ },
+ "blind-120": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "sheba-3 descendant-of keturah",
+  "chapter": "GEN-25"
+ },
+ "blind-121": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 101953,
+  "chapter": "1CH-7"
+ },
+ "blind-122": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 97333,
+  "chapter": "1CH-2"
+ },
+ "blind-123": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "hasadiah son-of zerubbabel-2",
+  "chapter": "1CH-3"
+ },
+ "blind-124": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 101139,
+  "chapter": "1CH-2"
+ },
+ "blind-125": {
+  "who": "haiku",
+  "type": "missing",
+  "claim": "hezron-2 descendant-of judah",
+  "chapter": "1CH-4"
+ },
+ "blind-126": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 103136,
+  "chapter": "1CH-7"
+ },
+ "blind-127": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 102725,
+  "chapter": "1CH-7"
+ },
+ "blind-128": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 103751,
+  "chapter": "NEH-12"
+ },
+ "blind-129": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "jorai son-of abihail-3",
+  "chapter": "1CH-5"
+ },
+ "blind-130": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "ohel son-of zerubbabel-2",
+  "chapter": "1CH-3"
+ },
+ "blind-131": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "zeruiah sister-of nethanel-2",
+  "chapter": "1CH-2"
+ },
+ "blind-132": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "sheba-3 descendant-of keturah",
+  "chapter": "GEN-25"
+ },
+ "blind-133": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "zetham son-of libni",
+  "chapter": "1CH-23"
+ },
+ "blind-134": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "zia son-of abihail-3",
+  "chapter": "1CH-5"
+ },
+ "blind-135": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "zeruiah sister-of raddai",
+  "chapter": "1CH-2"
+ },
+ "blind-136": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "sheba-3 descendant-of keturah",
+  "chapter": "GEN-25"
+ },
+ "blind-137": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 100934,
+  "chapter": "GEN-36"
+ },
+ "blind-138": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "joel-6 son-of libni",
+  "chapter": "1CH-23"
+ },
+ "blind-139": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "abigail-2 sister-of nethanel-2",
+  "chapter": "1CH-2"
+ },
+ "blind-140": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 105539,
+  "chapter": "1CH-5"
+ },
+ "blind-141": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 101352,
+  "chapter": "NEH-12"
+ },
+ "blind-142": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "zeruiah sister-of eliab-3",
+  "chapter": "1CH-2"
+ },
+ "blind-143": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 102590,
+  "chapter": "EZR-8"
+ },
+ "blind-144": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 102652,
+  "chapter": "1CH-24"
+ },
+ "blind-145": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 98583,
+  "chapter": "NEH-12"
+ },
+ "blind-146": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "zeruiah sister-of shammah-2",
+  "chapter": "1CH-2"
+ },
+ "blind-147": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "abigail-2 sister-of shammah-2",
+  "chapter": "1CH-2"
+ },
+ "blind-148": {
+  "who": "haiku",
+  "type": "wrong",
+  "row": 106963,
+  "chapter": "EZR-8"
+ },
+ "blind-149": {
+  "who": "codex",
+  "type": "wrong",
+  "row": 98904,
+  "chapter": "1CH-4"
+ },
+ "blind-150": {
+  "who": "codex",
+  "type": "missing",
+  "claim": "serah sister-of imnah",
+  "chapter": "1CH-7"
+ }
+}

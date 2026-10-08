@@ -1,0 +1,16 @@
+{"wrong": [
+  {"kind": "delete", "rows": [106256], "new_type": "", "new_to": "", "verse": "EZR 8:3", "why": "The Hebrew gives 'sons of Shechaniah' and 'sons of Parosh' as separate groups, with a paragraph mark between them, and does not make Shechaniah a descendant of Parosh.", "confidence": 0.55},
+  {"kind": "delete", "rows": [107099], "new_type": "", "new_to": "", "verse": "EZR 8:8", "why": "The Shephatiah of EZR 8:8 is recorded as shephatiah-10 (the ancestor whose sons were eighty males with Ezra), not shephatiah-5 of EZR 2:4.", "confidence": 0.7},
+  {"kind": "retarget", "rows": [103364], "new_type": "", "new_to": "shephatiah-10", "verse": "EZR 8:8", "why": "Zebadiah is one of the sons of Shephatiah in EZR 8:8, which is shephatiah-10; shephatiah-5 is the EZR 2:4 namesake.", "confidence": 0.65},
+  {"kind": "retarget", "rows": [106963], "new_type": "", "new_to": "shephatiah-10", "verse": "EZR 8:8", "why": "Same namesake problem as row 103364: the Shephatiah heading in EZR 8:8 is shephatiah-10. This is an agent row made on the owner's instruction, not a row the owner recorded himself.", "confidence": 0.5},
+  {"kind": "delete", "rows": [100346, 103826], "new_type": "", "new_to": "", "verse": "EZR 8:13", "why": "The verse names Jeiel (Hebrew Yeiel), recorded as jeiel-10; jeuel-2 is the same man under a misspelled name and duplicates him.", "confidence": 0.5},
+  {"kind": "delete", "rows": [105927], "new_type": "", "new_to": "", "verse": "EZR 8:33", "why": "Jozabad is a Levite here, so his father is the Levite Jeshua (jeshua-5, which owner row 105929 records); jeshua-3 is the EZR 2:2 namesake.", "confidence": 0.65},
+  {"kind": "retarget", "rows": [98581], "new_type": "", "new_to": "phinehas-3", "verse": "EZR 8:33", "why": "The father of Eleazar in EZR 8:33 is phinehas-3; 'phinehas' is Aaron's grandson, a different namesake.", "confidence": 0.7}
+ ],
+ "missing": [
+  {"from": "jeiel-10", "type": "descendant-of", "to": "adonikam", "verse": "EZR 8:13", "why": "The verse lists Eliphelet, Jeiel and Shemaiah among the last sons of Adonikam, and no row records Jeiel's line.", "confidence": 0.6},
+  {"from": "mahli", "type": "son-of", "to": "levi", "verse": "EZR 8:18", "why": "The verse says 'the sons of Mahli, the son of Levi', a son-of statement that the site records only as descendant-of.", "confidence": 0.4}
+ ],
+ "note": "Read from the Hebrew: the 'sons of X: Y' headings are descendant-of and the 'son of' phrases son-of. Owner rows (105917, 106846, 107102, 105732, 105929, 107147) are not contested; 105730 uses companion-of, which is not in the type list, and its 'with him' is not a family statement, so it is kept.",
+ "model": "claude-haiku-5-5"
+}

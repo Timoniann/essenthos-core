@@ -1,0 +1,16 @@
+{"wrong": [
+ {"kind": "retarget", "rows": [102118], "new_type": "", "new_to": "shobal-3", "verse": "1CH 4:2", "why": "Reaiah is the son of the Shobal who is a son of Judah in verse 1, which is shobal-3; shobal-2 is the son of Hur in 1CH 2:50.", "confidence": 0.55},
+ {"kind": "delete", "rows": [102815], "new_type": "", "new_to": "", "verse": "1CH 4:1", "why": "Verse 1 makes the Shobal here a son of Judah, which is shobal-3, not shobal-2 the son of Hur.", "confidence": 0.5},
+ {"kind": "delete", "rows": [102816], "new_type": "", "new_to": "", "verse": "1CH 4:2", "why": "The Shobal who begat Reaiah is the son of Judah (shobal-3), not shobal-2 the son of Hur.", "confidence": 0.5},
+ {"kind": "retarget", "rows": [101668], "new_type": "", "new_to": "ishi-the-simeonite", "verse": "1CH 4:42", "why": "The sons of Ishi who led the five hundred are the Simeonite Ishi, not the Ishi of verse 20.", "confidence": 0.55},
+ {"kind": "retarget", "rows": [101928], "new_type": "", "new_to": "ishi-the-simeonite", "verse": "1CH 4:42", "why": "Pelatiah is one of the sons of Ishi in verse 42, which is the Simeonite Ishi, not the Ishi of verse 20.", "confidence": 0.55},
+ {"kind": "retarget", "rows": [102168], "new_type": "", "new_to": "ishi-the-simeonite", "verse": "1CH 4:42", "why": "Rephaiah is one of the sons of Ishi in verse 42, which is the Simeonite Ishi, not the Ishi of verse 20.", "confidence": 0.55},
+ {"kind": "retarget", "rows": [103215], "new_type": "", "new_to": "ishi-the-simeonite", "verse": "1CH 4:42", "why": "Uzziel is one of the sons of Ishi in verse 42, which is the Simeonite Ishi, not the Ishi of verse 20.", "confidence": 0.55},
+ {"kind": "delete", "rows": [106049], "new_type": "", "new_to": "", "verse": "1CH 4:34", "why": "The words son of Amaziah in verse 34 attach to Joshah alone, and Meshobab is not said to descend from Amaziah.", "confidence": 0.4},
+ {"kind": "delete", "rows": [106686], "new_type": "", "new_to": "", "verse": "1CH 4:19", "why": "The verse names Naham only as father of Keilah; Eshtemoa is listed among the sons of Hodiah's wife with no father given.", "confidence": 0.35}
+],
+ "missing": [
+ {"from": "hezron-2", "type": "descendant-of", "to": "judah", "verse": "1CH 4:1", "why": "The chapter lists Hezron among the sons of Judah, and no row joins him to Judah, as it does Carmi, Hur and Shobal.", "confidence": 0.6}
+],
+ "note": "Owner rows that look wrong: meonothai son-of othniel (106560), which 4:13 does not state, and hodiah brother-in-law-of naham (106648), which fits the Hebrew but not the KJV's 'the sister of Naham'. Carmi and Hur are only descendant-of Judah, and the Ezer rows on ezer-6 duplicate ezer-2.",
+ "model": "claude-haiku-5-5"}

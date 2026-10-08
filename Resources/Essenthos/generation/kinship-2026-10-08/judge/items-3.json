@@ -1,0 +1,1846 @@
+[
+ {
+  "id": 101,
+  "chapter": "NEH-12",
+  "claim": "The chapter plainly states 'maai brother-of zechariah-22', and the site does not record it.",
+  "records": [
+   {
+    "slug": "maai",
+    "name": "Maai",
+    "distinguisher": "Levite with music instruments (NEH 12:36)",
+    "sex": "male"
+   },
+   {
+    "slug": "zechariah-22",
+    "name": "Zechariah",
+    "distinguisher": "son of Jonathan (NEH 12:35)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "NEH 12:35": {
+    "KJV": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:",
+    "BHSA": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ "
+   },
+   "NEH 12:36": {
+    "KJV": "And his brethren, Shemaiah, and Azarael, Milalai, Gilalai, Maai, Nethaneel, and Judah, Hanani, with the musical instruments of David the man of God, and Ezra the scribe before them.",
+    "BHSA": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד אִ֣ישׁ הָאֱלֹהִ֑ים וְעֶזְרָ֥א הַסֹּופֵ֖ר לִפְנֵיהֶֽם׃ "
+   },
+   "NEH 12:37": {
+    "KJV": "And at the fountain gate, which was over against them, they went up by the stairs of the city of David, at the going up of the wall, above the house of David, even unto the water gate eastward.",
+    "BHSA": "וְעַל֩ שַׁ֨עַר הָעַ֜יִן וְנֶגְדָּ֗ם עָלוּ֙ עַֽל־מַעֲלֹות֙ עִ֣יר דָּוִ֔יד בַּֽמַּעֲלֶ֖ה לַחֹומָ֑ה מֵעַל֙ לְבֵ֣ית דָּוִ֔יד וְעַ֛ד שַׁ֥עַר הַמַּ֖יִם מִזְרָֽח׃ "
+   }
+  }
+ },
+ {
+  "id": 102,
+  "chapter": "1CH-4",
+  "claim": "The row 'shobal-2 descendant-of judah' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 4:1",
+  "records": [
+   {
+    "slug": "judah",
+    "name": "Judah",
+    "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+    "sex": "male"
+   },
+   {
+    "slug": "shobal-2",
+    "name": "Shobal",
+    "distinguisher": "son of Hur who founded Kiriath-jearim (1CH 2:50)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 4:1": {
+    "KJV": "The sons of Judah; Pharez, Hezron, and Carmi, and Hur, and Shobal.",
+    "BHSA": "בְּנֵ֖י יְהוּדָ֑ה פֶּ֧רֶץ חֶצְרֹ֛ון וְכַרְמִ֖י וְח֥וּר וְשֹׁובָֽל׃ "
+   },
+   "1CH 4:2": {
+    "KJV": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites.",
+    "BHSA": "וּרְאָיָ֤ה בֶן־שֹׁובָל֙ הֹולִ֣יד אֶת־יַ֔חַת וְיַ֣חַת הֹלִ֔יד אֶת־אֲחוּמַ֖י וְאֶת־לָ֑הַד אֵ֖לֶּה מִשְׁפְּחֹ֥ות הַצָּֽרְעָתִֽי׃ ס "
+   }
+  }
+ },
+ {
+  "id": 103,
+  "chapter": "NEH-12",
+  "claim": "The chapter plainly states 'gilalai brother-of zechariah-22', and the site does not record it.",
+  "records": [
+   {
+    "slug": "gilalai",
+    "name": "Gilalai",
+    "distinguisher": "Levite with music instruments (NEH 12:36)",
+    "sex": "male"
+   },
+   {
+    "slug": "zechariah-22",
+    "name": "Zechariah",
+    "distinguisher": "son of Jonathan (NEH 12:35)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "NEH 12:35": {
+    "KJV": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:",
+    "BHSA": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ "
+   },
+   "NEH 12:36": {
+    "KJV": "And his brethren, Shemaiah, and Azarael, Milalai, Gilalai, Maai, Nethaneel, and Judah, Hanani, with the musical instruments of David the man of God, and Ezra the scribe before them.",
+    "BHSA": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד אִ֣ישׁ הָאֱלֹהִ֑ים וְעֶזְרָ֥א הַסֹּופֵ֖ר לִפְנֵיהֶֽם׃ "
+   },
+   "NEH 12:37": {
+    "KJV": "And at the fountain gate, which was over against them, they went up by the stairs of the city of David, at the going up of the wall, above the house of David, even unto the water gate eastward.",
+    "BHSA": "וְעַל֩ שַׁ֨עַר הָעַ֜יִן וְנֶגְדָּ֗ם עָלוּ֙ עַֽל־מַעֲלֹות֙ עִ֣יר דָּוִ֔יד בַּֽמַּעֲלֶ֖ה לַחֹומָ֑ה מֵעַל֙ לְבֵ֣ית דָּוִ֔יד וְעַ֛ד שַׁ֥עַר הַמַּ֖יִם מִזְרָֽח׃ "
+   }
+  }
+ },
+ {
+  "id": 104,
+  "chapter": "1CH-7",
+  "claim": "The chapter plainly states 'rizia son-of jephunneh-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jephunneh-2",
+    "name": "Jephunneh",
+    "distinguisher": "son of Jether [Ithran] (1CH 7:38)",
+    "sex": "male"
+   },
+   {
+    "slug": "rizia",
+    "name": "Rizia",
+    "distinguisher": "son of Ulla [Jephunneh] (1CH 7:39)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "1CH 7:38": {
+    "KJV": "And the sons of Jether; Jephunneh, and Pispah, and Ara.",
+    "BHSA": "וּבְנֵ֖י יֶ֑תֶר יְפֻנֶּ֥ה וּפִסְפָּ֖ה וַאְרָֽא׃ "
+   },
+   "1CH 7:39": {
+    "KJV": "And the sons of Ulla; Arah, and Haniel, and Rezia.",
+    "BHSA": "וּבְנֵ֖י עֻלָּ֑א אָרַ֥ח וְחַנִּיאֵ֖ל וְרִצְיָֽא׃ "
+   },
+   "1CH 7:40": {
+    "KJV": "All these were the children of Asher, heads of their father's house, choice and mighty men of valour, chief of the princes. And the number throughout the genealogy of them that were apt to the war and to battle was twenty and six thousand men.",
+    "BHSA": "כָּל־אֵ֣לֶּה בְנֵי־אָ֠שֵׁר רָאשֵׁ֨י בֵית־הָאָבֹ֤ות בְּרוּרִים֙ גִּבֹּורֵ֣י חֲיָלִ֔ים רָאשֵׁ֖י הַנְּשִׂיאִ֑ים וְהִתְיַחְשָׂ֤ם בַּצָּבָא֙ בַּמִּלְחָמָ֔ה מִסְפָּרָ֣ם אֲנָשִׁ֔ים עֶשְׂרִ֥ים וְשִׁשָּׁ֖ה אָֽלֶף׃ ס "
+   }
+  }
+ },
+ {
+  "id": 105,
+  "chapter": "GEN-36",
+  "claim": "The row 'timna sister-of lotan' should be removed: the chapter does not say it.",
+  "row_verse": "GEN 36:22",
+  "records": [
+   {
+    "slug": "lotan",
+    "name": "Lotan",
+    "distinguisher": "son of Seir (GEN 36:20) and chief in Edom (GEN 36:29)",
+    "sex": "male"
+   },
+   {
+    "slug": "timna",
+    "name": "Timna",
+    "distinguisher": "concubine of Esau's son Eliphaz (GEN 36:12) and sister of Lotan (GEN 36:22)",
+    "sex": "female"
+   }
+  ],
+  "text": {
+   "GEN 36:21": {
+    "KJV": "And Dishon, and Ezer, and Dishan: these are the dukes of the Horites, the children of Seir in the land of Edom.",
+    "BHSA": "וְדִשֹׁ֥ון וְאֵ֖צֶר וְדִישָׁ֑ן אֵ֣לֶּה אַלּוּפֵ֧י הַחֹרִ֛י בְּנֵ֥י שֵׂעִ֖יר בְּאֶ֥רֶץ אֱדֹֽום׃ "
+   },
+   "GEN 36:22": {
+    "KJV": "And the children of Lotan were Hori and Hemam; and Lotan's sister was Timna.",
+    "BHSA": "וַיִּהְי֥וּ בְנֵי־לֹוטָ֖ן חֹרִ֣י וְהֵימָ֑ם וַאֲחֹ֥ות לֹוטָ֖ן תִּמְנָֽע׃ "
+   },
+   "GEN 36:23": {
+    "KJV": "And the children of Shobal were these; Alvan, and Manahath, and Ebal, Shepho, and Onam.",
+    "BHSA": "וְאֵ֨לֶּה֙ בְּנֵ֣י שֹׁובָ֔ל עַלְוָ֥ן וּמָנַ֖חַת וְעֵיבָ֑ל שְׁפֹ֖ו וְאֹונָֽם׃ "
+   }
+  }
+ },
+ {
+  "id": 106,
+  "chapter": "NEH-11",
+  "claim": "The row 'zechariah-20 descendant-of ahijah' should be removed: the chapter does not say it.",
+  "row_verse": "NEH 11:5",
+  "records": [
+   {
+    "slug": "ahijah",
+    "name": "Ahijah",
+    "distinguisher": "the prophet of Shiloh (1KI 11:29, 14:2)",
+    "sex": "male"
+   },
+   {
+    "slug": "zechariah-20",
+    "name": "Zechariah",
+    "distinguisher": "son of the Shilonite (NEH 11:5)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "NEH 11:4": {
+    "KJV": "And at Jerusalem dwelt certain of the children of Judah, and of the children of Benjamin. Of the children of Judah; Athaiah the son of Uzziah, the son of Zechariah, the son of Amariah, the son of Shephatiah, the son of Mahalaleel, of the children of Perez;",
+    "BHSA": "וּבִֽירוּשָׁלִַ֨ם֙ יָֽשְׁב֔וּ מִבְּנֵ֥י יְהוּדָ֖ה וּמִבְּנֵ֣י בִנְיָמִ֑ן מִבְּנֵ֣י יְ֠הוּדָה עֲתָיָ֨ה בֶן־עֻזִּיָּ֜ה בֶּן־זְכַרְיָ֧ה בֶן־אֲמַרְיָ֛ה בֶּן־שְׁפַטְיָ֥ה בֶן־מַהֲלַלְאֵ֖ל מִבְּנֵי־פָֽרֶץ׃ "
+   },
+   "NEH 11:5": {
+    "KJV": "And Maaseiah the son of Baruch, the son of Colhozeh, the son of Hazaiah, the son of Adaiah, the son of Joiarib, the son of Zechariah, the son of Shiloni.",
+    "BHSA": "וּמַעֲשֵׂיָ֣ה בֶן־בָּר֣וּךְ בֶּן־כָּל־֠חֹזֶה בֶּן־חֲזָיָ֨ה בֶן־עֲדָיָ֧ה בֶן־יֹויָרִ֛יב בֶּן־זְכַרְיָ֖ה בֶּן־הַשִּׁלֹנִֽי׃ "
+   },
+   "NEH 11:6": {
+    "KJV": "All the sons of Perez that dwelt at Jerusalem were four hundred threescore and eight valiant men.",
+    "BHSA": "כָּל־בְּנֵי־פֶ֕רֶץ הַיֹּשְׁבִ֖ים בִּירוּשָׁלִָ֑ם אַרְבַּ֥ע מֵאֹ֛ות שִׁשִּׁ֥ים וּשְׁמֹנָ֖ה אַנְשֵׁי־חָֽיִל׃ ס "
+   }
+  }
+ },
+ {
+  "id": 107,
+  "chapter": "1CH-2",
+  "claim": "The chapter plainly states 'zeruiah sister-of abinadab-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abinadab-2",
+    "name": "Abinadab",
+    "distinguisher": "second-born (1CH 2:13) son of Jesse (1SA 16:8) brother of David",
+    "sex": "male"
+   },
+   {
+    "slug": "zeruiah",
+    "name": "Zeruiah",
+    "distinguisher": "mother of Abishai, Joab (1SA 26:6), and Asahel (2SA 2:18), sister of King David (1CH 2:16)",
+    "sex": "female"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abigail-2 sister-of zeruiah (2SA 17:25)",
+   "abishai son-of zeruiah (1SA 26:6)",
+   "asahel son-of zeruiah (2SA 2:18)",
+   "joab son-of zeruiah (2SA 2:18)",
+   "zeruiah mother-of joab (2SA 2:13)",
+   "zeruiah mother-of abishai (1SA 26:6)"
+  ],
+  "text": {
+   "1CH 2:15": {
+    "KJV": "Ozem the sixth, David the seventh:",
+    "BHSA": "אֹ֚צֶם הַשִּׁשִּׁ֔י דָּוִ֖יד הַשְּׁבִעִֽי׃ "
+   },
+   "1CH 2:16": {
+    "KJV": "Whose sisters were Zeruiah, and Abigail. And the sons of Zeruiah; Abishai, and Joab, and Asahel, three.",
+    "BHSA": "ואחיתיהם צְרוּיָ֣ה וַאֲבִיגָ֑יִל וּבְנֵ֣י צְרוּיָ֗ה אַבְשַׁ֛י וְיֹואָ֥ב וַעֲשָׂה־אֵ֖ל שְׁלֹשָֽׁה׃ "
+   },
+   "1CH 2:17": {
+    "KJV": "And Abigail bare Amasa: and the father of Amasa was Jether the Ishmeelite.",
+    "BHSA": "וַאֲבִיגַ֕יִל יָלְדָ֖ה אֶת־עֲמָשָׂ֑א וַאֲבִ֣י עֲמָשָׂ֔א יֶ֖תֶר הַיִּשְׁמְעֵאלִֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 108,
+  "chapter": "NEH-12",
+  "claim": "The row 'amariah-6 ancestor-of jehohanan-4' should be removed: the chapter does not say it.",
+  "row_verse": "NEH 12:13",
+  "records": [
+   {
+    "slug": "amariah-6",
+    "name": "Amariah",
+    "distinguisher": "Aaronic priest (NEH 10:8)",
+    "sex": "male"
+   },
+   {
+    "slug": "jehohanan-4",
+    "name": "Jehohanan",
+    "distinguisher": "son of Amariah (NEH 12:13)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "NEH 12:12": {
+    "KJV": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;",
+    "BHSA": "וּבִימֵי֙ יֹֽויָקִ֔ים הָי֥וּ כֹהֲנִ֖ים רָאשֵׁ֣י הָאָבֹ֑ות לִשְׂרָיָ֣ה מְרָיָ֔ה לְיִרְמְיָ֖ה חֲנַנְיָֽה׃ "
+   },
+   "NEH 12:13": {
+    "KJV": "Of Ezra, Meshullam; of Amariah, Jehohanan;",
+    "BHSA": "לְעֶזְרָ֣א מְשֻׁלָּ֔ם לַאֲמַרְיָ֖ה יְהֹוחָנָֽן׃ "
+   },
+   "NEH 12:14": {
+    "KJV": "Of Melicu, Jonathan; of Shebaniah, Joseph;",
+    "BHSA": "למלוכי יֹֽונָתָ֔ן לִשְׁבַנְיָ֖ה יֹוסֵֽף׃ "
+   }
+  }
+ },
+ {
+  "id": 109,
+  "chapter": "EZR-7",
+  "claim": "The row 'azariah son-of meraioth' should be removed: the chapter does not say it.",
+  "row_verse": "EZR 7:3",
+  "records": [
+   {
+    "slug": "azariah",
+    "name": "Azariah",
+    "distinguisher": "son of Johanan, who executed the priest's office in the temple that Solomon built (1CH 6:10)",
+    "sex": "male"
+   },
+   {
+    "slug": "meraioth",
+    "name": "Meraioth",
+    "distinguisher": "father of Amariah (1CH 6:7), Levite (1CH 6:1)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "EZR 7:2": {
+    "KJV": "The son of Shallum, the son of Zadok, the son of Ahitub,",
+    "BHSA": "בֶּן־שַׁלּ֥וּם בֶּן־צָדֹ֖וק בֶּן־אֲחִיטֽוּב׃ "
+   },
+   "EZR 7:3": {
+    "KJV": "The son of Amariah, the son of Azariah, the son of Meraioth,",
+    "BHSA": "בֶּן־אֲמַרְיָ֥ה בֶן־עֲזַרְיָ֖ה בֶּן־מְרָיֹֽות׃ "
+   },
+   "EZR 7:4": {
+    "KJV": "The son of Zerahiah, the son of Uzzi, the son of Bukki,",
+    "BHSA": "בֶּן־זְרַֽחְיָ֥ה בֶן־עֻזִּ֖י בֶּן־בֻּקִּֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 110,
+  "chapter": "EZR-8",
+  "claim": "The chapter plainly states 'jeiel-10 descendant-of adonikam', and the site does not record it.",
+  "records": [
+   {
+    "slug": "adonikam",
+    "name": "Adonikam",
+    "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:13)",
+    "sex": "male"
+   },
+   {
+    "slug": "jeiel-10",
+    "name": "Jeiel",
+    "distinguisher": "Son of Adonikam who returned from exile with Ezra; not among the given occurrences.",
+    "sex": null
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "EZR 8:12": {
+    "KJV": "And of the sons of Azgad; Johanan the son of Hakkatan, and with him an hundred and ten males.",
+    "BHSA": "וּמִבְּנֵ֣י עַזְגָּ֔ד יֹוחָנָ֖ן בֶּן־הַקָּטָ֑ן וְעִמֹּ֕ו מֵאָ֥ה וַעֲשָׂרָ֖ה הַזְּכָרִֽים׃ ס "
+   },
+   "EZR 8:13": {
+    "KJV": "And of the last sons of Adonikam, whose names are these, Eliphelet, Jeiel, and Shemaiah, and with them threescore males.",
+    "BHSA": "וּמִבְּנֵ֣י אֲדֹנִיקָם֮ אַחֲרֹנִים֒ וְאֵ֣לֶּה שְׁמֹותָ֔ם אֱלִיפֶ֖לֶט יְעִיאֵ֣ל וּֽשְׁמַעְיָ֑ה וְעִמָּהֶ֖ם שִׁשִּׁ֥ים הַזְּכָרִֽים׃ ס "
+   },
+   "EZR 8:14": {
+    "KJV": "Of the sons also of Bigvai; Uthai, and Zabbud, and with them seventy males.",
+    "BHSA": "וּמִבְּנֵ֥י בִגְוַ֖י עוּתַ֣י וזבוד וְעִמֹּ֖ו שִׁבְעִ֥ים הַזְּכָרִֽים׃ פ "
+   }
+  }
+ },
+ {
+  "id": 111,
+  "chapter": "LUK-3",
+  "claim": "The row 'admin son-of ram' should be removed: the chapter does not say it.",
+  "row_verse": "LUK 3:33",
+  "records": [
+   {
+    "slug": "admin",
+    "name": "Admin",
+    "distinguisher": "in the lineage of Messiah (LUK 3:31)",
+    "sex": "male"
+   },
+   {
+    "slug": "ram",
+    "name": "Ram",
+    "distinguisher": "son of Hezron in the lineage of King David (RUT 4:19)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "LUK 3:32": {
+    "KJV": "Which was the son of Jesse, which was the son of Obed, which was the son of Booz, which was the son of Salmon, which was the son of Naasson,",
+    "NESTLE1904": "τοῦ Ἰεσσαὶ τοῦ Ἰωβὴδ τοῦ Βοὸς τοῦ Σαλὰ τοῦ Ναασσὼν "
+   },
+   "LUK 3:33": {
+    "KJV": "Which was the son of Aminadab, which was the son of Aram, which was the son of Esrom, which was the son of Phares, which was the son of Juda,",
+    "NESTLE1904": "τοῦ Ἀμιναδὰβ τοῦ Ἀδμεὶν τοῦ Ἀρνεὶ τοῦ Ἐσρὼμ τοῦ Φαρὲς τοῦ Ἰούδα "
+   },
+   "LUK 3:34": {
+    "KJV": "Which was the son of Jacob, which was the son of Isaac, which was the son of Abraham, which was the son of Thara, which was the son of Nachor,",
+    "NESTLE1904": "τοῦ Ἰακὼβ τοῦ Ἰσαὰκ τοῦ Ἀβραὰμ τοῦ Θάρα τοῦ Ναχὼρ "
+   }
+  }
+ },
+ {
+  "id": 112,
+  "chapter": "1CH-4",
+  "claim": "The row 'idbash son-of etam' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 4:3",
+  "records": [
+   {
+    "slug": "etam",
+    "name": "Etam",
+    "distinguisher": "father of Jezreel, Ishma, Ibdash, and Hazzelelponi (1CH 4:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "idbash",
+    "name": "Idbash",
+    "distinguisher": "son of Etam (1CH 4:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 4:2": {
+    "KJV": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites.",
+    "BHSA": "וּרְאָיָ֤ה בֶן־שֹׁובָל֙ הֹולִ֣יד אֶת־יַ֔חַת וְיַ֣חַת הֹלִ֔יד אֶת־אֲחוּמַ֖י וְאֶת־לָ֑הַד אֵ֖לֶּה מִשְׁפְּחֹ֥ות הַצָּֽרְעָתִֽי׃ ס "
+   },
+   "1CH 4:3": {
+    "KJV": "And these were of the father of Etam; Jezreel, and Ishma, and Idbash: and the name of their sister was Hazelelponi:",
+    "BHSA": "וְאֵ֨לֶּה֙ אֲבִ֣י עֵיטָ֔ם יִזְרְעֶ֥אל וְיִשְׁמָ֖א וְיִדְבָּ֑שׁ וְשֵׁ֥ם אֲחֹותָ֖ם הַצְלֶלְפֹּֽונִי׃ "
+   },
+   "1CH 4:4": {
+    "KJV": "And Penuel the father of Gedor, and Ezer the father of Hushah. These are the sons of Hur, the firstborn of Ephratah, the father of Bethlehem.",
+    "BHSA": "וּפְנוּאֵל֙ אֲבִ֣י גְדֹ֔ר וְעֵ֖זֶר אֲבִ֣י חוּשָׁ֑ה אֵ֤לֶּה בְנֵי־חוּר֙ בְּכֹ֣ור אֶפְרָ֔תָה אֲבִ֖י בֵּ֥ית לָֽחֶם׃ "
+   }
+  }
+ },
+ {
+  "id": 113,
+  "chapter": "NEH-11",
+  "claim": "The row 'bunni-2 father-of hashabiah-2' points at the wrong person; it should point at 'hashabiah-11'.",
+  "row_verse": "NEH 11:15",
+  "records": [
+   {
+    "slug": "bunni-2",
+    "name": "Bunni",
+    "distinguisher": "father of Hashabiah (NEH 11:15)",
+    "sex": "male"
+   },
+   {
+    "slug": "hashabiah-11",
+    "name": "Hashabiah",
+    "distinguisher": "Son of Bunni, father of Azrikam, ancestor of Shemaiah in Nehemiah's day",
+    "sex": null
+   },
+   {
+    "slug": "hashabiah-2",
+    "name": "Hashabiah",
+    "distinguisher": "son of Jeduthun (1CH 25:3), chosen twelfth by lot (1CH 25:19), descendant of Hebron (1CH 26:30)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "NEH 11:14": {
+    "KJV": "And their brethren, mighty men of valour, an hundred twenty and eight: and their overseer was Zabdiel, the son of one of the great men.",
+    "BHSA": "וַאֲחֵיהֶם֙ גִּבֹּ֣ורֵי חַ֔יִל מֵאָ֖ה עֶשְׂרִ֣ים וּשְׁמֹנָ֑ה וּפָקִ֣יד עֲלֵיהֶ֔ם זַבְדִּיאֵ֖ל בֶּן־הַגְּדֹולִֽים׃ ס "
+   },
+   "NEH 11:15": {
+    "KJV": "Also of the Levites: Shemaiah the son of Hashub, the son of Azrikam, the son of Hashabiah, the son of Bunni;",
+    "BHSA": "וּמִֽן־הַלְוִיִּ֑ם שְׁמַעְיָ֧ה בֶן־חַשּׁ֛וּב בֶּן־עַזְרִיקָ֥ם בֶּן־חֲשַׁבְיָ֖ה בֶּן־בּוּנִּֽי׃ "
+   },
+   "NEH 11:16": {
+    "KJV": "And Shabbethai and Jozabad, of the chief of the Levites, had the oversight of the outward business of the house of God.",
+    "BHSA": "וְשַׁבְּתַ֨י וְיֹוזָבָ֜ד עַל־הַמְּלָאכָ֤ה הַחִֽיצֹנָה֙ לְבֵ֣ית הָאֱלֹהִ֔ים מֵרָאשֵׁ֖י הַלְוִיִּֽם׃ "
+   }
+  }
+ },
+ {
+  "id": 114,
+  "chapter": "NEH-11",
+  "claim": "The chapter plainly states 'mattaniah-9 descendant-of asaph-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "asaph-2",
+    "name": "Asaph",
+    "distinguisher": "son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9)",
+    "sex": "male"
+   },
+   {
+    "slug": "mattaniah-9",
+    "name": "Mattaniah",
+    "distinguisher": "descendant of Mica (NEH 11:17), gatekeeper (NEH 12:25)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "mattaniah-9 son-of mica-2 (1CH 9:15)",
+   "zichri-5 son-of asaph-2 (1CH 9:15)"
+  ],
+  "text": {
+   "NEH 11:16": {
+    "KJV": "And Shabbethai and Jozabad, of the chief of the Levites, had the oversight of the outward business of the house of God.",
+    "BHSA": "וְשַׁבְּתַ֨י וְיֹוזָבָ֜ד עַל־הַמְּלָאכָ֤ה הַחִֽיצֹנָה֙ לְבֵ֣ית הָאֱלֹהִ֔ים מֵרָאשֵׁ֖י הַלְוִיִּֽם׃ "
+   },
+   "NEH 11:17": {
+    "KJV": "And Mattaniah the son of Micha, the son of Zabdi, the son of Asaph, was the principal to begin the thanksgiving in prayer: and Bakbukiah the second among his brethren, and Abda the son of Shammua, the son of Galal, the son of Jeduthun.",
+    "BHSA": "וּמַתַּנְיָ֣ה בֶן־מִ֠יכָה בֶּן־זַבְדִּ֨י בֶן־אָסָ֜ף רֹ֗אשׁ הַתְּחִלָּה֙ יְהֹודֶ֣ה לַתְּפִלָּ֔ה וּבַקְבֻּקְיָ֖ה מִשְׁנֶ֣ה מֵאֶחָ֑יו וְעַבְדָּא֙ בֶּן־שַׁמּ֔וּעַ בֶּן־גָּלָ֖ל בֶּן־ידיתון׃ "
+   },
+   "NEH 11:18": {
+    "KJV": "All the Levites in the holy city were two hundred fourscore and four.",
+    "BHSA": "כָּל־הַלְוִיִּם֙ בְּעִ֣יר הַקֹּ֔דֶשׁ מָאתַ֖יִם שְׁמֹנִ֥ים וְאַרְבָּעָֽה׃ פ "
+   }
+  }
+ },
+ {
+  "id": 115,
+  "chapter": "1CH-7",
+  "claim": "The row 'bilhan-2 son-of jediael' points at the wrong person; it should point at 'ashbel'.",
+  "row_verse": "1CH 7:10",
+  "records": [
+   {
+    "slug": "ashbel",
+    "name": "Ashbel",
+    "distinguisher": "son of Benjamin (GEN 46:21)",
+    "sex": "male"
+   },
+   {
+    "slug": "bilhan-2",
+    "name": "Bilhan",
+    "distinguisher": "son of Jediael (also called Ashbel) (1CH 7:10)",
+    "sex": "male"
+   },
+   {
+    "slug": "jediael",
+    "name": "Jediael",
+    "distinguisher": "son of Shimri (1CH 11:45)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 7:9": {
+    "KJV": "And the number of them, after their genealogy by their generations, heads of the house of their fathers, mighty men of valour, was twenty thousand and two hundred.",
+    "BHSA": "וְהִתְיַחְשָׂ֣ם לְתֹלְדֹותָ֗ם רָאשֵׁי֙ בֵּ֣ית אֲבֹותָ֔ם גִּבֹּורֵ֖י חָ֑יִל עֶשְׂרִ֥ים אֶ֖לֶף וּמָאתָֽיִם׃ ס "
+   },
+   "1CH 7:10": {
+    "KJV": "The sons also of Jediael; Bilhan: and the sons of Bilhan; Jeush, and Benjamin, and Ehud, and Chenaanah, and Zethan, and Tharshish, and Ahishahar.",
+    "BHSA": "וּבְנֵ֥י יְדִיעֲאֵ֖ל בִּלְהָ֑ן וּבְנֵ֣י בִלְהָ֗ן יעישׁ וּ֠בִנְיָמִן וְאֵה֤וּד וּֽכְנַעֲנָה֙ וְזֵיתָ֔ן וְתַרְשִׁ֖ישׁ וַאֲחִישָֽׁחַר׃ "
+   },
+   "1CH 7:11": {
+    "KJV": "All these the sons of Jediael, by the heads of their fathers, mighty men of valour, were seventeen thousand and two hundred soldiers, fit to go out for war and battle.",
+    "BHSA": "כָּל־אֵ֜לֶּה בְּנֵ֤י יְדִֽיעֲאֵל֙ לְרָאשֵׁ֣י הָאָבֹ֔ות גִּבֹּורֵ֖י חֲיָלִ֑ים שִׁבְעָֽה־עָשָׂ֥ר אֶ֨לֶף֙ וּמָאתַ֔יִם יֹצְאֵ֥י צָבָ֖א לַמִּלְחָמָֽה׃ "
+   }
+  }
+ },
+ {
+  "id": 116,
+  "chapter": "NEH-12",
+  "claim": "The chapter plainly states 'judah-7 brother-of zechariah-22', and the site does not record it.",
+  "records": [
+   {
+    "slug": "judah-7",
+    "name": "Judah",
+    "distinguisher": "A priest in Nehemiah's time named among leaders in the dedication procession",
+    "sex": null
+   },
+   {
+    "slug": "zechariah-22",
+    "name": "Zechariah",
+    "distinguisher": "son of Jonathan (NEH 12:35)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "NEH 12:35": {
+    "KJV": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:",
+    "BHSA": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ "
+   },
+   "NEH 12:36": {
+    "KJV": "And his brethren, Shemaiah, and Azarael, Milalai, Gilalai, Maai, Nethaneel, and Judah, Hanani, with the musical instruments of David the man of God, and Ezra the scribe before them.",
+    "BHSA": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד אִ֣ישׁ הָאֱלֹהִ֑ים וְעֶזְרָ֥א הַסֹּופֵ֖ר לִפְנֵיהֶֽם׃ "
+   },
+   "NEH 12:37": {
+    "KJV": "And at the fountain gate, which was over against them, they went up by the stairs of the city of David, at the going up of the wall, above the house of David, even unto the water gate eastward.",
+    "BHSA": "וְעַל֩ שַׁ֨עַר הָעַ֜יִן וְנֶגְדָּ֗ם עָלוּ֙ עַֽל־מַעֲלֹות֙ עִ֣יר דָּוִ֔יד בַּֽמַּעֲלֶ֖ה לַחֹומָ֑ה מֵעַל֙ לְבֵ֣ית דָּוִ֔יד וְעַ֛ד שַׁ֥עַר הַמַּ֖יִם מִזְרָֽח׃ "
+   }
+  }
+ },
+ {
+  "id": 117,
+  "chapter": "1CH-5",
+  "claim": "The row 'jeiel brother-of zechariah-3' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 5:7",
+  "records": [
+   {
+    "slug": "jeiel",
+    "name": "Jeiel",
+    "distinguisher": "1CH 5:7, Reubenite (1CH 5:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "zechariah-3",
+    "name": "Zechariah",
+    "distinguisher": "1CH 5:7, Reubenite (1CH 5:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 5:6": {
+    "KJV": "Beerah his son, whom Tilgathpilneser king of Assyria carried away captive: he was prince of the Reubenites.",
+    "BHSA": "בְּאֵרָ֣ה בְנֹ֔ו אֲשֶׁ֣ר הֶגְלָ֔ה תִּלְּגַ֥ת פִּלְנְאֶ֖סֶר מֶ֣לֶךְ אַשֻּׁ֑ר ה֥וּא נָשִׂ֖יא לָרֽאוּבֵנִֽי׃ "
+   },
+   "1CH 5:7": {
+    "KJV": "And his brethren by their families, when the genealogy of their generations was reckoned, were the chief, Jeiel, and Zechariah,",
+    "BHSA": "וְאֶחָיו֙ לְמִשְׁפְּחֹתָ֔יו בְּהִתְיַחֵ֖שׂ לְתֹלְדֹותָ֑ם הָרֹ֥אשׁ יְעִיאֵ֖ל וּזְכַרְיָֽהוּ׃ "
+   },
+   "1CH 5:8": {
+    "KJV": "And Bela the son of Azaz, the son of Shema, the son of Joel, who dwelt in Aroer, even unto Nebo and Baalmeon:",
+    "BHSA": "וּבֶ֨לַע֙ בֶּן־עָזָ֔ז בֶּן־שֶׁ֖מַע בֶּן־יֹואֵ֑ל ה֚וּא יֹושֵׁ֣ב בַּעֲרֹעֵ֔ר וְעַד־נְבֹ֖ו וּבַ֥עַל מְעֹֽון׃ "
+   }
+  }
+ },
+ {
+  "id": 118,
+  "chapter": "1CH-4",
+  "claim": "The row 'etam father-of idbash' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 4:3",
+  "records": [
+   {
+    "slug": "etam",
+    "name": "Etam",
+    "distinguisher": "father of Jezreel, Ishma, Ibdash, and Hazzelelponi (1CH 4:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "idbash",
+    "name": "Idbash",
+    "distinguisher": "son of Etam (1CH 4:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 4:2": {
+    "KJV": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites.",
+    "BHSA": "וּרְאָיָ֤ה בֶן־שֹׁובָל֙ הֹולִ֣יד אֶת־יַ֔חַת וְיַ֣חַת הֹלִ֔יד אֶת־אֲחוּמַ֖י וְאֶת־לָ֑הַד אֵ֖לֶּה מִשְׁפְּחֹ֥ות הַצָּֽרְעָתִֽי׃ ס "
+   },
+   "1CH 4:3": {
+    "KJV": "And these were of the father of Etam; Jezreel, and Ishma, and Idbash: and the name of their sister was Hazelelponi:",
+    "BHSA": "וְאֵ֨לֶּה֙ אֲבִ֣י עֵיטָ֔ם יִזְרְעֶ֥אל וְיִשְׁמָ֖א וְיִדְבָּ֑שׁ וְשֵׁ֥ם אֲחֹותָ֖ם הַצְלֶלְפֹּֽונִי׃ "
+   },
+   "1CH 4:4": {
+    "KJV": "And Penuel the father of Gedor, and Ezer the father of Hushah. These are the sons of Hur, the firstborn of Ephratah, the father of Bethlehem.",
+    "BHSA": "וּפְנוּאֵל֙ אֲבִ֣י גְדֹ֔ר וְעֵ֖זֶר אֲבִ֣י חוּשָׁ֑ה אֵ֤לֶּה בְנֵי־חוּר֙ בְּכֹ֣ור אֶפְרָ֔תָה אֲבִ֖י בֵּ֥ית לָֽחֶם׃ "
+   }
+  }
+ },
+ {
+  "id": 119,
+  "chapter": "NEH-12",
+  "claim": "The row 'meshullam-16 descendant-of ezra' points at the wrong person; it should point at 'ezra-3'.",
+  "row_verse": "NEH 12:13",
+  "records": [
+   {
+    "slug": "ezra",
+    "name": "Ezra",
+    "distinguisher": "son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+    "sex": "male"
+   },
+   {
+    "slug": "ezra-3",
+    "name": "Ezra",
+    "distinguisher": "Priest who returned with Zerubbabel and Jeshua; ancestor of a priestly house later headed by Meshullam",
+    "sex": null
+   },
+   {
+    "slug": "meshullam-16",
+    "name": "Meshullam",
+    "distinguisher": "son of Ezra (NEH 12:13)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "NEH 12:12": {
+    "KJV": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;",
+    "BHSA": "וּבִימֵי֙ יֹֽויָקִ֔ים הָי֥וּ כֹהֲנִ֖ים רָאשֵׁ֣י הָאָבֹ֑ות לִשְׂרָיָ֣ה מְרָיָ֔ה לְיִרְמְיָ֖ה חֲנַנְיָֽה׃ "
+   },
+   "NEH 12:13": {
+    "KJV": "Of Ezra, Meshullam; of Amariah, Jehohanan;",
+    "BHSA": "לְעֶזְרָ֣א מְשֻׁלָּ֔ם לַאֲמַרְיָ֖ה יְהֹוחָנָֽן׃ "
+   },
+   "NEH 12:14": {
+    "KJV": "Of Melicu, Jonathan; of Shebaniah, Joseph;",
+    "BHSA": "למלוכי יֹֽונָתָ֔ן לִשְׁבַנְיָ֖ה יֹוסֵֽף׃ "
+   }
+  }
+ },
+ {
+  "id": 120,
+  "chapter": "GEN-25",
+  "claim": "The chapter plainly states 'sheba-3 descendant-of keturah', and the site does not record it.",
+  "records": [
+   {
+    "slug": "keturah",
+    "name": "Keturah",
+    "distinguisher": "Abraham's second wife after Sarah died (GEN 25:1)",
+    "sex": "female"
+   },
+   {
+    "slug": "sheba-3",
+    "name": "Sheba",
+    "distinguisher": "son of Jokshan (GEN 25:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abida descendant-of keturah (1CH 1:33)",
+   "ishbak son-of keturah (1CH 1:32)",
+   "jokshan son-of keturah (1CH 1:32)",
+   "keturah mother-of zimran (1CH 1:32)",
+   "keturah mother-of jokshan (1CH 1:32)",
+   "keturah mother-of medan (1CH 1:32)"
+  ],
+  "text": {
+   "GEN 25:3": {
+    "KJV": "And Jokshan begat Sheba, and Dedan. And the sons of Dedan were Asshurim, and Letushim, and Leummim.",
+    "BHSA": "וְיָקְשָׁ֣ן יָלַ֔ד אֶת־שְׁבָ֖א וְאֶת־דְּדָ֑ן וּבְנֵ֣י דְדָ֔ן הָי֛וּ אַשּׁוּרִ֥ם וּלְטוּשִׁ֖ים וּלְאֻמִּֽים׃ "
+   },
+   "GEN 25:4": {
+    "KJV": "And the sons of Midian; Ephah, and Epher, and Hanoch, and Abidah, and Eldaah. All these were the children of Keturah.",
+    "BHSA": "וּבְנֵ֣י מִדְיָ֗ן עֵיפָ֤ה וָעֵ֨פֶר֙ וַחֲנֹ֔ךְ וַאֲבִידָ֖ע וְאֶלְדָּעָ֑ה כָּל־אֵ֖לֶּה בְּנֵ֥י קְטוּרָֽה׃ "
+   },
+   "GEN 25:5": {
+    "KJV": "And Abraham gave all that he had unto Isaac.",
+    "BHSA": "וַיִּתֵּ֧ן אַבְרָהָ֛ם אֶת־כָּל־אֲשֶׁר־לֹ֖ו לְיִצְחָֽק׃ "
+   }
+  }
+ },
+ {
+  "id": 121,
+  "chapter": "1CH-7",
+  "claim": "The row 'peresh father-of rakem' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 7:16",
+  "records": [
+   {
+    "slug": "peresh",
+    "name": "Peresh",
+    "distinguisher": "son of Machir and Maacah (1CH 7:16)",
+    "sex": "male"
+   },
+   {
+    "slug": "rakem",
+    "name": "Rakem",
+    "distinguisher": "son of Peresh (1CH 7:16)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 7:15": {
+    "KJV": "And Machir took to wife the sister of Huppim and Shuppim, whose sister's name was Maachah;) and the name of the second was Zelophehad: and Zelophehad had daughters.",
+    "BHSA": "וּמָכִ֞יר לָקַ֤ח אִשָּׁה֙ לְחֻפִּ֣ים וּלְשֻׁפִּ֔ים וְשֵׁ֤ם אֲחֹתֹו֙ מַעֲכָ֔ה וְשֵׁ֥ם הַשֵּׁנִ֖י צְלָפְחָ֑ד וַתִּהְיֶ֥נָה לִצְלָפְחָ֖ד בָּנֹֽות׃ "
+   },
+   "1CH 7:16": {
+    "KJV": "And Maachah the wife of Machir bare a son, and she called his name Peresh; and the name of his brother was Sheresh; and his sons were Ulam and Rakem.",
+    "BHSA": "וַתֵּ֨לֶד מַעֲכָ֤ה אֵֽשֶׁת־מָכִיר֙ בֵּ֔ן וַתִּקְרָ֤א שְׁמֹו֙ פֶּ֔רֶשׁ וְשֵׁ֥ם אָחִ֖יו שָׁ֑רֶשׁ וּבָנָ֖יו אוּלָ֥ם וָרָֽקֶם׃ "
+   },
+   "1CH 7:17": {
+    "KJV": "And the sons of Ulam; Bedan. These were the sons of Gilead, the son of Machir, the son of Manasseh.",
+    "BHSA": "וּבְנֵ֥י אוּלָ֖ם בְּדָ֑ן אֵ֚לֶּה בְּנֵ֣י גִלְעָ֔ד בֶּן־מָכִ֖יר בֶּן־מְנַשֶּֽׁה׃ "
+   }
+  }
+ },
+ {
+  "id": 122,
+  "chapter": "1CH-2",
+  "claim": "The row 'ahlai son-of sheshan' should become 'ahlai daughter-of sheshan'.",
+  "row_verse": "1CH 2:31",
+  "records": [
+   {
+    "slug": "ahlai",
+    "name": "Ahlai",
+    "distinguisher": "son of Sheshan (1CH 2:31)",
+    "sex": "male"
+   },
+   {
+    "slug": "sheshan",
+    "name": "Sheshan",
+    "distinguisher": "son of Ishi (1CH 2:31)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 2:30": {
+    "KJV": "And the sons of Nadab; Seled, and Appaim: but Seled died without children.",
+    "BHSA": "וּבְנֵ֥י נָדָ֖ב סֶ֣לֶד וְאַפָּ֑יִם וַיָּ֥מָת סֶ֖לֶד לֹ֥א בָנִֽים׃ ס "
+   },
+   "1CH 2:31": {
+    "KJV": "And the sons of Appaim; Ishi. And the sons of Ishi; Sheshan. And the children of Sheshan; Ahlai.",
+    "BHSA": "וּבְנֵ֥י אַפַּ֖יִם יִשְׁעִ֑י וּבְנֵ֤י יִשְׁעִי֙ שֵׁשָׁ֔ן וּבְנֵ֥י שֵׁשָׁ֖ן אַחְלָֽי׃ "
+   },
+   "1CH 2:32": {
+    "KJV": "And the sons of Jada the brother of Shammai; Jether, and Jonathan: and Jether died without children.",
+    "BHSA": "וּבְנֵ֤י יָדָע֙ אֲחִ֣י שַׁמַּ֔י יֶ֖תֶר וְיֹונָתָ֑ן וַיָּ֥מָת יֶ֖תֶר לֹ֥א בָנִֽים׃ ס "
+   }
+  }
+ },
+ {
+  "id": 123,
+  "chapter": "1CH-3",
+  "claim": "The chapter plainly states 'hasadiah son-of zerubbabel-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "hasadiah",
+    "name": "Hasadiah",
+    "distinguisher": "son of Meshullam (1CH 3:20)",
+    "sex": "male"
+   },
+   {
+    "slug": "zerubbabel-2",
+    "name": "Zerubbabel",
+    "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7), son of Shealtiel (EZR 3:2)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "zerubbabel-2 son-of shealtiel-2 (EZR 3:2)",
+   "shealtiel-2 father-of zerubbabel-2 (EZR 3:2)"
+  ],
+  "text": {
+   "1CH 3:19": {
+    "KJV": "And the sons of Pedaiah were, Zerubbabel, and Shimei: and the sons of Zerubbabel; Meshullam, and Hananiah, and Shelomith their sister:",
+    "BHSA": "וּבְנֵ֣י פְדָיָ֔ה זְרֻבָּבֶ֖ל וְשִׁמְעִ֑י וּבֶן־זְרֻבָּבֶל֙ מְשֻׁלָּ֣ם וַחֲנַנְיָ֔ה וּשְׁלֹמִ֖ית אֲחֹותָֽם׃ "
+   },
+   "1CH 3:20": {
+    "KJV": "And Hashubah, and Ohel, and Berechiah, and Hasadiah, Jushabhesed, five.",
+    "BHSA": "וַחֲשֻׁבָ֡ה וָ֠אֹהֶל וּבֶרֶכְיָ֧ה וַֽחֲסַדְיָ֛ה י֥וּשַׁב חֶ֖סֶד חָמֵֽשׁ׃ "
+   },
+   "1CH 3:21": {
+    "KJV": "And the sons of Hananiah; Pelatiah, and Jesaiah: the sons of Rephaiah, the sons of Arnan, the sons of Obadiah, the sons of Shechaniah.",
+    "BHSA": "וּבֶן־חֲנַנְיָ֖ה פְּלַטְיָ֣ה וִישַֽׁעְיָ֑ה בְּנֵ֤י רְפָיָה֙ בְּנֵ֣י אַרְנָ֔ן בְּנֵ֥י עֹבַדְיָ֖ה בְּנֵ֥י שְׁכַנְיָֽה׃ ס "
+   }
+  }
+ },
+ {
+  "id": 124,
+  "chapter": "1CH-2",
+  "claim": "The row 'mareshah son-of chelubai' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 2:42",
+  "records": [
+   {
+    "slug": "chelubai",
+    "name": "Chelubai",
+    "distinguisher": "son of Hezron, son of Perez (1CH 2:9)",
+    "sex": "male"
+   },
+   {
+    "slug": "mareshah",
+    "name": "Mareshah",
+    "distinguisher": "son of Ziph (1CH 2:42)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 2:41": {
+    "KJV": "And Shallum begat Jekamiah, and Jekamiah begat Elishama.",
+    "BHSA": "וְשַׁלּוּם֙ הֹולִ֣יד אֶת־יְקַמְיָ֔ה וִֽיקַמְיָ֖ה הֹלִ֥יד אֶת־אֱלִישָׁמָֽע׃ "
+   },
+   "1CH 2:42": {
+    "KJV": "Now the sons of Caleb the brother of Jerahmeel were, Mesha his firstborn, which was the father of Ziph; and the sons of Mareshah the father of Hebron.",
+    "BHSA": "וּבְנֵ֤י כָלֵב֙ אֲחִ֣י יְרַחְמְאֵ֔ל מֵישָׁ֥ע בְּכֹרֹ֖ו ה֣וּא אֲבִי־זִ֑יף וּבְנֵ֥י מָרֵשָׁ֖ה אֲבִ֥י חֶבְרֹֽון׃ "
+   },
+   "1CH 2:43": {
+    "KJV": "And the sons of Hebron; Korah, and Tappuah, and Rekem, and Shema.",
+    "BHSA": "וּבְנֵ֖י חֶבְרֹ֑ון קֹ֥רַח וְתַפֻּ֖חַ וְרֶ֥קֶם וָשָֽׁמַע׃ "
+   }
+  }
+ },
+ {
+  "id": 125,
+  "chapter": "1CH-4",
+  "claim": "The chapter plainly states 'hezron-2 descendant-of judah', and the site does not record it.",
+  "records": [
+   {
+    "slug": "hezron-2",
+    "name": "Hezron",
+    "distinguisher": "son of Perez and grandson of Judah (GEN 46:12)",
+    "sex": "male"
+   },
+   {
+    "slug": "judah",
+    "name": "Judah",
+    "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "ashhur son-of hezron-2 (1CH 2:24)",
+   "caleb of-tribe judah (NUM 13:6)",
+   "hezekiah king-of judah (2KI 18:1)",
+   "hezron-2 son-of perez (GEN 46:12)",
+   "shelah-2 son-of judah (1CH 2:3)",
+   "jephunneh descendant-of judah (NUM 13:6)"
+  ],
+  "text": {
+   "1CH 4:1": {
+    "KJV": "The sons of Judah; Pharez, Hezron, and Carmi, and Hur, and Shobal.",
+    "BHSA": "בְּנֵ֖י יְהוּדָ֑ה פֶּ֧רֶץ חֶצְרֹ֛ון וְכַרְמִ֖י וְח֥וּר וְשֹׁובָֽל׃ "
+   },
+   "1CH 4:2": {
+    "KJV": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites.",
+    "BHSA": "וּרְאָיָ֤ה בֶן־שֹׁובָל֙ הֹולִ֣יד אֶת־יַ֔חַת וְיַ֣חַת הֹלִ֔יד אֶת־אֲחוּמַ֖י וְאֶת־לָ֑הַד אֵ֖לֶּה מִשְׁפְּחֹ֥ות הַצָּֽרְעָתִֽי׃ ס "
+   }
+  }
+ },
+ {
+  "id": 126,
+  "chapter": "1CH-7",
+  "claim": "The row 'ulam son-of peresh' points at the wrong person; it should point at 'sheresh'.",
+  "row_verse": "1CH 7:16",
+  "records": [
+   {
+    "slug": "peresh",
+    "name": "Peresh",
+    "distinguisher": "son of Machir and Maacah (1CH 7:16)",
+    "sex": "male"
+   },
+   {
+    "slug": "sheresh",
+    "name": "Sheresh",
+    "distinguisher": "son of Machir and Maacah (1CH 7:16)",
+    "sex": "male"
+   },
+   {
+    "slug": "ulam",
+    "name": "Ulam",
+    "distinguisher": "son of Peresh (1CH 7:16)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 7:15": {
+    "KJV": "And Machir took to wife the sister of Huppim and Shuppim, whose sister's name was Maachah;) and the name of the second was Zelophehad: and Zelophehad had daughters.",
+    "BHSA": "וּמָכִ֞יר לָקַ֤ח אִשָּׁה֙ לְחֻפִּ֣ים וּלְשֻׁפִּ֔ים וְשֵׁ֤ם אֲחֹתֹו֙ מַעֲכָ֔ה וְשֵׁ֥ם הַשֵּׁנִ֖י צְלָפְחָ֑ד וַתִּהְיֶ֥נָה לִצְלָפְחָ֖ד בָּנֹֽות׃ "
+   },
+   "1CH 7:16": {
+    "KJV": "And Maachah the wife of Machir bare a son, and she called his name Peresh; and the name of his brother was Sheresh; and his sons were Ulam and Rakem.",
+    "BHSA": "וַתֵּ֨לֶד מַעֲכָ֤ה אֵֽשֶׁת־מָכִיר֙ בֵּ֔ן וַתִּקְרָ֤א שְׁמֹו֙ פֶּ֔רֶשׁ וְשֵׁ֥ם אָחִ֖יו שָׁ֑רֶשׁ וּבָנָ֖יו אוּלָ֥ם וָרָֽקֶם׃ "
+   },
+   "1CH 7:17": {
+    "KJV": "And the sons of Ulam; Bedan. These were the sons of Gilead, the son of Machir, the son of Manasseh.",
+    "BHSA": "וּבְנֵ֥י אוּלָ֖ם בְּדָ֑ן אֵ֚לֶּה בְּנֵ֣י גִלְעָ֔ד בֶּן־מָכִ֖יר בֶּן־מְנַשֶּֽׁה׃ "
+   }
+  }
+ },
+ {
+  "id": 127,
+  "chapter": "1CH-7",
+  "claim": "The row 'shillem son-of bilhah' should become 'shillem descendant-of bilhah'.",
+  "row_verse": "1CH 7:13",
+  "records": [
+   {
+    "slug": "bilhah",
+    "name": "Bilhah",
+    "distinguisher": "maid of Laban given to Rachel (GEN 29:29) and wife of Jacob (GEN 30:4)",
+    "sex": "female"
+   },
+   {
+    "slug": "shillem",
+    "name": "Shillem",
+    "distinguisher": "son of Naphtali (GEN 46:24)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 7:12": {
+    "KJV": "Shuppim also, and Huppim, the children of Ir, and Hushim, the sons of Aher.",
+    "BHSA": "וְשֻׁפִּ֤ם וְחֻפִּם֙ בְּנֵ֣י עִ֔יר חֻשִׁ֖ם בְּנֵ֥י אַחֵֽר׃ "
+   },
+   "1CH 7:13": {
+    "KJV": "The sons of Naphtali; Jahziel, and Guni, and Jezer, and Shallum, the sons of Bilhah.",
+    "BHSA": "בְּנֵ֣י נַפְתָּלִ֗י יַחֲצִיאֵ֧ל וְגוּנִ֛י וְיֵ֥צֶר וְשַׁלּ֖וּם בְּנֵ֥י בִלְהָֽה׃ פ "
+   },
+   "1CH 7:14": {
+    "KJV": "The sons of Manasseh; Ashriel, whom she bare: (but his concubine the Aramitess bare Machir the father of Gilead:",
+    "BHSA": "בְּנֵ֣י מְנַשֶּׁ֔ה אַשְׂרִיאֵ֖ל אֲשֶׁ֣ר יָלָ֑דָה פִּֽילַגְשֹׁו֙ הָֽאֲרַמִּיָּ֔ה יָלְדָ֕ה אֶת־מָכִ֖יר אֲבִ֥י גִלְעָֽד׃ "
+   }
+  }
+ },
+ {
+  "id": 128,
+  "chapter": "NEH-12",
+  "claim": "The row 'shemaiah-27 brother-of zechariah-22' should be removed: the chapter does not say it.",
+  "row_verse": "NEH 12:36",
+  "records": [
+   {
+    "slug": "shemaiah-27",
+    "name": "Shemaiah",
+    "distinguisher": "Another priest with trumpets at the wall's dedication, alongside item 25",
+    "sex": null
+   },
+   {
+    "slug": "zechariah-22",
+    "name": "Zechariah",
+    "distinguisher": "son of Jonathan (NEH 12:35)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "NEH 12:35": {
+    "KJV": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:",
+    "BHSA": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ "
+   },
+   "NEH 12:36": {
+    "KJV": "And his brethren, Shemaiah, and Azarael, Milalai, Gilalai, Maai, Nethaneel, and Judah, Hanani, with the musical instruments of David the man of God, and Ezra the scribe before them.",
+    "BHSA": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד אִ֣ישׁ הָאֱלֹהִ֑ים וְעֶזְרָ֥א הַסֹּופֵ֖ר לִפְנֵיהֶֽם׃ "
+   },
+   "NEH 12:37": {
+    "KJV": "And at the fountain gate, which was over against them, they went up by the stairs of the city of David, at the going up of the wall, above the house of David, even unto the water gate eastward.",
+    "BHSA": "וְעַל֩ שַׁ֨עַר הָעַ֜יִן וְנֶגְדָּ֗ם עָלוּ֙ עַֽל־מַעֲלֹות֙ עִ֣יר דָּוִ֔יד בַּֽמַּעֲלֶ֖ה לַחֹומָ֑ה מֵעַל֙ לְבֵ֣ית דָּוִ֔יד וְעַ֛ד שַׁ֥עַר הַמַּ֖יִם מִזְרָֽח׃ "
+   }
+  }
+ },
+ {
+  "id": 129,
+  "chapter": "1CH-5",
+  "claim": "The chapter plainly states 'jorai son-of abihail-3', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abihail-3",
+    "name": "Abihail",
+    "distinguisher": "son of Huri (1CH 5:14, Gadite (1CH 5:11)",
+    "sex": "male"
+   },
+   {
+    "slug": "jorai",
+    "name": "Jorai",
+    "distinguisher": "??? (1CH 5:13), Gadite (1CH 5:11)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "1CH 5:13": {
+    "KJV": "And their brethren of the house of their fathers were, Michael, and Meshullam, and Sheba, and Jorai, and Jachan, and Zia, and Heber, seven.",
+    "BHSA": "וַאֲחֵיהֶ֞ם לְבֵ֣ית אֲבֹותֵיהֶ֗ם מִֽיכָאֵ֡ל וּמְשֻׁלָּ֡ם וְ֠שֶׁבַע וְיֹורַ֧י וְיַעְכָּ֛ן וְזִ֥יעַ וָעֵ֖בֶר שִׁבְעָֽה׃ ס "
+   },
+   "1CH 5:14": {
+    "KJV": "These are the children of Abihail the son of Huri, the son of Jaroah, the son of Gilead, the son of Michael, the son of Jeshishai, the son of Jahdo, the son of Buz;",
+    "BHSA": "אֵ֣לֶּה׀ בְּנֵ֣י אֲבִיחַ֗יִל בֶּן־חוּרִ֡י בֶּן־יָ֠רֹוחַ בֶּן־גִּלְעָ֧ד בֶּן־מִיכָאֵ֛ל בֶּן־יְשִׁישַׁ֥י בֶּן־יַחְדֹּ֖ו בֶּן־בּֽוּז׃ "
+   },
+   "1CH 5:15": {
+    "KJV": "Ahi the son of Abdiel, the son of Guni, chief of the house of their fathers.",
+    "BHSA": "אֲחִי֙ בֶּן־עַבְדִּיאֵ֣ל בֶּן־גּוּנִ֔י רֹ֖אשׁ לְבֵ֥ית אֲבֹותָֽם׃ "
+   }
+  }
+ },
+ {
+  "id": 130,
+  "chapter": "1CH-3",
+  "claim": "The chapter plainly states 'ohel son-of zerubbabel-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "ohel",
+    "name": "Ohel",
+    "distinguisher": "son of Meshullam (1CH 3:20)",
+    "sex": "male"
+   },
+   {
+    "slug": "zerubbabel-2",
+    "name": "Zerubbabel",
+    "distinguisher": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7), son of Shealtiel (EZR 3:2)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "zerubbabel-2 son-of shealtiel-2 (EZR 3:2)",
+   "shealtiel-2 father-of zerubbabel-2 (EZR 3:2)"
+  ],
+  "text": {
+   "1CH 3:19": {
+    "KJV": "And the sons of Pedaiah were, Zerubbabel, and Shimei: and the sons of Zerubbabel; Meshullam, and Hananiah, and Shelomith their sister:",
+    "BHSA": "וּבְנֵ֣י פְדָיָ֔ה זְרֻבָּבֶ֖ל וְשִׁמְעִ֑י וּבֶן־זְרֻבָּבֶל֙ מְשֻׁלָּ֣ם וַחֲנַנְיָ֔ה וּשְׁלֹמִ֖ית אֲחֹותָֽם׃ "
+   },
+   "1CH 3:20": {
+    "KJV": "And Hashubah, and Ohel, and Berechiah, and Hasadiah, Jushabhesed, five.",
+    "BHSA": "וַחֲשֻׁבָ֡ה וָ֠אֹהֶל וּבֶרֶכְיָ֧ה וַֽחֲסַדְיָ֛ה י֥וּשַׁב חֶ֖סֶד חָמֵֽשׁ׃ "
+   },
+   "1CH 3:21": {
+    "KJV": "And the sons of Hananiah; Pelatiah, and Jesaiah: the sons of Rephaiah, the sons of Arnan, the sons of Obadiah, the sons of Shechaniah.",
+    "BHSA": "וּבֶן־חֲנַנְיָ֖ה פְּלַטְיָ֣ה וִישַֽׁעְיָ֑ה בְּנֵ֤י רְפָיָה֙ בְּנֵ֣י אַרְנָ֔ן בְּנֵ֥י עֹבַדְיָ֖ה בְּנֵ֥י שְׁכַנְיָֽה׃ ס "
+   }
+  }
+ },
+ {
+  "id": 131,
+  "chapter": "1CH-2",
+  "claim": "The chapter plainly states 'zeruiah sister-of nethanel-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "nethanel-2",
+    "name": "Nethanel",
+    "distinguisher": "fourth-born son of Jesse (1CH 2:13)",
+    "sex": "male"
+   },
+   {
+    "slug": "zeruiah",
+    "name": "Zeruiah",
+    "distinguisher": "mother of Abishai, Joab (1SA 26:6), and Asahel (2SA 2:18), sister of King David (1CH 2:16)",
+    "sex": "female"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abigail-2 sister-of zeruiah (2SA 17:25)",
+   "abishai son-of zeruiah (1SA 26:6)",
+   "asahel son-of zeruiah (2SA 2:18)",
+   "joab son-of zeruiah (2SA 2:18)",
+   "zeruiah mother-of joab (2SA 2:13)",
+   "zeruiah mother-of abishai (1SA 26:6)"
+  ],
+  "text": {
+   "1CH 2:15": {
+    "KJV": "Ozem the sixth, David the seventh:",
+    "BHSA": "אֹ֚צֶם הַשִּׁשִּׁ֔י דָּוִ֖יד הַשְּׁבִעִֽי׃ "
+   },
+   "1CH 2:16": {
+    "KJV": "Whose sisters were Zeruiah, and Abigail. And the sons of Zeruiah; Abishai, and Joab, and Asahel, three.",
+    "BHSA": "ואחיתיהם צְרוּיָ֣ה וַאֲבִיגָ֑יִל וּבְנֵ֣י צְרוּיָ֗ה אַבְשַׁ֛י וְיֹואָ֥ב וַעֲשָׂה־אֵ֖ל שְׁלֹשָֽׁה׃ "
+   },
+   "1CH 2:17": {
+    "KJV": "And Abigail bare Amasa: and the father of Amasa was Jether the Ishmeelite.",
+    "BHSA": "וַאֲבִיגַ֕יִל יָלְדָ֖ה אֶת־עֲמָשָׂ֑א וַאֲבִ֣י עֲמָשָׂ֔א יֶ֖תֶר הַיִּשְׁמְעֵאלִֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 132,
+  "chapter": "GEN-25",
+  "claim": "The chapter plainly states 'sheba-3 descendant-of keturah', and the site does not record it.",
+  "records": [
+   {
+    "slug": "keturah",
+    "name": "Keturah",
+    "distinguisher": "Abraham's second wife after Sarah died (GEN 25:1)",
+    "sex": "female"
+   },
+   {
+    "slug": "sheba-3",
+    "name": "Sheba",
+    "distinguisher": "son of Jokshan (GEN 25:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abida descendant-of keturah (1CH 1:33)",
+   "ishbak son-of keturah (1CH 1:32)",
+   "jokshan son-of keturah (1CH 1:32)",
+   "keturah mother-of zimran (1CH 1:32)",
+   "keturah mother-of jokshan (1CH 1:32)",
+   "keturah mother-of medan (1CH 1:32)"
+  ],
+  "text": {
+   "GEN 25:3": {
+    "KJV": "And Jokshan begat Sheba, and Dedan. And the sons of Dedan were Asshurim, and Letushim, and Leummim.",
+    "BHSA": "וְיָקְשָׁ֣ן יָלַ֔ד אֶת־שְׁבָ֖א וְאֶת־דְּדָ֑ן וּבְנֵ֣י דְדָ֔ן הָי֛וּ אַשּׁוּרִ֥ם וּלְטוּשִׁ֖ים וּלְאֻמִּֽים׃ "
+   },
+   "GEN 25:4": {
+    "KJV": "And the sons of Midian; Ephah, and Epher, and Hanoch, and Abidah, and Eldaah. All these were the children of Keturah.",
+    "BHSA": "וּבְנֵ֣י מִדְיָ֗ן עֵיפָ֤ה וָעֵ֨פֶר֙ וַחֲנֹ֔ךְ וַאֲבִידָ֖ע וְאֶלְדָּעָ֑ה כָּל־אֵ֖לֶּה בְּנֵ֥י קְטוּרָֽה׃ "
+   },
+   "GEN 25:5": {
+    "KJV": "And Abraham gave all that he had unto Isaac.",
+    "BHSA": "וַיִּתֵּ֧ן אַבְרָהָ֛ם אֶת־כָּל־אֲשֶׁר־לֹ֖ו לְיִצְחָֽק׃ "
+   }
+  }
+ },
+ {
+  "id": 133,
+  "chapter": "1CH-23",
+  "claim": "The chapter plainly states 'zetham son-of libni', and the site does not record it.",
+  "records": [
+   {
+    "slug": "libni",
+    "name": "Libni",
+    "distinguisher": "son of Gershon (EXO 6:17)",
+    "sex": "male"
+   },
+   {
+    "slug": "zetham",
+    "name": "Zetham",
+    "distinguisher": "son of Ladan [Libni] (1CH 23:8)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "zetham descendant-of libni (1CH 23:8)",
+   "gershon father-of libni (EXO 6:17)",
+   "libni son-of gershon (EXO 6:17)",
+   "libni brother-of shimei (EXO 6:17)",
+   "joel-6 brother-of zetham (1CH 26:22)",
+   "zetham brother-of joel-6 (1CH 26:22)"
+  ],
+  "text": {
+   "1CH 23:7": {
+    "KJV": "Of the Gershonites were, Laadan, and Shimei.",
+    "BHSA": "לַגֵּרְשֻׁנִּ֖י לַעְדָּ֥ן וְשִׁמְעִֽי׃ ס "
+   },
+   "1CH 23:8": {
+    "KJV": "The sons of Laadan; the chief was Jehiel, and Zetham, and Joel, three.",
+    "BHSA": "בְּנֵ֣י לַעְדָּ֗ן הָרֹ֧אשׁ יְחִיאֵ֛ל וְזֵתָ֥ם וְיֹואֵ֖ל שְׁלֹשָֽׁה׃ ס "
+   },
+   "1CH 23:9": {
+    "KJV": "The sons of Shimei; Shelomith, and Haziel, and Haran, three. These were the chief of the fathers of Laadan.",
+    "BHSA": "בְּנֵ֣י שִׁמְעִ֗י שׁלמות וַחֲזִיאֵ֛ל וְהָרָ֖ן שְׁלֹשָׁ֑ה אֵ֛לֶּה רָאשֵׁ֥י הָאָבֹ֖ות לְלַעְדָּֽן׃ ס "
+   }
+  }
+ },
+ {
+  "id": 134,
+  "chapter": "1CH-5",
+  "claim": "The chapter plainly states 'zia son-of abihail-3', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abihail-3",
+    "name": "Abihail",
+    "distinguisher": "son of Huri (1CH 5:14, Gadite (1CH 5:11)",
+    "sex": "male"
+   },
+   {
+    "slug": "zia",
+    "name": "Zia",
+    "distinguisher": "??? (1CH 5:13), Gadite (1CH 5:11)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "1CH 5:13": {
+    "KJV": "And their brethren of the house of their fathers were, Michael, and Meshullam, and Sheba, and Jorai, and Jachan, and Zia, and Heber, seven.",
+    "BHSA": "וַאֲחֵיהֶ֞ם לְבֵ֣ית אֲבֹותֵיהֶ֗ם מִֽיכָאֵ֡ל וּמְשֻׁלָּ֡ם וְ֠שֶׁבַע וְיֹורַ֧י וְיַעְכָּ֛ן וְזִ֥יעַ וָעֵ֖בֶר שִׁבְעָֽה׃ ס "
+   },
+   "1CH 5:14": {
+    "KJV": "These are the children of Abihail the son of Huri, the son of Jaroah, the son of Gilead, the son of Michael, the son of Jeshishai, the son of Jahdo, the son of Buz;",
+    "BHSA": "אֵ֣לֶּה׀ בְּנֵ֣י אֲבִיחַ֗יִל בֶּן־חוּרִ֡י בֶּן־יָ֠רֹוחַ בֶּן־גִּלְעָ֧ד בֶּן־מִיכָאֵ֛ל בֶּן־יְשִׁישַׁ֥י בֶּן־יַחְדֹּ֖ו בֶּן־בּֽוּז׃ "
+   },
+   "1CH 5:15": {
+    "KJV": "Ahi the son of Abdiel, the son of Guni, chief of the house of their fathers.",
+    "BHSA": "אֲחִי֙ בֶּן־עַבְדִּיאֵ֣ל בֶּן־גּוּנִ֔י רֹ֖אשׁ לְבֵ֥ית אֲבֹותָֽם׃ "
+   }
+  }
+ },
+ {
+  "id": 135,
+  "chapter": "1CH-2",
+  "claim": "The chapter plainly states 'zeruiah sister-of raddai', and the site does not record it.",
+  "records": [
+   {
+    "slug": "raddai",
+    "name": "Raddai",
+    "distinguisher": "fifth-born son of Jesse (1CH 2:14)",
+    "sex": "male"
+   },
+   {
+    "slug": "zeruiah",
+    "name": "Zeruiah",
+    "distinguisher": "mother of Abishai, Joab (1SA 26:6), and Asahel (2SA 2:18), sister of King David (1CH 2:16)",
+    "sex": "female"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abigail-2 sister-of zeruiah (2SA 17:25)",
+   "abishai son-of zeruiah (1SA 26:6)",
+   "asahel son-of zeruiah (2SA 2:18)",
+   "joab son-of zeruiah (2SA 2:18)",
+   "zeruiah mother-of joab (2SA 2:13)",
+   "zeruiah mother-of abishai (1SA 26:6)"
+  ],
+  "text": {
+   "1CH 2:15": {
+    "KJV": "Ozem the sixth, David the seventh:",
+    "BHSA": "אֹ֚צֶם הַשִּׁשִּׁ֔י דָּוִ֖יד הַשְּׁבִעִֽי׃ "
+   },
+   "1CH 2:16": {
+    "KJV": "Whose sisters were Zeruiah, and Abigail. And the sons of Zeruiah; Abishai, and Joab, and Asahel, three.",
+    "BHSA": "ואחיתיהם צְרוּיָ֣ה וַאֲבִיגָ֑יִל וּבְנֵ֣י צְרוּיָ֗ה אַבְשַׁ֛י וְיֹואָ֥ב וַעֲשָׂה־אֵ֖ל שְׁלֹשָֽׁה׃ "
+   },
+   "1CH 2:17": {
+    "KJV": "And Abigail bare Amasa: and the father of Amasa was Jether the Ishmeelite.",
+    "BHSA": "וַאֲבִיגַ֕יִל יָלְדָ֖ה אֶת־עֲמָשָׂ֑א וַאֲבִ֣י עֲמָשָׂ֔א יֶ֖תֶר הַיִּשְׁמְעֵאלִֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 136,
+  "chapter": "GEN-25",
+  "claim": "The chapter plainly states 'sheba-3 descendant-of keturah', and the site does not record it.",
+  "records": [
+   {
+    "slug": "keturah",
+    "name": "Keturah",
+    "distinguisher": "Abraham's second wife after Sarah died (GEN 25:1)",
+    "sex": "female"
+   },
+   {
+    "slug": "sheba-3",
+    "name": "Sheba",
+    "distinguisher": "son of Jokshan (GEN 25:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abida descendant-of keturah (1CH 1:33)",
+   "ishbak son-of keturah (1CH 1:32)",
+   "jokshan son-of keturah (1CH 1:32)",
+   "keturah mother-of zimran (1CH 1:32)",
+   "keturah mother-of jokshan (1CH 1:32)",
+   "keturah mother-of medan (1CH 1:32)"
+  ],
+  "text": {
+   "GEN 25:3": {
+    "KJV": "And Jokshan begat Sheba, and Dedan. And the sons of Dedan were Asshurim, and Letushim, and Leummim.",
+    "BHSA": "וְיָקְשָׁ֣ן יָלַ֔ד אֶת־שְׁבָ֖א וְאֶת־דְּדָ֑ן וּבְנֵ֣י דְדָ֔ן הָי֛וּ אַשּׁוּרִ֥ם וּלְטוּשִׁ֖ים וּלְאֻמִּֽים׃ "
+   },
+   "GEN 25:4": {
+    "KJV": "And the sons of Midian; Ephah, and Epher, and Hanoch, and Abidah, and Eldaah. All these were the children of Keturah.",
+    "BHSA": "וּבְנֵ֣י מִדְיָ֗ן עֵיפָ֤ה וָעֵ֨פֶר֙ וַחֲנֹ֔ךְ וַאֲבִידָ֖ע וְאֶלְדָּעָ֑ה כָּל־אֵ֖לֶּה בְּנֵ֥י קְטוּרָֽה׃ "
+   },
+   "GEN 25:5": {
+    "KJV": "And Abraham gave all that he had unto Isaac.",
+    "BHSA": "וַיִּתֵּ֧ן אַבְרָהָ֛ם אֶת־כָּל־אֲשֶׁר־לֹ֖ו לְיִצְחָֽק׃ "
+   }
+  }
+ },
+ {
+  "id": 137,
+  "chapter": "GEN-36",
+  "claim": "The row 'lotan brother-of timna' points at the wrong person; it should point at 'timna-3'.",
+  "row_verse": "GEN 36:22",
+  "records": [
+   {
+    "slug": "lotan",
+    "name": "Lotan",
+    "distinguisher": "son of Seir (GEN 36:20) and chief in Edom (GEN 36:29)",
+    "sex": "male"
+   },
+   {
+    "slug": "timna",
+    "name": "Timna",
+    "distinguisher": "concubine of Esau's son Eliphaz (GEN 36:12) and sister of Lotan (GEN 36:22)",
+    "sex": "female"
+   },
+   {
+    "slug": "timna-3",
+    "name": "Timna",
+    "distinguisher": "Daughter of Seir the Horite, sister of Lotan",
+    "sex": null
+   }
+  ],
+  "text": {
+   "GEN 36:21": {
+    "KJV": "And Dishon, and Ezer, and Dishan: these are the dukes of the Horites, the children of Seir in the land of Edom.",
+    "BHSA": "וְדִשֹׁ֥ון וְאֵ֖צֶר וְדִישָׁ֑ן אֵ֣לֶּה אַלּוּפֵ֧י הַחֹרִ֛י בְּנֵ֥י שֵׂעִ֖יר בְּאֶ֥רֶץ אֱדֹֽום׃ "
+   },
+   "GEN 36:22": {
+    "KJV": "And the children of Lotan were Hori and Hemam; and Lotan's sister was Timna.",
+    "BHSA": "וַיִּהְי֥וּ בְנֵי־לֹוטָ֖ן חֹרִ֣י וְהֵימָ֑ם וַאֲחֹ֥ות לֹוטָ֖ן תִּמְנָֽע׃ "
+   },
+   "GEN 36:23": {
+    "KJV": "And the children of Shobal were these; Alvan, and Manahath, and Ebal, Shepho, and Onam.",
+    "BHSA": "וְאֵ֨לֶּה֙ בְּנֵ֣י שֹׁובָ֔ל עַלְוָ֥ן וּמָנַ֖חַת וְעֵיבָ֑ל שְׁפֹ֖ו וְאֹונָֽם׃ "
+   }
+  }
+ },
+ {
+  "id": 138,
+  "chapter": "1CH-23",
+  "claim": "The chapter plainly states 'joel-6 son-of libni', and the site does not record it.",
+  "records": [
+   {
+    "slug": "joel-6",
+    "name": "Joel",
+    "distinguisher": "chief of the sons of Gershom (1CH 15:7), son of Ladan (1CH 23:8)",
+    "sex": "male"
+   },
+   {
+    "slug": "libni",
+    "name": "Libni",
+    "distinguisher": "son of Gershon (EXO 6:17)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "joel-6 descendant-of libni (1CH 23:8)",
+   "gershon father-of libni (EXO 6:17)",
+   "libni son-of gershon (EXO 6:17)",
+   "libni brother-of shimei (EXO 6:17)",
+   "joel-6 brother-of zetham (1CH 26:22)",
+   "joel-6 descendant-of gershon (1CH 15:7)",
+   "zetham brother-of joel-6 (1CH 26:22)"
+  ],
+  "text": {
+   "1CH 23:7": {
+    "KJV": "Of the Gershonites were, Laadan, and Shimei.",
+    "BHSA": "לַגֵּרְשֻׁנִּ֖י לַעְדָּ֥ן וְשִׁמְעִֽי׃ ס "
+   },
+   "1CH 23:8": {
+    "KJV": "The sons of Laadan; the chief was Jehiel, and Zetham, and Joel, three.",
+    "BHSA": "בְּנֵ֣י לַעְדָּ֗ן הָרֹ֧אשׁ יְחִיאֵ֛ל וְזֵתָ֥ם וְיֹואֵ֖ל שְׁלֹשָֽׁה׃ ס "
+   },
+   "1CH 23:9": {
+    "KJV": "The sons of Shimei; Shelomith, and Haziel, and Haran, three. These were the chief of the fathers of Laadan.",
+    "BHSA": "בְּנֵ֣י שִׁמְעִ֗י שׁלמות וַחֲזִיאֵ֛ל וְהָרָ֖ן שְׁלֹשָׁ֑ה אֵ֛לֶּה רָאשֵׁ֥י הָאָבֹ֖ות לְלַעְדָּֽן׃ ס "
+   }
+  }
+ },
+ {
+  "id": 139,
+  "chapter": "1CH-2",
+  "claim": "The chapter plainly states 'abigail-2 sister-of nethanel-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abigail-2",
+    "name": "Abigail",
+    "distinguisher": "daughter of Nahash, sister of Zeruiah (2SA 17:25), (half-?) sister of King David (1CH 2:16)",
+    "sex": "female"
+   },
+   {
+    "slug": "nethanel-2",
+    "name": "Nethanel",
+    "distinguisher": "fourth-born son of Jesse (1CH 2:13)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abigail-2 sister-of zeruiah (2SA 17:25)",
+   "ithra husband-of abigail-2 (2SA 17:25)",
+   "zeruiah sister-of abigail-2 (2SA 17:25)"
+  ],
+  "text": {
+   "1CH 2:15": {
+    "KJV": "Ozem the sixth, David the seventh:",
+    "BHSA": "אֹ֚צֶם הַשִּׁשִּׁ֔י דָּוִ֖יד הַשְּׁבִעִֽי׃ "
+   },
+   "1CH 2:16": {
+    "KJV": "Whose sisters were Zeruiah, and Abigail. And the sons of Zeruiah; Abishai, and Joab, and Asahel, three.",
+    "BHSA": "ואחיתיהם צְרוּיָ֣ה וַאֲבִיגָ֑יִל וּבְנֵ֣י צְרוּיָ֗ה אַבְשַׁ֛י וְיֹואָ֥ב וַעֲשָׂה־אֵ֖ל שְׁלֹשָֽׁה׃ "
+   },
+   "1CH 2:17": {
+    "KJV": "And Abigail bare Amasa: and the father of Amasa was Jether the Ishmeelite.",
+    "BHSA": "וַאֲבִיגַ֕יִל יָלְדָ֖ה אֶת־עֲמָשָׂ֑א וַאֲבִ֣י עֲמָשָׂ֔א יֶ֖תֶר הַיִּשְׁמְעֵאלִֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 140,
+  "chapter": "1CH-5",
+  "claim": "The row 'zechariah-3 brother-of jeiel' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 5:7",
+  "records": [
+   {
+    "slug": "jeiel",
+    "name": "Jeiel",
+    "distinguisher": "1CH 5:7, Reubenite (1CH 5:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "zechariah-3",
+    "name": "Zechariah",
+    "distinguisher": "1CH 5:7, Reubenite (1CH 5:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 5:6": {
+    "KJV": "Beerah his son, whom Tilgathpilneser king of Assyria carried away captive: he was prince of the Reubenites.",
+    "BHSA": "בְּאֵרָ֣ה בְנֹ֔ו אֲשֶׁ֣ר הֶגְלָ֔ה תִּלְּגַ֥ת פִּלְנְאֶ֖סֶר מֶ֣לֶךְ אַשֻּׁ֑ר ה֥וּא נָשִׂ֖יא לָרֽאוּבֵנִֽי׃ "
+   },
+   "1CH 5:7": {
+    "KJV": "And his brethren by their families, when the genealogy of their generations was reckoned, were the chief, Jeiel, and Zechariah,",
+    "BHSA": "וְאֶחָיו֙ לְמִשְׁפְּחֹתָ֔יו בְּהִתְיַחֵ֖שׂ לְתֹלְדֹותָ֑ם הָרֹ֥אשׁ יְעִיאֵ֖ל וּזְכַרְיָֽהוּ׃ "
+   },
+   "1CH 5:8": {
+    "KJV": "And Bela the son of Azaz, the son of Shema, the son of Joel, who dwelt in Aroer, even unto Nebo and Baalmeon:",
+    "BHSA": "וּבֶ֨לַע֙ בֶּן־עָזָ֔ז בֶּן־שֶׁ֖מַע בֶּן־יֹואֵ֑ל ה֚וּא יֹושֵׁ֣ב בַּעֲרֹעֵ֔ר וְעַד־נְבֹ֖ו וּבַ֥עַל מְעֹֽון׃ "
+   }
+  }
+ },
+ {
+  "id": 141,
+  "chapter": "NEH-12",
+  "claim": "The row 'micaiah-4 father-of mattaniah-4' points at the wrong person; it should point at 'mattaniah-12'.",
+  "row_verse": "NEH 12:35",
+  "records": [
+   {
+    "slug": "mattaniah-12",
+    "name": "Mattaniah",
+    "distinguisher": "Levite ancestor of Zechariah the trumpeter, named in Nehemiah's priestly genealogy.",
+    "sex": null
+   },
+   {
+    "slug": "mattaniah-4",
+    "name": "Mattaniah",
+    "distinguisher": "descendant of Asaph (2CH 29:13)",
+    "sex": "male"
+   },
+   {
+    "slug": "micaiah-4",
+    "name": "Micaiah",
+    "distinguisher": "son of Zaccur (NEH 12:35)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "NEH 12:34": {
+    "KJV": "Judah, and Benjamin, and Shemaiah, and Jeremiah,",
+    "BHSA": "יְהוּדָה֙ וּבִנְיָמִ֔ן וּֽשְׁמַֽעְיָ֖ה וְיִרְמְיָֽה׃ ס "
+   },
+   "NEH 12:35": {
+    "KJV": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:",
+    "BHSA": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ "
+   },
+   "NEH 12:36": {
+    "KJV": "And his brethren, Shemaiah, and Azarael, Milalai, Gilalai, Maai, Nethaneel, and Judah, Hanani, with the musical instruments of David the man of God, and Ezra the scribe before them.",
+    "BHSA": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד אִ֣ישׁ הָאֱלֹהִ֑ים וְעֶזְרָ֥א הַסֹּופֵ֖ר לִפְנֵיהֶֽם׃ "
+   }
+  }
+ },
+ {
+  "id": 142,
+  "chapter": "1CH-2",
+  "claim": "The chapter plainly states 'zeruiah sister-of eliab-3', and the site does not record it.",
+  "records": [
+   {
+    "slug": "eliab-3",
+    "name": "Eliab",
+    "distinguisher": "firstborn (1CH 2:13) son of Jesse (1SA 16:6) brother of David",
+    "sex": "male"
+   },
+   {
+    "slug": "zeruiah",
+    "name": "Zeruiah",
+    "distinguisher": "mother of Abishai, Joab (1SA 26:6), and Asahel (2SA 2:18), sister of King David (1CH 2:16)",
+    "sex": "female"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abigail-2 sister-of zeruiah (2SA 17:25)",
+   "abishai son-of zeruiah (1SA 26:6)",
+   "asahel son-of zeruiah (2SA 2:18)",
+   "eliab-3 brother-of david (1SA 17:28)",
+   "joab son-of zeruiah (2SA 2:18)",
+   "zeruiah mother-of joab (2SA 2:13)"
+  ],
+  "text": {
+   "1CH 2:15": {
+    "KJV": "Ozem the sixth, David the seventh:",
+    "BHSA": "אֹ֚צֶם הַשִּׁשִּׁ֔י דָּוִ֖יד הַשְּׁבִעִֽי׃ "
+   },
+   "1CH 2:16": {
+    "KJV": "Whose sisters were Zeruiah, and Abigail. And the sons of Zeruiah; Abishai, and Joab, and Asahel, three.",
+    "BHSA": "ואחיתיהם צְרוּיָ֣ה וַאֲבִיגָ֑יִל וּבְנֵ֣י צְרוּיָ֗ה אַבְשַׁ֛י וְיֹואָ֥ב וַעֲשָׂה־אֵ֖ל שְׁלֹשָֽׁה׃ "
+   },
+   "1CH 2:17": {
+    "KJV": "And Abigail bare Amasa: and the father of Amasa was Jether the Ishmeelite.",
+    "BHSA": "וַאֲבִיגַ֕יִל יָלְדָ֖ה אֶת־עֲמָשָׂ֑א וַאֲבִ֣י עֲמָשָׂ֔א יֶ֖תֶר הַיִּשְׁמְעֵאלִֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 143,
+  "chapter": "EZR-8",
+  "claim": "The row 'shelomith-5 descendant-of bani-4' should be removed: the chapter does not say it.",
+  "row_verse": "EZR 8:10",
+  "records": [
+   {
+    "slug": "bani-4",
+    "name": "Bani",
+    "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:10)",
+    "sex": "male"
+   },
+   {
+    "slug": "shelomith-5",
+    "name": "Shelomith",
+    "distinguisher": "descendant of Bani, son of Josiphia who went up with Ezra (EZR 8:10)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "EZR 8:9": {
+    "KJV": "Of the sons of Joab; Obadiah the son of Jehiel, and with him two hundred and eighteen males.",
+    "BHSA": "מִבְּנֵ֣י יֹואָ֔ב עֹבַדְיָ֖ה בֶּן־יְחִיאֵ֑ל וְעִמֹּ֕ו מָאתַ֛יִם וּשְׁמֹנָ֥ה עָשָׂ֖ר הַזְּכָרִֽים׃ ס "
+   },
+   "EZR 8:10": {
+    "KJV": "And of the sons of Shelomith; the son of Josiphiah, and with him an hundred and threescore males.",
+    "BHSA": "וּמִבְּנֵ֥י שְׁלֹומִ֖ית בֶּן־יֹוסִפְיָ֑ה וְעִמֹּ֕ו מֵאָ֥ה וְשִׁשִּׁ֖ים הַזְּכָרִֽים׃ ס "
+   },
+   "EZR 8:11": {
+    "KJV": "And of the sons of Bebai; Zechariah the son of Bebai, and with him twenty and eight males.",
+    "BHSA": "וּמִבְּנֵ֣י בֵבַ֔י זְכַרְיָ֖ה בֶּן־בֵּבָ֑י וְעִמֹּ֕ו עֶשְׂרִ֥ים וּשְׁמֹנָ֖ה הַזְּכָרִֽים׃ ס "
+   }
+  }
+ },
+ {
+  "id": 144,
+  "chapter": "1CH-24",
+  "claim": "The row 'shemaiah-8 scribe-of david' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 24:6",
+  "records": [
+   {
+    "slug": "david",
+    "name": "David",
+    "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "shemaiah-8",
+    "name": "Shemaiah",
+    "distinguisher": "son of Nethanel the scribe (1CH 24:6)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 24:5": {
+    "KJV": "Thus were they divided by lot, one sort with another; for the governors of the sanctuary, and governors of the house of God, were of the sons of Eleazar, and of the sons of Ithamar.",
+    "BHSA": "וַיַּחְלְק֥וּם בְּגֹורָלֹ֖ות אֵ֣לֶּה עִם־אֵ֑לֶּה כִּי־הָי֤וּ שָֽׂרֵי־קֹ֨דֶשׁ֙ וְשָׂרֵ֣י הָאֱלֹהִ֔ים מִבְּנֵ֥י אֶלְעָזָ֖ר וּבִבְנֵ֥י אִיתָמָֽר׃ ס "
+   },
+   "1CH 24:6": {
+    "KJV": "And Shemaiah the son of Nethaneel the scribe, one of the Levites, wrote them before the king, and the princes, and Zadok the priest, and Ahimelech the son of Abiathar, and before the chief of the fathers of the priests and Levites: one principal household being taken for Eleazar, and one taken for Ithamar.",
+    "BHSA": "וַֽיִּכְתְּבֵ֡ם שְֽׁמַֽעְיָה֩ בֶן־נְתַנְאֵ֨ל הַסֹּופֵ֜ר מִן־הַלֵּוִ֗י לִפְנֵ֨י הַמֶּ֤לֶךְ וְהַשָּׂרִים֙ וְצָדֹ֣וק הַכֹּהֵ֗ן וַאֲחִימֶ֨לֶךְ֙ בֶּן־אֶבְיָתָ֔ר וְרָאשֵׁי֙ הָֽאָבֹ֔ות לַכֹּהֲנִ֖ים וְלַלְוִיִּ֑ם בֵּֽית־אָ֣ב אֶחָ֗ד אָחֻז֙ לְאֶלְעָזָ֔ר וְאָחֻ֥ז׀ אָחֻ֖ז לְאִיתָמָֽר׃ פ "
+   },
+   "1CH 24:7": {
+    "KJV": "Now the first lot came forth to Jehoiarib, the second to Jedaiah,",
+    "BHSA": "וַיֵּצֵ֞א הַגֹּורָ֤ל הָרִאשֹׁון֙ לִיהֹ֣ויָרִ֔יב לִֽידַעְיָ֖ה הַשֵּׁנִֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 145,
+  "chapter": "NEH-12",
+  "claim": "The row 'eleazar-8 companion-of jehohanan-4' points at the wrong person; it should point at 'jehohanan-5'.",
+  "row_verse": "NEH 12:42",
+  "records": [
+   {
+    "slug": "eleazar-8",
+    "name": "Eleazar",
+    "distinguisher": "with the officials and priests in the house of G-d (NEH 12:42)",
+    "sex": "male"
+   },
+   {
+    "slug": "jehohanan-4",
+    "name": "Jehohanan",
+    "distinguisher": "son of Amariah (NEH 12:13)",
+    "sex": "male"
+   },
+   {
+    "slug": "jehohanan-5",
+    "name": "Jehohanan",
+    "distinguisher": "Priest-singer at the dedication of the wall under Nehemiah",
+    "sex": null
+   }
+  ],
+  "text": {
+   "NEH 12:41": {
+    "KJV": "And the priests; Eliakim, Maaseiah, Miniamin, Michaiah, Elioenai, Zechariah, and Hananiah, with trumpets;",
+    "BHSA": "וְהַכֹּהֲנִ֡ים אֶלְיָקִ֡ים מַעֲשֵׂיָ֡ה מִ֠נְיָמִין מִיכָיָ֧ה אֶלְיֹועֵינַ֛י זְכַרְיָ֥ה חֲנַנְיָ֖ה בַּחֲצֹצְרֹֽות׃ "
+   },
+   "NEH 12:42": {
+    "KJV": "And Maaseiah, and Shemaiah, and Eleazar, and Uzzi, and Jehohanan, and Malchijah, and Elam, and Ezer. And the singers sang loud, with Jezrahiah their overseer.",
+    "BHSA": "וּמַעֲשֵׂיָ֨ה וּֽשְׁמַֽעְיָ֜ה וְאֶלְעָזָ֧ר וְעֻזִּ֛י וִֽיהֹוחָנָ֥ן וּמַלְכִּיָּ֖ה וְעֵילָ֣ם וָעָ֑זֶר וַיַּשְׁמִ֨יעוּ֙ הַמְשֹׁ֣רְרִ֔ים וְיִֽזְרַחְיָ֖ה הַפָּקִֽיד׃ "
+   },
+   "NEH 12:43": {
+    "KJV": "Also that day they offered great sacrifices, and rejoiced: for God had made them rejoice with great joy: the wives also and the children rejoiced: so that the joy of Jerusalem was heard even afar off.",
+    "BHSA": "וַיִּזְבְּח֣וּ בַיֹּום־הַ֠הוּא זְבָחִ֨ים גְּדֹולִ֜ים וַיִּשְׂמָ֗חוּ כִּ֤י הָאֱלֹהִים֙ שִׂמְּחָם֙ שִׂמְחָ֣ה גְדֹולָ֔ה וְגַ֧ם הַנָּשִׁ֛ים וְהַיְלָדִ֖ים שָׂמֵ֑חוּ וַתִּשָּׁמַ֛ע שִׂמְחַ֥ת יְרוּשָׁלִַ֖ם מֵרָחֹֽוק׃ "
+   }
+  }
+ },
+ {
+  "id": 146,
+  "chapter": "1CH-2",
+  "claim": "The chapter plainly states 'zeruiah sister-of shammah-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "shammah-2",
+    "name": "Shammah",
+    "distinguisher": "third-born (1CH 2:13) son of Jesse (1SA 16:9) brother of David",
+    "sex": "male"
+   },
+   {
+    "slug": "zeruiah",
+    "name": "Zeruiah",
+    "distinguisher": "mother of Abishai, Joab (1SA 26:6), and Asahel (2SA 2:18), sister of King David (1CH 2:16)",
+    "sex": "female"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abigail-2 sister-of zeruiah (2SA 17:25)",
+   "abishai son-of zeruiah (1SA 26:6)",
+   "asahel son-of zeruiah (2SA 2:18)",
+   "joab son-of zeruiah (2SA 2:18)",
+   "shammah-2 son-of jesse (1SA 17:13)",
+   "shammah-2 brother-of david (2SA 13:3)"
+  ],
+  "text": {
+   "1CH 2:15": {
+    "KJV": "Ozem the sixth, David the seventh:",
+    "BHSA": "אֹ֚צֶם הַשִּׁשִּׁ֔י דָּוִ֖יד הַשְּׁבִעִֽי׃ "
+   },
+   "1CH 2:16": {
+    "KJV": "Whose sisters were Zeruiah, and Abigail. And the sons of Zeruiah; Abishai, and Joab, and Asahel, three.",
+    "BHSA": "ואחיתיהם צְרוּיָ֣ה וַאֲבִיגָ֑יִל וּבְנֵ֣י צְרוּיָ֗ה אַבְשַׁ֛י וְיֹואָ֥ב וַעֲשָׂה־אֵ֖ל שְׁלֹשָֽׁה׃ "
+   },
+   "1CH 2:17": {
+    "KJV": "And Abigail bare Amasa: and the father of Amasa was Jether the Ishmeelite.",
+    "BHSA": "וַאֲבִיגַ֕יִל יָלְדָ֖ה אֶת־עֲמָשָׂ֑א וַאֲבִ֣י עֲמָשָׂ֔א יֶ֖תֶר הַיִּשְׁמְעֵאלִֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 147,
+  "chapter": "1CH-2",
+  "claim": "The chapter plainly states 'abigail-2 sister-of shammah-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abigail-2",
+    "name": "Abigail",
+    "distinguisher": "daughter of Nahash, sister of Zeruiah (2SA 17:25), (half-?) sister of King David (1CH 2:16)",
+    "sex": "female"
+   },
+   {
+    "slug": "shammah-2",
+    "name": "Shammah",
+    "distinguisher": "third-born (1CH 2:13) son of Jesse (1SA 16:9) brother of David",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abigail-2 sister-of zeruiah (2SA 17:25)",
+   "ithra husband-of abigail-2 (2SA 17:25)",
+   "shammah-2 son-of jesse (1SA 17:13)",
+   "shammah-2 brother-of david (2SA 13:3)",
+   "zeruiah sister-of abigail-2 (2SA 17:25)"
+  ],
+  "text": {
+   "1CH 2:15": {
+    "KJV": "Ozem the sixth, David the seventh:",
+    "BHSA": "אֹ֚צֶם הַשִּׁשִּׁ֔י דָּוִ֖יד הַשְּׁבִעִֽי׃ "
+   },
+   "1CH 2:16": {
+    "KJV": "Whose sisters were Zeruiah, and Abigail. And the sons of Zeruiah; Abishai, and Joab, and Asahel, three.",
+    "BHSA": "ואחיתיהם צְרוּיָ֣ה וַאֲבִיגָ֑יִל וּבְנֵ֣י צְרוּיָ֗ה אַבְשַׁ֛י וְיֹואָ֥ב וַעֲשָׂה־אֵ֖ל שְׁלֹשָֽׁה׃ "
+   },
+   "1CH 2:17": {
+    "KJV": "And Abigail bare Amasa: and the father of Amasa was Jether the Ishmeelite.",
+    "BHSA": "וַאֲבִיגַ֕יִל יָלְדָ֖ה אֶת־עֲמָשָׂ֑א וַאֲבִ֣י עֲמָשָׂ֔א יֶ֖תֶר הַיִּשְׁמְעֵאלִֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 148,
+  "chapter": "EZR-8",
+  "claim": "The row 'michael-8 descendant-of shephatiah-5' points at the wrong person; it should point at 'shephatiah-10'.",
+  "row_verse": "EZR 8:8",
+  "records": [
+   {
+    "slug": "michael-8",
+    "name": "Michael",
+    "distinguisher": "father of Zebadiah who went up with Ezra (EZR 8:8)",
+    "sex": "male"
+   },
+   {
+    "slug": "shephatiah-10",
+    "name": "Shephatiah",
+    "distinguisher": "Ancestor whose sons (fourscore males) returned to Jerusalem with Ezra",
+    "sex": null
+   },
+   {
+    "slug": "shephatiah-5",
+    "name": "Shephatiah",
+    "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:4)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "EZR 8:7": {
+    "KJV": "And of the sons of Elam; Jeshaiah the son of Athaliah, and with him seventy males.",
+    "BHSA": "וּמִבְּנֵ֣י עֵילָ֔ם יְשַֽׁעְיָ֖ה בֶּן־עֲתַלְיָ֑ה וְעִמֹּ֖ו שִׁבְעִ֥ים הַזְּכָרִֽים׃ ס "
+   },
+   "EZR 8:8": {
+    "KJV": "And of the sons of Shephatiah; Zebadiah the son of Michael, and with him fourscore males.",
+    "BHSA": "וּמִבְּנֵ֣י שְׁפַטְיָ֔ה זְבַדְיָ֖ה בֶּן־מִֽיכָאֵ֑ל וְעִמֹּ֖ו שְׁמֹנִ֥ים הַזְּכָרִֽים׃ ס "
+   },
+   "EZR 8:9": {
+    "KJV": "Of the sons of Joab; Obadiah the son of Jehiel, and with him two hundred and eighteen males.",
+    "BHSA": "מִבְּנֵ֣י יֹואָ֔ב עֹבַדְיָ֖ה בֶּן־יְחִיאֵ֑ל וְעִמֹּ֕ו מָאתַ֛יִם וּשְׁמֹנָ֥ה עָשָׂ֖ר הַזְּכָרִֽים׃ ס "
+   }
+  }
+ },
+ {
+  "id": 149,
+  "chapter": "1CH-4",
+  "claim": "The row 'etam father-of hazzelelponi' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 4:3",
+  "records": [
+   {
+    "slug": "etam",
+    "name": "Etam",
+    "distinguisher": "father of Jezreel, Ishma, Ibdash, and Hazzelelponi (1CH 4:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "hazzelelponi",
+    "name": "Hazzelelponi",
+    "distinguisher": "daughter of Etam (1CH 4:3)",
+    "sex": "female"
+   }
+  ],
+  "text": {
+   "1CH 4:2": {
+    "KJV": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites.",
+    "BHSA": "וּרְאָיָ֤ה בֶן־שֹׁובָל֙ הֹולִ֣יד אֶת־יַ֔חַת וְיַ֣חַת הֹלִ֔יד אֶת־אֲחוּמַ֖י וְאֶת־לָ֑הַד אֵ֖לֶּה מִשְׁפְּחֹ֥ות הַצָּֽרְעָתִֽי׃ ס "
+   },
+   "1CH 4:3": {
+    "KJV": "And these were of the father of Etam; Jezreel, and Ishma, and Idbash: and the name of their sister was Hazelelponi:",
+    "BHSA": "וְאֵ֨לֶּה֙ אֲבִ֣י עֵיטָ֔ם יִזְרְעֶ֥אל וְיִשְׁמָ֖א וְיִדְבָּ֑שׁ וְשֵׁ֥ם אֲחֹותָ֖ם הַצְלֶלְפֹּֽונִי׃ "
+   },
+   "1CH 4:4": {
+    "KJV": "And Penuel the father of Gedor, and Ezer the father of Hushah. These are the sons of Hur, the firstborn of Ephratah, the father of Bethlehem.",
+    "BHSA": "וּפְנוּאֵל֙ אֲבִ֣י גְדֹ֔ר וְעֵ֖זֶר אֲבִ֣י חוּשָׁ֑ה אֵ֤לֶּה בְנֵי־חוּר֙ בְּכֹ֣ור אֶפְרָ֔תָה אֲבִ֖י בֵּ֥ית לָֽחֶם׃ "
+   }
+  }
+ },
+ {
+  "id": 150,
+  "chapter": "1CH-7",
+  "claim": "The chapter plainly states 'serah sister-of imnah', and the site does not record it.",
+  "records": [
+   {
+    "slug": "imnah",
+    "name": "Imnah",
+    "distinguisher": "son of Asher (GEN 46:17)",
+    "sex": "male"
+   },
+   {
+    "slug": "serah",
+    "name": "Serah",
+    "distinguisher": "son of Asher (GEN 46:17)",
+    "sex": "female"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "imnah son-of asher (GEN 46:17)",
+   "imnah brother-of beriah (GEN 46:17)",
+   "imnah brother-of ishvah (GEN 46:17)",
+   "ishvah brother-of serah (GEN 46:17)",
+   "ishvi brother-of serah (GEN 46:17)",
+   "serah daughter-of asher (NUM 26:46)"
+  ],
+  "text": {
+   "1CH 7:29": {
+    "KJV": "And by the borders of the children of Manasseh, Bethshean and her towns, Taanach and her towns, Megiddo and her towns, Dor and her towns. In these dwelt the children of Joseph the son of Israel.",
+    "BHSA": "וְעַל־יְדֵ֣י בְנֵי־מְנַשֶּׁ֗ה בֵּית־שְׁאָ֤ן וּבְנֹתֶ֨יהָ֙ תַּעְנַ֣ךְ וּבְנֹתֶ֔יהָ מְגִדֹּ֥ו וּבְנֹותֶ֖יהָ דֹּ֣ור וּבְנֹותֶ֑יהָ בְּאֵ֨לֶּה֙ יָשְׁב֔וּ בְּנֵ֥י יֹוסֵ֖ף בֶּן־יִשְׂרָאֵֽל׃ פ "
+   },
+   "1CH 7:30": {
+    "KJV": "The sons of Asher; Imnah, and Isuah, and Ishuai, and Beriah, and Serah their sister.",
+    "BHSA": "בְּנֵ֣י אָשֵׁ֗ר יִמְנָ֧ה וְיִשְׁוָ֛ה וְיִשְׁוִ֥י וּבְרִיעָ֖ה וְשֶׂ֥רַח אֲחֹותָֽם׃ "
+   },
+   "1CH 7:31": {
+    "KJV": "And the sons of Beriah; Heber, and Malchiel, who is the father of Birzavith.",
+    "BHSA": "וּבְנֵ֣י בְרִיעָ֔ה חֶ֖בֶר וּמַלְכִּיאֵ֑ל ה֖וּא אֲבִ֥י ברזות׃ "
+   }
+  }
+ }
+]

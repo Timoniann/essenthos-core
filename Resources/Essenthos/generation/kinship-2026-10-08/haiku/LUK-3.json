@@ -1,0 +1,7 @@
+{"wrong": [],
+ "missing": [
+  {"from": "jesus", "type": "son-of", "to": "yhvh", "verse": "LUK 3:22", "why": "The voice from heaven says \"Thou art my beloved Son\", a plain son statement; the only recorded yhvh relation is creator-of, which is not an equivalent type.", "confidence": 0.5},
+  {"from": "adam", "type": "son-of", "to": "yhvh", "verse": "LUK 3:38", "why": "Luke closes the genealogy with \"Adam, which was the son of God\", a plain son statement; the only recorded yhvh relation is creator-of (GEN 2:7), which is not an equivalent type.", "confidence": 0.5}
+ ],
+ "note": "Every recorded row in the chapter matches the Greek genealogy and the names are placed correctly, so nothing is wrong; the two missing items are theological divine-sonship statements the owner may choose to drop. Duplicate records for the same person are kept as recorded: amos-4 duplicates amos-2 (LUK 3:25), and joseph-14 (\"Jose\") duplicates joshua-5 for the Greek Ἰησοῦ in LUK 3:29. No row was recorded by the project owner.",
+ "model": "claude-haiku-5-5"}

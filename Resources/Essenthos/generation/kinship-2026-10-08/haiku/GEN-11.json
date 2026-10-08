@@ -1,0 +1,5 @@
+{"wrong": [],
+ "missing": [{"from": "terah", "type": "grandfather-of", "to": "lot", "verse": "GEN 11:31", "why": "The verse calls Lot 'the son of Haran his son's son', so Terah is Lot's grandfather.", "confidence": 0.9},
+             {"from": "terah", "type": "father-in-law-of", "to": "sarai", "verse": "GEN 11:31", "why": "The verse calls Sarai Terah's 'daughter in law', Abram's wife, so Terah is her father-in-law.", "confidence": 0.75}],
+ "note": "No wrong rows: the Terah-Nahor-Serug-Reu-Peleg line and the Terah/Haran/Abram/Nahor-2 rows match the text, and the nahor (son of Serug) and nahor-2 (son of Terah) slugs are used correctly. The Sarai father-in-law row conflicts with 'sarai daughter-of terah' from GEN 20:12, a variant between books that is kept, not a wrong row here.",
+ "model": "claude-haiku-5-5"}

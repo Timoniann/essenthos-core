@@ -1,0 +1,2604 @@
+{
+ "apply": [
+  {
+   "chapter": "1CH-1",
+   "row_id": 97485,
+   "row": "anah-son-of-zibeon father-of dishon",
+   "row_verse": "1CH 1:41",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "dishon-2",
+    "verse": "1CH 1:41",
+    "why": "Anah's son Dishon is represented by dishon-2, whereas dishon is listed as Seir's son in verse 38."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "dishon-2",
+    "verse": "1CH 1:41",
+    "why": "Verse 1:41 says The sons of Anah; Dishon, and Anah here is the son of Zibeon named in 1:40 (Genesis 36:25 agrees), so the Dishon meant is Dishon son of Anah, not Dishon son of Seir."
+   }
+  },
+  {
+   "chapter": "1CH-1",
+   "row_id": 98289,
+   "row": "cheran son-of dishon",
+   "row_verse": "1CH 1:41",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "dishon-2",
+    "verse": "1CH 1:41",
+    "why": "The verse names Ithran and Cheran among the sons of the Dishon just identified as Anah's son."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "dishon-2",
+    "verse": "1CH 1:41",
+    "why": "Verse 1:41 lists Cheran among the sons of Dishon who is the son of Anah (Amram, Eshban, Ithran, Cheran), not the Dishon son of Seir."
+   }
+  },
+  {
+   "chapter": "1CH-1",
+   "row_id": 99844,
+   "row": "ithran son-of dishon",
+   "row_verse": "1CH 1:41",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "dishon-2",
+    "verse": "1CH 1:41",
+    "why": "The verse names Ithran and Cheran among the sons of the Dishon just identified as Anah's son."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "dishon-2",
+    "verse": "1CH 1:41",
+    "why": "Verse 1:41 lists Ithran among the sons of Dishon who is the son of Anah (Amram, Eshban, Ithran, Cheran), not the Dishon son of Seir."
+   }
+  },
+  {
+   "chapter": "1CH-2",
+   "row_id": 99034,
+   "row": "gazez-2 son-of chelubai",
+   "row_verse": "1CH 2:46",
+   "codex": {
+    "kind": "retype",
+    "new_type": "grandson-of",
+    "new_to": "",
+    "verse": "1CH 2:46",
+    "why": "The second Gazez was begotten by Haran, who was Caleb's son by Ephah."
+   },
+   "haiku": {
+    "kind": "retype",
+    "new_type": "grandson-of",
+    "new_to": "",
+    "verse": "1CH 2:46",
+    "why": "Haran begat Gazez, so this Gazez is Haran's son and Caleb's grandson; the chapter names Haran between him and Caleb."
+   }
+  },
+  {
+   "chapter": "1CH-2",
+   "row_id": 102709,
+   "row": "sheshan father-of attai",
+   "row_verse": "1CH 2:35",
+   "codex": {
+    "kind": "retype",
+    "new_type": "grandfather-of",
+    "new_to": "",
+    "verse": "1CH 2:35",
+    "why": "Sheshan's daughter bore Attai to Jarha, making Sheshan Attai's grandfather."
+   },
+   "haiku": {
+    "kind": "retype",
+    "new_type": "grandfather-of",
+    "new_to": "",
+    "verse": "1CH 2:35",
+    "why": "Sheshan gave his daughter to Jarha, and she bore Attai, so Attai is Sheshan's grandson through the daughter, not his son."
+   }
+  },
+  {
+   "chapter": "1CH-2",
+   "missing": "bathshua daughter-of shua",
+   "verse": "1CH 2:3",
+   "why": "The mother of Judah's first three sons is explicitly called the daughter of Shua."
+  },
+  {
+   "chapter": "1CH-24",
+   "missing": "zadok descendant-of eleazar",
+   "verse": "1CH 24:3",
+   "why": "The Hebrew explicitly identifies Zadok as belonging to the sons of Eleazar."
+  },
+  {
+   "chapter": "1CH-24",
+   "missing": "zadok descendant-of eleazar",
+   "verse": "1CH 24:3",
+   "why": "The Hebrew explicitly identifies Zadok as belonging to the sons of Eleazar."
+  },
+  {
+   "chapter": "1CH-24",
+   "missing": "zadok descendant-of eleazar",
+   "verse": "1CH 24:3",
+   "why": "The Hebrew explicitly identifies Zadok as belonging to the sons of Eleazar."
+  },
+  {
+   "chapter": "1CH-25",
+   "row_id": 102747,
+   "row": "shimei-10 son-of jeduthun",
+   "row_verse": "1CH 25:3",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 25:3",
+    "why": "The Hebrew names five sons of Jeduthun without naming Shimei, whose appearance in verse 17 gives no father."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 25:3",
+    "why": "Verse 3 says Jeduthun's sons were six but names only five (Gedaliah, Zeri, Jeshaiah, Hashabiah, Mattithiah), and Shimei is not named as a son there; verse 17 gives Shimei no father."
+   }
+  },
+  {
+   "chapter": "1CH-26",
+   "row_id": 102849,
+   "row": "shuppim companion-of hosah",
+   "row_verse": "1CH 26:16",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 26:16",
+    "why": "The verse assigns Shuppim and Hosah to the west gate but does not state that they were companions."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 26:16",
+    "why": "The verse only says the lot for the west gate fell to Shuppim and Hosah together; it states no family tie, and companion-of is not one of the family types."
+   }
+  },
+  {
+   "chapter": "1CH-26",
+   "missing": "joel-6 son-of jehiel-9",
+   "verse": "1CH 26:22",
+   "why": "The Hebrew lists Joel, Zetham's brother, among the sons of Jehieli."
+  },
+  {
+   "chapter": "1CH-26",
+   "missing": "zetham son-of jehiel-9",
+   "verse": "1CH 26:22",
+   "why": "The Hebrew explicitly lists Zetham among the sons of Jehieli."
+  },
+  {
+   "chapter": "1CH-3",
+   "row_id": 97593,
+   "row": "arnan descendant-of rephaiah",
+   "row_verse": "1CH 3:21",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 3:21",
+    "why": "The Hebrew lists 'sons of Rephaiah' and 'sons of Arnan' without saying that Arnan descends from Rephaiah."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 3:21",
+    "why": "The verse gives the sons of Rephaiah and the sons of Arnan as parallel families under Hananiah, so it does not say Arnan descends from Rephaiah."
+   }
+  },
+  {
+   "chapter": "1CH-3",
+   "row_id": 97594,
+   "row": "arnan ancestor-of obadiah-2",
+   "row_verse": "1CH 3:21",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 3:21",
+    "why": "The Hebrew lists 'sons of Arnan' and 'sons of Obadiah' without saying that Obadiah descends from Arnan."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 3:21",
+    "why": "The verse gives the sons of Arnan and the sons of Obadiah as parallel families, so it does not say Arnan is an ancestor of Obadiah."
+   }
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of adonijah",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Adonijah."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of eliada",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Eliada."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of eliphelet",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including the Eliphelet named in verse 8."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of eliphelet-3",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including the Eliphelet named in verse 6."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of elishama-2",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Elishama."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of ibhar",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Ibhar."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of ithream",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Ithream."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of japhia-2",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Japhia."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of nathan",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Nathan."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of nepheg-2",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Nepheg."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of nogah",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Nogah."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of shammua-2",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Shimea, represented here by shammua-2."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of shephatiah",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Shephatiah."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of shobab",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Shobab."
+  },
+  {
+   "chapter": "1CH-3",
+   "missing": "tamar-2 sister-of solomon",
+   "verse": "1CH 3:9",
+   "why": "Tamar is called the sister of David's listed sons, including Solomon."
+  },
+  {
+   "chapter": "1CH-4",
+   "row_id": 101668,
+   "row": "neariah-2 son-of ishi-2",
+   "row_verse": "1CH 4:42",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "ishi-the-simeonite",
+    "verse": "1CH 4:42",
+    "why": "The four captains are explicitly sons of the Simeonite Ishi represented by ishi-the-simeonite, rather than the Ishi in the earlier Judahite genealogy."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "ishi-the-simeonite",
+    "verse": "1CH 4:42",
+    "why": "The sons of Ishi who led the five hundred are the Simeonite Ishi, not the Ishi of verse 20."
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "row_id": 101928,
+   "row": "pelatiah-2 son-of ishi-2",
+   "row_verse": "1CH 4:42",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "ishi-the-simeonite",
+    "verse": "1CH 4:42",
+    "why": "The four captains are explicitly sons of the Simeonite Ishi represented by ishi-the-simeonite, rather than the Ishi in the earlier Judahite genealogy."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "ishi-the-simeonite",
+    "verse": "1CH 4:42",
+    "why": "Pelatiah is one of the sons of Ishi in verse 42, which is the Simeonite Ishi, not the Ishi of verse 20."
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "row_id": 102168,
+   "row": "rephaiah-2 son-of ishi-2",
+   "row_verse": "1CH 4:42",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "ishi-the-simeonite",
+    "verse": "1CH 4:42",
+    "why": "The four captains are explicitly sons of the Simeonite Ishi represented by ishi-the-simeonite, rather than the Ishi in the earlier Judahite genealogy."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "ishi-the-simeonite",
+    "verse": "1CH 4:42",
+    "why": "Rephaiah is one of the sons of Ishi in verse 42, which is the Simeonite Ishi, not the Ishi of verse 20."
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "row_id": 103215,
+   "row": "uzziel-2 son-of ishi-2",
+   "row_verse": "1CH 4:42",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "ishi-the-simeonite",
+    "verse": "1CH 4:42",
+    "why": "The four captains are explicitly sons of the Simeonite Ishi represented by ishi-the-simeonite, rather than the Ishi in the earlier Judahite genealogy."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "ishi-the-simeonite",
+    "verse": "1CH 4:42",
+    "why": "Uzziel is one of the sons of Ishi in verse 42, which is the Simeonite Ishi, not the Ishi of verse 20."
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "row_id": 106049,
+   "row": "meshobab descendant-of amaziah-2",
+   "row_verse": "1CH 4:34",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:34",
+    "why": "The phrase son of Amaziah qualifies Joshah alone, while Meshobab is a separate name in the list."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:34",
+    "why": "The words son of Amaziah in verse 34 attach to Joshah alone, and Meshobab is not said to descend from Amaziah."
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "row_id": 106686,
+   "row": "naham father-of eshtemoa-2",
+   "row_verse": "1CH 4:19",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:19",
+    "why": "Naham identifies the brother of Hodiah's wife, while the following genealogy concerns her sons rather than naming Naham as the father of Keilah or Eshtemoa."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:19",
+    "why": "The verse names Naham only as father of Keilah; Eshtemoa is listed among the sons of Hodiah's wife with no father given."
+   }
+  },
+  {
+   "chapter": "1CH-6",
+   "missing": "elkanah son-of assir",
+   "verse": "1CH 6:23",
+   "why": "Elkanah is called 'his son' immediately after Assir at the end of verse 22."
+  },
+  {
+   "chapter": "1CH-6",
+   "missing": "elkanah-4 son-of joel-son-of-azariah",
+   "verse": "1CH 6:36",
+   "why": "The ancestry explicitly identifies the Elkanah preceding Amasai as the son of Joel."
+  },
+  {
+   "chapter": "1CH-7",
+   "row_id": 98523,
+   "row": "ehi father-of hushim-2",
+   "row_verse": "1CH 7:12",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 7:12",
+    "why": "The Hebrew names Aher as Hushim's father and does not identify him as Ehi."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 7:12",
+    "why": "The verse makes Hushim a son of Aher, and Ehi is not named there; the row needs an unstated reading of Aher as Ehi."
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "row_id": 102176,
+   "row": "resheph son-of rephah",
+   "row_verse": "1CH 7:25",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 7:25",
+    "why": "Resheph is coordinated with Rephah without a following 'his son,' so the verse does not make Resheph Rephah's son."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 7:25",
+    "why": "Verse 25 makes Rephah and Resheph both sons of Ephraim ('Rephah was his son, also Resheph'), so Resheph is not Rephah's son."
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "missing": "nun son-of elishama",
+   "verse": "1CH 7:27",
+   "why": "Non 'his son' continues the genealogy immediately after Elishama in verse 26."
+  },
+  {
+   "chapter": "1CH-7",
+   "missing": "ladan son-of tahan",
+   "verse": "1CH 7:26",
+   "why": "Laadan 'his son' continues the genealogy immediately after Tahan in verse 25."
+  },
+  {
+   "chapter": "1CH-7",
+   "missing": "zabad-2 son-of tahath-3",
+   "verse": "1CH 7:21",
+   "why": "Zabad 'his son' continues the genealogy immediately after the second Tahath in verse 20."
+  },
+  {
+   "chapter": "1CH-8",
+   "row_id": 102454,
+   "row": "shamsherai son-of jeremoth-2",
+   "row_verse": "1CH 8:26",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "jeroham-father-of-jaresiah",
+    "verse": "1CH 8:26",
+    "why": "Shamsherai belongs to the list ending in verse 27 with 'sons of Jeroham,' rather than Jeremoth."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "jeroham-father-of-jaresiah",
+    "verse": "1CH 8:26",
+    "why": "Verse 27 closes this block as the sons of Jeroham, a name the text keeps distinct from Jeremoth of verse 14, the person the row points to."
+   }
+  },
+  {
+   "chapter": "1CH-8",
+   "row_id": 102550,
+   "row": "shehariah descendant-of shashak",
+   "row_verse": "1CH 8:26",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 8:26",
+    "why": "Shehariah is listed among Jeroham's sons in verses 26–27, and the chapter gives no ancestry connecting him to Shashak."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 8:26",
+    "why": "Verse 26 names Shehariah among the sons of Jeroham (closed in verse 27), and Shashak's sons end at verse 25, so the chapter does not say he descends from Shashak."
+   }
+  },
+  {
+   "chapter": "1CH-8",
+   "missing": "athaliah-2 son-of jeroham-father-of-jaresiah",
+   "verse": "1CH 8:26",
+   "why": "Athaliah appears in the list in verses 26–27 that concludes with 'sons of Jeroham.'"
+  },
+  {
+   "chapter": "1CH-8",
+   "missing": "elijah-2 son-of jeroham-father-of-jaresiah",
+   "verse": "1CH 8:27",
+   "why": "Verse 27 explicitly includes Eliah among Jeroham's sons."
+  },
+  {
+   "chapter": "1CH-8",
+   "missing": "jaareshiah son-of jeroham-father-of-jaresiah",
+   "verse": "1CH 8:27",
+   "why": "Verse 27 explicitly includes Jaresiah among Jeroham's sons."
+  },
+  {
+   "chapter": "1CH-8",
+   "missing": "shehariah son-of jeroham-father-of-jaresiah",
+   "verse": "1CH 8:26",
+   "why": "Shehariah appears in the list in verses 26–27 that concludes with 'sons of Jeroham.'"
+  },
+  {
+   "chapter": "1CH-8",
+   "missing": "zichri-4 son-of jeroham-father-of-jaresiah",
+   "verse": "1CH 8:27",
+   "why": "Verse 27 explicitly includes Zichri among Jeroham's sons."
+  },
+  {
+   "chapter": "1CH-9",
+   "missing": "ner son-of jeiel-2",
+   "verse": "1CH 9:36",
+   "why": "Ner is included in the list of sons of Jeiel introduced by 'his firstborn son Abdon.'"
+  },
+  {
+   "chapter": "EZR-10",
+   "row_id": 100577,
+   "row": "joseph-4 descendant-of amariah-5",
+   "row_verse": "EZR 10:42",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 10:42",
+    "why": "Amariah and Joseph are successive members of Bani's list, with no statement that Joseph descends from Amariah."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 10:42",
+    "why": "Verse 10:42 is a flat list ('Shallum, Amariah, and Joseph') with no parentage between Amariah and Joseph; row 100578 already records Joseph under bani-4, which the list supports."
+   }
+  },
+  {
+   "chapter": "EZR-10",
+   "row_id": 101015,
+   "row": "machnadebai descendant-of bani",
+   "row_verse": "EZR 10:40",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "bani-4",
+    "verse": "EZR 10:40",
+    "why": "Machnadebai continues the returned family of Bani's list begun in verse 34, which does not identify David's Gadite warrior."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "bani-4",
+    "verse": "EZR 10:40",
+    "why": "Machnadebai is in the list of Bani's descendants at 10:34-42, which is bani-4, not the Gadite Bani of 2SA 23:36; bani-4 is already recorded in row 101016, so this row can simply be dropped."
+   }
+  },
+  {
+   "chapter": "EZR-10",
+   "row_id": 101273,
+   "row": "meremoth-2 descendant-of vaniah",
+   "row_verse": "EZR 10:36",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 10:36",
+    "why": "Vaniah and Meremoth are successive members of Bani's list, with no statement that Meremoth descends from Vaniah."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 10:36",
+    "why": "Verse 10:36 is a flat list ('Vaniah, Meremoth, Eliashib') with no parentage between Vaniah and Meremoth; the descent from bani-4 in row 101274 is the one the list supports."
+   }
+  },
+  {
+   "chapter": "EZR-10",
+   "row_id": 102664,
+   "row": "shemariah-3 descendant-of hashum-2",
+   "row_verse": "EZR 10:32",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 10:32",
+    "why": "Shemariah continues the sons-of-Harim list begun in verse 31, whereas the Hashum list begins in verse 33."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 10:32",
+    "why": "Verse 10:32 continues the sons of Harim list begun at 10:31, and Hashum is named only at 10:33, so Shemariah is not said to be a descendant of hashum-2 (a different man, NEH 8:4); row 102665 already records him under harim-2."
+   }
+  },
+  {
+   "chapter": "EZR-10",
+   "missing": "eliezer-11 descendant-of levi",
+   "verse": "EZR 10:23",
+   "why": "The Hebrew explicitly includes this Eliezer among the Levites."
+  },
+  {
+   "chapter": "EZR-8",
+   "row_id": 106256,
+   "row": "shecaniah-2 descendant-of parosh",
+   "row_verse": "EZR 8:3",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 8:3",
+    "why": "The Hebrew does not identify the priest shecaniah-2 as either a descendant of Parosh or an ancestor of Zechariah."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 8:3",
+    "why": "The Hebrew gives 'sons of Shechaniah' and 'sons of Parosh' as separate groups, with a paragraph mark between them, and does not make Shechaniah a descendant of Parosh."
+   }
+  },
+  {
+   "chapter": "GEN-10",
+   "row_id": 99209,
+   "row": "hadoram descendant-of yhvh",
+   "row_verse": "GEN 10:27",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "GEN 10:27",
+    "why": "Hadoram appears in Joktan's offspring list, and the chapter states no genealogical relationship between Hadoram and YHVH."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "GEN 10:27",
+    "why": "Verses 10:27 and 10:29 make Hadoram a son of Joktan; the chapter nowhere makes him a descendant of YHVH."
+   }
+  },
+  {
+   "chapter": "GEN-10",
+   "row_id": 107058,
+   "row": "sheba-2 descendant-of sheba",
+   "row_verse": "GEN 10:28",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "GEN 10:28",
+    "why": "Sheba in Joktan's offspring list is distinct from Raamah's son Sheba in verse 7, and the chapter states no descent between them."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "GEN 10:28",
+    "why": "Verse 10:28 makes Sheba-2 a son of Joktan in the Eber line, not a descendant of Sheba the son of Raamah in the line of Cush (GEN 10:7)."
+   }
+  },
+  {
+   "chapter": "GEN-11",
+   "missing": "terah father-in-law-of sarai",
+   "verse": "GEN 11:31",
+   "why": "Sarai is explicitly called Terah's daughter-in-law (כַּלָּתוֹ), the wife of his son Abram."
+  },
+  {
+   "chapter": "GEN-11",
+   "missing": "terah grandfather-of lot",
+   "verse": "GEN 11:31",
+   "why": "Lot is explicitly called Terah's son's son (בֶּן־בְּנוֹ)."
+  },
+  {
+   "chapter": "GEN-29",
+   "missing": "laban son-of nahor-2",
+   "verse": "GEN 29:5",
+   "why": "The Hebrew explicitly identifies Laban as בֶּן־נָחוֹר, son of Nahor, and neither direction of this relationship is recorded."
+  },
+  {
+   "chapter": "GEN-35",
+   "missing": "bilhah concubine-of jacob",
+   "verse": "GEN 35:22",
+   "why": "Bilhah is explicitly called the concubine of Reuben's father, Jacob."
+  },
+  {
+   "chapter": "GEN-36",
+   "missing": "adah-wife-of-esau daughter-of elon",
+   "verse": "GEN 36:2",
+   "why": "Adah is explicitly called the daughter of Elon the Hittite."
+  },
+  {
+   "chapter": "GEN-36",
+   "missing": "basemath-daughter-of-ishmael daughter-of ishmael",
+   "verse": "GEN 36:3",
+   "why": "Bashemath is explicitly called Ishmael's daughter."
+  },
+  {
+   "chapter": "GEN-36",
+   "missing": "basemath-daughter-of-ishmael sister-of nebaioth",
+   "verse": "GEN 36:3",
+   "why": "Bashemath is explicitly called the sister of Nebajoth."
+  },
+  {
+   "chapter": "GEN-36",
+   "missing": "basemath-daughter-of-ishmael wife-of esau",
+   "verse": "GEN 36:10",
+   "why": "Bashemath is explicitly identified as Esau's wife."
+  },
+  {
+   "chapter": "GEN-36",
+   "missing": "oholibamah-wife-of-esau wife-of esau",
+   "verse": "GEN 36:14",
+   "why": "Aholibamah is explicitly identified as Esau's wife."
+  },
+  {
+   "chapter": "GEN-38",
+   "missing": "shelah-2 brother-of er",
+   "verse": "GEN 38:11",
+   "why": "Judah refers to Shelah's deceased brothers, who in the preceding narrative are Er and Onan."
+  },
+  {
+   "chapter": "GEN-4",
+   "missing": "jubal brother-of jabal",
+   "verse": "GEN 4:21",
+   "why": "The Hebrew names Jubal as the brother of Jabal, the preceding verse's subject."
+  },
+  {
+   "chapter": "GEN-46",
+   "missing": "serah sister-of imnah",
+   "verse": "GEN 46:17",
+   "why": "The Hebrew calls Serah 'their sister' after listing Imnah, Ishvah, Ishvi, and Beriah."
+  },
+  {
+   "chapter": "LUK-3",
+   "missing": "adam son-of yhvh",
+   "verse": "LUK 3:38",
+   "why": "The genealogy ends with Adam 'of God,' continuing the sonship construction."
+  },
+  {
+   "chapter": "LUK-3",
+   "missing": "jesus son-of yhvh",
+   "verse": "LUK 3:22",
+   "why": "The heavenly voice addresses Jesus as 'my beloved Son.'"
+  },
+  {
+   "chapter": "MAT-1",
+   "missing": "jehoram father-of azariah-3",
+   "verse": "MAT 1:8",
+   "why": "The text explicitly says Joram begat Ozias, identified here as Jehoram and Uzziah/Azariah."
+  },
+  {
+   "chapter": "MAT-1",
+   "missing": "josiah father-of jehoiachin",
+   "verse": "MAT 1:11",
+   "why": "The text explicitly says Josias begat Jechonias, identified here as Josiah and Jehoiachin."
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 100524,
+   "row": "jonathan-12 son-of shemaiah-14",
+   "row_verse": "NEH 12:35",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "shemaiah-26",
+    "verse": "NEH 12:35",
+    "why": "The genealogy makes Jonathan the son of the Shemaiah represented by shemaiah-26, Zechariah's grandfather."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "shemaiah-26",
+    "verse": "NEH 12:35",
+    "why": "The verse makes Jonathan the son of a Shemaiah who is in the line Zechariah, Jonathan, Shemaiah, Mattaniah, Michaiah, so the Levite namesake shemaiah-14 is the wrong person."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 101177,
+   "row": "mattaniah-4 father-of shemaiah-14",
+   "row_verse": "NEH 12:35",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:35",
+    "why": "The Mattaniah in this genealogy is mattaniah-12, not mattaniah-4 from Hezekiah's time, and his son is shemaiah-26."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:35",
+    "why": "The Shemaiah and Mattaniah links in this genealogy are shemaiah-26 and mattaniah-12, so these shemaiah-14 rows with mattaniah-4 name the wrong people."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 102624,
+   "row": "shemaiah-14 son-of mattaniah-4",
+   "row_verse": "NEH 12:35",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:35",
+    "why": "Jonathan's father in the genealogy is shemaiah-26, son of mattaniah-12, rather than the Levite shemaiah-14 sent by Ezra."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:35",
+    "why": "The Shemaiah and Mattaniah links in this genealogy are shemaiah-26 and mattaniah-12, so these shemaiah-14 rows with mattaniah-4 name the wrong people."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 102625,
+   "row": "shemaiah-14 father-of jonathan-12",
+   "row_verse": "NEH 12:35",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:35",
+    "why": "Jonathan's father in the genealogy is shemaiah-26, son of mattaniah-12, rather than the Levite shemaiah-14 sent by Ezra."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:35",
+    "why": "This Shemaiah is the grandfather of Zechariah in the verse's genealogy (shemaiah-26), so the shemaiah-14 father-of row is a namesake error and the chapter does not say it."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 105526,
+   "row": "jehonathan-2 descendant-of shemaiah-19",
+   "row_verse": "NEH 12:18",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "shemaiah-24",
+    "verse": "NEH 12:18",
+    "why": "Jehonathan heads the house of the returning priest Shemaiah from verse 6, represented by shemaiah-24."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "shemaiah-24",
+    "verse": "NEH 12:18",
+    "why": "'Of Shemaiah, Jehonathan' names the house of the Shemaiah who returned with Zerubbabel and headed a priestly house (shemaiah-24), not the NEH 10:8 priest shemaiah-19."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 105528,
+   "row": "jonathan-11 descendant-of malluch-4",
+   "row_verse": "NEH 12:14",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "malluch-6",
+    "verse": "NEH 12:14",
+    "why": "Jonathan heads the Melicu or Malluch house corresponding to the returning priest Malluch in verse 2."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "malluch-6",
+    "verse": "NEH 12:14",
+    "why": "'Of Melicu, Jonathan' names the house of Malluch that is later called Melicu, which is malluch-6 (the priest who went up with Zerubbabel), not the NEH 10:8 Malluch."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 105531,
+   "row": "malluch-4 ancestor-of jonathan-11",
+   "row_verse": "NEH 12:14",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:14",
+    "why": "This verse associates Jonathan with the returning Malluch house represented by malluch-6, not the separately recorded malluch-4."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:14",
+    "why": "Jonathan belongs to the house of malluch-6, so this malluch-4 row is a namesake and is removed in favour of the retargeted row."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 105535,
+   "row": "nethanel-7 descendant-of jedaiah-5",
+   "row_verse": "NEH 12:21",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "jedaiah-8",
+    "verse": "NEH 12:21",
+    "why": "Nethaneel heads the second Jedaiah house, following Hilkiah in the order of verses 7 and 21, represented by jedaiah-8."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "jedaiah-8",
+    "verse": "NEH 12:21",
+    "why": "'Of Jedaiah, Nethaneel' names the Jedaiah house later headed by Nethaneel (jedaiah-8), not jedaiah-5, who is named at NEH 11:10 and 12:7."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 105537,
+   "row": "shemaiah-19 ancestor-of jehonathan-2",
+   "row_verse": "NEH 12:18",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:18",
+    "why": "The Shemaiah house associated with Jehonathan is represented by shemaiah-24 rather than the separately recorded covenant priest shemaiah-19."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:18",
+    "why": "This shemaiah-19 link is a namesake of the house head in this verse and duplicates the shemaiah-24 link once 105526 is retargeted."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 105862,
+   "row": "jeremiah-7 ancestor-of hananiah-9",
+   "row_verse": "NEH 12:12",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:12",
+    "why": "The Jeremiah whose house Hananiah heads is the returning priestly house represented by jeremiah-9, not the separately recorded covenant priest jeremiah-7."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:12",
+    "why": "'Of Jeremiah, Hananiah' names the house of the Jeremiah who continued under Joiakim (jeremiah-9), not the NEH 10:8 priest jeremiah-7."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "missing": "jehohanan son-of eliashib-7",
+   "verse": "NEH 12:23",
+   "why": "The Hebrew explicitly calls Johanan son of Eliashib, continuing the priestly context that names Eliashib in verse 22."
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'zeruiah sister-of ozem', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "ואחיתיהם in 1CH 2:16 makes Zeruiah the sister of the sons of Jesse just listed, Ozem among them, and nothing between them is recorded."
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'abigail-2 sister-of raddai', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "ואחיתיהם in 1CH 2:16 makes Abigail the sister of Jesse's sons, Raddai among them, and abigail-2 is that Abigail (sister of Zeruiah)."
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The row 'bani-4 ancestor-of shelomith-5' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "The Masoretic text of Ezra 8:10 names no Bani (only 'of the sons of Shelomith, the son of Josiphiah'); Bani comes from an LXX/1 Esdras restoration, so the chapter does not say it.",
+   "row_id": 103912,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 8:10"
+   }
+  },
+  {
+   "chapter": "1CH-3",
+   "claim": "The chapter plainly states 'tamar-2 sister-of chileab', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 3:9 calls Tamar 'their sister' (אֲחוֹתָם) of all David's sons listed, which include Chileab (named Daniel in 3:1); the site already uses sister-of for half-siblings (Amnon)."
+  },
+  {
+   "chapter": "GEN-25",
+   "claim": "The chapter plainly states 'sheba-3 descendant-of keturah', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "GEN 25:4's כָּל־אֵלֶּה בְּנֵי קְטוּרָה covers Jokshan's son Sheba (25:3), so he is Keturah's grandson, and nothing between them is recorded."
+  },
+  {
+   "chapter": "1CH-6",
+   "claim": "The row 'tohu father-of eliel' points at the wrong person; it should point at 'elihu'.",
+   "judge": "right",
+   "judge_why": "The Eliel son of Toah in 1CH 6:34 is Samuel's ancestor, Elihu son of Tohu (1SA 1:1), not the Manassite head, so the row belongs on elihu.",
+   "row_id": 107137,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "elihu",
+    "verse": "1CH 6:34"
+   }
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The row 'eleazar-6 son-of phinehas' points at the wrong person; it should point at 'phinehas-3'.",
+   "judge": "right",
+   "judge_why": "The Eleazar son of Phinehas weighing silver in Ezra's day cannot be the son of Aaron's grandson Phinehas, so phinehas-3 is the right father.",
+   "row_id": 98581,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "phinehas-3",
+    "verse": "EZR 8:33"
+   }
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'sheba-5 son-of abihail-3', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "In 1CH 5:13-14, the seven brethren (Sheba among them) are introduced with אֵלֶּה בְּנֵי אֲבִיחַיִל, so Sheba is a son of Abihail."
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'zia brother-of eber-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "Zia and Eber are listed together among the seven sons of Abihail (1CH 5:13-14), which makes them brothers, and this is not recorded."
+  },
+  {
+   "chapter": "1CH-3",
+   "claim": "The chapter plainly states 'berechiah son-of zerubbabel-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 3:19-20 continues the list of Zerubbabel's children with the further five ('Hashubah ... Jushab-hesed, five') before Hananiah's sons begin in 3:21, so Berechiah is Zerubbabel's son."
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The row 'shecaniah-2 ancestor-of zechariah-16' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "The setumah puts 'of the sons of Shecaniah' apart from Zechariah, whom the verse makes 'of the sons of Parosh', and shecaniah-2 is the priestly-course head of 1CH 24:11 in any case, so the row is unsupported.",
+   "row_id": 106257,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 8:3"
+   }
+  },
+  {
+   "chapter": "GEN-36",
+   "claim": "The row 'mizzah son-of basemath-daughter-of-ishmael' should become 'mizzah grandson-of basemath-daughter-of-ishmael'.",
+   "judge": "right",
+   "judge_why": "Mizzah is Reuel's son and Reuel is Basemath's son (GEN 36:4), so בְּנֵי בָשְׂמַת in 36:13 means grandson.",
+   "row_id": 101469,
+   "fix": {
+    "kind": "retype",
+    "new_type": "grandson-of",
+    "new_to": "",
+    "verse": "GEN 36:13"
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The chapter plainly states 'jahzeel descendant-of bilhah', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 7:13 calls Naphtali's sons, Jahziel among them, בְּנֵי בִלְהָה, and he is her grandson; nothing directly between them is recorded."
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'maai brother-of gilalai' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "Neh 12:36 lists Maai and Gilalai as Zechariah's אַחִים (fellow musicians), and nothing makes them siblings of each other.",
+   "row_id": 106945,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:36"
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'eshtemoa-2 brother-of keilah' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "1CH 4:19 makes Eshtemoa a brother of the unnamed 'father of Keilah', not of Keilah (likely a town), so 'brother of Keilah' is not stated.",
+   "row_id": 98894,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:19"
+   }
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'eber-2 son-of abihail-3', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "In 1CH 5:13-14, the seven, Eber (Heber) among them, are אֵלֶּה בְּנֵי אֲבִיחַיִל."
+  },
+  {
+   "chapter": "MAT-1",
+   "claim": "The row 'salmon husband-of rahab' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "ἐκ τῆς Ῥαχάβ says only that Rahab bore Boaz to Salmon (the same formula is used of Tamar and Judah), so MAT 1:5 does not state a marriage.",
+   "row_id": 102266,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "MAT 1:5"
+   }
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'jacan son-of abihail-3', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "In 1CH 5:13-14, the seven, Jacan (Jachan) among them, are אֵלֶּה בְּנֵי אֲבִיחַיִל."
+  },
+  {
+   "chapter": "1CH-3",
+   "claim": "The chapter plainly states 'jushabhesed son-of zerubbabel-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 3:19-20 continues Zerubbabel's children with the five ending in Jushab-hesed before Hananiah's line begins, so he is Zerubbabel's son."
+  },
+  {
+   "chapter": "MAT-1",
+   "claim": "The row 'rahab wife-of salmon' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "MAT 1:5 says only that Salmon fathered Boaz ἐκ τῆς Ῥαχάβ, which does not state that Rahab was his wife.",
+   "row_id": 102087,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "MAT 1:5"
+   }
+  },
+  {
+   "chapter": "1CH-3",
+   "claim": "The chapter plainly states 'hashubah son-of zerubbabel-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "Hashubah heads the further five children of Zerubbabel in 1CH 3:20, after Meshullam, Hananiah and Shelomith."
+  },
+  {
+   "chapter": "GEN-46",
+   "claim": "The row 'malchiel of-tribe asher' should become 'malchiel grandson-of asher'.",
+   "judge": "right",
+   "judge_why": "GEN 46:17 makes Malchiel a son of Beriah, Asher's son, so grandson-of the person Asher is exact.",
+   "row_id": 101084,
+   "fix": {
+    "kind": "retype",
+    "new_type": "grandson-of",
+    "new_to": "asher",
+    "verse": "GEN 46:17"
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The chapter plainly states 'jahzeel descendant-of bilhah', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 7:13 calls Naphtali's sons, Jahziel among them, בְּנֵי בִלְהָה, and he is her grandson; nothing directly between them is recorded."
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'hodiah mother-of eshtemoa-2' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "'אֵשֶׁת הוֹדִיָּה' is 'the wife of Hodiah', so Hodiah (recorded as male) is the husband; nothing in the text makes Hodiah Eshtemoa's mother.",
+   "row_id": 106647,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:19"
+   }
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The row 'zattu ancestor-of shecaniah-4' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "The Masoretic text of EZR 8:5 reads only 'of the sons of Shecaniah, son of Jahaziel'; Zattu comes from the LXX/1 Esdras, not this chapter.",
+   "row_id": 107156,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 8:5"
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'etam father-of jezreel' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "The Hebrew 'אֲבִי עֵיטָם' makes Jezreel and the others belong to 'the father of Etam' (Etam is a town), not sons of a person Etam.",
+   "row_id": 98901,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:3"
+   }
+  },
+  {
+   "chapter": "1CH-1",
+   "claim": "The chapter plainly states 'keturah concubine-of abram', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 1:32 says 'קְטוּרָה פִּילֶגֶשׁ אַבְרָהָם', abram is the Abraham record, and nothing between them is recorded yet."
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'jehohanan-4 descendant-of amariah-6' points at the wrong person; it should point at 'amariah-priest-with-zerubbabel'.",
+   "judge": "right",
+   "judge_why": "The houses in NEH 12:12-21 match the priests who went up with Zerubbabel in 12:1-7, so 'of Amariah' means that Amariah, not the signer of NEH 10.",
+   "row_id": 105525,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "amariah-priest-with-zerubbabel",
+    "verse": "NEH 12:13"
+   }
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'zia brother-of meshullam-3', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 5:14 'אֵלֶּה בְּנֵי אֲבִיחַיִל' makes the seven of 5:13, Meshullam and Zia among them, sons of Abihail and so brothers."
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'etam father-of ishma' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "MT 'אֲבִי עֵיטָם' does not make a person Etam the father of Ishma; Etam is a place and 'father of Etam' is its founder.",
+   "row_id": 98902,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:3"
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'hodiah mother-of keilah' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "'אֵשֶׁת הוֹדִיָּה' makes Hodiah (recorded as male) the husband, and Keilah is at most a grandson, so 'mother-of' has no support.",
+   "row_id": 106646,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:19"
+   }
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'abigail-2 sister-of ozem', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 2:16 'ואחיתיהם צְרוּיָה וַאֲבִיגָיִל' names Abigail as the sister of Jesse's sons listed in 2:13-15, Ozem among them, and nothing between them is recorded."
+  },
+  {
+   "chapter": "NUM-3",
+   "claim": "The row 'zuriel commander-of merari' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "NUM 3:35 makes Zuriel the prince of the families of Merari (the clan), not commander of Merari the son of Levi, who is the record named.",
+   "row_id": 103600,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NUM 3:35"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'maai brother-of milalai' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "'וְאֶחָיו' in NEH 12:36 means Zechariah's fellow musicians; nothing makes Maai and Milalai siblings of each other.",
+   "row_id": 106944,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:36"
+   }
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'meshullam-3 son-of abihail-3', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 5:14 'אֵלֶּה בְּנֵי אֲבִיחַיִל' refers to the seven of 5:13, Meshullam among them."
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'ishma son-of etam' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "MT 'אֲבִי עֵיטָם' does not make Ishma the son of a person Etam; Etam is a town whose 'father' is named.",
+   "row_id": 99778,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:3"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'zechariah-25 descendant-of iddo-5' points at the wrong person; it should point at 'iddo-7'.",
+   "judge": "right",
+   "judge_why": "'Of Iddo' in NEH 12:16 is the priestly house of the Iddo who went up with Zerubbabel (12:4), which is iddo-7, not the prophet's grandfather of EZR 5:1.",
+   "row_id": 103770,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "iddo-7",
+    "verse": "NEH 12:16"
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The chapter plainly states 'jahzeel descendant-of bilhah', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 7:13 calls Naphtali's sons, Jahziel among them, 'בְּנֵי בִלְהָה', and no direct row between Jahzeel and Bilhah exists yet."
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'abigail-2 sister-of abinadab-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 2:16 names Abigail as the sister of Jesse's sons in 2:13-15, Abinadab among them, and nothing between them is recorded."
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'abigail-2 sister-of eliab-3', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 2:16 names Abigail as the sister of Jesse's sons in 2:13-15, Eliab among them, and no sibling row between them exists."
+  },
+  {
+   "chapter": "NEH-11",
+   "claim": "The row 'zechariah-20 descendant-of ahijah' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "NEH 11:5 ends בֶּן־הַשִּׁלֹנִי, a gentilic (likely Shelanite, of Judah's son Shelah, in a Judahite list), and nothing ties it to Ahijah the prophet of Shiloh.",
+   "row_id": 103404,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 11:5"
+   }
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'zeruiah sister-of abinadab-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 2:16 makes Zeruiah and Abigail the sisters (אַחְיוֹתֵיהֶם) of Jesse's sons listed in 2:13-15, Abinadab among them, and no Zeruiah-Abinadab relation is recorded."
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The chapter plainly states 'jeiel-10 descendant-of adonikam', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "EZR 8:13 lists Jeiel among מִבְּנֵי אֲדֹנִיקָם, the clan of the Adonikam of EZR 2:13, so descendant-of is the correct type and nothing is yet recorded."
+  },
+  {
+   "chapter": "NEH-11",
+   "claim": "The row 'bunni-2 father-of hashabiah-2' points at the wrong person; it should point at 'hashabiah-11'.",
+   "judge": "right",
+   "judge_why": "The Hashabiah son of Bunni in NEH 11:15, a post-exilic Merarite ancestor of Shemaiah, is not Hashabiah son of Jeduthun from David's time; hashabiah-11 is the person meant.",
+   "row_id": 106478,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "hashabiah-11",
+    "verse": "NEH 11:15"
+   }
+  },
+  {
+   "chapter": "NEH-11",
+   "claim": "The chapter plainly states 'mattaniah-9 descendant-of asaph-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "NEH 11:17 plainly gives Mattaniah son of Micha son of Zabdi son of Asaph, the musician Asaph-2, and no Mattaniah-Asaph relation is recorded directly."
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The row 'jeiel brother-of zechariah-3' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "1CH 5:7 calls Jeiel and Zechariah Beerah's 'brethren by their families' (kinsmen); it never says they are brothers of each other.",
+   "row_id": 105527,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 5:7"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'meshullam-16 descendant-of ezra' points at the wrong person; it should point at 'ezra-3'.",
+   "judge": "right",
+   "judge_why": "NEH 12:13's 'of Ezra, Meshullam' is the priestly house named for the Ezra who came up with Zerubbabel (12:1), not Ezra the scribe son of Seraiah.",
+   "row_id": 105534,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "ezra-3",
+    "verse": "NEH 12:13"
+   }
+  },
+  {
+   "chapter": "GEN-25",
+   "claim": "The chapter plainly states 'sheba-3 descendant-of keturah', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "GEN 25:3 has Jokshan (Keturah's son) begetting Sheba, and 25:4 closes כָּל־אֵלֶּה בְּנֵי קְטוּרָה; no Sheba-Keturah relation is recorded."
+  },
+  {
+   "chapter": "1CH-3",
+   "claim": "The chapter plainly states 'hasadiah son-of zerubbabel-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 3:20's group of five continues the children of Zerubbabel from 3:19 (no other parent is introduced, unlike 3:21), so Hasadiah is his son; the 'son of Meshullam' distinguisher has no basis."
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The chapter plainly states 'hezron-2 descendant-of judah', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 4:1 lists Hezron in Judah's descending line, he is Judah's grandson through Perez, and only son-of perez is recorded, not a relation to Judah."
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The row 'shillem son-of bilhah' should become 'shillem descendant-of bilhah'.",
+   "judge": "right",
+   "judge_why": "1CH 7:13 calls Naphtali's sons (Shallum = Shillem among them) בְּנֵי בִלְהָה, and they are Bilhah's grandsons, so descendant-of is the correct type.",
+   "row_id": 102725,
+   "fix": {
+    "kind": "retype",
+    "new_type": "descendant-of",
+    "new_to": "",
+    "verse": "1CH 7:13"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'shemaiah-27 brother-of zechariah-22' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "Shemaiah heads the list of Zechariah's אֶחָיו in NEH 12:36, which means fellow Levite musicians, not a sibling.",
+   "row_id": 103751,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:36"
+   }
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'jorai son-of abihail-3', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 5:14 says of the seven in 5:13, Jorai among them, אֵלֶּה בְּנֵי אֲבִיחַיִל בֶּן־חוּרִי, and nothing is recorded between them."
+  },
+  {
+   "chapter": "1CH-3",
+   "claim": "The chapter plainly states 'ohel son-of zerubbabel-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "Ohel is in the group of five in 1CH 3:20 that continues Zerubbabel's children from 3:19, and no relation is recorded between them."
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'zeruiah sister-of nethanel-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 2:16 names Zeruiah as sister of Jesse's sons listed in 2:13-15, Nethanel included, and no relation between them is recorded."
+  },
+  {
+   "chapter": "GEN-25",
+   "claim": "The chapter plainly states 'sheba-3 descendant-of keturah', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "Sheba is Jokshan's son (GEN 25:3), Jokshan is Keturah's son, and 25:4 counts all of them as Keturah's children; nothing recorded yet."
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'zia son-of abihail-3', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "Zia is among the seven whom 1CH 5:14 calls בְּנֵי אֲבִיחַיִל בֶּן־חוּרִי, and nothing is recorded between them."
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'zeruiah sister-of raddai', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 2:16 makes Zeruiah sister of Jesse's sons, Raddai (2:14) among them, and no relation is recorded."
+  },
+  {
+   "chapter": "GEN-25",
+   "claim": "The chapter plainly states 'sheba-3 descendant-of keturah', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "Same claim as 120: Sheba son of Jokshan son of Keturah is her descendant per GEN 25:3-4, and it is not recorded."
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'abigail-2 sister-of nethanel-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 2:16 makes Abigail a sister of Jesse's sons, Nethanel among them (a half-sister per 2SA 17:25 is still a sister), and no relation is recorded."
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The row 'zechariah-3 brother-of jeiel' should be removed: the chapter does not say it.",
+   "judge": "right",
+   "judge_why": "1CH 5:7 calls Jeiel and Zechariah Beerah's kinsmen 'by their families', not brothers of each other.",
+   "row_id": 105539,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 5:7"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'micaiah-4 father-of mattaniah-4' points at the wrong person; it should point at 'mattaniah-12'.",
+   "judge": "right",
+   "judge_why": "The Mattaniah of NEH 12:35 lived three generations before a trumpeter of Nehemiah's day, so he cannot be Hezekiah-era mattaniah-4; mattaniah-12 is defined as this person.",
+   "row_id": 101352,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "mattaniah-12",
+    "verse": "NEH 12:35"
+   }
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'zeruiah sister-of eliab-3', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 2:16 makes Zeruiah sister of Jesse's sons, Eliab among them, and no Zeruiah-Eliab relation is recorded."
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'zeruiah sister-of shammah-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 2:16 makes Zeruiah sister of Jesse's sons; Shammah is Shimea (2:13), and no relation between them is recorded."
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'abigail-2 sister-of shammah-2', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 2:16 makes Abigail sister of Jesse's sons, Shammah/Shimea among them, and no relation is recorded."
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The chapter plainly states 'serah sister-of imnah', and the site does not record it.",
+   "judge": "right",
+   "judge_why": "1CH 7:30 lists Imnah among Asher's sons with וְשֶׂרַח אֲחוֹתָם, and no Imnah-Serah relation is recorded (only Ishvah and Ishvi)."
+  }
+ ],
+ "read": [
+  {
+   "chapter": "1CH-7",
+   "row_id": 102729,
+   "row": "shilshah descendant-of beera",
+   "row_verse": "1CH 7:37",
+   "codex": {
+    "kind": "retype",
+    "new_type": "brother-of",
+    "new_to": "",
+    "verse": "1CH 7:37",
+    "why": "Shilshah and Beera both occur in Zophah's list of sons, with no statement that Shilshah descends from Beera."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 7:37",
+    "why": "Verse 37 lists Shilshah among Zophah's sons alongside Beera, so he is Beera's brother, not his descendant."
+   }
+  },
+  {
+   "chapter": "EZR-10",
+   "row_id": 106712,
+   "row": "shimei-16 descendant-of bani-5",
+   "row_verse": "EZR 10:38",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "bani-4",
+    "verse": "EZR 10:38",
+    "why": "Shimei belongs to the sons-of-Bani list begun in verse 34, while bani-5 is another member listed alongside him."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 10:38",
+    "why": "Verse 10:38 names Bani, Binnui and Shimei side by side as members of one family list, so the text does not say Shimei is a descendant of bani-5 (his brother in that list); row 106713 already gives bani-4."
+   }
+  },
+  {
+   "chapter": "EZR-8",
+   "row_id": 105927,
+   "row": "jozabad-5 son-of jeshua-3",
+   "row_verse": "EZR 8:33",
+   "codex": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "jeshua-5",
+    "verse": "EZR 8:33",
+    "why": "The verse identifies Jozabad as a Levite and son of Jeshua, matching the Levite jeshua-5 identified by the owner's ruling."
+   },
+   "haiku": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 8:33",
+    "why": "Jozabad is a Levite here, so his father is the Levite Jeshua (jeshua-5, which owner row 105929 records); jeshua-3 is the EZR 2:2 namesake."
+   }
+  },
+  {
+   "chapter": "NEH-11",
+   "rows": [
+    "hashabiah-2 son-of bunni-2 (id 99359)"
+   ],
+   "haiku_only": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 11:15",
+    "why": "The verse's Hashabiah son of Bunni is hashabiah-11 (father of Azrikam), not hashabiah-2, who is the Levitical singer son of Jeduthun (1CH 25:3)."
+   }
+  },
+  {
+   "chapter": "NEH-11",
+   "rows": [
+    "hashabiah-2 father-of azrikam-3 (id 99360)"
+   ],
+   "haiku_only": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 11:15",
+    "why": "Azrikam is the son of the Hashabiah of this verse (hashabiah-11), which 1CH 9:14 already records; hashabiah-2 is the wrong man."
+   }
+  },
+  {
+   "chapter": "NEH-11",
+   "rows": [
+    "bunni-2 father-of hashabiah-2 (id 106478)"
+   ],
+   "haiku_only": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "hashabiah-11",
+    "verse": "NEH 11:15",
+    "why": "NEH 11:15 says Bunni was the father of Hashabiah, and that Hashabiah is hashabiah-11 (son of Bunni), not hashabiah-2."
+   }
+  },
+  {
+   "chapter": "NEH-11",
+   "rows": [
+    "zechariah-20 descendant-of ahijah (id 103404)"
+   ],
+   "haiku_only": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 11:5",
+    "why": "The verse says only that Zechariah was 'the son of the Shilonite'; nothing in the chapter links him to Ahijah."
+   }
+  },
+  {
+   "chapter": "NEH-11",
+   "missing": "mattaniah-9 descendant-of asaph-2",
+   "verse": "NEH 11:17",
+   "haiku_only": "The verse gives Mattaniah as son of Micha, son of Zabdi, son of Asaph, so his descent from Asaph is stated, though Zabdi is not a record."
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 106942,
+   "row": "maai brother-of shemaiah-19",
+   "row_verse": "NEH 12:36",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:36",
+    "why": "The named musicians are called Zechariah's brethren in the musical procession, without a statement establishing biological sibling relationships."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "shemaiah-27",
+    "verse": "NEH 12:36",
+    "why": "Maai is one of 'his brethren' together with Shemaiah, the priest with trumpets (shemaiah-27), not the NEH 10:8 priest shemaiah-19."
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "row_id": 106943,
+   "row": "maai brother-of azarel-4",
+   "row_verse": "NEH 12:36",
+   "codex": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:36",
+    "why": "The named musicians are called Zechariah's brethren in the musical procession, without a statement establishing biological sibling relationships."
+   },
+   "haiku": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "azarel-6",
+    "verse": "NEH 12:36",
+    "why": "Azarael named among Zechariah's brethren is the musician-priest azarel-6, not Ahzai's son azarel-4 of NEH 11:13."
+   }
+  }
+ ],
+ "skip": [
+  {
+   "chapter": "EZR-8",
+   "claim": "The chapter plainly states 'hattush descendant-of shecaniah', and the site does not record it.",
+   "judge": "unclear",
+   "judge_why": "The Masoretic setumah after חַטּוּשׁ puts 'of the sons of Shecaniah' with v.3 (Zechariah), while 1 Esdras reads Hattush son of Shecaniah, so the verse division leaves it undecided."
+  },
+  {
+   "chapter": "EZR-7",
+   "claim": "The row 'meraioth father-of azariah' points at the wrong person; it should point at 'azariah-24'.",
+   "judge": "wrong",
+   "judge_why": "Ezra 7:1-3 telescopes the 1CH 6 high-priest line, so this Azariah (father of Amariah) is the Azariah of 1CH 6:10-11 already on the row; azariah-24 would only duplicate him.",
+   "row_id": 101264,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "azariah-24",
+    "verse": "EZR 7:3"
+   }
+  },
+  {
+   "chapter": "1CH-1",
+   "claim": "The chapter plainly states 'gether son-of shem', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "1CH 1:17 compresses Aram's sons into 'sons of Shem' (Gether is Aram's son, GEN 10:23), and 'gether descendant-of shem' is already recorded."
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The chapter plainly states 'azarel-6 brother-of zechariah-22', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "וְאֶחָיו in Neh 12:36 means Zechariah's fellow Levite musicians or kinsmen, not his siblings, so no brother relation is stated."
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The chapter plainly states 'milalai brother-of zechariah-22', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "וְאֶחָיו in Neh 12:36 means Zechariah's fellow Levite musicians or kinsmen, not his siblings, so no brother relation is stated."
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The chapter plainly states 'hezron-2 son-of judah', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "1CH 4:1 is a descending line (Perez, Hezron, ...), and Hezron is Perez's son (GEN 46:12, already recorded), so 'son-of judah' is false."
+  },
+  {
+   "chapter": "1CH-8",
+   "claim": "The chapter plainly states 'jeremoth-2 son-of beriah-3', and the site does not record it.",
+   "judge": "unclear",
+   "judge_why": "'Sons of Beriah' closes the list only at 1CH 8:16, and whether it reaches back to 8:14 (Jeremoth) or covers only Michael, Ispah and Joha is not settled by the text."
+  },
+  {
+   "chapter": "1CH-3",
+   "claim": "The row 'zedekiah-2 son-of eliakim-2' points at the wrong person; it should point at 'jehoiachin'.",
+   "judge": "unclear",
+   "judge_why": "In צִדְקִיָּה בְנוֹ, 'his son' can refer to Jehoiakim or to Jeconiah, and 1CH 3:16 does not resolve which.",
+   "row_id": 103420,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "son-of",
+    "new_to": "jehoiachin",
+    "verse": "1CH 3:16"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The chapter plainly states 'helkai descendant-of meraioth-2', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "In Neh 12:15, Meraioth is a priestly house whose head was Helkai, not the Meraioth son of Ahitub (meraioth-2), and no descent is stated."
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The row 'sheresh father-of ulam' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "In 1CH 7:16, וּבָנָיו ('his sons') can refer to Peresh, the main subject, or to Sheresh, the nearest name, so the father of Ulam is not decided.",
+   "row_id": 102703,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 7:16"
+   }
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The row 'adonikam ancestor-of jeuel-2' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "Ezra 8:13 names יְעִיאֵל among 'the last sons of Adonikam', so the chapter does say it.",
+   "row_id": 103826,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 8:13"
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'jezreel son-of etam' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "The Masoretic text reads אֲבִי עֵיטָם ('the father of Etam', likely a place founder) rather than 'sons of Etam' (LXX), so Jezreel's sonship to an Etam is not decided.",
+   "row_id": 100373,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:3"
+   }
+  },
+  {
+   "chapter": "NEH-11",
+   "claim": "The row 'hashabiah-2 son-of bunni-2' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "Neh 11:15 does say 'Hashabiah son of Bunni'; the trouble is that hashabiah-2 is Jeduthun's son, which calls for a repoint, not a removal.",
+   "row_id": 99359,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 11:15"
+   }
+  },
+  {
+   "chapter": "1CH-3",
+   "claim": "The chapter plainly states 'assir-3 son-of jehoiachin', and the site does not record it.",
+   "judge": "unclear",
+   "judge_why": "In 1CH 3:17, אַסִּר may be a son's name or mean 'the captive' describing Jeconiah, and the text does not decide which."
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The row 'zebadiah-8 descendant-of shephatiah-5' points at the wrong person; it should point at 'shephatiah-10'.",
+   "judge": "wrong",
+   "judge_why": "Ezra 8's clans repeat the Ezra 2 list, so 'sons of Shephatiah' is the clan of Ezra 2:4 (shephatiah-5), and shephatiah-10 would duplicate it.",
+   "row_id": 103364,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "shephatiah-10",
+    "verse": "EZR 8:8"
+   }
+  },
+  {
+   "chapter": "EZR-7",
+   "claim": "The row 'ezra son-of seraiah-2' points at the wrong person; it should point at 'seraiah-11'.",
+   "judge": "wrong",
+   "judge_why": "Ezra 7:1's 'Seraiah son of Azariah son of Hilkiah' is the chief priest of 1CH 6:13-14 and 2KI 25:18 (seraiah-2), and seraiah-11 would duplicate him.",
+   "row_id": 98947,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "seraiah-11",
+    "verse": "EZR 7:1"
+   }
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The row 'michael-2 son-of jeshishai' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "1CH 5:14 does say בֶּן־מִיכָאֵל בֶּן־יְשִׁישַׁי; the record's conflation with the 5:13 Michael is a separate problem, not grounds for removing the row.",
+   "row_id": 101357,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 5:14"
+   }
+  },
+  {
+   "chapter": "1CH-8",
+   "claim": "The chapter plainly states 'ahio-2 son-of beriah-3', and the site does not record it.",
+   "judge": "unclear",
+   "judge_why": "The reach of 'sons of Beriah' (8:16) back to 8:14 is undecided, and וְאַחְיוֹ is often read as 'and his brothers' rather than a name."
+  },
+  {
+   "chapter": "1CH-1",
+   "claim": "The chapter plainly states 'hul son-of shem', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "Hul is Aram's son (GEN 10:23), 1CH 1:17 compresses the generations, and 'hul descendant-of shem' is already recorded."
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The row 'shephatiah-5 ancestor-of zebadiah-8' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "Ezra 8:8 plainly puts Zebadiah 'of the sons of Shephatiah', the clan of Ezra 2:4, so the row is supported.",
+   "row_id": 107099,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 8:8"
+   }
+  },
+  {
+   "chapter": "GEN-36",
+   "claim": "The chapter plainly states 'zerah son-of basemath-daughter-of-ishmael', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "Zerah is Reuel's son and Basemath's grandson (GEN 36:4, 13), so 'son-of' is the wrong type; it should be grandson-of."
+  },
+  {
+   "chapter": "GEN-36",
+   "claim": "The chapter plainly states 'shammah son-of basemath-daughter-of-ishmael', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "Shammah is Reuel's son and Basemath's grandson (GEN 36:4, 13), so 'son-of' is the wrong type."
+  },
+  {
+   "chapter": "1CH-1",
+   "claim": "The chapter plainly states 'uz son-of shem', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "Uz is Aram's son (GEN 10:23, already recorded), and 1CH 1:17 compresses the generations, so 'son-of shem' is false (descendant-of would be the correct type)."
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'naham father-of keilah' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "In 1CH 4:19, אֲבִי קְעִילָה can stand in apposition to Naham or name the first of the wife's sons, and the text does not decide which.",
+   "row_id": 106685,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:19"
+   }
+  },
+  {
+   "chapter": "GEN-46",
+   "claim": "The chapter plainly states 'ard son-of benjamin', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "Ard is Bela's son (NUM 26:40), and GEN 46:21's wider 'sons of Benjamin' is already recorded as 'ard descendant-of benjamin'."
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The row 'jeuel-2 descendant-of adonikam' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "Ezra 8:13 names Jeiel among 'the last sons of Adonikam', so the chapter does say it.",
+   "row_id": 100346,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 8:13"
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The chapter plainly states 'arah son-of jephunneh-2', and the site does not record it.",
+   "judge": "unclear",
+   "judge_why": "1CH 7:39 says Arah is a son of Ulla, and nothing in the text identifies Ulla with Jephunneh."
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The chapter plainly states 'hanani-5 brother-of zechariah-22', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "In NEH 12:36 'וְאֶחָיו' means Zechariah's fellow musicians, not siblings, so the text does not plainly make Hanani his brother."
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The row 'sheresh father-of rakem' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "'וּבָנָיו אוּלָם וָרָקֶם' in 1CH 7:16 could refer to Peresh or to Sheresh, and the text does not decide which.",
+   "row_id": 102704,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 7:16"
+   }
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'boaz son-of salma', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "The Salma of 1CH 2:11 is Salmon, and 'boaz son-of salmon' is already recorded; the salma record is a different man, Hur's son (1CH 2:51)."
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The row 'michael-2 father-of gilead-3' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "1CH 5:14 does say 'בֶּן־גִּלְעָד בֶּן־מִיכָאֵל', so Gilead is the son of Michael; the record's mixing of two Michaels is a separate problem.",
+   "row_id": 101358,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 5:14"
+   }
+  },
+  {
+   "chapter": "NEH-11",
+   "claim": "The row 'hashabiah-2 father-of azrikam-3' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "NEH 11:15 does say 'Azrikam son of Hashabiah'; if hashabiah-2 (Jeduthun's son) is the wrong man, the row should be repointed, not removed.",
+   "row_id": 99360,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 11:15"
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'shobal-2 father-of reaiah' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "1CH 4:2 says 'Reaiah son of Shobal', and Hur's son Shobal (1CH 2:50-53, with Haroeh and the Zorathites) is the right man.",
+   "row_id": 102816,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:2"
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'keilah son-of naham' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "'אֲחוֹת נַחַם אֲבִי קְעִילָה' can make Naham the father of Keilah or make 'the father of Keilah' a son of Hodiah's wife alongside Eshtemoa; the text does not settle it.",
+   "row_id": 100710,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:19"
+   }
+  },
+  {
+   "chapter": "1CH-1",
+   "claim": "The chapter plainly states 'mash son-of shem', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "Mash/Meshech is listed among the 'sons of Shem' in the broad sense; 'mash descendant-of shem' and 'aram father-of mash' already record it correctly."
+  },
+  {
+   "chapter": "EZR-7",
+   "claim": "The row 'seraiah-2 son-of azariah-7' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "EZR 7:1 does say Seraiah son of Azariah son of Hilkiah, which matches 1CH 6:13-14, so seraiah-2 and azariah-7 are the right people.",
+   "row_id": 106586,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 7:1"
+   }
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'jeiel brother-of beerah', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "'וְאֶחָיו לְמִשְׁפְּחֹתָיו' means clan kinsmen by their families, not that Jeiel was Beerah's sibling."
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The chapter plainly states 'salma son-of nahshon', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "The Salma of 1CH 2:11 is Salmon, already recorded as Nahshon's son; the salma record is Hur's son, a different man."
+  },
+  {
+   "chapter": "1CH-8",
+   "claim": "The chapter plainly states 'shashak son-of beriah-3', and the site does not record it.",
+   "judge": "unclear",
+   "judge_why": "Whether 'וְאַחְיוֹ שָׁשָׁק' (8:14) belongs to the 'sons of Beriah' of 8:16, or names his brothers, is disputed, and Shashak has his own sons in 8:22-25."
+  },
+  {
+   "chapter": "1CH-23",
+   "claim": "The chapter plainly states 'shelomith-3 son-of izhar', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "In the David-era clan list of 1CH 23:18, 'sons of Izhar' means descendants (Izhar's sons are Korah, Nepheg and Zichri), and 'descendant-of' is already recorded."
+  },
+  {
+   "chapter": "GEN-4",
+   "claim": "The row 'zillah mother-of naamah' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "GEN 4:22 names Naamah inside Zillah's sentence as Tubal-cain's sister but does not say Zillah bore her, so she could be a half-sister through Lamech.",
+   "row_id": 103526,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "GEN 4:22"
+   }
+  },
+  {
+   "chapter": "GEN-36",
+   "claim": "The chapter plainly states 'nahath son-of basemath-daughter-of-ishmael', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "Nahath is Reuel's son (GEN 36:13), so he is Basemath's grandson; 'sons of Basemath' supports descendant-of, not son-of."
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'jeremiah-7 companion-of zerubbabel-2' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "NEH 12:1 does say Jeremiah went up with Zerubbabel, so the claim that the chapter does not say it is false; whether jeremiah-7 is the right person is a separate question.",
+   "row_id": 105860,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:1"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'mattaniah-4 son-of micaiah-4' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "NEH 12:35 does say 'Mattaniah son of Micaiah'; if mattaniah-4 (2CH 29:13) is the wrong man, the row should be repointed, not removed.",
+   "row_id": 101176,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:35"
+   }
+  },
+  {
+   "chapter": "EZR-7",
+   "claim": "The row 'azariah-7 father-of seraiah-2' points at the wrong person; it should point at 'seraiah-11'.",
+   "judge": "wrong",
+   "judge_why": "The chain in EZR 7:1-2 (Azariah, Hilkiah, Shallum, Zadok, Ahitub) is the high-priestly line of 1CH 6:13-14, so seraiah-2 is the right Seraiah and seraiah-11 looks like a duplicate.",
+   "row_id": 107334,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "seraiah-11",
+    "verse": "EZR 7:1"
+   }
+  },
+  {
+   "chapter": "1CH-6",
+   "claim": "The chapter plainly states 'eliel father-of jeroham', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "The eliel record is a Manassite clan head (1CH 5:24), not Samuel's ancestor; that ancestor is already recorded as 'elihu father-of jeroham'."
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The chapter plainly states 'benjamin father-of jediael', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "The jediael record is David's warrior, son of Shimri (1CH 11:45), not the Benjamite of 1CH 7:6."
+  },
+  {
+   "chapter": "GEN-46",
+   "claim": "The chapter plainly states 'naaman son-of benjamin', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "'naaman descendant-of benjamin' (GEN 46:21) and 'naaman son-of bela-2' (NUM 26:40) are already recorded, and son-of would contradict them."
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The chapter plainly states 'helkai descendant-of meraioth-2', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "'Of Meraioth' in NEH 12:15 is the priestly house of 12:3 (Meremoth), not Meraioth son of Ahitub (1CH 9:11)."
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The chapter plainly states 'nethanel-10 brother-of zechariah-22', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "In NEH 12:36 'וְאֶחָיו' means fellow musicians, not siblings, so the text does not make Nethanel Zechariah's brother."
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'reaiah son-of shobal-2' points at the wrong person; it should point at 'shobal-3'.",
+   "judge": "wrong",
+   "judge_why": "1CH 4:1 is a line of descent and Shobal is Hur's son (1CH 2:50-53, Haroeh and the Zorathites), so shobal-2 is correct and shobal-3 is a self-described possible duplicate.",
+   "row_id": 102118,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "shobal-3",
+    "verse": "1CH 4:2"
+   }
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The chapter plainly states 'mahli son-of levi', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "Mahli is Levi's grandson through Merari, 'בֶּן־לֵוִי' here means descendant, and 'mahli descendant-of levi' is already recorded."
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'michael-2 son-of abihail-3', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "michael-2 is recorded as son of Jeshishai and father of Gilead, Abihail's ancestor (1CH 5:14), so making him Abihail's son creates a loop; the record mixes two Michaels."
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'jeremiah-7 companion-of jeshua-3' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "NEH 12:1 does say these priests went up with Jeshua, so the claim that the chapter does not say it is false.",
+   "row_id": 105861,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:1"
+   }
+  },
+  {
+   "chapter": "1CH-6",
+   "claim": "The chapter plainly states 'heman-2 brother-of asaph-2', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "'וְאָחִיו אָסָף' calls Asaph Heman's fellow Levite singer: Heman is a Kohathite (6:33-38) and Asaph a Gershonite (6:39-43), so they are not siblings."
+  },
+  {
+   "chapter": "1CH-5",
+   "claim": "The chapter plainly states 'zechariah-3 brother-of beerah', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "'וְאֶחָיו לְמִשְׁפְּחֹתָיו' means kinsmen by clans, not that Zechariah was Beerah's sibling."
+  },
+  {
+   "chapter": "1CH-3",
+   "claim": "The row 'zedekiah-2 brother-of jehoiachin' should become 'zedekiah-2 son-of jehoiachin'.",
+   "judge": "unclear",
+   "judge_why": "'יְכָנְיָה בְנוֹ צִדְקִיָּה בְנוֹ' under the heading 'sons of Jehoiakim' can mean two sons of Jehoiakim or a chain making Zedekiah Jeconiah's son; the text does not decide.",
+   "row_id": 103421,
+   "fix": {
+    "kind": "retype",
+    "new_type": "son-of",
+    "new_to": "jehoiachin",
+    "verse": "1CH 3:16"
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The row 'rakem son-of peresh' points at the wrong person; it should point at 'sheresh'.",
+   "judge": "unclear",
+   "judge_why": "'וּבָנָיו' in 1CH 7:16 could be Peresh's sons or Sheresh's sons; the text does not decide.",
+   "row_id": 102091,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "sheresh",
+    "verse": "1CH 7:16"
+   }
+  },
+  {
+   "chapter": "EZR-7",
+   "claim": "The row 'seraiah-2 father-of ezra' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "EZR 7:1 does say 'עֶזְרָא בֶּן־שְׂרָיָה'; since Seraiah died in 586 the link is ancestry, which calls for retyping, not removal.",
+   "row_id": 106587,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 7:1"
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The row 'peresh father-of ulam' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "'וּבָנָיו אוּלָם וָרָקֶם' could be Peresh's sons or Sheresh's sons; the text does not decide.",
+   "row_id": 101952,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 7:16"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The chapter plainly states 'maai brother-of zechariah-22', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "וְאֶחָיו in NEH 12:36 means Zechariah's fellow Levite musicians (kinsmen/colleagues), not literal brothers, so brother-of is not stated."
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'shobal-2 descendant-of judah' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "1CH 4:1 lists Shobal (son of Hur, father of Reaiah in 4:2) among בְּנֵי יְהוּדָה, a descending line, so 'shobal-2 descendant-of judah' is exactly what the verse says.",
+   "row_id": 102815,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:1"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The chapter plainly states 'gilalai brother-of zechariah-22', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "The 'brethren' of NEH 12:36 are fellow Levite musicians, not siblings of Zechariah son of Jonathan."
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The chapter plainly states 'rizia son-of jephunneh-2', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "1CH 7:39 names Rizia's father as Ulla (עֻלָּא), not Jephunneh; equating the two is conjecture the chapter does not make."
+  },
+  {
+   "chapter": "GEN-36",
+   "claim": "The row 'timna sister-of lotan' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "GEN 36:22 says plainly וַאֲחוֹת לוֹטָן תִּמְנָע, 'Lotan's sister was Timna'.",
+   "row_id": 107129,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "GEN 36:22"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'amariah-6 ancestor-of jehohanan-4' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "NEH 12:12-13 lists heads of fathers' houses (רָאשֵׁי הָאָבוֹת), so Jehohanan heading the house 'of Amariah' makes him a descendant of that Amariah; ancestor-of is the right reading of the verse.",
+   "row_id": 105519,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 12:13"
+   }
+  },
+  {
+   "chapter": "EZR-7",
+   "claim": "The row 'azariah son-of meraioth' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "EZR 7:3 literally says בֶן־עֲזַרְיָה בֶּן־מְרָיוֹת; since 1CH 6 shows generations skipped, the fix is to retype the row as descendant-of, not to remove it as unstated.",
+   "row_id": 97733,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 7:3"
+   }
+  },
+  {
+   "chapter": "LUK-3",
+   "claim": "The row 'admin son-of ram' should be removed: the chapter does not say it.",
+   "judge": "wrong",
+   "judge_why": "Nestle's LUK 3:33 reads τοῦ Ἀδμεὶν τοῦ Ἀρνεί, so Admin is son of Arni, who is the Ram son of Hezron (Esrom) of RUT 4:19; the row is supported.",
+   "row_id": 97188,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "LUK 3:33"
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'idbash son-of etam' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "MT 1CH 4:3 reads אֲבִי עֵיטָם ('father of Etam', likely a founder of the town), while LXX and many translations read 'sons of Etam'; the text is corrupt and does not settle whether Etam is Idbash's father.",
+   "row_id": 99686,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:3"
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The row 'bilhan-2 son-of jediael' points at the wrong person; it should point at 'ashbel'.",
+   "judge": "unclear",
+   "judge_why": "The current target (Jediael son of Shimri) is plainly wrong, but 1CH 7:10's Jediael is Benjamin's son of 7:6, and the text never says he is Ashbel, so the proposed target is conjecture.",
+   "row_id": 98169,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "ashbel",
+    "verse": "1CH 7:10"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The chapter plainly states 'judah-7 brother-of zechariah-22', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "Judah in NEH 12:36 is one of Zechariah's fellow Levite musicians (אֶחָיו), not his literal brother."
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'etam father-of idbash' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "MT אֲבִי עֵיטָם against LXX 'sons of Etam' leaves it textually undecided whether Etam is Idbash's father.",
+   "row_id": 98903,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:3"
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The row 'peresh father-of rakem' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "In 1CH 7:16 the antecedent of וּבָנָיו after 'his brother Sheresh' could be Peresh or Sheresh; the Hebrew does not decide.",
+   "row_id": 101953,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 7:16"
+   }
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The row 'ahlai son-of sheshan' should become 'ahlai daughter-of sheshan'.",
+   "judge": "unclear",
+   "judge_why": "1CH 2:31 says וּבְנֵי שֵׁשָׁן אַחְלָי and 2:34 says Sheshan had no sons, only daughters, but nothing establishes that Ahlai is a daughter.",
+   "row_id": 97333,
+   "fix": {
+    "kind": "retype",
+    "new_type": "daughter-of",
+    "new_to": "",
+    "verse": "1CH 2:31"
+   }
+  },
+  {
+   "chapter": "1CH-2",
+   "claim": "The row 'mareshah son-of chelubai' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "1CH 2:42 'and the sons of Mareshah father of Hebron' is textually obscure (often emended) and does not decide whether Mareshah is Caleb's son or a later descendant.",
+   "row_id": 101139,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 2:42"
+   }
+  },
+  {
+   "chapter": "1CH-7",
+   "claim": "The row 'ulam son-of peresh' points at the wrong person; it should point at 'sheresh'.",
+   "judge": "unclear",
+   "judge_why": "וּבָנָיו in 1CH 7:16 may refer to Peresh or to Sheresh; the text does not decide whose sons Ulam and Rakem are.",
+   "row_id": 103136,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "sheresh",
+    "verse": "1CH 7:16"
+   }
+  },
+  {
+   "chapter": "1CH-23",
+   "claim": "The chapter plainly states 'zetham son-of libni', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "1CH 23:8 makes Zetham a son of Laadan in David's day, generations after Libni son of Gershon, and 'zetham descendant-of libni' is already recorded."
+  },
+  {
+   "chapter": "GEN-36",
+   "claim": "The row 'lotan brother-of timna' points at the wrong person; it should point at 'timna-3'.",
+   "judge": "wrong",
+   "judge_why": "The existing timna record is already defined as Lotan's sister by GEN 36:22, so the row points at the right person and timna-3 would only duplicate it.",
+   "row_id": 100934,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "timna-3",
+    "verse": "GEN 36:22"
+   }
+  },
+  {
+   "chapter": "1CH-23",
+   "claim": "The chapter plainly states 'joel-6 son-of libni', and the site does not record it.",
+   "judge": "wrong",
+   "judge_why": "1CH 23:8 makes Joel a son of Laadan in David's day, not of Libni son of Gershon, and 'joel-6 descendant-of libni' is already recorded."
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The row 'shelomith-5 descendant-of bani-4' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "MT EZR 8:10 has no 'Bani' (מִבְּנֵי שְׁלוֹמִית בֶּן־יוֹסִפְיָה); the LXX and 1 Esdras supply 'sons of Bani, Shelomith', and the row and the person record both rest on that reading, so the text does not settle it.",
+   "row_id": 102590,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 8:10"
+   }
+  },
+  {
+   "chapter": "1CH-24",
+   "claim": "The row 'shemaiah-8 scribe-of david' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "1CH 24:6 calls Shemaiah (or Nethanel) הַסּוֹפֵר and says he wrote 'before the king', which falls short of saying he was David's scribe but does not rule it out.",
+   "row_id": 102652,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 24:6"
+   }
+  },
+  {
+   "chapter": "NEH-12",
+   "claim": "The row 'eleazar-8 companion-of jehohanan-4' points at the wrong person; it should point at 'jehohanan-5'.",
+   "judge": "unclear",
+   "judge_why": "Nothing in NEH 12:42 decides whether the priest Jehohanan at the dedication is the head of Amariah's house in Joiakim's days (12:13) or someone else.",
+   "row_id": 98583,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "jehohanan-5",
+    "verse": "NEH 12:42"
+   }
+  },
+  {
+   "chapter": "EZR-8",
+   "claim": "The row 'michael-8 descendant-of shephatiah-5' points at the wrong person; it should point at 'shephatiah-10'.",
+   "judge": "wrong",
+   "judge_why": "EZR 8:8's clan 'sons of Shephatiah' is the same clan as EZR 2:4 (Ezra 8 follows the Ezra 2 clan list), so shephatiah-5 is right and shephatiah-10 is a duplicate.",
+   "row_id": 106963,
+   "fix": {
+    "kind": "retarget",
+    "new_type": "",
+    "new_to": "shephatiah-10",
+    "verse": "EZR 8:8"
+   }
+  },
+  {
+   "chapter": "1CH-4",
+   "claim": "The row 'etam father-of hazzelelponi' should be removed: the chapter does not say it.",
+   "judge": "unclear",
+   "judge_why": "Because of MT אֲבִי עֵיטָם against LXX 'sons of Etam', it is undecided whether Hazzelelponi's father is Etam or an unnamed 'father of Etam'.",
+   "row_id": 98904,
+   "fix": {
+    "kind": "delete",
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 4:3"
+   }
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+{"wrong": [],
+ "missing": [
+  {"from": "assir", "type": "father-of", "to": "elkanah", "verse": "1CH 6:23", "why": "Verse 22 gives Assir as Korah's son and verse 23 then gives Elkanah 'his son', so Assir begat Elkanah.", "confidence": 0.6},
+  {"from": "eliel", "type": "father-of", "to": "jeroham", "verse": "1CH 6:34", "why": "Verse 34 reads 'the son of Jeroham, the son of Eliel, the son of Toah', so Eliel begat Jeroham.", "confidence": 0.7},
+  {"from": "joel-son-of-azariah", "type": "father-of", "to": "elkanah-4", "verse": "1CH 6:36", "why": "Verse 36 reads 'the son of Elkanah, the son of Joel, the son of Azariah', so Joel begat Elkanah, the father of Amasai and Ahimoth named in verse 25.", "confidence": 0.8},
+  {"from": "heman-2", "type": "brother-of", "to": "asaph-2", "verse": "1CH 6:39", "why": "Verse 39 says 'And his brother Asaph', his being Heman the singer of verse 33.", "confidence": 0.85}
+ ],
+ "note": "Variant kept: jeroham son-of elihu (verse 27 names Eliab and verse 34 names Eliel; 1SA 1:1 gives Elihu), and verse 34 is recorded as a missing row above. Owner rows that look wrong: amasai son-of elkanah (105603) and ahimoth son-of elkanah (105596) point at the verse 23 Elkanah while verses 25 and 36 make the verse 25 Elkanah the son of Joel (elkanah-4), elkanah-4 son-of mahath (107213) contradicts verse 35 where the son of Mahath is elkanah-5, and zimmah son-of shimei-8 (107185), zerah-4 son-of adaiah-2 (107161) and ethni son-of zerah-4 (106817) merge namesakes from verses 20-21 and 41-42; kish-5, amaziah-4, asaiah-5 and uriel-2 duplicate kishi, amaziah-the-merarite, asaiah-3 and uriel.",
+ "model": "claude-haiku-5-5"}

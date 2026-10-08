@@ -1,0 +1,24 @@
+{"wrong": [
+{"kind": "delete", "rows": [97593], "new_type": "", "new_to": "", "verse": "1CH 3:21", "why": "The verse gives the sons of Rephaiah and the sons of Arnan as parallel families under Hananiah, so it does not say Arnan descends from Rephaiah.", "confidence": 0.55},
+{"kind": "delete", "rows": [97594], "new_type": "", "new_to": "", "verse": "1CH 3:21", "why": "The verse gives the sons of Arnan and the sons of Obadiah as parallel families, so it does not say Arnan is an ancestor of Obadiah.", "confidence": 0.55}
+],
+"missing": [
+{"from": "assir-3", "type": "son-of", "to": "jehoiachin", "verse": "1CH 3:17", "why": "The sons of Jeconiah are named as Assir and Salathiel his son.", "confidence": 0.85},
+{"from": "tamar-2", "type": "sister-of", "to": "adonijah", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "shephatiah", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "ithream", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "shammua-2", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "shobab", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "nathan", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "solomon", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "ibhar", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "elishama-2", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "eliphelet-3", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "eliphelet", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "nogah", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "nepheg-2", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "japhia-2", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7},
+{"from": "tamar-2", "type": "sister-of", "to": "eliada", "verse": "1CH 3:9", "why": "Tamar is named as their sister, the sons of David listed in verses 1-8.", "confidence": 0.7}
+],
+"note": "The owner's rows (1CH 3:6, 3:17, 3:19) all match the text. Not flagged: chileab at 3:1, since the verse says Daniel with no record and the row rests on 2SA 3:3; the Ammiel/Eliam variant at 3:5; and the five unparented sons at 3:20, which get no row. The arnan record's own note says son of Hananiah, which the two deletes would leave consistent with the text.",
+"model": "claude-haiku-5-5"}

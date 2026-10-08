@@ -1,0 +1,29 @@
+{"wrong": [
+{"kind": "retarget", "rows": [100524], "new_type": "", "new_to": "shemaiah-26", "verse": "NEH 12:35", "why": "The verse makes Jonathan the son of a Shemaiah who is in the line Zechariah, Jonathan, Shemaiah, Mattaniah, Michaiah, so the Levite namesake shemaiah-14 is the wrong person.", "confidence": 0.55},
+{"kind": "delete", "rows": [102625], "new_type": "", "new_to": "", "verse": "NEH 12:35", "why": "This Shemaiah is the grandfather of Zechariah in the verse's genealogy (shemaiah-26), so the shemaiah-14 father-of row is a namesake error and the chapter does not say it.", "confidence": 0.55},
+{"kind": "delete", "rows": [101177, 102624], "new_type": "", "new_to": "", "verse": "NEH 12:35", "why": "The Shemaiah and Mattaniah links in this genealogy are shemaiah-26 and mattaniah-12, so these shemaiah-14 rows with mattaniah-4 name the wrong people.", "confidence": 0.5},
+{"kind": "delete", "rows": [105860, 105861], "new_type": "", "new_to": "", "verse": "NEH 12:1", "why": "The Jeremiah who went up with Zerubbabel and Jeshua is the family head from Zerubbabel's return (jeremiah-9), whose companion rows already stand, so the jeremiah-7 rows duplicate a namesake.", "confidence": 0.45},
+{"kind": "delete", "rows": [105862], "new_type": "", "new_to": "", "verse": "NEH 12:12", "why": "'Of Jeremiah, Hananiah' names the house of the Jeremiah who continued under Joiakim (jeremiah-9), not the NEH 10:8 priest jeremiah-7.", "confidence": 0.45},
+{"kind": "retarget", "rows": [105528], "new_type": "", "new_to": "malluch-6", "verse": "NEH 12:14", "why": "'Of Melicu, Jonathan' names the house of Malluch that is later called Melicu, which is malluch-6 (the priest who went up with Zerubbabel), not the NEH 10:8 Malluch.", "confidence": 0.55},
+{"kind": "delete", "rows": [105531], "new_type": "", "new_to": "", "verse": "NEH 12:14", "why": "Jonathan belongs to the house of malluch-6, so this malluch-4 row is a namesake and is removed in favour of the retargeted row.", "confidence": 0.5},
+{"kind": "retarget", "rows": [106943], "new_type": "", "new_to": "azarel-6", "verse": "NEH 12:36", "why": "Azarael named among Zechariah's brethren is the musician-priest azarel-6, not Ahzai's son azarel-4 of NEH 11:13.", "confidence": 0.55},
+{"kind": "retarget", "rows": [106942], "new_type": "", "new_to": "shemaiah-27", "verse": "NEH 12:36", "why": "Maai is one of 'his brethren' together with Shemaiah, the priest with trumpets (shemaiah-27), not the NEH 10:8 priest shemaiah-19.", "confidence": 0.5},
+{"kind": "retarget", "rows": [98583], "new_type": "", "new_to": "jehohanan-5", "verse": "NEH 12:42", "why": "Jehohanan here is one of the singers at the wall dedication (jehohanan-5), not the son of Amariah in NEH 12:13 (jehohanan-4).", "confidence": 0.6},
+{"kind": "retarget", "rows": [105526], "new_type": "", "new_to": "shemaiah-24", "verse": "NEH 12:18", "why": "'Of Shemaiah, Jehonathan' names the house of the Shemaiah who returned with Zerubbabel and headed a priestly house (shemaiah-24), not the NEH 10:8 priest shemaiah-19.", "confidence": 0.5},
+{"kind": "delete", "rows": [105537], "new_type": "", "new_to": "", "verse": "NEH 12:18", "why": "This shemaiah-19 link is a namesake of the house head in this verse and duplicates the shemaiah-24 link once 105526 is retargeted.", "confidence": 0.5},
+{"kind": "retarget", "rows": [105535], "new_type": "", "new_to": "jedaiah-8", "verse": "NEH 12:21", "why": "'Of Jedaiah, Nethaneel' names the Jedaiah house later headed by Nethaneel (jedaiah-8), not jedaiah-5, who is named at NEH 11:10 and 12:7.", "confidence": 0.5}
+],
+"missing": [
+{"from": "helkai", "type": "descendant-of", "to": "meraioth-2", "verse": "NEH 12:15", "why": "'Of Meraioth, Helkai' gives Helkai as the house of Meraioth, the same pattern as 'Of Harim, Adna' which is already recorded.", "confidence": 0.5},
+{"from": "hashabiah-8", "type": "descendant-of", "to": "hilkiah-3", "verse": "NEH 12:21", "why": "'Of Hilkiah, Hashabiah' gives Hashabiah as belonging to the house of Hilkiah.", "confidence": 0.55},
+{"from": "jehohanan", "type": "son-of", "to": "eliashib-7", "verse": "NEH 12:23", "why": "'Johanan the son of Eliashib' names the son of the high priest Eliashib of NEH 12:10, and no row links the two.", "confidence": 0.5},
+{"from": "milalai", "type": "brother-of", "to": "zechariah-22", "verse": "NEH 12:36", "why": "Milalai is named among 'his brethren' of Zechariah, who is named in NEH 12:35.", "confidence": 0.55},
+{"from": "gilalai", "type": "brother-of", "to": "zechariah-22", "verse": "NEH 12:36", "why": "Gilalai is named among 'his brethren' of Zechariah, who is named in NEH 12:35.", "confidence": 0.55},
+{"from": "maai", "type": "brother-of", "to": "zechariah-22", "verse": "NEH 12:36", "why": "Maai is named among 'his brethren' of Zechariah, who is named in NEH 12:35.", "confidence": 0.55},
+{"from": "azarel-6", "type": "brother-of", "to": "zechariah-22", "verse": "NEH 12:36", "why": "Azarael is named among 'his brethren' of Zechariah, who is named in NEH 12:35.", "confidence": 0.5},
+{"from": "nethanel-10", "type": "brother-of", "to": "zechariah-22", "verse": "NEH 12:36", "why": "Nethaneel is named among 'his brethren' of Zechariah, who is named in NEH 12:35.", "confidence": 0.45},
+{"from": "judah-7", "type": "brother-of", "to": "zechariah-22", "verse": "NEH 12:36", "why": "Judah is named among 'his brethren' of Zechariah, who is named in NEH 12:35.", "confidence": 0.45},
+{"from": "hanani-5", "type": "brother-of", "to": "zechariah-22", "verse": "NEH 12:36", "why": "Hanani is named among 'his brethren' of Zechariah, who is named in NEH 12:35.", "confidence": 0.5}
+],
+"note": "Owner row 106241 (shammua-3 descendant-of bilgah) may take the 1CH 24:14 Bilgah for the house of NEH 12:5; left as ruled. The Iddo, Mattaniah, Kadmiel and Amariah namesakes are ambiguous from the text and left alone.",
+"model": "claude-haiku-5-5"}

@@ -1,0 +1,1390 @@
+{
+ "totals": {
+  "codex_wrong": 89,
+  "haiku_wrong": 63,
+  "both_wrong": 41,
+  "same_fix": 36,
+  "codex_missing": 100,
+  "haiku_missing": 75,
+  "both_missing": 50,
+  "haiku_checker_errors": 1
+ },
+ "chapters": [
+  {
+   "chapter": "1CH-1",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [
+    97485,
+    98289,
+    99844
+   ],
+   "same_fix": [
+    97485,
+    98289,
+    99844
+   ],
+   "missing_codex_only": [
+    [
+     "parent",
+     "shem",
+     "gether"
+    ],
+    [
+     "parent",
+     "shem",
+     "hul"
+    ],
+    [
+     "parent",
+     "shem",
+     "mash"
+    ],
+    [
+     "parent",
+     "shem",
+     "uz"
+    ],
+    [
+     "spouse",
+     "abram",
+     "keturah"
+    ]
+   ],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "1CH-2",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    97333,
+    101139
+   ],
+   "wrong_haiku_only": [],
+   "wrong_both": [
+    99034,
+    102709
+   ],
+   "same_fix": [
+    99034,
+    102709
+   ],
+   "missing_codex_only": [
+    [
+     "sibling",
+     "abigail-2",
+     "abinadab-2"
+    ],
+    [
+     "sibling",
+     "abigail-2",
+     "eliab-3"
+    ],
+    [
+     "sibling",
+     "abigail-2",
+     "nethanel-2"
+    ],
+    [
+     "sibling",
+     "abigail-2",
+     "ozem"
+    ],
+    [
+     "sibling",
+     "abigail-2",
+     "raddai"
+    ],
+    [
+     "sibling",
+     "abigail-2",
+     "shammah-2"
+    ],
+    [
+     "sibling",
+     "abinadab-2",
+     "zeruiah"
+    ],
+    [
+     "sibling",
+     "eliab-3",
+     "zeruiah"
+    ],
+    [
+     "sibling",
+     "nethanel-2",
+     "zeruiah"
+    ],
+    [
+     "sibling",
+     "ozem",
+     "zeruiah"
+    ],
+    [
+     "sibling",
+     "raddai",
+     "zeruiah"
+    ],
+    [
+     "sibling",
+     "shammah-2",
+     "zeruiah"
+    ]
+   ],
+   "missing_haiku_only": [
+    [
+     "parent",
+     "nahshon",
+     "salma"
+    ],
+    [
+     "parent",
+     "salma",
+     "boaz"
+    ]
+   ],
+   "missing_both": [
+    [
+     "parent",
+     "shua",
+     "bathshua"
+    ]
+   ]
+  },
+  {
+   "chapter": "1CH-23",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [
+    [
+     "parent",
+     "izhar",
+     "shelomith-3"
+    ],
+    [
+     "parent",
+     "libni",
+     "joel-6"
+    ],
+    [
+     "parent",
+     "libni",
+     "zetham"
+    ]
+   ],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "1CH-24",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    102652
+   ],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "descendant-of",
+     "beno",
+     "merari"
+    ],
+    [
+     "descendant-of",
+     "shebuel",
+     "amram"
+    ],
+    [
+     "descendant-of",
+     "zadok",
+     "eleazar"
+    ]
+   ]
+  },
+  {
+   "chapter": "1CH-25",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [
+    102747
+   ],
+   "same_fix": [
+    102747
+   ],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "1CH-26",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [
+    102849
+   ],
+   "same_fix": [
+    102849
+   ],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "parent",
+     "jehiel-9",
+     "joel-6"
+    ],
+    [
+     "parent",
+     "jehiel-9",
+     "zetham"
+    ]
+   ]
+  },
+  {
+   "chapter": "1CH-3",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    103420,
+    103421
+   ],
+   "wrong_haiku_only": [],
+   "wrong_both": [
+    97593,
+    97594
+   ],
+   "same_fix": [
+    97593,
+    97594
+   ],
+   "missing_codex_only": [
+    [
+     "parent",
+     "zerubbabel-2",
+     "berechiah"
+    ],
+    [
+     "parent",
+     "zerubbabel-2",
+     "hasadiah"
+    ],
+    [
+     "parent",
+     "zerubbabel-2",
+     "hashubah"
+    ],
+    [
+     "parent",
+     "zerubbabel-2",
+     "jushabhesed"
+    ],
+    [
+     "parent",
+     "zerubbabel-2",
+     "ohel"
+    ],
+    [
+     "sibling",
+     "chileab",
+     "tamar-2"
+    ]
+   ],
+   "missing_haiku_only": [
+    [
+     "parent",
+     "jehoiachin",
+     "assir-3"
+    ]
+   ],
+   "missing_both": [
+    [
+     "sibling",
+     "adonijah",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "eliada",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "eliphelet",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "eliphelet-3",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "elishama-2",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "ibhar",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "ithream",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "japhia-2",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "nathan",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "nepheg-2",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "nogah",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "shammua-2",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "shephatiah",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "shobab",
+     "tamar-2"
+    ],
+    [
+     "sibling",
+     "solomon",
+     "tamar-2"
+    ]
+   ]
+  },
+  {
+   "chapter": "1CH-4",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    98894,
+    98901,
+    98902,
+    98903,
+    98904,
+    99686,
+    99778,
+    100373,
+    100710,
+    106646,
+    106647,
+    106685
+   ],
+   "wrong_haiku_only": [
+    102118,
+    102815,
+    102816
+   ],
+   "wrong_both": [
+    101668,
+    101928,
+    102168,
+    103215,
+    106049,
+    106686
+   ],
+   "same_fix": [
+    101668,
+    101928,
+    102168,
+    103215,
+    106049,
+    106686
+   ],
+   "missing_codex_only": [
+    [
+     "parent",
+     "judah",
+     "hezron-2"
+    ]
+   ],
+   "missing_haiku_only": [
+    [
+     "descendant-of",
+     "hezron-2",
+     "judah"
+    ]
+   ],
+   "missing_both": []
+  },
+  {
+   "chapter": "1CH-5",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    101357,
+    101358,
+    105527,
+    105539
+   ],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [
+    [
+     "parent",
+     "abihail-3",
+     "eber-2"
+    ],
+    [
+     "parent",
+     "abihail-3",
+     "jacan"
+    ],
+    [
+     "parent",
+     "abihail-3",
+     "jorai"
+    ],
+    [
+     "parent",
+     "abihail-3",
+     "meshullam-3"
+    ],
+    [
+     "parent",
+     "abihail-3",
+     "michael-2"
+    ],
+    [
+     "parent",
+     "abihail-3",
+     "sheba-5"
+    ],
+    [
+     "parent",
+     "abihail-3",
+     "zia"
+    ]
+   ],
+   "missing_haiku_only": [
+    [
+     "sibling",
+     "beerah",
+     "jeiel"
+    ],
+    [
+     "sibling",
+     "beerah",
+     "zechariah-3"
+    ],
+    [
+     "sibling",
+     "eber-2",
+     "zia"
+    ],
+    [
+     "sibling",
+     "meshullam-3",
+     "zia"
+    ]
+   ],
+   "missing_both": []
+  },
+  {
+   "chapter": "1CH-6",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    107137
+   ],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [
+    [
+     "parent",
+     "eliel",
+     "jeroham"
+    ],
+    [
+     "sibling",
+     "asaph-2",
+     "heman-2"
+    ]
+   ],
+   "missing_both": [
+    [
+     "parent",
+     "assir",
+     "elkanah"
+    ],
+    [
+     "parent",
+     "joel-son-of-azariah",
+     "elkanah-4"
+    ]
+   ]
+  },
+  {
+   "chapter": "1CH-7",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    98169,
+    101952,
+    101953,
+    102091,
+    102725,
+    103136
+   ],
+   "wrong_haiku_only": [
+    102703,
+    102704
+   ],
+   "wrong_both": [
+    98523,
+    102176,
+    102729
+   ],
+   "same_fix": [
+    98523,
+    102176
+   ],
+   "missing_codex_only": [
+    [
+     "descendant-of",
+     "guni",
+     "bilhah"
+    ],
+    [
+     "descendant-of",
+     "jahzeel",
+     "bilhah"
+    ],
+    [
+     "descendant-of",
+     "jezer",
+     "bilhah"
+    ],
+    [
+     "parent",
+     "jephunneh-2",
+     "arah"
+    ],
+    [
+     "parent",
+     "jephunneh-2",
+     "rizia"
+    ],
+    [
+     "sibling",
+     "imnah",
+     "serah"
+    ]
+   ],
+   "missing_haiku_only": [
+    [
+     "parent",
+     "benjamin",
+     "jediael"
+    ]
+   ],
+   "missing_both": [
+    [
+     "parent",
+     "elishama",
+     "nun"
+    ],
+    [
+     "parent",
+     "tahan",
+     "ladan"
+    ],
+    [
+     "parent",
+     "tahath-3",
+     "zabad-2"
+    ]
+   ]
+  },
+  {
+   "chapter": "1CH-8",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [
+    102454,
+    102550
+   ],
+   "same_fix": [
+    102454,
+    102550
+   ],
+   "missing_codex_only": [
+    [
+     "parent",
+     "beriah-3",
+     "ahio-2"
+    ],
+    [
+     "parent",
+     "beriah-3",
+     "jeremoth-2"
+    ],
+    [
+     "parent",
+     "beriah-3",
+     "shashak"
+    ]
+   ],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "parent",
+     "jeroham-father-of-jaresiah",
+     "athaliah-2"
+    ],
+    [
+     "parent",
+     "jeroham-father-of-jaresiah",
+     "elijah-2"
+    ],
+    [
+     "parent",
+     "jeroham-father-of-jaresiah",
+     "jaareshiah"
+    ],
+    [
+     "parent",
+     "jeroham-father-of-jaresiah",
+     "shehariah"
+    ],
+    [
+     "parent",
+     "jeroham-father-of-jaresiah",
+     "zichri-4"
+    ]
+   ]
+  },
+  {
+   "chapter": "1CH-9",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "parent",
+     "jeiel-2",
+     "ner"
+    ]
+   ]
+  },
+  {
+   "chapter": "EXO-6",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "EZR-10",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [
+    100577,
+    101015,
+    101273,
+    102664,
+    106712
+   ],
+   "same_fix": [
+    100577,
+    101015,
+    101273,
+    102664
+   ],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "descendant-of",
+     "eliezer-11",
+     "levi"
+    ]
+   ]
+  },
+  {
+   "chapter": "EZR-2",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "EZR-7",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [
+    97733,
+    98947,
+    101264,
+    106586,
+    106587,
+    107334
+   ],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "EZR-8",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [
+    "wrong: rows [106963] are the owner's own; put them in note instead"
+   ],
+   "wrong_codex_only": [
+    102590,
+    103912,
+    106257,
+    107156
+   ],
+   "wrong_haiku_only": [
+    98581,
+    100346,
+    103364,
+    103826,
+    106963,
+    107099
+   ],
+   "wrong_both": [
+    105927,
+    106256
+   ],
+   "same_fix": [
+    106256
+   ],
+   "missing_codex_only": [
+    [
+     "descendant-of",
+     "hattush",
+     "shecaniah"
+    ]
+   ],
+   "missing_haiku_only": [
+    [
+     "descendant-of",
+     "jeiel-10",
+     "adonikam"
+    ],
+    [
+     "parent",
+     "levi",
+     "mahli"
+    ]
+   ],
+   "missing_both": []
+  },
+  {
+   "chapter": "GEN-10",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [
+    99209,
+    107058
+   ],
+   "same_fix": [
+    99209,
+    107058
+   ],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "GEN-11",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "father-in-law-of",
+     "terah",
+     "sarai"
+    ],
+    [
+     "grandfather-of",
+     "terah",
+     "lot"
+    ]
+   ]
+  },
+  {
+   "chapter": "GEN-22",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "GEN-25",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [
+    [
+     "descendant-of",
+     "dedan-2",
+     "keturah"
+    ],
+    [
+     "descendant-of",
+     "letush",
+     "keturah"
+    ],
+    [
+     "descendant-of",
+     "leum",
+     "keturah"
+    ],
+    [
+     "descendant-of",
+     "sheba-3",
+     "keturah"
+    ]
+   ],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "GEN-29",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "parent",
+     "nahor-2",
+     "laban"
+    ]
+   ]
+  },
+  {
+   "chapter": "GEN-30",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "GEN-35",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "spouse",
+     "bilhah",
+     "jacob"
+    ]
+   ]
+  },
+  {
+   "chapter": "GEN-36",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    101469
+   ],
+   "wrong_haiku_only": [
+    100934,
+    107129
+   ],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [
+    [
+     "parent",
+     "basemath-daughter-of-ishmael",
+     "nahath"
+    ],
+    [
+     "parent",
+     "basemath-daughter-of-ishmael",
+     "shammah"
+    ],
+    [
+     "parent",
+     "basemath-daughter-of-ishmael",
+     "zerah"
+    ]
+   ],
+   "missing_both": [
+    [
+     "parent",
+     "elon",
+     "adah-wife-of-esau"
+    ],
+    [
+     "parent",
+     "ishmael",
+     "basemath-daughter-of-ishmael"
+    ],
+    [
+     "sibling",
+     "basemath-daughter-of-ishmael",
+     "nebaioth"
+    ],
+    [
+     "spouse",
+     "basemath-daughter-of-ishmael",
+     "esau"
+    ],
+    [
+     "spouse",
+     "esau",
+     "oholibamah-wife-of-esau"
+    ]
+   ]
+  },
+  {
+   "chapter": "GEN-38",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "sibling",
+     "er",
+     "shelah-2"
+    ]
+   ]
+  },
+  {
+   "chapter": "GEN-4",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    103526
+   ],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "sibling",
+     "jabal",
+     "jubal"
+    ]
+   ]
+  },
+  {
+   "chapter": "GEN-46",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    101084
+   ],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [
+    [
+     "parent",
+     "benjamin",
+     "ard"
+    ],
+    [
+     "parent",
+     "benjamin",
+     "naaman"
+    ]
+   ],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "sibling",
+     "imnah",
+     "serah"
+    ]
+   ]
+  },
+  {
+   "chapter": "GEN-5",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "LUK-3",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    97188
+   ],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "parent",
+     "yhvh",
+     "adam"
+    ],
+    [
+     "parent",
+     "yhvh",
+     "jesus"
+    ]
+   ]
+  },
+  {
+   "chapter": "MAT-1",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    102087,
+    102266
+   ],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": [
+    [
+     "parent",
+     "jehoram",
+     "azariah-3"
+    ],
+    [
+     "parent",
+     "josiah",
+     "jehoiachin"
+    ]
+   ]
+  },
+  {
+   "chapter": "NEH-10",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "NEH-11",
+   "codex": false,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [
+    99359,
+    99360,
+    103404,
+    106478
+   ],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [
+    [
+     "descendant-of",
+     "mattaniah-9",
+     "asaph-2"
+    ]
+   ],
+   "missing_both": []
+  },
+  {
+   "chapter": "NEH-12",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    101176,
+    101352,
+    103751,
+    103770,
+    105519,
+    105525,
+    105534,
+    106944,
+    106945
+   ],
+   "wrong_haiku_only": [
+    98583,
+    105860,
+    105861
+   ],
+   "wrong_both": [
+    100524,
+    101177,
+    102624,
+    102625,
+    105526,
+    105528,
+    105531,
+    105535,
+    105537,
+    105862,
+    106942,
+    106943
+   ],
+   "same_fix": [
+    100524,
+    101177,
+    102624,
+    102625,
+    105526,
+    105528,
+    105531,
+    105535,
+    105537,
+    105862
+   ],
+   "missing_codex_only": [],
+   "missing_haiku_only": [
+    [
+     "descendant-of",
+     "hashabiah-8",
+     "hilkiah-3"
+    ],
+    [
+     "descendant-of",
+     "helkai",
+     "meraioth-2"
+    ],
+    [
+     "sibling",
+     "azarel-6",
+     "zechariah-22"
+    ],
+    [
+     "sibling",
+     "gilalai",
+     "zechariah-22"
+    ],
+    [
+     "sibling",
+     "hanani-5",
+     "zechariah-22"
+    ],
+    [
+     "sibling",
+     "judah-7",
+     "zechariah-22"
+    ],
+    [
+     "sibling",
+     "maai",
+     "zechariah-22"
+    ],
+    [
+     "sibling",
+     "milalai",
+     "zechariah-22"
+    ],
+    [
+     "sibling",
+     "nethanel-10",
+     "zechariah-22"
+    ]
+   ],
+   "missing_both": [
+    [
+     "parent",
+     "eliashib-7",
+     "jehohanan"
+    ]
+   ]
+  },
+  {
+   "chapter": "NEH-7",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "NUM-26",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "NUM-3",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [
+    103600
+   ],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  },
+  {
+   "chapter": "RUT-4",
+   "codex": true,
+   "haiku": true,
+   "haiku_checker": [],
+   "wrong_codex_only": [],
+   "wrong_haiku_only": [],
+   "wrong_both": [],
+   "same_fix": [],
+   "missing_codex_only": [],
+   "missing_haiku_only": [],
+   "missing_both": []
+  }
+ ]
+}

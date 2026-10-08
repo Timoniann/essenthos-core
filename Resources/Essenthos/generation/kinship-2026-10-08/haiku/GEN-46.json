@@ -1,0 +1,4 @@
+{"wrong": [],
+ "missing": [{"from": "imnah", "type": "brother-of", "to": "serah", "verse": "GEN 46:17", "why": "Verse 17 names Serah as 'their sister', the sister of the sons of Asher including Jimnah, and no row links Imnah and Serah.", "confidence": 0.85}],
+ "note": "Every row this chapter reads checks out against the text. Ard and Naaman are recorded as descendant-of Benjamin, looser than the verse's 'sons of Benjamin', so left as is; the malchiel of-tribe asher row uses a type outside the list but the chapter supports it.",
+ "model": "claude-haiku-5-5"}

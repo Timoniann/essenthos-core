@@ -1,0 +1,14 @@
+{"wrong": [
+{"kind": "delete", "rows": [102176], "new_type": "", "new_to": "", "verse": "1CH 7:25", "why": "Verse 25 makes Rephah and Resheph both sons of Ephraim ('Rephah was his son, also Resheph'), so Resheph is not Rephah's son.", "confidence": 0.8},
+{"kind": "delete", "rows": [102703, 102704], "new_type": "", "new_to": "", "verse": "1CH 7:16", "why": "'his sons were Ulam and Rakem' refers to Peresh, the son just named, whose brother is Sheresh; the verse does not make Sheresh their father.", "confidence": 0.7},
+{"kind": "delete", "rows": [102729], "new_type": "", "new_to": "", "verse": "1CH 7:37", "why": "Verse 37 lists Shilshah among Zophah's sons alongside Beera, so he is Beera's brother, not his descendant.", "confidence": 0.7},
+{"kind": "delete", "rows": [98523], "new_type": "", "new_to": "", "verse": "1CH 7:12", "why": "The verse makes Hushim a son of Aher, and Ehi is not named there; the row needs an unstated reading of Aher as Ehi.", "confidence": 0.3}
+],
+"missing": [
+{"from": "benjamin", "type": "father-of", "to": "jediael", "verse": "1CH 7:6", "why": "Verse 6 lists Jediael among the sons of Benjamin.", "confidence": 0.55},
+{"from": "tahath-3", "type": "father-of", "to": "zabad-2", "verse": "1CH 7:21", "why": "After 'Tahath his son' (7:20) the verse gives 'Zabad his son', so Zabad is the son of the second Tahath.", "confidence": 0.55},
+{"from": "tahan", "type": "father-of", "to": "ladan", "verse": "1CH 7:26", "why": "Verse 26 opens 'Laadan his son' directly after Tahan in verse 25.", "confidence": 0.6},
+{"from": "elishama", "type": "father-of", "to": "nun", "verse": "1CH 7:27", "why": "Verse 27 opens 'Non his son' directly after Elishama in verse 26.", "confidence": 0.75}
+],
+"note": "The 7:20-27 'his son' chain (Tahath, Tahan, Elishama) is what the missing rows fill in. Owner rows amal and zophah son-of hotham (7:35 names Helem as father) and hanniel-2 son-of jephunneh-2 (7:39 names Ulla) look wrong against the text; they rest on variant identifications and are left alone.",
+"model": "claude-haiku-5-5"}

@@ -1,0 +1,4 @@
+{"wrong": [{"kind": "delete", "rows": [102747], "new_type": "", "new_to": "", "verse": "1CH 25:3", "why": "Verse 3 says Jeduthun's sons were six but names only five (Gedaliah, Zeri, Jeshaiah, Hashabiah, Mattithiah), and Shimei is not named as a son there; verse 17 gives Shimei no father.", "confidence": 0.4}],
+ "missing": [],
+ "note": "The other 46 rows in this chapter match the text (Asaph, Jeduthun and Heman with their named sons; the sixth lot's Bukkiah, and the rest of the Heman sons). No owner-recorded rows here; the 'heman-2 prophet-to david' row uses a type outside the listed set, but verse 5's 'king's seer' fits it, so it is kept.",
+ "model": "claude-haiku-5-5"}

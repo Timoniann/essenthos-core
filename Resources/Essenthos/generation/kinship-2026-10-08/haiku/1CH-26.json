@@ -1,0 +1,5 @@
+{"wrong": [{"kind": "delete", "rows": [102849], "new_type": "", "new_to": "", "verse": "1CH 26:16", "why": "The verse only says the lot for the west gate fell to Shuppim and Hosah together; it states no family tie, and companion-of is not one of the family types.", "confidence": 0.5}],
+ "missing": [{"from": "zetham", "type": "son-of", "to": "jehiel-9", "verse": "1CH 26:22", "why": "The verse says 'The sons of Jehieli; Zetham, and Joel his brother', so Zetham is a son of Jehieli.", "confidence": 0.6},
+  {"from": "joel-6", "type": "son-of", "to": "jehiel-9", "verse": "1CH 26:22", "why": "The verse says 'The sons of Jehieli; Zetham, and Joel his brother', so Joel is a son of Jehieli.", "confidence": 0.6}],
+ "note": "All other rows match the verse; Meshelemiah = shallum-7 rests on other chapters, not this one. Hashabiah in v30 fits hashabiah-9's distinguisher (officer west of Jordan) better than hashabiah-2's cited 26:30, though no row touches either, and the ch.23 row jehiel-9 brother-of zetham clashes with 'sons of Jehieli' here (other chapter, not judged).",
+ "model": "claude-haiku-5-5"}

@@ -1,0 +1,8 @@
+{"wrong": [
+ {"kind": "retarget", "rows": [97485], "new_type": "", "new_to": "dishon-2", "verse": "1CH 1:41", "why": "Verse 1:41 says The sons of Anah; Dishon, and Anah here is the son of Zibeon named in 1:40 (Genesis 36:25 agrees), so the Dishon meant is Dishon son of Anah, not Dishon son of Seir.", "confidence": 0.9},
+ {"kind": "retarget", "rows": [98289], "new_type": "", "new_to": "dishon-2", "verse": "1CH 1:41", "why": "Verse 1:41 lists Cheran among the sons of Dishon who is the son of Anah (Amram, Eshban, Ithran, Cheran), not the Dishon son of Seir.", "confidence": 0.9},
+ {"kind": "retarget", "rows": [99844], "new_type": "", "new_to": "dishon-2", "verse": "1CH 1:41", "why": "Verse 1:41 lists Ithran among the sons of Dishon who is the son of Anah (Amram, Eshban, Ithran, Cheran), not the Dishon son of Seir.", "confidence": 0.9}
+],
+ "missing": [],
+ "note": "No owner-recorded rows in this chapter. The three retargets are one namesake error (Dishon son of Anah recorded as Dishon son of Seir); the 1:17 Meshech-for-Mash and 1:32 concubine-for-wife differences are other-book variants kept, and 1:36 lists Timna among Eliphaz's sons where the site records concubine-of, left alone.",
+ "model": "claude-haiku-5-5"}

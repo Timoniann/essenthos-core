@@ -1,0 +1,4 @@
+{"wrong": [],
+ "missing": [{"from": "jubal", "type": "brother-of", "to": "jabal", "verse": "GEN 4:21", "why": "The verse says 'And his brother's name was Jubal', with 'his' referring to Jabal in the verse before, and no row records the brothers in either direction.", "confidence": 0.9}],
+ "note": "Every other row agrees with the Hebrew, and the owner rows (abel son-of adam, jabal son-of lamech, jubal son-of lamech and son-of adah, naamah daughter-of lamech, tubalcain son-of lamech, seth son-of eve) are consistent with the text, so none is flagged. zillah mother-of naamah (4:22) is an inference from 'the sister of Tubalcain was Naamah' rather than something the verse states, but nothing contradicts it, so it is not listed as wrong.",
+ "model": "claude-haiku-5-5"}

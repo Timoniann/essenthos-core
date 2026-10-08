@@ -1,0 +1,3 @@
+{"wrong": [],
+ "missing": [{"from": "er", "type": "brother-of", "to": "shelah-2", "verse": "GEN 38:11", "why": "Judah fears Shelah may die \"as his brethren did\", and Er and Onan are Shelah's brethren, so Er is Shelah's brother.", "confidence": 0.6}],
+ "note": "Every row in this chapter matches the text: Shua is Judah's father-in-law, Tamar is Er's wife, Onan is Tamar's brother-in-law, and Zerah is Perez's brother. Owner row 106999 (onan killed-by yhvh) cites GEN 38:9, but the slaying is in GEN 38:10 (\"he slew him also\"), so the verse looks off by one; not listed as wrong.", "model": "claude-haiku-5-5"}

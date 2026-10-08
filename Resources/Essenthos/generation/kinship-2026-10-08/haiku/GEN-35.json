@@ -1,0 +1,4 @@
+{"wrong": [],
+ "missing": [{"from": "bilhah", "type": "concubine-of", "to": "jacob", "verse": "GEN 35:22", "why": "Reuben lay with Bilhah his father's concubine, which makes her Jacob's concubine; the recorded rows give her only as wife-of, a different type.", "confidence": 0.85}],
+ "note": "Every chapter row matches the text; Deborah's servant-of (nurse) is outside the family types and is left as is. The owner rows (Benjamin half-brother-of the other sons, jacob father-of dan and naphtali, simeon half-brother-of benjamin) fit the text, so none is flagged.",
+ "model": "claude-haiku-5-5"}

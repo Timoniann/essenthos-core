@@ -1,0 +1,4 @@
+{"wrong": [],
+ "missing": [{"from": "laban", "type": "son-of", "to": "nahor-2", "verse": "GEN 29:5", "why": "The verse calls Laban 'the son of Nahor', which is the Nahor who is Terah's son; the wording skips a generation, which the son-of convention allows.", "confidence": 0.6}],
+ "note": "No wrong rows: the Laban/Leah/Rachel/Bilhah/Zilpah rows and the Leah-to-Reuben/Levi/Judah rows match the text, and the owner's sibling rows (simeon, levi, judah brother-of reuben) look right. 'servant-of' is not in the listed types but the text supports it, so it is kept; Jacob's nephew relation to Laban (GEN 29:13) and Laban's idiomatic 'my brother' (GEN 29:15) have no listed type and were left out.",
+ "model": "claude-haiku-5-5"}
