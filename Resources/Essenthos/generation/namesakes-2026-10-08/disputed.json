@@ -1,0 +1,79 @@
+[
+ {
+  "verse": "1CH 12:27",
+  "name": "Jehoiada",
+  "dataset_man": "jehoiada",
+  "split_man": "jehoiada-4",
+  "codex": "jehoiada-4",
+  "codex_why": "The Hebrew identifies Jehoiada as הַנָּגִיד לְאַהֲרֹן, the leader of the Aaronites, accompanied by 3,700 men—exactly B’s stated office and contingent. The surrounding verses list Levites and Zadok; they do not identify this Jehoiada as Benaiah’s father.",
+  "codex_confidence": 0.98,
+  "judge": "unclear",
+  "judge_why": "The verse names a Jehoiada 'leader of Aaron' at Hebron; nothing in the text ties him to Benaiah's father (A), though 1CH 27:5 calls that Jehoiada a chief priest, so identity with A is possible but not stated."
+ },
+ {
+  "verse": "1CH 12:28",
+  "name": "Zadok",
+  "dataset_man": "zadok",
+  "split_man": "zadok-9",
+  "codex": "zadok",
+  "codex_why": "Zadok appears immediately after Jehoiada and the Aaronites; verse 29 then introduces a separate group with וּמִן־בְּנֵי בִנְיָמִן, “and from the sons of Benjamin.” This placement supports A’s Aaronic lineage rather than B’s stated Benjamite identity.",
+  "codex_confidence": 0.93,
+  "judge": "unclear",
+  "judge_why": "A young warrior Zadok in the Aaronite group at Hebron may be Zadok son of Ahitub (A, by tradition) or a separate man (B, though B wrongly calls him Benjamite); the text does not say."
+ },
+ {
+  "verse": "1CH 15:23",
+  "name": "Berechiah",
+  "dataset_man": "berechiah-3",
+  "split_man": "berechiah-2",
+  "codex": "neither",
+  "codex_why": "The Hebrew names Berechiah alongside Elkanah as an ark doorkeeper, without identifying his father or connecting him to Asaph. A separate Berechiah is therefore a tentative identification; these verses alone cannot exclude A or B.",
+  "codex_confidence": 0.4,
+  "judge": "neither",
+  "judge_why": "The doorkeeper of the ark under David is neither the post-exilic Berechiah son of Asa of 1CH 9:16 nor stated to be Asaph's father; he is a third Berechiah."
+ },
+ {
+  "verse": "1CH 9:10",
+  "name": "Jedaiah",
+  "dataset_man": "jedaiah-2",
+  "split_man": "jedaiah-5",
+  "codex": "jedaiah-2",
+  "codex_why": "The Hebrew lists Jedaiah, Jehoiarib, and Jachin as separate priests, fitting A’s stated priestly listing without identifying Jedaiah as Joiarib’s son. This only weakly favors A: no father or other unique identifier is given, and B is also a priest.",
+  "codex_confidence": 0.55,
+  "judge": "jedaiah-5",
+  "judge_why": "1CH 9:10 is the same Jerusalem priests' list as NEH 11:10, where this Jedaiah is son of Joiarib (B), not the Jedaiah family head of EZR 2:36 (A)."
+ },
+ {
+  "verse": "EZR 10:6",
+  "name": "Eliashib",
+  "dataset_man": "eliashib-3",
+  "split_man": "eliashib-7",
+  "codex": "eliashib-3",
+  "codex_why": "The Hebrew identifies Eliashib as the father of Johanan (יְהוֹחָנָן בֶּן־אֶלְיָשִׁיב), whose chamber Ezra entered, exactly matching A’s stated family relationship. The surrounding verses provide no identification with B’s high-priestly office or father Joiakim.",
+  "codex_confidence": 0.98,
+  "judge": "unclear",
+  "judge_why": "Whether Jehohanan's father Eliashib is the high priest of NEH 3:1 (B) or another man (A) is the long-standing Ezra-Nehemiah dating question, and the text does not settle it."
+ },
+ {
+  "verse": "EZR 2:36",
+  "name": "Jeshua",
+  "dataset_man": "jeshua",
+  "split_man": "jeshua-3",
+  "codex": "jeshua",
+  "codex_why": "לְבֵית יֵשׁוּעַ ('of the house of Jeshua') identifies a priestly household within the list of priestly families, favoring A as an ancestral priestly head. However, neither Jozadak nor the ninth course is mentioned, so the text does not conclusively distinguish A from B.",
+  "codex_confidence": 0.56,
+  "judge": "unclear",
+  "judge_why": "'The house of Jeshua' may be the ninth priestly course (A) or the house of the high priest Jeshua son of Jozadak (B); the verse does not say which."
+ },
+ {
+  "verse": "NEH 12:23",
+  "name": "Eliashib",
+  "dataset_man": "eliashib-3",
+  "split_man": "eliashib-7",
+  "codex": "eliashib-3",
+  "codex_why": "The Hebrew identifies Eliashib as the father of Johanan (יוֹחָנָן בֶּן־אֶלְיָשִׁיב), matching A’s stated relationship to Jehohanan. Verse 22 makes the high priest B contextually plausible, but the supplied facts do not explicitly identify B as Johanan’s father.",
+  "codex_confidence": 0.66,
+  "judge": "eliashib-7",
+  "judge_why": "Johanan ben Eliashib continues the high-priestly succession of 12:22 (Eliashib, Joiada, Johanan, Jaddua), so this is the high priest B."
+ }
+]

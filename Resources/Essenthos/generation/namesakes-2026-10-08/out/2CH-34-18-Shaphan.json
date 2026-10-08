@@ -1,0 +1,54 @@
+{
+ "b": 14,
+ "c": 34,
+ "v": 18,
+ "label": "Shaphan",
+ "dataset_man": "shaphan",
+ "split_man": "shaphan-4",
+ "case": {
+  "verse": "2CH 34:18",
+  "name": "Shaphan",
+  "text": {
+   "BHSA 2CH 34:17": "וַיַּתִּ֕יכוּ אֶת־הַכֶּ֖סֶף הַנִּמְצָ֣א בְּבֵית־יְהוָ֑ה וַֽיִּתְּנ֗וּהוּ עַל־יַד֙ הַמֻּפְקָדִ֔ים וְעַל־יַ֖ד עֹושֵׂ֥י הַמְּלָאכָֽה׃ ",
+   "KJV 2CH 34:17": "And they have gathered together the money that was found in the house of the LORD, and have delivered it into the hand of the overseers, and to the hand of the workmen.",
+   "BHSA 2CH 34:18": "וַיַּגֵּ֞ד שָׁפָ֤ן הַסֹּופֵר֙ לַמֶּ֣לֶךְ לֵאמֹ֔ר סֵ֚פֶר נָ֣תַן לִ֔י חִלְקִיָּ֖הוּ הַכֹּהֵ֑ן וַיִּקְרָא־בֹ֥ו שָׁפָ֖ן לִפְנֵ֥י הַמֶּֽלֶךְ׃ ",
+   "KJV 2CH 34:18": "Then Shaphan the scribe told the king, saying, Hilkiah the priest hath given me a book. And Shaphan read it before the king.",
+   "BHSA 2CH 34:19": "וַיְהִי֙ כִּשְׁמֹ֣עַ הַמֶּ֔לֶךְ אֵ֖ת דִּבְרֵ֣י הַתֹּורָ֑ה וַיִּקְרַ֖ע אֶת־בְּגָדָֽיו׃ ",
+   "KJV 2CH 34:19": "And it came to pass, when the king had heard the words of the law, that he rent his clothes."
+  },
+  "A": {
+   "name": "Shaphan",
+   "line": "scribe of King Josiah (2KI 22:3, 2CH 34:15)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "He was sent to repair the house of the Lord (2CH 34:8)",
+   "family": [
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)",
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "father-of ahikam (Ahikam, son of Shaphan (2KI 22:12))",
+    "grandfather-of gedaliah (Gedaliah, son of Ahikam, appointed King of Judah by Nebuchadnezzar (2K)"
+   ],
+   "verses": 46
+  },
+  "B": {
+   "name": "Shaphan",
+   "line": "Secretary/scribe of King Josiah who read the found law-book to him.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "grandson-of meshullam (Meshullam, father of Azaliah (2KI 22:3))",
+    "companion-of hilkiah-2 (Hilkiah, the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9))",
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)"
+   ],
+   "verses": 9
+  }
+ },
+ "names": "B",
+ "why": "שָׁפָן הַסּוֹפֵר receives the book from Hilkiah and reads it before the king, matching B’s stated role. However, A also identifies Josiah’s scribe, and both records give the same father, so the supplied facts do not securely distinguish them.",
+ "confidence": 0.5,
+ "names_slug": "shaphan-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:36:58+00:00"
+}

@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 3,
+ "v": 17,
+ "label": "Hashabiah",
+ "dataset_man": "hashabiah-5",
+ "split_man": "hashabiah-4",
+ "case": {
+  "verse": "NEH 3:17",
+  "name": "Hashabiah",
+  "text": {
+   "BHSA NEH 3:16": "אַחֲרָ֤יו הֶחֱזִיק֙ נְחֶמְיָ֣ה בֶן־עַזְבּ֔וּק שַׂ֕ר חֲצִ֖י פֶּ֣לֶךְ בֵּֽית־צ֑וּר עַד־נֶ֨גֶד֙ קִבְרֵ֣י דָוִ֔יד וְעַד־הַבְּרֵכָה֙ הָעֲשׂוּיָ֔ה וְעַ֖ד בֵּ֥ית הַגִּבֹּרִֽים׃ ס ",
+   "KJV NEH 3:16": "After him repaired Nehemiah the son of Azbuk, the ruler of the half part of Bethzur, unto the place over against the sepulchres of David, and to the pool that was made, and unto the house of the mighty.",
+   "BHSA NEH 3:17": "אַחֲרָ֛יו הֶחֱזִ֥יקוּ הַלְוִיִּ֖ם רְח֣וּם בֶּן־בָּנִ֑י עַל־יָדֹ֣ו הֶחֱזִ֗יק חֲשַׁבְיָ֛ה שַׂר־חֲצִי־פֶ֥לֶךְ קְעִילָ֖ה לְפִלְכֹּֽו׃ ס ",
+   "KJV NEH 3:17": "After him repaired the Levites, Rehum the son of Bani. Next unto him repaired Hashabiah, the ruler of the half part of Keilah, in his part.",
+   "BHSA NEH 3:18": "אַחֲרָיו֙ הֶחֱזִ֣יקוּ אֲחֵיהֶ֔ם בַּוַּ֖י בֶּן־חֵנָדָ֑ד שַׂ֕ר חֲצִ֖י פֶּ֥לֶךְ קְעִילָֽה׃ ס ",
+   "KJV NEH 3:18": "After him repaired their brethren, Bavai the son of Henadad, the ruler of the half part of Keilah."
+  },
+  "A": {
+   "name": "Hashabiah",
+   "line": "official of half the district of Keilah (NEH 3:17)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  },
+  "B": {
+   "name": "Hashabiah",
+   "line": "Levite sent to Ezra (EZR 8:19)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "descendant of Merari, named on the sealed document of Neh 10:1-27 (NEH 10:11)",
+   "family": [
+    "companion-of jeshaiah-4 (Jeshaiah, Levite sent to Ezra (EZR 8:19))",
+    "descendant-of merari (Merari, son of Levi (GEN 46:11))",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 9
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew identifies Hashabiah as שַׂר־חֲצִי־פֶלֶךְ קְעִילָה, ruler of half the district of Keilah, exactly matching A. The surrounding verses list district officials repairing the wall; nothing identifies him as B, the Merarite Levite sent to Ezra.",
+ "confidence": 0.99,
+ "names_slug": "hashabiah-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:39:02+00:00"
+}

@@ -1,0 +1,54 @@
+{
+ "b": 13,
+ "c": 23,
+ "v": 9,
+ "label": "Shimei",
+ "dataset_man": "shimei-9",
+ "split_man": "shimei",
+ "case": {
+  "verse": "1CH 23:9",
+  "name": "Shimei",
+  "text": {
+   "BHSA 1CH 23:8": "בְּנֵ֣י לַעְדָּ֗ן הָרֹ֧אשׁ יְחִיאֵ֛ל וְזֵתָ֥ם וְיֹואֵ֖ל שְׁלֹשָֽׁה׃ ס ",
+   "KJV 1CH 23:8": "The sons of Laadan; the chief was Jehiel, and Zetham, and Joel, three.",
+   "BHSA 1CH 23:9": "בְּנֵ֣י שִׁמְעִ֗י שׁלמות וַחֲזִיאֵ֛ל וְהָרָ֖ן שְׁלֹשָׁ֑ה אֵ֛לֶּה רָאשֵׁ֥י הָאָבֹ֖ות לְלַעְדָּֽן׃ ס ",
+   "KJV 1CH 23:9": "The sons of Shimei; Shelomith, and Haziel, and Haran, three. These were the chief of the fathers of Laadan.",
+   "BHSA 1CH 23:10": "וּבְנֵ֣י שִׁמְעִ֔י יַ֣חַת זִינָ֔א וִיע֖וּשׁ וּבְרִיעָ֑ה אֵ֥לֶּה בְנֵי־שִׁמְעִ֖י אַרְבָּעָֽה׃ ",
+   "KJV 1CH 23:10": "And the sons of Shimei were, Jahath, Zina, and Jeush, and Beriah. These four were the sons of Shimei."
+  },
+  "A": {
+   "name": "Shimei",
+   "line": "son of Ladan [Libni] as he was included in the \"fathers' households of Ladan\" (1CH 23:9)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "father-of shelomoth (Shelomoth, son of Shimei within the family of Ladan (1CH 23:9))",
+    "father-of haziel (Haziel, son of Shimei within the family of Ladan (1CH 23:9))",
+    "father-of haran-3 (Haran, son of Shimei within the family of Ladan (1CH 23:9))"
+   ],
+   "verses": 2
+  },
+  "B": {
+   "name": "Shimei",
+   "line": "son of Gershon (EXO 6:17)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "son-of gershon (Gershon, son of Levi (GEN 46:11))",
+    "father-of jahath-4 (Jahath, descendant of Shimei (1CH 23:10))",
+    "father-of zina (Zina, descendant of Shimei (1CH 23:10))",
+    "father-of jeush-4 (Jeush, descendant of Shimei (1CH 23:10))",
+    "father-of beriah-4 (Beriah, descendant of Shimei (1CH 23:10))"
+   ],
+   "verses": 11
+  }
+ },
+ "names": "A",
+ "why": "Verse 9 names Shimei as father of Shelomith, Haziel, and Haran and places these family heads within Ladan’s households, matching A. Verse 10 lists Jahath, Zina, Jeush, and Beriah, the distinct family attributed to B.",
+ "confidence": 0.99,
+ "names_slug": "shimei-9",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:35:33+00:00"
+}

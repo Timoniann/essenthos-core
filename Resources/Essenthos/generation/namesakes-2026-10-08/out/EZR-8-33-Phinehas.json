@@ -1,0 +1,51 @@
+{
+ "b": 15,
+ "c": 8,
+ "v": 33,
+ "label": "Phinehas",
+ "dataset_man": "phinehas",
+ "split_man": "phinehas-3",
+ "case": {
+  "verse": "EZR 8:33",
+  "name": "Phinehas",
+  "text": {
+   "BHSA EZR 8:32": "וַנָּבֹ֖וא יְרוּשָׁלִָ֑ם וַנֵּ֥שֶׁב שָׁ֖ם יָמִ֥ים שְׁלֹשָֽׁה׃ ",
+   "KJV EZR 8:32": "And we came to Jerusalem, and abode there three days.",
+   "BHSA EZR 8:33": "וּבַיֹּ֣ום הָרְבִיעִ֡י נִשְׁקַ֣ל הַכֶּסֶף֩ וְהַזָּהָ֨ב וְהַכֵּלִ֜ים בְּבֵ֣ית אֱלֹהֵ֗ינוּ עַ֠ל יַד־מְרֵמֹ֤ות בֶּן־אֽוּרִיָּה֙ הַכֹּהֵ֔ן וְעִמֹּ֖ו אֶלְעָזָ֣ר בֶּן־פִּֽינְחָ֑ס וְעִמָּהֶ֞ם יֹוזָבָ֧ד בֶּן־יֵשׁ֛וּעַ וְנֹֽועַדְיָ֥ה בֶן־בִּנּ֖וּי הַלְוִיִּֽם׃ ",
+   "KJV EZR 8:33": "Now on the fourth day was the silver and the gold and the vessels weighed in the house of our God by the hand of Meremoth the son of Uriah the priest; and with him was Eleazar the son of Phinehas; and with them was Jozabad the son of Jeshua, and Noadiah the son of Binnui, Levites;",
+   "BHSA EZR 8:34": "בְּמִסְפָּ֥ר בְּמִשְׁקָ֖ל לַכֹּ֑ל וַיִּכָּתֵ֥ב כָּֽל־הַמִּשְׁקָ֖ל בָּעֵ֥ת הַהִֽיא׃ פ ",
+   "KJV EZR 8:34": "By number and by weight of every one: and all the weight was written at that time."
+  },
+  "A": {
+   "name": "Phinehas",
+   "line": "Eleazar's son, Aaron's grandson (EXO 6:25) given a covenant of peace and perpetual priesthood (NUM 25:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "High Priest",
+   "family": [
+    "son-of eleazar (Eleazar, son of Aaron (EXO 6:23))",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))",
+    "father-of abishua (Abishua, son of Phinehas (1CH 6:4))",
+    "priest-of yhvh (YHVH, the God of Israel)"
+   ],
+   "verses": 33
+  },
+  "B": {
+   "name": "Phinehas",
+   "line": "Father of Eleazar, a helper weighing treasure for Ezra; his descendants returned with Ezra",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of eleazar-6 (Eleazar, the priest, descendant of Phinehas (EZR 8:33))"
+   ],
+   "verses": 3
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew identifies the treasury helper as אֶלְעָזָר בֶּן־פִּינְחָס, ‘Eleazar son of Phinehas,’ matching B’s stated son and Ezra-era context. A is instead Eleazar’s son and Aaron’s grandson from the Exodus generation.",
+ "confidence": 0.99,
+ "names_slug": "phinehas-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:38:22+00:00"
+}

@@ -1,0 +1,50 @@
+{
+ "b": 13,
+ "c": 6,
+ "v": 37,
+ "label": "Tahath",
+ "dataset_man": "tahath",
+ "split_man": "tahath-5",
+ "case": {
+  "verse": "1CH 6:37",
+  "name": "Tahath",
+  "text": {
+   "BHSA 1CH 6:36": "בֶּן־אֶלְקָנָה֙ בֶּן־יֹואֵ֔ל בֶּן־עֲזַרְיָ֖ה בֶּן־צְפַנְיָֽה׃ ",
+   "KJV 1CH 6:36": "The son of Elkanah, the son of Joel, the son of Azariah, the son of Zephaniah,",
+   "BHSA 1CH 6:37": "בֶּן־תַּ֨חַת֙ בֶּן־אַסִּ֔יר בֶּן־אֶבְיָסָ֖ף בֶּן־קֹֽרַח׃ ",
+   "KJV 1CH 6:37": "The son of Tahath, the son of Assir, the son of Ebiasaph, the son of Korah,",
+   "BHSA 1CH 6:38": "בֶּן־יִצְהָ֣ר בֶּן־קְהָ֔ת בֶּן־לֵוִ֖י בֶּן־יִשְׂרָאֵֽל׃ ",
+   "KJV 1CH 6:38": "The son of Izhar, the son of Kohath, the son of Levi, the son of Israel."
+  },
+  "A": {
+   "name": "Tahath",
+   "line": "son of Assir (1CH 6:24)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "son-of assir-2 (Assir, son of Ebiasaph (1CH 6:23))",
+    "father-of uriel (Uriel, son of Tahath (1CH 6:24), chief of the sons of Kohath (1CH 1)",
+    "descendant-of korah-3 (Korah, son of Izhar (EXO 6:21) who rebelled against G-d and Moses ()"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Tahath",
+   "line": "Kohathite Levite, son of Assir, father of Zephaniah (Heman's ancestry); possibly same as bearer 1",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of assir-2 (Assir, son of Ebiasaph (1CH 6:23))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew genealogy links Zephaniah in verse 36 to Tahath in verse 37, then continues through Assir, Ebiasaph, and Korah. B explicitly identifies Tahath as Zephaniah’s father in Heman’s ancestry, matching this sequence.",
+ "confidence": 0.97,
+ "names_slug": "tahath-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:33:40+00:00"
+}

@@ -1,0 +1,48 @@
+{
+ "b": 14,
+ "c": 29,
+ "v": 13,
+ "label": "Jeiel",
+ "dataset_man": "jeiel-7",
+ "split_man": "jeiel-12",
+ "case": {
+  "verse": "2CH 29:13",
+  "name": "Jeiel",
+  "text": {
+   "BHSA 2CH 29:12": "וַיָּקֻ֣מוּ הַ֠לְוִיִּם מַ֣חַת בֶּן־עֲמָשַׂ֞י וְיֹואֵ֣ל בֶּן־עֲזַרְיָהוּ֮ מִן־בְּנֵ֣י הַקְּהָתִי֒ וּמִן־בְּנֵ֣י מְרָרִ֔י קִ֚ישׁ בֶּן־עַבְדִּ֔י וַעֲזַרְיָ֖הוּ בֶּן־יְהַלֶּלְאֵ֑ל וּמִן־הַגֵּ֣רְשֻׁנִּ֔י יֹואָח֙ בֶּן־זִמָּ֔ה וְעֵ֖דֶן בֶּן־יֹואָֽח׃ ",
+   "KJV 2CH 29:12": "Then the Levites arose, Mahath the son of Amasai, and Joel the son of Azariah, of the sons of the Kohathites: and of the sons of Merari, Kish the son of Abdi, and Azariah the son of Jehalelel: and of the Gershonites; Joah the son of Zimmah, and Eden the son of Joah:",
+   "BHSA 2CH 29:13": "וּמִן־בְּנֵי֙ אֱלִ֣יצָפָ֔ן שִׁמְרִ֖י ויעואל וּמִן־בְּנֵ֣י אָסָ֔ף זְכַרְיָ֖הוּ וּמַתַּנְיָֽהוּ׃ ס ",
+   "KJV 2CH 29:13": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:",
+   "BHSA 2CH 29:14": "וּמִן־בְּנֵ֥י הֵימָ֖ן יחואל וְשִׁמְעִ֑י ס וּמִן־בְּנֵ֣י יְדוּת֔וּן שְׁמַֽעְיָ֖ה וְעֻזִּיאֵֽל׃ ",
+   "KJV 2CH 29:14": "And of the sons of Heman; Jehiel, and Shimei: and of the sons of Jeduthun; Shemaiah, and Uzziel."
+  },
+  "A": {
+   "name": "Jeiel",
+   "line": "descendant of Elizaphan [Elzaphan] (2CH 29:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathites (from Uzziel, from Kohath, son of Levi)",
+   "family": [
+    "descendant-of elzaphan (Elzaphan, son of Uzziel (EXO 6:22))"
+   ],
+   "verses": 2
+  },
+  "B": {
+   "name": "Jeiel",
+   "line": "Gershonite Levite of the sons of Elizaphan, listed with Shimri.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of elzaphan (Elzaphan, son of Uzziel (EXO 6:22))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew lists Jeiel with Shimri among the sons of Elizaphan, separately from the Gershonites in verse 12. The stated Elizaphan–Uzziel–Kohath lineage fits A and conflicts with B’s description as a Gershonite.",
+ "confidence": 0.93,
+ "names_slug": "jeiel-7",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:36:19+00:00"
+}

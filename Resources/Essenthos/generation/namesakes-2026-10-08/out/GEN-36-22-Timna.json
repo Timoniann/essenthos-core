@@ -1,0 +1,50 @@
+{
+ "b": 1,
+ "c": 36,
+ "v": 22,
+ "label": "Timna",
+ "dataset_man": "timna",
+ "split_man": "timna-3",
+ "case": {
+  "verse": "GEN 36:22",
+  "name": "Timna",
+  "text": {
+   "BHSA GEN 36:21": "וְדִשֹׁ֥ון וְאֵ֖צֶר וְדִישָׁ֑ן אֵ֣לֶּה אַלּוּפֵ֧י הַחֹרִ֛י בְּנֵ֥י שֵׂעִ֖יר בְּאֶ֥רֶץ אֱדֹֽום׃ ",
+   "KJV GEN 36:21": "And Dishon, and Ezer, and Dishan: these are the dukes of the Horites, the children of Seir in the land of Edom.",
+   "BHSA GEN 36:22": "וַיִּהְי֥וּ בְנֵי־לֹוטָ֖ן חֹרִ֣י וְהֵימָ֑ם וַאֲחֹ֥ות לֹוטָ֖ן תִּמְנָֽע׃ ",
+   "KJV GEN 36:22": "And the children of Lotan were Hori and Hemam; and Lotan's sister was Timna.",
+   "BHSA GEN 36:23": "וְאֵ֨לֶּה֙ בְּנֵ֣י שֹׁובָ֔ל עַלְוָ֥ן וּמָנַ֖חַת וְעֵיבָ֑ל שְׁפֹ֖ו וְאֹונָֽם׃ ",
+   "KJV GEN 36:23": "And the children of Shobal were these; Alvan, and Manahath, and Ebal, Shepho, and Onam."
+  },
+  "A": {
+   "name": "Timna",
+   "line": "concubine of Esau's son Eliphaz (GEN 36:12) and sister of Lotan (GEN 36:22)",
+   "sex": "female",
+   "tribe": "Edomite",
+   "notes": null,
+   "family": [
+    "mother-of amalek (Amalek, son of Eliphaz (GEN 36:12) and chief of Edom (GEN 36:16))",
+    "sister-of lotan (Lotan, son of Seir (GEN 36:20) and chief in Edom (GEN 36:29))",
+    "concubine-of eliphaz (Eliphaz, son of Esau (GEN 36:4, 10, 15))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Timna",
+   "line": "Daughter of Seir the Horite, sister of Lotan",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "sister-of lotan (Lotan, son of Seir (GEN 36:20) and chief in Edom (GEN 36:29))"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew וַאֲחוֹת לוֹטָן תִּמְנָע identifies Timna as Lotan’s sister within Seir’s genealogy, matching B. However, A states the same relationship, so the passage cannot securely distinguish these overlapping records; it names only one Timna.",
+ "confidence": 0.5,
+ "names_slug": "timna-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:31:23+00:00"
+}

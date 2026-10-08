@@ -1,0 +1,44 @@
+{
+ "b": 44,
+ "c": 23,
+ "v": 35,
+ "label": "Herod",
+ "dataset_man": "herod-3",
+ "split_man": "herod",
+ "case": {
+  "verse": "ACT 23:35",
+  "name": "Herod",
+  "text": {
+   "NESTLE1904 ACT 23:34": "ἀναγνοὺς δὲ καὶ ἐπερωτήσας ἐκ ποίας ἐπαρχείας ἐστὶν, καὶ πυθόμενος ὅτι ἀπὸ Κιλικίας ",
+   "KJV ACT 23:34": "And when the governor had read the letter, he asked of what province he was. And when he understood that he was of Cilicia;",
+   "NESTLE1904 ACT 23:35": "Διακούσομαί σου, ἔφη, ὅταν καὶ οἱ κατήγοροί σου παραγένωνται· κελεύσας ἐν τῷ πραιτωρίῳ τοῦ Ἡρῴδου φυλάσσεσθαι αὐτόν. ",
+   "KJV ACT 23:35": "I will hear thee, said he, when thine accusers are also come. And he commanded him to be kept in Herod's judgment hall."
+  },
+  "A": {
+   "name": "Herod",
+   "line": "the king of Judea (ACT 12:1)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "Herod Agrippa I",
+   "family": null,
+   "verses": 12
+  },
+  "B": {
+   "name": "Herod",
+   "line": "the king (MAT 2:1)",
+   "sex": "male",
+   "tribe": "Edom",
+   "notes": "Herod I, founder of the Herodian dynasty, son of Antipater",
+   "family": [
+    "father-of archelaus (Archelaus, son of Herod (MAT 2:22))"
+   ],
+   "verses": 21
+  }
+ },
+ "names": "B",
+ "why": "τοῦ Ἡρῴδου refers to the Herod associated with the praetorium, most likely Herod the Great (B). However, the supplied verses and records do not establish the building’s association with either man, so they alone cannot make the identification certain.",
+ "confidence": 0.6,
+ "names_slug": "herod",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:46:16+00:00"
+}

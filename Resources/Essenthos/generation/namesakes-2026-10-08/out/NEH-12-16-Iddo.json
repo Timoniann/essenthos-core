@@ -1,0 +1,49 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 16,
+ "label": "Iddo",
+ "dataset_man": "iddo-5",
+ "split_man": "iddo-7",
+ "case": {
+  "verse": "NEH 12:16",
+  "name": "Iddo",
+  "text": {
+   "BHSA NEH 12:15": "לְחָרִ֣ם עַדְנָ֔א לִמְרָיֹ֖ות חֶלְקָֽי׃ ",
+   "KJV NEH 12:15": "Of Harim, Adna; of Meraioth, Helkai;",
+   "BHSA NEH 12:16": "לעדיא זְכַרְיָ֖ה לְגִנְּתֹ֥ון מְשֻׁלָּֽם׃ ",
+   "KJV NEH 12:16": "Of Iddo, Zechariah; of Ginnethon, Meshullam;",
+   "BHSA NEH 12:17": "לַאֲבִיָּ֖ה זִכְרִ֑י לְמִ֨נְיָמִ֔ין לְמֹועַדְיָ֖ה פִּלְטָֽי׃ ",
+   "KJV NEH 12:17": "Of Abijah, Zichri; of Miniamin, of Moadiah, Piltai:"
+  },
+  "A": {
+   "name": "Iddo",
+   "line": "[grand] father of Zechariah the prophet (EZR 5:1, ZEC 1:1)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "listed among the priests of NEH 12:1-4, and was father of Zechariah (NEH 12:16)",
+   "family": [
+    "father-of berechiah-6 (Berechiah, father of Zechariah the prophet (ZEC 1:1))",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 12
+  },
+  "B": {
+   "name": "Iddo",
+   "line": "Priestly family head returning with Zerubbabel, time of Nehemiah",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of zechariah-25 (Zechariah, head of the priestly house of Iddo in the days of Joiakim (N)"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The parallel Hebrew entries “of Iddo, Zechariah; of Ginnethon, Meshullam” identify representatives of priestly houses, matching B’s stated relationship to Zechariah. A’s notes also claim this priestly connection, so these verses alone do not securely distinguish the two records or establish a connection to the prophet.",
+ "confidence": 0.6,
+ "names_slug": "iddo-7",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:43:17+00:00"
+}

@@ -1,0 +1,54 @@
+{
+ "b": 14,
+ "c": 34,
+ "v": 15,
+ "label": "Shaphan",
+ "dataset_man": "shaphan",
+ "split_man": "shaphan-4",
+ "case": {
+  "verse": "2CH 34:15",
+  "name": "Shaphan",
+  "text": {
+   "BHSA 2CH 34:14": "וּבְהֹוצִיאָ֣ם אֶת־הַכֶּ֔סֶף הַמּוּבָ֖א בֵּ֣ית יְהוָ֑ה מָצָא֙ חִלְקִיָּ֣הוּ הַכֹּהֵ֔ן אֶת־סֵ֥פֶר תֹּֽורַת־יְהוָ֖ה בְּיַד־מֹשֶֽׁה׃ ",
+   "KJV 2CH 34:14": "And when they brought out the money that was brought into the house of the LORD, Hilkiah the priest found a book of the law of the LORD given by Moses.",
+   "BHSA 2CH 34:15": "וַיַּ֣עַן חִלְקִיָּ֗הוּ וַיֹּ֨אמֶר֙ אֶל־שָׁפָ֣ן הַסֹּופֵ֔ר סֵ֧פֶר הַתֹּורָ֛ה מָצָ֖אתִי בְּבֵ֣ית יְהוָ֑ה וַיִּתֵּ֧ן חִלְקִיָּ֛הוּ אֶת־הַסֵּ֖פֶר אֶל־שָׁפָֽן׃ ",
+   "KJV 2CH 34:15": "And Hilkiah answered and said to Shaphan the scribe, I have found the book of the law in the house of the LORD. And Hilkiah delivered the book to Shaphan.",
+   "BHSA 2CH 34:16": "וַיָּבֵ֨א שָׁפָ֤ן אֶת־הַסֵּ֨פֶר֙ אֶל־הַמֶּ֔לֶךְ וַיָּ֨שֶׁב עֹ֧וד אֶת־הַמֶּ֛לֶךְ דָּבָ֖ר לֵאמֹ֑ר כֹּ֛ל אֲשֶׁר־נִתַּ֥ן בְּיַד־עֲבָדֶ֖יךָ הֵ֥ם עֹשִֽׂים׃ ",
+   "KJV 2CH 34:16": "And Shaphan carried the book to the king, and brought the king word back again, saying, All that was committed to thy servants, they do it."
+  },
+  "A": {
+   "name": "Shaphan",
+   "line": "scribe of King Josiah (2KI 22:3, 2CH 34:15)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "He was sent to repair the house of the Lord (2CH 34:8)",
+   "family": [
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)",
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "father-of ahikam (Ahikam, son of Shaphan (2KI 22:12))",
+    "grandfather-of gedaliah (Gedaliah, son of Ahikam, appointed King of Judah by Nebuchadnezzar (2K)"
+   ],
+   "verses": 46
+  },
+  "B": {
+   "name": "Shaphan",
+   "line": "Secretary/scribe of King Josiah who read the found law-book to him.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "grandson-of meshullam (Meshullam, father of Azaliah (2KI 22:3))",
+    "companion-of hilkiah-2 (Hilkiah, the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9))",
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)"
+   ],
+   "verses": 9
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew identifies one Shaphan as הַסּוֹפֵר, “the scribe,” who receives Hilkiah’s law-book and carries it to the king. Both A and B fit these facts equally, so the text does not establish A rather than B or name two distinct people.",
+ "confidence": 0.5,
+ "names_slug": "shaphan",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:36:39+00:00"
+}

@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 10,
+ "v": 21,
+ "label": "Zadok",
+ "dataset_man": "zadok-4",
+ "split_man": "zadok-8",
+ "case": {
+  "verse": "NEH 10:21",
+  "name": "Zadok",
+  "text": {
+   "BHSA NEH 10:20": "מַגְפִּיעָ֥שׁ מְשֻׁלָּ֖ם חֵזִֽיר׃ ",
+   "KJV NEH 10:20": "Magpiash, Meshullam, Hezir,",
+   "BHSA NEH 10:21": "מְשֵׁיזַבְאֵ֥ל צָדֹ֖וק יַדּֽוּעַ׃ ",
+   "KJV NEH 10:21": "Meshezabeel, Zadok, Jaddua,",
+   "BHSA NEH 10:22": "פְּלַטְיָ֥ה חָנָ֖ן עֲנָיָֽה׃ ",
+   "KJV NEH 10:22": "Pelatiah, Hanan, Anaiah,"
+  },
+  "A": {
+   "name": "Zadok",
+   "line": "made repairs to the wall of Jerusalem (NEH 3:4)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:21)",
+   "family": [
+    "son-of baana-3 (Baana, father of Zadok (NEH 3:4))"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Zadok",
+   "line": "A leader of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "A",
+ "why": "A’s stated facts explicitly place him in this covenant list at Nehemiah 10:21. However, צָדוֹק appears between Meshezabeel and Jaddua without a patronymic or other identifying detail, so the text itself does not distinguish A from B.",
+ "confidence": 0.55,
+ "names_slug": "zadok-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:41:10+00:00"
+}

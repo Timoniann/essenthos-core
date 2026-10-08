@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 2,
+ "label": "Malluch",
+ "dataset_man": "malluch-4",
+ "split_man": "malluch-6",
+ "case": {
+  "verse": "NEH 12:2",
+  "name": "Malluch",
+  "text": {
+   "BHSA NEH 12:1": "וְאֵ֨לֶּה֙ הַכֹּהֲנִ֣ים וְהַלְוִיִּ֔ם אֲשֶׁ֥ר עָל֛וּ עִם־זְרֻבָּבֶ֥ל בֶּן־שְׁאַלְתִּיאֵ֖ל וְיֵשׁ֑וּעַ שְׂרָיָ֥ה יִרְמְיָ֖ה עֶזְרָֽא׃ ",
+   "KJV NEH 12:1": "Now these are the priests and the Levites that went up with Zerubbabel the son of Shealtiel, and Jeshua: Seraiah, Jeremiah, Ezra,",
+   "BHSA NEH 12:2": "אֲמַרְיָ֥ה מַלּ֖וּךְ חַטּֽוּשׁ׃ ",
+   "KJV NEH 12:2": "Amariah, Malluch, Hattush,",
+   "BHSA NEH 12:3": "שְׁכַנְיָ֥ה רְחֻ֖ם מְרֵמֹֽת׃ ",
+   "KJV NEH 12:3": "Shechaniah, Rehum, Meremoth,"
+  },
+  "A": {
+   "name": "Malluch",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:4)",
+   "family": [
+    "ancestor-of jonathan-11 (Jonathan, son of Malluch [Malluchi] (NEH 12:14))"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Malluch",
+   "line": "Priest who returned with Zerubbabel; his house head later called Melicu/Jonathan",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 3
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew heading in Nehemiah 12:1 identifies the following names, including מַלּוּךְ in 12:2, as priests and Levites who returned with Zerubbabel and Jeshua. This directly matches B’s stated identity; A is identified as a priest who signed the covenant in Nehemiah 10.",
+ "confidence": 0.98,
+ "names_slug": "malluch-6",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:42:06+00:00"
+}

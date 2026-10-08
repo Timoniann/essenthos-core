@@ -1,0 +1,51 @@
+{
+ "b": 13,
+ "c": 15,
+ "v": 7,
+ "label": "Joel",
+ "dataset_man": "joel-6",
+ "split_man": "joel-13",
+ "case": {
+  "verse": "1CH 15:7",
+  "name": "Joel",
+  "text": {
+   "BHSA 1CH 15:6": "לִבְנֵ֖י מְרָרִ֑י עֲשָׂיָ֣ה הַשָּׂ֔ר וְאֶחָ֖יו מָאתַ֥יִם וְעֶשְׂרִֽים׃ ס ",
+   "KJV 1CH 15:6": "Of the sons of Merari; Asaiah the chief, and his brethren two hundred and twenty:",
+   "BHSA 1CH 15:7": "לִבְנֵ֖י גֵּרְשֹׁ֑ום יֹואֵ֣ל הַשָּׂ֔ר וְאֶחָ֖יו מֵאָ֥ה וּשְׁלֹשִֽׁים׃ ס ",
+   "KJV 1CH 15:7": "Of the sons of Gershom; Joel the chief and his brethren an hundred and thirty:",
+   "BHSA 1CH 15:8": "לִבְנֵ֖י אֱלִֽיצָפָ֑ן שְׁמַֽעְיָ֥ה הַשָּׂ֖ר וְאֶחָ֥יו מָאתָֽיִם׃ ס ",
+   "KJV 1CH 15:8": "Of the sons of Elizaphan; Shemaiah the chief, and his brethren two hundred:"
+  },
+  "A": {
+   "name": "Joel",
+   "line": "chief of the sons of Gershom (1CH 15:7), son of Ladan (1CH 23:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Gershonites (Gershomites), from Gershon, son of Levi",
+   "family": [
+    "brother-of jehiel-9 (Jehiel, Gershonite, son of Laadan, whose house (Jehieli) kept the te)",
+    "brother-of zetham (Zetham, son of Ladan [Libni] (1CH 23:8))",
+    "descendant-of gershon (Gershon, son of Levi (GEN 46:11))",
+    "descendant-of libni (Libni, son of Gershon (EXO 6:17))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Joel",
+   "line": "Chief of the Gershonite Levites who brought up the ark under David",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of gershon (Gershon, son of Levi (GEN 46:11))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew names one Joel as chief of the sons of Gershom, matching A’s stated office and ancestry. B has the same identifying facts, however, so the supplied verses do not establish A over B; this choice is tentative.",
+ "confidence": 0.5,
+ "names_slug": "joel-6",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:35:02+00:00"
+}

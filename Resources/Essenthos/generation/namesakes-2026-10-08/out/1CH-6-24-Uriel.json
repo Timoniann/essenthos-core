@@ -1,0 +1,51 @@
+{
+ "b": 13,
+ "c": 6,
+ "v": 24,
+ "label": "Uriel",
+ "dataset_man": "uriel",
+ "split_man": "uriel-2",
+ "case": {
+  "verse": "1CH 6:24",
+  "name": "Uriel",
+  "text": {
+   "BHSA 1CH 6:23": "אֶלְקָנָ֥ה בְנֹ֛ו וְאֶבְיָסָ֥ף בְּנֹ֖ו וְאַסִּ֥יר בְּנֹֽו׃ ",
+   "KJV 1CH 6:23": "Elkanah his son, and Ebiasaph his son, and Assir his son,",
+   "BHSA 1CH 6:24": "תַּ֤חַת בְּנֹו֙ אוּרִיאֵ֣ל בְּנֹ֔ו עֻזִּיָּ֥ה בְנֹ֖ו וְשָׁא֥וּל בְּנֹֽו׃ ",
+   "KJV 1CH 6:24": "Tahath his son, Uriel his son, Uzziah his son, and Shaul his son.",
+   "BHSA 1CH 6:25": "וּבְנֵי֙ אֶלְקָנָ֔ה עֲמָשַׂ֖י וַאֲחִימֹֽות׃ ",
+   "KJV 1CH 6:25": "And the sons of Elkanah; Amasai, and Ahimoth."
+  },
+  "A": {
+   "name": "Uriel",
+   "line": "son of Tahath (1CH 6:24), chief of the sons of Kohath (1CH 15:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "son-of tahath (Tahath, son of Assir (1CH 6:24))",
+    "father-of uzziah (Uzziah, son of Uriel (1CH 6:24))",
+    "descendant-of kohath (Kohath, son of Levi (GEN 46:11))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Uriel",
+   "line": "Levite ancestor, son of Tahath and father of Uzziah, in Kohath's genealogy",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of tahath (Tahath, son of Assir (1CH 6:24))",
+    "father-of uzziah (Uzziah, son of Uriel (1CH 6:24))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The repeated בְּנוֹ (“his son”) identifies Uriel as Tahath’s son and Uzziah’s father, matching B’s genealogical description. A states the same relationships, so this passage cannot distinguish the records or confirm A’s additional identification with the chief in 1CH 15:5.",
+ "confidence": 0.5,
+ "names_slug": "uriel-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:33:14+00:00"
+}

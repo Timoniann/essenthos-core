@@ -1,0 +1,49 @@
+{
+ "b": 13,
+ "c": 15,
+ "v": 23,
+ "label": "Berechiah",
+ "dataset_man": "berechiah-3",
+ "split_man": "berechiah-2",
+ "case": {
+  "verse": "1CH 15:23",
+  "name": "Berechiah",
+  "text": {
+   "BHSA 1CH 15:22": "וּכְנַנְיָ֥הוּ שַֽׂר־הַלְוִיִּ֖ם בְּמַשָּׂ֑א יָסֹר֙ בַּמַּשָּׂ֔א כִּ֥י מֵבִ֖ין הֽוּא׃ ",
+   "KJV 1CH 15:22": "And Chenaniah, chief of the Levites, was for song: he instructed about the song, because he was skilful.",
+   "BHSA 1CH 15:23": "וּבֶֽרֶכְיָה֙ וְאֶלְקָנָ֔ה שֹׁעֲרִ֖ים לָאָרֹֽון׃ ",
+   "KJV 1CH 15:23": "And Berechiah and Elkanah were doorkeepers for the ark.",
+   "BHSA 1CH 15:24": "וּשְׁבַנְיָ֡הוּ וְיֹֽושָׁפָ֡ט וּנְתַנְאֵ֡ל וַעֲמָשַׂ֡י וּ֠זְכַרְיָהוּ וּבְנָיָ֤הוּ וֶֽאֱלִיעֶ֨זֶר֙ הַכֹּ֣הֲנִ֔ים מחצצרים בַּחֲצֹ֣צְרֹ֔ות לִפְנֵ֖י אֲרֹ֣ון הָֽאֱלֹהִ֑ים וְעֹבֵ֤ד אֱדֹם֙ וִֽיחִיָּ֔ה שֹׁעֲרִ֖ים לָאָרֹֽון׃ ",
+   "KJV 1CH 15:24": "And Shebaniah, and Jehoshaphat, and Nethaneel, and Amasai, and Zechariah, and Benaiah, and Eliezer, the priests, did blow with the trumpets before the ark of God: and Obededom and Jehiah were doorkeepers for the ark."
+  },
+  "A": {
+   "name": "Berechiah",
+   "line": "son of Asa (1CH 9:16)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "son-of asa-2 (Asa, son of Elkanah (1CH 9:16))"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Berechiah",
+   "line": "son of Shimea (1CH 6:39)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Gershonites (Gershomites), from Gershon, son of Levi",
+   "family": [
+    "father-of asaph-2 (Asaph, son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9))",
+    "son-of shimea-2 (Shimea, son of Michael (1CH 6:39))"
+   ],
+   "verses": 5
+  }
+ },
+ "names": "neither",
+ "why": "The Hebrew names Berechiah alongside Elkanah as an ark doorkeeper, without identifying his father or connecting him to Asaph. A separate Berechiah is therefore a tentative identification; these verses alone cannot exclude A or B.",
+ "confidence": 0.4,
+ "names_slug": "neither",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:35:41+00:00"
+}

@@ -1,0 +1,46 @@
+{
+ "b": 13,
+ "c": 25,
+ "v": 18,
+ "label": "Azarel",
+ "dataset_man": "azarel",
+ "split_man": "azarel-5",
+ "case": {
+  "verse": "1CH 25:18",
+  "name": "Azarel",
+  "text": {
+   "BHSA 1CH 25:17": "הָעֲשִׂירִ֣י שִׁמְעִ֔י בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ ",
+   "KJV 1CH 25:17": "The tenth to Shimei, he, his sons, and his brethren, were twelve:",
+   "BHSA 1CH 25:18": "עַשְׁתֵּֽי־עָשָׂ֣ר עֲזַרְאֵ֔ל בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ ",
+   "KJV 1CH 25:18": "The eleventh to Azareel, he, his sons, and his brethren, were twelve:",
+   "BHSA 1CH 25:19": "הַשְּׁנֵ֤ים עָשָׂר֙ לַחֲשַׁבְיָ֔ה בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ ",
+   "KJV 1CH 25:19": "The twelfth to Hashabiah, he, his sons, and his brethren, were twelve:"
+  },
+  "A": {
+   "name": "Azarel",
+   "line": "the Korahite (1CH 12:6), chosen eleventh by lot (1CH 25:18)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Korahites, eleventh chosen of the singers (1CH 25:18)",
+   "family": [
+    "descendant-of korah-3 (Korah, son of Izhar (EXO 6:21) who rebelled against G-d and Moses ()"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Azarel",
+   "line": "Levite musician of Heman's family, head of the eleventh course",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew names one Azarel in the eleventh position, with his sons and brothers, matching B’s description as head of the eleventh course. The passage does not establish identity with the Korahite of 1 Chronicles 12:6, although A’s overlapping claim to this verse makes the supplied evidence inconclusive.",
+ "confidence": 0.6,
+ "names_slug": "azarel-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:35:54+00:00"
+}

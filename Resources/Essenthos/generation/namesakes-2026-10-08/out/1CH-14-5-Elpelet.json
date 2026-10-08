@@ -1,0 +1,48 @@
+{
+ "b": 13,
+ "c": 14,
+ "v": 5,
+ "label": "Elpelet",
+ "dataset_man": "eliphelet-3",
+ "split_man": "eliphelet",
+ "case": {
+  "verse": "1CH 14:5",
+  "name": "Elpelet",
+  "text": {
+   "BHSA 1CH 14:4": "וְאֵ֨לֶּה֙ שְׁמֹ֣ות הַיְלוּדִ֔ים אֲשֶׁ֥ר הָיוּ־לֹ֖ו בִּירוּשָׁלִָ֑ם שַׁמּ֣וּעַ וְשֹׁובָ֔ב נָתָ֖ן וּשְׁלֹמֹֽה׃ ",
+   "KJV 1CH 14:4": "Now these are the names of his children which he had in Jerusalem; Shammua, and Shobab, Nathan, and Solomon,",
+   "BHSA 1CH 14:5": "וְיִבְחָ֥ר וֶאֱלִישׁ֖וּעַ וְאֶלְפָּֽלֶט׃ ",
+   "KJV 1CH 14:5": "And Ibhar, and Elishua, and Elpalet,",
+   "BHSA 1CH 14:6": "וְנֹ֥גַהּ וְנֶ֖פֶג וְיָפִֽיעַ׃ ",
+   "KJV 1CH 14:6": "And Nogah, and Nepheg, and Japhia,"
+  },
+  "A": {
+   "name": "Eliphelet",
+   "line": "son of David (1CH 3:6) [his OTHER son named Eliphelet]",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": "Also called Elpelet (1CH 14:5)",
+   "family": [
+    "son-of david (David, son of Jesse (RUT 4:17), King of Israel (2SA 5:3))"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Eliphelet",
+   "line": "son of David (2SA 5:16)",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": null,
+   "family": [
+    "son-of david (David, son of Jesse (RUT 4:17), King of Israel (2SA 5:3))"
+   ],
+   "verses": 8
+  }
+ },
+ "names": "A",
+ "why": "וְאֶלְפָּלֶט appears among David’s Jerusalem-born children, after Ibhar and Elishua and before Nogah, identifying the earlier Eliphelet represented by A (1CH 3:6). B is the other Eliphelet, listed later in 2SA 5:16.",
+ "confidence": 0.98,
+ "names_slug": "eliphelet-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:54+00:00"
+}

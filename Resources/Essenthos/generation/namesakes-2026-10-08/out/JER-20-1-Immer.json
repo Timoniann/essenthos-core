@@ -1,0 +1,49 @@
+{
+ "b": 24,
+ "c": 20,
+ "v": 1,
+ "label": "Immer",
+ "dataset_man": "immer",
+ "split_man": "immer-5",
+ "case": {
+  "verse": "JER 20:1",
+  "name": "Immer",
+  "text": {
+   "BHSA JER 20:1": "וַיִּשְׁמַ֤ע פַּשְׁחוּר֙ בֶּן־אִמֵּ֣ר הַכֹּהֵ֔ן וְהֽוּא־פָקִ֥יד נָגִ֖יד בְּבֵ֣ית יְהוָ֑ה אֶֽת־יִרְמְיָ֔הוּ נִבָּ֖א אֶת־הַדְּבָרִ֥ים הָאֵֽלֶּה׃ ",
+   "KJV JER 20:1": "Now Pashur the son of Immer the priest, who was also chief governor in the house of the LORD, heard that Jeremiah prophesied these things.",
+   "BHSA JER 20:2": "וַיַּכֶּ֣ה פַשְׁח֔וּר אֵ֖ת יִרְמְיָ֣הוּ הַנָּבִ֑יא וַיִּתֵּ֨ן אֹתֹ֜ו עַל־הַמַּהְפֶּ֗כֶת אֲשֶׁ֨ר בְּשַׁ֤עַר בִּנְיָמִן֙ הָֽעֶלְיֹ֔ון אֲשֶׁ֖ר בְּבֵ֥ית יְהוָֽה׃ ",
+   "KJV JER 20:2": "Then Pashur smote Jeremiah the prophet, and put him in the stocks that were in the high gate of Benjamin, which was by the house of the LORD."
+  },
+  "A": {
+   "name": "Immer",
+   "line": "father of Meshillemith (1CH 9:12), priest (EZR 2:37, NEH 7:40)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "father-of meshillemith (Meshillemith, son of Immer (1CH 9:12))",
+    "ancestor-of maasai (Maasai, son of Adiel (1CH 9:12))",
+    "ancestor-of amashsai (Amashsai, priest, son of Azarel (NEH 11:13))",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 13
+  },
+  "B": {
+   "name": "Immer",
+   "line": "Priest, father of Pashur the chief governor in Jeremiah's day",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of pashhur-2 (Pashhur, son (descendant?) of Immer, chief officer in the Temple (JER)"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew identifies Pashhur as בֶּן־אִמֵּר, “son of Immer,” and describes Pashhur as a chief officer in the LORD’s house. This matches B’s stated relationship and setting; A is identified through Meshillemith and other priestly descendants.",
+ "confidence": 0.98,
+ "names_slug": "immer-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:45:06+00:00"
+}

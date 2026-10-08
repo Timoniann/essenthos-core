@@ -1,0 +1,51 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 35,
+ "label": "Mattaniah",
+ "dataset_man": "mattaniah-4",
+ "split_man": "mattaniah-12",
+ "case": {
+  "verse": "NEH 12:35",
+  "name": "Mattaniah",
+  "text": {
+   "BHSA NEH 12:34": "יְהוּדָה֙ וּבִנְיָמִ֔ן וּֽשְׁמַֽעְיָ֖ה וְיִרְמְיָֽה׃ ס ",
+   "KJV NEH 12:34": "Judah, and Benjamin, and Shemaiah, and Jeremiah,",
+   "BHSA NEH 12:35": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ ",
+   "KJV NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:",
+   "BHSA NEH 12:36": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד אִ֣ישׁ הָאֱלֹהִ֑ים וְעֶזְרָ֥א הַסֹּופֵ֖ר לִפְנֵיהֶֽם׃ ",
+   "KJV NEH 12:36": "And his brethren, Shemaiah, and Azarael, Milalai, Gilalai, Maai, Nethaneel, and Judah, Hanani, with the musical instruments of David the man of God, and Ezra the scribe before them."
+  },
+  "A": {
+   "name": "Mattaniah",
+   "line": "descendant of Asaph (2CH 29:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Gershonites (Gershomites), from Gershon, son of Levi",
+   "family": [
+    "descendant-of asaph-2 (Asaph, son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9))",
+    "son-of micaiah-4 (Micaiah, son of Zaccur (NEH 12:35))",
+    "father-of shemaiah-14 (Shemaiah, Levite Ezra sent to Iddo (EZR 8:16))"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Mattaniah",
+   "line": "Levite ancestor of Zechariah the trumpeter, named in Nehemiah's priestly genealogy.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of micaiah-4 (Micaiah, son of Zaccur (NEH 12:35))",
+    "father-of shemaiah-26 (Shemaiah, Grandfather of the priest Zechariah, in the trumpeters' gene)"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew genealogy identifies Mattaniah as son of Micaiah and father of Shemaiah, whose son Jonathan fathered Zechariah the trumpeter—the specific lineage stated for B. A instead identifies his son Shemaiah as Ezra’s envoy and associates Mattaniah with 2 Chronicles 29:13.",
+ "confidence": 0.93,
+ "names_slug": "mattaniah-12",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:44:21+00:00"
+}

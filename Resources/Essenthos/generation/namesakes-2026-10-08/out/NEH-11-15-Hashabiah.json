@@ -1,0 +1,51 @@
+{
+ "b": 16,
+ "c": 11,
+ "v": 15,
+ "label": "Hashabiah",
+ "dataset_man": "hashabiah-2",
+ "split_man": "hashabiah-11",
+ "case": {
+  "verse": "NEH 11:15",
+  "name": "Hashabiah",
+  "text": {
+   "BHSA NEH 11:14": "וַאֲחֵיהֶם֙ גִּבֹּ֣ורֵי חַ֔יִל מֵאָ֖ה עֶשְׂרִ֣ים וּשְׁמֹנָ֑ה וּפָקִ֣יד עֲלֵיהֶ֔ם זַבְדִּיאֵ֖ל בֶּן־הַגְּדֹולִֽים׃ ס ",
+   "KJV NEH 11:14": "And their brethren, mighty men of valour, an hundred twenty and eight: and their overseer was Zabdiel, the son of one of the great men.",
+   "BHSA NEH 11:15": "וּמִֽן־הַלְוִיִּ֑ם שְׁמַעְיָ֧ה בֶן־חַשּׁ֛וּב בֶּן־עַזְרִיקָ֥ם בֶּן־חֲשַׁבְיָ֖ה בֶּן־בּוּנִּֽי׃ ",
+   "KJV NEH 11:15": "Also of the Levites: Shemaiah the son of Hashub, the son of Azrikam, the son of Hashabiah, the son of Bunni;",
+   "BHSA NEH 11:16": "וְשַׁבְּתַ֨י וְיֹוזָבָ֜ד עַל־הַמְּלָאכָ֤ה הַחִֽיצֹנָה֙ לְבֵ֣ית הָאֱלֹהִ֔ים מֵרָאשֵׁ֖י הַלְוִיִּֽם׃ ",
+   "KJV NEH 11:16": "And Shabbethai and Jozabad, of the chief of the Levites, had the oversight of the outward business of the house of God."
+  },
+  "A": {
+   "name": "Hashabiah",
+   "line": "son of Jeduthun (1CH 25:3), chosen twelfth by lot (1CH 25:19), descendant of Hebron (1CH 26:30)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "set apart to prophesy with lyres, harps, and cymbals (1CH 25:1), twelfth chosen of the singers (1CH 25:19)",
+   "family": [
+    "son-of jeduthun (Jeduthun, father of Galal (1CH 9:16))",
+    "son-of bunni-2 (Bunni, father of Hashabiah (NEH 11:15))",
+    "father-of azrikam-3 (Azrikam, son of Hashabiah (1CH 9:14))"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Hashabiah",
+   "line": "Son of Bunni, father of Azrikam, ancestor of Shemaiah in Nehemiah's day",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of azrikam-3 (Azrikam, son of Hashabiah (1CH 9:14))",
+    "descendant-of merari (Merari, son of Levi (GEN 46:11))"
+   ],
+   "verses": 4
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew genealogy identifies Hashabiah as Bunni’s son and Azrikam’s father, an ancestor of Shemaiah, exactly matching B’s stated identity. A’s defining description identifies Jeduthun’s son; its overlapping family entries conflict with that identification.",
+ "confidence": 0.96,
+ "names_slug": "hashabiah-11",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:41:40+00:00"
+}

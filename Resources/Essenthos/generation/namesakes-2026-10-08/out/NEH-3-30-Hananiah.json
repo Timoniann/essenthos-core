@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 3,
+ "v": 30,
+ "label": "Hananiah",
+ "dataset_man": "hananiah-7",
+ "split_man": "hananiah-14",
+ "case": {
+  "verse": "NEH 3:30",
+  "name": "Hananiah",
+  "text": {
+   "BHSA NEH 3:29": "אַחֲרָ֧יו הֶחֱזִ֛יק צָדֹ֥וק בֶּן־אִמֵּ֖ר נֶ֣גֶד בֵּיתֹ֑ו ס וְאַחֲרָ֤יו הֶחֱזִיק֙ שְׁמַֽעְיָ֣ה בֶן־שְׁכַנְיָ֔ה שֹׁמֵ֖ר שַׁ֥עַר הַמִּזְרָֽח׃ ס ",
+   "KJV NEH 3:29": "After them repaired Zadok the son of Immer over against his house. After him repaired also Shemaiah the son of Shechaniah, the keeper of the east gate.",
+   "BHSA NEH 3:30": "אחרי הֶחֱזִ֜יק חֲנַנְיָ֣ה בֶן־שֶׁלֶמְיָ֗ה וְחָנ֧וּן בֶּן־צָלָ֛ף הַשִּׁשִּׁ֖י מִדָּ֣ה שֵׁנִ֑י ס אַחֲרָ֣יו הֶחֱזִ֗יק מְשֻׁלָּם֙ בֶּן־בֶּ֣רֶכְיָ֔ה נֶ֖גֶד נִשְׁכָּתֹֽו׃ ס ",
+   "KJV NEH 3:30": "After him repaired Hananiah the son of Shelemiah, and Hanun the sixth son of Zalaph, another piece. After him repaired Meshullam the son of Berechiah over against his chamber.",
+   "BHSA NEH 3:31": "אחרי הֶחֱזִ֗יק מַלְכִּיָּה֙ בֶּן־הַצֹּ֣רְפִ֔י עַד־בֵּ֥ית הַנְּתִינִ֖ים וְהָרֹכְלִ֑ים נֶ֚גֶד שַׁ֣עַר הַמִּפְקָ֔ד וְעַ֖ד עֲלִיַּ֥ת הַפִּנָּֽה׃ ",
+   "KJV NEH 3:31": "After him repaired Malchiah the goldsmith's son unto the place of the Nethinims, and of the merchants, over against the gate Miphkad, and to the going up of the corner."
+  },
+  "A": {
+   "name": "Hananiah",
+   "line": "repaired the wall of Jerusalem (NEH 3:30),",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:23)",
+   "family": [
+    "son-of shelemiah-3 (Shelemiah, father of Hananiah (NEH 3:30))"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Hananiah",
+   "line": "Son of Shelemiah, post-exilic Israelite who repaired another piece of the wall",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of shelemiah-3 (Shelemiah, father of Hananiah (NEH 3:30))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew names Hananiah son of Shelemiah repairing a second section of the wall, matching B. However, A states the same father and repair event, so the passage cannot distinguish the two records; it names only one Hananiah.",
+ "confidence": 0.5,
+ "names_slug": "hananiah-14",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:39:20+00:00"
+}

@@ -1,0 +1,49 @@
+{
+ "b": 15,
+ "c": 8,
+ "v": 8,
+ "label": "Shephatiah",
+ "dataset_man": "shephatiah-5",
+ "split_man": "shephatiah-10",
+ "case": {
+  "verse": "EZR 8:8",
+  "name": "Shephatiah",
+  "text": {
+   "BHSA EZR 8:7": "וּמִבְּנֵ֣י עֵילָ֔ם יְשַֽׁעְיָ֖ה בֶּן־עֲתַלְיָ֑ה וְעִמֹּ֖ו שִׁבְעִ֥ים הַזְּכָרִֽים׃ ס ",
+   "KJV EZR 8:7": "And of the sons of Elam; Jeshaiah the son of Athaliah, and with him seventy males.",
+   "BHSA EZR 8:8": "וּמִבְּנֵ֣י שְׁפַטְיָ֔ה זְבַדְיָ֖ה בֶּן־מִֽיכָאֵ֑ל וְעִמֹּ֖ו שְׁמֹנִ֥ים הַזְּכָרִֽים׃ ס ",
+   "KJV EZR 8:8": "And of the sons of Shephatiah; Zebadiah the son of Michael, and with him fourscore males.",
+   "BHSA EZR 8:9": "מִבְּנֵ֣י יֹואָ֔ב עֹבַדְיָ֖ה בֶּן־יְחִיאֵ֑ל וְעִמֹּ֕ו מָאתַ֛יִם וּשְׁמֹנָ֥ה עָשָׂ֖ר הַזְּכָרִֽים׃ ס ",
+   "KJV EZR 8:9": "Of the sons of Joab; Obadiah the son of Jehiel, and with him two hundred and eighteen males."
+  },
+  "A": {
+   "name": "Shephatiah",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:4)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of zebadiah-8 (Zebadiah, descendant of Shephatiah, son of Michael who went up with Ez)",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Shephatiah",
+   "line": "Ancestor whose sons (fourscore males) returned to Jerusalem with Ezra",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of zebadiah-8 (Zebadiah, descendant of Shephatiah, son of Michael who went up with Ez)"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew names Shephatiah as the ancestor of Zebadiah son of Michael’s group of eighty males, matching B’s stated description. A also claims ancestry of this same Zebadiah, so the supplied facts do not securely distinguish the two records.",
+ "confidence": 0.5,
+ "names_slug": "shephatiah-10",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:38:24+00:00"
+}

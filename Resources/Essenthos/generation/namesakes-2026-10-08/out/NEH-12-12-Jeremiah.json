@@ -1,0 +1,53 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 12,
+ "label": "Jeremiah",
+ "dataset_man": "jeremiah-7",
+ "split_man": "jeremiah-9",
+ "case": {
+  "verse": "NEH 12:12",
+  "name": "Jeremiah",
+  "text": {
+   "BHSA NEH 12:11": "וְיֹויָדָע֙ הֹולִ֣יד אֶת־יֹונָתָ֔ן וְיֹונָתָ֖ן הֹולִ֥יד אֶת־יַדּֽוּעַ׃ ",
+   "KJV NEH 12:11": "And Joiada begat Jonathan, and Jonathan begat Jaddua.",
+   "BHSA NEH 12:12": "וּבִימֵי֙ יֹֽויָקִ֔ים הָי֥וּ כֹהֲנִ֖ים רָאשֵׁ֣י הָאָבֹ֑ות לִשְׂרָיָ֣ה מְרָיָ֔ה לְיִרְמְיָ֖ה חֲנַנְיָֽה׃ ",
+   "KJV NEH 12:12": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;",
+   "BHSA NEH 12:13": "לְעֶזְרָ֣א מְשֻׁלָּ֔ם לַאֲמַרְיָ֖ה יְהֹוחָנָֽן׃ ",
+   "KJV NEH 12:13": "Of Ezra, Meshullam; of Amariah, Jehohanan;"
+  },
+  "A": {
+   "name": "Jeremiah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:2)",
+   "family": [
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "companion-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "ancestor-of hananiah-9 (Hananiah, son of Jeremiah (NEH 12:12))",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Jeremiah",
+   "line": "Priestly family head from Zerubbabel's return, continuing under Joiakim",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "companion-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "ancestor-of hananiah-9 (Hananiah, son of Jeremiah (NEH 12:12))"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew לְיִרְמְיָה חֲנַנְיָה identifies Hananiah as head of Jeremiah’s priestly house in Joiakim’s days, matching B’s stated role. A shares the same relevant ancestry links, however, so the verse alone does not firmly distinguish the records.",
+ "confidence": 0.6,
+ "names_slug": "jeremiah-9",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:42:51+00:00"
+}

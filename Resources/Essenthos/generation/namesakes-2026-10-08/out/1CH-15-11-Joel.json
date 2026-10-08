@@ -1,0 +1,49 @@
+{
+ "b": 13,
+ "c": 15,
+ "v": 11,
+ "label": "Joel",
+ "dataset_man": "joel-6",
+ "split_man": "joel-12",
+ "case": {
+  "verse": "1CH 15:11",
+  "name": "Joel",
+  "text": {
+   "BHSA 1CH 15:10": "לִבְנֵ֖י עֻזִּיאֵ֑ל עַמִּינָדָ֣ב הַשָּׂ֔ר וְאֶחָ֕יו מֵאָ֖ה וּשְׁנֵ֥ים עָשָֽׂר׃ ס ",
+   "KJV 1CH 15:10": "Of the sons of Uzziel; Amminadab the chief, and his brethren an hundred and twelve.",
+   "BHSA 1CH 15:11": "וַיִּקְרָ֣א דָוִ֔יד לְצָדֹ֥וק וּלְאֶבְיָתָ֖ר הַכֹּֽהֲנִ֑ים וְלַלְוִיִּ֗ם לְאֽוּרִיאֵ֤ל עֲשָׂיָה֙ וְיֹואֵ֣ל שְׁמַֽעְיָ֔ה וֶאֱלִיאֵ֖ל וְעַמִּינָדָֽב׃ ",
+   "KJV 1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,",
+   "BHSA 1CH 15:12": "וַיֹּ֣אמֶר לָהֶ֔ם אַתֶּ֛ם רָאשֵׁ֥י הָאָבֹ֖ות לַלְוִיִּ֑ם הִֽתְקַדְּשׁוּ֙ אַתֶּ֣ם וַאֲחֵיכֶ֔ם וְהַֽעֲלִיתֶ֗ם אֵ֣ת אֲרֹ֤ון יְהוָה֙ אֱלֹהֵ֣י יִשְׂרָאֵ֔ל אֶל־הֲכִינֹ֖ותִי לֹֽו׃ ",
+   "KJV 1CH 15:12": "And said unto them, Ye are the chief of the fathers of the Levites: sanctify yourselves, both ye and your brethren, that ye may bring up the ark of the LORD God of Israel unto the place that I have prepared for it."
+  },
+  "A": {
+   "name": "Joel",
+   "line": "chief of the sons of Gershom (1CH 15:7), son of Ladan (1CH 23:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Gershonites (Gershomites), from Gershon, son of Levi",
+   "family": [
+    "brother-of jehiel-9 (Jehiel, Gershonite, son of Laadan, whose house (Jehieli) kept the te)",
+    "brother-of zetham (Zetham, son of Ladan [Libni] (1CH 23:8))",
+    "descendant-of gershon (Gershon, son of Levi (GEN 46:11))",
+    "descendant-of libni (Libni, son of Gershon (EXO 6:17))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Joel",
+   "line": "A Levite summoned by David along with Uriel, Asaiah, Shemaiah and Eliel",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew places Joel among the Levites whom David addresses as heads of ancestral houses in verse 12, matching A, the Gershomite chief identified in 1 Chronicles 15:7. B merely describes this same summons and supplies no fact establishing a different Joel.",
+ "confidence": 0.94,
+ "names_slug": "joel-6",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:35:13+00:00"
+}

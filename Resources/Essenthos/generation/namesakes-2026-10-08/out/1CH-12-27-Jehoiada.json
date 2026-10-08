@@ -1,0 +1,48 @@
+{
+ "b": 13,
+ "c": 12,
+ "v": 27,
+ "label": "Jehoiada",
+ "dataset_man": "jehoiada",
+ "split_man": "jehoiada-4",
+ "case": {
+  "verse": "1CH 12:27",
+  "name": "Jehoiada",
+  "text": {
+   "BHSA 1CH 12:26": "מִן־בְּנֵי֙ הַלֵּוִ֔י אַרְבַּ֥עַת אֲלָפִ֖ים וְשֵׁ֥שׁ מֵאֹֽות׃ ס ",
+   "KJV 1CH 12:26": "Of the children of Levi four thousand and six hundred.",
+   "BHSA 1CH 12:27": "וִיהֹויָדָ֖ע הַנָּגִ֣יד לְאַהֲרֹ֑ן וְעִמֹּ֕ו שְׁלֹ֥שֶׁת אֲלָפִ֖ים וּשְׁבַ֥ע מֵאֹֽות׃ ס ",
+   "KJV 1CH 12:27": "And Jehoiada was the leader of the Aaronites, and with him were three thousand and seven hundred;",
+   "BHSA 1CH 12:28": "וְצָדֹ֥וק נַ֖עַר גִּבֹּ֣ור חָ֑יִל וּבֵית־אָבִ֥יו שָׂרִ֖ים עֶשְׂרִ֥ים וּשְׁנָֽיִם׃ ס ",
+   "KJV 1CH 12:28": "And Zadok, a young man mighty of valour, and of his father's house twenty and two captains."
+  },
+  "A": {
+   "name": "Jehoiada",
+   "line": "father of Benaiah (2SA 8:18), a priest (1CH 27:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "father-of benaiah (Benaiah, over the Cherethites and the Pelethites (2SA 8:18), the fift)"
+   ],
+   "verses": 42
+  },
+  "B": {
+   "name": "Jehoiada",
+   "line": "Leader of the Aaronite priests who joined David at Hebron with 3,700 men",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "commander-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew identifies Jehoiada as הַנָּגִיד לְאַהֲרֹן, the leader of the Aaronites, accompanied by 3,700 men—exactly B’s stated office and contingent. The surrounding verses list Levites and Zadok; they do not identify this Jehoiada as Benaiah’s father.",
+ "confidence": 0.98,
+ "names_slug": "jehoiada-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:34+00:00"
+}

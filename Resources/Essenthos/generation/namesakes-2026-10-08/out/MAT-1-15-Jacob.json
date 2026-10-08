@@ -1,0 +1,54 @@
+{
+ "b": 40,
+ "c": 1,
+ "v": 15,
+ "label": "Jacob",
+ "dataset_man": "jacob-2",
+ "split_man": "jacob",
+ "case": {
+  "verse": "MAT 1:15",
+  "name": "Jacob",
+  "text": {
+   "NESTLE1904 MAT 1:14": "Ἀζὼρ δὲ ἐγέννησεν τὸν Σαδώκ, Σαδὼκ δὲ ἐγέννησεν τὸν Ἀχείμ, Ἀχεὶμ δὲ ἐγέννησεν τὸν Ἐλιούδ, ",
+   "KJV MAT 1:14": "And Azor begat Sadoc; and Sadoc begat Achim; and Achim begat Eliud;",
+   "NESTLE1904 MAT 1:15": "Ἐλιοὺδ δὲ ἐγέννησεν τὸν Ἐλεάζαρ, Ἐλεάζαρ δὲ ἐγέννησεν τὸν Μαθθάν, Μαθθὰν δὲ ἐγέννησεν τὸν Ἰακώβ, ",
+   "KJV MAT 1:15": "And Eliud begat Eleazar; and Eleazar begat Matthan; and Matthan begat Jacob;",
+   "NESTLE1904 MAT 1:16": "Ἰακὼβ δὲ ἐγέννησεν τὸν Ἰωσὴφ τὸν ἄνδρα Μαρίας, ἐξ ἧς ἐγεννήθη Ἰησοῦς ὁ λεγόμενος Χριστός. ",
+   "KJV MAT 1:16": "And Jacob begat Joseph the husband of Mary, of whom was born Jesus, who is called Christ."
+  },
+  "A": {
+   "name": "Jacob",
+   "line": "son of Matthan in the lineage of the Messiah (MAT 1:15)",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": null,
+   "family": [
+    "son-of matthan (Matthan, son of Eleazar in the lineage of the Messiah (MAT 1:15))",
+    "father-of joseph-6 (Joseph, son of Jacob in the lineage of the Messiah (MAT 1:16))"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Jacob",
+   "line": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of isaac (Isaac, son of Abraham and Sarah (GEN 17:21))",
+    "son-of rebekah (Rebekah, daughter of Bethuel, grandaughter of Nahor (GEN 22:23))",
+    "brother-of esau (Esau, firstborn son of Isaac (GEN 25:25-26))",
+    "servant-of yhvh (YHVH, the God of Israel)",
+    "father-of dan (Dan, fifth-born son of Jacob (GEN 30:5), son of Bilhah, Rachel's )",
+    "father-of naphtali (Naphtali, sixth-born son of Jacob (GEN 30:7), son of Bilhah, Rachel's )"
+   ],
+   "verses": 686
+  }
+ },
+ "names": "A",
+ "why": "Matthew 1:15 says Μαθθὰν δὲ ἐγέννησεν τὸν Ἰακώβ, identifying Jacob as Matthan’s son; verse 16 identifies him as the father of Joseph, Mary’s husband. Both relationships match A, whereas B is Isaac’s son.",
+ "confidence": 1,
+ "names_slug": "jacob-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:45:29+00:00"
+}

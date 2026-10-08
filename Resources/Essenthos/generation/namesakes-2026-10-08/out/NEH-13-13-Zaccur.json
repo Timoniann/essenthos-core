@@ -1,0 +1,51 @@
+{
+ "b": 16,
+ "c": 13,
+ "v": 13,
+ "label": "Zaccur",
+ "dataset_man": "zaccur-6",
+ "split_man": "zaccur-7",
+ "case": {
+  "verse": "NEH 13:13",
+  "name": "Zaccur",
+  "text": {
+   "BHSA NEH 13:12": "וְכָל־יְהוּדָ֗ה הֵבִ֜יאוּ מַעְשַׂ֧ר הַדָּגָ֛ן וְהַתִּירֹ֥ושׁ וְהַיִּצְהָ֖ר לָאֹוצָרֹֽות׃ ",
+   "KJV NEH 13:12": "Then brought all Judah the tithe of the corn and the new wine and the oil unto the treasuries.",
+   "BHSA NEH 13:13": "וָאֹוצְרָ֣ה עַל־אֹ֠וצָרֹות שֶׁלֶמְיָ֨ה הַכֹּהֵ֜ן וְצָדֹ֣וק הַסֹּופֵ֗ר וּפְדָיָה֙ מִן־הַלְוִיִּ֔ם וְעַל־יָדָ֔ם חָנָ֥ן בֶּן־זַכּ֖וּר בֶּן־מַתַּנְיָ֑ה כִּ֤י נֶאֱמָנִים֙ נֶחְשָׁ֔בוּ וַעֲלֵיהֶ֖ם לַחֲלֹ֥ק לַאֲחֵיהֶֽם׃ פ ",
+   "KJV NEH 13:13": "And I made treasurers over the treasuries, Shelemiah the priest, and Zadok the scribe, and of the Levites, Pedaiah: and next to them was Hanan the son of Zaccur, the son of Mattaniah: for they were counted faithful, and their office was to distribute unto their brethren.",
+   "BHSA NEH 13:14": "זָכְרָה־לִּ֥י אֱלֹהַ֖י עַל־זֹ֑את וְאַל־תֶּ֣מַח חֲסָדַ֗י אֲשֶׁ֥ר עָשִׂ֛יתִי בְּבֵ֥ית אֱלֹהַ֖י וּבְמִשְׁמָרָֽיו׃ ",
+   "KJV NEH 13:14": "Remember me, O my God, concerning this, and wipe not out my good deeds that I have done for the house of my God, and for the offices thereof."
+  },
+  "A": {
+   "name": "Zaccur",
+   "line": "a Levite (NEH 10:9)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:12)",
+   "family": [
+    "son-of mattaniah-10 (Mattaniah, grandfather of Hanan (NEH 13:13))",
+    "father-of hanan-7 (Hanan, distributed portions to their kinsmen (NEH 13:13))",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Zaccur",
+   "line": "Son of Mattaniah, father of Hanan the treasury official",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of hanan-7 (Hanan, distributed portions to their kinsmen (NEH 13:13))",
+    "son-of mattaniah-10 (Mattaniah, grandfather of Hanan (NEH 13:13))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew identifies one Zaccur as Hanan’s father and Mattaniah’s son, matching B. However, A states exactly the same family relationships, so the supplied facts cannot uniquely distinguish B from A.",
+ "confidence": 0.5,
+ "names_slug": "zaccur-7",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:45:02+00:00"
+}

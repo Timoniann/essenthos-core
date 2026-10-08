@@ -1,0 +1,49 @@
+{
+ "b": 14,
+ "c": 31,
+ "v": 13,
+ "label": "Jehiel",
+ "dataset_man": "jehiel-4",
+ "split_man": "jehiel-10",
+ "case": {
+  "verse": "2CH 31:13",
+  "name": "Jehiel",
+  "text": {
+   "BHSA 2CH 31:12": "וַיָּבִ֨יאוּ אֶת־הַתְּרוּמָ֧ה וְהַֽמַּעֲשֵׂ֛ר וְהַקֳּדָשִׁ֖ים בֶּאֱמוּנָ֑ה וַעֲלֵיהֶ֤ם נָגִיד֙ כונניהו הַלֵּוִ֔י וְשִׁמְעִ֥י אָחִ֖יהוּ מִשְׁנֶֽה׃ ",
+   "KJV 2CH 31:12": "And brought in the offerings and the tithes and the dedicated things faithfully: over which Cononiah the Levite was ruler, and Shimei his brother was the next.",
+   "BHSA 2CH 31:13": "וִֽיחִיאֵ֡ל וַ֠עֲזַזְיָהוּ וְנַ֨חַת וַעֲשָׂהאֵ֜ל וִֽירִימֹ֤ות וְיֹוזָבָד֙ וֶאֱלִיאֵ֣ל וְיִסְמַכְיָ֔הוּ וּמַ֖חַת וּבְנָיָ֑הוּ פְּקִידִ֗ים מִיַּ֤ד כונניהו וְשִׁמְעִ֣י אָחִ֔יו בְּמִפְקַד֙ יְחִזְקִיָּ֣הוּ הַמֶּ֔לֶךְ וַעֲזַרְיָ֖הוּ נְגִ֥יד בֵּית־הָאֱלֹהִֽים׃ ",
+   "KJV 2CH 31:13": "And Jehiel, and Azaziah, and Nahath, and Asahel, and Jerimoth, and Jozabad, and Eliel, and Ismachiah, and Mahath, and Benaiah, were overseers under the hand of Cononiah and Shimei his brother, at the commandment of Hezekiah the king, and Azariah the ruler of the house of God.",
+   "BHSA 2CH 31:14": "וְקֹורֵ֨א בֶן־יִמְנָ֤ה הַלֵּוִי֙ הַשֹּׁועֵ֣ר לַמִּזְרָ֔חָה עַ֖ל נִדְבֹ֣ות הָאֱלֹהִ֑ים לָתֵת֙ תְּרוּמַ֣ת יְהוָ֔ה וְקָדְשֵׁ֖י הַקֳּדָשִֽׁים׃ ",
+   "KJV 2CH 31:14": "And Kore the son of Imnah the Levite, the porter toward the east, was over the freewill offerings of God, to distribute the oblations of the LORD, and the most holy things."
+  },
+  "A": {
+   "name": "Jehiel",
+   "line": "descendant of Heman (2CH 29:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "descendant-of heman-2 (Heman, the singer, son of Joel, decendant of Kohath (1CH 6:33), fat)",
+    "servant-of conaniah (Conaniah, officer in charge of the consecrated things (2CH 31:12))"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Jehiel",
+   "line": "Levite overseer under Cononiah in Hezekiah's reform",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "servant-of conaniah (Conaniah, officer in charge of the consecrated things (2CH 31:12))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew lists Jehiel among the overseers under Cononiah and Shimei appointed by Hezekiah, matching B's stated office and setting. However, A also served Cononiah, and the verse gives no ancestry to distinguish them securely.",
+ "confidence": 0.5,
+ "names_slug": "jehiel-10",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:36:30+00:00"
+}

@@ -1,0 +1,49 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 33,
+ "label": "Ezra",
+ "dataset_man": "ezra",
+ "split_man": "ezra-4",
+ "case": {
+  "verse": "NEH 12:33",
+  "name": "Ezra",
+  "text": {
+   "BHSA NEH 12:32": "וַיֵּ֤לֶךְ אַחֲרֵיהֶם֙ הֹושַׁ֣עְיָ֔ה וַחֲצִ֖י שָׂרֵ֥י יְהוּדָֽה׃ ",
+   "KJV NEH 12:32": "And after them went Hoshaiah, and half of the princes of Judah,",
+   "BHSA NEH 12:33": "וַעֲזַרְיָ֥ה עֶזְרָ֖א וּמְשֻׁלָּֽם׃ ",
+   "KJV NEH 12:33": "And Azariah, Ezra, and Meshullam,",
+   "BHSA NEH 12:34": "יְהוּדָה֙ וּבִנְיָמִ֔ן וּֽשְׁמַֽעְיָ֖ה וְיִרְמְיָֽה׃ ס ",
+   "KJV NEH 12:34": "Judah, and Benjamin, and Shemaiah, and Jeremiah,"
+  },
+  "A": {
+   "name": "Ezra",
+   "line": "son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "as \"priest\" would be a descendant of Aaron",
+   "family": [
+    "son-of seraiah-2 (Seraiah, the chief priest (2KI 25:18) who was killed by the king of B)",
+    "priest-of yhvh (YHVH, the God of Israel)",
+    "scribe-of yhvh (YHVH, the God of Israel)",
+    "descendant-of hilkiah-2 (Hilkiah, the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9))"
+   ],
+   "verses": 47
+  },
+  "B": {
+   "name": "Ezra",
+   "line": "Priest with trumpet in the wall-dedication procession under Nehemiah, distinct from the scribe leading it",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "עֶזְרָא appears among the dedication procession’s listed participants (vv.32–34), matching B’s stated setting and role. These verses supply no father or office distinguishing him from A, so this identification remains tentative.",
+ "confidence": 0.6,
+ "names_slug": "ezra-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:44:02+00:00"
+}

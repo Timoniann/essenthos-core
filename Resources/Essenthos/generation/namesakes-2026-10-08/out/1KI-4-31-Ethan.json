@@ -1,0 +1,47 @@
+{
+ "b": 11,
+ "c": 4,
+ "v": 31,
+ "label": "Ethan",
+ "dataset_man": "ethan",
+ "split_man": "ethan-4",
+ "case": {
+  "verse": "1KI 4:31",
+  "name": "Ethan",
+  "text": {
+   "BHSA 1KI 4:30": "וַתֵּ֨רֶב֙ חָכְמַ֣ת שְׁלֹמֹ֔ה מֵֽחָכְמַ֖ת כָּל־בְּנֵי־קֶ֑דֶם וּמִכֹּ֖ל חָכְמַ֥ת מִצְרָֽיִם׃ ",
+   "KJV 1KI 4:30": "And Solomon's wisdom excelled the wisdom of all the children of the east country, and all the wisdom of Egypt.",
+   "BHSA 1KI 4:31": "וַיֶּחְכַּם֮ מִכָּל־הָֽאָדָם֒ מֵאֵיתָ֣ן הָאֶזְרָחִ֗י וְהֵימָ֧ן וְכַלְכֹּ֛ל וְדַרְדַּ֖ע בְּנֵ֣י מָחֹ֑ול וַיְהִֽי־שְׁמֹ֥ו בְכָֽל־הַגֹּויִ֖ם סָבִֽיב׃ ",
+   "KJV 1KI 4:31": "For he was wiser than all men; than Ethan the Ezrahite, and Heman, and Chalcol, and Darda, the sons of Mahol: and his fame was in all nations round about.",
+   "BHSA 1KI 4:32": "וַיְדַבֵּ֕ר שְׁלֹ֥שֶׁת אֲלָפִ֖ים מָשָׁ֑ל וַיְהִ֥י שִׁירֹ֖ו חֲמִשָּׁ֥ה וָאָֽלֶף׃ ",
+   "KJV 1KI 4:32": "And he spake three thousand proverbs: and his songs were a thousand and five."
+  },
+  "A": {
+   "name": "Ethan",
+   "line": "the Ezrahite (1KI 4:31) [Zerahite?- 1CH 2:6]",
+   "sex": "male",
+   "tribe": null,
+   "notes": "This Ethan is likely the same person as the son of Zerah, son of Judah (1CH 2:6) given the matching names of his brothers.  Ethan the \"EZrahite\" may be a scribal transposition of \"ZErahite\". Ethan the Ezrahite is also named as the author of Psalm 89.  Jamieson, Fausset, and Brown Commentary (1871) says they are the same individuals.  Sons of Mahol is an appelative for \"sons of dancing\".",
+   "family": [
+    "son-of zerah-3 (Zerah, son of Judah and Tamar (GEN 38:30))",
+    "father-of azariah-4 (Azariah, son of Ethan (1CH 2:8))"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Ethan",
+   "line": "Ezrahite renowned for wisdom, compared to Solomon",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew names Ethan the Ezrahite as a benchmark for Solomon’s wisdom, matching B’s stated identity. A’s identification with Zerah’s son is conjectural, and neither this verse nor its neighbors establishes that ancestry.",
+ "confidence": 0.65,
+ "names_slug": "ethan-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:31:23+00:00"
+}

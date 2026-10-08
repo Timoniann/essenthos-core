@@ -1,0 +1,49 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 21,
+ "label": "Jedaiah",
+ "dataset_man": "jedaiah-5",
+ "split_man": "jedaiah-8",
+ "case": {
+  "verse": "NEH 12:21",
+  "name": "Jedaiah",
+  "text": {
+   "BHSA NEH 12:20": "לְסַלַּ֥י קַלָּ֖י לְעָמֹ֥וק עֵֽבֶר׃ ",
+   "KJV NEH 12:20": "Of Sallai, Kallai; of Amok, Eber;",
+   "BHSA NEH 12:21": "לְחִלְקִיָּ֣ה חֲשַׁבְיָ֔ה לִֽידַֽעְיָ֖ה נְתַנְאֵֽל׃ ",
+   "KJV NEH 12:21": "Of Hilkiah, Hashabiah; of Jedaiah, Nethaneel.",
+   "BHSA NEH 12:22": "הַלְוִיִּם֩ בִּימֵ֨י אֶלְיָשִׁ֜יב יֹויָדָ֤ע וְיֹוחָנָן֙ וְיַדּ֔וּעַ כְּתוּבִ֖ים רָאשֵׁ֣י אָבֹ֑ות וְהַכֹּ֣הֲנִ֔ים עַל־מַלְכ֖וּת דָּרְיָ֥וֶשׁ הַפָּֽרְסִֽי׃ פ ",
+   "KJV NEH 12:22": "The Levites in the days of Eliashib, Joiada, and Johanan, and Jaddua, were recorded chief of the fathers: also the priests, to the reign of Darius the Persian."
+  },
+  "A": {
+   "name": "Jedaiah",
+   "line": "priest, son of Joiarib (NEH 11:10, NEH 12:7)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Lived in Jerusalem (NEH 11:4)",
+   "family": [
+    "son-of joiarib-3 (Joiarib, priest, father of Jedaiah (NEH 11:10))",
+    "priest-of yhvh (YHVH, the God of Israel)"
+   ],
+   "verses": 7
+  },
+  "B": {
+   "name": "Jedaiah",
+   "line": "Second priestly course-head named Jedaiah in Jeshua's list, house later headed by Nethaneel",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of nethanel-7 (Nethanel, son of Jedaiah (NEH 12:21))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew לִידַעְיָה נְתַנְאֵל identifies Nethaneel as the representative of Jedaiah’s priestly house, immediately after Hilkiah’s entry. This matches B’s stated identity as the second Jedaiah course-head whose house was later headed by Nethaneel.",
+ "confidence": 0.97,
+ "names_slug": "jedaiah-8",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:43:26+00:00"
+}

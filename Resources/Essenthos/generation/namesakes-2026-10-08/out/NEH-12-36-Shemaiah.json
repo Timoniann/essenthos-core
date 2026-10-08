@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 36,
+ "label": "Shemaiah",
+ "dataset_man": "shemaiah-19",
+ "split_man": "shemaiah-27",
+ "case": {
+  "verse": "NEH 12:36",
+  "name": "Shemaiah",
+  "text": {
+   "BHSA NEH 12:35": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ ",
+   "KJV NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:",
+   "BHSA NEH 12:36": "וְֽאֶחָ֡יו שְֽׁמַעְיָ֡ה וַעֲזַרְאֵ֡ל מִֽלֲלַ֡י גִּֽלֲלַ֡י מָעַ֞י נְתַנְאֵ֤ל וִֽיהוּדָה֙ חֲנָ֔נִי בִּכְלֵי־שִׁ֥יר דָּוִ֖יד אִ֣ישׁ הָאֱלֹהִ֑ים וְעֶזְרָ֥א הַסֹּופֵ֖ר לִפְנֵיהֶֽם׃ ",
+   "KJV NEH 12:36": "And his brethren, Shemaiah, and Azarael, Milalai, Gilalai, Maai, Nethaneel, and Judah, Hanani, with the musical instruments of David the man of God, and Ezra the scribe before them.",
+   "BHSA NEH 12:37": "וְעַל֩ שַׁ֨עַר הָעַ֜יִן וְנֶגְדָּ֗ם עָלוּ֙ עַֽל־מַעֲלֹות֙ עִ֣יר דָּוִ֔יד בַּֽמַּעֲלֶ֖ה לַחֹומָ֑ה מֵעַל֙ לְבֵ֣ית דָּוִ֔יד וְעַ֛ד שַׁ֥עַר הַמַּ֖יִם מִזְרָֽח׃ ",
+   "KJV NEH 12:37": "And at the fountain gate, which was over against them, they went up by the stairs of the city of David, at the going up of the wall, above the house of David, even unto the water gate eastward."
+  },
+  "A": {
+   "name": "Shemaiah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:8)",
+   "family": [
+    "ancestor-of jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Shemaiah",
+   "line": "Another priest with trumpets at the wall's dedication, alongside item 25",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "brother-of zechariah-22 (Zechariah, son of Jonathan (NEH 12:35))"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew וְאֶחָיו (“and his brethren”) introduces Shemaiah among the musical companions of Zechariah named in verse 35, matching B’s stated relationship to that Zechariah. Nothing in this passage identifies him as A, the priest who sealed the covenant.",
+ "confidence": 0.97,
+ "names_slug": "shemaiah-27",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:44:29+00:00"
+}

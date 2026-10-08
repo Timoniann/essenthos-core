@@ -1,0 +1,51 @@
+{
+ "b": 12,
+ "c": 14,
+ "v": 24,
+ "label": "Jeroboam",
+ "dataset_man": "jeroboam",
+ "split_man": "jeroboam-2",
+ "case": {
+  "verse": "2KI 14:24",
+  "name": "Jeroboam",
+  "text": {
+   "BHSA 2KI 14:23": "בִּשְׁנַת֙ חֲמֵשׁ־עֶשְׂרֵ֣ה שָׁנָ֔ה לַאֲמַצְיָ֥הוּ בֶן־יֹואָ֖שׁ מֶ֣לֶךְ יְהוּדָ֑ה מָ֠לַךְ יָרָבְעָ֨ם בֶּן־יֹואָ֤שׁ מֶֽלֶךְ־יִשְׂרָאֵל֙ בְּשֹׁ֣מְרֹ֔ון אַרְבָּעִ֥ים וְאַחַ֖ת שָׁנָֽה׃ ",
+   "KJV 2KI 14:23": "In the fifteenth year of Amaziah the son of Joash king of Judah Jeroboam the son of Joash king of Israel began to reign in Samaria, and reigned forty and one years.",
+   "BHSA 2KI 14:24": "וַיַּ֥עַשׂ הָרַ֖ע בְּעֵינֵ֣י יְהוָ֑ה לֹ֣א סָ֗ר מִכָּל־חַטֹּאות֙ יָרָבְעָ֣ם בֶּן־נְבָ֔ט אֲשֶׁ֥ר הֶחֱטִ֖יא אֶת־יִשְׂרָאֵֽל׃ ",
+   "KJV 2KI 14:24": "And he did that which was evil in the sight of the LORD: he departed not from all the sins of Jeroboam the son of Nebat, who made Israel to sin.",
+   "BHSA 2KI 14:25": "ה֗וּא הֵשִׁיב֙ אֶת־גְּב֣וּל יִשְׂרָאֵ֔ל מִלְּבֹ֥וא חֲמָ֖ת עַד־יָ֣ם הָעֲרָבָ֑ה כִּדְבַ֤ר יְהוָה֙ אֱלֹהֵ֣י יִשְׂרָאֵ֔ל אֲשֶׁ֣ר דִּבֶּ֗ר בְּיַד־עַבְדֹּ֞ו יֹונָ֤ה בֶן־אֲמִתַּי֙ הַנָּבִ֔יא אֲשֶׁ֖ר מִגַּ֥ת הַחֵֽפֶר׃ ",
+   "KJV 2KI 14:25": "He restored the coast of Israel from the entering of Hamath unto the sea of the plain, according to the word of the LORD God of Israel, which he spake by the hand of his servant Jonah, the son of Amittai, the prophet, which was of Gathhepher."
+  },
+  "A": {
+   "name": "Jeroboam",
+   "line": "Solomon's servant, son of Nebat, who rebelled against him (1KI 11:26), and was later made king of Israel (1KI 12:20)",
+   "sex": "male",
+   "tribe": "Ephraim",
+   "notes": null,
+   "family": [
+    "son-of nebat (Nebat, father of Jeroboam (1KI 11:26))",
+    "servant-of solomon (Solomon, son of David (2SA 5:14))",
+    "father-of nadab-2 (Nadab, son of Jeroboam (1Ki 14:20))"
+   ],
+   "verses": 162
+  },
+  "B": {
+   "name": "Jeroboam",
+   "line": "King of Israel (2KI 13:13), son of Joash [Jehoash] (2KI 14:16)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of joash-4 (Joash, King of Israel, son of Jehoahaz (2KI 13:9))",
+    "father-of zechariah (Zechariah, King of Israel, son of Jeroboam (2KI 14:29))"
+   ],
+   "verses": 29
+  }
+ },
+ "names": "A",
+ "why": "The name in 14:24 is explicitly יָרָבְעָם בֶּן־נְבָט, “Jeroboam son of Nebat,” identifying A. The unnamed subject “he” continues B, son of Joash, from 14:23, but B is not named in 14:24.",
+ "confidence": 1,
+ "names_slug": "jeroboam",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:31:38+00:00"
+}

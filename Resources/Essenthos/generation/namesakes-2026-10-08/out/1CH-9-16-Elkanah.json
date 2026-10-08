@@ -1,0 +1,52 @@
+{
+ "b": 13,
+ "c": 9,
+ "v": 16,
+ "label": "Elkanah",
+ "dataset_man": "elkanah-6",
+ "split_man": "elkanah-4",
+ "case": {
+  "verse": "1CH 9:16",
+  "name": "Elkanah",
+  "text": {
+   "BHSA 1CH 9:15": "וּבַקְבַּקַּ֥ר חֶ֖רֶשׁ וְגָלָ֑ל וּמַתַּנְיָה֙ בֶּן־מִיכָ֔א בֶּן־זִכְרִ֖י בֶּן־אָסָֽף׃ ",
+   "KJV 1CH 9:15": "And Bakbakkar, Heresh, and Galal, and Mattaniah the son of Micah, the son of Zichri, the son of Asaph;",
+   "BHSA 1CH 9:16": "וְעֹבַדְיָה֙ בֶּֽן־שְׁמַֽעְיָ֔ה בֶּן־גָּלָ֖ל בֶּן־יְדוּת֑וּן וּבֶרֶכְיָ֤ה בֶן־אָסָא֙ בֶּן־אֶלְקָנָ֔ה הַיֹּושֵׁ֖ב בְּחַצְרֵ֥י נְטֹופָתִֽי׃ ",
+   "KJV 1CH 9:16": "And Obadiah the son of Shemaiah, the son of Galal, the son of Jeduthun, and Berechiah the son of Asa, the son of Elkanah, that dwelt in the villages of the Netophathites.",
+   "BHSA 1CH 9:17": "וְהַשֹּׁעֲרִים֙ שַׁלּ֣וּם וְעַקּ֔וּב וְטַלְמֹ֖ן וַאֲחִימָ֑ן וַאֲחִיהֶ֥ם שַׁלּ֖וּם הָרֹֽאשׁ׃ ",
+   "KJV 1CH 9:17": "And the porters were, Shallum, and Akkub, and Talmon, and Ahiman, and their brethren: Shallum was the chief;"
+  },
+  "A": {
+   "name": "Elkanah",
+   "line": "lived in the villages of the Netophathites (1CH 9:16)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "father-of asa-2 (Asa, son of Elkanah (1CH 9:16))",
+    "grandfather-of berechiah-3 (Berechiah, son of Asa (1CH 9:16))",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 2
+  },
+  "B": {
+   "name": "Elkanah",
+   "line": "father of Amasai and Ahimoth (1CH 6:25) and son of Joel (1CH 6:36)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "father-of amasai (Amasai, son of Elkanah (1CH 6:25, 1CH 6:35))",
+    "father-of ahimoth (Ahimoth, son of Elkanah (1CH 6:25))",
+    "son-of mahath (Mahath, son of Amasai (1CH 6:35))"
+   ],
+   "verses": 9
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew names Berechiah son of Asa son of Elkanah (בֶן־אָסָא בֶּן־אֶלְקָנָה), matching A’s stated son Asa and grandson Berechiah. B’s stated family relationships do not match this genealogy.",
+ "confidence": 0.99,
+ "names_slug": "elkanah-6",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:14+00:00"
+}

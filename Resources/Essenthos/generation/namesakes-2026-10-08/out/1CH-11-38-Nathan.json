@@ -1,0 +1,46 @@
+{
+ "b": 13,
+ "c": 11,
+ "v": 38,
+ "label": "Nathan",
+ "dataset_man": "nathan-3",
+ "split_man": "nathan-9",
+ "case": {
+  "verse": "1CH 11:38",
+  "name": "Nathan",
+  "text": {
+   "BHSA 1CH 11:37": "חֶצְרֹו֙ הַֽכַּרְמְלִ֔י נַעֲרַ֖י בֶּן־אֶזְבָּֽי׃ ס ",
+   "KJV 1CH 11:37": "Hezro the Carmelite, Naarai the son of Ezbai,",
+   "BHSA 1CH 11:38": "יֹואֵל֙ אֲחִ֣י נָתָ֔ן מִבְחָ֖ר בֶּן־הַגְרִֽי׃ ס ",
+   "KJV 1CH 11:38": "Joel the brother of Nathan, Mibhar the son of Haggeri,",
+   "BHSA 1CH 11:39": "צֶ֖לֶק הָעַמֹּונִ֑י נַחְרַי֙ הַבֵּ֣רֹתִ֔י נֹשֵׂ֕א כְּלֵ֖י יֹואָ֥ב בֶּן־צְרוּיָֽה׃ ס ",
+   "KJV 1CH 11:39": "Zelek the Ammonite, Naharai the Berothite, the armourbearer of Joab the son of Zeruiah,"
+  },
+  "A": {
+   "name": "Nathan",
+   "line": "of Zobah (2SA 23:36)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of igal-2 (Igal, son of Nathan, thirty-first of \"the thirty\" of David's men ()"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Nathan",
+   "line": "Brother of Joel, of the tribe of Judah, numbered among David's mighty men.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew identifies Joel as “the brother of Nathan” (יוֹאֵל אֲחִי נָתָן), directly matching B’s stated relationship to Joel. The surrounding verses list David’s warriors; nothing here identifies Nathan as Igal’s father or as being from Zobah, as stated for A.",
+ "confidence": 0.98,
+ "names_slug": "nathan-9",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:18+00:00"
+}

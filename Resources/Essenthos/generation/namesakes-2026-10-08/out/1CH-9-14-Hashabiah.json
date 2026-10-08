@@ -1,0 +1,52 @@
+{
+ "b": 13,
+ "c": 9,
+ "v": 14,
+ "label": "Hashabiah",
+ "dataset_man": "hashabiah",
+ "split_man": "hashabiah-11",
+ "case": {
+  "verse": "1CH 9:14",
+  "name": "Hashabiah",
+  "text": {
+   "BHSA 1CH 9:13": "וַאֲחֵיהֶ֗ם רָאשִׁים֙ לְבֵ֣ית אֲבֹותָ֔ם אֶ֕לֶף וּשְׁבַ֥ע מֵאֹ֖ות וְשִׁשִּׁ֑ים גִּבֹּ֣ורֵי חֵ֔יל מְלֶ֖אכֶת עֲבֹודַ֥ת בֵּית־הָאֱלֹהִֽים׃ ",
+   "KJV 1CH 9:13": "And their brethren, heads of the house of their fathers, a thousand and seven hundred and threescore; very able men for the work of the service of the house of God.",
+   "BHSA 1CH 9:14": "וּמִֽן־הַלְוִיִּ֑ם שְׁמַֽעְיָ֧ה בֶן־חַשּׁ֛וּב בֶּן־עַזְרִיקָ֥ם בֶּן־חֲשַׁבְיָ֖ה מִן־בְּנֵ֥י מְרָרִֽי׃ ",
+   "KJV 1CH 9:14": "And of the Levites; Shemaiah the son of Hasshub, the son of Azrikam, the son of Hashabiah, of the sons of Merari;",
+   "BHSA 1CH 9:15": "וּבַקְבַּקַּ֥ר חֶ֖רֶשׁ וְגָלָ֑ל וּמַתַּנְיָה֙ בֶּן־מִיכָ֔א בֶּן־זִכְרִ֖י בֶּן־אָסָֽף׃ ",
+   "KJV 1CH 9:15": "And Bakbakkar, Heresh, and Galal, and Mattaniah the son of Micah, the son of Zichri, the son of Asaph;"
+  },
+  "A": {
+   "name": "Hashabiah",
+   "line": "son of Amaziah (1CH 6:45), Levite during the return (NEH 10:11, NEH 12:24)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Merarites (from Mushi, from Merari, son of Levi)",
+   "family": [
+    "father-of azrikam-3 (Azrikam, son of Hashabiah (1CH 9:14))",
+    "descendant-of merari (Merari, son of Levi (GEN 46:11))",
+    "father-of malluch (Malluch, son of Hashabiah (1CH 6:44))",
+    "son-of amaziah-the-merarite (Amaziah, son of Hilkiah, in the line of Ethan the Merarite singer (1C)"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Hashabiah",
+   "line": "Son of Bunni, father of Azrikam, ancestor of Shemaiah in Nehemiah's day",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of azrikam-3 (Azrikam, son of Hashabiah (1CH 9:14))",
+    "descendant-of merari (Merari, son of Levi (GEN 46:11))"
+   ],
+   "verses": 4
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew gives the Merarite ancestry Shemaiah–Hasshub–Azrikam–Hashabiah, matching B’s stated identity as Shemaiah’s ancestor. The identification is not conclusive from this verse alone, since Hashabiah’s father is unnamed and A also claims to be Azrikam’s father.",
+ "confidence": 0.72,
+ "names_slug": "hashabiah-11",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:06+00:00"
+}

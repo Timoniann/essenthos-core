@@ -1,0 +1,49 @@
+{
+ "b": 13,
+ "c": 8,
+ "v": 5,
+ "label": "Gera",
+ "dataset_man": "gera-3",
+ "split_man": "gera-6",
+ "case": {
+  "verse": "1CH 8:5",
+  "name": "Gera",
+  "text": {
+   "BHSA 1CH 8:4": "וַאֲבִישׁ֥וּעַ וְנַעֲמָ֖ן וַאֲחֹֽוחַ׃ ",
+   "KJV 1CH 8:4": "And Abishua, and Naaman, and Ahoah,",
+   "BHSA 1CH 8:5": "וְגֵרָ֥א וּשְׁפוּפָ֖ן וְחוּרָֽם׃ ",
+   "KJV 1CH 8:5": "And Gera, and Shephuphan, and Huram.",
+   "BHSA 1CH 8:6": "וְאֵ֖לֶּה בְּנֵ֣י אֵח֑וּד אֵ֣לֶּה הֵ֞ם רָאשֵׁ֤י אָבֹות֙ לְיֹ֣ושְׁבֵי גֶ֔בַע וַיַּגְל֖וּם אֶל־מָנָֽחַת׃ ",
+   "KJV 1CH 8:6": "And these are the sons of Ehud: these are the heads of the fathers of the inhabitants of Geba, and they removed them to Manahath:"
+  },
+  "A": {
+   "name": "Gera",
+   "line": "father of Shimei (2SA 16:5), son of Bela (1CH 8:5)",
+   "sex": "male",
+   "tribe": "Benjamin",
+   "notes": null,
+   "family": [
+    "father-of shimei-2 (Shimei, of the house of Saul (2SA 16:5) who threw stones at King Dav)",
+    "son-of bela-2 (Bela, son of Benjamin (GEN 46:21))"
+   ],
+   "verses": 11
+  },
+  "B": {
+   "name": "Gera",
+   "line": "A second Gera named among Bela's sons in the same Chronicles list, name repeated or distinct brother.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of bela-2 (Bela, son of Benjamin (GEN 46:21))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "Gera in 8:5 occupies the second Gera position in Bela’s list, after Abishua, Naaman, and Ahoah, matching B’s description. The passage does not identify this Gera as Shimei’s father or establish whether the repeated name represents distinct brothers.",
+ "confidence": 0.86,
+ "names_slug": "gera-6",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:03+00:00"
+}

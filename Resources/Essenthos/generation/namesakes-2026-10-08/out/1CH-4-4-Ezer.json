@@ -1,0 +1,50 @@
+{
+ "b": 13,
+ "c": 4,
+ "v": 4,
+ "label": "Ezer",
+ "dataset_man": "ezer-2",
+ "split_man": "ezer-6",
+ "case": {
+  "verse": "1CH 4:4",
+  "name": "Ezer",
+  "text": {
+   "BHSA 1CH 4:3": "וְאֵ֨לֶּה֙ אֲבִ֣י עֵיטָ֔ם יִזְרְעֶ֥אל וְיִשְׁמָ֖א וְיִדְבָּ֑שׁ וְשֵׁ֥ם אֲחֹותָ֖ם הַצְלֶלְפֹּֽונִי׃ ",
+   "KJV 1CH 4:3": "And these were of the father of Etam; Jezreel, and Ishma, and Idbash: and the name of their sister was Hazelelponi:",
+   "BHSA 1CH 4:4": "וּפְנוּאֵל֙ אֲבִ֣י גְדֹ֔ר וְעֵ֖זֶר אֲבִ֣י חוּשָׁ֑ה אֵ֤לֶּה בְנֵי־חוּר֙ בְּכֹ֣ור אֶפְרָ֔תָה אֲבִ֖י בֵּ֥ית לָֽחֶם׃ ",
+   "KJV 1CH 4:4": "And Penuel the father of Gedor, and Ezer the father of Hushah. These are the sons of Hur, the firstborn of Ephratah, the father of Bethlehem.",
+   "BHSA 1CH 4:5": "וּלְאַשְׁחוּר֙ אֲבִ֣י תְקֹ֔ועַ הָי֖וּ שְׁתֵּ֣י נָשִׁ֑ים חֶלְאָ֖ה וְנַעֲרָֽה׃ ",
+   "KJV 1CH 4:5": "And Ashur the father of Tekoa had two wives, Helah and Naarah."
+  },
+  "A": {
+   "name": "Ezer",
+   "line": "son of Hur (1CH 4:4)",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": null,
+   "family": [
+    "son-of hur (Hur, supported Moses' hands during the battle against Amalek at R)",
+    "father-of hushah (Hushah, son of Ezer (1CH 4:4))"
+   ],
+   "verses": 2
+  },
+  "B": {
+   "name": "Ezer",
+   "line": "Judahite, son of Hur, father of Hushah",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of hur (Hur, supported Moses' hands during the battle against Amalek at R)",
+    "father-of hushah (Hushah, son of Ezer (1CH 4:4))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew identifies Ezer as the father of Hushah among the sons of Hur. A and B state identical identifying facts, so the text cannot favor A over B; it names one person, not both.",
+ "confidence": 0.5,
+ "names_slug": "ezer-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:32:52+00:00"
+}

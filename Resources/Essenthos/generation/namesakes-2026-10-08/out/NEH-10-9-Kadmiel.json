@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 10,
+ "v": 9,
+ "label": "Kadmiel",
+ "dataset_man": "kadmiel-2",
+ "split_man": "kadmiel",
+ "case": {
+  "verse": "NEH 10:9",
+  "name": "Kadmiel",
+  "text": {
+   "BHSA NEH 10:8": "מַֽעַזְיָ֥ה בִלְגַּ֖י שְׁמַֽעְיָ֑ה אֵ֖לֶּה הַכֹּהֲנִֽים׃ ס ",
+   "KJV NEH 10:8": "Maaziah, Bilgai, Shemaiah: these were the priests.",
+   "BHSA NEH 10:9": "וְֽהַלְוִיִּ֑ם וְיֵשׁ֨וּעַ֙ בֶּן־אֲזַנְיָ֔ה בִּנּ֕וּי מִבְּנֵ֥י חֵנָדָ֖ד קַדְמִיאֵֽל׃ ",
+   "KJV NEH 10:9": "And the Levites: both Jeshua the son of Azaniah, Binnui of the sons of Henadad, Kadmiel;",
+   "BHSA NEH 10:10": "וַאֲחֵיהֶ֑ם שְׁבַנְיָ֧ה הֹֽודִיָּ֛ה קְלִיטָ֖א פְּלָאיָ֥ה חָנָֽן׃ ",
+   "KJV NEH 10:10": "And their brethren, Shebaniah, Hodijah, Kelita, Pelaiah, Hanan,"
+  },
+  "A": {
+   "name": "Kadmiel",
+   "line": "stood on the Levites platform (NEH 9:4) and exhorted Israel to bless the Lord (NEH 9:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:9)",
+   "family": [
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Kadmiel",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "son of Hodaviah (EZR 2:40)",
+   "family": [
+    "descendant-of hodaviah-5 (Hodaviah, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "verses": 13
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew lists קַדְמִיאֵל among the Levites sealing the covenant, matching A’s participation in Nehemiah 9 and stated role in Nehemiah 10:9. B is identified as an ancestor of returning descendants, a relationship not indicated here.",
+ "confidence": 0.94,
+ "names_slug": "kadmiel-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:40:24+00:00"
+}

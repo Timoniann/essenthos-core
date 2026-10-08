@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 10,
+ "v": 12,
+ "label": "Shebaniah",
+ "dataset_man": "shebaniah-2",
+ "split_man": "shebaniah-5",
+ "case": {
+  "verse": "NEH 10:12",
+  "name": "Shebaniah",
+  "text": {
+   "BHSA NEH 10:11": "מִיכָ֥א רְחֹ֖וב חֲשַׁבְיָֽה׃ ",
+   "KJV NEH 10:11": "Micha, Rehob, Hashabiah,",
+   "BHSA NEH 10:12": "זַכּ֥וּר שֵׁרֵֽבְיָ֖ה שְׁבַנְיָֽה׃ ",
+   "KJV NEH 10:12": "Zaccur, Sherebiah, Shebaniah,",
+   "BHSA NEH 10:13": "הֹודִיָּ֥ה בָנִ֖י בְּנִֽינוּ׃ ס ",
+   "KJV NEH 10:13": "Hodijah, Bani, Beninu."
+  },
+  "A": {
+   "name": "Shebaniah",
+   "line": "stood on the Levites platform (NEH 9:4) and exhorted Israel to bless the Lord (NEH 9:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:12)",
+   "family": [
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Shebaniah",
+   "line": "Second Levite of this name in the same covenant-sealing list, distinct from the first",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "שְׁבַנְיָה follows Zaccur and Sherebiah at the second Shebaniah entry in the Levite covenant-sealing list, matching B's stated position. A's platform role does not establish this identification, and its verse note repeats the disputed attribution.",
+ "confidence": 0.85,
+ "names_slug": "shebaniah-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:40:50+00:00"
+}

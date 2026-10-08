@@ -1,0 +1,49 @@
+{
+ "b": 15,
+ "c": 7,
+ "v": 1,
+ "label": "Seraiah",
+ "dataset_man": "seraiah-2",
+ "split_man": "seraiah-11",
+ "case": {
+  "verse": "EZR 7:1",
+  "name": "Seraiah",
+  "text": {
+   "BHSA EZR 7:1": "וְאַחַר֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה בְּמַלְכ֖וּת אַרְתַּחְשַׁ֣סְתְּא מֶֽלֶךְ־פָּרָ֑ס עֶזְרָא֙ בֶּן־שְׂרָיָ֔ה בֶּן־עֲזַרְיָ֖ה בֶּן־חִלְקִיָּֽה׃ ",
+   "KJV EZR 7:1": "Now after these things, in the reign of Artaxerxes king of Persia, Ezra the son of Seraiah, the son of Azariah, the son of Hilkiah,",
+   "BHSA EZR 7:2": "בֶּן־שַׁלּ֥וּם בֶּן־צָדֹ֖וק בֶּן־אֲחִיטֽוּב׃ ",
+   "KJV EZR 7:2": "The son of Shallum, the son of Zadok, the son of Ahitub,"
+  },
+  "A": {
+   "name": "Seraiah",
+   "line": "the chief priest (2KI 25:18) who was killed by the king of Babylon (2KI 25:21)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Aaronic priest in the line of Eleazar (full lineage in 1CH 6:14)",
+   "family": [
+    "son-of azariah-7 (Azariah, son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and )",
+    "father-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Seraiah",
+   "line": "Son of Azariah, father of Ezra the priest and scribe.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+    "son-of azariah-7 (Azariah, son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and )"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew genealogy Ezra–Seraiah–Azariah–Hilkiah matches A’s stated priestly lineage; genealogical descent need not mean immediate fatherhood, so A’s earlier death does not exclude him. This identification is tentative because B is assigned the same family relationships, leaving the supplied facts unable to distinguish them decisively.",
+ "confidence": 0.5,
+ "names_slug": "seraiah-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:38:09+00:00"
+}

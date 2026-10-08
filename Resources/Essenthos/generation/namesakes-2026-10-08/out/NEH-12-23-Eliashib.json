@@ -1,0 +1,50 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 23,
+ "label": "Eliashib",
+ "dataset_man": "eliashib-3",
+ "split_man": "eliashib-7",
+ "case": {
+  "verse": "NEH 12:23",
+  "name": "Eliashib",
+  "text": {
+   "BHSA NEH 12:22": "הַלְוִיִּם֩ בִּימֵ֨י אֶלְיָשִׁ֜יב יֹויָדָ֤ע וְיֹוחָנָן֙ וְיַדּ֔וּעַ כְּתוּבִ֖ים רָאשֵׁ֣י אָבֹ֑ות וְהַכֹּ֣הֲנִ֔ים עַל־מַלְכ֖וּת דָּרְיָ֥וֶשׁ הַפָּֽרְסִֽי׃ פ ",
+   "KJV NEH 12:22": "The Levites in the days of Eliashib, Joiada, and Johanan, and Jaddua, were recorded chief of the fathers: also the priests, to the reign of Darius the Persian.",
+   "BHSA NEH 12:23": "בְּנֵ֤י לֵוִי֙ רָאשֵׁ֣י הָֽאָבֹ֔ות כְּתוּבִ֕ים עַל־סֵ֖פֶר דִּבְרֵ֣י הַיָּמִ֑ים וְעַד־יְמֵ֖י יֹֽוחָנָ֥ן בֶּן־אֶלְיָשִֽׁיב׃ ",
+   "KJV NEH 12:23": "The sons of Levi, the chief of the fathers, were written in the book of the chronicles, even until the days of Johanan the son of Eliashib.",
+   "BHSA NEH 12:24": "וְרָאשֵׁ֣י הַ֠לְוִיִּם חֲשַׁבְיָ֨ה שֵֽׁרֵבְיָ֜ה וְיֵשׁ֤וּעַ בֶּן־קַדְמִיאֵל֙ וַאֲחֵיהֶ֣ם לְנֶגְדָּ֔ם לְהַלֵּ֣ל לְהֹודֹ֔ות בְּמִצְוַ֖ת דָּוִ֣יד אִישׁ־הָאֱלֹהִ֑ים מִשְׁמָ֖ר לְעֻמַּ֥ת מִשְׁמָֽר׃ ",
+   "KJV NEH 12:24": "And the chief of the Levites: Hashabiah, Sherebiah, and Jeshua the son of Kadmiel, with their brethren over against them, to praise and to give thanks, according to the commandment of David the man of God, ward over against ward."
+  },
+  "A": {
+   "name": "Eliashib",
+   "line": "father of Jehohanan in whose house Ezra mourned (EZR 10:6)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Levite based on NEH 12:23",
+   "family": [
+    "father-of jehohanan (Jehohanan, in his house, Ezra mourned over the unfaithfulness of Israel)"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Eliashib",
+   "line": "the high priest with Nehemiah during the reconstruction of Jerusalem (NEH 3:1)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "high-priest-of yhvh (YHVH, the God of Israel)",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))",
+    "son-of joiakim (Joiakim, son of Jeshua and father of Eliashib (NEH 12:10))"
+   ],
+   "verses": 20
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew identifies Eliashib as the father of Johanan (יוֹחָנָן בֶּן־אֶלְיָשִׁיב), matching A’s stated relationship to Jehohanan. Verse 22 makes the high priest B contextually plausible, but the supplied facts do not explicitly identify B as Johanan’s father.",
+ "confidence": 0.66,
+ "names_slug": "eliashib-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:43:54+00:00"
+}

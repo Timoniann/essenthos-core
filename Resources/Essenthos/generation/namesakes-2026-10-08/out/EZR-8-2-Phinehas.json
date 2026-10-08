@@ -1,0 +1,51 @@
+{
+ "b": 15,
+ "c": 8,
+ "v": 2,
+ "label": "Phinehas",
+ "dataset_man": "phinehas",
+ "split_man": "phinehas-3",
+ "case": {
+  "verse": "EZR 8:2",
+  "name": "Phinehas",
+  "text": {
+   "BHSA EZR 8:1": "וְאֵ֛לֶּה רָאשֵׁ֥י אֲבֹתֵיהֶ֖ם וְהִתְיַחְשָׂ֑ם הָעֹלִ֣ים עִמִּ֗י בְּמַלְכ֛וּת אַרְתַּחְשַׁ֥סְתְּא הַמֶּ֖לֶךְ מִבָּבֶֽל׃ ס ",
+   "KJV EZR 8:1": "These are now the chief of their fathers, and this is the genealogy of them that went up with me from Babylon, in the reign of Artaxerxes the king.",
+   "BHSA EZR 8:2": "מִבְּנֵ֤י פִֽינְחָס֙ גֵּֽרְשֹׁ֔ם ס מִבְּנֵ֥י אִיתָמָ֖ר דָּנִיֵּ֑אל ס מִבְּנֵ֥י דָוִ֖יד חַטּֽוּשׁ׃ ס ",
+   "KJV EZR 8:2": "Of the sons of Phinehas; Gershom: of the sons of Ithamar; Daniel: of the sons of David; Hattush.",
+   "BHSA EZR 8:3": "מִבְּנֵ֣י שְׁכַנְיָ֔ה ס מִבְּנֵ֥י פַרְעֹ֖שׁ זְכַרְיָ֑ה וְעִמֹּ֛ו הִתְיַחֵ֥שׂ לִזְכָרִ֖ים מֵאָ֥ה וַחֲמִשִּֽׁים׃ ס ",
+   "KJV EZR 8:3": "Of the sons of Shechaniah, of the sons of Pharosh; Zechariah: and with him were reckoned by genealogy of the males an hundred and fifty."
+  },
+  "A": {
+   "name": "Phinehas",
+   "line": "Eleazar's son, Aaron's grandson (EXO 6:25) given a covenant of peace and perpetual priesthood (NUM 25:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "High Priest",
+   "family": [
+    "son-of eleazar (Eleazar, son of Aaron (EXO 6:23))",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))",
+    "father-of abishua (Abishua, son of Phinehas (1CH 6:4))",
+    "priest-of yhvh (YHVH, the God of Israel)"
+   ],
+   "verses": 33
+  },
+  "B": {
+   "name": "Phinehas",
+   "line": "Father of Eleazar, a helper weighing treasure for Ezra; his descendants returned with Ezra",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of eleazar-6 (Eleazar, the priest, descendant of Phinehas (EZR 8:33))"
+   ],
+   "verses": 3
+  }
+ },
+ "names": "A",
+ "why": "מִבְּנֵי פִינְחָס ('of the descendants of Phinehas') identifies Gershom’s ancestral line, parallel to the lines of Ithamar and David. This priestly genealogy points to A, Aaron’s grandson through Eleazar, rather than B, the father of Ezra’s contemporary Eleazar.",
+ "confidence": 0.96,
+ "names_slug": "phinehas",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:38:05+00:00"
+}

@@ -1,0 +1,51 @@
+{
+ "b": 13,
+ "c": 12,
+ "v": 3,
+ "label": "Azmaveth",
+ "dataset_man": "azmaveth-2",
+ "split_man": "azmaveth-6",
+ "case": {
+  "verse": "1CH 12:3",
+  "name": "Azmaveth",
+  "text": {
+   "BHSA 1CH 12:2": "נֹ֣שְׁקֵי קֶ֗שֶׁת מַיְמִינִ֤ים וּמַשְׂמִאלִים֙ בָּֽאֲבָנִ֔ים וּבַחִצִּ֖ים בַּקָּ֑שֶׁת מֵאֲחֵ֥י שָׁא֖וּל מִבִּנְיָמִֽן׃ ",
+   "KJV 1CH 12:2": "They were armed with bows, and could use both the right hand and the left in hurling stones and shooting arrows out of a bow, even of Saul's brethren of Benjamin.",
+   "BHSA 1CH 12:3": "הָרֹ֨אשׁ אֲחִיעֶ֜זֶר וְיֹואָ֗שׁ בְּנֵי֙ הַשְּׁמָעָ֣ה הַגִּבְעָתִ֔י ויזואל וָפֶ֖לֶט בְּנֵ֣י עַזְמָ֑וֶת וּבְרָכָ֕ה וְיֵה֖וּא הָעֲנְּתֹתִֽי׃ ",
+   "KJV 1CH 12:3": "The chief was Ahiezer, then Joash, the sons of Shemaah the Gibeathite; and Jeziel, and Pelet, the sons of Azmaveth; and Berachah, and Jehu the Antothite.",
+   "BHSA 1CH 12:4": "וְוְיִֽשְׁמַֽעְיָ֧ה יִרְמְיָ֤ה וְהַיַחֲזִיאֵל֙ גִּבְעֹונִ֛י גִּבֹּ֥ור וְיֹ֣וחָנָ֔ן בַּוְשְּׁלֹשִׁ֖ים יֹוזָבָ֖ד הַוְגְּדֵרָתִֽי׃ עַל־הַשְּׁלֹשִֽׁים׃ ",
+   "KJV 1CH 12:4": "And Ismaiah the Gibeonite, a mighty man among the thirty, and over the thirty; and Jeremiah, and Jahaziel, and Johanan, and Josabad the Gederathite,"
+  },
+  "A": {
+   "name": "Azmaveth",
+   "line": "son of Jehoadda (1CH 8:36)",
+   "sex": "male",
+   "tribe": "Benjamin",
+   "notes": null,
+   "family": [
+    "son-of jehoaddah (Jehoaddah, son of Ahaz (1CH 8:36))",
+    "father-of jeziel (Jeziel, son of Azmaveth (1CH 12:3))",
+    "father-of pelet-2 (Pelet, son of Azmaveth (1CH 12:3))"
+   ],
+   "verses": 5
+  },
+  "B": {
+   "name": "Azmaveth",
+   "line": "Benjamite, father of Jeziel and Pelet who joined David at Ziklag",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of jeziel (Jeziel, son of Azmaveth (1CH 12:3))",
+    "father-of pelet-2 (Pelet, son of Azmaveth (1CH 12:3))"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "בְּנֵי עַזְמָוֶת identifies Azmaveth as Jeziel and Pelet’s father among the Benjamite warriors, matching B’s stated setting with David. A also claims those sons, however, and the passage does not name Azmaveth’s father, so the supplied text cannot conclusively distinguish the records.",
+ "confidence": 0.65,
+ "names_slug": "azmaveth-6",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:45+00:00"
+}

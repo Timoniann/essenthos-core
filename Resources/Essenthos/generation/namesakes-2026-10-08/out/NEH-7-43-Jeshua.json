@@ -1,0 +1,51 @@
+{
+ "b": 16,
+ "c": 7,
+ "v": 43,
+ "label": "Jeshua",
+ "dataset_man": "jeshua-5",
+ "split_man": "jeshua-7",
+ "case": {
+  "verse": "NEH 7:43",
+  "name": "Jeshua",
+  "text": {
+   "BHSA NEH 7:42": "בְּנֵ֣י חָרִ֔ם אֶ֖לֶף שִׁבְעָ֥ה עָשָֽׂר׃ פ ",
+   "KJV NEH 7:42": "The children of Harim, a thousand and seventeen.",
+   "BHSA NEH 7:43": "הַלְוִיִּ֑ם בְּנֵֽי־יֵשׁ֧וּעַ לְקַדְמִיאֵ֛ל לִבְנֵ֥י לְהֹודְוָ֖ה שִׁבְעִ֥ים וְאַרְבָּעָֽה׃ ס ",
+   "KJV NEH 7:43": "The Levites: the children of Jeshua, of Kadmiel, and of the children of Hodevah, seventy and four.",
+   "BHSA NEH 7:44": "הַֽמְשֹׁרְרִ֑ים בְּנֵ֣י אָסָ֔ף מֵאָ֖ה אַרְבָּעִ֥ים וּשְׁמֹנָֽה׃ ס ",
+   "KJV NEH 7:44": "The singers: the children of Asaph, an hundred forty and eight."
+  },
+  "A": {
+   "name": "Jeshua",
+   "line": "Levite whose sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "of the sons of Hodaviah.  A peer/brother of Kadmiel? (EZR 2:40). Father of Jozabad (EZR 8:33)",
+   "family": [
+    "descendant-of hodaviah-5 (Hodaviah, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Jeshua",
+   "line": "explained the law to the people (NEH 8:7), stood on the Levites platform (NEH 9:4), and exhorted Israel to bless the Lord (NEH 9:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "\"of\" Kadmiel (NEH 7:43), son of Kadmiel (NEH 12:24). Father of Joiakim (NEH 12:10)",
+   "family": [
+    "son-of kadmiel-2 (Kadmiel, stood on the Levites platform (NEH 9:4) and exhorted Israel )",
+    "son-of kadmiel (Kadmiel, his sons (descendants) returned to Judah after captivity (EZ)",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)",
+    "son-of azaniah (Azaniah, father of Jeshua (NEH 10:9))"
+   ],
+   "verses": 13
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew lists בְנֵי־יֵשׁוּעַ, “the descendants of Jeshua,” under “the Levites,” alongside Kadmiel and Hodevah, matching A’s returning Levite family. It does not identify Jeshua as Kadmiel’s son or connect him with B’s later teaching activities.",
+ "confidence": 0.94,
+ "names_slug": "jeshua-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:39:38+00:00"
+}

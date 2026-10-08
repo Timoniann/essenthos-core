@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 42,
+ "label": "Elam",
+ "dataset_man": "elam-4",
+ "split_man": "elam-9",
+ "case": {
+  "verse": "NEH 12:42",
+  "name": "Elam",
+  "text": {
+   "BHSA NEH 12:41": "וְהַכֹּהֲנִ֡ים אֶלְיָקִ֡ים מַעֲשֵׂיָ֡ה מִ֠נְיָמִין מִיכָיָ֧ה אֶלְיֹועֵינַ֛י זְכַרְיָ֥ה חֲנַנְיָ֖ה בַּחֲצֹצְרֹֽות׃ ",
+   "KJV NEH 12:41": "And the priests; Eliakim, Maaseiah, Miniamin, Michaiah, Elioenai, Zechariah, and Hananiah, with trumpets;",
+   "BHSA NEH 12:42": "וּמַעֲשֵׂיָ֨ה וּֽשְׁמַֽעְיָ֜ה וְאֶלְעָזָ֧ר וְעֻזִּ֛י וִֽיהֹוחָנָ֥ן וּמַלְכִּיָּ֖ה וְעֵילָ֣ם וָעָ֑זֶר וַיַּשְׁמִ֨יעוּ֙ הַמְשֹׁ֣רְרִ֔ים וְיִֽזְרַחְיָ֖ה הַפָּקִֽיד׃ ",
+   "KJV NEH 12:42": "And Maaseiah, and Shemaiah, and Eleazar, and Uzzi, and Jehohanan, and Malchijah, and Elam, and Ezer. And the singers sang loud, with Jezrahiah their overseer.",
+   "BHSA NEH 12:43": "וַיִּזְבְּח֣וּ בַיֹּום־הַ֠הוּא זְבָחִ֨ים גְּדֹולִ֜ים וַיִּשְׂמָ֗חוּ כִּ֤י הָאֱלֹהִים֙ שִׂמְּחָם֙ שִׂמְחָ֣ה גְדֹולָ֔ה וְגַ֧ם הַנָּשִׁ֛ים וְהַיְלָדִ֖ים שָׂמֵ֑חוּ וַתִּשָּׁמַ֛ע שִׂמְחַ֥ת יְרוּשָׁלִַ֖ם מֵרָחֹֽוק׃ ",
+   "KJV NEH 12:43": "Also that day they offered great sacrifices, and rejoiced: for God had made them rejoice with great joy: the wives also and the children rejoiced: so that the joy of Jerusalem was heard even afar off."
+  },
+  "A": {
+   "name": "Elam",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:7)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "father of Jehiel (EZR 10:2), named on the sealed document of NEH 10:1-27 (NEH 10:14)",
+   "family": [
+    "ancestor-of jeshaiah-3 (Jeshaiah, descendant of Elam, son of Athaliah who went up with Ezra (E)",
+    "ancestor-of shecaniah-5 (Shecaniah, son of Jehiel (EZR 10:2))",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "verses": 13
+  },
+  "B": {
+   "name": "Elam",
+   "line": "Priest with a trumpet at the dedication of Jerusalem's wall",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "וְעֵילָם names Elam among participants in Jerusalem’s wall dedication, matching B’s stated event; nothing connects him to A’s descendants or family. The trumpets belong explicitly to the preceding priest list, so B’s trumpet description is less precise than its event identification.",
+ "confidence": 0.96,
+ "names_slug": "elam-9",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:44:40+00:00"
+}

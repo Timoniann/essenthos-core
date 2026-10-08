@@ -1,0 +1,51 @@
+{
+ "b": 13,
+ "c": 6,
+ "v": 26,
+ "label": "Elkanah",
+ "dataset_man": "elkanah-5",
+ "split_man": "elkanah-4",
+ "case": {
+  "verse": "1CH 6:26",
+  "name": "Elkanah",
+  "text": {
+   "BHSA 1CH 6:25": "וּבְנֵי֙ אֶלְקָנָ֔ה עֲמָשַׂ֖י וַאֲחִימֹֽות׃ ",
+   "KJV 1CH 6:25": "And the sons of Elkanah; Amasai, and Ahimoth.",
+   "BHSA 1CH 6:26": "אֶלְקָנָ֑ה בנו אֶלְקָנָ֔ה צֹופַ֥י בְּנֹ֖ו וְנַ֥חַת בְּנֹֽו׃ ",
+   "KJV 1CH 6:26": "As for Elkanah: the sons of Elkanah; Zophai his son, and Nahath his son,",
+   "BHSA 1CH 6:27": "אֱלִיאָ֥ב בְּנֹ֛ו יְרֹחָ֥ם בְּנֹ֖ו אֶלְקָנָ֥ה בְנֹֽו׃ ",
+   "KJV 1CH 6:27": "Eliab his son, Jeroham his son, Elkanah his son."
+  },
+  "A": {
+   "name": "Elkanah",
+   "line": "father of Zophai [Zuph] (1CH 6:26) and son of Mahath (1CH 6:35)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "son-of mahath (Mahath, son of Amasai (1CH 6:35))",
+    "father-of zuph (Zuph, father of Tohu and ancestor of Samuel (1SA 1:1))"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Elkanah",
+   "line": "father of Amasai and Ahimoth (1CH 6:25) and son of Joel (1CH 6:36)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "father-of amasai (Amasai, son of Elkanah (1CH 6:25, 1CH 6:35))",
+    "father-of ahimoth (Ahimoth, son of Elkanah (1CH 6:25))",
+    "son-of mahath (Mahath, son of Amasai (1CH 6:35))"
+   ],
+   "verses": 9
+  }
+ },
+ "names": "A",
+ "why": "The repeated Elkanah in 6:26 introduces Zophai as בְּנוֹ, “his son,” identifying A, the father of Zophai/Zuph. B is the Elkanah whose sons Amasai and Ahimoth are named in the preceding verse.",
+ "confidence": 0.92,
+ "names_slug": "elkanah-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:33:29+00:00"
+}

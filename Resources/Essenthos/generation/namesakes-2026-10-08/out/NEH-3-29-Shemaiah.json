@@ -1,0 +1,53 @@
+{
+ "b": 16,
+ "c": 3,
+ "v": 29,
+ "label": "Shemaiah",
+ "dataset_man": "shemaiah-17",
+ "split_man": "shemaiah-2",
+ "case": {
+  "verse": "NEH 3:29",
+  "name": "Shemaiah",
+  "text": {
+   "BHSA NEH 3:28": "מֵעַ֣ל׀ שַׁ֣עַר הַסּוּסִ֗ים הֶחֱזִ֨יקוּ֙ הַכֹּ֣הֲנִ֔ים אִ֖ישׁ לְנֶ֥גֶד בֵּיתֹֽו׃ ס ",
+   "KJV NEH 3:28": "From above the horse gate repaired the priests, every one over against his house.",
+   "BHSA NEH 3:29": "אַחֲרָ֧יו הֶחֱזִ֛יק צָדֹ֥וק בֶּן־אִמֵּ֖ר נֶ֣גֶד בֵּיתֹ֑ו ס וְאַחֲרָ֤יו הֶחֱזִיק֙ שְׁמַֽעְיָ֣ה בֶן־שְׁכַנְיָ֔ה שֹׁמֵ֖ר שַׁ֥עַר הַמִּזְרָֽח׃ ס ",
+   "KJV NEH 3:29": "After them repaired Zadok the son of Immer over against his house. After him repaired also Shemaiah the son of Shechaniah, the keeper of the east gate.",
+   "BHSA NEH 3:30": "אחרי הֶחֱזִ֜יק חֲנַנְיָ֣ה בֶן־שֶׁלֶמְיָ֗ה וְחָנ֧וּן בֶּן־צָלָ֛ף הַשִּׁשִּׁ֖י מִדָּ֣ה שֵׁנִ֑י ס אַחֲרָ֣יו הֶחֱזִ֗יק מְשֻׁלָּם֙ בֶּן־בֶּ֣רֶכְיָ֔ה נֶ֖גֶד נִשְׁכָּתֹֽו׃ ס ",
+   "KJV NEH 3:30": "After him repaired Hananiah the son of Shelemiah, and Hanun the sixth son of Zalaph, another piece. After him repaired Meshullam the son of Berechiah over against his chamber."
+  },
+  "A": {
+   "name": "Shemaiah",
+   "line": "repaired the wall of Jerusalem (NEH 3:29)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of shecaniah-6 (Shecaniah, father of Shemaiah (NEH 3:29))"
+   ],
+   "verses": 2
+  },
+  "B": {
+   "name": "Shemaiah",
+   "line": "son of Shecaniah (1CH 3:22)",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": null,
+   "family": [
+    "son-of shecaniah (Shecaniah, son of Hananiah (1CH 3:21))",
+    "father-of hattush (Hattush, son of Shecaniah (1CH 3:22))",
+    "father-of igal-3 (Igal, son of Shecaniah (1CH 3:22))",
+    "father-of bariah (Bariah, son of Shecaniah (1CH 3:22))",
+    "father-of neariah (Neariah, son of Shecaniah (1CH 3:22))",
+    "father-of shaphat-3 (Shaphat, son of Shecaniah (1CH 3:22))"
+   ],
+   "verses": 3
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew identifies Shemaiah son of Shecaniah as the keeper of the east gate, repairing the wall after Zadok. This matches A’s stated wall-repair role; B’s royal-family genealogy supplies no connection to that office or event.",
+ "confidence": 0.96,
+ "names_slug": "shemaiah-17",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:39:09+00:00"
+}

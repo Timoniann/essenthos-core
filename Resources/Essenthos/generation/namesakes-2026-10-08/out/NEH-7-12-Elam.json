@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 7,
+ "v": 12,
+ "label": "Elam",
+ "dataset_man": "elam-4",
+ "split_man": "elam-7",
+ "case": {
+  "verse": "NEH 7:12",
+  "name": "Elam",
+  "text": {
+   "BHSA NEH 7:11": "בְּנֵֽי־פַחַ֥ת מֹואָ֛ב לִבְנֵ֥י יֵשׁ֖וּעַ וְיֹואָ֑ב אַלְפַּ֕יִם וּשְׁמֹנֶ֥ה מֵאֹ֖ות שְׁמֹנָ֥ה עָשָֽׂר׃ ס ",
+   "KJV NEH 7:11": "The children of Pahathmoab, of the children of Jeshua and Joab, two thousand and eight hundred and eighteen.",
+   "BHSA NEH 7:12": "בְּנֵ֣י עֵילָ֔ם אֶ֕לֶף מָאתַ֖יִם חֲמִשִּׁ֥ים וְאַרְבָּעָֽה׃ ס ",
+   "KJV NEH 7:12": "The children of Elam, a thousand two hundred fifty and four.",
+   "BHSA NEH 7:13": "בְּנֵ֣י זַתּ֔וּא שְׁמֹנֶ֥ה מֵאֹ֖ות אַרְבָּעִ֥ים וַחֲמִשָּֽׁה׃ ס ",
+   "KJV NEH 7:13": "The children of Zattu, eight hundred forty and five."
+  },
+  "A": {
+   "name": "Elam",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:7)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "father of Jehiel (EZR 10:2), named on the sealed document of NEH 10:1-27 (NEH 10:14)",
+   "family": [
+    "ancestor-of jeshaiah-3 (Jeshaiah, descendant of Elam, son of Athaliah who went up with Ezra (E)",
+    "ancestor-of shecaniah-5 (Shecaniah, son of Jehiel (EZR 10:2))",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "verses": 13
+  },
+  "B": {
+   "name": "Elam",
+   "line": "Ancestor of 1,254 exiles who returned with Zerubbabel",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "A",
+ "why": "בְּנֵי עֵילָם appears between Pahath-moab and Zattu, matching the Ezra 2:7 family explicitly identified with A. The count of 1,254 also fits B, so the list position, rather than the number, decides it.",
+ "confidence": 0.9,
+ "names_slug": "elam-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:39:32+00:00"
+}

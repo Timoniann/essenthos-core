@@ -1,0 +1,49 @@
+{
+ "b": 13,
+ "c": 8,
+ "v": 3,
+ "label": "Gera",
+ "dataset_man": "gera",
+ "split_man": "gera-5",
+ "case": {
+  "verse": "1CH 8:3",
+  "name": "Gera",
+  "text": {
+   "BHSA 1CH 8:2": "נֹוחָה֙ הָֽרְבִיעִ֔י וְרָפָ֖א הַחֲמִישִֽׁי׃ ס ",
+   "KJV 1CH 8:2": "Nohah the fourth, and Rapha the fifth.",
+   "BHSA 1CH 8:3": "וַיִּהְי֥וּ בָנִ֖ים לְבָ֑לַע אַדָּ֥ר וְגֵרָ֖א וַאֲבִיהֽוּד׃ ",
+   "KJV 1CH 8:3": "And the sons of Bela were, Addar, and Gera, and Abihud,",
+   "BHSA 1CH 8:4": "וַאֲבִישׁ֥וּעַ וְנַעֲמָ֖ן וַאֲחֹֽוחַ׃ ",
+   "KJV 1CH 8:4": "And Abishua, and Naaman, and Ahoah,"
+  },
+  "A": {
+   "name": "Gera",
+   "line": "(grand?)son of Benjamin (GEN 46:21), son of Bela (1CH 8:3)",
+   "sex": "male",
+   "tribe": "Benjamin",
+   "notes": "from the list of \"sons of Israel\" who \"went to Egypt\" (GEN 46:8-27)",
+   "family": [
+    "son-of benjamin (Benjamin, twelfth-born son of Jacob and Rachel (GEN 35:18))",
+    "son-of bela-2 (Bela, son of Benjamin (GEN 46:21))"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Gera",
+   "line": "Son of Bela, grandson of Benjamin, in the Chronicles genealogy.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of bela-2 (Bela, son of Benjamin (GEN 46:21))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew names one Gera among Bela’s sons, matching B’s stated genealogy. However, A also explicitly identifies Gera as Bela’s son in this verse, so the supplied text and facts cannot distinguish the two records.",
+ "confidence": 0.5,
+ "names_slug": "gera-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:33:44+00:00"
+}

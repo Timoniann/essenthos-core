@@ -1,0 +1,49 @@
+{
+ "b": 16,
+ "c": 6,
+ "v": 18,
+ "label": "Arah",
+ "dataset_man": "arah-3",
+ "split_man": "arah-2",
+ "case": {
+  "verse": "NEH 6:18",
+  "name": "Arah",
+  "text": {
+   "BHSA NEH 6:17": "גַּ֣ם׀ בַּיָּמִ֣ים הָהֵ֗ם מַרְבִּ֞ים חֹרֵ֤י יְהוּדָה֙ אִגְּרֹ֣תֵיהֶ֔ם הֹולְכֹ֖ות עַל־טֹובִיָּ֑ה וַאֲשֶׁ֥ר לְטֹובִיָּ֖ה בָּאֹ֥ות אֲלֵיהֶֽם׃ ",
+   "KJV NEH 6:17": "Moreover in those days the nobles of Judah sent many letters unto Tobiah, and the letters of Tobiah came unto them.",
+   "BHSA NEH 6:18": "כִּי־רַבִּ֣ים בִּֽיהוּדָ֗ה בַּעֲלֵ֤י שְׁבוּעָה֙ לֹ֔ו כִּי־חָתָ֥ן ה֖וּא לִשְׁכַנְיָ֣ה בֶן־אָרַ֑ח וִֽיהֹוחָנָ֣ן בְּנֹ֔ו לָקַ֕ח אֶת־בַּת־מְשֻׁלָּ֖ם בֶּ֥ן בֶּֽרֶכְיָֽה׃ ",
+   "KJV NEH 6:18": "For there were many in Judah sworn unto him, because he was the son in law of Shechaniah the son of Arah; and his son Johanan had taken the daughter of Meshullam the son of Berechiah.",
+   "BHSA NEH 6:19": "גַּ֣ם טֹובֹתָ֗יו הָי֤וּ אֹמְרִים֙ לְפָנַ֔י וּדְבָרַ֕י הָי֥וּ מֹוצִיאִ֖ים לֹ֑ו אִגְּרֹ֛ות שָׁלַ֥ח טֹובִיָּ֖ה לְיָֽרְאֵֽנִי׃ ",
+   "KJV NEH 6:19": "Also they reported his good deeds before me, and uttered my words to him. And Tobiah sent letters to put me in fear."
+  },
+  "A": {
+   "name": "Arah",
+   "line": "father of Shecaniah (NEH 6:18)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of shecaniah-7 (Shecaniah, father-in-law of Tobiah (NEH 6:18))"
+   ],
+   "verses": 2
+  },
+  "B": {
+   "name": "Arah",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:5)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of shecaniah-7 (Shecaniah, father-in-law of Tobiah (NEH 6:18))",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "verses": 5
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew שְׁכַנְיָה בֶן־אָרַח identifies Arah as the father of Shecaniah, Tobiah’s father-in-law, matching A’s stated identity. However, B has the identical family relationship, so the supplied text and records cannot conclusively distinguish them.",
+ "confidence": 0.5,
+ "names_slug": "arah-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:39:22+00:00"
+}

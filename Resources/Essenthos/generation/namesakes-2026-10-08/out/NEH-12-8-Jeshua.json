@@ -1,0 +1,51 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 8,
+ "label": "Jeshua",
+ "dataset_man": "jeshua-5",
+ "split_man": "jeshua-7",
+ "case": {
+  "verse": "NEH 12:8",
+  "name": "Jeshua",
+  "text": {
+   "BHSA NEH 12:7": "סַלּ֣וּ עָמֹ֔וק חִלְקִיָּ֖ה יְדַֽעְיָ֑ה אֵ֣לֶּה רָאשֵׁ֧י הַכֹּהֲנִ֛ים וַאֲחֵיהֶ֖ם בִּימֵ֥י יֵשֽׁוּעַ׃ פ ",
+   "KJV NEH 12:7": "Sallu, Amok, Hilkiah, Jedaiah. These were the chief of the priests and of their brethren in the days of Jeshua.",
+   "BHSA NEH 12:8": "וְהַלְוִיִּ֗ם יֵשׁ֧וּעַ בִּנּ֛וּי קַדְמִיאֵ֥ל שֵׁרֵבְיָ֖ה יְהוּדָ֣ה מַתַּנְיָ֑ה עַֽל־הֻיְּדֹ֖ות ה֥וּא וְאֶחָֽיו׃ ",
+   "KJV NEH 12:8": "Moreover the Levites: Jeshua, Binnui, Kadmiel, Sherebiah, Judah, and Mattaniah, which was over the thanksgiving, he and his brethren.",
+   "BHSA NEH 12:9": "וּבַקְבֻּֽקְיָ֨ה וענו אֲחֵיהֶ֛ם לְנֶגְדָּ֖ם לְמִשְׁמָרֹֽות׃ ",
+   "KJV NEH 12:9": "Also Bakbukiah and Unni, their brethren, were over against them in the watches."
+  },
+  "A": {
+   "name": "Jeshua",
+   "line": "Levite whose sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "of the sons of Hodaviah.  A peer/brother of Kadmiel? (EZR 2:40). Father of Jozabad (EZR 8:33)",
+   "family": [
+    "descendant-of hodaviah-5 (Hodaviah, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Jeshua",
+   "line": "explained the law to the people (NEH 8:7), stood on the Levites platform (NEH 9:4), and exhorted Israel to bless the Lord (NEH 9:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "\"of\" Kadmiel (NEH 7:43), son of Kadmiel (NEH 12:24). Father of Joiakim (NEH 12:10)",
+   "family": [
+    "son-of kadmiel-2 (Kadmiel, stood on the Levites platform (NEH 9:4) and exhorted Israel )",
+    "son-of kadmiel (Kadmiel, his sons (descendants) returned to Judah after captivity (EZ)",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)",
+    "son-of azaniah (Azaniah, father of Jeshua (NEH 10:9))"
+   ],
+   "verses": 13
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew names Jeshua alongside Binnui and Kadmiel among the Levites, following the priests identified with 'the days of Jeshua' (12:7), which best fits A's return-era setting. B's law-reading activities and identification as a son of Kadmiel fit a later setting, although this verse supplies no patronymic to make the distinction certain.",
+ "confidence": 0.82,
+ "names_slug": "jeshua-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:42:51+00:00"
+}

@@ -1,0 +1,46 @@
+{
+ "b": 38,
+ "c": 12,
+ "v": 12,
+ "label": "Nathan",
+ "dataset_man": "nathan-2",
+ "split_man": "nathan-10",
+ "case": {
+  "verse": "ZEC 12:12",
+  "name": "Nathan",
+  "text": {
+   "BHSA ZEC 12:11": "בַּיֹּ֣ום הַה֗וּא יִגְדַּ֤ל הַמִּסְפֵּד֙ בִּיר֣וּשָׁלִַ֔ם כְּמִסְפַּ֥ד הֲדַדְ־רִמֹּ֖ון בְּבִקְעַ֥ת מְגִדֹּֽון׃ ",
+   "KJV ZEC 12:11": "In that day shall there be a great mourning in Jerusalem, as the mourning of Hadadrimmon in the valley of Megiddon.",
+   "BHSA ZEC 12:12": "וְסָפְדָ֣ה הָאָ֔רֶץ מִשְׁפָּחֹ֥ות מִשְׁפָּחֹ֖ות לְבָ֑ד מִשְׁפַּ֨חַת בֵּית־דָּוִ֤יד לְבָד֙ וּנְשֵׁיהֶ֣ם לְבָ֔ד מִשְׁפַּ֤חַת בֵּית־נָתָן֙ לְבָ֔ד וּנְשֵׁיהֶ֖ם לְבָֽד׃ ",
+   "KJV ZEC 12:12": "And the land shall mourn, every family apart; the family of the house of David apart, and their wives apart; the family of the house of Nathan apart, and their wives apart;",
+   "BHSA ZEC 12:13": "מִשְׁפַּ֤חַת בֵּית־לֵוִי֙ לְבָ֔ד וּנְשֵׁיהֶ֖ם לְבָ֑ד מִשְׁפַּ֤חַת הַשִּׁמְעִי֙ לְבָ֔ד וּנְשֵׁיהֶ֖ם לְבָֽד׃ ",
+   "KJV ZEC 12:13": "The family of the house of Levi apart, and their wives apart; the family of Shimei apart, and their wives apart;"
+  },
+  "A": {
+   "name": "Nathan",
+   "line": "the prophet (2SA 7:2)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "prophet-to david (David, son of Jesse (RUT 4:17), King of Israel (2SA 5:3))"
+   ],
+   "verses": 57
+  },
+  "B": {
+   "name": "Nathan",
+   "line": "Head of a family/house whose descendants shall mourn for Him whom they pierced.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew מִשְׁפַּחַת בֵּית־נָתָן names Nathan as the ancestor of a mourning house alongside the houses of David and Levi, matching B’s stated role. It supplies no title or biographical detail identifying him with Nathan the prophet, so that historical connection remains uncertain.",
+ "confidence": 0.72,
+ "names_slug": "nathan-10",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:45:36+00:00"
+}

@@ -1,0 +1,46 @@
+{
+ "b": 13,
+ "c": 15,
+ "v": 20,
+ "label": "Benaiah",
+ "dataset_man": "benaiah-4",
+ "split_man": "benaiah-12",
+ "case": {
+  "verse": "1CH 15:20",
+  "name": "Benaiah",
+  "text": {
+   "BHSA 1CH 15:19": "וְהַמְשֹׁ֣רְרִ֔ים הֵימָ֥ן אָסָ֖ף וְאֵיתָ֑ן בִּמְצִלְתַּ֥יִם נְחֹ֖שֶׁת לְהַשְׁמִֽיעַ׃ ",
+   "KJV 1CH 15:19": "So the singers, Heman, Asaph, and Ethan, were appointed to sound with cymbals of brass;",
+   "BHSA 1CH 15:20": "וּזְכַרְיָ֨ה וַעֲזִיאֵ֜ל וּשְׁמִֽירָמֹ֤ות וִֽיחִיאֵל֙ וְעֻנִּ֣י וֶֽאֱלִיאָ֔ב וּמַעֲשֵׂיָ֖הוּ וּבְנָיָ֑הוּ בִּנְבָלִ֖ים עַל־עֲלָמֹֽות׃ ",
+   "KJV 1CH 15:20": "And Zechariah, and Aziel, and Shemiramoth, and Jehiel, and Unni, and Eliab, and Maaseiah, and Benaiah, with psalteries on Alamoth;",
+   "BHSA 1CH 15:21": "וּמַתִּתְיָ֣הוּ וֶאֱלִֽיפְלֵ֗הוּ וּמִקְנֵיָ֨הוּ֙ וְעֹבֵ֣ד אֱדֹ֔ם וִֽיעִיאֵ֖ל וַעֲזַזְיָ֑הוּ בְּכִנֹּרֹ֥ות עַל־הַשְּׁמִינִ֖ית לְנַצֵּֽחַ׃ ",
+   "KJV 1CH 15:21": "And Mattithiah, and Elipheleh, and Mikneiah, and Obededom, and Jeiel, and Azaziah, with harps on the Sheminith to excel."
+  },
+  "A": {
+   "name": "Benaiah",
+   "line": "a Levite of the second degree who played the psaltery before the ark (1CH 15:18, 15:20, 16:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Benaiah",
+   "line": "Levite of second degree who played the psaltery on Alamoth before the ark",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew places Benaiah among those playing psalteries on Alamoth, matching A’s stated role. B describes the same role, however, so the verse does not distinguish the two records or establish that two Benaiahs are named.",
+ "confidence": 0.5,
+ "names_slug": "benaiah-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:35:21+00:00"
+}
