@@ -980,6 +980,214 @@
       "why": "Johanan-13 is the son of Tobiah the Ammonite who married the daughter of Meshullam (NEH 6:18), whom the kept record holds as Jehohanan; the register's bearer holds no word, verse or relationship of its own.",
       "confidence": 0.98,
       "source": "Essenthos: the person register's bearers that no verse stands behind, each compared with the held record of the same man by an agent reading their lines and verses (claude-sonnet-5-5, 2026-10-08), after the register's lines were found to say that no verse attests them"
+    },
+    {
+      "strongNumber": "H6126",
+      "keeps": "akkub-2",
+      "folds": "akkub-4",
+      "why": "Both records identify the same Akkub in the same gatekeeper list with Shallum, Talmon, and Ahiman (1CH 9:17); B supplies no independent lineage or occurrence distinguishing another person. A preserves that occurrence and the additional gatekeeper references, including the children of Akkub in EZR 2:42 and NEH 7:45, so B is a thinner duplicate of A.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H6126",
+      "keeps": "akkub-2",
+      "folds": "akkub-6",
+      "why": "B is a thinner copy of A: both identify Akkub as the gatekeeper named with Talmon in NEH 11:19 and NEH 12:25. A also includes the related gatekeeper listing in 1CH 9:17 and the children of Akkub in EZR 2:42 and NEH 7:45; those descendant lists do not establish a second individual represented by B. No supplied father, family tie, or verse distinguishes B from A.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "G301",
+      "keeps": "amos-2",
+      "folds": "amos-4",
+      "why": "Both records identify the Amos of LUK 3:25 as son of Naum and father of Mattathias, occupying the same place in Luke’s genealogy. Keep B because its verse attribution is correct: MAT 1:10 names Amon, son of Manasses and father of Josias, and is wrongly attached to A.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H6222",
+      "keeps": "asaiah-3",
+      "folds": "asaiah-5",
+      "why": "Both records identify the Asaiah who is Haggiah’s son in the same Merarite genealogy at 1CH 6:30. A’s additional references identify Asaiah as chief of Merari’s sons and a Levite summoned by David (1CH 15:6, 15:11), which fits that lineage. B is a thinner duplicate with no distinguishing ancestry, generation, or role.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H1141",
+      "keeps": "benaiah-4",
+      "folds": "benaiah-12",
+      "why": "Both records identify the same Benaiah in the second-degree Levite list in 1CH 15:18 and among those playing psalteries on Alamoth in 1CH 15:20. B adds the consistent continuation in 1CH 16:5, where Benaiah serves alongside several of the same musicians, and preserves fuller compatible ties to Levi and Eliab.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H5867",
+      "keeps": "elam-4",
+      "folds": "elam-7",
+      "why": "Both records identify the ancestor of the same 1,254 returning descendants in EZR 2:7 and NEH 7:12; B is a thinner duplicate with no distinguishing genealogy. A supplies further descendant connections in EZR 8:7, EZR 10:2, and EZR 10:26. The chief in NEH 10:14 and singer in NEH 12:42 are not securely identified with that ancestor merely by name, but neither establishes a separate identity for B.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H447",
+      "keeps": "eliel-7",
+      "folds": "eliel-9",
+      "why": "Both records identify the same Eliel in 1CH 15:9: chief of the sons of Hebron, with eighty brethren. A also includes 1CH 15:11, where David summons Eliel among the Levite leaders; B is a thinner duplicate with the same ancestry and office.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H494",
+      "keeps": "elnathan",
+      "folds": "elnathan-5",
+      "why": "Both records identify Elnathan of Jerusalem as Nehushta’s father in 2KI 24:8; B contains no separate lineage, family, or occurrence. A additionally identifies him as Achbor’s son and a royal official under Jehoiakim (JER 26:22; 36:12, 25), which is compatible with that family and period. B is a thinner copy of A, whose family ties and verse coverage are fuller.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H387",
+      "keeps": "ethan",
+      "folds": "ethan-4",
+      "why": "Both records identify Ethan the Ezrahite named in 1KI 4:31, and B supplies no separate father, generation, or role. A additionally associates him with Zerah’s son Ethan (1CH 2:6) and Ethan’s son Azariah (1CH 2:8); that identification is uncertain, but it does not distinguish B as another man. B is a thinner duplicate of A’s Ezrahite record.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "G1050",
+      "keeps": "gaius",
+      "folds": "gaius-3",
+      "why": "ACT 19:29 identifies both records as the Macedonian Gaius seized with Aristarchus, Paul's traveling companion; their place and companion ties are identical. ROM 16:23, 1CO 1:14, and 3JN 1:1 do not establish a distinction between A and B, though those verses alone do not prove that every Gaius mentioned is this Macedonian. B is a thinner duplicate of A's explicitly identified ACT 19:29 person.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H2608",
+      "keeps": "hananiah-7",
+      "folds": "hananiah-14",
+      "why": "Both records identify the same wall repairer, Hananiah son of Shelemiah, in NEH 3:30, with identical father links. B is fuller, retaining the reciprocal family tie and NEH 10:23; that verse supplies no patronymic proving the identification, but nothing in it distinguishes another person.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H5714",
+      "keeps": "iddo-5",
+      "folds": "iddo-7",
+      "why": "Both records identify the Iddo of NEH 12:4 whose priestly house was headed by Zechariah in NEH 12:16; B repeats information already present in A's notes and family ties. ZEC 1:1 and 1:7 give A's fuller ancestry through Berechiah, compatible with the shortened designation in EZR 5:1 and 6:14. No supplied verse distinguishes B by a different father, generation, or office, so A is the fuller record to retain.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H3402",
+      "keeps": "jarib",
+      "folds": "jarib-2",
+      "why": "Both records identify the same Jarib in EZR 10:18, a priest of the family of Jeshua son of Jozadak who married a foreign wife. B is a thinner copy of A, and A’s additional appearance among Ezra’s chief men in EZR 8:16 introduces no conflicting family, time, or role.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H3273",
+      "keeps": "jeiel-7",
+      "folds": "jeiel-12",
+      "why": "Both records identify Jeiel alongside Shimri among the sons of Elizaphan in 2CH 29:13, with identical ancestry and verse attribution. A's Gershonite label is erroneous: Elizaphan is descended through Uzziel (EXO 6:22), of the Kohathite line correctly recorded in B. B therefore preserves the fuller, correct identification.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H3414",
+      "keeps": "jeremiah-7",
+      "folds": "jeremiah-9",
+      "why": "Both records identify the Jeremiah who returned with Zerubbabel and Jeshua in NEH 12:1, whose priestly house was represented by Hananiah under Joiakim in NEH 12:12. B repeats A's verses and family links without identifying a separate person. NEH 10:2 and NEH 12:34 supply no contrasting father or lineage that distinguishes these records; A preserves the fuller account.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H3100",
+      "keeps": "joel-6",
+      "folds": "joel-12",
+      "why": "Joel the Gershomite chief in 1CH 15:7 is the Joel David summons among the Levite chiefs in 1CH 15:11, the sole verse assigned to A. The associations with Zetham and the Laadan/Jehieli family in 1CH 23:8 and 26:22 supply further information without distinguishing another person represented by A. A is a thinner duplicate of B.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H3100",
+      "keeps": "joel-6",
+      "folds": "joel-13",
+      "why": "Both records identify the same Joel, chief of the Gershonites, in 1CH 15:7; 1CH 15:11 names him again among David's summoned Levites. B's additional references place Joel alongside Zetham in Laadan's family (1CH 23:8) and identify him as Zetham's brother in the treasury service (1CH 26:22). A contains no distinguishing lineage or chronological information and is a thinner copy of B.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H4918",
+      "keeps": "meshullam-13",
+      "folds": "meshullam-19",
+      "why": "Both records identify the same Meshullam, named last among those standing at Ezra’s left hand in NEH 8:4. Keep B because its association with Ezra is supported by that verse, whereas A’s attribution to Levi is not established there.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H4918",
+      "keeps": "meshullam-16",
+      "folds": "meshullam-20",
+      "why": "Both records identify the same Meshullam, head of Ezra’s priestly house in Joiakim’s days (NEH 12:12–13). B correctly identifies the ancestral Ezra as the priest who returned with Zerubbabel (NEH 12:1); A’s link to Ezra the scribe is mistaken. NEH 12:33 gives no father or other distinguishing detail requiring a separate person, although its identification with this Meshullam remains uncertain.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H8304",
+      "keeps": "seraiah-2",
+      "folds": "seraiah-11",
+      "why": "EZR 7:1 identifies Seraiah through Azariah and Hilkiah, matching the priestly lineage of B; 1CH 6:14 also names Seraiah as Azariah’s son and Jehozadak’s father. Ezra’s later appearance does not require another Seraiah, since the genealogy can identify an ancestor rather than an immediate father. A is a thinner copy of B, which also includes the chief priest named in 2KI 25:18 and JER 52:24.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H8227",
+      "keeps": "shaphan",
+      "folds": "shaphan-4",
+      "why": "Both records identify Josiah's scribe Shaphan, son of Azaliah and grandson of Meshullam, performing the same mission in Josiah's eighteenth year (2KI 22:3; 2CH 34:8). Their accounts of receiving and reading the law-book describe the same events (2KI 22:8–10; 2CH 34:15–18), and every verse on B also appears on A. A preserves the fuller compatible family evidence: Ahikam his son, Gedaliah his grandson, and Gemariah explicitly son of Shaphan the scribe (2KI 22:12; 25:22; JER 36:10). A's description of Gedaliah as king should be corrected to governor or ruler (JER 40:5; 2KI 25:22).",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H8203",
+      "keeps": "shephatiah-5",
+      "folds": "shephatiah-10",
+      "why": "Both records identify Shephatiah as the ancestor of Zebadiah son of Michael in Ezra 8:8, and A supplies no distinguishing information. Ezra 2:4 and Nehemiah 7:9 repeat the same ancestral family of 372 returnees; the later return of descendants in Ezra 8:8 fits that family, so B preserves the fuller record.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H7732",
+      "keeps": "shobal-2",
+      "folds": "shobal-3",
+      "why": "1CH 4:1 lists Judah's descendants collectively, so it does not establish Judah as Shobal's immediate father or distinguish him from the Shobal in Hur's line in 1CH 2:50. Shobal's family in 1CH 2:52 is compatible with his being Reaiah's father in 1CH 4:2. B repeats A's Reaiah relationship and verses without supplying a distinct generation or identity; A is the fuller record.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H8480",
+      "keeps": "tahath",
+      "folds": "tahath-5",
+      "why": "The ancestry in 1CH 6:37—Tahath, Assir, Ebiasaph, Korah—matches A's family line in 1CH 6:23–24. B repeats this same identification, and its description of Tahath as Zephaniah's father does not conflict with his also having Uriel as a son in 1CH 6:24. A preserves the fuller family ties and both verse references.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H8555",
+      "keeps": "timna",
+      "folds": "timna-3",
+      "why": "Both records identify Timna as Lotan’s sister in GEN 36:22 and 1CH 1:39, where the Hebrew explicitly gives that relationship. B is a thinner copy of A, with no conflicting family ties or chronology. A additionally preserves her relationship to Eliphaz and motherhood of Amalek in GEN 36:12, consistent with Timna and Amalek appearing in Eliphaz’s list in 1CH 1:36.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H2139",
+      "keeps": "zaccur-6",
+      "folds": "zaccur-7",
+      "why": "NEH 13:13 gives both records the identical identity: Zaccur, son of Mattaniah and father of Hanan. B is a thinner copy of that entry, while A also includes NEH 10:12; the supplied verses show no conflicting parentage, generation, or separate individual.",
+      "confidence": 0.95,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
     }
   ],
   "declined": [
