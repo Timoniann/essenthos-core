@@ -1,8 +1,9 @@
 # The Bible's persons, places and things, from Wikidata
 
 The Wikidata items a record can be matched to, so that a person, place or record page can link to
-its Wikipedia article in the reader's language. Nothing here is loaded yet: this is the source the
-matching will read. **CC0** (see `LICENCE.md`).
+its Wikipedia article in the reader's language. The load step `wikipedia` reads this folder (and the
+Wikidata item OpenBible gives each ancient place) and writes the table `entity_wikipedia`; see "How
+the records are matched" below. **CC0** (see `LICENCE.md`).
 
 Fetched **27 September 2026** by `scripts/fetch-wikidata-biblical.ps1` (avioniq action
 `fetch-wikidata-biblical`), from `https://query.wikidata.org/sparql` and the Wikibase API
@@ -88,6 +89,32 @@ stated. Of the places, 1,480 have coordinates.
   name to match on; the rest have only another language's.
 - `described-by-source` brings 672 things that are neither person nor place (Nicephorus has
   articles on taxa, concepts, the Earth); they are `other` and harmless.
+
+## How the records are matched
+
+`forge wikipedia` (the load step of the same name, `forge load --from wikipedia`) ties a record to an
+item only where nothing else could be the item, and leaves the rest for the owner:
+
+- the candidates are the items of the right kind (a person's, a place's, a thing's) that go by one of the
+  record's names in any language, aliases included; an item that is a Wikimedia page, a people when the
+  record is a place, an angel when the line does not speak of one, or the other sex is not a candidate;
+- a tie is made at the first of these that picks out exactly one candidate, and no other record has an
+  equal or stronger claim on that item: the gazetteer's own Wikidata item for the ancient place
+  (`identification`); a verse the item's description cites that names the record (`verse`); kin the item's
+  family statements or description share with the record's line (`kin`); a chapter the item is present
+  in (`chapter`);
+- failing evidence, to the only candidate by every spelling of the name when no other record could be that
+  item and Wikidata states no namesake it is to be told from (P1889 to a person or a place of the same
+  name, any P460) — for a person, or a place that goes by the item's own label (`name`). The name alone
+  never ties an object, a feast, a people or a title;
+- everything else is ambiguous. Those with a candidate that has an article are listed in
+  `Resources/Essenthos/review/wikipedia-matches.json` for the owner's console; his answer there (an item,
+  or `none`) overrides the matching on every later load.
+
+Items counted as candidates include those without any article, because the dangerous case is the minor
+man of the famous man's name, and the minor namesakes are mostly items with none. A record is given a row
+for each of English, Ukrainian, German and Spanish in which the item has an article, and none for a
+language it has not.
 
 ## Re-running
 

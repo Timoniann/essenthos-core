@@ -563,6 +563,7 @@ public sealed class DeskTests : IAsyncLifetime
     [InlineData("Resources/Essenthos/review/objects-and-observances.json")]
     [InlineData("Resources/Essenthos/review/eponym-verses.json")]
     [InlineData("Resources/Essenthos/review/septuagint-placement.json")]
+    [InlineData("Resources/Essenthos/review/wikipedia-matches.json")]
     [InlineData("Essenthos.Api/site-settings.json")]
     public void AFileWrittenBackUnchangedIsTheSameFile(string tracked)
     {

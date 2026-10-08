@@ -16,6 +16,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Unmatched">Records no item goes by the name of.</param>
 /// <param name="Decided">Records settled by the owner's word.</param>
 /// <param name="Rows">Article links held: one per record and language.</param>
+/// <param name="ByKind">For each kind of record: how many were tied, how many are ambiguous and how many no item goes by the name of.</param>
 internal sealed record WikipediaOutcome(
     bool Skipped,
     IReadOnlyDictionary<string, int> Linked,
@@ -26,7 +27,8 @@ internal sealed record WikipediaOutcome(
     int Rows,
     int Written,
     int Removed,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    IReadOnlyDictionary<string, (int Tied, int Ambiguous, int Unmatched)>? ByKind = null)
 {
     public override string ToString() =>
         Skipped
@@ -34,7 +36,12 @@ internal sealed record WikipediaOutcome(
             : $"{Linked.Values.Sum()} records tied to a Wikidata item ({string.Join(", ", Linked.OrderByDescending(l => l.Value).Select(l => $"{l.Value} by {l.Key}"))}), " +
               $"{Ambiguous} left because the evidence does not tell them from a namesake ({Questions} listed for the owner), " +
               $"{Unmatched} that no item goes by the name of, {Decided} settled by the owner; {Rows} article links held " +
-              $"({Written} written, {Removed} removed) in {Elapsed}";
+              $"({Written} written, {Removed} removed) in {Elapsed}" +
+              (ByKind is null
+                  ? string.Empty
+                  : "; by kind: " + string.Join(
+                      ", ", ByKind.OrderBy(k => k.Key, StringComparer.Ordinal)
+                          .Select(k => $"{k.Key} {k.Value.Tied} tied / {k.Value.Ambiguous} ambiguous / {k.Value.Unmatched} unmatched")));
 }
 
 /// <summary>
@@ -96,6 +103,14 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
         var decided = 0;
         var ambiguous = 0;
         var unmatched = 0;
+        var byKind = new Dictionary<string, (int Tied, int Ambiguous, int Unmatched)>(StringComparer.Ordinal);
+        void Count(WikipediaRecord record, int tied, int open, int none)
+        {
+            var kind = record.Kind.ToString().ToLowerInvariant();
+            var was = byKind.GetValueOrDefault(kind);
+            byKind[kind] = (was.Tied + tied, was.Ambiguous + open, was.Unmatched + none);
+        }
+
         foreach (var record in records)
         {
             if (answers.TryGetValue(record.Slug, out var answer))
@@ -105,6 +120,7 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
                 {
                     chosen[record.Id] = (item, EntityWikipedia.Evidence.Owner);
                     linked[EntityWikipedia.Evidence.Owner] = linked.GetValueOrDefault(EntityWikipedia.Evidence.Owner) + 1;
+                    Count(record, 1, 0, 0);
                 }
                 else if (answer.Answer != WikipediaReviewList.None)
                 {
@@ -121,12 +137,15 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
                 case WikipediaMatch.Linked tied:
                     chosen[record.Id] = (tied.Item, tied.By);
                     linked[tied.By] = linked.GetValueOrDefault(tied.By) + 1;
+                    Count(record, 1, 0, 0);
                     break;
                 case WikipediaMatch.Ambiguous:
                     ambiguous++;
+                    Count(record, 0, 1, 0);
                     break;
                 default:
                     unmatched++;
+                    Count(record, 0, 0, 1);
                     break;
             }
         }
@@ -155,7 +174,7 @@ internal sealed class WikipediaLinkLoader(AppDbContext db, ReviewLists lists, IL
         }
 
         var outcome = new WikipediaOutcome(
-            false, linked, ambiguous, questions.Count, unmatched, decided, rows, written, removed, started.Elapsed);
+            false, linked, ambiguous, questions.Count, unmatched, decided, rows, written, removed, started.Elapsed, byKind);
         logger.LogInformation("Linked the records to Wikipedia: {Outcome}", outcome);
         return outcome;
     }

@@ -70,12 +70,30 @@ internal sealed class WikidataItem
     /// <summary>Whether the item is an angel, a demon or a god: a being the text names beside the men it names.</summary>
     public bool Supernatural => Classes.Any(Supernaturals.Contains);
 
+    /// <summary>
+    /// Whether the item is a people or a tribe and not also a country or a region: the article of
+    /// <em>the Hittites</em> is not the article of the land of Hatti, though a gazetteer may name it.
+    /// </summary>
+    public bool IsOnlyAPeople => Classes.Any(Peoples.Contains) && !Classes.Any(Lands.Contains);
+
     /// <summary>Whether the item stands for a page about pages — a disambiguation page, a list, a category — not for a thing.</summary>
     public bool IsAWikimediaPage =>
         Descriptions.TryGetValue("en", out var description)
         && description.StartsWith("Wikimedia", StringComparison.OrdinalIgnoreCase);
 
     public bool HasArticle => Articles.Count > 0;
+
+    /// <summary>people, tribe, historical ethnic group, ethnic group, Iranian peoples, extinct human group.</summary>
+    private static readonly HashSet<string> Peoples = new(StringComparer.Ordinal)
+    {
+        "Q2472587", "Q133311", "Q4204501", "Q41710", "Q1672477", "Q55208590",
+    };
+
+    /// <summary>biblical place, historical country, historical region, country, geographic region.</summary>
+    private static readonly HashSet<string> Lands = new(StringComparer.Ordinal)
+    {
+        "Q12404340", "Q3024240", "Q1620908", "Q6256", "Q82794",
+    };
 
     private static readonly HashSet<string> Supernaturals = new(StringComparer.Ordinal)
     {

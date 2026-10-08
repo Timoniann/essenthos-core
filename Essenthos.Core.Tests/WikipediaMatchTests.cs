@@ -325,6 +325,52 @@ public sealed class WikipediaMatchTests : IDisposable
     }
 
     [Fact]
+    public void TheNameAloneNeverTiesAThingASacredObjectAFeastAPeopleOrATitle()
+    {
+        Add("Q1", "Showbread", kind: "other", article: "Showbread");
+        Add("Q2", "Omer", kind: "other", article: "Omer (unit)");
+        Add("Q3", "Midianites", kind: "other", article: "Midianites");
+
+        var matches = Matcher().Match(
+        [
+            Record(1, "showbread", "Showbread", EntityKind.Object),
+            Record(2, "firstfruits", "Omer", EntityKind.Observance),
+            Record(3, "midianites", "Midianites", EntityKind.People),
+        ]);
+
+        matches[1].Should().BeOfType<WikipediaMatch.Ambiguous>();
+        matches[2].Should().BeOfType<WikipediaMatch.Ambiguous>();
+        matches[3].Should().BeOfType<WikipediaMatch.Ambiguous>("a thing is left for the owner unless a verse or a chapter ties it");
+    }
+
+    [Fact]
+    public void AThingATextCitesIsTiedByTheChapterItIsPresentIn()
+    {
+        Add("Q1", "Tower of Siloam", kind: "other", article: "Tower of Siloam", claims: new() { ["P1441"] = ["Q900"] });
+
+        var matches = Matcher(referenced: [new JsonObject { ["id"] = "Q900", ["labels"] = Labels("Luke 13") }.ToJsonString()])
+            .Match([Record(1, "tower-of-siloam", "Tower of Siloam", EntityKind.Object, verses: [(42, 13, 4)])]);
+
+        LinkedTo(matches, 1).Should().Be("Q1 by chapter");
+    }
+
+    [Fact]
+    public void APlaceIsNotLinkedToThePeopleTheGazetteerNamesInItsStead()
+    {
+        Add("Q1", "Hittites", kind: "place", classes: ["Q4204501"], article: "Hittites");
+        Add("Q2", "Moab", kind: "place", classes: ["Q2472587", "Q3024240"], article: "Moab");
+
+        var matches = Matcher(new() { ["a1"] = "Q1", ["a2"] = "Q2" }).Match(
+        [
+            Record(1, "hatti", "Hatti", EntityKind.Place, openBibleId: "a1"),
+            Record(2, "moab-2", "Moab", EntityKind.Place, openBibleId: "a2"),
+        ]);
+
+        matches[1].Should().BeOfType<WikipediaMatch.Unmatched>("the Hittites are a people, and Hatti is their land");
+        LinkedTo(matches, 2).Should().Be("Q2 by identification");
+    }
+
+    [Fact]
     public void AMenNamesAreFoldedAcrossScriptsAndSpellings()
     {
         var item = new JsonObject

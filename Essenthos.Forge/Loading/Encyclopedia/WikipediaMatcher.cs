@@ -94,7 +94,8 @@ internal abstract record WikipediaMatch
 /// name speaks for — a verse its description cites, kin its family statements name, a chapter it is
 /// present in, the gazetteer's own identification of the place — and no other record has the same
 /// claim on it. Failing that, to its only candidate by every spelling of its name, when no other
-/// record could be that item either and Wikidata states no namesake it is to be told from. Anything
+/// record could be that item either and Wikidata states no namesake it is to be told from — for a
+/// person or a place; the name alone never ties a thing. Anything
 /// else is ambiguous, and an ambiguous record is not given the famous namesake: it is listed for the
 /// owner with its candidates.
 /// </para>
@@ -257,9 +258,11 @@ internal sealed class WikipediaMatcher
             return null;
         }
 
-        // A man may be known by an alias; a place or a thing that merely goes by another item's alias
-        // is not that item: Persia is not Iran, nor the Lord's Day Sunday.
-        if (record.Kind != EntityKind.Person && !item.Names.Overlaps(record.Names))
+        // A man may be known by an alias; a place that merely goes by another item's alias is not that
+        // item: Persia is not Iran. And a name alone never ties an object, a feast, a people or a title:
+        // the Wave Sheaf is also an omer, and an omer is a measure.
+        if (record.Kind is not (EntityKind.Person or EntityKind.Place)
+            || (record.Kind == EntityKind.Place && !item.Names.Overlaps(record.Names)))
         {
             return null;
         }
@@ -339,7 +342,7 @@ internal sealed class WikipediaMatcher
 
     private static bool Compatible(WikipediaRecord record, WikidataItem item)
     {
-        if (item.IsAWikimediaPage)
+        if (item.IsAWikimediaPage || (record.Kind == EntityKind.Place && item.IsOnlyAPeople))
         {
             return false;
         }

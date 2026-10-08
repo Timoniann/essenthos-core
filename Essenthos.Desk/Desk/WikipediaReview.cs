@@ -17,6 +17,7 @@ internal sealed record WikipediaOffer(
 internal sealed record WikipediaDecision(string Answer, string? Note, string? At);
 
 /// <param name="Record">The record's slug.</param>
+/// <param name="Addresses">Each reference as the reading API addresses it, in step with <paramref name="References"/>, for showing its text.</param>
 /// <param name="Others">How many more items go by its names that have no article, so are not offered.</param>
 internal sealed record WikipediaQuestion(
     string Record,
@@ -24,6 +25,7 @@ internal sealed record WikipediaQuestion(
     string Label,
     string? Line,
     IReadOnlyList<string> References,
+    IReadOnlyList<string?> Addresses,
     IReadOnlyList<WikipediaOffer> Candidates,
     int Others,
     WikipediaDecision? Decision);
@@ -135,17 +137,22 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
     private static IEnumerable<JsonObject> Entries(JsonNode root) =>
         (root["entries"]?.AsArray() ?? []).OfType<JsonObject>();
 
-    private static WikipediaQuestion Question(JsonObject entry) => new(
-        entry["record"]?.GetValue<string>() ?? string.Empty,
-        entry["kind"]?.GetValue<string>() ?? string.Empty,
-        entry["label"]?.GetValue<string>() ?? string.Empty,
-        entry["line"]?.GetValue<string>(),
-        Strings(entry["references"]),
-        [.. (entry["candidates"]?.AsArray() ?? []).OfType<JsonObject>().Select(Offer)],
-        entry["others"]?.GetValue<int>() ?? 0,
-        entry["decision"] is JsonObject decision && decision["answer"]?.GetValue<string>() is { Length: > 0 } answer
-            ? new WikipediaDecision(answer, decision["note"]?.GetValue<string>(), decision["at"]?.GetValue<string>())
-            : null);
+    private static WikipediaQuestion Question(JsonObject entry)
+    {
+        var references = Strings(entry["references"]);
+        return new WikipediaQuestion(
+            entry["record"]?.GetValue<string>() ?? string.Empty,
+            entry["kind"]?.GetValue<string>() ?? string.Empty,
+            entry["label"]?.GetValue<string>() ?? string.Empty,
+            entry["line"]?.GetValue<string>(),
+            references,
+            [.. references.Select(Desk.Addresses.Of)],
+            [.. (entry["candidates"]?.AsArray() ?? []).OfType<JsonObject>().Select(Offer)],
+            entry["others"]?.GetValue<int>() ?? 0,
+            entry["decision"] is JsonObject decision && decision["answer"]?.GetValue<string>() is { Length: > 0 } answer
+                ? new WikipediaDecision(answer, decision["note"]?.GetValue<string>(), decision["at"]?.GetValue<string>())
+                : null);
+    }
 
     private static WikipediaOffer Offer(JsonObject offer) => new(
         offer["qid"]?.GetValue<string>() ?? string.Empty,
