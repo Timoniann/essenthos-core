@@ -88,6 +88,17 @@ public class Entity
 
     public Entity? Origin { get; set; }
 
+    /// <summary>
+    /// The place this one is only another name for, where the gazetteer says so: <em>Ramah 4</em> is
+    /// another name for <em>Ramah 1</em>. It names its target by the catalogue id this record's
+    /// <see cref="OpenBibleId"/> is of, so the target is resolved exactly rather than read out of the
+    /// prose, and a record that is another name claims no site of its own. Null for every record that
+    /// is not one, which is nearly all of them.
+    /// </summary>
+    public int? AnotherNameForEntityId { get; set; }
+
+    public Entity? AnotherNameFor { get; set; }
+
     public ICollection<EntityName> Names { get; set; } = [];
 
     public ICollection<EntityVerse> Verses { get; set; } = [];

@@ -276,6 +276,8 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         "DELETE FROM entity_alternative WHERE entity_id = alternative_entity_id AND entity_id IN (SELECT kept FROM folding)",
 
         Move("entity", "origin_entity_id"),
+        Move("entity", "another_name_for_entity_id"),
+        "UPDATE entity SET another_name_for_entity_id = NULL WHERE another_name_for_entity_id = id",
         Move("entity_passage", "entity_id"),
         Move("observance_time", "entity_id"),
         Move("event", "entity_id"),

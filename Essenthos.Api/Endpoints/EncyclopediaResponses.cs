@@ -192,6 +192,9 @@ internal record EntityResponse(
     /// </summary>
     public Dictionary<string, string>? Forms { get; init; }
 
+    /// <summary>The place this one is only another name for, where the gazetteer says so.</summary>
+    public EntityTribeResponse? AnotherNameFor { get; init; }
+
     /// <summary>
     /// <paramref name="Notes"/> in the reader's language, where this corpus wrote them and they were
     /// rendered from the English the record says now. Null for an English reader, for a dataset's

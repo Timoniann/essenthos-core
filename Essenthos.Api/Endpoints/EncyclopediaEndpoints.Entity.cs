@@ -44,6 +44,26 @@ internal static partial class EncyclopediaEndpoints
         return new EntityTribeResponse(found.Slug, EnumSpelling.Of(found.Kind), found.Name, names.GetValueOrDefault(found.Id));
     }
 
+    /// <summary>The place a place is only another name for, with its name in the reader's language.</summary>
+    internal static async Task<EntityTribeResponse?> AnotherNameFor(
+        AppDbContext db, int? target, string? language, CancellationToken cancellationToken)
+    {
+        if (target is not { } id)
+        {
+            return null;
+        }
+
+        var found = await db.Entities.Where(e => e.Id == id)
+            .Select(e => new { e.Slug, e.Kind, e.Name }).FirstOrDefaultAsync(cancellationToken);
+        if (found is null)
+        {
+            return null;
+        }
+
+        var names = await EntityNames.Of(db, [id], language, cancellationToken);
+        return new EntityTribeResponse(found.Slug, EnumSpelling.Of(found.Kind), found.Name, names.GetValueOrDefault(id));
+    }
+
     /// <summary>One entity's page.</summary>
     private static void MapEntity(IEndpointRouteBuilder routes)
     {
@@ -73,6 +93,7 @@ internal static partial class EncyclopediaEndpoints
                     e.ModernEquivalent,
                     e.Notes,
                     e.OpenBibleId,
+                    e.AnotherNameForEntityId,
                     Origin = e.Origin == null
                         ? null
                         : new EntityOriginResponse(
@@ -276,6 +297,7 @@ internal static partial class EncyclopediaEndpoints
                 Descriptor = await Descriptors.Of(
                     db, entity.Slug, words, cancellationToken, language),
                 Location = entity.Location,
+                AnotherNameFor = await AnotherNameFor(db, entity.AnotherNameForEntityId, language, cancellationToken),
                 Wikipedia = await WikipediaLinks.Of(db, entity.Id, words, cancellationToken),
                 LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
                     .GetValueOrDefault(entity.Id),
