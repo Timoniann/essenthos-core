@@ -1,0 +1,183 @@
+{
+ "chapter": "GEN 9",
+ "text": {
+  "GEN 9:1": {
+   "KJV": "And God blessed Noah and his sons, and said unto them, Be fruitful, and multiply, and replenish the earth.",
+   "BHSA": "וַיְבָ֣רֶךְ אֱלֹהִ֔ים אֶת־נֹ֖חַ וְאֶת־בָּנָ֑יו וַיֹּ֧אמֶר לָהֶ֛ם פְּר֥וּ וּרְב֖וּ וּמִלְא֥וּ אֶת־הָאָֽרֶץ׃ "
+  },
+  "GEN 9:2": {
+   "KJV": "And the fear of you and the dread of you shall be upon every beast of the earth, and upon every fowl of the air, upon all that moveth upon the earth, and upon all the fishes of the sea; into your hand are they delivered.",
+   "BHSA": "וּמֹורַאֲכֶ֤ם וְחִתְּכֶם֙ יִֽהְיֶ֔ה עַ֚ל כָּל־חַיַּ֣ת הָאָ֔רֶץ וְעַ֖ל כָּל־עֹ֣וף הַשָּׁמָ֑יִם בְּכֹל֩ אֲשֶׁ֨ר תִּרְמֹ֧שׂ הָֽאֲדָמָ֛ה וּֽבְכָל־דְּגֵ֥י הַיָּ֖ם בְּיֶדְכֶ֥ם נִתָּֽנוּ׃ "
+  },
+  "GEN 9:3": {
+   "KJV": "Every moving thing that liveth shall be meat for you; even as the green herb have I given you all things.",
+   "BHSA": "כָּל־רֶ֨מֶשׂ֙ אֲשֶׁ֣ר הוּא־חַ֔י לָכֶ֥ם יִהְיֶ֖ה לְאָכְלָ֑ה כְּיֶ֣רֶק עֵ֔שֶׂב נָתַ֥תִּי לָכֶ֖ם אֶת־כֹּֽל׃ "
+  },
+  "GEN 9:4": {
+   "KJV": "But flesh with the life thereof, which is the blood thereof, shall ye not eat.",
+   "BHSA": "אַךְ־בָּשָׂ֕ר בְּנַפְשֹׁ֥ו דָמֹ֖ו לֹ֥א תֹאכֵֽלוּ׃ "
+  },
+  "GEN 9:5": {
+   "KJV": "And surely your blood of your lives will I require; at the hand of every beast will I require it, and at the hand of man; at the hand of every man's brother will I require the life of man.",
+   "BHSA": "וְאַ֨ךְ אֶת־דִּמְכֶ֤ם לְנַפְשֹֽׁתֵיכֶם֙ אֶדְרֹ֔שׁ מִיַּ֥ד כָּל־חַיָּ֖ה אֶדְרְשֶׁ֑נּוּ וּמִיַּ֣ד הָֽאָדָ֗ם מִיַּד֙ אִ֣ישׁ אָחִ֔יו אֶדְרֹ֖שׁ אֶת־נֶ֥פֶשׁ הָֽאָדָֽם׃ "
+  },
+  "GEN 9:6": {
+   "KJV": "Whoso sheddeth man's blood, by man shall his blood be shed: for in the image of God made he man.",
+   "BHSA": "שֹׁפֵךְ֙ דַּ֣ם הָֽאָדָ֔ם בָּֽאָדָ֖ם דָּמֹ֣ו יִשָּׁפֵ֑ךְ כִּ֚י בְּצֶ֣לֶם אֱלֹהִ֔ים עָשָׂ֖ה אֶת־הָאָדָֽם׃ "
+  },
+  "GEN 9:7": {
+   "KJV": "And you, be ye fruitful, and multiply; bring forth abundantly in the earth, and multiply therein.",
+   "BHSA": "וְאַתֶּ֖ם פְּר֣וּ וּרְב֑וּ שִׁרְצ֥וּ בָאָ֖רֶץ וּרְבוּ־בָֽהּ׃ ס "
+  },
+  "GEN 9:8": {
+   "KJV": "And God spake unto Noah, and to his sons with him, saying,",
+   "BHSA": "וַיֹּ֤אמֶר אֱלֹהִים֙ אֶל־נֹ֔חַ וְאֶל־בָּנָ֥יו אִתֹּ֖ו לֵאמֹֽר׃ "
+  },
+  "GEN 9:9": {
+   "KJV": "And I, behold, I establish my covenant with you, and with your seed after you;",
+   "BHSA": "וַאֲנִ֕י הִנְנִ֥י מֵקִ֛ים אֶת־בְּרִיתִ֖י אִתְּכֶ֑ם וְאֶֽת־זַרְעֲכֶ֖ם אַֽחֲרֵיכֶֽם׃ "
+  },
+  "GEN 9:10": {
+   "KJV": "And with every living creature that is with you, of the fowl, of the cattle, and of every beast of the earth with you; from all that go out of the ark, to every beast of the earth.",
+   "BHSA": "וְאֵ֨ת כָּל־נֶ֤פֶשׁ הַֽחַיָּה֙ אֲשֶׁ֣ר אִתְּכֶ֔ם בָּעֹ֧וף בַּבְּהֵמָ֛ה וּֽבְכָל־חַיַּ֥ת הָאָ֖רֶץ אִתְּכֶ֑ם מִכֹּל֙ יֹצְאֵ֣י הַתֵּבָ֔ה לְכֹ֖ל חַיַּ֥ת הָאָֽרֶץ׃ "
+  },
+  "GEN 9:11": {
+   "KJV": "And I will establish my covenant with you, neither shall all flesh be cut off any more by the waters of a flood; neither shall there any more be a flood to destroy the earth.",
+   "BHSA": "וַהֲקִמֹתִ֤י אֶת־בְּרִיתִי֙ אִתְּכֶ֔ם וְלֹֽא־יִכָּרֵ֧ת כָּל־בָּשָׂ֛ר עֹ֖וד מִמֵּ֣י הַמַּבּ֑וּל וְלֹֽא־יִהְיֶ֥ה עֹ֛וד מַבּ֖וּל לְשַׁחֵ֥ת הָאָֽרֶץ׃ "
+  },
+  "GEN 9:12": {
+   "KJV": "And God said, This is the token of the covenant which I make between me and you and every living creature that is with you, for perpetual generations:",
+   "BHSA": "וַיֹּ֣אמֶר אֱלֹהִ֗ים זֹ֤את אֹֽות־הַבְּרִית֙ אֲשֶׁר־אֲנִ֣י נֹתֵ֗ן בֵּינִי֙ וּבֵ֣ינֵיכֶ֔ם וּבֵ֛ין כָּל־נֶ֥פֶשׁ חַיָּ֖ה אֲשֶׁ֣ר אִתְּכֶ֑ם לְדֹרֹ֖ת עֹולָֽם׃ "
+  },
+  "GEN 9:13": {
+   "KJV": "I do set my bow in the cloud, and it shall be for a token of a covenant between me and the earth.",
+   "BHSA": "אֶת־קַשְׁתִּ֕י נָתַ֖תִּי בֶּֽעָנָ֑ן וְהָֽיְתָה֙ לְאֹ֣ות בְּרִ֔ית בֵּינִ֖י וּבֵ֥ין הָאָֽרֶץ׃ "
+  },
+  "GEN 9:14": {
+   "KJV": "And it shall come to pass, when I bring a cloud over the earth, that the bow shall be seen in the cloud:",
+   "BHSA": "וְהָיָ֕ה בְּעַֽנְנִ֥י עָנָ֖ן עַל־הָאָ֑רֶץ וְנִרְאֲתָ֥ה הַקֶּ֖שֶׁת בֶּעָנָֽן׃ "
+  },
+  "GEN 9:15": {
+   "KJV": "And I will remember my covenant, which is between me and you and every living creature of all flesh; and the waters shall no more become a flood to destroy all flesh.",
+   "BHSA": "וְזָכַרְתִּ֣י אֶת־בְּרִיתִ֗י אֲשֶׁ֤ר בֵּינִי֙ וּבֵ֣ינֵיכֶ֔ם וּבֵ֛ין כָּל־נֶ֥פֶשׁ חַיָּ֖ה בְּכָל־בָּשָׂ֑ר וְלֹֽא־יִֽהְיֶ֨ה עֹ֤וד הַמַּ֨יִם֙ לְמַבּ֔וּל לְשַׁחֵ֖ת כָּל־בָּשָֽׂר׃ "
+  },
+  "GEN 9:16": {
+   "KJV": "And the bow shall be in the cloud; and I will look upon it, that I may remember the everlasting covenant between God and every living creature of all flesh that is upon the earth.",
+   "BHSA": "וְהָיְתָ֥ה הַקֶּ֖שֶׁת בֶּֽעָנָ֑ן וּרְאִיתִ֗יהָ לִזְכֹּר֙ בְּרִ֣ית עֹולָ֔ם בֵּ֣ין אֱלֹהִ֔ים וּבֵין֙ כָּל־נֶ֣פֶשׁ חַיָּ֔ה בְּכָל־בָּשָׂ֖ר אֲשֶׁ֥ר עַל־הָאָֽרֶץ׃ "
+  },
+  "GEN 9:17": {
+   "KJV": "And God said unto Noah, This is the token of the covenant, which I have established between me and all flesh that is upon the earth.",
+   "BHSA": "וַיֹּ֥אמֶר אֱלֹהִ֖ים אֶל־נֹ֑חַ זֹ֤את אֹֽות־הַבְּרִית֙ אֲשֶׁ֣ר הֲקִמֹ֔תִי בֵּינִ֕י וּבֵ֥ין כָּל־בָּשָׂ֖ר אֲשֶׁ֥ר עַל־הָאָֽרֶץ׃ פ "
+  },
+  "GEN 9:18": {
+   "KJV": "And the sons of Noah, that went forth of the ark, were Shem, and Ham, and Japheth: and Ham is the father of Canaan.",
+   "BHSA": "וַיִּֽהְי֣וּ בְנֵי־נֹ֗חַ הַיֹּֽצְאִים֙ מִן־הַתֵּבָ֔ה שֵׁ֖ם וְחָ֣ם וָיָ֑פֶת וְחָ֕ם ה֖וּא אֲבִ֥י כְנָֽעַן׃ "
+  },
+  "GEN 9:19": {
+   "KJV": "These are the three sons of Noah: and of them was the whole earth overspread.",
+   "BHSA": "שְׁלֹשָׁ֥ה אֵ֖לֶּה בְּנֵי־נֹ֑חַ וּמֵאֵ֖לֶּה נָֽפְצָ֥ה כָל־הָאָֽרֶץ׃ "
+  },
+  "GEN 9:20": {
+   "KJV": "And Noah began to be an husbandman, and he planted a vineyard:",
+   "BHSA": "וַיָּ֥חֶל נֹ֖חַ אִ֣ישׁ הָֽאֲדָמָ֑ה וַיִּטַּ֖ע כָּֽרֶם׃ "
+  },
+  "GEN 9:21": {
+   "KJV": "And he drank of the wine, and was drunken; and he was uncovered within his tent.",
+   "BHSA": "וַיֵּ֥שְׁתְּ מִן־הַיַּ֖יִן וַיִּשְׁכָּ֑ר וַיִּתְגַּ֖ל בְּתֹ֥וךְ אהלה׃ "
+  },
+  "GEN 9:22": {
+   "KJV": "And Ham, the father of Canaan, saw the nakedness of his father, and told his two brethren without.",
+   "BHSA": "וַיַּ֗רְא חָ֚ם אֲבִ֣י כְנַ֔עַן אֵ֖ת עֶרְוַ֣ת אָבִ֑יו וַיַּגֵּ֥ד לִשְׁנֵֽי־אֶחָ֖יו בַּחֽוּץ׃ "
+  },
+  "GEN 9:23": {
+   "KJV": "And Shem and Japheth took a garment, and laid it upon both their shoulders, and went backward, and covered the nakedness of their father; and their faces were backward, and they saw not their father's nakedness.",
+   "BHSA": "וַיִּקַּח֩ שֵׁ֨ם וָיֶ֜פֶת אֶת־הַשִּׂמְלָ֗ה וַיָּשִׂ֨ימוּ֙ עַל־שְׁכֶ֣ם שְׁנֵיהֶ֔ם וַיֵּֽלְכוּ֙ אֲחֹ֣רַנִּ֔ית וַיְכַסּ֕וּ אֵ֖ת עֶרְוַ֣ת אֲבִיהֶ֑ם וּפְנֵיהֶם֙ אֲחֹ֣רַנִּ֔ית וְעֶרְוַ֥ת אֲבִיהֶ֖ם לֹ֥א רָאֽוּ׃ "
+  },
+  "GEN 9:24": {
+   "KJV": "And Noah awoke from his wine, and knew what his younger son had done unto him.",
+   "BHSA": "וַיִּ֥יקֶץ נֹ֖חַ מִיֵּינֹ֑ו וַיֵּ֕דַע אֵ֛ת אֲשֶׁר־עָ֥שָׂה־לֹ֖ו בְּנֹ֥ו הַקָּטָֽן׃ "
+  },
+  "GEN 9:25": {
+   "KJV": "And he said, Cursed be Canaan; a servant of servants shall he be unto his brethren.",
+   "BHSA": "וַיֹּ֖אמֶר אָר֣וּר כְּנָ֑עַן עֶ֥בֶד עֲבָדִ֖ים יִֽהְיֶ֥ה לְאֶחָֽיו׃ "
+  },
+  "GEN 9:26": {
+   "KJV": "And he said, Blessed be the LORD God of Shem; and Canaan shall be his servant.",
+   "BHSA": "וַיֹּ֕אמֶר בָּר֥וּךְ יְהֹוָ֖ה אֱלֹ֣הֵי שֵׁ֑ם וִיהִ֥י כְנַ֖עַן עֶ֥בֶד לָֽמֹו׃ "
+  },
+  "GEN 9:27": {
+   "KJV": "God shall enlarge Japheth, and he shall dwell in the tents of Shem; and Canaan shall be his servant.",
+   "BHSA": "יַ֤פְתְּ אֱלֹהִים֙ לְיֶ֔פֶת וְיִשְׁכֹּ֖ן בְּאָֽהֳלֵי־שֵׁ֑ם וִיהִ֥י כְנַ֖עַן עֶ֥בֶד לָֽמֹו׃ "
+  },
+  "GEN 9:28": {
+   "KJV": "And Noah lived after the flood three hundred and fifty years.",
+   "BHSA": "וַֽיְחִי־נֹ֖חַ אַחַ֣ר הַמַּבּ֑וּל שְׁלֹ֤שׁ מֵאֹות֙ שָׁנָ֔ה וַֽחֲמִשִּׁ֖ים שָׁנָֽה׃ "
+  },
+  "GEN 9:29": {
+   "KJV": "And all the days of Noah were nine hundred and fifty years: and he died.",
+   "BHSA": "וַיִּֽהְיוּ֙ כָּל־יְמֵי־נֹ֔חַ תְּשַׁ֤ע מֵאֹות֙ שָׁנָ֔ה וַחֲמִשִּׁ֖ים שָׁנָ֑ה וַיָּמֹֽת׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "canaan",
+   "name": "Canaan",
+   "distinguisher": "son of Ham (GEN 9:18), cursed by Noah (GEN 9:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "ham",
+   "name": "Ham",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "japheth",
+   "name": "Japheth",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "noah",
+   "name": "Noah",
+   "distinguisher": "son of Lamech (GEN 5:28-29)",
+   "sex": "male"
+  },
+  {
+   "slug": "shem",
+   "name": "Shem",
+   "distinguisher": "son of Noah (GEN 5:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 98244,
+   "row": "canaan son-of ham",
+   "verse": "GEN 9:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99233,
+   "row": "ham father-of canaan",
+   "verse": "GEN 9:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "ham son-of noah (GEN 5:32)",
+  "japheth son-of noah (GEN 5:32)",
+  "japheth brother-of shem (GEN 10:21)",
+  "noah father-of shem (GEN 5:32)",
+  "noah father-of ham (GEN 5:32)",
+  "noah father-of japheth (GEN 5:32)",
+  "shem son-of noah (GEN 5:32)",
+  "shem brother-of japheth (GEN 10:21)"
+ ]
+}

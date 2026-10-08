@@ -1,0 +1,88 @@
+{
+ "chapter": "PSA 99",
+ "text": {
+  "PSA 99:1": {
+   "KJV": "The LORD reigneth; let the people tremble: he sitteth between the cherubims; let the earth be moved.",
+   "BHSA": "יְהוָ֣ה מָ֭לָךְ יִרְגְּז֣וּ עַמִּ֑ים יֹשֵׁ֥ב כְּ֝רוּבִ֗ים תָּנ֥וּט הָאָֽרֶץ׃ "
+  },
+  "PSA 99:2": {
+   "KJV": "The LORD is great in Zion; and he is high above all the people.",
+   "BHSA": "יְ֭הוָה בְּצִיֹּ֣ון גָּדֹ֑ול וְרָ֥ם ה֝֗וּא עַל־כָּל־הָֽעַמִּֽים׃ "
+  },
+  "PSA 99:3": {
+   "KJV": "Let them praise thy great and terrible name; for it is holy.",
+   "BHSA": "יֹוד֣וּ שִׁ֭מְךָ גָּדֹ֥ול וְנֹורָ֗א קָדֹ֥ושׁ הֽוּא׃ "
+  },
+  "PSA 99:4": {
+   "KJV": "The king's strength also loveth judgment; thou dost establish equity, thou executest judgment and righteousness in Jacob.",
+   "BHSA": "וְעֹ֥ז מֶלֶךְ֮ מִשְׁפָּ֢ט אָ֫הֵ֥ב אַ֭תָּה כֹּונַ֣נְתָּ מֵישָׁרִ֑ים מִשְׁפָּ֥ט וּ֝צְדָקָ֗ה בְּיַעֲקֹ֤ב׀ אַתָּ֬ה עָשִֽׂיתָ׃ "
+  },
+  "PSA 99:5": {
+   "KJV": "Exalt ye the LORD our God, and worship at his footstool; for he is holy.",
+   "BHSA": "רֹֽומְמ֡וּ יְה֘וָ֤ה אֱלֹהֵ֗ינוּ וְֽ֭הִשְׁתַּחֲווּ לַהֲדֹ֥ם רַגְלָ֗יו קָדֹ֥ושׁ הֽוּא׃ "
+  },
+  "PSA 99:6": {
+   "KJV": "Moses and Aaron among his priests, and Samuel among them that call upon his name; they called upon the LORD, and he answered them.",
+   "BHSA": "מֹ֘שֶׁ֤ה וְאַהֲרֹ֨ן׀ בְּֽכֹהֲנָ֗יו וּ֭שְׁמוּאֵל בְּקֹרְאֵ֣י שְׁמֹ֑ו קֹרִ֥אים אֶל־יְ֝הוָ֗ה וְה֣וּא יַעֲנֵֽם׃ "
+  },
+  "PSA 99:7": {
+   "KJV": "He spake unto them in the cloudy pillar: they kept his testimonies, and the ordinance that he gave them.",
+   "BHSA": "בְּעַמּ֣וּד עָ֭נָן יְדַבֵּ֣ר אֲלֵיהֶ֑ם שָׁמְר֥וּ עֵ֝דֹתָ֗יו וְחֹ֣ק נָֽתַן־לָֽמֹו׃ "
+  },
+  "PSA 99:8": {
+   "KJV": "Thou answeredst them, O LORD our God: thou wast a God that forgavest them, though thou tookest vengeance of their inventions.",
+   "BHSA": "יְהוָ֣ה אֱלֹהֵינוּ֮ אַתָּ֢ה עֲנִ֫יתָ֥ם אֵ֣ל נֹ֭שֵׂא הָיִ֣יתָ לָהֶ֑ם וְ֝נֹקֵ֗ם עַל־עֲלִילֹותָֽם׃ "
+  },
+  "PSA 99:9": {
+   "KJV": "Exalt the LORD our God, and worship at his holy hill; for the LORD our God is holy.",
+   "BHSA": "רֹֽומְמ֡וּ יְה֘וָ֤ה אֱלֹהֵ֗ינוּ וְ֭הִֽשְׁתַּחֲווּ לְהַ֣ר קָדְשֹׁ֑ו כִּֽי־קָ֝דֹ֗ושׁ יְהוָ֥ה אֱלֹהֵֽינוּ׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "samuel-2",
+   "name": "Samuel",
+   "distinguisher": "son of Elkanah and Hannah (1SA 1:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 101499,
+   "row": "moses priest-of yhvh",
+   "verse": "PSA 99:6",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron brother-of moses (EXO 4:14)",
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "samuel-2 servant-of yhvh (1SA 2:18)",
+  "jacob servant-of yhvh (ISA 41:8)"
+ ]
+}

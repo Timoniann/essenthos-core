@@ -1,0 +1,11 @@
+{
+ "chapter": "ISA 8",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "Owner row 105749 looks unsupported: ISA 8:3 names the son Mahershalalhashbaz, while ISA 8:8 mentions Immanuel without stating his parentage; the owner ruling is preserved. All plain family statements between the supplied records are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:47:27+00:00"
+}

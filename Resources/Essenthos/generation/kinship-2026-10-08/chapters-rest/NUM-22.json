@@ -1,0 +1,11 @@
+{
+ "chapter": "NUM 22",
+ "rows": 4,
+ "wrong": [],
+ "missing": [],
+ "note": "The Hebrew explicitly identifies Balak as Zippor's son and Balaam as Beor's son; both relationships are fully recorded. No other plain family statements connect the supplied person records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:46:24+00:00"
+}

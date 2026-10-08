@@ -1,0 +1,20 @@
+{
+ "chapter": "2CH 36",
+ "rows": 2,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "mattaniah",
+   "type": "brother-of",
+   "to": "jehoiachin",
+   "verse": "2CH 36:10",
+   "why": "The Hebrew calls Zedekiah (the king recorded as mattaniah) אָחִיו, 'his brother,' referring to Jehoiachin.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The reciprocal brother relationships in verse 4 are supported. Verse 10's description of Zedekiah as Jehoiachin's brother is retained as this chapter's wording despite the uncle relationship stated elsewhere.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:48:27+00:00"
+}

@@ -1,0 +1,11 @@
+{
+ "chapter": "JOL 1",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "JOL 1:1 explicitly identifies Joel as the son of Pethuel, supporting both recorded rows; no other verse states a family relationship between the supplied people.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:49:57+00:00"
+}

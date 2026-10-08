@@ -1,0 +1,11 @@
+{
+ "chapter": "LEV 24",
+ "rows": 4,
+ "wrong": [],
+ "missing": [],
+ "note": "LEV 24:11 explicitly calls Shelomith the daughter of Dibri, already recorded in both directions, and identifies the tribe of Dan. The unnamed son and Egyptian father have no supplied records, so their relationships cannot be added.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:46:52+00:00"
+}

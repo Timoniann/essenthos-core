@@ -1,0 +1,11 @@
+{
+ "chapter": "JER 41",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "The Hebrew supports Elishama as Ishmael’s grandfather and explicitly states that Ishmael killed Gedaliah; all plain parent-child relationships are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:32+00:00"
+}

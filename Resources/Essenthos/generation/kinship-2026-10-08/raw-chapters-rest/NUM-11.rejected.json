@@ -1,0 +1,34 @@
+{
+ "errors": [
+  "wrong: rows [107266] are the owner's own; put them in note instead",
+  "wrong: rows [107276] are the owner's own; put them in note instead"
+ ],
+ "answer": {
+  "wrong": [
+   {
+    "kind": "delete",
+    "rows": [
+     107266
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "NUM 11:26",
+    "why": "The Hebrew names Eldad and Medad as two men who remained and prophesied in the camp, without stating a companion relationship between them.",
+    "confidence": 0.94
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     107276
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "NUM 11:27",
+    "why": "The Hebrew reports that Eldad and Medad were prophesying in the camp, without stating a companion relationship between them.",
+    "confidence": 0.94
+   }
+  ],
+  "missing": [],
+  "note": "NUM 11:28 explicitly calls Joshua the son of Nun, and that relationship is already recorded from another chapter."
+ }
+}

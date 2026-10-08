@@ -1,0 +1,14 @@
+{
+  "wrong": [],
+  "missing": [
+    {
+      "from": "pharaoh",
+      "type": "husband-of",
+      "to": "sarai",
+      "verse": "GEN 12:19",
+      "why": "Pharaoh says וָאֶקַּח אֹתָהּ לִי לְאִשָּׁה, meaning that he took Sarai to himself as a wife.",
+      "confidence": 0.97
+    }
+  ],
+  "note": "The Hebrew in GEN 12:19 describes Pharaoh taking Sarai as a wife, whereas the KJV renders this as 'might have taken'; Lot's recorded nephew relationship is supported by GEN 12:5."
+}

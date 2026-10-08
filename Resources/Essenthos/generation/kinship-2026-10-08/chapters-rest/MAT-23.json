@@ -1,0 +1,11 @@
+{
+ "chapter": "MAT 23",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "MAT 23:35 explicitly calls Zacharias the son of Barachias (Ζαχαρίου υἱοῦ Βαραχίου), supporting both recorded rows. No other plain family relationship between the supplied people is stated.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:48+00:00"
+}

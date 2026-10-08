@@ -1,0 +1,52 @@
+[
+ {
+  "type": "missing",
+  "claim": "jacob ancestor-of moses",
+  "chapter": "ACT-7",
+  "verse": "ACT 7:32",
+  "codex_why": "God addresses Moses and names Jacob among his forefathers (τῶν πατέρων σου).",
+  "codex_confidence": 0.99,
+  "judge": "right",
+  "judge_why": "ACT 7:32 has God say to Moses 'Ἐγὼ ὁ Θεὸς τῶν πατέρων σου, ὁ Θεὸς Ἀβραὰμ καὶ Ἰσαὰκ καὶ Ἰακώβ', which names Jacob among Moses's fathers. Jacob son of Isaac is the patriarch meant, and nothing directly links him to Moses yet."
+ },
+ {
+  "type": "missing",
+  "claim": "abram ancestor-of moses",
+  "chapter": "ACT-7",
+  "verse": "ACT 7:32",
+  "codex_why": "God addresses Moses and names Abraham among his forefathers (τῶν πατέρων σου).",
+  "codex_confidence": 0.99,
+  "judge": "right",
+  "judge_why": "ACT 7:32 names Abraham among 'τῶν πατέρων σου' when God speaks to Moses, and Abram son of Terah is the patriarch meant. isaac son-of abram does not record Abram's link to Moses directly."
+ },
+ {
+  "type": "missing",
+  "claim": "isaac ancestor-of moses",
+  "chapter": "ACT-7",
+  "verse": "ACT 7:32",
+  "codex_why": "God addresses Moses and names Isaac among his forefathers (τῶν πατέρων σου).",
+  "codex_confidence": 0.99,
+  "judge": "right",
+  "judge_why": "ACT 7:32 names Isaac among Moses's fathers ('ὁ Θεὸς τῶν πατέρων σου, ὁ Θεὸς Ἀβραὰμ καὶ Ἰσαὰκ καὶ Ἰακώβ'), and nothing recorded links Isaac to Moses directly."
+ },
+ {
+  "type": "missing",
+  "claim": "levi descendant-of abram",
+  "chapter": "HEB-7",
+  "verse": "HEB 7:10",
+  "codex_why": "Levi was still in Abraham's loins when Melchizedek met Abraham, identifying Abraham as his forefather.",
+  "codex_confidence": 0.99,
+  "judge": "right",
+  "judge_why": "HEB 7:9-10 says Levi paid tithes 'δι’ Ἀβραὰμ' because 'ἔτι γὰρ ἐν τῇ ὀσφύϊ τοῦ πατρὸς ἦν' when Melchizedek met Abraham. That plainly says Levi, son of Jacob, descends from Abraham, and no such row exists."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus descendant-of judah",
+  "chapter": "HEB-7",
+  "verse": "HEB 7:14",
+  "codex_why": "The text says that our Lord sprang from Judah (ἐξ Ἰούδα ἀνατέταλκεν).",
+  "codex_confidence": 0.98,
+  "judge": "right",
+  "judge_why": "HEB 7:14 'ἐξ Ἰούδα ἀνατέταλκεν ὁ Κύριος ἡμῶν' says our Lord, meaning Jesus, sprang from Judah, the tribe named after Jacob's son. Only jesus descendant-of abram is recorded, not this."
+ }
+]

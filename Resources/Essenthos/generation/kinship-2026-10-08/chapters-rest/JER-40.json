@@ -1,0 +1,11 @@
+{
+ "chapter": "JER 40",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "JER 40:8 identifies Johanan and Jonathan as sons of Kareah, supporting the recorded brother relationship. All explicit parent-child relationships between the supplied records are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:48:27+00:00"
+}

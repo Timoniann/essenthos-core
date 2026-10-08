@@ -1,0 +1,277 @@
+[
+ {
+  "id": 51,
+  "chapter": "JHN-19",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus high-priest-of yhvh (HEB 4:14)"
+  ],
+  "text": {
+   "JHN 19:6": {
+    "KJV": "When the chief priests therefore and officers saw him, they cried out, saying, Crucify him, crucify him. Pilate saith unto them, Take ye him, and crucify him: for I find no fault in him.",
+    "NESTLE1904": "ὅτε οὖν εἶδον αὐτὸν οἱ ἀρχιερεῖς καὶ οἱ ὑπηρέται, ἐκραύγασαν λέγοντες Σταύρωσον σταύρωσον. λέγει αὐτοῖς ὁ Πειλᾶτος Λάβετε αὐτὸν ὑμεῖς καὶ σταυρώσατε· ἐγὼ γὰρ οὐχ εὑρίσκω ἐν αὐτῷ αἰτίαν. "
+   },
+   "JHN 19:7": {
+    "KJV": "The Jews answered him, We have a law, and by our law he ought to die, because he made himself the Son of God.",
+    "NESTLE1904": "ἀπεκρίθησαν αὐτῷ οἱ Ἰουδαῖοι Ἡμεῖς νόμον ἔχομεν, καὶ κατὰ τὸν νόμον ὀφείλει ἀποθανεῖν, ὅτι Υἱὸν Θεοῦ ἑαυτὸν ἐποίησεν. "
+   },
+   "JHN 19:8": {
+    "KJV": "When Pilate therefore heard that saying, he was the more afraid;",
+    "NESTLE1904": "Ὅτε οὖν ἤκουσεν ὁ Πειλᾶτος τοῦτον τὸν λόγον, μᾶλλον ἐφοβήθη, "
+   }
+  }
+ },
+ {
+  "id": 52,
+  "chapter": "1SA-16",
+  "claim": "The chapter plainly states 'david brother-of abinadab-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abinadab-2",
+    "name": "Abinadab",
+    "distinguisher": "second-born (1CH 2:13) son of Jesse (1SA 16:8) brother of David",
+    "sex": "male"
+   },
+   {
+    "slug": "david",
+    "name": "David",
+    "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abinadab-2 son-of jesse (1CH 2:13)",
+   "abinadab-2 brother-of eliab-3 (1CH 2:13)",
+   "abinadab-2 brother-of shammah-2 (1CH 2:13)",
+   "eliab-3 brother-of david (1SA 17:28)",
+   "jesse father-of david (RUT 4:22)",
+   "jesse father-of abinadab-2 (1CH 2:13)"
+  ],
+  "text": {
+   "1SA 16:12": {
+    "KJV": "And he sent, and brought him in. Now he was ruddy, and withal of a beautiful countenance, and goodly to look to. And the LORD said, Arise, anoint him: for this is he.",
+    "BHSA": "וַיִּשְׁלַ֤ח וַיְבִיאֵ֨הוּ֙ וְה֣וּא אַדְמֹונִ֔י עִם־יְפֵ֥ה עֵינַ֖יִם וְטֹ֣וב רֹ֑אִי פ וַיֹּ֧אמֶר יְהוָ֛ה ק֥וּם מְשָׁחֵ֖הוּ כִּֽי־זֶ֥ה הֽוּא׃ "
+   },
+   "1SA 16:13": {
+    "KJV": "Then Samuel took the horn of oil, and anointed him in the midst of his brethren: and the Spirit of the LORD came upon David from that day forward. So Samuel rose up, and went to Ramah.",
+    "BHSA": "וַיִּקַּ֨ח שְׁמוּאֵ֜ל אֶת־קֶ֣רֶן הַשֶּׁ֗מֶן וַיִּמְשַׁ֣ח אֹתֹו֮ בְּקֶ֣רֶב אֶחָיו֒ וַתִּצְלַ֤ח רֽוּחַ־יְהוָה֙ אֶל־דָּוִ֔ד מֵהַיֹּ֥ום הַה֖וּא וָמָ֑עְלָה וַיָּ֣קָם שְׁמוּאֵ֔ל וַיֵּ֖לֶךְ הָרָמָֽתָה׃ ס "
+   },
+   "1SA 16:14": {
+    "KJV": "But the Spirit of the LORD departed from Saul, and an evil spirit from the LORD troubled him.",
+    "BHSA": "וְר֧וּחַ יְהוָ֛ה סָ֖רָה מֵעִ֣ם שָׁא֑וּל וּבִֽעֲתַ֥תּוּ רֽוּחַ־רָעָ֖ה מֵאֵ֥ת יְהוָֽה׃ "
+   }
+  }
+ },
+ {
+  "id": 53,
+  "chapter": "1KI-19",
+  "claim": "The chapter plainly states 'jehu-2 son-of nimshi', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jehu-2",
+    "name": "Jehu",
+    "distinguisher": "anointed king over Israel (1KI 19:16) at the direction of Elisha (2KI 9:1-3)",
+    "sex": "male"
+   },
+   {
+    "slug": "nimshi",
+    "name": "Nimshi",
+    "distinguisher": "[grand]father of Jehu, King of Israel (1KI 19:16, 2KI 9:2)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jehu-2 grandson-of nimshi (2KI 9:14)",
+   "nimshi grandfather-of jehu-2 (2KI 9:2)"
+  ],
+  "text": {
+   "1KI 19:15": {
+    "KJV": "And the LORD said unto him, Go, return on thy way to the wilderness of Damascus: and when thou comest, anoint Hazael to be king over Syria:",
+    "BHSA": "וַיֹּ֤אמֶר יְהוָה֙ אֵלָ֔יו לֵ֛ךְ שׁ֥וּב לְדַרְכְּךָ֖ מִדְבַּ֣רָה דַמָּ֑שֶׂק וּבָ֗אתָ וּמָשַׁחְתָּ֧ אֶת־חֲזָאֵ֛ל לְמֶ֖לֶךְ עַל־אֲרָֽם׃ "
+   },
+   "1KI 19:16": {
+    "KJV": "And Jehu the son of Nimshi shalt thou anoint to be king over Israel: and Elisha the son of Shaphat of Abelmeholah shalt thou anoint to be prophet in thy room.",
+    "BHSA": "וְאֵת֙ יֵה֣וּא בֶן־נִמְשִׁ֔י תִּמְשַׁ֥ח לְמֶ֖לֶךְ עַל־יִשְׂרָאֵ֑ל וְאֶת־אֱלִישָׁ֤ע בֶּן־שָׁפָט֙ מֵאָבֵ֣ל מְחֹולָ֔ה תִּמְשַׁ֥ח לְנָבִ֖יא תַּחְתֶּֽיךָ׃ "
+   },
+   "1KI 19:17": {
+    "KJV": "And it shall come to pass, that him that escapeth the sword of Hazael shall Jehu slay: and him that escapeth from the sword of Jehu shall Elisha slay.",
+    "BHSA": "וְהָיָ֗ה הַנִּמְלָ֛ט מֵחֶ֥רֶב חֲזָאֵ֖ל יָמִ֣ית יֵה֑וּא וְהַנִּמְלָ֛ט מֵחֶ֥רֶב יֵה֖וּא יָמִ֥ית אֱלִישָֽׁע׃ "
+   }
+  }
+ },
+ {
+  "id": 54,
+  "chapter": "LUK-23",
+  "claim": "The chapter plainly states 'yhvh father-of jesus', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "joseph-8 disciple-of jesus (JHN 19:38)"
+  ],
+  "text": {
+   "LUK 23:33": {
+    "KJV": "And when they were come to the place, which is called Calvary, there they crucified him, and the malefactors, one on the right hand, and the other on the left.",
+    "NESTLE1904": "Καὶ ὅτε ἦλθον ἐπὶ τὸν τόπον τὸν καλούμενον Κρανίον, ἐκεῖ ἐσταύρωσαν αὐτὸν καὶ τοὺς κακούργους, ὃν μὲν ἐκ δεξιῶν ὃν δὲ ἐξ ἀριστερῶν. "
+   },
+   "LUK 23:34": {
+    "KJV": "Then said Jesus, Father, forgive them; for they know not what they do. And they parted his raiment, and cast lots.",
+    "NESTLE1904": "ὁ δὲ Ἰησοῦς ἔλεγεν Πάτερ, ἄφες αὐτοῖς· οὐ γὰρ οἴδασιν τί ποιοῦσιν. διαμεριζόμενοι δὲ τὰ ἱμάτια αὐτοῦ ἔβαλον κλήρους. "
+   },
+   "LUK 23:35": {
+    "KJV": "And the people stood beholding. And the rulers also with them derided him, saying, He saved others; let him save himself, if he be Christ, the chosen of God.",
+    "NESTLE1904": "καὶ εἱστήκει ὁ λαὸς θεωρῶν. ἐξεμυκτήριζον δὲ καὶ οἱ ἄρχοντες λέγοντες Ἄλλους ἔσωσεν, σωσάτω ἑαυτόν, εἰ οὗτός ἐστιν ὁ Χριστὸς τοῦ Θεοῦ ὁ ἐκλεκτός. "
+   }
+  }
+ },
+ {
+  "id": 55,
+  "chapter": "GAL-2",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus teacher-of john-2 (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "james-3 brother-of jesus (MRK 6:3)",
+   "james-3 servant-of yhvh (JAS 1:1)",
+   "simon servant-of jesus (MAT 10:2)"
+  ],
+  "text": {
+   "GAL 2:19": {
+    "KJV": "For I through the law am dead to the law, that I might live unto God.",
+    "NESTLE1904": "ἐγὼ γὰρ διὰ νόμου νόμῳ ἀπέθανον ἵνα Θεῷ ζήσω· Χριστῷ συνεσταύρωμαι· "
+   },
+   "GAL 2:20": {
+    "KJV": "I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me: and the life which I now live in the flesh I live by the faith of the Son of God, who loved me, and gave himself for me.",
+    "NESTLE1904": "ζῶ δὲ οὐκέτι ἐγώ, ζῇ δὲ ἐν ἐμοὶ Χριστός· ὃ δὲ νῦν ζῶ ἐν σαρκί, ἐν πίστει ζῶ τῇ τοῦ Υἱοῦ τοῦ Θεοῦ τοῦ ἀγαπήσαντός με καὶ παραδόντος ἑαυτὸν ὑπὲρ ἐμοῦ. "
+   },
+   "GAL 2:21": {
+    "KJV": "I do not frustrate the grace of God: for if righteousness come by the law, then Christ is dead in vain.",
+    "NESTLE1904": "Οὐκ ἀθετῶ τὴν χάριν τοῦ Θεοῦ· εἰ γὰρ διὰ νόμου δικαιοσύνη, ἄρα Χριστὸς δωρεὰν ἀπέθανεν. "
+   }
+  }
+ },
+ {
+  "id": 56,
+  "chapter": "2CH-36",
+  "claim": "The chapter plainly states 'mattaniah brother-of jehoiachin', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jehoiachin",
+    "name": "Jehoiachin",
+    "distinguisher": "King of Judah, son of Eliakim [Jehoiakim] (2KI 24:6)",
+    "sex": "male"
+   },
+   {
+    "slug": "mattaniah",
+    "name": "Mattaniah",
+    "distinguisher": "King of Judah, uncle of Jehoiachin (2KI 24:17)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "nebuchadnezzar exiler-of jehoiachin (EST 2:6)",
+   "josiah grandfather-of jehoiachin (MAT 1:11)",
+   "eliakim-2 father-of jehoiachin (2KI 24:6)",
+   "jehoiachin son-of eliakim-2 (2KI 24:6)",
+   "mattaniah son-of josiah (1CH 3:15)",
+   "mattaniah brother-of eliakim-2 (2KI 24:17)"
+  ],
+  "text": {
+   "2CH 36:9": {
+    "KJV": "Jehoiachin was eight years old when he began to reign, and he reigned three months and ten days in Jerusalem: and he did that which was evil in the sight of the LORD.",
+    "BHSA": "בֶּן־שְׁמֹונֶ֤ה שָׁנִים֙ יְהֹויָכִ֣ין בְּמָלְכֹ֔ו וּשְׁלֹשָׁ֤ה חֳדָשִׁים֙ וַעֲשֶׂ֣רֶת יָמִ֔ים מָלַ֖ךְ בִּירוּשָׁלִָ֑ם וַיַּ֥עַשׂ הָרַ֖ע בְּעֵינֵ֥י יְהוָֽה׃ "
+   },
+   "2CH 36:10": {
+    "KJV": "And when the year was expired, king Nebuchadnezzar sent, and brought him to Babylon, with the goodly vessels of the house of the LORD, and made Zedekiah his brother king over Judah and Jerusalem.",
+    "BHSA": "וְלִתְשׁוּבַ֣ת הַשָּׁנָ֗ה שָׁלַח֙ הַמֶּ֣לֶךְ נְבֽוּכַדְנֶאצַּ֔ר וַיְבִאֵ֣הוּ בָבֶ֔לָה עִם־כְּלֵ֖י חֶמְדַּ֣ת בֵּית־יְהוָ֑ה וַיַּמְלֵךְ֙ אֶת־צִדְקִיָּ֣הוּ אָחִ֔יו עַל־יְהוּדָ֖ה וִֽירוּשָׁלִָֽם׃ פ "
+   },
+   "2CH 36:11": {
+    "KJV": "Zedekiah was one and twenty years old when he began to reign, and reigned eleven years in Jerusalem.",
+    "BHSA": "בֶּן־עֶשְׂרִ֧ים וְאַחַ֛ת שָׁנָ֖ה צִדְקִיָּ֣הוּ בְמָלְכֹ֑ו וְאַחַ֤ת עֶשְׂרֵה֙ שָׁנָ֔ה מָלַ֖ךְ בִּירוּשָׁלִָֽם׃ "
+   }
+  }
+ },
+ {
+  "id": 57,
+  "chapter": "DEU-11",
+  "claim": "The chapter plainly states 'eliab-2 son-of reuben', and the site does not record it.",
+  "records": [
+   {
+    "slug": "eliab-2",
+    "name": "Eliab",
+    "distinguisher": "father of Dathan and Abiram from the tribe of Reuben (NUM 16:1)",
+    "sex": "male"
+   },
+   {
+    "slug": "reuben",
+    "name": "Reuben",
+    "distinguisher": "firstborn son of Jacob (GEN 29:32), son of Leah",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "eliab-2 descendant-of reuben (DEU 11:6)",
+   "abiram son-of eliab-2 (NUM 16:1)",
+   "abiram of-tribe reuben (NUM 16:1)",
+   "dathan son-of eliab-2 (NUM 16:1)",
+   "dathan descendant-of reuben (NUM 16:1)",
+   "eliab-2 father-of dathan (NUM 26:9)",
+   "eliab-2 father-of abiram (NUM 26:9)"
+  ],
+  "text": {
+   "DEU 11:5": {
+    "KJV": "And what he did unto you in the wilderness, until ye came into this place;",
+    "BHSA": "וַאֲשֶׁ֥ר עָשָׂ֛ה לָכֶ֖ם בַּמִּדְבָּ֑ר עַד־בֹּאֲכֶ֖ם עַד־הַמָּקֹ֥ום הַזֶּֽה׃ "
+   },
+   "DEU 11:6": {
+    "KJV": "And what he did unto Dathan and Abiram, the sons of Eliab, the son of Reuben: how the earth opened her mouth, and swallowed them up, and their households, and their tents, and all the substance that was in their possession, in the midst of all Israel:",
+    "BHSA": "וַאֲשֶׁ֨ר עָשָׂ֜ה לְדָתָ֣ן וְלַאֲבִירָ֗ם בְּנֵ֣י אֱלִיאָב֮ בֶּן־רְאוּבֵן֒ אֲשֶׁ֨ר פָּצְתָ֤ה הָאָ֨רֶץ֙ אֶת־פִּ֔יהָ וַתִּבְלָעֵ֥ם וְאֶת־בָּתֵּיהֶ֖ם וְאֶת־אָהֳלֵיהֶ֑ם וְאֵ֤ת כָּל־הַיְקוּם֙ אֲשֶׁ֣ר בְּרַגְלֵיהֶ֔ם בְּקֶ֖רֶב כָּל־יִשְׂרָאֵֽל׃ "
+   },
+   "DEU 11:7": {
+    "KJV": "But your eyes have seen all the great acts of the LORD which he did.",
+    "BHSA": "כִּ֤י עֵֽינֵיכֶם֙ הָֽרֹאֹ֔ת אֶת־כָּל־מַעֲשֵׂ֥ה יְהוָ֖ה הַגָּדֹ֑ל אֲשֶׁ֖ר עָשָֽׂה׃ "
+   }
+  }
+ }
+]

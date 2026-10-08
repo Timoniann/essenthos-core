@@ -1,0 +1,20 @@
+{
+ "chapter": "LUK 24",
+ "rows": 1,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "LUK 24:49",
+   "why": "Jesus refers to God as “my Father” (τοῦ Πατρός μου).",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Mary’s relationship to James is already recorded from Matthew 27:56. The companionship row is supported by the women’s joint report in Luke 24:10.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:52:41+00:00"
+}

@@ -1,0 +1,11 @@
+{
+ "chapter": "JOS 5",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "Owner row 107124 appears mistargeted: JOS 5:14 calls the figure commander of YHVH's host, not commander of YHVH; it is retained as an owner ruling. The chapter states no explicit family relationships between the supplied individuals.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:52:44+00:00"
+}

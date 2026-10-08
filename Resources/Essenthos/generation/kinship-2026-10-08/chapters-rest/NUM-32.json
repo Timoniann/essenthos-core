@@ -1,0 +1,20 @@
+{
+ "chapter": "NUM 32",
+ "rows": 2,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jair",
+   "type": "son-of",
+   "to": "manasseh",
+   "verse": "NUM 32:41",
+   "why": "The Hebrew explicitly calls Jair בֶן־מְנַשֶּׁה, son of Manasseh, whereas the recorded row states only descendant-of.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "The owner's Jephunneh–Kenaz ruling is retained, but NUM 32:12 calls Jephunneh a Kenizzite without explicitly identifying the listed Kenaz as his ancestor.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:14+00:00"
+}

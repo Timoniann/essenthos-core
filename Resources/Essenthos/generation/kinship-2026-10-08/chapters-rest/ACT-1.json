@@ -1,0 +1,20 @@
+{
+ "chapter": "ACT 1",
+ "rows": 1,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "judas-of-james",
+   "type": "son-of",
+   "to": "james-4",
+   "verse": "ACT 1:13",
+   "why": "The Greek Ἰούδας Ἰακώβου identifies Judas by his father James, using a patronymic construction parallel to Ἰάκωβος Ἀλφαίου.",
+   "confidence": 0.96
+  }
+ ],
+ "note": "The KJV supplies 'brother' for Judas, while the Greek patronymic supports 'son of James.' Mary's motherhood and James's relationship to Alphaeus are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:55:56+00:00"
+}

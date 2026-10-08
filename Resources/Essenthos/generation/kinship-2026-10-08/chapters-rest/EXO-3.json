@@ -1,0 +1,11 @@
+{
+ "chapter": "EXO 3",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "EXO 3:1 identifies Jethro as Moses’ father-in-law, matching the supplied reuel-2 record and the recorded relationship. The references to Abraham, Isaac, and Jacob do not explicitly state additional family relationships between the listed individuals.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:54:09+00:00"
+}

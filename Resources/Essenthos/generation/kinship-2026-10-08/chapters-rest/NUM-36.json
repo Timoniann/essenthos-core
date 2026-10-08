@@ -1,0 +1,11 @@
+{
+ "chapter": "NUM 36",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "All explicit relationships between named people are already recorded. NUM 36:11 identifies the daughters’ husbands as their paternal uncles’ sons but does not name them.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:52:58+00:00"
+}

@@ -1,0 +1,20 @@
+{
+ "chapter": "LUK 23",
+ "rows": 1,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "yhvh",
+   "type": "father-of",
+   "to": "jesus",
+   "verse": "LUK 23:34",
+   "why": "Jesus addresses God as Πάτερ ('Father') in his prayer for forgiveness.",
+   "confidence": 0.97
+  }
+ ],
+ "note": "LUK 23:12 calls Pilate and Herod φίλοι ('friends'), supporting the companion-of row. Jesus again addresses God as Father in LUK 23:46.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:53:16+00:00"
+}

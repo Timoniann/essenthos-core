@@ -1,0 +1,11 @@
+{
+ "chapter": "MRK 10",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "Both rows are supported by MRK 10:46, which identifies Bartimaeus as the son of Timaeus. The relationships stated in MRK 10:35 and MRK 10:47–48 are already recorded from other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:49:46+00:00"
+}

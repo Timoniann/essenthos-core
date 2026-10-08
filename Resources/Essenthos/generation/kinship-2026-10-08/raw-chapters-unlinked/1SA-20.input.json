@@ -1,0 +1,221 @@
+{
+ "chapter": "1SA 20",
+ "text": {
+  "1SA 20:1": {
+   "KJV": "And David fled from Naioth in Ramah, and came and said before Jonathan, What have I done? what is mine iniquity? and what is my sin before thy father, that he seeketh my life?",
+   "BHSA": "וַיִּבְרַ֣ח דָּוִ֔ד מנוות בָּרָמָ֑ה וַיָּבֹ֞א וַיֹּ֣אמֶר׀ לִפְנֵ֣י יְהֹונָתָ֗ן מֶ֤ה עָשִׂ֨יתִי֙ מֶֽה־עֲוֹנִ֤י וּמֶֽה־חַטָּאתִי֙ לִפְנֵ֣י אָבִ֔יךָ כִּ֥י מְבַקֵּ֖שׁ אֶת־נַפְשִֽׁי׃ "
+  },
+  "1SA 20:2": {
+   "KJV": "And he said unto him, God forbid; thou shalt not die: behold, my father will do nothing either great or small, but that he will shew it me: and why should my father hide this thing from me? it is not so.",
+   "BHSA": "וַיֹּ֨אמֶר לֹ֣ו חָלִילָה֮ לֹ֣א תָמוּת֒ הִנֵּ֡ה לו־עשׂה אָבִ֜י דָּבָ֣ר גָּדֹ֗ול אֹ֚ו דָּבָ֣ר קָטֹ֔ן וְלֹ֥א יִגְלֶ֖ה אֶת־אָזְנִ֑י וּמַדּוּעַ֩ יַסְתִּ֨יר אָבִ֥י מִמֶּ֛נִּי אֶת־הַדָּבָ֥ר הַזֶּ֖ה אֵ֥ין זֹֽאת׃ "
+  },
+  "1SA 20:3": {
+   "KJV": "And David sware moreover, and said, Thy father certainly knoweth that I have found grace in thine eyes; and he saith, Let not Jonathan know this, lest he be grieved: but truly as the LORD liveth, and as thy soul liveth, there is but a step between me and death.",
+   "BHSA": "וַיִּשָּׁבַ֨ע עֹ֜וד דָּוִ֗ד וַיֹּ֨אמֶר֙ יָדֹ֨עַ יָדַ֜ע אָבִ֗יךָ כִּֽי־מָצָ֤אתִי חֵן֙ בְּעֵינֶ֔יךָ וַיֹּ֛אמֶר אַל־יֵֽדַע־זֹ֥את יְהֹונָתָ֖ן פֶּן־יֵֽעָצֵ֑ב וְאוּלָ֗ם חַי־יְהוָה֙ וְחֵ֣י נַפְשֶׁ֔ךָ כִּ֣י כְפֶ֔שַׂע בֵּינִ֖י וּבֵ֥ין הַמָּֽוֶת׃ "
+  },
+  "1SA 20:4": {
+   "KJV": "Then said Jonathan unto David, Whatsoever thy soul desireth, I will even do it for thee.",
+   "BHSA": "וַיֹּ֥אמֶר יְהֹונָתָ֖ן אֶל־דָּוִ֑ד מַה־תֹּאמַ֥ר נַפְשְׁךָ֖ וְאֶֽעֱשֶׂה־לָּֽךְ׃ פ "
+  },
+  "1SA 20:5": {
+   "KJV": "And David said unto Jonathan, Behold, to morrow is the new moon, and I should not fail to sit with the king at meat: but let me go, that I may hide myself in the field unto the third day at even.",
+   "BHSA": "וַיֹּ֨אמֶר דָּוִ֜ד אֶל־יְהֹונָתָ֗ן הִֽנֵּה־חֹ֨דֶשׁ֙ מָחָ֔ר וְאָנֹכִ֛י יָשֹׁב־אֵשֵׁ֥ב עִם־הַמֶּ֖לֶךְ לֶאֱכֹ֑ול וְשִׁלַּחְתַּ֨נִי֙ וְנִסְתַּרְתִּ֣י בַשָּׂדֶ֔ה עַ֖ד הָעֶ֥רֶב הַשְּׁלִשִֽׁית׃ "
+  },
+  "1SA 20:6": {
+   "KJV": "If thy father at all miss me, then say, David earnestly asked leave of me that he might run to Bethlehem his city: for there is a yearly sacrifice there for all the family.",
+   "BHSA": "אִם־פָּקֹ֥ד יִפְקְדֵ֖נִי אָבִ֑יךָ וְאָמַרְתָּ֗ נִשְׁאֹל֩ נִשְׁאַ֨ל מִמֶּ֤נִּי דָוִד֙ לָרוּץ֙ בֵּֽית־לֶ֣חֶם עִירֹ֔ו כִּ֣י זֶ֧בַח הַיָּמִ֛ים שָׁ֖ם לְכָל־הַמִּשְׁפָּחָֽה׃ "
+  },
+  "1SA 20:7": {
+   "KJV": "If he say thus, It is well; thy servant shall have peace: but if he be very wroth, then be sure that evil is determined by him.",
+   "BHSA": "אִם־כֹּ֥ה יֹאמַ֛ר טֹ֖וב שָׁלֹ֣ום לְעַבְדֶּ֑ךָ וְאִם־חָרֹ֤ה יֶֽחֱרֶה֙ לֹ֔ו דַּ֕ע כִּֽי־כָלְתָ֥ה הָרָעָ֖ה מֵעִמֹּֽו׃ "
+  },
+  "1SA 20:8": {
+   "KJV": "Therefore thou shalt deal kindly with thy servant; for thou hast brought thy servant into a covenant of the LORD with thee: notwithstanding, if there be in me iniquity, slay me thyself; for why shouldest thou bring me to thy father?",
+   "BHSA": "וְעָשִׂ֤יתָ חֶ֨סֶד֙ עַל־עַבְדֶּ֔ךָ כִּ֚י בִּבְרִ֣ית יְהוָ֔ה הֵבֵ֥אתָ אֶֽת־עַבְדְּךָ֖ עִמָּ֑ךְ וְאִם־יֶשׁ־בִּ֤י עָוֹן֙ הֲמִיתֵ֣נִי אַ֔תָּה וְעַד־אָבִ֖יךָ לָמָּה־זֶּ֥ה תְבִיאֵֽנִי׃ פ "
+  },
+  "1SA 20:9": {
+   "KJV": "And Jonathan said, Far be it from thee: for if I knew certainly that evil were determined by my father to come upon thee, then would not I tell it thee?",
+   "BHSA": "וַיֹּ֥אמֶר יְהֹונָתָ֖ן חָלִ֣ילָה לָּ֑ךְ כִּ֣י׀ אִם־יָדֹ֣עַ אֵדַ֗ע כִּֽי־כָלְתָ֨ה הָרָעָ֜ה מֵעִ֤ם אָבִי֙ לָבֹ֣וא עָלֶ֔יךָ וְלֹ֥א אֹתָ֖הּ אַגִּ֥יד לָֽךְ׃ ס "
+  },
+  "1SA 20:10": {
+   "KJV": "Then said David to Jonathan, Who shall tell me? or what if thy father answer thee roughly?",
+   "BHSA": "וַיֹּ֤אמֶר דָּוִד֙ אֶל־יְהֹ֣ונָתָ֔ן מִ֖י יַגִּ֣יד לִ֑י אֹ֛ו מַה־יַּעַנְךָ֥ אָבִ֖יךָ קָשָֽׁה׃ ס "
+  },
+  "1SA 20:11": {
+   "KJV": "And Jonathan said unto David, Come, and let us go out into the field. And they went out both of them into the field.",
+   "BHSA": "וַיֹּ֤אמֶר יְהֹֽונָתָן֙ אֶל־דָּוִ֔ד לְכָ֖ה וְנֵצֵ֣א הַשָּׂדֶ֑ה וַיֵּצְא֥וּ שְׁנֵיהֶ֖ם הַשָּׂדֶֽה׃ ס "
+  },
+  "1SA 20:12": {
+   "KJV": "And Jonathan said unto David, O LORD God of Israel, when I have sounded my father about to morrow any time, or the third day, and, behold, if there be good toward David, and I then send not unto thee, and shew it thee;",
+   "BHSA": "וַיֹּ֨אמֶר יְהֹונָתָ֜ן אֶל־דָּוִ֗ד יְהוָ֞ה אֱלֹהֵ֤י יִשְׂרָאֵל֙ כִּֽי־אֶחְקֹ֣ר אֶת־אָבִ֗י כָּעֵ֤ת׀ מָחָר֙ הַשְּׁלִשִׁ֔ית וְהִנֵּה־טֹ֖וב אֶל־דָּוִ֑ד וְלֹֽא־אָז֙ אֶשְׁלַ֣ח אֵלֶ֔יךָ וְגָלִ֖יתִי אֶת־אָזְנֶֽךָ׃ "
+  },
+  "1SA 20:13": {
+   "KJV": "The LORD do so and much more to Jonathan: but if it please my father to do thee evil, then I will shew it thee, and send thee away, that thou mayest go in peace: and the LORD be with thee, as he hath been with my father.",
+   "BHSA": "כֹּֽה־יַעֲשֶׂה֩ יְהוָ֨ה לִֽיהֹונָתָ֜ן וְכֹ֣ה יֹסִ֗יף כִּֽי־יֵיטִ֨ב אֶל־אָבִ֤י אֶת־הָֽרָעָה֙ עָלֶ֔יךָ וְגָלִ֨יתִי֙ אֶת־אָזְנֶ֔ךָ וְשִׁלַּחְתִּ֖יךָ וְהָלַכְתָּ֣ לְשָׁלֹ֑ום וִיהִ֤י יְהוָה֙ עִמָּ֔ךְ כַּאֲשֶׁ֥ר הָיָ֖ה עִם־אָבִֽי׃ "
+  },
+  "1SA 20:14": {
+   "KJV": "And thou shalt not only while yet I live shew me the kindness of the LORD, that I die not:",
+   "BHSA": "וְלֹ֖א אִם־עֹודֶ֣נִּי חָ֑י וְלֹֽא־תַעֲשֶׂ֧ה עִמָּדִ֛י חֶ֥סֶד יְהוָ֖ה וְלֹ֥א אָמֽוּת׃ "
+  },
+  "1SA 20:15": {
+   "KJV": "But also thou shalt not cut off thy kindness from my house for ever: no, not when the LORD hath cut off the enemies of David every one from the face of the earth.",
+   "BHSA": "וְלֹֽא־תַכְרִ֧ת אֶֽת־חַסְדְּךָ֛ מֵעִ֥ם בֵּיתִ֖י עַד־עֹולָ֑ם וְלֹ֗א בְּהַכְרִ֤ת יְהוָה֙ אֶת־אֹיְבֵ֣י דָוִ֔ד אִ֕ישׁ מֵעַ֖ל פְּנֵ֥י הָאֲדָמָֽה׃ "
+  },
+  "1SA 20:16": {
+   "KJV": "So Jonathan made a covenant with the house of David, saying, Let the LORD even require it at the hand of David's enemies.",
+   "BHSA": "וַיִּכְרֹ֥ת יְהֹונָתָ֖ן עִם־בֵּ֣ית דָּוִ֑ד וּבִקֵּ֣שׁ יְהוָ֔ה מִיַּ֖ד אֹיְבֵ֥י דָוִֽד׃ "
+  },
+  "1SA 20:17": {
+   "KJV": "And Jonathan caused David to swear again, because he loved him: for he loved him as he loved his own soul.",
+   "BHSA": "וַיֹּ֤וסֶף יְהֹֽונָתָן֙ לְהַשְׁבִּ֣יעַ אֶת־דָּוִ֔ד בְּאַהֲבָתֹ֖ו אֹתֹ֑ו כִּֽי־אַהֲבַ֥ת נַפְשֹׁ֖ו אֲהֵבֹֽו׃ ס "
+  },
+  "1SA 20:18": {
+   "KJV": "Then Jonathan said to David, To morrow is the new moon: and thou shalt be missed, because thy seat will be empty.",
+   "BHSA": "וַיֹּֽאמֶר־לֹ֥ו יְהֹונָתָ֖ן מָחָ֣ר חֹ֑דֶשׁ וְנִפְקַ֕דְתָּ כִּ֥י יִפָּקֵ֖ד מֹושָׁבֶֽךָ׃ "
+  },
+  "1SA 20:19": {
+   "KJV": "And when thou hast stayed three days, then thou shalt go down quickly, and come to the place where thou didst hide thyself when the business was in hand, and shalt remain by the stone Ezel.",
+   "BHSA": "וְשִׁלַּשְׁתָּ֙ תֵּרֵ֣ד מְאֹ֔ד וּבָאתָ֙ אֶל־הַמָּקֹ֔ום אֲשֶׁר־נִסְתַּ֥רְתָּ שָּׁ֖ם בְּיֹ֣ום הַֽמַּעֲשֶׂ֑ה וְיָ֣שַׁבְתָּ֔ אֵ֖צֶל הָאֶ֥בֶן הָאָֽזֶל׃ "
+  },
+  "1SA 20:20": {
+   "KJV": "And I will shoot three arrows on the side thereof, as though I shot at a mark.",
+   "BHSA": "וַאֲנִ֕י שְׁלֹ֥שֶׁת הַחִצִּ֖ים צִדָּ֣ה אֹורֶ֑ה לְשַֽׁלַּֽח־לִ֖י לְמַטָּרָֽה׃ "
+  },
+  "1SA 20:21": {
+   "KJV": "And, behold, I will send a lad, saying, Go, find out the arrows. If I expressly say unto the lad, Behold, the arrows are on this side of thee, take them; then come thou: for there is peace to thee, and no hurt; as the LORD liveth.",
+   "BHSA": "וְהִנֵּה֙ אֶשְׁלַ֣ח אֶת־הַנַּ֔עַר לֵ֖ךְ מְצָ֣א אֶת־הַחִצִּ֑ים אִם־אָמֹר֩ אֹמַ֨ר לַנַּ֜עַר הִנֵּ֥ה הַחִצִּ֣ים׀ מִמְּךָ֣ וָהֵ֗נָּה קָחֶ֧נּוּ׀ וָבֹ֛אָה כִּֽי־שָׁלֹ֥ום לְךָ֛ וְאֵ֥ין דָּבָ֖ר חַי־יְהוָֽה׃ "
+  },
+  "1SA 20:22": {
+   "KJV": "But if I say thus unto the young man, Behold, the arrows are beyond thee; go thy way: for the LORD hath sent thee away.",
+   "BHSA": "וְאִם־כֹּ֤ה אֹמַר֙ לָעֶ֔לֶם הִנֵּ֥ה הַחִצִּ֖ים מִמְּךָ֣ וָהָ֑לְאָה לֵ֕ךְ כִּ֥י שִֽׁלַּחֲךָ֖ יְהוָֽה׃ "
+  },
+  "1SA 20:23": {
+   "KJV": "And as touching the matter which thou and I have spoken of, behold, the LORD be between thee and me for ever.",
+   "BHSA": "וְהַ֨דָּבָ֔ר אֲשֶׁ֥ר דִּבַּ֖רְנוּ אֲנִ֣י וָאָ֑תָּה הִנֵּ֧ה יְהוָ֛ה בֵּינִ֥י וּבֵינְךָ֖ עַד־עֹולָֽם׃ ס "
+  },
+  "1SA 20:24": {
+   "KJV": "So David hid himself in the field: and when the new moon was come, the king sat him down to eat meat.",
+   "BHSA": "וַיִּסָּתֵ֥ר דָּוִ֖ד בַּשָּׂדֶ֑ה וַיְהִ֣י הַחֹ֔דֶשׁ וַיֵּ֧שֶׁב הַמֶּ֛לֶךְ על־הַלֶּ֖חֶם לֶאֱכֹֽול׃ "
+  },
+  "1SA 20:25": {
+   "KJV": "And the king sat upon his seat, as at other times, even upon a seat by the wall: and Jonathan arose, and Abner sat by Saul's side, and David's place was empty.",
+   "BHSA": "וַיֵּ֣שֶׁב הַ֠מֶּלֶךְ עַל־מֹ֨ושָׁבֹ֜ו כְּפַ֣עַם׀ בְּפַ֗עַם אֶל־מֹושַׁב֙ הַקִּ֔יר וַיָּ֨קָם֙ יְהֹ֣ונָתָ֔ן וַיֵּ֥שֶׁב אַבְנֵ֖ר מִצַּ֣ד שָׁא֑וּל וַיִּפָּקֵ֖ד מְקֹ֥ום דָּוִֽד׃ "
+  },
+  "1SA 20:26": {
+   "KJV": "Nevertheless Saul spake not any thing that day: for he thought, Something hath befallen him, he is not clean; surely he is not clean.",
+   "BHSA": "וְלֹֽא־דִבֶּ֥ר שָׁא֛וּל מְא֖וּמָה בַּיֹּ֣ום הַה֑וּא כִּ֤י אָמַר֙ מִקְרֶ֣ה ה֔וּא בִּלְתִּ֥י טָהֹ֛ור ה֖וּא כִּֽי־לֹ֥א טָהֹֽור׃ ס "
+  },
+  "1SA 20:27": {
+   "KJV": "And it came to pass on the morrow, which was the second day of the month, that David's place was empty: and Saul said unto Jonathan his son, Wherefore cometh not the son of Jesse to meat, neither yesterday, nor to day?",
+   "BHSA": "וַיְהִ֗י מִֽמָּחֳרַ֤ת הַחֹ֨דֶשׁ֙ הַשֵּׁנִ֔י וַיִּפָּקֵ֖ד מְקֹ֣ום דָּוִ֑ד ס וַיֹּ֤אמֶר שָׁאוּל֙ אֶל־יְהֹונָתָ֣ן בְּנֹ֔ו מַדּ֜וּעַ לֹא־בָ֧א בֶן־יִשַׁ֛י גַּם־תְּמֹ֥ול גַּם־הַיֹּ֖ום אֶל־הַלָּֽחֶם׃ "
+  },
+  "1SA 20:28": {
+   "KJV": "And Jonathan answered Saul, David earnestly asked leave of me to go to Bethlehem:",
+   "BHSA": "וַיַּ֥עַן יְהֹונָתָ֖ן אֶת־שָׁא֑וּל נִשְׁאֹ֨ל נִשְׁאַ֥ל דָּוִ֛ד מֵעִמָּדִ֖י עַד־בֵּ֥ית לָֽחֶם׃ "
+  },
+  "1SA 20:29": {
+   "KJV": "And he said, Let me go, I pray thee; for our family hath a sacrifice in the city; and my brother, he hath commanded me to be there: and now, if I have found favour in thine eyes, let me get away, I pray thee, and see my brethren. Therefore he cometh not unto the king's table.",
+   "BHSA": "וַיֹּ֡אמֶר שַׁלְּחֵ֣נִי נָ֡א כִּ֣י זֶבַח֩ מִשְׁפָּחָ֨ה לָ֜נוּ בָּעִ֗יר וְה֤וּא צִוָּֽה־לִי֙ אָחִ֔י וְעַתָּ֗ה אִם־מָצָ֤אתִי חֵן֙ בְּעֵינֶ֔יךָ אִמָּ֥לְטָה נָּ֖א וְאֶרְאֶ֣ה אֶת־אֶחָ֑י עַל־כֵּ֣ן לֹא־בָ֔א אֶל־שֻׁלְחַ֖ן הַמֶּֽלֶךְ׃ ס "
+  },
+  "1SA 20:30": {
+   "KJV": "Then Saul's anger was kindled against Jonathan, and he said unto him, Thou son of the perverse rebellious woman, do not I know that thou hast chosen the son of Jesse to thine own confusion, and unto the confusion of thy mother's nakedness?",
+   "BHSA": "וַיִּֽחַר־אַ֤ף שָׁאוּל֙ בִּיהֹ֣ונָתָ֔ן וַיֹּ֣אמֶר לֹ֔ו בֶּֽן־נַעֲוַ֖ת הַמַּרְדּ֑וּת הֲלֹ֣וא יָדַ֗עְתִּי כִּֽי־בֹחֵ֤ר אַתָּה֙ לְבֶן־יִשַׁ֔י לְבָ֨שְׁתְּךָ֔ וּלְבֹ֖שֶׁת עֶרְוַ֥ת אִמֶּֽךָ׃ "
+  },
+  "1SA 20:31": {
+   "KJV": "For as long as the son of Jesse liveth upon the ground, thou shalt not be established, nor thy kingdom. Wherefore now send and fetch him unto me, for he shall surely die.",
+   "BHSA": "כִּ֣י כָל־הַיָּמִ֗ים אֲשֶׁ֤ר בֶּן־יִשַׁי֙ חַ֣י עַל־הָאֲדָמָ֔ה לֹ֥א תִכֹּ֖ון אַתָּ֣ה וּמַלְכוּתֶ֑ךָ וְעַתָּ֗ה שְׁלַ֨ח וְקַ֤ח אֹתֹו֙ אֵלַ֔י כִּ֥י בֶן־מָ֖וֶת הֽוּא׃ ס "
+  },
+  "1SA 20:32": {
+   "KJV": "And Jonathan answered Saul his father, and said unto him, Wherefore shall he be slain? what hath he done?",
+   "BHSA": "וַיַּ֨עַן֙ יְהֹ֣ונָתָ֔ן אֶת־שָׁא֖וּל אָבִ֑יו וַיֹּ֧אמֶר אֵלָ֛יו לָ֥מָּה יוּמַ֖ת מֶ֥ה עָשָֽׂה׃ "
+  },
+  "1SA 20:33": {
+   "KJV": "And Saul cast a javelin at him to smite him: whereby Jonathan knew that it was determined of his father to slay David.",
+   "BHSA": "וַיָּ֨טֶל שָׁא֧וּל אֶֽת־הַחֲנִ֛ית עָלָ֖יו לְהַכֹּתֹ֑ו וַיֵּ֨דַע֙ יְהֹ֣ונָתָ֔ן כִּֽי־כָ֥לָה הִ֛יא מֵעִ֥ם אָבִ֖יו לְהָמִ֥ית אֶת־דָּוִֽד׃ ס "
+  },
+  "1SA 20:34": {
+   "KJV": "So Jonathan arose from the table in fierce anger, and did eat no meat the second day of the month: for he was grieved for David, because his father had done him shame.",
+   "BHSA": "וַיָּ֧קָם יְהֹונָתָ֛ן מֵעִ֥ם הַשֻּׁלְחָ֖ן בָּחֳרִי־אָ֑ף וְלֹא־אָכַ֞ל בְּיֹום־הַחֹ֤דֶשׁ הַשֵּׁנִי֙ לֶ֔חֶם כִּ֤י נֶעְצַב֙ אֶל־דָּוִ֔ד כִּ֥י הִכְלִמֹ֖ו אָבִֽיו׃ ס "
+  },
+  "1SA 20:35": {
+   "KJV": "And it came to pass in the morning, that Jonathan went out into the field at the time appointed with David, and a little lad with him.",
+   "BHSA": "וַיְהִ֣י בַבֹּ֔קֶר וַיֵּצֵ֧א יְהֹונָתָ֛ן הַשָּׂדֶ֖ה לְמֹועֵ֣ד דָּוִ֑ד וְנַ֥עַר קָטֹ֖ן עִמֹּֽו׃ "
+  },
+  "1SA 20:36": {
+   "KJV": "And he said unto his lad, Run, find out now the arrows which I shoot. And as the lad ran, he shot an arrow beyond him.",
+   "BHSA": "וַיֹּ֣אמֶר לְנַעֲרֹ֔ו רֻ֗ץ מְצָ֥א נָא֙ אֶת־הַ֣חִצִּ֔ים אֲשֶׁ֥ר אָנֹכִ֖י מֹורֶ֑ה הַנַּ֣עַר רָ֔ץ וְהֽוּא־יָרָ֥ה הַחֵ֖צִי לְהַעֲבִרֹֽו׃ "
+  },
+  "1SA 20:37": {
+   "KJV": "And when the lad was come to the place of the arrow which Jonathan had shot, Jonathan cried after the lad, and said, Is not the arrow beyond thee?",
+   "BHSA": "וַיָּבֹ֤א הַנַּ֨עַר֙ עַד־מְקֹ֣ום הַחֵ֔צִי אֲשֶׁ֥ר יָרָ֖ה יְהֹונָתָ֑ן וַיִּקְרָ֨א יְהֹונָתָ֜ן אַחֲרֵ֤י הַנַּ֨עַר֙ וַיֹּ֔אמֶר הֲלֹ֥וא הַחֵ֖צִי מִמְּךָ֥ וָהָֽלְאָה׃ "
+  },
+  "1SA 20:38": {
+   "KJV": "And Jonathan cried after the lad, Make speed, haste, stay not. And Jonathan's lad gathered up the arrows, and came to his master.",
+   "BHSA": "וַיִּקְרָ֤א יְהֹֽונָתָן֙ אַחֲרֵ֣י הַנַּ֔עַר מְהֵרָ֥ה ח֖וּשָׁה אַֽל־תַּעֲמֹ֑ד וַיְלַקֵּ֞ט נַ֤עַר יְהֹֽונָתָן֙ אֶת־החצי וַיָּבֹ֖א אֶל־אֲדֹנָֽיו׃ "
+  },
+  "1SA 20:39": {
+   "KJV": "But the lad knew not any thing: only Jonathan and David knew the matter.",
+   "BHSA": "וְהַנַּ֖עַר לֹֽא־יָדַ֣ע מְא֑וּמָה אַ֤ךְ יְהֹֽונָתָן֙ וְדָוִ֔ד יָדְע֖וּ אֶת־הַדָּבָֽר׃ "
+  },
+  "1SA 20:40": {
+   "KJV": "And Jonathan gave his artillery unto his lad, and said unto him, Go, carry them to the city.",
+   "BHSA": "וַיִּתֵּ֤ן יְהֹֽונָתָן֙ אֶת־כֵּלָ֔יו אֶל־הַנַּ֖עַר אֲשֶׁר־לֹ֑ו וַיֹּ֣אמֶר לֹ֔ו לֵ֖ךְ הָבֵ֥יא הָעִֽיר׃ "
+  },
+  "1SA 20:41": {
+   "KJV": "And as soon as the lad was gone, David arose out of a place toward the south, and fell on his face to the ground, and bowed himself three times: and they kissed one another, and wept one with another, until David exceeded.",
+   "BHSA": "הַנַּעַר֮ בָּא֒ וְדָוִ֗ד קָ֚ם מֵאֵ֣צֶל הַנֶּ֔גֶב וַיִּפֹּ֨ל לְאַפָּ֥יו אַ֛רְצָה וַיִּשְׁתַּ֖חוּ שָׁלֹ֣שׁ פְּעָמִ֑ים וַֽיִּשְּׁק֣וּ׀ אִ֣ישׁ אֶת־רֵעֵ֗הוּ וַיִּבְכּוּ֙ אִ֣ישׁ אֶת־רֵעֵ֔הוּ עַד־דָּוִ֖ד הִגְדִּֽיל׃ "
+  },
+  "1SA 20:42": {
+   "KJV": "And Jonathan said to David, Go in peace, forasmuch as we have sworn both of us in the name of the LORD, saying, The LORD be between me and thee, and between my seed and thy seed for ever. And he arose and departed: and Jonathan went into the city.",
+   "BHSA": "וַיָּ֖קָם וַיֵּלַ֑ךְ וִיהֹונָתָ֖ן בָּ֥א הָעִֽיר׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abner",
+   "name": "Abner",
+   "distinguisher": "captain of Saul's army and Saul's uncle (1SA 14:50)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "jesse",
+   "name": "Jesse",
+   "distinguisher": "father of David (RUT 4:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "jonathan-2",
+   "name": "Jonathan",
+   "distinguisher": "son of King Saul (1SA 13:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "saul",
+   "name": "Saul",
+   "distinguisher": "son of Kish (1SA 9:2), King of Israel (1SA 11:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [],
+ "recorded_from_other_chapters": [
+  "abner commander-of saul (1SA 17:55)",
+  "jesse father-of david (RUT 4:22)",
+  "jonathan-2 son-of saul (1SA 14:49)",
+  "saul father-in-law-of david (1SA 25:44)",
+  "david son-of jesse (RUT 4:22)",
+  "david servant-of saul (1SA 16:21)",
+  "david servant-of yhvh (2SA 3:18)"
+ ]
+}

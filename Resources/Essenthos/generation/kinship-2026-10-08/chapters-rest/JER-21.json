@@ -1,0 +1,11 @@
+{
+ "chapter": "JER 21",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "JER 21:1 explicitly identifies Pashhur as the son of Malchijah and Zephaniah as the son of Maaseiah; both relationships are already recorded. The address to the house of David does not plainly state an additional relationship between two named individuals.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:02+00:00"
+}

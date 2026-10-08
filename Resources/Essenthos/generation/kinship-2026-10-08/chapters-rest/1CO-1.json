@@ -1,0 +1,32 @@
+{
+ "chapter": "1CO 1",
+ "rows": 1,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    98334
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CO 1:14",
+   "why": "Paul says he baptized Crispus (ἐβάπτισα), without stating that Crispus was his disciple.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "1CO 1:9",
+   "why": "The verse explicitly identifies Jesus Christ as God's Son (τοῦ Υἱοῦ αὐτοῦ Ἰησοῦ Χριστοῦ).",
+   "confidence": 1
+  }
+ ],
+ "note": "The chapter's references to brothers concern fellow believers, and its household references identify no individual relatives.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:54:22+00:00"
+}

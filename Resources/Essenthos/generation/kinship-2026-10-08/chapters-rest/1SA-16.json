@@ -1,0 +1,20 @@
+{
+ "chapter": "1SA 16",
+ "rows": 1,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "david",
+   "type": "brother-of",
+   "to": "abinadab-2",
+   "verse": "1SA 16:13",
+   "why": "David is anointed among his brothers (אֶחָיו), including Abinadab, whom Jesse presented among his sons.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "The father–son relationships and David's other named brothers are already recorded elsewhere; verse 21 supports David's service to Saul.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:56:26+00:00"
+}

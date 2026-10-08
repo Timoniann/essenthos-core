@@ -1,0 +1,36 @@
+{
+ "chapter": "HEB 7",
+ "rows": 0,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "levi",
+   "type": "descendant-of",
+   "to": "abram",
+   "verse": "HEB 7:10",
+   "why": "Levi was still in Abraham's loins when Melchizedek met Abraham, identifying Abraham as his forefather.",
+   "confidence": 0.99
+  },
+  {
+   "from": "jesus",
+   "type": "descendant-of",
+   "to": "judah",
+   "verse": "HEB 7:14",
+   "why": "The text says that our Lord sprang from Judah (ἐξ Ἰούδα ἀνατέταλκεν).",
+   "confidence": 0.98
+  },
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "HEB 7:3",
+   "why": "Melchizedek is likened to the Son of God, whom the chapter identifies as Jesus.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "Abraham is called Levi's father in the ancestral sense; the chapter gives no intervening genealogy.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T22:00:02+00:00"
+}

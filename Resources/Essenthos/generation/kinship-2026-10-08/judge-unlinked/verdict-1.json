@@ -1,0 +1,15 @@
+[
+ {"id": 1, "verdict": "right", "why": "ACT 7:32 has God say to Moses 'Ἐγὼ ὁ Θεὸς τῶν πατέρων σου, ὁ Θεὸς Ἀβραὰμ καὶ Ἰσαὰκ καὶ Ἰακώβ', which names Jacob among Moses's fathers. Jacob son of Isaac is the patriarch meant, and nothing directly links him to Moses yet."},
+ {"id": 2, "verdict": "wrong", "why": "MRK 14:61 'ὁ Υἱὸς τοῦ Εὐλογητοῦ' is a claim that Jesus is a son of God, and the owner has ruled that no one is recorded as a son of God/YHVH."},
+ {"id": 3, "verdict": "wrong", "why": "MRK 5:7 'Υἱὲ τοῦ Θεοῦ τοῦ Ὑψίστου' is a son-of-God claim, which the owner has ruled is not recorded."},
+ {"id": 4, "verdict": "wrong", "why": "In LUK 19:9, 'υἱὸς Ἀβραάμ' describes Zacchaeus as a member of Abraham's line or covenant people, not as Abraham's literal son. son-of is the wrong relation type."},
+ {"id": 5, "verdict": "wrong", "why": "MAT 20:23 'τοῦ Πατρός μου' would be recorded as YHVH father-of Jesus, which is the reverse of son-of-God. The owner's ruling excludes it."},
+ {"id": 6, "verdict": "right", "why": "HEB 7:9-10 says Levi paid tithes 'δι’ Ἀβραὰμ' because 'ἔτι γὰρ ἐν τῇ ὀσφύϊ τοῦ πατρὸς ἦν' when Melchizedek met Abraham. That plainly says Levi, son of Jacob, descends from Abraham, and no such row exists."},
+ {"id": 7, "verdict": "unclear", "why": "MRK 2:14 does say 'Λευεὶν τὸν τοῦ Ἀλφαίου', but the alphaeus record is described as the father of James (MAT 10:3). The text does not establish that James's father and Levi's father are the same man, and the Gospels never call Levi and James brothers."},
+ {"id": 8, "verdict": "wrong", "why": "MAT 15:13 'ὁ Πατήρ μου ὁ οὐράνιος' is the son-of-God relation in reverse, which the owner has ruled is not recorded."},
+ {"id": 9, "verdict": "right", "why": "ACT 7:32 names Abraham among 'τῶν πατέρων σου' when God speaks to Moses, and Abram son of Terah is the patriarch meant. isaac son-of abram does not record Abram's link to Moses directly."},
+ {"id": 10, "verdict": "wrong", "why": "2JN 1:3 'τοῦ Υἱοῦ τοῦ Πατρός' is a son-of-God claim, which the owner's ruling excludes."},
+ {"id": 11, "verdict": "wrong", "why": "HEB 7:3 'τῷ Υἱῷ τοῦ Θεοῦ' is a son-of-God claim, which the owner's ruling excludes. The verse also only compares Melchizedek to the Son of God."},
+ {"id": 12, "verdict": "right", "why": "ACT 7:32 names Isaac among Moses's fathers ('ὁ Θεὸς τῶν πατέρων σου, ὁ Θεὸς Ἀβραὰμ καὶ Ἰσαὰκ καὶ Ἰακώβ'), and nothing recorded links Isaac to Moses directly."},
+ {"id": 13, "verdict": "right", "why": "HEB 7:14 'ἐξ Ἰούδα ἀνατέταλκεν ὁ Κύριος ἡμῶν' says our Lord, meaning Jesus, sprang from Judah, the tribe named after Jacob's son. Only jesus descendant-of abram is recorded, not this."}
+]

@@ -1,0 +1,20 @@
+{
+ "chapter": "MRK 3",
+ "rows": 1,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "MRK 3:11",
+   "why": "The Greek explicitly calls Jesus ὁ Υἱὸς τοῦ Θεοῦ, “the Son of God.”",
+   "confidence": 1
+  }
+ ],
+ "note": "The brother relationship in MRK 3:17 is supported, and both named father–son relationships are already recorded elsewhere. Jesus’ mother, brothers, and sisters are unnamed here, so no additional relationships can be assigned to the supplied records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:56:10+00:00"
+}

@@ -1,0 +1,11 @@
+{
+ "chapter": "JDG 11",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "JDG 11:1 explicitly states that Gilead begat Jephthah, supporting both recorded rows. Balak's relationship to Zippor in JDG 11:25 is already recorded from NUM 22:2; Jephthah's mother, brothers, and daughter have no records in the supplied list.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:49:49+00:00"
+}

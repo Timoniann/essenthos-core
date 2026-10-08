@@ -1,0 +1,11 @@
+{
+ "chapter": "EST 5",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "EST 5:10 and 5:14 explicitly identify Zeresh as Haman’s wife, and that relationship is already recorded in both directions; Haman’s sons in EST 5:11 are unnamed.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:23+00:00"
+}

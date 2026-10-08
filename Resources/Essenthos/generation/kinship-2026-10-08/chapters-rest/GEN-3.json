@@ -1,0 +1,11 @@
+{
+ "chapter": "GEN 3",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "GEN 3:20 explicitly identifies Eve as Adam’s wife, and that relationship is already recorded; no additional specific family relationship between the supplied records is plainly stated.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:04+00:00"
+}

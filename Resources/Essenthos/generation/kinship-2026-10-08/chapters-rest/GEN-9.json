@@ -1,0 +1,28 @@
+{
+ "chapter": "GEN 9",
+ "rows": 2,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "ham",
+   "type": "brother-of",
+   "to": "shem",
+   "verse": "GEN 9:22",
+   "why": "Ham tells his two brothers, whom the following verse identifies as Shem and Japheth.",
+   "confidence": 1
+  },
+  {
+   "from": "ham",
+   "type": "brother-of",
+   "to": "japheth",
+   "verse": "GEN 9:22",
+   "why": "Ham tells his two brothers, whom the following verse identifies as Shem and Japheth.",
+   "confidence": 1
+  }
+ ],
+ "note": "Both recorded rows correctly express Ham's parentage of Canaan; all explicitly named father–son relationships are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:49:29+00:00"
+}

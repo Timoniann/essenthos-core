@@ -1,0 +1,1832 @@
+[
+ {
+  "id": 1,
+  "chapter": "GEN-9",
+  "claim": "The chapter plainly states 'ham brother-of japheth', and the site does not record it.",
+  "records": [
+   {
+    "slug": "ham",
+    "name": "Ham",
+    "distinguisher": "son of Noah (GEN 5:32)",
+    "sex": "male"
+   },
+   {
+    "slug": "japheth",
+    "name": "Japheth",
+    "distinguisher": "son of Noah (GEN 5:32)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "ham son-of noah (GEN 5:32)",
+   "japheth son-of noah (GEN 5:32)",
+   "japheth brother-of shem (GEN 10:21)",
+   "noah father-of ham (GEN 5:32)",
+   "noah father-of japheth (GEN 5:32)",
+   "shem brother-of japheth (GEN 10:21)"
+  ],
+  "text": {
+   "GEN 9:21": {
+    "KJV": "And he drank of the wine, and was drunken; and he was uncovered within his tent.",
+    "BHSA": "וַיֵּ֥שְׁתְּ מִן־הַיַּ֖יִן וַיִּשְׁכָּ֑ר וַיִּתְגַּ֖ל בְּתֹ֥וךְ אהלה׃ "
+   },
+   "GEN 9:22": {
+    "KJV": "And Ham, the father of Canaan, saw the nakedness of his father, and told his two brethren without.",
+    "BHSA": "וַיַּ֗רְא חָ֚ם אֲבִ֣י כְנַ֔עַן אֵ֖ת עֶרְוַ֣ת אָבִ֑יו וַיַּגֵּ֥ד לִשְׁנֵֽי־אֶחָ֖יו בַּחֽוּץ׃ "
+   },
+   "GEN 9:23": {
+    "KJV": "And Shem and Japheth took a garment, and laid it upon both their shoulders, and went backward, and covered the nakedness of their father; and their faces were backward, and they saw not their father's nakedness.",
+    "BHSA": "וַיִּקַּח֩ שֵׁ֨ם וָיֶ֜פֶת אֶת־הַשִּׂמְלָ֗ה וַיָּשִׂ֨ימוּ֙ עַל־שְׁכֶ֣ם שְׁנֵיהֶ֔ם וַיֵּֽלְכוּ֙ אֲחֹ֣רַנִּ֔ית וַיְכַסּ֕וּ אֵ֖ת עֶרְוַ֣ת אֲבִיהֶ֑ם וּפְנֵיהֶם֙ אֲחֹ֣רַנִּ֔ית וְעֶרְוַ֥ת אֲבִיהֶ֖ם לֹ֥א רָאֽוּ׃ "
+   }
+  }
+ },
+ {
+  "id": 2,
+  "chapter": "LUK-6",
+  "claim": "The row 'james-4 brother-of thaddaeus' should be removed: the chapter does not say it.",
+  "row_verse": "LUK 6:16",
+  "records": [
+   {
+    "slug": "james-4",
+    "name": "James",
+    "distinguisher": "the father of Judas (Thaddaeus) (LUK 6:16)",
+    "sex": "male"
+   },
+   {
+    "slug": "thaddaeus",
+    "name": "Thaddaeus",
+    "distinguisher": "disciple of the Messiah (MAT 10:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "LUK 6:15": {
+    "KJV": "Matthew and Thomas, James the son of Alphaeus, and Simon called Zelotes,",
+    "NESTLE1904": "καὶ Μαθθαῖον καὶ Θωμᾶν, καὶ Ἰάκωβον Ἀλφαίου καὶ Σίμωνα τὸν καλούμενον Ζηλωτὴν, "
+   },
+   "LUK 6:16": {
+    "KJV": "And Judas the brother of James, and Judas Iscariot, which also was the traitor.",
+    "NESTLE1904": "καὶ Ἰούδαν Ἰακώβου, καὶ Ἰούδαν Ἰσκαριὼθ, ὃς ἐγένετο προδότης, "
+   },
+   "LUK 6:17": {
+    "KJV": "And he came down with them, and stood in the plain, and the company of his disciples, and a great multitude of people out of all Judaea and Jerusalem, and from the sea coast of Tyre and Sidon, which came to hear him, and to be healed of their diseases;",
+    "NESTLE1904": "καὶ καταβὰς μετ’ αὐτῶν ἔστη ἐπὶ τόπου πεδινοῦ, καὶ ὄχλος πολὺς μαθητῶν αὐτοῦ, καὶ πλῆθος πολὺ τοῦ λαοῦ ἀπὸ πάσης τῆς Ἰουδαίας καὶ Ἱερουσαλὴμ καὶ τῆς παραλίου Τύρου καὶ Σιδῶνος, "
+   }
+  }
+ },
+ {
+  "id": 3,
+  "chapter": "ACT-1",
+  "claim": "The chapter plainly states 'judas-of-james son-of james-4', and the site does not record it.",
+  "records": [
+   {
+    "slug": "james-4",
+    "name": "James",
+    "distinguisher": "the father of Judas (Thaddaeus) (LUK 6:16)",
+    "sex": "male"
+   },
+   {
+    "slug": "judas-of-james",
+    "name": "Judas",
+    "distinguisher": "of James, one of the Twelve in Luke's list (LUK 6:16; ACT 1:13), 'not Iscariot' (JHN 14:22)",
+    "sex": null
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "ACT 1:12": {
+    "KJV": "Then returned they unto Jerusalem from the mount called Olivet, which is from Jerusalem a sabbath day's journey.",
+    "NESTLE1904": "Τότε ὑπέστρεψαν εἰς Ἱερουσαλὴμ ἀπὸ ὄρους τοῦ καλουμένου Ἐλαιῶνος, ὅ ἐστιν ἐγγὺς Ἱερουσαλὴμ σαββάτου ἔχον ὁδόν. "
+   },
+   "ACT 1:13": {
+    "KJV": "And when they were come in, they went up into an upper room, where abode both Peter, and James, and John, and Andrew, Philip, and Thomas, Bartholomew, and Matthew, James the son of Alphaeus, and Simon Zelotes, and Judas the brother of James.",
+    "NESTLE1904": "καὶ ὅτε εἰσῆλθον, εἰς τὸ ὑπερῷον ἀνέβησαν οὗ ἦσαν καταμένοντες, ὅ τε Πέτρος καὶ Ἰωάνης καὶ Ἰάκωβος καὶ Ἀνδρέας, Φίλιππος καὶ Θωμᾶς, Βαρθολομαῖος καὶ Μαθθαῖος, Ἰάκωβος Ἀλφαίου καὶ Σίμων ὁ Ζηλωτὴς καὶ Ἰούδας Ἰακώβου. "
+   },
+   "ACT 1:14": {
+    "KJV": "These all continued with one accord in prayer and supplication, with the women, and Mary the mother of Jesus, and with his brethren.",
+    "NESTLE1904": "οὗτοι πάντες ἦσαν προσκαρτεροῦντες ὁμοθυμαδὸν τῇ προσευχῇ σὺν γυναιξὶν καὶ Μαριὰμ τῇ μητρὶ τοῦ Ἰησοῦ καὶ σὺν τοῖς ἀδελφοῖς αὐτοῦ. "
+   }
+  }
+ },
+ {
+  "id": 4,
+  "chapter": "LUK-2",
+  "claim": "The chapter plainly states 'anna descendant-of asher', and the site does not record it.",
+  "records": [
+   {
+    "slug": "anna",
+    "name": "Anna",
+    "distinguisher": "the prophetess (LUK 2:36)",
+    "sex": "female"
+   },
+   {
+    "slug": "asher",
+    "name": "Asher",
+    "distinguisher": "eighth-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "LUK 2:35": {
+    "KJV": "(Yea, a sword shall pierce through thy own soul also,) that the thoughts of many hearts may be revealed.",
+    "NESTLE1904": "—καὶ σοῦ δὲ αὐτῆς τὴν ψυχὴν διελεύσεται ῥομφαία—, ὅπως ἂν ἀποκαλυφθῶσιν ἐκ πολλῶν καρδιῶν διαλογισμοί. "
+   },
+   "LUK 2:36": {
+    "KJV": "And there was one Anna, a prophetess, the daughter of Phanuel, of the tribe of Aser: she was of a great age, and had lived with an husband seven years from her virginity;",
+    "NESTLE1904": "Καὶ ἦν Ἄννα προφῆτις, θυγάτηρ Φανουήλ, ἐκ φυλῆς Ἀσήρ· αὕτη προβεβηκυῖα ἐν ἡμέραις πολλαῖς, ζήσασα μετὰ ἀνδρὸς ἔτη ἑπτὰ ἀπὸ τῆς παρθενίας αὐτῆς, "
+   },
+   "LUK 2:37": {
+    "KJV": "And she was a widow of about fourscore and four years, which departed not from the temple, but served God with fastings and prayers night and day.",
+    "NESTLE1904": "καὶ αὐτὴ χήρα ἕως ἐτῶν ὀγδοήκοντα τεσσάρων, ἣ οὐκ ἀφίστατο τοῦ ἱεροῦ νηστείαις καὶ δεήσεσιν λατρεύουσα νύκτα καὶ ἡμέραν. "
+   }
+  }
+ },
+ {
+  "id": 5,
+  "chapter": "MAT-27",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "joseph-8 disciple-of jesus (JHN 19:38)",
+   "jacob servant-of yhvh (ISA 41:8)",
+   "judas servant-of jesus (MAT 10:4)",
+   "judas apostle-of jesus (MAT 10:4)",
+   "judas disciple-of jesus (MAT 26:47)"
+  ],
+  "text": {
+   "MAT 27:53": {
+    "KJV": "And came out of the graves after his resurrection, and went into the holy city, and appeared unto many.",
+    "NESTLE1904": "καὶ ἐξελθόντες ἐκ τῶν μνημείων μετὰ τὴν ἔγερσιν αὐτοῦ εἰσῆλθον εἰς τὴν ἁγίαν πόλιν καὶ ἐνεφανίσθησαν πολλοῖς. "
+   },
+   "MAT 27:54": {
+    "KJV": "Now when the centurion, and they that were with him, watching Jesus, saw the earthquake, and those things that were done, they feared greatly, saying, Truly this was the Son of God.",
+    "NESTLE1904": "Ὁ δὲ ἑκατόνταρχος καὶ οἱ μετ’ αὐτοῦ τηροῦντες τὸν Ἰησοῦν ἰδόντες τὸν σεισμὸν καὶ τὰ γινόμενα ἐφοβήθησαν σφόδρα, λέγοντες Ἀληθῶς Θεοῦ Υἱὸς ἦν οὗτος. "
+   },
+   "MAT 27:55": {
+    "KJV": "And many women were there beholding afar off, which followed Jesus from Galilee, ministering unto him:",
+    "NESTLE1904": "Ἦσαν δὲ ἐκεῖ γυναῖκες πολλαὶ ἀπὸ μακρόθεν θεωροῦσαι, αἵτινες ἠκολούθησαν τῷ Ἰησοῦ ἀπὸ τῆς Γαλιλαίας διακονοῦσαι αὐτῷ· "
+   }
+  }
+ },
+ {
+  "id": 6,
+  "chapter": "1CH-20",
+  "claim": "The row 'elhanan killer-of goliath' points at the wrong person; it should point at 'lahmi'.",
+  "row_verse": "1CH 20:5",
+  "records": [
+   {
+    "slug": "elhanan",
+    "name": "Elhanan",
+    "distinguisher": "son of Jaare-oregim, who slew a giant of Gath in the war with the Philistines (2SA 21:19, 1CH 20:5)",
+    "sex": "male"
+   },
+   {
+    "slug": "goliath",
+    "name": "Goliath",
+    "distinguisher": "Philistine champion, from Gath (1SA 17:4)",
+    "sex": "male"
+   },
+   {
+    "slug": "lahmi",
+    "name": "Lahmi",
+    "distinguisher": "the brother of Goliath the Gittite (1CH 20:5)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 20:4": {
+    "KJV": "And it came to pass after this, that there arose war at Gezer with the Philistines; at which time Sibbechai the Hushathite slew Sippai, that was of the children of the giant: and they were subdued.",
+    "BHSA": "וַיְהִי֙ אַחֲרֵיכֵ֔ן וַתַּעֲמֹ֧ד מִלְחָמָ֛ה בְּגֶ֖זֶר עִם־פְּלִשְׁתִּ֑ים אָ֣ז הִכָּ֞ה סִבְּכַ֣י הַחֻֽשָׁתִ֗י אֶת־סִפַּ֛י מִילִדֵ֥י הָרְפָאִ֖ים וַיִּכָּנֵֽעוּ׃ "
+   },
+   "1CH 20:5": {
+    "KJV": "And there was war again with the Philistines; and Elhanan the son of Jair slew Lahmi the brother of Goliath the Gittite, whose spear staff was like a weaver's beam.",
+    "BHSA": "וַתְּהִי־עֹ֥וד מִלְחָמָ֖ה אֶת־פְּלִשְׁתִּ֑ים וַיַּ֞ךְ אֶלְחָנָ֣ן בֶּן־יעור אֶת־לַחְמִי֙ אֲחִי֙ גָּלְיָ֣ת הַגִּתִּ֔י וְעֵ֣ץ חֲנִיתֹ֔ו כִּמְנֹ֖ור אֹרְגִֽים׃ "
+   },
+   "1CH 20:6": {
+    "KJV": "And yet again there was war at Gath, where was a man of great stature, whose fingers and toes were four and twenty, six on each hand, and six on each foot and he also was the son of the giant.",
+    "BHSA": "וַתְּהִי־עֹ֥וד מִלְחָמָ֖ה בְּגַ֑ת וַיְהִ֣י׀ אִ֣ישׁ מִדָּ֗ה וְאֶצְבְּעֹתָ֤יו שֵׁשׁ־וָשֵׁשׁ֙ עֶשְׂרִ֣ים וְאַרְבַּ֔ע וְגַם־ה֖וּא נֹולַ֥ד לְהָרָפָֽא׃ "
+   }
+  }
+ },
+ {
+  "id": 7,
+  "chapter": "ROM-16",
+  "claim": "The row 'olympas companion-of nereus' should be removed: the chapter does not say it.",
+  "row_verse": "ROM 16:15",
+  "records": [
+   {
+    "slug": "nereus",
+    "name": "Nereus",
+    "distinguisher": "greeted by Paul with his sister and the saints who are with them (ROM 16:15)",
+    "sex": "male"
+   },
+   {
+    "slug": "olympas",
+    "name": "Olympas",
+    "distinguisher": "Paul sends greetings to him (ROM 16:15)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "ROM 16:14": {
+    "KJV": "Salute Asyncritus, Phlegon, Hermas, Patrobas, Hermes, and the brethren which are with them.",
+    "NESTLE1904": "ἀσπάσασθε Ἀσύνκριτον, Φλέγοντα, Ἑρμῆν, Πατρόβαν, Ἑρμᾶν, καὶ τοὺς σὺν αὐτοῖς ἀδελφούς. "
+   },
+   "ROM 16:15": {
+    "KJV": "Salute Philologus, and Julia, Nereus, and his sister, and Olympas, and all the saints which are with them.",
+    "NESTLE1904": "ἀσπάσασθε Φιλόλογον καὶ Ἰουλίαν, Νηρέα καὶ τὴν ἀδελφὴν αὐτοῦ, καὶ Ὀλυμπᾶν, καὶ τοὺς σὺν αὐτοῖς πάντας ἁγίους. "
+   },
+   "ROM 16:16": {
+    "KJV": "Salute one another with an holy kiss. The churches of Christ salute you.",
+    "NESTLE1904": "ἀσπάσασθε ἀλλήλους ἐν φιλήματι ἁγίῳ. ἀσπάζονται ὑμᾶς αἱ ἐκκλησίαι πᾶσαι τοῦ Χριστοῦ. "
+   }
+  }
+ },
+ {
+  "id": 8,
+  "chapter": "DEU-3",
+  "claim": "The row 'og killed-by yhvh' should be removed: the chapter does not say it.",
+  "row_verse": "DEU 3:3",
+  "records": [
+   {
+    "slug": "og",
+    "name": "Og",
+    "distinguisher": "King of Bashan (NUM 21:33)",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "DEU 3:2": {
+    "KJV": "And the LORD said unto me, Fear him not: for I will deliver him, and all his people, and his land, into thy hand; and thou shalt do unto him as thou didst unto Sihon king of the Amorites, which dwelt at Heshbon.",
+    "BHSA": "וַיֹּ֨אמֶר יְהוָ֤ה אֵלַי֙ אַל־תִּירָ֣א אֹתֹ֔ו כִּ֣י בְיָדְךָ֞ נָתַ֧תִּי אֹתֹ֛ו וְאֶת־כָּל־עַמֹּ֖ו וְאֶת־אַרְצֹ֑ו וְעָשִׂ֣יתָ לֹּ֔ו כַּאֲשֶׁ֣ר עָשִׂ֗יתָ לְסִיחֹן֙ מֶ֣לֶךְ הָֽאֱמֹרִ֔י אֲשֶׁ֥ר יֹושֵׁ֖ב בְּחֶשְׁבֹּֽון׃ "
+   },
+   "DEU 3:3": {
+    "KJV": "So the LORD our God delivered into our hands Og also, the king of Bashan, and all his people: and we smote him until none was left to him remaining.",
+    "BHSA": "וַיִּתֵּן֩ יְהוָ֨ה אֱלֹהֵ֜ינוּ בְּיָדֵ֗נוּ גַּ֛ם אֶת־עֹ֥וג מֶֽלֶךְ־הַבָּשָׁ֖ן וְאֶת־כָּל־עַמֹּ֑ו וַנַּכֵּ֕הוּ עַד־בִּלְתִּ֥י הִשְׁאִֽיר־לֹ֖ו שָׂרִֽיד׃ "
+   },
+   "DEU 3:4": {
+    "KJV": "And we took all his cities at that time, there was not a city which we took not from them, threescore cities, all the region of Argob, the kingdom of Og in Bashan.",
+    "BHSA": "וַנִּלְכֹּ֤ד אֶת־כָּל־עָרָיו֙ בָּעֵ֣ת הַהִ֔וא לֹ֤א הָֽיְתָה֙ קִרְיָ֔ה אֲשֶׁ֥ר לֹא־לָקַ֖חְנוּ מֵֽאִתָּ֑ם שִׁשִּׁ֥ים עִיר֙ כָּל־חֶ֣בֶל אַרְגֹּ֔ב מַמְלֶ֥כֶת עֹ֖וג בַּבָּשָֽׁן׃ "
+   }
+  }
+ },
+ {
+  "id": 9,
+  "chapter": "2CH-22",
+  "claim": "The chapter plainly states 'ahaziah-2 descendant-of jehoshaphat-3', and the site does not record it.",
+  "records": [
+   {
+    "slug": "ahaziah-2",
+    "name": "Ahaziah",
+    "distinguisher": "King of Judah, youngest (2CH 21:17) son of Jehoram (2KI 8:24) son of Jehoshapat",
+    "sex": "male"
+   },
+   {
+    "slug": "jehoshaphat-3",
+    "name": "Jehoshaphat",
+    "distinguisher": "son of Asa and King of Judah (1KI 15:24)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "ahaziah-2 son-of jehoram (2KI 8:24)",
+   "ahaziah-2 son-of athaliah (2KI 8:26)",
+   "ahaziah-2 killed-by jehu-2 (2KI 9:27)",
+   "jehosheba sister-of ahaziah-2 (2KI 11:2)",
+   "jehu-2 killer-of ahaziah-2 (2KI 9:27)",
+   "athaliah mother-of ahaziah-2 (2KI 11:1)"
+  ],
+  "text": {
+   "2CH 22:8": {
+    "KJV": "And it came to pass, that, when Jehu was executing judgment upon the house of Ahab, and found the princes of Judah, and the sons of the brethren of Ahaziah, that ministered to Ahaziah, he slew them.",
+    "BHSA": "וַיְהִ֕י כְּהִשָּׁפֵ֥ט יֵה֖וּא עִם־בֵּ֣ית אַחְאָ֑ב וַיִּמְצָא֩ אֶת־שָׂרֵ֨י יְהוּדָ֜ה וּבְנֵ֨י אֲחֵ֧י אֲחַזְיָ֛הוּ מְשָׁרְתִ֥ים לַאֲחַזְיָ֖הוּ וַיַּהַרְגֵֽם׃ "
+   },
+   "2CH 22:9": {
+    "KJV": "And he sought Ahaziah: and they caught him, (for he was hid in Samaria,) and brought him to Jehu: and when they had slain him, they buried him: Because, said they, he is the son of Jehoshaphat, who sought the LORD with all his heart. So the house of Ahaziah had no power to keep still the kingdom.",
+    "BHSA": "וַיְבַקֵּשׁ֩ אֶת־אֲחַזְיָ֨הוּ וַֽיִּלְכְּדֻ֜הוּ וְה֧וּא מִתְחַבֵּ֣א בְשֹֽׁמְרֹ֗ון וַיְבִאֻ֣הוּ אֶל־יֵהוּא֮ וַיְמִתֻהוּ֒ וַֽיִּקְבְּרֻ֔הוּ כִּ֤י אָֽמְרוּ֙ בֶּן־יְהֹושָׁפָ֣ט ה֔וּא אֲשֶׁר־דָּרַ֥שׁ אֶת־יְהוָ֖ה בְּכָל־לְבָבֹ֑ו וְאֵין֙ לְבֵ֣ית אֲחַזְיָ֔הוּ לַעְצֹ֥ר כֹּ֖חַ לְמַמְלָכָֽה׃ "
+   },
+   "2CH 22:10": {
+    "KJV": "But when Athaliah the mother of Ahaziah saw that her son was dead, she arose and destroyed all the seed royal of the house of Judah.",
+    "BHSA": "וַעֲתַלְיָ֨הוּ֙ אֵ֣ם אֲחַזְיָ֔הוּ רָאֲתָ֖ה כִּ֣י מֵ֣ת בְּנָ֑הּ וַתָּ֗קָם וַתְּדַבֵּ֛ר אֶת־כָּל־זֶ֥רַע הַמַּמְלָכָ֖ה לְבֵ֥ית יְהוּדָֽה׃ "
+   }
+  }
+ },
+ {
+  "id": 10,
+  "chapter": "ROM-11",
+  "claim": "The chapter plainly states 'saul-2 descendant-of abram', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abram",
+    "name": "Abram",
+    "distinguisher": "son of Terah (GEN 11:26)",
+    "sex": "male"
+   },
+   {
+    "slug": "saul-2",
+    "name": "Saul",
+    "distinguisher": "the apostle Paul, at whose feet witnesses to Stephen's death laid their robes (ACT 7:58)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abram servant-of yhvh (GEN 26:24)"
+  ],
+  "text": {
+   "ROM 11:1": {
+    "KJV": "I say then, Hath God cast away his people? God forbid. For I also am an Israelite, of the seed of Abraham, of the tribe of Benjamin.",
+    "NESTLE1904": "Λέγω οὖν, μὴ ἀπώσατο ὁ Θεὸς τὸν λαὸν αὐτοῦ; μὴ γένοιτο· καὶ γὰρ ἐγὼ Ἰσραηλείτης εἰμί, ἐκ σπέρματος Ἀβραάμ, φυλῆς Βενιαμείν. "
+   },
+   "ROM 11:2": {
+    "KJV": "God hath not cast away his people which he foreknew. Wot ye not what the scripture saith of Elias? how he maketh intercession to God against Israel saying,",
+    "NESTLE1904": "οὐκ ἀπώσατο ὁ Θεὸς τὸν λαὸν αὐτοῦ ὃν προέγνω. ἢ οὐκ οἴδατε ἐν Ἡλείᾳ τί λέγει ἡ γραφή, ὡς ἐντυγχάνει τῷ Θεῷ κατὰ τοῦ Ἰσραήλ; "
+   }
+  }
+ },
+ {
+  "id": 11,
+  "chapter": "ACT-26",
+  "claim": "The row 'bernice companion-of porcius' should be removed: the chapter does not say it.",
+  "row_verse": "ACT 26:30",
+  "records": [
+   {
+    "slug": "bernice",
+    "name": "Bernice",
+    "distinguisher": "traveled with Agrippa to visit Festus (ACT 25:13)",
+    "sex": "female"
+   },
+   {
+    "slug": "porcius",
+    "name": "Porcius",
+    "distinguisher": "the governor of Caesarea who succeeded Felix (ACT 24:27)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "ACT 26:29": {
+    "KJV": "And Paul said, I would to God, that not only thou, but also all that hear me this day, were both almost, and altogether such as I am, except these bonds.",
+    "NESTLE1904": "ὁ δὲ Παῦλος Εὐξαίμην ἂν τῷ Θεῷ καὶ ἐν ὀλίγῳ καὶ ἐν μεγάλῳ οὐ μόνον σὲ ἀλλὰ καὶ πάντας τοὺς ἀκούοντάς μου σήμερον γενέσθαι τοιούτους ὁποῖος καὶ ἐγώ εἰμι, παρεκτὸς τῶν δεσμῶν τούτων. "
+   },
+   "ACT 26:30": {
+    "KJV": "And when he had thus spoken, the king rose up, and the governor, and Bernice, and they that sat with them:",
+    "NESTLE1904": "Ἀνέστη τε ὁ βασιλεὺς καὶ ὁ ἡγεμὼν ἥ τε Βερνίκη καὶ οἱ συνκαθήμενοι αὐτοῖς, "
+   },
+   "ACT 26:31": {
+    "KJV": "And when they were gone aside, they talked between themselves, saying, This man doeth nothing worthy of death or of bonds.",
+    "NESTLE1904": "καὶ ἀναχωρήσαντες ἐλάλουν πρὸς ἀλλήλους λέγοντες ὅτι Οὐδὲν θανάτου ἢ δεσμῶν ἄξιον πράσσει ὁ ἄνθρωπος οὗτος. "
+   }
+  }
+ },
+ {
+  "id": 12,
+  "chapter": "LUK-10",
+  "claim": "The row 'mary-3 disciple-of jesus' should be removed: the chapter does not say it.",
+  "row_verse": "LUK 10:39",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "mary-3",
+    "name": "Mary",
+    "distinguisher": "sister of Martha (LUK 10:39)",
+    "sex": "female"
+   }
+  ],
+  "text": {
+   "LUK 10:38": {
+    "KJV": "Now it came to pass, as they went, that he entered into a certain village: and a certain woman named Martha received him into her house.",
+    "NESTLE1904": "Ἐν δὲ τῷ πορεύεσθαι αὐτοὺς αὐτὸς εἰσῆλθεν εἰς κώμην τινά· γυνὴ δέ τις ὀνόματι Μάρθα ὑπεδέξατο αὐτὸν εἰς τὴν οἰκίαν. "
+   },
+   "LUK 10:39": {
+    "KJV": "And she had a sister called Mary, which also sat at Jesus' feet, and heard his word.",
+    "NESTLE1904": "καὶ τῇδε ἦν ἀδελφὴ καλουμένη Μαριάμ, ἣ καὶ παρακαθεσθεῖσα πρὸς τοὺς πόδας τοῦ Κυρίου ἤκουεν τὸν λόγον αὐτοῦ. "
+   },
+   "LUK 10:40": {
+    "KJV": "But Martha was cumbered about much serving, and came to him, and said, Lord, dost thou not care that my sister hath left me to serve alone? bid her therefore that she help me.",
+    "NESTLE1904": "ἡ δὲ Μάρθα περιεσπᾶτο περὶ πολλὴν διακονίαν· ἐπιστᾶσα δὲ εἶπεν Κύριε, οὐ μέλει σοι ὅτι ἡ ἀδελφή μου μόνην με κατέλειπεν διακονεῖν; εἰπὸν οὖν αὐτῇ ἵνα μοι συναντιλάβηται. "
+   }
+  }
+ },
+ {
+  "id": 13,
+  "chapter": "2TI-1",
+  "claim": "The row 'lois mother-of eunice' should be removed: the chapter does not say it.",
+  "row_verse": "2TI 1:5",
+  "records": [
+   {
+    "slug": "eunice",
+    "name": "Eunice",
+    "distinguisher": "Timothy's mother (2TI 1:5)",
+    "sex": "female"
+   },
+   {
+    "slug": "lois",
+    "name": "Lois",
+    "distinguisher": "Timothy's grandmother (2TI 1:5)",
+    "sex": "female"
+   }
+  ],
+  "text": {
+   "2TI 1:4": {
+    "KJV": "Greatly desiring to see thee, being mindful of thy tears, that I may be filled with joy;",
+    "NESTLE1904": "ἐπιποθῶν σε ἰδεῖν, μεμνημένος σου τῶν δακρύων, ἵνα χαρᾶς πληρωθῶ, "
+   },
+   "2TI 1:5": {
+    "KJV": "When I call to remembrance the unfeigned faith that is in thee, which dwelt first in thy grandmother Lois, and thy mother Eunice; and I am persuaded that in thee also.",
+    "NESTLE1904": "ὑπόμνησιν λαβὼν τῆς ἐν σοὶ ἀνυποκρίτου πίστεως, ἥτις ἐνῴκησεν πρῶτον ἐν τῇ μάμμῃ σου Λωΐδι καὶ τῇ μητρί σου Εὐνίκῃ, πέπεισμαι δὲ ὅτι καὶ ἐν σοί. "
+   },
+   "2TI 1:6": {
+    "KJV": "Wherefore I put thee in remembrance that thou stir up the gift of God, which is in thee by the putting on of my hands.",
+    "NESTLE1904": "Δι’ ἣν αἰτίαν ἀναμιμνῄσκω σε ἀναζωπυρεῖν τὸ χάρισμα τοῦ Θεοῦ, ὅ ἐστιν ἐν σοὶ διὰ τῆς ἐπιθέσεως τῶν χειρῶν μου. "
+   }
+  }
+ },
+ {
+  "id": 14,
+  "chapter": "LUK-6",
+  "claim": "The chapter plainly states 'judas-of-james son-of james-4', and the site does not record it.",
+  "records": [
+   {
+    "slug": "james-4",
+    "name": "James",
+    "distinguisher": "the father of Judas (Thaddaeus) (LUK 6:16)",
+    "sex": "male"
+   },
+   {
+    "slug": "judas-of-james",
+    "name": "Judas",
+    "distinguisher": "of James, one of the Twelve in Luke's list (LUK 6:16; ACT 1:13), 'not Iscariot' (JHN 14:22)",
+    "sex": null
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "LUK 6:15": {
+    "KJV": "Matthew and Thomas, James the son of Alphaeus, and Simon called Zelotes,",
+    "NESTLE1904": "καὶ Μαθθαῖον καὶ Θωμᾶν, καὶ Ἰάκωβον Ἀλφαίου καὶ Σίμωνα τὸν καλούμενον Ζηλωτὴν, "
+   },
+   "LUK 6:16": {
+    "KJV": "And Judas the brother of James, and Judas Iscariot, which also was the traitor.",
+    "NESTLE1904": "καὶ Ἰούδαν Ἰακώβου, καὶ Ἰούδαν Ἰσκαριὼθ, ὃς ἐγένετο προδότης, "
+   },
+   "LUK 6:17": {
+    "KJV": "And he came down with them, and stood in the plain, and the company of his disciples, and a great multitude of people out of all Judaea and Jerusalem, and from the sea coast of Tyre and Sidon, which came to hear him, and to be healed of their diseases;",
+    "NESTLE1904": "καὶ καταβὰς μετ’ αὐτῶν ἔστη ἐπὶ τόπου πεδινοῦ, καὶ ὄχλος πολὺς μαθητῶν αὐτοῦ, καὶ πλῆθος πολὺ τοῦ λαοῦ ἀπὸ πάσης τῆς Ἰουδαίας καὶ Ἱερουσαλὴμ καὶ τῆς παραλίου Τύρου καὶ Σιδῶνος, "
+   }
+  }
+ },
+ {
+  "id": 15,
+  "chapter": "COL-4",
+  "claim": "The row 'john-5 nephew-of joseph-12' should be removed: the chapter does not say it.",
+  "row_verse": "COL 4:10",
+  "records": [
+   {
+    "slug": "john-5",
+    "name": "John",
+    "distinguisher": "also called Mark (ACT 12:12) a companion of Barnabas and Saul (ACT 12:25)",
+    "sex": "male"
+   },
+   {
+    "slug": "joseph-12",
+    "name": "Joseph",
+    "distinguisher": "a Levite of Cyprian birth (ACT 4:36)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "COL 4:9": {
+    "KJV": "With Onesimus, a faithful and beloved brother, who is one of you. They shall make known unto you all things which are done here.",
+    "NESTLE1904": "σὺν Ὀνησίμῳ τῷ πιστῷ καὶ ἀγαπητῷ ἀδελφῷ, ὅς ἐστιν ἐξ ὑμῶν· πάντα ὑμῖν γνωρίσουσιν τὰ ὧδε. "
+   },
+   "COL 4:10": {
+    "KJV": "Aristarchus my fellowprisoner saluteth you, and Marcus, sister's son to Barnabas, (touching whom ye received commandments: if he come unto you, receive him;)",
+    "NESTLE1904": "Ἀσπάζεται ὑμᾶς Ἀρίσταρχος ὁ συναιχμάλωτός μου, καὶ Μᾶρκος ὁ ἀνεψιὸς Βαρνάβα, (περὶ οὗ ἐλάβετε ἐντολάς, ἐὰν ἔλθῃ πρὸς ὑμᾶς, δέξασθε αὐτόν,) "
+   },
+   "COL 4:11": {
+    "KJV": "And Jesus, which is called Justus, who are of the circumcision. These only are my fellowworkers unto the kingdom of God, which have been a comfort unto me.",
+    "NESTLE1904": "καὶ Ἰησοῦς ὁ λεγόμενος Ἰοῦστος, οἱ ὄντες ἐκ περιτομῆς οὗτοι μόνοι συνεργοὶ εἰς τὴν βασιλείαν τοῦ Θεοῦ, οἵτινες ἐγενήθησάν μοι παρηγορία. "
+   }
+  }
+ },
+ {
+  "id": 16,
+  "chapter": "HEB-4",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "jesus descendant-of david (MAT 1:1)",
+   "david servant-of yhvh (2SA 3:18)"
+  ],
+  "text": {
+   "HEB 4:13": {
+    "KJV": "Neither is there any creature that is not manifest in his sight: but all things are naked and opened unto the eyes of him with whom we have to do.",
+    "NESTLE1904": "καὶ οὐκ ἔστιν κτίσις ἀφανὴς ἐνώπιον αὐτοῦ, πάντα δὲ γυμνὰ καὶ τετραχηλισμένα τοῖς ὀφθαλμοῖς αὐτοῦ, πρὸς ὃν ἡμῖν ὁ λόγος. "
+   },
+   "HEB 4:14": {
+    "KJV": "Seeing then that we have a great high priest, that is passed into the heavens, Jesus the Son of God, let us hold fast our profession.",
+    "NESTLE1904": "Ἔχοντες οὖν ἀρχιερέα μέγαν διεληλυθότα τοὺς οὐρανούς, Ἰησοῦν τὸν Υἱὸν τοῦ Θεοῦ, κρατῶμεν τῆς ὁμολογίας. "
+   },
+   "HEB 4:15": {
+    "KJV": "For we have not an high priest which cannot be touched with the feeling of our infirmities; but was in all points tempted like as we are, yet without sin.",
+    "NESTLE1904": "οὐ γὰρ ἔχομεν ἀρχιερέα μὴ δυνάμενον συνπαθῆσαι ταῖς ἀσθενείαις ἡμῶν, πεπειρασμένον δὲ κατὰ πάντα καθ’ ὁμοιότητα χωρὶς ἁμαρτίας. "
+   }
+  }
+ },
+ {
+  "id": 17,
+  "chapter": "MAT-2",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus son-of mary (MAT 1:16)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "joseph-6 father-of jesus (LUK 3:23)",
+   "mary mother-of jesus (MAT 1:16)",
+   "theangelofthelord angel-of yhvh (GEN 16:7)"
+  ],
+  "text": {
+   "MAT 2:14": {
+    "KJV": "When he arose, he took the young child and his mother by night, and departed into Egypt:",
+    "NESTLE1904": "ὁ δὲ ἐγερθεὶς παρέλαβεν τὸ παιδίον καὶ τὴν μητέρα αὐτοῦ νυκτὸς καὶ ἀνεχώρησεν εἰς Αἴγυπτον, "
+   },
+   "MAT 2:15": {
+    "KJV": "And was there until the death of Herod: that it might be fulfilled which was spoken of the Lord by the prophet, saying, Out of Egypt have I called my son.",
+    "NESTLE1904": "καὶ ἦν ἐκεῖ ἕως τῆς τελευτῆς Ἡρῴδου· ἵνα πληρωθῇ τὸ ῥηθὲν ὑπὸ κυρίου διὰ τοῦ προφήτου λέγοντος Ἐξ Αἰγύπτου ἐκάλεσα τὸν υἱόν μου. "
+   },
+   "MAT 2:16": {
+    "KJV": "Then Herod, when he saw that he was mocked of the wise men, was exceeding wroth, and sent forth, and slew all the children that were in Bethlehem, and in all the coasts thereof, from two years old and under, according to the time which he had diligently inquired of the wise men.",
+    "NESTLE1904": "Τότε Ἡρῴδης ἰδὼν ὅτι ἐνεπαίχθη ὑπὸ τῶν μάγων ἐθυμώθη λίαν, καὶ ἀποστείλας ἀνεῖλεν πάντας τοὺς παῖδας τοὺς ἐν Βηθλέεμ καὶ ἐν πᾶσι τοῖς ὁρίοις αὐτῆς ἀπὸ διετοῦς καὶ κατωτέρω, κατὰ τὸν χρόνον ὃν ἠκρίβωσεν παρὰ τῶν μάγων. "
+   }
+  }
+ },
+ {
+  "id": 18,
+  "chapter": "EZK-1",
+  "claim": "The row 'ezekiel priest-of yhvh' should be removed: the chapter does not say it.",
+  "row_verse": "EZK 1:3",
+  "records": [
+   {
+    "slug": "ezekiel",
+    "name": "Ezekiel",
+    "distinguisher": "the priest, son of Buzi (EZK  1:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "EZK 1:2": {
+    "KJV": "In the fifth day of the month, which was the fifth year of king Jehoiachin's captivity,",
+    "BHSA": "בַּחֲמִשָּׁ֖ה לַחֹ֑דֶשׁ הִ֚יא הַשָּׁנָ֣ה הַחֲמִישִׁ֔ית לְגָל֖וּת הַמֶּ֥לֶךְ יֹויָכִֽין׃ "
+   },
+   "EZK 1:3": {
+    "KJV": "The word of the LORD came expressly unto Ezekiel the priest, the son of Buzi, in the land of the Chaldeans by the river Chebar; and the hand of the LORD was there upon him.",
+    "BHSA": "הָיֹ֣ה הָיָ֣ה דְבַר־יְ֠הוָה אֶל־יְחֶזְקֵ֨אל בֶּן־בּוּזִ֧י הַכֹּהֵ֛ן בְּאֶ֥רֶץ כַּשְׂדִּ֖ים עַל־נְהַר־כְּבָ֑ר וַתְּהִ֥י עָלָ֛יו שָׁ֖ם יַד־יְהוָֽה׃ "
+   },
+   "EZK 1:4": {
+    "KJV": "And I looked, and, behold, a whirlwind came out of the north, a great cloud, and a fire infolding itself, and a brightness was about it, and out of the midst thereof as the colour of amber, out of the midst of the fire.",
+    "BHSA": "וָאֵ֡רֶא וְהִנֵּה֩ ר֨וּחַ סְעָרָ֜ה בָּאָ֣ה מִן־הַצָּפֹ֗ון עָנָ֤ן גָּדֹול֙ וְאֵ֣שׁ מִתְלַקַּ֔חַת וְנֹ֥גַֽהּ לֹ֖ו סָבִ֑יב וּמִ֨תֹּוכָ֔הּ כְּעֵ֥ין הַחַשְׁמַ֖ל מִתֹּ֥וךְ הָאֵֽשׁ׃ "
+   }
+  }
+ },
+ {
+  "id": 19,
+  "chapter": "JHN-18",
+  "claim": "The chapter plainly states 'yhvh father-of jesus', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "annas high-priest-of yhvh (ACT 4:6)",
+   "caiaphas high-priest-of yhvh (MAT 26:57)",
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "judas servant-of jesus (MAT 10:4)",
+   "judas apostle-of jesus (MAT 10:4)"
+  ],
+  "text": {
+   "JHN 18:10": {
+    "KJV": "Then Simon Peter having a sword drew it, and smote the high priest's servant, and cut off his right ear. The servant's name was Malchus.",
+    "NESTLE1904": "Σίμων οὖν Πέτρος ἔχων μάχαιραν εἵλκυσεν αὐτὴν καὶ ἔπαισεν τὸν τοῦ ἀρχιερέως δοῦλον καὶ ἀπέκοψεν αὐτοῦ τὸ ὠτάριον τὸ δεξιόν. ἦν δὲ ὄνομα τῷ δούλῳ Μάλχος. "
+   },
+   "JHN 18:11": {
+    "KJV": "Then said Jesus unto Peter, Put up thy sword into the sheath: the cup which my Father hath given me, shall I not drink it?",
+    "NESTLE1904": "εἶπεν οὖν ὁ Ἰησοῦς τῷ Πέτρῳ Βάλε τὴν μάχαιραν εἰς τὴν θήκην· τὸ ποτήριον ὃ δέδωκέν μοι ὁ Πατήρ, οὐ μὴ πίω αὐτό; "
+   },
+   "JHN 18:12": {
+    "KJV": "Then the band and the captain and officers of the Jews took Jesus, and bound him,",
+    "NESTLE1904": "Ἡ οὖν σπεῖρα καὶ ὁ χιλίαρχος καὶ οἱ ὑπηρέται τῶν Ἰουδαίων συνέλαβον τὸν Ἰησοῦν καὶ ἔδησαν αὐτὸν, "
+   }
+  }
+ },
+ {
+  "id": 20,
+  "chapter": "EZR-5",
+  "claim": "The chapter plainly states 'zechariah-13 son-of iddo-5', and the site does not record it.",
+  "records": [
+   {
+    "slug": "iddo-5",
+    "name": "Iddo",
+    "distinguisher": "[grand] father of Zechariah the prophet (EZR 5:1, ZEC 1:1)",
+    "sex": "male"
+   },
+   {
+    "slug": "zechariah-13",
+    "name": "Zechariah",
+    "distinguisher": "the prophet, son of Berechiah, son of Iddo (ZEC 1:1), who prophesied with Haggai (EZR 5:1)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "zechariah-13 grandson-of iddo-5 (ZEC 1:1)"
+  ],
+  "text": {
+   "EZR 5:1": {
+    "KJV": "Then the prophets, Haggai the prophet, and Zechariah the son of Iddo, prophesied unto the Jews that were in Judah and Jerusalem in the name of the God of Israel, even unto them.",
+    "BHSA": "וְהִתְנַבִּ֞י חַגַּ֣י נביאה וּזְכַרְיָ֤ה בַר־עִדֹּוא֙ נביאיא עַל־יְה֣וּדָיֵ֔א דִּ֥י בִיה֖וּד וּבִירוּשְׁלֶ֑ם בְּשֻׁ֛ם אֱלָ֥הּ יִשְׂרָאֵ֖ל עֲלֵיהֹֽון׃ ס "
+   },
+   "EZR 5:2": {
+    "KJV": "Then rose up Zerubbabel the son of Shealtiel, and Jeshua the son of Jozadak, and began to build the house of God which is at Jerusalem: and with them were the prophets of God helping them.",
+    "BHSA": "בֵּאדַ֡יִן קָ֠מוּ זְרֻבָּבֶ֤ל בַּר־שְׁאַלְתִּיאֵל֙ וְיֵשׁ֣וּעַ בַּר־יֹֽוצָדָ֔ק וְשָׁרִ֣יו לְמִבְנֵ֔א בֵּ֥ית אֱלָהָ֖א דִּ֣י בִירֽוּשְׁלֶ֑ם וְעִמְּהֹ֛ון נביאיא דִֽי־אֱלָהָ֖א מְסָעֲדִ֥ין לְהֹֽון׃ פ "
+   }
+  }
+ },
+ {
+  "id": 21,
+  "chapter": "MAT-26",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "aaron high-priest-of yhvh (EXO 28:1)",
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "judas servant-of jesus (MAT 10:4)",
+   "judas apostle-of jesus (MAT 10:4)",
+   "simon servant-of jesus (MAT 10:2)"
+  ],
+  "text": {
+   "MAT 26:38": {
+    "KJV": "Then saith he unto them, My soul is exceeding sorrowful, even unto death: tarry ye here, and watch with me.",
+    "NESTLE1904": "τότε λέγει αὐτοῖς Περίλυπός ἐστιν ἡ ψυχή μου ἕως θανάτου· μείνατε ὧδε καὶ γρηγορεῖτε μετ’ ἐμοῦ. "
+   },
+   "MAT 26:39": {
+    "KJV": "And he went a little farther, and fell on his face, and prayed, saying, O my Father, if it be possible, let this cup pass from me: nevertheless not as I will, but as thou wilt.",
+    "NESTLE1904": "καὶ προελθὼν μικρὸν ἔπεσεν ἐπὶ πρόσωπον αὐτοῦ προσευχόμενος καὶ λέγων Πάτερ μου, εἰ δυνατόν ἐστιν, παρελθάτω ἀπ’ ἐμοῦ τὸ ποτήριον τοῦτο· πλὴν οὐχ ὡς ἐγὼ θέλω ἀλλ’ ὡς σύ. "
+   },
+   "MAT 26:40": {
+    "KJV": "And he cometh unto the disciples, and findeth them asleep, and saith unto Peter, What, could ye not watch with me one hour?",
+    "NESTLE1904": "καὶ ἔρχεται πρὸς τοὺς μαθητὰς καὶ εὑρίσκει αὐτοὺς καθεύδοντας, καὶ λέγει τῷ Πέτρῳ Οὕτως οὐκ ἰσχύσατε μίαν ὥραν γρηγορῆσαι μετ’ ἐμοῦ; "
+   }
+  }
+ },
+ {
+  "id": 22,
+  "chapter": "LUK-6",
+  "claim": "The row 'thaddaeus brother-of james-4' should be removed: the chapter does not say it.",
+  "row_verse": "LUK 6:16",
+  "records": [
+   {
+    "slug": "james-4",
+    "name": "James",
+    "distinguisher": "the father of Judas (Thaddaeus) (LUK 6:16)",
+    "sex": "male"
+   },
+   {
+    "slug": "thaddaeus",
+    "name": "Thaddaeus",
+    "distinguisher": "disciple of the Messiah (MAT 10:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "LUK 6:15": {
+    "KJV": "Matthew and Thomas, James the son of Alphaeus, and Simon called Zelotes,",
+    "NESTLE1904": "καὶ Μαθθαῖον καὶ Θωμᾶν, καὶ Ἰάκωβον Ἀλφαίου καὶ Σίμωνα τὸν καλούμενον Ζηλωτὴν, "
+   },
+   "LUK 6:16": {
+    "KJV": "And Judas the brother of James, and Judas Iscariot, which also was the traitor.",
+    "NESTLE1904": "καὶ Ἰούδαν Ἰακώβου, καὶ Ἰούδαν Ἰσκαριὼθ, ὃς ἐγένετο προδότης, "
+   },
+   "LUK 6:17": {
+    "KJV": "And he came down with them, and stood in the plain, and the company of his disciples, and a great multitude of people out of all Judaea and Jerusalem, and from the sea coast of Tyre and Sidon, which came to hear him, and to be healed of their diseases;",
+    "NESTLE1904": "καὶ καταβὰς μετ’ αὐτῶν ἔστη ἐπὶ τόπου πεδινοῦ, καὶ ὄχλος πολὺς μαθητῶν αὐτοῦ, καὶ πλῆθος πολὺ τοῦ λαοῦ ἀπὸ πάσης τῆς Ἰουδαίας καὶ Ἱερουσαλὴμ καὶ τῆς παραλίου Τύρου καὶ Σιδῶνος, "
+   }
+  }
+ },
+ {
+  "id": 23,
+  "chapter": "ROM-16",
+  "claim": "The row 'olympas companion-of philologus' should be removed: the chapter does not say it.",
+  "row_verse": "ROM 16:15",
+  "records": [
+   {
+    "slug": "olympas",
+    "name": "Olympas",
+    "distinguisher": "Paul sends greetings to him (ROM 16:15)",
+    "sex": "male"
+   },
+   {
+    "slug": "philologus",
+    "name": "Philologus",
+    "distinguisher": "greeted by Paul with the saints who are with him (ROM 16:15)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "ROM 16:14": {
+    "KJV": "Salute Asyncritus, Phlegon, Hermas, Patrobas, Hermes, and the brethren which are with them.",
+    "NESTLE1904": "ἀσπάσασθε Ἀσύνκριτον, Φλέγοντα, Ἑρμῆν, Πατρόβαν, Ἑρμᾶν, καὶ τοὺς σὺν αὐτοῖς ἀδελφούς. "
+   },
+   "ROM 16:15": {
+    "KJV": "Salute Philologus, and Julia, Nereus, and his sister, and Olympas, and all the saints which are with them.",
+    "NESTLE1904": "ἀσπάσασθε Φιλόλογον καὶ Ἰουλίαν, Νηρέα καὶ τὴν ἀδελφὴν αὐτοῦ, καὶ Ὀλυμπᾶν, καὶ τοὺς σὺν αὐτοῖς πάντας ἁγίους. "
+   },
+   "ROM 16:16": {
+    "KJV": "Salute one another with an holy kiss. The churches of Christ salute you.",
+    "NESTLE1904": "ἀσπάσασθε ἀλλήλους ἐν φιλήματι ἁγίῳ. ἀσπάζονται ὑμᾶς αἱ ἐκκλησίαι πᾶσαι τοῦ Χριστοῦ. "
+   }
+  }
+ },
+ {
+  "id": 24,
+  "chapter": "LUK-10",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus high-priest-of yhvh (HEB 4:14)"
+  ],
+  "text": {
+   "LUK 10:21": {
+    "KJV": "In that hour Jesus rejoiced in spirit, and said, I thank thee, O Father, Lord of heaven and earth, that thou hast hid these things from the wise and prudent, and hast revealed them unto babes: even so, Father; for so it seemed good in thy sight.",
+    "NESTLE1904": "Ἐν αὐτῇ τῇ ὥρᾳ ἠγαλλιάσατο τῷ Πνεύματι τῷ Ἁγίῳ καὶ εἶπεν Ἐξομολογοῦμαί σοι, Πάτερ, Κύριε τοῦ οὐρανοῦ καὶ τῆς γῆς, ὅτι ἀπέκρυψας ταῦτα ἀπὸ σοφῶν καὶ συνετῶν, καὶ ἀπεκάλυψας αὐτὰ νηπίοις· ναί, ὁ Πατήρ, ὅτι οὕτως εὐδοκία ἐγένετο ἔμπροσθέν σου. "
+   },
+   "LUK 10:22": {
+    "KJV": "All things are delivered to me of my Father: and no man knoweth who the Son is, but the Father; and who the Father is, but the Son, and he to whom the Son will reveal him.",
+    "NESTLE1904": "πάντα μοι παρεδόθη ὑπὸ τοῦ Πατρός μου, καὶ οὐδεὶς γινώσκει τίς ἐστιν ὁ Υἱὸς εἰ μὴ ὁ Πατήρ, καὶ τίς ἐστιν ὁ Πατὴρ εἰ μὴ ὁ Υἱὸς καὶ ᾧ ἐὰν βούληται ὁ Υἱὸς ἀποκαλύψαι. "
+   },
+   "LUK 10:23": {
+    "KJV": "And he turned him unto his disciples, and said privately, Blessed are the eyes which see the things that ye see:",
+    "NESTLE1904": "Καὶ στραφεὶς πρὸς τοὺς μαθητὰς κατ’ ἰδίαν εἶπεν Μακάριοι οἱ ὀφθαλμοὶ οἱ βλέποντες ἃ βλέπετε. "
+   }
+  }
+ },
+ {
+  "id": 25,
+  "chapter": "ACT-26",
+  "claim": "The row 'agrippa judge-of saul-2' should be removed: the chapter does not say it.",
+  "row_verse": "ACT 26:32",
+  "records": [
+   {
+    "slug": "agrippa",
+    "name": "Agrippa",
+    "distinguisher": "the king who visited Festus  (ACT 25:13)",
+    "sex": "male"
+   },
+   {
+    "slug": "saul-2",
+    "name": "Saul",
+    "distinguisher": "the apostle Paul, at whose feet witnesses to Stephen's death laid their robes (ACT 7:58)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "ACT 26:31": {
+    "KJV": "And when they were gone aside, they talked between themselves, saying, This man doeth nothing worthy of death or of bonds.",
+    "NESTLE1904": "καὶ ἀναχωρήσαντες ἐλάλουν πρὸς ἀλλήλους λέγοντες ὅτι Οὐδὲν θανάτου ἢ δεσμῶν ἄξιον πράσσει ὁ ἄνθρωπος οὗτος. "
+   },
+   "ACT 26:32": {
+    "KJV": "Then said Agrippa unto Festus, This man might have been set at liberty, if he had not appealed unto Caesar.",
+    "NESTLE1904": "Ἀγρίππας δὲ τῷ Φήστῳ ἔφη Ἀπολελύσθαι ἐδύνατο ὁ ἄνθρωπος οὗτος εἰ μὴ ἐπεκέκλητο Καίσαρα. "
+   }
+  }
+ },
+ {
+  "id": 26,
+  "chapter": "JHN-6",
+  "claim": "The chapter plainly states 'yhvh father-of jesus', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus teacher-of andrew (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "joseph-6 father-of jesus (LUK 3:23)",
+   "moses servant-of yhvh (NUM 12:7)",
+   "moses priest-of yhvh (PSA 99:6)"
+  ],
+  "text": {
+   "JHN 6:31": {
+    "KJV": "Our fathers did eat manna in the desert; as it is written, He gave them bread from heaven to eat.",
+    "NESTLE1904": "οἱ πατέρες ἡμῶν τὸ μάννα ἔφαγον ἐν τῇ ἐρήμῳ, καθώς ἐστιν γεγραμμένον Ἄρτον ἐκ τοῦ οὐρανοῦ ἔδωκεν αὐτοῖς φαγεῖν. "
+   },
+   "JHN 6:32": {
+    "KJV": "Then Jesus said unto them, Verily, verily, I say unto you, Moses gave you not that bread from heaven; but my Father giveth you the true bread from heaven.",
+    "NESTLE1904": "εἶπεν οὖν αὐτοῖς ὁ Ἰησοῦς Ἀμὴν ἀμὴν λέγω ὑμῖν, οὐ Μωϋσῆς δέδωκεν ὑμῖν τὸν ἄρτον ἐκ τοῦ οὐρανοῦ, ἀλλ’ ὁ Πατήρ μου δίδωσιν ὑμῖν τὸν ἄρτον ἐκ τοῦ οὐρανοῦ τὸν ἀληθινόν· "
+   },
+   "JHN 6:33": {
+    "KJV": "For the bread of God is he which cometh down from heaven, and giveth life unto the world.",
+    "NESTLE1904": "ὁ γὰρ ἄρτος τοῦ Θεοῦ ἐστιν ὁ καταβαίνων ἐκ τοῦ οὐρανοῦ καὶ ζωὴν διδοὺς τῷ κόσμῳ. "
+   }
+  }
+ },
+ {
+  "id": 27,
+  "chapter": "JHN-19",
+  "claim": "The row 'clopas husband-of mary-2' points at the wrong person; it should point at 'mary-4'.",
+  "row_verse": "JHN 19:25",
+  "records": [
+   {
+    "slug": "clopas",
+    "name": "Clopas",
+    "distinguisher": "(huband?) of Mary (JHN 19:25)",
+    "sex": "male"
+   },
+   {
+    "slug": "mary-2",
+    "name": "Mary",
+    "distinguisher": "one of the women who followed Jesus from the Galilee (MAT 27:56)",
+    "sex": "female"
+   },
+   {
+    "slug": "mary-4",
+    "name": "Mary",
+    "distinguisher": "(the wife?) of Clopas (JHN 19:25)",
+    "sex": "female"
+   }
+  ],
+  "text": {
+   "JHN 19:24": {
+    "KJV": "They said therefore among themselves, Let us not rend it, but cast lots for it, whose it shall be: that the scripture might be fulfilled, which saith, They parted my raiment among them, and for my vesture they did cast lots. These things therefore the soldiers did.",
+    "NESTLE1904": "εἶπαν οὖν πρὸς ἀλλήλους Μὴ σχίσωμεν αὐτόν, ἀλλὰ λάχωμεν περὶ αὐτοῦ τίνος ἔσται· ἵνα ἡ γραφὴ πληρωθῇ Διεμερίσαντο τὰ ἱμάτιά μου ἑαυτοῖς καὶ ἐπὶ τὸν ἱματισμόν μου ἔβαλον κλῆρον. Οἱ μὲν οὖν στρατιῶται ταῦτα ἐποίησαν. "
+   },
+   "JHN 19:25": {
+    "KJV": "Now there stood by the cross of Jesus his mother, and his mother's sister, Mary the wife of Cleophas, and Mary Magdalene.",
+    "NESTLE1904": "εἱστήκεισαν δὲ παρὰ τῷ σταυρῷ τοῦ Ἰησοῦ ἡ μήτηρ αὐτοῦ καὶ ἡ ἀδελφὴ τῆς μητρὸς αὐτοῦ, Μαρία ἡ τοῦ Κλωπᾶ καὶ Μαρία ἡ Μαγδαληνή. "
+   },
+   "JHN 19:26": {
+    "KJV": "When Jesus therefore saw his mother, and the disciple standing by, whom he loved, he saith unto his mother, Woman, behold thy son!",
+    "NESTLE1904": "Ἰησοῦς οὖν ἰδὼν τὴν μητέρα καὶ τὸν μαθητὴν παρεστῶτα ὃν ἠγάπα, λέγει τῇ μητρί Γύναι, ἴδε ὁ υἱός σου. "
+   }
+  }
+ },
+ {
+  "id": 28,
+  "chapter": "1CO-1",
+  "claim": "The row 'crispus disciple-of saul-2' should be removed: the chapter does not say it.",
+  "row_verse": "1CO 1:14",
+  "records": [
+   {
+    "slug": "crispus",
+    "name": "Crispus",
+    "distinguisher": "the believing leader of the synagogue in Corinth (ACT 18:8)",
+    "sex": "male"
+   },
+   {
+    "slug": "saul-2",
+    "name": "Saul",
+    "distinguisher": "the apostle Paul, at whose feet witnesses to Stephen's death laid their robes (ACT 7:58)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CO 1:13": {
+    "KJV": "Is Christ divided? was Paul crucified for you? or were ye baptized in the name of Paul?",
+    "NESTLE1904": "μεμέρισται ὁ Χριστός; μὴ Παῦλος ἐσταυρώθη ὑπὲρ ὑμῶν, ἢ εἰς τὸ ὄνομα Παύλου ἐβαπτίσθητε; "
+   },
+   "1CO 1:14": {
+    "KJV": "I thank God that I baptized none of you, but Crispus and Gaius;",
+    "NESTLE1904": "εὐχαριστῶ ὅτι οὐδένα ὑμῶν ἐβάπτισα εἰ μὴ Κρίσπον καὶ Γάϊον· "
+   },
+   "1CO 1:15": {
+    "KJV": "Lest any should say that I had baptized in mine own name.",
+    "NESTLE1904": "ἵνα μή τις εἴπῃ ὅτι εἰς τὸ ἐμὸν ὄνομα ἐβαπτίσθητε. "
+   }
+  }
+ },
+ {
+  "id": 29,
+  "chapter": "ACT-13",
+  "claim": "The row 'manaen companion-of saul-2' should be removed: the chapter does not say it.",
+  "row_verse": "ACT 13:1",
+  "records": [
+   {
+    "slug": "manaen",
+    "name": "Manaen",
+    "distinguisher": "a prophet and teacher in Antioch (ACT 13:1)",
+    "sex": "male"
+   },
+   {
+    "slug": "saul-2",
+    "name": "Saul",
+    "distinguisher": "the apostle Paul, at whose feet witnesses to Stephen's death laid their robes (ACT 7:58)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "ACT 13:1": {
+    "KJV": "Now there were in the church that was at Antioch certain prophets and teachers; as Barnabas, and Simeon that was called Niger, and Lucius of Cyrene, and Manaen, which had been brought up with Herod the tetrarch, and Saul.",
+    "NESTLE1904": "Ἦσαν δὲ ἐν Ἀντιοχείᾳ κατὰ τὴν οὖσαν ἐκκλησίαν προφῆται καὶ διδάσκαλοι ὅ τε Βαρνάβας καὶ Συμεὼν ὁ καλούμενος Νίγερ, καὶ Λούκιος ὁ Κυρηναῖος, Μαναήν τε Ἡρῴδου τοῦ τετραάρχου σύντροφος καὶ Σαῦλος. "
+   },
+   "ACT 13:2": {
+    "KJV": "As they ministered to the Lord, and fasted, the Holy Ghost said, Separate me Barnabas and Saul for the work whereunto I have called them.",
+    "NESTLE1904": "Λειτουργούντων δὲ αὐτῶν τῷ Κυρίῳ καὶ νηστευόντων εἶπεν τὸ Πνεῦμα τὸ Ἅγιον Ἀφορίσατε δή μοι τὸν Βαρνάβαν καὶ Σαῦλον εἰς τὸ ἔργον ὃ προσκέκλημαι αὐτούς· "
+   }
+  }
+ },
+ {
+  "id": 30,
+  "chapter": "JHN-1",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "isaiah servant-of yhvh (ISA 20:3)",
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus teacher-of andrew (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "joseph-6 father-of jesus (LUK 3:23)",
+   "moses servant-of yhvh (NUM 12:7)"
+  ],
+  "text": {
+   "JHN 1:33": {
+    "KJV": "And I knew him not: but he that sent me to baptize with water, the same said unto me, Upon whom thou shalt see the Spirit descending, and remaining on him, the same is he which baptizeth with the Holy Ghost.",
+    "NESTLE1904": "κἀγὼ οὐκ ᾔδειν αὐτόν, ἀλλ’ ὁ πέμψας με βαπτίζειν ἐν ὕδατι ἐκεῖνός μοι εἶπεν Ἐφ’ ὃν ἂν ἴδῃς τὸ Πνεῦμα καταβαῖνον καὶ μένον ἐπ’ αὐτόν, οὗτός ἐστιν ὁ βαπτίζων ἐν Πνεύματι Ἁγίῳ. "
+   },
+   "JHN 1:34": {
+    "KJV": "And I saw, and bare record that this is the Son of God.",
+    "NESTLE1904": "κἀγὼ ἑώρακα, καὶ μεμαρτύρηκα ὅτι οὗτός ἐστιν ὁ Υἱὸς τοῦ Θεοῦ. "
+   },
+   "JHN 1:35": {
+    "KJV": "Again the next day after John stood, and two of his disciples;",
+    "NESTLE1904": "Τῇ ἐπαύριον πάλιν εἱστήκει ὁ Ἰωάνης καὶ ἐκ τῶν μαθητῶν αὐτοῦ δύο, "
+   }
+  }
+ },
+ {
+  "id": 31,
+  "chapter": "ACT-9",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "simon servant-of jesus (MAT 10:2)",
+   "simon apostle-of jesus (MAT 10:2)"
+  ],
+  "text": {
+   "ACT 9:19": {
+    "KJV": "And when he had received meat, he was strengthened. Then was Saul certain days with the disciples which were at Damascus.",
+    "NESTLE1904": "καὶ λαβὼν τροφὴν ἐνίσχυσεν. Ἐγένετο δὲ μετὰ τῶν ἐν Δαμασκῷ μαθητῶν ἡμέρας τινὰς, "
+   },
+   "ACT 9:20": {
+    "KJV": "And straightway he preached Christ in the synagogues, that he is the Son of God.",
+    "NESTLE1904": "καὶ εὐθέως ἐν ταῖς συναγωγαῖς ἐκήρυσσεν τὸν Ἰησοῦν, ὅτι οὗτός ἐστιν ὁ Υἱὸς τοῦ Θεοῦ. "
+   },
+   "ACT 9:21": {
+    "KJV": "But all that heard him were amazed, and said; Is not this he that destroyed them which called on this name in Jerusalem, and came hither for that intent, that he might bring them bound unto the chief priests?",
+    "NESTLE1904": "ἐξίσταντο δὲ πάντες οἱ ἀκούοντες καὶ ἔλεγον Οὐχ οὗτός ἐστιν ὁ πορθήσας εἰς Ἱερουσαλὴμ τοὺς ἐπικαλουμένους τὸ ὄνομα τοῦτο, καὶ ὧδε εἰς τοῦτο ἐληλύθει, ἵνα δεδεμένους αὐτοὺς ἀγάγῃ ἐπὶ τοὺς ἀρχιερεῖς; "
+   }
+  }
+ },
+ {
+  "id": 32,
+  "chapter": "MRK-3",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus teacher-of andrew (MAT 10:1)",
+   "jesus teacher-of james (MAT 10:1)",
+   "jesus teacher-of john-2 (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "bartholomew disciple-of jesus (MAT 10:3)"
+  ],
+  "text": {
+   "MRK 3:10": {
+    "KJV": "For he had healed many; insomuch that they pressed upon him for to touch him, as many as had plagues.",
+    "NESTLE1904": "πολλοὺς γὰρ ἐθεράπευσεν, ὥστε ἐπιπίπτειν αὐτῷ ἵνα αὐτοῦ ἅψωνται ὅσοι εἶχον μάστιγας. "
+   },
+   "MRK 3:11": {
+    "KJV": "And unclean spirits, when they saw him, fell down before him, and cried, saying, Thou art the Son of God.",
+    "NESTLE1904": "καὶ τὰ πνεύματα τὰ ἀκάθαρτα, ὅταν αὐτὸν ἐθεώρουν, προσέπιπτον αὐτῷ καὶ ἔκραζον λέγοντα ὅτι Σὺ εἶ ὁ Υἱὸς τοῦ Θεοῦ. "
+   },
+   "MRK 3:12": {
+    "KJV": "And he straitly charged them that they should not make him known.",
+    "NESTLE1904": "καὶ πολλὰ ἐπετίμα αὐτοῖς ἵνα μὴ αὐτὸν φανερὸν ποιήσωσιν. "
+   }
+  }
+ },
+ {
+  "id": 33,
+  "chapter": "ACT-13",
+  "claim": "The row 'manaen companion-of lucius' should be removed: the chapter does not say it.",
+  "row_verse": "ACT 13:1",
+  "records": [
+   {
+    "slug": "lucius",
+    "name": "Lucius",
+    "distinguisher": "a prophet and teacher in Antioch (ACT 13:1)",
+    "sex": "male"
+   },
+   {
+    "slug": "manaen",
+    "name": "Manaen",
+    "distinguisher": "a prophet and teacher in Antioch (ACT 13:1)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "ACT 13:1": {
+    "KJV": "Now there were in the church that was at Antioch certain prophets and teachers; as Barnabas, and Simeon that was called Niger, and Lucius of Cyrene, and Manaen, which had been brought up with Herod the tetrarch, and Saul.",
+    "NESTLE1904": "Ἦσαν δὲ ἐν Ἀντιοχείᾳ κατὰ τὴν οὖσαν ἐκκλησίαν προφῆται καὶ διδάσκαλοι ὅ τε Βαρνάβας καὶ Συμεὼν ὁ καλούμενος Νίγερ, καὶ Λούκιος ὁ Κυρηναῖος, Μαναήν τε Ἡρῴδου τοῦ τετραάρχου σύντροφος καὶ Σαῦλος. "
+   },
+   "ACT 13:2": {
+    "KJV": "As they ministered to the Lord, and fasted, the Holy Ghost said, Separate me Barnabas and Saul for the work whereunto I have called them.",
+    "NESTLE1904": "Λειτουργούντων δὲ αὐτῶν τῷ Κυρίῳ καὶ νηστευόντων εἶπεν τὸ Πνεῦμα τὸ Ἅγιον Ἀφορίσατε δή μοι τὸν Βαρνάβαν καὶ Σαῦλον εἰς τὸ ἔργον ὃ προσκέκλημαι αὐτούς· "
+   }
+  }
+ },
+ {
+  "id": 34,
+  "chapter": "2CH-22",
+  "claim": "The chapter plainly states 'jehu-2 son-of nimshi', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jehu-2",
+    "name": "Jehu",
+    "distinguisher": "anointed king over Israel (1KI 19:16) at the direction of Elisha (2KI 9:1-3)",
+    "sex": "male"
+   },
+   {
+    "slug": "nimshi",
+    "name": "Nimshi",
+    "distinguisher": "[grand]father of Jehu, King of Israel (1KI 19:16, 2KI 9:2)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "ahaziah-2 killed-by jehu-2 (2KI 9:27)",
+   "jehu-2 grandson-of nimshi (2KI 9:14)",
+   "jehu-2 killer-of ahaziah-2 (2KI 9:27)",
+   "nimshi grandfather-of jehu-2 (2KI 9:2)"
+  ],
+  "text": {
+   "2CH 22:6": {
+    "KJV": "And he returned to be healed in Jezreel because of the wounds which were given him at Ramah, when he fought with Hazael king of Syria. And Azariah the son of Jehoram king of Judah went down to see Jehoram the son of Ahab at Jezreel, because he was sick.",
+    "BHSA": "וַיָּ֜שָׁב לְהִתְרַפֵּ֣א בְיִזְרְעֶ֗אל כִּ֤י הַמַּכִּים֙ אֲשֶׁ֣ר הִכֻּ֣הוּ בָֽרָמָ֔ה בְּהִלָּ֣חֲמֹ֔ו אֶת־חֲזָהאֵ֖ל מֶ֣לֶךְ אֲרָ֑ם וַעֲזַרְיָ֨הוּ בֶן־יְהֹורָ֜ם מֶ֣לֶךְ יְהוּדָ֗ה יָרַ֡ד לִרְאֹ֞ות אֶת־יְהֹורָ֧ם בֶּן־אַחְאָ֛ב בְּיִזְרְעֶ֖אל כִּי־חֹלֶ֥ה הֽוּא׃ "
+   },
+   "2CH 22:7": {
+    "KJV": "And the destruction of Ahaziah was of God by coming to Joram: for when he was come, he went out with Jehoram against Jehu the son of Nimshi, whom the LORD had anointed to cut off the house of Ahab.",
+    "BHSA": "וּמֵֽאֱלֹהִ֗ים הָיְתָה֙ תְּבוּסַ֣ת אֲחַזְיָ֔הוּ לָבֹ֖וא אֶל־יֹורָ֑ם וּבְבֹאֹ֗ו יָצָ֤א עִם־יְהֹורָם֙ אֶל־יֵה֣וּא בֶן־נִמְשִׁ֔י אֲשֶׁ֣ר מְשָׁחֹ֣ו יְהוָ֔ה לְהַכְרִ֖ית אֶת־בֵּ֥ית אַחְאָֽב׃ "
+   },
+   "2CH 22:8": {
+    "KJV": "And it came to pass, that, when Jehu was executing judgment upon the house of Ahab, and found the princes of Judah, and the sons of the brethren of Ahaziah, that ministered to Ahaziah, he slew them.",
+    "BHSA": "וַיְהִ֕י כְּהִשָּׁפֵ֥ט יֵה֖וּא עִם־בֵּ֣ית אַחְאָ֑ב וַיִּמְצָא֩ אֶת־שָׂרֵ֨י יְהוּדָ֜ה וּבְנֵ֨י אֲחֵ֧י אֲחַזְיָ֛הוּ מְשָׁרְתִ֥ים לַאֲחַזְיָ֖הוּ וַיַּהַרְגֵֽם׃ "
+   }
+  }
+ },
+ {
+  "id": 35,
+  "chapter": "MAT-14",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "simon servant-of jesus (MAT 10:2)",
+   "simon apostle-of jesus (MAT 10:2)"
+  ],
+  "text": {
+   "MAT 14:32": {
+    "KJV": "And when they were come into the ship, the wind ceased.",
+    "NESTLE1904": "καὶ ἀναβάντων αὐτῶν εἰς τὸ πλοῖον ἐκόπασεν ὁ ἄνεμος. "
+   },
+   "MAT 14:33": {
+    "KJV": "Then they that were in the ship came and worshipped him, saying, Of a truth thou art the Son of God.",
+    "NESTLE1904": "οἱ δὲ ἐν τῷ πλοίῳ προσεκύνησαν αὐτῷ λέγοντες Ἀληθῶς Θεοῦ Υἱὸς εἶ. "
+   },
+   "MAT 14:34": {
+    "KJV": "And when they were gone over, they came into the land of Gennesaret.",
+    "NESTLE1904": "Καὶ διαπεράσαντες ἦλθον ἐπὶ τὴν γῆν εἰς Γεννησαρέτ. "
+   }
+  }
+ },
+ {
+  "id": 36,
+  "chapter": "PHP-2",
+  "claim": "The row 'epaphroditus companion-of jesus' should be removed: the chapter does not say it.",
+  "row_verse": "PHP 2:25",
+  "records": [
+   {
+    "slug": "epaphroditus",
+    "name": "Epaphroditus",
+    "distinguisher": "Paul's fellow worker and fellow solder (PHP 2:25)",
+    "sex": "male"
+   },
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "PHP 2:24": {
+    "KJV": "But I trust in the Lord that I also myself shall come shortly.",
+    "NESTLE1904": "πέποιθα δὲ ἐν Κυρίῳ ὅτι καὶ αὐτὸς ταχέως ἐλεύσομαι. "
+   },
+   "PHP 2:25": {
+    "KJV": "Yet I supposed it necessary to send to you Epaphroditus, my brother, and companion in labour, and fellowsoldier, but your messenger, and he that ministered to my wants.",
+    "NESTLE1904": "ἀναγκαῖον δὲ ἡγησάμην Ἐπαφρόδιτον τὸν ἀδελφὸν καὶ συνεργὸν καὶ συνστρατιώτην μου, ὑμῶν δὲ ἀπόστολον καὶ λειτουργὸν τῆς χρείας μου, πέμψαι πρὸς ὑμᾶς, "
+   },
+   "PHP 2:26": {
+    "KJV": "For he longed after you all, and was full of heaviness, because that ye had heard that he had been sick.",
+    "NESTLE1904": "ἐπειδὴ ἐπιποθῶν ἦν πάντας ὑμᾶς, καὶ ἀδημονῶν, διότι ἠκούσατε ὅτι ἠσθένησεν. "
+   }
+  }
+ },
+ {
+  "id": 37,
+  "chapter": "JHN-20",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "simon servant-of jesus (MAT 10:2)",
+   "simon apostle-of jesus (MAT 10:2)",
+   "thomas servant-of jesus (MAT 10:3)",
+   "thomas apostle-of jesus (MAT 10:3)"
+  ],
+  "text": {
+   "JHN 20:30": {
+    "KJV": "And many other signs truly did Jesus in the presence of his disciples, which are not written in this book:",
+    "NESTLE1904": "Πολλὰ μὲν οὖν καὶ ἄλλα σημεῖα ἐποίησεν ὁ Ἰησοῦς ἐνώπιον τῶν μαθητῶν, ἃ οὐκ ἔστιν γεγραμμένα ἐν τῷ βιβλίῳ τούτῳ· "
+   },
+   "JHN 20:31": {
+    "KJV": "But these are written, that ye might believe that Jesus is the Christ, the Son of God; and that believing ye might have life through his name.",
+    "NESTLE1904": "ταῦτα δὲ γέγραπται ἵνα πιστεύητε ὅτι Ἰησοῦς ἐστιν ὁ Χριστὸς ὁ Υἱὸς τοῦ Θεοῦ, καὶ ἵνα πιστεύοντες ζωὴν ἔχητε ἐν τῷ ὀνόματι αὐτοῦ. "
+   }
+  }
+ },
+ {
+  "id": 38,
+  "chapter": "LUK-24",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "moses servant-of yhvh (NUM 12:7)",
+   "moses priest-of yhvh (PSA 99:6)",
+   "simon servant-of jesus (MAT 10:2)",
+   "simon apostle-of jesus (MAT 10:2)"
+  ],
+  "text": {
+   "LUK 24:48": {
+    "KJV": "And ye are witnesses of these things.",
+    "NESTLE1904": "ὑμεῖς μάρτυρες τούτων. "
+   },
+   "LUK 24:49": {
+    "KJV": "And, behold, I send the promise of my Father upon you: but tarry ye in the city of Jerusalem, until ye be endued with power from on high.",
+    "NESTLE1904": "καὶ ἰδοὺ ἐγὼ ἐξαποστέλλω τὴν ἐπαγγελίαν τοῦ Πατρός μου ἐφ’ ὑμᾶς· ὑμεῖς δὲ καθίσατε ἐν τῇ πόλει ἕως οὗ ἐνδύσησθε ἐξ ὕψους δύναμιν. "
+   },
+   "LUK 24:50": {
+    "KJV": "And he led them out as far as to Bethany, and he lifted up his hands, and blessed them.",
+    "NESTLE1904": "Ἐξήγαγεν δὲ αὐτοὺς ἕως πρὸς Βηθανίαν, καὶ ἐπάρας τὰς χεῖρας αὐτοῦ εὐλόγησεν αὐτούς. "
+   }
+  }
+ },
+ {
+  "id": 39,
+  "chapter": "ACT-13",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus descendant-of david (MAT 1:1)",
+   "jesus descendant-of abram (MAT 1:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "moses servant-of yhvh (NUM 12:7)",
+   "moses priest-of yhvh (PSA 99:6)",
+   "samuel-2 servant-of yhvh (1SA 2:18)"
+  ],
+  "text": {
+   "ACT 13:32": {
+    "KJV": "And we declare unto you glad tidings, how that the promise which was made unto the fathers,",
+    "NESTLE1904": "καὶ ἡμεῖς ὑμᾶς εὐαγγελιζόμεθα τὴν πρὸς τοὺς πατέρας ἐπαγγελίαν γενομένην, "
+   },
+   "ACT 13:33": {
+    "KJV": "God hath fulfilled the same unto us their children, in that he hath raised up Jesus again; as it is also written in the second psalm, Thou art my Son, this day have I begotten thee.",
+    "NESTLE1904": "ὅτι ταύτην ὁ Θεὸς ἐκπεπλήρωκεν τοῖς τέκνοις ἡμῶν ἀναστήσας Ἰησοῦν, ὡς καὶ ἐν τῷ ψαλμῷ γέγραπται τῷ δευτέρῳ Υἱός μου εἶ σύ, ἐγὼ σήμερον γεγέννηκά σε. "
+   },
+   "ACT 13:34": {
+    "KJV": "And as concerning that he raised him up from the dead, now no more to return to corruption, he said on this wise, I will give you the sure mercies of David.",
+    "NESTLE1904": "ὅτι δὲ ἀνέστησεν αὐτὸν ἐκ νεκρῶν μηκέτι μέλλοντα ὑποστρέφειν εἰς διαφθοράν, οὕτως εἴρηκεν ὅτι Δώσω ὑμῖν τὰ ὅσια Δαυεὶδ τὰ πιστά. "
+   }
+  }
+ },
+ {
+  "id": 40,
+  "chapter": "NUM-32",
+  "claim": "The chapter plainly states 'jair son-of manasseh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jair",
+    "name": "Jair",
+    "distinguisher": "captured the region of Argob and called it Havvoth-jair (NUM 32:41)",
+    "sex": "male"
+   },
+   {
+    "slug": "manasseh",
+    "name": "Manasseh",
+    "distinguisher": "firstborn son of Joseph (GEN 41:51)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jair descendant-of manasseh (NUM 32:41)",
+   "machir son-of manasseh (JOS 17:1)",
+   "joseph father-of manasseh (NUM 36:12)",
+   "manasseh son-of joseph (GEN 41:51)",
+   "manasseh father-of machir (GEN 50:23)"
+  ],
+  "text": {
+   "NUM 32:40": {
+    "KJV": "And Moses gave Gilead unto Machir the son of Manasseh; and he dwelt therein.",
+    "BHSA": "וַיִּתֵּ֤ן מֹשֶׁה֙ אֶת־הַגִּלְעָ֔ד לְמָכִ֖יר בֶּן־מְנַשֶּׁ֑ה וַיֵּ֖שֶׁב בָּֽהּ׃ "
+   },
+   "NUM 32:41": {
+    "KJV": "And Jair the son of Manasseh went and took the small towns thereof, and called them Havothjair.",
+    "BHSA": "וְיָאִ֤יר בֶּן־מְנַשֶּׁה֙ הָלַ֔ךְ וַיִּלְכֹּ֖ד אֶת־חַוֹּתֵיהֶ֑ם וַיִּקְרָ֥א אֶתְהֶ֖ן חַוֹּ֥ת יָאִֽיר׃ "
+   },
+   "NUM 32:42": {
+    "KJV": "And Nobah went and took Kenath, and the villages thereof, and called it Nobah, after his own name.",
+    "BHSA": "וְנֹ֣בַח הָלַ֔ךְ וַיִּלְכֹּ֥ד אֶת־קְנָ֖ת וְאֶת־בְּנֹתֶ֑יהָ וַיִּקְרָ֧א לָ֦ה נֹ֖בַח בִּשְׁמֹֽו׃ פ "
+   }
+  }
+ },
+ {
+  "id": 41,
+  "chapter": "GEN-12",
+  "claim": "The chapter plainly states 'pharaoh husband-of sarai', and the site does not record it.",
+  "records": [
+   {
+    "slug": "pharaoh",
+    "name": "Pharaoh",
+    "distinguisher": "who took Sarai (GEN 12:15)",
+    "sex": "male"
+   },
+   {
+    "slug": "sarai",
+    "name": "Sarai",
+    "distinguisher": "Abram's wife (11:29)",
+    "sex": "female"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "sarai wife-of abram (GEN 11:29)",
+   "abram half-brother-of sarai (GEN 20:12)",
+   "abram husband-of sarai (GEN 11:29)"
+  ],
+  "text": {
+   "GEN 12:18": {
+    "KJV": "And Pharaoh called Abram and said, What is this that thou hast done unto me? why didst thou not tell me that she was thy wife?",
+    "BHSA": "וַיִּקְרָ֤א פַרְעֹה֙ לְאַבְרָ֔ם וַיֹּ֕אמֶר מַה־זֹּ֖את עָשִׂ֣יתָ לִּ֑י לָ֚מָּה לֹא־הִגַּ֣דְתָּ לִּ֔י כִּ֥י אִשְׁתְּךָ֖ הִֽוא׃ "
+   },
+   "GEN 12:19": {
+    "KJV": "Why saidst thou, She is my sister? so I might have taken her to me to wife: now therefore behold thy wife, take her, and go thy way.",
+    "BHSA": "לָמָ֤ה אָמַ֨רְתָּ֙ אֲחֹ֣תִי הִ֔וא וָאֶקַּ֥ח אֹתָ֛הּ לִ֖י לְאִשָּׁ֑ה וְעַתָּ֕ה הִנֵּ֥ה אִשְׁתְּךָ֖ קַ֥ח וָלֵֽךְ׃ "
+   },
+   "GEN 12:20": {
+    "KJV": "And Pharaoh commanded his men concerning him: and they sent him away, and his wife, and all that he had.",
+    "BHSA": "וַיְצַ֥ו עָלָ֛יו פַּרְעֹ֖ה אֲנָשִׁ֑ים וַֽיְשַׁלְּח֥וּ אֹתֹ֛ו וְאֶת־אִשְׁתֹּ֖ו וְאֶת־כָּל־אֲשֶׁר־לֹֽו׃ "
+   }
+  }
+ },
+ {
+  "id": 42,
+  "chapter": "GEN-9",
+  "claim": "The chapter plainly states 'ham brother-of shem', and the site does not record it.",
+  "records": [
+   {
+    "slug": "ham",
+    "name": "Ham",
+    "distinguisher": "son of Noah (GEN 5:32)",
+    "sex": "male"
+   },
+   {
+    "slug": "shem",
+    "name": "Shem",
+    "distinguisher": "son of Noah (GEN 5:32)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "ham son-of noah (GEN 5:32)",
+   "japheth brother-of shem (GEN 10:21)",
+   "noah father-of shem (GEN 5:32)",
+   "noah father-of ham (GEN 5:32)",
+   "shem son-of noah (GEN 5:32)",
+   "shem brother-of japheth (GEN 10:21)"
+  ],
+  "text": {
+   "GEN 9:21": {
+    "KJV": "And he drank of the wine, and was drunken; and he was uncovered within his tent.",
+    "BHSA": "וַיֵּ֥שְׁתְּ מִן־הַיַּ֖יִן וַיִּשְׁכָּ֑ר וַיִּתְגַּ֖ל בְּתֹ֥וךְ אהלה׃ "
+   },
+   "GEN 9:22": {
+    "KJV": "And Ham, the father of Canaan, saw the nakedness of his father, and told his two brethren without.",
+    "BHSA": "וַיַּ֗רְא חָ֚ם אֲבִ֣י כְנַ֔עַן אֵ֖ת עֶרְוַ֣ת אָבִ֑יו וַיַּגֵּ֥ד לִשְׁנֵֽי־אֶחָ֖יו בַּחֽוּץ׃ "
+   },
+   "GEN 9:23": {
+    "KJV": "And Shem and Japheth took a garment, and laid it upon both their shoulders, and went backward, and covered the nakedness of their father; and their faces were backward, and they saw not their father's nakedness.",
+    "BHSA": "וַיִּקַּח֩ שֵׁ֨ם וָיֶ֜פֶת אֶת־הַשִּׂמְלָ֗ה וַיָּשִׂ֨ימוּ֙ עַל־שְׁכֶ֣ם שְׁנֵיהֶ֔ם וַיֵּֽלְכוּ֙ אֲחֹ֣רַנִּ֔ית וַיְכַסּ֕וּ אֵ֖ת עֶרְוַ֣ת אֲבִיהֶ֑ם וּפְנֵיהֶם֙ אֲחֹ֣רַנִּ֔ית וְעֶרְוַ֥ת אֲבִיהֶ֖ם לֹ֥א רָאֽוּ׃ "
+   }
+  }
+ },
+ {
+  "id": 43,
+  "chapter": "1SA-17",
+  "claim": "The chapter plainly states 'abinadab-2 brother-of david', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abinadab-2",
+    "name": "Abinadab",
+    "distinguisher": "second-born (1CH 2:13) son of Jesse (1SA 16:8) brother of David",
+    "sex": "male"
+   },
+   {
+    "slug": "david",
+    "name": "David",
+    "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "abinadab-2 son-of jesse (1CH 2:13)",
+   "abinadab-2 brother-of eliab-3 (1CH 2:13)",
+   "abinadab-2 brother-of shammah-2 (1CH 2:13)",
+   "jesse father-of david (RUT 4:22)",
+   "jesse father-of abinadab-2 (1CH 2:13)",
+   "saul father-in-law-of david (1SA 25:44)"
+  ],
+  "text": {
+   "1SA 17:16": {
+    "KJV": "And the Philistine drew near morning and evening, and presented himself forty days.",
+    "BHSA": "וַיִּגַּ֥שׁ הַפְּלִשְׁתִּ֖י הַשְׁכֵּ֣ם וְהַעֲרֵ֑ב וַיִּתְיַצֵּ֖ב אַרְבָּעִ֥ים יֹֽום׃ פ "
+   },
+   "1SA 17:17": {
+    "KJV": "And Jesse said unto David his son, Take now for thy brethren an ephah of this parched corn, and these ten loaves, and run to the camp of thy brethren;",
+    "BHSA": "וַיֹּ֨אמֶר יִשַׁ֜י לְדָוִ֣ד בְּנֹ֗ו קַח־נָ֤א לְאַחֶ֨יךָ֙ אֵיפַ֤ת הַקָּלִיא֙ הַזֶּ֔ה וַעֲשָׂרָ֥ה לֶ֖חֶם הַזֶּ֑ה וְהָרֵ֥ץ הַֽמַּחֲנֶ֖ה לְאַחֶֽיךָ׃ "
+   },
+   "1SA 17:18": {
+    "KJV": "And carry these ten cheeses unto the captain of their thousand, and look how thy brethren fare, and take their pledge.",
+    "BHSA": "וְ֠אֵת עֲשֶׂ֜רֶת חֲרִצֵ֤י הֶֽחָלָב֙ הָאֵ֔לֶּה תָּבִ֖יא לְשַׂר־הָאָ֑לֶף וְאֶת־אַחֶ֨יךָ֙ תִּפְקֹ֣ד לְשָׁלֹ֔ום וְאֶת־עֲרֻבָּתָ֖ם תִּקָּֽח׃ "
+   }
+  }
+ },
+ {
+  "id": 44,
+  "chapter": "1CO-1",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "simon servant-of jesus (MAT 10:2)",
+   "simon apostle-of jesus (MAT 10:2)"
+  ],
+  "text": {
+   "1CO 1:8": {
+    "KJV": "Who shall also confirm you unto the end, that ye may be blameless in the day of our Lord Jesus Christ.",
+    "NESTLE1904": "ὃς καὶ βεβαιώσει ὑμᾶς ἕως τέλους ἀνεγκλήτους ἐν τῇ ἡμέρᾳ τοῦ Κυρίου ἡμῶν Ἰησοῦ Χριστοῦ. "
+   },
+   "1CO 1:9": {
+    "KJV": "God is faithful, by whom ye were called unto the fellowship of his Son Jesus Christ our Lord.",
+    "NESTLE1904": "πιστὸς ὁ Θεὸς, δι’ οὗ ἐκλήθητε εἰς κοινωνίαν τοῦ Υἱοῦ αὐτοῦ Ἰησοῦ Χριστοῦ τοῦ Κυρίου ἡμῶν. "
+   },
+   "1CO 1:10": {
+    "KJV": "Now I beseech you, brethren, by the name of our Lord Jesus Christ, that ye all speak the same thing, and that there be no divisions among you; but that ye be perfectly joined together in the same mind and in the same judgment.",
+    "NESTLE1904": "Παρακαλῶ δὲ ὑμᾶς, ἀδελφοί, διὰ τοῦ ὀνόματος τοῦ Κυρίου ἡμῶν Ἰησοῦ Χριστοῦ, ἵνα τὸ αὐτὸ λέγητε πάντες, καὶ μὴ ᾖ ἐν ὑμῖν σχίσματα, ἦτε δὲ κατηρτισμένοι ἐν τῷ αὐτῷ νοῒ καὶ ἐν τῇ αὐτῇ γνώμῃ. "
+   }
+  }
+ },
+ {
+  "id": 45,
+  "chapter": "ACT-13",
+  "claim": "The row 'manaen companion-of simeon-4' should be removed: the chapter does not say it.",
+  "row_verse": "ACT 13:1",
+  "records": [
+   {
+    "slug": "manaen",
+    "name": "Manaen",
+    "distinguisher": "a prophet and teacher in Antioch (ACT 13:1)",
+    "sex": "male"
+   },
+   {
+    "slug": "simeon-4",
+    "name": "Simeon",
+    "distinguisher": "a prophet and teacher in Antioch (ACT 13:1)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "ACT 13:1": {
+    "KJV": "Now there were in the church that was at Antioch certain prophets and teachers; as Barnabas, and Simeon that was called Niger, and Lucius of Cyrene, and Manaen, which had been brought up with Herod the tetrarch, and Saul.",
+    "NESTLE1904": "Ἦσαν δὲ ἐν Ἀντιοχείᾳ κατὰ τὴν οὖσαν ἐκκλησίαν προφῆται καὶ διδάσκαλοι ὅ τε Βαρνάβας καὶ Συμεὼν ὁ καλούμενος Νίγερ, καὶ Λούκιος ὁ Κυρηναῖος, Μαναήν τε Ἡρῴδου τοῦ τετραάρχου σύντροφος καὶ Σαῦλος. "
+   },
+   "ACT 13:2": {
+    "KJV": "As they ministered to the Lord, and fasted, the Holy Ghost said, Separate me Barnabas and Saul for the work whereunto I have called them.",
+    "NESTLE1904": "Λειτουργούντων δὲ αὐτῶν τῷ Κυρίῳ καὶ νηστευόντων εἶπεν τὸ Πνεῦμα τὸ Ἅγιον Ἀφορίσατε δή μοι τὸν Βαρνάβαν καὶ Σαῦλον εἰς τὸ ἔργον ὃ προσκέκλημαι αὐτούς· "
+   }
+  }
+ },
+ {
+  "id": 46,
+  "chapter": "JHN-19",
+  "claim": "The row 'caesar master-of pilate' should be removed: the chapter does not say it.",
+  "row_verse": "JHN 19:12",
+  "records": [
+   {
+    "slug": "caesar",
+    "name": "Caesar",
+    "distinguisher": "Caesar during Jesus' ministry (MAT 22:17)",
+    "sex": "male"
+   },
+   {
+    "slug": "pilate",
+    "name": "Pilate",
+    "distinguisher": "the governor of Judea (MAT 27:2)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "JHN 19:11": {
+    "KJV": "Jesus answered, Thou couldest have no power at all against me, except it were given thee from above: therefore he that delivered me unto thee hath the greater sin.",
+    "NESTLE1904": "ἀπεκρίθη Ἰησοῦς Οὐκ εἶχες ἐξουσίαν κατ’ ἐμοῦ οὐδεμίαν εἰ μὴ ἦν δεδομένον σοι ἄνωθεν· διὰ τοῦτο ὁ παραδούς μέ σοι μείζονα ἁμαρτίαν ἔχει. "
+   },
+   "JHN 19:12": {
+    "KJV": "And from thenceforth Pilate sought to release him: but the Jews cried out, saying, If thou let this man go, thou art not Caesar's friend: whosoever maketh himself a king speaketh against Caesar.",
+    "NESTLE1904": "ἐκ τούτου ὁ Πειλᾶτος ἐζήτει ἀπολῦσαι αὐτόν· οἱ δὲ Ἰουδαῖοι ἐκραύγασαν λέγοντες Ἐὰν τοῦτον ἀπολύσῃς, οὐκ εἶ φίλος τοῦ Καίσαρος· πᾶς ὁ βασιλέα ἑαυτὸν ποιῶν ἀντιλέγει τῷ Καίσαρι. "
+   },
+   "JHN 19:13": {
+    "KJV": "When Pilate therefore heard that saying, he brought Jesus forth, and sat down in the judgment seat in a place that is called the Pavement, but in the Hebrew, Gabbatha.",
+    "NESTLE1904": "Ὁ οὖν Πειλᾶτος ἀκούσας τῶν λόγων τούτων ἤγαγεν ἔξω τὸν Ἰησοῦν, καὶ ἐκάθισεν ἐπὶ βήματος εἰς τόπον λεγόμενον Λιθόστρωτον, Ἑβραϊστὶ δὲ Γαββαθα. "
+   }
+  }
+ },
+ {
+  "id": 47,
+  "chapter": "PHP-2",
+  "claim": "The row 'epaphroditus companion-of yhvh' should be removed: the chapter does not say it.",
+  "row_verse": "PHP 2:25",
+  "records": [
+   {
+    "slug": "epaphroditus",
+    "name": "Epaphroditus",
+    "distinguisher": "Paul's fellow worker and fellow solder (PHP 2:25)",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "PHP 2:24": {
+    "KJV": "But I trust in the Lord that I also myself shall come shortly.",
+    "NESTLE1904": "πέποιθα δὲ ἐν Κυρίῳ ὅτι καὶ αὐτὸς ταχέως ἐλεύσομαι. "
+   },
+   "PHP 2:25": {
+    "KJV": "Yet I supposed it necessary to send to you Epaphroditus, my brother, and companion in labour, and fellowsoldier, but your messenger, and he that ministered to my wants.",
+    "NESTLE1904": "ἀναγκαῖον δὲ ἡγησάμην Ἐπαφρόδιτον τὸν ἀδελφὸν καὶ συνεργὸν καὶ συνστρατιώτην μου, ὑμῶν δὲ ἀπόστολον καὶ λειτουργὸν τῆς χρείας μου, πέμψαι πρὸς ὑμᾶς, "
+   },
+   "PHP 2:26": {
+    "KJV": "For he longed after you all, and was full of heaviness, because that ye had heard that he had been sick.",
+    "NESTLE1904": "ἐπειδὴ ἐπιποθῶν ἦν πάντας ὑμᾶς, καὶ ἀδημονῶν, διότι ἠκούσατε ὅτι ἠσθένησεν. "
+   }
+  }
+ },
+ {
+  "id": 48,
+  "chapter": "JOS-22",
+  "claim": "The chapter plainly states 'achan son-of zerah-3', and the site does not record it.",
+  "records": [
+   {
+    "slug": "achan",
+    "name": "Achan",
+    "distinguisher": "took forbidden things from Jericho (JOS 7:1)",
+    "sex": "male"
+   },
+   {
+    "slug": "zerah-3",
+    "name": "Zerah",
+    "distinguisher": "son of Judah and Tamar (GEN 38:30)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "achan descendant-of zerah-3 (JOS 7:24)"
+  ],
+  "text": {
+   "JOS 22:19": {
+    "KJV": "Notwithstanding, if the land of your possession be unclean, then pass ye over unto the land of the possession of the LORD, wherein the LORD's tabernacle dwelleth, and take possession among us: but rebel not against the LORD, nor rebel against us, in building you an altar beside the altar of the LORD our God.",
+    "BHSA": "וְאַ֨ךְ אִם־טְמֵאָ֜ה אֶ֣רֶץ אֲחֻזַּתְכֶ֗ם עִבְר֨וּ לָכֶ֜ם אֶל־אֶ֨רֶץ אֲחֻזַּ֤ת יְהוָה֙ אֲשֶׁ֤ר שָֽׁכַן־שָׁם֙ מִשְׁכַּ֣ן יְהוָ֔ה וְהֵאָחֲז֖וּ בְּתֹוכֵ֑נוּ וּבַֽיהוָ֣ה אַל־תִּמְרֹ֗דוּ וְאֹתָ֨נוּ֙ אֶל־תִּמְרֹ֔דוּ בִּבְנֹֽתְכֶ֤ם לָכֶם֙ מִזְבֵּ֔חַ מִֽבַּלְעֲדֵ֔י מִזְבַּ֖ח יְהוָ֥ה אֱלֹהֵֽינוּ׃ "
+   },
+   "JOS 22:20": {
+    "KJV": "Did not Achan the son of Zerah commit a trespass in the accursed thing, and wrath fell on all the congregation of Israel? and that man perished not alone in his iniquity.",
+    "BHSA": "הֲלֹ֣וא׀ עָכָ֣ן בֶּן־זֶ֗רַח מָ֤עַל מַ֨עַל֙ בַּחֵ֔רֶם וְעַֽל־כָּל־עֲדַ֥ת יִשְׂרָאֵ֖ל הָ֣יָה קָ֑צֶף וְהוּא֙ אִ֣ישׁ אֶחָ֔ד לֹ֥א גָוַ֖ע בַּעֲוֹנֹֽו׃ פ "
+   },
+   "JOS 22:21": {
+    "KJV": "Then the children of Reuben and the children of Gad and the half tribe of Manasseh answered, and said unto the heads of the thousands of Israel,",
+    "BHSA": "וַֽיַּעֲנוּ֙ בְּנֵי־רְאוּבֵ֣ן וּבְנֵי־גָ֔ד וַחֲצִ֖י שֵׁ֣בֶט הַֽמְנַשֶּׁ֑ה וַֽיְדַבְּר֔וּ אֶת־רָאשֵׁ֖י אַלְפֵ֥י יִשְׂרָאֵֽל׃ "
+   }
+  }
+ },
+ {
+  "id": 49,
+  "chapter": "EZK-2",
+  "claim": "The row 'ezekiel prophet-to jacob' should be removed: the chapter does not say it.",
+  "row_verse": "EZK 2:3",
+  "records": [
+   {
+    "slug": "ezekiel",
+    "name": "Ezekiel",
+    "distinguisher": "the priest, son of Buzi (EZK  1:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "jacob",
+    "name": "Jacob",
+    "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "EZK 2:2": {
+    "KJV": "And the spirit entered into me when he spake unto me, and set me upon my feet, that I heard him that spake unto me.",
+    "BHSA": "וַתָּ֧בֹא בִ֣י ר֗וּחַ כַּֽאֲשֶׁר֙ דִּבֶּ֣ר אֵלַ֔י וַתַּעֲמִדֵ֖נִי עַל־רַגְלָ֑י וָאֶשְׁמַ֕ע אֵ֖ת מִדַּבֵּ֥ר אֵלָֽי׃ פ "
+   },
+   "EZK 2:3": {
+    "KJV": "And he said unto me, Son of man, I send thee to the children of Israel, to a rebellious nation that hath rebelled against me: they and their fathers have transgressed against me, even unto this very day.",
+    "BHSA": "וַיֹּ֣אמֶר אֵלַ֗י בֶּן־אָדָם֙ שֹׁולֵ֨חַ אֲנִ֤י אֹֽותְךָ֙ אֶל־בְּנֵ֣י יִשְׂרָאֵ֔ל אֶל־גֹּויִ֥ם הַמֹּורְדִ֖ים אֲשֶׁ֣ר מָרְדוּ־בִ֑י הֵ֤מָּה וַאֲבֹותָם֙ פָּ֣שְׁעוּ בִ֔י עַד־עֶ֖צֶם הַיֹּ֥ום הַזֶּֽה׃ "
+   },
+   "EZK 2:4": {
+    "KJV": "For they are impudent children and stiffhearted. I do send thee unto them; and thou shalt say unto them, Thus saith the Lord GOD.",
+    "BHSA": "וְהַבָּנִ֗ים קְשֵׁ֤י פָנִים֙ וְחִזְקֵי־לֵ֔ב אֲנִ֛י שֹׁולֵ֥חַ אֹותְךָ֖ אֲלֵיהֶ֑ם וְאָמַרְתָּ֣ אֲלֵיהֶ֔ם כֹּ֥ה אָמַ֖ר אֲדֹנָ֥י יְהֹוִֽה׃ "
+   }
+  }
+ },
+ {
+  "id": 50,
+  "chapter": "2CH-22",
+  "claim": "The chapter plainly states 'athaliah daughter-of omri', and the site does not record it.",
+  "records": [
+   {
+    "slug": "athaliah",
+    "name": "Athaliah",
+    "distinguisher": "daughter of Ahab and grandaughter of Omri (2KI 8:26, 2CH 22:2))",
+    "sex": "female"
+   },
+   {
+    "slug": "omri",
+    "name": "Omri",
+    "distinguisher": "commander of the army and king over Israel (1KI 16:16)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "ahab son-of omri (1KI 16:29)",
+   "ahaziah-2 son-of athaliah (2KI 8:26)",
+   "omri father-of ahab (1KI 16:29)",
+   "athaliah granddaughter-of omri (2KI 8:26)",
+   "athaliah mother-of ahaziah-2 (2KI 11:1)",
+   "athaliah wife-of jehoram (2KI 8:18)"
+  ],
+  "text": {
+   "2CH 22:1": {
+    "KJV": "And the inhabitants of Jerusalem made Ahaziah his youngest son king in his stead: for the band of men that came with the Arabians to the camp had slain all the eldest. So Ahaziah the son of Jehoram king of Judah reigned.",
+    "BHSA": "וַיַּמְלִיכוּ֩ יֹושְׁבֵ֨י יְרוּשָׁלִַ֜ם אֶת־אֲחַזְיָ֨הוּ בְנֹ֤ו הַקָּטֹן֙ תַּחְתָּ֔יו כִּ֤י כָל־הָרִאשֹׁנִים֙ הָרַ֣ג הַגְּד֔וּד הַבָּ֥א בָֽעַרְבִ֖ים לַֽמַּחֲנֶ֑ה וַיִּמְלֹ֛ךְ אֲחַזְיָ֥הוּ בֶן־יְהֹורָ֖ם מֶ֥לֶךְ יְהוּדָֽה׃ פ "
+   },
+   "2CH 22:2": {
+    "KJV": "Forty and two years old was Ahaziah when he began to reign, and he reigned one year in Jerusalem. His mother's name also was Athaliah the daughter of Omri.",
+    "BHSA": "בֶּן־אַרְבָּעִ֨ים וּשְׁתַּ֤יִם שָׁנָה֙ אֲחַזְיָ֣הוּ בְמָלְכֹ֔ו וְשָׁנָ֣ה אַחַ֔ת מָלַ֖ךְ בִּֽירוּשָׁלִָ֑ם וְשֵׁ֣ם אִמֹּ֔ו עֲתַלְיָ֖הוּ בַּת־עָמְרִֽי׃ "
+   },
+   "2CH 22:3": {
+    "KJV": "He also walked in the ways of the house of Ahab: for his mother was his counsellor to do wickedly.",
+    "BHSA": "גַּם־ה֣וּא הָלַ֔ךְ בְּדַרְכֵ֖י בֵּ֣ית אַחְאָ֑ב כִּ֥י אִמֹּ֛ו הָיְתָ֥ה יֹֽועַצְתֹּ֖ו לְהַרְשִֽׁיעַ׃ "
+   }
+  }
+ }
+]

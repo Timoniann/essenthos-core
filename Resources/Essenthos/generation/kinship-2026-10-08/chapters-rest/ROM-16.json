@@ -1,0 +1,24 @@
+{
+ "chapter": "ROM 16",
+ "rows": 2,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    101814,
+    101815
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "ROM 16:15",
+   "why": "The Greek lists Olympas, Philologus, and Nereus among those greeted but does not state that Olympas is either man's companion.",
+   "confidence": 0.94
+  }
+ ],
+ "missing": [],
+ "note": "Rufus's mother and Nereus's sister are explicitly mentioned, but neither has a record among those supplied, so no missing family relationship can be added.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:49:18+00:00"
+}

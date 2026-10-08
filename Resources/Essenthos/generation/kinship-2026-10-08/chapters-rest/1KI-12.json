@@ -1,0 +1,11 @@
+{
+ "chapter": "1KI 12",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "The chapter explicitly identifies Jeroboam as Nebat’s son, Rehoboam as Solomon’s son, and David as Jesse’s son; all three relationships are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:48:12+00:00"
+}

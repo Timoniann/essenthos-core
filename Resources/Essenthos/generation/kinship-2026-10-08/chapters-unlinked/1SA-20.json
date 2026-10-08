@@ -1,0 +1,11 @@
+{
+ "chapter": "1SA 20",
+ "rows": 0,
+ "wrong": [],
+ "missing": [],
+ "note": "The chapter explicitly identifies Jonathan as Saul's son and David as Jesse's son; both relationships are already recorded from other chapters. David's brothers and Jonathan's mother are unnamed and are not among the supplied records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:58:58+00:00"
+}

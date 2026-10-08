@@ -1,0 +1,11 @@
+{
+ "chapter": "JER 20",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "Owner row 107004 appears to select the wrong Immer: JER 20:1 calls Pashhur son of Immer, and the supplied record specifically identifying his father is immer-5; the owner ruling is retained.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:47:41+00:00"
+}

@@ -1,0 +1,11 @@
+{
+ "chapter": "DAN 2",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "DAN 2:17 calls Hananiah, Mishael, and Azariah Daniel's companions (חַבְרֹוהִי), supporting all three recorded rows; it does not identify them as relatives. The chapter states no explicit family relationship between the listed people.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:47:08+00:00"
+}

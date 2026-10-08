@@ -1,0 +1,11 @@
+{
+ "chapter": "EXO 28",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "EXO 28:1 names Nadab, Abihu, Eleazar, and Ithamar as Aaron’s sons, and all four relationships are already recorded from other chapters. Aaron’s brother, the addressee, is not among the supplied records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:47:57+00:00"
+}

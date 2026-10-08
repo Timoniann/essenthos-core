@@ -1,0 +1,11 @@
+{
+ "chapter": "JON 1",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "JON 1:1 explicitly identifies Jonah as the son of Amittai; both recorded directions are supported, and the chapter states no other family relationships.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:55+00:00"
+}

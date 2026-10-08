@@ -1,0 +1,11 @@
+{
+ "chapter": "1KI 17",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "The widow and her son are explicitly related, but neither is among the supplied records. Elijah’s prophetic address to Ahab supports row 98679; no family relationship between the listed people is stated.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:56:59+00:00"
+}

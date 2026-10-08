@@ -1,0 +1,11 @@
+{
+ "chapter": "2SA 10",
+ "rows": 4,
+ "wrong": [],
+ "missing": [],
+ "note": "The Hebrew identifies Hanun as Nahash’s son and Abishai as Joab’s brother; both relationships are already recorded. The Shobach rows are also supported by their cited verses.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:46:53+00:00"
+}

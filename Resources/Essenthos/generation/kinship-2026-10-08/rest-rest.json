@@ -1,0 +1,328 @@
+[
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MAT-27",
+  "verse": "MAT 27:54",
+  "codex_why": "The centurion and those with him explicitly call Jesus God's Son (Θεοῦ Υἱός).",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH. MAT 27:54 is the centurion's confession."
+ },
+ {
+  "type": "wrong",
+  "row": 101157,
+  "row_text": "mary-3 disciple-of jesus",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "LUK-10",
+  "verse": "LUK 10:39",
+  "codex_why": "The verse identifies Mary as Martha's sister and says she listened at the Lord's feet, but does not explicitly call her his disciple.",
+  "codex_confidence": 0.86,
+  "judge": "wrong",
+  "judge_why": "LUK 10:39: Mary sat at the Lord's feet and heard his word (παρακαθεσθεῖσα πρὸς τοὺς πόδας... ἤκουεν τὸν λόγον). That is the posture of a disciple, so the row is supported."
+ },
+ {
+  "type": "wrong",
+  "row": 100487,
+  "row_text": "john-5 nephew-of joseph-12",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "COL-4",
+  "verse": "COL 4:10",
+  "codex_why": "The Greek calls Mark Barnabas's ἀνεψιός (cousin), rather than his nephew as rendered in the KJV.",
+  "codex_confidence": 0.99,
+  "judge": "wrong",
+  "judge_why": "COL 4:10 does name Mark as ὁ ἀνεψιὸς Βαρνάβα (KJV 'sister's son'), and Barnabas is Joseph of ACT 4:36. A kinship is stated, so removal is wrong; at most it could be retyped to cousin."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "HEB-4",
+  "verse": "HEB 4:14",
+  "codex_why": "The Greek explicitly calls Jesus τὸν Υἱὸν τοῦ Θεοῦ, the Son of God.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH (HEB 4:14)."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MAT-2",
+  "verse": "MAT 2:15",
+  "codex_why": "The verse applies the Lord's declaration, “Out of Egypt have I called my son” (τὸν υἱόν μου), to Jesus.",
+  "codex_confidence": 0.97,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH. MAT 2:15 is also a citation of Hosea, not a stated relation."
+ },
+ {
+  "type": "wrong",
+  "row": 98934,
+  "row_text": "ezekiel priest-of yhvh",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "EZK-1",
+  "verse": "EZK 1:3",
+  "codex_why": "The Hebrew gives the title הַכֹּהֵן, 'the priest,' but does not state a priest-of relationship to YHVH.",
+  "codex_confidence": 0.92,
+  "judge": "wrong",
+  "judge_why": "EZK 1:3 calls Ezekiel הַכֹּהֵן, 'the priest', in a verse about the word of YHVH coming to him. A priest in Israel is YHVH's priest, so the row is supported."
+ },
+ {
+  "type": "missing",
+  "claim": "yhvh father-of jesus",
+  "chapter": "JHN-18",
+  "verse": "JHN 18:11",
+  "codex_why": "Jesus identifies the giver of his cup as his Father (ὁ Πατήρ).",
+  "codex_confidence": 0.99,
+  "judge": "wrong",
+  "judge_why": "JHN 18:11 'my Father' is the inverse of son-of-God, which the owner has ruled is not recorded."
+ },
+ {
+  "type": "missing",
+  "claim": "zechariah-13 son-of iddo-5",
+  "chapter": "EZR-5",
+  "verse": "EZR 5:1",
+  "codex_why": "The Aramaic explicitly calls Zechariah בַר־עִדּוֹא, son of Iddo, without naming an intervening generation.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "EZR 5:1 בַר־עִדּוֹא means 'descendant' here: ZEC 1:1 makes Zechariah son of Berechiah son of Iddo, and 'grandson-of iddo-5' is already recorded."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MAT-26",
+  "verse": "MAT 26:39",
+  "codex_why": "Jesus addresses God as “my Father” (Πάτερ μου).",
+  "codex_confidence": 0.99,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH. MAT 26:39 'O my Father' falls under that ruling."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "LUK-10",
+  "verse": "LUK 10:22",
+  "codex_why": "Jesus calls God 'my Father' (τοῦ Πατρός μου) and identifies himself as the Son.",
+  "codex_confidence": 0.99,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH. LUK 10:22 Father/Son language falls under that ruling."
+ },
+ {
+  "type": "wrong",
+  "row": 97223,
+  "row_text": "agrippa judge-of saul-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "ACT-26",
+  "verse": "ACT 26:32",
+  "codex_why": "Agrippa tells Festus that Paul could have been released, without identifying Agrippa as Paul's judge.",
+  "codex_confidence": 0.94,
+  "judge": "wrong",
+  "judge_why": "In ACT 26, Paul makes his defence before Agrippa (26:2). In 26:31-32 Agrippa delivers his judgment that Paul could have been released, so the chapter supports him as Paul's judge."
+ },
+ {
+  "type": "missing",
+  "claim": "yhvh father-of jesus",
+  "chapter": "JHN-6",
+  "verse": "JHN 6:32",
+  "codex_why": "Jesus calls God “my Father” (ὁ Πατήρ μου), explicitly stating their relationship.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "JHN 6:32 'my Father' is the inverse of son-of-God, which the owner has ruled is not recorded."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "JHN-1",
+  "verse": "JHN 1:34",
+  "codex_why": "John explicitly identifies Jesus as ὁ Υἱὸς τοῦ Θεοῦ, the Son of God.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH (JHN 1:34)."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "ACT-9",
+  "verse": "ACT 9:20",
+  "codex_why": "The Greek explicitly identifies Jesus as ὁ Υἱὸς τοῦ Θεοῦ, the Son of God.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH (ACT 9:20)."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MRK-3",
+  "verse": "MRK 3:11",
+  "codex_why": "The Greek explicitly calls Jesus ὁ Υἱὸς τοῦ Θεοῦ, “the Son of God.”",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH. MRK 3:11 is spoken by unclean spirits."
+ },
+ {
+  "type": "missing",
+  "claim": "jehu-2 son-of nimshi",
+  "chapter": "2CH-22",
+  "verse": "2CH 22:7",
+  "codex_why": "The Hebrew explicitly calls Jehu the son of Nimshi without naming an intervening generation.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "2CH 22:7 בֶן־נִמְשִׁי means descendant: Jehu is son of Jehoshaphat son of Nimshi (2KI 9:14), and 'jehu-2 grandson-of nimshi' is already recorded."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MAT-14",
+  "verse": "MAT 14:33",
+  "codex_why": "The disciples explicitly address Jesus as Θεοῦ Υἱός, the Son of God.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH (MAT 14:33)."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "JHN-20",
+  "verse": "JHN 20:31",
+  "codex_why": "The Greek explicitly identifies Jesus as ὁ Υἱὸς τοῦ Θεοῦ, 'the Son of God.'",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH (JHN 20:31)."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "LUK-24",
+  "verse": "LUK 24:49",
+  "codex_why": "Jesus refers to God as “my Father” (τοῦ Πατρός μου).",
+  "codex_confidence": 0.99,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH. LUK 24:49 'my Father' falls under that ruling."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "ACT-13",
+  "verse": "ACT 13:33",
+  "codex_why": "The quotation applied to Jesus explicitly declares God's words, 'Thou art my Son, this day have I begotten thee.'",
+  "codex_confidence": 0.99,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH. ACT 13:33 quotes Psalm 2."
+ },
+ {
+  "type": "missing",
+  "claim": "jair son-of manasseh",
+  "chapter": "NUM-32",
+  "verse": "NUM 32:41",
+  "codex_why": "The Hebrew explicitly calls Jair בֶן־מְנַשֶּׁה, son of Manasseh, whereas the recorded row states only descendant-of.",
+  "codex_confidence": 0.98,
+  "judge": "wrong",
+  "judge_why": "NUM 32:41 בֶּן־מְנַשֶּׁה means a descendant (Jair descends through Segub and Hezron's union with Machir's daughter), and 'jair descendant-of manasseh (NUM 32:41)' is already recorded."
+ },
+ {
+  "type": "missing",
+  "claim": "pharaoh husband-of sarai",
+  "chapter": "GEN-12",
+  "verse": "GEN 12:19",
+  "codex_why": "Pharaoh says וָאֶקַּח אֹתָהּ לִי לְאִשָּׁה, meaning that he took Sarai to himself as a wife.",
+  "codex_confidence": 0.97,
+  "judge": "unclear",
+  "judge_why": "GEN 12:19 does say וָאֶקַּח אֹתָהּ לִי לְאִשָּׁה ('I took her to me for a wife'), but she is called Abram's wife throughout and is returned to him. Whether this aborted taking makes Pharaoh her husband is not decided by the text."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "1CO-1",
+  "verse": "1CO 1:9",
+  "codex_why": "The verse explicitly identifies Jesus Christ as God's Son (τοῦ Υἱοῦ αὐτοῦ Ἰησοῦ Χριστοῦ).",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH (1CO 1:9)."
+ },
+ {
+  "type": "missing",
+  "claim": "achan son-of zerah-3",
+  "chapter": "JOS-22",
+  "verse": "JOS 22:20",
+  "codex_why": "The Hebrew explicitly calls Achan בֶּן־זֶרַח, son of Zerah, whereas the existing row records only descendant-of.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "JOS 22:20 בֶּן־זֶרַח means descendant: Achan is son of Carmi son of Zabdi son of Zerah (JOS 7:1), and 'achan descendant-of zerah-3' is already recorded."
+ },
+ {
+  "type": "missing",
+  "claim": "athaliah daughter-of omri",
+  "chapter": "2CH-22",
+  "verse": "2CH 22:2",
+  "codex_why": "The Hebrew identifies Athaliah as the daughter of Omri.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "2CH 22:2 בַּת־עָמְרִי means descendant: Athaliah is Ahab's daughter (2KI 8:18), and 'athaliah granddaughter-of omri' is already recorded."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "JHN-19",
+  "verse": "JHN 19:7",
+  "codex_why": "The Jews explicitly report that Jesus claimed to be Υἱὸν Θεοῦ, the Son of God.",
+  "codex_confidence": 0.98,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH. JHN 19:7 is the accusers' charge."
+ },
+ {
+  "type": "missing",
+  "claim": "jehu-2 son-of nimshi",
+  "chapter": "1KI-19",
+  "verse": "1KI 19:16",
+  "codex_why": "The Hebrew explicitly calls Jehu בֶן־נִמְשִׁי, son of Nimshi, and this chapter names no intervening generation.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "1KI 19:16 בֶן־נִמְשִׁי means descendant: Jehu is son of Jehoshaphat son of Nimshi (2KI 9:14), and 'jehu-2 grandson-of nimshi' is already recorded."
+ },
+ {
+  "type": "missing",
+  "claim": "yhvh father-of jesus",
+  "chapter": "LUK-23",
+  "verse": "LUK 23:34",
+  "codex_why": "Jesus addresses God as Πάτερ ('Father') in his prayer for forgiveness.",
+  "codex_confidence": 0.97,
+  "judge": "wrong",
+  "judge_why": "LUK 23:34 'Father' is the inverse of son-of-God, which the owner has ruled is not recorded."
+ },
+ {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "GAL-2",
+  "verse": "GAL 2:20",
+  "codex_why": "The Greek identifies Christ as τοῦ Υἱοῦ τοῦ Θεοῦ, 'the Son of God.'",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "The owner has ruled that no one is recorded as a son of God/YHVH (GAL 2:20)."
+ },
+ {
+  "type": "missing",
+  "claim": "mattaniah brother-of jehoiachin",
+  "chapter": "2CH-36",
+  "verse": "2CH 36:10",
+  "codex_why": "The Hebrew calls Zedekiah (the king recorded as mattaniah) אָחִיו, 'his brother,' referring to Jehoiachin.",
+  "codex_confidence": 0.99,
+  "judge": "wrong",
+  "judge_why": "2CH 36:10 אָחִיו is a loose word for kinsman. Mattaniah/Zedekiah was Jehoiachin's uncle (2KI 24:17), and 'mattaniah brother-of eliakim-2' (Jehoiachin's father) already records that."
+ },
+ {
+  "type": "missing",
+  "claim": "eliab-2 son-of reuben",
+  "chapter": "DEU-11",
+  "verse": "DEU 11:6",
+  "codex_why": "The Hebrew explicitly identifies Eliab as בֶּן־רְאוּבֵן, 'son of Reuben,' without naming an intervening generation.",
+  "codex_confidence": 1,
+  "judge": "wrong",
+  "judge_why": "DEU 11:6 אֱלִיאָב בֶּן־רְאוּבֵן means descendant: Eliab is son of Pallu son of Reuben (NUM 26:8), and 'eliab-2 descendant-of reuben (DEU 11:6)' is already recorded."
+ }
+]

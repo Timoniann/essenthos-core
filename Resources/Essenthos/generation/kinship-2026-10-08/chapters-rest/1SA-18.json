@@ -1,0 +1,11 @@
+{
+ "chapter": "1SA 18",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "The Hebrew text supports all three relationship rows. The explicitly stated daughter relationships and David’s relationship to Saul as son-in-law are already recorded from other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:47:45+00:00"
+}

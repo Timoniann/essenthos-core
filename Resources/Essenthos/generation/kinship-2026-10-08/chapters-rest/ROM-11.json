@@ -1,0 +1,20 @@
+{
+ "chapter": "ROM 11",
+ "rows": 1,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "saul-2",
+   "type": "descendant-of",
+   "to": "abram",
+   "verse": "ROM 11:1",
+   "why": "Paul explicitly identifies himself as ἐκ σπέρματος Ἀβραάμ, meaning of Abraham's offspring.",
+   "confidence": 1
+  }
+ ],
+ "note": "The owner's Benjamin ancestry row is supported by Paul's identification with the tribe of Benjamin.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:56:39+00:00"
+}

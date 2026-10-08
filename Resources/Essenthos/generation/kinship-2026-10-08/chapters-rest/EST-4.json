@@ -1,0 +1,11 @@
+{
+ "chapter": "EST 4",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "EST 4:5 supports Hathach's service to Esther; the chapter states no explicit family relationship between two listed people. Esther's father is mentioned in EST 4:14 but is unnamed and absent from the supplied records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:57:16+00:00"
+}

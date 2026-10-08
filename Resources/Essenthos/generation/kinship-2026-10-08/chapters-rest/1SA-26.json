@@ -1,0 +1,11 @@
+{
+ "chapter": "1SA 26",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "The explicit kinship statements in verses 5, 6, and 14 are already recorded. Saul's address to David as \"my son\" in verses 17, 21, and 25 does not plainly establish a father–son relationship.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:48:29+00:00"
+}

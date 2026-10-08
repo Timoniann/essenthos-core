@@ -1,0 +1,11 @@
+{
+ "chapter": "LEV 3",
+ "rows": 0,
+ "wrong": [],
+ "missing": [],
+ "note": "LEV 3:2, 3:5, 3:8, and 3:13 mention Aaron's sons collectively, but none is individually named or included among the supplied records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T22:01:46+00:00"
+}

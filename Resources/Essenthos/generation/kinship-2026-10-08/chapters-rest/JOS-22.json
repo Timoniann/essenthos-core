@@ -1,0 +1,20 @@
+{
+ "chapter": "JOS 22",
+ "rows": 1,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "achan",
+   "type": "son-of",
+   "to": "zerah-3",
+   "verse": "JOS 22:20",
+   "why": "The Hebrew explicitly calls Achan בֶּן־זֶרַח, son of Zerah, whereas the existing row records only descendant-of.",
+   "confidence": 1
+  }
+ ],
+ "note": "Phinehas's parentage is already recorded; the chapter names no intervening generation between Achan and Zerah.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:55:11+00:00"
+}

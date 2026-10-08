@@ -1,0 +1,11 @@
+{
+ "chapter": "JER 1",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "Both rows are supported by JER 1:1; all other explicit parent–child relationships in JER 1:2–3 are already recorded from other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:50:29+00:00"
+}

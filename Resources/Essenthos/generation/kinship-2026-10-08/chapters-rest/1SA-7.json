@@ -1,0 +1,11 @@
+{
+ "chapter": "1SA 7",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "In 1SA 7:1, אֶלְעָזָר בְּנוֹ identifies Eleazar as Abinadab’s son; both reciprocal rows are supported. The chapter states no other family relationships between the supplied people.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:48:59+00:00"
+}

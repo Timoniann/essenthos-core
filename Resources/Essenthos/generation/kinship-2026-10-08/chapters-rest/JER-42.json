@@ -1,0 +1,11 @@
+{
+ "chapter": "JER 42",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "JER 42:1 explicitly identifies Jezaniah as Hoshaiah's son and Johanan as Kareah's son; both relationships are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:49:39+00:00"
+}

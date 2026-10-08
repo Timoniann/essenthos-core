@@ -1,0 +1,71 @@
+{
+ "chapter": "PSA 46",
+ "text": {
+  "PSA 46:0": {
+   "KJV": null,
+   "BHSA": "לַמְנַצֵּ֥חַ לִבְנֵי־קֹ֑רַח עַֽל־עֲלָמֹ֥ות שִֽׁיר׃ "
+  },
+  "PSA 46:1": {
+   "KJV": "To the chief Musician for the sons of Korah, A Song upon Alamoth. God is our refuge and strength, a very present help in trouble.",
+   "BHSA": "אֱלֹהִ֣ים לָ֭נוּ מַחֲסֶ֣ה וָעֹ֑ז עֶזְרָ֥ה בְ֝צָרֹ֗ות נִמְצָ֥א מְאֹֽד׃ "
+  },
+  "PSA 46:2": {
+   "KJV": "Therefore will not we fear, though the earth be removed, and though the mountains be carried into the midst of the sea;",
+   "BHSA": "עַל־כֵּ֣ן לֹא־נִ֭ירָא בְּהָמִ֣יר אָ֑רֶץ וּבְמֹ֥וט הָ֝רִ֗ים בְּלֵ֣ב יַמִּֽים׃ "
+  },
+  "PSA 46:3": {
+   "KJV": "Though the waters thereof roar and be troubled, though the mountains shake with the swelling thereof. Selah.",
+   "BHSA": "יֶהֱמ֣וּ יֶחְמְר֣וּ מֵימָ֑יו יִֽרְעֲשֽׁוּ־הָרִ֖ים בְּגַאֲוָתֹ֣ו סֶֽלָה׃ "
+  },
+  "PSA 46:4": {
+   "KJV": "There is a river, the streams whereof shall make glad the city of God, the holy place of the tabernacles of the most High.",
+   "BHSA": "נָהָ֗ר פְּלָגָ֗יו יְשַׂמְּח֥וּ עִיר־אֱלֹהִ֑ים קְ֝דֹ֗שׁ מִשְׁכְּנֵ֥י עֶלְיֹֽון׃ "
+  },
+  "PSA 46:5": {
+   "KJV": "God is in the midst of her; she shall not be moved: God shall help her, and that right early.",
+   "BHSA": "אֱלֹהִ֣ים בְּ֭קִרְבָּהּ בַּל־תִּמֹּ֑וט יַעְזְרֶ֥הָ אֱ֝לֹהִ֗ים לִפְנֹ֥ות בֹּֽקֶר׃ "
+  },
+  "PSA 46:6": {
+   "KJV": "The heathen raged, the kingdoms were moved: he uttered his voice, the earth melted.",
+   "BHSA": "הָמ֣וּ גֹ֖ויִם מָ֣טוּ מַמְלָכֹ֑ות נָתַ֥ן בְּ֝קֹולֹ֗ו תָּמ֥וּג אָֽרֶץ׃ "
+  },
+  "PSA 46:7": {
+   "KJV": "The LORD of hosts is with us; the God of Jacob is our refuge. Selah.",
+   "BHSA": "יְהוָ֣ה צְבָאֹ֣ות עִמָּ֑נוּ מִשְׂגָּֽב־לָ֝נוּ אֱלֹהֵ֖י יַעֲקֹ֣ב סֶֽלָה׃ "
+  },
+  "PSA 46:8": {
+   "KJV": "Come, behold the works of the LORD, what desolations he hath made in the earth.",
+   "BHSA": "לְֽכוּ־חֲ֭זוּ מִפְעֲלֹ֣ות יְהוָ֑ה אֲשֶׁר־שָׂ֖ם שַׁמֹּ֣ות בָּאָֽרֶץ׃ "
+  },
+  "PSA 46:9": {
+   "KJV": "He maketh wars to cease unto the end of the earth; he breaketh the bow, and cutteth the spear in sunder; he burneth the chariot in the fire.",
+   "BHSA": "מַשְׁבִּ֥ית מִלְחָמֹות֮ עַד־קְצֵ֢ה הָ֫אָ֥רֶץ קֶ֣שֶׁת יְ֭שַׁבֵּר וְקִצֵּ֣ץ חֲנִ֑ית עֲ֝גָלֹ֗ות יִשְׂרֹ֥ף בָּאֵֽשׁ׃ "
+  },
+  "PSA 46:10": {
+   "KJV": "Be still, and know that I am God: I will be exalted among the heathen, I will be exalted in the earth.",
+   "BHSA": "הַרְפּ֣וּ וּ֭דְעוּ כִּי־אָנֹכִ֣י אֱלֹהִ֑ים אָר֥וּם בַּ֝גֹּויִ֗ם אָר֥וּם בָּאָֽרֶץ׃ "
+  },
+  "PSA 46:11": {
+   "KJV": "The LORD of hosts is with us; the God of Jacob is our refuge. Selah.",
+   "BHSA": "יְהוָ֣ה צְבָאֹ֣ות עִמָּ֑נוּ מִשְׂגָּֽב־לָ֝נוּ אֱלֹהֵ֖י יַעֲקֹ֣ב סֶֽלָה׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [],
+ "recorded_from_other_chapters": [
+  "jacob servant-of yhvh (ISA 41:8)"
+ ]
+}

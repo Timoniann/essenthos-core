@@ -1,0 +1,11 @@
+{
+ "chapter": "GEN 15",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "Eliezer is Abram’s household steward, not his son; the chapter states no family relationship between the listed people.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:55:32+00:00"
+}

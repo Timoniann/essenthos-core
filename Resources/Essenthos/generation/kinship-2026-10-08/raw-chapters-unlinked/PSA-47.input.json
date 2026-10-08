@@ -1,0 +1,71 @@
+{
+ "chapter": "PSA 47",
+ "text": {
+  "PSA 47:0": {
+   "KJV": null,
+   "BHSA": "לַמְנַצֵּ֬חַ׀ לִבְנֵי־קֹ֬רַח מִזְמֹֽור׃ "
+  },
+  "PSA 47:1": {
+   "KJV": "To the chief Musician, A Psalm for the sons of Korah. O clap your hands, all ye people; shout unto God with the voice of triumph.",
+   "BHSA": "כָּֽל־הָ֭עַמִּים תִּקְעוּ־כָ֑ף הָרִ֥יעוּ לֵ֝אלֹהִ֗ים בְּקֹ֣ול רִנָּֽה׃ "
+  },
+  "PSA 47:2": {
+   "KJV": "For the LORD most high is terrible; he is a great King over all the earth.",
+   "BHSA": "כִּֽי־יְהוָ֣ה עֶלְיֹ֣ון נֹורָ֑א מֶ֥לֶךְ גָּ֝דֹול עַל־כָּל־הָאָֽרֶץ׃ "
+  },
+  "PSA 47:3": {
+   "KJV": "He shall subdue the people under us, and the nations under our feet.",
+   "BHSA": "יַדְבֵּ֣ר עַמִּ֣ים תַּחְתֵּ֑ינוּ וּ֝לְאֻמִּ֗ים תַּ֣חַת רַגְלֵֽינוּ׃ "
+  },
+  "PSA 47:4": {
+   "KJV": "He shall choose our inheritance for us, the excellency of Jacob whom he loved. Selah.",
+   "BHSA": "יִבְחַר־לָ֥נוּ אֶת־נַחֲלָתֵ֑נוּ אֶ֥ת גְּאֹ֨ון יַעֲקֹ֖ב אֲשֶׁר־אָהֵ֣ב סֶֽלָה׃ "
+  },
+  "PSA 47:5": {
+   "KJV": "God is gone up with a shout, the LORD with the sound of a trumpet.",
+   "BHSA": "עָלָ֣ה אֱ֭לֹהִים בִּתְרוּעָ֑ה יְ֝הֹוָ֗ה בְּקֹ֣ול שֹׁופָֽר׃ "
+  },
+  "PSA 47:6": {
+   "KJV": "Sing praises to God, sing praises: sing praises unto our King, sing praises.",
+   "BHSA": "זַמְּר֣וּ אֱלֹהִ֣ים זַמֵּ֑רוּ זַמְּר֖וּ לְמַלְכֵּ֣נוּ זַמֵּֽרוּ׃ "
+  },
+  "PSA 47:7": {
+   "KJV": "For God is the King of all the earth: sing ye praises with understanding.",
+   "BHSA": "כִּ֤י מֶ֖לֶךְ כָּל־הָאָ֥רֶץ אֱלֹהִ֗ים זַמְּר֥וּ מַשְׂכִּֽיל׃ "
+  },
+  "PSA 47:8": {
+   "KJV": "God reigneth over the heathen: God sitteth upon the throne of his holiness.",
+   "BHSA": "מָלַ֣ךְ אֱ֭לֹהִים עַל־גֹּויִ֑ם אֱ֝לֹהִ֗ים יָשַׁ֤ב׀ עַל־כִּסֵּ֬א קָדְשֹֽׁו׃ "
+  },
+  "PSA 47:9": {
+   "KJV": "The princes of the people are gathered together, even the people of the God of Abraham: for the shields of the earth belong unto God: he is greatly exalted.",
+   "BHSA": "נְדִ֘יבֵ֤י עַמִּ֨ים׀ נֶאֱסָ֗פוּ עַם֮ אֱלֹהֵ֢י אַבְרָ֫הָ֥ם כִּ֣י לֵֽ֭אלֹהִים מָֽגִנֵּי־אֶ֗רֶץ מְאֹ֣ד נַעֲלָֽה׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abram",
+   "name": "Abram",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [],
+ "recorded_from_other_chapters": [
+  "jacob servant-of yhvh (ISA 41:8)",
+  "abram servant-of yhvh (GEN 26:24)",
+  "abram grandfather-of jacob (GEN 28:13)"
+ ]
+}

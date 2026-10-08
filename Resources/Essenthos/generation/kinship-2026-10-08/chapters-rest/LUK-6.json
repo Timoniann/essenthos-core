@@ -1,0 +1,33 @@
+{
+ "chapter": "LUK 6",
+ "rows": 2,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    105524,
+    107120
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "LUK 6:16",
+   "why": "The Greek names Judas of James (Ἰούδαν Ἰακώβου), a patronymic, and does not state a brotherhood between James and Thaddaeus.",
+   "confidence": 0.98
+  }
+ ],
+ "missing": [
+  {
+   "from": "judas-of-james",
+   "type": "son-of",
+   "to": "james-4",
+   "verse": "LUK 6:16",
+   "why": "Ἰούδαν Ἰακώβου identifies Judas by his father James, using the same patronymic construction as James of Alphaeus in verse 15.",
+   "confidence": 0.97
+  }
+ ],
+ "note": "The KJV supplies 'the brother of' where the Greek has only the patronymic genitive; this chapter does not explicitly identify Judas of James with Thaddaeus.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:49:03+00:00"
+}

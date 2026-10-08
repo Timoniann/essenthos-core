@@ -1,0 +1,11 @@
+{
+ "chapter": "DAN 9",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "DAN 9:1 explicitly calls Darius the son of Ahasuerus, supporting both recorded rows. No other plain family relationships between the supplied people are stated in this chapter.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:50:21+00:00"
+}

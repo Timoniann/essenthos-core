@@ -1,0 +1,33 @@
+{
+  "wrong": [
+    {
+      "kind": "delete",
+      "rows": [98223],
+      "new_type": "",
+      "new_to": "",
+      "verse": "JHN 19:12",
+      "why": "The verse calls Pilate Caesar's friend and speaks of opposition to Caesar, but does not state a master relationship.",
+      "confidence": 0.96
+    },
+    {
+      "kind": "retarget",
+      "rows": [98313],
+      "new_type": "",
+      "new_to": "mary-4",
+      "verse": "JHN 19:25",
+      "why": "Μαρία ἡ τοῦ Κλωπᾶ identifies Mary associated with Clopas, matching the supplied record mary-4.",
+      "confidence": 0.99
+    }
+  ],
+  "missing": [
+    {
+      "from": "jesus",
+      "type": "son-of",
+      "to": "yhvh",
+      "verse": "JHN 19:7",
+      "why": "The Jews explicitly report that Jesus claimed to be Υἱὸν Θεοῦ, the Son of God.",
+      "confidence": 0.98
+    }
+  ],
+  "note": "The unnamed mother of Jesus, her sister, and the beloved disciple cannot be securely matched to the supplied records; no additional relationships are inferred for them."
+}

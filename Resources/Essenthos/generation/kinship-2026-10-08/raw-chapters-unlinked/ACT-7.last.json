@@ -1,0 +1,30 @@
+{
+  "wrong": [],
+  "missing": [
+    {
+      "from": "abram",
+      "type": "ancestor-of",
+      "to": "moses",
+      "verse": "ACT 7:32",
+      "why": "God addresses Moses and names Abraham among his forefathers (τῶν πατέρων σου).",
+      "confidence": 0.99
+    },
+    {
+      "from": "isaac",
+      "type": "ancestor-of",
+      "to": "moses",
+      "verse": "ACT 7:32",
+      "why": "God addresses Moses and names Isaac among his forefathers (τῶν πατέρων σου).",
+      "confidence": 0.99
+    },
+    {
+      "from": "jacob",
+      "type": "ancestor-of",
+      "to": "moses",
+      "verse": "ACT 7:32",
+      "why": "God addresses Moses and names Jacob among his forefathers (τῶν πατέρων σου).",
+      "confidence": 0.99
+    }
+  ],
+  "note": "The parent-child statements involving Abraham, Isaac, Jacob, and Joseph are already recorded in other chapters; unnamed relatives cannot be linked to additional supplied records."
+}

@@ -1,0 +1,20 @@
+{
+ "chapter": "JHN 18",
+ "rows": 2,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "yhvh",
+   "type": "father-of",
+   "to": "jesus",
+   "verse": "JHN 18:11",
+   "why": "Jesus identifies the giver of his cup as his Father (ὁ Πατήρ).",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Both Annas–Caiaphas in-law rows are supported by JHN 18:13. JHN 18:26 mentions an unnamed relative of Malchus without specifying the relationship.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:15+00:00"
+}

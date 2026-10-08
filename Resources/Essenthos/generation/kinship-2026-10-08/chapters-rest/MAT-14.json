@@ -1,0 +1,20 @@
+{
+ "chapter": "MAT 14",
+ "rows": 4,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "MAT 14:33",
+   "why": "The disciples explicitly address Jesus as Θεοῦ Υἱός, the Son of God.",
+   "confidence": 1
+  }
+ ],
+ "note": "Owner row 99512 is retained, but MAT 14:1 identifies Herod as the tetrarch without stating that he is the son of the other Herod.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:45:38+00:00"
+}

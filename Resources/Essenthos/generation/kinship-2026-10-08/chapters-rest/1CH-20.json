@@ -1,0 +1,23 @@
+{
+ "chapter": "1CH 20",
+ "rows": 3,
+ "wrong": [
+  {
+   "kind": "retarget",
+   "rows": [
+    107818
+   ],
+   "new_type": "",
+   "new_to": "lahmi",
+   "verse": "1CH 20:5",
+   "why": "The Hebrew says Elhanan slew Lahmi, the brother of Goliath, so Lahmi is the victim.",
+   "confidence": 1
+  }
+ ],
+ "missing": [],
+ "note": "All plain family statements between the supplied people are already recorded here or in other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:47:16+00:00"
+}

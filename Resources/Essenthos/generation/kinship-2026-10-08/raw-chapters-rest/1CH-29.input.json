@@ -1,0 +1,223 @@
+{
+ "chapter": "1CH 29",
+ "text": {
+  "1CH 29:1": {
+   "KJV": "Furthermore David the king said unto all the congregation, Solomon my son, whom alone God hath chosen, is yet young and tender, and the work is great: for the palace is not for man, but for the LORD God.",
+   "BHSA": "וַיֹּ֨אמֶר דָּוִ֤יד הַמֶּ֨לֶךְ֙ לְכָל־הַקָּהָ֔ל שְׁלֹמֹ֨ה בְנִ֥י אֶחָ֛ד בָּֽחַר־בֹּ֥ו אֱלֹהִ֖ים נַ֣עַר וָרָ֑ךְ וְהַמְּלָאכָ֣ה גְדֹולָ֔ה כִּ֣י לֹ֤א לְאָדָם֙ הַבִּירָ֔ה כִּ֖י לַיהוָ֥ה אֱלֹהִֽים׃ "
+  },
+  "1CH 29:2": {
+   "KJV": "Now I have prepared with all my might for the house of my God the gold for things to be made of gold, and the silver for things of silver, and the brass for things of brass, the iron for things of iron, and wood for things of wood; onyx stones, and stones to be set, glistering stones, and of divers colours, and all manner of precious stones, and marble stones in abundance.",
+   "BHSA": "וּֽכְכָל־כֹּחִ֞י הֲכִינֹ֣ותִי לְבֵית־אֱלֹהַ֗י הַזָּהָ֣ב׀ לַ֠זָּהָב וְהַכֶּ֨סֶף לַכֶּ֜סֶף וְהַנְּחֹ֣שֶׁת לַנְּחֹ֗שֶׁת הַבַּרְזֶל֙ לַבַּרְזֶ֔ל וְהָעֵצִ֖ים לָעֵצִ֑ים אַבְנֵי־שֹׁ֨הַם וּמִלּוּאִ֜ים אַבְנֵי־פ֣וּךְ וְרִקְמָ֗ה וְכֹ֨ל אֶ֧בֶן יְקָרָ֛ה וְאַבְנֵי־שַׁ֖יִשׁ לָרֹֽב׃ "
+  },
+  "1CH 29:3": {
+   "KJV": "Moreover, because I have set my affection to the house of my God, I have of mine own proper good, of gold and silver, which I have given to the house of my God, over and above all that I have prepared for the holy house.",
+   "BHSA": "וְעֹ֗וד בִּרְצֹותִי֙ בְּבֵ֣ית אֱלֹהַ֔י יֶשׁ־לִ֥י סְגֻלָּ֖ה זָהָ֣ב וָכָ֑סֶף נָתַ֤תִּי לְבֵית־אֱלֹהַי֙ לְמַ֔עְלָה מִכָּל־הֲכִינֹ֖ותִי לְבֵ֥ית הַקֹּֽדֶשׁ׃ "
+  },
+  "1CH 29:4": {
+   "KJV": "Even three thousand talents of gold, of the gold of Ophir, and seven thousand talents of refined silver, to overlay the walls of the houses withal:",
+   "BHSA": "שְׁלֹ֧שֶׁת אֲלָפִ֛ים כִּכְּרֵ֥י זָהָ֖ב מִזְּהַ֣ב אֹופִ֑יר וְשִׁבְעַ֨ת אֲלָפִ֤ים כִּכַּר־כֶּ֨סֶף֙ מְזֻקָּ֔ק לָט֖וּחַ קִירֹ֥ות הַבָּתִּֽים׃ "
+  },
+  "1CH 29:5": {
+   "KJV": "The gold for things of gold, and the silver for things of silver, and for all manner of work to be made by the hands of artificers. And who then is willing to consecrate his service this day unto the LORD?",
+   "BHSA": "לַזָּהָ֤ב לַזָּהָב֙ וְלַכֶּ֣סֶף לַכֶּ֔סֶף וּלְכָל־מְלָאכָ֖ה בְּיַ֣ד חָרָשִׁ֑ים וּמִ֣י מִתְנַדֵּ֔ב לְמַלֹּ֥אות יָדֹ֛ו הַיֹּ֖ום לַיהוָֽה׃ "
+  },
+  "1CH 29:6": {
+   "KJV": "Then the chief of the fathers and princes of the tribes of Israel and the captains of thousands and of hundreds, with the rulers of the king's work, offered willingly,",
+   "BHSA": "וַיִּֽתְנַדְּבוּ֩ שָׂרֵ֨י הָאָבֹ֜ות וְשָׂרֵ֣י׀ שִׁבְטֵ֣י יִשְׂרָאֵ֗ל וְשָׂרֵ֤י הָאֲלָפִים֙ וְהַמֵּאֹ֔ות וּלְשָׂרֵ֖י מְלֶ֥אכֶת הַמֶּֽלֶךְ׃ "
+  },
+  "1CH 29:7": {
+   "KJV": "And gave for the service of the house of God of gold five thousand talents and ten thousand drams, and of silver ten thousand talents, and of brass eighteen thousand talents, and one hundred thousand talents of iron.",
+   "BHSA": "וַֽיִּתְּנ֞וּ לַעֲבֹודַ֣ת בֵּית־הָאֱלֹהִ֗ים זָהָ֞ב כִּכָּרִ֣ים חֲמֵֽשֶׁת־אֲלָפִים֮ וַאֲדַרְכֹנִ֣ים רִבֹּו֒ וְכֶ֗סֶף כִּכָּרִים֙ עֲשֶׂ֣רֶת אֲלָפִ֔ים וּנְחֹ֕שֶׁת רִבֹּ֛ו וּשְׁמֹונַ֥ת אֲלָפִ֖ים כִּכָּרִ֑ים וּבַרְזֶ֖ל מֵֽאָה־אֶ֥לֶף כִּכָּרִֽים׃ "
+  },
+  "1CH 29:8": {
+   "KJV": "And they with whom precious stones were found gave them to the treasure of the house of the LORD, by the hand of Jehiel the Gershonite.",
+   "BHSA": "וְהַנִּמְצָ֤א אִתֹּו֙ אֲבָנִ֔ים נָתְנ֖וּ לְאֹוצַ֣ר בֵּית־יְהוָ֑ה עַ֥ל יַד־יְחִיאֵ֖ל הַגֵּרְשֻׁנִּֽי׃ "
+  },
+  "1CH 29:9": {
+   "KJV": "Then the people rejoiced, for that they offered willingly, because with perfect heart they offered willingly to the LORD: and David the king also rejoiced with great joy.",
+   "BHSA": "וַיִּשְׂמְח֤וּ הָעָם֙ עַל־הִֽתְנַדְּבָ֔ם כִּ֚י בְּלֵ֣ב שָׁלֵ֔ם הִֽתְנַדְּב֖וּ לַיהוָ֑ה וְגַם֙ דָּוִ֣יד הַמֶּ֔לֶךְ שָׂמַ֖ח שִׂמְחָ֥ה גְדֹולָֽה׃ פ "
+  },
+  "1CH 29:10": {
+   "KJV": "Wherefore David blessed the LORD before all the congregation: and David said, Blessed be thou, LORD God of Israel our father, for ever and ever.",
+   "BHSA": "וַיְבָ֤רֶךְ דָּוִיד֙ אֶת־יְהוָ֔ה לְעֵינֵ֖י כָּל־הַקָּהָ֑ל וַיֹּ֣אמֶר דָּוִ֗יד בָּר֨וּךְ אַתָּ֤ה יְהוָה֙ אֱלֹהֵי֙ יִשְׂרָאֵ֣ל אָבִ֔ינוּ מֵעֹולָ֖ם וְעַד־עֹולָֽם׃ "
+  },
+  "1CH 29:11": {
+   "KJV": "Thine, O LORD is the greatness, and the power, and the glory, and the victory, and the majesty: for all that is in the heaven and in the earth is thine; thine is the kingdom, O LORD, and thou art exalted as head above all.",
+   "BHSA": "לְךָ֣ יְ֠הוָה הַגְּדֻלָּ֨ה וְהַגְּבוּרָ֤ה וְהַתִּפְאֶ֨רֶת֙ וְהַנֵּ֣צַח וְהַהֹ֔וד כִּי־כֹ֖ל בַּשָּׁמַ֣יִם וּבָאָ֑רֶץ לְךָ֤ יְהוָה֙ הַמַּמְלָכָ֔ה וְהַמִּתְנַשֵּׂ֖א לְכֹ֥ל׀ לְרֹֽאשׁ׃ "
+  },
+  "1CH 29:12": {
+   "KJV": "Both riches and honour come of thee, and thou reignest over all; and in thine hand is power and might; and in thine hand it is to make great, and to give strength unto all.",
+   "BHSA": "וְהָעֹ֤שֶׁר וְהַכָּבֹוד֙ מִלְּפָנֶ֔יךָ וְאַתָּה֙ מֹושֵׁ֣ל בַּכֹּ֔ל וּבְיָדְךָ֖ כֹּ֣חַ וּגְבוּרָ֑ה וּבְיָ֣דְךָ֔ לְגַדֵּ֥ל וּלְחַזֵּ֖ק לַכֹּֽל׃ "
+  },
+  "1CH 29:13": {
+   "KJV": "Now therefore, our God, we thank thee, and praise thy glorious name.",
+   "BHSA": "וְעַתָּ֣ה אֱלֹהֵ֔ינוּ מֹודִ֥ים אֲנַ֖חְנוּ לָ֑ךְ וּֽמְהַֽלְלִ֖ים לְשֵׁ֥ם תִּפְאַרְתֶּֽךָ׃ "
+  },
+  "1CH 29:14": {
+   "KJV": "But who am I, and what is my people, that we should be able to offer so willingly after this sort? for all things come of thee, and of thine own have we given thee.",
+   "BHSA": "וְכִ֨י מִ֤י אֲנִי֙ וּמִ֣י עַמִּ֔י כִּֽי־נַעְצֹ֣ר כֹּ֔חַ לְהִתְנַדֵּ֖ב כָּזֹ֑את כִּֽי־מִמְּךָ֣ הַכֹּ֔ל וּמִיָּדְךָ֖ נָתַ֥נּוּ לָֽךְ׃ "
+  },
+  "1CH 29:15": {
+   "KJV": "For we are strangers before thee, and sojourners, as were all our fathers: our days on the earth are as a shadow, and there is none abiding.",
+   "BHSA": "כִּֽי־גֵרִ֨ים אֲנַ֧חְנוּ לְפָנֶ֛יךָ וְתֹושָׁבִ֖ים כְּכָל־אֲבֹתֵ֑ינוּ כַּצֵּ֧ל׀ יָמֵ֛ינוּ עַל־הָאָ֖רֶץ וְאֵ֥ין מִקְוֶֽה׃ "
+  },
+  "1CH 29:16": {
+   "KJV": "O LORD our God, all this store that we have prepared to build thee an house for thine holy name cometh of thine hand, and is all thine own.",
+   "BHSA": "יְהוָ֣ה אֱלֹהֵ֔ינוּ כֹ֣ל הֶהָמֹ֤ון הַזֶּה֙ אֲשֶׁ֣ר הֲכִינֹ֔נוּ לִבְנֹֽות־לְךָ֥ בַ֖יִת לְשֵׁ֣ם קָדְשֶׁ֑ךָ מִיָּדְךָ֥ היא וּלְךָ֥ הַכֹּֽל׃ "
+  },
+  "1CH 29:17": {
+   "KJV": "I know also, my God, that thou triest the heart, and hast pleasure in uprightness. As for me, in the uprightness of mine heart I have willingly offered all these things: and now have I seen with joy thy people, which are present here, to offer willingly unto thee.",
+   "BHSA": "וְיָדַ֣עְתִּי אֱלֹהַ֔י כִּ֤י אַתָּה֙ בֹּחֵ֣ן לֵבָ֔ב וּמֵישָׁרִ֖ים תִּרְצֶ֑ה אֲנִ֗י בְּיֹ֤שֶׁר לְבָבִי֙ הִתְנַדַּ֣בְתִּי כָל־אֵ֔לֶּה וְעַתָּ֗ה עַמְּךָ֙ הַנִּמְצְאוּ־פֹ֔ה רָאִ֥יתִי בְשִׂמְחָ֖ה לְהִֽתְנַדֶּב־לָֽךְ׃ "
+  },
+  "1CH 29:18": {
+   "KJV": "O LORD God of Abraham, Isaac, and of Israel, our fathers, keep this for ever in the imagination of the thoughts of the heart of thy people, and prepare their heart unto thee:",
+   "BHSA": "יְהוָ֗ה אֱ֠לֹהֵי אַבְרָהָ֞ם יִצְחָ֤ק וְיִשְׂרָאֵל֙ אֲבֹתֵ֔ינוּ שֳׁמְרָה־זֹּ֣את לְעֹולָ֔ם לְיֵ֥צֶר מַחְשְׁבֹ֖ות לְבַ֣ב עַמֶּ֑ךָ וְהָכֵ֥ן לְבָבָ֖ם אֵלֶֽיךָ׃ "
+  },
+  "1CH 29:19": {
+   "KJV": "And give unto Solomon my son a perfect heart, to keep thy commandments, thy testimonies, and thy statutes, and to do all these things, and to build the palace, for the which I have made provision.",
+   "BHSA": "וְלִשְׁלֹמֹ֣ה בְנִ֗י תֵּ֚ן לֵבָ֣ב שָׁלֵ֔ם לִשְׁמֹור֙ מִצְוֹתֶ֔יךָ עֵדְוֹתֶ֖יךָ וְחֻקֶּ֑יךָ וְלַעֲשֹׂ֣ות הַכֹּ֔ל וְלִבְנֹ֖ות הַבִּירָ֥ה אֲשֶׁר־הֲכִינֹֽותִי׃ פ "
+  },
+  "1CH 29:20": {
+   "KJV": "And David said to all the congregation, Now bless the LORD your God. And all the congregation blessed the LORD God of their fathers, and bowed down their heads, and worshipped the LORD, and the king.",
+   "BHSA": "וַיֹּ֤אמֶר דָּוִיד֙ לְכָל־הַקָּהָ֔ל בָּֽרְכוּ־נָ֖א אֶת־יְהוָ֣ה אֱלֹהֵיכֶ֑ם וַיְבָרֲכ֣וּ כָֽל־הַקָּהָ֗ל לַיהוָה֙ אֱלֹהֵ֣י אֲבֹֽתֵיהֶ֔ם וַיִּקְּד֧וּ וַיִּֽשְׁתַּחֲו֛וּ לַיהוָ֖ה וְלַמֶּֽלֶךְ׃ "
+  },
+  "1CH 29:21": {
+   "KJV": "And they sacrificed sacrifices unto the LORD, and offered burnt offerings unto the LORD, on the morrow after that day, even a thousand bullocks, a thousand rams, and a thousand lambs, with their drink offerings, and sacrifices in abundance for all Israel:",
+   "BHSA": "וַיִּזְבְּח֣וּ לַיהוָ֣ה׀ זְ֠בָחִים וַיַּעֲל֨וּ עֹלֹ֜ות לַיהוָ֗ה לְֽמָחֳרַת֮ הַיֹּ֣ום הַהוּא֒ פָּרִ֨ים אֶ֜לֶף אֵילִ֥ים אֶ֛לֶף כְּבָשִׂ֥ים אֶ֖לֶף וְנִסְכֵּיהֶ֑ם וּזְבָחִ֥ים לָרֹ֖ב לְכָל־יִשְׂרָאֵֽל׃ "
+  },
+  "1CH 29:22": {
+   "KJV": "And did eat and drink before the LORD on that day with great gladness. And they made Solomon the son of David king the second time, and anointed him unto the LORD to be the chief governor, and Zadok to be priest.",
+   "BHSA": "וַיֹּאכְל֨וּ וַיִּשְׁתּ֜וּ לִפְנֵ֧י יְהוָ֛ה בַּיֹּ֥ום הַה֖וּא בְּשִׂמְחָ֣ה גְדֹולָ֑ה וַיַּמְלִ֤יכוּ שֵׁנִית֙ לִשְׁלֹמֹ֣ה בֶן־דָּוִ֔יד וַיִּמְשְׁח֧וּ לַיהוָ֛ה לְנָגִ֥יד וּלְצָדֹ֖וק לְכֹהֵֽן׃ "
+  },
+  "1CH 29:23": {
+   "KJV": "Then Solomon sat on the throne of the LORD as king instead of David his father, and prospered; and all Israel obeyed him.",
+   "BHSA": "וַיֵּ֣שֶׁב שְׁ֠לֹמֹה עַל־כִּסֵּ֨א יְהוָ֧ה׀ לְמֶ֛לֶךְ תַּֽחַת־דָּוִ֥יד אָבִ֖יו וַיַּצְלַ֑ח וַיִּשְׁמְע֥וּ אֵלָ֖יו כָּל־יִשְׂרָאֵֽל׃ "
+  },
+  "1CH 29:24": {
+   "KJV": "And all the princes, and the mighty men, and all the sons likewise of king David, submitted themselves unto Solomon the king.",
+   "BHSA": "וְכָל־הַשָּׂרִים֙ וְהַגִּבֹּרִ֔ים וְגַ֕ם כָּל־בְּנֵ֖י הַמֶּ֣לֶךְ דָּוִ֑יד נָ֣תְנוּ יָ֔ד תַּ֖חַת שְׁלֹמֹ֥ה הַמֶּֽלֶךְ׃ "
+  },
+  "1CH 29:25": {
+   "KJV": "And the LORD magnified Solomon exceedingly in the sight of all Israel, and bestowed upon him such royal majesty as had not been on any king before him in Israel.",
+   "BHSA": "וַיְגַדֵּ֨ל יְהוָ֤ה אֶת־שְׁלֹמֹה֙ לְמַ֔עְלָה לְעֵינֵ֖י כָּל־יִשְׂרָאֵ֑ל וַיִּתֵּ֤ן עָלָיו֙ הֹ֣וד מַלְכ֔וּת אֲ֠שֶׁר לֹֽא־הָיָ֧ה עַל־כָּל־מֶ֛לֶךְ לְפָנָ֖יו עַל־יִשְׂרָאֵֽל׃ פ "
+  },
+  "1CH 29:26": {
+   "KJV": "Thus David the son of Jesse reigned over all Israel.",
+   "BHSA": "וְדָוִיד֙ בֶּן־יִשָׁ֔י מָלַ֖ךְ עַל־כָּל־יִשְׂרָאֵֽל׃ "
+  },
+  "1CH 29:27": {
+   "KJV": "And the time that he reigned over Israel was forty years; seven years reigned he in Hebron, and thirty and three years reigned he in Jerusalem.",
+   "BHSA": "וְהַיָּמִ֗ים אֲשֶׁ֤ר מָלַךְ֙ עַל־יִשְׂרָאֵ֔ל אַרְבָּעִ֖ים שָׁנָ֑ה בְּחֶבְרֹ֤ון מָלַךְ֙ שֶׁ֣בַע שָׁנִ֔ים וּבִירוּשָׁלִַ֥ם מָלַ֖ךְ שְׁלֹשִׁ֥ים וְשָׁלֹֽושׁ׃ "
+  },
+  "1CH 29:28": {
+   "KJV": "And he died in a good old age, full of days, riches, and honour: and Solomon his son reigned in his stead.",
+   "BHSA": "וַיָּ֨מָת֙ בְּשֵׂיבָ֣ה טֹובָ֔ה שְׂבַ֥ע יָמִ֖ים עֹ֣שֶׁר וְכָבֹ֑וד וַיִּמְלֹ֛ךְ שְׁלֹמֹ֥ה בְנֹ֖ו תַּחְתָּֽיו׃ "
+  },
+  "1CH 29:29": {
+   "KJV": "Now the acts of David the king, first and last, behold, they are written in the book of Samuel the seer, and in the book of Nathan the prophet, and in the book of Gad the seer,",
+   "BHSA": "וְדִבְרֵי֙ דָּוִ֣יד הַמֶּ֔לֶךְ הָרִאשֹׁנִ֖ים וְהָאֲחרֹנִ֑ים הִנָּ֣ם כְּתוּבִ֗ים עַל־דִּבְרֵי֙ שְׁמוּאֵ֣ל הָרֹאֶ֔ה וְעַל־דִּבְרֵי֙ נָתָ֣ן הַנָּבִ֔יא וְעַל־דִּבְרֵ֖י גָּ֥ד הַחֹזֶֽה׃ "
+  },
+  "1CH 29:30": {
+   "KJV": "With all his reign and his might, and the times that went over him, and over Israel, and over all the kingdoms of the countries.",
+   "BHSA": "עִ֥ם כָּל־מַלְכוּתֹ֖ו וּגְבוּרָתֹ֑ו וְהָעִתִּ֗ים אֲשֶׁ֨ר עָבְר֤וּ עָלָיו֙ וְעַל־יִשְׂרָאֵ֔ל וְעַ֖ל כָּל־מַמְלְכֹ֥ות הָאֲרָצֹֽות׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abram",
+   "name": "Abram",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "gad-2",
+   "name": "Gad",
+   "distinguisher": "the prophet (1SA 22:5), the seer (1CH 21:9, 1CH 29:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "isaac",
+   "name": "Isaac",
+   "distinguisher": "son of Abraham and Sarah (GEN 17:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehiel-9",
+   "name": "Jehiel",
+   "distinguisher": "Gershonite, son of Laadan, whose house (Jehieli) kept the temple treasures",
+   "sex": null
+  },
+  {
+   "slug": "jesse",
+   "name": "Jesse",
+   "distinguisher": "father of David (RUT 4:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "nathan-2",
+   "name": "Nathan",
+   "distinguisher": "the prophet (2SA 7:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "samuel-2",
+   "name": "Samuel",
+   "distinguisher": "son of Elkanah and Hannah (1SA 1:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "solomon",
+   "name": "Solomon",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zadok",
+   "name": "Zadok",
+   "distinguisher": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 107805,
+   "row": "david father-of solomon",
+   "verse": "1CH 29:23",
+   "source": "read from Scripture by gpt-5, asked 2026-09-22"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "gad-2 prophet-to david (1SA 22:5)",
+  "isaac son-of abram (GEN 21:3)",
+  "isaac father-of jacob (GEN 27:26)",
+  "jesse father-of david (RUT 4:22)",
+  "nathan-2 prophet-to david (2SA 7:2)",
+  "samuel-2 servant-of yhvh (1SA 2:18)",
+  "solomon son-of david (1KI 1:13)",
+  "jacob son-of isaac (GEN 25:26)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "zadok priest-of yhvh (1KI 1:8)",
+  "abram servant-of yhvh (GEN 26:24)",
+  "abram grandfather-of jacob (GEN 28:13)",
+  "david son-of jesse (RUT 4:22)",
+  "david servant-of yhvh (2SA 3:18)"
+ ]
+}

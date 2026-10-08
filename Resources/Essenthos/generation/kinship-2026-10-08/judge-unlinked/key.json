@@ -1,0 +1,106 @@
+{
+ "blind-1": {
+  "type": "missing",
+  "claim": "jacob ancestor-of moses",
+  "chapter": "ACT-7",
+  "verse": "ACT 7:32",
+  "codex_why": "God addresses Moses and names Jacob among his forefathers (τῶν πατέρων σου).",
+  "codex_confidence": 0.99
+ },
+ "blind-2": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MRK-14",
+  "verse": "MRK 14:61",
+  "codex_why": "The high priest calls Jesus “the Son of the Blessed,” and Jesus affirms this identification in MRK 14:62.",
+  "codex_confidence": 0.99
+ },
+ "blind-3": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MRK-5",
+  "verse": "MRK 5:7",
+  "codex_why": "The Greek addresses Jesus as Υἱὲ τοῦ Θεοῦ τοῦ Ὑψίστου, Son of the Most High God.",
+  "codex_confidence": 1
+ },
+ "blind-4": {
+  "type": "missing",
+  "claim": "zaccheus son-of abram",
+  "chapter": "LUK-19",
+  "verse": "LUK 19:9",
+  "codex_why": "Jesus explicitly calls Zaccheus υἱὸς Ἀβραάμ, a son of Abraham.",
+  "codex_confidence": 1
+ },
+ "blind-5": {
+  "type": "missing",
+  "claim": "yhvh father-of jesus",
+  "chapter": "MAT-20",
+  "verse": "MAT 20:23",
+  "codex_why": "Jesus explicitly refers to God as “my Father” (τοῦ Πατρός μου).",
+  "codex_confidence": 0.99
+ },
+ "blind-6": {
+  "type": "missing",
+  "claim": "levi descendant-of abram",
+  "chapter": "HEB-7",
+  "verse": "HEB 7:10",
+  "codex_why": "Levi was still in Abraham's loins when Melchizedek met Abraham, identifying Abraham as his forefather.",
+  "codex_confidence": 0.99
+ },
+ "blind-7": {
+  "type": "missing",
+  "claim": "levi-son-of-alphaeus son-of alphaeus",
+  "chapter": "MRK-2",
+  "verse": "MRK 2:14",
+  "codex_why": "The Greek identifies Levi as τὸν τοῦ Ἀλφαίου, meaning the son of Alphaeus.",
+  "codex_confidence": 1
+ },
+ "blind-8": {
+  "type": "missing",
+  "claim": "yhvh father-of jesus",
+  "chapter": "MAT-15",
+  "verse": "MAT 15:13",
+  "codex_why": "Jesus calls God «ὁ Πατήρ μου ὁ οὐράνιος», meaning “my heavenly Father.”",
+  "codex_confidence": 0.99
+ },
+ "blind-9": {
+  "type": "missing",
+  "claim": "abram ancestor-of moses",
+  "chapter": "ACT-7",
+  "verse": "ACT 7:32",
+  "codex_why": "God addresses Moses and names Abraham among his forefathers (τῶν πατέρων σου).",
+  "codex_confidence": 0.99
+ },
+ "blind-10": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "2JN-1",
+  "verse": "2JN 1:3",
+  "codex_why": "The Greek calls Jesus Christ τοῦ Υἱοῦ τοῦ Πατρός, the Son of the Father, identified in the verse as God.",
+  "codex_confidence": 1
+ },
+ "blind-11": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "HEB-7",
+  "verse": "HEB 7:3",
+  "codex_why": "Melchizedek is likened to the Son of God, whom the chapter identifies as Jesus.",
+  "codex_confidence": 0.98
+ },
+ "blind-12": {
+  "type": "missing",
+  "claim": "isaac ancestor-of moses",
+  "chapter": "ACT-7",
+  "verse": "ACT 7:32",
+  "codex_why": "God addresses Moses and names Isaac among his forefathers (τῶν πατέρων σου).",
+  "codex_confidence": 0.99
+ },
+ "blind-13": {
+  "type": "missing",
+  "claim": "jesus descendant-of judah",
+  "chapter": "HEB-7",
+  "verse": "HEB 7:14",
+  "codex_why": "The text says that our Lord sprang from Judah (ἐξ Ἰούδα ἀνατέταλκεν).",
+  "codex_confidence": 0.98
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "chapter": "1SA 17",
+ "rows": 4,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "abinadab-2",
+   "type": "brother-of",
+   "to": "david",
+   "verse": "1SA 17:17",
+   "why": "Jesse calls the three sons at the battle David's brothers (לְאַחֶיךָ), including Abinadab named in verse 13.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The stated parentage and David's brotherhood with Eliab and Shammah are already recorded here or in other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:46:03+00:00"
+}

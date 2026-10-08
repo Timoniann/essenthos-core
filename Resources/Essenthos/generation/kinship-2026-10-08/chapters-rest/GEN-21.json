@@ -1,0 +1,11 @@
+{
+ "chapter": "GEN 21",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "Both recorded relationships are supported by GEN 21:3. Hagar's son and his Egyptian wife are not among the supplied records, so their relationships cannot be added.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:49:55+00:00"
+}

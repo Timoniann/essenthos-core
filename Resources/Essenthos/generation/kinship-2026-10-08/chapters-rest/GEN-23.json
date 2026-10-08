@@ -1,0 +1,11 @@
+{
+ "chapter": "GEN 23",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "GEN 23:8 explicitly names Ephron as Zohar's son, and GEN 23:19 names Sarah as Abraham's wife; both relationships are already recorded. The owner's Ephron–Heth descendant ruling is consistent with Ephron being called a Hittite in GEN 23:10.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:48:38+00:00"
+}

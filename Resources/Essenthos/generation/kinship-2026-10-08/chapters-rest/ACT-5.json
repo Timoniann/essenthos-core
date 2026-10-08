@@ -1,0 +1,11 @@
+{
+ "chapter": "ACT 5",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "ACT 5:1 explicitly identifies Sapphira as Ananias's wife, supporting both recorded rows; the chapter states no other plain family relationships between the supplied people.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:23+00:00"
+}

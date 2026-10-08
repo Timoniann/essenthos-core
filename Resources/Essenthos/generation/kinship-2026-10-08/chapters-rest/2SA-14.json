@@ -1,0 +1,11 @@
+{
+ "chapter": "2SA 14",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "Tamar is explicitly Absalom's daughter in 2SA 14:27, and Joab's relationship to Zeruiah in 2SA 14:1 is already recorded from other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:56:58+00:00"
+}

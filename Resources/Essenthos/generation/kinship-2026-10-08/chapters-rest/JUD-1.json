@@ -1,0 +1,11 @@
+{
+ "chapter": "JUD 1",
+ "rows": 4,
+ "wrong": [],
+ "missing": [],
+ "note": "JUD 1:1 explicitly identifies Jude as James’s brother and Jesus Christ’s servant; JUD 1:14 supports Enoch’s descent from Adam by calling him seventh from Adam. All plain family statements between the supplied records are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:46:58+00:00"
+}

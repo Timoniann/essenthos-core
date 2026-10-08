@@ -1,0 +1,20 @@
+{
+ "chapter": "MRK 14",
+ "rows": 0,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "MRK 14:61",
+   "why": "The high priest calls Jesus “the Son of the Blessed,” and Jesus affirms this identification in MRK 14:62.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Jesus also addresses God as “Abba, Father” in MRK 14:36; no other family relationship between the supplied records is plainly stated.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T22:00:31+00:00"
+}

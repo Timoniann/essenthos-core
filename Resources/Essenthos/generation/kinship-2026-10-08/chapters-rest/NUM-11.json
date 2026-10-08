@@ -1,0 +1,11 @@
+{
+ "chapter": "NUM 11",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "Owner rows 107266 and 107276 are retained, although NUM 11:26–27 describes Eldad and Medad prophesying in the camp without explicitly stating companionship or kinship. Joshua's sonship to Nun in NUM 11:28 is already recorded from another chapter.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 2,
+ "at": "2026-10-08T21:49:38+00:00"
+}

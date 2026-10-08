@@ -1,0 +1,36 @@
+{
+ "chapter": "2CH 22",
+ "rows": 4,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "athaliah",
+   "type": "daughter-of",
+   "to": "omri",
+   "verse": "2CH 22:2",
+   "why": "The Hebrew identifies Athaliah as the daughter of Omri.",
+   "confidence": 1
+  },
+  {
+   "from": "jehu-2",
+   "type": "son-of",
+   "to": "nimshi",
+   "verse": "2CH 22:7",
+   "why": "The Hebrew explicitly calls Jehu the son of Nimshi without naming an intervening generation.",
+   "confidence": 1
+  },
+  {
+   "from": "ahaziah-2",
+   "type": "descendant-of",
+   "to": "jehoshaphat-3",
+   "verse": "2CH 22:9",
+   "why": "The Hebrew calls Ahaziah a son of Jehoshaphat, plainly identifying him as Jehoshaphat's descendant.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The relationships recorded elsewhere as granddaughter-of Omri and grandson-of Nimshi do not replace this chapter's explicit daughter-of and son-of statements. Ahaziah's relationship to Jehoshaphat is expressed as descendant-of because verse 1 identifies Jehoram as his father.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:45:50+00:00"
+}

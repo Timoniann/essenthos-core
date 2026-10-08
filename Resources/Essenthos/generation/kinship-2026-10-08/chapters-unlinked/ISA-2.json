@@ -1,0 +1,11 @@
+{
+ "chapter": "ISA 2",
+ "rows": 0,
+ "wrong": [],
+ "missing": [],
+ "note": "ISA 2:1 explicitly identifies Isaiah as the son of Amoz, and that relationship is already recorded from other chapters. The chapter makes no other plain family statements between the supplied people.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T22:00:47+00:00"
+}

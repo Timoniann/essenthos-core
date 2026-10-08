@@ -1,0 +1,24 @@
+{
+  "wrong": [
+    {
+      "kind": "delete",
+      "rows": [101114, 101115, 101116],
+      "new_type": "",
+      "new_to": "",
+      "verse": "ACT 13:1",
+      "why": "The verse lists these men as prophets and teachers, but σύντροφος describes Manaen's relationship with Herod, not with Saul, Simeon, or Lucius.",
+      "confidence": 0.93
+    }
+  ],
+  "missing": [
+    {
+      "from": "jesus",
+      "type": "son-of",
+      "to": "yhvh",
+      "verse": "ACT 13:33",
+      "why": "The quotation applied to Jesus explicitly declares God's words, 'Thou art my Son, this day have I begotten thee.'",
+      "confidence": 0.99
+    }
+  ],
+  "note": "Manaen's designation σύντροφος establishes upbringing with Herod without plainly establishing a family relationship. Calling Elymas a son of the devil is a figurative accusation, not a genealogical statement."
+}

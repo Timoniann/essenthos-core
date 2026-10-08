@@ -1,0 +1,20 @@
+{
+ "chapter": "MRK 5",
+ "rows": 0,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "MRK 5:7",
+   "why": "The Greek addresses Jesus as Υἱὲ τοῦ Θεοῦ τοῦ Ὑψίστου, Son of the Most High God.",
+   "confidence": 1
+  }
+ ],
+ "note": "John and James's brotherhood is already recorded. Jairus's daughter has no supplied record, and Jesus's address Θυγάτηρ to the healed woman does not state a family relationship.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T22:01:45+00:00"
+}

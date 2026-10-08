@@ -1,0 +1,11 @@
+{
+ "chapter": "1SA 11",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "This chapter makes no explicit family statements between the listed people. Owner row 106690 infers Nahash’s descent from Ben-ammi from הָעַמֹּונִי (“the Ammonite”) in 1SA 11:2; the verse does not name Ben-ammi.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:54:51+00:00"
+}

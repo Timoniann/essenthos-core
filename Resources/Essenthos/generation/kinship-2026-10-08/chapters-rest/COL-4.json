@@ -1,0 +1,23 @@
+{
+ "chapter": "COL 4",
+ "rows": 2,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    100487
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "COL 4:10",
+   "why": "The Greek calls Mark Barnabas's ἀνεψιός (cousin), rather than his nephew as rendered in the KJV.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [],
+ "note": "The explicit cousin relationship cannot be represented by the permitted types. The references to brothers and Archippus's ministry do not state family relationships.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:48+00:00"
+}

@@ -1,0 +1,20 @@
+{
+ "chapter": "MAT 20",
+ "rows": 0,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "yhvh",
+   "type": "father-of",
+   "to": "jesus",
+   "verse": "MAT 20:23",
+   "why": "Jesus explicitly refers to God as “my Father” (τοῦ Πατρός μου).",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Jesus’ descent from David is already recorded. Zebedee’s sons and their mother are not among the supplied records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:59:04+00:00"
+}

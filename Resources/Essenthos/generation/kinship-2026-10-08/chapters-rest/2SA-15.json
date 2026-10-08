@@ -1,0 +1,11 @@
+{
+ "chapter": "2SA 15",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "The chapter identifies Ahimaaz as Zadok’s son, Jonathan as Abiathar’s son, and David as Absalom’s father; all three relationships are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:47:17+00:00"
+}

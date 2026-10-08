@@ -1,0 +1,11 @@
+{
+ "chapter": "EXO 2",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "All three chapter rows are supported by the Hebrew text, and Moses’ fatherhood of Gershom is already recorded from another chapter. No additional plain family statement between the supplied records is missing.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:48:18+00:00"
+}

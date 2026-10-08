@@ -1,0 +1,11 @@
+{
+ "chapter": "ACT 18",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "ACT 18:2 explicitly identifies Priscilla as Aquila's wife (Πρίσκιλλαν γυναῖκα αὐτοῦ), supporting both recorded rows; the chapter states no other family relationships between the supplied people.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:50:09+00:00"
+}

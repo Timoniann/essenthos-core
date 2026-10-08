@@ -1,0 +1,24 @@
+{
+ "chapter": "PHP 2",
+ "rows": 2,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    98813,
+    98814
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "PHP 2:25",
+   "why": "The Greek describes Epaphroditus as Paul's brother, fellow worker, and fellow soldier, not as a companion of YHVH or Jesus.",
+   "confidence": 1
+  }
+ ],
+ "missing": [],
+ "note": "PHP 2:22 compares Timothy's service to that of a child with a father, without asserting parentage. No plain family relationship between two supplied records is stated.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:37+00:00"
+}

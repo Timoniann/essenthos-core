@@ -1,0 +1,11 @@
+{
+ "chapter": "2CH 24",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "All explicit family relationships between the supplied people are already recorded, including the name variants in 2CH 24:26. In 2CH 24:22, Jehoiada is Zechariah’s father; the verse does not identify him as Joash’s father.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:56:34+00:00"
+}

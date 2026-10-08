@@ -1,0 +1,513 @@
+[
+ {
+  "id": 1,
+  "chapter": "ACT-7",
+  "claim": "The chapter plainly states 'jacob ancestor-of moses', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jacob",
+    "name": "Jacob",
+    "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+    "sex": "male"
+   },
+   {
+    "slug": "moses",
+    "name": "Moses",
+    "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "aaron brother-of moses (EXO 4:14)",
+   "isaac father-of jacob (GEN 27:26)",
+   "joshua servant-of moses (EXO 24:13)",
+   "moses servant-of yhvh (NUM 12:7)",
+   "moses priest-of yhvh (PSA 99:6)",
+   "jacob son-of isaac (GEN 25:26)"
+  ],
+  "text": {
+   "ACT 7:31": {
+    "KJV": "When Moses saw it, he wondered at the sight: and as he drew near to behold it, the voice of the Lord came unto him,",
+    "NESTLE1904": "ὁ δὲ Μωϋσῆς ἰδὼν ἐθαύμαζεν τὸ ὅραμα· προσερχομένου δὲ αὐτοῦ κατανοῆσαι ἐγένετο φωνὴ Κυρίου "
+   },
+   "ACT 7:32": {
+    "KJV": "Saying, I am the God of thy fathers, the God of Abraham, and the God of Isaac, and the God of Jacob. Then Moses trembled, and durst not behold.",
+    "NESTLE1904": "Ἐγὼ ὁ Θεὸς τῶν πατέρων σου, ὁ Θεὸς Ἀβραὰμ καὶ Ἰσαὰκ καὶ Ἰακώβ. ἔντρομος δὲ γενόμενος Μωϋσῆς οὐκ ἐτόλμα κατανοῆσαι. "
+   },
+   "ACT 7:33": {
+    "KJV": "Then said the Lord to him, Put off thy shoes from thy feet: for the place where thou standest is holy ground.",
+    "NESTLE1904": "εἶπεν δὲ αὐτῷ ὁ Κύριος Λῦσον τὸ ὑπόδημα τῶν ποδῶν σου· ὁ γὰρ τόπος ἐφ’ ᾧ ἕστηκας γῆ ἁγία ἐστίν. "
+   }
+  }
+ },
+ {
+  "id": 2,
+  "chapter": "MRK-14",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus teacher-of james (MAT 10:1)",
+   "jesus teacher-of john-2 (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "judas servant-of jesus (MAT 10:4)",
+   "judas apostle-of jesus (MAT 10:4)"
+  ],
+  "text": {
+   "MRK 14:60": {
+    "KJV": "And the high priest stood up in the midst, and asked Jesus, saying, Answerest thou nothing? what is it which these witness against thee?",
+    "NESTLE1904": "καὶ ἀναστὰς ὁ ἀρχιερεὺς εἰς μέσον ἐπηρώτησεν τὸν Ἰησοῦν λέγων Οὐκ ἀποκρίνῃ οὐδέν; τί οὗτοί σου καταμαρτυροῦσιν; "
+   },
+   "MRK 14:61": {
+    "KJV": "But he held his peace, and answered nothing. Again the high priest asked him, and said unto him, Art thou the Christ, the Son of the Blessed?",
+    "NESTLE1904": "ὁ δὲ ἐσιώπα καὶ οὐκ ἀπεκρίνατο οὐδέν. πάλιν ὁ ἀρχιερεὺς ἐπηρώτα αὐτὸν καὶ λέγει αὐτῷ Σὺ εἶ ὁ Χριστὸς ὁ Υἱὸς τοῦ Εὐλογητοῦ; "
+   },
+   "MRK 14:62": {
+    "KJV": "And Jesus said, I am: and ye shall see the Son of man sitting on the right hand of power, and coming in the clouds of heaven.",
+    "NESTLE1904": "ὁ δὲ Ἰησοῦς εἶπεν Ἐγώ εἰμι, καὶ ὄψεσθε τὸν Υἱὸν τοῦ ἀνθρώπου ἐκ δεξιῶν καθήμενον τῆς δυνάμεως καὶ ἐρχόμενον μετὰ τῶν νεφελῶν τοῦ οὐρανοῦ. "
+   }
+  }
+ },
+ {
+  "id": 3,
+  "chapter": "MRK-5",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus teacher-of james (MAT 10:1)",
+   "jesus teacher-of john-2 (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "simon servant-of jesus (MAT 10:2)",
+   "simon apostle-of jesus (MAT 10:2)"
+  ],
+  "text": {
+   "MRK 5:6": {
+    "KJV": "But when he saw Jesus afar off, he ran and worshipped him,",
+    "NESTLE1904": "καὶ ἰδὼν τὸν Ἰησοῦν ἀπὸ μακρόθεν ἔδραμεν καὶ προσεκύνησεν αὐτόν, "
+   },
+   "MRK 5:7": {
+    "KJV": "And cried with a loud voice, and said, What have I to do with thee, Jesus, thou Son of the most high God? I adjure thee by God, that thou torment me not.",
+    "NESTLE1904": "καὶ κράξας φωνῇ μεγάλῃ λέγει Τί ἐμοὶ καὶ σοί, Ἰησοῦ Υἱὲ τοῦ Θεοῦ τοῦ Ὑψίστου; ὁρκίζω σε τὸν Θεόν, μή με βασανίσῃς. "
+   },
+   "MRK 5:8": {
+    "KJV": "For he said unto him, Come out of the man, thou unclean spirit.",
+    "NESTLE1904": "ἔλεγεν γὰρ αὐτῷ Ἔξελθε τὸ πνεῦμα τὸ ἀκάθαρτον ἐκ τοῦ ἀνθρώπου. "
+   }
+  }
+ },
+ {
+  "id": 4,
+  "chapter": "LUK-19",
+  "claim": "The chapter plainly states 'zaccheus son-of abram', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abram",
+    "name": "Abram",
+    "distinguisher": "son of Terah (GEN 11:26)",
+    "sex": "male"
+   },
+   {
+    "slug": "zaccheus",
+    "name": "Zaccheus",
+    "distinguisher": "chief tax collector (LUK 19:2) of small stature (LUK 19:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus descendant-of abram (MAT 1:1)",
+   "abram servant-of yhvh (GEN 26:24)"
+  ],
+  "text": {
+   "LUK 19:8": {
+    "KJV": "And Zacchaeus stood, and said unto the Lord: Behold, Lord, the half of my goods I give to the poor; and if I have taken any thing from any man by false accusation, I restore him fourfold.",
+    "NESTLE1904": "σταθεὶς δὲ Ζακχαῖος εἶπεν πρὸς τὸν Κύριον Ἰδοὺ τὰ ἡμίσειά μου τῶν ὑπαρχόντων, Κύριε, τοῖς πτωχοῖς δίδωμι, καὶ εἴ τινός τι ἐσυκοφάντησα ἀποδίδωμι τετραπλοῦν. "
+   },
+   "LUK 19:9": {
+    "KJV": "And Jesus said unto him, This day is salvation come to this house, forsomuch as he also is a son of Abraham.",
+    "NESTLE1904": "εἶπεν δὲ πρὸς αὐτὸν ὁ Ἰησοῦς ὅτι Σήμερον σωτηρία τῷ οἴκῳ τούτῳ ἐγένετο, καθότι καὶ αὐτὸς υἱὸς Ἀβραάμ ἐστιν· "
+   },
+   "LUK 19:10": {
+    "KJV": "For the Son of man is come to seek and to save that which was lost.",
+    "NESTLE1904": "ἦλθεν γὰρ ὁ Υἱὸς τοῦ ἀνθρώπου ζητῆσαι καὶ σῶσαι τὸ ἀπολωλός. "
+   }
+  }
+ },
+ {
+  "id": 5,
+  "chapter": "MAT-20",
+  "claim": "The chapter plainly states 'yhvh father-of jesus', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus descendant-of david (MAT 1:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "david servant-of yhvh (2SA 3:18)"
+  ],
+  "text": {
+   "MAT 20:22": {
+    "KJV": "But Jesus answered and said, Ye know not what ye ask. Are ye able to drink of the cup that I shall drink of, and to be baptized with the baptism that I am baptized with? They say unto him, We are able.",
+    "NESTLE1904": "ἀποκριθεὶς δὲ ὁ Ἰησοῦς εἶπεν Οὐκ οἴδατε τί αἰτεῖσθε. δύνασθε πιεῖν τὸ ποτήριον ὃ ἐγὼ μέλλω πίνειν; λέγουσιν αὐτῷ Δυνάμεθα. "
+   },
+   "MAT 20:23": {
+    "KJV": "And he saith unto them, Ye shall drink indeed of my cup, and be baptized with the baptism that I am baptized with: but to sit on my right hand, and on my left, is not mine to give, but it shall be given to them for whom it is prepared of my Father.",
+    "NESTLE1904": "λέγει αὐτοῖς Τὸ μὲν ποτήριόν μου πίεσθε, τὸ δὲ καθίσαι ἐκ δεξιῶν μου καὶ ἐξ εὐωνύμων οὐκ ἔστιν ἐμὸν τοῦτο δοῦναι, ἀλλ’ οἷς ἡτοίμασται ὑπὸ τοῦ Πατρός μου. "
+   },
+   "MAT 20:24": {
+    "KJV": "And when the ten heard it, they were moved with indignation against the two brethren.",
+    "NESTLE1904": "καὶ ἀκούσαντες οἱ δέκα ἠγανάκτησαν περὶ τῶν δύο ἀδελφῶν. "
+   }
+  }
+ },
+ {
+  "id": 6,
+  "chapter": "HEB-7",
+  "claim": "The chapter plainly states 'levi descendant-of abram', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abram",
+    "name": "Abram",
+    "distinguisher": "son of Terah (GEN 11:26)",
+    "sex": "male"
+   },
+   {
+    "slug": "levi",
+    "name": "Levi",
+    "distinguisher": "third-born son of Jacob (GEN 29:34), son of Leah",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus descendant-of abram (MAT 1:1)",
+   "judah brother-of levi (GEN 29:35)",
+   "abram servant-of yhvh (GEN 26:24)"
+  ],
+  "text": {
+   "HEB 7:9": {
+    "KJV": "And as I may so say, Levi also, who receiveth tithes, payed tithes in Abraham.",
+    "NESTLE1904": "καὶ ὡς ἔπος εἰπεῖν, δι’ Ἀβραὰμ καὶ Λευεὶς ὁ δεκάτας λαμβάνων δεδεκάτωται· "
+   },
+   "HEB 7:10": {
+    "KJV": "For he was yet in the loins of his father, when Melchisedec met him.",
+    "NESTLE1904": "ἔτι γὰρ ἐν τῇ ὀσφύϊ τοῦ πατρὸς ἦν ὅτε συνήντησεν αὐτῷ Μελχισέδεκ. "
+   },
+   "HEB 7:11": {
+    "KJV": "If therefore perfection were by the Levitical priesthood, (for under it the people received the law,) what further need was there that another priest should rise after the order of Melchisedec, and not be called after the order of Aaron?",
+    "NESTLE1904": "Εἰ μὲν οὖν τελείωσις διὰ τῆς Λευειτικῆς ἱερωσύνης ἦν, ὁ λαὸς γὰρ ἐπ’ αὐτῆς νενομοθέτηται, τίς ἔτι χρεία κατὰ τὴν τάξιν Μελχισέδεκ ἕτερον ἀνίστασθαι ἱερέα καὶ οὐ κατὰ τὴν τάξιν Ἀαρὼν λέγεσθαι; "
+   }
+  }
+ },
+ {
+  "id": 7,
+  "chapter": "MRK-2",
+  "claim": "The chapter plainly states 'levi-son-of-alphaeus son-of alphaeus', and the site does not record it.",
+  "records": [
+   {
+    "slug": "alphaeus",
+    "name": "Alphaeus",
+    "distinguisher": "father of James the disciple (MAT 10:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "levi-son-of-alphaeus",
+    "name": "Levi",
+    "distinguisher": "son of Alphaeus, a publican whom Jesus called from the receipt of custom (MRK 2:14, LUK 5:27-29)",
+    "sex": null
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "MRK 2:13": {
+    "KJV": "And he went forth again by the sea side; and all the multitude resorted unto him, and he taught them.",
+    "NESTLE1904": "Καὶ ἐξῆλθεν πάλιν παρὰ τὴν θάλασσαν· καὶ πᾶς ὁ ὄχλος ἤρχετο πρὸς αὐτόν, καὶ ἐδίδασκεν αὐτούς. "
+   },
+   "MRK 2:14": {
+    "KJV": "And as he passed by, he saw Levi the son of Alphaeus sitting at the receipt of custom, and said unto him, Follow me. And he arose and followed him.",
+    "NESTLE1904": "καὶ παράγων εἶδεν Λευεὶν τὸν τοῦ Ἀλφαίου καθήμενον ἐπὶ τὸ τελώνιον, καὶ λέγει αὐτῷ Ἀκολούθει μοι. καὶ ἀναστὰς ἠκολούθησεν αὐτῷ. "
+   },
+   "MRK 2:15": {
+    "KJV": "And it came to pass, that, as Jesus sat at meat in his house, many publicans and sinners sat also together with Jesus and his disciples: for there were many, and they followed him.",
+    "NESTLE1904": "Καὶ γίνεται κατακεῖσθαι αὐτὸν ἐν τῇ οἰκίᾳ αὐτοῦ, καὶ πολλοὶ τελῶναι καὶ ἁμαρτωλοὶ συνανέκειντο τῷ Ἰησοῦ καὶ τοῖς μαθηταῖς αὐτοῦ, ἦσαν γὰρ πολλοὶ καὶ ἠκολούθουν αὐτῷ. "
+   }
+  }
+ },
+ {
+  "id": 8,
+  "chapter": "MAT-15",
+  "claim": "The chapter plainly states 'yhvh father-of jesus', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "isaiah servant-of yhvh (ISA 20:3)",
+   "jesus descendant-of david (MAT 1:1)",
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "simon servant-of jesus (MAT 10:2)",
+   "simon apostle-of jesus (MAT 10:2)"
+  ],
+  "text": {
+   "MAT 15:12": {
+    "KJV": "Then came his disciples, and said unto him, Knowest thou that the Pharisees were offended, after they heard this saying?",
+    "NESTLE1904": "Τότε προσελθόντες οἱ μαθηταὶ λέγουσιν αὐτῷ Οἶδας ὅτι οἱ Φαρισαῖοι ἀκούσαντες τὸν λόγον ἐσκανδαλίσθησαν; "
+   },
+   "MAT 15:13": {
+    "KJV": "But he answered and said, Every plant, which my heavenly Father hath not planted, shall be rooted up.",
+    "NESTLE1904": "ὁ δὲ ἀποκριθεὶς εἶπεν Πᾶσα φυτεία ἣν οὐκ ἐφύτευσεν ὁ Πατήρ μου ὁ οὐράνιος ἐκριζωθήσεται. "
+   },
+   "MAT 15:14": {
+    "KJV": "Let them alone: they be blind leaders of the blind. And if the blind lead the blind, both shall fall into the ditch.",
+    "NESTLE1904": "ἄφετε αὐτούς· τυφλοί εἰσιν ὁδηγοί τυφλῶν· τυφλὸς δὲ τυφλὸν ἐὰν ὁδηγῇ, ἀμφότεροι εἰς βόθυνον πεσοῦνται. "
+   }
+  }
+ },
+ {
+  "id": 9,
+  "chapter": "ACT-7",
+  "claim": "The chapter plainly states 'abram ancestor-of moses', and the site does not record it.",
+  "records": [
+   {
+    "slug": "abram",
+    "name": "Abram",
+    "distinguisher": "son of Terah (GEN 11:26)",
+    "sex": "male"
+   },
+   {
+    "slug": "moses",
+    "name": "Moses",
+    "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "aaron brother-of moses (EXO 4:14)",
+   "isaac son-of abram (GEN 21:3)",
+   "jesus descendant-of abram (MAT 1:1)",
+   "joshua servant-of moses (EXO 24:13)",
+   "moses servant-of yhvh (NUM 12:7)",
+   "moses priest-of yhvh (PSA 99:6)"
+  ],
+  "text": {
+   "ACT 7:31": {
+    "KJV": "When Moses saw it, he wondered at the sight: and as he drew near to behold it, the voice of the Lord came unto him,",
+    "NESTLE1904": "ὁ δὲ Μωϋσῆς ἰδὼν ἐθαύμαζεν τὸ ὅραμα· προσερχομένου δὲ αὐτοῦ κατανοῆσαι ἐγένετο φωνὴ Κυρίου "
+   },
+   "ACT 7:32": {
+    "KJV": "Saying, I am the God of thy fathers, the God of Abraham, and the God of Isaac, and the God of Jacob. Then Moses trembled, and durst not behold.",
+    "NESTLE1904": "Ἐγὼ ὁ Θεὸς τῶν πατέρων σου, ὁ Θεὸς Ἀβραὰμ καὶ Ἰσαὰκ καὶ Ἰακώβ. ἔντρομος δὲ γενόμενος Μωϋσῆς οὐκ ἐτόλμα κατανοῆσαι. "
+   },
+   "ACT 7:33": {
+    "KJV": "Then said the Lord to him, Put off thy shoes from thy feet: for the place where thou standest is holy ground.",
+    "NESTLE1904": "εἶπεν δὲ αὐτῷ ὁ Κύριος Λῦσον τὸ ὑπόδημα τῶν ποδῶν σου· ὁ γὰρ τόπος ἐφ’ ᾧ ἕστηκας γῆ ἁγία ἐστίν. "
+   }
+  }
+ },
+ {
+  "id": 10,
+  "chapter": "2JN-1",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of john-2 (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "john-2 servant-of jesus (MAT 10:2)",
+   "john-2 apostle-of jesus (MAT 10:2)"
+  ],
+  "text": {
+   "2JN 1:2": {
+    "KJV": "For the truth's sake, which dwelleth in us, and shall be with us for ever.",
+    "NESTLE1904": "διὰ τὴν ἀλήθειαν τὴν μένουσαν ἐν ἡμῖν, καὶ μεθ’ ἡμῶν ἔσται εἰς τὸν αἰῶνα. "
+   },
+   "2JN 1:3": {
+    "KJV": "Grace be with you, mercy, and peace, from God the Father, and from the Lord Jesus Christ, the Son of the Father, in truth and love.",
+    "NESTLE1904": "ἔσται μεθ’ ἡμῶν χάρις ἔλεος εἰρήνη παρὰ Θεοῦ Πατρός, καὶ παρὰ Ἰησοῦ Χριστοῦ τοῦ Υἱοῦ τοῦ Πατρός, ἐν ἀληθείᾳ καὶ ἀγάπῃ. "
+   },
+   "2JN 1:4": {
+    "KJV": "I rejoiced greatly that I found of thy children walking in truth, as we have received a commandment from the Father.",
+    "NESTLE1904": "Ἐχάρην λίαν ὅτι εὕρηκα ἐκ τῶν τέκνων σου περιπατοῦντας ἐν ἀληθείᾳ, καθὼς ἐντολὴν ἐλάβομεν παρὰ τοῦ Πατρός. "
+   }
+  }
+ },
+ {
+  "id": 11,
+  "chapter": "HEB-7",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "aaron high-priest-of yhvh (EXO 28:1)",
+   "jesus descendant-of abram (MAT 1:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "melchizedek priest-of yhvh (GEN 14:18)",
+   "moses servant-of yhvh (NUM 12:7)",
+   "moses priest-of yhvh (PSA 99:6)"
+  ],
+  "text": {
+   "HEB 7:2": {
+    "KJV": "To whom also Abraham gave a tenth part of all; first being by interpretation King of righteousness, and after that also King of Salem, which is, King of peace;",
+    "NESTLE1904": "ᾧ καὶ δεκάτην ἀπὸ πάντων ἐμέρισεν Ἀβραάμ, πρῶτον μὲν ἑρμηνευόμενος βασιλεὺς δικαιοσύνης, ἔπειτα δὲ καὶ βασιλεὺς Σαλήμ, ὅ ἐστιν βασιλεὺς εἰρήνης, "
+   },
+   "HEB 7:3": {
+    "KJV": "Without father, without mother, without descent, having neither beginning of days, nor end of life; but made like unto the Son of God; abideth a priest continually.",
+    "NESTLE1904": "ἀπάτωρ, ἀμήτωρ, ἀγενεαλόγητος, μήτε ἀρχὴν ἡμερῶν μήτε ζωῆς τέλος ἔχων, ἀφωμοιωμένος δὲ τῷ Υἱῷ τοῦ Θεοῦ, μένει ἱερεὺς εἰς τὸ διηνεκές. "
+   },
+   "HEB 7:4": {
+    "KJV": "Now consider how great this man was, unto whom even the patriarch Abraham gave the tenth of the spoils.",
+    "NESTLE1904": "Θεωρεῖτε δὲ πηλίκος οὗτος ᾧ δεκάτην Ἀβραὰμ ἔδωκεν ἐκ τῶν ἀκροθινίων ὁ πατριάρχης. "
+   }
+  }
+ },
+ {
+  "id": 12,
+  "chapter": "ACT-7",
+  "claim": "The chapter plainly states 'isaac ancestor-of moses', and the site does not record it.",
+  "records": [
+   {
+    "slug": "isaac",
+    "name": "Isaac",
+    "distinguisher": "son of Abraham and Sarah (GEN 17:21)",
+    "sex": "male"
+   },
+   {
+    "slug": "moses",
+    "name": "Moses",
+    "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "aaron brother-of moses (EXO 4:14)",
+   "isaac son-of abram (GEN 21:3)",
+   "isaac father-of jacob (GEN 27:26)",
+   "joshua servant-of moses (EXO 24:13)",
+   "moses servant-of yhvh (NUM 12:7)",
+   "moses priest-of yhvh (PSA 99:6)"
+  ],
+  "text": {
+   "ACT 7:31": {
+    "KJV": "When Moses saw it, he wondered at the sight: and as he drew near to behold it, the voice of the Lord came unto him,",
+    "NESTLE1904": "ὁ δὲ Μωϋσῆς ἰδὼν ἐθαύμαζεν τὸ ὅραμα· προσερχομένου δὲ αὐτοῦ κατανοῆσαι ἐγένετο φωνὴ Κυρίου "
+   },
+   "ACT 7:32": {
+    "KJV": "Saying, I am the God of thy fathers, the God of Abraham, and the God of Isaac, and the God of Jacob. Then Moses trembled, and durst not behold.",
+    "NESTLE1904": "Ἐγὼ ὁ Θεὸς τῶν πατέρων σου, ὁ Θεὸς Ἀβραὰμ καὶ Ἰσαὰκ καὶ Ἰακώβ. ἔντρομος δὲ γενόμενος Μωϋσῆς οὐκ ἐτόλμα κατανοῆσαι. "
+   },
+   "ACT 7:33": {
+    "KJV": "Then said the Lord to him, Put off thy shoes from thy feet: for the place where thou standest is holy ground.",
+    "NESTLE1904": "εἶπεν δὲ αὐτῷ ὁ Κύριος Λῦσον τὸ ὑπόδημα τῶν ποδῶν σου· ὁ γὰρ τόπος ἐφ’ ᾧ ἕστηκας γῆ ἁγία ἐστίν. "
+   }
+  }
+ },
+ {
+  "id": 13,
+  "chapter": "HEB-7",
+  "claim": "The chapter plainly states 'jesus descendant-of judah', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "judah",
+    "name": "Judah",
+    "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus descendant-of abram (MAT 1:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "judah brother-of levi (GEN 29:35)"
+  ],
+  "text": {
+   "HEB 7:13": {
+    "KJV": "For he of whom these things are spoken pertaineth to another tribe, of which no man gave attendance at the altar.",
+    "NESTLE1904": "ἐφ’ ὃν γὰρ λέγεται ταῦτα, φυλῆς ἑτέρας μετέσχηκεν, ἀφ’ ἧς οὐδεὶς προσέσχηκεν τῷ θυσιαστηρίῳ· "
+   },
+   "HEB 7:14": {
+    "KJV": "For it is evident that our Lord sprang out of Juda; of which tribe Moses spake nothing concerning priesthood.",
+    "NESTLE1904": "πρόδηλον γὰρ ὅτι ἐξ Ἰούδα ἀνατέταλκεν ὁ Κύριος ἡμῶν, εἰς ἣν φυλὴν περὶ ἱερέων οὐδὲν Μωϋσῆς ἐλάλησεν. "
+   },
+   "HEB 7:15": {
+    "KJV": "And it is yet far more evident: for that after the similitude of Melchisedec there ariseth another priest,",
+    "NESTLE1904": "Καὶ περισσότερον ἔτι κατάδηλόν ἐστιν, εἰ κατὰ τὴν ὁμοιότητα Μελχισέδεκ ἀνίσταται ἱερεὺς ἕτερος, "
+   }
+  }
+ }
+]

@@ -1,0 +1,11 @@
+{
+ "chapter": "JER 25",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "JER 25:1 names Jehoiakim (eliakim-2) as Josiah's son, and JER 25:3 names Josiah as Amon's son; both relationships are already recorded from other chapters. JER 25:9 explicitly calls Nebuchadnezzar YHVH's servant, supporting row 106573.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:52:34+00:00"
+}

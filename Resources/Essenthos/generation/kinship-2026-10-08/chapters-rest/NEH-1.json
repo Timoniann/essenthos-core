@@ -1,0 +1,11 @@
+{
+ "chapter": "NEH 1",
+ "rows": 3,
+ "wrong": [],
+ "missing": [],
+ "note": "NEH 1:1 identifies Nehemiah as Hacaliah’s son, and NEH 1:2 identifies Hanani as one of Nehemiah’s brothers; both relationships are recorded. No additional family relationship between the supplied people is plainly stated.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:48:05+00:00"
+}

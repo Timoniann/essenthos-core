@@ -1,0 +1,11 @@
+{
+ "chapter": "PSA 72",
+ "rows": 0,
+ "wrong": [],
+ "missing": [],
+ "note": "PSA 72:20 explicitly calls David the son of Jesse, and that relationship is already recorded. PSA 72:1 mentions the king's son but does not name his father, so it adds no plain relationship between the supplied records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T22:01:22+00:00"
+}

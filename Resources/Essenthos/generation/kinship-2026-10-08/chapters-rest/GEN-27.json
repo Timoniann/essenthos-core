@@ -1,0 +1,11 @@
+{
+ "chapter": "GEN 27",
+ "rows": 4,
+ "wrong": [],
+ "missing": [],
+ "note": "All four chapter rows are supported by the Hebrew text, and every plainly stated family relationship between the supplied people is already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:46:33+00:00"
+}

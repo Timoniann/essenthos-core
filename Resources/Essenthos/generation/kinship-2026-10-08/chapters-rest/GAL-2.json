@@ -1,0 +1,20 @@
+{
+ "chapter": "GAL 2",
+ "rows": 1,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "GAL 2:20",
+   "why": "The Greek identifies Christ as τοῦ Υἱοῦ τοῦ Θεοῦ, 'the Son of God.'",
+   "confidence": 1
+  }
+ ],
+ "note": "GAL 2:20 explicitly names Christ as God's Son; the chapter states no other family relationships between the supplied records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:52:47+00:00"
+}

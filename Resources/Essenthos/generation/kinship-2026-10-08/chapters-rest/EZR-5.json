@@ -1,0 +1,20 @@
+{
+ "chapter": "EZR 5",
+ "rows": 2,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "zechariah-13",
+   "type": "son-of",
+   "to": "iddo-5",
+   "verse": "EZR 5:1",
+   "why": "The Aramaic explicitly calls Zechariah בַר־עִדּוֹא, son of Iddo, without naming an intervening generation.",
+   "confidence": 1
+  }
+ ],
+ "note": "The grandson-of relationship recorded from Zechariah does not replace Ezra's explicit son-of statement; both can be retained.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:50:54+00:00"
+}

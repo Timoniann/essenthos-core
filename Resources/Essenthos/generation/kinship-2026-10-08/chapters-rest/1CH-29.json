@@ -1,0 +1,11 @@
+{
+ "chapter": "1CH 29",
+ "rows": 1,
+ "wrong": [],
+ "missing": [],
+ "note": "The Hebrew explicitly identifies Solomon as David’s son and David as Jesse’s son; both relationships are already recorded. The collective references to Israel and the patriarchs as “our fathers” add no explicit relationship between named individuals.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:55:01+00:00"
+}

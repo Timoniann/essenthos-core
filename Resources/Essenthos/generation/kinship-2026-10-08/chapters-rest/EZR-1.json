@@ -1,0 +1,11 @@
+{
+ "chapter": "EZR 1",
+ "rows": 2,
+ "wrong": [],
+ "missing": [],
+ "note": "The chapter states no explicit family relationships. Owner row 107105 is not established by EZR 1:8: Sheshbazzar's title, 'prince of Judah,' does not itself state descent from Judah.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:50:11+00:00"
+}

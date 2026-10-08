@@ -1,0 +1,542 @@
+{
+ "blind-1": {
+  "type": "missing",
+  "claim": "ham brother-of japheth",
+  "chapter": "GEN-9",
+  "verse": "GEN 9:22",
+  "codex_why": "Ham tells his two brothers, whom the following verse identifies as Shem and Japheth.",
+  "codex_confidence": 1
+ },
+ "blind-2": {
+  "type": "wrong",
+  "row": 105524,
+  "row_text": "james-4 brother-of thaddaeus",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "LUK-6",
+  "verse": "LUK 6:16",
+  "codex_why": "The Greek names Judas of James (Ἰούδαν Ἰακώβου), a patronymic, and does not state a brotherhood between James and Thaddaeus.",
+  "codex_confidence": 0.98
+ },
+ "blind-3": {
+  "type": "missing",
+  "claim": "judas-of-james son-of james-4",
+  "chapter": "ACT-1",
+  "verse": "ACT 1:13",
+  "codex_why": "The Greek Ἰούδας Ἰακώβου identifies Judas by his father James, using a patronymic construction parallel to Ἰάκωβος Ἀλφαίου.",
+  "codex_confidence": 0.96
+ },
+ "blind-4": {
+  "type": "missing",
+  "claim": "anna descendant-of asher",
+  "chapter": "LUK-2",
+  "verse": "LUK 2:36",
+  "codex_why": "The Greek describes Anna as being of the tribe of Asher.",
+  "codex_confidence": 0.95
+ },
+ "blind-5": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MAT-27",
+  "verse": "MAT 27:54",
+  "codex_why": "The centurion and those with him explicitly call Jesus God's Son (Θεοῦ Υἱός).",
+  "codex_confidence": 1
+ },
+ "blind-6": {
+  "type": "wrong",
+  "row": 107818,
+  "row_text": "elhanan killer-of goliath",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "lahmi",
+  "chapter": "1CH-20",
+  "verse": "1CH 20:5",
+  "codex_why": "The Hebrew says Elhanan slew Lahmi, the brother of Goliath, so Lahmi is the victim.",
+  "codex_confidence": 1
+ },
+ "blind-7": {
+  "type": "wrong",
+  "row": 101815,
+  "row_text": "olympas companion-of nereus",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "ROM-16",
+  "verse": "ROM 16:15",
+  "codex_why": "The Greek lists Olympas, Philologus, and Nereus among those greeted but does not state that Olympas is either man's companion.",
+  "codex_confidence": 0.94
+ },
+ "blind-8": {
+  "type": "wrong",
+  "row": 101804,
+  "row_text": "og killed-by yhvh",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "DEU-3",
+  "verse": "DEU 3:3",
+  "codex_why": "The Hebrew says YHVH delivered Og into Israel's hands and Israel smote him, rather than saying YHVH killed him.",
+  "codex_confidence": 0.98
+ },
+ "blind-9": {
+  "type": "missing",
+  "claim": "ahaziah-2 descendant-of jehoshaphat-3",
+  "chapter": "2CH-22",
+  "verse": "2CH 22:9",
+  "codex_why": "The Hebrew calls Ahaziah a son of Jehoshaphat, plainly identifying him as Jehoshaphat's descendant.",
+  "codex_confidence": 0.99
+ },
+ "blind-10": {
+  "type": "missing",
+  "claim": "saul-2 descendant-of abram",
+  "chapter": "ROM-11",
+  "verse": "ROM 11:1",
+  "codex_why": "Paul explicitly identifies himself as ἐκ σπέρματος Ἀβραάμ, meaning of Abraham's offspring.",
+  "codex_confidence": 1
+ },
+ "blind-11": {
+  "type": "wrong",
+  "row": 98078,
+  "row_text": "bernice companion-of porcius",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "ACT-26",
+  "verse": "ACT 26:30",
+  "codex_why": "The Greek lists Bernice and the governor among those who rose, without stating that Bernice was Porcius's companion.",
+  "codex_confidence": 0.98
+ },
+ "blind-12": {
+  "type": "wrong",
+  "row": 101157,
+  "row_text": "mary-3 disciple-of jesus",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "LUK-10",
+  "verse": "LUK 10:39",
+  "codex_why": "The verse identifies Mary as Martha's sister and says she listened at the Lord's feet, but does not explicitly call her his disciple.",
+  "codex_confidence": 0.86
+ },
+ "blind-13": {
+  "type": "wrong",
+  "row": 100925,
+  "row_text": "lois mother-of eunice",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2TI-1",
+  "verse": "2TI 1:5",
+  "codex_why": "The verse names Lois as Timothy's grandmother and Eunice as his mother, but does not state that Lois is Eunice's mother.",
+  "codex_confidence": 1
+ },
+ "blind-14": {
+  "type": "missing",
+  "claim": "judas-of-james son-of james-4",
+  "chapter": "LUK-6",
+  "verse": "LUK 6:16",
+  "codex_why": "Ἰούδαν Ἰακώβου identifies Judas by his father James, using the same patronymic construction as James of Alphaeus in verse 15.",
+  "codex_confidence": 0.97
+ },
+ "blind-15": {
+  "type": "wrong",
+  "row": 100487,
+  "row_text": "john-5 nephew-of joseph-12",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "COL-4",
+  "verse": "COL 4:10",
+  "codex_why": "The Greek calls Mark Barnabas's ἀνεψιός (cousin), rather than his nephew as rendered in the KJV.",
+  "codex_confidence": 0.99
+ },
+ "blind-16": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "HEB-4",
+  "verse": "HEB 4:14",
+  "codex_why": "The Greek explicitly calls Jesus τὸν Υἱὸν τοῦ Θεοῦ, the Son of God.",
+  "codex_confidence": 1
+ },
+ "blind-17": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MAT-2",
+  "verse": "MAT 2:15",
+  "codex_why": "The verse applies the Lord's declaration, “Out of Egypt have I called my son” (τὸν υἱόν μου), to Jesus.",
+  "codex_confidence": 0.97
+ },
+ "blind-18": {
+  "type": "wrong",
+  "row": 98934,
+  "row_text": "ezekiel priest-of yhvh",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "EZK-1",
+  "verse": "EZK 1:3",
+  "codex_why": "The Hebrew gives the title הַכֹּהֵן, 'the priest,' but does not state a priest-of relationship to YHVH.",
+  "codex_confidence": 0.92
+ },
+ "blind-19": {
+  "type": "missing",
+  "claim": "yhvh father-of jesus",
+  "chapter": "JHN-18",
+  "verse": "JHN 18:11",
+  "codex_why": "Jesus identifies the giver of his cup as his Father (ὁ Πατήρ).",
+  "codex_confidence": 0.99
+ },
+ "blind-20": {
+  "type": "missing",
+  "claim": "zechariah-13 son-of iddo-5",
+  "chapter": "EZR-5",
+  "verse": "EZR 5:1",
+  "codex_why": "The Aramaic explicitly calls Zechariah בַר־עִדּוֹא, son of Iddo, without naming an intervening generation.",
+  "codex_confidence": 1
+ },
+ "blind-21": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MAT-26",
+  "verse": "MAT 26:39",
+  "codex_why": "Jesus addresses God as “my Father” (Πάτερ μου).",
+  "codex_confidence": 0.99
+ },
+ "blind-22": {
+  "type": "wrong",
+  "row": 107120,
+  "row_text": "thaddaeus brother-of james-4",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "LUK-6",
+  "verse": "LUK 6:16",
+  "codex_why": "The Greek names Judas of James (Ἰούδαν Ἰακώβου), a patronymic, and does not state a brotherhood between James and Thaddaeus.",
+  "codex_confidence": 0.98
+ },
+ "blind-23": {
+  "type": "wrong",
+  "row": 101814,
+  "row_text": "olympas companion-of philologus",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "ROM-16",
+  "verse": "ROM 16:15",
+  "codex_why": "The Greek lists Olympas, Philologus, and Nereus among those greeted but does not state that Olympas is either man's companion.",
+  "codex_confidence": 0.94
+ },
+ "blind-24": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "LUK-10",
+  "verse": "LUK 10:22",
+  "codex_why": "Jesus calls God 'my Father' (τοῦ Πατρός μου) and identifies himself as the Son.",
+  "codex_confidence": 0.99
+ },
+ "blind-25": {
+  "type": "wrong",
+  "row": 97223,
+  "row_text": "agrippa judge-of saul-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "ACT-26",
+  "verse": "ACT 26:32",
+  "codex_why": "Agrippa tells Festus that Paul could have been released, without identifying Agrippa as Paul's judge.",
+  "codex_confidence": 0.94
+ },
+ "blind-26": {
+  "type": "missing",
+  "claim": "yhvh father-of jesus",
+  "chapter": "JHN-6",
+  "verse": "JHN 6:32",
+  "codex_why": "Jesus calls God “my Father” (ὁ Πατήρ μου), explicitly stating their relationship.",
+  "codex_confidence": 1
+ },
+ "blind-27": {
+  "type": "wrong",
+  "row": 98313,
+  "row_text": "clopas husband-of mary-2",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "mary-4",
+  "chapter": "JHN-19",
+  "verse": "JHN 19:25",
+  "codex_why": "Μαρία ἡ τοῦ Κλωπᾶ identifies Mary associated with Clopas, matching the supplied record mary-4.",
+  "codex_confidence": 0.99
+ },
+ "blind-28": {
+  "type": "wrong",
+  "row": 98334,
+  "row_text": "crispus disciple-of saul-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1CO-1",
+  "verse": "1CO 1:14",
+  "codex_why": "Paul says he baptized Crispus (ἐβάπτισα), without stating that Crispus was his disciple.",
+  "codex_confidence": 0.99
+ },
+ "blind-29": {
+  "type": "wrong",
+  "row": 101114,
+  "row_text": "manaen companion-of saul-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "ACT-13",
+  "verse": "ACT 13:1",
+  "codex_why": "The verse lists these men as prophets and teachers, but σύντροφος describes Manaen's relationship with Herod, not with Saul, Simeon, or Lucius.",
+  "codex_confidence": 0.93
+ },
+ "blind-30": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "JHN-1",
+  "verse": "JHN 1:34",
+  "codex_why": "John explicitly identifies Jesus as ὁ Υἱὸς τοῦ Θεοῦ, the Son of God.",
+  "codex_confidence": 1
+ },
+ "blind-31": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "ACT-9",
+  "verse": "ACT 9:20",
+  "codex_why": "The Greek explicitly identifies Jesus as ὁ Υἱὸς τοῦ Θεοῦ, the Son of God.",
+  "codex_confidence": 1
+ },
+ "blind-32": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MRK-3",
+  "verse": "MRK 3:11",
+  "codex_why": "The Greek explicitly calls Jesus ὁ Υἱὸς τοῦ Θεοῦ, “the Son of God.”",
+  "codex_confidence": 1
+ },
+ "blind-33": {
+  "type": "wrong",
+  "row": 101116,
+  "row_text": "manaen companion-of lucius",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "ACT-13",
+  "verse": "ACT 13:1",
+  "codex_why": "The verse lists these men as prophets and teachers, but σύντροφος describes Manaen's relationship with Herod, not with Saul, Simeon, or Lucius.",
+  "codex_confidence": 0.93
+ },
+ "blind-34": {
+  "type": "missing",
+  "claim": "jehu-2 son-of nimshi",
+  "chapter": "2CH-22",
+  "verse": "2CH 22:7",
+  "codex_why": "The Hebrew explicitly calls Jehu the son of Nimshi without naming an intervening generation.",
+  "codex_confidence": 1
+ },
+ "blind-35": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MAT-14",
+  "verse": "MAT 14:33",
+  "codex_why": "The disciples explicitly address Jesus as Θεοῦ Υἱός, the Son of God.",
+  "codex_confidence": 1
+ },
+ "blind-36": {
+  "type": "wrong",
+  "row": 98814,
+  "row_text": "epaphroditus companion-of jesus",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "PHP-2",
+  "verse": "PHP 2:25",
+  "codex_why": "The Greek describes Epaphroditus as Paul's brother, fellow worker, and fellow soldier, not as a companion of YHVH or Jesus.",
+  "codex_confidence": 1
+ },
+ "blind-37": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "JHN-20",
+  "verse": "JHN 20:31",
+  "codex_why": "The Greek explicitly identifies Jesus as ὁ Υἱὸς τοῦ Θεοῦ, 'the Son of God.'",
+  "codex_confidence": 1
+ },
+ "blind-38": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "LUK-24",
+  "verse": "LUK 24:49",
+  "codex_why": "Jesus refers to God as “my Father” (τοῦ Πατρός μου).",
+  "codex_confidence": 0.99
+ },
+ "blind-39": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "ACT-13",
+  "verse": "ACT 13:33",
+  "codex_why": "The quotation applied to Jesus explicitly declares God's words, 'Thou art my Son, this day have I begotten thee.'",
+  "codex_confidence": 0.99
+ },
+ "blind-40": {
+  "type": "missing",
+  "claim": "jair son-of manasseh",
+  "chapter": "NUM-32",
+  "verse": "NUM 32:41",
+  "codex_why": "The Hebrew explicitly calls Jair בֶן־מְנַשֶּׁה, son of Manasseh, whereas the recorded row states only descendant-of.",
+  "codex_confidence": 0.98
+ },
+ "blind-41": {
+  "type": "missing",
+  "claim": "pharaoh husband-of sarai",
+  "chapter": "GEN-12",
+  "verse": "GEN 12:19",
+  "codex_why": "Pharaoh says וָאֶקַּח אֹתָהּ לִי לְאִשָּׁה, meaning that he took Sarai to himself as a wife.",
+  "codex_confidence": 0.97
+ },
+ "blind-42": {
+  "type": "missing",
+  "claim": "ham brother-of shem",
+  "chapter": "GEN-9",
+  "verse": "GEN 9:22",
+  "codex_why": "Ham tells his two brothers, whom the following verse identifies as Shem and Japheth.",
+  "codex_confidence": 1
+ },
+ "blind-43": {
+  "type": "missing",
+  "claim": "abinadab-2 brother-of david",
+  "chapter": "1SA-17",
+  "verse": "1SA 17:17",
+  "codex_why": "Jesse calls the three sons at the battle David's brothers (לְאַחֶיךָ), including Abinadab named in verse 13.",
+  "codex_confidence": 0.99
+ },
+ "blind-44": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "1CO-1",
+  "verse": "1CO 1:9",
+  "codex_why": "The verse explicitly identifies Jesus Christ as God's Son (τοῦ Υἱοῦ αὐτοῦ Ἰησοῦ Χριστοῦ).",
+  "codex_confidence": 1
+ },
+ "blind-45": {
+  "type": "wrong",
+  "row": 101115,
+  "row_text": "manaen companion-of simeon-4",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "ACT-13",
+  "verse": "ACT 13:1",
+  "codex_why": "The verse lists these men as prophets and teachers, but σύντροφος describes Manaen's relationship with Herod, not with Saul, Simeon, or Lucius.",
+  "codex_confidence": 0.93
+ },
+ "blind-46": {
+  "type": "wrong",
+  "row": 98223,
+  "row_text": "caesar master-of pilate",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "JHN-19",
+  "verse": "JHN 19:12",
+  "codex_why": "The verse calls Pilate Caesar's friend and speaks of opposition to Caesar, but does not state a master relationship.",
+  "codex_confidence": 0.96
+ },
+ "blind-47": {
+  "type": "wrong",
+  "row": 98813,
+  "row_text": "epaphroditus companion-of yhvh",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "PHP-2",
+  "verse": "PHP 2:25",
+  "codex_why": "The Greek describes Epaphroditus as Paul's brother, fellow worker, and fellow soldier, not as a companion of YHVH or Jesus.",
+  "codex_confidence": 1
+ },
+ "blind-48": {
+  "type": "missing",
+  "claim": "achan son-of zerah-3",
+  "chapter": "JOS-22",
+  "verse": "JOS 22:20",
+  "codex_why": "The Hebrew explicitly calls Achan בֶּן־זֶרַח, son of Zerah, whereas the existing row records only descendant-of.",
+  "codex_confidence": 1
+ },
+ "blind-49": {
+  "type": "wrong",
+  "row": 98933,
+  "row_text": "ezekiel prophet-to jacob",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "EZK-2",
+  "verse": "EZK 2:3",
+  "codex_why": "בְּנֵי יִשְׂרָאֵל denotes the people of Israel, described as rebellious nations, rather than Jacob personally.",
+  "codex_confidence": 1
+ },
+ "blind-50": {
+  "type": "missing",
+  "claim": "athaliah daughter-of omri",
+  "chapter": "2CH-22",
+  "verse": "2CH 22:2",
+  "codex_why": "The Hebrew identifies Athaliah as the daughter of Omri.",
+  "codex_confidence": 1
+ },
+ "blind-51": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "JHN-19",
+  "verse": "JHN 19:7",
+  "codex_why": "The Jews explicitly report that Jesus claimed to be Υἱὸν Θεοῦ, the Son of God.",
+  "codex_confidence": 0.98
+ },
+ "blind-52": {
+  "type": "missing",
+  "claim": "david brother-of abinadab-2",
+  "chapter": "1SA-16",
+  "verse": "1SA 16:13",
+  "codex_why": "David is anointed among his brothers (אֶחָיו), including Abinadab, whom Jesse presented among his sons.",
+  "codex_confidence": 0.98
+ },
+ "blind-53": {
+  "type": "missing",
+  "claim": "jehu-2 son-of nimshi",
+  "chapter": "1KI-19",
+  "verse": "1KI 19:16",
+  "codex_why": "The Hebrew explicitly calls Jehu בֶן־נִמְשִׁי, son of Nimshi, and this chapter names no intervening generation.",
+  "codex_confidence": 1
+ },
+ "blind-54": {
+  "type": "missing",
+  "claim": "yhvh father-of jesus",
+  "chapter": "LUK-23",
+  "verse": "LUK 23:34",
+  "codex_why": "Jesus addresses God as Πάτερ ('Father') in his prayer for forgiveness.",
+  "codex_confidence": 0.97
+ },
+ "blind-55": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "GAL-2",
+  "verse": "GAL 2:20",
+  "codex_why": "The Greek identifies Christ as τοῦ Υἱοῦ τοῦ Θεοῦ, 'the Son of God.'",
+  "codex_confidence": 1
+ },
+ "blind-56": {
+  "type": "missing",
+  "claim": "mattaniah brother-of jehoiachin",
+  "chapter": "2CH-36",
+  "verse": "2CH 36:10",
+  "codex_why": "The Hebrew calls Zedekiah (the king recorded as mattaniah) אָחִיו, 'his brother,' referring to Jehoiachin.",
+  "codex_confidence": 0.99
+ },
+ "blind-57": {
+  "type": "missing",
+  "claim": "eliab-2 son-of reuben",
+  "chapter": "DEU-11",
+  "verse": "DEU 11:6",
+  "codex_why": "The Hebrew explicitly identifies Eliab as בֶּן־רְאוּבֵן, 'son of Reuben,' without naming an intervening generation.",
+  "codex_confidence": 1
+ }
+}

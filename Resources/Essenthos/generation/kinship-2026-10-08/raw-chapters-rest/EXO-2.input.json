@@ -1,0 +1,192 @@
+{
+ "chapter": "EXO 2",
+ "text": {
+  "EXO 2:1": {
+   "KJV": "And there went a man of the house of Levi, and took to wife a daughter of Levi.",
+   "BHSA": "וַיֵּ֥לֶךְ אִ֖ישׁ מִבֵּ֣ית לֵוִ֑י וַיִּקַּ֖ח אֶת־בַּת־לֵוִֽי׃ "
+  },
+  "EXO 2:2": {
+   "KJV": "And the woman conceived, and bare a son: and when she saw him that he was a goodly child, she hid him three months.",
+   "BHSA": "וַתַּ֥הַר הָאִשָּׁ֖ה וַתֵּ֣לֶד בֵּ֑ן וַתֵּ֤רֶא אֹתֹו֙ כִּי־טֹ֣וב ה֔וּא וַֽתִּצְפְּנֵ֖הוּ שְׁלֹשָׁ֥ה יְרָחִֽים׃ "
+  },
+  "EXO 2:3": {
+   "KJV": "And when she could not longer hide him, she took for him an ark of bulrushes, and daubed it with slime and with pitch, and put the child therein; and she laid it in the flags by the river's brink.",
+   "BHSA": "וְלֹא־יָכְלָ֣ה עֹוד֮ הַצְּפִינֹו֒ וַתִּֽקַּֽח־לֹו֙ תֵּ֣בַת גֹּ֔מֶא וַתַּחְמְרָ֥ה בַחֵמָ֖ר וּבַזָּ֑פֶת וַתָּ֤שֶׂם בָּהּ֙ אֶת־הַיֶּ֔לֶד וַתָּ֥שֶׂם בַּסּ֖וּף עַל־שְׂפַ֥ת הַיְאֹֽר׃ "
+  },
+  "EXO 2:4": {
+   "KJV": "And his sister stood afar off, to wit what would be done to him.",
+   "BHSA": "וַתֵּתַצַּ֥ב אֲחֹתֹ֖ו מֵרָחֹ֑ק לְדֵעָ֕ה מַה־יֵּעָשֶׂ֖ה לֹֽו׃ "
+  },
+  "EXO 2:5": {
+   "KJV": "And the daughter of Pharaoh came down to wash herself at the river; and her maidens walked along by the river's side; and when she saw the ark among the flags, she sent her maid to fetch it.",
+   "BHSA": "וַתֵּ֤רֶד בַּת־פַּרְעֹה֙ לִרְחֹ֣ץ עַל־הַיְאֹ֔ר וְנַעֲרֹתֶ֥יהָ הֹלְכֹ֖ת עַל־יַ֣ד הַיְאֹ֑ר וַתֵּ֤רֶא אֶת־הַתֵּבָה֙ בְּתֹ֣וךְ הַסּ֔וּף וַתִּשְׁלַ֥ח אֶת־אֲמָתָ֖הּ וַתִּקָּחֶֽהָ׃ "
+  },
+  "EXO 2:6": {
+   "KJV": "And when she had opened it, she saw the child: and, behold, the babe wept. And she had compassion on him, and said, This is one of the Hebrews' children.",
+   "BHSA": "וַתִּפְתַּח֙ וַתִּרְאֵ֣הוּ אֶת־הַיֶּ֔לֶד וְהִנֵּה־נַ֖עַר בֹּכֶ֑ה וַתַּחְמֹ֣ל עָלָ֔יו וַתֹּ֕אמֶר מִיַּלְדֵ֥י הָֽעִבְרִ֖ים זֶֽה׃ "
+  },
+  "EXO 2:7": {
+   "KJV": "Then said his sister to Pharaoh's daughter, Shall I go and call to thee a nurse of the Hebrew women, that she may nurse the child for thee?",
+   "BHSA": "וַתֹּ֣אמֶר אֲחֹתֹו֮ אֶל־בַּת־פַּרְעֹה֒ הַאֵלֵ֗ךְ וְקָרָ֤אתִי לָךְ֙ אִשָּׁ֣ה מֵינֶ֔קֶת מִ֖ן הָעִבְרִיֹּ֑ת וְתֵינִ֥ק לָ֖ךְ אֶת־הַיָּֽלֶד׃ "
+  },
+  "EXO 2:8": {
+   "KJV": "And Pharaoh's daughter said to her, Go. And the maid went and called the child's mother.",
+   "BHSA": "וַתֹּֽאמֶר־לָ֥הּ בַּת־פַּרְעֹ֖ה לֵ֑כִי וַתֵּ֨לֶךְ֙ הָֽעַלְמָ֔ה וַתִּקְרָ֖א אֶת־אֵ֥ם הַיָּֽלֶד׃ "
+  },
+  "EXO 2:9": {
+   "KJV": "And Pharaoh's daughter said unto her, Take this child away, and nurse it for me, and I will give thee thy wages. And the women took the child, and nursed it.",
+   "BHSA": "וַתֹּ֧אמֶר לָ֣הּ בַּת־פַּרְעֹ֗ה הֵילִ֜יכִי אֶת־הַיֶּ֤לֶד הַזֶּה֙ וְהֵינִקִ֣הוּ לִ֔י וַאֲנִ֖י אֶתֵּ֣ן אֶת־שְׂכָרֵ֑ךְ וַתִּקַּ֧ח הָאִשָּׁ֛ה הַיֶּ֖לֶד וַתְּנִיקֵֽהוּ׃ "
+  },
+  "EXO 2:10": {
+   "KJV": "And the child grew, and she brought him unto Pharaoh's daughter, and he became her son. And she called his name Moses: and she said, Because I drew him out of the water.",
+   "BHSA": "וַיִגְדַּ֣ל הַיֶּ֗לֶד וַתְּבִאֵ֨הוּ֙ לְבַת־פַּרְעֹ֔ה וַֽיְהִי־לָ֖הּ לְבֵ֑ן וַתִּקְרָ֤א שְׁמֹו֙ מֹשֶׁ֔ה וַתֹּ֕אמֶר כִּ֥י מִן־הַמַּ֖יִם מְשִׁיתִֽהוּ׃ "
+  },
+  "EXO 2:11": {
+   "KJV": "And it came to pass in those days, when Moses was grown, that he went out unto his brethren, and looked on their burdens: and he spied an Egyptian smiting an Hebrew, one of his brethren.",
+   "BHSA": "וַיְהִ֣י׀ בַּיָּמִ֣ים הָהֵ֗ם וַיִּגְדַּ֤ל מֹשֶׁה֙ וַיֵּצֵ֣א אֶל־אֶחָ֔יו וַיַּ֖רְא בְּסִבְלֹתָ֑ם וַיַּרְא֙ אִ֣ישׁ מִצְרִ֔י מַכֶּ֥ה אִישׁ־עִבְרִ֖י מֵאֶחָֽיו׃ "
+  },
+  "EXO 2:12": {
+   "KJV": "And he looked this way and that way, and when he saw that there was no man, he slew the Egyptian, and hid him in the sand.",
+   "BHSA": "וַיִּ֤פֶן כֹּה֙ וָכֹ֔ה וַיַּ֖רְא כִּ֣י אֵ֣ין אִ֑ישׁ וַיַּךְ֙ אֶת־הַמִּצְרִ֔י וַֽיִּטְמְנֵ֖הוּ בַּחֹֽול׃ "
+  },
+  "EXO 2:13": {
+   "KJV": "And when he went out the second day, behold, two men of the Hebrews strove together: and he said to him that did the wrong, Wherefore smitest thou thy fellow?",
+   "BHSA": "וַיֵּצֵא֙ בַּיֹּ֣ום הַשֵּׁנִ֔י וְהִנֵּ֛ה שְׁנֵֽי־אֲנָשִׁ֥ים עִבְרִ֖ים נִצִּ֑ים וַיֹּ֨אמֶר֙ לָֽרָשָׁ֔ע לָ֥מָּה תַכֶּ֖ה רֵעֶֽךָ׃ "
+  },
+  "EXO 2:14": {
+   "KJV": "And he said, Who made thee a prince and a judge over us? intendest thou to kill me, as thou killedst the Egyptian? And Moses feared, and said, Surely this thing is known.",
+   "BHSA": "וַ֠יֹּאמֶר מִ֣י שָֽׂמְךָ֞ לְאִ֨ישׁ שַׂ֤ר וְשֹׁפֵט֙ עָלֵ֔ינוּ הַלְהָרְגֵ֨נִי֙ אַתָּ֣ה אֹמֵ֔ר כַּאֲשֶׁ֥ר הָרַ֖גְתָּ אֶת־הַמִּצְרִ֑י וַיִּירָ֤א מֹשֶׁה֙ וַיֹּאמַ֔ר אָכֵ֖ן נֹודַ֥ע הַדָּבָֽר׃ "
+  },
+  "EXO 2:15": {
+   "KJV": "Now when Pharaoh heard this thing, he sought to slay Moses. But Moses fled from the face of Pharaoh, and dwelt in the land of Midian: and he sat down by a well.",
+   "BHSA": "וַיִּשְׁמַ֤ע פַּרְעֹה֙ אֶת־הַדָּבָ֣ר הַזֶּ֔ה וַיְבַקֵּ֖שׁ לַהֲרֹ֣ג אֶת־מֹשֶׁ֑ה וַיִּבְרַ֤ח מֹשֶׁה֙ מִפְּנֵ֣י פַרְעֹ֔ה וַיֵּ֥שֶׁב בְּאֶֽרֶץ־מִדְיָ֖ן וַיֵּ֥שֶׁב עַֽל־הַבְּאֵֽר׃ "
+  },
+  "EXO 2:16": {
+   "KJV": "Now the priest of Midian had seven daughters: and they came and drew water, and filled the troughs to water their father's flock.",
+   "BHSA": "וּלְכֹהֵ֥ן מִדְיָ֖ן שֶׁ֣בַע בָּנֹ֑ות וַתָּבֹ֣אנָה וַתִּדְלֶ֗נָה וַתְּמַלֶּ֨אנָה֙ אֶת־הָ֣רְהָטִ֔ים לְהַשְׁקֹ֖ות צֹ֥אן אֲבִיהֶֽן׃ "
+  },
+  "EXO 2:17": {
+   "KJV": "And the shepherds came and drove them away: but Moses stood up and helped them, and watered their flock.",
+   "BHSA": "וַיָּבֹ֥אוּ הָרֹעִ֖ים וַיְגָרְשׁ֑וּם וַיָּ֤קָם מֹשֶׁה֙ וַיֹּ֣ושִׁעָ֔ן וַיַּ֖שְׁקְ אֶת־צֹאנָֽם׃ "
+  },
+  "EXO 2:18": {
+   "KJV": "And when they came to Reuel their father, he said, How is it that ye are come so soon to day?",
+   "BHSA": "וַתָּבֹ֕אנָה אֶל־רְעוּאֵ֖ל אֲבִיהֶ֑ן וַיֹּ֕אמֶר מַדּ֛וּעַ מִהַרְתֶּ֥ן בֹּ֖א הַיֹּֽום׃ "
+  },
+  "EXO 2:19": {
+   "KJV": "And they said, An Egyptian delivered us out of the hand of the shepherds, and also drew water enough for us, and watered the flock.",
+   "BHSA": "וַתֹּאמַ֕רְןָ אִ֣ישׁ מִצְרִ֔י הִצִּילָ֖נוּ מִיַּ֣ד הָרֹעִ֑ים וְגַם־דָּלֹ֤ה דָלָה֙ לָ֔נוּ וַיַּ֖שְׁקְ אֶת־הַצֹּֽאן׃ "
+  },
+  "EXO 2:20": {
+   "KJV": "And he said unto his daughters, And where is he? why is it that ye have left the man? call him, that he may eat bread.",
+   "BHSA": "וַיֹּ֥אמֶר אֶל־בְּנֹתָ֖יו וְאַיֹּ֑ו לָ֤מָּה זֶּה֙ עֲזַבְתֶּ֣ן אֶת־הָאִ֔ישׁ קִרְאֶ֥ן לֹ֖ו וְיֹ֥אכַל לָֽחֶם׃ "
+  },
+  "EXO 2:21": {
+   "KJV": "And Moses was content to dwell with the man: and he gave Moses Zipporah his daughter.",
+   "BHSA": "וַיֹּ֥ואֶל מֹשֶׁ֖ה לָשֶׁ֣בֶת אֶת־הָאִ֑ישׁ וַיִּתֵּ֛ן אֶת־צִפֹּרָ֥ה בִתֹּ֖ו לְמֹשֶֽׁה׃ "
+  },
+  "EXO 2:22": {
+   "KJV": "And she bare him a son, and he called his name Gershom: for he said, I have been a stranger in a strange land.",
+   "BHSA": "וַתֵּ֣לֶד בֵּ֔ן וַיִּקְרָ֥א אֶת־שְׁמֹ֖ו גֵּרְשֹׁ֑ם כִּ֣י אָמַ֔ר גֵּ֣ר הָיִ֔יתִי בְּאֶ֖רֶץ נָכְרִיָּֽה׃ פ "
+  },
+  "EXO 2:23": {
+   "KJV": "And it came to pass in process of time, that the king of Egypt died: and the children of Israel sighed by reason of the bondage, and they cried, and their cry came up unto God by reason of the bondage.",
+   "BHSA": "וַיְהִי֩ בַיָּמִ֨ים הָֽרַבִּ֜ים הָהֵ֗ם וַיָּ֨מָת֙ מֶ֣לֶךְ מִצְרַ֔יִם וַיֵּאָנְח֧וּ בְנֵֽי־יִשְׂרָאֵ֛ל מִן־הָעֲבֹדָ֖ה וַיִּזְעָ֑קוּ וַתַּ֧עַל שַׁוְעָתָ֛ם אֶל־הָאֱלֹהִ֖ים מִן־הָעֲבֹדָֽה׃ "
+  },
+  "EXO 2:24": {
+   "KJV": "And God heard their groaning, and God remembered his covenant with Abraham, with Isaac, and with Jacob.",
+   "BHSA": "וַיִּשְׁמַ֥ע אֱלֹהִ֖ים אֶת־נַאֲקָתָ֑ם וַיִּזְכֹּ֤ר אֱלֹהִים֙ אֶת־בְּרִיתֹ֔ו אֶת־אַבְרָהָ֖ם אֶת־יִצְחָ֥ק וְאֶֽת־יַעֲקֹֽב׃ "
+  },
+  "EXO 2:25": {
+   "KJV": "And God looked upon the children of Israel, and God had respect unto them.",
+   "BHSA": "וַיַּ֥רְא אֱלֹהִ֖ים אֶת־בְּנֵ֣י יִשְׂרָאֵ֑ל וַיֵּ֖דַע אֱלֹהִֽים׃ ס "
+  }
+ },
+ "records": [
+  {
+   "slug": "abram",
+   "name": "Abram",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "gershom",
+   "name": "Gershom",
+   "distinguisher": "Moses' first son (EXO 2:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "isaac",
+   "name": "Isaac",
+   "distinguisher": "son of Abraham and Sarah (GEN 17:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "levi",
+   "name": "Levi",
+   "distinguisher": "third-born son of Jacob (GEN 29:34), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "pharaoh-3",
+   "name": "Pharaoh",
+   "distinguisher": "Pharaoh when Moses was born (EXO 1:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "reuel-2",
+   "name": "Reuel",
+   "distinguisher": "Moses' father-in-law (EXO 2:18, NUM 10:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "zipporah",
+   "name": "Zipporah",
+   "distinguisher": "daughter of Reuel (EXO 2:18), Moses' wife (EXO 2:21), a Cushite (NUM 12:1)",
+   "sex": "female"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 101496,
+   "row": "moses husband-of zipporah",
+   "verse": "EXO 2:21",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 103562,
+   "row": "zipporah daughter-of reuel-2",
+   "verse": "EXO 2:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99080,
+   "row": "gershom son-of zipporah",
+   "verse": "EXO 2:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "gershom son-of moses (1CH 23:15)",
+  "isaac son-of abram (GEN 21:3)",
+  "isaac father-of jacob (GEN 27:26)",
+  "moses son-in-law-of reuel-2 (EXO 3:1)",
+  "reuel-2 father-in-law-of moses (EXO 18:1)",
+  "zipporah wife-of moses (EXO 18:2)",
+  "jacob son-of isaac (GEN 25:26)",
+  "levi son-of jacob (GEN 35:23)",
+  "abram grandfather-of jacob (GEN 28:13)"
+ ]
+}

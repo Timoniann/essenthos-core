@@ -1,0 +1,20 @@
+{
+ "chapter": "MAT 26",
+ "rows": 3,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "MAT 26:39",
+   "why": "Jesus addresses God as “my Father” (Πάτερ μου).",
+   "confidence": 0.99
+  }
+ ],
+ "note": "MAT 26:3 identifies Caiaphas as high priest but does not state his descent from Aaron; owner row 98226 is preserved as required. Zebedee’s two sons are mentioned in MAT 26:37, but neither is among the supplied records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:47:45+00:00"
+}

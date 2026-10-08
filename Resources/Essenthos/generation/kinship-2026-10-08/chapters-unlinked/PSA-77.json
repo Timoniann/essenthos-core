@@ -1,0 +1,11 @@
+{
+ "chapter": "PSA 77",
+ "rows": 0,
+ "wrong": [],
+ "missing": [],
+ "note": "PSA 77:15 refers collectively to the sons of Jacob and Joseph, and PSA 77:20 names Moses and Aaron without stating a family relationship between them.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T22:00:21+00:00"
+}

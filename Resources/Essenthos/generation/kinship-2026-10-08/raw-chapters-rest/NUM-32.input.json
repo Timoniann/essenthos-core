@@ -1,0 +1,338 @@
+{
+ "chapter": "NUM 32",
+ "text": {
+  "NUM 32:1": {
+   "KJV": "Now the children of Reuben and the children of Gad had a very great multitude of cattle: and when they saw the land of Jazer, and the land of Gilead, that, behold, the place was a place for cattle;",
+   "BHSA": "וּמִקְנֶ֣ה׀ רַ֗ב הָיָ֞ה לִבְנֵ֧י רְאוּבֵ֛ן וְלִבְנֵי־גָ֖ד עָצ֣וּם מְאֹ֑ד וַיִּרְא֞וּ אֶת־אֶ֤רֶץ יַעְזֵר֙ וְאֶת־אֶ֣רֶץ גִּלְעָ֔ד וְהִנֵּ֥ה הַמָּקֹ֖ום מְקֹ֥ום מִקְנֶֽה׃ "
+  },
+  "NUM 32:2": {
+   "KJV": "The children of Gad and the children of Reuben came and spake unto Moses, and to Eleazar the priest, and unto the princes of the congregation, saying,",
+   "BHSA": "וַיָּבֹ֥אוּ בְנֵֽי־גָ֖ד וּבְנֵ֣י רְאוּבֵ֑ן וַיֹּאמְר֤וּ אֶל־מֹשֶׁה֙ וְאֶל־אֶלְעָזָ֣ר הַכֹּהֵ֔ן וְאֶל־נְשִׂיאֵ֥י הָעֵדָ֖ה לֵאמֹֽר׃ "
+  },
+  "NUM 32:3": {
+   "KJV": "Ataroth, and Dibon, and Jazer, and Nimrah, and Heshbon, and Elealeh, and Shebam, and Nebo, and Beon,",
+   "BHSA": "עֲטָרֹ֤ות וְדִיבֹן֙ וְיַעְזֵ֣ר וְנִמְרָ֔ה וְחֶשְׁבֹּ֖ון וְאֶלְעָלֵ֑ה וּשְׂבָ֥ם וּנְבֹ֖ו וּבְעֹֽן׃ "
+  },
+  "NUM 32:4": {
+   "KJV": "Even the country which the LORD smote before the congregation of Israel, is a land for cattle, and thy servants have cattle:",
+   "BHSA": "הָאָ֗רֶץ אֲשֶׁ֨ר הִכָּ֤ה יְהוָה֙ לִפְנֵי֙ עֲדַ֣ת יִשְׂרָאֵ֔ל אֶ֥רֶץ מִקְנֶ֖ה הִ֑וא וְלַֽעֲבָדֶ֖יךָ מִקְנֶֽה׃ ס "
+  },
+  "NUM 32:5": {
+   "KJV": "Wherefore, said they, if we have found grace in thy sight, let this land be given unto thy servants for a possession, and bring us not over Jordan.",
+   "BHSA": "וַיֹּאמְר֗וּ אִם־מָצָ֤אנוּ חֵן֙ בְּעֵינֶ֔יךָ יֻתַּ֞ן אֶת־הָאָ֧רֶץ הַזֹּ֛את לַעֲבָדֶ֖יךָ לַאֲחֻזָּ֑ה אַל־תַּעֲבִרֵ֖נוּ אֶת־הַיַּרְדֵּֽן׃ "
+  },
+  "NUM 32:6": {
+   "KJV": "And Moses said unto the children of Gad and to the children of Reuben, Shall your brethren go to war, and shall ye sit here?",
+   "BHSA": "וַיֹּ֣אמֶר מֹשֶׁ֔ה לִבְנֵי־גָ֖ד וְלִבְנֵ֣י רְאוּבֵ֑ן הַאַֽחֵיכֶ֗ם יָבֹ֨אוּ֙ לַמִּלְחָמָ֔ה וְאַתֶּ֖ם תֵּ֥שְׁבוּ פֹֽה׃ "
+  },
+  "NUM 32:7": {
+   "KJV": "And wherefore discourage ye the heart of the children of Israel from going over into the land which the LORD hath given them?",
+   "BHSA": "וְלָ֣מָּה תנואון אֶת־לֵ֖ב בְּנֵ֣י יִשְׂרָאֵ֑ל מֵֽעֲבֹר֙ אֶל־הָאָ֔רֶץ אֲשֶׁר־נָתַ֥ן לָהֶ֖ם יְהוָֽה׃ "
+  },
+  "NUM 32:8": {
+   "KJV": "Thus did your fathers, when I sent them from Kadeshbarnea to see the land.",
+   "BHSA": "כֹּ֥ה עָשׂ֖וּ אֲבֹתֵיכֶ֑ם בְּשָׁלְחִ֥י אֹתָ֛ם מִקָּדֵ֥שׁ בַּרְנֵ֖עַ לִרְאֹ֥ות אֶת־הָאָֽרֶץ׃ "
+  },
+  "NUM 32:9": {
+   "KJV": "For when they went up unto the valley of Eshcol, and saw the land, they discouraged the heart of the children of Israel, that they should not go into the land which the LORD had given them.",
+   "BHSA": "וַֽיַּעֲל֞וּ עַד־נַ֣חַל אֶשְׁכֹּ֗ול וַיִּרְאוּ֙ אֶת־הָאָ֔רֶץ וַיָּנִ֕יאוּ אֶת־לֵ֖ב בְּנֵ֣י יִשְׂרָאֵ֑ל לְבִלְתִּי־בֹא֙ אֶל־הָאָ֔רֶץ אֲשֶׁר־נָתַ֥ן לָהֶ֖ם יְהוָֽה׃ "
+  },
+  "NUM 32:10": {
+   "KJV": "And the Lord 'S anger was kindled the same time, and he sware, saying,",
+   "BHSA": "וַיִּֽחַר־אַ֥ף יְהוָ֖ה בַּיֹּ֣ום הַה֑וּא וַיִּשָּׁבַ֖ע לֵאמֹֽר׃ "
+  },
+  "NUM 32:11": {
+   "KJV": "Surely none of the men that came up out of Egypt, from twenty years old and upward, shall see the land which I sware unto Abraham, unto Isaac, and unto Jacob; because they have not wholly followed me:",
+   "BHSA": "אִם־יִרְא֨וּ הָאֲנָשִׁ֜ים הָעֹלִ֣ים מִמִּצְרַ֗יִם מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה אֵ֚ת הָאֲדָמָ֔ה אֲשֶׁ֥ר נִשְׁבַּ֛עְתִּי לְאַבְרָהָ֥ם לְיִצְחָ֖ק וּֽלְיַעֲקֹ֑ב כִּ֥י לֹא־מִלְא֖וּ אַחֲרָֽי׃ "
+  },
+  "NUM 32:12": {
+   "KJV": "Save Caleb the son of Jephunneh the Kenezite, and Joshua the son of Nun: for they have wholly followed the LORD.",
+   "BHSA": "בִּלְתִּ֞י כָּלֵ֤ב בֶּן־יְפֻנֶּה֙ הַקְּנִזִּ֔י וִיהֹושֻׁ֖עַ בִּן־נ֑וּן כִּ֥י מִלְא֖וּ אַחֲרֵ֥י יְהוָֽה׃ "
+  },
+  "NUM 32:13": {
+   "KJV": "And the Lord 'S anger was kindled against Israel, and he made them wander in the wilderness forty years, until all the generation, that had done evil in the sight of the LORD, was consumed.",
+   "BHSA": "וַיִּֽחַר־אַ֤ף יְהוָה֙ בְּיִשְׂרָאֵ֔ל וַיְנִעֵם֙ בַּמִּדְבָּ֔ר אַרְבָּעִ֖ים שָׁנָ֑ה עַד־תֹּם֙ כָּל־הַדֹּ֔ור הָעֹשֶׂ֥ה הָרַ֖ע בְּעֵינֵ֥י יְהוָֽה׃ "
+  },
+  "NUM 32:14": {
+   "KJV": "And, behold, ye are risen up in your fathers' stead, an increase of sinful men, to augment yet the fierce anger of the LORD toward Israel.",
+   "BHSA": "וְהִנֵּ֣ה קַמְתֶּ֗ם תַּ֚חַת אֲבֹ֣תֵיכֶ֔ם תַּרְבּ֖וּת אֲנָשִׁ֣ים חַטָּאִ֑ים לִסְפֹּ֣ות עֹ֗וד עַ֛ל חֲרֹ֥ון אַף־יְהוָ֖ה אֶל־יִשְׂרָאֵֽל׃ "
+  },
+  "NUM 32:15": {
+   "KJV": "For if ye turn away from after him, he will yet again leave them in the wilderness; and ye shall destroy all this people.",
+   "BHSA": "כִּ֤י תְשׁוּבֻן֙ מֵֽאַחֲרָ֔יו וְיָסַ֣ף עֹ֔וד לְהַנִּיחֹ֖ו בַּמִּדְבָּ֑ר וְשִֽׁחַתֶּ֖ם לְכָל־הָעָ֥ם הַזֶּֽה׃ ס "
+  },
+  "NUM 32:16": {
+   "KJV": "And they came near unto him, and said, We will build sheepfolds here for our cattle, and cities for our little ones:",
+   "BHSA": "וַיִּגְּשׁ֤וּ אֵלָיו֙ וַ֣יֹּאמְר֔וּ גִּדְרֹ֥ת צֹ֛אן נִבְנֶ֥ה לְמִקְנֵ֖נוּ פֹּ֑ה וְעָרִ֖ים לְטַפֵּֽנוּ׃ "
+  },
+  "NUM 32:17": {
+   "KJV": "But we ourselves will go ready armed before the children of Israel, until we have brought them unto their place: and our little ones shall dwell in the fenced cities because of the inhabitants of the land.",
+   "BHSA": "וַאֲנַ֜חְנוּ נֵחָלֵ֣ץ חֻשִׁ֗ים לִפְנֵי֙ בְּנֵ֣י יִשְׂרָאֵ֔ל עַ֛ד אֲשֶׁ֥ר אִם־הֲבִֽיאֹנֻ֖ם אֶל־מְקֹומָ֑ם וְיָשַׁ֤ב טַפֵּ֨נוּ֙ בְּעָרֵ֣י הַמִּבְצָ֔ר מִפְּנֵ֖י יֹשְׁבֵ֥י הָאָֽרֶץ׃ "
+  },
+  "NUM 32:18": {
+   "KJV": "We will not return unto our houses, until the children of Israel have inherited every man his inheritance.",
+   "BHSA": "לֹ֥א נָשׁ֖וּב אֶל־בָּתֵּ֑ינוּ עַ֗ד הִתְנַחֵל֙ בְּנֵ֣י יִשְׂרָאֵ֔ל אִ֖ישׁ נַחֲלָתֹֽו׃ "
+  },
+  "NUM 32:19": {
+   "KJV": "For we will not inherit with them on yonder side Jordan, or forward; because our inheritance is fallen to us on this side Jordan eastward.",
+   "BHSA": "כִּ֣י לֹ֤א נִנְחַל֙ אִתָּ֔ם מֵעֵ֥בֶר לַיַּרְדֵּ֖ן וָהָ֑לְאָה כִּ֣י בָ֤אָה נַחֲלָתֵ֨נוּ֙ אֵלֵ֔ינוּ מֵעֵ֥בֶר הַיַּרְדֵּ֖ן מִזְרָֽחָה׃ פ "
+  },
+  "NUM 32:20": {
+   "KJV": "And Moses said unto them, If ye will do this thing, if ye will go armed before the LORD to war,",
+   "BHSA": "וַיֹּ֤אמֶר אֲלֵיהֶם֙ מֹשֶׁ֔ה אִֽם־תַּעֲשׂ֖וּן אֶת־הַדָּבָ֣ר הַזֶּ֑ה אִם־תֵּחָֽלְצ֛וּ לִפְנֵ֥י יְהוָ֖ה לַמִּלְחָמָֽה׃ "
+  },
+  "NUM 32:21": {
+   "KJV": "And will go all of you armed over Jordan before the LORD, until he hath driven out his enemies from before him,",
+   "BHSA": "וְעָבַ֨ר לָכֶ֧ם כָּל־חָל֛וּץ אֶת־הַיַּרְדֵּ֖ן לִפְנֵ֣י יְהוָ֑ה עַ֧ד הֹורִישֹׁ֛ו אֶת־אֹיְבָ֖יו מִפָּנָֽיו׃ "
+  },
+  "NUM 32:22": {
+   "KJV": "And the land be subdued before the LORD: then afterward ye shall return, and be guiltless before the LORD, and before Israel; and this land shall be your possession before the LORD.",
+   "BHSA": "וְנִכְבְּשָׁ֨ה הָאָ֜רֶץ לִפְנֵ֤י יְהוָה֙ וְאַחַ֣ר תָּשֻׁ֔בוּ וִהְיִיתֶ֧ם נְקִיִּ֛ים מֵיְהוָ֖ה וּמִיִּשְׂרָאֵ֑ל וְ֠הָיְתָה הָאָ֨רֶץ הַזֹּ֥את לָכֶ֛ם לַאֲחֻזָּ֖ה לִפְנֵ֥י יְהוָֽה׃ "
+  },
+  "NUM 32:23": {
+   "KJV": "But if ye will not do so, behold, ye have sinned against the LORD: and be sure your sin will find you out.",
+   "BHSA": "וְאִם־לֹ֤א תַעֲשׂוּן֙ כֵּ֔ן הִנֵּ֥ה חֲטָאתֶ֖ם לַיהוָ֑ה וּדְעוּ֙ חַטַּאתְכֶ֔ם אֲשֶׁ֥ר תִּמְצָ֖א אֶתְכֶֽם׃ "
+  },
+  "NUM 32:24": {
+   "KJV": "Build you cities for your little ones, and folds for your sheep; and do that which hath proceeded out of your mouth.",
+   "BHSA": "בְּנֽוּ־לָכֶ֤ם עָרִים֙ לְטַפְּכֶ֔ם וּגְדֵרֹ֖ת לְצֹנַאֲכֶ֑ם וְהַיֹּצֵ֥א מִפִּיכֶ֖ם תַּעֲשֽׂוּ׃ "
+  },
+  "NUM 32:25": {
+   "KJV": "And the children of Gad and the children of Reuben spake unto Moses, saying, Thy servants will do as my lord commandeth.",
+   "BHSA": "וַיֹּ֤אמֶר בְּנֵי־גָד֙ וּבְנֵ֣י רְאוּבֵ֔ן אֶל־מֹשֶׁ֖ה לֵאמֹ֑ר עֲבָדֶ֣יךָ יַעֲשׂ֔וּ כַּאֲשֶׁ֥ר אֲדֹנִ֖י מְצַוֶּֽה׃ "
+  },
+  "NUM 32:26": {
+   "KJV": "Our little ones, our wives, our flocks, and all our cattle, shall be there in the cities of Gilead:",
+   "BHSA": "טַפֵּ֣נוּ נָשֵׁ֔ינוּ מִקְנֵ֖נוּ וְכָל־בְּהֶמְתֵּ֑נוּ יִֽהְיוּ־שָׁ֖ם בְּעָרֵ֥י הַגִּלְעָֽד׃ "
+  },
+  "NUM 32:27": {
+   "KJV": "But thy servants will pass over, every man armed for war, before the LORD to battle, as my lord saith.",
+   "BHSA": "וַעֲבָדֶ֨יךָ יַֽעַבְר֜וּ כָּל־חֲל֥וּץ צָבָ֛א לִפְנֵ֥י יְהוָ֖ה לַמִּלְחָמָ֑ה כַּאֲשֶׁ֥ר אֲדֹנִ֖י דֹּבֵֽר׃ "
+  },
+  "NUM 32:28": {
+   "KJV": "So concerning them Moses commanded Eleazar the priest, and Joshua the son of Nun, and the chief fathers of the tribes of the children of Israel:",
+   "BHSA": "וַיְצַ֤ו לָהֶם֙ מֹשֶׁ֔ה אֵ֚ת אֶלְעָזָ֣ר הַכֹּהֵ֔ן וְאֵ֖ת יְהֹושֻׁ֣עַ בִּן־נ֑וּן וְאֶת־רָאשֵׁ֛י אֲבֹ֥ות הַמַּטֹּ֖ות לִבְנֵ֥י יִשְׂרָאֵֽל׃ "
+  },
+  "NUM 32:29": {
+   "KJV": "And Moses said unto them, If the children of Gad and the children of Reuben will pass with you over Jordan, every man armed to battle, before the LORD, and the land shall be subdued before you; then ye shall give them the land of Gilead for a possession:",
+   "BHSA": "וַיֹּ֨אמֶר מֹשֶׁ֜ה אֲלֵהֶ֗ם אִם־יַעַבְר֣וּ בְנֵי־גָ֣ד וּבְנֵי־רְאוּבֵ֣ן׀ אִ֠תְּכֶם אֶֽת־הַיַּרְדֵּ֞ן כָּל־חָל֤וּץ לַמִּלְחָמָה֙ לִפְנֵ֣י יְהוָ֔ה וְנִכְבְּשָׁ֥ה הָאָ֖רֶץ לִפְנֵיכֶ֑ם וּנְתַתֶּ֥ם לָהֶ֛ם אֶת־אֶ֥רֶץ הַגִּלְעָ֖ד לַאֲחֻזָּֽה׃ "
+  },
+  "NUM 32:30": {
+   "KJV": "But if they will not pass over with you armed, they shall have possessions among you in the land of Canaan.",
+   "BHSA": "וְאִם־לֹ֧א יַֽעַבְר֛וּ חֲלוּצִ֖ים אִתְּכֶ֑ם וְנֹֽאחֲז֥וּ בְתֹכְכֶ֖ם בְּאֶ֥רֶץ כְּנָֽעַן׃ "
+  },
+  "NUM 32:31": {
+   "KJV": "And the children of Gad and the children of Reuben answered, saying, As the LORD hath said unto thy servants, so will we do.",
+   "BHSA": "וַיַּֽעֲנ֧וּ בְנֵי־גָ֛ד וּבְנֵ֥י רְאוּבֵ֖ן לֵאמֹ֑ר אֵת֩ אֲשֶׁ֨ר דִּבֶּ֧ר יְהוָ֛ה אֶל־עֲבָדֶ֖יךָ כֵּ֥ן נַעֲשֶֽׂה׃ "
+  },
+  "NUM 32:32": {
+   "KJV": "We will pass over armed before the LORD into the land of Canaan, that the possession of our inheritance on this side Jordan may be our's.",
+   "BHSA": "נַ֣חְנוּ נַעֲבֹ֧ר חֲלוּצִ֛ים לִפְנֵ֥י יְהוָ֖ה אֶ֣רֶץ כְּנָ֑עַן וְאִתָּ֨נוּ֙ אֲחֻזַּ֣ת נַחֲלָתֵ֔נוּ מֵעֵ֖בֶר לַיַּרְדֵּֽן׃ "
+  },
+  "NUM 32:33": {
+   "KJV": "And Moses gave unto them, even to the children of Gad, and to the children of Reuben, and unto half the tribe of Manasseh the son of Joseph, the kingdom of Sihon king of the Amorites, and the kingdom of Og king of Bashan, the land, with the cities thereof in the coasts, even the cities of the country round about.",
+   "BHSA": "וַיִּתֵּ֣ן לָהֶ֣ם׀ מֹשֶׁ֡ה לִבְנֵי־גָד֩ וְלִבְנֵ֨י רְאוּבֵ֜ן וְלַחֲצִ֣י׀ שֵׁ֣בֶט׀ מְנַשֶּׁ֣ה בֶן־יֹוסֵ֗ף אֶת־מַמְלֶ֨כֶת֙ סִיחֹן֙ מֶ֣לֶךְ הָֽאֱמֹרִ֔י וְאֶת־מַמְלֶ֔כֶת עֹ֖וג מֶ֣לֶךְ הַבָּשָׁ֑ן הָאָ֗רֶץ לְעָרֶ֨יהָ֙ בִּגְבֻלֹ֔ת עָרֵ֥י הָאָ֖רֶץ סָבִֽיב׃ "
+  },
+  "NUM 32:34": {
+   "KJV": "And the children of Gad built Dibon, and Ataroth, and Aroer,",
+   "BHSA": "וַיִּבְנ֣וּ בְנֵי־גָ֔ד אֶת־דִּיבֹ֖ן וְאֶת־עֲטָרֹ֑ת וְאֵ֖ת עֲרֹעֵֽר׃ "
+  },
+  "NUM 32:35": {
+   "KJV": "And Atroth, Shophan, and Jaazer, and Jogbehah,",
+   "BHSA": "וְאֶת־עַטְרֹ֥ת שֹׁופָ֛ן וְאֶת־יַעְזֵ֖ר וְיָגְבֳּהָֽה׃ "
+  },
+  "NUM 32:36": {
+   "KJV": "And Bethnimrah, and Bethharan, fenced cities: and folds for sheep.",
+   "BHSA": "וְאֶת־בֵּ֥ית נִמְרָ֖ה וְאֶת־בֵּ֣ית הָרָ֑ן עָרֵ֥י מִבְצָ֖ר וְגִדְרֹ֥ת צֹֽאן׃ "
+  },
+  "NUM 32:37": {
+   "KJV": "And the children of Reuben built Heshbon, and Elealeh, and Kirjathaim,",
+   "BHSA": "וּבְנֵ֤י רְאוּבֵן֙ בָּנ֔וּ אֶת־חֶשְׁבֹּ֖ון וְאֶת־אֶלְעָלֵ֑א וְאֵ֖ת קִרְיָתָֽיִם׃ "
+  },
+  "NUM 32:38": {
+   "KJV": "And Nebo, and Baalmeon, (their names being changed,) and Shibmah: and gave other names unto the cities which they builded.",
+   "BHSA": "וְאֶת־נְבֹ֞ו וְאֶת־בַּ֧עַל מְעֹ֛ון מֽוּסַבֹּ֥ת שֵׁ֖ם וְאֶת־שִׂבְמָ֑ה וַיִּקְרְא֣וּ בְשֵׁמֹ֔ת אֶת־שְׁמֹ֥ות הֶעָרִ֖ים אֲשֶׁ֥ר בָּנֽוּ׃ "
+  },
+  "NUM 32:39": {
+   "KJV": "And the children of Machir the son of Manasseh went to Gilead, and took it, and dispossessed the Amorite which was in it.",
+   "BHSA": "וַיֵּ֨לְכ֜וּ בְּנֵ֨י מָכִ֧יר בֶּן־מְנַשֶּׁ֛ה גִּלְעָ֖דָה וַֽיִּלְכְּדֻ֑הָ וַיֹּ֖ורֶשׁ אֶת־הָאֱמֹרִ֥י אֲשֶׁר־בָּֽהּ׃ "
+  },
+  "NUM 32:40": {
+   "KJV": "And Moses gave Gilead unto Machir the son of Manasseh; and he dwelt therein.",
+   "BHSA": "וַיִּתֵּ֤ן מֹשֶׁה֙ אֶת־הַגִּלְעָ֔ד לְמָכִ֖יר בֶּן־מְנַשֶּׁ֑ה וַיֵּ֖שֶׁב בָּֽהּ׃ "
+  },
+  "NUM 32:41": {
+   "KJV": "And Jair the son of Manasseh went and took the small towns thereof, and called them Havothjair.",
+   "BHSA": "וְיָאִ֤יר בֶּן־מְנַשֶּׁה֙ הָלַ֔ךְ וַיִּלְכֹּ֖ד אֶת־חַוֹּתֵיהֶ֑ם וַיִּקְרָ֥א אֶתְהֶ֖ן חַוֹּ֥ת יָאִֽיר׃ "
+  },
+  "NUM 32:42": {
+   "KJV": "And Nobah went and took Kenath, and the villages thereof, and called it Nobah, after his own name.",
+   "BHSA": "וְנֹ֣בַח הָלַ֔ךְ וַיִּלְכֹּ֥ד אֶת־קְנָ֖ת וְאֶת־בְּנֹתֶ֑יהָ וַיִּקְרָ֧א לָ֦ה נֹ֖בַח בִּשְׁמֹֽו׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abram",
+   "name": "Abram",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "caleb",
+   "name": "Caleb",
+   "distinguisher": "1 of the 12 spies- from Judah (NUM 13:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "eleazar",
+   "name": "Eleazar",
+   "distinguisher": "son of Aaron (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "gad",
+   "name": "Gad",
+   "distinguisher": "seventh-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "isaac",
+   "name": "Isaac",
+   "distinguisher": "son of Abraham and Sarah (GEN 17:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jair",
+   "name": "Jair",
+   "distinguisher": "captured the region of Argob and called it Havvoth-jair (NUM 32:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "jephunneh",
+   "name": "Jephunneh",
+   "distinguisher": "father of Caleb (NUM 13:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "joseph",
+   "name": "Joseph",
+   "distinguisher": "eleventh-born son of Jacob and Rachel (GEN 30:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "joshua",
+   "name": "Joshua",
+   "distinguisher": "1 of the 12 spies (called Hoshea)- from Ephraim (NUM 13:8), servant of Moses (EXO 17:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "kenaz",
+   "name": "Kenaz",
+   "distinguisher": "son of Eliphaz (GEN 36:11) and chief of Edom (GEN 36:15, 42)",
+   "sex": "male"
+  },
+  {
+   "slug": "machir",
+   "name": "Machir",
+   "distinguisher": "son of Manasseh (GEN 50:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh",
+   "name": "Manasseh",
+   "distinguisher": "firstborn son of Joseph (GEN 41:51)",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "nobah",
+   "name": "Nobah",
+   "distinguisher": "took Kenath and its villages and called it Nobah after his own name (NUM 32:42)",
+   "sex": "male"
+  },
+  {
+   "slug": "nun",
+   "name": "Nun",
+   "distinguisher": "father of Joshua (EXO 33:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "og",
+   "name": "Og",
+   "distinguisher": "King of Bashan (NUM 21:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "reuben",
+   "name": "Reuben",
+   "distinguisher": "firstborn son of Jacob (GEN 29:32), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "sihon",
+   "name": "Sihon",
+   "distinguisher": "King of the Amorites (NUM 21:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 105856,
+   "row": "jephunneh descendant-of kenaz",
+   "verse": "NUM 32:12",
+   "source": "read from Scripture by the project owner, decided 2026-09-13"
+  },
+  {
+   "id": 99977,
+   "row": "jair descendant-of manasseh",
+   "verse": "NUM 32:41",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "caleb son-of jephunneh (NUM 13:6)",
+  "caleb servant-of yhvh (NUM 14:24)",
+  "eleazar priest-of yhvh (NUM 16:39)",
+  "isaac son-of abram (GEN 21:3)",
+  "isaac father-of jacob (GEN 27:26)",
+  "joshua son-of nun (EXO 33:11)",
+  "joshua servant-of moses (EXO 24:13)",
+  "machir son-of manasseh (JOS 17:1)",
+  "machir descendant-of joseph (JOS 17:1)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "moses priest-of yhvh (PSA 99:6)",
+  "og killed-by yhvh (DEU 3:3)",
+  "reuben son-of jacob (GEN 35:23)",
+  "jacob son-of isaac (GEN 25:26)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "jephunneh father-of caleb (NUM 13:6)",
+  "gad son-of jacob (GEN 35:26)",
+  "gad half-brother-of reuben (GEN 30:11)",
+  "joseph son-of jacob (GEN 37:3)",
+  "joseph father-of manasseh (NUM 36:12)",
+  "joseph half-brother-of reuben (GEN 30:24)",
+  "joseph half-brother-of gad (GEN 30:24)",
+  "manasseh son-of joseph (GEN 41:51)",
+  "manasseh father-of machir (GEN 50:23)",
+  "nun father-of joshua (EXO 33:11)",
+  "abram servant-of yhvh (GEN 26:24)",
+  "abram grandfather-of jacob (GEN 28:13)"
+ ]
+}

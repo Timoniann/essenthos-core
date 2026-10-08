@@ -1,0 +1,20 @@
+{
+ "chapter": "JHN 1",
+ "rows": 2,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "JHN 1:34",
+   "why": "John explicitly identifies Jesus as ὁ Υἱὸς τοῦ Θεοῦ, the Son of God.",
+   "confidence": 1
+  }
+ ],
+ "note": "The human kinship statements concerning Andrew and Simon, Simon and John, and Jesus and Joseph are already recorded from other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:51:20+00:00"
+}

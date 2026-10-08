@@ -1,0 +1,20 @@
+{
+ "chapter": "LUK 2",
+ "rows": 4,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "anna",
+   "type": "descendant-of",
+   "to": "asher",
+   "verse": "LUK 2:36",
+   "why": "The Greek describes Anna as being of the tribe of Asher.",
+   "confidence": 0.95
+  }
+ ],
+ "note": "Owner row 107024 is retained, although LUK 2:36 explicitly assigns Asher's tribal affiliation to Anna and does not explicitly state Phanuel's ancestry.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T21:46:19+00:00"
+}
