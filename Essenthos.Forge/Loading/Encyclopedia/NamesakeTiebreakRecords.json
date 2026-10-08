@@ -1,0 +1,58 @@
+{
+  "decidedBy": "the lead, 2026-10-08, on PRB-0490: five verses where two readings of the original disagreed with an earlier answer or with each other, settled by the majority of three readers (Codex gpt-6.1-sol, a blind Opus judge, and Fable claude-fable-5-1, each reading the verse in the original against both records); each ruling says which of them read it so; no person has reviewed these rulings",
+  "policy": "A word names the man its verse names. Where the majority of three independent readings of the original says which of two men of one name a verse names, the word is ruled onto him and taken off the other, and where an earlier ruling named the other man this ruling corrects it.",
+  "method": "manual",
+  "source": "Essenthos, five verses where two men of one name were identified, read in the original by gpt-6.1-sol, a blind judge and claude-fable-5-1, settled by their majority, 2026-10-08",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "1CH 9:10",
+      "position": 5,
+      "surface": "יְדַֽעְיָ֥ה",
+      "strongNumber": "H3048",
+      "existing": "jedaiah-5",
+      "corrects": "jedaiah-2",
+      "why": "1CH 9:10 (Jedaiah): 1CH 9:10-13 and NEH 11:10-14 are one list of the priests who dwelt in Jerusalem, and 'Jedaiah, and Jehoiarib, and Jachin' answers to 'Jedaiah the son of Joiarib, Jachin' of NEH 11:10, which is jedaiah-5; jedaiah-2 is the house of Zerubbabel's day (NEH 12:6). A blind Opus judge and Fable (claude-fable-5-1) read it so; Codex gpt-6.1-sol, weakly, read jedaiah-2."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 12:29",
+      "position": 2,
+      "surface": "צָדֹ֥וק",
+      "strongNumber": "H6659",
+      "existing": "zadok",
+      "corrects": "zadok-9",
+      "why": "1CH 12:28 (Zadok): 'Zadok, a young man mighty of valour' follows Jehoiada and the Aaronites (12:27) and comes before 'of the children of Benjamin' (12:29), so he is the Aaronite Zadok of David's day, Zadok son of Ahitub, and not the Benjamite of zadok-9. Codex gpt-6.1-sol and Fable (claude-fable-5-1) read it so; a blind Opus judge left it open."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 10:13",
+      "position": 3,
+      "surface": "שְׁבַנְיָֽה",
+      "strongNumber": "H7645",
+      "existing": "shebaniah-5",
+      "corrects": "shebaniah-2",
+      "why": "NEH 10:12 (Shebaniah): the Levite sealers name Shebaniah twice, at 10:10 and 10:12, as they name Hodijah twice; the verse gives a second Levite Shebaniah, which is shebaniah-5, and nothing in it makes him the Levite of NEH 9:4-5 (shebaniah-2), whom the review placed here on BibleData's word alone. Codex gpt-6.1-sol, a blind Opus judge and Fable (claude-fable-5-1) read it so."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:21",
+      "position": 5,
+      "surface": "ידַֽעְיָ֖ה",
+      "strongNumber": "H3048",
+      "existing": "jedaiah-8",
+      "corrects": "jedaiah-5",
+      "why": "NEH 12:21 (Jedaiah): NEH 12:12-21 follows the order of 12:1-7, and 'of Hilkiah, Hashabiah; of Jedaiah, Nethaneel' answers to 'Hilkiah, Jedaiah' of 12:7, the second Jedaiah house, which is jedaiah-8; jedaiah-5 is the Jerusalem priest of NEH 11:10. The earlier sense reading conflated the two houses. Codex gpt-6.1-sol, a blind Opus judge and Fable (claude-fable-5-1) read it so."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:23",
+      "position": 17,
+      "surface": "אֶלְיָשִֽׁיב",
+      "strongNumber": "H475",
+      "existing": "eliashib-7",
+      "corrects": "eliashib-3",
+      "why": "NEH 12:23 (Eliashib): 12:22 names the high priests Eliashib, Joiada, Johanan and Jaddua, and 12:23 dates the Levites' records 'until the days of Johanan the son of Eliashib', the Johanan just listed, so the Eliashib named is the high priest, eliashib-7. A blind Opus judge and Fable (claude-fable-5-1) read it so; Codex gpt-6.1-sol read eliashib-3."
+    }
+  ]
+}

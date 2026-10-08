@@ -719,26 +719,50 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
-    /// A word is ruled on once, unless a later ruling corrects the earlier one and says which answer
-    /// it takes back. Two files ruling on one word otherwise both annotate it, and a reader would
-    /// meet a word naming whichever of two decisions the loader happened to write first.
+    /// A word is ruled on once, unless each later ruling corrects the one before it and says which
+    /// answer it takes back. Two files ruling on one word otherwise both annotate it, and a reader
+    /// would meet a word naming whichever of two decisions the loader happened to write first.
     /// </summary>
     [Fact]
     public void NoWordIsRuledOnTwiceUnlessTheLaterRulingCorrectsTheEarlier()
     {
         foreach (var word in _rulings.GroupBy(r => _words[r.Word]).Where(g => g.Count() > 1))
         {
-            var (earlier, later) = (word.First(), word.Last());
-            word.Count().Should().Be(2, $"word {word.Key} is ruled on once and corrected once at most");
-            if (later.Alongside is not null)
+            var rulings = word.ToList();
+            foreach (var (earlier, later) in rulings.Zip(rulings.Skip(1)))
             {
-                later.Corrects.Should().BeNull();
-                later.Alongside.Should().Be(earlier.Existing);
-                var companionFiles = SenseReadingFiles.AllRulings().Where(f => f.Rulings.Contains(earlier) || f.Rulings.Contains(later));
-                companionFiles.Should().OnlyContain(f => !f.Carry && f.Method == "manual");
+                if (later.Alongside is not null)
+                {
+                    rulings.Should().HaveCount(2, $"word {word.Key} has a companion ruling and nothing else");
+                    later.Corrects.Should().BeNull();
+                    later.Alongside.Should().Be(earlier.Existing);
+                    var companionFiles = SenseReadingFiles.AllRulings().Where(f => f.Rulings.Contains(earlier) || f.Rulings.Contains(later));
+                    companionFiles.Should().OnlyContain(f => !f.Carry && f.Method == "manual");
+                }
+                else
+                    later.Corrects.Should().Be(earlier.Create?.Slug ?? earlier.Existing,
+                        $"the ruling on {later.Reference} corrects the one before it");
             }
-            else
-                later.Corrects.Should().Be(earlier.Existing, $"the ruling on {later.Reference} corrects the earlier one");
+        }
+    }
+
+    /// <summary>
+    /// A word ruled on three times ends on the last answer: the second ruling took back the first,
+    /// the third the second, and a warm load gives back none of the answers taken back.
+    /// </summary>
+    [Fact]
+    public async Task AWordCorrectedTwiceEndsOnTheLastRuling()
+    {
+        var chain = _rulings.GroupBy(r => _words[r.Word]).Where(g => g.Count() > 2).ToList();
+        chain.Should().NotBeEmpty("NEH 12:21's Jedaiah is ruled by the review, corrected in 2026-09 and corrected again");
+
+        await Load();
+        await Load();
+
+        foreach (var word in chain)
+        {
+            var named = await _db.WordEntities.Where(a => a.WordId == word.Key).Select(a => a.Entity!.Slug).ToListAsync();
+            named.Should().Equal([word.Last().Existing], $"word {word.Key} names the last ruling's man only");
         }
     }
 
@@ -804,11 +828,12 @@ public sealed class OwnRecordTests : IDisposable
 
         foreach (var correction in _rulings.Where(r => r.Corrects is not null))
         {
+            var last = _rulings.Last(r => _words[r.Word] == _words[correction.Word]);
             var named = await _db.WordEntities.Include(a => a.Entity)
                 .Where(a => a.WordId == _words[correction.Word])
                 .Select(a => a.Entity!.Slug)
                 .ToListAsync();
-            named.Should().Equal(correction.Create?.Slug ?? correction.Existing);
+            named.Should().Equal(last.Create?.Slug ?? last.Existing);
         }
     }
 
