@@ -23,19 +23,6 @@
       ]
     },
     {
-      "record": "asher",
-      "label": "Asher",
-      "strong": "H836",
-      "references": [
-        "NUM 1:13"
-      ],
-      "question": "BibleData files these verses under Asher as 'Asher'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Asherites?",
-      "options": [
-        "asherites",
-        "leave as it is"
-      ]
-    },
-    {
       "record": "benammi",
       "label": "Ben-ammi",
       "strong": "H5983",
@@ -62,20 +49,6 @@
       ]
     },
     {
-      "record": "benjamin",
-      "label": "Benjamin",
-      "strong": "H1144",
-      "references": [
-        "1KI 12:23",
-        "1CH 12:2"
-      ],
-      "question": "BibleData files these verses under Benjamin as 'Benjamin'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Benjaminites?",
-      "options": [
-        "benjaminites",
-        "leave as it is"
-      ]
-    },
-    {
       "record": "cain",
       "label": "Cain",
       "strong": "G2535",
@@ -90,45 +63,16 @@
       ]
     },
     {
-      "record": "dan",
-      "label": "Dan",
-      "strong": "H1835",
-      "references": [
-        "EZK 48:1"
-      ],
-      "question": "BibleData files these verses under Dan as 'Dan'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Danites?",
-      "options": [
-        "danites",
-        "leave as it is"
-      ]
-    },
-    {
       "record": "ephraim",
       "label": "Ephraim",
       "strong": "H669",
       "references": [
         "NUM 26:28",
-        "DEU 33:17",
-        "1CH 7:22",
-        "JER 31:18",
-        "JER 31:20"
+        "1CH 7:22"
       ],
       "question": "BibleData files these verses under Ephraim as 'Ephraim'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Ephraimites?",
       "options": [
         "ephraimites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "gad",
-      "label": "Gad",
-      "strong": "H1410",
-      "references": [
-        "NUM 1:14"
-      ],
-      "question": "BibleData files these verses under Gad as 'Gad'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Gadites?",
-      "options": [
-        "gadites",
         "leave as it is"
       ]
     },
@@ -258,9 +202,11 @@
         "LAM 1:17",
         "EZK 39:25",
         "HOS 12:12",
+        "JHN 4:5",
         "JHN 4:6",
         "JHN 4:12",
         "ACT 7:12",
+        "ACT 7:14",
         "ACT 7:15",
         "HEB 11:21"
       ],
@@ -330,23 +276,6 @@
       ]
     },
     {
-      "record": "jacob",
-      "label": "Israel",
-      "strong": "G2474",
-      "references": [
-        "MRK 12:29",
-        "LUK 1:54",
-        "ACT 28:20",
-        "ROM 9:6",
-        "PHP 3:5"
-      ],
-      "question": "BibleData files these verses under Jacob as 'Israel'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Israelites?",
-      "options": [
-        "israelites",
-        "leave as it is"
-      ]
-    },
-    {
       "record": "jezer",
       "label": "Jezer",
       "strong": "H3337",
@@ -360,14 +289,73 @@
       ]
     },
     {
+      "record": "joseph",
+      "label": "Joseph",
+      "strong": "H3130",
+      "references": [
+        "GEN 43:17",
+        "GEN 43:18",
+        "GEN 43:19",
+        "GEN 43:24",
+        "GEN 44:14",
+        "GEN 46:27",
+        "GEN 48:8",
+        "GEN 50:8"
+      ],
+      "question": "BibleData files these verses under Joseph as 'Joseph', where the name stands in a phrase that elsewhere names the people — the sons of, the house of — but within Joseph's own lifetime, when it can mean his own children. Do they name the man, or the Josephites?",
+      "options": [
+        "josephites",
+        "leave as it is"
+      ]
+    },
+    {
+      "record": "joseph",
+      "label": "Joseph",
+      "strong": "H3130",
+      "references": [
+        "GEN 48:10"
+      ],
+      "question": "BibleData files these verses under Joseph as 'Joseph', and neither the Hebrew nor the Greek of them prints that name, so nothing in their words says whom it meant. Do they name the man, the Josephites, or nobody of the name?",
+      "options": [
+        "josephites",
+        "leave as it is"
+      ]
+    },
+    {
+      "record": "joseph",
+      "label": "Joseph",
+      "strong": "H3130",
+      "references": [
+        "EXO 1:5",
+        "EXO 1:6",
+        "EXO 1:8",
+        "EXO 13:19",
+        "DEU 33:16",
+        "1CH 5:2",
+        "PSA 77:15",
+        "PSA 105:17",
+        "EZK 47:13",
+        "JHN 4:5",
+        "ACT 7:9",
+        "ACT 7:13",
+        "ACT 7:14",
+        "ACT 7:18",
+        "HEB 11:22"
+      ],
+      "question": "BibleData files these verses under Joseph as 'Joseph'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Josephites?",
+      "options": [
+        "josephites",
+        "leave as it is"
+      ]
+    },
+    {
       "record": "judah",
       "label": "Judah",
       "strong": "H3063",
       "references": [
         "RUT 4:12",
+        "1CH 5:2",
         "ISA 48:1",
-        "EZK 9:9",
-        "HOS 8:14",
         "MAT 1:2",
         "MAT 1:3",
         "LUK 3:33"
@@ -412,8 +400,6 @@
       "label": "Levi",
       "strong": "H3878",
       "references": [
-        "DEU 33:8",
-        "MAL 2:4",
         "MAL 2:8"
       ],
       "question": "BibleData files these verses under Levi as 'Levi'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Levites?",
@@ -440,12 +426,7 @@
       "label": "Manasseh",
       "strong": "H4519",
       "references": [
-        "NUM 1:10",
-        "NUM 26:28",
-        "JOS 13:7",
-        "1CH 6:61",
-        "1CH 9:3",
-        "1CH 27:21"
+        "NUM 26:28"
       ],
       "question": "BibleData files these verses under Manasseh as 'Manasseh'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Manassites?",
       "options": [
@@ -514,19 +495,6 @@
       "label": "Naphtali",
       "strong": "H5321",
       "references": [
-        "NUM 1:15"
-      ],
-      "question": "BibleData files these verses under Naphtali as 'Naphtali'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Naphtalites?",
-      "options": [
-        "naphtalites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "naphtali",
-      "label": "Naphtali",
-      "strong": "H5321",
-      "references": [
         "REV 7:6"
       ],
       "question": "BibleData files these verses under Naphtali as 'Naphtali', and neither the Hebrew nor the Greek of them prints that name, so nothing in their words says whom it meant. Do they name the man, the Naphtalites, or nobody of the name?",
@@ -559,46 +527,6 @@
       "question": "BibleData files these verses under Perez as 'Perez', and neither the Hebrew nor the Greek of them prints that name, so nothing in their words says whom it meant. Do they name the man, the Pharzites, or nobody of the name?",
       "options": [
         "pharzites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "reuben",
-      "label": "Reuben",
-      "strong": "H7205",
-      "references": [
-        "NUM 1:5",
-        "DEU 33:6"
-      ],
-      "question": "BibleData files these verses under Reuben as 'Reuben'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Reubenites?",
-      "options": [
-        "reubenites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "simeon",
-      "label": "Simeon",
-      "strong": "H8095",
-      "references": [
-        "NUM 1:6"
-      ],
-      "question": "BibleData files these verses under Simeon as 'Simeon'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Simeonites?",
-      "options": [
-        "simeonites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "zebulun",
-      "label": "Zebulun",
-      "strong": "H2074",
-      "references": [
-        "NUM 1:9"
-      ],
-      "question": "BibleData files these verses under Zebulun as 'Zebulun'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Zebulonites?",
-      "options": [
-        "zebulonites",
         "leave as it is"
       ]
     }
