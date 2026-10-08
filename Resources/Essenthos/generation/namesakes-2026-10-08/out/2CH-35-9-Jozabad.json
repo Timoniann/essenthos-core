@@ -1,0 +1,47 @@
+{
+ "b": 14,
+ "c": 35,
+ "v": 9,
+ "label": "Jozabad",
+ "dataset_man": "jozabad-4",
+ "split_man": "jozabad-11",
+ "case": {
+  "verse": "2CH 35:9",
+  "name": "Jozabad",
+  "text": {
+   "BHSA 2CH 35:8": "וְשָׂרָ֞יו לִנְדָבָ֥ה לָעָ֛ם לַכֹּהֲנִ֥ים וְלַלְוִיִּ֖ם הֵרִ֑ימוּ חִלְקִיָּ֨ה וּזְכַרְיָ֜הוּ וִֽיחִיאֵ֗ל נְגִידֵי֙ בֵּ֣ית הָאֱלֹהִ֔ים לַכֹּהֲנִ֞ים נָתְנ֣וּ לַפְּסָחִ֗ים אַלְפַּ֨יִם֙ וְשֵׁ֣שׁ מֵאֹ֔ות וּבָקָ֖ר שְׁלֹ֥שׁ מֵאֹֽות׃ ",
+   "KJV 2CH 35:8": "And his princes gave willingly unto the people, to the priests, and to the Levites: Hilkiah and Zechariah and Jehiel, rulers of the house of God, gave unto the priests for the passover offerings two thousand and six hundred small cattle and three hundred oxen.",
+   "BHSA 2CH 35:9": "וכונניהו וּשְׁמַֽעְיָ֨הוּ וּנְתַנְאֵ֜ל אֶחָ֗יו וַחֲשַׁבְיָ֧הוּ וִיעִיאֵ֛ל וְיֹוזָבָ֖ד שָׂרֵ֣י הַלְוִיִּ֑ם הֵרִ֨ימוּ לַלְוִיִּ֤ם לַפְּסָחִים֙ חֲמֵ֣שֶׁת אֲלָפִ֔ים וּבָקָ֖ר חֲמֵ֥שׁ מֵאֹֽות׃ ",
+   "KJV 2CH 35:9": "Conaniah also, and Shemaiah and Nethaneel, his brethren, and Hashabiah and Jeiel and Jozabad, chief of the Levites, gave unto the Levites for passover offerings five thousand small cattle, and five hundred oxen.",
+   "BHSA 2CH 35:10": "וַתִּכֹּ֖ון הָעֲבֹודָ֑ה וַיַּֽעַמְד֨וּ הַכֹּהֲנִ֧ים עַל־עָמְדָ֛ם וְהַלְוִיִּ֥ם עַל־מַחְלְקֹותָ֖ם כְּמִצְוַ֥ת הַמֶּֽלֶךְ׃ ",
+   "KJV 2CH 35:10": "So the service was prepared, and the priests stood in their place, and the Levites in their courses, according to the king's commandment."
+  },
+  "A": {
+   "name": "Jozabad",
+   "line": "overseer of the consecrated things under Conaniah (2CH 31:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "servant-of conaniah (Conaniah, officer in charge of the consecrated things (2CH 31:12))",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Jozabad",
+   "line": "Chief Levite who gave Passover offerings to Levites under Josiah",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "וְיוֹזָבָד is listed among שָׂרֵי הַלְוִיִּם, the Levite chiefs donating animals for the Passover, matching B’s stated role under Josiah. A is identified instead as an overseer of consecrated things in 2 Chronicles 31:13; the shared association with Conaniah does not establish that they are the same person.",
+ "confidence": 0.97,
+ "names_slug": "jozabad-11",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:37:07+00:00"
+}

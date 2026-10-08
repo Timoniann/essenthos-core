@@ -1,0 +1,48 @@
+{
+ "b": 13,
+ "c": 15,
+ "v": 9,
+ "label": "Eliel",
+ "dataset_man": "eliel-7",
+ "split_man": "eliel-9",
+ "case": {
+  "verse": "1CH 15:9",
+  "name": "Eliel",
+  "text": {
+   "BHSA 1CH 15:8": "לִבְנֵ֖י אֱלִֽיצָפָ֑ן שְׁמַֽעְיָ֥ה הַשָּׂ֖ר וְאֶחָ֥יו מָאתָֽיִם׃ ס ",
+   "KJV 1CH 15:8": "Of the sons of Elizaphan; Shemaiah the chief, and his brethren two hundred:",
+   "BHSA 1CH 15:9": "לִבְנֵ֖י חֶבְרֹ֑ון אֱלִיאֵ֥ל הַשָּׂ֖ר וְאֶחָ֥יו שְׁמֹונִֽים׃ ס ",
+   "KJV 1CH 15:9": "Of the sons of Hebron; Eliel the chief, and his brethren fourscore:",
+   "BHSA 1CH 15:10": "לִבְנֵ֖י עֻזִּיאֵ֑ל עַמִּינָדָ֣ב הַשָּׂ֔ר וְאֶחָ֕יו מֵאָ֖ה וּשְׁנֵ֥ים עָשָֽׂר׃ ס ",
+   "KJV 1CH 15:10": "Of the sons of Uzziel; Amminadab the chief, and his brethren an hundred and twelve."
+  },
+  "A": {
+   "name": "Eliel",
+   "line": "chief of the sons of Hebron (1CH 15:9)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "descendant-of hebron (Hebron, son of Kohath (EXO 6:18))"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Eliel",
+   "line": "Chief of the sons of Hebron, a Kohathite, over eighty brethren, at the ark's removal",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of hebron (Hebron, son of Kohath (EXO 6:18))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew names Eliel as chief of Hebron’s descendants, with eighty brethren, matching A. B states the same identifying facts, so the text cannot distinguish A from B; it names only one Eliel.",
+ "confidence": 0.5,
+ "names_slug": "eliel-7",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:35:01+00:00"
+}

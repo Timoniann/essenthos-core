@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 18,
+ "label": "Shemaiah",
+ "dataset_man": "shemaiah-19",
+ "split_man": "shemaiah-24",
+ "case": {
+  "verse": "NEH 12:18",
+  "name": "Shemaiah",
+  "text": {
+   "BHSA NEH 12:17": "לַאֲבִיָּ֖ה זִכְרִ֑י לְמִ֨נְיָמִ֔ין לְמֹועַדְיָ֖ה פִּלְטָֽי׃ ",
+   "KJV NEH 12:17": "Of Abijah, Zichri; of Miniamin, of Moadiah, Piltai:",
+   "BHSA NEH 12:18": "לְבִלְגָּ֣ה שַׁמּ֔וּעַ לִֽשְׁמַעְיָ֖ה יְהֹונָתָֽן׃ ",
+   "KJV NEH 12:18": "Of Bilgah, Shammua; of Shemaiah, Jehonathan;",
+   "BHSA NEH 12:19": "וּלְיֹויָרִ֣יב מַתְּנַ֔י לִֽידַֽעְיָ֖ה עֻזִּֽי׃ ",
+   "KJV NEH 12:19": "And of Joiarib, Mattenai; of Jedaiah, Uzzi;"
+  },
+  "A": {
+   "name": "Shemaiah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:8)",
+   "family": [
+    "ancestor-of jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Shemaiah",
+   "line": "Priest who returned from exile with Zerubbabel, head of a priestly house",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18))"
+   ],
+   "verses": 4
+  }
+ },
+ "names": "B",
+ "why": "לִשְׁמַעְיָה יְהוֹנָתָן (“of Shemaiah, Jehonathan”) follows the surrounding pattern of priestly houses and their representatives, best matching B’s stated role as a priestly house head. Both records claim Jehonathan as a descendant, so that relationship alone cannot distinguish them, and the local verses leave some uncertainty.",
+ "confidence": 0.78,
+ "names_slug": "shemaiah-24",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:43:17+00:00"
+}

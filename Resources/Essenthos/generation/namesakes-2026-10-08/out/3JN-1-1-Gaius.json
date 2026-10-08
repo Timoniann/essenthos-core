@@ -1,0 +1,44 @@
+{
+ "b": 64,
+ "c": 1,
+ "v": 1,
+ "label": "Gaius",
+ "dataset_man": "gaius",
+ "split_man": "gaius-4",
+ "case": {
+  "verse": "3JN 1:1",
+  "name": "Gaius",
+  "text": {
+   "NESTLE1904 3JN 1:1": "Ὁ πρεσβύτερος Γαΐῳ τῷ ἀγαπητῷ, ὃν ἐγὼ ἀγαπῶ ἐν ἀληθείᾳ. ",
+   "KJV 3JN 1:1": "The elder unto the wellbeloved Gaius, whom I love in the truth.",
+   "NESTLE1904 3JN 1:2": "Ἀγαπητέ, περὶ πάντων εὔχομαί σε εὐοδοῦσθαι καὶ ὑγιαίνειν, καθὼς εὐοδοῦταί σου ἡ ψυχή. ",
+   "KJV 3JN 1:2": "Beloved, I wish above all things that thou mayest prosper and be in health, even as thy soul prospereth."
+  },
+  "A": {
+   "name": "Gaius",
+   "line": "Paul's traveling companion from Macedonia (ACT 19:29)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of aristarchus (Aristarchus, Paul's traveling companion from Macedonia (ACT 19:29))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Gaius",
+   "line": "The wellbeloved addressee of the Third Epistle of John.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Greek addresses “Γαΐῳ τῷ ἀγαπητῷ” (the beloved Gaius), matching B’s stated identity as the addressee of Third John; verse 2 continues addressing him as “Beloved.” Nothing here identifies him as Paul’s Macedonian traveling companion, A.",
+ "confidence": 0.99,
+ "names_slug": "gaius-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:46:20+00:00"
+}

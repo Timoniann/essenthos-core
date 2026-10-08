@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 9,
+ "v": 4,
+ "label": "Kadmiel",
+ "dataset_man": "kadmiel-2",
+ "split_man": "kadmiel",
+ "case": {
+  "verse": "NEH 9:4",
+  "name": "Kadmiel",
+  "text": {
+   "BHSA NEH 9:3": "וַיָּק֨וּמוּ֙ עַל־עָמְדָ֔ם וַֽיִּקְרְא֗וּ בְּסֵ֨פֶר תֹּורַ֧ת יְהוָ֛ה אֱלֹהֵיהֶ֖ם רְבִעִ֣ית הַיֹּ֑ום וּרְבִעִית֙ מִתְוַדִּ֣ים וּמִֽשְׁתַּחֲוִ֔ים לַיהוָ֖ה אֱלֹהֵיהֶֽם׃ פ ",
+   "KJV NEH 9:3": "And they stood up in their place, and read in the book of the law of the LORD their God one fourth part of the day; and another fourth part they confessed, and worshipped the LORD their God.",
+   "BHSA NEH 9:4": "וַיָּ֜קָם עַֽל־מַֽעֲלֵ֣ה הַלְוִיִּ֗ם יֵשׁ֨וּעַ וּבָנִ֜י קַדְמִיאֵ֧ל שְׁבַנְיָ֛ה בֻּנִּ֥י שֵׁרֵבְיָ֖ה בָּנִ֣י כְנָ֑נִי וַֽיִּזְעֲקוּ֙ בְּקֹ֣ול גָּדֹ֔ול אֶל־יְהוָ֖ה אֱלֹהֵיהֶֽם׃ ",
+   "KJV NEH 9:4": "Then stood up upon the stairs, of the Levites, Jeshua, and Bani, Kadmiel, Shebaniah, Bunni, Sherebiah, Bani, and Chenani, and cried with a loud voice unto the LORD their God.",
+   "BHSA NEH 9:5": "וַיֹּאמְר֣וּ הַלְוִיִּ֡ם יֵשׁ֣וּעַ וְ֠קַדְמִיאֵל בָּנִ֨י חֲשַׁבְנְיָ֜ה שֵׁרֵֽבְיָ֤ה הֹֽודִיָּה֙ שְׁבַנְיָ֣ה פְתַֽחְיָ֔ה ק֗וּמוּ בָּרֲכוּ֙ אֶת־יְהוָ֣ה אֱלֹֽהֵיכֶ֔ם מִן־הָעֹולָ֖ם עַד־הָעֹולָ֑ם וִיבָֽרְכוּ֙ שֵׁ֣ם כְּבֹודֶ֔ךָ וּמְרֹומַ֥ם עַל־כָּל־בְּרָכָ֖ה וּתְהִלָּֽה׃ ",
+   "KJV NEH 9:5": "Then the Levites, Jeshua, and Kadmiel, Bani, Hashabniah, Sherebiah, Hodijah, Shebaniah, and Pethahiah, said, Stand up and bless the LORD your God for ever and ever: and blessed be thy glorious name, which is exalted above all blessing and praise."
+  },
+  "A": {
+   "name": "Kadmiel",
+   "line": "stood on the Levites platform (NEH 9:4) and exhorted Israel to bless the Lord (NEH 9:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:9)",
+   "family": [
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Kadmiel",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "son of Hodaviah (EZR 2:40)",
+   "family": [
+    "descendant-of hodaviah-5 (Hodaviah, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "verses": 13
+  }
+ },
+ "names": "A",
+ "why": "קַדְמִיאֵל is listed among the Levites who stand and cry to the Lord in 9:4, then exhort the people in 9:5, matching A’s stated activities. The passage gives no Hodaviah parentage or returning-descendants context identifying B.",
+ "confidence": 0.97,
+ "names_slug": "kadmiel-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:39:57+00:00"
+}

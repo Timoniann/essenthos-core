@@ -1,0 +1,44 @@
+{
+ "b": 13,
+ "c": 9,
+ "v": 17,
+ "label": "Akkub",
+ "dataset_man": "akkub-2",
+ "split_man": "akkub-4",
+ "case": {
+  "verse": "1CH 9:17",
+  "name": "Akkub",
+  "text": {
+   "BHSA 1CH 9:16": "וְעֹבַדְיָה֙ בֶּֽן־שְׁמַֽעְיָ֔ה בֶּן־גָּלָ֖ל בֶּן־יְדוּת֑וּן וּבֶרֶכְיָ֤ה בֶן־אָסָא֙ בֶּן־אֶלְקָנָ֔ה הַיֹּושֵׁ֖ב בְּחַצְרֵ֥י נְטֹופָתִֽי׃ ",
+   "KJV 1CH 9:16": "And Obadiah the son of Shemaiah, the son of Galal, the son of Jeduthun, and Berechiah the son of Asa, the son of Elkanah, that dwelt in the villages of the Netophathites.",
+   "BHSA 1CH 9:17": "וְהַשֹּׁעֲרִים֙ שַׁלּ֣וּם וְעַקּ֔וּב וְטַלְמֹ֖ן וַאֲחִימָ֑ן וַאֲחִיהֶ֥ם שַׁלּ֖וּם הָרֹֽאשׁ׃ ",
+   "KJV 1CH 9:17": "And the porters were, Shallum, and Akkub, and Talmon, and Ahiman, and their brethren: Shallum was the chief;",
+   "BHSA 1CH 9:18": "וְֽעַד־הֵ֔נָּה בְּשַׁ֥עַר הַמֶּ֖לֶךְ מִזְרָ֑חָה הֵ֚מָּה הַשֹּׁ֣עֲרִ֔ים לְמַחֲנֹ֖ות בְּנֵ֥י לֵוִֽי׃ ",
+   "KJV 1CH 9:18": "Who hitherto waited in the king's gate eastward: they were porters in the companies of the children of Levi."
+  },
+  "A": {
+   "name": "Akkub",
+   "line": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": null,
+   "verses": 10
+  },
+  "B": {
+   "name": "Akkub",
+   "line": "Levite gatekeeper listed among porters with Shallum, Talmon, Ahiman",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew lists Akkub among the gatekeepers with Shallum, Talmon, and Ahiman, matching B’s description; verse 18 identifies them as Levites. A’s stated facts also fit, so the supplied text does not securely distinguish these records.",
+ "confidence": 0.5,
+ "names_slug": "akkub-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:22+00:00"
+}

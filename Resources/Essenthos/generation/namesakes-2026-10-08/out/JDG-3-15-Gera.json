@@ -1,0 +1,49 @@
+{
+ "b": 7,
+ "c": 3,
+ "v": 15,
+ "label": "Gera",
+ "dataset_man": "gera-2",
+ "split_man": "gera-3",
+ "case": {
+  "verse": "JDG 3:15",
+  "name": "Gera",
+  "text": {
+   "BHSA JDG 3:14": "וַיַּעַבְד֤וּ בְנֵֽי־יִשְׂרָאֵל֙ אֶת־עֶגְלֹ֣ון מֶֽלֶךְ־מֹואָ֔ב שְׁמֹונֶ֥ה עֶשְׂרֵ֖ה שָׁנָֽה׃ ס ",
+   "KJV JDG 3:14": "So the children of Israel served Eglon the king of Moab eighteen years.",
+   "BHSA JDG 3:15": "וַיִּזְעֲק֣וּ בְנֵֽי־יִשְׂרָאֵל֮ אֶל־יְהוָה֒ וַיָּקֶם֩ יְהוָ֨ה לָהֶ֜ם מֹושִׁ֗יעַ אֶת־אֵה֤וּד בֶּן־גֵּרָא֙ בֶּן־הַיְמִינִ֔י אִ֥ישׁ אִטֵּ֖ר יַד־יְמִינֹ֑ו וַיִּשְׁלְח֨וּ בְנֵי־יִשְׂרָאֵ֤ל בְּיָדֹו֙ מִנְחָ֔ה לְעֶגְלֹ֖ון מֶ֥לֶךְ מֹואָֽב׃ ",
+   "KJV JDG 3:15": "But when the children of Israel cried unto the LORD, the LORD raised them up a deliverer, Ehud the son of Gera, a Benjamite, a man lefthanded: and by him the children of Israel sent a present unto Eglon the king of Moab.",
+   "BHSA JDG 3:16": "וַיַּעַשׂ֩ לֹ֨ו אֵה֜וּד חֶ֗רֶב וְלָ֛הּ שְׁנֵ֥י פֵיֹ֖ות גֹּ֣מֶד אָרְכָּ֑הּ וַיַּחְגֹּ֤ר אֹותָהּ֙ מִתַּ֣חַת לְמַדָּ֔יו עַ֖ל יֶ֥רֶךְ יְמִינֹֽו׃ ",
+   "KJV JDG 3:16": "But Ehud made him a dagger which had two edges, of a cubit length; and he did gird it under his raiment upon his right thigh."
+  },
+  "A": {
+   "name": "Gera",
+   "line": "a Benjamite, father of Ehud (JDG 3:15)",
+   "sex": "male",
+   "tribe": "Benjamin",
+   "notes": null,
+   "family": [
+    "father-of ehud (Ehud, raised up by the LORD as a deliverer for Israel (JDG 3:15) w)"
+   ],
+   "verses": 2
+  },
+  "B": {
+   "name": "Gera",
+   "line": "father of Shimei (2SA 16:5), son of Bela (1CH 8:5)",
+   "sex": "male",
+   "tribe": "Benjamin",
+   "notes": null,
+   "family": [
+    "father-of shimei-2 (Shimei, of the house of Saul (2SA 16:5) who threw stones at King Dav)",
+    "son-of bela-2 (Bela, son of Benjamin (GEN 46:21))"
+   ],
+   "verses": 11
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew identifies the deliverer as אֵהוּד בֶּן־גֵּרָא, “Ehud son of Gera,” matching A’s stated fatherhood of Ehud. B is identified as Shimei’s father, whereas the surrounding verses concern Ehud’s mission against Eglon.",
+ "confidence": 0.99,
+ "names_slug": "gera-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:31:11+00:00"
+}

@@ -718,6 +718,36 @@ public sealed class DuplicateRecordTests : IDisposable
         return english;
     }
 
+    /// <summary>
+    /// The list names the record a man's verses go to, and the register has folded that record into the one
+    /// his verses reach since: the verses go there, as the fold took everything else.
+    /// </summary>
+    [Fact]
+    public async Task ASplitNamingARecordThatWasFoldedMovesToTheRecordItWasFoldedInto()
+    {
+        Names(_folded, LinkMethod.Lexical, 0.9, "the lexicon");
+        Labels(_folded, 1, 9, 11, "Helkiah", BibleData);
+        await _db.SaveChangesAsync();
+        (await _loader.Fold(List(("hilkiah-3", "meshullam-15")))).Folded.Should().Be(1);
+
+        var (parted, _) = await _loader.Split([Helkiah with { Name = null }]);
+
+        parted.Should().Be(2);
+        (await _db.WordEntities.AsNoTracking().SingleAsync()).EntityId.Should().Be(_kept.Id);
+        (await _db.EntityVerses.AsNoTracking().SingleAsync()).EntityId.Should().Be(_kept.Id);
+    }
+
+    [Fact]
+    public async Task ASplitWhoseTwoEndsAreNowOneRecordMovesNothing()
+    {
+        Names(_folded, LinkMethod.Lexical, 0.9, "the lexicon");
+        Labels(_folded, 1, 9, 11, "Helkiah", BibleData);
+        await _db.SaveChangesAsync();
+        (await _loader.Fold(List(("hilkiah-3", "meshullam-15"), ("hilkiah-3", "hilkiah-6")))).Folded.Should().Be(2);
+
+        (await _loader.Split([Helkiah with { Name = null }])).Should().Be((0, 0));
+    }
+
     [Fact]
     public async Task ASplitMadeFindsNothingLeftToMove()
     {

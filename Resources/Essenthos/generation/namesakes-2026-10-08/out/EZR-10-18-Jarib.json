@@ -1,0 +1,48 @@
+{
+ "b": 15,
+ "c": 10,
+ "v": 18,
+ "label": "Jarib",
+ "dataset_man": "jarib",
+ "split_man": "jarib-2",
+ "case": {
+  "verse": "EZR 10:18",
+  "name": "Jarib",
+  "text": {
+   "BHSA EZR 10:17": "וַיְכַלּ֣וּ בַכֹּ֔ל אֲנָשִׁ֕ים הַהֹשִׁ֖יבוּ נָשִׁ֣ים נָכְרִיֹּ֑ות עַ֛ד יֹ֥ום אֶחָ֖ד לַחֹ֥דֶשׁ הָרִאשֹֽׁון׃ פ ",
+   "KJV EZR 10:17": "And they made an end with all the men that had taken strange wives by the first day of the first month.",
+   "BHSA EZR 10:18": "וַיִּמָּצֵא֙ מִבְּנֵ֣י הַכֹּהֲנִ֔ים אֲשֶׁ֥ר הֹשִׁ֖יבוּ נָשִׁ֣ים נָכְרִיֹּ֑ות מִבְּנֵי֙ יֵשׁ֤וּעַ בֶּן־יֹֽוצָדָק֙ וְאֶחָ֔יו מַֽעֲשֵׂיָה֙ וֶֽאֱלִיעֶ֔זֶר וְיָרִ֖יב וּגְדַלְיָֽה׃ ",
+   "KJV EZR 10:18": "And among the sons of the priests there were found that had taken strange wives: namely, of the sons of Jeshua the son of Jozadak, and his brethren; Maaseiah, and Eliezer, and Jarib, and Gedaliah.",
+   "BHSA EZR 10:19": "וַיִּתְּנ֥וּ יָדָ֖ם לְהֹוצִ֣יא נְשֵׁיהֶ֑ם וַאֲשֵׁמִ֥ים אֵֽיל־צֹ֖אן עַל־אַשְׁמָתָֽם׃ ס ",
+   "KJV EZR 10:19": "And they gave their hands that they would put away their wives; and being guilty, they offered a ram of the flock for their trespass."
+  },
+  "A": {
+   "name": "Jarib",
+   "line": "Priest Ezra sent to Iddo (EZR 8:16), married a foreign wife (EZR 10:18)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Aaronic priest (EZR 10:18)",
+   "family": [
+    "descendant-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Jarib",
+   "line": "Priest, descendant of Jeshua son of Jozadak, put away his foreign wife.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew lists one Jarib among the priestly descendants of Jeshua son of Jozadak who married foreign wives; verse 19 records their pledge to dismiss those wives, matching B. A states the same ancestry and marriage, however, so this passage cannot securely distinguish the records or establish identity with the envoy in Ezra 8:16.",
+ "confidence": 0.5,
+ "names_slug": "jarib-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:38:50+00:00"
+}

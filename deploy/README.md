@@ -10,7 +10,7 @@ the corpus is DOC-0203; the page counter is DOC-0211.
     dev.essenthos.org      dev's reader and API, behind a password
     devapi.essenthos.org   dev's API alone, behind the same password
 
-Two things reach the server, separately:
+Three things reach the server, separately:
 
 - **the code** — `scripts/deploy.ps1`, which copies this folder's files as that commit holds them,
   never as they stand on disk, and sets the image tags CI pushed for it;
@@ -23,13 +23,8 @@ Two things reach the server, separately:
   copies a list or an avatar is served are made by the API itself, on the first request for each, and
   kept in the `image-cache` volume; any made ahead with `python scripts/picture-sizes.py` travel with
   the pictures and are served instead, which only spares their first readers the wait.
-
-A third thing has no place on the server yet: the downloads. `forge export` writes the texts that may
-be passed on as files (one per text, each with its licence and attribution beside it, and a `manifest.json` of checksums) into `.exports/`, or
-`--to <folder>`. Where those files are served from is the owner's to choose: the API lists them at
-`/v1/downloads` from the folder named by `Downloads__Folder` (the manifest is read from it) and gives
-each a link from `Downloads__BaseUrl` and its path; with no base address the files are listed with no
-link, and with no folder the list is empty. Neither is set in `compose.yaml` yet.
+- **the downloads** — `forge export`, then `forge publish` (which sends them with the corpus) or
+  `forge publish-downloads --to dev|prod` on its own. See **The downloads**, below.
 
 Everything below can be rehearsed on a workstation first, and should be before anything changes on the
 server:
@@ -121,7 +116,8 @@ new machine does not ask for them again.
    deploying:
 
         adduser --disabled-password deploy && usermod -aG docker deploy
-        mkdir -p /srv/essenthos/deploy && chown -R deploy /srv/essenthos
+        mkdir -p /srv/essenthos/deploy /srv/essenthos/downloads /srv/essenthos/downloads_dev \
+                 /srv/essenthos/images/corpus /srv/essenthos/images/corpus_dev && chown -R deploy /srv/essenthos
         # then put your public key in /home/deploy/.ssh/authorized_keys
 
 7. **The .env.** Copy `env.example` to `/srv/essenthos/deploy/.env` and fill it in. Every password
@@ -200,6 +196,7 @@ needed, and it changes three things that have to be done together:
 | undo a code deploy | the same with the previous commit |
 | ship a corpus | `forge release`, `forge publish --to dev`, look at dev, `forge publish --to prod` |
 | undo a corpus | `forge rollback --to prod` |
+| ship the downloads alone | `forge export`, then `forge publish-downloads --to dev`, look at `dev…/downloads/manifest.json`, then `--to prod` |
 | see what is where | `forge releases`, `forge releases --on prod` |
 
 Each of these can be tried first: `scripts/deploy.ps1 … -WhatIf` and `forge release | publish | rollback
@@ -216,6 +213,53 @@ answering behind its password and nothing more.
 
 A publication stops the API for the second or two the rename takes; Caddy holds requests through it.
 Measured on the rehearsal under continuous traffic: 2,230 requests, none failed, the slowest 5.4 s.
+
+## The downloads
+
+The texts that may be passed on are offered as files, one per text with a file beside it saying who made
+it and on what terms. They are made on this machine, from the corpus it holds, and live on the server
+beside the pictures:
+
+| | Where on the server | Served at |
+|---|---|---|
+| production | `/srv/essenthos/downloads` | `https://essenthos.org/downloads/…` and `https://api.essenthos.org/downloads/…` |
+| dev | `/srv/essenthos/downloads_dev` | `https://dev.essenthos.org/downloads/…` and `https://devapi.essenthos.org/downloads/…`, behind dev's password |
+
+**Making and sending them.** `forge export` writes the files into `.exports` in this checkout (or
+`--to <folder>`, or `Export:Path`), with a `manifest.json` that names every file with its size and
+checksum. `forge publish --to dev|prod` sends the export together with the corpus, before it swaps the
+corpus in; `forge publish-downloads --to dev|prod` sends the export without a corpus (`--dry-run` only
+checks it). With no export in the folder, a publication leaves the server's downloads as they are.
+
+**What the send does, in this order:**
+
+1. It checks the export against its own manifest: every file the manifest names must be there with the
+   size and checksum it states, and no name may point out of the folder. If one is not, **nothing is
+   sent** and the publication stops.
+2. It sends the files the server lacks. A file's name carries the first digits of its checksum
+   (`KJV.fad704a8bc0f.jsonl.gz`), so a file that changed has a new name and the old one is left alone.
+3. It asks the server for what it now holds and puts the new `manifest.json` in place, in one move, only
+   if every file the manifest names is there as stated.
+4. Only then does it take away the files no manifest names any more (the older versions of a text, or a
+   text that is no longer exported), and the folders that leaves empty.
+
+So at no moment does the list the site shows name a file that is not there, and a reader who opened the
+list a minute before a publication still finds every file it promised. Sending the same export twice
+sends and removes nothing.
+
+**How readers get them.** The API reads the manifest from the same folder (mounted read-only; set by
+`Downloads__Folder`) and lists the texts at `/v1/downloads`, each with a link under `Downloads__BaseUrl`,
+which is `/downloads` in `compose.yaml`: a link on the site's own address. The proxy serves that folder
+read-only at `/downloads/*` on the reader's address and on the API's, for production and for dev. A file
+is offered as a download under its plain name (`KJV.jsonl.gz`, `KJV-ATTRIBUTION.txt`) and may be kept
+by a browser or a cache for a year, since its bytes never change; the manifest is kept for five
+minutes. Nothing lists a folder: a path that is not a file answers 404. Because the links are on the
+site's own address, the Content-Security-Policy needs nothing added.
+
+**Rehearsing it.** With the rehearsal stack up (above), run `forge export` and `forge publish-downloads --to rehearsal-dev`
+(the rehearsal targets send to the rehearsal's own data root). Then `https://dev.essenthos.localhost:8443/downloads/manifest.json` (with dev's password) answers with its
+five-minute cache, a text's file with the year's and its plain name, `/downloads/` with a 404, and
+`/v1/downloads` lists the same files.
 
 ## Pages for search engines and link previews
 

@@ -1,0 +1,46 @@
+{
+ "b": 14,
+ "c": 35,
+ "v": 9,
+ "label": "Hashabiah",
+ "dataset_man": "hashabiah-3",
+ "split_man": "hashabiah-10",
+ "case": {
+  "verse": "2CH 35:9",
+  "name": "Hashabiah",
+  "text": {
+   "BHSA 2CH 35:8": "וְשָׂרָ֞יו לִנְדָבָ֥ה לָעָ֛ם לַכֹּהֲנִ֥ים וְלַלְוִיִּ֖ם הֵרִ֑ימוּ חִלְקִיָּ֨ה וּזְכַרְיָ֜הוּ וִֽיחִיאֵ֗ל נְגִידֵי֙ בֵּ֣ית הָאֱלֹהִ֔ים לַכֹּהֲנִ֞ים נָתְנ֣וּ לַפְּסָחִ֗ים אַלְפַּ֨יִם֙ וְשֵׁ֣שׁ מֵאֹ֔ות וּבָקָ֖ר שְׁלֹ֥שׁ מֵאֹֽות׃ ",
+   "KJV 2CH 35:8": "And his princes gave willingly unto the people, to the priests, and to the Levites: Hilkiah and Zechariah and Jehiel, rulers of the house of God, gave unto the priests for the passover offerings two thousand and six hundred small cattle and three hundred oxen.",
+   "BHSA 2CH 35:9": "וכונניהו וּשְׁמַֽעְיָ֨הוּ וּנְתַנְאֵ֜ל אֶחָ֗יו וַחֲשַׁבְיָ֧הוּ וִיעִיאֵ֛ל וְיֹוזָבָ֖ד שָׂרֵ֣י הַלְוִיִּ֑ם הֵרִ֨ימוּ לַלְוִיִּ֤ם לַפְּסָחִים֙ חֲמֵ֣שֶׁת אֲלָפִ֔ים וּבָקָ֖ר חֲמֵ֥שׁ מֵאֹֽות׃ ",
+   "KJV 2CH 35:9": "Conaniah also, and Shemaiah and Nethaneel, his brethren, and Hashabiah and Jeiel and Jozabad, chief of the Levites, gave unto the Levites for passover offerings five thousand small cattle, and five hundred oxen.",
+   "BHSA 2CH 35:10": "וַתִּכֹּ֖ון הָעֲבֹודָ֑ה וַיַּֽעַמְד֨וּ הַכֹּהֲנִ֧ים עַל־עָמְדָ֛ם וְהַלְוִיִּ֥ם עַל־מַחְלְקֹותָ֖ם כְּמִצְוַ֥ת הַמֶּֽלֶךְ׃ ",
+   "KJV 2CH 35:10": "So the service was prepared, and the priests stood in their place, and the Levites in their courses, according to the king's commandment."
+  },
+  "A": {
+   "name": "Hashabiah",
+   "line": "chief officer for the Levites, son of Kemuel (1CH 27:17)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "as \"chief officer\" for the Levites, likely a descendant of Aaron",
+   "family": [
+    "son-of kemuel-3 (Kemuel, father of Hashabiah (1CH 27:17))"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Hashabiah",
+   "line": "Levite chief who gave offerings for Josiah's great passover",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew names Hashabiah among שָׂרֵי הַלְוִיִּם, the Levite chiefs who supplied Passover offerings, matching B’s stated role at Josiah’s Passover. A is the son of Kemuel associated with the officers in 1 Chronicles 27:17.",
+ "confidence": 0.99,
+ "names_slug": "hashabiah-10",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:36:54+00:00"
+}

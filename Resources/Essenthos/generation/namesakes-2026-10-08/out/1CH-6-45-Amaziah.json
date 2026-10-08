@@ -1,0 +1,50 @@
+{
+ "b": 13,
+ "c": 6,
+ "v": 45,
+ "label": "Amaziah",
+ "dataset_man": "amaziah-the-merarite",
+ "split_man": "amaziah-4",
+ "case": {
+  "verse": "1CH 6:45",
+  "name": "Amaziah",
+  "text": {
+   "BHSA 1CH 6:44": "וּבְנֵ֧י מְרָרִ֛י אֲחֵיהֶ֖ם עַֽל־הַשְּׂמֹ֑אול אֵיתָן֙ בֶּן־קִישִׁ֔י בֶּן־עַבְדִּ֖י בֶּן־מַלּֽוּךְ׃ ",
+   "KJV 1CH 6:44": "And their brethren the sons of Merari stood on the left hand: Ethan the son of Kishi, the son of Abdi, the son of Malluch,",
+   "BHSA 1CH 6:45": "בֶּן־חֲשַׁבְיָ֥ה בֶן־אֲמַצְיָ֖ה בֶּן־חִלְקִיָּֽה׃ ",
+   "KJV 1CH 6:45": "The son of Hashabiah, the son of Amaziah, the son of Hilkiah,",
+   "BHSA 1CH 6:46": "בֶּן־אַמְצִ֥י בֶן־בָּנִ֖י בֶּן־שָֽׁמֶר׃ ",
+   "KJV 1CH 6:46": "The son of Amzi, the son of Bani, the son of Shamer,"
+  },
+  "A": {
+   "name": "Amaziah",
+   "line": "son of Hilkiah, in the line of Ethan the Merarite singer (1CH 6:45)",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of hashabiah (Hashabiah, son of Amaziah (1CH 6:45), Levite during the return (NEH 10:)",
+    "son-of hilkiah-4 (Hilkiah, son of Amzi (1CH 6:45))"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Amaziah",
+   "line": "Levite, son of Hilkiah, father of Hashabiah, in Kohathite/singer genealogy.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of hashabiah (Hashabiah, son of Amaziah (1CH 6:45), Levite during the return (NEH 10:)",
+    "son-of hilkiah-4 (Hilkiah, son of Amzi (1CH 6:45))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "A",
+ "why": "Verse 44 identifies Ethan’s genealogy as Merarite (בְנֵי מְרָרִי), and verse 45 places Amaziah between his son Hashabiah and his father Hilkiah. This matches A’s Merarite lineage; B’s stated Kohathite lineage conflicts with the passage.",
+ "confidence": 0.99,
+ "names_slug": "amaziah-the-merarite",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:33:41+00:00"
+}

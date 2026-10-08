@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 10,
+ "v": 25,
+ "label": "Rehum",
+ "dataset_man": "rehum-3",
+ "split_man": "rehum-5",
+ "case": {
+  "verse": "NEH 10:25",
+  "name": "Rehum",
+  "text": {
+   "BHSA NEH 10:24": "הַלֹּוחֵ֥שׁ פִּלְחָ֖א שֹׁובֵֽק׃ ",
+   "KJV NEH 10:24": "Hallohesh, Pileha, Shobek,",
+   "BHSA NEH 10:25": "רְח֥וּם חֲשַׁבְנָ֖ה מַעֲשֵׂיָֽה׃ ",
+   "KJV NEH 10:25": "Rehum, Hashabnah, Maaseiah,",
+   "BHSA NEH 10:26": "וַאֲחִיָּ֥ה חָנָ֖ן עָנָֽן׃ ",
+   "KJV NEH 10:26": "And Ahijah, Hanan, Anan,"
+  },
+  "A": {
+   "name": "Rehum",
+   "line": "supervised the Levites' repairs to the wall (NEH 3:17)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:25)",
+   "family": [
+    "son-of bani-6 (Bani, father of Rehum (NEH 3:17))"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Rehum",
+   "line": "Chief of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "רְחוּם appears in the covenant’s list of chiefs of the people, matching B’s stated office. A is associated with the Levites in Nehemiah 3:17; no patronymic or other identifying detail here establishes that this is also Bani’s son.",
+ "confidence": 0.8,
+ "names_slug": "rehum-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:41:04+00:00"
+}

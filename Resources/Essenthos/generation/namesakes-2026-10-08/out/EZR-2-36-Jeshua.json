@@ -1,0 +1,49 @@
+{
+ "b": 15,
+ "c": 2,
+ "v": 36,
+ "label": "Jeshua",
+ "dataset_man": "jeshua",
+ "split_man": "jeshua-3",
+ "case": {
+  "verse": "EZR 2:36",
+  "name": "Jeshua",
+  "text": {
+   "BHSA EZR 2:35": "בְּנֵ֣י סְנָאָ֔ה שְׁלֹ֣שֶׁת אֲלָפִ֔ים וְשֵׁ֥שׁ מֵאֹ֖ות וּשְׁלֹשִֽׁים׃ ס ",
+   "KJV EZR 2:35": "The children of Senaah, three thousand and six hundred and thirty.",
+   "BHSA EZR 2:36": "הַֽכֹּהֲנִ֑ים בְּנֵ֤י יְדַֽעְיָה֙ לְבֵ֣ית יֵשׁ֔וּעַ תְּשַׁ֥ע מֵאֹ֖ות שִׁבְעִ֥ים וּשְׁלֹשָֽׁה׃ ס ",
+   "KJV EZR 2:36": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+   "BHSA EZR 2:37": "בְּנֵ֣י אִמֵּ֔ר אֶ֖לֶף חֲמִשִּׁ֥ים וּשְׁנָֽיִם׃ ס ",
+   "KJV EZR 2:37": "The children of Immer, a thousand fifty and two."
+  },
+  "A": {
+   "name": "Jeshua",
+   "line": "ninth-chosen priest for the twenty-four courses (1CH 24:11)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "In the line of Eleazar (1CH 24:6, 11)",
+   "family": [
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Jeshua",
+   "line": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "son of Jozadak who helped to build the altar (EZR 3:2)",
+   "family": [
+    "son-of jozadak (Jozadak, father of Jeshua who built the altar (EZR 3:2))",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "verses": 25
+  }
+ },
+ "names": "A",
+ "why": "לְבֵית יֵשׁוּעַ ('of the house of Jeshua') identifies a priestly household within the list of priestly families, favoring A as an ancestral priestly head. However, neither Jozadak nor the ninth course is mentioned, so the text does not conclusively distinguish A from B.",
+ "confidence": 0.56,
+ "names_slug": "jeshua",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:37:40+00:00"
+}

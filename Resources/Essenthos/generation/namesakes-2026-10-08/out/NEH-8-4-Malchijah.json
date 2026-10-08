@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 8,
+ "v": 4,
+ "label": "Malchijah",
+ "dataset_man": "malchijah-2",
+ "split_man": "malchijah-11",
+ "case": {
+  "verse": "NEH 8:4",
+  "name": "Malchijah",
+  "text": {
+   "BHSA NEH 8:3": "וַיִּקְרָא־בֹו֩ לִפְנֵ֨י הָרְחֹ֜וב אֲשֶׁ֣ר׀ לִפְנֵ֣י שַֽׁעַר־הַמַּ֗יִם מִן־הָאֹור֙ עַד־מַחֲצִ֣ית הַיֹּ֔ום נֶ֛גֶד הָאֲנָשִׁ֥ים וְהַנָּשִׁ֖ים וְהַמְּבִינִ֑ים וְאָזְנֵ֥י כָל־הָעָ֖ם אֶל־סֵ֥פֶר הַתֹּורָֽה׃ ",
+   "KJV NEH 8:3": "And he read therein before the street that was before the water gate from the morning until midday, before the men and the women, and those that could understand; and the ears of all the people were attentive unto the book of the law.",
+   "BHSA NEH 8:4": "וַֽיַּעֲמֹ֞ד עֶזְרָ֣א הַסֹּפֵ֗ר עַֽל־מִגְדַּל־עֵץ֮ אֲשֶׁ֣ר עָשׂ֣וּ לַדָּבָר֒ וַיַּֽעֲמֹ֣ד אֶצְלֹ֡ו מַתִּתְיָ֡ה וְשֶׁ֡מַע וַ֠עֲנָיָה וְאוּרִיָּ֧ה וְחִלְקִיָּ֛ה וּמַעֲשֵׂיָ֖ה עַל־יְמִינֹ֑ו וּמִשְּׂמֹאלֹ֗ו פְּ֠דָיָה וּמִֽישָׁאֵ֧ל וּמַלְכִּיָּ֛ה וְחָשֻׁ֥ם וְחַשְׁבַּדָּ֖נָה זְכַרְיָ֥ה מְשֻׁלָּֽם׃ פ ",
+   "KJV NEH 8:4": "And Ezra the scribe stood upon a pulpit of wood, which they had made for the purpose; and beside him stood Mattithiah, and Shema, and Anaiah, and Urijah, and Hilkiah, and Maaseiah, on his right hand; and on his left hand, Pedaiah, and Mishael, and Malchiah, and Hashum, and Hashbadana, Zechariah, and Meshullam.",
+   "BHSA NEH 8:5": "וַיִּפְתַּ֨ח עֶזְרָ֤א הַסֵּ֨פֶר֙ לְעֵינֵ֣י כָל־הָעָ֔ם כִּֽי־מֵעַ֥ל כָּל־הָעָ֖ם הָיָ֑ה וּכְפִתְחֹ֖ו עָֽמְד֥וּ כָל־הָעָֽם׃ ",
+   "KJV NEH 8:5": "And Ezra opened the book in the sight of all the people; (for he was above all the people;) and when he opened it, all the people stood up:"
+  },
+  "A": {
+   "name": "Malchijah",
+   "line": "stood at Ezra's left hand as he read the law to the people (NEH 8:4)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "The priest who sealed the covenant (NEH 10:3) and the Malchijah at the dedication of the wall (NEH 12:42) are held apart; the text does not say whether either of them is this man.",
+   "family": null,
+   "verses": 2
+  },
+  "B": {
+   "name": "Malchijah",
+   "line": "Priest at Ezra's law-reading, sealer of the covenant, singer at the wall's dedication under Nehemiah",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)"
+   ],
+   "verses": 7
+  }
+ },
+ "names": "A",
+ "why": "וּמַלְכִּיָּה is listed at Ezra’s left during the law-reading, matching A’s specific identification. The surrounding verses do not establish that he is also the covenant sealer and dedication singer combined in B.",
+ "confidence": 0.65,
+ "names_slug": "malchijah-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:39:52+00:00"
+}

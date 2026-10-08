@@ -352,6 +352,17 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
             .Where(e => slugs.Contains(e.Slug))
             .ToDictionaryAsync(e => e.Slug, e => e.Id, StringComparer.Ordinal, cancellationToken);
 
+        // A record folded into another since the list was written is the record it was folded into: the
+        // register folds the records it added for a man into the ones his verses reach, and a split
+        // naming one of those still means the man.
+        foreach (var folded in await db.MergedRecords
+                     .Where(m => slugs.Contains(m.Slug))
+                     .Select(m => new { m.Slug, m.EntityId })
+                     .ToListAsync(cancellationToken))
+        {
+            held.TryAdd(folded.Slug, folded.EntityId);
+        }
+
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
         int parted = 0, kept = 0;
@@ -363,6 +374,11 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
                     "The list of records written wrongly moves {Name} from \"{From}\" to \"{To}\", and the encyclopedia " +
                     "does not hold both. Correct the pair in {Resource}, or load the record it moves to first.",
                     split.Name ?? split.To, split.From, split.To, Resource);
+                continue;
+            }
+
+            if (from == to)
+            {
                 continue;
             }
 

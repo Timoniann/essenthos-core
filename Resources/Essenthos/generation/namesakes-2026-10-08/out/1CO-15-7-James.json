@@ -1,0 +1,53 @@
+{
+ "b": 46,
+ "c": 15,
+ "v": 7,
+ "label": "James",
+ "dataset_man": "james",
+ "split_man": "james-3",
+ "case": {
+  "verse": "1CO 15:7",
+  "name": "James",
+  "text": {
+   "NESTLE1904 1CO 15:6": "ἔπειτα ὤφθη ἐπάνω πεντακοσίοις ἀδελφοῖς ἐφάπαξ, ἐξ ὧν οἱ πλείονες μένουσιν ἕως ἄρτι, τινὲς δὲ ἐκοιμήθησαν· ",
+   "KJV 1CO 15:6": "After that, he was seen of above five hundred brethren at once; of whom the greater part remain unto this present, but some are fallen asleep.",
+   "NESTLE1904 1CO 15:7": "ἔπειτα ὤφθη Ἰακώβῳ, εἶτα τοῖς ἀποστόλοις πᾶσιν· ",
+   "KJV 1CO 15:7": "After that, he was seen of James; then of all the apostles.",
+   "NESTLE1904 1CO 15:8": "ἔσχατον δὲ πάντων ὡσπερεὶ τῷ ἐκτρώματι ὤφθη κἀμοί. ",
+   "KJV 1CO 15:8": "And last of all he was seen of me also, as of one born out of due time."
+  },
+  "A": {
+   "name": "James",
+   "line": "son of Zebedee (MAT 4:21)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "fisherman (mending their nets- MAT 4:21), one of the Twelve (MAT 10:2)",
+   "family": [
+    "son-of zebedee (Zebedee, father of James and John (MAT 4:21))",
+    "brother-of john-2 (John, son of Zebedee (MAT 4:21))",
+    "servant-of jesus (Jesus, of Nazareth)",
+    "apostle-of jesus (Jesus, of Nazareth)"
+   ],
+   "verses": 40
+  },
+  "B": {
+   "name": "James",
+   "line": "brother of Jesus (MAT 13:55), 'the Lord's brother' (GAL 1:19)",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": "\"brother\" in the sense that they were born of the same womb",
+   "family": [
+    "servant-of yhvh (YHVH, the God of Israel)",
+    "brother-of jesus (Jesus, of Nazareth)",
+    "brother-of judas-2 (Judas, brother of Jesus (MAT 13:55, MRK 6:3))"
+   ],
+   "verses": 31
+  }
+ },
+ "names": "B",
+ "why": "Ἰακώβῳ names one James separately before “all the apostles,” which weakly favors B over A, a member of the Twelve. However, neither this verse nor its neighbors gives a father, family relationship, or other detail that uniquely identifies him.",
+ "confidence": 0.55,
+ "names_slug": "james-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:46:14+00:00"
+}

@@ -1,0 +1,49 @@
+{
+ "b": 13,
+ "c": 11,
+ "v": 41,
+ "label": "Zabad",
+ "dataset_man": "zabad-3",
+ "split_man": "zabad",
+ "case": {
+  "verse": "1CH 11:41",
+  "name": "Zabad",
+  "text": {
+   "BHSA 1CH 11:40": "עִירָא֙ הַיִּתְרִ֔י גָּרֵ֖ב הַיִּתְרִֽי׃ ס ",
+   "KJV 1CH 11:40": "Ira the Ithrite, Gareb the Ithrite,",
+   "BHSA 1CH 11:41": "אֽוּרִיָּה֙ הַחִתִּ֔י זָבָ֖ד בֶּן־אַחְלָֽי׃ ס ",
+   "KJV 1CH 11:41": "Uriah the Hittite, Zabad the son of Ahlai,",
+   "BHSA 1CH 11:42": "עֲדִינָ֨א בֶן־שִׁיזָ֜א הָרֽאוּבֵנִ֗י רֹ֛אשׁ לָרֽאוּבֵנִ֖י וְעָלָ֥יו שְׁלֹושִֽׁים׃ ס ",
+   "KJV 1CH 11:42": "Adina the son of Shiza the Reubenite, a captain of the Reubenites, and thirty with him,"
+  },
+  "A": {
+   "name": "Zabad",
+   "line": "son of Ahlai (1CH 11:41)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of ahlai-2 (Ahlai, father of Zabad (1CH 11:41))"
+   ],
+   "verses": 2
+  },
+  "B": {
+   "name": "Zabad",
+   "line": "son of Nathan (1CH 2:36)",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": null,
+   "family": [
+    "son-of nathan-6 (Nathan, son of Attai (1CH 2:36))",
+    "father-of ephlal (Ephlal, son of Zabad (1CH 2:37))"
+   ],
+   "verses": 5
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew explicitly names זָבָד בֶּן־אַחְלָי, “Zabad son of Ahlai,” matching A’s stated parentage. B is identified as the son of Nathan.",
+ "confidence": 1,
+ "names_slug": "zabad-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:24+00:00"
+}

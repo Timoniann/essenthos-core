@@ -1,0 +1,50 @@
+{
+ "b": 13,
+ "c": 27,
+ "v": 18,
+ "label": "Michael",
+ "dataset_man": "michael-4",
+ "split_man": "michael-10",
+ "case": {
+  "verse": "1CH 27:18",
+  "name": "Michael",
+  "text": {
+   "BHSA 1CH 27:17": "לְלֵוִ֛י חֲשַׁבְיָ֥ה בֶן־קְמוּאֵ֖ל לְאַהֲרֹ֥ן צָדֹֽוק׃ ס ",
+   "KJV 1CH 27:17": "Of the Levites, Hashabiah the son of Kemuel: of the Aaronites, Zadok:",
+   "BHSA 1CH 27:18": "לִֽיהוּדָ֕ה אֱלִיה֖וּ מֵאֲחֵ֣י דָוִ֑יד לְיִ֨שָׂשכָ֔ר עָמְרִ֖י בֶּן־מִיכָאֵֽל׃ ס ",
+   "KJV 1CH 27:18": "Of Judah, Elihu, one of the brethren of David: of Issachar, Omri the son of Michael:",
+   "BHSA 1CH 27:19": "לִזְבוּלֻ֕ן יִֽשְׁמַֽעְיָ֖הוּ בֶּן־עֹבַדְיָ֑הוּ לְנַ֨פְתָּלִ֔י יְרִימֹ֖ות בֶּן־עַזְרִיאֵֽל׃ ס ",
+   "KJV 1CH 27:19": "Of Zebulun, Ishmaiah the son of Obadiah: of Naphtali, Jerimoth the son of Azriel:"
+  },
+  "A": {
+   "name": "Michael",
+   "line": "son of Izrahiah (1CH 7:3)",
+   "sex": "male",
+   "tribe": "Issachar",
+   "notes": null,
+   "family": [
+    "son-of izrahiah (Izrahiah, son of Uzzi (1CH 7:3))",
+    "father-of omri-4 (Omri, chief officer for the Issacharites, son of Michael (1CH 27:1)",
+    "brother-of obadiah-3 (Obadiah, son of Izrahiah (1CH 7:3))"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Michael",
+   "line": "Father of Omri, chief of the tribe of Issachar under David",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of omri-4 (Omri, chief officer for the Issacharites, son of Michael (1CH 27:1)"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew בֶּן־מִיכָאֵל identifies Michael as the father of Omri, Issachar’s officer in David’s time, matching B’s defining description. However, A also explicitly claims this same father–son relationship, and the surrounding verses do not distinguish the records.",
+ "confidence": 0.5,
+ "names_slug": "michael-10",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:35:55+00:00"
+}

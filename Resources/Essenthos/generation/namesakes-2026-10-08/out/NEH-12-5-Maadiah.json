@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 5,
+ "label": "Maadiah",
+ "dataset_man": "maaziah-2",
+ "split_man": "maaziah-3",
+ "case": {
+  "verse": "NEH 12:5",
+  "name": "Maadiah",
+  "text": {
+   "BHSA NEH 12:4": "עִדֹּ֥וא גִנְּתֹ֖וי אֲבִיָּֽה׃ ",
+   "KJV NEH 12:4": "Iddo, Ginnetho, Abijah,",
+   "BHSA NEH 12:5": "מִיָּמִ֥ין מַֽעַדְיָ֖ה בִּלְגָּֽה׃ ",
+   "KJV NEH 12:5": "Miamin, Maadiah, Bilgah,",
+   "BHSA NEH 12:6": "שְׁמַֽעְיָ֥ה וְיֹויָרִ֖יב יְדַֽעְיָֽה׃ ",
+   "KJV NEH 12:6": "Shemaiah, and Joiarib, Jedaiah,"
+  },
+  "A": {
+   "name": "Maaziah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:8)",
+   "family": [
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Maaziah",
+   "line": "Priestly house head, 'Maadiah', listed with returning priests under Joiakim",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew מַעַדְיָה (Maadiah), between Miamin and Bilgah in the continuing list, matches B’s stated identification as the Maadiah listed among returning priests. A’s stated identifying event is signing the covenant in Nehemiah 10:8, which this passage does not describe.",
+ "confidence": 0.9,
+ "names_slug": "maaziah-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:42:27+00:00"
+}

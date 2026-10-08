@@ -1,0 +1,50 @@
+{
+ "b": 42,
+ "c": 3,
+ "v": 25,
+ "label": "Amos",
+ "dataset_man": "amos-2",
+ "split_man": "amos-4",
+ "case": {
+  "verse": "LUK 3:25",
+  "name": "Amos",
+  "text": {
+   "NESTLE1904 LUK 3:24": "τοῦ Ματθὰτ τοῦ Λευεὶ τοῦ Μελχεὶ τοῦ Ἰανναὶ τοῦ Ἰωσὴφ ",
+   "KJV LUK 3:24": "Which was the son of Matthat, which was the son of Levi, which was the son of Melchi, which was the son of Janna, which was the son of Joseph,",
+   "NESTLE1904 LUK 3:25": "τοῦ Ματταθίου τοῦ Ἀμὼς τοῦ Ναοὺμ τοῦ Ἐσλεὶ τοῦ Ναγγαὶ ",
+   "KJV LUK 3:25": "Which was the son of Mattathias, which was the son of Amos, which was the son of Naum, which was the son of Esli, which was the son of Nagge,",
+   "NESTLE1904 LUK 3:26": "τοῦ Μαὰθ τοῦ Ματταθίου τοῦ Σεμεεὶν τοῦ Ἰωσὴχ τοῦ Ἰωδὰ ",
+   "KJV LUK 3:26": "Which was the son of Maath, which was the son of Mattathias, which was the son of Semei, which was the son of Joseph, which was the son of Juda,"
+  },
+  "A": {
+   "name": "Amos",
+   "line": "in the lineage of Messiah (LUK 3:25)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of nahum-2 (Nahum, in the lineage of Messiah (LUK 3:25))",
+    "father-of mattathias (Mattathias, in the lineage of Messiah (LUK 3:25))"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Amos",
+   "line": "Ancestor of Jesus in Luke's genealogy, son of Naum, father of Mattathias.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of mattathias (Mattathias, in the lineage of Messiah (LUK 3:25))",
+    "son-of nahum-2 (Nahum, in the lineage of Messiah (LUK 3:25))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "A",
+ "why": "The Greek sequence τοῦ Ματταθίου τοῦ Ἀμὼς τοῦ Ναοὺμ identifies one Amos, father of Mattathias and son of Naum. Both records state these identical relationships, so the text cannot distinguish A from B; choosing A is tentative.",
+ "confidence": 0.5,
+ "names_slug": "amos-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:45:51+00:00"
+}

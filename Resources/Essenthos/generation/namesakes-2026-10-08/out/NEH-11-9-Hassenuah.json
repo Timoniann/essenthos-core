@@ -1,0 +1,51 @@
+{
+ "b": 16,
+ "c": 11,
+ "v": 9,
+ "label": "Hassenuah",
+ "dataset_man": "hassenuah-2",
+ "split_man": "hassenuah",
+ "case": {
+  "verse": "NEH 11:9",
+  "name": "Hassenuah",
+  "text": {
+   "BHSA NEH 11:8": "וְאַחֲרָ֖יו גַּבַּ֣י סַלָּ֑י תְּשַׁ֥ע מֵאֹ֖ות עֶשְׂרִ֥ים וּשְׁמֹנָֽה׃ ",
+   "KJV NEH 11:8": "And after him Gabbai, Sallai, nine hundred twenty and eight.",
+   "BHSA NEH 11:9": "וְיֹואֵ֥ל בֶּן־זִכְרִ֖י פָּקִ֣יד עֲלֵיהֶ֑ם וִיהוּדָ֧ה בֶן־הַסְּנוּאָ֛ה עַל־הָעִ֖יר מִשְׁנֶֽה׃ פ ",
+   "KJV NEH 11:9": "And Joel the son of Zichri was their overseer: and Judah the son of Senuah was second over the city.",
+   "BHSA NEH 11:10": "מִן־הַֽכֹּהֲנִ֑ים יְדַֽעְיָ֥ה בֶן־יֹויָרִ֖יב יָכִֽין׃ ",
+   "KJV NEH 11:10": "Of the priests: Jedaiah the son of Joiarib, Jachin."
+  },
+  "A": {
+   "name": "Hassenuah",
+   "line": "father of Judah (NEH 11:9)",
+   "sex": "male",
+   "tribe": "Benjamin",
+   "notes": null,
+   "family": [
+    "father-of judah-3 (Judah, second in command of Jerusalem (NEH 11:9))",
+    "descendant-of benjamin (Benjamin, twelfth-born son of Jacob and Rachel (GEN 35:18))"
+   ],
+   "verses": 2
+  },
+  "B": {
+   "name": "Hassenuah",
+   "line": "descendant of Benjamin (1CH 9:7)",
+   "sex": "male",
+   "tribe": "Benjamin",
+   "notes": null,
+   "family": [
+    "descendant-of benjamin (Benjamin, twelfth-born son of Jacob and Rachel (GEN 35:18))",
+    "of-tribe benjamin (Benjamin, twelfth-born son of Jacob and Rachel (GEN 35:18))",
+    "father-of hodaviah-4 (Hodaviah, son of Hassenuah (1CH 9:7))"
+   ],
+   "verses": 3
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew explicitly names Judah as בֶן־הַסְּנוּאָה, “son of Hassenuah,” and identifies Judah as second over the city. This matches A’s stated son and his office; B is identified as Hodaviah’s father.",
+ "confidence": 0.99,
+ "names_slug": "hassenuah-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:41:26+00:00"
+}

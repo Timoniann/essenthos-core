@@ -1,0 +1,50 @@
+{
+ "b": 13,
+ "c": 1,
+ "v": 39,
+ "label": "Timna",
+ "dataset_man": "timna",
+ "split_man": "timna-3",
+ "case": {
+  "verse": "1CH 1:39",
+  "name": "Timna",
+  "text": {
+   "BHSA 1CH 1:38": "וּבְנֵ֣י שֵׂעִ֔יר לֹוטָ֥ן וְשֹׁובָ֖ל וְצִבְעֹ֣ון וַֽעֲנָ֑ה וְדִישֹׁ֥ן וְאֵ֖צֶר וְדִישָֽׁן׃ ",
+   "KJV 1CH 1:38": "And the sons of Seir; Lotan, and Shobal, and Zibeon, and Anah, and Dishon, and Ezar, and Dishan.",
+   "BHSA 1CH 1:39": "וּבְנֵ֥י לֹוטָ֖ן חֹרִ֣י וְהֹומָ֑ם וַאֲחֹ֥ות לֹוטָ֖ן תִּמְנָֽע׃ ס ",
+   "KJV 1CH 1:39": "And the sons of Lotan; Hori, and Homam: and Timna was Lotan's sister.",
+   "BHSA 1CH 1:40": "בְּנֵ֣י שֹׁובָ֔ל עַלְיָ֧ן וּמָנַ֛חַת וְעֵיבָ֖ל שְׁפִ֣י וְאֹונָ֑ם ס וּבְנֵ֥י צִבְעֹ֖ון אַיָּ֥ה וַעֲנָֽה׃ ",
+   "KJV 1CH 1:40": "The sons of Shobal; Alian, and Manahath, and Ebal, Shephi, and Onam. and the sons of Zibeon; Aiah, and Anah."
+  },
+  "A": {
+   "name": "Timna",
+   "line": "concubine of Esau's son Eliphaz (GEN 36:12) and sister of Lotan (GEN 36:22)",
+   "sex": "female",
+   "tribe": "Edomite",
+   "notes": null,
+   "family": [
+    "mother-of amalek (Amalek, son of Eliphaz (GEN 36:12) and chief of Edom (GEN 36:16))",
+    "sister-of lotan (Lotan, son of Seir (GEN 36:20) and chief in Edom (GEN 36:29))",
+    "concubine-of eliphaz (Eliphaz, son of Esau (GEN 36:4, 10, 15))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Timna",
+   "line": "Daughter of Seir the Horite, sister of Lotan",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "sister-of lotan (Lotan, son of Seir (GEN 36:20) and chief in Edom (GEN 36:29))"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew identifies Timna as Lotan’s sister within Seir’s genealogy, matching B’s stated identity. A also explicitly names her as Lotan’s sister, so the supplied facts do not decisively distinguish the records; the verse names only one woman.",
+ "confidence": 0.5,
+ "names_slug": "timna-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:32:23+00:00"
+}

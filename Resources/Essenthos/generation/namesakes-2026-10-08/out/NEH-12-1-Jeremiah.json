@@ -1,0 +1,51 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 1,
+ "label": "Jeremiah",
+ "dataset_man": "jeremiah-7",
+ "split_man": "jeremiah-9",
+ "case": {
+  "verse": "NEH 12:1",
+  "name": "Jeremiah",
+  "text": {
+   "BHSA NEH 12:1": "וְאֵ֨לֶּה֙ הַכֹּהֲנִ֣ים וְהַלְוִיִּ֔ם אֲשֶׁ֥ר עָל֛וּ עִם־זְרֻבָּבֶ֥ל בֶּן־שְׁאַלְתִּיאֵ֖ל וְיֵשׁ֑וּעַ שְׂרָיָ֥ה יִרְמְיָ֖ה עֶזְרָֽא׃ ",
+   "KJV NEH 12:1": "Now these are the priests and the Levites that went up with Zerubbabel the son of Shealtiel, and Jeshua: Seraiah, Jeremiah, Ezra,",
+   "BHSA NEH 12:2": "אֲמַרְיָ֥ה מַלּ֖וּךְ חַטּֽוּשׁ׃ ",
+   "KJV NEH 12:2": "Amariah, Malluch, Hattush,"
+  },
+  "A": {
+   "name": "Jeremiah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:2)",
+   "family": [
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "companion-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "ancestor-of hananiah-9 (Hananiah, son of Jeremiah (NEH 12:12))",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Jeremiah",
+   "line": "Priestly family head from Zerubbabel's return, continuing under Joiakim",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "companion-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "ancestor-of hananiah-9 (Hananiah, son of Jeremiah (NEH 12:12))"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew lists Jeremiah among the priests who returned with Zerubbabel and Jeshua, matching B’s stated historical role. However, A is assigned the same companions and descendant, so the supplied facts do not decisively distinguish the records.",
+ "confidence": 0.55,
+ "names_slug": "jeremiah-9",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:42:00+00:00"
+}

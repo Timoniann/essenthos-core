@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 42,
+ "label": "Jehohanan",
+ "dataset_man": "jehohanan-4",
+ "split_man": "jehohanan-5",
+ "case": {
+  "verse": "NEH 12:42",
+  "name": "Jehohanan",
+  "text": {
+   "BHSA NEH 12:41": "וְהַכֹּהֲנִ֡ים אֶלְיָקִ֡ים מַעֲשֵׂיָ֡ה מִ֠נְיָמִין מִיכָיָ֧ה אֶלְיֹועֵינַ֛י זְכַרְיָ֥ה חֲנַנְיָ֖ה בַּחֲצֹצְרֹֽות׃ ",
+   "KJV NEH 12:41": "And the priests; Eliakim, Maaseiah, Miniamin, Michaiah, Elioenai, Zechariah, and Hananiah, with trumpets;",
+   "BHSA NEH 12:42": "וּמַעֲשֵׂיָ֨ה וּֽשְׁמַֽעְיָ֜ה וְאֶלְעָזָ֧ר וְעֻזִּ֛י וִֽיהֹוחָנָ֥ן וּמַלְכִּיָּ֖ה וְעֵילָ֣ם וָעָ֑זֶר וַיַּשְׁמִ֨יעוּ֙ הַמְשֹׁ֣רְרִ֔ים וְיִֽזְרַחְיָ֖ה הַפָּקִֽיד׃ ",
+   "KJV NEH 12:42": "And Maaseiah, and Shemaiah, and Eleazar, and Uzzi, and Jehohanan, and Malchijah, and Elam, and Ezer. And the singers sang loud, with Jezrahiah their overseer.",
+   "BHSA NEH 12:43": "וַיִּזְבְּח֣וּ בַיֹּום־הַ֠הוּא זְבָחִ֨ים גְּדֹולִ֜ים וַיִּשְׂמָ֗חוּ כִּ֤י הָאֱלֹהִים֙ שִׂמְּחָם֙ שִׂמְחָ֣ה גְדֹולָ֔ה וְגַ֧ם הַנָּשִׁ֛ים וְהַיְלָדִ֖ים שָׂמֵ֑חוּ וַתִּשָּׁמַ֛ע שִׂמְחַ֥ת יְרוּשָׁלִַ֖ם מֵרָחֹֽוק׃ ",
+   "KJV NEH 12:43": "Also that day they offered great sacrifices, and rejoiced: for God had made them rejoice with great joy: the wives also and the children rejoiced: so that the joy of Jerusalem was heard even afar off."
+  },
+  "A": {
+   "name": "Jehohanan",
+   "line": "son of Amariah (NEH 12:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "As \"priests\" (NEH 12:12), descendants of Aaron",
+   "family": [
+    "descendant-of amariah-6 (Amariah, Aaronic priest (NEH 10:8))"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Jehohanan",
+   "line": "Priest-singer at the dedication of the wall under Nehemiah",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "וִיהוֹחָנָן appears among the named participants immediately before the singers perform under Jezrahiah, matching B’s stated role at the wall dedication. The passage supplies no connection to Amariah that would identify him as A.",
+ "confidence": 0.94,
+ "names_slug": "jehohanan-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:45:43+00:00"
+}

@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 34,
+ "label": "Judah",
+ "dataset_man": "judah-4",
+ "split_man": "judah-7",
+ "case": {
+  "verse": "NEH 12:34",
+  "name": "Judah",
+  "text": {
+   "BHSA NEH 12:33": "וַעֲזַרְיָ֥ה עֶזְרָ֖א וּמְשֻׁלָּֽם׃ ",
+   "KJV NEH 12:33": "And Azariah, Ezra, and Meshullam,",
+   "BHSA NEH 12:34": "יְהוּדָה֙ וּבִנְיָמִ֔ן וּֽשְׁמַֽעְיָ֖ה וְיִרְמְיָֽה׃ ס ",
+   "KJV NEH 12:34": "Judah, and Benjamin, and Shemaiah, and Jeremiah,",
+   "BHSA NEH 12:35": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ ",
+   "KJV NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+  },
+  "A": {
+   "name": "Judah",
+   "line": "among the Levites who came up with Zerubabbel (NEH 12:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Judah",
+   "line": "A priest in Nehemiah's time named among leaders in the dedication procession",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "יְהוּדָה appears in the procession’s list alongside Benjamin, Shemaiah, and Jeremiah (Nehemiah 12:33–35), matching B’s stated role at the dedication. The passage gives no connection to A, the Levite who returned with Zerubbabel.",
+ "confidence": 0.94,
+ "names_slug": "judah-7",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:43:55+00:00"
+}

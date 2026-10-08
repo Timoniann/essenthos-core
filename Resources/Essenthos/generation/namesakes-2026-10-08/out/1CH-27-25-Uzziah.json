@@ -1,0 +1,50 @@
+{
+ "b": 13,
+ "c": 27,
+ "v": 25,
+ "label": "Uzziah",
+ "dataset_man": "uzziah",
+ "split_man": "uzziah-4",
+ "case": {
+  "verse": "1CH 27:25",
+  "name": "Uzziah",
+  "text": {
+   "BHSA 1CH 27:24": "יֹואָ֨ב בֶּן־צְרוּיָ֜ה הֵחֵ֤ל לִמְנֹות֙ וְלֹ֣א כִלָּ֔ה וַיְהִ֥י בָזֹ֛את קֶ֖צֶף עַל־יִשְׂרָאֵ֑ל וְלֹ֤א עָלָה֙ הַמִּסְפָּ֔ר בְּמִסְפַּ֥ר דִּבְרֵֽי־הַיָּמִ֖ים לַמֶּ֥לֶךְ דָּוִֽיד׃ ס ",
+   "KJV 1CH 27:24": "Joab the son of Zeruiah began to number, but he finished not, because there fell wrath for it against Israel; neither was the number put in the account of the chronicles of king David.",
+   "BHSA 1CH 27:25": "וְעַל֙ אֹצְרֹ֣ות הַמֶּ֔לֶךְ עַזְמָ֖וֶת בֶּן־עֲדִיאֵ֑ל ס וְעַ֣ל הָֽאֹצָרֹ֡ות בַּשָּׂדֶ֞ה בֶּעָרִ֤ים וּבַכְּפָרִים֙ וּבַמִּגְדָּלֹ֔ות יְהֹונָתָ֖ן בֶּן־עֻזִּיָּֽהוּ׃ ס ",
+   "KJV 1CH 27:25": "And over the king's treasures was Azmaveth the son of Adiel: and over the storehouses in the fields, in the cities, and in the villages, and in the castles, was Jehonathan the son of Uzziah:",
+   "BHSA 1CH 27:26": "וְעַ֗ל עֹשֵׂי֙ מְלֶ֣אכֶת הַשָּׂדֶ֔ה לַעֲבֹדַ֖ת הָאֲדָמָ֑ה עֶזְרִ֖י בֶּן־כְּלֽוּב׃ ",
+   "KJV 1CH 27:26": "And over them that did the work of the field for tillage of the ground was Ezri the son of Chelub:"
+  },
+  "A": {
+   "name": "Uzziah",
+   "line": "son of Uriel (1CH 6:24)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "son-of uriel (Uriel, son of Tahath (1CH 6:24), chief of the sons of Kohath (1CH 1)",
+    "father-of shaul-3 (Shaul, son of Uzziah (1CH 6:24))",
+    "father-of jonathan-7 (Jonathan, in charge of the other storehouses, son of Uzziah (1CH 27:25)"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Uzziah",
+   "line": "Father of Jehonathan, overseer of David's storehouses in fields and villages.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of jonathan-7 (Jonathan, in charge of the other storehouses, son of Uzziah (1CH 27:25)"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew names Uzziah as the father of Jehonathan, David’s storehouse overseer, matching B’s stated identity. It supplies no link to Uriel or the Kohathite genealogy; because A also claims this same son, the verse alone cannot conclusively distinguish the records.",
+ "confidence": 0.6,
+ "names_slug": "uzziah-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:36:12+00:00"
+}

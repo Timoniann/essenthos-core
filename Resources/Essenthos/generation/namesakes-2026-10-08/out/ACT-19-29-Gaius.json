@@ -1,0 +1,48 @@
+{
+ "b": 44,
+ "c": 19,
+ "v": 29,
+ "label": "Gaius",
+ "dataset_man": "gaius",
+ "split_man": "gaius-3",
+ "case": {
+  "verse": "ACT 19:29",
+  "name": "Gaius",
+  "text": {
+   "NESTLE1904 ACT 19:28": "Ἀκούσαντες δὲ καὶ γενόμενοι πλήρεις θυμοῦ ἔκραζον λέγοντες Μεγάλη ἡ Ἄρτεμις Ἐφεσίων. ",
+   "KJV ACT 19:28": "And when they heard these sayings, they were full of wrath, and cried out, saying, Great is Diana of the Ephesians.",
+   "NESTLE1904 ACT 19:29": "καὶ ἐπλήσθη ἡ πόλις τῆς συγχύσεως, ὥρμησάν τε ὁμοθυμαδὸν εἰς τὸ θέατρον, συναρπάσαντες Γάϊον καὶ Ἀρίσταρχον Μακεδόνας, συνεκδήμους Παύλου. ",
+   "KJV ACT 19:29": "And the whole city was filled with confusion: and having caught Gaius and Aristarchus, men of Macedonia, Paul's companions in travel, they rushed with one accord into the theatre.",
+   "NESTLE1904 ACT 19:30": "Παύλου δὲ βουλομένου εἰσελθεῖν εἰς τὸν δῆμον οὐκ εἴων αὐτὸν οἱ μαθηταί· ",
+   "KJV ACT 19:30": "And when Paul would have entered in unto the people, the disciples suffered him not."
+  },
+  "A": {
+   "name": "Gaius",
+   "line": "Paul's traveling companion from Macedonia (ACT 19:29)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of aristarchus (Aristarchus, Paul's traveling companion from Macedonia (ACT 19:29))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Gaius",
+   "line": "Macedonian, Paul's travel companion seized in the Ephesus theatre riot.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of aristarchus (Aristarchus, Paul's traveling companion from Macedonia (ACT 19:29))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "A",
+ "why": "The Greek identifies Gaius as a Macedonian traveling companion of Paul seized alongside Aristarchus. A matches these facts, but B states the same facts, so the text cannot distinguish A from B; it names only one Gaius.",
+ "confidence": 0.5,
+ "names_slug": "gaius",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:46:02+00:00"
+}

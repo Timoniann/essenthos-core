@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 3,
+ "label": "Meremoth",
+ "dataset_man": "meremoth",
+ "split_man": "meremoth-3",
+ "case": {
+  "verse": "NEH 12:3",
+  "name": "Meremoth",
+  "text": {
+   "BHSA NEH 12:2": "אֲמַרְיָ֥ה מַלּ֖וּךְ חַטּֽוּשׁ׃ ",
+   "KJV NEH 12:2": "Amariah, Malluch, Hattush,",
+   "BHSA NEH 12:3": "שְׁכַנְיָ֥ה רְחֻ֖ם מְרֵמֹֽת׃ ",
+   "KJV NEH 12:3": "Shechaniah, Rehum, Meremoth,",
+   "BHSA NEH 12:4": "עִדֹּ֥וא גִנְּתֹ֖וי אֲבִיָּֽה׃ ",
+   "KJV NEH 12:4": "Iddo, Ginnetho, Abijah,"
+  },
+  "A": {
+   "name": "Meremoth",
+   "line": "son of Uriah the priest (EZR 8:33)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "made repairs to the wall of Jerusalem (NEH 3:4, NEH 3:21), named on the sealed document of NEH 10:1-27 (NEH 10:5), Aaronic priest (NEH 10:8)",
+   "family": [
+    "son-of uriah-2 (Uriah, the priest, father of Meremoth (EZR 8:33))"
+   ],
+   "verses": 9
+  },
+  "B": {
+   "name": "Meremoth",
+   "line": "Priest listed among those who came up with Zerubbabel",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "מְרֵמֹת is a single entry between Rehum and Iddo in the list of priests who came up with Zerubbabel, matching B’s stated identity. Nothing here identifies him as Uriah’s son, the later priest and wall repairer described in A.",
+ "confidence": 0.94,
+ "names_slug": "meremoth-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:42:23+00:00"
+}

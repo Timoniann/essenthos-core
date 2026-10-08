@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 13,
+ "label": "Meshullam",
+ "dataset_man": "meshullam-16",
+ "split_man": "meshullam-20",
+ "case": {
+  "verse": "NEH 12:13",
+  "name": "Meshullam",
+  "text": {
+   "BHSA NEH 12:12": "וּבִימֵי֙ יֹֽויָקִ֔ים הָי֥וּ כֹהֲנִ֖ים רָאשֵׁ֣י הָאָבֹ֑ות לִשְׂרָיָ֣ה מְרָיָ֔ה לְיִרְמְיָ֖ה חֲנַנְיָֽה׃ ",
+   "KJV NEH 12:12": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;",
+   "BHSA NEH 12:13": "לְעֶזְרָ֣א מְשֻׁלָּ֔ם לַאֲמַרְיָ֖ה יְהֹוחָנָֽן׃ ",
+   "KJV NEH 12:13": "Of Ezra, Meshullam; of Amariah, Jehohanan;",
+   "BHSA NEH 12:14": "למלוכי יֹֽונָתָ֔ן לִשְׁבַנְיָ֖ה יֹוסֵֽף׃ ",
+   "KJV NEH 12:14": "Of Melicu, Jonathan; of Shebaniah, Joseph;"
+  },
+  "A": {
+   "name": "Meshullam",
+   "line": "son of Ezra (NEH 12:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "As \"priests\" (NEH 12:12), descendants of Aaron",
+   "family": [
+    "descendant-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Meshullam",
+   "line": "Priest, head of the family of Ezra in Joiakim's days, distinct from item 14's Ginnethon line",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of ezra-3 (Ezra, Priest who returned with Zerubbabel and Jeshua; ancestor of )"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "לְעֶזְרָא מְשֻׁלָּם identifies Meshullam as the head of Ezra’s priestly family within the list explicitly dated to Joiakim’s days (12:12–14), matching B. It does not identify him as a son of Ezra the scribe, as A claims.",
+ "confidence": 0.98,
+ "names_slug": "meshullam-20",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:43:05+00:00"
+}

@@ -1,0 +1,49 @@
+{
+ "b": 12,
+ "c": 24,
+ "v": 8,
+ "label": "Elnathan",
+ "dataset_man": "elnathan",
+ "split_man": "elnathan-5",
+ "case": {
+  "verse": "2KI 24:8",
+  "name": "Elnathan",
+  "text": {
+   "BHSA 2KI 24:7": "וְלֹֽא־הֹסִ֥יף עֹוד֙ מֶ֣לֶךְ מִצְרַ֔יִם לָצֵ֖את מֵֽאַרְצֹ֑ו כִּֽי־לָקַ֞ח מֶ֣לֶךְ בָּבֶ֗ל מִנַּ֤חַל מִצְרַ֨יִם֙ עַד־נְהַר־פְּרָ֔ת כֹּ֛ל אֲשֶׁ֥ר הָיְתָ֖ה לְמֶ֥לֶךְ מִצְרָֽיִם׃ פ ",
+   "KJV 2KI 24:7": "And the king of Egypt came not again any more out of his land: for the king of Babylon had taken from the river of Egypt unto the river Euphrates all that pertained to the king of Egypt.",
+   "BHSA 2KI 24:8": "בֶּן־שְׁמֹנֶ֨ה עֶשְׂרֵ֤ה שָׁנָה֙ יְהֹויָכִ֣ין בְּמָלְכֹ֔ו וּשְׁלֹשָׁ֣ה חֳדָשִׁ֔ים מָלַ֖ךְ בִּירוּשָׁלִָ֑ם וְשֵׁ֣ם אִמֹּ֔ו נְחֻשְׁתָּ֥א בַת־אֶלְנָתָ֖ן מִירוּשָׁלִָֽם׃ ",
+   "KJV 2KI 24:8": "Jehoiachin was eighteen years old when he began to reign, and he reigned in Jerusalem three months. And his mother's name was Nehushta, the daughter of Elnathan of Jerusalem.",
+   "BHSA 2KI 24:9": "וַיַּ֥עַשׂ הָרַ֖ע בְּעֵינֵ֣י יְהוָ֑ה כְּכֹ֥ל אֲשֶׁר־עָשָׂ֖ה אָבִֽיו׃ ",
+   "KJV 2KI 24:9": "And he did that which was evil in the sight of the LORD, according to all that his father had done."
+  },
+  "A": {
+   "name": "Elnathan",
+   "line": "from Jerusalem, father of Nehushta (2KI 24:8), an official (JER 36:12)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of achbor-2 (Achbor, son of Micaiah (2KI 22:12))",
+    "father-of nehushta (Nehushta, mother of Jehoiachin (2KI 24:8))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Elnathan",
+   "line": "Of Jerusalem; father of Nehushta, maternal grandfather of king Jehoiachin.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of nehushta (Nehushta, mother of Jehoiachin (2KI 24:8))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "בַת־אֶלְנָתָן מִירוּשָׁלָם identifies Elnathan as Nehushta’s father from Jerusalem, exactly as B states. A states the same identifying facts, however, and neither this verse nor its neighbors establishes the additional Achbor connection, so the choice of B is uncertain.",
+ "confidence": 0.5,
+ "names_slug": "elnathan-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:32:18+00:00"
+}

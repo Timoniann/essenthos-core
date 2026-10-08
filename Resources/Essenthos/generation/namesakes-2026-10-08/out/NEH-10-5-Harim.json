@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 10,
+ "v": 5,
+ "label": "Harim",
+ "dataset_man": "harim-3",
+ "split_man": "harim-6",
+ "case": {
+  "verse": "NEH 10:5",
+  "name": "Harim",
+  "text": {
+   "BHSA NEH 10:4": "חַטּ֥וּשׁ שְׁבַנְיָ֖ה מַלּֽוּךְ׃ ",
+   "KJV NEH 10:4": "Hattush, Shebaniah, Malluch,",
+   "BHSA NEH 10:5": "חָרִ֥ם מְרֵמֹ֖ות עֹֽבַדְיָֽה׃ ",
+   "KJV NEH 10:5": "Harim, Meremoth, Obadiah,",
+   "BHSA NEH 10:6": "דָּנִיֵּ֥אל גִּנְּתֹ֖ון בָּרֽוּךְ׃ ",
+   "KJV NEH 10:6": "Daniel, Ginnethon, Baruch,"
+  },
+  "A": {
+   "name": "Harim",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:39)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Aaronic priest, named on the sealed document of NEH 10:1-27 (NEH 10:5), Aaronic priest (NEH 10:8)",
+   "family": [
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 12
+  },
+  "B": {
+   "name": "Harim",
+   "line": "A priest who seals Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "חָרִם occurs once in the list, fitting B’s stated role as a priest who seals Nehemiah’s covenant. The surrounding verses provide no genealogy connecting him to A, whose descendants returned from captivity, although A’s notes also claim this passage, leaving the distinction uncertain.",
+ "confidence": 0.55,
+ "names_slug": "harim-6",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:40:29+00:00"
+}

@@ -1,0 +1,50 @@
+{
+ "b": 14,
+ "c": 29,
+ "v": 12,
+ "label": "Abdi",
+ "dataset_man": "abdi",
+ "split_man": "abdi-3",
+ "case": {
+  "verse": "2CH 29:12",
+  "name": "Abdi",
+  "text": {
+   "BHSA 2CH 29:11": "בָּנַ֕י עַתָּ֖ה אַל־תִּשָּׁל֑וּ כִּֽי־בָכֶ֞ם בָּחַ֣ר יְהוָ֗ה לַעֲמֹ֤ד לְפָנָיו֙ לְשָׁ֣רְתֹ֔ו וְלִהְיֹ֥ות לֹ֖ו מְשָׁרְתִ֥ים וּמַקְטִרִֽים׃ ס ",
+   "KJV 2CH 29:11": "My sons, be not now negligent: for the LORD hath chosen you to stand before him, to serve him, and that ye should minister unto him, and burn incense.",
+   "BHSA 2CH 29:12": "וַיָּקֻ֣מוּ הַ֠לְוִיִּם מַ֣חַת בֶּן־עֲמָשַׂ֞י וְיֹואֵ֣ל בֶּן־עֲזַרְיָהוּ֮ מִן־בְּנֵ֣י הַקְּהָתִי֒ וּמִן־בְּנֵ֣י מְרָרִ֔י קִ֚ישׁ בֶּן־עַבְדִּ֔י וַעֲזַרְיָ֖הוּ בֶּן־יְהַלֶּלְאֵ֑ל וּמִן־הַגֵּ֣רְשֻׁנִּ֔י יֹואָח֙ בֶּן־זִמָּ֔ה וְעֵ֖דֶן בֶּן־יֹואָֽח׃ ",
+   "KJV 2CH 29:12": "Then the Levites arose, Mahath the son of Amasai, and Joel the son of Azariah, of the sons of the Kohathites: and of the sons of Merari, Kish the son of Abdi, and Azariah the son of Jehalelel: and of the Gershonites; Joah the son of Zimmah, and Eden the son of Joah:",
+   "BHSA 2CH 29:13": "וּמִן־בְּנֵי֙ אֱלִ֣יצָפָ֔ן שִׁמְרִ֖י ויעואל וּמִן־בְּנֵ֣י אָסָ֔ף זְכַרְיָ֖הוּ וּמַתַּנְיָֽהוּ׃ ס ",
+   "KJV 2CH 29:13": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:"
+  },
+  "A": {
+   "name": "Abdi",
+   "line": "son of Malluch (1CH 6:44)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Merarites (from Mushi, from Merari, son of Levi)",
+   "family": [
+    "father-of kishi (Kishi, son of Abdi (1CH 6:44))",
+    "son-of malluch (Malluch, son of Hashabiah (1CH 6:44))",
+    "father-of kish-son-of-abdi (Kish, a Merarite Levite, son of Abdi, in Hezekiah's day (2CH 29:12)"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Abdi",
+   "line": "Merarite Levite, father of Kish, in reign of Hezekiah",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of kish-son-of-abdi (Kish, a Merarite Levite, son of Abdi, in Hezekiah's day (2CH 29:12)"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew קִישׁ בֶּן־עַבְדִּי identifies Abdi as the father of the Merarite Kish, matching B’s Hezekiah-era description. A also claims this fatherhood, so the supplied text cannot conclusively exclude A, but it provides no connection to A’s father Malluch.",
+ "confidence": 0.72,
+ "names_slug": "abdi-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:36:19+00:00"
+}

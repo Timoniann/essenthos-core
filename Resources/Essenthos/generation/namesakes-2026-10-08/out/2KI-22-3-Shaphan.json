@@ -1,0 +1,54 @@
+{
+ "b": 12,
+ "c": 22,
+ "v": 3,
+ "label": "Shaphan",
+ "dataset_man": "shaphan",
+ "split_man": "shaphan-4",
+ "case": {
+  "verse": "2KI 22:3",
+  "name": "Shaphan",
+  "text": {
+   "BHSA 2KI 22:2": "וַיַּ֥עַשׂ הַיָּשָׁ֖ר בְּעֵינֵ֣י יְהוָ֑ה וַיֵּ֗לֶךְ בְּכָל־דֶּ֨רֶךְ֙ דָּוִ֣ד אָבִ֔יו וְלֹא־סָ֖ר יָמִ֥ין וּשְׂמֹֽאול׃ פ ",
+   "KJV 2KI 22:2": "And he did that which was right in the sight of the LORD, and walked in all the way of David his father, and turned not aside to the right hand or to the left.",
+   "BHSA 2KI 22:3": "וַיְהִ֗י בִּשְׁמֹנֶ֤ה עֶשְׂרֵה֙ שָׁנָ֔ה לַמֶּ֖לֶךְ יֹאשִׁיָּ֑הוּ שָׁלַ֣ח הַ֠מֶּלֶךְ אֶת־שָׁפָ֨ן בֶּן־אֲצַלְיָ֤הוּ בֶן־מְשֻׁלָּם֙ הַסֹּפֵ֔ר בֵּ֥ית יְהוָ֖ה לֵאמֹֽר׃ ",
+   "KJV 2KI 22:3": "And it came to pass in the eighteenth year of king Josiah, that the king sent Shaphan the son of Azaliah, the son of Meshullam, the scribe, to the house of the LORD, saying,",
+   "BHSA 2KI 22:4": "עֲלֵ֗ה אֶל־חִלְקִיָּ֨הוּ֙ הַכֹּהֵ֣ן הַגָּדֹ֔ול וְיַתֵּ֣ם אֶת־הַכֶּ֔סֶף הַמּוּבָ֖א בֵּ֣ית יְהוָ֑ה אֲשֶׁ֥ר אָסְפ֛וּ שֹׁמְרֵ֥י הַסַּ֖ף מֵאֵ֥ת הָעָֽם׃ ",
+   "KJV 2KI 22:4": "Go up to Hilkiah the high priest, that he may sum the silver which is brought into the house of the LORD, which the keepers of the door have gathered of the people:"
+  },
+  "A": {
+   "name": "Shaphan",
+   "line": "scribe of King Josiah (2KI 22:3, 2CH 34:15)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "He was sent to repair the house of the Lord (2CH 34:8)",
+   "family": [
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)",
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "father-of ahikam (Ahikam, son of Shaphan (2KI 22:12))",
+    "grandfather-of gedaliah (Gedaliah, son of Ahikam, appointed King of Judah by Nebuchadnezzar (2K)"
+   ],
+   "verses": 46
+  },
+  "B": {
+   "name": "Shaphan",
+   "line": "Secretary/scribe of King Josiah who read the found law-book to him.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "grandson-of meshullam (Meshullam, father of Azaliah (2KI 22:3))",
+    "companion-of hilkiah-2 (Hilkiah, the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9))",
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)"
+   ],
+   "verses": 9
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew identifies one Shaphan, son of Azaliah and grandson of Meshullam, serving as Josiah’s scribe, matching B’s full stated genealogy. A shares the same father and office, however, so the supplied facts do not conclusively distinguish the records.",
+ "confidence": 0.5,
+ "names_slug": "shaphan-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:31:49+00:00"
+}

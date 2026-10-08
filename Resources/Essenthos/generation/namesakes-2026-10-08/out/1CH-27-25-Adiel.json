@@ -1,0 +1,50 @@
+{
+ "b": 13,
+ "c": 27,
+ "v": 25,
+ "label": "Adiel",
+ "dataset_man": "adiel-2",
+ "split_man": "adiel-3",
+ "case": {
+  "verse": "1CH 27:25",
+  "name": "Adiel",
+  "text": {
+   "BHSA 1CH 27:24": "יֹואָ֨ב בֶּן־צְרוּיָ֜ה הֵחֵ֤ל לִמְנֹות֙ וְלֹ֣א כִלָּ֔ה וַיְהִ֥י בָזֹ֛את קֶ֖צֶף עַל־יִשְׂרָאֵ֑ל וְלֹ֤א עָלָה֙ הַמִּסְפָּ֔ר בְּמִסְפַּ֥ר דִּבְרֵֽי־הַיָּמִ֖ים לַמֶּ֥לֶךְ דָּוִֽיד׃ ס ",
+   "KJV 1CH 27:24": "Joab the son of Zeruiah began to number, but he finished not, because there fell wrath for it against Israel; neither was the number put in the account of the chronicles of king David.",
+   "BHSA 1CH 27:25": "וְעַל֙ אֹצְרֹ֣ות הַמֶּ֔לֶךְ עַזְמָ֖וֶת בֶּן־עֲדִיאֵ֑ל ס וְעַ֣ל הָֽאֹצָרֹ֡ות בַּשָּׂדֶ֞ה בֶּעָרִ֤ים וּבַכְּפָרִים֙ וּבַמִּגְדָּלֹ֔ות יְהֹונָתָ֖ן בֶּן־עֻזִּיָּֽהוּ׃ ס ",
+   "KJV 1CH 27:25": "And over the king's treasures was Azmaveth the son of Adiel: and over the storehouses in the fields, in the cities, and in the villages, and in the castles, was Jehonathan the son of Uzziah:",
+   "BHSA 1CH 27:26": "וְעַ֗ל עֹשֵׂי֙ מְלֶ֣אכֶת הַשָּׂדֶ֔ה לַעֲבֹדַ֖ת הָאֲדָמָ֑ה עֶזְרִ֖י בֶּן־כְּלֽוּב׃ ",
+   "KJV 1CH 27:26": "And over them that did the work of the field for tillage of the ground was Ezri the son of Chelub:"
+  },
+  "A": {
+   "name": "Adiel",
+   "line": "son of Jahzerah (1CH 9:12)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "son-of jahzerah (Jahzerah, son of Meshullam (1CH 9:12))",
+    "father-of maasai (Maasai, son of Adiel (1CH 9:12))",
+    "father-of azmaveth-3 (Azmaveth, in charge of the king's storehouses, son of Adiel (1CH 27:25)"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Adiel",
+   "line": "Father of Azmaveth, David's treasurer",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of azmaveth-3 (Azmaveth, in charge of the king's storehouses, son of Adiel (1CH 27:25)"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew names Adiel as Azmaveth’s father, in the context of King David’s treasury, matching B’s stated identity. However, A also claims the same father–son relationship, so the supplied facts do not conclusively distinguish the records.",
+ "confidence": 0.55,
+ "names_slug": "adiel-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:36:00+00:00"
+}

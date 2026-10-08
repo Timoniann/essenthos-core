@@ -1,0 +1,50 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 1,
+ "label": "Ezra",
+ "dataset_man": "ezra",
+ "split_man": "ezra-3",
+ "case": {
+  "verse": "NEH 12:1",
+  "name": "Ezra",
+  "text": {
+   "BHSA NEH 12:1": "וְאֵ֨לֶּה֙ הַכֹּהֲנִ֣ים וְהַלְוִיִּ֔ם אֲשֶׁ֥ר עָל֛וּ עִם־זְרֻבָּבֶ֥ל בֶּן־שְׁאַלְתִּיאֵ֖ל וְיֵשׁ֑וּעַ שְׂרָיָ֥ה יִרְמְיָ֖ה עֶזְרָֽא׃ ",
+   "KJV NEH 12:1": "Now these are the priests and the Levites that went up with Zerubbabel the son of Shealtiel, and Jeshua: Seraiah, Jeremiah, Ezra,",
+   "BHSA NEH 12:2": "אֲמַרְיָ֥ה מַלּ֖וּךְ חַטּֽוּשׁ׃ ",
+   "KJV NEH 12:2": "Amariah, Malluch, Hattush,"
+  },
+  "A": {
+   "name": "Ezra",
+   "line": "son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "as \"priest\" would be a descendant of Aaron",
+   "family": [
+    "son-of seraiah-2 (Seraiah, the chief priest (2KI 25:18) who was killed by the king of B)",
+    "priest-of yhvh (YHVH, the God of Israel)",
+    "scribe-of yhvh (YHVH, the God of Israel)",
+    "descendant-of hilkiah-2 (Hilkiah, the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9))"
+   ],
+   "verses": 47
+  },
+  "B": {
+   "name": "Ezra",
+   "line": "Priest who returned with Zerubbabel and Jeshua; ancestor of a priestly house later headed by Meshullam",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of meshullam-16 (Meshullam, son of Ezra (NEH 12:13))",
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)"
+   ],
+   "verses": 4
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew lists Ezra among the priests who went up with Zerubbabel and Jeshua, exactly matching B’s stated identity. Seraiah, Jeremiah, and Ezra are separate entries in the list; Seraiah is not identified here as Ezra’s father.",
+ "confidence": 0.99,
+ "names_slug": "ezra-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:41:46+00:00"
+}

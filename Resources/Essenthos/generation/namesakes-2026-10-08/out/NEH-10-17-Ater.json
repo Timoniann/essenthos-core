@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 10,
+ "v": 17,
+ "label": "Ater",
+ "dataset_man": "ater",
+ "split_man": "ater-3",
+ "case": {
+  "verse": "NEH 10:17",
+  "name": "Ater",
+  "text": {
+   "BHSA NEH 10:16": "אֲדֹנִיָּ֥ה בִגְוַ֖י עָדִֽין׃ ",
+   "KJV NEH 10:16": "Adonijah, Bigvai, Adin,",
+   "BHSA NEH 10:17": "אָטֵ֥ר חִזְקִיָּ֖ה עַזּֽוּר׃ ",
+   "KJV NEH 10:17": "Ater, Hizkijah, Azzur,",
+   "BHSA NEH 10:18": "הֹודִיָּ֥ה חָשֻׁ֖ם בֵּצָֽי׃ ",
+   "KJV NEH 10:18": "Hodijah, Hashum, Bezai,"
+  },
+  "A": {
+   "name": "Ater",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:16)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of hezekiah-2 (Hezekiah, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Ater",
+   "line": "Chief Israelite (or representative of the family) who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew lists Ater among the covenant sealers, matching B’s stated role. It provides no descent formula connecting him to Hezekiah or identifying him as A, the ancestor of returning descendants.",
+ "confidence": 0.94,
+ "names_slug": "ater-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:40:44+00:00"
+}

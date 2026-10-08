@@ -1,0 +1,48 @@
+{
+ "b": 15,
+ "c": 8,
+ "v": 16,
+ "label": "Zechariah",
+ "dataset_man": "zechariah-16",
+ "split_man": "zechariah-24",
+ "case": {
+  "verse": "EZR 8:16",
+  "name": "Zechariah",
+  "text": {
+   "BHSA EZR 8:15": "וָֽאֶקְבְּצֵ֗ם אֶל־הַנָּהָר֙ הַבָּ֣א אֶֽל־אַהֲוָ֔א וַנַּחֲנֶ֥ה שָׁ֖ם יָמִ֣ים שְׁלֹשָׁ֑ה וָאָבִ֤ינָה בָעָם֙ וּבַכֹּ֣הֲנִ֔ים וּמִבְּנֵ֥י לֵוִ֖י לֹא־מָצָ֥אתִי שָֽׁם׃ ",
+   "KJV EZR 8:15": "And I gathered them together to the river that runneth to Ahava; and there abode we in tents three days: and I viewed the people, and the priests, and found there none of the sons of Levi.",
+   "BHSA EZR 8:16": "וָאֶשְׁלְחָ֡ה לֶאֱלִיעֶ֡זֶר לַאֲרִיאֵ֡ל לִֽ֠שְׁמַעְיָה וּלְאֶלְנָתָ֨ן וּלְיָרִ֜יב וּלְאֶלְנָתָ֧ן וּלְנָתָ֛ן וְלִזְכַרְיָ֥ה וְלִמְשֻׁלָּ֖ם רָאשִׁ֑ים וּלְיֹויָרִ֥יב וּלְאֶלְנָתָ֖ן מְבִינִֽים׃ ",
+   "KJV EZR 8:16": "Then sent I for Eliezer, for Ariel, for Shemaiah, and for Elnathan, and for Jarib, and for Elnathan, and for Nathan, and for Zechariah, and for Meshullam, chief men; also for Joiarib, and for Elnathan, men of understanding.",
+   "BHSA EZR 8:17": "ואוצאה אֹותָם֙ עַל־אִדֹּ֣ו הָרֹ֔אשׁ בְּכָסִפְיָ֖א הַמָּקֹ֑ום וָאָשִׂימָה֩ בְּפִיהֶ֨ם דְּבָרִ֜ים לְ֠דַבֵּר אֶל־אִדֹּ֨ו אָחִ֤יו הנתונים בְּכָסִפְיָ֣א הַמָּקֹ֔ום לְהָֽבִיא־לָ֥נוּ מְשָׁרְתִ֖ים לְבֵ֥ית אֱלֹהֵֽינוּ׃ ",
+   "KJV EZR 8:17": "And I sent them with commandment unto Iddo the chief at the place Casiphia, and I told them what they should say unto Iddo, and to his brethren the Nethinims, at the place Casiphia, that they should bring unto us ministers for the house of our God."
+  },
+  "A": {
+   "name": "Zechariah",
+   "line": "descendant of Shecaniah (EZR 8:3), a Levite Ezra sent to Iddo (EZR 8:16) (his grandfather?)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "descendant-of parosh (Parosh, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Zechariah",
+   "line": "Chief summoned by Ezra to Ahava, later stood at his left hand expounding the law.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)"
+   ],
+   "verses": 4
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew lists Zechariah among the רָאשִׁים (“chief men”) whom Ezra summoned at Ahava and sent to obtain temple ministers, matching B’s stated role. The preceding verse says Ezra found no Levites among the gathered company, which weighs against A’s identification as a Levite.",
+ "confidence": 0.9,
+ "names_slug": "zechariah-24",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:38:27+00:00"
+}

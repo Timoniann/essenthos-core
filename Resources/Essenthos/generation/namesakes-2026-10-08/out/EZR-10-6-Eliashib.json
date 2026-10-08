@@ -1,0 +1,50 @@
+{
+ "b": 15,
+ "c": 10,
+ "v": 6,
+ "label": "Eliashib",
+ "dataset_man": "eliashib-3",
+ "split_man": "eliashib-7",
+ "case": {
+  "verse": "EZR 10:6",
+  "name": "Eliashib",
+  "text": {
+   "BHSA EZR 10:5": "וַיָּ֣קָם עֶזְרָ֡א וַיַּשְׁבַּ֣ע אֶת־שָׂרֵי֩ הַכֹּהֲנִ֨ים הַלְוִיִּ֜ם וְכָל־יִשְׂרָאֵ֗ל לַעֲשֹׂ֛ות כַּדָּבָ֥ר הַזֶּ֖ה וַיִּשָּׁבֵֽעוּ׃ ",
+   "KJV EZR 10:5": "Then arose Ezra, and made the chief priests, the Levites, and all Israel, to swear that they should do according to this word. And they sware.",
+   "BHSA EZR 10:6": "וַיָּ֣קָם עֶזְרָ֗א מִלִּפְנֵי֙ בֵּ֣ית הָֽאֱלֹהִ֔ים וַיֵּ֕לֶךְ אֶל־לִשְׁכַּ֖ת יְהֹוחָנָ֣ן בֶּן־אֶלְיָשִׁ֑יב וַיֵּ֣לֶךְ שָׁ֗ם לֶ֤חֶם לֹֽא־אָכַל֙ וּמַ֣יִם לֹֽא־שָׁתָ֔ה כִּ֥י מִתְאַבֵּ֖ל עַל־מַ֥עַל הַגֹּולָֽה׃ ס ",
+   "KJV EZR 10:6": "Then Ezra rose up from before the house of God, and went into the chamber of Johanan the son of Eliashib: and when he came thither, he did eat no bread, nor drink water: for he mourned because of the transgression of them that had been carried away.",
+   "BHSA EZR 10:7": "וַיַּעֲבִ֨ירוּ קֹ֜ול בִּיהוּדָ֣ה וִירֽוּשָׁלִַ֗ם לְכֹל֙ בְּנֵ֣י הַגֹּולָ֔ה לְהִקָּבֵ֖ץ יְרוּשָׁלִָֽם׃ ",
+   "KJV EZR 10:7": "And they made proclamation throughout Judah and Jerusalem unto all the children of the captivity, that they should gather themselves together unto Jerusalem;"
+  },
+  "A": {
+   "name": "Eliashib",
+   "line": "father of Jehohanan in whose house Ezra mourned (EZR 10:6)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Levite based on NEH 12:23",
+   "family": [
+    "father-of jehohanan (Jehohanan, in his house, Ezra mourned over the unfaithfulness of Israel)"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Eliashib",
+   "line": "the high priest with Nehemiah during the reconstruction of Jerusalem (NEH 3:1)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "high-priest-of yhvh (YHVH, the God of Israel)",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))",
+    "son-of joiakim (Joiakim, son of Jeshua and father of Eliashib (NEH 12:10))"
+   ],
+   "verses": 20
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew identifies Eliashib as the father of Johanan (יְהוֹחָנָן בֶּן־אֶלְיָשִׁיב), whose chamber Ezra entered, exactly matching A’s stated family relationship. The surrounding verses provide no identification with B’s high-priestly office or father Joiakim.",
+ "confidence": 0.98,
+ "names_slug": "eliashib-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:38:35+00:00"
+}

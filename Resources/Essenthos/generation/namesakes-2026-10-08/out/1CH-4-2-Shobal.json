@@ -1,0 +1,50 @@
+{
+ "b": 13,
+ "c": 4,
+ "v": 2,
+ "label": "Shobal",
+ "dataset_man": "shobal-2",
+ "split_man": "shobal-3",
+ "case": {
+  "verse": "1CH 4:2",
+  "name": "Shobal",
+  "text": {
+   "BHSA 1CH 4:1": "בְּנֵ֖י יְהוּדָ֑ה פֶּ֧רֶץ חֶצְרֹ֛ון וְכַרְמִ֖י וְח֥וּר וְשֹׁובָֽל׃ ",
+   "KJV 1CH 4:1": "The sons of Judah; Pharez, Hezron, and Carmi, and Hur, and Shobal.",
+   "BHSA 1CH 4:2": "וּרְאָיָ֤ה בֶן־שֹׁובָל֙ הֹולִ֣יד אֶת־יַ֔חַת וְיַ֣חַת הֹלִ֔יד אֶת־אֲחוּמַ֖י וְאֶת־לָ֑הַד אֵ֖לֶּה מִשְׁפְּחֹ֥ות הַצָּֽרְעָתִֽי׃ ס ",
+   "KJV 1CH 4:2": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites.",
+   "BHSA 1CH 4:3": "וְאֵ֨לֶּה֙ אֲבִ֣י עֵיטָ֔ם יִזְרְעֶ֥אל וְיִשְׁמָ֖א וְיִדְבָּ֑שׁ וְשֵׁ֥ם אֲחֹותָ֖ם הַצְלֶלְפֹּֽונִי׃ ",
+   "KJV 1CH 4:3": "And these were of the father of Etam; Jezreel, and Ishma, and Idbash: and the name of their sister was Hazelelponi:"
+  },
+  "A": {
+   "name": "Shobal",
+   "line": "son of Hur who founded Kiriath-jearim (1CH 2:50)",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": null,
+   "family": [
+    "descendant-of judah (Judah, fourth-born son of Jacob (GEN 29:35), son of Leah)",
+    "father-of reaiah (Reaiah, son of Shobal (1CH 4:2))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Shobal",
+   "line": "Listed among sons of Judah, father of Reaiah, ancestor of Zorathites; may duplicate bearer 2",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of judah (Judah, fourth-born son of Jacob (GEN 29:35), son of Leah)",
+    "father-of reaiah (Reaiah, son of Shobal (1CH 4:2))"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "Reaiah is called בֶן־שׁוֹבָל, “son of Shobal,” and his descendants are Zorathite families, matching B’s stated identity in Judah’s list. However, A also names Reaiah as his son, and this passage does not explicitly identify Shobal’s father, so the distinction remains uncertain.",
+ "confidence": 0.51,
+ "names_slug": "shobal-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:32:55+00:00"
+}

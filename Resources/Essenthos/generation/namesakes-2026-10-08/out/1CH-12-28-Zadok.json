@@ -1,0 +1,48 @@
+{
+ "b": 13,
+ "c": 12,
+ "v": 28,
+ "label": "Zadok",
+ "dataset_man": "zadok",
+ "split_man": "zadok-9",
+ "case": {
+  "verse": "1CH 12:28",
+  "name": "Zadok",
+  "text": {
+   "BHSA 1CH 12:27": "וִיהֹויָדָ֖ע הַנָּגִ֣יד לְאַהֲרֹ֑ן וְעִמֹּ֕ו שְׁלֹ֥שֶׁת אֲלָפִ֖ים וּשְׁבַ֥ע מֵאֹֽות׃ ס ",
+   "KJV 1CH 12:27": "And Jehoiada was the leader of the Aaronites, and with him were three thousand and seven hundred;",
+   "BHSA 1CH 12:28": "וְצָדֹ֥וק נַ֖עַר גִּבֹּ֣ור חָ֑יִל וּבֵית־אָבִ֥יו שָׂרִ֖ים עֶשְׂרִ֥ים וּשְׁנָֽיִם׃ ס ",
+   "KJV 1CH 12:28": "And Zadok, a young man mighty of valour, and of his father's house twenty and two captains.",
+   "BHSA 1CH 12:29": "וּמִן־בְּנֵ֧י בִנְיָמִ֛ן אֲחֵ֥י שָׁא֖וּל שְׁלֹ֣שֶׁת אֲלָפִ֑ים וְעַד־הֵ֨נָּה֙ מַרְבִּיתָ֔ם שֹׁמְרִ֕ים מִשְׁמֶ֖רֶת בֵּ֥ית שָׁאֽוּל׃ ס ",
+   "KJV 1CH 12:29": "And of the children of Benjamin, the kindred of Saul, three thousand: for hitherto the greatest part of them had kept the ward of the house of Saul."
+  },
+  "A": {
+   "name": "Zadok",
+   "line": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Aaronic priest through Eleazar",
+   "family": [
+    "son-of ahitub-2 (Ahitub, (grand) father of Zadok the priest (2SA 8:17, 1CH 9:11), son)",
+    "father-of ahimaaz-2 (Ahimaaz, son of Zadok the priest (2SA 15:27))",
+    "priest-of yhvh (YHVH, the God of Israel)"
+   ],
+   "verses": 80
+  },
+  "B": {
+   "name": "Zadok",
+   "line": "Valiant young Benjamite warrior who joined David at Hebron; possibly identical to 1",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "A",
+ "why": "Zadok appears immediately after Jehoiada and the Aaronites; verse 29 then introduces a separate group with וּמִן־בְּנֵי בִנְיָמִן, “and from the sons of Benjamin.” This placement supports A’s Aaronic lineage rather than B’s stated Benjamite identity.",
+ "confidence": 0.93,
+ "names_slug": "zadok",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:40+00:00"
+}

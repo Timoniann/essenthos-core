@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 34,
+ "label": "Shemaiah",
+ "dataset_man": "shemaiah-19",
+ "split_man": "shemaiah-25",
+ "case": {
+  "verse": "NEH 12:34",
+  "name": "Shemaiah",
+  "text": {
+   "BHSA NEH 12:33": "וַעֲזַרְיָ֥ה עֶזְרָ֖א וּמְשֻׁלָּֽם׃ ",
+   "KJV NEH 12:33": "And Azariah, Ezra, and Meshullam,",
+   "BHSA NEH 12:34": "יְהוּדָה֙ וּבִנְיָמִ֔ן וּֽשְׁמַֽעְיָ֖ה וְיִרְמְיָֽה׃ ס ",
+   "KJV NEH 12:34": "Judah, and Benjamin, and Shemaiah, and Jeremiah,",
+   "BHSA NEH 12:35": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ ",
+   "KJV NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+  },
+  "A": {
+   "name": "Shemaiah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:8)",
+   "family": [
+    "ancestor-of jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Shemaiah",
+   "line": "Leader of the people processing at the wall's dedication",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 3
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew lists Shemaiah among the dedication procession’s participants, matching B’s stated role. Nothing identifies him as A, the covenant-signing priest; the ancestral Shemaiah in verse 35 belongs to a separate genealogy.",
+ "confidence": 0.9,
+ "names_slug": "shemaiah-25",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:44:16+00:00"
+}

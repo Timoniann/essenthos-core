@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 6,
+ "label": "Shemaiah",
+ "dataset_man": "shemaiah-19",
+ "split_man": "shemaiah-24",
+ "case": {
+  "verse": "NEH 12:6",
+  "name": "Shemaiah",
+  "text": {
+   "BHSA NEH 12:5": "מִיָּמִ֥ין מַֽעַדְיָ֖ה בִּלְגָּֽה׃ ",
+   "KJV NEH 12:5": "Miamin, Maadiah, Bilgah,",
+   "BHSA NEH 12:6": "שְׁמַֽעְיָ֥ה וְיֹויָרִ֖יב יְדַֽעְיָֽה׃ ",
+   "KJV NEH 12:6": "Shemaiah, and Joiarib, Jedaiah,",
+   "BHSA NEH 12:7": "סַלּ֣וּ עָמֹ֔וק חִלְקִיָּ֖ה יְדַֽעְיָ֑ה אֵ֣לֶּה רָאשֵׁ֧י הַכֹּהֲנִ֛ים וַאֲחֵיהֶ֖ם בִּימֵ֥י יֵשֽׁוּעַ׃ פ ",
+   "KJV NEH 12:7": "Sallu, Amok, Hilkiah, Jedaiah. These were the chief of the priests and of their brethren in the days of Jeshua."
+  },
+  "A": {
+   "name": "Shemaiah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:8)",
+   "family": [
+    "ancestor-of jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Shemaiah",
+   "line": "Priest who returned from exile with Zerubbabel, head of a priestly house",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18))"
+   ],
+   "verses": 4
+  }
+ },
+ "names": "B",
+ "why": "שְׁמַעְיָה appears in the priestly list that verse 7 identifies as the chief priests in Jeshua’s days, matching B’s stated role and period. A’s covenant-signing identification and the shared Jehonathan relationship do not outweigh that contextual match.",
+ "confidence": 0.95,
+ "names_slug": "shemaiah-24",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:42:41+00:00"
+}

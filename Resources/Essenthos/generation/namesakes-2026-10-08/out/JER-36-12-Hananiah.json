@@ -1,0 +1,48 @@
+{
+ "b": 24,
+ "c": 36,
+ "v": 12,
+ "label": "Hananiah",
+ "dataset_man": "hananiah-10",
+ "split_man": "hananiah-13",
+ "case": {
+  "verse": "JER 36:12",
+  "name": "Hananiah",
+  "text": {
+   "BHSA JER 36:11": "וַ֠יִּשְׁמַ֗ע מִכָ֨יְהוּ בֶן־גְּמַרְיָ֧הוּ בֶן־שָׁפָ֛ן אֶת־כָּל־דִּבְרֵ֥י יְהוָ֖ה מֵעַ֥ל הַסֵּֽפֶר׃ ",
+   "KJV JER 36:11": "When Michaiah the son of Gemariah, the son of Shaphan, had heard out of the book all the words of the LORD,",
+   "BHSA JER 36:12": "וַיֵּ֤רֶד בֵּית־הַמֶּ֨לֶךְ֙ עַל־לִשְׁכַּ֣ת הַסֹּפֵ֔ר וְהִ֨נֵּה־שָׁ֔ם כָּל־הַשָּׂרִ֖ים יֹֽושְׁבִ֑ים אֱלִישָׁמָ֣ע הַסֹּפֵ֡ר וּדְלָיָ֣הוּ בֶן־שְׁ֠מַעְיָהוּ וְאֶלְנָתָ֨ן בֶּן־עַכְבֹּ֜ור וּגְמַרְיָ֧הוּ בֶן־שָׁפָ֛ן וְצִדְקִיָּ֥הוּ בֶן־חֲנַנְיָ֖הוּ וְכָל־הַשָּׂרִֽים׃ ",
+   "KJV JER 36:12": "Then he went down into the king's house, into the scribe's chamber: and, lo, all the princes sat there, even Elishama the scribe, and Delaiah the son of Shemaiah, and Elnathan the son of Achbor, and Gemariah the son of Shaphan, and Zedekiah the son of Hananiah, and all the princes.",
+   "BHSA JER 36:13": "וַיַּגֵּ֤ד לָהֶם֙ מִכָ֔יְהוּ אֵ֥ת כָּל־הַדְּבָרִ֖ים אֲשֶׁ֣ר שָׁמֵ֑עַ בִּקְרֹ֥א בָר֛וּךְ בַּסֵּ֖פֶר בְּאָזְנֵ֥י הָעָֽם׃ ",
+   "KJV JER 36:13": "Then Michaiah declared unto them all the words that he had heard, when Baruch read the book in the ears of the people."
+  },
+  "A": {
+   "name": "Hananiah",
+   "line": "the [false] prophet, son of Azzur (JER 28:1)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of azzur-2 (Azzur, father of Hananiah (JER 28:1))"
+   ],
+   "verses": 17
+  },
+  "B": {
+   "name": "Hananiah",
+   "line": "Father of Zedekiah, a prince in Jehoiakim's court in Jeremiah's day",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of zedekiah-5 (Zedekiah, son of Hananiah, an official (JER 36:12))"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew names צִדְקִיָּהוּ בֶן־חֲנַנְיָהוּ, “Zedekiah son of Hananiah,” among the court officials, matching B’s stated fatherhood of that official. A is identified as the prophet son of Azzur, with no stated connection to this Zedekiah.",
+ "confidence": 0.99,
+ "names_slug": "hananiah-13",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:45:19+00:00"
+}

@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 10,
+ "v": 27,
+ "label": "Malluch",
+ "dataset_man": "malluch-2",
+ "split_man": "malluch-5",
+ "case": {
+  "verse": "NEH 10:27",
+  "name": "Malluch",
+  "text": {
+   "BHSA NEH 10:26": "וַאֲחִיָּ֥ה חָנָ֖ן עָנָֽן׃ ",
+   "KJV NEH 10:26": "And Ahijah, Hanan, Anan,",
+   "BHSA NEH 10:27": "מַלּ֥וּךְ חָרִ֖ם בַּעֲנָֽה׃ ",
+   "KJV NEH 10:27": "Malluch, Harim, Baanah.",
+   "BHSA NEH 10:28": "וּשְׁאָ֣ר הָעָ֡ם הַכֹּהֲנִ֣ים הַ֠לְוִיִּם הַשֹּׁועֲרִ֨ים הַמְשֹׁרְרִ֜ים הַנְּתִינִ֗ים וְֽכָל־הַנִּבְדָּ֞ל מֵעַמֵּ֤י הָאֲרָצֹות֙ אֶל־תֹּורַ֣ת הָאֱלֹהִ֔ים נְשֵׁיהֶ֖ם בְּנֵיהֶ֣ם וּבְנֹתֵיהֶ֑ם כֹּ֖ל יֹודֵ֥עַ מֵבִֽין׃ ",
+   "KJV NEH 10:28": "And the rest of the people, the priests, the Levites, the porters, the singers, the Nethinims, and all they that had separated themselves from the people of the lands unto the law of God, their wives, their sons, and their daughters, every one having knowledge, and having understanding;"
+  },
+  "A": {
+   "name": "Malluch",
+   "line": "descendant of Bani who had married a foreign wife (EZR 10:29)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:27)",
+   "family": [
+    "descendant-of bani-4 (Bani, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "verses": 3
+  },
+  "B": {
+   "name": "Malluch",
+   "line": "Lay leader of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "מַלּוּךְ closes the covenant-signatory list before “the rest of the people” in verse 28, fitting B’s stated role. However, no patronymic distinguishes him from Bani’s descendant, and A’s notes also claim this occurrence, so the identification is uncertain.",
+ "confidence": 0.58,
+ "names_slug": "malluch-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:41:28+00:00"
+}

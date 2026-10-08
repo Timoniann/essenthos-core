@@ -1,0 +1,50 @@
+{
+ "b": 13,
+ "c": 6,
+ "v": 23,
+ "label": "Elkanah",
+ "dataset_man": "elkanah",
+ "split_man": "elkanah-4",
+ "case": {
+  "verse": "1CH 6:23",
+  "name": "Elkanah",
+  "text": {
+   "BHSA 1CH 6:22": "בְּנֵ֖י קְהָ֑ת עַמִּינָדָ֣ב בְּנֹ֔ו קֹ֥רַח בְּנֹ֖ו אַסִּ֥יר בְּנֹֽו׃ ",
+   "KJV 1CH 6:22": "The sons of Kohath; Amminadab his son, Korah his son, Assir his son,",
+   "BHSA 1CH 6:23": "אֶלְקָנָ֥ה בְנֹ֛ו וְאֶבְיָסָ֥ף בְּנֹ֖ו וְאַסִּ֥יר בְּנֹֽו׃ ",
+   "KJV 1CH 6:23": "Elkanah his son, and Ebiasaph his son, and Assir his son,",
+   "BHSA 1CH 6:24": "תַּ֤חַת בְּנֹו֙ אוּרִיאֵ֣ל בְּנֹ֔ו עֻזִּיָּ֥ה בְנֹ֖ו וְשָׁא֥וּל בְּנֹֽו׃ ",
+   "KJV 1CH 6:24": "Tahath his son, Uriel his son, Uzziah his son, and Shaul his son."
+  },
+  "A": {
+   "name": "Elkanah",
+   "line": "son of Korah (EXO 6:24)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Son of Korah.  Did not die in the rebellion (NUM 26:11)",
+   "family": [
+    "son-of korah-3 (Korah, son of Izhar (EXO 6:21) who rebelled against G-d and Moses ()"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Elkanah",
+   "line": "father of Amasai and Ahimoth (1CH 6:25) and son of Joel (1CH 6:36)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "father-of amasai (Amasai, son of Elkanah (1CH 6:25, 1CH 6:35))",
+    "father-of ahimoth (Ahimoth, son of Elkanah (1CH 6:25))",
+    "son-of mahath (Mahath, son of Amasai (1CH 6:35))"
+   ],
+   "verses": 9
+  }
+ },
+ "names": "A",
+ "why": "Elkanah appears in the Korah–Assir–Ebiasaph portion of the genealogy, matching A’s Korah family rather than B’s later connection with Amasai and Ahimoth. The repeated Hebrew בְנוֹ (“his son”) makes the exact parentage less explicit, so the identification is not certain from this verse alone.",
+ "confidence": 0.86,
+ "names_slug": "elkanah",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:33:05+00:00"
+}

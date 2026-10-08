@@ -1,0 +1,46 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 42,
+ "label": "Uzzi",
+ "dataset_man": "uzzi-6",
+ "split_man": "uzzi-7",
+ "case": {
+  "verse": "NEH 12:42",
+  "name": "Uzzi",
+  "text": {
+   "BHSA NEH 12:41": "וְהַכֹּהֲנִ֡ים אֶלְיָקִ֡ים מַעֲשֵׂיָ֡ה מִ֠נְיָמִין מִיכָיָ֧ה אֶלְיֹועֵינַ֛י זְכַרְיָ֥ה חֲנַנְיָ֖ה בַּחֲצֹצְרֹֽות׃ ",
+   "KJV NEH 12:41": "And the priests; Eliakim, Maaseiah, Miniamin, Michaiah, Elioenai, Zechariah, and Hananiah, with trumpets;",
+   "BHSA NEH 12:42": "וּמַעֲשֵׂיָ֨ה וּֽשְׁמַֽעְיָ֜ה וְאֶלְעָזָ֧ר וְעֻזִּ֛י וִֽיהֹוחָנָ֥ן וּמַלְכִּיָּ֖ה וְעֵילָ֣ם וָעָ֑זֶר וַיַּשְׁמִ֨יעוּ֙ הַמְשֹׁ֣רְרִ֔ים וְיִֽזְרַחְיָ֖ה הַפָּקִֽיד׃ ",
+   "KJV NEH 12:42": "And Maaseiah, and Shemaiah, and Eleazar, and Uzzi, and Jehohanan, and Malchijah, and Elam, and Ezer. And the singers sang loud, with Jezrahiah their overseer.",
+   "BHSA NEH 12:43": "וַיִּזְבְּח֣וּ בַיֹּום־הַ֠הוּא זְבָחִ֨ים גְּדֹולִ֜ים וַיִּשְׂמָ֗חוּ כִּ֤י הָאֱלֹהִים֙ שִׂמְּחָם֙ שִׂמְחָ֣ה גְדֹולָ֔ה וְגַ֧ם הַנָּשִׁ֛ים וְהַיְלָדִ֖ים שָׂמֵ֑חוּ וַתִּשָּׁמַ֛ע שִׂמְחַ֥ת יְרוּשָׁלִַ֖ם מֵרָחֹֽוק׃ ",
+   "KJV NEH 12:43": "Also that day they offered great sacrifices, and rejoiced: for God had made them rejoice with great joy: the wives also and the children rejoiced: so that the joy of Jerusalem was heard even afar off."
+  },
+  "A": {
+   "name": "Uzzi",
+   "line": "son of Jedaiah (NEH 12:19)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "As \"priests\" (NEH 12:12), descendants of Aaron",
+   "family": [
+    "descendant-of jedaiah-2 (Jedaiah, priest (1CH 9:10, NEH 7:39, NEH 12:6), of the house of Jeshu)"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Uzzi",
+   "line": "Priest who sang at Ezra's wall dedication, possibly same as #6",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew lists one Uzzi among the participants in the celebration with singers and sacrifices, matching B’s wall-dedication role. It gives no father or priestly house identifying him as A, though the two records could describe the same historical person.",
+ "confidence": 0.76,
+ "names_slug": "uzzi-7",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:44:53+00:00"
+}

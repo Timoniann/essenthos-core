@@ -144,6 +144,10 @@ services:
       # over plain http from the proxy, and builds its links and its sign-in callbacks accordingly.
       ForwardedHeaders__KnownProxies: 10.89.0.2
       Images__Path: /images
+      # The texts that may be passed on, listed at /v1/downloads from the manifest in this folder, each with
+      # a link on this origin: the proxy serves the same folder at /downloads.
+      Downloads__Folder: /downloads
+      Downloads__BaseUrl: /downloads
       # Each page of the reader written out for search engines and link previews: the address every
       # absolute link names, and the reader's own index.html, read from the web container so the page
       # always names the scripts that container serves.
@@ -153,6 +157,8 @@ services:
       # The pictures the corpus's rows name. The rows arrive in the release; `forge publish` puts the
       # files here beside it, one folder per corpus, before it swaps the release in.
       - ${HOST_DATA_ROOT}/images/corpus:/images:ro
+      # What `forge publish` sent of `forge export`: the manifest and the files it names.
+      - ${HOST_DATA_ROOT}/downloads:/downloads:ro
       # The smaller copies the API makes of them on first request, kept across a restart. Nothing in
       # it is unique: lost, each copy is made again the next time it is asked for.
       - image-cache:/image-cache
@@ -198,10 +204,13 @@ services:
       Cors__AllowedOrigins__0: https://${DEV_DOMAIN:?set DEV_DOMAIN}
       ForwardedHeaders__KnownProxies: 10.89.0.2
       Images__Path: /images
+      Downloads__Folder: /downloads
+      Downloads__BaseUrl: /downloads
       Site__Origin: https://${DEV_DOMAIN}
       Site__Shell: http://web-dev:8080/index.html
     volumes:
       - ${HOST_DATA_ROOT}/images/corpus_dev:/images:ro
+      - ${HOST_DATA_ROOT}/downloads_dev:/downloads:ro
       - image-cache-dev:/image-cache
     depends_on:
       db:
@@ -245,6 +254,9 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
       - ${HOST_DATA_ROOT}/caddy/data:/data
       - ${HOST_DATA_ROOT}/caddy/config:/config
+      # The downloads, served read-only at /downloads (see the Caddyfile).
+      - ${HOST_DATA_ROOT}/downloads:/srv/downloads:ro
+      - ${HOST_DATA_ROOT}/downloads_dev:/srv/downloads_dev:ro
     depends_on:
       - api
       - web

@@ -1,0 +1,46 @@
+{
+ "b": 13,
+ "c": 15,
+ "v": 18,
+ "label": "Benaiah",
+ "dataset_man": "benaiah-4",
+ "split_man": "benaiah-12",
+ "case": {
+  "verse": "1CH 15:18",
+  "name": "Benaiah",
+  "text": {
+   "BHSA 1CH 15:17": "וַיַּעֲמִ֣ידוּ הַלְוִיִּ֗ם אֵ֚ת הֵימָ֣ן בֶּן־יֹואֵ֔ל וּמִ֨ן־אֶחָ֔יו אָסָ֖ף בֶּן־בֶּֽרֶכְיָ֑הוּ ס וּמִן־בְּנֵ֤י מְרָרִי֙ אֲחֵיהֶ֔ם אֵיתָ֖ן בֶּן־קֽוּשָׁיָֽהוּ׃ ",
+   "KJV 1CH 15:17": "So the Levites appointed Heman the son of Joel; and of his brethren, Asaph the son of Berechiah; and of the sons of Merari their brethren, Ethan the son of Kushaiah;",
+   "BHSA 1CH 15:18": "וְעִמָּהֶ֖ם אֲחֵיהֶ֣ם הַמִּשְׁנִ֑ים זְכַרְיָ֡הוּ בֵּ֡ן וְיַֽעֲזִיאֵ֡ל וּשְׁמִֽירָמֹ֡ות וִיחִיאֵ֣ל׀ וְעֻנִּ֡י אֱלִיאָ֡ב וּבְנָיָ֡הוּ וּמַֽעֲשֵׂיָ֡הוּ וּמַתִּתְיָהוּ֩ וֶאֱלִ֨יפְלֵ֜הוּ וּמִקְנֵיָ֨הוּ וְעֹבֵ֥ד אֱדֹ֛ם וִֽיעִיאֵ֖ל הַשֹּׁעֲרִֽים׃ ",
+   "KJV 1CH 15:18": "And with them their brethren of the second degree, Zechariah, Ben, and Jaaziel, and Shemiramoth, and Jehiel, and Unni, Eliab, and Benaiah, and Maaseiah, and Mattithiah, and Elipheleh, and Mikneiah, and Obededom, and Jeiel, the porters.",
+   "BHSA 1CH 15:19": "וְהַמְשֹׁ֣רְרִ֔ים הֵימָ֥ן אָסָ֖ף וְאֵיתָ֑ן בִּמְצִלְתַּ֥יִם נְחֹ֖שֶׁת לְהַשְׁמִֽיעַ׃ ",
+   "KJV 1CH 15:19": "So the singers, Heman, Asaph, and Ethan, were appointed to sound with cymbals of brass;"
+  },
+  "A": {
+   "name": "Benaiah",
+   "line": "a Levite of the second degree who played the psaltery before the ark (1CH 15:18, 15:20, 16:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Benaiah",
+   "line": "Levite of second degree who played the psaltery on Alamoth before the ark",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "A",
+ "why": "The single וּבְנָיָהוּ is listed among the Levites’ brethren of the second degree, matching A’s stated identification. B describes the same role, however, so the supplied text and facts do not distinguish A from B.",
+ "confidence": 0.5,
+ "names_slug": "benaiah-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:35:23+00:00"
+}

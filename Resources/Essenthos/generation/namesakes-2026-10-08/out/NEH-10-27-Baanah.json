@@ -1,0 +1,47 @@
+{
+ "b": 16,
+ "c": 10,
+ "v": 27,
+ "label": "Baanah",
+ "dataset_man": "baanah-3",
+ "split_man": "baanah-4",
+ "case": {
+  "verse": "NEH 10:27",
+  "name": "Baanah",
+  "text": {
+   "BHSA NEH 10:26": "וַאֲחִיָּ֥ה חָנָ֖ן עָנָֽן׃ ",
+   "KJV NEH 10:26": "And Ahijah, Hanan, Anan,",
+   "BHSA NEH 10:27": "מַלּ֥וּךְ חָרִ֖ם בַּעֲנָֽה׃ ",
+   "KJV NEH 10:27": "Malluch, Harim, Baanah.",
+   "BHSA NEH 10:28": "וּשְׁאָ֣ר הָעָ֡ם הַכֹּהֲנִ֣ים הַ֠לְוִיִּם הַשֹּׁועֲרִ֨ים הַמְשֹׁרְרִ֜ים הַנְּתִינִ֗ים וְֽכָל־הַנִּבְדָּ֞ל מֵעַמֵּ֤י הָאֲרָצֹות֙ אֶל־תֹּורַ֣ת הָאֱלֹהִ֔ים נְשֵׁיהֶ֖ם בְּנֵיהֶ֣ם וּבְנֹתֵיהֶ֑ם כֹּ֖ל יֹודֵ֥עַ מֵבִֽין׃ ",
+   "KJV NEH 10:28": "And the rest of the people, the priests, the Levites, the porters, the singers, the Nethinims, and all they that had separated themselves from the people of the lands unto the law of God, their wives, their sons, and their daughters, every one having knowledge, and having understanding;"
+  },
+  "A": {
+   "name": "Baanah",
+   "line": "returned to Judah after the Babylonian captivity (EZR 2:2, NEH 7:7)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:27)",
+   "family": [
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "verses": 5
+  },
+  "B": {
+   "name": "Baanah",
+   "line": "chief of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "בַּעֲנָה concludes the covenant signers’ list before “the rest of the people” in verse 28, matching B’s stated role. No patronymic or other identifying detail establishes that he is A, Zerubbabel’s companion, despite A’s note claiming this verse.",
+ "confidence": 0.6,
+ "names_slug": "baanah-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:41:30+00:00"
+}

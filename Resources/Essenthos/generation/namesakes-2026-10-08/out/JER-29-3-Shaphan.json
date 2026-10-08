@@ -1,0 +1,51 @@
+{
+ "b": 24,
+ "c": 29,
+ "v": 3,
+ "label": "Shaphan",
+ "dataset_man": "shaphan",
+ "split_man": "shaphan-5",
+ "case": {
+  "verse": "JER 29:3",
+  "name": "Shaphan",
+  "text": {
+   "BHSA JER 29:2": "אַחֲרֵ֣י צֵ֣את יְכָנְיָֽה־הַ֠מֶּלֶךְ וְהַגְּבִירָ֨ה וְהַסָּרִיסִ֜ים שָׂרֵ֨י יְהוּדָ֧ה וִירוּשָׁלִַ֛ם וְהֶחָרָ֥שׁ וְהַמַּסְגֵּ֖ר מִירוּשָׁלִָֽם׃ ",
+   "KJV JER 29:2": "(After that Jeconiah the king, and the queen, and the eunuchs, the princes of Judah and Jerusalem, and the carpenters, and the smiths, were departed from Jerusalem;)",
+   "BHSA JER 29:3": "בְּיַד֙ אֶלְעָשָׂ֣ה בֶן־שָׁפָ֔ן וּגְמַרְיָ֖ה בֶּן־חִלְקִיָּ֑ה אֲשֶׁ֨ר שָׁלַ֜ח צִדְקִיָּ֣ה מֶֽלֶךְ־יְהוּדָ֗ה אֶל־נְבוּכַדְנֶאצַּ֛ר מֶ֥לֶךְ בָּבֶ֖ל בָּבֶ֥לָה לֵאמֹֽר׃ ס ",
+   "KJV JER 29:3": "By the hand of Elasah the son of Shaphan, and Gemariah the son of Hilkiah, (whom Zedekiah king of Judah sent unto Babylon to Nebuchadnezzar king of Babylon) saying,",
+   "BHSA JER 29:4": "כֹּ֥ה אָמַ֛ר יְהוָ֥ה צְבָאֹ֖ות אֱלֹהֵ֣י יִשְׂרָאֵ֑ל לְכָל־הַ֨גֹּולָ֔ה אֲשֶׁר־הִגְלֵ֥יתִי מִירוּשָׁלִַ֖ם בָּבֶֽלָה׃ ",
+   "KJV JER 29:4": "Thus saith the LORD of hosts, the God of Israel, unto all that are carried away captives, whom I have caused to be carried away from Jerusalem unto Babylon;"
+  },
+  "A": {
+   "name": "Shaphan",
+   "line": "scribe of King Josiah (2KI 22:3, 2CH 34:15)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "He was sent to repair the house of the Lord (2CH 34:8)",
+   "family": [
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)",
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "father-of ahikam (Ahikam, son of Shaphan (2KI 22:12))",
+    "grandfather-of gedaliah (Gedaliah, son of Ahikam, appointed King of Judah by Nebuchadnezzar (2K)"
+   ],
+   "verses": 46
+  },
+  "B": {
+   "name": "Shaphan",
+   "line": "Father of Elasah, envoy sent by Zedekiah to Babylon.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of elasah-2 (Elasah, son of Shaphan (JER 29:3))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew identifies Elasah as בֶן־שָׁפָן, “son of Shaphan,” and places him among Zedekiah’s envoys to Babylon. B explicitly matches this father–son relationship and event; A’s stated facts do not identify him as Elasah’s father.",
+ "confidence": 0.99,
+ "names_slug": "shaphan-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:45:14+00:00"
+}

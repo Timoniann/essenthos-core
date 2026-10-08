@@ -1,0 +1,49 @@
+{
+ "b": 15,
+ "c": 10,
+ "v": 21,
+ "label": "Maaseiah",
+ "dataset_man": "maaseiah-6",
+ "split_man": "maaseiah-15",
+ "case": {
+  "verse": "EZR 10:21",
+  "name": "Maaseiah",
+  "text": {
+   "BHSA EZR 10:20": "וּמִבְּנֵ֣י אִמֵּ֔ר חֲנָ֖נִי וּזְבַדְיָֽה׃ ס ",
+   "KJV EZR 10:20": "And of the sons of Immer; Hanani, and Zebadiah.",
+   "BHSA EZR 10:21": "וּמִבְּנֵ֖י חָרִ֑ם מַעֲשֵׂיָ֤ה וְאֵֽלִיָּה֙ וּֽשְׁמַֽעְיָ֔ה וִיחִיאֵ֖ל וְעֻזִיָּֽה׃ ",
+   "KJV EZR 10:21": "And of the sons of Harim; Maaseiah, and Elijah, and Shemaiah, and Jehiel, and Uzziah.",
+   "BHSA EZR 10:22": "וּמִבְּנֵ֖י פַּשְׁח֑וּר אֶלְיֹועֵינַ֤י מַֽעֲשֵׂיָה֙ יִשְׁמָעֵ֣אל נְתַנְאֵ֔ל יֹוזָבָ֖ד וְאֶלְעָשָֽׂה׃ ס ",
+   "KJV EZR 10:22": "And of the sons of Pashur; Elioenai, Maaseiah, Ishmael, Nethaneel, Jozabad, and Elasah."
+  },
+  "A": {
+   "name": "Maaseiah",
+   "line": "priest who had married a foreign wife (EZR 10:18), son of Harim (EZR 10:21)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "descendant-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "descendant-of harim-3 (Harim, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "verses": 4
+  },
+  "B": {
+   "name": "Maaseiah",
+   "line": "Priest of the sons of Harim with a foreign wife",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of harim-3 (Harim, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew lists one Maaseiah among the sons of Harim, matching B. A also explicitly claims this identity and the same Harim ancestry, so the supplied facts do not distinguish the two records.",
+ "confidence": 0.5,
+ "names_slug": "maaseiah-15",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:38:57+00:00"
+}

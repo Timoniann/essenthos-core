@@ -1,0 +1,54 @@
+{
+ "b": 12,
+ "c": 22,
+ "v": 9,
+ "label": "Shaphan",
+ "dataset_man": "shaphan",
+ "split_man": "shaphan-4",
+ "case": {
+  "verse": "2KI 22:9",
+  "name": "Shaphan",
+  "text": {
+   "BHSA 2KI 22:8": "וַ֠יֹּאמֶר חִלְקִיָּ֜הוּ הַכֹּהֵ֤ן הַגָּדֹול֙ עַל־שָׁפָ֣ן הַסֹּפֵ֔ר סֵ֧פֶר הַתֹּורָ֛ה מָצָ֖אתִי בְּבֵ֣ית יְהוָ֑ה וַיִּתֵּ֨ן חִלְקִיָּ֧ה אֶת־הַסֵּ֛פֶר אֶל־שָׁפָ֖ן וַיִּקְרָאֵֽהוּ׃ ",
+   "KJV 2KI 22:8": "And Hilkiah the high priest said unto Shaphan the scribe, I have found the book of the law in the house of the LORD. And Hilkiah gave the book to Shaphan, and he read it.",
+   "BHSA 2KI 22:9": "וַיָּבֹ֞א שָׁפָ֤ן הַסֹּפֵר֙ אֶל־הַמֶּ֔לֶךְ וַיָּ֥שֶׁב אֶת־הַמֶּ֖לֶךְ דָּבָ֑ר וַיֹּ֗אמֶר הִתִּ֤יכוּ עֲבָדֶ֨יךָ֙ אֶת־הַכֶּ֨סֶף֙ הַנִּמְצָ֣א בַבַּ֔יִת וַֽיִּתְּנֻ֗הוּ עַל־יַד֙ עֹשֵׂ֣י הַמְּלָאכָ֔ה הַמֻּפְקָדִ֖ים בֵּ֥ית יְהוָֽה׃ ",
+   "KJV 2KI 22:9": "And Shaphan the scribe came to the king, and brought the king word again, and said, Thy servants have gathered the money that was found in the house, and have delivered it into the hand of them that do the work, that have the oversight of the house of the LORD.",
+   "BHSA 2KI 22:10": "וַיַּגֵּ֞ד שָׁפָ֤ן הַסֹּפֵר֙ לַמֶּ֣לֶךְ לֵאמֹ֔ר סֵ֚פֶר נָ֣תַן לִ֔י חִלְקִיָּ֖ה הַכֹּהֵ֑ן וַיִּקְרָאֵ֥הוּ שָׁפָ֖ן לִפְנֵ֥י הַמֶּֽלֶךְ׃ ",
+   "KJV 2KI 22:10": "And Shaphan the scribe shewed the king, saying, Hilkiah the priest hath delivered me a book. And Shaphan read it before the king."
+  },
+  "A": {
+   "name": "Shaphan",
+   "line": "scribe of King Josiah (2KI 22:3, 2CH 34:15)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "He was sent to repair the house of the Lord (2CH 34:8)",
+   "family": [
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)",
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "father-of ahikam (Ahikam, son of Shaphan (2KI 22:12))",
+    "grandfather-of gedaliah (Gedaliah, son of Ahikam, appointed King of Judah by Nebuchadnezzar (2K)"
+   ],
+   "verses": 46
+  },
+  "B": {
+   "name": "Shaphan",
+   "line": "Secretary/scribe of King Josiah who read the found law-book to him.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "grandson-of meshullam (Meshullam, father of Azaliah (2KI 22:3))",
+    "companion-of hilkiah-2 (Hilkiah, the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9))",
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)"
+   ],
+   "verses": 9
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew calls him שָׁפָן הַסֹּפֵר, “Shaphan the scribe”; verses 8–10 connect him with Hilkiah and reading the discovered law-book, matching B. However, A describes the same royal scribe with the same father, so the supplied facts do not establish a distinction between A and B.",
+ "confidence": 0.5,
+ "names_slug": "shaphan-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:31:56+00:00"
+}

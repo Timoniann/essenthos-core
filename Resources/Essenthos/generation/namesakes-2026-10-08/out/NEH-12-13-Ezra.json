@@ -1,0 +1,52 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 13,
+ "label": "Ezra",
+ "dataset_man": "ezra",
+ "split_man": "ezra-3",
+ "case": {
+  "verse": "NEH 12:13",
+  "name": "Ezra",
+  "text": {
+   "BHSA NEH 12:12": "וּבִימֵי֙ יֹֽויָקִ֔ים הָי֥וּ כֹהֲנִ֖ים רָאשֵׁ֣י הָאָבֹ֑ות לִשְׂרָיָ֣ה מְרָיָ֔ה לְיִרְמְיָ֖ה חֲנַנְיָֽה׃ ",
+   "KJV NEH 12:12": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;",
+   "BHSA NEH 12:13": "לְעֶזְרָ֣א מְשֻׁלָּ֔ם לַאֲמַרְיָ֖ה יְהֹוחָנָֽן׃ ",
+   "KJV NEH 12:13": "Of Ezra, Meshullam; of Amariah, Jehohanan;",
+   "BHSA NEH 12:14": "למלוכי יֹֽונָתָ֔ן לִשְׁבַנְיָ֖ה יֹוסֵֽף׃ ",
+   "KJV NEH 12:14": "Of Melicu, Jonathan; of Shebaniah, Joseph;"
+  },
+  "A": {
+   "name": "Ezra",
+   "line": "son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "as \"priest\" would be a descendant of Aaron",
+   "family": [
+    "son-of seraiah-2 (Seraiah, the chief priest (2KI 25:18) who was killed by the king of B)",
+    "priest-of yhvh (YHVH, the God of Israel)",
+    "scribe-of yhvh (YHVH, the God of Israel)",
+    "descendant-of hilkiah-2 (Hilkiah, the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9))"
+   ],
+   "verses": 47
+  },
+  "B": {
+   "name": "Ezra",
+   "line": "Priest who returned with Zerubbabel and Jeshua; ancestor of a priestly house later headed by Meshullam",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of meshullam-16 (Meshullam, son of Ezra (NEH 12:13))",
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)"
+   ],
+   "verses": 4
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew לְעֶזְרָא מְשֻׁלָּם (“of Ezra, Meshullam”) identifies Meshullam as head of Ezra’s priestly house in Joiakim’s days (v. 12). This matches B’s stated house headed by Meshullam; the passage provides no identifying connection to A, the scribe descended from Seraiah.",
+ "confidence": 0.98,
+ "names_slug": "ezra-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:42:54+00:00"
+}

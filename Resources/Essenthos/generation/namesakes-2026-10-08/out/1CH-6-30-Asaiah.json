@@ -1,0 +1,49 @@
+{
+ "b": 13,
+ "c": 6,
+ "v": 30,
+ "label": "Asaiah",
+ "dataset_man": "asaiah-3",
+ "split_man": "asaiah-5",
+ "case": {
+  "verse": "1CH 6:30",
+  "name": "Asaiah",
+  "text": {
+   "BHSA 1CH 6:29": "בְּנֵ֥י מְרָרִ֖י מַחְלִ֑י לִבְנִ֥י בְנֹ֛ו שִׁמְעִ֥י בְנֹ֖ו עֻזָּ֥ה בְנֹֽו׃ ",
+   "KJV 1CH 6:29": "The sons of Merari; Mahli, Libni his son, Shimei his son, Uzza his son,",
+   "BHSA 1CH 6:30": "שִׁמְעָ֥א בְנֹ֛ו חַגִּיָּ֥ה בְנֹ֖ו עֲשָׂיָ֥ה בְנֹֽו׃ פ ",
+   "KJV 1CH 6:30": "Shimea his son, Haggiah his son, Asaiah his son.",
+   "BHSA 1CH 6:31": "וְאֵ֗לֶּה אֲשֶׁ֨ר הֶעֱמִ֥יד דָּוִ֛יד עַל־יְדֵי־שִׁ֖יר בֵּ֣ית יְהוָ֑ה מִמְּנֹ֖וחַ הָאָרֹֽון׃ ",
+   "KJV 1CH 6:31": "And these are they whom David set over the service of song in the house of the LORD, after that the ark had rest."
+  },
+  "A": {
+   "name": "Asaiah",
+   "line": "son of Haggiah (1CH 6:30), chief of the sons of Merari (1CH 15:6)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Mahlites (from Merari, son of Levi)",
+   "family": [
+    "son-of haggiah (Haggiah, son of Shimea (1CH 6:30))",
+    "descendant-of merari (Merari, son of Levi (GEN 46:11))"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Asaiah",
+   "line": "Levite in Merari's ancestral genealogy, son of Haggiah, father unnamed further",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of haggiah (Haggiah, son of Shimea (1CH 6:30))"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew עֲשָׂיָה בְנוֹ identifies Asaiah as Haggiah’s son in Merari’s genealogy, matching B. However, A states the same ancestry, and the surrounding verses do not distinguish these two records, so this choice is uncertain.",
+ "confidence": 0.5,
+ "names_slug": "asaiah-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:33:28+00:00"
+}

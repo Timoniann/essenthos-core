@@ -1,0 +1,49 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 41,
+ "label": "Miniamin",
+ "dataset_man": "miniamin-3",
+ "split_man": "miniamin-2",
+ "case": {
+  "verse": "NEH 12:41",
+  "name": "Miniamin",
+  "text": {
+   "BHSA NEH 12:40": "וַֽתַּעֲמֹ֛דְנָה שְׁתֵּ֥י הַתֹּודֹ֖ת בְּבֵ֣ית הָאֱלֹהִ֑ים וַאֲנִ֕י וַחֲצִ֥י הַסְּגָנִ֖ים עִמִּֽי׃ ",
+   "KJV NEH 12:40": "So stood the two companies of them that gave thanks in the house of God, and I, and the half of the rulers with me:",
+   "BHSA NEH 12:41": "וְהַכֹּהֲנִ֡ים אֶלְיָקִ֡ים מַעֲשֵׂיָ֡ה מִ֠נְיָמִין מִיכָיָ֧ה אֶלְיֹועֵינַ֛י זְכַרְיָ֥ה חֲנַנְיָ֖ה בַּחֲצֹצְרֹֽות׃ ",
+   "KJV NEH 12:41": "And the priests; Eliakim, Maaseiah, Miniamin, Michaiah, Elioenai, Zechariah, and Hananiah, with trumpets;",
+   "BHSA NEH 12:42": "וּמַעֲשֵׂיָ֨ה וּֽשְׁמַֽעְיָ֜ה וְאֶלְעָזָ֧ר וְעֻזִּ֛י וִֽיהֹוחָנָ֥ן וּמַלְכִּיָּ֖ה וְעֵילָ֣ם וָעָ֑זֶר וַיַּשְׁמִ֨יעוּ֙ הַמְשֹׁ֣רְרִ֔ים וְיִֽזְרַחְיָ֖ה הַפָּקִֽיד׃ ",
+   "KJV NEH 12:42": "And Maaseiah, and Shemaiah, and Eleazar, and Uzzi, and Jehohanan, and Malchijah, and Elam, and Ezer. And the singers sang loud, with Jezrahiah their overseer."
+  },
+  "A": {
+   "name": "Miniamin",
+   "line": "priest with a trumpet (NEH 12:41)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "As \"priest\", a descendant of Aaron",
+   "family": [
+    "priest-of yhvh (YHVH, the God of Israel)",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 2
+  },
+  "B": {
+   "name": "Miniamin",
+   "line": "ancestor of Piltai (NEH 12:17)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "As \"priests\" (NEH 12:12), descendants of Aaron",
+   "family": [
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 3
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew lists Miniamin among הַכֹּהֲנִים, “the priests,” with trumpets as the thanksgiving companies stand in God's house (12:40–41), matching A's stated role. It does not identify him as Piltai's ancestor, the distinguishing fact given for B.",
+ "confidence": 0.95,
+ "names_slug": "miniamin-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:44:34+00:00"
+}

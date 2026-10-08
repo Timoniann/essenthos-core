@@ -1,0 +1,51 @@
+{
+ "b": 15,
+ "c": 2,
+ "v": 40,
+ "label": "Jeshua",
+ "dataset_man": "jeshua-5",
+ "split_man": "jeshua-7",
+ "case": {
+  "verse": "EZR 2:40",
+  "name": "Jeshua",
+  "text": {
+   "BHSA EZR 2:39": "בְּנֵ֣י חָרִ֔ם אֶ֖לֶף וְשִׁבְעָ֥ה עָשָֽׂר׃ ס ",
+   "KJV EZR 2:39": "The children of Harim, a thousand and seventeen.",
+   "BHSA EZR 2:40": "הַלְוִיִּ֑ם בְּנֵי־יֵשׁ֧וּעַ וְקַדְמִיאֵ֛ל לִבְנֵ֥י הֹודַוְיָ֖ה שִׁבְעִ֥ים וְאַרְבָּעָֽה׃ ס ",
+   "KJV EZR 2:40": "The Levites: the children of Jeshua and Kadmiel, of the children of Hodaviah, seventy and four.",
+   "BHSA EZR 2:41": "הַֽמְשֹׁרְרִ֑ים בְּנֵ֣י אָסָ֔ף מֵאָ֖ה עֶשְׂרִ֥ים וּשְׁמֹנָֽה׃ פ ",
+   "KJV EZR 2:41": "The singers: the children of Asaph, an hundred twenty and eight."
+  },
+  "A": {
+   "name": "Jeshua",
+   "line": "Levite whose sons (descendants) returned to Judah after captivity (EZR 2:40)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "of the sons of Hodaviah.  A peer/brother of Kadmiel? (EZR 2:40). Father of Jozabad (EZR 8:33)",
+   "family": [
+    "descendant-of hodaviah-5 (Hodaviah, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Jeshua",
+   "line": "explained the law to the people (NEH 8:7), stood on the Levites platform (NEH 9:4), and exhorted Israel to bless the Lord (NEH 9:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "\"of\" Kadmiel (NEH 7:43), son of Kadmiel (NEH 12:24). Father of Joiakim (NEH 12:10)",
+   "family": [
+    "son-of kadmiel-2 (Kadmiel, stood on the Levites platform (NEH 9:4) and exhorted Israel )",
+    "son-of kadmiel (Kadmiel, his sons (descendants) returned to Judah after captivity (EZ)",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)",
+    "son-of azaniah (Azaniah, father of Jeshua (NEH 10:9))"
+   ],
+   "verses": 13
+  }
+ },
+ "names": "A",
+ "why": "Ezra 2:40 lists the Levites descended from Jeshua and Kadmiel, associated with the descendants of Hodaviah, matching A’s stated ancestry. The Hebrew coordinates Jeshua with Kadmiel; it does not identify Jeshua as Kadmiel’s son, as B’s record does.",
+ "confidence": 0.98,
+ "names_slug": "jeshua-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:37:51+00:00"
+}

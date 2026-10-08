@@ -1,0 +1,44 @@
+{
+ "b": 16,
+ "c": 12,
+ "v": 25,
+ "label": "Akkub",
+ "dataset_man": "akkub-2",
+ "split_man": "akkub-6",
+ "case": {
+  "verse": "NEH 12:25",
+  "name": "Akkub",
+  "text": {
+   "BHSA NEH 12:24": "וְרָאשֵׁ֣י הַ֠לְוִיִּם חֲשַׁבְיָ֨ה שֵֽׁרֵבְיָ֜ה וְיֵשׁ֤וּעַ בֶּן־קַדְמִיאֵל֙ וַאֲחֵיהֶ֣ם לְנֶגְדָּ֔ם לְהַלֵּ֣ל לְהֹודֹ֔ות בְּמִצְוַ֖ת דָּוִ֣יד אִישׁ־הָאֱלֹהִ֑ים מִשְׁמָ֖ר לְעֻמַּ֥ת מִשְׁמָֽר׃ ",
+   "KJV NEH 12:24": "And the chief of the Levites: Hashabiah, Sherebiah, and Jeshua the son of Kadmiel, with their brethren over against them, to praise and to give thanks, according to the commandment of David the man of God, ward over against ward.",
+   "BHSA NEH 12:25": "מַתַּנְיָ֧ה וּבַקְבֻּֽקְיָ֛ה עֹבַדְיָ֥ה מְשֻׁלָּ֖ם טַלְמֹ֣ון עַקּ֑וּב שֹׁמְרִ֤ים שֹֽׁועֲרִים֙ מִשְׁמָ֔ר בַּאֲסֻפֵּ֖י הַשְּׁעָרִֽים׃ ",
+   "KJV NEH 12:25": "Mattaniah, and Bakbukiah, Obadiah, Meshullam, Talmon, Akkub, were porters keeping the ward at the thresholds of the gates.",
+   "BHSA NEH 12:26": "אֵ֕לֶּה בִּימֵ֛י יֹויָקִ֥ים בֶּן־יֵשׁ֖וּעַ בֶּן־יֹוצָדָ֑ק וּבִימֵי֙ נְחֶמְיָ֣ה הַפֶּחָ֔ה וְעֶזְרָ֥א הַכֹּהֵ֖ן הַסֹּופֵֽר׃ פ ",
+   "KJV NEH 12:26": "These were in the days of Joiakim the son of Jeshua, the son of Jozadak, and in the days of Nehemiah the governor, and of Ezra the priest, the scribe."
+  },
+  "A": {
+   "name": "Akkub",
+   "line": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": null,
+   "verses": 10
+  },
+  "B": {
+   "name": "Akkub",
+   "line": "Levite gatekeeper serving after the return, named with Talmon at the gates",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "Akkub appears beside Talmon among the gatekeepers (שֹׁמְרִים שׁוֹעֲרִים), and verse 26 places them in the post-return period, matching B's stated facts. A's gatekeeper description also fits, so the supplied text and records do not decisively distinguish them.",
+ "confidence": 0.55,
+ "names_slug": "akkub-6",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:43:40+00:00"
+}

@@ -171,22 +171,22 @@ internal static class HealthEndpoints
     /// This API does not load anything: a release is built elsewhere, verified, and restored into a
     /// database it is then pointed at. So <c>loading</c> is what an empty database means here, which
     /// on this machine is a load still running and on a server is a corpus that was never restored.
-    /// A corpus that breaks its own integrity checks is <c>degraded</c>, because those are not
-    /// measurements with a range but shapes no correct load produces.
+    /// A corpus that breaks its own integrity checks is still <c>ready</c>: those checks are shapes
+    /// no correct load produces, which is a fault for whoever builds the corpus and not an outage
+    /// for the reader, who can read every text it holds. The break stays in <c>verified.broken</c>,
+    /// in <c>/v1/verification</c> and in the Forge's verify output. <c>degraded</c> is for what a
+    /// reader really loses, and today that is the database being away.
     /// </summary>
-    private static string Status(int texts, VerificationResponse? verified) => (texts, verified) switch
+    internal static string Status(int texts, VerificationResponse? verified) => (texts, verified) switch
     {
         (0, _) => "loading",
-        (_, { Broken: > 0 }) => "degraded",
         _ => "ready",
     };
 
-    private static IList<string> Missing(int texts, VerificationResponse? verified) => (texts, verified) switch
+    internal static IList<string> Missing(int texts, VerificationResponse? verified) => (texts, verified) switch
     {
         (0, _) => ["the corpus is empty: either a load is still running, or no release has been restored here"],
         (_, null) => ["the corpus is loaded and has not been measured"],
-        (_, { Broken: > 0 } broken) =>
-            [$"the corpus breaks {broken.Broken} integrity checks; /v1/verification names them"],
         _ => [],
     };
 }

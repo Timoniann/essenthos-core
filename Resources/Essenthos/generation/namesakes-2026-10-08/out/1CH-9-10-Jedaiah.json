@@ -1,0 +1,51 @@
+{
+ "b": 13,
+ "c": 9,
+ "v": 10,
+ "label": "Jedaiah",
+ "dataset_man": "jedaiah-2",
+ "split_man": "jedaiah-5",
+ "case": {
+  "verse": "1CH 9:10",
+  "name": "Jedaiah",
+  "text": {
+   "BHSA 1CH 9:9": "וַאֲחֵיהֶם֙ לְתֹ֣לְדֹותָ֔ם תְּשַׁ֥ע מֵאֹ֖ות וַחֲמִשִּׁ֣ים וְשִׁשָּׁ֑ה כָּל־אֵ֣לֶּה אֲנָשִׁ֔ים רָאשֵׁ֥י אָבֹ֖ות לְבֵ֥ית אֲבֹתֵיהֶֽם׃ ס ",
+   "KJV 1CH 9:9": "And their brethren, according to their generations, nine hundred and fifty and six. All these men were chief of the fathers in the house of their fathers.",
+   "BHSA 1CH 9:10": "וּמִן־הַֽכֹּהֲנִ֑ים יְדַֽעְיָ֥ה וִיהֹויָרִ֖יב וְיָכִֽין׃ ",
+   "KJV 1CH 9:10": "And of the priests; Jedaiah, and Jehoiarib, and Jachin,",
+   "BHSA 1CH 9:11": "וַעֲזַרְיָ֨ה בֶן־חִלְקִיָּ֜ה בֶּן־מְשֻׁלָּ֣ם בֶּן־צָדֹ֗וק בֶּן־מְרָיֹות֙ בֶּן־אֲחִיט֔וּב נְגִ֖יד בֵּ֥ית הָאֱלֹהִֽים׃ ס ",
+   "KJV 1CH 9:11": "And Azariah the son of Hilkiah, the son of Meshullam, the son of Zadok, the son of Meraioth, the son of Ahitub, the ruler of the house of God;"
+  },
+  "A": {
+   "name": "Jedaiah",
+   "line": "priest (1CH 9:10, NEH 7:39, NEH 12:6), of the house of Jeshua (EZR 2:36)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "ancestor-of uzzi-6 (Uzzi, son of Jedaiah (NEH 12:19))",
+    "priest-of yhvh (YHVH, the God of Israel)",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 10
+  },
+  "B": {
+   "name": "Jedaiah",
+   "line": "priest, son of Joiarib (NEH 11:10, NEH 12:7)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Lived in Jerusalem (NEH 11:4)",
+   "family": [
+    "son-of joiarib-3 (Joiarib, priest, father of Jedaiah (NEH 11:10))",
+    "priest-of yhvh (YHVH, the God of Israel)"
+   ],
+   "verses": 7
+  }
+ },
+ "names": "A",
+ "why": "The Hebrew lists Jedaiah, Jehoiarib, and Jachin as separate priests, fitting A’s stated priestly listing without identifying Jedaiah as Joiarib’s son. This only weakly favors A: no father or other unique identifier is given, and B is also a priest.",
+ "confidence": 0.55,
+ "names_slug": "jedaiah-2",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:34:08+00:00"
+}

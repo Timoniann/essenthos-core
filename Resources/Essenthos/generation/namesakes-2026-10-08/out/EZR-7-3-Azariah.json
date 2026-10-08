@@ -1,0 +1,52 @@
+{
+ "b": 15,
+ "c": 7,
+ "v": 3,
+ "label": "Azariah",
+ "dataset_man": "azariah",
+ "split_man": "azariah-24",
+ "case": {
+  "verse": "EZR 7:3",
+  "name": "Azariah",
+  "text": {
+   "BHSA EZR 7:2": "בֶּן־שַׁלּ֥וּם בֶּן־צָדֹ֖וק בֶּן־אֲחִיטֽוּב׃ ",
+   "KJV EZR 7:2": "The son of Shallum, the son of Zadok, the son of Ahitub,",
+   "BHSA EZR 7:3": "בֶּן־אֲמַרְיָ֥ה בֶן־עֲזַרְיָ֖ה בֶּן־מְרָיֹֽות׃ ",
+   "KJV EZR 7:3": "The son of Amariah, the son of Azariah, the son of Meraioth,",
+   "BHSA EZR 7:4": "בֶּן־זְרַֽחְיָ֥ה בֶן־עֻזִּ֖י בֶּן־בֻּקִּֽי׃ ",
+   "KJV EZR 7:4": "The son of Zerahiah, the son of Uzzi, the son of Bukki,"
+  },
+  "A": {
+   "name": "Azariah",
+   "line": "son of Johanan, who executed the priest's office in the temple that Solomon built (1CH 6:10)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "1 Kings 4:2 names Azariah the son of Zadok the priest first among Solomon's princes; whether he is this priest or Azariah the son of Ahimaaz, Zadok's grandson (1CH 6:9), the text does not say. The Azariah who withstood King Uzziah in the temple (2CH 26:17-20) is held as azariah-20.",
+   "family": [
+    "son-of zadok (Zadok, son of Ahitub and priest during King David's reign (2SA 8:17)",
+    "son-of johanan-3 (Johanan, son of Azariah (1CH 6:9) and father of Azariah (1CH 6:10))",
+    "father-of amariah-2 (Amariah, son of Azariah and father of Ahitub, in the line of the high)",
+    "son-of meraioth (Meraioth, father of Amariah (1CH 6:7), Levite (1CH 6:1))"
+   ],
+   "verses": 8
+  },
+  "B": {
+   "name": "Azariah",
+   "line": "Priest, son of Meraioth, father of Amariah, in Ezra's genealogy.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of meraioth (Meraioth, father of Amariah (1CH 6:7), Levite (1CH 6:1))",
+    "father-of amariah-2 (Amariah, son of Azariah and father of Ahitub, in the line of the high)"
+   ],
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew genealogy places Azariah between his descendant Amariah and his ancestor Meraioth, matching B’s stated identity. A’s overlapping family links leave some uncertainty, but his defining description identifies him as Johanan’s son.",
+ "confidence": 0.65,
+ "names_slug": "azariah-24",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:38:08+00:00"
+}

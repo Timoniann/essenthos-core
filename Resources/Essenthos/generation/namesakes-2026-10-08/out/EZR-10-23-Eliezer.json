@@ -1,0 +1,47 @@
+{
+ "b": 15,
+ "c": 10,
+ "v": 23,
+ "label": "Eliezer",
+ "dataset_man": "eliezer-7",
+ "split_man": "eliezer-11",
+ "case": {
+  "verse": "EZR 10:23",
+  "name": "Eliezer",
+  "text": {
+   "BHSA EZR 10:22": "וּמִבְּנֵ֖י פַּשְׁח֑וּר אֶלְיֹועֵינַ֤י מַֽעֲשֵׂיָה֙ יִשְׁמָעֵ֣אל נְתַנְאֵ֔ל יֹוזָבָ֖ד וְאֶלְעָשָֽׂה׃ ס ",
+   "KJV EZR 10:22": "And of the sons of Pashur; Elioenai, Maaseiah, Ishmael, Nethaneel, Jozabad, and Elasah.",
+   "BHSA EZR 10:23": "וּמִֽן־הַלְוִיִּ֑ם יֹוזָבָ֣ד וְשִׁמְעִ֗י וְקֵֽלָיָה֙ ה֣וּא קְלִיטָ֔א פְּתַֽחְיָ֥ה יְהוּדָ֖ה וֶאֱלִיעֶֽזֶר׃ ס ",
+   "KJV EZR 10:23": "Also of the Levites; Jozabad, and Shimei, and Kelaiah, (the same is Kelita,) Pethahiah, Judah, and Eliezer.",
+   "BHSA EZR 10:24": "וּמִן־הַמְשֹׁרְרִ֖ים אֶלְיָשִׁ֑יב וּמִן־הַשֹּׁ֣עֲרִ֔ים שַׁלֻּ֥ם וָטֶ֖לֶם וְאוּרִֽי׃ ס ",
+   "KJV EZR 10:24": "Of the singers also; Eliashib: and of the porters; Shallum, and Telem, and Uri."
+  },
+  "A": {
+   "name": "Eliezer",
+   "line": "Priest Ezra sent to Iddo (EZR 8:16), married a foreign wife (EZR 10:18, EZ 10:23)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Aaronic priest (EZR 10:18)",
+   "family": [
+    "descendant-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "verses": 6
+  },
+  "B": {
+   "name": "Eliezer",
+   "line": "A Levite who had married a foreign wife, distinct from the priestly and Harim Eliezers.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew וּמִן־הַלְוִיִּם (“and of the Levites”) places Eliezer in the Levite list, matching B. A is identified as an Aaronic priest descended from Jeshua, belonging to the separate priestly group despite A’s conflicting citation of this verse.",
+ "confidence": 0.99,
+ "names_slug": "eliezer-11",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:38:57+00:00"
+}

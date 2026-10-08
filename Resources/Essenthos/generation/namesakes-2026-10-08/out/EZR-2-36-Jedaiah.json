@@ -1,0 +1,50 @@
+{
+ "b": 15,
+ "c": 2,
+ "v": 36,
+ "label": "Jedaiah",
+ "dataset_man": "jedaiah-2",
+ "split_man": "jedaiah-7",
+ "case": {
+  "verse": "EZR 2:36",
+  "name": "Jedaiah",
+  "text": {
+   "BHSA EZR 2:35": "בְּנֵ֣י סְנָאָ֔ה שְׁלֹ֣שֶׁת אֲלָפִ֔ים וְשֵׁ֥שׁ מֵאֹ֖ות וּשְׁלֹשִֽׁים׃ ס ",
+   "KJV EZR 2:35": "The children of Senaah, three thousand and six hundred and thirty.",
+   "BHSA EZR 2:36": "הַֽכֹּהֲנִ֑ים בְּנֵ֤י יְדַֽעְיָה֙ לְבֵ֣ית יֵשׁ֔וּעַ תְּשַׁ֥ע מֵאֹ֖ות שִׁבְעִ֥ים וּשְׁלֹשָֽׁה׃ ס ",
+   "KJV EZR 2:36": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+   "BHSA EZR 2:37": "בְּנֵ֣י אִמֵּ֔ר אֶ֖לֶף חֲמִשִּׁ֥ים וּשְׁנָֽיִם׃ ס ",
+   "KJV EZR 2:37": "The children of Immer, a thousand fifty and two."
+  },
+  "A": {
+   "name": "Jedaiah",
+   "line": "priest (1CH 9:10, NEH 7:39, NEH 12:6), of the house of Jeshua (EZR 2:36)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "ancestor-of uzzi-6 (Uzzi, son of Jedaiah (NEH 12:19))",
+    "priest-of yhvh (YHVH, the God of Israel)",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "verses": 10
+  },
+  "B": {
+   "name": "Jedaiah",
+   "line": "Priestly family head whose descendants returned with Zerubbabel, house of Jeshua",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of jeshua (Jeshua, ninth-chosen priest for the twenty-four courses (1CH 24:11))"
+   ],
+   "verses": 2
+  }
+ },
+ "names": "B",
+ "why": "בְּנֵי יְדַעְיָה לְבֵית יֵשׁוּעַ identifies a priestly ancestral family of the house of Jeshua, matching B’s description of the head whose descendants returned. A also shares these identifying facts, so the verse alone does not securely distinguish the two records.",
+ "confidence": 0.55,
+ "names_slug": "jedaiah-7",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:37:36+00:00"
+}

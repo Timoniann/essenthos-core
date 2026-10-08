@@ -1,0 +1,48 @@
+{
+ "b": 16,
+ "c": 10,
+ "v": 14,
+ "label": "Elam",
+ "dataset_man": "elam-4",
+ "split_man": "elam-8",
+ "case": {
+  "verse": "NEH 10:14",
+  "name": "Elam",
+  "text": {
+   "BHSA NEH 10:13": "הֹודִיָּ֥ה בָנִ֖י בְּנִֽינוּ׃ ס ",
+   "KJV NEH 10:13": "Hodijah, Bani, Beninu.",
+   "BHSA NEH 10:14": "רָאשֵׁ֖י הָעָ֑ם פַּרְעֹשׁ֙ פַּחַ֣ת מֹואָ֔ב עֵילָ֥ם זַתּ֖וּא בָּנִֽי׃ ",
+   "KJV NEH 10:14": "The chief of the people; Parosh, Pahathmoab, Elam, Zatthu, Bani,",
+   "BHSA NEH 10:15": "בֻּנִּ֥י עַזְגָּ֖ד בֵּבָֽי׃ ",
+   "KJV NEH 10:15": "Bunni, Azgad, Bebai,"
+  },
+  "A": {
+   "name": "Elam",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:7)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "father of Jehiel (EZR 10:2), named on the sealed document of NEH 10:1-27 (NEH 10:14)",
+   "family": [
+    "ancestor-of jeshaiah-3 (Jeshaiah, descendant of Elam, son of Athaliah who went up with Ezra (E)",
+    "ancestor-of shecaniah-5 (Shecaniah, son of Jehiel (EZR 10:2))",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "verses": 13
+  },
+  "B": {
+   "name": "Elam",
+   "line": "Chief of the people who sealed the covenant with Nehemiah",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "verses": 1
+  }
+ },
+ "names": "B",
+ "why": "The Hebrew introduces this list as רָאשֵׁי הָעָם, “chiefs of the people,” matching B’s stated role as a covenant signer. A is described primarily as the ancestor of a returning family, though the absence of a patronymic leaves some uncertainty about whether the list uses ancestral family names.",
+ "confidence": 0.78,
+ "names_slug": "elam-8",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T12:40:41+00:00"
+}
