@@ -21,6 +21,9 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// </param>
 /// <param name="Withdrawn">Weaker annotations naming the other of the two, taken back with what they carried.</param>
 /// <param name="Written">Annotations written under this pass's two sources, the carried ones included.</param>
+/// <param name="Outdated">
+/// Annotations and claims this pass's rule wrote on an earlier load on a word it no longer answers so, taken back.
+/// </param>
 internal sealed record EponymReadingOutcome(
     bool AlreadyLoaded,
     int Names,
@@ -34,7 +37,8 @@ internal sealed record EponymReadingOutcome(
     int Written,
     IReadOnlyList<(string Text, int Words)> ByText,
     IReadOnlyList<(string Tribe, int Man, int People)> ByTribe,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int Outdated = 0)
 {
     public override string ToString() =>
         AlreadyLoaded
@@ -43,7 +47,8 @@ internal sealed record EponymReadingOutcome(
               $"own sons and name nobody); of the names standing alone the reading gives {ReadAsTheMan} the man and " +
               $"{ReadAsThePeople} the people, {Unclear} unclear, in {Elapsed}; {Constructs} names after a word for a " +
               $"tribe or a realm keep the owner's answer alone. {Withdrawn} weaker annotations taken " +
-              $"back, {Written} words written in all. Per tribe (man/people): " +
+              $"back, {Outdated} written before that the rule no longer gives, {Written} words written in all. " +
+              "Per tribe (man/people): " +
               string.Join(", ", ByTribe.Select(t => $"{t.Tribe} {t.Man}/{t.People}")) + ". Per text: " +
               string.Join(", ", ByText.Select(t => $"{t.Text} {t.Words}"));
 }
@@ -128,7 +133,8 @@ internal sealed class EponymReadingLoader(AppDbContext db, ILogger<EponymReading
     /// <summary>
     /// The passages where <em>the sons of</em> a tribe's ancestor are his own sons, named there: Jacob's
     /// sons going down to Egypt, the genealogies of Exodus 6 and 1 Chronicles 2–7, the census of Numbers
-    /// 26, which counts the tribes by the sons it names. Book, chapter, first and last verse, canonical.
+    /// 26, which counts the tribes by the sons it names, and the two sons of Joseph whom Jacob blessed
+    /// (Hebrews 11:21). Book, chapter, first and last verse, canonical; the Hebrew and the Greek alike.
     /// </summary>
     internal static readonly (int Book, int Chapter, int From, int To)[] HisOwnSons =
     [
@@ -137,6 +143,7 @@ internal sealed class EponymReadingLoader(AppDbContext db, ILogger<EponymReading
         (4, 26, 5, 50),
         (13, 2, 1, 4), (13, 4, 1, 1), (13, 4, 24, 24), (13, 5, 1, 3), (13, 6, 1, 3), (13, 6, 16, 16),
         (13, 7, 1, 1), (13, 7, 13, 14), (13, 7, 20, 20), (13, 7, 30, 30), (13, 23, 6, 6),
+        (58, 11, 21, 21),
     ];
 
     /// <summary>
@@ -194,24 +201,19 @@ internal sealed class EponymReadingLoader(AppDbContext db, ILogger<EponymReading
                   AND sons.morphology ->> 'state' = 'c' AND sons.morphology ->> 'number' = 'pl'
              CROSS JOIN LATERAL {Tribe("w.strong_number")} tribe
              WHERE w.morphology ->> 'pos' = 'nmpr' AND tribe.people_id IS NOT NULL
-               AND NOT EXISTS (
-                   SELECT 1 FROM verse_reference r
-                   JOIN unnest(@books, @chapters, @froms, @tos) AS own(b, c, f, l)
-                        ON own.b = r.canonical_book AND own.c = r.canonical_chapter
-                       AND r.canonical_verse BETWEEN own.f AND own.l
-                   WHERE r.verse_id = w.verse_id AND r.is_primary)) x
+               AND NOT {OwnSons("w.verse_id")}) x
          ON CONFLICT (word_id) DO NOTHING
          """;
 
     /// <summary>
     /// The same in the Greek witnesses: a name of Hebrew origin after υἱοί, an article allowed between,
-    /// whose ancestor and people are the Hebrew name's.
+    /// whose ancestor and people are the Hebrew name's, and υἱοί naming nobody where they are his own sons.
     /// </summary>
     private static readonly string GreekSonsOf =
         $"""
          INSERT INTO eponym_target (word_id, entity_id, other_id, role, confidence, note)
          WITH after AS MATERIALIZED (
-             SELECT w.id, w.strong_number, sons.id AS sons_id
+             SELECT w.id, w.strong_number, w.verse_id, sons.id AS sons_id
              FROM word w
              JOIN text t ON t.id = w.text_id AND t.slug = ANY(@greek)
              JOIN word sons ON sons.verse_id = w.verse_id AND sons.strong_number = '{GreekSons}'
@@ -236,8 +238,51 @@ internal sealed class EponymReadingLoader(AppDbContext db, ILogger<EponymReading
          SELECT sons_id, people_id, ancestor_id, 'head', @confidence,
                 '{GreekSons}, sons of ' || strong_number || ', so the people of that name'
          FROM answered
+         WHERE NOT {OwnSons("answered.verse_id")}
          ON CONFLICT (word_id) DO NOTHING
          """;
+
+    /// <summary>Whether the verse is one of <see cref="HisOwnSons"/>.</summary>
+    private static string OwnSons(string verse) =>
+        $"""
+         EXISTS (
+             SELECT 1 FROM verse_reference r
+             JOIN unnest(@books, @chapters, @froms, @tos) AS own(b, c, f, l)
+                  ON own.b = r.canonical_book AND own.c = r.canonical_chapter
+                 AND r.canonical_verse BETWEEN own.f AND own.l
+             WHERE r.verse_id = {verse} AND r.is_primary)
+         """;
+
+    /// <summary>
+    /// What this pass's rule wrote on an earlier load on a word it no longer answers so — the row or the
+    /// claim, on the word itself or carried from it — as the rule stands now: a passage added to
+    /// <see cref="HisOwnSons"/>, or a tribe whose records changed. A load from nothing would not write
+    /// them, so a load over a corpus that holds them takes them back.
+    /// </summary>
+    private const string Outdated =
+        """
+        CREATE TEMP TABLE eponym_outdated ON COMMIT DROP AS
+        SELECT a.id AS row_id, NULL::bigint AS claim_id
+        FROM word_entity a
+        WHERE a.source = @source
+          AND NOT EXISTS (SELECT 1 FROM eponym_target x
+                          WHERE x.role IN ('head', 'name') AND x.entity_id = a.entity_id
+                            AND x.word_id = coalesce(substring(a.note FROM '^through \S+ word ([0-9]+)')::bigint, a.word_id))
+        UNION ALL
+        SELECT NULL, c.id
+        FROM word_entity_claim c
+        JOIN word_entity a ON a.id = c.word_entity_id
+        WHERE c.source = @source AND a.source <> @source
+          AND NOT EXISTS (SELECT 1 FROM eponym_target x
+                          WHERE x.role IN ('head', 'name') AND x.entity_id = a.entity_id
+                            AND x.word_id = coalesce(substring(c.note FROM '^through \S+ word ([0-9]+)')::bigint, a.word_id))
+        """;
+
+    private const string WithdrawOutdated =
+        """
+        DELETE FROM word_entity_claim c USING eponym_outdated o WHERE c.id = o.claim_id;
+        DELETE FROM word_entity a USING eponym_outdated o WHERE a.id = o.row_id
+        """;
 
     private const string Readings =
         """
@@ -379,20 +424,17 @@ internal sealed class EponymReadingLoader(AppDbContext db, ILogger<EponymReading
         var read = file.Readings.Where(r => r.Names is not null && held.Contains(r.Text)).ToList();
         var words = await RuledWords.Resolve(connection, read.Select(r => r.Word), cancellationToken);
         if (await db.WordEntities.AnyAsync(a => a.Source == Source, cancellationToken)
-            && await Applied(connection, read, words, cancellationToken))
+            && await Applied(connection, read, words, cancellationToken)
+            && await NothingOutdated(connection, cancellationToken))
         {
             logger.LogInformation("The man and the people a tribe's name stands for are already told apart; nothing to do");
             return new EponymReadingOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, [], [], TimeSpan.Zero);
         }
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        await Annotating.Run(connection, transaction, Targets, cancellationToken);
-        await Annotating.Run(connection, transaction, HebrewSonsOf, cancellationToken,
-            ("witness", EntityCandidates.Witness), ("confidence", ByThePhrase),
-            ("books", HisOwnSons.Select(s => s.Book).ToArray()), ("chapters", HisOwnSons.Select(s => s.Chapter).ToArray()),
-            ("froms", HisOwnSons.Select(s => s.From).ToArray()), ("tos", HisOwnSons.Select(s => s.To).ToArray()));
-        await Annotating.Run(connection, transaction, GreekSonsOf, cancellationToken,
-            ("greek", FixedTitles.GreekWitnesses.ToArray()), ("confidence", ByThePhrase));
+        await RuleTargets(connection, transaction, cancellationToken);
+        var outdated = await Count(connection, transaction, "SELECT count(*) FROM eponym_outdated", cancellationToken);
+        await Annotating.Run(connection, transaction, WithdrawOutdated, cancellationToken);
         await Annotating.Run(connection, transaction, Readings, cancellationToken,
             ("words", read.Select(r => words[r.Word]).ToArray()), ("names", read.Select(r => r.Names!).ToArray()),
             ("instead", read.Select(r => r.Instead).ToArray()),
@@ -434,7 +476,7 @@ internal sealed class EponymReadingLoader(AppDbContext db, ILogger<EponymReading
 
         var outcome = new EponymReadingOutcome(
             false, names, heads, names - heads, man, people, file.Readings.Count(r => r.Names is null), constructs, withdrawn,
-            byText.Sum(t => t.Item2), byText, byTribe, started.Elapsed);
+            byText.Sum(t => t.Item2), byText, byTribe, started.Elapsed, outdated);
         logger.LogInformation("Told the man from the people a tribe's name stands for: {Outcome}", outcome);
         return outcome;
     }
@@ -465,6 +507,38 @@ internal sealed class EponymReadingLoader(AppDbContext db, ILogger<EponymReading
         command.Parameters.AddWithValue("names", read.Select(r => r.Names!).ToArray());
         command.Parameters.AddWithValue("source", ReadingSource);
         return (long)(await command.ExecuteScalarAsync(cancellationToken))! == 0;
+    }
+
+    /// <summary>
+    /// The words the rule answers by <em>sons of</em>, in the Hebrew and the Greek, and what this pass
+    /// wrote on an earlier load that the rule no longer gives (<see cref="Outdated"/>).
+    /// </summary>
+    private static async Task RuleTargets(
+        NpgsqlConnection connection,
+        IDbContextTransaction transaction,
+        CancellationToken cancellationToken)
+    {
+        (string, object?)[] ownSons =
+        [
+            ("books", HisOwnSons.Select(s => s.Book).ToArray()), ("chapters", HisOwnSons.Select(s => s.Chapter).ToArray()),
+            ("froms", HisOwnSons.Select(s => s.From).ToArray()), ("tos", HisOwnSons.Select(s => s.To).ToArray()),
+        ];
+        await Annotating.Run(connection, transaction, Targets, cancellationToken);
+        await Annotating.Run(connection, transaction, HebrewSonsOf, cancellationToken,
+            [("witness", EntityCandidates.Witness), ("confidence", ByThePhrase), .. ownSons]);
+        await Annotating.Run(connection, transaction, GreekSonsOf, cancellationToken,
+            [("greek", FixedTitles.GreekWitnesses.ToArray()), ("confidence", ByThePhrase), .. ownSons]);
+        await Annotating.Run(connection, transaction, Outdated, cancellationToken, ("source", Source));
+    }
+
+    /// <summary>Whether nothing this pass wrote before is what its rule no longer gives; asked, and rolled back.</summary>
+    private async Task<bool> NothingOutdated(NpgsqlConnection connection, CancellationToken cancellationToken)
+    {
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await RuleTargets(connection, transaction, cancellationToken);
+        var outdated = await Count(connection, transaction, "SELECT count(*) FROM eponym_outdated", cancellationToken);
+        await transaction.RollbackAsync(cancellationToken);
+        return outdated == 0;
     }
 
     private static async Task Write(

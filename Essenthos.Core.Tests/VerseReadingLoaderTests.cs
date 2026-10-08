@@ -5,6 +5,7 @@ using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Frame;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -408,5 +409,28 @@ public sealed class VerseReadingLoaderTests : IDisposable
         file.Readings.GroupBy(r => (r.Record, r.Reference)).Should().OnlyContain(g => g.Count() == 1);
         file.ReferenceSources.Should().OnlyHaveUniqueItems();
         file.ReferenceSources.Count(ReferenceKinds.IsSpokenOf).Should().Be(2);
+    }
+
+    /// <summary>
+    /// A reading names the record a split leaves its verse with. Read for the record a split moves the
+    /// verse off, the fold after it takes the reading to the other man, and the next load finds it
+    /// missing and writes it back.
+    /// </summary>
+    [Fact]
+    public void NoShippedReadingIsOfAVerseASplitMovesToAnotherRecord()
+    {
+        var splits = DuplicateRecordLoader.Read().Splits!;
+
+        var moved = VerseReadingFiles.Read().Readings
+            .Where(reading => PassageReadingLoader.Place(reading.Reference) is { } at
+                              && splits.Any(split => split.From == reading.Record
+                                                     && Holds(split.Verses, at)
+                                                     && !Holds(split.Keeps ?? [], at)))
+            .Select(reading => $"{reading.Record} at {reading.Reference}");
+
+        moved.Should().BeEmpty();
+
+        static bool Holds(IEnumerable<string> spans, CanonicalReference at) =>
+            spans.Select(ScriptureSpan.Parse).Any(span => span.Holds(at.Book, at.Chapter, at.Verse, 1));
     }
 }
