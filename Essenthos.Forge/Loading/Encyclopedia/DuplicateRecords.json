@@ -2639,6 +2639,33 @@
         "NEH 10:25"
       ],
       "why": "rehum-3 is Rehum son of Bani, a Levite who repaired the wall (NEH 3:17 'repaired the Levites, Rehum the son of Bani'). The Levites sealed in NEH 10:9-13; NEH 10:25's Rehum stands among the chiefs of the people (10:14-27), the lay list, so the list itself keeps him apart from the Levite. The note on rehum-3 claiming 10:25 is the only link and should go."
+    },
+    {
+      "from": "berechiah-2",
+      "to": "berechiah-doorkeeper-of-the-ark",
+      "name": null,
+      "verses": [
+        "1CH 15:23"
+      ],
+      "why": "1CH 15:23: 'Berechiah and Elkanah were doorkeepers for the ark' when David brought it up gives this Berechiah an office and no father. Neither the father of Asaph (1CH 6:39, 15:17) nor the son of Asa (1CH 9:16) is said to be him, so the doorkeeper is a person of his own, as Elkanah beside him is, and the verse goes with him."
+    },
+    {
+      "from": "berechiah-3",
+      "to": "berechiah-doorkeeper-of-the-ark",
+      "name": null,
+      "verses": [
+        "1CH 15:23"
+      ],
+      "why": "1CH 15:23: 'Berechiah and Elkanah were doorkeepers for the ark' when David brought it up gives this Berechiah an office and no father. Neither the father of Asaph (1CH 6:39, 15:17) nor the son of Asa (1CH 9:16) is said to be him, so the doorkeeper is a person of his own, as Elkanah beside him is, and the verse goes with him."
+    },
+    {
+      "from": "elkanah-4",
+      "to": "elkanah-doorkeeper-of-the-ark",
+      "name": null,
+      "verses": [
+        "1CH 15:23"
+      ],
+      "why": "1CH 15:23: 'Berechiah and Elkanah were doorkeepers for the ark' names the Levite doorkeeper of David's day, whose word is his own record's; the Kohathite Elkanah, father of Amasai and Ahimoth and son of Joel (1CH 6:25, 6:36), lived generations before him."
     }
   ]
 }
