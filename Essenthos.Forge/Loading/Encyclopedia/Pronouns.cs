@@ -5,7 +5,11 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <summary>
 /// The personal pronouns of the languages a carried name lands on, each with the sex it states where
 /// it states one: <em>he</em> is a man and <em>she</em> a woman, <em>thee</em>, <em>their</em>,
-/// <em>sein</em> and <em>свой</em> say neither. A pronoun is never a name and never a spelling of
+/// <em>sein</em> and <em>свой</em> say neither. The Greek is the personal and demonstrative
+/// pronouns and the reflexives, in the forms Brenton, Swete and the New Testament print them: a form
+/// that is masculine or neuter (<em>αὐτοῦ</em>) is taken for the masculine, since a person is what it
+/// is carried onto, and one that is only neuter or says no gender (<em>αὐτό</em>, <em>με</em>,
+/// <em>αὐτῶν</em>) says no sex. A pronoun is never a name and never a spelling of
 /// one; whether the person it refers to may be shown on it is <see cref="PronounReferents"/>'s rule.
 /// </summary>
 internal static class Pronouns
@@ -48,7 +52,51 @@ internal static class Pronouns
                 ["ella"],
                 ["ellos", "ellas", "le", "les", "se", "su", "sus", "suyo", "suya", "tú", "ti", "te", "tu", "tus",
                  "yo", "me", "mi", "mis", "nosotros", "nos", "vosotros", "os", "quien", "quién"]),
+            ["grc"] = Words(
+                WithGraves(
+                    ["αὐτός", "αὐτοῦ", "αὐτῷ", "αὐτόν", "οὗτος", "τούτου", "τούτῳ", "τοῦτον", "ἐκεῖνος", "ἐκείνου",
+                     "ἐκείνῳ", "ἐκεῖνον", "ἑαυτοῦ", "ἑαυτῷ", "ἑαυτόν", "ἐμαυτοῦ", "ἐμαυτῷ", "ἐμαυτόν", "σεαυτοῦ",
+                     "σεαυτῷ", "σεαυτόν"]),
+                WithGraves(
+                    ["αὐτή", "αὐτῆς", "αὐτῇ", "αὐτήν", "αὕτη", "ταύτης", "ταύτῃ", "ταύτην", "ἐκείνη", "ἐκείνης",
+                     "ἐκείνῃ", "ἐκείνην", "ἑαυτῆς", "ἑαυτῇ", "ἑαυτήν"]),
+                WithGraves(
+                    ["αὐτό", "αὐτά", "αὐτοί", "αὐταί", "αὐτῶν", "αὐτοῖς", "αὐταῖς", "αὐτούς", "αὐτάς", "τοῦτο",
+                     "ταῦτα", "οὗτοι", "αὗται", "τούτων", "τούτοις", "τούτους", "ταύταις", "ταύτας", "ἐκεῖνο",
+                     "ἐκεῖνα", "ἐκεῖνοι", "ἐκεῖναι", "ἐκείνων", "ἐκείνοις", "ἐκείναις", "ἐκείνους", "ἐκείνας",
+                     "ἑαυτῶν", "ἑαυτοῖς", "ἑαυταῖς", "ἑαυτούς", "ἑαυτάς", "ἐγώ", "ἐμοῦ", "μου", "ἐμοί", "μοι", "ἐμέ",
+                     "με", "ἡμεῖς", "ἡμῶν", "ἡμῖν", "ἡμᾶς", "σύ", "σοῦ", "σου", "σοί", "σοι", "σέ", "σε", "ὑμεῖς",
+                     "ὑμῶν", "ὑμῖν", "ὑμᾶς", "ἐμός", "ἐμή", "ἐμόν", "σός", "σή", "σόν"])),
         };
+
+    /// <summary>
+    /// The forms as the texts print them mid-sentence too: a word with its accent on the last syllable
+    /// takes the grave there (<em>αὐτὸν</em>, <em>ἐγὼ</em>), and both are the same pronoun.
+    /// </summary>
+    private static string[] WithGraves(string[] acute) =>
+        [.. acute.SelectMany(form => new[] { form, ToGrave(form) }).Distinct(StringComparer.Ordinal)];
+
+    private static string ToGrave(string form)
+    {
+        for (var at = form.Length - 1; at >= 0; at--)
+        {
+            if (form[at] is not ('ά' or 'έ' or 'ή' or 'ί' or 'ό' or 'ύ' or 'ώ'))
+            {
+                continue;
+            }
+
+            var grave = form[at] switch
+            {
+                'ά' => 'ὰ', 'έ' => 'ὲ', 'ή' => 'ὴ', 'ί' => 'ὶ', 'ό' => 'ὸ', 'ύ' => 'ὺ', _ => 'ὼ',
+            };
+            var tail = form[(at + 1)..];
+
+            // Only an accent on the last syllable becomes a grave before another word.
+            return tail.All(letter => "βγδζθκλμνξπρσςτφχψ".Contains(letter)) ? form[..at] + grave + tail : form;
+        }
+
+        return form;
+    }
 
     private static Dictionary<string, string?> Words(string[] male, string[] female, string[] neither)
     {

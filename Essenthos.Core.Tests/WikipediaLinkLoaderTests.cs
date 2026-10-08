@@ -149,6 +149,63 @@ public sealed class WikipediaLinkLoaderTests : IDisposable
         ((JsonArray)entry["references"]!).Select(r => (string)r!).Should().Equal("2KI 14:29");
     }
 
+    private void ZechariahTiedByAVerse() =>
+        File.WriteAllLines(Path.Combine(_resources, WikidataItems.Folder, WikidataItems.ItemsFile),
+        [
+            Item("Q5", "Zechariah", "male human biblical figure in 2 Kings 14:29, King of Israel", """{"enwiki":"Zechariah of Israel"}"""),
+            Item("Q3", "Zechariah", "prophet", """{"enwiki":"Zechariah (prophet)","eswiki":"Zacarías"}"""),
+        ]);
+
+    [Fact]
+    public async Task ARecordTheMatchingTiedOnItsOwnIsListedWithTheTieAndTheOtherItemsItMightBe()
+    {
+        ZechariahTiedByAVerse();
+        Person("zechariah", "Zechariah", "son of Jeroboam (2KI 14:29)");
+
+        var outcome = await Loader().Load(_resources);
+
+        (await Held()).Should().Equal("zechariah en Zechariah of Israel Q5 verse");
+        outcome.Questions.Should().Be(0, "nothing is left undecided");
+        outcome.Ties.Should().Be(1);
+        var entry = ((JsonArray)Review()["entries"]!).OfType<JsonObject>().Single();
+        ((string)entry["tied"]!["qid"]!).Should().Be("Q5");
+        ((string)entry["tied"]!["by"]!).Should().Be("verse");
+        ((JsonArray)entry["candidates"]!).Select(c => (string)c!["qid"]!).Should().Equal("Q5", "Q3");
+    }
+
+    [Fact]
+    public async Task ATieTheOwnerSetsToAnotherItemIsLinkedByHisWordAndHisListKeepsBothTheTieAndTheAnswer()
+    {
+        ZechariahTiedByAVerse();
+        Person("zechariah", "Zechariah", "son of Jeroboam (2KI 14:29)");
+        await Loader().Load(_resources);
+        Answer("zechariah", "Q3", "owner in chat: the prophet");
+
+        await Loader().Load(_resources);
+        var again = await Loader().Load(_resources);
+
+        (await Held()).Should().Equal("zechariah en Zechariah (prophet) Q3 owner", "zechariah es Zacarías Q3 owner");
+        again.Written.Should().Be(0);
+        var entry = ((JsonArray)Review()["entries"]!).OfType<JsonObject>().Single();
+        ((string)entry["decision"]!["answer"]!).Should().Be("Q3");
+        ((string)entry["tied"]!["qid"]!).Should().Be("Q5");
+        ((JsonArray)entry["candidates"]!).Select(c => (string)c!["qid"]!).Should().Contain("Q3");
+    }
+
+    [Fact]
+    public async Task ATieTheOwnerTakesBackWithNoneLeavesTheRecordUnlinkedOnEveryLoad()
+    {
+        ZechariahTiedByAVerse();
+        Person("zechariah", "Zechariah", "son of Jeroboam (2KI 14:29)");
+        await Loader().Load(_resources);
+        Answer("zechariah", WikipediaReviewList.None, "owner in chat: not him");
+
+        await Loader().Load(_resources);
+        await Loader().Load(_resources);
+
+        (await Held()).Should().BeEmpty();
+    }
+
     [Fact]
     public async Task TheOwnersChoiceLinksTheRecordToTheItemHeChose()
     {

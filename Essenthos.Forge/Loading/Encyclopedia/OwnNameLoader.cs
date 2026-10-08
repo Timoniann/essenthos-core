@@ -73,7 +73,48 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
     {
         var list = Read();
         var numbers = await Correct(list.Numbers ?? [], cancellationToken);
-        return numbers + await CorrectForms(list.Forms ?? [], cancellationToken);
+        return numbers + await CorrectForms(list.Forms ?? [], cancellationToken)
+               + await CorrectKinds(list.Kinds ?? [], cancellationToken);
+    }
+
+    /// <summary>
+    /// A label a record is not known by, only described as, taken off the names it is known by: the
+    /// Nile's <em>River of Egypt</em> and the Euphrates' <em>the Great River</em> are the text's
+    /// description of the river, not a name of it, and filed as a proper name they read as one.
+    /// Only a row still of the kind the list says it was is changed, so a second run finds nothing
+    /// and a row somebody else has since kinded is left alone.
+    /// </summary>
+    internal async Task<int> CorrectKinds(IReadOnlyList<CorrectedNameKind> corrections, CancellationToken cancellationToken)
+    {
+        var slugs = corrections.Select(c => c.Entity).Distinct(StringComparer.Ordinal).ToList();
+        var records = await db.Entities.Where(e => slugs.Contains(e.Slug)).Include(e => e.Names)
+            .ToDictionaryAsync(e => e.Slug, StringComparer.Ordinal, cancellationToken);
+        var corrected = 0;
+        foreach (var correction in corrections)
+        {
+            if (!records.TryGetValue(correction.Entity, out var record)
+                || !string.Equals(record.SourceId, correction.SourceId, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            foreach (var name in record.Names.Where(n =>
+                         string.Equals(n.Label, correction.Label, StringComparison.Ordinal)
+                         && string.Equals(n.Kind, correction.Was, StringComparison.Ordinal)))
+            {
+                name.Kind = correction.Kind;
+                corrected++;
+                logger.LogInformation("{Slug}'s \"{Label}\" is a {Kind}, not a {Was}: {Why}",
+                    record.Slug, correction.Label, correction.Kind, correction.Was, correction.Why);
+            }
+        }
+
+        if (corrected > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        return corrected;
     }
 
     /// <summary>Correct a Greek form only while its record identity and original row still match.</summary>
@@ -217,7 +258,10 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
 
 /// <summary>The embedded list, as a file.</summary>
 internal sealed record OwnNames(IReadOnlyList<OwnName> Names, IReadOnlyList<CorrectedNumber>? Numbers,
-    IReadOnlyList<CorrectedNameForm>? Forms = null);
+    IReadOnlyList<CorrectedNameForm>? Forms = null, IReadOnlyList<CorrectedNameKind>? Kinds = null);
+
+/// <summary>A name row of one kind that is another, on the record with this source id.</summary>
+internal sealed record CorrectedNameKind(string Entity, string SourceId, string Label, string Was, string Kind, string Why);
 
 /// <summary>A sourced Greek spelling replacing a specific original name row.</summary>
 internal sealed record CorrectedNameForm(string Entity, string SourceId, string Label, string? HebrewStrongNumber,

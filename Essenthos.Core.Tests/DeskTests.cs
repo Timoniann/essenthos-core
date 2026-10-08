@@ -251,6 +251,42 @@ public sealed class DeskTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task ARecordTheMatchingTiedOnItsOwnIsListedApartFromTheOpenOnesAndCanBeSetToAnotherItem()
+    {
+        File.WriteAllText(Path.Combine(Review, WikipediaReview.FileName),
+            """
+            {
+              "entries": [
+                {
+                  "record": "immanuel", "kind": "person", "label": "Immanuel", "line": "the son of Isaiah (ISA 8:2)",
+                  "references": ["ISA 8:2"],
+                  "candidates": [
+                    { "qid": "Q7", "label": "Maher-shalal-hash-baz", "description": "son of Isaiah", "articles": { "en": "Maher-Shalal-Hash-Baz" }, "evidence": ["kin"] },
+                    { "qid": "Q8", "label": "Immanuel", "description": "sign", "articles": { "en": "Immanuel" }, "evidence": [] }
+                  ],
+                  "others": 0,
+                  "tied": { "qid": "Q7", "by": "kin" }
+                }
+              ]
+            }
+            """);
+
+        var read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+        (read.Open, read.Tied, read.Answered).Should().Be((0, 1, 0));
+        read.Entries.Single().Tied.Should().NotBeNull().And.Subject.Should().BeEquivalentTo(new { Qid = "Q7", By = "kin" });
+        var summary = await Json<SummaryResponse>(await _http.GetAsync("/desk-api/summary"));
+        summary.Counts.Single(c => c.Key == "wikipedia").Count.Should().Be(0, "a tie of the matching is not waiting for an answer");
+
+        (await Put("/desk-api/review/wikipedia/immanuel", new { answer = "Q8", note = "the sign, not the child" })).StatusCode
+            .Should().Be(HttpStatusCode.OK);
+
+        var after = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+        (after.Open, after.Tied, after.Answered).Should().Be((0, 0, 1));
+        var logged = Logged().Should().ContainSingle().Which;
+        logged.After!.GetValue<string>().Should().Be("Q8 Immanuel");
+    }
+
+    [Fact]
     public async Task NoneIsAnAnswerAndTakingAnAnswerBackRemovesIt()
     {
         WriteWikipedia();

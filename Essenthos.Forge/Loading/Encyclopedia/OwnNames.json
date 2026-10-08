@@ -131,5 +131,23 @@
       "hebrewStrongNumber": "H7928",
       "why": "H7927 is the town of Shechem; Shemida's son (1CH 7:19) is H7928, the number of the word that names him, which Strong heads for him and for Gilead's son."
     }
+  ],
+  "kinds": [
+      {
+          "entity": "nile",
+          "sourceId": "place:Nile_1",
+          "label": "River of Egypt",
+          "was": "proper name",
+          "kind": "description",
+          "why": "'The river of Egypt' (Gen 15:18) is how the text describes the river by the country it runs through; the Nile's names are Nile and the Hebrew Yeor. A description is kept as one, and is not a name the river is known by."
+      },
+      {
+          "entity": "euphrates",
+          "sourceId": "place:Euphrates_1",
+          "label": "the Great River",
+          "was": "proper name",
+          "kind": "description",
+          "why": "'The great river, the river Euphrates' (Gen 15:18, Deut 1:7) describes the river and then names it; the Euphrates' name is Euphrates. A description is kept as one, and is not a name the river is known by."
+      }
   ]
 }

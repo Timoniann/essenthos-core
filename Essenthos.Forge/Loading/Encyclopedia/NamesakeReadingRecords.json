@@ -1,0 +1,378 @@
+{
+  "decidedBy": "the lead, 2026-10-08, on PRB-0490: in 59 verses where BibleData's man and the person split's man of one name differ, Codex (gpt-6.1-sol, reasoning high) and a blind Opus judge each said which man the verse names, and they agree; applied here to the words of those verses no earlier ruling has settled; no person has reviewed these rulings",
+  "policy": "A word names the man its verse names. Where two independent readings of the original word and both records agree on which of two men of one name a verse names, the word is ruled onto him and taken off the other, which outranks the model readings and every pick of the namesake passes. The verses on which they disagree, and those the judge reads as one man held under two records, are not ruled here.",
+  "method": "manual",
+  "source": "Essenthos, 59 verses where two men of one name were identified, each read in the original by gpt-6.1-sol and by a blind judge, 2026-10-08",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "JDG 3:15",
+      "position": 15,
+      "surface": "גֵּרָא֙",
+      "strongNumber": "H1617",
+      "existing": "gera-2",
+      "corrects": "gera-3",
+      "why": "JDG 3:15 (Gera): 'Ehud ben Gera, the Benjamite' names Ehud's father, which is A; B is Shimei's father. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2KI 14:24",
+      "position": 13,
+      "surface": "יָרָבְעָ֣ם",
+      "strongNumber": "H3379",
+      "existing": "jeroboam",
+      "corrects": "jeroboam-2",
+      "why": "2KI 14:24 (Jeroboam): The only Jeroboam the verse names is 'Jeroboam son of Nebat, who made Israel to sin' (A); Jeroboam son of Joash is only the unnamed subject. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 3:6",
+      "position": 6,
+      "surface": "אֱלִיפָֽלֶט",
+      "strongNumber": "H467",
+      "existing": "eliphelet-3",
+      "corrects": "eliphelet",
+      "why": "1CH 3:6 (Eliphelet): 1CH 3:6 names the first of David's two Eliphelets; the second, in 3:8 and 2SA 5:16, is B. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 6:8",
+      "position": 1,
+      "surface": "אֶלְקָנָ֥ה",
+      "strongNumber": "H511",
+      "existing": "elkanah",
+      "corrects": "elkanah-4",
+      "why": "1CH 6:23 (Elkanah): This Elkanah follows Korah and Assir, matching Korah's son Elkanah of EXO 6:24 (A), not the later Elkanah son of Joel of 6:36 (B). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 6:11",
+      "position": 3,
+      "surface": "אֶלְקָנָ֔ה",
+      "strongNumber": "H511",
+      "existing": "elkanah-5",
+      "corrects": "elkanah-4",
+      "why": "1CH 6:26 (Elkanah): The Elkanah whose son is Zophai is Elkanah son of Mahath/Ahimoth (6:35, Ketiv 'Elkanah his son'), which is A, not Amasai's father (B). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 6:20",
+      "position": 4,
+      "surface": "אֶלְקָנָ֔ה",
+      "strongNumber": "H511",
+      "existing": "elkanah-5",
+      "corrects": "elkanah-4",
+      "why": "1CH 6:35 (Elkanah): The one Elkanah in 6:35 is son of Mahath and father of Zuph (A), while Elkanah son of Joel (B) is in 6:36. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 9:16",
+      "position": 14,
+      "surface": "אֶלְקָנָ֔ה",
+      "strongNumber": "H511",
+      "existing": "elkanah-6",
+      "corrects": "elkanah-4",
+      "why": "1CH 9:16 (Elkanah): The verse names Elkanah grandfather of Berechiah, of the Netophathite villages, which is exactly A. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 11:41",
+      "position": 4,
+      "surface": "זָבָ֖ד",
+      "strongNumber": "H2066",
+      "existing": "zabad-3",
+      "corrects": "zabad",
+      "why": "1CH 11:41 (Zabad): The verse names Zabad son of Ahlai, which is A; B is the Judahite son of Nathan of 1CH 2:36. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 14:5",
+      "position": 6,
+      "surface": "אֶלְפָּֽלֶט",
+      "strongNumber": "H467",
+      "existing": "eliphelet-3",
+      "corrects": "eliphelet",
+      "why": "1CH 14:5 (Elpelet): Elpelet in 14:5 is the earlier of David's two Eliphelets (matching 1CH 3:6), while the later one (14:7, 3:8, 2SA 5:16) is B. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 23:9",
+      "position": 2,
+      "surface": "שִׁמְעִ֗י",
+      "strongNumber": "H8096",
+      "existing": "shimei-9",
+      "corrects": "shimei",
+      "why": "1CH 23:9 (Shimei): The verse ends 'these were the heads of the fathers of Laadan', so this Shimei belongs to Laadan's house (A), not Gershon's son Shimei whose sons follow in 23:10 (B). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 35:9",
+      "position": 13,
+      "surface": "יֹוזָבָ֖ד",
+      "strongNumber": "H3107",
+      "existing": "jozabad-11",
+      "corrects": "jozabad-4",
+      "why": "2CH 35:9 (Jozabad): The verse names a chief Levite at Josiah's Passover (B); A is an overseer under Hezekiah about ninety years earlier (2CH 31:13). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZR 2:40",
+      "position": 4,
+      "surface": "יֵשׁ֧וּעַ",
+      "strongNumber": "H3442",
+      "existing": "jeshua-5",
+      "corrects": "jeshua-7",
+      "why": "EZR 2:40 (Jeshua): The verse names the Levite family head Jeshua of the sons of Hodaviah whose descendants returned (A), not the later Levite of Nehemiah's day (B). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZR 8:2",
+      "position": 3,
+      "surface": "פִֽינְחָס֙",
+      "strongNumber": "H6372",
+      "existing": "phinehas",
+      "corrects": "phinehas-3",
+      "why": "EZR 8:2 (Phinehas): 'Of the sons of Phinehas, Gershom' names the priestly house founded by Aaron's grandson Phinehas, not the contemporary father of Eleazar of 8:33. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZR 8:16",
+      "position": 23,
+      "surface": "זְכַרְיָ֥ה",
+      "strongNumber": "H2148",
+      "existing": "zechariah-24",
+      "corrects": "zechariah-16",
+      "why": "EZR 8:16 (Zechariah): The verse names Zechariah among the ra'shim (chief men) Ezra sent for at Ahava, which is B; A is the Parosh descendant of 8:3, and its claim that he was a Levite contradicts the text, since Ezra sent for these men because he had found no Levites. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZR 10:21",
+      "position": 5,
+      "surface": "מַעֲשֵׂיָ֤ה",
+      "strongNumber": "H4641",
+      "existing": "maaseiah-15",
+      "corrects": "maaseiah-6",
+      "why": "EZR 10:21 (Maaseiah): The verse names Maaseiah of the sons of Harim (B); A merges him with a different Maaseiah of the sons of Jeshua (10:18). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZR 10:23",
+      "position": 15,
+      "surface": "אֱלִיעֶֽזֶר",
+      "strongNumber": "H461",
+      "existing": "eliezer-11",
+      "corrects": "eliezer-7",
+      "why": "EZR 10:23 (Eliezer): This Eliezer is listed among the Levites, separate from the priest Eliezer of Jeshua's sons in 10:18 (A), so he is B. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 3:17",
+      "position": 11,
+      "surface": "חֲשַׁבְיָ֛ה",
+      "strongNumber": "H2811",
+      "existing": "hashabiah-5",
+      "corrects": "hashabiah-4",
+      "why": "NEH 3:17 (Hashabiah): Hashabiah, ruler of half the district of Keilah, is exactly A; B is the Merarite Levite who joined Ezra. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 3:29",
+      "position": 11,
+      "surface": "שְׁמַֽעְיָ֣ה",
+      "strongNumber": "H8098",
+      "existing": "shemaiah-17",
+      "corrects": "shemaiah-2",
+      "why": "NEH 3:29 (Shemaiah): Shemaiah ben Shecaniah, keeper of the east gate and a repairer of the wall, is A; the text does not make him the Davidic Shemaiah of 1CH 3:22 (B). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 7:43",
+      "position": 4,
+      "surface": "יֵשׁ֧וּעַ",
+      "strongNumber": "H3442",
+      "existing": "jeshua-5",
+      "corrects": "jeshua-7",
+      "why": "NEH 7:43 (Jeshua): 'The children of Jeshua, of Kadmiel' in the return list is the Levite house of Ezra 2:40, which is A; B is the Levite of Nehemiah's day. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 9:4",
+      "position": 10,
+      "surface": "קַדְמִיאֵ֧ל",
+      "strongNumber": "H6934",
+      "existing": "kadmiel-2",
+      "corrects": "kadmiel",
+      "why": "NEH 9:4 (Kadmiel): The Kadmiel on the Levites' stairs in Nehemiah's day is A by definition; B is the house-founder of Zerubbabel's return. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 9:5",
+      "position": 7,
+      "surface": "קַדְמִיאֵל",
+      "strongNumber": "H6934",
+      "existing": "kadmiel-2",
+      "corrects": "kadmiel",
+      "why": "NEH 9:5 (Kadmiel): The Kadmiel who called Israel to bless the LORD is A by definition; B is the house-founder of Zerubbabel's return. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 10:5",
+      "position": 1,
+      "surface": "חַטּ֥וּשׁ",
+      "strongNumber": "H2407",
+      "existing": "hattush-3",
+      "corrects": "hattush",
+      "why": "NEH 10:4 (Hattush): NEH 10:2-8 lists priests ('these were the priests', 10:8), so this Hattush is A, the Aaronic priest, not B, David's descendant of the tribe of Judah. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 10:10",
+      "position": 12,
+      "surface": "קַדְמִיאֵֽל",
+      "strongNumber": "H6934",
+      "existing": "kadmiel-2",
+      "corrects": "kadmiel",
+      "why": "NEH 10:9 (Kadmiel): A is the Kadmiel of Nehemiah's day, noted as sealing at 10:9; B is the Levite house-founder of Zerubbabel's return, about a century earlier. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 11:9",
+      "position": 11,
+      "surface": "סְּנוּאָ֛ה",
+      "strongNumber": "H5574",
+      "existing": "hassenuah-2",
+      "corrects": "hassenuah",
+      "why": "NEH 11:9 (Hassenuah): 'Judah ben Hassenuah' names Judah's father, which is A; B is Hodaviah's father in 1CH 9:7. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:2",
+      "position": 3,
+      "surface": "חַטּֽוּשׁ",
+      "strongNumber": "H2407",
+      "existing": "hattush-3",
+      "corrects": "hattush",
+      "why": "NEH 12:2 (Hattush): The list is of priests and Levites with Zerubbabel, so Hattush is the priest (A), not David's descendant of the tribe of Judah who went up with Ezra (B). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:5",
+      "position": 2,
+      "surface": "מַֽעַדְיָ֖ה",
+      "strongNumber": "H4573",
+      "existing": "maaziah-3",
+      "corrects": "maaziah-2",
+      "why": "NEH 12:5 (Maadiah): Maadiah in the list of priests with Zerubbabel is the house head B; A is the Maaziah who sealed in Nehemiah's day (10:8), and A's record does not claim this verse. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:34",
+      "position": 1,
+      "surface": "יְהוּדָה֙",
+      "strongNumber": "H3063",
+      "existing": "judah-7",
+      "corrects": "judah-4",
+      "why": "NEH 12:34 (Judah): Judah in the dedication procession under Nehemiah is B; A is a Levite of Zerubbabel's return, a century earlier. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:41",
+      "position": 6,
+      "surface": "מִ֠נְיָמִין",
+      "strongNumber": "H4509",
+      "existing": "miniamin-3",
+      "corrects": "miniamin-2",
+      "why": "NEH 12:41 (Miniamin): Miniamin, a priest with a trumpet at the dedication, is exactly A; B is the house of Miniamin in the Joiakim list (12:17). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:42",
+      "position": 8,
+      "surface": "עֻזִּ֛י",
+      "strongNumber": "H5813",
+      "existing": "uzzi-7",
+      "corrects": "uzzi-6",
+      "why": "NEH 12:42 (Uzzi): Uzzi among the priests and singers at the dedication is B; the text does not make him the head of Jedaiah's house under Joiakim. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:42",
+      "position": 10,
+      "surface": "יהֹוחָנָ֥ן",
+      "strongNumber": "H3076",
+      "existing": "jehohanan-5",
+      "corrects": "jehohanan-4",
+      "why": "NEH 12:42 (Jehohanan): Jehohanan among the priests and singers at the dedication is B; the text does not make him the head of Amariah's house under Joiakim. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 29:3",
+      "position": 5,
+      "surface": "שָׁפָ֔ן",
+      "strongNumber": "H8227",
+      "existing": "shaphan-5",
+      "corrects": "shaphan",
+      "why": "JER 29:3 (Shaphan): Elasah ben Shaphan names Elasah's father, which is B; the text does not say he is Josiah's scribe, and A's family lists no Elasah. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "BHSA",
+      "reference": "ZEC 12:12",
+      "position": 20,
+      "surface": "נָתָן֙",
+      "strongNumber": "H5416",
+      "existing": "nathan-10",
+      "corrects": "nathan-2",
+      "why": "ZEC 12:12 (Nathan): 'The family of the house of Nathan' is a mourning clan beside the house of David, matching B's house head; nothing points to Nathan the prophet (A). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MAT 1:15",
+      "position": 15,
+      "surface": "Ἰακώβ",
+      "strongNumber": "G2384",
+      "existing": "jacob-2",
+      "corrects": "jacob",
+      "why": "MAT 1:15 (Jacob): 'Matthan begat Jacob' names Matthan's son, Joseph's father, which is A, not the patriarch. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MAT 1:16",
+      "position": 1,
+      "surface": "Ἰακὼβ",
+      "strongNumber": "G2384",
+      "existing": "jacob-2",
+      "corrects": "jacob",
+      "why": "MAT 1:16 (Jacob): 'Jacob begat Joseph the husband of Mary' is Matthan's son, which is A, not the patriarch. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 23:35",
+      "position": 15,
+      "surface": "Ἡρῴδου",
+      "strongNumber": "G2264",
+      "existing": "herod",
+      "corrects": "herod-3",
+      "why": "ACT 23:35 (Herod): 'Herod's praetorium' at Caesarea is the palace built by Herod the Great (B), not Agrippa I (A). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "1CO 15:7",
+      "position": 3,
+      "surface": "Ἰακώβῳ",
+      "strongNumber": "G2385",
+      "existing": "james-3",
+      "corrects": "james",
+      "why": "1CO 15:7 (James): Paul sets this James apart from 'all the apostles', and the only James he names elsewhere is the Lord's brother (GAL 1:19), not the son of Zebedee. Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "3JN 1:1",
+      "position": 3,
+      "surface": "Γαΐῳ",
+      "strongNumber": "G1050",
+      "existing": "gaius-4",
+      "corrects": "gaius",
+      "why": "3JN 1:1 (Gaius): The verse names the addressee of 3 John (B); nothing ties him to the Macedonian travelling companion of ACT 19:29 (A). Codex gpt-6.1-sol and a blind Opus judge named the same man."
+    }
+  ]
+}

@@ -369,6 +369,11 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(e => e.OriginEntityId)
                 .OnDelete(DeleteBehavior.SetNull);
+
+            entity.HasOne(e => e.AnotherNameFor)
+                .WithMany()
+                .HasForeignKey(e => e.AnotherNameForEntityId)
+                .OnDelete(DeleteBehavior.SetNull);
         });
 
         // A name deferring to another record must not take the name with it when that record goes:

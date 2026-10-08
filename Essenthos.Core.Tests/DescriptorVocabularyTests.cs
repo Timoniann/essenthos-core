@@ -325,4 +325,36 @@ public sealed class DescriptorVocabularyTests
 
         (before + name).Should().Be(expected);
     }
+
+    /// <summary>
+    /// Rachel is Dan's adoptive mother (GEN 30:3-6): said of a woman, to a person, in all four
+    /// languages, and not a parent's tie, so no parent check and no tree reads it.
+    /// </summary>
+    [Theory]
+    [InlineData("eng", "adoptive mother of Dan")]
+    [InlineData("ukr", "названа мати Дана")]
+    [InlineData("deu", "Adoptivmutter Dans")]
+    [InlineData("spa", "madre adoptiva de Dan")]
+    public void AnAdoptiveMotherIsSaidInEveryLanguage(string language, string expected)
+    {
+        var forms = new Dictionary<string, string> { ["genitive"] = language == "ukr" ? "Дана" : "Dans", ["nominative"] = "Dan" };
+        var (before, name) = DescriptorPhrasings.Say(
+            language, DescriptorPhrasings.For(language)![DescriptorRelations.AdoptiveMotherOf], EntityKind.Person, forms, "Dan");
+
+        (before + name).Should().Be(expected);
+    }
+
+    [Fact]
+    public void AnAdoptiveMotherIsAWomanOfTheFamilyWhoIsNeitherParentNorChildNorOnAnyTree()
+    {
+        DescriptorRelations.All.Should().Contain(DescriptorRelations.AdoptiveMotherOf);
+        DescriptorSubjects.Admits(DescriptorRelations.AdoptiveMotherOf, EntityKind.Person).Should().BeTrue();
+        DescriptorSubjects.Admits(DescriptorRelations.AdoptiveMotherOf, EntityKind.Place).Should().BeFalse();
+        KinRelations.All.Should().Contain(DescriptorRelations.AdoptiveMotherOf);
+        KinRelations.SaidOfAWoman.Should().Contain(DescriptorRelations.AdoptiveMotherOf);
+        KinRelations.SaidOfAMan.Should().NotContain(DescriptorRelations.AdoptiveMotherOf);
+        KinRelations.ParentOf.Should().NotContain(DescriptorRelations.AdoptiveMotherOf);
+        KinRelations.ChildOf.Should().NotContain(DescriptorRelations.AdoptiveMotherOf);
+        ChapterFamily.Types.Should().NotContain(DescriptorRelations.AdoptiveMotherOf);
+    }
 }

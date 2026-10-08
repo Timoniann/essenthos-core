@@ -231,6 +231,55 @@ public sealed class PersonRegisterLoadTests : IDisposable
         claim.Note.Should().Contain("no verse of this corpus tells him from his namesakes");
     }
 
+    private const string ZimriFive =
+        "Obscure name in Jeremiah among 'mingled people'; possibly same as Zimran; no verse supplied here";
+
+    [Fact]
+    public async Task A_bearer_the_register_describes_with_a_sentence_about_our_verses_gets_a_line_for_the_reader()
+    {
+        Register(Bearer(5, ZimriFive, [], standing: "lexicon", why: "a second reading upholds the item as a man"));
+
+        await Load();
+
+        var line = (await Person("zimri-3"))!.Distinguisher;
+        line.Should().Be("A name among the mingled peoples in Jeremiah, possibly the same as Zimran");
+    }
+
+    [Fact]
+    public async Task A_corpus_loaded_with_the_registers_sentence_is_given_the_readers_line_once()
+    {
+        Register(Bearer(5, ZimriFive, [], standing: "lexicon", why: "a second reading upholds the item as a man"));
+        await Load();
+        var added = await Person("zimri-3");
+        added!.Distinguisher = ZimriFive;
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        await Load();
+
+        (await Person("zimri-3"))!.Distinguisher.Should().Be("A name among the mingled peoples in Jeremiah, possibly the same as Zimran");
+
+        var saved = await _db.Entities.AsNoTracking().SingleAsync(e => e.Slug == "zimri-3");
+        _db.ChangeTracker.Clear();
+        await Load();
+        (await _db.Entities.AsNoTracking().SingleAsync(e => e.Slug == "zimri-3")).Distinguisher.Should().Be(saved.Distinguisher);
+    }
+
+    [Fact]
+    public async Task A_line_somebody_else_has_since_rewritten_is_left_alone()
+    {
+        Register(Bearer(5, ZimriFive, [], standing: "lexicon", why: "a second reading upholds the item as a man"));
+        await Load();
+        var added = await Person("zimri-3");
+        added!.Distinguisher = "A man a later reading described";
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        await Load();
+
+        (await Person("zimri-3"))!.Distinguisher.Should().Be("A man a later reading described");
+    }
+
     [Fact]
     public async Task Two_bearers_cannot_both_be_one_held_man()
     {

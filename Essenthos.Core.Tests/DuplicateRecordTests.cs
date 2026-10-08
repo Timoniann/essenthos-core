@@ -826,6 +826,56 @@ public sealed class DuplicateRecordTests : IDisposable
     }
 
     /// <summary>
+    /// A bearer the register adds for a man no verse of ours tells from his namesakes, who is the man
+    /// a held record already is: Shaul-4 is Saul the king, the Hanoch of Midian is the Enoch of the
+    /// register's spelling, and Jehohanan-7 is the captain of 2 Chronicles 17:15 under the spelling
+    /// the register chose for him.
+    /// </summary>
+    [Theory]
+    [InlineData("shaul-4", "saul")]
+    [InlineData("hanoch-3", "enoch")]
+    [InlineData("hanoch-4", "enoch-2")]
+    [InlineData("enoch-4", "hanoch")]
+    [InlineData("enoch-5", "hanoch-2")]
+    [InlineData("saul-3", "shaul")]
+    [InlineData("saul-4", "shaul-2")]
+    [InlineData("saul-5", "shaul-3")]
+    [InlineData("amos-3", "amoz")]
+    [InlineData("jeshaiah-6", "isaiah")]
+    [InlineData("hoshea-4", "hosea")]
+    [InlineData("jether-4", "reuel-2")]
+    [InlineData("micaiah-7", "micah-4")]
+    [InlineData("micah-5", "micaiah")]
+    [InlineData("micah-6", "micaiah-3")]
+    [InlineData("jehohanan-6", "johanan-6")]
+    [InlineData("jehohanan-7", "johanan-7")]
+    [InlineData("jehohanan-8", "johanan-9")]
+    [InlineData("jehohanan-9", "johanan")]
+    [InlineData("jehohanan-12", "johanan-3")]
+    [InlineData("johanan-13", "jehohanan-3")]
+    public void AnEnumeratedBearerNoVerseStandsBehindFoldsIntoTheManTheRecordHolds(string folds, string keeps)
+    {
+        var merge = DuplicateRecordLoader.Read().Merges.Should().ContainSingle(m => m.Folds == folds).Subject;
+
+        merge.Keeps.Should().Be(keeps);
+        merge.AcrossKinds.Should().BeFalse();
+        merge.Source.Should().Contain("person register");
+    }
+
+    /// <summary>
+    /// Solomon's Azariah son of Zadok (1KI 4:2) leaves the record of Azariah son of Johanan (1CH 6:10),
+    /// who is Zadok's great-great-grandson, and takes only that verse.
+    /// </summary>
+    [Fact]
+    public void SolomonsAzariahSonOfZadokIsParted()
+    {
+        var split = DuplicateRecordLoader.Read().Splits!.Single(s => s.From == "azariah" && s.To == "azariah-son-of-zadok");
+
+        split.To.Should().Be("azariah-son-of-zadok");
+        split.Verses.Should().Equal("1KI 4:2");
+    }
+
+    /// <summary>
     /// A record that held several people keeps the man its line and picture were made for, and no
     /// verse of it is sent to two records or back to the record it leaves: Zedekiah's envoy keeps
     /// Jeremiah 21:1 and 38:1 while the priest's verses go, and the son of Hoshaiah leaves the

@@ -345,6 +345,12 @@ internal sealed class PersonRegisterLoader(
                     ? "The person register is already there; nothing to do"
                     : "The person register is already there; repaired {Verses} misfiled verses",
                 repaired);
+            var lined = await WriteTheReadersLines(cancellationToken);
+            if (lined > 0)
+            {
+                logger.LogInformation("{Lined} register lines written without the sentences about our own process", lined);
+            }
+
             logger.LogInformation(
                 "Matched the namesakes of the misfiled verses again: {Outcome}",
                 await Rematch(PersonRegisterFiles.Read(directory), cancellationToken));
@@ -663,6 +669,36 @@ internal sealed class PersonRegisterLoader(
         return moved;
     }
 
+    /// <summary>
+    /// The register's lines on a corpus loaded before they were written for the reader, replaced
+    /// where the record still carries the register's own sentence.
+    /// </summary>
+    internal async Task<int> WriteTheReadersLines(CancellationToken cancellationToken = default)
+    {
+        var lines = RegisterLines.All.ToDictionary(line => line.SourceId, StringComparer.Ordinal);
+        var ids = lines.Keys.ToList();
+        var held = await db.Entities
+            .Where(e => e.SourceId != null && ids.Contains(e.SourceId))
+            .ToListAsync(cancellationToken);
+
+        var lined = 0;
+        foreach (var entity in held)
+        {
+            if (lines[entity.SourceId!] is { } line && entity.Distinguisher == line.Was)
+            {
+                entity.Distinguisher = line.Line;
+                lined++;
+            }
+        }
+
+        if (lined > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        return lined;
+    }
+
     private static PersonRegisterOutcome Nothing(Stopwatch started) =>
         new(true, 0, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
 
@@ -975,7 +1011,7 @@ internal sealed class PersonRegisterLoader(
             Kind = EntityKind.Person,
             Slug = Unique(Slugs.Of(record.Name), slugs),
             Name = record.Name,
-            Distinguisher = record.Description,
+            Distinguisher = RegisterLines.Of(SourceIdOf(record.Key), record.Description),
             SourceId = SourceIdOf(record.Key),
             Source = FromTheEnumeration,
             Names = { Name(record) },

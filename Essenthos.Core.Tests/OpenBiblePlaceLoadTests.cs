@@ -171,6 +171,60 @@ public sealed class OpenBiblePlaceLoadTests : IClassFixture<OpenBiblePlaceLoadTe
         (await _db.EntityVerses.CountAsync()).Should().Be(before);
     }
 
+    /// <summary>
+    /// The 289 entries whose first line says they are another name for another place are tied to that
+    /// place by the id the source writes inside the phrase, and none is left telling a reader that the
+    /// modern equivalent of a place is another place's name.
+    /// </summary>
+    [Fact]
+    public async Task APlaceTheGazetteerCallsAnotherNameForAnotherIsTiedToThatPlace()
+    {
+        var aliases = OpenBiblePlaceLoader.Read(TestResources.Path("OpenBible", "ancient.jsonl"))
+            .Where(p => p.AnotherNameFor is not null)
+            .ToList();
+        var held = await _db.Entities
+            .Where(e => e.Kind == EntityKind.Place && e.OpenBibleId != null)
+            .ToDictionaryAsync(e => e.OpenBibleId!);
+
+        aliases.Should().HaveCount(289);
+        foreach (var alias in aliases)
+        {
+            held[alias.Id].AnotherNameForEntityId.Should().Be(held[alias.AnotherNameFor!].Id, $"{alias.Name} says so");
+        }
+
+        (await _db.Entities.CountAsync(e => e.ModernEquivalent!.StartsWith("another name for"))).Should().Be(0);
+        (await _db.Entities.Where(e => e.Distinguisher!.StartsWith("another name for")).Select(e => e.Distinguisher!).ToListAsync())
+            .Should().NotContain(line => System.Text.RegularExpressions.Regex.IsMatch(line, @"\d$"),
+                "the phrase names the place, and not the source's index of it");
+        OpenBiblePlaceLoader.Site(held[aliases[0].Id]).Should().BeNull("an alias claims no site of its own");
+    }
+
+    [Fact]
+    public async Task AWarmCorpusIsGivenTheAliasesAndFreedOfThePhraseOnceAndThenLeftAlone()
+    {
+        var alias = OpenBiblePlaceLoader.Read(TestResources.Path("OpenBible", "ancient.jsonl"))
+            .First(p => p.AnotherNameFor is not null && p.Identification is not null);
+        var entity = await _db.Entities.SingleAsync(e => e.OpenBibleId == alias.Id);
+        var target = await _db.Entities.SingleAsync(e => e.OpenBibleId == alias.AnotherNameFor);
+        entity.AnotherNameForEntityId = null;
+        entity.ModernEquivalent = "another name for Somewhere 1";
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        await new OpenBiblePlaceLoader(_db, NullLogger<OpenBiblePlaceLoader>.Instance).Load(TestResources.OpenBibleFolder);
+
+        var corrected = await _db.Entities.AsNoTracking().SingleAsync(e => e.Id == entity.Id);
+        corrected.AnotherNameForEntityId.Should().Be(target.Id);
+        corrected.ModernEquivalent.Should().Be(alias.Identification == alias.Name ? null : alias.Identification);
+
+        var before = await _db.Entities.AsNoTracking().OrderBy(e => e.Id)
+            .Select(e => new { e.Id, e.AnotherNameForEntityId, e.ModernEquivalent, e.Distinguisher }).ToListAsync();
+        await new OpenBiblePlaceLoader(_db, NullLogger<OpenBiblePlaceLoader>.Instance).Load(TestResources.OpenBibleFolder);
+        (await _db.Entities.AsNoTracking().OrderBy(e => e.Id)
+            .Select(e => new { e.Id, e.AnotherNameForEntityId, e.ModernEquivalent, e.Distinguisher }).ToListAsync())
+            .Should().BeEquivalentTo(before, options => options.WithStrictOrdering());
+    }
+
     /// <summary>The King James's Tyrus and Zidon reach Tyre and Sidon, credited to the source that gives them.</summary>
     [Fact]
     public async Task TheSpellingsTheTranslationsPrintAreNamesOfThePlace()

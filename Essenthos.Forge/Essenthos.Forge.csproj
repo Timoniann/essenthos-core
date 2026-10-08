@@ -66,6 +66,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\ReportRecords.json" />
         <Content Remove="Loading\Encyclopedia\OwnNames.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OwnNames.json" />
+        <Content Remove="Loading\Encyclopedia\RegisterLines.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\RegisterLines.json" />
         <Content Remove="Loading\Encyclopedia\WithdrawnRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\WithdrawnRecords.json" />
         <Content Remove="Loading\Encyclopedia\WithheldClauses.json" />
@@ -102,6 +104,9 @@
         <EmbeddedResource Include="Loading\Encyclopedia\NoNameRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SecondBearerRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\KinshipRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\PeoplesNamedRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\FamilyTailsRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\NamesakeReadingRecords.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />

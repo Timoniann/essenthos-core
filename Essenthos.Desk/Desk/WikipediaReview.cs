@@ -16,6 +16,10 @@ internal sealed record WikipediaOffer(
 
 internal sealed record WikipediaDecision(string Answer, string? Note, string? At);
 
+/// <param name="Qid">The item the matching tied the record to on its own.</param>
+/// <param name="By">What tied it: <c>verse</c>, <c>kin</c>, <c>chapter</c>, <c>identification</c> or <c>name</c>.</param>
+internal sealed record WikipediaTie(string Qid, string By);
+
 /// <param name="Record">The record's slug.</param>
 /// <param name="Addresses">Each reference as the reading API addresses it, in step with <paramref name="References"/>, for showing its text.</param>
 /// <param name="Others">How many more items go by its names that have no article, so are not offered.</param>
@@ -28,14 +32,19 @@ internal sealed record WikipediaQuestion(
     IReadOnlyList<string?> Addresses,
     IReadOnlyList<WikipediaOffer> Candidates,
     int Others,
-    WikipediaDecision? Decision);
+    WikipediaDecision? Decision,
+    WikipediaTie? Tied = null);
 
 /// <param name="Written">Whether a load has written the list yet; until one has there is nothing to answer.</param>
-internal sealed record WikipediaQuestionsResponse(bool Written, int Open, int Answered, IReadOnlyList<WikipediaQuestion> Entries);
+/// <param name="Open">Records the matching could not decide that have no answer yet.</param>
+/// <param name="Tied">Records the matching tied on its own that have no answer: the owner may leave them, set them to another item or to none.</param>
+internal sealed record WikipediaQuestionsResponse(
+    bool Written, int Open, int Answered, IReadOnlyList<WikipediaQuestion> Entries, int Tied = 0);
 
 /// <summary>
 /// The records whose Wikipedia article the corpus could not tell from a namesake's, which the owner
-/// answers: the item each one is, or none of those listed. An answer is written into the list, which
+/// answers: the item each one is, or none of those listed; and the records the matching tied on its
+/// own, which he may set to another item or take back. An answer is written into the list, which
 /// every load reads back and links the record by, so it takes effect on the next load of the step.
 /// </summary>
 internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
@@ -62,10 +71,14 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
 
         var entries = Entries(JsonFiles.Read(File)).Select(Question).ToList();
         return new WikipediaQuestionsResponse(
-            true, entries.Count(e => e.Decision is null), entries.Count(e => e.Decision is not null), entries);
+            true,
+            entries.Count(e => e.Decision is null && e.Tied is null),
+            entries.Count(e => e.Decision is not null),
+            entries,
+            entries.Count(e => e.Decision is null && e.Tied is not null));
     }
 
-    public int Unanswered() => Exists ? Entries(JsonFiles.Read(File)).Count(e => e["decision"] is null) : 0;
+    public int Unanswered() => Exists ? Entries(JsonFiles.Read(File)).Count(e => e["decision"] is null && e["tied"] is null) : 0;
 
     /// <summary>Answers one record or takes its answer back. Null where the list holds no such record or the answer is not one of its items.</summary>
     public async Task<WikipediaQuestion?> Answer(string slug, WikipediaAnswerRequest request)
@@ -151,6 +164,9 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
             entry["others"]?.GetValue<int>() ?? 0,
             entry["decision"] is JsonObject decision && decision["answer"]?.GetValue<string>() is { Length: > 0 } answer
                 ? new WikipediaDecision(answer, decision["note"]?.GetValue<string>(), decision["at"]?.GetValue<string>())
+                : null,
+            entry["tied"] is JsonObject tied && tied["qid"]?.GetValue<string>() is { Length: > 0 } qid
+                ? new WikipediaTie(qid, tied["by"]?.GetValue<string>() ?? string.Empty)
                 : null);
     }
 

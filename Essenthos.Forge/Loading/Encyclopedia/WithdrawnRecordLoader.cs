@@ -88,12 +88,12 @@ internal sealed class WithdrawnRecordLoader(AppDbContext db, ILogger<WithdrawnRe
         foreach (var record in records)
         {
             var entity = held.FirstOrDefault(e => e.Slug == record.Slug && e.SourceId == record.SourceId);
-            if (entity is null || Datasets.Of(entity.Source) == Datasets.Own)
+            if (entity is null || (Datasets.Of(entity.Source) == Datasets.Own && record.OwnRecord is null))
             {
                 continue;
             }
 
-            var dataset = Datasets.Of(entity.Source);
+            var dataset = record.OwnRecord is null ? Datasets.Of(entity.Source) : null;
             var ours = await Ours(entity.Id, dataset, cancellationToken);
             var standing = record.OwnerRuled is null
                 ? ours
@@ -188,4 +188,9 @@ internal sealed record WithdrawnRecords(string DecidedBy, string Policy, IReadOn
 /// Set where the owner ruled the record out although this corpus holds something on it: what he ruled
 /// and when. The record then goes with what stands on it.
 /// </param>
-internal sealed record WithdrawnRecord(string Slug, string SourceId, string Why, string? OwnerRuled = null);
+/// <param name="OwnRecord">
+/// Set where the record is one this corpus wrote itself and a ruling says it should not exist: who
+/// ruled it and when. Such a record is withdrawn only while nothing at all stands on it, since there
+/// is no dataset's part of it to tell from ours.
+/// </param>
+internal sealed record WithdrawnRecord(string Slug, string SourceId, string Why, string? OwnerRuled = null, string? OwnRecord = null);

@@ -17,8 +17,13 @@ internal sealed record WikipediaOffer(
     IReadOnlyDictionary<string, string> Articles,
     IReadOnlyList<string> Evidence);
 
-/// <summary>One record whose item the evidence does not settle.</summary>
+/// <summary>The item the matching tied a record to on its own, and what tied it.</summary>
+/// <param name="By">One of <see cref="EntityWikipedia.Evidence"/> that is not the owner's.</param>
+internal sealed record WikipediaTie(string Qid, string By);
+
+/// <summary>One record whose item the evidence does not settle, or that the matching tied on its own for the owner to confirm or take back.</summary>
 /// <param name="Others">How many more items go by its names that have no article, so are not offered.</param>
+/// <param name="Tied">The item the matching tied the record to, where it did.</param>
 internal sealed record WikipediaQuestion(
     string Record,
     string Kind,
@@ -26,7 +31,8 @@ internal sealed record WikipediaQuestion(
     string? Line,
     IReadOnlyList<string> References,
     IReadOnlyList<WikipediaOffer> Offers,
-    int Others);
+    int Others,
+    WikipediaTie? Tied = null);
 
 /// <summary>
 /// The records the matching could not tie to one Wikidata item, with the items each might be, and the
@@ -47,10 +53,11 @@ internal static class WikipediaReviewList
     public const string None = "none";
 
     private const string About =
-        "Persons, places and things whose Wikipedia article the corpus could not tell from a namesake's. Each entry " +
-        "lists the Wikidata items that go by the record's names and have an article, with what each has in common " +
-        "with the record. Answering with one tells every load to link the record to that item's articles; answering " +
-        "none leaves the record without a link. The load rewrites the open entries and keeps the answered ones.";
+        "Persons, places and things whose Wikipedia article the corpus could not tell from a namesake's, and those it " +
+        "tied to an item on its own (the entry then carries 'tied': the item and what tied it). Each entry lists the " +
+        "Wikidata items that go by the record's names and have an article, with what each has in common with the " +
+        "record. Answering with one tells every load to link the record to that item's articles; answering none " +
+        "leaves the record without a link. The load rewrites the entries and keeps the answers.";
 
     private static readonly JsonWriterOptions Writing = new()
     {
@@ -154,7 +161,7 @@ internal static class WikipediaReviewList
             });
         }
 
-        return new JsonObject
+        var entry = new JsonObject
         {
             ["record"] = question.Record,
             ["kind"] = question.Kind,
@@ -164,6 +171,12 @@ internal static class WikipediaReviewList
             ["candidates"] = offers,
             ["others"] = question.Others,
         };
+        if (question.Tied is { } tied)
+        {
+            entry["tied"] = new JsonObject { ["qid"] = tied.Qid, ["by"] = tied.By };
+        }
+
+        return entry;
     }
 
     private static JsonObject Read(string path)

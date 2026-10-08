@@ -324,5 +324,8 @@
       "origin": "arodi",
       "why": "The family of Arod son of Gad, Numbers 26:17: 'of Arod, the family of the Arodites'. Genesis 46:16 names the same son of Gad Arodi, the word this gentilic is spelled with. Strong defines the entry as an Arodite or descendant of Arod, but derives it from H721, the Arvadite of Genesis 10:18, which is spelled with the same letters; a people is not named after another people, so the derivation is refused and the record rests on his definition and on the verse."
     }
+  ],
+  "refused": [
+    {"number": "H4344", "why": "Strong derives the Macbannites as a patrial from Machbena (H4343), and the only text that has the word is 1 Chronicles 12:13, where Machbannai is a man, one of David's Gadites. No text names a people by it, so the entry is the man's name and not a people's, and the record the gentilic read made is withdrawn."}
   ]
 }

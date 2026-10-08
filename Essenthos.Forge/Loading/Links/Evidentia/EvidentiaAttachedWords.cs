@@ -935,8 +935,9 @@ internal static class EvidentiaAttachedWords
         var word = words[index];
         return Placement(attachment, rendering.Token.Language, word.Token.Language) switch
         {
-            EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb && !IsEnglish(word)
-                && OwnAuxiliary(rendering, verse) is { } own =>
+            EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb
+                && (!IsEnglish(word) || word.Lemma == Be)
+                && OwnAuxiliary(rendering, verse, beOnly: IsEnglish(word)) is { } own =>
                 taken.Contains(own.Token.Id) ? null : own,
             EvidentiaAttachmentPlacement.Rendering when attachment == EvidentiaAttachment.AuxiliaryVerb
                 && (Class(rendering) != "verb"
@@ -1097,15 +1098,19 @@ internal static class EvidentiaAttachedWords
     /// participle or an adjective (<em>ἦν βεβλημένος</em>, <em>κλητοῖς οὖσιν</em>) and its μέλλω before an
     /// infinitive (<em>ὁ μέλλων ἔρχεσθαι</em>); Hebrew's היה beside a participle (<em>וָאֱהִי נָגוּעַ</em>).
     /// After the word only directly: one further on it opens the next clause, <em>ἐγερθείς, ὅς ἐστιν</em>.
+    /// An English form of <em>be</em> goes the same way (<em>I was mourning</em> on the הָיִיתִי beside
+    /// מִתְאַבֵּל) and only for <em>be</em>: the other English auxiliaries do not translate it, and
+    /// <paramref name="beOnly"/> leaves out the Greek <em>about to</em>.
     /// </summary>
-    private static EvidentiaAnalysis? OwnAuxiliary(EvidentiaAnalysis rendering, IReadOnlyList<EvidentiaAnalysis> verse)
+    private static EvidentiaAnalysis? OwnAuxiliary(
+        EvidentiaAnalysis rendering, IReadOnlyList<EvidentiaAnalysis> verse, bool beOnly = false)
     {
         var at = IndexOf(verse, rendering);
         var greek = rendering.Token.Language.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase);
         var before = verse.Skip(Math.Max(0, at - OwnAuxiliaryReach)).Take(Math.Min(at, OwnAuxiliaryReach)).Reverse();
         if (greek && IsInfinitive(rendering))
         {
-            return before.FirstOrDefault(word => word.Token.StrongNumber == GreekAboutTo);
+            return beOnly ? null : before.FirstOrDefault(word => word.Token.StrongNumber == GreekAboutTo);
         }
 
         if (!(greek ? IsParticiple(rendering) || Class(rendering) == "adj" : IsHebrewParticiple(rendering)))

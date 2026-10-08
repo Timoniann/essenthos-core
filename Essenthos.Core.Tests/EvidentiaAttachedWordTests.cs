@@ -585,6 +585,51 @@ public class EvidentiaAttachedWordTests
         Attach([to, everlasting, shame], [bet, reproach], (shame, reproach)).Should().BeEmpty();
     }
 
+    [Fact]
+    public void AnEnglishWasBeforeAParticipleGoesOnTheHayahTheHebrewWritesBesideIt()
+    {
+        var daniel = English(1, Genesis122, 1, "Daniel", "PROPN");
+        var was = English(2, Genesis122, 2, "was", "AUX") with { Lemma = "be" };
+        var mourning = English(3, Genesis122, 3, "mourning", "VERB");
+        var hayiti = Hebrew(11, Genesis122, 1, "הָיִיתִי", "H1961", "verb", ("tense", "perf"), ("person", "p1"), ("number", "sg"));
+        var mourner = Hebrew(12, Genesis122, 2, "מִתְאַבֵּל", "H56", "verb", ("tense", "ptca"), ("number", "sg"), ("gender", "m"));
+
+        Attach([daniel, was, mourning], [hayiti, mourner], (mourning, mourner)).Should().Equal((2L, 11L));
+    }
+
+    [Fact]
+    public void AnEnglishWasStaysOnItsParticipleWhereTheHebrewWritesNoBeBesideIt()
+    {
+        var was = English(2, Genesis122, 2, "was", "AUX") with { Lemma = "be" };
+        var mourning = English(3, Genesis122, 3, "mourning", "VERB");
+        var mourner = Hebrew(12, Genesis122, 2, "מִתְאַבֵּל", "H56", "verb", ("tense", "ptca"), ("number", "sg"), ("gender", "m"));
+
+        Attach([was, mourning], [mourner], (mourning, mourner)).Should().Equal((2L, 12L));
+    }
+
+    [Fact]
+    public void AnEnglishWasIsLeftUnplacedWhereTheHebrewBeBesideTheParticipleIsAlreadyTaken()
+    {
+        var was = English(2, Genesis122, 2, "was", "AUX") with { Lemma = "be" };
+        var mourning = English(3, Genesis122, 3, "mourning", "VERB");
+        var itself = English(4, Genesis122, 4, "there", "ADV");
+        var hayiti = Hebrew(11, Genesis122, 1, "הָיִיתִי", "H1961", "verb", ("tense", "perf"), ("person", "p1"), ("number", "sg"));
+        var mourner = Hebrew(12, Genesis122, 2, "מִתְאַבֵּל", "H56", "verb", ("tense", "ptca"), ("number", "sg"), ("gender", "m"));
+
+        Attach([was, mourning, itself], [hayiti, mourner], (mourning, mourner), (itself, hayiti)).Should().NotContain((2L, 12L));
+    }
+
+    [Fact]
+    public void AnEnglishAuxiliaryThatIsNotAFormOfBeStaysOnTheParticiple()
+    {
+        var will = English(2, Genesis122, 2, "will", "AUX");
+        var mourn = English(3, Genesis122, 3, "mourn", "VERB");
+        var hayiti = Hebrew(11, Genesis122, 1, "הָיִיתִי", "H1961", "verb", ("tense", "perf"), ("person", "p1"), ("number", "sg"));
+        var mourner = Hebrew(12, Genesis122, 2, "מִתְאַבֵּל", "H56", "verb", ("tense", "ptca"), ("number", "sg"), ("gender", "m"));
+
+        Attach([will, mourn], [hayiti, mourner], (mourn, mourner)).Should().Equal((2L, 12L));
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Attach(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
