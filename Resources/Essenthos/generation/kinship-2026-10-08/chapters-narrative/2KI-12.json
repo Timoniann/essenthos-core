@@ -1,0 +1,40 @@
+{
+ "chapter": "2KI 12",
+ "rows": 10,
+ "wrong": [
+  {
+   "kind": "retarget",
+   "rows": [
+    100639
+   ],
+   "new_type": "",
+   "new_to": "joash-3",
+   "verse": "2KI 12:21",
+   "why": "The servants killed Joash, while Amaziah his son subsequently reigned in his place.",
+   "confidence": 1
+  }
+ ],
+ "missing": [
+  {
+   "from": "joash-3",
+   "type": "descendant-of",
+   "to": "jehoshaphat-3",
+   "verse": "2KI 12:18",
+   "why": "The verse explicitly includes Jehoshaphat among Jehoash's fathers (אֲבֹתָיו), meaning his ancestors.",
+   "confidence": 0.99
+  },
+  {
+   "from": "joash-3",
+   "type": "descendant-of",
+   "to": "jehoram",
+   "verse": "2KI 12:18",
+   "why": "The verse explicitly includes Jehoram among Jehoash's fathers (אֲבֹתָיו), meaning his ancestors.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Ahaziah is also named among Jehoash's ancestors, but their father–son relationship is already recorded from another chapter.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:04:59+00:00"
+}

@@ -1,0 +1,20 @@
+{
+ "chapter": "2KI 8",
+ "rows": 7,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "athaliah",
+   "type": "daughter-of",
+   "to": "ahab",
+   "verse": "2KI 8:18",
+   "why": "The verse explicitly calls Jehoram's wife, identified as Athaliah by the owner's ruling, the daughter of Ahab.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "Athaliah's daughter-of Omri row follows the explicit Hebrew wording in 2KI 8:26 and is retained. Ben-hadad's address as Elisha's son in 2KI 8:9 is deferential language, not a plain family statement.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:08:17+00:00"
+}

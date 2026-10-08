@@ -1,0 +1,494 @@
+{
+ "chapter": "2KI 15",
+ "text": {
+  "2KI 15:1": {
+   "KJV": "In the twenty and seventh year of Jeroboam king of Israel began Azariah son of Amaziah king of Judah to reign.",
+   "BHSA": "בִּשְׁנַ֨ת עֶשְׂרִ֤ים וָשֶׁ֨בַע֙ שָׁנָ֔ה לְיָרָבְעָ֖ם מֶ֣לֶךְ יִשְׂרָאֵ֑ל מָלַ֛ךְ עֲזַרְיָ֥ה בֶן־אֲמַצְיָ֖ה מֶ֥לֶךְ יְהוּדָֽה׃ "
+  },
+  "2KI 15:2": {
+   "KJV": "Sixteen years old was he when he began to reign, and he reigned two and fifty years in Jerusalem. And his mother's name was Jecholiah of Jerusalem.",
+   "BHSA": "בֶּן־שֵׁ֨שׁ עֶשְׂרֵ֤ה שָׁנָה֙ הָיָ֣ה בְמָלְכֹ֔ו וַחֲמִשִּׁ֤ים וּשְׁתַּ֨יִם֙ שָׁנָ֔ה מָלַ֖ךְ בִּירוּשָׁלִָ֑ם וְשֵׁ֣ם אִמֹּ֔ו יְכָלְיָ֖הוּ מִירוּשָׁלִָֽם׃ "
+  },
+  "2KI 15:3": {
+   "KJV": "And he did that which was right in the sight of the LORD, according to all that his father Amaziah had done;",
+   "BHSA": "וַיַּ֥עַשׂ הַיָּשָׁ֖ר בְּעֵינֵ֣י יְהוָ֑ה כְּכֹ֥ל אֲשֶׁר־עָשָׂ֖ה אֲמַצְיָ֥הוּ אָבִֽיו׃ "
+  },
+  "2KI 15:4": {
+   "KJV": "Save that the high places were not removed: the people sacrificed and burnt incense still on the high places.",
+   "BHSA": "רַ֥ק הַבָּמֹ֖ות לֹא־סָ֑רוּ עֹ֥וד הָעָ֛ם מְזַבְּחִ֥ים וּֽמְקַטְּרִ֖ים בַּבָּמֹֽות׃ "
+  },
+  "2KI 15:5": {
+   "KJV": "And the LORD smote the king, so that he was a leper unto the day of his death, and dwelt in a several house. And Jotham the king's son was over the house, judging the people of the land.",
+   "BHSA": "וַיְנַגַּ֨ע יְהוָ֜ה אֶת־הַמֶּ֗לֶךְ וַיְהִ֤י מְצֹרָע֙ עַד־יֹ֣ום מֹתֹ֔ו וַיֵּ֖שֶׁב בְּבֵ֣ית הַחָפְשִׁ֑ית וְיֹותָ֤ם בֶּן־הַמֶּ֨לֶךְ֙ עַל־הַבַּ֔יִת שֹׁפֵ֖ט אֶת־עַ֥ם הָאָֽרֶץ׃ "
+  },
+  "2KI 15:6": {
+   "KJV": "And the rest of the acts of Azariah, and all that he did, are they not written in the book of the chronicles of the kings of Judah?",
+   "BHSA": "וְיֶ֛תֶר דִּבְרֵ֥י עֲזַרְיָ֖הוּ וְכָל־אֲשֶׁ֣ר עָשָׂ֑ה הֲלֹא־הֵ֣ם כְּתוּבִ֗ים עַל־סֵ֛פֶר דִּבְרֵ֥י הַיָּמִ֖ים לְמַלְכֵ֥י יְהוּדָֽה׃ "
+  },
+  "2KI 15:7": {
+   "KJV": "So Azariah slept with his fathers; and they buried him with his fathers in the city of David: and Jotham his son reigned in his stead.",
+   "BHSA": "וַיִּשְׁכַּ֤ב עֲזַרְיָה֙ עִם־אֲבֹתָ֔יו וַיִּקְבְּר֥וּ אֹתֹ֛ו עִם־אֲבֹתָ֖יו בְּעִ֣יר דָּוִ֑ד וַיִּמְלֹ֛ךְ יֹותָ֥ם בְּנֹ֖ו תַּחְתָּֽיו׃ פ "
+  },
+  "2KI 15:8": {
+   "KJV": "In the thirty and eighth year of Azariah king of Judah did Zachariah the son of Jeroboam reign over Israel in Samaria six months.",
+   "BHSA": "בִּשְׁנַ֨ת שְׁלֹשִׁ֤ים וּשְׁמֹנֶה֙ שָׁנָ֔ה לַעֲזַרְיָ֖הוּ מֶ֣לֶךְ יְהוּדָ֑ה מָ֠לַךְ זְכַרְיָ֨הוּ בֶן־יָרָבְעָ֧ם עַל־יִשְׂרָאֵ֛ל בְּשֹׁמְרֹ֖ון שִׁשָּׁ֥ה חֳדָשִֽׁים׃ "
+  },
+  "2KI 15:9": {
+   "KJV": "And he did that which was evil in the sight of the LORD, as his fathers had done: he departed not from the sins of Jeroboam the son of Nebat, who made Israel to sin.",
+   "BHSA": "וַיַּ֤עַשׂ הָרַע֙ בְּעֵינֵ֣י יְהוָ֔ה כַּאֲשֶׁ֥ר עָשׂ֖וּ אֲבֹתָ֑יו לֹ֣א סָ֗ר מֵֽחַטֹּאות֙ יָרָבְעָ֣ם בֶּן־נְבָ֔ט אֲשֶׁ֥ר הֶחֱטִ֖יא אֶת־יִשְׂרָאֵֽל׃ "
+  },
+  "2KI 15:10": {
+   "KJV": "And Shallum the son of Jabesh conspired against him, and smote him before the people, and slew him, and reigned in his stead.",
+   "BHSA": "וַיִּקְשֹׁ֤ר עָלָיו֙ שַׁלֻּ֣ם בֶּן־יָבֵ֔שׁ וַיַּכֵּ֥הוּ קָֽבָלְ־עָ֖ם וַיְמִיתֵ֑הוּ וַיִּמְלֹ֖ךְ תַּחְתָּֽיו׃ "
+  },
+  "2KI 15:11": {
+   "KJV": "And the rest of the acts of Zachariah, behold, they are written in the book of the chronicles of the kings of Israel.",
+   "BHSA": "וְיֶ֖תֶר דִּבְרֵ֣י זְכַרְיָ֑ה הִנָּ֣ם כְּתוּבִ֗ים עַל־סֵ֛פֶר דִּבְרֵ֥י הַיָּמִ֖ים לְמַלְכֵ֥י יִשְׂרָאֵֽל׃ "
+  },
+  "2KI 15:12": {
+   "KJV": "This was the word of the LORD which he spake unto Jehu, saying, Thy sons shall sit on the throne of Israel unto the fourth generation. And so it came to pass.",
+   "BHSA": "ה֣וּא דְבַר־יְהוָ֗ה אֲשֶׁ֨ר דִּבֶּ֤ר אֶל־יֵהוּא֙ לֵאמֹ֔ר בְּנֵ֣י רְבִיעִ֔ים יֵשְׁב֥וּ לְךָ֖ עַל־כִּסֵּ֣א יִשְׂרָאֵ֑ל וַֽיְהִי־כֵֽן׃ פ "
+  },
+  "2KI 15:13": {
+   "KJV": "Shallum the son of Jabesh began to reign in the nine and thirtieth year of Uzziah king of Judah; and he reigned a full month in Samaria.",
+   "BHSA": "שַׁלּ֤וּם בֶּן־יָבֵישׁ֙ מָלַ֔ךְ בִּשְׁנַ֨ת שְׁלֹשִׁ֤ים וָתֵ֨שַׁע֙ שָׁנָ֔ה לְעֻזִיָּ֖ה מֶ֣לֶךְ יְהוּדָ֑ה וַיִּמְלֹ֥ךְ יֶֽרַח־יָמִ֖ים בְּשֹׁמְרֹֽון׃ "
+  },
+  "2KI 15:14": {
+   "KJV": "For Menahem the son of Gadi went up from Tirzah, and came to Samaria, and smote Shallum the son of Jabesh in Samaria, and slew him, and reigned in his stead.",
+   "BHSA": "וַיַּעַל֩ מְנַחֵ֨ם בֶּן־גָּדִ֜י מִתִּרְצָ֗ה וַיָּבֹא֙ שֹׁמְרֹ֔ון וַיַּ֛ךְ אֶת־שַׁלּ֥וּם בֶּן־יָבֵ֖ישׁ בְּשֹׁמְרֹ֑ון וַיְמִיתֵ֖הוּ וַיִּמְלֹ֥ךְ תַּחְתָּֽיו׃ "
+  },
+  "2KI 15:15": {
+   "KJV": "And the rest of the acts of Shallum, and his conspiracy which he made, behold, they are written in the book of the chronicles of the kings of Israel.",
+   "BHSA": "וְיֶ֨תֶר֙ דִּבְרֵ֣י שַׁלּ֔וּם וְקִשְׁרֹ֖ו אֲשֶׁ֣ר קָשָׁ֑ר הִנָּ֣ם כְּתֻבִ֗ים עַל־סֵ֛פֶר דִּבְרֵ֥י הַיָּמִ֖ים לְמַלְכֵ֥י יִשְׂרָאֵֽל׃ ס "
+  },
+  "2KI 15:16": {
+   "KJV": "Then Menahem smote Tiphsah, and all that were therein, and the coasts thereof from Tirzah: because they opened not to him, therefore he smote it; and all the women therein that were with child he ripped up.",
+   "BHSA": "אָ֣ז יַכֶּֽה־מְ֠נַחֵם אֶת־תִּפְסַ֨ח וְאֶת־כָּל־אֲשֶׁר־בָּ֤הּ וְאֶת־גְּבוּלֶ֨יהָ֙ מִתִּרְצָ֔ה כִּ֛י לֹ֥א פָתַ֖ח וַיַּ֑ךְ אֵ֛ת כָּל־הֶהָ֥רֹותֶ֖יהָ בִּקֵּֽעַ׃ פ "
+  },
+  "2KI 15:17": {
+   "KJV": "In the nine and thirtieth year of Azariah king of Judah began Menahem the son of Gadi to reign over Israel, and reigned ten years in Samaria.",
+   "BHSA": "בִּשְׁנַ֨ת שְׁלֹשִׁ֤ים וָתֵ֨שַׁע֙ שָׁנָ֔ה לַעֲזַרְיָ֖ה מֶ֣לֶךְ יְהוּדָ֑ה מָ֠לַךְ מְנַחֵ֨ם בֶּן־גָּדִ֧י עַל־יִשְׂרָאֵ֛ל עֶ֥שֶׂר שָׁנִ֖ים בְּשֹׁמְרֹֽון׃ "
+  },
+  "2KI 15:18": {
+   "KJV": "And he did that which was evil in the sight of the LORD: he departed not all his days from the sins of Jeroboam the son of Nebat, who made Israel to sin.",
+   "BHSA": "וַיַּ֥עַשׂ הָרַ֖ע בְּעֵינֵ֣י יְהוָ֑ה לֹ֣א סָ֠ר מֵעַ֨ל חַטֹּ֜אות יָרָבְעָ֧ם בֶּן־נְבָ֛ט אֲשֶׁר־הֶחֱטִ֥יא אֶת־יִשְׂרָאֵ֖ל כָּל־יָמָֽיו׃ "
+  },
+  "2KI 15:19": {
+   "KJV": "And Pul the king of Assyria came against the land: and Menahem gave Pul a thousand talents of silver, that his hand might be with him to confirm the kingdom in his hand.",
+   "BHSA": "בָּ֣א פ֤וּל מֶֽלֶךְ־אַשּׁוּר֙ עַל־הָאָ֔רֶץ וַיִּתֵּ֤ן מְנַחֵם֙ לְפ֔וּל אֶ֖לֶף כִּכַּר־כָּ֑סֶף לִהְיֹ֤ות יָדָיו֙ אִתֹּ֔ו לְהַחֲזִ֥יק הַמַּמְלָכָ֖ה בְּיָדֹֽו׃ "
+  },
+  "2KI 15:20": {
+   "KJV": "And Menahem exacted the money of Israel, even of all the mighty men of wealth, of each man fifty shekels of silver, to give to the king of Assyria. So the king of Assyria turned back, and stayed not there in the land.",
+   "BHSA": "וַיֹּצֵא֩ מְנַחֵ֨ם אֶת־הַכֶּ֜סֶף עַל־יִשְׂרָאֵ֗ל עַ֚ל כָּל־גִּבֹּורֵ֣י הַחַ֔יִל לָתֵת֙ לְמֶ֣לֶךְ אַשּׁ֔וּר חֲמִשִּׁ֧ים שְׁקָלִ֛ים כֶּ֖סֶף לְאִ֣ישׁ אֶחָ֑ד וַיָּ֨שָׁב֙ מֶ֣לֶךְ אַשּׁ֔וּר וְלֹא־עָ֥מַד שָׁ֖ם בָּאָֽרֶץ׃ "
+  },
+  "2KI 15:21": {
+   "KJV": "And the rest of the acts of Menahem, and all that he did, are they not written in the book of the chronicles of the kings of Israel?",
+   "BHSA": "וְיֶ֛תֶר דִּבְרֵ֥י מְנַחֵ֖ם וְכָל־אֲשֶׁ֣ר עָשָׂ֑ה הֲלֹוא־הֵ֣ם כְּתוּבִ֗ים עַל־סֵ֛פֶר דִּבְרֵ֥י הַיָּמִ֖ים לְמַלְכֵ֥י יִשְׂרָאֵֽל׃ "
+  },
+  "2KI 15:22": {
+   "KJV": "And Menahem slept with his fathers; and Pekahiah his son reigned in his stead.",
+   "BHSA": "וַיִּשְׁכַּ֥ב מְנַחֵ֖ם עִם־אֲבֹתָ֑יו וַיִּמְלֹ֛ךְ פְּקַחְיָ֥ה בְנֹ֖ו תַּחְתָּֽיו׃ פ "
+  },
+  "2KI 15:23": {
+   "KJV": "In the fiftieth year of Azariah king of Judah Pekahiah the son of Menahem began to reign over Israel in Samaria, and reigned two years.",
+   "BHSA": "בִּשְׁנַת֙ חֲמִשִּׁ֣ים שָׁנָ֔ה לַעֲזַרְיָ֖ה מֶ֣לֶךְ יְהוּדָ֑ה מָ֠לַךְ פְּקַֽחְיָ֨ה בֶן־מְנַחֵ֧ם עַל־יִשְׂרָאֵ֛ל בְּשֹׁמְרֹ֖ון שְׁנָתָֽיִם׃ "
+  },
+  "2KI 15:24": {
+   "KJV": "And he did that which was evil in the sight of the LORD: he departed not from the sins of Jeroboam the son of Nebat, who made Israel to sin.",
+   "BHSA": "וַיַּ֥עַשׂ הָרַ֖ע בְּעֵינֵ֣י יְהוָ֑ה לֹ֣א סָ֗ר מֵֽחַטֹּאות֙ יָרָבְעָ֣ם בֶּן־נְבָ֔ט אֲשֶׁ֥ר הֶחֱטִ֖יא אֶת־יִשְׂרָאֵֽל׃ "
+  },
+  "2KI 15:25": {
+   "KJV": "But Pekah the son of Remaliah, a captain of his, conspired against him, and smote him in Samaria, in the palace of the king's house, with Argob and Arieh, and with him fifty men of the Gileadites: and he killed him, and reigned in his room.",
+   "BHSA": "וַיִּקְשֹׁ֣ר עָלָיו֩ פֶּ֨קַח בֶּן־רְמַלְיָ֜הוּ שָׁלִישֹׁ֗ו וַיַּכֵּ֨הוּ בְשֹׁמְרֹ֜ון בְּאַרְמֹ֤ון בֵּית־מלך אֶת־אַרְגֹּ֣ב וְאֶת־הָאַרְיֵ֔ה וְעִמֹּ֛ו חֲמִשִּׁ֥ים אִ֖ישׁ מִבְּנֵ֣י גִלְעָדִ֑ים וַיְמִיתֵ֖הוּ וַיִּמְלֹ֥ךְ תַּחְתָּֽיו׃ "
+  },
+  "2KI 15:26": {
+   "KJV": "And the rest of the acts of Pekahiah, and all that he did, behold, they are written in the book of the chronicles of the kings of Israel.",
+   "BHSA": "וְיֶ֛תֶר דִּבְרֵ֥י פְקַחְיָ֖ה וְכָל־אֲשֶׁ֣ר עָשָׂ֑ה הִנָּ֣ם כְּתוּבִ֗ים עַל־סֵ֛פֶר דִּבְרֵ֥י הַיָּמִ֖ים לְמַלְכֵ֥י יִשְׂרָאֵֽל׃ פ "
+  },
+  "2KI 15:27": {
+   "KJV": "In the two and fiftieth year of Azariah king of Judah Pekah the son of Remaliah began to reign over Israel in Samaria, and reigned twenty years.",
+   "BHSA": "בִּשְׁנַ֨ת חֲמִשִּׁ֤ים וּשְׁתַּ֨יִם֙ שָׁנָ֔ה לַעֲזַרְיָ֖ה מֶ֣לֶךְ יְהוּדָ֑ה מָ֠לַךְ פֶּ֣קַח בֶּן־רְמַלְיָ֧הוּ עַל־יִשְׂרָאֵ֛ל בְּשֹׁמְרֹ֖ון עֶשְׂרִ֥ים שָׁנָֽה׃ "
+  },
+  "2KI 15:28": {
+   "KJV": "And he did that which was evil in the sight of the LORD: he departed not from the sins of Jeroboam the son of Nebat, who made Israel to sin.",
+   "BHSA": "וַיַּ֥עַשׂ הָרַ֖ע בְּעֵינֵ֣י יְהוָ֑ה לֹ֣א סָ֗ר מִן־חַטֹּאות֙ יָרָבְעָ֣ם בֶּן־נְבָ֔ט אֲשֶׁ֥ר הֶחֱטִ֖יא אֶת־יִשְׂרָאֵֽל׃ "
+  },
+  "2KI 15:29": {
+   "KJV": "In the days of Pekah king of Israel came Tiglathpileser king of Assyria, and took Ijon, and Abelbethmaachah, and Janoah, and Kedesh, and Hazor, and Gilead, and Galilee, all the land of Naphtali, and carried them captive to Assyria.",
+   "BHSA": "בִּימֵ֞י פֶּ֣קַח מֶֽלֶךְ־יִשְׂרָאֵ֗ל בָּא֮ תִּגְלַ֣ת פִּלְאֶסֶר֮ מֶ֣לֶךְ אַשּׁוּר֒ וַיִּקַּ֣ח אֶת־עִיֹּ֡ון וְאֶת־אָבֵ֣ל בֵּֽית־מַעֲכָ֡ה וְאֶת־יָ֠נֹוחַ וְאֶת־קֶ֨דֶשׁ וְאֶת־חָצֹ֤ור וְאֶת־הַגִּלְעָד֙ וְאֶת־הַגָּלִ֔ילָה כֹּ֖ל אֶ֣רֶץ נַפְתָּלִ֑י וַיַּגְלֵ֖ם אַשּֽׁוּרָה׃ "
+  },
+  "2KI 15:30": {
+   "KJV": "And Hoshea the son of Elah made a conspiracy against Pekah the son of Remaliah, and smote him, and slew him, and reigned in his stead, in the twentieth year of Jotham the son of Uzziah.",
+   "BHSA": "וַיִּקְשָׁר־קֶ֜שֶׁר הֹושֵׁ֣עַ בֶּן־אֵלָ֗ה עַל־פֶּ֨קַח֙ בֶּן־רְמַלְיָ֔הוּ וַיַּכֵּ֨הוּ֙ וַיְמִיתֵ֔הוּ וַיִּמְלֹ֖ךְ תַּחְתָּ֑יו בִּשְׁנַ֣ת עֶשְׂרִ֔ים לְיֹותָ֖ם בֶּן־עֻזִיָּֽה׃ "
+  },
+  "2KI 15:31": {
+   "KJV": "And the rest of the acts of Pekah, and all that he did, behold, they are written in the book of the chronicles of the kings of Israel.",
+   "BHSA": "וְיֶ֥תֶר דִּבְרֵי־פֶ֖קַח וְכָל־אֲשֶׁ֣ר עָשָׂ֑ה הִנָּ֣ם כְּתוּבִ֗ים עַל־סֵ֛פֶר דִּבְרֵ֥י הַיָּמִ֖ים לְמַלְכֵ֥י יִשְׂרָאֵֽל׃ פ "
+  },
+  "2KI 15:32": {
+   "KJV": "In the second year of Pekah the son of Remaliah king of Israel began Jotham the son of Uzziah king of Judah to reign.",
+   "BHSA": "בִּשְׁנַ֣ת שְׁתַּ֔יִם לְפֶ֥קַח בֶּן־רְמַלְיָ֖הוּ מֶ֣לֶךְ יִשְׂרָאֵ֑ל מָלַ֛ךְ יֹותָ֥ם בֶּן־עֻזִיָּ֖הוּ מֶ֥לֶךְ יְהוּדָֽה׃ "
+  },
+  "2KI 15:33": {
+   "KJV": "Five and twenty years old was he when he began to reign, and he reigned sixteen years in Jerusalem. And his mother's name was Jerusha, the daughter of Zadok.",
+   "BHSA": "בֶּן־עֶשְׂרִ֨ים וְחָמֵ֤שׁ שָׁנָה֙ הָיָ֣ה בְמָלְכֹ֔ו וְשֵׁשׁ־עֶשְׂרֵ֣ה שָׁנָ֔ה מָלַ֖ךְ בִּירוּשָׁלִָ֑ם וְשֵׁ֣ם אִמֹּ֔ו יְרוּשָׁ֖א בַּת־צָדֹֽוק׃ "
+  },
+  "2KI 15:34": {
+   "KJV": "And he did that which was right in the sight of the LORD: he did according to all that his father Uzziah had done.",
+   "BHSA": "וַיַּ֥עַשׂ הַיָּשָׁ֖ר בְּעֵינֵ֣י יְהוָ֑ה כְּכֹ֧ל אֲשֶׁר־עָשָׂ֛ה עֻזִיָּ֥הוּ אָבִ֖יו עָשָֽׂה׃ "
+  },
+  "2KI 15:35": {
+   "KJV": "Howbeit the high places were not removed: the people sacrificed and burned incense still in the high places. He built the higher gate of the house of the LORD.",
+   "BHSA": "רַ֤ק הַבָּמֹות֙ לֹ֣א סָ֔רוּ עֹ֗וד הָעָ֛ם מְזַבְּחִ֥ים וּֽמְקַטְּרִ֖ים בַּבָּמֹ֑ות ה֗וּא בָּנָ֛ה אֶת־שַׁ֥עַר בֵּית־יְהוָ֖ה הָעֶלְיֹֽון׃ "
+  },
+  "2KI 15:36": {
+   "KJV": "Now the rest of the acts of Jotham, and all that he did, are they not written in the book of the chronicles of the kings of Judah?",
+   "BHSA": "וְיֶ֛תֶר דִּבְרֵ֥י יֹותָ֖ם אֲשֶׁ֣ר עָשָׂ֑ה הֲלֹא־הֵ֣ם כְּתוּבִ֗ים עַל־סֵ֛פֶר דִּבְרֵ֥י הַיָּמִ֖ים לְמַלְכֵ֥י יְהוּדָֽה׃ "
+  },
+  "2KI 15:37": {
+   "KJV": "In those days the LORD began to send against Judah Rezin the king of Syria, and Pekah the son of Remaliah.",
+   "BHSA": "בַּיָּמִ֣ים הָהֵ֔ם הֵחֵ֣ל יְהוָ֗ה לְהַשְׁלִ֨יחַ֙ בִּֽיהוּדָ֔ה רְצִ֖ין מֶ֣לֶךְ אֲרָ֑ם וְאֵ֖ת פֶּ֥קַח בֶּן־רְמַלְיָֽהוּ׃ "
+  },
+  "2KI 15:38": {
+   "KJV": "And Jotham slept with his fathers, and was buried with his fathers in the city of David his father: and Ahaz his son reigned in his stead.",
+   "BHSA": "וַיִּשְׁכַּ֤ב יֹותָם֙ עִם־אֲבֹתָ֔יו וַיִּקָּבֵר֙ עִם־אֲבֹתָ֔יו בְּעִ֖יר דָּוִ֣ד אָבִ֑יו וַיִּמְלֹ֛ךְ אָחָ֥ז בְּנֹ֖ו תַּחְתָּֽיו׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "ahaz",
+   "name": "Ahaz",
+   "distinguisher": "King of Judah, son of Jotham (2KI 15:38)",
+   "sex": "male"
+  },
+  {
+   "slug": "amaziah",
+   "name": "Amaziah",
+   "distinguisher": "King of Judah, son of Joash (2KI 12:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "argob",
+   "name": "Argob",
+   "distinguisher": "conspired with Pekah against Pekahiah (2KI 15:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "arieh",
+   "name": "Arieh",
+   "distinguisher": "conspired with Pekah against Pekahiah (2KI 15:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "azariah-3",
+   "name": "Azariah",
+   "distinguisher": "[Uzziah] King of Judah, son of Amaziah (2KI 14:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "elah-3",
+   "name": "Elah",
+   "distinguisher": "father of Hoshea, King of Israel (2KI 15:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "gadi",
+   "name": "Gadi",
+   "distinguisher": "father of Menachem (2KI 15:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "hoshea",
+   "name": "Hoshea",
+   "distinguisher": "son of Elah who killed King Pekah and became King of Israel in his place (2KI 15:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "jabesh",
+   "name": "Jabesh",
+   "distinguisher": "father of Shallum (2KI 15:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jecoliah",
+   "name": "Jecoliah",
+   "distinguisher": "mother of Azariah (2KI 15:2)",
+   "sex": "female"
+  },
+  {
+   "slug": "jehu-2",
+   "name": "Jehu",
+   "distinguisher": "anointed king over Israel (1KI 19:16) at the direction of Elisha (2KI 9:1-3)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeroboam",
+   "name": "Jeroboam",
+   "distinguisher": "Solomon's servant, son of Nebat, who rebelled against him (1KI 11:26), and was later made king of Israel (1KI 12:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeroboam-2",
+   "name": "Jeroboam",
+   "distinguisher": "King of Israel (2KI 13:13), son of Joash [Jehoash] (2KI 14:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "jerusha",
+   "name": "Jerusha",
+   "distinguisher": "mother of Jotham, King of Israel (2KI 15:33)",
+   "sex": "female"
+  },
+  {
+   "slug": "jotham-2",
+   "name": "Jotham",
+   "distinguisher": "King of Judah, son of King Uzziah [Azariah] (2KI 15:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "menachem",
+   "name": "Menachem",
+   "distinguisher": "King of Israel (2KI 15:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "nebat",
+   "name": "Nebat",
+   "distinguisher": "father of Jeroboam (1KI 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "pekah",
+   "name": "Pekah",
+   "distinguisher": "son of Remaliah who killed King Pekahiah and became King of Israel in his place (2KI 15:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "pekahiah",
+   "name": "Pekahiah",
+   "distinguisher": "son of Menachem and King of Israel (2KI 15:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "pul",
+   "name": "Pul",
+   "distinguisher": "King of Assyria (2KI 15:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "remaliah",
+   "name": "Remaliah",
+   "distinguisher": "father of Pekah (2KI 15:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "rezin",
+   "name": "Rezin",
+   "distinguisher": "King of Aram (2KI 15:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum",
+   "name": "Shallum",
+   "distinguisher": "conspired against King Zechariah and became king of Israel in his place (2KI 15:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "tiglathpileser",
+   "name": "Tiglath-pileser",
+   "distinguisher": "King of Assyria (2KI 15:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zadok-2",
+   "name": "Zadok",
+   "distinguisher": "father of Jerusha (2KI 15:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "zechariah",
+   "name": "Zechariah",
+   "distinguisher": "King of Israel, son of Jeroboam (2KI 14:29)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 97753,
+   "row": "azariah-3 father-of jotham-2",
+   "verse": "2KI 15:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103381,
+   "row": "zechariah son-of jeroboam-2",
+   "verse": "2KI 15:8",
+   "source": "read from Scripture by gpt-5, asked 2026-09-22"
+  },
+  {
+   "id": 99897,
+   "row": "jabesh father-of shallum",
+   "verse": "2KI 15:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102400,
+   "row": "shallum son-of jabesh",
+   "verse": "2KI 15:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102403,
+   "row": "shallum killer-of zechariah",
+   "verse": "2KI 15:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98997,
+   "row": "gadi father-of menachem",
+   "verse": "2KI 15:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101241,
+   "row": "menachem son-of gadi",
+   "verse": "2KI 15:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101243,
+   "row": "menachem killer-of shallum",
+   "verse": "2KI 15:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102402,
+   "row": "shallum killed-by menachem",
+   "verse": "2KI 15:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101244,
+   "row": "menachem father-of pekahiah",
+   "verse": "2KI 15:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101917,
+   "row": "pekahiah son-of menachem",
+   "verse": "2KI 15:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97579,
+   "row": "argob companion-of pekah",
+   "verse": "2KI 15:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97581,
+   "row": "arieh companion-of argob",
+   "verse": "2KI 15:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101913,
+   "row": "pekah son-of remaliah",
+   "verse": "2KI 15:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 101916,
+   "row": "pekah killer-of pekahiah",
+   "verse": "2KI 15:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102160,
+   "row": "remaliah father-of pekah",
+   "verse": "2KI 15:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98537,
+   "row": "elah-3 father-of hoshea",
+   "verse": "2KI 15:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99629,
+   "row": "hoshea son-of elah-3",
+   "verse": "2KI 15:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99630,
+   "row": "hoshea killer-of pekah",
+   "verse": "2KI 15:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101914,
+   "row": "pekah killed-by hoshea",
+   "verse": "2KI 15:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 100622,
+   "row": "jotham-2 son-of azariah-3",
+   "verse": "2KI 15:32",
+   "source": "read from Scripture by gpt-5, asked 2026-09-22"
+  },
+  {
+   "id": 100293,
+   "row": "jerusha daughter-of zadok-2",
+   "verse": "2KI 15:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103318,
+   "row": "zadok-2 father-of jerusha",
+   "verse": "2KI 15:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103319,
+   "row": "zadok-2 grandfather-of jotham-2",
+   "verse": "2KI 15:33",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "ahaz son-of jotham-2 (2KI 16:1)",
+  "ahaz king-of judah (2KI 16:1)",
+  "ahaz servant-of tiglathpileser (2KI 16:7)",
+  "azariah-3 son-of amaziah (2KI 14:21)",
+  "david servant-of yhvh (2SA 3:18)",
+  "jecoliah mother-of azariah-3 (2CH 26:3)",
+  "jeroboam son-of nebat (1KI 11:26)",
+  "jeroboam-2 father-of zechariah (2KI 14:29)",
+  "jerusha mother-of jotham-2 (2CH 27:1)",
+  "jotham-2 king-of judah (2CH 27:1)",
+  "jotham-2 father-of ahaz (2KI 16:1)",
+  "nebat father-of jeroboam (1KI 11:26)",
+  "tiglathpileser killer-of rezin (2KI 16:9)"
+ ]
+}

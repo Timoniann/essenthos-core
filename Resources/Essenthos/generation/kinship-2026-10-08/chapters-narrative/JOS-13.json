@@ -1,0 +1,11 @@
+{
+ "chapter": "JOS 13",
+ "rows": 5,
+ "wrong": [],
+ "missing": [],
+ "note": "The explicit family statements—Balaam son of Beor (JOS 13:22) and Machir son of Manasseh (JOS 13:31)—are already recorded from other chapters. JOS 13:21 supports the supplied rows identifying Moses as killing the five Midianite princes.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:10:07+00:00"
+}

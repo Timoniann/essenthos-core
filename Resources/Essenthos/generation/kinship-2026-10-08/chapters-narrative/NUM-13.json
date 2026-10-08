@@ -1,0 +1,11 @@
+{
+ "chapter": "NUM 13",
+ "rows": 45,
+ "wrong": [],
+ "missing": [],
+ "note": "All explicit parent–child relationships are already recorded here or in other chapters. The twelve owner-recorded descendant-of rows infer the fathers’ ancestry from their sons’ tribal affiliations, which this chapter does not explicitly establish; they are retained as owner rulings.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T18:57:35+00:00"
+}

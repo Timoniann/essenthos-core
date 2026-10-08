@@ -1,0 +1,23 @@
+{
+ "chapter": "1CH 15",
+ "rows": 43,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    105620
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 15:18",
+   "why": "The Hebrew lists Ben and Obed-edom separately among the second-rank Levites and states no descent relationship between them.",
+   "confidence": 1
+  }
+ ],
+ "missing": [],
+ "note": "The chapter's explicit parentage statements are already recorded, including Ethan's father Kushaiah under the supplied record kishi. References to brethren here describe fellow Levites and do not establish biological sibling relationships.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T18:57:41+00:00"
+}

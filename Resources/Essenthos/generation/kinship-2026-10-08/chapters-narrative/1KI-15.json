@@ -1,0 +1,28 @@
+{
+ "chapter": "1KI 15",
+ "rows": 22,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "abijam",
+   "type": "descendant-of",
+   "to": "david",
+   "verse": "1KI 15:3",
+   "why": "The Hebrew calls David Abijam's father, explicitly identifying David as his forefather.",
+   "confidence": 0.99
+  },
+  {
+   "from": "asa",
+   "type": "descendant-of",
+   "to": "david",
+   "verse": "1KI 15:11",
+   "why": "The Hebrew calls David Asa's father, indicating ancestry while verse 8 names Abijam as Asa's father.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The Hebrew calls Maacah the mother of both Abijam and Asa, supporting the recorded maternal relationships, but does not explicitly describe an incestuous union. Neither owner ruling requires a warning.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:00:35+00:00"
+}

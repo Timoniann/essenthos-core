@@ -1,0 +1,23 @@
+{
+ "chapter": "JER 36",
+ "rows": 23,
+ "wrong": [
+  {
+   "kind": "retarget",
+   "rows": [
+    103424
+   ],
+   "new_type": "son-of",
+   "new_to": "hananiah-13",
+   "verse": "JER 36:12",
+   "why": "The verse identifies Zedekiah as son of Hananiah, matching hananiah-13, the court official's father, rather than hananiah-10, the prophet.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [],
+ "note": "All plain family statements are already recorded in at least one direction. The owner's Jerahmeel ruling accords with the Hebrew בֶּן־הַמֶּלֶךְ, 'son of the king.'",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:00:00+00:00"
+}

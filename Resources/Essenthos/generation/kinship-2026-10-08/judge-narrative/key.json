@@ -1,0 +1,1010 @@
+{
+ "blind-1": {
+  "type": "missing",
+  "claim": "jehoram brother-of sephatiah",
+  "chapter": "2CH-21",
+  "verse": "2CH 21:2",
+  "codex_why": "The Hebrew lists Shephatiah among Jehoram's brothers, the sons of Jehoshaphat.",
+  "codex_confidence": 1
+ },
+ "blind-2": {
+  "type": "missing",
+  "claim": "jair son-of manasseh",
+  "chapter": "1KI-4",
+  "verse": "1KI 4:13",
+  "codex_why": "The Hebrew explicitly calls Jair בֶּן־מְנַשֶּׁה, son of Manasseh, while the existing descendant-of row records only broader ancestry.",
+  "codex_confidence": 0.99
+ },
+ "blind-3": {
+  "type": "missing",
+  "claim": "tobiah-2 father-of jehohanan-3",
+  "chapter": "NEH-6",
+  "verse": "NEH 6:18",
+  "codex_why": "The Hebrew calls Jehohanan בְּנוֹ, 'his son,' referring to Tobiah.",
+  "codex_confidence": 1
+ },
+ "blind-4": {
+  "type": "wrong",
+  "row": 103312,
+  "row_text": "zacharias priest-of abijah-5",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "LUK-1",
+  "verse": "LUK 1:5",
+  "codex_why": "ἐξ ἐφημερίας Ἀβιά places Zacharias in Abijah's priestly division; it does not say he was a priest serving Abijah.",
+  "codex_confidence": 0.94
+ },
+ "blind-5": {
+  "type": "wrong",
+  "row": 100526,
+  "row_text": "jonathan-13 scribe-of mattaniah",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "JER-37",
+  "verse": "JER 37:15",
+  "codex_why": "The verse calls Jonathan a scribe and says his house was used as a prison, but does not identify him as Zedekiah's scribe.",
+  "codex_confidence": 0.99
+ },
+ "blind-6": {
+  "type": "wrong",
+  "row": 103921,
+  "row_text": "barachel descendant-of buz",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "JOB-32",
+  "verse": "JOB 32:2",
+  "codex_why": "The Hebrew identifies Barachel as 'the Buzite' but does not establish descent from the particular Buz who was Nahor's son.",
+  "codex_confidence": 0.9
+ },
+ "blind-7": {
+  "type": "wrong",
+  "row": 98535,
+  "row_text": "elah-2 king-of yhvh",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1KI-16",
+  "verse": "1KI 16:13",
+  "codex_why": "The verse describes Elah's sins provoking YHVH, not Elah being king over YHVH.",
+  "codex_confidence": 1
+ },
+ "blind-8": {
+  "type": "wrong",
+  "row": 105128,
+  "row_text": "joseph-7 brother-of simon-3",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "MAT-13",
+  "verse": "MAT 13:55",
+  "codex_why": "The Greek οἱ ἀδελφοὶ αὐτοῦ names James, Joseph, Simon, and Judas as Jesus' brothers but does not specify their relationships to one another.",
+  "codex_confidence": 0.93
+ },
+ "blind-9": {
+  "type": "missing",
+  "claim": "iezer descendant-of manasseh",
+  "chapter": "JOS-17",
+  "verse": "JOS 17:2",
+  "codex_why": "The verse includes Abiezer, identified in the supplied records as Iezer, among the male children of Manasseh by their families.",
+  "codex_confidence": 0.98
+ },
+ "blind-10": {
+  "type": "missing",
+  "claim": "joshebbasshebeth son-of hachmoni-father-of-jashobeam",
+  "chapter": "1CH-11",
+  "verse": "1CH 11:11",
+  "codex_why": "The Hebrew calls Jashobeam ben-Hachmoni, explicitly stating sonship beyond the recorded ancestor relationship.",
+  "codex_confidence": 0.95
+ },
+ "blind-11": {
+  "type": "missing",
+  "claim": "absalom brother-of solomon",
+  "chapter": "1KI-2",
+  "verse": "1KI 2:7",
+  "codex_why": "David calls Absalom אָחִיךָ, 'your brother,' while addressing Solomon.",
+  "codex_confidence": 1
+ },
+ "blind-12": {
+  "type": "wrong",
+  "row": 98764,
+  "row_text": "elnaam father-of eliel-4",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1CH-11",
+  "verse": "1CH 11:46",
+  "codex_why": "The Hebrew lists Eliel the Mahavite separately and identifies only Jeribai and Joshaviah as the sons of Elnaam.",
+  "codex_confidence": 0.99
+ },
+ "blind-13": {
+  "type": "wrong",
+  "row": 99841,
+  "row_text": "ithra husband-of abigail-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2SA-17",
+  "verse": "2SA 17:25",
+  "codex_why": "The Hebrew says Ithra went in to Abigail but does not state that he was her husband.",
+  "codex_confidence": 0.98
+ },
+ "blind-14": {
+  "type": "wrong",
+  "row": 107071,
+  "row_text": "shechem killed-by jacob",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "GEN-34",
+  "verse": "GEN 34:26",
+  "codex_why": "The plural subject of הָרְגוּ refers to Simeon and Levi from verse 25, who killed Shechem, not Jacob.",
+  "codex_confidence": 1
+ },
+ "blind-15": {
+  "type": "missing",
+  "claim": "david ancestor-of jehoshaphat-3",
+  "chapter": "1KI-22",
+  "verse": "1KI 22:50",
+  "codex_why": "The verse calls David Jehoshaphat's father (דָּוִד אָבִיו) in the ancestral sense, while verse 41 identifies Asa as his father.",
+  "codex_confidence": 0.98
+ },
+ "blind-16": {
+  "type": "missing",
+  "claim": "david ancestor-of amaziah",
+  "chapter": "2KI-14",
+  "verse": "2KI 14:3",
+  "codex_why": "The verse calls David Amaziah's father in the ancestral sense while also naming Joash as his father.",
+  "codex_confidence": 0.99
+ },
+ "blind-17": {
+  "type": "wrong",
+  "row": 97060,
+  "row_text": "abihail-4 wife-of rehoboam",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2CH-11",
+  "verse": "2CH 11:18",
+  "codex_why": "The Hebrew names Mahalath as the wife Rehoboam took, with Abihail belonging to Mahalath's parentage rather than explicitly being another wife.",
+  "codex_confidence": 0.88
+ },
+ "blind-18": {
+  "type": "wrong",
+  "row": 105632,
+  "row_text": "conaniah-chief-of-the-levites brother-of nethanel-4",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "nethanel-9",
+  "chapter": "2CH-35",
+  "verse": "2CH 35:9",
+  "codex_why": "The verse identifies Nethanel, the Levite chief under Josiah, as Conaniah's brother.",
+  "codex_confidence": 0.99
+ },
+ "blind-19": {
+  "type": "wrong",
+  "row": 106792,
+  "row_text": "elasah-2 servant-of zedekiah",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "mattaniah",
+  "chapter": "JER-29",
+  "verse": "JER 29:3",
+  "codex_why": "The Hebrew identifies the sender as Zedekiah king of Judah, represented by mattaniah, rather than zedekiah, the prophet who made iron horns.",
+  "codex_confidence": 1
+ },
+ "blind-20": {
+  "type": "missing",
+  "claim": "malchijah-10 son-of mattaniah",
+  "chapter": "JER-38",
+  "verse": "JER 38:6",
+  "codex_why": "The Hebrew calls Malchijah בֶן־הַמֶּלֶךְ, 'son of the king,' with Zedekiah identified as the king in verse 5.",
+  "codex_confidence": 0.93
+ },
+ "blind-21": {
+  "type": "missing",
+  "claim": "joash-3 descendant-of jehoshaphat-3",
+  "chapter": "2KI-12",
+  "verse": "2KI 12:18",
+  "codex_why": "The verse explicitly includes Jehoshaphat among Jehoash's fathers (אֲבֹתָיו), meaning his ancestors.",
+  "codex_confidence": 0.99
+ },
+ "blind-22": {
+  "type": "wrong",
+  "row": 97791,
+  "row_text": "azmaveth-2 father-of jeziel",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1CH-12",
+  "verse": "1CH 12:3",
+  "codex_why": "The Azmaveth identified as father of Jeziel and Pelet is azmaveth-6, not the separately recorded son of Jehoadda, azmaveth-2.",
+  "codex_confidence": 0.99
+ },
+ "blind-23": {
+  "type": "wrong",
+  "row": 97237,
+  "row_text": "ahaz king-of judah",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2KI-16",
+  "verse": "2KI 16:1",
+  "codex_why": "מֶלֶךְ יְהוּדָה refers to kingship over Judah the kingdom, not over the individual Judah son of Jacob.",
+  "codex_confidence": 0.99
+ },
+ "blind-24": {
+  "type": "wrong",
+  "row": 100804,
+  "row_text": "kishi descendant-of merari",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2CH-29",
+  "verse": "2CH 29:12",
+  "codex_why": "The Merarite named here is Kish represented by kish-son-of-abdi, not the separately recorded Kishi.",
+  "codex_confidence": 0.99
+ },
+ "blind-25": {
+  "type": "wrong",
+  "row": 97793,
+  "row_text": "azmaveth-3 son-of adiel-2",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "adiel-3",
+  "chapter": "1CH-27",
+  "verse": "1CH 27:25",
+  "codex_why": "The verse calls the treasurer Azmaveth son of Adiel, matching adiel-3.",
+  "codex_confidence": 0.99
+ },
+ "blind-26": {
+  "type": "missing",
+  "claim": "joash-3 descendant-of jehoram",
+  "chapter": "2KI-12",
+  "verse": "2KI 12:18",
+  "codex_why": "The verse explicitly includes Jehoram among Jehoash's fathers (אֲבֹתָיו), meaning his ancestors.",
+  "codex_confidence": 0.99
+ },
+ "blind-27": {
+  "type": "wrong",
+  "row": 103297,
+  "row_text": "zabdiel father-of joshebbasshebeth",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "jashobeam-2",
+  "chapter": "1CH-27",
+  "verse": "1CH 27:2",
+  "codex_why": "The verse names Jashobeam son of Zabdiel, matching jashobeam-2 rather than joshebbasshebeth.",
+  "codex_confidence": 0.99
+ },
+ "blind-28": {
+  "type": "missing",
+  "claim": "jehoram brother-of michael-7",
+  "chapter": "2CH-21",
+  "verse": "2CH 21:2",
+  "codex_why": "The Hebrew lists Michael among Jehoram's brothers, the sons of Jehoshaphat.",
+  "codex_confidence": 1
+ },
+ "blind-29": {
+  "type": "wrong",
+  "row": 103202,
+  "row_text": "uzziah father-of jonathan-7",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1CH-27",
+  "verse": "1CH 27:25",
+  "codex_why": "The verse names Jehonathan's father Uzziah, matching uzziah-4 rather than uzziah the son of Uriel.",
+  "codex_confidence": 0.99
+ },
+ "blind-30": {
+  "type": "wrong",
+  "row": 105245,
+  "row_text": "joseph-7 brother-of james-3",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "MAT-13",
+  "verse": "MAT 13:55",
+  "codex_why": "The Greek οἱ ἀδελφοὶ αὐτοῦ names James, Joseph, Simon, and Judas as Jesus' brothers but does not specify their relationships to one another.",
+  "codex_confidence": 0.93
+ },
+ "blind-31": {
+  "type": "wrong",
+  "row": 106632,
+  "row_text": "zelek servant-of joab",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2SA-23",
+  "verse": "2SA 23:37",
+  "codex_why": "The verse identifies Nahari as Joab's armourbearer and identifies Zelek only as the Ammonite.",
+  "codex_confidence": 0.99
+ },
+ "blind-32": {
+  "type": "wrong",
+  "row": 103838,
+  "row_text": "ahisamach of-tribe dan",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "EXO-31",
+  "verse": "EXO 31:6",
+  "codex_why": "The Hebrew identifies Oholiab as belonging to the tribe of Dan but does not separately state Ahisamach's tribal affiliation.",
+  "codex_confidence": 0.9
+ },
+ "blind-33": {
+  "type": "missing",
+  "claim": "joel-8 descendant-of kohath",
+  "chapter": "2CH-29",
+  "verse": "2CH 29:12",
+  "codex_why": "Joel son of Azariah is explicitly included among the Kohathites.",
+  "codex_confidence": 0.99
+ },
+ "blind-34": {
+  "type": "missing",
+  "claim": "athaliah daughter-of ahab",
+  "chapter": "2KI-8",
+  "verse": "2KI 8:18",
+  "codex_why": "The verse explicitly calls Jehoram's wife, identified as Athaliah by the owner's ruling, the daughter of Ahab.",
+  "codex_confidence": 0.98
+ },
+ "blind-35": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MAT-10",
+  "verse": "MAT 10:32",
+  "codex_why": "Jesus calls God 'my Father who is in heaven' (τοῦ Πατρός μου τοῦ ἐν τοῖς οὐρανοῖς).",
+  "codex_confidence": 0.99
+ },
+ "blind-36": {
+  "type": "missing",
+  "claim": "maaseiah-11 descendant-of judah",
+  "chapter": "NEH-11",
+  "verse": "NEH 11:5",
+  "codex_why": "Maaseiah continues the list introduced as the children of Judah in verse 4.",
+  "codex_confidence": 0.98
+ },
+ "blind-37": {
+  "type": "missing",
+  "claim": "baanah descendant-of benjamin",
+  "chapter": "2SA-4",
+  "verse": "2SA 4:2",
+  "codex_why": "The Hebrew describes Baanah and Rechab, the sons of Rimmon, as מִבְּנֵי בִנְיָמִן, 'of the children of Benjamin.'",
+  "codex_confidence": 0.94
+ },
+ "blind-38": {
+  "type": "wrong",
+  "row": 105123,
+  "row_text": "simon-3 brother-of judas-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "MAT-13",
+  "verse": "MAT 13:55",
+  "codex_why": "The Greek οἱ ἀδελφοὶ αὐτοῦ names James, Joseph, Simon, and Judas as Jesus' brothers but does not specify their relationships to one another.",
+  "codex_confidence": 0.93
+ },
+ "blind-39": {
+  "type": "missing",
+  "claim": "mattaniah brother-of eliakim-2",
+  "chapter": "2KI-24",
+  "verse": "2KI 24:17",
+  "codex_why": "Mattaniah is called Jehoiachin's father's brother, and verse 6 identifies Jehoiakim (eliakim-2) as Jehoiachin's father.",
+  "codex_confidence": 0.98
+ },
+ "blind-40": {
+  "type": "missing",
+  "claim": "jehoram brother-of jehiel-3",
+  "chapter": "2CH-21",
+  "verse": "2CH 21:2",
+  "codex_why": "The Hebrew lists Jehiel among Jehoram's brothers, the sons of Jehoshaphat.",
+  "codex_confidence": 1
+ },
+ "blind-41": {
+  "type": "missing",
+  "claim": "asa descendant-of david",
+  "chapter": "1KI-15",
+  "verse": "1KI 15:11",
+  "codex_why": "The Hebrew calls David Asa's father, indicating ancestry while verse 8 names Abijam as Asa's father.",
+  "codex_confidence": 0.99
+ },
+ "blind-42": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "LUK-8",
+  "verse": "LUK 8:28",
+  "codex_why": "The Greek explicitly addresses Jesus as the Son of God Most High (Υἱὲ τοῦ Θεοῦ τοῦ Ὑψίστου).",
+  "codex_confidence": 1
+ },
+ "blind-43": {
+  "type": "missing",
+  "claim": "david ancestor-of jehoram",
+  "chapter": "2CH-21",
+  "verse": "2CH 21:12",
+  "codex_why": "David is called Jehoram's father in the ancestral sense, with Jehoshaphat also explicitly identified as his father in this chapter.",
+  "codex_confidence": 0.99
+ },
+ "blind-44": {
+  "type": "wrong",
+  "row": 103153,
+  "row_text": "uriah killed-by joab",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2SA-11",
+  "verse": "2SA 11:17",
+  "codex_why": "The verse says the city's men fought and Uriah died, but does not identify Joab as the person who killed him.",
+  "codex_confidence": 0.98
+ },
+ "blind-45": {
+  "type": "missing",
+  "claim": "jehoram brother-of azaryahu",
+  "chapter": "2CH-21",
+  "verse": "2CH 21:2",
+  "codex_why": "The Hebrew lists Azaryahu among Jehoram's brothers, separately from Azariah.",
+  "codex_confidence": 1
+ },
+ "blind-46": {
+  "type": "wrong",
+  "row": 97178,
+  "row_text": "adiel-2 father-of azmaveth-3",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1CH-27",
+  "verse": "1CH 27:25",
+  "codex_why": "Azmaveth's father Adiel matches adiel-3, whereas adiel-2 is the separate son of Jahzerah.",
+  "codex_confidence": 0.99
+ },
+ "blind-47": {
+  "type": "wrong",
+  "row": 100597,
+  "row_text": "joshebbasshebeth killer-of yhvh",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2SA-23",
+  "verse": "2SA 23:8",
+  "codex_why": "The verse describes Josheb-basshebeth killing eight hundred men, not YHVH.",
+  "codex_confidence": 1
+ },
+ "blind-48": {
+  "type": "wrong",
+  "row": 97792,
+  "row_text": "azmaveth-2 father-of pelet-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1CH-12",
+  "verse": "1CH 12:3",
+  "codex_why": "The Azmaveth identified as father of Jeziel and Pelet is azmaveth-6, not the separately recorded son of Jehoadda, azmaveth-2.",
+  "codex_confidence": 0.99
+ },
+ "blind-49": {
+  "type": "wrong",
+  "row": 100133,
+  "row_text": "jehoiachin king-of judah",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2KI-24",
+  "verse": "2KI 24:8",
+  "codex_why": "Judah here is the kingdom over which Jehoiachin reigns, not the patriarch represented by the slug judah.",
+  "codex_confidence": 0.99
+ },
+ "blind-50": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "LUK-1",
+  "verse": "LUK 1:35",
+  "codex_why": "The angel explicitly says that Mary's child shall be called Υἱὸς Θεοῦ, the Son of God.",
+  "codex_confidence": 1
+ },
+ "blind-51": {
+  "type": "missing",
+  "claim": "nethanel-9 brother-of conaniah-chief-of-the-levites",
+  "chapter": "2CH-35",
+  "verse": "2CH 35:9",
+  "codex_why": "The Hebrew names Shemaiah and Nethanel as Conaniah's brothers.",
+  "codex_confidence": 0.99
+ },
+ "blind-52": {
+  "type": "missing",
+  "claim": "goliath descendant-of raphah",
+  "chapter": "2SA-21",
+  "verse": "2SA 21:22",
+  "codex_why": "The Hebrew names Goliath in verse 19 and states that these four were born to Raphah in verse 22.",
+  "codex_confidence": 0.96
+ },
+ "blind-53": {
+  "type": "wrong",
+  "row": 99042,
+  "row_text": "gedaliah governor-of judah",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2KI-25",
+  "verse": "2KI 25:22",
+  "codex_why": "The verse appoints Gedaliah over the people remaining in the land of Judah, not over Judah the son of Jacob.",
+  "codex_confidence": 1
+ },
+ "blind-54": {
+  "type": "wrong",
+  "row": 100156,
+  "row_text": "jehoshaphat-3 king-of judah",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1KI-22",
+  "verse": "1KI 22:2",
+  "codex_why": "Judah in מֶלֶךְ־יְהוּדָה denotes the kingdom Jehoshaphat ruled, not the patriarch represented by the slug judah.",
+  "codex_confidence": 1
+ },
+ "blind-55": {
+  "type": "wrong",
+  "row": 105127,
+  "row_text": "joseph-7 brother-of judas-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "MAT-13",
+  "verse": "MAT 13:55",
+  "codex_why": "The Greek οἱ ἀδελφοὶ αὐτοῦ names James, Joseph, Simon, and Judas as Jesus' brothers but does not specify their relationships to one another.",
+  "codex_confidence": 0.93
+ },
+ "blind-56": {
+  "type": "missing",
+  "claim": "hezekiah descendant-of david",
+  "chapter": "2CH-29",
+  "verse": "2CH 29:2",
+  "codex_why": "David is explicitly called Hezekiah's father (אָבִיו), identifying him as Hezekiah's royal forefather.",
+  "codex_confidence": 0.99
+ },
+ "blind-57": {
+  "type": "wrong",
+  "row": 96999,
+  "row_text": "abdi father-of kish-son-of-abdi",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2CH-29",
+  "verse": "2CH 29:12",
+  "codex_why": "The father of Kish here is the Hezekiah-era Merarite Abdi represented by abdi-3, not abdi, the son of Malluch.",
+  "codex_confidence": 0.99
+ },
+ "blind-58": {
+  "type": "missing",
+  "claim": "rechab descendant-of benjamin",
+  "chapter": "2SA-4",
+  "verse": "2SA 4:2",
+  "codex_why": "The Hebrew describes Baanah and Rechab, the sons of Rimmon, as מִבְּנֵי בִנְיָמִן, 'of the children of Benjamin.'",
+  "codex_confidence": 0.94
+ },
+ "blind-59": {
+  "type": "wrong",
+  "row": 105159,
+  "row_text": "hagar concubine-of abram",
+  "kind": "retype",
+  "new_type": "wife-of",
+  "new_to": "abram",
+  "chapter": "GEN-16",
+  "verse": "GEN 16:3",
+  "codex_why": "Sarai gave Hagar to Abram לְאִשָּׁה, explicitly meaning to be his wife.",
+  "codex_confidence": 0.99
+ },
+ "blind-60": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "JHN-11",
+  "verse": "JHN 11:27",
+  "codex_why": "Martha explicitly identifies Jesus as ὁ Υἱὸς τοῦ Θεοῦ, the Son of God.",
+  "codex_confidence": 1
+ },
+ "blind-61": {
+  "type": "wrong",
+  "row": 101725,
+  "row_text": "nethanel-4 brother-of conaniah-chief-of-the-levites",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2CH-35",
+  "verse": "2CH 35:9",
+  "codex_why": "The Nethanel named among the Levite chiefs as Conaniah's brother is nethanel-9, not the scribe nethanel-4.",
+  "codex_confidence": 0.99
+ },
+ "blind-62": {
+  "type": "missing",
+  "claim": "david ancestor-of ahaz",
+  "chapter": "2KI-16",
+  "verse": "2KI 16:2",
+  "codex_why": "David is called Ahaz's father (אָבִיו), meaning his forefather here, with Jotham already named as Ahaz's father in verse 1.",
+  "codex_confidence": 0.99
+ },
+ "blind-63": {
+  "type": "missing",
+  "claim": "ahaz descendant-of david",
+  "chapter": "2CH-28",
+  "verse": "2CH 28:1",
+  "codex_why": "The verse calls David Ahaz's father (אָבִיו), expressing ancestral kinship.",
+  "codex_confidence": 0.99
+ },
+ "blind-64": {
+  "type": "wrong",
+  "row": 107184,
+  "row_text": "zimmah father-of joah-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2CH-29",
+  "verse": "2CH 29:12",
+  "codex_why": "Joah's father here is represented by zimmah-the-later-gershonite, rather than zimmah, the son of Jahath.",
+  "codex_confidence": 0.99
+ },
+ "blind-65": {
+  "type": "missing",
+  "claim": "hobab father-in-law-of moses",
+  "chapter": "JDG-4",
+  "verse": "JDG 4:11",
+  "codex_why": "The Hebrew calls Hobab חֹתֵן מֹשֶׁה, rendered in the KJV as the father-in-law of Moses.",
+  "codex_confidence": 0.99
+ },
+ "blind-66": {
+  "type": "wrong",
+  "row": 101986,
+  "row_text": "pharaoh-5 master-of hadad-3",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1KI-11",
+  "verse": "1KI 11:19",
+  "codex_why": "Pharaoh gives Hadad a wife, but the text does not call Pharaoh his master or Hadad his servant.",
+  "codex_confidence": 0.98
+ },
+ "blind-67": {
+  "type": "missing",
+  "claim": "mary-7 mother-of joses-son-of-mary",
+  "chapter": "MRK-15",
+  "verse": "MRK 15:40",
+  "codex_why": "Mary is explicitly identified as the mother of both James the less and Joses.",
+  "codex_confidence": 1
+ },
+ "blind-68": {
+  "type": "wrong",
+  "row": 100806,
+  "row_text": "kish-son-of-abdi son-of abdi",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "abdi-3",
+  "chapter": "2CH-29",
+  "verse": "2CH 29:12",
+  "codex_why": "Kish is called the son of the Hezekiah-era Merarite Abdi represented by abdi-3.",
+  "codex_confidence": 0.99
+ },
+ "blind-69": {
+  "type": "missing",
+  "claim": "jashobeam-2 descendant-of perez",
+  "chapter": "1CH-27",
+  "verse": "1CH 27:3",
+  "codex_why": "The Hebrew identifies the first month's chief, Jashobeam of verse 2, as being from the sons of Perez.",
+  "codex_confidence": 0.99
+ },
+ "blind-70": {
+  "type": "wrong",
+  "row": 101934,
+  "row_text": "pelet-2 son-of azmaveth-2",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "azmaveth-6",
+  "chapter": "1CH-12",
+  "verse": "1CH 12:3",
+  "codex_why": "The Hebrew calls Jeziel and Pelet sons of Azmaveth, whose matching record is azmaveth-6.",
+  "codex_confidence": 0.99
+ },
+ "blind-71": {
+  "type": "wrong",
+  "row": 105122,
+  "row_text": "simon-3 brother-of joseph-7",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "MAT-13",
+  "verse": "MAT 13:55",
+  "codex_why": "The Greek οἱ ἀδελφοὶ αὐτοῦ names James, Joseph, Simon, and Judas as Jesus' brothers but does not specify their relationships to one another.",
+  "codex_confidence": 0.93
+ },
+ "blind-72": {
+  "type": "missing",
+  "claim": "jesus son-of yhvh",
+  "chapter": "MRK-15",
+  "verse": "MRK 15:39",
+  "codex_why": "The centurion explicitly calls Jesus Υἱὸς Θεοῦ, 'Son of God.'",
+  "codex_confidence": 1
+ },
+ "blind-73": {
+  "type": "missing",
+  "claim": "athaiah descendant-of judah",
+  "chapter": "NEH-11",
+  "verse": "NEH 11:4",
+  "codex_why": "The verse explicitly lists Athaiah among the children of Judah.",
+  "codex_confidence": 1
+ },
+ "blind-74": {
+  "type": "wrong",
+  "row": 103424,
+  "row_text": "zedekiah-5 son-of hananiah-10",
+  "kind": "retarget",
+  "new_type": "son-of",
+  "new_to": "hananiah-13",
+  "chapter": "JER-36",
+  "verse": "JER 36:12",
+  "codex_why": "The verse identifies Zedekiah as son of Hananiah, matching hananiah-13, the court official's father, rather than hananiah-10, the prophet.",
+  "codex_confidence": 0.99
+ },
+ "blind-75": {
+  "type": "missing",
+  "claim": "jehoram brother-of azariah-9",
+  "chapter": "2CH-21",
+  "verse": "2CH 21:2",
+  "codex_why": "The Hebrew lists Azariah among Jehoram's brothers, the sons of Jehoshaphat.",
+  "codex_confidence": 1
+ },
+ "blind-76": {
+  "type": "wrong",
+  "row": 100540,
+  "row_text": "jonathan-7 son-of uzziah",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "uzziah-4",
+  "chapter": "1CH-27",
+  "verse": "1CH 27:25",
+  "codex_why": "Jehonathan's father Uzziah matches uzziah-4, the supplied record for this overseer's father.",
+  "codex_confidence": 0.99
+ },
+ "blind-77": {
+  "type": "missing",
+  "claim": "abram ancestor-of jacob",
+  "chapter": "GEN-28",
+  "verse": "GEN 28:13",
+  "codex_why": "God calls Abraham Jacob's father (אָבִיךָ), identifying him as Jacob's forefather in this context.",
+  "codex_confidence": 0.99
+ },
+ "blind-78": {
+  "type": "wrong",
+  "row": 105121,
+  "row_text": "simon-3 brother-of james-3",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "MAT-13",
+  "verse": "MAT 13:55",
+  "codex_why": "The Greek οἱ ἀδελφοὶ αὐτοῦ names James, Joseph, Simon, and Judas as Jesus' brothers but does not specify their relationships to one another.",
+  "codex_confidence": 0.93
+ },
+ "blind-79": {
+  "type": "missing",
+  "claim": "david ancestor-of hezekiah",
+  "chapter": "2KI-18",
+  "verse": "2KI 18:3",
+  "codex_why": "The verse calls David Hezekiah's father (דָוִד אָבִיו) in the ancestral sense, while verse 1 names Ahaz as his father.",
+  "codex_confidence": 0.99
+ },
+ "blind-80": {
+  "type": "wrong",
+  "row": 102788,
+  "row_text": "shimshai scribe-of artaxerxes",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "EZR-4",
+  "verse": "EZR 4:8",
+  "codex_why": "The verse calls Shimshai a scribe who wrote to Artaxerxes, but does not say he was Artaxerxes' scribe.",
+  "codex_confidence": 0.98
+ },
+ "blind-81": {
+  "type": "wrong",
+  "row": 105591,
+  "row_text": "abijah-5 ancestor-of zacharias",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "LUK-1",
+  "verse": "LUK 1:5",
+  "codex_why": "Zacharias belongs to Abijah's priestly division, but the verse does not identify Abijah as his ancestor.",
+  "codex_confidence": 0.99
+ },
+ "blind-82": {
+  "type": "missing",
+  "claim": "jehoram brother-of zechariah-11",
+  "chapter": "2CH-21",
+  "verse": "2CH 21:2",
+  "codex_why": "The Hebrew lists Zechariah among Jehoram's brothers, the sons of Jehoshaphat.",
+  "codex_confidence": 1
+ },
+ "blind-83": {
+  "type": "missing",
+  "claim": "isshiah-2 descendant-of korah-3",
+  "chapter": "1CH-12",
+  "verse": "1CH 12:6",
+  "codex_why": "The Hebrew explicitly includes Isshiah among the men designated Korahites.",
+  "codex_confidence": 0.97
+ },
+ "blind-84": {
+  "type": "wrong",
+  "row": 99525,
+  "row_text": "hezekiah king-of judah",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2KI-18",
+  "verse": "2KI 18:1",
+  "codex_why": "Judah in מֶלֶךְ יְהוּדָה denotes the kingdom Hezekiah ruled, not the person recorded as judah.",
+  "codex_confidence": 1
+ },
+ "blind-85": {
+  "type": "wrong",
+  "row": 101128,
+  "row_text": "manasseh-3 king-of judah",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2KI-21",
+  "verse": "2KI 21:1",
+  "codex_why": "Manasseh rules the kingdom of Judah, identified in verse 11, whereas the target record is Judah the son of Jacob.",
+  "codex_confidence": 1
+ },
+ "blind-86": {
+  "type": "wrong",
+  "row": 101363,
+  "row_text": "michael-4 father-of omri-4",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1CH-27",
+  "verse": "1CH 27:18",
+  "codex_why": "Omri's father Michael matches michael-10, whereas michael-4 is the separate son of Izrahiah.",
+  "codex_confidence": 0.99
+ },
+ "blind-87": {
+  "type": "wrong",
+  "row": 100372,
+  "row_text": "jeziel son-of azmaveth-2",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "azmaveth-6",
+  "chapter": "1CH-12",
+  "verse": "1CH 12:3",
+  "codex_why": "The Hebrew calls Jeziel and Pelet sons of Azmaveth, whose matching record is azmaveth-6.",
+  "codex_confidence": 0.99
+ },
+ "blind-88": {
+  "type": "missing",
+  "claim": "jehoshaphat-3 descendant-of david",
+  "chapter": "2CH-17",
+  "verse": "2CH 17:3",
+  "codex_why": "The Hebrew calls David Jehoshaphat's father (אָבִיו), here indicating a forefather because verse 2 names Asa as his father.",
+  "codex_confidence": 0.98
+ },
+ "blind-89": {
+  "type": "wrong",
+  "row": 98588,
+  "row_text": "elhanan-son-of-dodo son-of dodo-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "2SA-23",
+  "verse": "2SA 23:24",
+  "codex_why": "Elhanan's father is Dodo of Bethlehem, whereas dodo-2 identifies the Ahohite Dodo who fathered Eleazar in verse 9.",
+  "codex_confidence": 0.94
+ },
+ "blind-90": {
+  "type": "missing",
+  "claim": "elkanah-7 descendant-of korah-3",
+  "chapter": "1CH-12",
+  "verse": "1CH 12:6",
+  "codex_why": "The Hebrew explicitly includes Elkanah among the men designated Korahites.",
+  "codex_confidence": 0.97
+ },
+ "blind-91": {
+  "type": "wrong",
+  "row": 99443,
+  "row_text": "heber-2 descendant-of reuel-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "JDG-4",
+  "verse": "JDG 4:11",
+  "codex_why": "The verse identifies Heber with the descendants of Hobab but does not mention Reuel or state descent from him.",
+  "codex_confidence": 0.98
+ },
+ "blind-92": {
+  "type": "wrong",
+  "row": 100639,
+  "row_text": "jozacar killer-of amaziah",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "joash-3",
+  "chapter": "2KI-12",
+  "verse": "2KI 12:21",
+  "codex_why": "The servants killed Joash, while Amaziah his son subsequently reigned in his place.",
+  "codex_confidence": 1
+ },
+ "blind-93": {
+  "type": "wrong",
+  "row": 101824,
+  "row_text": "omri-4 son-of michael-4",
+  "kind": "retarget",
+  "new_type": "",
+  "new_to": "michael-10",
+  "chapter": "1CH-27",
+  "verse": "1CH 27:18",
+  "codex_why": "The verse calls Omri son of Michael, matching the supplied father-of-Omri record michael-10.",
+  "codex_confidence": 0.99
+ },
+ "blind-94": {
+  "type": "missing",
+  "claim": "hadassah daughter-of mordecai-2",
+  "chapter": "EST-2",
+  "verse": "EST 2:7",
+  "codex_why": "The Hebrew explicitly says Mordecai took Hadassah (Esther) as his daughter after her parents died.",
+  "codex_confidence": 0.99
+ },
+ "blind-95": {
+  "type": "wrong",
+  "row": 105620,
+  "row_text": "ben descendant-of obededom-2",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1CH-15",
+  "verse": "1CH 15:18",
+  "codex_why": "The Hebrew lists Ben and Obed-edom separately among the second-rank Levites and states no descent relationship between them.",
+  "codex_confidence": 1
+ },
+ "blind-96": {
+  "type": "wrong",
+  "row": 98604,
+  "row_text": "eliab-4 descendant-of obadiah-6",
+  "kind": "delete",
+  "new_type": "",
+  "new_to": "",
+  "chapter": "1CH-12",
+  "verse": "1CH 12:9",
+  "codex_why": "The Hebrew lists Obadiah as second and Eliab as third among the warriors, without stating descent between them.",
+  "codex_confidence": 1
+ },
+ "blind-97": {
+  "type": "missing",
+  "claim": "hepher descendant-of manasseh",
+  "chapter": "JOS-17",
+  "verse": "JOS 17:2",
+  "codex_why": "The verse includes Hepher among the male children of Manasseh by their families, with the intervening generations named in JOS 17:3.",
+  "codex_confidence": 0.99
+ },
+ "blind-98": {
+  "type": "missing",
+  "claim": "david ancestor-of jotham-2",
+  "chapter": "2KI-15",
+  "verse": "2KI 15:38",
+  "codex_why": "The verse calls David Jotham's father, in an ancestral sense since verses 32–34 identify Uzziah as Jotham's father.",
+  "codex_confidence": 0.99
+ },
+ "blind-99": {
+  "type": "missing",
+  "claim": "abijam descendant-of david",
+  "chapter": "1KI-15",
+  "verse": "1KI 15:3",
+  "codex_why": "The Hebrew calls David Abijam's father, explicitly identifying David as his forefather.",
+  "codex_confidence": 0.99
+ },
+ "blind-100": {
+  "type": "missing",
+  "claim": "mahath-2 descendant-of kohath",
+  "chapter": "2CH-29",
+  "verse": "2CH 29:12",
+  "codex_why": "Mahath son of Amasai is explicitly included among the Kohathites.",
+  "codex_confidence": 0.99
+ }
+}

@@ -1,0 +1,11 @@
+{
+ "chapter": "2CH 23",
+ "rows": 10,
+ "wrong": [],
+ "missing": [],
+ "note": "All five father–son relationships explicitly stated in the Hebrew of 2CH 23:1 are already recorded correctly. The king's son and Jehoiada's sons in 2CH 23:11 are unnamed and cannot supply additional relationships between the given records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:04:17+00:00"
+}

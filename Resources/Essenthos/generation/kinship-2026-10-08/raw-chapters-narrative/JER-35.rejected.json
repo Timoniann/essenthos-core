@@ -1,0 +1,34 @@
+{
+ "errors": [
+  "wrong: rows [105700] are the owner's own; put them in note instead",
+  "wrong: rows [105831] are the owner's own; put them in note instead"
+ ],
+ "answer": {
+  "wrong": [
+   {
+    "kind": "delete",
+    "rows": [
+     105700
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "JER 35:3",
+    "why": "The verse names Habazziniah as Jeremiah's father but does not state that Habazziniah descends from Rechab.",
+    "confidence": 0.88
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     105831
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "JER 35:6",
+    "why": "The speakers call Jonadab their father, but the verse does not establish Jonadab as Habazziniah's ancestor.",
+    "confidence": 0.92
+   }
+  ],
+  "missing": [],
+  "note": "Owner-recorded row 106675 is retained, although this chapter does not independently identify Maaseiah's father Shallum with the gatekeeper shallum-7. Rows 105700 and 105831 identify an agent as their recorder, rather than the project owner himself."
+ }
+}

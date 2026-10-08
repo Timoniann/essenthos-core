@@ -1,0 +1,22 @@
+{
+ "errors": [
+  "wrong: rows [105848] are the owner's own; put them in note instead"
+ ],
+ "answer": {
+  "wrong": [
+   {
+    "kind": "delete",
+    "rows": [
+     105848
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "HAG 1:1",
+    "why": "The Hebrew names Joshua as Jehozadak's son but states no relationship between Jehozadak and Aaron.",
+    "confidence": 1
+   }
+  ],
+  "missing": [],
+  "note": "Both explicit father–son relationships are already recorded. Row 105848 is attributed to an agent acting on the owner's instruction, not to a ruling recorded by the project owner."
+ }
+}

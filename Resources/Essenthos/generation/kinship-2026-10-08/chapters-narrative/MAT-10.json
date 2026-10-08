@@ -1,0 +1,20 @@
+{
+ "chapter": "MAT 10",
+ "rows": 33,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "MAT 10:32",
+   "why": "Jesus calls God 'my Father who is in heaven' (τοῦ Πατρός μου τοῦ ἐν τοῖς οὐρανοῖς).",
+   "confidence": 0.99
+  }
+ ],
+ "note": "All explicitly named human kinships are already recorded here or in other chapters; the unnamed family examples do not identify additional relationships between the supplied records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T18:58:19+00:00"
+}

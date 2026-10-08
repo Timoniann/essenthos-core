@@ -1,0 +1,11 @@
+{
+ "chapter": "GEN 41",
+ "rows": 6,
+ "wrong": [],
+ "missing": [],
+ "note": "The Hebrew text supports all six chapter rows, and every explicit family statement between the supplied people is already recorded here or in another chapter.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:08:11+00:00"
+}

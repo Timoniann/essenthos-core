@@ -1,0 +1,294 @@
+{
+ "chapter": "JOS 13",
+ "text": {
+  "JOS 13:1": {
+   "KJV": "Now Joshua was old and stricken in years; and the LORD said unto him, Thou art old and stricken in years, and there remaineth yet very much land to be possessed.",
+   "BHSA": "וִיהֹושֻׁ֣עַ זָקֵ֔ן בָּ֖א בַּיָּמִ֑ים וַיֹּ֨אמֶר יְהוָ֜ה אֵלָ֗יו אַתָּ֤ה זָקַ֨נְתָּה֙ בָּ֣אתָ בַיָּמִ֔ים וְהָאָ֛רֶץ נִשְׁאֲרָ֥ה הַרְבֵּֽה־מְאֹ֖ד לְרִשְׁתָּֽהּ׃ "
+  },
+  "JOS 13:2": {
+   "KJV": "This is the land that yet remaineth: all the borders of the Philistines, and all Geshuri,",
+   "BHSA": "זֹ֥את הָאָ֖רֶץ הַנִּשְׁאָ֑רֶת כָּל־גְּלִילֹ֥ות הַפְּלִשְׁתִּ֖ים וְכָל־הַגְּשׁוּרִֽי׃ "
+  },
+  "JOS 13:3": {
+   "KJV": "From Sihor, which is before Egypt, even unto the borders of Ekron northward, which is counted to the Canaanite: five lords of the Philistines; the Gazathites, and the Ashdothites, the Eshkalonites, the Gittites, and the Ekronites; also the Avites:",
+   "BHSA": "מִֽן־הַשִּׁיחֹ֞ור אֲשֶׁ֣ר׀ עַל־פְּנֵ֣י מִצְרַ֗יִם וְעַ֨ד גְּב֤וּל עֶקְרֹון֙ צָפֹ֔ונָה לַֽכְּנַעֲנִ֖י תֵּחָשֵׁ֑ב חֲמֵ֣שֶׁת׀ סַרְנֵ֣י פְלִשְׁתִּ֗ים הָעַזָּתִ֤י וְהָאַשְׁדֹּודִי֙ הָאֶשְׁקְלֹונִ֣י הַגִּתִּ֔י וְהָעֶקְרֹונִ֖י וְהָעַוִּֽים׃ "
+  },
+  "JOS 13:4": {
+   "KJV": "From the south, all the land of the Canaanites, and Mearah that is beside the Sidonians unto Aphek, to the borders of the Amorites:",
+   "BHSA": "מִתֵּימָ֞ן כָּל־אֶ֣רֶץ הַֽכְּנַעֲנִ֗י וּמְעָרָ֛ה אֲשֶׁ֥ר לַצִּידֹנִ֖ים עַד־אֲפֵ֑קָה עַ֖ד גְּב֥וּל הָאֱמֹרִֽי׃ "
+  },
+  "JOS 13:5": {
+   "KJV": "And the land of the Giblites, and all Lebanon, toward the sunrising, from Baalgad under mount Hermon unto the entering into Hamath.",
+   "BHSA": "וְהָאָ֣רֶץ הַגִּבְלִ֗י וְכָל־הַלְּבָנֹון֙ מִזְרַ֣ח הַשֶּׁ֔מֶשׁ מִבַּ֣עַל גָּ֔ד תַּ֖חַת הַר־חֶרְמֹ֑ון עַ֖ד לְבֹ֥וא חֲמָֽת׃ "
+  },
+  "JOS 13:6": {
+   "KJV": "All the inhabitants of the hill country from Lebanon unto Misrephothmaim, and all the Sidonians, them will I drive out from before the children of Israel: only divide thou it by lot unto the Israelites for an inheritance, as I have commanded thee.",
+   "BHSA": "כָּל־יֹשְׁבֵ֣י הָ֠הָר מִֽן־הַלְּבָנֹ֞ון עַד־מִשְׂרְפֹ֥ת מַ֨יִם֙ כָּל־צִ֣ידֹנִ֔ים אָֽנֹכִי֙ אֹורִישֵׁ֔ם מִפְּנֵ֖י בְּנֵ֣י יִשְׂרָאֵ֑ל רַ֠ק הַפִּלֶ֤הָ לְיִשְׂרָאֵל֙ בְּֽנַחֲלָ֔ה כַּאֲשֶׁ֖ר צִוִּיתִֽיךָ׃ "
+  },
+  "JOS 13:7": {
+   "KJV": "Now therefore divide this land for an inheritance unto the nine tribes, and the half tribe of Manasseh,",
+   "BHSA": "וְעַתָּ֗ה חַלֵּ֞ק אֶת־הָאָ֧רֶץ הַזֹּ֛את בְּנַחֲלָ֖ה לְתִשְׁעַ֣ת הַשְּׁבָטִ֑ים וַחֲצִ֖י הַשֵּׁ֥בֶט הַֽמְנַשֶּֽׁה׃ "
+  },
+  "JOS 13:8": {
+   "KJV": "With whom the Reubenites and the Gadites have received their inheritance, which Moses gave them, beyond Jordan eastward, even as Moses the servant of the LORD gave them;",
+   "BHSA": "עִמֹּ֗ו הָרֽאוּבֵנִי֙ וְהַגָּדִ֔י לָקְח֖וּ נַחֲלָתָ֑ם אֲשֶׁר֩ נָתַ֨ן לָהֶ֜ם מֹשֶׁ֗ה בְּעֵ֤בֶר הַיַּרְדֵּן֙ מִזְרָ֔חָה כַּאֲשֶׁר֙ נָתַ֣ן לָהֶ֔ם מֹשֶׁ֖ה עֶ֥בֶד יְהוָֽה׃ "
+  },
+  "JOS 13:9": {
+   "KJV": "From Aroer, that is upon the bank of the river Arnon, and the city that is in the midst of the river, and all the plain of Medeba unto Dibon;",
+   "BHSA": "מֵעֲרֹועֵ֡ר אֲשֶׁר֩ עַל־שְׂפַת־נַ֨חַל אַרְנֹ֜ון וְהָעִ֨יר אֲשֶׁ֧ר בְּתֹוךְ־הַנַּ֛חַל וְכָל־הַמִּישֹׁ֥ר מֵידְבָ֖א עַד־דִּיבֹֽון׃ "
+  },
+  "JOS 13:10": {
+   "KJV": "And all the cities of Sihon king of the Amorites, which reigned in Heshbon, unto the border of the children of Ammon;",
+   "BHSA": "וְכֹ֗ל עָרֵי֙ סִיחֹון֙ מֶ֣לֶךְ הָאֱמֹרִ֔י אֲשֶׁ֥ר מָלַ֖ךְ בְּחֶשְׁבֹּ֑ון עַד־גְּב֖וּל בְּנֵ֥י עַמֹּֽון׃ "
+  },
+  "JOS 13:11": {
+   "KJV": "And Gilead, and the border of the Geshurites and Maachathites, and all mount Hermon, and all Bashan unto Salcah;",
+   "BHSA": "וְהַגִּלְעָ֞ד וּגְב֧וּל הַגְּשׁוּרִ֣י וְהַמַּעֲכָתִ֗י וְכֹ֨ל הַ֥ר חֶרְמֹ֛ון וְכָל־הַבָּשָׁ֖ן עַד־סַלְכָֽה׃ "
+  },
+  "JOS 13:12": {
+   "KJV": "All the kingdom of Og in Bashan, which reigned in Ashtaroth and in Edrei, who remained of the remnant of the giants: for these did Moses smite, and cast them out.",
+   "BHSA": "כָּל־מַמְלְכ֥וּת עֹוג֙ בַּבָּשָׁ֔ן אֲשֶׁר־מָלַ֥ךְ בְּעַשְׁתָּרֹ֖ות וּבְאֶדְרֶ֑עִי ה֤וּא נִשְׁאַר֙ מִיֶּ֣תֶר הָרְפָאִ֔ים וַיַּכֵּ֥ם מֹשֶׁ֖ה וַיֹּרִשֵֽׁם׃ "
+  },
+  "JOS 13:13": {
+   "KJV": "Nevertheless the children of Israel expelled not the Geshurites, nor the Maachathites: but the Geshurites and the Maachathites dwell among the Israelites until this day.",
+   "BHSA": "וְלֹ֤א הֹורִ֨ישׁוּ֙ בְּנֵ֣י יִשְׂרָאֵ֔ל אֶת־הַגְּשׁוּרִ֖י וְאֶת־הַמַּעֲכָתִ֑י וַיֵּ֨שֶׁב גְּשׁ֤וּר וּמַֽעֲכָת֙ בְּקֶ֣רֶב יִשְׂרָאֵ֔ל עַ֖ד הַיֹּ֥ום הַזֶּֽה׃ "
+  },
+  "JOS 13:14": {
+   "KJV": "Only unto the tribes of Levi he gave none inheritance; the sacrifices of the LORD God of Israel made by fire are their inheritance, as he said unto them.",
+   "BHSA": "רַ֚ק לְשֵׁ֣בֶט הַלֵּוִ֔י לֹ֥א נָתַ֖ן נַחֲלָ֑ה אִשֵּׁ֨י יְהוָ֜ה אֱלֹהֵ֤י יִשְׂרָאֵל֙ ה֣וּא נַחֲלָתֹ֔ו כַּאֲשֶׁ֖ר דִּבֶּר־לֹֽו׃ ס "
+  },
+  "JOS 13:15": {
+   "KJV": "And Moses gave unto the tribe of the children of Reuben inheritance according to their families.",
+   "BHSA": "וַיִּתֵּ֣ן מֹשֶׁ֔ה לְמַטֵּ֥ה בְנֵֽי־רְאוּבֵ֖ן לְמִשְׁפְּחֹתָֽם׃ "
+  },
+  "JOS 13:16": {
+   "KJV": "And their coast was from Aroer, that is on the bank of the river Arnon, and the city that is in the midst of the river, and all the plain by Medeba;",
+   "BHSA": "וַיְהִ֨י לָהֶ֜ם הַגְּב֗וּל מֵעֲרֹועֵ֡ר אֲשֶׁר֩ עַל־שְׂפַת־נַ֨חַל אַרְנֹ֜ון וְהָעִ֨יר אֲשֶׁ֧ר בְּתֹוךְ־הַנַּ֛חַל וְכָל־הַמִּישֹׁ֖ר עַל־מֵידְבָֽא׃ "
+  },
+  "JOS 13:17": {
+   "KJV": "Heshbon, and all her cities that are in the plain; Dibon, and Bamothbaal, and Bethbaalmeon,",
+   "BHSA": "חֶשְׁבֹּ֥ון וְכָל־עָרֶ֖יהָ אֲשֶׁ֣ר בַּמִּישֹׁ֑ר דִּיבֹון֙ וּבָמֹ֣ות בַּ֔עַל וּבֵ֖ית בַּ֥עַל מְעֹֽון׃ "
+  },
+  "JOS 13:18": {
+   "KJV": "And Jahaza, and Kedemoth, and Mephaath,",
+   "BHSA": "וְיַ֥הְצָה וּקְדֵמֹ֖ת וּמֵפָֽעַת׃ "
+  },
+  "JOS 13:19": {
+   "KJV": "And Kirjathaim, and Sibmah, and Zarethshahar in the mount of the valley,",
+   "BHSA": "וְקִרְיָתַ֣יִם וְשִׂבְמָ֔ה וְצֶ֥רֶת הַשַּׁ֖חַר בְּהַ֥ר הָעֵֽמֶק׃ "
+  },
+  "JOS 13:20": {
+   "KJV": "And Bethpeor, and Ashdothpisgah, and Bethjeshimoth,",
+   "BHSA": "וּבֵ֥ית פְּעֹ֛ור וְאַשְׁדֹּ֥ות הַפִּסְגָּ֖ה וּבֵ֥ית הַיְשִׁמֹֽות׃ "
+  },
+  "JOS 13:21": {
+   "KJV": "And all the cities of the plain, and all the kingdom of Sihon king of the Amorites, which reigned in Heshbon, whom Moses smote with the princes of Midian, Evi, and Rekem, and Zur, and Hur, and Reba, which were dukes of Sihon, dwelling in the country.",
+   "BHSA": "וְכֹל֙ עָרֵ֣י הַמִּישֹׁ֔ר וְכָֽל־מַמְלְכ֗וּת סִיחֹון֙ מֶ֣לֶךְ הָאֱמֹרִ֔י אֲשֶׁ֥ר מָלַ֖ךְ בְּחֶשְׁבֹּ֑ון אֲשֶׁר֩ הִכָּ֨ה מֹשֶׁ֜ה אֹתֹ֣ו׀ וְאֶת־נְשִׂיאֵ֣י מִדְיָ֗ן אֶת־אֱוִ֤י וְאֶת־רֶ֨קֶם֙ וְאֶת־צ֤וּר וְאֶת־חוּר֙ וְאֶת־רֶ֔בַע נְסִיכֵ֣י סִיחֹ֔ון יֹשְׁבֵ֖י הָאָֽרֶץ׃ "
+  },
+  "JOS 13:22": {
+   "KJV": "Balaam also the son of Beor, the soothsayer, did the children of Israel slay with the sword among them that were slain by them.",
+   "BHSA": "וְאֶת־בִּלְעָ֥ם בֶּן־בְּעֹ֖ור הַקֹּוסֵ֑ם הָרְג֧וּ בְנֵֽי־יִשְׂרָאֵ֛ל בַּחֶ֖רֶב אֶל־חַלְלֵיהֶֽם׃ "
+  },
+  "JOS 13:23": {
+   "KJV": "And the border of the children of Reuben was Jordan, and the border thereof. This was the inheritance of the children of Reuben after their families, the cities and the villages thereof.",
+   "BHSA": "וַיְהִ֗י גְּבוּל֙ בְּנֵ֣י רְאוּבֵ֔ן הַיַּרְדֵּ֖ן וּגְב֑וּל זֹ֣את נַחֲלַ֤ת בְּנֵֽי־רְאוּבֵן֙ לְמִשְׁפְּחֹתָ֔ם הֶעָרִ֖ים וְחַצְרֵיהֶֽן׃ פ "
+  },
+  "JOS 13:24": {
+   "KJV": "And Moses gave inheritance unto the tribe of Gad, even unto the children of Gad according to their families.",
+   "BHSA": "וַיִּתֵּ֤ן מֹשֶׁה֙ לְמַטֵּה־גָ֔ד לִבְנֵי־גָ֖ד לְמִשְׁפְּחֹתָֽם׃ "
+  },
+  "JOS 13:25": {
+   "KJV": "And their coast was Jazer, and all the cities of Gilead, and half the land of the children of Ammon, unto Aroer that is before Rabbah;",
+   "BHSA": "וַיְהִ֤י לָהֶם֙ הַגְּב֔וּל יַעְזֵר֙ וְכָל־עָרֵ֣י הַגִּלְעָ֔ד וַחֲצִ֕י אֶ֖רֶץ בְּנֵ֣י עַמֹּ֑ון עַד־עֲרֹועֵ֕ר אֲשֶׁ֖ר עַל־פְּנֵ֥י רַבָּֽה׃ "
+  },
+  "JOS 13:26": {
+   "KJV": "And from Heshbon unto Ramathmizpeh, and Betonim; and from Mahanaim unto the border of Debir;",
+   "BHSA": "וּמֵחֶשְׁבֹּ֛ון עַד־רָמַ֥ת הַמִּצְפֶּ֖ה וּבְטֹנִ֑ים וּמִֽמַּחֲנַ֖יִם עַד־גְּב֥וּל לִדְבִֽר׃ "
+  },
+  "JOS 13:27": {
+   "KJV": "And in the valley, Betharam, and Bethnimrah, and Succoth, and Zaphon, the rest of the kingdom of Sihon king of Heshbon, Jordan and his border, even unto the edge of the sea of Chinnereth on the other side Jordan eastward.",
+   "BHSA": "וּבָעֵ֡מֶק בֵּ֣ית הָרָם֩ וּבֵ֨ית נִמְרָ֜ה וְסֻכֹּ֣ות וְצָפֹ֗ון יֶ֚תֶר מַמְלְכ֗וּת סִיחֹון֙ מֶ֣לֶךְ חֶשְׁבֹּ֔ון הַיַּרְדֵּ֖ן וּגְבֻ֑ל עַד־קְצֵה֙ יָם־כִּנֶּ֔רֶת עֵ֥בֶר הַיַּרְדֵּ֖ן מִזְרָֽחָה׃ "
+  },
+  "JOS 13:28": {
+   "KJV": "This is the inheritance of the children of Gad after their families, the cities, and their villages.",
+   "BHSA": "זֹ֛את נַחֲלַ֥ת בְּנֵי־גָ֖ד לְמִשְׁפְּחֹתָ֑ם הֶעָרִ֖ים וְחַצְרֵיהֶֽם׃ "
+  },
+  "JOS 13:29": {
+   "KJV": "And Moses gave inheritance unto the half tribe of Manasseh: and this was the possession of the half tribe of the children of Manasseh by their families.",
+   "BHSA": "וַיִּתֵּ֣ן מֹשֶׁ֔ה לַחֲצִ֖י שֵׁ֣בֶט מְנַשֶּׁ֑ה וַיְהִ֗י לַחֲצִ֛י מַטֵּ֥ה בְנֵֽי־מְנַשֶּׁ֖ה לְמִשְׁפְּחֹותָֽם׃ "
+  },
+  "JOS 13:30": {
+   "KJV": "And their coast was from Mahanaim, all Bashan, all the kingdom of Og king of Bashan, and all the towns of Jair, which are in Bashan, threescore cities:",
+   "BHSA": "וַיְהִ֣י גְבוּלָ֗ם מִמַּחֲנַ֨יִם כָּֽל־הַבָּשָׁ֜ן כָּֽל־מַמְלְכ֣וּת׀ עֹ֣וג מֶֽלֶךְ־הַבָּשָׁ֗ן וְכָל־חַוֹּ֥ת יָאִ֛יר אֲשֶׁ֥ר בַּבָּשָׁ֖ן שִׁשִּׁ֥ים עִֽיר׃ "
+  },
+  "JOS 13:31": {
+   "KJV": "And half Gilead, and Ashtaroth, and Edrei, cities of the kingdom of Og in Bashan, were pertaining unto the children of Machir the son of Manasseh, even to the one half of the children of Machir by their families.",
+   "BHSA": "וַחֲצִ֤י הַגִּלְעָד֙ וְעַשְׁתָּרֹ֣ות וְאֶדְרֶ֔עִי עָרֵ֛י מַמְלְכ֥וּת עֹ֖וג בַּבָּשָׁ֑ן לִבְנֵ֤י מָכִיר֙ בֶּן־מְנַשֶּׁ֔ה לַחֲצִ֥י בְנֵֽי־מָכִ֖יר לְמִשְׁפְּחֹותָֽם׃ "
+  },
+  "JOS 13:32": {
+   "KJV": "These are the countries which Moses did distribute for inheritance in the plains of Moab, on the other side Jordan, by Jericho, eastward.",
+   "BHSA": "אֵ֕לֶּה אֲשֶׁר־נִחַ֥ל מֹשֶׁ֖ה בְּעַֽרְבֹ֣ות מֹואָ֑ב מֵעֵ֛בֶר לְיַרְדֵּ֥ן יְרִיחֹ֖ו מִזְרָֽחָה׃ ס "
+  },
+  "JOS 13:33": {
+   "KJV": "But unto the tribe of Levi Moses gave not any inheritance: the LORD God of Israel was their inheritance, as he said unto them.",
+   "BHSA": "וּלְשֵׁ֨בֶט֙ הַלֵּוִ֔י לֹֽא־נָתַ֥ן מֹשֶׁ֖ה נַחֲלָ֑ה יְהוָ֞ה אֱלֹהֵ֤י יִשְׂרָאֵל֙ ה֣וּא נַחֲלָתָ֔ם כַּאֲשֶׁ֖ר דִּבֶּ֥ר לָהֶֽם׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "balaam",
+   "name": "Balaam",
+   "distinguisher": "from Pethor of Mesopotamia (NUM 22:5, DEUT 23:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "beor-2",
+   "name": "Beor",
+   "distinguisher": "father of Balaam (NUM 22:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "evi",
+   "name": "Evi",
+   "distinguisher": "King of Midian (NUM 31:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "gad",
+   "name": "Gad",
+   "distinguisher": "seventh-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "hur-2",
+   "name": "Hur",
+   "distinguisher": "King of Midian (NUM 31:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jair",
+   "name": "Jair",
+   "distinguisher": "captured the region of Argob and called it Havvoth-jair (NUM 32:41)",
+   "sex": "male"
+  },
+  {
+   "slug": "joshua",
+   "name": "Joshua",
+   "distinguisher": "1 of the 12 spies (called Hoshea)- from Ephraim (NUM 13:8), servant of Moses (EXO 17:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "machir",
+   "name": "Machir",
+   "distinguisher": "son of Manasseh (GEN 50:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh",
+   "name": "Manasseh",
+   "distinguisher": "firstborn son of Joseph (GEN 41:51)",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "og",
+   "name": "Og",
+   "distinguisher": "King of Bashan (NUM 21:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "reba",
+   "name": "Reba",
+   "distinguisher": "King of Midian (NUM 31:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "rekem",
+   "name": "Rekem",
+   "distinguisher": "King of Midian (NUM 31:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "reuben",
+   "name": "Reuben",
+   "distinguisher": "firstborn son of Jacob (GEN 29:32), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "sihon",
+   "name": "Sihon",
+   "distinguisher": "King of the Amorites (NUM 21:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zur-2",
+   "name": "Zur",
+   "distinguisher": "King of Midian (NUM 31:8)- possibly the same as Zur, father of Cozbi (NUM 25:15)?",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 98927,
+   "row": "evi killed-by moses",
+   "verse": "JOS 13:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99657,
+   "row": "hur-2 killed-by moses",
+   "verse": "JOS 13:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102123,
+   "row": "reba killed-by moses",
+   "verse": "JOS 13:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102157,
+   "row": "rekem killed-by moses",
+   "verse": "JOS 13:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107194,
+   "row": "zur-2 killed-by moses",
+   "verse": "JOS 13:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "balaam son-of beor-2 (NUM 22:5)",
+  "beor-2 father-of balaam (NUM 22:5)",
+  "jair descendant-of manasseh (NUM 32:41)",
+  "joshua servant-of moses (EXO 24:13)",
+  "machir son-of manasseh (JOS 17:1)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "moses priest-of yhvh (PSA 99:6)",
+  "og killed-by yhvh (DEU 3:3)",
+  "reuben son-of jacob (GEN 35:23)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "gad son-of jacob (GEN 35:26)",
+  "gad half-brother-of reuben (GEN 30:11)",
+  "manasseh father-of machir (GEN 50:23)"
+ ]
+}

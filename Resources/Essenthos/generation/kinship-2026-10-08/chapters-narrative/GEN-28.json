@@ -1,0 +1,20 @@
+{
+ "chapter": "GEN 28",
+ "rows": 7,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "abram",
+   "type": "ancestor-of",
+   "to": "jacob",
+   "verse": "GEN 28:13",
+   "why": "God calls Abraham Jacob's father (אָבִיךָ), identifying him as Jacob's forefather in this context.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "All supplied rows from this chapter are supported by the text; the other explicit family statements are already recorded in either direction.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:07:42+00:00"
+}

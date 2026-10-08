@@ -1,0 +1,11 @@
+{
+ "chapter": "2SA 13",
+ "rows": 16,
+ "wrong": [],
+ "missing": [],
+ "note": "No recorded family relationship contradicts the chapter, and no plain family statement is missing. Owner row 107205 cites 2SA 13:12, which contains Tamar's protest; the assault itself is narrated in 2SA 13:14.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:01:47+00:00"
+}

@@ -1,0 +1,11 @@
+{
+ "chapter": "JOS 7",
+ "rows": 7,
+ "wrong": [],
+ "missing": [],
+ "note": "The Hebrew genealogy in JOS 7:1 and 7:18 supports all recorded relationships. Achan's designation as “son of Zerah” in JOS 7:24 abbreviates that genealogy, and Joshua's “my son” in JOS 7:19 is an address, not a statement of parentage.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:06:41+00:00"
+}

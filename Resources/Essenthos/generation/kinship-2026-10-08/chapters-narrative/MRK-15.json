@@ -1,0 +1,28 @@
+{
+ "chapter": "MRK 15",
+ "rows": 6,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "MRK 15:39",
+   "why": "The centurion explicitly calls Jesus Υἱὸς Θεοῦ, 'Son of God.'",
+   "confidence": 1
+  },
+  {
+   "from": "mary-7",
+   "type": "mother-of",
+   "to": "joses-son-of-mary",
+   "verse": "MRK 15:40",
+   "why": "Mary is explicitly identified as the mother of both James the less and Joses.",
+   "confidence": 1
+  }
+ ],
+ "note": "The recorded relationships involving Simon, Alexander, and Rufus are supported by Simon being named the father of both men; Mary's relationship to James is already recorded from Matthew.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:09:28+00:00"
+}

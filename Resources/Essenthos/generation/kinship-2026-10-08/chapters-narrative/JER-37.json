@@ -1,0 +1,23 @@
+{
+ "chapter": "JER 37",
+ "rows": 8,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    100526
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "JER 37:15",
+   "why": "The verse calls Jonathan a scribe and says his house was used as a prison, but does not identify him as Zedekiah's scribe.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [],
+ "note": "All explicit family statements are already recorded, including equivalent relationships from other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:06:27+00:00"
+}

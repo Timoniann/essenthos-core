@@ -1,0 +1,23 @@
+{
+ "chapter": "2CH 11",
+ "rows": 37,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    97060
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2CH 11:18",
+   "why": "The Hebrew names Mahalath as the wife Rehoboam took, with Abihail belonging to Mahalath's parentage rather than explicitly being another wife.",
+   "confidence": 0.88
+  }
+ ],
+ "missing": [],
+ "note": "Verse 18 is syntactically compressed, and the KJV treats Abihail as another wife. The owner's row 106554 is retained and fits the reading that Abihail is Mahalath's mother.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T18:58:02+00:00"
+}

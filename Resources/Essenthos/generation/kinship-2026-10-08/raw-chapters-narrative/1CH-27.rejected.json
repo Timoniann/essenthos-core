@@ -1,0 +1,195 @@
+{
+ "errors": [
+  "wrong: rows [107020] are the owner's own; put them in note instead",
+  "wrong: rows [107182] are the owner's own; put them in note instead",
+  "wrong: rows [107225] are the owner's own; put them in note instead",
+  "wrong: rows [103899] are the owner's own; put them in note instead",
+  "wrong: rows [106129] are the owner's own; put them in note instead",
+  "wrong: rows [105617] are the owner's own; put them in note instead",
+  "wrong: rows [107008] are the owner's own; put them in note instead",
+  "wrong: rows [106625] are the owner's own; put them in note instead",
+  "wrong: rows [105870] are the owner's own; put them in note instead"
+ ],
+ "answer": {
+  "wrong": [
+   {
+    "kind": "retarget",
+    "rows": [
+     103297
+    ],
+    "new_type": "",
+    "new_to": "jashobeam-2",
+    "verse": "1CH 27:2",
+    "why": "The Hebrew names Jashobeam, not Josheb-basshebeth, as Zabdiel's son.",
+    "confidence": 0.99
+   },
+   {
+    "kind": "retarget",
+    "rows": [
+     107020
+    ],
+    "new_type": "",
+    "new_to": "jashobeam-2",
+    "verse": "1CH 27:3",
+    "why": "The person described as being among Perez's descendants is the first month's chief, Jashobeam, rather than his father Zabdiel.",
+    "confidence": 0.97
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     107182
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:16",
+    "why": "The verse identifies Eliezer son of Zichri as ruler for the Reubenites without stating Zichri's ancestry.",
+    "confidence": 0.98
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     107225
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:17",
+    "why": "The verse identifies Hashabiah son of Kemuel as the official for Levi without stating Kemuel's ancestry.",
+    "confidence": 0.98
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     101363
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:18",
+    "why": "Omri's father is the Michael distinguished as his father, not Michael son of Izrahiah.",
+    "confidence": 0.99
+   },
+   {
+    "kind": "retarget",
+    "rows": [
+     101824
+    ],
+    "new_type": "",
+    "new_to": "michael-10",
+    "verse": "1CH 27:18",
+    "why": "The verse calls Omri son of Michael, matching the record for Michael father of Omri.",
+    "confidence": 0.99
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     103899
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:19",
+    "why": "The verse names Jerimoth son of Azriel as the official for Naphtali without stating Azriel's ancestry.",
+    "confidence": 0.98
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     106129
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:19",
+    "why": "The verse names Ishmaiah son of Obadiah as the official for Zebulun without stating Obadiah's ancestry.",
+    "confidence": 0.98
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     105617
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:20",
+    "why": "The verse names Hoshea son of Azaziah as the official for Ephraim's children without stating Azaziah's ancestry.",
+    "confidence": 0.98
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     107008
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:20",
+    "why": "The verse names Joel son of Pedaiah as the official for half the tribe of Manasseh without stating Pedaiah's ancestry.",
+    "confidence": 0.98
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     106625
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:21",
+    "why": "The verse names Iddo son of Zechariah as the official for Manasseh in Gilead without stating Zechariah's ancestry.",
+    "confidence": 0.98
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     105870
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:22",
+    "why": "The verse names Azarel son of Jeroham as the official for Dan without stating Jeroham's ancestry.",
+    "confidence": 0.98
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     97178
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:25",
+    "why": "Azmaveth's father is the Adiel distinguished as his father, not Adiel son of Jahzerah.",
+    "confidence": 0.99
+   },
+   {
+    "kind": "retarget",
+    "rows": [
+     97793
+    ],
+    "new_type": "",
+    "new_to": "adiel-3",
+    "verse": "1CH 27:25",
+    "why": "The verse calls the treasurer Azmaveth son of Adiel, matching Adiel father of David's treasurer.",
+    "confidence": 0.99
+   },
+   {
+    "kind": "retarget",
+    "rows": [
+     100540
+    ],
+    "new_type": "",
+    "new_to": "uzziah-4",
+    "verse": "1CH 27:25",
+    "why": "Jehonathan's father is the Uzziah distinguished as father of the storehouse overseer.",
+    "confidence": 0.99
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     103202
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "1CH 27:25",
+    "why": "The verse names Jehonathan's father Uzziah without identifying him as Uzziah son of Uriel.",
+    "confidence": 0.99
+   }
+  ],
+  "missing": [],
+  "note": "Owner row 106941 is not explicitly supported by 1CH 27:16: Shephatiah is named as ruler for the Simeonites, but Maacah's ancestry is not stated; the ruling is retained."
+ }
+}

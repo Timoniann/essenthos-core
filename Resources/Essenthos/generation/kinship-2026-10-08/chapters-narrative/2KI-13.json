@@ -1,0 +1,11 @@
+{
+ "chapter": "2KI 13",
+ "rows": 5,
+ "wrong": [],
+ "missing": [],
+ "note": "All supplied chapter rows are supported by the Hebrew text, and every plain family statement is already recorded here or in another chapter.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:10:35+00:00"
+}

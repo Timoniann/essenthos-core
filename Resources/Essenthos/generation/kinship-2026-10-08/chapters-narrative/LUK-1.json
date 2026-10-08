@@ -1,0 +1,43 @@
+{
+ "chapter": "LUK 1",
+ "rows": 8,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    103312
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "LUK 1:5",
+   "why": "ἐξ ἐφημερίας Ἀβιά places Zacharias in Abijah's priestly division; it does not say he was a priest serving Abijah.",
+   "confidence": 0.94
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    105591
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "LUK 1:5",
+   "why": "Zacharias belongs to Abijah's priestly division, but the verse does not identify Abijah as his ancestor.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "LUK 1:35",
+   "why": "The angel explicitly says that Mary's child shall be called Υἱὸς Θεοῦ, the Son of God.",
+   "confidence": 1
+  }
+ ],
+ "note": "In LUK 1:36, συγγενίς identifies Elizabeth as Mary's relative without specifying a relationship expressible by the permitted types.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:06:57+00:00"
+}

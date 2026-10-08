@@ -1,0 +1,11 @@
+{
+ "chapter": "1SA 25",
+ "rows": 12,
+ "wrong": [],
+ "missing": [],
+ "note": "All plain family statements between the supplied records are already recorded. David's description as Nabal's “son” in 1SA 25:8 is a courteous self-designation, not a statement of parentage.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:02:44+00:00"
+}

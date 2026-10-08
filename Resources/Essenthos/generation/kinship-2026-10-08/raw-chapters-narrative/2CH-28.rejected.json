@@ -1,0 +1,67 @@
+{
+ "errors": [
+  "wrong: rows [105702] are the owner's own; put them in note instead",
+  "wrong: rows [106048] are the owner's own; put them in note instead",
+  "wrong: rows [106234] are the owner's own; put them in note instead",
+  "wrong: rows [106901] are the owner's own; put them in note instead"
+ ],
+ "answer": {
+  "wrong": [
+   {
+    "kind": "delete",
+    "rows": [
+     105702
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "2CH 28:12",
+    "why": "The verse identifies Amasa among the heads of Ephraim but does not state that his father Hadlai descended from Ephraim.",
+    "confidence": 0.96
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     106048
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "2CH 28:12",
+    "why": "The verse identifies Berechiah among the heads of Ephraim but does not state that his father Meshillemoth descended from Ephraim.",
+    "confidence": 0.96
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     106234
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "2CH 28:12",
+    "why": "The verse identifies Jehizkiah among the heads of Ephraim but does not state that his father Shallum descended from Ephraim.",
+    "confidence": 0.96
+   },
+   {
+    "kind": "delete",
+    "rows": [
+     106901
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "2CH 28:12",
+    "why": "The verse identifies Azariah among the heads of Ephraim but does not state that his father Johanan descended from Ephraim.",
+    "confidence": 0.96
+   }
+  ],
+  "missing": [
+   {
+    "from": "david",
+    "type": "father-of",
+    "to": "ahaz",
+    "verse": "2CH 28:1",
+    "why": "The Hebrew calls David Ahaz's father (דָוִיד אָבִיו), without naming an intervening generation in this chapter.",
+    "confidence": 0.99
+   }
+  ],
+  "note": "Owner row 107175 is retained, although 'a mighty man of Ephraim' states tribal affiliation rather than an explicit genealogy. The four flagged ancestry rows were recorded by an agent on the owner's instruction, rather than directly by the project owner."
+ }
+}

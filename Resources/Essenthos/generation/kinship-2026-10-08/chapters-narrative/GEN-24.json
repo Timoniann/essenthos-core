@@ -1,0 +1,11 @@
+{
+ "chapter": "GEN 24",
+ "rows": 6,
+ "wrong": [],
+ "missing": [],
+ "note": "All supplied rows are supported by the chapter, including Milcah's grandmother relationship through Bethuel in GEN 24:15; every plain family statement is already recorded here or in another chapter.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:08:33+00:00"
+}

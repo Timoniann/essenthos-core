@@ -1,0 +1,227 @@
+{
+ "chapter": "JER 26",
+ "text": {
+  "JER 26:1": {
+   "KJV": "In the beginning of the reign of Jehoiakim the son of Josiah king of Judah came this word from the LORD, saying,",
+   "BHSA": "בְּרֵאשִׁ֗ית מַמְלְכ֛וּת יְהֹויָקִ֥ים בֶּן־יֹאשִׁיָּ֖הוּ מֶ֣לֶךְ יְהוּדָ֑ה הָיָה֙ הַדָּבָ֣ר הַזֶּ֔ה מֵאֵ֥ת יְהוָ֖ה לֵאמֹֽר׃ "
+  },
+  "JER 26:2": {
+   "KJV": "Thus saith the LORD; Stand in the court of the LORD's house, and speak unto all the cities of Judah, which come to worship in the LORD's house, all the words that I command thee to speak unto them; diminish not a word:",
+   "BHSA": "כֹּ֣ה׀ אָמַ֣ר יְהוָ֗ה עֲמֹד֮ בַּחֲצַ֣ר בֵּית־יְהוָה֒ וְדִבַּרְתָּ֞ עַל־כָּל־עָרֵ֣י יְהוּדָ֗ה הַבָּאִים֙ לְהִשְׁתַּחֲוֹ֣ת בֵּית־יְהוָ֔ה אֵ֚ת כָּל־הַדְּבָרִ֔ים אֲשֶׁ֥ר צִוִּיתִ֖יךָ לְדַבֵּ֣ר אֲלֵיהֶ֑ם אַל־תִּגְרַ֖ע דָּבָֽר׃ "
+  },
+  "JER 26:3": {
+   "KJV": "If so be they will hearken, and turn every man from his evil way, that I may repent me of the evil, which I purpose to do unto them because of the evil of their doings.",
+   "BHSA": "אוּלַ֣י יִשְׁמְע֔וּ וְיָשֻׁ֕בוּ אִ֖ישׁ מִדַּרְכֹּ֣ו הָרָעָ֑ה וְנִחַמְתִּ֣י אֶל־הָרָעָ֗ה אֲשֶׁ֨ר אָנֹכִ֤י חֹשֵׁב֙ לַעֲשֹׂ֣ות לָהֶ֔ם מִפְּנֵ֖י רֹ֥עַ מַעַלְלֵיהֶֽם׃ "
+  },
+  "JER 26:4": {
+   "KJV": "And thou shalt say unto them, Thus saith the LORD; If ye will not hearken to me, to walk in my law, which I have set before you,",
+   "BHSA": "וְאָמַרְתָּ֣ אֲלֵיהֶ֔ם כֹּ֖ה אָמַ֣ר יְהוָ֑ה אִם־לֹ֤א תִשְׁמְעוּ֙ אֵלַ֔י לָלֶ֨כֶת֙ בְּתֹ֣ורָתִ֔י אֲשֶׁ֥ר נָתַ֖תִּי לִפְנֵיכֶֽם׃ "
+  },
+  "JER 26:5": {
+   "KJV": "To hearken to the words of my servants the prophets, whom I sent unto you, both rising up early, and sending them, but ye have not hearkened;",
+   "BHSA": "לִשְׁמֹ֗עַ עַל־דִּבְרֵ֨י עֲבָדַ֣י הַנְּבִאִ֔ים אֲשֶׁ֥ר אָנֹכִ֖י שֹׁלֵ֣חַ אֲלֵיכֶ֑ם וְהַשְׁכֵּ֥ם וְשָׁלֹ֖חַ וְלֹ֥א שְׁמַעְתֶּֽם׃ "
+  },
+  "JER 26:6": {
+   "KJV": "Then will I make this house like Shiloh, and will make this city a curse to all the nations of the earth.",
+   "BHSA": "וְנָתַתִּ֛י אֶת־הַבַּ֥יִת הַזֶּ֖ה כְּשִׁלֹ֑ה וְאֶת־הָעִ֤יר הזאתה אֶתֵּ֣ן לִקְלָלָ֔ה לְכֹ֖ל גֹּויֵ֥י הָאָֽרֶץ׃ ס "
+  },
+  "JER 26:7": {
+   "KJV": "So the priests and the prophets and all the people heard Jeremiah speaking these words in the house of the LORD.",
+   "BHSA": "וַֽיִּשְׁמְע֛וּ הַכֹּהֲנִ֥ים וְהַנְּבִאִ֖ים וְכָל־הָעָ֑ם אֶֽת־יִרְמְיָ֔הוּ מְדַבֵּ֛ר אֶת־הַדְּבָרִ֥ים הָאֵ֖לֶּה בְּבֵ֥ית יְהוָֽה׃ "
+  },
+  "JER 26:8": {
+   "KJV": "Now it came to pass, when Jeremiah had made an end of speaking all that the LORD had commanded him to speak unto all the people, that the priests and the prophets and all the people took him, saying, Thou shalt surely die.",
+   "BHSA": "וַיְהִ֣י׀ כְּכַלֹּ֣ות יִרְמְיָ֗הוּ לְדַבֵּר֙ אֵ֣ת כָּל־אֲשֶׁר־צִוָּ֣ה יְהוָ֔ה לְדַבֵּ֖ר אֶל־כָּל־הָעָ֑ם וַיִּתְפְּשׂ֨וּ אֹתֹ֜ו הַכֹּהֲנִ֧ים וְהַנְּבִאִ֛ים וְכָל־הָעָ֥ם לֵאמֹ֖ר מֹ֥ות תָּמֽוּת׃ "
+  },
+  "JER 26:9": {
+   "KJV": "Why hast thou prophesied in the name of the LORD, saying, This house shall be like Shiloh, and this city shall be desolate without an inhabitant? And all the people were gathered against Jeremiah in the house of the LORD.",
+   "BHSA": "מַדּוּעַ֩ נִבֵּ֨יתָ בְשֵׁם־יְהוָ֜ה לֵאמֹ֗ר כְּשִׁלֹו֙ יִֽהְיֶה֙ הַבַּ֣יִת הַזֶּ֔ה וְהָעִ֥יר הַזֹּ֛את תֶּחֱרַ֖ב מֵאֵ֣ין יֹושֵׁ֑ב וַיִּקָּהֵ֧ל כָּל־הָעָ֛ם אֶֽל־יִרְמְיָ֖הוּ בְּבֵ֥ית יְהוָֽה׃ "
+  },
+  "JER 26:10": {
+   "KJV": "When the princes of Judah heard these things, then they came up from the king's house unto the house of the LORD, and sat down in the entry of the new gate of the LORD's house.",
+   "BHSA": "וַֽיִּשְׁמְע֣וּ׀ שָׂרֵ֣י יְהוּדָ֗ה אֵ֚ת הַדְּבָרִ֣ים הָאֵ֔לֶּה וַיַּעֲל֥וּ מִבֵּית־הַמֶּ֖לֶךְ בֵּ֣ית יְהוָ֑ה וַיֵּֽשְׁב֛וּ בְּפֶ֥תַח שַֽׁעַר־יְהוָ֖ה הֶחָדָֽשׁ׃ ס "
+  },
+  "JER 26:11": {
+   "KJV": "Then spake the priests and the prophets unto the princes and to all the people, saying, This man is worthy to die; for he hath prophesied against this city, as ye have heard with your ears.",
+   "BHSA": "וַיֹּ֨אמְר֜וּ הַכֹּהֲנִ֤ים וְהַנְּבִאִים֙ אֶל־הַשָּׂרִ֔ים וְאֶל־כָּל־הָעָ֖ם לֵאמֹ֑ר מִשְׁפַּט־מָ֨וֶת֙ לָאִ֣ישׁ הַזֶּ֔ה כִּ֤י נִבָּא֙ אֶל־הָעִ֣יר הַזֹּ֔את כַּאֲשֶׁ֥ר שְׁמַעְתֶּ֖ם בְּאָזְנֵיכֶֽם׃ "
+  },
+  "JER 26:12": {
+   "KJV": "Then spake Jeremiah unto all the princes and to all the people, saying, The LORD sent me to prophesy against this house and against this city all the words that ye have heard.",
+   "BHSA": "וַיֹּ֤אמֶר יִרְמְיָ֨הוּ֙ אֶל־כָּל־הַשָּׂרִ֔ים וְאֶל־כָּל־הָעָ֖ם לֵאמֹ֑ר יְהוָ֣ה שְׁלָחַ֗נִי לְהִנָּבֵ֞א אֶל־הַבַּ֤יִת הַזֶּה֙ וְאֶל־הָעִ֣יר הַזֹּ֔את אֵ֥ת כָּל־הַדְּבָרִ֖ים אֲשֶׁ֥ר שְׁמַעְתֶּֽם׃ "
+  },
+  "JER 26:13": {
+   "KJV": "Therefore now amend your ways and your doings, and obey the voice of the LORD your God; and the LORD will repent him of the evil that he hath pronounced against you.",
+   "BHSA": "וְעַתָּ֗ה הֵיטִ֤יבוּ דַרְכֵיכֶם֙ וּמַ֣עַלְלֵיכֶ֔ם וְשִׁמְע֕וּ בְּקֹ֖ול יְהוָ֣ה אֱלֹהֵיכֶ֑ם וְיִנָּחֵ֣ם יְהוָ֔ה אֶל־הָ֣רָעָ֔ה אֲשֶׁ֥ר דִּבֶּ֖ר עֲלֵיכֶֽם׃ "
+  },
+  "JER 26:14": {
+   "KJV": "As for me, behold, I am in your hand: do with me as seemeth good and meet unto you.",
+   "BHSA": "וַאֲנִ֖י הִנְנִ֣י בְיֶדְכֶ֑ם עֲשׂוּ־לִ֛י כַּטֹּ֥וב וְכַיָּשָׁ֖ר בְּעֵינֵיכֶֽם׃ "
+  },
+  "JER 26:15": {
+   "KJV": "But know ye for certain, that if ye put me to death, ye shall surely bring innocent blood upon yourselves, and upon this city, and upon the inhabitants thereof: for of a truth the LORD hath sent me unto you to speak all these words in your ears.",
+   "BHSA": "אַ֣ךְ׀ יָדֹ֣עַ תֵּדְע֗וּ כִּ֣י אִם־מְמִתִ֣ים אַתֶּם֮ אֹתִי֒ כִּי־דָ֣ם נָקִ֗י אַתֶּם֙ נֹתְנִ֣ים עֲלֵיכֶ֔ם וְאֶל־הָעִ֥יר הַזֹּ֖את וְאֶל־יֹשְׁבֶ֑יהָ כִּ֣י בֶאֱמֶ֗ת שְׁלָחַ֤נִי יְהוָה֙ עֲלֵיכֶ֔ם לְדַבֵּר֙ בְּאָזְנֵיכֶ֔ם אֵ֥ת כָּל־הַדְּבָרִ֖ים הָאֵֽלֶּה׃ ס "
+  },
+  "JER 26:16": {
+   "KJV": "Then said the princes and all the people unto the priests and to the prophets; This man is not worthy to die: for he hath spoken to us in the name of the LORD our God.",
+   "BHSA": "וַיֹּאמְר֤וּ הַשָּׂרִים֙ וְכָל־הָעָ֔ם אֶל־הַכֹּהֲנִ֖ים וְאֶל־הַנְּבִיאִ֑ים אֵין־לָאִ֤ישׁ הַזֶּה֙ מִשְׁפַּט־מָ֔וֶת כִּ֗י בְּשֵׁ֛ם יְהוָ֥ה אֱלֹהֵ֖ינוּ דִּבֶּ֥ר אֵלֵֽינוּ׃ "
+  },
+  "JER 26:17": {
+   "KJV": "Then rose up certain of the elders of the land, and spake to all the assembly of the people, saying,",
+   "BHSA": "וַיָּקֻ֣מוּ אֲנָשִׁ֔ים מִזִּקְנֵ֖י הָאָ֑רֶץ וַיֹּ֣אמְר֔וּ אֶל־כָּל־קְהַ֥ל הָעָ֖ם לֵאמֹֽר׃ "
+  },
+  "JER 26:18": {
+   "KJV": "Micah the Morasthite prophesied in the days of Hezekiah king of Judah, and spake to all the people of Judah, saying, Thus saith the LORD of hosts; Zion shall be plowed like a field, and Jerusalem shall become heaps, and the mountain of the house as the high places of a forest.",
+   "BHSA": "מיכיה הַמֹּ֣ורַשְׁתִּ֔י הָיָ֣ה נִבָּ֔א בִּימֵ֖י חִזְקִיָּ֣הוּ מֶֽלֶךְ־יְהוּדָ֑ה וַיֹּ֣אמֶר אֶל־כָּל־עַם֩ יְהוּדָ֨ה לֵאמֹ֜ר כֹּֽה־אָמַ֣ר׀ יְהוָ֣ה צְבָאֹ֗ות צִיֹּ֞ון שָׂדֶ֤ה תֵֽחָרֵשׁ֙ וִירוּשָׁלַ֨יִם֙ עִיִּ֣ים תִּֽהְיֶ֔ה וְהַ֥ר הַבַּ֖יִת לְבָמֹ֥ות יָֽעַר׃ "
+  },
+  "JER 26:19": {
+   "KJV": "Did Hezekiah king of Judah and all Judah put him at all to death? did he not fear the LORD, and besought the LORD, and the LORD repented him of the evil which he had pronounced against them? Thus might we procure great evil against our souls.",
+   "BHSA": "הֶהָמֵ֣ת הֱ֠מִתֻהוּ חִזְקִיָּ֨הוּ מֶֽלֶךְ־יְהוּדָ֜ה וְכָל־יְהוּדָ֗ה הֲלֹא֮ יָרֵ֣א אֶת־יְהוָה֒ וַיְחַל֙ אֶת־פְּנֵ֣י יְהוָ֔ה וַיִּנָּ֣חֶם יְהוָ֔ה אֶל־הָרָעָ֖ה אֲשֶׁר־דִּבֶּ֣ר עֲלֵיהֶ֑ם וַאֲנַ֗חְנוּ עֹשִׂ֛ים רָעָ֥ה גְדֹולָ֖ה עַל־נַפְשֹׁותֵֽינוּ׃ "
+  },
+  "JER 26:20": {
+   "KJV": "And there was also a man that prophesied in the name of the LORD, Urijah the son of Shemaiah of Kirjathjearim, who prophesied against this city and against this land according to all the words of Jeremiah.",
+   "BHSA": "וְגַם־אִ֗ישׁ הָיָ֤ה מִתְנַבֵּא֙ בְּשֵׁ֣ם יְהוָ֔ה אֽוּרִיָּ֨הוּ֙ בֶּֽן־שְׁמַעְיָ֔הוּ מִקִּרְיַ֖ת הַיְּעָרִ֑ים וַיִּנָּבֵ֞א עַל־הָעִ֤יר הַזֹּאת֙ וְעַל־הָאָ֣רֶץ הַזֹּ֔את כְּכֹ֖ל דִּבְרֵ֥י יִרְמְיָֽהוּ׃ "
+  },
+  "JER 26:21": {
+   "KJV": "And when Jehoiakim the king, with all his mighty men, and all the princes, heard his words, the king sought to put him to death: but when Urijah heard it, he was afraid, and fled, and went into Egypt;",
+   "BHSA": "וַיִּשְׁמַ֣ע הַמֶּֽלֶךְ־יְ֠הֹויָקִים וְכָל־גִּבֹּורָ֤יו וְכָל־הַשָּׂרִים֙ אֶת־דְּבָרָ֔יו וַיְבַקֵּ֥שׁ הַמֶּ֖לֶךְ הֲמִיתֹ֑ו וַיִּשְׁמַ֤ע אוּרִיָּ֨הוּ֙ וַיִּרָ֔א וַיִּבְרַ֖ח וַיָּבֹ֥א מִצְרָֽיִם׃ "
+  },
+  "JER 26:22": {
+   "KJV": "And Jehoiakim the king sent men into Egypt, namely, Elnathan the son of Achbor, and certain men with him into Egypt.",
+   "BHSA": "וַיִּשְׁלַ֞ח הַמֶּ֧לֶךְ יְהֹויָקִ֛ים אֲנָשִׁ֖ים מִצְרָ֑יִם אֵ֣ת אֶלְנָתָ֧ן בֶּן־עַכְבֹּ֛ור וַאֲנָשִׁ֥ים אִתֹּ֖ו אֶל־מִצְרָֽיִם׃ "
+  },
+  "JER 26:23": {
+   "KJV": "And they fetched forth Urijah out of Egypt, and brought him unto Jehoiakim the king; who slew him with the sword, and cast his dead body into the graves of the common people.",
+   "BHSA": "וַיֹּוצִ֨יאוּ אֶת־אוּרִיָּ֜הוּ מִמִּצְרַ֗יִם וַיְבִאֻ֨הוּ֙ אֶל־הַמֶּ֣לֶךְ יְהֹויָקִ֔ים וַיַּכֵּ֖הוּ בֶּחָ֑רֶב וַיַּשְׁלֵךְ֙ אֶת־נִבְלָתֹ֔ו אֶל־קִבְרֵ֖י בְּנֵ֥י הָעָֽם׃ "
+  },
+  "JER 26:24": {
+   "KJV": "Nevertheless the hand of Ahikam the son of Shaphan was with Jeremiah, that they should not give him into the hand of the people to put him to death.",
+   "BHSA": "אַ֗ךְ יַ֚ד אֲחִיקָ֣ם בֶּן־שָׁפָ֔ן הָיְתָ֖ה אֶֽת־יִרְמְיָ֑הוּ לְבִלְתִּ֛י תֵּת־אֹתֹ֥ו בְיַד־הָעָ֖ם לַהֲמִיתֹֽו׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "achbor-2",
+   "name": "Achbor",
+   "distinguisher": "son of Micaiah (2KI 22:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahikam",
+   "name": "Ahikam",
+   "distinguisher": "son of Shaphan (2KI 22:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliakim-2",
+   "name": "Eliakim",
+   "distinguisher": "King of Judah, son of Josiah (2KI 23:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "elnathan",
+   "name": "Elnathan",
+   "distinguisher": "from Jerusalem, father of Nehushta (2KI 24:8), an official (JER 36:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "hezekiah",
+   "name": "Hezekiah",
+   "distinguisher": "King of Judah, son of Ahaz (2KI 16:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremiah-6",
+   "name": "Jeremiah",
+   "distinguisher": "the prophet (2CH 36:12), son of Hilkiah (JER 1:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "josiah",
+   "name": "Josiah",
+   "distinguisher": "prophesied son of the house of David (1KI 13:2), King of Judah and son of Amon (2KI 21:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "micah-4",
+   "name": "Micah",
+   "distinguisher": "of Moresheth (JER 26:18) authored the book of Micah (MIC 1:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "shaphan",
+   "name": "Shaphan",
+   "distinguisher": "scribe of King Josiah (2KI 22:3, 2CH 34:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-20",
+   "name": "Shemaiah",
+   "distinguisher": "father of Uriah, from Kiriath-jearim (JER 26:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "uriah-4",
+   "name": "Uriah",
+   "distinguisher": "prophesied in the name of the LORD (JER 26:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 107518,
+   "row": "josiah father-of eliakim-2",
+   "verse": "JER 26:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102636,
+   "row": "shemaiah-20 father-of uriah-4",
+   "verse": "JER 26:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103158,
+   "row": "uriah-4 son-of shemaiah-20",
+   "verse": "JER 26:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97146,
+   "row": "achbor-2 father-of elnathan",
+   "verse": "JER 26:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98767,
+   "row": "elnathan son-of achbor-2",
+   "verse": "JER 26:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103160,
+   "row": "uriah-4 killed-by eliakim-2",
+   "verse": "JER 26:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "ahikam son-of shaphan (2KI 22:12)",
+  "eliakim-2 son-of josiah (2KI 23:34)",
+  "eliakim-2 king-of judah (2CH 36:4)",
+  "hezekiah king-of judah (2KI 18:1)",
+  "shaphan scribe-of josiah (2KI 22:3)",
+  "shaphan father-of ahikam (2KI 22:12)"
+ ]
+}

@@ -1,0 +1,47 @@
+{
+ "errors": [
+  "wrong: rows [103840] are the owner's own; put them in note instead"
+ ],
+ "answer": {
+  "wrong": [
+   {
+    "kind": "delete",
+    "rows": [
+     103840
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 11:11",
+    "why": "The verse traces the priestly genealogy to Ahitub but does not name Aaron or state Ahitub's descent from him.",
+    "confidence": 0.99
+   }
+  ],
+  "missing": [
+   {
+    "from": "athaiah",
+    "type": "descendant-of",
+    "to": "judah",
+    "verse": "NEH 11:4",
+    "why": "The Hebrew explicitly introduces Athaiah as belonging to the children of Judah.",
+    "confidence": 0.99
+   },
+   {
+    "from": "maaseiah-11",
+    "type": "descendant-of",
+    "to": "judah",
+    "verse": "NEH 11:5",
+    "why": "Maaseiah continues the list introduced in verse 4 as the children of Judah.",
+    "confidence": 0.97
+   },
+   {
+    "from": "uzzi-5",
+    "type": "descendant-of",
+    "to": "asaph-2",
+    "verse": "NEH 11:22",
+    "why": "The Hebrew identifies Uzzi and his genealogical line as belonging to the sons of Asaph.",
+    "confidence": 0.98
+   }
+  ],
+  "note": "Owner rows 106671 and 107710 assert descent from Aaron, and owner row 107382 asserts descent from Merari, although this chapter names neither ancestor; these rulings are retained. Collective references to brethren do not plainly establish sibling relationships between the named individuals."
+ }
+}

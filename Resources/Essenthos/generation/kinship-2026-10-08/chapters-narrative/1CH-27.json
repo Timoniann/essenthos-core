@@ -1,0 +1,98 @@
+{
+ "chapter": "1CH 27",
+ "rows": 65,
+ "wrong": [
+  {
+   "kind": "retarget",
+   "rows": [
+    103297
+   ],
+   "new_type": "",
+   "new_to": "jashobeam-2",
+   "verse": "1CH 27:2",
+   "why": "The verse names Jashobeam son of Zabdiel, matching jashobeam-2 rather than joshebbasshebeth.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    101363
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 27:18",
+   "why": "Omri's father Michael matches michael-10, whereas michael-4 is the separate son of Izrahiah.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    101824
+   ],
+   "new_type": "",
+   "new_to": "michael-10",
+   "verse": "1CH 27:18",
+   "why": "The verse calls Omri son of Michael, matching the supplied father-of-Omri record michael-10.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    97178
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 27:25",
+   "why": "Azmaveth's father Adiel matches adiel-3, whereas adiel-2 is the separate son of Jahzerah.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    97793
+   ],
+   "new_type": "",
+   "new_to": "adiel-3",
+   "verse": "1CH 27:25",
+   "why": "The verse calls the treasurer Azmaveth son of Adiel, matching adiel-3.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    100540
+   ],
+   "new_type": "",
+   "new_to": "uzziah-4",
+   "verse": "1CH 27:25",
+   "why": "Jehonathan's father Uzziah matches uzziah-4, the supplied record for this overseer's father.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    103202
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 27:25",
+   "why": "The verse names Jehonathan's father Uzziah, matching uzziah-4 rather than uzziah the son of Uriel.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "jashobeam-2",
+   "type": "descendant-of",
+   "to": "perez",
+   "verse": "1CH 27:3",
+   "why": "The Hebrew identifies the first month's chief, Jashobeam of verse 2, as being from the sons of Perez.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Owner rulings 107020, 107182, 107225, 103899, 106129, 105617, 107008, 106625, and 105870 are preserved: verse 3 identifies Jashobeam rather than Zabdiel as belonging to Perez's descendants, and verses 16–22 identify tribal rulers without explicitly stating their fathers' descent. Owner row 106941 likewise assigns Simeonite descent to Maacah although verse 16 explicitly identifies only his son Shephatiah as ruler of the Simeonites.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 2,
+ "at": "2026-10-08T18:57:34+00:00"
+}

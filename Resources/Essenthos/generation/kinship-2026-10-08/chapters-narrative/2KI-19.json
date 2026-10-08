@@ -1,0 +1,11 @@
+{
+ "chapter": "2KI 19",
+ "rows": 10,
+ "wrong": [],
+ "missing": [],
+ "note": "The supplied Hebrew explicitly identifies Isaiah as Amoz’s son and Esarhaddon as Sennacherib’s son; the KJV additionally identifies Adrammelech and Sharezer as Sennacherib’s sons, supporting the sibling relationships. Every explicit family statement is already recorded here or in another chapter.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:05:23+00:00"
+}

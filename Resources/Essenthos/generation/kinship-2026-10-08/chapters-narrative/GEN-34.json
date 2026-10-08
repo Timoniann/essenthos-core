@@ -1,0 +1,23 @@
+{
+ "chapter": "GEN 34",
+ "rows": 13,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    107071
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "GEN 34:26",
+   "why": "The plural subject of הָרְגוּ refers to Simeon and Levi from verse 25, who killed Shechem, not Jacob.",
+   "confidence": 1
+  }
+ ],
+ "missing": [],
+ "note": "All plainly stated family relationships are already recorded here or in other chapters; none of the project owner's rows appears wrong.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:02:24+00:00"
+}

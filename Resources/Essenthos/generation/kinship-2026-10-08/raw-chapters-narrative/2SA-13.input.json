@@ -1,0 +1,318 @@
+{
+ "chapter": "2SA 13",
+ "text": {
+  "2SA 13:1": {
+   "KJV": "And it came to pass after this, that Absalom the son of David had a fair sister, whose name was Tamar; and Amnon the son of David loved her.",
+   "BHSA": "וַיְהִ֣י אַֽחֲרֵי־כֵ֗ן וּלְאַבְשָׁלֹ֧ום בֶּן־דָּוִ֛ד אָחֹ֥ות יָפָ֖ה וּשְׁמָ֣הּ תָּמָ֑ר וַיֶּאֱהָבֶ֖הָ אַמְנֹ֥ון בֶּן־דָּוִֽד׃ "
+  },
+  "2SA 13:2": {
+   "KJV": "And Amnon was so vexed, that he fell sick for his sister Tamar; for she was a virgin; and Amnon thought it hard for him to do anything to her.",
+   "BHSA": "וַיֵּ֨צֶר לְאַמְנֹ֜ון לְהִתְחַלֹּ֗ות בַּֽעֲבוּר֙ תָּמָ֣ר אֲחֹתֹ֔ו כִּ֥י בְתוּלָ֖ה הִ֑יא וַיִּפָּלֵא֙ בְּעֵינֵ֣י אַמְנֹ֔ון לַעֲשֹׂ֥ות לָ֖הּ מְאֽוּמָה׃ "
+  },
+  "2SA 13:3": {
+   "KJV": "But Amnon had a friend, whose name was Jonadab, the son of Shimeah David's brother: and Jonadab was a very subtil man.",
+   "BHSA": "וּלְאַמְנֹ֣ון רֵ֗עַ וּשְׁמֹו֙ יֹֽונָדָ֔ב בֶּן־שִׁמְעָ֖ה אֲחִ֣י דָוִ֑ד וְיֹ֣ונָדָ֔ב אִ֥ישׁ חָכָ֖ם מְאֹֽד׃ "
+  },
+  "2SA 13:4": {
+   "KJV": "And he said unto him, Why art thou, being the king's son, lean from day to day? wilt thou not tell me? And Amnon said unto him, I love Tamar, my brother Absalom's sister.",
+   "BHSA": "וַיֹּ֣אמֶר לֹ֗ו מַדּ֣וּעַ אַ֠תָּה כָּ֣כָה דַּ֤ל בֶּן־הַמֶּ֨לֶךְ֙ בַּבֹּ֣קֶר בַּבֹּ֔קֶר הֲלֹ֖וא תַּגִּ֣יד לִ֑י וַיֹּ֤אמֶר לֹו֙ אַמְנֹ֔ון אֶת־תָּמָ֗ר אֲחֹ֛ות אַבְשָׁלֹ֥ם אָחִ֖י אֲנִ֥י אֹהֵֽב׃ "
+  },
+  "2SA 13:5": {
+   "KJV": "And Jonadab said unto him, Lay thee down on thy bed, and make thyself sick: and when thy father cometh to see thee, say unto him, I pray thee, let my sister Tamar come, and give me meat, and dress the meat in my sight, that I may see it, and eat it at her hand.",
+   "BHSA": "וַיֹּ֤אמֶר לֹו֙ יְהֹ֣ונָדָ֔ב שְׁכַ֥ב עַל־מִשְׁכָּבְךָ֖ וְהִתְחָ֑ל וּבָ֧א אָבִ֣יךָ לִרְאֹותֶ֗ךָ וְאָמַרְתָּ֣ אֵלָ֡יו תָּ֣בֹא נָא֩ תָמָ֨ר אֲחֹותִ֜י וְתַבְרֵ֣נִי לֶ֗חֶם וְעָשְׂתָ֤ה לְעֵינַי֙ אֶת־הַבִּרְיָ֔ה לְמַ֨עַן֙ אֲשֶׁ֣ר אֶרְאֶ֔ה וְאָכַלְתִּ֖י מִיָּדָֽהּ׃ "
+  },
+  "2SA 13:6": {
+   "KJV": "So Amnon lay down, and made himself sick: and when the king was come to see him, Amnon said unto the king, I pray thee, let Tamar my sister come, and make me a couple of cakes in my sight, that I may eat at her hand.",
+   "BHSA": "וַיִּשְׁכַּ֥ב אַמְנֹ֖ון וַיִּתְחָ֑ל וַיָּבֹ֨א הַמֶּ֜לֶךְ לִרְאֹתֹ֗ו וַיֹּ֨אמֶר אַמְנֹ֤ון אֶל־הַמֶּ֨לֶךְ֙ תָּֽבֹוא־נָ֞א תָּמָ֣ר אֲחֹתִ֗י וּתְלַבֵּ֤ב לְעֵינַי֙ שְׁתֵּ֣י לְבִבֹ֔ות וְאֶבְרֶ֖ה מִיָּדָֽהּ׃ "
+  },
+  "2SA 13:7": {
+   "KJV": "Then David sent home to Tamar, saying, Go now to thy brother Amnon's house, and dress him meat.",
+   "BHSA": "וַיִּשְׁלַ֥ח דָּוִ֛ד אֶל־תָּמָ֖ר הַבַּ֣יְתָה לֵאמֹ֑ר לְכִ֣י נָ֗א בֵּ֚ית אַמְנֹ֣ון אָחִ֔יךְ וַעֲשִׂי־לֹ֖ו הַבִּרְיָֽה׃ "
+  },
+  "2SA 13:8": {
+   "KJV": "So Tamar went to her brother Amnon's house; and he was laid down. And she took flour, and kneaded it, and made cakes in his sight, and did bake the cakes.",
+   "BHSA": "וַתֵּ֣לֶךְ תָּמָ֗ר בֵּ֛ית אַמְנֹ֥ון אָחִ֖יהָ וְה֣וּא שֹׁכֵ֑ב וַתִּקַּ֨ח אֶת־הַבָּצֵ֤ק ותלושׁ וַתְּלַבֵּ֣ב לְעֵינָ֔יו וַתְּבַשֵּׁ֖ל אֶת־הַלְּבִבֹֽות׃ "
+  },
+  "2SA 13:9": {
+   "KJV": "And she took a pan, and poured them out before him; but he refused to eat. And Amnon said, Have out all men from me. And they went out every man from him.",
+   "BHSA": "וַתִּקַּ֤ח אֶת־הַמַּשְׂרֵת֙ וַתִּצֹ֣ק לְפָנָ֔יו וַיְמָאֵ֖ן לֶאֱכֹ֑ול וַיֹּ֣אמֶר אַמְנֹ֗ון הֹוצִ֤יאוּ כָל־אִישׁ֙ מֵֽעָלַ֔י וַיֵּצְא֥וּ כָל־אִ֖ישׁ מֵעָלָֽיו׃ "
+  },
+  "2SA 13:10": {
+   "KJV": "And Amnon said unto Tamar, Bring the meat into the chamber, that I may eat of thine hand. And Tamar took the cakes which she had made, and brought them into the chamber to Amnon her brother.",
+   "BHSA": "וַיֹּ֨אמֶר אַמְנֹ֜ון אֶל־תָּמָ֗ר הָבִ֤יאִי הַבִּרְיָה֙ הַחֶדֶ֔ר וְאֶבְרֶ֖ה מִיָּדֵ֑ךְ וַתִּקַּ֣ח תָּמָ֗ר אֶת־הַלְּבִבֹות֙ אֲשֶׁ֣ר עָשָׂ֔תָה וַתָּבֵ֛א לְאַמְנֹ֥ון אָחִ֖יהָ הֶחָֽדְרָה׃ "
+  },
+  "2SA 13:11": {
+   "KJV": "And when she had brought them unto him to eat, he took hold of her, and said unto her, Come lie with me, my sister.",
+   "BHSA": "וַתַּגֵּ֥שׁ אֵלָ֖יו לֶֽאֱכֹ֑ל וַיַּֽחֲזֶק־בָּהּ֙ וַיֹּ֣אמֶר לָ֔הּ בֹּ֛ואִי שִׁכְבִ֥י עִמִּ֖י אֲחֹותִֽי׃ "
+  },
+  "2SA 13:12": {
+   "KJV": "And she answered him, Nay, my brother, do not force me; for no such thing ought to be done in Israel: do not thou this folly.",
+   "BHSA": "וַתֹּ֣אמֶר לֹ֗ו אַל־אָחִי֙ אַל־תְּעַנֵּ֔נִי כִּ֛י לֹא־יֵֽעָשֶׂ֥ה כֵ֖ן בְּיִשְׂרָאֵ֑ל אַֽל־תַּעֲשֵׂ֖ה אֶת־הַנְּבָלָ֥ה הַזֹּֽאת׃ "
+  },
+  "2SA 13:13": {
+   "KJV": "And I, whither shall I cause my shame to go? and as for thee, thou shalt be as one of the fools in Israel. Now therefore, I pray thee, speak unto the king; for he will not withhold me from thee.",
+   "BHSA": "וַאֲנִ֗י אָ֤נָה אֹולִיךְ֙ אֶת־חֶרְפָּתִ֔י וְאַתָּ֗ה תִּהְיֶ֛ה כְּאַחַ֥ד הַנְּבָלִ֖ים בְּיִשְׂרָאֵ֑ל וְעַתָּה֙ דַּבֶּר־נָ֣א אֶל־הַמֶּ֔לֶךְ כִּ֛י לֹ֥א יִמְנָעֵ֖נִי מִמֶּֽךָּ׃ "
+  },
+  "2SA 13:14": {
+   "KJV": "Howbeit he would not hearken unto her voice: but, being stronger than she, forced her, and lay with her.",
+   "BHSA": "וְלֹ֥א אָבָ֖ה לִשְׁמֹ֣עַ בְּקֹולָ֑הּ וַיֶּחֱזַ֤ק מִמֶּ֨נָּה֙ וַיְעַנֶּ֔הָ וַיִּשְׁכַּ֖ב אֹתָֽהּ׃ "
+  },
+  "2SA 13:15": {
+   "KJV": "Then Amnon hated her exceedingly; so that the hatred wherewith he hated her was greater than the love wherewith he had loved her. And Amnon said unto her, Arise, be gone.",
+   "BHSA": "וַיִּשְׂנָאֶ֣הָ אַמְנֹ֗ון שִׂנְאָה֙ גְּדֹולָ֣ה מְאֹ֔ד כִּ֣י גְדֹולָ֗ה הַשִּׂנְאָה֙ אֲשֶׁ֣ר שְׂנֵאָ֔הּ מֵאַהֲבָ֖ה אֲשֶׁ֣ר אֲהֵבָ֑הּ וַֽיֹּאמֶר־לָ֥הּ אַמְנֹ֖ון ק֥וּמִי לֵֽכִי׃ "
+  },
+  "2SA 13:16": {
+   "KJV": "And she said unto him, There is no cause: this evil in sending me away is greater than the other that thou didst unto me. But he would not hearken unto her.",
+   "BHSA": "וַתֹּ֣אמֶר לֹ֗ו אַל־אֹודֹ֞ת הָרָעָ֤ה הַגְּדֹולָה֙ הַזֹּ֔את מֵאַחֶ֛רֶת אֲשֶׁר־עָשִׂ֥יתָ עִמִּ֖י לְשַׁלְּחֵ֑נִי וְלֹ֥א אָבָ֖ה לִשְׁמֹ֥עַֽ לָֽהּ׃ "
+  },
+  "2SA 13:17": {
+   "KJV": "Then he called his servant that ministered unto him, and said, Put now this woman out from me, and bolt the door after her.",
+   "BHSA": "וַיִּקְרָ֗א אֶֽת־נַעֲרֹו֙ מְשָׁ֣רְתֹ֔ו וַיֹּ֕אמֶר שִׁלְחוּ־נָ֥א אֶת־זֹ֛את מֵעָלַ֖י הַח֑וּצָה וּנְעֹ֥ל הַדֶּ֖לֶת אַחֲרֶֽיהָ׃ "
+  },
+  "2SA 13:18": {
+   "KJV": "And she had a garment of divers colours upon her: for with such robes were the king's daughters that were virgins apparelled. Then his servant brought her out, and bolted the door after her.",
+   "BHSA": "וְעָלֶ֨יהָ֙ כְּתֹ֣נֶת פַּסִּ֔ים כִּי֩ כֵ֨ן תִּלְבַּ֧שְׁןָ בְנֹות־הַמֶּ֛לֶךְ הַבְּתוּלֹ֖ת מְעִילִ֑ים וַיֹּצֵ֨א אֹותָ֤הּ מְשָֽׁרְתֹו֙ הַח֔וּץ וְנָעַ֥ל הַדֶּ֖לֶת אַחֲרֶֽיהָ׃ "
+  },
+  "2SA 13:19": {
+   "KJV": "And Tamar put ashes on her head, and rent her garment of divers colours that was on her, and laid her hand on her head, and went on crying.",
+   "BHSA": "וַתִּקַּ֨ח תָּמָ֥ר אֵ֨פֶר֙ עַל־רֹאשָׁ֔הּ וּכְתֹ֧נֶת הַפַּסִּ֛ים אֲשֶׁ֥ר עָלֶ֖יהָ קָרָ֑עָה וַתָּ֤שֶׂם יָדָהּ֙ עַל־רֹאשָׁ֔הּ וַתֵּ֥לֶךְ הָלֹ֖וךְ וְזָעָֽקָה׃ "
+  },
+  "2SA 13:20": {
+   "KJV": "And Absalom her brother said unto her, Hath Amnon thy brother been with thee? but hold now thy peace, my sister: he is thy brother; regard not this thing. So Tamar remained desolate in her brother Absalom's house.",
+   "BHSA": "וַיֹּ֨אמֶר אֵלֶ֜יהָ אַבְשָׁלֹ֣ום אָחִ֗יהָ הַאֲמִינֹ֣ון אָחִיךְ֮ הָיָ֣ה עִמָּךְ֒ וְעַתָּ֞ה אֲחֹותִ֤י הַחֲרִ֨ישִׁי֙ אָחִ֣יךְ ה֔וּא אַל־תָּשִׁ֥יתִי אֶת־לִבֵּ֖ךְ לַדָּבָ֣ר הַזֶּ֑ה וַתֵּ֤שֶׁב תָּמָר֙ וְשֹׁ֣מֵמָ֔ה בֵּ֖ית אַבְשָׁלֹ֥ום אָחִֽיהָ׃ "
+  },
+  "2SA 13:21": {
+   "KJV": "But when king David heard of all these things, he was very wroth.",
+   "BHSA": "וְהַמֶּ֣לֶךְ דָּוִ֔ד שָׁמַ֕ע אֵ֥ת כָּל־הַדְּבָרִ֖ים הָאֵ֑לֶּה וַיִּ֥חַר לֹ֖ו מְאֹֽד׃ "
+  },
+  "2SA 13:22": {
+   "KJV": "And Absalom spake unto his brother Amnon neither good nor bad: for Absalom hated Amnon, because he had forced his sister Tamar.",
+   "BHSA": "וְלֹֽא־דִבֶּ֧ר אַבְשָׁלֹ֛ום עִם־אַמְנֹ֖ון לְמֵרָ֣ע וְעַד־טֹ֑וב כִּֽי־שָׂנֵ֤א אַבְשָׁלֹום֙ אֶת־אַמְנֹ֔ון עַל־דְּבַר֙ אֲשֶׁ֣ר עִנָּ֔ה אֵ֖ת תָּמָ֥ר אֲחֹתֹֽו׃ פ "
+  },
+  "2SA 13:23": {
+   "KJV": "And it came to pass after two full years, that Absalom had sheepshearers in Baalhazor, which is beside Ephraim: and Absalom invited all the king's sons.",
+   "BHSA": "וַֽיְהִי֙ לִשְׁנָתַ֣יִם יָמִ֔ים וַיִּהְי֤וּ גֹֽזְזִים֙ לְאַבְשָׁלֹ֔ום בְּבַ֥עַל חָצֹ֖ור אֲשֶׁ֣ר עִם־אֶפְרָ֑יִם וַיִּקְרָ֥א אַבְשָׁלֹ֖ום לְכָל־בְּנֵ֥י הַמֶּֽלֶךְ׃ "
+  },
+  "2SA 13:24": {
+   "KJV": "And Absalom came to the king, and said, Behold now, thy servant hath sheepshearers; let the king, I beseech thee, and his servants go with thy servant.",
+   "BHSA": "וַיָּבֹ֤א אַבְשָׁלֹום֙ אֶל־הַמֶּ֔לֶךְ וַיֹּ֕אמֶר הִנֵּה־נָ֥א גֹזְזִ֖ים לְעַבְדֶּ֑ךָ יֵֽלֶךְ־נָ֥א הַמֶּ֛לֶךְ וַעֲבָדָ֖יו עִם־עַבְדֶּֽךָ׃ "
+  },
+  "2SA 13:25": {
+   "KJV": "And the king said to Absalom, Nay, my son, let us not all now go, lest we be chargeable unto thee. And he pressed him: howbeit he would not go, but blessed him.",
+   "BHSA": "וַיֹּ֨אמֶר הַמֶּ֜לֶךְ אֶל־אַבְשָׁלֹ֗ום אַל־בְּנִי֙ אַל־נָ֤א נֵלֵךְ֙ כֻּלָּ֔נוּ וְלֹ֥א נִכְבַּ֖ד עָלֶ֑יךָ וַיִּפְרָץ־בֹּ֛ו וְלֹֽא־אָבָ֥ה לָלֶ֖כֶת וַֽיְבָרֲכֵֽהוּ׃ "
+  },
+  "2SA 13:26": {
+   "KJV": "Then said Absalom, If not, I pray thee, let my brother Amnon go with us. And the king said unto him, Why should he go with thee?",
+   "BHSA": "וַיֹּ֨אמֶר֙ אַבְשָׁלֹ֔ום וָלֹ֕א יֵֽלֶךְ־נָ֥א אִתָּ֖נוּ אַמְנֹ֣ון אָחִ֑י וַיֹּ֤אמֶר לֹו֙ הַמֶּ֔לֶךְ לָ֥מָּה יֵלֵ֖ךְ עִמָּֽךְ׃ "
+  },
+  "2SA 13:27": {
+   "KJV": "But Absalom pressed him, that he let Amnon and all the king's sons go with him.",
+   "BHSA": "וַיִּפְרָץ־בֹּ֖ו אַבְשָׁלֹ֑ום וַיִּשְׁלַ֤ח אִתֹּו֙ אֶת־אַמְנֹ֔ון וְאֵ֖ת כָּל־בְּנֵ֥י הַמֶּֽלֶךְ׃ ס "
+  },
+  "2SA 13:28": {
+   "KJV": "Now Absalom had commanded his servants, saying, Mark ye now when Amnon's heart is merry with wine, and when I say unto you, Smite Amnon; then kill him, fear not: have not I commanded you? be courageous, and be valiant.",
+   "BHSA": "וַיְצַו֩ אַבְשָׁלֹ֨ום אֶת־נְעָרָ֜יו לֵאמֹ֗ר רְא֣וּ נָ֠א כְּטֹ֨וב לֵב־אַמְנֹ֤ון בַּיַּ֨יִן֙ וְאָמַרְתִּ֣י אֲלֵיכֶ֔ם הַכּ֧וּ אֶת־אַמְנֹ֛ון וַהֲמִתֶּ֥ם אֹתֹ֖ו אַל־תִּירָ֑אוּ הֲלֹ֗וא כִּ֤י אָֽנֹכִי֙ צִוִּ֣יתִי אֶתְכֶ֔ם חִזְק֖וּ וִהְי֥וּ לִבְנֵי־חָֽיִל׃ "
+  },
+  "2SA 13:29": {
+   "KJV": "And the servants of Absalom did unto Amnon as Absalom had commanded. Then all the king's sons arose, and every man gat him up upon his mule, and fled.",
+   "BHSA": "וַֽיַּעֲשׂ֞וּ נַעֲרֵ֤י אַבְשָׁלֹום֙ לְאַמְנֹ֔ון כַּאֲשֶׁ֥ר צִוָּ֖ה אַבְשָׁלֹ֑ום וַיָּקֻ֣מוּ׀ כָּל־בְּנֵ֣י הַמֶּ֗לֶךְ וַֽיִּרְכְּב֛וּ אִ֥ישׁ עַל־פִּרְדֹּ֖ו וַיָּנֻֽסוּ׃ "
+  },
+  "2SA 13:30": {
+   "KJV": "And it came to pass, while they were in the way, that tidings came to David, saying, Absalom hath slain all the king's sons, and there is not one of them left.",
+   "BHSA": "וַֽיְהִי֙ הֵ֣מָּה בַדֶּ֔רֶךְ וְהַשְּׁמֻעָ֣ה בָ֔אָה אֶל־דָּוִ֖ד לֵאמֹ֑ר הִכָּ֤ה אַבְשָׁלֹום֙ אֶת־כָּל־בְּנֵ֣י הַמֶּ֔לֶךְ וְלֹֽא־נֹותַ֥ר מֵהֶ֖ם אֶחָֽד׃ ס "
+  },
+  "2SA 13:31": {
+   "KJV": "Then the king arose, and tare his garments, and lay on the earth; and all his servants stood by with their clothes rent.",
+   "BHSA": "וַיָּ֧קָם הַמֶּ֛לֶךְ וַיִּקְרַ֥ע אֶת־בְּגָדָ֖יו וַיִּשְׁכַּ֣ב אָ֑רְצָה וְכָל־עֲבָדָ֥יו נִצָּבִ֖ים קְרֻעֵ֥י בְגָדִֽים׃ ס "
+  },
+  "2SA 13:32": {
+   "KJV": "And Jonadab, the son of Shimeah David's brother, answered and said, Let not my lord suppose that they have slain all the young men the king's sons; for Amnon only is dead: for by the appointment of Absalom this hath been determined from the day that he forced his sister Tamar.",
+   "BHSA": "וַיַּ֡עַן יֹונָדָ֣ב׀ בֶּן־שִׁמְעָ֨ה אֲחִֽי־דָוִ֜ד וַיֹּ֗אמֶר אַל־יֹאמַ֤ר אֲדֹנִי֙ אֵ֣ת כָּל־הַנְּעָרִ֤ים בְּנֵֽי־הַמֶּ֨לֶךְ֙ הֵמִ֔יתוּ כִּֽי־אַמְנֹ֥ון לְבַדֹּ֖ו מֵ֑ת כִּֽי־עַל־פִּ֤י אַבְשָׁלֹום֙ הָיְתָ֣ה שׂוּמָ֔ה מִיֹּום֙ עַנֹּתֹ֔ו אֵ֖ת תָּמָ֥ר אֲחֹתֹֽו׃ "
+  },
+  "2SA 13:33": {
+   "KJV": "Now therefore let not my lord the king take the thing to his heart, to think that all the king's sons are dead: for Amnon only is dead.",
+   "BHSA": "וְעַתָּ֡ה אַל־יָשֵׂם֩ אֲדֹנִ֨י הַמֶּ֤לֶךְ אֶל־לִבֹּו֙ דָּבָ֣ר לֵאמֹ֔ר כָּל־בְּנֵ֥י הַמֶּ֖לֶךְ מֵ֑תוּ כִּֽי־אִם־אַמְנֹ֥ון לְבַדֹּ֖ו מֵֽת׃ פ "
+  },
+  "2SA 13:34": {
+   "KJV": "But Absalom fled. And the young man that kept the watch lifted up his eyes, and looked, and, behold, there came much people by the way of the hill side behind him.",
+   "BHSA": "וַיִּבְרַ֖ח אַבְשָׁלֹ֑ום וַיִּשָּׂ֞א הַנַּ֤עַר הַצֹּפֶה֙ אֶת־עינו וַיַּ֗רְא וְהִנֵּ֨ה עַם־רַ֜ב הֹלְכִ֥ים מִדֶּ֛רֶךְ אַחֲרָ֖יו מִצַּ֥ד הָהָֽר׃ "
+  },
+  "2SA 13:35": {
+   "KJV": "And Jonadab said unto the king, Behold, the king's sons come: as thy servant said, so it is.",
+   "BHSA": "וַיֹּ֤אמֶר יֹֽונָדָב֙ אֶל־הַמֶּ֔לֶךְ הִנֵּ֥ה בְנֵֽי־הַמֶּ֖לֶךְ בָּ֑אוּ כִּדְבַ֥ר עַבְדְּךָ֖ כֵּ֥ן הָיָֽה׃ "
+  },
+  "2SA 13:36": {
+   "KJV": "And it came to pass, as soon as he had made an end of speaking, that, behold, the king's sons came, and lifted up their voice and wept: and the king also and all his servants wept very sore.",
+   "BHSA": "וַיְהִ֣י׀ כְּכַלֹּתֹ֣ו לְדַבֵּ֗ר וְהִנֵּ֤ה בְנֵֽי־הַמֶּ֨לֶךְ֙ בָּ֔אוּ וַיִּשְׂא֥וּ קֹולָ֖ם וַיִּבְכּ֑וּ וְגַם־הַמֶּ֨לֶךְ֙ וְכָל־עֲבָדָ֔יו בָּכ֕וּ בְּכִ֖י גָּדֹ֥ול מְאֹֽד׃ "
+  },
+  "2SA 13:37": {
+   "KJV": "But Absalom fled, and went to Talmai, the son of Ammihud, king of Geshur. And David mourned for his son every day.",
+   "BHSA": "וְאַבְשָׁלֹ֣ום בָּרַ֔ח וַיֵּ֛לֶךְ אֶל־תַּלְמַ֥י בֶּן־עמיחור מֶ֣לֶךְ גְּשׁ֑וּר וַיִּתְאַבֵּ֥ל עַל־בְּנֹ֖ו כָּל־הַיָּמִֽים׃ "
+  },
+  "2SA 13:38": {
+   "KJV": "So Absalom fled, and went to Geshur, and was there three years.",
+   "BHSA": "וְאַבְשָׁלֹ֥ום בָּרַ֖ח וַיֵּ֣לֶךְ גְּשׁ֑וּר וַיְהִי־שָׁ֖ם שָׁלֹ֥שׁ שָׁנִֽים׃ "
+  },
+  "2SA 13:39": {
+   "KJV": "And the soul of king David longed to go forth unto Absalom: for he was comforted concerning Amnon, seeing he was dead.",
+   "BHSA": "וַתְּכַל֙ דָּוִ֣ד הַמֶּ֔לֶךְ לָצֵ֖את אֶל־אַבְשָׁלֹ֑ום כִּֽי־נִחַ֥ם עַל־אַמְנֹ֖ון כִּֽי־מֵֽת׃ ס "
+  }
+ },
+ "records": [
+  {
+   "slug": "absalom",
+   "name": "Absalom",
+   "distinguisher": "third-born son of King David (2SA 3:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "ammihud-4",
+   "name": "Ammihud",
+   "distinguisher": "father of the King of Geshur, Talmai (2SA 13:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "amnon",
+   "name": "Amnon",
+   "distinguisher": "firstborn son of King David (2SA 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "ephraim",
+   "name": "Ephraim",
+   "distinguisher": "second son of Joseph (GEN 41:52)",
+   "sex": "male"
+  },
+  {
+   "slug": "jonadab",
+   "name": "Jonadab",
+   "distinguisher": "son of Shimeah (2SA 13:3 or \"Shammah\" in 1SA 16:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "shammah-2",
+   "name": "Shammah",
+   "distinguisher": "third-born (1CH 2:13) son of Jesse (1SA 16:9) brother of David",
+   "sex": "male"
+  },
+  {
+   "slug": "talmai-2",
+   "name": "Talmai",
+   "distinguisher": "King of Geshur (2SA 3:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "tamar-2",
+   "name": "Tamar",
+   "distinguisher": "Absalom's sister, daughter of David (2SA 13:1)",
+   "sex": "female"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 103814,
+   "row": "absalom son-of david",
+   "verse": "2SA 13:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103816,
+   "row": "absalom brother-of tamar-2",
+   "verse": "2SA 13:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107667,
+   "row": "tamar-2 sister-of absalom",
+   "verse": "2SA 13:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107669,
+   "row": "tamar-2 daughter-of david",
+   "verse": "2SA 13:1",
+   "source": "read from Scripture by the project owner, decided 2026-09-13"
+  },
+  {
+   "id": 107668,
+   "row": "tamar-2 sister-of amnon",
+   "verse": "2SA 13:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100512,
+   "row": "jonadab son-of shammah-2",
+   "verse": "2SA 13:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100513,
+   "row": "jonadab nephew-of david",
+   "verse": "2SA 13:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102432,
+   "row": "shammah-2 brother-of david",
+   "verse": "2SA 13:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102433,
+   "row": "shammah-2 father-of jonadab",
+   "verse": "2SA 13:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103817,
+   "row": "absalom brother-of amnon",
+   "verse": "2SA 13:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107207,
+   "row": "amnon brother-of absalom",
+   "verse": "2SA 13:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107205,
+   "row": "amnon raper-of tamar-2",
+   "verse": "2SA 13:12",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 107206,
+   "row": "amnon brother-of tamar-2",
+   "verse": "2SA 13:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107208,
+   "row": "amnon killed-by absalom",
+   "verse": "2SA 13:32",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97442,
+   "row": "ammihud-4 father-of talmai-2",
+   "verse": "2SA 13:37",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 102984,
+   "row": "talmai-2 son-of ammihud-4",
+   "verse": "2SA 13:37",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "amnon son-of david (2SA 3:2)"
+ ]
+}

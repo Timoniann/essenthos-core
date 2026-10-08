@@ -1,0 +1,28 @@
+{
+ "chapter": "MAT 13",
+ "rows": 9,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    105121,
+    105122,
+    105123,
+    105127,
+    105128,
+    105245
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "MAT 13:55",
+   "why": "The Greek οἱ ἀδελφοὶ αὐτοῦ names James, Joseph, Simon, and Judas as Jesus' brothers but does not specify their relationships to one another.",
+   "confidence": 0.93
+  }
+ ],
+ "missing": [],
+ "note": "All explicitly stated relationships between the supplied people are already recorded here or in other chapters; the project owner's row agrees with MAT 13:55.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:05:34+00:00"
+}

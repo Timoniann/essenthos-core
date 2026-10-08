@@ -1,0 +1,32 @@
+{
+ "chapter": "JDG 4",
+ "rows": 11,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    99443
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "JDG 4:11",
+   "why": "The verse identifies Heber with the descendants of Hobab but does not mention Reuel or state descent from him.",
+   "confidence": 0.98
+  }
+ ],
+ "missing": [
+  {
+   "from": "hobab",
+   "type": "father-in-law-of",
+   "to": "moses",
+   "verse": "JDG 4:11",
+   "why": "The Hebrew calls Hobab חֹתֵן מֹשֶׁה, rendered in the KJV as the father-in-law of Moses.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The Hobab–Moses relationship stated here is retained as a variant alongside the brother-in-law relationship recorded from Numbers. Neither owner-recorded row appears wrong.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:04:05+00:00"
+}

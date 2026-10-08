@@ -1,0 +1,781 @@
+{
+ "chapter": "NUM 1",
+ "text": {
+  "NUM 1:1": {
+   "KJV": "And the LORD spake unto Moses in the wilderness of Sinai, in the tabernacle of the congregation, on the first day of the second month, in the second year after they were come out of the land of Egypt, saying,",
+   "BHSA": "וַיְדַבֵּ֨ר יְהוָ֧ה אֶל־מֹשֶׁ֛ה בְּמִדְבַּ֥ר סִינַ֖י בְּאֹ֣הֶל מֹועֵ֑ד בְּאֶחָד֩ לַחֹ֨דֶשׁ הַשֵּׁנִ֜י בַּשָּׁנָ֣ה הַשֵּׁנִ֗ית לְצֵאתָ֛ם מֵאֶ֥רֶץ מִצְרַ֖יִם לֵאמֹֽר׃ "
+  },
+  "NUM 1:2": {
+   "KJV": "Take ye the sum of all the congregation of the children of Israel, after their families, by the house of their fathers, with the number of their names, every male by their polls;",
+   "BHSA": "שְׂא֗וּ אֶת־רֹאשׁ֙ כָּל־עֲדַ֣ת בְּנֵֽי־יִשְׂרָאֵ֔ל לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֔ות כָּל־זָכָ֖ר לְגֻלְגְּלֹתָֽם׃ "
+  },
+  "NUM 1:3": {
+   "KJV": "From twenty years old and upward, all that are able to go forth to war in Israel: thou and Aaron shall number them by their armies.",
+   "BHSA": "מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כָּל־יֹצֵ֥א צָבָ֖א בְּיִשְׂרָאֵ֑ל תִּפְקְד֥וּ אֹתָ֛ם לְצִבְאֹתָ֖ם אַתָּ֥ה וְאַהֲרֹֽן׃ "
+  },
+  "NUM 1:4": {
+   "KJV": "And with you there shall be a man of every tribe; every one head of the house of his fathers.",
+   "BHSA": "וְאִתְּכֶ֣ם יִהְי֔וּ אִ֥ישׁ אִ֖ישׁ לַמַּטֶּ֑ה אִ֛ישׁ רֹ֥אשׁ לְבֵית־אֲבֹתָ֖יו הֽוּא׃ "
+  },
+  "NUM 1:5": {
+   "KJV": "And these are the names of the men that shall stand with you: of the tribe of Reuben; Elizur the son of Shedeur.",
+   "BHSA": "וְאֵ֨לֶּה֙ שְׁמֹ֣ות הָֽאֲנָשִׁ֔ים אֲשֶׁ֥ר יַֽעַמְד֖וּ אִתְּכֶ֑ם לִרְאוּבֵ֕ן אֱלִיצ֖וּר בֶּן־שְׁדֵיאֽוּר׃ "
+  },
+  "NUM 1:6": {
+   "KJV": "Of Simeon; Shelumiel the son of Zurishaddai.",
+   "BHSA": "לְשִׁמְעֹ֕ון שְׁלֻמִיאֵ֖ל בֶּן־צוּרִֽישַׁדָּֽי׃ "
+  },
+  "NUM 1:7": {
+   "KJV": "Of Judah; Nahshon the son of Amminadab.",
+   "BHSA": "לִֽיהוּדָ֕ה נַחְשֹׁ֖ון בֶּן־עַמִּינָדָֽב׃ "
+  },
+  "NUM 1:8": {
+   "KJV": "Of Issachar; Nethaneel the son of Zuar.",
+   "BHSA": "לְיִ֨שָּׂשכָ֔ר נְתַנְאֵ֖ל בֶּן־צוּעָֽר׃ "
+  },
+  "NUM 1:9": {
+   "KJV": "Of Zebulun; Eliab the son of Helon.",
+   "BHSA": "לִזְבוּלֻ֕ן אֱלִיאָ֖ב בֶּן־חֵלֹֽן׃ "
+  },
+  "NUM 1:10": {
+   "KJV": "Of the children of Joseph: of Ephraim; Elishama the son of Ammihud: of Manasseh; Gamaliel the son of Pedahzur.",
+   "BHSA": "לִבְנֵ֣י יֹוסֵ֔ף לְאֶפְרַ֕יִם אֱלִישָׁמָ֖ע בֶּן־עַמִּיה֑וּד לִמְנַשֶּׁ֕ה גַּמְלִיאֵ֖ל בֶּן־פְּדָהצֽוּר׃ "
+  },
+  "NUM 1:11": {
+   "KJV": "Of Benjamin; Abidan the son of Gideoni.",
+   "BHSA": "לְבִ֨נְיָמִ֔ן אֲבִידָ֖ן בֶּן־גִּדְעֹנִֽי׃ "
+  },
+  "NUM 1:12": {
+   "KJV": "Of Dan; Ahiezer the son of Ammishaddai.",
+   "BHSA": "לְדָ֕ן אֲחִיעֶ֖זֶר בֶּן־עַמִּֽישַׁדָּֽי׃ "
+  },
+  "NUM 1:13": {
+   "KJV": "Of Asher; Pagiel the son of Ocran.",
+   "BHSA": "לְאָשֵׁ֕ר פַּגְעִיאֵ֖ל בֶּן־עָכְרָֽן׃ "
+  },
+  "NUM 1:14": {
+   "KJV": "Of Gad; Eliasaph the son of Deuel.",
+   "BHSA": "לְגָ֕ד אֶלְיָסָ֖ף בֶּן־דְּעוּאֵֽל׃ "
+  },
+  "NUM 1:15": {
+   "KJV": "Of Naphtali; Ahira the son of Enan.",
+   "BHSA": "לְנַ֨פְתָּלִ֔י אֲחִירַ֖ע בֶּן־עֵינָֽן׃ "
+  },
+  "NUM 1:16": {
+   "KJV": "These were the renowned of the congregation, princes of the tribes of their fathers, heads of thousands in Israel.",
+   "BHSA": "אֵ֚לֶּה קריאי הָעֵדָ֔ה נְשִׂיאֵ֖י מַטֹּ֣ות אֲבֹותָ֑ם רָאשֵׁ֛י אַלְפֵ֥י יִשְׂרָאֵ֖ל הֵֽם׃ "
+  },
+  "NUM 1:17": {
+   "KJV": "And Moses and Aaron took these men which are expressed by their names:",
+   "BHSA": "וַיִּקַּ֥ח מֹשֶׁ֖ה וְאַהֲרֹ֑ן אֵ֚ת הָאֲנָשִׁ֣ים הָאֵ֔לֶּה אֲשֶׁ֥ר נִקְּב֖וּ בְּשֵׁמֹֽות׃ "
+  },
+  "NUM 1:18": {
+   "KJV": "And they assembled all the congregation together on the first day of the second month, and they declared their pedigrees after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, by their polls.",
+   "BHSA": "וְאֵ֨ת כָּל־הָעֵדָ֜ה הִקְהִ֗ילוּ בְּאֶחָד֙ לַחֹ֣דֶשׁ הַשֵּׁנִ֔י וַיִּתְיַֽלְד֥וּ עַל־מִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ות מִבֶּ֨ן עֶשְׂרִ֥ים שָׁנָ֛ה וָמַ֖עְלָה לְגֻלְגְּלֹתָֽם׃ "
+  },
+  "NUM 1:19": {
+   "KJV": "As the LORD commanded Moses, so he numbered them in the wilderness of Sinai.",
+   "BHSA": "כַּאֲשֶׁ֛ר צִוָּ֥ה יְהוָ֖ה אֶת־מֹשֶׁ֑ה וַֽיִּפְקְדֵ֖ם בְּמִדְבַּ֥ר סִינָֽי׃ פ "
+  },
+  "NUM 1:20": {
+   "KJV": "And the children of Reuben, Israel's eldest son, by their generations, after their families, by the house of their fathers, according to the number of the names, by their polls, every male from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "וַיִּהְי֤וּ בְנֵֽי־רְאוּבֵן֙ בְּכֹ֣ר יִשְׂרָאֵ֔ל תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֤ר שֵׁמֹות֙ לְגֻלְגְּלֹתָ֔ם כָּל־זָכָ֗ר מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:21": {
+   "KJV": "Those that were numbered of them, even of the tribe of Reuben, were forty and six thousand and five hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה רְאוּבֵ֑ן שִׁשָּׁ֧ה וְאַרְבָּעִ֛ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֹֽות׃ פ "
+  },
+  "NUM 1:22": {
+   "KJV": "Of the children of Simeon, by their generations, after their families, by the house of their fathers, those that were numbered of them, according to the number of the names, by their polls, every male from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "לִבְנֵ֣י שִׁמְעֹ֔ון תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם פְּקֻדָ֗יו בְּמִסְפַּ֤ר שֵׁמֹות֙ לְגֻלְגְּלֹתָ֔ם כָּל־זָכָ֗ר מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:23": {
+   "KJV": "Those that were numbered of them, even of the tribe of Simeon, were fifty and nine thousand and three hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה שִׁמְעֹ֑ון תִּשְׁעָ֧ה וַחֲמִשִּׁ֛ים אֶ֖לֶף וּשְׁלֹ֥שׁ מֵאֹֽות׃ פ "
+  },
+  "NUM 1:24": {
+   "KJV": "Of the children of Gad, by their generations, after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "לִבְנֵ֣י גָ֔ד תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ות מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:25": {
+   "KJV": "Those that were numbered of them, even of the tribe of Gad, were forty and five thousand six hundred and fifty.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה גָ֑ד חֲמִשָּׁ֤ה וְאַרְבָּעִים֙ אֶ֔לֶף וְשֵׁ֥שׁ מֵאֹ֖ות וַחֲמִשִּֽׁים׃ פ "
+  },
+  "NUM 1:26": {
+   "KJV": "Of the children of Judah, by their generations, after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "לִבְנֵ֣י יְהוּדָ֔ה תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ת מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:27": {
+   "KJV": "Those that were numbered of them, even of the tribe of Judah, were threescore and fourteen thousand and six hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה יְהוּדָ֑ה אַרְבָּעָ֧ה וְשִׁבְעִ֛ים אֶ֖לֶף וְשֵׁ֥שׁ מֵאֹֽות׃ פ "
+  },
+  "NUM 1:28": {
+   "KJV": "Of the children of Issachar, by their generations, after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "לִבְנֵ֣י יִשָּׂשכָ֔ר תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ת מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:29": {
+   "KJV": "Those that were numbered of them, even of the tribe of Issachar, were fifty and four thousand and four hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה יִשָּׂשכָ֑ר אַרְבָּעָ֧ה וַחֲמִשִּׁ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ פ "
+  },
+  "NUM 1:30": {
+   "KJV": "Of the children of Zebulun, by their generations, after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "לִבְנֵ֣י זְבוּלֻ֔ן תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ת מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:31": {
+   "KJV": "Those that were numbered of them, even of the tribe of Zebulun, were fifty and seven thousand and four hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה זְבוּלֻ֑ן שִׁבְעָ֧ה וַחֲמִשִּׁ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ פ "
+  },
+  "NUM 1:32": {
+   "KJV": "Of the children of Joseph, namely, of the children of Ephraim, by their generations, after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "לִבְנֵ֤י יֹוסֵף֙ לִבְנֵ֣י אֶפְרַ֔יִם תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ת מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:33": {
+   "KJV": "Those that were numbered of them, even of the tribe of Ephraim, were forty thousand and five hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה אֶפְרָ֑יִם אַרְבָּעִ֥ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֹֽות׃ פ "
+  },
+  "NUM 1:34": {
+   "KJV": "Of the children of Manasseh, by their generations, after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "לִבְנֵ֣י מְנַשֶּׁ֔ה תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ות מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:35": {
+   "KJV": "Those that were numbered of them, even of the tribe of Manasseh, were thirty and two thousand and two hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה מְנַשֶּׁ֑ה שְׁנַ֧יִם וּשְׁלֹשִׁ֛ים אֶ֖לֶף וּמָאתָֽיִם׃ פ "
+  },
+  "NUM 1:36": {
+   "KJV": "Of the children of Benjamin, by their generations, after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "לִבְנֵ֣י בִנְיָמִ֔ן תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ת מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:37": {
+   "KJV": "Those that were numbered of them, even of the tribe of Benjamin, were thirty and five thousand and four hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה בִנְיָמִ֑ן חֲמִשָּׁ֧ה וּשְׁלֹשִׁ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ פ "
+  },
+  "NUM 1:38": {
+   "KJV": "Of the children of Dan, by their generations, after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "לִבְנֵ֣י דָ֔ן תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ת מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:39": {
+   "KJV": "Those that were numbered of them, even of the tribe of Dan, were threescore and two thousand and seven hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה דָ֑ן שְׁנַ֧יִם וְשִׁשִּׁ֛ים אֶ֖לֶף וּשְׁבַ֥ע מֵאֹֽות׃ פ "
+  },
+  "NUM 1:40": {
+   "KJV": "Of the children of Asher, by their generations, after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "לִבְנֵ֣י אָשֵׁ֔ר תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ת מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:41": {
+   "KJV": "Those that were numbered of them, even of the tribe of Asher, were forty and one thousand and five hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה אָשֵׁ֑ר אֶחָ֧ד וְאַרְבָּעִ֛ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֹֽות׃ פ "
+  },
+  "NUM 1:42": {
+   "KJV": "Of the children of Naphtali, throughout their generations, after their families, by the house of their fathers, according to the number of the names, from twenty years old and upward, all that were able to go forth to war;",
+   "BHSA": "בְּנֵ֣י נַפְתָּלִ֔י תֹּולְדֹתָ֥ם לְמִשְׁפְּחֹתָ֖ם לְבֵ֣ית אֲבֹתָ֑ם בְּמִסְפַּ֣ר שֵׁמֹ֗ת מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כֹּ֖ל יֹצֵ֥א צָבָֽא׃ "
+  },
+  "NUM 1:43": {
+   "KJV": "Those that were numbered of them, even of the tribe of Naphtali, were fifty and three thousand and four hundred.",
+   "BHSA": "פְּקֻדֵיהֶ֖ם לְמַטֵּ֣ה נַפְתָּלִ֑י שְׁלֹשָׁ֧ה וַחֲמִשִּׁ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ פ "
+  },
+  "NUM 1:44": {
+   "KJV": "These are those that were numbered, which Moses and Aaron numbered, and the princes of Israel, being twelve men: each one was for the house of his fathers.",
+   "BHSA": "אֵ֣לֶּה הַפְּקֻדִ֡ים אֲשֶׁר֩ פָּקַ֨ד מֹשֶׁ֤ה וְאַהֲרֹן֙ וּנְשִׂיאֵ֣י יִשְׂרָאֵ֔ל שְׁנֵ֥ים עָשָׂ֖ר אִ֑ישׁ אִישׁ־אֶחָ֥ד לְבֵית־אֲבֹתָ֖יו הָיֽוּ׃ "
+  },
+  "NUM 1:45": {
+   "KJV": "So were all those that were numbered of the children of Israel, by the house of their fathers, from twenty years old and upward, all that were able to go forth to war in Israel;",
+   "BHSA": "וַיִּֽהְי֛וּ כָּל־פְּקוּדֵ֥י בְנֵֽי־יִשְׂרָאֵ֖ל לְבֵ֣ית אֲבֹתָ֑ם מִבֶּ֨ן עֶשְׂרִ֤ים שָׁנָה֙ וָמַ֔עְלָה כָּל־יֹצֵ֥א צָבָ֖א בְּיִשְׂרָאֵֽל׃ "
+  },
+  "NUM 1:46": {
+   "KJV": "Even all they that were numbered were six hundred thousand and three thousand and five hundred and fifty.",
+   "BHSA": "וַיִּֽהְיוּ֙ כָּל־הַפְּקֻדִ֔ים שֵׁשׁ־מֵאֹ֥ות אֶ֖לֶף וּשְׁלֹ֣שֶׁת אֲלָפִ֑ים וַחֲמֵ֥שׁ מֵאֹ֖ות וַחֲמִשִּֽׁים׃ "
+  },
+  "NUM 1:47": {
+   "KJV": "But the Levites after the tribe of their fathers were not numbered among them.",
+   "BHSA": "וְהַלְוִיִּ֖ם לְמַטֵּ֣ה אֲבֹתָ֑ם לֹ֥א הָתְפָּקְד֖וּ בְּתֹוכָֽם׃ פ "
+  },
+  "NUM 1:48": {
+   "KJV": "For the LORD had spoken unto Moses, saying,",
+   "BHSA": "וַיְדַבֵּ֥ר יְהוָ֖ה אֶל־מֹשֶׁ֥ה לֵּאמֹֽר׃ "
+  },
+  "NUM 1:49": {
+   "KJV": "Only thou shalt not number the tribe of Levi, neither take the sum of them among the children of Israel:",
+   "BHSA": "אַ֣ךְ אֶת־מַטֵּ֤ה לֵוִי֙ לֹ֣א תִפְקֹ֔ד וְאֶת־רֹאשָׁ֖ם לֹ֣א תִשָּׂ֑א בְּתֹ֖וךְ בְּנֵ֥י יִשְׂרָאֵֽל׃ "
+  },
+  "NUM 1:50": {
+   "KJV": "But thou shalt appoint the Levites over the tabernacle of testimony, and over all the vessels thereof, and over all things that belong to it: they shall bear the tabernacle, and all the vessels thereof; and they shall minister unto it, and shall encamp round about the tabernacle.",
+   "BHSA": "וְאַתָּ֡ה הַפְקֵ֣ד אֶת־הַלְוִיִּם֩ עַל־מִשְׁכַּ֨ן הָעֵדֻ֜ת וְעַ֣ל כָּל־כֵּלָיו֮ וְעַ֣ל כָּל־אֲשֶׁר־לֹו֒ הֵ֜מָּה יִשְׂא֤וּ אֶת־הַמִּשְׁכָּן֙ וְאֶת־כָּל־כֵּלָ֔יו וְהֵ֖ם יְשָׁרְתֻ֑הוּ וְסָבִ֥יב לַמִּשְׁכָּ֖ן יַחֲנֽוּ׃ "
+  },
+  "NUM 1:51": {
+   "KJV": "And when the tabernacle setteth forward, the Levites shall take it down: and when the tabernacle is to be pitched, the Levites shall set it up: and the stranger that cometh nigh shall be put to death.",
+   "BHSA": "וּבִנְסֹ֣עַ הַמִּשְׁכָּ֗ן יֹורִ֤ידוּ אֹתֹו֙ הַלְוִיִּ֔ם וּבַחֲנֹת֙ הַמִּשְׁכָּ֔ן יָקִ֥ימוּ אֹתֹ֖ו הַלְוִיִּ֑ם וְהַזָּ֥ר הַקָּרֵ֖ב יוּמָֽת׃ "
+  },
+  "NUM 1:52": {
+   "KJV": "And the children of Israel shall pitch their tents, every man by his own camp, and every man by his own standard, throughout their hosts.",
+   "BHSA": "וְחָנ֖וּ בְּנֵ֣י יִשְׂרָאֵ֑ל אִ֧ישׁ עַֽל־מַחֲנֵ֛הוּ וְאִ֥ישׁ עַל־דִּגְלֹ֖ו לְצִבְאֹתָֽם׃ "
+  },
+  "NUM 1:53": {
+   "KJV": "But the Levites shall pitch round about the tabernacle of testimony, that there be no wrath upon the congregation of the children of Israel: and the Levites shall keep the charge of the tabernacle of testimony.",
+   "BHSA": "וְהַלְוִיִּ֞ם יַחֲנ֤וּ סָבִיב֙ לְמִשְׁכַּ֣ן הָעֵדֻ֔ת וְלֹֽא־יִהְיֶ֣ה קֶ֔צֶף עַל־עֲדַ֖ת בְּנֵ֣י יִשְׂרָאֵ֑ל וְשָׁמְרוּ֙ הַלְוִיִּ֔ם אֶת־מִשְׁמֶ֖רֶת מִשְׁכַּ֥ן הָעֵדֽוּת׃ "
+  },
+  "NUM 1:54": {
+   "KJV": "And the children of Israel did according to all that the LORD commanded Moses, so did they.",
+   "BHSA": "וַֽיַּעֲשׂ֖וּ בְּנֵ֣י יִשְׂרָאֵ֑ל כְּ֠כֹל אֲשֶׁ֨ר צִוָּ֧ה יְהוָ֛ה אֶת־מֹשֶׁ֖ה כֵּ֥ן עָשֽׂוּ׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "abidan",
+   "name": "Abidan",
+   "distinguisher": "head of the tribe of Benjamin during the census (NUM 1:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahiezer",
+   "name": "Ahiezer",
+   "distinguisher": "head of the tribe of Dan during the census (NUM 1:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahira",
+   "name": "Ahira",
+   "distinguisher": "head of the tribe of Naphtali during the census (NUM 1:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "ammihud",
+   "name": "Ammihud",
+   "distinguisher": "father of Elishama (NUM 1:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "amminadab",
+   "name": "Amminadab",
+   "distinguisher": "father of Elisheba (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "ammishaddai",
+   "name": "Ammishaddai",
+   "distinguisher": "father of Ahiezer (NUM 1:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "asher",
+   "name": "Asher",
+   "distinguisher": "eighth-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin",
+   "name": "Benjamin",
+   "distinguisher": "twelfth-born son of Jacob and Rachel (GEN 35:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "dan",
+   "name": "Dan",
+   "distinguisher": "fifth-born son of Jacob (GEN 30:5), son of Bilhah, Rachel's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "deuel",
+   "name": "Deuel",
+   "distinguisher": "father of Eliasaph (NUM 1:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliab",
+   "name": "Eliab",
+   "distinguisher": "head of the tribe of Zebulun during the census (NUM 1:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliasaph",
+   "name": "Eliasaph",
+   "distinguisher": "head of the tribe of Gad during the census (NUM 1:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "elishama",
+   "name": "Elishama",
+   "distinguisher": "head of the tribe of Ephraim during the census (NUM 1:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "elizur",
+   "name": "Elizur",
+   "distinguisher": "head of the tribe of Reuben during the census (NUM 1:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "enan",
+   "name": "Enan",
+   "distinguisher": "father of Ahira (NUM 1:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "ephraim",
+   "name": "Ephraim",
+   "distinguisher": "second son of Joseph (GEN 41:52)",
+   "sex": "male"
+  },
+  {
+   "slug": "gad",
+   "name": "Gad",
+   "distinguisher": "seventh-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "gamaliel",
+   "name": "Gamaliel",
+   "distinguisher": "head of the tribe of Manasseh during the census (NUM 1:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "gideoni",
+   "name": "Gideoni",
+   "distinguisher": "father of Abidan (NUM 1:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "helon",
+   "name": "Helon",
+   "distinguisher": "father of Eliab (NUM 1:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "issachar",
+   "name": "Issachar",
+   "distinguisher": "ninth-born son of Jacob (GEN 30:17), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "joseph",
+   "name": "Joseph",
+   "distinguisher": "eleventh-born son of Jacob and Rachel (GEN 30:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh",
+   "name": "Manasseh",
+   "distinguisher": "firstborn son of Joseph (GEN 41:51)",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "nahshon",
+   "name": "Nahshon",
+   "distinguisher": "son of Amminadab and brother of Elisheba (EXO 6:23), head of the tribe of Judah during the census (NUM 1:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "naphtali",
+   "name": "Naphtali",
+   "distinguisher": "sixth-born son of Jacob (GEN 30:7), son of Bilhah, Rachel's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "nethanel",
+   "name": "Nethanel",
+   "distinguisher": "head of the tribe of Issachar during the census (NUM 1:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "ochran",
+   "name": "Ochran",
+   "distinguisher": "father of Pagiel (NUM 1:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "pagiel",
+   "name": "Pagiel",
+   "distinguisher": "head of the tribe of Asher during the census (NUM 1:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "pedahzur",
+   "name": "Pedahzur",
+   "distinguisher": "father of Gamaliel (NUM 1:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "reuben",
+   "name": "Reuben",
+   "distinguisher": "firstborn son of Jacob (GEN 29:32), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "shedeur",
+   "name": "Shedeur",
+   "distinguisher": "father of Elizur (NUM 1:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelumiel",
+   "name": "Shelumiel",
+   "distinguisher": "head of the tribe of Simeon during the census (NUM 1:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "simeon",
+   "name": "Simeon",
+   "distinguisher": "second-born son of Jacob (GEN 29:33), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zebulun",
+   "name": "Zebulun",
+   "distinguisher": "tenth-born son of Jacob (GEN 30:19), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "zuar",
+   "name": "Zuar",
+   "distinguisher": "father of Nethanel (NUM 1:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "zurishaddai",
+   "name": "Zurishaddai",
+   "distinguisher": "father of Shelumiel (NUM 1:6)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 98744,
+   "row": "elizur son-of shedeur",
+   "verse": "NUM 1:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107075,
+   "row": "shedeur father-of elizur",
+   "verse": "NUM 1:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107076,
+   "row": "shedeur descendant-of reuben",
+   "verse": "NUM 1:5",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 102596,
+   "row": "shelumiel son-of zurishaddai",
+   "verse": "NUM 1:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107200,
+   "row": "zurishaddai father-of shelumiel",
+   "verse": "NUM 1:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107201,
+   "row": "zurishaddai descendant-of simeon",
+   "verse": "NUM 1:6",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 101622,
+   "row": "nahshon son-of amminadab",
+   "verse": "NUM 1:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105133,
+   "row": "amminadab father-of nahshon",
+   "verse": "NUM 1:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101719,
+   "row": "nethanel son-of zuar",
+   "verse": "NUM 1:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107191,
+   "row": "zuar father-of nethanel",
+   "verse": "NUM 1:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107192,
+   "row": "zuar descendant-of issachar",
+   "verse": "NUM 1:8",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 98595,
+   "row": "eliab son-of helon",
+   "verse": "NUM 1:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 106830,
+   "row": "helon father-of eliab",
+   "verse": "NUM 1:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106831,
+   "row": "helon descendant-of zebulun",
+   "verse": "NUM 1:9",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 98718,
+   "row": "elishama son-of ammihud",
+   "verse": "NUM 1:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98719,
+   "row": "elishama of-tribe ephraim",
+   "verse": "NUM 1:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99012,
+   "row": "gamaliel son-of pedahzur",
+   "verse": "NUM 1:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103841,
+   "row": "ammihud father-of elishama",
+   "verse": "NUM 1:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103843,
+   "row": "ammihud descendant-of ephraim",
+   "verse": "NUM 1:10",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 107005,
+   "row": "pedahzur father-of gamaliel",
+   "verse": "NUM 1:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107006,
+   "row": "pedahzur descendant-of manasseh",
+   "verse": "NUM 1:10",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 97036,
+   "row": "abidan son-of gideoni",
+   "verse": "NUM 1:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105689,
+   "row": "gideoni father-of abidan",
+   "verse": "NUM 1:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105690,
+   "row": "gideoni descendant-of benjamin",
+   "verse": "NUM 1:11",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 97260,
+   "row": "ahiezer son-of ammishaddai",
+   "verse": "NUM 1:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103848,
+   "row": "ammishaddai father-of ahiezer",
+   "verse": "NUM 1:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103849,
+   "row": "ammishaddai descendant-of dan",
+   "verse": "NUM 1:12",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 101865,
+   "row": "pagiel son-of ochran",
+   "verse": "NUM 1:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106135,
+   "row": "ochran father-of pagiel",
+   "verse": "NUM 1:13",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106136,
+   "row": "ochran descendant-of asher",
+   "verse": "NUM 1:13",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 98626,
+   "row": "eliasaph son-of deuel",
+   "verse": "NUM 1:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105642,
+   "row": "deuel father-of eliasaph",
+   "verse": "NUM 1:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 105643,
+   "row": "deuel descendant-of gad",
+   "verse": "NUM 1:14",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  },
+  {
+   "id": 97313,
+   "row": "ahira son-of enan",
+   "verse": "NUM 1:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97315,
+   "row": "ahira of-tribe naphtali",
+   "verse": "NUM 1:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 106801,
+   "row": "enan father-of ahira",
+   "verse": "NUM 1:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106802,
+   "row": "enan descendant-of naphtali",
+   "verse": "NUM 1:15",
+   "source": "read from Scripture by the project owner, decided 2026-09-12"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron brother-of moses (EXO 4:14)",
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "ahira commander-of naphtali (NUM 10:27)",
+  "eliab commander-of zebulun (NUM 2:7)",
+  "eliasaph commander-of gad (NUM 2:14)",
+  "elishama commander-of ephraim (NUM 2:18)",
+  "elizur commander-of reuben (NUM 2:10)",
+  "ephraim son-of joseph (GEN 46:20)",
+  "ephraim brother-of manasseh (GEN 48:5)",
+  "gamaliel commander-of manasseh (NUM 2:20)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "moses priest-of yhvh (PSA 99:6)",
+  "pagiel commander-of asher (NUM 2:27)",
+  "reuben son-of jacob (GEN 35:23)",
+  "shelumiel commander-of simeon (NUM 10:19)",
+  "benjamin son-of jacob (GEN 35:18)",
+  "benjamin brother-of joseph (GEN 35:24)",
+  "benjamin half-brother-of reuben (GEN 35:18)",
+  "benjamin half-brother-of judah (GEN 35:18)",
+  "benjamin half-brother-of dan (GEN 35:18)",
+  "benjamin half-brother-of naphtali (GEN 35:18)",
+  "benjamin half-brother-of gad (GEN 35:18)",
+  "benjamin half-brother-of asher (GEN 35:18)",
+  "benjamin half-brother-of issachar (GEN 35:18)",
+  "benjamin half-brother-of zebulun (GEN 35:18)",
+  "amminadab father-in-law-of aaron (EXO 6:23)",
+  "issachar son-of jacob (1CH 2:1)",
+  "issachar brother-of reuben (GEN 30:18)",
+  "issachar brother-of simeon (GEN 30:18)",
+  "issachar brother-of judah (GEN 30:18)",
+  "issachar half-brother-of dan (GEN 30:18)",
+  "issachar half-brother-of naphtali (GEN 30:18)",
+  "issachar half-brother-of gad (GEN 30:18)",
+  "issachar half-brother-of asher (GEN 30:18)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "jacob father-of dan (GEN 35:22)",
+  "jacob father-of naphtali (GEN 35:22)",
+  "judah son-of jacob (GEN 35:23)",
+  "judah brother-of simeon (GEN 35:23)",
+  "judah brother-of reuben (GEN 29:35)",
+  "gad son-of jacob (GEN 35:26)",
+  "gad brother-of asher (GEN 35:26)",
+  "gad half-brother-of reuben (GEN 30:11)",
+  "gad half-brother-of simeon (GEN 30:11)",
+  "gad half-brother-of judah (GEN 30:11)",
+  "gad half-brother-of dan (GEN 30:11)",
+  "gad half-brother-of naphtali (GEN 30:11)",
+  "joseph son-of jacob (GEN 37:3)",
+  "joseph father-of manasseh (NUM 36:12)",
+  "joseph half-brother-of reuben (GEN 30:24)",
+  "joseph half-brother-of simeon (GEN 30:24)",
+  "joseph half-brother-of judah (GEN 30:24)",
+  "joseph half-brother-of dan (GEN 30:24)",
+  "joseph half-brother-of naphtali (GEN 30:24)",
+  "joseph half-brother-of gad (GEN 30:24)",
+  "joseph half-brother-of asher (GEN 30:24)",
+  "joseph half-brother-of issachar (GEN 30:24)",
+  "joseph half-brother-of zebulun (GEN 30:24)",
+  "manasseh son-of joseph (GEN 41:51)",
+  "manasseh brother-of ephraim (GEN 48:5)",
+  "naphtali brother-of dan (GEN 35:25)",
+  "naphtali half-brother-of reuben (GEN 30:8)",
+  "naphtali half-brother-of simeon (GEN 30:8)",
+  "naphtali half-brother-of judah (GEN 30:8)",
+  "simeon son-of jacob (GEN 35:23)",
+  "simeon brother-of reuben (GEN 29:33)",
+  "simeon half-brother-of benjamin (GEN 35:22)",
+  "zebulun son-of jacob (GEN 35:23)",
+  "zebulun brother-of reuben (GEN 30:20)",
+  "zebulun brother-of simeon (GEN 30:20)",
+  "zebulun brother-of judah (GEN 30:20)",
+  "zebulun half-brother-of dan (GEN 30:20)",
+  "zebulun half-brother-of naphtali (GEN 30:20)",
+  "zebulun half-brother-of gad (GEN 30:20)",
+  "zebulun half-brother-of asher (GEN 30:20)",
+  "zebulun brother-of issachar (GEN 30:20)",
+  "asher son-of jacob (GEN 35:26)",
+  "asher half-brother-of reuben (GEN 30:13)",
+  "asher half-brother-of simeon (GEN 30:13)",
+  "asher half-brother-of judah (GEN 30:13)",
+  "asher half-brother-of dan (GEN 30:13)",
+  "asher half-brother-of naphtali (GEN 30:13)",
+  "dan brother-of naphtali (GEN 35:25)",
+  "dan half-brother-of reuben (GEN 30:6)",
+  "dan half-brother-of simeon (GEN 30:6)",
+  "dan half-brother-of judah (GEN 30:6)"
+ ]
+}

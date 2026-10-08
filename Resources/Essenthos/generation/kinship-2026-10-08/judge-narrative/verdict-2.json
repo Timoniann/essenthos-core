@@ -1,0 +1,252 @@
+[
+ {
+  "id": 51,
+  "verdict": "right",
+  "why": "2CH 35:9: 'Conaniah, and Shemaiah and Nethanel his brethren (אחיו)', all chiefs of the Levites under Josiah. Not recorded with nethanel-9."
+ },
+ {
+  "id": 52,
+  "verdict": "right",
+  "why": "2SA 21:22 says 'these four were born to the giant (להרפה) in Gath', and the four include Goliath the Gittite (21:19). Not recorded."
+ },
+ {
+  "id": 53,
+  "verdict": "right",
+  "why": "2KI 25:22 sets Gedaliah over 'the people that remained in the land of Judah', the land. Not the patriarch Judah."
+ },
+ {
+  "id": 54,
+  "verdict": "right",
+  "why": "'Jehoshaphat king of Judah' (מלך־יהודה) names the kingdom, not the person Judah son of Jacob."
+ },
+ {
+  "id": 55,
+  "verdict": "wrong",
+  "why": "MAT 13:55 names Joseph (Ἰωσήφ) and Judas together as Jesus' brothers, so they are brothers to each other."
+ },
+ {
+  "id": 56,
+  "verdict": "right",
+  "why": "2CH 29:2: 'according to all that David his father (דויד אביו) had done'. Not recorded."
+ },
+ {
+  "id": 57,
+  "verdict": "right",
+  "why": "2CH 29:12's Kish son of Abdi lived in Hezekiah's day. The abdi record is the son of Malluch in Ethan's ancestry (1CH 6:44), centuries earlier; the father is abdi-3."
+ },
+ {
+  "id": 58,
+  "verdict": "unclear",
+  "why": "2SA 4:2 says 'of the children of Benjamin' but adds 'for Beeroth also was reckoned to Benjamin', a territorial reckoning of a Gibeonite town. Descent from Benjamin is not decided."
+ },
+ {
+  "id": 59,
+  "verdict": "right",
+  "why": "GEN 16:3: Sarai gave Hagar to Abram 'to be his wife' (לו לאשה). The chapter calls her wife, not concubine."
+ },
+ {
+  "id": 60,
+  "verdict": "right",
+  "why": "JHN 11:27: Martha confesses σὺ εἶ ὁ Χριστὸς ὁ Υἱὸς τοῦ Θεοῦ. Not recorded."
+ },
+ {
+  "id": 61,
+  "verdict": "right",
+  "why": "2CH 35:9's Nethanel is a chief Levite under Josiah. nethanel-4 is the scribe of David's time (1CH 24:6), a different man."
+ },
+ {
+  "id": 62,
+  "verdict": "right",
+  "why": "2KI 16:2: 'like David his father (כדוד אביו)'. David is not recorded as Ahaz's ancestor."
+ },
+ {
+  "id": 63,
+  "verdict": "right",
+  "why": "2CH 28:1: 'like David his father (כדויד אביו)'. Not recorded."
+ },
+ {
+  "id": 64,
+  "verdict": "wrong",
+  "why": "Joah son of Zimmah is stated in 1CH 6:21 (the joah-2 record), and 2CH 29:12 again reads 'Joah son of Zimmah' (יואח בן־זמה). The father link is true."
+ },
+ {
+  "id": 65,
+  "verdict": "unclear",
+  "why": "JDG 4:11 calls Hobab חתן משה, Moses' in-law/father-in-law, but the site already records moses brother-in-law-of hobab from NUM 10:29 (Hobab son of Reuel). Which is right is the old Hobab/Reuel question, not settled here."
+ },
+ {
+  "id": 66,
+  "verdict": "right",
+  "why": "1KI 11:18-20: Pharaoh gave Hadad a house, food, land and a wife, and Hadad 'found great favour'. Hospitality and patronage, not master-of; nor does it say this is Solomon's father-in-law."
+ },
+ {
+  "id": 67,
+  "verdict": "right",
+  "why": "MRK 15:40: Μαρία ἡ Ἰακώβου τοῦ μικροῦ καὶ Ἰωσῆτος μήτηρ, mother of Joses as well as of James. Only the James link is recorded."
+ },
+ {
+  "id": 68,
+  "verdict": "right",
+  "why": "2CH 29:12's Abdi is the Hezekiah-era Merarite father of Kish (abdi-3). He is not Malluch's son of 1CH 6:44."
+ },
+ {
+  "id": 69,
+  "verdict": "right",
+  "why": "1CH 27:3: 'Of the children of Perez (מן־בני־פרץ) was the chief ... for the first month', i.e. Jashobeam son of Zabdiel (27:2). Not recorded."
+ },
+ {
+  "id": 70,
+  "verdict": "right",
+  "why": "1CH 12:3's Azmaveth is the Benjamite father of Jeziel and Pelet at Ziklag (azmaveth-6). Jehoadda's son is five generations after Jonathan."
+ },
+ {
+  "id": 71,
+  "verdict": "wrong",
+  "why": "MAT 13:55 lists Simon and Joseph together among Jesus' brothers, so they are brothers."
+ },
+ {
+  "id": 72,
+  "verdict": "right",
+  "why": "MRK 15:39: the centurion says Ἀληθῶς οὗτος ὁ ἄνθρωπος Υἱὸς Θεοῦ ἦν. Not recorded."
+ },
+ {
+  "id": 73,
+  "verdict": "right",
+  "why": "NEH 11:4: 'Of the children of Judah (מבני יהודה); Athaiah son of Uzziah ... of the children of Perez'. Not recorded."
+ },
+ {
+  "id": 74,
+  "verdict": "right",
+  "why": "JER 36:12's Zedekiah son of Hananiah is a prince under Jehoiakim. Nothing ties his father to the prophet Hananiah son of Azzur of Gibeon (JER 28:1); hananiah-13 is the named father."
+ },
+ {
+  "id": 75,
+  "verdict": "right",
+  "why": "2CH 21:2 lists Azariah among Jehoram's brothers. Only killer-of is recorded."
+ },
+ {
+  "id": 76,
+  "verdict": "right",
+  "why": "1CH 27:25: Jehonathan's father is a David-era Uzziah (uzziah-4), not Uriel's son in the old Kohathite line of 1CH 6:24."
+ },
+ {
+  "id": 77,
+  "verdict": "right",
+  "why": "GEN 28:13: 'the LORD God of Abraham thy father (אברהם אביך)', to Jacob, so Abraham is his forefather. Only the Isaac links are recorded, nothing directly between them."
+ },
+ {
+  "id": 78,
+  "verdict": "wrong",
+  "why": "MAT 13:55 names James and Simon together as Jesus' brothers, so they are brothers to each other."
+ },
+ {
+  "id": 79,
+  "verdict": "right",
+  "why": "2KI 18:3: 'according to all that David his father (דוד אביו) did'. Not recorded."
+ },
+ {
+  "id": 80,
+  "verdict": "right",
+  "why": "EZR 4:8: 'Shimshai the scribe' (ספרא) wrote with Rehum to Artaxerxes against Jerusalem. He was a provincial scribe writing to the king, not the king's scribe."
+ },
+ {
+  "id": 81,
+  "verdict": "unclear",
+  "why": "LUK 1:5 says only ἐξ ἐφημερίας Ἀβιά, 'of the course of Abijah'. Course membership was priestly-familial, but the post-exilic courses were reconstituted under the old names, so descent from Abijah is not decided."
+ },
+ {
+  "id": 82,
+  "verdict": "right",
+  "why": "2CH 21:2 lists Zechariah among Jehoram's brothers. Only killer-of is recorded."
+ },
+ {
+  "id": 83,
+  "verdict": "unclear",
+  "why": "1CH 12:6 'the Korhites' (הקרחים) come in a list of Benjamites (12:2), and many read them as a Benjamite or Judahite Korah family (cf. 1CH 2:43) rather than Levites from Izhar's son Korah."
+ },
+ {
+  "id": 84,
+  "verdict": "right",
+  "why": "2KI 18:1: 'Hezekiah son of Ahaz king of Judah' names the kingdom, not the patriarch Judah."
+ },
+ {
+  "id": 85,
+  "verdict": "right",
+  "why": "2KI 21:1 does not even say 'king of Judah', and in any case the kingdom is meant, not Judah son of Jacob."
+ },
+ {
+  "id": 86,
+  "verdict": "right",
+  "why": "1CH 27:18's Michael is the father of David's prince of Issachar. michael-4, Izrahiah's son (1CH 7:3), is three generations after Tola, who went down to Egypt, so not David-era; michael-10 is the named father."
+ },
+ {
+  "id": 87,
+  "verdict": "right",
+  "why": "1CH 12:3's Azmaveth is the Benjamite father of Jeziel and Pelet at Ziklag (azmaveth-6), not Jehoadda's late descendant of Jonathan (1CH 8:36)."
+ },
+ {
+  "id": 88,
+  "verdict": "right",
+  "why": "2CH 17:3: 'he walked in the first ways of David his father (דויד אביו)'. Not recorded."
+ },
+ {
+  "id": 89,
+  "verdict": "right",
+  "why": "2SA 23:24's Elhanan is son of Dodo 'of Bethlehem'. dodo-2 is the Ahohite, father of Eleazar (23:9), a different man."
+ },
+ {
+  "id": 90,
+  "verdict": "unclear",
+  "why": "1CH 12:6 'the Korhites' (הקרחים) appear among Benjamites, and their link to Korah son of Izhar (rather than another Korah, cf. 1CH 2:43) is disputed."
+ },
+ {
+  "id": 91,
+  "verdict": "wrong",
+  "why": "JDG 4:11 places Heber 'of the children of Hobab (מבני חבב)', and Hobab is Reuel's son (NUM 10:29). Heber is therefore Reuel's descendant."
+ },
+ {
+  "id": 92,
+  "verdict": "right",
+  "why": "2KI 12:20-21: Joash's servants slew Joash; 'Jozachar ... smote him, and he died', and Amaziah reigned in his stead. The victim is Joash, not Amaziah."
+ },
+ {
+  "id": 93,
+  "verdict": "right",
+  "why": "1CH 27:18's Michael is the father of Omri, David's prince of Issachar (michael-10). The Tola-line Michael of 1CH 7:3 lived centuries earlier."
+ },
+ {
+  "id": 94,
+  "verdict": "wrong",
+  "why": "EST 2:7: Esther is Mordecai's 'uncle's daughter' (בת־דדו), already recorded as cousin, whom he 'took for his own daughter' (לקחה ... לו לבת). An adoption, not daughter-of."
+ },
+ {
+  "id": 95,
+  "verdict": "right",
+  "why": "1CH 15:18 only lists Ben and Obed-edom side by side among the second-degree Levites/porters. No descent is stated."
+ },
+ {
+  "id": 96,
+  "verdict": "right",
+  "why": "1CH 12:9 numbers the Gadites 'Ezer the first, Obadiah the second, Eliab the third'. A ranking, not a genealogy."
+ },
+ {
+  "id": 97,
+  "verdict": "right",
+  "why": "JOS 17:2-3: 'Hepher son of Gilead son of Machir son of Manasseh' and 'the male children of Manasseh'. Only son-of Gilead is recorded, nothing directly to Manasseh."
+ },
+ {
+  "id": 98,
+  "verdict": "right",
+  "why": "2KI 15:38 buries Jotham 'in the city of David his father (דוד אביו)'. Not recorded."
+ },
+ {
+  "id": 99,
+  "verdict": "right",
+  "why": "1KI 15:3: 'as the heart of David his father (דוד אביו)', said of Abijam. Not recorded."
+ },
+ {
+  "id": 100,
+  "verdict": "right",
+  "why": "2CH 29:12: 'Mahath son of Amasai ... of the sons of the Kohathites (מן־בני הקהתי)', the same Hezekiah-era Levite as 2CH 31:13. Not recorded."
+ }
+]

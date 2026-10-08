@@ -1,0 +1,11 @@
+{
+ "chapter": "2KI 11",
+ "rows": 6,
+ "wrong": [],
+ "missing": [],
+ "note": "All explicit family statements are already recorded. Owner row 106518 is retained, although this chapter identifies Jehoiada as the priest without stating his descent from Levi.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:09:11+00:00"
+}

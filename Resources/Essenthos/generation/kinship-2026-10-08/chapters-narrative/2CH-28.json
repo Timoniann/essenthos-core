@@ -1,0 +1,20 @@
+{
+ "chapter": "2CH 28",
+ "rows": 21,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "ahaz",
+   "type": "descendant-of",
+   "to": "david",
+   "verse": "2CH 28:1",
+   "why": "The verse calls David Ahaz's father (אָבִיו), expressing ancestral kinship.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Owner rulings 105702, 106048, 106234, and 106901 are retained: 2CH 28:12 identifies their sons as Ephraimite leaders but does not explicitly state these fathers' descent from Ephraim.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 2,
+ "at": "2026-10-08T19:01:27+00:00"
+}

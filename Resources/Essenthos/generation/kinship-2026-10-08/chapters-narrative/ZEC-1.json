@@ -1,0 +1,11 @@
+{
+ "chapter": "ZEC 1",
+ "rows": 5,
+ "wrong": [],
+ "missing": [],
+ "note": "ZEC 1:1 and 1:7 identify Zechariah as Berechiah’s son and Berechiah as Iddo’s son; both relationships are recorded. The owner’s grandson-of row agrees with this genealogy.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:09:55+00:00"
+}

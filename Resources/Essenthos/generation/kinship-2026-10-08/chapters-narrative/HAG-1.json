@@ -1,0 +1,11 @@
+{
+ "chapter": "HAG 1",
+ "rows": 5,
+ "wrong": [],
+ "missing": [],
+ "note": "Owner row 105848 is retained as his ruling, although HAG 1:1 does not explicitly state that Jehozadak is a descendant of Aaron.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 2,
+ "at": "2026-10-08T19:19:50+00:00"
+}

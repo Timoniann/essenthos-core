@@ -1,0 +1,20 @@
+{
+ "chapter": "EST 2",
+ "rows": 17,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "hadassah",
+   "type": "daughter-of",
+   "to": "mordecai-2",
+   "verse": "EST 2:7",
+   "why": "The Hebrew explicitly says Mordecai took Hadassah (Esther) as his daughter after her parents died.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The proposed daughter-of relationship denotes adoption, not biological parentage. No owner ruling appears wrong.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:01:49+00:00"
+}

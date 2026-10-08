@@ -1,0 +1,28 @@
+{
+ "chapter": "JOS 17",
+ "rows": 7,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "iezer",
+   "type": "descendant-of",
+   "to": "manasseh",
+   "verse": "JOS 17:2",
+   "why": "The verse includes Abiezer, identified in the supplied records as Iezer, among the male children of Manasseh by their families.",
+   "confidence": 0.98
+  },
+  {
+   "from": "hepher",
+   "type": "descendant-of",
+   "to": "manasseh",
+   "verse": "JOS 17:2",
+   "why": "The verse includes Hepher among the male children of Manasseh by their families, with the intervening generations named in JOS 17:3.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "All supplied chapter rows are supported by the text; the other explicit parent-child relationships are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:08:00+00:00"
+}

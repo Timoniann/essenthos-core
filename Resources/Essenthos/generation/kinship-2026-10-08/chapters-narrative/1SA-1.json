@@ -1,0 +1,11 @@
+{
+ "chapter": "1SA 1",
+ "rows": 22,
+ "wrong": [],
+ "missing": [],
+ "note": "The recorded relationships are supported by the Hebrew narrative, including the owner's ruling that Samuel is Elkanah's son in the context of 1SA 1:19–20. Every explicit family statement between the supplied people is already recorded in at least one direction.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:00:28+00:00"
+}

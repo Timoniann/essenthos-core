@@ -1,0 +1,955 @@
+{
+ "chapter": "NEH 3",
+ "text": {
+  "NEH 3:1": {
+   "KJV": "Then Eliashib the high priest rose up with his brethren the priests, and they builded the sheep gate; they sanctified it, and set up the doors of it; even unto the tower of Meah they sanctified it, unto the tower of Hananeel.",
+   "BHSA": "וַיָּ֡קָם אֶלְיָשִׁיב֩ הַכֹּהֵ֨ן הַגָּדֹ֜ול וְאֶחָ֣יו הַכֹּהֲנִ֗ים וַיִּבְנוּ֙ אֶת־שַׁ֣עַר הַצֹּ֔אן הֵ֣מָּה קִדְּשׁ֔וּהוּ וַֽיַּעֲמִ֖ידוּ דַּלְתֹתָ֑יו וְעַד־מִגְדַּ֤ל הַמֵּאָה֙ קִדְּשׁ֔וּהוּ עַ֖ד מִגְדַּ֥ל חֲנַנְאֵֽל׃ ס "
+  },
+  "NEH 3:2": {
+   "KJV": "And next unto him builded the men of Jericho. And next to them builded Zaccur the son of Imri.",
+   "BHSA": "וְעַל־יָדֹ֥ו בָנ֖וּ אַנְשֵׁ֣י יְרֵחֹ֑ו ס וְעַל־יָדֹ֣ו בָנָ֔ה זַכּ֖וּר בֶּן־אִמְרִֽי׃ ס "
+  },
+  "NEH 3:3": {
+   "KJV": "But the fish gate did the sons of Hassenaah build, who also laid the beams thereof, and set up the doors thereof, the locks thereof, and the bars thereof.",
+   "BHSA": "וְאֵת֙ שַׁ֣עַר הַדָּגִ֔ים בָּנ֖וּ בְּנֵ֣י הַסְּנָאָ֑ה הֵ֣מָּה קֵר֔וּהוּ וַֽיַּעֲמִ֨ידוּ֙ דַּלְתֹתָ֔יו מַנְעוּלָ֖יו וּבְרִיחָֽיו׃ ס "
+  },
+  "NEH 3:4": {
+   "KJV": "And next unto them repaired Meremoth the son of Urijah, the son of Koz. And next unto them repaired Meshullam the son of Berechiah, the son of Meshezabeel. And next unto them repaired Zadok the son of Baana.",
+   "BHSA": "וְעַל־יָדָ֣ם הֶחֱזִ֗יק מְרֵמֹ֤ות בֶּן־אוּרִיָּה֙ בֶּן־הַקֹּ֔וץ ס וְעַל־יָדָ֣ם הֶחֱזִ֔יק מְשֻׁלָּ֥ם בֶּן־בֶּרֶכְיָ֖ה בֶּן־מְשֵׁיזַבְאֵ֑ל ס וְעַל־יָדָ֣ם הֶֽחֱזִ֔יק צָדֹ֖וק בֶּֽן־בַּעֲנָֽא׃ ס "
+  },
+  "NEH 3:5": {
+   "KJV": "And next unto them the Tekoites repaired; but their nobles put not their necks to the work of their Lord.",
+   "BHSA": "וְעַל־יָדָ֖ם הֶחֱזִ֣יקוּ הַתְּקֹועִ֑ים וְאַדִּֽירֵיהֶם֙ לֹא־הֵבִ֣יאוּ צַוָּרָ֔ם בַּעֲבֹדַ֖ת אֲדֹנֵיהֶֽם׃ ס "
+  },
+  "NEH 3:6": {
+   "KJV": "Moreover the old gate repaired Jehoiada the son of Paseah, and Meshullam the son of Besodeiah; they laid the beams thereof, and set up the doors thereof, and the locks thereof, and the bars thereof.",
+   "BHSA": "וְאֵת֩ שַׁ֨עַר הַיְשָׁנָ֜ה הֶחֱזִ֗יקוּ יֹֽויָדָע֙ בֶּן־פָּסֵ֔חַ וּמְשֻׁלָּ֖ם בֶּן־בְּסֹֽודְיָ֑ה הֵ֣מָּה קֵר֔וּהוּ וַֽיַּעֲמִ֨ידוּ֙ דַּלְתֹתָ֔יו וּמַנְעֻלָ֖יו וּבְרִיחָֽיו׃ ס "
+  },
+  "NEH 3:7": {
+   "KJV": "And next unto them repaired Melatiah the Gibeonite, and Jadon the Meronothite, the men of Gibeon, and of Mizpah, unto the throne of the governor on this side the river.",
+   "BHSA": "וְעַל־יָדָ֨ם הֶחֱזִ֜יק מְלַטְיָ֣ה הַגִּבְעֹנִ֗י וְיָדֹון֙ הַמֵּרֹ֣נֹתִ֔י אַנְשֵׁ֥י גִבְעֹ֖ון וְהַמִּצְפָּ֑ה לְכִסֵּ֕א פַּחַ֖ת עֵ֥בֶר הַנָּהָֽר׃ ס "
+  },
+  "NEH 3:8": {
+   "KJV": "Next unto him repaired Uzziel the son of Harhaiah, of the goldsmiths. Next unto him also repaired Hananiah the son of one of the apothecaries, and they fortified Jerusalem unto the broad wall.",
+   "BHSA": "עַל־יָדֹ֣ו הֶחֱזִ֗יק עֻזִּיאֵ֤ל בֶּֽן־חַרְהֲיָה֙ צֹֽורְפִ֔ים ס וְעַל־יָדֹ֣ו הֶחֱזִ֔יק חֲנַנְיָ֖ה בֶּן־הָרַקָּחִ֑ים וַיַּֽעַזְבוּ֙ יְר֣וּשָׁלִַ֔ם עַ֖ד הַחֹומָ֥ה הָרְחָבָֽה׃ ס "
+  },
+  "NEH 3:9": {
+   "KJV": "And next unto them repaired Rephaiah the son of Hur, the ruler of the half part of Jerusalem.",
+   "BHSA": "וְעַל־יָדָ֤ם הֶחֱזִיק֙ רְפָיָ֣ה בֶן־ח֔וּר שַׂ֕ר חֲצִ֖י פֶּ֥לֶךְ יְרוּשָׁלִָֽם׃ ס "
+  },
+  "NEH 3:10": {
+   "KJV": "And next unto them repaired Jedaiah the son of Harumaph, even over against his house. And next unto him repaired Hattush the son of Hashabniah.",
+   "BHSA": "וְעַל־יָדָ֧ם הֶחֱזִ֛יק יְדָיָ֥ה בֶן־חֲרוּמַ֖ף וְנֶ֣גֶד בֵּיתֹ֑ו ס וְעַל־יָדֹ֣ו הֶחֱזִ֔יק חַטּ֖וּשׁ בֶּן־חֲשַׁבְנְיָֽה׃ "
+  },
+  "NEH 3:11": {
+   "KJV": "Malchijah the son of Harim, and Hashub the son of Pahathmoab, repaired the other piece, and the tower of the furnaces.",
+   "BHSA": "מִדָּ֣ה שֵׁנִ֗ית הֶחֱזִיק֙ מַלְכִּיָּ֣ה בֶן־חָרִ֔ם וְחַשּׁ֖וּב בֶּן־פַּחַ֣ת מֹואָ֑ב וְאֵ֖ת מִגְדַּ֥ל הַתַּנּוּרִֽים׃ ס "
+  },
+  "NEH 3:12": {
+   "KJV": "And next unto him repaired Shallum the son of Halohesh, the ruler of the half part of Jerusalem, he and his daughters.",
+   "BHSA": "וְעַל־יָדֹ֣ו הֶחֱזִ֗יק שַׁלּוּם֙ בֶּן־הַלֹּוחֵ֔שׁ שַׂ֕ר חֲצִ֖י פֶּ֣לֶךְ יְרוּשָׁלִָ֑ם ה֖וּא וּבְנֹותָֽיו׃ ס "
+  },
+  "NEH 3:13": {
+   "KJV": "The valley gate repaired Hanun, and the inhabitants of Zanoah; they built it, and set up the doors thereof, the locks thereof, and the bars thereof, and a thousand cubits on the wall unto the dung gate.",
+   "BHSA": "אֵת֩ שַׁ֨עַר הַגַּ֜יְא הֶחֱזִ֣יק חָנוּן֮ וְיֹשְׁבֵ֣י זָנֹוחַ֒ הֵ֣מָּה בָנ֔וּהוּ וַֽיַּעֲמִ֨ידוּ֙ דַּלְתֹתָ֔יו מַנְעֻלָ֖יו וּבְרִיחָ֑יו וְאֶ֤לֶף אַמָּה֙ בַּחֹומָ֔ה עַ֖ד שַׁ֥עַר הָשֲׁפֹֽות׃ "
+  },
+  "NEH 3:14": {
+   "KJV": "But the dung gate repaired Malchiah the son of Rechab, the ruler of part of Bethhaccerem; he built it, and set up the doors thereof, the locks thereof, and the bars thereof.",
+   "BHSA": "וְאֵ֣ת׀ שַׁ֣עַר הָאַשְׁפֹּ֗ות הֶחֱזִיק֙ מַלְכִּיָּ֣ה בֶן־רֵכָ֔ב שַׂ֖ר פֶּ֣לֶךְ בֵּית־הַכָּ֑רֶם ה֣וּא יִבְנֶ֔נּוּ וְיַעֲמִיד֙ דַּלְתֹתָ֔יו מַנְעֻלָ֖יו וּבְרִיחָֽיו׃ ס "
+  },
+  "NEH 3:15": {
+   "KJV": "But the gate of the fountain repaired Shallun the son of Colhozeh, the ruler of part of Mizpah; he built it, and covered it, and set up the doors thereof, the locks thereof, and the bars thereof, and the wall of the pool of Siloah by the king's garden, and unto the stairs that go down from the city of David.",
+   "BHSA": "וְאֵת֩ שַׁ֨עַר הָעַ֜יִן הֶ֠חֱזִיק שַׁלּ֣וּן בֶּן־כָּל־חֹזֶה֮ שַׂ֣ר פֶּ֣לֶךְ הַמִּצְפָּה֒ ה֤וּא יִבְנֶ֨נּוּ֙ וִיטַֽלְלֶ֔נּוּ ויעמידו דַּלְתֹתָ֔יו מַנְעֻלָ֖יו וּבְרִיחָ֑יו וְ֠אֵת חֹומַ֞ת בְּרֵכַ֤ת הַשֶּׁ֨לַח֙ לְגַן־הַמֶּ֔לֶךְ וְעַד־הַֽמַּעֲלֹ֔ות הַיֹּורְדֹ֖ות מֵעִ֥יר דָּוִֽיד׃ ס "
+  },
+  "NEH 3:16": {
+   "KJV": "After him repaired Nehemiah the son of Azbuk, the ruler of the half part of Bethzur, unto the place over against the sepulchres of David, and to the pool that was made, and unto the house of the mighty.",
+   "BHSA": "אַחֲרָ֤יו הֶחֱזִיק֙ נְחֶמְיָ֣ה בֶן־עַזְבּ֔וּק שַׂ֕ר חֲצִ֖י פֶּ֣לֶךְ בֵּֽית־צ֑וּר עַד־נֶ֨גֶד֙ קִבְרֵ֣י דָוִ֔יד וְעַד־הַבְּרֵכָה֙ הָעֲשׂוּיָ֔ה וְעַ֖ד בֵּ֥ית הַגִּבֹּרִֽים׃ ס "
+  },
+  "NEH 3:17": {
+   "KJV": "After him repaired the Levites, Rehum the son of Bani. Next unto him repaired Hashabiah, the ruler of the half part of Keilah, in his part.",
+   "BHSA": "אַחֲרָ֛יו הֶחֱזִ֥יקוּ הַלְוִיִּ֖ם רְח֣וּם בֶּן־בָּנִ֑י עַל־יָדֹ֣ו הֶחֱזִ֗יק חֲשַׁבְיָ֛ה שַׂר־חֲצִי־פֶ֥לֶךְ קְעִילָ֖ה לְפִלְכֹּֽו׃ ס "
+  },
+  "NEH 3:18": {
+   "KJV": "After him repaired their brethren, Bavai the son of Henadad, the ruler of the half part of Keilah.",
+   "BHSA": "אַחֲרָיו֙ הֶחֱזִ֣יקוּ אֲחֵיהֶ֔ם בַּוַּ֖י בֶּן־חֵנָדָ֑ד שַׂ֕ר חֲצִ֖י פֶּ֥לֶךְ קְעִילָֽה׃ ס "
+  },
+  "NEH 3:19": {
+   "KJV": "And next to him repaired Ezer the son of Jeshua, the ruler of Mizpah, another piece over against the going up to the armoury at the turning of the wall.",
+   "BHSA": "וַיְחַזֵּ֨ק עַל־יָדֹ֜ו עֵ֧זֶר בֶּן־יֵשׁ֛וּעַ שַׂ֥ר הַמִּצְפָּ֖ה מִדָּ֣ה שֵׁנִ֑ית מִנֶּ֕גֶד עֲלֹ֥ת הַנֶּ֖שֶׁק הַמִּקְצֹֽעַ׃ ס "
+  },
+  "NEH 3:20": {
+   "KJV": "After him Baruch the son of Zabbai earnestly repaired the other piece, from the turning of the wall unto the door of the house of Eliashib the high priest.",
+   "BHSA": "אַחֲרָ֨יו הֶחֱרָ֧ה הֶחֱזִ֛יק בָּר֥וּךְ בֶּן־זבי מִדָּ֣ה שֵׁנִ֑ית מִן־הַ֨מִּקְצֹ֔ועַ עַד־פֶּ֨תַח֙ בֵּ֣ית אֶלְיָשִׁ֔יב הַכֹּהֵ֖ן הַגָּדֹֽול׃ ס "
+  },
+  "NEH 3:21": {
+   "KJV": "After him repaired Meremoth the son of Urijah the son of Koz another piece, from the door of the house of Eliashib even to the end of the house of Eliashib.",
+   "BHSA": "אַחֲרָ֣יו הֶחֱזִ֗יק מְרֵמֹ֧ות בֶּן־אוּרִיָּ֛ה בֶּן־הַקֹּ֖וץ מִדָּ֣ה שֵׁנִ֑ית מִפֶּ֨תַח֙ בֵּ֣ית אֶלְיָשִׁ֔יב וְעַד־תַּכְלִ֖ית בֵּ֥ית אֶלְיָשִֽׁיב׃ ס "
+  },
+  "NEH 3:22": {
+   "KJV": "And after him repaired the priests, the men of the plain.",
+   "BHSA": "וְאַחֲרָ֛יו הֶחֱזִ֥יקוּ הַכֹּהֲנִ֖ים אַנְשֵׁ֥י הַכִּכָּֽר׃ "
+  },
+  "NEH 3:23": {
+   "KJV": "After him repaired Benjamin and Hashub over against their house. After him repaired Azariah the son of Maaseiah the son of Ananiah by his house.",
+   "BHSA": "אַחֲרָ֨יו הֶחֱזִ֧יק בִּנְיָמִ֛ן וְחַשּׁ֖וּב נֶ֣גֶד בֵּיתָ֑ם ס אַחֲרָ֣יו הֶחֱזִ֗יק עֲזַרְיָ֧ה בֶן־מַעֲשֵׂיָ֛ה בֶּן־עֲנָֽנְיָ֖ה אֵ֥צֶל בֵּיתֹֽו׃ ס "
+  },
+  "NEH 3:24": {
+   "KJV": "After him repaired Binnui the son of Henadad another piece, from the house of Azariah unto the turning of the wall, even unto the corner.",
+   "BHSA": "אַחֲרָ֣יו הֶחֱזִ֗יק בִּנּ֛וּי בֶּן־חֵנָדָ֖ד מִדָּ֣ה שֵׁנִ֑ית מִבֵּ֣ית עֲזַרְיָ֔ה עַד־הַמִּקְצֹ֖ועַ וְעַד־הַפִּנָּֽה׃ "
+  },
+  "NEH 3:25": {
+   "KJV": "Palal the son of Uzai, over against the turning of the wall, and the tower which lieth out from the king's high house, that was by the court of the prison. After him Pedaiah the son of Parosh.",
+   "BHSA": "פָּלָ֣ל בֶּן־אוּזַי֮ מִנֶּ֣גֶד הַמִּקְצֹועַ֒ וְהַמִּגְדָּ֗ל הַיֹּוצֵא֙ מִבֵּ֤ית הַמֶּ֨לֶךְ֙ הָֽעֶלְיֹ֔ון אֲשֶׁ֖ר לַחֲצַ֣ר הַמַּטָּרָ֑ה אַחֲרָ֖יו פְּדָיָ֥ה בֶן־פַּרְעֹֽשׁ׃ ס "
+  },
+  "NEH 3:26": {
+   "KJV": "Moreover the Nethinims dwelt in Ophel, unto the place over against the water gate toward the east, and the tower that lieth out.",
+   "BHSA": "וְהַ֨נְּתִינִ֔ים הָי֥וּ יֹשְׁבִ֖ים בָּעֹ֑פֶל עַ֠ד נֶ֜גֶד שַׁ֤עַר הַמַּ֨יִם֙ לַמִּזְרָ֔ח וְהַמִּגְדָּ֖ל הַיֹּוצֵֽא׃ ס "
+  },
+  "NEH 3:27": {
+   "KJV": "After them the Tekoites repaired another piece, over against the great tower that lieth out, even unto the wall of Ophel.",
+   "BHSA": "אַחֲרָ֛יו הֶחֱזִ֥יקוּ הַתְּקֹעִ֖ים מִדָּ֣ה שֵׁנִ֑ית מִנֶּ֜גֶד הַמִּגְדָּ֤ל הַגָּדֹול֙ הַיֹּוצֵ֔א וְעַ֖ד חֹומַ֥ת הָעֹֽפֶל׃ "
+  },
+  "NEH 3:28": {
+   "KJV": "From above the horse gate repaired the priests, every one over against his house.",
+   "BHSA": "מֵעַ֣ל׀ שַׁ֣עַר הַסּוּסִ֗ים הֶחֱזִ֨יקוּ֙ הַכֹּ֣הֲנִ֔ים אִ֖ישׁ לְנֶ֥גֶד בֵּיתֹֽו׃ ס "
+  },
+  "NEH 3:29": {
+   "KJV": "After them repaired Zadok the son of Immer over against his house. After him repaired also Shemaiah the son of Shechaniah, the keeper of the east gate.",
+   "BHSA": "אַחֲרָ֧יו הֶחֱזִ֛יק צָדֹ֥וק בֶּן־אִמֵּ֖ר נֶ֣גֶד בֵּיתֹ֑ו ס וְאַחֲרָ֤יו הֶחֱזִיק֙ שְׁמַֽעְיָ֣ה בֶן־שְׁכַנְיָ֔ה שֹׁמֵ֖ר שַׁ֥עַר הַמִּזְרָֽח׃ ס "
+  },
+  "NEH 3:30": {
+   "KJV": "After him repaired Hananiah the son of Shelemiah, and Hanun the sixth son of Zalaph, another piece. After him repaired Meshullam the son of Berechiah over against his chamber.",
+   "BHSA": "אחרי הֶחֱזִ֜יק חֲנַנְיָ֣ה בֶן־שֶׁלֶמְיָ֗ה וְחָנ֧וּן בֶּן־צָלָ֛ף הַשִּׁשִּׁ֖י מִדָּ֣ה שֵׁנִ֑י ס אַחֲרָ֣יו הֶחֱזִ֗יק מְשֻׁלָּם֙ בֶּן־בֶּ֣רֶכְיָ֔ה נֶ֖גֶד נִשְׁכָּתֹֽו׃ ס "
+  },
+  "NEH 3:31": {
+   "KJV": "After him repaired Malchiah the goldsmith's son unto the place of the Nethinims, and of the merchants, over against the gate Miphkad, and to the going up of the corner.",
+   "BHSA": "אחרי הֶחֱזִ֗יק מַלְכִּיָּה֙ בֶּן־הַצֹּ֣רְפִ֔י עַד־בֵּ֥ית הַנְּתִינִ֖ים וְהָרֹכְלִ֑ים נֶ֚גֶד שַׁ֣עַר הַמִּפְקָ֔ד וְעַ֖ד עֲלִיַּ֥ת הַפִּנָּֽה׃ "
+  },
+  "NEH 3:32": {
+   "KJV": "And between the going up of the corner unto the sheep gate repaired the goldsmiths and the merchants.",
+   "BHSA": "וּבֵ֨ין עֲלִיַּ֤ת הַפִּנָּה֙ לְשַׁ֣עַר הַצֹּ֔אן הֶחֱזִ֥יקוּ הַצֹּרְפִ֖ים וְהָרֹכְלִֽים׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "ananiah",
+   "name": "Ananiah",
+   "distinguisher": "father of Maaseiah (NEH 3:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "azariah-16",
+   "name": "Azariah",
+   "distinguisher": "carried out repairs beside his house (NEH 3:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "azbuk",
+   "name": "Azbuk",
+   "distinguisher": "official of the district of Beth-zur and father of Nehemiah (NEH 3:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "baana-3",
+   "name": "Baana",
+   "distinguisher": "father of Zadok (NEH 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "bani-6",
+   "name": "Bani",
+   "distinguisher": "father of Rehum (NEH 3:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "baruch",
+   "name": "Baruch",
+   "distinguisher": "zealously repaired another section of wall (NEH 3:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "bavvai",
+   "name": "Bavvai",
+   "distinguisher": "carried out repairs (NEH 3:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin-4",
+   "name": "Benjamin",
+   "distinguisher": "carried out repairs in front of their house (NEH 3:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "berechiah-5",
+   "name": "Berechiah",
+   "distinguisher": "father of Meshullam (NEH 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "besodeiah",
+   "name": "Besodeiah",
+   "distinguisher": "father of Meshullam (NEH 3:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "binnui-4",
+   "name": "Binnui",
+   "distinguisher": "repaired a section of the wall of Jerusalem (NEH 3:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "colhozeh",
+   "name": "Col-hozeh",
+   "distinguisher": "official of the distrct of Mizpah and father of Shallum (NEH 3:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliashib-7",
+   "name": "Eliashib",
+   "distinguisher": "the high priest with Nehemiah during the reconstruction of Jerusalem (NEH 3:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "ezer-5",
+   "name": "Ezer",
+   "distinguisher": "repaired the wall in front of the ascent of the armory (NEH 3:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "hakkoz",
+   "name": "Hakkoz",
+   "distinguisher": "seventh-chosen priest for the twenty-four courses (1CH 24:10), his descendants could not show proof of lineage (NEH 7:63)",
+   "sex": "male"
+  },
+  {
+   "slug": "hallohesh",
+   "name": "Hallohesh",
+   "distinguisher": "official of half the district of Jerusalem and father of Shallum (NEH 3:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "hananiah-6",
+   "name": "Hananiah",
+   "distinguisher": "one of the perfumers, made repairs to the wall of Jerusalem (NEH 3:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "hananiah-7",
+   "name": "Hananiah",
+   "distinguisher": "repaired the wall of Jerusalem (NEH 3:30),",
+   "sex": "male"
+  },
+  {
+   "slug": "hanun-2",
+   "name": "Hanun",
+   "distinguisher": "repaired the Valley Gate and the wall to the Refuse Gate (NEH 3:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "hanun-3",
+   "name": "Hanun",
+   "distinguisher": "the sixth son of Zalaph, repaired a section of Jerusalem's wall (NEH 3:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "harhaiah",
+   "name": "Harhaiah",
+   "distinguisher": "of the goldsmiths, father of Uzziel (NEH 3:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "harim-2",
+   "name": "Harim",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:32)",
+   "sex": "male"
+  },
+  {
+   "slug": "harumaph",
+   "name": "Harumaph",
+   "distinguisher": "father of Jedaiah (NEH 3:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashabiah-4",
+   "name": "Hashabiah",
+   "distinguisher": "Levite sent to Ezra (EZR 8:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashabiah-5",
+   "name": "Hashabiah",
+   "distinguisher": "official of half the district of Keilah (NEH 3:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "hashabneiah",
+   "name": "Hashabneiah",
+   "distinguisher": "father of Hattush (NEH 3:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "hasshub-2",
+   "name": "Hasshub",
+   "distinguisher": "repaired a section of wall and the Tower of Furnaces, son of Pahath-moab (NEH 3:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "hasshub-3",
+   "name": "Hasshub",
+   "distinguisher": "carried out repairs in front of their house (NEH 3:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "hattush-2",
+   "name": "Hattush",
+   "distinguisher": "made repairs to the wall of Jerusalem (NEH 3:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "henadad-2",
+   "name": "Henadad",
+   "distinguisher": "father of Binnui (NEH 3:24), a Levite (NEH 10:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "hur-3",
+   "name": "Hur",
+   "distinguisher": "official of half the district of Jerusalem and father of Rephaiah (NEH 3:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "immer-3",
+   "name": "Immer",
+   "distinguisher": "father of Zadok (NEH 3:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "imri-2",
+   "name": "Imri",
+   "distinguisher": "father of Zaccur (NEH 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "jadon",
+   "name": "Jadon",
+   "distinguisher": "the Meronothite, made repairs for the official seat of the governor (NEH 3:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "jedaiah-4",
+   "name": "Jedaiah",
+   "distinguisher": "made repairs to the wall of Jerusalem opposite his house (NEH 3:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeshua-6",
+   "name": "Jeshua",
+   "distinguisher": "official of Mizpah and father of Ezer (NEH 3:19)",
+   "sex": "male"
+  },
+  {
+   "slug": "joiada",
+   "name": "Joiada",
+   "distinguisher": "repaired the Old Gate (NEH 3:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "maaseiah-9",
+   "name": "Maaseiah",
+   "distinguisher": "father of Azariah (NEH 3:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "malchijah-6",
+   "name": "Malchijah",
+   "distinguisher": "descendant of Harim who had married a foreign wife (EZR 10:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "malchijah-8",
+   "name": "Malchijah",
+   "distinguisher": "repaired the Refuse Gate (NEH 3:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "malchijah-9",
+   "name": "Malchijah",
+   "distinguisher": "one of the goldsmiths who repaired the wall of Jerusalem (NEH 3:31)",
+   "sex": "male"
+  },
+  {
+   "slug": "melatiah",
+   "name": "Melatiah",
+   "distinguisher": "the Gibeonite, made repairs for the official seat of the governor (NEH 3:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "meremoth",
+   "name": "Meremoth",
+   "distinguisher": "son of Uriah the priest (EZR 8:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshezabel",
+   "name": "Meshezabel",
+   "distinguisher": "father of Berechiah (NEH 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshullam-11",
+   "name": "Meshullam",
+   "distinguisher": "made repairs to the wall of Jerusalem (NEH 3:4, NEH 3:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "meshullam-12",
+   "name": "Meshullam",
+   "distinguisher": "repaired the Old Gate (NEH 3:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "nehemiah-2",
+   "name": "Nehemiah",
+   "distinguisher": "made repairs to the wall of Jerusalem (NEH 3:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "pahathmoab",
+   "name": "Pahath-moab",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "palal",
+   "name": "Palal",
+   "distinguisher": "repaired the wall of Jerusalem in front of the Angle (NEH 3:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "parosh",
+   "name": "Parosh",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "paseah-3",
+   "name": "Paseah",
+   "distinguisher": "father of Joiada (NEH 3:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "pedaiah-4",
+   "name": "Pedaiah",
+   "distinguisher": "repaired the wall of Jerusalem (NEH 3:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "rechab-3",
+   "name": "Rechab",
+   "distinguisher": "official of the district of Beth-haccherem and father of Malchijah (NEH 3:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "rehum-3",
+   "name": "Rehum",
+   "distinguisher": "supervised the Levites' repairs to the wall (NEH 3:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "rephaiah-4",
+   "name": "Rephaiah",
+   "distinguisher": "made repairs to the wall of Jerusalem (NEH 3:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "senaah",
+   "name": "Senaah",
+   "distinguisher": "his sons (descendants) returned to Judah after captivity (EZR 2:35)",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum-11",
+   "name": "Shallum",
+   "distinguisher": "he and his daughters made repairs to the wall of Jerusalem (NEH 3:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum-12",
+   "name": "Shallum",
+   "distinguisher": "repaired the Fountain Gate (NEH 3:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "shecaniah-6",
+   "name": "Shecaniah",
+   "distinguisher": "father of Shemaiah (NEH 3:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelemiah-3",
+   "name": "Shelemiah",
+   "distinguisher": "father of Hananiah (NEH 3:30)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-17",
+   "name": "Shemaiah",
+   "distinguisher": "repaired the wall of Jerusalem (NEH 3:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-2",
+   "name": "Shemaiah",
+   "distinguisher": "son of Shecaniah (1CH 3:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "uriah-2",
+   "name": "Uriah",
+   "distinguisher": "the priest, father of Meremoth (EZR 8:33)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzai",
+   "name": "Uzai",
+   "distinguisher": "father of Palal (NEH 3:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "uzziel-6",
+   "name": "Uzziel",
+   "distinguisher": "made repairs to the wall of Jerusalem (NEH 3:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zabbai-2",
+   "name": "Zabbai",
+   "distinguisher": "father of Baruch (NEH 3:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "zaccur-5",
+   "name": "Zaccur",
+   "distinguisher": "rebuilt part of the Jerusalem wall (NEH 3:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "zadok-4",
+   "name": "Zadok",
+   "distinguisher": "made repairs to the wall of Jerusalem (NEH 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "zadok-5",
+   "name": "Zadok",
+   "distinguisher": "repaired Jerusalem's wall in front of his house (NEH 3:29)",
+   "sex": "male"
+  },
+  {
+   "slug": "zalaph",
+   "name": "Zalaph",
+   "distinguisher": "father of Hanun (NEH 3:30)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 106794,
+   "row": "eliashib-7 high-priest-of yhvh",
+   "verse": "NEH 3:1",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 106795,
+   "row": "eliashib-7 descendant-of aaron",
+   "verse": "NEH 3:1",
+   "source": "read from Scripture by an agent reading NEH 3:1 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 99727,
+   "row": "imri-2 father-of zaccur-5",
+   "verse": "NEH 3:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103308,
+   "row": "zaccur-5 son-of imri-2",
+   "verse": "NEH 3:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97842,
+   "row": "baana-3 father-of zadok-4",
+   "verse": "NEH 3:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98059,
+   "row": "berechiah-5 father-of meshullam-11",
+   "verse": "NEH 3:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98060,
+   "row": "berechiah-5 son-of meshezabel",
+   "verse": "NEH 3:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101288,
+   "row": "meshezabel father-of berechiah-5",
+   "verse": "NEH 3:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101301,
+   "row": "meshullam-11 son-of berechiah-5",
+   "verse": "NEH 3:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103322,
+   "row": "zadok-4 son-of baana-3",
+   "verse": "NEH 3:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105709,
+   "row": "hakkoz father-of uriah-2",
+   "verse": "NEH 3:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98082,
+   "row": "besodeiah father-of meshullam-12",
+   "verse": "NEH 3:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100489,
+   "row": "joiada son-of paseah-3",
+   "verse": "NEH 3:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101303,
+   "row": "meshullam-12 son-of besodeiah",
+   "verse": "NEH 3:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101891,
+   "row": "paseah-3 father-of joiada",
+   "verse": "NEH 3:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99338,
+   "row": "harhaiah father-of uzziel-6",
+   "verse": "NEH 3:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103219,
+   "row": "uzziel-6 son-of harhaiah",
+   "verse": "NEH 3:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99658,
+   "row": "hur-3 father-of rephaiah-4",
+   "verse": "NEH 3:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102171,
+   "row": "rephaiah-4 son-of hur-3",
+   "verse": "NEH 3:9",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99347,
+   "row": "harumaph father-of jedaiah-4",
+   "verse": "NEH 3:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99368,
+   "row": "hashabneiah father-of hattush-2",
+   "verse": "NEH 3:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99395,
+   "row": "hattush-2 son-of hashabneiah",
+   "verse": "NEH 3:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100074,
+   "row": "jedaiah-4 son-of harumaph",
+   "verse": "NEH 3:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99389,
+   "row": "hasshub-2 son-of pahathmoab",
+   "verse": "NEH 3:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106144,
+   "row": "pahathmoab father-of hasshub-2",
+   "verse": "NEH 3:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106952,
+   "row": "malchijah-6 son-of harim-2",
+   "verse": "NEH 3:11",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 99231,
+   "row": "hallohesh father-of shallum-11",
+   "verse": "NEH 3:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102405,
+   "row": "shallum-11 son-of hallohesh",
+   "verse": "NEH 3:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101091,
+   "row": "malchijah-8 son-of rechab-3",
+   "verse": "NEH 3:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102132,
+   "row": "rechab-3 father-of malchijah-8",
+   "verse": "NEH 3:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98314,
+   "row": "colhozeh father-of shallum-12",
+   "verse": "NEH 3:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 102406,
+   "row": "shallum-12 son-of colhozeh",
+   "verse": "NEH 3:15",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97777,
+   "row": "azbuk father-of nehemiah-2",
+   "verse": "NEH 3:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101691,
+   "row": "nehemiah-2 son-of azbuk",
+   "verse": "NEH 3:16",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97882,
+   "row": "bani-6 father-of rehum-3",
+   "verse": "NEH 3:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 102152,
+   "row": "rehum-3 son-of bani-6",
+   "verse": "NEH 3:17",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106778,
+   "row": "bavvai son-of henadad-2",
+   "verse": "NEH 3:18",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 98942,
+   "row": "ezer-5 son-of jeshua-6",
+   "verse": "NEH 3:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100315,
+   "row": "jeshua-6 father-of ezer-5",
+   "verse": "NEH 3:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97899,
+   "row": "baruch son-of zabbai-2",
+   "verse": "NEH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103290,
+   "row": "zabbai-2 father-of baruch",
+   "verse": "NEH 3:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105710,
+   "row": "hakkoz grandfather-of meremoth",
+   "verse": "NEH 3:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97496,
+   "row": "ananiah father-of maaseiah-9",
+   "verse": "NEH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97744,
+   "row": "azariah-16 son-of maaseiah-9",
+   "verse": "NEH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97745,
+   "row": "azariah-16 descendant-of ananiah",
+   "verse": "NEH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100997,
+   "row": "maaseiah-9 son-of ananiah",
+   "verse": "NEH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100998,
+   "row": "maaseiah-9 father-of azariah-16",
+   "verse": "NEH 3:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107264,
+   "row": "benjamin-4 companion-of hasshub-3",
+   "verse": "NEH 3:23",
+   "source": "read from Scripture by an agent reading NEH 3:23 on the project owner's instruction, decided 2026-10-07"
+  },
+  {
+   "id": 107269,
+   "row": "hasshub-3 companion-of benjamin-4",
+   "verse": "NEH 3:23",
+   "source": "read from Scripture by an agent reading NEH 3:23 on the project owner's instruction, decided 2026-10-07"
+  },
+  {
+   "id": 98183,
+   "row": "binnui-4 son-of henadad-2",
+   "verse": "NEH 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 99494,
+   "row": "henadad-2 father-of binnui-4",
+   "verse": "NEH 3:24",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101868,
+   "row": "palal son-of uzai",
+   "verse": "NEH 3:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103178,
+   "row": "uzai father-of palal",
+   "verse": "NEH 3:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107009,
+   "row": "pedaiah-4 son-of parosh",
+   "verse": "NEH 3:25",
+   "source": "read from Scripture by the project owner, decided 2026-09-29"
+  },
+  {
+   "id": 99714,
+   "row": "immer-3 father-of zadok-5",
+   "verse": "NEH 3:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102530,
+   "row": "shecaniah-6 father-of shemaiah-17",
+   "verse": "NEH 3:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102628,
+   "row": "shemaiah-17 son-of shecaniah-6",
+   "verse": "NEH 3:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103323,
+   "row": "zadok-5 son-of immer-3",
+   "verse": "NEH 3:29",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99304,
+   "row": "hananiah-7 son-of shelemiah-3",
+   "verse": "NEH 3:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99325,
+   "row": "hanun-3 son-of zalaph",
+   "verse": "NEH 3:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102561,
+   "row": "shelemiah-3 father-of hananiah-7",
+   "verse": "NEH 3:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103331,
+   "row": "zalaph father-of hanun-3",
+   "verse": "NEH 3:30",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "david servant-of yhvh (2SA 3:18)",
+  "meremoth son-of uriah-2 (EZR 8:33)",
+  "hakkoz descendant-of aaron (1CH 24:10)",
+  "uriah-2 father-of meremoth (EZR 8:33)",
+  "uriah-2 descendant-of aaron (EZR 8:33)"
+ ]
+}

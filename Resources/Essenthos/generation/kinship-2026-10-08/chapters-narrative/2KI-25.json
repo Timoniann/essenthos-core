@@ -1,0 +1,23 @@
+{
+ "chapter": "2KI 25",
+ "rows": 16,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    99042
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2KI 25:22",
+   "why": "The verse appoints Gedaliah over the people remaining in the land of Judah, not over Judah the son of Jacob.",
+   "confidence": 1
+  }
+ ],
+ "missing": [],
+ "note": "Owner rows 106588 and 106636 are preserved: 2KI 25:18 identifies Seraiah and Zephaniah as priests but does not explicitly state their descent from Aaron.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:01:41+00:00"
+}

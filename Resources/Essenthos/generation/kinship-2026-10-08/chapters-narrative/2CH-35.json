@@ -1,0 +1,43 @@
+{
+ "chapter": "2CH 35",
+ "rows": 5,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    101725
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2CH 35:9",
+   "why": "The Nethanel named among the Levite chiefs as Conaniah's brother is nethanel-9, not the scribe nethanel-4.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    105632
+   ],
+   "new_type": "",
+   "new_to": "nethanel-9",
+   "verse": "2CH 35:9",
+   "why": "The verse identifies Nethanel, the Levite chief under Josiah, as Conaniah's brother.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "nethanel-9",
+   "type": "brother-of",
+   "to": "conaniah-chief-of-the-levites",
+   "verse": "2CH 35:9",
+   "why": "The Hebrew names Shemaiah and Nethanel as Conaniah's brothers.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The missing Nethanel–Conaniah relationship is also supplied by the proposed retargeting of row 105632. Solomon's relationship to David is already recorded in other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:10:25+00:00"
+}

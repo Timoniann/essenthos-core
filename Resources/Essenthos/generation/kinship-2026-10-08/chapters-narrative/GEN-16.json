@@ -1,0 +1,23 @@
+{
+ "chapter": "GEN 16",
+ "rows": 6,
+ "wrong": [
+  {
+   "kind": "retype",
+   "rows": [
+    105159
+   ],
+   "new_type": "wife-of",
+   "new_to": "abram",
+   "verse": "GEN 16:3",
+   "why": "Sarai gave Hagar to Abram לְאִשָּׁה, explicitly meaning to be his wife.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [],
+ "note": "The other rows are supported, and all other explicit family relationships between the supplied people are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:09:39+00:00"
+}

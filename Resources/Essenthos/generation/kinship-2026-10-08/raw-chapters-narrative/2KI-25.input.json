@@ -1,0 +1,374 @@
+{
+ "chapter": "2KI 25",
+ "text": {
+  "2KI 25:1": {
+   "KJV": "And it came to pass in the ninth year of his reign, in the tenth month, in the tenth day of the month, that Nebuchadnezzar king of Babylon came, he, and all his host, against Jerusalem, and pitched against it; and they built forts against it round about.",
+   "BHSA": "וַיְהִי֩ בִשְׁנַ֨ת הַתְּשִׁיעִ֜ית לְמָלְכֹ֗ו בַּחֹ֣דֶשׁ הָעֲשִׂירִי֮ בֶּעָשֹׂ֣ור לַחֹדֶשׁ֒ בָּ֠א נְבֻכַדְנֶאצַּ֨ר מֶֽלֶךְ־בָּבֶ֜ל ה֧וּא וְכָל־חֵילֹ֛ו עַל־יְרוּשָׁלִַ֖ם וַיִּ֣חַן עָלֶ֑יהָ וַיִּבְנ֥וּ עָלֶ֖יהָ דָּיֵ֥ק סָבִֽיב׃ "
+  },
+  "2KI 25:2": {
+   "KJV": "And the city was besieged unto the eleventh year of king Zedekiah.",
+   "BHSA": "וַתָּבֹ֥א הָעִ֖יר בַּמָּצֹ֑ור עַ֚ד עַשְׁתֵּ֣י עֶשְׂרֵ֣ה שָׁנָ֔ה לַמֶּ֖לֶךְ צִדְקִיָּֽהוּ׃ "
+  },
+  "2KI 25:3": {
+   "KJV": "And on the ninth day of the fourth month the famine prevailed in the city, and there was no bread for the people of the land.",
+   "BHSA": "בְּתִשְׁעָ֣ה לַחֹ֔דֶשׁ וַיֶּחֱזַ֥ק הָרָעָ֖ב בָּעִ֑יר וְלֹא־הָ֥יָה לֶ֖חֶם לְעַ֥ם הָאָֽרֶץ׃ "
+  },
+  "2KI 25:4": {
+   "KJV": "And the city was broken up, and all the men of war fled by night by the way of the gate between two walls, which is by the king's garden: (now the Chaldees were against the city round about:) and the king went the way toward the plain.",
+   "BHSA": "וַתִּבָּקַ֣ע הָעִ֗יר וְכָל־אַנְשֵׁ֨י הַמִּלְחָמָ֤ה׀ הַלַּ֨יְלָה֙ דֶּ֜רֶךְ שַׁ֣עַר׀ בֵּ֣ין הַחֹמֹתַ֗יִם אֲשֶׁר֙ עַל־גַּ֣ן הַמֶּ֔לֶךְ וְכַשְׂדִּ֥ים עַל־הָעִ֖יר סָבִ֑יב וַיֵּ֖לֶךְ דֶּ֥רֶךְ הָעֲרָבָֽה׃ "
+  },
+  "2KI 25:5": {
+   "KJV": "And the army of the Chaldees pursued after the king, and overtook him in the plains of Jericho: and all his army were scattered from him.",
+   "BHSA": "וַיִּרְדְּפ֤וּ חֵיל־כַּשְׂדִּים֙ אַחַ֣ר הַמֶּ֔לֶךְ וַיַּשִּׂ֥גוּ אֹתֹ֖ו בְּעַרְבֹ֣ות יְרֵחֹ֑ו וְכָל־חֵילֹ֔ו נָפֹ֖צוּ מֵעָלָֽיו׃ "
+  },
+  "2KI 25:6": {
+   "KJV": "So they took the king, and brought him up to the king of Babylon to Riblah; and they gave judgment upon him.",
+   "BHSA": "וַֽיִּתְפְּשׂוּ֙ אֶת־הַמֶּ֔לֶךְ וַיַּעֲל֥וּ אֹתֹ֛ו אֶל־מֶ֥לֶךְ בָּבֶ֖ל רִבְלָ֑תָה וַיְדַבְּר֥וּ אִתֹּ֖ו מִשְׁפָּֽט׃ "
+  },
+  "2KI 25:7": {
+   "KJV": "And they slew the sons of Zedekiah before his eyes, and put out the eyes of Zedekiah, and bound him with fetters of brass, and carried him to Babylon.",
+   "BHSA": "וְאֶת־בְּנֵי֙ צִדְקִיָּ֔הוּ שָׁחֲט֖וּ לְעֵינָ֑יו וְאֶת־עֵינֵ֤י צִדְקִיָּ֨הוּ֙ עִוֵּ֔ר וַיַּאַסְרֵ֨הוּ֙ בַֽנְחֻשְׁתַּ֔יִם וַיְבִאֵ֖הוּ בָּבֶֽל׃ ס "
+  },
+  "2KI 25:8": {
+   "KJV": "And in the fifth month, on the seventh day of the month, which is the nineteenth year of king Nebuchadnezzar king of Babylon, came Nebuzaradan, captain of the guard, a servant of the king of Babylon, unto Jerusalem:",
+   "BHSA": "וּבַחֹ֤דֶשׁ הַֽחֲמִישִׁי֙ בְּשִׁבְעָ֣ה לַחֹ֔דֶשׁ הִ֗יא שְׁנַת֙ תְּשַֽׁע־עֶשְׂרֵ֣ה שָׁנָ֔ה לַמֶּ֖לֶךְ נְבֻכַדְנֶאצַּ֣ר מֶֽלֶךְ־בָּבֶ֑ל בָּ֞א נְבוּזַרְאֲדָ֧ן רַב־טַבָּחִ֛ים עֶ֥בֶד מֶֽלֶךְ־בָּבֶ֖ל יְרוּשָׁלִָֽם׃ "
+  },
+  "2KI 25:9": {
+   "KJV": "And he burnt the house of the LORD, and the king's house, and all the houses of Jerusalem, and every great man's house burnt he with fire.",
+   "BHSA": "וַיִּשְׂרֹ֥ף אֶת־בֵּית־יְהוָ֖ה וְאֶת־בֵּ֣ית הַמֶּ֑לֶךְ וְאֵ֨ת כָּל־בָּתֵּ֧י יְרוּשָׁלִַ֛ם וְאֶת־כָּל־בֵּ֥ית גָּדֹ֖ול שָׂרַ֥ף בָּאֵֽשׁ׃ "
+  },
+  "2KI 25:10": {
+   "KJV": "And all the army of the Chaldees, that were with the captain of the guard, brake down the walls of Jerusalem round about.",
+   "BHSA": "וְאֶת־חֹומֹ֥ת יְרוּשָׁלִַ֖ם סָבִ֑יב נָֽתְצוּ֙ כָּל־חֵ֣יל כַּשְׂדִּ֔ים אֲשֶׁ֖ר רַב־טַבָּחִֽים׃ "
+  },
+  "2KI 25:11": {
+   "KJV": "Now the rest of the people that were left in the city, and the fugitives that fell away to the king of Babylon, with the remnant of the multitude, did Nebuzaradan the captain of the guard carry away.",
+   "BHSA": "וְאֵת֩ יֶ֨תֶר הָעָ֜ם הַנִּשְׁאָרִ֣ים בָּעִ֗יר וְאֶת־הַנֹּֽפְלִים֙ אֲשֶׁ֤ר נָפְלוּ֙ עַל־הַמֶּ֣לֶךְ בָּבֶ֔ל וְאֵ֖ת יֶ֣תֶר הֶהָמֹ֑ון הֶגְלָ֕ה נְבוּזַרְאֲדָ֖ן רַב־טַבָּחִֽים׃ "
+  },
+  "2KI 25:12": {
+   "KJV": "But the captain of the guard left of the poor of the land to be vinedressers and husbandmen.",
+   "BHSA": "וּמִדַּלַּ֣ת הָאָ֔רֶץ הִשְׁאִ֖יר רַב־טַבָּחִ֑ים לְכֹֽרְמִ֖ים וּלְיֹגְבִֽים׃ "
+  },
+  "2KI 25:13": {
+   "KJV": "And the pillars of brass that were in the house of the LORD, and the bases, and the brasen sea that was in the house of the LORD, did the Chaldees break in pieces, and carried the brass of them to Babylon.",
+   "BHSA": "וְאֶת־עַמּוּדֵ֨י הַנְּחֹ֜שֶׁת אֲשֶׁ֣ר בֵּית־יְהוָ֗ה וְֽאֶת־הַמְּכֹנֹ֞ות וְאֶת־יָ֧ם הַנְּחֹ֛שֶׁת אֲשֶׁ֥ר בְּבֵית־יְהוָ֖ה שִׁבְּר֣וּ כַשְׂדִּ֑ים וַיִּשְׂא֥וּ אֶת־נְחֻשְׁתָּ֖ם בָּבֶֽלָה׃ "
+  },
+  "2KI 25:14": {
+   "KJV": "And the pots, and the shovels, and the snuffers, and the spoons, and all the vessels of brass wherewith they ministered, took they away.",
+   "BHSA": "וְאֶת־הַסִּירֹ֨ת וְאֶת־הַיָּעִ֜ים וְאֶת־הַֽמְזַמְּרֹ֣ות וְאֶת־הַכַּפֹּ֗ות וְאֵ֨ת כָּל־כְּלֵ֧י הַנְּחֹ֛שֶׁת אֲשֶׁ֥ר יְשָֽׁרְתוּ־בָ֖ם לָקָֽחוּ׃ "
+  },
+  "2KI 25:15": {
+   "KJV": "And the firepans, and the bowls, and such things as were of gold, in gold, and of silver, in silver, the captain of the guard took away.",
+   "BHSA": "וְאֶת־הַמַּחְתֹּות֙ וְאֶת־הַמִּזְרָקֹ֗ות אֲשֶׁ֤ר זָהָב֙ זָהָ֔ב וַאֲשֶׁר־כֶּ֖סֶף כָּ֑סֶף לָקַ֖ח רַב־טַבָּחִֽים׃ "
+  },
+  "2KI 25:16": {
+   "KJV": "The two pillars, one sea, and the bases which Solomon had made for the house of the LORD; the brass of all these vessels was without weight.",
+   "BHSA": "הָעַמּוּדִ֣ים׀ שְׁנַ֗יִם הַיָּ֤ם הָֽאֶחָד֙ וְהַמְּכֹנֹ֔ות אֲשֶׁר־עָשָׂ֥ה שְׁלֹמֹ֖ה לְבֵ֣ית יְהוָ֑ה לֹא־הָיָ֣ה מִשְׁקָ֔ל לִנְחֹ֖שֶׁת כָּל־הַכֵּלִ֥ים הָאֵֽלֶּה׃ "
+  },
+  "2KI 25:17": {
+   "KJV": "The height of the one pillar was eighteen cubits, and the chapiter upon it was brass: and the height of the chapiter three cubits; and the wreathen work, and pomegranates upon the chapiter round about, all of brass: and like unto these had the second pillar with wreathen work.",
+   "BHSA": "שְׁמֹנֶה֩ עֶשְׂרֵ֨ה אַמָּ֜ה קֹומַ֣ת׀ הָעַמּ֣וּד הָאֶחָ֗ד וְכֹתֶ֨רֶת עָלָ֥יו׀ נְחֹשֶׁת֮ וְקֹומַ֣ת הַכֹּתֶרֶת֮ שָׁלֹ֣שׁ אמה וּשְׂבָכָ֨ה וְרִמֹּנִ֧ים עַֽל־הַכֹּתֶ֛רֶת סָבִ֖יב הַכֹּ֣ל נְחֹ֑שֶׁת וְכָאֵ֛לֶּה לַֽעַמּ֥וּד הַשֵּׁנִ֖י עַל־הַשְּׂבָכָֽה׃ "
+  },
+  "2KI 25:18": {
+   "KJV": "And the captain of the guard took Seraiah the chief priest, and Zephaniah the second priest, and the three keepers of the door:",
+   "BHSA": "וַיִּקַּ֣ח רַב־טַבָּחִ֗ים אֶת־שְׂרָיָה֙ כֹּהֵ֣ן הָרֹ֔אשׁ וְאֶת־צְפַנְיָ֖הוּ כֹּהֵ֣ן מִשְׁנֶ֑ה וְאֶת־שְׁלֹ֖שֶׁת שֹׁמְרֵ֥י הַסַּֽף׃ "
+  },
+  "2KI 25:19": {
+   "KJV": "And out of the city he took an officer that was set over the men of war, and five men of them that were in the king's presence, which were found in the city, and the principal scribe of the host, which mustered the people of the land, and threescore men of the people of the land that were found in the city:",
+   "BHSA": "וּמִן־הָעִ֡יר לָקַח֩ סָרִ֨יס אֶחָ֜ד אֲֽשֶׁר־ה֥וּא פָקִ֣יד׀ עַל־אַנְשֵׁ֣י הַמִּלְחָמָ֗ה וַחֲמִשָּׁ֨ה אֲנָשִׁ֜ים מֵרֹאֵ֤י פְנֵֽי־הַמֶּ֨לֶךְ֙ אֲשֶׁ֣ר נִמְצְא֣וּ בָעִ֔יר וְאֵ֗ת הַסֹּפֵר֙ שַׂ֣ר הַצָּבָ֔א הַמַּצְבִּ֖א אֶת־עַ֣ם הָאָ֑רֶץ וְשִׁשִּׁ֥ים אִישׁ֙ מֵעַ֣ם הָאָ֔רֶץ הַֽנִּמְצְאִ֖ים בָּעִֽיר׃ "
+  },
+  "2KI 25:20": {
+   "KJV": "And Nebuzaradan captain of the guard took these, and brought them to the king of Babylon to Riblah:",
+   "BHSA": "וַיִּקַּ֣ח אֹתָ֔ם נְבוּזַרְאֲדָ֖ן רַב־טַבָּחִ֑ים וַיֹּ֧לֶךְ אֹתָ֛ם עַל־מֶ֥לֶךְ בָּבֶ֖ל רִבְלָֽתָה׃ "
+  },
+  "2KI 25:21": {
+   "KJV": "And the king of Babylon smote them, and slew them at Riblah in the land of Hamath. So Judah was carried away out of their land.",
+   "BHSA": "וַיַּ֣ךְ אֹתָם֩ מֶ֨לֶךְ בָּבֶ֧ל וַיְמִיתֵ֛ם בְּרִבְלָ֖ה בְּאֶ֣רֶץ חֲמָ֑ת וַיִּ֥גֶל יְהוּדָ֖ה מֵעַ֥ל אַדְמָתֹֽו׃ "
+  },
+  "2KI 25:22": {
+   "KJV": "And as for the people that remained in the land of Judah, whom Nebuchadnezzar king of Babylon had left, even over them he made Gedaliah the son of Ahikam, the son of Shaphan, ruler.",
+   "BHSA": "וְהָעָ֗ם הַנִּשְׁאָר֙ בְּאֶ֣רֶץ יְהוּדָ֔ה אֲשֶׁ֣ר הִשְׁאִ֔יר נְבֽוּכַדְנֶאצַּ֖ר מֶ֣לֶךְ בָּבֶ֑ל וַיַּפְקֵ֣ד עֲלֵיהֶ֔ם אֶת־גְּדַלְיָ֖הוּ בֶּן־אֲחִיקָ֥ם בֶּן־שָׁפָֽן׃ פ "
+  },
+  "2KI 25:23": {
+   "KJV": "And when all the captains of the armies, they and their men, heard that the king of Babylon had made Gedaliah governor, there came to Gedaliah to Mizpah, even Ishmael the son of Nethaniah, and Johanan the son of Careah, and Seraiah the son of Tanhumeth the Netophathite, and Jaazaniah the son of a Maachathite, they and their men.",
+   "BHSA": "וַיִּשְׁמְעוּ֩ כָל־שָׂרֵ֨י הַחֲיָלִ֜ים הֵ֣מָּה וְהָאֲנָשִׁ֗ים כִּֽי־הִפְקִ֤יד מֶֽלֶךְ־בָּבֶל֙ אֶת־גְּדַלְיָ֔הוּ וַיָּבֹ֥אוּ אֶל־גְּדַלְיָ֖הוּ הַמִּצְפָּ֑ה וְיִשְׁמָעֵ֣אל בֶּן־נְתַנְיָ֡ה וְיֹוחָנָ֣ן בֶּן־קָ֠רֵחַ וּשְׂרָיָ֨ה בֶן־תַּנְחֻ֜מֶת הַנְּטֹפָתִ֗י וְיַֽאֲזַנְיָ֨הוּ֙ בֶּן־הַמַּ֣עֲכָתִ֔י הֵ֖מָּה וְאַנְשֵׁיהֶֽם׃ "
+  },
+  "2KI 25:24": {
+   "KJV": "And Gedaliah sware to them, and to their men, and said unto them, Fear not to be the servants of the Chaldees: dwell in the land, and serve the king of Babylon; and it shall be well with you.",
+   "BHSA": "וַיִּשָּׁבַ֨ע לָהֶ֤ם גְּדַלְיָ֨הוּ֙ וּלְאַנְשֵׁיהֶ֔ם וַיֹּ֣אמֶר לָהֶ֔ם אַל־תִּֽירְא֖וּ מֵעַבְדֵ֣י הַכַּשְׂדִּ֑ים שְׁב֣וּ בָאָ֗רֶץ וְעִבְד֛וּ אֶת־מֶ֥לֶךְ בָּבֶ֖ל וְיִטַ֥ב לָכֶֽם׃ ס "
+  },
+  "2KI 25:25": {
+   "KJV": "But it came to pass in the seventh month, that Ishmael the son of Nethaniah, the son of Elishama, of the seed royal, came, and ten men with him, and smote Gedaliah, that he died, and the Jews and the Chaldees that were with him at Mizpah.",
+   "BHSA": "וַיְהִ֣י׀ בַּחֹ֣דֶשׁ הַשְּׁבִיעִ֗י בָּ֣א יִשְׁמָעֵ֣אל בֶּן־נְ֠תַנְיָה בֶּן־אֱלִ֨ישָׁמָ֜ע מִזֶּ֣רַע הַמְּלוּכָ֗ה וַעֲשָׂרָ֤ה אֲנָשִׁים֙ אִתֹּ֔ו וַיַּכּ֥וּ אֶת־גְּדַלְיָ֖הוּ וַיָּמֹ֑ת וְאֶת־הַיְּהוּדִים֙ וְאֶת־הַכַּשְׂדִּ֔ים אֲשֶׁר־הָי֥וּ אִתֹּ֖ו בַּמִּצְפָּֽה׃ "
+  },
+  "2KI 25:26": {
+   "KJV": "And all the people, both small and great, and the captains of the armies, arose, and came to Egypt: for they were afraid of the Chaldees.",
+   "BHSA": "וַיָּקֻ֨מוּ כָל־הָעָ֜ם מִקָּטֹ֤ן וְעַד־גָּדֹול֙ וְשָׂרֵ֣י הַחֲיָלִ֔ים וַיָּבֹ֖אוּ מִצְרָ֑יִם כִּ֥י יָרְא֖וּ מִפְּנֵ֥י כַשְׂדִּֽים׃ פ "
+  },
+  "2KI 25:27": {
+   "KJV": "And it came to pass in the seven and thirtieth year of the captivity of Jehoiachin king of Judah, in the twelfth month, on the seven and twentieth day of the month, that Evilmerodach king of Babylon in the year that he began to reign did lift up the head of Jehoiachin king of Judah out of prison;",
+   "BHSA": "וַיְהִי֩ בִשְׁלֹשִׁ֨ים וָשֶׁ֜בַע שָׁנָ֗ה לְגָלוּת֙ יְהֹויָכִ֣ין מֶֽלֶךְ־יְהוּדָ֔ה בִּשְׁנֵ֤ים עָשָׂר֙ חֹ֔דֶשׁ בְּעֶשְׂרִ֥ים וְשִׁבְעָ֖ה לַחֹ֑דֶשׁ נָשָׂ֡א אֱוִ֣יל מְרֹדַךְ֩ מֶ֨לֶךְ בָּבֶ֜ל בִּשְׁנַ֣ת מָלְכֹ֗ו אֶת־רֹ֛אשׁ יְהֹויָכִ֥ין מֶֽלֶךְ־יְהוּדָ֖ה מִבֵּ֥ית כֶּֽלֶא׃ "
+  },
+  "2KI 25:28": {
+   "KJV": "And he spake kindly to him, and set his throne above the throne of the kings that were with him in Babylon;",
+   "BHSA": "וַיְדַבֵּ֥ר אִתֹּ֖ו טֹבֹ֑ות וַיִּתֵּן֙ אֶת־כִּסְאֹ֔ו מֵעַ֗ל כִּסֵּ֧א הַמְּלָכִ֛ים אֲשֶׁ֥ר אִתֹּ֖ו בְּבָבֶֽל׃ "
+  },
+  "2KI 25:29": {
+   "KJV": "And changed his prison garments: and he did eat bread continually before him all the days of his life.",
+   "BHSA": "וְשִׁנָּ֕א אֵ֖ת בִּגְדֵ֣י כִלְאֹ֑ו וְאָכַ֨ל לֶ֧חֶם תָּמִ֛יד לְפָנָ֖יו כָּל־יְמֵ֥י חַיָּֽיו׃ "
+  },
+  "2KI 25:30": {
+   "KJV": "And his allowance was a continual allowance given him of the king, a daily rate for every day, all the days of his life.",
+   "BHSA": "וַאֲרֻחָתֹ֗ו אֲרֻחַ֨ת תָּמִ֧יד נִתְּנָה־לֹּ֛ו מֵאֵ֥ת הַמֶּ֖לֶךְ דְּבַר־יֹ֣ום בְּיֹומֹ֑ו כֹּ֖ל יְמֵ֥י חַיָּֽו׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahikam",
+   "name": "Ahikam",
+   "distinguisher": "son of Shaphan (2KI 22:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "elishama-3",
+   "name": "Elishama",
+   "distinguisher": "father of Nethaniah (2KI 25:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "evilmerodach",
+   "name": "Evil-merodach",
+   "distinguisher": "King of Babylon (2KI 25:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "gedaliah",
+   "name": "Gedaliah",
+   "distinguisher": "son of Ahikam, appointed King of Judah by Nebuchadnezzar (2KI 25:22)",
+   "sex": "male"
+  },
+  {
+   "slug": "hoshaiah-2",
+   "name": "Hoshaiah",
+   "distinguisher": "father of Jezaniah (JER 42:1) and of Azariah (JER 43:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "ishmael-2",
+   "name": "Ishmael",
+   "distinguisher": "son of Nethaniah, a captain of Judean forces during the Babylonian captivity (2KI 25:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "jaazaniah",
+   "name": "Jaazaniah",
+   "distinguisher": "son of a Maachathite, a captain of the forces who came to Gedaliah at Mizpah (2KI 25:23, JER 40:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoiachin",
+   "name": "Jehoiachin",
+   "distinguisher": "King of Judah, son of Eliakim [Jehoiakim] (2KI 24:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "johanan",
+   "name": "Johanan",
+   "distinguisher": "son of Kareah, a captain of Judean forces during the Babylonian captivity (2KI 25:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "kareah",
+   "name": "Kareah",
+   "distinguisher": "father of Johanan, one of the captains of Judean forces (2KI 25:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "mattaniah",
+   "name": "Mattaniah",
+   "distinguisher": "King of Judah, uncle of Jehoiachin (2KI 24:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "nebuchadnezzar",
+   "name": "Nebuchadnezzar",
+   "distinguisher": "King of Babylon (2KI 23:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "nebuzaradan",
+   "name": "Nebuzaradan",
+   "distinguisher": "captain of the guard of the King of Babylon (2KI 25:8) who took captives into exile (JER 39:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "nethaniah",
+   "name": "Nethaniah",
+   "distinguisher": "father of Ishmael, one of the captains of Judean forces (2KI 25:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "seraiah-2",
+   "name": "Seraiah",
+   "distinguisher": "the chief priest (2KI 25:18) who was killed by the king of Babylon (2KI 25:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "seraiah-3",
+   "name": "Seraiah",
+   "distinguisher": "son of Tanhumeth, a captain of Judean forces during the Babylonian captivity (2KI 25:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "shaphan",
+   "name": "Shaphan",
+   "distinguisher": "scribe of King Josiah (2KI 22:3, 2CH 34:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "solomon",
+   "name": "Solomon",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "tanhumeth",
+   "name": "Tanhumeth",
+   "distinguisher": "the Netophathite, father of Seraiah, one of the captains of Judean forces (2KI 25:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zephaniah-2",
+   "name": "Zephaniah",
+   "distinguisher": "the priest, son of Maaseiah (JER 21:1)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 101682,
+   "row": "nebuzaradan servant-of nebuchadnezzar",
+   "verse": "2KI 25:8",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106588,
+   "row": "seraiah-2 descendant-of aaron",
+   "verse": "2KI 25:18",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 106636,
+   "row": "zephaniah-2 descendant-of aaron",
+   "verse": "2KI 25:18",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 97280,
+   "row": "ahikam father-of gedaliah",
+   "verse": "2KI 25:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99041,
+   "row": "gedaliah son-of ahikam",
+   "verse": "2KI 25:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99042,
+   "row": "gedaliah governor-of judah",
+   "verse": "2KI 25:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102460,
+   "row": "shaphan grandfather-of gedaliah",
+   "verse": "2KI 25:22",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99785,
+   "row": "ishmael-2 son-of nethaniah",
+   "verse": "2KI 25:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100695,
+   "row": "kareah father-of johanan",
+   "verse": "2KI 25:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101727,
+   "row": "nethaniah father-of ishmael-2",
+   "verse": "2KI 25:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102367,
+   "row": "seraiah-3 son-of tanhumeth",
+   "verse": "2KI 25:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102994,
+   "row": "tanhumeth father-of seraiah-3",
+   "verse": "2KI 25:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105205,
+   "row": "johanan son-of kareah",
+   "verse": "2KI 25:23",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98722,
+   "row": "elishama-3 father-of nethaniah",
+   "verse": "2KI 25:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99043,
+   "row": "gedaliah killed-by ishmael-2",
+   "verse": "2KI 25:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101728,
+   "row": "nethaniah son-of elishama-3",
+   "verse": "2KI 25:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "ahikam son-of shaphan (2KI 22:12)",
+  "elishama-3 grandfather-of ishmael-2 (JER 41:1)",
+  "ishmael-2 killer-of gedaliah (JER 41:2)",
+  "jehoiachin king-of judah (2KI 24:8)",
+  "shaphan father-of ahikam (2KI 22:12)",
+  "nebuchadnezzar servant-of yhvh (JER 25:9)",
+  "nebuchadnezzar exiler-of jehoiachin (EST 2:6)",
+  "zephaniah-2 priest-of yhvh (JER 29:29)"
+ ]
+}

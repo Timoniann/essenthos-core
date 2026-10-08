@@ -1,0 +1,20 @@
+{
+ "chapter": "2KI 15",
+ "rows": 24,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "david",
+   "type": "ancestor-of",
+   "to": "jotham-2",
+   "verse": "2KI 15:38",
+   "why": "The verse calls David Jotham's father, in an ancestral sense since verses 32–34 identify Uzziah as Jotham's father.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Azariah and Uzziah designate the same king, azariah-3; the recorded family rows are supported. Non-family relationship types were excluded from this kinship review.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:00:16+00:00"
+}

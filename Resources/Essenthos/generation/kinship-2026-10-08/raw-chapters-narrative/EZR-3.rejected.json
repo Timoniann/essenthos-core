@@ -1,0 +1,22 @@
+{
+ "errors": [
+  "wrong: rows [107523] are the owner's own; put them in note instead"
+ ],
+ "answer": {
+  "wrong": [
+   {
+    "kind": "delete",
+    "rows": [
+     107523
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "EZR 3:2",
+    "why": "The verse identifies Jeshua as Jozadak's son but does not state that Jozadak descended from Aaron.",
+    "confidence": 1
+   }
+  ],
+  "missing": [],
+  "note": "Row 107523 is attributed to an agent acting on the owner's instruction, rather than to an explicit owner ruling. The Judah named in EZR 3:9 cannot confidently be identified with either supplied Judah record."
+ }
+}

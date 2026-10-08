@@ -1,0 +1,11 @@
+{
+ "chapter": "JER 39",
+ "rows": 7,
+ "wrong": [],
+ "missing": [],
+ "note": "JER 39:14 explicitly identifies Gedaliah as Ahikam’s son and Ahikam as Shaphan’s son; both relationships are already recorded from other chapters. Zedekiah’s sons in JER 39:6 are unnamed and have no supplied person records.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:07:50+00:00"
+}

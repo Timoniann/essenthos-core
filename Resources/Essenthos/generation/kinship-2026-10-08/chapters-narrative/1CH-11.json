@@ -1,0 +1,32 @@
+{
+ "chapter": "1CH 11",
+ "rows": 31,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    98764
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 11:46",
+   "why": "The Hebrew lists Eliel the Mahavite separately and identifies only Jeribai and Joshaviah as the sons of Elnaam.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "joshebbasshebeth",
+   "type": "son-of",
+   "to": "hachmoni-father-of-jashobeam",
+   "verse": "1CH 11:11",
+   "why": "The Hebrew calls Jashobeam ben-Hachmoni, explicitly stating sonship beyond the recorded ancestor relationship.",
+   "confidence": 0.95
+  }
+ ],
+ "note": "Parallel-list name variants were retained. The owner's Shiza–Reuben ruling is supported by the designation 'the Reubenite.'",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T18:58:46+00:00"
+}

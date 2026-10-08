@@ -1,0 +1,23 @@
+{
+ "chapter": "2SA 11",
+ "rows": 7,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    103153
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2SA 11:17",
+   "why": "The verse says the city's men fought and Uriah died, but does not identify Joab as the person who killed him.",
+   "confidence": 0.98
+  }
+ ],
+ "missing": [],
+ "note": "All explicit family relationships between the supplied people are already recorded. The son born in verse 27 has no supplied record.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:07:06+00:00"
+}

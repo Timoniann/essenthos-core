@@ -1,0 +1,32 @@
+{
+ "chapter": "2KI 16",
+ "rows": 7,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    97237
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2KI 16:1",
+   "why": "מֶלֶךְ יְהוּדָה refers to kingship over Judah the kingdom, not over the individual Judah son of Jacob.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "david",
+   "type": "ancestor-of",
+   "to": "ahaz",
+   "verse": "2KI 16:2",
+   "why": "David is called Ahaz's father (אָבִיו), meaning his forefather here, with Jotham already named as Ahaz's father in verse 1.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Ahaz's declaration 'I am thy servant and thy son' in verse 7 expresses submission to Tiglath-pileser, not a family relationship. The unnamed son in verse 3 cannot securely be identified as Hezekiah.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:07:28+00:00"
+}

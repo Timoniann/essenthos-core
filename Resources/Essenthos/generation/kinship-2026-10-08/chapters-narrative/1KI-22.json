@@ -1,0 +1,32 @@
+{
+ "chapter": "1KI 22",
+ "rows": 11,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    100156
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1KI 22:2",
+   "why": "Judah in מֶלֶךְ־יְהוּדָה denotes the kingdom Jehoshaphat ruled, not the patriarch represented by the slug judah.",
+   "confidence": 1
+  }
+ ],
+ "missing": [
+  {
+   "from": "david",
+   "type": "ancestor-of",
+   "to": "jehoshaphat-3",
+   "verse": "1KI 22:50",
+   "why": "The verse calls David Jehoshaphat's father (דָּוִד אָבִיו) in the ancestral sense, while verse 41 identifies Asa as his father.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "The remaining rows are supported, and the other explicit family statements already have equivalent recorded relationships.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:04:03+00:00"
+}

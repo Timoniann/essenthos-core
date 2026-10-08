@@ -1,0 +1,23 @@
+{
+ "chapter": "JOB 32",
+ "rows": 6,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    103921
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "JOB 32:2",
+   "why": "The Hebrew identifies Barachel as 'the Buzite' but does not establish descent from the particular Buz who was Nahor's son.",
+   "confidence": 0.9
+  }
+ ],
+ "missing": [],
+ "note": "Elihu's parentage and the ancestry associated with the family of Ram are already recorded. The owner-directed row concerning Barachel and Ram is supported by the text.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:09:49+00:00"
+}

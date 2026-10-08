@@ -1,0 +1,20 @@
+{
+ "chapter": "NEH 6",
+ "rows": 10,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "tobiah-2",
+   "type": "father-of",
+   "to": "jehohanan-3",
+   "verse": "NEH 6:18",
+   "why": "The Hebrew calls Jehohanan בְּנוֹ, 'his son,' referring to Tobiah.",
+   "confidence": 1
+  }
+ ],
+ "note": "All supplied relationship rows are supported by the chapter; the other plain family statements are already recorded.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:05:04+00:00"
+}

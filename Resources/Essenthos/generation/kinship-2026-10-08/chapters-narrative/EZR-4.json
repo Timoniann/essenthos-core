@@ -1,0 +1,23 @@
+{
+ "chapter": "EZR 4",
+ "rows": 9,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    102788
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "EZR 4:8",
+   "why": "The verse calls Shimshai a scribe who wrote to Artaxerxes, but does not say he was Artaxerxes' scribe.",
+   "confidence": 0.98
+  }
+ ],
+ "missing": [],
+ "note": "This chapter states no explicit family relationships between the supplied people; the companion relationships are supported by the groups described in verses 7 and 9.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:06:09+00:00"
+}

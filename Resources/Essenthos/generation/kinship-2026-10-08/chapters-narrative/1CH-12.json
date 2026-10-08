@@ -1,0 +1,64 @@
+{
+ "chapter": "1CH 12",
+ "rows": 63,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    97791,
+    97792
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 12:3",
+   "why": "The Azmaveth identified as father of Jeziel and Pelet is azmaveth-6, not the separately recorded son of Jehoadda, azmaveth-2.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    100372,
+    101934
+   ],
+   "new_type": "",
+   "new_to": "azmaveth-6",
+   "verse": "1CH 12:3",
+   "why": "The Hebrew calls Jeziel and Pelet sons of Azmaveth, whose matching record is azmaveth-6.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    98604
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1CH 12:9",
+   "why": "The Hebrew lists Obadiah as second and Eliab as third among the warriors, without stating descent between them.",
+   "confidence": 1
+  }
+ ],
+ "missing": [
+  {
+   "from": "elkanah-7",
+   "type": "descendant-of",
+   "to": "korah-3",
+   "verse": "1CH 12:6",
+   "why": "The Hebrew explicitly includes Elkanah among the men designated Korahites.",
+   "confidence": 0.97
+  },
+  {
+   "from": "isshiah-2",
+   "type": "descendant-of",
+   "to": "korah-3",
+   "verse": "1CH 12:6",
+   "why": "The Hebrew explicitly includes Isshiah among the men designated Korahites.",
+   "confidence": 0.97
+  }
+ ],
+ "note": "No owner-directed family row appears contradicted by the chapter. Saul's 'brethren' denotes tribal kin here, and shared parentage alone is not treated as an additional explicit sibling statement.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T18:56:31+00:00"
+}

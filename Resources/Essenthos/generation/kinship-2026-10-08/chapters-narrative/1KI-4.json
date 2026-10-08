@@ -1,0 +1,20 @@
+{
+ "chapter": "1KI 4",
+ "rows": 36,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jair",
+   "type": "son-of",
+   "to": "manasseh",
+   "verse": "1KI 4:13",
+   "why": "The Hebrew explicitly calls Jair בֶּן־מְנַשֶּׁה, son of Manasseh, while the existing descendant-of row records only broader ancestry.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "Owner row 106558 appears unsupported: 1KI 4:13 assigns Jair's towns to Ben-geber and calls Jair son of Manasseh, without saying Manasseh descended from Ben-geber. The chapter does not establish that Ben-geber's father is the Geber named in verse 19.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T18:55:26+00:00"
+}

@@ -1,0 +1,68 @@
+{
+ "chapter": "2CH 21",
+ "rows": 32,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jehoram",
+   "type": "brother-of",
+   "to": "azariah-9",
+   "verse": "2CH 21:2",
+   "why": "The Hebrew lists Azariah among Jehoram's brothers, the sons of Jehoshaphat.",
+   "confidence": 1
+  },
+  {
+   "from": "jehoram",
+   "type": "brother-of",
+   "to": "jehiel-3",
+   "verse": "2CH 21:2",
+   "why": "The Hebrew lists Jehiel among Jehoram's brothers, the sons of Jehoshaphat.",
+   "confidence": 1
+  },
+  {
+   "from": "jehoram",
+   "type": "brother-of",
+   "to": "zechariah-11",
+   "verse": "2CH 21:2",
+   "why": "The Hebrew lists Zechariah among Jehoram's brothers, the sons of Jehoshaphat.",
+   "confidence": 1
+  },
+  {
+   "from": "jehoram",
+   "type": "brother-of",
+   "to": "azaryahu",
+   "verse": "2CH 21:2",
+   "why": "The Hebrew lists Azaryahu among Jehoram's brothers, separately from Azariah.",
+   "confidence": 1
+  },
+  {
+   "from": "jehoram",
+   "type": "brother-of",
+   "to": "michael-7",
+   "verse": "2CH 21:2",
+   "why": "The Hebrew lists Michael among Jehoram's brothers, the sons of Jehoshaphat.",
+   "confidence": 1
+  },
+  {
+   "from": "jehoram",
+   "type": "brother-of",
+   "to": "sephatiah",
+   "verse": "2CH 21:2",
+   "why": "The Hebrew lists Shephatiah among Jehoram's brothers, the sons of Jehoshaphat.",
+   "confidence": 1
+  },
+  {
+   "from": "david",
+   "type": "ancestor-of",
+   "to": "jehoram",
+   "verse": "2CH 21:12",
+   "why": "David is called Jehoram's father in the ancestral sense, with Jehoshaphat also explicitly identified as his father in this chapter.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "All supplied chapter rows are supported, including the owner's two killing rows. Ahab's daughter is unnamed here and has no supplied record, so no relationship involving her is proposed.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T18:58:37+00:00"
+}

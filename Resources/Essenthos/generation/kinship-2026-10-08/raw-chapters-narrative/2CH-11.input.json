@@ -1,0 +1,475 @@
+{
+ "chapter": "2CH 11",
+ "text": {
+  "2CH 11:1": {
+   "KJV": "And when Rehoboam was come to Jerusalem, he gathered of the house of Judah and Benjamin an hundred and fourscore thousand chosen men, which were warriors, to fight against Israel, that he might bring the kingdom again to Rehoboam.",
+   "BHSA": "וַיָּבֹ֣א רְחַבְעָם֮ יְרוּשָׁלִַם֒ וַיַּקְהֵל֩ אֶת־בֵּ֨ית יְהוּדָ֜ה וּבִנְיָמִ֗ן מֵאָ֨ה וּשְׁמֹונִ֥ים אֶ֛לֶף בָּח֖וּר עֹשֵׂ֣ה מִלְחָמָ֑ה לְהִלָּחֵם֙ עִם־יִשְׂרָאֵ֔ל לְהָשִׁ֥יב אֶת־הַמַּמְלָכָ֖ה לִרְחַבְעָֽם׃ פ "
+  },
+  "2CH 11:2": {
+   "KJV": "But the word of the LORD came to Shemaiah the man of God, saying,",
+   "BHSA": "וַיְהִי֙ דְּבַר־יְהוָ֔ה אֶל־שְׁמַֽעְיָ֥הוּ אִישׁ־הָאֱלֹהִ֖ים לֵאמֹֽר׃ "
+  },
+  "2CH 11:3": {
+   "KJV": "Speak unto Rehoboam the son of Solomon, king of Judah, and to all Israel in Judah and Benjamin, saying,",
+   "BHSA": "אֱמֹ֕ר אֶל־רְחַבְעָ֥ם בֶּן־שְׁלֹמֹ֖ה מֶ֣לֶךְ יְהוּדָ֑ה וְאֶל֙ כָּל־יִשְׂרָאֵ֔ל בִּיהוּדָ֥ה וּבִנְיָמִ֖ן לֵאמֹֽר׃ "
+  },
+  "2CH 11:4": {
+   "KJV": "Thus saith the LORD, Ye shall not go up, nor fight against your brethren: return every man to his house: for this thing is done of me. And they obeyed the words of the LORD, and returned from going against Jeroboam.",
+   "BHSA": "כֹּ֣ה אָמַ֣ר יְהוָ֡ה לֹא־תַעֲלוּ֩ וְלֹא־תִלָּ֨חֲמ֜וּ עִם־אֲחֵיכֶ֗ם שׁ֚וּבוּ אִ֣ישׁ לְבֵיתֹ֔ו כִּ֧י מֵֽאִתִּ֛י נִהְיָ֖ה הַדָּבָ֣ר הַזֶּ֑ה וַֽיִּשְׁמְעוּ֙ אֶת־דִּבְרֵ֣י יְהוָ֔ה וַיָּשֻׁ֖בוּ מִלֶּ֥כֶת אֶל־יָרָבְעָֽם׃ פ "
+  },
+  "2CH 11:5": {
+   "KJV": "And Rehoboam dwelt in Jerusalem, and built cities for defence in Judah.",
+   "BHSA": "וַיֵּ֥שֶׁב רְחַבְעָ֖ם בִּירוּשָׁלִָ֑ם וַיִּ֧בֶן עָרִ֛ים לְמָצֹ֖ור בִּיהוּדָֽה׃ "
+  },
+  "2CH 11:6": {
+   "KJV": "He built even Bethlehem, and Etam, and Tekoa,",
+   "BHSA": "וַיִּ֧בֶן אֶת־בֵּֽית־לֶ֛חֶם וְאֶת־עֵיטָ֖ם וְאֶת־תְּקֹֽועַ׃ "
+  },
+  "2CH 11:7": {
+   "KJV": "And Bethzur, and Shoco, and Adullam,",
+   "BHSA": "וְאֶת־בֵּֽית־צ֥וּר וְאֶת־שֹׂוכֹ֖ו וְאֶת־עֲדֻלָּֽם׃ "
+  },
+  "2CH 11:8": {
+   "KJV": "And Gath, and Mareshah, and Ziph,",
+   "BHSA": "וְאֶת־גַּ֥ת וְאֶת־מָרֵשָׁ֖ה וְאֶת־זִֽיף׃ "
+  },
+  "2CH 11:9": {
+   "KJV": "And Adoraim, and Lachish, and Azekah,",
+   "BHSA": "וְאֶת־אֲדֹורַ֥יִם וְאֶת־לָכִ֖ישׁ וְאֶת־עֲזֵקָֽה׃ "
+  },
+  "2CH 11:10": {
+   "KJV": "And Zorah, and Aijalon, and Hebron, which are in Judah and in Benjamin fenced cities.",
+   "BHSA": "וְאֶת־צָרְעָה֙ וְאֶת־אַיָּלֹ֔ון וְאֶת־חֶבְרֹ֔ון אֲשֶׁ֥ר בִּיהוּדָ֖ה וּבְבִנְיָמִ֑ן עָרֵ֖י מְצֻרֹֽות׃ "
+  },
+  "2CH 11:11": {
+   "KJV": "And he fortified the strong holds, and put captains in them, and store of victual, and of oil and wine.",
+   "BHSA": "וַיְחַזֵּ֖ק אֶת־הַמְּצֻרֹ֑ות וַיִּתֵּ֤ן בָּהֶם֙ נְגִידִ֔ים וְאֹצְרֹ֥ות מַאֲכָ֖ל וְשֶׁ֥מֶן וָיָֽיִן׃ "
+  },
+  "2CH 11:12": {
+   "KJV": "And in every several city he put shields and spears, and made them exceeding strong, having Judah and Benjamin on his side.",
+   "BHSA": "וּבְכָל־עִ֤יר וָעִיר֙ צִנֹּ֣ות וּרְמָחִ֔ים וַֽיְחַזְּקֵ֖ם לְהַרְבֵּ֣ה מְאֹ֑ד וַיְהִי־לֹ֖ו יְהוּדָ֥ה וּבִנְיָמִֽן׃ ס "
+  },
+  "2CH 11:13": {
+   "KJV": "And the priests and the Levites that were in all Israel resorted to him out of all their coasts.",
+   "BHSA": "וְהַכֹּהֲנִים֙ וְהַלְוִיִּ֔ם אֲשֶׁ֖ר בְּכָל־יִשְׂרָאֵ֑ל הִֽתְיַצְּב֥וּ עָלָ֖יו מִכָּל־גְּבוּלָֽם׃ "
+  },
+  "2CH 11:14": {
+   "KJV": "For the Levites left their suburbs and their possession, and came to Judah and Jerusalem: for Jeroboam and his sons had cast them off from executing the priest's office unto the LORD:",
+   "BHSA": "כִּֽי־עָזְב֣וּ הַלְוִיִּ֗ם אֶת־מִגְרְשֵׁיהֶם֙ וַאֲחֻזָּתָ֔ם וַיֵּלְכ֥וּ לִיהוּדָ֖ה וְלִֽירוּשָׁלִָ֑ם כִּֽי־הִזְנִיחָ֤ם יָֽרָבְעָם֙ וּבָנָ֔יו מִכַּהֵ֖ן לַיהוָֽה׃ "
+  },
+  "2CH 11:15": {
+   "KJV": "And he ordained him priests for the high places, and for the devils, and for the calves which he had made.",
+   "BHSA": "וַיַּֽעֲמֶד־לֹו֙ כֹּֽהֲנִ֔ים לַבָּמֹ֖ות וְלַשְּׂעִירִ֑ים וְלָעֲגָלִ֖ים אֲשֶׁ֥ר עָשָֽׂה׃ "
+  },
+  "2CH 11:16": {
+   "KJV": "And after them out of all the tribes of Israel such as set their hearts to seek the LORD God of Israel came to Jerusalem, to sacrifice unto the LORD God of their fathers.",
+   "BHSA": "וְאַחֲרֵיהֶ֗ם מִכֹּל֙ שִׁבְטֵ֣י יִשְׂרָאֵ֔ל הַנֹּֽתְנִים֙ אֶת־לְבָבָ֔ם לְבַקֵּ֕שׁ אֶת־יְהוָ֖ה אֱלֹהֵ֣י יִשְׂרָאֵ֑ל בָּ֚אוּ יְר֣וּשָׁלִַ֔ם לִזְבֹּ֕וחַ לַיהוָ֖ה אֱלֹהֵ֥י אֲבֹותֵיהֶֽם׃ "
+  },
+  "2CH 11:17": {
+   "KJV": "So they strengthened the kingdom of Judah, and made Rehoboam the son of Solomon strong, three years: for three years they walked in the way of David and Solomon.",
+   "BHSA": "וַֽיְחַזְּקוּ֙ אֶת־מַלְכ֣וּת יְהוּדָ֔ה וַֽיְאַמְּצ֛וּ אֶת־רְחַבְעָ֥ם בֶּן־שְׁלֹמֹ֖ה לְשָׁנִ֣ים שָׁלֹ֑ושׁ כִּ֣י הָֽלְכ֗וּ בְּדֶ֧רֶךְ דָּוִ֛יד וּשְׁלֹמֹ֖ה לְשָׁנִ֥ים שָׁלֹֽושׁ׃ "
+  },
+  "2CH 11:18": {
+   "KJV": "And Rehoboam took him Mahalath the daughter of Jerimoth the son of David to wife, and Abihail the daughter of Eliab the son of Jesse;",
+   "BHSA": "וַיִּֽקַּֽח־לֹ֤ו רְחַבְעָם֙ אִשָּׁ֔ה אֶת־מָ֣חֲלַ֔ת בן־יְרִימֹ֖ות בֶּן־דָּוִ֑יד אֲבִיהַ֕יִל בַּת־אֱלִיאָ֖ב בֶּן־יִשָֽׁי׃ "
+  },
+  "2CH 11:19": {
+   "KJV": "Which bare him children; Jeush, and Shamariah, and Zaham.",
+   "BHSA": "וַתֵּ֥לֶד לֹ֖ו בָּנִ֑ים אֶת־יְע֥וּשׁ וְאֶת־שְׁמַרְיָ֖ה וְאֶת־זָֽהַם׃ "
+  },
+  "2CH 11:20": {
+   "KJV": "And after her he took Maachah the daughter of Absalom; which bare him Abijah, and Attai, and Ziza, and Shelomith.",
+   "BHSA": "וְאַחֲרֶ֣יהָ לָקַ֔ח אֶֽת־מַעֲכָ֖ה בַּת־אַבְשָׁלֹ֑ום וַתֵּ֣לֶד לֹ֗ו אֶת־אֲבִיָּה֙ וְאֶת־עַתַּ֔י וְאֶת־זִיזָ֖א וְאֶת־שְׁלֹמִֽית׃ "
+  },
+  "2CH 11:21": {
+   "KJV": "And Rehoboam loved Maachah the daughter of Absalom above all his wives and his concubines: (for he took eighteen wives, and threescore concubines; and begat twenty and eight sons, and threescore daughters.)",
+   "BHSA": "וַיֶּאֱהַ֨ב רְחַבְעָ֜ם אֶת־מַעֲכָ֣ה בַת־אַבְשָׁלֹ֗ום מִכָּל־נָשָׁיו֙ וּפִ֣ילַגְשָׁ֔יו כִּ֠י נָשִׁ֤ים שְׁמֹונֶֽה־עֶשְׂרֵה֙ נָשָׂ֔א וּפִֽילַגְשִׁ֖ים שִׁשִּׁ֑ים וַיֹּ֗ולֶד עֶשְׂרִ֧ים וּשְׁמֹונָ֛ה בָּנִ֖ים וְשִׁשִּׁ֥ים בָּנֹֽות׃ "
+  },
+  "2CH 11:22": {
+   "KJV": "And Rehoboam made Abijah the son of Maachah the chief, to be ruler among his brethren: for he thought to make him king.",
+   "BHSA": "וַיַּֽעֲמֵ֨ד לָרֹ֧אשׁ רְחַבְעָ֛ם אֶת־אֲבִיָּ֥ה בֶֽן־מַעֲכָ֖ה לְנָגִ֣יד בְּאֶחָ֑יו כִּ֖י לְהַמְלִיכֹֽו׃ "
+  },
+  "2CH 11:23": {
+   "KJV": "And he dealt wisely, and dispersed of all his children throughout all the countries of Judah and Benjamin, unto every fenced city: and he gave them victual in abundance. And he desired many wives.",
+   "BHSA": "וַיָּבֶן֩ וַיִּפְרֹ֨ץ מִכָּל־בָּנָ֜יו לְֽכָל־אַרְצֹ֧ות יְהוּדָ֣ה וּבִנְיָמִ֗ן לְכֹל֙ עָרֵ֣י הַמְּצֻרֹ֔ות וַיִּתֵּ֥ן לָהֶ֛ם הַמָּזֹ֖ון לָרֹ֑ב וַיִּשְׁאַ֖ל הֲמֹ֥ון נָשִֽׁים׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abihail-4",
+   "name": "Abihail",
+   "distinguisher": "the daughter of Eliab (2CH 11:18)",
+   "sex": "female"
+  },
+  {
+   "slug": "abijam",
+   "name": "Abijam",
+   "distinguisher": "King of Judah, son of Rehoboam (1KI 14:31) [Abijah in 2CH 12:16]",
+   "sex": "male"
+  },
+  {
+   "slug": "abishalom",
+   "name": "Abishalom",
+   "distinguisher": "father of Maacah the mother of Abijam (1KI 15:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "attai-3",
+   "name": "Attai",
+   "distinguisher": "son of Rehoboam and Maacah (2CH 11:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin",
+   "name": "Benjamin",
+   "distinguisher": "twelfth-born son of Jacob and Rachel (GEN 35:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliab-3",
+   "name": "Eliab",
+   "distinguisher": "firstborn (1CH 2:13) son of Jesse (1SA 16:6) brother of David",
+   "sex": "male"
+  },
+  {
+   "slug": "jerimoth-4",
+   "name": "Jerimoth",
+   "distinguisher": "the son of David (2CH 11:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeroboam",
+   "name": "Jeroboam",
+   "distinguisher": "Solomon's servant, son of Nebat, who rebelled against him (1KI 11:26), and was later made king of Israel (1KI 12:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "jesse",
+   "name": "Jesse",
+   "distinguisher": "father of David (RUT 4:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeush-5",
+   "name": "Jeush",
+   "distinguisher": "son of Rehoboam and Mahalath (2CH 11:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "maacah-3",
+   "name": "Maacah",
+   "distinguisher": "mother of Abijam (1KI 15:2) and Asa (1KI 15:10), daughter of Uriel_2 of Gibeah (2CH 13:2)",
+   "sex": "female"
+  },
+  {
+   "slug": "mahalath-2",
+   "name": "Mahalath",
+   "distinguisher": "daughter of Jerimoth and Abihail and wife of Rehoboam (2CH 11:18)",
+   "sex": "female"
+  },
+  {
+   "slug": "rehoboam",
+   "name": "Rehoboam",
+   "distinguisher": "son of Solomon who became king after him (1KI 11:43)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelomith-4",
+   "name": "Shelomith",
+   "distinguisher": "son of Rehoboam and Maacah (2CH 11:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah",
+   "name": "Shemaiah",
+   "distinguisher": "the man of G-d (1KI 12:22, 2CH 11:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemariah-2",
+   "name": "Shemariah",
+   "distinguisher": "son of Rehoboam and Mahalath (2CH 11:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "solomon",
+   "name": "Solomon",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zaham",
+   "name": "Zaham",
+   "distinguisher": "son of Rehoboam and Mahalath (2CH 11:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "ziza-2",
+   "name": "Ziza",
+   "distinguisher": "son of Rehoboam and Maacah (2CH 11:20)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 97060,
+   "row": "abihail-4 wife-of rehoboam",
+   "verse": "2CH 11:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97061,
+   "row": "abihail-4 daughter-of eliab-3",
+   "verse": "2CH 11:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98603,
+   "row": "eliab-3 father-of abihail-4",
+   "verse": "2CH 11:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100263,
+   "row": "jerimoth-4 son-of david",
+   "verse": "2CH 11:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100264,
+   "row": "jerimoth-4 father-of mahalath-2",
+   "verse": "2CH 11:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106551,
+   "row": "mahalath-2 wife-of rehoboam",
+   "verse": "2CH 11:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106552,
+   "row": "mahalath-2 daughter-of jerimoth-4",
+   "verse": "2CH 11:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106553,
+   "row": "mahalath-2 descendant-of david",
+   "verse": "2CH 11:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106554,
+   "row": "mahalath-2 daughter-of abihail-4",
+   "verse": "2CH 11:18",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 100360,
+   "row": "jeush-5 brother-of shemariah-2",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 100361,
+   "row": "jeush-5 brother-of zaham",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 100362,
+   "row": "jeush-5 son-of rehoboam",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 100363,
+   "row": "jeush-5 son-of mahalath-2",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102660,
+   "row": "shemariah-2 brother-of jeush-5",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102661,
+   "row": "shemariah-2 brother-of zaham",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102662,
+   "row": "shemariah-2 son-of rehoboam",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102663,
+   "row": "shemariah-2 son-of mahalath-2",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103326,
+   "row": "zaham brother-of jeush-5",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103327,
+   "row": "zaham brother-of shemariah-2",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103328,
+   "row": "zaham son-of rehoboam",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103329,
+   "row": "zaham son-of mahalath-2",
+   "verse": "2CH 11:19",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97080,
+   "row": "abijam son-of maacah-3",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97714,
+   "row": "attai-3 son-of maacah-3",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97715,
+   "row": "attai-3 brother-of abijam",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97716,
+   "row": "attai-3 brother-of ziza-2",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97717,
+   "row": "attai-3 brother-of shelomith-4",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97718,
+   "row": "attai-3 son-of rehoboam",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102584,
+   "row": "shelomith-4 son-of maacah-3",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102585,
+   "row": "shelomith-4 brother-of abijam",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102586,
+   "row": "shelomith-4 brother-of attai-3",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102587,
+   "row": "shelomith-4 brother-of ziza-2",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102588,
+   "row": "shelomith-4 son-of rehoboam",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103566,
+   "row": "ziza-2 son-of maacah-3",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103567,
+   "row": "ziza-2 brother-of abijam",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103568,
+   "row": "ziza-2 brother-of attai-3",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 103569,
+   "row": "ziza-2 son-of rehoboam",
+   "verse": "2CH 11:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 100959,
+   "row": "maacah-3 wife-of rehoboam",
+   "verse": "2CH 11:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "abijam son-of rehoboam (1KI 14:31)",
+  "abijam king-of judah (1KI 15:1)",
+  "abishalom father-of maacah-3 (1KI 15:2)",
+  "david son-of jesse (RUT 4:22)",
+  "david father-of solomon (1CH 29:23)",
+  "david servant-of yhvh (2SA 3:18)",
+  "eliab-3 son-of jesse (1CH 2:13)",
+  "eliab-3 brother-of david (1SA 17:28)",
+  "jeroboam servant-of solomon (1KI 11:26)",
+  "jesse father-of david (RUT 4:22)",
+  "jesse father-of eliab-3 (1CH 2:13)",
+  "maacah-3 mother-of abijam (1KI 15:2)",
+  "maacah-3 daughter-of abishalom (1KI 15:2)",
+  "rehoboam son-of solomon (1KI 12:23)",
+  "rehoboam king-of judah (1KI 12:23)",
+  "shemaiah prophet-to rehoboam (2CH 12:5)",
+  "solomon son-of david (1KI 1:13)",
+  "benjamin half-brother-of judah (GEN 35:18)"
+ ]
+}

@@ -1,0 +1,20 @@
+{
+ "chapter": "2KI 14",
+ "rows": 6,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "david",
+   "type": "ancestor-of",
+   "to": "amaziah",
+   "verse": "2KI 14:3",
+   "why": "The verse calls David Amaziah's father in the ancestral sense while also naming Joash as his father.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "All relationships recorded from this chapter are supported; the other explicit family relationships are already recorded in either direction.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:08:50+00:00"
+}

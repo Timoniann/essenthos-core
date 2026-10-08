@@ -1,0 +1,11 @@
+{
+ "chapter": "2SA 20",
+ "rows": 5,
+ "wrong": [],
+ "missing": [],
+ "note": "All plain family relationships in this chapter are already recorded. Joab's address to Amasa as “my brother” in 2SA 20:9 is a familiar greeting, not a plain statement of sibling kinship; the non-family rows are also supported by their verses.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:19:31+00:00"
+}

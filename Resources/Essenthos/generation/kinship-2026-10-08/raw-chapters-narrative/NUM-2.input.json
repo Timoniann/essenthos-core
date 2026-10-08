@@ -1,0 +1,526 @@
+{
+ "chapter": "NUM 2",
+ "text": {
+  "NUM 2:1": {
+   "KJV": "And the LORD spake unto Moses and unto Aaron, saying,",
+   "BHSA": "וַיְדַבֵּ֣ר יְהוָ֔ה אֶל־מֹשֶׁ֥ה וְאֶֽל־אַהֲרֹ֖ן לֵאמֹֽר׃ "
+  },
+  "NUM 2:2": {
+   "KJV": "Every man of the children of Israel shall pitch by his own standard, with the ensign of their father's house: far off about the tabernacle of the congregation shall they pitch.",
+   "BHSA": "אִ֣ישׁ עַל־דִּגְלֹ֤ו בְאֹתֹת֙ לְבֵ֣ית אֲבֹתָ֔ם יַחֲנ֖וּ בְּנֵ֣י יִשְׂרָאֵ֑ל מִנֶּ֕גֶד סָבִ֥יב לְאֹֽהֶל־מֹועֵ֖ד יַחֲנֽוּ׃ "
+  },
+  "NUM 2:3": {
+   "KJV": "And on the east side toward the rising of the sun shall they of the standard of the camp of Judah pitch throughout their armies: and Nahshon the son of Amminadab shall be captain of the children of Judah.",
+   "BHSA": "וְהַחֹנִים֙ קֵ֣דְמָה מִזְרָ֔חָה דֶּ֛גֶל מַחֲנֵ֥ה יְהוּדָ֖ה לְצִבְאֹתָ֑ם וְנָשִׂיא֙ לִבְנֵ֣י יְהוּדָ֔ה נַחְשֹׁ֖ון בֶּן־עַמִּינָדָֽב׃ "
+  },
+  "NUM 2:4": {
+   "KJV": "And his host, and those that were numbered of them, were threescore and fourteen thousand and six hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדֵיהֶ֑ם אַרְבָּעָ֧ה וְשִׁבְעִ֛ים אֶ֖לֶף וְשֵׁ֥שׁ מֵאֹֽות׃ "
+  },
+  "NUM 2:5": {
+   "KJV": "And those that do pitch next unto him shall be the tribe of Issachar: and Nethaneel the son of Zuar shall be captain of the children of Issachar.",
+   "BHSA": "וְהַחֹנִ֥ים עָלָ֖יו מַטֵּ֣ה יִשָּׂשכָ֑ר וְנָשִׂיא֙ לִבְנֵ֣י יִשָּׂשכָ֔ר נְתַנְאֵ֖ל בֶּן־צוּעָֽר׃ "
+  },
+  "NUM 2:6": {
+   "KJV": "And his host, and those that were numbered thereof, were fifty and four thousand and four hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדָ֑יו אַרְבָּעָ֧ה וַחֲמִשִּׁ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ ס "
+  },
+  "NUM 2:7": {
+   "KJV": "Then the tribe of Zebulun: and Eliab the son of Helon shall be captain of the children of Zebulun.",
+   "BHSA": "מַטֵּ֖ה זְבוּלֻ֑ן וְנָשִׂיא֙ לִבְנֵ֣י זְבוּלֻ֔ן אֱלִיאָ֖ב בֶּן־חֵלֹֽן׃ "
+  },
+  "NUM 2:8": {
+   "KJV": "And his host, and those that were numbered thereof, were fifty and seven thousand and four hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדָ֑יו שִׁבְעָ֧ה וַחֲמִשִּׁ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ "
+  },
+  "NUM 2:9": {
+   "KJV": "All that were numbered in the camp of Judah were an hundred thousand and fourscore thousand and six thousand and four hundred, throughout their armies. These shall first set forth.",
+   "BHSA": "כָּֽל־הַפְּקֻדִ֞ים לְמַחֲנֵ֣ה יְהוּדָ֗ה מְאַ֨ת אֶ֜לֶף וּשְׁמֹנִ֥ים אֶ֛לֶף וְשֵֽׁשֶׁת־אֲלָפִ֥ים וְאַרְבַּע־מֵאֹ֖ות לְצִבְאֹתָ֑ם רִאשֹׁנָ֖ה יִסָּֽעוּ׃ ס "
+  },
+  "NUM 2:10": {
+   "KJV": "On the south side shall be the standard of the camp of Reuben according to their armies: and the captain of the children of Reuben shall be Elizur the son of Shedeur.",
+   "BHSA": "דֶּ֣גֶל מַחֲנֵ֧ה רְאוּבֵ֛ן תֵּימָ֖נָה לְצִבְאֹתָ֑ם וְנָשִׂיא֙ לִבְנֵ֣י רְאוּבֵ֔ן אֱלִיצ֖וּר בֶּן־שְׁדֵיאֽוּר׃ "
+  },
+  "NUM 2:11": {
+   "KJV": "And his host, and those that were numbered thereof, were forty and six thousand and five hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדָ֑יו שִׁשָּׁ֧ה וְאַרְבָּעִ֛ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֹֽות׃ "
+  },
+  "NUM 2:12": {
+   "KJV": "And those which pitch by him shall be the tribe of Simeon: and the captain of the children of Simeon shall be Shelumiel the son of Zurishaddai.",
+   "BHSA": "וְהַחֹונִ֥ם עָלָ֖יו מַטֵּ֣ה שִׁמְעֹ֑ון וְנָשִׂיא֙ לִבְנֵ֣י שִׁמְעֹ֔ון שְׁלֻמִיאֵ֖ל בֶּן־צוּרִֽי־שַׁדָּֽי׃ "
+  },
+  "NUM 2:13": {
+   "KJV": "And his host, and those that were numbered of them, were fifty and nine thousand and three hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדֵיהֶ֑ם תִּשְׁעָ֧ה וַחֲמִשִּׁ֛ים אֶ֖לֶף וּשְׁלֹ֥שׁ מֵאֹֽות׃ "
+  },
+  "NUM 2:14": {
+   "KJV": "Then the tribe of Gad: and the captain of the sons of Gad shall be Eliasaph the son of Reuel.",
+   "BHSA": "וְמַטֵּ֖ה גָּ֑ד וְנָשִׂיא֙ לִבְנֵ֣י גָ֔ד אֶלְיָסָ֖ף בֶּן־רְעוּאֵֽל׃ "
+  },
+  "NUM 2:15": {
+   "KJV": "And his host, and those that were numbered of them, were forty and five thousand and six hundred and fifty.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדֵיהֶ֑ם חֲמִשָּׁ֤ה וְאַרְבָּעִים֙ אֶ֔לֶף וְשֵׁ֥שׁ מֵאֹ֖ות וַחֲמִשִּֽׁים׃ "
+  },
+  "NUM 2:16": {
+   "KJV": "All that were numbered in the camp of Reuben were an hundred thousand and fifty and one thousand and four hundred and fifty, throughout their armies. And they shall set forth in the second rank.",
+   "BHSA": "כָּֽל־הַפְּקֻדִ֞ים לְמַחֲנֵ֣ה רְאוּבֵ֗ן מְאַ֨ת אֶ֜לֶף וְאֶחָ֨ד וַחֲמִשִּׁ֥ים אֶ֛לֶף וְאַרְבַּע־מֵאֹ֥ות וַחֲמִשִּׁ֖ים לְצִבְאֹתָ֑ם וּשְׁנִיִּ֖ם יִסָּֽעוּ׃ ס "
+  },
+  "NUM 2:17": {
+   "KJV": "Then the tabernacle of the congregation shall set forward with the camp of the Levites in the midst of the camp: as they encamp, so shall they set forward, every man in his place by their standards.",
+   "BHSA": "וְנָסַ֧ע אֹֽהֶל־מֹועֵ֛ד מַחֲנֵ֥ה הַלְוִיִּ֖ם בְּתֹ֣וךְ הַֽמַּחֲנֹ֑ת כַּאֲשֶׁ֤ר יַחֲנוּ֙ כֵּ֣ן יִסָּ֔עוּ אִ֥ישׁ עַל־יָדֹ֖ו לְדִגְלֵיהֶֽם׃ ס "
+  },
+  "NUM 2:18": {
+   "KJV": "On the west side shall be the standard of the camp of Ephraim according to their armies: and the captain of the sons of Ephraim shall be Elishama the son of Ammihud.",
+   "BHSA": "דֶּ֣גֶל מַחֲנֵ֥ה אֶפְרַ֛יִם לְצִבְאֹתָ֖ם יָ֑מָּה וְנָשִׂיא֙ לִבְנֵ֣י אֶפְרַ֔יִם אֱלִישָׁמָ֖ע בֶּן־עַמִּיהֽוּד׃ "
+  },
+  "NUM 2:19": {
+   "KJV": "And his host, and those that were numbered of them, were forty thousand and five hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדֵיהֶ֑ם אַרְבָּעִ֥ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֹֽות׃ "
+  },
+  "NUM 2:20": {
+   "KJV": "And by him shall be the tribe of Manasseh: and the captain of the children of Manasseh shall be Gamaliel the son of Pedahzur.",
+   "BHSA": "וְעָלָ֖יו מַטֵּ֣ה מְנַשֶּׁ֑ה וְנָשִׂיא֙ לִבְנֵ֣י מְנַשֶּׁ֔ה גַּמְלִיאֵ֖ל בֶּן־פְּדָהצֽוּר׃ "
+  },
+  "NUM 2:21": {
+   "KJV": "And his host, and those that were numbered of them, were thirty and two thousand and two hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדֵיהֶ֑ם שְׁנַ֧יִם וּשְׁלֹשִׁ֛ים אֶ֖לֶף וּמָאתָֽיִם׃ "
+  },
+  "NUM 2:22": {
+   "KJV": "Then the tribe of Benjamin: and the captain of the sons of Benjamin shall be Abidan the son of Gideoni.",
+   "BHSA": "וּמַטֵּ֖ה בִּנְיָמִ֑ן וְנָשִׂיא֙ לִבְנֵ֣י בִנְיָמִ֔ן אֲבִידָ֖ן בֶּן־גִּדְעֹנִֽי׃ "
+  },
+  "NUM 2:23": {
+   "KJV": "And his host, and those that were numbered of them, were thirty and five thousand and four hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדֵיהֶ֑ם חֲמִשָּׁ֧ה וּשְׁלֹשִׁ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ "
+  },
+  "NUM 2:24": {
+   "KJV": "All that were numbered of the camp of Ephraim were an hundred thousand and eight thousand and an hundred, throughout their armies. And they shall go forward in the third rank.",
+   "BHSA": "כָּֽל־הַפְּקֻדִ֞ים לְמַחֲנֵ֣ה אֶפְרַ֗יִם מְאַ֥ת אֶ֛לֶף וּשְׁמֹֽנַת־אֲלָפִ֥ים וּמֵאָ֖ה לְצִבְאֹתָ֑ם וּשְׁלִשִׁ֖ים יִסָּֽעוּ׃ ס "
+  },
+  "NUM 2:25": {
+   "KJV": "The standard of the camp of Dan shall be on the north side by their armies: and the captain of the children of Dan shall be Ahiezer the son of Ammishaddai.",
+   "BHSA": "דֶּ֣גֶל מַחֲנֵ֥ה דָ֛ן צָפֹ֖נָה לְצִבְאֹתָ֑ם וְנָשִׂיא֙ לִבְנֵ֣י דָ֔ן אֲחִיעֶ֖זֶר בֶּן־עַמִּֽישַׁדָּֽי׃ "
+  },
+  "NUM 2:26": {
+   "KJV": "And his host, and those that were numbered of them, were threescore and two thousand and seven hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדֵיהֶ֑ם שְׁנַ֧יִם וְשִׁשִּׁ֛ים אֶ֖לֶף וּשְׁבַ֥ע מֵאֹֽות׃ "
+  },
+  "NUM 2:27": {
+   "KJV": "And those that encamp by him shall be the tribe of Asher: and the captain of the children of Asher shall be Pagiel the son of Ocran.",
+   "BHSA": "וְהַחֹנִ֥ים עָלָ֖יו מַטֵּ֣ה אָשֵׁ֑ר וְנָשִׂיא֙ לִבְנֵ֣י אָשֵׁ֔ר פַּגְעִיאֵ֖ל בֶּן־עָכְרָֽן׃ "
+  },
+  "NUM 2:28": {
+   "KJV": "And his host, and those that were numbered of them, were forty and one thousand and five hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדֵיהֶ֑ם אֶחָ֧ד וְאַרְבָּעִ֛ים אֶ֖לֶף וַחֲמֵ֥שׁ מֵאֹֽות׃ "
+  },
+  "NUM 2:29": {
+   "KJV": "Then the tribe of Naphtali: and the captain of the children of Naphtali shall be Ahira the son of Enan.",
+   "BHSA": "וּמַטֵּ֖ה נַפְתָּלִ֑י וְנָשִׂיא֙ לִבְנֵ֣י נַפְתָּלִ֔י אֲחִירַ֖ע בֶּן־עֵינָֽן׃ "
+  },
+  "NUM 2:30": {
+   "KJV": "And his host, and those that were numbered of them, were fifty and three thousand and four hundred.",
+   "BHSA": "וּצְבָאֹ֖ו וּפְקֻדֵיהֶ֑ם שְׁלֹשָׁ֧ה וַחֲמִשִּׁ֛ים אֶ֖לֶף וְאַרְבַּ֥ע מֵאֹֽות׃ "
+  },
+  "NUM 2:31": {
+   "KJV": "All they that were numbered in the camp of Dan were an hundred thousand and fifty and seven thousand and six hundred. They shall go hindmost with their standards.",
+   "BHSA": "כָּל־הַפְּקֻדִים֙ לְמַ֣חֲנֵה דָ֔ן מְאַ֣ת אֶ֗לֶף וְשִׁבְעָ֧ה וַחֲמִשִּׁ֛ים אֶ֖לֶף וְשֵׁ֣שׁ מֵאֹ֑ות לָאַחֲרֹנָ֥ה יִסְע֖וּ לְדִגְלֵיהֶֽם׃ פ "
+  },
+  "NUM 2:32": {
+   "KJV": "These are those which were numbered of the children of Israel by the house of their fathers: all those that were numbered of the camps throughout their hosts were six hundred thousand and three thousand and five hundred and fifty.",
+   "BHSA": "אֵ֛לֶּה פְּקוּדֵ֥י בְנֵֽי־יִשְׂרָאֵ֖ל לְבֵ֣ית אֲבֹתָ֑ם כָּל־פְּקוּדֵ֤י הַֽמַּחֲנֹת֙ לְצִבְאֹתָ֔ם שֵׁשׁ־מֵאֹ֥ות אֶ֨לֶף֙ וּשְׁלֹ֣שֶׁת אֲלָפִ֔ים וַחֲמֵ֥שׁ מֵאֹ֖ות וַחֲמִשִּֽׁים׃ "
+  },
+  "NUM 2:33": {
+   "KJV": "But the Levites were not numbered among the children of Israel; as the LORD commanded Moses.",
+   "BHSA": "וְהַ֨לְוִיִּ֔ם לֹ֣א הָתְפָּקְד֔וּ בְּתֹ֖וךְ בְּנֵ֣י יִשְׂרָאֵ֑ל כַּאֲשֶׁ֛ר צִוָּ֥ה יְהוָ֖ה אֶת־מֹשֶֽׁה׃ "
+  },
+  "NUM 2:34": {
+   "KJV": "And the children of Israel did according to all that the LORD commanded Moses: so they pitched by their standards, and so they set forward, every one after their families, according to the house of their fathers.",
+   "BHSA": "וַֽיַּעֲשׂ֖וּ בְּנֵ֣י יִשְׂרָאֵ֑ל כְּ֠כֹל אֲשֶׁר־צִוָּ֨ה יְהוָ֜ה אֶת־מֹשֶׁ֗ה כֵּֽן־חָנ֤וּ לְדִגְלֵיהֶם֙ וְכֵ֣ן נָסָ֔עוּ אִ֥ישׁ לְמִשְׁפְּחֹתָ֖יו עַל־בֵּ֥ית אֲבֹתָֽיו׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "abidan",
+   "name": "Abidan",
+   "distinguisher": "head of the tribe of Benjamin during the census (NUM 1:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahiezer",
+   "name": "Ahiezer",
+   "distinguisher": "head of the tribe of Dan during the census (NUM 1:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahira",
+   "name": "Ahira",
+   "distinguisher": "head of the tribe of Naphtali during the census (NUM 1:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "ammihud",
+   "name": "Ammihud",
+   "distinguisher": "father of Elishama (NUM 1:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "amminadab",
+   "name": "Amminadab",
+   "distinguisher": "father of Elisheba (EXO 6:23)",
+   "sex": "male"
+  },
+  {
+   "slug": "ammishaddai",
+   "name": "Ammishaddai",
+   "distinguisher": "father of Ahiezer (NUM 1:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "asher",
+   "name": "Asher",
+   "distinguisher": "eighth-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin",
+   "name": "Benjamin",
+   "distinguisher": "twelfth-born son of Jacob and Rachel (GEN 35:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "dan",
+   "name": "Dan",
+   "distinguisher": "fifth-born son of Jacob (GEN 30:5), son of Bilhah, Rachel's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "deuel",
+   "name": "Deuel",
+   "distinguisher": "father of Eliasaph (NUM 1:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliab",
+   "name": "Eliab",
+   "distinguisher": "head of the tribe of Zebulun during the census (NUM 1:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliasaph",
+   "name": "Eliasaph",
+   "distinguisher": "head of the tribe of Gad during the census (NUM 1:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "elishama",
+   "name": "Elishama",
+   "distinguisher": "head of the tribe of Ephraim during the census (NUM 1:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "elizur",
+   "name": "Elizur",
+   "distinguisher": "head of the tribe of Reuben during the census (NUM 1:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "enan",
+   "name": "Enan",
+   "distinguisher": "father of Ahira (NUM 1:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "ephraim",
+   "name": "Ephraim",
+   "distinguisher": "second son of Joseph (GEN 41:52)",
+   "sex": "male"
+  },
+  {
+   "slug": "gad",
+   "name": "Gad",
+   "distinguisher": "seventh-born son of Jacob (GEN 30:11, GEN 35:26), son of Zilpah, Leah's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "gamaliel",
+   "name": "Gamaliel",
+   "distinguisher": "head of the tribe of Manasseh during the census (NUM 1:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "gideoni",
+   "name": "Gideoni",
+   "distinguisher": "father of Abidan (NUM 1:11)",
+   "sex": "male"
+  },
+  {
+   "slug": "helon",
+   "name": "Helon",
+   "distinguisher": "father of Eliab (NUM 1:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "issachar",
+   "name": "Issachar",
+   "distinguisher": "ninth-born son of Jacob (GEN 30:17), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "manasseh",
+   "name": "Manasseh",
+   "distinguisher": "firstborn son of Joseph (GEN 41:51)",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "nahshon",
+   "name": "Nahshon",
+   "distinguisher": "son of Amminadab and brother of Elisheba (EXO 6:23), head of the tribe of Judah during the census (NUM 1:7)",
+   "sex": "male"
+  },
+  {
+   "slug": "naphtali",
+   "name": "Naphtali",
+   "distinguisher": "sixth-born son of Jacob (GEN 30:7), son of Bilhah, Rachel's handmaid",
+   "sex": "male"
+  },
+  {
+   "slug": "nethanel",
+   "name": "Nethanel",
+   "distinguisher": "head of the tribe of Issachar during the census (NUM 1:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "ochran",
+   "name": "Ochran",
+   "distinguisher": "father of Pagiel (NUM 1:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "pagiel",
+   "name": "Pagiel",
+   "distinguisher": "head of the tribe of Asher during the census (NUM 1:13)",
+   "sex": "male"
+  },
+  {
+   "slug": "pedahzur",
+   "name": "Pedahzur",
+   "distinguisher": "father of Gamaliel (NUM 1:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "reuben",
+   "name": "Reuben",
+   "distinguisher": "firstborn son of Jacob (GEN 29:32), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "shedeur",
+   "name": "Shedeur",
+   "distinguisher": "father of Elizur (NUM 1:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelumiel",
+   "name": "Shelumiel",
+   "distinguisher": "head of the tribe of Simeon during the census (NUM 1:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "simeon",
+   "name": "Simeon",
+   "distinguisher": "second-born son of Jacob (GEN 29:33), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zebulun",
+   "name": "Zebulun",
+   "distinguisher": "tenth-born son of Jacob (GEN 30:19), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "zuar",
+   "name": "Zuar",
+   "distinguisher": "father of Nethanel (NUM 1:8)",
+   "sex": "male"
+  },
+  {
+   "slug": "zurishaddai",
+   "name": "Zurishaddai",
+   "distinguisher": "father of Shelumiel (NUM 1:6)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 98596,
+   "row": "eliab commander-of zebulun",
+   "verse": "NUM 2:7",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98745,
+   "row": "elizur commander-of reuben",
+   "verse": "NUM 2:10",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 98627,
+   "row": "eliasaph commander-of gad",
+   "verse": "NUM 2:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 98720,
+   "row": "elishama commander-of ephraim",
+   "verse": "NUM 2:18",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99013,
+   "row": "gamaliel commander-of manasseh",
+   "verse": "NUM 2:20",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101866,
+   "row": "pagiel commander-of asher",
+   "verse": "NUM 2:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron brother-of moses (EXO 4:14)",
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "abidan son-of gideoni (NUM 1:11)",
+  "ahiezer son-of ammishaddai (NUM 1:12)",
+  "ahira son-of enan (NUM 1:15)",
+  "ahira commander-of naphtali (NUM 10:27)",
+  "ahira of-tribe naphtali (NUM 1:15)",
+  "eliab son-of helon (NUM 1:9)",
+  "eliasaph son-of deuel (NUM 1:14)",
+  "elishama son-of ammihud (NUM 1:10)",
+  "elishama of-tribe ephraim (NUM 1:10)",
+  "elizur son-of shedeur (NUM 1:5)",
+  "ephraim brother-of manasseh (GEN 48:5)",
+  "gamaliel son-of pedahzur (NUM 1:10)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "moses priest-of yhvh (PSA 99:6)",
+  "nahshon son-of amminadab (NUM 1:7)",
+  "nethanel son-of zuar (NUM 1:8)",
+  "pagiel son-of ochran (NUM 1:13)",
+  "reuben son-of jacob (GEN 35:23)",
+  "shelumiel commander-of simeon (NUM 10:19)",
+  "shelumiel son-of zurishaddai (NUM 1:6)",
+  "ammihud father-of elishama (NUM 1:10)",
+  "ammihud descendant-of ephraim (NUM 1:10)",
+  "ammishaddai father-of ahiezer (NUM 1:12)",
+  "ammishaddai descendant-of dan (NUM 1:12)",
+  "benjamin son-of jacob (GEN 35:18)",
+  "benjamin half-brother-of reuben (GEN 35:18)",
+  "benjamin half-brother-of judah (GEN 35:18)",
+  "benjamin half-brother-of dan (GEN 35:18)",
+  "benjamin half-brother-of naphtali (GEN 35:18)",
+  "benjamin half-brother-of gad (GEN 35:18)",
+  "benjamin half-brother-of asher (GEN 35:18)",
+  "benjamin half-brother-of issachar (GEN 35:18)",
+  "benjamin half-brother-of zebulun (GEN 35:18)",
+  "amminadab father-of nahshon (NUM 1:7)",
+  "amminadab father-in-law-of aaron (EXO 6:23)",
+  "deuel father-of eliasaph (NUM 1:14)",
+  "deuel descendant-of gad (NUM 1:14)",
+  "gideoni father-of abidan (NUM 1:11)",
+  "gideoni descendant-of benjamin (NUM 1:11)",
+  "issachar son-of jacob (1CH 2:1)",
+  "issachar brother-of reuben (GEN 30:18)",
+  "issachar brother-of simeon (GEN 30:18)",
+  "issachar brother-of judah (GEN 30:18)",
+  "issachar half-brother-of dan (GEN 30:18)",
+  "issachar half-brother-of naphtali (GEN 30:18)",
+  "issachar half-brother-of gad (GEN 30:18)",
+  "issachar half-brother-of asher (GEN 30:18)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "jacob father-of dan (GEN 35:22)",
+  "jacob father-of naphtali (GEN 35:22)",
+  "judah son-of jacob (GEN 35:23)",
+  "judah brother-of simeon (GEN 35:23)",
+  "judah brother-of reuben (GEN 29:35)",
+  "ochran father-of pagiel (NUM 1:13)",
+  "ochran descendant-of asher (NUM 1:13)",
+  "gad son-of jacob (GEN 35:26)",
+  "gad brother-of asher (GEN 35:26)",
+  "gad half-brother-of reuben (GEN 30:11)",
+  "gad half-brother-of simeon (GEN 30:11)",
+  "gad half-brother-of judah (GEN 30:11)",
+  "gad half-brother-of dan (GEN 30:11)",
+  "gad half-brother-of naphtali (GEN 30:11)",
+  "manasseh brother-of ephraim (GEN 48:5)",
+  "naphtali brother-of dan (GEN 35:25)",
+  "naphtali half-brother-of reuben (GEN 30:8)",
+  "naphtali half-brother-of simeon (GEN 30:8)",
+  "naphtali half-brother-of judah (GEN 30:8)",
+  "simeon son-of jacob (GEN 35:23)",
+  "simeon brother-of reuben (GEN 29:33)",
+  "simeon half-brother-of benjamin (GEN 35:22)",
+  "zebulun son-of jacob (GEN 35:23)",
+  "zebulun brother-of reuben (GEN 30:20)",
+  "zebulun brother-of simeon (GEN 30:20)",
+  "zebulun brother-of judah (GEN 30:20)",
+  "zebulun half-brother-of dan (GEN 30:20)",
+  "zebulun half-brother-of naphtali (GEN 30:20)",
+  "zebulun half-brother-of gad (GEN 30:20)",
+  "zebulun half-brother-of asher (GEN 30:20)",
+  "zebulun brother-of issachar (GEN 30:20)",
+  "asher son-of jacob (GEN 35:26)",
+  "asher half-brother-of reuben (GEN 30:13)",
+  "asher half-brother-of simeon (GEN 30:13)",
+  "asher half-brother-of judah (GEN 30:13)",
+  "asher half-brother-of dan (GEN 30:13)",
+  "asher half-brother-of naphtali (GEN 30:13)",
+  "enan father-of ahira (NUM 1:15)",
+  "enan descendant-of naphtali (NUM 1:15)",
+  "helon father-of eliab (NUM 1:9)",
+  "helon descendant-of zebulun (NUM 1:9)",
+  "pedahzur father-of gamaliel (NUM 1:10)",
+  "pedahzur descendant-of manasseh (NUM 1:10)",
+  "shedeur father-of elizur (NUM 1:5)",
+  "shedeur descendant-of reuben (NUM 1:5)",
+  "zuar father-of nethanel (NUM 1:8)",
+  "zuar descendant-of issachar (NUM 1:8)",
+  "zurishaddai father-of shelumiel (NUM 1:6)",
+  "zurishaddai descendant-of simeon (NUM 1:6)",
+  "dan brother-of naphtali (GEN 35:25)",
+  "dan half-brother-of reuben (GEN 30:6)",
+  "dan half-brother-of simeon (GEN 30:6)",
+  "dan half-brother-of judah (GEN 30:6)"
+ ]
+}

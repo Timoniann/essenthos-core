@@ -1,0 +1,249 @@
+{
+ "chapter": "1SA 9",
+ "text": {
+  "1SA 9:1": {
+   "KJV": "Now there was a man of Benjamin, whose name was Kish, the son of Abiel, the son of Zeror, the son of Bechorath, the son of Aphiah, a Benjamite, a mighty man of power.",
+   "BHSA": "וַֽיְהִי־אִ֣ישׁ מבן־ימין וּ֠שְׁמֹו קִ֣ישׁ בֶּן־אֲבִיאֵ֞ל בֶּן־צְרֹ֧ור בֶּן־בְּכֹורַ֛ת בֶּן־אֲפִ֖יחַ בֶּן־אִ֣ישׁ יְמִינִ֑י גִּבֹּ֖ור חָֽיִל׃ "
+  },
+  "1SA 9:2": {
+   "KJV": "And he had a son, whose name was Saul, a choice young man, and a goodly: and there was not among the children of Israel a goodlier person than he: from his shoulders and upward he was higher than any of the people.",
+   "BHSA": "וְלֹו־הָיָ֨ה בֵ֜ן וּשְׁמֹ֤ו שָׁאוּל֙ בָּח֣וּר וָטֹ֔וב וְאֵ֥ין אִ֛ישׁ מִבְּנֵ֥י יִשְׂרָאֵ֖ל טֹ֣וב מִמֶּ֑נּוּ מִשִּׁכְמֹ֣ו וָמַ֔עְלָה גָּבֹ֖הַּ מִכָּל־הָעָֽם׃ "
+  },
+  "1SA 9:3": {
+   "KJV": "And the asses of Kish Saul's father were lost. And Kish said to Saul his son, Take now one of the servants with thee, and arise, go seek the asses.",
+   "BHSA": "וַתֹּאבַ֨דְנָה֙ הָאֲתֹנֹ֔ות לְקִ֖ישׁ אֲבִ֣י שָׁא֑וּל וַיֹּ֨אמֶר קִ֜ישׁ אֶל־שָׁא֣וּל בְּנֹ֗ו קַח־נָ֤א אִתְּךָ֙ אֶת־אַחַ֣ד מֵֽהַנְּעָרִ֔ים וְק֣וּם לֵ֔ךְ בַּקֵּ֖שׁ אֶת־הָאֲתֹנֹֽת׃ "
+  },
+  "1SA 9:4": {
+   "KJV": "And he passed through mount Ephraim, and passed through the land of Shalisha, but they found them not: then they passed through the land of Shalim, and there they were not: and he passed through the land of the Benjamites, but they found them not.",
+   "BHSA": "וַיַּעֲבֹ֧ר בְּהַר־אֶפְרַ֛יִם וַיַּעֲבֹ֥ר בְּאֶֽרֶץ־שָׁלִ֖שָׁה וְלֹ֣א מָצָ֑אוּ וַיַּעַבְר֤וּ בְאֶֽרֶץ־שַׁעֲלִים֙ וָאַ֔יִן וַיַּעֲבֹ֥ר בְּאֶֽרֶץ־יְמִינִ֖י וְלֹ֥א מָצָֽאוּ׃ "
+  },
+  "1SA 9:5": {
+   "KJV": "And when they were come to the land of Zuph, Saul said to his servant that was with him, Come, and let us return; lest my father leave caring for the asses, and take thought for us.",
+   "BHSA": "הֵ֗מָּה בָּ֚אוּ בְּאֶ֣רֶץ צ֔וּף וְשָׁא֥וּל אָמַ֛ר לְנַעֲרֹ֥ו אֲשֶׁר־עִמֹּ֖ו לְכָ֣ה וְנָשׁ֑וּבָה פֶּן־יֶחְדַּ֥ל אָבִ֛י מִן־הָאֲתֹנֹ֖ות וְדָ֥אַג לָֽנוּ׃ "
+  },
+  "1SA 9:6": {
+   "KJV": "And he said unto him, Behold now, there is in this city a man of God, and he is an honourable man; all that he saith cometh surely to pass: now let us go thither; peradventure he can shew us our way that we should go.",
+   "BHSA": "וַיֹּ֣אמֶר לֹ֗ו הִנֵּה־נָ֤א אִישׁ־אֱלֹהִים֙ בָּעִ֣יר הַזֹּ֔את וְהָאִ֣ישׁ נִכְבָּ֔ד כֹּ֥ל אֲשֶׁר־יְדַבֵּ֖ר בֹּ֣וא יָבֹ֑וא עַתָּה֙ נֵ֣לֲכָה שָּׁ֔ם אוּלַי֙ יַגִּ֣יד לָ֔נוּ אֶת־דַּרְכֵּ֖נוּ אֲשֶׁר־הָלַ֥כְנוּ עָלֶֽיהָ׃ "
+  },
+  "1SA 9:7": {
+   "KJV": "Then said Saul to his servant, But, behold, if we go, what shall we bring the man? for the bread is spent in our vessels, and there is not a present to bring to the man of God: what have we?",
+   "BHSA": "וַיֹּ֨אמֶר שָׁא֜וּל לְנַעֲרֹ֗ו וְהִנֵּ֣ה נֵלֵךְ֮ וּמַה־נָּבִ֣יא לָאִישׁ֒ כִּ֤י הַלֶּ֨חֶם֙ אָזַ֣ל מִכֵּלֵ֔ינוּ וּתְשׁוּרָ֥ה אֵין־לְהָבִ֖יא לְאִ֣ישׁ הָאֱלֹהִ֑ים מָ֖ה אִתָּֽנוּ׃ "
+  },
+  "1SA 9:8": {
+   "KJV": "And the servant answered Saul again, and said, Behold, I have here at hand the fourth part of a shekel of silver: that will I give to the man of God, to tell us our way.",
+   "BHSA": "וַיֹּ֤סֶף הַנַּ֨עַר֙ לַעֲנֹ֣ות אֶת־שָׁא֔וּל וַיֹּ֕אמֶר הִנֵּה֙ נִמְצָ֣א בְיָדִ֔י רֶ֖בַע שֶׁ֣קֶל כָּ֑סֶף וְנָֽתַתִּי֙ לְאִ֣ישׁ הָאֱלֹהִ֔ים וְהִגִּ֥יד לָ֖נוּ אֶת־דַּרְכֵּֽנוּ׃ "
+  },
+  "1SA 9:9": {
+   "KJV": "(Beforetime in Israel, when a man went to enquire of God, thus he spake, Come, and let us go to the seer: for he that is now called a Prophet was beforetime called a Seer.)",
+   "BHSA": "לְפָנִ֣ים׀ בְּיִשְׂרָאֵ֗ל כֹּֽה־אָמַ֤ר הָאִישׁ֙ בְּלֶכְתֹּו֙ לִדְרֹ֣ושׁ אֱלֹהִ֔ים לְכ֥וּ וְנֵלְכָ֖ה עַד־הָרֹאֶ֑ה כִּ֤י לַנָּבִיא֙ הַיֹּ֔ום יִקָּרֵ֥א לְפָנִ֖ים הָרֹאֶֽה׃ "
+  },
+  "1SA 9:10": {
+   "KJV": "Then said Saul to his servant, Well said; come, let us go. So they went unto the city where the man of God was.",
+   "BHSA": "וַיֹּ֨אמֶר שָׁא֧וּל לְנַעֲרֹ֛ו טֹ֥וב דְּבָרְךָ֖ לְכָ֣ה׀ נֵלֵ֑כָה וַיֵּֽלְכוּ֙ אֶל־הָעִ֔יר אֲשֶׁר־שָׁ֖ם אִ֥ישׁ הָאֱלֹהִֽים׃ "
+  },
+  "1SA 9:11": {
+   "KJV": "And as they went up the hill to the city, they found young maidens going out to draw water, and said unto them, Is the seer here?",
+   "BHSA": "הֵ֗מָּה עֹלִים֙ בְּמַעֲלֵ֣ה הָעִ֔יר וְהֵ֨מָּה֙ מָצְא֣וּ נְעָרֹ֔ות יֹצְאֹ֖ות לִשְׁאֹ֣ב מָ֑יִם וַיֹּאמְר֣וּ לָהֶ֔ן הֲיֵ֥שׁ בָּזֶ֖ה הָרֹאֶֽה׃ "
+  },
+  "1SA 9:12": {
+   "KJV": "And they answered them, and said, He is; behold, he is before you: make haste now, for he came to day to the city; for there is a sacrifice of the people to day in the high place:",
+   "BHSA": "וַתַּעֲנֶ֧ינָה אֹותָ֛ם וַתֹּאמַ֥רְנָה יֵּ֖שׁ הִנֵּ֣ה לְפָנֶ֑יךָ מַהֵ֣ר׀ עַתָּ֗ה כִּ֤י הַיֹּום֙ בָּ֣א לָעִ֔יר כִּ֣י זֶ֧בַח הַיֹּ֛ום לָעָ֖ם בַּבָּמָֽה׃ "
+  },
+  "1SA 9:13": {
+   "KJV": "As soon as ye be come into the city, ye shall straightway find him, before he go up to the high place to eat: for the people will not eat until he come, because he doth bless the sacrifice; and afterwards they eat that be bidden. Now therefore get you up; for about this time ye shall find him.",
+   "BHSA": "כְּבֹאֲכֶ֣ם הָעִ֣יר כֵּ֣ן תִּמְצְא֣וּן אֹתֹ֡ו בְּטֶרֶם֩ יַעֲלֶ֨ה הַבָּמָ֜תָה לֶאֱכֹ֗ל כִּ֠י לֹֽא־יֹאכַ֤ל הָעָם֙ עַד־בֹּאֹ֔ו כִּֽי־הוּא֙ יְבָרֵ֣ךְ הַזֶּ֔בַח אַחֲרֵי־כֵ֖ן יֹאכְל֣וּ הַקְּרֻאִ֑ים וְעַתָּ֣ה עֲל֔וּ כִּֽי־אֹתֹ֥ו כְהַיֹּ֖ום תִּמְצְא֥וּן אֹתֹֽו׃ "
+  },
+  "1SA 9:14": {
+   "KJV": "And they went up into the city: and when they were come into the city, behold, Samuel came out against them, for to go up to the high place.",
+   "BHSA": "וַֽיַּעֲל֖וּ הָעִ֑יר הֵ֗מָּה בָּאִים֙ בְּתֹ֣וךְ הָעִ֔יר וְהִנֵּ֤ה שְׁמוּאֵל֙ יֹצֵ֣א לִקְרָאתָ֔ם לַעֲלֹ֖ות הַבָּמָֽה׃ ס "
+  },
+  "1SA 9:15": {
+   "KJV": "Now the LORD had told Samuel in his ear a day before Saul came, saying,",
+   "BHSA": "וַֽיהוָ֔ה גָּלָ֖ה אֶת־אֹ֣זֶן שְׁמוּאֵ֑ל יֹ֣ום אֶחָ֔ד לִפְנֵ֥י בֹֽוא־שָׁא֖וּל לֵאמֹֽר׃ "
+  },
+  "1SA 9:16": {
+   "KJV": "To morrow about this time I will send thee a man out of the land of Benjamin, and thou shalt anoint him to be captain over my people Israel, that he may save my people out of the hand of the Philistines: for I have looked upon my people, because their cry is come unto me.",
+   "BHSA": "כָּעֵ֣ת׀ מָחָ֡ר אֶשְׁלַח֩ אֵלֶ֨יךָ אִ֜ישׁ מֵאֶ֣רֶץ בִּנְיָמִ֗ן וּמְשַׁחְתֹּ֤ו לְנָגִיד֙ עַל־עַמִּ֣י יִשְׂרָאֵ֔ל וְהֹושִׁ֥יעַ אֶת־עַמִּ֖י מִיַּ֣ד פְּלִשְׁתִּ֑ים כִּ֤י רָאִ֨יתִי֙ אֶת־עַמִּ֔י כִּ֛י בָּ֥אָה צַעֲקָתֹ֖ו אֵלָֽי׃ "
+  },
+  "1SA 9:17": {
+   "KJV": "And when Samuel saw Saul, the LORD said unto him, Behold the man whom I spake to thee of! this same shall reign over my people.",
+   "BHSA": "וּשְׁמוּאֵ֖ל רָאָ֣ה אֶת־שָׁא֑וּל וַיהוָ֣ה עָנָ֔הוּ הִנֵּ֤ה הָאִישׁ֙ אֲשֶׁ֣ר אָמַ֣רְתִּי אֵלֶ֔יךָ זֶ֖ה יַעְצֹ֥ר בְּעַמִּֽי׃ "
+  },
+  "1SA 9:18": {
+   "KJV": "Then Saul drew near to Samuel in the gate, and said, Tell me, I pray thee, where the seer's house is.",
+   "BHSA": "וַיִּגַּ֥שׁ שָׁא֛וּל אֶת־שְׁמוּאֵ֖ל בְּתֹ֣וךְ הַשָּׁ֑עַר וַיֹּ֨אמֶר֙ הַגִּֽידָה־נָּ֣א לִ֔י אֵי־זֶ֖ה בֵּ֥ית הָרֹאֶֽה׃ "
+  },
+  "1SA 9:19": {
+   "KJV": "And Samuel answered Saul, and said, I am the seer: go up before me unto the high place; for ye shall eat with me to day, and to morrow I will let thee go, and will tell thee all that is in thine heart.",
+   "BHSA": "וַיַּ֨עַן שְׁמוּאֵ֜ל אֶת־שָׁא֗וּל וַיֹּ֨אמֶר֙ אָנֹכִ֣י הָרֹאֶ֔ה עֲלֵ֤ה לְפָנַי֙ הַבָּמָ֔ה וַאֲכַלְתֶּ֥ם עִמִּ֖י הַיֹּ֑ום וְשִׁלַּחְתִּ֣יךָ בַבֹּ֔קֶר וְכֹ֛ל אֲשֶׁ֥ר בִּֽלְבָבְךָ֖ אַגִּ֥יד לָֽךְ׃ "
+  },
+  "1SA 9:20": {
+   "KJV": "And as for thine asses that were lost three days ago, set not thy mind on them; for they are found. And on whom is all the desire of Israel? Is it not on thee, and on all thy father's house?",
+   "BHSA": "וְלָאֲתֹנֹ֞ות הָאֹבְדֹ֣ות לְךָ֗ הַיֹּום֙ שְׁלֹ֣שֶׁת הַיָּמִ֔ים אַל־תָּ֧שֶׂם אֶֽת־לִבְּךָ֛ לָהֶ֖ם כִּ֣י נִמְצָ֑אוּ וּלְמִי֙ כָּל־חֶמְדַּ֣ת יִשְׂרָאֵ֔ל הֲלֹ֣וא לְךָ֔ וּלְכֹ֖ל בֵּ֥ית אָבִֽיךָ׃ ס "
+  },
+  "1SA 9:21": {
+   "KJV": "And Saul answered and said, Am not I a Benjamite, of the smallest of the tribes of Israel? and my family the least of all the families of the tribe of Benjamin? wherefore then speakest thou so to me?",
+   "BHSA": "וַיַּ֨עַן שָׁא֜וּל וַיֹּ֗אמֶר הֲלֹ֨וא בֶן־יְמִינִ֤י אָ֨נֹכִי֙ מִקַּטַנֵּי֙ שִׁבְטֵ֣י יִשְׂרָאֵ֔ל וּמִשְׁפַּחְתִּי֙ הַצְּעִרָ֔ה מִכָּֽל־מִשְׁפְּחֹ֖ות שִׁבְטֵ֣י בִנְיָמִ֑ן וְלָ֨מָּה֙ דִּבַּ֣רְתָּ אֵלַ֔י כַּדָּבָ֖ר הַזֶּֽה׃ ס "
+  },
+  "1SA 9:22": {
+   "KJV": "And Samuel took Saul and his servant, and brought them into the parlour, and made them sit in the chiefest place among them that were bidden, which were about thirty persons.",
+   "BHSA": "וַיִּקַּ֤ח שְׁמוּאֵל֙ אֶת־שָׁא֣וּל וְאֶֽת־נַעֲרֹ֔ו וַיְבִיאֵ֖ם לִשְׁכָּ֑תָה וַיִּתֵּ֨ן לָהֶ֤ם מָקֹום֙ בְּרֹ֣אשׁ הַקְּרוּאִ֔ים וְהֵ֖מָּה כִּשְׁלֹשִׁ֥ים אִֽישׁ׃ "
+  },
+  "1SA 9:23": {
+   "KJV": "And Samuel said unto the cook, Bring the portion which I gave thee, of which I said unto thee, Set it by thee.",
+   "BHSA": "וַיֹּ֤אמֶר שְׁמוּאֵל֙ לַטַּבָּ֔ח תְּנָה֙ אֶת־הַמָּנָ֔ה אֲשֶׁ֥ר נָתַ֖תִּי לָ֑ךְ אֲשֶׁר֙ אָמַ֣רְתִּי אֵלֶ֔יךָ שִׂ֥ים אֹתָ֖הּ עִמָּֽךְ׃ "
+  },
+  "1SA 9:24": {
+   "KJV": "And the cook took up the shoulder, and that which was upon it, and set it before Saul. And Samuel said, Behold that which is left! set it before thee, and eat: for unto this time hath it been kept for thee since I said, I have invited the people. So Saul did eat with Samuel that day.",
+   "BHSA": "וַיָּ֣רֶם הַ֠טַּבָּח אֶת־הַשֹּׁ֨וק וְהֶעָלֶ֜יהָ וַיָּ֣שֶׂם׀ לִפְנֵ֣י שָׁא֗וּל וַיֹּ֨אמֶר֙ הִנֵּ֤ה הַנִּשְׁאָר֙ שִׂים־לְפָנֶ֣יךָ אֱכֹ֔ל כִּ֧י לַמֹּועֵ֛ד שָֽׁמוּר־לְךָ֥ לֵאמֹ֖ר הָעָ֣ם׀ קָרָ֑אתִי וַיֹּ֧אכַל שָׁא֛וּל עִם־שְׁמוּאֵ֖ל בַּיֹּ֥ום הַהֽוּא׃ "
+  },
+  "1SA 9:25": {
+   "KJV": "And when they were come down from the high place into the city, Samuel communed with Saul upon the top of the house.",
+   "BHSA": "וַיֵּרְד֥וּ מֵהַבָּמָ֖ה הָעִ֑יר וַיְדַבֵּ֥ר עִם־שָׁא֖וּל עַל־הַגָּֽג׃ "
+  },
+  "1SA 9:26": {
+   "KJV": "And they arose early: and it came to pass about the spring of the day, that Samuel called Saul to the top of the house, saying, Up, that I may send thee away. And Saul arose, and they went out both of them, he and Samuel, abroad.",
+   "BHSA": "וַיַּשְׁכִּ֗מוּ וַיְהִ֞י כַּעֲלֹ֤ות הַשַּׁ֨חַר֙ וַיִּקְרָ֨א שְׁמוּאֵ֤ל אֶל־שָׁאוּל֙ הגג לֵאמֹ֔ר ק֖וּמָה וַאֲשַׁלְּחֶ֑ךָּ וַיָּ֣קָם שָׁא֗וּל וַיֵּצְא֧וּ שְׁנֵיהֶ֛ם ה֥וּא וּשְׁמוּאֵ֖ל הַחֽוּצָה׃ "
+  },
+  "1SA 9:27": {
+   "KJV": "And as they were going down to the end of the city, Samuel said to Saul, Bid the servant pass on before us, (and he passed on), but stand thou still a while, that I may shew thee the word of God.",
+   "BHSA": "הֵ֗מָּה יֹֽורְדִים֙ בִּקְצֵ֣ה הָעִ֔יר וּשְׁמוּאֵ֞ל אָמַ֣ר אֶל־שָׁא֗וּל אֱמֹ֥ר לַנַּ֛עַר וְיַעֲבֹ֥ר לְפָנֵ֖ינוּ וַֽיַּעֲבֹ֑ר וְאַתָּה֙ עֲמֹ֣ד כַּיֹּ֔ום וְאַשְׁמִיעֲךָ֖ אֶת־דְּבַ֥ר אֱלֹהִֽים׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abiel",
+   "name": "Abiel",
+   "distinguisher": "(grand?)father of Kish (1SA 9:1), (great?) grandfather of King Saul",
+   "sex": "male"
+  },
+  {
+   "slug": "aphiah",
+   "name": "Aphiah",
+   "distinguisher": "father of Becorath (1SA 9:1), ancestor of King Saul",
+   "sex": "male"
+  },
+  {
+   "slug": "becorath",
+   "name": "Becorath",
+   "distinguisher": "father of Zeror (1SA 9:1), ancestor of King Saul",
+   "sex": "male"
+  },
+  {
+   "slug": "benjamin",
+   "name": "Benjamin",
+   "distinguisher": "twelfth-born son of Jacob and Rachel (GEN 35:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "kish",
+   "name": "Kish",
+   "distinguisher": "a mighty man of valor [perhaps wealth or influence] (1SA 9:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "samuel-2",
+   "name": "Samuel",
+   "distinguisher": "son of Elkanah and Hannah (1SA 1:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "saul",
+   "name": "Saul",
+   "distinguisher": "son of Kish (1SA 9:2), King of Israel (1SA 11:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zeror",
+   "name": "Zeror",
+   "distinguisher": "father of Abiel (1SA 9:1), ancestor of King Saul",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 97039,
+   "row": "abiel son-of zeror",
+   "verse": "1SA 9:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97941,
+   "row": "becorath father-of zeror",
+   "verse": "1SA 9:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97942,
+   "row": "becorath son-of aphiah",
+   "verse": "1SA 9:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103475,
+   "row": "zeror father-of abiel",
+   "verse": "1SA 9:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103476,
+   "row": "zeror son-of becorath",
+   "verse": "1SA 9:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103858,
+   "row": "aphiah father-of becorath",
+   "verse": "1SA 9:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103859,
+   "row": "aphiah ancestor-of kish",
+   "verse": "1SA 9:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103860,
+   "row": "aphiah descendant-of benjamin",
+   "verse": "1SA 9:1",
+   "source": "read from Scripture by the project owner, decided 2026-09-13"
+  },
+  {
+   "id": 106910,
+   "row": "kish of-tribe benjamin",
+   "verse": "1SA 9:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106912,
+   "row": "kish son-of abiel",
+   "verse": "1SA 9:1",
+   "source": "read from Scripture by the project owner, decided 2026-09-13"
+  },
+  {
+   "id": 102310,
+   "row": "saul son-of kish",
+   "verse": "1SA 9:2",
+   "source": "read from Scripture by gpt-5, asked 2026-09-22"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "samuel-2 servant-of yhvh (1SA 2:18)",
+  "benjamin son-of jacob (GEN 35:18)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "kish father-of saul (1SA 14:51)"
+ ]
+}

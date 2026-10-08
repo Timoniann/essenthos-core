@@ -1,0 +1,11 @@
+{
+ "chapter": "2SA 6",
+ "rows": 6,
+ "wrong": [],
+ "missing": [],
+ "note": "The Hebrew identifies Uzzah and Ahio as sons of Abinadab, supporting all six chapter rows. Michal's relationship to Saul is already recorded from other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:08:20+00:00"
+}

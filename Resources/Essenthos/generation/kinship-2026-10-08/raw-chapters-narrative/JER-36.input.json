@@ -1,0 +1,462 @@
+{
+ "chapter": "JER 36",
+ "text": {
+  "JER 36:1": {
+   "KJV": "And it came to pass in the fourth year of Jehoiakim the son of Josiah king of Judah, that this word came unto Jeremiah from the LORD, saying,",
+   "BHSA": "וַֽיְהִי֙ בַּשָּׁנָ֣ה הָרְבִיעִ֔ת לִיהֹויָקִ֥ים בֶּן־יֹאשִׁיָּ֖הוּ מֶ֣לֶךְ יְהוּדָ֑ה הָיָ֞ה הַדָּבָ֤ר הַזֶּה֙ אֶֽל־יִרְמְיָ֔הוּ מֵאֵ֥ת יְהוָ֖ה לֵאמֹֽר׃ "
+  },
+  "JER 36:2": {
+   "KJV": "Take thee a roll of a book, and write therein all the words that I have spoken unto thee against Israel, and against Judah, and against all the nations, from the day I spake unto thee, from the days of Josiah, even unto this day.",
+   "BHSA": "קַח־לְךָ֮ מְגִלַּת־סֵפֶר֒ וְכָתַבְתָּ֣ אֵלֶ֗יהָ אֵ֣ת כָּל־הַדְּבָרִ֞ים אֲשֶׁר־דִּבַּ֧רְתִּי אֵלֶ֛יךָ עַל־יִשְׂרָאֵ֥ל וְעַל־יְהוּדָ֖ה וְעַל־כָּל־הַגֹּויִ֑ם מִיֹּ֞ום דִּבַּ֤רְתִּי אֵלֶ֨יךָ֙ מִימֵ֣י יֹאשִׁיָּ֔הוּ וְעַ֖ד הַיֹּ֥ום הַזֶּֽה׃ "
+  },
+  "JER 36:3": {
+   "KJV": "It may be that the house of Judah will hear all the evil which I purpose to do unto them; that they may return every man from his evil way; that I may forgive their iniquity and their sin.",
+   "BHSA": "אוּלַ֤י יִשְׁמְעוּ֙ בֵּ֣ית יְהוּדָ֔ה אֵ֚ת כָּל־הָ֣רָעָ֔ה אֲשֶׁ֛ר אָנֹכִ֥י חֹשֵׁ֖ב לַעֲשֹׂ֣ות לָהֶ֑ם לְמַ֣עַן יָשׁ֗וּבוּ אִ֚ישׁ מִדַּרְכֹּ֣ו הָרָעָ֔ה וְסָלַחְתִּ֥י לַעֲוֹנָ֖ם וּלְחַטָּאתָֽם׃ ס "
+  },
+  "JER 36:4": {
+   "KJV": "Then Jeremiah called Baruch the son of Neriah: and Baruch wrote from the mouth of Jeremiah all the words of the LORD, which he had spoken unto him, upon a roll of a book.",
+   "BHSA": "וַיִּקְרָ֣א יִרְמְיָ֔הוּ אֶת־בָּר֖וּךְ בֶּן־נֵֽרִיָּ֑ה וַיִּכְתֹּ֨ב בָּר֜וּךְ מִפִּ֣י יִרְמְיָ֗הוּ אֵ֣ת כָּל־דִּבְרֵ֧י יְהוָ֛ה אֲשֶׁר־דִּבֶּ֥ר אֵלָ֖יו עַל־מְגִלַּת־סֵֽפֶר׃ "
+  },
+  "JER 36:5": {
+   "KJV": "And Jeremiah commanded Baruch, saying, I am shut up; I cannot go into the house of the LORD:",
+   "BHSA": "וַיְצַוֶּ֣ה יִרְמְיָ֔הוּ אֶת־בָּר֖וּךְ לֵאמֹ֑ר אֲנִ֣י עָצ֔וּר לֹ֣א אוּכַ֔ל לָבֹ֖וא בֵּ֥ית יְהוָֽה׃ "
+  },
+  "JER 36:6": {
+   "KJV": "Therefore go thou, and read in the roll, which thou hast written from my mouth, the words of the LORD in the ears of the people in the LORD's house upon the fasting day: and also thou shalt read them in the ears of all Judah that come out of their cities.",
+   "BHSA": "וּבָאתָ֣ אַתָּ֡ה וְקָרָ֣אתָ בַמְּגִלָּ֣ה אֲשֶׁר־כָּתַֽבְתָּ־מִפִּי֩ אֶת־דִּבְרֵ֨י יְהוָ֜ה בְּאָזְנֵ֥י הָעָ֛ם בֵּ֥ית יְהוָ֖ה בְּיֹ֣ום צֹ֑ום וְגַ֨ם בְּאָזְנֵ֧י כָל־יְהוּדָ֛ה הַבָּאִ֥ים מֵעָרֵיהֶ֖ם תִּקְרָאֵֽם׃ "
+  },
+  "JER 36:7": {
+   "KJV": "It may be they will present their supplication before the LORD, and will return every one from his evil way: for great is the anger and the fury that the LORD hath pronounced against this people.",
+   "BHSA": "אוּלַ֞י תִּפֹּ֤ל תְּחִנָּתָם֙ לִפְנֵ֣י יְהוָ֔ה וְיָשֻׁ֕בוּ אִ֖ישׁ מִדַּרְכֹּ֣ו הָרָעָ֑ה כִּֽי־גָדֹ֤ול הָאַף֙ וְהַ֣חֵמָ֔ה אֲשֶׁר־דִּבֶּ֥ר יְהוָ֖ה אֶל־הָעָ֥ם הַזֶּֽה׃ "
+  },
+  "JER 36:8": {
+   "KJV": "And Baruch the son of Neriah did according to all that Jeremiah the prophet commanded him, reading in the book the words of the LORD in the LORD's house.",
+   "BHSA": "וַיַּ֗עַשׂ בָּרוּךְ֙ בֶּן־נֵ֣רִיָּ֔ה כְּכֹ֥ל אֲשֶׁר־צִוָּ֖הוּ יִרְמְיָ֣הוּ הַנָּבִ֑יא לִקְרֹ֥א בַסֵּ֛פֶר דִּבְרֵ֥י יְהוָ֖ה בֵּ֥ית יְהֹוָֽה׃ ס "
+  },
+  "JER 36:9": {
+   "KJV": "And it came to pass in the fifth year of Jehoiakim the son of Josiah king of Judah, in the ninth month, that they proclaimed a fast before the LORD to all the people in Jerusalem, and to all the people that came from the cities of Judah unto Jerusalem.",
+   "BHSA": "וַיְהִ֣י בַשָּׁנָ֣ה הַ֠חֲמִשִׁית לִיהֹויָקִ֨ים בֶּן־יֹאשִׁיָּ֤הוּ מֶֽלֶךְ־יְהוּדָה֙ בַּחֹ֣דֶשׁ הַתְּשִׁעִ֔י קָרְא֨וּ צֹ֜ום לִפְנֵ֧י יְהוָ֛ה כָּל־הָעָ֖ם בִּירֽוּשָׁלִָ֑ם וְכָל־הָעָ֗ם הַבָּאִ֛ים מֵעָרֵ֥י יְהוּדָ֖ה בִּירוּשָׁלִָֽם׃ "
+  },
+  "JER 36:10": {
+   "KJV": "Then read Baruch in the book the words of Jeremiah in the house of the LORD, in the chamber of Gemariah the son of Shaphan the scribe, in the higher court, at the entry of the new gate of the LORD's house, in the ears of all the people.",
+   "BHSA": "וַיִּקְרָ֨א בָר֥וּךְ בַּסֵּ֛פֶר אֶת־דִּבְרֵ֥י יִרְמְיָ֖הוּ בֵּ֣ית יְהוָ֑ה בְּלִשְׁכַּ֡ת גְּמַרְיָהוּ֩ בֶן־שָׁפָ֨ן הַסֹּפֵ֜ר בֶּחָצֵ֣ר הָעֶלְיֹ֗ון פֶּ֣תַח שַׁ֤עַר בֵּית־יְהוָה֙ הֶֽחָדָ֔שׁ בְּאָזְנֵ֖י כָּל־הָעָֽם׃ "
+  },
+  "JER 36:11": {
+   "KJV": "When Michaiah the son of Gemariah, the son of Shaphan, had heard out of the book all the words of the LORD,",
+   "BHSA": "וַ֠יִּשְׁמַ֗ע מִכָ֨יְהוּ בֶן־גְּמַרְיָ֧הוּ בֶן־שָׁפָ֛ן אֶת־כָּל־דִּבְרֵ֥י יְהוָ֖ה מֵעַ֥ל הַסֵּֽפֶר׃ "
+  },
+  "JER 36:12": {
+   "KJV": "Then he went down into the king's house, into the scribe's chamber: and, lo, all the princes sat there, even Elishama the scribe, and Delaiah the son of Shemaiah, and Elnathan the son of Achbor, and Gemariah the son of Shaphan, and Zedekiah the son of Hananiah, and all the princes.",
+   "BHSA": "וַיֵּ֤רֶד בֵּית־הַמֶּ֨לֶךְ֙ עַל־לִשְׁכַּ֣ת הַסֹּפֵ֔ר וְהִ֨נֵּה־שָׁ֔ם כָּל־הַשָּׂרִ֖ים יֹֽושְׁבִ֑ים אֱלִישָׁמָ֣ע הַסֹּפֵ֡ר וּדְלָיָ֣הוּ בֶן־שְׁ֠מַעְיָהוּ וְאֶלְנָתָ֨ן בֶּן־עַכְבֹּ֜ור וּגְמַרְיָ֧הוּ בֶן־שָׁפָ֛ן וְצִדְקִיָּ֥הוּ בֶן־חֲנַנְיָ֖הוּ וְכָל־הַשָּׂרִֽים׃ "
+  },
+  "JER 36:13": {
+   "KJV": "Then Michaiah declared unto them all the words that he had heard, when Baruch read the book in the ears of the people.",
+   "BHSA": "וַיַּגֵּ֤ד לָהֶם֙ מִכָ֔יְהוּ אֵ֥ת כָּל־הַדְּבָרִ֖ים אֲשֶׁ֣ר שָׁמֵ֑עַ בִּקְרֹ֥א בָר֛וּךְ בַּסֵּ֖פֶר בְּאָזְנֵ֥י הָעָֽם׃ "
+  },
+  "JER 36:14": {
+   "KJV": "Therefore all the princes sent Jehudi the son of Nethaniah, the son of Shelemiah, the son of Cushi, unto Baruch, saying, Take in thine hand the roll wherein thou hast read in the ears of the people, and come. So Baruch the son of Neriah took the roll in his hand, and came unto them.",
+   "BHSA": "וַיִּשְׁלְח֨וּ כָל־הַשָּׂרִ֜ים אֶל־בָּר֗וּךְ אֶת־יְהוּדִ֡י בֶּן־נְ֠תַנְיָהוּ בֶּן־שֶׁלֶמְיָ֣הוּ בֶן־כּוּשִׁי֮ לֵאמֹר֒ הַמְּגִלָּ֗ה אֲשֶׁ֨ר קָרָ֤אתָ בָּהּ֙ בְּאָזְנֵ֣י הָעָ֔ם קָחֶ֥נָּה בְיָדְךָ֖ וָלֵ֑ךְ וַ֠יִּקַּח בָּר֨וּךְ בֶּן־נֵרִיָּ֤הוּ אֶת־הַמְּגִלָּה֙ בְּיָדֹ֔ו וַיָּבֹ֖א אֲלֵיהֶֽם׃ "
+  },
+  "JER 36:15": {
+   "KJV": "And they said unto him, Sit down now, and read it in our ears. So Baruch read it in their ears.",
+   "BHSA": "וַיֹּאמְר֣וּ אֵלָ֔יו שֵׁ֣ב נָ֔א וּקְרָאֶ֖נָּה בְּאָזְנֵ֑ינוּ וַיִּקְרָ֥א בָר֖וּךְ בְּאָזְנֵיהֶֽם׃ "
+  },
+  "JER 36:16": {
+   "KJV": "Now it came to pass, when they had heard all the words, they were afraid both one and other, and said unto Baruch, We will surely tell the king of all these words.",
+   "BHSA": "וַיְהִ֗י כְּשָׁמְעָם֙ אֶת־כָּל־הַדְּבָרִ֔ים פָּחֲד֖וּ אִ֣ישׁ אֶל־רֵעֵ֑הוּ וַיֹּֽאמְרוּ֙ אֶל־בָּר֔וּךְ הַגֵּ֤יד נַגִּיד֙ לַמֶּ֔לֶךְ אֵ֥ת כָּל־הַדְּבָרִ֖ים הָאֵֽלֶּה׃ "
+  },
+  "JER 36:17": {
+   "KJV": "And they asked Baruch, saying, Tell us now, How didst thou write all these words at his mouth?",
+   "BHSA": "וְאֶ֨ת־בָּר֔וּךְ שָׁאֲל֖וּ לֵאמֹ֑ר הַגֶּד־נָ֣א לָ֔נוּ אֵ֗יךְ כָּתַ֛בְתָּ אֶת־כָּל־הַדְּבָרִ֥ים הָאֵ֖לֶּה מִפִּֽיו׃ "
+  },
+  "JER 36:18": {
+   "KJV": "Then Baruch answered them, He pronounced all these words unto me with his mouth, and I wrote them with ink in the book.",
+   "BHSA": "וַיֹּ֤אמֶר לָהֶם֙ בָּר֔וּךְ מִפִּיו֙ יִקְרָ֣א אֵלַ֔י אֵ֥ת כָּל־הַדְּבָרִ֖ים הָאֵ֑לֶּה וַאֲנִ֛י כֹּתֵ֥ב עַל־הַסֵּ֖פֶר בַּדְּיֹֽו׃ פ "
+  },
+  "JER 36:19": {
+   "KJV": "Then said the princes unto Baruch, Go, hide thee, thou and Jeremiah; and let no man know where ye be.",
+   "BHSA": "וַיֹּאמְר֤וּ הַשָּׂרִים֙ אֶל־בָּר֔וּךְ לֵ֥ךְ הִסָּתֵ֖ר אַתָּ֣ה וְיִרְמְיָ֑הוּ וְאִ֥ישׁ אַל־יֵדַ֖ע אֵיפֹ֥ה אַתֶּֽם׃ "
+  },
+  "JER 36:20": {
+   "KJV": "And they went in to the king into the court, but they laid up the roll in the chamber of Elishama the scribe, and told all the words in the ears of the king.",
+   "BHSA": "וַיָּבֹ֤אוּ אֶל־הַמֶּ֨לֶךְ֙ חָצֵ֔רָה וְאֶת־הַמְּגִלָּ֣ה הִפְקִ֔דוּ בְּלִשְׁכַּ֖ת אֱלִישָׁמָ֣ע הַסֹּפֵ֑ר וַיַּגִּ֨ידוּ֙ בְּאָזְנֵ֣י הַמֶּ֔לֶךְ אֵ֖ת כָּל־הַדְּבָרִֽים׃ "
+  },
+  "JER 36:21": {
+   "KJV": "So the king sent Jehudi to fetch the roll: and he took it out of Elishama the scribe's chamber. And Jehudi read it in the ears of the king, and in the ears of all the princes which stood beside the king.",
+   "BHSA": "וַיִּשְׁלַ֨ח הַמֶּ֜לֶךְ אֶת־יְהוּדִ֗י לָקַ֨חַת֙ אֶת־הַמְּגִלָּ֔ה וַיִּ֨קָּחֶ֔הָ מִלִּשְׁכַּ֖ת אֱלִישָׁמָ֣ע הַסֹּפֵ֑ר וַיִּקְרָאֶ֤הָ יְהוּדִי֙ בְּאָזְנֵ֣י הַמֶּ֔לֶךְ וּבְאָזְנֵי֙ כָּל־הַשָּׂרִ֔ים הָעֹמְדִ֖ים מֵעַ֥ל הַמֶּֽלֶךְ׃ "
+  },
+  "JER 36:22": {
+   "KJV": "Now the king sat in the winterhouse in the ninth month: and there was a fire on the hearth burning before him.",
+   "BHSA": "וְהַמֶּ֗לֶךְ יֹושֵׁב֙ בֵּ֣ית הַחֹ֔רֶף בַּחֹ֖דֶשׁ הַתְּשִׁיעִ֑י וְאֶת־הָאָ֖ח לְפָנָ֥יו מְבֹעָֽרֶת׃ "
+  },
+  "JER 36:23": {
+   "KJV": "And it came to pass, that when Jehudi had read three or four leaves, he cut it with the penknife, and cast it into the fire that was on the hearth, until all the roll was consumed in the fire that was on the hearth.",
+   "BHSA": "וַיְהִ֣י׀ כִּקְרֹ֣וא יְהוּדִ֗י שָׁלֹ֣שׁ דְּלָתֹות֮ וְאַרְבָּעָה֒ יִֽקְרָעֶ֨הָ֙ בְּתַ֣עַר הַסֹּפֵ֔ר וְהַשְׁלֵ֕ךְ אֶל־הָאֵ֖שׁ אֲשֶׁ֣ר אֶל־הָאָ֑ח עַד־תֹּם֙ כָּל־הַמְּגִלָּ֔ה עַל־הָאֵ֖שׁ אֲשֶׁ֥ר עַל־הָאָֽח׃ "
+  },
+  "JER 36:24": {
+   "KJV": "Yet they were not afraid, nor rent their garments, neither the king, nor any of his servants that heard all these words.",
+   "BHSA": "וְלֹ֣א פָחֲד֔וּ וְלֹ֥א קָרְע֖וּ אֶת־בִּגְדֵיהֶ֑ם הַמֶּ֨לֶךְ֙ וְכָל־עֲבָדָ֔יו הַשֹּׁ֣מְעִ֔ים אֵ֥ת כָּל־הַדְּבָרִ֖ים הָאֵֽלֶּה׃ "
+  },
+  "JER 36:25": {
+   "KJV": "Nevertheless Elnathan and Delaiah and Gemariah had made intercession to the king that he would not burn the roll: but he would not hear them.",
+   "BHSA": "וְגַם֩ אֶלְנָתָ֨ן וּדְלָיָ֤הוּ וּגְמַרְיָ֨הוּ֙ הִפְגִּ֣עוּ בַמֶּ֔לֶךְ לְבִלְתִּ֥י שְׂרֹ֖ף אֶת־הַמְּגִלָּ֑ה וְלֹ֥א שָׁמַ֖ע אֲלֵיהֶֽם׃ "
+  },
+  "JER 36:26": {
+   "KJV": "But the king commanded Jerahmeel the son of Hammelech, and Seraiah the son of Azriel, and Shelemiah the son of Abdeel, to take Baruch the scribe and Jeremiah the prophet: but the LORD hid them.",
+   "BHSA": "וַיְצַוֶּ֣ה הַ֠מֶּלֶךְ אֶת־יְרַחְמְאֵ֨ל בֶּן־הַמֶּ֜לֶךְ וְאֶת־שְׂרָיָ֣הוּ בֶן־עַזְרִיאֵ֗ל וְאֶת־שֶֽׁלֶמְיָ֨הוּ֙ בֶּֽן־עַבְדְּאֵ֔ל לָקַ֨חַת֙ אֶת־בָּר֣וּךְ הַסֹּפֵ֔ר וְאֵ֖ת יִרְמְיָ֣הוּ הַנָּבִ֑יא וַיַּסְתִּרֵ֖ם יְהוָֽה׃ ס "
+  },
+  "JER 36:27": {
+   "KJV": "Then the word of the LORD came to Jeremiah, after that the king had burned the roll, and the words which Baruch wrote at the mouth of Jeremiah, saying,",
+   "BHSA": "וַיְהִ֥י דְבַר־יְהוָ֖ה אֶֽל־יִרְמְיָ֑הוּ אַחֲרֵ֣י׀ שְׂרֹ֣ף הַמֶּ֗לֶךְ אֶת־הַמְּגִלָּה֙ וְאֶת־הַדְּבָרִ֔ים אֲשֶׁ֨ר כָּתַ֥ב בָּר֛וּךְ מִפִּ֥י יִרְמְיָ֖הוּ לֵאמֹֽר׃ "
+  },
+  "JER 36:28": {
+   "KJV": "Take thee again another roll, and write in it all the former words that were in the first roll, which Jehoiakim the king of Judah hath burned.",
+   "BHSA": "שׁ֥וּב קַח־לְךָ֖ מְגִלָּ֣ה אַחֶ֑רֶת וּכְתֹ֣ב עָלֶ֗יהָ אֵ֤ת כָּל־הַדְּבָרִים֙ הָרִ֣אשֹׁנִ֔ים אֲשֶׁ֣ר הָי֗וּ עַל־הַמְּגִלָּה֙ הָרִ֣אשֹׁנָ֔ה אֲשֶׁ֥ר שָׂרַ֖ף יְהֹויָקִ֥ים מֶֽלֶךְ־יְהוּדָֽה׃ "
+  },
+  "JER 36:29": {
+   "KJV": "And thou shalt say to Jehoiakim king of Judah, Thus saith the LORD; Thou hast burned this roll, saying, Why hast thou written therein, saying, The king of Babylon shall certainly come and destroy this land, and shall cause to cease from thence man and beast?",
+   "BHSA": "וְעַל־יְהֹויָקִ֤ים מֶֽלֶךְ־יְהוּדָה֙ תֹאמַ֔ר כֹּ֖ה אָמַ֣ר יְהוָ֑ה אַ֠תָּה שָׂרַ֜פְתָּ אֶת־הַמְּגִלָּ֤ה הַזֹּאת֙ לֵאמֹ֔ר מַדּוּעַ֩ כָּתַ֨בְתָּ עָלֶ֜יהָ לֵאמֹ֗ר בֹּֽא־יָבֹ֤וא מֶֽלֶךְ־בָּבֶל֙ וְהִשְׁחִית֙ אֶת־הָאָ֣רֶץ הַזֹּ֔את וְהִשְׁבִּ֥ית מִמֶּ֖נָּה אָדָ֥ם וּבְהֵמָֽה׃ ס "
+  },
+  "JER 36:30": {
+   "KJV": "Therefore thus saith the LORD of Jehoiakim king of Judah; He shall have none to sit upon the throne of David: and his dead body shall be cast out in the day to the heat, and in the night to the frost.",
+   "BHSA": "לָכֵ֞ן כֹּֽה־אָמַ֣ר יְהוָ֗ה עַל־יְהֹֽויָקִים֙ מֶ֣לֶךְ יְהוּדָ֔ה לֹא־יִֽהְיֶה־לֹּ֥ו יֹושֵׁ֖ב עַל־כִּסֵּ֣א דָוִ֑ד וְנִבְלָתֹו֙ תִּֽהְיֶ֣ה מֻשְׁלֶ֔כֶת לַחֹ֥רֶב בַּיֹּ֖ום וְלַקֶּ֥רַח בַּלָּֽיְלָה׃ "
+  },
+  "JER 36:31": {
+   "KJV": "And I will punish him and his seed and his servants for their iniquity; and I will bring upon them, and upon the inhabitants of Jerusalem, and upon the men of Judah, all the evil that I have pronounced against them; but they hearkened not.",
+   "BHSA": "וּפָקַדְתִּ֨י עָלָ֧יו וְעַל־זַרְעֹ֛ו וְעַל־עֲבָדָ֖יו אֶת־עֲוֹנָ֑ם וְהֵבֵאתִ֣י עֲ֠לֵיהֶם וְעַל־יֹשְׁבֵ֨י יְרוּשָׁלִַ֜ם וְאֶל־אִ֣ישׁ יְהוּדָ֗ה אֵ֧ת כָּל־הָרָעָ֛ה אֲשֶׁר־דִּבַּ֥רְתִּי אֲלֵיהֶ֖ם וְלֹ֥א שָׁמֵֽעוּ׃ ס "
+  },
+  "JER 36:32": {
+   "KJV": "Then took Jeremiah another roll, and gave it to Baruch the scribe, the son of Neriah; who wrote therein from the mouth of Jeremiah all the words of the book which Jehoiakim king of Judah had burned in the fire: and there were added besides unto them many like words.",
+   "BHSA": "וְיִרְמְיָ֜הוּ לָקַ֣ח׀ מְגִלָּ֣ה אַחֶ֗רֶת וַֽיִּתְּנָהּ֮ אֶל־בָּר֣וּךְ בֶּן־נֵרִיָּהוּ֮ הַסֹּפֵר֒ וַיִּכְתֹּ֤ב עָלֶ֨יהָ֙ מִפִּ֣י יִרְמְיָ֔הוּ אֵ֚ת כָּל־דִּבְרֵ֣י הַסֵּ֔פֶר אֲשֶׁ֥ר שָׂרַ֛ף יְהֹויָקִ֥ים מֶֽלֶךְ־יְהוּדָ֖ה בָּאֵ֑שׁ וְעֹ֨וד נֹוסַ֧ף עֲלֵיהֶ֛ם דְּבָרִ֥ים רַבִּ֖ים כָּהֵֽמָּה׃ ס "
+  }
+ },
+ "records": [
+  {
+   "slug": "abdeel",
+   "name": "Abdeel",
+   "distinguisher": "father of Shelemiah (JER 36:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "achbor-2",
+   "name": "Achbor",
+   "distinguisher": "son of Micaiah (2KI 22:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "azriel-3",
+   "name": "Azriel",
+   "distinguisher": "father of Seraiah (JER 36:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "baruch-4",
+   "name": "Baruch",
+   "distinguisher": "scribe and friend (?) of Jeremiah (JER 32:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "cushi",
+   "name": "Cushi",
+   "distinguisher": "father of Shelamiah (JER 36:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "delaiah-5",
+   "name": "Delaiah",
+   "distinguisher": "son of Shemaiah, an official (JER 36:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliakim-2",
+   "name": "Eliakim",
+   "distinguisher": "King of Judah, son of Josiah (2KI 23:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "elishama-6",
+   "name": "Elishama",
+   "distinguisher": "the scribe, an official (JER 36:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "elnathan",
+   "name": "Elnathan",
+   "distinguisher": "from Jerusalem, father of Nehushta (2KI 24:8), an official (JER 36:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "gemariah-2",
+   "name": "Gemariah",
+   "distinguisher": "son of Shaphan the scribe (JER 36:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "hananiah-10",
+   "name": "Hananiah",
+   "distinguisher": "the [false] prophet, son of Azzur (JER 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "hananiah-13",
+   "name": "Hananiah",
+   "distinguisher": "Father of Zedekiah, a prince in Jehoiakim's court in Jeremiah's day",
+   "sex": null
+  },
+  {
+   "slug": "jehudi",
+   "name": "Jehudi",
+   "distinguisher": "son of Nethaniah (JER 36:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "jerahmeel-3",
+   "name": "Jerahmeel",
+   "distinguisher": "son of King Jehoiakim (Eliakim), sent to sieze Baruch and Jeremiah (JER 36:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeremiah-6",
+   "name": "Jeremiah",
+   "distinguisher": "the prophet (2CH 36:12), son of Hilkiah (JER 1:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "josiah",
+   "name": "Josiah",
+   "distinguisher": "prophesied son of the house of David (1KI 13:2), King of Judah and son of Amon (2KI 21:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "micaiah-6",
+   "name": "Micaiah",
+   "distinguisher": "son of Gemariah (JER 36:10)",
+   "sex": "male"
+  },
+  {
+   "slug": "nebuchadnezzar",
+   "name": "Nebuchadnezzar",
+   "distinguisher": "King of Babylon (2KI 23:37)",
+   "sex": "male"
+  },
+  {
+   "slug": "neriah",
+   "name": "Neriah",
+   "distinguisher": "father of Baruch (JER 32:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "nethaniah-4",
+   "name": "Nethaniah",
+   "distinguisher": "son of Shelemiah (JER 36:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "seraiah-9",
+   "name": "Seraiah",
+   "distinguisher": "son of Azriel, sent to sieze Baruch and Jeremiah (JER 36:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "shaphan",
+   "name": "Shaphan",
+   "distinguisher": "scribe of King Josiah (2KI 22:3, 2CH 34:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelemiah-5",
+   "name": "Shelemiah",
+   "distinguisher": "son of Cushi (JER 36:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "shelemiah-6",
+   "name": "Shelemiah",
+   "distinguisher": "son of Adbeel, sent to sieze Baruch and Jeremiah (JER 36:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemaiah-22",
+   "name": "Shemaiah",
+   "distinguisher": "Father of Delaiah, a prince who heard Jeremiah's scroll read",
+   "sex": null
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zedekiah-5",
+   "name": "Zedekiah",
+   "distinguisher": "son of Hananiah, an official (JER 36:12)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 97903,
+   "row": "baruch-4 scribe-of jeremiah-6",
+   "verse": "JER 36:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101714,
+   "row": "neriah father-of baruch-4",
+   "verse": "JER 36:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106462,
+   "row": "gemariah-2 son-of shaphan",
+   "verse": "JER 36:10",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 101354,
+   "row": "micaiah-6 son-of gemariah-2",
+   "verse": "JER 36:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106461,
+   "row": "gemariah-2 father-of micaiah-6",
+   "verse": "JER 36:11",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 98727,
+   "row": "elishama-6 scribe-of eliakim-2",
+   "verse": "JER 36:12",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 102638,
+   "row": "shemaiah-22 father-of delaiah-5",
+   "verse": "JER 36:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103424,
+   "row": "zedekiah-5 son-of hananiah-10",
+   "verse": "JER 36:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103660,
+   "row": "hananiah-13 father-of zedekiah-5",
+   "verse": "JER 36:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 107265,
+   "row": "delaiah-5 son-of shemaiah-22",
+   "verse": "JER 36:12",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-10-07"
+  },
+  {
+   "id": 98348,
+   "row": "cushi father-of shelemiah-5",
+   "verse": "JER 36:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100184,
+   "row": "jehudi son-of nethaniah-4",
+   "verse": "JER 36:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100185,
+   "row": "jehudi descendant-of shelemiah-5",
+   "verse": "JER 36:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100186,
+   "row": "jehudi descendant-of cushi",
+   "verse": "JER 36:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101731,
+   "row": "nethaniah-4 father-of jehudi",
+   "verse": "JER 36:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101732,
+   "row": "nethaniah-4 son-of shelemiah-5",
+   "verse": "JER 36:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102563,
+   "row": "shelemiah-5 son-of cushi",
+   "verse": "JER 36:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102564,
+   "row": "shelemiah-5 father-of nethaniah-4",
+   "verse": "JER 36:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 96996,
+   "row": "abdeel father-of shelemiah-6",
+   "verse": "JER 36:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97800,
+   "row": "azriel-3 father-of seraiah-9",
+   "verse": "JER 36:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 102373,
+   "row": "seraiah-9 son-of azriel-3",
+   "verse": "JER 36:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102565,
+   "row": "shelemiah-6 son-of abdeel",
+   "verse": "JER 36:26",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105857,
+   "row": "jerahmeel-3 son-of eliakim-2",
+   "verse": "JER 36:26",
+   "source": "read from Scripture by the project owner, decided 2026-09-28"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "achbor-2 father-of elnathan (JER 26:22)",
+  "baruch-4 son-of neriah (JER 32:12)",
+  "david servant-of yhvh (2SA 3:18)",
+  "eliakim-2 son-of josiah (2KI 23:34)",
+  "eliakim-2 king-of judah (2CH 36:4)",
+  "eliakim-2 servant-of nebuchadnezzar (2KI 24:1)",
+  "elnathan son-of achbor-2 (JER 26:22)",
+  "shaphan scribe-of josiah (2KI 22:3)",
+  "nebuchadnezzar servant-of yhvh (JER 25:9)",
+  "josiah descendant-of david (1KI 13:2)",
+  "josiah father-of eliakim-2 (JER 26:1)"
+ ]
+}

@@ -1,0 +1,420 @@
+{
+ "chapter": "1KI 2",
+ "text": {
+  "1KI 2:1": {
+   "KJV": "Now the days of David drew nigh that he should die; and he charged Solomon his son, saying,",
+   "BHSA": "וַיִּקְרְב֥וּ יְמֵֽי־דָוִ֖ד לָמ֑וּת וַיְצַ֛ו אֶת־שְׁלֹמֹ֥ה בְנֹ֖ו לֵאמֹֽר׃ "
+  },
+  "1KI 2:2": {
+   "KJV": "I go the way of all the earth: be thou strong therefore, and shew thyself a man;",
+   "BHSA": "אָנֹכִ֣י הֹלֵ֔ךְ בְּדֶ֖רֶךְ כָּל־הָאָ֑רֶץ וְחָזַקְתָּ֖ וְהָיִ֥יתָֽ לְאִֽישׁ׃ "
+  },
+  "1KI 2:3": {
+   "KJV": "And keep the charge of the LORD thy God, to walk in his ways, to keep his statutes, and his commandments, and his judgments, and his testimonies, as it is written in the law of Moses, that thou mayest prosper in all that thou doest, and whithersoever thou turnest thyself:",
+   "BHSA": "וְשָׁמַרְתָּ֞ אֶת־מִשְׁמֶ֣רֶת׀ יְהוָ֣ה אֱלֹהֶ֗יךָ לָלֶ֤כֶת בִּדְרָכָיו֙ לִשְׁמֹ֨ר חֻקֹּתָ֤יו מִצְוֹתָיו֙ וּמִשְׁפָּטָ֣יו וְעֵדְוֹתָ֔יו כַּכָּת֖וּב בְּתֹורַ֣ת מֹשֶׁ֑ה לְמַ֣עַן תַּשְׂכִּ֗יל אֵ֚ת כָּל־אֲשֶׁ֣ר תַּֽעֲשֶׂ֔ה וְאֵ֛ת כָּל־אֲשֶׁ֥ר תִּפְנֶ֖ה שָֽׁם׃ "
+  },
+  "1KI 2:4": {
+   "KJV": "That the LORD may continue his word which he spake concerning me, saying, If thy children take heed to their way, to walk before me in truth with all their heart and with all their soul, there shall not fail thee (said he) a man on the throne of Israel.",
+   "BHSA": "לְמַעַן֩ יָקִ֨ים יְהוָ֜ה אֶת־דְּבָרֹ֗ו אֲשֶׁ֨ר דִּבֶּ֣ר עָלַי֮ לֵאמֹר֒ אִם־יִשְׁמְר֨וּ בָנֶ֜יךָ אֶת־דַּרְכָּ֗ם לָלֶ֤כֶת לְפָנַי֙ בֶּאֱמֶ֔ת בְּכָל־לְבָבָ֖ם וּבְכָל־נַפְשָׁ֑ם לֵאמֹ֕ר לֹֽא־יִכָּרֵ֤ת לְךָ֙ אִ֔ישׁ מֵעַ֖ל כִּסֵּ֥א יִשְׂרָאֵֽל׃ "
+  },
+  "1KI 2:5": {
+   "KJV": "Moreover thou knowest also what Joab the son of Zeruiah did to me, and what he did to the two captains of the hosts of Israel, unto Abner the son of Ner, and unto Amasa the son of Jether, whom he slew, and shed the blood of war in peace, and put the blood of war upon his girdle that was about his loins, and in his shoes that were on his feet.",
+   "BHSA": "וְגַ֣ם אַתָּ֣ה יָדַ֡עְתָּ אֵת֩ אֲשֶׁר־עָ֨שָׂה לִ֜י יֹואָ֣ב בֶּן־צְרוּיָ֗ה אֲשֶׁ֣ר עָשָׂ֣ה לִשְׁנֵֽי־שָׂרֵ֣י צִבְאֹ֣ות יִ֠שְׂרָאֵל לְאַבְנֵ֨ר בֶּן־נֵ֜ר וְלַעֲמָשָׂ֤א בֶן־יֶ֨תֶר֙ וַיַּ֣הַרְגֵ֔ם וַיָּ֥שֶׂם דְּמֵֽי־מִלְחָמָ֖ה בְּשָׁלֹ֑ם וַיִּתֵּ֞ן דְּמֵ֣י מִלְחָמָ֗ה בַּחֲגֹֽרָתֹו֙ אֲשֶׁ֣ר בְּמָתְנָ֔יו וּֽבְנַעֲלֹ֖ו אֲשֶׁ֥ר בְּרַגְלָֽיו׃ "
+  },
+  "1KI 2:6": {
+   "KJV": "Do therefore according to thy wisdom, and let not his hoar head go down to the grave in peace.",
+   "BHSA": "וְעָשִׂ֖יתָ כְּחָכְמָתֶ֑ךָ וְלֹֽא־תֹורֵ֧ד שֵׂיבָתֹ֛ו בְּשָׁלֹ֖ם שְׁאֹֽל׃ ס "
+  },
+  "1KI 2:7": {
+   "KJV": "But shew kindness unto the sons of Barzillai the Gileadite, and let them be of those that eat at thy table: for so they came to me when I fled because of Absalom thy brother.",
+   "BHSA": "וְלִבְנֵ֨י בַרְזִלַּ֤י הַגִּלְעָדִי֙ תַּֽעֲשֶׂה־חֶ֔סֶד וְהָי֖וּ בְּאֹכְלֵ֣י שֻׁלְחָנֶ֑ךָ כִּי־כֵן֙ קָרְב֣וּ אֵלַ֔י בְּבָרְחִ֕י מִפְּנֵ֖י אַבְשָׁלֹ֥ום אָחִֽיךָ׃ "
+  },
+  "1KI 2:8": {
+   "KJV": "And, behold, thou hast with thee Shimei the son of Gera, a Benjamite of Bahurim, which cursed me with a grievous curse in the day when I went to Mahanaim: but he came down to meet me at Jordan, and I sware to him by the LORD, saying, I will not put thee to death with the sword.",
+   "BHSA": "וְהִנֵּ֣ה עִ֠מְּךָ שִֽׁמְעִ֨י בֶן־גֵּרָ֥א בֶן־הַיְמִינִי֮ מִבַּחֻרִים֒ וְה֤וּא קִֽלְלַ֨נִי֙ קְלָלָ֣ה נִמְרֶ֔צֶת בְּיֹ֖ום לֶכְתִּ֣י מַחֲנָ֑יִם וְהֽוּא־יָרַ֤ד לִקְרָאתִי֙ הַיַּרְדֵּ֔ן וָאֶשָּׁ֨בַֽע לֹ֤ו בַֽיהוָה֙ לֵאמֹ֔ר אִם־אֲמִֽיתְךָ֖ בֶּחָֽרֶב׃ "
+  },
+  "1KI 2:9": {
+   "KJV": "Now therefore hold him not guiltless: for thou art a wise man, and knowest what thou oughtest to do unto him; but his hoar head bring thou down to the grave with blood.",
+   "BHSA": "וְעַתָּה֙ אַל־תְּנַקֵּ֔הוּ כִּ֛י אִ֥ישׁ חָכָ֖ם אָ֑תָּה וְיָֽדַעְתָּ֙ אֵ֣ת אֲשֶׁ֣ר תַּֽעֲשֶׂה־לֹּ֔ו וְהֹורַדְתָּ֧ אֶת־שֵׂיבָתֹ֛ו בְּדָ֖ם שְׁאֹֽול׃ "
+  },
+  "1KI 2:10": {
+   "KJV": "So David slept with his fathers, and was buried in the city of David.",
+   "BHSA": "וַיִּשְׁכַּ֥ב דָּוִ֖ד עִם־אֲבֹתָ֑יו וַיִּקָּבֵ֖ר בְּעִ֥יר דָּוִֽד׃ פ "
+  },
+  "1KI 2:11": {
+   "KJV": "And the days that David reigned over Israel were forty years: seven years reigned he in Hebron, and thirty and three years reigned he in Jerusalem.",
+   "BHSA": "וְהַיָּמִ֗ים אֲשֶׁ֨ר מָלַ֤ךְ דָּוִד֙ עַל־יִשְׂרָאֵ֔ל אַרְבָּעִ֖ים שָׁנָ֑ה בְּחֶבְרֹ֤ון מָלַךְ֙ שֶׁ֣בַע שָׁנִ֔ים וּבִירוּשָׁלִַ֣ם מָלַ֔ךְ שְׁלֹשִׁ֥ים וְשָׁלֹ֖שׁ שָׁנִֽים׃ "
+  },
+  "1KI 2:12": {
+   "KJV": "Then sat Solomon upon the throne of David his father; and his kingdom was established greatly.",
+   "BHSA": "וּשְׁלֹמֹ֕ה יָשַׁ֕ב עַל־כִּסֵּ֖א דָּוִ֣ד אָבִ֑יו וַתִּכֹּ֥ן מַלְכֻתֹ֖ו מְאֹֽד׃ "
+  },
+  "1KI 2:13": {
+   "KJV": "And Adonijah the son of Haggith came to Bathsheba the mother of Solomon. And she said, Comest thou peaceably? And he said, Peaceably.",
+   "BHSA": "וַיָּבֹ֞א אֲדֹנִיָּ֣הוּ בֶן־חַגֵּ֗ית אֶל־בַּת־שֶׁ֨בַע֙ אֵם־שְׁלֹמֹ֔ה וַתֹּ֖אמֶר הֲשָׁלֹ֣ום בֹּאֶ֑ךָ וַיֹּ֖אמֶר שָׁלֹֽום׃ "
+  },
+  "1KI 2:14": {
+   "KJV": "He said moreover, I have somewhat to say unto thee. And she said, Say on.",
+   "BHSA": "וַיֹּ֕אמֶר דָּבָ֥ר לִ֖י אֵלָ֑יִךְ וַתֹּ֖אמֶר דַּבֵּֽר׃ "
+  },
+  "1KI 2:15": {
+   "KJV": "And he said, Thou knowest that the kingdom was mine, and that all Israel set their faces on me, that I should reign: howbeit the kingdom is turned about, and is become my brother's: for it was his from the LORD.",
+   "BHSA": "וַיֹּ֗אמֶר אַ֤תְּ יָדַ֨עַתְּ֙ כִּי־לִי֙ הָיְתָ֣ה הַמְּלוּכָ֔ה וְעָלַ֞י שָׂ֧מוּ כָֽל־יִשְׂרָאֵ֛ל פְּנֵיהֶ֖ם לִמְלֹ֑ךְ וַתִּסֹּ֤ב הַמְּלוּכָה֙ וַתְּהִ֣י לְאָחִ֔י כִּ֥י מֵיְהוָ֖ה הָ֥יְתָה לֹּֽו׃ "
+  },
+  "1KI 2:16": {
+   "KJV": "And now I ask one petition of thee, deny me not. And she said unto him, Say on.",
+   "BHSA": "וְעַתָּ֗ה שְׁאֵלָ֤ה אַחַת֙ אָֽנֹכִי֙ שֹׁאֵ֣ל מֵֽאִתָּ֔ךְ אַל־תָּשִׁ֖בִי אֶת־פָּנָ֑י וַתֹּ֥אמֶר אֵלָ֖יו דַּבֵּֽר׃ "
+  },
+  "1KI 2:17": {
+   "KJV": "And he said, Speak, I pray thee, unto Solomon the king, (for he will not say thee nay,) that he give me Abishag the Shunammite to wife.",
+   "BHSA": "וַיֹּ֗אמֶר אִמְרִי־נָא֙ לִשְׁלֹמֹ֣ה הַמֶּ֔לֶךְ כִּ֥י לֹֽא־יָשִׁ֖יב אֶת־פָּנָ֑יִךְ וְיִתֶּן־לִ֛י אֶת־אֲבִישַׁ֥ג הַשּׁוּנַמִּ֖ית לְאִשָּֽׁה׃ "
+  },
+  "1KI 2:18": {
+   "KJV": "And Bathsheba said, Well; I will speak for thee unto the king.",
+   "BHSA": "וַתֹּ֥אמֶר בַּת־שֶׁ֖בַע טֹ֑וב אָנֹכִ֕י אֲדַבֵּ֥ר עָלֶ֖יךָ אֶל־הַמֶּֽלֶךְ׃ "
+  },
+  "1KI 2:19": {
+   "KJV": "Bathsheba therefore went unto king Solomon, to speak unto him for Adonijah. And the king rose up to meet her, and bowed himself unto her, and sat down on his throne, and caused a seat to be set for the king's mother; and she sat on his right hand.",
+   "BHSA": "וַתָּבֹ֤א בַת־שֶׁ֨בַע֙ אֶל־הַמֶּ֣לֶךְ שְׁלֹמֹ֔ה לְדַבֶּר־לֹ֖ו עַל־אֲדֹנִיָּ֑הוּ וַיָּקָם֩ הַמֶּ֨לֶךְ לִקְרָאתָ֜הּ וַיִּשְׁתַּ֣חוּ לָ֗הּ וַיֵּ֨שֶׁב֙ עַל־כִּסְאֹ֔ו וַיָּ֤שֶׂם כִּסֵּא֙ לְאֵ֣ם הַמֶּ֔לֶךְ וַתֵּ֖שֶׁב לִֽימִינֹֽו׃ "
+  },
+  "1KI 2:20": {
+   "KJV": "Then she said, I desire one small petition of thee; I pray thee, say me not nay. And the king said unto her, Ask on, my mother: for I will not say thee nay.",
+   "BHSA": "וַתֹּ֗אמֶר שְׁאֵלָ֨ה אַחַ֤ת קְטַנָּה֙ אָֽנֹכִי֙ שֹׁאֶ֣לֶת מֵֽאִתָּ֔ךְ אַל־תָּ֖שֶׁב אֶת־פָּנָ֑י וַיֹּֽאמֶר־לָ֤הּ הַמֶּ֨לֶךְ֙ שַׁאֲלִ֣י אִמִּ֔י כִּ֥י לֹֽא־אָשִׁ֖יב אֶת־פָּנָֽיִךְ׃ "
+  },
+  "1KI 2:21": {
+   "KJV": "And she said, Let Abishag the Shunammite be given to Adonijah thy brother to wife.",
+   "BHSA": "וַתֹּ֕אמֶר יֻתַּ֖ן אֶת־אֲבִישַׁ֣ג הַשֻּׁנַמִּ֑ית לַאֲדֹנִיָּ֥הוּ אָחִ֖יךָ לְאִשָּֽׁה׃ "
+  },
+  "1KI 2:22": {
+   "KJV": "And king Solomon answered and said unto his mother, And why dost thou ask Abishag the Shunammite for Adonijah? ask for him the kingdom also; for he is mine elder brother; even for him, and for Abiathar the priest, and for Joab the son of Zeruiah.",
+   "BHSA": "וַיַּעַן֩ הַמֶּ֨לֶךְ שְׁלֹמֹ֜ה וַיֹּ֣אמֶר לְאִמֹּ֗ו וְלָמָה֩ אַ֨תְּ שֹׁאֶ֜לֶת אֶת־אֲבִישַׁ֤ג הַשֻּׁנַמִּית֙ לַאֲדֹ֣נִיָּ֔הוּ וְשַֽׁאֲלִי־לֹו֙ אֶת־הַמְּלוּכָ֔ה כִּ֛י ה֥וּא אָחִ֖י הַגָּדֹ֣ול מִמֶּ֑נִּי וְלֹו֙ וּלְאֶבְיָתָ֣ר הַכֹּהֵ֔ן וּלְיֹואָ֖ב בֶּן־צְרוּיָֽה׃ פ "
+  },
+  "1KI 2:23": {
+   "KJV": "Then king Solomon sware by the LORD, saying, God do so to me, and more also, if Adonijah have not spoken this word against his own life.",
+   "BHSA": "וַיִּשָּׁבַע֙ הַמֶּ֣לֶךְ שְׁלֹמֹ֔ה בַּֽיהוָ֖ה לֵאמֹ֑ר כֹּ֣ה יַֽעֲשֶׂה־לִּ֤י אֱלֹהִים֙ וְכֹ֣ה יֹוסִ֔יף כִּ֣י בְנַפְשֹׁ֔ו דִּבֶּר֙ אֲדֹ֣נִיָּ֔הוּ אֶת־הַדָּבָ֖ר הַזֶּֽה׃ "
+  },
+  "1KI 2:24": {
+   "KJV": "Now therefore, as the LORD liveth, which hath established me, and set me on the throne of David my father, and who hath made me an house, as he promised, Adonijah shall be put to death this day.",
+   "BHSA": "וְעַתָּ֗ה חַי־יְהוָה֙ אֲשֶׁ֣ר הֱכִינַ֗נִי ויושׁיביני עַל־כִּסֵּא֙ דָּוִ֣ד אָבִ֔י וַאֲשֶׁ֧ר עָֽשָׂה־לִ֛י בַּ֖יִת כַּאֲשֶׁ֣ר דִּבֵּ֑ר כִּ֣י הַיֹּ֔ום יוּמַ֖ת אֲדֹנִיָּֽהוּ׃ "
+  },
+  "1KI 2:25": {
+   "KJV": "And king Solomon sent by the hand of Benaiah the son of Jehoiada; and he fell upon him that he died.",
+   "BHSA": "וַיִּשְׁלַח֙ הַמֶּ֣לֶךְ שְׁלֹמֹ֔ה בְּיַ֖ד בְּנָיָ֣הוּ בֶן־יְהֹויָדָ֑ע וַיִּפְגַּע־בֹּ֖ו וַיָּמֹֽת׃ ס "
+  },
+  "1KI 2:26": {
+   "KJV": "And unto Abiathar the priest said the king, Get thee to Anathoth, unto thine own fields; for thou art worthy of death: but I will not at this time put thee to death, because thou barest the ark of the Lord GOD before David my father, and because thou hast been afflicted in all wherein my father was afflicted.",
+   "BHSA": "וּלְאֶבְיָתָ֨ר הַכֹּהֵ֜ן אָמַ֣ר הַמֶּ֗לֶךְ עֲנָתֹת֙ לֵ֣ךְ עַל־שָׂדֶ֔יךָ כִּ֛י אִ֥ישׁ מָ֖וֶת אָ֑תָּה וּבַיֹּ֨ום הַזֶּ֜ה לֹ֣א אֲמִיתֶ֗ךָ כִּֽי־נָשָׂ֜אתָ אֶת־אֲרֹ֨ון אֲדֹנָ֤י יְהֹוִה֙ לִפְנֵי֙ דָּוִ֣ד אָבִ֔י וְכִ֣י הִתְעַנִּ֔יתָ בְּכֹ֥ל אֲשֶֽׁר־הִתְעַנָּ֖ה אָבִֽי׃ "
+  },
+  "1KI 2:27": {
+   "KJV": "So Solomon thrust out Abiathar from being priest unto the LORD; that he might fulfil the word of the LORD, which he spake concerning the house of Eli in Shiloh.",
+   "BHSA": "וַיְגָ֤רֶשׁ שְׁלֹמֹה֙ אֶת־אֶבְיָתָ֔ר מִהְיֹ֥ות כֹּהֵ֖ן לַֽיהוָ֑ה לְמַלֵּא֙ אֶת־דְּבַ֣ר יְהוָ֔ה אֲשֶׁ֥ר דִּבֶּ֛ר עַל־בֵּ֥ית עֵלִ֖י בְּשִׁלֹֽה׃ פ "
+  },
+  "1KI 2:28": {
+   "KJV": "Then tidings came to Joab: for Joab had turned after Adonijah, though he turned not after Absalom. And Joab fled unto the tabernacle of the LORD, and caught hold on the horns of the altar.",
+   "BHSA": "וְהַשְּׁמֻעָה֙ בָּ֣אָה עַד־יֹואָ֔ב כִּ֣י יֹואָ֗ב נָטָה֙ אַחֲרֵ֣י אֲדֹנִיָּ֔ה וְאַחֲרֵ֥י אַבְשָׁלֹ֖ום לֹ֣א נָטָ֑ה וַיָּ֤נָס יֹואָב֙ אֶל־אֹ֣הֶל יְהוָ֔ה וַֽיַּחֲזֵ֖ק בְּקַרְנֹ֥ות הַמִּזְבֵּֽחַ׃ "
+  },
+  "1KI 2:29": {
+   "KJV": "And it was told king Solomon that Joab was fled unto the tabernacle of the LORD; and, behold, he is by the altar. Then Solomon sent Benaiah the son of Jehoiada, saying, Go, fall upon him.",
+   "BHSA": "וַיֻּגַּ֞ד לַמֶּ֣לֶךְ שְׁלֹמֹ֗ה כִּ֣י נָ֤ס יֹואָב֙ אֶל־אֹ֣הֶל יְהוָ֔ה וְהִנֵּ֖ה אֵ֣צֶל הַמִּזְבֵּ֑חַ וַיִּשְׁלַ֨ח שְׁלֹמֹ֜ה אֶת־בְּנָיָ֧הוּ בֶן־יְהֹויָדָ֛ע לֵאמֹ֖ר לֵ֥ךְ פְּגַע־בֹּֽו׃ "
+  },
+  "1KI 2:30": {
+   "KJV": "And Benaiah came to the tabernacle of the LORD, and said unto him, Thus saith the king, Come forth. And he said, Nay; but I will die here. And Benaiah brought the king word again, saying, Thus said Joab, and thus he answered me.",
+   "BHSA": "וַיָּבֹ֨א בְנָיָ֜הוּ אֶל־אֹ֣הֶל יְהוָ֗ה וַיֹּ֨אמֶר אֵלָ֜יו כֹּֽה־אָמַ֤ר הַמֶּ֨לֶךְ֙ צֵ֔א וַיֹּ֥אמֶר׀ לֹ֖א כִּ֣י פֹ֣ה אָמ֑וּת וַיָּ֨שֶׁב בְּנָיָ֤הוּ אֶת־הַמֶּ֨לֶךְ֙ דָּבָ֣ר לֵאמֹ֔ר כֹּֽה־דִבֶּ֥ר יֹואָ֖ב וְכֹ֥ה עָנָֽנִי׃ "
+  },
+  "1KI 2:31": {
+   "KJV": "And the king said unto him, Do as he hath said, and fall upon him, and bury him; that thou mayest take away the innocent blood, which Joab shed, from me, and from the house of my father.",
+   "BHSA": "וַיֹּ֧אמֶר לֹ֣ו הַמֶּ֗לֶךְ עֲשֵׂה֙ כַּאֲשֶׁ֣ר דִּבֶּ֔ר וּפְגַע־בֹּ֖ו וּקְבַרְתֹּ֑ו וַהֲסִירֹ֣תָ׀ דְּמֵ֣י חִנָּ֗ם אֲשֶׁר֙ שָׁפַ֣ךְ יֹואָ֔ב מֵעָלַ֕י וּמֵעַ֖ל בֵּ֥ית אָבִֽי׃ "
+  },
+  "1KI 2:32": {
+   "KJV": "And the LORD shall return his blood upon his own head, who fell upon two men more righteous and better than he, and slew them with the sword, my father David not knowing thereof, to wit, Abner the son of Ner, captain of the host of Israel, and Amasa the son of Jether, captain of the host of Judah.",
+   "BHSA": "וְהֵשִׁיב֩ יְהוָ֨ה אֶת־דָּמֹ֜ו עַל־רֹאשֹׁ֗ו אֲשֶׁ֣ר פָּגַ֣ע בִּשְׁנֵֽי־אֲ֠נָשִׁים צַדִּקִ֨ים וְטֹבִ֤ים מִמֶּ֨נּוּ֙ וַיַּהַרְגֵ֣ם בַּחֶ֔רֶב וְאָבִ֥י דָוִ֖ד לֹ֣א יָדָ֑ע אֶת־אַבְנֵ֤ר בֶּן־נֵר֙ שַׂר־צְבָ֣א יִשְׂרָאֵ֔ל וְאֶת־עֲמָשָׂ֥א בֶן־יֶ֖תֶר שַׂר־צְבָ֥א יְהוּדָֽה׃ "
+  },
+  "1KI 2:33": {
+   "KJV": "Their blood shall therefore return upon the head of Joab, and upon the head of his seed for ever: but upon David, and upon his seed, and upon his house, and upon his throne, shall there be peace for ever from the LORD.",
+   "BHSA": "וְשָׁ֤בוּ דְמֵיהֶם֙ בְּרֹ֣אשׁ יֹואָ֔ב וּבְרֹ֥אשׁ זַרְעֹ֖ו לְעֹלָ֑ם וּלְדָוִ֡ד וּ֠לְזַרְעֹו וּלְבֵיתֹ֨ו וּלְכִסְאֹ֜ו יִהְיֶ֥ה שָׁלֹ֛ום עַד־עֹולָ֖ם מֵעִ֥ם יְהוָֽה׃ "
+  },
+  "1KI 2:34": {
+   "KJV": "So Benaiah the son of Jehoiada went up, and fell upon him, and slew him: and he was buried in his own house in the wilderness.",
+   "BHSA": "וַיַּ֗עַל בְּנָיָ֨הוּ֙ בֶּן־יְהֹ֣ויָדָ֔ע וַיִּפְגַּע־בֹּ֖ו וַיְמִתֵ֑הוּ וַיִּקָּבֵ֥ר בְּבֵיתֹ֖ו בַּמִּדְבָּֽר׃ "
+  },
+  "1KI 2:35": {
+   "KJV": "And the king put Benaiah the son of Jehoiada in his room over the host: and Zadok the priest did the king put in the room of Abiathar.",
+   "BHSA": "וַיִּתֵּ֨ן הַמֶּ֜לֶךְ אֶת־בְּנָיָ֧הוּ בֶן־יְהֹויָדָ֛ע תַּחְתָּ֖יו עַל־הַצָּבָ֑א וְאֶת־צָדֹ֤וק הַכֹּהֵן֙ נָתַ֣ן הַמֶּ֔לֶךְ תַּ֖חַת אֶבְיָתָֽר׃ "
+  },
+  "1KI 2:36": {
+   "KJV": "And the king sent and called for Shimei, and said unto him, Build thee an house in Jerusalem, and dwell there, and go not forth thence any whither.",
+   "BHSA": "וַיִּשְׁלַ֤ח הַמֶּ֨לֶךְ֙ וַיִּקְרָ֣א לְשִׁמְעִ֔י וַיֹּ֣אמֶר לֹ֗ו בְּֽנֵה־לְךָ֥ בַ֨יִת֙ בִּיר֣וּשָׁלִַ֔ם וְיָשַׁבְתָּ֖ שָׁ֑ם וְלֹֽא־תֵצֵ֥א מִשָּׁ֖ם אָ֥נֶה וָאָֽנָה׃ "
+  },
+  "1KI 2:37": {
+   "KJV": "For it shall be, that on the day thou goest out, and passest over the brook Kidron, thou shalt know for certain that thou shalt surely die: thy blood shall be upon thine own head.",
+   "BHSA": "וְהָיָ֣ה׀ בְּיֹ֣ום צֵאתְךָ֗ וְעָֽבַרְתָּ֙ אֶת־נַ֣חַל קִדְרֹ֔ון יָדֹ֥עַ תֵּדַ֖ע כִּ֣י מֹ֣ות תָּמ֑וּת דָּמְךָ֖ יִהְיֶ֥ה בְרֹאשֶֽׁךָ׃ "
+  },
+  "1KI 2:38": {
+   "KJV": "And Shimei said unto the king, The saying is good: as my lord the king hath said, so will thy servant do. And Shimei dwelt in Jerusalem many days.",
+   "BHSA": "וַיֹּ֨אמֶר שִׁמְעִ֤י לַמֶּ֨לֶךְ֙ טֹ֣וב הַדָּבָ֔ר כַּאֲשֶׁ֤ר דִּבֶּר֙ אֲדֹנִ֣י הַמֶּ֔לֶךְ כֵּ֖ן יַעֲשֶׂ֣ה עַבְדֶּ֑ךָ וַיֵּ֧שֶׁב שִׁמְעִ֛י בִּירוּשָׁלִַ֖ם יָמִ֥ים רַבִּֽים׃ ס "
+  },
+  "1KI 2:39": {
+   "KJV": "And it came to pass at the end of three years, that two of the servants of Shimei ran away unto Achish son of Maachah king of Gath. And they told Shimei, saying, Behold, thy servants be in Gath.",
+   "BHSA": "וַיְהִ֗י מִקֵּץ֙ שָׁלֹ֣שׁ שָׁנִ֔ים וַיִּבְרְח֤וּ שְׁנֵֽי־עֲבָדִים֙ לְשִׁמְעִ֔י אֶל־אָכִ֥ישׁ בֶּֽן־מַעֲכָ֖ה מֶ֣לֶךְ גַּ֑ת וַיַּגִּ֤ידוּ לְשִׁמְעִי֙ לֵאמֹ֔ר הִנֵּ֥ה עֲבָדֶ֖יךָ בְּגַֽת׃ "
+  },
+  "1KI 2:40": {
+   "KJV": "And Shimei arose, and saddled his ass, and went to Gath to Achish to seek his servants: and Shimei went, and brought his servants from Gath.",
+   "BHSA": "וַיָּ֣קָם שִׁמְעִ֗י וַֽיַּחֲבֹשׁ֙ אֶת־חֲמֹרֹ֔ו וַיֵּ֤לֶךְ גַּ֨תָה֙ אֶל־אָכִ֔ישׁ לְבַקֵּ֖שׁ אֶת־עֲבָדָ֑יו וַיֵּ֣לֶךְ שִׁמְעִ֔י וַיָּבֵ֥א אֶת־עֲבָדָ֖יו מִגַּֽת׃ "
+  },
+  "1KI 2:41": {
+   "KJV": "And it was told Solomon that Shimei had gone from Jerusalem to Gath, and was come again.",
+   "BHSA": "וַיֻּגַּ֖ד לִשְׁלֹמֹ֑ה כִּי־הָלַ֨ךְ שִׁמְעִ֧י מִירוּשָׁלִַ֛ם גַּ֖ת וַיָּשֹֽׁב׃ "
+  },
+  "1KI 2:42": {
+   "KJV": "And the king sent and called for Shimei, and said unto him, Did I not make thee to swear by the LORD, and protested unto thee, saying, Know for a certain, on the day thou goest out, and walkest abroad any whither, that thou shalt surely die? and thou saidst unto me, The word that I have heard is good.",
+   "BHSA": "וַיִּשְׁלַ֨ח הַמֶּ֜לֶךְ וַיִּקְרָ֣א לְשִׁמְעִ֗י וַיֹּ֨אמֶר אֵלָ֜יו הֲלֹ֧וא הִשְׁבַּעְתִּ֣יךָ בַֽיהוָ֗ה וָאָעִ֤ד בְּךָ֙ לֵאמֹ֔ר בְּיֹ֣ום צֵאתְךָ֗ וְהָֽלַכְתָּ֙ אָ֣נֶה וָאָ֔נָה יָדֹ֥עַ תֵּדַ֖ע כִּ֣י מֹ֣ות תָּמ֑וּת וַתֹּ֧אמֶר אֵלַ֛י טֹ֥וב הַדָּבָ֖ר שָׁמָֽעְתִּי׃ "
+  },
+  "1KI 2:43": {
+   "KJV": "Why then hast thou not kept the oath of the LORD, and the commandment that I have charged thee with?",
+   "BHSA": "וּמַדּ֕וּעַ לֹ֣א שָׁמַ֔רְתָּ אֵ֖ת שְׁבֻעַ֣ת יְהוָ֑ה וְאֶת־הַמִּצְוָ֖ה אֲשֶׁר־צִוִּ֥יתִי עָלֶֽיךָ׃ "
+  },
+  "1KI 2:44": {
+   "KJV": "The king said moreover to Shimei, Thou knowest all the wickedness which thine heart is privy to, that thou didst to David my father: therefore the LORD shall return thy wickedness upon thine own head;",
+   "BHSA": "וַיֹּ֨אמֶר הַמֶּ֜לֶךְ אֶל־שִׁמְעִ֗י אַתָּ֤ה יָדַ֨עְתָּ֙ אֵ֣ת כָּל־הָרָעָ֗ה אֲשֶׁ֤ר יָדַע֙ לְבָ֣בְךָ֔ אֲשֶׁ֥ר עָשִׂ֖יתָ לְדָוִ֣ד אָבִ֑י וְהֵשִׁ֧יב יְהוָ֛ה אֶת־רָעָתְךָ֖ בְּרֹאשֶֽׁךָ׃ "
+  },
+  "1KI 2:45": {
+   "KJV": "And king Solomon shall be blessed, and the throne of David shall be established before the LORD for ever.",
+   "BHSA": "וְהַמֶּ֥לֶךְ שְׁלֹמֹ֖ה בָּר֑וּךְ וְכִסֵּ֣א דָוִ֗ד יִהְיֶ֥ה נָכֹ֛ון לִפְנֵ֥י יְהוָ֖ה עַד־עֹולָֽם׃ "
+  },
+  "1KI 2:46": {
+   "KJV": "So the king commanded Benaiah the son of Jehoiada; which went out, and fell upon him, that he died. And the kingdom was established in the hand of Solomon.",
+   "BHSA": "וַיְצַ֣ו הַמֶּ֗לֶךְ אֶת־בְּנָיָ֨הוּ֙ בֶּן־יְהֹ֣ויָדָ֔ע וַיֵּצֵ֕א וַיִּפְגַּע־בֹּ֖ו וַיָּמֹ֑ת וְהַמַּמְלָכָ֥ה נָכֹ֖ונָה בְּיַד־שְׁלֹמֹֽה׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abiathar",
+   "name": "Abiathar",
+   "distinguisher": "son of Ahimelech, the priest (1SA 22:20), counselor to David (1CH 27:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "abishag",
+   "name": "Abishag",
+   "distinguisher": "the Shunammite, David's nurse (1KI 1:3-4)",
+   "sex": "female"
+  },
+  {
+   "slug": "abner",
+   "name": "Abner",
+   "distinguisher": "captain of Saul's army and Saul's uncle (1SA 14:50)",
+   "sex": "male"
+  },
+  {
+   "slug": "absalom",
+   "name": "Absalom",
+   "distinguisher": "third-born son of King David (2SA 3:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "achish",
+   "name": "Achish",
+   "distinguisher": "King of Gath (1SA 21:10) before whom David feigned madness",
+   "sex": "male"
+  },
+  {
+   "slug": "adonijah",
+   "name": "Adonijah",
+   "distinguisher": "fourth-born son of King David (2SA 3:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "amasa",
+   "name": "Amasa",
+   "distinguisher": "set over David's army in place of Joab (2SA 17:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "barzillai",
+   "name": "Barzillai",
+   "distinguisher": "the Gileadite from Rogelim (2SA 17:27)",
+   "sex": "male"
+  },
+  {
+   "slug": "bathsheba",
+   "name": "Bathsheba",
+   "distinguisher": "daughter of Eliam and wife of Uriah (2SA 11:3)",
+   "sex": "female"
+  },
+  {
+   "slug": "benaiah",
+   "name": "Benaiah",
+   "distinguisher": "over the Cherethites and the Pelethites (2SA 8:18), the fifth of \"the thirty\" of David's men (2SA 23:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "eli",
+   "name": "Eli",
+   "distinguisher": "priest of Israel in Shiloh (1SA 1:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "gera-3",
+   "name": "Gera",
+   "distinguisher": "father of Shimei (2SA 16:5), son of Bela (1CH 8:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "haggith",
+   "name": "Haggith",
+   "distinguisher": "wife (concubine?) of King David (2SA 3:4)",
+   "sex": "female"
+  },
+  {
+   "slug": "ithra",
+   "name": "Ithra",
+   "distinguisher": "father of Amasa (2SA 17:25)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehoiada",
+   "name": "Jehoiada",
+   "distinguisher": "father of Benaiah (2SA 8:18), a priest (1CH 27:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "joab",
+   "name": "Joab",
+   "distinguisher": "son of Zeruiah (2SA 2:13), commander of David's army (1CH 27:34)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "maoch",
+   "name": "Maoch",
+   "distinguisher": "father of the king of Gath (1SA 27:2)",
+   "sex": "male"
+  },
+  {
+   "slug": "moses",
+   "name": "Moses",
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "ner",
+   "name": "Ner",
+   "distinguisher": "father of Abner (1SA 14:50)",
+   "sex": "male"
+  },
+  {
+   "slug": "shimei-2",
+   "name": "Shimei",
+   "distinguisher": "of the house of Saul (2SA 16:5) who threw stones at King David",
+   "sex": "male"
+  },
+  {
+   "slug": "solomon",
+   "name": "Solomon",
+   "distinguisher": "son of David (2SA 5:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zadok",
+   "name": "Zadok",
+   "distinguisher": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "zeruiah",
+   "name": "Zeruiah",
+   "distinguisher": "mother of Abishai, Joab (1SA 26:6), and Asahel (2SA 2:18), sister of King David (1CH 2:16)",
+   "sex": "female"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 97198,
+   "row": "adonijah brother-of solomon",
+   "verse": "1KI 2:21",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97992,
+   "row": "benaiah killer-of adonijah",
+   "verse": "1KI 2:25",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97031,
+   "row": "abiathar priest-of yhvh",
+   "verse": "1KI 2:27",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97993,
+   "row": "benaiah killer-of joab",
+   "verse": "1KI 2:34",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 102760,
+   "row": "shimei-2 servant-of solomon",
+   "verse": "1KI 2:36",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97994,
+   "row": "benaiah killer-of shimei-2",
+   "verse": "1KI 2:46",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "abner son-of ner (1SA 14:51)",
+  "abner killed-by joab (2SA 3:30)",
+  "achish son-of maoch (1SA 27:2)",
+  "adonijah son-of haggith (2SA 3:4)",
+  "adonijah son-of david (2SA 3:4)",
+  "amasa son-of ithra (2SA 17:25)",
+  "amasa killed-by joab (2SA 20:10)",
+  "bathsheba wife-of david (2SA 12:24)",
+  "bathsheba mother-of solomon (2SA 12:24)",
+  "benaiah son-of jehoiada (2SA 8:18)",
+  "benaiah commander-of david (2SA 8:18)",
+  "david father-of solomon (1CH 29:23)",
+  "david servant-of yhvh (2SA 3:18)",
+  "eli priest-of yhvh (1SA 1:9)",
+  "ithra father-of amasa (2SA 17:25)",
+  "jehoiada father-of benaiah (2SA 8:18)",
+  "joab son-of zeruiah (2SA 2:18)",
+  "maoch father-of achish (1SA 27:2)",
+  "moses servant-of yhvh (NUM 12:7)",
+  "moses priest-of yhvh (PSA 99:6)",
+  "shimei-2 son-of gera-3 (2SA 16:5)",
+  "solomon son-of david (1KI 1:13)",
+  "solomon son-of bathsheba (1KI 1:11)",
+  "solomon brother-of adonijah (1KI 1:10)",
+  "absalom son-of david (2SA 13:1)",
+  "absalom killed-by joab (2SA 18:14)",
+  "gera-3 father-of shimei-2 (2SA 16:5)",
+  "haggith mother-of adonijah (2SA 3:4)",
+  "haggith wife-of david (2SA 3:4)",
+  "ner father-of abner (1SA 14:51)",
+  "zadok priest-of yhvh (1KI 1:8)",
+  "zeruiah mother-of joab (2SA 2:13)",
+  "zeruiah sister-of david (1CH 2:16)"
+ ]
+}

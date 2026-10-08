@@ -1,0 +1,493 @@
+{
+ "chapter": "MAT 10",
+ "text": {
+  "MAT 10:1": {
+   "KJV": "And when he had called unto him his twelve disciples, he gave them power against unclean spirits, to cast them out, and to heal all manner of sickness and all manner of disease.",
+   "NESTLE1904": "Καὶ προσκαλεσάμενος τοὺς δώδεκα μαθητὰς αὐτοῦ ἔδωκεν αὐτοῖς ἐξουσίαν πνευμάτων ἀκαθάρτων ὥστε ἐκβάλλειν αὐτὰ καὶ θεραπεύειν πᾶσαν νόσον καὶ πᾶσαν μαλακίαν. "
+  },
+  "MAT 10:2": {
+   "KJV": "Now the names of the twelve apostles are these; The first, Simon, who is called Peter, and Andrew his brother; James the son of Zebedee, and John his brother;",
+   "NESTLE1904": "Τῶν δὲ δώδεκα ἀποστόλων τὰ ὀνόματά ἐστιν ταῦτα· πρῶτος Σίμων ὁ λεγόμενος Πέτρος καὶ Ἀνδρέας ὁ ἀδελφὸς αὐτοῦ, καὶ Ἰάκωβος ὁ τοῦ Ζεβεδαίου καὶ Ἰωάνης ὁ ἀδελφὸς αὐτοῦ, "
+  },
+  "MAT 10:3": {
+   "KJV": "Philip, and Bartholomew; Thomas, and Matthew the publican; James the son of Alphaeus, and Lebbaeus, whose surname was Thaddaeus;",
+   "NESTLE1904": "Φίλιππος καὶ Βαρθολομαῖος, Θωμᾶς καὶ Μαθθαῖος ὁ τελώνης, Ἰάκωβος ὁ τοῦ Ἁλφαίου καὶ Θαδδαῖος, "
+  },
+  "MAT 10:4": {
+   "KJV": "Simon the Canaanite, and Judas Iscariot, who also betrayed him.",
+   "NESTLE1904": "Σίμων ὁ Καναναῖος καὶ Ἰούδας ὁ Ἰσκαριώτης ὁ καὶ παραδοὺς αὐτόν. "
+  },
+  "MAT 10:5": {
+   "KJV": "These twelve Jesus sent forth, and commanded them, saying, Go not into the way of the Gentiles, and into any city of the Samaritans enter ye not:",
+   "NESTLE1904": "Τούτους τοὺς δώδεκα ἀπέστειλεν ὁ Ἰησοῦς παραγγείλας αὐτοῖς λέγων Εἰς ὁδὸν ἐθνῶν μὴ ἀπέλθητε καὶ εἰς πόλιν Σαμαρειτῶν μὴ εἰσέλθητε· "
+  },
+  "MAT 10:6": {
+   "KJV": "But go rather to the lost sheep of the house of Israel.",
+   "NESTLE1904": "πορεύεσθε δὲ μᾶλλον πρὸς τὰ πρόβατα τὰ ἀπολωλότα οἴκου Ἰσραήλ. "
+  },
+  "MAT 10:7": {
+   "KJV": "And as ye go, preach, saying, The kingdom of heaven is at hand.",
+   "NESTLE1904": "πορευόμενοι δὲ κηρύσσετε λέγοντες ὅτι Ἤγγικεν ἡ βασιλεία τῶν οὐρανῶν. "
+  },
+  "MAT 10:8": {
+   "KJV": "Heal the sick, cleanse the lepers, raise the dead, cast out devils: freely ye have received, freely give.",
+   "NESTLE1904": "ἀσθενοῦντας θεραπεύετε, νεκροὺς ἐγείρετε, λεπροὺς καθαρίζετε, δαιμόνια ἐκβάλλετε· δωρεὰν ἐλάβετε, δωρεὰν δότε. "
+  },
+  "MAT 10:9": {
+   "KJV": "Provide neither gold, nor silver, nor brass in your purses,",
+   "NESTLE1904": "Μὴ κτήσησθε χρυσὸν μηδὲ ἄργυρον μηδὲ χαλκὸν εἰς τὰς ζώνας ὑμῶν, "
+  },
+  "MAT 10:10": {
+   "KJV": "Nor scrip for your journey, neither two coats, neither shoes, nor yet staves: for the workman is worthy of his meat.",
+   "NESTLE1904": "μὴ πήραν εἰς ὁδὸν μηδὲ δύο χιτῶνας μηδὲ ὑποδήματα μηδὲ ῥάβδον· ἄξιος γὰρ ὁ ἐργάτης τῆς τροφῆς αὐτοῦ. "
+  },
+  "MAT 10:11": {
+   "KJV": "And into whatsoever city or town ye shall enter, enquire who in it is worthy; and there abide till ye go thence.",
+   "NESTLE1904": "εἰς ἣν δ’ ἂν πόλιν ἢ κώμην εἰσέλθητε, ἐξετάσατε τίς ἐν αὐτῇ ἄξιός ἐστιν· κἀκεῖ μείνατε ἕως ἂν ἐξέλθητε. "
+  },
+  "MAT 10:12": {
+   "KJV": "And when ye come into an house, salute it.",
+   "NESTLE1904": "εἰσερχόμενοι δὲ εἰς τὴν οἰκίαν ἀσπάσασθε αὐτήν· "
+  },
+  "MAT 10:13": {
+   "KJV": "And if the house be worthy, let your peace come upon it: but if it be not worthy, let your peace return to you.",
+   "NESTLE1904": "καὶ ἐὰν μὲν ᾖ ἡ οἰκία ἀξία, ἐλθάτω ἡ εἰρήνη ὑμῶν ἐπ’ αὐτήν· ἐὰν δὲ μὴ ᾖ ἀξία, ἡ εἰρήνη ὑμῶν πρὸς ὑμᾶς ἐπιστραφήτω. "
+  },
+  "MAT 10:14": {
+   "KJV": "And whosoever shall not receive you, nor hear your words, when ye depart out of that house or city, shake off the dust of your feet.",
+   "NESTLE1904": "καὶ ὃς ἂν μὴ δέξηται ὑμᾶς μηδὲ ἀκούσῃ τοὺς λόγους ὑμῶν, ἐξερχόμενοι ἔξω τῆς οἰκίας ἢ τῆς πόλεως ἐκείνης ἐκτινάξατε τὸν κονιορτὸν τῶν ποδῶν ὑμῶν. "
+  },
+  "MAT 10:15": {
+   "KJV": "Verily I say unto you, It shall be more tolerable for the land of Sodom and Gomorrha in the day of judgment, than for that city.",
+   "NESTLE1904": "ἀμὴν λέγω ὑμῖν, ἀνεκτότερον ἔσται γῇ Σοδόμων καὶ Γομόρρων ἐν ἡμέρᾳ κρίσεως ἢ τῇ πόλει ἐκείνῃ. "
+  },
+  "MAT 10:16": {
+   "KJV": "Behold, I send you forth as sheep in the midst of wolves: be ye therefore wise as serpents, and harmless as doves.",
+   "NESTLE1904": "Ἰδοὺ ἐγὼ ἀποστέλλω ὑμᾶς ὡς πρόβατα ἐν μέσῳ λύκων· γίνεσθε οὖν φρόνιμοι ὡς οἱ ὄφεις καὶ ἀκέραιοι ὡς αἱ περιστεραί. "
+  },
+  "MAT 10:17": {
+   "KJV": "But beware of men: for they will deliver you up to the councils, and they will scourge you in their synagogues;",
+   "NESTLE1904": "Προσέχετε δὲ ἀπὸ τῶν ἀνθρώπων· παραδώσουσιν γὰρ ὑμᾶς εἰς συνέδρια, καὶ ἐν ταῖς συναγωγαῖς αὐτῶν μαστιγώσουσιν ὑμᾶς· "
+  },
+  "MAT 10:18": {
+   "KJV": "And ye shall be brought before governors and kings for my sake, for a testimony against them and the Gentiles.",
+   "NESTLE1904": "καὶ ἐπὶ ἡγεμόνας δὲ καὶ βασιλεῖς ἀχθήσεσθε ἕνεκεν ἐμοῦ, εἰς μαρτύριον αὐτοῖς καὶ τοῖς ἔθνεσιν. "
+  },
+  "MAT 10:19": {
+   "KJV": "But when they deliver you up, take no thought how or what ye shall speak: for it shall be given you in that same hour what ye shall speak.",
+   "NESTLE1904": "ὅταν δὲ παραδῶσιν ὑμᾶς, μὴ μεριμνήσητε πῶς ἢ τί λαλήσητε· δοθήσεται γὰρ ὑμῖν ἐν ἐκείνῃ τῇ ὥρᾳ τί λαλήσητε· "
+  },
+  "MAT 10:20": {
+   "KJV": "For it is not ye that speak, but the Spirit of your Father which speaketh in you.",
+   "NESTLE1904": "οὐ γὰρ ὑμεῖς ἐστε οἱ λαλοῦντες ἀλλὰ τὸ Πνεῦμα τοῦ Πατρὸς ὑμῶν τὸ λαλοῦν ἐν ὑμῖν. "
+  },
+  "MAT 10:21": {
+   "KJV": "And the brother shall deliver up the brother to death, and the father the child: and the children shall rise up against their parents, and cause them to be put to death.",
+   "NESTLE1904": "παραδώσει δὲ ἀδελφὸς ἀδελφὸν εἰς θάνατον καὶ πατὴρ τέκνον, καὶ ἐπαναστήσονται τέκνα ἐπὶ γονεῖς καὶ θανατώσουσιν αὐτούς. "
+  },
+  "MAT 10:22": {
+   "KJV": "And ye shall be hated of all men for my name's sake: but he that endureth to the end shall be saved.",
+   "NESTLE1904": "καὶ ἔσεσθε μισούμενοι ὑπὸ πάντων διὰ τὸ ὄνομά μου· ὁ δὲ ὑπομείνας εἰς τέλος, οὗτος σωθήσεται. "
+  },
+  "MAT 10:23": {
+   "KJV": "But when they persecute you in this city, flee ye into another: for verily I say unto you, Ye shall not have gone over the cities of Israel, till the Son of man be come.",
+   "NESTLE1904": "ὅταν δὲ διώκωσιν ὑμᾶς ἐν τῇ πόλει ταύτῃ, φεύγετε εἰς τὴν ἑτέραν· ἀμὴν γὰρ λέγω ὑμῖν, οὐ μὴ τελέσητε τὰς πόλεις τοῦ Ἰσραὴλ ἕως ἔλθῃ ὁ Υἱὸς τοῦ ἀνθρώπου. "
+  },
+  "MAT 10:24": {
+   "KJV": "The disciple is not above his master, nor the servant above his lord.",
+   "NESTLE1904": "Οὐκ ἔστιν μαθητὴς ὑπὲρ τὸν διδάσκαλον οὐδὲ δοῦλος ὑπὲρ τὸν κύριον αὐτοῦ. "
+  },
+  "MAT 10:25": {
+   "KJV": "It is enough for the disciple that he be as his master, and the servant as his lord. If they have called the master of the house Beelzebub, how much more shall they call them of his household?",
+   "NESTLE1904": "ἀρκετὸν τῷ μαθητῇ ἵνα γένηται ὡς ὁ διδάσκαλος αὐτοῦ, καὶ ὁ δοῦλος ὡς ὁ κύριος αὐτοῦ. εἰ τὸν οἰκοδεσπότην Βεελζεβοὺλ ἐπεκάλεσαν, πόσῳ μᾶλλον τοὺς οἰκιακοὺς αὐτοῦ. "
+  },
+  "MAT 10:26": {
+   "KJV": "Fear them not therefore: for there is nothing covered, that shall not be revealed; and hid, that shall not be known.",
+   "NESTLE1904": "μὴ οὖν φοβηθῆτε αὐτούς· οὐδὲν γάρ ἐστιν κεκαλυμμένον ὃ οὐκ ἀποκαλυφθήσεται, καὶ κρυπτὸν ὃ οὐ γνωσθήσεται. "
+  },
+  "MAT 10:27": {
+   "KJV": "What I tell you in darkness, that speak ye in light: and what ye hear in the ear, that preach ye upon the housetops.",
+   "NESTLE1904": "ὃ λέγω ὑμῖν ἐν τῇ σκοτίᾳ, εἴπατε ἐν τῷ φωτί· καὶ ὃ εἰς τὸ οὖς ἀκούετε, κηρύξατε ἐπὶ τῶν δωμάτων. "
+  },
+  "MAT 10:28": {
+   "KJV": "And fear not them which kill the body, but are not able to kill the soul: but rather fear him which is able to destroy both soul and body in hell.",
+   "NESTLE1904": "καὶ μὴ φοβεῖσθε ἀπὸ τῶν ἀποκτεννόντων τὸ σῶμα, τὴν δὲ ψυχὴν μὴ δυναμένων ἀποκτεῖναι· φοβεῖσθε δὲ μᾶλλον τὸν δυνάμενον καὶ ψυχὴν καὶ σῶμα ἀπολέσαι ἐν γεέννῃ. "
+  },
+  "MAT 10:29": {
+   "KJV": "Are not two sparrows sold for a farthing? and one of them shall not fall on the ground without your Father.",
+   "NESTLE1904": "οὐχὶ δύο στρουθία ἀσσαρίου πωλεῖται; καὶ ἓν ἐξ αὐτῶν οὐ πεσεῖται ἐπὶ τὴν γῆν ἄνευ τοῦ Πατρὸς ὑμῶν. "
+  },
+  "MAT 10:30": {
+   "KJV": "But the very hairs of your head are all numbered.",
+   "NESTLE1904": "ὑμῶν δὲ καὶ αἱ τρίχες τῆς κεφαλῆς πᾶσαι ἠριθμημέναι εἰσίν. "
+  },
+  "MAT 10:31": {
+   "KJV": "Fear ye not therefore, ye are of more value than many sparrows.",
+   "NESTLE1904": "μὴ οὖν φοβεῖσθε· πολλῶν στρουθίων διαφέρετε ὑμεῖς. "
+  },
+  "MAT 10:32": {
+   "KJV": "Whosoever therefore shall confess me before men, him will I confess also before my Father which is in heaven.",
+   "NESTLE1904": "Πᾶς οὖν ὅστις ὁμολογήσει ἐν ἐμοὶ ἔμπροσθεν τῶν ἀνθρώπων, ὁμολογήσω κἀγὼ ἐν αὐτῷ ἔμπροσθεν τοῦ Πατρός μου τοῦ ἐν τοῖς οὐρανοῖς· "
+  },
+  "MAT 10:33": {
+   "KJV": "But whosoever shall deny me before men, him will I also deny before my Father which is in heaven.",
+   "NESTLE1904": "ὅστις δ’ ἂν ἀρνήσηταί με ἔμπροσθεν τῶν ἀνθρώπων, ἀρνήσομαι κἀγὼ αὐτὸν ἔμπροσθεν τοῦ Πατρός μου τοῦ ἐν τοῖς οὐρανοῖς. "
+  },
+  "MAT 10:34": {
+   "KJV": "Think not that I am come to send peace on earth: I came not to send peace, but a sword.",
+   "NESTLE1904": "Μὴ νομίσητε ὅτι ἦλθον βαλεῖν εἰρήνην ἐπὶ τὴν γῆν· οὐκ ἦλθον βαλεῖν εἰρήνην ἀλλὰ μάχαιραν. "
+  },
+  "MAT 10:35": {
+   "KJV": "For I am come to set a man at variance against his father, and the daughter against her mother, and the daughter in law against her mother in law.",
+   "NESTLE1904": "ἦλθον γὰρ διχάσαι ἄνθρωπον κατὰ τοῦ πατρὸς αὐτοῦ καὶ θυγατέρα κατὰ τῆς μητρὸς αὐτῆς καὶ νύμφην κατὰ τῆς πενθερᾶς αὐτῆς, "
+  },
+  "MAT 10:36": {
+   "KJV": "And a man's foes shall be they of his own household.",
+   "NESTLE1904": "καὶ ἐχθροὶ τοῦ ἀνθρώπου οἱ οἰκιακοὶ αὐτοῦ. "
+  },
+  "MAT 10:37": {
+   "KJV": "He that loveth father or mother more than me is not worthy of me: and he that loveth son or daughter more than me is not worthy of me.",
+   "NESTLE1904": "Ὁ φιλῶν πατέρα ἢ μητέρα ὑπὲρ ἐμὲ οὐκ ἔστιν μου ἄξιος· καὶ ὁ φιλῶν υἱὸν ἢ θυγατέρα ὑπὲρ ἐμὲ οὐκ ἔστιν μου ἄξιος· "
+  },
+  "MAT 10:38": {
+   "KJV": "And he that taketh not his cross, and followeth after me, is not worthy of me.",
+   "NESTLE1904": "καὶ ὃς οὐ λαμβάνει τὸν σταυρὸν αὐτοῦ καὶ ἀκολουθεῖ ὀπίσω μου, οὐκ ἔστιν μου ἄξιος. "
+  },
+  "MAT 10:39": {
+   "KJV": "He that findeth his life shall lose it: and he that loseth his life for my sake shall find it.",
+   "NESTLE1904": "ὁ εὑρὼν τὴν ψυχὴν αὐτοῦ ἀπολέσει αὐτήν, καὶ ὁ ἀπολέσας τὴν ψυχὴν αὐτοῦ ἕνεκεν ἐμοῦ εὑρήσει αὐτήν. "
+  },
+  "MAT 10:40": {
+   "KJV": "He that receiveth you receiveth me, and he that receiveth me receiveth him that sent me.",
+   "NESTLE1904": "Ὁ δεχόμενος ὑμᾶς ἐμὲ δέχεται, καὶ ὁ ἐμὲ δεχόμενος δέχεται τὸν ἀποστείλαντά με. "
+  },
+  "MAT 10:41": {
+   "KJV": "He that receiveth a prophet in the name of a prophet shall receive a prophet's reward; and he that receiveth a righteous man in the name of a righteous man shall receive a righteous man's reward.",
+   "NESTLE1904": "ὁ δεχόμενος προφήτην εἰς ὄνομα προφήτου μισθὸν προφήτου λήμψεται, καὶ ὁ δεχόμενος δίκαιον εἰς ὄνομα δικαίου μισθὸν δικαίου λήμψεται. "
+  },
+  "MAT 10:42": {
+   "KJV": "And whosoever shall give to drink unto one of these little ones a cup of cold water only in the name of a disciple, verily I say unto you, he shall in no wise lose his reward.",
+   "NESTLE1904": "καὶ ὃς ἐὰν ποτίσῃ ἕνα τῶν μικρῶν τούτων ποτήριον ψυχροῦ μόνον εἰς ὄνομα μαθητοῦ, ἀμὴν λέγω ὑμῖν, οὐ μὴ ἀπολέσῃ τὸν μισθὸν αὐτοῦ. "
+  }
+ },
+ "records": [
+  {
+   "slug": "alphaeus",
+   "name": "Alphaeus",
+   "distinguisher": "father of James the disciple (MAT 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "andrew",
+   "name": "Andrew",
+   "distinguisher": "brother of Simon/Peter (MAT 4:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "bartholomew",
+   "name": "Bartholomew",
+   "distinguisher": "disciple of the Messiah (MAT 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "james",
+   "name": "James",
+   "distinguisher": "son of Zebedee (MAT 4:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "james-2",
+   "name": "James",
+   "distinguisher": "disciple of the Messiah (MAT 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "jesus",
+   "name": "Jesus",
+   "distinguisher": "of Nazareth",
+   "sex": "male"
+  },
+  {
+   "slug": "john-2",
+   "name": "John",
+   "distinguisher": "son of Zebedee (MAT 4:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "judas",
+   "name": "Judas",
+   "distinguisher": "disciple of the Messiah (MAT 10:4) who betrayed Him (MAT 10:4)",
+   "sex": "male"
+  },
+  {
+   "slug": "matthew",
+   "name": "Matthew",
+   "distinguisher": "the tax collector (MAT 9:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "philip",
+   "name": "Philip",
+   "distinguisher": "disciple of the Messiah (MAT 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "satan",
+   "name": "Satan",
+   "distinguisher": "the adversary who came among the sons of God before the LORD (JOB 1:6) and moved David to number Israel (1CH 21:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "simon",
+   "name": "Simon",
+   "distinguisher": "Peter, brother of Andrew (MAT 4:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "simon-2",
+   "name": "Simon",
+   "distinguisher": "disciple of the Messiah (MAT 10:4), the zealot",
+   "sex": "male"
+  },
+  {
+   "slug": "thaddaeus",
+   "name": "Thaddaeus",
+   "distinguisher": "disciple of the Messiah (MAT 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "thomas",
+   "name": "Thomas",
+   "distinguisher": "disciple of the Messiah (MAT 10:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zebedee",
+   "name": "Zebedee",
+   "distinguisher": "father of James and John (MAT 4:21)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 100331,
+   "row": "jesus teacher-of simon",
+   "verse": "MAT 10:1",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 100332,
+   "row": "jesus teacher-of andrew",
+   "verse": "MAT 10:1",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 100333,
+   "row": "jesus teacher-of james",
+   "verse": "MAT 10:1",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 100334,
+   "row": "jesus teacher-of john-2",
+   "verse": "MAT 10:1",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 105137,
+   "row": "andrew servant-of jesus",
+   "verse": "MAT 10:2",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 105138,
+   "row": "andrew apostle-of jesus",
+   "verse": "MAT 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106613,
+   "row": "simon servant-of jesus",
+   "verse": "MAT 10:2",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 106614,
+   "row": "simon apostle-of jesus",
+   "verse": "MAT 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106667,
+   "row": "john-2 servant-of jesus",
+   "verse": "MAT 10:2",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 106668,
+   "row": "john-2 apostle-of jesus",
+   "verse": "MAT 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106850,
+   "row": "james servant-of jesus",
+   "verse": "MAT 10:2",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 106851,
+   "row": "james apostle-of jesus",
+   "verse": "MAT 10:2",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97381,
+   "row": "alphaeus father-of james-2",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 103923,
+   "row": "bartholomew disciple-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 103924,
+   "row": "bartholomew servant-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 106037,
+   "row": "matthew servant-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 106039,
+   "row": "matthew apostle-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106852,
+   "row": "james-2 son-of alphaeus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106853,
+   "row": "james-2 disciple-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 106854,
+   "row": "james-2 servant-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 106855,
+   "row": "james-2 apostle-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 107025,
+   "row": "philip servant-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 107026,
+   "row": "philip apostle-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 107121,
+   "row": "thaddaeus disciple-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 107122,
+   "row": "thaddaeus servant-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 107123,
+   "row": "thaddaeus apostle-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 107125,
+   "row": "thomas servant-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 107126,
+   "row": "thomas apostle-of jesus",
+   "verse": "MAT 10:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 105949,
+   "row": "judas servant-of jesus",
+   "verse": "MAT 10:4",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 105950,
+   "row": "judas apostle-of jesus",
+   "verse": "MAT 10:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106615,
+   "row": "simon-2 servant-of jesus",
+   "verse": "MAT 10:4",
+   "source": "read from Scripture by the project owner, decided 2026-09-11"
+  },
+  {
+   "id": 106616,
+   "row": "simon-2 apostle-of jesus",
+   "verse": "MAT 10:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 106617,
+   "row": "simon-2 disciple-of jesus",
+   "verse": "MAT 10:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "jesus high-priest-of yhvh (HEB 4:14)",
+  "zebedee father-of james (MAT 4:21)",
+  "zebedee father-of john-2 (MAT 4:21)",
+  "bartholomew apostle-of jesus (ACT 1:13)",
+  "andrew brother-of simon (MAT 4:18)",
+  "judas disciple-of jesus (MAT 26:47)",
+  "matthew disciple-of jesus (MAT 9:9)",
+  "simon brother-of andrew (MAT 4:18)",
+  "john-2 son-of zebedee (MAT 4:21)",
+  "john-2 brother-of james (MAT 4:21)",
+  "james son-of zebedee (MAT 4:21)",
+  "james brother-of john-2 (MRK 3:17)",
+  "philip disciple-of jesus (JHN 1:43)",
+  "thomas disciple-of jesus (JHN 20:26)"
+ ]
+}

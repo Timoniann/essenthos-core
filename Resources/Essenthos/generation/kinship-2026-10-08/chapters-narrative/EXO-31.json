@@ -1,0 +1,23 @@
+{
+ "chapter": "EXO 31",
+ "rows": 7,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    103838
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "EXO 31:6",
+   "why": "The Hebrew identifies Oholiab as belonging to the tribe of Dan but does not separately state Ahisamach's tribal affiliation.",
+   "confidence": 0.9
+  }
+ ],
+ "missing": [],
+ "note": "All plainly stated parent-child relationships are already recorded. Owner row 103837 is preserved, although EXO 31:6 identifies Oholiab's tribe rather than explicitly stating Ahisamach's descent from Dan.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:07:30+00:00"
+}

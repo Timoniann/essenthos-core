@@ -1,0 +1,20 @@
+{
+ "chapter": "LUK 8",
+ "rows": 5,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jesus",
+   "type": "son-of",
+   "to": "yhvh",
+   "verse": "LUK 8:28",
+   "why": "The Greek explicitly addresses Jesus as the Son of God Most High (Υἱὲ τοῦ Θεοῦ τοῦ Ὑψίστου).",
+   "confidence": 1
+  }
+ ],
+ "note": "Jairus's daughter and Jesus's mother and brothers are not identifiable among the supplied records. Jesus's address 'Daughter' to the woman with an issue of blood in LUK 8:48 does not state a literal family relationship.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:10:53+00:00"
+}

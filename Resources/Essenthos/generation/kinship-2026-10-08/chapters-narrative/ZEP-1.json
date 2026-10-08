@@ -1,0 +1,11 @@
+{
+ "chapter": "ZEP 1",
+ "rows": 11,
+ "wrong": [],
+ "missing": [],
+ "note": "All listed relationships are supported by the genealogy in ZEP 1:1; Josiah's relationship to Amon is already recorded from other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:03:06+00:00"
+}

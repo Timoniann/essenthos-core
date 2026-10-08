@@ -1,0 +1,11 @@
+{
+ "chapter": "EZR 3",
+ "rows": 5,
+ "wrong": [],
+ "missing": [],
+ "note": "Owner row 107523 (jozadak descendant-of aaron) is retained as an owner ruling, although EZR 3:2 does not state Jozadak's descent from Aaron.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 2,
+ "at": "2026-10-08T19:10:22+00:00"
+}

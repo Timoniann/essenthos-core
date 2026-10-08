@@ -1,0 +1,11 @@
+{
+ "chapter": "2SA 3",
+ "rows": 29,
+ "wrong": [],
+ "missing": [],
+ "note": "Row 98296 is supported by Chileab and Absalom sharing David as their father; their different mothers do not make the broader brother-of relationship false. Owner rows 106936, 103813, and 105706 are preserved, although these verses identify Maacah, Abital, and Haggith as mothers of David's sons without explicitly calling them his wives.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T18:55:13+00:00"
+}

@@ -1,0 +1,28 @@
+{
+ "chapter": "2SA 4",
+ "rows": 10,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "baanah",
+   "type": "descendant-of",
+   "to": "benjamin",
+   "verse": "2SA 4:2",
+   "why": "The Hebrew describes Baanah and Rechab, the sons of Rimmon, as מִבְּנֵי בִנְיָמִן, 'of the children of Benjamin.'",
+   "confidence": 0.94
+  },
+  {
+   "from": "rechab",
+   "type": "descendant-of",
+   "to": "benjamin",
+   "verse": "2SA 4:2",
+   "why": "The Hebrew describes Baanah and Rechab, the sons of Rimmon, as מִבְּנֵי בִנְיָמִן, 'of the children of Benjamin.'",
+   "confidence": 0.94
+  }
+ ],
+ "note": "The existing rows are supported by the chapter, and neither owner ruling appears to conflict with its wording.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:04:29+00:00"
+}

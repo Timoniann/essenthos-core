@@ -1,0 +1,28 @@
+{
+ "chapter": "NEH 11",
+ "rows": 81,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "athaiah",
+   "type": "descendant-of",
+   "to": "judah",
+   "verse": "NEH 11:4",
+   "why": "The verse explicitly lists Athaiah among the children of Judah.",
+   "confidence": 1
+  },
+  {
+   "from": "maaseiah-11",
+   "type": "descendant-of",
+   "to": "judah",
+   "verse": "NEH 11:5",
+   "why": "Maaseiah continues the list introduced as the children of Judah in verse 4.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "Row 103840 is an owner ruling and is retained; NEH 11:11 does not explicitly state that Ahitub descends from Aaron.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 2,
+ "at": "2026-10-08T18:57:20+00:00"
+}

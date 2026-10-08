@@ -1,0 +1,23 @@
+{
+ "chapter": "1KI 11",
+ "rows": 13,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    101986
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "1KI 11:19",
+   "why": "Pharaoh gives Hadad a wife, but the text does not call Pharaoh his master or Hadad his servant.",
+   "confidence": 0.98
+  }
+ ],
+ "missing": [],
+ "note": "All plain family statements between the supplied records are already recorded. Tahpenes weaning Genubath does not establish an adoptive-mother relationship.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:02:25+00:00"
+}

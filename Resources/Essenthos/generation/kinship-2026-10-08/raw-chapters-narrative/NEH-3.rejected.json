@@ -1,0 +1,22 @@
+{
+ "errors": [
+  "wrong: rows [106795] are the owner's own; put them in note instead"
+ ],
+ "answer": {
+  "wrong": [
+   {
+    "kind": "delete",
+    "rows": [
+     106795
+    ],
+    "new_type": "",
+    "new_to": "",
+    "verse": "NEH 3:1",
+    "why": "The Hebrew calls Eliashib the high priest and mentions his fellow priests, but does not state his descent from Aaron.",
+    "confidence": 0.98
+   }
+  ],
+  "missing": [],
+  "note": "All plain family statements between the supplied people are already recorded. The rows recorded directly by the project owner agree with the chapter."
+ }
+}

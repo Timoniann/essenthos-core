@@ -1,0 +1,11 @@
+{
+ "chapter": "GEN 14",
+ "rows": 9,
+ "wrong": [],
+ "missing": [],
+ "note": "GEN 14:12 identifies Lot as Abram’s brother’s son, so “brother” in verses 14 and 16 denotes kinship rather than literal siblinghood. The owner’s alliance rows are supported by GEN 14:13.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:05:52+00:00"
+}

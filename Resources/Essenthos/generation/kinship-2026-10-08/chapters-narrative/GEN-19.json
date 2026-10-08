@@ -1,0 +1,11 @@
+{
+ "chapter": "GEN 19",
+ "rows": 11,
+ "wrong": [],
+ "missing": [],
+ "note": "All recorded relationships are supported by the chapter, and no plain family statement between the supplied records is missing. The owner's rulings identifying Lot as father of Moab and Ben-ammi are supported by GEN 19:36–38.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:03:25+00:00"
+}

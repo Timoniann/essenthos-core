@@ -1,0 +1,45 @@
+{
+ "chapter": "2SA 23",
+ "rows": 26,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    100597
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2SA 23:8",
+   "why": "The verse describes Josheb-basshebeth killing eight hundred men, not YHVH.",
+   "confidence": 1
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    98588
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2SA 23:24",
+   "why": "Elhanan's father is Dodo of Bethlehem, whereas dodo-2 identifies the Ahohite Dodo who fathered Eleazar in verse 9.",
+   "confidence": 0.94
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    106632
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2SA 23:37",
+   "why": "The verse identifies Nahari as Joab's armourbearer and identifies Zelek only as the Ammonite.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [],
+ "note": "Owner rows 107048 and 106633 infer ancestry from tribal or geographical descriptions rather than explicitly named pedigrees and are retained as owner rulings. No matching record is supplied for Dodo of Bethlehem, so Elhanan's stated parentage cannot be added with the available slugs.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:00:14+00:00"
+}

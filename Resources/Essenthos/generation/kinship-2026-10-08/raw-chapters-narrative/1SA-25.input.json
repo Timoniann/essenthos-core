@@ -1,0 +1,339 @@
+{
+ "chapter": "1SA 25",
+ "text": {
+  "1SA 25:1": {
+   "KJV": "And Samuel died; and all the Israelites were gathered together, and lamented him, and buried him in his house at Ramah. And David arose, and went down to the wilderness of Paran.",
+   "BHSA": "וַיָּ֣מָת שְׁמוּאֵ֔ל וַיִּקָּבְצ֤וּ כָל־יִשְׂרָאֵל֙ וַיִּסְפְּדוּ־לֹ֔ו וַיִּקְבְּרֻ֥הוּ בְּבֵיתֹ֖ו בָּרָמָ֑ה וַיָּ֣קָם דָּוִ֔ד וַיֵּ֖רֶד אֶל־מִדְבַּ֥ר פָּארָֽן׃ ס "
+  },
+  "1SA 25:2": {
+   "KJV": "And there was a man in Maon, whose possessions were in Carmel; and the man was very great, and he had three thousand sheep, and a thousand goats: and he was shearing his sheep in Carmel.",
+   "BHSA": "וְאִ֨ישׁ בְּמָעֹ֜ון וּמַעֲשֵׂ֣הוּ בַכַּרְמֶ֗ל וְהָאִישׁ֙ גָּדֹ֣ול מְאֹ֔ד וְלֹ֛ו צֹ֥אן שְׁלֹֽשֶׁת־אֲלָפִ֖ים וְאֶ֣לֶף עִזִּ֑ים וַיְהִ֛י בִּגְזֹ֥ז אֶת־צֹאנֹ֖ו בַּכַּרְמֶֽל׃ "
+  },
+  "1SA 25:3": {
+   "KJV": "Now the name of the man was Nabal; and the name of his wife Abigail: and she was a woman of good understanding, and of a beautiful countenance: but the man was churlish and evil in his doings; and he was of the house of Caleb.",
+   "BHSA": "וְשֵׁ֤ם הָאִישׁ֙ נָבָ֔ל וְשֵׁ֥ם אִשְׁתֹּ֖ו אֲבִגָ֑יִל וְהָאִשָּׁ֤ה טֹֽובַת־שֶׂ֨כֶל֙ וִ֣יפַת תֹּ֔אַר וְהָאִ֥ישׁ קָשֶׁ֛ה וְרַ֥ע מַעֲלָלִ֖ים וְה֥וּא כלבו׃ "
+  },
+  "1SA 25:4": {
+   "KJV": "And David heard in the wilderness that Nabal did shear his sheep.",
+   "BHSA": "וַיִּשְׁמַ֥ע דָּוִ֖ד בַּמִּדְבָּ֑ר כִּֽי־גֹזֵ֥ז נָבָ֖ל אֶת־צֹאנֹֽו׃ "
+  },
+  "1SA 25:5": {
+   "KJV": "And David sent out ten young men, and David said unto the young men, Get you up to Carmel, and go to Nabal, and greet him in my name:",
+   "BHSA": "וַיִּשְׁלַ֥ח דָּוִ֖ד עֲשָׂרָ֣ה נְעָרִ֑ים וַיֹּ֨אמֶר דָּוִ֜ד לַנְּעָרִ֗ים עֲל֤וּ כַרְמֶ֨לָה֙ וּבָאתֶ֣ם אֶל־נָבָ֔ל וּשְׁאֶלְתֶּם־לֹ֥ו בִשְׁמִ֖י לְשָׁלֹֽום׃ "
+  },
+  "1SA 25:6": {
+   "KJV": "And thus shall ye say to him that liveth in prosperity, Peace be both to thee, and peace be to thine house, and peace be unto all that thou hast.",
+   "BHSA": "וַאֲמַרְתֶּ֥ם כֹּ֖ה לֶחָ֑י וְאַתָּ֤ה שָׁלֹום֙ וּבֵיתְךָ֣ שָׁלֹ֔ום וְכֹ֥ל אֲשֶׁר־לְךָ֖ שָׁלֹֽום׃ "
+  },
+  "1SA 25:7": {
+   "KJV": "And now I have heard that thou hast shearers: now thy shepherds which were with us, we hurt them not, neither was there ought missing unto them, all the while they were in Carmel.",
+   "BHSA": "וְעַתָּ֣ה שָׁמַ֔עְתִּי כִּ֥י גֹזְזִ֖ים לָ֑ךְ עַתָּ֗ה הָרֹעִ֤ים אֲשֶׁר־לְךָ֙ הָי֣וּ עִמָּ֔נוּ לֹ֣א הֶכְלַמְנ֗וּם וְלֹֽא־נִפְקַ֤ד לָהֶם֙ מְא֔וּמָה כָּל־יְמֵ֖י הֱיֹותָ֥ם בַּכַּרְמֶֽל׃ "
+  },
+  "1SA 25:8": {
+   "KJV": "Ask thy young men, and they will shew thee. Wherefore let the young men find favour in thine eyes: for we come in a good day: give, I pray thee, whatsoever cometh to thine hand unto thy servants, and to thy son David.",
+   "BHSA": "שְׁאַ֨ל אֶת־נְעָרֶ֜יךָ וְיַגִּ֣ידוּ לָ֗ךְ וְיִמְצְא֨וּ הַנְּעָרִ֥ים חֵן֙ בְּעֵינֶ֔יךָ כִּֽי־עַל־יֹ֥ום טֹ֖וב בָּ֑נוּ תְּנָה־נָּ֗א אֵת֩ אֲשֶׁ֨ר תִּמְצָ֤א יָֽדְךָ֙ לַעֲבָדֶ֔יךָ וּלְבִנְךָ֖ לְדָוִֽד׃ "
+  },
+  "1SA 25:9": {
+   "KJV": "And when David's young men came, they spake to Nabal according to all those words in the name of David, and ceased.",
+   "BHSA": "וַיָּבֹ֨אוּ֙ נַעֲרֵ֣י דָוִ֔ד וַיְדַבְּר֧וּ אֶל־נָבָ֛ל כְּכָל־הַדְּבָרִ֥ים הָאֵ֖לֶּה בְּשֵׁ֣ם דָּוִ֑ד וַיָּנֽוּחוּ׃ "
+  },
+  "1SA 25:10": {
+   "KJV": "And Nabal answered David's servants, and said, Who is David? and who is the son of Jesse? there be many servants now a days that break away every man from his master.",
+   "BHSA": "וַיַּ֨עַן נָבָ֜ל אֶת־עַבְדֵ֤י דָוִד֙ וַיֹּ֔אמֶר מִ֥י דָוִ֖ד וּמִ֣י בֶן־יִשָׁ֑י הַיֹּום֙ רַבּ֣וּ עֲבָדִ֔ים הַמִּתְפָּ֣רְצִ֔ים אִ֖ישׁ מִפְּנֵ֥י אֲדֹנָֽיו׃ "
+  },
+  "1SA 25:11": {
+   "KJV": "Shall I then take my bread, and my water, and my flesh that I have killed for my shearers, and give it unto men, whom I know not whence they be?",
+   "BHSA": "וְלָקַחְתִּ֤י אֶת־לַחְמִי֙ וְאֶת־מֵימַ֔י וְאֵת֙ טִבְחָתִ֔י אֲשֶׁ֥ר טָבַ֖חְתִּי לְגֹֽזְזָ֑י וְנָֽתַתִּי֙ לַֽאֲנָשִׁ֔ים אֲשֶׁר֙ לֹ֣א יָדַ֔עְתִּי אֵ֥י מִזֶּ֖ה הֵֽמָּה׃ "
+  },
+  "1SA 25:12": {
+   "KJV": "So David's young men turned their way, and went again, and came and told him all those sayings.",
+   "BHSA": "וַיַּהַפְכ֥וּ נַעֲרֵֽי־דָוִ֖ד לְדַרְכָּ֑ם וַיָּשֻׁ֨בוּ֙ וַיָּבֹ֔אוּ וַיַּגִּ֣דוּ לֹ֔ו כְּכֹ֖ל הַדְּבָרִ֥ים הָאֵֽלֶּה׃ "
+  },
+  "1SA 25:13": {
+   "KJV": "And David said unto his men, Gird ye on every man his sword. And they girded on every man his sword; and David also girded on his sword: and there went up after David about four hundred men; and two hundred abode by the stuff.",
+   "BHSA": "וַיֹּאמֶר֩ דָּוִ֨ד לַאֲנָשָׁ֜יו חִגְר֣וּ׀ אִ֣ישׁ אֶת־חַרְבֹּ֗ו וַֽיַּחְגְּרוּ֙ אִ֣ישׁ אֶת־חַרְבֹּ֔ו וַיַּחְגֹּ֥ר גַּם־דָּוִ֖ד אֶת־חַרְבֹּ֑ו וַֽיַּעֲל֣וּ׀ אַחֲרֵ֣י דָוִ֗ד כְּאַרְבַּ֤ע מֵאֹות֙ אִ֔ישׁ וּמָאתַ֖יִם יָשְׁב֥וּ עַל־הַכֵּלִֽים׃ "
+  },
+  "1SA 25:14": {
+   "KJV": "But one of the young men told Abigail, Nabal's wife, saying, Behold, David sent messengers out of the wilderness to salute our master; and he railed on them.",
+   "BHSA": "וְלַאֲבִיגַ֨יִל֙ אֵ֣שֶׁת נָבָ֔ל הִגִּ֧יד נַֽעַר־אֶחָ֛ד מֵהַנְּעָרִ֖ים לֵאמֹ֑ר הִנֵּ֣ה שָׁלַח֩ דָּוִ֨ד מַלְאָכִ֧ים׀ מֵֽהַמִּדְבָּ֛ר לְבָרֵ֥ךְ אֶת־אֲדֹנֵ֖ינוּ וַיָּ֥עַט בָּהֶֽם׃ "
+  },
+  "1SA 25:15": {
+   "KJV": "But the men were very good unto us, and we were not hurt, neither missed we any thing, as long as we were conversant with them, when we were in the fields:",
+   "BHSA": "וְהָ֣אֲנָשִׁ֔ים טֹבִ֥ים לָ֖נוּ מְאֹ֑ד וְלֹ֤א הָכְלַ֨מְנוּ֙ וְלֹֽא־פָקַ֣דְנוּ מְא֔וּמָה כָּל־יְמֵי֙ הִתְהַלַּ֣כְנוּ אִתָּ֔ם בִּֽהְיֹותֵ֖נוּ בַּשָּׂדֶֽה׃ "
+  },
+  "1SA 25:16": {
+   "KJV": "They were a wall unto us both by night and day, all the while we were with them keeping the sheep.",
+   "BHSA": "חֹומָה֙ הָי֣וּ עָלֵ֔ינוּ גַּם־לַ֖יְלָה גַּם־יֹומָ֑ם כָּל־יְמֵ֛י הֱיֹותֵ֥נוּ עִמָּ֖ם רֹעִ֥ים הַצֹּֽאן׃ "
+  },
+  "1SA 25:17": {
+   "KJV": "Now therefore know and consider what thou wilt do; for evil is determined against our master, and against all his household: for he is such a son of Belial, that a man cannot speak to him.",
+   "BHSA": "וְעַתָּ֗ה דְּעִ֤י וּרְאִי֙ מַֽה־תַּעֲשִׂ֔י כִּֽי־כָלְתָ֧ה הָרָעָ֛ה אֶל־אֲדֹנֵ֖ינוּ וְעַ֣ל כָּל־בֵּיתֹ֑ו וְהוּא֙ בֶּן־בְּלִיַּ֔עַל מִדַּבֵּ֖ר אֵלָֽיו׃ "
+  },
+  "1SA 25:18": {
+   "KJV": "Then Abigail made haste, and took two hundred loaves, and two bottles of wine, and five sheep ready dressed, and five measures of parched corn, and an hundred clusters of raisins, and two hundred cakes of figs, and laid them on asses.",
+   "BHSA": "וַתְּמַהֵ֣ר אבוגיל וַתִּקַּח֩ מָאתַ֨יִם לֶ֜חֶם וּשְׁנַ֣יִם נִבְלֵי־יַ֗יִן וְחָמֵ֨שׁ צֹ֤אן עשׂוות וְחָמֵ֤שׁ סְאִים֙ קָלִ֔י וּמֵאָ֥ה צִמֻּקִ֖ים וּמָאתַ֣יִם דְּבֵלִ֑ים וַתָּ֖שֶׂם עַל־הַחֲמֹרִֽים׃ "
+  },
+  "1SA 25:19": {
+   "KJV": "And she said unto her servants, Go on before me; behold, I come after you. But she told not her husband Nabal.",
+   "BHSA": "וַתֹּ֤אמֶר לִנְעָרֶ֨יהָ֙ עִבְר֣וּ לְפָנַ֔י הִנְנִ֖י אַחֲרֵיכֶ֣ם בָּאָ֑ה וּלְאִישָׁ֥הּ נָבָ֖ל לֹ֥א הִגִּֽידָה׃ "
+  },
+  "1SA 25:20": {
+   "KJV": "And it was so, as she rode on the ass, that she came down by the covert on the hill, and, behold, David and his men came down against her; and she met them.",
+   "BHSA": "וְהָיָ֞ה הִ֣יא׀ רֹכֶ֣בֶת עַֽל־הַחֲמֹ֗ור וְיֹרֶ֨דֶת֙ בְּסֵ֣תֶר הָהָ֔ר וְהִנֵּ֤ה דָוִד֙ וַאֲנָשָׁ֔יו יֹרְדִ֖ים לִקְרָאתָ֑הּ וַתִּפְגֹּ֖שׁ אֹתָֽם׃ "
+  },
+  "1SA 25:21": {
+   "KJV": "Now David had said, Surely in vain have I kept all that this fellow hath in the wilderness, so that nothing was missed of all that pertained unto him: and he hath requited me evil for good.",
+   "BHSA": "וְדָוִ֣ד אָמַ֗ר אַךְ֩ לַשֶּׁ֨קֶר שָׁמַ֜רְתִּי אֶֽת־כָּל־אֲשֶׁ֤ר לָזֶה֙ בַּמִּדְבָּ֔ר וְלֹא־נִפְקַ֥ד מִכָּל־אֲשֶׁר־לֹ֖ו מְא֑וּמָה וַיָּֽשֶׁב־לִ֥י רָעָ֖ה תַּ֥חַת טֹובָֽה׃ "
+  },
+  "1SA 25:22": {
+   "KJV": "So and more also do God unto the enemies of David, if I leave of all that pertain to him by the morning light any that pisseth against the wall.",
+   "BHSA": "כֹּה־יַעֲשֶׂ֧ה אֱלֹהִ֛ים לְאֹיְבֵ֥י דָוִ֖ד וְכֹ֣ה יֹסִ֑יף אִם־אַשְׁאִ֧יר מִכָּל־אֲשֶׁר־לֹ֛ו עַד־הַבֹּ֖קֶר מַשְׁתִּ֥ין בְּקִֽיר׃ "
+  },
+  "1SA 25:23": {
+   "KJV": "And when Abigail saw David, she hasted, and lighted off the ass, and fell before David on her face, and bowed herself to the ground,",
+   "BHSA": "וַתֵּ֤רֶא אֲבִיגַ֨יִל֙ אֶת־דָּוִ֔ד וַתְּמַהֵ֕ר וַתֵּ֖רֶד מֵעַ֣ל הַחֲמֹ֑ור וַתִּפֹּ֞ל לְאַפֵּ֤י דָוִד֙ עַל־פָּנֶ֔יהָ וַתִּשְׁתַּ֖חוּ אָֽרֶץ׃ "
+  },
+  "1SA 25:24": {
+   "KJV": "And fell at his feet, and said, Upon me, my lord, upon me let this iniquity be: and let thine handmaid, I pray thee, speak in thine audience, and hear the words of thine handmaid.",
+   "BHSA": "וַתִּפֹּל֙ עַל־רַגְלָ֔יו וַתֹּ֕אמֶר בִּי־אֲנִ֥י אֲדֹנִ֖י הֶֽעָוֹ֑ן וּֽתְדַבֶּר־נָ֤א אֲמָֽתְךָ֙ בְּאָזְנֶ֔יךָ וּשְׁמַ֕ע אֵ֖ת דִּבְרֵ֥י אֲמָתֶֽךָ׃ "
+  },
+  "1SA 25:25": {
+   "KJV": "Let not my lord, I pray thee, regard this man of Belial, even Nabal: for as his name is, so is he; Nabal is his name, and folly is with him: but I thine handmaid saw not the young men of my lord, whom thou didst send.",
+   "BHSA": "אַל־נָ֣א יָשִׂ֣ים אֲדֹנִ֣י׀ אֶת־לִבֹּ֡ו אֶל־אִישׁ֩ הַבְּלִיַּ֨עַל הַזֶּ֜ה עַל־נָבָ֗ל כִּ֤י כִשְׁמֹו֙ כֶּן־ה֔וּא נָבָ֣ל שְׁמֹ֔ו וּנְבָלָ֖ה עִמֹּ֑ו וַֽאֲנִי֙ אֲמָ֣תְךָ֔ לֹ֥א רָאִ֛יתִי אֶת־נַעֲרֵ֥י אֲדֹנִ֖י אֲשֶׁ֥ר שָׁלָֽחְתָּ׃ "
+  },
+  "1SA 25:26": {
+   "KJV": "Now therefore, my lord, as the LORD liveth, and as thy soul liveth, seeing the LORD hath withholden thee from coming to shed blood, and from avenging thyself with thine own hand, now let thine enemies, and they that seek evil to my lord, be as Nabal.",
+   "BHSA": "וְעַתָּ֣ה אֲדֹנִ֗י חַי־יְהוָ֤ה וְחֵֽי־נַפְשְׁךָ֙ אֲשֶׁ֨ר מְנָעֲךָ֤ יְהוָה֙ מִבֹּ֣וא בְדָמִ֔ים וְהֹושֵׁ֥עַ יָדְךָ֖ לָ֑ךְ וְעַתָּ֗ה יִֽהְי֤וּ כְנָבָל֙ אֹיְבֶ֔יךָ וְהַֽמְבַקְשִׁ֥ים אֶל־אֲדֹנִ֖י רָעָֽה׃ "
+  },
+  "1SA 25:27": {
+   "KJV": "And now this blessing which thine handmaid hath brought unto my lord, let it even be given unto the young men that follow my lord.",
+   "BHSA": "וְעַתָּה֙ הַבְּרָכָ֣ה הַזֹּ֔את אֲשֶׁר־הֵבִ֥יא שִׁפְחָתְךָ֖ לַֽאדֹנִ֑י וְנִתְּנָה֙ לַנְּעָרִ֔ים הַמִּֽתְהַלְּכִ֖ים בְּרַגְלֵ֥י אֲדֹנִֽי׃ "
+  },
+  "1SA 25:28": {
+   "KJV": "I pray thee, forgive the trespass of thine handmaid: for the LORD will certainly make my lord a sure house; because my lord fighteth the battles of the LORD, and evil hath not been found in thee all thy days.",
+   "BHSA": "שָׂ֥א נָ֖א לְפֶ֣שַׁע אֲמָתֶ֑ךָ כִּ֣י עָשֹֽׂה־יַעֲשֶׂה֩ יְהוָ֨ה לַֽאדֹנִ֜י בַּ֣יִת נֶאֱמָ֗ן כִּי־מִלְחֲמֹ֤ות יְהוָה֙ אֲדֹנִ֣י נִלְחָ֔ם וְרָעָ֛ה לֹא־תִמָּצֵ֥א בְךָ֖ מִיָּמֶֽיךָ׃ "
+  },
+  "1SA 25:29": {
+   "KJV": "Yet a man is risen to pursue thee, and to seek thy soul: but the soul of my lord shall be bound in the bundle of life with the LORD thy God; and the souls of thine enemies, them shall he sling out, as out of the middle of a sling.",
+   "BHSA": "וַיָּ֤קָם אָדָם֙ לִרְדָפְךָ֔ וּלְבַקֵּ֖שׁ אֶת־נַפְשֶׁ֑ךָ וְֽהָיְתָה֩ נֶ֨פֶשׁ אֲדֹנִ֜י צְרוּרָ֣ה׀ בִּצְרֹ֣ור הַחַיִּ֗ים אֵ֚ת יְהוָ֣ה אֱלֹהֶ֔יךָ וְאֵ֨ת נֶ֤פֶשׁ אֹיְבֶ֨יךָ֙ יְקַלְּעֶ֔נָּה בְּתֹ֖וךְ כַּ֥ף הַקָּֽלַע׃ "
+  },
+  "1SA 25:30": {
+   "KJV": "And it shall come to pass, when the LORD shall have done to my lord according to all the good that he hath spoken concerning thee, and shall have appointed thee ruler over Israel;",
+   "BHSA": "וְהָיָ֗ה כִּֽי־יַעֲשֶׂ֤ה יְהוָה֙ לַֽאדֹנִ֔י כְּכֹ֛ל אֲשֶׁר־דִּבֶּ֥ר אֶת־הַטֹּובָ֖ה עָלֶ֑יךָ וְצִוְּךָ֥ לְנָגִ֖יד עַל־יִשְׂרָאֵֽל׃ "
+  },
+  "1SA 25:31": {
+   "KJV": "That this shall be no grief unto thee, nor offence of heart unto my lord, either that thou hast shed blood causeless, or that my lord hath avenged himself: but when the LORD shall have dealt well with my lord, then remember thine handmaid.",
+   "BHSA": "וְלֹ֣א תִהְיֶ֣ה זֹ֣את׀ לְךָ֡ לְפוּקָה֩ וּלְמִכְשֹׁ֨ול לֵ֜ב לַאדֹנִ֗י וְלִשְׁפָּךְ־דָּם֙ חִנָּ֔ם וּלְהֹושִׁ֥יעַ אֲדֹנִ֖י לֹ֑ו וְהֵיטִ֤ב יְהוָה֙ לַֽאדֹנִ֔י וְזָכַרְתָּ֖ אֶת־אֲמָתֶֽךָ׃ ס "
+  },
+  "1SA 25:32": {
+   "KJV": "And David said to Abigail, Blessed be the LORD God of Israel, which sent thee this day to meet me:",
+   "BHSA": "וַיֹּ֥אמֶר דָּוִ֖ד לַאֲבִיגַ֑ל בָּר֤וּךְ יְהוָה֙ אֱלֹהֵ֣י יִשְׂרָאֵ֔ל אֲשֶׁ֧ר שְׁלָחֵ֛ךְ הַיֹּ֥ום הַזֶּ֖ה לִקְרָאתִֽי׃ "
+  },
+  "1SA 25:33": {
+   "KJV": "And blessed be thy advice, and blessed be thou, which hast kept me this day from coming to shed blood, and from avenging myself with mine own hand.",
+   "BHSA": "וּבָר֥וּךְ טַעְמֵ֖ךְ וּבְרוּכָ֣ה אָ֑תְּ אֲשֶׁ֨ר כְּלִתִ֜נִי הַיֹּ֤ום הַזֶּה֙ מִבֹּ֣וא בְדָמִ֔ים וְהֹשֵׁ֥עַ יָדִ֖י לִֽי׃ "
+  },
+  "1SA 25:34": {
+   "KJV": "For in very deed, as the LORD God of Israel liveth, which hath kept me back from hurting thee, except thou hadst hasted and come to meet me, surely there had not been left unto Nabal by the morning light any that pisseth against the wall.",
+   "BHSA": "וְאוּלָ֗ם חַי־יְהוָה֙ אֱלֹהֵ֣י יִשְׂרָאֵ֔ל אֲשֶׁ֣ר מְנָעַ֔נִי מֵהָרַ֖ע אֹתָ֑ךְ כִּ֣י׀ לוּלֵ֣י מִהַ֗רְתְּ ותבאתי לִקְרָאתִ֔י כִּ֣י אִם־נֹותַ֧ר לְנָבָ֛ל עַד־אֹ֥ור הַבֹּ֖קֶר מַשְׁתִּ֥ין בְּקִֽיר׃ "
+  },
+  "1SA 25:35": {
+   "KJV": "So David received of her hand that which she had brought him, and said unto her, Go up in peace to thine house; see, I have hearkened to thy voice, and have accepted thy person.",
+   "BHSA": "וַיִּקַּ֤ח דָּוִד֙ מִיָּדָ֔הּ אֵ֥ת אֲשֶׁר־הֵבִ֖יאָה לֹ֑ו וְלָ֣הּ אָמַ֗ר עֲלִ֤י לְשָׁלֹום֙ לְבֵיתֵ֔ךְ רְאִי֙ שָׁמַ֣עְתִּי בְקֹולֵ֔ךְ וָאֶשָּׂ֖א פָּנָֽיִךְ׃ "
+  },
+  "1SA 25:36": {
+   "KJV": "And Abigail came to Nabal; and, behold, he held a feast in his house, like the feast of a king; and Nabal's heart was merry within him, for he was very drunken: wherefore she told him nothing, less or more, until the morning light.",
+   "BHSA": "וַתָּבֹ֣א אֲבִיגַ֣יִל׀ אֶל־נָבָ֡ל וְהִנֵּה־לֹו֩ מִשְׁתֶּ֨ה בְּבֵיתֹ֜ו כְּמִשְׁתֵּ֣ה הַמֶּ֗לֶךְ וְלֵ֤ב נָבָל֙ טֹ֣וב עָלָ֔יו וְה֥וּא שִׁכֹּ֖ר עַד־מְאֹ֑ד וְלֹֽא־הִגִּ֣ידָה לֹּ֗ו דָּבָ֥ר קָטֹ֛ן וְגָדֹ֖ול עַד־אֹ֥ור הַבֹּֽקֶר׃ "
+  },
+  "1SA 25:37": {
+   "KJV": "But it came to pass in the morning, when the wine was gone out of Nabal, and his wife had told him these things, that his heart died within him, and he became as a stone.",
+   "BHSA": "וַיְהִ֣י בַבֹּ֗קֶר בְּצֵ֤את הַיַּ֨יִן֙ מִנָּבָ֔ל וַתַּגֶּד־לֹ֣ו אִשְׁתֹּ֔ו אֶת־הַדְּבָרִ֖ים הָאֵ֑לֶּה וַיָּ֤מָת לִבֹּו֙ בְּקִרְבֹּ֔ו וְה֖וּא הָיָ֥ה לְאָֽבֶן׃ "
+  },
+  "1SA 25:38": {
+   "KJV": "And it came to pass about ten days after, that the LORD smote Nabal, that he died.",
+   "BHSA": "וַיְהִ֖י כַּעֲשֶׂ֣רֶת הַיָּמִ֑ים וַיִּגֹּ֧ף יְהוָ֛ה אֶת־נָבָ֖ל וַיָּמֹֽת׃ "
+  },
+  "1SA 25:39": {
+   "KJV": "And when David heard that Nabal was dead, he said, Blessed be the LORD, that hath pleaded the cause of my reproach from the hand of Nabal, and hath kept his servant from evil: for the LORD hath returned the wickedness of Nabal upon his own head. And David sent and communed with Abigail, to take her to him to wife.",
+   "BHSA": "וַיִּשְׁמַ֣ע דָּוִד֮ כִּ֣י מֵ֣ת נָבָל֒ וַיֹּ֡אמֶר בָּר֣וּךְ יְהוָ֡ה אֲשֶׁ֣ר רָב֩ אֶת־רִ֨יב חֶרְפָּתִ֜י מִיַּ֣ד נָבָ֗ל וְאֶת־עַבְדֹּו֙ חָשַׂ֣ךְ מֵֽרָעָ֔ה וְאֵת֙ רָעַ֣ת נָבָ֔ל הֵשִׁ֥יב יְהוָ֖ה בְּרֹאשֹׁ֑ו וַיִּשְׁלַ֤ח דָּוִד֙ וַיְדַבֵּ֣ר בַּאֲבִיגַ֔יִל לְקַחְתָּ֥הּ לֹ֖ו לְאִשָּֽׁה׃ "
+  },
+  "1SA 25:40": {
+   "KJV": "And when the servants of David were come to Abigail to Carmel, they spake unto her, saying, David sent us unto thee, to take thee to him to wife.",
+   "BHSA": "וַיָּבֹ֜אוּ עַבְדֵ֥י דָוִ֛ד אֶל־אֲבִיגַ֖יִל הַכַּרְמֶ֑לָה וַיְדַבְּר֤וּ אֵלֶ֨יהָ֙ לֵאמֹ֔ר דָּוִד֙ שְׁלָחָ֣נוּ אֵלַ֔יִךְ לְקַחְתֵּ֥ךְ לֹ֖ו לְאִשָּֽׁה׃ "
+  },
+  "1SA 25:41": {
+   "KJV": "And she arose, and bowed herself on her face to the earth, and said, Behold, let thine handmaid be a servant to wash the feet of the servants of my lord.",
+   "BHSA": "וַתָּ֕קָם וַתִּשְׁתַּ֥חוּ אַפַּ֖יִם אָ֑רְצָה וַתֹּ֗אמֶר הִנֵּ֤ה אֲמָֽתְךָ֙ לְשִׁפְחָ֔ה לִרְחֹ֕ץ רַגְלֵ֖י עַבְדֵ֥י אֲדֹנִֽי׃ "
+  },
+  "1SA 25:42": {
+   "KJV": "And Abigail hasted, and arose and rode upon an ass, with five damsels of hers that went after her; and she went after the messengers of David, and became his wife.",
+   "BHSA": "וַתְּמַהֵ֞ר וַתָּ֣קָם אֲבִיגַ֗יִל וַתִּרְכַּב֙ עַֽל־הַחֲמֹ֔ור וְחָמֵשׁ֙ נַעֲרֹתֶ֔יהָ הַהֹלְכֹ֖ות לְרַגְלָ֑הּ וַתֵּ֗לֶךְ אַֽחֲרֵי֙ מַלְאֲכֵ֣י דָוִ֔ד וַתְּהִי־לֹ֖ו לְאִשָּֽׁה׃ "
+  },
+  "1SA 25:43": {
+   "KJV": "David also took Ahinoam of Jezreel; and they were also both of them his wives.",
+   "BHSA": "וְאֶת־אֲחִינֹ֛עַם לָקַ֥ח דָּוִ֖ד מִֽיִּזְרְעֶ֑אל וַתִּהְיֶ֛יןָ גַּֽם־שְׁתֵּיהֶ֥ן לֹ֖ו לְנָשִֽׁים׃ ס "
+  },
+  "1SA 25:44": {
+   "KJV": "But Saul had given Michal his daughter, David's wife, to Phalti the son of Laish, which was of Gallim.",
+   "BHSA": "וְשָׁא֗וּל נָתַ֛ן אֶת־מִיכַ֥ל בִּתֹּ֖ו אֵ֣שֶׁת דָּוִ֑ד לְפַלְטִ֥י בֶן־לַ֖יִשׁ אֲשֶׁ֥ר מִגַּלִּֽים׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abigail",
+   "name": "Abigail",
+   "distinguisher": "the Carmelitess (1SA 25:3)",
+   "sex": "female"
+  },
+  {
+   "slug": "ahinoam-2",
+   "name": "Ahinoam",
+   "distinguisher": "of Jezreel.  Same as Ahinoam? (see 2SA 12:8)",
+   "sex": "female"
+  },
+  {
+   "slug": "caleb",
+   "name": "Caleb",
+   "distinguisher": "1 of the 12 spies- from Judah (NUM 13:6)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "jesse",
+   "name": "Jesse",
+   "distinguisher": "father of David (RUT 4:17)",
+   "sex": "male"
+  },
+  {
+   "slug": "laish",
+   "name": "Laish",
+   "distinguisher": "from Gallim (1SA 25:44)",
+   "sex": "male"
+  },
+  {
+   "slug": "michal",
+   "name": "Michal",
+   "distinguisher": "daughter of Saul (1SA 14:49) and barren (2SA 6:23) wife of King David (1SA 18:27)",
+   "sex": "female"
+  },
+  {
+   "slug": "nabal",
+   "name": "Nabal",
+   "distinguisher": "the rich man of Maon, husband of Abigail (1SA 25:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "palti-2",
+   "name": "Palti",
+   "distinguisher": "Michal's new husband (1SA 25:44)",
+   "sex": "male"
+  },
+  {
+   "slug": "samuel-2",
+   "name": "Samuel",
+   "distinguisher": "son of Elkanah and Hannah (1SA 1:20)",
+   "sex": "male"
+  },
+  {
+   "slug": "saul",
+   "name": "Saul",
+   "distinguisher": "son of Kish (1SA 9:2), King of Israel (1SA 11:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 101579,
+   "row": "nabal husband-of abigail",
+   "verse": "1SA 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101580,
+   "row": "nabal descendant-of caleb",
+   "verse": "1SA 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105129,
+   "row": "abigail wife-of nabal",
+   "verse": "1SA 25:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101581,
+   "row": "nabal killed-by yhvh",
+   "verse": "1SA 25:38",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105131,
+   "row": "abigail wife-of david",
+   "verse": "1SA 25:42",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97302,
+   "row": "ahinoam-2 wife-of david",
+   "verse": "1SA 25:43",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100865,
+   "row": "laish father-of palti-2",
+   "verse": "1SA 25:44",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101382,
+   "row": "michal wife-of palti-2",
+   "verse": "1SA 25:44",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101875,
+   "row": "palti-2 husband-of michal",
+   "verse": "1SA 25:44",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101876,
+   "row": "palti-2 son-of laish",
+   "verse": "1SA 25:44",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102311,
+   "row": "saul father-in-law-of david",
+   "verse": "1SA 25:44",
+   "source": "read from Scripture by gpt-5, asked 2026-09-22"
+  },
+  {
+   "id": 102312,
+   "row": "saul father-of michal",
+   "verse": "1SA 25:44",
+   "source": "read from Scripture by gpt-5, asked 2026-09-22"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "caleb servant-of yhvh (NUM 14:24)",
+  "david son-of jesse (RUT 4:22)",
+  "david servant-of saul (1SA 16:21)",
+  "david servant-of yhvh (2SA 3:18)",
+  "jesse father-of david (RUT 4:22)",
+  "michal daughter-of saul (1SA 14:49)",
+  "michal wife-of david (1SA 18:27)",
+  "samuel-2 servant-of yhvh (1SA 2:18)"
+ ]
+}

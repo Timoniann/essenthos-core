@@ -1,0 +1,252 @@
+[
+ {
+  "id": 1,
+  "verdict": "right",
+  "why": "2CH 21:2: 'he had brethren (אחים), the sons of Jehoshaphat ... Shephatiah'. Only killer-of is recorded between them."
+ },
+ {
+  "id": 2,
+  "verdict": "wrong",
+  "why": "1KI 4:13 'Jair ben-Manasseh' uses ben for a descendant (Jair is of Segub/Hezron, 1CH 2:21-22); the site already records jair descendant-of manasseh."
+ },
+ {
+  "id": 3,
+  "verdict": "right",
+  "why": "NEH 6:18: 'Jehohanan his son (בנו)', i.e. Tobiah's son, and nothing is recorded between them."
+ },
+ {
+  "id": 4,
+  "verdict": "right",
+  "why": "LUK 1:5 makes Zacharias a priest ἐξ ἐφημερίας Ἀβιά, 'of the course of Abijah', the priestly division named after Abijah. He is not a priest serving Abijah."
+ },
+ {
+  "id": 5,
+  "verdict": "right",
+  "why": "JER 37:15 says only 'the house of Jonathan the scribe (הספר)'. It does not say whose scribe he was, and does not name the king's."
+ },
+ {
+  "id": 6,
+  "verdict": "unclear",
+  "why": "JOB 32:2 gives only the gentilic 'the Buzite' (הבוזי), not a genealogy, and it may describe Elihu rather than Barachel. Which Buz is meant (Nahor's son or the Gadite of 1CH 5:14) is not stated."
+ },
+ {
+  "id": 7,
+  "verdict": "right",
+  "why": "1KI 16:13 speaks of Elah's sins provoking YHVH. Nothing makes Elah king of YHVH."
+ },
+ {
+  "id": 8,
+  "verdict": "wrong",
+  "why": "MAT 13:55 names James, Joseph (Ἰωσήφ), Simon and Judas together as οἱ ἀδελφοὶ αὐτοῦ, Jesus' brothers, so Joseph and Simon are brothers to each other."
+ },
+ {
+  "id": 9,
+  "verdict": "right",
+  "why": "JOS 17:2 lists the sons of Abiezer (Iezer) among 'the male children of Manasseh son of Joseph'. Only iezer son-of gilead is recorded, and nothing directly to Manasseh."
+ },
+ {
+  "id": 10,
+  "verdict": "wrong",
+  "why": "1CH 11:11 'Jashobeam ben-Hachmoni' gives a clan name (2SA 23:8 'the Tachmonite'; 1CH 27:2 calls him son of Zabdiel). The site already records hachmoni ancestor-of joshebbasshebeth."
+ },
+ {
+  "id": 11,
+  "verdict": "right",
+  "why": "1KI 2:7: David to Solomon, 'Absalom thy brother (אבשלום אחיך)'. No sibling row between them is recorded."
+ },
+ {
+  "id": 12,
+  "verdict": "right",
+  "why": "1CH 11:46: 'Eliel the Mahavite' carries his own gentilic. 'Sons of Elnaam' (בני אלנעם) covers the next pair, Jeribai and Joshaviah."
+ },
+ {
+  "id": 13,
+  "verdict": "wrong",
+  "why": "2SA 17:25: Ithra 'went in to' (בא אל) Abigail and fathered Amasa by her (cf. 1CH 2:17), which supports the union recorded."
+ },
+ {
+  "id": 14,
+  "verdict": "right",
+  "why": "GEN 34:25-26 says Simeon and Levi killed Hamor and Shechem (הרגו). Jacob did not, and he rebukes them in 34:30."
+ },
+ {
+  "id": 15,
+  "verdict": "right",
+  "why": "1KI 22:50 buries Jehoshaphat 'in the city of David his father (דוד אביו)', David being his forefather. No row between them exists."
+ },
+ {
+  "id": 16,
+  "verdict": "right",
+  "why": "2KI 14:3: 'yet not like David his father (כדוד אביו)' makes David Amaziah's ancestor. It is not recorded."
+ },
+ {
+  "id": 17,
+  "verdict": "unclear",
+  "why": "2CH 11:18 has no 'and' before Abihail (MT מחלת בן־ירימות ... אביהיל בת־אליאב), and 11:19 'she bare him' is singular. So Abihail may be Mahalath's mother rather than a second wife; KJV supplies 'and'."
+ },
+ {
+  "id": 18,
+  "verdict": "right",
+  "why": "2CH 35:9: Nethanel, Conaniah's brother, is one of the chiefs of the Levites under Josiah, which is nethanel-9. He is not the scribe of David's time (1CH 24:6)."
+ },
+ {
+  "id": 19,
+  "verdict": "right",
+  "why": "JER 29:3: the sender is 'Zedekiah king of Judah', i.e. Mattaniah (2KI 24:17). He is not the prophet Zedekiah son of Chenaanah."
+ },
+ {
+  "id": 20,
+  "verdict": "unclear",
+  "why": "JER 38:6 'Malchiah ben-hammelech' may be a title (royal official) or 'the king's son', and if a son it does not say of which king. The text does not establish him as Zedekiah's son."
+ },
+ {
+  "id": 21,
+  "verdict": "right",
+  "why": "2KI 12:18 names 'Jehoshaphat and Jehoram and Ahaziah, his fathers (אבתיו)'. Only the father-son links in between are recorded, not this pair."
+ },
+ {
+  "id": 22,
+  "verdict": "right",
+  "why": "1CH 12:3 names 'sons of Azmaveth' among men joining David at Ziklag. azmaveth-2 (1CH 8:36) is five generations after Jonathan and cannot be their father; the verse's Azmaveth is another man (azmaveth-6)."
+ },
+ {
+  "id": 23,
+  "verdict": "right",
+  "why": "'Ahaz ... king of Judah' (מלך יהודה) means the kingdom. Ahaz was not king over the person Judah son of Jacob."
+ },
+ {
+  "id": 24,
+  "verdict": "wrong",
+  "why": "Kishi son of Abdi is a Merarite by 1CH 6:44 ('sons of Merari ... Kishi son of Abdi'), and 2CH 29:12 likewise has 'of the sons of Merari, Kish son of Abdi'. The descent is true."
+ },
+ {
+  "id": 25,
+  "verdict": "right",
+  "why": "1CH 27:25 is David's treasurer Azmaveth son of Adiel. adiel-2 is a post-exilic priest's ancestor (1CH 9:12); adiel-3 is the treasurer's father."
+ },
+ {
+  "id": 26,
+  "verdict": "right",
+  "why": "2KI 12:18 calls Jehoram one of Jehoash's 'fathers' (אבתיו). Only son-of links via Ahaziah are recorded, nothing directly between them."
+ },
+ {
+  "id": 27,
+  "verdict": "right",
+  "why": "1CH 27:2 names 'Jashobeam ben-Zabdiel', the first-month commander, which is exactly the jashobeam-2 record. Josheb-basshebeth is called the Tachmonite/Hachmonite elsewhere."
+ },
+ {
+  "id": 28,
+  "verdict": "right",
+  "why": "2CH 21:2 lists Michael among Jehoram's brothers (ולו אחים בני יהושפט). Only killer-of is recorded."
+ },
+ {
+  "id": 29,
+  "verdict": "right",
+  "why": "1CH 27:25 is Jehonathan son of an Uzziah in David's time. The uzziah record is Uriel's son in the ancient Kohathite line (1CH 6:24), generations earlier; the verse's man is uzziah-4."
+ },
+ {
+  "id": 30,
+  "verdict": "wrong",
+  "why": "MAT 13:55 names James and Joseph together among Jesus' brothers (οἱ ἀδελφοὶ αὐτοῦ), so they are brothers."
+ },
+ {
+  "id": 31,
+  "verdict": "right",
+  "why": "2SA 23:37: the armour-bearer of Joab is Nahari the Beerothite (qere נשׂא, and the parallel 1CH 11:39 is singular). Zelek the Ammonite is only listed among the thirty."
+ },
+ {
+  "id": 32,
+  "verdict": "wrong",
+  "why": "EXO 31:6 'Aholiab ben-Ahisamach of the tribe of Dan (למטה־דן)'. Tribe passes from father to son, so Ahisamach is a Danite."
+ },
+ {
+  "id": 33,
+  "verdict": "right",
+  "why": "2CH 29:12: 'Joel son of Azariah, of the sons of the Kohathites (מן־בני הקהתי)'. Not recorded."
+ },
+ {
+  "id": 34,
+  "verdict": "right",
+  "why": "2KI 8:18 'the daughter of Ahab was his wife' (בת־אחאב), and 8:26 names Jehoram's wife, mother of Ahaziah, as Athaliah. Daughter-of Ahab is not recorded."
+ },
+ {
+  "id": 35,
+  "verdict": "right",
+  "why": "MAT 10:32-33: Jesus speaks of 'my Father which is in heaven' (τοῦ Πατρός μου τοῦ ἐν τοῖς οὐρανοῖς). Only high-priest-of is recorded with YHVH."
+ },
+ {
+  "id": 36,
+  "verdict": "right",
+  "why": "NEH 11:4-5 lists Maaseiah son of Baruch ... 'son of the Shilonite' under 'of the children of Judah' (מבני יהודה). Not recorded."
+ },
+ {
+  "id": 37,
+  "verdict": "unclear",
+  "why": "2SA 4:2 says 'of the children of Benjamin' but explains it at once: 'for Beeroth also was reckoned to Benjamin', a territorial reckoning of a Gibeonite town. That leaves descent from Benjamin open."
+ },
+ {
+  "id": 38,
+  "verdict": "wrong",
+  "why": "MAT 13:55 lists Simon and Judas together as Jesus' brothers (οἱ ἀδελφοὶ αὐτοῦ), so they are brothers to each other."
+ },
+ {
+  "id": 39,
+  "verdict": "right",
+  "why": "2KI 24:17: Mattaniah is Jehoiachin's 'father's brother' (דדו), and Jehoiachin's father is Eliakim/Jehoiakim (24:6). Both are Josiah's sons, and nothing is recorded between them."
+ },
+ {
+  "id": 40,
+  "verdict": "right",
+  "why": "2CH 21:2: Jehiel is among Jehoram's brothers, the sons of Jehoshaphat. Only killer-of is recorded."
+ },
+ {
+  "id": 41,
+  "verdict": "right",
+  "why": "1KI 15:11: 'as did David his father (כדוד אביו)'. Asa's descent from David is not recorded."
+ },
+ {
+  "id": 42,
+  "verdict": "right",
+  "why": "LUK 8:28 addresses him as Ἰησοῦ Υἱὲ τοῦ Θεοῦ τοῦ Ὑψίστου, 'Son of God most high'. No son-of row to YHVH exists."
+ },
+ {
+  "id": 43,
+  "verdict": "right",
+  "why": "2CH 21:12: 'the LORD God of David thy father (דויד אביך)', said to Jehoram. Not recorded."
+ },
+ {
+  "id": 44,
+  "verdict": "right",
+  "why": "2SA 11:16-17: Joab placed Uriah where the valiant men were, but 'the men of the city' fought and Uriah died. The chapter never says Joab killed him; 2SA 12:9 lays it on David by the sword of the Ammonites."
+ },
+ {
+  "id": 45,
+  "verdict": "right",
+  "why": "2CH 21:2 lists Azariahu (עזריהו) among Jehoram's brothers. Only killer-of is recorded."
+ },
+ {
+  "id": 46,
+  "verdict": "right",
+  "why": "The Adiel of 1CH 27:25, father of David's treasurer, is not adiel-2, the post-exilic priest's ancestor of 1CH 9:12. The chapter does not support this pairing."
+ },
+ {
+  "id": 47,
+  "verdict": "right",
+  "why": "2SA 23:8 says the Tachmonite slew 800 men at one time. Nothing makes him killer of YHVH."
+ },
+ {
+  "id": 48,
+  "verdict": "right",
+  "why": "1CH 12:3's Azmaveth is the father of two Benjamites at Ziklag. azmaveth-2 (son of Jehoadda, 1CH 8:36) is five generations after Jonathan and cannot be him."
+ },
+ {
+  "id": 49,
+  "verdict": "right",
+  "why": "2KI 24:8 says Jehoiachin reigned in Jerusalem. 'Judah' there is the kingdom, not the patriarch."
+ },
+ {
+  "id": 50,
+  "verdict": "right",
+  "why": "LUK 1:35: the child 'shall be called the Son of God (Υἱὸς Θεοῦ)'. Not recorded."
+ }
+]

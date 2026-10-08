@@ -1,0 +1,382 @@
+{
+ "chapter": "2KI 22",
+ "text": {
+  "2KI 22:1": {
+   "KJV": "Josiah was eight years old when he began to reign, and he reigned thirty and one years in Jerusalem. And his mother's name was Jedidah, the daughter of Adaiah of Boscath.",
+   "BHSA": "בֶּן־שְׁמֹנֶ֤ה שָׁנָה֙ יֹאשִׁיָּ֣הוּ בְמָלְכֹ֔ו וּשְׁלֹשִׁ֤ים וְאַחַת֙ שָׁנָ֔ה מָלַ֖ךְ בִּירוּשָׁלִָ֑ם וְשֵׁ֣ם אִמֹּ֔ו יְדִידָ֥ה בַת־עֲדָ֖יָה מִבָּצְקַֽת׃ "
+  },
+  "2KI 22:2": {
+   "KJV": "And he did that which was right in the sight of the LORD, and walked in all the way of David his father, and turned not aside to the right hand or to the left.",
+   "BHSA": "וַיַּ֥עַשׂ הַיָּשָׁ֖ר בְּעֵינֵ֣י יְהוָ֑ה וַיֵּ֗לֶךְ בְּכָל־דֶּ֨רֶךְ֙ דָּוִ֣ד אָבִ֔יו וְלֹא־סָ֖ר יָמִ֥ין וּשְׂמֹֽאול׃ פ "
+  },
+  "2KI 22:3": {
+   "KJV": "And it came to pass in the eighteenth year of king Josiah, that the king sent Shaphan the son of Azaliah, the son of Meshullam, the scribe, to the house of the LORD, saying,",
+   "BHSA": "וַיְהִ֗י בִּשְׁמֹנֶ֤ה עֶשְׂרֵה֙ שָׁנָ֔ה לַמֶּ֖לֶךְ יֹאשִׁיָּ֑הוּ שָׁלַ֣ח הַ֠מֶּלֶךְ אֶת־שָׁפָ֨ן בֶּן־אֲצַלְיָ֤הוּ בֶן־מְשֻׁלָּם֙ הַסֹּפֵ֔ר בֵּ֥ית יְהוָ֖ה לֵאמֹֽר׃ "
+  },
+  "2KI 22:4": {
+   "KJV": "Go up to Hilkiah the high priest, that he may sum the silver which is brought into the house of the LORD, which the keepers of the door have gathered of the people:",
+   "BHSA": "עֲלֵ֗ה אֶל־חִלְקִיָּ֨הוּ֙ הַכֹּהֵ֣ן הַגָּדֹ֔ול וְיַתֵּ֣ם אֶת־הַכֶּ֔סֶף הַמּוּבָ֖א בֵּ֣ית יְהוָ֑ה אֲשֶׁ֥ר אָסְפ֛וּ שֹׁמְרֵ֥י הַסַּ֖ף מֵאֵ֥ת הָעָֽם׃ "
+  },
+  "2KI 22:5": {
+   "KJV": "And let them deliver it into the hand of the doers of the work, that have the oversight of the house of the LORD: and let them give it to the doers of the work which is in the house of the LORD, to repair the breaches of the house,",
+   "BHSA": "ויתנה עַל־יַד֙ עֹשֵׂ֣י הַמְּלָאכָ֔ה הַמֻּפְקָדִ֖ים בבית יְהוָ֑ה וְיִתְּנ֣וּ אֹתֹ֗ו לְעֹשֵׂ֤י הַמְּלָאכָה֙ אֲשֶׁר֙ בְּבֵ֣ית יְהוָ֔ה לְחַזֵּ֖ק בֶּ֥דֶק הַבָּֽיִת׃ "
+  },
+  "2KI 22:6": {
+   "KJV": "Unto carpenters, and builders, and masons, and to buy timber and hewn stone to repair the house.",
+   "BHSA": "לֶחָ֣רָשִׁ֔ים וְלַבֹּנִ֖ים וְלַגֹּֽדְרִ֑ים וְלִקְנֹ֤ות עֵצִים֙ וְאַבְנֵ֣י מַחְצֵ֔ב לְחַזֵּ֖ק אֶת־הַבָּֽיִת׃ "
+  },
+  "2KI 22:7": {
+   "KJV": "Howbeit there was no reckoning made with them of the money that was delivered into their hand, because they dealt faithfully.",
+   "BHSA": "אַ֚ךְ לֹא־יֵחָשֵׁ֣ב אִתָּ֔ם הַכֶּ֖סֶף הַנִּתָּ֣ן עַל־יָדָ֑ם כִּ֥י בֶאֱמוּנָ֖ה הֵ֥ם עֹשִֽׂים׃ "
+  },
+  "2KI 22:8": {
+   "KJV": "And Hilkiah the high priest said unto Shaphan the scribe, I have found the book of the law in the house of the LORD. And Hilkiah gave the book to Shaphan, and he read it.",
+   "BHSA": "וַ֠יֹּאמֶר חִלְקִיָּ֜הוּ הַכֹּהֵ֤ן הַגָּדֹול֙ עַל־שָׁפָ֣ן הַסֹּפֵ֔ר סֵ֧פֶר הַתֹּורָ֛ה מָצָ֖אתִי בְּבֵ֣ית יְהוָ֑ה וַיִּתֵּ֨ן חִלְקִיָּ֧ה אֶת־הַסֵּ֛פֶר אֶל־שָׁפָ֖ן וַיִּקְרָאֵֽהוּ׃ "
+  },
+  "2KI 22:9": {
+   "KJV": "And Shaphan the scribe came to the king, and brought the king word again, and said, Thy servants have gathered the money that was found in the house, and have delivered it into the hand of them that do the work, that have the oversight of the house of the LORD.",
+   "BHSA": "וַיָּבֹ֞א שָׁפָ֤ן הַסֹּפֵר֙ אֶל־הַמֶּ֔לֶךְ וַיָּ֥שֶׁב אֶת־הַמֶּ֖לֶךְ דָּבָ֑ר וַיֹּ֗אמֶר הִתִּ֤יכוּ עֲבָדֶ֨יךָ֙ אֶת־הַכֶּ֨סֶף֙ הַנִּמְצָ֣א בַבַּ֔יִת וַֽיִּתְּנֻ֗הוּ עַל־יַד֙ עֹשֵׂ֣י הַמְּלָאכָ֔ה הַמֻּפְקָדִ֖ים בֵּ֥ית יְהוָֽה׃ "
+  },
+  "2KI 22:10": {
+   "KJV": "And Shaphan the scribe shewed the king, saying, Hilkiah the priest hath delivered me a book. And Shaphan read it before the king.",
+   "BHSA": "וַיַּגֵּ֞ד שָׁפָ֤ן הַסֹּפֵר֙ לַמֶּ֣לֶךְ לֵאמֹ֔ר סֵ֚פֶר נָ֣תַן לִ֔י חִלְקִיָּ֖ה הַכֹּהֵ֑ן וַיִּקְרָאֵ֥הוּ שָׁפָ֖ן לִפְנֵ֥י הַמֶּֽלֶךְ׃ "
+  },
+  "2KI 22:11": {
+   "KJV": "And it came to pass, when the king had heard the words of the book of the law, that he rent his clothes.",
+   "BHSA": "וַֽיְהִי֙ כִּשְׁמֹ֣עַ הַמֶּ֔לֶךְ אֶת־דִּבְרֵ֖י סֵ֣פֶר הַתֹּורָ֑ה וַיִּקְרַ֖ע אֶת־בְּגָדָֽיו׃ "
+  },
+  "2KI 22:12": {
+   "KJV": "And the king commanded Hilkiah the priest, and Ahikam the son of Shaphan, and Achbor the son of Michaiah, and Shaphan the scribe, and Asahiah a servant of the king's, saying,",
+   "BHSA": "וַיְצַ֣ו הַמֶּ֡לֶךְ אֶת־חִלְקִיָּ֣ה הַכֹּהֵ֡ן וְאֶת־אֲחִיקָ֣ם בֶּן־שָׁ֠פָן וְאֶת־עַכְבֹּ֨ור בֶּן־מִיכָיָ֜ה וְאֵ֣ת׀ שָׁפָ֣ן הַסֹּפֵ֗ר וְאֵ֛ת עֲשָׂיָ֥ה עֶֽבֶד־הַמֶּ֖לֶךְ לֵאמֹֽר׃ "
+  },
+  "2KI 22:13": {
+   "KJV": "Go ye, enquire of the LORD for me, and for the people, and for all Judah, concerning the words of this book that is found: for great is the wrath of the LORD that is kindled against us, because our fathers have not hearkened unto the words of this book, to do according unto all that which is written concerning us.",
+   "BHSA": "לְכוּ֩ דִרְשׁ֨וּ אֶת־יְהוָ֜ה בַּעֲדִ֣י וּבְעַד־הָעָ֗ם וּבְעַד֙ כָּל־יְהוּדָ֔ה עַל־דִּבְרֵ֛י הַסֵּ֥פֶר הַנִּמְצָ֖א הַזֶּ֑ה כִּֽי־גְדֹולָ֞ה חֲמַ֣ת יְהוָ֗ה אֲשֶׁר־הִיא֙ נִצְּתָ֣ה בָ֔נוּ עַל֩ אֲשֶׁ֨ר לֹֽא־שָׁמְע֜וּ אֲבֹתֵ֗ינוּ עַל־דִּבְרֵי֙ הַסֵּ֣פֶר הַזֶּ֔ה לַעֲשֹׂ֖ות כְּכָל־הַכָּת֥וּב עָלֵֽינוּ׃ "
+  },
+  "2KI 22:14": {
+   "KJV": "So Hilkiah the priest, and Ahikam, and Achbor, and Shaphan, and Asahiah, went unto Huldah the prophetess, the wife of Shallum the son of Tikvah, the son of Harhas, keeper of the wardrobe; (now she dwelt in Jerusalem in the college;) and they communed with her.",
+   "BHSA": "וַיֵּ֣לֶךְ חִלְקִיָּ֣הוּ הַ֠כֹּהֵן וַאֲחִיקָ֨ם וְעַכְבֹּ֜ור וְשָׁפָ֣ן וַעֲשָׂיָ֗ה אֶל־חֻלְדָּ֨ה הַנְּבִיאָ֜ה אֵ֣שֶׁת׀ שַׁלֻּ֣ם בֶּן־תִּקְוָ֗ה בֶּן־חַרְחַס֙ שֹׁמֵ֣ר הַבְּגָדִ֔ים וְהִ֛יא יֹשֶׁ֥בֶת בִּירוּשָׁלִַ֖ם בַּמִּשְׁנֶ֑ה וַֽיְדַבְּר֖וּ אֵלֶֽיהָ׃ "
+  },
+  "2KI 22:15": {
+   "KJV": "And she said unto them, Thus saith the LORD God of Israel, Tell the man that sent you to me,",
+   "BHSA": "וַתֹּ֣אמֶר אֲלֵיהֶ֔ם כֹּֽה־אָמַ֥ר יְהוָ֖ה אֱלֹהֵ֣י יִשְׂרָאֵ֑ל אִמְר֣וּ לָאִ֔ישׁ אֲשֶׁר־שָׁלַ֥ח אֶתְכֶ֖ם אֵלָֽי׃ "
+  },
+  "2KI 22:16": {
+   "KJV": "Thus saith the LORD, Behold, I will bring evil upon this place, and upon the inhabitants thereof, even all the words of the book which the king of Judah hath read:",
+   "BHSA": "כֹּ֚ה אָמַ֣ר יְהוָ֔ה הִנְנִ֨י מֵבִ֥יא רָעָ֛ה אֶל־הַמָּקֹ֥ום הַזֶּ֖ה וְעַל־יֹֽשְׁבָ֑יו אֵ֚ת כָּל־דִּבְרֵ֣י הַסֵּ֔פֶר אֲשֶׁ֥ר קָרָ֖א מֶ֥לֶךְ יְהוּדָֽה׃ "
+  },
+  "2KI 22:17": {
+   "KJV": "Because they have forsaken me, and have burned incense unto other gods, that they might provoke me to anger with all the works of their hands; therefore my wrath shall be kindled against this place, and shall not be quenched.",
+   "BHSA": "תַּ֣חַת׀ אֲשֶׁ֣ר עֲזָב֗וּנִי וַֽיְקַטְּרוּ֙ לֵאלֹהִ֣ים אֲחֵרִ֔ים לְמַ֨עַן֙ הַכְעִיסֵ֔נִי בְּכֹ֖ל מַעֲשֵׂ֣ה יְדֵיהֶ֑ם וְנִצְּתָ֧ה חֲמָתִ֛י בַּמָּקֹ֥ום הַזֶּ֖ה וְלֹ֥א תִכְבֶּֽה׃ "
+  },
+  "2KI 22:18": {
+   "KJV": "But to the king of Judah which sent you to enquire of the LORD, thus shall ye say to him, Thus saith the LORD God of Israel, As touching the words which thou hast heard;",
+   "BHSA": "וְאֶל־מֶ֣לֶךְ יְהוּדָ֗ה הַשֹּׁלֵ֤חַ אֶתְכֶם֙ לִדְרֹ֣שׁ אֶת־יְהוָ֔ה כֹּ֥ה תֹאמְר֖וּ אֵלָ֑יו כֹּֽה־אָמַ֤ר יְהוָה֙ אֱלֹהֵ֣י יִשְׂרָאֵ֔ל הַדְּבָרִ֖ים אֲשֶׁ֥ר שָׁמָֽעְתָּ׃ "
+  },
+  "2KI 22:19": {
+   "KJV": "Because thine heart was tender, and thou hast humbled thyself before the LORD, when thou heardest what I spake against this place, and against the inhabitants thereof, that they should become a desolation and a curse, and hast rent thy clothes, and wept before me; I also have heard thee, saith the LORD.",
+   "BHSA": "יַ֠עַן רַךְ־לְבָ֨בְךָ֜ וַתִּכָּנַ֣ע׀ מִפְּנֵ֣י יְהוָ֗ה בְּֽשָׁמְעֲךָ֡ אֲשֶׁ֣ר דִּבַּרְתִּי֩ עַל־הַמָּקֹ֨ום הַזֶּ֜ה וְעַל־יֹשְׁבָ֗יו לִהְיֹ֤ות לְשַׁמָּה֙ וְלִקְלָלָ֔ה וַתִּקְרַע֙ אֶת־בְּגָדֶ֔יךָ וַתִּבְכֶּ֖ה לְפָנָ֑י וְגַ֧ם אָנֹכִ֛י שָׁמַ֖עְתִּי נְאֻם־יְהוָֽה׃ "
+  },
+  "2KI 22:20": {
+   "KJV": "Behold therefore, I will gather thee unto thy fathers, and thou shalt be gathered into thy grave in peace; and thine eyes shall not see all the evil which I will bring upon this place. And they brought the king word again.",
+   "BHSA": "לָכֵן֩ הִנְנִ֨י אֹֽסִפְךָ֜ עַל־אֲבֹתֶ֗יךָ וְנֶאֱסַפְתָּ֣ אֶל־קִבְרֹתֶיךָ֮ בְּשָׁלֹום֒ וְלֹא־תִרְאֶ֣ינָה עֵינֶ֔יךָ בְּכֹל֙ הָֽרָעָ֔ה אֲשֶׁר־אֲנִ֥י מֵבִ֖יא עַל־הַמָּקֹ֣ום הַזֶּ֑ה וַיָּשִׁ֥יבוּ אֶת־הַמֶּ֖לֶךְ דָּבָֽר׃ "
+  }
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "name": "Aaron",
+   "distinguisher": "brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "achbor-2",
+   "name": "Achbor",
+   "distinguisher": "son of Micaiah (2KI 22:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "adaiah",
+   "name": "Adaiah",
+   "distinguisher": "of Bozkath, father of Jedidah (2KI 22:1)",
+   "sex": "male"
+  },
+  {
+   "slug": "ahikam",
+   "name": "Ahikam",
+   "distinguisher": "son of Shaphan (2KI 22:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "asaiah",
+   "name": "Asaiah",
+   "distinguisher": "King Josiah's servant (2KI 22:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "azaliah",
+   "name": "Azaliah",
+   "distinguisher": "father of Shaphan (2KI 22:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "harhas",
+   "name": "Harhas",
+   "distinguisher": "father of Tikvah (2KI 22:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "hilkiah-2",
+   "name": "Hilkiah",
+   "distinguisher": "the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "huldah",
+   "name": "Huldah",
+   "distinguisher": "the prophetess, wife of Shallum (2KI 22:14, 2CH 34:22)",
+   "sex": "female"
+  },
+  {
+   "slug": "jedidah",
+   "name": "Jedidah",
+   "distinguisher": "mother of Josiah (2KI 22:1)",
+   "sex": "female"
+  },
+  {
+   "slug": "josiah",
+   "name": "Josiah",
+   "distinguisher": "prophesied son of the house of David (1KI 13:2), King of Judah and son of Amon (2KI 21:24)",
+   "sex": "male"
+  },
+  {
+   "slug": "judah",
+   "name": "Judah",
+   "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "meshullam",
+   "name": "Meshullam",
+   "distinguisher": "father of Azaliah (2KI 22:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "micaiah-2",
+   "name": "Micaiah",
+   "distinguisher": "father of Achbor (2KI 22:12)",
+   "sex": "male"
+  },
+  {
+   "slug": "shallum-2",
+   "name": "Shallum",
+   "distinguisher": "husband of Huldah the prophetess (2KI 22:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "shaphan",
+   "name": "Shaphan",
+   "distinguisher": "scribe of King Josiah (2KI 22:3, 2CH 34:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "tikvah",
+   "name": "Tikvah",
+   "distinguisher": "father of Shallum (2KI 22:14)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 97157,
+   "row": "adaiah father-of jedidah",
+   "verse": "2KI 22:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 100085,
+   "row": "jedidah mother-of josiah",
+   "verse": "2KI 22:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 100086,
+   "row": "jedidah daughter-of adaiah",
+   "verse": "2KI 22:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 107516,
+   "row": "josiah son-of jedidah",
+   "verse": "2KI 22:1",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97720,
+   "row": "azaliah father-of shaphan",
+   "verse": "2KI 22:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97721,
+   "row": "azaliah son-of meshullam",
+   "verse": "2KI 22:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 101298,
+   "row": "meshullam father-of azaliah",
+   "verse": "2KI 22:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101299,
+   "row": "meshullam grandfather-of shaphan",
+   "verse": "2KI 22:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102457,
+   "row": "shaphan scribe-of josiah",
+   "verse": "2KI 22:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102458,
+   "row": "shaphan son-of azaliah",
+   "verse": "2KI 22:3",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103742,
+   "row": "shaphan grandson-of meshullam",
+   "verse": "2KI 22:3",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 106836,
+   "row": "hilkiah-2 high-priest-of yhvh",
+   "verse": "2KI 22:4",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106837,
+   "row": "hilkiah-2 descendant-of aaron",
+   "verse": "2KI 22:4",
+   "source": "read from Scripture by the project owner, decided 2026-09-26"
+  },
+  {
+   "id": 97145,
+   "row": "achbor-2 son-of micaiah-2",
+   "verse": "2KI 22:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-06"
+  },
+  {
+   "id": 97279,
+   "row": "ahikam son-of shaphan",
+   "verse": "2KI 22:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 101349,
+   "row": "micaiah-2 father-of achbor-2",
+   "verse": "2KI 22:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102459,
+   "row": "shaphan father-of ahikam",
+   "verse": "2KI 22:12",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 97627,
+   "row": "asaiah companion-of hilkiah-2",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 97628,
+   "row": "asaiah companion-of achbor-2",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-10"
+  },
+  {
+   "id": 99339,
+   "row": "harhas father-of tikvah",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99340,
+   "row": "harhas grandfather-of shallum-2",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 99643,
+   "row": "huldah wife-of shallum-2",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 99646,
+   "row": "huldah prophet-to josiah",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 102408,
+   "row": "shallum-2 husband-of huldah",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102409,
+   "row": "shallum-2 son-of tikvah",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 102410,
+   "row": "shallum-2 descendant-of harhas",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103061,
+   "row": "tikvah father-of shallum-2",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103062,
+   "row": "tikvah son-of harhas",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103743,
+   "row": "shaphan companion-of hilkiah-2",
+   "verse": "2KI 22:14",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "aaron high-priest-of yhvh (EXO 28:1)",
+  "david servant-of yhvh (2SA 3:18)",
+  "josiah descendant-of david (1KI 13:2)"
+ ]
+}

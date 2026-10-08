@@ -1,0 +1,81 @@
+{
+ "chapter": "2CH 29",
+ "rows": 29,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    96999
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2CH 29:12",
+   "why": "The father of Kish here is the Hezekiah-era Merarite Abdi represented by abdi-3, not abdi, the son of Malluch.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "retarget",
+   "rows": [
+    100806
+   ],
+   "new_type": "",
+   "new_to": "abdi-3",
+   "verse": "2CH 29:12",
+   "why": "Kish is called the son of the Hezekiah-era Merarite Abdi represented by abdi-3.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    100804
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2CH 29:12",
+   "why": "The Merarite named here is Kish represented by kish-son-of-abdi, not the separately recorded Kishi.",
+   "confidence": 0.99
+  },
+  {
+   "kind": "delete",
+   "rows": [
+    107184
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2CH 29:12",
+   "why": "Joah's father here is represented by zimmah-the-later-gershonite, rather than zimmah, the son of Jahath.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "hezekiah",
+   "type": "descendant-of",
+   "to": "david",
+   "verse": "2CH 29:2",
+   "why": "David is explicitly called Hezekiah's father (אָבִיו), identifying him as Hezekiah's royal forefather.",
+   "confidence": 0.99
+  },
+  {
+   "from": "mahath-2",
+   "type": "descendant-of",
+   "to": "kohath",
+   "verse": "2CH 29:12",
+   "why": "Mahath son of Amasai is explicitly included among the Kohathites.",
+   "confidence": 0.99
+  },
+  {
+   "from": "joel-8",
+   "type": "descendant-of",
+   "to": "kohath",
+   "verse": "2CH 29:12",
+   "why": "Joel son of Azariah is explicitly included among the Kohathites.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "The owner-directed rows 105614 and 106652 are consistent with the clan affiliations in verse 12. Reciprocal relationships and the son-of wording for Shimei have been retained.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T18:59:40+00:00"
+}

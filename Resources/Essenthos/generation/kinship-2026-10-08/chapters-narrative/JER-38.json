@@ -1,0 +1,20 @@
+{
+ "chapter": "JER 38",
+ "rows": 5,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "malchijah-10",
+   "type": "son-of",
+   "to": "mattaniah",
+   "verse": "JER 38:6",
+   "why": "The Hebrew calls Malchijah בֶן־הַמֶּלֶךְ, 'son of the king,' with Zedekiah identified as the king in verse 5.",
+   "confidence": 0.93
+  }
+ ],
+ "note": "All four father–son statements in JER 38:1 are already recorded here or in another chapter. The chapter does not contradict the owner's identification of Pashhur's father.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:10:44+00:00"
+}

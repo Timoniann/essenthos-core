@@ -1,0 +1,32 @@
+{
+ "chapter": "2KI 18",
+ "rows": 11,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    99525
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2KI 18:1",
+   "why": "Judah in מֶלֶךְ יְהוּדָה denotes the kingdom Hezekiah ruled, not the person recorded as judah.",
+   "confidence": 1
+  }
+ ],
+ "missing": [
+  {
+   "from": "david",
+   "type": "ancestor-of",
+   "to": "hezekiah",
+   "verse": "2KI 18:3",
+   "why": "The verse calls David Hezekiah's father (דָוִד אָבִיו) in the ancestral sense, while verse 1 names Ahaz as his father.",
+   "confidence": 0.99
+  }
+ ],
+ "note": "All other explicit family statements are already recorded here or in the supplied rows from other chapters.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:03:28+00:00"
+}

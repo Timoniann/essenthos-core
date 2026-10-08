@@ -1,0 +1,23 @@
+{
+ "chapter": "JER 29",
+ "rows": 12,
+ "wrong": [
+  {
+   "kind": "retarget",
+   "rows": [
+    106792
+   ],
+   "new_type": "",
+   "new_to": "mattaniah",
+   "verse": "JER 29:3",
+   "why": "The Hebrew identifies the sender as Zedekiah king of Judah, represented by mattaniah, rather than zedekiah, the prophet who made iron horns.",
+   "confidence": 1
+  }
+ ],
+ "missing": [],
+ "note": "The chapter does not distinguish the two Shaphan records; owner row 106793 identifies Elasah’s father as shaphan. Owner row 105826 is retained, although this chapter does not state Jehoiada’s descent from Aaron.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:03:12+00:00"
+}

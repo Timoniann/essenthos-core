@@ -1,0 +1,393 @@
+{
+ "chapter": "1CH 16",
+ "text": {
+  "1CH 16:1": {
+   "KJV": "So they brought the ark of God, and set it in the midst of the tent that David had pitched for it: and they offered burnt sacrifices and peace offerings before God.",
+   "BHSA": "וַיָּבִ֨יאוּ֙ אֶת־אֲרֹ֣ון הָֽאֱלֹהִ֔ים וַיַּצִּ֣יגוּ אֹתֹ֔ו בְּתֹ֣וךְ הָאֹ֔הֶל אֲשֶׁ֥ר נָֽטָה־לֹ֖ו דָּוִ֑יד וַיַּקְרִ֛יבוּ עֹלֹ֥ות וּשְׁלָמִ֖ים לִפְנֵ֥י הָאֱלֹהִֽים׃ "
+  },
+  "1CH 16:2": {
+   "KJV": "And when David had made an end of offering the burnt offerings and the peace offerings, he blessed the people in the name of the LORD.",
+   "BHSA": "וַיְכַ֣ל דָּוִ֔יד מֵהַעֲלֹ֥ות הָעֹלָ֖ה וְהַשְּׁלָמִ֑ים וַיְבָ֥רֶךְ אֶת־הָעָ֖ם בְּשֵׁ֥ם יְהוָֽה׃ "
+  },
+  "1CH 16:3": {
+   "KJV": "And he dealt to every one of Israel, both man and woman, to every one a loaf of bread, and a good piece of flesh, and a flagon of wine.",
+   "BHSA": "וַיְחַלֵּק֙ לְכָל־אִ֣ישׁ יִשְׂרָאֵ֔ל מֵאִ֖ישׁ וְעַד־אִשָּׁ֑ה לְאִישׁ֙ כִּכַּר־לֶ֔חֶם וְאֶשְׁפָּ֖ר וַאֲשִׁישָֽׁה׃ "
+  },
+  "1CH 16:4": {
+   "KJV": "And he appointed certain of the Levites to minister before the ark of the LORD, and to record, and to thank and praise the LORD God of Israel:",
+   "BHSA": "וַיִּתֵּ֞ן לִפְנֵ֨י אֲרֹ֧ון יְהוָ֛ה מִן־הַלְוִיִּ֖ם מְשָׁרְתִ֑ים וּלְהַזְכִּיר֙ וּלְהֹודֹ֣ות וּלְהַלֵּ֔ל לַיהוָ֖ה אֱלֹהֵ֥י יִשְׂרָאֵֽל׃ פ "
+  },
+  "1CH 16:5": {
+   "KJV": "Asaph the chief, and next to him Zechariah, Jeiel, and Shemiramoth, and Jehiel, and Mattithiah, and Eliab, and Benaiah, and Obededom: and Jeiel with psalteries and with harps; but Asaph made a sound with cymbals;",
+   "BHSA": "אָסָ֥ף הָרֹ֖אשׁ וּמִשְׁנֵ֣הוּ זְכַרְיָ֑ה יְעִיאֵ֡ל וּשְׁמִֽירָמֹ֡ות וִֽיחִיאֵ֡ל וּמַתִּתְיָ֡ה וֶאֱלִיאָ֡ב וּבְנָיָהוּ֩ וְעֹבֵ֨ד אֱדֹ֜ם וִֽיעִיאֵ֗ל בִּכְלֵ֤י נְבָלִים֙ וּבְכִנֹּרֹ֔ות וְאָסָ֖ף בַּֽמְצִלְתַּ֥יִם מַשְׁמִֽיעַ׃ "
+  },
+  "1CH 16:6": {
+   "KJV": "Benaiah also and Jahaziel the priests with trumpets continually before the ark of the covenant of God.",
+   "BHSA": "וּבְנָיָ֥הוּ וְיַחֲזִיאֵ֖ל הַכֹּהֲנִ֑ים בַּחֲצֹצְרֹ֣ות תָּמִ֔יד לִפְנֵ֖י אֲרֹ֥ון בְּרִית־הָאֱלֹהִֽים׃ "
+  },
+  "1CH 16:7": {
+   "KJV": "Then on that day David delivered first this psalm to thank the LORD into the hand of Asaph and his brethren.",
+   "BHSA": "בַּיֹּ֣ום הַה֗וּא אָ֣ז נָתַ֤ן דָּוִיד֙ בָּרֹ֔אשׁ לְהֹדֹ֖ות לַיהוָ֑ה בְּיַד־אָסָ֖ף וְאֶחָֽיו׃ פ "
+  },
+  "1CH 16:8": {
+   "KJV": "Give thanks unto the LORD, call upon his name, make known his deeds among the people.",
+   "BHSA": "הֹוד֤וּ לַֽיהוָה֙ קִרְא֣וּ בִשְׁמֹ֔ו הֹודִ֥יעוּ בָעַמִּ֖ים עֲלִילֹתָֽיו׃ "
+  },
+  "1CH 16:9": {
+   "KJV": "Sing unto him, sing psalms unto him, talk ye of all his wondrous works.",
+   "BHSA": "שִׁ֤ירוּ לֹו֙ זַמְּרוּ־לֹ֔ו שִׂ֖יחוּ בְּכָל־נִפְלְאֹתָֽיו׃ "
+  },
+  "1CH 16:10": {
+   "KJV": "Glory ye in his holy name: let the heart of them rejoice that seek the LORD.",
+   "BHSA": "הִֽתְהַֽלְלוּ֙ בְּשֵׁ֣ם קָדְשֹׁ֔ו יִשְׂמַ֕ח לֵ֖ב מְבַקְשֵׁ֥י יְהוָֽה׃ "
+  },
+  "1CH 16:11": {
+   "KJV": "Seek the LORD and his strength, seek his face continually.",
+   "BHSA": "דִּרְשׁ֤וּ יְהוָה֙ וְעֻזֹּ֔ו בַּקְּשׁ֥וּ פָנָ֖יו תָּמִֽיד׃ "
+  },
+  "1CH 16:12": {
+   "KJV": "Remember his marvellous works that he hath done, his wonders, and the judgments of his mouth;",
+   "BHSA": "זִכְר֗וּ נִפְלְאֹתָיו֙ אֲשֶׁ֣ר עָשָׂ֔ה מֹפְתָ֖יו וּמִשְׁפְּטֵי־פִֽיהוּ׃ "
+  },
+  "1CH 16:13": {
+   "KJV": "O ye seed of Israel his servant, ye children of Jacob, his chosen ones.",
+   "BHSA": "זֶ֚רַע יִשְׂרָאֵ֣ל עַבְדֹּ֔ו בְּנֵ֥י יַעֲקֹ֖ב בְּחִירָֽיו׃ "
+  },
+  "1CH 16:14": {
+   "KJV": "He is the LORD our God; his judgments are in all the earth.",
+   "BHSA": "ה֚וּא יְהוָ֣ה אֱלֹהֵ֔ינוּ בְּכָל־הָאָ֖רֶץ מִשְׁפָּטָֽיו׃ "
+  },
+  "1CH 16:15": {
+   "KJV": "Be ye mindful always of his covenant; the word which he commanded to a thousand generations;",
+   "BHSA": "זִכְר֤וּ לְעֹולָם֙ בְּרִיתֹ֔ו דָּבָ֥ר צִוָּ֖ה לְאֶ֥לֶף דֹּֽור׃ "
+  },
+  "1CH 16:16": {
+   "KJV": "Even of the covenant which he made with Abraham, and of his oath unto Isaac;",
+   "BHSA": "אֲשֶׁ֤ר כָּרַת֙ אֶת־אַבְרָהָ֔ם וּשְׁבוּעָתֹ֖ו לְיִצְחָֽק׃ "
+  },
+  "1CH 16:17": {
+   "KJV": "And hath confirmed the same to Jacob for a law, and to Israel for an everlasting covenant,",
+   "BHSA": "וַיַּעֲמִידֶ֤הָ לְיַעֲקֹב֙ לְחֹ֔ק לְיִשְׂרָאֵ֖ל בְּרִ֥ית עֹולָֽם׃ "
+  },
+  "1CH 16:18": {
+   "KJV": "Saying, Unto thee will I give the land of Canaan, the lot of your inheritance;",
+   "BHSA": "לֵאמֹ֗ר לְךָ֙ אֶתֵּ֣ן אֶֽרֶץ־כְּנָ֔עַן חֶ֖בֶל נַחֲלַתְכֶֽם׃ "
+  },
+  "1CH 16:19": {
+   "KJV": "When ye were but few, even a few, and strangers in it.",
+   "BHSA": "בִּֽהְיֹֽותְכֶם֙ מְתֵ֣י מִסְפָּ֔ר כִּמְעַ֖ט וְגָרִ֥ים בָּֽהּ׃ "
+  },
+  "1CH 16:20": {
+   "KJV": "And when they went from nation to nation, and from one kingdom to another people;",
+   "BHSA": "וַיִּֽתְהַלְּכוּ֙ מִגֹּ֣וי אֶל־גֹּ֔וי וּמִמַּמְלָכָ֖ה אֶל־עַ֥ם אַחֵֽר׃ "
+  },
+  "1CH 16:21": {
+   "KJV": "He suffered no man to do them wrong: yea, he reproved kings for their sakes,",
+   "BHSA": "לֹא־הִנִּ֤יחַ לְאִישׁ֙ לְעָשְׁקָ֔ם וַיֹּ֥וכַח עֲלֵיהֶ֖ם מְלָכִֽים׃ "
+  },
+  "1CH 16:22": {
+   "KJV": "Saying, Touch not mine anointed, and do my prophets no harm.",
+   "BHSA": "אַֽל־תִּגְּעוּ֙ בִּמְשִׁיחָ֔י וּבִנְבִיאַ֖י אַל־תָּרֵֽעוּ׃ פ "
+  },
+  "1CH 16:23": {
+   "KJV": "Sing unto the LORD, all the earth; shew forth from day to day his salvation.",
+   "BHSA": "שִׁ֤ירוּ לַֽיהוָה֙ כָּל־הָאָ֔רֶץ בַּשְּׂר֥וּ מִיֹּֽום־אֶל־יֹ֖ום יְשׁוּעָתֹֽו׃ "
+  },
+  "1CH 16:24": {
+   "KJV": "Declare his glory among the heathen; his marvellous works among all nations.",
+   "BHSA": "סַפְּר֤וּ בַגֹּויִם֙ אֶת־כְּבֹודֹ֔ו בְּכָל־הָעַמִּ֖ים נִפְלְאֹתָֽיו׃ "
+  },
+  "1CH 16:25": {
+   "KJV": "For great is the LORD, and greatly to be praised: he also is to be feared above all gods.",
+   "BHSA": "כִּי֩ גָדֹ֨ול יְהוָ֤ה וּמְהֻלָּל֙ מְאֹ֔ד וְנֹורָ֥א ה֖וּא עַל־כָּל־אֱלֹהִֽים׃ "
+  },
+  "1CH 16:26": {
+   "KJV": "For all the gods of the people are idols: but the LORD made the heavens.",
+   "BHSA": "כִּ֠י כָּל־אֱלֹהֵ֤י הָעַמִּים֙ אֱלִילִ֔ים וַיהוָ֖ה שָׁמַ֥יִם עָשָֽׂה׃ "
+  },
+  "1CH 16:27": {
+   "KJV": "Glory and honour are in his presence; strength and gladness are in his place.",
+   "BHSA": "הֹ֤וד וְהָדָר֙ לְפָנָ֔יו עֹ֥ז וְחֶדְוָ֖ה בִּמְקֹמֹֽו׃ "
+  },
+  "1CH 16:28": {
+   "KJV": "Give unto the LORD, ye kindreds of the people, give unto the LORD glory and strength.",
+   "BHSA": "הָב֤וּ לַֽיהוָה֙ מִשְׁפְּחֹ֣ות עַמִּ֔ים הָב֥וּ לַיהוָ֖ה כָּבֹ֥וד וָעֹֽז׃ "
+  },
+  "1CH 16:29": {
+   "KJV": "Give unto the LORD the glory due unto his name: bring an offering, and come before him: worship the LORD in the beauty of holiness.",
+   "BHSA": "הָב֥וּ לַיהוָ֖ה כְּבֹ֣וד שְׁמֹ֑ו שְׂא֤וּ מִנְחָה֙ וּבֹ֣אוּ לְפָנָ֔יו הִשְׁתַּחֲו֥וּ לַיהוָ֖ה בְּהַדְרַת־קֹֽדֶשׁ׃ "
+  },
+  "1CH 16:30": {
+   "KJV": "Fear before him, all the earth: the world also shall be stable, that it be not moved.",
+   "BHSA": "חִ֤ילוּ מִלְּפָנָיו֙ כָּל־הָאָ֔רֶץ אַף־תִּכֹּ֥ון תֵּבֵ֖ל בַּל־תִּמֹּֽוט׃ "
+  },
+  "1CH 16:31": {
+   "KJV": "Let the heavens be glad, and let the earth rejoice: and let men say among the nations, The LORD reigneth.",
+   "BHSA": "יִשְׂמְח֤וּ הַשָּׁמַ֨יִם֙ וְתָגֵ֣ל הָאָ֔רֶץ וְיֹאמְר֥וּ בַגֹּויִ֖ם יְהוָ֥ה מָלָֽךְ׃ "
+  },
+  "1CH 16:32": {
+   "KJV": "Let the sea roar, and the fulness thereof: let the fields rejoice, and all that is therein.",
+   "BHSA": "יִרְעַ֤ם הַיָּם֙ וּמְלֹואֹ֔ו יַעֲלֹ֥ץ הַשָּׂדֶ֖ה וְכָל־אֲשֶׁר־בֹּֽו׃ "
+  },
+  "1CH 16:33": {
+   "KJV": "Then shall the trees of the wood sing out at the presence of the LORD, because he cometh to judge the earth.",
+   "BHSA": "אָ֥ז יְרַנְּנ֖וּ עֲצֵ֣י הַיָּ֑עַר מִלִּפְנֵ֣י יְהוָ֔ה כִּי־בָ֖א לִשְׁפֹּ֥וט אֶת־הָאָֽרֶץ׃ "
+  },
+  "1CH 16:34": {
+   "KJV": "O give thanks unto the LORD; for he is good; for his mercy endureth for ever.",
+   "BHSA": "הֹוד֤וּ לַיהוָה֙ כִּ֣י טֹ֔וב כִּ֥י לְעֹולָ֖ם חַסְדֹּֽו׃ "
+  },
+  "1CH 16:35": {
+   "KJV": "And say ye, Save us, O God of our salvation, and gather us together, and deliver us from the heathen, that we may give thanks to thy holy name, and glory in thy praise.",
+   "BHSA": "וְאִמְר֕וּ הֹושִׁיעֵ֨נוּ֙ אֱלֹהֵ֣י יִשְׁעֵ֔נוּ וְקַבְּצֵ֥נוּ וְהַצִּילֵ֖נוּ מִן־הַגֹּויִ֑ם לְהֹדֹות֙ לְשֵׁ֣ם קָדְשֶׁ֔ךָ לְהִשְׁתַּבֵּ֖חַ בִּתְהִלָּתֶֽךָ׃ "
+  },
+  "1CH 16:36": {
+   "KJV": "Blessed be the LORD God of Israel for ever and ever. And all the people said, Amen, and praised the LORD.",
+   "BHSA": "בָּר֤וּךְ יְהוָה֙ אֱלֹהֵ֣י יִשְׂרָאֵ֔ל מִן־הָעֹולָ֖ם וְעַ֣ד הָעֹלָ֑ם וַיֹּאמְר֤וּ כָל־הָעָם֙ אָמֵ֔ן וְהַלֵּ֖ל לַֽיהוָֽה׃ פ "
+  },
+  "1CH 16:37": {
+   "KJV": "So he left there before the ark of the covenant of the LORD Asaph and his brethren, to minister before the ark continually, as every day's work required:",
+   "BHSA": "וַיַּֽעֲזָב־שָׁ֗ם לִפְנֵי֙ אֲרֹ֣ון בְּרִית־יְהוָ֔ה לְאָסָ֖ף וּלְאֶחָ֑יו לְשָׁרֵ֞ת לִפְנֵ֧י הָאָרֹ֛ון תָּמִ֖יד לִדְבַר־יֹ֥ום בְּיֹומֹֽו׃ "
+  },
+  "1CH 16:38": {
+   "KJV": "And Obededom with their brethren, threescore and eight; Obededom also the son of Jeduthun and Hosah to be porters:",
+   "BHSA": "וְעֹבֵ֥ד אֱדֹ֛ם וַאֲחֵיהֶ֖ם שִׁשִּׁ֣ים וּשְׁמֹונָ֑ה וְעֹבֵ֨ד אֱדֹ֧ם בֶּן־יְדִית֛וּן וְחֹסָ֖ה לְשֹׁעֲרִֽים׃ "
+  },
+  "1CH 16:39": {
+   "KJV": "And Zadok the priest, and his brethren the priests, before the tabernacle of the LORD in the high place that was at Gibeon,",
+   "BHSA": "וְאֵ֣ת׀ צָדֹ֣וק הַכֹּהֵ֗ן וְאֶחָיו֙ הַכֹּ֣הֲנִ֔ים לִפְנֵ֖י מִשְׁכַּ֣ן יְהוָ֑ה בַּבָּמָ֖ה אֲשֶׁ֥ר בְּגִבְעֹֽון׃ "
+  },
+  "1CH 16:40": {
+   "KJV": "To offer burnt offerings unto the LORD upon the altar of the burnt offering continually morning and evening, and to do according to all that is written in the law of the LORD, which he commanded Israel;",
+   "BHSA": "לְֽהַעֲלֹות֩ עֹלֹ֨ות לַיהוָ֜ה עַל־מִזְבַּ֧ח הָעֹלָ֛ה תָּמִ֖יד לַבֹּ֣קֶר וְלָעָ֑רֶב וּלְכָל־הַכָּתוּב֙ בְּתֹורַ֣ת יְהוָ֔ה אֲשֶׁ֥ר צִוָּ֖ה עַל־יִשְׂרָאֵֽל׃ "
+  },
+  "1CH 16:41": {
+   "KJV": "And with them Heman and Jeduthun, and the rest that were chosen, who were expressed by name, to give thanks to the LORD, because his mercy endureth for ever;",
+   "BHSA": "וְעִמָּהֶם֙ הֵימָ֣ן וִֽידוּת֔וּן וּשְׁאָר֙ הַבְּרוּרִ֔ים אֲשֶׁ֥ר נִקְּב֖וּ בְּשֵׁמֹ֑ות לְהֹדֹות֙ לַֽיהוָ֔ה כִּ֥י לְעֹולָ֖ם חַסְדֹּֽו׃ "
+  },
+  "1CH 16:42": {
+   "KJV": "And with them Heman and Jeduthun with trumpets and cymbals for those that should make a sound, and with musical instruments of God. And the sons of Jeduthun were porters.",
+   "BHSA": "וְעִמָּהֶם֩ הֵימָ֨ן וִֽידוּת֜וּן חֲצֹצְרֹ֤ות וּמְצִלְתַּ֨יִם֙ לְמַשְׁמִיעִ֔ים וּכְלֵ֖י שִׁ֣יר הָאֱלֹהִ֑ים וּבְנֵ֥י יְדוּת֖וּן לַשָּֽׁעַר׃ "
+  },
+  "1CH 16:43": {
+   "KJV": "And all the people departed every man to his house: and David returned to bless his house.",
+   "BHSA": "וַיֵּלְכ֥וּ כָל־הָעָ֖ם אִ֣ישׁ לְבֵיתֹ֑ו וַיִּסֹּ֥ב דָּוִ֖יד לְבָרֵ֥ךְ אֶת־בֵּיתֹֽו׃ פ "
+  }
+ },
+ "records": [
+  {
+   "slug": "abram",
+   "name": "Abram",
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "sex": "male"
+  },
+  {
+   "slug": "asaph-2",
+   "name": "Asaph",
+   "distinguisher": "son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9)",
+   "sex": "male"
+  },
+  {
+   "slug": "benaiah-4",
+   "name": "Benaiah",
+   "distinguisher": "a Levite of the second degree who played the psaltery before the ark (1CH 15:18, 15:20, 16:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "benaiah-the-trumpeting-priest",
+   "name": "Benaiah",
+   "distinguisher": "a priest who blew the trumpet before the ark of God (1CH 15:24, 16:6)",
+   "sex": null
+  },
+  {
+   "slug": "david",
+   "name": "David",
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "sex": "male"
+  },
+  {
+   "slug": "eliab-5",
+   "name": "Eliab",
+   "distinguisher": "second rank Levite, gatekeeper (1CH 15:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "heman-2",
+   "name": "Heman",
+   "distinguisher": "the singer, son of Joel, decendant of Kohath (1CH 6:33), father of fourteen sons and three daughter (1CH 25:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "hosah",
+   "name": "Hosah",
+   "distinguisher": "one of the gatekeepers (1CH 16:38), to the west (1CH 26:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "isaac",
+   "name": "Isaac",
+   "distinguisher": "son of Abraham and Sarah (GEN 17:21)",
+   "sex": "male"
+  },
+  {
+   "slug": "jaaziel",
+   "name": "Jaaziel",
+   "distinguisher": "second rank Levite, gatekeeper (1CH 15:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "jacob",
+   "name": "Jacob",
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "sex": "male"
+  },
+  {
+   "slug": "jahaziel-the-trumpeting-priest",
+   "name": "Jahaziel",
+   "distinguisher": "a priest who blew the trumpet continually before the ark of the covenant (1CH 16:6)",
+   "sex": null
+  },
+  {
+   "slug": "jeduthun",
+   "name": "Jeduthun",
+   "distinguisher": "father of Galal (1CH 9:16)",
+   "sex": "male"
+  },
+  {
+   "slug": "jehiel",
+   "name": "Jehiel",
+   "distinguisher": "a Levite of the second degree who played the psaltery before the ark (1CH 15:18, 15:20, 16:5)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeiel-4",
+   "name": "Jeiel",
+   "distinguisher": "second rank Levite, gatekeeper (1CH 15:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "jeiel-the-alamoth-psaltery-player",
+   "name": "Jeiel",
+   "distinguisher": "the psaltery player set to Alamoth (1CH 16:5)",
+   "sex": null
+  },
+  {
+   "slug": "levi",
+   "name": "Levi",
+   "distinguisher": "third-born son of Jacob (GEN 29:34), son of Leah",
+   "sex": "male"
+  },
+  {
+   "slug": "mattithiah-2",
+   "name": "Mattithiah",
+   "distinguisher": "second rank Levite, gatekeeper (1CH 15:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "obededom-2",
+   "name": "Obed-edom",
+   "distinguisher": "second rank Levite, gatekeeper (1CH 15:18), the south gate (1CH 26:15)",
+   "sex": "male"
+  },
+  {
+   "slug": "shemiramoth",
+   "name": "Shemiramoth",
+   "distinguisher": "second rank Levite, gatekeeper (1CH 15:18)",
+   "sex": "male"
+  },
+  {
+   "slug": "yhvh",
+   "name": "YHVH",
+   "distinguisher": "the God of Israel",
+   "sex": "male"
+  },
+  {
+   "slug": "zadok",
+   "name": "Zadok",
+   "distinguisher": "son of Ahitub and priest during King David's reign (2SA 8:17), a mighty of valor (1CH 12:28)",
+   "sex": "male"
+  },
+  {
+   "slug": "zechariah-5",
+   "name": "Zechariah",
+   "distinguisher": "a Levite of the second degree who played the psaltery before the ark (1CH 15:18, 15:20, 16:5)",
+   "sex": "male"
+  }
+ ],
+ "relationships": [
+  {
+   "id": 100198,
+   "row": "jeiel-the-alamoth-psaltery-player companion-of asaph-2",
+   "verse": "1CH 16:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-16"
+  },
+  {
+   "id": 107094,
+   "row": "shemiramoth companion-of zechariah-5",
+   "verse": "1CH 16:5",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 103939,
+   "row": "benaiah-the-trumpeting-priest companion-of jahaziel-the-trumpeting-priest",
+   "verse": "1CH 16:6",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 103940,
+   "row": "benaiah-the-trumpeting-priest priest-of yhvh",
+   "verse": "1CH 16:6",
+   "source": "read from Scripture by claude-opus-5-5, asked 2026-09-23"
+  },
+  {
+   "id": 105785,
+   "row": "jahaziel-the-trumpeting-priest priest-of yhvh",
+   "verse": "1CH 16:6",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 105742,
+   "row": "hosah descendant-of levi",
+   "verse": "1CH 16:38",
+   "source": "read from Scripture by an agent reading 1CH 16:38 on the project owner's instruction, decided 2026-09-26"
+  },
+  {
+   "id": 106130,
+   "row": "obededom-2 son-of jeduthun",
+   "verse": "1CH 16:38",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  },
+  {
+   "id": 106866,
+   "row": "jeduthun father-of obededom-2",
+   "verse": "1CH 16:38",
+   "source": "read from Scripture by claude-sonnet-5, asked 2026-09-09"
+  }
+ ],
+ "recorded_from_other_chapters": [
+  "david servant-of yhvh (2SA 3:18)",
+  "heman-2 prophet-to david (1CH 25:5)",
+  "isaac son-of abram (GEN 21:3)",
+  "isaac father-of jacob (GEN 27:26)",
+  "benaiah-4 descendant-of levi (1CH 15:18)",
+  "eliab-5 companion-of benaiah-4 (1CH 15:18)",
+  "eliab-5 descendant-of levi (1CH 15:18)",
+  "jaaziel descendant-of levi (1CH 15:18)",
+  "jacob son-of isaac (GEN 25:26)",
+  "jacob servant-of yhvh (ISA 41:8)",
+  "jeiel-4 companion-of asaph-2 (1CH 15:18)",
+  "jeiel-4 descendant-of levi (1CH 15:18)",
+  "mattithiah-2 descendant-of levi (1CH 15:18)",
+  "obededom-2 descendant-of levi (1CH 15:18)",
+  "abram servant-of yhvh (GEN 26:24)",
+  "zechariah-5 descendant-of levi (1CH 15:18)",
+  "jehiel descendant-of levi (1CH 15:18)",
+  "asaph-2 descendant-of levi (1CH 9:15)",
+  "jeduthun prophet-to david (2CH 35:15)",
+  "jeduthun descendant-of levi (1CH 9:16)",
+  "levi son-of jacob (GEN 35:23)",
+  "shemiramoth companion-of jehiel (1CH 15:18)",
+  "shemiramoth descendant-of levi (1CH 15:18)",
+  "zadok priest-of yhvh (1KI 1:8)"
+ ]
+}

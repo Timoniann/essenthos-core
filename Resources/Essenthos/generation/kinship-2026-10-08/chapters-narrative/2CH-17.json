@@ -1,0 +1,20 @@
+{
+ "chapter": "2CH 17",
+ "rows": 21,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "jehoshaphat-3",
+   "type": "descendant-of",
+   "to": "david",
+   "verse": "2CH 17:3",
+   "why": "The Hebrew calls David Jehoshaphat's father (אָבִיו), here indicating a forefather because verse 2 names Asa as his father.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "Jehoshaphat's relationship to Asa and Amasiah's relationship to Zichri are already recorded. The owner-recorded Aaron ancestry rows are retained; verse 8 identifies the men as priests without explicitly naming Aaron.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:00:55+00:00"
+}

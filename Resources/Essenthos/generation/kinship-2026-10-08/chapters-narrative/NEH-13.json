@@ -1,0 +1,11 @@
+{
+ "chapter": "NEH 13",
+ "rows": 8,
+ "wrong": [],
+ "missing": [],
+ "note": "All explicit family relationships between the supplied people are already recorded. Owner row 107078 is retained, although NEH 13:13 calls Shelemiah a priest without explicitly stating his descent from Aaron.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:06:37+00:00"
+}

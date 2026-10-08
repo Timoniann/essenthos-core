@@ -1,0 +1,1831 @@
+[
+ {
+  "id": 1,
+  "chapter": "2CH-21",
+  "claim": "The chapter plainly states 'jehoram brother-of sephatiah', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jehoram",
+    "name": "Jehoram",
+    "distinguisher": "King of Judah and son of Jehoshaphat (1KI 22:50)",
+    "sex": "male"
+   },
+   {
+    "slug": "sephatiah",
+    "name": "Sephatiah",
+    "distinguisher": "son of Jehoshaphat (2CH 21:2)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jehoram killer-of sephatiah (2CH 21:4)",
+   "ahaziah-2 son-of jehoram (2KI 8:24)",
+   "jehoshaphat-3 father-of jehoram (2KI 1:17)",
+   "jehoram son-of jehoshaphat-3 (2KI 8:16)",
+   "jehoram father-of ahaziah-2 (2CH 22:1)"
+  ],
+  "text": {
+   "2CH 21:1": {
+    "KJV": "Now Jehoshaphat slept with his fathers, and was buried with his fathers in the city of David. And Jehoram his son reigned in his stead.",
+    "BHSA": "וַיִּשְׁכַּ֤ב יְהֹֽושָׁפָט֙ עִם־אֲבֹתָ֔יו וַיִּקָּבֵ֥ר עִם־אֲבֹתָ֖יו בְּעִ֣יר דָּוִ֑יד וַיִּמְלֹ֛ךְ יְהֹורָ֥ם בְּנֹ֖ו תַּחְתָּֽיו׃ "
+   },
+   "2CH 21:2": {
+    "KJV": "And he had brethren the sons of Jehoshaphat, Azariah, and Jehiel, and Zechariah, and Azariah, and Michael, and Shephatiah: all these were the sons of Jehoshaphat king of Israel.",
+    "BHSA": "וְלֹֽו־אַחִ֞ים בְּנֵ֣י יְהֹושָׁפָ֗ט עֲזַרְיָ֤ה וִֽיחִיאֵל֙ וּזְכַרְיָ֣הוּ וַעֲזַרְיָ֔הוּ וּמִיכָאֵ֖ל וּשְׁפַטְיָ֑הוּ כָּל־אֵ֕לֶּה בְּנֵ֥י יְהֹושָׁפָ֖ט מֶ֥לֶךְ־יִשְׂרָאֵֽל׃ "
+   },
+   "2CH 21:3": {
+    "KJV": "And their father gave them great gifts of silver, and of gold, and of precious things, with fenced cities in Judah: but the kingdom gave he to Jehoram; because he was the firstborn.",
+    "BHSA": "וַיִּתֵּ֣ן לָהֶ֣ם׀ אֲ֠בִיהֶם מַתָּנֹ֨ות רַבֹּ֜ות לְכֶ֤סֶף וּלְזָהָב֙ וּלְמִגְדָּנֹ֔ות עִם־עָרֵ֥י מְצֻרֹ֖ות בִּֽיהוּדָ֑ה וְאֶת־הַמַּמְלָכָ֛ה נָתַ֥ן לִֽיהֹורָ֖ם כִּי־ה֥וּא הַבְּכֹֽור׃ פ "
+   }
+  }
+ },
+ {
+  "id": 2,
+  "chapter": "1KI-4",
+  "claim": "The chapter plainly states 'jair son-of manasseh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jair",
+    "name": "Jair",
+    "distinguisher": "captured the region of Argob and called it Havvoth-jair (NUM 32:41)",
+    "sex": "male"
+   },
+   {
+    "slug": "manasseh",
+    "name": "Manasseh",
+    "distinguisher": "firstborn son of Joseph (GEN 41:51)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jair descendant-of manasseh (NUM 32:41)"
+  ],
+  "text": {
+   "1KI 4:12": {
+    "KJV": "Baana the son of Ahilud; to him pertained Taanach and Megiddo, and all Bethshean, which is by Zartanah beneath Jezreel, from Bethshean to Abelmeholah, even unto the place that is beyond Jokneam:",
+    "BHSA": "בַּֽעֲנָא֙ בֶּן־אֲחִיל֔וּד תַּעְנַ֖ךְ וּמְגִדֹּ֑ו וְכָל־בֵּ֣ית שְׁאָ֡ן אֲשֶׁר֩ אֵ֨צֶל צָרְתַ֜נָה מִתַּ֣חַת לְיִזְרְעֶ֗אל מִבֵּ֤ית שְׁאָן֙ עַ֚ד אָבֵ֣ל מְחֹולָ֔ה עַ֖ד מֵעֵ֥בֶר לְיָקְמֳעָֽם׃ ס "
+   },
+   "1KI 4:13": {
+    "KJV": "The son of Geber, in Ramothgilead; to him pertained the towns of Jair the son of Manasseh, which are in Gilead; to him also pertained the region of Argob, which is in Bashan, threescore great cities with walls and brasen bars:",
+    "BHSA": "בֶּן־גֶּ֖בֶר בְּרָמֹ֣ת גִּלְעָ֑ד לֹ֡ו חַוֹּת֩ יָאִ֨יר בֶּן־מְנַשֶּׁ֜ה אֲשֶׁ֣ר בַּגִּלְעָ֗ד לֹ֚ו חֶ֤בֶל אַרְגֹּב֙ אֲשֶׁ֣ר בַּבָּשָׁ֔ן שִׁשִּׁים֙ עָרִ֣ים גְּדֹלֹ֔ות חֹומָ֖ה וּבְרִ֥יחַ נְחֹֽשֶׁת׃ ס "
+   },
+   "1KI 4:14": {
+    "KJV": "Ahinadab the son of Iddo had Mahanaim:",
+    "BHSA": "אֲחִֽינָדָ֥ב בֶּן־עִדֹּ֖א מַחֲנָֽיְמָה׃ "
+   }
+  }
+ },
+ {
+  "id": 3,
+  "chapter": "NEH-6",
+  "claim": "The chapter plainly states 'tobiah-2 father-of jehohanan-3', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jehohanan-3",
+    "name": "Jehohanan",
+    "distinguisher": "son of Tobiah who married daughter of Meshullam (NEH 6:18)",
+    "sex": "male"
+   },
+   {
+    "slug": "tobiah-2",
+    "name": "Tobiah",
+    "distinguisher": "the Ammonite official who opposed Nehemiah (NEH 2:10)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "NEH 6:17": {
+    "KJV": "Moreover in those days the nobles of Judah sent many letters unto Tobiah, and the letters of Tobiah came unto them.",
+    "BHSA": "גַּ֣ם׀ בַּיָּמִ֣ים הָהֵ֗ם מַרְבִּ֞ים חֹרֵ֤י יְהוּדָה֙ אִגְּרֹ֣תֵיהֶ֔ם הֹולְכֹ֖ות עַל־טֹובִיָּ֑ה וַאֲשֶׁ֥ר לְטֹובִיָּ֖ה בָּאֹ֥ות אֲלֵיהֶֽם׃ "
+   },
+   "NEH 6:18": {
+    "KJV": "For there were many in Judah sworn unto him, because he was the son in law of Shechaniah the son of Arah; and his son Johanan had taken the daughter of Meshullam the son of Berechiah.",
+    "BHSA": "כִּי־רַבִּ֣ים בִּֽיהוּדָ֗ה בַּעֲלֵ֤י שְׁבוּעָה֙ לֹ֔ו כִּי־חָתָ֥ן ה֖וּא לִשְׁכַנְיָ֣ה בֶן־אָרַ֑ח וִֽיהֹוחָנָ֣ן בְּנֹ֔ו לָקַ֕ח אֶת־בַּת־מְשֻׁלָּ֖ם בֶּ֥ן בֶּֽרֶכְיָֽה׃ "
+   },
+   "NEH 6:19": {
+    "KJV": "Also they reported his good deeds before me, and uttered my words to him. And Tobiah sent letters to put me in fear.",
+    "BHSA": "גַּ֣ם טֹובֹתָ֗יו הָי֤וּ אֹמְרִים֙ לְפָנַ֔י וּדְבָרַ֕י הָי֥וּ מֹוצִיאִ֖ים לֹ֑ו אִגְּרֹ֛ות שָׁלַ֥ח טֹובִיָּ֖ה לְיָֽרְאֵֽנִי׃ "
+   }
+  }
+ },
+ {
+  "id": 4,
+  "chapter": "LUK-1",
+  "claim": "The row 'zacharias priest-of abijah-5' should be removed: the chapter does not say it.",
+  "row_verse": "LUK 1:5",
+  "records": [
+   {
+    "slug": "abijah-5",
+    "name": "Abijah",
+    "distinguisher": "eighth-chosen priest for the twenty-four courses (1CH 24:10)",
+    "sex": "male"
+   },
+   {
+    "slug": "zacharias",
+    "name": "Zacharias",
+    "distinguisher": "the priest (LUK 1:5) father of John the Baptist",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "LUK 1:4": {
+    "KJV": "That thou mightest know the certainty of those things, wherein thou hast been instructed.",
+    "NESTLE1904": "ἵνα ἐπιγνῷς περὶ ὧν κατηχήθης λόγων τὴν ἀσφάλειαν. "
+   },
+   "LUK 1:5": {
+    "KJV": "There was in the days of Herod, the king of Judaea, a certain priest named Zacharias, of the course of Abia: and his wife was of the daughters of Aaron, and her name was Elisabeth.",
+    "NESTLE1904": "Ἐγένετο ἐν ταῖς ἡμέραις Ἡρῴδου βασιλέως τῆς Ἰουδαίας ἱερεύς τις ὀνόματι Ζαχαρίας ἐξ ἐφημερίας Ἀβιά, καὶ γυνὴ αὐτῷ ἐκ τῶν θυγατέρων Ἀαρών, καὶ τὸ ὄνομα αὐτῆς Ἐλεισάβετ. "
+   },
+   "LUK 1:6": {
+    "KJV": "And they were both righteous before God, walking in all the commandments and ordinances of the Lord blameless.",
+    "NESTLE1904": "ἦσαν δὲ δίκαιοι ἀμφότεροι ἐναντίον τοῦ Θεοῦ, πορευόμενοι ἐν πάσαις ταῖς ἐντολαῖς καὶ δικαιώμασιν τοῦ Κυρίου ἄμεμπτοι. "
+   }
+  }
+ },
+ {
+  "id": 5,
+  "chapter": "JER-37",
+  "claim": "The row 'jonathan-13 scribe-of mattaniah' should be removed: the chapter does not say it.",
+  "row_verse": "JER 37:15",
+  "records": [
+   {
+    "slug": "jonathan-13",
+    "name": "Jonathan",
+    "distinguisher": "the scribe in whose house Jeremiah was jailed (JER 37:15)",
+    "sex": "male"
+   },
+   {
+    "slug": "mattaniah",
+    "name": "Mattaniah",
+    "distinguisher": "King of Judah, uncle of Jehoiachin (2KI 24:17)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "JER 37:14": {
+    "KJV": "Then said Jeremiah, It is false; I fall not away to the Chaldeans. But he hearkened not to him: so Irijah took Jeremiah, and brought him to the princes.",
+    "BHSA": "וַיֹּ֨אמֶר יִרְמְיָ֜הוּ שֶׁ֗קֶר אֵינֶ֤נִּי נֹפֵל֙ עַל־הַכַּשְׂדִּ֔ים וְלֹ֥א שָׁמַ֖ע אֵלָ֑יו וַיִּתְפֹּ֤שׂ יִרְאִיָּיה֙ בְּיִרְמְיָ֔הוּ וַיְבִאֵ֖הוּ אֶל־הַשָּׂרִֽים׃ "
+   },
+   "JER 37:15": {
+    "KJV": "Wherefore the princes were wroth with Jeremiah, and smote him, and put him in prison in the house of Jonathan the scribe: for they had made that the prison.",
+    "BHSA": "וַיִּקְצְפ֧וּ הַשָּׂרִ֛ים עַֽל־יִרְמְיָ֖הוּ וְהִכּ֣וּ אֹתֹ֑ו וְנָתְנ֨וּ אֹותֹ֜ו בֵּ֣ית הָאֵס֗וּר בֵּ֚ית יְהֹונָתָ֣ן הַסֹּפֵ֔ר כִּֽי־אֹתֹ֥ו עָשׂ֖וּ לְבֵ֥ית הַכֶּֽלֶא׃ "
+   },
+   "JER 37:16": {
+    "KJV": "When Jeremiah was entered into the dungeon, and into the cabins, and Jeremiah had remained there many days;",
+    "BHSA": "כִּ֣י בָ֧א יִרְמְיָ֛הוּ אֶל־בֵּ֥ית הַבֹּ֖ור וְאֶל־הַֽחֲנֻ֑יֹות וַיֵּֽשֶׁב־שָׁ֥ם יִרְמְיָ֖הוּ יָמִ֥ים רַבִּֽים׃ פ "
+   }
+  }
+ },
+ {
+  "id": 6,
+  "chapter": "JOB-32",
+  "claim": "The row 'barachel descendant-of buz' should be removed: the chapter does not say it.",
+  "row_verse": "JOB 32:2",
+  "records": [
+   {
+    "slug": "barachel",
+    "name": "Barachel",
+    "distinguisher": "the Buzite, of the family of Ram (JOB 32:2)",
+    "sex": "male"
+   },
+   {
+    "slug": "buz",
+    "name": "Buz",
+    "distinguisher": "son of Nahor (GEN 22:20-21)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "JOB 32:1": {
+    "KJV": "So these three men ceased to answer Job, because he was righteous in his own eyes.",
+    "BHSA": "וַֽיִּשְׁבְּת֡וּ שְׁלֹ֤שֶׁת הָאֲנָשִׁ֣ים הָ֭אֵלֶּה מֵעֲנֹ֣ות אֶת־אִיֹּ֑וב כִּ֤י ה֖וּא צַדִּ֣יק בְּעֵינָֽיו׃ פ "
+   },
+   "JOB 32:2": {
+    "KJV": "Then was kindled the wrath of Elihu the son of Barachel the Buzite, of the kindred of Ram: against Job was his wrath kindled, because he justified himself rather than God.",
+    "BHSA": "וַיִּ֤חַר אַ֨ף׀ אֱלִיה֣וּא בֶן־בַּרַכְאֵ֣ל הַבּוּזִי֮ מִמִּשְׁפַּ֢חַ֫ת רָ֥ם בְּ֭אִיֹּוב חָרָ֣ה אַפֹּ֑ו עַֽל־צַדְּקֹ֥ו נַ֝פְשֹׁ֗ו מֵאֱלֹהִֽים׃ "
+   },
+   "JOB 32:3": {
+    "KJV": "Also against his three friends was his wrath kindled, because they had found no answer, and yet had condemned Job.",
+    "BHSA": "וּבִשְׁלֹ֣שֶׁת רֵעָיו֮ חָרָ֢ה אַ֫פֹּ֥ו עַ֤ל אֲשֶׁ֣ר לֹא־מָצְא֣וּ מַעֲנֶ֑ה וַ֝יַּרְשִׁ֗יעוּ אֶת־אִיֹּֽוב׃ "
+   }
+  }
+ },
+ {
+  "id": 7,
+  "chapter": "1KI-16",
+  "claim": "The row 'elah-2 king-of yhvh' should be removed: the chapter does not say it.",
+  "row_verse": "1KI 16:13",
+  "records": [
+   {
+    "slug": "elah-2",
+    "name": "Elah",
+    "distinguisher": "son of Baasha and King of Israel (1KI 16:6)",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1KI 16:12": {
+    "KJV": "Thus did Zimri destroy all the house of Baasha, according to the word of the LORD, which he spake against Baasha by Jehu the prophet.",
+    "BHSA": "וַיַּשְׁמֵ֣ד זִמְרִ֔י אֵ֖ת כָּל־בֵּ֣ית בַּעְשָׁ֑א כִּדְבַ֤ר יְהוָה֙ אֲשֶׁ֣ר דִּבֶּ֣ר אֶל־בַּעְשָׁ֔א בְּיַ֖ד יֵה֥וּא הַנָּבִֽיא׃ "
+   },
+   "1KI 16:13": {
+    "KJV": "For all the sins of Baasha, and the sins of Elah his son, by which they sinned, and by which they made Israel to sin, in provoking the LORD God of Israel to anger with their vanities.",
+    "BHSA": "אֶ֚ל כָּל־חַטֹּ֣אות בַּעְשָׁ֔א וְחַטֹּ֖אות אֵלָ֣ה בְנֹ֑ו אֲשֶׁ֣ר חָטְא֗וּ וַאֲשֶׁ֤ר הֶחֱטִ֨יאוּ֙ אֶת־יִשְׂרָאֵ֔ל לְהַכְעִ֗יס אֶת־יְהוָ֛ה אֱלֹהֵ֥י יִשְׂרָאֵ֖ל בְּהַבְלֵיהֶֽם׃ "
+   },
+   "1KI 16:14": {
+    "KJV": "Now the rest of the acts of Elah, and all that he did, are they not written in the book of the chronicles of the kings of Israel?",
+    "BHSA": "וְיֶ֛תֶר דִּבְרֵ֥י אֵלָ֖ה וְכָל־אֲשֶׁ֣ר עָשָׂ֑ה הֲלֹֽוא־הֵ֣ם כְּתוּבִ֗ים עַל־סֵ֛פֶר דִּבְרֵ֥י הַיָּמִ֖ים לְמַלְכֵ֥י יִשְׂרָאֵֽל׃ פ "
+   }
+  }
+ },
+ {
+  "id": 8,
+  "chapter": "MAT-13",
+  "claim": "The row 'joseph-7 brother-of simon-3' should be removed: the chapter does not say it.",
+  "row_verse": "MAT 13:55",
+  "records": [
+   {
+    "slug": "joseph-7",
+    "name": "Joseph",
+    "distinguisher": "brother of Jesus (MAT 13:55, MRK 6:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "simon-3",
+    "name": "Simon",
+    "distinguisher": "brother of Jesus (MAT 13:55, MRK 6:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "MAT 13:54": {
+    "KJV": "And when he was come into his own country, he taught them in their synagogue, insomuch that they were astonished, and said, Whence hath this man this wisdom, and these mighty works?",
+    "NESTLE1904": "καὶ ἐλθὼν εἰς τὴν πατρίδα αὐτοῦ ἐδίδασκεν αὐτοὺς ἐν τῇ συναγωγῇ αὐτῶν, ὥστε ἐκπλήσσεσθαι αὐτοὺς καὶ λέγειν Πόθεν τούτῳ ἡ σοφία αὕτη καὶ αἱ δυνάμεις; "
+   },
+   "MAT 13:55": {
+    "KJV": "Is not this the carpenter's son? is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?",
+    "NESTLE1904": "οὐχ οὗτός ἐστιν ὁ τοῦ τέκτονος υἱός; οὐχ ἡ μήτηρ αὐτοῦ λέγεται Μαριὰμ καὶ οἱ ἀδελφοὶ αὐτοῦ Ἰάκωβος καὶ Ἰωσὴφ καὶ Σίμων καὶ Ἰούδας; "
+   },
+   "MAT 13:56": {
+    "KJV": "And his sisters, are they not all with us? Whence then hath this man all these things?",
+    "NESTLE1904": "καὶ αἱ ἀδελφαὶ αὐτοῦ οὐχὶ πᾶσαι πρὸς ἡμᾶς εἰσιν; πόθεν οὖν τούτῳ ταῦτα πάντα; "
+   }
+  }
+ },
+ {
+  "id": 9,
+  "chapter": "JOS-17",
+  "claim": "The chapter plainly states 'iezer descendant-of manasseh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "iezer",
+    "name": "Iezer",
+    "distinguisher": "named among the sons of Gilead (NUM 26:30) and called Abiezer in JOS 17:2; whether he is the Abiezer whom Gilead's sister Hammolecheth bore (1CH 7:18) the text does not settle",
+    "sex": "male"
+   },
+   {
+    "slug": "manasseh",
+    "name": "Manasseh",
+    "distinguisher": "firstborn son of Joseph (GEN 41:51)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "ephraim brother-of manasseh (GEN 48:5)",
+   "iezer son-of gilead (NUM 26:30)",
+   "zelophehad of-tribe manasseh (NUM 27:1)",
+   "joseph father-of manasseh (NUM 36:12)",
+   "manasseh son-of joseph (GEN 41:51)",
+   "manasseh brother-of ephraim (GEN 48:5)"
+  ],
+  "text": {
+   "JOS 17:1": {
+    "KJV": "There was also a lot for the tribe of Manasseh; for he was the firstborn of Joseph; to wit, for Machir the firstborn of Manasseh, the father of Gilead: because he was a man of war, therefore he had Gilead and Bashan.",
+    "BHSA": "וַיְהִ֤י הַגֹּורָל֙ לְמַטֵּ֣ה מְנַשֶּׁ֔ה כִּי־ה֖וּא בְּכֹ֣ור יֹוסֵ֑ף לְמָכִיר֩ בְּכֹ֨ור מְנַשֶּׁ֜ה אֲבִ֣י הַגִּלְעָ֗ד כִּ֣י ה֤וּא הָיָה֙ אִ֣ישׁ מִלְחָמָ֔ה וַֽיְהִי־לֹ֖ו הַגִּלְעָ֥ד וְהַבָּשָֽׁן׃ "
+   },
+   "JOS 17:2": {
+    "KJV": "There was also a lot for the rest of the children of Manasseh by their families; for the children of Abiezer, and for the children of Helek, and for the children of Asriel, and for the children of Shechem, and for the children of Hepher, and for the children of Shemida: these were the male children of Manasseh the son of Joseph by their families.",
+    "BHSA": "וַ֠יְהִי לִבְנֵ֨י מְנַשֶּׁ֥ה הַנֹּותָרִים֮ לְמִשְׁפְּחֹתָם֒ לִבְנֵ֨י אֲבִיעֶ֜זֶר וְלִבְנֵי־חֵ֗לֶק וְלִבְנֵ֤י אַשְׂרִיאֵל֙ וְלִבְנֵי־שֶׁ֔כֶם וְלִבְנֵי־חֵ֖פֶר וְלִבְנֵ֣י שְׁמִידָ֑ע אֵ֠לֶּה בְּנֵ֨י מְנַשֶּׁ֧ה בֶּן־יֹוסֵ֛ף הַזְּכָרִ֖ים לְמִשְׁפְּחֹתָֽם׃ "
+   },
+   "JOS 17:3": {
+    "KJV": "But Zelophehad, the son of Hepher, the son of Gilead, the son of Machir, the son of Manasseh, had no sons, but daughters: and these are the names of his daughters, Mahlah, and Noah, Hoglah, Milcah, and Tirzah.",
+    "BHSA": "וְלִצְלָפְחָד֩ בֶּן־חֵ֨פֶר בֶּן־גִּלְעָ֜ד בֶּן־מָכִ֣יר בֶּן־מְנַשֶּׁ֗ה לֹא־הָ֥יוּ לֹ֛ו בָּנִ֖ים כִּ֣י אִם־בָּנֹ֑ות וְאֵ֨לֶּה֙ שְׁמֹ֣ות בְּנֹתָ֔יו מַחְלָ֣ה וְנֹעָ֔ה חָגְלָ֥ה מִלְכָּ֖ה וְתִרְצָֽה׃ "
+   }
+  }
+ },
+ {
+  "id": 10,
+  "chapter": "1CH-11",
+  "claim": "The chapter plainly states 'joshebbasshebeth son-of hachmoni-father-of-jashobeam', and the site does not record it.",
+  "records": [
+   {
+    "slug": "hachmoni-father-of-jashobeam",
+    "name": "Hachmoni",
+    "distinguisher": "whose son Jashobeam was the chief of David's captains (1CH 11:11)",
+    "sex": null
+   },
+   {
+    "slug": "joshebbasshebeth",
+    "name": "Josheb-basshebeth",
+    "distinguisher": "first of \"the thirty\" of David's men, a Tahchemonite (2SA 23:8)/Hachmonite (1CH 11:11)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "hachmoni-father-of-jashobeam ancestor-of joshebbasshebeth (1CH 11:11)",
+   "joshebbasshebeth servant-of david (2SA 23:8)",
+   "joshebbasshebeth killer-of yhvh (2SA 23:8)"
+  ],
+  "text": {
+   "1CH 11:10": {
+    "KJV": "These also are the chief of the mighty men whom David had, who strengthened themselves with him in his kingdom, and with all Israel, to make him king, according to the word of the LORD concerning Israel.",
+    "BHSA": "וְאֵ֨לֶּה רָאשֵׁ֤י הַגִּבֹּורִים֙ אֲשֶׁ֣ר לְדָוִ֔יד הַמִּתְחַזְּקִ֨ים עִמֹּ֧ו בְמַלְכוּתֹ֛ו עִם־כָּל־יִשְׂרָאֵ֖ל לְהַמְלִיכֹ֑ו כִּדְבַ֥ר יְהוָ֖ה עַל־יִשְׂרָאֵֽל׃ ס "
+   },
+   "1CH 11:11": {
+    "KJV": "And this is the number of the mighty men whom David had; Jashobeam, an Hachmonite, the chief of the captains: he lifted up his spear against three hundred slain by him at one time.",
+    "BHSA": "וְאֵ֛לֶּה מִסְפַּ֥ר הַגִּבֹּרִ֖ים אֲשֶׁ֣ר לְדָוִ֑יד יָשָׁבְעָ֣ם בֶּן־חַכְמֹונִ֗י רֹ֚אשׁ השׁלושׁים הֽוּא־עֹורֵ֧ר אֶת־חֲנִיתֹ֛ו עַל־שְׁלֹשׁ־מֵאֹ֥ות חָלָ֖ל בְּפַ֥עַם אֶחָֽת׃ "
+   },
+   "1CH 11:12": {
+    "KJV": "And after him was Eleazar the son of Dodo, the Ahohite, who was one of the three mighties.",
+    "BHSA": "וְאַחֲרָ֛יו אֶלְעָזָ֥ר בֶּן־דֹּודֹ֖ו הָאֲחֹוחִ֑י ה֖וּא בִּשְׁלֹושָׁ֥ה הַגִּבֹּרִֽים׃ "
+   }
+  }
+ },
+ {
+  "id": 11,
+  "chapter": "1KI-2",
+  "claim": "The chapter plainly states 'absalom brother-of solomon', and the site does not record it.",
+  "records": [
+   {
+    "slug": "absalom",
+    "name": "Absalom",
+    "distinguisher": "third-born son of King David (2SA 3:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "solomon",
+    "name": "Solomon",
+    "distinguisher": "son of David (2SA 5:14)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "bathsheba mother-of solomon (2SA 12:24)",
+   "david father-of solomon (1CH 29:23)",
+   "solomon son-of david (1KI 1:13)",
+   "solomon son-of bathsheba (1KI 1:11)",
+   "solomon brother-of adonijah (1KI 1:10)",
+   "absalom son-of david (2SA 13:1)"
+  ],
+  "text": {
+   "1KI 2:6": {
+    "KJV": "Do therefore according to thy wisdom, and let not his hoar head go down to the grave in peace.",
+    "BHSA": "וְעָשִׂ֖יתָ כְּחָכְמָתֶ֑ךָ וְלֹֽא־תֹורֵ֧ד שֵׂיבָתֹ֛ו בְּשָׁלֹ֖ם שְׁאֹֽל׃ ס "
+   },
+   "1KI 2:7": {
+    "KJV": "But shew kindness unto the sons of Barzillai the Gileadite, and let them be of those that eat at thy table: for so they came to me when I fled because of Absalom thy brother.",
+    "BHSA": "וְלִבְנֵ֨י בַרְזִלַּ֤י הַגִּלְעָדִי֙ תַּֽעֲשֶׂה־חֶ֔סֶד וְהָי֖וּ בְּאֹכְלֵ֣י שֻׁלְחָנֶ֑ךָ כִּי־כֵן֙ קָרְב֣וּ אֵלַ֔י בְּבָרְחִ֕י מִפְּנֵ֖י אַבְשָׁלֹ֥ום אָחִֽיךָ׃ "
+   },
+   "1KI 2:8": {
+    "KJV": "And, behold, thou hast with thee Shimei the son of Gera, a Benjamite of Bahurim, which cursed me with a grievous curse in the day when I went to Mahanaim: but he came down to meet me at Jordan, and I sware to him by the LORD, saying, I will not put thee to death with the sword.",
+    "BHSA": "וְהִנֵּ֣ה עִ֠מְּךָ שִֽׁמְעִ֨י בֶן־גֵּרָ֥א בֶן־הַיְמִינִי֮ מִבַּחֻרִים֒ וְה֤וּא קִֽלְלַ֨נִי֙ קְלָלָ֣ה נִמְרֶ֔צֶת בְּיֹ֖ום לֶכְתִּ֣י מַחֲנָ֑יִם וְהֽוּא־יָרַ֤ד לִקְרָאתִי֙ הַיַּרְדֵּ֔ן וָאֶשָּׁ֨בַֽע לֹ֤ו בַֽיהוָה֙ לֵאמֹ֔ר אִם־אֲמִֽיתְךָ֖ בֶּחָֽרֶב׃ "
+   }
+  }
+ },
+ {
+  "id": 12,
+  "chapter": "1CH-11",
+  "claim": "The row 'elnaam father-of eliel-4' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 11:46",
+  "records": [
+   {
+    "slug": "eliel-4",
+    "name": "Eliel",
+    "distinguisher": "the Mahavite (1CH 11:46)",
+    "sex": "male"
+   },
+   {
+    "slug": "elnaam",
+    "name": "Elnaam",
+    "distinguisher": "father of Jeribai and Joshaviah (1CH 11:46)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 11:45": {
+    "KJV": "Jediael the son of Shimri, and Joha his brother, the Tizite,",
+    "BHSA": "יְדִֽיעֲאֵל֙ בֶּן־שִׁמְרִ֔י וְיֹחָ֥א אָחִ֖יו הַתִּיצִֽי׃ ס "
+   },
+   "1CH 11:46": {
+    "KJV": "Eliel the Mahavite, and Jeribai, and Joshaviah, the sons of Elnaam, and Ithmah the Moabite,",
+    "BHSA": "אֱלִיאֵל֙ הַֽמַּחֲוִ֔ים וִירִיבַ֥י וְיֹושַׁוְיָ֖ה בְּנֵ֣י אֶלְנָ֑עַם וְיִתְמָ֖ה הַמֹּואָבִֽי׃ "
+   },
+   "1CH 11:47": {
+    "KJV": "Eliel, and Obed, and Jasiel the Mesobaite.",
+    "BHSA": "אֱלִיאֵ֣ל וְעֹובֵ֔ד וְיַעֲשִׂיאֵ֖ל הַמְּצֹבָיָֽה׃ פ "
+   }
+  }
+ },
+ {
+  "id": 13,
+  "chapter": "2SA-17",
+  "claim": "The row 'ithra husband-of abigail-2' should be removed: the chapter does not say it.",
+  "row_verse": "2SA 17:25",
+  "records": [
+   {
+    "slug": "abigail-2",
+    "name": "Abigail",
+    "distinguisher": "daughter of Nahash, sister of Zeruiah (2SA 17:25), (half-?) sister of King David (1CH 2:16)",
+    "sex": "female"
+   },
+   {
+    "slug": "ithra",
+    "name": "Ithra",
+    "distinguisher": "father of Amasa (2SA 17:25)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "2SA 17:24": {
+    "KJV": "Then David came to Mahanaim. And Absalom passed over Jordan, he and all the men of Israel with him.",
+    "BHSA": "וְדָוִ֖ד בָּ֣א מַחֲנָ֑יְמָה וְאַבְשָׁלֹ֗ם עָבַר֙ אֶת־הַיַּרְדֵּ֔ן ה֕וּא וְכָל־אִ֥ישׁ יִשְׂרָאֵ֖ל עִמֹּֽו׃ "
+   },
+   "2SA 17:25": {
+    "KJV": "And Absalom made Amasa captain of the host instead of Joab: which Amasa was a man's son, whose name was Ithra an Israelite, that went in to Abigail the daughter of Nahash, sister to Zeruiah Joab's mother.",
+    "BHSA": "וְאֶת־עֲמָשָׂ֗א שָׂ֧ם אַבְשָׁלֹ֛ם תַּ֥חַת יֹואָ֖ב עַל־הַצָּבָ֑א וַעֲמָשָׂ֣א בֶן־אִ֗ישׁ וּשְׁמֹו֙ יִתְרָ֣א הַיִּשְׂרְאֵלִ֔י אֲשֶׁר־בָּא֙ אֶל־אֲבִיגַ֣ל בַּת־נָחָ֔שׁ אֲחֹ֥ות צְרוּיָ֖ה אֵ֥ם יֹואָֽב׃ "
+   },
+   "2SA 17:26": {
+    "KJV": "So Israel and Absalom pitched in the land of Gilead.",
+    "BHSA": "וַיִּ֤חַן יִשְׂרָאֵל֙ וְאַבְשָׁלֹ֔ם אֶ֖רֶץ הַגִּלְעָֽד׃ ס "
+   }
+  }
+ },
+ {
+  "id": 14,
+  "chapter": "GEN-34",
+  "claim": "The row 'shechem killed-by jacob' should be removed: the chapter does not say it.",
+  "row_verse": "GEN 34:26",
+  "records": [
+   {
+    "slug": "jacob",
+    "name": "Jacob",
+    "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+    "sex": "male"
+   },
+   {
+    "slug": "shechem",
+    "name": "Shechem",
+    "distinguisher": "son of Hamor, the Hivite (GEN 33:19, GEN 34:2) who raped Dinah (GEN 34:2)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "GEN 34:25": {
+    "KJV": "And it came to pass on the third day, when they were sore, that two of the sons of Jacob, Simeon and Levi, Dinah's brethren, took each man his sword, and came upon the city boldly, and slew all the males.",
+    "BHSA": "וַיְהִי֩ בַיֹּ֨ום הַשְּׁלִישִׁ֜י בִּֽהְיֹותָ֣ם כֹּֽאֲבִ֗ים וַיִּקְח֣וּ שְׁנֵֽי־בְנֵי־יַ֠עֲקֹב שִׁמְעֹ֨ון וְלֵוִ֜י אֲחֵ֤י דִינָה֙ אִ֣ישׁ חַרְבֹּ֔ו וַיָּבֹ֥אוּ עַל־הָעִ֖יר בֶּ֑טַח וַיַּֽהַרְג֖וּ כָּל־זָכָֽר׃ "
+   },
+   "GEN 34:26": {
+    "KJV": "And they slew Hamor and Shechem his son with the edge of the sword, and took Dinah out of Shechem's house, and went out.",
+    "BHSA": "וְאֶת־חֲמֹור֙ וְאֶת־שְׁכֶ֣ם בְּנֹ֔ו הָרְג֖וּ לְפִי־חָ֑רֶב וַיִּקְח֧וּ אֶת־דִּינָ֛ה מִבֵּ֥ית שְׁכֶ֖ם וַיֵּצֵֽאוּ׃ "
+   },
+   "GEN 34:27": {
+    "KJV": "The sons of Jacob came upon the slain, and spoiled the city, because they had defiled their sister.",
+    "BHSA": "בְּנֵ֣י יַעֲקֹ֗ב בָּ֚אוּ עַל־הַ֣חֲלָלִ֔ים וַיָּבֹ֖זּוּ הָעִ֑יר אֲשֶׁ֥ר טִמְּא֖וּ אֲחֹותָֽם׃ "
+   }
+  }
+ },
+ {
+  "id": 15,
+  "chapter": "1KI-22",
+  "claim": "The chapter plainly states 'david ancestor-of jehoshaphat-3', and the site does not record it.",
+  "records": [
+   {
+    "slug": "david",
+    "name": "David",
+    "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "jehoshaphat-3",
+    "name": "Jehoshaphat",
+    "distinguisher": "son of Asa and King of Judah (1KI 15:24)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "david servant-of yhvh (2SA 3:18)",
+   "jehoshaphat-3 son-of asa (1KI 15:24)",
+   "jehoshaphat-3 father-of jehoram (2KI 1:17)",
+   "jehoram son-of jehoshaphat-3 (2KI 8:16)"
+  ],
+  "text": {
+   "1KI 22:49": {
+    "KJV": "Then said Ahaziah the son of Ahab unto Jehoshaphat, Let my servants go with thy servants in the ships. But Jehoshaphat would not.",
+    "BHSA": "אָ֠ז אָמַ֞ר אֲחַזְיָ֤הוּ בֶן־אַחְאָב֙ אֶל־יְהֹ֣ושָׁפָ֔ט יֵלְכ֧וּ עֲבָדַ֛י עִם־עֲבָדֶ֖יךָ בָּאֳנִיֹּ֑ות וְלֹ֥א אָבָ֖ה יְהֹושָׁפָֽט׃ "
+   },
+   "1KI 22:50": {
+    "KJV": "And Jehoshaphat slept with his fathers, and was buried with his fathers in the city of David his father: and Jehoram his son reigned in his stead.",
+    "BHSA": "וַיִּשְׁכַּ֤ב יְהֹֽושָׁפָט֙ עִם־אֲבֹתָ֔יו וַיִּקָּבֵר֙ עִם־אֲבֹתָ֔יו בְּעִ֖יר דָּוִ֣ד אָבִ֑יו וַיִּמְלֹ֛ךְ יְהֹורָ֥ם בְּנֹ֖ו תַּחְתָּֽיו׃ ס "
+   },
+   "1KI 22:51": {
+    "KJV": "Ahaziah the son of Ahab began to reign over Israel in Samaria the seventeenth year of Jehoshaphat king of Judah, and reigned two years over Israel.",
+    "BHSA": "אֲחַזְיָ֣הוּ בֶן־אַחְאָ֗ב מָלַ֤ךְ עַל־יִשְׂרָאֵל֙ בְּשֹׁ֣מְרֹ֔ון בִּשְׁנַת֙ שְׁבַ֣ע עֶשְׂרֵ֔ה לִיהֹושָׁפָ֖ט מֶ֣לֶךְ יְהוּדָ֑ה וַיִּמְלֹ֥ךְ עַל־יִשְׂרָאֵ֖ל שְׁנָתָֽיִם׃ "
+   }
+  }
+ },
+ {
+  "id": 16,
+  "chapter": "2KI-14",
+  "claim": "The chapter plainly states 'david ancestor-of amaziah', and the site does not record it.",
+  "records": [
+   {
+    "slug": "amaziah",
+    "name": "Amaziah",
+    "distinguisher": "King of Judah, son of Joash (2KI 12:21)",
+    "sex": "male"
+   },
+   {
+    "slug": "david",
+    "name": "David",
+    "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "david servant-of yhvh (2SA 3:18)"
+  ],
+  "text": {
+   "2KI 14:2": {
+    "KJV": "He was twenty and five years old when he began to reign, and reigned twenty and nine years in Jerusalem. And his mother's name was Jehoaddan of Jerusalem.",
+    "BHSA": "בֶּן־עֶשְׂרִ֨ים וְחָמֵ֤שׁ שָׁנָה֙ הָיָ֣ה בְמָלְכֹ֔ו וְעֶשְׂרִ֤ים וָתֵ֨שַׁע֙ שָׁנָ֔ה מָלַ֖ךְ בִּירוּשָׁלִָ֑ם וְשֵׁ֣ם אִמֹּ֔ו יהועדין מִן־יְרוּשָׁלִָֽם׃ "
+   },
+   "2KI 14:3": {
+    "KJV": "And he did that which was right in the sight of the LORD, yet not like David his father: he did according to all things as Joash his father did.",
+    "BHSA": "וַיַּ֤עַשׂ הַיָּשָׁר֙ בְּעֵינֵ֣י יְהוָ֔ה רַ֕ק לֹ֖א כְּדָוִ֣ד אָבִ֑יו כְּכֹ֧ל אֲשֶׁר־עָשָׂ֛ה יֹואָ֥שׁ אָבִ֖יו עָשָֽׂה׃ "
+   },
+   "2KI 14:4": {
+    "KJV": "Howbeit the high places were not taken away: as yet the people did sacrifice and burnt incense on the high places.",
+    "BHSA": "רַ֥ק הַבָּמֹ֖ות לֹא־סָ֑רוּ עֹ֥וד הָעָ֛ם מְזַבְּחִ֥ים וּֽמְקַטְּרִ֖ים בַּבָּמֹֽות׃ "
+   }
+  }
+ },
+ {
+  "id": 17,
+  "chapter": "2CH-11",
+  "claim": "The row 'abihail-4 wife-of rehoboam' should be removed: the chapter does not say it.",
+  "row_verse": "2CH 11:18",
+  "records": [
+   {
+    "slug": "abihail-4",
+    "name": "Abihail",
+    "distinguisher": "the daughter of Eliab (2CH 11:18)",
+    "sex": "female"
+   },
+   {
+    "slug": "rehoboam",
+    "name": "Rehoboam",
+    "distinguisher": "son of Solomon who became king after him (1KI 11:43)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "2CH 11:17": {
+    "KJV": "So they strengthened the kingdom of Judah, and made Rehoboam the son of Solomon strong, three years: for three years they walked in the way of David and Solomon.",
+    "BHSA": "וַֽיְחַזְּקוּ֙ אֶת־מַלְכ֣וּת יְהוּדָ֔ה וַֽיְאַמְּצ֛וּ אֶת־רְחַבְעָ֥ם בֶּן־שְׁלֹמֹ֖ה לְשָׁנִ֣ים שָׁלֹ֑ושׁ כִּ֣י הָֽלְכ֗וּ בְּדֶ֧רֶךְ דָּוִ֛יד וּשְׁלֹמֹ֖ה לְשָׁנִ֥ים שָׁלֹֽושׁ׃ "
+   },
+   "2CH 11:18": {
+    "KJV": "And Rehoboam took him Mahalath the daughter of Jerimoth the son of David to wife, and Abihail the daughter of Eliab the son of Jesse;",
+    "BHSA": "וַיִּֽקַּֽח־לֹ֤ו רְחַבְעָם֙ אִשָּׁ֔ה אֶת־מָ֣חֲלַ֔ת בן־יְרִימֹ֖ות בֶּן־דָּוִ֑יד אֲבִיהַ֕יִל בַּת־אֱלִיאָ֖ב בֶּן־יִשָֽׁי׃ "
+   },
+   "2CH 11:19": {
+    "KJV": "Which bare him children; Jeush, and Shamariah, and Zaham.",
+    "BHSA": "וַתֵּ֥לֶד לֹ֖ו בָּנִ֑ים אֶת־יְע֥וּשׁ וְאֶת־שְׁמַרְיָ֖ה וְאֶת־זָֽהַם׃ "
+   }
+  }
+ },
+ {
+  "id": 18,
+  "chapter": "2CH-35",
+  "claim": "The row 'conaniah-chief-of-the-levites brother-of nethanel-4' points at the wrong person; it should point at 'nethanel-9'.",
+  "row_verse": "2CH 35:9",
+  "records": [
+   {
+    "slug": "conaniah-chief-of-the-levites",
+    "name": "Conaniah",
+    "distinguisher": "a chief of the Levites under Josiah, who gave the Levites cattle for the passover (2CH 35:9)",
+    "sex": null
+   },
+   {
+    "slug": "nethanel-4",
+    "name": "Nethanel",
+    "distinguisher": "the scribe, father of Shemaiah (1CH 24:6)",
+    "sex": "male"
+   },
+   {
+    "slug": "nethanel-9",
+    "name": "Nethanel",
+    "distinguisher": "Chief of the Levites under Josiah",
+    "sex": null
+   }
+  ],
+  "text": {
+   "2CH 35:8": {
+    "KJV": "And his princes gave willingly unto the people, to the priests, and to the Levites: Hilkiah and Zechariah and Jehiel, rulers of the house of God, gave unto the priests for the passover offerings two thousand and six hundred small cattle and three hundred oxen.",
+    "BHSA": "וְשָׂרָ֞יו לִנְדָבָ֥ה לָעָ֛ם לַכֹּהֲנִ֥ים וְלַלְוִיִּ֖ם הֵרִ֑ימוּ חִלְקִיָּ֨ה וּזְכַרְיָ֜הוּ וִֽיחִיאֵ֗ל נְגִידֵי֙ בֵּ֣ית הָאֱלֹהִ֔ים לַכֹּהֲנִ֞ים נָתְנ֣וּ לַפְּסָחִ֗ים אַלְפַּ֨יִם֙ וְשֵׁ֣שׁ מֵאֹ֔ות וּבָקָ֖ר שְׁלֹ֥שׁ מֵאֹֽות׃ "
+   },
+   "2CH 35:9": {
+    "KJV": "Conaniah also, and Shemaiah and Nethaneel, his brethren, and Hashabiah and Jeiel and Jozabad, chief of the Levites, gave unto the Levites for passover offerings five thousand small cattle, and five hundred oxen.",
+    "BHSA": "וכונניהו וּשְׁמַֽעְיָ֨הוּ וּנְתַנְאֵ֜ל אֶחָ֗יו וַחֲשַׁבְיָ֧הוּ וִיעִיאֵ֛ל וְיֹוזָבָ֖ד שָׂרֵ֣י הַלְוִיִּ֑ם הֵרִ֨ימוּ לַלְוִיִּ֤ם לַפְּסָחִים֙ חֲמֵ֣שֶׁת אֲלָפִ֔ים וּבָקָ֖ר חֲמֵ֥שׁ מֵאֹֽות׃ "
+   },
+   "2CH 35:10": {
+    "KJV": "So the service was prepared, and the priests stood in their place, and the Levites in their courses, according to the king's commandment.",
+    "BHSA": "וַתִּכֹּ֖ון הָעֲבֹודָ֑ה וַיַּֽעַמְד֨וּ הַכֹּהֲנִ֧ים עַל־עָמְדָ֛ם וְהַלְוִיִּ֥ם עַל־מַחְלְקֹותָ֖ם כְּמִצְוַ֥ת הַמֶּֽלֶךְ׃ "
+   }
+  }
+ },
+ {
+  "id": 19,
+  "chapter": "JER-29",
+  "claim": "The row 'elasah-2 servant-of zedekiah' points at the wrong person; it should point at 'mattaniah'.",
+  "row_verse": "JER 29:3",
+  "records": [
+   {
+    "slug": "elasah-2",
+    "name": "Elasah",
+    "distinguisher": "son of Shaphan (JER 29:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "mattaniah",
+    "name": "Mattaniah",
+    "distinguisher": "King of Judah, uncle of Jehoiachin (2KI 24:17)",
+    "sex": "male"
+   },
+   {
+    "slug": "zedekiah",
+    "name": "Zedekiah",
+    "distinguisher": "made horns of iron (1KI 22:11, 2CH 18:10)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "JER 29:2": {
+    "KJV": "(After that Jeconiah the king, and the queen, and the eunuchs, the princes of Judah and Jerusalem, and the carpenters, and the smiths, were departed from Jerusalem;)",
+    "BHSA": "אַחֲרֵ֣י צֵ֣את יְכָנְיָֽה־הַ֠מֶּלֶךְ וְהַגְּבִירָ֨ה וְהַסָּרִיסִ֜ים שָׂרֵ֨י יְהוּדָ֧ה וִירוּשָׁלִַ֛ם וְהֶחָרָ֥שׁ וְהַמַּסְגֵּ֖ר מִירוּשָׁלִָֽם׃ "
+   },
+   "JER 29:3": {
+    "KJV": "By the hand of Elasah the son of Shaphan, and Gemariah the son of Hilkiah, (whom Zedekiah king of Judah sent unto Babylon to Nebuchadnezzar king of Babylon) saying,",
+    "BHSA": "בְּיַד֙ אֶלְעָשָׂ֣ה בֶן־שָׁפָ֔ן וּגְמַרְיָ֖ה בֶּן־חִלְקִיָּ֑ה אֲשֶׁ֨ר שָׁלַ֜ח צִדְקִיָּ֣ה מֶֽלֶךְ־יְהוּדָ֗ה אֶל־נְבוּכַדְנֶאצַּ֛ר מֶ֥לֶךְ בָּבֶ֖ל בָּבֶ֥לָה לֵאמֹֽר׃ ס "
+   },
+   "JER 29:4": {
+    "KJV": "Thus saith the LORD of hosts, the God of Israel, unto all that are carried away captives, whom I have caused to be carried away from Jerusalem unto Babylon;",
+    "BHSA": "כֹּ֥ה אָמַ֛ר יְהוָ֥ה צְבָאֹ֖ות אֱלֹהֵ֣י יִשְׂרָאֵ֑ל לְכָל־הַ֨גֹּולָ֔ה אֲשֶׁר־הִגְלֵ֥יתִי מִירוּשָׁלִַ֖ם בָּבֶֽלָה׃ "
+   }
+  }
+ },
+ {
+  "id": 20,
+  "chapter": "JER-38",
+  "claim": "The chapter plainly states 'malchijah-10 son-of mattaniah', and the site does not record it.",
+  "records": [
+   {
+    "slug": "malchijah-10",
+    "name": "Malchijah",
+    "distinguisher": "father of Pashhur (JER 38:1) and son of King Zedekiah (JER 38:6)",
+    "sex": "male"
+   },
+   {
+    "slug": "mattaniah",
+    "name": "Mattaniah",
+    "distinguisher": "King of Judah, uncle of Jehoiachin (2KI 24:17)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jonathan-13 scribe-of mattaniah (JER 37:15)"
+  ],
+  "text": {
+   "JER 38:5": {
+    "KJV": "Then Zedekiah the king said, Behold, he is in your hand: for the king is not he that can do any thing against you.",
+    "BHSA": "וַיֹּ֨אמֶר֙ הַמֶּ֣לֶךְ צִדְקִיָּ֔הוּ הִנֵּה־ה֖וּא בְּיֶדְכֶ֑ם כִּֽי־אֵ֣ין הַמֶּ֔לֶךְ יוּכַ֥ל אֶתְכֶ֖ם דָּבָֽר׃ "
+   },
+   "JER 38:6": {
+    "KJV": "Then took they Jeremiah, and cast him into the dungeon of Malchiah the son of Hammelech, that was in the court of the prison: and they let down Jeremiah with cords. And in the dungeon there was no water, but mire: so Jeremiah sunk in the mire.",
+    "BHSA": "וַיִּקְח֣וּ אֶֽת־יִרְמְיָ֗הוּ וַיַּשְׁלִ֨כוּ אֹתֹ֜ו אֶל־הַבֹּ֣ור׀ מַלְכִּיָּ֣הוּ בֶן־הַמֶּ֗לֶךְ אֲשֶׁר֙ בַּחֲצַ֣ר הַמַּטָּרָ֔ה וַיְשַׁלְּח֥וּ אֶֽת־יִרְמְיָ֖הוּ בַּחֲבָלִ֑ים וּבַבֹּ֤ור אֵֽין־מַ֨יִם֙ כִּ֣י אִם־טִ֔יט וַיִּטְבַּ֥ע יִרְמְיָ֖הוּ בַּטִּֽיט׃ ס "
+   },
+   "JER 38:7": {
+    "KJV": "Now when Ebedmelech the Ethiopian, one of the eunuchs which was in the king's house, heard that they had put Jeremiah in the dungeon; the king then sitting in the gate of Benjamin;",
+    "BHSA": "וַיִּשְׁמַ֡ע עֶֽבֶד־מֶ֨לֶךְ הַכּוּשִׁ֜י אִ֣ישׁ סָרִ֗יס וְהוּא֙ בְּבֵ֣ית הַמֶּ֔לֶךְ כִּֽי־נָתְנ֥וּ אֶֽת־יִרְמְיָ֖הוּ אֶל־הַבֹּ֑ור וְהַמֶּ֥לֶךְ יֹושֵׁ֖ב בְּשַׁ֥עַר בִּנְיָמִֽן׃ "
+   }
+  }
+ },
+ {
+  "id": 21,
+  "chapter": "2KI-12",
+  "claim": "The chapter plainly states 'joash-3 descendant-of jehoshaphat-3', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jehoshaphat-3",
+    "name": "Jehoshaphat",
+    "distinguisher": "son of Asa and King of Judah (1KI 15:24)",
+    "sex": "male"
+   },
+   {
+    "slug": "joash-3",
+    "name": "Joash",
+    "distinguisher": "King of Judah (2KI 11:21), son of Ahaziah (2KI 11:2)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jehoshaphat-3 father-of jehoram (2KI 1:17)",
+   "amaziah son-of joash-3 (2KI 14:1)",
+   "joash-3 son-of ahaziah-2 (2KI 11:2)",
+   "joash-3 father-of amaziah (2KI 14:1)",
+   "jehoram son-of jehoshaphat-3 (2KI 8:16)"
+  ],
+  "text": {
+   "2KI 12:17": {
+    "KJV": "Then Hazael king of Syria went up, and fought against Gath, and took it: and Hazael set his face to go up to Jerusalem.",
+    "BHSA": "אָ֣ז יַעֲלֶ֗ה חֲזָאֵל֙ מֶ֣לֶךְ אֲרָ֔ם וַיִּלָּ֥חֶם עַל־גַּ֖ת וַֽיִּלְכְּדָ֑הּ וַיָּ֤שֶׂם חֲזָאֵל֙ פָּנָ֔יו לַעֲלֹ֖ות עַל־יְרוּשָׁלִָֽם׃ "
+   },
+   "2KI 12:18": {
+    "KJV": "And Jehoash king of Judah took all the hallowed things that Jehoshaphat, and Jehoram, and Ahaziah, his fathers, kings of Judah, had dedicated, and his own hallowed things, and all the gold that was found in the treasures of the house of the LORD, and in the king's house, and sent it to Hazael king of Syria: and he went away from Jerusalem.",
+    "BHSA": "וַיִּקַּ֞ח יְהֹואָ֣שׁ מֶֽלֶךְ־יְהוּדָ֗ה אֵ֣ת כָּל־הַקֳּדָשִׁ֡ים אֲשֶׁר־הִקְדִּ֣ישׁוּ יְהֹושָׁפָ֣ט וִיהֹורָם֩ וַאֲחַזְיָ֨הוּ אֲבֹתָ֜יו מַלְכֵ֤י יְהוּדָה֙ וְאֶת־קֳדָשָׁ֔יו וְאֵ֣ת כָּל־הַזָּהָ֗ב הַנִּמְצָ֛א בְּאֹצְרֹ֥ות בֵּית־יְהוָ֖ה וּבֵ֣ית הַמֶּ֑לֶךְ וַיִּשְׁלַ֗ח לַֽחֲזָאֵל֙ מֶ֣לֶךְ אֲרָ֔ם וַיַּ֖עַל מֵעַ֥ל יְרוּשָׁלִָֽם׃ "
+   },
+   "2KI 12:19": {
+    "KJV": "And the rest of the acts of Joash, and all that he did, are they not written in the book of the chronicles of the kings of Judah?",
+    "BHSA": "וְיֶ֛תֶר דִּבְרֵ֥י יֹואָ֖שׁ וְכָל־אֲשֶׁ֣ר עָשָׂ֑ה הֲלֹוא־הֵ֣ם כְּתוּבִ֗ים עַל־סֵ֛פֶר דִּבְרֵ֥י הַיָּמִ֖ים לְמַלְכֵ֥י יְהוּדָֽה׃ "
+   }
+  }
+ },
+ {
+  "id": 22,
+  "chapter": "1CH-12",
+  "claim": "The row 'azmaveth-2 father-of jeziel' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 12:3",
+  "records": [
+   {
+    "slug": "azmaveth-2",
+    "name": "Azmaveth",
+    "distinguisher": "son of Jehoadda (1CH 8:36)",
+    "sex": "male"
+   },
+   {
+    "slug": "jeziel",
+    "name": "Jeziel",
+    "distinguisher": "son of Azmaveth (1CH 12:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 12:2": {
+    "KJV": "They were armed with bows, and could use both the right hand and the left in hurling stones and shooting arrows out of a bow, even of Saul's brethren of Benjamin.",
+    "BHSA": "נֹ֣שְׁקֵי קֶ֗שֶׁת מַיְמִינִ֤ים וּמַשְׂמִאלִים֙ בָּֽאֲבָנִ֔ים וּבַחִצִּ֖ים בַּקָּ֑שֶׁת מֵאֲחֵ֥י שָׁא֖וּל מִבִּנְיָמִֽן׃ "
+   },
+   "1CH 12:3": {
+    "KJV": "The chief was Ahiezer, then Joash, the sons of Shemaah the Gibeathite; and Jeziel, and Pelet, the sons of Azmaveth; and Berachah, and Jehu the Antothite.",
+    "BHSA": "הָרֹ֨אשׁ אֲחִיעֶ֜זֶר וְיֹואָ֗שׁ בְּנֵי֙ הַשְּׁמָעָ֣ה הַגִּבְעָתִ֔י ויזואל וָפֶ֖לֶט בְּנֵ֣י עַזְמָ֑וֶת וּבְרָכָ֕ה וְיֵה֖וּא הָעֲנְּתֹתִֽי׃ "
+   },
+   "1CH 12:4": {
+    "KJV": "And Ismaiah the Gibeonite, a mighty man among the thirty, and over the thirty; and Jeremiah, and Jahaziel, and Johanan, and Josabad the Gederathite,",
+    "BHSA": "וְיִרְמְיָ֤ה וְיַחֲזִיאֵל֙ וְיֹ֣וחָנָ֔ן וְיֹוזָבָ֖ד הַגְּדֵרָתִֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 23,
+  "chapter": "2KI-16",
+  "claim": "The row 'ahaz king-of judah' should be removed: the chapter does not say it.",
+  "row_verse": "2KI 16:1",
+  "records": [
+   {
+    "slug": "ahaz",
+    "name": "Ahaz",
+    "distinguisher": "King of Judah, son of Jotham (2KI 15:38)",
+    "sex": "male"
+   },
+   {
+    "slug": "judah",
+    "name": "Judah",
+    "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "2KI 16:1": {
+    "KJV": "In the seventeenth year of Pekah the son of Remaliah Ahaz the son of Jotham king of Judah began to reign.",
+    "BHSA": "בִּשְׁנַת֙ שְׁבַֽע־עֶשְׂרֵ֣ה שָׁנָ֔ה לְפֶ֖קַח בֶּן־רְמַלְיָ֑הוּ מָלַ֛ךְ אָחָ֥ז בֶּן־יֹותָ֖ם מֶ֥לֶךְ יְהוּדָֽה׃ "
+   },
+   "2KI 16:2": {
+    "KJV": "Twenty years old was Ahaz when he began to reign, and reigned sixteen years in Jerusalem, and did not that which was right in the sight of the LORD his God, like David his father.",
+    "BHSA": "בֶּן־עֶשְׂרִ֤ים שָׁנָה֙ אָחָ֣ז בְּמָלְכֹ֔ו וְשֵׁשׁ־עֶשְׂרֵ֣ה שָׁנָ֔ה מָלַ֖ךְ בִּירוּשָׁלִָ֑ם וְלֹא־עָשָׂ֣ה הַיָּשָׁ֗ר בְּעֵינֵ֛י יְהוָ֥ה אֱלֹהָ֖יו כְּדָוִ֥ד אָבִֽיו׃ "
+   }
+  }
+ },
+ {
+  "id": 24,
+  "chapter": "2CH-29",
+  "claim": "The row 'kishi descendant-of merari' should be removed: the chapter does not say it.",
+  "row_verse": "2CH 29:12",
+  "records": [
+   {
+    "slug": "kishi",
+    "name": "Kishi",
+    "distinguisher": "son of Abdi (1CH 6:44)",
+    "sex": "male"
+   },
+   {
+    "slug": "merari",
+    "name": "Merari",
+    "distinguisher": "son of Levi (GEN 46:11)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "2CH 29:11": {
+    "KJV": "My sons, be not now negligent: for the LORD hath chosen you to stand before him, to serve him, and that ye should minister unto him, and burn incense.",
+    "BHSA": "בָּנַ֕י עַתָּ֖ה אַל־תִּשָּׁל֑וּ כִּֽי־בָכֶ֞ם בָּחַ֣ר יְהוָ֗ה לַעֲמֹ֤ד לְפָנָיו֙ לְשָׁ֣רְתֹ֔ו וְלִהְיֹ֥ות לֹ֖ו מְשָׁרְתִ֥ים וּמַקְטִרִֽים׃ ס "
+   },
+   "2CH 29:12": {
+    "KJV": "Then the Levites arose, Mahath the son of Amasai, and Joel the son of Azariah, of the sons of the Kohathites: and of the sons of Merari, Kish the son of Abdi, and Azariah the son of Jehalelel: and of the Gershonites; Joah the son of Zimmah, and Eden the son of Joah:",
+    "BHSA": "וַיָּקֻ֣מוּ הַ֠לְוִיִּם מַ֣חַת בֶּן־עֲמָשַׂ֞י וְיֹואֵ֣ל בֶּן־עֲזַרְיָהוּ֮ מִן־בְּנֵ֣י הַקְּהָתִי֒ וּמִן־בְּנֵ֣י מְרָרִ֔י קִ֚ישׁ בֶּן־עַבְדִּ֔י וַעֲזַרְיָ֖הוּ בֶּן־יְהַלֶּלְאֵ֑ל וּמִן־הַגֵּ֣רְשֻׁנִּ֔י יֹואָח֙ בֶּן־זִמָּ֔ה וְעֵ֖דֶן בֶּן־יֹואָֽח׃ "
+   },
+   "2CH 29:13": {
+    "KJV": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:",
+    "BHSA": "וּמִן־בְּנֵי֙ אֱלִ֣יצָפָ֔ן שִׁמְרִ֖י ויעואל וּמִן־בְּנֵ֣י אָסָ֔ף זְכַרְיָ֖הוּ וּמַתַּנְיָֽהוּ׃ ס "
+   }
+  }
+ },
+ {
+  "id": 25,
+  "chapter": "1CH-27",
+  "claim": "The row 'azmaveth-3 son-of adiel-2' points at the wrong person; it should point at 'adiel-3'.",
+  "row_verse": "1CH 27:25",
+  "records": [
+   {
+    "slug": "adiel-2",
+    "name": "Adiel",
+    "distinguisher": "son of Jahzerah (1CH 9:12)",
+    "sex": "male"
+   },
+   {
+    "slug": "adiel-3",
+    "name": "Adiel",
+    "distinguisher": "Father of Azmaveth, David's treasurer",
+    "sex": null
+   },
+   {
+    "slug": "azmaveth-3",
+    "name": "Azmaveth",
+    "distinguisher": "in charge of the king's storehouses, son of Adiel (1CH 27:25)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 27:24": {
+    "KJV": "Joab the son of Zeruiah began to number, but he finished not, because there fell wrath for it against Israel; neither was the number put in the account of the chronicles of king David.",
+    "BHSA": "יֹואָ֨ב בֶּן־צְרוּיָ֜ה הֵחֵ֤ל לִמְנֹות֙ וְלֹ֣א כִלָּ֔ה וַיְהִ֥י בָזֹ֛את קֶ֖צֶף עַל־יִשְׂרָאֵ֑ל וְלֹ֤א עָלָה֙ הַמִּסְפָּ֔ר בְּמִסְפַּ֥ר דִּבְרֵֽי־הַיָּמִ֖ים לַמֶּ֥לֶךְ דָּוִֽיד׃ ס "
+   },
+   "1CH 27:25": {
+    "KJV": "And over the king's treasures was Azmaveth the son of Adiel: and over the storehouses in the fields, in the cities, and in the villages, and in the castles, was Jehonathan the son of Uzziah:",
+    "BHSA": "וְעַל֙ אֹצְרֹ֣ות הַמֶּ֔לֶךְ עַזְמָ֖וֶת בֶּן־עֲדִיאֵ֑ל ס וְעַ֣ל הָֽאֹצָרֹ֡ות בַּשָּׂדֶ֞ה בֶּעָרִ֤ים וּבַכְּפָרִים֙ וּבַמִּגְדָּלֹ֔ות יְהֹונָתָ֖ן בֶּן־עֻזִּיָּֽהוּ׃ ס "
+   },
+   "1CH 27:26": {
+    "KJV": "And over them that did the work of the field for tillage of the ground was Ezri the son of Chelub:",
+    "BHSA": "וְעַ֗ל עֹשֵׂי֙ מְלֶ֣אכֶת הַשָּׂדֶ֔ה לַעֲבֹדַ֖ת הָאֲדָמָ֑ה עֶזְרִ֖י בֶּן־כְּלֽוּב׃ "
+   }
+  }
+ },
+ {
+  "id": 26,
+  "chapter": "2KI-12",
+  "claim": "The chapter plainly states 'joash-3 descendant-of jehoram', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jehoram",
+    "name": "Jehoram",
+    "distinguisher": "King of Judah and son of Jehoshaphat (1KI 22:50)",
+    "sex": "male"
+   },
+   {
+    "slug": "joash-3",
+    "name": "Joash",
+    "distinguisher": "King of Judah (2KI 11:21), son of Ahaziah (2KI 11:2)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "ahaziah-2 son-of jehoram (2KI 8:24)",
+   "jehoshaphat-3 father-of jehoram (2KI 1:17)",
+   "amaziah son-of joash-3 (2KI 14:1)",
+   "joash-3 son-of ahaziah-2 (2KI 11:2)",
+   "joash-3 father-of amaziah (2KI 14:1)",
+   "jehoram son-of jehoshaphat-3 (2KI 8:16)"
+  ],
+  "text": {
+   "2KI 12:17": {
+    "KJV": "Then Hazael king of Syria went up, and fought against Gath, and took it: and Hazael set his face to go up to Jerusalem.",
+    "BHSA": "אָ֣ז יַעֲלֶ֗ה חֲזָאֵל֙ מֶ֣לֶךְ אֲרָ֔ם וַיִּלָּ֥חֶם עַל־גַּ֖ת וַֽיִּלְכְּדָ֑הּ וַיָּ֤שֶׂם חֲזָאֵל֙ פָּנָ֔יו לַעֲלֹ֖ות עַל־יְרוּשָׁלִָֽם׃ "
+   },
+   "2KI 12:18": {
+    "KJV": "And Jehoash king of Judah took all the hallowed things that Jehoshaphat, and Jehoram, and Ahaziah, his fathers, kings of Judah, had dedicated, and his own hallowed things, and all the gold that was found in the treasures of the house of the LORD, and in the king's house, and sent it to Hazael king of Syria: and he went away from Jerusalem.",
+    "BHSA": "וַיִּקַּ֞ח יְהֹואָ֣שׁ מֶֽלֶךְ־יְהוּדָ֗ה אֵ֣ת כָּל־הַקֳּדָשִׁ֡ים אֲשֶׁר־הִקְדִּ֣ישׁוּ יְהֹושָׁפָ֣ט וִיהֹורָם֩ וַאֲחַזְיָ֨הוּ אֲבֹתָ֜יו מַלְכֵ֤י יְהוּדָה֙ וְאֶת־קֳדָשָׁ֔יו וְאֵ֣ת כָּל־הַזָּהָ֗ב הַנִּמְצָ֛א בְּאֹצְרֹ֥ות בֵּית־יְהוָ֖ה וּבֵ֣ית הַמֶּ֑לֶךְ וַיִּשְׁלַ֗ח לַֽחֲזָאֵל֙ מֶ֣לֶךְ אֲרָ֔ם וַיַּ֖עַל מֵעַ֥ל יְרוּשָׁלִָֽם׃ "
+   },
+   "2KI 12:19": {
+    "KJV": "And the rest of the acts of Joash, and all that he did, are they not written in the book of the chronicles of the kings of Judah?",
+    "BHSA": "וְיֶ֛תֶר דִּבְרֵ֥י יֹואָ֖שׁ וְכָל־אֲשֶׁ֣ר עָשָׂ֑ה הֲלֹוא־הֵ֣ם כְּתוּבִ֗ים עַל־סֵ֛פֶר דִּבְרֵ֥י הַיָּמִ֖ים לְמַלְכֵ֥י יְהוּדָֽה׃ "
+   }
+  }
+ },
+ {
+  "id": 27,
+  "chapter": "1CH-27",
+  "claim": "The row 'zabdiel father-of joshebbasshebeth' points at the wrong person; it should point at 'jashobeam-2'.",
+  "row_verse": "1CH 27:2",
+  "records": [
+   {
+    "slug": "jashobeam-2",
+    "name": "Jashobeam",
+    "distinguisher": "son of Zabdiel, captain of the first monthly course of 24,000 under David",
+    "sex": null
+   },
+   {
+    "slug": "joshebbasshebeth",
+    "name": "Josheb-basshebeth",
+    "distinguisher": "first of \"the thirty\" of David's men, a Tahchemonite (2SA 23:8)/Hachmonite (1CH 11:11)",
+    "sex": "male"
+   },
+   {
+    "slug": "zabdiel",
+    "name": "Zabdiel",
+    "distinguisher": "father of Jashobeam (1CH 27:2), descendant of Perez (1CH 27:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 27:1": {
+    "KJV": "Now the children of Israel after their number, to wit, the chief fathers and captains of thousands and hundreds, and their officers that served the king in any matter of the courses, which came in and went out month by month throughout all the months of the year, of every course were twenty and four thousand.",
+    "BHSA": "וּבְנֵ֣י יִשְׂרָאֵ֣ל׀ לְֽמִסְפָּרָ֡ם רָאשֵׁ֣י הָאָבֹ֣ות וְשָׂרֵ֣י הָֽאֲלָפִ֣ים׀ וְהַמֵּאֹ֡ות וְשֹׁטְרֵיהֶם֩ הַמְשָׁרְתִ֨ים אֶת־הַמֶּ֜לֶךְ לְכֹ֣ל׀ דְּבַ֣ר הַֽמַּחְלְקֹ֗ות הַבָּאָ֤ה וְהַיֹּצֵאת֙ חֹ֣דֶשׁ בְּחֹ֔דֶשׁ לְכֹ֖ל חָדְשֵׁ֣י הַשָּׁנָ֑ה הַֽמַּחֲלֹ֨קֶת֙ הָֽאַחַ֔ת עֶשְׂרִ֥ים וְאַרְבָּעָ֖ה אָֽלֶף׃ ס "
+   },
+   "1CH 27:2": {
+    "KJV": "Over the first course for the first month was Jashobeam the son of Zabdiel: and in his course were twenty and four thousand.",
+    "BHSA": "עַ֞ל הַמַּחֲלֹ֤קֶת הָרִֽאשֹׁונָה֙ לַחֹ֣דֶשׁ הָרִאשֹׁ֔ון יָֽשָׁבְעָ֖ם בֶּן־זַבְדִּיאֵ֑ל וְעַל֙ מַֽחֲלֻקְתֹּ֔ו עֶשְׂרִ֥ים וְאַרְבָּעָ֖ה אָֽלֶף׃ "
+   },
+   "1CH 27:3": {
+    "KJV": "Of the children of Perez was the chief of all the captains of the host for the first month.",
+    "BHSA": "מִן־בְּנֵי־פֶ֗רֶץ הָרֹ֛אשׁ לְכָל־שָׂרֵ֥י הַצְּבָאֹ֖ות לַחֹ֥דֶשׁ הָרִאשֹֽׁון׃ "
+   }
+  }
+ },
+ {
+  "id": 28,
+  "chapter": "2CH-21",
+  "claim": "The chapter plainly states 'jehoram brother-of michael-7', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jehoram",
+    "name": "Jehoram",
+    "distinguisher": "King of Judah and son of Jehoshaphat (1KI 22:50)",
+    "sex": "male"
+   },
+   {
+    "slug": "michael-7",
+    "name": "Michael",
+    "distinguisher": "son of Jehoshaphat (2CH 21:2)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jehoram killer-of michael-7 (2CH 21:4)",
+   "ahaziah-2 son-of jehoram (2KI 8:24)",
+   "jehoshaphat-3 father-of jehoram (2KI 1:17)",
+   "jehoram son-of jehoshaphat-3 (2KI 8:16)",
+   "jehoram father-of ahaziah-2 (2CH 22:1)"
+  ],
+  "text": {
+   "2CH 21:1": {
+    "KJV": "Now Jehoshaphat slept with his fathers, and was buried with his fathers in the city of David. And Jehoram his son reigned in his stead.",
+    "BHSA": "וַיִּשְׁכַּ֤ב יְהֹֽושָׁפָט֙ עִם־אֲבֹתָ֔יו וַיִּקָּבֵ֥ר עִם־אֲבֹתָ֖יו בְּעִ֣יר דָּוִ֑יד וַיִּמְלֹ֛ךְ יְהֹורָ֥ם בְּנֹ֖ו תַּחְתָּֽיו׃ "
+   },
+   "2CH 21:2": {
+    "KJV": "And he had brethren the sons of Jehoshaphat, Azariah, and Jehiel, and Zechariah, and Azariah, and Michael, and Shephatiah: all these were the sons of Jehoshaphat king of Israel.",
+    "BHSA": "וְלֹֽו־אַחִ֞ים בְּנֵ֣י יְהֹושָׁפָ֗ט עֲזַרְיָ֤ה וִֽיחִיאֵל֙ וּזְכַרְיָ֣הוּ וַעֲזַרְיָ֔הוּ וּמִיכָאֵ֖ל וּשְׁפַטְיָ֑הוּ כָּל־אֵ֕לֶּה בְּנֵ֥י יְהֹושָׁפָ֖ט מֶ֥לֶךְ־יִשְׂרָאֵֽל׃ "
+   },
+   "2CH 21:3": {
+    "KJV": "And their father gave them great gifts of silver, and of gold, and of precious things, with fenced cities in Judah: but the kingdom gave he to Jehoram; because he was the firstborn.",
+    "BHSA": "וַיִּתֵּ֣ן לָהֶ֣ם׀ אֲ֠בִיהֶם מַתָּנֹ֨ות רַבֹּ֜ות לְכֶ֤סֶף וּלְזָהָב֙ וּלְמִגְדָּנֹ֔ות עִם־עָרֵ֥י מְצֻרֹ֖ות בִּֽיהוּדָ֑ה וְאֶת־הַמַּמְלָכָ֛ה נָתַ֥ן לִֽיהֹורָ֖ם כִּי־ה֥וּא הַבְּכֹֽור׃ פ "
+   }
+  }
+ },
+ {
+  "id": 29,
+  "chapter": "1CH-27",
+  "claim": "The row 'uzziah father-of jonathan-7' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 27:25",
+  "records": [
+   {
+    "slug": "jonathan-7",
+    "name": "Jonathan",
+    "distinguisher": "in charge of the other storehouses, son of Uzziah (1CH 27:25)",
+    "sex": "male"
+   },
+   {
+    "slug": "uzziah",
+    "name": "Uzziah",
+    "distinguisher": "son of Uriel (1CH 6:24)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 27:24": {
+    "KJV": "Joab the son of Zeruiah began to number, but he finished not, because there fell wrath for it against Israel; neither was the number put in the account of the chronicles of king David.",
+    "BHSA": "יֹואָ֨ב בֶּן־צְרוּיָ֜ה הֵחֵ֤ל לִמְנֹות֙ וְלֹ֣א כִלָּ֔ה וַיְהִ֥י בָזֹ֛את קֶ֖צֶף עַל־יִשְׂרָאֵ֑ל וְלֹ֤א עָלָה֙ הַמִּסְפָּ֔ר בְּמִסְפַּ֥ר דִּבְרֵֽי־הַיָּמִ֖ים לַמֶּ֥לֶךְ דָּוִֽיד׃ ס "
+   },
+   "1CH 27:25": {
+    "KJV": "And over the king's treasures was Azmaveth the son of Adiel: and over the storehouses in the fields, in the cities, and in the villages, and in the castles, was Jehonathan the son of Uzziah:",
+    "BHSA": "וְעַל֙ אֹצְרֹ֣ות הַמֶּ֔לֶךְ עַזְמָ֖וֶת בֶּן־עֲדִיאֵ֑ל ס וְעַ֣ל הָֽאֹצָרֹ֡ות בַּשָּׂדֶ֞ה בֶּעָרִ֤ים וּבַכְּפָרִים֙ וּבַמִּגְדָּלֹ֔ות יְהֹונָתָ֖ן בֶּן־עֻזִּיָּֽהוּ׃ ס "
+   },
+   "1CH 27:26": {
+    "KJV": "And over them that did the work of the field for tillage of the ground was Ezri the son of Chelub:",
+    "BHSA": "וְעַ֗ל עֹשֵׂי֙ מְלֶ֣אכֶת הַשָּׂדֶ֔ה לַעֲבֹדַ֖ת הָאֲדָמָ֑ה עֶזְרִ֖י בֶּן־כְּלֽוּב׃ "
+   }
+  }
+ },
+ {
+  "id": 30,
+  "chapter": "MAT-13",
+  "claim": "The row 'joseph-7 brother-of james-3' should be removed: the chapter does not say it.",
+  "row_verse": "MAT 13:55",
+  "records": [
+   {
+    "slug": "james-3",
+    "name": "James",
+    "distinguisher": "brother of Jesus (MAT 13:55), 'the Lord's brother' (GAL 1:19)",
+    "sex": "male"
+   },
+   {
+    "slug": "joseph-7",
+    "name": "Joseph",
+    "distinguisher": "brother of Jesus (MAT 13:55, MRK 6:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "MAT 13:54": {
+    "KJV": "And when he was come into his own country, he taught them in their synagogue, insomuch that they were astonished, and said, Whence hath this man this wisdom, and these mighty works?",
+    "NESTLE1904": "καὶ ἐλθὼν εἰς τὴν πατρίδα αὐτοῦ ἐδίδασκεν αὐτοὺς ἐν τῇ συναγωγῇ αὐτῶν, ὥστε ἐκπλήσσεσθαι αὐτοὺς καὶ λέγειν Πόθεν τούτῳ ἡ σοφία αὕτη καὶ αἱ δυνάμεις; "
+   },
+   "MAT 13:55": {
+    "KJV": "Is not this the carpenter's son? is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?",
+    "NESTLE1904": "οὐχ οὗτός ἐστιν ὁ τοῦ τέκτονος υἱός; οὐχ ἡ μήτηρ αὐτοῦ λέγεται Μαριὰμ καὶ οἱ ἀδελφοὶ αὐτοῦ Ἰάκωβος καὶ Ἰωσὴφ καὶ Σίμων καὶ Ἰούδας; "
+   },
+   "MAT 13:56": {
+    "KJV": "And his sisters, are they not all with us? Whence then hath this man all these things?",
+    "NESTLE1904": "καὶ αἱ ἀδελφαὶ αὐτοῦ οὐχὶ πᾶσαι πρὸς ἡμᾶς εἰσιν; πόθεν οὖν τούτῳ ταῦτα πάντα; "
+   }
+  }
+ },
+ {
+  "id": 31,
+  "chapter": "2SA-23",
+  "claim": "The row 'zelek servant-of joab' should be removed: the chapter does not say it.",
+  "row_verse": "2SA 23:37",
+  "records": [
+   {
+    "slug": "joab",
+    "name": "Joab",
+    "distinguisher": "son of Zeruiah (2SA 2:13), commander of David's army (1CH 27:34)",
+    "sex": "male"
+   },
+   {
+    "slug": "zelek",
+    "name": "Zelek",
+    "distinguisher": "the Ammonite, thirty-third of \"the thirty\" of David's men (2SA 23:37)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "2SA 23:36": {
+    "KJV": "Igal the son of Nathan of Zobah, Bani the Gadite,",
+    "BHSA": "יִגְאָ֤ל בֶּן־נָתָן֙ מִצֹּבָ֔ה ס בָּנִ֖י הַגָּדִֽי׃ ס "
+   },
+   "2SA 23:37": {
+    "KJV": "Zelek the Ammonite, Nahari the Beerothite, armourbearer to Joab the son of Zeruiah,",
+    "BHSA": "צֶ֖לֶק הָעַמֹּנִ֑י ס נַחְרַי֙ הַבְּאֵ֣רֹתִ֔י נשׂאי כְּלֵ֖י יֹואָ֥ב בֶּן־צְרֻיָֽה׃ ס "
+   },
+   "2SA 23:38": {
+    "KJV": "Ira an Ithrite, Gareb an Ithrite,",
+    "BHSA": "עִירָא֙ הַיִּתְרִ֔י גָּרֵ֖ב הַיִּתְרִֽי׃ ס "
+   }
+  }
+ },
+ {
+  "id": 32,
+  "chapter": "EXO-31",
+  "claim": "The row 'ahisamach of-tribe dan' should be removed: the chapter does not say it.",
+  "row_verse": "EXO 31:6",
+  "records": [
+   {
+    "slug": "ahisamach",
+    "name": "Ahisamach",
+    "distinguisher": "father of Oholiab (EXO 31:6)",
+    "sex": "male"
+   },
+   {
+    "slug": "dan",
+    "name": "Dan",
+    "distinguisher": "fifth-born son of Jacob (GEN 30:5), son of Bilhah, Rachel's handmaid",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "EXO 31:5": {
+    "KJV": "And in cutting of stones, to set them, and in carving of timber, to work in all manner of workmanship.",
+    "BHSA": "וּבַחֲרֹ֥שֶׁת אֶ֛בֶן לְמַלֹּ֖את וּבַחֲרֹ֣שֶׁת עֵ֑ץ לַעֲשֹׂ֖ות בְּכָל־מְלָאכָֽה׃ "
+   },
+   "EXO 31:6": {
+    "KJV": "And I, behold, I have given with him Aholiab, the son of Ahisamach, of the tribe of Dan: and in the hearts of all that are wise hearted I have put wisdom, that they may make all that I have commanded thee;",
+    "BHSA": "וַאֲנִ֞י הִנֵּ֧ה נָתַ֣תִּי אִתֹּ֗ו אֵ֣ת אָהֳלִיאָ֞ב בֶּן־אֲחִֽיסָמָךְ֙ לְמַטֵּה־דָ֔ן וּבְלֵ֥ב כָּל־חֲכַם־לֵ֖ב נָתַ֣תִּי חָכְמָ֑ה וְעָשׂ֕וּ אֵ֖ת כָּל־אֲשֶׁ֥ר צִוִּיתִֽךָ׃ "
+   },
+   "EXO 31:7": {
+    "KJV": "The tabernacle of the congregation, and the ark of the testimony, and the mercy seat that is thereupon, and all the furniture of the tabernacle,",
+    "BHSA": "אֵ֣ת׀ אֹ֣הֶל מֹועֵ֗ד וְאֶת־הָֽאָרֹן֙ לָֽעֵדֻ֔ת וְאֶת־הַכַּפֹּ֖רֶת אֲשֶׁ֣ר עָלָ֑יו וְאֵ֖ת כָּל־כְּלֵ֥י הָאֹֽהֶל׃ "
+   }
+  }
+ },
+ {
+  "id": 33,
+  "chapter": "2CH-29",
+  "claim": "The chapter plainly states 'joel-8 descendant-of kohath', and the site does not record it.",
+  "records": [
+   {
+    "slug": "joel-8",
+    "name": "Joel",
+    "distinguisher": "Kohathite during reign of Hezekiah (2CH 29:12)",
+    "sex": "male"
+   },
+   {
+    "slug": "kohath",
+    "name": "Kohath",
+    "distinguisher": "son of Levi (GEN 46:11)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "2CH 29:11": {
+    "KJV": "My sons, be not now negligent: for the LORD hath chosen you to stand before him, to serve him, and that ye should minister unto him, and burn incense.",
+    "BHSA": "בָּנַ֕י עַתָּ֖ה אַל־תִּשָּׁל֑וּ כִּֽי־בָכֶ֞ם בָּחַ֣ר יְהוָ֗ה לַעֲמֹ֤ד לְפָנָיו֙ לְשָׁ֣רְתֹ֔ו וְלִהְיֹ֥ות לֹ֖ו מְשָׁרְתִ֥ים וּמַקְטִרִֽים׃ ס "
+   },
+   "2CH 29:12": {
+    "KJV": "Then the Levites arose, Mahath the son of Amasai, and Joel the son of Azariah, of the sons of the Kohathites: and of the sons of Merari, Kish the son of Abdi, and Azariah the son of Jehalelel: and of the Gershonites; Joah the son of Zimmah, and Eden the son of Joah:",
+    "BHSA": "וַיָּקֻ֣מוּ הַ֠לְוִיִּם מַ֣חַת בֶּן־עֲמָשַׂ֞י וְיֹואֵ֣ל בֶּן־עֲזַרְיָהוּ֮ מִן־בְּנֵ֣י הַקְּהָתִי֒ וּמִן־בְּנֵ֣י מְרָרִ֔י קִ֚ישׁ בֶּן־עַבְדִּ֔י וַעֲזַרְיָ֖הוּ בֶּן־יְהַלֶּלְאֵ֑ל וּמִן־הַגֵּ֣רְשֻׁנִּ֔י יֹואָח֙ בֶּן־זִמָּ֔ה וְעֵ֖דֶן בֶּן־יֹואָֽח׃ "
+   },
+   "2CH 29:13": {
+    "KJV": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:",
+    "BHSA": "וּמִן־בְּנֵי֙ אֱלִ֣יצָפָ֔ן שִׁמְרִ֖י ויעואל וּמִן־בְּנֵ֣י אָסָ֔ף זְכַרְיָ֖הוּ וּמַתַּנְיָֽהוּ׃ ס "
+   }
+  }
+ },
+ {
+  "id": 34,
+  "chapter": "2KI-8",
+  "claim": "The chapter plainly states 'athaliah daughter-of ahab', and the site does not record it.",
+  "records": [
+   {
+    "slug": "ahab",
+    "name": "Ahab",
+    "distinguisher": "son of Omri and King of Israel (1KI 16:28)",
+    "sex": "male"
+   },
+   {
+    "slug": "athaliah",
+    "name": "Athaliah",
+    "distinguisher": "daughter of Ahab and grandaughter of Omri (2KI 8:26, 2CH 22:2))",
+    "sex": "female"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "ahab son-of omri (1KI 16:29)",
+   "jehoram-2 son-of ahab (2KI 3:1)",
+   "omri father-of ahab (1KI 16:29)",
+   "athaliah mother-of ahaziah-2 (2KI 11:1)"
+  ],
+  "text": {
+   "2KI 8:17": {
+    "KJV": "Thirty and two years old was he when he began to reign; and he reigned eight years in Jerusalem.",
+    "BHSA": "בֶּן־שְׁלֹשִׁ֥ים וּשְׁתַּ֛יִם שָׁנָ֖ה הָיָ֣ה בְמָלְכֹ֑ו וּשְׁמֹנֶ֣ה שׁנה מָלַ֖ךְ בִּירוּשָׁלִָֽם׃ "
+   },
+   "2KI 8:18": {
+    "KJV": "And he walked in the way of the kings of Israel, as did the house of Ahab: for the daughter of Ahab was his wife: and he did evil in the sight of the LORD.",
+    "BHSA": "וַיֵּ֨לֶךְ בְּדֶ֣רֶךְ׀ מַלְכֵ֣י יִשְׂרָאֵ֗ל כַּאֲשֶׁ֤ר עָשׂוּ֙ בֵּ֣ית אַחְאָ֔ב כִּ֚י בַּת־אַחְאָ֔ב הָֽיְתָה־לֹּ֖ו לְאִשָּׁ֑ה וַיַּ֥עַשׂ הָרַ֖ע בְּעֵינֵ֥י יְהוָֽה׃ "
+   },
+   "2KI 8:19": {
+    "KJV": "Yet the LORD would not destroy Judah for David his servant's sake, as he promised him to give him alway a light, and to his children.",
+    "BHSA": "וְלֹֽא־אָבָ֤ה יְהוָה֙ לְהַשְׁחִ֣ית אֶת־יְהוּדָ֔ה לְמַ֖עַן דָּוִ֣ד עַבְדֹּ֑ו כַּאֲשֶׁ֣ר אָֽמַר־לֹ֗ו לָתֵ֨ת לֹ֥ו נִ֛יר לְבָנָ֖יו כָּל־הַיָּמִֽים׃ "
+   }
+  }
+ },
+ {
+  "id": 35,
+  "chapter": "MAT-10",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "bartholomew apostle-of jesus (ACT 1:13)",
+   "judas disciple-of jesus (MAT 26:47)",
+   "matthew disciple-of jesus (MAT 9:9)",
+   "philip disciple-of jesus (JHN 1:43)",
+   "thomas disciple-of jesus (JHN 20:26)"
+  ],
+  "text": {
+   "MAT 10:31": {
+    "KJV": "Fear ye not therefore, ye are of more value than many sparrows.",
+    "NESTLE1904": "μὴ οὖν φοβεῖσθε· πολλῶν στρουθίων διαφέρετε ὑμεῖς. "
+   },
+   "MAT 10:32": {
+    "KJV": "Whosoever therefore shall confess me before men, him will I confess also before my Father which is in heaven.",
+    "NESTLE1904": "Πᾶς οὖν ὅστις ὁμολογήσει ἐν ἐμοὶ ἔμπροσθεν τῶν ἀνθρώπων, ὁμολογήσω κἀγὼ ἐν αὐτῷ ἔμπροσθεν τοῦ Πατρός μου τοῦ ἐν τοῖς οὐρανοῖς· "
+   },
+   "MAT 10:33": {
+    "KJV": "But whosoever shall deny me before men, him will I also deny before my Father which is in heaven.",
+    "NESTLE1904": "ὅστις δ’ ἂν ἀρνήσηταί με ἔμπροσθεν τῶν ἀνθρώπων, ἀρνήσομαι κἀγὼ αὐτὸν ἔμπροσθεν τοῦ Πατρός μου τοῦ ἐν τοῖς οὐρανοῖς. "
+   }
+  }
+ },
+ {
+  "id": 36,
+  "chapter": "NEH-11",
+  "claim": "The chapter plainly states 'maaseiah-11 descendant-of judah', and the site does not record it.",
+  "records": [
+   {
+    "slug": "judah",
+    "name": "Judah",
+    "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+    "sex": "male"
+   },
+   {
+    "slug": "maaseiah-11",
+    "name": "Maaseiah",
+    "distinguisher": "son of Baruch (NEH 11:5)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "zerah-3 son-of judah (GEN 46:12)",
+   "benjamin half-brother-of judah (GEN 35:18)",
+   "judah son-of jacob (GEN 35:23)",
+   "perez son-of judah (RUT 4:12)"
+  ],
+  "text": {
+   "NEH 11:4": {
+    "KJV": "And at Jerusalem dwelt certain of the children of Judah, and of the children of Benjamin. Of the children of Judah; Athaiah the son of Uzziah, the son of Zechariah, the son of Amariah, the son of Shephatiah, the son of Mahalaleel, of the children of Perez;",
+    "BHSA": "וּבִֽירוּשָׁלִַ֨ם֙ יָֽשְׁב֔וּ מִבְּנֵ֥י יְהוּדָ֖ה וּמִבְּנֵ֣י בִנְיָמִ֑ן מִבְּנֵ֣י יְ֠הוּדָה עֲתָיָ֨ה בֶן־עֻזִּיָּ֜ה בֶּן־זְכַרְיָ֧ה בֶן־אֲמַרְיָ֛ה בֶּן־שְׁפַטְיָ֥ה בֶן־מַהֲלַלְאֵ֖ל מִבְּנֵי־פָֽרֶץ׃ "
+   },
+   "NEH 11:5": {
+    "KJV": "And Maaseiah the son of Baruch, the son of Colhozeh, the son of Hazaiah, the son of Adaiah, the son of Joiarib, the son of Zechariah, the son of Shiloni.",
+    "BHSA": "וּמַעֲשֵׂיָ֣ה בֶן־בָּר֣וּךְ בֶּן־כָּל־֠חֹזֶה בֶּן־חֲזָיָ֨ה בֶן־עֲדָיָ֧ה בֶן־יֹויָרִ֛יב בֶּן־זְכַרְיָ֖ה בֶּן־הַשִּׁלֹנִֽי׃ "
+   },
+   "NEH 11:6": {
+    "KJV": "All the sons of Perez that dwelt at Jerusalem were four hundred threescore and eight valiant men.",
+    "BHSA": "כָּל־בְּנֵי־פֶ֕רֶץ הַיֹּשְׁבִ֖ים בִּירוּשָׁלִָ֑ם אַרְבַּ֥ע מֵאֹ֛ות שִׁשִּׁ֥ים וּשְׁמֹנָ֖ה אַנְשֵׁי־חָֽיִל׃ ס "
+   }
+  }
+ },
+ {
+  "id": 37,
+  "chapter": "2SA-4",
+  "claim": "The chapter plainly states 'baanah descendant-of benjamin', and the site does not record it.",
+  "records": [
+   {
+    "slug": "baanah",
+    "name": "Baanah",
+    "distinguisher": "commander of Ish-bosheth's military (2SA 4:2)",
+    "sex": "male"
+   },
+   {
+    "slug": "benjamin",
+    "name": "Benjamin",
+    "distinguisher": "twelfth-born son of Jacob and Rachel (GEN 35:18)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [],
+  "text": {
+   "2SA 4:1": {
+    "KJV": "And when Saul's son heard that Abner was dead in Hebron, his hands were feeble, and all the Israelites were troubled.",
+    "BHSA": "וַיִּשְׁמַ֣ע בֶּן־שָׁא֗וּל כִּ֣י מֵ֤ת אַבְנֵר֙ בְּחֶבְרֹ֔ון וַיִּרְפּ֖וּ יָדָ֑יו וְכָל־יִשְׂרָאֵ֖ל נִבְהָֽלוּ׃ "
+   },
+   "2SA 4:2": {
+    "KJV": "And Saul's son had two men that were captains of bands: the name of the one was Baanah, and the name of the other Rechab, the sons of Rimmon a Beerothite, of the children of Benjamin: (for Beeroth also was reckoned to Benjamin.",
+    "BHSA": "וּשְׁנֵ֣י אֲנָשִׁ֣ים שָׂרֵֽי־גְדוּדִ֣ים הָי֪וּ בֶן־שָׁא֟וּל שֵׁם֩ הָאֶחָ֨ד בַּֽעֲנָ֜ה וְשֵׁ֧ם הַשֵּׁנִ֣י רֵכָ֗ב בְּנֵ֛י רִמֹּ֥ון הַבְּאֶֽרֹתִ֖י מִבְּנֵ֣י בִנְיָמִ֑ן כִּ֚י גַּם־בְּאֵרֹ֔ות תֵּחָשֵׁ֖ב עַל־בִּנְיָמִֽן׃ "
+   },
+   "2SA 4:3": {
+    "KJV": "And the Beerothites fled to Gittaim, and were sojourners there until this day.)",
+    "BHSA": "וַיִּבְרְח֥וּ הַבְּאֵרֹתִ֖ים גִּתָּ֑יְמָה וַֽיִּהְיוּ־שָׁ֣ם גָּרִ֔ים עַ֖ד הַיֹּ֥ום הַזֶּֽה׃ ס "
+   }
+  }
+ },
+ {
+  "id": 38,
+  "chapter": "MAT-13",
+  "claim": "The row 'simon-3 brother-of judas-2' should be removed: the chapter does not say it.",
+  "row_verse": "MAT 13:55",
+  "records": [
+   {
+    "slug": "judas-2",
+    "name": "Judas",
+    "distinguisher": "brother of Jesus (MAT 13:55, MRK 6:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "simon-3",
+    "name": "Simon",
+    "distinguisher": "brother of Jesus (MAT 13:55, MRK 6:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "MAT 13:54": {
+    "KJV": "And when he was come into his own country, he taught them in their synagogue, insomuch that they were astonished, and said, Whence hath this man this wisdom, and these mighty works?",
+    "NESTLE1904": "καὶ ἐλθὼν εἰς τὴν πατρίδα αὐτοῦ ἐδίδασκεν αὐτοὺς ἐν τῇ συναγωγῇ αὐτῶν, ὥστε ἐκπλήσσεσθαι αὐτοὺς καὶ λέγειν Πόθεν τούτῳ ἡ σοφία αὕτη καὶ αἱ δυνάμεις; "
+   },
+   "MAT 13:55": {
+    "KJV": "Is not this the carpenter's son? is not his mother called Mary? and his brethren, James, and Joses, and Simon, and Judas?",
+    "NESTLE1904": "οὐχ οὗτός ἐστιν ὁ τοῦ τέκτονος υἱός; οὐχ ἡ μήτηρ αὐτοῦ λέγεται Μαριὰμ καὶ οἱ ἀδελφοὶ αὐτοῦ Ἰάκωβος καὶ Ἰωσὴφ καὶ Σίμων καὶ Ἰούδας; "
+   },
+   "MAT 13:56": {
+    "KJV": "And his sisters, are they not all with us? Whence then hath this man all these things?",
+    "NESTLE1904": "καὶ αἱ ἀδελφαὶ αὐτοῦ οὐχὶ πᾶσαι πρὸς ἡμᾶς εἰσιν; πόθεν οὖν τούτῳ ταῦτα πάντα; "
+   }
+  }
+ },
+ {
+  "id": 39,
+  "chapter": "2KI-24",
+  "claim": "The chapter plainly states 'mattaniah brother-of eliakim-2', and the site does not record it.",
+  "records": [
+   {
+    "slug": "eliakim-2",
+    "name": "Eliakim",
+    "distinguisher": "King of Judah, son of Josiah (2KI 23:34)",
+    "sex": "male"
+   },
+   {
+    "slug": "mattaniah",
+    "name": "Mattaniah",
+    "distinguisher": "King of Judah, uncle of Jehoiachin (2KI 24:17)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "eliakim-2 king-of judah (2CH 36:4)"
+  ],
+  "text": {
+   "2KI 24:16": {
+    "KJV": "And all the men of might, even seven thousand, and craftsmen and smiths a thousand, all that were strong and apt for war, even them the king of Babylon brought captive to Babylon.",
+    "BHSA": "וְאֵת֩ כָּל־אַנְשֵׁ֨י הַחַ֜יִל שִׁבְעַ֣ת אֲלָפִ֗ים וְהֶחָרָ֤שׁ וְהַמַּסְגֵּר֙ אֶ֔לֶף הַכֹּ֕ל גִּבֹּורִ֖ים עֹשֵׂ֣י מִלְחָמָ֑ה וַיְבִיאֵ֧ם מֶֽלֶךְ־בָּבֶ֛ל גֹּולָ֖ה בָּבֶֽלָה׃ "
+   },
+   "2KI 24:17": {
+    "KJV": "And the king of Babylon made Mattaniah his father's brother king in his stead, and changed his name to Zedekiah.",
+    "BHSA": "וַיַּמְלֵ֧ךְ מֶֽלֶךְ־בָּבֶ֛ל אֶת־מַתַּנְיָ֥ה דֹדֹ֖ו תַּחְתָּ֑יו וַיַּסֵּ֥ב אֶת־שְׁמֹ֖ו צִדְקִיָּֽהוּ׃ פ "
+   },
+   "2KI 24:18": {
+    "KJV": "Zedekiah was twenty and one years old when he began to reign, and he reigned eleven years in Jerusalem. And his mother's name was Hamutal, the daughter of Jeremiah of Libnah.",
+    "BHSA": "בֶּן־עֶשְׂרִ֨ים וְאַחַ֤ת שָׁנָה֙ צִדְקִיָּ֣הוּ בְמָלְכֹ֔ו וְאַחַ֤ת עֶשְׂרֵה֙ שָׁנָ֔ה מָלַ֖ךְ בִּירוּשָׁלִָ֑ם וְשֵׁ֣ם אִמֹּ֔ו חמיטל בַּֽת־יִרְמְיָ֖הוּ מִלִּבְנָֽה׃ "
+   }
+  }
+ },
+ {
+  "id": 40,
+  "chapter": "2CH-21",
+  "claim": "The chapter plainly states 'jehoram brother-of jehiel-3', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jehiel-3",
+    "name": "Jehiel",
+    "distinguisher": "son of Jehoshaphat (2CH 21:2)",
+    "sex": "male"
+   },
+   {
+    "slug": "jehoram",
+    "name": "Jehoram",
+    "distinguisher": "King of Judah and son of Jehoshaphat (1KI 22:50)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jehoram killer-of jehiel-3 (2CH 21:4)",
+   "ahaziah-2 son-of jehoram (2KI 8:24)",
+   "jehoshaphat-3 father-of jehoram (2KI 1:17)",
+   "jehoram son-of jehoshaphat-3 (2KI 8:16)",
+   "jehoram father-of ahaziah-2 (2CH 22:1)"
+  ],
+  "text": {
+   "2CH 21:1": {
+    "KJV": "Now Jehoshaphat slept with his fathers, and was buried with his fathers in the city of David. And Jehoram his son reigned in his stead.",
+    "BHSA": "וַיִּשְׁכַּ֤ב יְהֹֽושָׁפָט֙ עִם־אֲבֹתָ֔יו וַיִּקָּבֵ֥ר עִם־אֲבֹתָ֖יו בְּעִ֣יר דָּוִ֑יד וַיִּמְלֹ֛ךְ יְהֹורָ֥ם בְּנֹ֖ו תַּחְתָּֽיו׃ "
+   },
+   "2CH 21:2": {
+    "KJV": "And he had brethren the sons of Jehoshaphat, Azariah, and Jehiel, and Zechariah, and Azariah, and Michael, and Shephatiah: all these were the sons of Jehoshaphat king of Israel.",
+    "BHSA": "וְלֹֽו־אַחִ֞ים בְּנֵ֣י יְהֹושָׁפָ֗ט עֲזַרְיָ֤ה וִֽיחִיאֵל֙ וּזְכַרְיָ֣הוּ וַעֲזַרְיָ֔הוּ וּמִיכָאֵ֖ל וּשְׁפַטְיָ֑הוּ כָּל־אֵ֕לֶּה בְּנֵ֥י יְהֹושָׁפָ֖ט מֶ֥לֶךְ־יִשְׂרָאֵֽל׃ "
+   },
+   "2CH 21:3": {
+    "KJV": "And their father gave them great gifts of silver, and of gold, and of precious things, with fenced cities in Judah: but the kingdom gave he to Jehoram; because he was the firstborn.",
+    "BHSA": "וַיִּתֵּ֣ן לָהֶ֣ם׀ אֲ֠בִיהֶם מַתָּנֹ֨ות רַבֹּ֜ות לְכֶ֤סֶף וּלְזָהָב֙ וּלְמִגְדָּנֹ֔ות עִם־עָרֵ֥י מְצֻרֹ֖ות בִּֽיהוּדָ֑ה וְאֶת־הַמַּמְלָכָ֛ה נָתַ֥ן לִֽיהֹורָ֖ם כִּי־ה֥וּא הַבְּכֹֽור׃ פ "
+   }
+  }
+ },
+ {
+  "id": 41,
+  "chapter": "1KI-15",
+  "claim": "The chapter plainly states 'asa descendant-of david', and the site does not record it.",
+  "records": [
+   {
+    "slug": "asa",
+    "name": "Asa",
+    "distinguisher": "King of Judah (1KI 15:9), son of incestuous relationship between Abijah and his mother, Maacah (1KI 15:10)",
+    "sex": "male"
+   },
+   {
+    "slug": "david",
+    "name": "David",
+    "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "david servant-of yhvh (2SA 3:18)",
+   "maacah-3 mother-of asa (2CH 15:16)",
+   "uriah servant-of david (2SA 11:9)"
+  ],
+  "text": {
+   "1KI 15:10": {
+    "KJV": "And forty and one years reigned he in Jerusalem. And his mother's name was Maachah, the daughter of Abishalom.",
+    "BHSA": "וְאַרְבָּעִ֤ים וְאַחַת֙ שָׁנָ֔ה מָלַ֖ךְ בִּירוּשָׁלִָ֑ם וְשֵׁ֣ם אִמֹּ֔ו מַעֲכָ֖ה בַּת־אֲבִישָׁלֹֽום׃ "
+   },
+   "1KI 15:11": {
+    "KJV": "And Asa did that which was right in the eyes of the LORD, as did David his father.",
+    "BHSA": "וַיַּ֧עַשׂ אָסָ֛א הַיָּשָׁ֖ר בְּעֵינֵ֣י יְהוָ֑ה כְּדָוִ֖ד אָבִֽיו׃ "
+   },
+   "1KI 15:12": {
+    "KJV": "And he took away the sodomites out of the land, and removed all the idols that his fathers had made.",
+    "BHSA": "וַיַּעֲבֵ֥ר הַקְּדֵשִׁ֖ים מִן־הָאָ֑רֶץ וַיָּ֨סַר֙ אֶת־כָּל־הַגִּלֻּלִ֔ים אֲשֶׁ֥ר עָשׂ֖וּ אֲבֹתָֽיו׃ "
+   }
+  }
+ },
+ {
+  "id": 42,
+  "chapter": "LUK-8",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jesus teacher-of simon (MAT 10:1)",
+   "jesus teacher-of james (MAT 10:1)",
+   "jesus teacher-of john-2 (MAT 10:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)",
+   "simon servant-of jesus (MAT 10:2)",
+   "simon apostle-of jesus (MAT 10:2)"
+  ],
+  "text": {
+   "LUK 8:27": {
+    "KJV": "And when he went forth to land, there met him out of the city a certain man, which had devils long time, and ware no clothes, neither abode in any house, but in the tombs.",
+    "NESTLE1904": "ἐξελθόντι δὲ αὐτῷ ἐπὶ τὴν γῆν ὑπήντησεν ἀνήρ τις ἐκ τῆς πόλεως ἔχων δαιμόνια, καὶ χρόνῳ ἱκανῷ οὐκ ἐνεδύσατο ἱμάτιον, καὶ ἐν οἰκίᾳ οὐκ ἔμενεν ἀλλ’ ἐν τοῖς μνήμασιν. "
+   },
+   "LUK 8:28": {
+    "KJV": "When he saw Jesus, he cried out, and fell down before him, and with a loud voice said, What have I to do with thee, Jesus, thou Son of God most high? I beseech thee, torment me not.",
+    "NESTLE1904": "ἰδὼν δὲ τὸν Ἰησοῦν ἀνακράξας προσέπεσεν αὐτῷ καὶ φωνῇ μεγάλῃ εἶπεν Τί ἐμοὶ καὶ σοί, Ἰησοῦ Υἱὲ τοῦ Θεοῦ τοῦ Ὑψίστου; δέομαί σου, μή με βασανίσῃς. "
+   },
+   "LUK 8:29": {
+    "KJV": "(For he had commanded the unclean spirit to come out of the man. For oftentimes it had caught him: and he was kept bound with chains and in fetters; and he brake the bands, and was driven of the devil into the wilderness.)",
+    "NESTLE1904": "παρήγγελλεν γὰρ τῷ πνεύματι τῷ ἀκαθάρτῳ ἐξελθεῖν ἀπὸ τοῦ ἀνθρώπου. πολλοῖς γὰρ χρόνοις συνηρπάκει αὐτόν, καὶ ἐδεσμεύετο ἁλύσεσιν καὶ πέδαις φυλασσόμενος, καὶ διαρήσσων τὰ δεσμὰ ἠλαύνετο ἀπὸ τοῦ δαιμονίου εἰς τὰς ἐρήμους. "
+   }
+  }
+ },
+ {
+  "id": 43,
+  "chapter": "2CH-21",
+  "claim": "The chapter plainly states 'david ancestor-of jehoram', and the site does not record it.",
+  "records": [
+   {
+    "slug": "david",
+    "name": "David",
+    "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+    "sex": "male"
+   },
+   {
+    "slug": "jehoram",
+    "name": "Jehoram",
+    "distinguisher": "King of Judah and son of Jehoshaphat (1KI 22:50)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "ahaziah-2 son-of jehoram (2KI 8:24)",
+   "david servant-of yhvh (2SA 3:18)",
+   "jehoshaphat-3 father-of jehoram (2KI 1:17)",
+   "jehoram son-of jehoshaphat-3 (2KI 8:16)",
+   "jehoram father-of ahaziah-2 (2CH 22:1)"
+  ],
+  "text": {
+   "2CH 21:11": {
+    "KJV": "Moreover he made high places in the mountains of Judah and caused the inhabitants of Jerusalem to commit fornication, and compelled Judah thereto.",
+    "BHSA": "גַּם־ה֥וּא עָשָֽׂה־בָמֹ֖ות בְּהָרֵ֣י יְהוּדָ֑ה וַיֶּ֨זֶן֙ אֶת־יֹשְׁבֵ֣י יְרוּשָׁלִַ֔ם וַיַּדַּ֖ח אֶת־יְהוּדָֽה׃ פ "
+   },
+   "2CH 21:12": {
+    "KJV": "And there came a writing to him from Elijah the prophet, saying, Thus saith the LORD God of David thy father, Because thou hast not walked in the ways of Jehoshaphat thy father, nor in the ways of Asa king of Judah,",
+    "BHSA": "וַיָּבֹ֤א אֵלָיו֙ מִכְתָּ֔ב מֵֽאֵלִיָּ֥הוּ הַנָּבִ֖יא לֵאמֹ֑ר כֹּ֣ה׀ אָמַ֣ר יְהוָ֗ה אֱלֹהֵי֙ דָּוִ֣יד אָבִ֔יךָ תַּ֗חַת אֲשֶׁ֤ר לֹֽא־הָלַ֨כְתָּ֙ בְּדַרְכֵי֙ יְהֹושָׁפָ֣ט אָבִ֔יךָ וּבְדַרְכֵ֖י אָסָ֥א מֶֽלֶךְ־יְהוּדָֽה׃ "
+   },
+   "2CH 21:13": {
+    "KJV": "But hast walked in the way of the kings of Israel, and hast made Judah and the inhabitants of Jerusalem to go a whoring, like to the whoredoms of the house of Ahab, and also hast slain thy brethren of thy father's house, which were better than thyself:",
+    "BHSA": "וַתֵּ֗לֶךְ בְּדֶ֨רֶךְ֙ מַלְכֵ֣י יִשְׂרָאֵ֔ל וַתַּזְנֶ֤ה אֶת־יְהוּדָה֙ וְאֶת־יֹשְׁבֵ֣י יְרוּשָׁלִַ֔ם כְּהַזְנֹ֖ות בֵּ֣ית אַחְאָ֑ב וְגַ֨ם אֶת־אַחֶ֧יךָ בֵית־אָבִ֛יךָ הַטֹּובִ֥ים מִמְּךָ֖ הָרָֽגְתָּ׃ "
+   }
+  }
+ },
+ {
+  "id": 44,
+  "chapter": "2SA-11",
+  "claim": "The row 'uriah killed-by joab' should be removed: the chapter does not say it.",
+  "row_verse": "2SA 11:17",
+  "records": [
+   {
+    "slug": "joab",
+    "name": "Joab",
+    "distinguisher": "son of Zeruiah (2SA 2:13), commander of David's army (1CH 27:34)",
+    "sex": "male"
+   },
+   {
+    "slug": "uriah",
+    "name": "Uriah",
+    "distinguisher": "the Hittite (2SA 11:3), thirty-seventh of \"the thirty\" of David's men (2SA 23:39)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "2SA 11:16": {
+    "KJV": "And it came to pass, when Joab observed the city, that he assigned Uriah unto a place where he knew that valiant men were.",
+    "BHSA": "וַיְהִ֕י בִּשְׁמֹ֥ור יֹואָ֖ב אֶל־הָעִ֑יר וַיִּתֵּן֙ אֶת־א֣וּרִיָּ֔ה אֶל־הַמָּקֹום֙ אֲשֶׁ֣ר יָדַ֔ע כִּ֥י אַנְשֵׁי־חַ֖יִל שָֽׁם׃ "
+   },
+   "2SA 11:17": {
+    "KJV": "And the men of the city went out, and fought with Joab: and there fell some of the people of the servants of David; and Uriah the Hittite died also.",
+    "BHSA": "וַיֵּ֨צְא֜וּ אַנְשֵׁ֤י הָעִיר֙ וַיִּלָּחֲמ֣וּ אֶת־יֹואָ֔ב וַיִּפֹּ֥ל מִן־הָעָ֖ם מֵעַבְדֵ֣י דָוִ֑ד וַיָּ֕מָת גַּ֖ם אוּרִיָּ֥ה הַחִתִּֽי׃ "
+   },
+   "2SA 11:18": {
+    "KJV": "Then Joab sent and told David all the things concerning the war;",
+    "BHSA": "וַיִּשְׁלַ֖ח יֹואָ֑ב וַיַּגֵּ֣ד לְדָוִ֔ד אֶת־כָּל־דִּבְרֵ֖י הַמִּלְחָמָֽה׃ "
+   }
+  }
+ },
+ {
+  "id": 45,
+  "chapter": "2CH-21",
+  "claim": "The chapter plainly states 'jehoram brother-of azaryahu', and the site does not record it.",
+  "records": [
+   {
+    "slug": "azaryahu",
+    "name": "Azaryahu",
+    "distinguisher": "son of Jehoshaphat (2CH 21:2)",
+    "sex": "male"
+   },
+   {
+    "slug": "jehoram",
+    "name": "Jehoram",
+    "distinguisher": "King of Judah and son of Jehoshaphat (1KI 22:50)",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "jehoram killer-of azaryahu (2CH 21:4)",
+   "ahaziah-2 son-of jehoram (2KI 8:24)",
+   "jehoshaphat-3 father-of jehoram (2KI 1:17)",
+   "jehoram son-of jehoshaphat-3 (2KI 8:16)",
+   "jehoram father-of ahaziah-2 (2CH 22:1)"
+  ],
+  "text": {
+   "2CH 21:1": {
+    "KJV": "Now Jehoshaphat slept with his fathers, and was buried with his fathers in the city of David. And Jehoram his son reigned in his stead.",
+    "BHSA": "וַיִּשְׁכַּ֤ב יְהֹֽושָׁפָט֙ עִם־אֲבֹתָ֔יו וַיִּקָּבֵ֥ר עִם־אֲבֹתָ֖יו בְּעִ֣יר דָּוִ֑יד וַיִּמְלֹ֛ךְ יְהֹורָ֥ם בְּנֹ֖ו תַּחְתָּֽיו׃ "
+   },
+   "2CH 21:2": {
+    "KJV": "And he had brethren the sons of Jehoshaphat, Azariah, and Jehiel, and Zechariah, and Azariah, and Michael, and Shephatiah: all these were the sons of Jehoshaphat king of Israel.",
+    "BHSA": "וְלֹֽו־אַחִ֞ים בְּנֵ֣י יְהֹושָׁפָ֗ט עֲזַרְיָ֤ה וִֽיחִיאֵל֙ וּזְכַרְיָ֣הוּ וַעֲזַרְיָ֔הוּ וּמִיכָאֵ֖ל וּשְׁפַטְיָ֑הוּ כָּל־אֵ֕לֶּה בְּנֵ֥י יְהֹושָׁפָ֖ט מֶ֥לֶךְ־יִשְׂרָאֵֽל׃ "
+   },
+   "2CH 21:3": {
+    "KJV": "And their father gave them great gifts of silver, and of gold, and of precious things, with fenced cities in Judah: but the kingdom gave he to Jehoram; because he was the firstborn.",
+    "BHSA": "וַיִּתֵּ֣ן לָהֶ֣ם׀ אֲ֠בִיהֶם מַתָּנֹ֨ות רַבֹּ֜ות לְכֶ֤סֶף וּלְזָהָב֙ וּלְמִגְדָּנֹ֔ות עִם־עָרֵ֥י מְצֻרֹ֖ות בִּֽיהוּדָ֑ה וְאֶת־הַמַּמְלָכָ֛ה נָתַ֥ן לִֽיהֹורָ֖ם כִּי־ה֥וּא הַבְּכֹֽור׃ פ "
+   }
+  }
+ },
+ {
+  "id": 46,
+  "chapter": "1CH-27",
+  "claim": "The row 'adiel-2 father-of azmaveth-3' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 27:25",
+  "records": [
+   {
+    "slug": "adiel-2",
+    "name": "Adiel",
+    "distinguisher": "son of Jahzerah (1CH 9:12)",
+    "sex": "male"
+   },
+   {
+    "slug": "azmaveth-3",
+    "name": "Azmaveth",
+    "distinguisher": "in charge of the king's storehouses, son of Adiel (1CH 27:25)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 27:24": {
+    "KJV": "Joab the son of Zeruiah began to number, but he finished not, because there fell wrath for it against Israel; neither was the number put in the account of the chronicles of king David.",
+    "BHSA": "יֹואָ֨ב בֶּן־צְרוּיָ֜ה הֵחֵ֤ל לִמְנֹות֙ וְלֹ֣א כִלָּ֔ה וַיְהִ֥י בָזֹ֛את קֶ֖צֶף עַל־יִשְׂרָאֵ֑ל וְלֹ֤א עָלָה֙ הַמִּסְפָּ֔ר בְּמִסְפַּ֥ר דִּבְרֵֽי־הַיָּמִ֖ים לַמֶּ֥לֶךְ דָּוִֽיד׃ ס "
+   },
+   "1CH 27:25": {
+    "KJV": "And over the king's treasures was Azmaveth the son of Adiel: and over the storehouses in the fields, in the cities, and in the villages, and in the castles, was Jehonathan the son of Uzziah:",
+    "BHSA": "וְעַל֙ אֹצְרֹ֣ות הַמֶּ֔לֶךְ עַזְמָ֖וֶת בֶּן־עֲדִיאֵ֑ל ס וְעַ֣ל הָֽאֹצָרֹ֡ות בַּשָּׂדֶ֞ה בֶּעָרִ֤ים וּבַכְּפָרִים֙ וּבַמִּגְדָּלֹ֔ות יְהֹונָתָ֖ן בֶּן־עֻזִּיָּֽהוּ׃ ס "
+   },
+   "1CH 27:26": {
+    "KJV": "And over them that did the work of the field for tillage of the ground was Ezri the son of Chelub:",
+    "BHSA": "וְעַ֗ל עֹשֵׂי֙ מְלֶ֣אכֶת הַשָּׂדֶ֔ה לַעֲבֹדַ֖ת הָאֲדָמָ֑ה עֶזְרִ֖י בֶּן־כְּלֽוּב׃ "
+   }
+  }
+ },
+ {
+  "id": 47,
+  "chapter": "2SA-23",
+  "claim": "The row 'joshebbasshebeth killer-of yhvh' should be removed: the chapter does not say it.",
+  "row_verse": "2SA 23:8",
+  "records": [
+   {
+    "slug": "joshebbasshebeth",
+    "name": "Josheb-basshebeth",
+    "distinguisher": "first of \"the thirty\" of David's men, a Tahchemonite (2SA 23:8)/Hachmonite (1CH 11:11)",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "2SA 23:7": {
+    "KJV": "But the man that shall touch them must be fenced with iron and the staff of a spear; and they shall be utterly burned with fire in the same place.",
+    "BHSA": "וְאִישׁ֙ יִגַּ֣ע בָּהֶ֔ם יִמָּלֵ֥א בַרְזֶ֖ל וְעֵ֣ץ חֲנִ֑ית וּבָאֵ֕שׁ שָׂרֹ֥וף יִשָּׂרְפ֖וּ בַּשָּֽׁבֶת׃ פ "
+   },
+   "2SA 23:8": {
+    "KJV": "These be the names of the mighty men whom David had: The Tachmonite that sat in the seat, chief among the captains; the same was Adino the Eznite: he lift up his spear against eight hundred, whom he slew at one time.",
+    "BHSA": "אֵ֛לֶּה שְׁמֹ֥ות הַגִּבֹּרִ֖ים אֲשֶׁ֣ר לְדָוִ֑ד יֹשֵׁ֨ב בַּשֶּׁ֜בֶת תַּחְכְּמֹנִ֣י׀ רֹ֣אשׁ הַשָּׁלִשִׁ֗י ה֚וּא עֲדִינֹ֣ו העצנו עַל־שְׁמֹנֶ֥ה מֵאֹ֛ות חָלָ֖ל בְּפַ֥עַם אחד׃ "
+   },
+   "2SA 23:9": {
+    "KJV": "And after him was Eleazar the son of Dodo the Ahohite, one of the three mighty men with David, when they defied the Philistines that were there gathered together to battle, and the men of Israel were gone away:",
+    "BHSA": "ואחרו אֶלְעָזָ֥ר בֶּן־דדי בֶּן־אֲחֹחִ֑י בִּשְׁלֹשָׁ֨ה גברים עִם־דָּוִ֗ד בְּחָֽרְפָ֤ם בַּפְּלִשְׁתִּים נֶאֶסְפוּ־שָׁ֣ם לַמִּלְחָמָ֔ה וַֽיַּעֲל֖וּ אִ֥ישׁ יִשְׂרָאֵֽל׃ "
+   }
+  }
+ },
+ {
+  "id": 48,
+  "chapter": "1CH-12",
+  "claim": "The row 'azmaveth-2 father-of pelet-2' should be removed: the chapter does not say it.",
+  "row_verse": "1CH 12:3",
+  "records": [
+   {
+    "slug": "azmaveth-2",
+    "name": "Azmaveth",
+    "distinguisher": "son of Jehoadda (1CH 8:36)",
+    "sex": "male"
+   },
+   {
+    "slug": "pelet-2",
+    "name": "Pelet",
+    "distinguisher": "son of Azmaveth (1CH 12:3)",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "1CH 12:2": {
+    "KJV": "They were armed with bows, and could use both the right hand and the left in hurling stones and shooting arrows out of a bow, even of Saul's brethren of Benjamin.",
+    "BHSA": "נֹ֣שְׁקֵי קֶ֗שֶׁת מַיְמִינִ֤ים וּמַשְׂמִאלִים֙ בָּֽאֲבָנִ֔ים וּבַחִצִּ֖ים בַּקָּ֑שֶׁת מֵאֲחֵ֥י שָׁא֖וּל מִבִּנְיָמִֽן׃ "
+   },
+   "1CH 12:3": {
+    "KJV": "The chief was Ahiezer, then Joash, the sons of Shemaah the Gibeathite; and Jeziel, and Pelet, the sons of Azmaveth; and Berachah, and Jehu the Antothite.",
+    "BHSA": "הָרֹ֨אשׁ אֲחִיעֶ֜זֶר וְיֹואָ֗שׁ בְּנֵי֙ הַשְּׁמָעָ֣ה הַגִּבְעָתִ֔י ויזואל וָפֶ֖לֶט בְּנֵ֣י עַזְמָ֑וֶת וּבְרָכָ֕ה וְיֵה֖וּא הָעֲנְּתֹתִֽי׃ "
+   },
+   "1CH 12:4": {
+    "KJV": "And Ismaiah the Gibeonite, a mighty man among the thirty, and over the thirty; and Jeremiah, and Jahaziel, and Johanan, and Josabad the Gederathite,",
+    "BHSA": "וְיִרְמְיָ֤ה וְיַחֲזִיאֵל֙ וְיֹ֣וחָנָ֔ן וְיֹוזָבָ֖ד הַגְּדֵרָתִֽי׃ "
+   }
+  }
+ },
+ {
+  "id": 49,
+  "chapter": "2KI-24",
+  "claim": "The row 'jehoiachin king-of judah' should be removed: the chapter does not say it.",
+  "row_verse": "2KI 24:8",
+  "records": [
+   {
+    "slug": "jehoiachin",
+    "name": "Jehoiachin",
+    "distinguisher": "King of Judah, son of Eliakim [Jehoiakim] (2KI 24:6)",
+    "sex": "male"
+   },
+   {
+    "slug": "judah",
+    "name": "Judah",
+    "distinguisher": "fourth-born son of Jacob (GEN 29:35), son of Leah",
+    "sex": "male"
+   }
+  ],
+  "text": {
+   "2KI 24:7": {
+    "KJV": "And the king of Egypt came not again any more out of his land: for the king of Babylon had taken from the river of Egypt unto the river Euphrates all that pertained to the king of Egypt.",
+    "BHSA": "וְלֹֽא־הֹסִ֥יף עֹוד֙ מֶ֣לֶךְ מִצְרַ֔יִם לָצֵ֖את מֵֽאַרְצֹ֑ו כִּֽי־לָקַ֞ח מֶ֣לֶךְ בָּבֶ֗ל מִנַּ֤חַל מִצְרַ֨יִם֙ עַד־נְהַר־פְּרָ֔ת כֹּ֛ל אֲשֶׁ֥ר הָיְתָ֖ה לְמֶ֥לֶךְ מִצְרָֽיִם׃ פ "
+   },
+   "2KI 24:8": {
+    "KJV": "Jehoiachin was eighteen years old when he began to reign, and he reigned in Jerusalem three months. And his mother's name was Nehushta, the daughter of Elnathan of Jerusalem.",
+    "BHSA": "בֶּן־שְׁמֹנֶ֨ה עֶשְׂרֵ֤ה שָׁנָה֙ יְהֹויָכִ֣ין בְּמָלְכֹ֔ו וּשְׁלֹשָׁ֣ה חֳדָשִׁ֔ים מָלַ֖ךְ בִּירוּשָׁלִָ֑ם וְשֵׁ֣ם אִמֹּ֔ו נְחֻשְׁתָּ֥א בַת־אֶלְנָתָ֖ן מִירוּשָׁלִָֽם׃ "
+   },
+   "2KI 24:9": {
+    "KJV": "And he did that which was evil in the sight of the LORD, according to all that his father had done.",
+    "BHSA": "וַיַּ֥עַשׂ הָרַ֖ע בְּעֵינֵ֣י יְהוָ֑ה כְּכֹ֥ל אֲשֶׁר־עָשָׂ֖ה אָבִֽיו׃ "
+   }
+  }
+ },
+ {
+  "id": 50,
+  "chapter": "LUK-1",
+  "claim": "The chapter plainly states 'jesus son-of yhvh', and the site does not record it.",
+  "records": [
+   {
+    "slug": "jesus",
+    "name": "Jesus",
+    "distinguisher": "of Nazareth",
+    "sex": "male"
+   },
+   {
+    "slug": "yhvh",
+    "name": "YHVH",
+    "distinguisher": "the God of Israel",
+    "sex": "male"
+   }
+  ],
+  "already_recorded_between_these_people": [
+   "aaron high-priest-of yhvh (EXO 28:1)",
+   "david servant-of yhvh (2SA 3:18)",
+   "jesus son-of mary (MAT 1:16)",
+   "jesus descendant-of david (MAT 1:1)",
+   "jesus descendant-of abram (MAT 1:1)",
+   "jesus high-priest-of yhvh (HEB 4:14)"
+  ],
+  "text": {
+   "LUK 1:34": {
+    "KJV": "Then said Mary unto the angel, How shall this be, seeing I know not a man?",
+    "NESTLE1904": "εἶπεν δὲ Μαριὰμ πρὸς τὸν ἄγγελον Πῶς ἔσται τοῦτο, ἐπεὶ ἄνδρα οὐ γινώσκω; "
+   },
+   "LUK 1:35": {
+    "KJV": "And the angel answered and said unto her, The Holy Ghost shall come upon thee, and the power of the Highest shall overshadow thee: therefore also that holy thing which shall be born of thee shall be called the Son of God.",
+    "NESTLE1904": "καὶ ἀποκριθεὶς ὁ ἄγγελος εἶπεν αὐτῇ Πνεῦμα Ἅγιον ἐπελεύσεται ἐπὶ σέ, καὶ δύναμις Ὑψίστου ἐπισκιάσει σοι· διὸ καὶ τὸ γεννώμενον ἅγιον κληθήσεται Υἱὸς Θεοῦ. "
+   },
+   "LUK 1:36": {
+    "KJV": "And, behold, thy cousin Elisabeth, she hath also conceived a son in her old age: and this is the sixth month with her, who was called barren.",
+    "NESTLE1904": "καὶ ἰδοὺ Ἐλεισάβετ ἡ συγγενίς σου καὶ αὐτὴ συνείληφεν υἱὸν ἐν γήρει αὐτῆς, καὶ οὗτος μὴν ἕκτος ἐστὶν αὐτῇ τῇ καλουμένῃ στείρᾳ· "
+   }
+  }
+ }
+]

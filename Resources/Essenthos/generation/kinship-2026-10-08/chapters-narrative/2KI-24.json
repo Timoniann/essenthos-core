@@ -1,0 +1,32 @@
+{
+ "chapter": "2KI 24",
+ "rows": 11,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    100133
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2KI 24:8",
+   "why": "Judah here is the kingdom over which Jehoiachin reigns, not the patriarch represented by the slug judah.",
+   "confidence": 0.99
+  }
+ ],
+ "missing": [
+  {
+   "from": "mattaniah",
+   "type": "brother-of",
+   "to": "eliakim-2",
+   "verse": "2KI 24:17",
+   "why": "Mattaniah is called Jehoiachin's father's brother, and verse 6 identifies Jehoiakim (eliakim-2) as Jehoiachin's father.",
+   "confidence": 0.98
+  }
+ ],
+ "note": "Verse 17 renames Mattaniah Zedekiah, so the relationships concerning Zedekiah in verse 18 correctly target mattaniah.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:03:33+00:00"
+}

@@ -1,0 +1,23 @@
+{
+ "chapter": "2SA 17",
+ "rows": 9,
+ "wrong": [
+  {
+   "kind": "delete",
+   "rows": [
+    99841
+   ],
+   "new_type": "",
+   "new_to": "",
+   "verse": "2SA 17:25",
+   "why": "The Hebrew says Ithra went in to Abigail but does not state that he was her husband.",
+   "confidence": 0.98
+  }
+ ],
+ "missing": [],
+ "note": "Abigail's parent Nahash is not identified as male or female in the Hebrew, nor explicitly equated with Shobi's father Nahash in verse 27; the supplied records do not justify changing that parent identification.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:05:56+00:00"
+}

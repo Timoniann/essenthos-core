@@ -1,0 +1,20 @@
+{
+ "chapter": "1KI 2",
+ "rows": 6,
+ "wrong": [],
+ "missing": [
+  {
+   "from": "absalom",
+   "type": "brother-of",
+   "to": "solomon",
+   "verse": "1KI 2:7",
+   "why": "David calls Absalom אָחִיךָ, 'your brother,' while addressing Solomon.",
+   "confidence": 1
+  }
+ ],
+ "note": "The other plain family statements are already recorded. The requests to give Abishag to Adonijah as wife do not establish a marriage.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:08:42+00:00"
+}

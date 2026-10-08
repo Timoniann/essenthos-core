@@ -1,0 +1,11 @@
+{
+ "chapter": "RUT 1",
+ "rows": 15,
+ "wrong": [],
+ "missing": [],
+ "note": "RUT 1:4 does not identify which son married Orpah; owner row 106143 is retained as his ruling. RUT 1:15 explicitly calls Orpah Ruth's sister-in-law, but sister-in-law-of is not among the allowed types.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:02:05+00:00"
+}

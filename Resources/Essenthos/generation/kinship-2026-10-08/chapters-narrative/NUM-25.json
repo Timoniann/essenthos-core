@@ -1,0 +1,11 @@
+{
+ "chapter": "NUM 25",
+ "rows": 6,
+ "wrong": [],
+ "missing": [],
+ "note": "All non-owner rows are supported, and no plain family statement is missing. Owner row 106705 infers Salu’s ancestry from Zimri’s Simeonite affiliation; owner row 107195 is questionable because “in Midian” identifies Zur’s location, without stating descent from the individual Midian.",
+ "model": "gpt-6.1-sol",
+ "effort": "high",
+ "attempt": 1,
+ "at": "2026-10-08T19:08:55+00:00"
+}
