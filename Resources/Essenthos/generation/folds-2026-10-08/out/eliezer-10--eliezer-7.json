@@ -1,0 +1,69 @@
+{
+ "pair": [
+  "eliezer-10",
+  "eliezer-7"
+ ],
+ "case": {
+  "name": "Eliezer",
+  "A": {
+   "name": "Eliezer",
+   "line": "Priest, of the sons of Jeshua's family, who had married a foreign wife.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "EZR 10:18"
+   ],
+   "kjv": {
+    "EZR 10:18": "And among the sons of the priests there were found that had taken strange wives: namely, of the sons of Jeshua the son of Jozadak, and his brethren; Maaseiah, and Eliezer, and Jarib, and Gedaliah."
+   }
+  },
+  "B": {
+   "name": "Eliezer",
+   "line": "Priest Ezra sent to Iddo (EZR 8:16), married a foreign wife (EZR 10:18, EZ 10:23)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Aaronic priest (EZR 10:18)",
+   "family": [
+    "descendant-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "of-people levites (Levites, the tribe descended from Levi, Jacob's third son, set apart )",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "named_by": null,
+   "verse_count": 3,
+   "verses": [
+    "EZR 8:16",
+    "EZR 10:18",
+    "EZR 10:23"
+   ],
+   "kjv": {
+    "EZR 8:16": "Then sent I for Eliezer, for Ariel, for Shemaiah, and for Elnathan, and for Jarib, and for Elnathan, and for Nathan, and for Zechariah, and for Meshullam, chief men; also for Joiarib, and for Elnathan, men of understanding.",
+    "EZR 10:18": "And among the sons of the priests there were found that had taken strange wives: namely, of the sons of Jeshua the son of Jozadak, and his brethren; Maaseiah, and Eliezer, and Jarib, and Gedaliah.",
+    "EZR 10:23": "Also of the Levites; Jozabad, and Shimei, and Kelaiah, (the same is Kelita,) Pethahiah, Judah, and Eliezer."
+   }
+  },
+  "disputed_verses": {
+   "BHSA EZR 10:18": "וַיִּמָּצֵא֙ מִבְּנֵ֣י הַכֹּהֲנִ֔ים אֲשֶׁ֥ר הֹשִׁ֖יבוּ נָשִׁ֣ים נָכְרִיֹּ֑ות מִבְּנֵי֙ יֵשׁ֤וּעַ בֶּן־יֹֽוצָדָק֙ וְאֶחָ֔יו מַֽעֲשֵׂיָה֙ וֶֽאֱלִיעֶ֔זֶר וְיָרִ֖יב וּגְדַלְיָֽה׃ ",
+   "KJV EZR 10:18": "And among the sons of the priests there were found that had taken strange wives: namely, of the sons of Jeshua the son of Jozadak, and his brethren; Maaseiah, and Eliezer, and Jarib, and Gedaliah."
+  },
+  "first_reader_said": [
+   "EZR 10:18: Both records hold Eliezer, priest of the sons of Jeshua, who had married a foreign wife in 10:18."
+  ]
+ },
+ "verdict": "two",
+ "keep": "none",
+ "why": "EZR 10:18 names Eliezer among the priests of Jeshua's family, while EZR 10:23 separately names Eliezer among the Levites in the same list, distinguishing two men. B conflates them: its EZR 10:18 citation and Jeshua family tie belong to A's priest. EZR 8:16 identifies Eliezer only as a chief man and does not establish which man he was.",
+ "confidence": 0.94,
+ "verses_of_other": [
+  "EZR 10:18"
+ ],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:34:44+00:00"
+}

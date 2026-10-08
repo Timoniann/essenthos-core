@@ -1,0 +1,78 @@
+{
+ "pair": [
+  "shobal-2",
+  "shobal-3"
+ ],
+ "case": {
+  "name": "Shobal",
+  "A": {
+   "name": "Shobal",
+   "line": "son of Hur who founded Kiriath-jearim (1CH 2:50)",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": null,
+   "family": [
+    "father-of kiriathjearim (Kiriath-jearim)",
+    "descendant-of judah (Judah, fourth-born son of Jacob (GEN 29:35), son of Leah)",
+    "father-of reaiah (Reaiah, son of Shobal (1CH 4:2))"
+   ],
+   "named_by": [
+    "haroeh (Haroeh, son of Shobal (1CH 2:52)) son-of",
+    "reaiah (Reaiah, son of Shobal (1CH 4:2)) son-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "1CH 2:50",
+    "1CH 2:52",
+    "1CH 4:1",
+    "1CH 4:2"
+   ],
+   "kjv": {
+    "1CH 2:50": "These were the sons of Caleb the son of Hur, the firstborn of Ephratah; Shobal the father of Kirjathjearim.",
+    "1CH 2:52": "And Shobal the father of Kirjathjearim had sons; Haroeh, and half of the Manahethites.",
+    "1CH 4:1": "The sons of Judah; Pharez, Hezron, and Carmi, and Hur, and Shobal.",
+    "1CH 4:2": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites."
+   }
+  },
+  "B": {
+   "name": "Shobal",
+   "line": "Listed among sons of Judah, father of Reaiah, ancestor of Zorathites; may duplicate bearer 2",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of judah (Judah, fourth-born son of Jacob (GEN 29:35), son of Leah)",
+    "father-of reaiah (Reaiah, son of Shobal (1CH 4:2))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "1CH 4:1",
+    "1CH 4:2"
+   ],
+   "kjv": {
+    "1CH 4:1": "The sons of Judah; Pharez, Hezron, and Carmi, and Hur, and Shobal.",
+    "1CH 4:2": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 4:1": "בְּנֵ֖י יְהוּדָ֑ה פֶּ֧רֶץ חֶצְרֹ֛ון וְכַרְמִ֖י וְח֥וּר וְשֹׁובָֽל׃ ",
+   "KJV 1CH 4:1": "The sons of Judah; Pharez, Hezron, and Carmi, and Hur, and Shobal.",
+   "BHSA 1CH 4:2": "וּרְאָיָ֤ה בֶן־שֹׁובָל֙ הֹולִ֣יד אֶת־יַ֔חַת וְיַ֣חַת הֹלִ֔יד אֶת־אֲחוּמַ֖י וְאֶת־לָ֑הַד אֵ֖לֶּה מִשְׁפְּחֹ֥ות הַצָּֽרְעָתִֽי׃ ס ",
+   "KJV 1CH 4:2": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites."
+  },
+  "first_reader_said": [
+   "1CH 4:1: 1CH 4:1 is a descending line (Perez, Hezron, Carmi, Hur, Shobal), so this is Shobal son of Hur, father of Reaiah, which both records hold.",
+   "1CH 4:2: Both records are Shobal father of Reaiah, and A's son of Hur is the same man as B's Shobal listed under Judah."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "1CH 4:1 lists Judah's descendants collectively, so it does not establish Judah as Shobal's immediate father or distinguish him from the Shobal in Hur's line in 1CH 2:50. Shobal's family in 1CH 2:52 is compatible with his being Reaiah's father in 1CH 4:2. B repeats A's Reaiah relationship and verses without supplying a distinct generation or identity; A is the fuller record.",
+ "confidence": 0.95,
+ "verses_of_other": [],
+ "keep_slug": "shobal-2",
+ "fold_slug": "shobal-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:32:52+00:00"
+}

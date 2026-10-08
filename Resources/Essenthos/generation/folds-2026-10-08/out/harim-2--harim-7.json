@@ -1,0 +1,76 @@
+{
+ "pair": [
+  "harim-2",
+  "harim-7"
+ ],
+ "case": {
+  "name": "Harim",
+  "A": {
+   "name": "Harim",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:32)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:27)",
+   "family": [
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "named_by": [
+    "shimeon (Shimeon, descendant of Harim who had married a foreign wife (EZR 10:3) descendant-of",
+    "malchijah-6 (Malchijah, descendant of Harim who had married a foreign wife (EZR 10:3) son-of",
+    "shemaiah-16 (Shemaiah, descendant of Harim who had married a foreign wife (EZR 10:3) descendant-of",
+    "eliezer-8 (Eliezer, descendant of Harim who had married a foreign wife (EZR 10:3) descendant-of",
+    "isshijah (Isshijah, descendant of Harim who had married a foreign wife (EZR 10:3) descendant-of",
+    "benjamin-3 (Benjamin, descendant of Harim who had married a foreign wife (EZR 10:3) descendant-of",
+    "malluch-3 (Malluch, descendant of Harim who had married a foreign wife (EZR 10:3) descendant-of",
+    "shemariah-3 (Shemariah, descendant of Harim who had married a foreign wife (EZR 10:3) descendant-of"
+   ],
+   "verse_count": 5,
+   "verses": [
+    "EZR 2:32",
+    "EZR 10:31",
+    "NEH 3:11",
+    "NEH 7:35",
+    "NEH 10:27"
+   ],
+   "kjv": {
+    "EZR 2:32": "The children of Harim, three hundred and twenty.",
+    "EZR 10:31": "And of the sons of Harim; Eliezer, Ishijah, Malchiah, Shemaiah, Shimeon,",
+    "NEH 3:11": "Malchijah the son of Harim, and Hashub the son of Pahathmoab, repaired the other piece, and the tower of the furnaces.",
+    "NEH 7:35": "The children of Harim, three hundred and twenty.",
+    "NEH 10:27": "Malluch, Harim, Baanah."
+   }
+  },
+  "B": {
+   "name": "Harim",
+   "line": "A lay chief of the people who seals Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 10:27"
+   ],
+   "kjv": {
+    "NEH 10:27": "Malluch, Harim, Baanah."
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 10:27": "מַלּ֥וּךְ חָרִ֖ם בַּעֲנָֽה׃ ",
+   "KJV NEH 10:27": "Malluch, Harim, Baanah."
+  },
+  "first_reader_said": [
+   "NEH 10:27: A, the house of Harim of Ezra 2:32, is already noted as sealing at 10:27, and B is that same lay sealer."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "B is a thinner copy of the lay sealer in NEH 10:27, an occurrence already explicitly included in A's verses and notes. A additionally preserves the Harim family in EZR 2:32 and NEH 7:35 and the family connections in EZR 10:31 and NEH 3:11. B supplies no separate father, generation, or office that would distinguish another man.",
+ "confidence": 0.91,
+ "verses_of_other": [],
+ "keep_slug": "harim-2",
+ "fold_slug": "harim-7",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:36:19+00:00"
+}

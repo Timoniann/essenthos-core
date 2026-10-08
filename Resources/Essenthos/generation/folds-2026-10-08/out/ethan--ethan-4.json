@@ -1,0 +1,72 @@
+{
+ "pair": [
+  "ethan",
+  "ethan-4"
+ ],
+ "case": {
+  "name": "Ethan",
+  "A": {
+   "name": "Ethan",
+   "line": "the Ezrahite (1KI 4:31) [Zerahite?- 1CH 2:6]",
+   "sex": "male",
+   "tribe": null,
+   "notes": "This Ethan is likely the same person as the son of Zerah, son of Judah (1CH 2:6) given the matching names of his brothers.  Ethan the \"EZrahite\" may be a scribal transposition of \"ZErahite\". Ethan the Ezrahite is also named as the author of Psalm 89.  Jamieson, Fausset, and Brown Commentary (1871) says they are the same individuals.  Sons of Mahol is an appelative for \"sons of dancing\".",
+   "family": [
+    "son-of zerah-3 (Zerah, son of Judah and Tamar (GEN 38:30))",
+    "of-people ezrahites (Ezrahites, patronymic of H2246, as Strong's Dictionary derives it)",
+    "father-of azariah-4 (Azariah, son of Ethan (1CH 2:8))"
+   ],
+   "named_by": [
+    "azariah-4 (Azariah, son of Ethan (1CH 2:8)) son-of",
+    "darda (Darda, son of Zerah (1CH 2:6).  Solomon was wiser than him (1KI 4:3) brother-of",
+    "heman (Heman, son of Zerah (1CH 2:6).  Solomon was wiser than him (1KI 4:3) brother-of",
+    "zerah-3 (Zerah, son of Judah and Tamar (GEN 38:30)) father-of"
+   ],
+   "verse_count": 3,
+   "verses": [
+    "1KI 4:31",
+    "1CH 2:6",
+    "1CH 2:8"
+   ],
+   "kjv": {
+    "1KI 4:31": "For he was wiser than all men; than Ethan the Ezrahite, and Heman, and Chalcol, and Darda, the sons of Mahol: and his fame was in all nations round about.",
+    "1CH 2:6": "And the sons of Zerah; Zimri, and Ethan, and Heman, and Calcol, and Dara: five of them in all.",
+    "1CH 2:8": "And the sons of Ethan; Azariah."
+   }
+  },
+  "B": {
+   "name": "Ethan",
+   "line": "Ezrahite renowned for wisdom, compared to Solomon",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "of-people ezrahites (Ezrahites, patronymic of H2246, as Strong's Dictionary derives it)"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1KI 4:31"
+   ],
+   "kjv": {
+    "1KI 4:31": "For he was wiser than all men; than Ethan the Ezrahite, and Heman, and Chalcol, and Darda, the sons of Mahol: and his fame was in all nations round about."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1KI 4:31": "וַיֶּחְכַּם֮ מִכָּל־הָֽאָדָם֒ מֵאֵיתָ֣ן הָאֶזְרָחִ֗י וְהֵימָ֧ן וְכַלְכֹּ֛ל וְדַרְדַּ֖ע בְּנֵ֣י מָחֹ֑ול וַיְהִֽי־שְׁמֹ֥ו בְכָֽל־הַגֹּויִ֖ם סָבִֽיב׃ ",
+   "KJV 1KI 4:31": "For he was wiser than all men; than Ethan the Ezrahite, and Heman, and Chalcol, and Darda, the sons of Mahol: and his fame was in all nations round about."
+  },
+  "first_reader_said": [
+   "1KI 4:31: Both records are Ethan the Ezrahite of this verse; A only adds the possible Zerahite identification."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "Both records identify Ethan the Ezrahite named in 1KI 4:31, and B supplies no separate father, generation, or role. A additionally associates him with Zerah’s son Ethan (1CH 2:6) and Ethan’s son Azariah (1CH 2:8); that identification is uncertain, but it does not distinguish B as another man. B is a thinner duplicate of A’s Ezrahite record.",
+ "confidence": 0.98,
+ "verses_of_other": [],
+ "keep_slug": "ethan",
+ "fold_slug": "ethan-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:33:55+00:00"
+}

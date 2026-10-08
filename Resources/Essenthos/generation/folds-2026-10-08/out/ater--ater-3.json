@@ -1,0 +1,65 @@
+{
+ "pair": [
+  "ater",
+  "ater-3"
+ ],
+ "case": {
+  "name": "Ater",
+  "A": {
+   "name": "Ater",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:16)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of hezekiah-2 (Hezekiah, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "named_by": [
+    "hezekiah-2 (Hezekiah, his sons (descendants) returned to Judah after captivity (EZ) ancestor-of"
+   ],
+   "verse_count": 3,
+   "verses": [
+    "EZR 2:16",
+    "NEH 7:21",
+    "NEH 10:17"
+   ],
+   "kjv": {
+    "EZR 2:16": "The children of Ater of Hezekiah, ninety and eight.",
+    "NEH 7:21": "The children of Ater of Hezekiah, ninety and eight.",
+    "NEH 10:17": "Ater, Hizkijah, Azzur,"
+   }
+  },
+  "B": {
+   "name": "Ater",
+   "line": "Chief Israelite (or representative of the family) who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 10:17"
+   ],
+   "kjv": {
+    "NEH 10:17": "Ater, Hizkijah, Azzur,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 10:17": "אָטֵ֥ר חִזְקִיָּ֖ה עַזּֽוּר׃ ",
+   "KJV NEH 10:17": "Ater, Hizkijah, Azzur,"
+  },
+  "first_reader_said": [
+   "NEH 10:17: 'Ater, Hizkijah' echoes 'Ater of Hezekiah' (Ezra 2:16), so the sealer is the house of Ater, which A records; B is the same house held again."
+  ]
+ },
+ "verdict": "unclear",
+ "keep": "none",
+ "why": "Ezra 2:16 and Nehemiah 7:21 identify descendants of Ater of Hezekiah, without identifying Ater himself as a covenant sealer. Nehemiah 10:17 lists Ater and Hizkijah separately; its Hebrew does not say “Ater of Hezekiah.” The sealer could represent that ancestral family or be another namesake, so the text establishes neither personal identity nor distinctness.",
+ "confidence": 0.9,
+ "verses_of_other": [],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:35:40+00:00"
+}

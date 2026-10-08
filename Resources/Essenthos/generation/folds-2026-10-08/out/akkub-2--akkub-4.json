@@ -1,0 +1,65 @@
+{
+ "pair": [
+  "akkub-2",
+  "akkub-4"
+ ],
+ "case": {
+  "name": "Akkub",
+  "A": {
+   "name": "Akkub",
+   "line": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 5,
+   "verses": [
+    "1CH 9:17",
+    "EZR 2:42",
+    "NEH 7:45",
+    "NEH 11:19",
+    "NEH 12:25"
+   ],
+   "kjv": {
+    "1CH 9:17": "And the porters were, Shallum, and Akkub, and Talmon, and Ahiman, and their brethren: Shallum was the chief;",
+    "EZR 2:42": "The children of the porters: the children of Shallum, the children of Ater, the children of Talmon, the children of Akkub, the children of Hatita, the children of Shobai, in all an hundred thirty and nine.",
+    "NEH 7:45": "The porters: the children of Shallum, the children of Ater, the children of Talmon, the children of Akkub, the children of Hatita, the children of Shobai, an hundred thirty and eight.",
+    "NEH 11:19": "Moreover the porters, Akkub, Talmon, and their brethren that kept the gates, were an hundred seventy and two.",
+    "NEH 12:25": "Mattaniah, and Bakbukiah, Obadiah, Meshullam, Talmon, Akkub, were porters keeping the ward at the thresholds of the gates."
+   }
+  },
+  "B": {
+   "name": "Akkub",
+   "line": "Levite gatekeeper listed among porters with Shallum, Talmon, Ahiman",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 9:17"
+   ],
+   "kjv": {
+    "1CH 9:17": "And the porters were, Shallum, and Akkub, and Talmon, and Ahiman, and their brethren: Shallum was the chief;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 9:17": "וְהַשֹּׁעֲרִים֙ שַׁלּ֣וּם וְעַקּ֔וּב וְטַלְמֹ֖ן וַאֲחִימָ֑ן וַאֲחִיהֶ֥ם שַׁלּ֖וּם הָרֹֽאשׁ׃ ",
+   "KJV 1CH 9:17": "And the porters were, Shallum, and Akkub, and Talmon, and Ahiman, and their brethren: Shallum was the chief;"
+  },
+  "first_reader_said": [
+   "1CH 9:17: Both records are the gatekeeper Akkub listed with Shallum, Talmon and Ahiman."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "Both records identify the same Akkub in the same gatekeeper list with Shallum, Talmon, and Ahiman (1CH 9:17); B supplies no independent lineage or occurrence distinguishing another person. A preserves that occurrence and the additional gatekeeper references, including the children of Akkub in EZR 2:42 and NEH 7:45, so B is a thinner duplicate of A.",
+ "confidence": 0.99,
+ "verses_of_other": [],
+ "keep_slug": "akkub-2",
+ "fold_slug": "akkub-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:33:42+00:00"
+}

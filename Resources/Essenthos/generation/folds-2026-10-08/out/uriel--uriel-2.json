@@ -1,0 +1,75 @@
+{
+ "pair": [
+  "uriel",
+  "uriel-2"
+ ],
+ "case": {
+  "name": "Uriel",
+  "A": {
+   "name": "Uriel",
+   "line": "son of Tahath (1CH 6:24), chief of the sons of Kohath (1CH 15:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "son-of tahath (Tahath, son of Assir (1CH 6:24))",
+    "father-of uzziah (Uzziah, son of Uriel (1CH 6:24))",
+    "descendant-of kohath (Kohath, son of Levi (GEN 46:11))"
+   ],
+   "named_by": [
+    "tahath (Tahath, son of Assir (1CH 6:24)) father-of",
+    "uzziah (Uzziah, son of Uriel (1CH 6:24)) son-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "1CH 6:24",
+    "1CH 6:36",
+    "1CH 15:5",
+    "1CH 15:11"
+   ],
+   "kjv": {
+    "1CH 6:24": "Tahath his son, Uriel his son, Uzziah his son, and Shaul his son.",
+    "1CH 6:36": "The son of Elkanah, the son of Joel, the son of Azariah, the son of Zephaniah,",
+    "1CH 15:5": "Of the sons of Kohath; Uriel the chief, and his brethren an hundred and twenty:",
+    "1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,"
+   }
+  },
+  "B": {
+   "name": "Uriel",
+   "line": "Levite ancestor, son of Tahath and father of Uzziah, in Kohath's genealogy",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of tahath (Tahath, son of Assir (1CH 6:24))",
+    "father-of uzziah (Uzziah, son of Uriel (1CH 6:24))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 6:24"
+   ],
+   "kjv": {
+    "1CH 6:24": "Tahath his son, Uriel his son, Uzziah his son, and Shaul his son."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 6:24": "תַּ֤חַת בְּנֹו֙ אוּרִיאֵ֣ל בְּנֹ֔ו עֻזִּיָּ֥ה בְנֹ֖ו וְשָׁא֥וּל בְּנֹֽו׃ ",
+   "KJV 1CH 6:24": "Tahath his son, Uriel his son, Uzziah his son, and Shaul his son."
+  },
+  "first_reader_said": [
+   "1CH 6:24: Both records are Uriel son of Tahath and father of Uzziah."
+  ]
+ },
+ "verdict": "two",
+ "keep": "none",
+ "why": "The Uriel of 1CH 6:24, son of Tahath and father of Uzziah, belongs to the earlier Kohathite genealogy. The Uriel of 1CH 15:5 and 15:11 is the Kohathite chief serving under David, a later generation; A has combined these two men, while B represents the ancestor. The supplied text of 1CH 6:36 does not name Uriel.",
+ "confidence": 0.94,
+ "verses_of_other": [
+  "1CH 6:24"
+ ],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:33:42+00:00"
+}

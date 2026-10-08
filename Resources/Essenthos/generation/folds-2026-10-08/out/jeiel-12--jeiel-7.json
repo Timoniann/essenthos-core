@@ -1,0 +1,61 @@
+{
+ "pair": [
+  "jeiel-12",
+  "jeiel-7"
+ ],
+ "case": {
+  "name": "Jeiel",
+  "A": {
+   "name": "Jeiel",
+   "line": "Gershonite Levite of the sons of Elizaphan, listed with Shimri.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of elzaphan (Elzaphan, son of Uzziel (EXO 6:22))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "2CH 29:13"
+   ],
+   "kjv": {
+    "2CH 29:13": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:"
+   }
+  },
+  "B": {
+   "name": "Jeiel",
+   "line": "descendant of Elizaphan [Elzaphan] (2CH 29:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathites (from Uzziel, from Kohath, son of Levi)",
+   "family": [
+    "descendant-of elzaphan (Elzaphan, son of Uzziel (EXO 6:22))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "2CH 29:13"
+   ],
+   "kjv": {
+    "2CH 29:13": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 2CH 29:13": "וּמִן־בְּנֵי֙ אֱלִ֣יצָפָ֔ן שִׁמְרִ֖י ויעואל וּמִן־בְּנֵ֣י אָסָ֔ף זְכַרְיָ֖הוּ וּמַתַּנְיָֽהוּ׃ ס ",
+   "KJV 2CH 29:13": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:"
+  },
+  "first_reader_said": [
+   "2CH 29:13: Both records are Jeiel of the sons of Elizaphan in this verse (B wrongly calls him Gershonite)."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "Both records identify Jeiel alongside Shimri among the sons of Elizaphan in 2CH 29:13, with identical ancestry and verse attribution. A's Gershonite label is erroneous: Elizaphan is descended through Uzziel (EXO 6:22), of the Kohathite line correctly recorded in B. B therefore preserves the fuller, correct identification.",
+ "confidence": 0.99,
+ "verses_of_other": [],
+ "keep_slug": "jeiel-7",
+ "fold_slug": "jeiel-12",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:33:57+00:00"
+}

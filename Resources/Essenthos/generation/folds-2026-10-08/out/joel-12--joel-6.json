@@ -1,0 +1,74 @@
+{
+ "pair": [
+  "joel-12",
+  "joel-6"
+ ],
+ "case": {
+  "name": "Joel",
+  "A": {
+   "name": "Joel",
+   "line": "A Levite summoned by David along with Uriel, Asaiah, Shemaiah and Eliel",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "of-people levites (Levites, the tribe descended from Levi, Jacob's third son, set apart )"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 15:11"
+   ],
+   "kjv": {
+    "1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,"
+   }
+  },
+  "B": {
+   "name": "Joel",
+   "line": "chief of the sons of Gershom (1CH 15:7), son of Ladan (1CH 23:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Gershonites (Gershomites), from Gershon, son of Levi",
+   "family": [
+    "brother-of jehiel-9 (Jehiel, Gershonite, son of Laadan, whose house (Jehieli) kept the te)",
+    "brother-of zetham (Zetham, son of Ladan [Libni] (1CH 23:8))",
+    "of-people jehielites (Jehielites, patronymic of H3171, as Strong's Dictionary derives it)",
+    "descendant-of gershon (Gershon, son of Levi (GEN 46:11))",
+    "descendant-of libni (Libni, son of Gershon (EXO 6:17))"
+   ],
+   "named_by": [
+    "jehiel-9 (Jehiel, Gershonite, son of Laadan, whose house (Jehieli) kept the te) brother-of",
+    "zetham (Zetham, son of Ladan [Libni] (1CH 23:8)) brother-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "1CH 15:7",
+    "1CH 15:11",
+    "1CH 23:8",
+    "1CH 26:22"
+   ],
+   "kjv": {
+    "1CH 15:7": "Of the sons of Gershom; Joel the chief and his brethren an hundred and thirty:",
+    "1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,",
+    "1CH 23:8": "The sons of Laadan; the chief was Jehiel, and Zetham, and Joel, three.",
+    "1CH 26:22": "The sons of Jehieli; Zetham, and Joel his brother, which were over the treasures of the house of the LORD."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 15:11": "וַיִּקְרָ֣א דָוִ֔יד לְצָדֹ֥וק וּלְאֶבְיָתָ֖ר הַכֹּֽהֲנִ֑ים וְלַלְוִיִּ֗ם לְאֽוּרִיאֵ֤ל עֲשָׂיָה֙ וְיֹואֵ֣ל שְׁמַֽעְיָ֔ה וֶאֱלִיאֵ֖ל וְעַמִּינָדָֽב׃ ",
+   "KJV 1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,"
+  },
+  "first_reader_said": [
+   "1CH 15:11: David summons the six chiefs just listed in 15:5-10, so this Joel is the Gershomite chief of 15:7 that A holds, and B is the same man held again."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "Joel the Gershomite chief in 1CH 15:7 is the Joel David summons among the Levite chiefs in 1CH 15:11, the sole verse assigned to A. The associations with Zetham and the Laadan/Jehieli family in 1CH 23:8 and 26:22 supply further information without distinguishing another person represented by A. A is a thinner duplicate of B.",
+ "confidence": 0.97,
+ "verses_of_other": [],
+ "keep_slug": "joel-6",
+ "fold_slug": "joel-12",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:32:32+00:00"
+}

@@ -1,0 +1,69 @@
+{
+ "pair": [
+  "gaius",
+  "gaius-3"
+ ],
+ "case": {
+  "name": "Gaius",
+  "A": {
+   "name": "Gaius",
+   "line": "Paul's traveling companion from Macedonia (ACT 19:29)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of aristarchus (Aristarchus, Paul's traveling companion from Macedonia (ACT 19:29))",
+    "from-place macedonia (Macedonia)"
+   ],
+   "named_by": null,
+   "verse_count": 4,
+   "verses": [
+    "ACT 19:29",
+    "ROM 16:23",
+    "1CO 1:14",
+    "3JN 1:1"
+   ],
+   "kjv": {
+    "ACT 19:29": "And the whole city was filled with confusion: and having caught Gaius and Aristarchus, men of Macedonia, Paul's companions in travel, they rushed with one accord into the theatre.",
+    "ROM 16:23": "Gaius mine host, and of the whole church, saluteth you. Erastus the chamberlain of the city saluteth you, and Quartus a brother.",
+    "1CO 1:14": "I thank God that I baptized none of you, but Crispus and Gaius;",
+    "3JN 1:1": "The elder unto the wellbeloved Gaius, whom I love in the truth."
+   }
+  },
+  "B": {
+   "name": "Gaius",
+   "line": "Macedonian, Paul's travel companion seized in the Ephesus theatre riot.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of aristarchus (Aristarchus, Paul's traveling companion from Macedonia (ACT 19:29))",
+    "from-place macedonia (Macedonia)"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "ACT 19:29"
+   ],
+   "kjv": {
+    "ACT 19:29": "And the whole city was filled with confusion: and having caught Gaius and Aristarchus, men of Macedonia, Paul's companions in travel, they rushed with one accord into the theatre."
+   }
+  },
+  "disputed_verses": {
+   "NESTLE1904 ACT 19:29": "καὶ ἐπλήσθη ἡ πόλις τῆς συγχύσεως, ὥρμησάν τε ὁμοθυμαδὸν εἰς τὸ θέατρον, συναρπάσαντες Γάϊον καὶ Ἀρίσταρχον Μακεδόνας, συνεκδήμους Παύλου. ",
+   "KJV ACT 19:29": "And the whole city was filled with confusion: and having caught Gaius and Aristarchus, men of Macedonia, Paul's companions in travel, they rushed with one accord into the theatre."
+  },
+  "first_reader_said": [
+   "ACT 19:29: Both records are the Macedonian Gaius, Paul's travelling companion seized with Aristarchus."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "ACT 19:29 identifies both records as the Macedonian Gaius seized with Aristarchus, Paul's traveling companion; their place and companion ties are identical. ROM 16:23, 1CO 1:14, and 3JN 1:1 do not establish a distinction between A and B, though those verses alone do not prove that every Gaius mentioned is this Macedonian. B is a thinner duplicate of A's explicitly identified ACT 19:29 person.",
+ "confidence": 0.98,
+ "verses_of_other": [],
+ "keep_slug": "gaius",
+ "fold_slug": "gaius-3",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:34:13+00:00"
+}

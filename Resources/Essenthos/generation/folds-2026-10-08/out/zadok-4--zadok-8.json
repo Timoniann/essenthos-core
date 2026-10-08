@@ -1,0 +1,63 @@
+{
+ "pair": [
+  "zadok-4",
+  "zadok-8"
+ ],
+ "case": {
+  "name": "Zadok",
+  "A": {
+   "name": "Zadok",
+   "line": "made repairs to the wall of Jerusalem (NEH 3:4)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:21)",
+   "family": [
+    "son-of baana-3 (Baana, father of Zadok (NEH 3:4))"
+   ],
+   "named_by": [
+    "baana-3 (Baana, father of Zadok (NEH 3:4)) father-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "NEH 3:4",
+    "NEH 10:21"
+   ],
+   "kjv": {
+    "NEH 3:4": "And next unto them repaired Meremoth the son of Urijah, the son of Koz. And next unto them repaired Meshullam the son of Berechiah, the son of Meshezabeel. And next unto them repaired Zadok the son of Baana.",
+    "NEH 10:21": "Meshezabeel, Zadok, Jaddua,"
+   }
+  },
+  "B": {
+   "name": "Zadok",
+   "line": "A leader of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 10:21"
+   ],
+   "kjv": {
+    "NEH 10:21": "Meshezabeel, Zadok, Jaddua,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 10:21": "מְשֵׁיזַבְאֵ֥ל צָדֹ֖וק יַדּֽוּעַ׃ ",
+   "KJV NEH 10:21": "Meshezabeel, Zadok, Jaddua,"
+  },
+  "first_reader_said": [
+   "NEH 10:21: A's notes already place Zadok on the sealed document at 10:21, and B is that same sealer with nothing added."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "A already includes the covenant sealer named in NEH 10:21, which is B's sole verse and identifying description. A additionally identifies Zadok as the son of Baana who repaired the wall in NEH 3:4; B supplies no distinct father, generation, or role, so it is a thinner duplicate of A.",
+ "confidence": 0.98,
+ "verses_of_other": [],
+ "keep_slug": "zadok-4",
+ "fold_slug": "zadok-8",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:35:46+00:00"
+}

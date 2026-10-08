@@ -1,0 +1,63 @@
+{
+ "pair": [
+  "nathan-3",
+  "nathan-9"
+ ],
+ "case": {
+  "name": "Nathan",
+  "A": {
+   "name": "Nathan",
+   "line": "of Zobah (2SA 23:36)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of igal-2 (Igal, son of Nathan, thirty-first of \"the thirty\" of David's men ()"
+   ],
+   "named_by": [
+    "igal-2 (Igal, son of Nathan, thirty-first of \"the thirty\" of David's men () son-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "2SA 23:36",
+    "1CH 11:38"
+   ],
+   "kjv": {
+    "2SA 23:36": "Igal the son of Nathan of Zobah, Bani the Gadite,",
+    "1CH 11:38": "Joel the brother of Nathan, Mibhar the son of Haggeri,"
+   }
+  },
+  "B": {
+   "name": "Nathan",
+   "line": "Brother of Joel, of the tribe of Judah, numbered among David's mighty men.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 11:38"
+   ],
+   "kjv": {
+    "1CH 11:38": "Joel the brother of Nathan, Mibhar the son of Haggeri,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 11:38": "יֹואֵל֙ אֲחִ֣י נָתָ֔ן מִבְחָ֖ר בֶּן־הַגְרִֽי׃ ס ",
+   "KJV 1CH 11:38": "Joel the brother of Nathan, Mibhar the son of Haggeri,"
+  },
+  "first_reader_said": [
+   "1CH 11:38: 1CH 11:38 'Joel brother of Nathan' stands in the same slot of David's mighty men as 2SA 23:36 'Igal son of Nathan of Zobah', so both records hold the one Nathan of that list."
+  ]
+ },
+ "verdict": "unclear",
+ "keep": "none",
+ "why": "2SA 23:36 names Nathan of Zobah as Igal’s father, while 1CH 11:38 names Nathan as Joel’s brother. Their corresponding positions in parallel lists suggest a connection, and these family relationships could fit one Nathan, but neither verse establishes that identification or distinguishes two Nathans. The Judah affiliation stated for B is not established by 1CH 11:38.",
+ "confidence": 0.91,
+ "verses_of_other": [],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:32:07+00:00"
+}

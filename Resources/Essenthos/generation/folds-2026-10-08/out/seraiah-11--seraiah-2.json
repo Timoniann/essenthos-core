@@ -1,0 +1,75 @@
+{
+ "pair": [
+  "seraiah-11",
+  "seraiah-2"
+ ],
+ "case": {
+  "name": "Seraiah",
+  "A": {
+   "name": "Seraiah",
+   "line": "Son of Azariah, father of Ezra the priest and scribe.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+    "son-of azariah-7 (Azariah, son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and )"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "EZR 7:1"
+   ],
+   "kjv": {
+    "EZR 7:1": "Now after these things, in the reign of Artaxerxes king of Persia, Ezra the son of Seraiah, the son of Azariah, the son of Hilkiah,"
+   }
+  },
+  "B": {
+   "name": "Seraiah",
+   "line": "the chief priest (2KI 25:18) who was killed by the king of Babylon (2KI 25:21)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Aaronic priest in the line of Eleazar (full lineage in 1CH 6:14)",
+   "family": [
+    "high-priest-of jerusalem (Jerusalem)",
+    "son-of azariah-7 (Azariah, son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and )",
+    "father-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "named_by": [
+    "azariah-7 (Azariah, son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and ) father-of",
+    "jehozadak-2 (Jehozadak, father of Joshua the high priest (HAG 1:1)) son-of",
+    "ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6) son-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "2KI 25:18",
+    "1CH 6:14",
+    "EZR 7:1",
+    "JER 52:24"
+   ],
+   "kjv": {
+    "2KI 25:18": "And the captain of the guard took Seraiah the chief priest, and Zephaniah the second priest, and the three keepers of the door:",
+    "1CH 6:14": "And Azariah begat Seraiah, and Seraiah begat Jehozadak,",
+    "EZR 7:1": "Now after these things, in the reign of Artaxerxes king of Persia, Ezra the son of Seraiah, the son of Azariah, the son of Hilkiah,",
+    "JER 52:24": "And the captain of the guard took Seraiah the chief priest, and Zephaniah the second priest, and the three keepers of the door:"
+   }
+  },
+  "disputed_verses": {
+   "BHSA EZR 7:1": "וְאַחַר֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה בְּמַלְכ֖וּת אַרְתַּחְשַׁ֣סְתְּא מֶֽלֶךְ־פָּרָ֑ס עֶזְרָא֙ בֶּן־שְׂרָיָ֔ה בֶּן־עֲזַרְיָ֖ה בֶּן־חִלְקִיָּֽה׃ ",
+   "KJV EZR 7:1": "Now after these things, in the reign of Artaxerxes king of Persia, Ezra the son of Seraiah, the son of Azariah, the son of Hilkiah,"
+  },
+  "first_reader_said": [
+   "EZR 7:1: Both records are Seraiah son of Azariah and father (ancestor) of Ezra."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "EZR 7:1 identifies Seraiah through Azariah and Hilkiah, matching the priestly lineage of B; 1CH 6:14 also names Seraiah as Azariah’s son and Jehozadak’s father. Ezra’s later appearance does not require another Seraiah, since the genealogy can identify an ancestor rather than an immediate father. A is a thinner copy of B, which also includes the chief priest named in 2KI 25:18 and JER 52:24.",
+ "confidence": 0.98,
+ "verses_of_other": [],
+ "keep_slug": "seraiah-2",
+ "fold_slug": "seraiah-11",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:34:59+00:00"
+}

@@ -1,0 +1,70 @@
+{
+ "pair": [
+  "benaiah-12",
+  "benaiah-4"
+ ],
+ "case": {
+  "name": "Benaiah",
+  "A": {
+   "name": "Benaiah",
+   "line": "Levite of second degree who played the psaltery on Alamoth before the ark",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "1CH 15:18",
+    "1CH 15:20"
+   ],
+   "kjv": {
+    "1CH 15:18": "And with them their brethren of the second degree, Zechariah, Ben, and Jaaziel, and Shemiramoth, and Jehiel, and Unni, Eliab, and Benaiah, and Maaseiah, and Mattithiah, and Elipheleh, and Mikneiah, and Obededom, and Jeiel, the porters.",
+    "1CH 15:20": "And Zechariah, and Aziel, and Shemiramoth, and Jehiel, and Unni, and Eliab, and Maaseiah, and Benaiah, with psalteries on Alamoth;"
+   }
+  },
+  "B": {
+   "name": "Benaiah",
+   "line": "a Levite of the second degree who played the psaltery before the ark (1CH 15:18, 15:20, 16:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "named_by": [
+    "eliab-5 (Eliab, second rank Levite, gatekeeper (1CH 15:18)) companion-of"
+   ],
+   "verse_count": 3,
+   "verses": [
+    "1CH 15:18",
+    "1CH 15:20",
+    "1CH 16:5"
+   ],
+   "kjv": {
+    "1CH 15:18": "And with them their brethren of the second degree, Zechariah, Ben, and Jaaziel, and Shemiramoth, and Jehiel, and Unni, Eliab, and Benaiah, and Maaseiah, and Mattithiah, and Elipheleh, and Mikneiah, and Obededom, and Jeiel, the porters.",
+    "1CH 15:20": "And Zechariah, and Aziel, and Shemiramoth, and Jehiel, and Unni, and Eliab, and Maaseiah, and Benaiah, with psalteries on Alamoth;",
+    "1CH 16:5": "Asaph the chief, and next to him Zechariah, Jeiel, and Shemiramoth, and Jehiel, and Mattithiah, and Eliab, and Benaiah, and Obededom: and Jeiel with psalteries and with harps; but Asaph made a sound with cymbals;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 15:18": "וְעִמָּהֶ֖ם אֲחֵיהֶ֣ם הַמִּשְׁנִ֑ים זְכַרְיָ֡הוּ בֵּ֡ן וְיַֽעֲזִיאֵ֡ל וּשְׁמִֽירָמֹ֡ות וִיחִיאֵ֣ל׀ וְעֻנִּ֡י אֱלִיאָ֡ב וּבְנָיָ֡הוּ וּמַֽעֲשֵׂיָ֡הוּ וּמַתִּתְיָהוּ֩ וֶאֱלִ֨יפְלֵ֜הוּ וּמִקְנֵיָ֨הוּ וְעֹבֵ֥ד אֱדֹ֛ם וִֽיעִיאֵ֖ל הַשֹּׁעֲרִֽים׃ ",
+   "KJV 1CH 15:18": "And with them their brethren of the second degree, Zechariah, Ben, and Jaaziel, and Shemiramoth, and Jehiel, and Unni, Eliab, and Benaiah, and Maaseiah, and Mattithiah, and Elipheleh, and Mikneiah, and Obededom, and Jeiel, the porters.",
+   "BHSA 1CH 15:20": "וּזְכַרְיָ֨ה וַעֲזִיאֵ֜ל וּשְׁמִֽירָמֹ֤ות וִֽיחִיאֵל֙ וְעֻנִּ֣י וֶֽאֱלִיאָ֔ב וּמַעֲשֵׂיָ֖הוּ וּבְנָיָ֑הוּ בִּנְבָלִ֖ים עַל־עֲלָמֹֽות׃ ",
+   "KJV 1CH 15:20": "And Zechariah, and Aziel, and Shemiramoth, and Jehiel, and Unni, and Eliab, and Maaseiah, and Benaiah, with psalteries on Alamoth;"
+  },
+  "first_reader_said": [
+   "1CH 15:18: Both records are the second-degree Levite Benaiah who played the psaltery before the ark.",
+   "1CH 15:20: Both records are the second-degree Levite Benaiah who played psalteries on Alamoth."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "Both records identify the same Benaiah in the second-degree Levite list in 1CH 15:18 and among those playing psalteries on Alamoth in 1CH 15:20. B adds the consistent continuation in 1CH 16:5, where Benaiah serves alongside several of the same musicians, and preserves fuller compatible ties to Levi and Eliab.",
+ "confidence": 0.99,
+ "verses_of_other": [],
+ "keep_slug": "benaiah-4",
+ "fold_slug": "benaiah-12",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:32:26+00:00"
+}

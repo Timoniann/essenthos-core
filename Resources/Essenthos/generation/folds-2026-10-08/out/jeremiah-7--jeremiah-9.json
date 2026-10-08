@@ -1,0 +1,77 @@
+{
+ "pair": [
+  "jeremiah-7",
+  "jeremiah-9"
+ ],
+ "case": {
+  "name": "Jeremiah",
+  "A": {
+   "name": "Jeremiah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:2)",
+   "family": [
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "companion-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "ancestor-of hananiah-9 (Hananiah, son of Jeremiah (NEH 12:12))",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "named_by": null,
+   "verse_count": 4,
+   "verses": [
+    "NEH 10:2",
+    "NEH 12:1",
+    "NEH 12:12",
+    "NEH 12:34"
+   ],
+   "kjv": {
+    "NEH 10:2": "Seraiah, Azariah, Jeremiah,",
+    "NEH 12:1": "Now these are the priests and the Levites that went up with Zerubbabel the son of Shealtiel, and Jeshua: Seraiah, Jeremiah, Ezra,",
+    "NEH 12:12": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;",
+    "NEH 12:34": "Judah, and Benjamin, and Shemaiah, and Jeremiah,"
+   }
+  },
+  "B": {
+   "name": "Jeremiah",
+   "line": "Priestly family head from Zerubbabel's return, continuing under Joiakim",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "companion-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "ancestor-of hananiah-9 (Hananiah, son of Jeremiah (NEH 12:12))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "NEH 12:1",
+    "NEH 12:12"
+   ],
+   "kjv": {
+    "NEH 12:1": "Now these are the priests and the Levites that went up with Zerubbabel the son of Shealtiel, and Jeshua: Seraiah, Jeremiah, Ezra,",
+    "NEH 12:12": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:1": "וְאֵ֨לֶּה֙ הַכֹּהֲנִ֣ים וְהַלְוִיִּ֔ם אֲשֶׁ֥ר עָל֛וּ עִם־זְרֻבָּבֶ֥ל בֶּן־שְׁאַלְתִּיאֵ֖ל וְיֵשׁ֑וּעַ שְׂרָיָ֥ה יִרְמְיָ֖ה עֶזְרָֽא׃ ",
+   "KJV NEH 12:1": "Now these are the priests and the Levites that went up with Zerubbabel the son of Shealtiel, and Jeshua: Seraiah, Jeremiah, Ezra,",
+   "BHSA NEH 12:12": "וּבִימֵי֙ יֹֽויָקִ֔ים הָי֥וּ כֹהֲנִ֖ים רָאשֵׁ֣י הָאָבֹ֑ות לִשְׂרָיָ֣ה מְרָיָ֔ה לְיִרְמְיָ֖ה חֲנַנְיָֽה׃ ",
+   "KJV NEH 12:12": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;"
+  },
+  "first_reader_said": [
+   "NEH 12:1: Both records are the priest Jeremiah who came up with Zerubbabel and Jeshua and was ancestor of Hananiah (12:12), with the same family links.",
+   "NEH 12:12: Both records are the priestly house of Jeremiah headed by Hananiah under Joiakim, with the same links."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "Both records identify the Jeremiah who returned with Zerubbabel and Jeshua in NEH 12:1, whose priestly house was represented by Hananiah under Joiakim in NEH 12:12. B repeats A's verses and family links without identifying a separate person. NEH 10:2 and NEH 12:34 supply no contrasting father or lineage that distinguishes these records; A preserves the fuller account.",
+ "confidence": 0.96,
+ "verses_of_other": [],
+ "keep_slug": "jeremiah-7",
+ "fold_slug": "jeremiah-9",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:37:02+00:00"
+}

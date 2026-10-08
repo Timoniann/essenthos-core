@@ -1,0 +1,61 @@
+{
+ "pair": [
+  "malluch-2",
+  "malluch-5"
+ ],
+ "case": {
+  "name": "Malluch",
+  "A": {
+   "name": "Malluch",
+   "line": "descendant of Bani who had married a foreign wife (EZR 10:29)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:27)",
+   "family": [
+    "descendant-of bani-4 (Bani, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "EZR 10:29",
+    "NEH 10:27"
+   ],
+   "kjv": {
+    "EZR 10:29": "And of the sons of Bani; Meshullam, Malluch, and Adaiah, Jashub, and Sheal, and Ramoth.",
+    "NEH 10:27": "Malluch, Harim, Baanah."
+   }
+  },
+  "B": {
+   "name": "Malluch",
+   "line": "Lay leader of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 10:27"
+   ],
+   "kjv": {
+    "NEH 10:27": "Malluch, Harim, Baanah."
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 10:27": "מַלּ֥וּךְ חָרִ֖ם בַּעֲנָֽה׃ ",
+   "KJV NEH 10:27": "Malluch, Harim, Baanah."
+  },
+  "first_reader_said": [
+   "NEH 10:27: A's notes already place Malluch on the sealed document at 10:27, and B is that same lay sealer with nothing added."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "Both records identify Malluch with the same covenant sealer in NEH 10:27, and B adds no distinct family ties or occurrence. A also preserves his descent from Bani and appearance in EZR 10:29, with no conflicting detail; B is therefore a thinner copy of A.",
+ "confidence": 0.94,
+ "verses_of_other": [],
+ "keep_slug": "malluch-2",
+ "fold_slug": "malluch-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:36:18+00:00"
+}

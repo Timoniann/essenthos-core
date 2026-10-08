@@ -1,0 +1,954 @@
+[
+ {
+  "pair": [
+   "timna",
+   "timna-3"
+  ],
+  "name": "Timna",
+  "disputed_refs": [
+   [
+    13,
+    1,
+    39
+   ],
+   [
+    1,
+    36,
+    22
+   ]
+  ],
+  "why": [
+   "1CH 1:39: The verse names Timna sister of Lotan, and both records are the sister of Lotan (A only adds the Eliphaz concubine identification of GEN 36:12).",
+   "GEN 36:22: Both records are Timna the sister of Lotan; A states that it is this verse's sister of Lotan, so the woman is held twice."
+  ]
+ },
+ {
+  "pair": [
+   "nathan-3",
+   "nathan-9"
+  ],
+  "name": "Nathan",
+  "disputed_refs": [
+   [
+    13,
+    11,
+    38
+   ]
+  ],
+  "why": [
+   "1CH 11:38: 1CH 11:38 'Joel brother of Nathan' stands in the same slot of David's mighty men as 2SA 23:36 'Igal son of Nathan of Zobah', so both records hold the one Nathan of that list."
+  ]
+ },
+ {
+  "pair": [
+   "joel-12",
+   "joel-6"
+  ],
+  "name": "Joel",
+  "disputed_refs": [
+   [
+    13,
+    15,
+    11
+   ]
+  ],
+  "why": [
+   "1CH 15:11: David summons the six chiefs just listed in 15:5-10, so this Joel is the Gershomite chief of 15:7 that A holds, and B is the same man held again."
+  ]
+ },
+ {
+  "pair": [
+   "benaiah-12",
+   "benaiah-4"
+  ],
+  "name": "Benaiah",
+  "disputed_refs": [
+   [
+    13,
+    15,
+    18
+   ],
+   [
+    13,
+    15,
+    20
+   ]
+  ],
+  "why": [
+   "1CH 15:18: Both records are the second-degree Levite Benaiah who played the psaltery before the ark.",
+   "1CH 15:20: Both records are the second-degree Levite Benaiah who played psalteries on Alamoth."
+  ]
+ },
+ {
+  "pair": [
+   "joel-13",
+   "joel-6"
+  ],
+  "name": "Joel",
+  "disputed_refs": [
+   [
+    13,
+    15,
+    7
+   ]
+  ],
+  "why": [
+   "1CH 15:7: Both records are Joel chief of the sons of Gershom at the bringing up of the ark."
+  ]
+ },
+ {
+  "pair": [
+   "eliel-7",
+   "eliel-9"
+  ],
+  "name": "Eliel",
+  "disputed_refs": [
+   [
+    13,
+    15,
+    9
+   ]
+  ],
+  "why": [
+   "1CH 15:9: Both records are Eliel chief of the sons of Hebron with eighty brethren."
+  ]
+ },
+ {
+  "pair": [
+   "azarel",
+   "azarel-5"
+  ],
+  "name": "Azarel",
+  "disputed_refs": [
+   [
+    13,
+    25,
+    18
+   ]
+  ],
+  "why": [
+   "1CH 25:18: Both records are the Azarel who drew the eleventh lot among the singers."
+  ]
+ },
+ {
+  "pair": [
+   "shobal-2",
+   "shobal-3"
+  ],
+  "name": "Shobal",
+  "disputed_refs": [
+   [
+    13,
+    4,
+    1
+   ],
+   [
+    13,
+    4,
+    2
+   ]
+  ],
+  "why": [
+   "1CH 4:1: 1CH 4:1 is a descending line (Perez, Hezron, Carmi, Hur, Shobal), so this is Shobal son of Hur, father of Reaiah, which both records hold.",
+   "1CH 4:2: Both records are Shobal father of Reaiah, and A's son of Hur is the same man as B's Shobal listed under Judah."
+  ]
+ },
+ {
+  "pair": [
+   "ezer-2",
+   "ezer-6"
+  ],
+  "name": "Ezer",
+  "disputed_refs": [
+   [
+    13,
+    4,
+    4
+   ]
+  ],
+  "why": [
+   "1CH 4:4: Both records are Ezer son of Hur, father of Hushah."
+  ]
+ },
+ {
+  "pair": [
+   "uriel",
+   "uriel-2"
+  ],
+  "name": "Uriel",
+  "disputed_refs": [
+   [
+    13,
+    6,
+    24
+   ]
+  ],
+  "why": [
+   "1CH 6:24: Both records are Uriel son of Tahath and father of Uzziah."
+  ]
+ },
+ {
+  "pair": [
+   "asaiah-3",
+   "asaiah-5"
+  ],
+  "name": "Asaiah",
+  "disputed_refs": [
+   [
+    13,
+    6,
+    30
+   ]
+  ],
+  "why": [
+   "1CH 6:30: Both records are Asaiah son of Haggiah in Merari's line."
+  ]
+ },
+ {
+  "pair": [
+   "tahath",
+   "tahath-5"
+  ],
+  "name": "Tahath",
+  "disputed_refs": [
+   [
+    13,
+    6,
+    37
+   ]
+  ],
+  "why": [
+   "1CH 6:37: Tahath son of Assir son of Ebiasaph holds the same place as in 6:23-24, and both records are son of Assir."
+  ]
+ },
+ {
+  "pair": [
+   "amaziah-4",
+   "amaziah-the-merarite"
+  ],
+  "name": "Amaziah",
+  "disputed_refs": [
+   [
+    13,
+    6,
+    45
+   ]
+  ],
+  "why": [
+   "1CH 6:45: Both records are Amaziah son of Hilkiah, father of Hashabiah, in Ethan's line."
+  ]
+ },
+ {
+  "pair": [
+   "gera",
+   "gera-5"
+  ],
+  "name": "Gera",
+  "disputed_refs": [
+   [
+    13,
+    8,
+    3
+   ]
+  ],
+  "why": [
+   "1CH 8:3: Both records are Gera son of Bela in this list."
+  ]
+ },
+ {
+  "pair": [
+   "akkub-2",
+   "akkub-4"
+  ],
+  "name": "Akkub",
+  "disputed_refs": [
+   [
+    13,
+    9,
+    17
+   ]
+  ],
+  "why": [
+   "1CH 9:17: Both records are the gatekeeper Akkub listed with Shallum, Talmon and Ahiman."
+  ]
+ },
+ {
+  "pair": [
+   "ethan",
+   "ethan-4"
+  ],
+  "name": "Ethan",
+  "disputed_refs": [
+   [
+    11,
+    4,
+    31
+   ]
+  ],
+  "why": [
+   "1KI 4:31: Both records are Ethan the Ezrahite of this verse; A only adds the possible Zerahite identification."
+  ]
+ },
+ {
+  "pair": [
+   "jeiel-12",
+   "jeiel-7"
+  ],
+  "name": "Jeiel",
+  "disputed_refs": [
+   [
+    14,
+    29,
+    13
+   ]
+  ],
+  "why": [
+   "2CH 29:13: Both records are Jeiel of the sons of Elizaphan in this verse (B wrongly calls him Gershonite)."
+  ]
+ },
+ {
+  "pair": [
+   "jehiel-10",
+   "jehiel-4"
+  ],
+  "name": "Jehiel",
+  "disputed_refs": [
+   [
+    14,
+    31,
+    13
+   ]
+  ],
+  "why": [
+   "2CH 31:13: Both records hold the overseer under Conaniah in Hezekiah's reign; A identifies him with Heman's descendant Jehiel of the same reign."
+  ]
+ },
+ {
+  "pair": [
+   "shaphan",
+   "shaphan-4"
+  ],
+  "name": "Shaphan",
+  "disputed_refs": [
+   [
+    14,
+    34,
+    15
+   ],
+   [
+    14,
+    34,
+    16
+   ],
+   [
+    14,
+    34,
+    18
+   ],
+   [
+    14,
+    34,
+    8
+   ],
+   [
+    12,
+    22,
+    10
+   ],
+   [
+    12,
+    22,
+    14
+   ],
+   [
+    12,
+    22,
+    3
+   ],
+   [
+    12,
+    22,
+    8
+   ],
+   [
+    12,
+    22,
+    9
+   ]
+  ],
+  "why": [
+   "2CH 34:15: Both records are Shaphan son of Azaliah, Josiah's scribe.",
+   "2CH 34:16: Both records are Shaphan son of Azaliah, Josiah's scribe.",
+   "2CH 34:18: Both records are Shaphan son of Azaliah, Josiah's scribe.",
+   "2CH 34:8: Both records are Shaphan son of Azaliah, Josiah's scribe.",
+   "2KI 22:10: Both records are Shaphan son of Azaliah, Josiah's scribe.",
+   "2KI 22:14: Both records are Shaphan son of Azaliah, Josiah's scribe.",
+   "2KI 22:3: Both records are Shaphan son of Azaliah son of Meshullam, Josiah's scribe.",
+   "2KI 22:8: Both records are Shaphan son of Azaliah, Josiah's scribe.",
+   "2KI 22:9: Both records are Shaphan son of Azaliah, Josiah's scribe."
+  ]
+ },
+ {
+  "pair": [
+   "elnathan",
+   "elnathan-5"
+  ],
+  "name": "Elnathan",
+  "disputed_refs": [
+   [
+    12,
+    24,
+    8
+   ]
+  ],
+  "why": [
+   "2KI 24:8: Both records are Elnathan of Jerusalem, father of Nehushta."
+  ]
+ },
+ {
+  "pair": [
+   "gaius",
+   "gaius-3"
+  ],
+  "name": "Gaius",
+  "disputed_refs": [
+   [
+    44,
+    19,
+    29
+   ]
+  ],
+  "why": [
+   "ACT 19:29: Both records are the Macedonian Gaius, Paul's travelling companion seized with Aristarchus."
+  ]
+ },
+ {
+  "pair": [
+   "eliezer-10",
+   "eliezer-7"
+  ],
+  "name": "Eliezer",
+  "disputed_refs": [
+   [
+    15,
+    10,
+    18
+   ]
+  ],
+  "why": [
+   "EZR 10:18: Both records hold Eliezer, priest of the sons of Jeshua, who had married a foreign wife in 10:18."
+  ]
+ },
+ {
+  "pair": [
+   "jarib",
+   "jarib-2"
+  ],
+  "name": "Jarib",
+  "disputed_refs": [
+   [
+    15,
+    10,
+    18
+   ]
+  ],
+  "why": [
+   "EZR 10:18: Both records hold Jarib, priest of the sons of Jeshua, who had married a foreign wife."
+  ]
+ },
+ {
+  "pair": [
+   "jedaiah-2",
+   "jedaiah-7"
+  ],
+  "name": "Jedaiah",
+  "disputed_refs": [
+   [
+    15,
+    2,
+    36
+   ],
+   [
+    16,
+    7,
+    39
+   ]
+  ],
+  "why": [
+   "EZR 2:36: Both records hold the priestly family head Jedaiah of the house of Jeshua in this list.",
+   "NEH 7:39: Both records are the priestly house of Jedaiah 'of the house of Jeshua' in the return list; A already cites NEH 7:39."
+  ]
+ },
+ {
+  "pair": [
+   "elam-4",
+   "elam-7"
+  ],
+  "name": "Elam",
+  "disputed_refs": [
+   [
+    15,
+    2,
+    7
+   ],
+   [
+    16,
+    7,
+    12
+   ]
+  ],
+  "why": [
+   "EZR 2:7: Both records hold Elam whose 1,254 descendants returned in this list.",
+   "NEH 7:12: Both records are the ancestor of the 1,254 'children of Elam' in the return list (EZR 2:7 = NEH 7:12)."
+  ]
+ },
+ {
+  "pair": [
+   "seraiah-11",
+   "seraiah-2"
+  ],
+  "name": "Seraiah",
+  "disputed_refs": [
+   [
+    15,
+    7,
+    1
+   ]
+  ],
+  "why": [
+   "EZR 7:1: Both records are Seraiah son of Azariah and father (ancestor) of Ezra."
+  ]
+ },
+ {
+  "pair": [
+   "azariah",
+   "azariah-24"
+  ],
+  "name": "Azariah",
+  "disputed_refs": [
+   [
+    15,
+    7,
+    3
+   ]
+  ],
+  "why": [
+   "EZR 7:3: Both records hold the Azariah who is father of Amariah-2 and descendant of Meraioth in this shortened high-priestly line."
+  ]
+ },
+ {
+  "pair": [
+   "shephatiah-10",
+   "shephatiah-5"
+  ],
+  "name": "Shephatiah",
+  "disputed_refs": [
+   [
+    15,
+    8,
+    8
+   ]
+  ],
+  "why": [
+   "EZR 8:8: Both records are the family head Shephatiah whose descendant Zebadiah ben Michael went up with Ezra, with the same ancestor-of link."
+  ]
+ },
+ {
+  "pair": [
+   "amos-2",
+   "amos-4"
+  ],
+  "name": "Amos",
+  "disputed_refs": [
+   [
+    42,
+    3,
+    25
+   ]
+  ],
+  "why": [
+   "LUK 3:25: Both records are Amos, son of Naum and father of Mattathias, at the same place in Luke's genealogy."
+  ]
+ },
+ {
+  "pair": [
+   "elam-4",
+   "elam-8"
+  ],
+  "name": "Elam",
+  "disputed_refs": [
+   [
+    16,
+    10,
+    14
+   ]
+  ],
+  "why": [
+   "NEH 10:14: Elam among the 'chiefs of the people' is the house of Elam (Parosh, Pahath-moab, Elam, Zattu... follow Ezra 2), and A already records him as named on the sealed document at 10:14, so B duplicates him."
+  ]
+ },
+ {
+  "pair": [
+   "ater",
+   "ater-3"
+  ],
+  "name": "Ater",
+  "disputed_refs": [
+   [
+    16,
+    10,
+    17
+   ]
+  ],
+  "why": [
+   "NEH 10:17: 'Ater, Hizkijah' echoes 'Ater of Hezekiah' (Ezra 2:16), so the sealer is the house of Ater, which A records; B is the same house held again."
+  ]
+ },
+ {
+  "pair": [
+   "zadok-4",
+   "zadok-8"
+  ],
+  "name": "Zadok",
+  "disputed_refs": [
+   [
+    16,
+    10,
+    21
+   ]
+  ],
+  "why": [
+   "NEH 10:21: A's notes already place Zadok on the sealed document at 10:21, and B is that same sealer with nothing added."
+  ]
+ },
+ {
+  "pair": [
+   "rehum-3",
+   "rehum-5"
+  ],
+  "name": "Rehum",
+  "disputed_refs": [
+   [
+    16,
+    10,
+    25
+   ]
+  ],
+  "why": [
+   "NEH 10:25: A's notes already place Rehum on the sealed document at 10:25, and B is that same sealer with nothing added."
+  ]
+ },
+ {
+  "pair": [
+   "baanah-3",
+   "baanah-4"
+  ],
+  "name": "Baanah",
+  "disputed_refs": [
+   [
+    16,
+    10,
+    27
+   ]
+  ],
+  "why": [
+   "NEH 10:27: A's notes already place Baanah on the sealed document at 10:27, and B is that same sealer with nothing added."
+  ]
+ },
+ {
+  "pair": [
+   "harim-2",
+   "harim-7"
+  ],
+  "name": "Harim",
+  "disputed_refs": [
+   [
+    16,
+    10,
+    27
+   ]
+  ],
+  "why": [
+   "NEH 10:27: A, the house of Harim of Ezra 2:32, is already noted as sealing at 10:27, and B is that same lay sealer."
+  ]
+ },
+ {
+  "pair": [
+   "malluch-2",
+   "malluch-5"
+  ],
+  "name": "Malluch",
+  "disputed_refs": [
+   [
+    16,
+    10,
+    27
+   ]
+  ],
+  "why": [
+   "NEH 10:27: A's notes already place Malluch on the sealed document at 10:27, and B is that same lay sealer with nothing added."
+  ]
+ },
+ {
+  "pair": [
+   "harim-3",
+   "harim-6"
+  ],
+  "name": "Harim",
+  "disputed_refs": [
+   [
+    16,
+    10,
+    5
+   ]
+  ],
+  "why": [
+   "NEH 10:5: A, the priestly house of Harim, is already noted as sealing at 10:5, and B is that same priestly sealer."
+  ]
+ },
+ {
+  "pair": [
+   "hashabiah-11",
+   "hashabiah-2"
+  ],
+  "name": "Hashabiah",
+  "disputed_refs": [
+   [
+    16,
+    11,
+    15
+   ]
+  ],
+  "why": [
+   "NEH 11:15: Both records are Hashabiah, son of Bunni and father of Azrikam, in Shemaiah's Levitical pedigree; A adds an unsupported tie to Jeduthun."
+  ]
+ },
+ {
+  "pair": [
+   "akkub-2",
+   "akkub-6"
+  ],
+  "name": "Akkub",
+  "disputed_refs": [
+   [
+    16,
+    11,
+    19
+   ],
+   [
+    16,
+    12,
+    25
+   ]
+  ],
+  "why": [
+   "NEH 11:19: Both records are Akkub the gatekeeper named with Talmon after the return.",
+   "NEH 12:25: Both records are Akkub the gatekeeper named with Talmon; A already cites NEH 12:25."
+  ]
+ },
+ {
+  "pair": [
+   "jeremiah-7",
+   "jeremiah-9"
+  ],
+  "name": "Jeremiah",
+  "disputed_refs": [
+   [
+    16,
+    12,
+    1
+   ],
+   [
+    16,
+    12,
+    12
+   ]
+  ],
+  "why": [
+   "NEH 12:1: Both records are the priest Jeremiah who came up with Zerubbabel and Jeshua and was ancestor of Hananiah (12:12), with the same family links.",
+   "NEH 12:12: Both records are the priestly house of Jeremiah headed by Hananiah under Joiakim, with the same links."
+  ]
+ },
+ {
+  "pair": [
+   "meshullam-16",
+   "meshullam-20"
+  ],
+  "name": "Meshullam",
+  "disputed_refs": [
+   [
+    16,
+    12,
+    13
+   ]
+  ],
+  "why": [
+   "NEH 12:13: Both records are Meshullam, head of the house of Ezra under Joiakim at 12:13; they differ only in which Ezra they link to."
+  ]
+ },
+ {
+  "pair": [
+   "iddo-5",
+   "iddo-7"
+  ],
+  "name": "Iddo",
+  "disputed_refs": [
+   [
+    16,
+    12,
+    16
+   ],
+   [
+    16,
+    12,
+    4
+   ]
+  ],
+  "why": [
+   "NEH 12:16: Both records are the priestly house of Iddo from Zerubbabel's return, which Zechariah headed under Joiakim, and A's notes cite 12:16 itself.",
+   "NEH 12:4: Both records are the priest Iddo who came up with Zerubbabel; A's notes cite NEH 12:1-4, and B's house is the same Iddo's."
+  ]
+ },
+ {
+  "pair": [
+   "shemaiah-19",
+   "shemaiah-24"
+  ],
+  "name": "Shemaiah",
+  "disputed_refs": [
+   [
+    16,
+    12,
+    18
+   ],
+   [
+    16,
+    12,
+    6
+   ]
+  ],
+  "why": [
+   "NEH 12:18: Both records are Shemaiah, ancestor of Jehonathan in the list of priestly houses.",
+   "NEH 12:6: Both records are the priest Shemaiah, ancestor of Jehonathan (12:18), whose house stands in the Zerubbabel list."
+  ]
+ },
+ {
+  "pair": [
+   "malluch-4",
+   "malluch-6"
+  ],
+  "name": "Malluch",
+  "disputed_refs": [
+   [
+    16,
+    12,
+    2
+   ]
+  ],
+  "why": [
+   "NEH 12:2: Both records are the priest Malluch whose house (Melicu/Malluchi) Jonathan headed, which A records through ancestor-of jonathan-11."
+  ]
+ },
+ {
+  "pair": [
+   "mattaniah-12",
+   "mattaniah-4"
+  ],
+  "name": "Mattaniah",
+  "disputed_refs": [
+   [
+    16,
+    12,
+    35
+   ]
+  ],
+  "why": [
+   "NEH 12:35: Both records are Mattaniah ben Micaiah, father of Shemaiah, at the same point of the Asaphite pedigree in 12:35."
+  ]
+ },
+ {
+  "pair": [
+   "shemaiah-14",
+   "shemaiah-26"
+  ],
+  "name": "Shemaiah",
+  "disputed_refs": [
+   [
+    16,
+    12,
+    35
+   ]
+  ],
+  "why": [
+   "NEH 12:35: Both records are Shemaiah ben Mattaniah, father of Jonathan, at the same point of the pedigree in 12:35."
+  ]
+ },
+ {
+  "pair": [
+   "zaccur-6",
+   "zaccur-7"
+  ],
+  "name": "Zaccur",
+  "disputed_refs": [
+   [
+    16,
+    13,
+    13
+   ]
+  ],
+  "why": [
+   "NEH 13:13: Both records are Zaccur, son of Mattaniah and father of Hanan the treasurer, with identical family links."
+  ]
+ },
+ {
+  "pair": [
+   "hananiah-14",
+   "hananiah-7"
+  ],
+  "name": "Hananiah",
+  "disputed_refs": [
+   [
+    16,
+    3,
+    30
+   ]
+  ],
+  "why": [
+   "NEH 3:30: Both records are Hananiah ben Shelemiah, who repaired the wall, with the same father link."
+  ]
+ },
+ {
+  "pair": [
+   "arah-2",
+   "arah-3"
+  ],
+  "name": "Arah",
+  "disputed_refs": [
+   [
+    16,
+    6,
+    18
+   ]
+  ],
+  "why": [
+   "NEH 6:18: Both records hold Arah as the father of Shecaniah, Tobiah's father-in-law; B adds the house of Arah from Ezra 2:5."
+  ]
+ },
+ {
+  "pair": [
+   "meshullam-13",
+   "meshullam-19"
+  ],
+  "name": "Meshullam",
+  "disputed_refs": [
+   [
+    16,
+    8,
+    4
+   ]
+  ],
+  "why": [
+   "NEH 8:4: Both records are Meshullam standing at Ezra's left hand at the reading of the law, with nothing else to tell them apart."
+  ]
+ }
+]
