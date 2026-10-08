@@ -27119,6 +27119,30 @@
       }
     },
     {
+      "record": "raphah",
+      "kind": "person",
+      "label": "Raphah",
+      "line": "the giant whose sons fell by the hand of David and of his servants (2SA 21:22)",
+      "references": [
+        "2SA 21:16",
+        "2SA 21:18",
+        "2SA 21:19",
+        "2SA 21:22"
+      ],
+      "candidates": [
+        {
+          "qid": "Q2131345",
+          "label": "Rapha",
+          "description": "human biblical figure ; giant",
+          "articles": {
+            "de": "Rapha"
+          },
+          "evidence": []
+        }
+      ],
+      "others": 0
+    },
+    {
       "record": "redsea",
       "kind": "place",
       "label": "Red Sea",
@@ -31597,29 +31621,6 @@
         "qid": "Q210074",
         "by": "name"
       }
-    },
-    {
-      "record": "raphah",
-      "kind": "person",
-      "label": "Raphah",
-      "line": "the giant whose sons fell by the hand of David and of his servants (2SA 21:22)",
-      "references": [
-        "2SA 21:16",
-        "2SA 21:18",
-        "2SA 21:22"
-      ],
-      "candidates": [
-        {
-          "qid": "Q2131345",
-          "label": "Rapha",
-          "description": "human biblical figure ; giant",
-          "articles": {
-            "de": "Rapha"
-          },
-          "evidence": []
-        }
-      ],
-      "others": 0
     },
     {
       "record": "sardis",
@@ -51079,15 +51080,13 @@
           "articles": {
             "en": "Lois (biblical figure)"
           },
-          "evidence": [
-            "kin"
-          ]
+          "evidence": []
         }
       ],
       "others": 0,
       "tied": {
         "qid": "Q25344412",
-        "by": "kin"
+        "by": "name"
       }
     },
     {
