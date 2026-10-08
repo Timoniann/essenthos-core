@@ -256,6 +256,8 @@ internal static partial class EncyclopediaEndpoints
                 }),
             ];
 
+            var localNames = await EntityNames.Of(db, [entity.Id], language, cancellationToken);
+
             return Results.Ok(new EntityResponse(
                 entity.Slug,
                 EnumSpelling.Of(entity.Kind),
@@ -299,8 +301,9 @@ internal static partial class EncyclopediaEndpoints
                 Location = entity.Location,
                 AnotherNameFor = await AnotherNameFor(db, entity.AnotherNameForEntityId, language, cancellationToken),
                 Wikipedia = await WikipediaLinks.Of(db, entity.Id, words, cancellationToken),
-                LocalName = (await EntityNames.Of(db, [entity.Id], language, cancellationToken))
-                    .GetValueOrDefault(entity.Id),
+                LocalName = localNames.GetValueOrDefault(entity.Id),
+                NameFromSource = (await EntityNames.NamedOnlyBySource(
+                    db, [entity.Id], language, localNames, cancellationToken)).Contains(entity.Id),
                 LocalDistinguisher = mine is null || mine.Line is not null
                     ? (await EntityDistinguishers.Of(db, [entity.Id], words, cancellationToken))
                         .GetValueOrDefault(entity.Id)

@@ -163,6 +163,40 @@ internal static class EntityNames
     }
 
     /// <summary>
+    /// The entities among these that only the source names, to a reader of a language other than
+    /// English: the corpus holds no name for them in the language, and no verse of any text stands
+    /// behind them, so there is no printed spelling to borrow either. A client shows the English
+    /// headword for such a record and says whose name it is, where it shows the record at all.
+    /// </summary>
+    /// <param name="localNames">The names <see cref="Of"/> found for these entities.</param>
+    public static async Task<HashSet<int>> NamedOnlyBySource(
+        AppDbContext db,
+        IReadOnlyCollection<int> entities,
+        string? language,
+        IReadOnlyDictionary<int, string> localNames,
+        CancellationToken cancellationToken)
+    {
+        if (Local(language) is null)
+        {
+            return [];
+        }
+
+        var unnamed = entities.Where(id => !localNames.ContainsKey(id)).Distinct().ToList();
+        if (unnamed.Count == 0)
+        {
+            return [];
+        }
+
+        var cited = await db.EntityVerses
+            .Where(v => unnamed.Contains(v.EntityId))
+            .Select(v => v.EntityId)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
+        return [.. unnamed.Except(cited)];
+    }
+
+    /// <summary>
     /// The entities some name of which contains what was typed: the English headword, the slug, every
     /// label a dataset gives it, its name in any language this corpus holds, and every spelling any
     /// text prints for it — so <em>Аарон</em>, <em>Aarón</em>, <em>Aarons</em> and <em>אהרן</em> all

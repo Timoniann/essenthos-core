@@ -1228,6 +1228,30 @@
       "why": "NEH 12:6 lists Shemaiah among the priestly houses that came up with Zerubbabel, NEH 12:18 gives its head under Joiakim ('of Shemaiah, Jehonathan'), and NEH 10:8 has 'Shemaiah' sign among the priests in a list entered by house (fourteen or fifteen of the twenty-one names of 10:2-8 are the houses of 12:1-21). The three verses name one house; shemaiah-24 is it held again, with the same Jehonathan tie. NEH 12:34 and 12:36 have already left shemaiah-19; NEH 12:42, a priest with a trumpet at the dedication in 445 BC, is another man still sitting on it with no record to go to.",
       "confidence": 0.65,
       "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), read by gpt-6.1-sol (Codex), blind by claude-opus-5-5 and, where they differed, by claude-fable-5-1; folded where two of the three call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H2769",
+      "keeps": "mounthermon",
+      "folds": "hermons",
+      "why": "Strong's H2769 is the plural of Hermon (H2768), 'Hermons, i.e. its peaks', and stands in one verse, PSA 42:6 ('the Hermons'); Mount Hermon already holds PSA 42:6, and the register's Hermons holds no word, verse or relationship of its own. Harmon (Amos 4:3), the target Codex weighed, is itself only another name for Mount Hermon in the gazetteer, so the record that stays is Mount Hermon.",
+      "confidence": 0.9,
+      "source": "Essenthos: the four folds the Codex pass left unsure, each read against its source record, the held texts and the dataset's own identifications by claude-sonnet-5-5, 2026-10-08"
+    },
+    {
+      "strongNumber": "H8528",
+      "keeps": "telmelah",
+      "folds": "thelme",
+      "why": "OpenBible's own record of Tel-melah (EZR 2:59, NEH 7:61) lists 'another name for Thelme' among its identifications, naming this very record; the Greek and Latin texts spell the town Thelmelech, Thelmeleth and Thelmela in the same lists. The two sites the gazetteer gives (near Nippur, at Samawah) are both guesses at one Babylonian town, and the register's Thelme holds no word, verse or relationship of its own.",
+      "confidence": 0.8,
+      "source": "Essenthos: the four folds the Codex pass left unsure, each read against its source record, the held texts and the dataset's own identifications by claude-sonnet-5-5, 2026-10-08"
+    },
+    {
+      "strongNumber": "G1638",
+      "keeps": "mountofolives",
+      "folds": "olivet",
+      "why": "Acts 1:12 says the apostles returned 'from the mount called Olivet', which is the Mount of Olives the Gospels name; the kept record holds ACT 1:12 and has 'mount Olivet' among its names, and the register's Olivet holds no word, verse or relationship of its own.",
+      "confidence": 0.95,
+      "source": "Essenthos: the register's records that no held text names in a reader's language, found since the Codex pass by claude-sonnet-5-5 reading the held record of the same place against its verses, 2026-10-08"
     }
   ],
   "declined": [
@@ -1494,6 +1518,22 @@
         "shaphan-3"
       ],
       "why": "The first record is folded into the scribe's; the pair above answers it."
+    },
+    {
+      "strongNumber": "H1336",
+      "pair": [
+        "bether",
+        "bether-2"
+      ],
+      "why": "OpenBible files two Bethers on purpose: the first is 'not a place (adjective)', the mountains of Song 2:17, and says that were it a place it would lie within 5 km of the second; the second is the settlement at Khirbet al Yahud, and no verse names it. Folding would turn the adjective into the settlement, or the settlement into a reading of the verse, and neither is the source's claim; Bether-2 stays."
+    },
+    {
+      "strongNumber": "H4024",
+      "pair": [
+        "magdolum",
+        "migdol-2"
+      ],
+      "why": "Magdolum is put at Tell el Herr, the site of all three Migdol records, and no held text prints the name. Nothing says it is Migdol, and nothing says which of the three: Jeremiah 44:1 and 46:14, the Exodus camp, or Ezekiel's Migdol, whose identification with Tell el Herr is itself one of several. Magdolum stays."
     }
   ],
   "splits": [

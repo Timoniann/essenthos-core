@@ -817,12 +817,43 @@ public sealed class DuplicateRecordTests : IDisposable
     [InlineData("tegarama", "bethtogarmah")]
     [InlineData("barsabbas", "joseph-11")]
     [InlineData("barsabbas-2", "judas-5")]
+    [InlineData("hermons", "mounthermon")]
+    [InlineData("thelme", "telmelah")]
+    [InlineData("olivet", "mountofolives")]
     public void ARegisterSpellingNoReadersTextWritesFoldsIntoTheRecordTheTextNames(string folds, string keeps)
     {
         var merge = DuplicateRecordLoader.Read().Merges.Should().ContainSingle(m => m.Folds == folds).Subject;
 
         merge.Keeps.Should().Be(keeps);
         merge.AcrossKinds.Should().BeFalse();
+    }
+
+    /// <summary>
+    /// The register's Hermons is the plural of Hermon, the peaks of the mountain Psalm 42:6 names, and
+    /// folds into Mount Hermon and not into Harmon, which the gazetteer files as another name for that
+    /// mountain. Each fold says what makes the two one.
+    /// </summary>
+    [Fact]
+    public void ThePeaksOfHermonFoldIntoTheMountainAndNotIntoAnotherNameForIt()
+    {
+        var list = DuplicateRecordLoader.Read();
+
+        list.Merges.Select(m => m.Keeps).Should().NotContain("harmon");
+        list.Merges.Single(m => m.Folds == "hermons").Why.Should().Contain("PSA 42:6");
+        list.Merges.Single(m => m.Folds == "thelme").Why.Should().Contain("another name for Thelme");
+    }
+
+    /// <summary>
+    /// A second Bether the gazetteer files beside the adjective of Song 2:17, and a Magdolum it puts at the
+    /// site of three Migdols, are named by no held text and say nothing that makes either another record's
+    /// twin. The evidence does not decide, so they stay records of their own and no pair folds them.
+    /// </summary>
+    [Fact]
+    public void ARecordTheEvidenceDoesNotMatchToATwinStaysItsOwn()
+    {
+        var folded = DuplicateRecordLoader.Read().Merges.Select(m => m.Folds).ToList();
+
+        folded.Should().NotContain(["bether-2", "magdolum"]);
     }
 
     /// <summary>
