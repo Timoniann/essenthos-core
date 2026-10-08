@@ -258,6 +258,7 @@ internal sealed class AnnotationCarrier(
                 connection, transaction, "SELECT count(*) FROM pending_annotation", cancellationToken);
             await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
             await Execute(connection, transaction, Expected, cancellationToken, parameters);
+            await pronouns.LeaveOut(connection, (NpgsqlTransaction)transaction.GetDbTransaction(), cancellationToken);
 
             var carried = await Scalar(connection, transaction, Carried, cancellationToken, parameters);
             var taken = await Execute(connection, transaction, Withdraw, cancellationToken, parameters);
