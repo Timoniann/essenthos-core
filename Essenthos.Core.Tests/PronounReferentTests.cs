@@ -114,11 +114,58 @@ public sealed class PronounReferentTests : IDisposable
         (await pass.Withdraw()).Withdrawn.Should().Be(0, "the rule reads only words it does not touch");
     }
 
+    [Fact]
+    public async Task APlaceOrAPeopleCarriedOntoAPronounIsTakenBackAndAGreekPronounIsJudgedLikeTheRest()
+    {
+        Corpus.Add(_db, "GRCBRENT", TextKind.Translation, "grc",
+            (5, 1, ["Μωυσῆς", "εἶπεν", "αὐτόν"]),
+            (5, 2, ["Μωυσῆς", "καὶ", "Ἀαρὼν", "αὐτὸν"]),
+            (5, 3, ["Αἴγυπτος", "ἦν", "αὐτῆς"]),
+            (5, 4, ["Ἰσραὴλ", "εἶπεν", "αὐτῶν"]),
+            (5, 5, ["Μωυσῆς", "γυνή"]));
+        var moses = Person("moses", "Moses", "male");
+        var aaron = Person("aaron", "Aaron", "male");
+        var egypt = new Entity { Kind = EntityKind.Place, Slug = "egypt", Name = "Egypt", SourceId = "egypt", Source = "a test" };
+        var israel = new Entity { Kind = EntityKind.People, Slug = "israelites", Name = "Israelites", SourceId = "israelites", Source = "a test" };
+        _db.Entities.AddRange(egypt, israel);
+        await _db.SaveChangesAsync();
+
+        await Name(5, 1, 1, moses);
+        await Name(5, 1, 3, moses);                 // αὐτόν, Moses named in the verse and nobody else male: kept
+        await Name(5, 2, 1, moses);
+        await Name(5, 2, 3, aaron);
+        await Name(5, 2, 4, moses);                 // αὐτὸν with a second man in the verse: taken back
+        await Name(5, 3, 1, egypt);
+        await Name(5, 3, 3, egypt);                 // a place is never a pronoun's person: taken back
+        await Name(5, 4, 1, israel);
+        await Name(5, 4, 3, israel);                // nor a people: taken back
+        await Name(5, 5, 1, moses);
+        await Name(5, 5, 2, moses);                 // γυνή is a common noun, not a pronoun: left
+        await _db.SaveChangesAsync();
+
+        var outcome = await new PronounReferents(_db, NullLogger<PronounReferents>.Instance).Withdraw();
+
+        outcome.Withdrawn.Should().Be(3);
+        outcome.Kept.Should().Be(1);
+        var left = await _db.WordEntities
+            .Select(a => a.Word!.Verse!.Number + " " + a.Word.Surface + " " + a.Entity!.Slug)
+            .ToListAsync();
+        left.Should().BeEquivalentTo("1 Μωυσῆς moses", "1 αὐτόν moses", "2 Μωυσῆς moses", "2 Ἀαρὼν aaron", "3 Αἴγυπτος egypt",
+            "4 Ἰσραὴλ israelites", "5 Μωυσῆς moses", "5 γυνή moses");
+    }
+
     [Theory]
     [InlineData("eng", "Him", true)]
     [InlineData("ukr", "його", true)]
     [InlineData("deu", "ihm", true)]
     [InlineData("eng", "Moses", false)]
+    [InlineData("grc", "αὐτόν", true)]
+    [InlineData("grc", "αὐτὸν", true)]
+    [InlineData("grc", "ἐγὼ", true)]
+    [InlineData("grc", "ἑαυτοῦ", true)]
+    [InlineData("grc", "τοῦτο", true)]
+    [InlineData("grc", "Μωυσῆς", false)]
+    [InlineData("grc", "γυνή", false)]
     public void APronounIsKnownForWhatItIs(string language, string word, bool pronoun) =>
         Pronouns.Is(language, word.ToLowerInvariant()).Should().Be(pronoun);
 }

@@ -48,6 +48,11 @@ internal sealed record PronounReferentOutcome(
 /// as the person.
 /// </para>
 /// <para>
+/// A place or a people has neither sex nor a capital for God, so it is never clear: <em>it</em> over
+/// Egypt or <em>αὐτῶν</em> over Edom is taken back wherever it was carried. The same goes for the Greek
+/// pronouns of the Septuagint and the New Testament, whose forms are listed in <see cref="Pronouns"/>.
+/// </para>
+/// <para>
 /// A ruling and a row with an answer read of its own word are never taken back. Idempotent: the rule
 /// reads only the words that are not pronouns, which it does not touch, so a second run takes nothing.
 /// </para>
@@ -62,10 +67,10 @@ internal sealed class PronounReferents(AppDbContext db, ILogger<PronounReferents
          CREATE TEMP TABLE pronoun_carried ON COMMIT DROP AS
          SELECT a.id AS row_id, a.entity_id, w.id AS word_id, w.text AS surface, w.position, w.verse_id, w.text_id,
                 t.slug AS text_slug, t.language, v.book_id, v.chapter_number, v.number,
-                e.slug AS person, e.sex, pronoun.sex AS says,
+                e.slug AS person, e.kind AS kind, e.sex, pronoun.sex AS says,
                 before.trailer AS before
          FROM word_entity a
-         JOIN entity e ON e.id = a.entity_id AND e.kind IN ('person', 'title')
+         JOIN entity e ON e.id = a.entity_id AND e.kind IN ('person', 'title', 'place', 'people')
          JOIN word w ON w.id = a.word_id
          JOIN text t ON t.id = w.text_id
          JOIN verse v ON v.id = w.verse_id
@@ -96,7 +101,8 @@ internal sealed class PronounReferents(AppDbContext db, ILogger<PronounReferents
                     AND NOT (p.language = 'eng' AND p.surface = 'I')
                     AND p.position > 1
                     AND coalesce(p.before, '') !~ '[.!?:;"“”‘’«»]')
-                OR (p.says IS NOT NULL
+                OR (p.kind IN ('person', 'title')
+                    AND p.says IS NOT NULL
                     AND (p.sex IS NULL OR p.sex = p.says)
                     AND EXISTS (SELECT 1 FROM pronoun_named n WHERE n.row_id = p.row_id AND n.entity_id = p.entity_id)
                     AND NOT EXISTS (SELECT 1 FROM pronoun_named n
