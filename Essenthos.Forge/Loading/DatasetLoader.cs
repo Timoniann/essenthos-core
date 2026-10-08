@@ -364,6 +364,7 @@ internal sealed class DatasetLoader(
             new("person-register", cancellationToken => TellTheNamesakesApart(resources, cancellationToken)),
             new("annotations", SayWhichWordNamesWhom),
             new("own-records", cancellationToken => WriteTheRecordsNobodyElseHolds(resources, cancellationToken)),
+            new("register-rematch", cancellationToken => MatchTheRegisterToTheOwnRecords(resources, cancellationToken)),
             new("sense-readings", cancellationToken => ReadTheNamesNothingSettles(resources, cancellationToken)),
             new("namesake-places", cancellationToken => TellTheNamesakePlacesApart(resources, cancellationToken)),
             new("greek-namesakes", TellTheGreekNamesakesApart),
@@ -1696,6 +1697,21 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OwnRecordLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// The person register matched again now that the records this corpus writes for itself are held.
+    /// On a corpus built from nothing the register ran before them and added a record for each
+    /// bearer they are the record of; the load after would have folded those, so this does it in
+    /// the load that added them.
+    /// </summary>
+    private async Task MatchTheRegisterToTheOwnRecords(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the person register against the records this corpus writes for itself");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<PersonRegisterLoader>();
+        status.Record($"Matched the person register again: {await loader.Settle(resources, cancellationToken)}");
     }
 
     /// <summary>

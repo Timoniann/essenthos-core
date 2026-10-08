@@ -1196,6 +1196,26 @@ internal sealed class PersonRegisterLoader(
         }
     }
 
+    /// <summary>
+    /// The register matched again once the records this corpus writes for itself are held. Built from
+    /// nothing, the register runs before them and so adds a record of its own for a bearer they are
+    /// the record of; matched again here it folds that record into theirs, which is where the next
+    /// load would have put it. Nothing to do where the register is not there or every bearer is on
+    /// the record his verses reach.
+    /// </summary>
+    public async Task<RegisterRematchOutcome> Settle(string resources, CancellationToken cancellationToken = default)
+    {
+        var directory = configuration[PersonRegisterFiles.ConfigurationKey] is { Length: > 0 } set
+            ? set
+            : Path.Combine(resources, PersonRegisterFiles.DefaultFolder);
+        if (!Directory.Exists(directory) || !await db.EntityClaims.AnyAsync(c => c.Source == FromTheEnumeration, cancellationToken))
+        {
+            return new RegisterRematchOutcome(0, 0, 0, 0, TimeSpan.Zero);
+        }
+
+        return await Rematch(PersonRegisterFiles.Read(directory), cancellationToken);
+    }
+
     private static string Unique(string slug, HashSet<string> taken)
     {
         var candidate = slug;

@@ -74,6 +74,17 @@ public sealed class DatasetLoaderStepTests : IDisposable
     }
 
     /// <summary>
+    /// A corpus built from nothing runs the register before the records this corpus writes, so the
+    /// register is matched again as soon as they are held, in the load that added its records.
+    /// </summary>
+    [Fact]
+    public void TheRegisterIsMatchedAgainRightAfterTheOwnRecordsAreWritten()
+    {
+        Loader().StepNames().Should().ContainInOrder(
+            "person-register", "annotations", "own-records", "register-rematch", "sense-readings", "fold-records");
+    }
+
+    /// <summary>
     /// The relationships are read off the clauses after every step that moves a clause, and before
     /// the verses they were read from are listed.
     /// </summary>

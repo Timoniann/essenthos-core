@@ -711,6 +711,54 @@ public sealed class PersonRegisterLoadTests : IDisposable
         (await _db.Entities.CountAsync(e => e.Source == Ours)).Should().Be(1);
     }
 
+    /// <summary>
+    /// Built from nothing the register runs before the records this corpus writes for itself, so it adds
+    /// a record for a bearer one of them is the record of. Matched again once they are held, it folds
+    /// the added record into theirs in the load that added it, where it was the next load that did.
+    /// </summary>
+    [Fact]
+    public async Task A_bearer_added_before_his_record_was_written_is_folded_into_it_in_the_same_load()
+    {
+        Held("gemariah-shaphan", "Gemariah", "person:Gemariah_2", ["Gemariah"],
+            [(24, 36, 10), (24, 36, 11), (24, 36, 12), (24, 36, 25)]);
+        await _db.SaveChangesAsync();
+        Register(
+            Bearer(1, "Son of Shaphan the scribe", ["JER 36:10", "JER 36:11", "JER 36:12", "JER 36:25"],
+                group: "Gemariah", name: "Gemariah"),
+            Bearer(2, "Son of Hilkiah, who bore Jeremiah's letter", ["JER 29:3"],
+                group: "Gemariah", name: "Gemariah"));
+        (await Load()).Added.Should().Be(1);
+        (await Person("gemariah")).Should().NotBeNull("the register added a record for the man nobody held");
+
+        Held("gemariah-hilkiah", "Gemariah", "essenthos:gemariah-hilkiah", ["Gemariah"], [(24, 29, 3)]);
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        var settled = await Settle();
+
+        settled.Folded.Should().Be(1);
+        _db.ChangeTracker.Clear();
+        (await Person("gemariah")).Should().BeNull("the added record is folded into the one written for him");
+        (await Person("gemariah-hilkiah"))!.Claims.Should()
+            .ContainSingle(c => c.Source == Ours && c.Method == LinkMethod.ModelReading)
+            .Which.Note.Should().StartWith("Gemariah #2, ");
+        (await _db.MergedRecords.AsNoTracking().SingleAsync()).Slug.Should().Be("gemariah");
+
+        var again = await Settle();
+        again.Folded.Should().Be(0);
+        again.Rewritten.Should().Be(0);
+        again.Added.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task Settling_a_corpus_the_register_was_never_read_into_does_nothing()
+    {
+        Register(Bearer(1, "Son of Shaphan the scribe", ["JER 36:10"], group: "Gemariah", name: "Gemariah"));
+
+        (await Settle()).ToString().Should().Be("every bearer of those names is on the record its verses reach");
+        (await _db.Entities.CountAsync(e => e.Source == Ours)).Should().Be(0);
+    }
+
     private void Held(
         string slug,
         string name,
@@ -791,6 +839,19 @@ public sealed class PersonRegisterLoadTests : IDisposable
             handle.WriteLine(JsonSerializer.Serialize(record));
         }
     }
+
+    private Task<RegisterRematchOutcome> Settle() =>
+        new PersonRegisterLoader(
+                _db,
+                new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string?>
+                    {
+                        [PersonRegisterFiles.ConfigurationKey] = _folder,
+                    })
+                    .Build(),
+                new DuplicateRecordLoader(_db, NullLogger<DuplicateRecordLoader>.Instance),
+                NullLogger<PersonRegisterLoader>.Instance)
+            .Settle(Path.Combine(Path.GetTempPath(), $"absent-{Guid.NewGuid():N}"));
 
     private Task<PersonRegisterOutcome> Load() =>
         new PersonRegisterLoader(
