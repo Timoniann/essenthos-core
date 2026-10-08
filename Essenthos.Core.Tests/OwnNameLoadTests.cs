@@ -204,6 +204,59 @@ public sealed class OwnNameLoadTests : IDisposable
             .Should().Equal((was, number));
     }
 
+    private static readonly CorrectedNameKind GreatRiver = new(
+        "euphrates", "place:Euphrates_1", "the Great River", "proper name", "description", "the text describes the river");
+
+    [Fact]
+    public async Task ADescriptiveLabelFiledAsAProperNameIsKeptAsADescriptionOnce()
+    {
+        var river = new Entity
+        {
+            Kind = EntityKind.Place, Slug = "euphrates", Name = "Euphrates", SourceId = "place:Euphrates_1", Source = "BibleData",
+            Names =
+            {
+                new EntityName { Label = "Euphrates", Kind = "proper name", HebrewStrongNumber = "H6578" },
+                new EntityName { Label = "the Great River", Kind = "proper name" },
+            },
+        };
+        _db.Entities.Add(river);
+        await _db.SaveChangesAsync();
+        var loader = new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance);
+
+        (await loader.CorrectKinds([GreatRiver], default)).Should().Be(1);
+        (await loader.CorrectKinds([GreatRiver], default)).Should().Be(0, "a row already corrected is not found");
+
+        _db.ChangeTracker.Clear();
+        var names = (await _db.EntityNames.Where(n => n.EntityId == river.Id).ToListAsync()).ToDictionary(n => n.Label, n => n.Kind);
+        names["the Great River"].Should().Be("description");
+        names["Euphrates"].Should().Be("proper name", "its real name is left as it is");
+    }
+
+    [Fact]
+    public async Task ARecordUnderAnotherSourceIdIsNotTheOneTheKindWasWrittenFor()
+    {
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Place, Slug = "euphrates", Name = "Euphrates", SourceId = "place:Somewhere_9", Source = "BibleData",
+            Names = { new EntityName { Label = "the Great River", Kind = "proper name" } },
+        });
+        await _db.SaveChangesAsync();
+
+        (await new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance).CorrectKinds([GreatRiver], default)).Should().Be(0);
+    }
+
+    [Fact]
+    public async Task TheEmbeddedListKeepsTheNilesAndTheEuphratesDescriptionsOutOfTheirNames()
+    {
+        await using var stream = typeof(OwnNameLoader).Assembly
+            .GetManifestResourceStream("Essenthos.Core.Loading.Encyclopedia.OwnNames.json");
+        using var list = await JsonDocument.ParseAsync(stream!);
+
+        list.RootElement.GetProperty("kinds").EnumerateArray()
+            .Select(k => (k.GetProperty("entity").GetString(), k.GetProperty("label").GetString(), k.GetProperty("kind").GetString()))
+            .Should().BeEquivalentTo([("nile", "River of Egypt", "description"), ("euphrates", "the Great River", "description")]);
+    }
+
     /// <summary>The list ships inside the loader, so a build that dropped it would load nothing silently.</summary>
     [Fact]
     public async Task TheEmbeddedListIsRead()
