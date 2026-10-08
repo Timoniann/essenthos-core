@@ -833,6 +833,19 @@ public sealed class DuplicateRecordTests : IDisposable
     }
 
     /// <summary>
+    /// Solomon's Azariah son of Zadok (1KI 4:2) leaves the record of Azariah son of Johanan (1CH 6:10),
+    /// who is Zadok's great-great-grandson, and takes only that verse.
+    /// </summary>
+    [Fact]
+    public void SolomonsAzariahSonOfZadokIsParted()
+    {
+        var split = DuplicateRecordLoader.Read().Splits!.Single(s => s.From == "azariah" && s.To == "azariah-son-of-zadok");
+
+        split.To.Should().Be("azariah-son-of-zadok");
+        split.Verses.Should().Equal("1KI 4:2");
+    }
+
+    /// <summary>
     /// A record that held several people keeps the man its line and picture were made for, and no
     /// verse of it is sent to two records or back to the record it leaves: Zedekiah's envoy keeps
     /// Jeremiah 21:1 and 38:1 while the priest's verses go, and the son of Hoshaiah leaves the

@@ -13,6 +13,22 @@
       "existing": "dishon",
       "corrects": "dishan",
       "why": "'And these are the children of Dishan; Hemdan, and Eshban, and Ithran, and Cheran': the Hebrew writes דִישָׁן, Dishan, here, but the verse stands in the list of Seir's sons where Dishon comes (Lotan, Shobal, Zibeon, Anah, Dishon, Ezer, Dishan, GEN 36:20-28), 1 Chronicles 1:41 gives the same children as 'the sons of Dishon', and Brenton's Septuagint (Δησών) and the King James read Dishon. Dishan's own children are Uz and Aran (GEN 36:28). The word names Seir's son Dishon."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1KI 4:2",
+      "position": 7,
+      "surface": "עֲזַרְיָ֥הוּ",
+      "strongNumber": "H5838",
+      "create": {
+        "slug": "azariah-son-of-zadok",
+        "name": "Azariah",
+        "distinguisher": "son of Zadok the priest, one of Solomon's princes (1KI 4:2)",
+        "notes": "Whether he is the Azariah son of Ahimaaz of 1CH 6:9 the text does not say.",
+        "kind": "person"
+      },
+      "why": "'And these were the princes which he had; Azariah the son of Zadok the priest' (עֲזַרְיָהוּ בֶן־צָדוֹק הַכֹּהֵן): 1CH 6:8-10 makes the Azariah son of Johanan Zadok's great-great-grandson, so the Azariah whose father is Zadok is not he; whether he is the son of Ahimaaz (1CH 6:9), Zadok's grandson, the passages do not say.",
+      "corrects": "azariah"
     }
   ]
 }
