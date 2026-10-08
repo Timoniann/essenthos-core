@@ -196,6 +196,7 @@ builder.Services.AddSingleton<DatasetStatus>();
 builder.Services.AddSingleton<ICanonIndex, CanonIndex>();
 builder.Services.AddScoped<DatasetLoader>();
 builder.Services.AddScoped<Publisher>();
+builder.Services.AddScoped<TextExporter>();
 
 // Disposed on every return path, not only the one that serves. Draining the console logger's
 // background queue is what disposal does, and a command that returns without it loses whatever is

@@ -69,6 +69,8 @@ builder.Services.AddSingleton<DatasetCountsCache>();
 builder.Services.AddSingleton<WordForms>();
 builder.Services.AddSingleton(services =>
     new SiteSettingsFile(siteSettings, services.GetRequiredService<ILogger<SiteSettingsFile>>()));
+builder.Services.AddSingleton(services => DownloadsCatalogue.From(
+    builder.Configuration, builder.Environment.ContentRootPath, services.GetRequiredService<ILogger<DownloadsCatalogue>>()));
 builder.Services.AddSingleton(services =>
     new PictureCopies(images, pictureCache, services.GetRequiredService<ILogger<PictureCopies>>()));
 
@@ -163,6 +165,7 @@ v1.MapContext();
 v1.MapBookAbout();
 v1.MapImages(app.Services.GetRequiredService<PictureCopies>());
 v1.MapSettings();
+v1.MapDownloads();
 v1.MapCommandments();
 v1.MapCrossReferences();
 v1.MapDatasets();

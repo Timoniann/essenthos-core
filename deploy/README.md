@@ -24,6 +24,13 @@ Two things reach the server, separately:
   kept in the `image-cache` volume; any made ahead with `python scripts/picture-sizes.py` travel with
   the pictures and are served instead, which only spares their first readers the wait.
 
+A third thing has no place on the server yet: the downloads. `forge export` writes the texts that may
+be passed on as files (one per text, each with its licence and attribution beside it, and a `manifest.json` of checksums) into `.exports/`, or
+`--to <folder>`. Where those files are served from is the owner's to choose: the API lists them at
+`/v1/downloads` from the folder named by `Downloads__Folder` (the manifest is read from it) and gives
+each a link from `Downloads__BaseUrl` and its path; with no base address the files are listed with no
+link, and with no folder the list is empty. Neither is set in `compose.yaml` yet.
+
 Everything below can be rehearsed on a workstation first, and should be before anything changes on the
 server:
 

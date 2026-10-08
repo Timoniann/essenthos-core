@@ -744,7 +744,7 @@ internal sealed class Publisher(
         return Convert.ToHexStringLower(await SHA256.HashDataAsync(stream, cancellationToken));
     }
 
-    private static string ForgeVersion() =>
+    internal static string ForgeVersion() =>
         typeof(Publisher).Assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion
         ?? "unknown";
 }
