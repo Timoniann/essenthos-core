@@ -213,6 +213,34 @@ public sealed class PeopleLoadTests : IDisposable
         new PeopleLoader(_db, new ConfigurationBuilder().Build(), NullLogger<PeopleLoader>.Instance)
             .Load(Path.Combine(Path.GetTempPath(), $"absent-{Guid.NewGuid():N}"));
 
+    /// <summary>
+    /// The Macbannites are Strong's patrial from Machbena and the only word is a man's name in 1
+    /// Chronicles 12:13; the file refuses the number, so no load makes a people of it, and the
+    /// refusal is the file's, not a fixture's.
+    /// </summary>
+    [Fact]
+    public async Task AGentilicTheFileRefusesIsGivenNoPeopleOnAnyLoad()
+    {
+        _file.Refused.Should().ContainSingle(r => r.Number == "H4344");
+        _db.StrongEntries.Add(new StrongEntry
+        {
+            StrongNumber = "H4344", Definition = "a Macbannite, or inhabitant of Machbena", KjvDefinition = "Machbanai.",
+        });
+        _db.StrongGentilics.Add(new StrongGentilic
+        {
+            StrongNumber = "H4344", OriginNumber = "H4343", Kind = GentilicKinds.Patrial,
+            Statement = "patrial from מַכְבֵּנָא (H4343)", Source = "a dictionary",
+        });
+        await _db.SaveChangesAsync();
+
+        await Load();
+        await Load();
+
+        (await _db.Entities.AnyAsync(e => e.Name == "Macbannites")).Should().BeFalse();
+        (await _db.StrongGentilics.SingleAsync(g => g.StrongNumber == "H4344")).PeopleEntityId.Should().BeNull();
+        (await _db.Entities.AnyAsync(e => e.Name == "Philistines")).Should().BeTrue("the other unjoined gentilic still gets its people");
+    }
+
     [Fact]
     public async Task EveryTribeInTheFileBecomesARecordNamingItsAncestor()
     {

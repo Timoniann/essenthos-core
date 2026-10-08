@@ -78,6 +78,12 @@
       "sourceId": "person:Beno_1",
       "why": "1 Chronicles 24:26-27 reads בְנוֹ, 'his son', and the Septuagint υἱοὶ αὐτοῦ: Jaaziah is the son of Merari, and Shoham, Zaccur and Ibri are Jaaziah's sons. Only the King James prints Beno as a name.",
       "ownerRuled": "the lead, 2026-10-07, on the project owner's instruction to withdraw it unless the Hebrew and the Septuagint show a man, although this corpus held its own rows on the record"
+    },
+    {
+      "slug": "macbannites",
+      "sourceId": "essenthos:macbannites",
+      "why": "Strong's H4344 is a patrial from Machbena, and the only text with the word is 1 Chronicles 12:13, where Machbannai is a man of David's Gadites. No text names a people by it, and the record was made only from the dictionary's derivation.",
+      "ownRecord": "the lead, 2026-10-08, deciding option (a) of PRB-0476: no text names that people, H4344 is the man Machbannai"
     }
   ]
 }

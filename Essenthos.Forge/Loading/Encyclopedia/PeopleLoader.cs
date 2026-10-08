@@ -338,8 +338,9 @@ internal sealed class PeopleLoader(
         }
 
         var namings = file.Namings.ToDictionary(n => n.Number, StringComparer.Ordinal);
+        var refused = (file.Refused ?? []).Select(r => r.Number).ToList();
         var unjoined = await db.StrongGentilics
-            .Where(g => g.PeopleEntityId == null)
+            .Where(g => g.PeopleEntityId == null && !refused.Contains(g.StrongNumber))
             .OrderBy(g => g.StrongNumber)
             .ToListAsync(cancellationToken);
 

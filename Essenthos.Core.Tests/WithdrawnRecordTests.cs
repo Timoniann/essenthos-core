@@ -118,6 +118,58 @@ public sealed class WithdrawnRecordTests : IDisposable
         (await _db.EntityDescriptors.CountAsync()).Should().Be(1, "only heaven's line is left");
     }
 
+    /// <summary>
+    /// A record this corpus wrote itself is withdrawn only where a ruling says so, and only while
+    /// nothing of ours stands on it: the Macbannites, made from a dictionary derivation and named by
+    /// no text, go; a record of the same kind with a verse of ours is kept and named.
+    /// </summary>
+    [Fact]
+    public async Task ARecordOfOursARulingSaysShouldNotExistIsWithdrawnOnlyWhileNothingStandsOnIt()
+    {
+        var own = "Essenthos, from the gentilics Strong's Dictionary derives";
+        Record("macbannites", "essenthos:macbannites", own);
+        var held = Record("calebites", "essenthos:calebites", own);
+        _db.SaveChanges();
+        _db.EntityVerses.Add(new EntityVerse
+        {
+            EntityId = held.Id, CanonicalBook = 9, CanonicalChapter = 25, CanonicalVerse = 3, Label = "Calebite",
+            Source = "Essenthos, a test reading",
+        });
+        _db.SaveChanges();
+        WithdrawnRecord[] ruled =
+        [
+            new("macbannites", "essenthos:macbannites", "no text names that people", OwnRecord: "the lead, on a test day"),
+            new("calebites", "essenthos:calebites", "ruled by mistake", OwnRecord: "the lead, on a test day"),
+        ];
+
+        var outcome = await Loader().Load(ruled, default);
+
+        outcome.Withdrawn.Should().Be(1);
+        outcome.Kept.Should().Equal("calebites");
+        (await Slugs()).Should().NotContain("macbannites").And.Contain("calebites");
+        (await Loader().Load(ruled, default)).Withdrawn.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task ARecordOfOursNoRulingNamesIsNeverWithdrawn()
+    {
+        Record("macbannites", "essenthos:macbannites", "Essenthos, from the gentilics Strong's Dictionary derives");
+        _db.SaveChanges();
+
+        var outcome = await Loader().Load([new("macbannites", "essenthos:macbannites", "a common noun")], default);
+
+        outcome.Withdrawn.Should().Be(0);
+        (await Slugs()).Should().Contain("macbannites");
+    }
+
+    [Fact]
+    public void TheMacbannitesAreWithdrawnOnTheLeadsRulingAndNotRecreatedByTheGentilicRead()
+    {
+        WithdrawnRecordLoader.Read().Single(record => record.Slug == "macbannites").OwnRecord
+            .Should().NotBeNullOrWhiteSpace();
+        PeopleFiles.Read().Refused.Should().Contain(refusal => refusal.Number == "H4344");
+    }
+
     [Fact]
     public async Task ASecondRunWithdrawsNothingMore()
     {

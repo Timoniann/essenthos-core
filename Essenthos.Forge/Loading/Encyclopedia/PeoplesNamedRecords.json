@@ -1,0 +1,26 @@
+{
+  "decidedBy": "the lead, 2026-10-08, deciding option (a) of PRB-0476 for the three peoples no text writes in a language we carry: the Calebites and the Gederathites are given the word that names them, an agent having read 1 Samuel 25:3 and 1 Chronicles 12:5 against the Hebrew; no person has reviewed this ruling",
+  "policy": "A people the dictionary derives, whose name a word of the Hebrew text writes, is that word's answer. The Calebites are the house of Caleb, Nabal's; the Gederathite of 1 Chronicles 12 is a man of Gederah.",
+  "method": "manual",
+  "source": "Essenthos, the Calebite of 1 Samuel 25:3 and the Gederathite of 1 Chronicles 12:5 (English 12:4) in BHSA, read on 2026-10-08",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "1SA 25:3",
+      "position": 27,
+      "surface": "כלבו",
+      "strongNumber": "H3820",
+      "existing": "calebites",
+      "why": "'and he was of the house of Caleb': the written text has כלבו and the reading tradition (qere) כָּלִבִּי, a Calebite, which the King James follows; the Septuagint takes the word as 'dog-like' (κυνικός), a reading this ruling does not follow. The word names the people descended from Caleb."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 12:5",
+      "position": 10,
+      "surface": "גְּדֵרָתִֽי",
+      "strongNumber": "H1452",
+      "existing": "gederathites",
+      "why": "'and Jozabad the Gederathite': הַגְּדֵרָתִי is the gentilic of Gederah (Strong's H1452, a patrial from H1449), one of the Benjamites who came to David at Ziklag. The word names the people of Gederah, of which Jozabad is one."
+    }
+  ]
+}

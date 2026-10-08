@@ -74,6 +74,13 @@ internal sealed record PeopleRuling(string Text, string Reference, int Position,
 /// </param>
 internal sealed record PeopleNation(string Name, string Number, string? Origin, string Why);
 
+/// <summary>
+/// A gentilic of Strong's that is not a people of this corpus, and so is given no record: the
+/// <em>Macbannites</em> of H4344 are the dictionary's patrial of the man Machbena, and no text names
+/// a people by it.
+/// </summary>
+internal sealed record PeopleRefusal(string Number, string Why);
+
 internal sealed record PeopleFile(
     string DecidedBy,
     string Policy,
@@ -83,7 +90,8 @@ internal sealed record PeopleFile(
     IReadOnlyList<PeopleNaming> Namings,
     IReadOnlyList<PeopleRuling> Rulings,
     string? NationSource = null,
-    IReadOnlyList<PeopleNation>? Nations = null);
+    IReadOnlyList<PeopleNation>? Nations = null,
+    IReadOnlyList<PeopleRefusal>? Refused = null);
 
 /// <summary>
 /// What to call the people a gentilic entry names, from the two things the entry itself says.
