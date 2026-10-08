@@ -1,0 +1,59 @@
+{
+ "pair": [
+  "meshullam-13",
+  "meshullam-19"
+ ],
+ "case": {
+  "name": "Meshullam",
+  "A": {
+   "name": "Meshullam",
+   "line": "stood at Ezra's left hand as he read the law to the people (NEH 8:4)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "The priest who sealed the covenant (NEH 10:7), the chief of the people who sealed it (NEH 10:20) and the head of the house of Ginnethon (NEH 12:16) are held apart; the text does not say whether any of them is this man.",
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 8:4"
+   ],
+   "kjv": {
+    "NEH 8:4": "And Ezra the scribe stood upon a pulpit of wood, which they had made for the purpose; and beside him stood Mattithiah, and Shema, and Anaiah, and Urijah, and Hilkiah, and Maaseiah, on his right hand; and on his left hand, Pedaiah, and Mishael, and Malchiah, and Hashum, and Hashbadana, Zechariah, and Meshullam."
+   }
+  },
+  "B": {
+   "name": "Meshullam",
+   "line": "Stood at Ezra's left hand when he read the law to the people",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 8:4"
+   ],
+   "kjv": {
+    "NEH 8:4": "And Ezra the scribe stood upon a pulpit of wood, which they had made for the purpose; and beside him stood Mattithiah, and Shema, and Anaiah, and Urijah, and Hilkiah, and Maaseiah, on his right hand; and on his left hand, Pedaiah, and Mishael, and Malchiah, and Hashum, and Hashbadana, Zechariah, and Meshullam."
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 8:4": "וַֽיַּעֲמֹ֞ד עֶזְרָ֣א הַסֹּפֵ֗ר עַֽל־מִגְדַּל־עֵץ֮ אֲשֶׁ֣ר עָשׂ֣וּ לַדָּבָר֒ וַיַּֽעֲמֹ֣ד אֶצְלֹ֡ו מַתִּתְיָ֡ה וְשֶׁ֡מַע וַ֠עֲנָיָה וְאוּרִיָּ֧ה וְחִלְקִיָּ֛ה וּמַעֲשֵׂיָ֖ה עַל־יְמִינֹ֑ו וּמִשְּׂמֹאלֹ֗ו פְּ֠דָיָה וּמִֽישָׁאֵ֧ל וּמַלְכִּיָּ֛ה וְחָשֻׁ֥ם וְחַשְׁבַּדָּ֖נָה זְכַרְיָ֥ה מְשֻׁלָּֽם׃ פ ",
+   "KJV NEH 8:4": "And Ezra the scribe stood upon a pulpit of wood, which they had made for the purpose; and beside him stood Mattithiah, and Shema, and Anaiah, and Urijah, and Hilkiah, and Maaseiah, on his right hand; and on his left hand, Pedaiah, and Mishael, and Malchiah, and Hashum, and Hashbadana, Zechariah, and Meshullam."
+  },
+  "first_reader_said": [
+   "NEH 8:4: Both records are Meshullam standing at Ezra's left hand at the reading of the law, with nothing else to tell them apart."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "Both records identify the same Meshullam, named last among those standing at Ezra’s left hand in NEH 8:4. Keep B because its association with Ezra is supported by that verse, whereas A’s attribution to Levi is not established there.",
+ "confidence": 0.99,
+ "verses_of_other": [],
+ "keep_slug": "meshullam-19",
+ "fold_slug": "meshullam-13",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:38:18+00:00"
+}

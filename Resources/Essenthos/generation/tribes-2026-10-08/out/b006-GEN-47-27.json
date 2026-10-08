@@ -1,0 +1,153 @@
+{
+ "batch": "b006-GEN-47-27",
+ "answers": [
+  {
+   "key": "BHSA GEN 47:27 #3",
+   "answer": "people",
+   "why": "Israel is described collectively as possessing land, growing fruitful, and multiplying, with plural Hebrew verbs.",
+   "confidence": 0.97
+  },
+  {
+   "key": "BHSA GEN 47:29 #4",
+   "answer": "man",
+   "why": "Israel approaches death and asks his son Joseph to bury him outside Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 47:31 #10",
+   "answer": "man",
+   "why": "Israel bows at the head of his bed after Joseph swears to fulfill his burial request.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:1 #22",
+   "answer": "man",
+   "why": "Manasseh is one of Joseph's two sons whom he takes to visit his sick father.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:1 #25",
+   "answer": "man",
+   "why": "Ephraim is one of Joseph's two sons whom he takes to visit his sick father.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:2 #14",
+   "answer": "man",
+   "why": "Israel strengthens himself and sits on his bed when his son Joseph arrives.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:5 #17",
+   "answer": "man",
+   "why": "Jacob claims Ephraim, Joseph's son born in Egypt, as his own son.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:5 #19",
+   "answer": "man",
+   "why": "Jacob claims Manasseh, Joseph's son born in Egypt, as his own son.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:5 #21",
+   "answer": "man",
+   "why": "Jacob names Reuben as his own son whose standing Ephraim and Manasseh will share.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA GEN 48:5 #23",
+   "answer": "man",
+   "why": "Jacob names Simeon as his own son whose standing Ephraim and Manasseh will share.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA GEN 48:8 #3",
+   "answer": "man",
+   "why": "Israel sees Joseph's sons and personally asks who they are.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:10 #3",
+   "answer": "man",
+   "why": "Israel's eyes are dim with age, and he kisses and embraces Joseph's sons.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:11 #3",
+   "answer": "man",
+   "why": "Israel tells Joseph that he had not expected to see his face again.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:13 #7",
+   "answer": "man",
+   "why": "Joseph physically positions Ephraim toward Jacob's left hand.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:13 #12",
+   "answer": "man",
+   "why": "Israel's left side determines where Joseph positions Ephraim for the blessing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:13 #15",
+   "answer": "man",
+   "why": "Joseph physically positions Manasseh toward Jacob's right hand.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:13 #20",
+   "answer": "man",
+   "why": "Israel's right side determines where Joseph positions Manasseh for the blessing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:14 #3",
+   "answer": "man",
+   "why": "Israel stretches out his hands and places them on his grandsons' heads.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:14 #10",
+   "answer": "man",
+   "why": "Jacob places his right hand on Ephraim's head and identifies him as the younger son.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:14 #20",
+   "answer": "man",
+   "why": "Jacob places his left hand on Manasseh's head.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:14 #25",
+   "answer": "man",
+   "why": "Manasseh is identified as Joseph's firstborn son in the scene of the personal blessing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:17 #11",
+   "answer": "man",
+   "why": "Joseph sees his father's right hand resting on Ephraim's head.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:17 #26",
+   "answer": "man",
+   "why": "Joseph tries to remove his father's hand from Ephraim's head.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 48:17 #29",
+   "answer": "man",
+   "why": "Joseph tries to move his father's hand onto Manasseh's head.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:28:48+00:00"
+}

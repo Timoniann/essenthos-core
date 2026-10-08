@@ -1,0 +1,70 @@
+{
+ "pair": [
+  "akkub-2",
+  "akkub-6"
+ ],
+ "case": {
+  "name": "Akkub",
+  "A": {
+   "name": "Akkub",
+   "line": "one of the gatekeepers (1CH 9:17, EZR 2:42, NEH 7:45, NEH 12:25)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 5,
+   "verses": [
+    "1CH 9:17",
+    "EZR 2:42",
+    "NEH 7:45",
+    "NEH 11:19",
+    "NEH 12:25"
+   ],
+   "kjv": {
+    "1CH 9:17": "And the porters were, Shallum, and Akkub, and Talmon, and Ahiman, and their brethren: Shallum was the chief;",
+    "EZR 2:42": "The children of the porters: the children of Shallum, the children of Ater, the children of Talmon, the children of Akkub, the children of Hatita, the children of Shobai, in all an hundred thirty and nine.",
+    "NEH 7:45": "The porters: the children of Shallum, the children of Ater, the children of Talmon, the children of Akkub, the children of Hatita, the children of Shobai, an hundred thirty and eight.",
+    "NEH 11:19": "Moreover the porters, Akkub, Talmon, and their brethren that kept the gates, were an hundred seventy and two.",
+    "NEH 12:25": "Mattaniah, and Bakbukiah, Obadiah, Meshullam, Talmon, Akkub, were porters keeping the ward at the thresholds of the gates."
+   }
+  },
+  "B": {
+   "name": "Akkub",
+   "line": "Levite gatekeeper serving after the return, named with Talmon at the gates",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "NEH 11:19",
+    "NEH 12:25"
+   ],
+   "kjv": {
+    "NEH 11:19": "Moreover the porters, Akkub, Talmon, and their brethren that kept the gates, were an hundred seventy and two.",
+    "NEH 12:25": "Mattaniah, and Bakbukiah, Obadiah, Meshullam, Talmon, Akkub, were porters keeping the ward at the thresholds of the gates."
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 11:19": "וְהַשֹּֽׁועֲרִים֙ עַקּ֣וּב טַלְמֹ֔ון וַאֲחֵיהֶ֖ם הַשֹּׁמְרִ֣ים בַּשְּׁעָרִ֑ים מֵאָ֖ה שִׁבְעִ֥ים וּשְׁנָֽיִם׃ ",
+   "KJV NEH 11:19": "Moreover the porters, Akkub, Talmon, and their brethren that kept the gates, were an hundred seventy and two.",
+   "BHSA NEH 12:25": "מַתַּנְיָ֧ה וּבַקְבֻּֽקְיָ֛ה עֹבַדְיָ֥ה מְשֻׁלָּ֖ם טַלְמֹ֣ון עַקּ֑וּב שֹׁמְרִ֤ים שֹֽׁועֲרִים֙ מִשְׁמָ֔ר בַּאֲסֻפֵּ֖י הַשְּׁעָרִֽים׃ ",
+   "KJV NEH 12:25": "Mattaniah, and Bakbukiah, Obadiah, Meshullam, Talmon, Akkub, were porters keeping the ward at the thresholds of the gates."
+  },
+  "first_reader_said": [
+   "NEH 11:19: Both records are Akkub the gatekeeper named with Talmon after the return.",
+   "NEH 12:25: Both records are Akkub the gatekeeper named with Talmon; A already cites NEH 12:25."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "B is a thinner copy of A: both identify Akkub as the gatekeeper named with Talmon in NEH 11:19 and NEH 12:25. A also includes the related gatekeeper listing in 1CH 9:17 and the children of Akkub in EZR 2:42 and NEH 7:45; those descendant lists do not establish a second individual represented by B. No supplied father, family tie, or verse distinguishes B from A.",
+ "confidence": 0.98,
+ "verses_of_other": [],
+ "keep_slug": "akkub-2",
+ "fold_slug": "akkub-6",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:36:44+00:00"
+}

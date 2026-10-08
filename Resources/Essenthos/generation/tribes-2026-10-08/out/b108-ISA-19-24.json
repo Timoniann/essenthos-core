@@ -1,0 +1,81 @@
+{
+ "batch": "b108-ISA-19-24",
+ "answers": [
+  {
+   "key": "BHSA ISA 19:24 #7",
+   "answer": "people",
+   "why": "Israel stands alongside Egypt and Assyria as a nation blessed in the earth.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 19:25 #16",
+   "answer": "people",
+   "why": "Israel is God's inheritance alongside the peoples Egypt and Assyria.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 21:10 #12",
+   "answer": "people",
+   "why": "The prophet names the nation's God as the God of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 21:17 #12",
+   "answer": "people",
+   "why": "The God of Israel is the national divine title confirming the prophecy against Kedar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 22:8 #5",
+   "answer": "people",
+   "why": "Judah's defenses are exposed amid chariots, weapons, and breaches in Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 22:21 #22",
+   "answer": "people",
+   "why": "Eliakim will govern and care for Jerusalem's inhabitants and the house of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 24:15 #15",
+   "answer": "people",
+   "why": "Worshippers glorify the LORD under his title as the God of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 27:6 #8",
+   "answer": "people",
+   "why": "Israel's future blossoming and filling the world with fruit describe the restored nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 28:1 #5",
+   "answer": "people",
+   "why": "Ephraim names the community whose drunkards and proud crown face judgment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 28:3 #7",
+   "answer": "people",
+   "why": "The drunkards of Ephraim belong to the community whose proud crown will be trampled.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 29:19 #12",
+   "answer": "people",
+   "why": "The Holy One of Israel is the nation's God in whom the poor rejoice.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 29:23 #19",
+   "answer": "people",
+   "why": "The restored house of Jacob will sanctify and fear its national God, the God of Israel.",
+   "confidence": 0.99
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:18:56+00:00"
+}

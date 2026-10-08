@@ -1,0 +1,74 @@
+{
+ "pair": [
+  "joel-13",
+  "joel-6"
+ ],
+ "case": {
+  "name": "Joel",
+  "A": {
+   "name": "Joel",
+   "line": "Chief of the Gershonite Levites who brought up the ark under David",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of gershon (Gershon, son of Levi (GEN 46:11))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 15:7"
+   ],
+   "kjv": {
+    "1CH 15:7": "Of the sons of Gershom; Joel the chief and his brethren an hundred and thirty:"
+   }
+  },
+  "B": {
+   "name": "Joel",
+   "line": "chief of the sons of Gershom (1CH 15:7), son of Ladan (1CH 23:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Gershonites (Gershomites), from Gershon, son of Levi",
+   "family": [
+    "brother-of jehiel-9 (Jehiel, Gershonite, son of Laadan, whose house (Jehieli) kept the te)",
+    "brother-of zetham (Zetham, son of Ladan [Libni] (1CH 23:8))",
+    "of-people jehielites (Jehielites, patronymic of H3171, as Strong's Dictionary derives it)",
+    "descendant-of gershon (Gershon, son of Levi (GEN 46:11))",
+    "descendant-of libni (Libni, son of Gershon (EXO 6:17))"
+   ],
+   "named_by": [
+    "jehiel-9 (Jehiel, Gershonite, son of Laadan, whose house (Jehieli) kept the te) brother-of",
+    "zetham (Zetham, son of Ladan [Libni] (1CH 23:8)) brother-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "1CH 15:7",
+    "1CH 15:11",
+    "1CH 23:8",
+    "1CH 26:22"
+   ],
+   "kjv": {
+    "1CH 15:7": "Of the sons of Gershom; Joel the chief and his brethren an hundred and thirty:",
+    "1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,",
+    "1CH 23:8": "The sons of Laadan; the chief was Jehiel, and Zetham, and Joel, three.",
+    "1CH 26:22": "The sons of Jehieli; Zetham, and Joel his brother, which were over the treasures of the house of the LORD."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 15:7": "לִבְנֵ֖י גֵּרְשֹׁ֑ום יֹואֵ֣ל הַשָּׂ֔ר וְאֶחָ֖יו מֵאָ֥ה וּשְׁלֹשִֽׁים׃ ס ",
+   "KJV 1CH 15:7": "Of the sons of Gershom; Joel the chief and his brethren an hundred and thirty:"
+  },
+  "first_reader_said": [
+   "1CH 15:7: Both records are Joel chief of the sons of Gershom at the bringing up of the ark."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "Both records identify the same Joel, chief of the Gershonites, in 1CH 15:7; 1CH 15:11 names him again among David's summoned Levites. B's additional references place Joel alongside Zetham in Laadan's family (1CH 23:8) and identify him as Zetham's brother in the treasury service (1CH 26:22). A contains no distinguishing lineage or chronological information and is a thinner copy of B.",
+ "confidence": 0.96,
+ "verses_of_other": [],
+ "keep_slug": "joel-6",
+ "fold_slug": "joel-13",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:32:39+00:00"
+}

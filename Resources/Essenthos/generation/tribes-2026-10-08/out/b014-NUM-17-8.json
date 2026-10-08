@@ -1,0 +1,135 @@
+{
+ "batch": "b014-NUM-17-8",
+ "answers": [
+  {
+   "key": "BHSA NUM 17:23 #19",
+   "answer": "people",
+   "why": "Aaron's rod represents the house of Levi among the tribal rods.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 18:14 #4",
+   "answer": "people",
+   "why": "Devoted things within Israel belong to Aaron under the community's priestly regulations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 18:21 #10",
+   "answer": "people",
+   "why": "The tithes collected in Israel support the Levites' sanctuary service.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 19:13 #26",
+   "answer": "people",
+   "why": "The unpurified person is cut off from the Israelite community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 20:14 #13",
+   "answer": "people",
+   "why": "Israel speaks through Moses' messengers of hardships suffered by us and our fathers.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 20:21 #6",
+   "answer": "people",
+   "why": "Edom refuses passage to the Israelite congregation traveling from Kadesh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 20:21 #12",
+   "answer": "people",
+   "why": "Israel turns away from Edom, and the whole congregation continues its journey.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:1 #12",
+   "answer": "people",
+   "why": "Israel is the traveling people whose arrival prompts the Canaanite king's attack.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:1 #19",
+   "answer": "people",
+   "why": "The king fights Israel and takes members of the people captive.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:2 #3",
+   "answer": "people",
+   "why": "Israel collectively vows to destroy the cities of the enemy that attacked them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:3 #6",
+   "answer": "people",
+   "why": "The LORD answers Israel's collective vow and gives them victory over the Canaanites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:6 #22",
+   "answer": "people",
+   "why": "Many members of Israel die when serpents bite the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:17 #3",
+   "answer": "people",
+   "why": "The people gathered by Moses sing together about the well.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:21 #3",
+   "answer": "people",
+   "why": "Israel sends messengers requesting passage for the traveling community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:23 #6",
+   "answer": "people",
+   "why": "Sihon refuses to let the Israelite people pass through his territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:23 #20",
+   "answer": "people",
+   "why": "Sihon gathers his army and advances against the Israelite people in the wilderness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:23 #29",
+   "answer": "people",
+   "why": "Sihon fights the Israelite people at Jahaz.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:24 #3",
+   "answer": "people",
+   "why": "Israel defeats Sihon by the sword and takes possession of his territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:25 #3",
+   "answer": "people",
+   "why": "Israel captures the Amorite cities following its military victory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:25 #12",
+   "answer": "people",
+   "why": "Israel settles throughout the captured Amorite cities and their villages.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 21:31 #3",
+   "answer": "people",
+   "why": "Israel occupies Amorite territory while Moses directs further reconnaissance.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:30:51+00:00"
+}

@@ -1,0 +1,87 @@
+{
+ "batch": "b017-NUM-33-45",
+ "answers": [
+  {
+   "key": "BHSA NUM 33:45 #9",
+   "answer": "people",
+   "why": "Gad identifies the tribal association of Dibon, where the Israelites camped.",
+   "confidence": 0.97
+  },
+  {
+   "key": "BHSA NUM 33:46 #5",
+   "answer": "people",
+   "why": "Gad is part of the place name Dibon-gad, marking its tribal association.",
+   "confidence": 0.97
+  },
+  {
+   "key": "BHSA NUM 36:1 #13",
+   "answer": "man",
+   "why": "Manasseh is named as Machir's father in Gilead's genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 1:1 #9",
+   "answer": "people",
+   "why": "Moses speaks to all Israel assembled in the wilderness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 1:38 #17",
+   "answer": "people",
+   "why": "Joshua will lead Israel into possession of the promised land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 2:12 #23",
+   "answer": "people",
+   "why": "Israel dispossessed inhabitants of the land the LORD gave to them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 3:13 #16",
+   "answer": "people",
+   "why": "Moses gives Gilead and Bashan to the half tribe of Manasseh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 3:14 #3",
+   "answer": "man",
+   "why": "Manasseh is named as Jair's ancestor in the expression 'son of Manasseh.'",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA DEU 4:1 #3",
+   "answer": "people",
+   "why": "Moses addresses Israel with plural commands to live and possess the land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 5:1 #6",
+   "answer": "people",
+   "why": "Moses summons all Israel and speaks to them collectively.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 5:1 #11",
+   "answer": "people",
+   "why": "The Israel commanded to hear is the assembled people Moses has summoned.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 6:3 #3",
+   "answer": "people",
+   "why": "Israel is commanded to obey so that they may multiply in the promised land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA DEU 6:4 #2",
+   "answer": "people",
+   "why": "Moses addresses the nation Israel and identifies the LORD as 'our God.'",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:31:13+00:00"
+}

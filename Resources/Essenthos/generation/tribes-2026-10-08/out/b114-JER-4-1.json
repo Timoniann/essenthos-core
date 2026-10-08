@@ -1,0 +1,93 @@
+{
+ "batch": "b114-JER-4-1",
+ "answers": [
+  {
+   "key": "BHSA JER 4:1 #3",
+   "answer": "people",
+   "why": "Israel is called to return to the LORD and remove its abominations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 4:3 #7",
+   "answer": "people",
+   "why": "The LORD addresses the men of Judah alongside Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 4:4 #9",
+   "answer": "people",
+   "why": "The men of Judah and inhabitants of Jerusalem are commanded to cleanse their hearts.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 4:5 #3",
+   "answer": "people",
+   "why": "Judah is the territory where the warning is proclaimed and people gather into fortified cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 5:15 #8",
+   "answer": "people",
+   "why": "The house of Israel is threatened with invasion by a distant nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 5:20 #9",
+   "answer": "people",
+   "why": "The message is published in Judah to the foolish people addressed next.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 6:9 #11",
+   "answer": "people",
+   "why": "The remnant of Israel is a surviving population to be gleaned like a vine.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 7:2 #20",
+   "answer": "people",
+   "why": "All Judah denotes the worshippers entering the temple gates.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 7:3 #6",
+   "answer": "people",
+   "why": "The God of Israel addresses the community and commands them to amend their ways.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 7:12 #26",
+   "answer": "people",
+   "why": "Israel is explicitly called God's people whose wickedness brought judgment on Shiloh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 7:21 #6",
+   "answer": "people",
+   "why": "The God of Israel addresses a community whose forefathers he brought out of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 9:14 #7",
+   "answer": "people",
+   "why": "The God of Israel announces punishment and dispersion of this people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 9:25 #5",
+   "answer": "people",
+   "why": "Judah is listed alongside Egypt and other nations facing punishment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 9:25 #34",
+   "answer": "people",
+   "why": "All the house of Israel is collectively described as uncircumcised in heart.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:19:39+00:00"
+}

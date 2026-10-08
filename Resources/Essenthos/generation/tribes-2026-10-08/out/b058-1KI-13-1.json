@@ -1,0 +1,111 @@
+{
+ "batch": "b058-1KI-13-1",
+ "answers": [
+  {
+   "key": "BHSA 1KI 13:1 #7",
+   "answer": "people",
+   "why": "The man of God comes from Judah, identifying the territory of the kingdom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 13:12 #24",
+   "answer": "people",
+   "why": "Judah is the territory from which the man of God came to Bethel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 13:14 #24",
+   "answer": "people",
+   "why": "The prophet asks whether this is the man of God who came from Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 13:21 #10",
+   "answer": "people",
+   "why": "The addressed man of God is identified as having come from Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:7 #9",
+   "answer": "people",
+   "why": "The LORD is called the God of the nation over which he appointed Jeroboam.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:7 #22",
+   "answer": "people",
+   "why": "Israel is explicitly God's people over whom Jeroboam was made ruler.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:10 #19",
+   "answer": "people",
+   "why": "Those of Jeroboam's house are to be cut off within the kingdom of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:13 #5",
+   "answer": "people",
+   "why": "All Israel collectively will mourn and bury Jeroboam's child.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:13 #26",
+   "answer": "people",
+   "why": "The LORD God of Israel is the nation's God toward whom the child showed goodness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:14 #7",
+   "answer": "people",
+   "why": "The LORD will raise up a king over Israel to destroy Jeroboam's dynasty.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:15 #5",
+   "answer": "people",
+   "why": "Israel is the nation the LORD will strike because its people made idolatrous groves.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:15 #17",
+   "answer": "people",
+   "why": "Israel will be uprooted from its ancestral land and its people scattered beyond the river.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:16 #4",
+   "answer": "people",
+   "why": "The LORD will give up the nation because of Jeroboam's sins.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:16 #15",
+   "answer": "people",
+   "why": "Jeroboam caused the people of Israel to sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:18 #8",
+   "answer": "people",
+   "why": "All Israel collectively mourned Jeroboam's child after his burial.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:21 #7",
+   "answer": "people",
+   "why": "Rehoboam reigned in Judah, the kingdom centered on Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 14:22 #3",
+   "answer": "people",
+   "why": "Judah's collective wrongdoing is described with plural references to their sins and fathers.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:36:49+00:00"
+}

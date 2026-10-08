@@ -1,0 +1,99 @@
+{
+ "batch": "b034-JDG-13-5",
+ "answers": [
+  {
+   "key": "BHSA JDG 13:5 #28",
+   "answer": "people",
+   "why": "Samson will begin delivering Israel from the Philistines.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 14:4 #26",
+   "answer": "people",
+   "why": "The Philistines ruled over Israel in Samson's time.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 15:9 #7",
+   "answer": "people",
+   "why": "The Philistines camped in Judah's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 15:11 #7",
+   "answer": "people",
+   "why": "Three thousand men from Judah came to confront Samson.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 15:20 #4",
+   "answer": "people",
+   "why": "Samson judged the nation of Israel for twenty years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 16:31 #29",
+   "answer": "people",
+   "why": "The account of Samson's burial recalls his twenty years judging Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 17:6 #9",
+   "answer": "people",
+   "why": "Israel lacked a king, and everyone acted as they pleased.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 17:7 #6",
+   "answer": "people",
+   "why": "Judah identifies the tribal territory containing the young man's hometown, Bethlehem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 17:8 #10",
+   "answer": "people",
+   "why": "The man departed from Bethlehem in Judah's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 17:9 #15",
+   "answer": "people",
+   "why": "The Levite identifies his place of origin as Bethlehem in Judah's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 18:1 #9",
+   "answer": "people",
+   "why": "Israel is the nation without a king while the Danites seek an inheritance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 18:12 #8",
+   "answer": "people",
+   "why": "The Danites camped at Kirjathjearim in Judah's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 18:19 #37",
+   "answer": "people",
+   "why": "The priest is offered service to a tribe and family within Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 18:29 #9",
+   "answer": "man",
+   "why": "Dan is explicitly their ancestor, who was born to Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 18:29 #14",
+   "answer": "man",
+   "why": "Israel is the father to whom the ancestor Dan was born.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:33:43+00:00"
+}

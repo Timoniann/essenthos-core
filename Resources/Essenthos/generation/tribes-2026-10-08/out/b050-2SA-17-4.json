@@ -1,0 +1,87 @@
+{
+ "batch": "b050-2SA-17-4",
+ "answers": [
+  {
+   "key": "BHSA 2SA 17:4 #13",
+   "answer": "people",
+   "why": "Israel is the nation whose elders approve the counsel with Absalom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 17:10 #17",
+   "answer": "people",
+   "why": "All Israel knows that David and his companions are mighty warriors.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 17:11 #7",
+   "answer": "people",
+   "why": "Israel is the multitude gathered from Dan to Beersheba for battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 17:13 #9",
+   "answer": "people",
+   "why": "All Israel would bring ropes to pull down the city sheltering David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 17:14 #7",
+   "answer": "people",
+   "why": "The men of Israel join Absalom in approving Hushai's counsel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 17:15 #23",
+   "answer": "people",
+   "why": "Israel is the nation whose elders received Ahithophel's counsel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 17:24 #15",
+   "answer": "people",
+   "why": "The men of Israel cross the Jordan with Absalom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 17:26 #3",
+   "answer": "people",
+   "why": "Israel is the army encamping with Absalom in Gilead.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 18:6 #9",
+   "answer": "people",
+   "why": "Israel is the opposing army that David's forces meet in battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 18:6 #16",
+   "answer": "people",
+   "why": "Ephraim names the woodland where the battle occurs, using the tribal name geographically.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA 2SA 18:7 #5",
+   "answer": "people",
+   "why": "The people of Israel suffer defeat before David's servants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 18:16 #14",
+   "answer": "people",
+   "why": "Israel is the fleeing army that Joab's troops stop pursuing.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 18:17 #25",
+   "answer": "people",
+   "why": "All Israel flees, each man returning to his tent.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:35:44+00:00"
+}

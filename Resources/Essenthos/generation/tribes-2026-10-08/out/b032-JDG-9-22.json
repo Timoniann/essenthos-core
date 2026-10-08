@@ -1,0 +1,159 @@
+{
+ "batch": "b032-JDG-9-22",
+ "answers": [
+  {
+   "key": "BHSA JDG 9:22 #5",
+   "answer": "people",
+   "why": "Abimelech ruled over Israel for three years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 9:55 #4",
+   "answer": "people",
+   "why": "The men of Israel saw Abimelech was dead and returned to their homes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 10:1 #8",
+   "answer": "people",
+   "why": "Tola arose after Abimelech to deliver Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 10:2 #4",
+   "answer": "people",
+   "why": "Tola judged Israel for twenty-three years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 10:3 #10",
+   "answer": "people",
+   "why": "Jair judged Israel for twenty-two years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 10:7 #6",
+   "answer": "people",
+   "why": "The LORD delivered Israel into enemy hands after the people served other gods.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 10:9 #12",
+   "answer": "people",
+   "why": "The Ammonites crossed Jordan to fight against the tribe of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 10:9 #15",
+   "answer": "people",
+   "why": "Benjamin is a tribal target of the Ammonite attack.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 10:9 #19",
+   "answer": "people",
+   "why": "The Ammonites fought against the house of Ephraim alongside Judah and Benjamin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 10:9 #23",
+   "answer": "people",
+   "why": "Israel was greatly distressed by the Ammonite attacks on its tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 10:16 #18",
+   "answer": "people",
+   "why": "Israel's misery is that of the people who removed foreign gods and served the LORD.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:4 #10",
+   "answer": "people",
+   "why": "The Ammonites made war against Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:5 #9",
+   "answer": "people",
+   "why": "The elders sought Jephthah to lead them while Ammon was fighting Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:13 #11",
+   "answer": "people",
+   "why": "Israel is the nation accused of taking territory after coming out of Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:15 #9",
+   "answer": "people",
+   "why": "Jephthah denies that Israel took the lands of Moab and Ammon during the exodus journey.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:16 #8",
+   "answer": "people",
+   "why": "Israel journeyed from Egypt through the wilderness to the Red Sea and Kadesh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:17 #3",
+   "answer": "people",
+   "why": "Israel sent messengers requesting passage through Edom during the wilderness journey.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:17 #30",
+   "answer": "people",
+   "why": "Israel remained at Kadesh after its requests for passage were refused.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:19 #3",
+   "answer": "people",
+   "why": "Israel sent messengers to Sihon during the nation's journey toward its territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:19 #15",
+   "answer": "people",
+   "why": "Israel's request says 'Let us pass,' identifying the speakers as a collective.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:20 #6",
+   "answer": "people",
+   "why": "Sihon refused to trust Israel to pass through his territory and gathered his army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:20 #23",
+   "answer": "people",
+   "why": "Sihon and his assembled people fought against Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:21 #5",
+   "answer": "people",
+   "why": "The LORD is called Israel's God while granting the nation victory over Sihon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:21 #14",
+   "answer": "people",
+   "why": "Sihon and his people were delivered into Israel's hand, and they defeated them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JDG 11:21 #19",
+   "answer": "people",
+   "why": "Israel collectively possessed the Amorites' land after defeating Sihon.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:33:34+00:00"
+}

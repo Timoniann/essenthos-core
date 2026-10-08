@@ -1,0 +1,147 @@
+{
+ "batch": "b023-JOS-9-2",
+ "answers": [
+  {
+   "key": "BHSA JOS 9:2 #10",
+   "answer": "people",
+   "why": "The kings gather to fight Joshua and the Israelite people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 9:6 #16",
+   "answer": "people",
+   "why": "The Gibeonites address the men of Israel at Joshua's camp.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 9:7 #4",
+   "answer": "people",
+   "why": "The men of Israel question the Hivites about making a covenant.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 9:18 #15",
+   "answer": "people",
+   "why": "The congregation's leaders swear by the LORD, the nation's God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 9:19 #16",
+   "answer": "people",
+   "why": "Israel's leaders invoke their nation's God in explaining their oath.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:1 #38",
+   "answer": "people",
+   "why": "Gibeon's inhabitants make peace with Israel and live among them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:10 #6",
+   "answer": "people",
+   "why": "The LORD routs the enemy before the Israelites fighting at Gibeon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:11 #7",
+   "answer": "people",
+   "why": "The enemies flee before the Israelite forces who kill them with swords.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:12 #21",
+   "answer": "people",
+   "why": "Joshua speaks in the sight of the Israelites during their battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:14 #23",
+   "answer": "people",
+   "why": "The LORD fights for the Israelite people against their enemies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:15 #6",
+   "answer": "people",
+   "why": "All Israel returns with Joshua to the camp at Gilgal.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:24 #18",
+   "answer": "people",
+   "why": "Joshua summons all Israel's men and addresses their military captains.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:29 #6",
+   "answer": "people",
+   "why": "All Israel accompanies Joshua to fight against Libnah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:30 #8",
+   "answer": "people",
+   "why": "The LORD delivers Libnah and its king into the Israelites' power.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:31 #6",
+   "answer": "people",
+   "why": "All Israel accompanies Joshua to besiege and fight Lachish.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:32 #8",
+   "answer": "people",
+   "why": "The LORD delivers Lachish to the Israelites, who capture it.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:34 #6",
+   "answer": "people",
+   "why": "All Israel accompanies Joshua to Eglon and fights against it.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:36 #6",
+   "answer": "people",
+   "why": "All Israel goes with Joshua to Hebron and fights against it.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:38 #6",
+   "answer": "people",
+   "why": "All Israel accompanies Joshua to Debir in the conquest campaign.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:40 #37",
+   "answer": "people",
+   "why": "The LORD is named as Israel's national God who commanded the conquest.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:42 #18",
+   "answer": "people",
+   "why": "The LORD is called the God of the Israelite people whose battles he fights.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:42 #21",
+   "answer": "people",
+   "why": "The LORD fights for the Israelites as Joshua captures kings and their lands.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 10:43 #6",
+   "answer": "people",
+   "why": "All Israel returns with Joshua to the camp at Gilgal.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:32:10+00:00"
+}

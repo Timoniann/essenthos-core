@@ -1,0 +1,111 @@
+{
+ "batch": "b052-2SA-21-4",
+ "answers": [
+  {
+   "key": "BHSA 2SA 21:4 #23",
+   "answer": "people",
+   "why": "The Gibeonites speak of killing someone within Israel, the nation ruled by David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 21:15 #9",
+   "answer": "people",
+   "why": "Israel is the nation against which the Philistines wage war.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 21:17 #33",
+   "answer": "people",
+   "why": "David is called Israel's light because his life sustains the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 21:21 #4",
+   "answer": "people",
+   "why": "The Philistine defies Israel during a battle with David's warriors.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 23:1 #23",
+   "answer": "people",
+   "why": "David is Israel's sweet psalmist, associating his songs with the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 23:3 #3",
+   "answer": "people",
+   "why": "The God of Israel speaks to David about just rule over people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 23:3 #7",
+   "answer": "people",
+   "why": "The Rock of Israel names God as the nation's protector in David's speech.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 23:9 #27",
+   "answer": "people",
+   "why": "Israel's men withdraw from the battle against the Philistines.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 24:1 #8",
+   "answer": "people",
+   "why": "The LORD's anger burns against Israel, referred to collectively as them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 24:1 #19",
+   "answer": "people",
+   "why": "David is commanded to count Israel and Judah in a census of the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 24:4 #30",
+   "answer": "people",
+   "why": "Israel identifies the people whom Joab and the commanders set out to count.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 24:5 #19",
+   "answer": "people",
+   "why": "Gad identifies tribal territory near Aroer and Jazer on the census route.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA 2SA 24:7 #17",
+   "answer": "people",
+   "why": "Judah identifies the southern tribal territory through which the census officials travel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 24:9 #14",
+   "answer": "people",
+   "why": "Israel comprises eight hundred thousand sword-bearing men in Joab's census report.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 24:9 #24",
+   "answer": "people",
+   "why": "Judah's men number five hundred thousand in the census report.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 24:15 #6",
+   "answer": "people",
+   "why": "The pestilence strikes Israel and kills seventy thousand people from Dan to Beersheba.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 24:25 #25",
+   "answer": "people",
+   "why": "The plague affecting the nation ceases after David offers sacrifices.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:35:58+00:00"
+}

@@ -1,0 +1,53 @@
+[
+ {
+  "pair": [
+   "hashabiah-11",
+   "hashabiah-2"
+  ],
+  "name": "Hashabiah",
+  "codex": "two",
+  "codex_keep": null,
+  "codex_confidence": 0.99,
+  "codex_why": "A is Hashabiah son of Bunni, father of Azrikam, in Shemaiah’s Merarite ancestry (NEH 11:15; 1CH 9:14). B’s singer is a son of Jeduthun assigned the twelfth division in David’s time (1CH 25:3,19), a different father and historical setting. NEH 11:15 belongs to A and is wrongly attached to B; B’s duplicated family ties do not establish identity. The Hebronite officer in 1CH 26:30 also has a different Levitical lineage from A’s Merarite family.",
+  "codex_verses_of_other": [
+   "NEH 11:15"
+  ],
+  "judge": "two",
+  "judge_keep": null,
+  "judge_why": "A is Hashabiah son of Bunni, a Merarite, father of Azrikam (1CH 9:14, NEH 11:15). B is at heart Hashabiah son of Jeduthun, of the twelfth lot in David's day (1CH 25:3, 25:19). Their fathers differ, so B's NEH 11:15 and its son-of-Bunni tie are wrong (as is its 1CH 26:30 Hebronite)."
+ },
+ {
+  "pair": [
+   "mattaniah-12",
+   "mattaniah-4"
+  ],
+  "name": "Mattaniah",
+  "codex": "two",
+  "codex_keep": null,
+  "codex_confidence": 0.96,
+  "codex_why": "2CH 29:13 names an Asaphite Levite serving in Hezekiah’s time, centuries before the Nehemiah-era Zechariah whose great-grandfather Mattaniah appears in NEH 12:35. NEH 12:35 supplies A’s Micaiah–Mattaniah–Shemaiah genealogy; B’s matching father comes from its misplaced assignment of that same verse, rather than independent evidence identifying the two men.",
+  "codex_verses_of_other": [
+   "NEH 12:35"
+  ],
+  "judge": "two",
+  "judge_keep": null,
+  "judge_why": "A is Mattaniah son of Michaiah son of Zaccur, great-grandfather of the trumpeter Zechariah of 445 BC (NEH 12:35; compare NEH 11:17). B is at heart the Asaphite Mattaniah of Hezekiah's day (2CH 29:13), nearly three centuries earlier. B's NEH 12:35 and its son-of-Micaiah tie are wrong."
+ },
+ {
+  "pair": [
+   "rehum-3",
+   "rehum-5"
+  ],
+  "name": "Rehum",
+  "codex": "two",
+  "codex_keep": null,
+  "codex_confidence": 0.88,
+  "codex_why": "NEH 3:17 identifies A as Rehum son of Bani, a Levite. NEH 10:25 names Rehum among the chiefs of the people, whose list begins at NEH 10:14, separately from the Levites in NEH 10:9–13. This distinction supports two men; A's assignment of NEH 10:25 belongs to B.",
+  "codex_verses_of_other": [
+   "NEH 10:25"
+  ],
+  "judge": "two",
+  "judge_keep": null,
+  "judge_why": "A is Rehum son of Bani, who led the Levites' repairs (NEH 3:17). B seals among the lay 'chiefs of the people' (NEH 10:14-27, at 10:25), while the Levites sealed separately in NEH 10:9-13, so A's note claiming NEH 10:25 is wrong."
+ }
+]

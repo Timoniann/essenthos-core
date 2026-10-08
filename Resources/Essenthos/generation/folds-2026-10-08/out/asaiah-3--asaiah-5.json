@@ -1,0 +1,70 @@
+{
+ "pair": [
+  "asaiah-3",
+  "asaiah-5"
+ ],
+ "case": {
+  "name": "Asaiah",
+  "A": {
+   "name": "Asaiah",
+   "line": "son of Haggiah (1CH 6:30), chief of the sons of Merari (1CH 15:6)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Mahlites (from Merari, son of Levi)",
+   "family": [
+    "son-of haggiah (Haggiah, son of Shimea (1CH 6:30))",
+    "descendant-of merari (Merari, son of Levi (GEN 46:11))",
+    "of-people levites (Levites, the tribe descended from Levi, Jacob's third son, set apart )"
+   ],
+   "named_by": [
+    "haggiah (Haggiah, son of Shimea (1CH 6:30)) father-of",
+    "shimea (Shimea, son of Uzzah (1CH 6:30)) grandfather-of"
+   ],
+   "verse_count": 3,
+   "verses": [
+    "1CH 6:30",
+    "1CH 15:6",
+    "1CH 15:11"
+   ],
+   "kjv": {
+    "1CH 6:30": "Shimea his son, Haggiah his son, Asaiah his son.",
+    "1CH 15:6": "Of the sons of Merari; Asaiah the chief, and his brethren two hundred and twenty:",
+    "1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,"
+   }
+  },
+  "B": {
+   "name": "Asaiah",
+   "line": "Levite in Merari's ancestral genealogy, son of Haggiah, father unnamed further",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of haggiah (Haggiah, son of Shimea (1CH 6:30))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 6:30"
+   ],
+   "kjv": {
+    "1CH 6:30": "Shimea his son, Haggiah his son, Asaiah his son."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 6:30": "שִׁמְעָ֥א בְנֹ֛ו חַגִּיָּ֥ה בְנֹ֖ו עֲשָׂיָ֥ה בְנֹֽו׃ פ ",
+   "KJV 1CH 6:30": "Shimea his son, Haggiah his son, Asaiah his son."
+  },
+  "first_reader_said": [
+   "1CH 6:30: Both records are Asaiah son of Haggiah in Merari's line."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "Both records identify the Asaiah who is Haggiah’s son in the same Merarite genealogy at 1CH 6:30. A’s additional references identify Asaiah as chief of Merari’s sons and a Levite summoned by David (1CH 15:6, 15:11), which fits that lineage. B is a thinner duplicate with no distinguishing ancestry, generation, or role.",
+ "confidence": 0.98,
+ "verses_of_other": [],
+ "keep_slug": "asaiah-3",
+ "fold_slug": "asaiah-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:33:11+00:00"
+}

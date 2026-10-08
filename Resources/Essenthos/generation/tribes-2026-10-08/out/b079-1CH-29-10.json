@@ -1,0 +1,81 @@
+{
+ "batch": "b079-1CH-29-10",
+ "answers": [
+  {
+   "key": "BHSA 1CH 29:10 #18",
+   "answer": "man",
+   "why": "Israel is called 'our father,' identifying the patriarch Jacob.",
+   "confidence": 0.97
+  },
+  {
+   "key": "BHSA 1CH 29:18 #6",
+   "answer": "man",
+   "why": "Israel is named alongside Abraham and Isaac as 'our fathers.'",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA 1CH 29:21 #31",
+   "answer": "people",
+   "why": "The congregation offers abundant sacrifices for all Israel.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA 1CH 29:23 #18",
+   "answer": "people",
+   "why": "All Israel obeys Solomon as king.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA 1CH 29:25 #11",
+   "answer": "people",
+   "why": "Solomon is magnified in the sight of all Israel, the assembled nation.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA 1CH 29:25 #26",
+   "answer": "people",
+   "why": "Israel is the nation over which earlier kings ruled.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA 1CH 29:26 #8",
+   "answer": "people",
+   "why": "David reigns over all Israel.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA 1CH 29:27 #7",
+   "answer": "people",
+   "why": "David's forty-year reign is over the nation Israel.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA 1CH 29:30 #14",
+   "answer": "people",
+   "why": "The recorded events affect David, Israel, and the surrounding kingdoms.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA 2CH 1:2 #6",
+   "answer": "people",
+   "why": "Solomon addresses all Israel through its captains, judges, and leaders.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA 2CH 1:2 #24",
+   "answer": "people",
+   "why": "Israel is the nation whose governors and family heads Solomon addresses.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA 2CH 1:13 #19",
+   "answer": "people",
+   "why": "Solomon returns to Jerusalem and reigns over Israel.",
+   "confidence": 1.0
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:39:18+00:00"
+}

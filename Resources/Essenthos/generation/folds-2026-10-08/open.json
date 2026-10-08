@@ -1,0 +1,271 @@
+[
+ {
+  "pair": [
+   "arah-2",
+   "arah-3"
+  ],
+  "name": "Arah",
+  "codex": "one",
+  "codex_keep": "arah-2",
+  "codex_confidence": 0.96,
+  "codex_why": "Both records identify Arah as the father of the same Shecaniah, Tobiah’s father-in-law, in NEH 6:18. A additionally holds the family lists in EZR 2:5 and NEH 7:10; B supplies no distinct ancestry, generation, or role and is a thinner copy of A.",
+  "codex_verses_of_other": [],
+  "judge": "unclear",
+  "judge_keep": null,
+  "judge_why": "A is the family head whose descendants returned (EZR 2:5, NEH 7:10); B is the father of Shechaniah, Tobiah's father-in-law (NEH 6:18). 'Son of Arah' may mean a member of that family or a man's actual father, and the text does not say which."
+ },
+ {
+  "pair": [
+   "ater",
+   "ater-3"
+  ],
+  "name": "Ater",
+  "codex": "unclear",
+  "codex_keep": null,
+  "codex_confidence": 0.9,
+  "codex_why": "Ezra 2:16 and Nehemiah 7:21 identify descendants of Ater of Hezekiah, without identifying Ater himself as a covenant sealer. Nehemiah 10:17 lists Ater and Hizkijah separately; its Hebrew does not say “Ater of Hezekiah.” The sealer could represent that ancestral family or be another namesake, so the text establishes neither personal identity nor distinctness.",
+  "codex_verses_of_other": [],
+  "judge": "unclear",
+  "judge_keep": null,
+  "judge_why": "A is the forefather of the 'children of Ater of Hezekiah' (EZR 2:16, NEH 7:21); B is the Ater who sealed the covenant about 90 years later (NEH 10:17). 'Ater, Hizkijah' may be the family signing under its name or a man of that name, and the text does not decide."
+ },
+ {
+  "pair": [
+   "azarel",
+   "azarel-5"
+  ],
+  "name": "Azarel",
+  "codex": "two",
+  "codex_keep": null,
+  "codex_confidence": 0.85,
+  "codex_why": "1CH 12:6 identifies A in the roster of Korahites who joined David’s fighting force. 1CH 25:18 identifies B as the head of the eleventh musical course in Heman’s family, a separate roster identity. Shared Korahite ancestry does not establish that these men were identical; 1CH 25:18 should belong to B alone.",
+  "codex_verses_of_other": [
+   "1CH 25:18"
+  ],
+  "judge": "one",
+  "judge_keep": "azarel",
+  "judge_why": "B is Azareel of the eleventh course (1CH 25:18), whom A's line and notes already name; the son of Heman (1CH 25:4) and A's 'Korahite' agree, since Heman descends from Korah. A's tie to the Ziklag Korhite of 1CH 12:6 is a separate, unproven link."
+ },
+ {
+  "pair": [
+   "baanah-3",
+   "baanah-4"
+  ],
+  "name": "Baanah",
+  "codex": "one",
+  "codex_keep": "baanah-3",
+  "codex_confidence": 0.97,
+  "codex_why": "B contains only the covenant sealer named in NEH 10:27, whom A already explicitly includes in its notes and verses. A also supplies EZR 2:2 and NEH 7:7 and fuller family associations; B adds no distinct father, generation, or other identifying detail.",
+  "codex_verses_of_other": [],
+  "judge": "two",
+  "judge_keep": null,
+  "judge_why": "A is a leader who came up with Zerubbabel about 538 BC (EZR 2:2, NEH 7:7); B sealed Nehemiah's covenant about 445 BC (NEH 10:27). The two are about 90 years apart, so they are almost certainly different men, and A's note tying it to NEH 10:27 should go."
+ },
+ {
+  "pair": [
+   "elam-4",
+   "elam-8"
+  ],
+  "name": "Elam",
+  "codex": "one",
+  "codex_keep": "elam-4",
+  "codex_confidence": 0.84,
+  "codex_why": "B contains only the Elam entry in NEH 10:14, which A already explicitly records, and supplies no distinguishing family ties or other occurrences. A preserves the fuller family associations in EZR 2:7, 8:7, 10:2, 10:26 and NEH 7:12. NEH 12:42 supplies no parentage connecting or distinguishing its Elam, so that occurrence remains uncertain, but it does not establish B as a separate person.",
+  "codex_verses_of_other": [],
+  "judge": "unclear",
+  "judge_keep": null,
+  "judge_why": "A is the forefather of the returning family (EZR 2:7); B is the Elam among the chiefs who sealed in NEH 10:14, about 90 years later. That list may give family names (Parosh, Pahath-moab, Elam) or living men, and the text does not decide."
+ },
+ {
+  "pair": [
+   "eliezer-10",
+   "eliezer-7"
+  ],
+  "name": "Eliezer",
+  "codex": "two",
+  "codex_keep": null,
+  "codex_confidence": 0.94,
+  "codex_why": "EZR 10:18 names Eliezer among the priests of Jeshua's family, while EZR 10:23 separately names Eliezer among the Levites in the same list, distinguishing two men. B conflates them: its EZR 10:18 citation and Jeshua family tie belong to A's priest. EZR 8:16 identifies Eliezer only as a chief man and does not establish which man he was.",
+  "codex_verses_of_other": [
+   "EZR 10:18"
+  ],
+  "judge": "one",
+  "judge_keep": "eliezer-7",
+  "judge_why": "Both are the priest Eliezer of the sons of Jeshua son of Jozadak who had a foreign wife (EZR 10:18). B's EZR 10:23 Eliezer is listed separately among the Levites and is another man, so that verse should come off it."
+ },
+ {
+  "pair": [
+   "harim-2",
+   "harim-7"
+  ],
+  "name": "Harim",
+  "codex": "one",
+  "codex_keep": "harim-2",
+  "codex_confidence": 0.91,
+  "codex_why": "B is a thinner copy of the lay sealer in NEH 10:27, an occurrence already explicitly included in A's verses and notes. A additionally preserves the Harim family in EZR 2:32 and NEH 7:35 and the family connections in EZR 10:31 and NEH 3:11. B supplies no separate father, generation, or office that would distinguish another man.",
+  "codex_verses_of_other": [],
+  "judge": "unclear",
+  "judge_keep": null,
+  "judge_why": "A is the forefather of the lay family Harim (EZR 2:32, NEH 7:35, EZR 10:31); B is the Harim among the chiefs who sealed in NEH 10:27, about 90 years after the return. Whether that is the family's name or a living man, the text does not decide."
+ },
+ {
+  "pair": [
+   "harim-3",
+   "harim-6"
+  ],
+  "name": "Harim",
+  "codex": "two",
+  "codex_keep": null,
+  "codex_confidence": 0.91,
+  "codex_why": "1CH 24:8 places Harim in the priestly divisions established in David’s time, whereas NEH 10:5 names a priest sealing Nehemiah’s covenant centuries later. EZR 2:39, EZR 10:21, NEH 7:42, and NEH 12:15 concern Harim’s descendants or priestly house; they do not establish that its earlier namesake was the later sealer. A’s NEH 10:5 attribution belongs to B.",
+  "codex_verses_of_other": [
+   "NEH 10:5"
+  ],
+  "judge": "unclear",
+  "judge_keep": null,
+  "judge_why": "A is the priestly house of Harim, from David's courses (1CH 24:8) through the return (EZR 2:39); B is the priest Harim who sealed in NEH 10:5. The priestly sealers mirror the house names of NEH 12:12-21, but whether NEH 10:5 names a house or a man, the text does not decide."
+ },
+ {
+  "pair": [
+   "jedaiah-2",
+   "jedaiah-7"
+  ],
+  "name": "Jedaiah",
+  "codex": "unclear",
+  "codex_keep": null,
+  "codex_confidence": 0.93,
+  "codex_why": "EZR 2:36 and NEH 7:39 give the identical priestly family entry in both records, supporting duplication there. However, NEH 12:6 and NEH 12:7 list two distinct Jedaiahs, both currently assigned to A, so A already combines different people. The supplied text does not identify which Jedaiah corresponds to B’s family head, and “of the house of Jeshua” does not establish descent from the ninth-course priest.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "jedaiah-2",
+  "judge_why": "B is the priestly family 'Jedaiah, of the house of Jeshua' (EZR 2:36, NEH 7:39), which A's line cites. A also merges the two separate Jedaiahs of NEH 12:6 and 12:7, which should be split."
+ },
+ {
+  "pair": [
+   "jehiel-10",
+   "jehiel-4"
+  ],
+  "name": "Jehiel",
+  "codex": "one",
+  "codex_keep": "jehiel-4",
+  "codex_confidence": 0.96,
+  "codex_why": "Both records identify Jehiel as the overseer under Cononiah in Hezekiah’s reign in 2CH 31:13. B also preserves his descent from Heman in 2CH 29:14, which fits the same reform period; A supplies no distinguishing ancestry or role and is a thinner copy of B.",
+  "codex_verses_of_other": [],
+  "judge": "unclear",
+  "judge_keep": null,
+  "judge_why": "A is only the overseer under Cononiah (2CH 31:13); B is at heart the Hemanite Jehiel who cleansed the temple (2CH 29:14), with 31:13 added. It is the same reign, and a Shimei stands beside him in both verses, but the text does not say they are one man."
+ },
+ {
+  "pair": [
+   "malluch-2",
+   "malluch-5"
+  ],
+  "name": "Malluch",
+  "codex": "one",
+  "codex_keep": "malluch-2",
+  "codex_confidence": 0.94,
+  "codex_why": "Both records identify Malluch with the same covenant sealer in NEH 10:27, and B adds no distinct family ties or occurrence. A also preserves his descent from Bani and appearance in EZR 10:29, with no conflicting detail; B is therefore a thinner copy of A.",
+  "codex_verses_of_other": [],
+  "judge": "unclear",
+  "judge_keep": null,
+  "judge_why": "A is Malluch of the sons of Bani with a foreign wife (EZR 10:29); B is the Malluch who sealed in NEH 10:27. EZR 10:32 has another Malluch, of the sons of Harim, and NEH 10:27 reads 'Malluch, Harim', so the text does not decide which Malluch, if either, sealed."
+ },
+ {
+  "pair": [
+   "malluch-4",
+   "malluch-6"
+  ],
+  "name": "Malluch",
+  "codex": "two",
+  "codex_keep": null,
+  "codex_confidence": 0.9,
+  "codex_why": "NEH 12:2 places Malluch among the priests who returned with Zerubbabel and Jeshua (NEH 12:1), while NEH 10:4 names a covenant signer in Nehemiah’s much later generation. NEH 12:14 identifies Jonathan as head of the earlier Malluch/Melicu priestly house in Joiakim’s days; it does not identify the later signer with that house’s founder. A’s references to NEH 12:2 and NEH 12:14 therefore belong to B.",
+  "codex_verses_of_other": [
+   "NEH 12:2",
+   "NEH 12:14"
+  ],
+  "judge": "one",
+  "judge_keep": "malluch-4",
+  "judge_why": "B is the priest who went up with Zerubbabel and whose house Jonathan led (NEH 12:2, 12:14), both held by A with the same Jonathan tie. A's link to the sealer of NEH 10:4 is a separate, unproven link."
+ },
+ {
+  "pair": [
+   "nathan-3",
+   "nathan-9"
+  ],
+  "name": "Nathan",
+  "codex": "unclear",
+  "codex_keep": null,
+  "codex_confidence": 0.91,
+  "codex_why": "2SA 23:36 names Nathan of Zobah as Igal’s father, while 1CH 11:38 names Nathan as Joel’s brother. Their corresponding positions in parallel lists suggest a connection, and these family relationships could fit one Nathan, but neither verse establishes that identification or distinguishes two Nathans. The Judah affiliation stated for B is not established by 1CH 11:38.",
+  "codex_verses_of_other": [],
+  "judge": "one",
+  "judge_keep": "nathan-3",
+  "judge_why": "1CH 11:38 'Joel the brother of Nathan' holds the same place in the list of David's mighty men as 2SA 23:36 'Igal the son of Nathan of Zobah'. A holds both parallels; B's 'tribe of Judah' is unsupported."
+ },
+ {
+  "pair": [
+   "shemaiah-14",
+   "shemaiah-26"
+  ],
+  "name": "Shemaiah",
+  "codex": "unclear",
+  "codex_keep": null,
+  "codex_confidence": 0.93,
+  "codex_why": "NEH 12:35 identifies Shemaiah as Mattaniah’s son and Jonathan’s father, so both records claim the same genealogical occurrence. EZR 8:16 supplies no parentage connecting its Shemaiah with that ancestor, and A’s link to the Mattaniah of 2CH 29:13 is not established by either supplied verse. The shared occurrence exposes overlapping attribution but does not establish whether Ezra’s envoy and Zechariah’s grandfather were one man or two.",
+  "codex_verses_of_other": [],
+  "judge": "unclear",
+  "judge_keep": null,
+  "judge_why": "B is the trumpeter Zechariah's grandfather (NEH 12:35); A is at heart a chief man Ezra sent to Iddo (EZR 8:16), with NEH 12:35 attached. Nothing in either verse links the two, and A's father is wrongly the Hezekiah-era Mattaniah."
+ },
+ {
+  "pair": [
+   "shemaiah-19",
+   "shemaiah-24"
+  ],
+  "name": "Shemaiah",
+  "codex": "two",
+  "codex_keep": null,
+  "codex_confidence": 0.87,
+  "codex_why": "B is the priest of Zerubbabel's returning generation in NEH 12:6, whereas A is identified with the later covenant signatory in NEH 10:8. NEH 12:18 names Shemaiah's priestly house, represented by Jehonathan; this shared house association does not establish that the earlier ancestor and later signatory were one man. A also includes the musician Shemaiah among Maai's brethren in NEH 12:36, indicating additional conflation rather than reliable evidence for merging. NEH 12:6 and NEH 12:18 on A belong to B.",
+  "codex_verses_of_other": [
+   "NEH 12:6",
+   "NEH 12:18"
+  ],
+  "judge": "one",
+  "judge_keep": "shemaiah-19",
+  "judge_why": "B is the priest who went up with Zerubbabel and whose house Jehonathan led (NEH 12:6, 12:18), both held by A with the same tie. A's NEH 12:34, 12:36 (a Levite musician) and 12:42 are other Shemaiahs and should be split off."
+ },
+ {
+  "pair": [
+   "uriel",
+   "uriel-2"
+  ],
+  "name": "Uriel",
+  "codex": "two",
+  "codex_keep": null,
+  "codex_confidence": 0.94,
+  "codex_why": "The Uriel of 1CH 6:24, son of Tahath and father of Uzziah, belongs to the earlier Kohathite genealogy. The Uriel of 1CH 15:5 and 15:11 is the Kohathite chief serving under David, a later generation; A has combined these two men, while B represents the ancestor. The supplied text of 1CH 6:36 does not name Uriel.",
+  "codex_verses_of_other": [
+   "1CH 6:24"
+  ],
+  "judge": "one",
+  "judge_keep": "uriel",
+  "judge_why": "Both are Uriel son of Tahath and father of Uzziah (1CH 6:24), with identical ties. A adds 1CH 6:36 and the chief of Kohath (1CH 15:5, 15:11)."
+ },
+ {
+  "pair": [
+   "zadok-4",
+   "zadok-8"
+  ],
+  "name": "Zadok",
+  "codex": "one",
+  "codex_keep": "zadok-4",
+  "codex_confidence": 0.98,
+  "codex_why": "A already includes the covenant sealer named in NEH 10:21, which is B's sole verse and identifying description. A additionally identifies Zadok as the son of Baana who repaired the wall in NEH 3:4; B supplies no distinct father, generation, or role, so it is a thinner duplicate of A.",
+  "codex_verses_of_other": [],
+  "judge": "unclear",
+  "judge_keep": null,
+  "judge_why": "A is Zadok son of Baana, who repaired the wall (NEH 3:4); B is a Zadok among the lay chiefs who sealed (NEH 10:21) in the same years. NEH 3:29 has another Zadok, son of Immer, so the text does not say which one, if either, sealed."
+ }
+]

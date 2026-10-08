@@ -1,0 +1,105 @@
+{
+ "batch": "b060-1KI-16-2",
+ "answers": [
+  {
+   "key": "BHSA 1KI 16:2 #12",
+   "answer": "people",
+   "why": "God calls Israel his people, over whom he made Baasha ruler.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:2 #22",
+   "answer": "people",
+   "why": "Baasha made God's people Israel sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:8 #16",
+   "answer": "people",
+   "why": "Elah reigned over Israel from Tirzah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:13 #15",
+   "answer": "people",
+   "why": "Baasha and Elah caused Israel to sin through their idolatry.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:13 #21",
+   "answer": "people",
+   "why": "The LORD is called Israel's God as its rulers provoke him with their idols.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:16 #20",
+   "answer": "people",
+   "why": "All Israel collectively made Omri king in the camp.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:16 #26",
+   "answer": "people",
+   "why": "Israel is the nation over which Omri was made king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:17 #6",
+   "answer": "people",
+   "why": "All Israel accompanied Omri and besieged Tirzah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:19 #25",
+   "answer": "people",
+   "why": "Zimri followed Jeroboam's way in causing Israel to sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:21 #5",
+   "answer": "people",
+   "why": "The people Israel divided between supporters of Tibni and Omri.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:23 #14",
+   "answer": "people",
+   "why": "Omri reigned over Israel for twelve years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:26 #15",
+   "answer": "people",
+   "why": "Jeroboam's sin caused the nation Israel to sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:26 #21",
+   "answer": "people",
+   "why": "The LORD is Israel's God, provoked by the people's idols.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:29 #7",
+   "answer": "people",
+   "why": "Ahab began to reign over Israel during Asa's reign.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:29 #24",
+   "answer": "people",
+   "why": "Ahab ruled Israel from Samaria for twenty-two years.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1KI 16:33 #17",
+   "answer": "people",
+   "why": "Ahab's idolatry provoked the LORD, the God of the nation Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:36:56+00:00"
+}

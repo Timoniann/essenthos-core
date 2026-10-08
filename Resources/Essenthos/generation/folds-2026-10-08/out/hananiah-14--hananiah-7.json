@@ -1,0 +1,65 @@
+{
+ "pair": [
+  "hananiah-14",
+  "hananiah-7"
+ ],
+ "case": {
+  "name": "Hananiah",
+  "A": {
+   "name": "Hananiah",
+   "line": "Son of Shelemiah, post-exilic Israelite who repaired another piece of the wall",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of shelemiah-3 (Shelemiah, father of Hananiah (NEH 3:30))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 3:30"
+   ],
+   "kjv": {
+    "NEH 3:30": "After him repaired Hananiah the son of Shelemiah, and Hanun the sixth son of Zalaph, another piece. After him repaired Meshullam the son of Berechiah over against his chamber."
+   }
+  },
+  "B": {
+   "name": "Hananiah",
+   "line": "repaired the wall of Jerusalem (NEH 3:30),",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:23)",
+   "family": [
+    "son-of shelemiah-3 (Shelemiah, father of Hananiah (NEH 3:30))"
+   ],
+   "named_by": [
+    "shelemiah-3 (Shelemiah, father of Hananiah (NEH 3:30)) father-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "NEH 3:30",
+    "NEH 10:23"
+   ],
+   "kjv": {
+    "NEH 3:30": "After him repaired Hananiah the son of Shelemiah, and Hanun the sixth son of Zalaph, another piece. After him repaired Meshullam the son of Berechiah over against his chamber.",
+    "NEH 10:23": "Hoshea, Hananiah, Hashub,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 3:30": "אחרי הֶחֱזִ֜יק חֲנַנְיָ֣ה בֶן־שֶׁלֶמְיָ֗ה וְחָנ֧וּן בֶּן־צָלָ֛ף הַשִּׁשִּׁ֖י מִדָּ֣ה שֵׁנִ֑י ס אַחֲרָ֣יו הֶחֱזִ֗יק מְשֻׁלָּם֙ בֶּן־בֶּ֣רֶכְיָ֔ה נֶ֖גֶד נִשְׁכָּתֹֽו׃ ס ",
+   "KJV NEH 3:30": "After him repaired Hananiah the son of Shelemiah, and Hanun the sixth son of Zalaph, another piece. After him repaired Meshullam the son of Berechiah over against his chamber."
+  },
+  "first_reader_said": [
+   "NEH 3:30: Both records are Hananiah ben Shelemiah, who repaired the wall, with the same father link."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "Both records identify the same wall repairer, Hananiah son of Shelemiah, in NEH 3:30, with identical father links. B is fuller, retaining the reciprocal family tie and NEH 10:23; that verse supplies no patronymic proving the identification, but nothing in it distinguishes another person.",
+ "confidence": 0.98,
+ "verses_of_other": [],
+ "keep_slug": "hananiah-7",
+ "fold_slug": "hananiah-14",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:38:05+00:00"
+}

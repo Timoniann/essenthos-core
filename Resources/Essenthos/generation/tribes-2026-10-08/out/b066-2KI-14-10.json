@@ -1,0 +1,87 @@
+{
+ "batch": "b066-2KI-14-10",
+ "answers": [
+  {
+   "key": "BHSA 2KI 14:10 #22",
+   "answer": "people",
+   "why": "Judah is the kingdom that would fall along with its king Amaziah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 14:11 #22",
+   "answer": "people",
+   "why": "Bethshemesh belongs to Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 14:12 #3",
+   "answer": "people",
+   "why": "Judah's forces are defeated and flee to their tents.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 14:12 #6",
+   "answer": "people",
+   "why": "Israel is the opposing kingdom whose forces defeat Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 14:13 #26",
+   "answer": "people",
+   "why": "The gate of Ephraim names a geographical connection with Ephraim's tribal territory.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA 2KI 14:22 #8",
+   "answer": "people",
+   "why": "Azariah restores Elath to the kingdom of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 14:24 #19",
+   "answer": "people",
+   "why": "Jeroboam son of Nebat led the nation of Israel into sin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 14:25 #18",
+   "answer": "people",
+   "why": "The LORD is called Israel's God in an account of restoring the nation's borders.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 14:26 #6",
+   "answer": "people",
+   "why": "The LORD sees the bitter affliction of the Israelite population.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 14:26 #19",
+   "answer": "people",
+   "why": "Israel is the afflicted nation with no helper.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 14:27 #9",
+   "answer": "people",
+   "why": "The LORD preserves Israel's national existence and saves them through Jeroboam.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2KI 14:28 #22",
+   "answer": "people",
+   "why": "Judah denotes the kingdom associated with the former possession of Damascus and Hamath.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA 2KI 14:28 #24",
+   "answer": "people",
+   "why": "Israel is the kingdom for which Jeroboam recovers Damascus and Hamath.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:37:38+00:00"
+}

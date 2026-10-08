@@ -386,6 +386,7 @@ internal sealed class DatasetLoader(
             new("title-readings", ReadWhoseTheTitleIsWhereItStands),
             new("passage-readings", cancellationToken => NameWhomTheReadingsOfThePassagesFind(resources, cancellationToken)),
             new("verse-readings", KeepTheVersesReadForTheRecordsTheySpeakOf),
+            new("eponym-readings", TellTheManFromThePeopleATribesNameStandsFor),
             new("misplaced-annotations", TakeTheMisplacedNamesOffTheirRecords),
             new("own-references", CiteTheVersesOurOwnWordsName),
             new("misfiled-verses", cancellationToken => GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, cancellationToken)),
@@ -2188,6 +2189,21 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<VerseReadingLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// <em>The sons of Israel</em> as the people on <em>sons</em> and Jacob on <em>Israel</em>, and a
+    /// tribe's name standing alone as whichever its sentence was read as, on the owner's ruling of
+    /// 2026-10-08. After every pass that names a word, so nothing writes the other answer back beside
+    /// it, and before the verses are read off the words.
+    /// </summary>
+    private async Task TellTheManFromThePeopleATribesNameStandsFor(CancellationToken cancellationToken)
+    {
+        status.Starting("the man and the people a tribe's name stands for");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<EponymReadingLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

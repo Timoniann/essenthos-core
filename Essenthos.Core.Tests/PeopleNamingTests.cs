@@ -134,7 +134,7 @@ public sealed class PeopleFileTests
         File.Tribes.Select(t => t.Name).Should().OnlyHaveUniqueItems();
         File.Tribes.Should().OnlyContain(t => t.Why.Length > 0);
         File.Tribes.Should().OnlyContain(t => t.Origin.Length > 0);
-        File.Tribes.Should().OnlyContain(t => t.CollectiveNumber.StartsWith('H'));
+        File.Tribes.Should().OnlyContain(t => t.CollectiveNumber == null || t.CollectiveNumber.StartsWith('H'));
     }
 
     /// <summary>
@@ -185,7 +185,7 @@ public sealed class PeopleFileTests
     [Fact]
     public void NoNumberNamesTwoPeoples()
     {
-        File.Tribes.Select(t => t.CollectiveNumber).Should().OnlyHaveUniqueItems();
+        File.Tribes.Where(t => t.CollectiveNumber != null).Select(t => t.CollectiveNumber).Should().OnlyHaveUniqueItems();
         File.Tribes.SelectMany(t => t.GentilicNumbers ?? []).Should().OnlyHaveUniqueItems();
     }
 

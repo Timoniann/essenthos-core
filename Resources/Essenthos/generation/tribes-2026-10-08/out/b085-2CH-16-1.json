@@ -1,0 +1,93 @@
+{
+ "batch": "b085-2CH-16-1",
+ "answers": [
+  {
+   "key": "BHSA 2CH 16:1 #14",
+   "answer": "people",
+   "why": "Baasha attacks Judah, the kingdom ruled by Asa.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 16:6 #8",
+   "answer": "people",
+   "why": "Asa mobilizes all Judah, and they carry away Ramah's stones and timber.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 16:11 #17",
+   "answer": "people",
+   "why": "Judah names a kingdom whose kings' chronicle records Asa's acts.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 16:11 #19",
+   "answer": "people",
+   "why": "Israel names the kingdom paired with Judah in the kings' chronicle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 17:1 #9",
+   "answer": "people",
+   "why": "Jehoshaphat strengthens himself against the kingdom of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 17:4 #14",
+   "answer": "people",
+   "why": "Israel's doings are the nation's practices that Jehoshaphat avoids.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 17:5 #12",
+   "answer": "people",
+   "why": "All Judah brings presents to its king Jehoshaphat.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 17:6 #18",
+   "answer": "people",
+   "why": "Jehoshaphat removes high places and Asherim from Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 17:9 #4",
+   "answer": "people",
+   "why": "The teachers travel through Judah's cities and teach the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 17:10 #12",
+   "answer": "people",
+   "why": "Neighboring kingdoms surround Judah and refrain from war against Jehoshaphat.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 17:12 #13",
+   "answer": "people",
+   "why": "Jehoshaphat builds fortresses and store cities in Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 17:14 #8",
+   "answer": "people",
+   "why": "Judah identifies the tribal contingent whose captains and soldiers are counted.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 17:17 #3",
+   "answer": "people",
+   "why": "Benjamin supplies Eliada's contingent of men armed with bows and shields.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 17:19 #20",
+   "answer": "people",
+   "why": "The king stations troops in fortified cities throughout Judah's territory.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:39:59+00:00"
+}

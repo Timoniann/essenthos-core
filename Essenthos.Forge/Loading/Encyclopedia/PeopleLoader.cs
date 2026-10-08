@@ -810,8 +810,8 @@ internal sealed class PeopleLoader(
         CancellationToken cancellationToken)
     {
         var collectives = file.Tribes
-            .Where(t => peoples.ContainsKey(t.Slug))
-            .ToDictionary(t => t.CollectiveNumber, t => peoples[t.Slug].Id, StringComparer.Ordinal);
+            .Where(t => peoples.ContainsKey(t.Slug) && t.CollectiveNumber is not null)
+            .ToDictionary(t => t.CollectiveNumber!, t => peoples[t.Slug].Id, StringComparer.Ordinal);
 
         if (collectives.Count == 0)
         {

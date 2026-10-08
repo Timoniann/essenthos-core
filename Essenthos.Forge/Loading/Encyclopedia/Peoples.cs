@@ -21,7 +21,8 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// The Strong number of the ancestor's own name — the word that does duty for the people. It is
 /// never annotated wholesale: 800 words carry H3063 and BHSA marks nearly all of them
 /// <c>pers,gens,topo</c> at once, which decides nothing. It is here so that an occurrence somebody
-/// has individually read as the collective has a record to point at.
+/// has individually read as the collective has a record to point at. Null for a tribe the text names
+/// only as somebody's sons, which no word of its own stands for.
 /// </param>
 /// <param name="GentilicNumbers">
 /// The Strong numbers that are this people's gentilic — <em>Reubenite</em> beside <em>Reuben</em>.
@@ -33,7 +34,7 @@ internal sealed record PeopleRecord(
     string Name,
     string? Distinguisher,
     string Origin,
-    string CollectiveNumber,
+    string? CollectiveNumber,
     IReadOnlyList<string>? GentilicNumbers,
     string Why,
     string? Notes);

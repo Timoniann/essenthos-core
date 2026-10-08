@@ -1,0 +1,81 @@
+{
+ "batch": "b009-EXO-2-1",
+ "answers": [
+  {
+   "key": "BHSA EXO 2:1 #6",
+   "answer": "people",
+   "why": "The house of Levi identifies the man's tribal affiliation.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA EXO 2:1 #11",
+   "answer": "man",
+   "why": "Levi is named as the father of the woman taken as wife.",
+   "confidence": 0.86
+  },
+  {
+   "key": "BHSA EXO 3:16 #6",
+   "answer": "people",
+   "why": "Israel has elders who represent the people afflicted in Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 3:18 #10",
+   "answer": "people",
+   "why": "The elders of Israel accompany Moses to request freedom for the Hebrews.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 4:22 #10",
+   "answer": "people",
+   "why": "God's firstborn Israel is the people Pharaoh must release.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 5:1 #15",
+   "answer": "people",
+   "why": "The God of Israel commands Pharaoh to release his people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 5:2 #13",
+   "answer": "people",
+   "why": "Pharaoh questions the command to let the Israelite people go.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 5:2 #21",
+   "answer": "people",
+   "why": "Pharaoh refuses to release the Israelite people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 6:14 #8",
+   "answer": "man",
+   "why": "Israel is the father whose firstborn son is Reuben.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EXO 6:14 #17",
+   "answer": "people",
+   "why": "The families of Reuben are the clans constituting the Reubenite tribe.",
+   "confidence": 0.95
+  },
+  {
+   "key": "BHSA EXO 6:15 #20",
+   "answer": "people",
+   "why": "The families of Simeon are the clans constituting the Simeonite tribe.",
+   "confidence": 0.95
+  },
+  {
+   "key": "BHSA EXO 6:16 #16",
+   "answer": "man",
+   "why": "The verse gives Levi's personal lifespan as 137 years.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:30:12+00:00"
+}

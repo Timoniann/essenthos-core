@@ -1,0 +1,81 @@
+{
+ "batch": "b041-1SA-14-12",
+ "answers": [
+  {
+   "key": "BHSA 1SA 14:12 #33",
+   "answer": "people",
+   "why": "The LORD delivers the Philistine garrison into the hands of Israel's fighters.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:16 #9",
+   "answer": "people",
+   "why": "Benjamin identifies the tribal territory containing Gibeah, where Saul's watchmen stand.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:21 #24",
+   "answer": "people",
+   "why": "The Hebrews join the Israelites fighting with Saul and Jonathan.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:23 #10",
+   "answer": "people",
+   "why": "The LORD saves Israel in the battle against the Philistines that day.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:24 #3",
+   "answer": "people",
+   "why": "Israel's men are distressed because Saul has forbidden the people to eat.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:37 #14",
+   "answer": "people",
+   "why": "Saul asks whether God will deliver the Philistines into his nation's hands.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:39 #7",
+   "answer": "people",
+   "why": "Saul invokes the LORD who saves the people involved in the current battle.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:40 #5",
+   "answer": "people",
+   "why": "Saul tells all Israel to stand opposite himself and Jonathan, and the people respond.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:41 #7",
+   "answer": "people",
+   "why": "Saul addresses the nation's God while lots distinguish him and Jonathan from the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:45 #19",
+   "answer": "people",
+   "why": "The people defend Jonathan because he has brought great deliverance to Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:47 #7",
+   "answer": "people",
+   "why": "Saul takes royal authority over Israel and fights its surrounding enemies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 14:48 #11",
+   "answer": "people",
+   "why": "Saul defeats Amalek and delivers the nation from its plunderers.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:34:30+00:00"
+}

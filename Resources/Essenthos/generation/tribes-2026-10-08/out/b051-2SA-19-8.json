@@ -1,0 +1,93 @@
+{
+ "batch": "b051-2SA-19-8",
+ "answers": [
+  {
+   "key": "BHSA 2SA 19:9 #35",
+   "answer": "people",
+   "why": "Israel fled, each man to his own tent, describing the defeated people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 19:12 #34",
+   "answer": "people",
+   "why": "The speech of all Israel concerns bringing David back as king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 19:23 #22",
+   "answer": "people",
+   "why": "David asks whether anyone should be executed within the nation of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 19:23 #33",
+   "answer": "people",
+   "why": "David declares that he is king over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 19:41 #23",
+   "answer": "people",
+   "why": "Half the people of Israel accompany the king alongside the people of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 19:42 #5",
+   "answer": "people",
+   "why": "The men of Israel come to David and complain about the men of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 19:43 #8",
+   "answer": "people",
+   "why": "The men of Judah answer the men of Israel about their relationship to David.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 19:44 #4",
+   "answer": "people",
+   "why": "The men of Israel claim ten shares in the king while disputing with Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 19:44 #43",
+   "answer": "people",
+   "why": "The verse compares the words of the men of Israel with those of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 20:1 #35",
+   "answer": "people",
+   "why": "Sheba addresses Israel collectively and orders every man to his tent.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 20:2 #5",
+   "answer": "people",
+   "why": "The men of Israel abandon David and follow Sheba.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 20:19 #4",
+   "answer": "people",
+   "why": "The woman identifies herself among the peaceable and faithful people of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 20:19 #13",
+   "answer": "people",
+   "why": "The threatened city is described as a mother city within Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2SA 20:23 #7",
+   "answer": "people",
+   "why": "Joab commands the entire army of Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:35:50+00:00"
+}

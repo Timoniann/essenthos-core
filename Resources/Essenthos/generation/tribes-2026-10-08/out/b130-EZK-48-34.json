@@ -1,0 +1,87 @@
+{
+ "batch": "b130-EZK-48-34",
+ "answers": [
+  {
+   "key": "BHSA EZK 48:34 #11",
+   "answer": "people",
+   "why": "Gad names a tribal gate in the restored city.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA EZK 48:34 #14",
+   "answer": "people",
+   "why": "Asher names a tribal gate in the restored city.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA EZK 48:34 #17",
+   "answer": "people",
+   "why": "Naphtali names a tribal gate in the restored city.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA DAN 9:7 #17",
+   "answer": "people",
+   "why": "Judah denotes the community whose men share in the confessed shame.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA DAN 9:7 #25",
+   "answer": "people",
+   "why": "All Israel includes people scattered through the countries where God drove them.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA DAN 9:11 #3",
+   "answer": "people",
+   "why": "All Israel transgressed God's law and suffered the collective curse.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA DAN 9:20 #13",
+   "answer": "people",
+   "why": "Daniel explicitly calls Israel 'my people' while confessing their sin.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA HOS 1:4 #23",
+   "answer": "people",
+   "why": "God announces the end of the kingdom of the house of Israel.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA HOS 1:5 #12",
+   "answer": "people",
+   "why": "Israel's bow represents the military power of the kingdom threatened in the preceding verse.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA HOS 4:15 #4",
+   "answer": "people",
+   "why": "Israel is addressed collectively for religious unfaithfulness and forbidden visits to cult sites.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA HOS 4:15 #7",
+   "answer": "people",
+   "why": "Judah is warned against sharing Israel's religious offenses.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA HOS 4:16 #6",
+   "answer": "people",
+   "why": "Israel's collective stubbornness is pictured as a heifer, followed by God feeding 'them'.",
+   "confidence": 1.0
+  },
+  {
+   "key": "BHSA HOS 4:17 #3",
+   "answer": "people",
+   "why": "Ephraim denotes the idolatrous community whose rulers and misconduct appear in the following verse.",
+   "confidence": 1.0
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:21:37+00:00"
+}

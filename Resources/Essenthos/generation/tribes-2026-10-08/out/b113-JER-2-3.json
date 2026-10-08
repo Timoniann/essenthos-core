@@ -1,0 +1,99 @@
+{
+ "batch": "b113-JER-2-3",
+ "answers": [
+  {
+   "key": "BHSA JER 2:3 #2",
+   "answer": "people",
+   "why": "Israel is the holy people who followed the LORD in the wilderness and whose devourers face judgment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 2:4 #10",
+   "answer": "people",
+   "why": "The address includes all the families of the house of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 2:14 #3",
+   "answer": "people",
+   "why": "Israel is the plundered people whose land and cities are devastated in the following verse.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 2:26 #9",
+   "answer": "people",
+   "why": "The house of Israel includes their kings, princes, priests, and prophets.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 2:28 #18",
+   "answer": "people",
+   "why": "Judah is addressed as having cities and numerous false gods.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 2:31 #11",
+   "answer": "people",
+   "why": "Israel is identified with the LORD's people who say they will no longer come to him.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 3:6 #15",
+   "answer": "people",
+   "why": "Israel is personified as an unfaithful woman worshipping on hills, with Judah as her sister.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 3:7 #17",
+   "answer": "people",
+   "why": "Judah is personified as the treacherous sister who witnesses Israel's unfaithfulness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 3:8 #10",
+   "answer": "people",
+   "why": "Israel is personified as an adulterous wife whom the LORD sends away.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 3:8 #22",
+   "answer": "people",
+   "why": "Judah is Israel's personified sister who also commits religious adultery.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 3:10 #11",
+   "answer": "people",
+   "why": "Judah is the treacherous sister whose return to the LORD is insincere.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 3:11 #8",
+   "answer": "people",
+   "why": "Israel's national unfaithfulness is compared with that of treacherous Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 3:11 #11",
+   "answer": "people",
+   "why": "Judah is the treacherous nation compared with backsliding Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 3:12 #14",
+   "answer": "people",
+   "why": "The proclamation toward the north calls backsliding Israel to return and addresses its members in the plural.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 3:23 #14",
+   "answer": "people",
+   "why": "The collective speakers confess that Israel's salvation is in the LORD their God.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:19:30+00:00"
+}

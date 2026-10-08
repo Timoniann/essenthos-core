@@ -1,0 +1,1435 @@
+[
+ {
+  "key": "jarib--jarib-2",
+  "A_slug": "jarib",
+  "B_slug": "jarib-2",
+  "name": "Jarib",
+  "A": {
+   "name": "Jarib",
+   "line": "Priest Ezra sent to Iddo (EZR 8:16), married a foreign wife (EZR 10:18)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Aaronic priest (EZR 10:18)",
+   "family": [
+    "descendant-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "EZR 8:16",
+    "EZR 10:18"
+   ],
+   "kjv": {
+    "EZR 8:16": "Then sent I for Eliezer, for Ariel, for Shemaiah, and for Elnathan, and for Jarib, and for Elnathan, and for Nathan, and for Zechariah, and for Meshullam, chief men; also for Joiarib, and for Elnathan, men of understanding.",
+    "EZR 10:18": "And among the sons of the priests there were found that had taken strange wives: namely, of the sons of Jeshua the son of Jozadak, and his brethren; Maaseiah, and Eliezer, and Jarib, and Gedaliah."
+   }
+  },
+  "B": {
+   "name": "Jarib",
+   "line": "Priest, descendant of Jeshua son of Jozadak, put away his foreign wife.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "EZR 10:18"
+   ],
+   "kjv": {
+    "EZR 10:18": "And among the sons of the priests there were found that had taken strange wives: namely, of the sons of Jeshua the son of Jozadak, and his brethren; Maaseiah, and Eliezer, and Jarib, and Gedaliah."
+   }
+  },
+  "disputed_verses": {
+   "BHSA EZR 10:18": "וַיִּמָּצֵא֙ מִבְּנֵ֣י הַכֹּהֲנִ֔ים אֲשֶׁ֥ר הֹשִׁ֖יבוּ נָשִׁ֣ים נָכְרִיֹּ֑ות מִבְּנֵי֙ יֵשׁ֤וּעַ בֶּן־יֹֽוצָדָק֙ וְאֶחָ֔יו מַֽעֲשֵׂיָה֙ וֶֽאֱלִיעֶ֔זֶר וְיָרִ֖יב וּגְדַלְיָֽה׃ ",
+   "KJV EZR 10:18": "And among the sons of the priests there were found that had taken strange wives: namely, of the sons of Jeshua the son of Jozadak, and his brethren; Maaseiah, and Eliezer, and Jarib, and Gedaliah."
+  }
+ },
+ {
+  "key": "jedaiah-2--jedaiah-7",
+  "A_slug": "jedaiah-2",
+  "B_slug": "jedaiah-7",
+  "name": "Jedaiah",
+  "A": {
+   "name": "Jedaiah",
+   "line": "priest (1CH 9:10, NEH 7:39, NEH 12:6), of the house of Jeshua (EZR 2:36)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "ancestor-of uzzi-6 (Uzzi, son of Jedaiah (NEH 12:19))",
+    "priest-of yhvh (YHVH, the God of Israel)",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "named_by": [
+    "uzzi-6 (Uzzi, son of Jedaiah (NEH 12:19)) descendant-of"
+   ],
+   "verse_count": 6,
+   "verses": [
+    "1CH 9:10",
+    "EZR 2:36",
+    "NEH 7:39",
+    "NEH 12:6",
+    "NEH 12:7",
+    "NEH 12:19"
+   ],
+   "kjv": {
+    "1CH 9:10": "And of the priests; Jedaiah, and Jehoiarib, and Jachin,",
+    "EZR 2:36": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+    "NEH 7:39": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+    "NEH 12:6": "Shemaiah, and Joiarib, Jedaiah,",
+    "NEH 12:7": "Sallu, Amok, Hilkiah, Jedaiah. These were the chief of the priests and of their brethren in the days of Jeshua.",
+    "NEH 12:19": "And of Joiarib, Mattenai; of Jedaiah, Uzzi;"
+   }
+  },
+  "B": {
+   "name": "Jedaiah",
+   "line": "Priestly family head whose descendants returned with Zerubbabel, house of Jeshua",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of jeshua (Jeshua, ninth-chosen priest for the twenty-four courses (1CH 24:11))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "EZR 2:36",
+    "NEH 7:39"
+   ],
+   "kjv": {
+    "EZR 2:36": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+    "NEH 7:39": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three."
+   }
+  },
+  "disputed_verses": {
+   "BHSA EZR 2:36": "הַֽכֹּהֲנִ֑ים בְּנֵ֤י יְדַֽעְיָה֙ לְבֵ֣ית יֵשׁ֔וּעַ תְּשַׁ֥ע מֵאֹ֖ות שִׁבְעִ֥ים וּשְׁלֹשָֽׁה׃ ס ",
+   "KJV EZR 2:36": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three.",
+   "BHSA NEH 7:39": "הַֽכֹּהֲנִ֑ים בְּנֵ֤י יְדַֽעְיָה֙ לְבֵ֣ית יֵשׁ֔וּעַ תְּשַׁ֥ע מֵאֹ֖ות שִׁבְעִ֥ים וּשְׁלֹשָֽׁה׃ ס ",
+   "KJV NEH 7:39": "The priests: the children of Jedaiah, of the house of Jeshua, nine hundred seventy and three."
+  }
+ },
+ {
+  "key": "jehiel-10--jehiel-4",
+  "A_slug": "jehiel-10",
+  "B_slug": "jehiel-4",
+  "name": "Jehiel",
+  "A": {
+   "name": "Jehiel",
+   "line": "Levite overseer under Cononiah in Hezekiah's reform",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "servant-of conaniah (Conaniah, officer in charge of the consecrated things (2CH 31:12))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "2CH 31:13"
+   ],
+   "kjv": {
+    "2CH 31:13": "And Jehiel, and Azaziah, and Nahath, and Asahel, and Jerimoth, and Jozabad, and Eliel, and Ismachiah, and Mahath, and Benaiah, were overseers under the hand of Cononiah and Shimei his brother, at the commandment of Hezekiah the king, and Azariah the ruler of the house of God."
+   }
+  },
+  "B": {
+   "name": "Jehiel",
+   "line": "descendant of Heman (2CH 29:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "descendant-of heman-2 (Heman, the singer, son of Joel, decendant of Kohath (1CH 6:33), fat)",
+    "servant-of conaniah (Conaniah, officer in charge of the consecrated things (2CH 31:12))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "2CH 29:14",
+    "2CH 31:13"
+   ],
+   "kjv": {
+    "2CH 29:14": "And of the sons of Heman; Jehiel, and Shimei: and of the sons of Jeduthun; Shemaiah, and Uzziel.",
+    "2CH 31:13": "And Jehiel, and Azaziah, and Nahath, and Asahel, and Jerimoth, and Jozabad, and Eliel, and Ismachiah, and Mahath, and Benaiah, were overseers under the hand of Cononiah and Shimei his brother, at the commandment of Hezekiah the king, and Azariah the ruler of the house of God."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 2CH 31:13": "וִֽיחִיאֵ֡ל וַ֠עֲזַזְיָהוּ וְנַ֨חַת וַעֲשָׂהאֵ֜ל וִֽירִימֹ֤ות וְיֹוזָבָד֙ וֶאֱלִיאֵ֣ל וְיִסְמַכְיָ֔הוּ וּמַ֖חַת וּבְנָיָ֑הוּ פְּקִידִ֗ים מִיַּ֤ד כונניהו וְשִׁמְעִ֣י אָחִ֔יו בְּמִפְקַד֙ יְחִזְקִיָּ֣הוּ הַמֶּ֔לֶךְ וַעֲזַרְיָ֖הוּ נְגִ֥יד בֵּית־הָאֱלֹהִֽים׃ ",
+   "KJV 2CH 31:13": "And Jehiel, and Azaziah, and Nahath, and Asahel, and Jerimoth, and Jozabad, and Eliel, and Ismachiah, and Mahath, and Benaiah, were overseers under the hand of Cononiah and Shimei his brother, at the commandment of Hezekiah the king, and Azariah the ruler of the house of God."
+  }
+ },
+ {
+  "key": "jeiel-12--jeiel-7",
+  "A_slug": "jeiel-12",
+  "B_slug": "jeiel-7",
+  "name": "Jeiel",
+  "A": {
+   "name": "Jeiel",
+   "line": "Gershonite Levite of the sons of Elizaphan, listed with Shimri.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of elzaphan (Elzaphan, son of Uzziel (EXO 6:22))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "2CH 29:13"
+   ],
+   "kjv": {
+    "2CH 29:13": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:"
+   }
+  },
+  "B": {
+   "name": "Jeiel",
+   "line": "descendant of Elizaphan [Elzaphan] (2CH 29:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathites (from Uzziel, from Kohath, son of Levi)",
+   "family": [
+    "descendant-of elzaphan (Elzaphan, son of Uzziel (EXO 6:22))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "2CH 29:13"
+   ],
+   "kjv": {
+    "2CH 29:13": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 2CH 29:13": "וּמִן־בְּנֵי֙ אֱלִ֣יצָפָ֔ן שִׁמְרִ֖י ויעואל וּמִן־בְּנֵ֣י אָסָ֔ף זְכַרְיָ֖הוּ וּמַתַּנְיָֽהוּ׃ ס ",
+   "KJV 2CH 29:13": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:"
+  }
+ },
+ {
+  "key": "jeremiah-7--jeremiah-9",
+  "A_slug": "jeremiah-7",
+  "B_slug": "jeremiah-9",
+  "name": "Jeremiah",
+  "A": {
+   "name": "Jeremiah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:2)",
+   "family": [
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "companion-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "ancestor-of hananiah-9 (Hananiah, son of Jeremiah (NEH 12:12))",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "named_by": null,
+   "verse_count": 4,
+   "verses": [
+    "NEH 10:2",
+    "NEH 12:1",
+    "NEH 12:12",
+    "NEH 12:34"
+   ],
+   "kjv": {
+    "NEH 10:2": "Seraiah, Azariah, Jeremiah,",
+    "NEH 12:1": "Now these are the priests and the Levites that went up with Zerubbabel the son of Shealtiel, and Jeshua: Seraiah, Jeremiah, Ezra,",
+    "NEH 12:12": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;",
+    "NEH 12:34": "Judah, and Benjamin, and Shemaiah, and Jeremiah,"
+   }
+  },
+  "B": {
+   "name": "Jeremiah",
+   "line": "Priestly family head from Zerubbabel's return, continuing under Joiakim",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of zerubbabel-2 (Zerubbabel, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "companion-of jeshua-3 (Jeshua, returned to Judah after the Babylonian captivity (EZR 2:2, N)",
+    "ancestor-of hananiah-9 (Hananiah, son of Jeremiah (NEH 12:12))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "NEH 12:1",
+    "NEH 12:12"
+   ],
+   "kjv": {
+    "NEH 12:1": "Now these are the priests and the Levites that went up with Zerubbabel the son of Shealtiel, and Jeshua: Seraiah, Jeremiah, Ezra,",
+    "NEH 12:12": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:1": "וְאֵ֨לֶּה֙ הַכֹּהֲנִ֣ים וְהַלְוִיִּ֔ם אֲשֶׁ֥ר עָל֛וּ עִם־זְרֻבָּבֶ֥ל בֶּן־שְׁאַלְתִּיאֵ֖ל וְיֵשׁ֑וּעַ שְׂרָיָ֥ה יִרְמְיָ֖ה עֶזְרָֽא׃ ",
+   "KJV NEH 12:1": "Now these are the priests and the Levites that went up with Zerubbabel the son of Shealtiel, and Jeshua: Seraiah, Jeremiah, Ezra,",
+   "BHSA NEH 12:12": "וּבִימֵי֙ יֹֽויָקִ֔ים הָי֥וּ כֹהֲנִ֖ים רָאשֵׁ֣י הָאָבֹ֑ות לִשְׂרָיָ֣ה מְרָיָ֔ה לְיִרְמְיָ֖ה חֲנַנְיָֽה׃ ",
+   "KJV NEH 12:12": "And in the days of Joiakim were priests, the chief of the fathers: of Seraiah, Meraiah; of Jeremiah, Hananiah;"
+  }
+ },
+ {
+  "key": "joel-12--joel-6",
+  "A_slug": "joel-12",
+  "B_slug": "joel-6",
+  "name": "Joel",
+  "A": {
+   "name": "Joel",
+   "line": "A Levite summoned by David along with Uriel, Asaiah, Shemaiah and Eliel",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "of-people levites (Levites, the tribe descended from Levi, Jacob's third son, set apart )"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 15:11"
+   ],
+   "kjv": {
+    "1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,"
+   }
+  },
+  "B": {
+   "name": "Joel",
+   "line": "chief of the sons of Gershom (1CH 15:7), son of Ladan (1CH 23:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Gershonites (Gershomites), from Gershon, son of Levi",
+   "family": [
+    "brother-of jehiel-9 (Jehiel, Gershonite, son of Laadan, whose house (Jehieli) kept the te)",
+    "brother-of zetham (Zetham, son of Ladan [Libni] (1CH 23:8))",
+    "of-people jehielites (Jehielites, patronymic of H3171, as Strong's Dictionary derives it)",
+    "descendant-of gershon (Gershon, son of Levi (GEN 46:11))",
+    "descendant-of libni (Libni, son of Gershon (EXO 6:17))"
+   ],
+   "named_by": [
+    "jehiel-9 (Jehiel, Gershonite, son of Laadan, whose house (Jehieli) kept the te) brother-of",
+    "zetham (Zetham, son of Ladan [Libni] (1CH 23:8)) brother-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "1CH 15:7",
+    "1CH 15:11",
+    "1CH 23:8",
+    "1CH 26:22"
+   ],
+   "kjv": {
+    "1CH 15:7": "Of the sons of Gershom; Joel the chief and his brethren an hundred and thirty:",
+    "1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,",
+    "1CH 23:8": "The sons of Laadan; the chief was Jehiel, and Zetham, and Joel, three.",
+    "1CH 26:22": "The sons of Jehieli; Zetham, and Joel his brother, which were over the treasures of the house of the LORD."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 15:11": "וַיִּקְרָ֣א דָוִ֔יד לְצָדֹ֥וק וּלְאֶבְיָתָ֖ר הַכֹּֽהֲנִ֑ים וְלַלְוִיִּ֗ם לְאֽוּרִיאֵ֤ל עֲשָׂיָה֙ וְיֹואֵ֣ל שְׁמַֽעְיָ֔ה וֶאֱלִיאֵ֖ל וְעַמִּינָדָֽב׃ ",
+   "KJV 1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,"
+  }
+ },
+ {
+  "key": "joel-13--joel-6",
+  "A_slug": "joel-13",
+  "B_slug": "joel-6",
+  "name": "Joel",
+  "A": {
+   "name": "Joel",
+   "line": "Chief of the Gershonite Levites who brought up the ark under David",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of gershon (Gershon, son of Levi (GEN 46:11))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 15:7"
+   ],
+   "kjv": {
+    "1CH 15:7": "Of the sons of Gershom; Joel the chief and his brethren an hundred and thirty:"
+   }
+  },
+  "B": {
+   "name": "Joel",
+   "line": "chief of the sons of Gershom (1CH 15:7), son of Ladan (1CH 23:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Gershonites (Gershomites), from Gershon, son of Levi",
+   "family": [
+    "brother-of jehiel-9 (Jehiel, Gershonite, son of Laadan, whose house (Jehieli) kept the te)",
+    "brother-of zetham (Zetham, son of Ladan [Libni] (1CH 23:8))",
+    "of-people jehielites (Jehielites, patronymic of H3171, as Strong's Dictionary derives it)",
+    "descendant-of gershon (Gershon, son of Levi (GEN 46:11))",
+    "descendant-of libni (Libni, son of Gershon (EXO 6:17))"
+   ],
+   "named_by": [
+    "jehiel-9 (Jehiel, Gershonite, son of Laadan, whose house (Jehieli) kept the te) brother-of",
+    "zetham (Zetham, son of Ladan [Libni] (1CH 23:8)) brother-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "1CH 15:7",
+    "1CH 15:11",
+    "1CH 23:8",
+    "1CH 26:22"
+   ],
+   "kjv": {
+    "1CH 15:7": "Of the sons of Gershom; Joel the chief and his brethren an hundred and thirty:",
+    "1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,",
+    "1CH 23:8": "The sons of Laadan; the chief was Jehiel, and Zetham, and Joel, three.",
+    "1CH 26:22": "The sons of Jehieli; Zetham, and Joel his brother, which were over the treasures of the house of the LORD."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 15:7": "לִבְנֵ֖י גֵּרְשֹׁ֑ום יֹואֵ֣ל הַשָּׂ֔ר וְאֶחָ֖יו מֵאָ֥ה וּשְׁלֹשִֽׁים׃ ס ",
+   "KJV 1CH 15:7": "Of the sons of Gershom; Joel the chief and his brethren an hundred and thirty:"
+  }
+ },
+ {
+  "key": "malluch-2--malluch-5",
+  "A_slug": "malluch-2",
+  "B_slug": "malluch-5",
+  "name": "Malluch",
+  "A": {
+   "name": "Malluch",
+   "line": "descendant of Bani who had married a foreign wife (EZR 10:29)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:27)",
+   "family": [
+    "descendant-of bani-4 (Bani, his sons (descendants) returned to Judah after captivity (EZ)"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "EZR 10:29",
+    "NEH 10:27"
+   ],
+   "kjv": {
+    "EZR 10:29": "And of the sons of Bani; Meshullam, Malluch, and Adaiah, Jashub, and Sheal, and Ramoth.",
+    "NEH 10:27": "Malluch, Harim, Baanah."
+   }
+  },
+  "B": {
+   "name": "Malluch",
+   "line": "Lay leader of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 10:27"
+   ],
+   "kjv": {
+    "NEH 10:27": "Malluch, Harim, Baanah."
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 10:27": "מַלּ֥וּךְ חָרִ֖ם בַּעֲנָֽה׃ ",
+   "KJV NEH 10:27": "Malluch, Harim, Baanah."
+  }
+ },
+ {
+  "key": "malluch-4--malluch-6",
+  "A_slug": "malluch-4",
+  "B_slug": "malluch-6",
+  "name": "Malluch",
+  "A": {
+   "name": "Malluch",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:4)",
+   "family": [
+    "ancestor-of jonathan-11 (Jonathan, son of Malluch [Malluchi] (NEH 12:14))"
+   ],
+   "named_by": [
+    "jonathan-11 (Jonathan, son of Malluch [Malluchi] (NEH 12:14)) descendant-of"
+   ],
+   "verse_count": 3,
+   "verses": [
+    "NEH 10:4",
+    "NEH 12:2",
+    "NEH 12:14"
+   ],
+   "kjv": {
+    "NEH 10:4": "Hattush, Shebaniah, Malluch,",
+    "NEH 12:2": "Amariah, Malluch, Hattush,",
+    "NEH 12:14": "Of Melicu, Jonathan; of Shebaniah, Joseph;"
+   }
+  },
+  "B": {
+   "name": "Malluch",
+   "line": "Priest who returned with Zerubbabel; his house head later called Melicu/Jonathan",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "NEH 12:2",
+    "NEH 12:14"
+   ],
+   "kjv": {
+    "NEH 12:2": "Amariah, Malluch, Hattush,",
+    "NEH 12:14": "Of Melicu, Jonathan; of Shebaniah, Joseph;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:2": "אֲמַרְיָ֥ה מַלּ֖וּךְ חַטּֽוּשׁ׃ ",
+   "KJV NEH 12:2": "Amariah, Malluch, Hattush,"
+  }
+ },
+ {
+  "key": "mattaniah-12--mattaniah-4",
+  "A_slug": "mattaniah-12",
+  "B_slug": "mattaniah-4",
+  "name": "Mattaniah",
+  "A": {
+   "name": "Mattaniah",
+   "line": "Levite ancestor of Zechariah the trumpeter, named in Nehemiah's priestly genealogy.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of micaiah-4 (Micaiah, son of Zaccur (NEH 12:35))",
+    "father-of shemaiah-26 (Shemaiah, Grandfather of the priest Zechariah, in the trumpeters' gene)"
+   ],
+   "named_by": [
+    "shemaiah-26 (Shemaiah, Grandfather of the priest Zechariah, in the trumpeters' gene) son-of"
+   ],
+   "verse_count": 1,
+   "verses": [
+    "NEH 12:35"
+   ],
+   "kjv": {
+    "NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+   }
+  },
+  "B": {
+   "name": "Mattaniah",
+   "line": "descendant of Asaph (2CH 29:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Gershonites (Gershomites), from Gershon, son of Levi",
+   "family": [
+    "descendant-of asaph-2 (Asaph, son of Berechiah (1CH 6:39), chosen first by lot (1CH 25:9))",
+    "son-of micaiah-4 (Micaiah, son of Zaccur (NEH 12:35))",
+    "father-of shemaiah-14 (Shemaiah, Levite Ezra sent to Iddo (EZR 8:16))"
+   ],
+   "named_by": [
+    "micaiah-4 (Micaiah, son of Zaccur (NEH 12:35)) father-of",
+    "shemaiah-14 (Shemaiah, Levite Ezra sent to Iddo (EZR 8:16)) son-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "2CH 29:13",
+    "NEH 12:35"
+   ],
+   "kjv": {
+    "2CH 29:13": "And of the sons of Elizaphan; Shimri, and Jeiel: and of the sons of Asaph; Zechariah, and Mattaniah:",
+    "NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:35": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ ",
+   "KJV NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+  }
+ },
+ {
+  "key": "meshullam-13--meshullam-19",
+  "A_slug": "meshullam-13",
+  "B_slug": "meshullam-19",
+  "name": "Meshullam",
+  "A": {
+   "name": "Meshullam",
+   "line": "stood at Ezra's left hand as he read the law to the people (NEH 8:4)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "The priest who sealed the covenant (NEH 10:7), the chief of the people who sealed it (NEH 10:20) and the head of the house of Ginnethon (NEH 12:16) are held apart; the text does not say whether any of them is this man.",
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 8:4"
+   ],
+   "kjv": {
+    "NEH 8:4": "And Ezra the scribe stood upon a pulpit of wood, which they had made for the purpose; and beside him stood Mattithiah, and Shema, and Anaiah, and Urijah, and Hilkiah, and Maaseiah, on his right hand; and on his left hand, Pedaiah, and Mishael, and Malchiah, and Hashum, and Hashbadana, Zechariah, and Meshullam."
+   }
+  },
+  "B": {
+   "name": "Meshullam",
+   "line": "Stood at Ezra's left hand when he read the law to the people",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "companion-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 8:4"
+   ],
+   "kjv": {
+    "NEH 8:4": "And Ezra the scribe stood upon a pulpit of wood, which they had made for the purpose; and beside him stood Mattithiah, and Shema, and Anaiah, and Urijah, and Hilkiah, and Maaseiah, on his right hand; and on his left hand, Pedaiah, and Mishael, and Malchiah, and Hashum, and Hashbadana, Zechariah, and Meshullam."
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 8:4": "וַֽיַּעֲמֹ֞ד עֶזְרָ֣א הַסֹּפֵ֗ר עַֽל־מִגְדַּל־עֵץ֮ אֲשֶׁ֣ר עָשׂ֣וּ לַדָּבָר֒ וַיַּֽעֲמֹ֣ד אֶצְלֹ֡ו מַתִּתְיָ֡ה וְשֶׁ֡מַע וַ֠עֲנָיָה וְאוּרִיָּ֧ה וְחִלְקִיָּ֛ה וּמַעֲשֵׂיָ֖ה עַל־יְמִינֹ֑ו וּמִשְּׂמֹאלֹ֗ו פְּ֠דָיָה וּמִֽישָׁאֵ֧ל וּמַלְכִּיָּ֛ה וְחָשֻׁ֥ם וְחַשְׁבַּדָּ֖נָה זְכַרְיָ֥ה מְשֻׁלָּֽם׃ פ ",
+   "KJV NEH 8:4": "And Ezra the scribe stood upon a pulpit of wood, which they had made for the purpose; and beside him stood Mattithiah, and Shema, and Anaiah, and Urijah, and Hilkiah, and Maaseiah, on his right hand; and on his left hand, Pedaiah, and Mishael, and Malchiah, and Hashum, and Hashbadana, Zechariah, and Meshullam."
+  }
+ },
+ {
+  "key": "meshullam-16--meshullam-20",
+  "A_slug": "meshullam-16",
+  "B_slug": "meshullam-20",
+  "name": "Meshullam",
+  "A": {
+   "name": "Meshullam",
+   "line": "son of Ezra (NEH 12:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "As \"priests\" (NEH 12:12), descendants of Aaron",
+   "family": [
+    "descendant-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)"
+   ],
+   "named_by": [
+    "ezra-3 (Ezra, Priest who returned with Zerubbabel and Jeshua; ancestor of ) ancestor-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "NEH 12:13",
+    "NEH 12:33"
+   ],
+   "kjv": {
+    "NEH 12:13": "Of Ezra, Meshullam; of Amariah, Jehohanan;",
+    "NEH 12:33": "And Azariah, Ezra, and Meshullam,"
+   }
+  },
+  "B": {
+   "name": "Meshullam",
+   "line": "Priest, head of the family of Ezra in Joiakim's days, distinct from item 14's Ginnethon line",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of ezra-3 (Ezra, Priest who returned with Zerubbabel and Jeshua; ancestor of )"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 12:13"
+   ],
+   "kjv": {
+    "NEH 12:13": "Of Ezra, Meshullam; of Amariah, Jehohanan;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:13": "לְעֶזְרָ֣א מְשֻׁלָּ֔ם לַאֲמַרְיָ֖ה יְהֹוחָנָֽן׃ ",
+   "KJV NEH 12:13": "Of Ezra, Meshullam; of Amariah, Jehohanan;"
+  }
+ },
+ {
+  "key": "nathan-3--nathan-9",
+  "A_slug": "nathan-3",
+  "B_slug": "nathan-9",
+  "name": "Nathan",
+  "A": {
+   "name": "Nathan",
+   "line": "of Zobah (2SA 23:36)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of igal-2 (Igal, son of Nathan, thirty-first of \"the thirty\" of David's men ()"
+   ],
+   "named_by": [
+    "igal-2 (Igal, son of Nathan, thirty-first of \"the thirty\" of David's men () son-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "2SA 23:36",
+    "1CH 11:38"
+   ],
+   "kjv": {
+    "2SA 23:36": "Igal the son of Nathan of Zobah, Bani the Gadite,",
+    "1CH 11:38": "Joel the brother of Nathan, Mibhar the son of Haggeri,"
+   }
+  },
+  "B": {
+   "name": "Nathan",
+   "line": "Brother of Joel, of the tribe of Judah, numbered among David's mighty men.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 11:38"
+   ],
+   "kjv": {
+    "1CH 11:38": "Joel the brother of Nathan, Mibhar the son of Haggeri,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 11:38": "יֹואֵל֙ אֲחִ֣י נָתָ֔ן מִבְחָ֖ר בֶּן־הַגְרִֽי׃ ס ",
+   "KJV 1CH 11:38": "Joel the brother of Nathan, Mibhar the son of Haggeri,"
+  }
+ },
+ {
+  "key": "rehum-3--rehum-5",
+  "A_slug": "rehum-3",
+  "B_slug": "rehum-5",
+  "name": "Rehum",
+  "A": {
+   "name": "Rehum",
+   "line": "supervised the Levites' repairs to the wall (NEH 3:17)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:25)",
+   "family": [
+    "son-of bani-6 (Bani, father of Rehum (NEH 3:17))",
+    "of-tribe levites (Levites, the tribe descended from Levi, Jacob's third son, set apart )"
+   ],
+   "named_by": [
+    "bani-6 (Bani, father of Rehum (NEH 3:17)) father-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "NEH 3:17",
+    "NEH 10:25"
+   ],
+   "kjv": {
+    "NEH 3:17": "After him repaired the Levites, Rehum the son of Bani. Next unto him repaired Hashabiah, the ruler of the half part of Keilah, in his part.",
+    "NEH 10:25": "Rehum, Hashabnah, Maaseiah,"
+   }
+  },
+  "B": {
+   "name": "Rehum",
+   "line": "Chief of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 10:25"
+   ],
+   "kjv": {
+    "NEH 10:25": "Rehum, Hashabnah, Maaseiah,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 10:25": "רְח֥וּם חֲשַׁבְנָ֖ה מַעֲשֵׂיָֽה׃ ",
+   "KJV NEH 10:25": "Rehum, Hashabnah, Maaseiah,"
+  }
+ },
+ {
+  "key": "seraiah-11--seraiah-2",
+  "A_slug": "seraiah-11",
+  "B_slug": "seraiah-2",
+  "name": "Seraiah",
+  "A": {
+   "name": "Seraiah",
+   "line": "Son of Azariah, father of Ezra the priest and scribe.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+    "son-of azariah-7 (Azariah, son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and )"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "EZR 7:1"
+   ],
+   "kjv": {
+    "EZR 7:1": "Now after these things, in the reign of Artaxerxes king of Persia, Ezra the son of Seraiah, the son of Azariah, the son of Hilkiah,"
+   }
+  },
+  "B": {
+   "name": "Seraiah",
+   "line": "the chief priest (2KI 25:18) who was killed by the king of Babylon (2KI 25:21)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Aaronic priest in the line of Eleazar (full lineage in 1CH 6:14)",
+   "family": [
+    "high-priest-of jerusalem (Jerusalem)",
+    "son-of azariah-7 (Azariah, son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and )",
+    "father-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)",
+    "descendant-of aaron (Aaron, brother of Moses (EXO 4:14) and Levitical priest (EXO 28:1))"
+   ],
+   "named_by": [
+    "azariah-7 (Azariah, son of Hilkiah (1CH 6:13), father of Seriah (1CH 6:14), and ) father-of",
+    "jehozadak-2 (Jehozadak, father of Joshua the high priest (HAG 1:1)) son-of",
+    "ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6) son-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "2KI 25:18",
+    "1CH 6:14",
+    "EZR 7:1",
+    "JER 52:24"
+   ],
+   "kjv": {
+    "2KI 25:18": "And the captain of the guard took Seraiah the chief priest, and Zephaniah the second priest, and the three keepers of the door:",
+    "1CH 6:14": "And Azariah begat Seraiah, and Seraiah begat Jehozadak,",
+    "EZR 7:1": "Now after these things, in the reign of Artaxerxes king of Persia, Ezra the son of Seraiah, the son of Azariah, the son of Hilkiah,",
+    "JER 52:24": "And the captain of the guard took Seraiah the chief priest, and Zephaniah the second priest, and the three keepers of the door:"
+   }
+  },
+  "disputed_verses": {
+   "BHSA EZR 7:1": "וְאַחַר֙ הַדְּבָרִ֣ים הָאֵ֔לֶּה בְּמַלְכ֖וּת אַרְתַּחְשַׁ֣סְתְּא מֶֽלֶךְ־פָּרָ֑ס עֶזְרָא֙ בֶּן־שְׂרָיָ֔ה בֶּן־עֲזַרְיָ֖ה בֶּן־חִלְקִיָּֽה׃ ",
+   "KJV EZR 7:1": "Now after these things, in the reign of Artaxerxes king of Persia, Ezra the son of Seraiah, the son of Azariah, the son of Hilkiah,"
+  }
+ },
+ {
+  "key": "shaphan--shaphan-4",
+  "A_slug": "shaphan",
+  "B_slug": "shaphan-4",
+  "name": "Shaphan",
+  "A": {
+   "name": "Shaphan",
+   "line": "scribe of King Josiah (2KI 22:3, 2CH 34:15)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "He was sent to repair the house of the Lord (2CH 34:8)",
+   "family": [
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)",
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "father-of ahikam (Ahikam, son of Shaphan (2KI 22:12))",
+    "grandfather-of gedaliah (Gedaliah, son of Ahikam, appointed King of Judah by Nebuchadnezzar (2K)"
+   ],
+   "named_by": [
+    "elasah-2 (Elasah, son of Shaphan (JER 29:3)) son-of",
+    "gemariah-2 (Gemariah, son of Shaphan the scribe (JER 36:10)) son-of",
+    "ahikam (Ahikam, son of Shaphan (2KI 22:12)) son-of",
+    "azaliah (Azaliah, father of Shaphan (2KI 22:3)) father-of",
+    "meshullam (Meshullam, father of Azaliah (2KI 22:3)) grandfather-of"
+   ],
+   "verse_count": 23,
+   "verses": [
+    "2KI 22:3",
+    "2KI 22:8",
+    "2KI 22:9",
+    "2KI 22:10",
+    "2KI 22:12",
+    "2KI 22:14",
+    "2KI 25:22",
+    "2CH 34:8",
+    "2CH 34:15",
+    "2CH 34:16",
+    "2CH 34:18",
+    "2CH 34:20",
+    "JER 26:24",
+    "JER 29:3",
+    "JER 36:10",
+    "JER 36:11",
+    "JER 36:12",
+    "JER 39:14",
+    "JER 40:5",
+    "JER 40:9",
+    "JER 40:11",
+    "JER 41:2",
+    "JER 43:6"
+   ],
+   "kjv": {
+    "2KI 22:3": "And it came to pass in the eighteenth year of king Josiah, that the king sent Shaphan the son of Azaliah, the son of Meshullam, the scribe, to the house of the LORD, saying,",
+    "2KI 22:8": "And Hilkiah the high priest said unto Shaphan the scribe, I have found the book of the law in the house of the LORD. And Hilkiah gave the book to Shaphan, and he read it.",
+    "2KI 22:9": "And Shaphan the scribe came to the king, and brought the king word again, and said, Thy servants have gathered the money that was found in the house, and have delivered it into the hand of them that do the work, that have the oversight of the house of the LORD.",
+    "2KI 22:10": "And Shaphan the scribe shewed the king, saying, Hilkiah the priest hath delivered me a book. And Shaphan read it before the king.",
+    "2KI 22:12": "And the king commanded Hilkiah the priest, and Ahikam the son of Shaphan, and Achbor the son of Michaiah, and Shaphan the scribe, and Asahiah a servant of the king's, saying,",
+    "2KI 22:14": "So Hilkiah the priest, and Ahikam, and Achbor, and Shaphan, and Asahiah, went unto Huldah the prophetess, the wife of Shallum the son of Tikvah, the son of Harhas, keeper of the wardrobe; (now she dwelt in Jerusalem in the college;) and they communed with her.",
+    "2KI 25:22": "And as for the people that remained in the land of Judah, whom Nebuchadnezzar king of Babylon had left, even over them he made Gedaliah the son of Ahikam, the son of Shaphan, ruler.",
+    "2CH 34:8": "Now in the eighteenth year of his reign, when he had purged the land, and the house, he sent Shaphan the son of Azaliah, and Maaseiah the governor of the city, and Joah the son of Joahaz the recorder, to repair the house of the LORD his God.",
+    "2CH 34:15": "And Hilkiah answered and said to Shaphan the scribe, I have found the book of the law in the house of the LORD. And Hilkiah delivered the book to Shaphan.",
+    "2CH 34:16": "And Shaphan carried the book to the king, and brought the king word back again, saying, All that was committed to thy servants, they do it.",
+    "2CH 34:18": "Then Shaphan the scribe told the king, saying, Hilkiah the priest hath given me a book. And Shaphan read it before the king.",
+    "2CH 34:20": "And the king commanded Hilkiah, and Ahikam the son of Shaphan, and Abdon the son of Micah, and Shaphan the scribe, and Asaiah a servant of the king's, saying,",
+    "JER 26:24": "Nevertheless the hand of Ahikam the son of Shaphan was with Jeremiah, that they should not give him into the hand of the people to put him to death.",
+    "JER 29:3": "By the hand of Elasah the son of Shaphan, and Gemariah the son of Hilkiah, (whom Zedekiah king of Judah sent unto Babylon to Nebuchadnezzar king of Babylon) saying,",
+    "JER 36:10": "Then read Baruch in the book the words of Jeremiah in the house of the LORD, in the chamber of Gemariah the son of Shaphan the scribe, in the higher court, at the entry of the new gate of the LORD's house, in the ears of all the people.",
+    "JER 36:11": "When Michaiah the son of Gemariah, the son of Shaphan, had heard out of the book all the words of the LORD,",
+    "JER 36:12": "Then he went down into the king's house, into the scribe's chamber: and, lo, all the princes sat there, even Elishama the scribe, and Delaiah the son of Shemaiah, and Elnathan the son of Achbor, and Gemariah the son of Shaphan, and Zedekiah the son of Hananiah, and all the princes.",
+    "JER 39:14": "Even they sent, and took Jeremiah out of the court of the prison, and committed him unto Gedaliah the son of Ahikam the son of Shaphan, that he should carry him home: so he dwelt among the people.",
+    "JER 40:5": "Now while he was not yet gone back, he said, Go back also to Gedaliah the son of Ahikam the son of Shaphan, whom the king of Babylon hath made governor over the cities of Judah, and dwell with him among the people: or go wheresoever it seemeth convenient unto thee to go. So the captain of the guard gave him victuals and a reward, and let him go.",
+    "JER 40:9": "And Gedaliah the son of Ahikam the son of Shaphan sware unto them and to their men, saying, Fear not to serve the Chaldeans: dwell in the land, and serve the king of Babylon, and it shall be well with you.",
+    "JER 40:11": "Likewise when all the Jews that were in Moab, and among the Ammonites, and in Edom, and that were in all the countries, heard that the king of Babylon had left a remnant of Judah, and that he had set over them Gedaliah the son of Ahikam the son of Shaphan;",
+    "JER 41:2": "Then arose Ishmael the son of Nethaniah, and the ten men that were with him, and smote Gedaliah the son of Ahikam the son of Shaphan with the sword, and slew him, whom the king of Babylon had made governor over the land.",
+    "JER 43:6": "Even men, and women, and children, and the king's daughters, and every person that Nebuzaradan the captain of the guard had left with Gedaliah the son of Ahikam the son of Shaphan, and Jeremiah the prophet, and Baruch the son of Neriah."
+   }
+  },
+  "B": {
+   "name": "Shaphan",
+   "line": "Secretary/scribe of King Josiah who read the found law-book to him.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of azaliah (Azaliah, father of Shaphan (2KI 22:3))",
+    "grandson-of meshullam (Meshullam, father of Azaliah (2KI 22:3))",
+    "companion-of hilkiah-2 (Hilkiah, the high priest of King Josiah's reign (2KI 22:4, 2CH 34:9))",
+    "scribe-of josiah (Josiah, prophesied son of the house of David (1KI 13:2), King of Jud)"
+   ],
+   "named_by": null,
+   "verse_count": 9,
+   "verses": [
+    "2KI 22:3",
+    "2KI 22:8",
+    "2KI 22:9",
+    "2KI 22:10",
+    "2KI 22:14",
+    "2CH 34:8",
+    "2CH 34:15",
+    "2CH 34:16",
+    "2CH 34:18"
+   ],
+   "kjv": {
+    "2KI 22:3": "And it came to pass in the eighteenth year of king Josiah, that the king sent Shaphan the son of Azaliah, the son of Meshullam, the scribe, to the house of the LORD, saying,",
+    "2KI 22:8": "And Hilkiah the high priest said unto Shaphan the scribe, I have found the book of the law in the house of the LORD. And Hilkiah gave the book to Shaphan, and he read it.",
+    "2KI 22:9": "And Shaphan the scribe came to the king, and brought the king word again, and said, Thy servants have gathered the money that was found in the house, and have delivered it into the hand of them that do the work, that have the oversight of the house of the LORD.",
+    "2KI 22:10": "And Shaphan the scribe shewed the king, saying, Hilkiah the priest hath delivered me a book. And Shaphan read it before the king.",
+    "2KI 22:14": "So Hilkiah the priest, and Ahikam, and Achbor, and Shaphan, and Asahiah, went unto Huldah the prophetess, the wife of Shallum the son of Tikvah, the son of Harhas, keeper of the wardrobe; (now she dwelt in Jerusalem in the college;) and they communed with her.",
+    "2CH 34:8": "Now in the eighteenth year of his reign, when he had purged the land, and the house, he sent Shaphan the son of Azaliah, and Maaseiah the governor of the city, and Joah the son of Joahaz the recorder, to repair the house of the LORD his God.",
+    "2CH 34:15": "And Hilkiah answered and said to Shaphan the scribe, I have found the book of the law in the house of the LORD. And Hilkiah delivered the book to Shaphan.",
+    "2CH 34:16": "And Shaphan carried the book to the king, and brought the king word back again, saying, All that was committed to thy servants, they do it.",
+    "2CH 34:18": "Then Shaphan the scribe told the king, saying, Hilkiah the priest hath given me a book. And Shaphan read it before the king."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 2CH 34:15": "וַיַּ֣עַן חִלְקִיָּ֗הוּ וַיֹּ֨אמֶר֙ אֶל־שָׁפָ֣ן הַסֹּופֵ֔ר סֵ֧פֶר הַתֹּורָ֛ה מָצָ֖אתִי בְּבֵ֣ית יְהוָ֑ה וַיִּתֵּ֧ן חִלְקִיָּ֛הוּ אֶת־הַסֵּ֖פֶר אֶל־שָׁפָֽן׃ ",
+   "KJV 2CH 34:15": "And Hilkiah answered and said to Shaphan the scribe, I have found the book of the law in the house of the LORD. And Hilkiah delivered the book to Shaphan.",
+   "BHSA 2CH 34:16": "וַיָּבֵ֨א שָׁפָ֤ן אֶת־הַסֵּ֨פֶר֙ אֶל־הַמֶּ֔לֶךְ וַיָּ֨שֶׁב עֹ֧וד אֶת־הַמֶּ֛לֶךְ דָּבָ֖ר לֵאמֹ֑ר כֹּ֛ל אֲשֶׁר־נִתַּ֥ן בְּיַד־עֲבָדֶ֖יךָ הֵ֥ם עֹשִֽׂים׃ ",
+   "KJV 2CH 34:16": "And Shaphan carried the book to the king, and brought the king word back again, saying, All that was committed to thy servants, they do it.",
+   "BHSA 2CH 34:18": "וַיַּגֵּ֞ד שָׁפָ֤ן הַסֹּופֵר֙ לַמֶּ֣לֶךְ לֵאמֹ֔ר סֵ֚פֶר נָ֣תַן לִ֔י חִלְקִיָּ֖הוּ הַכֹּהֵ֑ן וַיִּקְרָא־בֹ֥ו שָׁפָ֖ן לִפְנֵ֥י הַמֶּֽלֶךְ׃ ",
+   "KJV 2CH 34:18": "Then Shaphan the scribe told the king, saying, Hilkiah the priest hath given me a book. And Shaphan read it before the king.",
+   "BHSA 2CH 34:8": "וּבִשְׁנַ֨ת שְׁמֹונֶ֤ה עֶשְׂרֵה֙ לְמָלְכֹ֔ו לְטַהֵ֥ר הָאָ֖רֶץ וְהַבָּ֑יִת שָׁ֠לַח אֶת־שָׁפָ֨ן בֶּן־אֲצַלְיָ֜הוּ וְאֶת־מַעֲשֵׂיָ֣הוּ שַׂר־הָעִ֗יר וְ֠אֵת יֹואָ֤ח בֶּן־יֹֽואָחָז֙ הַמַּזְכִּ֔יר לְחַזֵּ֕ק אֶת־בֵּ֖ית יְהוָ֥ה אֱלֹהָֽיו׃ ",
+   "KJV 2CH 34:8": "Now in the eighteenth year of his reign, when he had purged the land, and the house, he sent Shaphan the son of Azaliah, and Maaseiah the governor of the city, and Joah the son of Joahaz the recorder, to repair the house of the LORD his God.",
+   "BHSA 2KI 22:10": "וַיַּגֵּ֞ד שָׁפָ֤ן הַסֹּפֵר֙ לַמֶּ֣לֶךְ לֵאמֹ֔ר סֵ֚פֶר נָ֣תַן לִ֔י חִלְקִיָּ֖ה הַכֹּהֵ֑ן וַיִּקְרָאֵ֥הוּ שָׁפָ֖ן לִפְנֵ֥י הַמֶּֽלֶךְ׃ ",
+   "KJV 2KI 22:10": "And Shaphan the scribe shewed the king, saying, Hilkiah the priest hath delivered me a book. And Shaphan read it before the king.",
+   "BHSA 2KI 22:14": "וַיֵּ֣לֶךְ חִלְקִיָּ֣הוּ הַ֠כֹּהֵן וַאֲחִיקָ֨ם וְעַכְבֹּ֜ור וְשָׁפָ֣ן וַעֲשָׂיָ֗ה אֶל־חֻלְדָּ֨ה הַנְּבִיאָ֜ה אֵ֣שֶׁת׀ שַׁלֻּ֣ם בֶּן־תִּקְוָ֗ה בֶּן־חַרְחַס֙ שֹׁמֵ֣ר הַבְּגָדִ֔ים וְהִ֛יא יֹשֶׁ֥בֶת בִּירוּשָׁלִַ֖ם בַּמִּשְׁנֶ֑ה וַֽיְדַבְּר֖וּ אֵלֶֽיהָ׃ ",
+   "KJV 2KI 22:14": "So Hilkiah the priest, and Ahikam, and Achbor, and Shaphan, and Asahiah, went unto Huldah the prophetess, the wife of Shallum the son of Tikvah, the son of Harhas, keeper of the wardrobe; (now she dwelt in Jerusalem in the college;) and they communed with her.",
+   "BHSA 2KI 22:3": "וַיְהִ֗י בִּשְׁמֹנֶ֤ה עֶשְׂרֵה֙ שָׁנָ֔ה לַמֶּ֖לֶךְ יֹאשִׁיָּ֑הוּ שָׁלַ֣ח הַ֠מֶּלֶךְ אֶת־שָׁפָ֨ן בֶּן־אֲצַלְיָ֤הוּ בֶן־מְשֻׁלָּם֙ הַסֹּפֵ֔ר בֵּ֥ית יְהוָ֖ה לֵאמֹֽר׃ ",
+   "KJV 2KI 22:3": "And it came to pass in the eighteenth year of king Josiah, that the king sent Shaphan the son of Azaliah, the son of Meshullam, the scribe, to the house of the LORD, saying,",
+   "BHSA 2KI 22:8": "וַ֠יֹּאמֶר חִלְקִיָּ֜הוּ הַכֹּהֵ֤ן הַגָּדֹול֙ עַל־שָׁפָ֣ן הַסֹּפֵ֔ר סֵ֧פֶר הַתֹּורָ֛ה מָצָ֖אתִי בְּבֵ֣ית יְהוָ֑ה וַיִּתֵּ֨ן חִלְקִיָּ֧ה אֶת־הַסֵּ֛פֶר אֶל־שָׁפָ֖ן וַיִּקְרָאֵֽהוּ׃ ",
+   "KJV 2KI 22:8": "And Hilkiah the high priest said unto Shaphan the scribe, I have found the book of the law in the house of the LORD. And Hilkiah gave the book to Shaphan, and he read it.",
+   "BHSA 2KI 22:9": "וַיָּבֹ֞א שָׁפָ֤ן הַסֹּפֵר֙ אֶל־הַמֶּ֔לֶךְ וַיָּ֥שֶׁב אֶת־הַמֶּ֖לֶךְ דָּבָ֑ר וַיֹּ֗אמֶר הִתִּ֤יכוּ עֲבָדֶ֨יךָ֙ אֶת־הַכֶּ֨סֶף֙ הַנִּמְצָ֣א בַבַּ֔יִת וַֽיִּתְּנֻ֗הוּ עַל־יַד֙ עֹשֵׂ֣י הַמְּלָאכָ֔ה הַמֻּפְקָדִ֖ים בֵּ֥ית יְהוָֽה׃ ",
+   "KJV 2KI 22:9": "And Shaphan the scribe came to the king, and brought the king word again, and said, Thy servants have gathered the money that was found in the house, and have delivered it into the hand of them that do the work, that have the oversight of the house of the LORD."
+  }
+ },
+ {
+  "key": "shemaiah-14--shemaiah-26",
+  "A_slug": "shemaiah-14",
+  "B_slug": "shemaiah-26",
+  "name": "Shemaiah",
+  "A": {
+   "name": "Shemaiah",
+   "line": "Levite Ezra sent to Iddo (EZR 8:16)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": null,
+   "family": [
+    "son-of mattaniah-4 (Mattaniah, descendant of Asaph (2CH 29:13))",
+    "father-of jonathan-12 (Jonathan, son of Shemaiah (NEH 12:35))"
+   ],
+   "named_by": [
+    "jonathan-12 (Jonathan, son of Shemaiah (NEH 12:35)) son-of",
+    "mattaniah-4 (Mattaniah, descendant of Asaph (2CH 29:13)) father-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "EZR 8:16",
+    "NEH 12:35"
+   ],
+   "kjv": {
+    "EZR 8:16": "Then sent I for Eliezer, for Ariel, for Shemaiah, and for Elnathan, and for Jarib, and for Elnathan, and for Nathan, and for Zechariah, and for Meshullam, chief men; also for Joiarib, and for Elnathan, men of understanding.",
+    "NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+   }
+  },
+  "B": {
+   "name": "Shemaiah",
+   "line": "Grandfather of the priest Zechariah, in the trumpeters' genealogy",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of jonathan-12 (Jonathan, son of Shemaiah (NEH 12:35))",
+    "son-of mattaniah-12 (Mattaniah, Levite ancestor of Zechariah the trumpeter, named in Nehemia)"
+   ],
+   "named_by": [
+    "mattaniah-12 (Mattaniah, Levite ancestor of Zechariah the trumpeter, named in Nehemia) father-of"
+   ],
+   "verse_count": 1,
+   "verses": [
+    "NEH 12:35"
+   ],
+   "kjv": {
+    "NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:35": "וּמִבְּנֵ֥י הַכֹּהֲנִ֖ים בַּחֲצֹצְרֹ֑ות זְכַרְיָ֨ה בֶן־יֹֽונָתָ֜ן בֶּן־שְׁמַֽעְיָ֗ה בֶּן־מַתַּנְיָה֙ בֶּן־מִ֣יכָיָ֔ה בֶּן־זַכּ֖וּר בֶּן־אָסָֽף׃ ",
+   "KJV NEH 12:35": "And certain of the priests' sons with trumpets; namely, Zechariah the son of Jonathan, the son of Shemaiah, the son of Mattaniah, the son of Michaiah, the son of Zaccur, the son of Asaph:"
+  }
+ },
+ {
+  "key": "shemaiah-19--shemaiah-24",
+  "A_slug": "shemaiah-19",
+  "B_slug": "shemaiah-24",
+  "name": "Shemaiah",
+  "A": {
+   "name": "Shemaiah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:8)",
+   "family": [
+    "ancestor-of jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18))"
+   ],
+   "named_by": [
+    "maai (Maai, Levite with music instruments (NEH 12:36)) brother-of",
+    "jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18)) descendant-of"
+   ],
+   "verse_count": 6,
+   "verses": [
+    "NEH 10:8",
+    "NEH 12:6",
+    "NEH 12:18",
+    "NEH 12:34",
+    "NEH 12:36",
+    "NEH 12:42"
+   ],
+   "kjv": {
+    "NEH 10:8": "Maaziah, Bilgai, Shemaiah: these were the priests.",
+    "NEH 12:6": "Shemaiah, and Joiarib, Jedaiah,",
+    "NEH 12:18": "Of Bilgah, Shammua; of Shemaiah, Jehonathan;",
+    "NEH 12:34": "Judah, and Benjamin, and Shemaiah, and Jeremiah,",
+    "NEH 12:36": "And his brethren, Shemaiah, and Azarael, Milalai, Gilalai, Maai, Nethaneel, and Judah, Hanani, with the musical instruments of David the man of God, and Ezra the scribe before them.",
+    "NEH 12:42": "And Maaseiah, and Shemaiah, and Eleazar, and Uzzi, and Jehohanan, and Malchijah, and Elam, and Ezer. And the singers sang loud, with Jezrahiah their overseer."
+   }
+  },
+  "B": {
+   "name": "Shemaiah",
+   "line": "Priest who returned from exile with Zerubbabel, head of a priestly house",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "NEH 12:6",
+    "NEH 12:18"
+   ],
+   "kjv": {
+    "NEH 12:6": "Shemaiah, and Joiarib, Jedaiah,",
+    "NEH 12:18": "Of Bilgah, Shammua; of Shemaiah, Jehonathan;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:18": "לְבִלְגָּ֣ה שַׁמּ֔וּעַ לִֽשְׁמַעְיָ֖ה יְהֹונָתָֽן׃ ",
+   "KJV NEH 12:18": "Of Bilgah, Shammua; of Shemaiah, Jehonathan;",
+   "BHSA NEH 12:6": "שְׁמַֽעְיָ֥ה וְיֹויָרִ֖יב יְדַֽעְיָֽה׃ ",
+   "KJV NEH 12:6": "Shemaiah, and Joiarib, Jedaiah,"
+  }
+ },
+ {
+  "key": "shephatiah-10--shephatiah-5",
+  "A_slug": "shephatiah-10",
+  "B_slug": "shephatiah-5",
+  "name": "Shephatiah",
+  "A": {
+   "name": "Shephatiah",
+   "line": "Ancestor whose sons (fourscore males) returned to Jerusalem with Ezra",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of zebadiah-8 (Zebadiah, descendant of Shephatiah, son of Michael who went up with Ez)"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "EZR 8:8"
+   ],
+   "kjv": {
+    "EZR 8:8": "And of the sons of Shephatiah; Zebadiah the son of Michael, and with him fourscore males."
+   }
+  },
+  "B": {
+   "name": "Shephatiah",
+   "line": "his sons (descendants) returned to Judah after captivity (EZR 2:4)",
+   "sex": "male",
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of zebadiah-8 (Zebadiah, descendant of Shephatiah, son of Michael who went up with Ez)",
+    "descendant-of jacob (Jacob, second-born son of Isaac (GEN 25:25-26))"
+   ],
+   "named_by": [
+    "michael-8 (Michael, father of Zebadiah who went up with Ezra (EZR 8:8)) descendant-of",
+    "zebadiah-8 (Zebadiah, descendant of Shephatiah, son of Michael who went up with Ez) descendant-of"
+   ],
+   "verse_count": 3,
+   "verses": [
+    "EZR 2:4",
+    "EZR 8:8",
+    "NEH 7:9"
+   ],
+   "kjv": {
+    "EZR 2:4": "The children of Shephatiah, three hundred seventy and two.",
+    "EZR 8:8": "And of the sons of Shephatiah; Zebadiah the son of Michael, and with him fourscore males.",
+    "NEH 7:9": "The children of Shephatiah, three hundred seventy and two."
+   }
+  },
+  "disputed_verses": {
+   "BHSA EZR 8:8": "וּמִבְּנֵ֣י שְׁפַטְיָ֔ה זְבַדְיָ֖ה בֶּן־מִֽיכָאֵ֑ל וְעִמֹּ֖ו שְׁמֹנִ֥ים הַזְּכָרִֽים׃ ס ",
+   "KJV EZR 8:8": "And of the sons of Shephatiah; Zebadiah the son of Michael, and with him fourscore males."
+  }
+ },
+ {
+  "key": "shobal-2--shobal-3",
+  "A_slug": "shobal-2",
+  "B_slug": "shobal-3",
+  "name": "Shobal",
+  "A": {
+   "name": "Shobal",
+   "line": "son of Hur who founded Kiriath-jearim (1CH 2:50)",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": null,
+   "family": [
+    "father-of kiriathjearim (Kiriath-jearim)",
+    "descendant-of judah (Judah, fourth-born son of Jacob (GEN 29:35), son of Leah)",
+    "father-of reaiah (Reaiah, son of Shobal (1CH 4:2))"
+   ],
+   "named_by": [
+    "haroeh (Haroeh, son of Shobal (1CH 2:52)) son-of",
+    "reaiah (Reaiah, son of Shobal (1CH 4:2)) son-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "1CH 2:50",
+    "1CH 2:52",
+    "1CH 4:1",
+    "1CH 4:2"
+   ],
+   "kjv": {
+    "1CH 2:50": "These were the sons of Caleb the son of Hur, the firstborn of Ephratah; Shobal the father of Kirjathjearim.",
+    "1CH 2:52": "And Shobal the father of Kirjathjearim had sons; Haroeh, and half of the Manahethites.",
+    "1CH 4:1": "The sons of Judah; Pharez, Hezron, and Carmi, and Hur, and Shobal.",
+    "1CH 4:2": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites."
+   }
+  },
+  "B": {
+   "name": "Shobal",
+   "line": "Listed among sons of Judah, father of Reaiah, ancestor of Zorathites; may duplicate bearer 2",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of judah (Judah, fourth-born son of Jacob (GEN 29:35), son of Leah)",
+    "father-of reaiah (Reaiah, son of Shobal (1CH 4:2))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "1CH 4:1",
+    "1CH 4:2"
+   ],
+   "kjv": {
+    "1CH 4:1": "The sons of Judah; Pharez, Hezron, and Carmi, and Hur, and Shobal.",
+    "1CH 4:2": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 4:1": "בְּנֵ֖י יְהוּדָ֑ה פֶּ֧רֶץ חֶצְרֹ֛ון וְכַרְמִ֖י וְח֥וּר וְשֹׁובָֽל׃ ",
+   "KJV 1CH 4:1": "The sons of Judah; Pharez, Hezron, and Carmi, and Hur, and Shobal.",
+   "BHSA 1CH 4:2": "וּרְאָיָ֤ה בֶן־שֹׁובָל֙ הֹולִ֣יד אֶת־יַ֔חַת וְיַ֣חַת הֹלִ֔יד אֶת־אֲחוּמַ֖י וְאֶת־לָ֑הַד אֵ֖לֶּה מִשְׁפְּחֹ֥ות הַצָּֽרְעָתִֽי׃ ס ",
+   "KJV 1CH 4:2": "And Reaiah the son of Shobal begat Jahath; and Jahath begat Ahumai, and Lahad. These are the families of the Zorathites."
+  }
+ },
+ {
+  "key": "tahath--tahath-5",
+  "A_slug": "tahath",
+  "B_slug": "tahath-5",
+  "name": "Tahath",
+  "A": {
+   "name": "Tahath",
+   "line": "son of Assir (1CH 6:24)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "son-of assir-2 (Assir, son of Ebiasaph (1CH 6:23))",
+    "father-of uriel (Uriel, son of Tahath (1CH 6:24), chief of the sons of Kohath (1CH 1)",
+    "descendant-of korah-3 (Korah, son of Izhar (EXO 6:21) who rebelled against G-d and Moses ()"
+   ],
+   "named_by": [
+    "assir-2 (Assir, son of Ebiasaph (1CH 6:23)) father-of",
+    "uriel (Uriel, son of Tahath (1CH 6:24), chief of the sons of Kohath (1CH 1) son-of",
+    "uriel-2 (Uriel, Levite ancestor, son of Tahath and father of Uzziah, in Koha) son-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "1CH 6:24",
+    "1CH 6:37"
+   ],
+   "kjv": {
+    "1CH 6:24": "Tahath his son, Uriel his son, Uzziah his son, and Shaul his son.",
+    "1CH 6:37": "The son of Tahath, the son of Assir, the son of Ebiasaph, the son of Korah,"
+   }
+  },
+  "B": {
+   "name": "Tahath",
+   "line": "Kohathite Levite, son of Assir, father of Zephaniah (Heman's ancestry); possibly same as bearer 1",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of assir-2 (Assir, son of Ebiasaph (1CH 6:23))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 6:37"
+   ],
+   "kjv": {
+    "1CH 6:37": "The son of Tahath, the son of Assir, the son of Ebiasaph, the son of Korah,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 6:37": "בֶּן־תַּ֨חַת֙ בֶּן־אַסִּ֔יר בֶּן־אֶבְיָסָ֖ף בֶּן־קֹֽרַח׃ ",
+   "KJV 1CH 6:37": "The son of Tahath, the son of Assir, the son of Ebiasaph, the son of Korah,"
+  }
+ },
+ {
+  "key": "timna--timna-3",
+  "A_slug": "timna",
+  "B_slug": "timna-3",
+  "name": "Timna",
+  "A": {
+   "name": "Timna",
+   "line": "concubine of Esau's son Eliphaz (GEN 36:12) and sister of Lotan (GEN 36:22)",
+   "sex": "female",
+   "tribe": "Edomite",
+   "notes": null,
+   "family": [
+    "mother-of amalek (Amalek, son of Eliphaz (GEN 36:12) and chief of Edom (GEN 36:16))",
+    "sister-of lotan (Lotan, son of Seir (GEN 36:20) and chief in Edom (GEN 36:29))",
+    "concubine-of eliphaz (Eliphaz, son of Esau (GEN 36:4, 10, 15))"
+   ],
+   "named_by": [
+    "lotan (Lotan, son of Seir (GEN 36:20) and chief in Edom (GEN 36:29)) brother-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "GEN 36:12",
+    "GEN 36:22",
+    "1CH 1:36",
+    "1CH 1:39"
+   ],
+   "kjv": {
+    "GEN 36:12": "And Timna was concubine to Eliphaz Esau's son; and she bare to Eliphaz Amalek: these were the sons of Adah Esau's wife.",
+    "GEN 36:22": "And the children of Lotan were Hori and Hemam; and Lotan's sister was Timna.",
+    "1CH 1:36": "The sons of Eliphaz; Teman, and Omar, Zephi, and Gatam, Kenaz, and Timna, and Amalek.",
+    "1CH 1:39": "And the sons of Lotan; Hori, and Homam: and Timna was Lotan's sister."
+   }
+  },
+  "B": {
+   "name": "Timna",
+   "line": "Daughter of Seir the Horite, sister of Lotan",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "sister-of lotan (Lotan, son of Seir (GEN 36:20) and chief in Edom (GEN 36:29))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "GEN 36:22",
+    "1CH 1:39"
+   ],
+   "kjv": {
+    "GEN 36:22": "And the children of Lotan were Hori and Hemam; and Lotan's sister was Timna.",
+    "1CH 1:39": "And the sons of Lotan; Hori, and Homam: and Timna was Lotan's sister."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 1:39": "וּבְנֵ֥י לֹוטָ֖ן חֹרִ֣י וְהֹומָ֑ם וַאֲחֹ֥ות לֹוטָ֖ן תִּמְנָֽע׃ ס ",
+   "KJV 1CH 1:39": "And the sons of Lotan; Hori, and Homam: and Timna was Lotan's sister.",
+   "BHSA GEN 36:22": "וַיִּהְי֥וּ בְנֵי־לֹוטָ֖ן חֹרִ֣י וְהֵימָ֑ם וַאֲחֹ֥ות לֹוטָ֖ן תִּמְנָֽע׃ ",
+   "KJV GEN 36:22": "And the children of Lotan were Hori and Hemam; and Lotan's sister was Timna."
+  }
+ },
+ {
+  "key": "uriel--uriel-2",
+  "A_slug": "uriel",
+  "B_slug": "uriel-2",
+  "name": "Uriel",
+  "A": {
+   "name": "Uriel",
+   "line": "son of Tahath (1CH 6:24), chief of the sons of Kohath (1CH 15:5)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "son-of tahath (Tahath, son of Assir (1CH 6:24))",
+    "father-of uzziah (Uzziah, son of Uriel (1CH 6:24))",
+    "descendant-of kohath (Kohath, son of Levi (GEN 46:11))"
+   ],
+   "named_by": [
+    "tahath (Tahath, son of Assir (1CH 6:24)) father-of",
+    "uzziah (Uzziah, son of Uriel (1CH 6:24)) son-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "1CH 6:24",
+    "1CH 6:36",
+    "1CH 15:5",
+    "1CH 15:11"
+   ],
+   "kjv": {
+    "1CH 6:24": "Tahath his son, Uriel his son, Uzziah his son, and Shaul his son.",
+    "1CH 6:36": "The son of Elkanah, the son of Joel, the son of Azariah, the son of Zephaniah,",
+    "1CH 15:5": "Of the sons of Kohath; Uriel the chief, and his brethren an hundred and twenty:",
+    "1CH 15:11": "And David called for Zadok and Abiathar the priests, and for the Levites, for Uriel, Asaiah, and Joel, Shemaiah, and Eliel, and Amminadab,"
+   }
+  },
+  "B": {
+   "name": "Uriel",
+   "line": "Levite ancestor, son of Tahath and father of Uzziah, in Kohath's genealogy",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of tahath (Tahath, son of Assir (1CH 6:24))",
+    "father-of uzziah (Uzziah, son of Uriel (1CH 6:24))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 6:24"
+   ],
+   "kjv": {
+    "1CH 6:24": "Tahath his son, Uriel his son, Uzziah his son, and Shaul his son."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 6:24": "תַּ֤חַת בְּנֹו֙ אוּרִיאֵ֣ל בְּנֹ֔ו עֻזִּיָּ֥ה בְנֹ֖ו וְשָׁא֥וּל בְּנֹֽו׃ ",
+   "KJV 1CH 6:24": "Tahath his son, Uriel his son, Uzziah his son, and Shaul his son."
+  }
+ },
+ {
+  "key": "zaccur-6--zaccur-7",
+  "A_slug": "zaccur-6",
+  "B_slug": "zaccur-7",
+  "name": "Zaccur",
+  "A": {
+   "name": "Zaccur",
+   "line": "a Levite (NEH 10:9)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:12)",
+   "family": [
+    "son-of mattaniah-10 (Mattaniah, grandfather of Hanan (NEH 13:13))",
+    "father-of hanan-7 (Hanan, distributed portions to their kinsmen (NEH 13:13))",
+    "descendant-of levi (Levi, third-born son of Jacob (GEN 29:34), son of Leah)"
+   ],
+   "named_by": [
+    "hanan-7 (Hanan, distributed portions to their kinsmen (NEH 13:13)) son-of",
+    "mattaniah-10 (Mattaniah, grandfather of Hanan (NEH 13:13)) father-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "NEH 10:12",
+    "NEH 13:13"
+   ],
+   "kjv": {
+    "NEH 10:12": "Zaccur, Sherebiah, Shebaniah,",
+    "NEH 13:13": "And I made treasurers over the treasuries, Shelemiah the priest, and Zadok the scribe, and of the Levites, Pedaiah: and next to them was Hanan the son of Zaccur, the son of Mattaniah: for they were counted faithful, and their office was to distribute unto their brethren."
+   }
+  },
+  "B": {
+   "name": "Zaccur",
+   "line": "Son of Mattaniah, father of Hanan the treasury official",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of hanan-7 (Hanan, distributed portions to their kinsmen (NEH 13:13))",
+    "son-of mattaniah-10 (Mattaniah, grandfather of Hanan (NEH 13:13))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 13:13"
+   ],
+   "kjv": {
+    "NEH 13:13": "And I made treasurers over the treasuries, Shelemiah the priest, and Zadok the scribe, and of the Levites, Pedaiah: and next to them was Hanan the son of Zaccur, the son of Mattaniah: for they were counted faithful, and their office was to distribute unto their brethren."
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 13:13": "וָאֹוצְרָ֣ה עַל־אֹ֠וצָרֹות שֶׁלֶמְיָ֨ה הַכֹּהֵ֜ן וְצָדֹ֣וק הַסֹּופֵ֗ר וּפְדָיָה֙ מִן־הַלְוִיִּ֔ם וְעַל־יָדָ֔ם חָנָ֥ן בֶּן־זַכּ֖וּר בֶּן־מַתַּנְיָ֑ה כִּ֤י נֶאֱמָנִים֙ נֶחְשָׁ֔בוּ וַעֲלֵיהֶ֖ם לַחֲלֹ֥ק לַאֲחֵיהֶֽם׃ פ ",
+   "KJV NEH 13:13": "And I made treasurers over the treasuries, Shelemiah the priest, and Zadok the scribe, and of the Levites, Pedaiah: and next to them was Hanan the son of Zaccur, the son of Mattaniah: for they were counted faithful, and their office was to distribute unto their brethren."
+  }
+ },
+ {
+  "key": "zadok-4--zadok-8",
+  "A_slug": "zadok-4",
+  "B_slug": "zadok-8",
+  "name": "Zadok",
+  "A": {
+   "name": "Zadok",
+   "line": "made repairs to the wall of Jerusalem (NEH 3:4)",
+   "sex": "male",
+   "tribe": null,
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:21)",
+   "family": [
+    "son-of baana-3 (Baana, father of Zadok (NEH 3:4))"
+   ],
+   "named_by": [
+    "baana-3 (Baana, father of Zadok (NEH 3:4)) father-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "NEH 3:4",
+    "NEH 10:21"
+   ],
+   "kjv": {
+    "NEH 3:4": "And next unto them repaired Meremoth the son of Urijah, the son of Koz. And next unto them repaired Meshullam the son of Berechiah, the son of Meshezabeel. And next unto them repaired Zadok the son of Baana.",
+    "NEH 10:21": "Meshezabeel, Zadok, Jaddua,"
+   }
+  },
+  "B": {
+   "name": "Zadok",
+   "line": "A leader of the people who sealed Nehemiah's covenant",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 10:21"
+   ],
+   "kjv": {
+    "NEH 10:21": "Meshezabeel, Zadok, Jaddua,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 10:21": "מְשֵׁיזַבְאֵ֥ל צָדֹ֖וק יַדּֽוּעַ׃ ",
+   "KJV NEH 10:21": "Meshezabeel, Zadok, Jaddua,"
+  }
+ }
+]

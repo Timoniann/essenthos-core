@@ -1,0 +1,87 @@
+{
+ "batch": "b077-1CH-22-1",
+ "answers": [
+  {
+   "key": "BHSA 1CH 22:1 #16",
+   "answer": "people",
+   "why": "David identifies the altar for the nation's burnt offerings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 22:6 #14",
+   "answer": "people",
+   "why": "Solomon is charged to build a house for the LORD, the nation's God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 22:9 #27",
+   "answer": "people",
+   "why": "God promises Israel peace and quiet during Solomon's reign.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 22:10 #22",
+   "answer": "people",
+   "why": "Solomon's royal throne is to be established over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 22:12 #11",
+   "answer": "people",
+   "why": "David asks that Solomon receive wisdom and authority over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 22:13 #20",
+   "answer": "people",
+   "why": "The statutes and judgments commanded through Moses concern the nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 22:17 #7",
+   "answer": "people",
+   "why": "David commands Israel's princes to help Solomon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 23:1 #13",
+   "answer": "people",
+   "why": "David makes Solomon king over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 23:2 #6",
+   "answer": "people",
+   "why": "David assembles the nation's princes together with priests and Levites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 23:25 #7",
+   "answer": "people",
+   "why": "The LORD God of Israel gives rest to his people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 24:19 #21",
+   "answer": "people",
+   "why": "The LORD God of Israel commands Aaron concerning the priests' service.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 26:29 #13",
+   "answer": "people",
+   "why": "Chenaniah and his sons serve as officers and judges over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1CH 26:30 #15",
+   "answer": "people",
+   "why": "Hashabiah and his brethren oversee Israel west of the Jordan.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:38:58+00:00"
+}

@@ -1,0 +1,87 @@
+{
+ "batch": "b115-JER-10-16",
+ "answers": [
+  {
+   "key": "BHSA JER 10:16 #12",
+   "answer": "people",
+   "why": "Israel is called the tribe of the LORD's inheritance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 11:3 #8",
+   "answer": "people",
+   "why": "The God of Israel addresses the people bound by the covenant made at the exodus.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 11:17 #14",
+   "answer": "people",
+   "why": "The house of Israel provoked God by offering incense to Baal.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 11:17 #17",
+   "answer": "people",
+   "why": "The house of Judah shares in the collective sin of offering incense to Baal.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 12:14 #19",
+   "answer": "people",
+   "why": "God explicitly calls Israel his people who received the inheritance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 13:12 #13",
+   "answer": "people",
+   "why": "The God of Israel speaks to the houses of Israel and Judah and the inhabitants of their land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 14:2 #2",
+   "answer": "people",
+   "why": "Judah mourns during drought alongside its gates and Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 14:8 #2",
+   "answer": "people",
+   "why": "Israel's hope and saviour is invoked by the community confessing its sins.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 16:9 #7",
+   "answer": "people",
+   "why": "The God of Israel announces judgment upon the people and their communal celebrations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 17:13 #2",
+   "answer": "people",
+   "why": "The LORD is Israel's hope in a passage referring to our sanctuary and those who forsake him.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA JER 18:13 #18",
+   "answer": "people",
+   "why": "The virgin Israel personifies the nation whose collective conduct shocks other nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 19:3 #16",
+   "answer": "people",
+   "why": "The God of Israel addresses Judah's kings and Jerusalem's inhabitants about coming judgment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 19:15 #6",
+   "answer": "people",
+   "why": "The God of Israel announces judgment on the city and its towns for the people's disobedience.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:19:39+00:00"
+}

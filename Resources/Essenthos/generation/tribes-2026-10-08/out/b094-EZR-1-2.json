@@ -1,0 +1,105 @@
+{
+ "batch": "b094-EZR-1-2",
+ "answers": [
+  {
+   "key": "BHSA EZR 1:2 #28",
+   "answer": "people",
+   "why": "Jerusalem is located in Judah, the territory named for the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 1:3 #15",
+   "answer": "people",
+   "why": "Judah is the territory containing Jerusalem to which the exiles may return.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 1:3 #22",
+   "answer": "people",
+   "why": "The returning people are to rebuild the house of the LORD God of Israel, their nation's God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 1:5 #9",
+   "answer": "people",
+   "why": "Benjamin names the tribal community whose family heads rise to rebuild the temple.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 1:8 #18",
+   "answer": "people",
+   "why": "Sheshbazzar is the prince governing Judah, the community and province.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 2:1 #24",
+   "answer": "people",
+   "why": "The exiles return to Jerusalem and Judah, each to his own city.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 2:2 #18",
+   "answer": "people",
+   "why": "The list counts the men of the people of Israel returning from captivity.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 2:59 #22",
+   "answer": "people",
+   "why": "The returnees cannot establish whether their ancestry qualifies them as members of Israel.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA EZR 2:70 #25",
+   "answer": "people",
+   "why": "All Israel settles in their cities alongside the priests and other returning groups.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 3:2 #21",
+   "answer": "people",
+   "why": "The gathered community builds an altar to the God of Israel, its national God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 3:11 #17",
+   "answer": "people",
+   "why": "The assembled people praise the LORD for his enduring mercy toward Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 4:1 #6",
+   "answer": "people",
+   "why": "Benjamin is paired with Judah as the community whose adversaries oppose the returning exiles.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 4:1 #16",
+   "answer": "people",
+   "why": "The returned exiles build the temple for the LORD God of Israel, their nation's God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 4:3 #13",
+   "answer": "people",
+   "why": "Israel names the community represented by Zerubbabel, Jeshua, and its family heads.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 4:3 #30",
+   "answer": "people",
+   "why": "The community calls the LORD God of Israel its own God while asserting its right to rebuild.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZR 4:6 #12",
+   "answer": "people",
+   "why": "The accusation concerns inhabitants of Judah and Jerusalem, identifying Judah as their territory.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:41:14+00:00"
+}

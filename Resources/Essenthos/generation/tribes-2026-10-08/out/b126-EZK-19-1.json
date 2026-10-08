@@ -1,0 +1,81 @@
+{
+ "batch": "b126-EZK-19-1",
+ "answers": [
+  {
+   "key": "BHSA EZK 19:1 #7",
+   "answer": "people",
+   "why": "The lamentation concerns the princes who rule Israel as a nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 20:1 #21",
+   "answer": "people",
+   "why": "Israel's elders come together to enquire of the LORD.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 20:3 #6",
+   "answer": "people",
+   "why": "God addresses Israel's elders and condemns their fathers' abominations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 20:5 #12",
+   "answer": "people",
+   "why": "Israel is identified with Jacob's descendants in Egypt whom God would bring out.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 20:30 #5",
+   "answer": "people",
+   "why": "The house of Israel is addressed collectively about following its fathers' abominations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 20:31 #24",
+   "answer": "people",
+   "why": "The house of Israel is accused of offering gifts to idols and passing its children through fire.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 20:40 #8",
+   "answer": "people",
+   "why": "The mountain of Israel is the nation's holy mountain where its people will worship.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 20:40 #16",
+   "answer": "people",
+   "why": "All the house of Israel in the land will serve God and bring offerings.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 21:17 #15",
+   "answer": "people",
+   "why": "Israel's princes face the sword together with God's people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 21:25 #12",
+   "answer": "people",
+   "why": "Judah in fortified Jerusalem is a target of the Babylonian king's sword.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 21:30 #6",
+   "answer": "people",
+   "why": "Israel names the nation ruled by the wicked prince whose crown will be removed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 22:6 #3",
+   "answer": "people",
+   "why": "Israel's princes are accused of using their power to shed blood in the city.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:21:09+00:00"
+}

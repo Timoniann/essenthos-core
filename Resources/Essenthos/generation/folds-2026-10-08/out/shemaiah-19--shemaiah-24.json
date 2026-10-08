@@ -1,0 +1,82 @@
+{
+ "pair": [
+  "shemaiah-19",
+  "shemaiah-24"
+ ],
+ "case": {
+  "name": "Shemaiah",
+  "A": {
+   "name": "Shemaiah",
+   "line": "Aaronic priest (NEH 10:8)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "named on the sealed document of NEH 10:1-27 (NEH 10:8)",
+   "family": [
+    "ancestor-of jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18))"
+   ],
+   "named_by": [
+    "maai (Maai, Levite with music instruments (NEH 12:36)) brother-of",
+    "jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18)) descendant-of"
+   ],
+   "verse_count": 6,
+   "verses": [
+    "NEH 10:8",
+    "NEH 12:6",
+    "NEH 12:18",
+    "NEH 12:34",
+    "NEH 12:36",
+    "NEH 12:42"
+   ],
+   "kjv": {
+    "NEH 10:8": "Maaziah, Bilgai, Shemaiah: these were the priests.",
+    "NEH 12:6": "Shemaiah, and Joiarib, Jedaiah,",
+    "NEH 12:18": "Of Bilgah, Shammua; of Shemaiah, Jehonathan;",
+    "NEH 12:34": "Judah, and Benjamin, and Shemaiah, and Jeremiah,",
+    "NEH 12:36": "And his brethren, Shemaiah, and Azarael, Milalai, Gilalai, Maai, Nethaneel, and Judah, Hanani, with the musical instruments of David the man of God, and Ezra the scribe before them.",
+    "NEH 12:42": "And Maaseiah, and Shemaiah, and Eleazar, and Uzzi, and Jehohanan, and Malchijah, and Elam, and Ezer. And the singers sang loud, with Jezrahiah their overseer."
+   }
+  },
+  "B": {
+   "name": "Shemaiah",
+   "line": "Priest who returned from exile with Zerubbabel, head of a priestly house",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "ancestor-of jehonathan-2 (Jehonathan, son of Shemaiah (NEH 12:18))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "NEH 12:6",
+    "NEH 12:18"
+   ],
+   "kjv": {
+    "NEH 12:6": "Shemaiah, and Joiarib, Jedaiah,",
+    "NEH 12:18": "Of Bilgah, Shammua; of Shemaiah, Jehonathan;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:18": "לְבִלְגָּ֣ה שַׁמּ֔וּעַ לִֽשְׁמַעְיָ֖ה יְהֹונָתָֽן׃ ",
+   "KJV NEH 12:18": "Of Bilgah, Shammua; of Shemaiah, Jehonathan;",
+   "BHSA NEH 12:6": "שְׁמַֽעְיָ֥ה וְיֹויָרִ֖יב יְדַֽעְיָֽה׃ ",
+   "KJV NEH 12:6": "Shemaiah, and Joiarib, Jedaiah,"
+  },
+  "first_reader_said": [
+   "NEH 12:18: Both records are Shemaiah, ancestor of Jehonathan in the list of priestly houses.",
+   "NEH 12:6: Both records are the priest Shemaiah, ancestor of Jehonathan (12:18), whose house stands in the Zerubbabel list."
+  ]
+ },
+ "verdict": "two",
+ "keep": "none",
+ "why": "B is the priest of Zerubbabel's returning generation in NEH 12:6, whereas A is identified with the later covenant signatory in NEH 10:8. NEH 12:18 names Shemaiah's priestly house, represented by Jehonathan; this shared house association does not establish that the earlier ancestor and later signatory were one man. A also includes the musician Shemaiah among Maai's brethren in NEH 12:36, indicating additional conflation rather than reliable evidence for merging. NEH 12:6 and NEH 12:18 on A belong to B.",
+ "confidence": 0.87,
+ "verses_of_other": [
+  "NEH 12:6",
+  "NEH 12:18"
+ ],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:37:53+00:00"
+}

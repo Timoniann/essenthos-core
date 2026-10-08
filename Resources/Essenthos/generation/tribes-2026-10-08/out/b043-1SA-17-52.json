@@ -1,0 +1,93 @@
+{
+ "batch": "b043-1SA-17-52",
+ "answers": [
+  {
+   "key": "BHSA 1SA 17:52 #4",
+   "answer": "people",
+   "why": "The men of Israel arise and pursue the Philistines.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 18:16 #3",
+   "answer": "people",
+   "why": "All Israel and Judah love David as he leads them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 18:18 #14",
+   "answer": "people",
+   "why": "David describes his father's family within the nation of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 19:5 #19",
+   "answer": "people",
+   "why": "David's defeat of the Philistine brings deliverance to all Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 20:12 #8",
+   "answer": "people",
+   "why": "Jonathan invokes the LORD as the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 23:3 #10",
+   "answer": "people",
+   "why": "David's men are afraid in Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 23:10 #6",
+   "answer": "people",
+   "why": "David addresses the LORD as the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 23:11 #16",
+   "answer": "people",
+   "why": "David invokes Israel's national God while asking about Saul.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 23:17 #16",
+   "answer": "people",
+   "why": "Jonathan says David will reign over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 24:3 #10",
+   "answer": "people",
+   "why": "Saul selects three thousand men from all Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 25:1 #7",
+   "answer": "people",
+   "why": "All Israel gathers to mourn and bury Samuel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 25:30 #21",
+   "answer": "people",
+   "why": "Abigail says the LORD will appoint David ruler over Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 25:32 #9",
+   "answer": "people",
+   "why": "David blesses the LORD as the God of the nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 1SA 25:34 #6",
+   "answer": "people",
+   "why": "David swears by the living LORD, the God of the nation Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:34:51+00:00"
+}

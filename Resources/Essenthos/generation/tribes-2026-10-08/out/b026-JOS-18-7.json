@@ -1,0 +1,129 @@
+{
+ "batch": "b026-JOS-18-7",
+ "answers": [
+  {
+   "key": "BHSA JOS 18:7 #14",
+   "answer": "people",
+   "why": "Gad received its tribal inheritance east of Jordan from Moses.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 18:7 #16",
+   "answer": "people",
+   "why": "Reuben received its tribal inheritance east of Jordan from Moses.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 18:7 #21",
+   "answer": "people",
+   "why": "Half the tribe of Manasseh received land east of Jordan.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 18:17 #20",
+   "answer": "man",
+   "why": "Reuben is named as Bohan's father in the boundary landmark.",
+   "confidence": 0.94
+  },
+  {
+   "key": "BHSA JOS 19:1 #8",
+   "answer": "people",
+   "why": "Simeon receives the second lot, explicitly identified as the tribe according to its families.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 19:27 #10",
+   "answer": "people",
+   "why": "The boundary reaches Zebulun's tribal territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 19:34 #15",
+   "answer": "people",
+   "why": "The boundary reaches Zebulun's territory on the south.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 19:34 #20",
+   "answer": "people",
+   "why": "The boundary reaches Asher's territory on the west.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 19:34 #26",
+   "answer": "people",
+   "why": "Judah appears as territory reached by the boundary toward the east.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA JOS 19:47 #37",
+   "answer": "man",
+   "why": "The settlers name Leshem after Dan their father.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 21:43 #5",
+   "answer": "people",
+   "why": "Israel receives the land promised to their fathers, and they possess and inhabit it.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 22:7 #6",
+   "answer": "people",
+   "why": "Manasseh is the tribe whose two halves received possessions from Moses and Joshua.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 22:9 #14",
+   "answer": "people",
+   "why": "The half tribe of Manasseh returns to its possession in Gilead.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 22:10 #22",
+   "answer": "people",
+   "why": "The half tribe of Manasseh joins Reuben and Gad in building an altar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 22:11 #18",
+   "answer": "people",
+   "why": "The half tribe of Manasseh is reported to have built the altar with Reuben and Gad.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 22:14 #24",
+   "answer": "people",
+   "why": "Israel's thousands are the groups represented by the delegation's leaders.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 22:16 #15",
+   "answer": "people",
+   "why": "The congregation accuses the eastern tribes of trespassing against the nation's God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 22:21 #12",
+   "answer": "people",
+   "why": "The half tribe of Manasseh answers the leaders alongside Reuben and Gad.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 22:22 #10",
+   "answer": "people",
+   "why": "The eastern tribes declare that Israel will know their intentions concerning the altar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 22:24 #26",
+   "answer": "people",
+   "why": "The feared dispute concerns future generations' relationship with the nation's God.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:32:41+00:00"
+}

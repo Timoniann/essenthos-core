@@ -1,0 +1,87 @@
+{
+ "batch": "b135-HOS-12-1",
+ "answers": [
+  {
+   "key": "BHSA HOS 12:2 #1",
+   "answer": "people",
+   "why": "Ephraim makes treaties with Assyria and sends oil to Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 12:3 #6",
+   "answer": "people",
+   "why": "The LORD's controversy with Judah accompanies judgment on the people described as making foreign treaties.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA HOS 12:9 #3",
+   "answer": "people",
+   "why": "Ephraim boasts of wealth amid accusations of dishonest trade and oppression.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 12:13 #8",
+   "answer": "man",
+   "why": "Israel is Jacob, who fled to Aram and tended sheep to obtain a wife.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 12:14 #7",
+   "answer": "people",
+   "why": "The LORD brought Israel out of Egypt through a prophet.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 12:15 #2",
+   "answer": "people",
+   "why": "Ephraim's provocation and bloodguilt continue the indictment of the people delivered from Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 13:1 #3",
+   "answer": "people",
+   "why": "Ephraim incurred guilt through Baal worship, and the next verse describes their continuing idolatry.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 13:1 #8",
+   "answer": "people",
+   "why": "Israel is the nation within which Ephraim held an exalted position.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 13:9 #2",
+   "answer": "people",
+   "why": "Israel is addressed as having cities, judges, and a demand for a king.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 13:12 #3",
+   "answer": "people",
+   "why": "Ephraim's stored guilt belongs to the people whose king God gave and removed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 14:2 #2",
+   "answer": "people",
+   "why": "The call for Israel to return continues with plural commands to repent and speak to the LORD.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 14:6 #6",
+   "answer": "people",
+   "why": "Israel's flourishing follows God's promise to heal their backsliding and love them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA HOS 14:9 #1",
+   "answer": "people",
+   "why": "Ephraim's rejection of idols concludes the promise of the people's restoration.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:22:21+00:00"
+}

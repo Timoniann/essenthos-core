@@ -1,0 +1,93 @@
+{
+ "batch": "b127-EZK-25-14",
+ "answers": [
+  {
+   "key": "BHSA EZK 25:14 #10",
+   "answer": "people",
+   "why": "Israel is explicitly God's people who will execute vengeance upon Edom.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 27:17 #1",
+   "answer": "people",
+   "why": "Judah trades with Tyre alongside the land of Israel and other nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 28:25 #9",
+   "answer": "people",
+   "why": "The house of Israel is gathered from the nations among whom they were scattered.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 34:2 #6",
+   "answer": "people",
+   "why": "Israel is the nation whose shepherds are condemned for neglecting their flock.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 34:2 #20",
+   "answer": "people",
+   "why": "Israel names the people whose shepherds feed themselves instead of the flock.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 34:14 #10",
+   "answer": "people",
+   "why": "Israel names the national territory whose high mountains will shelter the gathered people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 36:8 #12",
+   "answer": "people",
+   "why": "Israel is explicitly God's people returning to receive the mountains' fruit.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 36:12 #7",
+   "answer": "people",
+   "why": "Israel is God's people who will possess the land as their inheritance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 36:21 #9",
+   "answer": "people",
+   "why": "The house of Israel profaned God's name among the nations where they went.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 36:37 #10",
+   "answer": "people",
+   "why": "The house of Israel will be increased with people like a flock.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 37:16 #29",
+   "answer": "people",
+   "why": "Ephraim's stick represents Joseph's tribal group to be joined with Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 37:16 #33",
+   "answer": "people",
+   "why": "The house of Israel names the people associated with Joseph's stick.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 37:19 #16",
+   "answer": "people",
+   "why": "Ephraim holds the symbolic stick of Joseph alongside allied tribes to be united with Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 37:28 #10",
+   "answer": "people",
+   "why": "God sanctifies Israel by placing his sanctuary among them, whom he calls his people.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:21:19+00:00"
+}

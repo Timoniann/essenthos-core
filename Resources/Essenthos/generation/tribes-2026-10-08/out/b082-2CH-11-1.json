@@ -1,0 +1,93 @@
+{
+ "batch": "b082-2CH-11-1",
+ "answers": [
+  {
+   "key": "BHSA 2CH 11:1 #11",
+   "answer": "people",
+   "why": "Rehoboam gathers warriors from Benjamin alongside Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:1 #22",
+   "answer": "people",
+   "why": "Israel is the opposing kingdom Rehoboam intends to fight.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:3 #11",
+   "answer": "people",
+   "why": "The message addresses all Israel residing in Judah and Benjamin.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:3 #13",
+   "answer": "people",
+   "why": "Judah names the territory where the addressed Israelites live.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:3 #15",
+   "answer": "people",
+   "why": "Benjamin names the tribal territory where the addressed Israelites live.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:5 #12",
+   "answer": "people",
+   "why": "Rehoboam builds defensive cities within Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:10 #12",
+   "answer": "people",
+   "why": "The fortified cities are located in Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:10 #15",
+   "answer": "people",
+   "why": "The fortified cities are located in Benjamin's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:12 #18",
+   "answer": "people",
+   "why": "Judah is the tribe supporting Rehoboam.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:12 #20",
+   "answer": "people",
+   "why": "Benjamin is the tribe supporting Rehoboam alongside Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:13 #10",
+   "answer": "people",
+   "why": "Priests and Levites throughout Israel come from their territories to Rehoboam.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:14 #12",
+   "answer": "people",
+   "why": "The Levites leave their holdings and relocate to Judah and Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:16 #16",
+   "answer": "people",
+   "why": "People from all the tribes seek the LORD as the God of their nation Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 11:23 #13",
+   "answer": "people",
+   "why": "Rehoboam disperses his children among fortified cities in Benjamin's territory.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:39:40+00:00"
+}

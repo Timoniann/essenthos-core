@@ -1,0 +1,66 @@
+{
+ "pair": [
+  "amaziah-4",
+  "amaziah-the-merarite"
+ ],
+ "case": {
+  "name": "Amaziah",
+  "A": {
+   "name": "Amaziah",
+   "line": "Levite, son of Hilkiah, father of Hashabiah, in Kohathite/singer genealogy.",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of hashabiah (Hashabiah, son of Amaziah (1CH 6:45), Levite during the return (NEH 10:)",
+    "son-of hilkiah-4 (Hilkiah, son of Amzi (1CH 6:45))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 6:45"
+   ],
+   "kjv": {
+    "1CH 6:45": "The son of Hashabiah, the son of Amaziah, the son of Hilkiah,"
+   }
+  },
+  "B": {
+   "name": "Amaziah",
+   "line": "son of Hilkiah, in the line of Ethan the Merarite singer (1CH 6:45)",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of hashabiah (Hashabiah, son of Amaziah (1CH 6:45), Levite during the return (NEH 10:)",
+    "son-of hilkiah-4 (Hilkiah, son of Amzi (1CH 6:45))"
+   ],
+   "named_by": [
+    "hashabiah (Hashabiah, son of Amaziah (1CH 6:45), Levite during the return (NEH 10:) son-of",
+    "hilkiah-4 (Hilkiah, son of Amzi (1CH 6:45)) father-of"
+   ],
+   "verse_count": 1,
+   "verses": [
+    "1CH 6:45"
+   ],
+   "kjv": {
+    "1CH 6:45": "The son of Hashabiah, the son of Amaziah, the son of Hilkiah,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 6:45": "בֶּן־חֲשַׁבְיָ֥ה בֶן־אֲמַצְיָ֖ה בֶּן־חִלְקִיָּֽה׃ ",
+   "KJV 1CH 6:45": "The son of Hashabiah, the son of Amaziah, the son of Hilkiah,"
+  },
+  "first_reader_said": [
+   "1CH 6:45: Both records are Amaziah son of Hilkiah, father of Hashabiah, in Ethan's line."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "Both records identify the same Amaziah in 1CH 6:45: son of Hilkiah and father of Hashabiah, with identical family links and the same sole naming verse. B preserves the fuller reciprocal links and correctly identifies Ethan’s Merarite line; A’s Kohathite label does not establish another person.",
+ "confidence": 0.99,
+ "verses_of_other": [],
+ "keep_slug": "amaziah-the-merarite",
+ "fold_slug": "amaziah-4",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:33:24+00:00"
+}

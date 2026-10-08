@@ -1,0 +1,99 @@
+{
+ "batch": "b088-2CH-25-5",
+ "answers": [
+  {
+   "key": "BHSA 2CH 25:5 #5",
+   "answer": "people",
+   "why": "Amaziah gathers Judah and organizes its men into military units.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:5 #22",
+   "answer": "people",
+   "why": "All Judah supplies men aged twenty and above for Amaziah's army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:5 #24",
+   "answer": "people",
+   "why": "Benjamin supplies soldiers alongside Judah in the military census.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:6 #4",
+   "answer": "people",
+   "why": "Amaziah hires one hundred thousand warriors from Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:7 #15",
+   "answer": "people",
+   "why": "Israel names the people whose army is forbidden to accompany Amaziah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:7 #20",
+   "answer": "people",
+   "why": "Israel is explicitly identified with all the children of Ephraim.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:9 #20",
+   "answer": "people",
+   "why": "Israel names the nation whose hired army received the hundred talents.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:10 #11",
+   "answer": "people",
+   "why": "The dismissed army came from Ephraim and returns to its own homes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:10 #21",
+   "answer": "people",
+   "why": "The dismissed soldiers become angry with Judah after Amaziah sends them home.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:19 #23",
+   "answer": "people",
+   "why": "Joash warns that Amaziah and his kingdom Judah will fall together.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:21 #18",
+   "answer": "people",
+   "why": "Bethshemesh belongs to Judah's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:22 #3",
+   "answer": "people",
+   "why": "Judah suffers military defeat and its men flee to their tents.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:22 #6",
+   "answer": "people",
+   "why": "Israel is the opposing nation before which Judah is defeated.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 25:23 #26",
+   "answer": "people",
+   "why": "Ephraim identifies Jerusalem's gate toward the tribal territory.",
+   "confidence": 0.98
+  },
+  {
+   "key": "BHSA 2CH 25:26 #19",
+   "answer": "people",
+   "why": "Israel is paired with Judah as a kingdom whose kings have recorded histories.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:40:24+00:00"
+}

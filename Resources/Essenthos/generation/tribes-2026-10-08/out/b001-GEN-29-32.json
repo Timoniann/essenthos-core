@@ -1,0 +1,81 @@
+{
+ "batch": "b001-GEN-29-32",
+ "answers": [
+  {
+   "key": "BHSA GEN 29:32 #10",
+   "answer": "man",
+   "why": "Leah names her newborn son Reuben.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 29:33 #24",
+   "answer": "man",
+   "why": "Leah names the son she has just borne Simeon.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 29:34 #24",
+   "answer": "man",
+   "why": "Leah's third son is given the name Levi.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 29:35 #18",
+   "answer": "man",
+   "why": "Leah names her newborn son Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 30:6 #19",
+   "answer": "man",
+   "why": "Rachel names the son Bilhah has borne to Jacob Dan.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 30:8 #14",
+   "answer": "man",
+   "why": "Rachel names Bilhah's second son Naphtali.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 30:11 #10",
+   "answer": "man",
+   "why": "Leah names the son Zilpah has borne to Jacob Gad.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 30:13 #13",
+   "answer": "man",
+   "why": "Leah names Zilpah's second son Asher.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 30:14 #3",
+   "answer": "man",
+   "why": "Reuben finds mandrakes and brings them to his mother Leah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 30:18 #15",
+   "answer": "man",
+   "why": "Leah names her newly born fifth son Issachar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 30:20 #22",
+   "answer": "man",
+   "why": "Leah names her newly born sixth son Zebulun.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA GEN 32:29 #10",
+   "answer": "man",
+   "why": "Jacob is personally given the new name Israel after his struggle.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:29:08+00:00"
+}

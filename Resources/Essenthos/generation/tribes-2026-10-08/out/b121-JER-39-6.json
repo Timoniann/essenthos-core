@@ -1,0 +1,105 @@
+{
+ "batch": "b121-JER-39-6",
+ "answers": [
+  {
+   "key": "BHSA JER 39:6 #16",
+   "answer": "people",
+   "why": "The king of Babylon slays the nobles of the kingdom of Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 39:16 #15",
+   "answer": "people",
+   "why": "The LORD is called the God of Israel while announcing judgment on the city.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 40:1 #34",
+   "answer": "people",
+   "why": "Judah names the population carried captive to Babylon alongside Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 40:11 #29",
+   "answer": "people",
+   "why": "Babylon has left a remnant of Judah and appointed Gedaliah over them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 40:15 #41",
+   "answer": "people",
+   "why": "The remnant of Judah is the surviving community threatened with destruction.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 42:9 #8",
+   "answer": "people",
+   "why": "The God of Israel receives the supplication of the assembled people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 42:15 #14",
+   "answer": "people",
+   "why": "The God of Israel addresses Judah's remnant about moving to Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 42:18 #7",
+   "answer": "people",
+   "why": "The God of Israel warns the community of judgment like that upon Jerusalem's inhabitants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 43:10 #9",
+   "answer": "people",
+   "why": "The God of Israel announces Nebuchadrezzar's coming to the Judean men in Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 44:2 #6",
+   "answer": "people",
+   "why": "The God of Israel addresses the Jews about the devastation of Jerusalem and Judah's cities.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 44:7 #9",
+   "answer": "people",
+   "why": "The God of Israel rebukes the community for evil that threatens its survival.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 44:7 #28",
+   "answer": "people",
+   "why": "Men, women, children and infants are threatened with being cut off from Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 44:11 #7",
+   "answer": "people",
+   "why": "The God of Israel announces judgment against the disobedient Judean community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 44:11 #19",
+   "answer": "people",
+   "why": "All Judah is threatened with destruction, followed by judgment on its remnant in Egypt.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 44:25 #6",
+   "answer": "people",
+   "why": "The God of Israel addresses the people and their wives about their idolatrous vows.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JER 44:28 #16",
+   "answer": "people",
+   "why": "Judah's remnant consists of those who went to Egypt to live there.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:20:36+00:00"
+}

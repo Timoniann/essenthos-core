@@ -1,0 +1,81 @@
+{
+ "batch": "b125-EZK-12-10",
+ "answers": [
+  {
+   "key": "BHSA EZK 12:10 #18",
+   "answer": "people",
+   "why": "The whole house of Israel in Jerusalem faces removal into captivity.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 12:23 #20",
+   "answer": "people",
+   "why": "The proverb will cease to be used among Israel's inhabitants.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 13:2 #6",
+   "answer": "people",
+   "why": "Israel is the nation whose false prophets Ezekiel must address.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 13:4 #6",
+   "answer": "people",
+   "why": "Israel is addressed as the community whose prophets resemble foxes in ruins.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 13:9 #23",
+   "answer": "people",
+   "why": "The false prophets will be excluded from the register of the house of Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 13:16 #2",
+   "answer": "people",
+   "why": "Israel's prophets proclaim false visions of peace concerning Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 14:1 #7",
+   "answer": "people",
+   "why": "The elders of Israel come as representatives of the community to Ezekiel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 14:5 #5",
+   "answer": "people",
+   "why": "The house of Israel is described collectively as estranged through their idols.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 14:7 #14",
+   "answer": "people",
+   "why": "A foreigner sojourns in Israel, identifying the nation's territory and community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 14:9 #27",
+   "answer": "people",
+   "why": "God explicitly calls Israel his people, from whose midst the prophet is destroyed.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 17:23 #4",
+   "answer": "people",
+   "why": "The planting occurs on Israel's lofty mountain, locating it in the nation's territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 18:3 #16",
+   "answer": "people",
+   "why": "The plural audience will no longer use this proverb in Israel.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:20:57+00:00"
+}

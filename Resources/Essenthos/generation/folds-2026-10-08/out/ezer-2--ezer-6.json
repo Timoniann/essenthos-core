@@ -1,0 +1,65 @@
+{
+ "pair": [
+  "ezer-2",
+  "ezer-6"
+ ],
+ "case": {
+  "name": "Ezer",
+  "A": {
+   "name": "Ezer",
+   "line": "son of Hur (1CH 4:4)",
+   "sex": "male",
+   "tribe": "Judah",
+   "notes": null,
+   "family": [
+    "son-of hur (Hur, supported Moses' hands during the battle against Amalek at R)",
+    "father-of hushah (Hushah, son of Ezer (1CH 4:4))"
+   ],
+   "named_by": [
+    "hushah (Hushah, son of Ezer (1CH 4:4)) son-of"
+   ],
+   "verse_count": 1,
+   "verses": [
+    "1CH 4:4"
+   ],
+   "kjv": {
+    "1CH 4:4": "And Penuel the father of Gedor, and Ezer the father of Hushah. These are the sons of Hur, the firstborn of Ephratah, the father of Bethlehem."
+   }
+  },
+  "B": {
+   "name": "Ezer",
+   "line": "Judahite, son of Hur, father of Hushah",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of hur (Hur, supported Moses' hands during the battle against Amalek at R)",
+    "father-of hushah (Hushah, son of Ezer (1CH 4:4))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 4:4"
+   ],
+   "kjv": {
+    "1CH 4:4": "And Penuel the father of Gedor, and Ezer the father of Hushah. These are the sons of Hur, the firstborn of Ephratah, the father of Bethlehem."
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 4:4": "וּפְנוּאֵל֙ אֲבִ֣י גְדֹ֔ר וְעֵ֖זֶר אֲבִ֣י חוּשָׁ֑ה אֵ֤לֶּה בְנֵי־חוּר֙ בְּכֹ֣ור אֶפְרָ֔תָה אֲבִ֖י בֵּ֥ית לָֽחֶם׃ ",
+   "KJV 1CH 4:4": "And Penuel the father of Gedor, and Ezer the father of Hushah. These are the sons of Hur, the firstborn of Ephratah, the father of Bethlehem."
+  },
+  "first_reader_said": [
+   "1CH 4:4: Both records are Ezer son of Hur, father of Hushah."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "1CH 4:4 names a single Ezer, father of Hushah, among the sons of Hur; both records have exactly these relationships and this sole verse. A is fuller, including the reciprocal relationship from Hushah and explicit sex and tribe, so B should be folded into A.",
+ "confidence": 0.99,
+ "verses_of_other": [],
+ "keep_slug": "ezer-2",
+ "fold_slug": "ezer-6",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:32:55+00:00"
+}

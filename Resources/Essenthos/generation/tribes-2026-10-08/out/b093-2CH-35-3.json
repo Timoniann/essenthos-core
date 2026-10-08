@@ -1,0 +1,87 @@
+{
+ "batch": "b093-2CH-35-3",
+ "answers": [
+  {
+   "key": "BHSA 2CH 35:3 #10",
+   "answer": "people",
+   "why": "The Levites taught all Israel, meaning the assembled nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 35:3 #44",
+   "answer": "people",
+   "why": "Israel is explicitly called God's people whom the Levites must serve.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 35:18 #7",
+   "answer": "people",
+   "why": "The Passover was celebrated in Israel from the days of Samuel onward.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 35:18 #33",
+   "answer": "people",
+   "why": "All Judah joined Josiah in celebrating the Passover.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 35:18 #35",
+   "answer": "people",
+   "why": "Israel refers to those present who celebrated the Passover with Judah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 35:24 #27",
+   "answer": "people",
+   "why": "All Judah and Jerusalem mourned King Josiah.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 35:25 #26",
+   "answer": "people",
+   "why": "The lamentations for Josiah became an ordinance for Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 35:27 #15",
+   "answer": "people",
+   "why": "Judah names the kingdom whose kings' records contain Josiah's deeds.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 36:4 #9",
+   "answer": "people",
+   "why": "Eliakim was appointed king over Judah and Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 36:8 #20",
+   "answer": "people",
+   "why": "Judah names the kingdom in the book recording its kings' deeds.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 36:10 #24",
+   "answer": "people",
+   "why": "Zedekiah was appointed king over Judah and Jerusalem.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 36:13 #25",
+   "answer": "people",
+   "why": "The LORD is called the God of Israel in the account of the nation's rebellion.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA 2CH 36:23 #28",
+   "answer": "people",
+   "why": "Judah is the territory in which Jerusalem stands.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:41:08+00:00"
+}

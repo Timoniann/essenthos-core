@@ -1,0 +1,64 @@
+{
+ "pair": [
+  "azarel",
+  "azarel-5"
+ ],
+ "case": {
+  "name": "Azarel",
+  "A": {
+   "name": "Azarel",
+   "line": "the Korahite (1CH 12:6), chosen eleventh by lot (1CH 25:18)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Korahites, eleventh chosen of the singers (1CH 25:18)",
+   "family": [
+    "of-people korahites (Korahites, patronymic of H7141, as Strong's Dictionary derives it)",
+    "descendant-of korah-3 (Korah, son of Izhar (EXO 6:21) who rebelled against G-d and Moses ()"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "1CH 12:6",
+    "1CH 25:18"
+   ],
+   "kjv": {
+    "1CH 12:6": "Elkanah, and Jesiah, and Azareel, and Joezer, and Jashobeam, the Korhites,",
+    "1CH 25:18": "The eleventh to Azareel, he, his sons, and his brethren, were twelve:"
+   }
+  },
+  "B": {
+   "name": "Azarel",
+   "line": "Levite musician of Heman's family, head of the eleventh course",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": null,
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 25:18"
+   ],
+   "kjv": {
+    "1CH 25:18": "The eleventh to Azareel, he, his sons, and his brethren, were twelve:"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 25:18": "עַשְׁתֵּֽי־עָשָׂ֣ר עֲזַרְאֵ֔ל בָּנָ֥יו וְאֶחָ֖יו שְׁנֵ֥ים עָשָֽׂר׃ ",
+   "KJV 1CH 25:18": "The eleventh to Azareel, he, his sons, and his brethren, were twelve:"
+  },
+  "first_reader_said": [
+   "1CH 25:18: Both records are the Azarel who drew the eleventh lot among the singers."
+  ]
+ },
+ "verdict": "two",
+ "keep": "none",
+ "why": "1CH 12:6 identifies A in the roster of Korahites who joined David’s fighting force. 1CH 25:18 identifies B as the head of the eleventh musical course in Heman’s family, a separate roster identity. Shared Korahite ancestry does not establish that these men were identical; 1CH 25:18 should belong to B alone.",
+ "confidence": 0.85,
+ "verses_of_other": [
+  "1CH 25:18"
+ ],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:33:12+00:00"
+}

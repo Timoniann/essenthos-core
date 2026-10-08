@@ -1,0 +1,81 @@
+{
+ "batch": "b112-ISA-49-3",
+ "answers": [
+  {
+   "key": "BHSA ISA 49:3 #6",
+   "answer": "people",
+   "why": "Israel is addressed as God's servant, personifying the nation rather than the patriarch Jacob.",
+   "confidence": 0.97
+  },
+  {
+   "key": "BHSA ISA 49:5 #16",
+   "answer": "people",
+   "why": "Israel is to be gathered and restored, with the following verse identifying its tribes and survivors.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 49:6 #15",
+   "answer": "people",
+   "why": "The preserved of Israel are the people restored alongside the tribes of Jacob.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 49:7 #5",
+   "answer": "people",
+   "why": "The LORD is the Redeemer of Israel, the people whose restoration is described immediately before.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 49:7 #28",
+   "answer": "people",
+   "why": "The Holy One of Israel names the God of the nation being restored.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 52:12 #19",
+   "answer": "people",
+   "why": "The God of Israel protects the departing people addressed with plural pronouns.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 54:5 #10",
+   "answer": "people",
+   "why": "The Holy One of Israel is the Redeemer of the community portrayed as a forsaken wife.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 55:5 #18",
+   "answer": "people",
+   "why": "The Holy One of Israel is the nation's God, whose glory draws other nations.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 56:8 #6",
+   "answer": "people",
+   "why": "Israel has outcasts whom God gathers together with others.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 60:9 #27",
+   "answer": "people",
+   "why": "The Holy One of Israel glorifies the community whose children return from afar.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 60:14 #21",
+   "answer": "people",
+   "why": "Zion is called the city of the Holy One of Israel, the nation's God.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA ISA 63:16 #9",
+   "answer": "man",
+   "why": "Israel stands alongside Abraham as an ancestral father who does not acknowledge his descendants.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:19:21+00:00"
+}

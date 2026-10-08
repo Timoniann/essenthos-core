@@ -1,0 +1,147 @@
+{
+ "batch": "b025-JOS-14-4",
+ "answers": [
+  {
+   "key": "BHSA JOS 14:4 #9",
+   "answer": "people",
+   "why": "Ephraim is explicitly named as one of the two tribes descended from Joseph.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 14:10 #28",
+   "answer": "people",
+   "why": "Israel wandered in the wilderness during the time of Moses.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 14:14 #24",
+   "answer": "people",
+   "why": "The LORD is called the God of Israel in the account of Caleb's inheritance.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 15:6 #19",
+   "answer": "man",
+   "why": "Reuben is named as Bohan's father in the designation of the stone.",
+   "confidence": 0.95
+  },
+  {
+   "key": "BHSA JOS 16:4 #5",
+   "answer": "people",
+   "why": "Manasseh receives its territorial inheritance alongside Ephraim.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 16:4 #7",
+   "answer": "people",
+   "why": "Ephraim receives its territorial inheritance alongside Manasseh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 16:10 #17",
+   "answer": "people",
+   "why": "The Canaanites remain among Ephraim and serve under tribute.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:1 #15",
+   "answer": "man",
+   "why": "Manasseh is named as the father whose firstborn is Machir.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:3 #11",
+   "answer": "man",
+   "why": "Manasseh is Machir's father in Zelophehad's genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:5 #4",
+   "answer": "people",
+   "why": "Ten territorial portions are allotted to Manasseh besides Gilead and Bashan.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:6 #3",
+   "answer": "people",
+   "why": "Manasseh's female descendants receive inheritance among the tribe's male descendants.",
+   "confidence": 0.99
+  },
+  {
+   "key": "BHSA JOS 17:7 #6",
+   "answer": "people",
+   "why": "Asher marks a geographical starting point for Manasseh's territorial boundary.",
+   "confidence": 0.86
+  },
+  {
+   "key": "BHSA JOS 17:8 #2",
+   "answer": "people",
+   "why": "Manasseh holds the land of Tappuah in the tribal allotment.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:9 #15",
+   "answer": "people",
+   "why": "The cities belong to Ephraim within Manasseh's allotted territory.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:10 #3",
+   "answer": "people",
+   "why": "The territory south of the boundary belongs to Ephraim.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:10 #7",
+   "answer": "people",
+   "why": "The territory north of the boundary belongs to Manasseh.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:10 #15",
+   "answer": "people",
+   "why": "The tribal territories meet Asher on the north.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:10 #21",
+   "answer": "people",
+   "why": "The tribal territories meet Issachar on the east.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:11 #4",
+   "answer": "people",
+   "why": "Manasseh possesses towns within the territories of Issachar and Asher.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:11 #6",
+   "answer": "people",
+   "why": "Issachar is the territory in which Manasseh possesses towns.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:11 #9",
+   "answer": "people",
+   "why": "Asher is the territory in which Manasseh possesses towns.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:17 #8",
+   "answer": "people",
+   "why": "Joshua addresses Ephraim as part of a numerous people needing additional land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 17:17 #11",
+   "answer": "people",
+   "why": "Joshua addresses Manasseh as part of a numerous people needing additional land.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:32:39+00:00"
+}

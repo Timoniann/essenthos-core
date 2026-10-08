@@ -94,6 +94,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\PhilipRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SynodalJehoiakimRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\RevelationTribeRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\EponymReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\SynodalChristTitleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OhienkoAdamRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\OhienkoGentilicRecords.json" />

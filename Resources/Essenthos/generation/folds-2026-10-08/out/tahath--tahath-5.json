@@ -1,0 +1,69 @@
+{
+ "pair": [
+  "tahath",
+  "tahath-5"
+ ],
+ "case": {
+  "name": "Tahath",
+  "A": {
+   "name": "Tahath",
+   "line": "son of Assir (1CH 6:24)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "Kohathite",
+   "family": [
+    "son-of assir-2 (Assir, son of Ebiasaph (1CH 6:23))",
+    "father-of uriel (Uriel, son of Tahath (1CH 6:24), chief of the sons of Kohath (1CH 1)",
+    "descendant-of korah-3 (Korah, son of Izhar (EXO 6:21) who rebelled against G-d and Moses ()"
+   ],
+   "named_by": [
+    "assir-2 (Assir, son of Ebiasaph (1CH 6:23)) father-of",
+    "uriel (Uriel, son of Tahath (1CH 6:24), chief of the sons of Kohath (1CH 1) son-of",
+    "uriel-2 (Uriel, Levite ancestor, son of Tahath and father of Uzziah, in Koha) son-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "1CH 6:24",
+    "1CH 6:37"
+   ],
+   "kjv": {
+    "1CH 6:24": "Tahath his son, Uriel his son, Uzziah his son, and Shaul his son.",
+    "1CH 6:37": "The son of Tahath, the son of Assir, the son of Ebiasaph, the son of Korah,"
+   }
+  },
+  "B": {
+   "name": "Tahath",
+   "line": "Kohathite Levite, son of Assir, father of Zephaniah (Heman's ancestry); possibly same as bearer 1",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "son-of assir-2 (Assir, son of Ebiasaph (1CH 6:23))"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "1CH 6:37"
+   ],
+   "kjv": {
+    "1CH 6:37": "The son of Tahath, the son of Assir, the son of Ebiasaph, the son of Korah,"
+   }
+  },
+  "disputed_verses": {
+   "BHSA 1CH 6:37": "בֶּן־תַּ֨חַת֙ בֶּן־אַסִּ֔יר בֶּן־אֶבְיָסָ֖ף בֶּן־קֹֽרַח׃ ",
+   "KJV 1CH 6:37": "The son of Tahath, the son of Assir, the son of Ebiasaph, the son of Korah,"
+  },
+  "first_reader_said": [
+   "1CH 6:37: Tahath son of Assir son of Ebiasaph holds the same place as in 6:23-24, and both records are son of Assir."
+  ]
+ },
+ "verdict": "one",
+ "keep": "A",
+ "why": "The ancestry in 1CH 6:37—Tahath, Assir, Ebiasaph, Korah—matches A's family line in 1CH 6:23–24. B repeats this same identification, and its description of Tahath as Zephaniah's father does not conflict with his also having Uriel as a son in 1CH 6:24. A preserves the fuller family ties and both verse references.",
+ "confidence": 0.97,
+ "verses_of_other": [],
+ "keep_slug": "tahath",
+ "fold_slug": "tahath-5",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:33:29+00:00"
+}

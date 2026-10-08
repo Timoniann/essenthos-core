@@ -1,0 +1,77 @@
+{
+ "pair": [
+  "hashabiah-11",
+  "hashabiah-2"
+ ],
+ "case": {
+  "name": "Hashabiah",
+  "A": {
+   "name": "Hashabiah",
+   "line": "Son of Bunni, father of Azrikam, ancestor of Shemaiah in Nehemiah's day",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "father-of azrikam-3 (Azrikam, son of Hashabiah (1CH 9:14))",
+    "descendant-of merari (Merari, son of Levi (GEN 46:11))"
+   ],
+   "named_by": null,
+   "verse_count": 2,
+   "verses": [
+    "1CH 9:14",
+    "NEH 11:15"
+   ],
+   "kjv": {
+    "1CH 9:14": "And of the Levites; Shemaiah the son of Hasshub, the son of Azrikam, the son of Hashabiah, of the sons of Merari;",
+    "NEH 11:15": "Also of the Levites: Shemaiah the son of Hashub, the son of Azrikam, the son of Hashabiah, the son of Bunni;"
+   }
+  },
+  "B": {
+   "name": "Hashabiah",
+   "line": "son of Jeduthun (1CH 25:3), chosen twelfth by lot (1CH 25:19), descendant of Hebron (1CH 26:30)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "set apart to prophesy with lyres, harps, and cymbals (1CH 25:1), twelfth chosen of the singers (1CH 25:19)",
+   "family": [
+    "son-of jeduthun (Jeduthun, father of Galal (1CH 9:16))",
+    "son-of bunni-2 (Bunni, father of Hashabiah (NEH 11:15))",
+    "father-of azrikam-3 (Azrikam, son of Hashabiah (1CH 9:14))"
+   ],
+   "named_by": [
+    "bunni-2 (Bunni, father of Hashabiah (NEH 11:15)) father-of",
+    "merari (Merari, son of Levi (GEN 46:11)) ancestor-of"
+   ],
+   "verse_count": 4,
+   "verses": [
+    "1CH 25:3",
+    "1CH 25:19",
+    "1CH 26:30",
+    "NEH 11:15"
+   ],
+   "kjv": {
+    "1CH 25:3": "Of Jeduthun: the sons of Jeduthun; Gedaliah, and Zeri, and Jeshaiah, Hashabiah, and Mattithiah, six, under the hands of their father Jeduthun, who prophesied with a harp, to give thanks and to praise the LORD.",
+    "1CH 25:19": "The twelfth to Hashabiah, he, his sons, and his brethren, were twelve:",
+    "1CH 26:30": "And of the Hebronites, Hashabiah and his brethren, men of valour, a thousand and seven hundred, were officers among them of Israel on this side Jordan westward in all the business of the LORD, and in the service of the king.",
+    "NEH 11:15": "Also of the Levites: Shemaiah the son of Hashub, the son of Azrikam, the son of Hashabiah, the son of Bunni;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 11:15": "וּמִֽן־הַלְוִיִּ֑ם שְׁמַעְיָ֧ה בֶן־חַשּׁ֛וּב בֶּן־עַזְרִיקָ֥ם בֶּן־חֲשַׁבְיָ֖ה בֶּן־בּוּנִּֽי׃ ",
+   "KJV NEH 11:15": "Also of the Levites: Shemaiah the son of Hashub, the son of Azrikam, the son of Hashabiah, the son of Bunni;"
+  },
+  "first_reader_said": [
+   "NEH 11:15: Both records are Hashabiah, son of Bunni and father of Azrikam, in Shemaiah's Levitical pedigree; A adds an unsupported tie to Jeduthun."
+  ]
+ },
+ "verdict": "two",
+ "keep": "none",
+ "why": "A is Hashabiah son of Bunni, father of Azrikam, in Shemaiah’s Merarite ancestry (NEH 11:15; 1CH 9:14). B’s singer is a son of Jeduthun assigned the twelfth division in David’s time (1CH 25:3,19), a different father and historical setting. NEH 11:15 belongs to A and is wrongly attached to B; B’s duplicated family ties do not establish identity. The Hebronite officer in 1CH 26:30 also has a different Levitical lineage from A’s Merarite family.",
+ "confidence": 0.99,
+ "verses_of_other": [
+  "NEH 11:15"
+ ],
+ "keep_slug": null,
+ "fold_slug": null,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:36:44+00:00"
+}

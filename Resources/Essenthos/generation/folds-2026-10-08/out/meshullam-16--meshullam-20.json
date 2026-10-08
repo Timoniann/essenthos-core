@@ -1,0 +1,65 @@
+{
+ "pair": [
+  "meshullam-16",
+  "meshullam-20"
+ ],
+ "case": {
+  "name": "Meshullam",
+  "A": {
+   "name": "Meshullam",
+   "line": "son of Ezra (NEH 12:13)",
+   "sex": "male",
+   "tribe": "Levi",
+   "notes": "As \"priests\" (NEH 12:12), descendants of Aaron",
+   "family": [
+    "descendant-of ezra (Ezra, son of Seraiah (EZR 7:1), scribe skilled in the Law (EZR 7:6)"
+   ],
+   "named_by": [
+    "ezra-3 (Ezra, Priest who returned with Zerubbabel and Jeshua; ancestor of ) ancestor-of"
+   ],
+   "verse_count": 2,
+   "verses": [
+    "NEH 12:13",
+    "NEH 12:33"
+   ],
+   "kjv": {
+    "NEH 12:13": "Of Ezra, Meshullam; of Amariah, Jehohanan;",
+    "NEH 12:33": "And Azariah, Ezra, and Meshullam,"
+   }
+  },
+  "B": {
+   "name": "Meshullam",
+   "line": "Priest, head of the family of Ezra in Joiakim's days, distinct from item 14's Ginnethon line",
+   "sex": null,
+   "tribe": null,
+   "notes": null,
+   "family": [
+    "descendant-of ezra-3 (Ezra, Priest who returned with Zerubbabel and Jeshua; ancestor of )"
+   ],
+   "named_by": null,
+   "verse_count": 1,
+   "verses": [
+    "NEH 12:13"
+   ],
+   "kjv": {
+    "NEH 12:13": "Of Ezra, Meshullam; of Amariah, Jehohanan;"
+   }
+  },
+  "disputed_verses": {
+   "BHSA NEH 12:13": "לְעֶזְרָ֣א מְשֻׁלָּ֔ם לַאֲמַרְיָ֖ה יְהֹוחָנָֽן׃ ",
+   "KJV NEH 12:13": "Of Ezra, Meshullam; of Amariah, Jehohanan;"
+  },
+  "first_reader_said": [
+   "NEH 12:13: Both records are Meshullam, head of the house of Ezra under Joiakim at 12:13; they differ only in which Ezra they link to."
+  ]
+ },
+ "verdict": "one",
+ "keep": "B",
+ "why": "Both records identify the same Meshullam, head of Ezra’s priestly house in Joiakim’s days (NEH 12:12–13). B correctly identifies the ancestral Ezra as the priest who returned with Zerubbabel (NEH 12:1); A’s link to Ezra the scribe is mistaken. NEH 12:33 gives no father or other distinguishing detail requiring a separate person, although its identification with this Meshullam remains uncertain.",
+ "confidence": 0.96,
+ "verses_of_other": [],
+ "keep_slug": "meshullam-20",
+ "fold_slug": "meshullam-16",
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-08T15:37:09+00:00"
+}

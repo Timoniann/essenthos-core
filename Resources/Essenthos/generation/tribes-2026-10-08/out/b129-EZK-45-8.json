@@ -1,0 +1,147 @@
+{
+ "batch": "b129-EZK-45-8",
+ "answers": [
+  {
+   "key": "BHSA EZK 45:8 #9",
+   "answer": "people",
+   "why": "The prince receives a possession within Israel's land.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 45:8 #23",
+   "answer": "people",
+   "why": "The house of Israel receives land according to its tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 45:9 #8",
+   "answer": "people",
+   "why": "Israel's princes are commanded to stop oppressing God's people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 45:15 #12",
+   "answer": "people",
+   "why": "Israel denotes the national territory whose pastures supply the offering.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 45:16 #16",
+   "answer": "people",
+   "why": "The people of the land give an offering for the prince in Israel.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:1 #30",
+   "answer": "people",
+   "why": "The verse introduces the tribes and assigns Dan a territorial portion.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:2 #11",
+   "answer": "people",
+   "why": "Asher receives a territorial portion beside Dan's border.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:3 #12",
+   "answer": "people",
+   "why": "Naphtali receives a territorial portion beside Asher's border.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:4 #11",
+   "answer": "people",
+   "why": "Manasseh receives a territorial portion beside Naphtali's border.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:5 #11",
+   "answer": "people",
+   "why": "Ephraim receives a territorial portion beside Manasseh's border.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:6 #12",
+   "answer": "people",
+   "why": "Reuben receives a territorial portion beside Ephraim's border.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:7 #11",
+   "answer": "people",
+   "why": "Judah receives a territorial portion beside Reuben's border.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:23 #11",
+   "answer": "people",
+   "why": "Benjamin is among the remaining tribes receiving territorial portions.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:24 #11",
+   "answer": "people",
+   "why": "Simeon receives a territorial portion beside Benjamin's border.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:25 #11",
+   "answer": "people",
+   "why": "Issachar receives a territorial portion beside Simeon's border.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:26 #11",
+   "answer": "people",
+   "why": "Zebulun receives a territorial portion beside Issachar's border.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:27 #11",
+   "answer": "people",
+   "why": "Gad receives a territorial portion beside Zebulun's border.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:31 #13",
+   "answer": "people",
+   "why": "The gates explicitly bear the names of Israel's tribes, including Reuben.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:31 #19",
+   "answer": "people",
+   "why": "Levi names a gate in the explicit list of Israel's tribal names.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:32 #18",
+   "answer": "people",
+   "why": "Benjamin names an eastern gate under the preceding instruction to use tribal names.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:32 #21",
+   "answer": "people",
+   "why": "Dan names an eastern gate under the preceding instruction to use tribal names.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:33 #14",
+   "answer": "people",
+   "why": "Simeon names a southern gate in the sequence of gates named for tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA EZK 48:33 #20",
+   "answer": "people",
+   "why": "Zebulun names a southern gate in the sequence of gates named for tribes.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T14:21:42+00:00"
+}

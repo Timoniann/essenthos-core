@@ -1,0 +1,141 @@
+{
+ "batch": "b022-JOS-7-6",
+ "answers": [
+  {
+   "key": "BHSA JOS 7:6 #20",
+   "answer": "people",
+   "why": "Israel's elders join Joshua in mourning the people's defeat.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 7:8 #8",
+   "answer": "people",
+   "why": "Israel is the army that has turned its back before its enemies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 7:11 #2",
+   "answer": "people",
+   "why": "Israel is described collectively as having sinned and transgressed the covenant.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 7:13 #16",
+   "answer": "people",
+   "why": "The LORD is identified as the God of the people being commanded to sanctify themselves.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 7:13 #20",
+   "answer": "people",
+   "why": "Israel is addressed as the community containing the accursed thing and facing enemies.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 7:15 #28",
+   "answer": "people",
+   "why": "The offender has committed folly within the Israelite community.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 7:16 #10",
+   "answer": "people",
+   "why": "Joshua brings Israel forward according to its tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 7:19 #13",
+   "answer": "people",
+   "why": "Joshua tells Achan to confess to the LORD, the God of the Israelite nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 7:20 #14",
+   "answer": "people",
+   "why": "Achan confesses his sin against the LORD, the God of the Israelite nation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 7:24 #46",
+   "answer": "people",
+   "why": "All Israel accompanies Joshua in bringing Achan to the valley of Achor.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 7:25 #17",
+   "answer": "people",
+   "why": "All Israel collectively stones Achan.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:10 #17",
+   "answer": "people",
+   "why": "Israel's elders accompany Joshua before the army to Ai.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:14 #19",
+   "answer": "people",
+   "why": "The men of Ai go out to battle against the Israelite army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:15 #6",
+   "answer": "people",
+   "why": "All Israel joins Joshua in feigning defeat and fleeing into the wilderness.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:17 #14",
+   "answer": "people",
+   "why": "The men of Ai and Bethel go out after the Israelite army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:17 #24",
+   "answer": "people",
+   "why": "The city's men leave it open while pursuing the Israelite army.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:21 #5",
+   "answer": "people",
+   "why": "All Israel sees the smoke with Joshua and turns to strike the men of Ai.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:22 #12",
+   "answer": "people",
+   "why": "The men of Ai are surrounded by Israelite forces on both sides.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:24 #5",
+   "answer": "people",
+   "why": "Israel is the army that finishes slaying Ai's inhabitants in the field.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:24 #33",
+   "answer": "people",
+   "why": "All Israel returns to Ai and strikes the city with the sword.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:27 #12",
+   "answer": "people",
+   "why": "Israel collectively takes the city's cattle and spoil for themselves.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA JOS 8:30 #8",
+   "answer": "people",
+   "why": "Joshua builds an altar to the nation's God, following Moses' command to the Israelites.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:32:08+00:00"
+}

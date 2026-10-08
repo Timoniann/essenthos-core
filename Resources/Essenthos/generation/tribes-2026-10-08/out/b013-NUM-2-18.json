@@ -1,0 +1,99 @@
+{
+ "batch": "b013-NUM-2-18",
+ "answers": [
+  {
+   "key": "BHSA NUM 2:18 #3",
+   "answer": "people",
+   "why": "Ephraim names the camp organized by armies under its standard.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 3:13 #18",
+   "answer": "people",
+   "why": "Israel is the community whose firstborn humans and animals were consecrated at the exodus.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 4:46 #11",
+   "answer": "people",
+   "why": "Israel has chiefs who join Moses and Aaron in numbering the Levites.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 7:2 #4",
+   "answer": "people",
+   "why": "The princes of Israel are explicitly identified as leaders of the tribes.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 7:84 #12",
+   "answer": "people",
+   "why": "Israel's princes supply the twelve sets of offerings for the altar's dedication.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 10:4 #13",
+   "answer": "people",
+   "why": "Israel consists of thousands whose leaders assemble at the trumpet signal.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 10:29 #33",
+   "answer": "people",
+   "why": "The promised good concerns the people traveling with Moses to the land God will give them.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 10:36 #9",
+   "answer": "people",
+   "why": "Israel is the multitude of thousands to whom Moses asks the LORD to return.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 11:16 #12",
+   "answer": "people",
+   "why": "Israel's seventy elders are explicitly called elders and officers of the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 11:30 #10",
+   "answer": "people",
+   "why": "Israel's elders return with Moses to the camp of the people.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 16:1 #9",
+   "answer": "man",
+   "why": "Levi is named as Kohath's father in Korah's personal genealogy.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 16:9 #7",
+   "answer": "people",
+   "why": "The God of Israel separates the Levites from the nation's congregation for service.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 16:9 #11",
+   "answer": "people",
+   "why": "Israel names the congregation from which the Levites were set apart.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 16:25 #14",
+   "answer": "people",
+   "why": "Israel's elders follow Moses to Dathan and Abiram before he addresses the congregation.",
+   "confidence": 1
+  },
+  {
+   "key": "BHSA NUM 16:34 #3",
+   "answer": "people",
+   "why": "All Israel nearby flee and speak together in fear that the earth will swallow them.",
+   "confidence": 1
+  }
+ ],
+ "model": "gpt-6.1-sol",
+ "effort": "medium",
+ "attempt": 1,
+ "at": "2026-10-08T13:30:39+00:00"
+}
