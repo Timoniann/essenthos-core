@@ -272,41 +272,6 @@
     },
     {
       "record": "jacob",
-      "label": "Israel",
-      "strong": "H3478",
-      "references": [
-        "EXO 4:22",
-        "NUM 20:14",
-        "NUM 21:6",
-        "1KI 18:31",
-        "2KI 17:34",
-        "1CH 16:40",
-        "PSA 136:22",
-        "PSA 149:2",
-        "ISA 49:6",
-        "ISA 63:16",
-        "JER 2:3",
-        "JER 2:14",
-        "LAM 2:1",
-        "LAM 2:3",
-        "EZK 20:5",
-        "HOS 8:14",
-        "HOS 10:1",
-        "HOS 12:13",
-        "MRK 12:29",
-        "LUK 1:54",
-        "ACT 28:20",
-        "ROM 9:6",
-        "PHP 3:5"
-      ],
-      "question": "BibleData files these verses under Jacob as 'Israel'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Israelites?",
-      "options": [
-        "israelites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "jacob",
       "label": "Jesherun",
       "strong": "H3484",
       "references": [
@@ -327,19 +292,6 @@
         "EZR 6:17"
       ],
       "question": "BibleData files these verses under Jacob as 'Israel', and neither the Hebrew nor the Greek of them prints that name, so nothing in their words says whom it meant. Do they name the man, the Israelites, or nobody of the name?",
-      "options": [
-        "israelites",
-        "leave as it is"
-      ]
-    },
-    {
-      "record": "jacob",
-      "label": "Israel My servant",
-      "strong": "H3478",
-      "references": [
-        "ISA 41:8"
-      ],
-      "question": "BibleData files these verses under Jacob as 'Israel My servant'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Israelites?",
       "options": [
         "israelites",
         "leave as it is"
@@ -379,12 +331,16 @@
     },
     {
       "record": "jacob",
-      "label": "My servant Israel",
-      "strong": "H3478",
+      "label": "Israel",
+      "strong": "G2474",
       "references": [
-        "ISA 49:3"
+        "MRK 12:29",
+        "LUK 1:54",
+        "ACT 28:20",
+        "ROM 9:6",
+        "PHP 3:5"
       ],
-      "question": "BibleData files these verses under Jacob as 'My servant Israel'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Israelites?",
+      "question": "BibleData files these verses under Jacob as 'Israel'. They come after his death in the text, and the name stands on its own, in no phrase that says whether it is the man or his people. Do they name the man, or the Israelites?",
       "options": [
         "israelites",
         "leave as it is"
