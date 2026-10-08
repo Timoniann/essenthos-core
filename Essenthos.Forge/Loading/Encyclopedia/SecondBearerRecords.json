@@ -1,0 +1,188 @@
+{
+  "decidedBy": "Essenthos, 2026-10-08, on Strong's entries that number several men under a name the corpus held one record for, proposed by gpt-6.1-sol (Codex, reasoning high) on 2026-10-07 and each occurrence read against its verse by claude-opus-5-5, under the project owner's decision of 2026-09-16 that a namesake the text does not identify is a person of his own and that where the text leaves an identification open the record says so",
+  "policy": "A record is one man, and a word names the one its verse names. Where one record held a second man Strong numbers under the name, his occurrences go to a record of his own; where his record was held already, his words are given to him.",
+  "method": "manual",
+  "source": "Essenthos, on Strong's entries numbering several men under one held name, each occurrence read against its verse by claude-opus-5-5, 2026-10-08",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "1CH 9:15",
+      "position": 5,
+      "surface": "גָלָ֑ל",
+      "strongNumber": "H1559",
+      "create": {
+        "slug": "galal-who-dwelt-in-jerusalem",
+        "name": "Galal",
+        "distinguisher": "a Levite who dwelt in Jerusalem after the return, named with Bakbakkar, Heresh and Mattaniah (1CH 9:15)",
+        "notes": "Whether he is the man of that name in 1CH 9:16 the text does not say.",
+        "kind": "person"
+      },
+      "why": "'And Bakbakkar, Heresh, and Galal, and Mattaniah the son of Micah' among the Levites who dwelt in Jerusalem; the Galal of the next verse is the son of Jeduthun and the forefather of Obadiah, and the text does not make the two one.",
+      "corrects": "galal"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 11:11",
+      "position": 11,
+      "surface": "חַכְמֹונִ֗י",
+      "strongNumber": "H2453",
+      "create": {
+        "slug": "hachmoni-father-of-jashobeam",
+        "name": "Hachmoni",
+        "distinguisher": "whose son Jashobeam was the chief of David's captains (1CH 11:11)",
+        "notes": "Whether he is the man of that name in 1CH 27:32 the text does not say.",
+        "kind": "person"
+      },
+      "why": "'Jashobeam, the son of Hachmoni, the chief of the captains' (בֶּן־חַכְמוֹנִי); the Hachmoni whose son Jehiel was with the king's sons (1CH 27:32) is not said to be the same man.",
+      "corrects": "hachmoni"
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 4:2",
+      "position": 6,
+      "surface": "יָבִ֣ין",
+      "strongNumber": "H2985",
+      "create": {
+        "slug": "jabin-king-of-canaan",
+        "name": "Jabin",
+        "distinguisher": "king of Canaan who reigned in Hazor in the days of Deborah and Barak, whose captain was Sisera (JDG 4:2)",
+        "notes": "Not the king of JOS 11:1, who was slain when his city was taken (JOS 11:10).",
+        "kind": "person"
+      },
+      "why": "'And the LORD sold them into the hand of Jabin king of Canaan, that reigned in Hazor': the oppressor of Judges 4 and Psalm 83:9, long after the Jabin Joshua slew and whose city he burnt (JOS 11:10-11).",
+      "corrects": "jabin"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 27:26",
+      "position": 13,
+      "surface": "כְּלֽוּב",
+      "strongNumber": "H3620",
+      "create": {
+        "slug": "chelub-father-of-ezri",
+        "name": "Chelub",
+        "distinguisher": "father of Ezri, who was over the tillage of the ground for King David (1CH 27:26)",
+        "notes": "Whether he is the man of that name in 1CH 4:11 the text does not say.",
+        "kind": "person"
+      },
+      "why": "'And over them that did the work of the field for tillage of the ground was Ezri the son of Chelub': an officer's father under David; the Chelub of 1 Chronicles 4:11, Shuah's brother, is not said to be him.",
+      "corrects": "chelub"
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 10:17",
+      "position": 3,
+      "surface": "עָדִֽין",
+      "strongNumber": "H5720",
+      "create": {
+        "slug": "adin-who-sealed-the-covenant",
+        "name": "Adin",
+        "distinguisher": "one of the chiefs of the people who sealed the covenant in the days of Nehemiah (NEH 10:16)",
+        "notes": "Whether he is the forefather of the house of that name whose children came up from Babylon (EZR 2:15, NEH 7:20) the text does not say.",
+        "kind": "person"
+      },
+      "why": "'Adonijah, Bigvai, Adin' among the chiefs of the people who sealed the covenant (NEH 10:14-16), a man living in Nehemiah's day; the Adin whose children came up with Zerubbabel (EZR 2:15) is a forefather.",
+      "corrects": "adin"
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 10:16",
+      "position": 2,
+      "surface": "עַזְגָּ֖ד",
+      "strongNumber": "H5803",
+      "create": {
+        "slug": "azgad-who-sealed-the-covenant",
+        "name": "Azgad",
+        "distinguisher": "one of the chiefs of the people who sealed the covenant in the days of Nehemiah (NEH 10:15)",
+        "notes": "Whether he is the forefather of the house of that name whose children came up from Babylon (EZR 2:12, NEH 7:17) the text does not say.",
+        "kind": "person"
+      },
+      "why": "'Bunni, Azgad, Bebai' among the chiefs of the people who sealed the covenant (NEH 10:14-15), a man living in Nehemiah's day; the Azgad whose children came up with Zerubbabel (EZR 2:12) is a forefather.",
+      "corrects": "azgad"
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 10:15",
+      "position": 5,
+      "surface": "פַּחַ֣ת מֹואָ֔ב",
+      "strongNumber": "H6355",
+      "create": {
+        "slug": "pahath-moab-who-sealed-the-covenant",
+        "name": "Pahath-moab",
+        "distinguisher": "one of the chiefs of the people who sealed the covenant in the days of Nehemiah (NEH 10:14)",
+        "notes": "Whether he is the forefather of the house of that name whose children came up from Babylon (EZR 2:6, NEH 7:11) the text does not say.",
+        "kind": "person"
+      },
+      "why": "'Parosh, Pahath-moab, Elam' at the head of the chiefs of the people who sealed the covenant (NEH 10:14), a man living in Nehemiah's day; the Pahath-moab whose children came up with Zerubbabel (EZR 2:6) is a forefather.",
+      "corrects": "pahathmoab"
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 10:15",
+      "position": 4,
+      "surface": "פַּרְעֹשׁ֙",
+      "strongNumber": "H6551",
+      "create": {
+        "slug": "parosh-who-sealed-the-covenant",
+        "name": "Parosh",
+        "distinguisher": "first of the chiefs of the people who sealed the covenant in the days of Nehemiah (NEH 10:14)",
+        "notes": "Whether he is the forefather of the house of that name whose children came up from Babylon (EZR 2:3, NEH 7:8) the text does not say.",
+        "kind": "person"
+      },
+      "why": "'The chief of the people; Parosh, Pahath-moab' who sealed the covenant (NEH 10:14), a man living in Nehemiah's day; the Parosh whose children came up with Zerubbabel (EZR 2:3) is a forefather.",
+      "corrects": "parosh"
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 11:21",
+      "position": 9,
+      "surface": "צִיחָ֥א",
+      "strongNumber": "H6727",
+      "create": {
+        "slug": "ziha-over-the-nethinims",
+        "name": "Ziha",
+        "distinguisher": "who with Gispa was over the Nethinims dwelling in Ophel (NEH 11:21)",
+        "notes": "Whether he is the forefather of the house of that name whose children came up from Babylon (EZR 2:43, NEH 7:46) the text does not say.",
+        "kind": "person"
+      },
+      "why": "'But the Nethinims dwelt in Ophel: and Ziha and Gispa were over the Nethinims': a man set over them in Nehemiah's day; the children of Ziha of Ezra 2:43 are a house of the Nethinims.",
+      "corrects": "ziha"
+    },
+    {
+      "text": "BHSA",
+      "reference": "2SA 23:29",
+      "position": 6,
+      "surface": "אִתַּי֙",
+      "strongNumber": "H863",
+      "create": {
+        "slug": "ittai-son-of-ribai",
+        "name": "Ittai",
+        "distinguisher": "son of Ribai, of Gibeah of the children of Benjamin, one of David's thirty mighty men (2SA 23:29, 1CH 11:31)",
+        "notes": "Another man than the one of that name from Gath (2SA 15:19-22).",
+        "kind": "person"
+      },
+      "why": "'Ittai the son of Ribai out of Gibeah of the children of Benjamin' among the thirty (2SA 23:29; Ithai, 1CH 11:31): a Benjamite, where the Ittai of 2 Samuel 15 is a Gittite, a stranger and an exile.",
+      "corrects": "ittai"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 2:24",
+      "position": 18,
+      "surface": "תְקֹֽועַ",
+      "strongNumber": "H8620",
+      "existing": "tekoa",
+      "why": "'Abiah Hezron's wife bare him Ashur the father of Tekoa': a man, Ashur's son, not the town.",
+      "corrects": "tekoa-2"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 4:5",
+      "position": 5,
+      "surface": "תְקֹ֔ועַ",
+      "strongNumber": "H8620",
+      "existing": "tekoa",
+      "why": "'And Ashur the father of Tekoa had two wives': the man of 1 Chronicles 2:24.",
+      "corrects": "tekoa-2"
+    }
+  ]
+}

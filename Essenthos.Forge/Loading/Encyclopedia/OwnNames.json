@@ -72,6 +72,75 @@
       },
       "hebrewStrongNumber": "H3153",
       "why": "Jeremiah 42:1 writes his name Jezaniah, H3153, the number of the word that names him. Left as it was, that word resolves to Jaazaniah the Maachathite's son alone, the only record bearing H3153."
+    },
+    {
+      "entities": [
+        "baanah",
+        "baanah-3",
+        "baanah-4"
+      ],
+      "label": "Baanah",
+      "was": {
+        "hebrew": "H1195"
+      },
+      "hebrewStrongNumber": "H1196",
+      "why": "H1195 is Baana, Solomon's officers' father (1KI 4:12, 4:16) and Zadok's (NEH 3:4); Ish-bosheth's captain (2SA 4:2), the leader of the return (EZR 2:2, NEH 7:7) and the chief who sealed the covenant (NEH 10:27) are written Baanah, H1196, the number of the words that name them. Left as it was, those words resolve to the father of Heleb alone, the only record bearing H1196."
+    },
+    {
+      "entities": [
+        "ezer-4",
+        "ezer-5"
+      ],
+      "label": "Ezer",
+      "was": {
+        "hebrew": "H5827"
+      },
+      "hebrewStrongNumber": "H5829",
+      "why": "H5827 is Ezer the Ephraimite of 1 Chronicles 7:21; the Gadite who came to David (1CH 12:9) and the repairer of the wall (NEH 3:19) are written H5829, the number of the words that name them. Left as it was, those words resolve to the son of Hur alone."
+    },
+    {
+      "entities": [
+        "areli"
+      ],
+      "label": "Areli",
+      "was": {
+        "hebrew": "H6929"
+      },
+      "hebrewStrongNumber": "H692",
+      "why": "H6929 is Ziphion; Gad's son Areli is H692, the number of the words that name him (GEN 46:16, NUM 26:17)."
+    },
+    {
+      "entities": [
+        "kore-2"
+      ],
+      "label": "Kore",
+      "was": {
+        "hebrew": "H7124"
+      },
+      "hebrewStrongNumber": "H6981",
+      "why": "H7124 is qore, the partridge; Hezekiah's porter Kore son of Imnah (2CH 31:14) is H6981, the number of the word that names him. Left as it was, that word resolves to the Korahite father of Shallum alone."
+    },
+    {
+      "entities": [
+        "shechem-3"
+      ],
+      "label": "Shechem",
+      "was": {
+        "hebrew": "H7927"
+      },
+      "hebrewStrongNumber": "H7928",
+      "why": "H7927 is the town of Shechem; Shemida's son (1CH 7:19) is H7928, the number of the word that names him, which Strong heads for him and for Gilead's son."
+    },
+    {
+      "entities": [
+        "tekoa"
+      ],
+      "label": "Tekoa",
+      "was": {
+        "hebrew": "H8619"
+      },
+      "hebrewStrongNumber": "H8620",
+      "why": "H8619 is taqowa, a trumpet; Ashur's son Tekoa (1CH 2:24, 4:5) is H8620, the number of the words that name him, which Strong heads for the man and the town. Left as it was, those words resolve to the town alone."
     }
   ]
 }
