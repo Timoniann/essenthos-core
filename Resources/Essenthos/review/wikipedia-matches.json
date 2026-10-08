@@ -27460,6 +27460,32 @@
       }
     },
     {
+      "record": "shemaiah-19",
+      "kind": "person",
+      "label": "Shemaiah",
+      "line": "Aaronic priest (NEH 10:8)",
+      "references": [
+        "NEH 10:8",
+        "NEH 12:6",
+        "NEH 12:18",
+        "NEH 12:42"
+      ],
+      "candidates": [
+        {
+          "qid": "Q2090113",
+          "label": "Shemaiah",
+          "description": "prophet",
+          "articles": {
+            "de": "Schemaja",
+            "en": "Shemaiah (prophet)",
+            "uk": "Семей (пророк)"
+          },
+          "evidence": []
+        }
+      ],
+      "others": 11
+    },
+    {
       "record": "sheshbazzar",
       "kind": "person",
       "label": "Sheshbazzar",
@@ -40366,30 +40392,6 @@
       }
     },
     {
-      "record": "shemaiah-19",
-      "kind": "person",
-      "label": "Shemaiah",
-      "line": "Aaronic priest (NEH 10:8)",
-      "references": [
-        "NEH 10:8",
-        "NEH 12:42"
-      ],
-      "candidates": [
-        {
-          "qid": "Q2090113",
-          "label": "Shemaiah",
-          "description": "prophet",
-          "articles": {
-            "de": "Schemaja",
-            "en": "Shemaiah (prophet)",
-            "uk": "Семей (пророк)"
-          },
-          "evidence": []
-        }
-      ],
-      "others": 11
-    },
-    {
       "record": "shemaiah-2",
       "kind": "person",
       "label": "Shemaiah",
@@ -40416,30 +40418,6 @@
         "qid": "Q115805697",
         "by": "verse"
       }
-    },
-    {
-      "record": "shemaiah-24",
-      "kind": "person",
-      "label": "Shemaiah",
-      "line": "Priest who returned from exile with Zerubbabel, head of a priestly house",
-      "references": [
-        "NEH 12:6",
-        "NEH 12:18"
-      ],
-      "candidates": [
-        {
-          "qid": "Q2090113",
-          "label": "Shemaiah",
-          "description": "prophet",
-          "articles": {
-            "de": "Schemaja",
-            "en": "Shemaiah (prophet)",
-            "uk": "Семей (пророк)"
-          },
-          "evidence": []
-        }
-      ],
-      "others": 11
     },
     {
       "record": "shemaiah-25",
@@ -52690,29 +52668,6 @@
       "line": "descendant of Bani who had married a foreign wife (EZR 10:39)",
       "references": [
         "EZR 10:39"
-      ],
-      "candidates": [
-        {
-          "qid": "Q3437128",
-          "label": "Nathan",
-          "description": "third of four sons born to King David and Bathsheba",
-          "articles": {
-            "en": "Nathan (son of David)",
-            "es": "Natán (hijo de David)",
-            "uk": "Натан (син Давида)"
-          },
-          "evidence": []
-        }
-      ],
-      "others": 0
-    },
-    {
-      "record": "nathan-9",
-      "kind": "person",
-      "label": "Nathan",
-      "line": "Brother of Joel, of the tribe of Judah, numbered among David's mighty men.",
-      "references": [
-        "1CH 11:38"
       ],
       "candidates": [
         {
