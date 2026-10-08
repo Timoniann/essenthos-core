@@ -357,7 +357,7 @@ The relation vocabulary is closed. Use only these, and read each as "the entity 
 the target" -- `son-of` means the entity is the son of the target, `father-in-law-of` means the
 entity is the target's father-in-law:
 
-  kinship   son-of daughter-of father-of mother-of brother-of sister-of
+  kinship   son-of daughter-of father-of mother-of adoptive-mother-of brother-of sister-of
             husband-of wife-of concubine-of
             half-brother-of half-sister-of
             grandfather-of grandmother-of grandson-of granddaughter-of

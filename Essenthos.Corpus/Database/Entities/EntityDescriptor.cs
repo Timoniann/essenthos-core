@@ -288,6 +288,13 @@ public static class DescriptorRelations
     public const string DaughterOf = "daughter-of";
     public const string FatherOf = "father-of";
     public const string MotherOf = "mother-of";
+
+    /// <summary>
+    /// The woman who took a child as her own and is not the one who bore it: Rachel of Dan, whom her
+    /// maid Bilhah bore on Rachel's knees (GEN 30:3-6). A tie of the family that is not a parent's: the
+    /// tree draws parents and children, and this is neither.
+    /// </summary>
+    public const string AdoptiveMotherOf = "adoptive-mother-of";
     public const string BrotherOf = "brother-of";
     public const string SisterOf = "sister-of";
     public const string HusbandOf = "husband-of";
@@ -438,7 +445,7 @@ public static class DescriptorRelations
 
     public static readonly IReadOnlySet<string> All = new HashSet<string>(StringComparer.Ordinal)
     {
-        SonOf, DaughterOf, FatherOf, MotherOf, BrotherOf, SisterOf, HusbandOf, WifeOf,
+        SonOf, DaughterOf, FatherOf, MotherOf, AdoptiveMotherOf, BrotherOf, SisterOf, HusbandOf, WifeOf,
         HalfBrotherOf, HalfSisterOf,
         GrandfatherOf, GrandmotherOf, GrandsonOf, GranddaughterOf,
         UncleOf, AuntOf, NephewOf, NieceOf,
@@ -500,6 +507,7 @@ public static class KinRelations
         DescriptorRelations.FatherInLawOf, DescriptorRelations.MotherInLawOf, DescriptorRelations.SonInLawOf,
         DescriptorRelations.DaughterInLawOf, DescriptorRelations.BrotherInLawOf,
         DescriptorRelations.SisterInLawOf, DescriptorRelations.ConcubineOf, DescriptorRelations.CousinOf,
+        DescriptorRelations.AdoptiveMotherOf,
     };
 
     /// <summary>A man as somebody's mother, a woman as somebody's son: the sex a relation says its subject has.</summary>
@@ -518,7 +526,7 @@ public static class KinRelations
         DescriptorRelations.WifeOf, DescriptorRelations.HalfSisterOf, DescriptorRelations.GrandmotherOf,
         DescriptorRelations.GranddaughterOf, DescriptorRelations.AuntOf, DescriptorRelations.NieceOf,
         DescriptorRelations.MotherInLawOf, DescriptorRelations.DaughterInLawOf, DescriptorRelations.SisterInLawOf,
-        DescriptorRelations.ConcubineOf,
+        DescriptorRelations.ConcubineOf, DescriptorRelations.AdoptiveMotherOf,
     };
 
     /// <summary>The relations that make the target the subject's parent, and those that make the subject the target's.</summary>
@@ -574,6 +582,7 @@ public static class DescriptorSubjects
             DescriptorRelations.FatherInLawOf, DescriptorRelations.MotherInLawOf, DescriptorRelations.SonInLawOf,
             DescriptorRelations.DaughterInLawOf, DescriptorRelations.BrotherInLawOf,
             DescriptorRelations.SisterInLawOf, DescriptorRelations.ConcubineOf, DescriptorRelations.CousinOf,
+            DescriptorRelations.AdoptiveMotherOf,
             DescriptorRelations.KingOf, DescriptorRelations.QueenOf, DescriptorRelations.ProphetTo,
             DescriptorRelations.PriestOf, DescriptorRelations.JudgeOf, DescriptorRelations.HighPriestOf,
             DescriptorRelations.CommanderOf, DescriptorRelations.GovernorOf, DescriptorRelations.TetrarchOf,

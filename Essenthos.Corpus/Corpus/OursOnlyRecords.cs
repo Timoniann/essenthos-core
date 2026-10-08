@@ -39,7 +39,7 @@ internal static class OursOnlyRecords
 
     private static readonly HashSet<string> Female =
     [
-        "daughter-of", "mother-of", "wife-of", "sister-of", "half-sister-of", "grandmother-of",
+        "daughter-of", "mother-of", "adoptive-mother-of", "wife-of", "sister-of", "half-sister-of", "grandmother-of",
         "queen-of", "concubine-of", "granddaughter-of", "daughter-in-law-of", "mother-in-law-of",
     ];
 
