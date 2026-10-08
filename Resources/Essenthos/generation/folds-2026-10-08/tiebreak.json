@@ -1,0 +1,230 @@
+{
+ "about": "PRB-0490 tie-break by the third reader (Claude Fable 5.1, 2026-10-08) on the pairs and verses Codex (gpt-6.1-sol) and the blind Opus judge did not settle, read from folds-2026-10-08/out and namesakes-2026-10-08/out. unclear = leave as it is.",
+ "pairs": [
+  {
+   "pair": ["arah-2", "arah-3"],
+   "verdict": "one",
+   "keep": "arah-2",
+   "move": [],
+   "why": "NEH 6:18 'Shechaniah the son of Arah', in 445 BC, uses the family name of EZR 2:5 / NEH 7:10 (775 and 652 'children of Arah' in 538 BC), the way Nehemiah writes 'Malchijah the son of Harim' (NEH 3:11) and 'Zadok the son of Immer' (NEH 3:29); Williamson and Blenkinsopp read it as the Arah family. A second man named Arah, old enough a century after the return to be father of Tobiah's father-in-law, is not what the text offers, and arah-3 holds nothing but this verse.",
+   "confidence": 0.7
+  },
+  {
+   "pair": ["ater", "ater-3"],
+   "verdict": "one",
+   "keep": "ater",
+   "move": [],
+   "why": "NEH 10:17 'Ater, Hizkijah' reproduces 'the children of Ater of Hezekiah' of EZR 2:16 / NEH 7:21 (Williamson: the source's 'Ater of Hezekiah' taken as two names), and NEH 10:14-19 runs through the Ezra 2 families in nearly their order (Parosh, Pahath-moab, Elam, Zattu, Bani ... Bebai, Adonijah, Bigvai, Adin, Ater, Hezekiah ... Hashum, Bezai, Hariph). The sealer entry is the family's name, not a second man called Ater, and the family is what the record ater already stands for.",
+   "confidence": 0.7
+  },
+  {
+   "pair": ["azarel", "azarel-5"],
+   "verdict": "two",
+   "keep": null,
+   "move": [{"verse": "1CH 25:18", "from": "azarel", "to": "azarel-5"}],
+   "why": "1CH 12:6 names a Korahite warrior who came to David at Ziklag. 1CH 25:18's Azareel heads the eleventh course of singers, 'he, his sons, and his brethren, twelve', and is Heman's son Uzziel of 1CH 25:4 under the other form of the name. A fighting man at Ziklag and a son of the singer Heman share only the name; azarel's 'chosen eleventh by lot' and its notes came from 25:18 and go with the verse.",
+   "confidence": 0.85
+  },
+  {
+   "pair": ["baanah-3", "baanah-4"],
+   "verdict": "two",
+   "keep": null,
+   "move": [{"verse": "NEH 10:27", "from": "baanah-3", "to": "baanah-4"}],
+   "why": "baanah-3 is one of the leaders who came with Zerubbabel in 538 BC (EZR 2:2, NEH 7:7), a man, not a family name; NEH 10:27's Baanah seals in 445 BC. Nothing but the name joins them across some ninety years, and the note on baanah-3 claiming NEH 10:27 is the only link. The verse belongs on baanah-4 alone and the note should go.",
+   "confidence": 0.8
+  },
+  {
+   "pair": ["elam-4", "elam-8"],
+   "verdict": "one",
+   "keep": "elam-4",
+   "move": [],
+   "why": "NEH 10:14 'Parosh, Pahath-moab, Elam, Zattu, Bani' is the order of the families in EZR 2:3-10, so the chiefs of the people are entered under family names and 'Elam' here is the first Elam family of EZR 2:7 / NEH 7:12, neither a man of that name nor 'the other Elam' of EZR 2:31. elam-4 already is that family's eponym (EZR 2:7, 8:7, 10:2, 10:26); elam-8 holds only this verse. NEH 12:42's Elam has already gone to elam-9.",
+   "confidence": 0.7
+  },
+  {
+   "pair": ["eliezer-10", "eliezer-7"],
+   "verdict": "two",
+   "keep": null,
+   "move": [{"verse": "EZR 10:18", "from": "eliezer-7", "to": "eliezer-10"}],
+   "why": "eliezer-7 is a 'chief man' Ezra sent from Ahava to Iddo for Levites (EZR 8:16); eliezer-10 is the priest of the sons of Jeshua son of Jozadak who had taken a foreign wife (EZR 10:18). No verse joins the envoy and the priest, and the reference works keep them as different Eliezers. The descendant-of jeshua-3 tie and the 'Aaronic priest' note on eliezer-7 came from 10:18 and go with the verse; EZR 10:23's Levite has already gone to eliezer-11.",
+   "confidence": 0.7
+  },
+  {
+   "pair": ["harim-2", "harim-7"],
+   "verdict": "unclear",
+   "keep": null,
+   "move": [],
+   "why": "NEH 10:27 'Malluch, Harim, Baanah' closes the chiefs of the people. The head of that list (10:14-19) is plainly the Ezra 2 families in order, but from 10:20 on the names (Meshullam, Hezir, Meshezabeel, Zadok, Jaddua, Hanan, Hananiah, Hasshub, Rehum ...) read as men, and Williamson treats them so. Whether this Harim is the lay family of EZR 2:32 / NEH 7:35 signing under its name or a man called Harim, the text does not say.",
+   "confidence": 0.55
+  },
+  {
+   "pair": ["harim-3", "harim-6"],
+   "verdict": "one",
+   "keep": "harim-3",
+   "move": [],
+   "why": "The priestly sealers of NEH 10:2-8 are entered by house: fourteen or fifteen of the twenty-one names are the priestly houses of NEH 12:1-7 and 12:12-21 (Seraiah, Jeremiah, Amariah, Malluch, Hattush, Shebaniah, Harim/Rehum, Meremoth, Ginnethon, Abijah, Mijamin, Maaziah, Bilgah, Shemaiah), as Williamson, Rudolph and Blenkinsopp conclude. 'Harim' at 10:5 is therefore the house whose head under Joiakim was Adna (NEH 12:15), whose sons returned in EZR 2:39 / NEH 7:42 and put away wives in EZR 10:21; harim-3 is that house and harim-6 holds the one verse. The applied Hattush reading (NEH 10:4 and 12:2 on one record) already follows this line.",
+   "confidence": 0.65
+  },
+  {
+   "pair": ["jedaiah-2", "jedaiah-7"],
+   "verdict": "unclear",
+   "keep": null,
+   "move": [],
+   "why": "jedaiah-7 is the family 'children of Jedaiah, of the house of Jeshua' of EZR 2:36 / NEH 7:39; jedaiah-2 is BibleData's merge of that family with the Jedaiah of NEH 12:6 and 12:19 (and, wrongly, the second Jedaiah of 12:7 and 12:21). NEH 12:1-7 names two Jedaiah houses, and whether the 973-strong Ezra 2 family is the first of them, the second, or the parent of both is not said. Not defensible either way; 1CH 9:10 on jedaiah-2 is answered under verses.",
+   "confidence": 0.6
+  },
+  {
+   "pair": ["jehiel-10", "jehiel-4"],
+   "verdict": "unclear",
+   "keep": null,
+   "move": [],
+   "why": "2CH 29:14 names Jehiel son of Heman among the Levites who sanctified the temple in Hezekiah's first year; 2CH 31:13 names a Jehiel among ten overseers under Conaniah in the same reign, and 'Shimei his brother' there is Conaniah's brother (31:12), not Heman's son Shimei of 29:14. Same reign and both Levites make identity plausible (Japhet: may be the same), but no verse joins them.",
+   "confidence": 0.55
+  },
+  {
+   "pair": ["malluch-2", "malluch-5"],
+   "verdict": "unclear",
+   "keep": null,
+   "move": [],
+   "why": "malluch-2 is Malluch of the sons of Bani who put away a foreign wife in 458 BC (EZR 10:29); a Malluch of the sons of Harim did the same (EZR 10:32, malluch-3); NEH 10:27's Malluch seals among the chiefs of the people in 445 BC with no father given. Either, or neither, could be the sealer, and the note on malluch-2 is the only link.",
+   "confidence": 0.55
+  },
+  {
+   "pair": ["malluch-4", "malluch-6"],
+   "verdict": "one",
+   "keep": "malluch-4",
+   "move": [],
+   "why": "NEH 12:2 lists Malluch among the priestly houses that came up with Zerubbabel, NEH 12:14 gives that house's head under Joiakim ('of Melicu, Jonathan'), and NEH 10:4 has 'Malluch' sign among the priests in a list entered by house (fourteen or fifteen of the twenty-one priestly sealers of 10:2-8 are the houses of 12:1-21). The three verses name the one priestly house of Malluch; malluch-4 holds them with the Jonathan tie, malluch-6 is the same house held again. Same reading as the applied Hattush case (NEH 10:4 and 12:2 on one record).",
+   "confidence": 0.65
+  },
+  {
+   "pair": ["nathan-3", "nathan-9"],
+   "verdict": "one",
+   "keep": "nathan-3",
+   "move": [],
+   "why": "1CH 11:38 'Joel the brother of Nathan, Mibhar the son of Haggeri' is the Chronicler's copy of 2SA 23:36 'Igal the son of Nathan of Zobah, Bani the Gadite': the same slot in the list of the Thirty, with yig'al ben / yo'el achi and mitstsovah bani haggadi / mivchar ben hagri as the variants (Japhet). One Nathan stands behind both verses; nathan-9's 'tribe of Judah' has no verse behind it.",
+   "confidence": 0.8
+  },
+  {
+   "pair": ["shemaiah-14", "shemaiah-26"],
+   "verdict": "two",
+   "keep": null,
+   "move": [{"verse": "NEH 12:35", "from": "shemaiah-14", "to": "shemaiah-26"}],
+   "why": "shemaiah-14 is a 'chief man' Ezra sent from Ahava to Iddo for Levites (EZR 8:16, when 'none of the sons of Levi' were there, 8:15); shemaiah-26 is Shemaiah son of Mattaniah, grandfather of the trumpeter Zechariah in the Asaphite pedigree of NEH 12:35. Nothing joins them, and the father tie on shemaiah-14 points at the Hezekiah-era mattaniah-4, which the settled Mattaniah case has already corrected to mattaniah-12 for this verse. The pedigree verse and its son-of and father-of ties belong on shemaiah-26 alone.",
+   "confidence": 0.7
+  },
+  {
+   "pair": ["shemaiah-19", "shemaiah-24"],
+   "verdict": "one",
+   "keep": "shemaiah-19",
+   "move": [],
+   "why": "NEH 12:6 lists Shemaiah among the priestly houses that came up with Zerubbabel, NEH 12:18 gives its head under Joiakim ('of Shemaiah, Jehonathan'), and NEH 10:8 has 'Shemaiah' sign among the priests in a list entered by house (fourteen or fifteen of the twenty-one names of 10:2-8 are the houses of 12:1-21). The three verses name one house; shemaiah-24 is it held again, with the same Jehonathan tie. NEH 12:34 and 12:36 have already left shemaiah-19; NEH 12:42, a priest with a trumpet at the dedication in 445 BC, is another man still sitting on it with no record to go to.",
+   "confidence": 0.65
+  },
+  {
+   "pair": ["uriel", "uriel-2"],
+   "verdict": "two",
+   "keep": null,
+   "move": [{"verse": "1CH 6:24", "from": "uriel", "to": "uriel-2"}],
+   "why": "1CH 6:22-24 runs Korah, Assir, Elkanah, Ebiasaph, Assir, Tahath, Uriel, Uzziah, Shaul: Uriel son of Tahath stands some fourteen generations before Heman and David in the parallel pedigree of 6:33-38 (Tahath, Zephaniah, Azariah, Joel, Elkanah, Amasai, Mahath, Elkanah, Zuph, Toah, Eliel, Jeroham, Elkanah, Samuel, Joel, Heman). The Uriel 'the chief' of the sons of Kohath whom David summoned (1CH 15:5, 15:11) is a man of David's day. The son-of tahath and father-of uzziah ties go with 6:24; 1CH 6:36 names no Uriel at all (Zephaniah fills that slot) and should sit on neither record.",
+   "confidence": 0.85
+  },
+  {
+   "pair": ["zadok-4", "zadok-8"],
+   "verdict": "unclear",
+   "keep": null,
+   "move": [],
+   "why": "NEH 10:21 'Meshezabeel, Zadok, Jaddua' seals among the chiefs of the people in the year Zadok son of Baana repaired the wall (NEH 3:4), and the Meshezabeel beside him is the grandfather of the Meshullam who repaired next to that Zadok (3:4), which makes the identification attractive. But Zadok son of Immer (NEH 3:29) and Zadok the scribe (NEH 13:13) are the same year, and the sealer has no father. Suggestive, not decided.",
+   "confidence": 0.5
+  },
+  {
+   "pair": ["hashabiah-11", "hashabiah-2"],
+   "verdict": "two",
+   "keep": null,
+   "move": [{"verse": "NEH 11:15", "from": "hashabiah-2", "to": "hashabiah-11"}],
+   "why": "hashabiah-11 is Hashabiah son of Bunni, father of Azrikam, in the pedigree of Shemaiah the Merarite of Nehemiah's day (1CH 9:14, NEH 11:15). hashabiah-2 is Jeduthun's son of the twelfth lot in David's day (1CH 25:3, 25:19); its son-of bunni-2 and father-of azrikam-3 ties came from NEH 11:15 and go with the verse. Its 1CH 26:30 Hebronite officer is a third man with no record of his own.",
+   "confidence": 0.95
+  },
+  {
+   "pair": ["mattaniah-12", "mattaniah-4"],
+   "verdict": "two",
+   "keep": null,
+   "move": [{"verse": "NEH 12:35", "from": "mattaniah-4", "to": "mattaniah-12"}],
+   "why": "mattaniah-4 is the Asaphite who sanctified the temple under Hezekiah (2CH 29:13, about 715 BC); mattaniah-12 is Mattaniah son of Michaiah son of Zaccur, great-grandfather of the trumpeter Zechariah of 445 BC (NEH 12:35). Nearly three centuries apart. The son-of micaiah-4 and father-of shemaiah ties on mattaniah-4 came from 12:35 and go with it, the son being shemaiah-26 (see that pair).",
+   "confidence": 0.95
+  },
+  {
+   "pair": ["rehum-3", "rehum-5"],
+   "verdict": "two",
+   "keep": null,
+   "move": [{"verse": "NEH 10:25", "from": "rehum-3", "to": "rehum-5"}],
+   "why": "rehum-3 is Rehum son of Bani, a Levite who repaired the wall (NEH 3:17 'repaired the Levites, Rehum the son of Bani'). The Levites sealed in NEH 10:9-13; NEH 10:25's Rehum stands among the chiefs of the people (10:14-27), the lay list, so the list itself keeps him apart from the Levite. The note on rehum-3 claiming 10:25 is the only link and should go.",
+   "confidence": 0.8
+  }
+ ],
+ "verses": [
+  {
+   "verse": "1CH 12:27",
+   "name": "Jehoiada",
+   "names": "unclear",
+   "why": "'Jehoiada the leader of the Aaronites, and with him three thousand and seven hundred' at Hebron is a priestly Jehoiada of David's day. Benaiah's father (jehoiada) is a priest only through 1CH 27:5 'Benaiah the son of Jehoiada, the chief priest', a phrase read several ways; Keil and Japhet call the identification probable, but no verse makes it. Left as it is.",
+   "confidence": 0.5
+  },
+  {
+   "verse": "1CH 12:28",
+   "name": "Zadok",
+   "names": "zadok",
+   "why": "Zadok 'a young man mighty of valour, and of his father's house twenty and two captains' follows Jehoiada and the Aaronites (12:27) and precedes 'of the children of Benjamin' (12:29), so he is counted with the Aaronites, not a Benjamite as zadok-9 says. An Aaronite Zadok of David's day who joins him at Hebron is Zadok son of Ahitub, the priest of 2SA 8:17 whom the Chronicler derives from Eleazar (1CH 6:8, 24:3); Japhet, Knoppers, Klein and Keil read it so, and zadok's own line already cites this verse.",
+   "confidence": 0.75
+  },
+  {
+   "verse": "1CH 15:23",
+   "name": "Berechiah",
+   "names": "neither",
+   "why": "The Berechiah who with Elkanah kept the door for the ark (1CH 15:23) serves under David. berechiah-3, son of Asa (1CH 9:16), belongs to the post-exilic Netophathite villages; berechiah-2 is Asaph's father (1CH 6:39, 15:17), a patronym that nothing joins to a doorkeeper serving in the same procession as his son. A third Berechiah.",
+   "confidence": 0.7
+  },
+  {
+   "verse": "1CH 9:10",
+   "name": "Jedaiah",
+   "names": "jedaiah-5",
+   "why": "1CH 9:10-13 and NEH 11:10-14 are one list of the priests who dwelt in Jerusalem: 'Jedaiah, and Jehoiarib, and Jachin' is 'Jedaiah the son of Joiarib, Jachin' of NEH 11:10 (where 'son of' is commonly taken as a slip for 'and'), followed in both by Azariah/Seraiah son of Hilkiah with the same descent. The verse names the Jedaiah of NEH 11:10, which is jedaiah-5; jedaiah-2 is the Zerubbabel-era house of NEH 12:6.",
+   "confidence": 0.8
+  },
+  {
+   "verse": "EZR 10:6",
+   "name": "Eliashib",
+   "names": "unclear",
+   "why": "'The chamber of Johanan the son of Eliashib' in Ezra's crisis names the high priest Eliashib (eliashib-7) only if Ezra came after Nehemiah or 'son' means grandson (NEH 12:10-11, 22-23); otherwise it is another priestly Eliashib (eliashib-3), as Williamson holds. That is the Ezra-Nehemiah chronology question, and the verse does not settle it.",
+   "confidence": 0.5
+  },
+  {
+   "verse": "EZR 2:36",
+   "name": "Jeshua",
+   "names": "jeshua-3",
+   "why": "'The priests: the children of Jedaiah, of the house of Jeshua' heads the priests in a list that has just named Jeshua son of Jozadak as a leader of the return (EZR 2:2), and Williamson, Blenkinsopp, Fensham and Keil read 'the house of Jeshua' as the high priest's family, marked as belonging to the Jedaiah course. The ninth course of 1CH 24:11 (jeshua) is the only other Jeshua, and one course does not sit inside another's house; the register read the verse the same way.",
+   "confidence": 0.65
+  },
+  {
+   "verse": "NEH 12:23",
+   "name": "Eliashib",
+   "names": "eliashib-7",
+   "why": "NEH 12:22 names the high priests Eliashib, Joiada, Johanan and Jaddua, and 12:23 dates the Levite records 'until the days of Johanan the son of Eliashib', the Johanan just listed, grandson of Eliashib by 12:10-11 ('Joiada begat Jonathan'), 'son' used loosely. The Eliashib named is therefore the high priest.",
+   "confidence": 0.7
+  }
+ ],
+ "conflicts": [
+  {
+   "verse": "NEH 10:12",
+   "right": "shebaniah-5",
+   "why": "The Levite sealers name Shebaniah twice, at 10:10 and 10:12, as they name Hodijah twice (10:10, 10:13): two men in one list. Which of them, if either, is the Levite who stood on the stairs in NEH 9:4-5 (shebaniah-2) the text does not say; the earlier ruling puts that man at 10:12 on BibleData's say-so alone, and the dictionaries that identify him take the first occurrence (10:10) and call 10:12 'another Levite'. The agreed reading claims only what the verse gives, a second Levite Shebaniah, which is shebaniah-5, with shebaniah-4 keeping 10:10 where its word already is.",
+   "confidence": 0.65
+  },
+  {
+   "verse": "NEH 12:21",
+   "right": "jedaiah-8",
+   "why": "NEH 12:12-21 follows the order of 12:1-7: Joiarib and the first Jedaiah (12:6) are answered by 'of Joiarib, Mattenai; of Jedaiah, Uzzi' (12:19), and 'Hilkiah, Jedaiah' (12:7) by 'of Hilkiah, Hashabiah; of Jedaiah, Nethaneel' (12:21). So 12:21 names the second Jedaiah house, which jedaiah-8 was made for. jedaiah-5 is the Jerusalem priest 'Jedaiah the son of Joiarib' of NEH 11:10 / 1CH 9:10, Joiarib's neighbour and so the first house if any, and the owner has already removed 'nethanel-7 son-of jedaiah-5'. The earlier ruling is the 2026-09-05 sense reading in Resources/SenseReadings/full-2/answers.jsonl (claude-sonnet-5, medium), whose reason calls v.7's second Jedaiah 'son of Joiarib', i.e. it conflated the two houses. NEH 12:7, still on jedaiah-2, names the same second house and should follow.",
+   "confidence": 0.8
+  }
+ ]
+}

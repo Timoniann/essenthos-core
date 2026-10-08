@@ -1188,6 +1188,46 @@
       "why": "NEH 13:13 gives both records the identical identity: Zaccur, son of Mattaniah and father of Hanan. B is a thinner copy of that entry, while A also includes NEH 10:12; the supplied verses show no conflicting parentage, generation, or separate individual.",
       "confidence": 0.95,
       "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), each read by gpt-6.1-sol (Codex) and, blind, by claude-opus-5-5, folded where both call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H733",
+      "keeps": "arah-2",
+      "folds": "arah-3",
+      "why": "NEH 6:18 'Shechaniah the son of Arah', in 445 BC, uses the family name of EZR 2:5 / NEH 7:10 (775 and 652 'children of Arah' in 538 BC), the way Nehemiah writes 'Malchijah the son of Harim' (NEH 3:11) and 'Zadok the son of Immer' (NEH 3:29); Williamson and Blenkinsopp read it as the Arah family. A second man named Arah, old enough a century after the return to be father of Tobiah's father-in-law, is not what the text offers, and arah-3 holds nothing but this verse.",
+      "confidence": 0.7,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), read by gpt-6.1-sol (Codex), blind by claude-opus-5-5 and, where they differed, by claude-fable-5-1; folded where two of the three call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H5867",
+      "keeps": "elam-4",
+      "folds": "elam-8",
+      "why": "NEH 10:14 'Parosh, Pahath-moab, Elam, Zattu, Bani' is the order of the families in EZR 2:3-10, so the chiefs of the people are entered under family names and 'Elam' here is the first Elam family of EZR 2:7 / NEH 7:12, neither a man of that name nor 'the other Elam' of EZR 2:31. elam-4 already is that family's eponym (EZR 2:7, 8:7, 10:2, 10:26); elam-8 holds only this verse. NEH 12:42's Elam has already gone to elam-9.",
+      "confidence": 0.7,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), read by gpt-6.1-sol (Codex), blind by claude-opus-5-5 and, where they differed, by claude-fable-5-1; folded where two of the three call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H4409",
+      "keeps": "malluch-4",
+      "folds": "malluch-6",
+      "why": "NEH 12:2 lists Malluch among the priestly houses that came up with Zerubbabel, NEH 12:14 gives that house's head under Joiakim ('of Melicu, Jonathan'), and NEH 10:4 has 'Malluch' sign among the priests in a list entered by house (fourteen or fifteen of the twenty-one priestly sealers of 10:2-8 are the houses of 12:1-21). The three verses name the one priestly house of Malluch; malluch-4 holds them with the Jonathan tie, malluch-6 is the same house held again. Same reading as the applied Hattush case (NEH 10:4 and 12:2 on one record).",
+      "confidence": 0.65,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), read by gpt-6.1-sol (Codex), blind by claude-opus-5-5 and, where they differed, by claude-fable-5-1; folded where two of the three call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H5416",
+      "keeps": "nathan-3",
+      "folds": "nathan-9",
+      "why": "1CH 11:38 'Joel the brother of Nathan, Mibhar the son of Haggeri' is the Chronicler's copy of 2SA 23:36 'Igal the son of Nathan of Zobah, Bani the Gadite': the same slot in the list of the Thirty, with yig'al ben / yo'el achi and mitstsovah bani haggadi / mivchar ben hagri as the variants (Japhet). One Nathan stands behind both verses; nathan-9's 'tribe of Judah' has no verse behind it.",
+      "confidence": 0.8,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), read by gpt-6.1-sol (Codex), blind by claude-opus-5-5 and, where they differed, by claude-fable-5-1; folded where two of the three call them one person, 2026-10-08"
+    },
+    {
+      "strongNumber": "H8098",
+      "keeps": "shemaiah-19",
+      "folds": "shemaiah-24",
+      "why": "NEH 12:6 lists Shemaiah among the priestly houses that came up with Zerubbabel, NEH 12:18 gives its head under Joiakim ('of Shemaiah, Jehonathan'), and NEH 10:8 has 'Shemaiah' sign among the priests in a list entered by house (fourteen or fifteen of the twenty-one names of 10:2-8 are the houses of 12:1-21). The three verses name one house; shemaiah-24 is it held again, with the same Jehonathan tie. NEH 12:34 and 12:36 have already left shemaiah-19; NEH 12:42, a priest with a trumpet at the dedication in 445 BC, is another man still sitting on it with no record to go to.",
+      "confidence": 0.65,
+      "source": "Essenthos: the namesakes judge's pairs of one man held twice (PRB-0490), read by gpt-6.1-sol (Codex), blind by claude-opus-5-5 and, where they differed, by claude-fable-5-1; folded where two of the three call them one person, 2026-10-08"
     }
   ],
   "declined": [
@@ -2489,15 +2529,6 @@
       "why": "2 Chronicles 29:12 is Mahath the son of Amasai, a Kohathite Levite in Hezekiah's day, who is the overseer of 2CH 31:13, held as mahath-2; the Mahath of 1CH 6:35 is a forefather of Samuel."
     },
     {
-      "from": "hashabiah-2",
-      "to": "hashabiah-11",
-      "name": null,
-      "verses": [
-        "NEH 11:15"
-      ],
-      "why": "Nehemiah 11:15 is Hashabiah the son of Bunni, a Merarite and forefather of Shemaiah (1CH 9:14), held as hashabiah-11; the singer Hashabiah is the son of Jeduthun (1CH 25:3)."
-    },
-    {
       "from": "jeshua-7",
       "to": "jeshua-son-of-kadmiel",
       "name": null,
@@ -2514,6 +2545,60 @@
         "1KI 4:2"
       ],
       "why": "1 Kings 4:2 is Azariah the son of Zadok the priest, one of Solomon's princes. The record holds Azariah the son of Johanan (1CH 6:10), who is Zadok's great-great-grandson by 1CH 6:8-10, so the record gave one man two fathers. Which Azariah of 1 Chronicles 6 the son of Zadok is the passages do not say (1CH 6:9 has an Azariah son of Ahimaaz, Zadok's grandson), so he is a man of his own."
+    },
+    {
+      "from": "azarel",
+      "to": "azarel-5",
+      "name": null,
+      "verses": [
+        "1CH 25:18"
+      ],
+      "why": "1CH 12:6 names a Korahite warrior who came to David at Ziklag. 1CH 25:18's Azareel heads the eleventh course of singers, 'he, his sons, and his brethren, twelve', and is Heman's son Uzziel of 1CH 25:4 under the other form of the name. A fighting man at Ziklag and a son of the singer Heman share only the name; azarel's 'chosen eleventh by lot' and its notes came from 25:18 and go with the verse."
+    },
+    {
+      "from": "eliezer-7",
+      "to": "eliezer-10",
+      "name": null,
+      "verses": [
+        "EZR 10:18"
+      ],
+      "why": "eliezer-7 is a 'chief man' Ezra sent from Ahava to Iddo for Levites (EZR 8:16); eliezer-10 is the priest of the sons of Jeshua son of Jozadak who had taken a foreign wife (EZR 10:18). No verse joins the envoy and the priest, and the reference works keep them as different Eliezers. The descendant-of jeshua-3 tie and the 'Aaronic priest' note on eliezer-7 came from 10:18 and go with the verse; EZR 10:23's Levite has already gone to eliezer-11."
+    },
+    {
+      "from": "uriel",
+      "to": "uriel-2",
+      "name": null,
+      "verses": [
+        "1CH 6:24"
+      ],
+      "why": "1CH 6:22-24 runs Korah, Assir, Elkanah, Ebiasaph, Assir, Tahath, Uriel, Uzziah, Shaul: Uriel son of Tahath stands some fourteen generations before Heman and David in the parallel pedigree of 6:33-38 (Tahath, Zephaniah, Azariah, Joel, Elkanah, Amasai, Mahath, Elkanah, Zuph, Toah, Eliel, Jeroham, Elkanah, Samuel, Joel, Heman). The Uriel 'the chief' of the sons of Kohath whom David summoned (1CH 15:5, 15:11) is a man of David's day. The son-of tahath and father-of uzziah ties go with 6:24; 1CH 6:36 names no Uriel at all (Zephaniah fills that slot) and should sit on neither record."
+    },
+    {
+      "from": "hashabiah-2",
+      "to": "hashabiah-11",
+      "name": null,
+      "verses": [
+        "NEH 11:15"
+      ],
+      "why": "hashabiah-11 is Hashabiah son of Bunni, father of Azrikam, in the pedigree of Shemaiah the Merarite of Nehemiah's day (1CH 9:14, NEH 11:15). hashabiah-2 is Jeduthun's son of the twelfth lot in David's day (1CH 25:3, 25:19); its son-of bunni-2 and father-of azrikam-3 ties came from NEH 11:15 and go with the verse. Its 1CH 26:30 Hebronite officer is a third man with no record of his own."
+    },
+    {
+      "from": "mattaniah-4",
+      "to": "mattaniah-12",
+      "name": null,
+      "verses": [
+        "NEH 12:35"
+      ],
+      "why": "mattaniah-4 is the Asaphite who sanctified the temple under Hezekiah (2CH 29:13, about 715 BC); mattaniah-12 is Mattaniah son of Michaiah son of Zaccur, great-grandfather of the trumpeter Zechariah of 445 BC (NEH 12:35). Nearly three centuries apart. The son-of micaiah-4 and father-of shemaiah ties on mattaniah-4 came from 12:35 and go with it, the son being shemaiah-26 (see that pair)."
+    },
+    {
+      "from": "rehum-3",
+      "to": "rehum-5",
+      "name": null,
+      "verses": [
+        "NEH 10:25"
+      ],
+      "why": "rehum-3 is Rehum son of Bani, a Levite who repaired the wall (NEH 3:17 'repaired the Levites, Rehum the son of Bani'). The Levites sealed in NEH 10:9-13; NEH 10:25's Rehum stands among the chiefs of the people (10:14-27), the lay list, so the list itself keeps him apart from the Levite. The note on rehum-3 claiming 10:25 is the only link and should go."
     }
   ]
 }
