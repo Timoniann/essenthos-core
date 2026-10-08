@@ -39,6 +39,8 @@ internal static partial class ForgeVerbs
             "Measure the corpus, record what it finds for /v1/health, and fail on anything broken.", Verify),
         new("release", "[--allow-dirty] [--allow-unrecorded] [--dry-run]",
             "Verify this machine's corpus and dump it into .releases/ as the next release.", Release),
+        new("export", "[--to <folder>] [--dry-run]",
+            "Write the texts that may be passed on, one file each with its licence and attribution, and a manifest of checksums.", Export),
         new("publish", "--to <target> [--release <name>] [--without-rehearsal] [--dry-run]",
             "Restore a release on a target, verify it there and swap it in.", Publish),
         new("rollback", "--to <target> [--dry-run]", "Swap a target's live corpus with the previous release.", Rollback),

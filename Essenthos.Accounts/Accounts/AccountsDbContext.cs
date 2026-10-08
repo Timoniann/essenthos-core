@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Essenthos.Core.Accounts;
 
@@ -51,6 +53,11 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSnakeCaseNamingConvention();
+
+        // A forgotten device is a row nobody reads, and its readings are deleted with it, so the
+        // history that points at a device never points at one the filter hides.
+        optionsBuilder.ConfigureWarnings(warnings => warnings.Ignore(
+            CoreEventId.PossibleIncorrectRequiredNavigationWithQueryFilterInteractionWarning));
     }
 
     protected override void OnModelCreating(ModelBuilder model)
@@ -113,6 +120,7 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             device.Property(d => d.Settings).HasColumnType("jsonb");
             device.HasIndex(d => d.AccountId);
             device.HasIndex(d => d.Revision);
+            device.HasQueryFilter(d => d.DeletedAt == null);
             device.HasOne<Account>().WithMany().HasForeignKey(d => d.AccountId).OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -136,6 +144,7 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             // What the reader opens a chapter by: every bookmark of theirs that starts in this book.
             bookmark.HasIndex(b => new { b.AccountId, b.Book, b.Chapter });
             bookmark.HasIndex(b => b.Revision);
+            bookmark.HasQueryFilter(b => b.DeletedAt == null);
             bookmark.HasOne<Account>().WithMany().HasForeignKey(b => b.AccountId).OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -144,8 +153,10 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             bookmark.ToTable("chapter_bookmark");
             bookmark.Property(b => b.Id).ValueGeneratedNever();
             bookmark.Property(b => b.Color).HasMaxLength(16);
-            bookmark.HasIndex(b => new { b.AccountId, b.Book, b.Chapter }).IsUnique();
+            // One live bookmark per chapter: a removed one stays as a tombstone and the chapter can be marked again.
+            bookmark.HasIndex(b => new { b.AccountId, b.Book, b.Chapter }).IsUnique().HasFilter("deleted_at IS NULL");
             bookmark.HasIndex(b => b.Revision);
+            bookmark.HasQueryFilter(b => b.DeletedAt == null);
             bookmark.HasOne<Account>().WithMany().HasForeignKey(b => b.AccountId).OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -154,8 +165,9 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
             favorite.ToTable("favorite_text");
             favorite.Property(f => f.Id).ValueGeneratedNever();
             favorite.Property(f => f.Text).HasMaxLength(Limits.TextSlug);
-            favorite.HasIndex(f => new { f.AccountId, f.Text }).IsUnique();
+            favorite.HasIndex(f => new { f.AccountId, f.Text }).IsUnique().HasFilter("deleted_at IS NULL");
             favorite.HasIndex(f => f.Revision);
+            favorite.HasQueryFilter(f => f.DeletedAt == null);
             favorite.HasOne<Account>().WithMany().HasForeignKey(f => f.AccountId).OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -214,35 +226,97 @@ public class AccountsDbContext(DbContextOptions<AccountsDbContext> options) : Db
 
     /// <summary>
     /// Stamps every added or changed row that a second device will have to catch up on with the next
-    /// revision, from one sequence, so revisions are ordered across tables and never reused.
+    /// revision, from one sequence, so revisions are ordered across tables and never reused. A row that was
+    /// removed is kept as a tombstone and stamped as any other change.
+    ///
+    /// A revision handed out is not yet a revision committed: two saves of one account could take 10 and
+    /// 11 and commit 11 first, and a device that synchronised in between would carry 11 as its cursor and
+    /// never be told of 10. So the rows of one account are saved under that account's lock, held until the
+    /// commit, and its revisions commit in the order they were handed out.
     /// </summary>
     public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
     {
-        foreach (var entry in Revised())
+        var revised = Revised();
+        if (revised.Count == 0)
+        {
+            return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        await using var own = Database.CurrentTransaction is null ? await Database.BeginTransactionAsync(cancellationToken) : null;
+        foreach (var account in Owners(revised))
+        {
+            await Database.ExecuteSqlAsync($"SELECT pg_advisory_xact_lock(hashtextextended({LockKey(account)}, 0))", cancellationToken);
+        }
+
+        foreach (var entry in revised)
         {
             Stamp(entry, await NextRevisionQuery().SingleAsync(cancellationToken));
         }
 
-        return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        var saved = await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        if (own is not null)
+        {
+            await own.CommitAsync(cancellationToken);
+        }
+
+        return saved;
     }
 
     /// <summary>The same, for the one caller that cannot be asynchronous: the data-protection key store.</summary>
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
-        foreach (var entry in Revised())
+        var revised = Revised();
+        if (revised.Count == 0)
+        {
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        using var own = Database.CurrentTransaction is null ? Database.BeginTransaction() : null;
+        foreach (var account in Owners(revised))
+        {
+            Database.ExecuteSql($"SELECT pg_advisory_xact_lock(hashtextextended({LockKey(account)}, 0))");
+        }
+
+        foreach (var entry in revised)
         {
             Stamp(entry, NextRevisionQuery().Single());
         }
 
-        return base.SaveChanges(acceptAllChangesOnSuccess);
+        var saved = base.SaveChanges(acceptAllChangesOnSuccess);
+        own?.Commit();
+        return saved;
     }
 
-    private List<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<IRevised>> Revised() =>
-        ChangeTracker.Entries<IRevised>()
+    /// <summary>The accounts the rows belong to, in one order, so two saves taking several locks cannot wait on each other.</summary>
+    private static IEnumerable<Guid> Owners(IEnumerable<EntityEntry<IRevised>> revised) =>
+        revised.Select(e => e.Entity.Owner).Distinct().Order();
+
+    private static string LockKey(Guid account) => $"account-revision:{account}";
+
+    /// <summary>
+    /// The rows this save adds or changes, after every removed row that is kept as a tombstone has been
+    /// turned from a deletion into the change that marks it.
+    /// </summary>
+    private List<EntityEntry<IRevised>> Revised()
+    {
+        var leaving = ChangeTracker.Entries<Account>().Where(e => e.State == EntityState.Deleted).Select(e => e.Entity.Id).ToHashSet();
+        var now = DateTimeOffset.UtcNow;
+        foreach (var removed in ChangeTracker.Entries<ISoftDeleted>().Where(e => e.State == EntityState.Deleted).ToList())
+        {
+            // A row going with its account goes in the database's cascade; there is nobody left to tell.
+            if (!leaving.Contains(removed.Entity.Owner))
+            {
+                removed.State = EntityState.Modified;
+                removed.Entity.Forget(now);
+            }
+        }
+
+        return ChangeTracker.Entries<IRevised>()
             .Where(e => e.State is EntityState.Added or EntityState.Modified)
             .ToList();
+    }
 
-    private static void Stamp(Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<IRevised> entry, long revision)
+    private static void Stamp(EntityEntry<IRevised> entry, long revision)
     {
         entry.Entity.Revision = revision;
         entry.Entity.UpdatedAt = DateTimeOffset.UtcNow;

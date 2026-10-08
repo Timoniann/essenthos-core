@@ -218,6 +218,11 @@ scripts/__pycache__/
 
 # Corpus releases (a 376 MB dump each) and the local rehearsal of the server. Artefacts, never source.
 /.releases/
+
+# What `forge export` wrote: files for people to download, rebuilt from the corpus whenever it is run.
+/.exports/
+/.exports.writing/
+/.exports.previous/
 /.rehearsal/
 deploy/.env
 deploy/.env.*

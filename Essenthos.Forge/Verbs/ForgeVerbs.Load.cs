@@ -81,6 +81,13 @@ internal static partial class ForgeVerbs
                 allowUnrecorded: args.Contains("--allow-unrecorded"));
     }
 
+    private static async Task<int> Export(ForgeRun forge, string[] args)
+    {
+        using var exportScope = forge.Scope();
+        return await exportScope.ServiceProvider.GetRequiredService<TextExporter>()
+            .Export(Option(args, "--to"), args.Contains("--dry-run"), CancellationToken.None);
+    }
+
     private static async Task<int> Publish(ForgeRun forge, string[] args)
     {
         using var publishScope = forge.Scope();

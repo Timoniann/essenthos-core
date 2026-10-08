@@ -45,6 +45,8 @@ public class Account : IRevised
 
     public long Revision { get; set; }
 
+    Guid IRevised.Owner => Id;
+
     public List<Credential> Credentials { get; set; } = [];
 
     public override string ToString() => $"Account({Id}, {DisplayName})";
@@ -137,6 +139,30 @@ public interface IRevised
     long Revision { get; set; }
 
     DateTimeOffset UpdatedAt { get; set; }
+
+    /// <summary>
+    /// The account whose feed this row belongs to. Saving rows of one account takes that account's lock
+    /// (<see cref="AccountsDbContext"/>), so their revisions are handed out in the order they commit.
+    /// </summary>
+    Guid Owner { get; }
+}
+
+/// <summary>
+/// A revised row that is never really deleted while its account lives: removing it keeps the row, marked
+/// with <see cref="DeletedAt"/> and stamped with a new revision, which is the only way a second device
+/// can learn the row is gone. Every read leaves a tombstone out; the change feed alone asks for them.
+///
+/// Leaving the account removes everything, tombstones included, in the database's own cascade.
+/// </summary>
+public interface ISoftDeleted : IRevised
+{
+    DateTimeOffset? DeletedAt { get; set; }
+
+    /// <summary>
+    /// Marks the row deleted and clears what the reader wrote in it, since a tombstone has to outlive the
+    /// row's content and not carry it: a deleted comment is not kept.
+    /// </summary>
+    void Forget(DateTimeOffset at);
 }
 
 /// <summary>One data-protection key, as the framework's own XML.</summary>
@@ -180,7 +206,7 @@ public class AccountEmail
 /// browser whose storage was cleared — is a new one. Kind, system, browser and model are kept only to
 /// name the device to its reader.
 /// </summary>
-public class Device : IRevised
+public class Device : ISoftDeleted
 {
     public Guid Id { get; set; }
 
@@ -218,6 +244,19 @@ public class Device : IRevised
     public DateTimeOffset UpdatedAt { get; set; }
 
     public long Revision { get; set; }
+
+    /// <summary>When the reader forgot the device; null while it is one of theirs.</summary>
+    public DateTimeOffset? DeletedAt { get; set; }
+
+    Guid IRevised.Owner => AccountId;
+
+    public void Forget(DateTimeOffset at)
+    {
+        DeletedAt = at;
+        Settings = null;
+        SettingsChangedAt = null;
+        Model = null;
+    }
 }
 
 /// <summary>

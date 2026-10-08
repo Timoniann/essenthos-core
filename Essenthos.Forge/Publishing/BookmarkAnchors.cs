@@ -32,10 +32,12 @@ internal static class BookmarkAnchors
             return null;
         }
 
-        var points = Parse(await host.Sql(app,
-            "SELECT DISTINCT coalesce(text, ''), book, chapter, verse FROM bookmark " +
-            "UNION SELECT DISTINCT coalesce(text, ''), book, end_chapter, end_verse FROM bookmark",
-            cancellationToken));
+        // A bookmark the reader removed is kept as a tombstone, and nobody needs its place to survive; an
+        // accounts database not yet migrated to tombstones has none.
+        var tombstones = await host.Sql(app,
+            "SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'bookmark' AND column_name = 'deleted_at'",
+            cancellationToken) == "1";
+        var points = Parse(await host.Sql(app, Anchors(tombstones), cancellationToken));
 
         var missing = new List<Point>();
         foreach (var chunk in points.Chunk(Batch))
@@ -44,6 +46,15 @@ internal static class BookmarkAnchors
         }
 
         return missing;
+    }
+
+    /// <summary>The addresses of the bookmarks that are still the reader's: both ends of every passage.</summary>
+    internal static string Anchors(bool tombstones)
+    {
+        var live = tombstones ? " WHERE deleted_at IS NULL" : string.Empty;
+        return
+            $"SELECT DISTINCT coalesce(text, ''), book, chapter, verse FROM bookmark{live} " +
+            $"UNION SELECT DISTINCT coalesce(text, ''), book, end_chapter, end_verse FROM bookmark{live}";
     }
 
     /// <summary>psql's unaligned rows, <c>text|book|chapter|verse</c>, one to a line.</summary>

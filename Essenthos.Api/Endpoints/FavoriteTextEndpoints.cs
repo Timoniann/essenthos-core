@@ -75,10 +75,15 @@ internal static class FavoriteTextEndpoints
             // A text the corpus no longer holds can still be let go of, by the slug it was kept under.
             var slug = (await canon.Text(text, context.RequestAborted))?.Slug ?? text;
             var account = context.User.AccountId();
-            var removed = await db.FavoriteTexts
-                .Where(f => f.AccountId == account && f.Text.ToLower() == slug.ToLower())
-                .ExecuteDeleteAsync(context.RequestAborted);
-            return removed == 0 ? Results.NotFound(new ProblemResponse("This text is not a favourite.")) : Results.NoContent();
+            if (await db.FavoriteTexts.FirstOrDefaultAsync(
+                    f => f.AccountId == account && f.Text.ToLower() == slug.ToLower(), context.RequestAborted) is not { } favorite)
+            {
+                return Results.NotFound(new ProblemResponse("This text is not a favourite."));
+            }
+
+            db.FavoriteTexts.Remove(favorite);
+            await db.SaveChangesAsync(context.RequestAborted);
+            return Results.NoContent();
         });
 
         favorites.MapPut("/order", async (HttpContext context, AccountsDbContext db, ICanonIndex canon, FavoriteTextOrder order) =>
