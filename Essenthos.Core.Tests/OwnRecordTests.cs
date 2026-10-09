@@ -896,6 +896,42 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
+    /// The Greek Jacob of 'the God of Abraham, Isaac and Jacob' is the patriarch, which the number cannot
+    /// say because the father of Joseph bears it too; the Jacob of Romans 11:26 is the people. A rendering
+    /// linked to the Greek word is given the patriarch through the link, and the father of Joseph keeps
+    /// his own verse.
+    /// </summary>
+    [Fact]
+    public async Task TheGodOfJacobNamesThePatriarchAndRomansJacobThePeople()
+    {
+        var file = SenseReadingFiles.AllRulings().Single(f => f.Rulings.Any(r => r.Reference == "ACT 7:32" && r.Existing == "jacob"));
+        var english = _db.Place([new RuledWord("KJV", "ACT 7:32", 21, "Jacob")]).Single().Value;
+        var fatherOfJoseph = _words[new RuledWord("NESTLE1904", "MAT 1:15", 15, "Ἰακώβ")];
+        var greekId = _words[file.Rulings.Single(r => r.Reference == "ACT 7:32").Word];
+        var greek = await _db.Words.SingleAsync(w => w.Id == greekId);
+        var link = new Link { FromTextId = english.TextId, ToTextId = greek.TextId,
+            Relation = LinkRelation.Renders, Method = LinkMethod.StrongNumber, Confidence = 1,
+            Provenance = new() { Source = "a fixture's stated number match" } };
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = english, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = greek, Side = LinkSide.To });
+        await _db.SaveChangesAsync();
+
+        await Load();
+
+        file.Rulings.Should().HaveCount(7);
+        foreach (var ruling in file.Rulings)
+        {
+            (await _db.WordEntities.Where(a => a.WordId == _words[ruling.Word]).Select(a => a.Entity!.Slug).ToListAsync())
+                .Should().Equal([ruling.Reference == "ROM 11:26" ? "israelites" : "jacob"], "{0}", ruling.Word);
+        }
+
+        (await _db.WordEntities.Where(a => a.WordId == english.Id).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("jacob");
+        (await _db.WordEntities.Where(a => a.WordId == fatherOfJoseph).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("jacob-2");
+    }
+
+    /// <summary>
     /// The second men Strong numbers under a name the corpus held one record for: Jabin of Judges 4, the
     /// chiefs who sealed Nehemiah's covenant, Ittai son of Ribai and the rest are records of their own,
     /// and every word of the file names its own man and not the record it was read as before.

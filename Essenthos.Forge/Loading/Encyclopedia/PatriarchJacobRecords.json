@@ -1,0 +1,71 @@
+{
+  "decidedBy": "an agent (claude-opus-5-5, batch AA of the backlog cleanup) reading each verse in the Nestle text and the King James on the lead's instruction, 2026-10-09; no person has reviewed these rulings",
+  "policy": "The Greek name Jacob is borne by two men in the New Testament, the patriarch and the father of Joseph (MAT 1:15-16), so its number alone names neither. A word names the man its verse names: in 'the God of Abraham, Isaac and Jacob' and 'the house of Jacob' that is the patriarch, as Abraham and Isaac beside him are; where Jacob stands for the people descended from him, as the verse's Israel does, the word names the people.",
+  "method": "manual",
+  "source": "Essenthos, the Greek Jacob in seven New Testament verses, read by an agent on the lead's instruction, 2026-10-09",
+  "rulings": [
+    {
+      "text": "NESTLE1904",
+      "reference": "MAT 22:32",
+      "position": 13,
+      "surface": "Ἰακώβ",
+      "strongNumber": "G2384",
+      "existing": "jacob",
+      "why": "MAT 22:32: Jesus quotes Exodus 3:6, 'I am the God of Abraham, and the God of Isaac, and the God of Jacob', the three patriarchs by name; Abraham and Isaac beside him are the patriarchs, and Jacob the son of Matthan (MAT 1:15) is not in view."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "MRK 12:26",
+      "position": 31,
+      "surface": "Ἰακώβ",
+      "strongNumber": "G2384",
+      "existing": "jacob",
+      "why": "MRK 12:26: God's words to Moses at the bush, 'I am the God of Abraham, and the God of Isaac, and the God of Jacob' (Exodus 3:6), name the patriarch with his father and grandfather."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "LUK 20:37",
+      "position": 23,
+      "surface": "Ἰακώβ",
+      "strongNumber": "G2384",
+      "existing": "jacob",
+      "why": "LUK 20:37: Moses at the bush 'calleth the Lord the God of Abraham, and the God of Isaac, and the God of Jacob' (Exodus 3:6), the patriarch with his father and grandfather."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 3:13",
+      "position": 7,
+      "surface": "Ἰακώβ",
+      "strongNumber": "G2384",
+      "existing": "jacob",
+      "why": "ACT 3:13: Peter's 'the God of Abraham, and of Isaac, and of Jacob, the God of our fathers' names the patriarchs, the fathers of the people he speaks to."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 7:32",
+      "position": 13,
+      "surface": "Ἰακώβ",
+      "strongNumber": "G2384",
+      "existing": "jacob",
+      "why": "ACT 7:32: Stephen quotes the voice at the bush, 'I am the God of thy fathers, the God of Abraham, and the God of Isaac, and the God of Jacob' (Exodus 3:6), after telling Jacob's own story in 7:8-15."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ACT 7:46",
+      "position": 13,
+      "surface": "Ἰακώβ",
+      "strongNumber": "G2384",
+      "existing": "jacob",
+      "why": "ACT 7:46: David 'desired to find a tabernacle for the house of Jacob' (the King James, from another Greek reading, 'for the God of Jacob'); either way the word is the name of the patriarch whose house or whose God it is, as Luke 1:33's 'the house of Jacob' already names him."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "ROM 11:26",
+      "position": 16,
+      "surface": "Ἰακώβ",
+      "strongNumber": "G2384",
+      "existing": "israelites",
+      "why": "ROM 11:26: 'There shall come out of Sion the Deliverer, and shall turn away ungodliness from Jacob' (Isaiah 59:20) is said of 'all Israel' at the head of the same verse, the people whose sins God takes away in 11:27; the man Jacob is not in view, so the word names the people descended from him, as the verse's Israel does."
+    }
+  ]
+}
