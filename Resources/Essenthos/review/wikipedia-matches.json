@@ -99,42 +99,6 @@
       }
     },
     {
-      "record": "david",
-      "kind": "person",
-      "label": "David",
-      "line": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
-      "references": [
-        "RUT 4:17",
-        "RUT 4:22",
-        "1SA 16:13",
-        "1SA 16:19",
-        "1SA 16:20",
-        "1SA 16:21"
-      ],
-      "candidates": [
-        {
-          "qid": "Q41370",
-          "label": "David",
-          "description": "king of Israel and Judah",
-          "articles": {
-            "de": "David",
-            "en": "David",
-            "es": "David",
-            "uk": "Давид"
-          },
-          "evidence": [
-            "kin",
-            "chapter"
-          ]
-        }
-      ],
-      "others": 0,
-      "tied": {
-        "qid": "Q41370",
-        "by": "kin"
-      }
-    },
-    {
       "record": "jacob",
       "kind": "person",
       "label": "Jacob",
@@ -186,6 +150,42 @@
         }
       ],
       "others": 0
+    },
+    {
+      "record": "david",
+      "kind": "person",
+      "label": "David",
+      "line": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+      "references": [
+        "RUT 4:17",
+        "RUT 4:22",
+        "1SA 16:13",
+        "1SA 16:19",
+        "1SA 16:20",
+        "1SA 16:21"
+      ],
+      "candidates": [
+        {
+          "qid": "Q41370",
+          "label": "David",
+          "description": "king of Israel and Judah",
+          "articles": {
+            "de": "David",
+            "en": "David",
+            "es": "David",
+            "uk": "Давид"
+          },
+          "evidence": [
+            "kin",
+            "chapter"
+          ]
+        }
+      ],
+      "others": 0,
+      "tied": {
+        "qid": "Q41370",
+        "by": "kin"
+      }
     },
     {
       "record": "jerusalem",
