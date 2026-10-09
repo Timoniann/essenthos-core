@@ -234,6 +234,74 @@ internal static class Annotating
         """;
 
     /// <summary>
+    /// What <see cref="CommonWord"/> reads, made once per transaction: <c>common_number</c>, the
+    /// Strong numbers the lexicon gives a common word — a Greek lemma written without a capital, a
+    /// Hebrew entry whose part of speech is not a proper noun — and <c>own_number</c>, the numbers
+    /// each record's own names and titles carry, and those of the titles it bears. A value of several
+    /// numbers is split, since it is the record's own title word by word: <em>King of Hazor</em> is
+    /// Jabin's, and so is the βασιλεύς that renders it. Dropped and made again on each call, because a
+    /// pass may add records between two carries of one transaction.
+    /// </summary>
+    public const string CommonWords =
+        """
+        DROP TABLE IF EXISTS common_number, own_number;
+        CREATE TEMP TABLE common_number ON COMMIT DROP AS
+        SELECT s.strong_number AS number
+        FROM strong_entry s
+        WHERE (s.strong_number LIKE 'G%' AND s.lemma !~ '^[[:upper:]]')
+           OR (s.strong_number LIKE 'H%' AND s.morphology !~ 'n-pr');
+        CREATE UNIQUE INDEX ON common_number (number);
+        CREATE TEMP TABLE own_number ON COMMIT DROP AS
+        SELECT DISTINCT owner.entity_id, btrim(number) AS number
+        FROM entity_name n
+        CROSS JOIN LATERAL unnest(string_to_array(concat_ws(',', n.hebrew_strong_number, n.greek_strong_number), ',')) number
+        CROSS JOIN LATERAL (VALUES (n.entity_id), (n.aspect_of_entity_id)) owner (entity_id)
+        WHERE owner.entity_id IS NOT NULL
+        UNION
+        SELECT borne.bearer_entity_id, btrim(number)
+        FROM title_bearer borne
+        JOIN entity_name n ON n.entity_id = borne.title_entity_id
+        CROSS JOIN LATERAL unnest(string_to_array(concat_ws(',', n.hebrew_strong_number, n.greek_strong_number), ',')) number;
+        CREATE INDEX ON own_number (entity_id, number)
+        """;
+
+    /// <summary>
+    /// The pronouns of the two original languages: the Greek by the numbers of the forms
+    /// <see cref="Pronouns"/> lists, which hold for the editions printed without accents too, and
+    /// BHSA's personal and demonstrative pronouns by its parsing. Whom a pronoun may be shown naming
+    /// is <see cref="PronounReferents"/>'s question, not <see cref="CommonWord"/>'s.
+    /// </summary>
+    private const string GreekPronouns =
+        "'G846', 'G3778', 'G1565', 'G1438', 'G1683', 'G4572', 'G1473', 'G4771', 'G2249', 'G5210', 'G1699', 'G4674'";
+
+    /// <summary>
+    /// Whether the word <paramref name="word"/> of the text <paramref name="text"/> is a Greek or
+    /// Hebrew common word the person or place <paramref name="entity"/> may not be carried onto: its
+    /// Strong number is one the lexicon gives a common noun, verb, adjective or particle, and none of
+    /// the record's own names or titles. A link is a claim about which words correspond, and a
+    /// translation's own alignment is wrong often enough — the Hindi interlinear puts
+    /// <em>अब्राहम</em> opposite the βίβλῳ of Mark 12:26 and <em>यीशु का तिरस्कार किया</em>
+    /// opposite ἠρνήσασθε of Acts 3:13, and the Chinese Union writes <em>彼拉多定意</em> as one word
+    /// numbered for κρίναντος — while the original word's own number is the lexicon's statement of
+    /// what the word is. A word BHSA parses as a proper noun is a name whatever its number, a title
+    /// the record bears keeps it (Pharaoh's פַּרְעֹה, Jabin's βασιλεύς), and a people, a title, an
+    /// object or a feast is not asked: πάσχα is the Passover. Reads the tables
+    /// <see cref="CommonWords"/> makes.
+    /// </summary>
+    public static string CommonWord(string word, string text, string entity) =>
+        $"""
+         (CASE WHEN {text}.language IN ('grc', 'hbo')
+                    AND EXISTS (SELECT 1 FROM common_number common WHERE common.number = {word}.strong_number)
+                    AND EXISTS (SELECT 1 FROM entity named WHERE named.id = {entity}
+                                AND named.kind IN ('{EnumSpelling.Of(EntityKind.Person)}', '{EnumSpelling.Of(EntityKind.Place)}'))
+                    AND NOT EXISTS (SELECT 1 FROM own_number own
+                                    WHERE own.entity_id = {entity} AND own.number = {word}.strong_number)
+               THEN {word}.strong_number NOT IN ({GreekPronouns})
+                    AND coalesce({word}.morphology ->> 'pos', '') NOT IN ('nmpr', 'prps', 'prde')
+               ELSE FALSE END)
+         """;
+
+    /// <summary>
     /// The postpositions of Hindi, Urdu and Punjabi, which follow the noun they govern: in a phrase
     /// that renders a name, the word before one of them is the name — <em>एसाव के पुत्र</em>,
     /// <em>Esau's sons</em>, is a name, its genitive and what it governs, and the last word is the
@@ -609,7 +677,8 @@ internal static class Annotating
                    seed.source,
                    l.method AS link_method,
                    seed.word_id AS through,
-                   witness.slug AS spoken_by
+                   witness.slug AS spoken_by,
+                   {CommonWord("w", "wt", "seed.entity_id")} AS common
             FROM pending_annotation seed
             JOIN word origin ON origin.id = seed.word_id
             JOIN text witness ON witness.id = origin.text_id
@@ -618,6 +687,7 @@ internal static class Annotating
             CROSS JOIN LATERAL (SELECT {LinkWorth} AS worth) crossed
             CROSS JOIN LATERAL ({Reached}) other
             JOIN word w ON w.id = other.word_id
+            JOIN text wt ON wt.id = w.text_id
             LEFT JOIN word before ON before.verse_id = w.verse_id AND before.position = w.position - 1
             WHERE seed.through IS NULL
         ),
@@ -626,6 +696,7 @@ internal static class Annotating
                    max(r.link) OVER verse AS best,
                    min(r.word_id) OVER verse <> max(r.word_id) OVER verse AS crowded
             FROM reached r
+            WHERE NOT r.common
             WINDOW verse AS (PARTITION BY r.through, r.text_id, r.verse_id)
         ),
         {Leftover},
@@ -992,6 +1063,7 @@ internal static class Annotating
         CancellationToken cancellationToken)
     {
         await Run(connection, transaction, ForeignNames.Prepare, cancellationToken);
+        await Run(connection, transaction, CommonWords, cancellationToken);
         await Run(connection, transaction, Carry, cancellationToken, ("faint", Faint), ("firm", Firm));
     }
 
