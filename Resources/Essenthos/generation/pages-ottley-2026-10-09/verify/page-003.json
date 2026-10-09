@@ -1,0 +1,77 @@
+[
+ {
+  "id": 24,
+  "verdict": "right",
+  "actual": "οἱ ἁμαρτωλοὶ"
+ },
+ {
+  "id": 27,
+  "verdict": "right",
+  "actual": "ἡ"
+ },
+ {
+  "id": 28,
+  "verdict": "right",
+  "actual": "αὐτῶν"
+ },
+ {
+  "id": 29,
+  "verdict": "right",
+  "actual": "οὐκ"
+ },
+ {
+  "id": 30,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 31,
+  "verdict": "right",
+  "actual": "ὁ γενόμενος"
+ },
+ {
+  "id": 32,
+  "verdict": "right",
+  "actual": "ἐν"
+ },
+ {
+  "id": 33,
+  "verdict": "right",
+  "actual": "ὁ οἶκος"
+ },
+ {
+  "id": 35,
+  "verdict": "neither",
+  "actual": "εἰς τὸ ὄρος"
+ },
+ {
+  "id": 36,
+  "verdict": "right",
+  "actual": "εἰς τὸν οἶκον"
+ },
+ {
+  "id": 37,
+  "verdict": "right",
+  "actual": "εἰς ἄροτρα"
+ },
+ {
+  "id": 38,
+  "verdict": "right",
+  "actual": "εἰς δρέπανα"
+ },
+ {
+  "id": 39,
+  "verdict": "right",
+  "actual": "οὐ λήμψεται"
+ },
+ {
+  "id": 40,
+  "verdict": "right",
+  "actual": "οὐ μὴ"
+ },
+ {
+  "id": 41,
+  "verdict": "right",
+  "actual": "ὁ οἶκος"
+ }
+]

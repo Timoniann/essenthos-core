@@ -1,0 +1,57 @@
+[
+ {
+  "id": 0,
+  "verdict": "right",
+  "actual": "Ὅρασις ἣν"
+ },
+ {
+  "id": 1,
+  "verdict": "right",
+  "actual": "Ἀμώς ἣν"
+ },
+ {
+  "id": 2,
+  "verdict": "right",
+  "actual": "αὐτοῦ"
+ },
+ {
+  "id": 3,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 4,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 5,
+  "verdict": "right",
+  "actual": "κεφαλὴ εἰς"
+ },
+ {
+  "id": 6,
+  "verdict": "right",
+  "actual": "καρδία εἰς"
+ },
+ {
+  "id": 8,
+  "verdict": "right",
+  "actual": "ἔρημος"
+ },
+ {
+  "id": 9,
+  "verdict": "right",
+  "actual": "αἱ"
+ },
+ {
+  "id": 12,
+  "verdict": "right",
+  "actual": "ὡς"
+ },
+ {
+  "id": 13,
+  "verdict": "right",
+  "actual": "εἰ"
+ }
+]

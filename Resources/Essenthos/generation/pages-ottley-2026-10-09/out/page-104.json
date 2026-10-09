@@ -1,0 +1,48 @@
+{
+ "page": "104",
+ "leaf": 486,
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-485.jpg",
+  "IsaiahAccordingToTheSeptuagint-486.jpg",
+  "IsaiahAccordingToTheSeptuagint-487.jpg"
+ ],
+ "verses": [
+  {
+   "verse": "66:24",
+   "printed": "καὶ ἐξελεύσονται καὶ ὄψονται τὰ κῶλα τῶν ἀνθρώπων τῶν παραβεβηκότων ἐν ἐμοί· ὁ γὰρ σκώληξ αὐτῶν οὐ τελευτᾷ, καὶ τὸ πῦρ αὐτῶν οὐ σβεσθήσεται, καὶ ἔσονται εἰς ὅρασιν πάσῃ σαρκί.",
+   "corrections": [
+    {
+     "ours": "ὃ",
+     "printed": "ὁ",
+     "why": "The article has no grave accent."
+    },
+    {
+     "ours": "οὗ",
+     "printed": "οὐ",
+     "why": "Smooth breathing; no circumflex."
+    },
+    {
+     "ours": "οὔ",
+     "printed": "οὐ",
+     "why": "No acute accent is printed."
+    },
+    {
+     "ours": "εἷς",
+     "printed": "εἰς",
+     "why": "Smooth breathing; no circumflex."
+    }
+   ]
+  }
+ ],
+ "before": {
+  "66:23": "καὶ ἔσται μῆνα ἐκ μηνὸς καὶ σάββατον ἐκ σαββάτου ἥξει πᾶσα σὰρξ ἐνώπιόν μου προσκυνῆσαι ἐν Ἰερουσαλήμ, εἶπεν Κύριος "
+ },
+ "ours": {
+  "66:24": "καὶ ἐξελεύσονται καὶ ὄψονται τὰ κῶλα τῶν ἀνθρώπων τῶν παραβεβηκότων ἐν ἐμοί· ὃ γὰρ σκώληξ αὐτῶν οὗ τελευτᾷ, καὶ τὸ πῦρ αὐτῶν οὔ σβεσθήσεται, καὶ ἔσονται εἷς ὅρασιν πάσῃ σαρκί. "
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-486.jpg",
+ "note": "",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-09T09:36:54+00:00"
+}

@@ -1,0 +1,15 @@
+IsaiahAccordingToTheSeptuagint-383.jpg Verse 1:11 continues on printed page 2, IsaiahAccordingToTheSeptuagint-384.jpg.
+1:1 | Ὅρασις ἥν -> Ὅρασις ἣν | Acute instead of grave.
+1:1 | Ἀμώς, ἥν -> Ἀμώς, ἣν | Acute instead of grave.
+1:3 | αὑτοῦ -> αὐτοῦ | Rough instead of smooth breathing.
+1:3 | ὃ -> ὁ | Extra grave accent.
+1:3 | οὗ -> οὐ | Wrong breathing and extra circumflex.
+1:5 | κεφαλὴ εἷς -> κεφαλὴ εἰς | Wrong breathing and extra circumflex.
+1:5 | καρδία εἷς -> καρδία εἰς | Wrong breathing and extra circumflex.
+1:6 | ἔως -> ἕως | Smooth instead of rough breathing.
+1:7 | ἕρημος -> ἔρημος | Rough instead of smooth breathing.
+1:7 | αἶ -> αἱ | Wrong breathing and extra circumflex.
+1:7 | πυρίκαυστον -> πυρίκαυστοι | Final iota misread as nu.
+1:8 | ἦ -> ἡ | Wrong breathing and extra circumflex.
+1:8 | ὥς -> ὡς | Extra acute accent.
+1:9 | εἶ -> εἰ | Extra circumflex.

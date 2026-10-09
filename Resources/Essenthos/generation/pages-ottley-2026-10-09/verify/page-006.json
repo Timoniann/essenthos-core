@@ -1,0 +1,52 @@
+[
+ {
+  "id": 64,
+  "verdict": "right",
+  "actual": "τὸ"
+ },
+ {
+  "id": 66,
+  "verdict": "right",
+  "actual": "ἱματισμοῦ αὐτῶν"
+ },
+ {
+  "id": 67,
+  "verdict": "wrong",
+  "actual": "κόσμους αύτῶν"
+ },
+ {
+  "id": 68,
+  "verdict": "right",
+  "actual": "αὐτῶν"
+ },
+ {
+  "id": 71,
+  "verdict": "right",
+  "actual": "ὁ υἱός"
+ },
+ {
+  "id": 72,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 73,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 74,
+  "verdict": "right",
+  "actual": "ἐν"
+ },
+ {
+  "id": 75,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 76,
+  "verdict": "right",
+  "actual": "εἰς"
+ }
+]

@@ -1,0 +1,86 @@
+[
+ {
+  "id": 317,
+  "page": "29",
+  "image": "IsaiahAccordingToTheSeptuagint-411.jpg",
+  "verse": "19:6",
+  "ours": "ἐκλείχουσιν",
+  "printed": "ξηρανθήσεται",
+  "why": "Wrong word substituted.",
+  "kind": "letters",
+  "judge_actual": "ἐκλείψουσιν",
+  "judge_note": "19:6 prints καὶ ἐκλείψουσιν οἱ ποταμοὶ; ξηρανθήσεται comes later in the verse"
+ },
+ {
+  "id": 424,
+  "page": "39",
+  "image": "IsaiahAccordingToTheSeptuagint-421.jpg",
+  "verse": "26:8",
+  "ours": "καὶ ἐπὶ",
+  "printed": "καὶ ἐπὶ τῇ μνείᾳ ᾗ ἐπιθυμεῖ ἡ ψυχὴ ἡμῶν.",
+  "why": "Verse ending missing; a corrupted fragment was assigned to 26:9.",
+  "kind": "words",
+  "judge_actual": "καὶ ἐπὶ τῇ μνείᾳ",
+  "judge_note": "page puts the verse-9 numeral before ᾗ: 26:8 ends ἐπὶ τῇ μνείᾳ; ᾗ ἐπιθυμεῖ ἡ ψυχὴ ἡμῶν. opens 26:9"
+ },
+ {
+  "id": 425,
+  "page": "39",
+  "image": "IsaiahAccordingToTheSeptuagint-421.jpg",
+  "verse": "26:9",
+  "ours": "ᾖ μνείᾳ ἡ ἐπιθυμεῖ ἦ",
+  "printed": "",
+  "why": "Corrupted fragment of 26:8 inserted before 26:9.",
+  "kind": "words",
+  "judge_actual": "ᾗ ἐπιθυμεῖ ἡ ψυχὴ ἡμῶν.",
+  "judge_note": "26:9 opens ᾗ ἐπιθυμεῖ ἡ ψυχὴ ἡμῶν. (Ὠιδή.); the garble should be replaced by this, not removed"
+ },
+ {
+  "id": 744,
+  "page": "61",
+  "image": "IsaiahAccordingToTheSeptuagint-443.jpg",
+  "verse": "38:17",
+  "ours": "ἀπέριχας",
+  "printed": "ἀπέρριψας",
+  "why": "Missing ρ and misread ψ.",
+  "kind": "letters",
+  "judge_actual": "ἀπέριψας",
+  "judge_note": "single rho on the page, zoomed"
+ },
+ {
+  "id": 1006,
+  "page": "76",
+  "image": "IsaiahAccordingToTheSeptuagint-458.jpg",
+  "verse": "48:5",
+  "ours": "Τὸ. εἴδωλά μοι",
+  "printed": "Τὰ εἴδωλά μου",
+  "why": "Alpha and final upsilon misread.",
+  "kind": "letters",
+  "judge_actual": "Τὰ εἴδωλά μοι",
+  "judge_note": "page prints μοι, not μου; τὰ is right, zoomed"
+ },
+ {
+  "id": 1049,
+  "page": "79",
+  "image": "IsaiahAccordingToTheSeptuagint-461.jpg",
+  "verse": "49:13",
+  "ours": "ἀγαλλίσαθω",
+  "printed": "ἀγαλλιάσθω",
+  "why": "Alpha and sigma transposed; accent misplaced.",
+  "kind": "letters",
+  "judge_actual": "ἀγαλλίασθω",
+  "judge_note": "page accents the iota: ἀγαλλίασθω, zoomed"
+ },
+ {
+  "id": 1149,
+  "page": "83",
+  "image": "IsaiahAccordingToTheSeptuagint-465.jpg",
+  "verse": "52:4",
+  "ours": "Ἀσσυρίους ἤχθησαν",
+  "printed": "Ἀσσυρίους βία ἤχθησαν",
+  "why": "Missing word.",
+  "kind": "words",
+  "judge_actual": "Ἀσσυρίους βίᾳ ἤχθησαν",
+  "judge_note": "word is missing from ours, but the page prints βίᾳ with iota subscript, zoomed"
+ }
+]
