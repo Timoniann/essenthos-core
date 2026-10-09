@@ -47,6 +47,14 @@ public partial class DistinguisherTests
             lines[ruling.Existing!] = ruling.Says!.Distinguisher!;
         }
 
+        // A record a ruling created is ours from the start.
+        foreach (var created in SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings)
+                     .Select(r => r.Create)
+                     .Where(r => r?.Distinguisher is not null))
+        {
+            lines[created!.Slug] = created.Distinguisher!;
+        }
+
         return lines;
     }
 
