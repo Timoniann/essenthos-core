@@ -37,7 +37,8 @@ internal sealed record EqualTwinNameOutcome(
 /// <para>
 /// <strong>Only to a word nothing else names, and only one answer.</strong> A twin that any pass has
 /// already named keeps that answer, and a word its language never names anybody with
-/// (<see cref="Annotating.NeverAName"/>) gets none. Only an answer at least as sure as
+/// (<see cref="Annotating.NeverAName"/>) gets none, nor does a Greek or Hebrew common word get a person
+/// or place (<see cref="Annotating.CommonWord"/>). Only an answer at least as sure as
 /// <see cref="Annotating.Faint"/> is given: a faint one is the twin's last resort, not the word's. A word whose own annotations name two records gives nothing, nor
 /// does a word twinned with several that disagree. What is given is carried, in the note's own form
 /// (<see cref="Annotating.CarriedNote"/>), so a reading of the word itself still comes first, and its
@@ -94,6 +95,7 @@ internal sealed class EqualTwinNames(
             WHERE NOT EXISTS (SELECT 1 FROM word_entity spoken
                               WHERE spoken.word_id = p.twin AND spoken.source <> @source)
               AND NOT {Annotating.NeverAName}
+              AND NOT {Annotating.CommonWord("hw", "ht", "n.entity_id")}
         )
         SELECT DISTINCT ON (o.word_id) o.word_id, o.entity_id, o.method, o.confidence, o.note
         FROM offered o
@@ -136,6 +138,7 @@ internal sealed class EqualTwinNames(
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await Run(connection, transaction, Annotating.CommonWords, cancellationToken);
         await Run(connection, transaction, Wanted, cancellationToken);
         await LeaveOutPronouns(connection, transaction, cancellationToken);
         var withdrawn = await Run(connection, transaction, TakeBack, cancellationToken);
