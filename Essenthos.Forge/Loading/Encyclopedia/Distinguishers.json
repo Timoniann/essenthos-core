@@ -1,5 +1,5 @@
 {
-  "source": "Essenthos, its own lines rendered into Ukrainian, German and Spanish by a language model on 2026-09-27",
+  "source": "Essenthos, its own lines rendered into Ukrainian, German and Spanish by a language model on 2026-09-27, the lines of the records a ruling creates on 2026-10-09",
   "records": [
     {
       "slug": "tabernacle",
@@ -896,6 +896,433 @@
       "ukr": "яка торкнулася краю Ісусового одягу (MAT 9:20-22)",
       "deu": "die den Saum von Jesu Gewand berührte (MAT 9:20-22)",
       "spa": "que tocó el borde del manto de Jesús (MAT 9:20-22)"
+    },
+    {
+      "slug": "azariah-son-of-zadok",
+      "english": "son of Zadok the priest, one of Solomon's princes (1KI 4:2)",
+      "ukr": "син священика Садока, один із Соломонових зверхників (1KI 4:2)",
+      "deu": "Sohn Zadoks, des Priesters, einer der Obersten Salomos (1KI 4:2)",
+      "spa": "hijo del sacerdote Sadoc, uno de los príncipes de Salomón (1KI 4:2)"
+    },
+    {
+      "slug": "jeshua-son-of-kadmiel",
+      "english": "son of Kadmiel, one of the chiefs of the Levites in the days of Joiakim (NEH 12:24)",
+      "ukr": "син Кадміїла, один із голів левитів за днів Йоякима (NEH 12:24)",
+      "deu": "Sohn Kadmiëls, einer der Häupter der Leviten in den Tagen Jojakims (NEH 12:24)",
+      "spa": "hijo de Cadmiel, uno de los jefes de los levitas en los días de Joiacim (NEH 12:24)"
+    },
+    {
+      "slug": "ishi-the-simeonite",
+      "english": "a Simeonite, father of Pelatiah, Neariah, Rephaiah and Uzziel, who led five hundred men to mount Seir (1CH 4:42)",
+      "ukr": "симеонівець, батько Пелатії, Неарії, Рефаї та Уззіїла, що повів п'ятсот чоловік на гору Сеїр (1CH 4:42)",
+      "deu": "ein Simeoniter, Vater Pelatjas, Nearjas, Refajas und Usiëls, der fünfhundert Mann zum Gebirge Seïr führte (1CH 4:42)",
+      "spa": "un simeonita, padre de Pelatías, Nearías, Refaías y Uziel, que llevó quinientos hombres al monte de Seir (1CH 4:42)"
+    },
+    {
+      "slug": "jeroham-father-of-jaresiah",
+      "english": "a Benjamite whose sons Jaresiah, Eliah and Zichri were heads of fathers in Jerusalem (1CH 8:27)",
+      "ukr": "веніяминівець, чиї сини Яарешія, Елійя та Зікрі були головами батьківських родів в Єрусалимі (1CH 8:27)",
+      "deu": "ein Benjaminiter, dessen Söhne Jaarescheja, Elia und Sichri Häupter der Vaterhäuser in Jerusalem waren (1CH 8:27)",
+      "spa": "un benjamita cuyos hijos Jaresías, Elías y Zicri eran jefes de casas paternas en Jerusalén (1CH 8:27)"
+    },
+    {
+      "slug": "elkanah-doorkeeper-of-the-ark",
+      "english": "a Levite doorkeeper for the ark when David brought it up to Jerusalem (1CH 15:23)",
+      "ukr": "левит, придверний при ковчезі, коли Давид переносив його до Єрусалиму (1CH 15:23)",
+      "deu": "ein levitischer Torhüter der Lade, als David sie nach Jerusalem hinaufbrachte (1CH 15:23)",
+      "spa": "un levita portero del arca cuando David la hizo subir a Jerusalén (1CH 15:23)"
+    },
+    {
+      "slug": "bunni-the-covenant-chief",
+      "english": "one of the chiefs of the people who sealed the covenant under Nehemiah (NEH 10:15)",
+      "ukr": "один із голів народу, що запечатали заповіт за Неемії (NEH 10:15)",
+      "deu": "einer der Häupter des Volkes, die unter Nehemia den Bund versiegelten (NEH 10:15)",
+      "spa": "uno de los jefes del pueblo que sellaron el pacto bajo Nehemías (NEH 10:15)"
+    },
+    {
+      "slug": "hizkijah-the-covenant-chief",
+      "english": "one of the chiefs of the people who sealed the covenant under Nehemiah (NEH 10:17)",
+      "ukr": "один із голів народу, що запечатали заповіт за Неемії (NEH 10:17)",
+      "deu": "einer der Häupter des Volkes, die unter Nehemia den Bund versiegelten (NEH 10:17)",
+      "spa": "uno de los jefes del pueblo que sellaron el pacto bajo Nehemías (NEH 10:17)"
+    },
+    {
+      "slug": "meshullam-the-covenant-chief",
+      "english": "one of the chiefs of the people who sealed the covenant under Nehemiah (NEH 10:20)",
+      "ukr": "один із голів народу, що запечатали заповіт за Неемії (NEH 10:20)",
+      "deu": "einer der Häupter des Volkes, die unter Nehemia den Bund versiegelten (NEH 10:20)",
+      "spa": "uno de los jefes del pueblo que sellaron el pacto bajo Nehemías (NEH 10:20)"
+    },
+    {
+      "slug": "amariah-priest-with-zerubbabel",
+      "english": "one of the chief priests who went up with Zerubbabel and Jeshua (NEH 12:2)",
+      "ukr": "один із головних священиків, що вийшли із Зоровавелем та Ісусом (NEH 12:2)",
+      "deu": "einer der obersten Priester, die mit Serubbabel und Jeschua heraufzogen (NEH 12:2)",
+      "spa": "uno de los principales sacerdotes que subieron con Zorobabel y Jesúa (NEH 12:2)"
+    },
+    {
+      "slug": "binnui-levite-with-zerubbabel",
+      "english": "a Levite who went up with Zerubbabel and Jeshua (NEH 12:8)",
+      "ukr": "левит, що вийшов із Зоровавелем та Ісусом (NEH 12:8)",
+      "deu": "ein Levit, der mit Serubbabel und Jeschua heraufzog (NEH 12:8)",
+      "spa": "un levita que subió con Zorobabel y Jesúa (NEH 12:8)"
+    },
+    {
+      "slug": "zechariah-trumpeter-of-the-second-company",
+      "english": "a priest with a trumpet in the second company at the dedication of the wall (NEH 12:41)",
+      "ukr": "священик із сурмою в другому хорі при освяченні муру (NEH 12:41)",
+      "deu": "ein Priester mit einer Trompete im zweiten Dankchor bei der Einweihung der Mauer (NEH 12:41)",
+      "spa": "un sacerdote con trompeta en el segundo coro en la dedicación del muro (NEH 12:41)"
+    },
+    {
+      "slug": "berechiah-doorkeeper-of-the-ark",
+      "english": "a Levite doorkeeper for the ark when David brought it up to Jerusalem (1CH 15:23)",
+      "ukr": "левит, придверний при ковчезі, коли Давид переносив його до Єрусалиму (1CH 15:23)",
+      "deu": "ein levitischer Torhüter der Lade, als David sie nach Jerusalem hinaufbrachte (1CH 15:23)",
+      "spa": "un levita portero del arca cuando David la hizo subir a Jerusalén (1CH 15:23)"
+    },
+    {
+      "slug": "azariah-the-covenant-priest",
+      "english": "a priest who sealed the covenant under Nehemiah (NEH 10:2)",
+      "ukr": "священик, що запечатав заповіт за Неемії (NEH 10:2)",
+      "deu": "ein Priester, der unter Nehemia den Bund versiegelte (NEH 10:2)",
+      "spa": "un sacerdote que selló el pacto bajo Nehemías (NEH 10:2)"
+    },
+    {
+      "slug": "azariah-of-the-wall-dedication",
+      "english": "walked in the dedication of the wall (NEH 12:33)",
+      "ukr": "ішов у процесії при освяченні муру (NEH 12:33)",
+      "deu": "ging bei der Einweihung der Mauer im Zug mit (NEH 12:33)",
+      "spa": "anduvo en la procesión de la dedicación del muro (NEH 12:33)"
+    },
+    {
+      "slug": "obadiah-the-teaching-prince",
+      "english": "a prince of Judah sent by Jehoshaphat to teach in the cities (2CH 17:7)",
+      "ukr": "Юдин зверхник, якого Йосафат послав навчати по містах (2CH 17:7)",
+      "deu": "ein Oberster Judas, den Joschafat aussandte, in den Städten zu lehren (2CH 17:7)",
+      "spa": "un príncipe de Judá a quien Josafat envió a enseñar en las ciudades (2CH 17:7)"
+    },
+    {
+      "slug": "zimri-in-jezebels-cry",
+      "english": "whom Jezebel names as Jehu comes through the gate (2KI 9:31)",
+      "ukr": "якого називає Єзавель, коли Єгу входить у браму (2KI 9:31)",
+      "deu": "den Isebel nennt, als Jehu durch das Tor kommt (2KI 9:31)",
+      "spa": "a quien nombra Jezabel cuando Jehú entra por la puerta (2KI 9:31)"
+    },
+    {
+      "slug": "hilkiah-at-ezras-right-hand",
+      "english": "who stood at Ezra's right hand as he read the Law (NEH 8:4)",
+      "ukr": "що стояв праворуч Езри, коли той читав Закон (NEH 8:4)",
+      "deu": "der zur Rechten Esras stand, als er das Gesetz vorlas (NEH 8:4)",
+      "spa": "que estaba a la derecha de Esdras cuando leía la Ley (NEH 8:4)"
+    },
+    {
+      "slug": "johanan-firstborn-of-josiah",
+      "english": "the firstborn of Josiah, who never reigned (1CH 3:15)",
+      "ukr": "первісток Йосії, що ніколи не царював (1CH 3:15)",
+      "deu": "der Erstgeborene Josias, der nie regierte (1CH 3:15)",
+      "spa": "el primogénito de Josías, que nunca reinó (1CH 3:15)"
+    },
+    {
+      "slug": "michael-the-gadite-forefather",
+      "english": "an earlier Gadite, son of Jeshishai and forefather of Abihail (1CH 5:14)",
+      "ukr": "давніший ґадівець, син Єшішая і предок Авіхаїла (1CH 5:14)",
+      "deu": "ein früherer Gaditer, Sohn Jeschischais und Vorfahr Abihajils (1CH 5:14)",
+      "spa": "un gadita anterior, hijo de Jesisai y antepasado de Abihail (1CH 5:14)"
+    },
+    {
+      "slug": "hepher-the-mecherathite",
+      "english": "the Mecherathite, one of David's warriors (1CH 11:36)",
+      "ukr": "мехератянин, один із Давидових лицарів (1CH 11:36)",
+      "deu": "der Mecheratiter, einer der Helden Davids (1CH 11:36)",
+      "spa": "el mequeratita, uno de los valientes de David (1CH 11:36)"
+    },
+    {
+      "slug": "zechariah-the-trumpeting-priest",
+      "english": "a priest who blew trumpets before the ark (1CH 15:24)",
+      "ukr": "священик, що сурмив у сурми перед ковчегом (1CH 15:24)",
+      "deu": "ein Priester, der vor der Lade die Trompeten blies (1CH 15:24)",
+      "spa": "un sacerdote que tocaba las trompetas delante del arca (1CH 15:24)"
+    },
+    {
+      "slug": "jeiel-the-alamoth-psaltery-player",
+      "english": "the psaltery player set to Alamoth (1CH 16:5)",
+      "ukr": "гравець на арфі, настроєній на аламот (1CH 16:5)",
+      "deu": "der Psalterspieler nach der Weise Alamot (1CH 16:5)",
+      "spa": "el que tocaba el salterio sobre Alamot (1CH 16:5)"
+    },
+    {
+      "slug": "jehoiada-son-of-benaiah",
+      "english": "son of Benaiah, a counsellor after Ahithophel (1CH 27:34)",
+      "ukr": "син Беная, порадник після Ахітофела (1CH 27:34)",
+      "deu": "Sohn Benajas, ein Ratgeber nach Ahitofel (1CH 27:34)",
+      "spa": "hijo de Benaía, consejero después de Ahitofel (1CH 27:34)"
+    },
+    {
+      "slug": "uriel-of-gibeah",
+      "english": "of Gibeah, father of Michaiah and grandfather of Abijah (2CH 13:2)",
+      "ukr": "з Ґів'ї, батько Міхаї і дід Авійї (2CH 13:2)",
+      "deu": "aus Gibea, Vater Michajas und Großvater Abijas (2CH 13:2)",
+      "spa": "de Gabaa, padre de Micaías y abuelo de Abías (2CH 13:2)"
+    },
+    {
+      "slug": "zechariah-who-taught-uzziah",
+      "english": "Uzziah's mentor, who had understanding in the visions of God (2CH 26:5)",
+      "ukr": "наставник Уззійї, що розумівся на Божих видіннях (2CH 26:5)",
+      "deu": "Usijas Lehrer, der Verständnis hatte in den Gesichten Gottes (2CH 26:5)",
+      "spa": "el maestro de Uzías, entendido en visiones de Dios (2CH 26:5)"
+    },
+    {
+      "slug": "kish-son-of-abdi",
+      "english": "a Merarite Levite, son of Abdi, in Hezekiah's day (2CH 29:12)",
+      "ukr": "левит із Мерарієвих синів, син Авдія, за днів Єзекії (2CH 29:12)",
+      "deu": "ein Levit von den Merariten, Sohn Abdis, in den Tagen Hiskias (2CH 29:12)",
+      "spa": "un levita merarita, hijo de Abdi, en los días de Ezequías (2CH 29:12)"
+    },
+    {
+      "slug": "zimmah-the-later-gershonite",
+      "english": "a Gershonite Levite, father of the Joah who served under Hezekiah (2CH 29:12)",
+      "ukr": "левит із Ґершонових синів, батько Йоаха, що служив за Єзекії (2CH 29:12)",
+      "deu": "ein Levit von den Gersoniten, Vater des Joach, der unter Hiskia diente (2CH 29:12)",
+      "spa": "un levita gersonita, padre del Joa que sirvió bajo Ezequías (2CH 29:12)"
+    },
+    {
+      "slug": "jehiel-ruler-of-the-house-of-god",
+      "english": "a ruler of the house of God under Josiah (2CH 35:8)",
+      "ukr": "начальник Божого дому за Йосії (2CH 35:8)",
+      "deu": "ein Vorsteher im Hause Gottes unter Josia (2CH 35:8)",
+      "spa": "un oficial de la casa de Dios bajo Josías (2CH 35:8)"
+    },
+    {
+      "slug": "galal-who-dwelt-in-jerusalem",
+      "english": "a Levite who dwelt in Jerusalem after the return, named with Bakbakkar, Heresh and Mattaniah (1CH 9:15)",
+      "ukr": "левит, що жив в Єрусалимі після повернення, названий разом із Бакбаккаром, Херешем і Маттанією (1CH 9:15)",
+      "deu": "ein Levit, der nach der Heimkehr in Jerusalem wohnte, genannt mit Bakbakkar, Heresch und Mattanja (1CH 9:15)",
+      "spa": "un levita que habitó en Jerusalén después del regreso, nombrado con Bacbacar, Heres y Matanías (1CH 9:15)"
+    },
+    {
+      "slug": "hachmoni-father-of-jashobeam",
+      "english": "whose son Jashobeam was the chief of David's captains (1CH 11:11)",
+      "ukr": "чий син Яшов'ам був головою Давидових старшин (1CH 11:11)",
+      "deu": "dessen Sohn Jaschobeam der Oberste der Hauptleute Davids war (1CH 11:11)",
+      "spa": "cuyo hijo Jasobeam era el caudillo de los capitanes de David (1CH 11:11)"
+    },
+    {
+      "slug": "jabin-king-of-canaan",
+      "english": "king of Canaan who reigned in Hazor in the days of Deborah and Barak, whose captain was Sisera (JDG 4:2)",
+      "ukr": "ханаанський цар, що царював у Хацорі за днів Девори й Барака, а його військовим начальником був Сісера (JDG 4:2)",
+      "deu": "König von Kanaan, der zu Hazor regierte in den Tagen Deboras und Baraks, dessen Feldhauptmann Sisera war (JDG 4:2)",
+      "spa": "rey de Canaán que reinó en Hazor en los días de Débora y Barac, cuyo capitán era Sísara (JDG 4:2)"
+    },
+    {
+      "slug": "chelub-father-of-ezri",
+      "english": "father of Ezri, who was over the tillage of the ground for King David (1CH 27:26)",
+      "ukr": "батько Езрі, що був над хліборобами для царя Давида (1CH 27:26)",
+      "deu": "Vater Esris, der für König David über den Ackerbau gesetzt war (1CH 27:26)",
+      "spa": "padre de Ezri, que estaba sobre la labranza de la tierra para el rey David (1CH 27:26)"
+    },
+    {
+      "slug": "adin-who-sealed-the-covenant",
+      "english": "one of the chiefs of the people who sealed the covenant in the days of Nehemiah (NEH 10:16)",
+      "ukr": "один із голів народу, що запечатали заповіт за днів Неемії (NEH 10:16)",
+      "deu": "einer der Häupter des Volkes, die in den Tagen Nehemias den Bund versiegelten (NEH 10:16)",
+      "spa": "uno de los jefes del pueblo que sellaron el pacto en los días de Nehemías (NEH 10:16)"
+    },
+    {
+      "slug": "azgad-who-sealed-the-covenant",
+      "english": "one of the chiefs of the people who sealed the covenant in the days of Nehemiah (NEH 10:15)",
+      "ukr": "один із голів народу, що запечатали заповіт за днів Неемії (NEH 10:15)",
+      "deu": "einer der Häupter des Volkes, die in den Tagen Nehemias den Bund versiegelten (NEH 10:15)",
+      "spa": "uno de los jefes del pueblo que sellaron el pacto en los días de Nehemías (NEH 10:15)"
+    },
+    {
+      "slug": "pahath-moab-who-sealed-the-covenant",
+      "english": "one of the chiefs of the people who sealed the covenant in the days of Nehemiah (NEH 10:14)",
+      "ukr": "один із голів народу, що запечатали заповіт за днів Неемії (NEH 10:14)",
+      "deu": "einer der Häupter des Volkes, die in den Tagen Nehemias den Bund versiegelten (NEH 10:14)",
+      "spa": "uno de los jefes del pueblo que sellaron el pacto en los días de Nehemías (NEH 10:14)"
+    },
+    {
+      "slug": "parosh-who-sealed-the-covenant",
+      "english": "first of the chiefs of the people who sealed the covenant in the days of Nehemiah (NEH 10:14)",
+      "ukr": "перший із голів народу, що запечатали заповіт за днів Неемії (NEH 10:14)",
+      "deu": "der erste der Häupter des Volkes, die in den Tagen Nehemias den Bund versiegelten (NEH 10:14)",
+      "spa": "el primero de los jefes del pueblo que sellaron el pacto en los días de Nehemías (NEH 10:14)"
+    },
+    {
+      "slug": "ziha-over-the-nethinims",
+      "english": "who with Gispa was over the Nethinims dwelling in Ophel (NEH 11:21)",
+      "ukr": "що разом із Ґішпою був над храмовими слугами, які жили в Офелі (NEH 11:21)",
+      "deu": "der mit Gischpa über die Tempeldiener gesetzt war, die auf dem Ofel wohnten (NEH 11:21)",
+      "spa": "que con Gispa estaba sobre los sirvientes del templo que habitaban en Ofel (NEH 11:21)"
+    },
+    {
+      "slug": "ittai-son-of-ribai",
+      "english": "son of Ribai, of Gibeah of the children of Benjamin, one of David's thirty mighty men (2SA 23:29, 1CH 11:31)",
+      "ukr": "син Ривая з Ґів'ї Веніяминових синів, один із тридцяти Давидових лицарів (2SA 23:29, 1CH 11:31)",
+      "deu": "Sohn Ribais, aus Gibea der Kinder Benjamin, einer der dreißig Helden Davids (2SA 23:29, 1CH 11:31)",
+      "spa": "hijo de Ribai, de Gabaa de los hijos de Benjamín, uno de los treinta valientes de David (2SA 23:29, 1CH 11:31)"
+    },
+    {
+      "slug": "judas-of-james",
+      "english": "of James, one of the Twelve in Luke's list (LUK 6:16; ACT 1:13), 'not Iscariot' (JHN 14:22)",
+      "ukr": "Яковів, один із Дванадцятьох у списку Луки (LUK 6:16; ACT 1:13), «не Іскаріотський» (JHN 14:22)",
+      "deu": "des Jakobus, einer der Zwölf in der Liste des Lukas (LUK 6:16; ACT 1:13), „nicht der Iskariot“ (JHN 14:22)",
+      "spa": "de Jacobo, uno de los Doce en la lista de Lucas (LUK 6:16; ACT 1:13), «no el Iscariote» (JHN 14:22)"
+    },
+    {
+      "slug": "ahasuerus-father-of-darius",
+      "english": "father of Darius the Mede (DAN 9:1)",
+      "ukr": "батько мідянина Дарія (DAN 9:1)",
+      "deu": "Vater des Darius, des Meders (DAN 9:1)",
+      "spa": "padre de Darío el medo (DAN 9:1)"
+    },
+    {
+      "slug": "anah-son-of-zibeon",
+      "english": "son of Zibeon (GEN 36:24), father of Aholibamah, Esau's wife (GEN 36:25)",
+      "ukr": "син Цівона (GEN 36:24), батько Оголівами, Ісавової жінки (GEN 36:25)",
+      "deu": "Sohn Zibeons (GEN 36:24), Vater Oholibamas, der Frau Esaus (GEN 36:25)",
+      "spa": "hijo de Zibeón (GEN 36:24), padre de Aholibama, mujer de Esaú (GEN 36:25)"
+    },
+    {
+      "slug": "pashhur-the-priest",
+      "english": "a priest, son of Malchijah, forefather of priests who served in Jerusalem after the return (1CH 9:12, NEH 11:12)",
+      "ukr": "священик, син Малкійї, предок священиків, що служили в Єрусалимі після повернення (1CH 9:12, NEH 11:12)",
+      "deu": "ein Priester, Sohn Malkijas, Vorfahr von Priestern, die nach der Heimkehr in Jerusalem dienten (1CH 9:12, NEH 11:12)",
+      "spa": "un sacerdote, hijo de Malquías, antepasado de sacerdotes que sirvieron en Jerusalén después del regreso (1CH 9:12, NEH 11:12)"
+    },
+    {
+      "slug": "malchijah-father-of-pashhur",
+      "english": "a priest, father of Pashhur, forefather of priests who served in Jerusalem after the return (1CH 9:12, NEH 11:12)",
+      "ukr": "священик, батько Пашхура, предок священиків, що служили в Єрусалимі після повернення (1CH 9:12, NEH 11:12)",
+      "deu": "ein Priester, Vater Paschhurs, Vorfahr von Priestern, die nach der Heimkehr in Jerusalem dienten (1CH 9:12, NEH 11:12)",
+      "spa": "un sacerdote, padre de Pasur, antepasado de sacerdotes que sirvieron en Jerusalén después del regreso (1CH 9:12, NEH 11:12)"
+    },
+    {
+      "slug": "conaniah-chief-of-the-levites",
+      "english": "a chief of the Levites under Josiah, who gave the Levites cattle for the passover (2CH 35:9)",
+      "ukr": "голова левитів за Йосії, що дав левитам худобу на Пасху (2CH 35:9)",
+      "deu": "ein Oberster der Leviten unter Josia, der den Leviten Vieh zum Passa gab (2CH 35:9)",
+      "spa": "un jefe de los levitas bajo Josías, que dio a los levitas ganado para la pascua (2CH 35:9)"
+    },
+    {
+      "slug": "jeiel-chief-of-the-levites",
+      "english": "a chief of the Levites under Josiah, who gave the Levites cattle for the passover (2CH 35:9)",
+      "ukr": "голова левитів за Йосії, що дав левитам худобу на Пасху (2CH 35:9)",
+      "deu": "ein Oberster der Leviten unter Josia, der den Leviten Vieh zum Passa gab (2CH 35:9)",
+      "spa": "un jefe de los levitas bajo Josías, que dio a los levitas ganado para la pascua (2CH 35:9)"
+    },
+    {
+      "slug": "benaiah-the-trumpeting-priest",
+      "english": "a priest who blew the trumpet before the ark of God (1CH 15:24, 16:6)",
+      "ukr": "священик, що сурмив у сурму перед Божим ковчегом (1CH 15:24, 16:6)",
+      "deu": "ein Priester, der vor der Lade Gottes die Trompete blies (1CH 15:24, 16:6)",
+      "spa": "un sacerdote que tocaba la trompeta delante del arca de Dios (1CH 15:24, 16:6)"
+    },
+    {
+      "slug": "jahaziel-the-trumpeting-priest",
+      "english": "a priest who blew the trumpet continually before the ark of the covenant (1CH 16:6)",
+      "ukr": "священик, що завжди сурмив у сурму перед ковчегом заповіту (1CH 16:6)",
+      "deu": "ein Priester, der beständig vor der Bundeslade die Trompete blies (1CH 16:6)",
+      "spa": "un sacerdote que tocaba continuamente la trompeta delante del arca del pacto (1CH 16:6)"
+    },
+    {
+      "slug": "elhanan-son-of-dodo",
+      "english": "son of Dodo of Bethlehem, one of David's thirty mighty men (2SA 23:24, 1CH 11:26)",
+      "ukr": "син Додо з Віфлеєму, один із тридцяти Давидових лицарів (2SA 23:24, 1CH 11:26)",
+      "deu": "Sohn Dodos aus Bethlehem, einer der dreißig Helden Davids (2SA 23:24, 1CH 11:26)",
+      "spa": "hijo de Dodo de Belén, uno de los treinta valientes de David (2SA 23:24, 1CH 11:26)"
+    },
+    {
+      "slug": "amaziah-the-merarite",
+      "english": "son of Hilkiah, in the line of Ethan the Merarite singer (1CH 6:45)",
+      "ukr": "син Хілкійї, з роду співця Етана з Мерарієвих синів (1CH 6:45)",
+      "deu": "Sohn Hilkijas, im Geschlecht Etans, des Sängers von den Merariten (1CH 6:45)",
+      "spa": "hijo de Hilcías, en la línea de Etán, el cantor merarita (1CH 6:45)"
+    },
+    {
+      "slug": "joel-son-of-azariah",
+      "english": "son of Azariah and father of Elkanah, in the line of Heman the singer (1CH 6:36)",
+      "ukr": "син Азарії і батько Елкани, з роду співця Гемана (1CH 6:36)",
+      "deu": "Sohn Asarjas und Vater Elkanas, im Geschlecht Hemans, des Sängers (1CH 6:36)",
+      "spa": "hijo de Azarías y padre de Elcana, en la línea de Hemán el cantor (1CH 6:36)"
+    },
+    {
+      "slug": "ezer-at-the-dedication",
+      "english": "one of those who stood in the house of God at the dedication of the wall (NEH 12:42)",
+      "ukr": "один із тих, що стояли в Божому домі при освяченні муру (NEH 12:42)",
+      "deu": "einer von denen, die bei der Einweihung der Mauer im Hause Gottes standen (NEH 12:42)",
+      "spa": "uno de los que estuvieron en la casa de Dios en la dedicación del muro (NEH 12:42)"
+    },
+    {
+      "slug": "levi-son-of-alphaeus",
+      "english": "son of Alphaeus, a publican whom Jesus called from the receipt of custom (MRK 2:14, LUK 5:27-29)",
+      "ukr": "син Алфеїв, митник, якого Ісус покликав від митниці (MRK 2:14, LUK 5:27-29)",
+      "deu": "Sohn des Alphäus, ein Zöllner, den Jesus vom Zoll weg berief (MRK 2:14, LUK 5:27-29)",
+      "spa": "hijo de Alfeo, un publicano a quien Jesús llamó del banco de los tributos públicos (MRK 2:14, LUK 5:27-29)"
+    },
+    {
+      "slug": "james-son-of-mary",
+      "english": "son of Mary, called James the less, whose mother watched at the cross and came to the tomb (MAT 27:56, MRK 15:40, 16:1, LUK 24:10)",
+      "ukr": "син Марії, званий Яковом Меншим, чия мати дивилася на хрест і прийшла до гробу (MAT 27:56, MRK 15:40, 16:1, LUK 24:10)",
+      "deu": "Sohn der Maria, genannt Jakobus der Kleine, dessen Mutter beim Kreuz zusah und zum Grab kam (MAT 27:56, MRK 15:40, 16:1, LUK 24:10)",
+      "spa": "hijo de María, llamado Jacobo el menor, cuya madre miraba la cruz y vino al sepulcro (MAT 27:56, MRK 15:40, 16:1, LUK 24:10)"
+    },
+    {
+      "slug": "joses-son-of-mary",
+      "english": "son of Mary and brother of James the less, whose mother watched at the cross (MAT 27:56, MRK 15:40, 15:47)",
+      "ukr": "син Марії і брат Якова Меншого, чия мати дивилася на хрест (MAT 27:56, MRK 15:40, 15:47)",
+      "deu": "Sohn der Maria und Bruder Jakobus' des Kleinen, dessen Mutter beim Kreuz zusah (MAT 27:56, MRK 15:40, 15:47)",
+      "spa": "hijo de María y hermano de Jacobo el menor, cuya madre miraba la cruz (MAT 27:56, MRK 15:40, 15:47)"
+    },
+    {
+      "slug": "oded-prophet-in-samaria",
+      "english": "a prophet of the LORD in Samaria in the days of Pekah and Ahaz (2CH 28:6-9)",
+      "ukr": "Господній пророк у Самарії за днів Пекаха й Ахаза (2CH 28:6-9)",
+      "deu": "ein Prophet des HERRN in Samaria in den Tagen Pekachs und Ahas' (2CH 28:6-9)",
+      "spa": "un profeta del SEÑOR en Samaria en los días de Peka y Acaz (2CH 28:6-9)"
+    },
+    {
+      "slug": "zacharias-son-of-barachias",
+      "english": "son of Barachias, slain between the temple and the altar (MAT 23:35; LUK 11:51)",
+      "ukr": "син Варахії, убитий між храмом і жертівником (MAT 23:35; LUK 11:51)",
+      "deu": "Sohn des Barachias, getötet zwischen Tempel und Altar (MAT 23:35; LUK 11:51)",
+      "spa": "hijo de Berequías, muerto entre el templo y el altar (MAT 23:35; LUK 11:51)"
+    },
+    {
+      "slug": "barachias",
+      "english": "father of the Zacharias slain between the temple and the altar (MAT 23:35)",
+      "ukr": "батько Захарії, убитого між храмом і жертівником (MAT 23:35)",
+      "deu": "Vater des Zacharias, der zwischen Tempel und Altar getötet wurde (MAT 23:35)",
+      "spa": "padre del Zacarías muerto entre el templo y el altar (MAT 23:35)"
+    },
+    {
+      "slug": "john-who-saw-the-revelation",
+      "english": "servant of Jesus Christ, who saw the Revelation in the isle of Patmos (REV 1:1, 1:9)",
+      "ukr": "раб Ісуса Христа, що бачив Об'явлення на острові Патмос (REV 1:1, 1:9)",
+      "deu": "Knecht Jesu Christi, der die Offenbarung auf der Insel Patmos sah (REV 1:1, 1:9)",
+      "spa": "siervo de Jesucristo, que vio el Apocalipsis en la isla de Patmos (REV 1:1, 1:9)"
+    },
+    {
+      "slug": "adah-wife-of-esau",
+      "english": "daughter of Elon the Hittite, wife of Esau and mother of Eliphaz (GEN 36:2, 36:4)",
+      "ukr": "дочка хіттеянина Елона, жінка Ісава і мати Еліфаза (GEN 36:2, 36:4)",
+      "deu": "Tochter Elons, des Hetiters, Frau Esaus und Mutter des Elifas (GEN 36:2, 36:4)",
+      "spa": "hija de Elón heteo, mujer de Esaú y madre de Elifaz (GEN 36:2, 36:4)"
+    },
+    {
+      "slug": "oholibamah-wife-of-esau",
+      "english": "daughter of Anah, the daughter of Zibeon the Hivite, wife of Esau and mother of Jeush, Jaalam and Korah (GEN 36:2, 36:5)",
+      "ukr": "дочка Ани, дочки хіввеянина Цівона, жінка Ісава і мати Єуша, Яалама та Кораха (GEN 36:2, 36:5)",
+      "deu": "Tochter der Ana, der Tochter Zibeons, des Hewiters, Frau Esaus und Mutter Jeuschs, Jaelams und Korachs (GEN 36:2, 36:5)",
+      "spa": "hija de Aná, hija de Zibeón heveo, mujer de Esaú y madre de Jeús, Jaalam y Coré (GEN 36:2, 36:5)"
+    },
+    {
+      "slug": "basemath-daughter-of-ishmael",
+      "english": "Ishmael's daughter, sister of Nebajoth, wife of Esau and mother of Reuel (GEN 36:3-4)",
+      "ukr": "дочка Ізмаїла, сестра Невайота, жінка Ісава і мати Реуїла (GEN 36:3-4)",
+      "deu": "Tochter Ismaels, Schwester Nebajoths, Frau Esaus und Mutter Reguels (GEN 36:3-4)",
+      "spa": "hija de Ismael, hermana de Nebaiot, mujer de Esaú y madre de Reuel (GEN 36:3-4)"
     }
   ]
 }
