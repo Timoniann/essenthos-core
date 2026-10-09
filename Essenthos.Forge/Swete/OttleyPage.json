@@ -1,0 +1,7259 @@
+[
+ {
+  "chapter": 2,
+  "verse": "19",
+  "digitised": "εἷς τὸ. σπήλαια",
+  "printed": "εἰς τὰ σπήλαια",
+  "page": 4,
+  "leaf": 386,
+  "what": "εἰς, with the smooth breathing, and τὰ",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ],
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 1,
+  "source": "hand-1-0"
+ },
+ {
+  "chapter": 2,
+  "verse": "19",
+  "digitised": "εἷς τὰς σχισμὸς",
+  "printed": "εἰς τὰς σχισμὰς",
+  "page": 4,
+  "leaf": 386,
+  "what": "εἰς, with the smooth breathing, and σχισμὰς",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ],
+   [
+    "σχισμὸς",
+    "σχισμὰς"
+   ]
+  ],
+  "round": 1,
+  "source": "hand-1-1"
+ },
+ {
+  "chapter": 2,
+  "verse": "19",
+  "digitised": "εἷς τὰς τρώγλας",
+  "printed": "εἰς τὰς τρώγλας",
+  "page": 4,
+  "leaf": 386,
+  "what": "εἰς, with the smooth breathing",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 1,
+  "source": "hand-1-2"
+ },
+ {
+  "chapter": 5,
+  "verse": "5",
+  "digitised": "εἷς διαρπαγήν,",
+  "printed": "εἰς διαρπαγήν,",
+  "page": 7,
+  "leaf": 389,
+  "what": "εἰς, with the smooth breathing",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 1,
+  "source": "hand-1-3"
+ },
+ {
+  "chapter": 5,
+  "verse": "5",
+  "digitised": "εἷς καταπάτημα",
+  "printed": "εἰς < καταπάτημα>.",
+  "page": 7,
+  "leaf": 389,
+  "what": "εἰς, with the smooth breathing, and καταπάτημα in Ottley's angle brackets",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 1,
+  "source": "hand-1-4"
+ },
+ {
+  "chapter": 34,
+  "verse": "11",
+  "digitised": "καὶ καὶ κατοικήσονται",
+  "printed": "καὶ κατοικήσονται",
+  "page": 53,
+  "leaf": 435,
+  "what": "one καὶ",
+  "same": [],
+  "round": 1,
+  "source": "hand-1-5"
+ },
+ {
+  "chapter": 35,
+  "verse": "3",
+  "digitised": "παραλελυμένα",
+  "printed": "παραλελυμένα.",
+  "page": 54,
+  "leaf": 436,
+  "what": "the verse ends with the stop",
+  "same": [],
+  "round": 1,
+  "source": "hand-1-6"
+ },
+ {
+  "chapter": 35,
+  "verse": "4",
+  "digitised": "ὃ",
+  "printed": "ὁ",
+  "page": 54,
+  "leaf": 436,
+  "what": "the article, with the smooth breathing",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 1,
+  "source": "hand-1-7"
+ },
+ {
+  "chapter": 35,
+  "verse": "4",
+  "digitised": "σώσει",
+  "printed": "σώσει ἡμᾶς.",
+  "page": 54,
+  "leaf": 436,
+  "what": "ἡμᾶς, which the transcription lost",
+  "same": [],
+  "round": 1,
+  "source": "hand-1-8"
+ },
+ {
+  "chapter": 35,
+  "verse": "9",
+  "digitised": "οὔκ",
+  "printed": "οὐκ",
+  "page": 54,
+  "leaf": 436,
+  "what": "οὐκ, unaccented",
+  "same": [
+   [
+    "οὔκ",
+    "οὐκ"
+   ]
+  ],
+  "round": 1,
+  "source": "hand-1-9"
+ },
+ {
+  "chapter": 35,
+  "verse": "9",
+  "digitised": "οὗ",
+  "printed": "οὐ",
+  "page": 54,
+  "leaf": 436,
+  "what": "the negative, with the smooth breathing",
+  "same": [
+   [
+    "οὗ",
+    "οὐ"
+   ]
+  ],
+  "round": 1,
+  "source": "hand-1-10"
+ },
+ {
+  "chapter": 53,
+  "verse": "1",
+  "digitised": "ὃ",
+  "printed": "ὁ",
+  "page": 84,
+  "leaf": 466,
+  "what": "the article, with the rough breathing",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 1,
+  "source": "hand-1-11"
+ },
+ {
+  "chapter": 1,
+  "verse": "1",
+  "digitised": "Ὅρασις ἥν",
+  "printed": "Ὅρασις ἣν",
+  "page": 1,
+  "leaf": 383,
+  "what": "Acute instead of grave (read by Codex, twice)",
+  "same": [
+   [
+    "ἥν",
+    "ἣν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-0"
+ },
+ {
+  "chapter": 1,
+  "verse": "1",
+  "digitised": "Ἀμώς, ἥν",
+  "printed": "Ἀμώς, ἣν",
+  "page": 1,
+  "leaf": 383,
+  "what": "Acute instead of grave (read by Codex, twice)",
+  "same": [
+   [
+    "ἥν",
+    "ἣν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1"
+ },
+ {
+  "chapter": 1,
+  "verse": "3",
+  "digitised": "αὑτοῦ·",
+  "printed": "αὐτοῦ·",
+  "page": 1,
+  "leaf": 383,
+  "what": "Rough instead of smooth breathing (read by Codex, twice)",
+  "same": [
+   [
+    "αὑτοῦ·",
+    "αὐτοῦ·"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-2"
+ },
+ {
+  "chapter": 1,
+  "verse": "3",
+  "digitised": "ὃ",
+  "printed": "ὁ",
+  "page": 1,
+  "leaf": 383,
+  "what": "Extra grave accent (read by Codex, twice)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-3"
+ },
+ {
+  "chapter": 1,
+  "verse": "3",
+  "digitised": "οὗ",
+  "printed": "οὐ",
+  "page": 1,
+  "leaf": 383,
+  "what": "Wrong breathing and extra circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "οὗ",
+    "οὐ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-4"
+ },
+ {
+  "chapter": 1,
+  "verse": "5",
+  "digitised": "κεφαλὴ εἷς",
+  "printed": "κεφαλὴ εἰς",
+  "page": 1,
+  "leaf": 383,
+  "what": "Wrong breathing and extra circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-5"
+ },
+ {
+  "chapter": 1,
+  "verse": "5",
+  "digitised": "καρδία εἷς",
+  "printed": "καρδία εἰς",
+  "page": 1,
+  "leaf": 383,
+  "what": "Wrong breathing and extra circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-6"
+ },
+ {
+  "chapter": 1,
+  "verse": "6",
+  "digitised": "ἔως",
+  "printed": "ἕως",
+  "page": 1,
+  "leaf": 383,
+  "what": "Smooth instead of rough breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἔως",
+    "ἕως"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-7"
+ },
+ {
+  "chapter": 1,
+  "verse": "7",
+  "digitised": "ἕρημος,",
+  "printed": "ἔρημος,",
+  "page": 1,
+  "leaf": 383,
+  "what": "Rough instead of smooth breathing (read by Codex, twice)",
+  "same": [
+   [
+    "ἕρημος,",
+    "ἔρημος,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-8"
+ },
+ {
+  "chapter": 1,
+  "verse": "7",
+  "digitised": "αἶ",
+  "printed": "αἱ",
+  "page": 1,
+  "leaf": 383,
+  "what": "Wrong breathing and extra circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "αἶ",
+    "αἱ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-9"
+ },
+ {
+  "chapter": 1,
+  "verse": "7",
+  "digitised": "πυρίκαυστον",
+  "printed": "πυρίκαυστοι",
+  "page": 1,
+  "leaf": 383,
+  "what": "Final iota misread as nu (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "πυρίκαυστον",
+    "πυρίκαυστοι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-10"
+ },
+ {
+  "chapter": 1,
+  "verse": "8",
+  "digitised": "ἦ",
+  "printed": "ἡ",
+  "page": 1,
+  "leaf": 383,
+  "what": "Wrong breathing and extra circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἦ",
+    "ἡ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-11"
+ },
+ {
+  "chapter": 1,
+  "verse": "8",
+  "digitised": "ὥς",
+  "printed": "ὡς",
+  "page": 1,
+  "leaf": 383,
+  "what": "Extra acute accent (read by Codex, twice)",
+  "same": [
+   [
+    "ὥς",
+    "ὡς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-12"
+ },
+ {
+  "chapter": 1,
+  "verse": "9",
+  "digitised": "εἶ",
+  "printed": "εἰ",
+  "page": 1,
+  "leaf": 383,
+  "what": "Extra circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "εἶ",
+    "εἰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-13"
+ },
+ {
+  "chapter": 1,
+  "verse": "14",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 2,
+  "leaf": 384,
+  "what": "Wrong breathing and added circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-14"
+ },
+ {
+  "chapter": 1,
+  "verse": "15",
+  "digitised": "ἀποστρέψει)",
+  "printed": "ἀποστρέψω",
+  "page": 2,
+  "leaf": 384,
+  "what": "Final omega misread as ει) (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀποστρέψει)",
+    "ἀποστρέψω"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-15"
+ },
+ {
+  "chapter": 1,
+  "verse": "18",
+  "digitised": "καὶ τὰς",
+  "printed": "",
+  "page": 2,
+  "leaf": 384,
+  "what": "Extra words absent from the printed verse (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-16"
+ },
+ {
+  "chapter": 1,
+  "verse": "19",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 2,
+  "leaf": 384,
+  "what": "Accented alpha misread as omicron and dot (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-17"
+ },
+ {
+  "chapter": 1,
+  "verse": "21",
+  "digitised": "ᾖ",
+  "printed": "ᾗ",
+  "page": 2,
+  "leaf": 384,
+  "what": "Smooth breathing substituted for rough breathing (read by Codex, twice)",
+  "same": [
+   [
+    "ᾖ",
+    "ᾗ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-18"
+ },
+ {
+  "chapter": 1,
+  "verse": "22",
+  "digitised": "οἶ",
+  "printed": "οἱ",
+  "page": 2,
+  "leaf": 384,
+  "what": "Wrong breathing and added circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "οἶ",
+    "οἱ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-19"
+ },
+ {
+  "chapter": 1,
+  "verse": "23",
+  "digitised": "οὗ",
+  "printed": "οὐ",
+  "page": 2,
+  "leaf": 384,
+  "what": "Wrong breathing and added circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οὗ",
+    "οὐ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-20"
+ },
+ {
+  "chapter": 1,
+  "verse": "23",
+  "digitised": "οὔ",
+  "printed": "οὐ",
+  "page": 2,
+  "leaf": 384,
+  "what": "Added acute accent (read by Codex, twice)",
+  "same": [
+   [
+    "οὔ",
+    "οὐ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-21"
+ },
+ {
+  "chapter": 1,
+  "verse": "24",
+  "digitised": "οὗ",
+  "printed": "οὐ",
+  "page": 2,
+  "leaf": 384,
+  "what": "Wrong breathing and added circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "οὗ",
+    "οὐ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-22"
+ },
+ {
+  "chapter": 1,
+  "verse": "25",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 2,
+  "leaf": 384,
+  "what": "Wrong breathing and added circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-23"
+ },
+ {
+  "chapter": 1,
+  "verse": "28",
+  "digitised": "οἳ ἁμαρτωλοὶ",
+  "printed": "οἱ ἁμαρτωλοὶ",
+  "page": 3,
+  "leaf": 385,
+  "what": "Extra grave accent on the article (read by Codex, twice)",
+  "same": [
+   [
+    "οἳ",
+    "οἱ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-24"
+ },
+ {
+  "chapter": 1,
+  "verse": "29",
+  "digitised": "ὃ ἐπεθύμησαν.",
+  "printed": "ἃ ἐπεθύμησαν.",
+  "page": 3,
+  "leaf": 385,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ἃ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-25"
+ },
+ {
+  "chapter": 1,
+  "verse": "30",
+  "digitised": "τὸ. φύλλα,",
+  "printed": "τὰ φύλλα,",
+  "page": 3,
+  "leaf": 385,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-26"
+ },
+ {
+  "chapter": 1,
+  "verse": "31",
+  "digitised": "ἦ",
+  "printed": "ἡ",
+  "page": 3,
+  "leaf": 385,
+  "what": "Wrong breathing and extra circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "ἦ",
+    "ἡ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-27"
+ },
+ {
+  "chapter": 1,
+  "verse": "31",
+  "digitised": "αὑτῶν",
+  "printed": "αὐτῶν",
+  "page": 3,
+  "leaf": 385,
+  "what": "Rough breathing replaces smooth breathing (read by Codex, twice)",
+  "same": [
+   [
+    "αὑτῶν",
+    "αὐτῶν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-28"
+ },
+ {
+  "chapter": 1,
+  "verse": "31",
+  "digitised": "οὔκ",
+  "printed": "οὐκ",
+  "page": 3,
+  "leaf": 385,
+  "what": "Extra acute accent (read by Codex, twice)",
+  "same": [
+   [
+    "οὔκ",
+    "οὐκ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-29"
+ },
+ {
+  "chapter": 1,
+  "verse": "31",
+  "digitised": "ὅ",
+  "printed": "ὁ",
+  "page": 3,
+  "leaf": 385,
+  "what": "Extra acute accent on the article (read by Codex, twice)",
+  "same": [
+   [
+    "ὅ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-30"
+ },
+ {
+  "chapter": 2,
+  "verse": "1",
+  "digitised": "ὃ γενόμενος",
+  "printed": "ὁ γενόμενος",
+  "page": 3,
+  "leaf": 385,
+  "what": "Extra grave accent on the article (read by Codex, twice)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-31"
+ },
+ {
+  "chapter": 2,
+  "verse": "2",
+  "digitised": "ἔν",
+  "printed": "ἐν",
+  "page": 3,
+  "leaf": 385,
+  "what": "Extra acute accent (read by Codex, twice)",
+  "same": [
+   [
+    "ἔν",
+    "ἐν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-32"
+ },
+ {
+  "chapter": 2,
+  "verse": "2",
+  "digitised": "ὅ οἶκος",
+  "printed": "ὁ οἶκος",
+  "page": 3,
+  "leaf": 385,
+  "what": "Extra acute accent on the article (read by Codex, twice)",
+  "same": [
+   [
+    "ὅ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-33"
+ },
+ {
+  "chapter": 2,
+  "verse": "2",
+  "digitised": "τὸ, ἔθνη.",
+  "printed": "τὰ ἔθνη.",
+  "page": 3,
+  "leaf": 385,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-34"
+ },
+ {
+  "chapter": 2,
+  "verse": "3",
+  "digitised": "εἷς τὸν οἶκον",
+  "printed": "εἰς τὸν οἶκον",
+  "page": 3,
+  "leaf": 385,
+  "what": "Wrong breathing and extra circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-36"
+ },
+ {
+  "chapter": 2,
+  "verse": "4",
+  "digitised": "εἷς ἄροτρα",
+  "printed": "εἰς ἄροτρα",
+  "page": 3,
+  "leaf": 385,
+  "what": "Wrong breathing and extra circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-37"
+ },
+ {
+  "chapter": 2,
+  "verse": "4",
+  "digitised": "εἷς δρέπανα,",
+  "printed": "εἰς δρέπανα,",
+  "page": 3,
+  "leaf": 385,
+  "what": "Wrong breathing and extra circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-38"
+ },
+ {
+  "chapter": 2,
+  "verse": "4",
+  "digitised": "οὔ λήμψεται",
+  "printed": "οὐ λήμψεται",
+  "page": 3,
+  "leaf": 385,
+  "what": "Extra acute accent (read by Codex, twice)",
+  "same": [
+   [
+    "οὔ",
+    "οὐ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-39"
+ },
+ {
+  "chapter": 2,
+  "verse": "4",
+  "digitised": "οὔ μὴ",
+  "printed": "οὐ μὴ",
+  "page": 3,
+  "leaf": 385,
+  "what": "Extra acute accent (read by Codex, twice)",
+  "same": [
+   [
+    "οὔ",
+    "οὐ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-40"
+ },
+ {
+  "chapter": 2,
+  "verse": "5",
+  "digitised": "ὃ οἶκος",
+  "printed": "ὁ οἶκος",
+  "page": 3,
+  "leaf": 385,
+  "what": "Extra grave accent on the article (read by Codex, twice)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-41"
+ },
+ {
+  "chapter": 2,
+  "verse": "5",
+  "digitised": "καὶ",
+  "printed": "",
+  "page": 3,
+  "leaf": 385,
+  "what": "Extra word after the verse ends (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-42"
+ },
+ {
+  "chapter": 2,
+  "verse": "7",
+  "digitised": "ἐνεπελήσθη",
+  "printed": "ἐνεπλήσθη",
+  "page": 4,
+  "leaf": 386,
+  "what": "Extra epsilon (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἐνεπελήσθη",
+    "ἐνεπλήσθη"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-43"
+ },
+ {
+  "chapter": 2,
+  "verse": "7",
+  "digitised": "ἦ χώρα",
+  "printed": "ἡ χώρα",
+  "page": 4,
+  "leaf": 386,
+  "what": "Wrong breathing and added circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἦ",
+    "ἡ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-44"
+ },
+ {
+  "chapter": 2,
+  "verse": "10",
+  "digitised": "οῦ,",
+  "printed": "αὐτοῦ,",
+  "page": 4,
+  "leaf": 386,
+  "what": "Lost initial letters αὐτ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-51"
+ },
+ {
+  "chapter": 2,
+  "verse": "17",
+  "digitised": "τῇ ἐκείνῃ.",
+  "printed": "τῇ ἡμέρᾳ ἐκείνῃ.",
+  "page": 4,
+  "leaf": 386,
+  "what": "Missing word ἡμέρᾳ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-56"
+ },
+ {
+  "chapter": 2,
+  "verse": "18",
+  "digitised": "τὸ, χειροποίητα",
+  "printed": "τὰ χειροποίητα",
+  "page": 4,
+  "leaf": 386,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-57"
+ },
+ {
+  "chapter": 3,
+  "verse": "9",
+  "digitised": "Σοδομων",
+  "printed": "Σοδόμων",
+  "page": 5,
+  "leaf": 387,
+  "what": "Missing acute accent (read by Codex, twice)",
+  "same": [
+   [
+    "Σοδομων",
+    "Σοδόμων"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-58"
+ },
+ {
+  "chapter": 3,
+  "verse": "9",
+  "digitised": "διότι",
+  "printed": "ὅτι",
+  "page": 5,
+  "leaf": 387,
+  "what": "Printed conjunction is ὅτι (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διότι",
+    "ὅτι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-59"
+ },
+ {
+  "chapter": 3,
+  "verse": "12",
+  "digitised": "τὸν τρίβον",
+  "printed": "τὴν τρίβον",
+  "page": 5,
+  "leaf": 387,
+  "what": "Misread article vowel and accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸν",
+    "τὴν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-60"
+ },
+ {
+  "chapter": 3,
+  "verse": "16",
+  "digitised": "άδε",
+  "printed": "Τάδε",
+  "page": 6,
+  "leaf": 388,
+  "what": "Missing initial letter (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "άδε",
+    "Τάδε"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-61"
+ },
+ {
+  "chapter": 3,
+  "verse": "16",
+  "digitised": "καὶ ταπεινώσει ὁ θεὸς ἀρχούσας θυγατέρας Σιών.",
+  "printed": "παίζουσαι,",
+  "page": 6,
+  "leaf": 388,
+  "what": "Verse boundary misplaced; this clause belongs to 3:17 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-62"
+ },
+ {
+  "chapter": 3,
+  "verse": "17",
+  "digitised": "παίζουσαι,",
+  "printed": "καὶ ταπεινώσει ὁ θεὸς ἀρχούσας θυγατέρας Σιών.",
+  "page": 6,
+  "leaf": 388,
+  "what": "Verse boundary misplaced; παίζουσαι belongs to 3:16 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-63"
+ },
+ {
+  "chapter": 3,
+  "verse": "17",
+  "digitised": "τό",
+  "printed": "τὸ",
+  "page": 6,
+  "leaf": 388,
+  "what": "Acute instead of grave (read by Codex, twice)",
+  "same": [
+   [
+    "τό",
+    "τὸ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-64"
+ },
+ {
+  "chapter": 3,
+  "verse": "17",
+  "digitised": "αύτῶν",
+  "printed": "αὐτῶν",
+  "page": 6,
+  "leaf": 388,
+  "what": "Acute instead of smooth breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αύτῶν",
+    "αὐτῶν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-65"
+ },
+ {
+  "chapter": 3,
+  "verse": "18",
+  "digitised": "ἱματισμοῦ αύτῶν,",
+  "printed": "ἱματισμοῦ αὐτῶν,",
+  "page": 6,
+  "leaf": 388,
+  "what": "Acute instead of smooth breathing (read by Codex, twice)",
+  "same": [
+   [
+    "αύτῶν,",
+    "αὐτῶν,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-66"
+ },
+ {
+  "chapter": 3,
+  "verse": "20",
+  "digitised": "αύτῶν,",
+  "printed": "αὐτῶν,",
+  "page": 6,
+  "leaf": 388,
+  "what": "Acute instead of smooth breathing (read by Codex, twice)",
+  "same": [
+   [
+    "αύτῶν,",
+    "αὐτῶν,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-68"
+ },
+ {
+  "chapter": 3,
+  "verse": "22",
+  "digitised": "τὸ, ἐπιβλήματα",
+  "printed": "τὰ ἐπιβλήματα",
+  "page": 6,
+  "leaf": 388,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-69"
+ },
+ {
+  "chapter": 3,
+  "verse": "22",
+  "digitised": "τὸ, κατὰ",
+  "printed": "τὰ κατὰ",
+  "page": 6,
+  "leaf": 388,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-70"
+ },
+ {
+  "chapter": 3,
+  "verse": "25",
+  "digitised": "ὃ υἱός",
+  "printed": "ὁ υἱός",
+  "page": 6,
+  "leaf": 388,
+  "what": "Smooth breathing misread as rough with grave (read by Codex, twice)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-71"
+ },
+ {
+  "chapter": 3,
+  "verse": "25",
+  "digitised": "οἷ",
+  "printed": "οἱ",
+  "page": 6,
+  "leaf": 388,
+  "what": "Extraneous circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "οἷ",
+    "οἱ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-72"
+ },
+ {
+  "chapter": 4,
+  "verse": "2",
+  "digitised": "ὅ",
+  "printed": "ὁ",
+  "page": 6,
+  "leaf": 388,
+  "what": "Smooth breathing misread as rough with acute (read by Codex, twice)",
+  "same": [
+   [
+    "ὅ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-73"
+ },
+ {
+  "chapter": 4,
+  "verse": "3",
+  "digitised": "ἔν",
+  "printed": "ἐν",
+  "page": 6,
+  "leaf": 388,
+  "what": "Extraneous acute (read by Codex, twice)",
+  "same": [
+   [
+    "ἔν",
+    "ἐν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-74"
+ },
+ {
+  "chapter": 4,
+  "verse": "3",
+  "digitised": "οἶ",
+  "printed": "οἱ",
+  "page": 6,
+  "leaf": 388,
+  "what": "Wrong breathing and extraneous circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "οἶ",
+    "οἱ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-75"
+ },
+ {
+  "chapter": 4,
+  "verse": "3",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 6,
+  "leaf": 388,
+  "what": "Wrong breathing and extraneous circumflex (read by Codex, twice)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-76"
+ },
+ {
+  "chapter": 4,
+  "verse": "5",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 7,
+  "leaf": 389,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-78"
+ },
+ {
+  "chapter": 5,
+  "verse": "3",
+  "digitised": "Ἰερουσαλήμ,",
+  "printed": "Ἰερουσαλήμ, κρίνατε ἐν ἐμοὶ καὶ ἀνὰ μέσον τοῦ ἀμπελῶνός μου.",
+  "page": 7,
+  "leaf": 389,
+  "what": "Verse ending misplaced in 5:4 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-84"
+ },
+ {
+  "chapter": 5,
+  "verse": "4",
+  "digitised": "κρίνατε ἐν ἐμοὶ καὶ ἀνὰ, μέσον τοῦ ἀμπελῶνός μου.",
+  "printed": "",
+  "page": 7,
+  "leaf": 389,
+  "what": "This clause belongs to 5:3 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-85"
+ },
+ {
+  "chapter": 5,
+  "verse": "15",
+  "digitised": "καὶ καὶ",
+  "printed": "καὶ",
+  "page": 8,
+  "leaf": 390,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-103"
+ },
+ {
+  "chapter": 5,
+  "verse": "16",
+  "digitised": "ὃ ἅγιος",
+  "printed": "ὁ ἅγιος",
+  "page": 8,
+  "leaf": 390,
+  "what": "Article has no grave accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-106"
+ },
+ {
+  "chapter": 5,
+  "verse": "16",
+  "digitised": "ἐν καὶ βοσκηθήσονται οἱ διηρπασμένοι ὡς ταῦροι, καὶ",
+  "printed": "ἐν δικαιοσύνῃ.",
+  "page": 8,
+  "leaf": 390,
+  "what": "Verse boundary misplaced; δικαιοσύνῃ ends verse 16 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-107"
+ },
+ {
+  "chapter": 5,
+  "verse": "17",
+  "digitised": "δικαιοσύνῃ.",
+  "printed": "καὶ βοσκηθήσονται οἱ διηρπασμένοι ὡς ταῦροι, καὶ",
+  "page": 8,
+  "leaf": 390,
+  "what": "Verse opening assigned to verse 16; δικαιοσύνῃ belongs there (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-108"
+ },
+ {
+  "chapter": 5,
+  "verse": "25",
+  "digitised": "τὸ, ὅρη,",
+  "printed": "τὰ ὄρη,",
+  "page": 9,
+  "leaf": 391,
+  "what": "Misread article vowel and breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ],
+   [
+    "ὅρη,",
+    "ὄρη,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-114"
+ },
+ {
+  "chapter": 5,
+  "verse": "28",
+  "digitised": "τὸ, βέλη",
+  "printed": "τὰ βέλη",
+  "page": 9,
+  "leaf": 391,
+  "what": "Misread article vowel (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-116"
+ },
+ {
+  "chapter": 5,
+  "verse": "28",
+  "digitised": "τὸ. τόξα",
+  "printed": "τὰ τόξα",
+  "page": 9,
+  "leaf": 391,
+  "what": "Misread article vowel (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-117"
+ },
+ {
+  "chapter": 6,
+  "verse": "6",
+  "digitised": "καὶ καὶ",
+  "printed": "καὶ",
+  "page": 10,
+  "leaf": 392,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-128"
+ },
+ {
+  "chapter": 7,
+  "verse": "1",
+  "digitised": "ἡμέρως",
+  "printed": "ἡμέραις",
+  "page": 10,
+  "leaf": 392,
+  "what": "Ending αις misread as ως (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἡμέρως",
+    "ἡμέραις"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-132"
+ },
+ {
+  "chapter": 7,
+  "verse": "2",
+  "digitised": "ἡ αὐτοῦ",
+  "printed": "ἡ ψυχὴ αὐτοῦ",
+  "page": 10,
+  "leaf": 392,
+  "what": "Missing word ψυχὴ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-134"
+ },
+ {
+  "chapter": 7,
+  "verse": "2",
+  "digitised": "ἡ τοῦ λαοῦ",
+  "printed": "ἡ ψυχὴ τοῦ λαοῦ",
+  "page": 10,
+  "leaf": 392,
+  "what": "Missing word ψυχὴ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-135"
+ },
+ {
+  "chapter": 7,
+  "verse": "10",
+  "digitised": "προσέθετο θετο",
+  "printed": "προσέθετο",
+  "page": 11,
+  "leaf": 393,
+  "what": "Duplicated ending of a word divided across lines (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-136"
+ },
+ {
+  "chapter": 7,
+  "verse": "12",
+  "digitised": "Κύρων.",
+  "printed": "Κύριον.",
+  "page": 11,
+  "leaf": 393,
+  "what": "Misread ιο as ω (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Κύρων.",
+    "Κύριον."
+   ]
+  ],
+  "round": 2,
+  "source": "codex-137"
+ },
+ {
+  "chapter": 7,
+  "verse": "15",
+  "digitised": "βούτυρον βούτυρον",
+  "printed": "βούτυρον",
+  "page": 11,
+  "leaf": 393,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-140"
+ },
+ {
+  "chapter": 7,
+  "verse": "16",
+  "digitised": "ἥν",
+  "printed": "ἣν",
+  "page": 11,
+  "leaf": 393,
+  "what": "Acute instead of grave (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἥν",
+    "ἣν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-144"
+ },
+ {
+  "chapter": 7,
+  "verse": "19",
+  "digitised": "εἷς τὸ.",
+  "printed": "εἰς τὰ",
+  "page": 12,
+  "leaf": 394,
+  "what": "Wrong breathing and accent; article vowel misread (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ],
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-149"
+ },
+ {
+  "chapter": 7,
+  "verse": "23",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 12,
+  "leaf": 394,
+  "what": "Wrong breathing and extra circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-152"
+ },
+ {
+  "chapter": 7,
+  "verse": "25",
+  "digitised": "ἀροτρια θήσεται·",
+  "printed": "ἀροτριαθήσεται·",
+  "page": 12,
+  "leaf": 394,
+  "what": "One word split at the printed line break (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-153"
+ },
+ {
+  "chapter": 8,
+  "verse": "11",
+  "digitised": "οὕτω",
+  "printed": "οὕτως",
+  "page": 13,
+  "leaf": 395,
+  "what": "Final sigma omitted (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οὕτω",
+    "οὕτως"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-161"
+ },
+ {
+  "chapter": 8,
+  "verse": "15",
+  "digitised": "διὸ,",
+  "printed": "διὰ",
+  "page": 13,
+  "leaf": 395,
+  "what": "Final alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ,",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-162"
+ },
+ {
+  "chapter": 8,
+  "verse": "18",
+  "digitised": "τὸ, παιδία",
+  "printed": "τὰ παιδία",
+  "page": 14,
+  "leaf": 396,
+  "what": "Misread article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-164"
+ },
+ {
+  "chapter": 8,
+  "verse": "20",
+  "digitised": "τὸ τοῦτο,",
+  "printed": "τὸ ῥῆμα τοῦτο,",
+  "page": 14,
+  "leaf": 396,
+  "what": "Missing word ῥῆμα (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-169"
+ },
+ {
+  "chapter": 9,
+  "verse": "1",
+  "digitised": "παράλων",
+  "printed": "παράλιον",
+  "page": 14,
+  "leaf": 396,
+  "what": "ιο misread as ω (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "παράλων",
+    "παράλιον"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-173"
+ },
+ {
+  "chapter": 9,
+  "verse": "4",
+  "digitised": "ὃ ζυγὸς",
+  "printed": "ὁ ζυγὸς",
+  "page": 14,
+  "leaf": 396,
+  "what": "Article breathing misread as accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-175"
+ },
+ {
+  "chapter": 9,
+  "verse": "14",
+  "digitised": "Καὶ Καὶ",
+  "printed": "Καὶ",
+  "page": 15,
+  "leaf": 397,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-187"
+ },
+ {
+  "chapter": 9,
+  "verse": "14",
+  "digitised": "τὸ, πρόσωπα",
+  "printed": "τὰ πρόσωπα",
+  "page": 15,
+  "leaf": 397,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-189"
+ },
+ {
+  "chapter": 9,
+  "verse": "21",
+  "digitised": "ἡ χεὶρ",
+  "printed": "ἡ χεὶρ ὑψηλή",
+  "page": 16,
+  "leaf": 398,
+  "what": "Final word omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-201"
+ },
+ {
+  "chapter": 10,
+  "verse": "7",
+  "digitised": "πῆ",
+  "printed": "τῇ",
+  "page": 16,
+  "leaf": 398,
+  "what": "Tau misread as pi; missing iota subscript (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "πῆ",
+    "τῇ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-206"
+ },
+ {
+  "chapter": 10,
+  "verse": "10",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 17,
+  "leaf": 399,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-211"
+ },
+ {
+  "chapter": 10,
+  "verse": "13",
+  "digitised": "τὴν προνομεύσω·",
+  "printed": "τὴν ἰσχὺν αὐτῶν προνομεύσω·",
+  "page": 17,
+  "leaf": 399,
+  "what": "Two words omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-214"
+ },
+ {
+  "chapter": 10,
+  "verse": "15",
+  "digitised": "ἦ",
+  "printed": "ἢ",
+  "page": 17,
+  "leaf": 399,
+  "what": "Circumflex misread for grave (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἦ",
+    "ἢ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-217"
+ },
+ {
+  "chapter": 10,
+  "verse": "18",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 17,
+  "leaf": 399,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-222"
+ },
+ {
+  "chapter": 10,
+  "verse": "18",
+  "digitised": "οἶ δρυμοὶ",
+  "printed": "οἱ δρυμοὶ",
+  "page": 17,
+  "leaf": 399,
+  "what": "Article has rough breathing and no circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οἶ",
+    "οἱ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-224"
+ },
+ {
+  "chapter": 10,
+  "verse": "18",
+  "digitised": "ἔσται ὅ φεύγων",
+  "printed": "ἔσται ὁ φεύγων",
+  "page": 17,
+  "leaf": 399,
+  "what": "Article has no acute accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὅ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-226"
+ },
+ {
+  "chapter": 10,
+  "verse": "30",
+  "digitised": "θυγάτηρ τηρ",
+  "printed": "θυγάτηρ",
+  "page": 18,
+  "leaf": 400,
+  "what": "Line-ending continuation duplicated (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-232"
+ },
+ {
+  "chapter": 11,
+  "verse": "3",
+  "digitised": "αὑτὸν",
+  "printed": "αὐτὸν",
+  "page": 19,
+  "leaf": 401,
+  "what": "Rough breathing instead of smooth (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αὑτὸν",
+    "αὐτὸν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-233"
+ },
+ {
+  "chapter": 11,
+  "verse": "11",
+  "digitised": "Καὶ Καὶ",
+  "printed": "Καὶ",
+  "page": 19,
+  "leaf": 401,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-240"
+ },
+ {
+  "chapter": 13,
+  "verse": "9",
+  "digitised": "ἀπολέσω",
+  "printed": "ἀπολέσαι",
+  "page": 21,
+  "leaf": 403,
+  "what": "Ending αι misread as ω (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀπολέσω",
+    "ἀπολέσαι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-254"
+ },
+ {
+  "chapter": 13,
+  "verse": "13",
+  "digitised": "διὸ,",
+  "printed": "διὰ",
+  "page": 21,
+  "leaf": 403,
+  "what": "Final α misread as ο (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ,",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-255"
+ },
+ {
+  "chapter": 13,
+  "verse": "14",
+  "digitised": "δορκάδων",
+  "printed": "δορκάδιον",
+  "page": 21,
+  "leaf": 403,
+  "what": "Letters ιο misread as ω (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "δορκάδων",
+    "δορκάδιον"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-256"
+ },
+ {
+  "chapter": 13,
+  "verse": "18",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 21,
+  "leaf": 403,
+  "what": "Final α misread as ο (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-257"
+ },
+ {
+  "chapter": 13,
+  "verse": "20",
+  "digitised": "ἀναπαύσεωνται",
+  "printed": "ἀναπαύσωνται",
+  "page": 22,
+  "leaf": 404,
+  "what": "Extra epsilon (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀναπαύσεωνται",
+    "ἀναπαύσωνται"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-258"
+ },
+ {
+  "chapter": 14,
+  "verse": "1",
+  "digitised": "ρποστεθήσεται",
+  "printed": "προστεθήσεται",
+  "page": 22,
+  "leaf": 404,
+  "what": "Initial letters transposed (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ρποστεθήσεται",
+    "προστεθήσεται"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-259"
+ },
+ {
+  "chapter": 14,
+  "verse": "3",
+  "digitised": "ἑμέρᾳ",
+  "printed": "ἡμέρᾳ",
+  "page": 22,
+  "leaf": 404,
+  "what": "Epsilon misread for eta (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἑμέρᾳ",
+    "ἡμέρᾳ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-260"
+ },
+ {
+  "chapter": 14,
+  "verse": "6",
+  "digitised": "πατάζας",
+  "printed": "πατάξας",
+  "page": 22,
+  "leaf": 404,
+  "what": "Zeta misread for xi (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "πατάζας",
+    "πατάξας"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-261"
+ },
+ {
+  "chapter": 14,
+  "verse": "13",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 23,
+  "leaf": 405,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-263"
+ },
+ {
+  "chapter": 14,
+  "verse": "17",
+  "digitised": "καὶ καὶ",
+  "printed": "καὶ",
+  "page": 23,
+  "leaf": 405,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-266"
+ },
+ {
+  "chapter": 14,
+  "verse": "21",
+  "digitised": "ἐπαναστήσομαι",
+  "printed": "ἐμπλήσωσιν",
+  "page": 23,
+  "leaf": 405,
+  "what": "Wrong word copied from the following verse (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-270"
+ },
+ {
+  "chapter": 14,
+  "verse": "28",
+  "digitised": "ὁ βασιλεὺς τό",
+  "printed": "ὁ βασιλεὺς ἐγενήθη τὸ",
+  "page": 24,
+  "leaf": 406,
+  "what": "Verb omitted; acute instead of grave on article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τό",
+    "τὸ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-275"
+ },
+ {
+  "chapter": 14,
+  "verse": "32",
+  "digitised": "τι",
+  "printed": "τί",
+  "page": 24,
+  "leaf": 406,
+  "what": "Missing acute accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τι",
+    "τί"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-277"
+ },
+ {
+  "chapter": 15,
+  "verse": "5",
+  "digitised": "δὴ",
+  "printed": "ἡ",
+  "page": 25,
+  "leaf": 407,
+  "what": "Extra δ before the article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "δὴ",
+    "ἡ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-279"
+ },
+ {
+  "chapter": 15,
+  "verse": "5",
+  "digitised": "Μωαβίτιδος ἐν",
+  "printed": "Μωαβίτιδος βοᾷ ἐν",
+  "page": 25,
+  "leaf": 407,
+  "what": "Missing βοᾷ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-280"
+ },
+ {
+  "chapter": 15,
+  "verse": "8",
+  "digitised": "ἡ τὸ",
+  "printed": "ἡ βοὴ τὸ",
+  "page": 25,
+  "leaf": 407,
+  "what": "Missing βοὴ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-282"
+ },
+ {
+  "chapter": 15,
+  "verse": "9",
+  "digitised": "τό ῾Ρεμμὼν",
+  "printed": "τὸ Ῥεμμὼν",
+  "page": 25,
+  "leaf": 407,
+  "what": "Acute instead of grave on τὸ (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τό",
+    "τὸ"
+   ],
+   [
+    "῾Ρεμμὼν",
+    "Ῥεμμὼν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-283"
+ },
+ {
+  "chapter": 16,
+  "verse": "3",
+  "digitised": "διὸ.",
+  "printed": "διὰ",
+  "page": 25,
+  "leaf": 407,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-287"
+ },
+ {
+  "chapter": 16,
+  "verse": "13",
+  "digitised": "τὸ ὃ",
+  "printed": "τὸ ῥῆμα ὃ",
+  "page": 26,
+  "leaf": 408,
+  "what": "The word ῥῆμα was omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-294"
+ },
+ {
+  "chapter": 17,
+  "verse": "8",
+  "digitised": "οὐτῶν,",
+  "printed": "αὐτῶν,",
+  "page": 27,
+  "leaf": 409,
+  "what": "Initial alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οὐτῶν,",
+    "αὐτῶν,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-302"
+ },
+ {
+  "chapter": 17,
+  "verse": "9",
+  "digitised": "Εὑαῖοι",
+  "printed": "Εὐαῖοι",
+  "page": 27,
+  "leaf": 409,
+  "what": "Rough instead of smooth breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Εὑαῖοι",
+    "Εὐαῖοι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-303"
+ },
+ {
+  "chapter": 17,
+  "verse": "11",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 27,
+  "leaf": 409,
+  "what": "Wrong breathing and extra circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-305"
+ },
+ {
+  "chapter": 18,
+  "verse": "5",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 28,
+  "leaf": 410,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-309"
+ },
+ {
+  "chapter": 18,
+  "verse": "6",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 28,
+  "leaf": 410,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-311"
+ },
+ {
+  "chapter": 19,
+  "verse": "6",
+  "digitised": "ἐκλείχουσιν",
+  "printed": "ξηρανθήσεται",
+  "page": 29,
+  "leaf": 411,
+  "what": "the page prints καὶ ξηρανθήσεται πᾶσα συναγωγὴ ὕδατος; the verse's first ἐκλείψουσιν is already right",
+  "same": [],
+  "round": 2,
+  "source": "codex-317"
+ },
+ {
+  "chapter": 19,
+  "verse": "25",
+  "digitised": "ὅ λαός",
+  "printed": "ὁ λαός",
+  "page": 30,
+  "leaf": 412,
+  "what": "Article has no acute accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὅ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-329"
+ },
+ {
+  "chapter": 20,
+  "verse": "2",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 31,
+  "leaf": 413,
+  "what": "Misread vowel and accent; stray stop (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-332"
+ },
+ {
+  "chapter": 21,
+  "verse": "4",
+  "digitised": "ἡ μου",
+  "printed": "ἡ ψυχή μου",
+  "page": 31,
+  "leaf": 413,
+  "what": "Omitted ψυχή (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-336"
+ },
+ {
+  "chapter": 21,
+  "verse": "8",
+  "digitised": "διὸ.",
+  "printed": "διὰ",
+  "page": 32,
+  "leaf": 414,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-338"
+ },
+ {
+  "chapter": 21,
+  "verse": "9",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 32,
+  "leaf": 414,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-339"
+ },
+ {
+  "chapter": 21,
+  "verse": "10",
+  "digitised": "σαβαώβ·",
+  "printed": "σαβαώθ·",
+  "page": 32,
+  "leaf": 414,
+  "what": "Theta misread as beta (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "σαβαώβ·",
+    "σαβαώθ·"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-341"
+ },
+ {
+  "chapter": 21,
+  "verse": "15",
+  "digitised": "διὸ.",
+  "printed": "διὰ",
+  "page": 32,
+  "leaf": 414,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-344"
+ },
+ {
+  "chapter": 21,
+  "verse": "15",
+  "digitised": "διὸ,",
+  "printed": "διὰ",
+  "page": 32,
+  "leaf": 414,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ,",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-346"
+ },
+ {
+  "chapter": 22,
+  "verse": "9",
+  "digitised": "ἀνακαλύψουσιν λύψουσιν",
+  "printed": "ἀνακαλύψουσιν",
+  "page": 33,
+  "leaf": 415,
+  "what": "Duplicated ending of a word split across lines (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-359"
+ },
+ {
+  "chapter": 22,
+  "verse": "10",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 33,
+  "leaf": 415,
+  "what": "Smooth breathing; no circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-361"
+ },
+ {
+  "chapter": 22,
+  "verse": "11",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 33,
+  "leaf": 415,
+  "what": "Smooth breathing; no circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-362"
+ },
+ {
+  "chapter": 23,
+  "verse": "2",
+  "digitised": "διεκπερῶντες",
+  "printed": "διαπερῶντες",
+  "page": 34,
+  "leaf": 416,
+  "what": "Misread prefix: δια-, not διεκ- (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διεκπερῶντες",
+    "διαπερῶντες"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-370"
+ },
+ {
+  "chapter": 23,
+  "verse": "3",
+  "digitised": "ὡς εἰσφερομένου",
+  "printed": "ὡς ἀμητοῦ εἰσφερομένου",
+  "page": 35,
+  "leaf": 417,
+  "what": "Missing word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-371"
+ },
+ {
+  "chapter": 23,
+  "verse": "9",
+  "digitised": "ἀτιμάσω",
+  "printed": "ἀτιμάσαι",
+  "page": 35,
+  "leaf": 417,
+  "what": "Ending αι misread as ω (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀτιμάσω",
+    "ἀτιμάσαι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-373"
+ },
+ {
+  "chapter": 23,
+  "verse": "11",
+  "digitised": "ἀπολέσω",
+  "printed": "ἀπολέσαι",
+  "page": 35,
+  "leaf": 417,
+  "what": "Ending αι misread as ω (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀπολέσω",
+    "ἀπολέσαι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-374"
+ },
+ {
+  "chapter": 23,
+  "verse": "13",
+  "digitised": "ἢ",
+  "printed": "ἣ",
+  "page": 35,
+  "leaf": 417,
+  "what": "Rough breathing, not smooth (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἢ",
+    "ἣ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-377"
+ },
+ {
+  "chapter": 23,
+  "verse": "16",
+  "digitised": "ὃ",
+  "printed": "ὁ",
+  "page": 35,
+  "leaf": 417,
+  "what": "Extra grave accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-378"
+ },
+ {
+  "chapter": 24,
+  "verse": "2",
+  "digitised": "καὶ ἔσται ὁ καὶ ἔσται ὁ",
+  "printed": "καὶ ἔσται ὁ",
+  "page": 36,
+  "leaf": 418,
+  "what": "Duplicated words (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-383"
+ },
+ {
+  "chapter": 24,
+  "verse": "3",
+  "digitised": "ἦ",
+  "printed": "ἡ γῆ",
+  "page": 36,
+  "leaf": 418,
+  "what": "Misread article and missing noun (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἦ",
+    "ἡ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-391"
+ },
+ {
+  "chapter": 24,
+  "verse": "5",
+  "digitised": "διὸ,",
+  "printed": "διὰ",
+  "page": 36,
+  "leaf": 418,
+  "what": "Misread final vowel (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ,",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-392"
+ },
+ {
+  "chapter": 24,
+  "verse": "6",
+  "digitised": "ἔ",
+  "printed": "",
+  "page": 36,
+  "leaf": 418,
+  "what": "Stray letter before ἔδεται (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-393"
+ },
+ {
+  "chapter": 24,
+  "verse": "10",
+  "digitised": "ἠρμώθη",
+  "printed": "ἠρημώθη",
+  "page": 36,
+  "leaf": 418,
+  "what": "Missing eta after rho (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἠρμώθη",
+    "ἠρημώθη"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-396"
+ },
+ {
+  "chapter": 24,
+  "verse": "11",
+  "digitised": "πᾶσα τῆς",
+  "printed": "πᾶσα εὐφροσύνη τῆς",
+  "page": 36,
+  "leaf": 418,
+  "what": "Missing εὐφροσύνη (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-397"
+ },
+ {
+  "chapter": 24,
+  "verse": "13",
+  "digitised": "ἔστω",
+  "printed": "ἔσται",
+  "page": 36,
+  "leaf": 418,
+  "what": "Misread verb ending (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἔστω",
+    "ἔσται"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-398"
+ },
+ {
+  "chapter": 24,
+  "verse": "21",
+  "digitised": "Καὶ Καὶ",
+  "printed": "Καὶ",
+  "page": 37,
+  "leaf": 419,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-407"
+ },
+ {
+  "chapter": 26,
+  "verse": "4",
+  "digitised": "ὅ αἰώνιος,",
+  "printed": "ὁ αἰώνιος,",
+  "page": 39,
+  "leaf": 421,
+  "what": "Spurious acute accent on the article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὅ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-423"
+ },
+ {
+  "chapter": 26,
+  "verse": "8",
+  "digitised": "καὶ ἐπὶ",
+  "printed": "καὶ ἐπὶ τῇ μνείᾳ",
+  "page": 39,
+  "leaf": 421,
+  "what": "the verse ends ἐπὶ τῇ μνείᾳ, and the number 9 stands before ᾗ",
+  "same": [],
+  "round": 2,
+  "source": "codex-424"
+ },
+ {
+  "chapter": 26,
+  "verse": "9",
+  "digitised": "ᾖ μνείᾳ ἡ ἐπιθυμεῖ ἦ",
+  "printed": "ᾗ ἐπιθυμεῖ ἡ ψυχὴ ἡμῶν.",
+  "page": 39,
+  "leaf": 421,
+  "what": "the verse opens ᾗ ἐπιθυμεῖ ἡ ψυχὴ ἡμῶν. before (Ὠιδή.)",
+  "same": [
+   [
+    "ᾖ",
+    "ᾗ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-425"
+ },
+ {
+  "chapter": 26,
+  "verse": "9",
+  "digitised": "ὅ θεός,",
+  "printed": "ὁ θεός,",
+  "page": 39,
+  "leaf": 421,
+  "what": "the article, with the rough breathing and no accent",
+  "same": [
+   [
+    "ὅ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-426"
+ },
+ {
+  "chapter": 26,
+  "verse": "12",
+  "digitised": "ἀπέδωκας",
+  "printed": "ἀπέδωκας ἡμῖν",
+  "page": 39,
+  "leaf": 421,
+  "what": "Final word missing (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-432"
+ },
+ {
+  "chapter": 26,
+  "verse": "13",
+  "digitised": "κτῆσαι",
+  "printed": "κτῆσαι ἡμᾶς",
+  "page": 39,
+  "leaf": 421,
+  "what": "Object pronoun missing (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-434"
+ },
+ {
+  "chapter": 26,
+  "verse": "21",
+  "digitised": "ἡ γῆ τοὺς",
+  "printed": "ἡ γῆ τοὺς ἀνῃρημένους",
+  "page": 40,
+  "leaf": 422,
+  "what": "Final word omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-443"
+ },
+ {
+  "chapter": 27,
+  "verse": "8",
+  "digitised": "οὗ",
+  "printed": "οὐ",
+  "page": 40,
+  "leaf": 422,
+  "what": "Wrong breathing and extra circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οὗ",
+    "οὐ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-451"
+ },
+ {
+  "chapter": 27,
+  "verse": "9",
+  "digitised": "αὑτοῦ",
+  "printed": "αὐτοῦ",
+  "page": 40,
+  "leaf": 422,
+  "what": "Smooth, not rough breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αὑτοῦ",
+    "αὐτοῦ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-453"
+ },
+ {
+  "chapter": 27,
+  "verse": "9",
+  "digitised": "τὸ. δένδρα",
+  "printed": "τὰ δένδρα",
+  "page": 40,
+  "leaf": 422,
+  "what": "Wrong vowel in article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-454"
+ },
+ {
+  "chapter": 27,
+  "verse": "11",
+  "digitised": "διὸ. τὸ",
+  "printed": "διὰ τὸ",
+  "page": 41,
+  "leaf": 423,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-456"
+ },
+ {
+  "chapter": 27,
+  "verse": "11",
+  "digitised": "διὸ. τοῦτο",
+  "printed": "διὰ τοῦτο",
+  "page": 41,
+  "leaf": 423,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-458"
+ },
+ {
+  "chapter": 27,
+  "verse": "13",
+  "digitised": "οἶ < ἀπολόμενοι>",
+  "printed": "οἱ <ἀπολόμενοι>",
+  "page": 41,
+  "leaf": 423,
+  "what": "Wrong breathing and extra circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οἶ",
+    "οἱ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-463"
+ },
+ {
+  "chapter": 28,
+  "verse": "1",
+  "digitised": "Ἐφραίιμ,",
+  "printed": "Ἐφράιμ,",
+  "page": 41,
+  "leaf": 423,
+  "what": "Extra iota and misplaced acute accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Ἐφραίιμ,",
+    "Ἐφράιμ,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-466"
+ },
+ {
+  "chapter": 28,
+  "verse": "2",
+  "digitised": "σκέπην, καταφερομένη·",
+  "printed": "σκέπην, βίᾳ καταφερομένη·",
+  "page": 41,
+  "leaf": 423,
+  "what": "Missing word βίᾳ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-470"
+ },
+ {
+  "chapter": 28,
+  "verse": "4",
+  "digitised": "Καὶ",
+  "printed": "",
+  "page": 41,
+  "leaf": 423,
+  "what": "Extra word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-473"
+ },
+ {
+  "chapter": 28,
+  "verse": "6",
+  "digitised": "οὗτοι γὰρ οἴνῳ πεπλανημένοι",
+  "printed": "",
+  "page": 42,
+  "leaf": 424,
+  "what": "Words intruded from verse 7 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-477"
+ },
+ {
+  "chapter": 28,
+  "verse": "8",
+  "digitised": "αὕτη ἡ",
+  "printed": "αὕτη γὰρ ἡ",
+  "page": 42,
+  "leaf": 424,
+  "what": "Missing γὰρ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-480"
+ },
+ {
+  "chapter": 28,
+  "verse": "11",
+  "digitised": "διὸ.",
+  "printed": "διὰ",
+  "page": 42,
+  "leaf": 424,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-481"
+ },
+ {
+  "chapter": 28,
+  "verse": "15",
+  "digitised": "σκεπασθησόμεθα. θησόμεθα.",
+  "printed": "σκεπασθησόμεθα.",
+  "page": 42,
+  "leaf": 424,
+  "what": "Repeated continuation of a word split across lines (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-485"
+ },
+ {
+  "chapter": 28,
+  "verse": "16",
+  "digitised": "Κύριος, Κύριος,",
+  "printed": "Κύριος, Ἰδοὺ",
+  "page": 42,
+  "leaf": 424,
+  "what": "Second Κύριος replaces printed Ἰδοὺ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-486"
+ },
+ {
+  "chapter": 28,
+  "verse": "16",
+  "digitised": "εἷς τὰ. θεμέλια",
+  "printed": "εἰς τὰ θεμέλια",
+  "page": 42,
+  "leaf": 424,
+  "what": "Wrong breathing and extra circumflex on εἰς (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-487"
+ },
+ {
+  "chapter": 28,
+  "verse": "16",
+  "digitised": "εἷς τὸ, θεμέλια",
+  "printed": "εἰς τὰ θεμέλια",
+  "page": 42,
+  "leaf": 424,
+  "what": "Wrong breathing and accent on εἰς; alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ],
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-488"
+ },
+ {
+  "chapter": 28,
+  "verse": "22",
+  "digitised": "ἅ",
+  "printed": "ἃ",
+  "page": 43,
+  "leaf": 425,
+  "what": "Acute accent for grave (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἅ",
+    "ἃ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-502"
+ },
+ {
+  "chapter": 29,
+  "verse": "8",
+  "digitised": "ἡ δὲ αὐτοῦ",
+  "printed": "ἡ δὲ ψυχὴ αὐτοῦ",
+  "page": 44,
+  "leaf": 426,
+  "what": "Omitted ψυχὴ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-514"
+ },
+ {
+  "chapter": 29,
+  "verse": "11",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 44,
+  "leaf": 426,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-517"
+ },
+ {
+  "chapter": 29,
+  "verse": "12",
+  "digitised": "Ἀνάγνωθ(??)",
+  "printed": "Ἀνάγνωθι",
+  "page": 44,
+  "leaf": 426,
+  "what": "Final iota replaced by uncertainty marker (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Ἀνάγνωθ(??)",
+    "Ἀνάγνωθι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-521"
+ },
+ {
+  "chapter": 29,
+  "verse": "16",
+  "digitised": "ἦ",
+  "printed": "ἢ",
+  "page": 45,
+  "leaf": 427,
+  "what": "Circumflex misread for grave (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἦ",
+    "ἢ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-528"
+ },
+ {
+  "chapter": 29,
+  "verse": "17",
+  "digitised": "ὅρος τὸ Χερμὲλ",
+  "printed": "ὄρος τὸ Χερμὲλ",
+  "page": 45,
+  "leaf": 427,
+  "what": "Rough breathing misread for smooth (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὅρος",
+    "ὄρος"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-532"
+ },
+ {
+  "chapter": 29,
+  "verse": "23",
+  "digitised": "τὸ. τέκνα",
+  "printed": "τὰ τέκνα",
+  "page": 45,
+  "leaf": 427,
+  "what": "Alpha misread as omicron in the article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-533"
+ },
+ {
+  "chapter": 29,
+  "verse": "23",
+  "digitised": "τὸ. ἔργα",
+  "printed": "τὰ ἔργα",
+  "page": 45,
+  "leaf": 427,
+  "what": "Alpha misread as omicron in the article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-534"
+ },
+ {
+  "chapter": 30,
+  "verse": "1",
+  "digitised": "ὐαὶ",
+  "printed": "Οὐαὶ",
+  "page": 46,
+  "leaf": 428,
+  "what": "Initial omicron missing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὐαὶ",
+    "Οὐαὶ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-537"
+ },
+ {
+  "chapter": 30,
+  "verse": "8",
+  "digitised": "εἷς βιβλίον,",
+  "printed": "εἰς βιβλίον,",
+  "page": 46,
+  "leaf": 428,
+  "what": "Smooth breathing misread; circumflex added (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-542"
+ },
+ {
+  "chapter": 30,
+  "verse": "10",
+  "digitised": "τὸ. ὁράματα",
+  "printed": "τὰ ὁράματα",
+  "page": 46,
+  "leaf": 428,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-545"
+ },
+ {
+  "chapter": 30,
+  "verse": "14",
+  "digitised": "ᾦ",
+  "printed": "ᾧ",
+  "page": 46,
+  "leaf": 428,
+  "what": "Rough breathing misread as smooth (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ᾦ",
+    "ᾧ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-547"
+ },
+ {
+  "chapter": 30,
+  "verse": "15",
+  "digitised": "ἐγενήθη.",
+  "printed": "ἐγενήθη. καὶ οὐκ ἐβούλεσθε ἀκούειν,",
+  "page": 47,
+  "leaf": 429,
+  "what": "Closing words assigned to verse 16 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-549"
+ },
+ {
+  "chapter": 30,
+  "verse": "16",
+  "digitised": "καὶ οὐκ ἐβούλεσθε ἀκούειν,",
+  "printed": "",
+  "page": 47,
+  "leaf": 429,
+  "what": "These words belong to verse 15 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-550"
+ },
+ {
+  "chapter": 30,
+  "verse": "16",
+  "digitised": "διὸ,",
+  "printed": "διὰ",
+  "page": 47,
+  "leaf": 429,
+  "what": "Final alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ,",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-551"
+ },
+ {
+  "chapter": 30,
+  "verse": "18",
+  "digitised": "οἱκτεικριτὴς ρῆσαι",
+  "printed": "οἰκτειρῆσαι",
+  "page": 47,
+  "leaf": 429,
+  "what": "Wrong breathing; misplaced κριτὴς inserted into a divided word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-556"
+ },
+ {
+  "chapter": 30,
+  "verse": "18",
+  "digitised": "διότι Κύριος",
+  "printed": "διότι κριτὴς Κύριος",
+  "page": 47,
+  "leaf": 429,
+  "what": "κριτὴς displaced from its printed position (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-557"
+ },
+ {
+  "chapter": 30,
+  "verse": "21",
+  "digitised": "λήγοντες",
+  "printed": "λέγοντες",
+  "page": 47,
+  "leaf": 429,
+  "what": "Epsilon misread as eta (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "λήγοντες",
+    "λέγοντες"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-560"
+ },
+ {
+  "chapter": 30,
+  "verse": "22",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 47,
+  "leaf": 429,
+  "what": "Alpha misread as omicron with stray stop (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-561"
+ },
+ {
+  "chapter": 30,
+  "verse": "23",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 47,
+  "leaf": 429,
+  "what": "Alpha misread as omicron with stray stop (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-563"
+ },
+ {
+  "chapter": 30,
+  "verse": "24",
+  "digitised": "οἶ βόες",
+  "printed": "οἱ βόες",
+  "page": 47,
+  "leaf": 429,
+  "what": "Circumflex instead of rough breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οἶ",
+    "οἱ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-565"
+ },
+ {
+  "chapter": 31,
+  "verse": "1",
+  "digitised": "τᾶν",
+  "printed": "τὸν",
+  "page": 49,
+  "leaf": 431,
+  "what": "Misread vowel and accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τᾶν",
+    "τὸν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-573"
+ },
+ {
+  "chapter": 31,
+  "verse": "2",
+  "digitised": "σοφὸς ἐπ’",
+  "printed": "σοφὸς ἦγεν ἐπ’",
+  "page": 49,
+  "leaf": 431,
+  "what": "Missing word ἦγεν (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-574"
+ },
+ {
+  "chapter": 31,
+  "verse": "3",
+  "digitised": "Αἰγύπιον",
+  "printed": "Αἰγύπτιον",
+  "page": 49,
+  "leaf": 431,
+  "what": "Missing tau (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Αἰγύπιον",
+    "Αἰγύπτιον"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-577"
+ },
+ {
+  "chapter": 31,
+  "verse": "3",
+  "digitised": "καὶ ἔστιν",
+  "printed": "καὶ οὐκ ἔστιν",
+  "page": 49,
+  "leaf": 431,
+  "what": "Missing word οὐκ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-578"
+ },
+ {
+  "chapter": 31,
+  "verse": "4",
+  "digitised": "ἐὰν λέων",
+  "printed": "ἐὰν βοήσῃ λέων",
+  "page": 49,
+  "leaf": 431,
+  "what": "Missing word βοήσῃ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-579"
+ },
+ {
+  "chapter": 31,
+  "verse": "5",
+  "digitised": "οὕτως Κύριος",
+  "printed": "οὕτως ὑπερασπιεῖ Κύριος",
+  "page": 49,
+  "leaf": 431,
+  "what": "Missing word ὑπερασπιεῖ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-582"
+ },
+ {
+  "chapter": 31,
+  "verse": "7",
+  "digitised": "τὸ, ἀργυρᾶ",
+  "printed": "τὰ ἀργυρᾶ",
+  "page": 49,
+  "leaf": 431,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-586"
+ },
+ {
+  "chapter": 32,
+  "verse": "15",
+  "digitised": "πνῦμα",
+  "printed": "πνεῦμα",
+  "page": 50,
+  "leaf": 432,
+  "what": "Missing epsilon (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "πνῦμα",
+    "πνεῦμα"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-593"
+ },
+ {
+  "chapter": 32,
+  "verse": "18",
+  "digitised": "ἐνοικήαἰῶνος· σει",
+  "printed": "ἐνοικήσει",
+  "page": 51,
+  "leaf": 433,
+  "what": "End of 32:17 inserted into a word split across lines (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-595"
+ },
+ {
+  "chapter": 32,
+  "verse": "20",
+  "digitised": "μακράριοι",
+  "printed": "μακάριοι",
+  "page": 51,
+  "leaf": 433,
+  "what": "Extra rho (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "μακράριοι",
+    "μακάριοι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-596"
+ },
+ {
+  "chapter": 33,
+  "verse": "9",
+  "digitised": "ὃ Σαρών·",
+  "printed": "ὁ Σαρών·",
+  "page": 51,
+  "leaf": 433,
+  "what": "Extra grave accent on the article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-605"
+ },
+ {
+  "chapter": 33,
+  "verse": "18",
+  "digitised": "ἡ ὑμῶν",
+  "printed": "ἡ ψυχὴ ὑμῶν",
+  "page": 52,
+  "leaf": 434,
+  "what": "Word ψυχὴ omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-610"
+ },
+ {
+  "chapter": 33,
+  "verse": "23",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 52,
+  "leaf": 434,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-621"
+ },
+ {
+  "chapter": 34,
+  "verse": "2",
+  "digitised": "ἀπολέσω",
+  "printed": "ἀπολέσαι",
+  "page": 53,
+  "leaf": 435,
+  "what": "Final αι misread as ω (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀπολέσω",
+    "ἀπολέσαι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-628"
+ },
+ {
+  "chapter": 34,
+  "verse": "4",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 53,
+  "leaf": 435,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-632"
+ },
+ {
+  "chapter": 34,
+  "verse": "6",
+  "digitised": "μάχαιρα μάχαιρα",
+  "printed": "μάχαιρα",
+  "page": 53,
+  "leaf": 435,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-633"
+ },
+ {
+  "chapter": 34,
+  "verse": "7",
+  "digitised": "οἶ",
+  "printed": "οἱ",
+  "page": 53,
+  "leaf": 435,
+  "what": "Wrong breathing and extra accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οἶ",
+    "οἱ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-635"
+ },
+ {
+  "chapter": 34,
+  "verse": "8",
+  "digitised": "ἀνταποκαὶ δόσεως",
+  "printed": "ἀνταποδόσεως",
+  "page": 53,
+  "leaf": 435,
+  "what": "Line break split word and introduced καὶ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-636"
+ },
+ {
+  "chapter": 34,
+  "verse": "9",
+  "digitised": "στραφήσονται",
+  "printed": "καὶ στραφήσονται",
+  "page": 53,
+  "leaf": 435,
+  "what": "Missing initial καὶ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-638"
+ },
+ {
+  "chapter": 34,
+  "verse": "9",
+  "digitised": "ἦ",
+  "printed": "ἡ",
+  "page": 53,
+  "leaf": 435,
+  "what": "Wrong breathing and extra accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἦ",
+    "ἡ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-640"
+ },
+ {
+  "chapter": 34,
+  "verse": "10",
+  "digitised": "νυκτὸς νυκτὸς",
+  "printed": "νυκτὸς",
+  "page": 53,
+  "leaf": 435,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-642"
+ },
+ {
+  "chapter": 34,
+  "verse": "13",
+  "digitised": "εἷς τὸ,",
+  "printed": "εἰς τὰ",
+  "page": 53,
+  "leaf": 435,
+  "what": "Wrong diacritics; alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ],
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-649"
+ },
+ {
+  "chapter": 34,
+  "verse": "13",
+  "digitised": "σειρήνωι",
+  "printed": "σειρήνων",
+  "page": 53,
+  "leaf": 435,
+  "what": "Final nu misread as iota (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "σειρήνωι",
+    "σειρήνων"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-650"
+ },
+ {
+  "chapter": 34,
+  "verse": "15",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 54,
+  "leaf": 436,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-651"
+ },
+ {
+  "chapter": 34,
+  "verse": "17",
+  "digitised": "αύηῆς.",
+  "printed": "αὐτῆς.",
+  "page": 54,
+  "leaf": 436,
+  "what": "Wrong diacritic and eta misread for tau (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αύηῆς.",
+    "αὐτῆς."
+   ]
+  ],
+  "round": 2,
+  "source": "codex-655"
+ },
+ {
+  "chapter": 36,
+  "verse": "3",
+  "digitised": "Χελκίου οἰκονόμος",
+  "printed": "Χελκίου ὁ οἰκονόμος",
+  "page": 55,
+  "leaf": 437,
+  "what": "Article omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-667"
+ },
+ {
+  "chapter": 36,
+  "verse": "4",
+  "digitised": "Εἴπατε",
+  "printed": "Εἴπατε Ἑζεκίᾳ",
+  "page": 55,
+  "leaf": 437,
+  "what": "Name omitted after Εἴπατε (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-668"
+ },
+ {
+  "chapter": 36,
+  "verse": "10",
+  "digitised": "Καὶ",
+  "printed": "",
+  "page": 55,
+  "leaf": 437,
+  "what": "Extra word before αὐτήν (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-670"
+ },
+ {
+  "chapter": 36,
+  "verse": "15",
+  "digitised": "μὴ ἀκούετε Ἑζεκίου·",
+  "printed": "",
+  "page": 56,
+  "leaf": 438,
+  "what": "These words belong to verse 36:16 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-677"
+ },
+ {
+  "chapter": 36,
+  "verse": "16",
+  "digitised": "τάδε λέγει",
+  "printed": "μὴ ἀκούετε Ἑζεκίου· τάδε λέγει",
+  "page": 56,
+  "leaf": 438,
+  "what": "Opening words misplaced in verse 36:15 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-678"
+ },
+ {
+  "chapter": 36,
+  "verse": "22",
+  "digitised": "εἰσῆλθεν εἰσῆλθεν",
+  "printed": "εἰσῆλθεν Ἐλιακεὶμ",
+  "page": 56,
+  "leaf": 438,
+  "what": "Repeated verb replaces the name (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-685"
+ },
+ {
+  "chapter": 36,
+  "verse": "22",
+  "digitised": "Χελκιίου",
+  "printed": "Χελκίου",
+  "page": 56,
+  "leaf": 438,
+  "what": "Extra iota (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Χελκιίου",
+    "Χελκίου"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-686"
+ },
+ {
+  "chapter": 37,
+  "verse": "4",
+  "digitised": "θεός σου τοὺς",
+  "printed": "θεὸς τοὺς",
+  "page": 57,
+  "leaf": 439,
+  "what": "Extra σου; printed θεὸς has grave (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "θεός",
+    "θεὸς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-692"
+ },
+ {
+  "chapter": 37,
+  "verse": "4",
+  "digitised": "ἀπέστειλεν βασιλεὺς",
+  "printed": "ἀπέστειλεν αὐτὸν βασιλεὺς",
+  "page": 57,
+  "leaf": 439,
+  "what": "Missing αὐτὸν (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-693"
+ },
+ {
+  "chapter": 37,
+  "verse": "4",
+  "digitised": "κύριον τὸν θεόν σου",
+  "printed": "Κύριόν σου",
+  "page": 57,
+  "leaf": 439,
+  "what": "Extra τὸν θεόν; missing second accent on Κύριόν (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "κύριον",
+    "Κύριόν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-694"
+ },
+ {
+  "chapter": 37,
+  "verse": "4",
+  "digitised": "καταλελειμμένων",
+  "printed": "καταλελιμμένων",
+  "page": 57,
+  "leaf": 439,
+  "what": "Printed λι, not λει (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "καταλελειμμένων",
+    "καταλελιμμένων"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-695"
+ },
+ {
+  "chapter": 37,
+  "verse": "10",
+  "digitised": "ᾧ πεποιθὼς",
+  "printed": "ᾧ σὺ πεποιθὼς",
+  "page": 57,
+  "leaf": 439,
+  "what": "Missing σὺ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-699"
+ },
+ {
+  "chapter": 37,
+  "verse": "13",
+  "digitised": "Ἐγγουγαυά;",
+  "printed": "Ἐγγουγανά;",
+  "page": 58,
+  "leaf": 440,
+  "what": "Nu misread as upsilon (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Ἐγγουγαυά;",
+    "Ἐγγουγανά;"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-702"
+ },
+ {
+  "chapter": 37,
+  "verse": "17",
+  "digitised": "εἴσβεψον,",
+  "printed": "εἴσβλεψον,",
+  "page": 58,
+  "leaf": 440,
+  "what": "Missing lambda (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἴσβεψον,",
+    "εἴσβλεψον,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-707"
+ },
+ {
+  "chapter": 37,
+  "verse": "24",
+  "digitised": "εἰσῆλθον εἷς",
+  "printed": "εἰσῆλθον εἰς",
+  "page": 58,
+  "leaf": 440,
+  "what": "Wrong breathing and spurious circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-719"
+ },
+ {
+  "chapter": 37,
+  "verse": "26",
+  "digitised": "ἄ",
+  "printed": "ἃ",
+  "page": 59,
+  "leaf": 441,
+  "what": "Rough breathing and grave accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἄ",
+    "ἃ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-720"
+ },
+ {
+  "chapter": 37,
+  "verse": "35",
+  "digitised": "διὸ.",
+  "printed": "διὰ",
+  "page": 59,
+  "leaf": 441,
+  "what": "Alpha misread as omicron; stray period (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-724"
+ },
+ {
+  "chapter": 38,
+  "verse": "1",
+  "digitised": "οὗ",
+  "printed": "οὐ ζήσῃ",
+  "page": 60,
+  "leaf": 442,
+  "what": "Wrong breathing and accent; following word omitted (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οὗ",
+    "οὐ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-729"
+ },
+ {
+  "chapter": 38,
+  "verse": "3",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 60,
+  "leaf": 442,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-730"
+ },
+ {
+  "chapter": 38,
+  "verse": "7",
+  "digitised": "τὸ τοῦτο.",
+  "printed": "τὸ ῥῆμα τοῦτο.",
+  "page": 60,
+  "leaf": 442,
+  "what": "Word omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-733"
+ },
+ {
+  "chapter": 38,
+  "verse": "10",
+  "digitised": "ᾅδου τὰ.",
+  "printed": "ᾅδου καταλείψω τὰ",
+  "page": 60,
+  "leaf": 442,
+  "what": "Word omitted across printed line break (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-737"
+ },
+ {
+  "chapter": 38,
+  "verse": "10",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 60,
+  "leaf": 442,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-738"
+ },
+ {
+  "chapter": 38,
+  "verse": "12",
+  "digitised": "στὸς",
+  "printed": "ἐγένετο ὡς ἱστὸς",
+  "page": 60,
+  "leaf": 442,
+  "what": "Two words and initial breathed iota omitted (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "στὸς",
+    "ἱστὸς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-741"
+ },
+ {
+  "chapter": 38,
+  "verse": "13",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 60,
+  "leaf": 442,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-742"
+ },
+ {
+  "chapter": 38,
+  "verse": "17",
+  "digitised": "ἀπέριχας",
+  "printed": "ἀπέριψας",
+  "page": 61,
+  "leaf": 443,
+  "what": "ἀπέριψας, with one ρ as the page prints it",
+  "same": [
+   [
+    "ἀπέριχας",
+    "ἀπέριψας"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-744"
+ },
+ {
+  "chapter": 38,
+  "verse": "18",
+  "digitised": "εὐλογήουσίν",
+  "printed": "εὐλογήσουσίν",
+  "page": 61,
+  "leaf": 443,
+  "what": "Missing σ (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εὐλογήουσίν",
+    "εὐλογήσουσίν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-746"
+ },
+ {
+  "chapter": 39,
+  "verse": "1",
+  "digitised": "θανάτου ἀνέστη.",
+  "printed": "θανάτου καὶ ἀνέστη.",
+  "page": 61,
+  "leaf": 443,
+  "what": "Missing καὶ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-753"
+ },
+ {
+  "chapter": 39,
+  "verse": "2",
+  "digitised": "αὐτοῖς τὸν οἶκον τοῦ νεχωθὰ καὶ τῆς στακτῆς καὶ τῶν θυμιαμάτων καὶ ἐχάρη ἐπ’ αὐτοῖς Ἑζεκίας χαρὰν μεγάλην, καὶ ἔδειξεν",
+  "printed": "καὶ ἐχάρη ἐπ’ αὐτοῖς Ἑζεκίας χαρὰν μεγάλην, καὶ ἔδειξεν αὐτοῖς τὸν οἶκον τοῦ νεχωθὰ καὶ τῆς στακτῆς καὶ τῶν θυμιαμάτων",
+  "page": 61,
+  "leaf": 443,
+  "what": "Text transposed from its printed order (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-754"
+ },
+ {
+  "chapter": 39,
+  "verse": "4",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 62,
+  "leaf": 444,
+  "what": "Misread vowel and accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-760"
+ },
+ {
+  "chapter": 39,
+  "verse": "4",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 62,
+  "leaf": 444,
+  "what": "Misread vowel and accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-762"
+ },
+ {
+  "chapter": 40,
+  "verse": "9",
+  "digitised": "φοιδον. . .ιδοσαν] βεῖσθε·",
+  "printed": "φοβεῖσθε·",
+  "page": 62,
+  "leaf": 444,
+  "what": "Apparatus intrudes into word split across pages (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "βεῖσθε·",
+    "φοβεῖσθε·"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-776"
+ },
+ {
+  "chapter": 40,
+  "verse": "12",
+  "digitised": "τὰ ὕδωρ,",
+  "printed": "τὸ ὕδωρ,",
+  "page": 63,
+  "leaf": 445,
+  "what": "Alpha misread for omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὰ",
+    "τὸ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-782"
+ },
+ {
+  "chapter": 40,
+  "verse": "12",
+  "digitised": "τὸ. ὄρη",
+  "printed": "τὰ ὄρη",
+  "page": 63,
+  "leaf": 445,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-783"
+ },
+ {
+  "chapter": 40,
+  "verse": "15",
+  "digitised": "ὡς ζυγοῦ",
+  "printed": "ὡς ῥοπὴ ζυγοῦ",
+  "page": 63,
+  "leaf": 445,
+  "what": "Missing word ῥοπὴ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-786"
+ },
+ {
+  "chapter": 40,
+  "verse": "15",
+  "digitised": "ὡς λογισθήσονται;",
+  "printed": "ὡς σίελον λογισθήσονται;",
+  "page": 63,
+  "leaf": 445,
+  "what": "Missing word σίελον (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-787"
+ },
+ {
+  "chapter": 40,
+  "verse": "16",
+  "digitised": "εἷς καῦσιν,",
+  "printed": "εἰς καῦσιν,",
+  "page": 63,
+  "leaf": 445,
+  "what": "Wrong breathing and extra circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-789"
+ },
+ {
+  "chapter": 40,
+  "verse": "16",
+  "digitised": "τά. τετράποδα",
+  "printed": "τὰ τετράποδα",
+  "page": 63,
+  "leaf": 445,
+  "what": "Acute misread for grave accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τά.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-790"
+ },
+ {
+  "chapter": 40,
+  "verse": "18",
+  "digitised": "Κύρων,",
+  "printed": "Κύριον,",
+  "page": 63,
+  "leaf": 445,
+  "what": "Iota-omicron misread as omega (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Κύρων,",
+    "Κύριον,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-794"
+ },
+ {
+  "chapter": 40,
+  "verse": "23",
+  "digitised": "οἷς",
+  "printed": "ὡς",
+  "page": 63,
+  "leaf": 445,
+  "what": "Omega misread as omicron-iota; extra circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οἷς",
+    "ὡς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-802"
+ },
+ {
+  "chapter": 40,
+  "verse": "24",
+  "digitised": "μὴ εἷς",
+  "printed": "μὴ ῥιζωθῇ εἰς",
+  "page": 63,
+  "leaf": 445,
+  "what": "Missing ῥιζωθῇ; wrong breathing and accent on εἰς (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-803"
+ },
+ {
+  "chapter": 40,
+  "verse": "27",
+  "digitised": "ἐλόλησας,",
+  "printed": "ἐλάλησας,",
+  "page": 64,
+  "leaf": 446,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἐλόλησας,",
+    "ἐλάλησας,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-806"
+ },
+ {
+  "chapter": 40,
+  "verse": "31",
+  "digitised": "κεινάσουσιν.",
+  "printed": "πεινάσουσιν.",
+  "page": 64,
+  "leaf": 446,
+  "what": "Pi misread as kappa (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "κεινάσουσιν.",
+    "πεινάσουσιν."
+   ]
+  ],
+  "round": 2,
+  "source": "codex-807"
+ },
+ {
+  "chapter": 41,
+  "verse": "11",
+  "digitised": "ἰδοὺ ἰδοὺ",
+  "printed": "ἰδοὺ",
+  "page": 65,
+  "leaf": 447,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-812"
+ },
+ {
+  "chapter": 41,
+  "verse": "12",
+  "digitised": "εἷς οὐκ",
+  "printed": "ὡς οὐκ",
+  "page": 65,
+  "leaf": 447,
+  "what": "Misread word (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "ὡς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-818"
+ },
+ {
+  "chapter": 41,
+  "verse": "17",
+  "digitised": "δίψης ἐγὼ",
+  "printed": "δίψης ἐξηράνθη· ἐγὼ",
+  "page": 65,
+  "leaf": 447,
+  "what": "Omitted ἐξηράνθη (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-825"
+ },
+ {
+  "chapter": 41,
+  "verse": "20",
+  "digitised": "ἐπισπῶνται",
+  "printed": "ἐπιστῶνται",
+  "page": 65,
+  "leaf": 447,
+  "what": "Pi misread for tau (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἐπισπῶνται",
+    "ἐπιστῶνται"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-828"
+ },
+ {
+  "chapter": 41,
+  "verse": "22",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 65,
+  "leaf": 447,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-831"
+ },
+ {
+  "chapter": 41,
+  "verse": "23",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 65,
+  "leaf": 447,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-832"
+ },
+ {
+  "chapter": 41,
+  "verse": "25",
+  "digitised": "αἷς",
+  "printed": "ὡς",
+  "page": 66,
+  "leaf": 448,
+  "what": "Misread letters and diacritics (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αἷς",
+    "ὡς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-833"
+ },
+ {
+  "chapter": 41,
+  "verse": "25",
+  "digitised": "οἷς",
+  "printed": "ὡς",
+  "page": 66,
+  "leaf": 448,
+  "what": "Misread letters and diacritics (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οἷς",
+    "ὡς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-834"
+ },
+ {
+  "chapter": 42,
+  "verse": "2",
+  "digitised": "πράξεται",
+  "printed": "κράξεται",
+  "page": 66,
+  "leaf": 448,
+  "what": "Initial κ misread as π (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "πράξεται",
+    "κράξεται"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-838"
+ },
+ {
+  "chapter": 42,
+  "verse": "6",
+  "digitised": "ἐκάλεσέ",
+  "printed": "ἐκάλεσά",
+  "page": 66,
+  "leaf": 448,
+  "what": "Final α misread as ε (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἐκάλεσέ",
+    "ἐκάλεσά"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-846"
+ },
+ {
+  "chapter": 42,
+  "verse": "14",
+  "digitised": "ἐστώπησα,",
+  "printed": "ἐσιώπησα,",
+  "page": 67,
+  "leaf": 449,
+  "what": "Iota misread as tau (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἐστώπησα,",
+    "ἐσιώπησα,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-859"
+ },
+ {
+  "chapter": 42,
+  "verse": "16",
+  "digitised": "τὸ, σκολιὰ",
+  "printed": "τὰ σκολιὰ",
+  "page": 67,
+  "leaf": 449,
+  "what": "Accented alpha misread as omicron and comma (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-861"
+ },
+ {
+  "chapter": 42,
+  "verse": "16",
+  "digitised": "ταῦτα τὸ. ῥήματα",
+  "printed": "ταῦτα τὰ ῥήματα",
+  "page": 67,
+  "leaf": 449,
+  "what": "Accented alpha misread as omicron and stop (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-862"
+ },
+ {
+  "chapter": 42,
+  "verse": "20",
+  "digitised": "τὸ. ὦτα,",
+  "printed": "τὰ ὦτα,",
+  "page": 67,
+  "leaf": 449,
+  "what": "Accented alpha misread as omicron and stop (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-864"
+ },
+ {
+  "chapter": 42,
+  "verse": "23",
+  "digitised": "τὸ. ἐπερχόμενα.",
+  "printed": "τὰ ἐπερχόμενα.",
+  "page": 67,
+  "leaf": 449,
+  "what": "Accented alpha misread as omicron and stop (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-866"
+ },
+ {
+  "chapter": 43,
+  "verse": "10",
+  "digitised": "γένεσθέμοι",
+  "printed": "γένεσθέ μοι",
+  "page": 68,
+  "leaf": 450,
+  "what": "Two words fused (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "γένεσθέμοι",
+    "γένεσθέ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-869"
+ },
+ {
+  "chapter": 43,
+  "verse": "18",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 69,
+  "leaf": 451,
+  "what": "Alpha misread as omicron with a dot (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-873"
+ },
+ {
+  "chapter": 43,
+  "verse": "18",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 69,
+  "leaf": 451,
+  "what": "Alpha misread as omicron with a comma (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-874"
+ },
+ {
+  "chapter": 43,
+  "verse": "20",
+  "digitised": "τὸ. τοῦ",
+  "printed": "τὰ θηρία τοῦ",
+  "page": 69,
+  "leaf": 451,
+  "what": "Article misread; θηρία omitted (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-877"
+ },
+ {
+  "chapter": 43,
+  "verse": "28",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 69,
+  "leaf": 451,
+  "what": "Alpha misread as omicron with a comma (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-885"
+ },
+ {
+  "chapter": 43,
+  "verse": "28",
+  "digitised": "ἀπολέσω",
+  "printed": "ἀπολέσαι",
+  "page": 69,
+  "leaf": 451,
+  "what": "Final αι misread as ω (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀπολέσω",
+    "ἀπολέσαι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-886"
+ },
+ {
+  "chapter": 44,
+  "verse": "3",
+  "digitised": "τὰ τέκνα σου, καὶ",
+  "printed": "τὰ τέκνα σου,",
+  "page": 70,
+  "leaf": 452,
+  "what": "καὶ begins verse 44:4 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-892"
+ },
+ {
+  "chapter": 44,
+  "verse": "4",
+  "digitised": "ἀνατελοῦσιν",
+  "printed": "καὶ ἀνατελοῦσιν",
+  "page": 70,
+  "leaf": 452,
+  "what": "Opening καὶ assigned to preceding verse (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-893"
+ },
+ {
+  "chapter": 44,
+  "verse": "10",
+  "digitised": "ἀνωφελῆ, φελῆ,",
+  "printed": "ἀνωφελῆ,",
+  "page": 70,
+  "leaf": 452,
+  "what": "Line-break continuation duplicated (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-895"
+ },
+ {
+  "chapter": 44,
+  "verse": "17",
+  "digitised": "εἴ",
+  "printed": "εἶ",
+  "page": 71,
+  "leaf": 453,
+  "what": "Acute for circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἴ",
+    "εἶ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-900"
+ },
+ {
+  "chapter": 44,
+  "verse": "23",
+  "digitised": "ὃ θεὸς τὸν Ἰακώβ,",
+  "printed": "ὁ θεὸς τὸν Ἰακώβ,",
+  "page": 71,
+  "leaf": 453,
+  "what": "Spurious grave accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-908"
+ },
+ {
+  "chapter": 44,
+  "verse": "26",
+  "digitised": "τὸ. ἔρημα",
+  "printed": "τὰ ἔρημα",
+  "page": 72,
+  "leaf": 454,
+  "what": "Alpha misread as omicron with stray stop (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-914"
+ },
+ {
+  "chapter": 45,
+  "verse": "2",
+  "digitised": "ὅρη",
+  "printed": "ὄρη",
+  "page": 72,
+  "leaf": 454,
+  "what": "Rough breathing for smooth (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὅρη",
+    "ὄρη"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-919"
+ },
+ {
+  "chapter": 45,
+  "verse": "3",
+  "digitised": "θησαυροὺς ἀποκρύφους, ἀποκρύφους,",
+  "printed": "θησαυροὺς σκοτινοὺς ἀποκρύφους,",
+  "page": 72,
+  "leaf": 454,
+  "what": "σκοτινοὺς replaced by duplicated ἀποκρύφους (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-921"
+ },
+ {
+  "chapter": 45,
+  "verse": "3",
+  "digitised": "ἀνοίζα",
+  "printed": "ἀνοίξω",
+  "page": 72,
+  "leaf": 454,
+  "what": "Xi and omega misread (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀνοίζα",
+    "ἀνοίξω"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-922"
+ },
+ {
+  "chapter": 45,
+  "verse": "6",
+  "digitised": "ὅ θεός,",
+  "printed": "ὁ θεός,",
+  "page": 72,
+  "leaf": 454,
+  "what": "Extra acute accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὅ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-929"
+ },
+ {
+  "chapter": 45,
+  "verse": "13",
+  "digitised": "ἐγὰ",
+  "printed": "ἐγὼ",
+  "page": 73,
+  "leaf": 455,
+  "what": "Omega misread as alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἐγὰ",
+    "ἐγὼ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-942"
+ },
+ {
+  "chapter": 45,
+  "verse": "13",
+  "digitised": "οἰκοδομήσει πόλιν",
+  "printed": "οἰκοδομήσει τὴν πόλιν",
+  "page": 73,
+  "leaf": 455,
+  "what": "Missing article τὴν (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-945"
+ },
+ {
+  "chapter": 45,
+  "verse": "17",
+  "digitised": "αἰώνων·",
+  "printed": "αἰώνιον·",
+  "page": 73,
+  "leaf": 455,
+  "what": "Printed ending is -ιον, not -ων (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αἰώνων·",
+    "αἰώνιον·"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-950"
+ },
+ {
+  "chapter": 45,
+  "verse": "21",
+  "digitised": "ἀπ’ τότε",
+  "printed": "ἀπ’ ἀρχῆς· τότε",
+  "page": 73,
+  "leaf": 455,
+  "what": "Missing word ἀρχῆς (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-960"
+ },
+ {
+  "chapter": 46,
+  "verse": "6",
+  "digitised": "σοῖ",
+  "printed": "οἱ",
+  "page": 74,
+  "leaf": 456,
+  "what": "Stray sigma; breathing misread as circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "σοῖ",
+    "οἱ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-970"
+ },
+ {
+  "chapter": 46,
+  "verse": "6",
+  "digitised": "αὐτόν.",
+  "printed": "αὐτό.",
+  "page": 74,
+  "leaf": 456,
+  "what": "Extra final nu (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αὐτόν.",
+    "αὐτό."
+   ]
+  ],
+  "round": 2,
+  "source": "codex-971"
+ },
+ {
+  "chapter": 46,
+  "verse": "9",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 74,
+  "leaf": 456,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-974"
+ },
+ {
+  "chapter": 46,
+  "verse": "10",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 75,
+  "leaf": 457,
+  "what": "ὰ misread as ό and a dot (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-977"
+ },
+ {
+  "chapter": 46,
+  "verse": "10",
+  "digitised": "αὐτὸ.",
+  "printed": "αὐτὰ",
+  "page": 75,
+  "leaf": 457,
+  "what": "ὰ misread as ό and a dot (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αὐτὸ.",
+    "αὐτὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-978"
+ },
+ {
+  "chapter": 47,
+  "verse": "3",
+  "digitised": "αἰσχύνη χύνη",
+  "printed": "αἰσχύνη",
+  "page": 75,
+  "leaf": 457,
+  "what": "Duplicated continuation of a hyphenated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-984"
+ },
+ {
+  "chapter": 47,
+  "verse": "7",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 75,
+  "leaf": 457,
+  "what": "ὰ misread as ό and a dot (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-987"
+ },
+ {
+  "chapter": 47,
+  "verse": "8",
+  "digitised": "νῦν δὲ ἥξει ἐξέφνης τὸ.",
+  "printed": "",
+  "page": 75,
+  "leaf": 457,
+  "what": "These words belong to verse 47:9 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-990"
+ },
+ {
+  "chapter": 47,
+  "verse": "9",
+  "digitised": "δύο ταῦτα",
+  "printed": "νῦν δὲ ἥξει ἐξέφνης τὰ δύο ταῦτα",
+  "page": 75,
+  "leaf": 457,
+  "what": "Verse opening incorrectly assigned to 47:8; τὰ also misread (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-991"
+ },
+ {
+  "chapter": 47,
+  "verse": "9",
+  "digitised": "ἐν μιᾷ χηρία",
+  "printed": "ἐν μιᾷ ἡμέρᾳ, χηρία",
+  "page": 75,
+  "leaf": 457,
+  "what": "Missing word ἡμέρᾳ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-992"
+ },
+ {
+  "chapter": 47,
+  "verse": "12",
+  "digitised": "εἳ",
+  "printed": "ἃ",
+  "page": 76,
+  "leaf": 458,
+  "what": "Letters misread (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἳ",
+    "ἃ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-998"
+ },
+ {
+  "chapter": 48,
+  "verse": "5",
+  "digitised": "Τὸ. εἴδωλά μοι",
+  "printed": "Τὰ εἴδωλά μοι",
+  "page": 76,
+  "leaf": 458,
+  "what": "Τὰ; the page prints μοι",
+  "same": [
+   [
+    "Τὸ.",
+    "Τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1006"
+ },
+ {
+  "chapter": 48,
+  "verse": "5",
+  "digitised": "τὸ. πάλαι",
+  "printed": "τὰ πάλαι",
+  "page": 76,
+  "leaf": 458,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1005"
+ },
+ {
+  "chapter": 48,
+  "verse": "5",
+  "digitised": "Τὸ. γλυπτὰ",
+  "printed": "Τὰ γλυπτὰ",
+  "page": 76,
+  "leaf": 458,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Τὸ.",
+    "Τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1007"
+ },
+ {
+  "chapter": 48,
+  "verse": "6",
+  "digitised": "τὸ, καινὰ",
+  "printed": "τὰ καινὰ",
+  "page": 76,
+  "leaf": 458,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1008"
+ },
+ {
+  "chapter": 48,
+  "verse": "8",
+  "digitised": "τὸ.",
+  "printed": "ἤνοιξα τὰ",
+  "page": 77,
+  "leaf": 459,
+  "what": "Missing verb and misread article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1011"
+ },
+ {
+  "chapter": 48,
+  "verse": "12",
+  "digitised": "ἐγώ εἶμι εἷς",
+  "printed": "ἐγώ εἰμι εἰς",
+  "page": 77,
+  "leaf": 459,
+  "what": "Spurious circumflexes; wrong breathing on εἰς (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἶμι",
+    "εἰμι"
+   ],
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1014"
+ },
+ {
+  "chapter": 48,
+  "verse": "17",
+  "digitised": "σοι τοῦ",
+  "printed": "δέδειχά σοι τοῦ",
+  "page": 77,
+  "leaf": 459,
+  "what": "Missing verb δέδειχά (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1022"
+ },
+ {
+  "chapter": 48,
+  "verse": "18",
+  "digitised": "καὶ συναχθήσονται πάντες καὶ ἀκούσονται. τίς αὐτοῖς",
+  "printed": "",
+  "page": 77,
+  "leaf": 459,
+  "what": "Extraneous text repeated from 48:14 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1024"
+ },
+ {
+  "chapter": 48,
+  "verse": "19",
+  "digitised": "τὸ, ἔκγονα",
+  "printed": "τὰ ἔκγονα",
+  "page": 77,
+  "leaf": 459,
+  "what": "Article vowel misread (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1026"
+ },
+ {
+  "chapter": 48,
+  "verse": "19",
+  "digitised": "γῆν",
+  "printed": "γῆς",
+  "page": 77,
+  "leaf": 459,
+  "what": "Final letter misread (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "γῆν",
+    "γῆς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1028"
+ },
+ {
+  "chapter": 48,
+  "verse": "19",
+  "digitised": "οὔ",
+  "printed": "οὐ",
+  "page": 77,
+  "leaf": 459,
+  "what": "Spurious acute (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οὔ",
+    "οὐ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1029"
+ },
+ {
+  "chapter": 48,
+  "verse": "20",
+  "digitised": "εὐφροσύνης",
+  "printed": "φωνὴν εὐφροσύνης",
+  "page": 77,
+  "leaf": 459,
+  "what": "Missing word φωνὴν (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1030"
+ },
+ {
+  "chapter": 49,
+  "verse": "2",
+  "digitised": "ὥς",
+  "printed": "ὡς",
+  "page": 78,
+  "leaf": 460,
+  "what": "Extra acute accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὥς",
+    "ὡς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1031"
+ },
+ {
+  "chapter": 49,
+  "verse": "7",
+  "digitised": "ὅ θεὸς",
+  "printed": "ὁ θεὸς",
+  "page": 78,
+  "leaf": 460,
+  "what": "Extra acute accent on article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὅ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1040"
+ },
+ {
+  "chapter": 49,
+  "verse": "10",
+  "digitised": "διὸ,",
+  "printed": "διὰ",
+  "page": 79,
+  "leaf": 461,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ,",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1044"
+ },
+ {
+  "chapter": 49,
+  "verse": "12",
+  "digitised": "ἰδοὺ ἰδοὺ",
+  "printed": "ἰδοὺ",
+  "page": 79,
+  "leaf": 461,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1048"
+ },
+ {
+  "chapter": 49,
+  "verse": "13",
+  "digitised": "ἀγαλλίσαθω",
+  "printed": "ἀγαλλίασθω",
+  "page": 79,
+  "leaf": 461,
+  "what": "ἀγαλλίασθω, accented on the iota",
+  "same": [
+   [
+    "ἀγαλλίσαθω",
+    "ἀγαλλίασθω"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1049"
+ },
+ {
+  "chapter": 49,
+  "verse": "13",
+  "digitised": "ἦ γῆ,",
+  "printed": "ἡ γῆ,",
+  "page": 79,
+  "leaf": 461,
+  "what": "the article ἡ",
+  "same": [
+   [
+    "ἦ",
+    "ἡ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1050"
+ },
+ {
+  "chapter": 49,
+  "verse": "15",
+  "digitised": "μὴ μὴ",
+  "printed": "μὴ",
+  "page": 79,
+  "leaf": 461,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1052"
+ },
+ {
+  "chapter": 49,
+  "verse": "15",
+  "digitised": "τὸ, ἔκγονα",
+  "printed": "τὰ ἔκγονα",
+  "page": 79,
+  "leaf": 461,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1053"
+ },
+ {
+  "chapter": 49,
+  "verse": "16",
+  "digitised": "τὸ. τείχη,",
+  "printed": "τὰ τείχη,",
+  "page": 79,
+  "leaf": 461,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1056"
+ },
+ {
+  "chapter": 49,
+  "verse": "16",
+  "digitised": "διὸ. παντός,",
+  "printed": "διὰ παντός,",
+  "page": 79,
+  "leaf": 461,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1058"
+ },
+ {
+  "chapter": 49,
+  "verse": "18",
+  "digitised": "πάντες,",
+  "printed": "πάντας,",
+  "page": 79,
+  "leaf": 461,
+  "what": "Epsilon misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "πάντες,",
+    "πάντας,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1060"
+ },
+ {
+  "chapter": 49,
+  "verse": "19",
+  "digitised": "τὸ. ἔρημά",
+  "printed": "τὰ ἔρημά",
+  "page": 79,
+  "leaf": 461,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1061"
+ },
+ {
+  "chapter": 49,
+  "verse": "19",
+  "digitised": "τὸ. πεπτωκότα,",
+  "printed": "τὰ πεπτωκότα,",
+  "page": 79,
+  "leaf": 461,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1062"
+ },
+ {
+  "chapter": 49,
+  "verse": "22",
+  "digitised": "εἷς τὸ. ἔθνη",
+  "printed": "εἰς τὰ ἔθνη",
+  "page": 79,
+  "leaf": 461,
+  "what": "Incorrect breathing and circumflex; omicron for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ],
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1067"
+ },
+ {
+  "chapter": 49,
+  "verse": "26",
+  "digitised": "αἷς",
+  "printed": "ὡς",
+  "page": 80,
+  "leaf": 462,
+  "what": "Omega misread as alpha-iota with circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αἷς",
+    "ὡς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1070"
+ },
+ {
+  "chapter": 50,
+  "verse": "8",
+  "digitised": "καὶ τίς ὃ κρινόμενός",
+  "printed": "καὶ τίς ὁ κρινόμενός",
+  "page": 81,
+  "leaf": 463,
+  "what": "Extra grave accent on article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1080"
+ },
+ {
+  "chapter": 50,
+  "verse": "10",
+  "digitised": "ἀντστηρίσασθε",
+  "printed": "ἀντιστηρίσασθε",
+  "page": 81,
+  "leaf": 463,
+  "what": "Missing iota (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀντστηρίσασθε",
+    "ἀντιστηρίσασθε"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1084"
+ },
+ {
+  "chapter": 50,
+  "verse": "11",
+  "digitised": "ἰδοὺ ἰδοὺ",
+  "printed": "ἰδοὺ",
+  "page": 81,
+  "leaf": 463,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1085"
+ },
+ {
+  "chapter": 50,
+  "verse": "11",
+  "digitised": "κατισχδύετε",
+  "printed": "κατισχύετε",
+  "page": 81,
+  "leaf": 463,
+  "what": "Extra delta (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "κατισχδύετε",
+    "κατισχύετε"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1086"
+ },
+ {
+  "chapter": 51,
+  "verse": "3",
+  "digitised": "τὸ. ἔρημα",
+  "printed": "τὰ ἔρημα",
+  "page": 81,
+  "leaf": 463,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1093"
+ },
+ {
+  "chapter": 51,
+  "verse": "3",
+  "digitised": "καὶ πρὸς δυσμὰς)",
+  "printed": "καὶ τὰ πρὸς δυσμὰς>",
+  "page": 81,
+  "leaf": 463,
+  "what": "Missing article τὰ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1094"
+ },
+ {
+  "chapter": 51,
+  "verse": "9",
+  "digitised": "αἷς",
+  "printed": "ὡς",
+  "page": 82,
+  "leaf": 464,
+  "what": "Misread letters and diacritics (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αἷς",
+    "ὡς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1113"
+ },
+ {
+  "chapter": 51,
+  "verse": "10",
+  "digitised": "ἦ",
+  "printed": "ἡ",
+  "page": 82,
+  "leaf": 464,
+  "what": "Wrong breathing and extra circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἦ",
+    "ἡ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1116"
+ },
+ {
+  "chapter": 51,
+  "verse": "13",
+  "digitised": "τοῦ θυμοῦ θλίβοντός",
+  "printed": "τοῦ θυμοῦ τοῦ θλίβοντός",
+  "page": 82,
+  "leaf": 464,
+  "what": "Missing article τοῦ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1120"
+ },
+ {
+  "chapter": 51,
+  "verse": "15",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 82,
+  "leaf": 464,
+  "what": "Misread vowel and stray full stop (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1126"
+ },
+ {
+  "chapter": 51,
+  "verse": "17",
+  "digitised": "ἐξεγείρου, Ἰερουσαλήμ,",
+  "printed": "ἐξεγείρου, ἀνάστηθι, Ἰερουσαλήμ,",
+  "page": 82,
+  "leaf": 464,
+  "what": "Missing word ἀνάστηθι (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1128"
+ },
+ {
+  "chapter": 51,
+  "verse": "20",
+  "digitised": "ἐκλελυμένα",
+  "printed": "ἐκλελυμένοι",
+  "page": 83,
+  "leaf": 465,
+  "what": "Misread ending (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἐκλελυμένα",
+    "ἐκλελυμένοι"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1134"
+ },
+ {
+  "chapter": 51,
+  "verse": "23",
+  "digitised": "τὸ. μετάφρενά",
+  "printed": "τὰ μετάφρενά",
+  "page": 83,
+  "leaf": 465,
+  "what": "Misread article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1140"
+ },
+ {
+  "chapter": 51,
+  "verse": "23",
+  "digitised": "παραπορευομένας.",
+  "printed": "παραπορευομένοις.",
+  "page": 83,
+  "leaf": 465,
+  "what": "Misread ending (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "παραπορευομένας.",
+    "παραπορευομένοις."
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1141"
+ },
+ {
+  "chapter": 52,
+  "verse": "1",
+  "digitised": "διὸ,",
+  "printed": "διὰ",
+  "page": 83,
+  "leaf": 465,
+  "what": "Omicron instead of alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ,",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1142"
+ },
+ {
+  "chapter": 52,
+  "verse": "3",
+  "digitised": "οὒ",
+  "printed": "οὐ",
+  "page": 83,
+  "leaf": 465,
+  "what": "Extra grave accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οὒ",
+    "οὐ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1144"
+ },
+ {
+  "chapter": 52,
+  "verse": "4",
+  "digitised": "Οὖτως",
+  "printed": "Οὕτως",
+  "page": 83,
+  "leaf": 465,
+  "what": "Οὕτως, with the rough breathing",
+  "same": [
+   [
+    "Οὖτως",
+    "Οὕτως"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1145"
+ },
+ {
+  "chapter": 52,
+  "verse": "4",
+  "digitised": "εἷς Ἀσσυρίους",
+  "printed": "εἰς Ἀσσυρίους",
+  "page": 83,
+  "leaf": 465,
+  "what": "εἰς, with the smooth breathing",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1148"
+ },
+ {
+  "chapter": 52,
+  "verse": "4",
+  "digitised": "Ἀσσυρίους ἤχθησαν·",
+  "printed": "Ἀσσυρίους βίᾳ ἤχθησαν·",
+  "page": 83,
+  "leaf": 465,
+  "what": "βίᾳ, with the iota subscript, which the transcription lost",
+  "same": [],
+  "round": 2,
+  "source": "codex-1149"
+ },
+ {
+  "chapter": 52,
+  "verse": "4",
+  "digitised": "Αἴγυππον",
+  "printed": "Αἴγυπτον",
+  "page": 83,
+  "leaf": 465,
+  "what": "Pi instead of tau (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Αἴγυππον",
+    "Αἴγυπτον"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1146"
+ },
+ {
+  "chapter": 52,
+  "verse": "4",
+  "digitised": "ὃ",
+  "printed": "ὁ",
+  "page": 83,
+  "leaf": 465,
+  "what": "Extra grave on article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1147"
+ },
+ {
+  "chapter": 52,
+  "verse": "5",
+  "digitised": "μου θαυμάζετε",
+  "printed": "μου δωρεάν, θαυμάζετε",
+  "page": 83,
+  "leaf": 465,
+  "what": "Missing word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1151"
+ },
+ {
+  "chapter": 52,
+  "verse": "6",
+  "digitised": "έν",
+  "printed": "ἐν",
+  "page": 83,
+  "leaf": 465,
+  "what": "Accent instead of smooth breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "έν",
+    "ἐν"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1153"
+ },
+ {
+  "chapter": 52,
+  "verse": "9",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 84,
+  "leaf": 466,
+  "what": "Misread vowel in the article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1157"
+ },
+ {
+  "chapter": 52,
+  "verse": "11",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 84,
+  "leaf": 466,
+  "what": "Misread vowel in the article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1158"
+ },
+ {
+  "chapter": 52,
+  "verse": "12",
+  "digitised": "οὐδὲ πορεύσεσθε,",
+  "printed": "οὐδὲ φυγῇ πορεύσεσθε,",
+  "page": 84,
+  "leaf": 466,
+  "what": "Missing word φυγῇ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1160"
+ },
+ {
+  "chapter": 53,
+  "verse": "4",
+  "digitised": "τὰς ἁμαρτίας φέρει",
+  "printed": "τὰς ἁμαρτίας ἡμῶν φέρει",
+  "page": 84,
+  "leaf": 466,
+  "what": "Missing word ἡμῶν (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1168"
+ },
+ {
+  "chapter": 53,
+  "verse": "5",
+  "digitised": "ἁμαρτίας παιδία",
+  "printed": "ἁμαρτίας ἡμῶν· παιδία",
+  "page": 85,
+  "leaf": 467,
+  "what": "Missing ἡμῶν (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1169"
+ },
+ {
+  "chapter": 53,
+  "verse": "8",
+  "digitised": "κρίσις αὐτοῦ τὴν",
+  "printed": "κρίσις αὐτοῦ ἤρθη· τὴν",
+  "page": 85,
+  "leaf": 467,
+  "what": "Missing ἤρθη (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1175"
+ },
+ {
+  "chapter": 53,
+  "verse": "9",
+  "digitised": "καὶ αὐτὸς διὰ τὸ",
+  "printed": "",
+  "page": 85,
+  "leaf": 467,
+  "what": "Extraneous words from verse 7 (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1176"
+ },
+ {
+  "chapter": 53,
+  "verse": "10",
+  "digitised": "ἡ ὑμῶν",
+  "printed": "ἡ ψυχὴ ὑμῶν",
+  "page": 85,
+  "leaf": 467,
+  "what": "Missing ψυχὴ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1178"
+ },
+ {
+  "chapter": 53,
+  "verse": "12",
+  "digitised": "ἡ αὐτοῦ,",
+  "printed": "ἡ ψυχὴ αὐτοῦ,",
+  "page": 85,
+  "leaf": 467,
+  "what": "Missing ψυχὴ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1181"
+ },
+ {
+  "chapter": 54,
+  "verse": "1",
+  "digitised": "Εὐφράθητι,",
+  "printed": "Εὐφράνθητι,",
+  "page": 85,
+  "leaf": 467,
+  "what": "Missing ν (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Εὐφράθητι,",
+    "Εὐφράνθητι,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1182"
+ },
+ {
+  "chapter": 54,
+  "verse": "2",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 85,
+  "leaf": 467,
+  "what": "Misread vowel with stray punctuation (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1183"
+ },
+ {
+  "chapter": 54,
+  "verse": "3",
+  "digitised": "εἷς δεξιὰ",
+  "printed": "εἰς τὰ δεξιὰ",
+  "page": 85,
+  "leaf": 467,
+  "what": "Wrong breathing, extra accent, missing τὰ (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1184"
+ },
+ {
+  "chapter": 54,
+  "verse": "3",
+  "digitised": "εἷς τὸ, ἀριστερὰ,",
+  "printed": "εἰς τὰ ἀριστερὰ",
+  "page": 85,
+  "leaf": 467,
+  "what": "Wrong breathing, extra accent, misread τὰ (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ],
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1185"
+ },
+ {
+  "chapter": 54,
+  "verse": "11",
+  "digitised": "τὸ. θεμέλιά",
+  "printed": "τὰ θεμέλιά",
+  "page": 86,
+  "leaf": 468,
+  "what": "Alpha misread as omicron; stray stop (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1190"
+ },
+ {
+  "chapter": 54,
+  "verse": "13",
+  "digitised": "θεοῦ, ἐν",
+  "printed": "θεοῦ, καὶ ἐν",
+  "page": 86,
+  "leaf": 468,
+  "what": "Missing καὶ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1191"
+ },
+ {
+  "chapter": 54,
+  "verse": "14",
+  "digitised": "οἰκοδομηκαὶ θήσῃ·",
+  "printed": "οἰκοδομηθήσῃ·",
+  "page": 86,
+  "leaf": 468,
+  "what": "Intrusive καὶ within a split word (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οἰκοδομηκαὶ",
+    "οἰκοδομηθήσῃ·"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1192"
+ },
+ {
+  "chapter": 54,
+  "verse": "15",
+  "digitised": "ἰδοὺ ἰδοὺ",
+  "printed": "ἰδοὺ",
+  "page": 86,
+  "leaf": 468,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1193"
+ },
+ {
+  "chapter": 55,
+  "verse": "6",
+  "digitised": "ὐγῖν,",
+  "printed": "ὑμῖν,",
+  "page": 87,
+  "leaf": 469,
+  "what": "Mu misread as gamma; wrong breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὐγῖν,",
+    "ὑμῖν,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1198"
+ },
+ {
+  "chapter": 55,
+  "verse": "7",
+  "digitised": "ἀπολιπέτα",
+  "printed": "ἀπολιπέτω",
+  "page": 87,
+  "leaf": 469,
+  "what": "Final omega misread as alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀπολιπέτα",
+    "ἀπολιπέτω"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1199"
+ },
+ {
+  "chapter": 55,
+  "verse": "9",
+  "digitised": "τὸ, διανοήματα",
+  "printed": "τὰ διανοήματα",
+  "page": 87,
+  "leaf": 469,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1202"
+ },
+ {
+  "chapter": 56,
+  "verse": "10",
+  "digitised": "ἴδετε ἴδετε",
+  "printed": "ἴδετε",
+  "page": 88,
+  "leaf": 470,
+  "what": "Word duplicated in transcription (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1220"
+ },
+ {
+  "chapter": 57,
+  "verse": "1",
+  "digitised": "δίκαιον",
+  "printed": "δίκαιος",
+  "page": 89,
+  "leaf": 471,
+  "what": "Final letter misread (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "δίκαιον",
+    "δίκαιος"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1227"
+ },
+ {
+  "chapter": 57,
+  "verse": "5",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 89,
+  "leaf": 471,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1228"
+ },
+ {
+  "chapter": 57,
+  "verse": "9",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 89,
+  "leaf": 471,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1230"
+ },
+ {
+  "chapter": 57,
+  "verse": "10",
+  "digitised": "ἐνισχύουσα ἔπραξας",
+  "printed": "ἐνισχύουσα ὅτι ἔπραξας",
+  "page": 89,
+  "leaf": 471,
+  "what": "Missing word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1232"
+ },
+ {
+  "chapter": 57,
+  "verse": "11",
+  "digitised": "εἷς τὴν διάνοιαν",
+  "printed": "εἰς τὴν διάνοιαν",
+  "page": 89,
+  "leaf": 471,
+  "what": "Wrong breathing and extra accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1234"
+ },
+ {
+  "chapter": 57,
+  "verse": "12",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 89,
+  "leaf": 471,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1236"
+ },
+ {
+  "chapter": 57,
+  "verse": "17",
+  "digitised": "ἁμαρτίαν τι",
+  "printed": "ἁμαρτίαν βραχύ τι",
+  "page": 90,
+  "leaf": 472,
+  "what": "Missing word βραχύ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1244"
+ },
+ {
+  "chapter": 58,
+  "verse": "9",
+  "digitised": "καὶ γογγυσμοῦ,",
+  "printed": "καὶ ῥῆμα γογγυσμοῦ,",
+  "page": 91,
+  "leaf": 473,
+  "what": "Missing word ῥῆμα (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1246"
+ },
+ {
+  "chapter": 58,
+  "verse": "11",
+  "digitised": "διὸ.",
+  "printed": "διὰ",
+  "page": 91,
+  "leaf": 473,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1247"
+ },
+ {
+  "chapter": 58,
+  "verse": "11",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 91,
+  "leaf": 473,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1248"
+ },
+ {
+  "chapter": 58,
+  "verse": "13",
+  "digitised": "τὸ, θελήματά",
+  "printed": "τὰ θελήματά",
+  "page": 91,
+  "leaf": 473,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1250"
+ },
+ {
+  "chapter": 58,
+  "verse": "13",
+  "digitised": "τὸ. σάββατα",
+  "printed": "τὰ σάββατα",
+  "page": 91,
+  "leaf": 473,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1251"
+ },
+ {
+  "chapter": 59,
+  "verse": "2",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 92,
+  "leaf": 474,
+  "what": "Misread vowel (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1254"
+ },
+ {
+  "chapter": 59,
+  "verse": "2",
+  "digitised": "θεοῦ θεοῦ>,",
+  "printed": "θεοῦ>,",
+  "page": 92,
+  "leaf": 474,
+  "what": "Duplicated word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1255"
+ },
+ {
+  "chapter": 59,
+  "verse": "2",
+  "digitised": "τὰς ἁμαρτίας",
+  "printed": "καὶ διὰ τὰς ἁμαρτίας",
+  "page": 92,
+  "leaf": 474,
+  "what": "Two words omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1256"
+ },
+ {
+  "chapter": 59,
+  "verse": "9",
+  "digitised": "φῶς αὐτοῖς",
+  "printed": "φῶς ἐγένετο αὐτοῖς",
+  "page": 92,
+  "leaf": 474,
+  "what": "Word omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1267"
+ },
+ {
+  "chapter": 59,
+  "verse": "12",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 92,
+  "leaf": 474,
+  "what": "Misread vowel (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1268"
+ },
+ {
+  "chapter": 59,
+  "verse": "13",
+  "digitised": "τοῦ θεοῦ ἐλαλήσαμεν",
+  "printed": "τοῦ θεοῦ ἡμῶν· ἐλαλήσαμεν",
+  "page": 92,
+  "leaf": 474,
+  "what": "Word omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1269"
+ },
+ {
+  "chapter": 59,
+  "verse": "14",
+  "digitised": "ἀφ᾿ ὅτι",
+  "printed": "ἀφ’ ἡμῶν· ὅτι",
+  "page": 92,
+  "leaf": 474,
+  "what": "Word omitted (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀφ᾿",
+    "ἀφ’"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1270"
+ },
+ {
+  "chapter": 59,
+  "verse": "19",
+  "digitised": "τὰ ὄνομα",
+  "printed": "τὸ ὄνομα",
+  "page": 93,
+  "leaf": 475,
+  "what": "Alpha misread for omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὰ",
+    "τὸ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1273"
+ },
+ {
+  "chapter": 59,
+  "verse": "19",
+  "digitised": "το ἔνδοξον·",
+  "printed": "τὸ ἔνδοξον·",
+  "page": 93,
+  "leaf": 475,
+  "what": "Missing grave accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "το",
+    "τὸ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1274"
+ },
+ {
+  "chapter": 60,
+  "verse": "1",
+  "digitised": "φωτίζον,",
+  "printed": "φωτίζου,",
+  "page": 93,
+  "leaf": 475,
+  "what": "Final upsilon misread as nu (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "φωτίζον,",
+    "φωτίζου,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1278"
+ },
+ {
+  "chapter": 60,
+  "verse": "7",
+  "digitised": "ἀνενεχθήσονται",
+  "printed": "ἀνενεχθήσεται",
+  "page": 94,
+  "leaf": 476,
+  "what": "Printed verb is singular (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀνενεχθήσονται",
+    "ἀνενεχθήσεται"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1283"
+ },
+ {
+  "chapter": 60,
+  "verse": "9",
+  "digitised": "τὸν Ἰσραὴλ",
+  "printed": "τοῦ Ἰσραὴλ",
+  "page": 94,
+  "leaf": 476,
+  "what": "Misread article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸν",
+    "τοῦ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1286"
+ },
+ {
+  "chapter": 60,
+  "verse": "10",
+  "digitised": "σου·",
+  "printed": "σοι·",
+  "page": 94,
+  "leaf": 476,
+  "what": "Misread final letter (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "σου·",
+    "σοι·"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1287"
+ },
+ {
+  "chapter": 60,
+  "verse": "12",
+  "digitised": "οἱ βασιλεῖς,",
+  "printed": "οἱ βασιλεῖς αὐτῶν,",
+  "page": 94,
+  "leaf": 476,
+  "what": "Missing pronoun (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1291"
+ },
+ {
+  "chapter": 60,
+  "verse": "16",
+  "digitised": "θεὸς",
+  "printed": "ὁ θεὸς",
+  "page": 94,
+  "leaf": 476,
+  "what": "Missing article (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1295"
+ },
+ {
+  "chapter": 60,
+  "verse": "19",
+  "digitised": "αἰώνων,",
+  "printed": "αἰώνιον,",
+  "page": 94,
+  "leaf": 476,
+  "what": "Misread ending (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αἰώνων,",
+    "αἰώνιον,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1298"
+ },
+ {
+  "chapter": 61,
+  "verse": "5",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 95,
+  "leaf": 477,
+  "what": "Alpha misread as omicron, with stray punctuation (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1309"
+ },
+ {
+  "chapter": 62,
+  "verse": "1",
+  "digitised": "Ἰερουσαλὴμ ἀνήσω,",
+  "printed": "Ἰερουσαλὴμ οὐκ ἀνήσω,",
+  "page": 96,
+  "leaf": 478,
+  "what": "Negation οὐκ omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1315"
+ },
+ {
+  "chapter": 62,
+  "verse": "8",
+  "digitised": "καὶ οὐκέτι καὶ τὸ, βρώματά",
+  "printed": "καὶ τὰ βρώματά",
+  "page": 96,
+  "leaf": 478,
+  "what": "Extra words οὐκέτι καὶ; τὰ misread as τὸ (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1317"
+ },
+ {
+  "chapter": 62,
+  "verse": "9",
+  "digitised": "αὐτὸ.",
+  "printed": "αὐτὰ",
+  "page": 97,
+  "leaf": 479,
+  "what": "Final vowel and accent misread (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αὐτὸ.",
+    "αὐτὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1318"
+ },
+ {
+  "chapter": 62,
+  "verse": "10",
+  "digitised": "διὸ.",
+  "printed": "διὰ",
+  "page": 97,
+  "leaf": 479,
+  "what": "Final vowel misread (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1319"
+ },
+ {
+  "chapter": 62,
+  "verse": "10",
+  "digitised": "διαρράψατε.",
+  "printed": "διαρρίψατε,",
+  "page": 97,
+  "leaf": 479,
+  "what": "Accented iota misread as alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διαρράψατε.",
+    "διαρρίψατε,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1320"
+ },
+ {
+  "chapter": 62,
+  "verse": "10",
+  "digitised": "τὸ. ἔθνη.",
+  "printed": "τὰ ἔθνη.",
+  "page": 97,
+  "leaf": 479,
+  "what": "Article's final vowel misread (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1321"
+ },
+ {
+  "chapter": 62,
+  "verse": "11",
+  "digitised": "τῆς εἴπατε",
+  "printed": "τῆς γῆς· εἴπατε",
+  "page": 97,
+  "leaf": 479,
+  "what": "Word γῆς omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1322"
+ },
+ {
+  "chapter": 63,
+  "verse": "5",
+  "digitised": "οὐδεὶς καὶ προσενόησα,",
+  "printed": "οὐδεὶς βοηθός· καὶ προσενόησα,",
+  "page": 97,
+  "leaf": 479,
+  "what": "Word βοηθός omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1328"
+ },
+ {
+  "chapter": 63,
+  "verse": "7",
+  "digitised": "ὁ Κύριος ἀνταποδίδωσιν.",
+  "printed": "ὁ Κύριος ἡμῖν ἀνταποδίδωσιν.",
+  "page": 97,
+  "leaf": 479,
+  "what": "Word ἡμῖν omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1333"
+ },
+ {
+  "chapter": 63,
+  "verse": "16",
+  "digitised": "ἐπέγνω σύ,",
+  "printed": "ἐπέγνω ἡμᾶς· ἀλλὰ σύ,",
+  "page": 98,
+  "leaf": 480,
+  "what": "Two words omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1346"
+ },
+ {
+  "chapter": 63,
+  "verse": "16",
+  "digitised": "πατὴρ ῥῦσαι",
+  "printed": "πατὴρ ἡμῶν· ῥῦσαι",
+  "page": 98,
+  "leaf": 480,
+  "what": "ἡμῶν omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1347"
+ },
+ {
+  "chapter": 63,
+  "verse": "16",
+  "digitised": "ἀπ’ ἀπ᾿",
+  "printed": "ἀπ’ ἀρχῆς",
+  "page": 98,
+  "leaf": 480,
+  "what": "ἀρχῆς misread as repeated ἀπ᾿ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1348"
+ },
+ {
+  "chapter": 63,
+  "verse": "17",
+  "digitised": "διὸ.",
+  "printed": "διὰ",
+  "page": 98,
+  "leaf": 480,
+  "what": "Final alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1349"
+ },
+ {
+  "chapter": 64,
+  "verse": "3",
+  "digitised": "τὸ,",
+  "printed": "τὰ",
+  "page": 99,
+  "leaf": 481,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ,",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1351"
+ },
+ {
+  "chapter": 64,
+  "verse": "4",
+  "digitised": "σοῦ σοῦ>,",
+  "printed": "σοῦ>,",
+  "page": 99,
+  "leaf": 481,
+  "what": "Duplicated σοῦ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1353"
+ },
+ {
+  "chapter": 64,
+  "verse": "4",
+  "digitised": "ὑπομένουσιν",
+  "printed": "ὑπομένουσιν ἔλεον",
+  "page": 99,
+  "leaf": 481,
+  "what": "Missing final word (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1355"
+ },
+ {
+  "chapter": 64,
+  "verse": "5",
+  "digitised": "διὸ,",
+  "printed": "διὰ",
+  "page": 99,
+  "leaf": 481,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ,",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1356"
+ },
+ {
+  "chapter": 64,
+  "verse": "6",
+  "digitised": "δικαιοσύνη καὶ",
+  "printed": "δικαιοσύνη ἡμῶν· καὶ",
+  "page": 99,
+  "leaf": 481,
+  "what": "Missing ἡμῶν (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1357"
+ },
+ {
+  "chapter": 64,
+  "verse": "6",
+  "digitised": "ἀνομίας οὕτως",
+  "printed": "ἀνομίας ἡμῶν· οὕτως",
+  "page": 99,
+  "leaf": 481,
+  "what": "Missing ἡμῶν (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1359"
+ },
+ {
+  "chapter": 64,
+  "verse": "6",
+  "digitised": "οἴσει",
+  "printed": "οἴσει ἡμᾶς",
+  "page": 99,
+  "leaf": 481,
+  "what": "Missing final pronoun (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1360"
+ },
+ {
+  "chapter": 64,
+  "verse": "7",
+  "digitised": "ὃ",
+  "printed": "ὁ",
+  "page": 99,
+  "leaf": 481,
+  "what": "Extraneous grave accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1362"
+ },
+ {
+  "chapter": 64,
+  "verse": "7",
+  "digitised": "ἁμαρτίας",
+  "printed": "ἁμαρτίας ἡμῶν",
+  "page": 99,
+  "leaf": 481,
+  "what": "Missing final pronoun (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1363"
+ },
+ {
+  "chapter": 64,
+  "verse": "9",
+  "digitised": "ἁμαρτιῶν καὶ",
+  "printed": "ἁμαρτιῶν ἡμῶν· καὶ",
+  "page": 99,
+  "leaf": 481,
+  "what": "Missing ἡμῶν (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1365"
+ },
+ {
+  "chapter": 64,
+  "verse": "11",
+  "digitised": "πυρί· καυστος.",
+  "printed": "πυρίκαυστος,",
+  "page": 99,
+  "leaf": 481,
+  "what": "One word split at the printed line break (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1368"
+ },
+ {
+  "chapter": 64,
+  "verse": "12",
+  "digitised": "ἀνέσχον,",
+  "printed": "ἀνέσχου,",
+  "page": 99,
+  "leaf": 481,
+  "what": "Final upsilon misread as nu (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἀνέσχον,",
+    "ἀνέσχου,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1369"
+ },
+ {
+  "chapter": 65,
+  "verse": "4",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 100,
+  "leaf": 482,
+  "what": "Misread vowel and accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1373"
+ },
+ {
+  "chapter": 65,
+  "verse": "7",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 100,
+  "leaf": 482,
+  "what": "Misread vowel and accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1376"
+ },
+ {
+  "chapter": 65,
+  "verse": "8",
+  "digitised": "ὃ",
+  "printed": "ὁ",
+  "page": 100,
+  "leaf": 482,
+  "what": "Extra grave accent (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1379"
+ },
+ {
+  "chapter": 65,
+  "verse": "8",
+  "digitised": "δουλεύοντάς",
+  "printed": "δουλεύοντός",
+  "page": 100,
+  "leaf": 482,
+  "what": "Alpha misread for omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "δουλεύοντάς",
+    "δουλεύοντός"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1381"
+ },
+ {
+  "chapter": 65,
+  "verse": "12",
+  "digitised": "οὑκ",
+  "printed": "οὐκ",
+  "page": 100,
+  "leaf": 482,
+  "what": "Rough instead of smooth breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οὑκ",
+    "οὐκ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1388"
+ },
+ {
+  "chapter": 65,
+  "verse": "14",
+  "digitised": "διὸ.",
+  "printed": "διὰ",
+  "page": 100,
+  "leaf": 482,
+  "what": "Omicron misread for alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "διὸ.",
+    "διὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1392"
+ },
+ {
+  "chapter": 65,
+  "verse": "15",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 101,
+  "leaf": 483,
+  "what": "Wrong breathing and extra circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1393"
+ },
+ {
+  "chapter": 65,
+  "verse": "20",
+  "digitised": "αὑτοῦ·",
+  "printed": "αὐτοῦ·",
+  "page": 101,
+  "leaf": 483,
+  "what": "Rough instead of smooth breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αὑτοῦ·",
+    "αὐτοῦ·"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1400"
+ },
+ {
+  "chapter": 65,
+  "verse": "25",
+  "digitised": "λύκοι λύκοι",
+  "printed": "τότε λύκοι",
+  "page": 101,
+  "leaf": 483,
+  "what": "τότε misread as a duplicate λύκοι (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1406"
+ },
+ {
+  "chapter": 66,
+  "verse": "4",
+  "digitised": "ἀνταπο. δώσω",
+  "printed": "ἀνταποδώσω",
+  "page": 102,
+  "leaf": 484,
+  "what": "Line-end hyphen misread; word split (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1412"
+ },
+ {
+  "chapter": 66,
+  "verse": "10",
+  "digitised": "Ἰερουσλήμ,",
+  "printed": "Ἰερουσαλήμ,",
+  "page": 102,
+  "leaf": 484,
+  "what": "Missing alpha (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "Ἰερουσλήμ,",
+    "Ἰερουσαλήμ,"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1417"
+ },
+ {
+  "chapter": 66,
+  "verse": "11",
+  "digitised": "ἐκθηλά. σαντες",
+  "printed": "ἐκθηλάσαντες",
+  "page": 102,
+  "leaf": 484,
+  "what": "Line-end hyphen misread; word split (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1418"
+ },
+ {
+  "chapter": 66,
+  "verse": "15",
+  "digitised": "ἰδοὺ ἰδοὺ",
+  "printed": "ἰδοὺ",
+  "page": 103,
+  "leaf": 485,
+  "what": "Word duplicated (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1421"
+ },
+ {
+  "chapter": 66,
+  "verse": "15",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 103,
+  "leaf": 485,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1422"
+ },
+ {
+  "chapter": 66,
+  "verse": "16",
+  "digitised": "ἐν τῇ",
+  "printed": "ἐν τῇ ῥομφαίᾳ",
+  "page": 103,
+  "leaf": 485,
+  "what": "Word omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1423"
+ },
+ {
+  "chapter": 66,
+  "verse": "17",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 103,
+  "leaf": 485,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 2,
+  "source": "codex-1426"
+ },
+ {
+  "chapter": 66,
+  "verse": "22",
+  "digitised": "λέγει οὕτως",
+  "printed": "λέγει Κύριος, οὕτως",
+  "page": 103,
+  "leaf": 485,
+  "what": "Κύριος omitted (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 2,
+  "source": "codex-1436"
+ }
+]

@@ -261,7 +261,7 @@ public class OttleyTests
     {
         Book.Chapters.Should().HaveCount(66);
         Book.Chapters.Sum(chapter => chapter.Verses.Count).Should().Be(1288);
-        Book.Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)).Should().Be(27162);
+        Book.Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)).Should().Be(27189);
 
         var missing = Book.Chapters.SelectMany(chapter =>
             Enumerable.Range(1, chapter.Verses.Max(v => v.Number))
@@ -273,7 +273,7 @@ public class OttleyTests
     [Fact]
     public void TheManuscriptsTitleAndColophonAreNotWordsOfAVerse()
     {
-        Text(1, 1).Should().StartWith("Ὅρασις ἥν εἶδεν Ἠσαίας").And.Contain("Ὀζίου");
+        Text(1, 1).Should().StartWith("Ὅρασις ἣν εἶδεν Ἠσαίας").And.Contain("Ὀζίου");
         Text(66, 24).Should().EndWith("πάσῃ σαρκί.");
     }
 

@@ -1,6 +1,7 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Glaux;
+using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Links;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -22,6 +23,14 @@ namespace Essenthos.Core.Loading;
 /// one the statistical aligner or the Greek editions' letter matcher drew, with no other kind of
 /// claim on it, where every word on the removed word's side is going too. Anything else refuses, and
 /// the caller's transaction leaves the corpus as it was.
+/// </para>
+///
+/// <para>
+/// Two projections go with it as well, because nobody stated them and the load writes them again from
+/// the text: a Strong number read off the word's own lemma, and the name the encyclopedia reads off a
+/// word by its letters alone — the word the verses naming a record share (<see cref="NameConsensusPass"/>)
+/// or the name the same word carries in another edition (<see cref="EqualTwinNames"/>) — with no claim
+/// on it from anywhere else.
 /// </para>
 ///
 /// <para>
@@ -116,18 +125,23 @@ internal static class RemovedWordEvidence
         var held = new List<string>();
         foreach (var (table, column) in columns.Where(c => !(c.Table == "link_word" && c.Column == "word_id")))
         {
-            // A link word headed by a removed word goes with it when it is removed too, and a Strong number
-            // read off the word's own lemma is that lemma's projection rather than anybody's statement.
+            // A link word headed by a removed word goes with it when it is removed too; a Strong number
+            // read off the word's own lemma, and a name read off its letters, are projections rather than
+            // anybody's statement.
             var others = table switch
             {
                 "link_word" => " AND word_id <> ALL (@ids)",
                 "word_strong" => $" AND NOT (method = '{EnumSpelling.Of(LinkMethod.Lexical)}' AND source = @lemma)",
+                "word_entity" => $" AND NOT (method = '{EnumSpelling.Of(LinkMethod.RuleBased)}' AND source = ANY (@read)"
+                                 + " AND NOT EXISTS (SELECT 1 FROM word_entity_claim c"
+                                 + " WHERE c.word_entity_id = word_entity.id AND c.source <> ALL (@read)))",
                 _ => string.Empty,
             };
             await using var command = new NpgsqlCommand(
                 $"SELECT EXISTS (SELECT 1 FROM {table} WHERE \"{column}\" = ANY (@ids){others})", connection, transaction);
             command.Parameters.AddWithValue("ids", ids);
             command.Parameters.AddWithValue("lemma", SeptuagintStrongLoader.Source);
+            command.Parameters.AddWithValue("read", ReadOffTheLetters);
             if ((bool)(await command.ExecuteScalarAsync(token))!)
             {
                 held.Add($"{table}.{column}");
@@ -136,4 +150,7 @@ internal static class RemovedWordEvidence
 
         return held;
     }
+
+    /// <summary>The sources of the names the encyclopedia reads off a word's letters alone.</summary>
+    private static readonly string[] ReadOffTheLetters = [NameConsensusPass.Source, EqualTwinNames.Source];
 }

@@ -155,6 +155,9 @@
         <EmbeddedResource Include="Swete\SwetePage.json" />
         <Content Remove="Swete\SweteSettled.json" />
         <EmbeddedResource Include="Swete\SweteSettled.json" />
+        <!-- Ottley's page, which Resources/Essenthos/generation/pages-ottley-2026-10-09/write_table.py writes. -->
+        <Content Remove="Swete\OttleyPage.json" />
+        <EmbeddedResource Include="Swete\OttleyPage.json" />
 
         <!-- What each text was translated from, revised from or shares a tradition with, kept by hand. -->
         <Content Remove="Loading\TextRelations.json" />

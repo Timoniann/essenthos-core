@@ -89,10 +89,12 @@ public class SweteMarginTests(Swete swete) : IClassFixture<Swete>
             && r.Why.Contains("swetuoft", StringComparison.Ordinal));
 }
 
-/// <summary>The seven verses of Ottley's Isaiah read against his printed page.</summary>
+/// <summary>Ottley's Isaiah read against his printed page, page by page.</summary>
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 public class OttleyPageTests
 {
+    private const string Pipeline = "pages-ottley-2026-10-09";
+
     private static readonly Lazy<BookDraft> Book =
         new(() => OttleyTextSource.Read(TestResources.SweteFolder).Books.Single());
 
@@ -106,40 +108,110 @@ public class OttleyPageTests
     [InlineData(35, 9, "καὶ οὐκ ἔσται ἐκεῖ λέων, οὐδὲ τῶν θηρίων τῶν πονηρῶν οὐ μὴ ἀναβῇ ἐπ’ αὐτὴν οὐδὲ μὴ εὑρεθῇ ἐκεῖ, "
                        + "ἀλλὰ πορεύσονται ἐν αὐτῇ λελυτρωμένοι")]
     [InlineData(53, 1, "Κύριε, τίς ἐπίστευσεν τῇ ἀκοῇ ἡμῶν; καὶ ὁ βραχίων Κυρίου τίνι ἀπεκαλύφθη;")]
+    [InlineData(48, 5, "καὶ ἀνήγγειλά σοι τὰ πάλαι πρὶν ἐλθεῖν ἐπὶ σέ· ἀκουστόν σοι ἐποίησα, μὴ εἴπῃς ὅτι Τὰ εἴδωλά μοι "
+                       + "ἐποίησαν, καὶ < μὴ εἴπῃς> Τὰ γλυπτὰ καὶ τὰ χωνευτὰ ἐνετείλατό μοι.")]
+    [InlineData(38, 17, "εἵλου γάρ μου τὴν ψυχὴν ἵνα μὴ ἀπόληται, καὶ ἀπέριψας ὀπίσω μου πάσας τὰς ἁμαρτίας μου.")]
+    [InlineData(49, 13, "εὐφραίνεσθε, οὐρανοί, καὶ ἀγαλλίασθω ἡ γῆ, ῥηξάτωσαν τὰ ὅρη εὐφροσύνην, ὅτι ἠλέησεν ὁ θεὸς τὸν "
+                        + "λαὸν αὐτοῦ, καὶ τοὺς ταπεινοὺς τοῦ λαοῦ αὐτοῦ παρεκάλεσεν.")]
+    // The stop the transcription read out of the grave accent of διὰ.
+    [InlineData(24, 5, "ἡ δὲ γῆ ἠνόμησεν διὰ τοὺς κατοικοῦντας αὐτήν, διότι παρέβησαν τὸν νόμον καὶ ἤλλαξαν τὰ "
+                       + "προστάγματα Κυρίου, διαθήκην αἰώνιον.")]
+    // A word the transcription read as another.
+    [InlineData(19, 6, "καὶ ἐκλείψουσιν οἱ ποταμοὶ καὶ αἱ διώρυγες τοῦ ποταμοῦ, καὶ ξηρανθήσεται πᾶσα συναγωγὴ ὕδατος "
+                       + "καὶ ἐν παντὶ ἕλει καλάμου καὶ παπύρου,")]
     // Ottley's angle brackets, which the transcription lost with the word.
     [InlineData(5, 5, "νῦν δὲ ἀναγγελῶ ὑμῖν τί ποιήσω τῷ ἀμπελῶνί μου. ἀφελῶ τὸν φραγμὸν αὐτοῦ καὶ ἔσται εἰς "
                       + "διαρπαγήν, καὶ καθελῶ τὸν τοῖχον αὐτοῦ καὶ ἔσται εἰς < καταπάτημα>.")]
-    // A word the transcription doubled, one it lost, and the stop that ends a verse.
+    // A word the transcription doubled, words it lost, and the stop that ends a verse.
     [InlineData(34, 11, "καὶ κατοικήσονται ἐν αὐτῇ ὄρνεα καὶ ἐχῖνοι καὶ ἴβεις καὶ κόρακες· καὶ ἐπιβληθήσεται ἐπ’ αὐτῇ "
                         + "σπαρτίον γεωμετρίας ἐρήμου, καὶ ὀνοκένταυροι οἰκήσουσιν ἐν αὐτῇ.")]
     [InlineData(35, 4, "παρακαλέσατε, οἱ ὀλιγόψυχοι τῇ διανοίᾳ· ἰσχύσατε, μὴ φοβεῖσθε· ἰδοὺ ὁ θεὸς ἡμῶν κρίσιν "
                        + "ἀνταποδώσει καὶ ἀνταποδώσει, αὐτὸς ἥξει καὶ σώσει ἡμᾶς.")]
     [InlineData(35, 3, "ἰσχύσατε, χεῖρες ἀνειμέναι καὶ γόνατα παραλελυμένα.")]
+    [InlineData(52, 4, "Οὕτως λέγει Κύριος Εἰς Αἴγυπτον κατέβη ὁ λαός μου τὸ πρότερον παροικῆσαι ἐκεῖ, καὶ εἰς "
+                       + "Ἀσσυρίους βίᾳ ἤχθησαν·")]
+    // Words the transcription set in the verse beside: the page opens 26:9 at ᾗ and 3:17 at καὶ ταπεινώσει.
+    [InlineData(26, 8, "ἡ γὰρ ὁδὸς Κυρίου κρίσις· ἠλπίσαμεν ἐπὶ τῷ ὀνόματί σου καὶ ἐπὶ τῇ μνείᾳ")]
+    [InlineData(26, 9, "ᾗ ἐπιθυμεῖ ἡ ψυχὴ ἡμῶν. ( Ὠιδή.) ἐκ νυκτὸς ὀρθρίζει τὸ πνεῦμά μου πρὸς σέ, ὁ θεός, διότι φῶς "
+                       + "τὰ προστάγματά σου ἐπὶ τῆς γῆς. δικαιοσύνην μάθετε, οἱ ἐνοικοῦντες ἐπὶ τῆς γῆς.")]
+    [InlineData(3, 16, "Τάδε λέγει Κύριος Ἀνθ’ ὧν ὑψώθησαν αἱ θυγατέρες Σιών, καὶ ἐπορεύθησαν ὑψηλῷ τραχήλῳ καὶ "
+                       + "νεύμασιν ὀφθαλμῶν, καὶ τῇ πορείᾳ τῶν ποδῶν ἅμα σύρουσαι τοὺς χιτῶνας καὶ τοῖς ποσὶν ἅμα "
+                       + "παίζουσαι,")]
+    [InlineData(3, 17, "καὶ ταπεινώσει ὁ θεὸς ἀρχούσας θυγατέρας Σιών. καὶ Κύριος ἀποκαλύψει τὸ σχῆμα αὐτῶν")]
     public void TheVerseReadsAsThePagePrintsIt(int chapter, int verse, string printed) =>
         Text(chapter, verse).Should().Be(printed);
 
     /// <summary>
-    /// Every entry still finds the transcription's text it was read against, once, in the verse as the
-    /// repairs before it leave it, and each cites the page and the scan's leaf.
+    /// Every entry still finds the text it was read against, once, in the verse as the transcription's
+    /// repairs and the entries before it leave it, and each cites the page and the scan's leaf.
     /// </summary>
     [Fact]
-    public void EveryEntryStillFindsWhatTheTranscriptionHasAndCitesItsPage()
+    public void EveryEntryStillFindsWhatItWasReadAgainstAndCitesItsPage()
     {
-        var transcribed = OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Transcription);
-        OttleyIsaiah.Page.Should().HaveCount(12);
-        foreach (var entry in OttleyIsaiah.Page)
+        var verses = new Dictionary<(int, string), List<string>>();
+        foreach (var line in OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Transcription))
         {
-            var tokens = transcribed.Where(line => line.Split(' ')[0].EndsWith($".{entry.Chapter}.{entry.Verse}", StringComparison.Ordinal))
-                .Select(line => line[(line.IndexOf(' ') + 1)..]).ToList();
-            var digitised = entry.Digitised.Split(' ');
-            Enumerable.Range(0, tokens.Count - digitised.Length + 1)
-                .Count(at => tokens.Skip(at).Take(digitised.Length).SequenceEqual(digitised))
-                .Should().Be(1, $"{entry.Chapter}:{entry.Verse} \"{entry.Digitised}\"");
-            entry.Why.Should().StartWith("Printed in Ottley, vol. 2").And.Contain("scan leaf");
+            var reference = line[..line.IndexOf(' ')].Split('.');
+            var key = (int.Parse(reference[1]), reference[2]);
+            (verses.TryGetValue(key, out var tokens) ? tokens : verses[key] = []).Add(line[(line.IndexOf(' ') + 1)..]);
         }
 
-        var reading = () => OttleyIsaiah.Lines(TestResources.SweteFolder);
-        reading.Should().NotThrow();
+        OttleyIsaiah.PageEntries.Should().NotBeEmpty();
+        OttleyIsaiah.PageEntries.Select(e => e.Round).Should().BeInAscendingOrder();
+        OttleyIsaiah.PageEntries.Select(e => e.Source).Should().OnlyHaveUniqueItems();
+        foreach (var entry in OttleyIsaiah.Page)
+        {
+            var tokens = verses[(entry.Chapter, entry.Verse)];
+            var digitised = entry.Digitised.Split(' ');
+            var found = Enumerable.Range(0, tokens.Count - digitised.Length + 1)
+                .Where(at => tokens.Skip(at).Take(digitised.Length).SequenceEqual(digitised)).ToList();
+            found.Should().ContainSingle($"{entry.Chapter}:{entry.Verse} \"{entry.Digitised}\"");
+            entry.Why.Should().StartWith("Printed in Ottley, vol. 2").And.Contain("scan leaf");
+
+            tokens.RemoveRange(found[0], digitised.Length);
+            tokens.InsertRange(found[0], entry.Printed.Length == 0 ? [] : entry.Printed.Split(' '));
+        }
+    }
+
+    /// <summary>A corpus loaded after any round reads; the reading after the last is the converter's.</summary>
+    [Fact]
+    public void EveryRoundReads()
+    {
+        var last = OttleyIsaiah.PageEntries.Max(e => e.Round);
+        foreach (var round in Enumerable.Range(0, last + 1))
+        {
+            var reading = () => OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Through(round));
+            reading.Should().NotThrow();
+        }
+
+        OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Through(last))
+            .Should().Equal(OttleyIsaiah.Lines(TestResources.SweteFolder));
+    }
+
+    /// <summary>
+    /// The script that writes the table places Codex's corrections in the tokens it keeps beside it, which
+    /// must be the converter's after the transcription's own repairs, or a correction is placed in a verse
+    /// the converter does not read.
+    /// </summary>
+    [Fact]
+    public void ThePipelineReadsTheTranscriptionAsTheConverterDoes()
+    {
+        var kept = Path.Combine(Checkout(), "Resources", "Essenthos", "generation", Pipeline, "transcribed.txt");
+
+        File.ReadAllLines(kept).Should().Equal(OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Transcription));
+    }
+
+    private static string Checkout()
+    {
+        for (var folder = new DirectoryInfo(AppContext.BaseDirectory); folder is not null; folder = folder.Parent)
+        {
+            if (File.Exists(Path.Combine(folder.FullName, "Essenthos.Core.sln")))
+            {
+                return folder.FullName;
+            }
+        }
+
+        throw new InvalidOperationException("No Essenthos.Core.sln above the test assembly.");
     }
 }
 
@@ -255,21 +327,30 @@ public sealed class PrintedPageLoadTests : IDisposable
         (await _loader.Load(TestResources.SweteFolder)).Verses.Should().Be(0);
     }
 
+    /// <summary>Every verse the page puts right.</summary>
+    private static List<(int, int)> OttleyVerses() =>
+        [.. OttleyIsaiah.Page.Select(r => (r.Chapter, int.Parse(r.Verse))).Distinct()];
+
+    private static int Count(SweteBook book, IEnumerable<(int Chapter, int Verse)> verses) =>
+        verses.Sum(at => Words(book, at.Chapter, at.Verse).Count);
+
     [Fact]
     public async Task OttleysVersesReadAsThePageInBothTextsThatHoldTheBook()
     {
         var transcribed = SweteReader.Read(OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Transcription));
         var printed = SweteReader.Read(OttleyIsaiah.Lines(TestResources.SweteFolder));
-        var verses = OttleyIsaiah.Page.Select(r => (r.Chapter, int.Parse(r.Verse))).Distinct().ToList();
+        var verses = OttleyVerses();
         var ottley = Loaded(OttleyTextSource.Slug, (Isaiah, "Isaiah", transcribed, verses));
         var codex = Loaded(AlexandrinusTextSource.Slug, (Isaiah, "Isaiah", transcribed, verses));
         var into = At(ottley, Isaiah, 2, 19, "τὸ");
         var save = At(ottley, Isaiah, 35, 4, "σώσει");
+        var egypt = At(ottley, Isaiah, 52, 4, "Αἴγυππον");
+        var dried = At(ottley, Isaiah, 19, 6, "ἐκλείχουσιν");
 
         var outcome = await _loader.Load(TestResources.SweteFolder);
 
         outcome.Verses.Should().Be(2 * verses.Count);
-        outcome.Words.Should().Be(0, "ἡμᾶς comes in at 35:4 and a doubled καὶ goes at 34:11, in each text");
+        outcome.Words.Should().Be(2 * (Count(printed, verses) - Count(transcribed, verses)));
         foreach (var text in new[] { ottley, codex })
         {
             foreach (var (chapter, verse) in verses)
@@ -283,8 +364,92 @@ public sealed class PrintedPageLoadTests : IDisposable
 
         (await _db.Words.AsNoTracking().SingleAsync(w => w.Id == into.Id)).Surface.Should().Be("τὰ");
         (await _db.Words.AsNoTracking().SingleAsync(w => w.Id == save.Id)).Position.Should().Be(20);
+        (await _db.Words.AsNoTracking().SingleAsync(w => w.Id == egypt.Id)).Surface.Should().Be("Αἴγυπτον",
+            "a word whose letters the page puts right keeps its row");
+        (await _db.Words.AnyAsync(w => w.Id == dried.Id)).Should().BeFalse("ξηρανθήσεται is another word, not ἐκλείχουσιν put right");
 
         (await _loader.Load(TestResources.SweteFolder)).Verses.Should().Be(0);
+    }
+
+    /// <summary>
+    /// A corpus that took the page's first round — the twelve readings of seven verses this machine's corpus
+    /// holds — is brought to the whole page, and its notes say so in place of what they said before.
+    /// </summary>
+    [Fact]
+    public async Task ACorpusAtAnEarlierRoundIsBroughtToThePage()
+    {
+        var first = SweteReader.Read(OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Through(1)));
+        var printed = SweteReader.Read(OttleyIsaiah.Lines(TestResources.SweteFolder));
+        var verses = OttleyVerses();
+        var ottley = Loaded(OttleyTextSource.Slug, (Isaiah, "Isaiah", first, verses));
+        var earlier = string.Join(' ', OttleyIsaiah.Superseded.Select(s => s.Was));
+        ottley.RightsNote = $"CC BY-SA 4.0. {earlier}";
+        _db.SaveChanges();
+        var save = At(ottley, Isaiah, 35, 4, "ἡμᾶς");
+
+        var outcome = await _loader.Load(TestResources.SweteFolder);
+
+        var changed = verses.Where(at => Words(first, at.Item1, at.Item2).Select(w => w.Surface + w.Trailer)
+            .SequenceEqual(Words(printed, at.Item1, at.Item2).Select(w => w.Surface + w.Trailer)) is false).ToList();
+        outcome.Verses.Should().Be(changed.Count).And.BeGreaterThan(300);
+        foreach (var (chapter, verse) in verses)
+        {
+            Read(ottley, Isaiah, chapter, verse).Should()
+                .Be(string.Concat(Words(printed, chapter, verse).Select(w => w.Surface + w.Trailer)), $"{chapter}:{verse}");
+        }
+
+        (await _db.Words.AnyAsync(w => w.Id == save.Id)).Should().BeTrue("35:4 already read as the page");
+        var note = (await _db.Texts.AsNoTracking().SingleAsync(t => t.Id == ottley.Id)).RightsNote;
+        note.Should().Be($"CC BY-SA 4.0. {OttleyIsaiah.Note} {OttleyIsaiah.PageNote}");
+
+        (await _loader.Load(TestResources.SweteFolder)).Verses.Should().Be(0);
+    }
+
+    /// <summary>
+    /// The second Κύριος of 28:16 is the transcription's misreading of Ἰδοὺ, so it goes. A name read off its
+    /// letters goes with it, since the load reads the names again from the text; a name somebody gave it stops
+    /// the pass.
+    /// </summary>
+    [Theory]
+    [InlineData(true)]
+    [InlineData(false)]
+    public async Task AWordThePageDoesNotPrintTakesOnlyANameReadOffItsLettersWithIt(bool readOffTheLetters)
+    {
+        var transcribed = SweteReader.Read(OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Transcription));
+        var ottley = Loaded(OttleyTextSource.Slug, (Isaiah, "Isaiah", transcribed, OttleyVerses()));
+        var misread = Stored(ottley, Isaiah, 28, 16).Where(w => w.Surface == "Κύριος").OrderBy(w => w.Position).Skip(1).First();
+        var lord = new Entity
+        {
+            Kind = EntityKind.Person, Slug = $"page-test-{readOffTheLetters}", Name = "the Lord", SourceId = "yhvh", Source = "a test",
+        };
+        var (method, source) = readOffTheLetters
+            ? (LinkMethod.RuleBased, Essenthos.Core.Loading.Encyclopedia.NameConsensusPass.Source)
+            : (LinkMethod.Manual, "a reader");
+        var named = new WordEntity { WordId = misread.Id, Entity = lord, Method = method, Confidence = readOffTheLetters ? 0.9 : null, Source = source };
+        _db.WordEntities.Add(named);
+        _db.WordEntityClaims.Add(new WordEntityClaim
+        {
+            WordEntity = named, Method = method, Confidence = readOffTheLetters ? 0.9 : null, Source = source,
+        });
+        _db.SaveChanges();
+
+        var correcting = () => _loader.Load(TestResources.SweteFolder);
+
+        if (readOffTheLetters)
+        {
+            await correcting.Should().NotThrowAsync();
+            (await _db.Words.AnyAsync(w => w.Id == misread.Id)).Should().BeFalse();
+            (await _db.WordEntities.AnyAsync(w => w.Id == named.Id)).Should().BeFalse();
+            Read(ottley, Isaiah, 28, 16).Should().Contain("λέγει Κύριος, Ἰδοὺ ἐγὼ");
+        }
+        else
+        {
+            await correcting.Should().ThrowAsync<InvalidOperationException>().WithMessage("*protected*");
+            (await _db.Words.AnyAsync(w => w.Id == misread.Id)).Should().BeTrue();
+            Read(ottley, Isaiah, 28, 16).Should().Contain("λέγει Κύριος, Κύριος,");
+        }
+
+        await _db.Entities.Where(e => e.Id == lord.Id).ExecuteDeleteAsync();
     }
 
     [Fact]
@@ -292,7 +457,7 @@ public sealed class PrintedPageLoadTests : IDisposable
     {
         var transcribed = SweteReader.Read(OttleyIsaiah.Lines(TestResources.SweteFolder, OttleyIsaiah.Transcription));
         var ottley = Loaded(OttleyTextSource.Slug,
-            (Isaiah, "Isaiah", transcribed, [.. OttleyIsaiah.Page.Select(r => (r.Chapter, int.Parse(r.Verse))).Distinct()]));
+            (Isaiah, "Isaiah", transcribed, OttleyVerses()));
         At(ottley, Isaiah, 53, 1, "βραχίων").Surface = "βραχίονα";
         _db.SaveChanges();
 
