@@ -164,8 +164,9 @@ public class SweteCorpusTests(Swete swete) : IClassFixture<Swete>
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .Sum(verse => verse.Words.Count)
-            .Should().Be(575783, "the 59 chapter numbers are not words, Exodus 20:1 and Numbers 17:1 and 19:1 hold the page's words in "
-                                  + "place of one, and the running head and apparatus read into Judges 18:8 and 1 Samuel 8:2 and 11:11 are not Swete's text");
+            .Should().Be(575777, "the 59 chapter numbers are not words, Exodus 20:1 and Numbers 17:1 and 19:1 hold the page's words in "
+                                  + "place of one, the running head and apparatus read into Judges 18:8 and 1 Samuel 8:2 and 11:11 are not Swete's "
+                                  + "text, and of the margin's letters read into nine verses six stood as words");
     }
 
     /// <summary>

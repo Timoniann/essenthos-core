@@ -179,6 +179,19 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>
+    /// The load's swete-restoration step on its own: the verses of Swete and of Ottley's Isaiah read
+    /// against the printed page, written into a corpus that holds them as the transcription had them.
+    /// Their words are linked again by <c>septuagint-refresh</c>.
+    /// </summary>
+    private static async Task<int> RestoreSwete(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<SweteRestorationLoader>()
+            .Load(Path.Combine(forge.Resources, "Swete"), CancellationToken.None));
+        return 0;
+    }
+
     private static async Task<int> Reframe(ForgeRun forge, string[] args)
     {
         using var scope = forge.Scope();

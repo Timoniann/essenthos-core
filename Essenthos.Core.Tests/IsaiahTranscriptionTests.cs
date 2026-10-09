@@ -291,9 +291,9 @@ public class OttleyTests
     /// letters of the foot-note the transcription read into it at the foot of the page.
     /// </summary>
     [Theory]
-    [InlineData(53, 1, "καὶ ὃ βραχίων Κυρίου τίνι ἀπεκαλύφθη;")]
-    [InlineData(5, 5, "καὶ ἔσται εἷς καταπάτημα")]
-    [InlineData(35, 3, "καὶ γόνατα παραλελυμένα")]
+    [InlineData(53, 1, "καὶ ὁ βραχίων Κυρίου τίνι ἀπεκαλύφθη;")]
+    [InlineData(5, 5, "καὶ ἔσται εἰς < καταπάτημα>.")]
+    [InlineData(35, 3, "καὶ γόνατα παραλελυμένα.")]
     public void AWordTheFileLostIsBack(int chapter, int verse, string end) =>
         Text(chapter, verse).Should().EndWith(end);
 

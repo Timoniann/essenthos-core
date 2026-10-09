@@ -26,8 +26,16 @@ namespace Essenthos.Core.Swete;
 /// nothing after it, Brenton, Swete and GLAUx all read the same word there, and the note on that
 /// verse records no manuscript differing from A at that word, the word is A's and the transcription
 /// lost it: βραχίων at 53:1, καταπάτημα at 5:5, the end of παραλελυμένα at 35:3. Where the verse
-/// reads whole without it — σώσει at the end of 35:4, which the others follow with ἡμᾶς — nothing
-/// is added.
+/// reads whole without it, only the page puts it back.
+/// </para>
+///
+/// <para>
+/// **Seven verses are read against the printed page** (<see cref="Page"/>), each entry citing the page
+/// of Ottley's second volume and the leaf of the Internet Archive's scan it was read on: ἡμᾶς at the end
+/// of 35:4, a καὶ the file doubles at 34:11, and the letters the transcription misreads in those verses
+/// — εἷς for εἰς, ὃ for ὁ, οὗ for οὐ. An entry that prints as many words as it replaces puts their
+/// letters right one for one, so a corpus that already holds the verse keeps the words' rows. The same
+/// misreadings elsewhere in the book are left as the transcription reads them.
 /// </para>
 ///
 /// <para>
@@ -55,6 +63,12 @@ internal static class OttleyIsaiah
         + "transcription set down out of its place in 2:20 is read in its place. Letters the transcription "
         + "misread are left as it reads them.";
 
+    /// <summary>What the text's row says about the verses read against the printed page.</summary>
+    public const string PageNote =
+        "Modified: seven verses (2:19, 5:5, 34:11, 35:3, 35:4, 35:9, 53:1) are read by Essenthos against "
+        + "Ottley's printed page: the letters the transcription misread there are written as the page prints "
+        + "them, ἡμᾶς is restored at the end of 35:4, and a καὶ the transcription doubled at 34:11 is taken out.";
+
     private const string Margin =
         "Ottley's own number for the verse stands in the margin of this line; Swete and Brenton begin the verse at these words";
 
@@ -64,11 +78,18 @@ internal static class OttleyIsaiah
         "Brenton, Swete and GLAUx all read the word here, where the file leaves the verse without it, and "
         + "Ottley's apparatus on the verse records no manuscript differing from A at this word";
 
-    public static IReadOnlyList<string> Lines(string folder) =>
-        EditionRepairs.Apply(File,
-            First1KGreekReader.Lines(Path.Combine(folder, SweteIsaiah.Folder, File), SweteIsaiah.Work), Repairs);
+    public static IReadOnlyList<string> Lines(string folder) => Lines(folder, Repairs);
 
-    public static readonly IReadOnlyList<EditionRepair> Repairs =
+    /// <summary>The file's lines with one set of repairs made rather than all of them.</summary>
+    public static IReadOnlyList<string> Lines(string folder, IReadOnlyList<EditionRepair> repairs) =>
+        EditionRepairs.Apply(File,
+            First1KGreekReader.Lines(Path.Combine(folder, SweteIsaiah.Folder, File), SweteIsaiah.Work), repairs);
+
+    /// <summary>What the file shows about itself, then what the page settles, in that order.</summary>
+    public static readonly IReadOnlyList<EditionRepair> Repairs = [.. Transcription, .. Page];
+
+    /// <summary>The repairs the file's own evidence settles, which a corpus loaded before the page was read holds.</summary>
+    public static IReadOnlyList<EditionRepair> Transcription =>
     [
         EditionRepair.Replace(1, "1", "προφήτης ιγ΄", "",
             "The manuscript's title, Ἠσαΐας προφήτης ιγ΄ — Isaiah, the thirteenth prophet, after the Twelve — "
@@ -91,8 +112,8 @@ internal static class OttleyIsaiah
         EditionRepair.Divide(25, "11", "τὸ ὕψος τῆς καταφυγῆς", "τὸ ὕψος τῆς καταφυγῆς", "12", Margin),
         EditionRepair.Replace(30, "7", "Αἰγύπτιοi", "Αἰγύπτιοι", Latin),
         EditionRepair.Replace(34, "11", "ABBREV", "",
-            "The transcription's placeholder for an abbreviation it did not expand; the word it stands for "
-            + "is not in the file"),
+            "The transcription's placeholder for an abbreviation it did not expand, where the page prints no "
+            + $"word: {Printed(53, 435)}"),
         EditionRepair.Replace(35, "3", "παραλεφοβεῖσθε·", "παραλελυμένα",
             $"παραλε- is the head of παραλελυμένα, run into φοβεῖσθε· from the end of the line 35:4 prints whole. {Lost}: "
             + "the notes on chapter 35 pass from 2 to 4"),
@@ -105,9 +126,35 @@ internal static class OttleyIsaiah
         EditionRepair.Replace(53, "1", "Kύριε,", "Κύριε,", Latin),
         EditionRepair.Replace(53, "1", "καὶ ὃ Κυρίου", "καὶ ὃ βραχίων Κυρίου",
             $"The article stands with nothing to name. {Lost}: the notes on chapter 53 open at verse 2; "
-            + "βραχίων as Ottley prints it at 40:10, and ὃ left as the transcription misreads ὁ"),
+            + "βραχίων as Ottley prints it at 40:10"),
         EditionRepair.Replace(59, "1", "Mὴ", "Μὴ", Latin),
         EditionRepair.Replace(66, "24", "σαρκί. ΗΣΑΙΑΣ ΠΡΟΦΗΤΗΣ.", "σαρκί.",
             "The manuscript's colophon, Ἠσαΐας προφήτης, which Ottley prints below the last verse"),
     ];
+
+    /// <summary>
+    /// The verses read against Ottley's printed page, each addressed to the verse as
+    /// <see cref="Transcription"/> leaves it.
+    /// </summary>
+    public static IReadOnlyList<EditionRepair> Page =>
+    [
+        EditionRepair.Replace(2, "19", "εἷς τὸ. σπήλαια", "εἰς τὰ σπήλαια", $"{Printed(4, 386)}: {Breathing}, and τὰ"),
+        EditionRepair.Replace(2, "19", "εἷς τὰς σχισμὸς", "εἰς τὰς σχισμὰς", $"{Printed(4, 386)}: {Breathing}, and σχισμὰς"),
+        EditionRepair.Replace(2, "19", "εἷς τὰς τρώγλας", "εἰς τὰς τρώγλας", $"{Printed(4, 386)}: {Breathing}"),
+        EditionRepair.Replace(5, "5", "εἷς διαρπαγήν,", "εἰς διαρπαγήν,", $"{Printed(7, 389)}: {Breathing}"),
+        EditionRepair.Replace(5, "5", "εἷς καταπάτημα", "εἰς < καταπάτημα>.",
+            $"{Printed(7, 389)}: {Breathing}, and καταπάτημα in Ottley's angle brackets"),
+        EditionRepair.Replace(34, "11", "καὶ καὶ κατοικήσονται", "καὶ κατοικήσονται", $"{Printed(53, 435)}: one καὶ"),
+        EditionRepair.Replace(35, "3", "παραλελυμένα", "παραλελυμένα.", $"{Printed(54, 436)}: the verse ends with the stop"),
+        EditionRepair.Replace(35, "4", "ὃ", "ὁ", $"{Printed(54, 436)}: the article, with the smooth breathing"),
+        EditionRepair.Replace(35, "4", "σώσει", "σώσει ἡμᾶς.", $"{Printed(54, 436)}: ἡμᾶς, which the transcription lost"),
+        EditionRepair.Replace(35, "9", "οὔκ", "οὐκ", $"{Printed(54, 436)}: οὐκ, unaccented"),
+        EditionRepair.Replace(35, "9", "οὗ", "οὐ", $"{Printed(54, 436)}: the negative, with the smooth breathing"),
+        EditionRepair.Replace(53, "1", "ὃ", "ὁ", $"{Printed(84, 466)}: the article, with the rough breathing"),
+    ];
+
+    private const string Breathing = "εἰς, with the smooth breathing";
+
+    private static string Printed(int page, int leaf) =>
+        $"Printed in Ottley, vol. 2 (Cambridge, 1904), p. {page}, scan leaf {leaf} of IsaiahAccordingToTheSeptuagint";
 }

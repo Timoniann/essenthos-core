@@ -12,9 +12,9 @@ namespace Essenthos.Core.Loading;
 internal sealed record SweteRestorationOutcome(int Verses, int Words, TimeSpan Elapsed)
 {
     public override string ToString() => Verses == 0
-        ? "Swete's text already holds the words its transcription lost and the letters it corrects"
-        : $"{Verses} verses of Swete's text rewritten with the words its transcription lost and the letters it " +
-          $"corrects, {Words} words added, in {Elapsed}";
+        ? "Swete's and Ottley's texts already hold the words their transcriptions lost and the letters they correct"
+        : $"{Verses} verses of Swete's and Ottley's texts rewritten with the words their transcriptions lost and the " +
+          $"letters they correct, {Words} words added, in {Elapsed}";
 }
 
 /// <summary>
@@ -34,6 +34,11 @@ internal sealed record SweteRestorationOutcome(int Verses, int Words, TimeSpan E
 /// It is guarded on what the verse says. A verse reading as the transcription is rewritten, one
 /// reading as the restoration is left, and one reading as neither stops the pass, because then the
 /// corpus holds a Swete nobody here has read.
+/// </para>
+///
+/// <para>
+/// Ottley's Isaiah is brought to the verses read against his printed page (<see cref="OttleyIsaiah.Page"/>)
+/// the same way, in <c>OTTLEY</c> and in the codex <c>ALEX</c>, whose Isaiah is read through the same reader.
 /// </para>
 /// </summary>
 internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteRestorationLoader> logger)
@@ -64,19 +69,37 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
 
     public async Task<SweteRestorationOutcome> Load(string folder, CancellationToken cancellationToken = default)
     {
-        var text = await db.Texts.FirstOrDefaultAsync(t => t.Slug == SweteTextSource.Slug, cancellationToken);
-        if (text is null)
-        {
-            return new SweteRestorationOutcome(0, 0, TimeSpan.Zero);
-        }
-
         var started = Stopwatch.StartNew();
-        var verses = 0;
-        var added = 0;
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
 
+        var (verses, added) = await db.Texts.FirstOrDefaultAsync(t => t.Slug == SweteTextSource.Slug, cancellationToken)
+            is { } swete
+            ? await RestoreSwete(swete, folder, cancellationToken)
+            : (0, 0);
+
+        foreach (var slug in (string[])[OttleyTextSource.Slug, AlexandrinusTextSource.Slug])
+        {
+            if (await db.Texts.FirstOrDefaultAsync(t => t.Slug == slug, cancellationToken) is { } isaiah)
+            {
+                var (rewritten, gained) = await RestoreOttley(isaiah, folder, cancellationToken);
+                verses += rewritten;
+                added += gained;
+            }
+        }
+
+        await transaction.CommitAsync(cancellationToken);
+
+        var outcome = new SweteRestorationOutcome(verses, added, started.Elapsed);
+        logger.LogInformation("Swete restorations: {Outcome}", outcome);
+        return outcome;
+    }
+
+    private async Task<(int Verses, int Words)> RestoreSwete(Text text, string folder, CancellationToken cancellationToken)
+    {
+        var verses = 0;
+        var added = 0;
         var held = (await db.Books.Where(b => b.TextId == text.Id).Select(b => b.CanonicalOrdinal)
             .ToListAsync(cancellationToken)).ToHashSet();
 
@@ -145,7 +168,8 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                             "The corpus holds a Swete loaded from other files; load the text again from these before " +
                             "restoring anything in it. Nothing was changed.");
 
-                added += await Write(text, verseId, stored, target, here.All(SweteCorrections.KeepsTheWord), cancellationToken);
+                added += await Write(text, verseId, stored, target, here.All(r => r.SameWord),
+                    SameWords(here.Where(r => r.SameWord).Select(r => (r.Digitised, r.Printed))), cancellationToken);
                 await EnsureRebuilds(verseId, target, $"{placed}:{verse}{label}", cancellationToken);
                 verses++;
             }
@@ -153,26 +177,113 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
 
         if (verses > 0)
         {
-            foreach (var note in new[]
-                     {
-                         SweteRestorations.Note, SweteCorrections.Note, SwetePage.Note, SweteCorrections.FiguresNote,
-                         SweteSettled.Note,
-                     })
-            {
-                if (text.RightsNote?.Contains(note, StringComparison.Ordinal) != true)
-                {
-                    text.RightsNote = text.RightsNote is { Length: > 0 } existing ? $"{existing} {note}" : note;
-                }
-            }
-
+            AddNotes(text, SweteRestorations.Note, SweteCorrections.Note, SwetePage.Note, SweteCorrections.FiguresNote,
+                SweteSettled.Note, SweteSettled.MarginNote);
             await db.SaveChangesAsync(cancellationToken);
         }
 
-        await transaction.CommitAsync(cancellationToken);
+        return (verses, added);
+    }
 
-        var outcome = new SweteRestorationOutcome(verses, added, started.Elapsed);
-        logger.LogInformation("Swete restorations: {Outcome}", outcome);
-        return outcome;
+    /// <summary>
+    /// The verses of Ottley's Isaiah read against his printed page, in a text that holds the book as the
+    /// transcription's own repairs left it.
+    /// </summary>
+    private async Task<(int Verses, int Words)> RestoreOttley(Text text, string folder, CancellationToken cancellationToken)
+    {
+        if (!await db.Books.AnyAsync(b => b.TextId == text.Id && b.CanonicalOrdinal == OttleyTextSource.Isaiah,
+                cancellationToken))
+        {
+            return (0, 0);
+        }
+
+        var transcribed = SweteReader.Read(OttleyIsaiah.Lines(folder, OttleyIsaiah.Transcription));
+        var printed = SweteReader.Read(OttleyIsaiah.Lines(folder));
+        var verses = 0;
+        var added = 0;
+
+        foreach (var here in OttleyIsaiah.Page.GroupBy(r => (r.Chapter, r.Verse)))
+        {
+            var (chapter, address) = here.Key;
+            var digits = address.TakeWhile(char.IsAsciiDigit).Count();
+            var (verse, label) = (int.Parse(address[..digits]), address[digits..]);
+            var after = Words(printed, chapter, verse, label);
+            var stored = await db.Words
+                .Where(w => w.TextId == text.Id
+                            && w.Verse!.Book!.CanonicalOrdinal == OttleyTextSource.Isaiah
+                            && w.Verse.ChapterNumber == chapter
+                            && w.Verse.Number == verse
+                            && w.Verse.Label == label)
+                .OrderBy(w => w.Position)
+                .Select(w => new StoredWord(w.Id, w.VerseId, w.Position, w.Surface, w.Trailer))
+                .ToListAsync(cancellationToken);
+
+            if (Same(stored, after))
+            {
+                continue;
+            }
+
+            if (stored.Count == 0 || !Same(stored, Words(transcribed, chapter, verse, label)))
+            {
+                throw new InvalidOperationException(
+                    $"{text.Slug} Isaiah {chapter}:{address} reads neither as Ottley's transcription nor as his printed " +
+                    $"page: \"{string.Concat(stored.Select(w => w.Surface + w.Trailer))}\". The corpus holds an Isaiah " +
+                    "loaded from other files; load the text again from these before correcting anything in it. " +
+                    "Nothing was changed.");
+            }
+
+            added += await Write(text, stored[0].VerseId, stored, after, inPlace: false,
+                SameWords(here.Select(r => (r.Digitised, r.Printed))), cancellationToken);
+            await EnsureRebuilds(stored[0].VerseId, after, $"{text.Slug} Isaiah {chapter}:{address}", cancellationToken);
+            verses++;
+        }
+
+        if (verses > 0)
+        {
+            AddNotes(text, OttleyIsaiah.PageNote);
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        return (verses, added);
+    }
+
+    private static void AddNotes(Text text, params string[] notes)
+    {
+        foreach (var note in notes)
+        {
+            if (text.RightsNote?.Contains(note, StringComparison.Ordinal) != true)
+            {
+                text.RightsNote = text.RightsNote is { Length: > 0 } existing ? $"{existing} {note}" : note;
+            }
+        }
+    }
+
+    /// <summary>
+    /// The words entries put right letter by letter: where one prints as many words as it replaces, each
+    /// printed word is the digitised word standing in its place.
+    /// </summary>
+    private static HashSet<(string Digitised, string Printed)> SameWords(IEnumerable<(string Digitised, string Printed)> entries)
+    {
+        var pairs = new HashSet<(string, string)>();
+        foreach (var (digitised, printed) in entries)
+        {
+            var was = SweteReader.Words(digitised.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+            var now = SweteReader.Words(printed.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+            if (was.Count != now.Count)
+            {
+                continue;
+            }
+
+            foreach (var (from, to) in was.Zip(now))
+            {
+                if (from.Surface != to.Surface)
+                {
+                    pairs.Add((from.Surface, to.Surface));
+                }
+            }
+        }
+
+        return pairs;
     }
 
     private sealed record StoredWord(long Id, int VerseId, int Position, string Surface, string Trailer);
@@ -205,7 +316,8 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
     /// Where every change to the verse corrects a word's letters — a Latin letter, a margin number —
     /// each row is rewritten in place and keeps its links, since it is the same word. Otherwise the
     /// words the two readings share, in order, keep their rows and with them every link and annotation,
-    /// taking the printed trailer where it differs; every other digitised row goes — a misread token is
+    /// taking the printed trailer where it differs, and so does a word an entry puts right letter by letter
+    /// (<paramref name="sameWords"/>), taking its printed letters; every other digitised row goes — a misread token is
     /// not a word the edition prints, so a matcher's link on it alone goes with it, and anything more
     /// refuses — and the printed words are written in their places. Returns how many words the verse
     /// gained.
@@ -216,6 +328,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
         List<StoredWord> stored,
         IReadOnlyList<SweteWord> after,
         bool inPlace,
+        IReadOnlySet<(string Digitised, string Printed)> sameWords,
         CancellationToken cancellationToken)
     {
         if (inPlace && stored.Count == after.Count)
@@ -239,6 +352,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
         }
 
         var kept = SharedWords.Of([.. stored.Select(w => w.Surface)], [.. after.Select(w => w.Surface)]);
+        KeepCorrected(kept, stored, after, sameWords);
         var keptRows = kept.Where(k => k >= 0).ToHashSet();
         await RemovedWordEvidence.Remove(db,
             [.. stored.Where((_, index) => !keptRows.Contains(index)).Select(w => w.Id)], cancellationToken);
@@ -251,7 +365,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
             {
                 var row = stored[kept[i]];
                 await Execute(Place, cancellationToken, ("id", row.Id), ("position", i + 1));
-                if (row.Trailer != word.Trailer)
+                if (row.Surface != word.Surface || row.Trailer != word.Trailer)
                 {
                     await Execute(Rewrite, cancellationToken,
                         ("id", row.Id),
@@ -276,6 +390,46 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
 
         await db.SaveChangesAsync(cancellationToken);
         return after.Count - stored.Count;
+    }
+
+    /// <summary>
+    /// Where a run of printed words no stored word matches stands between the same two kept words as a
+    /// run of stored words as long, and each stored word there is one an entry of the verse puts right
+    /// into the printed word opposite it, the stored word is kept as that word.
+    /// </summary>
+    private static void KeepCorrected(
+        int[] kept,
+        IReadOnlyList<StoredWord> stored,
+        IReadOnlyList<SweteWord> after,
+        IReadOnlySet<(string Digitised, string Printed)> sameWords)
+    {
+        for (var start = 0; start < after.Count && sameWords.Count > 0;)
+        {
+            if (kept[start] >= 0)
+            {
+                start++;
+                continue;
+            }
+
+            var end = start;
+            while (end < after.Count && kept[end] < 0)
+            {
+                end++;
+            }
+
+            var from = start == 0 ? 0 : kept[start - 1] + 1;
+            var to = end == after.Count ? stored.Count : kept[end];
+            if (to - from == end - start
+                && Enumerable.Range(0, end - start).All(k => sameWords.Contains((stored[from + k].Surface, after[start + k].Surface))))
+            {
+                for (var k = 0; k < end - start; k++)
+                {
+                    kept[start + k] = from + k;
+                }
+            }
+
+            start = end;
+        }
     }
 
     /// <summary>The words in order must give back the restored verse, checked inside the transaction.</summary>

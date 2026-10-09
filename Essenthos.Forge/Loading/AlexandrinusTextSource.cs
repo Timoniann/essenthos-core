@@ -103,7 +103,8 @@ internal static class AlexandrinusTextSource
                      + "obliges anything derived from those books to be shared alike. Modified: the "
                      + "transcription labels 69 verses of 3 John, Jude, Hebrews 13 and 1 Timothy 1 in a form "
                      + "other than its own, and Essenthos places them by that form, checked verse for verse "
-                     + "against CNTR's independent transcription of the manuscript. " + OttleyIsaiah.Note,
+                     + "against CNTR's independent transcription of the manuscript. " + OttleyIsaiah.Note + " "
+                     + OttleyIsaiah.PageNote,
         Citation = "Codex Alexandrinus (GA 02), New Testament transcription by the Institut für "
                    + "Neutestamentliche Textforschung, New Testament Virtual Manuscript Room, CC BY 4.0; Isaiah "
                    + "from R. R. Ottley (ed.), The Book of Isaiah according to the Septuagint (Codex "

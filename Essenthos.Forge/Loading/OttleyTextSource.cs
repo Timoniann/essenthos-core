@@ -24,7 +24,7 @@ internal static class OttleyTextSource
 {
     public const string Slug = Sources.OttleySlug;
 
-    private const int Isaiah = 23;
+    public const int Isaiah = 23;
 
     /// <summary>
     /// The licence is the one the transcription states in its own header, which is what reaches the
@@ -66,7 +66,7 @@ internal static class OttleyTextSource
                      + "carries a licence is the transcription, made for Open Greek and Latin's First1KGreek "
                      + "project, whose header states Creative Commons Attribution-ShareAlike 4.0 — an "
                      + "obligation to credit it and to share alike anything derived from it. "
-                     + OttleyIsaiah.Note,
+                     + OttleyIsaiah.Note + " " + OttleyIsaiah.PageNote,
         Citation = "Richard Rusden Ottley (ed.), The Book of Isaiah according to the Septuagint (Codex "
                    + "Alexandrinus), volume 2, Cambridge University Press, 1904, in the Open Greek and Latin "
                    + "First1KGreek transcription (tlg0527.tlg048.1st1K-grc2), CC BY-SA 4.0.",
