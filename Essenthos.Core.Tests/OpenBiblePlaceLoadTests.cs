@@ -127,7 +127,8 @@ public sealed class OpenBiblePlaceLoadTests : IClassFixture<OpenBiblePlaceLoadTe
 
     /// <summary>
     /// BibleData's 674 place references stay in the table and are not among the sources a reader is
-    /// shown the layer by.
+    /// shown the layer by. OpenBible's 8,742 are shown less one: its Tarshish at EZK 10:9 is the stone
+    /// the wheels looked like, not the place, and is stored but not counted.
     /// </summary>
     [Fact]
     public async Task TheCoverageOfTheLayerIsReportedPerSourceAsWellAsWhole()
@@ -137,7 +138,7 @@ public sealed class OpenBiblePlaceLoadTests : IClassFixture<OpenBiblePlaceLoadTe
 
         places.Books.Books.Should().HaveCount(61);
         openBible.Books.Books.Should().HaveCount(61);
-        openBible.Mentions.Should().Be(8_742);
+        openBible.Mentions.Should().Be(8_741);
         places.Sources.Should().NotContain(s => s.Dataset == "bibledata");
         (await _db.EntityVerses.CountAsync(v => v.Source == BibleData && v.Entity!.Kind == EntityKind.Place))
             .Should().Be(674);
