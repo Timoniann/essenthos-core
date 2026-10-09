@@ -1,3 +1,6 @@
+using System.Reflection;
+using System.Text.Json;
+
 namespace Essenthos.Core.Swete;
 
 /// <summary>
@@ -5,9 +8,9 @@ namespace Essenthos.Core.Swete;
 /// read from First1KGreek's TEI, which is the file its licence is stated in.
 ///
 /// <para>
-/// The transcription is rougher than Swete's and most of what is wrong with it is left as it is: a
-/// misread letter, a word the page prints and the file lost, a line set down out of its place, are
-/// all things only the page can settle. What is repaired here is what the file shows about itself.
+/// The transcription is rougher than Swete's: a misread letter, a word the page prints and the file
+/// lost, a line set down out of its place, are all things only the page can settle, and the page does
+/// (<see cref="Page"/>). What <see cref="Transcription"/> repairs is what the file shows about itself.
 /// Ottley prints the verse number in the margin of the line a verse begins on, and the file keeps
 /// those numbers as line marks even where it failed to open the verse, so the last verse of a
 /// chapter often runs into the one before it with its own number standing beside it; those are
@@ -30,12 +33,13 @@ namespace Essenthos.Core.Swete;
 /// </para>
 ///
 /// <para>
-/// **Seven verses are read against the printed page** (<see cref="Page"/>), each entry citing the page
-/// of Ottley's second volume and the leaf of the Internet Archive's scan it was read on: ἡμᾶς at the end
-/// of 35:4, a καὶ the file doubles at 34:11, and the letters the transcription misreads in those verses
-/// — εἷς for εἰς, ὃ for ὁ, οὗ for οὐ. An entry that prints as many words as it replaces puts their
-/// letters right one for one, so a corpus that already holds the verse keeps the words' rows. The same
-/// misreadings elsewhere in the book are left as the transcription reads them.
+/// **The book is read against the printed page, page by page** (<see cref="Page"/>, written out in
+/// <c>OttleyPage.json</c>), each entry citing the page of Ottley's second volume and the leaf of the
+/// Internet Archive's scan it was read on: the letters, accents and breathings the transcription misreads
+/// throughout — εἷς for εἰς, ὃ for ὁ, τὸ. for τὰ — and the words it lost, doubled or set in the verse
+/// beside. What goes in is what the page prints, its own misprints included. The words an entry puts
+/// right letter by letter (<c>same</c>) keep their rows in a corpus that already holds the verse. Entries come in rounds, and a corpus loaded before a round holds the
+/// verses as the rounds before it left them (<see cref="Through"/>).
 /// </para>
 ///
 /// <para>
@@ -60,14 +64,24 @@ internal static class OttleyIsaiah
         + "a placeholder the transcription left for what it could not read is taken out; three Latin "
         + "letters standing for the Greek ones they look like are written as Greek; the manuscript's title "
         + "above 1:1 and colophon below 66:24 are not counted as words of those verses; and one line the "
-        + "transcription set down out of its place in 2:20 is read in its place. Letters the transcription "
-        + "misread are left as it reads them.";
+        + "transcription set down out of its place in 2:20 is read in its place.";
 
-    /// <summary>What the text's row says about the verses read against the printed page.</summary>
+    /// <summary>What the text's row says about the book read against the printed page.</summary>
     public const string PageNote =
-        "Modified: seven verses (2:19, 5:5, 34:11, 35:3, 35:4, 35:9, 53:1) are read by Essenthos against "
-        + "Ottley's printed page: the letters the transcription misread there are written as the page prints "
-        + "them, ἡμᾶς is restored at the end of 35:4, and a καὶ the transcription doubled at 34:11 is taken out.";
+        "Modified: Essenthos reads the book against Ottley's printed page, page by page: the letters, accents and "
+        + "breathings the transcription misread are written as the page prints them, the page's own misprints "
+        + "included; words it lost are restored; and words it doubled, or set in the verse beside, are taken out "
+        + "or put in the verse the page prints them in.";
+
+    /// <summary>What the text's row said before, which a corpus loaded then holds, and what replaces it.</summary>
+    public static readonly IReadOnlyList<(string Was, string Now)> Superseded =
+    [
+        (Note + " Letters the transcription misread are left as it reads them.", Note),
+        ("Modified: seven verses (2:19, 5:5, 34:11, 35:3, 35:4, 35:9, 53:1) are read by Essenthos against "
+         + "Ottley's printed page: the letters the transcription misread there are written as the page prints "
+         + "them, ἡμᾶς is restored at the end of 35:4, and a καὶ the transcription doubled at 34:11 is taken out.",
+            PageNote),
+    ];
 
     private const string Margin =
         "Ottley's own number for the verse stands in the margin of this line; Swete and Brenton begin the verse at these words";
@@ -85,8 +99,17 @@ internal static class OttleyIsaiah
         EditionRepairs.Apply(File,
             First1KGreekReader.Lines(Path.Combine(folder, SweteIsaiah.Folder, File), SweteIsaiah.Work), repairs);
 
+    private const string PageResource = "Essenthos.Core.Swete.OttleyPage.json";
+
+    /// <summary>The page's entries in the order they are made: by round, then through the book.</summary>
+    public static readonly IReadOnlyList<OttleyPageEntry> PageEntries = ReadPage();
+
     /// <summary>What the file shows about itself, then what the page settles, in that order.</summary>
     public static readonly IReadOnlyList<EditionRepair> Repairs = [.. Transcription, .. Page];
+
+    /// <summary>The repairs a corpus loaded after the page's given round, and before the next, holds.</summary>
+    public static IReadOnlyList<EditionRepair> Through(int round) =>
+        [.. Transcription, .. PageEntries.Where(entry => entry.Round <= round).Select(entry => entry.Repair)];
 
     /// <summary>The repairs the file's own evidence settles, which a corpus loaded before the page was read holds.</summary>
     public static IReadOnlyList<EditionRepair> Transcription =>
@@ -134,27 +157,51 @@ internal static class OttleyIsaiah
 
     /// <summary>
     /// The verses read against Ottley's printed page, each addressed to the verse as
-    /// <see cref="Transcription"/> leaves it.
+    /// <see cref="Transcription"/> and the entries before it leave it.
     /// </summary>
-    public static IReadOnlyList<EditionRepair> Page =>
-    [
-        EditionRepair.Replace(2, "19", "εἷς τὸ. σπήλαια", "εἰς τὰ σπήλαια", $"{Printed(4, 386)}: {Breathing}, and τὰ"),
-        EditionRepair.Replace(2, "19", "εἷς τὰς σχισμὸς", "εἰς τὰς σχισμὰς", $"{Printed(4, 386)}: {Breathing}, and σχισμὰς"),
-        EditionRepair.Replace(2, "19", "εἷς τὰς τρώγλας", "εἰς τὰς τρώγλας", $"{Printed(4, 386)}: {Breathing}"),
-        EditionRepair.Replace(5, "5", "εἷς διαρπαγήν,", "εἰς διαρπαγήν,", $"{Printed(7, 389)}: {Breathing}"),
-        EditionRepair.Replace(5, "5", "εἷς καταπάτημα", "εἰς < καταπάτημα>.",
-            $"{Printed(7, 389)}: {Breathing}, and καταπάτημα in Ottley's angle brackets"),
-        EditionRepair.Replace(34, "11", "καὶ καὶ κατοικήσονται", "καὶ κατοικήσονται", $"{Printed(53, 435)}: one καὶ"),
-        EditionRepair.Replace(35, "3", "παραλελυμένα", "παραλελυμένα.", $"{Printed(54, 436)}: the verse ends with the stop"),
-        EditionRepair.Replace(35, "4", "ὃ", "ὁ", $"{Printed(54, 436)}: the article, with the smooth breathing"),
-        EditionRepair.Replace(35, "4", "σώσει", "σώσει ἡμᾶς.", $"{Printed(54, 436)}: ἡμᾶς, which the transcription lost"),
-        EditionRepair.Replace(35, "9", "οὔκ", "οὐκ", $"{Printed(54, 436)}: οὐκ, unaccented"),
-        EditionRepair.Replace(35, "9", "οὗ", "οὐ", $"{Printed(54, 436)}: the negative, with the smooth breathing"),
-        EditionRepair.Replace(53, "1", "ὃ", "ὁ", $"{Printed(84, 466)}: the article, with the rough breathing"),
-    ];
+    public static IReadOnlyList<EditionRepair> Page => [.. PageEntries.Select(entry => entry.Repair)];
 
-    private const string Breathing = "εἰς, with the smooth breathing";
+    private static IReadOnlyList<OttleyPageEntry> ReadPage()
+    {
+        using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(PageResource)
+                           ?? throw new InvalidOperationException($"{PageResource} is not embedded in the Forge assembly.");
+        var entries = JsonSerializer.Deserialize<List<PageEntry>>(stream,
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
+        return
+        [
+            .. entries.Select(entry => new OttleyPageEntry(
+                EditionRepair.Replace(entry.Chapter, entry.Verse, entry.Digitised, entry.Printed,
+                    $"{Printed(entry.Page, entry.Leaf)}: {entry.What}"),
+                [.. entry.Same.Select(pair => (pair[0], pair[1]))],
+                entry.Round,
+                entry.Source)),
+        ];
+    }
 
     private static string Printed(int page, int leaf) =>
         $"Printed in Ottley, vol. 2 (Cambridge, 1904), p. {page}, scan leaf {leaf} of IsaiahAccordingToTheSeptuagint";
+
+    private sealed record PageEntry(
+        int Chapter,
+        string Verse,
+        string Digitised,
+        string Printed,
+        int Page,
+        int Leaf,
+        string What,
+        IReadOnlyList<IReadOnlyList<string>> Same,
+        int Round,
+        string Source);
 }
+
+/// <summary>
+/// One reading of Ottley's page: the repair, the digitised tokens it puts right letter by letter into the
+/// printed tokens they stand for (so a corpus holding the verse keeps those words' rows), the round it came
+/// in, and what it was read from — <c>codex-N</c>, item N of the page-by-page reading, or
+/// <c>hand-…</c>, a reading made on the scan by hand.
+/// </summary>
+internal sealed record OttleyPageEntry(
+    EditionRepair Repair,
+    IReadOnlyList<(string Digitised, string Printed)> SameWords,
+    int Round,
+    string Source);

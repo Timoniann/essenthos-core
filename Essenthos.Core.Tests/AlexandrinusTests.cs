@@ -165,7 +165,7 @@ public class AlexandrinusTests
     [Fact]
     public void IsaiahIsOttleysAndTheBooksStandInTheCodexsOrder()
     {
-        Book(Isaiah).Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)).Should().Be(27162);
+        Book(Isaiah).Chapters.Sum(chapter => chapter.Verses.Sum(verse => verse.Words.Count)).Should().Be(27189);
         Source.Value.Books.Select(book => book.Position).Should().BeInAscendingOrder().And.OnlyHaveUniqueItems();
         Source.Value.Books.Take(6).Select(book => book.CanonicalOrdinal).Should().Equal(1, 23, 73, 74, 80, 81);
     }

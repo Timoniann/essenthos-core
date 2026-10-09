@@ -187,7 +187,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
 
     /// <summary>
     /// The verses of Ottley's Isaiah read against his printed page, in a text that holds the book as the
-    /// transcription's own repairs left it.
+    /// transcription's own repairs, or an earlier round of the page's, left it.
     /// </summary>
     private async Task<(int Verses, int Words)> RestoreOttley(Text text, string folder, CancellationToken cancellationToken)
     {
@@ -197,12 +197,15 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
             return (0, 0);
         }
 
-        var transcribed = SweteReader.Read(OttleyIsaiah.Lines(folder, OttleyIsaiah.Transcription));
+        // What a corpus may hold: the transcription, or the page as far as any round read it.
+        var readings = Enumerable.Range(0, OttleyIsaiah.PageEntries.Max(e => e.Round) + 1)
+            .Select(round => SweteReader.Read(OttleyIsaiah.Lines(folder, OttleyIsaiah.Through(round))))
+            .ToList();
         var printed = SweteReader.Read(OttleyIsaiah.Lines(folder));
         var verses = 0;
         var added = 0;
 
-        foreach (var here in OttleyIsaiah.Page.GroupBy(r => (r.Chapter, r.Verse)))
+        foreach (var here in OttleyIsaiah.PageEntries.GroupBy(e => (e.Repair.Chapter, e.Repair.Verse)))
         {
             var (chapter, address) = here.Key;
             var digits = address.TakeWhile(char.IsAsciiDigit).Count();
@@ -223,7 +226,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                 continue;
             }
 
-            if (stored.Count == 0 || !Same(stored, Words(transcribed, chapter, verse, label)))
+            if (stored.Count == 0 || !readings.Any(reading => Same(stored, Words(reading, chapter, verse, label))))
             {
                 throw new InvalidOperationException(
                     $"{text.Slug} Isaiah {chapter}:{address} reads neither as Ottley's transcription nor as his printed " +
@@ -233,13 +236,18 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
             }
 
             added += await Write(text, stored[0].VerseId, stored, after, inPlace: false,
-                SameWords(here.Select(r => (r.Digitised, r.Printed))), cancellationToken);
+                SameWords(here.SelectMany(e => e.SameWords)), cancellationToken);
             await EnsureRebuilds(stored[0].VerseId, after, $"{text.Slug} Isaiah {chapter}:{address}", cancellationToken);
             verses++;
         }
 
         if (verses > 0)
         {
+            foreach (var (was, now) in OttleyIsaiah.Superseded)
+            {
+                text.RightsNote = text.RightsNote?.Replace(was, now, StringComparison.Ordinal);
+            }
+
             AddNotes(text, OttleyIsaiah.PageNote);
             await db.SaveChangesAsync(cancellationToken);
         }
@@ -260,7 +268,7 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
 
     /// <summary>
     /// The words entries put right letter by letter: where one prints as many words as it replaces, each
-    /// printed word is the digitised word standing in its place.
+    /// printed word is the digitised word standing in its place. Ottley's entries name theirs pair by pair.
     /// </summary>
     private static HashSet<(string Digitised, string Printed)> SameWords(IEnumerable<(string Digitised, string Printed)> entries)
     {
@@ -393,9 +401,10 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
     }
 
     /// <summary>
-    /// Where a run of printed words no stored word matches stands between the same two kept words as a
-    /// run of stored words as long, and each stored word there is one an entry of the verse puts right
-    /// into the printed word opposite it, the stored word is kept as that word.
+    /// Between the same two kept words, a printed word no stored word matches takes the first stored word
+    /// after the last one taken there that an entry of the verse puts right into it, in order: the stored
+    /// word is kept as that word. A run the page prints longer or shorter than the transcription keeps the
+    /// words it shares with it that way, and the rest are taken out or written new.
     /// </summary>
     private static void KeepCorrected(
         int[] kept,
@@ -417,14 +426,18 @@ internal sealed class SweteRestorationLoader(AppDbContext db, ILogger<SweteResto
                 end++;
             }
 
-            var from = start == 0 ? 0 : kept[start - 1] + 1;
+            var next = start == 0 ? 0 : kept[start - 1] + 1;
             var to = end == after.Count ? stored.Count : kept[end];
-            if (to - from == end - start
-                && Enumerable.Range(0, end - start).All(k => sameWords.Contains((stored[from + k].Surface, after[start + k].Surface))))
+            for (var k = start; k < end; k++)
             {
-                for (var k = 0; k < end - start; k++)
+                for (var candidate = next; candidate < to; candidate++)
                 {
-                    kept[start + k] = from + k;
+                    if (sameWords.Contains((stored[candidate].Surface, after[k].Surface)))
+                    {
+                        kept[k] = candidate;
+                        next = candidate + 1;
+                        break;
+                    }
                 }
             }
 

@@ -1,0 +1,26 @@
+[
+ {"round": 1, "chapter": 2, "verse": "19", "digitised": "εἷς τὸ. σπήλαια", "printed": "εἰς τὰ σπήλαια", "page": 4, "leaf": 386, "what": "εἰς, with the smooth breathing, and τὰ", "sameWord": true},
+ {"round": 1, "chapter": 2, "verse": "19", "digitised": "εἷς τὰς σχισμὸς", "printed": "εἰς τὰς σχισμὰς", "page": 4, "leaf": 386, "what": "εἰς, with the smooth breathing, and σχισμὰς", "sameWord": true},
+ {"round": 1, "chapter": 2, "verse": "19", "digitised": "εἷς τὰς τρώγλας", "printed": "εἰς τὰς τρώγλας", "page": 4, "leaf": 386, "what": "εἰς, with the smooth breathing", "sameWord": true},
+ {"round": 1, "chapter": 5, "verse": "5", "digitised": "εἷς διαρπαγήν,", "printed": "εἰς διαρπαγήν,", "page": 7, "leaf": 389, "what": "εἰς, with the smooth breathing", "sameWord": true},
+ {"round": 1, "chapter": 5, "verse": "5", "digitised": "εἷς καταπάτημα", "printed": "εἰς < καταπάτημα>.", "page": 7, "leaf": 389, "what": "εἰς, with the smooth breathing, and καταπάτημα in Ottley's angle brackets"},
+ {"round": 1, "chapter": 34, "verse": "11", "digitised": "καὶ καὶ κατοικήσονται", "printed": "καὶ κατοικήσονται", "page": 53, "leaf": 435, "what": "one καὶ"},
+ {"round": 1, "chapter": 35, "verse": "3", "digitised": "παραλελυμένα", "printed": "παραλελυμένα.", "page": 54, "leaf": 436, "what": "the verse ends with the stop", "sameWord": true},
+ {"round": 1, "chapter": 35, "verse": "4", "digitised": "ὃ", "printed": "ὁ", "page": 54, "leaf": 436, "what": "the article, with the smooth breathing", "sameWord": true},
+ {"round": 1, "chapter": 35, "verse": "4", "digitised": "σώσει", "printed": "σώσει ἡμᾶς.", "page": 54, "leaf": 436, "what": "ἡμᾶς, which the transcription lost"},
+ {"round": 1, "chapter": 35, "verse": "9", "digitised": "οὔκ", "printed": "οὐκ", "page": 54, "leaf": 436, "what": "οὐκ, unaccented", "sameWord": true},
+ {"round": 1, "chapter": 35, "verse": "9", "digitised": "οὗ", "printed": "οὐ", "page": 54, "leaf": 436, "what": "the negative, with the smooth breathing", "sameWord": true},
+ {"round": 1, "chapter": 53, "verse": "1", "digitised": "ὃ", "printed": "ὁ", "page": 84, "leaf": 466, "what": "the article, with the rough breathing", "sameWord": true},
+
+ {"round": 2, "settles": [317], "chapter": 19, "verse": "6", "digitised": "ἐκλείχουσιν", "printed": "ξηρανθήσεται", "page": 29, "leaf": 411, "what": "the page prints καὶ ξηρανθήσεται πᾶσα συναγωγὴ ὕδατος; the verse's first ἐκλείψουσιν is already right"},
+ {"round": 2, "settles": [424], "chapter": 26, "verse": "8", "digitised": "καὶ ἐπὶ", "printed": "καὶ ἐπὶ τῇ μνείᾳ", "page": 39, "leaf": 421, "what": "the verse ends ἐπὶ τῇ μνείᾳ, and the number 9 stands before ᾗ"},
+ {"round": 2, "settles": [425], "chapter": 26, "verse": "9", "digitised": "ᾖ μνείᾳ ἡ ἐπιθυμεῖ ἦ", "printed": "ᾗ ἐπιθυμεῖ ἡ ψυχὴ ἡμῶν.", "page": 39, "leaf": 421, "what": "the verse opens ᾗ ἐπιθυμεῖ ἡ ψυχὴ ἡμῶν. before (Ὠιδή.)"},
+ {"round": 2, "settles": [426], "chapter": 26, "verse": "9", "digitised": "ὅ θεός,", "printed": "ὁ θεός,", "page": 39, "leaf": 421, "what": "the article, with the rough breathing and no accent", "sameWord": true},
+ {"round": 2, "settles": [744], "chapter": 38, "verse": "17", "digitised": "ἀπέριχας", "printed": "ἀπέριψας", "page": 61, "leaf": 443, "what": "ἀπέριψας, with one ρ as the page prints it", "sameWord": true},
+ {"round": 2, "settles": [1006], "chapter": 48, "verse": "5", "digitised": "Τὸ. εἴδωλά μοι", "printed": "Τὰ εἴδωλά μοι", "page": 76, "leaf": 458, "what": "Τὰ; the page prints μοι", "sameWord": true},
+ {"round": 2, "settles": [1049], "chapter": 49, "verse": "13", "digitised": "ἀγαλλίσαθω", "printed": "ἀγαλλίασθω", "page": 79, "leaf": 461, "what": "ἀγαλλίασθω, accented on the iota", "sameWord": true},
+ {"round": 2, "settles": [1050], "chapter": 49, "verse": "13", "digitised": "ἦ γῆ,", "printed": "ἡ γῆ,", "page": 79, "leaf": 461, "what": "the article ἡ", "sameWord": true},
+ {"round": 2, "settles": [1145], "chapter": 52, "verse": "4", "digitised": "Οὖτως", "printed": "Οὕτως", "page": 83, "leaf": 465, "what": "Οὕτως, with the rough breathing", "sameWord": true},
+ {"round": 2, "settles": [1148], "chapter": 52, "verse": "4", "digitised": "εἷς Ἀσσυρίους", "printed": "εἰς Ἀσσυρίους", "page": 83, "leaf": 465, "what": "εἰς, with the smooth breathing", "sameWord": true},
+ {"round": 2, "settles": [1149], "chapter": 52, "verse": "4", "digitised": "Ἀσσυρίους ἤχθησαν·", "printed": "Ἀσσυρίους βίᾳ ἤχθησαν·", "page": 83, "leaf": 465, "what": "βίᾳ, with the iota subscript, which the transcription lost"}
+]

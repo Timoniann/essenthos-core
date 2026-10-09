@@ -150,7 +150,7 @@ public sealed class IsaiahLoadTests : IDisposable
         var outcome = await Loader.Load(OttleyTextSource.Read(TestResources.SweteFolder));
         await Place(OttleyTextSource.Slug);
 
-        outcome.Words.Should().Be(27162);
+        outcome.Words.Should().Be(27189);
         var moved = await _db.VerseReferences
             .Where(r => r.IsPrimary && (r.CanonicalChapter != r.Verse!.ChapterNumber || r.CanonicalVerse != r.Verse.Number))
             .CountAsync();
