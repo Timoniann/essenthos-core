@@ -1,0 +1,52 @@
+[
+ {
+  "id": 382,
+  "verdict": "right",
+  "actual": "αὐτῇ"
+ },
+ {
+  "id": 384,
+  "verdict": "right",
+  "actual": "ὁ παῖς"
+ },
+ {
+  "id": 385,
+  "verdict": "right",
+  "actual": "ὁ κύριος"
+ },
+ {
+  "id": 386,
+  "verdict": "right",
+  "actual": "ὁ ἀγοράζων"
+ },
+ {
+  "id": 387,
+  "verdict": "right",
+  "actual": "ὡς ὁ πωλῶν"
+ },
+ {
+  "id": 388,
+  "verdict": "right",
+  "actual": "ὁ δανίζων"
+ },
+ {
+  "id": 389,
+  "verdict": "right",
+  "actual": "ὁ δανιζόμενος"
+ },
+ {
+  "id": 390,
+  "verdict": "right",
+  "actual": "ὁ ὀφείλων"
+ },
+ {
+  "id": 394,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 395,
+  "verdict": "right",
+  "actual": "ἄνθρωποι"
+ }
+]

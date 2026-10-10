@@ -1,0 +1,22 @@
+[
+ {
+  "id": 264,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 265,
+  "verdict": "wrong",
+  "actual": "ἅνθρωπος"
+ },
+ {
+  "id": 268,
+  "verdict": "wrong",
+  "actual": "οὔτως"
+ },
+ {
+  "id": 269,
+  "verdict": "right",
+  "actual": "εἰς"
+ }
+]

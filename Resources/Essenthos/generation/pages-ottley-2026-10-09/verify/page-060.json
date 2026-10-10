@@ -1,0 +1,47 @@
+[
+ {
+  "id": 728,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 731,
+  "verdict": "right",
+  "actual": "ὁ θεὸς"
+ },
+ {
+  "id": 732,
+  "verdict": "right",
+  "actual": "θεὸς"
+ },
+ {
+  "id": 734,
+  "verdict": "right",
+  "actual": "τὸν"
+ },
+ {
+  "id": 735,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 736,
+  "verdict": "right",
+  "actual": "οὓς"
+ },
+ {
+  "id": 739,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 740,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 743,
+  "verdict": "right",
+  "actual": "ἕως"
+ }
+]

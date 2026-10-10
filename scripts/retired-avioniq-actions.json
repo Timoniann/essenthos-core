@@ -1,0 +1,816 @@
+{
+  "note": "avioniq actions retired on 2026-10-10 at the owner's request: one-off corpus fetches, manifest updates, and Forge verbs that core-forge runs with their arguments. Re-register one with: avioniq services add --input <file holding that one entry>.",
+  "actions": [
+    {
+      "name": "verification",
+      "command": "curl -s http://localhost:5279/v1/verification",
+      "description": "The corpus measures from the last load: coverage, reach, contention, crowding, and the integrity checks, which must be zero. Needs core running.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "frozen-api-test",
+      "command": "dotnet test --nologo",
+      "project": "essenthos-api",
+      "description": "The frozen API's suite, run only to confirm the reference still passes. Nothing here should need changing.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-bibledata",
+      "command": "pwsh -NoProfile -File scripts/fetch-bibledata.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch a fresh BibleData release and update the corpus sources with it. GitHub main by default, because that is where the LICENSE that governs lives and it needs no credentials; -From Kaggle needs an API token and says so before downloading anything. The download is checked whole before anything is replaced, and both the LICENSE and CITATION.cff must still say Attribution 4.0 or it stops. A reload is not automatic: the encyclopedia loader is idempotent on whether any entity exists, so a restart alone picks nothing up.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-berean",
+      "command": "pwsh -NoProfile -File scripts/fetch-berean.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the Berean Standard Bible: the published text, and the translation tables that say which of its words renders which original word.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-clearbible",
+      "command": "pwsh -NoProfile -File scripts/fetch-clearbible.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch Clear Bible's hand-made word alignments.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-glaux",
+      "command": "pwsh -NoProfile -File scripts/fetch-glaux.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the 57 Septuagint books of the GLAUx treebank, which give Brenton its lemmas.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-openbible",
+      "command": "pwsh -NoProfile -File scripts/fetch-openbible.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch OpenBible.info's Bible Geocoding places — 1,342 places and 8,742 place-verse references across 61 books, which is the place layer's second source beside BibleData's 118. Only ancient.jsonl is taken: the geometry beside it is partly OpenStreetMap's and carries ODbL, which is share-alike. Both licence statements must still say Attribution 4.0 or it stops without replacing anything. A reload is not automatic — the encyclopedia loader does nothing when the tables already hold rows.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-byzantine",
+      "command": "pwsh -NoProfile -File scripts/fetch-byzantine.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch Robinson and Pierpont's Byzantine Textform, the reading of the majority of the surviving Greek manuscripts and the fourth Greek witness. Robinson's own parsed beta code is what gets loaded; the repository's Unicode conversion of the same files comes with it as the answer key the beta-code table is checked against, and the accented CCAT text with its apparatus is left where it is. Both public-domain statements must still stand or it stops without replacing anything. A reload is not automatic - the corpus loader returns early for a text whose slug is already in the text table.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-stepbible",
+      "command": "pwsh -NoProfile -File scripts/fetch-stepbible.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch TAHOT, STEPBible's tagged Hebrew Old Testament, which states which of the mapping file's morphemes are prefixes and what each one means where it stands. Four files, 70 MB, split by the publisher only because one would be too large for GitHub. Pinned to the commit Resources/STEPBible/LICENCE.md quotes; the header block is the licence, so the fetch stops without replacing anything if the sentences it was read under are gone. A reload is not automatic: the Old Testament link loader does nothing when links between the King James and BHSA already exist.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-samaritan",
+      "command": "pwsh -NoProfile -File scripts/fetch-samaritan.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the Text-Fabric dataset of the Samaritan Pentateuch, the Torah as the Samaritan community transmitted it and the first witness here that disagrees with BHSA in Hebrew rather than in translation. All 41 feature files of release 7.1.3, pinned to the commit Resources/SamaritanPentateuch/LICENCE.md quotes. The licence is stated in four places and they do not all agree; the file headers and both README statements must still say what they said or it stops without replacing anything. A reload is not automatic - the corpus loader returns early for a text whose slug is already in the text table, and the link loader for a pair that already has links.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-russian-synodal",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-russian-synodal.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the only word-aligned Russian Synodal text anyone publishes: Titus, Philemon and 2 John, aligned to the Greek by hand in translationCore, 1,266 milestones over 84 verses. It is the same USFM 3.0 alignment the Ukrainian interlinear arrives in, so the reader and the loader already here take it. The same three books are published twice under different terms - CC0 1.0 in each per-book repository, CC BY-SA 4.0 in the ru_rsb aggregate - and this takes the CC0 copies and stops if either statement in them moves. A reload is not automatic: the interlinear loader returns early once the Synodal has any stated link.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "renderings",
+      "command": "curl -s \"http://localhost:5279/v1/strong/${number}/renderings?corpus=${corpus}&take=${take}\"",
+      "description": "How one translation actually renders one Strong number, counted over every place it stands. Needs core running.",
+      "env": {},
+      "params": [
+        {
+          "type": "text",
+          "name": "number",
+          "label": "Strong number",
+          "description": "A language letter and digits, as H430 or G26.",
+          "default": "H430",
+          "pattern": "^[GHgh][0-9]+$",
+          "raw": false
+        },
+        {
+          "type": "enum",
+          "name": "corpus",
+          "label": "Translation",
+          "values": [
+            "KJV",
+            "RUSV",
+            "UBIO"
+          ]
+        },
+        {
+          "type": "number",
+          "name": "take",
+          "label": "How many",
+          "default": 12,
+          "min": 1,
+          "max": 100
+        }
+      ],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-kulish",
+      "command": "pwsh -NoProfile -File scripts/fetch-kulish.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the Kulish-Nechui-Levytsky-Puliui Bible of 1903, the first complete Ukrainian Bible and the only Ukrainian text in the corpus that needs nobody's permission - all three translators were dead by 1918. eBible states Public Domain in two places, on the copyright page shipped inside the archive and in the Copyright and Redistributable columns of its catalogue, and both must still say it or this stops without replacing anything. The copyright page is kept beside the data as copr.htm. eBible's other Ukrainian text, ukrfb, is not taken: it is a damaged copy of this one rather than the revision its title claims. A reload is not automatic - the corpus loader returns early for a text whose slug is already in the text table.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-swete",
+      "command": "pwsh -NoProfile -File scripts/fetch-swete.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch Swete's Septuagint, the second Greek Old Testament and the first diplomatic text of Codex Vaticanus the corpus holds. Swete's own text is out of copyright - he died in 1917 and the volumes were printed 1887-1905 - so what carries a licence is the transcription, and both statements over it say CC BY-SA 4.0: the README of nathans/lxx-swete, and the full legal code First1KGreek ships as license.md, whose Zenodo record declares CC-BY-SA-4.0 as well. All three must still say it or this stops without replacing anything. Pinned to the commit Resources/Swete/LICENCE.md quotes, because an unpinned fetch of a share-alike source is an obligation whose terms could have moved since anybody read them. A reload is not automatic - the corpus loader returns early for a text whose slug is already in the text table.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-synodal-strong",
+      "command": "pwsh -NoProfile -File scripts/fetch-synodal-strong.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the Strong-tagged Russian Synodal from swmail/RST, pinned to commit 78d6bbf and checked against the hashes the mapping was measured with. It is an input to the synodal-strong batch command and is never loaded as a text: Bob Jones University's 1996 notice, the only terms for the numbering, permits use only of the work unmodified, and the owner decided to use it for the mapping alone (PRB-0264). The notice is re-read at clavmon.cz first, and if the page no longer carries it nothing is replaced. The script lands with wt/rst (essenthos-core 619d71c) and does not exist on main until that is merged.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-stepbible-lexicons",
+      "command": "pwsh -NoProfile -File scripts/fetch-stepbible-lexicons.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch STEPBible's four Strong-indexed Hebrew and Greek lexicons as audited candidate sources; TBESH remains quarantined because its own header requires Online Bible permission before definitions are applied.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-wikidata-lexemes",
+      "command": "pwsh -NoProfile -File scripts/fetch-wikidata-lexemes.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch a pinned CC0 Wikidata Lexeme dump for offline dictionary and sense-translation extraction; it is not loaded as word alignment evidence.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-panlex-swadesh",
+      "command": "pwsh -NoProfile -File scripts/fetch-panlex-swadesh.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the pinned NLTK PanLex Swadesh-207 corpus, verify its SHA-256, unpack it, and retain provenance/licence notes.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "corpus-manifest-update-new-lexical-sources",
+      "command": "python scripts/corpus-manifest.py --folders ClearBible,PanLexSwadesh,STEPBibleLexicons,WikidataLexemes",
+      "project": "essenthos-core",
+      "description": "Record only the deliberately fetched lexical-source folders in Resources/MANIFEST.json, preserving independently known corpus drift.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-udpipe-repair",
+      "command": "pwsh -NoProfile -File scripts/fetch-udpipe.ps1 -Repair",
+      "project": "essenthos-core",
+      "description": "Recover only an incomplete UDPipe bootstrap created by fetch-udpipe itself, then fetch fresh pinned model and tool artifacts. It checks the provenance marker before removal and never touches corpus data or the database.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "corpus-manifest-update-udpipe",
+      "command": "python scripts/corpus-manifest.py --folders UDPipe",
+      "project": "essenthos-core",
+      "description": "Record checksums for the deliberately fetched audited UDPipe tool, models and licence files only, preserving independent corpus-manifest drift.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "udpipe-smoke",
+      "command": "pwsh -NoProfile -File scripts/udpipe-smoke.ps1 -Language ${language}",
+      "project": "essenthos-core",
+      "description": "Run a short Ukrainian, Russian or English local UDPipe analysis and print CoNLL-U lemma, POS, morphology and dependency output. Diagnostic only; no corpus writes or links.",
+      "env": {},
+      "params": [
+        {
+          "type": "enum",
+          "name": "language",
+          "values": [
+            "ukrainian",
+            "russian",
+            "english"
+          ],
+          "default": "ukrainian"
+        }
+      ],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-locate",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- locate",
+      "project": "essenthos-core",
+      "description": "Put the places on the map in an already loaded essenthos_core: one point per place from OpenBible (Resources/OpenBible/ancient.jsonl + modern.jsonl), never one credited to OpenStreetMap. Needs the PlaceLocations migration applied. Does nothing if place_location already holds rows.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-spell",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- spell",
+      "project": "essenthos-core",
+      "description": "Count how each text spells each entity's name, from the words word_entity names it by, into entity_rendering in an already loaded essenthos_core. Rebuilds the table whole in about two seconds; the full load does the same as its last naming step. Needs the EachTextSpellsEachName migration applied.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-ohienko-wikisource",
+      "command": "pwsh -NoProfile -File scripts/fetch-ohienko-wikisource.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch Ohienko's Ukrainian Bible from uk.wikisource, proofread page by page against a scan of the 1988 printing: 66 books, 31,168 verses, 6.5 MB, about ten minutes of polite API calls. It is the only complete machine-readable copy anybody publishes, and the corpus needs it because the file it loaded Ohienko from belongs to a digitisation that lost text - his Psalm 7 has eighteen verses and ours has seventeen. Only that one verse is taken. The licence is CC BY-SA 4.0 and has conditions, so two statements are checked before anything is written and both must still say it: the Commons file page of the scan, which also records a confirmed permission ticket, and uk.wikisource's own site-wide terms. It is NOT in the corpus's numbering - the Old Testament follows the Hebrew divisions and the Psalms are numbered as the Septuagint numbers them - so nothing may be read out of it by address without a versification first. Resources/OhienkoWikisource/LICENCE.md says what the licence obliges. A reload is not automatic: run core-load afterwards.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-ebible",
+      "command": "pwsh -NoProfile -File scripts/fetch-ebible.ps1 ${only}",
+      "project": "essenthos-core",
+      "description": "Fetch the German, Spanish and English Bibles the corpus holds from eBible.org: Luther 1912, the unrevised Elberfelder, the Reina-Valera 1909, Tyndale, Geneva, the American Standard, Young's, the World English Bible, the JPS TaNaKH, and the standardised 1769 King James. Every one of them states Public Domain in three places that agree - the catalogue's Copyright and Redistributable columns, the copyright page on the web, and the copy of that page shipped inside the archive - and all three are read before anything is replaced. KingJames2006 is not loaded as a text of its own: what is taken from it is the 116 psalm superscriptions the bible4u file prints nowhere. A reload is not automatic: run core-load afterwards.",
+      "env": {},
+      "params": [
+        {
+          "type": "text",
+          "name": "only",
+          "label": "One folder only, e.g. -Only KingJames2006",
+          "default": "",
+          "raw": false
+        }
+      ],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-redraw",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- redraw ${source} ${text}",
+      "project": "essenthos-core",
+      "description": "Withdraw and reload one source's word links for one text in essenthos_core (e.g. clearbible RV1909), carrying the annotations itself. Several minutes for a whole text. For a text whose placement or whose source's records changed after the links were drawn.",
+      "env": {},
+      "params": [
+        {
+          "type": "text",
+          "name": "source",
+          "default": "clearbible",
+          "pattern": "^[a-z0-9-]+$",
+          "raw": false
+        },
+        {
+          "type": "text",
+          "name": "text",
+          "default": "RV1909",
+          "pattern": "^[A-Z0-9]+$",
+          "raw": false
+        }
+      ],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-compose",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- compose ${from} ${via} ${to}",
+      "project": "essenthos-core",
+      "description": "Compose a text's links to an original through aligned intermediates (e.g. UBIO KJV NESTLE1904, or LUTH1912 KJV,BSB NESTLE1904 through two) in essenthos_core: the aligner's direct links plus those reached through the intermediates, each combination written only from the confidence where it matched 90% on the pair's own stated links. Minutes per pair (4-13 measured); heavy on CPU, so run one at a time.",
+      "env": {},
+      "params": [
+        {
+          "type": "text",
+          "name": "from",
+          "default": "UBIO",
+          "pattern": "^[A-Z0-9]+$",
+          "raw": false
+        },
+        {
+          "type": "text",
+          "name": "via",
+          "default": "KJV",
+          "pattern": "^[A-Z0-9]+(,[A-Z0-9]+)*$",
+          "raw": false
+        },
+        {
+          "type": "text",
+          "name": "to",
+          "default": "BHSA",
+          "pattern": "^[A-Z0-9]+$",
+          "raw": false
+        }
+      ],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-align",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- align ${from} ${to} --replace",
+      "project": "essenthos-core",
+      "description": "Align two texts directly with SIL's statistical aligner and write the result as aligner links in essenthos_core, replacing that pair's earlier aligner links in the same transaction (e.g. BSB KJV). The model's workspace in %TEMP%/essenthos-align is reused only if it was made from the verses the two texts share now. BSB KJV: about 2 min training, 1 min writing.",
+      "env": {},
+      "params": [
+        {
+          "type": "text",
+          "name": "from",
+          "default": "BSB",
+          "pattern": "^[A-Z0-9]+$",
+          "raw": false
+        },
+        {
+          "type": "text",
+          "name": "to",
+          "default": "KJV",
+          "pattern": "^[A-Z0-9]+$",
+          "raw": false
+        }
+      ],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-names",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- names ${from} ${to} --apply",
+      "project": "essenthos-core",
+      "description": "Re-match the names in lists over one aligner pair's stored links (PRB-0342): refuse a name linked to a different name and add the pair the letters and order agree on, at 0.9. About 5 s a pair; run core-carry after the pairs you meant to fix.",
+      "env": {},
+      "params": [
+        {
+          "type": "text",
+          "name": "from",
+          "default": "GRCBRENT",
+          "pattern": "^[A-Z0-9]+$",
+          "raw": false
+        },
+        {
+          "type": "text",
+          "name": "to",
+          "default": "BHSA",
+          "pattern": "^[A-Z0-9]+$",
+          "raw": false
+        }
+      ],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-persons",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- persons",
+      "project": "essenthos-core",
+      "description": "Match the person register again in an already loaded essenthos_core: the verses a dataset filed under the wrong man put back, the bearers of those names moved onto the records their verses reach, and a record the register added for a man it now reaches folded into his. Two seconds; the full load does the same at its own step. Run it before core-fold-records.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-fold-records",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- fold-records",
+      "project": "essenthos-core",
+      "description": "Fold the records BibleData wrote twice for one person into one, in an already loaded essenthos_core, as Essenthos.Forge/Loading/Encyclopedia/DuplicateRecords.json lists them: every verse, name, relationship, picture and annotation moves to the record that stays, and the folded address is kept as a merged record that redirects. About two seconds; a pair already folded is skipped. The full load does the same at its own step. Needs the merged_record migration applied.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-crosswire",
+      "command": "pwsh -NoProfile -File scripts/fetch-crosswire.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the Chinese Union Version (ChiUn, ChiUns: FHL's transcription of the 1919 text with FHL's Strong numbers) and the Korean Revised Version 1961 (KorRV, from Korean Wikisource) as CrossWire SWORD modules into Resources/ChineseUnion1919 and Resources/KoreanRevised1961, pinned to the archives read on 2026-09-25 by SHA-256. FHL's copyright page and the Korean Bible Society's FAQ are re-read first; if either no longer says what the decision rested on, nothing is replaced (FTR-0731). About 8 MB. The script lands with wt/newlangs2 and does not exist on main until that is merged.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-union-strong",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- union-strong",
+      "project": "essenthos-core",
+      "description": "Link the Chinese Union Version (CUV and CUVS) to BHSA, Nestle 1904 and Westcott-Hort by FHL's Strong numbers, read from the SWORD modules and never stored, in essenthos_core; then the verse links and a carry, as synodal-strong does. The texts must be loaded first (core-load). On a scratch database the six pairs took 46 s before the carry and reached 98.4% (OT) and 98.8% (NT) of the tagged words, 91.6% of all words (FTR-0731). Lands with wt/newlangs2.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-betamasaheft",
+      "command": "pwsh -NoProfile -File scripts/fetch-betamasaheft.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the Ethiopic (Ge'ez) Bible, all 81 books of the Ethiopian Orthodox canon, as 81 single TEI files from github.com/BetaMasaheft/Works, pinned to commit 1d96713 with each file's size checked, into Resources/BetaMasaheft. Every file's header must still state Creative Commons Attribution-ShareAlike 4.0 or nothing is replaced; fifteen of them also carry Ran HaCohen's or Michal Jerabek's non-commercial notice, quoted in Resources/BetaMasaheft/LICENCE.md. Nothing else from the repository is taken. A reload is not automatic - the corpus loader returns early for a text whose slug is already in the text table.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-reload",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- reload ${text}",
+      "project": "essenthos-core",
+      "description": "Read one text again from its source into essenthos_core without the whole load (e.g. GEEZ81, about 2.5 minutes). Its words are replaced, so run the aligner and composition for it afterwards, then core-carry and core-verify.",
+      "env": {},
+      "params": [
+        {
+          "type": "text",
+          "name": "text",
+          "default": "GEEZ81",
+          "raw": false
+        }
+      ],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-compose-daughter",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- compose ${from} ${via} ${to} --daughter --unmeasured",
+      "project": "essenthos-core",
+      "description": "Compose a daughter translation's links to an original through the text it was translated from (e.g. GEEZ81 GRCBRENT BHSA: the Ge'ez reaches the Hebrew only through the Greek), writing every answer from the threshold with the link source saying how it was measured. Minutes; heavy on CPU, run one at a time.",
+      "env": {},
+      "params": [
+        {
+          "type": "text",
+          "name": "from",
+          "default": "GEEZ81",
+          "raw": false
+        },
+        {
+          "type": "text",
+          "name": "via",
+          "default": "GRCBRENT",
+          "raw": false
+        },
+        {
+          "type": "text",
+          "name": "to",
+          "default": "BHSA",
+          "raw": false
+        }
+      ],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-correct",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- correct",
+      "project": "essenthos-core",
+      "description": "Correct the King James and the Synodal in essenthos_core against their authoritative editions (casing of LORD/GOD, garbled readings, epistle subscriptions; the Synodal's run-together words and typos), keeping every word row that is still the same word and relinking only verses that gained or lost a word, then rebuilding verse links and carrying names. Stop core first; run core-spell after. Idempotent; minutes.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-openbible-cross-references",
+      "command": "pwsh -NoProfile -File scripts/fetch-openbible-cross-references.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch OpenBible.info's cross references into Resources/OpenBibleCrossReferences: 344,799 verse pairs ranked by readers' votes, CC BY, the reader's default set. The zip is rebuilt as votes arrive and has no version, so it is pinned by SHA-256 (read 2026-09-27, header 2026-09-21); a new hash stops the fetch until it is taken deliberately with -Sha256. The page's and the file's own CC BY statements are re-read first. About 8 MB. Lands with wt/s2-parallels (FTR-0012).",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-tsk",
+      "command": "pwsh -NoProfile -File scripts/fetch-tsk.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the Treasury of Scripture Knowledge (about 1880, public domain) as CrossWire's SWORD module TSK into Resources/TreasuryOfScriptureKnowledge, pinned to the archive read on 2026-09-27 by SHA-256; the module's own DistributionLicense=Public Domain is re-read before anything is replaced. 377,512 references. About 3 MB. Lands with wt/s2-parallels (FTR-0012).",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-cross-references",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- cross-references",
+      "project": "essenthos-core",
+      "description": "Load the cross reference sets into an already loaded essenthos_core: OpenBible.info (Resources/OpenBibleCrossReferences), the Treasury of Scripture Knowledge (Resources/TreasuryOfScriptureKnowledge) and the parallel passages detected from the BHSA and Nestle 1904 lemmas. Needs the AVerseSendsTheReaderToOthers migration applied. Each set is skipped when its rows are there; seconds. The full load does the same as one of its last steps. Lands with wt/s2-parallels (FTR-0012).",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-wikidata-biblical",
+      "command": "pwsh -NoProfile -File scripts/fetch-wikidata-biblical.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the CC0 Wikidata items for the Bible's persons, places and things (present in a Bible book, described by a Bible encyclopedia, a biblical-figure or biblical-place class, or named by OpenBible) with labels in seven languages, six Wikipedias' article titles, family and location statements and external identifiers, into Resources/Wikidata. Each item records the revision it was read at; nothing is loaded.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-udpipe",
+      "command": "pwsh -NoProfile -File scripts/fetch-udpipe.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch audited UDPipe 1.4.0 Windows tool plus pinned Ukrainian-IU, Russian-SynTagRus, German-HDT, Spanish-AnCora and English UD models; an installation that lacks a pinned model gains that model alone. Verifies byte size and MD5, retains MPL-2.0, CC BY-NC-SA 4.0 and CC BY-SA 4.0 licences; it loads/maps nothing.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-crosswire-strong",
+      "command": "pwsh -NoProfile -File scripts/fetch-crosswire-strong.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the Strong-numbered CrossWire SWORD modules taken on 2026-10-01 (TSK-0909): FreSegond1910 into Resources/Segond1910Strong (numbers only, laid onto the eBible Segond), FreJND into Resources/DarbyFrench (JND2024), GerSch into Resources/Schlachter1951 (SCH1951) and RLT into Resources/RevisedLiteral (RLT2018), each pinned by SHA-256 and refused if its conf's DistributionLicense no longer reads as it did. About 13 MB. RusVZh and ABP are not fetched: their terms do not reach this project. The script lands with wt/s39-strong and does not exist on main until that is merged.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-crosswire-strong",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- crosswire-strong",
+      "project": "essenthos-core",
+      "description": "Link the CrossWire Strong numberings (TSK-0909) in essenthos_core: FreSegond1910's numbers laid onto LSG1910 (against BHSA, TR1894, NESTLE1904), and JND2024 (BHSA, NESTLE1904, WH1881), SCH1951 (BHSA, TR1894, NESTLE1904) and RLT2018 (BHSA, TR1894, TR1550) by the numbers in their own modules; read and never stored, as union-strong does, then the verse links and a carry. The three texts must be loaded first (core-reload JND2024 / SCH1951 / RLT2018). On a slim copy the twelve pairs took 90 s and reached 97.3-99.9% of the numbered words. Records itself in recipe.json. Lands with wt/s39-strong.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-ar-avd",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only ar_avd",
+      "project": "essenthos-core",
+      "description": "Fetch BSOJ's word alignment of the Van Dyck Arabic Bible to unfoldingWord's Hebrew and Greek from Door43 (BSOJ/ar_avd v6.9, SHA-256 pinned, CC BY-SA 4.0, 448,187 milestones over 66 books) into Resources/Door43/ar_avd. Only links are drawn from it, onto AVD1865; the text stays eBible's. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-hi-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only hi_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Door43 word alignment of the Indian Revised Version (Hindi) to unfoldingWord's Hebrew and Greek (Door43-Catalog/hi_irv v12, SHA-256 pinned, CC BY-SA 4.0, 430,532 milestones over 66 books) into Resources/Door43/hi_irv. Only links are drawn from it, onto IRV2019. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-bn-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only bn_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Indian Revised Version (Bengali) from Door43 (Door43-Catalog/bn_irv v5, SHA-256 pinned, CC BY-SA 4.0): the whole Bible, loaded as the text IRVBEN, with its New Testament aligned to the Greek in 101,374 milestones. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-as-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only as_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Indian Revised Version (Assamese) from Door43 (Door43-Catalog/as_irv v3, SHA-256 pinned, CC BY-SA 4.0): the whole Bible, loaded as the text IRVASM, with its New Testament aligned to the Greek in 118,110 milestones. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-openhebrewbible",
+      "command": "pwsh -NoProfile -File scripts/fetch-openhebrewbible.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the Open Hebrew Bible's mapping of the Chinese Union Version to BHS (009-BHS-mapping-CUV/CUV-OT-mapped-to-BHS.csv, Eliran Wong, CC BY-NC 4.0) and the README its terms are stated in, into Resources/OpenHebrewBible, pinned to commit 28ae9b2 by SHA-256; the README is re-read first. About 19 MB (TSK-0909). The script lands with wt/s39-strong and does not exist on main until that is merged.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-ohb-cuv",
+      "command": "dotnet run --project Essenthos.Forge -c Release -- ohb-cuv --replace",
+      "project": "essenthos-core",
+      "description": "Link the Chinese Union Version's Old Testament (CUV and CUVS) to BHSA by the Open Hebrew Bible's mapping in essenthos_core, stated-by-source (TSK-0909). --replace removes the CUV/CUVS-to-BHSA links FHL's numbers drew, writes the mapping, then matches FHL's numbers to BHSA again so they corroborate it and fill the words it does not state; then the verse links and a carry. Needs Resources/OpenHebrewBible (fetch-openhebrewbible) and Resources/mapping. On a slim copy: 271,108 stated links per script, 200,551 corroborated by FHL's numbers, 4,472 FHL links beside them, about 40 s. Records itself in recipe.json. Lands with wt/s39-strong.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-gu-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only gu_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Indian Revised Version (Gujarati) from Door43 (Door43-Catalog/gu_irv v4, SHA-256 pinned, CC BY-SA 4.0): its New Testament, loaded as the text IRVGUJ, with 108,616 alignment milestones to the Greek. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-kn-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only kn_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Indian Revised Version (Kannada) from Door43 (Door43-Catalog/kn_irv v5, SHA-256 pinned, CC BY-SA 4.0): its New Testament, loaded as the text IRVKAN, with 93,859 alignment milestones to the Greek. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-ml-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only ml_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Indian Revised Version (Malayalam) from Door43 (Door43-Catalog/ml_irv v5, SHA-256 pinned, CC BY-SA 4.0): the whole Bible, the New Testament aligned, loaded as the text IRVMAL, with 79,528 alignment milestones to the Greek. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-mr-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only mr_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Indian Revised Version (Marathi) from Door43 (Door43-Catalog/mr_irv v4, SHA-256 pinned, CC BY-SA 4.0): its New Testament, loaded as the text IRVMAR, with 113,022 alignment milestones to the Greek. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-pa-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only pa_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Indian Revised Version (Punjabi) from Door43 (Door43-Catalog/pa_irv v3, SHA-256 pinned, CC BY-SA 4.0): its New Testament, loaded as the text IRVPAN, with 128,991 alignment milestones to the Greek. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-ta-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only ta_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Indian Revised Version (Tamil) from Door43 (Door43-Catalog/ta_irv v3, SHA-256 pinned, CC BY-SA 4.0): the whole Bible, the New Testament aligned, loaded as the text IRVTAM, with 102,597 alignment milestones to the Greek. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-te-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only te_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Indian Revised Version (Telugu) from Door43 (Door43-Catalog/te_irv v2, SHA-256 pinned, CC BY-SA 4.0): its New Testament, loaded as the text IRVTEL, with 96,367 alignment milestones to the Greek. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-ur-deva-irv",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only ur-deva_irv",
+      "project": "essenthos-core",
+      "description": "Fetch the Indian Revised Version (Urdu, in Devanagari) from Door43 (Door43-Catalog/ur-deva_irv v2, SHA-256 pinned, CC BY-SA 4.0): the whole Bible, the New Testament aligned, loaded as the text IRVURD, with 119,570 alignment milestones to the Greek. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-en-ust",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only en_ust",
+      "project": "essenthos-core",
+      "description": "Fetch the unfoldingWord Simplified Text from Door43 (unfoldingWord/en_ust v91, SHA-256 pinned, CC BY-SA 4.0): 59 books loaded as the text UST, every word tied to unfoldingWord's Hebrew or Greek in 397,226 milestones. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-vi-glt",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only vi_glt",
+      "project": "essenthos-core",
+      "description": "Fetch the Vietnamese Literal Text from Door43 (vi_gl/vi_glt v1, SHA-256 pinned, CC BY-SA 4.0, FEBC): the New Testament and Ruth loaded as the text VIGLT, with 123,933 alignment milestones. Stops if the archive, LICENSE.md or manifest moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-door43-fr-lsg",
+      "command": "pwsh -NoProfile -File scripts/fetch-door43-aligned.ps1 -Only fr_lsg",
+      "project": "essenthos-core",
+      "description": "Fetch the Door43 word alignment of the Louis Segond 1910 New Testament to unfoldingWord's Greek (fr_gl/fr-textTranslation-FR_LSG v1, a Scripture Burrito, SHA-256 pinned, CC BY-SA 4.0, 116,124 milestones) into Resources/Door43/fr_lsg. Only links are drawn from it, onto LSG1910. Stops if the archive, licence or metadata moved.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "core-backup-rehearsal",
+      "command": "pwsh -NoProfile -File \"${root}/scripts/rehearse-backups.ps1\" -Output \"${output}\"",
+      "project": "essenthos-core",
+      "description": "Rehearse encrypted Accounts backup and recovery with synthetic isolated data and an ephemeral private key; no server deployment",
+      "env": {},
+      "params": [
+        {
+          "type": "text",
+          "name": "root",
+          "default": ".",
+          "raw": false
+        },
+        {
+          "type": "text",
+          "name": "output",
+          "default": "backup-rehearsal",
+          "raw": false
+        }
+      ],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-codices",
+      "command": "pwsh -NoProfile -File scripts/fetch-alexandrinus.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the three great codices as INTF transcribed them for the Virtual Manuscript Room (CC BY 4.0): Alexandrinus (with the books Swete prints from it), Sinaiticus and Vaticanus, each with CNTR's transcription beside it as the check on its verse labels. Every licence statement is re-read and a changed one stops the fetch; a manuscript already on disk is left alone (-Replace to fetch it again).",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-sblgnt",
+      "command": "pwsh -NoProfile -File scripts/fetch-sblgnt.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the SBL Greek New Testament's text (CC BY 4.0) from Faithlife/SBLGNT at a pinned commit, every file checked against its SHA-256 and both licence statements re-read; MorphGNT's ShareAlike parsing is not fetched. A complete copy on disk is left alone.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    },
+    {
+      "name": "fetch-elizabeth",
+      "command": "pwsh -NoProfile -File scripts/fetch-elizabeth.ps1",
+      "project": "essenthos-core",
+      "description": "Fetch the Church Slavonic Elizabeth Bible as CrossWire publishes it, SWORD module CSlElizabeth 1.5.2 (Public Domain, rusbible.ru's modernised spelling), pinned to the archive's SHA-256 with its DistributionLicense re-read; a copy at that version on disk is left alone.",
+      "env": {},
+      "params": [],
+      "kind": "action",
+      "quiet": false
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+[
+ {
+  "id": 721,
+  "verdict": "right",
+  "actual": "ἃ"
+ },
+ {
+  "id": 722,
+  "verdict": "right",
+  "actual": "ὅτι"
+ },
+ {
+  "id": 723,
+  "verdict": "right",
+  "actual": "ὄρους"
+ },
+ {
+  "id": 725,
+  "verdict": "right",
+  "actual": "ἄγγελος"
+ },
+ {
+  "id": 726,
+  "verdict": "right",
+  "actual": "εὗρον"
+ },
+ {
+  "id": 727,
+  "verdict": "wrong",
+  "actual": "οἰκῷ"
+ }
+]

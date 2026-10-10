@@ -1,0 +1,92 @@
+[
+ {
+  "id": 1129,
+  "verdict": "right",
+  "actual": "οὐκ"
+ },
+ {
+  "id": 1130,
+  "verdict": "right",
+  "actual": "ὧν"
+ },
+ {
+  "id": 1131,
+  "verdict": "right",
+  "actual": "ὁ ἀντιλαμβανόμενος"
+ },
+ {
+  "id": 1132,
+  "verdict": "right",
+  "actual": "οὐδὲ"
+ },
+ {
+  "id": 1133,
+  "verdict": "right",
+  "actual": "ὕψωσας"
+ },
+ {
+  "id": 1135,
+  "verdict": "right",
+  "actual": "ὁ θεὸς"
+ },
+ {
+  "id": 1136,
+  "verdict": "right",
+  "actual": "ὁ κρίνων"
+ },
+ {
+  "id": 1137,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 1138,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1139,
+  "verdict": "right",
+  "actual": "ἵνα"
+ },
+ {
+  "id": 1143,
+  "verdict": "wrong",
+  "actual": "ἦ"
+ },
+ {
+  "id": 1145,
+  "verdict": "right",
+  "actual": "Οὕτως"
+ },
+ {
+  "id": 1148,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1150,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 1152,
+  "verdict": "right",
+  "actual": "ὁ λαός"
+ },
+ {
+  "id": 1154,
+  "verdict": "right",
+  "actual": "αὐτὸς"
+ },
+ {
+  "id": 1155,
+  "verdict": "right",
+  "actual": "ὁ λαλῶν"
+ },
+ {
+  "id": 1156,
+  "verdict": "right",
+  "actual": "ὁ"
+ }
+]

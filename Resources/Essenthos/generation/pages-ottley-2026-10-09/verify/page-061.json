@@ -1,0 +1,57 @@
+[
+ {
+  "id": 745,
+  "verdict": "right",
+  "actual": "οἱ ἐν ᾅδου αἰνέσουσίν"
+ },
+ {
+  "id": 747,
+  "verdict": "right",
+  "actual": "οὐδὲ"
+ },
+ {
+  "id": 748,
+  "verdict": "right",
+  "actual": "οἱ ἐν ᾅδου τὴν"
+ },
+ {
+  "id": 749,
+  "verdict": "right",
+  "actual": "ἃ"
+ },
+ {
+  "id": 750,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 751,
+  "verdict": "right",
+  "actual": "ὁ βασιλεὺς"
+ },
+ {
+  "id": 752,
+  "verdict": "right",
+  "actual": "Ἑζεκίᾳ"
+ },
+ {
+  "id": 755,
+  "verdict": "right",
+  "actual": "αὐτοῦ"
+ },
+ {
+  "id": 757,
+  "verdict": "right",
+  "actual": "ὁ προφήτης"
+ },
+ {
+  "id": 758,
+  "verdict": "wrong",
+  "actual": "αὐτόν"
+ },
+ {
+  "id": 759,
+  "verdict": "right",
+  "actual": "ἄνθρωποι"
+ }
+]

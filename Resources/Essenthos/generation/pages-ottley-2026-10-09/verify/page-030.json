@@ -1,0 +1,47 @@
+[
+ {
+  "id": 322,
+  "verdict": "right",
+  "actual": "ἣν"
+ },
+ {
+  "id": 323,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 324,
+  "verdict": "right",
+  "actual": "Τῇ"
+ },
+ {
+  "id": 325,
+  "verdict": "right",
+  "actual": "ἀσεδὲκ"
+ },
+ {
+  "id": 326,
+  "verdict": "right",
+  "actual": "ἡ"
+ },
+ {
+  "id": 327,
+  "verdict": "right",
+  "actual": "καὶ"
+ },
+ {
+  "id": 328,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 330,
+  "verdict": "right",
+  "actual": "ὁ ἐν Αἰγύπτῳ"
+ },
+ {
+  "id": 331,
+  "verdict": "right",
+  "actual": "ὁ ἐν Ἀσσυρίοις"
+ }
+]

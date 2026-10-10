@@ -1,0 +1,32 @@
+[
+ {
+  "id": 888,
+  "verdict": "right",
+  "actual": "ὁ θεὸς"
+ },
+ {
+  "id": 889,
+  "verdict": "right",
+  "actual": "ὁ ποιήσας"
+ },
+ {
+  "id": 890,
+  "verdict": "right",
+  "actual": "ὁ πλάσας"
+ },
+ {
+  "id": 891,
+  "verdict": "right",
+  "actual": "ὁ ἠγαπημένος"
+ },
+ {
+  "id": 894,
+  "verdict": "right",
+  "actual": "ἃ"
+ },
+ {
+  "id": 896,
+  "verdict": "right",
+  "actual": "οὐ"
+ }
+]

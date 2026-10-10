@@ -1,0 +1,77 @@
+[
+ {
+  "id": 608,
+  "verdict": "wrong",
+  "actual": "ἴνα"
+ },
+ {
+  "id": 609,
+  "verdict": "right",
+  "actual": "αὐτοῦ"
+ },
+ {
+  "id": 611,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 612,
+  "verdict": "right",
+  "actual": "ᾧ"
+ },
+ {
+  "id": 613,
+  "verdict": "wrong",
+  "actual": "αἲ"
+ },
+ {
+  "id": 614,
+  "verdict": "neither",
+  "actual": "αἲ οὐ"
+ },
+ {
+  "id": 615,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 616,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 617,
+  "verdict": "right",
+  "actual": "αὐτῆς οὐ"
+ },
+ {
+  "id": 618,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 619,
+  "verdict": "right",
+  "actual": "ἄρχων"
+ },
+ {
+  "id": 620,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 622,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 623,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 624,
+  "verdict": "right",
+  "actual": "ὁ"
+ }
+]

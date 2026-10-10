@@ -1,0 +1,77 @@
+[
+ {
+  "id": 1042,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 1043,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 1045,
+  "verdict": "right",
+  "actual": "ὄρος"
+ },
+ {
+  "id": 1046,
+  "verdict": "right",
+  "actual": "εἰς ὁδὸν"
+ },
+ {
+  "id": 1047,
+  "verdict": "right",
+  "actual": "εἰς βόσκημα"
+ },
+ {
+  "id": 1050,
+  "verdict": "right",
+  "actual": "ἡ"
+ },
+ {
+  "id": 1051,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 1054,
+  "verdict": "right",
+  "actual": "εἰ"
+ },
+ {
+  "id": 1057,
+  "verdict": "right",
+  "actual": "εἶ"
+ },
+ {
+  "id": 1059,
+  "verdict": "right",
+  "actual": "ὧν"
+ },
+ {
+  "id": 1063,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1064,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 1065,
+  "verdict": "right",
+  "actual": "οὓς"
+ },
+ {
+  "id": 1066,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 1068,
+  "verdict": "right",
+  "actual": "εἰς τὰς νήσους"
+ }
+]

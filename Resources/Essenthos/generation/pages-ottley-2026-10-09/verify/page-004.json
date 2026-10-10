@@ -1,0 +1,52 @@
+[
+ {
+  "id": 45,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 46,
+  "verdict": "right",
+  "actual": "αὐτῶν"
+ },
+ {
+  "id": 47,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ },
+ {
+  "id": 48,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 49,
+  "verdict": "right",
+  "actual": "εἰς τὰς πέτρας"
+ },
+ {
+  "id": 50,
+  "verdict": "right",
+  "actual": "εἰς τὴν γῆν"
+ },
+ {
+  "id": 52,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 53,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ },
+ {
+  "id": 54,
+  "verdict": "right",
+  "actual": "ὄρος"
+ },
+ {
+  "id": 55,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ }
+]

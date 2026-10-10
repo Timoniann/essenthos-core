@@ -1,0 +1,87 @@
+[
+ {
+  "id": 190,
+  "verdict": "right",
+  "actual": "ὁ θεός"
+ },
+ {
+  "id": 191,
+  "verdict": "right",
+  "actual": "οὐκ"
+ },
+ {
+  "id": 192,
+  "verdict": "right",
+  "actual": "ὁ θυμός"
+ },
+ {
+  "id": 193,
+  "verdict": "right",
+  "actual": "ὁ λαὸς"
+ },
+ {
+  "id": 194,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ },
+ {
+  "id": 195,
+  "verdict": "right",
+  "actual": "αὐτοῦ"
+ },
+ {
+  "id": 196,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 197,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 198,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ },
+ {
+  "id": 199,
+  "verdict": "wrong",
+  "actual": "Μαννασσὴ"
+ },
+ {
+  "id": 200,
+  "verdict": "wrong",
+  "actual": "Μαννασσή"
+ },
+ {
+  "id": 202,
+  "verdict": "right",
+  "actual": "εἰς ἁρπαγήν"
+ },
+ {
+  "id": 203,
+  "verdict": "right",
+  "actual": "εἰς προνομήν"
+ },
+ {
+  "id": 204,
+  "verdict": "right",
+  "actual": "ὁ θυμός"
+ },
+ {
+  "id": 205,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 207,
+  "verdict": "right",
+  "actual": "οὐχ"
+ },
+ {
+  "id": 208,
+  "verdict": "right",
+  "actual": "ὁ νοῦς"
+ }
+]

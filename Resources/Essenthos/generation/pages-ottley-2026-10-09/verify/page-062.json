@@ -1,0 +1,77 @@
+[
+ {
+  "id": 761,
+  "verdict": "wrong",
+  "actual": "οὔκ"
+ },
+ {
+  "id": 764,
+  "verdict": "wrong",
+  "actual": "ὃ"
+ },
+ {
+  "id": 765,
+  "verdict": "right",
+  "actual": "Ἀγαθὸς"
+ },
+ {
+  "id": 766,
+  "verdict": "right",
+  "actual": "ὁ λόγος"
+ },
+ {
+  "id": 767,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 768,
+  "verdict": "right",
+  "actual": "αὐτήν"
+ },
+ {
+  "id": 769,
+  "verdict": "right",
+  "actual": "ὁδὸν"
+ },
+ {
+  "id": 770,
+  "verdict": "right",
+  "actual": "ὄρος"
+ },
+ {
+  "id": 771,
+  "verdict": "right",
+  "actual": "εἰς εὐθεῖαν"
+ },
+ {
+  "id": 772,
+  "verdict": "right",
+  "actual": "εἰς ὁδοὺς"
+ },
+ {
+  "id": 773,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 774,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 775,
+  "verdict": "right",
+  "actual": "ὁ εὐαγγελιζόμενος"
+ },
+ {
+  "id": 777,
+  "verdict": "right",
+  "actual": "εἰπὸν"
+ },
+ {
+  "id": 778,
+  "verdict": "right",
+  "actual": "ὁ θεὸς"
+ }
+]

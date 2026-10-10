@@ -1,0 +1,57 @@
+[
+ {
+  "id": 1284,
+  "verdict": "right",
+  "actual": "θυσιαστήριόν"
+ },
+ {
+  "id": 1285,
+  "verdict": "right",
+  "actual": "σὺν"
+ },
+ {
+  "id": 1288,
+  "verdict": "right",
+  "actual": "γὰρ"
+ },
+ {
+  "id": 1289,
+  "verdict": "right",
+  "actual": "ἐπάταξά"
+ },
+ {
+  "id": 1290,
+  "verdict": "wrong",
+  "actual": "ἕλεος"
+ },
+ {
+  "id": 1292,
+  "verdict": "neither",
+  "actual": "Σίων"
+ },
+ {
+  "id": 1293,
+  "verdict": "right",
+  "actual": "Ἰσραήλ"
+ },
+ {
+  "id": 1294,
+  "verdict": "right",
+  "actual": "γεγενῆσθαι"
+ },
+ {
+  "id": 1296,
+  "verdict": "right",
+  "actual": "Ἰσραήλ"
+ },
+ {
+  "id": 1297,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1299,
+  "verdict": "right",
+  "actual": "ὁ"
+ }
+]

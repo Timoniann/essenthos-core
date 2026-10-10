@@ -1,0 +1,62 @@
+[
+ {
+  "id": 242,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 243,
+  "verdict": "right",
+  "actual": "Ἀμμὼν"
+ },
+ {
+  "id": 244,
+  "verdict": "right",
+  "actual": "ἐν"
+ },
+ {
+  "id": 245,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 246,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 247,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 248,
+  "verdict": "right",
+  "actual": "αὐτοῦ"
+ },
+ {
+  "id": 249,
+  "verdict": "right",
+  "actual": "ἣν"
+ },
+ {
+  "id": 250,
+  "verdict": "wrong",
+  "actual": "Ἠσαίας"
+ },
+ {
+  "id": 251,
+  "verdict": "right",
+  "actual": "ὄρους"
+ },
+ {
+  "id": 252,
+  "verdict": "right",
+  "actual": "ὑψώσατε"
+ },
+ {
+  "id": 253,
+  "verdict": "right",
+  "actual": "αὐτούς"
+ }
+]

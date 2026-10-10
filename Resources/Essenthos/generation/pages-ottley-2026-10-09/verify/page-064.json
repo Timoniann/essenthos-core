@@ -1,0 +1,17 @@
+[
+ {
+  "id": 808,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 809,
+  "verdict": "wrong",
+  "actual": "οὖ"
+ },
+ {
+  "id": 810,
+  "verdict": "wrong",
+  "actual": "εἴ"
+ }
+]

@@ -1,0 +1,27 @@
+[
+ {
+  "id": 272,
+  "verdict": "right",
+  "actual": "τὸ"
+ },
+ {
+  "id": 273,
+  "verdict": "wrong",
+  "actual": "αὔτη"
+ },
+ {
+  "id": 274,
+  "verdict": "right",
+  "actual": "ἣν"
+ },
+ {
+  "id": 276,
+  "verdict": "right",
+  "actual": "ζυγὸς"
+ },
+ {
+  "id": 278,
+  "verdict": "wrong",
+  "actual": "ῥύμαις αὑτῆς"
+ }
+]

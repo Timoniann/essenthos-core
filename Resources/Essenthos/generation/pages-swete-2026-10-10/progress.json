@@ -1,0 +1,21 @@
+{
+ "title": "Swete's Septuagint: every page read twice against the scan",
+ "action": "pages-swete",
+ "state": "running",
+ "started": "2026-10-10T19:38:24+00:00",
+ "updated": "2026-10-10T19:38:25+00:00",
+ "pages": {
+  "total": 2288,
+  "done": 3,
+  "failed": 0
+ },
+ "items": {
+  "total": 13,
+  "read": 13,
+  "right": 10,
+  "wrong": 3,
+  "neither": 0
+ },
+ "note": null,
+ "after": "Tell Claude it has finished: the corrections both readings agree on go into the Swete converter's page table, then tests and the load. A book can be applied before the whole edition is read."
+}

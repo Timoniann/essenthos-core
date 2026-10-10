@@ -1,0 +1,1 @@
+{"type": "object", "additionalProperties": false, "required": ["items"], "properties": {"items": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["id", "prints", "actual"], "properties": {"id": {"type": "integer"}, "prints": {"type": "string", "enum": ["A", "B", "neither"]}, "actual": {"type": "string"}}}}}}

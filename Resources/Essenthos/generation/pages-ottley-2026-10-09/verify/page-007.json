@@ -1,0 +1,67 @@
+[
+ {
+  "id": 77,
+  "verdict": "right",
+  "actual": "ἐν"
+ },
+ {
+  "id": 79,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 80,
+  "verdict": "wrong",
+  "actual": "Ἅσω"
+ },
+ {
+  "id": 81,
+  "verdict": "wrong",
+  "actual": "ὥρυξα"
+ },
+ {
+  "id": 82,
+  "verdict": "right",
+  "actual": "αὐτῷ"
+ },
+ {
+  "id": 83,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ },
+ {
+  "id": 86,
+  "verdict": "right",
+  "actual": "οὐκ"
+ },
+ {
+  "id": 87,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 88,
+  "verdict": "right",
+  "actual": "ἀναβήσεται εἰς"
+ },
+ {
+  "id": 89,
+  "verdict": "right",
+  "actual": "ὡς εἰς"
+ },
+ {
+  "id": 90,
+  "verdict": "right",
+  "actual": "βρέξαι εἰς"
+ },
+ {
+  "id": 91,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ },
+ {
+  "id": 92,
+  "verdict": "right",
+  "actual": "οὐ"
+ }
+]

@@ -1,0 +1,52 @@
+[
+ {
+  "id": 548,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 552,
+  "verdict": "wrong",
+  "actual": "ἐνὸς"
+ },
+ {
+  "id": 553,
+  "verdict": "right",
+  "actual": "ἂν"
+ },
+ {
+  "id": 554,
+  "verdict": "right",
+  "actual": "ὄρους"
+ },
+ {
+  "id": 555,
+  "verdict": "right",
+  "actual": "μενεῖ ὁ"
+ },
+ {
+  "id": 558,
+  "verdict": "right",
+  "actual": "Κύριος ὁ"
+ },
+ {
+  "id": 559,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 562,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 564,
+  "verdict": "right",
+  "actual": "τῇ"
+ },
+ {
+  "id": 566,
+  "verdict": "right",
+  "actual": "οἱ ἐργαζόμενοι"
+ }
+]

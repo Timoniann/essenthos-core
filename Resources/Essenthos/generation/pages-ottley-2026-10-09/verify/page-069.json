@@ -1,0 +1,67 @@
+[
+ {
+  "id": 870,
+  "verdict": "right",
+  "actual": "οὐκ"
+ },
+ {
+  "id": 871,
+  "verdict": "right",
+  "actual": "Οὕτως"
+ },
+ {
+  "id": 872,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 875,
+  "verdict": "wrong",
+  "actual": "ἰδοῦ"
+ },
+ {
+  "id": 876,
+  "verdict": "right",
+  "actual": "ἃ"
+ },
+ {
+  "id": 878,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 879,
+  "verdict": "right",
+  "actual": "κοπιάσαί"
+ },
+ {
+  "id": 880,
+  "verdict": "right",
+  "actual": "εἰμι"
+ },
+ {
+  "id": 881,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 882,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 883,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 884,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 887,
+  "verdict": "right",
+  "actual": "εἰς"
+ }
+]

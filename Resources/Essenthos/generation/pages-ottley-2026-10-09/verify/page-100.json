@@ -1,0 +1,72 @@
+[
+ {
+  "id": 1374,
+  "verdict": "right",
+  "actual": "εἰμι"
+ },
+ {
+  "id": 1375,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1377,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1378,
+  "verdict": "right",
+  "actual": "Ὃν"
+ },
+ {
+  "id": 1380,
+  "verdict": "right",
+  "actual": "αὐτόν"
+ },
+ {
+  "id": 1382,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 1383,
+  "verdict": "right",
+  "actual": "οἱ ἐκλεκτοί"
+ },
+ {
+  "id": 1384,
+  "verdict": "right",
+  "actual": "οἱ δοῦλοί"
+ },
+ {
+  "id": 1385,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1386,
+  "verdict": "wrong",
+  "actual": "οἱ"
+ },
+ {
+  "id": 1387,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1389,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 1390,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 1391,
+  "verdict": "right",
+  "actual": "οἱ"
+ }
+]

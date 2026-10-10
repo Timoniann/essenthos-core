@@ -1,0 +1,22 @@
+[
+ {
+  "id": 127,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ },
+ {
+  "id": 129,
+  "verdict": "right",
+  "actual": "ἤκουσα"
+ },
+ {
+  "id": 130,
+  "verdict": "wrong",
+  "actual": "ἥκουσαν"
+ },
+ {
+  "id": 133,
+  "verdict": "right",
+  "actual": "Ἀχὰζ"
+ }
+]

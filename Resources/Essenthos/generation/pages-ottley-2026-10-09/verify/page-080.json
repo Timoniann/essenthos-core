@@ -1,0 +1,37 @@
+[
+ {
+  "id": 1069,
+  "verdict": "right",
+  "actual": "αἱ"
+ },
+ {
+  "id": 1071,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 1072,
+  "verdict": "wrong",
+  "actual": "ᾦ"
+ },
+ {
+  "id": 1073,
+  "verdict": "right",
+  "actual": "οὐκ"
+ },
+ {
+  "id": 1074,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ },
+ {
+  "id": 1075,
+  "verdict": "right",
+  "actual": "ὡς"
+ },
+ {
+  "id": 1076,
+  "verdict": "right",
+  "actual": "αὐτοῦ"
+ }
+]

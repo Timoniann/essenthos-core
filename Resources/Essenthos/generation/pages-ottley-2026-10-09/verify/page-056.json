@@ -1,0 +1,82 @@
+[
+ {
+  "id": 671,
+  "verdict": "right",
+  "actual": "αὐτὸν"
+ },
+ {
+  "id": 672,
+  "verdict": "right",
+  "actual": "ὁ γραμματεὺς"
+ },
+ {
+  "id": 673,
+  "verdict": "right",
+  "actual": "Ἰωὰχ"
+ },
+ {
+  "id": 674,
+  "verdict": "right",
+  "actual": "ἵνα"
+ },
+ {
+  "id": 675,
+  "verdict": "right",
+  "actual": "οἳ"
+ },
+ {
+  "id": 676,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 679,
+  "verdict": "right",
+  "actual": "ὁ βασιλεὺς"
+ },
+ {
+  "id": 680,
+  "verdict": "right",
+  "actual": "ἕως"
+ },
+ {
+  "id": 681,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 682,
+  "verdict": "right",
+  "actual": "ἡ"
+ },
+ {
+  "id": 683,
+  "verdict": "right",
+  "actual": "ὁ θεὸς"
+ },
+ {
+  "id": 684,
+  "verdict": "right",
+  "actual": "ὁ θεὸς"
+ },
+ {
+  "id": 687,
+  "verdict": "right",
+  "actual": "Ἰωὰχ"
+ },
+ {
+  "id": 688,
+  "verdict": "right",
+  "actual": "Ἀσὰφ"
+ },
+ {
+  "id": 689,
+  "verdict": "wrong",
+  "actual": "Ἐζεκίαν"
+ },
+ {
+  "id": 690,
+  "verdict": "right",
+  "actual": "Ῥαψάκου"
+ }
+]

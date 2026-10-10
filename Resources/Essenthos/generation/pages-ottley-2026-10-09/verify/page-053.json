@@ -1,0 +1,82 @@
+[
+ {
+  "id": 625,
+  "verdict": "right",
+  "actual": "ἡ"
+ },
+ {
+  "id": 626,
+  "verdict": "right",
+  "actual": "ὁ λαὸς"
+ },
+ {
+  "id": 627,
+  "verdict": "right",
+  "actual": "ὁ ἐν αὐτῇ"
+ },
+ {
+  "id": 629,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 630,
+  "verdict": "right",
+  "actual": "ἑλιγήσεται"
+ },
+ {
+  "id": 631,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 634,
+  "verdict": "right",
+  "actual": "γῇ"
+ },
+ {
+  "id": 637,
+  "verdict": "wrong",
+  "actual": "Σιών"
+ },
+ {
+  "id": 639,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 641,
+  "verdict": "right",
+  "actual": "ὡς"
+ },
+ {
+  "id": 643,
+  "verdict": "right",
+  "actual": "εἰς τὸν"
+ },
+ {
+  "id": 644,
+  "verdict": "right",
+  "actual": "εἰς γενεὰς"
+ },
+ {
+  "id": 645,
+  "verdict": "right",
+  "actual": "οἱ ἄρχοντες"
+ },
+ {
+  "id": 646,
+  "verdict": "right",
+  "actual": "οὐκ"
+ },
+ {
+  "id": 647,
+  "verdict": "right",
+  "actual": "οἱ μεγιστᾶνες"
+ },
+ {
+  "id": 648,
+  "verdict": "right",
+  "actual": "εἰς τὰς"
+ }
+]

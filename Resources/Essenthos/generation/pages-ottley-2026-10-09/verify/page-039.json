@@ -1,0 +1,72 @@
+[
+ {
+  "id": 421,
+  "verdict": "wrong",
+  "actual": "ἐπι"
+ },
+ {
+  "id": 422,
+  "verdict": "right",
+  "actual": "ὁ μέγας"
+ },
+ {
+  "id": 426,
+  "verdict": "right",
+  "actual": "ὁ θεός"
+ },
+ {
+  "id": 427,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 428,
+  "verdict": "right",
+  "actual": "ὁ ἀσεβής"
+ },
+ {
+  "id": 429,
+  "verdict": "right",
+  "actual": "ἵνα"
+ },
+ {
+  "id": 430,
+  "verdict": "right",
+  "actual": "ὁ βραχίων"
+ },
+ {
+  "id": 431,
+  "verdict": "right",
+  "actual": "ὁ θεὸς"
+ },
+ {
+  "id": 433,
+  "verdict": "right",
+  "actual": "ὁ θεὸς"
+ },
+ {
+  "id": 435,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 436,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 437,
+  "verdict": "right",
+  "actual": "ἄρσεν"
+ },
+ {
+  "id": 438,
+  "verdict": "right",
+  "actual": "μικρὰ"
+ },
+ {
+  "id": 439,
+  "verdict": "right",
+  "actual": "ἡ"
+ }
+]

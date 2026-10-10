@@ -1,0 +1,47 @@
+[
+ {
+  "id": 997,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 999,
+  "verdict": "right",
+  "actual": "οὗτοι"
+ },
+ {
+  "id": 1000,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ },
+ {
+  "id": 1001,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 1002,
+  "verdict": "right",
+  "actual": "τῷ"
+ },
+ {
+  "id": 1003,
+  "verdict": "right",
+  "actual": "τοῦ"
+ },
+ {
+  "id": 1004,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 1009,
+  "verdict": "right",
+  "actual": "οὐ πάλαι"
+ },
+ {
+  "id": 1010,
+  "verdict": "neither",
+  "actual": "οὐ προτέρας"
+ }
+]

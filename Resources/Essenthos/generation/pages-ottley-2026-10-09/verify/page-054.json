@@ -1,0 +1,47 @@
+[
+ {
+  "id": 652,
+  "verdict": "right",
+  "actual": "αὐτοῦ"
+ },
+ {
+  "id": 653,
+  "verdict": "right",
+  "actual": "εἰς τὸν"
+ },
+ {
+  "id": 654,
+  "verdict": "right",
+  "actual": "εἰς γενεὰς"
+ },
+ {
+  "id": 656,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 657,
+  "verdict": "wrong",
+  "actual": "ἀλεῖται"
+ },
+ {
+  "id": 659,
+  "verdict": "right",
+  "actual": "εἰς ἕλη"
+ },
+ {
+  "id": 660,
+  "verdict": "right",
+  "actual": "εἰς τὴν"
+ },
+ {
+  "id": 661,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 662,
+  "verdict": "right",
+  "actual": "οὐ"
+ }
+]

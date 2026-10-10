@@ -1,0 +1,32 @@
+[
+ {
+  "id": 281,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 284,
+  "verdict": "right",
+  "actual": "τὸ σπέρμα"
+ },
+ {
+  "id": 285,
+  "verdict": "wrong",
+  "actual": "τό κατάλοιπον"
+ },
+ {
+  "id": 286,
+  "verdict": "right",
+  "actual": "ὄρος"
+ },
+ {
+  "id": 288,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 289,
+  "verdict": "right",
+  "actual": "ἄρχων"
+ }
+]

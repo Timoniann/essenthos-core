@@ -1,0 +1,87 @@
+[
+ {
+  "id": 700,
+  "verdict": "right",
+  "actual": "αἵ"
+ },
+ {
+  "id": 701,
+  "verdict": "right",
+  "actual": "Ἀνά"
+ },
+ {
+  "id": 703,
+  "verdict": "right",
+  "actual": "Ἐζεκίας"
+ },
+ {
+  "id": 704,
+  "verdict": "wrong",
+  "actual": "Ἑζεκίας"
+ },
+ {
+  "id": 705,
+  "verdict": "right",
+  "actual": "ὁ θεὸς"
+ },
+ {
+  "id": 706,
+  "verdict": "right",
+  "actual": "ὁ καθήμενος"
+ },
+ {
+  "id": 708,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 709,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 710,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 711,
+  "verdict": "right",
+  "actual": "Ἤκουσα"
+ },
+ {
+  "id": 712,
+  "verdict": "right",
+  "actual": "ἃ"
+ },
+ {
+  "id": 713,
+  "verdict": "right",
+  "actual": "οὐκ"
+ },
+ {
+  "id": 714,
+  "verdict": "right",
+  "actual": "ἦρας"
+ },
+ {
+  "id": 715,
+  "verdict": "right",
+  "actual": "εἰς ὕψος"
+ },
+ {
+  "id": 716,
+  "verdict": "right",
+  "actual": "εἰς τὸν"
+ },
+ {
+  "id": 717,
+  "verdict": "right",
+  "actual": "ἀνέβην εἰς"
+ },
+ {
+  "id": 718,
+  "verdict": "right",
+  "actual": "εἰς τὰ"
+ }
+]

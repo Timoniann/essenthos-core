@@ -1,0 +1,52 @@
+[
+ {
+  "id": 1407,
+  "verdict": "right",
+  "actual": "ὁ θύων"
+ },
+ {
+  "id": 1408,
+  "verdict": "right",
+  "actual": "ὁ δὲ ἀναφέρων"
+ },
+ {
+  "id": 1409,
+  "verdict": "right",
+  "actual": "ὁ διδοὺς"
+ },
+ {
+  "id": 1410,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1411,
+  "verdict": "right",
+  "actual": "ἃ"
+ },
+ {
+  "id": 1413,
+  "verdict": "wrong",
+  "actual": "ἥκουσαν"
+ },
+ {
+  "id": 1414,
+  "verdict": "right",
+  "actual": "ἃ"
+ },
+ {
+  "id": 1415,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1416,
+  "verdict": "wrong",
+  "actual": "ὃ θεός"
+ },
+ {
+  "id": 1419,
+  "verdict": "right",
+  "actual": "εἰς"
+ }
+]

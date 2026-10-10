@@ -1,0 +1,62 @@
+[
+ {
+  "id": 1012,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 1013,
+  "verdict": "right",
+  "actual": "ἐγώ εἰμι πρῶτος"
+ },
+ {
+  "id": 1015,
+  "verdict": "right",
+  "actual": "ἡ"
+ },
+ {
+  "id": 1016,
+  "verdict": "wrong",
+  "actual": "τήν"
+ },
+ {
+  "id": 1017,
+  "verdict": "right",
+  "actual": "μέ"
+ },
+ {
+  "id": 1018,
+  "verdict": "right",
+  "actual": "ἤμην"
+ },
+ {
+  "id": 1019,
+  "verdict": "right",
+  "actual": "αὐτοῦ"
+ },
+ {
+  "id": 1020,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 1021,
+  "verdict": "right",
+  "actual": "Ἐγώ"
+ },
+ {
+  "id": 1023,
+  "verdict": "right",
+  "actual": "εἰ"
+ },
+ {
+  "id": 1025,
+  "verdict": "right",
+  "actual": "ἄμμος"
+ },
+ {
+  "id": 1027,
+  "verdict": "right",
+  "actual": "ὡς"
+ }
+]

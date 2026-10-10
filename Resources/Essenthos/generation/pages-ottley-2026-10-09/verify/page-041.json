@@ -1,0 +1,82 @@
+[
+ {
+  "id": 455,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 457,
+  "verdict": "wrong",
+  "actual": "οὔ γὰρ"
+ },
+ {
+  "id": 459,
+  "verdict": "right",
+  "actual": "ὁ ποιήσας"
+ },
+ {
+  "id": 460,
+  "verdict": "right",
+  "actual": "οὐ μὴ"
+ },
+ {
+  "id": 461,
+  "verdict": "right",
+  "actual": "ἐν"
+ },
+ {
+  "id": 462,
+  "verdict": "right",
+  "actual": "μεγάλῃ"
+ },
+ {
+  "id": 464,
+  "verdict": "right",
+  "actual": "οἱ ἀπολόμενοι"
+ },
+ {
+  "id": 465,
+  "verdict": "right",
+  "actual": "ὄρος"
+ },
+ {
+  "id": 467,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 468,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 469,
+  "verdict": "right",
+  "actual": "ὡς"
+ },
+ {
+  "id": 471,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 472,
+  "verdict": "right",
+  "actual": "ὄρους"
+ },
+ {
+  "id": 474,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 475,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 476,
+  "verdict": "right",
+  "actual": "ὁ"
+ }
+]

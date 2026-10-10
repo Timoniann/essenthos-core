@@ -1,0 +1,22 @@
+[
+ {
+  "id": 691,
+  "verdict": "wrong",
+  "actual": "Ἐζεκὶας"
+ },
+ {
+  "id": 696,
+  "verdict": "right",
+  "actual": "Ἐζεκίαν"
+ },
+ {
+  "id": 697,
+  "verdict": "right",
+  "actual": "Ἰουδαίας"
+ },
+ {
+  "id": 698,
+  "verdict": "right",
+  "actual": "Μὴ"
+ }
+]

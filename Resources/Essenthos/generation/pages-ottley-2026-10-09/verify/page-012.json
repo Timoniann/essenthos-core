@@ -1,0 +1,37 @@
+[
+ {
+  "id": 147,
+  "verdict": "wrong",
+  "actual": "ὃ"
+ },
+ {
+  "id": 148,
+  "verdict": "right",
+  "actual": "ἥ"
+ },
+ {
+  "id": 150,
+  "verdict": "wrong",
+  "actual": "ἅνθρωπος"
+ },
+ {
+  "id": 151,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 154,
+  "verdict": "right",
+  "actual": "εἰς βόσκημα"
+ },
+ {
+  "id": 155,
+  "verdict": "right",
+  "actual": "εἰς καταπάτημα"
+ },
+ {
+  "id": 156,
+  "verdict": "right",
+  "actual": "εἰς"
+ }
+]

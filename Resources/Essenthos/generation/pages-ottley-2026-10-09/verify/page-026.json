@@ -1,0 +1,32 @@
+[
+ {
+  "id": 290,
+  "verdict": "wrong",
+  "actual": "Ἑσεβὼν"
+ },
+ {
+  "id": 291,
+  "verdict": "right",
+  "actual": "ἔρημον"
+ },
+ {
+  "id": 292,
+  "verdict": "wrong",
+  "actual": "Ἑσεβὼν"
+ },
+ {
+  "id": 293,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 295,
+  "verdict": "right",
+  "actual": "ἔτεσιν"
+ },
+ {
+  "id": 296,
+  "verdict": "right",
+  "actual": "εἶ"
+ }
+]

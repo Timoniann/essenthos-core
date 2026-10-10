@@ -1,0 +1,37 @@
+[
+ {
+  "id": 234,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 235,
+  "verdict": "right",
+  "actual": "δικαιοσύνη"
+ },
+ {
+  "id": 236,
+  "verdict": "wrong",
+  "actual": "λεὼν"
+ },
+ {
+  "id": 237,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 238,
+  "verdict": "wrong",
+  "actual": "οὗ"
+ },
+ {
+  "id": 239,
+  "verdict": "wrong",
+  "actual": "ἦ"
+ },
+ {
+  "id": 241,
+  "verdict": "right",
+  "actual": "οὐ"
+ }
+]

@@ -1,0 +1,27 @@
+[
+ {
+  "id": 567,
+  "verdict": "right",
+  "actual": "καὶ"
+ },
+ {
+  "id": 568,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 569,
+  "verdict": "right",
+  "actual": "τὸν"
+ },
+ {
+  "id": 570,
+  "verdict": "wrong",
+  "actual": "βία"
+ },
+ {
+  "id": 571,
+  "verdict": "right",
+  "actual": "ἂν"
+ }
+]

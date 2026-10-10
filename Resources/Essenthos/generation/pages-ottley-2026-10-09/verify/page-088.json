@@ -1,0 +1,62 @@
+[
+ {
+  "id": 1211,
+  "verdict": "right",
+  "actual": "ἄνθρωπος"
+ },
+ {
+  "id": 1212,
+  "verdict": "right",
+  "actual": "ὁ ἀντεχόμενος"
+ },
+ {
+  "id": 1213,
+  "verdict": "right",
+  "actual": "ὁ προσκείμενος"
+ },
+ {
+  "id": 1214,
+  "verdict": "right",
+  "actual": "ὁ εὐνοῦχος"
+ },
+ {
+  "id": 1215,
+  "verdict": "right",
+  "actual": "ἃ"
+ },
+ {
+  "id": 1216,
+  "verdict": "wrong",
+  "actual": "δουλέυειν"
+ },
+ {
+  "id": 1217,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 1218,
+  "verdict": "right",
+  "actual": "ὄρος"
+ },
+ {
+  "id": 1219,
+  "verdict": "right",
+  "actual": "ὁ συνάγων"
+ },
+ {
+  "id": 1221,
+  "verdict": "right",
+  "actual": "οὐ"
+ },
+ {
+  "id": 1222,
+  "verdict": "right",
+  "actual": "καὶ εἰσιν"
+ },
+ {
+  "id": 1223,
+  "verdict": "right",
+  "actual": "αὐτό"
+ }
+]

@@ -1,0 +1,62 @@
+[
+ {
+  "id": 897,
+  "verdict": "wrong",
+  "actual": "ᾗ"
+ },
+ {
+  "id": 898,
+  "verdict": "right",
+  "actual": "ἀνθρώποις εἰς"
+ },
+ {
+  "id": 899,
+  "verdict": "right",
+  "actual": "εἰς θεούς"
+ },
+ {
+  "id": 901,
+  "verdict": "right",
+  "actual": "ἥμισυ αὐτοῦ"
+ },
+ {
+  "id": 902,
+  "verdict": "right",
+  "actual": "λοιπὸν αὐτοῦ"
+ },
+ {
+  "id": 903,
+  "verdict": "right",
+  "actual": "εἰς"
+ },
+ {
+  "id": 904,
+  "verdict": "right",
+  "actual": "αὐτοῦ"
+ },
+ {
+  "id": 905,
+  "verdict": "right",
+  "actual": "ὁ θεὸς τὸν Ἰσραήλ"
+ },
+ {
+  "id": 906,
+  "verdict": "right",
+  "actual": "ὄρη"
+ },
+ {
+  "id": 907,
+  "verdict": "right",
+  "actual": "οἱ"
+ },
+ {
+  "id": 909,
+  "verdict": "right",
+  "actual": "ὁ"
+ },
+ {
+  "id": 912,
+  "verdict": "right",
+  "actual": "εἰς"
+ }
+]
