@@ -50,6 +50,7 @@ internal static class DeskApplication
         builder.Services.AddScoped<PortraitEditor>();
         builder.Services.AddSingleton<TextBoard>();
         builder.Services.AddSingleton<TextProblems>();
+        builder.Services.AddSingleton<PageReadings>();
         builder.Services.AddSingleton(new OperationAllowance(
             builder.Configuration.GetSection("Desk:Operations").Get<string[]>() ?? []));
         builder.Services.AddSingleton<Operations>();

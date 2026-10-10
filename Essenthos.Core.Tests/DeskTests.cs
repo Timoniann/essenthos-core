@@ -622,6 +622,32 @@ public sealed class DeskTests : IAsyncLifetime
     public void AVerseIsAddressedAsTheReadingApiTakesIt(string reference, string? address) =>
         Addresses.Of(reference).Should().Be(address);
 
+    /// <summary>A page reading's progress is read from its pipeline folder; a folder with none, or one caught mid-write, is left out.</summary>
+    [Fact]
+    public async Task APageReadingShowsHowFarItHasGot()
+    {
+        var generation = Path.Combine(Repository, "Resources", "Essenthos", "generation");
+        Directory.CreateDirectory(Path.Combine(generation, "pages-ottley"));
+        Directory.CreateDirectory(Path.Combine(generation, "pages-swete"));
+        Directory.CreateDirectory(Path.Combine(generation, "pages-half"));
+        File.WriteAllText(Path.Combine(generation, "pages-ottley", "progress.json"), """
+            {"title": "Ottley", "action": "pages-ottley", "state": "limit", "started": "2026-10-10T09:00:00+00:00",
+             "updated": "2026-10-10T10:00:00+00:00", "pages": {"total": 102, "done": 40, "failed": 0},
+             "items": {"total": 1008, "read": 400, "right": 380, "wrong": 15, "neither": 5},
+             "note": "Codex stopped at its usage limit.", "after": null}
+            """);
+        File.WriteAllText(Path.Combine(generation, "pages-half", "progress.json"), """{"title": "Ha""");
+
+        var readings = await Json<List<PageReading>>(await _http.GetAsync("/desk-api/texts/pages"));
+
+        readings.Should().ContainSingle();
+        readings[0].Should().BeEquivalentTo(new
+        {
+            Folder = "pages-ottley", Action = "pages-ottley", State = "limit",
+            Pages = new PageCount(102, 40, 0), Items = new ItemCount(1008, 400, 380, 15, 5),
+        });
+    }
+
     [Fact]
     public void EveryOpenOccurrenceHasAKeyOfItsOwn()
     {

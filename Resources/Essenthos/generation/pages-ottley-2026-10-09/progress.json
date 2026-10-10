@@ -1,0 +1,21 @@
+{
+ "title": "Ottley's Isaiah: second reading of the accent corrections",
+ "action": "pages-ottley",
+ "state": "stopped",
+ "started": "2026-10-10T18:08:52+00:00",
+ "updated": "2026-10-10T18:08:52+00:00",
+ "pages": {
+  "total": 102,
+  "done": 5,
+  "failed": 0
+ },
+ "items": {
+  "total": 1008,
+  "read": 42,
+  "right": 40,
+  "wrong": 1,
+  "neither": 1
+ },
+ "note": null,
+ "after": "Tell Claude it has finished: accept.py and write_table.py turn the confirmed ones into corrections, then tests and the load."
+}

@@ -195,6 +195,8 @@ internal static class DeskEndpoints
 
     public static void MapTexts(this RouteGroupBuilder routes)
     {
+        routes.MapGet("/texts/pages", (PageReadings readings) => readings.Read());
+
         routes.MapGet("/texts", (TextBoard board, AppDbContext db, CancellationToken cancellationToken) =>
             board.List(db, cancellationToken));
 
