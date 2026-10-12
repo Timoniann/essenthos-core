@@ -87,6 +87,17 @@ public sealed class DatasetLoaderStepTests : IDisposable
     }
 
     /// <summary>
+    /// The titles' words are written again once the readings have fixed some of them to a bearer, and
+    /// before any verse is read off the words.
+    /// </summary>
+    [Fact]
+    public void TheTitlesAreWrittenAgainRightAfterTheReadings()
+    {
+        Loader().StepNames().Should().ContainInOrder(
+            "titles", "fixed-titles", "title-readings", "settled-titles", "passage-readings", "own-references");
+    }
+
+    /// <summary>
     /// The relationships are read off the clauses after every step that moves a clause, and before
     /// the verses they were read from are listed.
     /// </summary>

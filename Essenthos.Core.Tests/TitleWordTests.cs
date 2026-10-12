@@ -60,7 +60,9 @@ public sealed class TitleWordTests : IDisposable
             (41, 1, ["פרעה"]),
             (21, 10, ["ה", "כהן", "ה", "גדול"]),
             (21, 1, ["כהן"]));
-        _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (12, 15, ["Pharaoh", "Sarai"]));
+        _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
+            (12, 15, ["Pharaoh", "Sarai"]),
+            (41, 1, ["Pharaoh"]));
         _greek = Corpus.Add(_db, EntityCandidates.GreekWitnesses[0], TextKind.CriticalEdition, "grc",
             (26, 3, ["ἀρχιερέως"]),
             (26, 4, ["ἀρχιερεῖς"]),
@@ -253,6 +255,93 @@ public sealed class TitleWordTests : IDisposable
         seed.Should().Be(6);
         (await _db.WordEntities.Select(a => a.Id).OrderBy(id => id).ToListAsync()).Should().Equal(ids);
     }
+
+    /// <summary>
+    /// A reading fixes Pharaoh of Genesis 41:1 to one king after the title has been written on every
+    /// Pharaoh. The next pass takes the title off that word and off the word the links carried it to,
+    /// and leaves every other row with its id; the pass after it writes nothing; and the corpus holds
+    /// what a pass run after the reading writes from nothing.
+    /// </summary>
+    [Fact]
+    public async Task AWordAReadingFixesToOneKingLosesTheTitleAndNothingElseIsWrittenAgain()
+    {
+        var hebrew = _db.WordAt(_hebrew, 41, 1, 1);
+        var rendering = _db.WordAt(_english, 41, 1, 1);
+        Link(_db.WordAt(_english, 12, 15, 1), _db.WordAt(_hebrew, 12, 15, 1));
+        Link(rendering, hebrew);
+        _db.Entities.Add(new Entity { Kind = EntityKind.Person, Slug = "pharaoh-2", Name = "Pharaoh", SourceId = "p2", Source = "a test" });
+        await _db.SaveChangesAsync();
+        await _loader.NameTheWords(Titles, CancellationToken.None);
+        (await Named()).Should().ContainKeys(hebrew.Id, rendering.Id);
+
+        var readings = new TitleReadings(
+            "two models", "which king the verse means", "model-reading", "a reading of Pharaoh by two models",
+            "pharaoh-title", [new TitleReading("GEN 41:1", Pharaoh, "pharaoh-2", "the king of the dreams", Confidence: 0.9)]);
+        (await new TitleReadingLoader(_db, NullLogger<TitleReadingLoader>.Instance).Load(readings))
+            .ByBearer.Should().Equal(("pharaoh-2", 1));
+        var read = await Rows();
+
+        var (_, byText) = await _loader.NameTheWords(Titles, CancellationToken.None);
+
+        byText.Should().NotBeNull();
+        var titled = await Rows();
+        titled.Should().BeEquivalentTo(read.Where(row =>
+            !(row.Source == TitleLoader.WordSource && (row.WordId == hebrew.Id || row.WordId == rendering.Id))));
+        titled.Where(row => row.WordId == hebrew.Id || row.WordId == rendering.Id)
+            .Should().HaveCount(2).And.OnlyContain(row => row.Source == readings.Source);
+
+        (await _loader.NameTheWords(Titles, CancellationToken.None)).ByText.Should().BeNull();
+        (await Rows()).Should().BeEquivalentTo(titled);
+
+        var written = titled.Where(row => row.Source == TitleLoader.WordSource)
+            .Select(row => (row.WordId, row.EntityId, row.Confidence, row.Note)).ToList();
+        await _db.Database.ExecuteSqlRawAsync("DELETE FROM word_entity WHERE source = {0}", TitleLoader.WordSource);
+        await _loader.NameTheWords(Titles, CancellationToken.None);
+        (await Rows()).Where(row => row.Source == TitleLoader.WordSource)
+            .Select(row => (row.WordId, row.EntityId, row.Confidence, row.Note))
+            .Should().BeEquivalentTo(written);
+    }
+
+    /// <summary>
+    /// A rule reaches one word more than it did: that word and the word it carries to are written,
+    /// and every row already there keeps its id and its claim.
+    /// </summary>
+    [Fact]
+    public async Task ARuleThatReachesAWordMoreWritesOnlyThatWord()
+    {
+        Link(_db.WordAt(_english, 12, 15, 1), _db.WordAt(_hebrew, 12, 15, 1));
+        await _db.SaveChangesAsync();
+        await _loader.NameTheWords([Titles[0]], CancellationToken.None);
+        var before = await Rows();
+        var claims = await _db.WordEntityClaims.AsNoTracking().Select(c => c.Id).ToListAsync();
+
+        await _loader.NameTheWords(Titles, CancellationToken.None);
+
+        var after = await Rows();
+        after.Should().Contain(before);
+        after.Except(before).Should().OnlyContain(row => row.Source == TitleLoader.WordSource && row.EntityId != before[0].EntityId);
+        (await _db.WordEntityClaims.AsNoTracking().Select(c => c.Id).ToListAsync()).Should().Contain(claims);
+    }
+
+    private void Link(Word rendering, Word word)
+    {
+        var link = new Link
+        {
+            FromTextId = rendering.TextId, ToTextId = word.TextId, Relation = LinkRelation.Renders,
+            Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = word, Side = LinkSide.To });
+    }
+
+    private sealed record Row(long Id, long WordId, int EntityId, string Source, double? Confidence, string? Note);
+
+    private async Task<List<Row>> Rows() =>
+        await _db.WordEntities.AsNoTracking()
+            .OrderBy(a => a.Id)
+            .Select(a => new Row(a.Id, a.WordId, a.EntityId, a.Source, a.Confidence, a.Note))
+            .ToListAsync();
 
     /// <summary>Every rule the shipped file gives names a number and, where it leaves verses out, verses.</summary>
     [Fact]

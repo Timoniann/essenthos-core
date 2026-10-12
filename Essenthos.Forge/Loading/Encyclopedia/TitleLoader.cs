@@ -104,6 +104,13 @@ internal sealed record TitleOutcome(
 /// persons and titles by the time anything is read off them; on a loaded corpus a record already
 /// held as a title under this decision is left exactly as it is.
 /// </para>
+///
+/// <para>
+/// It runs once more after <see cref="TitleReadingLoader"/>. A reading that fixes Pharaoh's word to
+/// one king makes it a word somebody else names, which a loaded corpus's first pass already sees and
+/// one built from nothing does not, so the second pass takes the title off it in the load that fixed
+/// it.
+/// </para>
 /// </summary>
 internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
 {
@@ -370,10 +377,51 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
         "AND coalesce(note, '') NOT LIKE @carried";
 
     /// <summary>
+    /// What the rules wrote last time and would not write now, seed or carried, against the
+    /// <c>pending_annotation</c> the seed and the carry filled.
+    /// </summary>
+    private static readonly string[] Withdrawn =
+    [
+        """
+        DELETE FROM word_entity a
+        WHERE a.source = @source
+          AND NOT EXISTS (SELECT 1 FROM pending_annotation p WHERE p.word_id = a.word_id AND p.entity_id = a.entity_id)
+        """,
+        """
+        DELETE FROM word_entity_claim c
+        USING word_entity a
+        WHERE c.word_entity_id = a.id AND c.source = @source
+          AND NOT EXISTS (SELECT 1 FROM pending_annotation p WHERE p.word_id = a.word_id AND p.entity_id = a.entity_id)
+        """,
+    ];
+
+    /// <summary>
+    /// A row the rules still write whose seed or link changed: said again in place, so the row and its
+    /// claim keep their ids.
+    /// </summary>
+    private static readonly string[] Restated =
+    [
+        """
+        UPDATE word_entity a SET method = @method, confidence = p.confidence, note = p.note
+        FROM pending_annotation p
+        WHERE a.source = @source AND p.word_id = a.word_id AND p.entity_id = a.entity_id
+          AND (a.method <> @method OR a.confidence IS DISTINCT FROM p.confidence OR a.note IS DISTINCT FROM p.note)
+        """,
+        """
+        UPDATE word_entity_claim c SET confidence = p.confidence, note = p.note
+        FROM word_entity a
+        JOIN pending_annotation p ON p.word_id = a.word_id AND p.entity_id = a.entity_id
+        WHERE c.word_entity_id = a.id AND c.source = @source AND c.method = @method
+          AND (c.confidence IS DISTINCT FROM p.confidence OR c.note IS DISTINCT FROM p.note)
+        """,
+    ];
+
+    /// <summary>
     /// The witness words each title's rules reach, annotated to it and carried along the links, unless
     /// they are exactly the words seeded last time. A word two titles' rules both reach is given to
-    /// neither. Returns how many witness words the rules reach, and per text what was written, which is
-    /// null where nothing had to be.
+    /// neither. What changed is all that is written: a row the rules no longer reach goes, a new one is
+    /// added, and every other keeps its id. Returns how many witness words the rules reach, and per text
+    /// what was written, which is null where nothing had to be.
     /// </summary>
     internal async Task<(int Seed, IReadOnlyList<(string Text, int Words)>? ByText)> NameTheWords(
         IReadOnlyList<TitleRecord> titles,
@@ -434,14 +482,18 @@ internal sealed class TitleLoader(AppDbContext db, ILogger<TitleLoader> logger)
 
         var method = Method;
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        await Annotating.Run(connection, transaction, "DELETE FROM word_entity WHERE source = @source",
-            cancellationToken, ("source", WordSource));
         await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
         await Annotating.Seed(
             connection,
             claimed.Select(c => (c.Key, c.Value.Entity, (double?)ByTheNumber, false, c.Value.Note)),
             cancellationToken);
         await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
+        foreach (var statement in Withdrawn.Concat(Restated))
+        {
+            await Annotating.Run(connection, transaction, statement, cancellationToken,
+                ("method", method), ("source", WordSource));
+        }
+
         await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,
             ("method", method), ("source", WordSource));
         await Annotating.Run(connection, transaction, Annotating.Claim, cancellationToken,

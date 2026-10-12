@@ -748,6 +748,66 @@ public sealed class DuplicateRecordTests : IDisposable
         (await _loader.Split([Helkiah with { Name = null }])).Should().Be((0, 0));
     }
 
+    /// <summary>
+    /// The resolution reads the number as the first man in the second man's verse, and the verses'
+    /// consensus already names the second man at the word and at the word the King James renders it
+    /// with. The split gives the resolution's rows to him and keeps the consensus as their claims, so
+    /// the next annotation pass finds the words answered and writes nothing, and a second split moves
+    /// nothing: every row and claim keeps its id.
+    /// </summary>
+    [Fact]
+    public async Task ASplitBesideAnotherPassesReadingLeavesNothingToWriteAgain()
+    {
+        var english = Corpus.Add(_db, "KJV", TextKind.Translation, "en", (9, 11, ["Helkiah"]));
+        _db.EntityNames.Add(new EntityName { Entity = _folded, Label = "Helkiah", HebrewStrongNumber = "H2518" });
+        await _db.SaveChangesAsync();
+        var hebrew = _db.WordAt(_hebrew, 9, 11, 3);
+        hebrew.StrongNumber = "H2518";
+        hebrew.Morphology = JsonDocument.Parse("""{"pos": "nmpr", "nameType": "pers"}""");
+        var rendering = _db.WordAt(english, 9, 11, 1);
+        var link = new Link
+        {
+            FromTextId = _hebrew.Id, ToTextId = english.Id, Relation = LinkRelation.Renders,
+            Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = hebrew, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.To });
+        foreach (var word in new[] { hebrew, rendering })
+        {
+            _db.WordEntities.Add(new WordEntity
+            {
+                Word = word, Entity = _meshullam, Method = LinkMethod.RuleBased, Confidence = 0.8,
+                Source = Essenthos.Core.Corpus.Annotations.Consensus, Note = "the verses' consensus",
+            });
+        }
+
+        await _db.SaveChangesAsync();
+        var annotations = new EntityAnnotationLoader(_db, NullLogger<EntityAnnotationLoader>.Instance);
+        await annotations.Load();
+        (await _db.WordEntities.CountAsync(a => a.EntityId == _folded.Id)).Should().Be(2);
+        var split = Helkiah with { Name = null };
+
+        await _loader.Split([split]);
+
+        var rows = await Annotations();
+        rows.Should().HaveCount(2).And.OnlyContain(row => row.EntityId == _meshullam.Id
+            && EntityAnnotationLoader.Written.Contains(row.Source));
+        (await _db.WordEntityClaims.AsNoTracking().CountAsync(c => c.Source == Essenthos.Core.Corpus.Annotations.Consensus))
+            .Should().Be(2);
+        var claims = await _db.WordEntityClaims.AsNoTracking().OrderBy(c => c.Id).Select(c => c.Id).ToListAsync();
+
+        await annotations.Load();
+        (await _loader.Split([split])).Should().Be((0, 0));
+
+        (await Annotations()).Should().Equal(rows);
+        (await _db.WordEntityClaims.AsNoTracking().OrderBy(c => c.Id).Select(c => c.Id).ToListAsync()).Should().Equal(claims);
+    }
+
+    private async Task<List<(long Id, long WordId, int EntityId, string Source)>> Annotations() =>
+        [.. (await _db.WordEntities.AsNoTracking().OrderBy(a => a.Id).ToListAsync())
+            .Select(a => (a.Id, a.WordId, a.EntityId, a.Source))];
+
     [Fact]
     public async Task ASplitMadeFindsNothingLeftToMove()
     {

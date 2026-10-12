@@ -326,7 +326,8 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
     /// row by row as a fold moves them, since a father named in the second man's verse is his father;
     /// and the name the record holds for him, which his own record carries instead.
     /// An annotation his record already has for the same word keeps the moved one's testimony as its
-    /// claims, as a fold does. The rest of the record stays as it was, except that a word it keeps
+    /// claims, as a fold does, or gives its own to the resolution's row (<see cref="SplitStatements"/>).
+    /// The rest of the record stays as it was, except that a word it keeps
     /// under a name the split has made the other man's too now says the split chose it
     /// (<see cref="ChosenStatements"/>), and a word in a verse the ruling says the record keeps, left
     /// naming nobody, names it again (<see cref="KeptSeed"/>).
@@ -395,7 +396,8 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
             foreach (var statement in split.Name is null ? SplitStatements[..^NameStatements] : SplitStatements)
             {
                 await Annotating.Run(connection, transaction, statement, cancellationToken,
-                    ("from", from), ("to", to), ("name", split.Name ?? string.Empty));
+                    ("from", from), ("to", to), ("name", split.Name ?? string.Empty),
+                    ("written", EntityAnnotationLoader.Written));
             }
 
             foreach (var statement in ChosenStatements)
@@ -668,12 +670,22 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
     /// The statements of a split, in order: the annotations, joined where his record already names
     /// the word and moved where it does not; the verse rows, the same way; the relationships and
     /// clauses the moved verses cite; and the name.
+    ///
+    /// <para>
+    /// Where the word is joined, the row his record already has stays and the moved one's testimony
+    /// becomes its claims, unless the moved row is the name resolution's own and his is an inference of
+    /// another pass: then the resolution's row moves to him and the inference becomes its claims. The
+    /// resolution asks only its own rows whether a word names somebody else, so a word left holding
+    /// the other pass's row is a word it names the first man at again on its next run.
+    /// </para>
     /// </summary>
     private static readonly string[] SplitStatements =
     [
         $"""
          CREATE TEMP TABLE parted ON COMMIT DROP AS
-         SELECT a.id, a.word_id, t.id AS joins
+         SELECT a.id, a.word_id, t.id AS joins,
+                t.id IS NOT NULL AND a.source = ANY(@written) AND NOT (t.source = ANY(@written))
+                    AND t.method NOT IN ('manual', 'stated-by-source') AS yields
          FROM word_entity a
          JOIN word w ON w.id = a.word_id
          JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
@@ -681,27 +693,34 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
          WHERE a.entity_id = @from AND {string.Format(InParting, "r")}
          """,
         """
-        INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
-        SELECT p.joins, a.method, a.confidence, a.source, a.note
-        FROM parted p JOIN word_entity a ON a.id = p.id
+        CREATE TEMP TABLE parted_pair ON COMMIT DROP AS
+        SELECT CASE WHEN p.yields THEN p.id ELSE p.joins END AS stays,
+               CASE WHEN p.yields THEN p.joins ELSE p.id END AS goes
+        FROM parted p
         WHERE p.joins IS NOT NULL
+        """,
+        """
+        INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
+        SELECT p.stays, a.method, a.confidence, a.source, a.note
+        FROM parted_pair p JOIN word_entity a ON a.id = p.goes
         ON CONFLICT DO NOTHING
         """,
         """
         INSERT INTO word_entity_claim (word_entity_id, method, confidence, source, note)
-        SELECT p.joins, c.method, c.confidence, c.source, c.note
-        FROM parted p JOIN word_entity_claim c ON c.word_entity_id = p.id
-        WHERE p.joins IS NOT NULL
+        SELECT p.stays, c.method, c.confidence, c.source, c.note
+        FROM parted_pair p JOIN word_entity_claim c ON c.word_entity_id = p.goes
         ON CONFLICT DO NOTHING
         """,
         """
-        WITH gone AS (DELETE FROM word_entity a USING parted p WHERE a.id = p.id AND p.joins IS NOT NULL RETURNING 1)
+        WITH gone AS (DELETE FROM word_entity a USING parted_pair p WHERE a.id = p.goes RETURNING 1)
         INSERT INTO fold_count SELECT count(*), true FROM gone
         """,
         """
         WITH moved AS (
-            UPDATE word_entity a SET entity_id = @to FROM parted p WHERE a.id = p.id AND p.joins IS NULL RETURNING 1)
-        INSERT INTO fold_count SELECT count(*), false FROM moved
+            UPDATE word_entity a SET entity_id = @to FROM parted p
+            WHERE a.id = p.id AND (p.joins IS NULL OR p.yields)
+            RETURNING p.joins IS NULL AS alone)
+        INSERT INTO fold_count SELECT count(*) FILTER (WHERE alone), false FROM moved
         """,
         $"""
          WITH gone AS (
