@@ -327,6 +327,8 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(TextVerseResponse))]
 [JsonSerializable(typeof(SourceNoteResponse))]
 [JsonSerializable(typeof(IList<SourceNoteResponse>))]
+[JsonSerializable(typeof(BookNotesResponse))]
+[JsonSerializable(typeof(Dictionary<string, BookNotesResponse>))]
 [JsonSerializable(typeof(IList<TextVerseResponse>))]
 [JsonSerializable(typeof(List<TextVerseResponse>))]
 [JsonSerializable(typeof(ChapterTextResponse))]

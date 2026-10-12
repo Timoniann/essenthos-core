@@ -133,7 +133,11 @@ internal record ChapterTextResponse(
     int Chapter,
     int ChapterCount,
     string Direction,
-    IList<TextVerseResponse> Verses);
+    IList<TextVerseResponse> Verses)
+{
+    /// <summary>The notes the text printed on the book's title, on its first chapter only.</summary>
+    public BookNotesResponse? BookNotes { get; init; }
+}
 
 internal static class ReadEndpoints
 {
@@ -312,7 +316,11 @@ internal static class ReadEndpoints
                 chapter,
                 chapterCount,
                 text.Direction == Database.Entities.Enums.TextDirection.RightToLeft ? "rtl" : "ltr",
-                verses));
+                verses)
+            {
+                BookNotes = (await Texts.BookNotes(db, [entry.Id], ordinal.Value, chapter, cancellationToken))
+                    .GetValueOrDefault(entry.Id),
+            });
         });
     }
 

@@ -392,6 +392,16 @@ internal record StrongCandidateResponse(string Number, string Method, double? Co
 /// </param>
 internal record SourceNoteResponse(string Kind, string Content, long? AnchorWordId = null, string? Anchor = null);
 
+/// <summary>
+/// The notes an edition printed on a book's title, which belong to the book and to no verse of it.
+/// </summary>
+/// <param name="Title">
+/// What the edition calls the book, which is the title the notes were printed on; null where it
+/// names the book nowhere.
+/// </param>
+/// <param name="Notes">In the order the edition printed them. None of them has an anchor word.</param>
+internal record BookNotesResponse(string? Title, IList<SourceNoteResponse> Notes);
+
 internal record TextVerseResponse(int Number, IList<TextWordResponse> Words, string Label = "")
 {
     /// <summary>

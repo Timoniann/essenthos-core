@@ -450,7 +450,10 @@ internal static class EnglishTextSource
                 Slug: BookReferences.Slug(ordinal),
                 Chapters: [.. book.Chapters.Select(chapter => Chapter(chapter, tagged))],
                 NameNative: book.Name,
-                Abbreviation: BookReferences.Abbreviation(ordinal)));
+                Abbreviation: BookReferences.Abbreviation(ordinal))
+            {
+                Notes = BookNoteDraft.From(book),
+            });
         }
 
         return new TextSource(text.Definition, drafts);

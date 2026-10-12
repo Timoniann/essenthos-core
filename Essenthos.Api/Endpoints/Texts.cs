@@ -147,6 +147,38 @@ internal static class Texts
     }
 
     /// <summary>
+    /// The notes each of these texts printed on this book's title, by text, for a text that printed
+    /// any. They come with the book's first chapter, where the title stands on the page, and with no
+    /// other chapter.
+    /// </summary>
+    public static async Task<Dictionary<int, BookNotesResponse>> BookNotes(
+        AppDbContext db,
+        IReadOnlyCollection<int> textIds,
+        int bookOrdinal,
+        int chapter,
+        CancellationToken cancellationToken)
+    {
+        if (chapter != 1)
+        {
+            return [];
+        }
+
+        var notes = await db.BookNotes
+            .Where(note => textIds.Contains(note.Book!.TextId) && note.Book.CanonicalOrdinal == bookOrdinal)
+            .OrderBy(note => note.Position)
+            .Select(note => new { note.Book!.TextId, note.Book.NameNative, note.Kind, note.Content })
+            .ToListAsync(cancellationToken);
+
+        return notes
+            .GroupBy(note => note.TextId)
+            .ToDictionary(
+                group => group.Key,
+                group => new BookNotesResponse(
+                    group.First().NameNative,
+                    [.. group.Select(note => new SourceNoteResponse(EnumSpelling.Of(note.Kind), note.Content))]));
+    }
+
+    /// <summary>
     /// The words of the ancient witnesses each of these words reaches, in one query rather than one
     /// per word.
     ///

@@ -79,6 +79,46 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("book", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.BookNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("integer")
+                        .HasColumnName("book_id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("content");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("kind");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer")
+                        .HasColumnName("position");
+
+                    b.HasKey("Id")
+                        .HasName("pk_book_note");
+
+                    b.HasIndex("BookId", "Position")
+                        .IsUnique()
+                        .HasDatabaseName("ix_book_note_book_id_position");
+
+                    b.ToTable("book_note", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_book_note_content_not_empty", "length(btrim(\"content\")) > 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Chapter", b =>
                 {
                     b.Property<int>("Id")
@@ -5002,6 +5042,18 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_book_texts_text_id");
 
                     b.Navigation("Text");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.BookNote", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Book", "Book")
+                        .WithMany()
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_book_note_book_book_id");
+
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Chapter", b =>

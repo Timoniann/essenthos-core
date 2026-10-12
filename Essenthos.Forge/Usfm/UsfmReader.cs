@@ -13,7 +13,14 @@ namespace Essenthos.Core.Usfm;
 /// anything in its own words about the book as a whole, and a Ukrainian pane headed "Genesis" is a
 /// Ukrainian pane a Ukrainian reader has to translate back.
 /// </param>
-internal sealed record UsfmBook(string Book, IReadOnlyList<UsfmChapter> Chapters, string Name = "");
+internal sealed record UsfmBook(string Book, IReadOnlyList<UsfmChapter> Chapters, string Name = "")
+{
+    /// <summary>
+    /// The notes the edition printed on the book's title (<c>\mt</c>), in the order it printed them.
+    /// They are about the book and stand before any verse, so no verse carries them.
+    /// </summary>
+    public IReadOnlyList<UsfmNote> TitleNotes { get; init; } = [];
+}
 
 internal sealed record UsfmChapter(int Number, IReadOnlyList<UsfmVerse> Verses);
 
@@ -155,11 +162,12 @@ internal static partial class UsfmReader
 
     /// <summary>
     /// Markers that are titles, notes or metadata: read and discarded. The two that name the book —
-    /// <c>\h</c> and <c>\toc1</c> — are handled rather than discarded and so are not here.
+    /// <c>\h</c> and <c>\toc1</c> — are handled rather than discarded and so are not here, and
+    /// neither are the book's printed titles, whose notes are kept.
     /// </summary>
     private static readonly HashSet<string> Matter =
     [
-        "toc2", "toc3", "mt", "mt1", "mt2", "mt3", "is", "is1", "ip", "imt", "rem", "cl", "ide", "usfm",
+        "toc2", "toc3", "is", "is1", "ip", "imt", "rem", "cl", "ide", "usfm",
 
         // A book's introduction, its outline and the tables in it, which some editions print before
         // the first chapter: the Segond has a page of it before every book.
@@ -234,6 +242,12 @@ internal static partial class UsfmReader
     /// <summary>The marker of a psalm's superscription.</summary>
     private const string Superscription = "d";
 
+    /// <summary>
+    /// The book's title as the edition prints it over the first chapter, at its levels. The title's
+    /// words are not read — <c>\h</c> and <c>\toc1</c> name the book — but a note printed on it is.
+    /// </summary>
+    private static readonly HashSet<string> Titles = ["mt", "mt1", "mt2", "mt3"];
+
     public static UsfmBook Read(string content) => Read(content, editorialHeadings: false);
 
     /// <param name="editorialHeadings">
@@ -247,6 +261,7 @@ internal static partial class UsfmReader
         var verses = new List<UsfmVerse>();
         var words = new List<UsfmWord>();
         var notes = new List<UsfmNote>();
+        var titleNotes = new List<UsfmNote>();
         var chapter = 0;
         var verse = 0;
         var label = string.Empty;
@@ -384,7 +399,11 @@ internal static partial class UsfmReader
                         break;
                     }
 
-                    if (Passage.Contains(name))
+                    if (Titles.Contains(name))
+                    {
+                        titleNotes.AddRange(Note().Matches(rest).Select(note => ReadNote(note, null)));
+                    }
+                    else if (Passage.Contains(name))
                     {
                         // Before the first verse, or at its very start: the unfoldingWord Literal Text
                         // opens verse 1 and then its title in fifty psalms.
@@ -412,7 +431,7 @@ internal static partial class UsfmReader
 
         return book is null
             ? throw new InvalidOperationException("The file has no \\id, so nothing says which book it is.")
-            : new UsfmBook(book, chapters, title);
+            : new UsfmBook(book, chapters, title) { TitleNotes = titleNotes };
     }
 
     /// <summary>
@@ -881,8 +900,9 @@ internal static partial class UsfmReader
     /// Едом as *Червоний* and Егова-Нїссі as *Господь-прапор* — and a corpus that tokenised it
     /// would have those standing in Genesis as words nobody wrote there. Nothing here models a
     /// note, and inventing a place for one on the way past would be worse than dropping it: it
-    /// would be a claim about the text made by a regex. Its readable text is retained as a
-    /// source-attributed verse note by <see cref="ReadNote"/>.
+    /// would be a claim about the text made by a regex. Its readable text is retained by
+    /// <see cref="ReadNote"/> as a source-attributed note on its verse, or on the book where the
+    /// edition printed it on the title.
     ///
     /// <para>
     /// The Indian Revised Version prints its cross references in the running text instead, in

@@ -137,7 +137,10 @@ internal static class KulishTextSource
                 Slug: BookReferences.Slug(ordinal),
                 Chapters: [.. book.Chapters.Select(Chapter)],
                 NameNative: book.Name,
-                Abbreviation: BookReferences.Abbreviation(ordinal)));
+                Abbreviation: BookReferences.Abbreviation(ordinal))
+            {
+                Notes = BookNoteDraft.From(book),
+            });
         }
 
         return new TextSource(Definition, drafts);

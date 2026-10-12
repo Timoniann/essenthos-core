@@ -1,3 +1,4 @@
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
 using Essenthos.Core.Usfm;
 using FluentAssertions;
@@ -155,10 +156,26 @@ public class KulishCorpusTests(Kulish kulish) : IClassFixture<Kulish>
             .SelectMany(book => book.Chapters)
             .SelectMany(chapter => chapter.Verses)
             .SelectMany(verse => verse.Notes)
-            // Ten more source footnotes sit in \mt1 book-title metadata. The reader currently
-            // serves verse notes, so they have no verse to attach to and are deliberately not
-            // passed off as one.
             .Should().HaveCount(194);
+
+    /// <summary>
+    /// The other ten of its 204 footnotes are printed on a book's title, and the book keeps them:
+    /// none of them is passed off as a note on the first verse.
+    /// </summary>
+    [Fact]
+    public void ItsTenTitleFootnotesStayWithTheirBooks()
+    {
+        var titled = kulish.Source.Books.Where(book => book.Notes.Count > 0).ToList();
+
+        titled.Select(book => book.CanonicalOrdinal).Should().Equal(6, 9, 10, 11, 12, 13, 22, 23, 24, 26);
+        titled.Should().OnlyContain(book => book.Notes.Count == 1 && book.Notes[0].Kind == VerseNoteKind.Footnote);
+        kulish.Book(11).Notes.Single().Content.Should().Be("Зветься також: Третя книга царів.");
+        kulish.Source.Books
+            .SelectMany(book => book.Chapters)
+            .SelectMany(chapter => chapter.Verses)
+            .SelectMany(verse => verse.Notes)
+            .Should().NotContain(note => titled.Any(book => book.Notes[0].Content == note.Content));
+    }
 
     /// <summary>
     /// Its order is the canonical one, which is what lets the ordinal be the position. Checked

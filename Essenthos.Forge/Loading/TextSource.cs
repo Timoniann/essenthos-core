@@ -1,5 +1,6 @@
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Usfm;
 
 namespace Essenthos.Core.Loading;
 
@@ -201,6 +202,21 @@ internal sealed record BookDraft(
     string Slug,
     IReadOnlyList<ChapterDraft> Chapters,
     string? NameNative = null,
-    string? Abbreviation = null);
+    string? Abbreviation = null)
+{
+    /// <summary>The edition's notes on the book's title, in their source language and order.</summary>
+    public IReadOnlyList<BookNoteDraft> Notes { get; init; } = [];
+}
+
+/// <summary>A note an edition prints on a book's title, which no verse of the book carries.</summary>
+internal sealed record BookNoteDraft(VerseNoteKind Kind, string Content)
+{
+    public static IReadOnlyList<BookNoteDraft> From(UsfmBook book) =>
+    [
+        .. book.TitleNotes.Select(note => new BookNoteDraft(
+            note.Kind == UsfmNoteKind.Footnote ? VerseNoteKind.Footnote : VerseNoteKind.CrossReference,
+            note.Content)),
+    ];
+}
 
 internal sealed record TextSource(TextDefinition Definition, IReadOnlyList<BookDraft> Books);

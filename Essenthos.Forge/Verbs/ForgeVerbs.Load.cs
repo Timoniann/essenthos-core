@@ -192,6 +192,18 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>
+    /// The notes on the book titles alone, which the load writes at each text's step: the one text
+    /// that prints any is read again from its files and nothing else is touched.
+    /// </summary>
+    private static async Task<int> TitleNotes(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<BookNoteLoader>()
+            .Load(KulishTextSource.Read(Path.Combine(forge.Resources, "Kulish")), CancellationToken.None));
+        return 0;
+    }
+
     private static async Task<int> Reframe(ForgeRun forge, string[] args)
     {
         using var scope = forge.Scope();
