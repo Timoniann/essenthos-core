@@ -1,5 +1,5 @@
 {
-  "source": "Essenthos, its own lines rendered into Ukrainian, German and Spanish by a language model on 2026-09-27, the lines of the records a ruling creates on 2026-10-09",
+  "source": "Essenthos, its own lines rendered into Ukrainian, German and Spanish by a language model on 2026-09-27, the lines of the records a ruling creates on 2026-10-09, and those the table of nations and the unread Hebrew names add on 2026-10-12",
   "records": [
     {
       "slug": "tabernacle",
@@ -1316,6 +1316,195 @@
       "ukr": "дочка Ани, дочки хіввеянина Цівона, жінка Ісава і мати Єуша, Яалама та Кораха (GEN 36:2, 36:5)",
       "deu": "Tochter der Ana, der Tochter Zibeons, des Hewiters, Frau Esaus und Mutter Jeuschs, Jaelams und Korachs (GEN 36:2, 36:5)",
       "spa": "hija de Aná, hija de Zibeón heveo, mujer de Esaú y madre de Jeús, Jaalam y Coré (GEN 36:2, 36:5)"
+    },
+    {
+      "slug": "jebusite-son-of-canaan",
+      "english": "son of Canaan (GEN 10:16)",
+      "ukr": "син Ханаана (GEN 10:16)",
+      "deu": "Sohn Kanaans (GEN 10:16)",
+      "spa": "hijo de Canaán (GEN 10:16)"
+    },
+    {
+      "slug": "amorite-son-of-canaan",
+      "english": "son of Canaan (GEN 10:16)",
+      "ukr": "син Ханаана (GEN 10:16)",
+      "deu": "Sohn Kanaans (GEN 10:16)",
+      "spa": "hijo de Canaán (GEN 10:16)"
+    },
+    {
+      "slug": "girgashite-son-of-canaan",
+      "english": "son of Canaan (GEN 10:16)",
+      "ukr": "син Ханаана (GEN 10:16)",
+      "deu": "Sohn Kanaans (GEN 10:16)",
+      "spa": "hijo de Canaán (GEN 10:16)"
+    },
+    {
+      "slug": "hivite-son-of-canaan",
+      "english": "son of Canaan (GEN 10:17)",
+      "ukr": "син Ханаана (GEN 10:17)",
+      "deu": "Sohn Kanaans (GEN 10:17)",
+      "spa": "hijo de Canaán (GEN 10:17)"
+    },
+    {
+      "slug": "arkite-son-of-canaan",
+      "english": "son of Canaan (GEN 10:17)",
+      "ukr": "син Ханаана (GEN 10:17)",
+      "deu": "Sohn Kanaans (GEN 10:17)",
+      "spa": "hijo de Canaán (GEN 10:17)"
+    },
+    {
+      "slug": "sinite-son-of-canaan",
+      "english": "son of Canaan (GEN 10:17)",
+      "ukr": "син Ханаана (GEN 10:17)",
+      "deu": "Sohn Kanaans (GEN 10:17)",
+      "spa": "hijo de Canaán (GEN 10:17)"
+    },
+    {
+      "slug": "arvadite-son-of-canaan",
+      "english": "son of Canaan (GEN 10:18)",
+      "ukr": "син Ханаана (GEN 10:18)",
+      "deu": "Sohn Kanaans (GEN 10:18)",
+      "spa": "hijo de Canaán (GEN 10:18)"
+    },
+    {
+      "slug": "zemarite-son-of-canaan",
+      "english": "son of Canaan (GEN 10:18)",
+      "ukr": "син Ханаана (GEN 10:18)",
+      "deu": "Sohn Kanaans (GEN 10:18)",
+      "spa": "hijo de Canaán (GEN 10:18)"
+    },
+    {
+      "slug": "hamathite-son-of-canaan",
+      "english": "son of Canaan (GEN 10:18)",
+      "ukr": "син Ханаана (GEN 10:18)",
+      "deu": "Sohn Kanaans (GEN 10:18)",
+      "spa": "hijo de Canaán (GEN 10:18)"
+    },
+    {
+      "slug": "anamim-son-of-mizraim",
+      "english": "son of Mizraim (GEN 10:13)",
+      "ukr": "син Міцраїма (GEN 10:13)",
+      "deu": "Sohn Mizraims (GEN 10:13)",
+      "spa": "hijo de Mizraim (GEN 10:13)"
+    },
+    {
+      "slug": "lehabim-son-of-mizraim",
+      "english": "son of Mizraim (GEN 10:13)",
+      "ukr": "син Міцраїма (GEN 10:13)",
+      "deu": "Sohn Mizraims (GEN 10:13)",
+      "spa": "hijo de Mizraim (GEN 10:13)"
+    },
+    {
+      "slug": "pathrusim-son-of-mizraim",
+      "english": "son of Mizraim (GEN 10:14)",
+      "ukr": "син Міцраїма (GEN 10:14)",
+      "deu": "Sohn Mizraims (GEN 10:14)",
+      "spa": "hijo de Mizraim (GEN 10:14)"
+    },
+    {
+      "slug": "casluhim-son-of-mizraim",
+      "english": "son of Mizraim (GEN 10:14)",
+      "ukr": "син Міцраїма (GEN 10:14)",
+      "deu": "Sohn Mizraims (GEN 10:14)",
+      "spa": "hijo de Mizraim (GEN 10:14)"
+    },
+    {
+      "slug": "caphtorim-son-of-mizraim",
+      "english": "son of Mizraim (GEN 10:14)",
+      "ukr": "син Міцраїма (GEN 10:14)",
+      "deu": "Sohn Mizraims (GEN 10:14)",
+      "spa": "hijo de Mizraim (GEN 10:14)"
+    },
+    {
+      "slug": "kittim-son-of-javan",
+      "english": "son of Javan (GEN 10:4)",
+      "ukr": "син Явана (GEN 10:4)",
+      "deu": "Sohn Jawans (GEN 10:4)",
+      "spa": "hijo de Javán (GEN 10:4)"
+    },
+    {
+      "slug": "rephaim",
+      "english": "a people of giants the text names among the first inhabitants of the land (GEN 14:5; DEU 2:11)",
+      "ukr": "народ велетнів, якого текст називає серед перших мешканців краю (GEN 14:5; DEU 2:11)",
+      "deu": "ein Volk von Riesen, das der Text unter den ersten Bewohnern des Landes nennt (GEN 14:5; DEU 2:11)",
+      "spa": "un pueblo de gigantes que el texto nombra entre los primeros habitantes de la tierra (GEN 14:5; DEU 2:11)"
+    },
+    {
+      "slug": "rechabites",
+      "english": "the house of Jonadab son of Rechab, who kept his command to drink no wine (JER 35:2-6)",
+      "ukr": "дім Йонадава, сина Рехава, що дотримав його наказу не пити вина (JER 35:2-6)",
+      "deu": "das Haus Jonadabs, des Sohnes Rechabs, das sein Gebot hielt, keinen Wein zu trinken (JER 35:2-6)",
+      "spa": "la casa de Jonadab hijo de Recab, que guardó su mandato de no beber vino (JER 35:2-6)"
+    },
+    {
+      "slug": "zamzummims",
+      "english": "the name the Ammonites gave the giants who dwelt before them in their land (DEU 2:20)",
+      "ukr": "ім'я, яким аммонітяни називали велетнів, що жили перед ними в їхньому краї (DEU 2:20)",
+      "deu": "der Name, den die Ammoniter den Riesen gaben, die vor ihnen in ihrem Land wohnten (DEU 2:20)",
+      "spa": "el nombre que los amonitas daban a los gigantes que habitaron antes que ellos en su tierra (DEU 2:20)"
+    },
+    {
+      "slug": "gammadims",
+      "english": "men who kept the towers of Tyre (EZK 27:11)",
+      "ukr": "люди, що стояли на баштах Тиру (EZK 27:11)",
+      "deu": "Männer, die die Türme von Tyrus besetzt hielten (EZK 27:11)",
+      "spa": "hombres que guardaban las torres de Tiro (EZK 27:11)"
+    },
+    {
+      "slug": "dehavites",
+      "english": "one of the peoples settled in Samaria who wrote to Artaxerxes against Jerusalem (EZR 4:9)",
+      "ukr": "один із народів, поселених у Самарії, що писали Артаксерксові проти Єрусалима (EZR 4:9)",
+      "deu": "eines der in Samaria angesiedelten Völker, die an Artaxerxes gegen Jerusalem schrieben (EZR 4:9)",
+      "spa": "uno de los pueblos asentados en Samaria que escribieron a Artajerjes contra Jerusalén (EZR 4:9)"
+    },
+    {
+      "slug": "nodab",
+      "english": "a people the tribes east of the Jordan made war on, with the Hagarites, Jetur and Naphish (1CH 5:19)",
+      "ukr": "народ, з яким воювали племена на схід від Йордану, разом з агарянами, Ітуром і Нафішем (1CH 5:19)",
+      "deu": "ein Volk, gegen das die Stämme östlich des Jordan Krieg führten, mit den Hagaritern, Jetur und Naphis (1CH 5:19)",
+      "spa": "un pueblo contra el que hicieron guerra las tribus del este del Jordán, junto con los agarenos, Jetur y Nafis (1CH 5:19)"
+    },
+    {
+      "slug": "matrites",
+      "english": "the family of Benjamin taken by lot before Saul son of Kish (1SA 10:21)",
+      "ukr": "рід Веніямина, на який упав жереб перед Саулом, сином Кіша (1SA 10:21)",
+      "deu": "das Geschlecht Benjamins, das vor Saul, dem Sohn des Kis, durch das Los getroffen wurde (1SA 10:21)",
+      "spa": "la familia de Benjamín tomada por suerte antes que Saúl hijo de Cis (1SA 10:21)"
+    },
+    {
+      "slug": "nachon",
+      "english": "the threshing floor where Uzzah took hold of the ark (2SA 6:6)",
+      "ukr": "тік, де Узза схопився за ковчег (2SA 6:6)",
+      "deu": "die Tenne, an der Usa die Lade ergriff (2SA 6:6)",
+      "spa": "la era donde Uza sostuvo el arca (2SA 6:6)"
+    },
+    {
+      "slug": "zoheleth",
+      "english": "the stone by En-rogel where Adonijah made his feast (1KI 1:9)",
+      "ukr": "камінь біля Ен-Роґелю, де Адонія справив бенкет (1KI 1:9)",
+      "deu": "der Stein beim Brunnen Rogel, wo Adonia sein Festmahl hielt (1KI 1:9)",
+      "spa": "la piedra junto a En-rogel donde Adonías hizo su banquete (1KI 1:9)"
+    },
+    {
+      "slug": "shalman",
+      "english": "who spoiled Beth-arbel in the day of battle (HOS 10:14)",
+      "ukr": "що зруйнував Бет-Арбел у день війни (HOS 10:14)",
+      "deu": "der Beth-Arbeel am Tag des Kampfes verwüstete (HOS 10:14)",
+      "spa": "el que destruyó Bet-arbel en el día de la batalla (HOS 10:14)"
+    },
+    {
+      "slug": "tormah",
+      "english": "whence Zebul sent messengers to Abimelech (JDG 9:31)",
+      "ukr": "звідки Зевул послав послів до Авімелеха (JDG 9:31)",
+      "deu": "von wo Sebul Boten zu Abimelech sandte (JDG 9:31)",
+      "spa": "desde donde Zebul envió mensajeros a Abimelec (JDG 9:31)"
+    },
+    {
+      "slug": "zahar",
+      "english": "whose wool Damascus traded with Tyre (EZK 27:18)",
+      "ukr": "чиєю вовною Дамаск торгував із Тиром (EZK 27:18)",
+      "deu": "dessen Wolle Damaskus mit Tyrus handelte (EZK 27:18)",
+      "spa": "cuya lana comerciaba Damasco con Tiro (EZK 27:18)"
     }
   ]
 }

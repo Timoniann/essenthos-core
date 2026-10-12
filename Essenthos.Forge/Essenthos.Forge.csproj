@@ -111,6 +111,10 @@
         <EmbeddedResource Include="Loading\Encyclopedia\NamesakeTiebreakSecondRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PatriarchJacobRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\EsauWivesRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\NationEponymRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\UnreadNameRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\UnreadHebrewNameRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\PsalmTitleRecords.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />

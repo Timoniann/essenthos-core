@@ -1,0 +1,430 @@
+{
+  "decidedBy": "the project owner, 2026-10-12: where the text says a father begat a nation, the begotten one is read as a son and shown as the people descended from him; each word read against its verse by claude-opus-5-5",
+  "policy": "In the tables of nations (Genesis 10 and 1 Chronicles 1) a name the text lists among the sons a father begat is the son, named as the verse names him, whatever form the name has. The people of the same name is a record of its own, descended from him, and keeps every other word that names it.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's ruling of 2026-10-12 that the nations a father begat in the tables of nations are his sons and the peoples descended from them, each word read against its verse by claude-opus-5-5",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:16",
+      "position": 4,
+      "surface": "יְבוּסִי֙",
+      "strongNumber": "H2983",
+      "create": {
+        "slug": "jebusite-son-of-canaan",
+        "name": "Jebusite",
+        "distinguisher": "son of Canaan (GEN 10:16)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Canaan begat Sidon his firstborn, and Heth, and the Jebusite, and the Amorite, and the Girgasite (10:15-16)': the text names the Jebusite among the sons Canaan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:14",
+      "position": 4,
+      "surface": "יְבוּסִי֙",
+      "strongNumber": "H2983",
+      "existing": "jebusite-son-of-canaan",
+      "why": "The list of Canaan's sons again, as GEN 10:16 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:16",
+      "position": 8,
+      "surface": "אֱמֹרִ֔י",
+      "strongNumber": "H567",
+      "create": {
+        "slug": "amorite-son-of-canaan",
+        "name": "Amorite",
+        "distinguisher": "son of Canaan (GEN 10:16)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Canaan begat Sidon his firstborn, and Heth, and the Jebusite, and the Amorite, and the Girgasite (10:15-16)': the text names the Amorite among the sons Canaan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:14",
+      "position": 8,
+      "surface": "אֱמֹרִ֔י",
+      "strongNumber": "H567",
+      "existing": "amorite-son-of-canaan",
+      "why": "The list of Canaan's sons again, as GEN 10:16 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:16",
+      "position": 12,
+      "surface": "גִּרְגָּשִֽׁי",
+      "strongNumber": "H1622",
+      "create": {
+        "slug": "girgashite-son-of-canaan",
+        "name": "Girgashite",
+        "distinguisher": "son of Canaan (GEN 10:16)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Canaan begat Sidon his firstborn, and Heth, and the Jebusite, and the Amorite, and the Girgasite (10:15-16)': the text names the Girgashite among the sons Canaan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:14",
+      "position": 12,
+      "surface": "גִּרְגָּשִֽׁי",
+      "strongNumber": "H1622",
+      "existing": "girgashite-son-of-canaan",
+      "why": "The list of Canaan's sons again, as GEN 10:16 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:17",
+      "position": 4,
+      "surface": "חִוִּ֥י",
+      "strongNumber": "H2340",
+      "create": {
+        "slug": "hivite-son-of-canaan",
+        "name": "Hivite",
+        "distinguisher": "son of Canaan (GEN 10:17)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Canaan begat ... the Hivite, and the Arkite, and the Sinite (10:15-17)': the text names the Hivite among the sons Canaan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:15",
+      "position": 4,
+      "surface": "חִוִּ֥י",
+      "strongNumber": "H2340",
+      "existing": "hivite-son-of-canaan",
+      "why": "The list of Canaan's sons again, as GEN 10:17 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:17",
+      "position": 8,
+      "surface": "עַרְקִ֖י",
+      "strongNumber": "H6208",
+      "create": {
+        "slug": "arkite-son-of-canaan",
+        "name": "Arkite",
+        "distinguisher": "son of Canaan (GEN 10:17)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Canaan begat ... the Hivite, and the Arkite, and the Sinite (10:15-17)': the text names the Arkite among the sons Canaan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:15",
+      "position": 8,
+      "surface": "עַרְקִ֖י",
+      "strongNumber": "H6208",
+      "existing": "arkite-son-of-canaan",
+      "why": "The list of Canaan's sons again, as GEN 10:17 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:17",
+      "position": 12,
+      "surface": "סִּינִֽי",
+      "strongNumber": "H5513",
+      "create": {
+        "slug": "sinite-son-of-canaan",
+        "name": "Sinite",
+        "distinguisher": "son of Canaan (GEN 10:17)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Canaan begat ... the Hivite, and the Arkite, and the Sinite (10:15-17)': the text names the Sinite among the sons Canaan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:15",
+      "position": 12,
+      "surface": "סִּינִֽי",
+      "strongNumber": "H5513",
+      "existing": "sinite-son-of-canaan",
+      "why": "The list of Canaan's sons again, as GEN 10:17 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:18",
+      "position": 4,
+      "surface": "אַרְוָדִ֥י",
+      "strongNumber": "H721",
+      "create": {
+        "slug": "arvadite-son-of-canaan",
+        "name": "Arvadite",
+        "distinguisher": "son of Canaan (GEN 10:18)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Canaan begat ... the Arvadite, and the Zemarite, and the Hamathite (10:15-18)': the text names the Arvadite among the sons Canaan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:16",
+      "position": 4,
+      "surface": "אַרְוָדִ֥י",
+      "strongNumber": "H721",
+      "existing": "arvadite-son-of-canaan",
+      "why": "The list of Canaan's sons again, as GEN 10:18 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:18",
+      "position": 8,
+      "surface": "צְּמָרִ֖י",
+      "strongNumber": "H6786",
+      "create": {
+        "slug": "zemarite-son-of-canaan",
+        "name": "Zemarite",
+        "distinguisher": "son of Canaan (GEN 10:18)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Canaan begat ... the Arvadite, and the Zemarite, and the Hamathite (10:15-18)': the text names the Zemarite among the sons Canaan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:16",
+      "position": 8,
+      "surface": "צְּמָרִ֖י",
+      "strongNumber": "H6786",
+      "existing": "zemarite-son-of-canaan",
+      "why": "The list of Canaan's sons again, as GEN 10:18 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:18",
+      "position": 12,
+      "surface": "חֲמָתִ֑י",
+      "strongNumber": "H2577",
+      "create": {
+        "slug": "hamathite-son-of-canaan",
+        "name": "Hamathite",
+        "distinguisher": "son of Canaan (GEN 10:18)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Canaan begat ... the Arvadite, and the Zemarite, and the Hamathite (10:15-18)': the text names the Hamathite among the sons Canaan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:16",
+      "position": 12,
+      "surface": "חֲמָתִֽי",
+      "strongNumber": "H2577",
+      "existing": "hamathite-son-of-canaan",
+      "why": "The list of Canaan's sons again, as GEN 10:18 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:13",
+      "position": 5,
+      "surface": "לוּדִ֧ים",
+      "strongNumber": "H3866",
+      "existing": "lud",
+      "says": {
+        "name": "Ludim",
+        "distinguisher": "son of Mizraim (GEN 10:13)"
+      },
+      "why": "'Mizraim begat Ludim, and Anamim, and Lehabim, and Naphtuhim (10:13)': the text names Ludim among the sons Mizraim begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:11",
+      "position": 5,
+      "surface": "לודיים",
+      "strongNumber": "H3866",
+      "existing": "lud",
+      "why": "The list of Mizraim's sons again, as GEN 10:13 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:13",
+      "position": 8,
+      "surface": "עֲנָמִ֛ים",
+      "strongNumber": "H6047",
+      "create": {
+        "slug": "anamim-son-of-mizraim",
+        "name": "Anamim",
+        "distinguisher": "son of Mizraim (GEN 10:13)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Mizraim begat Ludim, and Anamim, and Lehabim, and Naphtuhim (10:13)': the text names Anamim among the sons Mizraim begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:11",
+      "position": 8,
+      "surface": "עֲנָמִ֛ים",
+      "strongNumber": "H6047",
+      "existing": "anamim-son-of-mizraim",
+      "why": "The list of Mizraim's sons again, as GEN 10:13 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:13",
+      "position": 11,
+      "surface": "לְהָבִ֖ים",
+      "strongNumber": "H3853",
+      "create": {
+        "slug": "lehabim-son-of-mizraim",
+        "name": "Lehabim",
+        "distinguisher": "son of Mizraim (GEN 10:13)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Mizraim begat Ludim, and Anamim, and Lehabim, and Naphtuhim (10:13)': the text names Lehabim among the sons Mizraim begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:11",
+      "position": 11,
+      "surface": "לְהָבִ֖ים",
+      "strongNumber": "H3853",
+      "existing": "lehabim-son-of-mizraim",
+      "why": "The list of Mizraim's sons again, as GEN 10:13 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:13",
+      "position": 14,
+      "surface": "נַפְתֻּחִֽים",
+      "strongNumber": "H5320",
+      "existing": "naphtuh",
+      "says": {
+        "name": "Naphtuhim",
+        "distinguisher": "son of Mizraim (GEN 10:13)"
+      },
+      "why": "'Mizraim begat Ludim, and Anamim, and Lehabim, and Naphtuhim (10:13)': the text names Naphtuhim among the sons Mizraim begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:11",
+      "position": 14,
+      "surface": "נַפְתֻּחִֽים",
+      "strongNumber": "H5320",
+      "existing": "naphtuh",
+      "why": "The list of Mizraim's sons again, as GEN 10:13 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:14",
+      "position": 3,
+      "surface": "פַּתְרֻסִ֞ים",
+      "strongNumber": "H6625",
+      "create": {
+        "slug": "pathrusim-son-of-mizraim",
+        "name": "Pathrusim",
+        "distinguisher": "son of Mizraim (GEN 10:14)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Mizraim begat ... Pathrusim, and Casluhim, (out of whom came Philistim,) and Caphtorim (10:13-14)': the text names Pathrusim among the sons Mizraim begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:12",
+      "position": 3,
+      "surface": "פַּתְרֻסִ֞ים",
+      "strongNumber": "H6625",
+      "existing": "pathrusim-son-of-mizraim",
+      "why": "The list of Mizraim's sons again, as GEN 10:14 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:14",
+      "position": 6,
+      "surface": "כַּסְלֻחִ֗ים",
+      "strongNumber": "H3695",
+      "create": {
+        "slug": "casluhim-son-of-mizraim",
+        "name": "Casluhim",
+        "distinguisher": "son of Mizraim (GEN 10:14)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Mizraim begat ... Pathrusim, and Casluhim, (out of whom came Philistim,) and Caphtorim (10:13-14)': the text names Casluhim among the sons Mizraim begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:12",
+      "position": 6,
+      "surface": "כַּסְלֻחִ֗ים",
+      "strongNumber": "H3695",
+      "existing": "casluhim-son-of-mizraim",
+      "why": "The list of Mizraim's sons again, as GEN 10:14 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:14",
+      "position": 14,
+      "surface": "כַּפְתֹּרִֽים",
+      "strongNumber": "H3732",
+      "create": {
+        "slug": "caphtorim-son-of-mizraim",
+        "name": "Caphtorim",
+        "distinguisher": "son of Mizraim (GEN 10:14)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'Mizraim begat ... Pathrusim, and Casluhim, (out of whom came Philistim,) and Caphtorim (10:13-14)': the text names Caphtorim among the sons Mizraim begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:12",
+      "position": 14,
+      "surface": "כַּפְתֹּרִֽים",
+      "strongNumber": "H3732",
+      "existing": "caphtorim-son-of-mizraim",
+      "why": "The list of Mizraim's sons again, as GEN 10:14 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:4",
+      "position": 7,
+      "surface": "כִּתִּ֖ים",
+      "strongNumber": "H3794",
+      "create": {
+        "slug": "kittim-son-of-javan",
+        "name": "Kittim",
+        "distinguisher": "son of Javan (GEN 10:4)",
+        "notes": null,
+        "kind": "person"
+      },
+      "why": "'And the sons of Javan; Elishah, and Tarshish, Kittim, and Dodanim (10:4)': the text names Kittim among the sons Javan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:7",
+      "position": 7,
+      "surface": "כִּתִּ֖ים",
+      "strongNumber": "H3794",
+      "existing": "kittim-son-of-javan",
+      "why": "The list of Javan's sons again, as GEN 10:4 gives it: the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:4",
+      "position": 9,
+      "surface": "דֹדָנִֽים",
+      "strongNumber": "H1721",
+      "existing": "dodanim",
+      "why": "'And the sons of Javan; Elishah, and Tarshish, Kittim, and Dodanim (10:4)': the text names Dodanim among the sons Javan begat, so the word is the son, and the people descended from him keep their own record."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:7",
+      "position": 9,
+      "surface": "רֹודָנִֽים",
+      "strongNumber": "H1721",
+      "existing": "dodanim",
+      "why": "The list of Javan's sons again, as GEN 10:4 gives it: the word is the son, and the people descended from him keep their own record."
+    }
+  ]
+}

@@ -1139,4 +1139,146 @@ public sealed class OwnRecordTests : IDisposable
             .Should().Match<WordEntity>(a => a.Entity!.Slug == ruling.Existing && a.Source == file.Source);
         (await Load()).Restored.Should().Be(0);
     }
+
+    private OwnRecordRuling Ruled(string slug, string reference) =>
+        _rulings.First(r => (r.Create?.Slug ?? r.Existing) == slug && r.Reference == reference);
+
+    /// <summary>
+    /// Where the text says Canaan begat the Jebusite, the word is a son of Canaan named as the verse
+    /// names him, in Genesis and in Chronicles alike; the people of the same name loses that word and
+    /// keeps every other word that names it. Lud and Naphtuh, men a dataset made of the plurals, are
+    /// the sons of their verse and are headed as the verse writes them.
+    /// </summary>
+    [Fact]
+    public async Task TheNationsAFatherBegatAreHisSonsAndThePeopleKeepItsOtherWords()
+    {
+        var people = new Entity
+        {
+            Kind = EntityKind.People, Slug = "jebusites", Name = "Jebusites", SourceId = "jebusites", Source = "a test",
+        };
+        _db.Entities.Add(people);
+        var elsewhere = _db.Place([new RuledWord("BHSA", "JOS 15:63", 3, "הַיְבוּסִי")]).Values.Single();
+        await _db.SaveChangesAsync();
+        var begotten = _words[Ruled("jebusite-son-of-canaan", "GEN 10:16").Word];
+        foreach (var word in new[] { begotten, elsewhere.Id })
+        {
+            _db.WordEntities.Add(new WordEntity
+            {
+                WordId = word, EntityId = people.Id, Method = LinkMethod.Lexical, Confidence = 0.9,
+                Source = "the gentilic Strong's Dictionary derives, resolving to exactly one people",
+            });
+        }
+
+        await _db.SaveChangesAsync();
+
+        await Load();
+
+        (await _db.WordEntities.Where(a => a.WordId == begotten).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("jebusite-son-of-canaan");
+        (await _db.WordEntities.Where(a => a.WordId == _words[Ruled("jebusite-son-of-canaan", "1CH 1:14").Word])
+            .Select(a => a.Entity!.Slug).ToListAsync()).Should().Equal("jebusite-son-of-canaan");
+        (await _db.WordEntities.Where(a => a.WordId == elsewhere.Id).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("jebusites");
+
+        var son = await _db.Entities.SingleAsync(e => e.Slug == "jebusite-son-of-canaan");
+        son.Kind.Should().Be(EntityKind.Person);
+        son.Name.Should().Be("Jebusite");
+        son.Distinguisher.Should().Be("son of Canaan (GEN 10:16)");
+        (await _db.Entities.SingleAsync(e => e.Slug == "lud")).Name.Should().Be("Ludim");
+        (await _db.Entities.SingleAsync(e => e.Slug == "naphtuh")).Name.Should().Be("Naphtuhim");
+    }
+
+    /// <summary>
+    /// The clauses the table of nations is read into: each son is his father's, and the people of his
+    /// name descends from him and no longer from the father. The owner's own clause on Caphtorim moves
+    /// to the son with his credit.
+    /// </summary>
+    [Fact]
+    public void ThePeopleOfTheTableOfNationsDescendFromTheSonsTheTextNames()
+    {
+        var folder = Path.Combine(Solution(), "Resources", "Essenthos", "descriptors");
+        var records = DescriptorFiles.Read(folder).Records.ToDictionary(r => r.Entity);
+
+        foreach (var (people, son, father) in new[]
+                 {
+                     ("jebusites", "jebusite-son-of-canaan", "canaan"), ("hamathites", "hamathite-son-of-canaan", "canaan"),
+                     ("anamim", "anamim-son-of-mizraim", "mizraim"), ("naphtuhim", "naphtuh", "mizraim"),
+                     ("lydians", "lud", "mizraim"), ("caphthorim", "caphtorim-son-of-mizraim", "mizraim"),
+                     ("kittim-h3794", "kittim-son-of-javan", "javan"), ("dodanim-h1721", "dodanim", "javan"),
+                 })
+        {
+            records[people].Claims.Should().ContainSingle(c => c.Relation == "descendants-of" && c.Target == son);
+            records[people].Claims.Should().NotContain(c => c.Target == father);
+            records[son].Claims.Should().ContainSingle(c => c.Relation == "son-of" && c.Target == father);
+        }
+
+        records["caphtorim-son-of-mizraim"].Claims!.Single().DecidedBy.Should().StartWith("the project owner");
+        records["jebusite-son-of-canaan"].Names!["rus"]["nominative"].Should().Be("Иевусей");
+    }
+
+    /// <summary>
+    /// The Rephaim are a people of their own, and the word that names them reaches the translation
+    /// linked to it; the same word after <em>the valley of</em> is the valley.
+    /// </summary>
+    [Fact]
+    public async Task TheRephaimAreAPeopleAndTheirValleyIsAPlace()
+    {
+        var english = _db.WordAt(_english, 1, 1, 1);
+        Tie(_words[Ruled("rephaim", "GEN 14:5").Word], english);
+        await _db.SaveChangesAsync();
+
+        await Load();
+
+        var rephaim = await _db.Entities.SingleAsync(e => e.Slug == "rephaim");
+        rephaim.Kind.Should().Be(EntityKind.People);
+        (await _db.WordEntities.Where(a => a.WordId == english.Id).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("rephaim");
+        (await _db.WordEntities.Where(a => a.WordId == _words[Ruled("valleyofrephaim", "JOS 15:8").Word])
+            .Select(a => a.Entity!.Slug).ToListAsync()).Should().Equal("valleyofrephaim");
+        (await _db.WordEntities.CountAsync(a => a.EntityId == rephaim.Id && a.Word!.Text!.Slug == "BHSA"))
+            .Should().Be(11);
+    }
+
+    /// <summary>
+    /// A place the Hebrew names where every translation reads a common word stays on the Hebrew word:
+    /// Horesh is the wood the translations say, and the link does not carry the place to it.
+    /// </summary>
+    [Fact]
+    public async Task APlaceTheTranslationsReadAsACommonWordStaysOnTheHebrew()
+    {
+        var english = _db.WordAt(_english, 1, 1, 1);
+        var horesh = _words[Ruled("horesh", "1SA 23:15").Word];
+        Tie(horesh, english);
+        await _db.SaveChangesAsync();
+
+        await Load();
+
+        (await _db.WordEntities.Where(a => a.WordId == horesh).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("horesh");
+        (await _db.WordEntities.AnyAsync(a => a.WordId == english.Id)).Should().BeFalse();
+    }
+
+    private void Tie(long from, Word to)
+    {
+        var hebrew = _db.Words.Single(w => w.Id == from);
+        var link = new Link
+        {
+            FromTextId = hebrew.TextId, ToTextId = to.TextId, Relation = LinkRelation.Renders,
+            Method = LinkMethod.Aligner, Confidence = 0.9, Provenance = new() { Source = "a test" },
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = hebrew, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = to, Side = LinkSide.To });
+    }
+
+    private static string Solution()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Essenthos.Core.sln")))
+        {
+            directory = directory.Parent;
+        }
+
+        return directory?.FullName ?? throw new DirectoryNotFoundException("Essenthos.Core.sln is not above the test output.");
+    }
 }

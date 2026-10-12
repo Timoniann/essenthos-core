@@ -1,0 +1,424 @@
+{
+  "decidedBy": "Essenthos, 2026-10-12, on the names in the titles of the Psalms that no pass answered: each word read against its title by claude-opus-5-5 on the project owner's instruction that every name the Hebrew marks is read; no person has reviewed this ruling",
+  "policy": "A name in a psalm's title is the man, the people or the place the title's own words say: the sons of Korah are the Levite family, Asaph is David's singer, and the occasions of David's life name the men of 1 and 2 Samuel. Where BHSA gives a title word the Strong number of a word beside it, the word is still the name it spells.",
+  "method": "manual",
+  "source": "Essenthos, the names in the titles of the Psalms, each read against its title by claude-opus-5-5, 2026-10-12",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "PSA 3:1",
+      "position": 8,
+      "surface": "אַבְשָׁלֹ֬ום",
+      "strongNumber": "H53",
+      "existing": "absalom",
+      "why": "'A Psalm of David, when he fled from Absalom his son': David's son, whom the title names."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 7:1",
+      "position": 12,
+      "surface": "יְמִינִֽי",
+      "strongNumber": "H1145",
+      "existing": "benjaminites",
+      "why": "'Concerning the words of Cush the Benjamite': the word is the gentilic, the tribe Cush was of."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 18:1",
+      "position": 31,
+      "surface": "שָׁאֽוּל",
+      "strongNumber": "H7586",
+      "existing": "saul",
+      "why": "The title sets the psalm in David's flight from Saul, the king, son of Kish."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 42:1",
+      "position": 7,
+      "surface": "קֹֽרַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 44:1",
+      "position": 6,
+      "surface": "קֹ֬רַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 45:1",
+      "position": 8,
+      "surface": "קֹ֑רַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 46:1",
+      "position": 6,
+      "surface": "קֹ֑רַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 47:1",
+      "position": 6,
+      "surface": "קֹ֬רַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 48:1",
+      "position": 5,
+      "surface": "קֹֽרַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 49:1",
+      "position": 6,
+      "surface": "קֹ֬רַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 50:1",
+      "position": 3,
+      "surface": "אָ֫סָ֥ף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 51:1",
+      "position": 6,
+      "surface": "דָוִֽד",
+      "strongNumber": "H9009",
+      "existing": "david",
+      "why": "'A Psalm of David, when Nathan the prophet came unto him': the king; BHSA gives the word the number of the article beside it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 51:2",
+      "position": 4,
+      "surface": "נָתָ֣ן",
+      "strongNumber": "H935",
+      "existing": "nathan-2",
+      "why": "'When Nathan the prophet came unto him': the prophet of 2 Samuel 12; BHSA gives the word the number of the verb beside it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 52:2",
+      "position": 5,
+      "surface": "אֲדֹמִי֮",
+      "strongNumber": "H9009",
+      "existing": "edomites",
+      "why": "'When Doeg the Edomite came and told Saul': the gentilic; BHSA gives the word the number of the article beside it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 52:2",
+      "position": 9,
+      "surface": "שָׁ֫א֥וּל",
+      "strongNumber": "H7586",
+      "existing": "saul",
+      "why": "The title sets the psalm in David's flight from Saul, the king, son of Kish."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 52:2",
+      "position": 17,
+      "surface": "אֲחִימֶֽלֶךְ",
+      "strongNumber": "H288",
+      "existing": "ahimelech",
+      "why": "'David is come to the house of Ahimelech': the priest of Nob (1 Samuel 21-22)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 54:2",
+      "position": 4,
+      "surface": "זִּיפִים",
+      "strongNumber": "H2130",
+      "existing": "ziphites",
+      "why": "'When the Ziphims came and said to Saul': the people of Ziph (1 Samuel 23:19)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 54:2",
+      "position": 8,
+      "surface": "שָׁא֑וּל",
+      "strongNumber": "H7586",
+      "existing": "saul",
+      "why": "The title sets the psalm in David's flight from Saul, the king, son of Kish."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 56:1",
+      "position": 14,
+      "surface": "פְלִשְׁתִּ֣ים",
+      "strongNumber": "H6430",
+      "existing": "philistines",
+      "why": "'When the Philistines took him in Gath': the people."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 56:1",
+      "position": 16,
+      "surface": "גַֽת",
+      "strongNumber": "H1661",
+      "existing": "gath",
+      "why": "'When the Philistines took him in Gath': the Philistine city (1 Samuel 21:10)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 57:1",
+      "position": 13,
+      "surface": "שָׁ֝א֗וּל",
+      "strongNumber": "H7586",
+      "existing": "saul",
+      "why": "The title sets the psalm in David's flight from Saul, the king, son of Kish."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 59:1",
+      "position": 11,
+      "surface": "שָׁא֑וּל",
+      "strongNumber": "H7586",
+      "existing": "saul",
+      "why": "The title sets the psalm in David's flight from Saul, the king, son of Kish."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 60:2",
+      "position": 9,
+      "surface": "צֹ֫ובָ֥ה",
+      "strongNumber": "H9000",
+      "existing": "zobah",
+      "why": "'When he strove with Aram-zobah': Zobah of the Arameans; BHSA gives the word the number of the conjunction beside it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 60:2",
+      "position": 12,
+      "surface": "יֹואָ֗ב",
+      "strongNumber": "H9000",
+      "existing": "joab",
+      "why": "'When Joab returned, and smote of Edom in the valley of salt': David's captain, son of Zeruiah; BHSA gives the word the number of the conjunction beside it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 60:2",
+      "position": 16,
+      "surface": "אֱדֹ֣ום",
+      "strongNumber": "H9003",
+      "existing": "edom",
+      "why": "'Smote of Edom in the valley of salt': BHSA marks the word a place name; BHSA gives it the number of the preposition beside it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 73:1",
+      "position": 3,
+      "surface": "אָ֫סָ֥ף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 74:1",
+      "position": 3,
+      "surface": "אָ֫סָ֥ף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 75:1",
+      "position": 8,
+      "surface": "אָסָ֣ף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 76:1",
+      "position": 8,
+      "surface": "אָסָ֣ף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 77:1",
+      "position": 7,
+      "surface": "אָסָ֥ף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 78:1",
+      "position": 3,
+      "surface": "אָ֫סָ֥ף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 79:1",
+      "position": 3,
+      "surface": "אָ֫סָ֥ף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 80:1",
+      "position": 8,
+      "surface": "אָסָ֣ף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 81:1",
+      "position": 8,
+      "surface": "אָסָֽף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 82:1",
+      "position": 3,
+      "surface": "אָ֫סָ֥ף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 83:1",
+      "position": 4,
+      "surface": "אָסָֽף",
+      "strongNumber": "H623",
+      "existing": "asaph-2",
+      "why": "'A Psalm of Asaph': the singer Asaph son of Berechiah, whom David set over the song (1 Chronicles 6:39; 16:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 84:1",
+      "position": 9,
+      "surface": "קֹ֥רַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 85:1",
+      "position": 6,
+      "surface": "קֹ֬רַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 87:1",
+      "position": 3,
+      "surface": "קֹ֖רַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 88:1",
+      "position": 5,
+      "surface": "קֹ֥רַח",
+      "strongNumber": "H7141",
+      "existing": "korah-3",
+      "why": "'For the sons of Korah': the Levite family descended from Korah son of Izhar (Numbers 16; 1 Chronicles 6:22, 37), of whom came the temple singers."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 88:1",
+      "position": 15,
+      "surface": "הֵימָ֥ן",
+      "strongNumber": "H1968",
+      "existing": "heman",
+      "why": "'Maschil of Heman the Ezrahite': Heman the Ezrahite, of the sons of Zerah (1 Kings 4:31; 1 Chronicles 2:6)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 88:1",
+      "position": 17,
+      "surface": "אֶזְרָחִֽי",
+      "strongNumber": "H250",
+      "existing": "ezrahites",
+      "why": "'The Ezrahite': the gentilic, of the descendants of Zerah."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 89:1",
+      "position": 3,
+      "surface": "אֵיתָ֥ן",
+      "strongNumber": "H387",
+      "existing": "ethan",
+      "why": "'Maschil of Ethan the Ezrahite': Ethan of the sons of Zerah (1 Kings 4:31; 1 Chronicles 2:6)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 89:1",
+      "position": 5,
+      "surface": "אֶזְרָחִֽי",
+      "strongNumber": "H250",
+      "existing": "ezrahites",
+      "why": "'The Ezrahite': the gentilic, of the descendants of Zerah."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 52:2",
+      "position": 3,
+      "surface": "דֹּואֵ֣ג",
+      "strongNumber": "H1732",
+      "existing": "doeg",
+      "why": "'When Doeg the Edomite came and told Saul': BHSA gives the word the number of David's name two words on, and the resolution by number named David.",
+      "corrects": "david"
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 60:2",
+      "position": 18,
+      "surface": "גֵיא־מֶ֑לַח",
+      "strongNumber": "H4417",
+      "existing": "valleyofsalt",
+      "why": "'Smote of Edom in the valley of salt': the valley, not the Salt Sea; BHSA gives the word the number of salt alone, which the sea's record carries.",
+      "corrects": "saltsea"
+    }
+  ]
+}

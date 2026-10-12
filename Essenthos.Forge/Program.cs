@@ -165,6 +165,7 @@ builder.Services.AddScoped<FixedTitleLoader>();
 builder.Services.AddScoped<PassageReadingLoader>();
 builder.Services.AddScoped<CrossedNameLoader>();
 builder.Services.AddScoped<EqualTwinNames>();
+builder.Services.AddScoped<LexemeNameLoader>();
 builder.Services.AddScoped<ForeignNames>();
 builder.Services.AddScoped<PronounReferents>();
 builder.Services.AddScoped<AnnotationCarrier>();

@@ -3,6 +3,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using Npgsql;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
@@ -222,6 +223,13 @@ internal sealed class PeopleLoader(
         if (descended > 0)
         {
             logger.LogInformation("{Descended} verses stating a people's descent were added to its list", descended);
+        }
+
+        var restored = await RestoreTheGentilics(cancellationToken);
+        if (restored > 0)
+        {
+            logger.LogInformation(
+                "{Restored} Hebrew words carrying a people's gentilic that nothing named were given the people", restored);
         }
 
         if (peoples.Count == 0 && writing.Joined.Count == 0)
@@ -726,11 +734,63 @@ internal sealed class PeopleLoader(
         FROM word w
         JOIN text t ON t.id = w.text_id AND t.slug = @witness
         JOIN entity_name n ON n.hebrew_strong_number = w.strong_number AND n.kind = @label
-        JOIN entity e ON e.id = n.entity_id AND e.kind = 'people' AND e.id = ANY(@peoples)
+        JOIN entity e ON e.id = n.entity_id AND e.kind = 'people'
         LEFT JOIN strong_gentilic g ON g.strong_number = w.strong_number
         WHERE coalesce(w.morphology->>'nameType', '') NOT IN ('pers', 'topo')
+          AND (e.id = ANY(@peoples)
+               OR (@unnamed AND NOT EXISTS (SELECT 1 FROM word_entity spoken WHERE spoken.word_id = w.id)))
         ORDER BY w.id, n.entity_id
         """;
+
+    /// <summary>
+    /// The words carrying a people's gentilic that nothing names, given the people again. The pass
+    /// above writes a people's words when the people is written, so a word that lost its answer
+    /// afterwards stayed unnamed on every later load, while a corpus built from nothing names it:
+    /// Joshua 24:11's seven peoples were blank on a warm corpus and named on a cold one. A word some
+    /// other pass named, whoever it names, is left as it is.
+    /// </summary>
+    private async Task<int> RestoreTheGentilics(CancellationToken cancellationToken)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
+        await Annotating.Run(connection, transaction, TheGentilicWords, cancellationToken,
+            ("confidence", GentilicResolution), ("witness", EntityCandidates.Witness),
+            ("label", GentilicName), ("peoples", Array.Empty<int>()), ("unnamed", true));
+
+        var restored = new List<int>();
+        var seeds = 0;
+        await using (var command = new NpgsqlCommand(
+                         "SELECT entity_id, count(*) FROM pending_annotation GROUP BY entity_id",
+                         connection, (NpgsqlTransaction)transaction.GetDbTransaction()))
+        await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
+        {
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                restored.Add(reader.GetInt32(0));
+                seeds += (int)reader.GetInt64(1);
+            }
+        }
+
+        if (seeds == 0)
+        {
+            await transaction.RollbackAsync(cancellationToken);
+            return 0;
+        }
+
+        await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
+        var spelled = EnumSpelling.Of(ByTheForm);
+        await Annotating.Run(connection, transaction, Annotating.Settle, cancellationToken,
+            ("method", spelled), ("source", ByTheGentilic));
+        await Annotating.Run(connection, transaction, Annotating.Claim, cancellationToken,
+            ("method", spelled), ("source", ByTheGentilic));
+        await transaction.CommitAsync(cancellationToken);
+
+        await Reference([.. restored], cancellationToken);
+        return seeds;
+    }
 
     /// <summary>The words of the peoples this run wrote, which on a later boot are the only new ones.</summary>
     private async Task<int> AnnotateTheGentilics(int[] peoples, CancellationToken cancellationToken)
@@ -742,7 +802,7 @@ internal sealed class PeopleLoader(
         await Annotating.Run(connection, transaction, Annotating.Workspace, cancellationToken);
         await Annotating.Run(connection, transaction, TheGentilicWords, cancellationToken,
             ("confidence", GentilicResolution), ("witness", EntityCandidates.Witness),
-            ("label", GentilicName), ("peoples", peoples));
+            ("label", GentilicName), ("peoples", peoples), ("unnamed", false));
         await Annotating.CarryAcrossLinks(connection, transaction, cancellationToken);
 
         var spelled = EnumSpelling.Of(ByTheForm);
