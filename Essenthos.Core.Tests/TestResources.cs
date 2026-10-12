@@ -38,6 +38,12 @@ internal static class TestResources
     public static string SynodalStrong =>
         System.IO.Path.Combine([ResolvedPath.Value, .. Essenthos.Core.Loading.Links.SynodalStrongLinkLoader.EditionFile]);
 
+    /// <summary>
+    /// A folder this checkout ships under its own <c>Resources/</c>, such as the descriptor clauses: the
+    /// files as this branch has them, wherever the corpus sources are read from.
+    /// </summary>
+    public static string Shipped(string relative) => System.IO.Path.Combine(ContentRoot(), "Resources", relative);
+
     /// <summary>A folder of the corpus sources, which <see cref="Path"/> cannot name since it expects a file.</summary>
     public static string Folder(string relative) => System.IO.Path.Combine(ResolvedPath.Value, relative);
 
