@@ -384,6 +384,7 @@ internal sealed class DatasetLoader(
             new("context-bearers", cancellationToken => NameTheBearerTheBookNames(resources, cancellationToken)),
             new("fixed-titles", NameTheTitlesTheTextFixes),
             new("title-readings", ReadWhoseTheTitleIsWhereItStands),
+            new("settled-titles", HoldTheTitlesAsTitlesAgain),
             new("passage-readings", cancellationToken => NameWhomTheReadingsOfThePassagesFind(resources, cancellationToken)),
             new("verse-readings", KeepTheVersesReadForTheRecordsTheySpeakOf),
             new("eponym-readings", TellTheManFromThePeopleATribesNameStandsFor),
@@ -2161,6 +2162,21 @@ internal sealed class DatasetLoader(
         {
             status.Record(outcome);
         }
+    }
+
+    /// <summary>
+    /// The titles' words again, over the words the readings have fixed to a bearer. A title takes no
+    /// word somebody else names; on a corpus loaded before, the first pass already sees what the
+    /// readings fixed, and on one built from nothing only this one does, so without it the title would
+    /// stay on those words until a second load took it off.
+    /// </summary>
+    private async Task HoldTheTitlesAsTitlesAgain(CancellationToken cancellationToken)
+    {
+        status.Starting("the names that are titles, over the words the readings fixed");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<TitleLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>
