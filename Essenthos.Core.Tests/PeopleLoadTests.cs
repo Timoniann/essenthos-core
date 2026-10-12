@@ -241,6 +241,28 @@ public sealed class PeopleLoadTests : IDisposable
         (await _db.Entities.AnyAsync(e => e.Name == "Philistines")).Should().BeTrue("the other unjoined gentilic still gets its people");
     }
 
+    /// <summary>
+    /// A word carrying a people's gentilic that lost its answer after the people was written is given
+    /// the people again on the next load, as a corpus built from nothing would give it; a word another
+    /// pass named is left alone.
+    /// </summary>
+    [Fact]
+    public async Task AGentilicWordThatLostItsPeopleIsGivenItAgainOnTheNextLoad()
+    {
+        await Load();
+        var word = At(_rulings.Count + 1);
+        var people = await _db.WordEntities.Where(a => a.WordId == word.Id).Select(a => a.EntityId).SingleAsync();
+        await _db.WordEntities.Where(a => a.WordId == word.Id).ExecuteDeleteAsync();
+
+        await Load();
+
+        (await _db.WordEntities.Where(a => a.WordId == word.Id).Select(a => a.EntityId).ToListAsync())
+            .Should().Equal(people);
+        var before = await _db.WordEntities.CountAsync();
+        await Load();
+        (await _db.WordEntities.CountAsync()).Should().Be(before);
+    }
+
     [Fact]
     public async Task EveryTribeInTheFileBecomesARecordNamingItsAncestor()
     {

@@ -1,0 +1,813 @@
+{
+  "decidedBy": "the project owner, 2026-10-12: a name the Hebrew marks and nothing reads is held as a people or a place, as the standard references treat it (BHSA's own marking, Strong's and Brown-Driver-Briggs's entries, the OpenBible gazetteer); gods, months and Ezekiel's Oholah and Oholibah are left; each word read against its verse by claude-opus-5-5",
+  "policy": "Each word BHSA marks as a name, or analyses as a gentilic, that no record answered is given the people or the place the references make it: the record the gazetteer or the lexicon already holds, or one written here from the verse.",
+  "method": "manual",
+  "source": "Essenthos, the names the Hebrew marks that nothing read, each word read against its verse by claude-opus-5-5 on the project owner's ruling of 2026-10-12",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:5",
+      "position": 16,
+      "surface": "רְפָאִים֙",
+      "strongNumber": "H7497",
+      "create": {
+        "slug": "rephaim",
+        "name": "Rephaim",
+        "distinguisher": "a people of giants the text names among the first inhabitants of the land (GEN 14:5; DEU 2:11)",
+        "notes": null,
+        "kind": "people"
+      },
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 15:20",
+      "position": 12,
+      "surface": "רְפָאִֽים",
+      "strongNumber": "H7497",
+      "existing": "rephaim",
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 2:11",
+      "position": 1,
+      "surface": "רְפָאִ֛ים",
+      "strongNumber": "H7497",
+      "existing": "rephaim",
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 2:20",
+      "position": 2,
+      "surface": "רְפָאִ֥ים",
+      "strongNumber": "H7497",
+      "existing": "rephaim",
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 2:20",
+      "position": 6,
+      "surface": "רְפָאִ֤ים",
+      "strongNumber": "H7497",
+      "existing": "rephaim",
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 3:11",
+      "position": 11,
+      "surface": "רְפָאִים֒",
+      "strongNumber": "H7497",
+      "existing": "rephaim",
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 3:13",
+      "position": 29,
+      "surface": "רְפָאִֽים",
+      "strongNumber": "H7497",
+      "existing": "rephaim",
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 12:4",
+      "position": 10,
+      "surface": "רְפָאִ֑ים",
+      "strongNumber": "H7497",
+      "existing": "rephaim",
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 13:12",
+      "position": 19,
+      "surface": "רְפָאִ֔ים",
+      "strongNumber": "H7497",
+      "existing": "rephaim",
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 17:15",
+      "position": 23,
+      "surface": "רְפָאִ֑ים",
+      "strongNumber": "H7497",
+      "existing": "rephaim",
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 20:4",
+      "position": 22,
+      "surface": "רְפָאִ֖ים",
+      "strongNumber": "H7497",
+      "existing": "rephaim",
+      "why": "BHSA marks רְפָאִים here as the descent group, and the verse speaks of the people: Strong's H7497 in its sense of the giants, the people the King James calls the Rephaims and the giants."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:8",
+      "position": 33,
+      "surface": "רְפָאִ֖ים",
+      "strongNumber": "H7497",
+      "existing": "valleyofrephaim",
+      "why": "עֵמֶק רְפָאִים, the valley of Rephaim: the name of the valley, which the gazetteer holds as a place."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 18:16",
+      "position": 17,
+      "surface": "רְפָאִ֖ים",
+      "strongNumber": "H7497",
+      "existing": "valleyofrephaim",
+      "why": "עֵמֶק רְפָאִים, the valley of Rephaim: the name of the valley, which the gazetteer holds as a place."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2SA 5:18",
+      "position": 8,
+      "surface": "רְפָאִֽים",
+      "strongNumber": "H7497",
+      "existing": "valleyofrephaim",
+      "why": "עֵמֶק רְפָאִים, the valley of Rephaim: the name of the valley, which the gazetteer holds as a place."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2SA 5:22",
+      "position": 11,
+      "surface": "רְפָאִֽים",
+      "strongNumber": "H7497",
+      "existing": "valleyofrephaim",
+      "why": "עֵמֶק רְפָאִים, the valley of Rephaim: the name of the valley, which the gazetteer holds as a place."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2SA 23:13",
+      "position": 23,
+      "surface": "רְפָאִֽים",
+      "strongNumber": "H7497",
+      "existing": "valleyofrephaim",
+      "why": "עֵמֶק רְפָאִים, the valley of Rephaim: the name of the valley, which the gazetteer holds as a place."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 11:15",
+      "position": 22,
+      "surface": "רְפָאִֽים",
+      "strongNumber": "H7497",
+      "existing": "valleyofrephaim",
+      "why": "עֵמֶק רְפָאִים, the valley of Rephaim: the name of the valley, which the gazetteer holds as a place."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 14:9",
+      "position": 8,
+      "surface": "רְפָאִֽים",
+      "strongNumber": "H7497",
+      "existing": "valleyofrephaim",
+      "why": "עֵמֶק רְפָאִים, the valley of Rephaim: the name of the valley, which the gazetteer holds as a place."
+    },
+    {
+      "text": "BHSA",
+      "reference": "ISA 17:5",
+      "position": 18,
+      "surface": "רְפָאִֽים",
+      "strongNumber": "H7497",
+      "existing": "valleyofrephaim",
+      "why": "עֵמֶק רְפָאִים, the valley of Rephaim: the name of the valley, which the gazetteer holds as a place."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:8",
+      "position": 6,
+      "surface": "בֶן־הִנֹּ֗ם",
+      "strongNumber": "H1121",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי בֶן־הִנֹּם, the valley of the son of Hinnom: BHSA marks the phrase a place name, and it is the valley the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 18:16",
+      "position": 13,
+      "surface": "בֶן־הִנֹּ֔ם",
+      "strongNumber": "H1121",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי בֶן־הִנֹּם, the valley of the son of Hinnom: BHSA marks the phrase a place name, and it is the valley the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 28:3",
+      "position": 6,
+      "surface": "בֶן־הִנֹּ֑ם",
+      "strongNumber": "H1121",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי בֶן־הִנֹּם, the valley of the son of Hinnom: BHSA marks the phrase a place name, and it is the valley the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 33:6",
+      "position": 11,
+      "surface": "בֶן־הִנֹּ֔ם",
+      "strongNumber": "H1121",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי בֶן־הִנֹּם, the valley of the son of Hinnom: BHSA marks the phrase a place name, and it is the valley the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 7:31",
+      "position": 9,
+      "surface": "בֶן־הִנֹּ֔ם",
+      "strongNumber": "H1121",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי בֶן־הִנֹּם, the valley of the son of Hinnom: BHSA marks the phrase a place name, and it is the valley the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 7:32",
+      "position": 15,
+      "surface": "בֶן־הִנֹּ֔ם",
+      "strongNumber": "H1121",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי בֶן־הִנֹּם, the valley of the son of Hinnom: BHSA marks the phrase a place name, and it is the valley the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 19:2",
+      "position": 5,
+      "surface": "בֶן־הִנֹּ֔ם",
+      "strongNumber": "H1121",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי בֶן־הִנֹּם, the valley of the son of Hinnom: BHSA marks the phrase a place name, and it is the valley the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 19:6",
+      "position": 20,
+      "surface": "בֶן־הִנֹּ֑ם",
+      "strongNumber": "H1121",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי בֶן־הִנֹּם, the valley of the son of Hinnom: BHSA marks the phrase a place name, and it is the valley the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 32:35",
+      "position": 10,
+      "surface": "בֶן־הִנֹּ֗ם",
+      "strongNumber": "H1121",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי בֶן־הִנֹּם, the valley of the son of Hinnom: BHSA marks the phrase a place name, and it is the valley the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:8",
+      "position": 27,
+      "surface": "הִנֹּם֙",
+      "strongNumber": "H2011",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי הִנֹּם, the valley of Hinnom: the name of the valley, which the gazetteer holds; BHSA marks Hinnom himself a person, and the text names him only in the valley's name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 18:16",
+      "position": 22,
+      "surface": "הִנֹּ֜ם",
+      "strongNumber": "H2011",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי הִנֹּם, the valley of Hinnom: the name of the valley, which the gazetteer holds; BHSA marks Hinnom himself a person, and the text names him only in the valley's name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2KI 23:10",
+      "position": 10,
+      "surface": "הִנֹּ֑ם",
+      "strongNumber": "H2011",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי הִנֹּם, the valley of Hinnom: the name of the valley, which the gazetteer holds; BHSA marks Hinnom himself a person, and the text names him only in the valley's name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 11:30",
+      "position": 18,
+      "surface": "הִנֹּֽם",
+      "strongNumber": "H2011",
+      "existing": "valleyofhinnom",
+      "why": "גֵּי הִנֹּם, the valley of Hinnom: the name of the valley, which the gazetteer holds; BHSA marks Hinnom himself a person, and the text names him only in the valley's name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 35:2",
+      "position": 5,
+      "surface": "רֵכָבִים֒",
+      "strongNumber": "H7397",
+      "create": {
+        "slug": "rechabites",
+        "name": "Rechabites",
+        "distinguisher": "the house of Jonadab son of Rechab, who kept his command to drink no wine (JER 35:2-6)",
+        "notes": null,
+        "kind": "people"
+      },
+      "why": "בֵּית הָרֵכָבִים, the house of the Rechabites: BHSA analyses the word as a gentilic, and the chapter says who they are, the sons of Jonadab son of Rechab (JER 35:6)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 35:3",
+      "position": 21,
+      "surface": "רֵכָבִֽים",
+      "strongNumber": "H7397",
+      "existing": "rechabites",
+      "why": "בֵּית הָרֵכָבִים, the house of the Rechabites: BHSA analyses the word as a gentilic, and the chapter says who they are, the sons of Jonadab son of Rechab (JER 35:6)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 35:5",
+      "position": 8,
+      "surface": "רֵכָבִ֗ים",
+      "strongNumber": "H7397",
+      "existing": "rechabites",
+      "why": "בֵּית הָרֵכָבִים, the house of the Rechabites: BHSA analyses the word as a gentilic, and the chapter says who they are, the sons of Jonadab son of Rechab (JER 35:6)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 35:18",
+      "position": 5,
+      "surface": "רֵכָבִ֜ים",
+      "strongNumber": "H7397",
+      "existing": "rechabites",
+      "why": "בֵּית הָרֵכָבִים, the house of the Rechabites: BHSA analyses the word as a gentilic, and the chapter says who they are, the sons of Jonadab son of Rechab (JER 35:6)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:1",
+      "position": 17,
+      "surface": "גֹּויִֽם",
+      "strongNumber": "H1471",
+      "existing": "goiim",
+      "why": "Tidal king of Goiim: BHSA marks גֹּויִם here as a place name, and the gazetteer holds it as the place of Genesis 14."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:9",
+      "position": 8,
+      "surface": "גֹּויִ֔ם",
+      "strongNumber": "H1471",
+      "existing": "goiim",
+      "why": "Tidal king of Goiim: BHSA marks גֹּויִם here as a place name, and the gazetteer holds it as the place of Genesis 14."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 12:23",
+      "position": 8,
+      "surface": "גֹּויִ֥ם",
+      "strongNumber": "H1471",
+      "existing": "goiim-2",
+      "why": "The king of Goiim at Gilgal: BHSA marks גֹּויִם here as a place name, and the gazetteer holds it as the Goiim of Joshua 12."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 2:20",
+      "position": 16,
+      "surface": "זַמְזֻמִּֽים",
+      "strongNumber": "H2157",
+      "create": {
+        "slug": "zamzummims",
+        "name": "Zamzummims",
+        "distinguisher": "the name the Ammonites gave the giants who dwelt before them in their land (DEU 2:20)",
+        "notes": null,
+        "kind": "people"
+      },
+      "why": "BHSA marks the name the descent group; Strong's H2157 is a native tribe of Palestine, and the verse says it is what the Ammonites called the giants of their land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZK 27:11",
+      "position": 9,
+      "surface": "גַ֨מָּדִ֔ים",
+      "strongNumber": "H1575",
+      "create": {
+        "slug": "gammadims",
+        "name": "Gammadims",
+        "distinguisher": "men who kept the towers of Tyre (EZK 27:11)",
+        "notes": null,
+        "kind": "people"
+      },
+      "why": "BHSA marks the name the descent group, and the King James and the Synodal read a people, the Gammadims in the towers of Tyre."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZR 4:9",
+      "position": 19,
+      "surface": "דהוא",
+      "strongNumber": "H1768",
+      "create": {
+        "slug": "dehavites",
+        "name": "Dehavites",
+        "distinguisher": "one of the peoples settled in Samaria who wrote to Artaxerxes against Jerusalem (EZR 4:9)",
+        "notes": null,
+        "kind": "people"
+      },
+      "why": "BHSA analyses the word as a gentilic in the list of the peoples who wrote against Jerusalem; the King James reads the Dehavites."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 5:19",
+      "position": 12,
+      "surface": "נֹודָֽב",
+      "strongNumber": "H5114",
+      "create": {
+        "slug": "nodab",
+        "name": "Nodab",
+        "distinguisher": "a people the tribes east of the Jordan made war on, with the Hagarites, Jetur and Naphish (1CH 5:19)",
+        "notes": null,
+        "kind": "people"
+      },
+      "why": "BHSA marks the name the descent group, and Strong's H5114 is an Arab tribe, named with Jetur and Naphish, the sons of Ishmael."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 10:21",
+      "position": 12,
+      "surface": "מַּטְרִ֑י",
+      "strongNumber": "H4309",
+      "create": {
+        "slug": "matrites",
+        "name": "Matrites",
+        "distinguisher": "the family of Benjamin taken by lot before Saul son of Kish (1SA 10:21)",
+        "notes": null,
+        "kind": "people"
+      },
+      "why": "מִשְׁפַּחַת הַמַּטְרִי, the family of the Matrite: BHSA analyses the word as a gentilic, the family of Benjamin the lot fell on."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2SA 6:6",
+      "position": 5,
+      "surface": "נָכֹ֑ון",
+      "strongNumber": "H5225",
+      "create": {
+        "slug": "nachon",
+        "name": "Nachon",
+        "distinguisher": "the threshing floor where Uzzah took hold of the ark (2SA 6:6)",
+        "notes": null,
+        "kind": "place"
+      },
+      "why": "גֹּרֶן נָכֹון, the threshing floor of Nachon: the name of the place where Uzzah died; BHSA marks it a person's name, the owner of the floor, and the text names nothing but the floor."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1KI 1:9",
+      "position": 12,
+      "surface": "זֹּחֶ֔לֶת",
+      "strongNumber": "H2120",
+      "create": {
+        "slug": "zoheleth",
+        "name": "Zoheleth",
+        "distinguisher": "the stone by En-rogel where Adonijah made his feast (1KI 1:9)",
+        "notes": null,
+        "kind": "place"
+      },
+      "why": "אֶבֶן הַזֹּחֶלֶת, the stone of Zoheleth by En-rogel: BHSA marks it a place name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "HOS 10:14",
+      "position": 12,
+      "surface": "שַֽׁלְמַ֛ן",
+      "strongNumber": "H8020",
+      "create": {
+        "slug": "shalman",
+        "name": "Shalman",
+        "distinguisher": "who spoiled Beth-arbel in the day of battle (HOS 10:14)",
+        "notes": null,
+        "kind": "person"
+      },
+      "alternatives": [
+        {
+          "slug": "shalmaneser",
+          "describes": null,
+          "reason": "The name is the first part of Shalmaneser's, and the king of Assyria who besieged Samaria (2KI 17:3) may be meant; the text does not say."
+        }
+      ],
+      "why": "BHSA marks Shalman a person's name: the one who spoiled Beth-arbel; the text does not say who he was."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 26:17",
+      "position": 2,
+      "surface": "אֲרֹ֕וד",
+      "strongNumber": "H720",
+      "existing": "arodi",
+      "why": "Arod son of Gad, of whom came the family of the Arodites; Genesis 46:16 names him Arodi."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 19:38",
+      "position": 11,
+      "surface": "בֶּן־עַמִּ֑י",
+      "strongNumber": "H1151",
+      "existing": "benammi",
+      "why": "The son Lot's younger daughter bore and named Ben-ammi."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 40:8",
+      "position": 27,
+      "surface": "יזַנְיָ֨הוּ֙",
+      "strongNumber": "H3153",
+      "existing": "jaazaniah",
+      "why": "Jezaniah the son of a Maachathite, among the captains who came to Gedaliah at Mizpah; 2 Kings 25:23 names him Jaazaniah."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 80:2",
+      "position": 8,
+      "surface": "יֹוסֵ֑ף",
+      "strongNumber": "H3130",
+      "existing": "josephites",
+      "why": "'This he ordained in Joseph for a testimony': Joseph stands for his descendants, the people the Psalm calls by his name, as Brown-Driver-Briggs reads it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 81:6",
+      "position": 3,
+      "surface": "יהֹ֘וסֵ֤ף",
+      "strongNumber": "H3084",
+      "existing": "josephites",
+      "why": "'This he ordained in Joseph for a testimony': Joseph stands for his descendants, the people the Psalm calls by his name, as Brown-Driver-Briggs reads it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 13:9",
+      "position": 5,
+      "surface": "כִּידֹ֑ן",
+      "strongNumber": "H3592",
+      "existing": "chidon",
+      "why": "גֹּרֶן כִּידֹן, the threshing floor of Chidon, the place 2 Samuel 6:6 calls Nachon's."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 11:47",
+      "position": 7,
+      "surface": "מְּצֹבָיָֽה",
+      "strongNumber": "H4677",
+      "existing": "mesobaite",
+      "why": "Jasiel the Mesobaite: the place he came from, which the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 4:21",
+      "position": 20,
+      "surface": "אַשְׁבֵּֽעַ",
+      "strongNumber": "H791",
+      "existing": "bethashbea",
+      "why": "בֵּית אַשְׁבֵּעַ, the house of Ashbea, which the gazetteer holds as the place Beth-ashbea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 1:16",
+      "position": 12,
+      "surface": "קְוֵ֕א",
+      "strongNumber": "H4723",
+      "existing": "kue",
+      "why": "Solomon's horses brought from Kue: BHSA marks it a place name, the land of Cilicia the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 1:16",
+      "position": 17,
+      "surface": "קְוֵ֥א",
+      "strongNumber": "H4723",
+      "existing": "kue",
+      "why": "Solomon's horses brought from Kue: BHSA marks it a place name, the land of Cilicia the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "ISA 15:5",
+      "position": 8,
+      "surface": "עֶגְלַ֣ת שְׁלִשִׁיָּ֑ה",
+      "strongNumber": "H5697",
+      "existing": "eglathshelishiyah",
+      "why": "BHSA marks Eglath-shelishiyah a place name, a town of Moab."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JER 48:34",
+      "position": 14,
+      "surface": "עֶגְלַ֖ת שְׁלִֽשִׁיָּ֑ה",
+      "strongNumber": "H5697",
+      "existing": "eglathshelishiyah",
+      "why": "BHSA marks Eglath-shelishiyah a place name, a town of Moab."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 11:33",
+      "position": 13,
+      "surface": "אָבֵ֣ל כְּרָמִ֔ים",
+      "strongNumber": "H58",
+      "existing": "abelkeramim",
+      "why": "Jephthah smote the Ammonites unto Abel-keramim: BHSA marks it a place name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 50:11",
+      "position": 26,
+      "surface": "אָבֵ֣ל מִצְרַ֔יִם",
+      "strongNumber": "H67",
+      "existing": "abelmizraim",
+      "why": "'Wherefore the name of it was called Abel-mizraim': the place named in the verse."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZK 30:17",
+      "position": 2,
+      "surface": "אָ֛וֶן",
+      "strongNumber": "H206",
+      "existing": "aven",
+      "why": "The young men of Aven, the city of Egypt called On: BHSA marks it a place name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "AMO 1:5",
+      "position": 9,
+      "surface": "בִּקְעַת־אָ֔וֶן",
+      "strongNumber": "H1237",
+      "existing": "valleyofaven",
+      "why": "בִּקְעַת אָוֶן, the plain of Aven in Aram: the place the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 20:19",
+      "position": 23,
+      "surface": "אָֽזֶל",
+      "strongNumber": "H237",
+      "existing": "ezel",
+      "why": "The stone Ezel, where David hid: the place the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 12:29",
+      "position": 3,
+      "surface": "בֵּית֙ הַגִּלְגָּ֔ל",
+      "strongNumber": "H1004",
+      "existing": "bethgilgal",
+      "why": "Beth-gilgal, whence the singers came to the dedication of the wall."
+    },
+    {
+      "text": "BHSA",
+      "reference": "AMO 1:5",
+      "position": 14,
+      "surface": "בֵּ֣ית עֶ֑דֶן",
+      "strongNumber": "H1004",
+      "existing": "betheden",
+      "why": "Him that holdeth the sceptre from Beth-eden: BHSA marks it a place name, the place the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2KI 10:12",
+      "position": 9,
+      "surface": "בֵּֽית־עֵ֥קֶד הָרֹעִ֖ים",
+      "strongNumber": "H1004",
+      "existing": "betheked",
+      "why": "Beth-eked of the shepherds on the way to Samaria, the place of 2 Kings 10:14."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 1:35",
+      "position": 8,
+      "surface": "הַר־חֶ֔רֶס",
+      "strongNumber": "H2022",
+      "existing": "mountheres",
+      "why": "The Amorites would dwell in mount Heres: the place the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 8:13",
+      "position": 11,
+      "surface": "מַעֲלֵ֖ה הֶחָֽרֶס",
+      "strongNumber": "H4608",
+      "existing": "heres",
+      "why": "Gideon returned from the ascent of Heres: BHSA marks it a place name, Heres."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2KI 9:27",
+      "position": 23,
+      "surface": "מַֽעֲלֵה־גוּר֙",
+      "strongNumber": "H4608",
+      "existing": "gur",
+      "why": "At the ascent of Gur, by Ibleam: the place the gazetteer holds as Gur."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:7",
+      "position": 18,
+      "surface": "מַעֲלֵ֣ה אֲדֻמִּ֔ים",
+      "strongNumber": "H4608",
+      "existing": "adummim",
+      "why": "The ascent of Adummim on the border of Judah and Benjamin: the place the gazetteer holds as Adummim."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 18:17",
+      "position": 14,
+      "surface": "מַעֲלֵ֣ה אֲדֻמִּ֑ים",
+      "strongNumber": "H4608",
+      "existing": "adummim",
+      "why": "The ascent of Adummim on the border of Judah and Benjamin: the place the gazetteer holds as Adummim."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 132:6",
+      "position": 8,
+      "surface": "יָֽעַר",
+      "strongNumber": "H3293",
+      "existing": "jaar",
+      "why": "'We found it in the fields of Jaar': BHSA marks it a place name, the town of the ark (Kiriath-jearim)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "HAB 3:7",
+      "position": 5,
+      "surface": "כוּשָׁ֑ן",
+      "strongNumber": "H3572",
+      "existing": "cushan",
+      "why": "The tents of Cushan, beside the land of Midian: BHSA marks it the descent group, and the gazetteer holds Cushan as the land."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NAM 3:8",
+      "position": 4,
+      "surface": "נֹּ֣א אָמֹ֔ון",
+      "strongNumber": "H528",
+      "existing": "thebes",
+      "why": "No-amon, the city of Egypt the gazetteer holds as Thebes."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 1:1",
+      "position": 21,
+      "surface": "ס֜וּף",
+      "strongNumber": "H5489",
+      "existing": "suph",
+      "why": "The plain over against Suph: BHSA marks it a place name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 2:13",
+      "position": 11,
+      "surface": "עֵ֣ין הַתַּנִּ֔ין",
+      "strongNumber": "H5869",
+      "existing": "dragonspring",
+      "why": "Before the Dragon Spring, by the valley gate of Jerusalem."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZK 23:23",
+      "position": 10,
+      "surface": "קֹ֔ועַ",
+      "strongNumber": "H6970",
+      "existing": "koa",
+      "why": "Pekod, Shoa and Koa among the Chaldeans: BHSA marks it the descent group, and the gazetteer holds Koa."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:11",
+      "position": 14,
+      "surface": "רְחֹבֹ֥ת עִ֖יר",
+      "strongNumber": "H7344",
+      "existing": "rehobothir",
+      "why": "Asshur built Nineveh and Rehoboth-ir: the city named in the verse."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:17",
+      "position": 21,
+      "surface": "שָׁוֵ֔ה",
+      "strongNumber": "H7740",
+      "existing": "valleyofshaveh",
+      "why": "The valley of Shaveh, which is the king's dale."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:5",
+      "position": 28,
+      "surface": "אֵימִ֔ים",
+      "strongNumber": "H368",
+      "existing": "emims",
+      "why": "BHSA analyses the word as the gentilic of the Emim, the people the encyclopedia holds and annotates in Deuteronomy 2:10."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 2:11",
+      "position": 13,
+      "surface": "אֵמִֽים",
+      "strongNumber": "H368",
+      "existing": "emims",
+      "why": "BHSA analyses the word as the gentilic of the Emim, the people the encyclopedia holds and annotates in Deuteronomy 2:10."
+    }
+  ]
+}

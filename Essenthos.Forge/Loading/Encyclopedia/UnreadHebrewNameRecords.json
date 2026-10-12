@@ -1,0 +1,136 @@
+{
+  "decidedBy": "the project owner, 2026-10-12: a name the Hebrew marks and nothing reads is held as a people or a place, as the standard references treat it (BHSA's own marking, Strong's and Brown-Driver-Briggs's entries, the OpenBible gazetteer); gods, months and Ezekiel's Oholah and Oholibah are left; each word read against its verse by claude-opus-5-5",
+  "policy": "Each word BHSA marks as a name, or analyses as a gentilic, that no record answered is given the people or the place the references make it: the record the gazetteer or the lexicon already holds, or one written here from the verse. These are the places whose word every translation we hold reads as a common noun — a wood, villages, a palace, horns, an army, white wool, secretly — so the name stays on the Hebrew word and is not carried to theirs.",
+  "method": "manual",
+  "source": "Essenthos, the place names the Hebrew marks and the translations read as common words, each read against its verse by claude-opus-5-5 on the project owner's ruling of 2026-10-12",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "1SA 23:15",
+      "position": 18,
+      "surface": "חֹֽרְשָׁה",
+      "strongNumber": "H2793",
+      "existing": "horesh",
+      "why": "David in the wilderness of Ziph at Horesh: BHSA marks it a place name, and the gazetteer holds it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 23:16",
+      "position": 10,
+      "surface": "חֹ֑רְשָׁה",
+      "strongNumber": "H2793",
+      "existing": "horesh",
+      "why": "David in the wilderness of Ziph at Horesh: BHSA marks it a place name, and the gazetteer holds it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 23:18",
+      "position": 13,
+      "surface": "חֹ֔רְשָׁה",
+      "strongNumber": "H2793",
+      "existing": "horesh",
+      "why": "David in the wilderness of Ziph at Horesh: BHSA marks it a place name, and the gazetteer holds it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1SA 23:19",
+      "position": 20,
+      "surface": "חֹ֔רְשָׁה",
+      "strongNumber": "H2793",
+      "existing": "horesh",
+      "why": "David in the wilderness of Ziph at Horesh: BHSA marks it a place name, and the gazetteer holds it."
+    },
+    {
+      "text": "BHSA",
+      "reference": "2KI 9:27",
+      "position": 9,
+      "surface": "בֵּ֣ית הַגָּ֑ן",
+      "strongNumber": "H1004",
+      "existing": "bethhaggan",
+      "why": "Ahaziah fled by the way of Beth-haggan: BHSA marks it a place name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NEH 6:2",
+      "position": 15,
+      "surface": "כְּפִירִ֖ים",
+      "strongNumber": "H3715",
+      "existing": "hakkephirim",
+      "why": "In one of the villages, Kephirim, in the plain of Ono: BHSA marks it a place name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 21:14",
+      "position": 11,
+      "surface": "סוּפָ֔ה",
+      "strongNumber": "H5492",
+      "existing": "suphah",
+      "why": "Waheb in Suphah, from the book of the wars of the LORD: BHSA marks it a place name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "AMO 6:13",
+      "position": 13,
+      "surface": "קַרְנָֽיִם",
+      "strongNumber": "H7161",
+      "existing": "karnaim",
+      "why": "'Have we not taken to us Karnaim': BHSA marks it a place name, the town the gazetteer holds."
+    },
+    {
+      "text": "BHSA",
+      "reference": "AMO 4:3",
+      "position": 9,
+      "surface": "הַרְמֹ֖ונָה",
+      "strongNumber": "H2038",
+      "existing": "harmon",
+      "why": "'Ye shall cast them into Harmon': BHSA marks it a place name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZK 27:11",
+      "position": 4,
+      "surface": "חֵילֵ֗ךְ",
+      "strongNumber": "H2428",
+      "existing": "helech",
+      "why": "The men of Arvad and Helech upon the walls of Tyre: BHSA marks it a place name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JDG 9:31",
+      "position": 7,
+      "surface": "תָרְמָ֣ה",
+      "strongNumber": "H8649",
+      "create": {
+        "slug": "tormah",
+        "name": "Tormah",
+        "distinguisher": "whence Zebul sent messengers to Abimelech (JDG 9:31)",
+        "notes": null,
+        "kind": "place"
+      },
+      "alternatives": [
+        {
+          "slug": "arumah",
+          "describes": null,
+          "reason": "Arumah, where Abimelech dwelt (JDG 9:41), is a name of the same letters but one, and the two may be one town."
+        }
+      ],
+      "why": "Zebul sent messengers unto Abimelech in Tormah: BHSA marks it a place name."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZK 27:18",
+      "position": 15,
+      "surface": "צָֽחַר",
+      "strongNumber": "H6713",
+      "create": {
+        "slug": "zahar",
+        "name": "Zahar",
+        "distinguisher": "whose wool Damascus traded with Tyre (EZK 27:18)",
+        "notes": null,
+        "kind": "place"
+      },
+      "why": "The wool of Zahar: BHSA marks it a place name."
+    }
+  ],
+  "carry": false
+}

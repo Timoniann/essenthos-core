@@ -389,6 +389,7 @@ internal sealed class DatasetLoader(
             new("verse-readings", KeepTheVersesReadForTheRecordsTheySpeakOf),
             new("eponym-readings", TellTheManFromThePeopleATribesNameStandsFor),
             new("misplaced-annotations", TakeTheMisplacedNamesOffTheirRecords),
+            new("lexeme-names", NameTheHebrewNamesTheirLexemeNames),
             new("own-references", CiteTheVersesOurOwnWordsName),
             new("misfiled-verses", cancellationToken => GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, cancellationToken)),
             new("register-rematch-verses", cancellationToken => MatchTheRegisterToTheMovedVerses(resources, cancellationToken)),
@@ -2341,6 +2342,21 @@ internal sealed class DatasetLoader(
         {
             status.Record((await scope.ServiceProvider.GetRequiredService<OwnReferenceLoader>().Load(cancellationToken)).ToString());
         }
+    }
+
+    /// <summary>
+    /// The Hebrew names no pass answered, given the record their lexeme names everywhere else or the
+    /// people their descent group is named after. After every pass that names a Hebrew word by reading
+    /// it, and before the verses are cited off the words, the verses a dataset filed under an ancestor
+    /// are given his people, and the carried names are weighed against the verses' consensus and the
+    /// pronouns.
+    /// </summary>
+    private async Task NameTheHebrewNamesTheirLexemeNames(CancellationToken cancellationToken)
+    {
+        status.Starting("the Hebrew names their lexeme answers");
+
+        using var scope = services.CreateScope();
+        status.Record((await scope.ServiceProvider.GetRequiredService<LexemeNameLoader>().Load(cancellationToken)).ToString());
     }
 
     /// <summary>
