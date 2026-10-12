@@ -1,0 +1,134 @@
+SET
+Output format is unaligned.
+Field separator is "	".
+slug	txt	string_agg
+adah-wife-of-esau	RUSV	Адыx3 Адуx1 Адаx1
+adah-wife-of-esau	UBIO	Адиx3 Адаx1 Адуx1
+adah-wife-of-esau	UKR1871	Адиніx1 Адаx1 Адиx1 Адуx1
+adin-who-sealed-the-covenant	RUSV	Адинx1
+adin-who-sealed-the-covenant	UBIO	Адінx1
+adin-who-sealed-the-covenant	UKR1871	Адинx1
+ahijah-8	UBIO	Ахійяx1
+amariah-priest-with-zerubbabel	RUSV	Амарииx1 Амарияx1
+amariah-priest-with-zerubbabel	UBIO	Амаріїногоx1 Амаріяx1
+amariah-priest-with-zerubbabel	UKR1871	Амаріїногоx1 Амаріяx1
+assir-3	RUSV	Асирx1
+assir-3	UBIO	Ассірx1
+assir-3	UKR1871	Асирx1
+azarel-6	RUSV	Азариилx1
+azarel-6	UBIO	Азаріїлx1
+azarel-6	UKR1871	Азариїлx1
+azgad-who-sealed-the-covenant	RUSV	Азгарx1
+azgad-who-sealed-the-covenant	UBIO	Аз'дадx1
+azgad-who-sealed-the-covenant	UKR1871	Азгадx1
+basemath-daughter-of-ishmael	RUSV	Васемафыx3 Васемафаx1 Васемафуx1
+basemath-daughter-of-ishmael	UBIO	Босматиx3 Босматx2
+basemath-daughter-of-ishmael	UKR1871	Басматиx3 Басматуx1 Басматаx1
+benaiah-the-trumpeting-priest	RUSV	Ванеюx1 Ванеяx1
+benaiah-the-trumpeting-priest	UBIO	Бенаяx2
+benaiah-the-trumpeting-priest	UKR1871	Банеюx1 Банеяx1
+binnui-levite-with-zerubbabel	RUSV	Биннуйx1
+binnui-levite-with-zerubbabel	UBIO	Біннуйx1
+binnui-levite-with-zerubbabel	UKR1871	Биннуйx1
+bunni-the-covenant-chief	RUSV	Вуннийx1
+bunni-the-covenant-chief	UBIO	Бунніx1
+bunni-the-covenant-chief	UKR1871	Вуннїйx1
+chelub-father-of-ezri	RUSV	Хелуваx1
+chelub-father-of-ezri	UBIO	Келувівx1
+elkanah-doorkeeper-of-the-ark	RUSV	Елканаx1
+elkanah-doorkeeper-of-the-ark	UBIO	Елканаx1
+elkanah-doorkeeper-of-the-ark	UKR1871	Елканаx1
+ezer-at-the-dedication	RUSV	Езерx1
+ezer-at-the-dedication	UBIO	Езерx1
+ezer-at-the-dedication	UKR1871	Езерx1
+ezra-2	RUSV	Мисферефомx1
+ezra-2	UBIO	Місперетомx1
+ezra-2	UKR1871	Мисферетомx1
+galal-who-dwelt-in-jerusalem	RUSV	Галалx1
+galal-who-dwelt-in-jerusalem	UBIO	Балалx1
+galal-who-dwelt-in-jerusalem	UKR1871	Галалx1
+hachmoni-father-of-jashobeam	RUSV	Ахаманиx1
+hachmoni-father-of-jashobeam	UBIO	Гахмоніx1
+hachmoni-father-of-jashobeam	UKR1871	Ахаманинx1
+hasshub-4	RUSV	Хашшувx1
+hasshub-4	UBIO	Хашшувx1
+hasshub-4	UKR1871	Хашшувx1
+hizkijah-the-covenant-chief	RUSV	Езекияx1
+hizkijah-the-covenant-chief	UBIO	Хізкійяx1
+hizkijah-the-covenant-chief	UKR1871	Езекіяx1
+ishi-the-simeonite	RUSV	Ишияx1
+ishi-the-simeonite	UBIO	Їш'їx1
+ishi-the-simeonite	UKR1871	Ішіїніx1
+ishmaiah-2	RUSV	Ишмаияx1
+ishmaiah-2	UBIO	Їшмаяx1
+ishmaiah-2	UKR1871	Габаонїйx1 Ішмаяx1
+ittai-son-of-ribai	RUSV	Иттайx2
+ittai-son-of-ribai	UBIO	Іттайx1 Ітайx1
+ittai-son-of-ribai	UKR1871	Іттайx1 Іддайx1
+jabin-king-of-canaan	RUSV	Иавинаx3 Иавиномx2 Иавиноваx1 Иавинуx1
+jabin-king-of-canaan	UBIO	Явінаx3 Явіномx2 Явіновіx1 Явіновогоx1
+jabin-king-of-canaan	UKR1871	Явиновіx2 Явиномx2 Явимуx1 Явиновогоx1
+jahaziel-the-trumpeting-priest	RUSV	Озиилаx1
+jahaziel-the-trumpeting-priest	UBIO	Яхазіїлx1
+jahaziel-the-trumpeting-priest	UKR1871	Озиїлаx1
+james-son-of-mary	RUSV	Иаковаx6 Иаковлеваx2
+james-son-of-mary	UBIO	Яковаx4 Якововаx4
+james-son-of-mary	UKR1871	Якововаx3 Яковаx1
+jeiel-10	RUSV	Иеиелx1
+jeiel-10	UBIO	Єіїлx1
+jeiel-10	UKR1871	Егелx1
+jeiel-chief-of-the-levites	RUSV	Иеиелx1
+jeiel-chief-of-the-levites	UBIO	Єіїлx1
+jeiel-chief-of-the-levites	UKR1871	Еїєлx1
+jeroham-father-of-jaresiah	RUSV	Иерохамаx1
+jeroham-father-of-jaresiah	UBIO	Єрохамовіx1
+jeroham-father-of-jaresiah	UKR1871	Ерохамовіx1
+jeshua-son-of-kadmiel	RUSV	Иисусx1
+jeshua-son-of-kadmiel	UBIO	Ісусx1
+jeshua-son-of-kadmiel	UKR1871	Ісусx1
+joel-son-of-azariah	RUSV	Иоиляx1
+joel-son-of-azariah	UBIO	Йоїлаx1
+joel-son-of-azariah	UKR1871	Йоїлиногоx1
+joses-son-of-mary	RUSV	Иосииx4 Иосиеваx2
+joses-son-of-mary	UBIO	Йосипаx2 Йосієваx2 Йосіїx2
+joses-son-of-mary	UKR1871	Йосиїнаx2 Йосиїx1
+kingjareb	RUSV	Иаревуx2
+kingjareb	UKR1871	Яреваx1
+levi-son-of-alphaeus	RUSV	Левияx4 Левийx2
+levi-son-of-alphaeus	UBIO	Левіяx4 Левійx2
+levi-son-of-alphaeus	UKR1871	Левіюx2 Левійx1
+malchijah-father-of-pashhur	RUSV	Малхииx2
+malchijah-father-of-pashhur	UBIO	Малкійїx2
+malchijah-father-of-pashhur	UKR1871	Малхіїx1 Малхіїногоx1
+meshezabel-3	RUSV	Мешезавелx1
+meshezabel-3	UBIO	Мешезав'їлx1
+meshezabel-3	UKR1871	Мешезавелx1
+meshullam-the-covenant-chief	RUSV	Мешулламx1
+meshullam-the-covenant-chief	UBIO	Мешулламx1
+meshullam-the-covenant-chief	UKR1871	Мешулламx1
+mijamin-4	RUSV	Мияминx1
+mijamin-4	UBIO	Мійямінx1
+mijamin-4	UKR1871	Миянинx1
+nethanel-10	RUSV	Нафанаилx1
+nethanel-10	UBIO	Натанаїлx1
+nethanel-10	UKR1871	Натанаїлx1
+oholibamah-wife-of-esau	RUSV	Оливемыx3 Оливемаx2 Оливемуx1
+oholibamah-wife-of-esau	UBIO	Оголівамиx3 Оголівамаx2 Оголівамуx1
+oholibamah-wife-of-esau	UKR1871	Оголибамиx3 Оголибамаx2 Оголибамуx1
+pahath-moab-who-sealed-the-covenant	RUSV	Пахаф-Моавx1
+pahath-moab-who-sealed-the-covenant	UBIO	Пахат-Моавx1
+pahath-moab-who-sealed-the-covenant	UKR1871	Пахат-Моабx1
+parosh-who-sealed-the-covenant	RUSV	Парошx1
+parosh-who-sealed-the-covenant	UBIO	Пар'ошx1
+parosh-who-sealed-the-covenant	UKR1871	Парошx1
+pashhur-the-priest	RUSV	Пашхураx5 Пашхурx1
+pashhur-the-priest	UBIO	Пашхуровихx3 Пашхураx2 Пашхурx1
+pashhur-the-priest	UKR1871	Пашхураx2 Пашхуровихx2 Пашхурx1 Пашхуровогоx1
+ucal	RUSV	Укалуx1
+ucal	UKR1871	Укаловіx1
+zechariah-trumpeter-of-the-second-company	RUSV	Захарияx1
+zechariah-trumpeter-of-the-second-company	UBIO	Захарійx1
+zechariah-trumpeter-of-the-second-company	UKR1871	Захаріяx1
+ziha-over-the-nethinims	RUSV	Цихаx1
+ziha-over-the-nethinims	UBIO	Ціхаx1
+ziha-over-the-nethinims	UKR1871	Зихаx1

@@ -625,6 +625,74 @@ public sealed class CorpusCheckTests : IDisposable
         (await Integrity(self)).Should().Be(1);
     }
 
+    /// <summary>
+    /// Maachah as the mother of Abijam and of his son Asa is a break, and as Asa's grandmother is not.
+    /// Two fathers are a break unless one is the other's forebear — Luke's Cainan between Arphaxad and
+    /// Shelah — or both statements were decided, as Joseph's Jacob and Heli are; Muppim with Benjamin
+    /// and an unrelated Iri is one.
+    /// </summary>
+    [Fact]
+    public async Task AMotherOfFatherAndSonAndTwoFathersNobodyDecidedAreFound()
+    {
+        const string mother = "women stated as the mother of a man and of his son at once";
+        const string fathers = "people with two fathers, neither the other's forebear, that nobody decided are both stated";
+        Entity Record(string slug, string sex = "male") => new()
+        {
+            Kind = EntityKind.Person, Slug = slug, Name = slug, SourceId = slug, Source = "a test", Sex = sex,
+        };
+        var maacah = Record("maacah", "female");
+        var abijam = Record("abijam");
+        var asa = Record("asa");
+        var arphaxad = Record("arphaxad");
+        var cainan = Record("cainan");
+        var shelah = Record("shelah");
+        var joseph = Record("joseph");
+        var jacob = Record("jacob");
+        var heli = Record("heli");
+        var benjamin = Record("benjamin");
+        var iri = Record("iri");
+        var muppim = Record("muppim");
+        _db.Entities.AddRange(maacah, abijam, asa, arphaxad, cainan, shelah, joseph, jacob, heli, benjamin, iri, muppim);
+        _db.SaveChanges();
+        EntityRelationship Row(Entity from, string type, Entity to, LinkMethod method = LinkMethod.ModelReading)
+        {
+            var row = new EntityRelationship
+            {
+                FromEntityId = from.Id, ToEntityId = to.Id, Type = type, Category = RelationshipCategories.Read,
+                CanonicalBook = 11, CanonicalChapter = 15, CanonicalVerse = 2, Method = method,
+                Confidence = method == LinkMethod.Manual ? null : 0.9, Source = "read from Scripture by a test",
+            };
+            _db.EntityRelationships.Add(row);
+            return row;
+        }
+
+        Row(maacah, DescriptorRelations.MotherOf, abijam);
+        Row(asa, DescriptorRelations.SonOf, abijam);
+        var grandmother = Row(maacah, DescriptorRelations.GrandmotherOf, asa, LinkMethod.Manual);
+        Row(shelah, DescriptorRelations.SonOf, arphaxad);
+        Row(shelah, DescriptorRelations.SonOf, cainan);
+        Row(cainan, DescriptorRelations.SonOf, arphaxad);
+        Row(jacob, DescriptorRelations.FatherOf, joseph, LinkMethod.Manual);
+        Row(heli, DescriptorRelations.FatherOf, joseph, LinkMethod.Manual);
+        Row(muppim, DescriptorRelations.SonOf, benjamin);
+        _db.SaveChanges();
+
+        (await Integrity(mother)).Should().Be(0);
+        (await Integrity(fathers)).Should().Be(0);
+
+        grandmother.Type = DescriptorRelations.MotherOf;
+        Row(iri, DescriptorRelations.FatherOf, muppim);
+        _db.SaveChanges();
+
+        (await Integrity(mother)).Should().Be(1, "Maachah is then Abijam's mother and his son Asa's");
+        (await Integrity(fathers)).Should().Be(1, "Iri is neither Benjamin's forebear nor his descendant");
+
+        Row(iri, DescriptorRelations.DescendantOf, benjamin);
+        _db.SaveChanges();
+
+        (await Integrity(fathers)).Should().Be(0, "a son of Benjamin's descendant is a generation the other list skips");
+    }
+
     private void VerseLink(string source) =>
         _db.VerseLinks.Add(new VerseLink
         {

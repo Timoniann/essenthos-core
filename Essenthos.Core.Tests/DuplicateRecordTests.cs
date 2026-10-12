@@ -889,6 +889,76 @@ public sealed class DuplicateRecordTests : IDisposable
     }
 
     /// <summary>
+    /// Records held twice in the family tree, each folded on a decision rather than a model's reading:
+    /// Kishi and Aholibamah written twice, Esau's wives the two lists of Genesis name with the same
+    /// father, and the Gershonites of 1 Chronicles 6:20-21 under their names in 6:41-43, so that Zerah
+    /// has one father. Judith and Aholibamah, whose fathers differ, stay two, and so does Chelubai,
+    /// Caleb son of Hezron, whose grandson's grandson Bezalel is of the generation of Caleb son of
+    /// Jephunneh.
+    /// </summary>
+    [Theory]
+    [InlineData("kish-5", "kishi", "1 Chronicles 6:44")]
+    [InlineData("oholibamah-2", "oholibamah-wife-of-esau", "Genesis 36:2")]
+    [InlineData("basemath-daughter-of-ishmael", "mahalath", "Genesis 28:9")]
+    [InlineData("basemath", "adah-wife-of-esau", "Genesis 26:34")]
+    [InlineData("ethan-2", "joah-2", "1 Chronicles 6:20-21")]
+    [InlineData("adaiah-2", "iddo-2", "1 Chronicles 6:20-21")]
+    [InlineData("ethni", "jeatherai", "1 Chronicles 6:20-21")]
+    public void ARecordTheFamilyTreeHeldTwiceIsFoldedOnADecision(string folds, string keeps, string verse)
+    {
+        var merge = DuplicateRecordLoader.Read().Merges.Should().ContainSingle(m => m.Folds == folds).Subject;
+
+        merge.Keeps.Should().Be(keeps);
+        merge.Method.Should().Be("manual");
+        merge.Confidence.Should().BeNull();
+        merge.Source.Should().Contain("2026-10-12");
+        merge.Why.Should().Contain(verse);
+    }
+
+    [Fact]
+    public void WivesWithDifferentFathersAndTheTwoCalebsAreNotFolded()
+    {
+        var folded = DuplicateRecordLoader.Read().Merges.SelectMany(m => new[] { m.Folds, m.Keeps }).ToHashSet();
+
+        folded.Should().NotContain(["judith", "chelubai"]);
+    }
+
+    /// <summary>
+    /// The second Gershonite list folded into the first leaves Zerah, son of Iddo in one and of Adaiah in
+    /// the other, one father, and each folded record's relationships on the man it is.
+    /// </summary>
+    [Fact]
+    public async Task TheTwoGershoniteListsFoldIntoOneLineAndZerahHasOneFather()
+    {
+        var iddo = Record("iddo-2", "person:Iddo_2", "son of Joah (1CH 6:21)");
+        var adaiah = Record("adaiah-2", "person:Adaiah_2", "son of Ethan (1CH 6:41)");
+        var zerah = Record("zerah-4", "person:Zerah_4", "son of Iddo (1CH 6:21)");
+        await _db.SaveChangesAsync();
+        void Son(Entity child, Entity father, int verse, LinkMethod method) =>
+            _db.EntityRelationships.Add(new EntityRelationship
+            {
+                From = child, To = father, Type = "son-of", Category = RelationshipCategories.Read,
+                CanonicalBook = 13, CanonicalChapter = 6, CanonicalVerse = verse, Method = method,
+                Confidence = method == LinkMethod.Manual ? null : 0.9, Source = Decided,
+            });
+        Son(zerah, iddo, 21, LinkMethod.ModelReading);
+        Son(zerah, adaiah, 41, LinkMethod.Manual);
+        await _db.SaveChangesAsync();
+
+        var shipped = DuplicateRecordLoader.Read().Merges.Single(m => m.Folds == "adaiah-2");
+        await _loader.Fold(new DuplicateRecordList(LinkMethod.ModelReading, 0.9, "a test", [shipped]));
+
+        (await _db.Entities.AnyAsync(e => e.Slug == "adaiah-2")).Should().BeFalse();
+        var fathers = await _db.EntityRelationships.AsNoTracking()
+            .Where(r => r.FromEntityId == zerah.Id && r.Type == "son-of")
+            .Select(r => r.ToEntityId).Distinct().ToListAsync();
+        fathers.Should().Equal(iddo.Id);
+        var merged = await _db.MergedRecords.AsNoTracking().SingleAsync(m => m.Slug == "adaiah-2");
+        merged.EntityId.Should().Be(iddo.Id);
+        merged.Method.Should().Be(LinkMethod.Manual);
+    }
+
+    /// <summary>
     /// The register's Hermons is the plural of Hermon, the peaks of the mountain Psalm 42:6 names, and
     /// folds into Mount Hermon and not into Harmon, which the gazetteer files as another name for that
     /// mountain. Each fold says what makes the two one.

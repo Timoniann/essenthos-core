@@ -529,6 +529,55 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
          ORDER BY c.slug, s.sex
          """;
 
+    /// <summary>The relations that make the target somebody's descendant beyond a child, and their inverses.</summary>
+    private static readonly string[] Forebears =
+        [DescriptorRelations.AncestorOf, DescriptorRelations.GrandfatherOf, DescriptorRelations.GrandmotherOf];
+
+    /// <inheritdoc cref="Forebears"/>
+    private static readonly string[] Offspring =
+        [DescriptorRelations.DescendantOf, DescriptorRelations.GrandsonOf, DescriptorRelations.GranddaughterOf];
+
+    /// <summary>
+    /// Children of two fathers that are neither a generation one list skips — Luke's Cainan between
+    /// Arphaxad and Shelah, where the second father is the first's descendant — nor two statements
+    /// somebody decided both stand, as Matthew's Jacob and Luke's Heli do for Joseph. What is left is
+    /// one man held as two records, two men held as one, or a misreading: Iri as Muppim's father,
+    /// Assir as Elkanah's.
+    /// </summary>
+    private static readonly string TwoFathersSql =
+        $"""
+         WITH RECURSIVE stated AS (
+             SELECT from_entity_id parent, to_entity_id child, method FROM entity_relationship
+             WHERE type IN ({Listed(KinRelations.ParentOf)})
+             UNION ALL
+             SELECT to_entity_id, from_entity_id, method FROM entity_relationship
+             WHERE type IN ({Listed(KinRelations.ChildOf)})),
+         fathers AS (
+             SELECT s.child, s.parent, bool_or(s.method = '{EnumSpelling.Of(LinkMethod.Manual)}') decided
+             FROM stated s JOIN entity f ON f.id = s.parent AND f.sex = 'male'
+             GROUP BY s.child, s.parent),
+         pairs AS (
+             SELECT a.child, a.parent one, b.parent other, a.decided AND b.decided decided
+             FROM fathers a JOIN fathers b ON b.child = a.child AND b.parent > a.parent),
+         forebear AS (
+             SELECT parent up, child down FROM stated
+             UNION
+             SELECT from_entity_id, to_entity_id FROM entity_relationship
+             WHERE type IN ({Listed(Forebears)})
+             UNION
+             SELECT to_entity_id, from_entity_id FROM entity_relationship
+             WHERE type IN ({Listed(Offspring)})),
+         walk AS (
+             SELECT f.down start, f.up FROM forebear f
+             WHERE f.down IN (SELECT one FROM pairs UNION SELECT other FROM pairs)
+             UNION
+             SELECT w.start, f.up FROM walk w JOIN forebear f ON f.down = w.up)
+         SELECT count(DISTINCT p.child) FROM pairs p
+         WHERE NOT p.decided
+           AND NOT EXISTS (SELECT 1 FROM walk w WHERE w.start = p.one AND w.up = p.other)
+           AND NOT EXISTS (SELECT 1 FROM walk w WHERE w.start = p.other AND w.up = p.one)
+         """;
+
     /// <summary>
     /// Each of these should return nothing. They are the shapes the schema cannot forbid but that
     /// no correct load produces, so a count above zero is a defect and not a measurement.
@@ -795,6 +844,21 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
              FROM parent p JOIN sibling s
                ON (s.a = p.parent AND s.b = p.child) OR (s.a = p.child AND s.b = p.parent)
              """),
+
+        // Maachah is Abijam's mother and Asa's grandmother (1KI 15:2, 15:8); "his mother" of 15:10 is
+        // the queen mother. A woman who is the mother of a man and of his son is that reading.
+        ("women stated as the mother of a man and of his son at once",
+            $"""
+             WITH {ParentSql}
+             SELECT count(DISTINCT (m.parent, m.child, g.child))
+             FROM parent m
+             JOIN entity w ON w.id = m.parent AND w.sex = 'female'
+             JOIN parent g ON g.parent = m.child
+             JOIN parent n ON n.parent = m.parent AND n.child = g.child
+             """),
+
+        ("people with two fathers, neither the other's forebear, that nobody decided are both stated",
+            TwoFathersSql),
 
         ("verse links saying again what another link of the same pair says",
             $"""

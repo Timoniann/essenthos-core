@@ -460,7 +460,7 @@ public sealed class OwnRecordTests : IDisposable
     /// <summary>
     /// A record we wrote says it is ours, in the source a reader is shown and in a claim carrying
     /// the method and whoever decided. A dataset's row carries neither, so the two can never be
-    /// confused.
+    /// confused. A later ruling that amends what the record says adds its own decision beside it.
     /// </summary>
     [Fact]
     public async Task ARecordWeWroteSaysItIsOursAndWhatEstablishedIt()
@@ -476,9 +476,9 @@ public sealed class OwnRecordTests : IDisposable
 
             written.Source.Should().StartWith("Essenthos");
             written.SourceId.Should().StartWith("essenthos:");
-            written.Claims.Should().ContainSingle()
-                .Which.Should().Match<EntityClaim>(c =>
-                    c.Method == LinkMethod.Manual && c.Confidence == null && c.Note == ruling.Why);
+            written.Claims.Should().ContainSingle(c => c.Note == ruling.Why)
+                .And.OnlyContain(c => c.Method == LinkMethod.Manual && c.Confidence == null,
+                    "a later ruling that amends the record says so in a decision of its own");
             written.Verses.Should().ContainSingle()
                 .Which.Source.Should().StartWith("Essenthos");
         }
@@ -978,8 +978,11 @@ public sealed class OwnRecordTests : IDisposable
     }
 
     /// <summary>
-    /// Esau's wives of Genesis 36:2-3 are each a woman of her own, the words of the second list leave the
-    /// records of the first, and every record of the six names the other reading; Beeri is not Anah.
+    /// Esau's wives of Genesis 36:2-3 are each a record of her own, the words of the second list leave the
+    /// records of the first, and every record of the six names the other reading; Beeri is not Anah. The
+    /// owner's later decision makes the two pairs with one father one woman each, Adah and Bashemath
+    /// daughter of Elon, Mahalath and Bashemath daughter of Ishmael, which the fold then joins; Judith
+    /// and Aholibamah stay open, with the identification some commentators make.
     /// </summary>
     [Fact]
     public async Task EsausWivesOfTheSecondListAreWomenOfTheirOwnWhoNameTheOtherReading()
@@ -1008,14 +1011,24 @@ public sealed class OwnRecordTests : IDisposable
         foreach (var (wife, first) in wives)
         {
             var record = await _db.Entities.SingleAsync(e => e.Slug == wife);
-            record.Notes.Should().Contain("the text does not say");
+            record.Notes.Should().Contain(wife switch
+            {
+                "adah-wife-of-esau" => "Adah is the Bashemath daughter of Elon of 26:34 under another name",
+                "oholibamah-wife-of-esau" => "Some commentators hold that Aholibamah and Judith are one woman",
+                _ => "the text does not say",
+            });
             (await _db.EntityAlternatives.Where(a => a.EntityId == record.Id).Select(a => a.Alternative!.Slug).ToListAsync())
                 .Should().Equal(first);
             var words = file.Rulings.Where(r => (r.Create?.Slug ?? r.Existing) == wife).Select(r => _words[r.Word]).ToList();
             words.Should().HaveCountGreaterThan(3);
             (await _db.WordEntities.Where(a => words.Contains(a.WordId)).Select(a => a.Entity!.Slug).Distinct().ToListAsync())
                 .Should().Equal(wife);
-            (await _db.Entities.SingleAsync(e => e.Slug == first)).Notes.Should().Contain("the text does not say");
+            (await _db.Entities.SingleAsync(e => e.Slug == first)).Notes.Should().Contain(first switch
+            {
+                "mahalath" => "Mahalath is the Bashemath of 36:3 under another name",
+                "judith" => "Some commentators hold that Judith and Aholibamah are one woman",
+                _ => "the text does not say",
+            });
         }
 
         var beeri = await _db.Entities.SingleAsync(e => e.Slug == "beeri");

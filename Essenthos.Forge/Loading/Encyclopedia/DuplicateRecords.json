@@ -1252,6 +1252,62 @@
       "why": "Acts 1:12 says the apostles returned 'from the mount called Olivet', which is the Mount of Olives the Gospels name; the kept record holds ACT 1:12 and has 'mount Olivet' among its names, and the register's Olivet holds no word, verse or relationship of its own.",
       "confidence": 0.95,
       "source": "Essenthos: the register's records that no held text names in a reader's language, found since the Codex pass by claude-sonnet-5-5 reading the held record of the same place against its verses, 2026-10-08"
+    },
+    {
+      "strongNumber": "H7027",
+      "keeps": "kishi",
+      "folds": "kish-5",
+      "why": "Both records are Kishi the son of Abdi, the Merarite father of Ethan the singer (1 Chronicles 6:44): each is the son of Abdi and the father of Ethan there, and the second holds no word of its own.",
+      "source": "an agent reading 1CH 6:44 on the project owner's instruction, decided 2026-10-12",
+      "method": "manual"
+    },
+    {
+      "strongNumber": "H173",
+      "keeps": "oholibamah-wife-of-esau",
+      "folds": "oholibamah-2",
+      "why": "Both records are Aholibamah the daughter of Anah, Esau's wife (Genesis 36:2, 5, 14, 18, 25); the second describes her the same way and holds no word, verse or relationship of its own.",
+      "source": "an agent reading GEN 36:2-25 on the project owner's instruction, decided 2026-10-12",
+      "method": "manual"
+    },
+    {
+      "strongNumber": "H1315",
+      "keeps": "mahalath",
+      "folds": "basemath-daughter-of-ishmael",
+      "why": "Genesis 28:9 names Esau's wife Mahalath the daughter of Ishmael, the sister of Nebajoth, and Genesis 36:3 Bashemath, Ishmael's daughter, the sister of Nebajoth: one woman under two names. The owner: Esau had two Canaanite wives and one daughter of Ishmael.",
+      "source": "the project owner, ruled 2026-10-12",
+      "method": "manual"
+    },
+    {
+      "strongNumber": "H1315",
+      "keeps": "adah-wife-of-esau",
+      "folds": "basemath",
+      "why": "Genesis 26:34 names Esau's wife Bashemath the daughter of Elon the Hittite, and Genesis 36:2 Adah the daughter of Elon the Hittite: the same father, and the same place among Esau's wives, so one woman under two names. Adah's record holds more of the text and stays.",
+      "source": "an agent reading GEN 26:34 and GEN 36:2 on the project owner's instruction of 2026-10-12 to decide the identities as is most logical, decided 2026-10-12",
+      "method": "manual"
+    },
+    {
+      "strongNumber": "H387",
+      "keeps": "joah-2",
+      "folds": "ethan-2",
+      "why": "1 Chronicles 6:20-21 and 6:41-43 give the same Gershonite line: Jahath, Zimmah, Joah, Iddo, Zerah, Jeaterai in the first, and Jahath, Shimei, Zimmah, Ethan, Adaiah, Zerah, Ethni in the second. Zimmah and Zerah stand in both, and Ethan son of Zimmah stands where Joah son of Zimmah stands.",
+      "source": "an agent reading 1CH 6:20-21 and 1CH 6:41-43 on the project owner's instruction of 2026-10-12 to decide the identities as is most logical, decided 2026-10-12",
+      "method": "manual"
+    },
+    {
+      "strongNumber": "H5718",
+      "keeps": "iddo-2",
+      "folds": "adaiah-2",
+      "why": "1 Chronicles 6:20-21 and 6:41-43 give the same Gershonite line, and Adaiah the father of Zerah (6:41) stands where Iddo the father of Zerah stands (6:21).",
+      "source": "an agent reading 1CH 6:20-21 and 1CH 6:41-43 on the project owner's instruction of 2026-10-12 to decide the identities as is most logical, decided 2026-10-12",
+      "method": "manual"
+    },
+    {
+      "strongNumber": "H867",
+      "keeps": "jeatherai",
+      "folds": "ethni",
+      "why": "1 Chronicles 6:20-21 and 6:41-43 give the same Gershonite line, and Ethni the son of Zerah (6:41) stands where Jeaterai the son of Zerah stands (6:21).",
+      "source": "an agent reading 1CH 6:20-21 and 1CH 6:41-43 on the project owner's instruction of 2026-10-12 to decide the identities as is most logical, decided 2026-10-12",
+      "method": "manual"
     }
   ],
   "declined": [
@@ -2391,19 +2447,6 @@
       "why": "Jeremiah 42:1 is Jezaniah the son of Hoshaiah; whether he is the Maachathite's son of 2 Kings 25:23 and Jeremiah 40:8 the text does not settle, so he is held as a man of his own who says so."
     },
     {
-      "from": "basemath",
-      "to": "adah-wife-of-esau",
-      "name": null,
-      "verses": [
-        "GEN 36:2",
-        "GEN 36:4",
-        "GEN 36:10",
-        "GEN 36:12",
-        "GEN 36:16"
-      ],
-      "why": "Genesis 36:2-16 names Esau's wife Adah the daughter of Elon; whether she is the Bashemath of 26:34 the text does not say, so she is held as a woman of her own and each record names the other reading."
-    },
-    {
       "from": "judith",
       "to": "oholibamah-wife-of-esau",
       "name": null,
@@ -2415,19 +2458,6 @@
         "GEN 36:25"
       ],
       "why": "Genesis 36:2-25 names Esau's wife Aholibamah the daughter of Anah; whether she is Judith of 26:34 the text does not say, so she is held as a woman of her own and each record names the other reading."
-    },
-    {
-      "from": "mahalath",
-      "to": "basemath-daughter-of-ishmael",
-      "name": null,
-      "verses": [
-        "GEN 36:3",
-        "GEN 36:4",
-        "GEN 36:10",
-        "GEN 36:13",
-        "GEN 36:17"
-      ],
-      "why": "Genesis 36:3-17 names Esau's wife Bashemath Ishmael's daughter; whether she is Mahalath of 28:9 the text does not say, so she is held as a woman of her own and each record names the other reading."
     },
     {
       "from": "anah",
