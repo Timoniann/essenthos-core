@@ -123,6 +123,8 @@ public class AppDbContext : DbContext
 
     public DbSet<VerseNote> VerseNotes { get; set; } = null!;
 
+    public DbSet<BookNote> BookNotes { get; set; } = null!;
+
     public DbSet<Word> Words { get; set; } = null!;
 
     public DbSet<VerseReference> VerseReferences { get; set; } = null!;
@@ -963,6 +965,19 @@ public class AppDbContext : DbContext
 
             entity.ToTable("verse_note", table => table.HasCheckConstraint(
                 "ck_verse_note_content_not_empty", "length(btrim(\"content\")) > 0"));
+        });
+
+        modelBuilder.Entity<BookNote>(entity =>
+        {
+            entity.Property(note => note.Kind).HasConversion(EnumStorage.VerseNoteKind);
+
+            entity.HasOne(note => note.Book)
+                .WithMany()
+                .HasForeignKey(note => note.BookId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("book_note", table => table.HasCheckConstraint(
+                "ck_book_note_content_not_empty", "length(btrim(\"content\")) > 0"));
         });
 
         modelBuilder.Entity<Word>(entity =>

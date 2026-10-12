@@ -90,7 +90,14 @@ internal record ParallelTextResponse(
     int ChapterCount,
     string? ReferenceCorpus,
     IList<CorpusResponse> Corpora,
-    IList<ParallelVerseResponse> Verses);
+    IList<ParallelVerseResponse> Verses)
+{
+    /// <summary>
+    /// The notes each text printed on this book's title, by corpus, on the book's first chapter
+    /// only; a text that printed none is not listed.
+    /// </summary>
+    public Dictionary<string, BookNotesResponse> BookNotes { get; init; } = [];
+}
 
 internal static class ParallelEndpoints
 {
@@ -214,6 +221,8 @@ internal static class ParallelEndpoints
                 .ToList();
 
             var corpusRows = await CorpusRows(db, canon, requested, cancellationToken);
+            var bookNotes = await Texts.BookNotes(
+                db, [.. requested.Select(entry => entry.Id)], ordinal.Value, chapter, cancellationToken);
 
             return Results.Ok(new ParallelTextResponse(
                 new BookRefResponse(ordinal.Value, BookReferences.Name(ordinal.Value),
@@ -222,7 +231,12 @@ internal static class ParallelEndpoints
                 chapterCount,
                 requested[0].Slug,
                 corpusRows,
-                rows));
+                rows)
+            {
+                BookNotes = requested
+                    .Where(entry => bookNotes.ContainsKey(entry.Id))
+                    .ToDictionary(entry => entry.Slug, entry => bookNotes[entry.Id]),
+            });
         });
     }
 

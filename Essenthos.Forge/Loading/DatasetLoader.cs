@@ -2541,6 +2541,14 @@ internal sealed class DatasetLoader(
             status.Record(noteOutcome.ToString());
         }
 
+        using var titleNotes = services.CreateScope();
+        var titleOutcome = await titleNotes.ServiceProvider.GetRequiredService<BookNoteLoader>()
+            .Load(source, cancellationToken);
+        if (titleOutcome.Notes > 0 || titleOutcome.AlreadyLoaded)
+        {
+            status.Record(titleOutcome.ToString());
+        }
+
         // The same again for where the edition starts a paragraph or a line, which a text loaded
         // before the marks were read does not carry.
         using var paragraphing = services.CreateScope();

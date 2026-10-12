@@ -497,7 +497,10 @@ internal static class EbibleTextSource
                 Chapters: [.. book.Chapters.Select(chapter => Chapter(chapter, tagged,
                     code == Psalms && TitleInsideTheFirstVerse.Contains(name)))],
                 NameNative: Corrected(book.Name),
-                Abbreviation: BookReferences.Abbreviation(ordinal)));
+                Abbreviation: BookReferences.Abbreviation(ordinal))
+            {
+                Notes = BookNoteDraft.From(book),
+            });
         }
 
         return new TextSource(definition, drafts);
