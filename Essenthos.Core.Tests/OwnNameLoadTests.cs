@@ -257,6 +257,44 @@ public sealed class OwnNameLoadTests : IDisposable
             .Should().BeEquivalentTo([("nile", "River of Egypt", "description"), ("euphrates", "the Great River", "description")]);
     }
 
+    /// <summary>
+    /// 1 Chronicles 3:15 names Josiah's firstborn Johanan and the king Shallum: the name Johanan the
+    /// dataset gave King Jehoahaz goes, once, and his own names and the firstborn's stay.
+    /// </summary>
+    [Fact]
+    public async Task TheFirstbornsNameIsTakenOffKingJehoahazOnce()
+    {
+        var king = new Entity
+        {
+            Kind = EntityKind.Person, Slug = "jehoahaz-2", Name = "Jehoahaz", SourceId = "person:Jehoahaz_2", Source = "BibleData",
+            Names =
+            {
+                new EntityName { Label = "Jehoahaz", Kind = "proper name", HebrewStrongNumber = "H3059" },
+                new EntityName { Label = "Shallum", Kind = "proper name", HebrewStrongNumber = "H7967" },
+                new EntityName { Label = "Johanan", Kind = "proper name", HebrewStrongNumber = "H3110" },
+            },
+        };
+        var firstborn = new Entity
+        {
+            Kind = EntityKind.Person, Slug = "johanan-firstborn-of-josiah", Name = "Johanan",
+            SourceId = "essenthos:johanan-firstborn-of-josiah", Source = "Essenthos",
+            Names = { new EntityName { Label = "Johanan", Kind = "proper name", HebrewStrongNumber = "H3110" } },
+        };
+        _db.Entities.AddRange(king, firstborn);
+        await _db.SaveChangesAsync();
+        var loader = new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance);
+        var drops = OwnNameLoader.Read().Drops!;
+
+        (await loader.Drop(drops, default)).Should().Be(1);
+        (await loader.Drop(drops, default)).Should().Be(0, "a name already taken off is not found");
+
+        _db.ChangeTracker.Clear();
+        (await _db.EntityNames.Where(n => n.EntityId == king.Id).Select(n => n.Label).ToListAsync())
+            .Should().BeEquivalentTo("Jehoahaz", "Shallum");
+        (await _db.EntityNames.Where(n => n.EntityId == firstborn.Id).Select(n => n.Label).ToListAsync())
+            .Should().Equal("Johanan");
+    }
+
     /// <summary>The list ships inside the loader, so a build that dropped it would load nothing silently.</summary>
     [Fact]
     public async Task TheEmbeddedListIsRead()

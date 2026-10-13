@@ -1,0 +1,361 @@
+{
+  "decidedBy": "Essenthos, 2026-10-13, on words that named the wrong record of a name two records share, or none: each read against its verse by claude-opus-5-5 on the project owner's instruction of 2026-10-13 ('PRB-1010-1014 - fix them'); no person has reviewed these rulings",
+  "policy": "A word names the man, the people or the place its verse names. Where a record holds two men of one name, the man of the later verse is his own record; where a name is several records', the verse decides which; and a valley the sea later covered is not the sea.",
+  "method": "manual",
+  "source": "Essenthos, names read again against their verses by claude-opus-5-5 on the project owner's instruction, 2026-10-13",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "2CH 29:12",
+      "position": 31,
+      "surface": "יֹואָח֙",
+      "strongNumber": "H3098",
+      "create": {
+        "slug": "joah-the-later-gershonite",
+        "kind": "person",
+        "name": "Joah",
+        "distinguisher": "a Gershonite Levite, son of Zimmah and father of Eden, who served under Hezekiah (2CH 29:12)",
+        "notes": "David's Gershonite Joah son of Zimmah (1CH 6:20-21) stands many generations before Hezekiah's cleansing of the temple, so the Joah of this verse is another man of the same family."
+      },
+      "why": "'Of the Gershonites; Joah the son of Zimmah, and Eden the son of Joah' (2CH 29:12): the Gershonite who served when Hezekiah cleansed the temple. David's Gershonite Joah son of Zimmah (1CH 6:20-21, called Ethan in 6:42) stands generations earlier, and the Zimmah of this verse is already a man of his own.",
+      "corrects": "joah-2"
+    },
+    {
+      "text": "BHSA",
+      "reference": "2CH 29:12",
+      "position": 37,
+      "surface": "יֹואָֽח",
+      "strongNumber": "H3098",
+      "existing": "joah-the-later-gershonite",
+      "why": "'Of the Gershonites; Joah the son of Zimmah, and Eden the son of Joah' (2CH 29:12): the Gershonite who served when Hezekiah cleansed the temple. David's Gershonite Joah son of Zimmah (1CH 6:20-21, called Ethan in 6:42) stands generations earlier, and the Zimmah of this verse is already a man of his own. The second Joah of the verse is the same man, Eden's father.",
+      "corrects": "joah-2"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 7:12",
+      "position": 2,
+      "surface": "שֻׁפִּ֤ם",
+      "strongNumber": "H8206",
+      "create": {
+        "slug": "shuppim-the-benjamite",
+        "kind": "person",
+        "name": "Shuppim",
+        "distinguisher": "a Benjamite, brother of Huppim, of the children of Ir (1CH 7:12)",
+        "notes": "Whether he is the Muppim of Genesis 46:21, the Shupham of Numbers 26:39 or the Shephuphan of 1 Chronicles 8:5 no verse says."
+      },
+      "why": "'Shuppim also, and Huppim, the children of Ir' (1CH 7:12) and 'the sister of Huppim and Shuppim' (1CH 7:15) name Shuppim beside Huppim, not as Huppim and not as Muppim. The gatekeeper Shuppim of 1CH 26:16 is a Levite of David's day.",
+      "corrects": "huppim"
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 7:15",
+      "position": 9,
+      "surface": "שֻׁפִּ֔ים",
+      "strongNumber": "H8206",
+      "existing": "shuppim-the-benjamite",
+      "why": "'Shuppim also, and Huppim, the children of Ir' (1CH 7:12) and 'the sister of Huppim and Shuppim' (1CH 7:15) name Shuppim beside Huppim, not as Huppim and not as Muppim. The gatekeeper Shuppim of 1CH 26:16 is a Levite of David's day.",
+      "corrects": "huppim"
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "1CH 7:12",
+      "position": 2,
+      "surface": "Σαπφὶν",
+      "strongNumber": null,
+      "existing": "shuppim-the-benjamite",
+      "why": "'Shuppim also, and Huppim, the children of Ir' (1CH 7:12) and 'the sister of Huppim and Shuppim' (1CH 7:15) name Shuppim beside Huppim, not as Huppim and not as Muppim. The gatekeeper Shuppim of 1CH 26:16 is a Levite of David's day. The Septuagint writes him Σαπφίν beside Ἀπφίν, Huppim.",
+      "corrects": "huppim"
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "1CH 7:15",
+      "position": 8,
+      "surface": "Σαπφίν",
+      "strongNumber": null,
+      "existing": "shuppim-the-benjamite",
+      "why": "'Shuppim also, and Huppim, the children of Ir' (1CH 7:12) and 'the sister of Huppim and Shuppim' (1CH 7:15) name Shuppim beside Huppim, not as Huppim and not as Muppim. The gatekeeper Shuppim of 1CH 26:16 is a Levite of David's day. The Septuagint writes him Σαπφίν beside Ἀπφίν, Huppim.",
+      "corrects": "huppim"
+    },
+    {
+      "text": "SWETE",
+      "reference": "1CH 7:15",
+      "position": 8,
+      "surface": "Μαμφείν",
+      "strongNumber": null,
+      "existing": "shuppim-the-benjamite",
+      "why": "'Shuppim also, and Huppim, the children of Ir' (1CH 7:12) and 'the sister of Huppim and Shuppim' (1CH 7:15) name Shuppim beside Huppim, not as Huppim and not as Muppim. The gatekeeper Shuppim of 1CH 26:16 is a Levite of David's day. Swete prints him Μαμφείν beside Ἀμφείν, Huppim.",
+      "corrects": "huppim"
+    },
+    {
+      "text": "UKR1871",
+      "reference": "1CH 3:15",
+      "position": 4,
+      "surface": "Йоахаз",
+      "strongNumber": null,
+      "existing": "johanan-firstborn-of-josiah",
+      "why": "'And the sons of Josiah were, the firstborn Johanan, the second Jehoiakim, the third Zedekiah, the fourth Shallum' (1CH 3:15): Kulish prints the firstborn as Йоахаз, as the Synodal prints him Иоахаз. The king Jehoahaz is the fourth, Shallum (JER 22:11), whom the same verse names Селлум.",
+      "corrects": "jehoahaz-2"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:2",
+      "position": 3,
+      "surface": "גֹּ֣מֶר",
+      "strongNumber": "H1586",
+      "existing": "gomer",
+      "why": "'The sons of Japheth; Gomer, and Magog, and Madai' (GEN 10:2; 1CH 1:5) and 'the sons of Gomer; Ashkenaz, and Riphath, and Togarmah' (GEN 10:3; 1CH 1:6): Japheth's son. Hosea's wife, the daughter of Diblaim, shares the name and is in neither list."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 10:3",
+      "position": 3,
+      "surface": "גֹּ֑מֶר",
+      "strongNumber": "H1586",
+      "existing": "gomer",
+      "why": "'The sons of Japheth; Gomer, and Magog, and Madai' (GEN 10:2; 1CH 1:5) and 'the sons of Gomer; Ashkenaz, and Riphath, and Togarmah' (GEN 10:3; 1CH 1:6): Japheth's son. Hosea's wife, the daughter of Diblaim, shares the name and is in neither list."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:5",
+      "position": 3,
+      "surface": "גֹּ֣מֶר",
+      "strongNumber": "H1586",
+      "existing": "gomer",
+      "why": "'The sons of Japheth; Gomer, and Magog, and Madai' (GEN 10:2; 1CH 1:5) and 'the sons of Gomer; Ashkenaz, and Riphath, and Togarmah' (GEN 10:3; 1CH 1:6): Japheth's son. Hosea's wife, the daughter of Diblaim, shares the name and is in neither list."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 1:6",
+      "position": 3,
+      "surface": "גֹּ֑מֶר",
+      "strongNumber": "H1586",
+      "existing": "gomer",
+      "why": "'The sons of Japheth; Gomer, and Magog, and Madai' (GEN 10:2; 1CH 1:5) and 'the sons of Gomer; Ashkenaz, and Riphath, and Togarmah' (GEN 10:3; 1CH 1:6): Japheth's son. Hosea's wife, the daughter of Diblaim, shares the name and is in neither list."
+    },
+    {
+      "text": "BHSA",
+      "reference": "EZK 38:6",
+      "position": 1,
+      "surface": "גֹּ֚מֶר",
+      "strongNumber": "H1586",
+      "existing": "gomer-3",
+      "why": "'Gomer, and all his bands; the house of Togarmah of the north quarters' (EZK 38:6): Gomer of the north, beside the house of Togarmah, among Gog's allies; not Japheth's son himself and not Hosea's wife."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:3",
+      "position": 7,
+      "surface": "שִּׂדִּ֑ים",
+      "strongNumber": "H7708",
+      "create": {
+        "slug": "vale-of-siddim",
+        "kind": "place",
+        "name": "Vale of Siddim",
+        "distinguisher": "the valley where the kings of the plain fought, which the Salt Sea has since covered (GEN 14:3)",
+        "notes": "'All these were joined together in the vale of Siddim, which is the salt sea' (GEN 14:3): the valley lay where the Salt Sea later stood, and the vale was full of slimepits (GEN 14:10)."
+      },
+      "why": "'All these were joined together in the vale of Siddim, which is the salt sea' (GEN 14:3), and the battle of 14:8-10 is fought in the same vale, 'full of slimepits': a valley, which the verse says the Salt Sea now covers, and not the sea.",
+      "corrects": "saltsea"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:8",
+      "position": 26,
+      "surface": "שִּׂדִּֽים",
+      "strongNumber": "H7708",
+      "existing": "vale-of-siddim",
+      "why": "'All these were joined together in the vale of Siddim, which is the salt sea' (GEN 14:3), and the battle of 14:8-10 is fought in the same vale, 'full of slimepits': a valley, which the verse says the Salt Sea now covers, and not the sea.",
+      "corrects": "saltsea"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:10",
+      "position": 4,
+      "surface": "שִׂדִּ֗ים",
+      "strongNumber": "H7708",
+      "existing": "vale-of-siddim",
+      "why": "'All these were joined together in the vale of Siddim, which is the salt sea' (GEN 14:3), and the battle of 14:8-10 is fought in the same vale, 'full of slimepits': a valley, which the verse says the Salt Sea now covers, and not the sea.",
+      "corrects": "saltsea"
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:3",
+      "position": 9,
+      "surface": "יָ֥ם",
+      "strongNumber": "H3220",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 14:3",
+      "position": 11,
+      "surface": "מֶּֽלַח",
+      "strongNumber": "H4417",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 34:3",
+      "position": 19,
+      "surface": "יָם",
+      "strongNumber": "H3220",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 34:3",
+      "position": 21,
+      "surface": "מֶּ֖לַח",
+      "strongNumber": "H4417",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 34:12",
+      "position": 10,
+      "surface": "יָ֣ם",
+      "strongNumber": "H3220",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "NUM 34:12",
+      "position": 12,
+      "surface": "מֶּ֑לַח",
+      "strongNumber": "H4417",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 3:17",
+      "position": 16,
+      "surface": "יָ֣ם",
+      "strongNumber": "H3220",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "DEU 3:17",
+      "position": 18,
+      "surface": "מֶּ֔לַח",
+      "strongNumber": "H4417",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 3:16",
+      "position": 30,
+      "surface": "יָם",
+      "strongNumber": "H3220",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 3:16",
+      "position": 32,
+      "surface": "מֶּ֖לַח",
+      "strongNumber": "H4417",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 12:3",
+      "position": 13,
+      "surface": "יָם",
+      "strongNumber": "H3220",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 12:3",
+      "position": 15,
+      "surface": "מֶּ֨לַח֙",
+      "strongNumber": "H4417",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:2",
+      "position": 8,
+      "surface": "יָ֣ם",
+      "strongNumber": "H3220",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:2",
+      "position": 10,
+      "surface": "מֶּ֑לַח",
+      "strongNumber": "H4417",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:5",
+      "position": 4,
+      "surface": "יָ֣ם",
+      "strongNumber": "H3220",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 15:5",
+      "position": 6,
+      "surface": "מֶּ֔לַח",
+      "strongNumber": "H4417",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 18:19",
+      "position": 16,
+      "surface": "יָם",
+      "strongNumber": "H3220",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "JOS 18:19",
+      "position": 18,
+      "surface": "מֶּ֨לַח֙",
+      "strongNumber": "H4417",
+      "existing": "saltsea",
+      "why": "'The salt sea' (yam ha-melach), the sea at the end of the Jordan and the south end of the land (NUM 34:3, 12; JOS 15:2, 5; 18:19), which is the Dead Sea."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 60:2",
+      "position": 4,
+      "surface": "אֲרַ֣ם",
+      "strongNumber": "H763",
+      "existing": "mesopotamia",
+      "why": "'When he strove with Aram-naharaim' (the title of Psalm 60): Aram of the two rivers, Mesopotamia. The mapping file writes the name as one word where BHSA writes two, so the word carries no number of its own to be named from."
+    },
+    {
+      "text": "BHSA",
+      "reference": "PSA 60:2",
+      "position": 8,
+      "surface": "אֲרַ֢ם",
+      "strongNumber": "H758",
+      "existing": "aramzobah",
+      "why": "'And with Aram-zobah' (the title of Psalm 60): the Aramean kingdom of Zobah, which David fought (2SA 8:3-5)."
+    }
+  ]
+}

@@ -267,7 +267,8 @@ internal static class RelationshipVocabulary
     public static string Branch(string relation) =>
         Kinship.Contains(relation) ? KinshipBranch
         : Marriage.Contains(relation) ? MarriageBranch
-        : relation is DescriptorRelations.KillerOf or DescriptorRelations.KilledBy ? ViolenceBranch
+        : relation is DescriptorRelations.KillerOf or DescriptorRelations.KilledBy or DescriptorRelations.StruckBy
+            ? ViolenceBranch
         : relation;
 
     /// <summary>

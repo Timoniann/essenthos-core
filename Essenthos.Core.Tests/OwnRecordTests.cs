@@ -1258,6 +1258,74 @@ public sealed class OwnRecordTests : IDisposable
         (await _db.WordEntities.AnyAsync(a => a.WordId == english.Id)).Should().BeFalse();
     }
 
+    /// <summary>
+    /// The words a name two records share had put on the wrong one: Hezekiah's Joah on David's, the
+    /// Shuppim of 1 Chronicles 7 on Huppim, Kulish's firstborn of Josiah on the king, and the Vale of
+    /// Siddim on the sea. Each is the record its verse names afterwards and nothing else; the Gomer of
+    /// each verse and the words <em>salt sea</em>, which named nobody, are named.
+    /// </summary>
+    [Theory]
+    [InlineData("BHSA", "2CH 29:12", 31, "joah-2", "joah-the-later-gershonite")]
+    [InlineData("BHSA", "2CH 29:12", 37, "joah-2", "joah-the-later-gershonite")]
+    [InlineData("BHSA", "1CH 7:12", 2, "huppim", "shuppim-the-benjamite")]
+    [InlineData("BHSA", "1CH 7:15", 9, "huppim", "shuppim-the-benjamite")]
+    [InlineData("GRCBRENT", "1CH 7:12", 2, "huppim", "shuppim-the-benjamite")]
+    [InlineData("SWETE", "1CH 7:15", 8, "huppim", "shuppim-the-benjamite")]
+    [InlineData("UKR1871", "1CH 3:15", 4, "jehoahaz-2", "johanan-firstborn-of-josiah")]
+    [InlineData("BHSA", "GEN 14:3", 7, "saltsea", "vale-of-siddim")]
+    [InlineData("BHSA", "GEN 14:10", 4, "saltsea", "vale-of-siddim")]
+    [InlineData("BHSA", "GEN 14:3", 9, null, "saltsea")]
+    [InlineData("BHSA", "GEN 14:3", 11, null, "saltsea")]
+    [InlineData("BHSA", "JOS 15:5", 4, null, "saltsea")]
+    [InlineData("BHSA", "GEN 10:2", 3, null, "gomer")]
+    [InlineData("BHSA", "1CH 1:5", 3, null, "gomer")]
+    [InlineData("BHSA", "EZK 38:6", 1, null, "gomer-3")]
+    public async Task AWordReadAgainNamesTheRecordItsVerseNames(
+        string text, string reference, int position, string? wrong, string named)
+    {
+        var ruling = _rulings.Single(r => r.Text == text && r.Reference == reference && r.Position == position);
+        var word = _words[ruling.Word];
+        if (wrong is not null)
+        {
+            var held = await _db.Entities.SingleOrDefaultAsync(e => e.Slug == wrong);
+            if (held is null)
+            {
+                held = new Entity { Kind = EntityKind.Person, Slug = wrong, Name = wrong, SourceId = wrong, Source = "a test" };
+                _db.Entities.Add(held);
+                await _db.SaveChangesAsync();
+            }
+
+            _db.WordEntities.Add(new WordEntity
+            {
+                WordId = word, EntityId = held.Id, Method = LinkMethod.StrongNumber, Confidence = 0.99,
+                Source = "a resolution by number",
+            });
+            await _db.SaveChangesAsync();
+        }
+
+        await Load();
+
+        (await _db.WordEntities.Where(a => a.WordId == word).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal(named);
+    }
+
+    /// <summary>The records the names read again create, each of the kind its verse names.</summary>
+    [Fact]
+    public async Task TheRecordsTheNamesReadAgainCreateAreAManAManAndAValley()
+    {
+        await Load();
+
+        var created = await _db.Entities
+            .Where(e => e.Slug == "joah-the-later-gershonite" || e.Slug == "shuppim-the-benjamite" || e.Slug == "vale-of-siddim")
+            .ToDictionaryAsync(e => e.Slug, e => e.Kind);
+        created.Should().BeEquivalentTo(new Dictionary<string, EntityKind>
+        {
+            ["joah-the-later-gershonite"] = EntityKind.Person,
+            ["shuppim-the-benjamite"] = EntityKind.Person,
+            ["vale-of-siddim"] = EntityKind.Place,
+        });
+    }
+
     private void Tie(long from, Word to)
     {
         var hebrew = _db.Words.Single(w => w.Id == from);

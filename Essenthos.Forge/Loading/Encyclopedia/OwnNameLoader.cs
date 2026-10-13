@@ -74,7 +74,47 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
         var list = Read();
         var numbers = await Correct(list.Numbers ?? [], cancellationToken);
         return numbers + await CorrectForms(list.Forms ?? [], cancellationToken)
-               + await CorrectKinds(list.Kinds ?? [], cancellationToken);
+               + await CorrectKinds(list.Kinds ?? [], cancellationToken)
+               + await Drop(list.Drops ?? [], cancellationToken);
+    }
+
+    /// <summary>
+    /// A name a record does not bear, taken off it: King Jehoahaz was given the name Johanan, which 1
+    /// Chronicles 3:15 gives his elder brother, the firstborn who never reigned. Only a row still
+    /// labelled and numbered as the list says, on the record with the source id it names, goes, so a
+    /// second run finds nothing.
+    /// </summary>
+    internal async Task<int> Drop(IReadOnlyList<DroppedName> drops, CancellationToken cancellationToken)
+    {
+        var slugs = drops.Select(d => d.Entity).Distinct(StringComparer.Ordinal).ToList();
+        var records = await db.Entities.Where(e => slugs.Contains(e.Slug)).Include(e => e.Names)
+            .ToDictionaryAsync(e => e.Slug, StringComparer.Ordinal, cancellationToken);
+        var dropped = 0;
+        foreach (var drop in drops)
+        {
+            if (!records.TryGetValue(drop.Entity, out var record)
+                || !string.Equals(record.SourceId, drop.SourceId, StringComparison.Ordinal))
+            {
+                continue;
+            }
+
+            foreach (var name in record.Names.Where(n =>
+                         string.Equals(n.Label, drop.Label, StringComparison.Ordinal)
+                         && string.Equals(n.HebrewStrongNumber, drop.HebrewStrongNumber, StringComparison.Ordinal)).ToList())
+            {
+                record.Names.Remove(name);
+                db.EntityNames.Remove(name);
+                dropped++;
+                logger.LogInformation("{Slug} does not bear the name \"{Label}\": {Why}", record.Slug, drop.Label, drop.Why);
+            }
+        }
+
+        if (dropped > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        return dropped;
     }
 
     /// <summary>
@@ -248,7 +288,7 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
         return outcome;
     }
 
-    private static OwnNames Read()
+    internal static OwnNames Read()
     {
         using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Resource)
                            ?? throw new InvalidOperationException($"{Resource} is not embedded in the Forge assembly.");
@@ -258,7 +298,11 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
 
 /// <summary>The embedded list, as a file.</summary>
 internal sealed record OwnNames(IReadOnlyList<OwnName> Names, IReadOnlyList<CorrectedNumber>? Numbers,
-    IReadOnlyList<CorrectedNameForm>? Forms = null, IReadOnlyList<CorrectedNameKind>? Kinds = null);
+    IReadOnlyList<CorrectedNameForm>? Forms = null, IReadOnlyList<CorrectedNameKind>? Kinds = null,
+    IReadOnlyList<DroppedName>? Drops = null);
+
+/// <summary>A name row the record with this source id does not bear, by its label and Hebrew number.</summary>
+internal sealed record DroppedName(string Entity, string SourceId, string Label, string? HebrewStrongNumber, string Why);
 
 /// <summary>A name row of one kind that is another, on the record with this source id.</summary>
 internal sealed record CorrectedNameKind(string Entity, string SourceId, string Label, string Was, string Kind, string Why);

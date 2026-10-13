@@ -700,6 +700,13 @@
       "ukr": "названий також Шаллумом (1CH 3:15; JER 22:11)",
       "deu": "auch Sallum genannt (1CH 3:15; JER 22:11)",
       "spa": "llamado también Sallum (1CH 3:15; JER 22:11)"
+    },
+    {
+      "slug": "saltsea",
+      "english": "the Dead Sea, into which the Jordan runs (NUM 34:12; JOS 15:5)",
+      "ukr": "Мертве море, куди впадає Йордан (NUM 34:12; JOS 15:5)",
+      "deu": "das Tote Meer, in das der Jordan mündet (NUM 34:12; JOS 15:5)",
+      "spa": "el mar Muerto, donde desemboca el Jordán (NUM 34:12; JOS 15:5)"
     }
   ]
 }

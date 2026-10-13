@@ -308,6 +308,155 @@ public sealed class OldTestamentLinkTests : IDisposable
     private const string Split = "נ";
 
     /// <summary>
+    /// Psalm 51's title, which the Hebrew numbers as two verses at the frame's one address. A corpus
+    /// loaded while their words were read by position alone has them interleaved — the word for a
+    /// psalm with David's number, David with the verb's — and the next load gives each word the
+    /// number the file states for it, takes back what the resolution named from the old number, and
+    /// leaves a ruling alone. A third load finds nothing to do.
+    /// </summary>
+    [Fact]
+    public async Task ATitleTheHebrewNumbersAsTwoVersesIsNumberedAgainWhereAnEarlierLoadReadItInterleaved()
+    {
+        Titled();
+        var record = new MappingRecord(1, 1, 1,
+        [
+            new("H9005", "c1", 1, "to"), new("H4210", "c1", 2, "psalm"), new("H1732", "c1", 3, "David"),
+            new("H9003", "c2", 4, "in"), new("H935", "c2", 5, "come"), new("H5416", "c2", 6, "Nathan"),
+            new("H2603", "c3", 7, "favour"),
+        ],
+        [Segment(["Psalm"], 2), Segment(["Nathan"], 6), Segment(["mercy"], 7)]);
+        await Load(record);
+        (await Numbers()).Should().Equal("H9005", "H4210", "H1732", "H9003", "H935", "H5416", "H2603");
+
+        await Interleave();
+        var david = new Entity { Kind = EntityKind.Person, Slug = "david", Name = "David", SourceId = "test:david", Source = "test" };
+        _db.Entities.Add(david);
+        var psalm = _db.WordAt(_bhsa, 1, 1, 2);
+        var english = _db.WordAt(_kjv, 1, 1, 1);
+        var name = _db.WordAt(_bhsa, 1, 1, 3);
+        _db.WordEntities.AddRange(
+            new WordEntity { Word = psalm, Entity = david, Method = LinkMethod.StrongNumber, Confidence = 0.99, Source = Resolution },
+            new WordEntity
+            {
+                Word = english, Entity = david, Method = LinkMethod.StrongNumber, Confidence = 0.99, Source = Resolution,
+                Note = $"through BHSA word {psalm.Id}, linked by stated-by-source",
+            },
+            new WordEntity { Word = name, Entity = david, Method = LinkMethod.Manual, Source = "a ruling" });
+        await _db.SaveChangesAsync();
+
+        var outcome = await Load(record);
+
+        outcome.AlreadyLoaded.Should().BeTrue();
+        outcome.StrongNumbers.Should().Be(4);
+        (await Numbers()).Should().Equal("H9005", "H4210", "H1732", "H9003", "H935", "H5416", "H2603");
+        (await _db.WordEntities.AsNoTracking().Select(a => a.Source).ToListAsync()).Should().Equal("a ruling");
+        (await Load(record)).StrongNumbers.Should().Be(0);
+    }
+
+    /// <summary>
+    /// Psalm 60's title: the file gives the Valley of Salt, one word in BHSA, two entries under one
+    /// running number, and Aram-naharaim, two words in BHSA, one. The counts agree by accident and a
+    /// join by position gave every word between the two its neighbour's number — Joab the
+    /// conjunction's, the valley salt's. The verse is numbered by the running numbers and the glosses
+    /// instead: each word whose gloss pairs takes its own number, and the two words the file and BHSA
+    /// divide differently take none. A corpus loaded with the shifted numbers is given the same ones.
+    /// </summary>
+    [Fact]
+    public async Task AVerseTheFileNumbersTwoEntriesAsOneWordInIsNotNumberedByPosition()
+    {
+        Clear();
+        _kjv = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["a"]), (1, 2, ["b"]), (1, 3, ["c"]));
+        _bhsa = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
+            (1, 1, ["א", "ב"]),
+            (1, 2, ["לַ", "מְנַצֵּחַ", "אֲרַם", "נַהֲרַיִם", "וַ", "יֹואָב", "בְּ", "גֵיא־מֶלַח", "שְׁנֵים", "עָשָׂר", "אָלֶף", "אֱלֹהִים", "זְנַחְתָּנוּ", "פְרַצְתָּנוּ"]),
+            (1, 3, ["ג", "ד"]));
+        _db.SaveChanges();
+        string[] glosses =
+        [
+            "gloss1", "gloss2", "to", "prevail", "Aram", "stream", "and", "Joab", "in", "the Valley of Salt", "two",
+            "-teen", "thousand", "god(s)", "reject", "break", "gloss16", "gloss17",
+        ];
+        var words = _db.Words.Where(w => w.TextId == _bhsa.Id).OrderBy(w => w.Id).ToList();
+        for (var i = 0; i < words.Count; i++)
+        {
+            words[i].Gloss = glosses[i];
+        }
+
+        _db.SaveChanges();
+        MappingRecord[] records =
+        [
+            new(1, 1, 1, [new("H1", "c1", 1, "gloss1"), new("H2", "c1", 2, "gloss2")], [Segment(["a"], 1)]),
+            new(1, 1, 2,
+            [
+                new("H9005", "c2", 3, "to"), new("H5329", "c2", 4, "prevail"), new("H763", "c2", 5, "Mesopotamia"),
+                new("H9000", "c2", 6, "and"), new("H3097", "c2", 7, "Joab"), new("H9003", "c2", 8, "in"),
+                new("H1516", "c2", 9, "the Valley of Salt"), new("H4417", "c2", 9, "the Valley of Salt"),
+                new("H8147", "c2", 10, "two"), new("H6240", "c2", 11, "-teen"), new("H505", "c2", 12, "thousand"),
+                new("H430", "c2", 13, "god(s)"), new("H2186", "c2", 14, "reject"), new("H6555", "c2", 15, "break"),
+            ],
+            [Segment(["b"], 3)]),
+            new(1, 1, 3, [new("H16", "c3", 16, "gloss16"), new("H17", "c3", 17, "gloss17")], [Segment(["c"], 16)]),
+        ];
+        string?[] expected =
+        [
+            "H1", "H2", "H9005", "H5329", null, null, "H9000", "H3097", "H9003", "H1516", "H8147", "H6240", "H505",
+            "H430", "H2186", "H6555", "H16", "H17",
+        ];
+
+        await Load(records);
+        (await Numbers()).Should().Equal(expected);
+
+        await _db.Database.ExecuteSqlRawAsync(
+            """
+            UPDATE word w SET strong_number = shifted.number
+            FROM (VALUES (5, 'H763'), (6, 'H9000'), (7, 'H3097'), (8, 'H9003'), (9, 'H1516'), (10, 'H4417'))
+                 AS shifted(position, number), verse v
+            WHERE v.id = w.verse_id AND v.number = 2 AND w.text_id = {0} AND w.position = shifted.position - 2
+            """,
+            _bhsa.Id);
+
+        var outcome = await Load(records);
+
+        outcome.StrongNumbers.Should().Be(6);
+        (await Numbers()).Should().Equal(expected);
+    }
+
+    private const string Resolution =
+        "BHSA's proper-noun marking, and the Strong number the encyclopedia records for the name";
+
+    /// <summary>
+    /// BHSA's Psalm 51 title and first verse: the title as the two verses BHSA numbers it, both at the
+    /// frame's verse 0, and the King James's first verse, which holds the title.
+    /// </summary>
+    private void Titled()
+    {
+        Clear();
+        _kjv = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["Psalm", "Nathan", "mercy"]));
+        _bhsa = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
+            (1, 1, ["לַ", "מִזְמֹור", "דָוִד"]), (1, 2, ["בְּ", "בֹוא", "נָתָן"]), (1, 3, ["חָנֵּנִי"]));
+        _db.SaveChanges();
+        _db.Database.ExecuteSqlRaw(
+            """
+            UPDATE verse SET sequence = number WHERE text_id = {0};
+            UPDATE verse_reference r SET canonical_verse = CASE v.number WHEN 3 THEN 1 ELSE 0 END
+            FROM verse v WHERE v.id = r.verse_id AND v.text_id = {0}
+            """,
+            _bhsa.Id);
+    }
+
+    /// <summary>The title's numbers as a load reading its two verses by position alone wrote them.</summary>
+    private async Task Interleave() =>
+        await _db.Database.ExecuteSqlRawAsync(
+            """
+            UPDATE word w SET strong_number = interleaved.number
+            FROM (VALUES (1, 1, 'H9005'), (2, 1, 'H4210'), (1, 2, 'H1732'), (2, 2, 'H9003'), (1, 3, 'H935'), (2, 3, 'H5416'))
+                 AS interleaved(verse, position, number), verse v
+            WHERE v.id = w.verse_id AND v.number = interleaved.verse AND w.position = interleaved.position
+              AND w.text_id = {0}
+            """,
+            _bhsa.Id);
+
+    /// <summary>
     /// BHSA's Genesis 1:1-4 with verses 2 and 3 of the lengths given, every word glossed as the file
     /// glosses its running number, and the King James beside it.
     /// </summary>

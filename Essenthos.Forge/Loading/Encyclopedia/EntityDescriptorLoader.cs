@@ -621,8 +621,9 @@ internal sealed class EntityDescriptorLoader(
     /// The clauses that turn a people's line round: belonging to what is not a people, descending
     /// from what is neither a man nor a people, or descending from a man the cited verse writes with
     /// the people's own name after his (<em>Keilah the Garmite</em> is a Garmite, not the Garmites'
-    /// forebear). Collected before anything is written so a clause loaded before these rules
-    /// existed is read again and leaves.
+    /// forebear); and a pass's clause saying of a record what its kind cannot be, a people killed
+    /// where some of it were slain. Collected before anything is written so a clause loaded before
+    /// these rules existed is read again and leaves.
     /// </summary>
     internal static HashSet<(int Entity, string Relation, int Target)> Turned(
         IReadOnlyList<DescriptorRecord> records,
@@ -645,8 +646,11 @@ internal sealed class EntityDescriptorLoader(
                     continue;
                 }
 
-                var wrongKind = kinds.TryGetValue(targetId, out var kind)
-                    && !DescriptorTargets.Admits(claim.Relation, kind);
+                var wrongKind = (kinds.TryGetValue(targetId, out var kind)
+                        && !DescriptorTargets.Admits(claim.Relation, kind))
+                    || (string.IsNullOrWhiteSpace(claim.DecidedBy)
+                        && kinds.TryGetValue(entityId, out var subject)
+                        && !DescriptorSubjects.Admits(claim.Relation, subject));
                 var member = claim.Relation == DescriptorRelations.DescendantsOf
                     && Citation.Parse(claim.Reference) is { } citation
                     && citation.Verses.Any(v => members.Contains((entityId, targetId, v.Book, v.Chapter, v.Verse)));

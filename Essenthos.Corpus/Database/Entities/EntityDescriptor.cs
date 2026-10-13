@@ -370,6 +370,13 @@ public static class DescriptorRelations
     public const string KillerOf = "killer-of";
 
     /// <summary>
+    /// A people some of whom another party slew, said of the people: <em>they slew of them in Bezek
+    /// ten thousand men</em> (JDG 1:4), <em>he slew the Gibeonites</em> (2SA 21:1). The people did not
+    /// die out, so <see cref="KilledBy"/>, which says of its subject that it was killed, is not this.
+    /// </summary>
+    public const string StruckBy = "struck-by";
+
+    /// <summary>
     /// What one person is to another in a rape, both ways round, which the text states plainly of
     /// Shechem and Dinah (GEN 34:2) and of Amnon and Tamar (2SA 13:14). A dataset filed both women
     /// beside the dead under one word, <c>victim</c>; they are a different fact, and a page reading
@@ -455,7 +462,7 @@ public static class DescriptorRelations
         KingOf, QueenOf, ProphetTo, PriestOf, JudgeOf, HighPriestOf,
         CommanderOf, GovernorOf, TetrarchOf, ServantOf, MasterOf,
         DiscipleOf, ApostleOf, ScribeOf, CompanionOf, TeacherOf, AllyOf, FounderOf,
-        KilledBy, KillerOf, RapedBy, RaperOf, AngelOf,
+        KilledBy, KillerOf, StruckBy, RapedBy, RaperOf, AngelOf,
         SupporterOf, SupportedBy, CreatorOf, CreatedBy, HeirOf, InheritedBy, ExilerOf, ExiledBy,
         OfTribe, OfPeople, FromPlace, LivedIn, BuriedIn,
         DescendantsOf,
@@ -590,11 +597,12 @@ public static class DescriptorSubjects
             DescriptorRelations.ScribeOf, DescriptorRelations.CompanionOf, DescriptorRelations.TeacherOf,
             DescriptorRelations.RapedBy, DescriptorRelations.RaperOf, DescriptorRelations.CreatorOf,
             DescriptorRelations.AngelOf, DescriptorRelations.FounderOf,
+            DescriptorRelations.KilledBy, DescriptorRelations.KillerOf,
         ]),
         ([EntityKind.Person, EntityKind.Title, EntityKind.People],
         [
             DescriptorRelations.AncestorOf, DescriptorRelations.DescendantOf, DescriptorRelations.ServantOf,
-            DescriptorRelations.KilledBy, DescriptorRelations.KillerOf, DescriptorRelations.HeirOf,
+            DescriptorRelations.HeirOf,
             DescriptorRelations.OfTribe, DescriptorRelations.OfPeople, DescriptorRelations.FromPlace,
             DescriptorRelations.LivedIn, DescriptorRelations.BuriedIn,
         ]),
@@ -605,7 +613,7 @@ public static class DescriptorSubjects
         ]),
         ([EntityKind.People],
         [
-            DescriptorRelations.DescendantsOf,
+            DescriptorRelations.DescendantsOf, DescriptorRelations.StruckBy,
         ]),
         ([EntityKind.Place, EntityKind.People],
         [
@@ -670,7 +678,11 @@ public static class DescriptorTargets
         ]),
         ([EntityKind.Person, EntityKind.Title],
         [
-            .. KinRelations.All,
+            .. KinRelations.All, DescriptorRelations.KillerOf,
+        ]),
+        ([EntityKind.Person, EntityKind.Title, EntityKind.People],
+        [
+            DescriptorRelations.KilledBy, DescriptorRelations.StruckBy,
         ]),
     ];
 

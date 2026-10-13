@@ -1505,6 +1505,27 @@
       "ukr": "чиєю вовною Дамаск торгував із Тиром (EZK 27:18)",
       "deu": "dessen Wolle Damaskus mit Tyrus handelte (EZK 27:18)",
       "spa": "cuya lana comerciaba Damasco con Tiro (EZK 27:18)"
+    },
+    {
+      "slug": "joah-the-later-gershonite",
+      "english": "a Gershonite Levite, son of Zimmah and father of Eden, who served under Hezekiah (2CH 29:12)",
+      "ukr": "левит із Ґершонових синів, син Зімми і батько Едена, що служив за Єзекії (2CH 29:12)",
+      "deu": "ein Levit von den Gersoniten, Sohn Simmas und Vater Edens, der unter Hiskia diente (2CH 29:12)",
+      "spa": "un levita gersonita, hijo de Zima y padre de Edén, que sirvió bajo Ezequías (2CH 29:12)"
+    },
+    {
+      "slug": "shuppim-the-benjamite",
+      "english": "a Benjamite, brother of Huppim, of the children of Ir (1CH 7:12)",
+      "ukr": "веніямінівець, брат Хуппіма, з синів Іра (1CH 7:12)",
+      "deu": "ein Benjaminiter, Bruder Huppims, von den Söhnen Irs (1CH 7:12)",
+      "spa": "un benjamita, hermano de Hupim, de los hijos de Ir (1CH 7:12)"
+    },
+    {
+      "slug": "vale-of-siddim",
+      "english": "the valley where the kings of the plain fought, which the Salt Sea has since covered (GEN 14:3)",
+      "ukr": "долина, де билися царі рівнини і яку згодом укрило Солоне море (GEN 14:3)",
+      "deu": "das Tal, in dem die Könige der Ebene kämpften und das später das Salzmeer bedeckte (GEN 14:3)",
+      "spa": "el valle donde lucharon los reyes de la llanura, que después cubrió el mar Salado (GEN 14:3)"
     }
   ]
 }

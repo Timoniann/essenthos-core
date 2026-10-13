@@ -771,6 +771,88 @@ public sealed class DescriptorTests : IDisposable
             .Should().BeEquivalentTo("salma-1 founder-of kirjathjearim-1", "lehabim descendants-of mizraim-1");
     }
 
+    /// <summary>
+    /// <em>They slew of them in Bezek ten thousand men</em> (JDG 1:4) is a defeat of the Canaanites,
+    /// who go on through the book, and not their death: a people is struck, and only a person is
+    /// killed. A place kills nobody — Cozbi was slain for Peor's sake, by Phinehas — and a people that
+    /// kills a man is said from the man's side, where Hophni killed by the Philistines stays.
+    /// </summary>
+    [Fact]
+    public async Task APeopleIsStruckAndOnlyAPersonIsKilledByAPersonOrAPeople()
+    {
+        await SeedTheSlain();
+
+        var outcome = await Load("struck");
+
+        outcome.Refused.Inadmissible.Should().Be(2, "the Canaanites were not killed, and the Amalekites killed nobody here");
+        outcome.Refused.Mistargeted.Should().Be(1, "Peor is a place");
+        (await _db.EntityDescriptors.Select(d => d.Entity!.Slug + " " + d.Relation + " " + d.Target!.Slug).ToListAsync())
+            .Should().BeEquivalentTo(
+                "canaanites-1 struck-by judah-the-tribe",
+                "cozbi-1 killed-by phinehas-1",
+                "hophni-1 killed-by philistines-1");
+        DescriptorSubjects.Admits(DescriptorRelations.KilledBy, EntityKind.People).Should().BeFalse();
+        DescriptorTargets.Admits(DescriptorRelations.KilledBy, EntityKind.People).Should().BeTrue();
+        DescriptorTargets.Admits(DescriptorRelations.KillerOf, EntityKind.People).Should().BeFalse();
+        DescriptorSubjects.Admits(DescriptorRelations.StruckBy, EntityKind.Person).Should().BeFalse();
+    }
+
+    /// <summary>
+    /// A people's killing loaded before the rule existed is read again and leaves with the relationship
+    /// read off it, and the struck-by the same record states takes its place.
+    /// </summary>
+    [Fact]
+    public async Task APeoplesKillingLoadedBeforeTheRuleLeavesOnTheNextLoad()
+    {
+        await SeedTheSlain();
+        var (records, _, _) = DescriptorFiles.Read(Fixtures("struck"));
+        var canaanites = records.Single(r => r.Entity == "canaanites-1");
+        var ids = await _db.Entities.ToDictionaryAsync(e => e.Slug, e => e.Id);
+        _db.EntityDescriptors.Add(new EntityDescriptor
+        {
+            EntityId = ids["canaanites-1"], Ordinal = 1, Relation = DescriptorRelations.KilledBy,
+            TargetEntityId = ids["judah-the-tribe"], CanonicalBook = 1, CanonicalChapter = 7, CanonicalVerse = 1,
+            Method = LinkMethod.ModelReading, Confidence = 0.55,
+            Source = EntityDescriptorLoader.SourcePrefix + " claude-sonnet-5, asked 2026-09-09", Run = canaanites.Run,
+        });
+        _db.EntityRelationships.Add(new EntityRelationship
+        {
+            FromEntityId = ids["canaanites-1"], ToEntityId = ids["judah-the-tribe"], Type = DescriptorRelations.KilledBy,
+            Category = RelationshipCategories.Read, CanonicalBook = 1, CanonicalChapter = 7, CanonicalVerse = 1,
+            Method = LinkMethod.ModelReading, Confidence = 0.55,
+            Source = EntityDescriptorLoader.SourcePrefix + " claude-sonnet-5, asked 2026-09-09",
+        });
+        await _db.SaveChangesAsync();
+
+        var outcome = await Load("struck");
+
+        outcome.Superseded.Should().Be(1);
+        (await _db.EntityDescriptors.Where(d => d.EntityId == ids["canaanites-1"]).Select(d => d.Relation).ToListAsync())
+            .Should().Equal(DescriptorRelations.StruckBy);
+        (await _db.EntityRelationships.AnyAsync(r => r.Type == DescriptorRelations.KilledBy && r.FromEntityId == ids["canaanites-1"]))
+            .Should().BeFalse();
+        (await Load("struck")).Superseded.Should().Be(0, "the second load has nothing left to withdraw");
+    }
+
+    private async Task SeedTheSlain()
+    {
+        Corpus.Add(_db, Bible4uTextSource.KingJames, TextKind.Translation, "eng",
+            (7, 1, ["Judah", "slew", "of", "the", "Canaanites"]),
+            (7, 2, ["Cozbi", "slain", "for", "Peor's", "sake", "Phinehas"]),
+            (7, 3, ["Hophni", "slain", "by", "the", "Philistines"]),
+            (7, 4, ["Abdon", "buried", "in", "the", "mount", "of", "the", "Amalekites"]));
+        Add("canaanites-1", EntityKind.People, "Canaanites", null, (1, 7, 1));
+        Add("judah-the-tribe", EntityKind.Person, "Judah", null, (1, 7, 1));
+        Add("cozbi-1", EntityKind.Person, "Cozbi", null, (1, 7, 2));
+        Add("peor-1", EntityKind.Place, "Peor", null, (1, 7, 2));
+        Add("phinehas-1", EntityKind.Person, "Phinehas", null, (1, 7, 2));
+        Add("hophni-1", EntityKind.Person, "Hophni", null, (1, 7, 3));
+        Add("philistines-1", EntityKind.People, "Philistines", null, (1, 7, 3));
+        Add("amalekites-1", EntityKind.People, "Amalekites", null, (1, 7, 4));
+        Add("abdon-1", EntityKind.Person, "Abdon", null, (1, 7, 4));
+        await _db.SaveChangesAsync();
+    }
+
     private async Task SeedThePeoples()
     {
         Corpus.Add(_db, Bible4uTextSource.KingJames, TextKind.Translation, "eng",

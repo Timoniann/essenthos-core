@@ -369,7 +369,7 @@ entity is the target's father-in-law:
             commander-of governor-of tetrarch-of
             servant-of master-of disciple-of apostle-of scribe-of companion-of
             teacher-of ally-of supporter-of supported-by heir-of inherited-by
-  violence  killed-by killer-of raped-by raper-of exiler-of exiled-by
+  violence  killed-by killer-of struck-by raped-by raper-of exiler-of exiled-by
   making    creator-of created-by
   belonging of-tribe of-people from-place lived-in buried-in angel-of
   peoples   descendants-of
@@ -405,7 +405,12 @@ The readings that go wrong often enough to be worth naming:
   second mother named is `brother-of`. Never soften `brother-of` into `half-brother-of` to be safe.
 - **`killed-by` is the person killed, `killer-of` the one who killed.** *Zichri slew Maaseiah* makes
   `maaseiah killed-by zichri` and `zichri killer-of maaseiah`. Both are worth stating; a battle in
-  which somebody merely took part is neither.
+  which somebody merely took part is neither. Both ends are people who died or killed: a person may
+  be killed by a people (*the Philistines slew Jonathan*), but a place kills nobody, and a verse that
+  says a man was slain without saying by whom gives no `killed-by`.
+- **A people is not killed; it is `struck-by`.** *They slew of them in Bezek ten thousand men*
+  (JDG 1:4) and *he slew the Gibeonites* (2SA 21:1) say some of a people were slain, and the people
+  goes on: `canaanites struck-by judah`. Say it of the people, never `killed-by` or `killer-of`.
 
 `angel-of` is a being the text defines by whose it is, as in *the angel of the LORD*.
 
