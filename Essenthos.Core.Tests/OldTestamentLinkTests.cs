@@ -222,8 +222,8 @@ public sealed class OldTestamentLinkTests : IDisposable
     public async Task AVerseWhoseEnglishDoesNotLineUpStillGivesTheHebrewItsNumbers()
     {
         var outcome = await Load(Record(
-            Segment(["In", "the", "start"], 2),
-            Segment(["created"], 3)));
+            Segment(["In", "a", "start"], 2),
+            Segment(["made"], 3)));
 
         outcome.Links.Should().Be(0);
         outcome.Refused.Should().Be(1);
