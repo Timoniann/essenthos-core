@@ -196,6 +196,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.FounderOf] = new("founder of ", Nominative),
             [DescriptorRelations.KilledBy] = new("killed by ", Nominative),
             [DescriptorRelations.KillerOf] = new("killer of ", Nominative),
+            [DescriptorRelations.StruckBy] = new("struck by ", Nominative),
             [DescriptorRelations.RapedBy] = new("raped by ", Nominative),
             [DescriptorRelations.RaperOf] = new("raped ", Nominative),
             [DescriptorRelations.SupporterOf] = new("supporter of ", Nominative),
@@ -285,6 +286,9 @@ internal static partial class DescriptorPhrasings
             // clause asking for one would render the English name for every entity in the corpus.
             [DescriptorRelations.KilledBy] = new("загинув від руки ", Genitive),
             [DescriptorRelations.KillerOf] = new("вбивця ", Genitive),
+
+            // Said only of a people, so the verb is plural: "постраждали від руки Юди".
+            [DescriptorRelations.StruckBy] = new("постраждали від руки ", Genitive),
             [DescriptorRelations.RapedBy] = new("зазнала насильства від ", Genitive),
             [DescriptorRelations.RaperOf] = new("насильник ", Genitive),
             [DescriptorRelations.SupporterOf] = new("покровитель ", Genitive),
@@ -389,6 +393,7 @@ internal static partial class DescriptorPhrasings
             // leaves the rest to the verse the clause carries.
             [DescriptorRelations.KilledBy] = new("getötet von ", Nominative),
             [DescriptorRelations.KillerOf] = new("tötete ", Nominative),
+            [DescriptorRelations.StruckBy] = new("geschlagen von ", Nominative),
             [DescriptorRelations.RapedBy] = new("vergewaltigt von ", Nominative),
             [DescriptorRelations.RaperOf] = new("vergewaltigte ", Nominative),
             [DescriptorRelations.SupporterOf] = new("Förderer ", Genitive),
@@ -476,6 +481,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.FounderOf] = new("fundador de ", Nominative),
             [DescriptorRelations.KilledBy] = new("muerto a manos de ", Nominative),
             [DescriptorRelations.KillerOf] = new("dio muerte a ", Nominative),
+            [DescriptorRelations.StruckBy] = new("atacados por ", Nominative),
             [DescriptorRelations.RapedBy] = new("violada por ", Nominative),
             [DescriptorRelations.RaperOf] = new("violó a ", Nominative),
             [DescriptorRelations.SupporterOf] = new("benefactor de ", Nominative),

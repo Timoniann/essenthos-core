@@ -149,5 +149,14 @@
           "kind": "description",
           "why": "'The great river, the river Euphrates' (Gen 15:18, Deut 1:7) describes the river and then names it; the Euphrates' name is Euphrates. A description is kept as one, and is not a name the river is known by."
       }
+  ],
+  "drops": [
+      {
+          "entity": "jehoahaz-2",
+          "sourceId": "person:Jehoahaz_2",
+          "label": "Johanan",
+          "hebrewStrongNumber": "H3110",
+          "why": "'The sons of Josiah were, the firstborn Johanan, the second Jehoiakim, the third Zedekiah, the fourth Shallum' (1CH 3:15): Johanan is the firstborn, who never reigned; King Jehoahaz is the fourth, Shallum (JER 22:11). The name is the firstborn's, and his own record bears it."
+      }
   ]
 }

@@ -1024,6 +1024,57 @@ public sealed class DuplicateRecordTests : IDisposable
     }
 
     /// <summary>
+    /// David's Gershonite Joah son of Zimmah (1CH 6:21) leaves 2 Chronicles 29:12 to Hezekiah's: the
+    /// verse, its Joahs and Eden's tie to his father go to the later man, and the ties 1 Chronicles 6
+    /// states stay. So Ethan, folded into David's Joah, has no Eden for a son.
+    /// </summary>
+    [Fact]
+    public async Task HezekiahsJoahTakesTheVerseAndEdenFromDavidsJoah()
+    {
+        _db.AddBook(_hebrew, 14, "2 Chronicles", (29, 12, ["יֹואָח", "בֶּן", "זִמָּה", "וְעֵדֶן", "בֶּן", "יֹואָח"]));
+        var davids = Record("joah-2", "person:Joah_2", "son of Zimmah (1CH 6:21)");
+        var hezekiahs = Record("joah-the-later-gershonite", "essenthos:joah-the-later-gershonite", "son of Zimmah (2CH 29:12)");
+        var eden = Record("eden", "person:Eden_1", "son of Joah (2CH 29:12)");
+        var iddo = Record("iddo-2", "person:Iddo_2", "son of Joah (1CH 6:21)");
+        await _db.SaveChangesAsync();
+        Cites(davids, 13, 6, 21);
+        Cites(davids, 14, 29, 12);
+        foreach (var position in new[] { 1, 6 })
+        {
+            _db.WordEntities.Add(new WordEntity
+            {
+                Word = _db.WordAt(_hebrew, 29, 12, position), Entity = davids, Method = LinkMethod.StrongNumber,
+                Confidence = 0.99, Source = "a resolution by number",
+            });
+        }
+
+        EntityRelationship Tie(Entity from, string type, Entity to, int book, int chapter, int verse) => new()
+        {
+            From = from, To = to, Type = type, Category = RelationshipCategories.Read,
+            CanonicalBook = book, CanonicalChapter = chapter, CanonicalVerse = verse,
+            Method = LinkMethod.ModelReading, Confidence = 0.9, Source = "read from Scripture by a test",
+        };
+        _db.EntityRelationships.AddRange(
+            Tie(eden, "son-of", davids, 14, 29, 12),
+            Tie(davids, "father-of", eden, 14, 29, 12),
+            Tie(iddo, "son-of", davids, 13, 6, 21));
+        await _db.SaveChangesAsync();
+
+        var split = DuplicateRecordLoader.Read().Splits!.Single(s => s.From == "joah-2");
+        await _loader.Split([split]);
+
+        _db.ChangeTracker.Clear();
+        (await _db.WordEntities.Select(a => a.EntityId).Distinct().ToListAsync()).Should().Equal(hezekiahs.Id);
+        (await _db.EntityVerses.Where(v => v.EntityId == davids.Id).Select(v => v.CanonicalBook).ToListAsync())
+            .Should().Equal(13);
+        var ties = await _db.EntityRelationships
+            .Select(r => r.From!.Slug + " " + r.Type + " " + r.To!.Slug).ToListAsync();
+        ties.Should().BeEquivalentTo(
+            "eden son-of joah-the-later-gershonite", "joah-the-later-gershonite father-of eden", "iddo-2 son-of joah-2");
+        (await _loader.Split([split])).Should().Be((0, 0));
+    }
+
+    /// <summary>
     /// Solomon's Azariah son of Zadok (1KI 4:2) leaves the record of Azariah son of Johanan (1CH 6:10),
     /// who is Zadok's great-great-grandson, and takes only that verse.
     /// </summary>

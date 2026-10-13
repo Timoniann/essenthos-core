@@ -399,26 +399,6 @@
       "strongNumber": "H250",
       "existing": "ezrahites",
       "why": "'The Ezrahite': the gentilic, of the descendants of Zerah."
-    },
-    {
-      "text": "BHSA",
-      "reference": "PSA 52:2",
-      "position": 3,
-      "surface": "דֹּואֵ֣ג",
-      "strongNumber": "H1732",
-      "existing": "doeg",
-      "why": "'When Doeg the Edomite came and told Saul': BHSA gives the word the number of David's name two words on, and the resolution by number named David.",
-      "corrects": "david"
-    },
-    {
-      "text": "BHSA",
-      "reference": "PSA 60:2",
-      "position": 18,
-      "surface": "גֵיא־מֶ֑לַח",
-      "strongNumber": "H4417",
-      "existing": "valleyofsalt",
-      "why": "'Smote of Edom in the valley of salt': the valley, not the Salt Sea; BHSA gives the word the number of salt alone, which the sea's record carries.",
-      "corrects": "saltsea"
     }
   ]
 }

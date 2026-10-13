@@ -2696,6 +2696,44 @@
         "1CH 15:23"
       ],
       "why": "1CH 15:23: 'Berechiah and Elkanah were doorkeepers for the ark' names the Levite doorkeeper of David's day, whose word is his own record's; the Kohathite Elkanah, father of Amasai and Ahimoth and son of Joel (1CH 6:25, 6:36), lived generations before him."
+    },
+    {
+      "from": "joah-2",
+      "to": "joah-the-later-gershonite",
+      "name": null,
+      "verses": [
+        "2CH 29:12"
+      ],
+      "why": "2CH 29:12: 'Of the Gershonites; Joah the son of Zimmah, and Eden the son of Joah' is the Gershonite who served when Hezekiah cleansed the temple. The record holds David's Gershonite Joah son of Zimmah (1CH 6:20-21), called Ethan in 6:42, generations earlier; held together, Ethan of Asaph's line had Eden for a son and two fathers named Zimmah. Parted on the project owner's instruction of 2026-10-13."
+    },
+    {
+      "from": "zimmah",
+      "to": "zimmah-the-later-gershonite",
+      "name": null,
+      "verses": [
+        "2CH 29:12"
+      ],
+      "why": "2CH 29:12's Zimmah, father of Hezekiah's Joah, is already a record of his own; the verse the dataset still listed under Zimmah son of Jahath (1CH 6:20) goes with him."
+    },
+    {
+      "from": "muppim",
+      "to": "shuppim-the-benjamite",
+      "name": null,
+      "verses": [
+        "1CH 7:12",
+        "1CH 7:15"
+      ],
+      "why": "1CH 7:12 'Shuppim also, and Huppim, the children of Ir' and 7:15 'the sister of Huppim and Shuppim' print Shuppim, not Muppim; the dataset listed both verses under Muppim of GEN 46:21, which no verse says he is."
+    },
+    {
+      "from": "saltsea",
+      "to": "vale-of-siddim",
+      "name": "Siddim",
+      "verses": [
+        "GEN 14:8",
+        "GEN 14:10"
+      ],
+      "why": "GEN 14:3, 8 and 10 name the vale of Siddim, 'which is the salt sea' (14:3): a valley the sea later covered, where the kings of the plain fought and fell into its slimepits, and not the sea. Its name and the two verses that name only the vale go to it; 14:3, which names both, stays with the sea as well."
     }
   ]
 }

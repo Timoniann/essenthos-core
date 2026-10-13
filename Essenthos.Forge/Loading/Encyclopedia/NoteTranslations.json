@@ -2354,5 +2354,41 @@
  "model": "claude-opus-5-5",
  "effort": "high",
  "at": "2026-10-08T15:30:00+00:00"
-}
+},
+ {
+  "file": "NamesReadAgainRecords.json",
+  "slug": "joah-the-later-gershonite",
+  "sha256": "d4ac8501a149c3a4ba89c2d899745412f919386d853cea539c4db8611c532d4c",
+  "english": "David's Gershonite Joah son of Zimmah (1CH 6:20-21) stands many generations before Hezekiah's cleansing of the temple, so the Joah of this verse is another man of the same family.",
+  "ukr": "Давидів ґершонівець Йоах, син Зімми (1CH 6:20-21), жив за багато поколінь до того, як Єзекія очистив храм, тож Йоах цього вірша — інший чоловік із того самого роду.",
+  "deu": "Davids Gersoniter Joach, der Sohn Simmas (1CH 6:20-21), lebte viele Generationen vor Hiskias Reinigung des Tempels; der Joach dieses Verses ist also ein anderer Mann aus derselben Familie.",
+  "spa": "El gersonita Joa hijo de Zima de los días de David (1CH 6:20-21) vivió muchas generaciones antes de que Ezequías purificara el templo, así que el Joa de este versículo es otro hombre de la misma familia.",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "at": "2026-10-13T20:00:00+00:00"
+ },
+ {
+  "file": "NamesReadAgainRecords.json",
+  "slug": "shuppim-the-benjamite",
+  "sha256": "4d41954dc12eb770bdd8cf6c7c8325c5416e889073a2a8561622fdf0c0be0f34",
+  "english": "Whether he is the Muppim of Genesis 46:21, the Shupham of Numbers 26:39 or the Shephuphan of 1 Chronicles 8:5 no verse says.",
+  "ukr": "Чи він той самий, що Муппім із Буття 46:21, Шефуфам із Чисел 26:39 або Шефуфан із 1 Хронік 8:5, жоден вірш не каже.",
+  "deu": "Ob er der Muppim aus 1. Mose 46:21, der Schefufam aus 4. Mose 26:39 oder der Schefufan aus 1. Chronik 8:5 ist, sagt kein Vers.",
+  "spa": "Ningún versículo dice si es el Mupim de Génesis 46:21, el Sufam de Números 26:39 o el Sefufán de 1 Crónicas 8:5.",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "at": "2026-10-13T20:00:00+00:00"
+ },
+ {
+  "file": "NamesReadAgainRecords.json",
+  "slug": "vale-of-siddim",
+  "sha256": "0670b4a069e17d7d8f712d85afb6718ea47a3ab08b2f2f2b982b7e506a613103",
+  "english": "'All these were joined together in the vale of Siddim, which is the salt sea' (GEN 14:3): the valley lay where the Salt Sea later stood, and the vale was full of slimepits (GEN 14:10).",
+  "ukr": "Царі зібралися в долині Сіддім, «а це Солоне море» (GEN 14:3): долина лежала там, де згодом стало Солоне море, і була повна смоляних ям (GEN 14:10).",
+  "deu": "„Diese kamen alle zusammen in das Tal Siddim, wo nun das Salzmeer ist“ (GEN 14:3): Das Tal lag dort, wo später das Salzmeer stand, und es war voller Erdharzgruben (GEN 14:10).",
+  "spa": "«Todos estos se juntaron en el valle de Sidim, que es el mar Salado» (GEN 14:3): el valle estaba donde después estuvo el mar Salado, y estaba lleno de pozos de betún (GEN 14:10).",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "at": "2026-10-13T20:00:00+00:00"
+ }
 ]

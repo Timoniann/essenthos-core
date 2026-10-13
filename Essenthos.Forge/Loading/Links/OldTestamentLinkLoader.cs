@@ -2,6 +2,7 @@ using System.Globalization;
 using System.Diagnostics;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Strong;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -177,6 +178,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     private const string StrongNumberUpdate =
         """
         CREATE TEMP TABLE stated_strong (word_id bigint PRIMARY KEY, strong_number text) ON COMMIT DROP;
+        CREATE TEMP TABLE doubtful_word (word_id bigint PRIMARY KEY) ON COMMIT DROP;
         """;
 
     /// <param name="segmentation">
@@ -201,8 +203,8 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         {
             var numbered = await NumberTheUnnumbered(records, hebrew.Id, cancellationToken);
             logger.LogInformation(
-                "The Old Testament links are already loaded; {Numbered} Hebrew words that had no Strong number were " +
-                "given the one the file states", numbered);
+                "The Old Testament links are already loaded; {Numbered} Hebrew words that had no Strong number, or " +
+                "one an earlier load read off the wrong word, were given the one the file states", numbered);
             return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, numbered, TimeSpan.Zero);
         }
 
@@ -235,7 +237,10 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             // The numbers belong to the Hebrew words, so they need only the Hebrew join. A verse the
             // King James words differently from the file is refused its links, and its Hebrew is
             // still the Hebrew the file numbers.
-            StateNumbers(record, bhsaWords, statedStrong, placed);
+            if (!NumbersTwoEntriesAsOneWord(record))
+            {
+                StateNumbers(record, bhsaWords, statedStrong, placed);
+            }
 
             if (!Take(record, bhsaWords, glosses))
             {
@@ -511,6 +516,17 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         }
     }
 
+    /// <summary>
+    /// Whether the file gives one running word number to two of its entries — a word BHSA writes as
+    /// one, such as <em>the Valley of Salt</em>, under each Strong number it is made of. Its entries
+    /// are then not one per word, and a count that agrees with BHSA's agrees by accident: Psalm 60's
+    /// title writes the valley twice and Aram-naharaim once where BHSA writes the reverse, so every
+    /// word between them took the number of the word before it. Such a verse is numbered by the
+    /// running numbers and the glosses instead (<see cref="RunningWordNumbers"/>).
+    /// </summary>
+    private static bool NumbersTwoEntriesAsOneWord(MappingRecord record) =>
+        record.Hebrew.Select(entry => entry.Position).Distinct().Count() < record.Hebrew.Count;
+
     private static void StateNumbers(
         MappingRecord record,
         List<Word> bhsa,
@@ -530,24 +546,38 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
     /// <summary>
     /// The numbers alone, for a corpus whose links are already written: every Hebrew word whose verse
-    /// the file joins and which carries no number yet. A number already there is never replaced, so
-    /// a second run writes nothing.
+    /// the file joins and which carries no number yet, and every word an earlier load could have
+    /// numbered wrongly and whose number the file now states otherwise.
+    ///
+    /// <para>
+    /// Those are the words of an address two of BHSA's verses share — a psalm title the Hebrew
+    /// numbers as two verses, whose words an earlier load read interleaved, Psalm 51's David taking
+    /// the article's number and Psalm 52's Doeg David's — and of a verse the file numbers two entries
+    /// as one word in (<see cref="NumbersTwoEntriesAsOneWord"/>). Any other number already there is
+    /// never replaced, so a second run writes nothing.
+    /// </para>
     /// </summary>
     private async Task<int> NumberTheUnnumbered(
         IReadOnlyList<MappingRecord> records,
         int hebrewTextId,
         CancellationToken cancellationToken)
     {
-        if (!await db.Words.AnyAsync(w => w.TextId == hebrewTextId && w.StrongNumber == null, cancellationToken))
-        {
-            return 0;
-        }
-
         var hebrewVerses = await VerseWords(hebrewTextId, cancellationToken);
+        var shared = await SharedAddresses(hebrewTextId, cancellationToken);
+        var doubtful = hebrewVerses
+            .Where(verse => shared.Contains(verse.Key))
+            .SelectMany(verse => verse.Value.Select(word => word.Id))
+            .ToHashSet();
         var statedStrong = new List<(long WordId, string Strong)>(430_000);
         var placed = new Dictionary<long, int>(430_000);
         foreach (var record in records)
         {
+            if (NumbersTwoEntriesAsOneWord(record))
+            {
+                doubtful.UnionWith(WordsAt(record, hebrewVerses).Select(word => word.Id));
+                continue;
+            }
+
             if (JoinHebrew(record, hebrewVerses, out _) is { } bhsaWords)
             {
                 StateNumbers(record, bhsaWords, statedStrong, placed);
@@ -555,8 +585,40 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         }
 
         statedStrong.AddRange(Unplaced(records, WordsByNumber(records, hebrewVerses, placed), placed));
-        return await WriteStrongNumbers(statedStrong, cancellationToken);
+        return await WriteStrongNumbers(statedStrong, doubtful, cancellationToken);
     }
+
+    /// <summary>Every BHSA word the record's verse holds, its superscription first where it is a first verse.</summary>
+    private static IEnumerable<Word> WordsAt(MappingRecord record, Dictionary<(int, int, int), List<Word>> hebrewVerses)
+    {
+        if (record.Verse == FirstVerse
+            && hebrewVerses.TryGetValue((record.Book, record.Chapter, Superscription), out var superscription))
+        {
+            foreach (var word in superscription)
+            {
+                yield return word;
+            }
+        }
+
+        if (hebrewVerses.TryGetValue((record.Book, record.Chapter, record.Verse), out var verse))
+        {
+            foreach (var word in verse)
+            {
+                yield return word;
+            }
+        }
+    }
+
+    /// <summary>The canonical addresses two or more of the text's verses stand at.</summary>
+    private async Task<HashSet<(int, int, int)>> SharedAddresses(int textId, CancellationToken cancellationToken) =>
+        (await db.VerseReferences
+            .Where(r => r.IsPrimary && r.Verse!.TextId == textId)
+            .GroupBy(r => new { r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse })
+            .Where(group => group.Count() > 1)
+            .Select(group => group.Key)
+            .ToListAsync(cancellationToken))
+        .Select(address => (address.CanonicalBook, address.CanonicalChapter, address.CanonicalVerse))
+        .ToHashSet();
 
     /// <summary>
     /// The numbers of the words no verse join placed — verses the file divides differently from BHSA —
@@ -583,13 +645,15 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     }
 
     /// <summary>The numbers without links, in a transaction of their own, which the temporary table needs.</summary>
+    /// <param name="doubtful">Words whose number is replaced where the file states another.</param>
     private async Task<int> WriteStrongNumbers(
         List<(long WordId, string Strong)> stated,
+        IReadOnlySet<long>? doubtful,
         CancellationToken cancellationToken)
     {
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
         var numbered = await WriteStrongNumbers(
-            (NpgsqlConnection)db.Database.GetDbConnection(), stated, cancellationToken);
+            (NpgsqlConnection)db.Database.GetDbConnection(), stated, cancellationToken, doubtful);
         await transaction.CommitAsync(cancellationToken);
         return numbered;
     }
@@ -777,7 +841,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     {
         if (drafts.Count == 0)
         {
-            await WriteStrongNumbers(stated, cancellationToken);
+            await WriteStrongNumbers(stated, null, cancellationToken);
             return;
         }
 
@@ -841,9 +905,10 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     private static async Task<int> WriteStrongNumbers(
         NpgsqlConnection connection,
         List<(long WordId, string Strong)> stated,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        IReadOnlySet<long>? doubtful = null)
     {
-        if (stated.Count == 0)
+        if (stated.Count == 0 && doubtful is not { Count: > 0 })
         {
             return 0;
         }
@@ -866,12 +931,65 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             await writer.CompleteAsync(cancellationToken);
         }
 
+        var renumbered = 0;
+        if (doubtful is { Count: > 0 })
+        {
+            await using (var writer = await connection.BeginBinaryImportAsync(
+                             "COPY doubtful_word (word_id) FROM STDIN (FORMAT BINARY)", cancellationToken))
+            {
+                foreach (var wordId in doubtful)
+                {
+                    await writer.StartRowAsync(cancellationToken);
+                    await writer.WriteAsync(wordId, NpgsqlDbType.Bigint, cancellationToken);
+                }
+
+                await writer.CompleteAsync(cancellationToken);
+            }
+
+            await using (var withdraw = new NpgsqlCommand(Renumber, connection))
+            {
+                withdraw.Parameters.AddWithValue("written", EntityAnnotationLoader.Written);
+                await withdraw.ExecuteNonQueryAsync(cancellationToken);
+            }
+
+            await using var renumber = new NpgsqlCommand(
+                "UPDATE word SET strong_number = r.strong_number FROM renumbered r WHERE word.id = r.word_id",
+                connection);
+            renumbered = await renumber.ExecuteNonQueryAsync(cancellationToken);
+        }
+
         await using var update = new NpgsqlCommand(
             "UPDATE word SET strong_number = s.strong_number FROM stated_strong s " +
             "WHERE word.id = s.word_id AND word.strong_number IS NULL",
             connection);
-        return await update.ExecuteNonQueryAsync(cancellationToken);
+        return renumbered + await update.ExecuteNonQueryAsync(cancellationToken);
     }
+
+    /// <summary>
+    /// The doubtful words whose number is not the one the file states — none, where the file states
+    /// none for the word — given the file's, after what the resolution by number wrote from the old
+    /// number, and carried across the links from it, is taken back: the number named the record, and
+    /// the word is named again from the one it now carries when the annotations are read.
+    /// </summary>
+    private const string Renumber =
+        """
+        CREATE TEMP TABLE renumbered ON COMMIT DROP AS
+        SELECT d.word_id, s.strong_number
+        FROM doubtful_word d
+        JOIN word w ON w.id = d.word_id
+        LEFT JOIN stated_strong s ON s.word_id = d.word_id
+        WHERE w.strong_number IS NOT NULL AND w.strong_number IS DISTINCT FROM s.strong_number;
+        DELETE FROM word_entity a
+        USING renumbered r
+        WHERE a.word_id = r.word_id AND a.source = ANY(@written);
+        DELETE FROM word_entity a
+        USING renumbered r, link_word mine, link_word other
+        WHERE mine.word_id = r.word_id
+          AND other.link_id = mine.link_id AND other.side <> mine.side
+          AND a.word_id = other.word_id
+          AND a.source = ANY(@written)
+          AND a.note LIKE 'through % word ' || r.word_id || ',%'
+        """;
 
     private sealed record Word(long Id, string Text, string? Gloss);
 
