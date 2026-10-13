@@ -15,6 +15,10 @@ namespace Essenthos.Core.Loading.Links;
 /// point: a link written from a verse whose words do not correspond is a claim about the wrong
 /// words, and it would look exactly like the 402,232 correct ones.
 /// </param>
+/// <param name="NumberedVerses">
+/// Of the verses linked, the ones whose Hebrew the file and BHSA divide differently, read word by
+/// word through the file's running numbers instead of verse by verse.
+/// </param>
 /// <param name="GlossRefused">
 /// Of those, the ones the counts accepted and the glosses caught. They are the misalignments
 /// nothing else can see, so they are counted apart from the rest.
@@ -41,6 +45,7 @@ namespace Essenthos.Core.Loading.Links;
 internal sealed record LinkOutcome(
     bool AlreadyLoaded,
     int Verses,
+    int NumberedVerses,
     int Refused,
     int GlossRefused,
     int GlossesCompared,
@@ -60,7 +65,8 @@ internal sealed record LinkOutcome(
     public override string ToString() =>
         AlreadyLoaded
             ? "the Old Testament links are already loaded"
-            : $"{Links} links over {Verses} verses in {Elapsed}: {EnglishWordsLinked} English and " +
+            : $"{Links} links over {Verses} verses in {Elapsed}, {NumberedVerses} of them read through the " +
+              $"running word numbers: {EnglishWordsLinked} English and " +
               $"{HebrewWordsLinked} Hebrew words, {MultiWordLinks} naming more than one Hebrew word, " +
               $"{Omissions} naming a Hebrew word the English does not render, " +
               $"{Supplied} naming an English word the King James supplies and the Hebrew does not have, " +
@@ -147,6 +153,14 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     private const double SameVerse = 0.6;
 
     /// <summary>
+    /// How much of a verse's Hebrew the running numbers must reach before the verse is read through
+    /// them. Below it the file's verse is not the stretch of BHSA its numbers name, and nothing is
+    /// written; above it the entries left over are words a revision split or merged, and only the
+    /// English rendering them stays unlinked.
+    /// </summary>
+    private const double MostlyReached = 0.8;
+
+    /// <summary>
     /// Where the frame puts a psalm's superscription, which BHSA numbers as its first verse and the
     /// King James does not number at all. The file follows the King James and counts the
     /// superscription's Hebrew into verse 1.
@@ -189,7 +203,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             logger.LogInformation(
                 "The Old Testament links are already loaded; {Numbered} Hebrew words that had no Strong number were " +
                 "given the one the file states", numbered);
-            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, numbered, TimeSpan.Zero);
+            return new LinkOutcome(true, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, numbered, TimeSpan.Zero);
         }
 
         var started = Stopwatch.StartNew();
@@ -204,7 +218,9 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var glossesDrifted = 0;
         var unreached = 0;
         var statedVerses = 0;
+        var numberedVerses = 0;
         var placed = new Dictionary<long, int>(430_000);
+        var unjoined = new List<(MappingRecord Record, bool ForGlosses)>();
 
         foreach (var record in records)
         {
@@ -212,12 +228,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             glossesCompared += glosses.Compared;
             if (bhsaWords is null)
             {
-                refused++;
-                if (glosses.Share < SameVerse)
-                {
-                    glossRefused++;
-                }
-
+                unjoined.Add((record, glosses.Share < SameVerse));
                 continue;
             }
 
@@ -226,40 +237,37 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             // still the Hebrew the file numbers.
             StateNumbers(record, bhsaWords, statedStrong, placed);
 
-            if (!englishVerses.TryGetValue((record.Book, record.Chapter, record.Verse), out var kjvWords))
+            if (!Take(record, bhsaWords, glosses))
             {
                 refused++;
-                continue;
             }
-
-            var stated = segmentation?.Align(record.Book, record.Chapter, record.Verse, record.Hebrew);
-            if (stated is { Count: > 0 })
-            {
-                statedVerses++;
-            }
-
-            var drafts = Build(record, kjvWords, bhsaWords, stated);
-            if (drafts is null)
-            {
-                refused++;
-                continue;
-            }
-
-            if (glosses.Compared > 0 && glosses.Same < glosses.Compared)
-            {
-                glossesDrifted++;
-            }
-
-            pairs.AddRange(drafts);
-            unreached += bhsaWords.Count - drafts.SelectMany(d => d.Hebrew).Distinct().Count();
         }
 
-        statedStrong.AddRange(Unplaced(records, hebrewVerses, placed));
+        // A verse the file and BHSA divide differently is read word by word through the running
+        // numbers, which reach across the verse boundary where the two put it in different places.
+        var byNumber = WordsByNumber(records, hebrewVerses, placed);
+        foreach (var (record, forGlosses) in unjoined)
+        {
+            if (ByRunningNumber(record, byNumber) is { } bhsaWords && Take(record, bhsaWords, default))
+            {
+                numberedVerses++;
+                continue;
+            }
+
+            refused++;
+            if (forGlosses)
+            {
+                glossRefused++;
+            }
+        }
+
+        statedStrong.AddRange(Unplaced(records, byNumber, placed));
         await Write(english.Id, hebrew.Id, pairs, statedStrong, cancellationToken);
 
         var outcome = new LinkOutcome(
             false,
             records.Count - refused,
+            numberedVerses,
             refused,
             glossRefused,
             glossesCompared,
@@ -277,37 +285,73 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             started.Elapsed);
         logger.LogInformation("Loaded {Outcome}", outcome);
         return outcome;
+
+        bool Take(MappingRecord record, IReadOnlyList<Word?> bhsaWords, GlossAgreement glosses)
+        {
+            if (!englishVerses.TryGetValue((record.Book, record.Chapter, record.Verse), out var kjvWords))
+            {
+                return false;
+            }
+
+            var stated = segmentation?.Align(record.Book, record.Chapter, record.Verse, record.Hebrew);
+            if (stated is { Count: > 0 })
+            {
+                statedVerses++;
+            }
+
+            var drafts = Build(record, kjvWords, bhsaWords, stated);
+            if (drafts is null)
+            {
+                return false;
+            }
+
+            if (glosses.Compared > 0 && glosses.Same < glosses.Compared)
+            {
+                glossesDrifted++;
+            }
+
+            pairs.AddRange(drafts);
+            unreached += bhsaWords.OfType<Word>().Select(word => word.Id).Distinct().Count()
+                         - drafts.SelectMany(d => d.Hebrew).Distinct().Count();
+            return true;
+        }
     }
 
     /// <summary>
-    /// The links of verses the King James came to read as the file does after its words were loaded:
-    /// a verse the loaded text garbled was refused its links, and once it is corrected it joins. Only
-    /// verses none of whose words is linked to BHSA yet are drawn, so no verse is linked twice, and
-    /// the Hebrew numbers are not written again — the Hebrew join held for them the first time.
+    /// The links of verses that have none: a verse the loaded text garbled was refused its links, and
+    /// once it is corrected it joins; and a verse an earlier reading of the file could not line up
+    /// joins once the reading can. Only verses none of whose words is linked to BHSA yet are drawn,
+    /// so no verse is linked twice, and the Hebrew numbers are not written again — the Hebrew join
+    /// held for them the first time.
     /// </summary>
-    /// <param name="verses">The King James verses, by address, whose words changed.</param>
+    /// <param name="verses">
+    /// The King James verses, by address, whose words changed; null for every verse the file holds.
+    /// </param>
     public async Task<int> Relink(
         IReadOnlyList<MappingRecord> records,
         TahotSegmentation? segmentation,
-        IReadOnlyCollection<(int Book, int Chapter, int Verse)> verses,
+        IReadOnlyCollection<(int Book, int Chapter, int Verse)>? verses,
         CancellationToken cancellationToken = default)
     {
         var english = await db.Texts.SingleOrDefaultAsync(t => t.Slug == Bible4uTextSource.KingJames, cancellationToken);
         var hebrew = await db.Texts.SingleOrDefaultAsync(t => t.Slug == BhsaTextSource.Slug, cancellationToken);
-        if (english is null || hebrew is null || verses.Count == 0)
+        if (english is null || hebrew is null || verses is { Count: 0 })
         {
             return 0;
         }
 
         var englishVerses = await VerseWords(english.Id, cancellationToken);
-        var wanted = verses.Where(englishVerses.ContainsKey).ToHashSet();
-        var words = wanted.SelectMany(address => englishVerses[address].Select(word => word.Id)).ToList();
-        var linked = (await db.LinkWords
-                .Where(lw => words.Contains(lw.WordId)
-                             && lw.Link!.FromTextId == english.Id && lw.Link.ToTextId == hebrew.Id)
-                .Select(lw => lw.WordId)
-                .ToListAsync(cancellationToken))
+        var wanted = (verses ?? [.. records.Select(r => (r.Book, r.Chapter, r.Verse))])
+            .Where(englishVerses.ContainsKey)
             .ToHashSet();
+        var pair = db.LinkWords.Where(lw => lw.Link!.FromTextId == english.Id && lw.Link.ToTextId == hebrew.Id);
+        if (verses is not null)
+        {
+            var words = wanted.SelectMany(address => englishVerses[address].Select(word => word.Id)).ToList();
+            pair = pair.Where(lw => words.Contains(lw.WordId));
+        }
+
+        var linked = (await pair.Select(lw => lw.WordId).ToListAsync(cancellationToken)).ToHashSet();
         wanted.RemoveWhere(address => englishVerses[address].Any(word => linked.Contains(word.Id)));
         if (wanted.Count == 0)
         {
@@ -315,11 +359,21 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         }
 
         var hebrewVerses = await VerseWords(hebrew.Id, cancellationToken);
+        var placed = new Dictionary<long, int>(430_000);
+        foreach (var record in records)
+        {
+            if (JoinHebrew(record, hebrewVerses, out _) is { } joinedWords)
+            {
+                Place(record, joinedWords, placed);
+            }
+        }
+
+        var byNumber = WordsByNumber(records, hebrewVerses, placed);
         var pairs = new List<LinkDraft>();
         var joined = 0;
         foreach (var record in records.Where(r => wanted.Contains((r.Book, r.Chapter, r.Verse))))
         {
-            if (JoinHebrew(record, hebrewVerses, out _) is not { } bhsaWords
+            if ((JoinHebrew(record, hebrewVerses, out _) ?? ByRunningNumber(record, byNumber)) is not { } bhsaWords
                 || Build(
                     record,
                     englishVerses[(record.Book, record.Chapter, record.Verse)],
@@ -335,7 +389,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
 
         await Write(english.Id, hebrew.Id, pairs, [], cancellationToken);
         logger.LogInformation(
-            "Linked {Verses} of {Wanted} corrected King James verses to BHSA from the mapping file: {Links} links",
+            "Linked {Verses} of {Wanted} King James verses that had no link to BHSA from the mapping file: {Links} links",
             joined, wanted.Count, pairs.Count);
         return pairs.Count;
     }
@@ -361,15 +415,23 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         {
             if (JoinHebrew(record, hebrewVerses, out _) is { } bhsa)
             {
-                for (var i = 0; i < record.Hebrew.Count; i++)
-                {
-                    placed[bhsa[i].Id] = record.Hebrew[i].Position;
-                }
+                Place(record, bhsa, placed);
             }
         }
 
-        // The stretches between placed words are numbered by the same reading as the Strong numbers
-        // are, with each entry's own running number standing where its Strong number would.
+        return WordsByNumber(records, hebrewVerses, placed).ToDictionary(pair => pair.Key, pair => pair.Value.Id);
+    }
+
+    /// <summary>
+    /// The BHSA word at each running number: the words a joined verse placed, and the stretches
+    /// between them numbered by the same reading as the Strong numbers are, with each entry's own
+    /// running number standing where its Strong number would.
+    /// </summary>
+    private static Dictionary<int, Word> WordsByNumber(
+        IReadOnlyList<MappingRecord> records,
+        Dictionary<(int, int, int), List<Word>> hebrewVerses,
+        Dictionary<long, int> placed)
+    {
         var numbers = new Dictionary<int, (string Strong, string Gloss)>(430_000);
         foreach (var entry in records.SelectMany(record => record.Hebrew))
         {
@@ -379,20 +441,34 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var inTextOrder = hebrewVerses.Values
             .SelectMany(words => words)
             .OrderBy(word => word.Id)
-            .Select(word => (word.Id, word.Gloss))
             .ToList();
-        var byNumber = new Dictionary<int, long>(placed.Count);
+        var byId = inTextOrder.ToDictionary(word => word.Id);
+        var byNumber = new Dictionary<int, Word>(inTextOrder.Count);
         foreach (var (wordId, number) in placed)
         {
-            byNumber.TryAdd(number, wordId);
+            byNumber.TryAdd(number, byId[wordId]);
         }
 
-        foreach (var (wordId, number) in RunningWordNumbers.Between(inTextOrder, placed, numbers, SameVerse))
+        foreach (var (wordId, number) in RunningWordNumbers.Between(
+                     [.. inTextOrder.Select(word => (word.Id, word.Gloss))], placed, numbers, SameVerse))
         {
-            byNumber.TryAdd(int.Parse(number, CultureInfo.InvariantCulture), wordId);
+            byNumber.TryAdd(int.Parse(number, CultureInfo.InvariantCulture), byId[wordId]);
         }
 
         return byNumber;
+    }
+
+    /// <summary>
+    /// A verse's Hebrew read through the running numbers, one word or none per entry: a verse the file
+    /// and BHSA divide differently, a word the file lists twice under one number because it gives it
+    /// two Strong numbers, a verse of the file that runs into the next one of BHSA. Null where too
+    /// little of it is reached to be the verse the file means.
+    /// </summary>
+    private static List<Word?>? ByRunningNumber(MappingRecord record, Dictionary<int, Word> byNumber)
+    {
+        var words = record.Hebrew.Select(entry => byNumber.GetValueOrDefault(entry.Position)).ToList();
+        var reached = words.Count(word => word is not null);
+        return reached > 0 && reached >= record.Hebrew.Count * MostlyReached ? words : null;
     }
 
     /// <summary>
@@ -427,15 +503,23 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         return glosses.Share < SameVerse ? null : bhsa;
     }
 
+    private static void Place(MappingRecord record, List<Word> bhsa, Dictionary<long, int> placed)
+    {
+        for (var i = 0; i < record.Hebrew.Count; i++)
+        {
+            placed[bhsa[i].Id] = record.Hebrew[i].Position;
+        }
+    }
+
     private static void StateNumbers(
         MappingRecord record,
         List<Word> bhsa,
         List<(long WordId, string Strong)> statedStrong,
         Dictionary<long, int> placed)
     {
+        Place(record, bhsa, placed);
         for (var i = 0; i < record.Hebrew.Count; i++)
         {
-            placed[bhsa[i].Id] = record.Hebrew[i].Position;
             var strong = StrongNumbers.Normalize(record.Hebrew[i].Strong);
             if (strong is not null)
             {
@@ -470,7 +554,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
             }
         }
 
-        statedStrong.AddRange(Unplaced(records, hebrewVerses, placed));
+        statedStrong.AddRange(Unplaced(records, WordsByNumber(records, hebrewVerses, placed), placed));
         return await WriteStrongNumbers(statedStrong, cancellationToken);
     }
 
@@ -480,25 +564,20 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     /// </summary>
     private static IEnumerable<(long WordId, string Strong)> Unplaced(
         IReadOnlyList<MappingRecord> records,
-        Dictionary<(int, int, int), List<Word>> hebrewVerses,
+        Dictionary<int, Word> byNumber,
         Dictionary<long, int> placed)
     {
-        var stated = new Dictionary<int, (string Strong, string Gloss)>(430_000);
+        var stated = new Dictionary<int, string>(430_000);
         foreach (var entry in records.SelectMany(record => record.Hebrew))
         {
-            stated.TryAdd(entry.Position, (entry.Strong, entry.Gloss));
+            stated.TryAdd(entry.Position, entry.Strong);
         }
 
-        var inTextOrder = hebrewVerses.Values
-            .SelectMany(words => words)
-            .OrderBy(word => word.Id)
-            .Select(word => (word.Id, word.Gloss))
-            .ToList();
-        foreach (var (wordId, strong) in RunningWordNumbers.Between(inTextOrder, placed, stated, SameVerse))
+        foreach (var (number, word) in byNumber)
         {
-            if (StrongNumbers.Normalize(strong) is { } number)
+            if (!placed.ContainsKey(word.Id) && StrongNumbers.Normalize(stated[number]) is { } strong)
             {
-                yield return (wordId, number);
+                yield return (word.Id, strong);
             }
         }
     }
@@ -516,40 +595,28 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
     }
 
     /// <summary>
-    /// Whether the file and the loaded text spell one word. The file writes the psalm titles' names
-    /// whole where the King James hyphenates them — <em>Bathsheba</em>, <em>Altaschith</em> — and
-    /// its apostrophe is straight where the text's is curly.
-    /// </summary>
-    private static bool SameWord(string file, string loaded) =>
-        string.Equals(Spelled(file), Spelled(loaded), StringComparison.OrdinalIgnoreCase);
-
-    private static string Spelled(string word) => word.Replace("-", "").Replace('’', '\'');
-
-    /// <summary>
     /// Lines the file's English up with the King James as loaded, over a verse whose Hebrew has
-    /// already joined, and refuses rather than guessing when it cannot. The join is positional and
-    /// checked against the words themselves, folded for case because the file writes the divine name
-    /// in capitals and bible4u does not.
+    /// already been read, and refuses rather than guessing when it cannot (<see cref="EnglishWordJoin"/>).
+    /// A Hebrew entry with no word is one BHSA divides otherwise, and the English rendering it is
+    /// left unlinked rather than given a neighbour's word.
     /// </summary>
     private static List<LinkDraft>? Build(
         MappingRecord record,
         List<Word> kjv,
-        List<Word> bhsa,
+        IReadOnlyList<Word?> bhsa,
         IReadOnlyDictionary<int, TahotMorpheme>? stated)
     {
         var fileWords = record.English.SelectMany(segment => segment.Words).ToList();
-        if (fileWords.Count != kjv.Count)
+        if (EnglishWordJoin.Of([.. fileWords.Select(word => word.Text)], [.. kjv.Select(word => word.Text)])
+            is not { } joined)
         {
             return null;
         }
 
-        for (var i = 0; i < fileWords.Count; i++)
-        {
-            if (!SameWord(fileWords[i].Text, kjv[i].Text))
-            {
-                return null;
-            }
-        }
+        // A loaded word two file words are written as belongs to the first of them.
+        var claimed = new HashSet<int>();
+        List<long> Loaded(IEnumerable<int> file) =>
+            [.. file.SelectMany(i => joined[i]).Where(claimed.Add).Select(k => kjv[k].Id)];
 
         var byPosition = new Dictionary<int, int>(record.Hebrew.Count);
         for (var i = 0; i < record.Hebrew.Count; i++)
@@ -578,35 +645,70 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
         var drafts = new List<LinkDraft>(record.English.Count + prefixes.Count + supplied.Count);
         foreach (var (english, match) in prefixes)
         {
-            drafts.Add(new LinkDraft(
-                [kjv[english].Id], [bhsa[byPosition[match.HebrewPosition]].Id], match.Confidence)
+            if (bhsa[byPosition[match.HebrewPosition]] is { } prefix && Loaded([english]) is { Count: > 0 } words)
             {
-                Stated = match.Stated,
-            });
+                drafts.Add(new LinkDraft(words, [prefix.Id], match.Confidence) { Stated = match.Stated });
+            }
         }
 
         foreach (var english in supplied)
         {
-            drafts.Add(new LinkDraft([kjv[english].Id], []) { Relation = LinkRelation.Expands });
+            if (Loaded([english]) is { Count: > 0 } words)
+            {
+                drafts.Add(new LinkDraft(words, []) { Relation = LinkRelation.Expands });
+            }
         }
 
+        var segments = new List<(EnglishSegment Segment, List<int> Own)>(record.English.Count);
         var read = 0;
-
         foreach (var segment in record.English)
         {
-            var at = read;
-            var words = kjv.GetRange(read, segment.Words.Count)
-                .Where((_, offset) => !prefixes.ContainsKey(at + offset) && !supplied.Contains(at + offset))
-                .ToList();
+            segments.Add((segment, [
+                .. Enumerable.Range(read, segment.Words.Count)
+                    .Where(i => !prefixes.ContainsKey(i) && !supplied.Contains(i)),
+            ]));
             read += segment.Words.Count;
+        }
 
-            if (segment.RendersHebrew is null || !byPosition.TryGetValue(segment.RendersHebrew.Position, out var index))
+        // A word the file lists twice under one number has two markers, and only one of them carries
+        // English. The bare one says nothing the other does not: it is neither the rest of the phrase
+        // before it nor a word the English leaves unrendered.
+        var rendered = segments
+            .Where(s => s.Own.Count > 0 && s.Segment.RendersHebrew is not null
+                        && byPosition.ContainsKey(s.Segment.RendersHebrew.Position))
+            .Select(s => bhsa[byPosition[s.Segment.RendersHebrew!.Position]]?.Id)
+            .ToHashSet();
+
+        foreach (var (segment, own) in segments)
+        {
+            if (segment.RendersHebrew is null || !byPosition.TryGetValue(segment.RendersHebrew.Position, out var index)
+                || bhsa[index] is not { } hebrewWord
+                || own.Count > 0 && own.All(i => joined[i].Length == 0))
             {
                 continue;
             }
 
-            var hebrewWord = bhsa[index];
+            var words = Loaded(own);
             var position = record.Hebrew[index].Position;
+
+            if (words.Count == 0 && own.Count > 0)
+            {
+                // Its English is one loaded word with the phrase before it -- "days'journey" for the
+                // file's "days journey" -- and that word renders this Hebrew word too.
+                var shared = kjv[own.SelectMany(i => joined[i]).First()].Id;
+                if (drafts.FirstOrDefault(draft => draft.English.Contains(shared)) is { } holder
+                    && !holder.Hebrew.Contains(hebrewWord.Id))
+                {
+                    holder.Hebrew.Add(hebrewWord.Id);
+                }
+
+                continue;
+            }
+
+            if (words.Count == 0 && rendered.Contains(hebrewWord.Id))
+            {
+                continue;
+            }
 
             if (words.Count == 0)
             {
@@ -628,7 +730,7 @@ internal sealed class OldTestamentLinkLoader(AppDbContext db, ILogger<OldTestame
                 continue;
             }
 
-            drafts.Add(new LinkDraft([.. words.Select(w => w.Id)], [hebrewWord.Id]) { LastHebrewPosition = position });
+            drafts.Add(new LinkDraft(words, [hebrewWord.Id]) { LastHebrewPosition = position });
         }
 
         return drafts;
