@@ -88,6 +88,12 @@ internal sealed partial class EntityNameTranslationLoader(AppDbContext db, ILogg
         CancellationToken cancellationToken)
     {
         var started = Stopwatch.StartNew();
+        var spelled = await Spell(cancellationToken);
+        if (spelled > 0)
+        {
+            logger.LogInformation("{Spelled} titles and glosses of names spelled right", spelled);
+        }
+
         var wanted = new Dictionary<(string Language, string English), (string Text, string Source)>();
         var refused = 0;
         foreach (var record in records)
@@ -143,6 +149,30 @@ internal sealed partial class EntityNameTranslationLoader(AppDbContext db, ILogg
         var outcome = new EntityNameTranslationOutcome(false, files, written, removed, refused, started.Elapsed);
         logger.LogInformation("Titles and glosses of names in every language: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The titles and glosses a warm corpus loaded before their slips were put right
+    /// (<see cref="LineSpellings.Name"/>), spelled as a cold load spells them, so the renderings
+    /// are keyed by the English the reader is shown.
+    /// </summary>
+    internal async Task<int> Spell(CancellationToken cancellationToken)
+    {
+        var names = await db.EntityNames.ToListAsync(cancellationToken);
+        var spelled = 0;
+        foreach (var name in names)
+        {
+            var label = LineSpellings.Name(name.Label)!;
+            var meaning = LineSpellings.Name(name.Meaning);
+            if (label != name.Label || meaning != name.Meaning)
+            {
+                name.Label = label;
+                name.Meaning = meaning;
+                spelled++;
+            }
+        }
+
+        return spelled;
     }
 
     internal static (IReadOnlyList<EntityNameTranslationRecord> Records, int Files) Read(string directory)

@@ -1,4 +1,6 @@
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading.Encyclopedia;
 using FluentAssertions;
@@ -72,6 +74,41 @@ public sealed class EntityNameTranslationTests : IDisposable
         outcome.Removed.Should().Be(3);
         (await EntityNameTranslations.Of(_db, [King, Son], "ukr", default))
             .Should().Equal(new Dictionary<string, string> { [King] = "цар Ізраїлю" });
+    }
+
+    /// <summary>
+    /// A warm corpus holds the titles and glosses as they were loaded before their slips were put
+    /// right; the pass spells them as a cold load does, so the rendering keyed by the right English
+    /// reaches them.
+    /// </summary>
+    [Fact]
+    public async Task ATitleLoadedWithASlipIsSpelledRightAndFindsItsRendering()
+    {
+        var david = new Entity { Kind = EntityKind.Person, Slug = "test-david", Name = "David", SourceId = "test-david", Source = "a test" };
+        _db.Entities.Add(david);
+        _db.EntityNames.Add(new EntityName { Entity = david, Label = "His Annointed", Meaning = "his [the LORD's] annointed" });
+        await _db.SaveChangesAsync();
+
+        try
+        {
+            await _loader.Load(
+                [new EntityNameTranslationRecord("His Anointed", "Його Помазаний", null, null, null, "a model", "2026-10-14")],
+                1,
+                default);
+
+            var name = await _db.EntityNames.AsNoTracking().SingleAsync(n => n.EntityId == david.Id);
+            name.Label.Should().Be("His Anointed");
+            name.Meaning.Should().Be("his [the LORD's] anointed");
+            (await EntityNameTranslations.Of(_db, [name.Label], "ukr", default))
+                .Should().Equal(new Dictionary<string, string> { ["His Anointed"] = "Його Помазаний" });
+            (await _loader.Spell(default)).Should().Be(0);
+        }
+        finally
+        {
+            _db.EntityNames.RemoveRange(_db.EntityNames.Where(n => n.EntityId == david.Id));
+            _db.Entities.Remove(david);
+            await _db.SaveChangesAsync();
+        }
     }
 
     /// <summary>Every rendering on disk reads, and cites the verses its English cites.</summary>

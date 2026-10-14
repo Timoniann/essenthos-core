@@ -720,13 +720,13 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
                 names.AddRange(bearers.Select(bearer => new EntityName
                 {
                     EntityId = bearer,
-                    Label = row["english_label"],
+                    Label = LineSpellings.Name(row["english_label"])!,
                     Hebrew = Blank(row["hebrew_label"]),
                     HebrewTransliterated = Blank(row["hebrew_label_transliterated"]),
                     Greek = Blank(row["greek_label"]),
                     GreekTransliterated = Blank(row["greek_label_transliterated"]),
-                    Meaning = Blank(row["hebrew_label_meaning"])
-                              ?? Blank(row.GetValueOrDefault("greek_label_meaning")),
+                    Meaning = LineSpellings.Name(Blank(row["hebrew_label_meaning"])
+                                                 ?? Blank(row.GetValueOrDefault("greek_label_meaning"))),
                     HebrewStrongNumber = Strong(row["hebrew_strongs_number"], 'H'),
                     GreekStrongNumber = Strong(row["greek_strongs_number"], 'G'),
                     Kind = Blank(row["label_type"]),

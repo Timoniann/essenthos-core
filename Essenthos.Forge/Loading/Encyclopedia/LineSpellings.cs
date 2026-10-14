@@ -55,6 +55,72 @@ internal static partial class LineSpellings
         return corrected;
     }
 
+    /// <summary>
+    /// Slips in the titles and the glosses of names: a gloss that lost its first letter or its
+    /// opening bracket, a word misspelled, a closing quote left behind, a spreadsheet's boolean.
+    /// </summary>
+    internal static readonly IReadOnlyList<(string Was, string Is)> NameSlips =
+    [
+        ("Annointed", "Anointed"),
+        ("annointed", "anointed"),
+        ("Ahasureus", "Ahasuerus"),
+        ("Meshash", "Meshach"),
+    ];
+
+    internal static readonly IReadOnlyList<(string Was, string Is)> NameOpenings =
+    [
+        ("on of Deker", "son of Deker"),
+        ("rom the right", "from the right"),
+        ("awning, shining", "dawning, shining"),
+        ("might god [El]", "mighty G-d [El]"),
+        ("Oather (?) of", "G-d of"),
+    ];
+
+    private static readonly IReadOnlyDictionary<string, string> NameLines =
+        new Dictionary<string, string>(StringComparer.Ordinal) { ["TRUE"] = "true" };
+
+    /// <summary>A title or the gloss of a name spelled right, or the line itself.</summary>
+    public static string? Name(string? line)
+    {
+        if (string.IsNullOrEmpty(line))
+        {
+            return line;
+        }
+
+        if (NameLines.TryGetValue(line, out var whole))
+        {
+            return whole;
+        }
+
+        var corrected = line;
+        foreach (var (was, @is) in NameOpenings)
+        {
+            if (corrected.StartsWith(was, StringComparison.Ordinal))
+            {
+                corrected = @is + corrected[was.Length..];
+            }
+        }
+
+        foreach (var (was, @is) in NameSlips)
+        {
+            corrected = corrected.Replace(was, @is, StringComparison.Ordinal);
+        }
+
+        // "my] father is Ner [a lamp]": the bracket that opened the gloss was lost.
+        var close = corrected.IndexOf(']');
+        if (close >= 0 && corrected.IndexOf('[') is var open && (open < 0 || open > close))
+        {
+            corrected = "[" + corrected;
+        }
+
+        if (corrected.EndsWith('”') && !corrected.Contains('“'))
+        {
+            corrected = corrected[..^1];
+        }
+
+        return corrected;
+    }
+
     [GeneratedRegex(" {2,}")]
     private static partial Regex Spaces();
 
