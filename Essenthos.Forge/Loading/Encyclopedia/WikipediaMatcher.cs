@@ -275,7 +275,11 @@ internal sealed class WikipediaMatcher
     /// <summary>
     /// Whether Wikidata itself says the item has a namesake to be told from: an item said to be
     /// different from it that is the same kind of thing or goes by one of the record's names, or one
-    /// said to be the same as it, which scholars argue about and the owner decides.
+    /// said to be the same as it, which scholars argue about and the owner decides. Only an item the
+    /// files hold as an item counts: those are everything present in a work of Scripture or described by
+    /// a source on it, so one they hold only as a label is a given name, a modern woman, an opera — never
+    /// what a record could be. A record goes by its name in every language it is told in, and Delilah,
+    /// said to be different from an actress who is «Dalila», is not hers to be told from.
     /// </summary>
     private bool HasNamesake(WikipediaRecord record, WikidataItem item)
     {
@@ -286,14 +290,8 @@ internal sealed class WikipediaMatcher
 
         foreach (var other in item.DifferentFrom)
         {
-            if (_wikidata.TryGet(other, out var sibling))
-            {
-                if (sibling.Kind == item.Kind || sibling.Names.Overlaps(record.Names))
-                {
-                    return true;
-                }
-            }
-            else if (_wikidata.NamesOf(other).Overlaps(record.Names))
+            if (_wikidata.TryGet(other, out var sibling)
+                && (sibling.Kind == item.Kind || sibling.Names.Overlaps(record.Names)))
             {
                 return true;
             }

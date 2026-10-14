@@ -289,6 +289,24 @@ public sealed class WikipediaMatchTests : IDisposable
     }
 
     [Fact]
+    public void AnItemTheFilesHoldOnlyAsALabelIsNoNamesakeEvenWhereItBearsTheRecordsTranslatedName()
+    {
+        Add("Q1", "Delilah", article: "Delilah", claims: new() { ["P1889"] = ["Q50", "Q51"] });
+        var record = Record(1, "delilah", "Delilah") with
+        {
+            Names = new HashSet<string> { NameFolding.Fold("Delilah"), NameFolding.Fold("Dalila") },
+        };
+        var matches = Matcher(referenced:
+            [
+                new JsonObject { ["id"] = "Q50", ["labels"] = Labels("Dalila") }.ToJsonString(),
+                new JsonObject { ["id"] = "Q51", ["labels"] = Labels("Delilah") }.ToJsonString(),
+            ])
+            .Match([record]);
+
+        LinkedTo(matches, 1).Should().Be("Q1 by name", "an actress and a given name are not what a woman in Judges could be");
+    }
+
+    [Fact]
     public void AGazetteersIdentificationTiesAPlaceWhateverItsNameIs()
     {
         Add("Q1", "Kutha", kind: "place", article: "Kutha");
