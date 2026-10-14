@@ -22,7 +22,9 @@ internal enum OsisPieceKind
 /// What a <c>&lt;w type="x-split-…"&gt;</c> names: the elements of one verse sharing it are a single
 /// rendering the edition printed in pieces — <em>afin</em> … <em>que</em> under one number. Null elsewhere.
 /// </param>
-internal readonly record struct OsisPiece(OsisPieceKind Kind, string Text, string? Lemma, bool Title, string? Split = null);
+/// <param name="Source">The <c>src</c> attribute of a <c>&lt;w&gt;</c>, as written; null elsewhere.</param>
+internal readonly record struct OsisPiece(
+    OsisPieceKind Kind, string Text, string? Lemma, bool Title, string? Split = null, string? Source = null);
 
 /// <summary>
 /// One verse of a SWORD module's OSIS, as the pieces a reader needs: the tagged words, the text
@@ -36,6 +38,7 @@ internal static class OsisVerse
     private const string TitleElement = "title";
     private const string LemmaAttribute = "lemma";
     private const string TypeAttribute = "type";
+    private const string SourceAttribute = "src";
     private const string SplitType = "x-split";
 
     public static List<OsisPiece> Parse(string markup)
@@ -54,6 +57,7 @@ internal static class OsisVerse
         StringBuilder? word = null;
         string? lemma = null;
         string? split = null;
+        string? source = null;
         StringBuilder? note = null;
         var noteDepth = 0;
         var titles = 0;
@@ -89,9 +93,10 @@ internal static class OsisVerse
                     split = xml.GetAttribute(TypeAttribute) is { } type && type.StartsWith(SplitType, StringComparison.Ordinal)
                         ? type
                         : null;
+                    source = xml.GetAttribute(SourceAttribute);
                     if (xml.IsEmptyElement)
                     {
-                        pieces.Add(new OsisPiece(OsisPieceKind.Word, string.Empty, lemma, titles > 0, split));
+                        pieces.Add(new OsisPiece(OsisPieceKind.Word, string.Empty, lemma, titles > 0, split, source));
                     }
                     else
                     {
@@ -101,7 +106,7 @@ internal static class OsisVerse
                     break;
 
                 case XmlNodeType.EndElement when xml.LocalName == WordElement && noteDepth == 0 && word is not null:
-                    pieces.Add(new OsisPiece(OsisPieceKind.Word, word.ToString(), lemma, titles > 0, split));
+                    pieces.Add(new OsisPiece(OsisPieceKind.Word, word.ToString(), lemma, titles > 0, split, source));
                     word = null;
                     break;
 

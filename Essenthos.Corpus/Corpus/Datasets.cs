@@ -609,6 +609,19 @@ public static class Datasets
             Sources.RevisedLiteralStrongCredit, Links: true,
             Obliges: "The GPL: anything published as an adaptation of the text carries the same terms."),
 
+        new("rlt-positions", "Received Text positions of the Revised Literal Translation",
+            "CrossWire's KJV2003 project, as Michael W. Jones, Sr. carried its New Testament tagging onto his "
+            + "revision; the copy read is CrossWire's RLT module, version 1.0",
+            "GPL",
+            "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/rlt.conf",
+            "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=RLT",
+            "Which words of the Revised Literal Translation's New Testament render which words of the Textus "
+            + "Receptus: the module names, beside each English word, the place of the Greek word in its verse "
+            + "and the Greek word itself. Read for the length of one run and never stored; a place is linked "
+            + "only where Scrivener's or Stephanus's printing holds that Greek word there.",
+            Sources.RevisedLiteralPositionCredit, Links: true,
+            Obliges: "The GPL: anything published as an adaptation of the text carries the same terms."),
+
         new("glaux", "GLAUx", "Alek Keersmaekers and the GLAUx contributors", "CC BY-SA 3.0",
             "https://creativecommons.org/licenses/by-sa/3.0/",
             "https://github.com/alekkeersmaekers/glaux",

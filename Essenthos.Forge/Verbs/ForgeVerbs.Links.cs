@@ -365,6 +365,23 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
+    /// The Received Text positions CrossWire's RLT states on its New Testament, linked where Scrivener or
+    /// Stephanus holds the named Greek word at the place. The modules to run may follow the verb.
+    /// </summary>
+    private static async Task<int> CrossWirePositions(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        await scope.ServiceProvider.GetRequiredService<CrossWirePositionLinkLoader>()
+            .Load(forge.Resources, CrossWirePositionLinkLoader.Named(args[1..]));
+
+        forge.Logger.LogInformation("{Outcome}", await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+        forge.Logger.LogInformation(
+            "{Outcome}", await scope.ServiceProvider.GetRequiredService<AnnotationCarrier>().CarryNewLinks());
+        await forge.Tidy();
+        return 0;
+    }
+
+    /// <summary>
     /// The Chinese Union Version's Old Testament linked to BHSA by the Open Hebrew Bible's mapping,
     /// which names the BHS word each of FHL's spans renders. Where a link of FHL's numbers names the same
     /// words the mapping adds its claim to it. With --replace the numbers' links to BHSA are removed

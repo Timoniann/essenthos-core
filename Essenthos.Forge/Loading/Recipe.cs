@@ -205,6 +205,17 @@ internal static class Recipe
 
                 return "CrossWire's Strong numberings are already linked";
 
+            case "crosswire-positions":
+                foreach (var module in CrossWirePositionLinkLoader.Named(step.Arguments))
+                {
+                    if (!await Exists(connection, BySource, null, null, module.Credit, cancellationToken))
+                    {
+                        return null;
+                    }
+                }
+
+                return "the Received Text positions are already linked";
+
             case "ohb-cuv":
                 return await Exists(connection, BySource, null, null, OpenHebrewCuvLinkLoader.Credit, cancellationToken)
                     ? "the Open Hebrew Bible's mapping of the Union Version is already linked"
