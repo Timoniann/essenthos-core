@@ -259,6 +259,7 @@ internal static class Descriptors
                 Verses = Relationships.Verses(clause.Citation),
                 Witness = clause.Witness,
                 Original = clause.Original,
+                SharedParent = clause.SharedParent,
             });
         }
 
@@ -424,4 +425,10 @@ internal record DescriptorClaimResponse(
 
     /// <summary>The words of <see cref="Witness"/> the clause rests on, as that text prints them.</summary>
     public string? Original { get; init; }
+
+    /// <summary>
+    /// For a half-sibling, the parent the two share where the corpus records one: <c>father</c> or
+    /// <c>mother</c>, which a language with a word for each says. Null otherwise.
+    /// </summary>
+    public string? SharedParent { get; init; }
 }

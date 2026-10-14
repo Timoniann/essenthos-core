@@ -86,6 +86,7 @@ public sealed class HalfSiblingPhrasingTests : IDisposable
         await _db.SaveChangesAsync();
 
         (await Line("abram", "ukr")).Should().Be("єдинокровний брат Сари");
+        (await Descriptors.Of(_db, "abram", "ukr", default))!.Claims.Single().SharedParent.Should().Be(SharedParents.Father);
         (await Line("abram", "eng")).Should().Be("half-brother of sarai");
         (await Line("abram", "deu")).Should().StartWith("Halbbruder");
         (await Line("abram", "spa")).Should().StartWith("medio hermano");
