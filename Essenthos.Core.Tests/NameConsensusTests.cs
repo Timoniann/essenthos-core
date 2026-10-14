@@ -1,5 +1,6 @@
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Loading.Links;
 using FluentAssertions;
 using Xunit;
 
@@ -103,6 +104,110 @@ public class NameConsensusTests
         NameConsensus.Settle(findings, claims, Lenient)
             .Where(word => word.Entity == Saul)
             .Should().HaveCount(3);
+    }
+
+    [Fact]
+    public void TwoNamesThatFitTheVersesEquallyAreToldApartByTheirLetters()
+    {
+        var text = Text(
+            (101, "and Mahlon and Chilion went"),
+            (102, "and Mahlon and Chilion died"),
+            (201, "and the people went"));
+        var question = new ConsensusQuestion(
+            new Dictionary<int, IReadOnlySet<int>> { [Mahlon] = new HashSet<int> { 101, 102 }, [Chilion] = new HashSet<int> { 101, 102 } },
+            new Dictionary<int, IReadOnlySet<int>>(),
+            new Dictionary<int, IReadOnlySet<string>>
+            {
+                [Mahlon] = new HashSet<string> { "מַחְלֹון" },
+                [Chilion] = new HashSet<string> { "כִּלְיֹון" },
+            });
+
+        var (findings, claims) = NameConsensus.Read(text, question);
+
+        findings.Single(finding => finding.Entity == Mahlon).Margin.Should().BeGreaterThan(0.05);
+        Surfaces(text, NameConsensus.Settle(findings, claims, new ConsensusBar(5, 0.1, 0.05)).Where(word => word.Entity == Mahlon))
+            .Should().Equal("Mahlon", "Mahlon");
+        Surfaces(text, NameConsensus.Settle(findings, claims, new ConsensusBar(5, 0.1, 0.05)).Where(word => word.Entity == Chilion))
+            .Should().Equal("Chilion", "Chilion");
+    }
+
+    [Fact]
+    public void InAFewVersesTheWordSpeltLikeTheOriginalIsTheNameAndNotTheFathers()
+    {
+        var text = Text(
+            (101, "the prince of Dan Ahiezer the son of Ammisaddai"),
+            (102, "and Ammisaddai begat Ahiezer"),
+            (201, "and the people went"));
+        const int ahiezer = 41;
+        const int ammishaddai = 42;
+        var question = new ConsensusQuestion(
+            new Dictionary<int, IReadOnlySet<int>> { [ammishaddai] = new HashSet<int> { 101, 102 } },
+            new Dictionary<int, IReadOnlySet<int>>(),
+            new Dictionary<int, IReadOnlySet<string>> { [ammishaddai] = new HashSet<string> { "עַמִּישַׁדָּי" } });
+
+        var (findings, claims) = NameConsensus.Read(text, question);
+
+        findings.Single().Name!.Core.Should().Be("ammisaddai");
+        Surfaces(text, NameConsensus.Settle(findings, claims, new ConsensusBar(5, 0.1, 0.05)))
+            .Should().Equal("Ammisaddai", "Ammisaddai");
+        _ = ahiezer;
+    }
+
+    [Fact]
+    public void ATextHoldingFewOfTheVersesIsReadAgainstAFullerTextOfItsLanguage()
+    {
+        var full = Text(
+            (101, "Ἢρ πρωτότοκος"),
+            (102, "καὶ Ἢρ ἀπέθανεν"),
+            (103, "τῷ Ἢρ γυναῖκα"),
+            (104, "Ἢρ πονηρὸς"),
+            (105, "Ἢρ καὶ Αὐνάν"),
+            (106, "υἱοὶ Ἢρ"),
+            (201, "καὶ ὁ λαὸς ἐπορεύθη"));
+        var part = Text(
+            (101, "Ἢρ καὶ Σηλώμ"),
+            (102, "καὶ Ἢρ καὶ Σηλώμ"),
+            (201, "καὶ ὁ λαὸς ἐπορεύθη"));
+        var question = Question((Og, [101, 102, 103, 104, 105, 106]));
+        var bars = new ConsensusBars(new Dictionary<EntityKind, ConsensusBar>(), new ConsensusBar(5, 0.1, 0.05));
+        var attested = new Dictionary<int, HashSet<string>>();
+
+        NameConsensus.Witness(attested, NameConsensus.Read(full, question).Findings, bars);
+
+        var (alone, _) = NameConsensus.Read(part, question);
+        bars.Accepts(alone.Single()).Should().BeFalse();
+        var (findings, claims) = NameConsensus.Read(part, question with { Attested = attested });
+        findings.Single().Attested.Should().BeTrue();
+        Surfaces(part, NameConsensus.Settle(findings, claims, bars.Accepts)).Should().Equal("Ἢρ", "Ἢρ");
+        var (elsewhere, _) = NameConsensus.Read(part, question with { Attested = new Dictionary<int, HashSet<string>> { [Og] = ["αυναν"] } });
+        bars.Accepts(elsewhere.Single()).Should().BeFalse();
+    }
+
+    [Fact]
+    public void AStrayWordOfAnothersNameMakesNoNamesake()
+    {
+        const int shaul = 31;
+        const int israelites = 32;
+        const int benjaminites = 33;
+        var naming = new Dictionary<(string, int), int>
+        {
+            [("משֶׁה", Paul)] = 767,
+            [("משֶׁה", TheLord)] = 2,
+            [("יְהוָה", TheLord)] = 6827,
+            [("שָׁאוּל", Saul)] = 397,
+            [("שָׁאוּל", shaul)] = 4,
+            [("בֵּן", israelites)] = 629,
+            [("יִשְׂרָאֵל", israelites)] = 1769,
+            [("בֵּן", benjaminites)] = 46,
+            [("בִּנְיָמִן", benjaminites)] = 100,
+        };
+        var printed = new Dictionary<string, int> { ["משֶׁה"] = 770, ["שָׁאוּל"] = 406, ["בֵּן"] = 4937 };
+
+        var namesakes = NameConsensus.Namesakes(naming, printed);
+
+        namesakes.Should().NotContainKey(TheLord).And.NotContainKey(Paul);
+        namesakes[Saul].Should().Equal(shaul);
+        namesakes.Should().NotContainKey(israelites);
     }
 
     [Fact]
@@ -223,6 +328,36 @@ public class NameConsensusTests
 
         new ConsensusBar(5, 0.1, 0.05).Accepts(findings.Single()).Should().Be(accepted);
     }
+
+    [Theory]
+    [InlineData("스굽이", "שְׂגוּב", true)]
+    [InlineData("스굽이", "מְשֻׁלָּם", false)]
+    [InlineData("사밀과", "שָׁמִיר", true)]
+    [InlineData("사밀과", "שֹׂוכֹה", false)]
+    [InlineData("갈랄의", "גָּלָל", true)]
+    [InlineData("갈랄의", "זִכְרִי", false)]
+    public void AKoreanNameReadOffOneVerseIsSpeltByItsSyllables(string word, string lemma, bool accepted)
+    {
+        var text = Text(
+            (101, word + " 올라가니라"),
+            (201, "그가 올라가니라"),
+            (202, "그들이 올라가니라"));
+        var question = new ConsensusQuestion(
+            new Dictionary<int, IReadOnlySet<int>> { [Joshua] = new HashSet<int> { 101 } },
+            new Dictionary<int, IReadOnlySet<int>>(),
+            new Dictionary<int, IReadOnlySet<string>> { [Joshua] = new HashSet<string> { lemma } });
+
+        var (findings, _) = NameConsensus.Read(text, question);
+
+        new ConsensusBar(5, 0.1, 0.05).Accepts(findings.Single()).Should().Be(accepted);
+    }
+
+    [Theory]
+    [InlineData("아브라함", "PRM")]
+    [InlineData("스굽", "SKP")]
+    [InlineData("엘리야", "R")]
+    public void AHangulWordIsSpeltInTheConsonantsItsSyllablesWrite(string korean, string skeleton) =>
+        HangulLetters.Coarse(NameLists.Skeleton(HangulLetters.Romanised(korean))).Should().Be(skeleton);
 
     [Fact]
     public void ACoreHoldsAtLeastHalfTheLettersOfEveryFormFiledUnderIt()

@@ -43,13 +43,18 @@ internal sealed record NameCluster(
 /// <see cref="NameLists"/>; null in a script whose letters that cannot read — Chinese, Korean,
 /// Devanagari, Arabic — or where the question gives no spelling.
 /// </param>
+/// <param name="Attested">
+/// Whether a text of the same language holding more of the entity's verses names it with one of
+/// these forms: a manuscript or a single book is read against its full edition.
+/// </param>
 internal sealed record NameFinding(
     int Entity,
     int Verses,
     NameCluster? Name,
     double Margin,
     double? Likeness = null,
-    EntityKind Kind = EntityKind.Person);
+    EntityKind Kind = EntityKind.Person,
+    bool Attested = false);
 
 /// <summary>A word the consensus reads as naming an entity.</summary>
 /// <param name="Verse">Which of the verses read it stands in.</param>
@@ -60,11 +65,16 @@ internal readonly record struct ConsensusWord(long Word, int Entity, int Verse);
 /// <param name="Namesakes">For an entity, the others the original calls by one of its names.</param>
 /// <param name="Spellings">For an entity, the lemmas the original names it with.</param>
 /// <param name="Kinds">What each entity is; a person where it is not said.</param>
+/// <param name="Attested">
+/// For an entity, the forms a fuller text of the same language was read to name it with (see
+/// <see cref="NameConsensus.Witness"/>).
+/// </param>
 internal sealed record ConsensusQuestion(
     IReadOnlyDictionary<int, IReadOnlySet<int>> Entities,
     IReadOnlyDictionary<int, IReadOnlySet<int>> Namesakes,
     IReadOnlyDictionary<int, IReadOnlySet<string>>? Spellings = null,
-    IReadOnlyDictionary<int, EntityKind>? Kinds = null)
+    IReadOnlyDictionary<int, EntityKind>? Kinds = null,
+    IReadOnlyDictionary<int, HashSet<string>>? Attested = null)
 {
     public EntityKind KindOf(int entity) => Kinds?.GetValueOrDefault(entity, EntityKind.Person) ?? EntityKind.Person;
 }
@@ -101,8 +111,9 @@ internal sealed record ConsensusRules(bool Capitalised, double FormSpecificity, 
 
 /// <summary>When a finding is believed.</summary>
 /// <param name="LeastVerses">
-/// How many of the entity's verses the text must have, unless the name is spelt like the original's.
-/// A name read off one or two verses is as likely the father's printed beside it.
+/// How many of the entity's verses the text must have, unless the name is spelt like the original's
+/// or a fuller text of its language names the entity so. A name read off one or two verses is as
+/// likely the father's printed beside it.
 /// </param>
 /// <param name="LeastScore">How high the first name must score.</param>
 /// <param name="LeastMargin">How far above the best name sharing no form with it.</param>
@@ -111,6 +122,7 @@ internal sealed record ConsensusBar(int LeastVerses, double LeastScore, double L
     public bool Accepts(NameFinding finding) =>
         finding.Name is { } name
         && (finding.Verses >= LeastVerses
+            || finding.Attested
             || (ConsensusRules.For(finding.Kind).Spelt && finding.Likeness >= NameLists.LeastLikeness))
         && name.Coverage >= NameConsensus.LeastCoverage
         && name.Score >= LeastScore
@@ -369,12 +381,21 @@ internal static class NameConsensus
                 : [];
 
             var kind = question.KindOf(entity);
-            var (finding, forms, particular) = text.Name(entity, mine, namesakeOnly, ConsensusRules.For(kind));
-            findings.Add(finding with
+            var rules = ConsensusRules.For(kind);
+            var (finding, forms, particular, scored) = text.Name(entity, mine, namesakeOnly, rules);
+            var spellings = question.Spellings?.GetValueOrDefault(entity);
+            finding = finding with { Likeness = Likeness(finding.Name, spellings), Kind = kind };
+            if (kind is EntityKind.Person or EntityKind.Place && spellings is { Count: > 0 })
             {
-                Likeness = Likeness(finding.Name, question.Spellings?.GetValueOrDefault(entity)),
-                Kind = kind,
-            });
+                (finding, forms) = SpeltApart(finding, forms, scored, spellings);
+            }
+
+            if (question.Attested?.GetValueOrDefault(entity) is { Count: > 0 } attested)
+            {
+                (finding, forms) = AttestedApart(finding, forms, scored, attested);
+            }
+
+            findings.Add(finding);
             read[entity] = (mine, forms, particular);
         }
 
@@ -447,6 +468,186 @@ internal static class NameConsensus
         }
     }
 
+    /// <summary>
+    /// The share of the words naming an entity that a lemma must be for the lemma to be one of its
+    /// names. The originals put the LORD on a מֹשֶׁה twice and David on a שָׁאוּל twice, and a single
+    /// such word made Moses the LORD's namesake and Saul David's, so that in every verse naming both
+    /// neither name was written.
+    /// </summary>
+    internal const double OwnName = 0.1;
+
+    /// <summary>
+    /// The share of a lemma's occurrences in the originals that must name somebody for it to be a
+    /// name at all. בֵּן names the Israelites in "the sons of Israel" six hundred times and is printed
+    /// five thousand; a common noun is no name two entities share.
+    /// </summary>
+    internal const double NamingLemma = 0.5;
+
+    /// <summary>
+    /// The entities each entity shares a name with: two entities both named by a lemma that is a name
+    /// in the originals and one of each entity's own names.
+    /// </summary>
+    /// <param name="naming">How many of the originals' words of each lemma name each entity.</param>
+    /// <param name="printed">How many times the originals print each lemma; a lemma not given counts as a name.</param>
+    public static IReadOnlyDictionary<int, IReadOnlySet<int>> Namesakes(
+        IReadOnlyDictionary<(string Lemma, int Entity), int> naming,
+        IReadOnlyDictionary<string, int> printed)
+    {
+        var namedBy = naming
+            .GroupBy(entry => entry.Key.Entity)
+            .ToDictionary(group => group.Key, group => group.Sum(entry => entry.Value));
+        var namesakes = new Dictionary<int, HashSet<int>>();
+        foreach (var lemma in naming.GroupBy(entry => entry.Key.Lemma))
+        {
+            var annotated = lemma.Sum(entry => entry.Value);
+            if (printed.TryGetValue(lemma.Key, out var occurrences) && annotated < NamingLemma * occurrences)
+            {
+                continue;
+            }
+
+            var bearers = lemma
+                .Where(entry => entry.Value >= OwnName * namedBy[entry.Key.Entity])
+                .Select(entry => entry.Key.Entity)
+                .ToList();
+            if (bearers.Count < 2)
+            {
+                continue;
+            }
+
+            foreach (var entity in bearers)
+            {
+                if (!namesakes.TryGetValue(entity, out var others))
+                {
+                    namesakes[entity] = others = [];
+                }
+
+                others.UnionWith(bearers.Where(other => other != entity));
+            }
+        }
+
+        return namesakes.ToDictionary(entry => entry.Key, entry => (IReadOnlySet<int>)entry.Value);
+    }
+
+    /// <summary>For each entity, the lemmas that are its own names: each at least <see cref="OwnName"/> of the words naming it.</summary>
+    public static IReadOnlyDictionary<int, IReadOnlySet<string>> OwnNames(IReadOnlyDictionary<(string Lemma, int Entity), int> naming) =>
+        naming
+            .GroupBy(entry => entry.Key.Entity)
+            .ToDictionary(
+                group => group.Key,
+                group =>
+                {
+                    var all = group.Sum(entry => entry.Value);
+                    return (IReadOnlySet<string>)group
+                        .Where(entry => entry.Value >= OwnName * all)
+                        .Select(entry => entry.Key.Lemma)
+                        .ToHashSet(StringComparer.Ordinal);
+                });
+
+    /// <summary>
+    /// Below this many verses, a name spelt like the original's is preferred to a better-scoring word
+    /// that is not: in a verse that lists Ahiezer the son of Ammishaddai, both names are particular to
+    /// it, and only the letters say which is whose.
+    /// </summary>
+    internal const int SpeltVerses = 5;
+
+    /// <summary>How close two names' scores are for the letters to choose between them.</summary>
+    private const double Tied = 0.05;
+
+    /// <summary>
+    /// The letters as a second signal beside the recurrence. Where the name the verses share is spelt
+    /// like the original's, it stands apart from every name that is not, however closely they score:
+    /// two brothers always listed together, or a man and the father named in his one verse, are told
+    /// apart by their letters. Where the verses are few and the best word is not spelt like the
+    /// original's, the best word that is takes its place, so that the name is the man's and not his
+    /// father's. The recurrence still has to hold: the word must be printed in enough of the verses.
+    /// Persons and places only: a people's gentilic is spelt like its eponym and its land, which
+    /// stand in the same verses.
+    /// </summary>
+    private static (NameFinding Finding, HashSet<int> Forms) SpeltApart(
+        NameFinding finding,
+        HashSet<int> forms,
+        IReadOnlyList<(NameCluster Cluster, HashSet<int> Types)> scored,
+        IReadOnlySet<string> spellings)
+    {
+        if (finding.Name is null)
+        {
+            return (finding, forms);
+        }
+
+        var spelt = scored
+            .Where(candidate => candidate.Cluster.Coverage >= LeastCoverage)
+            .Select(candidate => (candidate.Cluster, candidate.Types, Likeness: Likeness(candidate.Cluster, spellings) ?? 0))
+            .Where(candidate => candidate.Likeness >= NameLists.LeastLikeness)
+            .OrderByDescending(candidate => candidate.Likeness)
+            .ThenByDescending(candidate => candidate.Cluster.Score)
+            .ToList();
+        if (spelt.Count == 0)
+        {
+            return (finding, forms);
+        }
+
+        (NameCluster Cluster, HashSet<int> Types, double Likeness) chosen;
+        if (finding.Likeness >= NameLists.LeastLikeness)
+        {
+            var score = finding.Name.Score;
+            chosen = spelt.FirstOrDefault(candidate => candidate.Cluster.Score >= score - Tied && candidate.Likeness > finding.Likeness);
+            if (chosen.Cluster is null)
+            {
+                chosen = (finding.Name, forms, finding.Likeness.Value);
+            }
+        }
+        else if (finding.Verses < SpeltVerses)
+        {
+            chosen = spelt[0];
+        }
+        else
+        {
+            return (finding, forms);
+        }
+
+        var rival = spelt
+            .Where(other => other.Likeness >= chosen.Likeness && !other.Types.Overlaps(chosen.Types))
+            .Select(other => other.Cluster.Score)
+            .DefaultIfEmpty(0)
+            .Max();
+        var apart = chosen.Cluster.Score - rival;
+        return chosen.Cluster == finding.Name
+            ? (finding with { Margin = Math.Max(finding.Margin, apart) }, forms)
+            : (finding with { Name = chosen.Cluster, Margin = apart, Likeness = chosen.Likeness }, chosen.Types);
+    }
+
+    /// <summary>
+    /// A text holding fewer of the entity's verses than <see cref="SpeltVerses"/> read against a fuller
+    /// text of its language. Alexandrinus holds Isaiah and a few books, Ottley Isaiah alone, Swete's Old
+    /// Greek Daniel: in four verses every word is particular to them, and the best of them is as likely
+    /// a neighbour's name as the entity's. Where one of the words is the form the fuller text names the
+    /// entity with — Er is Ἢρ in four verses of Alexandrinus' Genesis and six of Swete's — that word is
+    /// the name, printed in enough of the verses, and the fuller text's verses are the recurrence the
+    /// few verses lack.
+    /// </summary>
+    private static (NameFinding Finding, HashSet<int> Forms) AttestedApart(
+        NameFinding finding,
+        HashSet<int> forms,
+        IReadOnlyList<(NameCluster Cluster, HashSet<int> Types)> scored,
+        HashSet<string> attested)
+    {
+        if (finding.Name is null || finding.Verses >= SpeltVerses)
+        {
+            return (finding, forms);
+        }
+
+        if (finding.Name.Forms.Any(attested.Contains))
+        {
+            return (finding with { Attested = true, Margin = Math.Max(finding.Margin, finding.Name.Score) }, forms);
+        }
+
+        var chosen = scored.FirstOrDefault(candidate => candidate.Cluster.Coverage >= LeastCoverage
+                                                         && candidate.Cluster.Forms.Any(attested.Contains));
+        return chosen.Cluster is null
+            ? (finding, forms)
+            : (finding with { Name = chosen.Cluster, Margin = chosen.Cluster.Score, Attested = true, Likeness = null }, chosen.Types);
+    }
+
     /// <summary>How many of a name's commonest forms are spelt against the original.</summary>
     private const int FormsSpelt = 3;
 
@@ -456,7 +657,20 @@ internal static class NameConsensus
     /// </summary>
     private static double? Likeness(NameCluster? name, IReadOnlySet<string>? spellings)
     {
-        if (name is null || spellings is null || spellings.Count == 0 || !Spelt(name.Core))
+        if (name is null || spellings is null || spellings.Count == 0)
+        {
+            return null;
+        }
+
+        // Hangul writes l and r, g and k, d and t, b and p alike, so its skeleton has fewer letters to
+        // differ by: Galal is KR and Zichri SKR, alike by four fifths. Only the same consonants count.
+        if (name.Core.All(HangulLetters.IsSyllable))
+        {
+            var core = HangulLetters.Coarse(NameLists.Skeleton(HangulLetters.Romanised(HangulLetters.WithoutParticle(name.Core))));
+            return spellings.Any(spelling => core.Length >= ShortestName && core == HangulLetters.Coarse(NameLists.Skeleton(spelling))) ? 1 : 0;
+        }
+
+        if (!Spelt(name.Core))
         {
             return null;
         }
@@ -469,7 +683,7 @@ internal static class NameConsensus
     }
 
     /// <summary>Whether <see cref="NameLists.Skeleton(string?)"/> reads a word's letters: Latin, Greek, Cyrillic, Hebrew or Ethiopic.</summary>
-    private static bool Spelt(string folded) =>
+    internal static bool Spelt(string folded) =>
         folded.All(letter => letter is >= 'a' and <= 'z' or >= '\u00C0' and <= '\u024F'
             or >= '\u0370' and <= '\u03FF' or >= '\u1F00' and <= '\u1FFF' or >= '\u0400' and <= '\u04FF'
             or >= '\u0590' and <= '\u05FF'
@@ -478,6 +692,28 @@ internal static class NameConsensus
     private const string EthiopicLanguage = "gez";
 
     private static bool IsEthiopic(char letter) => letter is >= '\u1200' and <= '\u137F';
+
+    /// <summary>
+    /// Adds to <paramref name="attested"/> the forms of every name <paramref name="bars"/> accept off
+    /// as many verses as the bar asks, so that a text holding fewer of those verses can be read
+    /// against them.
+    /// </summary>
+    public static void Witness(
+        IDictionary<int, HashSet<string>> attested,
+        IReadOnlyList<NameFinding> findings,
+        ConsensusBars bars)
+    {
+        foreach (var finding in findings.Where(finding => finding.Name is not null
+                     && finding.Verses >= bars.For(finding.Kind).LeastVerses && bars.Accepts(finding)))
+        {
+            if (!attested.TryGetValue(finding.Entity, out var forms))
+            {
+                attested[finding.Entity] = forms = new HashSet<string>(StringComparer.Ordinal);
+            }
+
+            forms.UnionWith(finding.Name!.Forms);
+        }
+    }
 
     /// <summary>
     /// The claims of the findings <paramref name="bar"/> accepts, less every word two of them claim:
@@ -612,7 +848,7 @@ internal static class NameConsensus
         /// The finding, the forms of its name, and every form particular to the entity's verses with how
         /// many of them print it.
         /// </returns>
-        public (NameFinding Finding, HashSet<int> Forms, Dictionary<int, int> Particular) Name(
+        public (NameFinding Finding, HashSet<int> Forms, Dictionary<int, int> Particular, IReadOnlyList<(NameCluster Cluster, HashSet<int> Types)> Scored) Name(
             int entity,
             int[] mine,
             int[] namesakeOnly,
@@ -677,7 +913,7 @@ internal static class NameConsensus
                 .ToList();
             if (scored.Count == 0)
             {
-                return (new NameFinding(entity, mine.Length, null, 0), [], particular);
+                return (new NameFinding(entity, mine.Length, null, 0), [], particular, scored);
             }
 
             var best = scored
@@ -686,7 +922,7 @@ internal static class NameConsensus
             var rival = scored.FirstOrDefault(other => !other.Types.Overlaps(best.Types));
             var margin = best.Cluster.Score - (rival.Cluster?.Score ?? 0);
 
-            return (new NameFinding(entity, mine.Length, best.Cluster, margin), best.Types, particular);
+            return (new NameFinding(entity, mine.Length, best.Cluster, margin), best.Types, particular, scored);
         }
 
         /// <summary>

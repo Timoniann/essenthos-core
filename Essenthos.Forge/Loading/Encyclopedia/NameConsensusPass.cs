@@ -5,6 +5,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Links;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
@@ -179,6 +180,7 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
                 if (output is not null)
                 {
                     await Write(output, reading, bars, slugs, cancellationToken);
+                    await Unnamed(output, reading, bars, slugs, question, cancellationToken);
                     if (Measured.Contains(reading.Slug))
                     {
                         await Audit(output, reading, bars, slugs, question, cancellationToken);
@@ -188,14 +190,50 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
                 done.Add(reading.Slug);
             }
 
+            var attested = new Dictionary<string, Dictionary<int, HashSet<string>>>(StringComparer.Ordinal);
+            void Witness(Reading reading)
+            {
+                if (!attested.TryGetValue(reading.Language, out var language))
+                {
+                    attested[reading.Language] = language = [];
+                }
+
+                NameConsensus.Witness(language, reading.Findings, bars);
+            }
+
+            foreach (var reading in measured)
+            {
+                Witness(reading);
+            }
+
             foreach (var reading in measured.Where(reading => chosen.Any(text => text.Slug == reading.Slug)))
             {
                 await Add(reading);
             }
 
-            foreach (var text in chosen.Where(text => !done.Contains(text.Slug)))
+            var versesOf = await VersesOf(connection, cancellationToken);
+            var rest = chosen
+                .Where(text => !done.Contains(text.Slug))
+                .OrderByDescending(text => versesOf.GetValueOrDefault(text.Slug))
+                .ThenBy(text => text.Slug, StringComparer.Ordinal)
+                .ToList();
+            foreach (var partner in every
+                         .Where(text => !Measured.Contains(text.Slug) && !chosen.Contains(text)
+                                        && rest.Any(other => other.Language == text.Language
+                                                             && versesOf.GetValueOrDefault(text.Slug) > versesOf.GetValueOrDefault(other.Slug)))
+                         .OrderByDescending(text => versesOf.GetValueOrDefault(text.Slug)))
             {
-                await Add(await Read(connection, text.Id, text.Slug, text.Language, question, cancellationToken));
+                Witness(await Read(connection, partner.Id, partner.Slug, partner.Language, question, cancellationToken));
+                logger.LogInformation("Read {Text} for the texts of its language holding fewer verses", partner.Slug);
+            }
+
+            foreach (var text in rest)
+            {
+                var reading = await Read(
+                    connection, text.Id, text.Slug, text.Language,
+                    question with { Attested = attested.GetValueOrDefault(text.Language) }, cancellationToken);
+                await Add(reading);
+                Witness(reading);
                 logger.LogInformation("Read {Text}", text.Slug);
             }
 
@@ -225,6 +263,20 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
         {
             await db.Database.CloseConnectionAsync();
         }
+    }
+
+    private static async Task<Dictionary<string, int>> VersesOf(NpgsqlConnection connection, CancellationToken cancellationToken)
+    {
+        var verses = new Dictionary<string, int>(StringComparer.Ordinal);
+        await using var command = new NpgsqlCommand(
+            "SELECT t.slug, count(*) FROM verse v JOIN text t ON t.id = v.text_id GROUP BY t.slug", connection);
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            verses[reader.GetString(0)] = (int)reader.GetInt64(1);
+        }
+
+        return verses;
     }
 
     /// <summary>Whether any text already holds an annotation this pass wrote, which is what the load asks before running it.</summary>
@@ -815,14 +867,14 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
         IReadOnlyDictionary<int, string> slugs,
         CancellationToken cancellationToken)
     {
-        var findings = new StringBuilder("entity\tkind\tverses\taccepted\tcore\tforms\tcoverage\tspecificity\tscore\tmargin\n");
+        var findings = new StringBuilder("entity\tkind\tverses\taccepted\tcore\tforms\tcoverage\tspecificity\tscore\tmargin\tlikeness\n");
         foreach (var finding in reading.Findings.Where(finding => finding.Name is not null)
                      .OrderByDescending(finding => finding.Verses))
         {
             var name = finding.Name!;
             findings.Append(CultureInfo.InvariantCulture,
                 $"{slugs[finding.Entity]}\t{EnumSpelling.Of(finding.Kind)}\t{finding.Verses}\t{bars.Accepts(finding)}\t{name.Core}\t{string.Join(' ', name.Forms)}\t" +
-                $"{name.Coverage:0.000}\t{name.Specificity:0.000}\t{name.Score:0.000}\t{finding.Margin:0.000}\n");
+                $"{name.Coverage:0.000}\t{name.Specificity:0.000}\t{name.Score:0.000}\t{finding.Margin:0.000}\t{finding.Likeness:0.00}\n");
         }
 
         await File.WriteAllTextAsync(Path.Combine(output, $"{reading.Slug}-findings.tsv"), findings.ToString(), cancellationToken);
@@ -883,6 +935,130 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
         }
 
         await File.WriteAllTextAsync(Path.Combine(output, $"{reading.Slug}-missed.tsv"), missed.ToString(), cancellationToken);
+    }
+
+    /// <summary>The last book of the Old Testament in canonical order.</summary>
+    private const int Malachi = 39;
+
+    /// <summary>
+    /// Every Old Testament verse of the text the originals name somebody in and the text names nobody
+    /// in, with each entity named there and why the consensus did not name it: no word particular to
+    /// its verses, a finding under the bar and which part of the bar, or a finding accepted whose
+    /// name the verse prints in a form outside it, in lower case, left to another entity or to
+    /// nobody. Beside the reason, the words of the verse the text's own annotations name the entity
+    /// with elsewhere, and the capitalised words spelt like the original's lemma.
+    /// </summary>
+    private static async Task Unnamed(
+        string output,
+        Reading reading,
+        ConsensusBars bars,
+        IReadOnlyDictionary<int, string> slugs,
+        ConsensusQuestion question,
+        CancellationToken cancellationToken)
+    {
+        var settled = NameConsensus.Settle(reading.Findings, reading.Claims, bars.Accepts);
+        var named = reading.Annotated.Keys.Concat(settled.Select(word => word.Word)).ToHashSet();
+        var claimed = reading.Claims.Select(word => (word.Word, word.Entity)).ToHashSet();
+        var findingOf = reading.Findings.ToDictionary(finding => finding.Entity);
+        var namedAt = new Dictionary<int, List<int>>();
+        foreach (var (entity, addresses) in question.Entities)
+        {
+            foreach (var address in addresses.Where(address => address / AddressBook <= Malachi))
+            {
+                if (!namedAt.TryGetValue(address, out var entities))
+                {
+                    namedAt[address] = entities = [];
+                }
+
+                entities.Add(entity);
+            }
+        }
+
+        var formOf = reading.Verses.SelectMany(verse => verse.Words).ToDictionary(word => word.Word, word => NameConsensus.Fold(word.Surface));
+        var known = new Dictionary<int, HashSet<string>>();
+        foreach (var (word, entities) in reading.Annotated
+                     .Select(entry => (entry.Key, (IEnumerable<int>)entry.Value))
+                     .Concat(settled.Select(word => (word.Word, (IEnumerable<int>)[word.Entity]))))
+        {
+            foreach (var entity in entities)
+            {
+                if (!known.TryGetValue(entity, out var forms))
+                {
+                    known[entity] = forms = [];
+                }
+
+                if (formOf.TryGetValue(word, out var form) && form.Length > 0)
+                {
+                    forms.Add(form);
+                }
+            }
+        }
+
+        var language = reading.Language;
+        var lemmas = question.Spellings?.ToDictionary(
+            entry => entry.Key,
+            entry => entry.Value.Select(lemma => NameLists.Skeleton(lemma)).ToList()) ?? [];
+        var rows = new StringBuilder("address\tentity\tkind\tits verses\tin the text\twhy\tknown form here\tspelt like the original\tcore\tverse\n");
+        for (var at = 0; at < reading.Verses.Count; at++)
+        {
+            var verse = reading.Verses[at];
+            if (verse.Words.Any(word => named.Contains(word.Word)))
+            {
+                continue;
+            }
+
+            var entities = verse.Addresses.SelectMany(address => namedAt.GetValueOrDefault(address) ?? []).Distinct().ToList();
+            if (entities.Count == 0)
+            {
+                continue;
+            }
+
+            var folded = verse.Words.Select(word => NameConsensus.Fold(word.Surface)).ToList();
+            foreach (var entity in entities)
+            {
+                var finding = findingOf.GetValueOrDefault(entity);
+                var bar = bars.For(question.KindOf(entity));
+                string why;
+                if (finding?.Name is not { } name)
+                {
+                    why = "no word particular to its verses";
+                }
+                else if (!bars.Accepts(finding))
+                {
+                    why = finding.Verses < bar.LeastVerses
+                          && !(ConsensusRules.For(finding.Kind).Spelt && finding.Likeness >= NameLists.LeastLikeness)
+                        ? question.Entities[entity].Count >= bar.LeastVerses ? "partial text: fewer of its verses than the bar" : "few verses"
+                        : name.Coverage < NameConsensus.LeastCoverage ? "printed in few of its verses"
+                        : name.Score < bar.LeastScore ? "score under the bar"
+                        : "margin under the bar";
+                }
+                else
+                {
+                    var printing = Enumerable.Range(0, folded.Count).Where(position => name.Forms.Contains(folded[position])).ToList();
+                    why = printing.Count == 0
+                        ? folded.Any(form => form.Contains(name.Core, StringComparison.Ordinal)) ? "a form outside the name" : "the name not printed"
+                        : printing.Any(position => claimed.Contains((verse.Words[position].Word, entity))) ? "claimed by two"
+                        : printing.All(position => verse.Words[position].Surface.FirstOrDefault(char.IsLetter) is var first && char.IsLower(first)) ? "lower case"
+                        : "left to another entity of the verse";
+                }
+
+                var knownHere = known.TryGetValue(entity, out var forms)
+                    ? verse.Words.Where((_, position) => forms.Contains(folded[position])).Select(word => word.Surface)
+                    : [];
+                var spelt = lemmas.TryGetValue(entity, out var skeletons) && NameConsensus.Spelt(folded.FirstOrDefault(form => form.Length > 0) ?? string.Empty)
+                    ? verse.Words
+                        .Where(word => word.Surface.FirstOrDefault(char.IsLetter) is var first && !char.IsLower(first))
+                        .Where(word => skeletons.Max(lemma => NameLists.Alike(NameLists.Skeleton(word.Surface, language), lemma)) >= NameLists.LeastLikeness)
+                        .Select(word => word.Surface)
+                    : [];
+                rows.Append(CultureInfo.InvariantCulture,
+                    $"{Reference(verse.Addresses.Min())}\t{slugs[entity]}\t{EnumSpelling.Of(question.KindOf(entity))}\t" +
+                    $"{question.Entities[entity].Count}\t{finding?.Verses ?? 0}\t{why}\t{string.Join(' ', knownHere)}\t{string.Join(' ', spelt)}\t" +
+                    $"{finding?.Name?.Core}\t{string.Join(' ', verse.Words.Select(word => word.Surface))}\n");
+            }
+        }
+
+        await File.WriteAllTextAsync(Path.Combine(output, $"{reading.Slug}-unnamed.tsv"), rows.ToString(), cancellationToken);
     }
 
     /// <summary>
@@ -977,6 +1153,7 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
         var entities = new Dictionary<int, HashSet<int>>();
         var kinds = new Dictionary<int, EntityKind>();
         var lemmas = new Dictionary<string, HashSet<int>>(StringComparer.Ordinal);
+        var naming = new Dictionary<(string Lemma, int Entity), int>();
         await using (var reader = await command.ExecuteReaderAsync(cancellationToken))
         {
             while (await reader.ReadAsync(cancellationToken))
@@ -996,30 +1173,34 @@ internal sealed class NameConsensusPass(AppDbContext db, ILogger<NameConsensusPa
                 }
 
                 named.Add(entity);
+                naming[(lemma, entity)] = naming.GetValueOrDefault((lemma, entity)) + 1;
             }
         }
 
-        var namesakes = new Dictionary<int, HashSet<int>>();
-        foreach (var named in lemmas.Values.Where(named => named.Count > 1))
+        var printed = new Dictionary<string, int>(StringComparer.Ordinal);
+        await using (var count = new NpgsqlCommand(
+                         """
+                         SELECT coalesce(w.lemma, w.normalised_text, w.text), count(*)
+                         FROM word w JOIN text t ON t.id = w.text_id AND t.slug = ANY(@originals)
+                         WHERE coalesce(w.lemma, w.normalised_text, w.text) = ANY(@lemmas)
+                         GROUP BY 1
+                         """, connection))
         {
-            foreach (var entity in named)
+            count.Parameters.AddWithValue("originals", Originals);
+            count.Parameters.AddWithValue("lemmas", lemmas.Where(entry => entry.Value.Count > 1).Select(entry => entry.Key).ToArray());
+            await using var reader = await count.ExecuteReaderAsync(cancellationToken);
+            while (await reader.ReadAsync(cancellationToken))
             {
-                if (!namesakes.TryGetValue(entity, out var others))
-                {
-                    namesakes[entity] = others = [];
-                }
-
-                others.UnionWith(named.Where(other => other != entity));
+                printed[reader.GetString(0)] = (int)reader.GetInt64(1);
             }
         }
+
+        var namesakes = NameConsensus.Namesakes(naming, printed);
 
         return new ConsensusQuestion(
             entities.ToDictionary(entry => entry.Key, entry => (IReadOnlySet<int>)entry.Value),
-            namesakes.ToDictionary(entry => entry.Key, entry => (IReadOnlySet<int>)entry.Value),
-            lemmas
-                .SelectMany(entry => entry.Value.Select(entity => (entity, lemma: entry.Key)))
-                .GroupBy(pair => pair.entity)
-                .ToDictionary(group => group.Key, group => (IReadOnlySet<string>)group.Select(pair => pair.lemma).ToHashSet()),
+            namesakes,
+            NameConsensus.OwnNames(naming),
             kinds);
     }
 
