@@ -9,6 +9,7 @@
       "names": {
         "ukr": "Субота",
         "deu": "Sabbat",
+        "rus": "Суббота",
         "spa": "Sábado"
       },
       "distinguisher": "the seventh day of every week, kept holy as a day of rest from all work (EXO 20:8-11)",
@@ -177,6 +178,7 @@
       "names": {
         "ukr": "Новомісяччя",
         "deu": "Neumond",
+        "rus": "Новомесячие",
         "spa": "Nueva luna"
       },
       "distinguisher": "the first day of each month, marked with trumpets and burnt offerings (NUM 28:11)",
@@ -295,6 +297,7 @@
       "names": {
         "ukr": "Пасха",
         "deu": "Passah",
+        "rus": "Пасха",
         "spa": "Pascua"
       },
       "distinguisher": "the LORD's passover, kept at evening on the fourteenth day of the first month with a slain lamb (LEV 23:5)",
@@ -477,6 +480,7 @@
       "names": {
         "ukr": "Свято Опрісноків",
         "deu": "Fest der ungesäuerten Brote",
+        "rus": "Праздник опресноков",
         "spa": "Solemnidad de los ázimos"
       },
       "distinguisher": "the seven days from the fifteenth of the first month on which only unleavened bread was eaten (LEV 23:6)",
@@ -634,7 +638,8 @@
       "name": "Firstfruits (the Wave Sheaf)",
       "names": {
         "ukr": "Сніп первоплоду",
-        "deu": "Garbe der Erstlinge"
+        "deu": "Garbe der Erstlinge",
+        "rus": "Сноп первых плодов"
       },
       "distinguisher": "the first sheaf of the harvest waved before the LORD on the morrow after the sabbath (LEV 23:10-11)",
       "notes": "When Israel entered the land and reaped, they were to bring a sheaf of the firstfruits of the harvest to the priest, who waved it before the LORD on the morrow after the sabbath (LEV 23:10-11). With it went a lamb of the first year for a burnt offering, a meal offering and a drink offering, and no bread, parched grain or fresh ears might be eaten until that day (LEV 23:12-14). The day of the sheaf is the start of the count of seven weeks to the Feast of Weeks (LEV 23:15). The text gives this day no feast name of its own; 'Firstfruits' here is a name for the rite, not the text's title for a day. Paul calls the risen Christ 'the firstfruits of them that slept' (1CO 15:20-23).",
@@ -701,6 +706,7 @@
       "names": {
         "ukr": "Свято Тижнів",
         "deu": "Fest der Wochen",
+        "rus": "Праздник седмиц",
         "spa": "Solemnidad de las semanas"
       },
       "distinguisher": "the harvest feast kept fifty days after the wave sheaf, called Pentecost in the New Testament (DEU 16:10)",
@@ -838,6 +844,7 @@
       "names": {
         "ukr": "День сурмлення",
         "deu": "Drommetentag",
+        "rus": "Праздник труб",
         "spa": "Día de sonar las trompetas"
       },
       "distinguisher": "the first day of the seventh month, a holy convocation marked by the blowing of trumpets (NUM 29:1)",
@@ -940,6 +947,7 @@
       "names": {
         "ukr": "День Очищення",
         "deu": "Versöhnungstag",
+        "rus": "День очищения",
         "spa": "Día de las expiaciones"
       },
       "distinguisher": "the tenth day of the seventh month, when the high priest entered the holy of holies to make atonement and the people afflicted their souls (LEV 23:27)",
@@ -1064,6 +1072,7 @@
       "names": {
         "ukr": "Свято Кучок",
         "deu": "Fest der Laubhütten",
+        "rus": "Праздник кущей",
         "spa": "Solemnidad de las cabañas"
       },
       "forms": {
@@ -1256,7 +1265,8 @@
       "name": "The Eighth Day (Solemn Assembly)",
       "names": {
         "ukr": "Віддання свята",
-        "deu": "Tag der Versammlung"
+        "deu": "Tag der Versammlung",
+        "rus": "Отдание праздника"
       },
       "distinguisher": "the solemn assembly on the day after the seven days of Booths (LEV 23:36)",
       "notes": "After the seven days of Booths, the eighth day was a holy convocation and a solemn assembly on which an offering was made by fire and no servile work was done (LEV 23:36). It was a day of solemn rest like the first day of the feast (LEV 23:39). Its offering was smaller than on the days of the feast: one bullock, one ram and seven lambs, with a goat for a sin offering (NUM 29:35-38). Solomon's people kept it after the dedication and the feast and were sent home on the twenty-third day of the month (2CH 7:9-10), and the returned exiles held it after reading the law through the feast (NEH 8:18).",
@@ -1351,6 +1361,7 @@
       "names": {
         "ukr": "Рік відпущення",
         "deu": "Erlaßjahr",
+        "rus": "Год прощения",
         "spa": "Año de la remisión"
       },
       "distinguisher": "every seventh year, when the land lay fallow and debts were released (LEV 25:4; DEU 15:1)",
@@ -1472,6 +1483,7 @@
       "names": {
         "ukr": "Ювілей",
         "deu": "Halljahr",
+        "rus": "Юбилей",
         "spa": "Jubileo"
       },
       "distinguisher": "the fiftieth year, proclaimed by trumpet, when land returned to its families and liberty was proclaimed (LEV 25:10)",
@@ -1543,6 +1555,7 @@
       "names": {
         "ukr": "Пурім",
         "deu": "Purim",
+        "rus": "Пурим",
         "spa": "Purim"
       },
       "distinguisher": "the days of the fourteenth and fifteenth of Adar that Esther and Mordecai established to remember the Jews' deliverance (EST 9:26)",
@@ -1602,6 +1615,7 @@
       "names": {
         "ukr": "Свято Відновлення",
         "deu": "Kirchweihe",
+        "rus": "Праздник обновления",
         "spa": "Fiesta de la dedicación"
       },
       "distinguisher": "the winter feast at Jerusalem during which Jesus walked in Solomon's porch (JHN 10:22)",
@@ -1655,7 +1669,8 @@
       "name": "Fasts of the Fourth, Fifth, Seventh and Tenth Months",
       "names": {
         "ukr": "Піст четвертого, п'ятого, сьомого і десятого місяця",
-        "deu": "Fasten des vierten, fünften, siebenten und zehnten Monats"
+        "deu": "Fasten des vierten, fünften, siebenten und zehnten Monats",
+        "rus": "Пост четвертого, пятого, седьмого и десятого месяца"
       },
       "distinguisher": "the fasts kept during the exile which Zechariah says will become feasts of joy (ZEC 8:19)",
       "notes": "In the fourth year of Darius men from Bethel asked the priests whether they should still weep in the fifth month, as they had done for many years (ZEC 7:1-3). The LORD's answer asked whether their fasting and mourning in the fifth and seventh months through the seventy years had been for him at all (ZEC 7:4-7). He then promised that the fast of the fourth month, of the fifth, of the seventh and of the tenth would become joy, gladness and cheerful feasts to Judah (ZEC 8:18-19). The text names only the months. They match the months in which the siege of Jerusalem began (tenth month), the city was broken into (fourth), the temple was burned (fifth) and Gedaliah was killed (seventh) (2KI 25:1-4, 8-9, 25; JER 52:4-13; 41:1-2), but Zechariah does not make that connection himself.",
@@ -1772,7 +1787,9 @@
       "subtype": "feast",
       "name": "The Second Passover",
       "names": {
-        "ukr": "Пасха другого місяця"
+        "ukr": "Пасха другого місяця",
+        "deu": "Passah im zweiten Monat",
+        "rus": "Пасха второго месяца"
       },
       "distinguisher": "the Passover kept on the fourteenth of the second month by those unclean or far away at the first (NUM 9:11)",
       "notes": "At Sinai some men were unclean from a dead body on the day of the Passover and asked Moses why they should be kept from bringing the LORD's offering (NUM 9:6-7). The LORD answered that anyone unclean by a dead body, or on a journey far off, should keep the Passover on the fourteenth day of the second month at evening, eating it with unleavened bread and bitter herbs, leaving none till morning and breaking no bone of it (NUM 9:9-12). A clean man at home who failed to keep the Passover was to be cut off (NUM 9:13). Hezekiah's Passover was kept in the second month because the priests had not sanctified themselves and the people had not gathered in time (2CH 30:2-3, 15), though the text does not cite this law for it.",
@@ -1830,7 +1847,9 @@
       "subtype": "feast",
       "name": "Jeroboam's Feast of the Eighth Month",
       "names": {
-        "ukr": "Свято Єровоама"
+        "ukr": "Свято Єровоама",
+        "deu": "Fest Jerobeams",
+        "rus": "Праздник Иеровоама"
       },
       "distinguisher": "the feast Jeroboam set up at Bethel on the fifteenth of the eighth month, in imitation of the feast in Judah (1KI 12:32)",
       "notes": "Jeroboam ordained a feast on the fifteenth day of the eighth month, like the feast that was in Judah, and sacrificed on the altar at Bethel to the calves he had made (1KI 12:32). He appointed priests of the high places there, and the text says he chose the month 'of his own heart' (1KI 12:32-33). It was while he stood by this altar burning incense that the man of God from Judah cried against it (1KI 13:1-5). The feast it imitated falls a month earlier, on the fifteenth of the seventh month (LEV 23:34).",
@@ -1889,6 +1908,7 @@
       "names": {
         "ukr": "Пожертва дров",
         "deu": "Opfer des Holzes",
+        "rus": "Доставка дров",
         "spa": "Ofrenda de la leña"
       },
       "distinguisher": "the wood for the altar brought by lot, family by family, at appointed times each year (NEH 10:34)",
@@ -1942,6 +1962,7 @@
       "names": {
         "ukr": "Господня Вечеря",
         "deu": "Abendmahl des Herrn",
+        "rus": "Вечеря Господня",
         "spa": "Cena del Señor"
       },
       "distinguisher": "the bread and cup Jesus gave his disciples the night he was betrayed, kept by the church in remembrance of him (1CO 11:20-26)",
@@ -2015,6 +2036,7 @@
       "names": {
         "ukr": "Господній день",
         "deu": "Tag des Herrn",
+        "rus": "День воскресный",
         "spa": "Día del Señor"
       },
       "distinguisher": "the day on which John, in Patmos, was in the Spirit and received the Revelation (REV 1:10)",
@@ -2058,6 +2080,7 @@
       "names": {
         "ukr": "Свята Господні",
         "deu": "Feste des Herrn",
+        "rus": "Праздники Господни",
         "spa": "Solemnidades de Jehová"
       },
       "forms": {

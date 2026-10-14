@@ -9,6 +9,7 @@
       "names": {
         "ukr": "Скинія",
         "deu": "Hütte des Stifts",
+        "rus": "Скиния",
         "spa": "Tabernáculo"
       },
       "forms": {
@@ -314,6 +315,7 @@
       "names": {
         "ukr": "Свічник",
         "deu": "Leuchter",
+        "rus": "Светильник",
         "spa": "Candelero"
       },
       "distinguisher": "the seven-lamp lampstand of beaten gold that stood in the tabernacle's holy place (EXO 25:31-40)",
@@ -405,6 +407,7 @@
       "names": {
         "ukr": "Стіл показних хлібів",
         "deu": "Schaubrottisch",
+        "rus": "Стол хлебов предложения",
         "spa": "Mesa de la proposición"
       },
       "distinguisher": "the gold-overlaid acacia table in the holy place on which the bread of the presence was set (EXO 25:23-30)",
@@ -545,6 +548,7 @@
       "names": {
         "ukr": "Жертівник кадила",
         "deu": "Räucheraltar",
+        "rus": "Жертвенник курения",
         "spa": "Altar del perfume"
       },
       "distinguisher": "the small gold-overlaid acacia altar before the veil on which incense was burned (EXO 30:1-10)",
@@ -647,6 +651,7 @@
       "names": {
         "ukr": "Ковчег заповіту",
         "deu": "Lade des Bundes",
+        "rus": "Ковчег завета",
         "spa": "Arca del pacto"
       },
       "forms": {
@@ -801,7 +806,8 @@
       "name": "Jar of Manna",
       "names": {
         "ukr": "Посудина з манною",
-        "deu": "Krug mit dem Himmelsbrot"
+        "deu": "Krug mit dem Himmelsbrot",
+        "rus": "Сосуд с манной"
       },
       "distinguisher": "the jar holding an omer of manna laid up before the LORD for Israel's generations (EXO 16:32-34)",
       "notes": "The LORD commanded that an omer of manna be kept for Israel's generations, so that they might see the bread he fed them with in the wilderness (EXO 16:32). Moses told Aaron to take a jar, put an omer full of manna in it and lay it up before the LORD, and Aaron laid it up before the testimony (EXO 16:33-34). Exodus does not say what the jar was made of; Hebrews calls it a golden jar and places it in the ark of the covenant with Aaron's rod and the tablets (HEB 9:4). When the ark was brought into Solomon's temple there was nothing in it but the two tablets of stone (1KI 8:9), and the text does not mention the jar again.",
@@ -856,6 +862,7 @@
       "names": {
         "ukr": "Ааронова палиця",
         "deu": "Stecken Aarons",
+        "rus": "Жезл Ааронов",
         "spa": "Vara de Aarón"
       },
       "distinguisher": "the rod of Aaron that became a serpent before Pharaoh and budded before the testimony (NUM 17:8)",
@@ -947,6 +954,7 @@
       "names": {
         "ukr": "Таблиці заповіту",
         "deu": "Tafeln des Bundes",
+        "rus": "Скрижали завета",
         "spa": "Tablas del pacto"
       },
       "distinguisher": "the two tablets of stone, written by the finger of God, on which the ten commandments were given (EXO 31:18)",
@@ -1063,6 +1071,7 @@
       "names": {
         "ukr": "Віко",
         "deu": "Gnadenstuhl",
+        "rus": "Крышка",
         "spa": "Cubierta"
       },
       "distinguisher": "the slab of pure gold with two cherubim that lay upon the ark of the covenant (EXO 25:17-22)",
@@ -1156,6 +1165,7 @@
       "names": {
         "ukr": "Завіса",
         "deu": "Vorhang",
+        "rus": "Завеса",
         "spa": "Velo"
       },
       "distinguisher": "the woven curtain that divided the holy place from the most holy place in the tabernacle (EXO 26:31-33)",
@@ -1246,6 +1256,7 @@
       "names": {
         "ukr": "Мідяний жертівник",
         "deu": "Brandopferaltar",
+        "rus": "Медный жертвенник",
         "spa": "Altar del holocausto"
       },
       "distinguisher": "the bronze-overlaid acacia altar of burnt offering that stood before the door of the tabernacle (EXO 27:1-8)",
@@ -1370,6 +1381,7 @@
       "names": {
         "ukr": "Умивальниця",
         "deu": "Ehernes Handfaß",
+        "rus": "Медный умывальник",
         "spa": "Fuente de metal"
       },
       "distinguisher": "the bronze basin on a bronze base between the tent of meeting and the altar, where the priests washed (EXO 30:17-21)",
@@ -1443,6 +1455,7 @@
       "names": {
         "ukr": "Ноїв ковчег",
         "deu": "Arche",
+        "rus": "Ноев ковчег",
         "spa": "Arca"
       },
       "distinguisher": "the vessel of gopher wood that Noah built at God's command to come through the flood (GEN 6:14-16)",
@@ -1539,6 +1552,7 @@
       "names": {
         "ukr": "Яхін",
         "deu": "Jachin",
+        "rus": "Иахин",
         "spa": "Jachîn"
       },
       "distinguisher": "the bronze pillar Solomon set up on the right of the temple porch (1KI 7:21)",
@@ -1607,6 +1621,7 @@
       "names": {
         "ukr": "Боаз",
         "deu": "Boas",
+        "rus": "Воаз",
         "spa": "Boaz"
       },
       "distinguisher": "the bronze pillar Solomon set up on the left of the temple porch (1KI 7:21)",
@@ -1675,6 +1690,7 @@
       "names": {
         "ukr": "Соломонів храм",
         "deu": "Tempel Salomos",
+        "rus": "Храм Соломона",
         "spa": "Templo de Salomón"
       },
       "forms": {
@@ -1997,6 +2013,7 @@
       "names": {
         "ukr": "Другий храм",
         "deu": "Zweiter Tempel",
+        "rus": "Второй храм",
         "spa": "Segundo Templo"
       },
       "forms": {
@@ -2143,6 +2160,7 @@
       "names": {
         "ukr": "Іродів храм",
         "deu": "Tempel des Herodes",
+        "rus": "Иродов храм",
         "spa": "Templo de Herodes"
       },
       "forms": {
@@ -2248,6 +2266,7 @@
       "names": {
         "ukr": "Храм із видіння Єзекіїля",
         "deu": "Tempel aus Hesekiels Vision",
+        "rus": "Храм из видения Иезекииля",
         "spa": "Templo de la visión de Ezequiel"
       },
       "distinguisher": "the temple Ezekiel was shown and measured in a vision (EZK 41:1)",
@@ -2319,6 +2338,7 @@
       "names": {
         "ukr": "Небесна святиня",
         "deu": "Himmlisches Heiligtum",
+        "rus": "Небесный храм",
         "spa": "Santuario celestial"
       },
       "distinguisher": "the temple of God in heaven that John saw opened (REV 11:19)",
@@ -2374,6 +2394,7 @@
       "names": {
         "ukr": "Святеє Святих",
         "deu": "Allerheiligste",
+        "rus": "Святое Святых",
         "spa": "Lugar Santísimo"
       },
       "forms": {
@@ -2508,6 +2529,7 @@
       "names": {
         "ukr": "Мідяне море",
         "deu": "Eherne Meer",
+        "rus": "Медное море",
         "spa": "Mar de bronce"
       },
       "distinguisher": "the great cast bronze basin on twelve oxen in Solomon's temple (1KI 7:23; 2KI 25:13)",
@@ -2595,6 +2617,7 @@
       "names": {
         "ukr": "Вавилонська башта",
         "deu": "Turm zu Babel",
+        "rus": "Вавилонская башня",
         "spa": "Torre de Babel"
       },
       "distinguisher": "the tower begun with the city in the plain of Shinar (GEN 11:4)",
@@ -2648,6 +2671,7 @@
       "names": {
         "ukr": "Царський дім Соломона",
         "deu": "Palast Salomos",
+        "rus": "Царский дом Соломона",
         "spa": "Palacio de Salomón"
       },
       "distinguisher": "the king's house Solomon built for himself in thirteen years (1KI 7:1; 9:1)",
@@ -2716,6 +2740,7 @@
       "names": {
         "ukr": "Башта в Сілоамі",
         "deu": "Turm von Siloah",
+        "rus": "Силоамская башня",
         "spa": "Torre en Siloé"
       },
       "distinguisher": "the tower in Siloam whose fall killed eighteen people (LUK 13:4)",
@@ -2758,7 +2783,9 @@
       "subtype": "structure",
       "name": "Hezekiah's Tunnel",
       "names": {
-        "ukr": "Водотяг Єзекії"
+        "ukr": "Водотяг Єзекії",
+        "deu": "Wasserleitung Hiskias",
+        "rus": "Водопровод Езекии"
       },
       "distinguisher": "the conduit by which Hezekiah brought water into Jerusalem (2KI 20:20)",
       "notes": "Kings records that Hezekiah made a pool and a conduit and brought water into the city (2KI 20:20). Chronicles says he stopped the upper watercourse of Gihon and brought it straight down to the west side of the city of David (2CH 32:30), after stopping the springs outside the city so that the kings of Assyria should not find much water (2CH 32:2-4). Isaiah reproaches Jerusalem for making a reservoir between the two walls for the water of the old pool (ISA 22:11). It is not the 'conduit of the upper pool' where Isaiah met Ahaz and the Rabshakeh stood (ISA 7:3; 2KI 18:17), which is named already in Ahaz's day.",
@@ -2825,7 +2852,9 @@
       "subtype": "structure",
       "name": "Tent of Meeting outside the Camp",
       "names": {
-        "ukr": "Скинія заповіту поза табором"
+        "ukr": "Скинія заповіту поза табором",
+        "deu": "Hütte des Stifts außerhalb des Lagers",
+        "rus": "Скиния собрания вне стана"
       },
       "distinguisher": "the tent Moses pitched outside the camp, far off, before the tabernacle was made (EXO 33:7)",
       "notes": "After the golden calf Moses took the tent and pitched it outside the camp, far off, and called it the tent of meeting, and everyone who sought the LORD went out to it (EXO 33:7). When Moses went into it the pillar of cloud came down and stood at its door and the LORD spoke with him face to face, while the people rose and worshipped at their own tent doors (EXO 33:8-11). Joshua the son of Nun did not depart out of it (EXO 33:11). It comes before the making of the tabernacle (EXO 35-40), which was set in the midst of the camp (NUM 2:17); whether the tent of NUM 11:16-30 and 12:4-10 is this one is not settled by the text.",
@@ -2872,7 +2901,9 @@
       "subtype": "structure",
       "name": "David's Tent for the Ark",
       "names": {
-        "ukr": "Давидів намет для ковчега"
+        "ukr": "Давидів намет для ковчега",
+        "deu": "Hütte Davids für die Lade",
+        "rus": "Скиния Давида для ковчега"
       },
       "distinguisher": "the tent David pitched in the city of David for the ark of God (2SA 6:17)",
       "notes": "David prepared a place for the ark of God in the city of David and pitched a tent for it (1CH 15:1). The ark was brought up from the house of Obed-edom with gladness and set in its place in the midst of the tent, and David offered burnt offerings and peace offerings before the LORD (2SA 6:12-17; 1CH 16:1). Chronicles keeps it distinct from the tabernacle of the LORD, which stood at the high place at Gibeon (1CH 16:39; 2CH 1:3-4). The ark stayed in the city of David until Solomon's priests brought it up into the temple (1KI 8:1-6).",
@@ -2941,6 +2972,7 @@
       "names": {
         "ukr": "Мідяний змій (Нехуштан)",
         "deu": "Eherne Schlange (Nehusthan)",
+        "rus": "Медный змей (Нехуштан)",
         "spa": "Serpiente de metal (Nehustán)"
       },
       "distinguisher": "the serpent of bronze Moses set on a pole in the wilderness, later broken by Hezekiah (NUM 21:9)",
@@ -3023,6 +3055,7 @@
       "names": {
         "ukr": "Ефод первосвященика",
         "deu": "Leibrock",
+        "rus": "Ефод первосвященника",
         "spa": "Ephod"
       },
       "forms": {
@@ -3075,6 +3108,7 @@
       "names": {
         "ukr": "Судний нагрудник",
         "deu": "Amtschild",
+        "rus": "Наперсник судный",
         "spa": "Racional del juicio"
       },
       "forms": {
@@ -3133,6 +3167,7 @@
       "names": {
         "ukr": "Урім та туммім",
         "deu": "Licht und Recht",
+        "rus": "Урим и туммим",
         "spa": "Urim y Thummim"
       },
       "distinguisher": "the means of judgment put in the high priest's breastpiece (EXO 28:30)",
@@ -3201,6 +3236,7 @@
       "names": {
         "ukr": "Вінець святости",
         "deu": "Heilige Krone",
+        "rus": "Диадима святыни",
         "spa": "Diadema santa"
       },
       "distinguisher": "the plate of pure gold engraved 'Holiness to the LORD' on the front of the high priest's mitre (EXO 28:36-38)",
@@ -3269,6 +3305,8 @@
       "name": "Two Silver Trumpets",
       "names": {
         "ukr": "Дві срібні сурмі",
+        "deu": "Zwei silberne Drommeten",
+        "rus": "Две серебряные трубы",
         "spa": "Dos trompetas de plata"
       },
       "distinguisher": "the pair of hammered silver trumpets made in the wilderness to call the assembly and move the camps (NUM 10:2)",
@@ -3309,6 +3347,7 @@
       "names": {
         "ukr": "Лите теля",
         "deu": "Gegossenes Kalb",
+        "rus": "Литой телец",
         "spa": "Becerro de fundición"
       },
       "distinguisher": "the molten calf Aaron made from the people's gold at Sinai (EXO 32:4)",
@@ -3386,6 +3425,7 @@
       "names": {
         "ukr": "Золоті тельці Єровоама",
         "deu": "Zwei goldene Kälber",
+        "rus": "Золотые тельцы Иеровоама",
         "spa": "Dos becerros de oro"
       },
       "distinguisher": "the two calves of gold Jeroboam set up at Bethel and Dan (1KI 12:28-29)",
@@ -3461,6 +3501,7 @@
       "names": {
         "ukr": "Золотий бовван Навуходоносора",
         "deu": "Goldenes Bild",
+        "rus": "Золотой истукан Навуходоносора",
         "spa": "Estatua de oro"
       },
       "distinguisher": "the image of gold sixty cubits high set up in the plain of Dura (DAN 3:1)",
@@ -3510,6 +3551,7 @@
       "names": {
         "ukr": "Великий бовван зі сну Навуходоносора",
         "deu": "Das große Bild in Nebukadnezars Traum",
+        "rus": "Великий истукан из сна Навуходоносора",
         "spa": "La gran imagen del sueño de Nabucodonosor"
       },
       "distinguisher": "the great image of gold, silver, brass, iron and clay that Nebuchadnezzar saw in his dream (DAN 2:31-35)",
@@ -3547,6 +3589,7 @@
       "names": {
         "ukr": "Меч Ґоліята",
         "deu": "Schwert des Philisters Goliath",
+        "rus": "Меч Голиафа",
         "spa": "Espada de Goliath"
       },
       "distinguisher": "the Philistine's sword with which David beheaded him, later kept at Nob (1SA 21:9)",
@@ -3594,6 +3637,7 @@
       "names": {
         "ukr": "Палиця Мойсея",
         "deu": "Stab Gottes",
+        "rus": "Жезл Моисея",
         "spa": "Vara de Dios"
       },
       "distinguisher": "the rod in Moses' hand at the bush, called the rod of God, with which he did the signs (EXO 4:2-20)",
@@ -3652,7 +3696,9 @@
       "subtype": "monument",
       "name": "Jacob's Pillar at Bethel",
       "names": {
-        "ukr": "Яковів пам'ятник"
+        "ukr": "Яковів пам'ятник",
+        "deu": "Mal Jakobs",
+        "rus": "Памятник Иакова"
       },
       "distinguisher": "the stone Jacob slept on, set up as a pillar and anointed at Bethel (GEN 28:18)",
       "notes": "On his way to Haran Jacob slept with a stone for his pillow and dreamed of the ladder (GEN 28:11-15). In the morning he set up that stone for a pillar, poured oil on its top, and called the place Bethel (GEN 28:18-19). He vowed that this stone, which he had set for a pillar, should be God's house (GEN 28:22). Years later God spoke to him as 'the God of Bethel, where thou anointedst the pillar' (GEN 31:13). On his return to Bethel Jacob again set up a pillar of stone where God had spoken with him and poured a drink offering and oil on it (GEN 35:14); the text does not say whether it was the same stone.",
@@ -3717,6 +3763,8 @@
       "name": "Altar of Witness (Ed)",
       "names": {
         "ukr": "Жертівник Ед",
+        "deu": "Altar Ed",
+        "rus": "Жертвенник Ед",
         "spa": "Altar Ed"
       },
       "distinguisher": "the great altar the eastern tribes built by the Jordan as a witness, not for sacrifice (JOS 22:10-34)",
@@ -3766,6 +3814,7 @@
       "names": {
         "ukr": "Дванадцять каменів з Йордану",
         "deu": "Zwölf Steine aus dem Jordan",
+        "rus": "Двенадцать камней из Иордана",
         "spa": "Doce piedras del Jordán"
       },
       "distinguisher": "the twelve stones taken from the bed of the Jordan and set up at Gilgal as a memorial of the crossing (JOS 4:20)",
@@ -3820,6 +3869,7 @@
       "names": {
         "ukr": "Залізне ложе Оґа",
         "deu": "Eisernes Bett",
+        "rus": "Железный одр Ога",
         "spa": "Cama de hierro"
       },
       "distinguisher": "the iron bedstead of Og king of Bashan, kept in Rabbah of the Ammonites (DEU 3:11)",
@@ -3864,6 +3914,7 @@
       "names": {
         "ukr": "Ефод Гедеона",
         "deu": "Leibrock Gideons",
+        "rus": "Ефод Гедеона",
         "spa": "Ephod de Gedeón"
       },
       "distinguisher": "the ephod Gideon made from the Midianite gold and set up in Ophrah (JDG 8:27)",
@@ -3913,6 +3964,7 @@
       "names": {
         "ukr": "Жертівник Єгова-Ніссі",
         "deu": "Der HERR ist mein Panier",
+        "rus": "Жертвенник Иегова-Нисси",
         "spa": "Jehová-nissi"
       },
       "distinguisher": "the altar Moses built and named after the victory over Amalek (EXO 17:15)",
@@ -3957,6 +4009,7 @@
       "names": {
         "ukr": "Жертівник Єгова-Шалом",
         "deu": "Der HERR ist der Friede",
+        "rus": "Жертвенник Иегова-Шалом",
         "spa": "Jehová-salom"
       },
       "distinguisher": "the altar Gideon built at Ophrah where the angel of the LORD appeared to him (JDG 6:24)",
@@ -4005,6 +4058,8 @@
       "name": "Altar El-elohe-Israel",
       "names": {
         "ukr": "Жертівник Ел-Елогей-Ізраїль",
+        "deu": "Altar El-Elohe-Israel",
+        "rus": "Жертвенник Эл-Элогей-Израиль",
         "spa": "El Dios de Israel"
       },
       "distinguisher": "the altar Jacob erected on the ground he bought before Shechem (GEN 33:20)",
@@ -4054,6 +4109,7 @@
       "names": {
         "ukr": "Хрест Ісуса",
         "deu": "Kreuz",
+        "rus": "Крест Христов",
         "spa": "Cruz"
       },
       "distinguisher": "the cross on which Jesus was crucified at Golgotha (JHN 19:17)",
@@ -4120,6 +4176,7 @@
       "names": {
         "ukr": "Терновий вінок",
         "deu": "Dornenkrone",
+        "rus": "Терновый венец",
         "spa": "Corona de espinas"
       },
       "distinguisher": "the crown the soldiers plaited of thorns and put on Jesus' head (MAT 27:29)",
@@ -4168,6 +4225,7 @@
       "names": {
         "ukr": "Напис на хресті",
         "deu": "Überschrift",
+        "rus": "Надпись на кресте",
         "spa": "Título"
       },
       "distinguisher": "the title Pilate wrote, 'The King of the Jews', and set on the cross (JHN 19:19)",
@@ -4236,6 +4294,7 @@
       "names": {
         "ukr": "Тридцять срібняків",
         "deu": "Dreißig Silberlinge",
+        "rus": "Тридцать сребреников",
         "spa": "Treinta piezas de plata"
       },
       "distinguisher": "the price the chief priests paid Judas to deliver Jesus, which bought the potter's field (MAT 26:15)",
@@ -4285,6 +4344,7 @@
       "names": {
         "ukr": "Нешитий хітон Ісуса",
         "deu": "Ungenähter Rock",
+        "rus": "Несшитый хитон Иисуса",
         "spa": "Túnica sin costura"
       },
       "distinguisher": "Jesus' coat woven in one piece, for which the soldiers cast lots (JHN 19:23)",
@@ -4326,6 +4386,7 @@
       "names": {
         "ukr": "Квітчасте вбрання Йосипа",
         "deu": "Bunter Rock",
+        "rus": "Разноцветная одежда Иосифа",
         "spa": "Ropa de diversos colores"
       },
       "distinguisher": "the coat Israel made for Joseph, which his brothers dipped in blood (GEN 37:3)",
@@ -4383,6 +4444,8 @@
       "name": "Elijah's Mantle",
       "names": {
         "ukr": "Іллів плащ",
+        "deu": "Mantel Elias",
+        "rus": "Милоть Илии",
         "spa": "Manto de Elías"
       },
       "distinguisher": "the mantle Elijah cast on Elisha and with which both divided the Jordan (1KI 19:19)",
@@ -4432,6 +4495,7 @@
       "names": {
         "ukr": "Папірусова скринька",
         "deu": "Kästlein von Rohr",
+        "rus": "Тростниковая корзинка",
         "spa": "Arquilla de juncos"
       },
       "distinguisher": "the pitched papyrus basket in which the infant Moses was laid by the river (EXO 2:3)",
@@ -4470,6 +4534,7 @@
       "names": {
         "ukr": "Соломонів трон зо слонової кости",
         "deu": "Großer Stuhl von Elfenbein",
+        "rus": "Престол Соломона из слоновой кости",
         "spa": "Gran trono de marfil"
       },
       "distinguisher": "the great throne of ivory overlaid with gold, with six steps and twelve lions (1KI 10:18)",
@@ -4521,6 +4586,7 @@
       "names": {
         "ukr": "Золоті щити Соломона",
         "deu": "Schilde vom besten Gold",
+        "rus": "Золотые щиты Соломона",
         "spa": "Escudos de oro extendido"
       },
       "distinguisher": "the two hundred large and three hundred small shields of beaten gold Solomon kept in the House of the Forest of Lebanon (1KI 10:16-17)",
@@ -4599,6 +4665,7 @@
       "names": {
         "ukr": "Ступені Ахазові",
         "deu": "Zeiger Ahas",
+        "rus": "Ступени Ахазовы",
         "spa": "Reloj de Achâz"
       },
       "distinguisher": "the steps (the King James 'dial') on which the shadow went back ten degrees as a sign to Hezekiah (2KI 20:11)",
@@ -4641,6 +4708,7 @@
       "names": {
         "ukr": "Михин різьблений бовван",
         "deu": "Bild Michas",
+        "rus": "Истукан Михи",
         "spa": "Imagen de Michâs"
       },
       "distinguisher": "the carved image made from Micah's mother's silver, taken by the Danites and set up at Dan (JDG 18:30-31)",
@@ -4704,7 +4772,9 @@
       "subtype": "weapon",
       "name": "Saul's Spear",
       "names": {
-        "ukr": "Саулів спис"
+        "ukr": "Саулів спис",
+        "deu": "Spieß Sauls",
+        "rus": "Копье Саула"
       },
       "distinguisher": "the spear Saul kept at hand, threw at David and Jonathan, and which David took from his bolster (1SA 26:7-12)",
       "notes": "When the evil spirit came on Saul he had a javelin in his hand and cast it at David twice (1SA 18:10-11); another time he drove it into the wall as David slipped away (1SA 19:9-10), and he cast it at his own son Jonathan (1SA 20:33). He sat under a tree in Gibeah with his spear in his hand when he heard David was found (1SA 22:6). In the wilderness of Ziph David found Saul asleep with his spear stuck in the ground at his bolster; he would not let Abishai strike with it, but took it and the cruse of water (1SA 26:7-12), asked Abner where the king's spear was (1SA 26:16), and told Saul, 'Behold the king's spear' (1SA 26:22). The Amalekite said he found Saul on mount Gilboa leaning on his spear (2SA 1:6). The Hebrew word is the same throughout, though the King James varies between 'javelin' and 'spear', and the text never says whether it was always one weapon.",
@@ -4769,6 +4839,7 @@
       "names": {
         "ukr": "Червоний шнурок Рахави",
         "deu": "Rotes Seil",
+        "rus": "Червленая веревка Раав",
         "spa": "Cordón de grana"
       },
       "distinguisher": "the line of scarlet thread Rahab bound in her window at Jericho as the sign agreed with the spies (JOS 2:18)",
@@ -4809,7 +4880,9 @@
       "subtype": "vestment",
       "name": "Moses' Veil",
       "names": {
-        "ukr": "Покривало Мойсея"
+        "ukr": "Покривало Мойсея",
+        "deu": "Decke Moses",
+        "rus": "Покрывало Моисея"
       },
       "distinguisher": "the veil Moses put over his shining face after speaking with the LORD (EXO 34:33)",
       "notes": "When Moses came down from Sinai the skin of his face shone, and Aaron and the people were afraid to come near him (EXO 34:29-30). When he had finished speaking with them he put a veil on his face (EXO 34:33). He took it off whenever he went in before the LORD, spoke to Israel what he was commanded, and put it on again (EXO 34:34-35). Paul recalls that Moses put a veil over his face so that Israel could not look to the end of what was passing away (2CO 3:13), and goes on to speak of a veil over the reading of the old covenant and over hearts (2CO 3:14-16).",
@@ -4860,6 +4933,7 @@
       "names": {
         "ukr": "Книга Праведного",
         "deu": "Buch des Frommen",
+        "rus": "Книга Праведного",
         "spa": "Libro de Jasher"
       },
       "forms": {
@@ -4915,6 +4989,7 @@
       "names": {
         "ukr": "Дерево життя",
         "deu": "Der Baum des Lebens",
+        "rus": "Дерево жизни",
         "spa": "El árbol de la vida"
       },
       "forms": {
@@ -4994,6 +5069,7 @@
       "names": {
         "ukr": "Дерево пізнання добра і зла",
         "deu": "Der Baum der Erkenntnis des Guten und Bösen",
+        "rus": "Дерево познания добра и зла",
         "spa": "El árbol del conocimiento del bien y del mal"
       },
       "forms": {
@@ -5061,6 +5137,7 @@
       "names": {
         "ukr": "Полум’яний меч",
         "deu": "Das flammende Schwert",
+        "rus": "Пламенный меч",
         "spa": "La espada encendida"
       },
       "forms": {
