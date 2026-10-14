@@ -871,6 +871,20 @@ internal sealed class DatasetLoader(
         {
             status.Record($"{relinked} links to BHSA from King James verses that had none");
         }
+        // The Chinese Union's links borrow the same running numbers, and a loaded corpus keeps the ones
+        // it drew from a number read wrong before; the recipe replays the mapping only on a cold one.
+        var union = scope.ServiceProvider.GetRequiredService<UnionStrongLinkLoader>();
+        var redrawn = await scope.ServiceProvider.GetRequiredService<OpenHebrewCuvLinkLoader>().Redraw(
+            resources,
+            async slug => (await union.Numbers(
+                slug,
+                Path.Combine(resources, SwordTextSource.Texts.Values.Single(t => t.Definition.Slug == slug).Folder),
+                cancellationToken)).Tags,
+            cancellationToken);
+        if (redrawn > 0)
+        {
+            status.Record($"{redrawn} spans of the Chinese Union's mapping drawn again from the running numbers as they read now");
+        }
     }
 
     private const int PsalmsOrdinal = 19;
