@@ -215,5 +215,7 @@ support, a psalm title merged into a verse or a number that misleads: each is on
 - Never submit a form, never sign in, never create an account, never send a suggestion or a message.
   The tool refuses them anyway; do not try.
 - Never leave the site's host. The tool refuses that too.
+- A link to another site (Wikipedia, say) opens in a new tab outside this visit: the click is recorded,
+  the tool says so, and you stay on the page you were on. It is not the site failing to open it.
 - Never look at the site any other way than through `visit`, and never search the web for it.
 - Never change anything outside your session folder.
