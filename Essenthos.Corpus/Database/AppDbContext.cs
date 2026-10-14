@@ -208,6 +208,9 @@ public class AppDbContext : DbContext
     /// <summary>The label a released corpus carries inside its dump. Empty in a working copy.</summary>
     public DbSet<CorpusRelease> CorpusReleases { get; set; } = null!;
 
+    /// <summary>How far the names the passes wrote have been carried over the links, in one row.</summary>
+    public DbSet<CarryMark> CarryMarks { get; set; } = null!;
+
     /// <summary>The people, places and peoples the text names, and where it names them.</summary>
     public DbSet<Entity> Entities { get; set; } = null!;
 
@@ -361,6 +364,8 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         NameTablesInTheSingular(modelBuilder);
+
+        modelBuilder.Entity<CarryMark>().ToTable(t => t.HasCheckConstraint("ck_carry_mark_one_row", "id = 1"));
 
         // A people's origin going away must not take the people with it: the Moabites do not stop
         // existing because the record for the man Moab was merged into another, and the claim on

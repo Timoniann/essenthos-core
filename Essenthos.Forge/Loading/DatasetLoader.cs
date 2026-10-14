@@ -1668,11 +1668,17 @@ internal sealed class DatasetLoader(
         }
     }
 
+    /// <summary>
+    /// The names already written, carried first over the links drawn since they were last carried —
+    /// a mapping step earlier in this load links verses a name was written in long before — and then
+    /// the names the numbers resolve.
+    /// </summary>
     private async Task SayWhichWordNamesWhom(CancellationToken cancellationToken)
     {
         status.Starting("the entity annotations");
 
         using var scope = services.CreateScope();
+        status.Record(await scope.ServiceProvider.GetRequiredService<AnnotationCarrier>().CarryNewLinks(cancellationToken));
         var loader = scope.ServiceProvider.GetRequiredService<EntityAnnotationLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
