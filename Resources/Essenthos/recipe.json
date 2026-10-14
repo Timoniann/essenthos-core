@@ -920,6 +920,24 @@
       "verb": "reina-valera-strong",
       "arguments": [],
       "at": "2026-10-07T20:59:00.7289377+00:00"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "SCH1951",
+        "BHSA",
+        "--apply"
+      ],
+      "note": "written down by hand: CrossWire's Schlachter leaves most names without a Strong number, or puts the name's number on the word beside it, so its names reach the Hebrew only by their letters"
+    },
+    {
+      "verb": "names",
+      "arguments": [
+        "GEEZ81",
+        "GRCBRENT",
+        "--apply"
+      ],
+      "note": "written down by hand: the Ge'ez names the aligner left unlinked, paired with the Greek name they spell"
     }
   ]
 }

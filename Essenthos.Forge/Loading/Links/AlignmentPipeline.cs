@@ -478,7 +478,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     };
 
     /// <summary>A script with no capital letters, whose words never say that they are names.</summary>
-    private static bool MarksNoNames(string? language) => language is "gez";
+    internal static bool MarksNoNames(string? language) => language is "gez";
 
     /// <summary>
     /// The Hebrew against a Greek edition, which both mark every name they print — BHSA by its part of
