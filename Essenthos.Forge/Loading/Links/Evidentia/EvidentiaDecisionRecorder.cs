@@ -387,7 +387,6 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
         EvidentiaProposalKind.SharedEntityInOrder => "shared-entity-in-order",
         EvidentiaProposalKind.ConfirmedRendering => "confirmed-rendering",
         EvidentiaProposalKind.AlignerAndLexicalEvidence => "aligner-and-lexical-evidence",
-        EvidentiaProposalKind.SameLanguagePivot => "same-language-pivot",
         _ => throw new ArgumentOutOfRangeException(nameof(kind), kind,
             $"{kind} has no stored spelling. Add it to EvidentiaDecisionRecorder.Spelling before a resolver emits it."),
     };

@@ -273,8 +273,6 @@ internal static class EvidentiaStateScore
 {
     public const string LexicalRule = "lexical";
 
-    public const string PivotRule = "pivot";
-
     private static readonly HashSet<EvidentiaAttachment> PhraseAttachments =
         [.. AttachedWords.PhraseAttachments.Select(Enum.Parse<EvidentiaAttachment>)];
 
@@ -435,7 +433,6 @@ internal static class EvidentiaStateScore
     private static string RuleOf(EvidentiaProposal proposal) =>
         proposal.Kind == EvidentiaProposalKind.AttachedWord && EvidentiaAttachedWords.Attachment(proposal) is { } attachment
             ? attachment.ToString()
-            : proposal.Kind == EvidentiaProposalKind.SameLanguagePivot ? PivotRule
             : LexicalRule;
 
     public static bool IsGrammatical(EvidentiaAnalysis word) =>

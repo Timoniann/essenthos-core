@@ -119,9 +119,6 @@ internal enum EvidentiaProposalKind
 
     /// <summary>An unplaced word on the word the statistical aligner pairs it with, where a dictionary sense or gloss names the same pair.</summary>
     AlignerAndLexicalEvidence,
-
-    /// <summary>A word on the word another text of its language states for the same word of the same verse, with a second signal.</summary>
-    SameLanguagePivot,
 }
 
 /// <param name="Head">For an attached word, the proposal of the word it belongs to.</param>

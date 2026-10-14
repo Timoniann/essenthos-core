@@ -263,7 +263,6 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         var pivot = options.PivotTexts is { Count: > 0 } pivotTexts
             ? await Pivot(pivotTexts, fromSlug, toSlug, canonicalBook, canonicalChapter, sourceAnalyses, targetAnalyses, cancellationToken)
             : EvidentiaPivot.None;
-        // A word the pivot took a placement from stays unplaced: the pivot is not then also the evidence that fills it.
         var pivotContradicted = EvidentiaPivotCheck.Contradicted(lexicalProposals, pivot, options.PivotPolicy);
         if (pivotContradicted.Count > 0)
         {
@@ -296,9 +295,6 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 .Where(proposal => !withheld.Contains(proposal.Source.Token.Id)));
         }
 
-        filled.AddRange(EvidentiaPivotCheck.Resolve(
-                sourceAnalyses, targetAnalyses, candidates, [.. lexicalProposals, .. filled], pivot, options.PivotPolicy)
-            .Where(proposal => !withheld.Contains(proposal.Source.Token.Id)));
 
         syntaxTargetGlossReviewResolution = syntaxTargetGlossReviewResolution with
         {
