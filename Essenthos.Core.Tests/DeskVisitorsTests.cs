@@ -79,6 +79,7 @@ public sealed class DeskVisitorsTests : IAsyncLifetime
         var pilot = runs[0];
         (pilot.Sessions, pilot.Reached, pilot.Note).Should().Be((3, 1, "pilot"));
         pilot.Outcomes.Should().BeEquivalentTo(new Dictionary<string, int> { ["goal"] = 1, ["bored"] = 1, ["running"] = 1 });
+        (pilot.Aggregate, runs[1].Aggregate).Should().Be((true, false));
     }
 
     [Fact]
@@ -94,10 +95,15 @@ public sealed class DeskVisitorsTests : IAsyncLifetime
         hanna.Goal.Queries.Should().Equal("псалом 90 українською");
         (hanna.Screen, hanna.Minutes, hanna.MinutesUsed, hanna.Steps).Should().Be((new VisitorScreen(1366, 768), 10, 2.5, 2));
         (hanna.EndedBy, hanna.Reached).Should().Be(("goal", true));
+        (hanna.Viewport, hanna.Persona.Language).Should().Be((new VisitorScreen(1350, 673), "uk"));
+        hanna.Usage.Should().Be(new VisitorUsage(182_400, 41, 312_000));
+        hanna.Mood.Should().BeEquivalentTo(new VisitorMood("frustrated", new VisitorFeelingAt(2, new VisitorFeeling("frustrated", 3, null))),
+            "each feeling was given once, so the stronger one leads, and the worst moment is the frustration at the end");
 
         var ivan = run.Sessions[1];
         (ivan.Goal!.Kind, ivan.EndedBy, ivan.Reached).Should().Be(("explore", "bored", (bool?)null), "an exploration has no goal to reach");
         (ivan.MinutesUsed, ivan.Steps).Should().Be((4.0, 0), "with no steps the time comes from the start and the end");
+        (ivan.Usage, ivan.Mood).Should().Be(((VisitorUsage?)null, (VisitorMood?)null), "nothing was recorded of either");
 
         var maria = run.Sessions[2];
         (maria.EndedBy, maria.Reached, maria.EndedAt).Should().Be(((string?)null, (bool?)null, (string?)null), "she is still going");
@@ -117,6 +123,14 @@ public sealed class DeskVisitorsTests : IAsyncLifetime
             .Should().Be((new VisitorTarget("12", "Псалми", "link"), "Псалми мені й треба", "001.png", (string?)null));
         read.Steps[2].Screenshot.Should().BeNull("no picture was taken at the end");
         read.Steps[2].Blocked.Should().Be("POST · /v1/suggestions", "a refusal written as an object is said in words");
+        click.Feeling.Should().Be(new VisitorFeeling("interest", 2, "о, псалми"));
+        click.Click.Should().Be(new VisitorClick(210.5, 96, 210.5, 496, new VisitorBox(180, 84, 61, 24)));
+        click.Scroll.Should().Be(new VisitorScroll(400, 0, 2400, 673));
+        (click.From, click.LoadMs).Should().Be(("http://localhost:5288/uk", 812));
+        read.Steps[2].Feeling.Should().Be(new VisitorFeeling("frustrated", 3, null), "a feeling left as kind:strength is read too");
+        read.Steps[0].Should().Match<VisitorStep>(s => s.Feeling == null && s.Click == null && s.Scroll == null && s.From == null && s.LoadMs == null,
+            "a step written before these were recorded has none of them");
+        read.Session.Mood!.Low!.Step.Should().Be(2);
 
         var report = read.Report!;
         (report.Reached, report.Summary, report.WouldReturn).Should().Be((true, "Знайшла", "Так"));
@@ -142,6 +156,34 @@ public sealed class DeskVisitorsTests : IAsyncLifetime
         var read = await Json<VisitorSessionResponse>(await _http.GetAsync("/desk-api/visitors/2026-10-15-pilot/s03-maria"));
 
         read.Steps.Select(s => s.N).Should().Equal(0);
+    }
+
+    [Fact]
+    public async Task ARunsAggregateIsServedAsWrittenAndIsNotThereUntilItIsWritten()
+    {
+        WritePilot();
+        Write("2026-10-01-trial/s01-oleh/session.json", Session("s01-oleh", "task", "2026-10-01T08:00:00Z", null, null, null));
+
+        var aggregate = await Json<VisitorAggregateResponse>(await _http.GetAsync("/desk-api/visitors/2026-10-15-pilot/aggregate"));
+
+        aggregate.Should().Be(new VisitorAggregateResponse("2026-10-15-pilot", "# Pilot\n\nTwo of three reached it.\n"));
+        (await _http.GetAsync("/desk-api/visitors/2026-10-01-trial/aggregate")).StatusCode.Should().Be(HttpStatusCode.NotFound);
+        (await _http.GetAsync("/desk-api/visitors/no-such-run/aggregate")).StatusCode.Should().Be(HttpStatusCode.NotFound);
+        (await _http.GetAsync("/desk-api/visitors/..%2F/aggregate")).StatusCode.Should().Be(HttpStatusCode.NotFound);
+    }
+
+    [Fact]
+    public void TheWorstMomentIsTheMostNegativeFeelingByItsStrengthAndTheEarliestOfEqualOnes()
+    {
+        static VisitorStep Felt(int n, string kind, int? strength) =>
+            new(n, null, null, "click", null, null, null, null, null, null, null, new VisitorFeeling(kind, strength, null), null, null, null, null);
+
+        var mood = Visitors.Mood([Felt(1, "confused", 3), Felt(2, "annoyed", 2), Felt(3, "frustrated", 1), Felt(4, "annoyed", 2), Felt(5, "delight", 3)]);
+
+        mood!.Low!.Step.Should().Be(2, "annoyed at 2 is worse than confused at 3 or frustrated at 1, and the earlier of two equal ones counts");
+        mood.Dominant.Should().Be("annoyed");
+        Visitors.Mood([Felt(1, "delight", 1), Felt(2, "interest", null)])!.Low.Should().BeNull("nothing went badly");
+        Visitors.Mood([]).Should().BeNull();
     }
 
     [Theory]
@@ -180,14 +222,24 @@ public sealed class DeskVisitorsTests : IAsyncLifetime
         const string run = "2026-10-15-pilot";
         Write($"{run}/run.json", """{ "id": "2026-10-15-pilot", "startedAt": "2026-10-15T09:00:00Z", "note": "pilot", "sessions": ["s01-hanna", "s02-ivan", "s03-maria"] }""");
 
-        Write($"{run}/s01-hanna/session.json", Session("s01-hanna", "task", "2026-10-15T09:00:00Z", "2026-10-15T09:03:00Z", "goal", true, steps: 2));
+        Write($"{run}/s01-hanna/session.json", Session("s01-hanna", "task", "2026-10-15T09:00:00Z", "2026-10-15T09:03:00Z", "goal", true, steps: 2, usage: true));
+        Write($"{run}/aggregate.md", "# Pilot\n\nTwo of three reached it.\n");
         Write($"{run}/s01-hanna/dossier.md", "# Ганна\nЯ шукаю псалом.\n");
         Write($"{run}/s01-hanna/steps/000.json",
             """{ "n": 0, "at": "2026-10-15T09:00:00Z", "elapsedSeconds": 0, "action": "start", "target": null, "value": null, "thought": null, "url": "http://localhost:5288/uk", "title": "Essenthos", "screenshot": "000.png", "blocked": null }""");
         Write($"{run}/s01-hanna/steps/001.json",
-            """{ "n": 1, "at": "2026-10-15T09:01:00Z", "elapsedSeconds": 60, "action": "click", "target": { "ref": 12, "text": "Псалми", "role": "link" }, "value": null, "thought": "Псалми мені й треба", "url": "http://localhost:5288/uk/psalms", "title": "Псалми", "screenshot": "001.png", "blocked": null }""");
+            """
+            { "n": 1, "at": "2026-10-15T09:01:00Z", "elapsedSeconds": 60, "action": "click", "target": { "ref": 12, "text": "Псалми", "role": "link" }, "value": null, "thought": "Псалми мені й треба", "url": "http://localhost:5288/uk/psalms", "title": "Псалми", "screenshot": "001.png", "blocked": null,
+            "feeling": { "kind": "Interest", "strength": 2, "words": "о, псалми" },
+            "click": { "x": 210.5, "y": 96, "pageX": 210.5, "pageY": 496, "box": { "x": 180, "y": 84, "width": 61, "height": 24 } },
+            "scroll": { "before": 400, "after": 0, "pageHeight": 2400, "viewportHeight": 673 },
+            "timing": { "loadMs": 812 }, "from": "http://localhost:5288/uk" }
+            """);
         Write($"{run}/s01-hanna/steps/002.json",
-            """{ "n": 2, "at": "2026-10-15T09:02:30Z", "elapsedSeconds": 150, "action": "end", "target": null, "value": null, "thought": "Знайшла", "url": "http://localhost:5288/uk/psalms/90", "title": "Псалом 90", "screenshot": "002.png", "blocked": { "method": "POST", "url": "/v1/suggestions" } }""");
+            """
+            { "n": 2, "at": "2026-10-15T09:02:30Z", "elapsedSeconds": 150, "action": "end", "target": null, "value": null, "thought": "Знайшла", "url": "http://localhost:5288/uk/psalms/90", "title": "Псалом 90", "screenshot": "002.png", "blocked": { "method": "POST", "url": "/v1/suggestions" },
+            "feeling": "frustrated:3" }
+            """);
         Write($"{run}/s01-hanna/steps/000.png", "png");
         Write($"{run}/s01-hanna/steps/001.png", "png");
         Write($"{run}/s01-hanna/report.json",
@@ -206,13 +258,13 @@ public sealed class DeskVisitorsTests : IAsyncLifetime
     }
 
     private static string Session(
-        string id, string kind, string startedAt, string? endedAt, string? endedBy, bool? reached, int? steps = null) =>
+        string id, string kind, string startedAt, string? endedAt, string? endedBy, bool? reached, int? steps = null, bool usage = false) =>
         JsonSerializer.Serialize(new
         {
             id,
             run = "2026-10-15-pilot",
             model = "sonnet",
-            persona = new { id = id[4..], name = id == "s01-hanna" ? "Ганна" : id[4..], summary = "одна" },
+            persona = new { id = id[4..], name = id == "s01-hanna" ? "Ганна" : id[4..], summary = "одна", language = "uk" },
             goal = new { id = id == "s01-hanna" ? "psalm-90-funeral" : "browse", kind, text = "знайти", landing = "http://localhost:5288/uk", queries = new[] { "псалом 90 українською" } },
             screen = new { width = 1366, height = 768 },
             language = "uk",
@@ -220,6 +272,8 @@ public sealed class DeskVisitorsTests : IAsyncLifetime
             startedAt,
             endedAt,
             outcome = new { endedBy, reached, steps },
+            viewport = new { width = 1350, height = 673 },
+            usage = usage ? new { tokens = 182_400, toolUses = 41, durationMs = 312_000 } : null,
         });
 
     private void Write(string relative, string content)

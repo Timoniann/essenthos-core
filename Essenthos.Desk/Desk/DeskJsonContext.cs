@@ -53,4 +53,5 @@ namespace Essenthos.Core.Desk;
 [JsonSerializable(typeof(VisitorRunsResponse))]
 [JsonSerializable(typeof(VisitorRunResponse))]
 [JsonSerializable(typeof(VisitorSessionResponse))]
+[JsonSerializable(typeof(VisitorAggregateResponse))]
 internal sealed partial class DeskJsonContext : JsonSerializerContext;
