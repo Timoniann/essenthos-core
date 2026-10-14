@@ -1,5 +1,5 @@
 {
-  "about": "Goals for simulated visitors. text is what the visitor wants, in their own words, and is the only part the visitor is told besides its landing. queries are real Google autocomplete phrasings behind the goal (queries.json, fetched 2026-10-14). landing is the path on the site a search would plausibly open; the session's host is put in front of it. fits names the personas the goal suits. checks says what the session is meant to reveal, for whoever reads the results; it is never given to the visitor. kind is task for a goal with an end, explore for a visit with none.",
+  "about": "Goals for simulated visitors. text is what the visitor wants, in their own words, and is the only part the visitor is told besides its landing. queries are real Google autocomplete phrasings behind the goal (queries.json, fetched 2026-10-14). landing is the path on the site a search would plausibly open; the session's host is put in front of it. fits names the personas the goal suits. checks says what the session is meant to reveal, for whoever reads the results; it is never given to the visitor. kind is task for a goal with an end, explore for a visit with none. typed, when present, is what the visitor types into the site's own search after arriving on the home page (the landing); the goal's text says so in the visitor's words.",
   "goals": [
     {
       "id": "psalm-90-funeral",
@@ -399,6 +399,180 @@
       "checks": "Data QA on psalm numbering, titles and verse numbers across traditions."
     },
     {
+      "id": "psalm-23-search-en",
+      "kind": "task",
+      "language": "en",
+      "text": "I want Psalm 23, \"The Lord is my shepherd\", to read with the children this morning and copy out as a memory verse. I've opened this Bible site and I'm typing \"psalm 23\" into its search.",
+      "queries": [
+        "psalm 23",
+        "psalm 23 kjv",
+        "psalm 23 1",
+        "psalm 23 niv",
+        "psalm 23 esv"
+      ],
+      "landing": "/",
+      "typed": "psalm 23",
+      "fits": [
+        "jessica",
+        "margaret"
+      ],
+      "checks": "A search that starts on the home page: does typing «psalm 23» into the site's own search lead to Psalm 23, and is it plain which translation she is reading?"
+    },
+    {
+      "id": "king-david-search-en",
+      "kind": "task",
+      "language": "en",
+      "text": "Who was King David, and what did he do? I've got this Bible site open and I'm typing \"who was king david\" into its search.",
+      "queries": [
+        "who was david in the bible",
+        "who was david in the bible and what did he do",
+        "who was david in the bible father",
+        "who was king david married to"
+      ],
+      "landing": "/",
+      "typed": "who was king david",
+      "fits": [
+        "jessica",
+        "greg"
+      ],
+      "checks": "A question typed as people type it into Google: does the site's search find the person David, or only verses with the words in them?"
+    },
+    {
+      "id": "lords-prayer-where-en",
+      "kind": "task",
+      "language": "en",
+      "text": "Where in the Bible is the Lord's Prayer? I want the exact words in the King James, and I've heard it is in two of the Gospels and they are not the same.",
+      "queries": [
+        "where in the bible is the lord's prayer",
+        "lord's prayer verse",
+        "lord's prayer kjv",
+        "lord's prayer matthew",
+        "lord's prayer in bible"
+      ],
+      "landing": "/read/matthew/6/9",
+      "fits": [
+        "jessica",
+        "oliver",
+        "margaret"
+      ],
+      "checks": "Does Matthew 6:9–13 read as the King James (with the closing doxology), and does anything on the page lead to Luke 11:2–4 so the two can be compared?"
+    },
+    {
+      "id": "genealogy-matthew-luke-en",
+      "kind": "task",
+      "language": "en",
+      "text": "Matthew and Luke give Jesus two different family trees. I want to see both lists side by side and exactly where they disagree.",
+      "queries": [
+        "genealogy of jesus matthew vs luke",
+        "genealogy of jesus explained",
+        "genealogy of jesus through mary",
+        "genealogy of jesus chart",
+        "bible contradictions list"
+      ],
+      "landing": "/genealogies/jesus",
+      "fits": [
+        "greg",
+        "oliver"
+      ],
+      "checks": "Is the English genealogies page readable to someone who arrives on it from search: are the two lines shown side by side, are the disagreements (from David on) visible, and is each name tied to its verse?"
+    },
+    {
+      "id": "greek-words-love-en",
+      "kind": "task",
+      "language": "en",
+      "text": "People keep saying the New Testament has different Greek words for love, agape and phileo. I want to see what each one means and a few verses where each is used.",
+      "queries": [
+        "bible greek words for love",
+        "bible greek words and their meanings",
+        "bible greek word study",
+        "bible greek word dictionary",
+        "strong's concordance online"
+      ],
+      "landing": "/strong/G26",
+      "fits": [
+        "oliver",
+        "mark"
+      ],
+      "checks": "Landing on agape (G26): can he get to agapao (G25) and phileo (G5368) from there, and are the verses for each shown in English?"
+    },
+    {
+      "id": "bethlehem-where-en",
+      "kind": "task",
+      "language": "en",
+      "text": "Where exactly was Bethlehem, and is it the same place as the Bethlehem on the news today? My kids are asking, and I'd like a map to show them.",
+      "queries": [
+        "where was bethlehem",
+        "where was bethlehem located",
+        "where was bethlehem when jesus was born",
+        "where was bethlehem in modern day",
+        "where was bethlehem and nazareth"
+      ],
+      "landing": "/places/bethlehem",
+      "fits": [
+        "jessica",
+        "greg"
+      ],
+      "checks": "Does the place page show where Bethlehem is on a map and that it is today's Bethlehem, and does it keep apart the Bethlehem in Zebulun?"
+    },
+    {
+      "id": "psalm-90-search",
+      "kind": "task",
+      "language": "uk",
+      "text": "Мені потрібен дев'яностий псалом, щоб прочитати його на похороні. Відкриваю цей сайт і пишу в його пошуку «псалом 90».",
+      "queries": [
+        "псалом 90",
+        "псалом 90 українською",
+        "псалом 90 текст",
+        "псалом 90 читати",
+        "псалом 90 молитва"
+      ],
+      "landing": "/uk",
+      "typed": "псалом 90",
+      "fits": [
+        "hanna",
+        "olena"
+      ],
+      "checks": "A search that starts on the home page: what does «псалом 90» typed into the site's search open, the Hebrew 90 («Молитва Мойсея») or the church 90 (91 here), and does anything say which?"
+    },
+    {
+      "id": "king-david-search",
+      "kind": "task",
+      "language": "uk",
+      "text": "Хочу коротко дізнатися, хто такий цар Давид: коли жив, чим відомий, хто його родина. Відкриваю цей сайт і пишу в його пошуку «цар Давид».",
+      "queries": [
+        "хто такий давид",
+        "хто такий давид з біблії",
+        "хто такий давид і голіаф"
+      ],
+      "landing": "/uk",
+      "typed": "цар Давид",
+      "fits": [
+        "sofiia",
+        "andriy"
+      ],
+      "checks": "Does «цар Давид» typed into the site's search find the person David, or only verses with the words?"
+    },
+    {
+      "id": "lords-prayer-search",
+      "kind": "task",
+      "language": "uk",
+      "text": "Хочу прочитати молитву «Отче наш» так, як вона написана в Біблії, і дізнатися, де саме її там шукати. Відкриваю цей сайт і пишу в його пошуку «Отче наш».",
+      "queries": [
+        "молитва отче наш",
+        "молитва отче наш українською",
+        "молитва отче наш текст",
+        "молитва отче наш українською в біблії"
+      ],
+      "landing": "/uk",
+      "typed": "Отче наш",
+      "fits": [
+        "hanna",
+        "andriy",
+        "sofiia"
+      ],
+      "checks": "Does «Отче наш» typed into the site's search lead to Matthew 6:9 (and Luke 11:2) in a Ukrainian text?"
+    },
+    {
       "id": "explore-home",
       "kind": "explore",
       "language": "uk",
@@ -469,7 +643,10 @@
       "landing": "/read/genesis/1",
       "fits": [
         "mark",
-        "margaret"
+        "margaret",
+        "oliver",
+        "greg",
+        "jessica"
       ],
       "checks": "The same first impression in English, from a chapter rather than the home page."
     }
