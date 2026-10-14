@@ -105,6 +105,7 @@ internal sealed record MarkerRematchOutcome(
     int Changed,
     int Removed,
     int Added,
+    int Joined,
     int Dropped,
     int ClaimsLost,
     int Confirmed,
@@ -115,7 +116,8 @@ internal sealed record MarkerRematchOutcome(
 {
     public override string ToString() =>
         $"{Named} links naming the object marker, {Considered} links considered with them; {Changed} changed " +
-        $"({Dropped} witness words taken off them), {Removed} removed ({ClaimsLost} claims of another method " +
+        $"({Dropped} witness words taken off them), {Joined} joined to the link already on their new words, " +
+        $"{Removed} removed ({ClaimsLost} claims of another method " +
         $"with them), {Added} added ({Confirmed} aligner links confirmed and folded in, {Contradicted} " +
         $"contradicted and removed). By confidence, before {Tiers(Before)}; after {Tiers(After)}. {Elapsed}";
 
@@ -275,6 +277,30 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         FROM restated
         WHERE c.link_id = restated.id AND c.method = restated.method
           AND c.provenance_id = restated.provenance_id
+        """;
+
+    /// <summary>
+    /// A changed link joined to the link already on its new words: every claim it carries moves onto
+    /// that link, with the standing link's own statement kept as a claim beside them, and the stronger
+    /// claim becomes its answer, as <see cref="LinkWriter"/> joins a draft to a link already there.
+    /// </summary>
+    private static readonly string JoinStanding =
+        $"""
+        WITH joined AS (
+            SELECT * FROM unnest(@links, @into) AS j (link_id, into_id)
+        ), claimed AS (
+            INSERT INTO link_claim (link_id, method, confidence, provenance_id)
+            SELECT j.into_id, c.method, c.confidence, c.provenance_id
+            FROM joined j JOIN link_claim c ON c.link_id = j.link_id
+            UNION
+            SELECT l.id, l.method, l.confidence, l.provenance_id
+            FROM joined j JOIN link l ON l.id = j.into_id
+            ON CONFLICT DO NOTHING
+        )
+        UPDATE link l
+        SET method = s.method, confidence = s.confidence, provenance_id = s.provenance_id
+        FROM joined j JOIN link s ON s.id = j.link_id
+        WHERE l.id = j.into_id AND {LinkWriter.Standing("l.method")} < {LinkWriter.Standing("s.method")}
         """;
 
     public Task<TaggedTextLinkOutcome> Load(
@@ -483,7 +509,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         if (seeds.Count == 0)
         {
             return new MarkerRematchOutcome(
-                0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<double, int>(), new Dictionary<double, int>(), started.Elapsed);
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<double, int>(), new Dictionary<double, int>(), started.Elapsed);
         }
 
         var (drafts, _, _, _, _, _, _) = await Match(from, to, edition, cancellationToken);
@@ -562,7 +588,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         if (stale.Count == 0)
         {
             return (new MarkerRematchOutcome(
-                0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<double, int>(), new Dictionary<double, int>(), started.Elapsed),
+                0, 0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<double, int>(), new Dictionary<double, int>(), started.Elapsed),
                 0, new HashSet<long>());
         }
 
@@ -628,12 +654,19 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             }
         }
 
+        long[] removedIds = [.. removed.Select(link => link.Link)];
+        var standing = await AlreadyStanding(fromTextId, toTextId, changed, removedIds, cancellationToken);
+        var joined = changed
+            .Where(change => standing.ContainsKey(change.Link.Link))
+            .Select(change => (change.Link, change.Draft, Into: standing[change.Link.Link]))
+            .ToList();
+        changed.RemoveAll(change => standing.ContainsKey(change.Link.Link));
+
         var added = matches.Where(draft => !claimed.Contains(draft)).ToList();
         var settled = NumberedLinkSettlement.Settle(
             [.. added.Select(d => ((IReadOnlyList<long>)d.From, (IReadOnlyList<long>)d.To))],
             guesses);
 
-        long[] removedIds = [.. removed.Select(link => link.Link)];
         var claimsLost = removedIds.Length == 0
             ? 0
             : await db.LinkClaims.CountAsync(
@@ -641,7 +674,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
 
         if (apply)
         {
-            await Rewrite(fromTextId, toTextId, source, changed, removedIds, added, settled, cancellationToken);
+            await Rewrite(fromTextId, toTextId, source, changed, joined, removedIds, added, settled, cancellationToken);
         }
 
         var outcome = new MarkerRematchOutcome(
@@ -650,6 +683,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             changed.Count,
             removed.Count,
             added.Count,
+            joined.Count,
             changed.Sum(change => change.Link.To.Count(word => !change.Draft.To.Contains(word))),
             claimsLost,
             settled.Count(s => s.Verdict == SettledVerdict.Confirmed),
@@ -658,6 +692,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             Tiers(matches.Select(draft => draft.Confidence)),
             started.Elapsed);
         var touched = changed.SelectMany(c => c.Link.From.Concat(c.Link.To).Concat(c.Draft.To))
+            .Concat(joined.SelectMany(j => j.Link.From.Concat(j.Link.To).Concat(j.Draft.To)))
             .Concat(removed.SelectMany(link => link.From.Concat(link.To)))
             .Concat(added.SelectMany(draft => draft.From.Concat(draft.To)))
             .ToHashSet();
@@ -666,6 +701,44 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
 
     private static Dictionary<double, int> Tiers(IEnumerable<double> confidences) =>
         confidences.GroupBy(confidence => Math.Round(confidence, 2)).ToDictionary(tier => tier.Key, tier => tier.Count());
+
+    /// <summary>
+    /// For each changed link whose new words another link of the pair already names — one of another
+    /// method, such as the aligner's, or one outside the links the rematch reads — that link. The pair
+    /// cannot hold two links over one set of words, so the changed link joins it as a claim rather
+    /// than moving onto it.
+    /// </summary>
+    private async Task<Dictionary<long, long>> AlreadyStanding(
+        int fromTextId,
+        int toTextId,
+        List<(DrawnLink Link, Draft Draft)> changed,
+        long[] removed,
+        CancellationToken cancellationToken)
+    {
+        var moving = changed.Where(change => !SameWords(change.Draft.To, change.Link.To)).ToList();
+        if (moving.Count == 0)
+        {
+            return [];
+        }
+
+        var byShape = moving.ToDictionary(change => LinkShape.Of(change.Link.From, change.Draft.To), change => change.Link.Link);
+        var shapes = byShape.Keys.ToList();
+        long[] leaving = [.. removed, .. changed.Select(change => change.Link.Link)];
+        var standing = await db.Links
+            .Where(l => l.FromTextId == fromTextId && l.ToTextId == toTextId && l.Fingerprint != null
+                        && shapes.Contains(l.Fingerprint.Value) && !leaving.Contains(l.Id))
+            .Select(l => new { l.Id, Shape = l.Fingerprint!.Value, l.Relation })
+            .ToListAsync(cancellationToken);
+        if (standing.FirstOrDefault(l => l.Relation != LinkRelation.Renders) is { } other)
+        {
+            throw new InvalidOperationException(
+                $"Link {other.Id} names the words link {byShape[other.Shape]} is matched to now, but says they " +
+                $"{EnumSpelling.Of(other.Relation)} where the numbers say {EnumSpelling.Of(LinkRelation.Renders)}. " +
+                "One set of words cannot be both; withdraw the link that is wrong before matching the pair again.");
+        }
+
+        return standing.ToDictionary(l => byShape[l.Shape], l => l.Id);
+    }
 
     /// <summary>
     /// The links a rematch acts on and the matches that stand in their place: the links naming a
@@ -756,6 +829,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         int toTextId,
         string source,
         List<(DrawnLink Link, Draft Draft)> changed,
+        List<(DrawnLink Link, Draft Draft, long Into)> joined,
         long[] removed,
         List<Draft> added,
         List<Settled> settled,
@@ -802,6 +876,28 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             restate.Parameters.AddWithValue("links", changed.Select(c => c.Link.Link).ToArray());
             restate.Parameters.AddWithValue("confidences", changed.Select(c => c.Draft.Confidence).ToArray());
             await restate.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        if (joined.Count > 0)
+        {
+            long[] leaving = [.. joined.Select(j => j.Link.Link)];
+            await using (var restate = new NpgsqlCommand(Restate, connection))
+            {
+                restate.Parameters.AddWithValue("links", leaving);
+                restate.Parameters.AddWithValue("confidences", joined.Select(j => j.Draft.Confidence).ToArray());
+                await restate.ExecuteNonQueryAsync(cancellationToken);
+            }
+
+            await using (var join = new NpgsqlCommand(JoinStanding, connection))
+            {
+                join.Parameters.AddWithValue("links", leaving);
+                join.Parameters.AddWithValue("into", joined.Select(j => j.Into).ToArray());
+                await join.ExecuteNonQueryAsync(cancellationToken);
+            }
+
+            await using var remove = new NpgsqlCommand(RemoveSettled, connection);
+            remove.Parameters.AddWithValue("ids", leaving);
+            await remove.ExecuteNonQueryAsync(cancellationToken);
         }
 
         if (added.Count > 0)
