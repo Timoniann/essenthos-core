@@ -69,7 +69,7 @@ public sealed class EntitySearchTests : IDisposable
         _abram = Record("abram", "Abram", ("Abram", BibleDataLoader.LabelKind), ("Abraham", BibleDataLoader.LabelKind));
         _barnabas = Record("joseph-12", "Joseph", ("Joseph", BibleDataLoader.LabelKind), ("Barnabas", BibleDataLoader.LabelKind));
         _paul = Record("saul-2", "Saul", ("Saul", BibleDataLoader.LabelKind), ("Paul", BibleDataLoader.LabelKind));
-        _elijah = Record("elijah", "Elijah", ("Elijah", BibleDataLoader.LabelKind));
+        _elijah = Record("elijah", "Elijah", ("Elijah", BibleDataLoader.LabelKind), ("Elijah the Tishbite", BibleDataLoader.LabelKind));
         _cityOfDavid = Record("cityofdavid", "City of David", ("City of David", BibleDataLoader.LabelKind));
         _db.SaveChanges();
 
@@ -86,6 +86,11 @@ public sealed class EntitySearchTests : IDisposable
         Printed(ohienko, _barnabas, "Йосип", 1);
         Printed(ohienko, _barnabas, "Йосипа", 1);
         Printed(ohienko, _paul, "Павло", 120, heading: true);
+        Printed(ohienko, _paul, "Павла", 40);
+        Printed(ohienko, _abram, "Авраам", 90);
+        Printed(ohienko, _abram, "Авраама", 50);
+        Printed(ohienko, _abram, "Аврам", 28, heading: true);
+        Printed(ohienko, _abram, "Аврама", 12);
         Printed(ohienko, _paul, "Савл", 15);
         Printed(ohienko, _david, "Давид", 800, heading: true);
         Printed(ohienko, _david, "Давида", 200);
@@ -98,6 +103,20 @@ public sealed class EntitySearchTests : IDisposable
         Named(_david, 20);
         Named(_cityOfDavid, 5);
         Named(_abram, 3);
+
+        // Each verse the dataset lists says which name it uses: Paul far more often than Saul,
+        // Barnabas and never Joseph, Abraham more than Abram; David by his one name.
+        Named(_paul, 6, "Paul", from: 100);
+        Named(_paul, 2, "Saul", from: 200);
+        Named(_paul, 1, "they", from: 300);
+        Named(_barnabas, 3, "Barnabas", from: 100);
+        Named(_abram, 4, "Abraham", from: 100);
+        Named(_abram, 2, "Abram", from: 200);
+        Named(_abram, 9, "Abraham our father", from: 300);
+        Named(_david, 3, "David", from: 100);
+        Named(_jesus, 5, "Son of David", from: 100);
+        Named(_elijah, 4, "Elijah the Tishbite", from: 100);
+        Named(_elijah, 1, "Elijah", from: 200);
         _db.SaveChanges();
     }
 
@@ -143,14 +162,14 @@ public sealed class EntitySearchTests : IDisposable
             Occurrences = occurrences, Heading = heading,
         });
 
-    private void Named(Entity entity, int verses)
+    private void Named(Entity entity, int verses, string? label = null, int from = 1)
     {
-        for (var verse = 1; verse <= verses; verse++)
+        for (var verse = from; verse < from + verses; verse++)
         {
             _db.EntityVerses.Add(new EntityVerse
             {
                 EntityId = entity.Id, CanonicalBook = 1, CanonicalChapter = 1, CanonicalVerse = verse,
-                Source = BibleDataLoader.Source,
+                Label = label, Source = BibleDataLoader.Source,
             });
         }
     }
@@ -214,26 +233,42 @@ public sealed class EntitySearchTests : IDisposable
         var matched = await EntityNames.Matching(_db, _db.Entities, typed).Select(e => e.Id).ToListAsync();
         var shown = await EntityNames.Localised(_db, _db.Entities.Where(e => matched.Contains(e.Id)), "ukr")
             .ToDictionaryAsync(l => l.Entity.Id, l => l.Shown);
+        var renamed = await RenamedHeadings.Of(_db, shown.Keys, "ukr", CancellationToken.None);
+        foreach (var (id, heads) in renamed)
+        {
+            shown[id] = heads.LocalName ?? heads.Name;
+        }
+
         var slugs = await _db.Entities.ToDictionaryAsync(e => e.Id, e => e.Slug);
-        return (await EntityNames.FoundAs(_db, shown, typed, CancellationToken.None))
+        return (await EntityNames.FoundAs(_db, shown, typed, CancellationToken.None, renamed))
             .ToDictionary(pair => slugs[pair.Key], pair => pair.Value);
     }
 
     [Fact]
-    public async Task ARowFoundByAnotherNameSaysWhichInTheReadersText() =>
-        (await FoundAs("Варнава")).Should().BeEquivalentTo(new Dictionary<string, EntityMatchResponse>
-        {
-            ["joseph-12"] = new("Варнава", MatchKinds.Name),
-        });
+    public async Task ARowFoundByAnotherNameSaysWhichInTheReadersText()
+    {
+        (await FoundAs("Савл"))["saul-2"].Should().Be(new EntityMatchResponse("Савл", MatchKinds.Name));
+        (await FoundAs("Аврам"))["abram"].Should().Be(new EntityMatchResponse("Аврам", MatchKinds.Name));
+    }
 
     [Fact]
     public async Task ARowFoundByAnotherNameOfTheSourceSaysWhich()
     {
-        (await FoundAs("Barnabas"))["joseph-12"].Should().Be(new EntityMatchResponse("Barnabas", MatchKinds.Name));
-        (await FoundAs("Paul"))["saul-2"].Should().Be(new EntityMatchResponse("Paul", MatchKinds.Name));
-        (await FoundAs("Павло"))["saul-2"].Should().Be(new EntityMatchResponse("Павло", MatchKinds.Name));
-        (await FoundAs("Abraham"))["abram"].Should().Be(new EntityMatchResponse("Abraham", MatchKinds.Name));
+        (await FoundAs("Joseph"))["joseph-12"].Should().Be(new EntityMatchResponse("Joseph", MatchKinds.Name));
+        (await FoundAs("Saul"))["saul-2"].Should().Be(new EntityMatchResponse("Saul", MatchKinds.Name));
+        (await FoundAs("Abram"))["abram"].Should().Be(new EntityMatchResponse("Abram", MatchKinds.Name));
     }
+
+    [Theory]
+    [InlineData("Варнава", "joseph-12")]
+    [InlineData("Barnabas", "joseph-12")]
+    [InlineData("Paul", "saul-2")]
+    [InlineData("Павло", "saul-2")]
+    [InlineData("Павла", "saul-2")]
+    [InlineData("Abraham", "abram")]
+    [InlineData("Авраама", "abram")]
+    public async Task ARowFoundByTheNameItIsHeadedWithSaysNothing(string typed, string slug) =>
+        (await FoundAs(typed)).Should().NotContainKey(slug);
 
     [Fact]
     public async Task ARowFoundOnlyThroughATitleSaysTheTitle()
@@ -253,7 +288,42 @@ public sealed class EntitySearchTests : IDisposable
     public async Task ARowWhoseHeadingHoldsWhatWasTypedSaysNothing(string typed) =>
         (await FoundAs(typed)).Should().NotContainKey("david");
 
+    /// <summary>
+    /// Paul is named in more verses than Saul, Barnabas than Joseph, Abraham than Abram, so each is
+    /// headed by that name — in Ukrainian as the Ohienko Bible prints it — and told to be also called
+    /// the name the record is filed under. David has one name, and Abraham's titles are not names.
+    /// </summary>
     [Fact]
-    public async Task ACaseOfTheHeadingIsNotAnotherName() =>
-        (await FoundAs("Йосипа")).Should().NotContainKey("joseph-12");
+    public async Task ARenamedPersonIsHeadedByTheNameTheTextUsesMost()
+    {
+        var ukrainian = await RenamedHeadings.Of(
+            _db, [_paul.Id, _barnabas.Id, _abram.Id, _david.Id, _jesus.Id], "ukr", CancellationToken.None);
+        var english = await RenamedHeadings.Of(_db, [_paul.Id, _barnabas.Id, _abram.Id], "eng", CancellationToken.None);
+
+        ukrainian.Should().BeEquivalentTo(new Dictionary<int, RenamedHeading>
+        {
+            [_paul.Id] = new("Paul", "Павло", "Saul", "Савл"),
+            [_barnabas.Id] = new("Barnabas", "Варнава", "Joseph", "Йосип"),
+            [_abram.Id] = new("Abraham", "Авраам", "Abram", "Аврам"),
+        });
+        english[_paul.Id].Should().Be(new RenamedHeading("Paul", null, "Saul", null));
+        english[_paul.Id].AlsoCalled.Should().Be("Saul");
+        ukrainian[_paul.Id].AlsoCalled.Should().Be("Савл");
+        english[_abram.Id].Should().Be(new RenamedHeading("Abraham", null, "Abram", null));
+    }
+
+    /// <summary><em>Elijah the Tishbite</em> says which Elijah; it does not rename him.</summary>
+    [Fact]
+    public async Task ANameWithAnEpithetIsNotARenaming() =>
+        (await RenamedHeadings.Of(_db, [_elijah.Id], "eng", CancellationToken.None)).Should().BeEmpty();
+
+    [Fact]
+    public void ADeclinedSpellingIsTheNameItDeclines()
+    {
+        EntityNames.SameName("павло", "павла").Should().BeTrue();
+        EntityNames.SameName("йосип", "йосипові").Should().BeTrue();
+        EntityNames.SameName("ілля", "іллі").Should().BeTrue();
+        EntityNames.SameName("аврам", "авраам").Should().BeFalse();
+        EntityNames.SameName("йосип", "варнава").Should().BeFalse();
+    }
 }

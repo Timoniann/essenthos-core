@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -52,6 +52,13 @@ internal record EntitySummaryResponse(
     /// and outside a search.
     /// </summary>
     public EntityMatchResponse? Matched { get; init; }
+
+    /// <summary>
+    /// The name a renamed person's record is filed under, in the language asked for where the corpus
+    /// holds it, for a client to say they are also called that: <em>Савл</em> beside <em>Павло</em>.
+    /// Null for everyone the text calls by one name most and the record is filed under.
+    /// </summary>
+    public string? AlsoCalled { get; init; }
 }
 
 /// <summary>The name or title a search found an entity by.</summary>
@@ -258,6 +265,13 @@ internal record EntityResponse(
 
     /// <summary>The name in the language asked for, as on the index; null where there is none.</summary>
     public string? LocalName { get; init; }
+
+    /// <summary>
+    /// The name a renamed person's record is filed under, in the language asked for where the corpus
+    /// holds it: the page is headed <em>Павло</em> and says he is also called <em>Савл</em>. Null for
+    /// everyone else.
+    /// </summary>
+    public string? AlsoCalled { get; init; }
 
     /// <summary>
     /// True where the name is the source's alone: a language other than English was asked for, the

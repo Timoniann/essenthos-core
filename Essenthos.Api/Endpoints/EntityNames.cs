@@ -332,11 +332,16 @@ internal static class EntityNames
     /// <em>Давида</em> found <em>Давид</em>.
     /// </summary>
     /// <param name="shown">The name each row is headed with, by entity id.</param>
+    /// <param name="renamed">
+    /// The rows headed by another name than the one the record is filed under, whose filed name is
+    /// therefore one of the other names a search can find them by.
+    /// </param>
     public static async Task<Dictionary<int, EntityMatchResponse>> FoundAs(
         AppDbContext db,
         IReadOnlyDictionary<int, string> shown,
         string q,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        IReadOnlyDictionary<int, RenamedHeading>? renamed = null)
     {
         string[] typed = [.. new[] { q, TitleWords.Without(q) }.OfType<string>().Select(NameFolding.Fold).Where(t => t.Length > 0)];
         var ids = shown.Keys.ToList();
@@ -371,8 +376,15 @@ internal static class EntityNames
         foreach (var (id, heading) in shown)
         {
             var own = new List<string> { heading };
-            own.AddRange(headwords.Where(h => h.Id == id).Select(h => h.Name));
-            own.AddRange(nominatives.Where(f => f.EntityId == id).Select(f => f.Form));
+            if (renamed?.GetValueOrDefault(id) is { } heads)
+            {
+                own.Add(heads.Name);
+            }
+            else
+            {
+                own.AddRange(headwords.Where(h => h.Id == id).Select(h => h.Name));
+                own.AddRange(nominatives.Where(f => f.EntityId == id).Select(f => f.Form));
+            }
             if (own.Any(Holds))
             {
                 continue;
@@ -407,22 +419,22 @@ internal static class EntityNames
 
     /// <summary>
     /// Whether a printed spelling is one case of a name rather than another name: <em>Йосипа</em> and
-    /// <em>Йосипові</em> are <em>Йосип</em>, <em>Варнава</em> is not. A declined form keeps all but the
-    /// last letter or two of the name it declines.
+    /// <em>Йосипові</em> are <em>Йосип</em> and <em>Павла</em> is <em>Павло</em>; <em>Варнава</em> is
+    /// not <em>Йосип</em>, and <em>Авраам</em> is not <em>Аврам</em>. Both are folded. A declined form keeps
+    /// the whole name, less the vowel or soft sign a case ending replaces.
     /// </summary>
-    internal static bool SameName(string name, string spelling)
-    {
-        var shared = 0;
-        while (shared < name.Length && shared < spelling.Length && name[shared] == spelling[shared])
-        {
-            shared++;
-        }
+    internal static bool SameName(string name, string spelling) =>
+        name.Length > 0 && spelling.StartsWith(Stem(name), StringComparison.Ordinal);
 
-        return shared > 0 && shared >= Math.Min(name.Length, spelling.Length) - DeclinedLetters;
-    }
+    /// <summary>A folded name without the last letter a case ending may replace.</summary>
+    private static string Stem(string name) =>
+        name.Length > MinimumStem && ReplacedByEndings.Contains(name[^1]) ? name[..^1] : name;
 
-    /// <summary>How many letters at the end of a name a case ending may change.</summary>
-    private const int DeclinedLetters = 2;
+    /// <summary>The letters a case ending takes the place of: <em>Павл-о</em>, <em>Ілл-я</em>, <em>Но-й</em>.</summary>
+    private const string ReplacedByEndings = "аеєиіїоуюяыэйьaeiouy";
+
+    /// <summary>The fewest letters a stem keeps, so a two-letter name is not reduced to one.</summary>
+    private const int MinimumStem = 2;
 
     /// <summary>By the shown name in the language's own order, and by slug where two names are the same.</summary>
     public static IOrderedQueryable<LocalisedEntity> Alphabetical(

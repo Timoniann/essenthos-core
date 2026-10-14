@@ -416,8 +416,12 @@ internal sealed class PageLoader(
             return null;
         }
 
-        var local = (await EntityNames.Of(db, [entity.Id], language.Corpus, cancellationToken)).GetValueOrDefault(entity.Id);
-        return new ShownEntity(entity.Id, entity.Slug, entity.Kind, string.IsNullOrEmpty(local) ? entity.Name : local, entity.Distinguisher);
+        var renamed = (await RenamedHeadings.Of(db, [entity.Id], language.Corpus, cancellationToken)).GetValueOrDefault(entity.Id);
+        var local = renamed is null
+            ? (await EntityNames.Of(db, [entity.Id], language.Corpus, cancellationToken)).GetValueOrDefault(entity.Id)
+            : renamed.LocalName;
+        var name = renamed?.Name ?? entity.Name;
+        return new ShownEntity(entity.Id, entity.Slug, entity.Kind, string.IsNullOrEmpty(local) ? name : local, entity.Distinguisher);
     }
 
     private async Task<string?> Picture(string slug, CancellationToken cancellationToken) =>
