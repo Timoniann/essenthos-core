@@ -49,7 +49,17 @@ internal sealed record SwordText(
 /// empty for a word no element claims. Never stored: <see cref="UnionStrongLinkLoader"/> reads them.
 /// </param>
 /// <param name="Unit">The element the word came from, so a phrase tagged once is one rendering.</param>
-internal sealed record SwordWord(string Surface, string Trailer, IReadOnlyList<string> Numbers, int Unit, bool Elided);
+/// <param name="Positions">
+/// The places of the Greek words the element renders in the Received Text verse, where the module
+/// states them; empty elsewhere. Never stored: <see cref="CrossWirePositionLinkLoader"/> reads them.
+/// </param>
+internal sealed record SwordWord(
+    string Surface, string Trailer, IReadOnlyList<string> Numbers, int Unit, bool Elided,
+    IReadOnlyList<StatedPosition>? Positions = null);
+
+/// <param name="Book">The canonical ordinal of the verse the element stands in.</param>
+/// <param name="Positions">The Greek words it renders, by their place in the Received Text.</param>
+internal sealed record StatedPositions(int Book, int Chapter, int Verse, IReadOnlyList<StatedPosition> Positions);
 
 /// <summary>
 /// The Chinese Union Version and the Korean Revised Version, as CrossWire publishes them in SWORD
@@ -441,6 +451,28 @@ internal static class SwordTextSource
             verse => verse.Key,
             verse => verse.Value.Words.Select(word => new EditionWord(word.Surface, word.Numbers, word.Unit)).ToList());
 
+    /// <summary>
+    /// The Received Text positions the module states, by the element they stand on, numbered as
+    /// <see cref="Numbers"/> numbers it — so a word the numbers were laid onto finds its positions by
+    /// its unit.
+    /// </summary>
+    public static Dictionary<int, StatedPositions> Positions(string folder)
+    {
+        var positions = new Dictionary<int, StatedPositions>(140_000);
+        foreach (var (address, verse) in Verses(folder).Verses)
+        {
+            foreach (var word in verse.Words)
+            {
+                if (word.Positions is { Count: > 0 } stated)
+                {
+                    positions.TryAdd(word.Unit, new StatedPositions(address.Book, address.Chapter, address.Verse, stated));
+                }
+            }
+        }
+
+        return positions;
+    }
+
     private static VerseDraft Draft(int number, ReadVerse verse) =>
         new(number, [.. verse.Words.Select(word => new WordDraft(word.Surface, word.Trailer, Elided: word.Elided))])
         {
@@ -573,6 +605,8 @@ internal static class SwordTextSource
 
             IReadOnlyList<string> numbers =
                 piece.Kind == OsisPieceKind.Word ? UnionStrongNumbers.Read(piece.Lemma, fhlPrefixes) : [];
+            IReadOnlyList<StatedPosition> positions =
+                piece.Kind == OsisPieceKind.Word ? ReceivedTextPositions.Read(piece.Lemma, piece.Source) : [];
             var element = piece.Kind != OsisPieceKind.Word
                 ? 0
                 : piece.Split is not { } split
@@ -611,7 +645,7 @@ internal static class SwordTextSource
                     continue;
                 }
 
-                words.Add(new SwordWord(run, string.Empty, numbers, element > 0 ? element : ++unit, Elided: false));
+                words.Add(new SwordWord(run, string.Empty, numbers, element > 0 ? element : ++unit, Elided: false, positions));
                 joinable = !tagged;
             }
         }

@@ -62,15 +62,18 @@ It is honoured: both editors are named on the `text` row for this edition, in
   `csv-unicode/strongs/with-parsing`. Not loaded. It is the answer key: the beta-code table in
   `Byzantine/Bp5BetaCode.cs` was derived from it and is checked against all 140,149 words in the
   tests, the same way the Textus Receptus extraction is checked against `scrivener/*.SCV`.
+- `ccat/*.TXT` — Robinson's accented text with his apparatus inline, from `source/CCAT`, taken on
+  **2026-10-14** at the same commit as the parse (27a45ff1, v3.3.2), so the notes describe the text
+  that is loaded. The 27 books and the two files beside them: `04a_PA` (the adulteress pericope
+  printed apart, with its own notes) and `05a_ACT24` (the longer text of Acts 24:6-8). Under the same
+  two statements as the rest of the repository. Read by `Byzantine/CcatReader.cs`: the notes where
+  the Byzantine manuscripts divide (B) and where Nestle-Aland 28 and the *Editio Critica Maior* read
+  otherwise (N, E) are linked where a loaded edition prints the other reading at the place. The two
+  files beside the books are not read.
 
-## What is not taken, and why it is worth coming back for
+## What is not taken
 
-`source/CCAT` is Robinson's accented text with the critical apparatus inline: the places where the
-Byzantine tradition itself divides, and where it parts from Nestle-Aland and the *Editio Critica
-Maior*. It is a second edition's worth of stated variation, in the same `{ }` notation the Textus
-Receptus composite's variant groups already use. Nothing here reads it yet.
-
-`tei-xml-unicode` and the other CSV forms are derived from the two files above and add nothing this
+`tei-xml-unicode` and the other CSV forms are derived from the parse and the CCAT text and add nothing this
 corpus needs.
 
 ## Which of the four representations is authoritative

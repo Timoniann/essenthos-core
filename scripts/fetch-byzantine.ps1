@@ -9,10 +9,11 @@
     does. Every word carries a Strong number, so it joins the other three Greek panes on the numbers
     they all state, with no aligner.
 
-    Two things are taken. Robinson's own parsed beta code, which is what gets loaded; and the
+    Three things are taken. Robinson's own parsed beta code, which is what gets loaded; the
     repository's Unicode conversion of exactly those files, which is not loaded and is kept as the
-    answer key the beta-code table is checked against. The accented CCAT text with its apparatus and
-    the TEI-XML are left where they are — nothing reads them yet.
+    answer key the beta-code table is checked against; and the accented CCAT text with Robinson's
+    apparatus inline, which is read for the places the Byzantine tradition divides against itself and
+    where it parts from Nestle-Aland and the Editio Critica Maior. The TEI-XML is left where it is.
 
     The licence is checked, not assumed. Both statements attached to the bytes must still be
     public-domain dedications, and if either stops this stops and replaces nothing. The commit is
@@ -28,8 +29,9 @@ param(
     [string] $ResourcesPath = (Join-Path $PSScriptRoot '..' 'Resources'),
 
     # A branch, tag or commit of byztxt/byzantine-majority-text. Releases are 3.x.x; the README
-    # warns that the Unicode files of anything before 2.0.3 carry conversion errors.
-    [string] $Ref = 'master'
+    # warns that the Unicode files of anything before 2.0.3 carry conversion errors. The default is
+    # the commit the loaded text was taken from (v3.3.2), so the apparatus describes the same text.
+    [string] $Ref = '27a45ff1b7be6c17ccbfeac414f3f55732ae8e28'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -48,6 +50,10 @@ $Books = @(
 # The whole New Testament, as the 2018 edition prints it. A short download is a partial one.
 $ExpectedVerses = 7957
 
+# The CCAT files beyond one per book: the pericope of the adulteress, which Robinson prints apart
+# with its own apparatus, and the longer text of Acts 24:6-8.
+$CcatExtras = @('04a_PA', '05a_ACT24')
+
 $commit = (Invoke-RestMethod -Uri "https://api.github.com/repos/$Repository/commits/$Ref" `
     -Headers @{ 'User-Agent' = 'essenthos' }).sha
 $raw = "https://raw.githubusercontent.com/$Repository/$commit"
@@ -55,6 +61,7 @@ $raw = "https://raw.githubusercontent.com/$Repository/$commit"
 $staging = Join-Path ([IO.Path]::GetTempPath()) "byzantine-$([guid]::NewGuid().ToString('n'))"
 New-Item -ItemType Directory -Force -Path (Join-Path $staging 'strongs') | Out-Null
 New-Item -ItemType Directory -Force -Path (Join-Path $staging 'unicode') | Out-Null
+New-Item -ItemType Directory -Force -Path (Join-Path $staging 'ccat') | Out-Null
 
 try {
     Write-Host "Fetching $Repository at $($commit.Substring(0, 7))"
@@ -88,6 +95,10 @@ try {
         $stem = $book.Substring(3)
         Invoke-WebRequest -Uri "$raw/csv-unicode/strongs/with-parsing/$stem.csv" `
             -OutFile (Join-Path $staging "unicode\$stem.csv")
+    }
+
+    foreach ($file in $Books + $CcatExtras) {
+        Invoke-WebRequest -Uri "$raw/source/CCAT/$file.TXT" -OutFile (Join-Path $staging "ccat\$file.TXT")
     }
 
     if ($verses -ne $ExpectedVerses) {

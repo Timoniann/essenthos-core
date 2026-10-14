@@ -609,6 +609,30 @@ public static class Datasets
             Sources.RevisedLiteralStrongCredit, Links: true,
             Obliges: "The GPL: anything published as an adaptation of the text carries the same terms."),
 
+        new("byzantine-apparatus", "Apparatus to the Byzantine Textform",
+            "Maurice A. Robinson and William G. Pierpont; the ByzTxt repository's beta-code files, release v3.3.2",
+            "Public domain (the Unlicense)",
+            "https://github.com/byztxt/byzantine-majority-text/blob/27a45ff1b7be6c17ccbfeac414f3f55732ae8e28/LICENSE.txt",
+            "https://github.com/byztxt/byzantine-majority-text/tree/27a45ff1b7be6c17ccbfeac414f3f55732ae8e28/source/CCAT",
+            "Where the Byzantine manuscripts divide between two readings, and where Nestle-Aland 28 and the "
+            + "Editio Critica Maior read otherwise, as Robinson notes it beside his text. A note is linked only "
+            + "where a loaded edition prints its other reading at the place: the critical notes against Nestle "
+            + "1904, the divided readings against Scrivener's Received Text.",
+            Sources.ByzantineApparatusCredit, Links: true),
+
+        new("rlt-positions", "Received Text positions of the Revised Literal Translation",
+            "CrossWire's KJV2003 project, as Michael W. Jones, Sr. carried its New Testament tagging onto his "
+            + "revision; the copy read is CrossWire's RLT module, version 1.0",
+            "GPL",
+            "https://www.crosswire.org/ftpmirror/pub/sword/raw/mods.d/rlt.conf",
+            "https://www.crosswire.org/sword/modules/ModInfo.jsp?modName=RLT",
+            "Which words of the Revised Literal Translation's New Testament render which words of the Textus "
+            + "Receptus: the module names, beside each English word, the place of the Greek word in its verse "
+            + "and the Greek word itself. Read for the length of one run and never stored; a place is linked "
+            + "only where Scrivener's or Stephanus's printing holds that Greek word there.",
+            Sources.RevisedLiteralPositionCredit, Links: true,
+            Obliges: "The GPL: anything published as an adaptation of the text carries the same terms."),
+
         new("glaux", "GLAUx", "Alek Keersmaekers and the GLAUx contributors", "CC BY-SA 3.0",
             "https://creativecommons.org/licenses/by-sa/3.0/",
             "https://github.com/alekkeersmaekers/glaux",

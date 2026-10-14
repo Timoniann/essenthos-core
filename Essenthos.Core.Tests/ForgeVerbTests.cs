@@ -18,7 +18,7 @@ public sealed class ForgeVerbTests
     public void TheVerbsThatWriteWhatTheLoadDoesNotAreTheOnesTheRecipeRecords() =>
         ForgeVerbs.All.Where(verb => verb.Records is not null).Select(verb => verb.Name).Should().BeEquivalentTo(
             "align", "compose", "names", "possessives", "unshare", "strong", "synodal-strong", "union-strong", "reina-valera-strong",
-            "crosswire-strong", "ohb-cuv", "interlinear-join", "correct", "reload", "edition-boundaries");
+            "crosswire-strong", "crosswire-positions", "byzantine-apparatus", "ohb-cuv", "interlinear-join", "correct", "reload", "edition-boundaries");
 
     [Theory]
     [InlineData(new[] { "load" }, true)]
@@ -67,6 +67,8 @@ public sealed class ForgeVerbTests
     [InlineData(new[] { "names", "KJV", "BHSA", "--apply" }, "KJV,BHSA")]
     [InlineData(new[] { "cards" }, "")]
     [InlineData(new[] { "kjv-greek", "tisch" }, "KJV,TISCH")]
+    [InlineData(new[] { "crosswire-positions" }, "RLT2018,TR1894,TR1550")]
+    [InlineData(new[] { "byzantine-apparatus" }, "RP2018,NESTLE1904,TR1894")]
     public void ARunCountsAgainTheTextsWhoseLinksItChanged(string[] args, string texts) =>
         string.Join(',', ForgeVerbs.Find(args[0])!.Changed(args).Texts!).Should().Be(texts);
 
