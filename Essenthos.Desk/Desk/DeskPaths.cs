@@ -36,6 +36,9 @@ internal sealed record DeskPaths(string Repository, string Resources, string Wor
 
     public string Images => Path.Combine(Resources, "Images");
 
+    /// <summary>The simulated visitors' sessions: screenshots and steps, beside the scans and never in a repository.</summary>
+    public string Visitors => Path.Combine(Workspace, ".visitors");
+
     public string Generated => Path.Combine(Images, "generated");
 
     /// <summary>

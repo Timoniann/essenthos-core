@@ -51,6 +51,7 @@ internal static class DeskApplication
         builder.Services.AddSingleton<TextBoard>();
         builder.Services.AddSingleton<TextProblems>();
         builder.Services.AddSingleton<PageReadings>();
+        builder.Services.AddSingleton<Visitors>();
         builder.Services.AddSingleton(new OperationAllowance(
             builder.Configuration.GetSection("Desk:Operations").Get<string[]>() ?? []));
         builder.Services.AddSingleton<Operations>();
@@ -84,6 +85,7 @@ internal static class DeskApplication
         desk.MapTexts();
         desk.MapDeployment();
         desk.MapServerBackups();
+        desk.MapVisitors();
 
         return app;
     }
