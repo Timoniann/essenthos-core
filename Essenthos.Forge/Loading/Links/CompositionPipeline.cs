@@ -30,9 +30,11 @@ internal sealed record CompositionOutcome(
     int Written,
     int Corroborated,
     string Admitted,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int? Verses = null)
 {
     public override string ToString() =>
+        (Verses is { } verses ? $"In the {verses} verses where {Via} gained links since: " : string.Empty) +
         $"{From} to {To} through {Via}: {Written} links from {Direct} direct and {Reached} composed — " +
             $"{Agreed} reached by more than one reading, {Added} only through {Via}, " +
             $"{Corroborated} agreeing with a link a source already states; {Admitted}";
@@ -90,6 +92,10 @@ internal sealed class CompositionPipeline(
     /// The threshold, or null for the one measured for a daughter version of the source's language,
     /// and <see cref="AlignmentPipeline.DefaultMinimumConfidence"/> where none was.
     /// </param>
+    /// <param name="refresh">
+    /// Redraw only the verses where a middle text gained links to the target since the pair was
+    /// composed (<see cref="Stale"/>), and leave the rest of the pair as it stands.
+    /// </param>
     public async Task<CompositionOutcome> Run(
         string fromSlug,
         IReadOnlyList<string> viaSlugs,
@@ -99,6 +105,7 @@ internal sealed class CompositionPipeline(
         bool unmeasured = false,
         bool daughter = false,
         int agreeing = 1,
+        bool refresh = false,
         CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
@@ -111,6 +118,20 @@ internal sealed class CompositionPipeline(
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+
+        IReadOnlySet<int>? verses = null;
+        if (refresh)
+        {
+            verses = await Stale(connection, fromSlug, viaSlugs, toSlug, daughter, cancellationToken);
+            if (verses.Count == 0)
+            {
+                var current = new CompositionOutcome(
+                    fromSlug, string.Join(" and ", viaSlugs), toSlug, 0, 0, 0, 0, 0, 0,
+                    "nothing to redraw: no middle text gained links since the pair was composed", started.Elapsed, 0);
+                logger.LogInformation("Composed {Outcome}", current);
+                return current;
+            }
+        }
 
         var proposed = await Propose(connection, fromSlug, viaSlugs, toSlug, false, null, cancellationToken, daughter);
         var statements = await Key(connection, from.Id, to.Id, cancellationToken);
@@ -130,7 +151,8 @@ internal sealed class CompositionPipeline(
             connection, from, to, [.. viaSlugs], merged, cancellationToken,
             measured is not null && threshold == measured.Minimum && (daughter || admission.Floors.Count == 0)
                 ? measured.Note
-                : null);
+                : null,
+            verses);
 
         var outcome = new CompositionOutcome(
             fromSlug, string.Join(" and ", viaSlugs), toSlug,
@@ -141,10 +163,78 @@ internal sealed class CompositionPipeline(
             fresh,
             corroborated,
             admission.Describe([.. viaSlugs]),
-            started.Elapsed);
+            started.Elapsed,
+            verses?.Count);
 
         logger.LogInformation("Composed {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>How the source of every link a composition or an alignment writes begins (<see cref="Routes.Describe"/>).</summary>
+    internal const string Machine = "SIL.Machine";
+
+    /// <summary>
+    /// The verses of the source a composition no longer reflects: those at the canonical address of a
+    /// verse in which a middle text holds a link to the target newer than every link the pair's
+    /// composition wrote. A middle text's links are its own mapping, reloaded or redrawn on their own
+    /// schedule — the King James's psalm titles were first linked to BHSA after every text composed
+    /// through it — and a composition only ever reached what its middle text reached when it ran.
+    /// Empty for a pair that was never composed, which a run draws whole.
+    ///
+    /// <para>
+    /// The middle links counted are the ones the composition goes through: a source's statements,
+    /// and for a daughter version every link of the middle text (<see cref="Carried"/>).
+    /// </para>
+    /// </summary>
+    public static async Task<IReadOnlySet<int>> Stale(
+        NpgsqlConnection connection,
+        string fromSlug,
+        IReadOnlyList<string> viaSlugs,
+        string toSlug,
+        bool daughter,
+        CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(
+            """
+            WITH pair AS (
+                SELECT (SELECT id FROM text WHERE upper(slug) = upper(@from)) AS from_id,
+                       (SELECT id FROM text WHERE upper(slug) = upper(@to)) AS to_id
+            ),
+            composed AS (
+                SELECT max(l.id) AS through
+                FROM pair
+                JOIN link l ON l.from_text_id = pair.from_id AND l.to_text_id = pair.to_id
+                JOIN provenance p ON p.id = l.provenance_id
+                WHERE l.method = 'aligner' AND starts_with(p.source, @machine)
+            )
+            SELECT DISTINCT verse.id
+            FROM pair
+            CROSS JOIN composed
+            JOIN text via ON upper(via.slug) = ANY(@vias)
+            JOIN link l ON l.from_text_id = via.id AND l.to_text_id = pair.to_id AND l.id > composed.through
+            JOIN link_word side ON side.link_id = l.id AND side.side = 'from'
+            JOIN word middle ON middle.id = side.word_id
+            JOIN verse_reference there ON there.verse_id = middle.verse_id
+            JOIN verse_reference here ON here.canonical_book = there.canonical_book
+                 AND here.canonical_chapter = there.canonical_chapter
+                 AND here.canonical_verse = there.canonical_verse
+            JOIN verse ON verse.id = here.verse_id AND verse.text_id = pair.from_id
+            WHERE l.method NOT IN ('aligner', 'rule-based') OR @aligned
+            """, connection);
+        command.Parameters.AddWithValue("from", fromSlug);
+        command.Parameters.AddWithValue("to", toSlug);
+        command.Parameters.AddWithValue("vias", viaSlugs.Select(via => via.ToUpperInvariant()).ToArray());
+        command.Parameters.AddWithValue("machine", Machine);
+        command.Parameters.AddWithValue("aligned", daughter);
+
+        var verses = new HashSet<int>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            verses.Add(reader.GetInt32(0));
+        }
+
+        return verses;
     }
 
     /// <summary>
@@ -591,6 +681,14 @@ internal sealed class CompositionPipeline(
     /// reconciled.
     ///
     /// <para>
+    /// Given <paramref name="verses"/>, only those verses of the source are redrawn: the links this
+    /// composition or an alignment wrote from their words, and the aligner's agreements with a
+    /// statement there, are replaced by the merged pairs from their words, and everything else stands.
+    /// A link another pass wrote as the aligner's, the names settled by spelling, is kept, and a
+    /// merged pair over its words becomes a claim on it.
+    /// </para>
+    ///
+    /// <para>
     /// A pair a source has already stated is not written again. The routes reach words the
     /// interlinear also annotates — the same word of the Ukrainian against the same word of the
     /// Hebrew — and a second row saying that is not a second fact: it makes a word pair nobody
@@ -614,8 +712,15 @@ internal sealed class CompositionPipeline(
         string[] viaSlugs,
         IReadOnlyList<RoutedLink> merged,
         CancellationToken cancellationToken,
-        string? note = null)
+        string? note = null,
+        IReadOnlySet<int>? verses = null)
     {
+        if (verses is not null)
+        {
+            var inScope = await WordsOf(connection, verses, cancellationToken);
+            merged = [.. merged.Where(link => inScope.Contains(link.From))];
+        }
+
         var renders = EnumSpelling.Of(LinkRelation.Renders);
         var stated = await Stated(connection, from.Id, to.Id, renders, cancellationToken);
         var claimed = (await Statements(connection, from.Id, to.Id, cancellationToken, rules: true)).Keys.ToHashSet();
@@ -629,20 +734,26 @@ internal sealed class CompositionPipeline(
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
 
         await using (var delete = new NpgsqlCommand(
-            "DELETE FROM link WHERE from_text_id = @from AND to_text_id = @to AND method = 'aligner'",
+            verses is null
+                ? "DELETE FROM link WHERE from_text_id = @from AND to_text_id = @to AND method = 'aligner'"
+                : DeleteInVerses,
             connection, (NpgsqlTransaction)transaction.GetDbTransaction()))
         {
             delete.Parameters.AddWithValue("from", from.Id);
             delete.Parameters.AddWithValue("to", to.Id);
+            delete.Parameters.AddWithValue("verses", verses?.ToArray() ?? []);
+            delete.Parameters.AddWithValue("machine", Machine);
             await delete.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        await using (var withdraw = new NpgsqlCommand(WithdrawEarlierAgreement, connection,
+        await using (var withdraw = new NpgsqlCommand(
+                         verses is null ? WithdrawEarlierAgreement : WithdrawEarlierAgreementInVerses, connection,
                          (NpgsqlTransaction)transaction.GetDbTransaction()))
         {
             withdraw.Parameters.AddWithValue("from", from.Id);
             withdraw.Parameters.AddWithValue("to", to.Id);
             withdraw.Parameters.AddWithValue("aligner", EnumSpelling.Of(LinkMethod.Aligner));
+            withdraw.Parameters.AddWithValue("verses", verses?.ToArray() ?? []);
             await withdraw.ExecuteNonQueryAsync(cancellationToken);
         }
 
@@ -724,6 +835,43 @@ internal sealed class CompositionPipeline(
         WHERE c.link_id = l.id AND l.from_text_id = @from AND l.to_text_id = @to
           AND l.method <> @aligner AND c.method = @aligner
         """;
+
+    /// <summary><see cref="WithdrawEarlierAgreement"/> on the links from a word of <c>@verses</c>.</summary>
+    private const string WithdrawEarlierAgreementInVerses =
+        """
+        DELETE FROM link_claim c
+        USING link l
+        WHERE c.link_id = l.id AND l.from_text_id = @from AND l.to_text_id = @to
+          AND l.method <> @aligner AND c.method = @aligner
+          AND EXISTS (SELECT 1 FROM link_word side JOIN word w ON w.id = side.word_id
+                      WHERE side.link_id = l.id AND side.side = 'from' AND w.verse_id = ANY(@verses))
+        """;
+
+    /// <summary>The links a composition or an alignment wrote from a word of <c>@verses</c>.</summary>
+    private const string DeleteInVerses =
+        """
+        DELETE FROM link l
+        USING provenance p
+        WHERE p.id = l.provenance_id AND starts_with(p.source, @machine)
+          AND l.from_text_id = @from AND l.to_text_id = @to AND l.method = 'aligner'
+          AND EXISTS (SELECT 1 FROM link_word side JOIN word w ON w.id = side.word_id
+                      WHERE side.link_id = l.id AND side.side = 'from' AND w.verse_id = ANY(@verses))
+        """;
+
+    private static async Task<HashSet<long>> WordsOf(
+        NpgsqlConnection connection, IReadOnlySet<int> verses, CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand("SELECT id FROM word WHERE verse_id = ANY(@verses)", connection);
+        command.Parameters.AddWithValue("verses", verses.ToArray());
+        var words = new HashSet<long>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
+        {
+            words.Add(reader.GetInt64(0));
+        }
+
+        return words;
+    }
 
     /// <summary>
     /// What the aligner writes when it arrives at a pair somebody has already stated.

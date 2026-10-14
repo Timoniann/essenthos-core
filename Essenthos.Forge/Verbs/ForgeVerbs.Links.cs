@@ -98,7 +98,8 @@ internal static partial class ForgeVerbs
             composePrecision,
             args.Contains("--unmeasured"),
             args.Contains("--daughter"),
-            Agreeing(args)));
+            Agreeing(args),
+            args.Contains(Recipe.Refresh)));
         await forge.Replay(composeScope, (from, to) => Between(from, to, Identifier(composeFrom), Identifier(composeTo)));
         await forge.Tidy();
         return 0;
