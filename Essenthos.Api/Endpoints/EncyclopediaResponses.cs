@@ -389,6 +389,13 @@ internal record PlacePointResponse(
     /// the English headword, marked as the source's.
     /// </summary>
     public bool NameFromSource { get; init; }
+
+    /// <summary>
+    /// A few words in the reader's language telling this place from another of the same name — the
+    /// Antioch in Pisidia — for a map to add to its label where both are in sight. Null on a place
+    /// whose name no other shares, or where nothing is said of it in that language.
+    /// </summary>
+    public string? Distinguisher { get; init; }
 }
 
 /// <param name="Datasets">Whose points these are, as declared dataset ids, for the credit a map owes.</param>
