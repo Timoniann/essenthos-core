@@ -194,6 +194,74 @@ public sealed class RenumberedWitnessTests : IDisposable
         (await Links(_luther)).Should().BeEquivalentTo(links);
     }
 
+    /// <summary>A link another method drew, with its own claim beside it.</summary>
+    private Link Drawn(Text from, LinkMethod method, string source, double confidence, Word translated, Word witness)
+    {
+        var link = new Link
+        {
+            FromTextId = from.Id,
+            ToTextId = _hebrew.Id,
+            Relation = LinkRelation.Renders,
+            Method = method,
+            Confidence = confidence,
+            Provenance = new() { Source = source },
+        };
+        link.Words.Add(new LinkWord { WordId = translated.Id, Side = LinkSide.From });
+        link.Words.Add(new LinkWord { WordId = witness.Id, Side = LinkSide.To });
+        _db.Links.Add(link);
+        _db.SaveChanges();
+        _db.LinkClaims.Add(new LinkClaim
+        {
+            LinkId = link.Id, Method = link.Method, Confidence = link.Confidence, Provenance = link.Provenance,
+        });
+        _db.SaveChanges();
+        return link;
+    }
+
+    private async Task<List<(LinkMethod Method, string Source)>> Claims(long link) =>
+        (await _db.LinkClaims.AsNoTracking().Where(c => c.LinkId == link)
+            .Select(c => new { c.Method, c.Provenance!.Source }).ToListAsync())
+        .Select(c => (c.Method, c.Source)).ToList();
+
+    /// <summary>
+    /// The aligner had already joined Luther's <em>Doeg</em> to Doeg's word, so the word the numbers
+    /// now give it is taken: Doeg's numbered link joins the aligner's as a claim and goes, and the
+    /// number, the stronger claim, becomes that link's answer. Two links over one set of words would
+    /// be refused when the repair commits.
+    /// </summary>
+    [Fact]
+    public async Task ALinkMatchedOntoWordsAnotherMethodAlreadyLinksJoinsThatLink()
+    {
+        var (doeg, david, _, _) = LutherAsTheOldNumbersDrewIt();
+        var source = TaggedTextLinkLoader.Source(_luther.Slug, _hebrew.Slug);
+        var aligned = Drawn(_luther, LinkMethod.Aligner, "an aligner under test", 0.6, Luther(0, 5), Hebrew(2, 3));
+
+        var outcome = await _repair.Run(Path.GetTempPath());
+
+        outcome.Stale.Should().Be(2);
+        outcome.Changed.Should().Be(1, "David's link moves in place");
+        outcome.Joined.Should().Be(1, "Doeg's link joins the aligner's");
+        outcome.Removed.Should().Be(0);
+        var links = await Links(_luther);
+        links.Should().NotContainKey(doeg.Id);
+        links[aligned.Id].Should().BeEquivalentTo((new List<long> { Luther(0, 5).Id }, new List<long> { Hebrew(2, 3).Id }));
+        links[david.Id].To.Should().Equal(Hebrew(1, 5).Id);
+        var standing = await _db.Links.AsNoTracking().Include(l => l.Provenance).SingleAsync(l => l.Id == aligned.Id);
+        standing.Method.Should().Be(LinkMethod.StrongNumber);
+        standing.Provenance!.Source.Should().Be(source);
+        standing.Confidence.Should().Be(StrongNumberMatch.Unambiguous);
+        (await Claims(aligned.Id)).Should().BeEquivalentTo(new[]
+        {
+            (LinkMethod.Aligner, "an aligner under test"), (LinkMethod.StrongNumber, source),
+        });
+        outcome.Verses.Should().Contain([Luther(0, 1).VerseId, Hebrew(1, 1).VerseId, Hebrew(2, 1).VerseId]);
+
+        var again = await _repair.Run(Path.GetTempPath());
+
+        again.Stale.Should().Be(0);
+        (await Links(_luther)).Should().BeEquivalentTo(links);
+    }
+
     /// <summary>
     /// A numbering read from an edition and never written to the words — the Synodal's — is matched
     /// again by the numbers it was drawn from, and a translated word no link named before is matched

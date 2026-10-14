@@ -16,6 +16,7 @@ internal sealed record RenumberedWitnessOutcome(
     int Changed,
     int Removed,
     int Added,
+    int Joined,
     IReadOnlyList<string> Unread,
     IReadOnlySet<int> Verses,
     TimeSpan Elapsed)
@@ -25,7 +26,8 @@ internal sealed record RenumberedWitnessOutcome(
             ? $"The Strong-number links of {Pairs} pairs at the Hebrew's shared addresses all stand on the numbers " +
               $"the Hebrew carries now ({Elapsed})"
             : $"{Stale} Strong-number links at the Hebrew's shared addresses stood on numbers the Hebrew no longer " +
-              $"carries: {Changed} redrawn in place, {Removed} removed, {Added} added, in {Verses.Count} verses " +
+              $"carries: {Changed} redrawn in place, {Joined} joined to the link already on their new words, " +
+              $"{Removed} removed, {Added} added, in {Verses.Count} verses " +
               $"({Elapsed})" + (Unread.Count == 0 ? "" : $"; left alone, their numbering unread: {string.Join(", ", Unread)}");
 }
 
@@ -68,7 +70,7 @@ internal sealed class RenumberedWitnessRepair(
         var addresses = await SharedAddresses(witness, cancellationToken);
         if (addresses.Count == 0)
         {
-            return new RenumberedWitnessOutcome(0, 0, 0, 0, 0, [], new HashSet<int>(), started.Elapsed);
+            return new RenumberedWitnessOutcome(0, 0, 0, 0, 0, 0, [], new HashSet<int>(), started.Elapsed);
         }
 
         var pairs = (await db.Links
@@ -80,7 +82,7 @@ internal sealed class RenumberedWitnessRepair(
             .OrderBy(pair => pair.Key, StringComparer.Ordinal)
             .ToList();
 
-        int stale = 0, changed = 0, removed = 0, added = 0;
+        int stale = 0, changed = 0, removed = 0, added = 0, joined = 0;
         var unread = new List<string>();
         var touched = new HashSet<long>();
         foreach (var pair in pairs)
@@ -111,6 +113,7 @@ internal sealed class RenumberedWitnessRepair(
             changed += outcome.Changed;
             removed += outcome.Removed;
             added += outcome.Added;
+            joined += outcome.Joined;
             touched.UnionWith(changedWords);
         }
 
@@ -120,7 +123,7 @@ internal sealed class RenumberedWitnessRepair(
             : (await db.Words.Where(w => words.Contains(w.Id)).Select(w => w.VerseId).Distinct()
                 .ToListAsync(cancellationToken)).ToHashSet();
         var result = new RenumberedWitnessOutcome(
-            pairs.Count, stale, changed, removed, added, unread, verses, started.Elapsed);
+            pairs.Count, stale, changed, removed, added, joined, unread, verses, started.Elapsed);
         logger.LogInformation("{Outcome}", result);
         return result;
     }
