@@ -151,7 +151,7 @@ The report is in the persona's language ({{lang}}) and in their voice. Its shape
 ```json
 {
   "interesting": ["what caught my interest, and where"],
-  "comeBackFor": ["what I would come back for, if anything"],
+  "wouldComeBackFor": ["what I would come back for, if anything"],
   "lostInterest": { "where": "what I was looking at", "url": "…", "step": 12, "why": "why it stopped holding me" }
 }
 ```
