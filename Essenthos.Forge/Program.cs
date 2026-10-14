@@ -57,6 +57,7 @@ builder.Services.AddScoped<CorpusLoader>();
 builder.Services.AddScoped<StatedNumberLoader>();
 builder.Services.AddScoped<SourceNoteLoader>();
 builder.Services.AddScoped<BookNoteLoader>();
+builder.Services.AddScoped<ChapterNoteLoader>();
 builder.Services.AddScoped<TextRelationLoader>();
 builder.Services.AddScoped<ParagraphMarkLoader>();
 builder.Services.AddScoped<MorphGntParsingLoader>();

@@ -188,7 +188,24 @@ internal sealed record VerseDraft(int Number, IReadOnlyList<WordDraft> Words, st
 /// </param>
 internal sealed record VerseNoteDraft(VerseNoteKind Kind, string Content, int? AnchorWordPosition = null);
 
-internal sealed record ChapterDraft(int Number, IReadOnlyList<VerseDraft> Verses);
+internal sealed record ChapterDraft(int Number, IReadOnlyList<VerseDraft> Verses)
+{
+    /// <summary>The edition's notes on the chapter's own headings, in their source language and order.</summary>
+    public IReadOnlyList<ChapterNoteDraft> Notes { get; init; } = [];
+}
+
+/// <summary>A note an edition prints on a chapter's heading, which no verse of the chapter carries.</summary>
+/// <param name="Heading">The heading it was printed on: "Псалом 9 (9–10)", "א Алеф".</param>
+internal sealed record ChapterNoteDraft(string Heading, VerseNoteKind Kind, string Content)
+{
+    public static IReadOnlyList<ChapterNoteDraft> From(UsfmChapter chapter) =>
+    [
+        .. chapter.Notes.Select(printed => new ChapterNoteDraft(
+            printed.Heading,
+            printed.Note.Kind == UsfmNoteKind.Footnote ? VerseNoteKind.Footnote : VerseNoteKind.CrossReference,
+            printed.Note.Content)),
+    ];
+}
 
 /// <param name="CanonicalOrdinal">Its place in the shared order, 1 to 66, the same in every text.</param>
 /// <param name="Position">

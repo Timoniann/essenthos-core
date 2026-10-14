@@ -157,5 +157,8 @@ internal static class KulishTextSource
                 note.Kind == UsfmNoteKind.Footnote ? VerseNoteKind.Footnote : VerseNoteKind.CrossReference,
                 note.Content,
                 note.AnchorWordPosition))],
-        })]);
+        })])
+    {
+        Notes = ChapterNoteDraft.From(chapter),
+    };
 }

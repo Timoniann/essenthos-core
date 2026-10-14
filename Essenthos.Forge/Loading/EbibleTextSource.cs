@@ -583,7 +583,10 @@ internal static class EbibleTextSource
             OpensBeforeItsStatedAddress = verse.OpensBeforeItsStatedAddress,
             MarksASuperscription = verse.MarksASuperscription
                                    || (titled && verse.Number == 1 && verse.Label.Length == 0 && OpensWithATitle(verse.Words)),
-        })]);
+        })])
+    {
+        Notes = ChapterNoteDraft.From(chapter),
+    };
 
     /// <param name="translation">
     /// eBible's identifier, which is what the download and both statements of the licence are keyed

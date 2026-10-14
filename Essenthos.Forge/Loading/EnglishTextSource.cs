@@ -489,7 +489,10 @@ internal static class EnglishTextSource
             Stated = [.. verse.Stated.Select(address => new StatedNumberDraft(address.Chapter, address.Number))],
             OpensBeforeItsStatedAddress = verse.OpensBeforeItsStatedAddress,
             MarksASuperscription = verse.MarksASuperscription,
-        })]);
+        })])
+    {
+        Notes = ChapterNoteDraft.From(chapter),
+    };
 
     /// <param name="FirstBook">The first canonical ordinal this edition holds, 1 for a whole Bible.</param>
     /// <param name="LastBook">The last, 66 for a whole Bible.</param>
