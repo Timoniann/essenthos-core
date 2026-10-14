@@ -1,0 +1,44 @@
+{
+  "decidedBy": "Essenthos, 2026-10-14, on the names of Genesis 14:5 in the Septuagint and the Ge'ez, which an alignment had paired one place off: each word read against its verse by claude-opus-5-5 on the project owner's instruction of 2026-10-14 ('Роби як логічніше'); no person has reviewed these rulings",
+  "policy": "Where the Septuagint renders one name of a list as a common phrase, the names after it are the Hebrew's names after it, not the ones beside them by position.",
+  "method": "manual",
+  "source": "Essenthos, the names of Genesis 14:5 in the Septuagint and the Ge'ez, read by claude-opus-5-5 on the project owner's instruction, 2026-10-14",
+  "rulings": [
+    {
+      "text": "GRCBRENT",
+      "reference": "GEN 14:5",
+      "position": 29,
+      "surface": "Ὀμμαίους",
+      "strongNumber": null,
+      "existing": "emims",
+      "why": "The Septuagint reads Genesis 14:5's list otherwise than the Hebrew: the Zuzim are 'strong nations' (ἔθνη ἰσχυρὰ) and 'in Ham' is 'with them' (ἅμα αὐτοῖς), so its next name, 'the Ommaeans' (τοὺς Ὀμμαίους), is the Hebrew's next name, the Emim (הָאֵימִים), and not the Zuzim."
+    },
+    {
+      "text": "GRCBRENT",
+      "reference": "GEN 14:5",
+      "position": 32,
+      "surface": "Σαυῇ",
+      "strongNumber": null,
+      "existing": "shavehkiriathaim",
+      "why": "'The Ommaeans in Save the city' (τοὺς ἐν Σαυῇ τῇ πόλει) renders 'the Emim in Shaveh Kiriathaim' (בְּשָׁוֵה קִרְיָתָיִם): Save is Shaveh, and 'the city' is Kiriathaim read as a common noun, not Ham."
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "GEN 14:5",
+      "position": 14,
+      "surface": "ወለአምዮስ",
+      "strongNumber": null,
+      "existing": "emims",
+      "why": "The Ge'ez follows the Septuagint here: 'and the Ammyos' (ወለአምዮስ) after 'the strong peoples with them' (ወለሕዝብኒ ጽኑዓን ምስሌሆሙ) is the Septuagint's Ommaeans, the Emim, and not the Zuzim."
+    },
+    {
+      "text": "GEEZ81",
+      "reference": "GEN 14:5",
+      "position": 16,
+      "surface": "ሴዊ",
+      "strongNumber": null,
+      "existing": "shavehkiriathaim",
+      "why": "'And the city of Sewi' (ወለሀገረ ሴዊ) is the Septuagint's 'Save the city', Shaveh Kiriathaim."
+    }
+  ]
+}

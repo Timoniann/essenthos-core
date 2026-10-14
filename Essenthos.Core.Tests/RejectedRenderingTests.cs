@@ -19,6 +19,7 @@ public sealed class RejectedRenderingTests : IDisposable
     private static readonly RuledWord Christ = new("RUSV", "1CO 5:5", 15, "Христа");
     private static readonly RuledWord Satan = new("NESTLE1904", "1CO 5:5", 5, "Σατανᾷ");
     private const string Source = "SIL.Machine, aligned as written and as stems and through KJV";
+    private static readonly RejectedRendering[] Satanic = [.. RejectedRenderings.All.Where(r => r.From.Text == "RUSV")];
 
     public RejectedRenderingTests(WitnessDatabase database)
     {
@@ -166,12 +167,54 @@ public sealed class RejectedRenderingTests : IDisposable
         found.Should().Equal((placed[russian].Id, placed[greek].Id));
     }
 
+    /// <summary>
+    /// Genesis 14:5 in the Septuagint: the Zuzim are rendered "strong nations", and the aligner paired
+    /// the names after them one place off, the Emim's Ὀμμαίους with the Zuzim and Shaveh's Σαυῇ with
+    /// Ham. Those pairings are withdrawn, and a second withdrawal finds nothing.
+    /// </summary>
+    [Fact]
+    public async Task TheSeptuagintsGenesisFourteenFiveNamesArePairedNoMoreOnePlaceOff()
+    {
+        var genesis = RejectedRenderings.All.Where(r => r.From.Reference == "GEN 14:5").ToList();
+        genesis.Should().HaveCount(5);
+        foreach (var ruling in genesis)
+        {
+            AddLink(words[ruling.From], words[ruling.To], LinkMethod.Aligner, "SIL.Machine, aligned as written and as stems");
+        }
+
+        db.SaveChanges();
+
+        (await RejectedRenderings.Withdraw(db)).Should().Be(new RejectedRenderingOutcome(5, 0));
+        (await db.Links.CountAsync()).Should().Be(0);
+        (await RejectedRenderings.Withdraw(db)).Should().Be(new RejectedRenderingOutcome(0, 0));
+    }
+
+    /// <summary>
+    /// And the words themselves are named as their verse names them: the Ommaeans and the Ge'ez Ammyos
+    /// are the Emim, Save and Sewi are Shaveh Kiriathaim.
+    /// </summary>
+    [Fact]
+    public void TheSeptuagintsAndTheGeezGenesisFourteenFiveAreRuledTheEmimAndShaveh()
+    {
+        var rulings = SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings)
+            .Where(r => r.Reference == "GEN 14:5" && r.Text is "GRCBRENT" or "GEEZ81")
+            .ToDictionary(r => (r.Text, r.Position), r => r.Existing);
+
+        rulings.Should().BeEquivalentTo(new Dictionary<(string, int), string?>
+        {
+            [("GRCBRENT", 29)] = "emims",
+            [("GRCBRENT", 32)] = "shavehkiriathaim",
+            [("GEEZ81", 14)] = "emims",
+            [("GEEZ81", 16)] = "shavehkiriathaim",
+        });
+    }
+
     private static NewLink Draft(Word from, Word to) => new(from.TextId, to.TextId, LinkRelation.Renders,
         LinkMethod.Aligner, 0.98, Source, null, [from.Id], [to.Id]);
 
     private void AddWarmLinks()
     {
-        foreach (var ruling in RejectedRenderings.All)
+        foreach (var ruling in Satanic)
         {
             AddLink(words[ruling.From], words[ruling.To], LinkMethod.Aligner, Source);
             var position = ruling.From.Reference.StartsWith("ROM", StringComparison.Ordinal) ? 5 : 2;
@@ -196,7 +239,7 @@ public sealed class RejectedRenderingTests : IDisposable
     {
         var satan = new Entity { Slug = "satan", Name = "Satan", SourceId = "satan", Source = "a test", Kind = EntityKind.Person };
         db.Entities.Add(satan);
-        foreach (var ruling in RejectedRenderings.All.DistinctBy(r => r.From))
+        foreach (var ruling in Satanic.DistinctBy(r => r.From))
         {
             var note = $"through {ruling.To.Text} word {words[ruling.To].Id}, linked by aligner";
             db.WordEntities.Add(new() { Word = words[ruling.From], Entity = satan, Method = LinkMethod.StrongNumber,

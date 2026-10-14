@@ -26,6 +26,19 @@ internal static class RejectedRenderings
             "Codex, 2026-10-05: Scrivener omits Christ here and names Satan earlier in the verse."),
         new(new("RUSV", "1CO 5:5", 15, "Христа"), new("KJV", "1CO 5:5", 7, "Satan"),
             "Claude, 2026-10-06: the King James's Satan is the Synodal's сатане at position 2; Христа is Christ."),
+
+        // Genesis 14:5, where the Septuagint renders one name of the list as a phrase and the aligner
+        // paired the names after it one place off.
+        new(new("GRCBRENT", "GEN 14:5", 29, "Ὀμμαίους"), new("BHSA", "GEN 14:5", 22, "זּוּזִ֖ים"),
+            "Claude, 2026-10-14: the Septuagint renders the Zuzim 'strong nations'; Ὀμμαίους is the Emim at position 28."),
+        new(new("GRCBRENT", "GEN 14:5", 32, "Σαυῇ"), new("BHSA", "GEN 14:5", 24, "הָ֑ם"),
+            "Claude, 2026-10-14: Σαυῇ is Shaveh at position 30; the Septuagint reads 'in Ham' as 'with them'."),
+        new(new("GRCBRENT", "GEN 14:5", 29, "Ὀμμαίους"), new("KJV", "GEN 14:5", 24, "Zuzims"),
+            "Claude, 2026-10-14: Ὀμμαίους is the King James's Emims at position 29, not the Zuzims."),
+        new(new("GRCBRENT", "GEN 14:5", 32, "Σαυῇ"), new("KJV", "GEN 14:5", 29, "Emins"),
+            "Claude, 2026-10-14: Σαυῇ is the King James's Shaveh at position 31, not the Emims."),
+        new(new("GEEZ81", "GEN 14:5", 14, "ወለአምዮስ"), new("BHSA", "GEN 14:5", 22, "זּוּזִ֖ים"),
+            "Claude, 2026-10-14: the Ge'ez Ammyos follows the Septuagint's Ommaeans, the Emim at position 28."),
     ];
 
     /// <summary>

@@ -364,39 +364,7 @@ public sealed class OldTestamentLinkTests : IDisposable
     [Fact]
     public async Task AVerseTheFileNumbersTwoEntriesAsOneWordInIsNotNumberedByPosition()
     {
-        Clear();
-        _kjv = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["a"]), (1, 2, ["b"]), (1, 3, ["c"]));
-        _bhsa = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
-            (1, 1, ["א", "ב"]),
-            (1, 2, ["לַ", "מְנַצֵּחַ", "אֲרַם", "נַהֲרַיִם", "וַ", "יֹואָב", "בְּ", "גֵיא־מֶלַח", "שְׁנֵים", "עָשָׂר", "אָלֶף", "אֱלֹהִים", "זְנַחְתָּנוּ", "פְרַצְתָּנוּ"]),
-            (1, 3, ["ג", "ד"]));
-        _db.SaveChanges();
-        string[] glosses =
-        [
-            "gloss1", "gloss2", "to", "prevail", "Aram", "stream", "and", "Joab", "in", "the Valley of Salt", "two",
-            "-teen", "thousand", "god(s)", "reject", "break", "gloss16", "gloss17",
-        ];
-        var words = _db.Words.Where(w => w.TextId == _bhsa.Id).OrderBy(w => w.Id).ToList();
-        for (var i = 0; i < words.Count; i++)
-        {
-            words[i].Gloss = glosses[i];
-        }
-
-        _db.SaveChanges();
-        MappingRecord[] records =
-        [
-            new(1, 1, 1, [new("H1", "c1", 1, "gloss1"), new("H2", "c1", 2, "gloss2")], [Segment(["a"], 1)]),
-            new(1, 1, 2,
-            [
-                new("H9005", "c2", 3, "to"), new("H5329", "c2", 4, "prevail"), new("H763", "c2", 5, "Mesopotamia"),
-                new("H9000", "c2", 6, "and"), new("H3097", "c2", 7, "Joab"), new("H9003", "c2", 8, "in"),
-                new("H1516", "c2", 9, "the Valley of Salt"), new("H4417", "c2", 9, "the Valley of Salt"),
-                new("H8147", "c2", 10, "two"), new("H6240", "c2", 11, "-teen"), new("H505", "c2", 12, "thousand"),
-                new("H430", "c2", 13, "god(s)"), new("H2186", "c2", 14, "reject"), new("H6555", "c2", 15, "break"),
-            ],
-            [Segment(["b"], 3)]),
-            new(1, 1, 3, [new("H16", "c3", 16, "gloss16"), new("H17", "c3", 17, "gloss17")], [Segment(["c"], 16)]),
-        ];
+        var records = SixtiethPsalm(["b"], [Segment(["b"], 3)]);
         string?[] expected =
         [
             "H1", "H2", "H9005", "H5329", null, null, "H9000", "H3097", "H9003", "H1516", "H8147", "H6240", "H505",
@@ -419,6 +387,108 @@ public sealed class OldTestamentLinkTests : IDisposable
 
         outcome.StrongNumbers.Should().Be(6);
         (await Numbers()).Should().Equal(expected);
+    }
+
+    /// <summary>
+    /// The same title's English, linked. By position "Joab" took the conjunction before יֹואָב and
+    /// "the valley" and "of salt" the preposition before גֵיא־מֶלַח; through the running numbers each
+    /// phrase reaches its own word, and Aram-naharaim, one entry for BHSA's two words, reaches none.
+    /// </summary>
+    [Fact]
+    public async Task AVerseTheFileNumbersTwoEntriesAsOneWordInIsLinkedThroughItsRunningNumbers()
+    {
+        await Load(SixtiethPsalm(TitleEnglish, TitleSegments()));
+
+        var links = await Links();
+        links.Should().ContainSingle(link => link.English.Contains("Joab"))
+            .Which.Hebrew.Should().Equal("יֹואָב");
+        links.Single(link => link.English.Contains("valley")).Hebrew.Should().Equal("גֵיא־מֶלַח");
+        links.Single(link => link.English.Contains("salt")).Hebrew.Should().Equal("גֵיא־מֶלַח");
+        links.Should().NotContain(link => link.English.Contains("Aram-naharaim"));
+    }
+
+    /// <summary>
+    /// A corpus an earlier load linked by position there: the next load takes back the links the
+    /// shift drew, keeps the ones the running numbers draw too, and a load after it changes nothing.
+    /// </summary>
+    [Fact]
+    public async Task ATitleAnEarlierLoadLinkedByPositionIsLinkedAgainOnceAndThenLeftAlone()
+    {
+        // Drawn as loads before the fix drew it: the second entry of the valley out of the way, the
+        // verse joined by position, and every phrase between the two divisions a word early.
+        var records = SixtiethPsalm(TitleEnglish, TitleSegments());
+        var byPosition = records.ToArray();
+        byPosition[1] = byPosition[1] with
+        {
+            Hebrew = [.. byPosition[1].Hebrew.Select((entry, i) => i == 7 ? entry with { Position = 99 } : entry)],
+        };
+        await Load(byPosition);
+        (await Links()).Single(link => link.English.Contains("Joab")).Hebrew.Should().Equal("וַ");
+        var musician = await _db.Links.Where(l => l.Words.Any(w => w.Word!.Surface == "Musician")).Select(l => l.Id).SingleAsync();
+
+        var outcome = await Load(records);
+
+        outcome.Redrawn.Should().Be(1);
+        var links = await Links();
+        links.Single(link => link.English.Contains("Joab")).Hebrew.Should().Equal("יֹואָב");
+        links.Single(link => link.English.Contains("valley")).Hebrew.Should().Equal("גֵיא־מֶלַח");
+        links.Should().NotContain(link => link.English.Contains("Aram-naharaim"));
+        (await _db.Links.Where(l => l.Words.Any(w => w.Word!.Surface == "Musician")).Select(l => l.Id).SingleAsync())
+            .Should().Be(musician);
+
+        var standing = await _db.Links.OrderBy(l => l.Id).Select(l => l.Id).ToListAsync();
+        (await Load(records)).Redrawn.Should().Be(0);
+        (await _db.Links.OrderBy(l => l.Id).Select(l => l.Id).ToListAsync()).Should().Equal(standing);
+    }
+
+    private static readonly string[] TitleEnglish =
+        ["chief", "Musician", "Aram-naharaim", "Joab", "in", "the", "valley", "of", "salt"];
+
+    private static EnglishSegment[] TitleSegments() =>
+    [
+        Segment(["chief", "Musician"], 4), Segment(["Aram-naharaim"], 5), Segment(["Joab"], 7), Segment(["in"], 8),
+        Segment(["the", "valley"], 9), Segment(["of", "salt"], 9),
+    ];
+
+    /// <summary>
+    /// Psalm 60's title, BHSA beside the file: BHSA writes Aram-naharaim as two words and the Valley of
+    /// Salt as one, the file the reverse, so the two count the same number of entries.
+    /// </summary>
+    private MappingRecord[] SixtiethPsalm(string[] english, EnglishSegment[] segments)
+    {
+        Clear();
+        _kjv = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["a"]), (1, 2, english), (1, 3, ["c"]));
+        _bhsa = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
+            (1, 1, ["א", "ב"]),
+            (1, 2, ["לַ", "מְנַצֵּחַ", "אֲרַם", "נַהֲרַיִם", "וַ", "יֹואָב", "בְּ", "גֵיא־מֶלַח", "שְׁנֵים", "עָשָׂר", "אָלֶף", "אֱלֹהִים", "זְנַחְתָּנוּ", "פְרַצְתָּנוּ"]),
+            (1, 3, ["ג", "ד"]));
+        _db.SaveChanges();
+        string[] glosses =
+        [
+            "gloss1", "gloss2", "to", "prevail", "Aram", "stream", "and", "Joab", "in", "the Valley of Salt", "two",
+            "-teen", "thousand", "god(s)", "reject", "break", "gloss16", "gloss17",
+        ];
+        var words = _db.Words.Where(w => w.TextId == _bhsa.Id).OrderBy(w => w.Id).ToList();
+        for (var i = 0; i < words.Count; i++)
+        {
+            words[i].Gloss = glosses[i];
+        }
+
+        _db.SaveChanges();
+        return
+        [
+            new(1, 1, 1, [new("H1", "c1", 1, "gloss1"), new("H2", "c1", 2, "gloss2")], [Segment(["a"], 1)]),
+            new(1, 1, 2,
+            [
+                new("H9005", "c2", 3, "to"), new("H5329", "c2", 4, "prevail"), new("H763", "c2", 5, "Mesopotamia"),
+                new("H9000", "c2", 6, "and"), new("H3097", "c2", 7, "Joab"), new("H9003", "c2", 8, "in"),
+                new("H1516", "c2", 9, "the Valley of Salt"), new("H4417", "c2", 9, "the Valley of Salt"),
+                new("H8147", "c2", 10, "two"), new("H6240", "c2", 11, "-teen"), new("H505", "c2", 12, "thousand"),
+                new("H430", "c2", 13, "god(s)"), new("H2186", "c2", 14, "reject"), new("H6555", "c2", 15, "break"),
+            ],
+            segments),
+            new(1, 1, 3, [new("H16", "c3", 16, "gloss16"), new("H17", "c3", 17, "gloss17")], [Segment(["c"], 16)]),
+        ];
     }
 
     private const string Resolution =
