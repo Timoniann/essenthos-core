@@ -287,7 +287,7 @@ internal static class DeskEndpoints
 
     /// <summary>
     /// The simulated visitors' runs, their sessions, each session step by step and its screenshots,
-    /// as the visit command wrote them. Nothing here writes; no folder yet means no runs.
+    /// and a run's aggregate where one was written, as the visit command and the aggregator left them. Nothing here writes; no folder yet means no runs.
     /// </summary>
     public static void MapVisitors(this RouteGroupBuilder routes)
     {
@@ -295,6 +295,9 @@ internal static class DeskEndpoints
 
         routes.MapGet("/visitors/{run}", (string run, Visitors visitors) =>
             visitors.Run(run) is { } read ? Results.Ok(read) : NotThere("There is no such run of visitors."));
+
+        routes.MapGet("/visitors/{run}/aggregate", (string run, Visitors visitors) =>
+            visitors.Aggregate(run) is { } read ? Results.Ok(read) : NotThere("This run has no aggregate yet."));
 
         routes.MapGet("/visitors/{run}/{session}", (string run, string session, Visitors visitors) =>
             visitors.Session(run, session) is { } read ? Results.Ok(read) : NotThere("There is no such visitor in this run."));
