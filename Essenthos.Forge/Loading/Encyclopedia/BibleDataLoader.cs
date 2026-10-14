@@ -412,12 +412,6 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             Tribe = "Judah",
             SourceId = "essenthos:jesus",
             Source = "Essenthos, separated from BibleData's YHVH_1",
-            Notes =
-                "BibleData holds the God of Israel and Jesus as one entity and the Father as another. This " +
-                "corpus separates them. New Testament references that name Jesus plainly were moved here; " +
-                "those that say only God or Lord stayed on the divine name and are marked disputed, because " +
-                "which of the two they mean is a reading of the text and not a fact about the dataset. The " +
-                "titles came with the references that carry them, so a name is here where the namings are.",
         };
 
         entities[jesus.SourceId] = jesus;
@@ -436,21 +430,14 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
     /// What separates them is what each is, and both halves are facts about the dataset rather
     /// than readings of the text: the first carries the divine name through the whole canon and is
     /// the entity Jesus was taken out of; the second is the Father, and all 352 of its namings are
-    /// in New Testament books. The source's own attribute is kept in the notes, because it is a
-    /// true thing it said even though it is not a distinguisher.
+    /// in New Testament books. None of this goes into the notes: a note is read on the record's page,
+    /// and how a dataset held the two says nothing to a reader about either.
     /// </summary>
     internal static void Distinguish(Dictionary<string, Entity> entities)
     {
         if (entities.TryGetValue(DivineName, out var god))
         {
             god.Distinguisher = "the God of Israel";
-            god.Notes = Sentences(
-                "The dataset gives this entity and the Father the same name and tells them apart by a " +
-                "sample of their titles — for this one, \"Holy, Holy, Holy (ISA 6:3) and too many others " +
-                "to fit here\" — which does not say which of the two it is. This is the one the divine " +
-                "name belongs to, named through the whole canon. It is also the entity Jesus is folded " +
-                "into, and the New Testament namings that plainly mean him were moved to his own entry.",
-                god.Notes);
         }
 
         if (entities.TryGetValue(TheFather, out var father))
@@ -463,12 +450,6 @@ internal sealed partial class BibleDataLoader(AppDbContext db, ILogger<BibleData
             // all 352 of its namings are in New Testament books.
             father.Name = "God the Father";
             father.Distinguisher = "as the New Testament names him (MAT 5:16)";
-            father.Notes = Sentences(
-                "The dataset names this entity YHVH, the same as the God of Israel, and tells the " +
-                "two apart by a sample of their titles. The name here is the one its own labels " +
-                "give it; the dataset's is kept in this note, because a name it chose is a thing " +
-                "it said.",
-                father.Notes);
         }
     }
 
