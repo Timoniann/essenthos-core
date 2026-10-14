@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -85,11 +85,6 @@ internal static class StrongEndpoints
 
             var total = await entries.CountAsync(cancellationToken);
             var page = await entries
-                // Hebrew before Greek, as the Old Testament comes before the New — not G before H
-                // because that is where the letters fall.
-                .OrderBy(e => e.StrongNumber.StartsWith("H") ? 0 : 1)
-                .ThenBy(e => e.StrongNumber.Length)
-                .ThenBy(e => e.StrongNumber)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 50, 1, MostPerPage))
                 .Select(e => Response(e, null))
@@ -160,6 +155,8 @@ internal static class StrongEndpoints
     /// every entry whose definition says "compare G2646" — and bare digits take the letter of the
     /// language asked for, or both. Anything else is a word: the lemma and the transliteration are
     /// compared without accents, because nobody types <em>philéō</em>, and the glosses as written.
+    /// A word answers the entry spelled exactly so first, then those it opens, then the rest:
+    /// <em>phileo</em> is philéō before kataphiléō.
     /// </summary>
     internal static IQueryable<StrongEntry> Matching(AppDbContext db, string? query, string? language)
     {
@@ -170,7 +167,7 @@ internal static class StrongEndpoints
 
         if (StrongNumbers.Normalize(term) is { } number)
         {
-            return db.StrongEntries.Where(e => e.StrongNumber == number);
+            return Ordered(db.StrongEntries.Where(e => e.StrongNumber == number));
         }
 
         if (term is { Length: > 0 } && term.All(char.IsAsciiDigit))
@@ -178,31 +175,59 @@ internal static class StrongEndpoints
             var numbers = letter is { } only
                 ? new[] { StrongNumbers.Normalize($"{only}{term}") }
                 : [StrongNumbers.Normalize($"{StrongNumbers.Hebrew}{term}"), StrongNumbers.Normalize($"{StrongNumbers.Greek}{term}")];
-            return db.StrongEntries.Where(e => numbers.Contains(e.StrongNumber));
+            return Ordered(db.StrongEntries.Where(e => numbers.Contains(e.StrongNumber)));
         }
 
-        var entries = term is { Length: > 0 }
-            ? db.StrongEntries.FromSqlRaw(WordSearch, LikePatterns.Containing(term))
-            : db.StrongEntries.AsQueryable();
-
+        var entries = db.StrongEntries.AsQueryable();
         if (letter is { } chosen)
         {
             var prefix = chosen.ToString();
             entries = entries.Where(e => e.StrongNumber.StartsWith(prefix));
         }
 
-        return entries;
+        if (term is not { Length: > 0 })
+        {
+            return Ordered(entries);
+        }
+
+        var ranks = db.Database.SqlQueryRaw<WordRank>(
+            WordSearch, LikePatterns.Containing(term), LikePatterns.Exactly(term), LikePatterns.StartingWith(term));
+        return
+            from e in entries
+            join r in ranks on e.StrongNumber equals r.StrongNumber
+            orderby r.Rank, e.StrongNumber.StartsWith("H") ? 0 : 1, e.StrongNumber.Length, e.StrongNumber
+            select e;
     }
+
+    /// <summary>
+    /// Hebrew before Greek, as the Old Testament comes before the New — not G before H because
+    /// that is where the letters fall.
+    /// </summary>
+    private static IQueryable<StrongEntry> Ordered(IQueryable<StrongEntry> entries)
+    {
+        return entries
+            .OrderBy(e => e.StrongNumber.StartsWith("H") ? 0 : 1)
+            .ThenBy(e => e.StrongNumber.Length)
+            .ThenBy(e => e.StrongNumber);
+    }
+
+    private sealed record WordRank(string StrongNumber, int Rank);
 
     /// <summary>
     /// Folded in Postgres on both sides, with the expression the corpus's other folded columns
     /// use: the API runs without ICU, so folding the term in C# would leave its accents on.
     /// </summary>
     private static readonly string WordSearch =
-        "SELECT * FROM strong_entry WHERE " +
-        $"{DiacriticFolding.Expression("lemma")} LIKE {DiacriticFolding.Expression("{0}")} OR " +
-        $"{DiacriticFolding.Expression("transliteration")} LIKE {DiacriticFolding.Expression("{0}")} OR " +
-        "definition ILIKE {0} OR kjv_definition ILIKE {0}";
+        "SELECT strong_number, CASE " +
+        $"WHEN {Folded("{1}")} THEN 0 WHEN {Folded("{2}")} THEN 1 ELSE 2 END AS rank " +
+        "FROM strong_entry WHERE " +
+        $"{Folded("{0}")} OR definition ILIKE {{0}} OR kjv_definition ILIKE {{0}}";
+
+    private static string Folded(string pattern)
+    {
+        return $"{DiacriticFolding.Expression("lemma")} LIKE {DiacriticFolding.Expression(pattern)} OR " +
+               $"{DiacriticFolding.Expression("transliteration")} LIKE {DiacriticFolding.Expression(pattern)}";
+    }
 
     /// <summary>One page of the words carrying a number, with how many stand in each text.</summary>
     internal static async Task<StrongOccurrenceListResponse> OccurrencePage(
