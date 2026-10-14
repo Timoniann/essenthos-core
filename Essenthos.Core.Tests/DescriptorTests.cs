@@ -834,6 +834,38 @@ public sealed class DescriptorTests : IDisposable
         (await Load("struck")).Superseded.Should().Be(0, "the second load has nothing left to withdraw");
     }
 
+    /// <summary>
+    /// A clause taken out of the record that states it leaves a corpus already loaded, with the
+    /// relationship read off it, and nothing else of the file moves: the owner took Judah's battle with
+    /// the Canaanites off the page, and the next load is what takes it.
+    /// </summary>
+    [Fact]
+    public async Task AClauseTakenOutOfItsRecordLeavesTheCorpusAtTheNextLoad()
+    {
+        await SeedTheSlain();
+        await Load("struck");
+        var ids = await _db.Entities.ToDictionaryAsync(e => e.Slug, e => e.Id);
+        _db.EntityRelationships.Add(new EntityRelationship
+        {
+            FromEntityId = ids["canaanites-1"], ToEntityId = ids["judah-the-tribe"], Type = DescriptorRelations.StruckBy,
+            Category = RelationshipCategories.Read, CanonicalBook = 1, CanonicalChapter = 7, CanonicalVerse = 1,
+            Method = LinkMethod.ModelReading, Confidence = 0.9,
+            Source = EntityDescriptorLoader.SourcePrefix + " claude-sonnet-5, asked 2026-09-09",
+        });
+        await _db.SaveChangesAsync();
+        var others = await _db.EntityDescriptors.Where(d => d.EntityId != ids["canaanites-1"])
+            .OrderBy(d => d.Id).Select(d => d.Id).ToListAsync();
+
+        var outcome = await Load("struck-taken");
+
+        outcome.Superseded.Should().Be(1);
+        (await _db.EntityDescriptors.AnyAsync(d => d.EntityId == ids["canaanites-1"])).Should().BeFalse();
+        (await _db.EntityRelationships.AnyAsync(r => r.FromEntityId == ids["canaanites-1"])).Should().BeFalse();
+        (await _db.EntityDescriptors.Where(d => d.EntityId != ids["canaanites-1"]).OrderBy(d => d.Id).Select(d => d.Id).ToListAsync())
+            .Should().Equal(others);
+        (await Load("struck-taken")).Superseded.Should().Be(0);
+    }
+
     private async Task SeedTheSlain()
     {
         Corpus.Add(_db, Bible4uTextSource.KingJames, TextKind.Translation, "eng",

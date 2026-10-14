@@ -408,9 +408,10 @@ The readings that go wrong often enough to be worth naming:
   which somebody merely took part is neither. Both ends are people who died or killed: a person may
   be killed by a people (*the Philistines slew Jonathan*), but a place kills nobody, and a verse that
   says a man was slain without saying by whom gives no `killed-by`.
-- **A people is not killed; it is `struck-by`.** *They slew of them in Bezek ten thousand men*
-  (JDG 1:4) and *he slew the Gibeonites* (2SA 21:1) say some of a people were slain, and the people
-  goes on: `canaanites struck-by judah`. Say it of the people, never `killed-by` or `killer-of`.
+- **A people is not killed; it is `struck-by`.** *He slew the Gibeonites* (2SA 21:1) says some of a
+  people were slain, and the people goes on: `gibeonites struck-by saul`. Say it of the people, never
+  `killed-by` or `killer-of`. Judah's battle with the Canaanites at Bezek (JDG 1:4) is not said of
+  either of them at all.
 
 `angel-of` is a being the text defines by whose it is, as in *the angel of the LORD*.
 

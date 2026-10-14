@@ -79,15 +79,13 @@ public sealed class NamesReadAgainTests
     }
 
     /// <summary>
-    /// Judges 1:4 and 2 Samuel 21:1 say some of a people were slain, which is a defeat; Belshazzar was
-    /// slain by no one the verse names; Cozbi by Phinehas; Ezer and Elead by the men of Gath, and Zabad
-    /// by nobody. A people killing a man is said from the man's side, where Hophni's stays.
+    /// 2 Samuel 21:1 says some of a people were slain, which is a defeat; Belshazzar was slain by no one
+    /// the verse names; Cozbi by Phinehas; Ezer and Elead by the men of Gath, and Zabad by nobody. A
+    /// people killing a man is said from the man's side, where Hophni's stays.
     /// </summary>
     [Fact]
     public void APeopleIsStruckAndTheSlainAreSlainByWhomTheVerseSays()
     {
-        Claims("canaanites").Should().ContainSingle(c => c.Relation == "struck-by" && c.Target == "judah")
-            .And.NotContain(c => c.Relation == "killed-by");
         Claims("gibeonites").Should().ContainSingle(c => c.Relation == "struck-by" && c.Target == "saul")
             .And.NotContain(c => c.Relation == "killed-by");
         Claims("cozbi").Where(c => c.Relation == "killed-by").Select(c => c.Target).Should().Equal("phinehas");
@@ -98,6 +96,25 @@ public sealed class NamesReadAgainTests
         Claims("amalekites").Should().NotContain(c => c.Relation == "killer-of");
         Claims("cushites").Should().NotContain(c => c.Relation == "killer-of");
         Claims("hophni").Should().Contain(c => c.Relation == "killed-by" && c.Target == "philistines");
+    }
+
+    /// <summary>
+    /// Judges 1:4 is not said of the Canaanites at all, neither as killed nor as struck by Judah: the
+    /// owner took the line away, and no record says anything of the two of them, from either end.
+    /// </summary>
+    [Fact]
+    public void NothingIsSaidOfTheCanaanitesAndJudah()
+    {
+        static bool Between(string subject, string? target) =>
+            (subject is "canaanites" && target is "judah" or "judahites")
+            || (subject is "judah" or "judahites" && target is "canaanites");
+
+        Records.Value.Values
+            .SelectMany(record => (record.Claims ?? []).Select(claim => (record.Entity, claim)))
+            .Where(x => Between(x.Entity, x.claim.Target))
+            .Select(x => $"{x.Entity} {x.claim.Relation} {x.claim.Target} ({x.claim.Reference})")
+            .Should().BeEmpty();
+        Claims("canaanites").Should().ContainSingle().Which.Relation.Should().Be("from-place");
     }
 
     /// <summary>
