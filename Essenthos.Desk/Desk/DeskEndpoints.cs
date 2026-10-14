@@ -285,6 +285,26 @@ internal static class DeskEndpoints
         });
     }
 
+    /// <summary>
+    /// The simulated visitors' runs, their sessions, each session step by step and its screenshots,
+    /// as the visit command wrote them. Nothing here writes; no folder yet means no runs.
+    /// </summary>
+    public static void MapVisitors(this RouteGroupBuilder routes)
+    {
+        routes.MapGet("/visitors", (Visitors visitors) => visitors.Runs());
+
+        routes.MapGet("/visitors/{run}", (string run, Visitors visitors) =>
+            visitors.Run(run) is { } read ? Results.Ok(read) : NotThere("There is no such run of visitors."));
+
+        routes.MapGet("/visitors/{run}/{session}", (string run, string session, Visitors visitors) =>
+            visitors.Session(run, session) is { } read ? Results.Ok(read) : NotThere("There is no such visitor in this run."));
+
+        routes.MapGet("/visitors/{run}/{session}/steps/{file}", (string run, string session, string file, Visitors visitors) =>
+            visitors.Picture(run, session, file) is { } path
+                ? Results.File(path, "image/png")
+                : NotThere("There is no such screenshot for this visitor."));
+    }
+
     /// <summary>The section a change made among the texts is logged under.</summary>
     private const string TextsSection = "texts";
 
