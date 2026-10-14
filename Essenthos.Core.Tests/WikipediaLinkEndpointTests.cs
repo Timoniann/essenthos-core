@@ -10,8 +10,8 @@ using Xunit;
 namespace Essenthos.Core.Tests;
 
 /// <summary>
-/// A page links to the article of the reader's own language and to no other: a record whose item has
-/// no article in that language has no link, rather than one that reads as theirs and is not.
+/// A page links to the article of the reader's own language, and to the English one where their
+/// Wikipedia has none; the link says which Wikipedia it is.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class WikipediaLinkEndpointTests : IDisposable
@@ -63,13 +63,57 @@ public sealed class WikipediaLinkEndpointTests : IDisposable
 
     [Theory]
     [InlineData("spa")]
+    [InlineData("es")]
     [InlineData("rus")]
     [InlineData("fra")]
     [InlineData(null)]
     [InlineData("")]
-    public async Task AReaderWhoseLanguageHasNoArticleIsGivenNoLinkRatherThanAnotherLanguagesOne(string? asked)
+    public async Task AReaderWhoseWikipediaHasNoArticleIsSentToTheEnglishOne(string? asked)
     {
-        (await WikipediaLinks.Of(_db, _moses.Id, asked, default)).Should().BeNull();
+        var link = await WikipediaLinks.Of(_db, _moses.Id, asked, default);
+
+        link.Should().NotBeNull();
+        link!.Language.Should().Be("en");
+        link.Title.Should().Be("Moses");
+        link.Url.Should().Be("https://en.wikipedia.org/wiki/Moses");
+    }
+
+    [Theory]
+    [InlineData("ukr")]
+    [InlineData("spa")]
+    [InlineData("eng")]
+    public async Task ARecordWithOnlyAnEnglishArticleSendsEveryReaderToIt(string asked)
+    {
+        var elishah = new Entity { Kind = EntityKind.Person, Slug = "elishah", Name = "Elishah", SourceId = "test:elishah", Source = "test" };
+        _db.Entities.Add(elishah);
+        await _db.SaveChangesAsync();
+        _db.EntityWikipedia.Add(new EntityWikipedia
+        {
+            EntityId = elishah.Id, Language = "en", Title = "Elishah", Qid = "Q1", MatchedBy = EntityWikipedia.Evidence.Kin, Confidence = 0.9,
+        });
+        await _db.SaveChangesAsync();
+
+        var link = await WikipediaLinks.Of(_db, elishah.Id, asked, default);
+
+        link.Should().NotBeNull();
+        link!.Language.Should().Be("en");
+        link.Title.Should().Be("Elishah");
+    }
+
+    [Fact]
+    public async Task ARecordWithNeitherTheReadersNorAnEnglishArticleGivesNone()
+    {
+        var hiel = new Entity { Kind = EntityKind.Person, Slug = "hiel", Name = "Hiel", SourceId = "test:hiel", Source = "test" };
+        _db.Entities.Add(hiel);
+        await _db.SaveChangesAsync();
+        _db.EntityWikipedia.Add(new EntityWikipedia
+        {
+            EntityId = hiel.Id, Language = "de", Title = "Hiel", Qid = "Q2", MatchedBy = EntityWikipedia.Evidence.Kin, Confidence = 0.9,
+        });
+        await _db.SaveChangesAsync();
+
+        (await WikipediaLinks.Of(_db, hiel.Id, "ukr", default)).Should().BeNull();
+        (await WikipediaLinks.Of(_db, hiel.Id, "deu", default))!.Title.Should().Be("Hiel");
     }
 
     [Fact]

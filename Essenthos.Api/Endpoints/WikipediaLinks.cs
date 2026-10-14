@@ -14,12 +14,15 @@ namespace Essenthos.Core.Endpoints;
 /// </para>
 ///
 /// <para>
-/// There is no fallback. A record whose item has no article in the reader's language gets no link, and
-/// a link that reads as theirs is never to another language's article.
+/// Where the reader's Wikipedia has no article on the record, or the reader's language has no Wikipedia
+/// kept here, the English article stands in. The response says which Wikipedia it is, and the page says
+/// so beside the link, so an English article never reads as one in the reader's language.
 /// </para>
 /// </summary>
 internal static class WikipediaLinks
 {
+    private const string Fallback = "en";
+
     /// <summary>The Wikipedia of a language the corpus spells <c>ukr</c> or the interface spells <c>uk</c>, or null where none is kept.</summary>
     public static string? WikipediaOf(string? language) => LanguageCodes.Normalise(language) switch
     {
@@ -33,16 +36,16 @@ internal static class WikipediaLinks
     public static async Task<EntityWikipediaResponse?> Of(
         AppDbContext db, int entityId, string? language, CancellationToken cancellationToken)
     {
-        if (WikipediaOf(language) is not { } wikipedia)
-        {
-            return null;
-        }
-
-        var title = await db.EntityWikipedia
-            .Where(w => w.EntityId == entityId && w.Language == wikipedia)
-            .Select(w => w.Title)
-            .FirstOrDefaultAsync(cancellationToken);
-        return title is null ? null : new EntityWikipediaResponse(wikipedia, title, Address(wikipedia, title));
+        var wikipedia = WikipediaOf(language) ?? Fallback;
+        var articles = await db.EntityWikipedia
+            .Where(w => w.EntityId == entityId && (w.Language == wikipedia || w.Language == Fallback))
+            .Select(w => new { w.Language, w.Title })
+            .ToListAsync(cancellationToken);
+        var article = articles.FirstOrDefault(a => a.Language == wikipedia)
+            ?? articles.FirstOrDefault(a => a.Language == Fallback);
+        return article is null
+            ? null
+            : new EntityWikipediaResponse(article.Language, article.Title, Address(article.Language, article.Title));
     }
 
     /// <summary>The article's address: the title with its spaces as underscores, escaped as a path segment.</summary>

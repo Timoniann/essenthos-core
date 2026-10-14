@@ -206,9 +206,10 @@ internal record EntityResponse(
     public EntityTribeResponse? TribeRecord { get; init; }
 
     /// <summary>
-    /// The article the Wikipedia of the reader's own language has on this record, where the record could
-    /// be tied to one. Null when it could not, or when that Wikipedia has none: a reader is never sent to
-    /// another language's article under a link that reads as their own.
+    /// The article the Wikipedia of the reader's own language has on this record, or the English one where
+    /// that Wikipedia has none. Null when the record could not be tied to an article in either.
+    /// <see cref="EntityWikipediaResponse.Language"/> says which, so a page can name the language of an
+    /// article that is not in the reader's.
     /// </summary>
     public EntityWikipediaResponse? Wikipedia { get; init; }
 
@@ -380,7 +381,7 @@ internal record EntityOriginResponse(string Slug, string Kind, string Name, stri
 internal record EntityTribeResponse(string Slug, string Kind, string Name, string? LocalName);
 
 /// <summary>
-/// The article one language's Wikipedia has on a record, for a reader of that language.
+/// The article one language's Wikipedia has on a record: the reader's language's, or the English one standing in for it.
 /// </summary>
 /// <param name="Language">The two-letter language of the Wikipedia: <c>en</c>, <c>uk</c>, <c>de</c>, <c>es</c>.</param>
 /// <param name="Title">The article's title, as a link's text would show it.</param>
