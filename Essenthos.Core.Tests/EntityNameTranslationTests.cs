@@ -74,6 +74,20 @@ public sealed class EntityNameTranslationTests : IDisposable
             .Should().Equal(new Dictionary<string, string> { [King] = "цар Ізраїлю" });
     }
 
+    /// <summary>Every rendering on disk reads, and cites the verses its English cites.</summary>
+    [Fact]
+    [Trait(TestCategory.Name, TestCategory.Corpus)]
+    public void EveryRenderingOnDiskIsSound()
+    {
+        var (records, files) = EntityNameTranslationLoader.Read(TestResources.Shipped(EntityNameTranslationLoader.Folder));
+
+        files.Should().BeGreaterThan(0);
+        records.Should().NotBeEmpty();
+        records.Should().OnlyContain(record => record.Languages().Any());
+        records.SelectMany(record => record.Languages().Select(one => (record.English, one.Text)))
+            .Should().OnlyContain(pair => EntityNameTranslationLoader.CitesTheSameVerses(pair.English, pair.Text));
+    }
+
     /// <summary>The page turns a cited verse into a link; a rendering that lost it is refused.</summary>
     [Fact]
     public async Task ARenderingThatLosesAVerseIsRefused()
