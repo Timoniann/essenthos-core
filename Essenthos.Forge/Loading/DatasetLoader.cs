@@ -1487,14 +1487,16 @@ internal sealed class DatasetLoader(
         var connectionString = DatabaseConnection.Read(configuration);
         int ran = 0, skipped = 0;
 
-        foreach (var step in steps)
+        foreach (var recorded in steps)
         {
+            RecipeStep step;
             using (var scope = services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
                 await db.Database.OpenConnectionAsync(cancellationToken);
-                var already = await Recipe.AlreadyThere(
-                    (Npgsql.NpgsqlConnection)db.Database.GetDbConnection(), step, cancellationToken);
+                var connection = (Npgsql.NpgsqlConnection)db.Database.GetDbConnection();
+                step = await Recipe.Replayed(connection, recorded, cancellationToken);
+                var already = await Recipe.AlreadyThere(connection, step, cancellationToken);
                 if (already is not null)
                 {
                     logger.LogInformation("Recipe: not running `{Step}`: {Reason}", step, already);

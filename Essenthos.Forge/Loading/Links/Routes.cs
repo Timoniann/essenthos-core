@@ -172,6 +172,6 @@ internal static class Routes
             }
         }
 
-        return $"SIL.Machine, aligned {string.Join(" and ", found)}";
+        return $"{CompositionPipeline.Machine}, aligned {string.Join(" and ", found)}";
     }
 }
