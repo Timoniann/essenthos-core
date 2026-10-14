@@ -18,12 +18,20 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// Records a dataset supplied whose English line was set to the one this project wrote for it, which
 /// is all of them on a corpus loaded before the lines were written and none after.
 /// </param>
-internal sealed record DistinguisherOutcome(int Written, int Stale, int Missing, TimeSpan Elapsed, int Lined = 0)
+/// <param name="Spelled">Records whose line a dataset misspelled, put right: all of them once, none after.</param>
+internal sealed record DistinguisherOutcome(
+    int Written,
+    int Stale,
+    int Missing,
+    TimeSpan Elapsed,
+    int Lined = 0,
+    int Spelled = 0)
 {
     public override string ToString() =>
-        Written == 0 && Stale == 0 && Missing == 0 && Lined == 0
+        Written == 0 && Stale == 0 && Missing == 0 && Lined == 0 && Spelled == 0
             ? "our own lines in every language are already there"
-            : $"{Lined} records given the English line this project wrote for them, " +
+            : $"{Spelled} lines a dataset misspelled put right, " +
+              $"{Lined} records given the English line this project wrote for them, " +
               $"{Written} of our own lines written in another language, {Stale} records whose English has " +
               $"changed since it was rendered, {Missing} for records the encyclopedia does not hold, in {Elapsed}";
 }
@@ -33,7 +41,8 @@ internal sealed record DistinguisherOutcome(int Written, int Stale, int Missing,
 /// German and Spanish: the objects, the appointed times, the beings the narratives turn on, the
 /// titles, the tribes and the words for God; and the line itself, in English as well, of the records a
 /// dataset supplied that this project has read for itself and describes by no clause, which replaces
-/// the dataset's.
+/// the dataset's. Before any of that, the slips of spelling in the lines the datasets wrote are put
+/// right (<see cref="LineSpellings"/>), so a rendering is made against the line as it is shown.
 ///
 /// <para>
 /// A rendering is kept only while the record still says what it renders. The file carries the
@@ -75,6 +84,7 @@ internal sealed class DistinguisherLoader(AppDbContext db, ILogger<Distinguisher
         CancellationToken cancellationToken)
     {
         var started = Stopwatch.StartNew();
+        var spelled = await Spell(cancellationToken);
         var slugs = files.SelectMany(file => file.Records).Select(r => r.Slug).Distinct().ToList();
         var entities = await db.Entities
             .Where(e => slugs.Contains(e.Slug))
@@ -153,9 +163,34 @@ internal sealed class DistinguisherLoader(AppDbContext db, ILogger<Distinguisher
         }
 
         await db.SaveChangesAsync(cancellationToken);
-        var outcome = new DistinguisherOutcome(written, stale, missing, started.Elapsed, lined);
+        var outcome = new DistinguisherOutcome(written, stale, missing, started.Elapsed, lined, spelled);
         logger.LogInformation("Our own lines in every language: {Outcome}", outcome);
         return outcome;
+    }
+
+    private async Task<int> Spell(CancellationToken cancellationToken)
+    {
+        var lines = await db.Entities
+            .AsNoTracking()
+            .Where(e => e.Distinguisher != null)
+            .Select(e => new { e.Id, e.Distinguisher })
+            .ToListAsync(cancellationToken);
+        var misspelled = lines
+            .Where(line => LineSpellings.Correct(line.Distinguisher) != line.Distinguisher)
+            .Select(line => line.Id)
+            .ToList();
+        if (misspelled.Count == 0)
+        {
+            return 0;
+        }
+
+        var entities = await db.Entities.Where(e => misspelled.Contains(e.Id)).ToListAsync(cancellationToken);
+        foreach (var entity in entities)
+        {
+            entity.Distinguisher = LineSpellings.Correct(entity.Distinguisher);
+        }
+
+        return entities.Count;
     }
 
     internal static DistinguisherFile Read() => Embedded(Resource);

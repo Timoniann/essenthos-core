@@ -108,6 +108,36 @@ public sealed class DistinguisherLoaderTests : IDisposable
             .Source.Should().Be("Essenthos, a test");
     }
 
+    /// <summary>
+    /// A dataset's slip of spelling is put right in the line once, whichever loader wrote it, and a
+    /// second load finds nothing to put right.
+    /// </summary>
+    [Fact]
+    public async Task ALineADatasetMisspelledIsPutRightOnce()
+    {
+        var rebekah = new Entity
+        {
+            Kind = EntityKind.Person,
+            Slug = "rebekah",
+            Name = "Rebekah",
+            Distinguisher = "daughter of Bethuel, grandaughter of Nahor (GEN 22:23)",
+            SourceId = "person:Rebekah_1",
+            Source = "BibleData by a test",
+        };
+        _db.Entities.Add(rebekah);
+        await _db.SaveChangesAsync();
+
+        var first = await _loader.Load(File, CancellationToken.None);
+        var second = await _loader.Load(File, CancellationToken.None);
+
+        first.Spelled.Should().Be(1);
+        second.Spelled.Should().Be(0);
+        _db.ChangeTracker.Clear();
+        (await _db.Entities.SingleAsync(e => e.Slug == "rebekah")).Distinguisher
+            .Should().Be("daughter of Bethuel, granddaughter of Nahor (GEN 22:23)");
+        (await _db.Entities.SingleAsync(e => e.Slug == "cherubim")).Distinguisher.Should().Be(English);
+    }
+
     [Fact]
     public async Task ALineRewrittenSinceItWasRenderedKeepsNoTranslation()
     {
