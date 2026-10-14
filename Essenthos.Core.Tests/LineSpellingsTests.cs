@@ -37,6 +37,36 @@ public sealed class LineSpellingsTests
         LineSpellings.Correct(line).Should().Be(line);
     }
 
+    [Theory]
+    [InlineData("His Annointed", "His Anointed")]
+    [InlineData("his [the LORD's] annointed", "his [the LORD's] anointed")]
+    [InlineData("on of Deker [pierces]", "son of Deker [pierces]")]
+    [InlineData("my] father is Ner [a lamp]", "[my] father is Ner [a lamp]")]
+    [InlineData("poss. a form of] man of Baal; having a long upper lip", "[poss. a form of] man of Baal; having a long upper lip")]
+    [InlineData("rom the right, good, fortune", "from the right, good, fortune")]
+    [InlineData("awning, shining or flashing [red or scarlet] light", "dawning, shining or flashing [red or scarlet] light")]
+    [InlineData("TRUE", "true")]
+    [InlineData("Oather (?) of Shadrach, Meshash, and Abednego", "G-d of Shadrach, Meshach, and Abednego")]
+    [InlineData("King Ahasureus", "King Ahasuerus")]
+    [InlineData("might god [El]", "mighty G-d [El]")]
+    [InlineData("G-d has filled with joy or [the object of] joy is G-d”", "G-d has filled with joy or [the object of] joy is G-d")]
+    public void ASlipInANameIsPutRight(string line, string right)
+    {
+        LineSpellings.Name(line).Should().Be(right);
+        LineSpellings.Name(right).Should().Be(right);
+    }
+
+    [Theory]
+    [InlineData("Ashurbanipal, “Ashur creates a son”")]
+    [InlineData("valley [of the] plain (?)")]
+    [InlineData("[my] father is good")]
+    [InlineData("son of Deker [piercing]")]
+    [InlineData(null)]
+    public void ANameSpelledRightIsLeftAlone(string? line)
+    {
+        LineSpellings.Name(line).Should().Be(line);
+    }
+
     [Fact]
     public void PuttingALineRightTwiceChangesNothingTheSecondTime()
     {

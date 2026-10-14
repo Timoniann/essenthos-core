@@ -84,6 +84,22 @@ public sealed class StrongSearchTests : IDisposable
         (await Numbers("agape", "greek")).Should().BeEquivalentTo("G26", "G27");
     }
 
+    /// <summary>
+    /// καταφιλέω holds φιλέω, and its number comes first; a student who typed the word itself
+    /// wants the word itself first, then the words it opens.
+    /// </summary>
+    [Fact]
+    public async Task TheWordSpelledExactlyComesFirstThenTheWordsItOpens()
+    {
+        Entry("G2705", "καταφιλέω", "kataphiléō", "to kiss earnestly", "kiss");
+        Entry("G5384", "φίλος", "phílos", "actively, fond, i.e. friendly", "friend");
+        await _db.SaveChangesAsync();
+
+        (await Numbers("phileo", "greek")).Should().Equal("G5368", "G2705");
+        (await Numbers("φιλεω", null)).Should().Equal("G5368", "G2705");
+        (await Numbers("phil", "greek")).Should().Equal("G5368", "G5384", "G2705");
+    }
+
     [Fact]
     public async Task GlossesAreStillSearched()
     {

@@ -115,7 +115,7 @@
 {"english": "Highest One", "ukr": "Всевишній", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "High priest", "ukr": "Первосвященик", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "High Priest", "ukr": "Первосвященик", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "His Annointed", "ukr": "Його Помазаний", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "His Anointed", "ukr": "Його Помазаний", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Holy Father", "ukr": "Отче Святий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Holy One", "ukr": "Святий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Holy One of G-d", "ukr": "Святий Божий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -543,7 +543,7 @@
 {"english": "[my] father is a wall", "ukr": "[мій] батько — мур", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[my] father is [the] night dew", "ukr": "[мій] батько — [нічна] роса", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[my] father is good", "ukr": "[мій] батько добрий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "my] father is Ner [a lamp]", "ukr": "[мій] батько — Нер [світильник]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "[my] father is Ner [a lamp]", "ukr": "[мій] батько — Нер [світильник]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "father of many", "ukr": "батько багатьох", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "exalted father", "ukr": "піднесений батько", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "father is peace", "ukr": "батько — мир", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -627,7 +627,7 @@
 {"english": "y-h-v-h carries a load", "ukr": "ГОСПОДЬ несе тягар", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "y-h-v-h is powerful", "ukr": "ГОСПОДЬ могутній", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "trustworthy, reliable, faithful", "ukr": "надійний, певний, вірний", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "TRUE", "ukr": "правдивий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "true", "ukr": "правдивий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [El] is my kinsman", "ukr": "Бог [Ел] — мій родич", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[my] people have majesty", "ukr": "[мій] народ має величність", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[my] people are generous", "ukr": "[мій] народ щедрий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -668,14 +668,13 @@
 {"english": "y-h-v-h has made", "ukr": "ГОСПОДЬ учинив", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "gatherer", "ukr": "збирач", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[belonging to] Neith", "ukr": "[що належить] Нейт", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "poss. a form of] man of Baal; having a long upper lip", "ukr": "[можливо, форма від] чоловік Баала; той, хто має довгу верхню губу", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "[poss. a form of] man of Baal; having a long upper lip", "ukr": "[можливо, форма від] чоловік Баала; той, хто має довгу верхню губу", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Happy One", "ukr": "Щасливий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "guest", "ukr": "гість", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Ashteroth of the pair of horns [twin peaks?]", "ukr": "Аштарот двох рогів [двох вершин?]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] wrought iron", "ukr": "[можливо,] кване залізо", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] thornbush; he who belongs to Nah", "ukr": "[можливо,] терновий кущ; той, хто належить Нагу", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] given from a sacred horse", "ukr": "[можливо,] даний від священного коня", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "G-d has filled with joy or [the object of] joy is G-d”", "ukr": "Бог наповнив радістю, або [предмет] радості — Бог", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d has filled with joy or [the object of] joy is G-d", "ukr": "Бог наповнив радістю, або [предмет] радості — Бог", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "prisoner", "ukr": "в’язень", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Asshur = Assyria", "ukr": "Ашшур = Ассирія", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -742,7 +741,7 @@
 {"english": "son of Abinadab", "ukr": "син Авінадава", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "y-h-v-h has built", "ukr": "ГОСПОДЬ збудував", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "son of my people", "ukr": "син мого народу", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "on of Deker [pierces]", "ukr": "син Декера [той, що пронизує]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "son of Deker [pierces]", "ukr": "син Декера [той, що пронизує]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "son of strength", "ukr": "син сили", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "son of Hadad", "ukr": "син Гадада", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "son of wealth, son of strength", "ukr": "син багатства, син сили", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -768,7 +767,7 @@
 {"english": "house of Rapha [healing]", "ukr": "дім Рафи [зцілення]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "cliff house", "ukr": "дім на скелі", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "in the shadow of G-d [El]", "ukr": "у тіні Бога [Ел]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "metallic] ore or place of refuge", "ukr": "[металева] руда, або місце притулку", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "[metallic] ore or place of refuge", "ukr": "[металева] руда, або місце притулку", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "son of Deker [piercing]", "ukr": "син Декера [пронизування]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "gift of G-d", "ukr": "дар Божий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "fortunate", "ukr": "щасливий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1336,7 +1335,7 @@
 {"english": "[perhaps] angry or wrath", "ukr": "[можливо,] гнівний, або гнів", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "clad with a cloak", "ukr": "одягнений у плащ", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "bond", "ukr": "зв’язок", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "perhaps] reduced or bought", "ukr": "[можливо,] зменшений, або куплений", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "[perhaps] reduced or bought", "ukr": "[можливо,] зменшений, або куплений", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "bought", "ukr": "куплений", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] possession of Nebo", "ukr": "[можливо,] власність Нево", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "double cave", "ukr": "подвійна печера", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1388,7 +1387,6 @@
 {"english": "full yield (of crops)", "ukr": "повний урожай", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "my dwellings", "ukr": "мої оселі", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "from the mouth of Shame [a derogatory name for Baal]", "ukr": "з уст Сорому [зневажливе ім’я Баала]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "from the mouth of Shame [a derogatory name for Baal]”", "ukr": "з уст Сорому [зневажливе ім’я Баала]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "abundant", "ukr": "рясний", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "loved by y-h-v-h", "ukr": "улюблений ГОСПОДОМ", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "rebellious", "ukr": "бунтівний", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1417,7 +1415,6 @@
 {"english": "rods", "ukr": "жезли", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "y-h-v-h acquires", "ukr": "ГОСПОДЬ набуває", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "queen", "ukr": "цариця", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "rom the right, good, fortune", "ukr": "від правиці, добро, щастя", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "from the right, good, fortune", "ukr": "від правиці, добро, щастя", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Who belongs to G-d [El]?", "ukr": "Хто належить Богові [Ел]?", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "rumor", "ukr": "чутка", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1552,7 +1549,6 @@
 {"english": "healed", "ukr": "зцілений", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "y-h-v-h has seen", "ukr": "ГОСПОДЬ побачив", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] choice calf", "ukr": "[можливо,] добірне теля", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "[prob.] rider or horseman [from to ride, mount]”", "ukr": "[імовірно,] вершник, або їздець [від «їхати верхи»]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[prob.] rider or horseman [from to ride, mount]", "ukr": "[імовірно,] вершник, або їздець [від «їхати верхи»]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "sea [of] reeds", "ukr": "море очерету", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "friend", "ukr": "друг", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1610,7 +1606,6 @@
 {"english": "one born at the time of the barley [harvest]", "ukr": "народжений під час [жнив] ячменю", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "one who explains, opens, extends; abundance", "ukr": "той, хто пояснює, відкриває, поширює; достаток", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "y-h-v-h persists; y-h-v-h is prince; y-h-v-h contends", "ukr": "ГОСПОДЬ стоїть твердо; ГОСПОДЬ — князь; ГОСПОДЬ змагається", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "y-h-v-h persists; y-h-v-h is prince; y-h-v-h contends”", "ukr": "ГОСПОДЬ стоїть твердо; ГОСПОДЬ — князь; ГОСПОДЬ змагається", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "descendant i.e., younger branch", "ukr": "нащадок, тобто молодша гілка", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "determined, granted, Ge 4:25; restitution", "ukr": "призначений, даний, Ge 4:25; відшкодування", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "concealed [by deity]", "ukr": "прихований [божеством]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1798,7 +1793,6 @@
 {"english": "gaze", "ukr": "погляд", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "north, northern", "ukr": "північ, північний", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "dawning, shining or flashing [red or scarlet] light", "ukr": "світання, сяйво, або спалах [червоного чи багряного] світла", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "awning, shining or flashing [red or scarlet] light", "ukr": "світання, сяйво, або спалах [червоного чи багряного] світла", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "y-h-v-h shines brightly [red or scarlet]; y-h-v-h has risen [like the sun]", "ukr": "ГОСПОДЬ яскраво сяє [червоним чи багряним]; ГОСПОДЬ зійшов [як сонце]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "[poss.] Kirsha; gold; mop-headed", "ukr": "[можливо,] Кірша; золото; кошлатий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "splendor", "ukr": "пишнота", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1889,7 +1883,7 @@
 {"english": "god of my righteousness", "ukr": "бог моєї праведності", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "god of my salvation", "ukr": "бог мого спасіння", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "the god of peace", "ukr": "бог миру", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "Oather (?) of Shadrach, Meshash, and Abednego", "ukr": "Бог(?) Шадраха, Мешаха та Авед-Неґо", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "G-d of Shadrach, Meshach, and Abednego", "ukr": "Бог Шадраха, Мешаха та Авед-Неґо", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "god of Shem", "ukr": "бог Симів", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [of] truth", "ukr": "Бог правди", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "god of vengeance", "ukr": "бог помсти", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1909,7 +1903,7 @@
 {"english": "Highest", "ukr": "Всевишній", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "the great priest", "ukr": "великий священик", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "the high priest", "ukr": "первосвященик", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "his [the LORD's] annointed", "ukr": "його [ГОСПОДНІЙ] помазаний", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "his [the LORD's] anointed", "ukr": "його [ГОСПОДНІЙ] помазаний", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "holy father", "ukr": "святий отче", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "holy ones [plural]", "ukr": "святі [множина]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "holy one", "ukr": "святий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -1931,7 +1925,6 @@
 {"english": "judge [of] all the land", "ukr": "суддя всієї землі", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Adonijah", "ukr": "цар Адонія", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "Agrippa the king", "ukr": "Агриппа цар", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "King Ahasureus", "ukr": "цар Ахашверош", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Ahaz", "ukr": "цар Ахаз", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Amon", "ukr": "цар Амон", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "king Artaxerxes", "ukr": "цар Артаксеркс", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
@@ -2076,7 +2069,7 @@
 {"english": "my king is right/righteous", "ukr": "мій цар праведний", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "messiah", "ukr": "месія", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "messiah the prince", "ukr": "месія-князь", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
-{"english": "might god [El]", "ukr": "могутній бог [Ел]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
+{"english": "mighty G-d [El]", "ukr": "могутній Бог [Ел]", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "mighty one", "ukr": "сильний", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "mighty one [of] Jacob", "ukr": "сильний Яковів", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
 {"english": "G-d [the] Highest", "ukr": "Бог Найвищий", "model": "claude-opus-5-5", "askedAt": "2026-10-14"}
