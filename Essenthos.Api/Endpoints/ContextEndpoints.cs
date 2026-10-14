@@ -182,6 +182,7 @@ internal static class ContextEndpoints
             .ThenBy(e => e.Slug)
             .Select(EncyclopediaEndpoints.Rows)
             .ToListAsync(cancellationToken);
+        events = await EncyclopediaEndpoints.Aged(db, events, cancellationToken);
 
         var (periods, dated) = await Periods(db, book, chapter, events, cancellationToken);
         var measures = await Measures(db, book, chapter, cancellationToken);
