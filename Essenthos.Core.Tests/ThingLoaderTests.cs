@@ -609,7 +609,7 @@ public sealed class ThingFileTests
 
             record.Kind.Should().BeOneOf("object", "observance");
             Subtypes.Should().Contain(record.Subtype, $"{record.Slug} has to be sorted by a subtype the pages know");
-            record.Names.Should().ContainKeys(["ukr", "deu", "rus"], $"{record.Slug} is named in every language its page is read in");
+            record.Names.Should().ContainKeys(["ukr", "deu", "rus", "spa"], $"{record.Slug} is named in every language its page is read in");
             record.Distinguisher.Should().NotBeNullOrWhiteSpace();
             foreach (var passage in record.Passages ?? [])
             {
