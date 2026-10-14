@@ -120,6 +120,13 @@ internal static class Sources
         "the King James Strong numbering of the Revised Literal Translation (Bible Foundation and KJV2003), read from CrossWire's RLT";
 
     /// <summary>
+    /// What every link drawn from Robinson's apparatus carries: the places the Byzantine manuscripts
+    /// divide, and where Nestle-Aland and the Editio Critica Maior read otherwise.
+    /// </summary>
+    public const string ByzantineApparatusCredit =
+        "Robinson's apparatus to the Byzantine Textform 2018 (byztxt/byzantine-majority-text, source/CCAT)";
+
+    /// <summary>
     /// What every link drawn from the Received Text positions on the Revised Literal Translation's
     /// New Testament carries.
     /// </summary>
