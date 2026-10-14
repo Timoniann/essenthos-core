@@ -257,6 +257,8 @@ internal static partial class EncyclopediaEndpoints
             ];
 
             var localNames = await EntityNames.Of(db, [entity.Id], language, cancellationToken);
+            var glosses = await EntityNameTranslations.Of(
+                db, names.SelectMany(n => new[] { n.Label, n.Meaning }), words, cancellationToken);
 
             return Results.Ok(new EntityResponse(
                 entity.Slug,
@@ -278,7 +280,13 @@ internal static partial class EncyclopediaEndpoints
                 [
                     .. names.Select(n => new EntityNameResponse(
                         n.Label, n.Hebrew, n.HebrewTransliterated, n.Greek, n.GreekTransliterated,
-                        n.Meaning, Numbers(n.HebrewStrongNumber), Numbers(n.GreekStrongNumber), n.Kind)),
+                        n.Meaning, Numbers(n.HebrewStrongNumber), Numbers(n.GreekStrongNumber), n.Kind)
+                    {
+                        LocalLabel = n.Kind is { } kind && EntityNameTranslations.RenderedKinds.Contains(kind)
+                            ? glosses.GetValueOrDefault(n.Label)
+                            : null,
+                        LocalMeaning = n.Meaning is { } meaning ? glosses.GetValueOrDefault(meaning) : null,
+                    }),
                 ],
                 related,
                 [.. events.Select(one => Event(one, placesNamed))],

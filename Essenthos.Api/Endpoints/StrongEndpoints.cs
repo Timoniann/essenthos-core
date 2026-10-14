@@ -3,6 +3,7 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Strong;
+using Essenthos.Core.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -80,23 +81,7 @@ internal static class StrongEndpoints
                     $"There is no text \"{rendering}\". Ask /v1/corpora for the ones this corpus holds."));
             }
 
-            var entries = db.StrongEntries.AsQueryable();
-
-            if (language is { Length: > 0 })
-            {
-                var letter = language.StartsWith('g') || language.StartsWith('G') ? "G" : "H";
-                entries = entries.Where(e => e.StrongNumber.StartsWith(letter));
-            }
-
-            if (query is { Length: > 0 })
-            {
-                var like = LikePatterns.Containing(query);
-                entries = entries.Where(e =>
-                    EF.Functions.ILike(e.Lemma ?? string.Empty, like) ||
-                    EF.Functions.ILike(e.Transliteration ?? string.Empty, like) ||
-                    EF.Functions.ILike(e.Definition ?? string.Empty, like) ||
-                    EF.Functions.ILike(e.KjvDefinition ?? string.Empty, like));
-            }
+            var entries = Matching(db, query, language);
 
             var total = await entries.CountAsync(cancellationToken);
             var page = await entries
@@ -169,6 +154,55 @@ internal static class StrongEndpoints
 
         MapRenderings(routes);
     }
+
+    /// <summary>
+    /// The entries a lexicon search answers. A number is looked up as a number — G26 is G26, not
+    /// every entry whose definition says "compare G2646" — and bare digits take the letter of the
+    /// language asked for, or both. Anything else is a word: the lemma and the transliteration are
+    /// compared without accents, because nobody types <em>philéō</em>, and the glosses as written.
+    /// </summary>
+    internal static IQueryable<StrongEntry> Matching(AppDbContext db, string? query, string? language)
+    {
+        var letter = language is { Length: > 0 }
+            ? char.ToUpperInvariant(language[0]) == StrongNumbers.Greek ? StrongNumbers.Greek : StrongNumbers.Hebrew
+            : (char?)null;
+        var term = query?.Trim();
+
+        if (StrongNumbers.Normalize(term) is { } number)
+        {
+            return db.StrongEntries.Where(e => e.StrongNumber == number);
+        }
+
+        if (term is { Length: > 0 } && term.All(char.IsAsciiDigit))
+        {
+            var numbers = letter is { } only
+                ? new[] { StrongNumbers.Normalize($"{only}{term}") }
+                : [StrongNumbers.Normalize($"{StrongNumbers.Hebrew}{term}"), StrongNumbers.Normalize($"{StrongNumbers.Greek}{term}")];
+            return db.StrongEntries.Where(e => numbers.Contains(e.StrongNumber));
+        }
+
+        var entries = term is { Length: > 0 }
+            ? db.StrongEntries.FromSqlRaw(WordSearch, LikePatterns.Containing(term))
+            : db.StrongEntries.AsQueryable();
+
+        if (letter is { } chosen)
+        {
+            var prefix = chosen.ToString();
+            entries = entries.Where(e => e.StrongNumber.StartsWith(prefix));
+        }
+
+        return entries;
+    }
+
+    /// <summary>
+    /// Folded in Postgres on both sides, with the expression the corpus's other folded columns
+    /// use: the API runs without ICU, so folding the term in C# would leave its accents on.
+    /// </summary>
+    private static readonly string WordSearch =
+        "SELECT * FROM strong_entry WHERE " +
+        $"{DiacriticFolding.Expression("lemma")} LIKE {DiacriticFolding.Expression("{0}")} OR " +
+        $"{DiacriticFolding.Expression("transliteration")} LIKE {DiacriticFolding.Expression("{0}")} OR " +
+        "definition ILIKE {0} OR kjv_definition ILIKE {0}";
 
     /// <summary>One page of the words carrying a number, with how many stand in each text.</summary>
     internal static async Task<StrongOccurrenceListResponse> OccurrencePage(

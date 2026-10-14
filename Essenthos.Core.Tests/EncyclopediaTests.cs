@@ -391,8 +391,9 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
     /// The dataset names both of these YHVH and tells them apart by a sample of their titles —
     /// "Holy, Holy, Holy (ISA 6:3) and too many others to fit here" — which is true of the first and
     /// says nothing about which of the two it is. A search for the name returned two rows a reader
-    /// had nothing to choose between, so the second is named rather than distinguished. Both keep
-    /// the dataset's own words in their notes: a name it chose is a thing it said.
+    /// had nothing to choose between, so the second is named rather than distinguished. How the
+    /// dataset held them is not put in their notes, which a reader reads on their pages, and neither
+    /// is how Jesus was taken out of the first.
     /// </summary>
     [Fact]
     public void TheTwoEntitiesNamedYhvhAreToldApart()
@@ -405,8 +406,10 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
         god.Distinguisher.Should().NotBeNullOrWhiteSpace().And.NotBe(father.Distinguisher);
         father.Distinguisher.Should().NotBeNullOrWhiteSpace();
         god.Distinguisher.Should().NotContain("too many others");
-        god.Notes.Should().NotBeNull().And.Contain("too many others");
-        father.Notes.Should().NotBeNull().And.Contain("YHVH");
+        foreach (var record in new[] { god, father, _corpus.Entities["essenthos:jesus"] })
+        {
+            (record.Notes ?? string.Empty).Should().NotContainAny("dataset", "BibleData", "corpus", "too many others");
+        }
     }
 
     /// <summary>

@@ -245,6 +245,8 @@ public class AppDbContext : DbContext
 
     public DbSet<EntityDistinguisher> EntityDistinguishers { get; set; } = null!;
 
+    public DbSet<EntityNameTranslation> EntityNameTranslations { get; set; } = null!;
+
     /// <summary>The article each language's Wikipedia has on a record, and what tied the record to it.</summary>
     public DbSet<EntityWikipedia> EntityWikipedia { get; set; } = null!;
 

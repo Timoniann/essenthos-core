@@ -439,7 +439,14 @@ internal record EntityNameResponse(
     string? Meaning,
     IList<string> HebrewStrongNumbers,
     IList<string> GreekStrongNumbers,
-    string? Kind);
+    string? Kind)
+{
+    /// <summary>A title's label in the reader's language, where it has been rendered; never a name's.</summary>
+    public string? LocalLabel { get; init; }
+
+    /// <summary>The meaning in the reader's language, where it has been rendered.</summary>
+    public string? LocalMeaning { get; init; }
+}
 
 
 /// <summary>What the text calls the entity at one verse, and whether that word settles who it is.</summary>
