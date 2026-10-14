@@ -399,6 +399,7 @@ internal sealed class DatasetLoader(
             new("fold-records", FoldTheRecordsWrittenTwice),
             new("settled-names", SayAgainWhichWordNamesWhom),
             new("own-lines", RenderOurOwnLinesInEveryLanguage),
+            new("name-glosses", cancellationToken => RenderTheTitlesAndGlossesOfNames(resources, cancellationToken)),
             new("refiled-ties", MoveWhatWasReadOffTheMisfiledVerses),
             new("own-relationships", RelateTheEntitiesOurOwnClausesRelate),
             new("crossed-names", CrossBackTheNamesGivenToEachOther),
@@ -1924,6 +1925,19 @@ internal sealed class DatasetLoader(
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<OwnNameLoader>();
         status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// The titles a record is given and the glosses of its names, in each reader's language, from what
+    /// a generation pass rendered. Keyed by their English, so after every step that writes a name.
+    /// </summary>
+    private async Task RenderTheTitlesAndGlossesOfNames(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the titles and glosses of names in every language");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<EntityNameTranslationLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
     }
 
     /// <summary>

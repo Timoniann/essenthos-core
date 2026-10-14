@@ -192,6 +192,7 @@ builder.Services.AddScoped<CommandmentLoader>();
 builder.Services.AddScoped<NaveTopicLoader>();
 builder.Services.AddScoped<Essenthos.Core.Loading.CrossReferences.CrossReferenceLoader>();
 builder.Services.AddScoped<EntityNameFormLoader>();
+builder.Services.AddScoped<EntityNameTranslationLoader>();
 builder.Services.AddScoped<EntityRenderingLoader>();
 builder.Services.AddScoped<NameConsensusPass>();
 builder.Services.AddScoped<StrongRenderingLoader>();

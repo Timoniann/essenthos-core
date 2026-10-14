@@ -1218,6 +1218,45 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityNameTranslation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("English")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("english");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("language");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("text");
+
+                    b.HasKey("Id")
+                        .HasName("pk_entity_name_translation");
+
+                    b.HasIndex("Language", "English")
+                        .IsUnique()
+                        .HasDatabaseName("ix_entity_name_translation_language_english");
+
+                    b.ToTable("entity_name_translation", (string)null);
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityNoteTranslation", b =>
                 {
                     b.Property<int>("Id")

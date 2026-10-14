@@ -118,6 +118,14 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>The titles and glosses of names in each reader's language, from files written after the corpus was loaded.</summary>
+    private static async Task<int> NameGlosses(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<EntityNameTranslationLoader>().Load(forge.Resources));
+        return 0;
+    }
+
     /// <summary>The sourced name corrections and additional names, for a corpus already loaded.</summary>
     private static async Task<int> OwnNames(ForgeRun forge, string[] args)
     {
