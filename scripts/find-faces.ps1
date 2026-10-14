@@ -13,7 +13,9 @@
 
     An entry written by hand, with "by": "eye", is kept as it is: that is somebody having looked
     at a picture the detector got wrong or found nothing in. A picture it finds no face in is written
-    with "face": null, so the gap is visible and can be filled by eye.
+    with "face": null, so the gap is visible and can be filled by eye. A picture shared by several
+    people can carry, by eye, one more entry per person keyed "file#slug", which frames that person
+    on their own face; it is kept the same way.
 
     Each entry carries the digest of the file it was measured on. A picture replaced under the same
     name no longer matches it, and the loader leaves its crop out until this is run again.
@@ -58,6 +60,11 @@ function Await($operation, [Type] $type) {
 
 function Round([double] $value) { [Math]::Round($value, $Places).ToString([Globalization.CultureInfo]::InvariantCulture) }
 
+function Format-Kept([string] $key, $entry) {
+    $face = if ($null -eq $entry.face) { 'null' } else { '[' + (($entry.face | ForEach-Object { Round $_ }) -join ', ') + ']' }
+    "  `"$key`": { `"digest`": `"$($entry.digest)`", `"face`": $face, `"by`": `"eye`" }"
+}
+
 function Read-Json([string] $path) {
     (Get-Content -LiteralPath $path -Raw -Encoding UTF8) -replace '(?m)^\s*//.*$', '' | ConvertFrom-Json
 }
@@ -92,10 +99,13 @@ foreach ($file in $listed) {
     }
     $digest = (Get-FileHash -LiteralPath $path -Algorithm SHA256).Hash.ToLowerInvariant().Substring(0, $DigestLength)
 
+    foreach ($key in @($kept.Keys | Where-Object { $_.StartsWith("$file#", [StringComparison]::Ordinal) } | Sort-Object)) {
+        $lines.Add((Format-Kept $key $kept[$key]))
+        $byEye++
+    }
+
     if ($kept.ContainsKey($file)) {
-        $entry = $kept[$file]
-        $face = if ($null -eq $entry.face) { 'null' } else { '[' + (($entry.face | ForEach-Object { Round $_ }) -join ', ') + ']' }
-        $lines.Add("  `"$file`": { `"digest`": `"$($entry.digest)`", `"face`": $face, `"by`": `"eye`" }")
+        $lines.Add((Format-Kept $file $kept[$file]))
         $byEye++
         continue
     }

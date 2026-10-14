@@ -401,7 +401,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
             ordinals[key] = ordinal + 1;
 
             var portrait = people?.Contains(candidate.EntityId) == true && !candidate.Glory;
-            var measured = faces?.GetValueOrDefault(candidate.File);
+            var measured = PortraitFaces.For(faces, candidate.File, candidate.Slug);
             if (portrait && measured?.Digest != read.Digest)
             {
                 unmeasured++;
