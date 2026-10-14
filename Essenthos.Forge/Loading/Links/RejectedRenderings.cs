@@ -47,7 +47,7 @@ internal static class RejectedRenderings
     /// </summary>
     private const string Located =
         """
-        SELECT x.n, ft.id, tt.id, f.id, f.text, z.id, z.text
+        SELECT x.n, ft.id, tt.id, f.id, f.text, z.id, z.text, fve.id, tve.id
         FROM unnest(@from_texts, @from_books, @from_chapters, @from_verses, @from_labels, @from_positions,
                     @to_texts, @to_books, @to_chapters, @to_verses, @to_labels, @to_positions)
              WITH ORDINALITY x(fs, fb, fc, fv, fl, fp, ts, tb, tc, tv, tl, tp, n)
@@ -89,7 +89,10 @@ internal static class RejectedRenderings
         while (await reader.ReadAsync(cancellationToken))
         {
             var ruling = rejected[(int)reader.GetInt64(0) - 1];
-            if (reader.IsDBNull(1) || reader.IsDBNull(2)) continue;
+            // A corpus without either text, or without the verse (a partial edition, a test's few
+            // verses), has nothing the ruling is about; only a verse that is there and holds other
+            // words means the ruling has gone stale.
+            if (reader.IsDBNull(1) || reader.IsDBNull(2) || reader.IsDBNull(7) || reader.IsDBNull(8)) continue;
             if (reader.IsDBNull(3) || reader.IsDBNull(5)
                 || reader.GetString(4) != ruling.From.Surface || reader.GetString(6) != ruling.To.Surface)
                 throw new InvalidDataException($"The rejected rendering no longer names its ruled words: {ruling.From}; {ruling.To}.");

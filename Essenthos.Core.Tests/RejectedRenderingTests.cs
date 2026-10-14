@@ -153,6 +153,18 @@ public sealed class RejectedRenderingTests : IDisposable
     }
 
     [Fact]
+    public async Task ARulingOnAVerseTheCorpusDoesNotHoldIsPassedOver()
+    {
+        var absent = new RejectedRendering(
+            new RuledWord("RUSV", "GEN 50:26", 1, "Христа"), new RuledWord("GRCBRENT", "GEN 50:26", 1, "Σατανᾶν"), "a verse nobody loaded");
+        await db.Database.OpenConnectionAsync();
+
+        var found = await RejectedRenderings.Locate((NpgsqlConnection)db.Database.GetDbConnection(), [absent], CancellationToken.None);
+
+        found.Should().BeEmpty();
+    }
+
+    [Fact]
     public async Task EachWordOfARejectedPairIsLookedForAtItsOwnTextsAddress()
     {
         var russian = new RuledWord("RUSV", "PSA 9:22", 3, "Христа");
