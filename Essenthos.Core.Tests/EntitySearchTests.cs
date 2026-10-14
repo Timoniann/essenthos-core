@@ -302,9 +302,9 @@ public sealed class EntitySearchTests : IDisposable
 
         ukrainian.Should().BeEquivalentTo(new Dictionary<int, RenamedHeading>
         {
-            [_paul.Id] = new("Paul", "Павло", "Saul", "Савл"),
-            [_barnabas.Id] = new("Barnabas", "Варнава", "Joseph", "Йосип"),
-            [_abram.Id] = new("Abraham", "Авраам", "Abram", "Аврам"),
+            [_paul.Id] = new("Paul", "Павло", "Saul", "Савл") { LocalGenitive = "Павла" },
+            [_barnabas.Id] = new("Barnabas", "Варнава", "Joseph", "Йосип") { LocalGenitive = "Варнави" },
+            [_abram.Id] = new("Abraham", "Авраам", "Abram", "Аврам") { LocalGenitive = "Авраама" },
         });
         english[_paul.Id].Should().Be(new RenamedHeading("Paul", null, "Saul", null));
         english[_paul.Id].AlsoCalled.Should().Be("Saul");

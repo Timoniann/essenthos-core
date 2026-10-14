@@ -142,6 +142,17 @@ internal record ChapterTextResponse(
     public IList<ChapterNotesResponse> ChapterNotes { get; init; } = [];
 }
 
+/// <summary>
+/// Where a text's own numbering of one book puts a verse in the shared frame, for every address it
+/// numbers differently: the Synodal's Psalm 90 is the frame's 91. Empty where the text numbers the
+/// book as the frame does.
+/// </summary>
+internal record TextNumberingResponse(string Corpus, BookRefResponse Book, IList<NumberedAddressResponse> Addresses);
+
+/// <param name="Chapter">The chapter as the text numbers it, or as its edition prints it where it prints one.</param>
+/// <param name="FrameChapter">Where that verse stands in the shared frame the reader is laid out on.</param>
+internal record NumberedAddressResponse(int Chapter, int Verse, int FrameChapter, int FrameVerse);
+
 internal static class ReadEndpoints
 {
     public static void MapRead(this IEndpointRouteBuilder routes)
@@ -272,6 +283,34 @@ internal static class ReadEndpoints
             return ordinal is null
                 ? ApiResults.NotFound(BookReferences.FormatHint(book))
                 : Results.Ok(await Book(canon, ordinal.Value, cancellationToken));
+        });
+
+        // How the text numbers the book against the frame, so an address typed in the text's own
+        // numbering can be opened where the reader lays it out.
+        routes.MapGet("/text/{corpus}/{book}/numbering", async (
+            string corpus,
+            string book,
+            AppDbContext db,
+            ICanonIndex canon,
+            CancellationToken cancellationToken) =>
+        {
+            var entry = await canon.Text(corpus, cancellationToken);
+            if (entry is null)
+            {
+                return ApiResults.NotFound(
+                    $"There is no text \"{corpus}\". Ask /v1/corpora for the ones this corpus holds.");
+            }
+
+            var ordinal = BookReferences.ResolveOrdinal(book);
+            if (ordinal is null)
+            {
+                return ApiResults.NotFound(BookReferences.FormatHint(book));
+            }
+
+            return Results.Ok(new TextNumberingResponse(
+                entry.Slug,
+                BookReference(ordinal.Value),
+                await TextNumbering.Of(db, entry.Id, ordinal.Value, cancellationToken)));
         });
 
         routes.MapGet("/text/{corpus}/{book}/{chapter:int}", async (

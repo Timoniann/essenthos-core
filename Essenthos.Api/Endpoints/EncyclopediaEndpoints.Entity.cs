@@ -134,9 +134,9 @@ internal static partial class EncyclopediaEndpoints
             var related = await Relationships.Of(db, entity.Id, language, cancellationToken);
             var own = await Relationships.Forms(db, [entity.Id], language, cancellationToken);
 
-            var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
+            var events = await Aged(db, await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
                 .Select(Rows)
-                .ToListAsync(cancellationToken);
+                .ToListAsync(cancellationToken), cancellationToken);
             var placesNamed = await PlacesNamed(db, events.Select(row => EventLocation.Of(row.Event)), cancellationToken);
 
             // Who says the text names this entity where it does — which is not always whoever

@@ -134,6 +134,14 @@ internal record EventDateResponse(
     /// and a reader is owed which one is in front of them.
     /// </summary>
     public bool Stated { get; init; }
+
+    /// <summary>
+    /// The person's age at the event by this reckoning's own years: the reckoning's year of the
+    /// event less its year of the person's birth, and for BibleData the age its own row states.
+    /// Null where the reckoning dates no birth of the person, or the event is not one the source
+    /// gives an age for — so a year and an age shown together are always one reckoning's.
+    /// </summary>
+    public int? AgeAtEvent { get; init; }
 }
 
 /// <summary>
