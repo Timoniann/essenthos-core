@@ -1144,7 +1144,7 @@ public sealed class DescriptorTests : IDisposable
         outcome.Refused.UnknownRelation.Should().Be(0);
 
         Line(await Read("lot-1", DescriptorPhrasings.English))
-            .Should().Be("nephew of Abram, son of Haran");
+            .Should().Be("son of Haran, nephew of Abram");
         Line(await Read("abram-1", DescriptorPhrasings.Ukrainian)).Should().Be("дядько Лота");
         Line(await Read("azrikam-4", DescriptorPhrasings.Ukrainian))
             .Should().Be("намісник Єрусалима, загинув від руки Зіхрі");
@@ -1168,9 +1168,9 @@ public sealed class DescriptorTests : IDisposable
         await Load("widened");
 
         Line(await Read("lot-1", DescriptorPhrasings.German))
-            .Should().Be("Neffe Abrams, Sohn Harans");
+            .Should().Be("Sohn Harans, Neffe Abrams");
         Line(await Read("lot-1", DescriptorPhrasings.Spanish))
-            .Should().Be("sobrino de Abram, hijo de Harán");
+            .Should().Be("hijo de Harán, sobrino de Abram");
 
         Line(await Read("azrikam-4", DescriptorPhrasings.German))
             .Should().Be("Statthalter Jerusalems, getötet von Sichri");
@@ -1229,7 +1229,7 @@ public sealed class DescriptorTests : IDisposable
         await Load("widened");
 
         Line(await Read("lot-1", DescriptorPhrasings.Ukrainian))
-            .Should().Be("племінник Аврама, син Haran");
+            .Should().Be("син Haran, племінник Аврама");
     }
 
     /// <summary>
@@ -1432,7 +1432,9 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
-    /// Sending each target complete costs two queries for a whole page, not one per name.
+    /// Sending each target complete, with the ties written on the other records, the sexes they are
+    /// turned by and the names renamed people are headed with, costs a fixed handful of queries for a
+    /// whole page, not one per name: a page of ten and a page of forty send the same number.
     ///
     /// <para>
     /// It is asserted rather than assumed because the shape that reads a target's own forms inside
@@ -1443,7 +1445,7 @@ public sealed class DescriptorTests : IDisposable
     /// </para>
     /// </summary>
     [Fact]
-    public async Task AWholePageOfDescriptionsCostsTwoQueriesAndNotOnePerName()
+    public async Task AWholePageOfDescriptionsCostsAFixedHandfulOfQueriesAndNotOnePerName()
     {
         const int Described = 400;
         const int Page = 40;
@@ -1460,6 +1462,9 @@ public sealed class DescriptorTests : IDisposable
         // The first read of a context builds EF's model, which is tens of milliseconds and is not
         // what is being measured. The second is what a request pays.
         await Descriptors.Of(db, slugs, DescriptorPhrasings.Ukrainian, default);
+        counted.Reset();
+        await Descriptors.Of(db, slugs.Take(10), DescriptorPhrasings.Ukrainian, default);
+        var forTen = counted.Commands;
         counted.Reset();
 
         var started = Stopwatch.GetTimestamp();
@@ -1480,7 +1485,9 @@ public sealed class DescriptorTests : IDisposable
         descriptions.Should().HaveCount(Page);
         descriptions[slugs[0]].Claims.Should()
             .OnlyContain(c => c.Target.Forms!.Count == GrammaticalCases.All.Count);
-        counted.Commands.Should().Be(2, "one read for the clauses and one for the name forms");
+        counted.Commands.Should().Be(forTen, "the queries are per page, not per name");
+        counted.Commands.Should().BeLessThanOrEqualTo(
+            9, "own clauses, clauses written on others, sexes, name forms and renamed headings");
         elapsed.Should().BeLessThan(TimeSpan.FromSeconds(1));
     }
 

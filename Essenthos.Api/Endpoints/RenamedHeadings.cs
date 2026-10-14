@@ -17,6 +17,15 @@ namespace Essenthos.Core.Endpoints;
 internal sealed record RenamedHeading(string Name, string? LocalName, string Former, string? LocalFormer)
 {
     /// <summary>
+    /// The genitive of <see cref="LocalName"/> as the same texts print it, where the language declines
+    /// a name and one of the printed spellings is the genitive by its ending: <em>Павла</em>,
+    /// <em>Авраама</em>. Null where the language does not decline, the heading is the filed name's, or
+    /// no printed spelling ends as the genitive does. A line that puts the name in the genitive names
+    /// the person by the heading only where this is known.
+    /// </summary>
+    public string? LocalGenitive { get; init; }
+
+    /// <summary>
     /// What a reader of the language asked for is told the person is also called: the filed name in
     /// that language, and in English the English one. Null where that language heads the person as
     /// before, so a Ukrainian page never says it in English.
@@ -141,11 +150,59 @@ internal static class RenamedHeadings
             r =>
             {
                 var former = held.GetValueOrDefault(r.Key);
-                var printed = Heading(
+                var family = Family(
                     [.. spellings.Where(s => s.EntityId == r.Key).Select(s => (s.Form, s.Folded, s.Occurrences))],
                     former);
-                return new RenamedHeading(r.Value.Name, printed ?? former, r.Value.Former, printed is null ? null : former);
+                var printed = family is null ? null : Heading(family);
+                return new RenamedHeading(r.Value.Name, printed ?? former, r.Value.Former, printed is null ? null : former)
+                {
+                    LocalGenitive = printed is null ? null : Genitive(local, family!, printed),
+                };
             });
+    }
+
+    /// <summary>The languages whose texts decline a name, so that a genitive is a spelling of its own.</summary>
+    private static readonly IReadOnlySet<string> Declining = new HashSet<string>(StringComparer.Ordinal) { "ukr", "rus" };
+
+    /// <summary>Whether a phrase in this language that wants a genitive needs a spelling of its own for it.</summary>
+    public static bool Declines(string? language) => EntityNames.Local(language) is { } local && Declining.Contains(local);
+
+    /// <summary>
+    /// The genitive among the printed spellings of the heading's family: the one printed most of those
+    /// whose ending a genitive of that nominative takes. A name ending in <em>-а</em> or <em>-я</em>
+    /// takes <em>-и</em> (<em>Юда</em>, <em>Юди</em>; never the dative <em>Юді</em>), one in <em>-я</em>
+    /// takes <em>-і</em> or <em>-ї</em> (<em>Марія</em>, <em>Марії</em>), and any other takes <em>-а</em> or
+    /// <em>-я</em> (<em>Павло</em>, <em>Павла</em>); Russian likewise, with <em>-ы</em>. Chosen among what the text prints,
+    /// never made: where no printed spelling ends so, there is no genitive.
+    /// </summary>
+    internal static string? Genitive(
+        string language,
+        IReadOnlyList<(string Form, string Folded, int Occurrences)> family,
+        string nominative)
+    {
+        if (!Declining.Contains(language) || nominative.Length == 0)
+        {
+            return null;
+        }
+
+        var last = char.ToLowerInvariant(nominative[^1]);
+        var endings = (last, language) switch
+        {
+            ('а', "rus") => "ыи",
+            ('а', _) => "и",
+            ('я', "rus") => "и",
+            ('я', _) => "іїи",
+            _ => "ая",
+        };
+        return family
+            .Where(s => !string.Equals(s.Form, nominative, StringComparison.Ordinal)
+                        && s.Form.Length > 0
+                        && endings.Contains(char.ToLowerInvariant(s.Form[^1]))
+                        && !s.Form.Contains(' '))
+            .OrderByDescending(s => s.Occurrences)
+            .ThenBy(s => s.Form, StringComparer.Ordinal)
+            .Select(s => s.Form)
+            .FirstOrDefault();
     }
 
     /// <summary>
@@ -163,7 +220,16 @@ internal static class RenamedHeadings
     /// name's own or nothing is printed. A family is a name and its cases: <em>Авраам</em>,
     /// <em>Авраама</em>, <em>Авраамові</em>.
     /// </summary>
-    internal static string? Heading(IReadOnlyList<(string Form, string Folded, int Occurrences)> spellings, string? held)
+    internal static string? Heading(IReadOnlyList<(string Form, string Folded, int Occurrences)> spellings, string? held) =>
+        Family(spellings, held) is { } family ? Heading(family) : null;
+
+    /// <summary>
+    /// The family of spellings printed most, or null where that family is the held name's own or
+    /// nothing is printed.
+    /// </summary>
+    private static List<(string Form, string Folded, int Occurrences)>? Family(
+        IReadOnlyList<(string Form, string Folded, int Occurrences)> spellings,
+        string? held)
     {
         var families = new List<List<(string Form, string Folded, int Occurrences)>>();
         foreach (var spelling in spellings.OrderByDescending(s => s.Occurrences).ThenBy(s => s.Folded, StringComparer.Ordinal))
@@ -192,6 +258,12 @@ internal static class RenamedHeadings
             return null;
         }
 
+        return most;
+    }
+
+    /// <summary>The nominative of a family: its shortest spelling printed often enough to head it.</summary>
+    private static string Heading(List<(string Form, string Folded, int Occurrences)> most)
+    {
         var commonest = most[0].Occurrences;
         return most
             .Where(s => s.Occurrences >= commonest * HeadingShare)

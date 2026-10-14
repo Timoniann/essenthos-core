@@ -21,9 +21,9 @@ internal static class SharedParents
 
     public const string Mother = "mother";
 
-    private const string Male = "male";
+    public const string Male = "male";
 
-    private const string Female = "female";
+    public const string Female = "female";
 
     /// <summary>
     /// The parent each pair shares, keyed by the first's slug and the second's id, holding only the
