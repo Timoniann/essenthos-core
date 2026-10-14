@@ -20,6 +20,22 @@ internal sealed record WikipediaDecision(string Answer, string? Note, string? At
 /// <param name="By">What tied it: <c>verse</c>, <c>kin</c>, <c>chapter</c>, <c>identification</c> or <c>name</c>.</param>
 internal sealed record WikipediaTie(string Qid, string By);
 
+/// <summary>What the agents' readings propose for a record, for the owner to take or leave.</summary>
+/// <param name="Answer">One of the entry's items, or <c>none</c>.</param>
+/// <param name="Confidence">The lower of the two readings' confidences: <c>high</c>, <c>medium</c> or <c>low</c>.</param>
+/// <param name="Agreed">Whether two independent readings gave the same answer.</param>
+/// <param name="Other">Where they did not, the second reading's answer.</param>
+internal sealed record WikipediaProposal(
+    string Answer,
+    string Confidence,
+    bool Agreed,
+    string? Why,
+    string? Other = null,
+    string? OtherWhy = null);
+
+/// <param name="Accepted">How many records took their proposal as the answer.</param>
+internal sealed record WikipediaAcceptResponse(int Accepted);
+
 /// <param name="Record">The record's slug.</param>
 /// <param name="Addresses">Each reference as the reading API addresses it, in step with <paramref name="References"/>, for showing its text.</param>
 /// <param name="Others">How many more items go by its names that have no article, so are not offered.</param>
@@ -33,7 +49,8 @@ internal sealed record WikipediaQuestion(
     IReadOnlyList<WikipediaOffer> Candidates,
     int Others,
     WikipediaDecision? Decision,
-    WikipediaTie? Tied = null);
+    WikipediaTie? Tied = null,
+    WikipediaProposal? Proposal = null);
 
 /// <param name="Written">Whether a load has written the list yet; until one has there is nothing to answer.</param>
 /// <param name="Open">Records the matching could not decide that have no answer yet.</param>
@@ -51,6 +68,12 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
 {
     public const string FileName = "wikipedia-matches.json";
 
+    /// <summary>The agents' proposals beside the list: generated, never written by the console, read only to show and to accept.</summary>
+    public const string ProposalsFileName = "wikipedia-proposals.json";
+
+    /// <summary>The note an answer carries when it was taken from an agreed proposal in bulk.</summary>
+    public const string AcceptedNote = "Пропозиція агентів: два незалежні читання згодні";
+
     public const string Section = "wikipedia";
 
     /// <summary>The answer that says none of the items listed is the record.</summary>
@@ -62,6 +85,8 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
 
     public bool Exists => System.IO.File.Exists(File);
 
+    private string ProposalsFile => Path.Combine(paths.Review, ProposalsFileName);
+
     public WikipediaQuestionsResponse Read()
     {
         if (!Exists)
@@ -69,7 +94,8 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
             return new WikipediaQuestionsResponse(false, 0, 0, []);
         }
 
-        var entries = Entries(JsonFiles.Read(File)).Select(Question).ToList();
+        var proposals = Proposals();
+        var entries = Entries(JsonFiles.Read(File)).Select(e => Question(e, proposals)).ToList();
         return new WikipediaQuestionsResponse(
             true,
             entries.Count(e => e.Decision is null && e.Tied is null),
@@ -93,6 +119,7 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
         WikipediaQuestion after;
         try
         {
+            var proposals = Proposals();
             var root = JsonFiles.Read(File);
             var entry = Entries(root).FirstOrDefault(e => e["record"]?.GetValue<string>() == slug);
             if (entry is null)
@@ -100,7 +127,7 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
                 return null;
             }
 
-            before = Question(entry);
+            before = Question(entry, proposals);
             if (request.Answer is not null && request.Answer != None
                 && !before.Candidates.Any(c => c.Qid == request.Answer))
             {
@@ -118,7 +145,7 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
             }
 
             JsonFiles.Write(File, root);
-            after = Question(entry);
+            after = Question(entry, proposals);
         }
         finally
         {
@@ -137,6 +164,69 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
         return after;
     }
 
+    /// <summary>
+    /// Takes the proposal as the answer of every open record whose two readings agree with high
+    /// confidence. A record the matching tied on its own, or that already has an answer, is left for
+    /// the owner to look at one by one.
+    /// </summary>
+    public async Task<WikipediaAcceptResponse> AcceptAgreed()
+    {
+        if (!Exists)
+        {
+            return new WikipediaAcceptResponse(0);
+        }
+
+        var accepted = new List<WikipediaQuestion>();
+        await _gate.WaitAsync();
+        try
+        {
+            var proposals = Proposals();
+            var root = JsonFiles.Read(File);
+            foreach (var entry in Entries(root))
+            {
+                if (Question(entry, proposals) is { Decision: null, Tied: null, Proposal: { Agreed: true, Confidence: "high" } proposal })
+                {
+                    entry["decision"] = new JsonObject { ["answer"] = proposal.Answer, ["note"] = AcceptedNote, ["at"] = JsonFiles.Now() };
+                    accepted.Add(Question(entry, proposals));
+                }
+            }
+
+            if (accepted.Count > 0)
+            {
+                JsonFiles.Write(File, root);
+            }
+        }
+        finally
+        {
+            _gate.Release();
+        }
+
+        foreach (var after in accepted)
+        {
+            await log.Append(Section, "match", $"{after.Kind}/{after.Record}", null, Logged(after), AcceptedNote, "load", after.Label);
+        }
+
+        return new WikipediaAcceptResponse(accepted.Count);
+    }
+
+    /// <summary>The proposals by record slug; empty where none have been written.</summary>
+    private Dictionary<string, JsonObject> Proposals()
+    {
+        var proposals = new Dictionary<string, JsonObject>(StringComparer.Ordinal);
+        if (System.IO.File.Exists(ProposalsFile))
+        {
+            foreach (var proposal in Entries(JsonFiles.Read(ProposalsFile)))
+            {
+                if (proposal["record"]?.GetValue<string>() is { Length: > 0 } slug)
+                {
+                    proposals[slug] = proposal;
+                }
+            }
+        }
+
+        return proposals;
+    }
+
     /// <summary>What a change is logged as: the item chosen, with its label, or <c>none</c>.</summary>
     private static JsonNode? Logged(WikipediaQuestion question) =>
         question.Decision is null
@@ -150,24 +240,48 @@ internal sealed class WikipediaReview(DeskPaths paths, ChangeLog log)
     private static IEnumerable<JsonObject> Entries(JsonNode root) =>
         (root["entries"]?.AsArray() ?? []).OfType<JsonObject>();
 
-    private static WikipediaQuestion Question(JsonObject entry)
+    private static WikipediaQuestion Question(JsonObject entry, IReadOnlyDictionary<string, JsonObject> proposals)
     {
         var references = Strings(entry["references"]);
+        var candidates = (entry["candidates"]?.AsArray() ?? []).OfType<JsonObject>().Select(Offer).ToList();
+        var record = entry["record"]?.GetValue<string>() ?? string.Empty;
         return new WikipediaQuestion(
-            entry["record"]?.GetValue<string>() ?? string.Empty,
+            record,
             entry["kind"]?.GetValue<string>() ?? string.Empty,
             entry["label"]?.GetValue<string>() ?? string.Empty,
             entry["line"]?.GetValue<string>(),
             references,
             [.. references.Select(Desk.Addresses.Of)],
-            [.. (entry["candidates"]?.AsArray() ?? []).OfType<JsonObject>().Select(Offer)],
+            candidates,
             entry["others"]?.GetValue<int>() ?? 0,
             entry["decision"] is JsonObject decision && decision["answer"]?.GetValue<string>() is { Length: > 0 } answer
                 ? new WikipediaDecision(answer, decision["note"]?.GetValue<string>(), decision["at"]?.GetValue<string>())
                 : null,
             entry["tied"] is JsonObject tied && tied["qid"]?.GetValue<string>() is { Length: > 0 } qid
                 ? new WikipediaTie(qid, tied["by"]?.GetValue<string>() ?? string.Empty)
-                : null);
+                : null,
+            proposals.TryGetValue(record, out var proposal) ? Proposal(proposal, candidates) : null);
+    }
+
+    /// <summary>A proposal, where its answer is still one the entry offers; one a later load no longer offers is dropped.</summary>
+    private static WikipediaProposal? Proposal(JsonObject proposal, IReadOnlyList<WikipediaOffer> candidates)
+    {
+        bool Offered(string? answer) => answer == None || candidates.Any(c => c.Qid == answer);
+
+        var answer = proposal["answer"]?.GetValue<string>();
+        if (answer is null || !Offered(answer))
+        {
+            return null;
+        }
+
+        var other = proposal["other"]?.GetValue<string>();
+        return new WikipediaProposal(
+            answer,
+            proposal["confidence"]?.GetValue<string>() ?? "low",
+            proposal["agreed"]?.GetValue<bool>() ?? false,
+            proposal["why"]?.GetValue<string>(),
+            other is not null && Offered(other) ? other : null,
+            proposal["otherWhy"]?.GetValue<string>());
     }
 
     private static WikipediaOffer Offer(JsonObject offer) => new(

@@ -31,6 +31,7 @@ namespace Essenthos.Core.Desk;
 [JsonSerializable(typeof(WikipediaAnswerRequest))]
 [JsonSerializable(typeof(WikipediaQuestion))]
 [JsonSerializable(typeof(WikipediaQuestionsResponse))]
+[JsonSerializable(typeof(WikipediaAcceptResponse))]
 [JsonSerializable(typeof(PortraitsResponse))]
 [JsonSerializable(typeof(PortraitDetail))]
 [JsonSerializable(typeof(OperationsResponse))]

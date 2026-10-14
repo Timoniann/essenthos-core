@@ -107,6 +107,8 @@ internal static class DeskEndpoints
     {
         routes.MapGet("/review/wikipedia", (WikipediaReview review) => review.Read());
 
+        routes.MapPost("/review/wikipedia/accept-agreed", async (WikipediaReview review) => await review.AcceptAgreed());
+
         routes.MapPut("/review/wikipedia/{slug}", async (string slug, WikipediaAnswerRequest request, WikipediaReview review) =>
             await review.Answer(slug, request) is { } answered
                 ? Results.Ok(answered)

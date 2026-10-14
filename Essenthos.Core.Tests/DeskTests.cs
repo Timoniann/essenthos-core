@@ -314,6 +314,56 @@ public sealed class DeskTests : IAsyncLifetime
         Logged().Should().BeEmpty();
     }
 
+    [Fact]
+    public async Task TheAgentsProposalIsShownBesideTheEntryAndOneTheEntryNoLongerOffersIsDropped()
+    {
+        WriteWikipedia();
+        WriteProposals(
+            """{ "record": "zechariah-5", "answer": "Q2", "confidence": "medium", "agreed": false, "why": "the king of 2KI 14:29", "other": "Q999", "otherWhy": "gone" }""",
+            """{ "record": "nobody", "answer": "none", "confidence": "high", "agreed": true, "why": "not in the list" }""");
+
+        var read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+
+        read.Entries.Single().Proposal.Should().BeEquivalentTo(
+            new WikipediaProposal("Q2", "medium", false, "the king of 2KI 14:29", null, "gone"));
+    }
+
+    [Fact]
+    public async Task AcceptingTheAgreedProposalsAnswersOnlyOpenRecordsWhoseTwoReadingsAgreeWithHighConfidence()
+    {
+        File.WriteAllText(Path.Combine(Review, WikipediaReview.FileName),
+            """
+            {
+              "entries": [
+                { "record": "a", "kind": "person", "label": "A", "references": [], "candidates": [ { "qid": "Q1", "label": "A", "articles": {}, "evidence": [] } ], "others": 0 },
+                { "record": "b", "kind": "person", "label": "B", "references": [], "candidates": [ { "qid": "Q2", "label": "B", "articles": {}, "evidence": [] } ], "others": 0 },
+                { "record": "c", "kind": "person", "label": "C", "references": [], "candidates": [ { "qid": "Q3", "label": "C", "articles": {}, "evidence": [] } ], "others": 0 },
+                { "record": "d", "kind": "place", "label": "D", "references": [], "candidates": [ { "qid": "Q4", "label": "D", "articles": {}, "evidence": [] } ], "others": 0, "tied": { "qid": "Q4", "by": "name" } },
+                { "record": "e", "kind": "person", "label": "E", "references": [], "candidates": [ { "qid": "Q5", "label": "E", "articles": {}, "evidence": [] } ], "others": 0, "decision": { "answer": "Q5", "note": "mine", "at": "2026-10-01T00:00:00Z" } }
+              ]
+            }
+            """);
+        WriteProposals(
+            """{ "record": "a", "answer": "Q1", "confidence": "high", "agreed": true, "why": "" }""",
+            """{ "record": "b", "answer": "none", "confidence": "high", "agreed": true, "why": "" }""",
+            """{ "record": "c", "answer": "Q3", "confidence": "medium", "agreed": true, "why": "" }""",
+            """{ "record": "d", "answer": "none", "confidence": "high", "agreed": true, "why": "" }""",
+            """{ "record": "e", "answer": "none", "confidence": "high", "agreed": true, "why": "" }""");
+
+        var response = await _http.PostAsync("/desk-api/review/wikipedia/accept-agreed", null);
+
+        (await Json<WikipediaAcceptResponse>(response)).Accepted.Should().Be(2);
+        var read = await Json<WikipediaQuestionsResponse>(await _http.GetAsync("/desk-api/review/wikipedia"));
+        read.Entries.Select(e => (e.Record, e.Decision?.Answer)).Should().Equal(
+            ("a", "Q1"), ("b", "none"), ("c", null), ("d", null), ("e", "Q5"));
+        Logged().Select(l => (l.Target, l.After?.GetValue<string>(), l.Needs)).Should().Equal(
+            ("person/a", "Q1 A", "load"), ("person/b", "none", "load"));
+    }
+
+    private void WriteProposals(params string[] entries) =>
+        File.WriteAllText(Path.Combine(Review, WikipediaReview.ProposalsFileName),
+            $$"""{ "entries": [ {{string.Join(", ", entries)}} ] }""");
+
     private void WriteWikipedia() =>
         File.WriteAllText(Path.Combine(Review, WikipediaReview.FileName),
             """
