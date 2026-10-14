@@ -1,0 +1,18 @@
+{
+  "decidedBy": "Essenthos, 2026-10-14, read against the title of Psalm 52 by claude-opus-5-5; no person has reviewed this ruling",
+  "policy": "A name in a psalm's title is the man the title's own words say. The Synodal's links to the Hebrew title were drawn while the Hebrew carried its neighbours' numbers, so they do not reach the name; the reading is the Synodal's own and is not carried over them.",
+  "method": "manual",
+  "source": "Essenthos, the Synodal's names in the titles of the Psalms, read by claude-opus-5-5, 2026-10-14",
+  "carry": false,
+  "rulings": [
+    {
+      "text": "RUSV",
+      "reference": "PSA 52:1",
+      "position": 9,
+      "surface": "Доик",
+      "strongNumber": null,
+      "existing": "doeg",
+      "why": "'Учение Давида, после того, как приходил Доик Идумеянин и донес Саулу': Doeg the Edomite, Saul's herdsman of 1 Samuel 21:7 and 22:9, as the King James's Doeg beside it names him."
+    }
+  ]
+}

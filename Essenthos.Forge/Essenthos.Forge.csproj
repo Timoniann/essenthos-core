@@ -116,6 +116,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\UnreadHebrewNameRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PsalmTitleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\NamesReadAgainRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\SynodalPsalmTitleRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\KulishTwoWordNameRecords.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />

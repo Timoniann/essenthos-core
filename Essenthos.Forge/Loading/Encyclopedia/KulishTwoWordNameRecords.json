@@ -1,0 +1,108 @@
+{
+  "decidedBy": "Essenthos, 2026-10-14, each word read against its verse in the Kulish Bible and the Hebrew beside it by claude-opus-5-5, on the project owner's word of 2026-10-14 to decide such names as is most logical; no person has reviewed this ruling",
+  "policy": "A name the Hebrew writes as one word and the Kulish Bible prints as two is one name in both of its words: the statistical link reaches only one of them, and the other names nothing, or the name the link put beside it. This reading is the Kulish Bible's own and is not carried over its links.",
+  "method": "manual",
+  "source": "Essenthos, the names the Kulish Bible prints in two words, read against their verses by claude-opus-5-5, 2026-10-14",
+  "carry": false,
+  "rulings": [
+    {
+      "text": "UKR1871",
+      "reference": "GEN 14:5",
+      "position": 19,
+      "surface": "Карнаїмі",
+      "strongNumber": null,
+      "existing": "ashterothkarnaim",
+      "why": "'та й побили Рефаїмів ув Астарот Карнаїмі': the second word of Ashteroth-karnaim, where the Rephaim were smitten. Kiriathaim is the plain at the end of the verse, not this town."
+    },
+    {
+      "text": "UKR1871",
+      "reference": "GEN 14:5",
+      "position": 27,
+      "surface": "Кириятаїм-долинї",
+      "strongNumber": null,
+      "existing": "kiriathaim",
+      "why": "'а Еміїв на Кириятаїм-долинї': the plain of Kiriathaim (Shaveh-kiriathaim), whose words the Hebrew, the King James and the Synodal all name by the town Kiriathaim."
+    },
+    {
+      "text": "UKR1871",
+      "reference": "NUM 33:46",
+      "position": 9,
+      "surface": "Алмон",
+      "strongNumber": null,
+      "existing": "almondiblathaim",
+      "why": "'та й отаборились в Алмон Диблатаїмі': the first word of Almon-diblathaim, the camp after Dibon-gad, which the next verse prints as one word."
+    },
+    {
+      "text": "UKR1871",
+      "reference": "JDG 3:8",
+      "position": 14,
+      "surface": "Хузанові",
+      "strongNumber": null,
+      "existing": "cushanrishathaim",
+      "why": "'оддав їх на поталу Хузанові Русатаїмові, цареві Мезопотамїї': the first word of Cushan-rishathaim, king of Mesopotamia."
+    },
+    {
+      "text": "UKR1871",
+      "reference": "JDG 3:8",
+      "position": 23,
+      "surface": "Хузанові",
+      "strongNumber": null,
+      "existing": "cushanrishathaim",
+      "why": "'і були сини Ізрайлеві підневоленими Хузанові Русатаїмові вісїм год': the first word of Cushan-rishathaim, whom Israel served eight years."
+    },
+    {
+      "text": "UKR1871",
+      "reference": "JDG 3:10",
+      "position": 24,
+      "surface": "Хузана",
+      "strongNumber": null,
+      "existing": "cushanrishathaim",
+      "why": "'і подав йому Господь на поталу Хузана Русатаїма, царя Мезопотамського': the first word of Cushan-rishathaim, given into Othniel's hand."
+    },
+    {
+      "text": "UKR1871",
+      "reference": "JDG 3:10",
+      "position": 33,
+      "surface": "Хузаном",
+      "strongNumber": null,
+      "existing": "cushanrishathaim",
+      "why": "'і взяв він гору над Хузаном Русатаїмом': the first word of Cushan-rishathaim, over whom Othniel prevailed."
+    },
+    {
+      "text": "UKR1871",
+      "reference": "2KI 4:42",
+      "position": 4,
+      "surface": "Баал",
+      "strongNumber": null,
+      "existing": "baalshalishah",
+      "why": "'Прийшов чоловік із Баал Салиси': the first word of Baal-shalishah, the place the man came from."
+    },
+    {
+      "text": "UKR1871",
+      "reference": "2KI 20:12",
+      "position": 5,
+      "surface": "Баладан",
+      "strongNumber": null,
+      "existing": "berodachbaladan",
+      "why": "'Того часу прислав Беродах Баладан Валаданенко, царь Вавилонський': the second word of Berodach-baladan; Валаданенко after it is his father Baladan."
+    },
+    {
+      "text": "UKR1871",
+      "reference": "ISA 39:1",
+      "position": 5,
+      "surface": "Баладан",
+      "strongNumber": null,
+      "existing": "berodachbaladan",
+      "why": "'Того часу прислав Беродах Баладан Валаданенко, царь Вавилонський': the second word of the king of Babylon's name, Merodach-baladan; Валаданенко after it is his father Baladan."
+    },
+    {
+      "text": "UKR1871",
+      "reference": "EZR 2:57",
+      "position": 8,
+      "surface": "Газзебаїма",
+      "strongNumber": null,
+      "existing": "pocherethhazzebaim",
+      "why": "'сини Похерета з Газзебаїма': the second half of the one Hebrew name Pochereth-hazzebaim, which Nehemiah 7:59 prints as one word, Похерет-Газеваїмові."
+    }
+  ]
+}

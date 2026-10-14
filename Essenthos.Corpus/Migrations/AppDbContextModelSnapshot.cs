@@ -119,6 +119,25 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.CarryMark", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    b.Property<long>("LinkId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("link_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_carry_mark");
+
+                    b.ToTable("carry_mark", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_carry_mark_one_row", "id = 1");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Chapter", b =>
                 {
                     b.Property<int>("Id")
