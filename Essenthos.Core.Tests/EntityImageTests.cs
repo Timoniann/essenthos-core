@@ -526,6 +526,61 @@ public sealed class EntityImageTests : IDisposable
         rows.Single(r => r.EntityId == 3).BustX.Should().BeNull("a place is shown whole");
     }
 
+    /// <summary>
+    /// Adam and Eve share one picture. The detector's face is Adam's, on the right; the entry set by
+    /// eye for Eve alone frames her on the left, and Adam keeps the file's.
+    /// </summary>
+    [Fact]
+    public void APersonsOwnFaceInASharedPictureWinsOverTheFiles()
+    {
+        var root = Path.Combine(_resources, "Images");
+        WriteJpeg(Path.Combine(root, "generated", "adam-and-eve.jpg"));
+        var digest = ImageFiles.Read(Path.Combine(root, "generated", "adam-and-eve.jpg")).Digest;
+        var faces = new Dictionary<string, PortraitFaces.Measured>
+        {
+            ["generated/adam-and-eve.jpg"] = new(digest, [0.7, 0.1, 0.1, 0.1], "detector"),
+            ["generated/adam-and-eve.jpg#eve"] = new(digest, [0.2, 0.1, 0.1, 0.1], "eye"),
+        };
+        EntityImageLoader.Candidate Candidate(int entity, string slug) => new(
+            entity, slug, "generated", "gallery", "generated/adam-and-eve.jpg", null, "Credit", null, "Licence", null,
+            "Source", null, false);
+
+        var (rows, _) = new EntityImageLoader(_db, NullLogger<EntityImageLoader>.Instance).Rows(
+            root, [Candidate(1, "adam"), Candidate(2, "eve")], faces, new HashSet<int> { 1, 2 });
+
+        var adam = rows.Single(r => r.EntityId == 1);
+        var eve = rows.Single(r => r.EntityId == 2);
+        (adam.BustX!.Value + adam.BustWidth!.Value / 2).Should().BeApproximately(0.75, 1e-9);
+        (eve.BustX!.Value + eve.BustWidth!.Value / 2).Should().BeApproximately(0.25, 1e-9);
+    }
+
+    /// <summary>
+    /// Where the detector framed a bystander, the face set by eye is the one read: the prophet Jehu
+    /// on the left rebuking the king in his chariot on the right, and the others the same way.
+    /// </summary>
+    [Fact]
+    public void TheFacesSetByEyeAreTheOnesRead()
+    {
+        var faces = PortraitFaces.Read();
+        string[] byEye =
+        [
+            "generated/jehu.webp", "generated/haggai.webp", "generated/terah.webp", "generated/huldah.webp",
+            "generated/pharaoh.webp", "generated/eglon.webp", "generated/annas.webp",
+            "generated/tiglathpileser.webp", "generated/reuel-2.webp", "generated/bani-7.webp",
+            "generated/abiram.webp", "generated/ahijah-7.webp", "generated/malchijah-2.webp",
+            "generated/adam-and-eve.webp#eve",
+        ];
+
+        byEye.Should().OnlyContain(key => faces.ContainsKey(key) && faces[key].By == "eye" && faces[key].Face != null);
+        var (x, _, width, _) = PortraitFaces.Bust(faces["generated/jehu.webp"].Face!, 1024, 1536)!.Value;
+        (x + width).Should().BeLessThan(0.5, "the prophet stands on the left, the king on the right");
+        PortraitFaces.For(faces, "generated/adam-and-eve.webp", "eve").Should().BeSameAs(faces["generated/adam-and-eve.webp#eve"]);
+        PortraitFaces.For(faces, "generated/adam-and-eve.webp", "adam").Should().BeSameAs(faces["generated/adam-and-eve.webp"]);
+        faces.Where(f => f.Key.Contains('#'))
+            .Select(f => faces.GetValueOrDefault(f.Key.Split('#')[0])?.Digest == f.Value.Digest)
+            .Should().OnlyContain(same => same, "a person's own face is measured on the same file as the picture's");
+    }
+
     [Fact]
     public void TheCuratedListCreditsAndLicensesEveryWork()
     {

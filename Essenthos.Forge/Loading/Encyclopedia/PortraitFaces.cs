@@ -14,6 +14,10 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// of the file it was measured on, and a picture since replaced under the same name gets no crop
 /// until the script is run again: the old face would frame the new picture's background.
 /// </para>
+/// <para>
+/// A picture shared by several people frames each of them on their own face where an entry keyed
+/// <c>file#slug</c> says where it is; the others take the file's.
+/// </para>
 /// </summary>
 internal static class PortraitFaces
 {
@@ -30,7 +34,8 @@ internal static class PortraitFaces
 
     /// <param name="Digest">The first twelve hex digits of the SHA-256 of the file the face was measured on.</param>
     /// <param name="Face">Left, top, width and height, as fractions of the picture's; null where none was found.</param>
-    internal sealed record Measured(string Digest, double[]? Face);
+    /// <param name="By">"detector", or "eye" where somebody set it by looking, which a rerun of the script keeps.</param>
+    internal sealed record Measured(string Digest, double[]? Face, string? By = null);
 
     private static readonly JsonSerializerOptions Json = new(JsonSerializerDefaults.Web);
 
@@ -44,6 +49,10 @@ internal static class PortraitFaces
         return JsonSerializer.Deserialize<Dictionary<string, Measured>>(stream, Json)
                ?? throw new InvalidDataException("PortraitFaces.json is empty. Run scripts/find-faces.ps1 to write it.");
     }
+
+    /// <summary>The face a person's picture is framed on: theirs where the file names it, else the file's.</summary>
+    internal static Measured? For(IReadOnlyDictionary<string, Measured>? faces, string file, string slug) =>
+        faces?.GetValueOrDefault($"{file}#{slug}") ?? faces?.GetValueOrDefault(file);
 
     /// <summary>
     /// The square of a picture that holds a face's head and shoulders, as fractions of the picture's
