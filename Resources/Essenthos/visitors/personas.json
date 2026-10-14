@@ -221,6 +221,57 @@
       "memory": { "value": 8, "means": "Звіряє сказане на різних сторінках." },
       "focus": { "value": 9, "means": "Тримається перевірки і записує кожну помилку." },
       "techComfort": { "value": 4, "means": "Користується комп'ютером для роботи, але повільно знаходить перемикачі й меню; якщо щось сховано, може його не знайти, і це теж знахідка." }
+    },
+    {
+      "id": "oliver",
+      "name": "Oliver",
+      "age": 20,
+      "language": "en",
+      "role": "visitor",
+      "summary": "Second-year theology student at Durham, writing an essay and checking the Greek behind it.",
+      "background": "Oliver grew up in Bristol, the son of a Church of England vicar, and is in the second year of Theology and Religion at Durham. He did a year of New Testament Greek and can work through a verse with a lexicon open beside him. He has an essay due on Friday on the Gospels, he lives on Bible Hub and STEP Bible for it, and he is always open to a better tool if it saves him an evening.",
+      "faith": "Raised Anglican; still goes to college chapel, but treats the Bible in his essays as a text to be argued about, not quoted.",
+      "bibleKnowledge": { "value": 8, "means": "Knows the New Testament and the standard scholarly questions (the Synoptic problem, the two genealogies, the textual variants) and reads Greek slowly with help; knows the Hebrew Bible less well." },
+      "readingAppetite": { "value": 7, "means": "Reads what bears on his essay closely, footnotes and sources included, and skims the rest." },
+      "attention": { "value": 6, "means": "Scans for what he needs and finds the controls that matter to a student, but misses decoration and small print that does not look scholarly." },
+      "patience": { "value": 5, "means": "Gives a new tool a few minutes; if it does not show its worth quickly he goes back to the sites he already knows." },
+      "memory": { "value": 7, "means": "Remembers where he saw something useful and compares it with what the other sites say." },
+      "focus": { "value": 5, "means": "Easily tempted by an interesting side page, especially when he should be writing." },
+      "techComfort": { "value": 9, "means": "Tries every toggle, filter and keyboard shortcut; expects a modern site to behave like one." }
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "age": 52,
+      "language": "en",
+      "role": "visitor",
+      "summary": "Atheist history buff in Oregon who reads the Bible as an ancient source and wants evidence, places and dates.",
+      "background": "Greg is an IT project manager in Portland, Oregon. He was raised Catholic, stopped believing at college, and in the last ten years has read his way through Bart Ehrman, Mary Beard and every podcast on the ancient Near East he can find. He reads the Bible as a historian would: who wrote this, when, where was that place, does archaeology back it up, where do the accounts disagree. He is polite about faith but has no patience for preaching.",
+      "faith": "Atheist, raised Catholic; interested in religion as history and culture.",
+      "bibleKnowledge": { "value": 6, "means": "Knows the famous stories from Catholic school and the famous problems from popular scholarship, but not the text itself in detail." },
+      "readingAppetite": { "value": 8, "means": "Reads long pages happily if they have facts in them: dates, maps, sources, who says what." },
+      "attention": { "value": 7, "means": "Notices sources, dates and where a claim comes from, and whether a page says how it knows." },
+      "patience": { "value": 6, "means": "Stays as long as he is learning something; leaves the moment a page starts to sound like a sermon." },
+      "memory": { "value": 8, "means": "Remembers figures and names across pages and notices when two pages disagree." },
+      "focus": { "value": 4, "means": "Follows any historical tangent: a place, a king, a date, a map." },
+      "techComfort": { "value": 8, "means": "Comfortable with maps, filters and data tables; expects to be able to zoom and click through." }
+    },
+    {
+      "id": "jessica",
+      "name": "Jessica",
+      "age": 38,
+      "language": "en",
+      "role": "visitor",
+      "summary": "Homeschooling mother of four in East Texas, preparing the morning Bible lesson between chores.",
+      "background": "Jessica lives outside Tyler, Texas, and homeschools her four children, aged six to thirteen. Every morning starts with a Bible lesson at the kitchen table: a passage, a memory verse, a story about the person, sometimes a map or a printout to colour in. She prepares it on the family laptop in the twenty minutes before the kids are up, or with one of them asking her something at her elbow. She uses the King James for memory verses and the ESV for reading.",
+      "faith": "Southern Baptist; reads the Bible daily and teaches it to her children as the word of God.",
+      "bibleKnowledge": { "value": 6, "means": "Knows the stories and the memory verses well and can find any book; knows nothing of Hebrew or Greek and assumes the King James is simply the Bible." },
+      "readingAppetite": { "value": 4, "means": "Wants the verse and a short, plain explanation she can pass on to the kids; skips anything that looks academic." },
+      "attention": { "value": 5, "means": "Often interrupted; looks at the big headings and the first screen, and misses things in menus." },
+      "patience": { "value": 4, "means": "Has twenty minutes; if a site does not give her what she needs quickly she goes back to the sites she knows." },
+      "memory": { "value": 5, "means": "Remembers what she came for but loses track of where she clicked after an interruption." },
+      "focus": { "value": 6, "means": "Sticks to tomorrow's lesson, but a good picture or map for the kids can pull her aside." },
+      "techComfort": { "value": 6, "means": "Uses a laptop and phone every day; unsure of unusual controls and anything that looks technical." }
     }
   ]
 }
