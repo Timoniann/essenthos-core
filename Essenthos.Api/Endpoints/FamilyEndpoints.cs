@@ -71,6 +71,7 @@ internal static class FamilyEndpoints
                 : null;
 
         var local = await EntityNames.Of(db, ids, language, cancellationToken);
+        var renamed = await RenamedHeadings.Of(db, ids, language, cancellationToken);
         var lines = await EntityDistinguishers.OfSlugs(
             db, [.. people.Select(p => p.Slug)], ReaderLanguages.Prose(prose, language), cancellationToken);
         var pictured = await ImageEndpoints.Leading(db, slugs, cancellationToken, generated);
@@ -82,8 +83,8 @@ internal static class FamilyEndpoints
                 .OrderBy(p => order.GetValueOrDefault(p.Slug))
                 .Select(p => new FamilyMemberResponse(
                     p.Slug,
-                    p.Name,
-                    local.GetValueOrDefault(p.Id),
+                    renamed.GetValueOrDefault(p.Id)?.Name ?? p.Name,
+                    renamed.TryGetValue(p.Id, out var heads) ? heads.LocalName : local.GetValueOrDefault(p.Id),
                     OursOnlyRecords.Line(ours, p.Slug, p.Distinguisher),
                     ours.TryGetValue(p.Slug, out var own) ? own.Sex : p.Sex ?? stated.GetValueOrDefault(p.Id),
                     [
@@ -104,6 +105,7 @@ internal static class FamilyEndpoints
                 {
                     LocalDistinguisher = EntityDistinguishers.For(ours, lines, p.Slug),
                     Thumbnail = pictured.GetValueOrDefault(p.Slug),
+                    AlsoCalled = renamed.TryGetValue(p.Id, out var also) ? also.AlsoCalled : null,
                 }),
         ]);
     }
@@ -143,6 +145,9 @@ internal sealed record FamilyMemberResponse(
 
     /// <summary>The picture the person's page leads with, to show small; null where there is none.</summary>
     public EntityThumbnailResponse? Thumbnail { get; init; }
+
+    /// <summary>The name a renamed person's record is filed under, which the tree's finder also knows them by.</summary>
+    public string? AlsoCalled { get; init; }
 }
 
 /// <summary>

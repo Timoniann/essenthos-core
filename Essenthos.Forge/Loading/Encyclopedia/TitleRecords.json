@@ -136,7 +136,7 @@
       "slug": "caesar-title",
       "name": "Caesar",
       "distinguisher": "the title of the Roman emperors, from the family name of Julius Caesar",
-      "notes": "Caesar was the family name of Julius Caesar, taken by Augustus as his heir and borne after him by every emperor, until it was the title of the office. The Gospels and Acts use it both with a name, Caesar Augustus (LUK 2:1), Tiberius Caesar (LUK 3:1) and Claudius Caesar (ACT 11:28, as the King James and the Textus Receptus read; the critical text has Claudius alone), and alone for whoever reigned: the Caesar to whom tribute is given (MAT 22:17-21) is Tiberius, and the Caesar to whom Paul appeals (ACT 25:8-12) is Nero, whom the text never names. Both of those are kept as the records the dataset holds for them, and joined here.",
+      "notes": "Caesar was the family name of Julius Caesar, taken by Augustus as his heir and borne after him by every emperor, until it was the title of the office. The Gospels and Acts use it both with a name, Caesar Augustus (LUK 2:1), Tiberius Caesar (LUK 3:1) and Claudius Caesar (ACT 11:28, as the King James and the Textus Receptus read; the critical text has Claudius alone), and alone for whoever reigned: the Caesar to whom tribute is given (MAT 22:17-21) is Tiberius, and the Caesar to whom Paul appeals (ACT 25:8-12) is Nero, whom the text never names.",
       "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
       "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to",
       "words": [
@@ -477,7 +477,7 @@
       "slug": "rabshakeh",
       "name": "Rabshakeh",
       "distinguisher": "the title of a high Assyrian officer, whom Sennacherib sent to Jerusalem (2KI 18:17); the text gives no name",
-      "notes": "Akkadian rab shaqe, the chief cupbearer, by then one of the highest officers of the Assyrian court. The officer who speaks to the people on the wall in the Hebrew tongue (2KI 18:17-37; ISA 36) is known only by his office, and the dataset held the office as his name.",
+      "notes": "Akkadian rab shaqe, the chief cupbearer, by then one of the highest officers of the Assyrian court. The officer who speaks to the people on the wall in the Hebrew tongue (2KI 18:17-37; ISA 36) is known only by his office, and the text calls him by it as by a name.",
       "why": "The owner ruled that Pharaoh is held as a title and that every other title the text gives is collected beside it, joined to a bearer only where a verse names the person and the title together.",
       "source": "Essenthos, on the project owner's decision of 2026-09-19 that Pharaoh is a title and that the titles the text gives are collected as titles, each joined to the people a verse gives it to",
       "words": [

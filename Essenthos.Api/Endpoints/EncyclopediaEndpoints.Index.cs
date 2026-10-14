@@ -82,18 +82,28 @@ internal static partial class EncyclopediaEndpoints
             var words = ReaderLanguages.Prose(prose, language);
             var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], words, cancellationToken);
             var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
+            var renamed = await RenamedHeadings.Of(db, [.. named.Select(row => row.Id)], language, cancellationToken);
+            var headed = named.ToDictionary(
+                row => row.Id,
+                row => renamed.TryGetValue(row.Id, out var heads)
+                    ? summaries[row.Slug] with { Name = heads.Name, LocalName = heads.LocalName, AlsoCalled = heads.AlsoCalled }
+                    : summaries[row.Slug] with { LocalName = row.LocalName });
+            var foundAs = q is { Length: > 0 }
+                ? await EntityNames.FoundAs(
+                    db, headed.ToDictionary(row => row.Key, row => row.Value.LocalName ?? row.Value.Name), q, cancellationToken, renamed)
+                : [];
             var page = named
                 .Select(row => ours.TryGetValue(row.Slug, out var own)
-                    ? summaries[row.Slug] with
+                    ? headed[row.Id] with
                     {
                         Distinguisher = own.Line,
-                        LocalName = row.LocalName,
                         LocalDistinguisher = own.Line is null ? null : lines.GetValueOrDefault(row.Id),
+                        Matched = foundAs.GetValueOrDefault(row.Id),
                     }
-                    : summaries[row.Slug] with
+                    : headed[row.Id] with
                     {
-                        LocalName = row.LocalName,
                         LocalDistinguisher = lines.GetValueOrDefault(row.Id),
+                        Matched = foundAs.GetValueOrDefault(row.Id),
                     })
                 .ToList();
 

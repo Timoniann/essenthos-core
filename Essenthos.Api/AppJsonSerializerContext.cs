@@ -125,6 +125,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(IList<CanonResponse>))]
 [JsonSerializable(typeof(IList<CanonSectionResponse>))]
 [JsonSerializable(typeof(EntityListResponse))]
+[JsonSerializable(typeof(EntityMatchResponse))]
 [JsonSerializable(typeof(EntityLettersResponse))]
 [JsonSerializable(typeof(EntityFamilyResponse))]
 [JsonSerializable(typeof(ChapterDifferencesResponse))]

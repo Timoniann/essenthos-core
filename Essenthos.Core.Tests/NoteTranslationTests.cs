@@ -4,8 +4,11 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using Essenthos.Core.Loading.Encyclopedia;
+using Essenthos.Core.Migrations;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
@@ -124,4 +127,68 @@ public sealed class NoteTranslationTests : IDisposable
     [Fact]
     public void TheShippedFileReads() =>
         NoteTranslationLoader.Read().Should().NotBeNull();
+
+    /// <summary>
+    /// The corpus already loaded loses the clause too: the migration rewrites a note that still reads
+    /// as the loader wrote it, and leaves one somebody has changed since.
+    /// </summary>
+    [Fact]
+    public async Task TheMigrationTakesTheClauseOffANoteStillAsLoaded()
+    {
+        const string loaded = "Akkadian rab shaqe, the chief cupbearer, by then one of the highest officers of the " +
+                              "Assyrian court. The officer who speaks to the people on the wall in the Hebrew tongue " +
+                              "(2KI 18:17-37; ISA 36) is known only by his office, and the dataset held the office as his name.";
+        var rabshakeh = new Entity
+        {
+            Kind = EntityKind.Title, Slug = "rabshakeh", Name = "Rabshakeh", Notes = loaded,
+            SourceId = "rabshakeh", Source = "a test",
+        };
+        var judahites = new Entity
+        {
+            Kind = EntityKind.People, Slug = "judahites", Name = "Judahites", Notes = "A note somebody wrote since.",
+            SourceId = "judahites", Source = "a test",
+        };
+        _db.Entities.AddRange(rabshakeh, judahites);
+        await _db.SaveChangesAsync();
+
+        var builder = new MigrationBuilder("Npgsql.EntityFrameworkCore.PostgreSQL");
+        new NotesMigration().Apply(builder);
+        foreach (var operation in builder.Operations.OfType<SqlOperation>())
+        {
+            await _db.Database.ExecuteSqlRawAsync(operation.Sql);
+        }
+
+        var notes = await _db.Entities.AsNoTracking()
+            .Where(e => e.Slug == "rabshakeh" || e.Slug == "judahites")
+            .ToDictionaryAsync(e => e.Slug, e => e.Notes);
+        notes["rabshakeh"].Should().Be(NoteTranslationLoader.Read().Single(r => r.Slug == "rabshakeh").English);
+        notes["judahites"].Should().Be("A note somebody wrote since.");
+    }
+
+    private sealed class NotesMigration : RecordNotesSayNothingOfTheDataset
+    {
+        public void Apply(MigrationBuilder builder) => Up(builder);
+    }
+
+    /// <summary>
+    /// A note is read on the record's page, so it ends on what the text says and never on how the
+    /// dataset held the record, and its renderings are of that note: Rabshakeh, Caesar and the
+    /// Judahites each ended on such a clause.
+    /// </summary>
+    [Theory]
+    [InlineData("rabshakeh")]
+    [InlineData("caesar-title")]
+    [InlineData("judahites")]
+    public void ANoteSaysNothingOfHowTheDatasetHeldTheRecord(string slug)
+    {
+        var rendered = NoteTranslationLoader.Read().Single(r => r.Slug == slug);
+
+        rendered.English.Should().NotContainAny("dataset", "this corpus", "the record");
+        EnglishNotes.Digest(rendered.English).Should().Be(rendered.Sha256);
+        foreach (var language in new[] { rendered.Ukr, rendered.Deu, rendered.Spa })
+        {
+            language.Should().NotContainAny("набір даних", "корпус", "Datensatz", "Datensammlung", "Korpus",
+                "conjunto de datos", "corpus", "registro");
+        }
+    }
 }

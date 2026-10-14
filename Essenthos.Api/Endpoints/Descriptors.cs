@@ -103,6 +103,15 @@ internal static class Descriptors
             return [];
         }
 
+        var halves = clauses
+            .Where(c => c.Relation is DescriptorRelations.HalfBrotherOf or DescriptorRelations.HalfSisterOf)
+            .Select(c => (c.Slug, c.TargetEntityId))
+            .ToList();
+        var sharing = await SharedParents.Of(db, halves, cancellationToken);
+        clauses = [.. clauses.Select(c => sharing.TryGetValue((c.Slug, c.TargetEntityId), out var parent)
+            ? c with { SharedParent = parent }
+            : c)];
+
         var targets = clauses.Select(c => c.TargetEntityId).Distinct().ToList();
         var rows = await db.EntityNameForms
             .Where(f => targets.Contains(f.EntityId) && f.Language == named)
@@ -187,6 +196,8 @@ internal static class Descriptors
                 continue;
             }
 
+            phrasing = DescriptorPhrasings.ByTheSharedParent(language, clause.Relation, clause.SharedParent) ?? phrasing;
+
             var doubtful = clause.Confidence is { } confidence && confidence < Plain;
             var cases = forms.GetValueOrDefault(clause.TargetEntityId);
             var target = Target(clause, cases);
@@ -248,6 +259,7 @@ internal static class Descriptors
                 Verses = Relationships.Verses(clause.Citation),
                 Witness = clause.Witness,
                 Original = clause.Original,
+                SharedParent = clause.SharedParent,
             });
         }
 
@@ -302,6 +314,9 @@ internal static class Descriptors
         public string? Citation { get; init; }
 
         public string? Witness { get; init; }
+
+        /// <summary>For a half-sibling, whether the two share a father or a mother, where the corpus knows.</summary>
+        public string? SharedParent { get; init; }
 
         public string? Original { get; init; }
     }
@@ -410,4 +425,10 @@ internal record DescriptorClaimResponse(
 
     /// <summary>The words of <see cref="Witness"/> the clause rests on, as that text prints them.</summary>
     public string? Original { get; init; }
+
+    /// <summary>
+    /// For a half-sibling, the parent the two share where the corpus records one: <c>father</c> or
+    /// <c>mother</c>, which a language with a word for each says. Null otherwise.
+    /// </summary>
+    public string? SharedParent { get; init; }
 }
