@@ -284,7 +284,8 @@ internal static partial class EncyclopediaEndpoints
                 [.. events.Select(one => Event(one, placesNamed))],
                 [
                     .. stated.Select(row => new EntityReferenceSourceResponse(
-                        Datasets.Of(row.Source), row.Source, row.References, row.Mentions)),
+                        Datasets.Of(row.Source), row.Source, row.References, row.Mentions,
+                        ReferenceMethods.Of(row.Source))),
                 ],
                 [
                     .. established.Select(c => new EntityClaimResponse(

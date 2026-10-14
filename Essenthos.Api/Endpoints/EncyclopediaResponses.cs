@@ -419,11 +419,16 @@ internal record EntityAlternativeResponse(
 /// page crediting the reference list to the entity's source would name the wrong party on nearly
 /// every place in the corpus.
 /// </remarks>
+/// <param name="Method">
+/// How this project reached its own references, as one of <see cref="ReferenceMethods"/>; null for
+/// another dataset's, and for a source of ours no kind is declared for.
+/// </param>
 internal record EntityReferenceSourceResponse(
     string? Dataset,
     string Source,
     int References,
-    int Mentions);
+    int Mentions,
+    string? Method);
 
 /// <param name="HebrewStrongNumbers">
 /// The lexicon entries this name is, one per word of it. A proper name has one; a title has as
