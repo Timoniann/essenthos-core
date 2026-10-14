@@ -186,6 +186,7 @@ internal static partial class ForgeVerbs
         new("reigns", "", "Load the kings, the rulers of the nations and the prophets of their days.", Reigns),
         new("own-records", "", "Apply the rulings on records, then write their lines in every language.", OwnRecords),
         new("distinguishers", "", "Write our own lines under our records in every language.", Distinguishers),
+        new("note-translations", "", "Write the notes of our own records in every reader's language.", NoteTranslations),
         new("naming", "", "Tell the listed verses that name their entity from those that concern it.", Naming),
         new("cross-references", "[--measure]", "Load the cross references and the detected parallels.", CrossReferences),
         new("topics", "", "Load Nave's topics.", Topics),

@@ -165,6 +165,14 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>The renderings of our own records' notes, for a note rewritten in a corpus already loaded.</summary>
+    private static async Task<int> NoteTranslations(ForgeRun forge, string[] args)
+    {
+        using var notesScope = forge.Scope();
+        Console.WriteLine(await notesScope.ServiceProvider.GetRequiredService<NoteTranslationLoader>().Load());
+        return 0;
+    }
+
     /// <summary>Which listed verses name their entity and which only concern it, told apart again.</summary>
     private static async Task<int> Naming(ForgeRun forge, string[] args)
     {
