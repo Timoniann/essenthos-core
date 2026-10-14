@@ -78,6 +78,21 @@ public sealed partial class GenealogyReadingTests
         fathers.Single(c => c.Target == one).Reason.Should().Contain("Both statements stand");
     }
 
+    /// <summary>
+    /// 2 Chronicles 11:18 gives Rehoboam one wife, Mahalath, whose mother is Abihail daughter of Eliab:
+    /// the Hebrew has no "and" before Abihail, and "she bare him" in 11:19 is one woman. Abihail is not
+    /// a second wife, or the tree marries her to her daughter's husband.
+    /// </summary>
+    [Fact]
+    public void AbihailIsMahalathsMotherAndNotRehoboamsWife()
+    {
+        Claims("abihail-4").Should().NotContain(c => c.Target == "rehoboam");
+        Claims("rehoboam").Should().NotContain(c => c.Target == "abihail-4");
+        Claims("mahalath-2").Should().ContainSingle(c => c.Target == "abihail-4")
+            .Which.Should().Match<DescriptorClaimRecord>(c => c.Relation == "daughter-of" && c.DecidedBy != null);
+        Claims("mahalath-2").Should().Contain(c => c.Relation == "wife-of" && c.Target == "rehoboam");
+    }
+
     /// <summary>King Jehoahaz is the Shallum of 1 Chronicles 3:15 and Jeremiah 22:11, and his line says so.</summary>
     [Fact]
     public void JehoahazsLineSaysHeIsAlsoCalledShallum()
