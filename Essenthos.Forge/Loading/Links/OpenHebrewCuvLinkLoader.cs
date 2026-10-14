@@ -6,6 +6,7 @@ using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Strong;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 using NpgsqlTypes;
@@ -137,6 +138,236 @@ internal sealed class OpenHebrewCuvLinkLoader(
         }
 
         return outcomes;
+    }
+
+    /// <summary>
+    /// On a loaded corpus, the links this mapping drew from a running number an earlier reading gave
+    /// the wrong word (<see cref="OldTestamentLinkLoader.RunningNumbers"/>), drawn again from the
+    /// number as it reads now: Psalm 60's title, where 約押 (Joab) stood on "returned" and 在鹽 谷
+    /// (in the valley of salt) on the preposition before it, and a word BHSA splits, which had none.
+    ///
+    /// <para>
+    /// A link is taken back only where it names exactly the words the old number gave the span and
+    /// this mapping is one of its claims. Where FHL's numbers claim it too, they were matched against
+    /// the same wrong numbers, and FHL's claim goes with the link unless the Chinese word's own FHL
+    /// number is one a Hebrew word of the link carries now; then only this mapping's claim is taken
+    /// back and FHL's stays the link's answer. Any other claim, or a review, leaves the span as it is.
+    /// A span is drawn again where no link of the pair names those words yet, so a second run writes
+    /// nothing. The links of the King James are drawn again by <see cref="OldTestamentLinkLoader"/>.
+    /// </para>
+    /// </summary>
+    /// <param name="fhl">FHL's numbers on a Chinese text's words, asked only where a link carries FHL's claim.</param>
+    /// <returns>The spans drawn again, over both texts.</returns>
+    public async Task<int> Redraw(
+        string resources,
+        Func<string, Task<IReadOnlyDictionary<long, WordTag>>> fhl,
+        CancellationToken cancellationToken = default)
+    {
+        if (!await db.Texts.AnyAsync(t => t.Slug == SwordTextSource.ChineseUnion, cancellationToken))
+        {
+            return 0;
+        }
+
+        return await Redraw(
+            KjvBhsMapping.Read(ResourcePaths.File(resources, KingJamesMapping)),
+            OpenHebrewCuvMapping.Read(ResourcePaths.File(resources, File)),
+            fhl,
+            cancellationToken);
+    }
+
+    internal async Task<int> Redraw(
+        IReadOnlyList<MappingRecord> records,
+        IReadOnlyList<OhbVerse> mapped,
+        Func<string, Task<IReadOnlyDictionary<long, WordTag>>> fhl,
+        CancellationToken cancellationToken = default)
+    {
+        var (now, before) = await hebrew.RunningNumbers(records, cancellationToken);
+        var changed = now.Keys.Concat(before.Keys)
+            .Where(number => !Same(now.GetValueOrDefault(number), before.GetValueOrDefault(number)))
+            .ToHashSet();
+        if (changed.Count == 0)
+        {
+            return 0;
+        }
+
+        var verses = mapped
+            .Where(verse => verse.Runs.Any(run => run.Positions.Any(changed.Contains)))
+            .ToList();
+        if (verses.Count == 0)
+        {
+            return 0;
+        }
+
+        var bhsa = await db.Texts.SingleAsync(t => t.Slug == BhsaTextSource.Slug, cancellationToken);
+        var traditional = await Words(SwordTextSource.ChineseUnion, cancellationToken);
+        var redrawn = 0;
+        foreach (var slug in new[] { SwordTextSource.ChineseUnion, SwordTextSource.ChineseUnionSimplified })
+        {
+            if (!await db.Texts.AnyAsync(t => t.Slug == slug, cancellationToken))
+            {
+                continue;
+            }
+
+            var text = slug == SwordTextSource.ChineseUnion ? traditional : await Words(slug, cancellationToken);
+            if (!await db.LinkClaims.AnyAsync(
+                    c => c.Provenance!.Source.StartsWith(Credit) && c.Link!.FromTextId == text.Id && c.Link.ToTextId == bhsa.Id,
+                    cancellationToken))
+            {
+                continue;
+            }
+
+            redrawn += await Redraw(text, traditional, bhsa.Id, verses, now, before, fhl, cancellationToken);
+        }
+
+        return redrawn;
+
+        static bool Same(IReadOnlyList<long>? one, IReadOnlyList<long>? other) =>
+            (one ?? []).Order().SequenceEqual((other ?? []).Order());
+    }
+
+    private async Task<int> Redraw(
+        CorpusText text,
+        CorpusText traditional,
+        int bhsaId,
+        IReadOnlyList<OhbVerse> verses,
+        IReadOnlyDictionary<int, IReadOnlyList<long>> now,
+        IReadOnlyDictionary<int, IReadOnlyList<long>> before,
+        Func<string, Task<IReadOnlyDictionary<long, WordTag>>> fhl,
+        CancellationToken cancellationToken)
+    {
+        var spans = new List<(long[] Chinese, long[] Before, long[] Now)>();
+        foreach (var verse in verses)
+        {
+            var key = (verse.Book, verse.Chapter, verse.Verse);
+            if (!traditional.Words.TryGetValue(key, out var lettered)
+                || !text.Words.TryGetValue(key, out var words) || words.Count != lettered.Count)
+            {
+                continue;
+            }
+
+            foreach (var placement in Place(verse.Runs, [.. lettered.Select(word => word.Surface)], out _))
+            {
+                long[] then = [.. Hebrew(placement, before)];
+                long[] read = [.. Hebrew(placement, now)];
+                if (placement.Words.Count > 0 && read.Length > 0 && !then.SequenceEqual(read))
+                {
+                    spans.Add(([.. placement.Words.Select(i => words[i].Id)], then, read));
+                }
+            }
+        }
+
+        if (spans.Count == 0)
+        {
+            return 0;
+        }
+
+        var chinese = spans.SelectMany(span => span.Chinese).Distinct().ToList();
+        var links = await db.Links.AsNoTracking()
+            .Where(l => l.FromTextId == text.Id && l.ToTextId == bhsaId && l.Words.Any(w => chinese.Contains(w.WordId)))
+            .Select(l => new
+            {
+                l.Id,
+                From = l.Words.Where(w => w.Side == LinkSide.From).Select(w => w.WordId).ToList(),
+                To = l.Words.Where(w => w.Side == LinkSide.To).Select(w => w.WordId).ToList(),
+                Claims = l.Claims.Select(c => c.Provenance!.Source).ToList(),
+                Reviewed = db.EvidentiaReviews.Any(r => r.LinkId == l.Id) || db.EvidentiaWithdrawals.Any(r => r.LinkId == l.Id),
+            })
+            .ToListAsync(cancellationToken);
+        var byShape = links.ToDictionary(l => Shape(l.From, l.To));
+        var hebrewWords = links.SelectMany(l => l.To).Distinct().ToList();
+        var numbered = await db.Words
+            .Where(w => hebrewWords.Contains(w.Id) && w.StrongNumber != null)
+            .ToDictionaryAsync(w => w.Id, w => StrongNumbers.Normalize(w.StrongNumber), cancellationToken);
+
+        IReadOnlyDictionary<long, WordTag>? tags = null;
+        var gone = new List<long>();
+        var unclaimed = new List<long>();
+        var drafts = new List<(long[] Chinese, long[] Hebrew)>();
+        var drawn = 0;
+        foreach (var (words, then, read) in spans)
+        {
+            if (byShape.TryGetValue(Shape(words, read), out var already) && already.Claims.Any(c => c.StartsWith(Credit)))
+            {
+                continue;
+            }
+
+            if (byShape.TryGetValue(Shape(words, then), out var old) && old.Claims.Any(c => c.StartsWith(Credit)))
+            {
+                var others = old.Claims.Where(c => !c.StartsWith(Credit)).ToList();
+                if (old.Reviewed || others.Any(c => !c.StartsWith(UnionStrongLinkLoader.Credit)))
+                {
+                    logger.LogWarning(
+                        "{Slug}: a span the mapping drew from a running number read wrong before is claimed by another " +
+                        "source too, or reviewed; left as it is (link {Link})", text.Slug, old.Id);
+                    continue;
+                }
+
+                if (others.Count == 0)
+                {
+                    gone.Add(old.Id);
+                }
+                else
+                {
+                    tags ??= await fhl(text.Slug);
+                    var stands = words.Any(word => tags.TryGetValue(word, out var tag)
+                        && tag.Numbers.Any(number => old.To.Any(to =>
+                            numbered.TryGetValue(to, out var carried) && carried == StrongNumbers.Normalize(number))));
+                    (stands ? unclaimed : gone).Add(old.Id);
+                }
+            }
+            else if (words.Concat(read).Any(word => links.Any(l => l.Claims.Any(c => c.StartsWith(Credit))
+                                                                  && (l.From.Contains(word) || l.To.Contains(word)))))
+            {
+                continue;
+            }
+
+            drafts.Add((words, read));
+            drawn++;
+        }
+
+        if (drawn == 0)
+        {
+            return 0;
+        }
+
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        await db.Links.Where(l => gone.Contains(l.Id)).ExecuteDeleteAsync(cancellationToken);
+        if (unclaimed.Count > 0)
+        {
+            await db.LinkClaims
+                .Where(c => unclaimed.Contains(c.LinkId) && c.Provenance!.Source.StartsWith(Credit))
+                .ExecuteDeleteAsync(cancellationToken);
+            await db.Database.ExecuteSqlRawAsync(
+                $$"""
+                UPDATE link l
+                SET method = c.method, confidence = c.confidence, provenance_id = c.provenance_id
+                FROM (SELECT DISTINCT ON (link_id) link_id, method, confidence, provenance_id
+                      FROM link_claim WHERE link_id = ANY({0})
+                      ORDER BY link_id, {{LinkWriter.Standing("method")}} DESC, confidence DESC NULLS FIRST) c
+                WHERE l.id = c.link_id
+                """,
+                new object[] { unclaimed.ToArray() },
+                cancellationToken);
+        }
+
+        await LinkWriter.Write(
+            connection,
+            (NpgsqlTransaction)transaction.GetDbTransaction(),
+            [
+                .. drafts.Select(draft => new NewLink(
+                    text.Id, bhsaId, LinkRelation.Renders, LinkMethod.StatedBySource, null, Credit, null,
+                    draft.Chinese, draft.Hebrew)),
+            ],
+            cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
+        logger.LogInformation(
+            "{Slug}: {Drawn} spans drawn again from the running numbers as they read now; {Gone} links taken back, " +
+            "{Unclaimed} left to FHL's numbers alone", text.Slug, drawn, gone.Count, unclaimed.Count);
+        return drawn;
+
+        static IEnumerable<long> Hebrew(Placement placement, IReadOnlyDictionary<int, IReadOnlyList<long>> numbers) =>
+            placement.Positions.Where(numbers.ContainsKey).SelectMany(p => numbers[p]).Distinct().Order();
     }
 
     /// <summary>
@@ -281,7 +512,7 @@ internal sealed class OpenHebrewCuvLinkLoader(
         IReadOnlyList<OhbVerse> verses,
         Dictionary<(int, int, int), List<Placement>> placements,
         CorpusText traditional,
-        IReadOnlyDictionary<int, long> numbers,
+        IReadOnlyDictionary<int, IReadOnlyList<long>> numbers,
         int realigned,
         CancellationToken cancellationToken)
     {
@@ -314,7 +545,7 @@ internal sealed class OpenHebrewCuvLinkLoader(
             foreach (var placement in placed)
             {
                 spans++;
-                long[] hebrewWords = [.. placement.Positions.Where(numbers.ContainsKey).Select(p => numbers[p]).Distinct().Order()];
+                long[] hebrewWords = [.. placement.Positions.Where(numbers.ContainsKey).SelectMany(p => numbers[p]).Distinct().Order()];
                 if (hebrewWords.Length == 0)
                 {
                     withoutHebrew++;

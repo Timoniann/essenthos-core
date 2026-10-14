@@ -392,7 +392,7 @@ public sealed class OldTestamentLinkTests : IDisposable
     /// <summary>
     /// The same title's English, linked. By position "Joab" took the conjunction before יֹואָב and
     /// "the valley" and "of salt" the preposition before גֵיא־מֶלַח; through the running numbers each
-    /// phrase reaches its own word, and Aram-naharaim, one entry for BHSA's two words, reaches none.
+    /// phrase reaches its own word, and Aram-naharaim, one entry for BHSA's two words, reaches both.
     /// </summary>
     [Fact]
     public async Task AVerseTheFileNumbersTwoEntriesAsOneWordInIsLinkedThroughItsRunningNumbers()
@@ -404,7 +404,8 @@ public sealed class OldTestamentLinkTests : IDisposable
             .Which.Hebrew.Should().Equal("יֹואָב");
         links.Single(link => link.English.Contains("valley")).Hebrew.Should().Equal("גֵיא־מֶלַח");
         links.Single(link => link.English.Contains("salt")).Hebrew.Should().Equal("גֵיא־מֶלַח");
-        links.Should().NotContain(link => link.English.Contains("Aram-naharaim"));
+        links.Single(link => link.English.Contains("Aram-naharaim")).Hebrew
+            .Should().BeEquivalentTo("אֲרַם", "נַהֲרַיִם");
     }
 
     /// <summary>
@@ -432,13 +433,67 @@ public sealed class OldTestamentLinkTests : IDisposable
         var links = await Links();
         links.Single(link => link.English.Contains("Joab")).Hebrew.Should().Equal("יֹואָב");
         links.Single(link => link.English.Contains("valley")).Hebrew.Should().Equal("גֵיא־מֶלַח");
-        links.Should().NotContain(link => link.English.Contains("Aram-naharaim"));
+        links.Single(link => link.English.Contains("Aram-naharaim")).Hebrew
+            .Should().BeEquivalentTo("אֲרַם", "נַהֲרַיִם");
         (await _db.Links.Where(l => l.Words.Any(w => w.Word!.Surface == "Musician")).Select(l => l.Id).SingleAsync())
             .Should().Be(musician);
 
         var standing = await _db.Links.OrderBy(l => l.Id).Select(l => l.Id).ToListAsync();
         (await Load(records)).Redrawn.Should().Be(0);
         (await _db.Links.OrderBy(l => l.Id).Select(l => l.Id).ToListAsync()).Should().Equal(standing);
+    }
+
+    /// <summary>
+    /// A verse the file and BHSA divide differently, with one word of the file BHSA writes as two:
+    /// the glosses pair neither half with "Mesopotamia", and the English rendering it reaches both.
+    /// A corpus loaded before that, with the English unlinked, is given the link once.
+    /// </summary>
+    [Fact]
+    public async Task AWordBhsaWritesAsTwoIsLinkedWholeFromTheEnglishThatRendersIt()
+    {
+        Clear();
+        _kjv = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
+            (1, 1, ["a"]), (1, 2, ["x", "Aram-naharaim", "y", "z"]), (1, 3, ["c"]));
+        _bhsa = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
+            (1, 1, ["א", "ב"]), (1, 2, ["ג", "אֲרַם", "נַהֲרַיִם", "ה", "ו"]), (1, 3, ["ז", "ח"]));
+        _db.SaveChanges();
+        string[] glosses = ["gloss1", "gloss2", "gloss3", "Aram", "stream", "gloss5", "gloss6", "gloss7", "gloss8"];
+        var words = _db.Words.Where(w => w.TextId == _bhsa.Id).OrderBy(w => w.Id).ToList();
+        for (var i = 0; i < words.Count; i++)
+        {
+            words[i].Gloss = glosses[i];
+        }
+
+        _db.SaveChanges();
+        MappingRecord[] records =
+        [
+            new(1, 1, 1, [new("H1", "c1", 1, "gloss1"), new("H2", "c1", 2, "gloss2")], [Segment(["a"], 1)]),
+            new(1, 1, 2,
+            [
+                new("H3", "c2", 3, "gloss3"), new("H763", "c2", 4, "Mesopotamia"), new("H5", "c2", 5, "gloss5"),
+                new("H6", "c2", 6, "gloss6"),
+            ],
+            [Segment(["x"], 3), Segment(["Aram-naharaim"], 4), Segment(["y"], 5), Segment(["z"], 6)]),
+            new(1, 1, 3, [new("H7", "c3", 7, "gloss7"), new("H8", "c3", 8, "gloss8")], [Segment(["c"], 7)]),
+        ];
+
+        await Load(records);
+
+        (await Links()).Single(link => link.English.Contains("Aram-naharaim")).Hebrew
+            .Should().BeEquivalentTo("אֲרַם", "נַהֲרַיִם");
+        (await Numbers()).Should().Equal("H1", "H2", "H3", null, null, "H5", "H6", "H7", "H8");
+
+        await _db.Links.Where(l => l.Words.Any(w => w.Word!.Surface == "Aram-naharaim")).ExecuteDeleteAsync();
+        var standing = await _db.Links.OrderBy(l => l.Id).Select(l => l.Id).ToListAsync();
+
+        (await Load(records)).Redrawn.Should().Be(1);
+        (await Links()).Single(link => link.English.Contains("Aram-naharaim")).Hebrew
+            .Should().BeEquivalentTo("אֲרַם", "נַהֲרַיִם");
+        (await _db.Links.Select(l => l.Id).ToListAsync()).Should().Contain(standing);
+
+        var after = await _db.Links.OrderBy(l => l.Id).Select(l => l.Id).ToListAsync();
+        (await Load(records)).Redrawn.Should().Be(0);
+        (await _db.Links.OrderBy(l => l.Id).Select(l => l.Id).ToListAsync()).Should().Equal(after);
     }
 
     private static readonly string[] TitleEnglish =
