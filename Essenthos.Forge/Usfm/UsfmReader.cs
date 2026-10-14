@@ -22,7 +22,18 @@ internal sealed record UsfmBook(string Book, IReadOnlyList<UsfmChapter> Chapters
     public IReadOnlyList<UsfmNote> TitleNotes { get; init; } = [];
 }
 
-internal sealed record UsfmChapter(int Number, IReadOnlyList<UsfmVerse> Verses);
+internal sealed record UsfmChapter(int Number, IReadOnlyList<UsfmVerse> Verses)
+{
+    /// <summary>
+    /// The notes the edition printed on the chapter's own headings — its label (<c>\cl</c>) and an
+    /// acrostic letter over a stanza (<c>\qa</c>) — in the order it printed them. Biblica's Ukrainian
+    /// addresses them as verse 0 of the psalm: they are about the chapter, so no verse carries them.
+    /// </summary>
+    public IReadOnlyList<UsfmHeadingNote> Notes { get; init; } = [];
+}
+
+/// <param name="Heading">The heading the note was printed on, as the edition prints it, without the note.</param>
+internal sealed record UsfmHeadingNote(string Heading, UsfmNote Note);
 
 /// <param name="Words">
 /// Split on whitespace, with trailing punctuation moved into the word's trailer so that a word is
@@ -167,17 +178,16 @@ internal static partial class UsfmReader
     /// </summary>
     private static readonly HashSet<string> Matter =
     [
-        "toc2", "toc3", "is", "is1", "ip", "imt", "rem", "cl", "ide", "usfm",
+        "toc2", "toc3", "is", "is1", "ip", "imt", "rem", "ide", "usfm",
 
         // A book's introduction, its outline and the tables in it, which some editions print before
         // the first chapter: the Segond has a page of it before every book.
         "imt1", "imt2", "imt3", "ipi", "im", "ib", "ie", "iot", "io1", "io2",
         "tr", "th1", "th2", "tc1", "tc2", "tc3",
 
-        // References to other passages printed under a heading or over a section, a letter of the
-        // alphabet heading a stanza of Psalm 119, and a heading over a group of chapters. None is a
-        // word of the verse it stands beside.
-        "r", "mr", "qa", "ms2",
+        // References to other passages printed under a heading or over a section, and a heading over a
+        // group of chapters. None is a word of the verse it stands beside.
+        "r", "mr", "ms2",
 
         // The number a chapter is printed under where it is not the one it is filed under: the World
         // English Bible's Psalm 151 is one chapter printed as 151.
@@ -248,6 +258,13 @@ internal static partial class UsfmReader
     /// </summary>
     private static readonly HashSet<string> Titles = ["mt", "mt1", "mt2", "mt3"];
 
+    /// <summary>
+    /// A chapter's own headings: its label (<c>\cl</c>, "Псалом 9 (9–10)") and the letter of the
+    /// alphabet over a stanza of Psalm 119 (<c>\qa</c>). Neither is a word of a verse; a note printed on
+    /// one is the chapter's. A label before the first chapter names every chapter, so its note is the book's.
+    /// </summary>
+    private static readonly HashSet<string> ChapterHeadings = ["cl", "qa"];
+
     public static UsfmBook Read(string content) => Read(content, editorialHeadings: false);
 
     /// <param name="editorialHeadings">
@@ -262,6 +279,7 @@ internal static partial class UsfmReader
         var words = new List<UsfmWord>();
         var notes = new List<UsfmNote>();
         var titleNotes = new List<UsfmNote>();
+        var headingNotes = new List<UsfmHeadingNote>();
         var chapter = 0;
         var verse = 0;
         var label = string.Empty;
@@ -326,13 +344,14 @@ internal static partial class UsfmReader
             CloseVerse();
             if (chapter > 0 && verses.Count > 0)
             {
-                chapters.Add(new UsfmChapter(chapter, [.. verses]));
+                chapters.Add(new UsfmChapter(chapter, [.. verses]) { Notes = [.. headingNotes] });
             }
 
             // A heading with no verse after it in the whole chapter has nowhere to belong.
             words.Clear();
             notes.Clear();
             verses.Clear();
+            headingNotes.Clear();
         }
 
         foreach (var line in Lines(content))
@@ -402,6 +421,20 @@ internal static partial class UsfmReader
                     if (Titles.Contains(name))
                     {
                         titleNotes.AddRange(Note().Matches(rest).Select(note => ReadNote(note, null)));
+                    }
+                    else if (ChapterHeadings.Contains(name))
+                    {
+                        var printed = Note().Matches(rest).Select(note => ReadNote(note, null)).ToList();
+                        if (chapter == 0)
+                        {
+                            titleNotes.AddRange(printed);
+                        }
+                        else
+                        {
+                            var printedOn = string.Join(' ', NoteMarker().Replace(Note().Replace(rest, " "), " ")
+                                .Split(' ', StringSplitOptions.RemoveEmptyEntries));
+                            headingNotes.AddRange(printed.Select(note => new UsfmHeadingNote(printedOn, note)));
+                        }
                     }
                     else if (Passage.Contains(name))
                     {

@@ -153,6 +153,51 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("chapter", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.ChapterNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ChapterId")
+                        .HasColumnType("integer")
+                        .HasColumnName("chapter_id");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("content");
+
+                    b.Property<string>("Heading")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("heading");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("kind");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer")
+                        .HasColumnName("position");
+
+                    b.HasKey("Id")
+                        .HasName("pk_chapter_note");
+
+                    b.HasIndex("ChapterId", "Position")
+                        .IsUnique()
+                        .HasDatabaseName("ix_chapter_note_chapter_id_position");
+
+                    b.ToTable("chapter_note", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_chapter_note_content_not_empty", "length(btrim(\"content\")) > 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Chronology", b =>
                 {
                     b.Property<int>("Id")
@@ -5075,6 +5120,18 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("Text");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.ChapterNote", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Chapter", "Chapter")
+                        .WithMany()
+                        .HasForeignKey("ChapterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_chapter_note_chapter_chapter_id");
+
+                    b.Navigation("Chapter");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.CommandmentReference", b =>

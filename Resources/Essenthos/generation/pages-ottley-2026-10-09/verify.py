@@ -15,9 +15,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).parent
-# The scans are archive.org's and stay out of git: in the control folder, beside the repositories.
+# The scans are archive.org's and stay out of git: in the control folder, beside the repositories, found from a worktree too.
 ARGS = [a for a in sys.argv[1:] if a != "--status"]
-PAGES = Path(ARGS[0]) if ARGS else HERE.parents[4] / ".scans" / "ottley"
+PAGES = Path(ARGS[0]) if ARGS else next((p / ".scans" / "ottley" for p in HERE.parents if (p / ".scans" / "ottley").is_dir()), HERE.parents[4] / ".scans" / "ottley")
 OUT = HERE / "verify"; RAW = PAGES.parent / "ottley-raw"; PROGRESS = HERE / "progress.json"
 OUT.mkdir(exist_ok=True); RAW.mkdir(exist_ok=True)
 CODEX = str(max(Path.home().joinpath("AppData/Local/OpenAI/Codex/bin").glob("*/codex.exe"), key=os.path.getmtime))
@@ -113,7 +113,8 @@ def run(page, items):
 
 
 rows = json.loads((HERE / "kinds.json").read_text(encoding="utf-8"))
-judged = {x["id"] for n in (1, 2) for x in json.loads((HERE / "judge" / f"half-{n}.json").read_text(encoding="utf-8"))}
+judged = {x["id"] for n in ("half-1", "half-2", "divided")
+          for x in json.loads((HERE / "judge" / f"{n}.json").read_text(encoding="utf-8"))}
 by_page = {}
 for i, r in enumerate(rows):
     if r["kind"] == "marks" and i not in judged:

@@ -1,0 +1,33 @@
+{
+ "page": "61",
+ "leaf": 443,
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-442.jpg",
+  "IsaiahAccordingToTheSeptuagint-443.jpg",
+  "IsaiahAccordingToTheSeptuagint-444.jpg"
+ ],
+ "verses": [
+  {
+   "verse": "38:22",
+   "printed": "καὶ εἶπεν Ἑζεκίας Τοῦτο τὸ σημεῖον ὅτι ἀναβήσομαι εἰς τὸν οἶκον Κυρίου τοῦ θεοῦ.",
+   "corrections": [
+    {
+     "ours": "εἷς",
+     "printed": "εἰς",
+     "why": "Smooth breathing; no circumflex."
+    }
+   ]
+  }
+ ],
+ "before": {
+  "38:21": "Καὶ εἶπεν Ἠσαίας πρὸς Ἑζεκίαν Λάβε παλάθην ἐκ σύκων καὶ τρίψον καὶ κατάπλασαι, καὶ ὑγιὴς ἔσῃ."
+ },
+ "ours": {
+  "38:22": "καὶ εἶπεν Ἑζεκίας Τοῦτο τὸ σημεῖον ὅτι ἀναβήσομαι εἷς τὸν οἶκον Κυρίου τοῦ θεοῦ."
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-443.jpg",
+ "note": "",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-14T06:05:23+00:00"
+}

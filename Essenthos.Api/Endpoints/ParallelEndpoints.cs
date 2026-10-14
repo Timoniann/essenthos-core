@@ -97,6 +97,12 @@ internal record ParallelTextResponse(
     /// only; a text that printed none is not listed.
     /// </summary>
     public Dictionary<string, BookNotesResponse> BookNotes { get; init; } = [];
+
+    /// <summary>
+    /// The notes each text printed on the headings of its chapters, by corpus, each above the row its
+    /// chapter opens with; a text that printed none here is not listed.
+    /// </summary>
+    public Dictionary<string, IList<ChapterNotesResponse>> ChapterNotes { get; init; } = [];
 }
 
 internal static class ParallelEndpoints
@@ -168,6 +174,7 @@ internal static class ParallelEndpoints
             var stated = new Dictionary<string, Dictionary<int, List<string>>>();
             var notes = new Dictionary<string, Dictionary<int, List<SourceNoteResponse>>>();
             var strength = new Dictionary<string, Dictionary<int, LinkStrengthResponse>>();
+            var headings = new Dictionary<string, Dictionary<int, List<ChapterNotesResponse>>>();
             var byNumber = new HashSet<string>();
             var reference = requested[0];
             foreach (var entry in requested)
@@ -178,6 +185,7 @@ internal static class ParallelEndpoints
                 stated[entry.Slug] = [];
                 notes[entry.Slug] = [];
                 strength[entry.Slug] = [];
+                headings[entry.Slug] = [];
                 foreach (var (heldBook, heldChapter, first, last, shift) in Held(ordinal.Value, chapter))
                 {
                     Merge(byText[entry.Slug], await Texts.ReadByCanonicalVerse(
@@ -190,6 +198,8 @@ internal static class ParallelEndpoints
                         await StatedVerses(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
                     Merge(notes[entry.Slug],
                         await SourceNotes(db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
+                    Merge(headings[entry.Slug], await Texts.ChapterNotesByCanonicalVerse(
+                        db, entry.Id, heldBook, heldChapter, cancellationToken), first, last, shift);
                     if (entry.Id != reference.Id)
                     {
                         Merge(strength[entry.Slug], await Strengths(
@@ -236,6 +246,15 @@ internal static class ParallelEndpoints
                 BookNotes = requested
                     .Where(entry => bookNotes.ContainsKey(entry.Id))
                     .ToDictionary(entry => entry.Slug, entry => bookNotes[entry.Id]),
+                ChapterNotes = headings
+                    .Where(text => text.Value.Count > 0)
+                    .ToDictionary(
+                        text => text.Key,
+                        text => (IList<ChapterNotesResponse>)
+                        [
+                            .. text.Value.OrderBy(row => row.Key)
+                                .SelectMany(row => row.Value.Select(note => note with { Verse = row.Key })),
+                        ]),
             });
         });
     }

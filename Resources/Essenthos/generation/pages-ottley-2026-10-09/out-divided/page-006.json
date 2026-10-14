@@ -1,0 +1,33 @@
+{
+ "page": "6",
+ "leaf": 388,
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-387.jpg",
+  "IsaiahAccordingToTheSeptuagint-388.jpg",
+  "IsaiahAccordingToTheSeptuagint-389.jpg"
+ ],
+ "verses": [
+  {
+   "verse": "3:26",
+   "printed": "καὶ πενθήσουσιν αἱ θῆκαι τοῦ κόσμου ὑμῶν, καὶ καταλειφθήσῃ μόνη καὶ εἰς τὴν γῆν ἐδαφισθήσῃ.",
+   "corrections": [
+    {
+     "ours": "εἷς",
+     "printed": "εἰς",
+     "why": "Smooth breathing, no circumflex."
+    }
+   ]
+  }
+ ],
+ "before": {
+  "3:25": "καὶ ὁ υἱός σου ὁ κάλλιστος ὃν ἀγαπᾷς μαχαίρᾳ πεσεῖται, καὶ οἱ ἰσχύοντες ὑμῶν μαχαίρᾳ πεσοῦνται καὶ ταπεινωθήσονται·"
+ },
+ "ours": {
+  "3:26": "καὶ πενθήσουσιν αἱ θῆκαι τοῦ κόσμου ὑμῶν, καὶ καταλειφθήσῃ μόνη καὶ εἷς τὴν γῆν ἐδαφισθήσῃ."
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-388.jpg",
+ "note": "",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-14T06:04:43+00:00"
+}

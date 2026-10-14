@@ -1,0 +1,45 @@
+{
+ "page": "20",
+ "leaf": 402,
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-401.jpg",
+  "IsaiahAccordingToTheSeptuagint-402.jpg",
+  "IsaiahAccordingToTheSeptuagint-403.jpg"
+ ],
+ "verses": [
+  {
+   "verse": "12:5",
+   "printed": "ὑμνήσατε τὸ ὄνομα Κυρίου, ὅτι ὑψηλὰ ἐποίησεν· ἀναγγείλατε ταῦτα ἐν πάσῃ τῇ γῇ.",
+   "corrections": [
+    {
+     "ours": "τῇ",
+     "printed": "τῇ γῇ",
+     "why": "Missing final word γῇ."
+    }
+   ]
+  },
+  {
+   "verse": "12:6",
+   "printed": "ἀγαλλιᾶσθε καὶ εὐφραίνεσθε, οἱ κατοικοῦντες ἐν Σιών, ὅτι ὑψώθη ὁ ἅγιος τοῦ Ἰσραὴλ ἐν μέσῳ σου.",
+   "corrections": [
+    {
+     "ours": "ὃ",
+     "printed": "ὁ",
+     "why": "Extraneous grave accent on the article."
+    }
+   ]
+  }
+ ],
+ "before": {
+  "12:4": "καὶ ἐρεῖς ἐν τῇ ἡμέρᾳ ἐκείνῃ Ὑμνεῖτε Κύριον, βοᾶτε τὸ ὄνομα αὐτοῦ, ἀναγγείλατε ἐν τοῖς ἔθνεσιν τὰ ἔνδοξα αὐτοῦ· μιμνήσκεσθε ὅτι ὑψώθη τὸ ὄνομα αὐτοῦ."
+ },
+ "ours": {
+  "12:5": "ὑμνήσατε τὸ ὄνομα Κυρίου, ὅτι ὑψηλὰ ἐποίησεν· ἀναγγείλατε ταῦτα ἐν πάσῃ τῇ",
+  "12:6": "ἀγαλλιᾶσθε καὶ εὐφραίνεσθε, οἱ κατοικοῦντες ἐν Σιών, ὅτι ὑψώθη ὃ ἅγιος τοῦ Ἰσραὴλ ἐν μέσῳ σου."
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-402.jpg",
+ "note": "",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-14T06:04:52+00:00"
+}

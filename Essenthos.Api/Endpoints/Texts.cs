@@ -179,6 +179,100 @@ internal static class Texts
     }
 
     /// <summary>
+    /// The notes a text printed on the headings of its chapters, by the canonical address of the
+    /// verse each chapter opens with, for the chapters whose first verse stands in this canonical
+    /// chapter. A psalm the edition numbers otherwise brings its notes to the canonical psalm it opens.
+    /// </summary>
+    public static async Task<Dictionary<int, List<ChapterNotesResponse>>> ChapterNotesByCanonicalVerse(
+        AppDbContext db,
+        int textId,
+        int canonicalBook,
+        int canonicalChapter,
+        CancellationToken cancellationToken)
+    {
+        var notes = await db.ChapterNotes
+            .Where(note => note.Chapter!.TextId == textId && note.Chapter.Book!.CanonicalOrdinal == canonicalBook)
+            .OrderBy(note => note.Position)
+            .Select(note => new { note.ChapterId, note.Heading, note.Kind, note.Content })
+            .ToListAsync(cancellationToken);
+        if (notes.Count == 0)
+        {
+            return [];
+        }
+
+        var chapterIds = notes.Select(note => note.ChapterId).Distinct().ToList();
+        var opening = (await db.VerseReferences
+                .Where(reference => reference.IsPrimary && chapterIds.Contains(reference.Verse!.ChapterId))
+                .Select(reference => new
+                {
+                    reference.Verse!.ChapterId,
+                    reference.Verse.Sequence,
+                    reference.Verse.Number,
+                    reference.Verse.Label,
+                    reference.CanonicalBook,
+                    reference.CanonicalChapter,
+                    reference.CanonicalVerse,
+                })
+                .ToListAsync(cancellationToken))
+            .GroupBy(verse => verse.ChapterId)
+            .Select(verses => verses
+                .OrderBy(verse => verse.Sequence).ThenBy(verse => verse.Number)
+                .ThenBy(verse => verse.Label, StringComparer.Ordinal)
+                .First())
+            .Where(verse => verse.CanonicalBook == canonicalBook && verse.CanonicalChapter == canonicalChapter)
+            .ToDictionary(verse => verse.ChapterId, verse => verse.CanonicalVerse);
+
+        return Grouped(notes
+            .Where(note => opening.ContainsKey(note.ChapterId))
+            .Select(note => (opening[note.ChapterId], note.Heading, note.Kind, note.Content)));
+    }
+
+    /// <summary>
+    /// The notes a text printed on the heading of this chapter of its own, by the number of the verse
+    /// the chapter opens with.
+    /// </summary>
+    public static async Task<Dictionary<int, List<ChapterNotesResponse>>> ChapterNotesOfOwnChapter(
+        AppDbContext db,
+        int textId,
+        int bookOrdinal,
+        int chapter,
+        CancellationToken cancellationToken)
+    {
+        var notes = await db.ChapterNotes
+            .Where(note => note.Chapter!.TextId == textId && note.Chapter.Book!.CanonicalOrdinal == bookOrdinal
+                                                           && note.Chapter.Number == chapter)
+            .OrderBy(note => note.Position)
+            .Select(note => new { note.ChapterId, note.Heading, note.Kind, note.Content })
+            .ToListAsync(cancellationToken);
+        if (notes.Count == 0)
+        {
+            return [];
+        }
+
+        var first = await db.Verses
+            .Where(verse => verse.ChapterId == notes[0].ChapterId)
+            .OrderBy(verse => verse.Sequence).ThenBy(verse => verse.Number).ThenBy(verse => verse.Label)
+            .Select(verse => verse.Number)
+            .FirstAsync(cancellationToken);
+
+        return Grouped(notes.Select(note => (first, note.Heading, note.Kind, note.Content)));
+    }
+
+    private static Dictionary<int, List<ChapterNotesResponse>> Grouped(
+        IEnumerable<(int Verse, string Heading, VerseNoteKind Kind, string Content)> notes) =>
+        notes
+            .GroupBy(note => note.Verse)
+            .ToDictionary(
+                byVerse => byVerse.Key,
+                byVerse => byVerse
+                    .GroupBy(note => note.Heading)
+                    .Select(byHeading => new ChapterNotesResponse(
+                        byVerse.Key,
+                        byHeading.Key,
+                        [.. byHeading.Select(note => new SourceNoteResponse(EnumSpelling.Of(note.Kind), note.Content))]))
+                    .ToList());
+
+    /// <summary>
     /// The words of the ancient witnesses each of these words reaches, in one query rather than one
     /// per word.
     ///

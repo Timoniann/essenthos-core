@@ -402,6 +402,15 @@ internal record SourceNoteResponse(string Kind, string Content, long? AnchorWord
 /// <param name="Notes">In the order the edition printed them. None of them has an anchor word.</param>
 internal record BookNotesResponse(string? Title, IList<SourceNoteResponse> Notes);
 
+/// <summary>
+/// The notes an edition printed on a chapter's own heading — a psalm's label, the letter over a
+/// stanza — which belong to the chapter and to no verse of it. They stand above the chapter's first verse.
+/// </summary>
+/// <param name="Verse">The number of the verse they stand above, as the response numbers its verses.</param>
+/// <param name="Heading">The heading they were printed on, as the edition prints it.</param>
+/// <param name="Notes">In the order the edition printed them. None of them has an anchor word.</param>
+internal record ChapterNotesResponse(int Verse, string Heading, IList<SourceNoteResponse> Notes);
+
 internal record TextVerseResponse(int Number, IList<TextWordResponse> Words, string Label = "")
 {
     /// <summary>

@@ -137,6 +137,9 @@ internal record ChapterTextResponse(
 {
     /// <summary>The notes the text printed on the book's title, on its first chapter only.</summary>
     public BookNotesResponse? BookNotes { get; init; }
+
+    /// <summary>The notes the text printed on this chapter's own headings, above the verse it opens with.</summary>
+    public IList<ChapterNotesResponse> ChapterNotes { get; init; } = [];
 }
 
 internal static class ReadEndpoints
@@ -320,6 +323,11 @@ internal static class ReadEndpoints
             {
                 BookNotes = (await Texts.BookNotes(db, [entry.Id], ordinal.Value, chapter, cancellationToken))
                     .GetValueOrDefault(entry.Id),
+                ChapterNotes =
+                [
+                    .. (await Texts.ChapterNotesOfOwnChapter(db, entry.Id, ordinal.Value, chapter, cancellationToken))
+                        .SelectMany(verse => verse.Value),
+                ],
             });
         });
     }
