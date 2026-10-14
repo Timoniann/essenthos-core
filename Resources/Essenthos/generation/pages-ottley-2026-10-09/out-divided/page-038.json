@@ -1,0 +1,33 @@
+{
+ "page": "38",
+ "leaf": 420,
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-419.jpg",
+  "IsaiahAccordingToTheSeptuagint-420.jpg",
+  "IsaiahAccordingToTheSeptuagint-421.jpg"
+ ],
+ "verses": [
+  {
+   "verse": "25:12",
+   "printed": "καὶ τὸ ὕψος τῆς καταφυγῆς τοῦ τοίχου σου ταπεινώσει, καὶ καταβήσεται ἕως τοῦ ἐδάφους.",
+   "corrections": [
+    {
+     "ours": "τὸ ὕψος",
+     "printed": "καὶ τὸ ὕψος",
+     "why": "Missing initial καὶ."
+    }
+   ]
+  }
+ ],
+ "before": {
+  "25:11": "καὶ ἀνήσει τὰς χεῖρας αὐτοῦ, ὃν τρόπον καὶ αὐτὸς ἐταπείνωσεν τοῦ ἀπολέσαι, καὶ ταπεινώσει τὴν ὕβριν αὐτοῦ ἐφ᾿ ἃ τὰς χεῖρας ἐπέβαλεν·"
+ },
+ "ours": {
+  "25:12": "τὸ ὕψος τῆς καταφυγῆς τοῦ τοίχου σου ταπεινώσει, καὶ καταβήσεται ἕως τοῦ ἐδάφους."
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-420.jpg",
+ "note": "",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-14T06:05:07+00:00"
+}

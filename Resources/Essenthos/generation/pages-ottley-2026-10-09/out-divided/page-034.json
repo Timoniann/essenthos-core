@@ -1,0 +1,38 @@
+{
+ "page": "34",
+ "leaf": 416,
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-415.jpg",
+  "IsaiahAccordingToTheSeptuagint-416.jpg",
+  "IsaiahAccordingToTheSeptuagint-417.jpg"
+ ],
+ "verses": [
+  {
+   "verse": "22:25",
+   "printed": "ἐν τῇ ἡμέρᾳ ἐκείνῃ. τάδε λέγει Κύριος σαβαώθ· κινηθήσεται ὁ ἄνθρωπος ὁ ἐστηριγμένος ἐν τόπῳ πιστῷ, καὶ πεσεῖται καὶ ἀφαιρεθήσεται ἡ δόξα ἡ ἐπ᾿ αὐτόν, ὅτι Κύριος ἐλάλησεν.",
+   "corrections": [
+    {
+     "ours": "πέν",
+     "printed": "ἐν",
+     "why": "Stray π and incorrect accent; printed with smooth breathing."
+    },
+    {
+     "ours": "ἅνθρωπος",
+     "printed": "ἄνθρωπος",
+     "why": "Rough breathing misread for smooth breathing."
+    }
+   ]
+  }
+ ],
+ "before": {
+  "22:24": "καὶ ἔσται πεποιθὼς ἐπ᾿ αὐτὸν πᾶς ἔνδοξος ἐν τῷ οἴκῳ τοῦ πατρὸς αὐτοῦ, ἀπὸ μικροῦ ἕως μεγάλου, καὶ ἔσονται ἐπικρεμάμενοι ἐν αὐτῷ,"
+ },
+ "ours": {
+  "22:25": "πέν τῇ ἡμέρᾳ. ἐκείνῃ. τάδε λέγει Κύριος σαβαώθ· κινηθήσεται ὁ ἅνθρωπος ὁ ἐστηριγμένος ἐν τόπῳ πιστῷ, καὶ πεσεῖται καὶ ἀφαιρεθήσεται ἡ δόξα ἡ ἐπ᾿ αὐτόν, ὅτι Κύριος ἐλάλησεν."
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-416.jpg",
+ "note": "",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-14T06:05:07+00:00"
+}

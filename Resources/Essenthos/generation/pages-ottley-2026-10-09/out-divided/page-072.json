@@ -1,0 +1,33 @@
+{
+ "page": "72",
+ "leaf": 454,
+ "images": [
+  "IsaiahAccordingToTheSeptuagint-453.jpg",
+  "IsaiahAccordingToTheSeptuagint-454.jpg",
+  "IsaiahAccordingToTheSeptuagint-455.jpg"
+ ],
+ "verses": [
+  {
+   "verse": "44:28",
+   "printed": "ὁ λέγων Κύρῳ φρονεῖν, καὶ Πάντα τὰ θελήματά μου ποιήσει· ὁ λέγων Ἰερουσαλήμ Οἰκοδομηθήσῃ, καὶ τὸν οἶκον τὸν ἅγιόν μου θεμελιώσω.",
+   "corrections": [
+    {
+     "ours": "ποίησει",
+     "printed": "ποιήσει",
+     "why": "Acute belongs on η, not ι."
+    }
+   ]
+  }
+ ],
+ "before": {
+  "44:27": "ὁ λέγων τῇ ἀβύσσῳ Ἐρημωθήσῃ, καὶ τοὺς ποταμούς σου ξηρανῶ·"
+ },
+ "ours": {
+  "44:28": "ὁ λέγων Κύρῳ φρονεῖν, καὶ Πάντα τὰ θελήματά μου ποίησει· ὁ λέγων Ἰερουσαλήμ Οἰκοδομηθήσῃ, καὶ τὸν οἶκον τὸν ἅγιόν μου θεμελιώσω."
+ },
+ "image": "IsaiahAccordingToTheSeptuagint-454.jpg",
+ "note": "",
+ "confidence": 0.99,
+ "model": "gpt-6.1-sol",
+ "at": "2026-10-14T06:05:20+00:00"
+}

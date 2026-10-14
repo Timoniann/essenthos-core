@@ -12967,5 +12967,165 @@
   "printed": "εἰς",
   "why": "Smooth breathing; no circumflex.",
   "kind": "marks"
+ },
+ {
+  "page": "4",
+  "image": "IsaiahAccordingToTheSeptuagint-386.jpg",
+  "verse": "2:20",
+  "ours": "ἅνθριιηνος",
+  "printed": "ἄνθρωπος",
+  "why": "Misread letters and breathing.",
+  "kind": "letters",
+  "divided": true
+ },
+ {
+  "page": "4",
+  "image": "IsaiahAccordingToTheSeptuagint-386.jpg",
+  "verse": "2:20",
+  "ours": "αὑτοῦ",
+  "printed": "αὐτοῦ",
+  "why": "Smooth breathing misread as rough.",
+  "kind": "marks",
+  "divided": true
+ },
+ {
+  "page": "4",
+  "image": "IsaiahAccordingToTheSeptuagint-386.jpg",
+  "verse": "2:20",
+  "ours": "τὸ.",
+  "printed": "τὰ",
+  "why": "Alpha misread as omicron.",
+  "kind": "letters",
+  "divided": true
+ },
+ {
+  "page": "4",
+  "image": "IsaiahAccordingToTheSeptuagint-386.jpg",
+  "verse": "2:20",
+  "ours": "οἳ",
+  "printed": "ἃ",
+  "why": "Relative pronoun misread.",
+  "kind": "letters",
+  "divided": true
+ },
+ {
+  "page": "4",
+  "image": "IsaiahAccordingToTheSeptuagint-386.jpg",
+  "verse": "2:21",
+  "ours": "εἷς",
+  "printed": "εἰς",
+  "why": "Extra accent and wrong breathing.",
+  "kind": "marks",
+  "divided": true
+ },
+ {
+  "page": "4",
+  "image": "IsaiahAccordingToTheSeptuagint-386.jpg",
+  "verse": "2:21",
+  "ours": "αὑτοῦ",
+  "printed": "αὐτοῦ",
+  "why": "Smooth breathing misread as rough.",
+  "kind": "marks",
+  "divided": true
+ },
+ {
+  "page": "6",
+  "image": "IsaiahAccordingToTheSeptuagint-388.jpg",
+  "verse": "3:26",
+  "ours": "εἷς",
+  "printed": "εἰς",
+  "why": "Smooth breathing, no circumflex.",
+  "kind": "marks",
+  "divided": true
+ },
+ {
+  "page": "20",
+  "image": "IsaiahAccordingToTheSeptuagint-402.jpg",
+  "verse": "12:5",
+  "ours": "τῇ",
+  "printed": "τῇ γῇ",
+  "why": "Missing final word γῇ.",
+  "kind": "words",
+  "divided": true
+ },
+ {
+  "page": "20",
+  "image": "IsaiahAccordingToTheSeptuagint-402.jpg",
+  "verse": "12:6",
+  "ours": "ὃ",
+  "printed": "ὁ",
+  "why": "Extraneous grave accent on the article.",
+  "kind": "marks",
+  "divided": true
+ },
+ {
+  "page": "34",
+  "image": "IsaiahAccordingToTheSeptuagint-416.jpg",
+  "verse": "22:25",
+  "ours": "πέν",
+  "printed": "ἐν",
+  "why": "Stray π and incorrect accent; printed with smooth breathing.",
+  "kind": "letters",
+  "divided": true
+ },
+ {
+  "page": "34",
+  "image": "IsaiahAccordingToTheSeptuagint-416.jpg",
+  "verse": "22:25",
+  "ours": "ἅνθρωπος",
+  "printed": "ἄνθρωπος",
+  "why": "Rough breathing misread for smooth breathing.",
+  "kind": "marks",
+  "divided": true
+ },
+ {
+  "page": "38",
+  "image": "IsaiahAccordingToTheSeptuagint-420.jpg",
+  "verse": "25:12",
+  "ours": "τὸ ὕψος",
+  "printed": "καὶ τὸ ὕψος",
+  "why": "Missing initial καὶ.",
+  "kind": "words",
+  "divided": true
+ },
+ {
+  "page": "55",
+  "image": "IsaiahAccordingToTheSeptuagint-437.jpg",
+  "verse": "35:10",
+  "ours": "καί",
+  "printed": "καὶ",
+  "why": "Acute should be grave.",
+  "kind": "marks",
+  "divided": true
+ },
+ {
+  "page": "55",
+  "image": "IsaiahAccordingToTheSeptuagint-437.jpg",
+  "verse": "35:10",
+  "ours": "καὶ καταλήμψεται αὐτούς",
+  "printed": "καὶ εὐφροσύνη καταλήμψεται αὐτούς",
+  "why": "Missing word εὐφροσύνη.",
+  "kind": "words",
+  "divided": true
+ },
+ {
+  "page": "61",
+  "image": "IsaiahAccordingToTheSeptuagint-443.jpg",
+  "verse": "38:22",
+  "ours": "εἷς",
+  "printed": "εἰς",
+  "why": "Smooth breathing; no circumflex.",
+  "kind": "marks",
+  "divided": true
+ },
+ {
+  "page": "72",
+  "image": "IsaiahAccordingToTheSeptuagint-454.jpg",
+  "verse": "44:28",
+  "ours": "ποίησει",
+  "printed": "ποιήσει",
+  "why": "Acute belongs on η, not ι.",
+  "kind": "marks",
+  "divided": true
  }
 ]

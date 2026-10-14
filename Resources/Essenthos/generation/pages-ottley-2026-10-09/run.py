@@ -1,15 +1,22 @@
 """Ottley's Isaiah page by page: gpt-6.1-sol reads the printed page (the scan's leaf and its two neighbours) and says,
 verse by verse, what the edition prints and where our OTTLEY text differs. Script-checked (every verse of the page
 answered, every `ours` found in our text of that verse); one retry with the errors; three in parallel.
-Out: out/page-NNN.json. Usage: run.py <scratch folder holding pages/> [page ...]"""
+Out: out/page-NNN.json. --divided reads items-divided.json (prepare.py --divided: the verses the converter divides,
+which the TEI has no verse for) into out-divided/.
+Usage: run.py [--divided] [scans folder, default .scans/ottley in the control folder] [page ...]"""
 import json, os, subprocess, sys
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from pathlib import Path
 
 HERE = Path(__file__).parent
-PAGES = Path(sys.argv[1]) / "pages"
-OUT = HERE / "out"; RAW = HERE / "raw"
+DIVIDED = "--divided" in sys.argv
+ARGS = [a for a in sys.argv[1:] if a != "--divided"]
+# The scans are archive.org's and stay out of git: in the control folder, beside the repositories, found from a worktree too.
+PAGES = Path(ARGS[0]) if ARGS and not ARGS[0].isdigit() else next((p / ".scans" / "ottley" for p in HERE.parents if (p / ".scans" / "ottley").is_dir()), HERE.parents[4] / ".scans" / "ottley")
+WANTED = [a for a in ARGS if a.isdigit()]
+ITEMS = HERE / ("items-divided.json" if DIVIDED else "items.json")
+OUT = HERE / ("out-divided" if DIVIDED else "out"); RAW = PAGES.parent / "ottley-raw"
 OUT.mkdir(exist_ok=True); RAW.mkdir(exist_ok=True)
 CODEX = str(max(Path.home().joinpath("AppData/Local/OpenAI/Codex/bin").glob("*/codex.exe"), key=os.path.getmtime))
 MODEL, EFFORT = "gpt-6.1-sol", "high"
@@ -71,8 +78,8 @@ def run(item):
     if out.exists():
         return name, "kept"
     ours = "\n".join(f"{k}: {v}" for k, v in item["ours"].items())
-    before = "".join(f"\n(For context, the verse before them, which begins on the previous page: {k}: {v})\n"
-                     for k, v in item["before"].items() if v)
+    where = "" if DIVIDED else ", which begins on the previous page"
+    before = "".join(f"\n(For context, the verse before them{where}: {k}: {v})\n" for k, v in item["before"].items() if v)
     prompt = (PROMPT.replace("{page}", item["page"]).replace("{images}", ", ".join(item["images"]))
               .replace("{ours}", ours).replace("{before}", before))
     extra = ""
@@ -98,9 +105,9 @@ def run(item):
     return name, "rejected: " + "; ".join(errs[:6])
 
 
-items = json.loads((HERE / "items.json").read_text(encoding="utf-8"))
-if len(sys.argv) > 2:
-    items = [i for i in items if i["page"] in sys.argv[2:]]
+items = json.loads(ITEMS.read_text(encoding="utf-8"))
+if WANTED:
+    items = [i for i in items if i["page"] in WANTED]
 with ThreadPoolExecutor(max_workers=3) as pool:
     for name, status in pool.map(run, items):
         print(name, status, flush=True)

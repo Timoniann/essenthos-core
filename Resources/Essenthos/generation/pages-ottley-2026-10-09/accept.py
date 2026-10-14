@@ -1,13 +1,15 @@
 """The corrections that go into the converter now: every one the Opus judge called right (all letter and word
 corrections it saw, and its 60-item sample of accent corrections), plus the judge's own readings where it found the
-page prints a third form. The ~1,000 accent corrections it did not see wait for the second reading (verify.py);
+page prints a third form; and the divided verses' reading, every correction of which it judged (verdict-divided.json).
+The ~1,000 accent corrections it did not see wait for the second reading (verify.py);
 verified ones are added by running this again. Out: accepted.json, judge-readings.json."""
 import json
 from pathlib import Path
 
 HERE = Path(__file__).parent
 rows = json.loads((HERE / "kinds.json").read_text(encoding="utf-8"))
-verdicts = {x["id"]: x for n in (1, 2) for x in json.loads((HERE / "judge" / f"verdict-{n}.json").read_text(encoding="utf-8"))}
+verdicts = {x["id"]: x for n in ("1", "2", "divided")
+            for x in json.loads((HERE / "judge" / f"verdict-{n}.json").read_text(encoding="utf-8"))}
 second = {x["id"]: x for f in sorted((HERE / "verify").glob("page-*.json")) for x in json.loads(f.read_text(encoding="utf-8"))}
 accepted, readings = [], []
 for i, r in enumerate(rows):

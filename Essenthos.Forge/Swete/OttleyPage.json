@@ -22550,5 +22550,245 @@
   ],
   "round": 3,
   "source": "codex-1440"
+ },
+ {
+  "chapter": 2,
+  "verse": "20",
+  "digitised": "ἅνθριιηνος",
+  "printed": "ἄνθρωπος",
+  "page": 4,
+  "leaf": 386,
+  "what": "Misread letters and breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἅνθριιηνος",
+    "ἄνθρωπος"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1441"
+ },
+ {
+  "chapter": 2,
+  "verse": "20",
+  "digitised": "αὑτοῦ",
+  "printed": "αὐτοῦ",
+  "page": 4,
+  "leaf": 386,
+  "what": "Smooth breathing misread as rough (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αὑτοῦ",
+    "αὐτοῦ"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1442"
+ },
+ {
+  "chapter": 2,
+  "verse": "20",
+  "digitised": "τὸ.",
+  "printed": "τὰ",
+  "page": 4,
+  "leaf": 386,
+  "what": "Alpha misread as omicron (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "τὸ.",
+    "τὰ"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1443"
+ },
+ {
+  "chapter": 2,
+  "verse": "20",
+  "digitised": "οἳ",
+  "printed": "ἃ",
+  "page": 4,
+  "leaf": 386,
+  "what": "Relative pronoun misread (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "οἳ",
+    "ἃ"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1444"
+ },
+ {
+  "chapter": 2,
+  "verse": "21",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 4,
+  "leaf": 386,
+  "what": "Extra accent and wrong breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1445"
+ },
+ {
+  "chapter": 2,
+  "verse": "21",
+  "digitised": "αὑτοῦ,",
+  "printed": "αὐτοῦ,",
+  "page": 4,
+  "leaf": 386,
+  "what": "Smooth breathing misread as rough (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "αὑτοῦ,",
+    "αὐτοῦ,"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1446"
+ },
+ {
+  "chapter": 3,
+  "verse": "26",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 6,
+  "leaf": 388,
+  "what": "Smooth breathing, no circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1447"
+ },
+ {
+  "chapter": 12,
+  "verse": "5",
+  "digitised": "τῇ",
+  "printed": "τῇ γῇ",
+  "page": 20,
+  "leaf": 402,
+  "what": "Missing final word γῇ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 4,
+  "source": "codex-1448"
+ },
+ {
+  "chapter": 12,
+  "verse": "6",
+  "digitised": "ὃ",
+  "printed": "ὁ",
+  "page": 20,
+  "leaf": 402,
+  "what": "Extraneous grave accent on the article (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ὃ",
+    "ὁ"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1449"
+ },
+ {
+  "chapter": 22,
+  "verse": "25",
+  "digitised": "πέν",
+  "printed": "ἐν",
+  "page": 34,
+  "leaf": 416,
+  "what": "Stray π and incorrect accent; printed with smooth breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "πέν",
+    "ἐν"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1450"
+ },
+ {
+  "chapter": 22,
+  "verse": "25",
+  "digitised": "ἅνθρωπος",
+  "printed": "ἄνθρωπος",
+  "page": 34,
+  "leaf": 416,
+  "what": "Rough breathing misread for smooth breathing (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "ἅνθρωπος",
+    "ἄνθρωπος"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1451"
+ },
+ {
+  "chapter": 25,
+  "verse": "12",
+  "digitised": "τὸ ὕψος",
+  "printed": "καὶ τὸ ὕψος",
+  "page": 38,
+  "leaf": 420,
+  "what": "Missing initial καὶ (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 4,
+  "source": "codex-1452"
+ },
+ {
+  "chapter": 35,
+  "verse": "10",
+  "digitised": "καί",
+  "printed": "καὶ",
+  "page": 55,
+  "leaf": 437,
+  "what": "Acute should be grave (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "καί",
+    "καὶ"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1453"
+ },
+ {
+  "chapter": 35,
+  "verse": "10",
+  "digitised": "καὶ καταλήμψεται αὐτούς·",
+  "printed": "καὶ εὐφροσύνη καταλήμψεται αὐτούς·",
+  "page": 55,
+  "leaf": 437,
+  "what": "Missing word εὐφροσύνη (read by Codex, confirmed by Opus)",
+  "same": [],
+  "round": 4,
+  "source": "codex-1454"
+ },
+ {
+  "chapter": 38,
+  "verse": "22",
+  "digitised": "εἷς",
+  "printed": "εἰς",
+  "page": 61,
+  "leaf": 443,
+  "what": "Smooth breathing; no circumflex (read by Codex, confirmed by Opus)",
+  "same": [
+   [
+    "εἷς",
+    "εἰς"
+   ]
+  ],
+  "round": 4,
+  "source": "codex-1455"
  }
 ]
