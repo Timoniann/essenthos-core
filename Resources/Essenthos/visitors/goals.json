@@ -1,0 +1,477 @@
+{
+  "about": "Goals for simulated visitors. text is what the visitor wants, in their own words, and is the only part the visitor is told besides its landing. queries are real Google autocomplete phrasings behind the goal (queries.json, fetched 2026-10-14). landing is the path on the site a search would plausibly open; the session's host is put in front of it. fits names the personas the goal suits. checks says what the session is meant to reveal, for whoever reads the results; it is never given to the visitor. kind is task for a goal with an end, explore for a visit with none.",
+  "goals": [
+    {
+      "id": "psalm-90-funeral",
+      "kind": "task",
+      "language": "uk",
+      "text": "Мені треба дев'яностий псалом, «Хто живе під покровом Всевишнього», щоб прочитати його на похороні сусідки. Хочу знайти текст українською і, якщо можна, роздрукувати.",
+      "queries": [
+        "псалом 90 українською",
+        "псалом 90 українською хто живе під покровом всевишнього",
+        "псалом 90 українською текст",
+        "псалом 90 українською роздрукувати",
+        "псалом 90 українською огієнка"
+      ],
+      "landing": "/uk/read/psalms/90",
+      "fits": [
+        "hanna",
+        "olena"
+      ],
+      "checks": "The site numbers psalms as the Hebrew does, so chapter 90 is «Молитва Мойсея» and the psalm she means is 91. Does she notice she has the wrong psalm, and does anything on the page lead her to the right one?"
+    },
+    {
+      "id": "psalm-90-russian",
+      "kind": "task",
+      "language": "ru",
+      "text": "Хочу найти 90-й псалом, «Живый в помощи Вышняго», по-русски, чтобы распечатать сыну на фронт.",
+      "queries": [
+        "псалом 90 на русском",
+        "псалом 90 на русском живущий под кровом всевышнего",
+        "псалом 90 на русском языке читать живый в помощи",
+        "псалом 90 на русском синодальный перевод",
+        "псалом 90 текст на русском"
+      ],
+      "landing": "/read/psalms/90?c=RUSV",
+      "fits": [
+        "lyudmyla"
+      ],
+      "checks": "Same numbering trap through the Synodal text, which prints the psalm she wants as 90 while the address says 91; and the interface has no Russian, so she lands in English."
+    },
+    {
+      "id": "psalm-50-repentance",
+      "kind": "task",
+      "language": "uk",
+      "text": "Шукаю п'ятдесятий псалом, «Помилуй мене, Боже», українською, щоб читати його вранці.",
+      "queries": [
+        "псалом 50 українською",
+        "псалом 50 помилуй мене боже українською текст",
+        "псалом 50 українською мовою огієнка",
+        "псалом 50 молитва українською"
+      ],
+      "landing": "/uk/read/psalms/50",
+      "fits": [
+        "hanna",
+        "olena"
+      ],
+      "checks": "A small goal for a cheaper model: the psalm wanted is 51 in the Hebrew numbering the site uses."
+    },
+    {
+      "id": "ohienko-online",
+      "kind": "task",
+      "language": "uk",
+      "text": "Хочу читати Біблію онлайн саме в перекладі Огієнка, до якого звик(ла), і почати з Євангелія від Івана.",
+      "queries": [
+        "біблія огієнка онлайн",
+        "біблія онлайн огієнко",
+        "біблія читати українською огієнка",
+        "біблія переклад огієнка читати онлайн",
+        "біблія в перекладі огієнка читати онлайн"
+      ],
+      "landing": "/uk",
+      "fits": [
+        "viktor",
+        "hanna",
+        "andriy",
+        "olena"
+      ],
+      "checks": "Can a visitor tell which translation is on screen, and choose Ohienko by that name?"
+    },
+    {
+      "id": "listen-audio",
+      "kind": "task",
+      "language": "uk",
+      "text": "Хочу слухати Біблію українською в навушниках дорогою на роботу, як подкаст, — наприклад, Псалми.",
+      "queries": [
+        "біблія слухати онлайн українською",
+        "біблія онлайн слухати огієнка",
+        "біблія онлайн слухати псалми",
+        "аудіо біблія українською слухати онлайн",
+        "біблія українською аудіокнига"
+      ],
+      "landing": "/uk",
+      "fits": [
+        "olena",
+        "hanna"
+      ],
+      "checks": "The site has no audio. How soon does the visitor find that out, and does she leave knowing it, or still unsure?"
+    },
+    {
+      "id": "david-homework",
+      "kind": "task",
+      "language": "uk",
+      "text": "Мені треба на завтра коротке повідомлення про царя Давида: хто він такий, чим відомий і два-три цікаві факти.",
+      "queries": [
+        "хто такий давид з біблії",
+        "хто такий давид і голіаф",
+        "хто такий давид"
+      ],
+      "landing": "/uk/people/david",
+      "fits": [
+        "sofiia"
+      ],
+      "checks": "Does the person page answer who David was in the first screen, in words a fifteen-year-old reads?"
+    },
+    {
+      "id": "david-wives",
+      "kind": "task",
+      "language": "en",
+      "text": "Who was King David married to? I want the list of his wives, and which one was first, before Bathsheba.",
+      "queries": [
+        "who was david in the bible married to",
+        "who was david's first wife in the bible",
+        "who was david married to before bathsheba",
+        "who all was david married to in the bible"
+      ],
+      "landing": "/people/david",
+      "fits": [
+        "margaret",
+        "mark"
+      ],
+      "checks": "Are David's wives on his page, complete and in order, each with the verse that says so?"
+    },
+    {
+      "id": "abraham-sermon",
+      "kind": "task",
+      "language": "uk",
+      "text": "Готую недільну проповідь про віру Авраама. Мені треба зібрати його історію: родина, де він жив і мандрував, і головні місця Писання про нього.",
+      "queries": [
+        "хто такий авраам з біблії",
+        "родовід авраама",
+        "біблійна карта ізраїлю"
+      ],
+      "landing": "/uk/people/abram",
+      "fits": [
+        "viktor"
+      ],
+      "checks": "Abraham's page sits at the address of Abram. Does the page read as Abraham's to a Ukrainian reader, and do family, places and verses come together for a sermon?"
+    },
+    {
+      "id": "john-1-1-greek",
+      "kind": "task",
+      "language": "uk",
+      "text": "Мені треба розібрати Івана 1:1 у грецькому оригіналі: які там слова, де стоїть артикль, а де ні, і як «Слово» передають різні переклади.",
+      "queries": [
+        "євангеліє від івана 1",
+        "грецьке слово логос",
+        "библия на греческом с подстрочным переводом"
+      ],
+      "landing": "/uk/read/john/1/1",
+      "fits": [
+        "ostap"
+      ],
+      "checks": "Can a reader put the Greek beside Ohienko, see which words correspond, and read the grammar of θεός and ὁ λόγος?"
+    },
+    {
+      "id": "hesed-strong",
+      "kind": "task",
+      "language": "ru",
+      "text": "Хочу понять еврейское слово «хесед» (милость): что оно значит, где встречается и как его переводят в разных Библиях.",
+      "queries": [
+        "номера стронга онлайн",
+        "библия онлайн номера стронга",
+        "что такое номера стронга в библии",
+        "библия на иврите с подстрочным переводом"
+      ],
+      "landing": "/strong/H2617",
+      "fits": [
+        "igor"
+      ],
+      "checks": "The Strong's page in an English interface for a Russian speaker: can he read it, find the verses, and see the Synodal renderings?"
+    },
+    {
+      "id": "genealogy-contradiction",
+      "kind": "task",
+      "language": "uk",
+      "text": "Хочу побачити поруч два родоводи Ісуса, у Матвія і в Луки, і зрозуміти, де саме вони розходяться. Мені потрібен сам текст, а не пояснення проповідників.",
+      "queries": [
+        "суперечності в біблії",
+        "родовід ісуса від луки",
+        "родовід ісуса христа біблія",
+        "противоречия в библии примеры",
+        "родословие иисуса христа от матфея"
+      ],
+      "landing": "/uk/genealogies/jesus",
+      "fits": [
+        "dmytro"
+      ],
+      "checks": "Does the genealogy page show both lines side by side with the point where they part, from the text, without an apologetic tone?"
+    },
+    {
+      "id": "patriarchs-family-tree",
+      "kind": "task",
+      "language": "en",
+      "text": "I want a proper family tree from Abraham to Jacob's twelve sons, with the wives and mothers, so my study group can see who is whose son.",
+      "queries": [
+        "abraham family tree bible",
+        "bible family tree abraham to joseph",
+        "bible family tree genesis",
+        "abraham and sarah family tree bible",
+        "bible family tree printable"
+      ],
+      "landing": "/family-tree?person=jacob",
+      "fits": [
+        "margaret"
+      ],
+      "checks": "Is the tree readable and correct for the patriarchs (mothers of Jacob's sons, Ishmael and Isaac's mothers), and can it be widened or printed?"
+    },
+    {
+      "id": "paul-journeys-map",
+      "kind": "task",
+      "language": "en",
+      "text": "I need a map of Paul's first missionary journey (Acts 13–14) to show my small group on the TV, and who was travelling with him.",
+      "queries": [
+        "paul's missionary journeys map",
+        "paul's first missionary journey map pdf",
+        "paul's missionary journey map present day",
+        "dates for paul's missionary journeys"
+      ],
+      "landing": "/map?testament=new",
+      "fits": [
+        "mark"
+      ],
+      "checks": "The map shows places, not routes. Can he get the places of Acts 13–14 on it, and does he find who travelled with Paul?"
+    },
+    {
+      "id": "holy-land-map",
+      "kind": "task",
+      "language": "uk",
+      "text": "Шукаю біблійну карту Ізраїлю часів Ісуса, щоб показати, де Віфлеєм, Назарет і Єрусалим.",
+      "queries": [
+        "біблійна карта ізраїлю",
+        "біблійна карта",
+        "библейская карта нового завета",
+        "where was bethlehem when jesus was born map"
+      ],
+      "landing": "/uk/map",
+      "fits": [
+        "viktor",
+        "andriy",
+        "sofiia"
+      ],
+      "checks": "Can a reader find three named towns on the map and narrow it to the New Testament?"
+    },
+    {
+      "id": "lords-prayer",
+      "kind": "task",
+      "language": "uk",
+      "text": "Хочу знайти «Отче наш» саме в Біблії, українською, і подивитися, чим воно відрізняється від того, як ми молимося в церкві.",
+      "queries": [
+        "молитва отче наш українською в біблії",
+        "отче наш українською текст",
+        "молитва отче наш текст з біблії",
+        "lord's prayer in bible luke"
+      ],
+      "landing": "/uk/read/matthew/6/9",
+      "fits": [
+        "andriy",
+        "hanna",
+        "sofiia"
+      ],
+      "checks": "Lands on the verse; does the reader see the whole prayer (6:9–13), and find Luke's version (11:2–4)?"
+    },
+    {
+      "id": "tobit-ukrainian",
+      "kind": "task",
+      "language": "uk",
+      "text": "Ми з дружиною хочемо на піст прочитати книгу Товита українською. Де її тут знайти?",
+      "queries": [
+        "книга товита",
+        "книга товита читати українською",
+        "книга товита українською",
+        "tobit bible"
+      ],
+      "landing": "/uk",
+      "fits": [
+        "andriy"
+      ],
+      "checks": "Tobit is on the site only in English and Greek texts, under the Catholic canon. Does he find it, and is it clear that no Ukrainian text of it is here?"
+    },
+    {
+      "id": "pork-verse",
+      "kind": "task",
+      "language": "ru",
+      "text": "Где в Библии написано, что нельзя есть свинину? Хочу найти это место и понять, касается ли оно христиан.",
+      "queries": [
+        "где в библии написано что нельзя есть свинину",
+        "где в библии написано про свинину",
+        "где в библии написано что нельзя есть свинину в новом завете"
+      ],
+      "landing": "/read/leviticus/11/7?c=RUSV",
+      "fits": [
+        "igor",
+        "lyudmyla"
+      ],
+      "checks": "Lands on the verse in the Synodal text with an English interface. Does he see the verse at once, find the parallel in Deuteronomy 14:8, and get on to whether it binds Christians (Acts 10, Mark 7)?"
+    },
+    {
+      "id": "zion-meaning",
+      "kind": "task",
+      "language": "uk",
+      "text": "Що означає слово «Сіон» у Біблії? Це гора, місто чи щось інше?",
+      "queries": [
+        "що означає сіон в біблії",
+        "що означає гора сіон",
+        "що означає сіон"
+      ],
+      "landing": "/uk/places/zion",
+      "fits": [
+        "sofiia",
+        "olena",
+        "viktor"
+      ],
+      "checks": "The place page for Zion: does it answer what the word means, and is it one place or several (Zion, Mount Zion, Sion)?"
+    },
+    {
+      "id": "ten-commandments",
+      "kind": "task",
+      "language": "uk",
+      "text": "Мені треба десять заповідей Божих, як вони написані в Біблії.",
+      "queries": [
+        "десять заповідей божих біблія",
+        "десять заповідей божих українською",
+        "10 заповідей божих біблія де написано"
+      ],
+      "landing": "/uk",
+      "fits": [
+        "sofiia",
+        "hanna"
+      ],
+      "checks": "A small goal: from the home page, can a visitor get to Exodus 20 without knowing the reference?"
+    },
+    {
+      "id": "psalm-23-kjv",
+      "kind": "task",
+      "language": "en",
+      "text": "Psalm 23 in the King James, the one we read at my mother's funeral. I want to read it and copy it for a card.",
+      "queries": [
+        "psalm 23 kjv",
+        "psalm 23 kjv printable",
+        "psalm 23 1-6 kjv"
+      ],
+      "landing": "/read/psalms/23",
+      "fits": [
+        "margaret",
+        "mark"
+      ],
+      "checks": "A small goal: is the text on the page the King James, and can it be copied cleanly?"
+    },
+    {
+      "id": "expert-parallel-words",
+      "kind": "task",
+      "language": "uk",
+      "text": "Як експертка перевірте дані паралельного читання: Буття 22 і Псалом 23 в Огієнка поруч з івритом, Івана 1 поруч із грецьким. Чи підсвічуються справді відповідні слова, чи правильні словникові дані й морфологія слова. Кожну помилку запишіть з адресою, словом і тим, як має бути.",
+      "queries": [],
+      "landing": "/uk/read/genesis/22?c=UBIO,BHSA",
+      "fits": [
+        "iryna"
+      ],
+      "checks": "Data QA on word correspondences and word details: the class of fault found by hand on 2026-10-13/14."
+    },
+    {
+      "id": "expert-entity-cards",
+      "kind": "task",
+      "language": "uk",
+      "text": "Як експерт перевірте картки осіб і місць: Давид, Авраам, Марія Магдалина, Віфлеєм. Кожне твердження в картці звірте з віршем, на який воно посилається, і з тим, як ім'я передано в українському тексті. Кожну помилку запишіть з адресою, цитатою і тим, як має бути.",
+      "queries": [],
+      "landing": "/uk/people/david",
+      "fits": [
+        "iryna",
+        "taras"
+      ],
+      "checks": "Data QA on entity claims, names and the verses they cite."
+    },
+    {
+      "id": "expert-psalm-numbering",
+      "kind": "task",
+      "language": "uk",
+      "text": "Як експерт перевірте, чи не введе сайт в оману православного читача з псалмами: нумерація в Огієнка, Синодальному і церковнослов'янському тексті поруч з івритом (Пс 9–10, 50/51, 90/91, 113–116, 147), заголовки псалмів і чи не злиті вони з першим віршем. Кожну помилку запишіть з адресою і цитатою.",
+      "queries": [
+        "псалом 90 українською",
+        "псалом 50 українською",
+        "псалом 26 50 90"
+      ],
+      "landing": "/uk/read/psalms/51?c=UBIO,RUSV",
+      "fits": [
+        "taras",
+        "iryna"
+      ],
+      "checks": "Data QA on psalm numbering, titles and verse numbers across traditions."
+    },
+    {
+      "id": "explore-home",
+      "kind": "explore",
+      "language": "uk",
+      "text": "Ви натрапили на сайт про Біблію. Подивіться, чи є тут щось варте вашого часу.",
+      "queries": [
+        "біблія онлайн українською",
+        "біблія читати онлайн"
+      ],
+      "landing": "/uk",
+      "fits": [
+        "hanna",
+        "ostap",
+        "viktor",
+        "sofiia",
+        "dmytro",
+        "olena",
+        "andriy"
+      ],
+      "checks": "What a first-time visitor understands the site to be from its home page, what draws them in, and where they lose interest."
+    },
+    {
+      "id": "explore-chapter",
+      "kind": "explore",
+      "language": "uk",
+      "text": "Ви перейшли з пошуку на розділ Біблії на незнайомому сайті. Роздивіться, що тут є, крім самого тексту, і чи варто тут залишитися.",
+      "queries": [
+        "біблія читати українською",
+        "книга рут"
+      ],
+      "landing": "/uk/read/ruth/1",
+      "fits": [
+        "viktor",
+        "olena",
+        "andriy",
+        "ostap",
+        "dmytro"
+      ],
+      "checks": "Whether a reader who arrives on a chapter discovers what surrounds the text (people, places, other translations, originals)."
+    },
+    {
+      "id": "explore-person",
+      "kind": "explore",
+      "language": "uk",
+      "text": "Ви відкрили з пошуку сторінку про Мойсея на сайті, якого не знаєте. Погляньте, що тут можна дізнатися, і чи захочеться піти далі.",
+      "queries": [
+        "хто такий мойсей з біблії",
+        "пророк"
+      ],
+      "landing": "/uk/people/moses",
+      "fits": [
+        "sofiia",
+        "olena",
+        "viktor",
+        "dmytro"
+      ],
+      "checks": "Whether a person page leads a curious reader onward (family, places, verses, timeline) or ends their visit."
+    },
+    {
+      "id": "explore-chapter-en",
+      "kind": "explore",
+      "language": "en",
+      "text": "You came from a search to the first chapter of Genesis on a Bible site you have never seen. Look around and see whether anything here is worth your time.",
+      "queries": [
+        "bible online",
+        "bible online kjv",
+        "interlinear bible"
+      ],
+      "landing": "/read/genesis/1",
+      "fits": [
+        "mark",
+        "margaret"
+      ],
+      "checks": "The same first impression in English, from a chapter rather than the home page."
+    }
+  ]
+}
