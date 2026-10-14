@@ -49,7 +49,7 @@ internal sealed record NewLinkCarryOutcome(
     TimeSpan Elapsed)
 {
     public override string ToString() =>
-        Since == Through
+        Since == Through && Scope == 0
             ? $"No link was drawn since the annotations were last carried, at link {Through}"
             : (Since is null
                   ? $"Carried every annotation over every link, up to link {Through}"
@@ -295,7 +295,9 @@ internal sealed class AnnotationCarrier(
             SELECT DISTINCT touched.verse_id
             FROM link_word lw
             JOIN word touched ON touched.id = lw.word_id
-            WHERE lw.link_id > @since);
+            WHERE lw.link_id > @since
+            UNION
+            SELECT unnest(@verses::integer[]));
         CREATE UNIQUE INDEX ON carry_scope (word_id);
         CREATE TEMP TABLE carry_near AS
         SELECT DISTINCT other.word_id
@@ -384,11 +386,16 @@ internal sealed class AnnotationCarrier(
     /// </para>
     ///
     /// <para>
-    /// A link taken away is not something a mark can see: a name carried over it stays until a
-    /// carry over every link withdraws it.
+    /// A link taken away, or one changed in place, is not something a mark can see: the step that
+    /// changed it names its verses (<paramref name="verses"/>), and they are asked again with the
+    /// rest. A name carried over a link taken away elsewhere stays until a carry over every link
+    /// withdraws it.
     /// </para>
     /// </summary>
-    public async Task<NewLinkCarryOutcome> CarryNewLinks(CancellationToken cancellationToken = default)
+    /// <param name="verses">Verses whose links changed without a newer link standing in them.</param>
+    public async Task<NewLinkCarryOutcome> CarryNewLinks(
+        CancellationToken cancellationToken = default,
+        IReadOnlyCollection<int>? verses = null)
     {
         var started = Stopwatch.StartNew();
 
@@ -403,7 +410,8 @@ internal sealed class AnnotationCarrier(
             since = null;
         }
 
-        if (since == through)
+        int[] changed = [.. verses ?? []];
+        if (since == through && changed.Length == 0)
         {
             return new NewLinkCarryOutcome(since, through, 0, 0, 0, 0, 0, started.Elapsed);
         }
@@ -418,7 +426,7 @@ internal sealed class AnnotationCarrier(
         {
             try
             {
-                await Run(connection, Scope, cancellationToken, ("since", since.Value));
+                await Run(connection, Scope, cancellationToken, ("since", since.Value), ("verses", changed));
                 scope = await Count(connection, "SELECT count(*) FROM carry_scope", cancellationToken);
                 if (scope > 0)
                 {

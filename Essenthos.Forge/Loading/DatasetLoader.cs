@@ -351,6 +351,7 @@ internal sealed class DatasetLoader(
             new("interlinear", cancellationToken => LinkFromTheInterlinear(resources, cancellationToken)),
             new("psalm-titles", cancellationToken => CoverThePsalmTitles(resources, cancellationToken)),
             new("recipe", cancellationToken => FollowTheRecipe(resources, cancellationToken)),
+            new("renumbered-links", cancellationToken => MatchAgainWhereTheHebrewWasNumberedAgain(resources, cancellationToken)),
             new("rejected-renderings", WithdrawRejectedRenderings),
             new("unlike-names", WithdrawTheNamesTheLettersNoLongerPair),
             new("verse-links", JoinTheVerses),
@@ -1658,6 +1659,25 @@ internal sealed class DatasetLoader(
     /// steps to have finished: BHSA's annotation, the links that carry the answer into every other
     /// text, and the encyclopedia the answer is about.
     /// </summary>
+    /// <summary>
+    /// The links every Strong numbering matched against BHSA's psalm titles before their numbers were
+    /// put right, matched again, and the names carried over them carried again. A corpus whose links
+    /// stand on the numbers the Hebrew carries finds nothing to do.
+    /// </summary>
+    private async Task MatchAgainWhereTheHebrewWasNumberedAgain(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the numbered links where the Hebrew was numbered again");
+
+        using var scope = services.CreateScope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<RenumberedWitnessRepair>().Run(resources, cancellationToken);
+        status.Record(outcome);
+        if (outcome.Verses.Count > 0)
+        {
+            status.Record(await scope.ServiceProvider.GetRequiredService<AnnotationCarrier>()
+                .CarryNewLinks(cancellationToken, outcome.Verses));
+        }
+    }
+
     private async Task WithdrawRejectedRenderings(CancellationToken cancellationToken)
     {
         status.Starting("the rejected statistical renderings");

@@ -491,7 +491,119 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         testimony.AddRange(await Drawn(from.Id, to.Id, LinkMethod.Manual, cancellationToken));
         var (kept, _) = YieldToTestimony(drafts, testimony, source);
 
-        var (links, matches) = Considered(seeds, existing, kept);
+        var guesses = await Drawn(from.Id, to.Id, LinkMethod.Aligner, cancellationToken);
+        var (outcome, _) = await Reconcile(
+            from.Id, to.Id, source, seeds, existing, kept, [], guesses, apply, started, cancellationToken);
+        logger.LogInformation("{From} to {To}: {Outcome}", fromSlug, toSlug, outcome);
+        return outcome;
+    }
+
+    /// <summary>
+    /// The pair's links matched again at the addresses named, where the witness's numbers no longer
+    /// bear them out, and changed in place to what a load would draw now.
+    ///
+    /// <para>
+    /// For a witness whose words were numbered again after the pair was linked: BHSA read the titles
+    /// of Psalms 51, 52 and 60 a word out of step, and every numbering matched the Synodal's
+    /// <em>Доик</em> against the word that then carried Doeg's number. A link is stale where a witness
+    /// word it names carries no number the translated words carry; a pair at these addresses with no
+    /// stale link is left exactly as it is, so a second run, and every load after the repair, does
+    /// nothing. Where there is one, the stale links are the seeds, with the matches of translated words
+    /// no link of these numbers names yet, and what they reach is settled as <see cref="Rematch"/>
+    /// settles it.
+    /// </para>
+    ///
+    /// <para>
+    /// Only the verses at those addresses are read, so it costs what those verses cost. The Greek is
+    /// matched with redirects admitted over every verse at once, so it is not matched this way.
+    /// </para>
+    /// </summary>
+    /// <returns>The outcome, and every word on either side of a link that changed.</returns>
+    public async Task<(MarkerRematchOutcome Outcome, int Stale, IReadOnlySet<long> Touched)> RematchAt(
+        string fromSlug,
+        string toSlug,
+        EditionNumbers? edition,
+        IReadOnlySet<(int, int, int)> addresses,
+        bool apply,
+        CancellationToken cancellationToken = default)
+    {
+        var started = Stopwatch.StartNew();
+        var (from, to) = await Pair(fromSlug, toSlug, cancellationToken);
+        if (to.Language == Greek)
+        {
+            throw new InvalidOperationException(
+                $"{toSlug} is Greek, and a Greek witness is matched with redirects admitted over every verse at " +
+                "once; match the whole pair again rather than some of its verses.");
+        }
+
+        var source = edition is null ? Source(fromSlug, toSlug) : Source(edition, toSlug);
+        var written = Written(fromSlug, toSlug, edition);
+
+        var translation = await TranslationVerses(from.Id, edition, StrongNumbers.Hebrew, cancellationToken, addresses);
+        var witness = await WitnessVerses(
+            to.Id, cancellationToken, translation.SelectMany(verse => verse.Addresses).ToHashSet());
+        var numbers = translation.SelectMany(verse => verse.Words).ToDictionary(word => word.Id, word => word.Numbers);
+        var strong = witness.ByVerse.Values.SelectMany(words => words).ToDictionary(word => word.Id, word => word.Strong);
+        var scope = witness.ByAddress
+            .Where(address => addresses.Contains(address.Key))
+            .SelectMany(address => address.Value)
+            .Where(witness.ByVerse.ContainsKey)
+            .SelectMany(verse => witness.ByVerse[verse].Select(word => word.Id))
+            .ToHashSet();
+        List<long> near = [.. numbers.Keys, .. scope];
+
+        var existing = await Drawn(from.Id, to.Id, LinkMethod.StrongNumber, cancellationToken, written, near);
+        var stale = existing
+            .Where(link => link.To.Any(scope.Contains))
+            .Where(link => link.To.Any(word =>
+                strong.GetValueOrDefault(word) is not { } number
+                || !link.From.Any(said => numbers.GetValueOrDefault(said)?.Contains(number) == true)))
+            .ToList();
+        if (stale.Count == 0)
+        {
+            return (new MarkerRematchOutcome(
+                0, 0, 0, 0, 0, 0, 0, 0, 0, new Dictionary<double, int>(), new Dictionary<double, int>(), started.Elapsed),
+                0, new HashSet<long>());
+        }
+
+        var (pairs, _, _) = Paired(translation, witness);
+        var (drafts, _, _) = Drafted(pairs, []);
+        drafts = await Present(from.Id, to.Id, drafts, cancellationToken);
+        var testimony = await Drawn(from.Id, to.Id, LinkMethod.StatedBySource, cancellationToken, touching: near);
+        testimony.AddRange(await Drawn(from.Id, to.Id, LinkMethod.Manual, cancellationToken, touching: near));
+        var (kept, _) = YieldToTestimony(drafts, testimony, source);
+
+        var linked = existing.SelectMany(link => link.From).ToHashSet();
+        var unlinked = kept.Where(draft => draft.To.Any(scope.Contains) && !draft.From.Any(linked.Contains)).ToList();
+        var guesses = await Drawn(from.Id, to.Id, LinkMethod.Aligner, cancellationToken, touching: near);
+        var (outcome, touched) = await Reconcile(
+            from.Id, to.Id, source, stale, existing, kept, unlinked, guesses, apply, started, cancellationToken);
+        logger.LogInformation("{From} to {To}, {Stale} links the renumbered witness no longer bears out: {Outcome}",
+            fromSlug, toSlug, stale.Count, outcome);
+        return (outcome, stale.Count, touched);
+    }
+
+    /// <summary>
+    /// The links a rematch acts on compared with what the numbers draw now, and the difference
+    /// written when asked: a link whose translated words are still drawn together keeps its id and
+    /// takes the witness words and confidence of the match, one whose words are drawn otherwise or
+    /// not at all is removed, and what stands in their place is written as a load writes it.
+    /// Returns, with the outcome, every word on either side of what changed.
+    /// </summary>
+    private async Task<(MarkerRematchOutcome Outcome, IReadOnlySet<long> Touched)> Reconcile(
+        int fromTextId,
+        int toTextId,
+        string source,
+        List<DrawnLink> seeds,
+        List<DrawnLink> existing,
+        List<Draft> kept,
+        List<Draft> initial,
+        List<DrawnLink> guesses,
+        bool apply,
+        Stopwatch started,
+        CancellationToken cancellationToken)
+    {
+        var (links, matches) = Considered(seeds, existing, kept, initial);
         var confidence = await Confidences([.. links.Select(link => link.Link)], cancellationToken);
 
         var changed = new List<(DrawnLink Link, Draft Draft)>();
@@ -517,7 +629,6 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         }
 
         var added = matches.Where(draft => !claimed.Contains(draft)).ToList();
-        var guesses = await Drawn(from.Id, to.Id, LinkMethod.Aligner, cancellationToken);
         var settled = NumberedLinkSettlement.Settle(
             [.. added.Select(d => ((IReadOnlyList<long>)d.From, (IReadOnlyList<long>)d.To))],
             guesses);
@@ -530,7 +641,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
 
         if (apply)
         {
-            await Rewrite(from.Id, to.Id, source, changed, removedIds, added, settled, cancellationToken);
+            await Rewrite(fromTextId, toTextId, source, changed, removedIds, added, settled, cancellationToken);
         }
 
         var outcome = new MarkerRematchOutcome(
@@ -546,8 +657,11 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             Tiers(links.Select(link => confidence[link.Link])),
             Tiers(matches.Select(draft => draft.Confidence)),
             started.Elapsed);
-        logger.LogInformation("{From} to {To}: {Outcome}", fromSlug, toSlug, outcome);
-        return outcome;
+        var touched = changed.SelectMany(c => c.Link.From.Concat(c.Link.To).Concat(c.Draft.To))
+            .Concat(removed.SelectMany(link => link.From.Concat(link.To)))
+            .Concat(added.SelectMany(draft => draft.From.Concat(draft.To)))
+            .ToHashSet();
+        return (outcome, touched);
     }
 
     private static Dictionary<double, int> Tiers(IEnumerable<double> confidences) =>
@@ -561,7 +675,8 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     private static (List<DrawnLink> Links, List<Draft> Matches) Considered(
         List<DrawnLink> seeds,
         List<DrawnLink> existing,
-        List<Draft> drafts)
+        List<Draft> drafts,
+        List<Draft> initial)
     {
         var linksOf = new Dictionary<long, List<DrawnLink>>(existing.Count * 2);
         foreach (var link in existing)
@@ -592,6 +707,15 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         var seenLinks = new HashSet<long>();
         var seenDrafts = new HashSet<Draft>(ReferenceEqualityComparer.Instance);
         var pending = new Queue<DrawnLink>(seeds);
+        foreach (var draft in initial.Where(seenDrafts.Add))
+        {
+            matches.Add(draft);
+            foreach (var other in draft.From.SelectMany(w => linksOf.GetValueOrDefault(w) ?? []))
+            {
+                pending.Enqueue(other);
+            }
+        }
+
         while (pending.TryDequeue(out var link))
         {
             if (!seenLinks.Add(link.Link))
@@ -734,7 +858,19 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         var series = to.Language == Greek ? StrongNumbers.Greek : StrongNumbers.Hebrew;
         var translation = await TranslationVerses(from.Id, edition, series, cancellationToken);
         var witness = await WitnessVerses(to.Id, cancellationToken);
+        var (pairs, tagged, unplaced) = Paired(translation, witness);
 
+        var resolution = series == StrongNumbers.Greek
+            ? await Resolution(pairs, cancellationToken)
+            : [];
+
+        var (drafts, matched, resolved) = Drafted(pairs, resolution);
+        return (drafts, pairs.Count, unplaced, tagged, matched, resolved, resolution.Count);
+    }
+
+    /// <summary>Each translation verse beside the witness's words at every address it stands at.</summary>
+    private static (List<VersePair> Pairs, int Tagged, int Unplaced) Paired(List<TranslationVerse> translation, Witness witness)
+    {
         var pairs = new List<VersePair>(24_000);
         var tagged = 0;
         var unplaced = 0;
@@ -757,10 +893,14 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             pairs.Add(new VersePair(verse.Words, against));
         }
 
-        var resolution = series == StrongNumbers.Greek
-            ? await Resolution(pairs, cancellationToken)
-            : [];
+        return (pairs, tagged, unplaced);
+    }
 
+    /// <summary>What the numbers draw in each verse pair.</summary>
+    private static (List<Draft> Drafts, int Matched, int Resolved) Drafted(
+        List<VersePair> pairs,
+        Dictionary<string, NumberRedirect> resolution)
+    {
         var drafts = new List<Draft>(300_000);
         var matched = 0;
         var resolved = 0;
@@ -788,7 +928,7 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
             }
         }
 
-        return (drafts, pairs.Count, unplaced, tagged, matched, resolved, resolution.Count);
+        return (drafts, matched, resolved);
     }
 
     /// <summary>
@@ -891,15 +1031,16 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     /// verse and a verse of its own in the Hebrew, so a verse is offered every witness verse at any
     /// of its addresses, not the one at its primary address alone.
     /// </summary>
+    /// <param name="at">Only the verses standing at one of these addresses; null reads every verse.</param>
     private async Task<List<TranslationVerse>> TranslationVerses(
         int textId,
         EditionNumbers? edition,
         char series,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        IReadOnlySet<(int, int, int)>? at = null)
     {
-        var addresses = await Addresses(textId, cancellationToken);
-        var words = await db.Words
-            .Where(w => w.TextId == textId)
+        var addresses = Standing(await Addresses(textId, cancellationToken), at);
+        var words = await Words(textId, addresses, at is not null)
             .Select(w => new { w.VerseId, w.Position, w.Id, w.StrongNumber })
             .ToListAsync(cancellationToken);
 
@@ -931,11 +1072,14 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         return numbers.Count == 0 ? null : new TaggedWord(id, numbers, tag.Unit);
     }
 
-    private async Task<Witness> WitnessVerses(int textId, CancellationToken cancellationToken)
+    /// <param name="at">Only the verses standing at one of these addresses; null reads every verse.</param>
+    private async Task<Witness> WitnessVerses(
+        int textId,
+        CancellationToken cancellationToken,
+        IReadOnlySet<(int, int, int)>? at = null)
     {
-        var addresses = await Addresses(textId, cancellationToken);
-        var words = await db.Words
-            .Where(w => w.TextId == textId)
+        var addresses = Standing(await Addresses(textId, cancellationToken), at);
+        var words = await Words(textId, addresses, at is not null)
             .Select(w => new
             {
                 w.VerseId,
@@ -957,9 +1101,9 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
                     .ToList());
 
         var byAddress = new Dictionary<(int, int, int), List<int>>(byVerse.Count + 256);
-        foreach (var (verse, at) in addresses)
+        foreach (var (verse, stands) in addresses)
         {
-            foreach (var address in at)
+            foreach (var address in stands)
             {
                 if (!byAddress.TryGetValue(address, out var standing))
                 {
@@ -972,6 +1116,27 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
         }
 
         return new Witness(byVerse, byAddress, addresses);
+    }
+
+    /// <summary>The verses standing at any of the addresses, or every verse where none are named.</summary>
+    private static Dictionary<int, List<(int, int, int)>> Standing(
+        Dictionary<int, List<(int, int, int)>> addresses,
+        IReadOnlySet<(int, int, int)>? at) =>
+        at is null
+            ? addresses
+            : addresses.Where(verse => verse.Value.Any(at.Contains)).ToDictionary(verse => verse.Key, verse => verse.Value);
+
+    /// <summary>A text's words, or only those of the verses named where the verses are a selection.</summary>
+    private IQueryable<Database.Entities.Word> Words(int textId, Dictionary<int, List<(int, int, int)>> verses, bool selected)
+    {
+        var words = db.Words.Where(w => w.TextId == textId);
+        if (!selected)
+        {
+            return words;
+        }
+
+        var ids = verses.Keys.ToList();
+        return words.Where(w => ids.Contains(w.VerseId));
     }
 
     /// <summary>Every address each verse of a text stands at, its primary address first.</summary>
@@ -1025,18 +1190,26 @@ internal sealed class TaggedTextLinkLoader(AppDbContext db, ILogger<TaggedTextLi
     }
 
     /// <param name="sources">Only the links carrying one of these sources; null takes every one.</param>
+    /// <param name="touching">Only the links naming one of these words, on either side; null takes every one.</param>
     private async Task<List<DrawnLink>> Drawn(
         int fromTextId,
         int toTextId,
         LinkMethod method,
         CancellationToken cancellationToken,
-        List<string>? sources = null)
+        List<string>? sources = null,
+        IReadOnlyCollection<long>? touching = null)
     {
         var drawn = db.LinkWords
             .Where(lw => lw.Link!.FromTextId == fromTextId && lw.Link.ToTextId == toTextId && lw.Link.Method == method);
         if (sources is not null)
         {
             drawn = drawn.Where(lw => sources.Contains(lw.Link!.Provenance!.Source));
+        }
+
+        if (touching is not null)
+        {
+            var words = touching.ToList();
+            drawn = drawn.Where(lw => db.LinkWords.Any(named => named.LinkId == lw.LinkId && words.Contains(named.WordId)));
         }
 
         var rows = await drawn
