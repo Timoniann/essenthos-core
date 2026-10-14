@@ -82,6 +82,10 @@ internal static partial class EncyclopediaEndpoints
             var words = ReaderLanguages.Prose(prose, language);
             var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], words, cancellationToken);
             var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
+            var foundAs = q is { Length: > 0 }
+                ? await EntityNames.FoundAs(
+                    db, named.ToDictionary(row => row.Id, row => row.LocalName ?? summaries[row.Slug].Name), q, cancellationToken)
+                : [];
             var page = named
                 .Select(row => ours.TryGetValue(row.Slug, out var own)
                     ? summaries[row.Slug] with
@@ -89,11 +93,13 @@ internal static partial class EncyclopediaEndpoints
                         Distinguisher = own.Line,
                         LocalName = row.LocalName,
                         LocalDistinguisher = own.Line is null ? null : lines.GetValueOrDefault(row.Id),
+                        Matched = foundAs.GetValueOrDefault(row.Id),
                     }
                     : summaries[row.Slug] with
                     {
                         LocalName = row.LocalName,
                         LocalDistinguisher = lines.GetValueOrDefault(row.Id),
+                        Matched = foundAs.GetValueOrDefault(row.Id),
                     })
                 .ToList();
 

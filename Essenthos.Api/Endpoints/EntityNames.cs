@@ -1,4 +1,5 @@
-﻿using Essenthos.Core.Corpus;
+﻿using System.Linq.Expressions;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -202,19 +203,44 @@ internal static class EntityNames
     /// text prints for it — so <em>Аарон</em>, <em>Aarón</em>, <em>Aarons</em> and <em>אהרן</em> all
     /// find Aaron.
     /// </summary>
+    /// <remarks>
+    /// A title in front of the name is read past as well: <em>цар Давид</em> finds David by
+    /// <em>Давид</em>, as <em>King David</em> finds him by the whole label.
+    /// </remarks>
     public static IQueryable<Entity> Matching(AppDbContext db, IQueryable<Entity> entities, string q)
+    {
+        var matching = entities.Where(Containing(db, q, titles: true));
+        return TitleWords.Without(q) is { } name
+            ? matching.Union(entities.Where(Containing(db, name, titles: true)))
+            : matching;
+    }
+
+    /// <summary>
+    /// The labels a dataset gives as a title or a description rather than a name: <em>Son of
+    /// David</em> on Jesus, <em>King of Israel</em> on David.
+    /// </summary>
+    private static readonly string[] TitleKinds = ["title", "description"];
+
+    /// <summary>Whether a label is a title or a description rather than a name.</summary>
+    public static bool IsTitle(string? kind) => kind is not null && TitleKinds.Contains(kind);
+
+    /// <summary>
+    /// Whether some name of the entity contains what was typed — and, with <paramref name="titles"/>,
+    /// a title of it too.
+    /// </summary>
+    private static Expression<Func<Entity, bool>> Containing(AppDbContext db, string q, bool titles)
     {
         var like = LikePatterns.Containing(q);
         var folded = NameFolding.Fold(q);
         var foldedLike = LikePatterns.Containing(folded);
         var anyFolded = folded.Length > 0;
 
-        return entities.Where(e =>
+        return e =>
             EF.Functions.ILike(e.Name, like)
             || EF.Functions.ILike(e.Slug, like)
-            || e.Names.Any(n => EF.Functions.ILike(n.Label, like))
+            || e.Names.Any(n => (titles || n.Kind == null || !TitleKinds.Contains(n.Kind)) && EF.Functions.ILike(n.Label, like))
             || db.EntityNameForms.Any(f => f.EntityId == e.Id && EF.Functions.ILike(f.Form, like))
-            || (anyFolded && db.EntityRenderings.Any(r => r.EntityId == e.Id && EF.Functions.Like(r.Folded, foldedLike))));
+            || (anyFolded && db.EntityRenderings.Any(r => r.EntityId == e.Id && EF.Functions.Like(r.Folded, foldedLike)));
     }
 
     /// <summary>
@@ -222,36 +248,181 @@ internal static class EntityNames
     ///
     /// The entity actually called that — in any of the names <see cref="Matching"/> reads, because
     /// Peter is Cephas and Aaron is <em>Аарон</em>, and a reader who types the other name has typed
-    /// the thing itself — then those whose shown name opens with it, then everything it merely
-    /// occurs in. Inside a band the corpus's own weight breaks the tie, so the Judah with a thousand
-    /// namings comes before the Judah with two.
+    /// the thing itself — then those whose shown name opens with it, then those one of whose names
+    /// holds it, and last those only a title holds it in: <em>David</em> is David's name and only
+    /// inside a title of Jesus. Inside a band the corpus's own weight breaks the tie, so the Judah
+    /// with a thousand namings comes before the Judah with two.
     /// </summary>
     public static IOrderedQueryable<LocalisedEntity> ByRelevance(
         AppDbContext db,
         IQueryable<LocalisedEntity> entities,
         string q,
-        string? language)
-    {
-        var exactly = LikePatterns.Exactly(q);
-        var opening = LikePatterns.StartingWith(q);
-        var folded = NameFolding.Fold(q);
-        var anyFolded = folded.Length > 0;
-
-        return Alphabetical(
-            entities
-                .OrderBy(l =>
-                    EF.Functions.ILike(l.Shown, exactly)
-                    || EF.Functions.ILike(l.Entity.Name, exactly)
-                    || l.Entity.Names.Any(n => EF.Functions.ILike(n.Label, exactly))
-                    || db.EntityNameForms.Any(f => f.EntityId == l.Entity.Id
-                                                   && f.GrammaticalCase == GrammaticalCases.Nominative
-                                                   && EF.Functions.ILike(f.Form, exactly))
-                    || (anyFolded && db.EntityRenderings.Any(r => r.EntityId == l.Entity.Id && r.Folded == folded))
-                        ? 0
-                        : EF.Functions.ILike(l.Shown, opening) || EF.Functions.ILike(l.Entity.Name, opening) ? 1 : 2)
-                .ThenByDescending(l => l.Entity.Verses.AsQueryable().Count(ShownVerses.IsShown)),
+        string? language) =>
+        Alphabetical(
+            Banded(db, entities, q).ThenByDescending(l => l.Entity.Verses.AsQueryable().Count(ShownVerses.IsShown)),
             language);
+
+    /// <summary>
+    /// The bands of <see cref="ByRelevance"/>, for an order that then sorts inside them by something
+    /// else: an index ordered by how often each is named still heads with the one called what was
+    /// typed, and ends with those that only carry it in a title.
+    /// </summary>
+    public static IOrderedQueryable<LocalisedEntity> Banded(AppDbContext db, IQueryable<LocalisedEntity> entities, string q)
+    {
+        var name = TitleWords.Without(q) ?? q;
+        var exactly = LikePatterns.Exactly(q);
+        var exactName = LikePatterns.Exactly(name);
+        var opening = LikePatterns.StartingWith(q);
+        var openingName = LikePatterns.StartingWith(name);
+
+        // Each band beyond the shown name is a set of ids read once, which the database hashes,
+        // rather than a test of every row's names and spellings one row at a time: the second costs
+        // half a second on a two-letter search, which Go To asks as the reader types.
+        var calledThat = name == q ? CalledExactly(db, q) : CalledExactly(db, q).Concat(CalledExactly(db, name));
+        var named = name == q ? NamedContaining(db, q) : NamedContaining(db, q).Concat(NamedContaining(db, name));
+
+        return entities.OrderBy(l =>
+            EF.Functions.ILike(l.Shown, exactly) || EF.Functions.ILike(l.Shown, exactName)
+            || calledThat.Contains(l.Entity.Id)
+                ? 0
+                : EF.Functions.ILike(l.Shown, opening) || EF.Functions.ILike(l.Shown, openingName)
+                  || EF.Functions.ILike(l.Entity.Name, opening) || EF.Functions.ILike(l.Entity.Name, openingName)
+                    ? 1
+                    : named.Contains(l.Entity.Id)
+                        ? 2
+                        : 3);
     }
+
+    /// <summary>The entities one of whose names is exactly what was typed, in any language or text.</summary>
+    private static IQueryable<int> CalledExactly(AppDbContext db, string typed)
+    {
+        var exactly = LikePatterns.Exactly(typed);
+        var folded = NameFolding.Fold(typed);
+
+        return db.Entities.Where(e => EF.Functions.ILike(e.Name, exactly)).Select(e => e.Id)
+            .Concat(db.EntityNames.Where(n => EF.Functions.ILike(n.Label, exactly)).Select(n => n.EntityId))
+            .Concat(db.EntityNameForms
+                .Where(f => f.GrammaticalCase == GrammaticalCases.Nominative && EF.Functions.ILike(f.Form, exactly))
+                .Select(f => f.EntityId))
+            .Concat(db.EntityRenderings.Where(r => folded.Length > 0 && r.Folded == folded).Select(r => r.EntityId));
+    }
+
+    /// <summary>The entities some name of which — not a title — holds what was typed.</summary>
+    private static IQueryable<int> NamedContaining(AppDbContext db, string typed)
+    {
+        var like = LikePatterns.Containing(typed);
+        var folded = NameFolding.Fold(typed);
+        var foldedLike = LikePatterns.Containing(folded);
+
+        return db.Entities.Where(e => EF.Functions.ILike(e.Name, like) || EF.Functions.ILike(e.Slug, like)).Select(e => e.Id)
+            .Concat(db.EntityNames
+                .Where(n => (n.Kind == null || !TitleKinds.Contains(n.Kind)) && EF.Functions.ILike(n.Label, like))
+                .Select(n => n.EntityId))
+            .Concat(db.EntityNameForms.Where(f => EF.Functions.ILike(f.Form, like)).Select(f => f.EntityId))
+            .Concat(db.EntityRenderings
+                .Where(r => folded.Length > 0 && EF.Functions.Like(r.Folded, foldedLike))
+                .Select(r => r.EntityId));
+    }
+
+    /// <summary>
+    /// The name each of these entities was found by, where a reader looking at the row would not see
+    /// it: <em>Варнава</em> finds the record headed <em>Йосип</em>, <em>Paul</em> the one headed
+    /// <em>Saul</em>, and <em>David</em> finds Jesus only through <em>Son of David</em>. Absent where
+    /// the row's own name holds what was typed, in whatever language or case — the reader can see why
+    /// <em>Давида</em> found <em>Давид</em>.
+    /// </summary>
+    /// <param name="shown">The name each row is headed with, by entity id.</param>
+    public static async Task<Dictionary<int, EntityMatchResponse>> FoundAs(
+        AppDbContext db,
+        IReadOnlyDictionary<int, string> shown,
+        string q,
+        CancellationToken cancellationToken)
+    {
+        string[] typed = [.. new[] { q, TitleWords.Without(q) }.OfType<string>().Select(NameFolding.Fold).Where(t => t.Length > 0)];
+        var ids = shown.Keys.ToList();
+        if (typed.Length == 0 || ids.Count == 0)
+        {
+            return [];
+        }
+
+        var headwords = await db.Entities
+            .Where(e => ids.Contains(e.Id))
+            .Select(e => new { e.Id, e.Name })
+            .ToListAsync(cancellationToken);
+        var nominatives = await db.EntityNameForms
+            .Where(f => ids.Contains(f.EntityId) && f.GrammaticalCase == GrammaticalCases.Nominative)
+            .Select(f => new { f.EntityId, f.Form })
+            .ToListAsync(cancellationToken);
+        var labels = await db.EntityNames
+            .Where(n => ids.Contains(n.EntityId))
+            .Select(n => new { n.EntityId, n.Label, n.Kind })
+            .ToListAsync(cancellationToken);
+        var whole = LikePatterns.Containing(typed[0]);
+        var named = LikePatterns.Containing(typed[^1]);
+        var spellings = await db.EntityRenderings
+            .Where(r => ids.Contains(r.EntityId) && (EF.Functions.Like(r.Folded, whole) || EF.Functions.Like(r.Folded, named)))
+            .Select(r => new { r.EntityId, r.Form, r.Folded, r.Occurrences, r.Heading })
+            .ToListAsync(cancellationToken);
+
+        bool Holds(string name) => typed.Any(NameFolding.Fold(name).Contains);
+        bool Opens(string folded) => typed.Any(folded.StartsWith);
+
+        var found = new Dictionary<int, EntityMatchResponse>();
+        foreach (var (id, heading) in shown)
+        {
+            var own = new List<string> { heading };
+            own.AddRange(headwords.Where(h => h.Id == id).Select(h => h.Name));
+            own.AddRange(nominatives.Where(f => f.EntityId == id).Select(f => f.Form));
+            if (own.Any(Holds))
+            {
+                continue;
+            }
+
+            var label = labels
+                .Where(n => n.EntityId == id && Holds(n.Label))
+                .OrderBy(n => IsTitle(n.Kind))
+                .ThenBy(n => !Opens(NameFolding.Fold(n.Label)))
+                .ThenBy(n => n.Label.Length)
+                .FirstOrDefault();
+            if (label is not null)
+            {
+                found[id] = new EntityMatchResponse(label.Label, IsTitle(label.Kind) ? MatchKinds.Title : MatchKinds.Name);
+                continue;
+            }
+
+            var spelling = spellings
+                .Where(r => r.EntityId == id && typed.Any(r.Folded.Contains))
+                .OrderBy(r => !Opens(r.Folded))
+                .ThenByDescending(r => r.Heading)
+                .ThenByDescending(r => r.Occurrences)
+                .FirstOrDefault();
+            if (spelling is not null && !own.Any(name => SameName(NameFolding.Fold(name), spelling.Folded)))
+            {
+                found[id] = new EntityMatchResponse(spelling.Form, MatchKinds.Name);
+            }
+        }
+
+        return found;
+    }
+
+    /// <summary>
+    /// Whether a printed spelling is one case of a name rather than another name: <em>Йосипа</em> and
+    /// <em>Йосипові</em> are <em>Йосип</em>, <em>Варнава</em> is not. A declined form keeps all but the
+    /// last letter or two of the name it declines.
+    /// </summary>
+    internal static bool SameName(string name, string spelling)
+    {
+        var shared = 0;
+        while (shared < name.Length && shared < spelling.Length && name[shared] == spelling[shared])
+        {
+            shared++;
+        }
+
+        return shared > 0 && shared >= Math.Min(name.Length, spelling.Length) - DeclinedLetters;
+    }
+
+    /// <summary>How many letters at the end of a name a case ending may change.</summary>
+    private const int DeclinedLetters = 2;
 
     /// <summary>By the shown name in the language's own order, and by slug where two names are the same.</summary>
     public static IOrderedQueryable<LocalisedEntity> Alphabetical(
