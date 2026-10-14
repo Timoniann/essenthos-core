@@ -327,5 +327,12 @@ internal static partial class ForgeVerbs
         AlignerLinks: arguments.Contains("--aligner-links"),
         AlignerPairs: OptionalText(arguments, "--aligner-pairs") is { } alignerPairs
             ? EvidentiaAlignerPairs.Read(alignerPairs.Split(',', StringSplitOptions.RemoveEmptyEntries))
-            : null);
+            : null,
+        PivotTexts: OptionalText(arguments, "--pivot") is { } pivot
+            ? [.. pivot.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Identifier)]
+            : null,
+        PivotPolicy: OptionalText(arguments, "--pivot-policy") is { } pivotPolicy
+            ? pivotPolicy.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Aggregate(EvidentiaPivotPolicy.None, (policy, flag) => policy | Enum.Parse<EvidentiaPivotPolicy>(flag, ignoreCase: true))
+            : EvidentiaPivotPolicy.None);
 }

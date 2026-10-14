@@ -73,7 +73,8 @@ internal sealed record EvidentiaWordRecord(
     IReadOnlyDictionary<string, string>? SourceMorphology = null,
     IReadOnlyDictionary<string, string>? TargetMorphology = null,
     bool? CorrectOnJudgedKey = null,
-    string? KeyReading = null);
+    string? KeyReading = null,
+    IReadOnlyDictionary<string, HashSet<long>>? Pivot = null);
 
 /// <summary>
 /// A word the answer key puts the source word on, whether another word's proposal holds it, and what

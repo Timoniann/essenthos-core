@@ -260,6 +260,26 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             lexicalProposals.RemoveAll(proposal => contested.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)));
         }
 
+        var pivot = options.PivotTexts is { Count: > 0 } pivotTexts
+            ? await Pivot(pivotTexts, fromSlug, toSlug, canonicalBook, canonicalChapter, sourceAnalyses, targetAnalyses, cancellationToken)
+            : EvidentiaPivot.None;
+        // A word the pivot took a placement from stays unplaced: the pivot is not then also the evidence that fills it.
+        var pivotContradicted = EvidentiaPivotCheck.Contradicted(lexicalProposals, pivot, options.PivotPolicy);
+        if (pivotContradicted.Count > 0)
+        {
+            withheld.UnionWith(pivotContradicted.Select(pair => pair.From));
+            EvidentiaResolution Uncontradicted(EvidentiaResolution resolution) => resolution with
+            {
+                Proposals = [.. resolution.Proposals.Where(proposal =>
+                    !pivotContradicted.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))],
+            };
+            globalKnownRenderingResolution = Uncontradicted(globalKnownRenderingResolution);
+            globalReviewKnownRenderingResolution = Uncontradicted(globalReviewKnownRenderingResolution);
+            syntaxTargetGlossReviewResolution = Uncontradicted(syntaxTargetGlossReviewResolution);
+            named = [.. named.Where(proposal => !pivotContradicted.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))];
+            lexicalProposals.RemoveAll(proposal => pivotContradicted.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)));
+        }
+
         // Last of the lexical tiers, on the words they leave free, and before the grammatical words, which
         // then find their head placed.
         List<EvidentiaProposal> filled = [];
@@ -275,6 +295,10 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             filled.AddRange(EvidentiaAlignerCheck.Resolve(candidates, [.. lexicalProposals, .. filled], aligner, frame)
                 .Where(proposal => !withheld.Contains(proposal.Source.Token.Id)));
         }
+
+        filled.AddRange(EvidentiaPivotCheck.Resolve(
+                sourceAnalyses, targetAnalyses, candidates, [.. lexicalProposals, .. filled], pivot, options.PivotPolicy)
+            .Where(proposal => !withheld.Contains(proposal.Source.Token.Id)));
 
         syntaxTargetGlossReviewResolution = syntaxTargetGlossReviewResolution with
         {
@@ -304,6 +328,14 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             : [.. lexicalProposals.Except(filled).Where(proposal =>
                 aligner.Agrees(proposal.Source.Token.Id, proposal.Target.Token.Id)
                 && !alreadySafe.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id)))];
+        if (options.PivotPolicy.HasFlag(EvidentiaPivotPolicy.Safe))
+        {
+            alreadySafe.UnionWith(promoted.Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id)));
+            promoted.AddRange(lexicalProposals.Except(filled).Where(proposal =>
+                pivot.Agrees(proposal.Source.Token.Id, proposal.Target.Token.Id)
+                && aligner?.Contradicts(proposal.Source.Token.Id, proposal.Target.Token.Id) != true
+                && !alreadySafe.Contains((proposal.Source.Token.Id, proposal.Target.Token.Id))));
+        }
         safeLexical.AddRange(promoted);
         var safe = EvidentiaAttachedWords.Safe(safeLexical, attachedWords);
         List<EvidentiaProposal> safeProposals =
@@ -355,6 +387,10 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 Relation = parsed.GetValueOrDefault(word.SourceWordId)?.Relation,
             }
             : word)];
+        if (options.RecordWords && !pivot.IsEmpty)
+        {
+            words = [.. words.Select(word => pivot.Of(word.SourceWordId) is { Count: > 0 } said ? word with { Pivot = said } : word)];
+        }
         var routes = new List<EvidentiaRouteAgreement>();
         var routeVerdicts = new Dictionary<(long From, long To), List<string>>();
         foreach (var route in options.RouteTexts ?? [])
@@ -571,6 +607,48 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             options.AllowKnownRenderingEvidence,
             canonicalBook,
             measurements);
+    }
+
+    /// <summary>
+    /// The pivot texts read for the chapter: each one's words, analysed by the same language pack, and the original
+    /// words its own stated or Strong-numbered links put them on. The measured text is never its own pivot.
+    /// </summary>
+    private async Task<EvidentiaPivot> Pivot(
+        IReadOnlyList<string> texts,
+        string fromSlug,
+        string toSlug,
+        int canonicalBook,
+        int canonicalChapter,
+        IReadOnlyList<EvidentiaAnalysis> source,
+        IReadOnlyList<EvidentiaAnalysis> target,
+        CancellationToken cancellationToken)
+    {
+        var targetIds = target.Select(word => word.Token.Id).ToHashSet();
+        var grammatical = target.Where(word => !word.IsContentWord).Select(word => word.Token.Id).ToHashSet();
+        var pivots = new List<EvidentiaPivotText>();
+        foreach (var text in texts.Where(text => text != fromSlug))
+        {
+            // A pivot that lacks the chapter (the ULT has no Isaiah) is silent there, not an error.
+            var words = await Tokens(text, canonicalBook, canonicalChapter, null, cancellationToken, required: false, primaryChapterOnly: true);
+            if (words.Count == 0)
+            {
+                continue;
+            }
+
+            var tokens = EnglishCompounds.Join((await udpipe.Annotate(words, cancellationToken)).Tokens);
+            var gold = await Gold(text, toSlug, tokens.Select(token => token.Id).ToHashSet(), targetIds, null, cancellationToken);
+            // A pivot word names one word of the original only where its link holds one content word: a link
+            // over several (a number, a phrase) says what the words render together, not which one this is.
+            pivots.Add(new EvidentiaPivotText(
+                text,
+                [.. tokens.Select(Analyse).OfType<EvidentiaAnalysis>()],
+                gold.Pairs.Where(pair => !grammatical.Contains(pair.To))
+                    .GroupBy(pair => pair.From)
+                    .Where(group => group.Count() == 1)
+                    .ToDictionary(group => group.Key, group => group.Select(pair => pair.To).ToHashSet())));
+        }
+
+        return EvidentiaPivot.Match(source, pivots);
     }
 
     /// <summary>The pairs the statistical aligner's stored links hold for the passage's words.</summary>
@@ -1613,7 +1691,9 @@ internal sealed record EvidentiaMeasurementOptions(
     IReadOnlyList<string>? ConfirmedByFiles = null,
     bool AlignerLinks = false,
     EvidentiaAlignerPairs? AlignerPairs = null,
-    bool RecordKeyDoubts = false);
+    bool RecordKeyDoubts = false,
+    IReadOnlyList<string>? PivotTexts = null,
+    EvidentiaPivotPolicy PivotPolicy = EvidentiaPivotPolicy.None);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.

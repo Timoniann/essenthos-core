@@ -533,6 +533,8 @@ internal sealed class EvidentiaRunner(
             ["confirmedByRuns"] = options.ConfirmedByRuns,
             ["confirmedByFiles"] = options.ConfirmedByFiles,
             ["alignerLinks"] = options.AlignerLinks,
+            ["pivotTexts"] = options.PivotTexts,
+            ["pivotPolicy"] = options.PivotPolicy.ToString(),
             ["defaults"] = typeof(EvidentiaDefaults)
                 .GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(field => field.IsLiteral)
@@ -565,7 +567,13 @@ internal sealed class EvidentiaRunner(
             ConfirmedByFiles: root.TryGetProperty("confirmedByFiles", out var byFiles) && byFiles.ValueKind == JsonValueKind.Array
                 ? [.. byFiles.EnumerateArray().Select(file => file.GetString()!)]
                 : null,
-            AlignerLinks: root.TryGetProperty("alignerLinks", out var alignerLinks) && alignerLinks.ValueKind == JsonValueKind.True);
+            AlignerLinks: root.TryGetProperty("alignerLinks", out var alignerLinks) && alignerLinks.ValueKind == JsonValueKind.True,
+            PivotTexts: root.TryGetProperty("pivotTexts", out var pivotTexts) && pivotTexts.ValueKind == JsonValueKind.Array
+                ? [.. pivotTexts.EnumerateArray().Select(text => text.GetString()!)]
+                : null,
+            PivotPolicy: root.TryGetProperty("pivotPolicy", out var pivotPolicy) && pivotPolicy.ValueKind == JsonValueKind.String
+                ? Enum.Parse<EvidentiaPivotPolicy>(pivotPolicy.GetString()!)
+                : EvidentiaPivotPolicy.None);
     }
 
     /// <summary>A run stored before the window was an option read with the default of its day.</summary>

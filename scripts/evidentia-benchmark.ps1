@@ -31,6 +31,11 @@ param(
     # or the second pass: '--confirmed', '<folder of --confirmed-out files>', '--aligner-pairs', '<score --pairs files>'.
     [string[]] $Extra = @(),
 
+    # Texts of the measured text's language whose stated links are read word by word as a second opinion
+    # (--pivot), and what that opinion may change (--pivot-policy); 'none' for neither.
+    [string] $Pivot = 'none',
+    [string] $PivotPolicy = 'none',
+
     # Says the one run of held2 a step is allowed is this one.
     [switch] $Unseal,
 
@@ -257,6 +262,8 @@ function Arguments($passage) {
     if ($first -gt 0) { $arguments += '--from-chapter', $first, '--to-chapter', $last }
     if ($NeighbourVerses -ge 0) { $arguments += '--neighbour-verses', $NeighbourVerses }
     $arguments += $Extra
+    if ($Pivot -ne 'none') { $arguments += '--pivot', $Pivot }
+    if ($PivotPolicy -ne 'none') { $arguments += '--pivot-policy', $PivotPolicy }
     $arguments + @('--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json",
         '--key-doubts', "$prefix.key-doubts.json")
 }
