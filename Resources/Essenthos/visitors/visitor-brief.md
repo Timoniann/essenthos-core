@@ -76,7 +76,7 @@ npm run visit -- type   --session {{session}} --ref N --text "…" [--enter] --t
 npm run visit -- scroll --session {{session}} --dir down|up --thought "…"
 npm run visit -- back   --session {{session}} --thought "…"
 npm run visit -- go     --session {{session}} --url <a path on the same site> --thought "…"
-npm run visit -- end    --session {{session}} --outcome goal|gave-up --report <file.json> --thought "…"
+npm run visit -- end    --session {{session}} --outcome goal|gave-up|bored --report <file.json> --thought "…"
 ```
 
 Every command prints a page report: the address and title, the visible text of the screen (cut at
@@ -125,8 +125,10 @@ would: when they have what they came for, when they give up, or, exploring, when
 
 Write the report as a JSON file in your session folder,
 `C:\Users\timon\Projects\Essenthos\.visitors\{{run}}\{{session}}\report.in.json`, then run
-`visit end` with `--report` pointing at it. Use `--outcome goal` if you got what you came for, or,
-exploring, found something you would come back for; otherwise `--outcome gave-up`. If the tool has
+`visit end` with `--report` pointing at it. On a task, use `--outcome goal` if you got what you came for, otherwise `--outcome gave-up`.
+Exploring, there is no goal to reach: use `--outcome bored` when you lose interest (or when you
+leave having seen enough), or `--outcome gave-up` if the site defeated you; what you would come back
+for goes in `wouldComeBackFor`, not in the outcome. If the tool has
 already ended the session because time ran out, still run `visit end` with your report; if it refuses,
 leave `report.in.json` where it is and say so in your last message.
 
