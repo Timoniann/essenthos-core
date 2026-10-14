@@ -50,9 +50,9 @@
     "sha256": "740baa91e47934e895f118ec594ea06b92408125e2f5b83ba3c816ef000df790"
   },
   "Byzantine": {
-    "bytes": 6173042,
-    "files": 56,
-    "sha256": "0ef51da34ca072d262ee55772465eab25506765a5e4b3deda318b537a52749ac"
+    "bytes": 7547647,
+    "files": 85,
+    "sha256": "998af783cbba190b49cde1d0334b94d192d5784a8a649a8ddd9c696387a77a0c"
   },
   "ChineseUnion1919": {
     "bytes": 6588985,
