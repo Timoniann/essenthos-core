@@ -168,10 +168,11 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
             var refused = new HashSet<long>();
             var added = new List<(long From, long To)>();
             var refuseStrays = AlignmentPipeline.BothMarkTheirNames(from.Language, to.Language);
+            var common = AlignmentPipeline.MarksNoNames(from.Language) ? CommonWords(source, target, links) : null;
 
             foreach (var address in source.Keys.Intersect(target.Keys).Order())
             {
-                var verse = Settle(source[address], target[address], links, reviewed, refuseStrays);
+                var verse = Settle(source[address], target[address], links, reviewed, refuseStrays, common);
                 whole.Add(verse);
                 if (chapters.Contains((address.Item1, address.Item2)))
                 {
@@ -212,12 +213,18 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
 
     /// <summary>One verse: what the names settle, measured against the links the pair already has.</summary>
     /// <param name="refuseStrays">Both texts mark their names, so <see cref="NameLists.Strays"/> is refused too.</param>
+    /// <param name="common">
+    /// For a source that marks no names, the forms its links read as common words
+    /// (<see cref="CommonWords"/>); the names it leaves unlinked are then paired as
+    /// <see cref="Unlinked"/> says. Null for a source that marks its names.
+    /// </param>
     internal static VerseNames Settle(
         List<AlignmentPipeline.Word> source,
         List<AlignmentPipeline.Word> target,
         StoredLinks links,
         IReadOnlySet<long> reviewed,
-        bool refuseStrays = false)
+        bool refuseStrays = false,
+        IReadOnlySet<string>? common = null)
     {
         var targetIndex = target.Select((word, at) => (word.Id, at)).ToDictionary(pair => pair.Id, pair => pair.at);
         var proposed = source
@@ -298,11 +305,163 @@ internal sealed class NameListPass(AppDbContext db, AlignmentPipeline aligner, I
             }
         }
 
+        if (common is not null)
+        {
+            foreach (var (s, t) in Unlinked(source, target, links, common))
+            {
+                verse.Named++;
+                verse.Added.Add((source[s].Id, target[t].Id));
+                after.Add((s, t, -verse.Added.Count));
+            }
+        }
+
         verse.CrossedBefore = Crossing(before);
         verse.CrossedAfter = Crossing(after);
 
         return verse;
     }
+
+    /// <summary>
+    /// The names of a source that marks none, paired where the aligner left them out. Ethiopic has
+    /// no capitals, and the aligner takes a Ge'ez word for a name only where three of its consonants
+    /// spell a name of the Greek, so a short name stays unlinked: Genesis 10:2's ማዴ and Μαδοί are
+    /// both MD.
+    ///
+    /// <para>
+    /// A word is paired here only where the pair has no link on it at all, and only with a name of
+    /// the verse no word of the source is linked to, whose consonants it spells exactly: two of them
+    /// at least, every one the same and in the same order. The pairs keep their order among
+    /// themselves and cross no link the verse already has. A form the links read elsewhere as a
+    /// common word is left out, because a short word is a name by its letters alone: እምነ "from" is
+    /// MN, as Haman is.
+    /// </para>
+    /// </summary>
+    /// <returns>Source position to target position.</returns>
+    internal static IReadOnlyList<(int Source, int Target)> Unlinked(
+        List<AlignmentPipeline.Word> source,
+        List<AlignmentPipeline.Word> target,
+        StoredLinks links,
+        IReadOnlySet<string> common)
+    {
+        var targetIndex = target.Select((word, at) => (word.Id, at)).ToDictionary(pair => pair.Id, pair => pair.at);
+        var anchors = new List<(int Source, int Target)>();
+        var unlinked = new List<int>();
+        for (var s = 0; s < source.Count; s++)
+        {
+            var reached = links.Guessed[source[s].Id].Select(guess => guess.To).Concat(links.Stated[source[s].Id])
+                .ToList();
+            if (reached.Count == 0)
+            {
+                unlinked.Add(s);
+            }
+
+            anchors.AddRange(reached.Where(targetIndex.ContainsKey).Select(to => (s, targetIndex[to])));
+        }
+
+        var reachedTargets = anchors.Select(anchor => anchor.Target).ToHashSet();
+        var names = Enumerable.Range(0, target.Count)
+            .Where(t => target[t].Name is { Length: >= LeastConsonants } && !reachedTargets.Contains(t))
+            .ToList();
+        var spelt = names.Select(t => target[t].Name!).ToHashSet(StringComparer.Ordinal);
+        var candidates = unlinked
+            .Where(s => source[s].Letters.Length >= LeastConsonants && spelt.Contains(source[s].Letters)
+                        && !common.Contains(source[s].Text))
+            .ToList();
+
+        return
+        [
+            .. InOrder(candidates, names, (s, t) => source[s].Letters == target[t].Name)
+                .Where(pair => !anchors.Any(anchor =>
+                    (anchor.Source - pair.Source) * (anchor.Target - pair.Target) < 0)),
+        ];
+    }
+
+    /// <summary>The fewest consonants a word of a source that marks no names is paired by.</summary>
+    private const int LeastConsonants = 2;
+
+    /// <summary>
+    /// The most pairs that keep their order on both sides, of the words given: the longest common
+    /// subsequence, with <paramref name="same"/> for equality.
+    /// </summary>
+    private static List<(int Source, int Target)> InOrder(
+        IReadOnlyList<int> source, IReadOnlyList<int> target, Func<int, int, bool> same)
+    {
+        var best = new int[source.Count + 1, target.Count + 1];
+        for (var i = 1; i <= source.Count; i++)
+        {
+            for (var j = 1; j <= target.Count; j++)
+            {
+                best[i, j] = same(source[i - 1], target[j - 1])
+                    ? best[i - 1, j - 1] + 1
+                    : Math.Max(best[i - 1, j], best[i, j - 1]);
+            }
+        }
+
+        var pairs = new List<(int, int)>();
+        for (int i = source.Count, j = target.Count; i > 0 && j > 0;)
+        {
+            if (same(source[i - 1], target[j - 1]) && best[i, j] == best[i - 1, j - 1] + 1)
+            {
+                pairs.Add((source[i - 1], target[j - 1]));
+                i--;
+                j--;
+            }
+            else if (best[i, j] == best[i - 1, j])
+            {
+                i--;
+            }
+            else
+            {
+                j--;
+            }
+        }
+
+        pairs.Reverse();
+        return pairs;
+    }
+
+    /// <summary>
+    /// The source's forms the pair's links put against a word that is no name at least
+    /// <see cref="CommonAtLeast"/> times and more often than against a name: እምነ "from" against
+    /// ἀπό and ἐκ 848 times, ሕዝብ "people" against λαός 558.
+    /// </summary>
+    internal static IReadOnlySet<string> CommonWords(
+        Dictionary<(int, int, int), List<AlignmentPipeline.Word>> source,
+        Dictionary<(int, int, int), List<AlignmentPipeline.Word>> target,
+        StoredLinks links)
+    {
+        var named = new Dictionary<long, bool>();
+        foreach (var word in target.Values.SelectMany(words => words))
+        {
+            named[word.Id] = word.Name is not null;
+        }
+
+        var counted = new Dictionary<string, (int Common, int Names)>(StringComparer.Ordinal);
+        foreach (var word in source.Values.SelectMany(words => words).DistinctBy(word => word.Id))
+        {
+            foreach (var to in links.Guessed[word.Id].Select(guess => guess.To).Concat(links.Stated[word.Id]))
+            {
+                if (!named.TryGetValue(to, out var isName))
+                {
+                    continue;
+                }
+
+                var (common, names) = counted.GetValueOrDefault(word.Text);
+                counted[word.Text] = isName ? (common, names + 1) : (common + 1, names);
+            }
+        }
+
+        return counted.Where(form => form.Value.Common >= CommonAtLeast && form.Value.Common > form.Value.Names)
+            .Select(form => form.Key)
+            .ToHashSet(StringComparer.Ordinal);
+    }
+
+    /// <summary>
+    /// How often a form must be read as a word that is no name before it is taken for one. Two or
+    /// three such readings are as often a name the aligner misplaced: Gera's ጌራ stands against
+    /// three Greek words that are not Γηρά.
+    /// </summary>
+    private const int CommonAtLeast = 5;
 
     private static int Crossing(List<(int Source, int Target, long Link)> pairs) =>
         pairs.Count(one => pairs.Any(other =>
