@@ -35,10 +35,11 @@ internal sealed record RecipeFile(string About, IReadOnlyList<RecipeStep> Steps)
 /// <para>
 /// **Replaying is idempotent.** Each step is run as its own Forge process, exactly as it was typed,
 /// unless the corpus already holds what it writes: a pair the aligner or a composition has reached,
-/// a pair the names have settled, a numbering already linked. <c>reload</c> is never run again: a
-/// load reads that text afresh anyway, and on a warm corpus it would delete the links the next steps
-/// are skipped for. EVIDENTIA's verdicts are not here; they have their own ledger, which the load
-/// replays after this.
+/// a pair the names have settled, a numbering already linked. A composition whose middle text gained
+/// links since it was drawn is replayed with <see cref="Refresh"/>, which redraws those verses alone.
+/// <c>reload</c> is never run again: a load reads that text afresh anyway, and on a warm corpus it
+/// would delete the links the next steps are skipped for. EVIDENTIA's verdicts are not here; they
+/// have their own ledger, which the load replays after this.
 /// </para>
 /// </summary>
 internal static class Recipe
@@ -50,6 +51,9 @@ internal static class Recipe
     /// An argument would be read by the verbs that take their witnesses from what follows them.
     /// </summary>
     public const string Replaying = "ESSENTHOS_RECIPE_STEP";
+
+    /// <summary>The compose flag that redraws only the verses whose middle text gained links since (<see cref="CompositionPipeline.Stale"/>).</summary>
+    public const string Refresh = "--refresh";
 
     private const string About =
         "The Forge runs that write links the load does not, in the order they last ran. Each verb records itself "
@@ -112,6 +116,31 @@ internal static class Recipe
         argument.StartsWith("--", StringComparison.Ordinal) ? argument : argument.ToUpperInvariant();
 
     /// <summary>
+    /// The step as a load replays it: as it was recorded, or, for a composition its middle text has
+    /// moved on from, with <see cref="Refresh"/>. A pair never composed is left as recorded, and drawn
+    /// whole.
+    /// </summary>
+    public static async Task<RecipeStep> Replayed(
+        NpgsqlConnection connection, RecipeStep step, CancellationToken cancellationToken)
+    {
+        if (step.Verb != "compose" || step.Arguments.Contains(Refresh))
+        {
+            return step;
+        }
+
+        var slugs = step.Arguments.Where(argument => !argument.StartsWith("--", StringComparison.Ordinal)).ToList();
+        if (slugs.Count < 3)
+        {
+            return step;
+        }
+
+        var stale = await CompositionPipeline.Stale(
+            connection, slugs[0], slugs[1].Split(',', StringSplitOptions.RemoveEmptyEntries), slugs[2],
+            step.Arguments.Contains("--daughter"), cancellationToken);
+        return stale.Count > 0 ? step with { Arguments = [.. step.Arguments, Refresh] } : step;
+    }
+
+    /// <summary>
     /// Why the corpus already holds what the step writes, or null when it has to run. Asked of the
     /// database the step would write to, before its process is started.
     /// </summary>
@@ -126,6 +155,9 @@ internal static class Recipe
         {
             case "reload":
                 return "the load reads the text afresh itself";
+
+            case "compose" when step.Arguments.Contains(Refresh):
+                return null;
 
             case "align" when slugs.Count >= 2:
             case "compose" when slugs.Count >= 3:
@@ -172,6 +204,22 @@ internal static class Recipe
                 }
 
                 return "CrossWire's Strong numberings are already linked";
+
+            case "byzantine-apparatus":
+                return await Exists(connection, BySource, null, null, ByzantineApparatusLinkLoader.Credit, cancellationToken)
+                    ? "Robinson's apparatus is already linked"
+                    : null;
+
+            case "crosswire-positions":
+                foreach (var module in CrossWirePositionLinkLoader.Named(step.Arguments))
+                {
+                    if (!await Exists(connection, BySource, null, null, module.Credit, cancellationToken))
+                    {
+                        return null;
+                    }
+                }
+
+                return "the Received Text positions are already linked";
 
             case "ohb-cuv":
                 return await Exists(connection, BySource, null, null, OpenHebrewCuvLinkLoader.Credit, cancellationToken)

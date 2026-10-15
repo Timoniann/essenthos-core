@@ -98,7 +98,8 @@ internal static partial class ForgeVerbs
             composePrecision,
             args.Contains("--unmeasured"),
             args.Contains("--daughter"),
-            Agreeing(args)));
+            Agreeing(args),
+            args.Contains(Recipe.Refresh)));
         await forge.Replay(composeScope, (from, to) => Between(from, to, Identifier(composeFrom), Identifier(composeTo)));
         await forge.Tidy();
         return 0;
@@ -359,6 +360,39 @@ internal static partial class ForgeVerbs
         forge.Logger.LogInformation(
             "{Outcome}", await crosswireScope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
         await crosswireScope.ServiceProvider.GetRequiredService<AnnotationCarrier>().Carry();
+        await forge.Tidy();
+        return 0;
+    }
+
+    /// <summary>
+    /// Robinson's apparatus, linked where Nestle 1904 or Scrivener prints the reading a note states.
+    /// </summary>
+    private static async Task<int> ByzantineApparatusVerb(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        await scope.ServiceProvider.GetRequiredService<ByzantineApparatusLinkLoader>()
+            .Load(Path.Combine(forge.Resources, "Byzantine"));
+
+        forge.Logger.LogInformation("{Outcome}", await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+        forge.Logger.LogInformation(
+            "{Outcome}", await scope.ServiceProvider.GetRequiredService<AnnotationCarrier>().CarryNewLinks());
+        await forge.Tidy();
+        return 0;
+    }
+
+    /// <summary>
+    /// The Received Text positions CrossWire's RLT states on its New Testament, linked where Scrivener or
+    /// Stephanus holds the named Greek word at the place. The modules to run may follow the verb.
+    /// </summary>
+    private static async Task<int> CrossWirePositions(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        await scope.ServiceProvider.GetRequiredService<CrossWirePositionLinkLoader>()
+            .Load(forge.Resources, CrossWirePositionLinkLoader.Named(args[1..]));
+
+        forge.Logger.LogInformation("{Outcome}", await scope.ServiceProvider.GetRequiredService<VerseLinkLoader>().Load());
+        forge.Logger.LogInformation(
+            "{Outcome}", await scope.ServiceProvider.GetRequiredService<AnnotationCarrier>().CarryNewLinks());
         await forge.Tidy();
         return 0;
     }

@@ -1,4 +1,4 @@
-using Essenthos.Core.Corpus;
+﻿using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -45,6 +45,35 @@ internal record EntitySummaryResponse(
 
     /// <summary>What sort of object or observance it is; null on every other kind.</summary>
     public string? Subtype { get; init; }
+
+    /// <summary>
+    /// In a search, the name the row was found by where its heading does not show it — the
+    /// <em>Barnabas</em> of a row headed <em>Joseph</em>; null where the heading holds what was typed,
+    /// and outside a search.
+    /// </summary>
+    public EntityMatchResponse? Matched { get; init; }
+
+    /// <summary>
+    /// The name a renamed person's record is filed under, in the language asked for where the corpus
+    /// holds it, for a client to say they are also called that: <em>Савл</em> beside <em>Павло</em>.
+    /// Null for everyone the text calls by one name most and the record is filed under.
+    /// </summary>
+    public string? AlsoCalled { get; init; }
+}
+
+/// <summary>The name or title a search found an entity by.</summary>
+/// <param name="Name">The name as the record or the text has it: <em>Barnabas</em>, <em>Варнава</em>, <em>Son of David</em>.</param>
+/// <param name="Kind">One of <see cref="MatchKinds"/>: another name of the same one, or a title.</param>
+internal sealed record EntityMatchResponse(string Name, string Kind);
+
+/// <summary>What a search can have found an entity by besides the name it is headed with.</summary>
+internal static class MatchKinds
+{
+    /// <summary>Another name the same one is called by.</summary>
+    public const string Name = "name";
+
+    /// <summary>A title or description of it, which a name of somebody else may stand inside.</summary>
+    public const string Title = "title";
 }
 
 internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items);
@@ -238,6 +267,13 @@ internal record EntityResponse(
     public string? LocalName { get; init; }
 
     /// <summary>
+    /// The name a renamed person's record is filed under, in the language asked for where the corpus
+    /// holds it: the page is headed <em>Павло</em> and says he is also called <em>Савл</em>. Null for
+    /// everyone else.
+    /// </summary>
+    public string? AlsoCalled { get; init; }
+
+    /// <summary>
     /// True where the name is the source's alone: a language other than English was asked for, the
     /// corpus holds no name for the record in it, and no verse stands behind the record. A client
     /// shows the English headword, marked as the source's.
@@ -353,6 +389,13 @@ internal record PlacePointResponse(
     /// the English headword, marked as the source's.
     /// </summary>
     public bool NameFromSource { get; init; }
+
+    /// <summary>
+    /// A few words in the reader's language telling this place from another of the same name — the
+    /// Antioch in Pisidia — for a map to add to its label where both are in sight. Null on a place
+    /// whose name no other shares, or where nothing is said of it in that language.
+    /// </summary>
+    public string? Distinguisher { get; init; }
 }
 
 /// <param name="Datasets">Whose points these are, as declared dataset ids, for the credit a map owes.</param>

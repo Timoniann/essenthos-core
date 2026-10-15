@@ -640,8 +640,10 @@ internal static class Annotating
     /// <para>
     /// A person's name is not carried onto a word the text writes as somebody else's name
     /// (<see cref="ForeignNames"/>): a link that pairs <em>Христа</em> with <em>Σατανᾶν</em> is
-    /// wrong, and the name would be wrong with it. It is asked before unanimity, so the refused
-    /// answer neither stands nor vetoes another.
+    /// wrong, and the name would be wrong with it. Nor is any name carried across an aligner's link
+    /// onto a word that spells another name of the seed's verse and not the seed's
+    /// (<see cref="ShiftedNames"/>). Both are asked before unanimity, so the refused answer neither
+    /// stands nor vetoes another.
     /// </para>
     ///
     /// <para>
@@ -709,6 +711,8 @@ internal static class Annotating
               AND NOT EXISTS (SELECT 1 FROM foreign_refused refused
                               WHERE refused.word_id = j.word_id AND refused.entity_id = j.entity_id
                                 AND refused.through = j.through)
+              AND NOT EXISTS (SELECT 1 FROM shifted_name shifted
+                              WHERE shifted.word_id = j.word_id AND shifted.through = j.through)
             WINDOW word AS (PARTITION BY j.word_id)
         ),
         strongest AS (
@@ -1064,6 +1068,7 @@ internal static class Annotating
     {
         await Run(connection, transaction, ForeignNames.Prepare, cancellationToken);
         await Run(connection, transaction, CommonWords, cancellationToken);
+        await ShiftedNames.Prepare(connection, transaction, cancellationToken);
         await Run(connection, transaction, Carry, cancellationToken, ("faint", Faint), ("firm", Firm));
     }
 

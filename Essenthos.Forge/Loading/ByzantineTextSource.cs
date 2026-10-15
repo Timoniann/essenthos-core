@@ -38,7 +38,7 @@ internal static class ByzantineTextSource
     ];
 
     /// <summary>Matthew, and therefore the offset from this edition's order to the shared canon.</summary>
-    private const int FirstCanonicalOrdinal = 40;
+    public const int FirstCanonicalOrdinal = 40;
 
     public static IReadOnlyList<string> Books => Canon;
 

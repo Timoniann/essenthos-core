@@ -268,20 +268,34 @@ internal static partial class EncyclopediaEndpoints
         string? language) => sort switch
     {
         "verses" => EntityNames.Alphabetical(
-            entities.OrderByDescending(l => l.Entity.Verses
+            MostFirst(db, entities, q, l => l.Entity.Verses
                 .AsQueryable().Where(ShownVerses.IsShown)
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count()),
             language),
         "mentions" => EntityNames.Alphabetical(
-            entities.OrderByDescending(l => l.Entity.Verses.AsQueryable().Count(ShownVerses.IsShown)),
+            MostFirst(db, entities, q, l => l.Entity.Verses.AsQueryable().Count(ShownVerses.IsShown)),
             language),
         "name" => EntityNames.Alphabetical(entities, language),
         _ => q is { Length: > 0 }
             ? EntityNames.ByRelevance(db, entities, q, language)
             : EntityNames.Alphabetical(entities, language),
     };
+
+    /// <summary>
+    /// The largest count first — inside the bands of how well each row answers what was typed, where
+    /// the index was searched. A count alone would head a search for <em>Abraham</em> with the God of
+    /// Abraham, who is named far more often and only carries the name in a title.
+    /// </summary>
+    private static IOrderedQueryable<LocalisedEntity> MostFirst(
+        AppDbContext db,
+        IQueryable<LocalisedEntity> entities,
+        string? q,
+        Expression<Func<LocalisedEntity, int>> count) =>
+        q is { Length: > 0 }
+            ? EntityNames.Banded(db, entities, q).ThenByDescending(count)
+            : entities.OrderByDescending(count);
 
     /// <summary>The orders <c>sort</c> accepts. Anything else is refused rather than ignored.</summary>
     private static readonly string[] Sorts = ["name", "verses", "mentions"];

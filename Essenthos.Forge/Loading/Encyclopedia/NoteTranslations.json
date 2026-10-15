@@ -1211,14 +1211,14 @@
  {
   "file": "Peoples.json",
   "slug": "judahites",
-  "sha256": "fabf1832d9047be516e53fcfccdd44284cad6b0344fc8feb85bab46ddd9a78fc",
-  "english": "Strong's entry runs the tribe and the post-exilic Jews together — a Jehudite, i.e. Judaite or Jew, or descendant of Jehudah — and this corpus does not separate them either, because nothing in the Hebrew word does. What the record refuses is the other conflation: the kingdom and the territory of Judah are a polity and a land, not a people, and an occurrence naming those is left unannotated rather than folded in here.",
-  "ukr": "Стаття Стронга об’єднує плем’я та юдеїв після вигнання — єгудит, тобто юдеянин або юдей, чи нащадок Юди — і цей корпус також їх не розрізняє, бо в самому єврейському слові немає нічого, що їх розрізняло б. Натомість цей запис відкидає інше змішування: царство й територія Юди — це політичне утворення та земля, а не народ, і згадка, що називає їх, залишається без анотації, а не долучається сюди.",
-  "deu": "Der Eintrag bei Strong fasst den Stamm und die Juden nach dem Exil zusammen — ein Jehuditer, d. h. Judäer oder Jude, oder Nachkomme Judas —, und auch dieses Korpus unterscheidet sie nicht, weil das hebräische Wort selbst keine solche Unterscheidung macht. Dieser Datensatz lehnt jedoch eine andere Vermischung ab: Das Königreich und das Gebiet von Juda sind ein politisches Gemeinwesen und ein Land, kein Volk, und eine Belegstelle, die diese nennt, bleibt ohne Annotation, statt hier eingeordnet zu werden.",
-  "spa": "La entrada de Strong agrupa a la tribu y a los judíos posteriores al exilio —un jehudita, es decir, judaíta o judío, o descendiente de Judá—, y este corpus tampoco los distingue, porque la palabra hebrea en sí no establece ninguna distinción. Lo que este registro rechaza es la otra confusión: el reino y el territorio de Judá son una entidad política y una tierra, no un pueblo, y una aparición que los nombra queda sin anotar en lugar de incorporarse aquí.",
-  "model": "gpt-6.1-sol",
-  "effort": "medium",
-  "at": "2026-10-07T17:11:14+00:00"
+  "sha256": "dbe0965a4a24d29053e44aa1bf2d8618f729cecc50fb02a5f95b39424015b985",
+  "english": "Strong's entry runs the tribe and the post-exilic Jews together — a Jehudite, i.e. Judaite or Jew, or descendant of Jehudah — and nothing in the Hebrew word separates them. The kingdom and the territory of Judah are a polity and a land, not a people.",
+  "ukr": "Стаття Стронга об’єднує плем’я та юдеїв після вигнання — єгудит, тобто юдеянин або юдей, чи нащадок Юди, — і в самому єврейському слові немає нічого, що їх розрізняло б. Царство й територія Юди — це політичне утворення та земля, а не народ.",
+  "deu": "Der Eintrag bei Strong fasst den Stamm und die Juden nach dem Exil zusammen — ein Jehuditer, d. h. Judäer oder Jude, oder Nachkomme Judas —, und das hebräische Wort selbst unterscheidet sie nicht. Das Königreich und das Gebiet von Juda sind ein politisches Gemeinwesen und ein Land, kein Volk.",
+  "spa": "La entrada de Strong agrupa a la tribu y a los judíos posteriores al exilio —un jehudita, es decir, judaíta o judío, o descendiente de Judá—, y la palabra hebrea en sí no los distingue. El reino y el territorio de Judá son una entidad política y una tierra, no un pueblo.",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "at": "2026-10-14T20:30:00+00:00"
  },
  {
   "file": "Peoples.json",
@@ -1957,14 +1957,14 @@
  {
   "file": "TitleRecords.json",
   "slug": "caesar-title",
-  "sha256": "1a2fc4faebec94c2f1cb1fc9ca6f145fd3d7cbc33690b4e9f25a7cad944609a9",
-  "english": "Caesar was the family name of Julius Caesar, taken by Augustus as his heir and borne after him by every emperor, until it was the title of the office. The Gospels and Acts use it both with a name, Caesar Augustus (LUK 2:1), Tiberius Caesar (LUK 3:1) and Claudius Caesar (ACT 11:28, as the King James and the Textus Receptus read; the critical text has Claudius alone), and alone for whoever reigned: the Caesar to whom tribute is given (MAT 22:17-21) is Tiberius, and the Caesar to whom Paul appeals (ACT 25:8-12) is Nero, whom the text never names. Both of those are kept as the records the dataset holds for them, and joined here.",
-  "ukr": "Цезар було родовим ім’ям Юлія Цезаря, яке Август прийняв як його спадкоємець і яке після нього носив кожен імператор, аж поки воно стало назвою посади. Євангелія та Дії вживають його як разом з ім’ям — кесар Август (LUK 2:1), Тиверій кесар (LUK 3:1) і Клавдій кесар (ACT 11:28, як читаємо в Біблії короля Якова та Прийнятому тексті; у критичному тексті стоїть лише Клавдій), — так і окремо на позначення того, хто царював: кесар, якому платять податок (MAT 22:17-21), — це Тиверій, а кесар, до якого апелює Павло (ACT 25:8-12), — це Нерон, якого текст ніде не називає на ім’я. Обидва збережені як окремі записи, які набір даних містить для них, і об’єднані тут.",
-  "deu": "Cäsar war der Familienname von Julius Cäsar, den Augustus als dessen Erbe annahm und den nach ihm jeder Kaiser trug, bis er zur Amtsbezeichnung wurde. Die Evangelien und die Apostelgeschichte verwenden ihn sowohl zusammen mit einem Namen — Kaiser Augustus (LUK 2:1), Kaiser Tiberius (LUK 3:1) und Kaiser Claudius (ACT 11:28, wie es in der König-Jakob-Bibel und im überlieferten Text steht; der kritische Text nennt nur Claudius) — als auch allein für den jeweils regierenden Herrscher: Der Kaiser, dem die Steuer entrichtet wird (MAT 22:17-21), ist Tiberius, und der Kaiser, an den Paulus appelliert (ACT 25:8-12), ist Nero, den der Text nirgends beim Namen nennt. Beide bleiben als die jeweiligen Datensätze erhalten, die die Datensammlung für sie enthält, und werden hier zusammengeführt.",
-  "spa": "César era el nombre de familia de Julio César, que Augusto adoptó como su heredero y que después de él llevó cada emperador, hasta convertirse en el título del cargo. Los Evangelios y los Hechos lo usan tanto junto a un nombre, César Augusto (LUK 2:1), Tiberio César (LUK 3:1) y Claudio César (ACT 11:28, como se lee en la Biblia del rey Jacobo y en el Texto Recibido; el texto crítico tiene solo Claudio), como por sí solo para designar a quien reinaba: el César a quien se paga tributo (MAT 22:17-21) es Tiberio, y el César a quien apela Pablo (ACT 25:8-12) es Nerón, a quien el texto nunca nombra. Ambos se conservan como los respectivos registros que el conjunto de datos contiene para ellos y se reúnen aquí.",
-  "model": "gpt-6.1-sol",
-  "effort": "medium",
-  "at": "2026-10-07T17:08:57+00:00"
+  "sha256": "9c39f75bc7d48a60f581b2b9135255d3aee0b94622cc1c48841a42968c4290c3",
+  "english": "Caesar was the family name of Julius Caesar, taken by Augustus as his heir and borne after him by every emperor, until it was the title of the office. The Gospels and Acts use it both with a name, Caesar Augustus (LUK 2:1), Tiberius Caesar (LUK 3:1) and Claudius Caesar (ACT 11:28, as the King James and the Textus Receptus read; the critical text has Claudius alone), and alone for whoever reigned: the Caesar to whom tribute is given (MAT 22:17-21) is Tiberius, and the Caesar to whom Paul appeals (ACT 25:8-12) is Nero, whom the text never names.",
+  "ukr": "Цезар було родовим ім’ям Юлія Цезаря, яке Август прийняв як його спадкоємець і яке після нього носив кожен імператор, аж поки воно стало назвою посади. Євангелія та Дії вживають його як разом з ім’ям — кесар Август (LUK 2:1), Тиверій кесар (LUK 3:1) і Клавдій кесар (ACT 11:28, як читаємо в Біблії короля Якова та Прийнятому тексті; у критичному тексті стоїть лише Клавдій), — так і окремо на позначення того, хто царював: кесар, якому платять податок (MAT 22:17-21), — це Тиверій, а кесар, до якого апелює Павло (ACT 25:8-12), — це Нерон, якого текст ніде не називає на ім’я.",
+  "deu": "Cäsar war der Familienname von Julius Cäsar, den Augustus als dessen Erbe annahm und den nach ihm jeder Kaiser trug, bis er zur Amtsbezeichnung wurde. Die Evangelien und die Apostelgeschichte verwenden ihn sowohl zusammen mit einem Namen — Kaiser Augustus (LUK 2:1), Kaiser Tiberius (LUK 3:1) und Kaiser Claudius (ACT 11:28, wie es in der König-Jakob-Bibel und im überlieferten Text steht; der kritische Text nennt nur Claudius) — als auch allein für den jeweils regierenden Herrscher: Der Kaiser, dem die Steuer entrichtet wird (MAT 22:17-21), ist Tiberius, und der Kaiser, an den Paulus appelliert (ACT 25:8-12), ist Nero, den der Text nirgends beim Namen nennt.",
+  "spa": "César era el nombre de familia de Julio César, que Augusto adoptó como su heredero y que después de él llevó cada emperador, hasta convertirse en el título del cargo. Los Evangelios y los Hechos lo usan tanto junto a un nombre, César Augusto (LUK 2:1), Tiberio César (LUK 3:1) y Claudio César (ACT 11:28, como se lee en la Biblia del rey Jacobo y en el Texto Recibido; el texto crítico tiene solo Claudio), como por sí solo para designar a quien reinaba: el César a quien se paga tributo (MAT 22:17-21) es Tiberio, y el César a quien apela Pablo (ACT 25:8-12) es Nerón, a quien el texto nunca nombra.",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "at": "2026-10-14T20:30:00+00:00"
  },
  {
   "file": "TitleRecords.json",
@@ -2065,14 +2065,14 @@
  {
   "file": "TitleRecords.json",
   "slug": "rabshakeh",
-  "sha256": "4021869e57628ca8fb952de156e96bce8212d5353625c0549d6e2baa753590b9",
-  "english": "Akkadian rab shaqe, the chief cupbearer, by then one of the highest officers of the Assyrian court. The officer who speaks to the people on the wall in the Hebrew tongue (2KI 18:17-37; ISA 36) is known only by his office, and the dataset held the office as his name.",
-  "ukr": "Аккадське раб шаке — головний чашник, на той час один із найвищих урядовців ассирійського двору. Урядовець, який говорить єврейською мовою до людей на мурі (2KI 18:17-37; ISA 36), відомий лише за своєю посадою, і в наборі даних назву цієї посади було збережено як його ім’я.",
-  "deu": "Akkadisch rab šāqē, der oberste Mundschenk, zu jener Zeit einer der höchsten Beamten am assyrischen Hof. Der Beamte, der in hebräischer Sprache zu den Menschen auf der Mauer spricht (2KI 18:17-37; ISA 36), ist nur durch sein Amt bekannt, und im Datensatz wurde die Amtsbezeichnung als sein Name geführt.",
-  "spa": "Acadio rab šāqē, el copero mayor, para entonces uno de los más altos funcionarios de la corte asiria. El funcionario que habla en lengua hebrea al pueblo que está sobre el muro (2KI 18:17-37; ISA 36) es conocido únicamente por su cargo, y en el conjunto de datos se registró el título del cargo como su nombre.",
-  "model": "gpt-6.1-sol",
-  "effort": "medium",
-  "at": "2026-10-07T17:10:02+00:00"
+  "sha256": "b2439a8b6b55b6034f5aca6469c51878c0c9ce803cafffc49bd239ff149dcaef",
+  "english": "Akkadian rab shaqe, the chief cupbearer, by then one of the highest officers of the Assyrian court. The officer who speaks to the people on the wall in the Hebrew tongue (2KI 18:17-37; ISA 36) is known only by his office, and the text calls him by it as by a name.",
+  "ukr": "Аккадське раб шаке — головний чашник, на той час один із найвищих урядовців ассирійського двору. Урядовець, який говорить єврейською мовою до людей на мурі (2KI 18:17-37; ISA 36), відомий лише за своєю посадою, і текст називає його нею, як ім’ям.",
+  "deu": "Akkadisch rab šāqē, der oberste Mundschenk, zu jener Zeit einer der höchsten Beamten am assyrischen Hof. Der Beamte, der in hebräischer Sprache zu den Menschen auf der Mauer spricht (2KI 18:17-37; ISA 36), ist nur durch sein Amt bekannt, und der Text nennt ihn danach wie mit einem Namen.",
+  "spa": "Acadio rab šāqē, el copero mayor, para entonces uno de los más altos funcionarios de la corte asiria. El funcionario que habla en lengua hebrea al pueblo que está sobre el muro (2KI 18:17-37; ISA 36) es conocido únicamente por su cargo, y el texto lo llama por él como por un nombre.",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "at": "2026-10-14T20:30:00+00:00"
  },
  {
   "file": "TitleRecords.json",

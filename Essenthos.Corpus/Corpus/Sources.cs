@@ -120,6 +120,20 @@ internal static class Sources
         "the King James Strong numbering of the Revised Literal Translation (Bible Foundation and KJV2003), read from CrossWire's RLT";
 
     /// <summary>
+    /// What every link drawn from Robinson's apparatus carries: the places the Byzantine manuscripts
+    /// divide, and where Nestle-Aland and the Editio Critica Maior read otherwise.
+    /// </summary>
+    public const string ByzantineApparatusCredit =
+        "Robinson's apparatus to the Byzantine Textform 2018 (byztxt/byzantine-majority-text, source/CCAT)";
+
+    /// <summary>
+    /// What every link drawn from the Received Text positions on the Revised Literal Translation's
+    /// New Testament carries.
+    /// </summary>
+    public const string RevisedLiteralPositionCredit =
+        "the places of the Greek words in the KJV2003 project's Received Text, stated on the Revised Literal Translation's New Testament in CrossWire's RLT";
+
+    /// <summary>
     /// How a translated lexicon row begins. The English of the lexicon is public domain and the
     /// rendering into a reader's language is this project's, so the row names the model, the prompt
     /// version and the day, and the English stays beside it.

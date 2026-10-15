@@ -137,6 +137,29 @@ internal static partial class DescriptorPhrasings
 
     public static IEnumerable<string> Languages => ByLanguage.Keys;
 
+    /// <summary>
+    /// A half-sibling said by the parent the two share, in a language that has a word for each:
+    /// Ukrainian <em>єдинокровний брат</em> by the father, <em>єдиноутробний брат</em> by the mother.
+    /// Null where the language says it one way whichever parent it is — <em>Halbbruder</em>,
+    /// <em>medio hermano</em> — or the relation is not a half-sibling's, and the table's own phrasing
+    /// stands; it is the one for a pair whose shared parent is not known.
+    /// </summary>
+    /// <param name="parent">One of <see cref="SharedParents"/>'s <c>Father</c> or <c>Mother</c>.</param>
+    public static Phrasing? ByTheSharedParent(string? language, string relation, string? parent) =>
+        language is not null && parent is not null
+                             && HalfSiblings.TryGetValue((language, relation, parent), out var phrasing)
+            ? phrasing
+            : null;
+
+    private static readonly IReadOnlyDictionary<(string Language, string Relation, string Parent), Phrasing> HalfSiblings =
+        new Dictionary<(string, string, string), Phrasing>
+        {
+            [(Ukrainian, DescriptorRelations.HalfBrotherOf, SharedParents.Father)] = new("єдинокровний брат ", Genitive),
+            [(Ukrainian, DescriptorRelations.HalfSisterOf, SharedParents.Father)] = new("єдинокровна сестра ", Genitive),
+            [(Ukrainian, DescriptorRelations.HalfBrotherOf, SharedParents.Mother)] = new("єдиноутробний брат ", Genitive),
+            [(Ukrainian, DescriptorRelations.HalfSisterOf, SharedParents.Mother)] = new("єдиноутробна сестра ", Genitive),
+        };
+
 
     /// <summary>
     /// English, which needs no form but the name as it stands — and, because of that, no possessive
@@ -238,8 +261,8 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.SisterOf] = new("сестра ", Genitive),
             [DescriptorRelations.HusbandOf] = new("чоловік ", Genitive),
             [DescriptorRelations.WifeOf] = new("дружина ", Genitive),
-            [DescriptorRelations.HalfBrotherOf] = new("зведений брат ", Genitive),
-            [DescriptorRelations.HalfSisterOf] = new("зведена сестра ", Genitive),
+            [DescriptorRelations.HalfBrotherOf] = new("неповнорідний брат ", Genitive),
+            [DescriptorRelations.HalfSisterOf] = new("неповнорідна сестра ", Genitive),
             [DescriptorRelations.GrandfatherOf] = new("дід ", Genitive),
             [DescriptorRelations.GrandmotherOf] = new("бабуся ", Genitive),
             [DescriptorRelations.GrandsonOf] = new("онук ", Genitive),

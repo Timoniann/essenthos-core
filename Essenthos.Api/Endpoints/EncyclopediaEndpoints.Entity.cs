@@ -134,9 +134,9 @@ internal static partial class EncyclopediaEndpoints
             var related = await Relationships.Of(db, entity.Id, language, cancellationToken);
             var own = await Relationships.Forms(db, [entity.Id], language, cancellationToken);
 
-            var events = await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
+            var events = await Aged(db, await InOrder(db.Events.Where(e => e.EntityId == entity.Id))
                 .Select(Rows)
-                .ToListAsync(cancellationToken);
+                .ToListAsync(cancellationToken), cancellationToken);
             var placesNamed = await PlacesNamed(db, events.Select(row => EventLocation.Of(row.Event)), cancellationToken);
 
             // Who says the text names this entity where it does — which is not always whoever
@@ -257,13 +257,14 @@ internal static partial class EncyclopediaEndpoints
             ];
 
             var localNames = await EntityNames.Of(db, [entity.Id], language, cancellationToken);
+            var renamed = (await RenamedHeadings.Of(db, [entity.Id], language, cancellationToken)).GetValueOrDefault(entity.Id);
             var glosses = await EntityNameTranslations.Of(
                 db, names.SelectMany(n => new[] { n.Label, n.Meaning }), words, cancellationToken);
 
             return Results.Ok(new EntityResponse(
                 entity.Slug,
                 EnumSpelling.Of(entity.Kind),
-                entity.Name,
+                renamed?.Name ?? entity.Name,
                 mine is null ? entity.Distinguisher : mine.Line,
                 sex,
                 mine is null ? entity.Tribe : mine.Tribe,
@@ -310,7 +311,8 @@ internal static partial class EncyclopediaEndpoints
                 Location = entity.Location,
                 AnotherNameFor = await AnotherNameFor(db, entity.AnotherNameForEntityId, language, cancellationToken),
                 Wikipedia = await WikipediaLinks.Of(db, entity.Id, words, cancellationToken),
-                LocalName = localNames.GetValueOrDefault(entity.Id),
+                LocalName = renamed is null ? localNames.GetValueOrDefault(entity.Id) : renamed.LocalName,
+                AlsoCalled = renamed?.AlsoCalled,
                 NameFromSource = (await EntityNames.NamedOnlyBySource(
                     db, [entity.Id], language, localNames, cancellationToken)).Contains(entity.Id),
                 LocalDistinguisher = mine is null || mine.Line is not null

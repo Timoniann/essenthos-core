@@ -55,8 +55,9 @@ internal static partial class EncyclopediaEndpoints
                 .ToListAsync(cancellationToken);
 
             var places = await PlacesNamed(db, page.Select(row => EventLocation.Of(row.Event)), cancellationToken);
+            var aged = await Aged(db, page, cancellationToken);
 
-            return Results.Ok(new EventListResponse(total, [.. page.Select(row => Event(row, places))]));
+            return Results.Ok(new EventListResponse(total, [.. aged.Select(row => Event(row, places))]));
         });
 
         // One event, with everything the trimmed timeline payload leaves out.
@@ -76,7 +77,7 @@ internal static partial class EncyclopediaEndpoints
             }
 
             var places = await PlacesNamed(db, [EventLocation.Of(row.Event)], cancellationToken);
-            return Results.Ok(Event(row, places));
+            return Results.Ok(Event((await Aged(db, [row], cancellationToken))[0], places));
         });
     }
 
@@ -188,6 +189,94 @@ internal static partial class EncyclopediaEndpoints
                     Stated = d.StatedYear != null,
                 })
                 .ToList());
+
+    /// <summary>The reckoning whose years the source's own age at the event belongs to.</summary>
+    private const string BibleDataReckoning = "bibledata";
+
+    private const string Birth = "Birth";
+
+    /// <summary>
+    /// The rows with each date's age at the event, counted in that date's own reckoning.
+    ///
+    /// <para>
+    /// The source gives one age per event and it is BibleData's: Abram leaves Ur at 70 in its year
+    /// 2080 and Haran at 75 in 2085. Ussher puts both departures in his year 2083, so his years
+    /// beside BibleData's ages had Abram 70 and 75 in one year. Each reckoning's age is therefore its
+    /// own year of the event less its own year of the person's birth, and BibleData keeps the age its
+    /// row states. One query for the births of every person on the page.
+    /// </para>
+    /// </summary>
+    internal static async Task<List<EventRow>> Aged(
+        AppDbContext db,
+        IReadOnlyList<EventRow> rows,
+        CancellationToken cancellationToken)
+    {
+        var people = rows
+            .Where(row => row.Event.AgeAtEvent is not null)
+            .Select(row => row.Event.EntityId)
+            .OfType<int>()
+            .Distinct()
+            .ToList();
+        if (people.Count == 0)
+        {
+            return [.. rows];
+        }
+
+        var births = (await db.EventDates
+                .Where(d => d.Event!.Kind == Birth && d.Event.EntityId != null && people.Contains(d.Event.EntityId.Value))
+                .Select(d => new
+                {
+                    Person = d.Event!.EntityId!.Value,
+                    d.Chronology!.Slug,
+                    d.Year,
+                    d.StatedYear,
+                    d.Chronology.LastYearBeforeTheCommonEra,
+                })
+                .ToListAsync(cancellationToken))
+            .GroupBy(b => (b.Person, b.Slug))
+            .Where(g => g.Count() == 1)
+            .ToDictionary(g => g.Key, g => g.Single());
+
+        return
+        [
+            .. rows.Select(row => row.Event.AgeAtEvent is null || row.Event.EntityId is not { } person
+                ? row
+                : row with
+                {
+                    Dates =
+                    [
+                        .. row.Dates.Select(date => date with
+                        {
+                            AgeAtEvent = date.Chronology == BibleDataReckoning
+                                ? row.Event.AgeAtEvent
+                                : births.TryGetValue((person, date.Chronology), out var birth)
+                                    ? Age(Astronomical(date.Year, date.BceYear, date.Era, birth.LastYearBeforeTheCommonEra),
+                                        Astronomical(birth.Year, birth.StatedYear, birth.LastYearBeforeTheCommonEra))
+                                    : null,
+                        }),
+                    ],
+                }),
+        ];
+    }
+
+    /// <summary>The years between, or null where either is missing or the event would come before the birth.</summary>
+    private static int? Age(int? at, int? born) =>
+        at is { } year && born is { } birth && year >= birth ? year - birth : null;
+
+    /// <summary>
+    /// A date as one count of years: the reckoning's year from creation where it states one, and
+    /// otherwise its year of the common era moved onto that count, so a paragraph Ussher dates only
+    /// BC is still counted against a birth he dates in anno mundi.
+    /// </summary>
+    private static int? Astronomical(int? year, int? bceYear, string era, int lastBeforeTheCommonEra) =>
+        year ?? (bceYear is not { } stated ? null
+            : era == CommonEra ? lastBeforeTheCommonEra + stated
+            : lastBeforeTheCommonEra - stated + 1);
+
+    private static int? Astronomical(int? year, int? statedYear, int lastBeforeTheCommonEra) =>
+        year ?? (statedYear is not { } stated ? null
+            : stated > 0 ? lastBeforeTheCommonEra + stated
+            : lastBeforeTheCommonEra + stated + 1);
 
     internal static EventResponse Event(EventRow row, IReadOnlyDictionary<EventLocation, string> places) =>
         Event(row.Event, row.EntitySlug, row.EntityName, row.DefaultChronology, row.Dates, places);

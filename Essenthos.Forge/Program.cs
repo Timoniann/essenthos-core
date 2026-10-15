@@ -131,6 +131,8 @@ builder.Services.AddScoped<SynodalStrongLinkLoader>();
 builder.Services.AddScoped<UnionStrongLinkLoader>();
 builder.Services.AddScoped<ReinaValeraStrongLinkLoader>();
 builder.Services.AddScoped<CrossWireStrongLinkLoader>();
+builder.Services.AddScoped<CrossWirePositionLinkLoader>();
+builder.Services.AddScoped<ByzantineApparatusLinkLoader>();
 builder.Services.AddScoped<OpenHebrewCuvLinkLoader>();
 builder.Services.AddScoped<ObjectMarkerRepair>();
 builder.Services.AddScoped<RenumberedWitnessRepair>();
