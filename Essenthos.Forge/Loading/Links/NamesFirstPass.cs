@@ -30,8 +30,9 @@ internal sealed record NamePolicy(NameSignal Alone, bool Even, bool Repeated = t
     public NamePolicy For(string? language) => this with { Repeated = Repeated && !VerbLast.Contains(language ?? string.Empty) };
 
     /// <summary>
-    /// As measured on the keys (TSK-1086): two signals; whom the verses say a word names alone, or its
-    /// letters alone where they are clear; never an entity the two sides name a different number of times.
+    /// As measured on the Berean's and the Reina-Valera's keys and on every text's stated links: two
+    /// signals; whom the verses say a word names alone, or its letters alone where they are clear; never
+    /// an entity the two sides name a different number of times.
     /// </summary>
     public static readonly NamePolicy Default = new(NameSignal.Entity | NameSignal.Letters, Even: true);
 
