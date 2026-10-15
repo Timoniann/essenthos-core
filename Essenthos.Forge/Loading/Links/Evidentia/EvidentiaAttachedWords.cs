@@ -115,6 +115,31 @@ internal enum EvidentiaAttachment
     /// writes no <em>be</em> of its own: on that verb, תִּשָּׁחֵת, as the tense of the word it goes with.
     /// </summary>
     BeOnTheVerb,
+
+    /// <summary>
+    /// <em>will</em> of <em>will die</em> on the Greek future ἀποθανεῖται, <em>was</em> of <em>was baptized</em> on the
+    /// passive ἐβαπτίσθη, <em>might</em> of <em>might believe</em> on the subjunctive: an English auxiliary of a Greek
+    /// verb whose own form carries that tense, mood or voice; on the εἰμί or μέλλω where the original writes one.
+    /// </summary>
+    GreekAuxiliary,
+
+    /// <summary>
+    /// <em>did</em> of <em>did not see</em>, <em>will</em> of <em>will not go</em>: the auxiliary on the Hebrew verb whose
+    /// form carries its tense, across the negation the original writes as a word of its own.
+    /// </summary>
+    AuxiliaryAcrossNegation,
+
+    /// <summary><em>Let us</em> of <em>Let us make</em>: on the cohortative נַעֲשֶׂה, or the jussive, the Greek hortatory subjunctive or imperative.</summary>
+    LetOfTheMood,
+
+    /// <summary><em>to</em> of <em>to God</em>, which Greek writes as the dative τῷ Θεῷ: on the noun, or on its article where English writes <em>the</em> or a possessive.</summary>
+    DativeTo,
+
+    /// <summary>
+    /// <em>who</em> and <em>the One</em> of <em>the One who comes</em>, which Greek writes as the article of the participle,
+    /// ὁ ἐρχόμενος, and Hebrew as the participle itself.
+    /// </summary>
+    RelativeOfTheParticiple,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -245,7 +270,7 @@ internal enum EvidentiaAttachmentPlacement
 /// inflection as a word: the subject pronoun and the auxiliary of tense, by the German and Spanish
 /// UDPipe parses (<see cref="ClassifyInflection"/>). Every other source language is left alone.</para>
 /// </summary>
-internal static class EvidentiaAttachedWords
+internal static partial class EvidentiaAttachedWords
 {
     private const double ConfidenceBelowHead = 0.10;
 
@@ -479,7 +504,8 @@ internal static class EvidentiaAttachedWords
     /// Hebrew (<see cref="EvidentiaAttachment.OfTheConstruct"/>), on the genitive in Greek
     /// (<see cref="EvidentiaAttachment.OfTheGoverned"/>); and a Hebrew <em>is</em> in a clause the original's
     /// syntax types as verbless (<see cref="EvidentiaAttachment.CopulaOnThePredicate"/>), read from
-    /// <paramref name="clauses"/>, without which it places none.
+    /// <paramref name="clauses"/>, without which it places none; and the English words that say what one word of the
+    /// original carries in its form go with that word (<see cref="AttachInflection"/>).
     /// </param>
     public static IReadOnlyList<EvidentiaProposal> Resolve(
         IReadOnlyList<EvidentiaAnalysis> source,
@@ -525,6 +551,8 @@ internal static class EvidentiaAttachedWords
                 {
                     AttachIs(words, placedBySource, targetsByVerse, taken, clauses, proposals);
                 }
+
+                AttachInflection(words, placedBySource, targetsByVerse, taken, renderedBy, proposals);
             }
         }
 
@@ -1009,7 +1037,9 @@ internal static class EvidentiaAttachedWords
                     break;
                 }
 
-                if (placedBySource.TryGetValue(other.Token.Id, out var head))
+                // An auxiliary placed across its negation stands on the verb after the negation, and the ו of the
+                // clause is written on the negation: וְלֹא עָנָם, but He did not answer.
+                if (placedBySource.TryGetValue(other.Token.Id, out var head) && Attachment(head) != EvidentiaAttachment.AuxiliaryAcrossNegation)
                 {
                     if (head.Target.Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
                         && targetsByVerse.TryGetValue(head.Target.Token.Address, out var verse)
