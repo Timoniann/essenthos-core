@@ -571,6 +571,32 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
+    public void WhenAskedBeGoesOnTheFiniteVerbItsPredicateWasPlacedOnWhereTheClauseWritesNoBe()
+    {
+        var earth = English(1, Genesis122, 1, "earth", "NOUN") with { SyntacticHead = 3, Relation = "nsubj" };
+        var was = English(2, Genesis122, 2, "was", "AUX") with { Lemma = "be", SyntacticHead = 3, Relation = "cop" };
+        var corrupt = English(3, Genesis122, 3, "corrupt", "ADJ");
+        var tishachet = Hebrew(11, Genesis122, 1, "תִּשָּׁחֵת", "H7843", "verb", ("tense", "wayq"));
+        var arets = Hebrew(12, Genesis122, 2, "אָרֶץ", "H776", "subs");
+        var verbal = Clauses((tishachet, 1, "WayX", 1, "Pred"), (arets, 1, "WayX", 2, "Subj"));
+        AttachIs([earth, was, corrupt], [tishachet, arets], verbal, (earth, arets), (corrupt, tishachet)).Should().Contain((2L, 11L));
+        AttachOf([earth, was, corrupt], [tishachet, arets], (earth, arets), (corrupt, tishachet)).Should().NotContain(pair => pair.Source == 2);
+
+        var be = Hebrew(13, Genesis122, 3, "הָיָה", "H1961", "verb", ("tense", "perf"));
+        AttachIs([earth, was, corrupt], [tishachet, arets, be], Clauses((tishachet, 1, "WayX", 1, "Pred"), (arets, 1, "WayX", 2, "Subj"), (be, 1, "WayX", 3, "Pred")),
+            (earth, arets), (corrupt, tishachet)).Should().NotContain(pair => pair.Source == 2);
+
+        var corruption = Hebrew(14, Genesis122, 1, "שַׁחַת", "H7845", "subs");
+        AttachIs([earth, was, corrupt], [corruption, arets], Clauses((corruption, 1, "WayX", 1, "Objc"), (arets, 1, "WayX", 2, "Subj")),
+            (earth, arets), (corrupt, corruption)).Should().NotContain(pair => pair.Source == 2);
+
+        var beFruitful = English(1, Genesis122, 1, "Be", "AUX") with { Lemma = "be", SyntacticHead = 2, Relation = "cop" };
+        var fruitful = English(2, Genesis122, 2, "fruitful", "ADJ");
+        var peru = Hebrew(11, Genesis122, 1, "פְּרוּ", "H6509", "verb", ("tense", "impv"));
+        AttachIs([beFruitful, fruitful], [peru], Clauses((peru, 1, "ZIm0", 1, "Pred")), (fruitful, peru)).Should().Contain((1L, 11L));
+    }
+
+    [Fact]
     public void WhenAskedIsIsNotPlacedWhereTheClauseWritesItsOwnBe()
     {
         var god = English(1, Genesis122, 1, "God", "PROPN") with { SyntacticHead = 4, Relation = "nsubj" };

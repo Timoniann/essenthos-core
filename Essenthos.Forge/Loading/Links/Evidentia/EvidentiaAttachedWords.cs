@@ -109,6 +109,12 @@ internal enum EvidentiaAttachment
     /// on the word of <em>good</em>, and on the demonstrative where the subject is one, <em>This is the book</em> on זֶה.
     /// </summary>
     CopulaOnThePredicate,
+
+    /// <summary>
+    /// <em>was</em> of <em>the earth was corrupt</em>, where the original says the predicate with a finite verb and
+    /// writes no <em>be</em> of its own: on that verb, תִּשָּׁחֵת, as the tense of the word it goes with.
+    /// </summary>
+    BeOnTheVerb,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -642,8 +648,8 @@ internal static class EvidentiaAttachedWords
     /// <summary>
     /// A form of <em>be</em> no rule placed, decided by the original's own syntax rather than by the English parse.
     /// Its English predicate - the word the parse hangs it on, or a predicate English writes before it - must have
-    /// been placed in one clause of the original, and that clause must be one BHSA types as verbless
-    /// (<see cref="VerblessClauses"/>); a subject placed alone does not say which clause English's predicate is in.
+    /// been placed in one clause of the original. Where BHSA types that clause as verbless
+    /// (<see cref="VerblessClauses"/>), the predicate complement takes it; a subject placed alone does not say which clause English's predicate is in.
     /// The subject must stand in the same clause, or in another only where this clause
     /// writes none (<em>God saw that the light was good</em>: הָאוֹר is the object of וַיַּרְא, כִּי טוֹב has no
     /// subject). Then <em>is</em> goes on the head of the clause's predicate complement (<see cref="PhraseHead"/>):
@@ -652,9 +658,15 @@ internal static class EvidentiaAttachedWords
     /// subject is a demonstrative and the predicate no interrogative, on the demonstrative (<em>These are the
     /// sons</em> on אֵלֶּה), as unfoldingWord aligns it.
     ///
+    /// <para>Where the clause is verbal and English's predicate - an adjective, a participle or a noun after
+    /// <em>be</em> - was placed on its finite verb, <em>be</em> goes on that verb as the tense of the word it goes
+    /// with (<see cref="EvidentiaAttachment.BeOnTheVerb"/>: <em>the earth was corrupt</em> on תִּשָּׁחֵת, <em>Be
+    /// fruitful</em> on פְּרוּ).</para>
+    ///
     /// <para>Nothing where the English clause reaches into two of the original's clauses or into none, where the
-    /// clause has a finite verb (היה among them), where it writes יֵשׁ or אַיִן, or a הוּא no word of the translation
-    /// took as its subject: that word is the <em>is</em>. Greek is left alone.</para>
+    /// clause writes היה, יֵשׁ or אַיִן, or a הוּא no word of the translation took as its subject: that word is the
+    /// <em>is</em>. Nothing in a verbal clause whose verb English's predicate was not placed on. Greek is left
+    /// alone.</para>
     /// </summary>
     private static void AttachIs(
         IReadOnlyList<EvidentiaAnalysis> words,
@@ -683,18 +695,41 @@ internal static class EvidentiaAttachedWords
             if (predicates.Count == 0 || places.Any(place => place is null)
                 || places.Select(place => place!.Value.Clause).Distinct().Count() != 1
                 || predicates.Select(anchor => anchor.Target.Token.Address).Distinct().Count() != 1
-                || !VerblessClauses.Contains(places[0]!.Value.ClauseType ?? string.Empty)
                 || !targetsByVerse.TryGetValue(predicates[0].Target.Token.Address, out var verse))
             {
                 continue;
             }
 
             var clauseType = places[0]!.Value.ClauseType;
+            var verbless = VerblessClauses.Contains(clauseType ?? string.Empty);
+            var verb = predicates.FirstOrDefault(anchor => IsHebrewFinite(anchor.Target) && anchor.Target.Token.StrongNumber != HebrewBe);
+            if (!verbless && verb is null)
+            {
+                continue;
+            }
+
             var clause = verse.Where(other => clauses.Of(other)?.Clause == places[0]!.Value.Clause).ToList();
             var subjectOutside = subjectPlaced is not null && clause.All(other => other.Token.Id != subjectPlaced.Target.Token.Id);
             if (subjectOutside && clause.Any(other => clauses.Of(other)?.Function == SubjectFunction)
                 || clause.Any(other => WritesBe(other, clause, clauses, taken, subjectPlaced)))
             {
+                continue;
+            }
+
+            if (!verbless)
+            {
+                var onTheVerb = new EvidentiaProposal(
+                    word,
+                    verb!.Target,
+                    EvidentiaProposalKind.AttachedWord,
+                    Math.Max(0, verb.Confidence - ConfidenceBelowHead),
+                    new EvidentiaDecisionTrace(
+                        "attached",
+                        $"{EvidentiaAttachment.BeOnTheVerb} of '{verb.Source.Token.Surface}', on the finite verb its predicate was placed on in a {clauseType} clause",
+                        verb.Trace?.Evidence ?? []),
+                    verb);
+                proposals.Add(onTheVerb);
+                placedBySource[word.Token.Id] = onTheVerb;
                 continue;
             }
 
