@@ -324,6 +324,14 @@ public static class DescriptorRelations
     public const string ProphetTo = "prophet-to";
     public const string PriestOf = "priest-of";
     public const string JudgeOf = "judge-of";
+
+    /// <summary>
+    /// One who leads a people as a whole, which the text states without the title of a king, a judge or
+    /// a governor: Moses, whom God sent <em>to be a ruler and a deliverer</em> (ACT 7:35), Joshua, told
+    /// <em>thou shalt bring the children of Israel into the land</em> (DEU 31:23), a tribe's prince.
+    /// </summary>
+    public const string LeaderOf = "leader-of";
+
     public const string HighPriestOf = "high-priest-of";
     public const string CommanderOf = "commander-of";
     public const string GovernorOf = "governor-of";
@@ -459,7 +467,7 @@ public static class DescriptorRelations
         AncestorOf, DescendantOf,
         FatherInLawOf, MotherInLawOf, SonInLawOf, DaughterInLawOf,
         BrotherInLawOf, SisterInLawOf, ConcubineOf, CousinOf,
-        KingOf, QueenOf, ProphetTo, PriestOf, JudgeOf, HighPriestOf,
+        KingOf, QueenOf, ProphetTo, PriestOf, JudgeOf, LeaderOf, HighPriestOf,
         CommanderOf, GovernorOf, TetrarchOf, ServantOf, MasterOf,
         DiscipleOf, ApostleOf, ScribeOf, CompanionOf, TeacherOf, AllyOf, FounderOf,
         KilledBy, KillerOf, StruckBy, RapedBy, RaperOf, AngelOf,
@@ -591,7 +599,8 @@ public static class DescriptorSubjects
             DescriptorRelations.SisterInLawOf, DescriptorRelations.ConcubineOf, DescriptorRelations.CousinOf,
             DescriptorRelations.AdoptiveMotherOf,
             DescriptorRelations.KingOf, DescriptorRelations.QueenOf, DescriptorRelations.ProphetTo,
-            DescriptorRelations.PriestOf, DescriptorRelations.JudgeOf, DescriptorRelations.HighPriestOf,
+            DescriptorRelations.PriestOf, DescriptorRelations.JudgeOf, DescriptorRelations.LeaderOf,
+            DescriptorRelations.HighPriestOf,
             DescriptorRelations.CommanderOf, DescriptorRelations.GovernorOf, DescriptorRelations.TetrarchOf,
             DescriptorRelations.MasterOf, DescriptorRelations.DiscipleOf, DescriptorRelations.ApostleOf,
             DescriptorRelations.ScribeOf, DescriptorRelations.CompanionOf, DescriptorRelations.TeacherOf,

@@ -111,6 +111,7 @@ public sealed class DescriptorVocabularyTests
             DescriptorRelations.SupporterOf, DescriptorRelations.SupportedBy,
             DescriptorRelations.CreatorOf, DescriptorRelations.CreatedBy,
             DescriptorRelations.HeirOf, DescriptorRelations.ExilerOf, DescriptorRelations.ExiledBy,
+            DescriptorRelations.LeaderOf,
         ];
 
         var phrasings = DescriptorPhrasings.For(language)!;
@@ -308,6 +309,10 @@ public sealed class DescriptorVocabularyTests
     [InlineData("spa", "king-of", "people", "nominative=israelitas", "rey de los israelitas")]
     [InlineData("spa", "son-of", "person", "nominative=Isaí", "hijo de Isaí")]
     [InlineData("spa", "king-of", "people", "nominative=Israel", "rey de Israel")]
+    [InlineData("deu", "leader-of", "people", "genitive=Israeliten", "Anführer der Israeliten")]
+    [InlineData("spa", "leader-of", "people", "nominative=israelitas", "líder de los israelitas")]
+    [InlineData("ukr", "leader-of", "people", "genitive=ізраїльтян", "вождь ізраїльтян")]
+    [InlineData("eng", "leader-of", "people", "nominative=Israelites", "leader of Israelites")]
     [InlineData("spa", "of-people", "people", "nominative=moabitas", "del pueblo de los moabitas")]
     [InlineData("ukr", "son-of", "person", "genitive=Єссея", "син Єссея")]
     public void ANameIsSaidWithWhatItsLanguageNeedsAroundIt(
