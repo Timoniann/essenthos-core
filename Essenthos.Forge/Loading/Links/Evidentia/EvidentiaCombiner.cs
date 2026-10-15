@@ -72,6 +72,8 @@ internal static class EvidentiaCombinerFeatures
         .. pivots.Select(pivot => $"pivot_{pivot}"),
         .. PlacementKinds.Select(kind => $"current_{kind}"),
         "pivots_naming_lexical", "pivot_names_another_current",
+        "pos_counterparts", "pos_not_counterparts", "number_agrees", "number_disagrees",
+        "between_anchors", "anchor_distance", "no_anchor", "head_near", "head_far",
     ];
 
     /// <summary>
@@ -107,6 +109,13 @@ internal static class EvidentiaCombinerFeatures
         var sourceRank = Ranks(words);
         var byWord = candidates.GroupBy(candidate => candidate.Source.Token.Id).ToDictionary(group => group.Key, group => group.ToList());
         var named = new HashSet<string>(pivots, StringComparer.Ordinal);
+        var targetIndex = Indexes(targets.Values);
+        var renderedAt = lexical
+            .Where(proposal => targetIndex.ContainsKey(proposal.Target.Token.Id))
+            .GroupBy(proposal => proposal.Source.Token.Id)
+            .ToDictionary(group => group.Key, group => (group.First().Target.Token.Address, Index: targetIndex[group.First().Target.Token.Id]));
+        var verses = words.GroupBy(word => word.Token.Address)
+            .ToDictionary(verse => verse.Key, verse => verse.OrderBy(word => word.Token.Position).ThenBy(word => word.Token.Id).ToList());
 
         var offered = new List<(EvidentiaAnalysis Word, Dictionary<long, EvidentiaCandidate> Candidates,
             Dictionary<string, HashSet<long>> Pivot, List<long> Targets)>();
@@ -176,6 +185,8 @@ internal static class EvidentiaCombinerFeatures
                     .. pivots.Select(text => said.TryGetValue(text, out var ids) && ids.Contains(id) ? 1.0 : 0.0),
                     .. PlacementKinds.Select(kind => isCurrent * (placed?.Kind.ToString() == kind ? 1 : 0)),
                     naming * (kinds.Overlaps(Proposing) ? 1 : 0), another * isCurrent,
+                    .. Classes(word, to), .. Numbers(word, to),
+                    .. Anchors(word, to, verses[word.Token.Address], renderedAt, targetIndex),
                 ];
                 edges.Add(new EvidentiaCombinerEdge(word, to, candidate, placed, [.. features]));
             }
@@ -183,6 +194,97 @@ internal static class EvidentiaCombinerFeatures
 
         return edges;
     }
+
+    /// <summary>
+    /// Where the edge stands against the placements around it: between the renderings of the nearest placed words before
+    /// and after the word, how far from the nearer of them (in words, at most six, as a share of six), whether the verse
+    /// has no such placement, and whether it stands within two words of the rendering of the word the parse hangs this one
+    /// on, or more than four from it. Only placements in the word's own verse count.
+    /// </summary>
+    private static double[] Anchors(
+        EvidentiaAnalysis word,
+        EvidentiaAnalysis target,
+        List<EvidentiaAnalysis> verse,
+        Dictionary<long, (EvidentiaAddress Address, int Index)> renderedAt,
+        Dictionary<long, int> targetIndex)
+    {
+        int? Rendering(EvidentiaAnalysis other) =>
+            other.Token.Id != word.Token.Id && renderedAt.TryGetValue(other.Token.Id, out var at) && at.Address == target.Token.Address
+                ? at.Index
+                : null;
+
+        var position = verse.IndexOf(word);
+        var at = targetIndex[target.Token.Id];
+        int? before = null, after = null;
+        for (var index = position - 1; index >= 0 && before is null; index--)
+        {
+            before = Rendering(verse[index]);
+        }
+
+        for (var index = position + 1; index < verse.Count && after is null; index++)
+        {
+            after = Rendering(verse[index]);
+        }
+
+        var between = before is { } low && after is { } high && Math.Min(low, high) < at && at < Math.Max(low, high) ? 1.0 : 0.0;
+        var nearest = new[] { before, after }.OfType<int>().Select(index => Math.Abs(index - at)).DefaultIfEmpty(-1).Min();
+        var distance = nearest < 0 ? 0 : Math.Min(nearest, MaximumAnchorDistance) / (double)MaximumAnchorDistance;
+        var head = word.Token.SyntacticHead is { } id ? verse.FirstOrDefault(other => other.Token.Id == id) : null;
+        var fromHead = head is not null && Rendering(head) is { } headAt ? Math.Abs(headAt - at) : (int?)null;
+        return
+        [
+            between, distance, nearest < 0 ? 1 : 0,
+            fromHead is <= 2 ? 1 : 0, fromHead is > 4 ? 1 : 0,
+        ];
+    }
+
+    private const int MaximumAnchorDistance = 6;
+
+    /// <summary>Each word's place in its verse, counted from 0.</summary>
+    private static Dictionary<long, int> Indexes(IEnumerable<EvidentiaAnalysis> words)
+    {
+        var indexes = new Dictionary<long, int>();
+        foreach (var verse in words.GroupBy(word => word.Token.Address))
+        {
+            var ordered = verse.OrderBy(word => word.Token.Position).ThenBy(word => word.Token.Id).ToList();
+            for (var index = 0; index < ordered.Count; index++)
+            {
+                indexes[ordered[index].Token.Id] = index;
+            }
+        }
+
+        return indexes;
+    }
+
+    /// <summary>Whether the two words are of classes that render one another, and whether both state a class that does not.</summary>
+    private static double[] Classes(EvidentiaAnalysis word, EvidentiaAnalysis target)
+    {
+        if (EvidentiaMorphologyLabels.AreCounterparts(word, target))
+        {
+            return [1, 0];
+        }
+
+        var known = EvidentiaMorphologyLabels.HasCounterparts(word)
+            && EvidentiaMorphologyLabels.PartOfSpeech(target.PartOfSpeech ?? target.Token.PartOfSpeech, target.Token.Language) is not null;
+        return [0, known ? 1 : 0];
+    }
+
+    /// <summary>Whether both words state a grammatical number, and whether it is the same: a dual counts as a plural.</summary>
+    private static double[] Numbers(EvidentiaAnalysis word, EvidentiaAnalysis target)
+    {
+        if (Number(word) is not { } one || Number(target) is not { } two)
+        {
+            return [0, 0];
+        }
+
+        return one == two ? [1, 0] : [0, 1];
+    }
+
+    private static string? Number(EvidentiaAnalysis word) =>
+        word.Token.Morphology?.FirstOrDefault(pair => pair.Key.Equals("Number", StringComparison.OrdinalIgnoreCase)).Value is { } value
+        && EvidentiaMorphologyLabels.Feature(value, word.Token.Language) is { } number
+            ? number == "du" ? "pl" : number
+            : null;
 
     /// <summary>Each word's place in its verse, from 0 at the first word to 1 at the last.</summary>
     private static Dictionary<long, double> Ranks(IEnumerable<EvidentiaAnalysis> words)
@@ -281,6 +383,9 @@ internal sealed class EvidentiaCombiner
 
     public double WithdrawBelow => file.Bands.Withdraw;
 
+    /// <summary>The band an edge the tiers had not chosen needs to be placed; the review band where the file names none.</summary>
+    public double NewBand => file.Bands.New ?? file.Bands.Review;
+
     public IReadOnlyList<CombinerCheck> Checks => file.Checks ?? [];
 
     public object Description => new
@@ -294,8 +399,11 @@ internal sealed class EvidentiaCombiner
         pivots = file.Pivots,
     };
 
-    /// <summary>The model's own probability of an edge, then that probability as the calibration passage observed it.</summary>
-    public (double Raw, double Calibrated) Probability(string group, IReadOnlyList<double> features)
+    /// <summary>
+    /// The model's own probability of an edge, then that probability as the calibration passage observed it: for the
+    /// tiers' own placement, as it observed the tiers' placements the model kept, which win at lower probabilities.
+    /// </summary>
+    public (double Raw, double Calibrated) Probability(string group, IReadOnlyList<double> features, bool current = false)
     {
         var model = file.Models.TryGetValue(group, out var own) ? own
             : file.Models.TryGetValue(AllGroups, out var shared) ? shared
@@ -307,7 +415,8 @@ internal sealed class EvidentiaCombiner
         }
 
         var raw = 1 / (1 + Math.Exp(-sum));
-        foreach (var step in model.Calibration)
+        var calibration = current && model.CalibrationKept is { Length: > 0 } kept ? kept : model.Calibration;
+        foreach (var step in calibration)
         {
             if (raw <= step[0])
             {
@@ -315,7 +424,7 @@ internal sealed class EvidentiaCombiner
             }
         }
 
-        return (raw, model.Calibration[^1][1]);
+        return (raw, calibration[^1][1]);
     }
 
     /// <summary>The features that pushed an edge up the most, by weight times standardised value.</summary>
@@ -334,9 +443,8 @@ internal sealed class EvidentiaCombiner
     {
         var weighed = edges
             .Select(edge => (Edge: edge, Group: EvidentiaCombinerFeatures.Group(edge.Target),
-                Probability: Probability(EvidentiaCombinerFeatures.Group(edge.Target), edge.Features)))
-            .Where(edge => edge.Probability.Calibrated >= ReviewBand
-                || (edge.Edge.IsCurrent && edge.Probability.Calibrated >= WithdrawBelow))
+                Probability: Probability(EvidentiaCombinerFeatures.Group(edge.Target), edge.Features, edge.IsCurrent)))
+            .Where(edge => (edge.Edge.IsCurrent ? edge.Probability.Calibrated >= WithdrawBelow : edge.Probability.Calibrated >= NewBand))
             .OrderByDescending(edge => edge.Probability.Raw)
             .ThenByDescending(edge => edge.Edge.IsCurrent)
             .ThenBy(edge => edge.Edge.Source.Token.Address.Verse)
@@ -431,10 +539,12 @@ internal sealed class EvidentiaCombiner
         IReadOnlyDictionary<string, CombinerModel> Models,
         IReadOnlyList<CombinerCheck>? Checks = null);
 
-    internal sealed record CombinerBands(double Safe, double Review, double Withdraw);
+    internal sealed record CombinerBands(double Safe, double Review, double Withdraw, double? New = null);
 
     /// <param name="Calibration">Steps of the calibration: up to the raw probability of the first, the rate of the second.</param>
-    internal sealed record CombinerModel(double Intercept, double[] Weights, double[] Mean, double[] Scale, double[][] Calibration);
+    /// <param name="CalibrationKept">The same for the tiers' own placements, where the fit calibrated them apart.</param>
+    internal sealed record CombinerModel(
+        double Intercept, double[] Weights, double[] Mean, double[] Scale, double[][] Calibration, double[][]? CalibrationKept = null);
 
     /// <summary>An exported edge and the probabilities the fit gave it, so a test can hold this code to the fit.</summary>
     internal sealed record CombinerCheck(
@@ -442,5 +552,6 @@ internal sealed class EvidentiaCombiner
         double[] Features,
         double Raw,
         double Calibrated,
-        [property: JsonPropertyName("where")] string? Where = null);
+        [property: JsonPropertyName("where")] string? Where = null,
+        bool Current = false);
 }

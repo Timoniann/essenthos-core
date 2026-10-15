@@ -18,6 +18,7 @@ param(
     # self: the King James against its own stated links; selfstrong: the same with source Strong allowed.
     # kjv, kjvval: the King James against its own links with the index learned from the Berean instead,
     # so nothing the King James states teaches it (the passages of ind, and of val and val2).
+    # spa: the Reina-Valera 1909 against Clear Bible's hand alignment of it, over the passages of ind, val and val2.
     # bbe, nwt: the Bible in Basic English and the New World Translation, read from their files, over
     # the passages of ind and val. Neither states a link, so there is no gold: what they report is
     # coverage and how far the links agree with the King James's and the Berean's own.
@@ -40,6 +41,9 @@ param(
     # every edge it weighs, with its features and the key's label, is written beside the words (--combiner-export).
     [switch] $Combiner,
     [switch] $CombinerExport,
+
+    # The before a Hebrew noun its grammar makes definite, with no article written, goes with the noun (--definite-nouns).
+    [switch] $DefiniteNouns,
 
     # Says the one run of held2 a step is allowed is this one.
     [switch] $Unseal,
@@ -83,6 +87,9 @@ $env:DOTNET_ENVIRONMENT = 'Production'
 $independent = '--without-source-strong', '--learn-from', 'KJV'
 $fromFiles = $independent + '--source-from-files', '--routes', 'KJV,BSB'
 $kjv = '--without-source-strong', '--learn-from', 'BSB'
+# The Reina-Valera against its own hand alignment (Clear Bible), the one key outside English that links grammatical
+# words; it learns from its own links with the measured passage held out, so its precision is self-consistency.
+$spanish = '--without-source-strong', '--learn-from', 'RV1909'
 $passages = @{
     ind        = @(
         @('ind-gen', 'BSB', 'BHSA', 1, 1, 10, $independent),
@@ -150,6 +157,17 @@ $passages = @{
         @('nwt-1sa', 'NWT2013', 'BHSA', 9, 17, 17, $fromFiles),
         @('nwt-ps', 'NWT2013', 'BHSA', 19, 1, 23, $fromFiles),
         @('nwt-john', 'NWT2013', 'NESTLE1904', 43, 1, 3, ($fromFiles + '--learn-from-strong-numbers')))
+    spa        = @(
+        @('spa-gen', 'RV1909', 'BHSA', 1, 1, 10, $spanish),
+        @('spa-ruth', 'RV1909', 'BHSA', 8, 0, 0, $spanish),
+        @('spa-jon', 'RV1909', 'BHSA', 32, 0, 0, $spanish),
+        @('spa-mark', 'RV1909', 'NESTLE1904', 41, 1, 4, ($spanish + '--learn-from-strong-numbers')),
+        @('spa-1sa', 'RV1909', 'BHSA', 9, 17, 17, $spanish),
+        @('spa-ps', 'RV1909', 'BHSA', 19, 1, 23, $spanish),
+        @('spa-john', 'RV1909', 'NESTLE1904', 43, 1, 3, ($spanish + '--learn-from-strong-numbers')),
+        @('spa-exo', 'RV1909', 'BHSA', 2, 21, 23, $spanish),
+        @('spa-isa', 'RV1909', 'BHSA', 23, 40, 42, $spanish),
+        @('spa-rom', 'RV1909', 'NESTLE1904', 45, 5, 8, ($spanish + '--learn-from-strong-numbers')))
     selfstrong = @(
         @('sst-gen', 'KJV', 'BHSA', 1, 1, 10, @()),
         @('sst-ruth', 'KJV', 'BHSA', 8, 0, 0, @()),
@@ -271,6 +289,7 @@ function Arguments($passage) {
     if ($PivotPolicy -ne 'none') { $arguments += '--pivot-policy', $PivotPolicy }
     if ($Combiner) { $arguments += '--combiner' }
     if ($CombinerExport) { $arguments += '--combiner-export', "$prefix.edges.json" }
+    if ($DefiniteNouns) { $arguments += '--definite-nouns' }
     $arguments + @('--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json",
         '--key-doubts', "$prefix.key-doubts.json")
 }
@@ -325,7 +344,7 @@ function MeasureSideBySide($set) {
 Push-Location $(if ($FromReports) { $directory } else { $snapshot })
 try {
     foreach ($set in $Runs -split ',') {
-        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, held2, kjv, kjvval, self, selfstrong, bbe or nwt." }
+        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, held2, kjv, kjvval, self, selfstrong, spa, bbe or nwt." }
         if ($set -eq 'held2' -and -not $Unseal) { throw 'held2 is sealed: it is run once per step, with its rules fixed. Pass -Unseal when this is that run.' }
         $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0; Seconds = 0.0 }
         $words = @{}

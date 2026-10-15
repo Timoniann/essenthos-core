@@ -345,7 +345,8 @@ internal static partial class ForgeVerbs
                 .Aggregate(EvidentiaPivotPolicy.None, (policy, flag) => policy | Enum.Parse<EvidentiaPivotPolicy>(flag, ignoreCase: true))
             : EvidentiaPivotPolicy.None,
         Combiner: arguments.Contains("--combiner") ? EvidentiaCombiner.Default : null,
-        RecordCombinerEdges: OptionalText(arguments, "--combiner-export") is not null);
+        RecordCombinerEdges: OptionalText(arguments, "--combiner-export") is not null,
+        DefiniteNouns: arguments.Contains("--definite-nouns"));
 
     /// <summary>
     /// The pivot texts a run reads: the combiner's weights were fitted with its pivots' readings as features, so it

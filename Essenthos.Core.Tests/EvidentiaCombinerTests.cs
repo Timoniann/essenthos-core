@@ -27,7 +27,7 @@ public class EvidentiaCombinerTests
         combiner.Checks.Should().NotBeEmpty("the weights file carries edges of one exported chapter with the fit's probabilities");
         foreach (var check in combiner.Checks)
         {
-            var (raw, calibrated) = combiner.Probability(check.Group, check.Features);
+            var (raw, calibrated) = combiner.Probability(check.Group, check.Features, check.Current);
             raw.Should().BeApproximately(check.Raw, 1e-9, check.Where);
             calibrated.Should().BeApproximately(check.Calibrated, 1e-12, check.Where);
         }
@@ -73,6 +73,70 @@ public class EvidentiaCombinerTests
         Feature(onHerd, "pivot_names_another").Should().Be(1);
         Feature(onHerd, "diagonal").Should().Be(1);
         onHerd.IsCurrent.Should().BeTrue();
+        Feature(onBeast, "pos_counterparts").Should().Be(1, "a noun renders a noun");
+        Feature(onBeast, "pos_not_counterparts").Should().Be(0);
+        Feature(onBeast, "number_agrees").Should().Be(0, "neither word states a number here");
+        Feature(onBeast, "number_disagrees").Should().Be(0);
+    }
+
+    [Fact]
+    public void AVerbOnANounAndASingularOnAPluralAreSaidSo()
+    {
+        var verb = new EvidentiaToken(11, Verse, 1, "יְדֻשָּׁן", "hbo", StrongNumber: "H1878", PartOfSpeech: "verb",
+            Morphology: new Dictionary<string, string> { ["pos"] = "verb", ["number"] = "pl" });
+        Packs.TryAnalyse(verb, out var target).Should().BeTrue();
+        var singular = new EvidentiaToken(1, Verse, 1, "fat", "eng", PartOfSpeech: "NOUN",
+            Morphology: new Dictionary<string, string> { ["Number"] = "Sing" });
+        Packs.TryAnalyse(singular, out var source).Should().BeTrue();
+
+        var edges = EvidentiaCombinerFeatures.Edges(
+            [source], [target], [Candidate(source, target, 0.6, 0.7)], [], new HashSet<(long, long)>(), EvidentiaPivot.None, Pivots);
+
+        var names = EvidentiaCombinerFeatures.Names(Pivots).ToList();
+        var edge = edges.Should().ContainSingle().Subject;
+        edge.Features[names.IndexOf("pos_counterparts")].Should().Be(0);
+        edge.Features[names.IndexOf("pos_not_counterparts")].Should().Be(1);
+        edge.Features[names.IndexOf("number_disagrees")].Should().Be(1);
+    }
+
+    [Fact]
+    public void AnEdgeBetweenTheRenderingsOfItsPlacedNeighboursAndBesideItsHeadsRenderingIsSaidToBe()
+    {
+        var before = English(1, 1, "flocks");
+        Packs.TryAnalyse(new EvidentiaToken(2, Verse, 2, "livestock", "eng", PartOfSpeech: "NOUN", SyntacticHead: 1), out var word)
+            .Should().BeTrue();
+        var after = English(3, 3, "herds");
+        var sheep = Hebrew(11, 1, "צֹאן", "H6629");
+        var beast = Hebrew(12, 2, "בְּהֵמָה", "H929");
+        var herd = Hebrew(13, 3, "מִקְנֶה", "H4735");
+        List<EvidentiaProposal> placed =
+        [
+            new(before, sheep, EvidentiaProposalKind.GlobalReviewKnownRendering, 0.5),
+            new(after, herd, EvidentiaProposalKind.GlobalReviewKnownRendering, 0.5),
+        ];
+
+        var edges = EvidentiaCombinerFeatures.Edges(
+            [before, word, after], [sheep, beast, herd], [Candidate(word, beast, 0.6, 0.7)], placed,
+            new HashSet<(long, long)>(), EvidentiaPivot.None, Pivots);
+
+        var names = EvidentiaCombinerFeatures.Names(Pivots).ToList();
+        var edge = edges.Single(edge => edge.Source.Token.Id == 2);
+        edge.Features[names.IndexOf("between_anchors")].Should().Be(1);
+        edge.Features[names.IndexOf("anchor_distance")].Should().BeApproximately(1 / 6.0, 1e-12);
+        edge.Features[names.IndexOf("no_anchor")].Should().Be(0);
+        edge.Features[names.IndexOf("head_near")].Should().Be(1, "its head, flocks, was placed on the word just before");
+        edge.Features[names.IndexOf("head_far")].Should().Be(0);
+    }
+
+    [Fact]
+    public void TheTiersOwnPlacementReadsTheCalibrationOfTheKeptPlacements()
+    {
+        var combiner = Model(kept: true);
+        var names = EvidentiaCombinerFeatures.Names(Pivots);
+        var features = names.Select(name => name == "score" ? 0.99 : 0.0).ToArray();
+
+        combiner.Probability("all", features).Calibrated.Should().Be(0.99);
+        combiner.Probability("all", features, current: true).Calibrated.Should().Be(0.90);
     }
 
     [Fact]
@@ -120,7 +184,7 @@ public class EvidentiaCombinerTests
     }
 
     /// <summary>A model that reads the score alone, calibrated to the score itself, so the bands can be set by hand.</summary>
-    private static EvidentiaCombiner Model()
+    private static EvidentiaCombiner Model(bool kept = false)
     {
         var names = EvidentiaCombinerFeatures.Names(Pivots);
         var weights = names.Select(name => name == "score" ? 50.0 : 0).ToArray();
@@ -143,7 +207,11 @@ public class EvidentiaCombinerTests
             bands = new { safe = 0.98, review = 0.90, withdraw = 0.60 },
             models = new Dictionary<string, object>
             {
-                ["all"] = new { intercept = 0.0, weights, mean, scale = names.Select(_ => 1.0).ToArray(), calibration },
+                ["all"] = new
+                {
+                    intercept = 0.0, weights, mean, scale = names.Select(_ => 1.0).ToArray(), calibration,
+                    calibrationKept = kept ? new[] { new[] { 1.0, 0.90 } } : null,
+                },
             },
         };
         return EvidentiaCombiner.Read(new MemoryStream(Encoding.UTF8.GetBytes(JsonSerializer.Serialize(document))));

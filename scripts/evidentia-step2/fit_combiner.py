@@ -5,6 +5,11 @@ Fitted on the training sets, calibrated (isotonic) on the calibration sets, both
 Greek) is kept only if it beats the shared one on the calibration sets.
 
 usage: fit_combiner.py <label> <train sets> <calibration sets> <out.json> [--version V] [--split auto|yes|no]
+                       [--kept apart|together] [--drop feature,feature] [--min-block N]
+
+--kept apart calibrates the tiers' own placements the model keeps on their own picks, and its new edges on theirs.
+--min-block merges calibration steps until each holds N picks.
+--drop holds features at zero, so a fit without them can be compared on the same export.
 """
 import collections
 import glob
@@ -19,8 +24,10 @@ import numpy as np
 
 sys.stdout.reconfigure(encoding='utf-8')
 ROOT = os.path.join(os.environ.get('TEMP', r'C:\Users\timon\AppData\Local\Temp'), 'essenthos-evidentia')
-BANDS = {'safe': 0.98, 'review': 0.95, 'withdraw': 0.60}
+BANDS = {'safe': 0.98, 'review': 0.95, 'withdraw': 0.60, 'new': 0.98}
 L2 = 1.0
+KEPT_APART = True
+MIN_BLOCK = 1
 
 
 def load(label, sets):
@@ -73,11 +80,12 @@ def raw(model, features):
     return 1 / (1 + math.exp(-total))
 
 
-def calibrated(model, p):
-    for hi, rate in model['calibration']:
+def calibrated(model, p, current=False):
+    table = model.get('calibrationKept') if current and model.get('calibrationKept') else model['calibration']
+    for hi, rate in table:
         if p <= hi:
             return rate
-    return model['calibration'][-1][1]
+    return table[-1][1]
 
 
 def isotonic(xs, ys):
@@ -90,6 +98,14 @@ def isotonic(xs, ys):
             blocks[-1][0] = hi
             blocks[-1][1] += s
             blocks[-1][2] += n
+    # A step of a few picks states a rate the next passage will not see; merge each with a neighbour until it holds
+    # MIN_BLOCK picks. Merging neighbours of a non-decreasing sequence keeps it non-decreasing.
+    while len(blocks) > 1 and min(b[2] for b in blocks) < MIN_BLOCK:
+        i = min(range(len(blocks)), key=lambda k: blocks[k][2])
+        j = i - 1 if i == len(blocks) - 1 or (i > 0 and blocks[i - 1][2] <= blocks[i + 1][2]) else i + 1
+        lo, hi = min(i, j), max(i, j)
+        blocks[lo] = [blocks[hi][0], blocks[lo][1] + blocks[hi][1], blocks[lo][2] + blocks[hi][2]]
+        del blocks[hi]
     steps = [[hi, s / n] for hi, s, n in blocks]
     steps[-1][0] = 1.0
     return steps
@@ -140,7 +156,15 @@ def calibrate(models, check):
     picks = greedy(check, probs)
     for key, model in models.items():
         mine = [r for r in picks if key == 'all' or r['Group'] == key]
-        model['calibration'] = isotonic([probs(r)[0] for r in mine], [1.0 if r['Label'] else 0.0 for r in mine])
+        if KEPT_APART:
+            new = [r for r in mine if not r['Current']]
+            # Every placement of the tiers, not only those the greedy picks keep: where the model prefers another edge
+            # that does not reach the band, the tiers' own stands, and that is the placement whose rate is stated.
+            kept = [r for r in check if r['Current'] and (key == 'all' or r['Group'] == key)]
+            model['calibration'] = isotonic([probs(r)[0] for r in new], [1.0 if r['Label'] else 0.0 for r in new])
+            model['calibrationKept'] = isotonic([probs(r)[0] for r in kept], [1.0 if r['Label'] else 0.0 for r in kept])
+        else:
+            model['calibration'] = isotonic([probs(r)[0] for r in mine], [1.0 if r['Label'] else 0.0 for r in mine])
 
 
 def log_loss(models, rows):
@@ -155,11 +179,11 @@ def decide(models, rows):
     """The rule the Forge applies: a new edge at the review band or better, the tiers' own at the withdrawal line."""
     def prob(r):
         p = raw(model_of(models, r), r['Features'])
-        return p, calibrated(model_of(models, r), p)
+        return p, calibrated(model_of(models, r), p, r['Current'])
 
     def accept(r):
         c = prob(r)[1]
-        return c >= BANDS['review'] or (r['Current'] and c >= BANDS['withdraw'])
+        return c >= BANDS['withdraw'] if r['Current'] else c >= BANDS.get('new', BANDS['review'])
 
     return [(r, prob(r)[1]) for r in greedy(rows, prob, accept)]
 
@@ -192,9 +216,22 @@ def main():
             args.append(rest.pop(0))
     label, train_sets, check_sets, out = args[0], args[1].split(','), args[2].split(','), args[3]
     version = opts.get('--version', 'unversioned')
+    global KEPT_APART
+    KEPT_APART = opts.get('--kept', 'apart') == 'apart'
+    global MIN_BLOCK
+    MIN_BLOCK = int(opts.get('--min-block', '1'))
     split_mode = opts.get('--split', 'auto')
     names, train = load(label, train_sets)
     _, check = load(label, check_sets)
+    dropped = [n for n in opts.get('--drop', '').split(',') if n]
+    for n in dropped:
+        if n not in names:
+            raise SystemExit(f'no feature {n}')
+        j = names.index(n)
+        for r in train + check:
+            r['Features'] = r['Features'][:j] + [0.0] + r['Features'][j + 1:]
+    if dropped:
+        print(f'dropped (held at zero): {", ".join(dropped)}')
     fit_rows = [r for r in train if r['Covered']]
     check_scored = [r for r in check if r['Covered']]
     print(f'{len(names)} features; train {len(fit_rows)} edges ({sum(r["Label"] for r in fit_rows)} positive) of {len(train)}; '
@@ -229,8 +266,9 @@ def main():
     for r in ruth:
         model = model_of(models, r)
         p = raw(model, r['Features'])
-        checks.append({'group': r['Group'], 'features': r['Features'], 'raw': p, 'calibrated': calibrated(model, p),
-                       'where': f"{r['Passage']} {r['Book']}:{r['Chapter']}:{r['Verse']} {r['SourceWordId']}->{r['TargetWordId']}"})
+        checks.append({'group': r['Group'], 'features': r['Features'], 'raw': p, 'calibrated': calibrated(model, p, r['Current']),
+                       'where': f"{r['Passage']} {r['Book']}:{r['Chapter']}:{r['Verse']} {r['SourceWordId']}->{r['TargetWordId']}",
+                       'current': bool(r['Current'])})
     document = {
         'version': version,
         'fittedOn': {
