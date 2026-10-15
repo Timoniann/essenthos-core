@@ -187,10 +187,11 @@ internal sealed class OwnRecordLoader(
     /// record may not exist yet or still be held as the person it was.
     ///
     /// <para>
-    /// A ruling naming a people beside a place stands on a manual ruling of the place on the same
-    /// word, in an earlier file because a file gives a word one answer, and both records are held as
-    /// what they are: <em>the father of Gibeon</em> is the town and its people in every text, so the
-    /// pair carries across the links.
+    /// A companion ruling in a file that carries is a people beside its town: <em>the father of
+    /// Gibeon</em> is the town and its people in every text, so the pair crosses the links. It stands
+    /// on a manual ruling of the town on the same word, in an earlier file because a file gives a word
+    /// one answer. Whether the two are a place and a people is the reader's to ask
+    /// (<c>Annotations.Beside</c>): a pair of any other kinds is the ruled people's answer alone.
     /// </para>
     /// </summary>
     private async Task ValidateCompanions(IReadOnlyList<OwnRecordRulings> files, CancellationToken cancellationToken)
@@ -199,19 +200,18 @@ internal sealed class OwnRecordLoader(
         foreach (var file in files)
         foreach (var ruling in file.Rulings.Where(r => r.Alongside is not null))
         {
-            if (await db.Entities.AnyAsync(e => e.Slug == ruling.Alongside && e.Kind == EntityKind.Place, cancellationToken))
+            if (file.Carry)
             {
-                var place = files.Where(f => f.Method == "manual")
+                var town = files.TakeWhile(f => !ReferenceEquals(f, file)).Where(f => f.Method == "manual")
                     .SelectMany(f => f.Rulings).SingleOrDefault(r => r.Word == ruling.Word && r.Existing == ruling.Alongside);
-                if (file.Method != "manual" || ruling.Corrects is not null || place is null || ruling.Existing is null
-                    || !await db.Entities.AnyAsync(e => e.Slug == ruling.Existing && e.Kind == EntityKind.People, cancellationToken))
-                    throw new InvalidDataException($"The companion ruling on {ruling.Word} must name a held people beside a place a manual ruling gives the same word.");
+                if (file.Method != "manual" || ruling.Corrects is not null || town is null || ruling.Existing is null)
+                    throw new InvalidDataException($"The companion ruling on {ruling.Word} must name a people beside a town a manual ruling of an earlier file gives the same word.");
                 continue;
             }
 
             var companion = files.Where(f => !f.Carry && f.Method == "manual")
                 .SelectMany(f => f.Rulings).SingleOrDefault(r => r.Word == ruling.Word && r.Existing == ruling.Alongside);
-            if (file.Carry || file.Method != "manual" || ruling.Corrects is not null
+            if (file.Method != "manual" || ruling.Corrects is not null
                 || companion is null || ruling.Existing is null
                 || (!decided.Contains(ruling.Alongside!)
                     && !await db.Entities.AnyAsync(e => e.Slug == ruling.Alongside && e.Kind == EntityKind.Title, cancellationToken))
