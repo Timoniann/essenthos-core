@@ -533,6 +533,9 @@ internal sealed class EvidentiaRunner(
             ["confirmedByRuns"] = options.ConfirmedByRuns,
             ["confirmedByFiles"] = options.ConfirmedByFiles,
             ["alignerLinks"] = options.AlignerLinks,
+            ["pivotTexts"] = options.PivotTexts,
+            ["pivotPolicy"] = options.PivotPolicy.ToString(),
+            ["combiner"] = options.Combiner?.Description,
             ["defaults"] = typeof(EvidentiaDefaults)
                 .GetFields(BindingFlags.Public | BindingFlags.Static)
                 .Where(field => field.IsLiteral)
@@ -565,7 +568,33 @@ internal sealed class EvidentiaRunner(
             ConfirmedByFiles: root.TryGetProperty("confirmedByFiles", out var byFiles) && byFiles.ValueKind == JsonValueKind.Array
                 ? [.. byFiles.EnumerateArray().Select(file => file.GetString()!)]
                 : null,
-            AlignerLinks: root.TryGetProperty("alignerLinks", out var alignerLinks) && alignerLinks.ValueKind == JsonValueKind.True);
+            AlignerLinks: root.TryGetProperty("alignerLinks", out var alignerLinks) && alignerLinks.ValueKind == JsonValueKind.True,
+            PivotTexts: root.TryGetProperty("pivotTexts", out var pivotTexts) && pivotTexts.ValueKind == JsonValueKind.Array
+                ? [.. pivotTexts.EnumerateArray().Select(text => text.GetString()!)]
+                : null,
+            PivotPolicy: root.TryGetProperty("pivotPolicy", out var pivotPolicy) && pivotPolicy.ValueKind == JsonValueKind.String
+                ? Enum.Parse<EvidentiaPivotPolicy>(pivotPolicy.GetString()!)
+                : EvidentiaPivotPolicy.None,
+            Combiner: Combiner(root));
+    }
+
+    /// <summary>
+    /// The combiner a stored run decided by. Only the weights this build carries can repeat it, so a run fitted
+    /// with others is refused rather than repeated with a different model.
+    /// </summary>
+    private static EvidentiaCombiner? Combiner(JsonElement root)
+    {
+        if (!root.TryGetProperty("combiner", out var stored) || stored.ValueKind != JsonValueKind.Object)
+        {
+            return null;
+        }
+
+        var version = stored.GetProperty("version").GetString();
+        return version == EvidentiaCombiner.Default.Version
+            ? EvidentiaCombiner.Default
+            : throw new InvalidOperationException(
+                $"The run decided by the combiner's weights {version}, and this build carries {EvidentiaCombiner.Default.Version}. " +
+                "Repeat it from the commit that carried those weights.");
     }
 
     /// <summary>A run stored before the window was an option read with the default of its day.</summary>
