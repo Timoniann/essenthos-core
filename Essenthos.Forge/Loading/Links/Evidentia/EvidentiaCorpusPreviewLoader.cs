@@ -389,8 +389,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             }
         }
 
+        var clauses = options.FunctionWords ? await Clauses(target, cancellationToken) : null;
         var attachedWords = EvidentiaAttachedWords.Resolve(
-            markedSource, targetAnalyses, lexicalProposals, options.DefiniteNouns, options.FunctionWords);
+            markedSource, targetAnalyses, lexicalProposals, options.DefiniteNouns, options.FunctionWords, clauses);
         List<EvidentiaProposal> finalProposals = [.. lexicalProposals, .. attachedWords];
         finalProposals.AddRange(frame.Near(EvidentiaCounterparts.Resolve(sourceAnalyses, targetAnalyses, finalProposals)));
 
@@ -997,6 +998,21 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             var syntax = await SyntaxPrior.Read((NpgsqlConnection)db.Database.GetDbConnection(), textId, cancellationToken);
             syntaxByTargetText.Add(textSlug, syntax);
             return syntax;
+        }
+        finally
+        {
+            await db.Database.CloseConnectionAsync();
+        }
+    }
+
+    /// <summary>The clauses and phrases the original's own syntax puts the passage's words in, where it has one.</summary>
+    private async Task<EvidentiaClauses> Clauses(IReadOnlyList<EvidentiaToken> words, CancellationToken cancellationToken)
+    {
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        try
+        {
+            return await EvidentiaClauses.Read(
+                (NpgsqlConnection)db.Database.GetDbConnection(), [.. words.Select(word => word.Id).Distinct()], cancellationToken);
         }
         finally
         {

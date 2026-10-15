@@ -105,8 +105,8 @@ internal enum EvidentiaAttachment
     OfTheConstruct,
 
     /// <summary>
-    /// <em>is</em> of a Hebrew clause that writes no <em>be</em>: on the predicate, <em>Life is good</em> on the
-    /// word of <em>good</em>, and on the demonstrative where the subject is one, <em>This is the book</em> on זֶה.
+    /// <em>is</em> of a clause BHSA types as verbless: on the head of its predicate complement, <em>Life is good</em>
+    /// on the word of <em>good</em>, and on the demonstrative where the subject is one, <em>This is the book</em> on זֶה.
     /// </summary>
     CopulaOnThePredicate,
 }
@@ -380,19 +380,34 @@ internal static class EvidentiaAttachedWords
 
     private const string Of = "of";
 
-    /// <summary>How far from the predicate's word the original's own <em>be</em> may stand and still be this clause's.</summary>
-    private const int CopulaReach = 4;
+    /// <summary>
+    /// The clauses BHSA types as having no finite verb: a nominal clause, an adjective clause, and a participle
+    /// clause, whose participle is its predicate complement (<em>Blessed be the LORD</em>, בָּרוּךְ יְהוָה).
+    /// </summary>
+    private static readonly HashSet<string> VerblessClauses = new(StringComparer.Ordinal) { "NmCl", "AjCl", "Ptcp" };
 
-    /// <summary>היה, אַיִן and יֵשׁ: the original's own words for <em>is</em>, <em>is not</em> and <em>there is</em>.</summary>
-    private static readonly HashSet<string> HebrewBeWords = new(StringComparer.Ordinal) { HebrewBe, "H369", "H3426" };
+    /// <summary>BHSA's predicate complement, and the same with the subject in its suffix.</summary>
+    private static readonly HashSet<string> PredicateComplements = new(StringComparer.Ordinal) { "PreC", "PrcS" };
 
-    /// <summary>הוּא and הִיא, which stand for <em>is</em> in a clause whose subject is written elsewhere.</summary>
-    private static readonly HashSet<string> HebrewCopulaPronouns = new(StringComparer.Ordinal) { "H1931", "H1932" };
+    /// <summary>The phrases by which a clause writes its own <em>is</em>: יֵשׁ and אַיִן, with or without a suffix.</summary>
+    private static readonly HashSet<string> WrittenBeFunctions = new(StringComparer.Ordinal) { "Exst", "ExsS", "NCop", "NCoS" };
+
+    /// <summary>הוּא, הִיא, הֵם, הֵמָּה and הֵנָּה, which stand for <em>is</em> where no word of the translation takes them as the subject.</summary>
+    private static readonly HashSet<string> HebrewCopulaPronouns = new(StringComparer.Ordinal) { "H1931", "H1932", "H1992", "H1993", "H2007" };
+
+    private const string SubjectFunction = "Subj";
 
     /// <summary>BHSA's demonstrative pronoun: זֶה, זֹאת, אֵלֶּה.</summary>
     private const string HebrewDemonstrative = "prde";
 
-    private static readonly HashSet<string> Demonstratives = new(StringComparer.OrdinalIgnoreCase) { "this", "these", "that", "those" };
+    /// <summary>BHSA's interrogative pronoun and interrogative: מִי, מָה, אֵי.</summary>
+    private static readonly HashSet<string> HebrewInterrogatives = new(StringComparer.Ordinal) { "prin", "inrg" };
+
+    /// <summary>The tenses of a Hebrew verb that is finite, which a verbless clause never has.</summary>
+    private static readonly HashSet<string> HebrewFiniteTenses = new(StringComparer.OrdinalIgnoreCase) { "perf", "impf", "wayq", "impv" };
+
+    /// <summary>כֹּל, which stands before a demonstrative subject without making it any less one: <em>all these</em>.</summary>
+    private const string HebrewAll = "H3605";
 
     /// <summary>The question words and <em>here</em> that, opening a sentence, are its predicate: <em>What is your country</em>.</summary>
     private static readonly HashSet<string> FrontedQuestions = new(StringComparer.OrdinalIgnoreCase) { "what", "where", "here" };
@@ -456,14 +471,17 @@ internal static class EvidentiaAttachedWords
     /// Whether a Hebrew <em>of</em> goes with the construct rather than the governed noun, and an <em>of</em> the
     /// original writes no word for is placed once every other rule has had its turn: with the construct in
     /// Hebrew (<see cref="EvidentiaAttachment.OfTheConstruct"/>), on the genitive in Greek
-    /// (<see cref="EvidentiaAttachment.OfTheGoverned"/>).
+    /// (<see cref="EvidentiaAttachment.OfTheGoverned"/>); and a Hebrew <em>is</em> in a clause the original's
+    /// syntax types as verbless (<see cref="EvidentiaAttachment.CopulaOnThePredicate"/>), read from
+    /// <paramref name="clauses"/>, without which it places none.
     /// </param>
     public static IReadOnlyList<EvidentiaProposal> Resolve(
         IReadOnlyList<EvidentiaAnalysis> source,
         IReadOnlyList<EvidentiaAnalysis> target,
         IReadOnlyList<EvidentiaProposal> placed,
         bool definiteNouns = false,
-        bool functionWords = false)
+        bool functionWords = false,
+        EvidentiaClauses? clauses = null)
     {
         var placedBySource = placed
             .GroupBy(proposal => proposal.Source.Token.Id)
@@ -497,7 +515,10 @@ internal static class EvidentiaAttachedWords
             foreach (var words in verses)
             {
                 AttachOf(words, placedBySource, targetsByVerse, renderedBy, proposals);
-                AttachIs(words, placedBySource, targetsByVerse, taken, proposals);
+                if (clauses is not null)
+                {
+                    AttachIs(words, placedBySource, targetsByVerse, taken, clauses, proposals);
+                }
             }
         }
 
@@ -619,22 +640,28 @@ internal static class EvidentiaAttachedWords
     }
 
     /// <summary>
-    /// A form of <em>be</em> no rule placed, where a Hebrew clause writes no word for it: on the word its predicate
-    /// was placed on (<em>Life is good</em>: <em>is good</em>, not <em>Life is</em>), and where its subject is
-    /// <em>this</em>, <em>these</em>, <em>that</em> or <em>those</em>, on the demonstrative instead (<em>These are
-    /// the sons</em> on אֵלֶּה), as unfoldingWord aligns it. A predicate English puts before the verb is the
-    /// predicate whatever the parse hangs on: an adjective or a participle (<em>Great is his glory</em>,
-    /// <em>Blessed be the LORD</em>), and <em>What</em>, <em>Where</em> or <em>Here</em> opening a sentence.
+    /// A form of <em>be</em> no rule placed, decided by the original's own syntax rather than by the English parse.
+    /// Its English predicate - the word the parse hangs it on, or a predicate English writes before it - must have
+    /// been placed in one clause of the original, and that clause must be one BHSA types as verbless
+    /// (<see cref="VerblessClauses"/>); a subject placed alone does not say which clause English's predicate is in.
+    /// The subject must stand in the same clause, or in another only where this clause
+    /// writes none (<em>God saw that the light was good</em>: הָאוֹר is the object of וַיַּרְא, כִּי טוֹב has no
+    /// subject). Then <em>is</em> goes on the head of the clause's predicate complement (<see cref="PhraseHead"/>):
+    /// the noun of a prepositional one, the interrogative of a question (<em>who is this Philistine</em> on מִי),
+    /// the adjective English puts first (<em>Great is the LORD</em> on גָּדוֹל). Where the
+    /// subject is a demonstrative and the predicate no interrogative, on the demonstrative (<em>These are the
+    /// sons</em> on אֵלֶּה), as unfoldingWord aligns it.
     ///
-    /// <para>Nothing where the original writes <em>be</em> itself near the predicate's word (היה, יֵשׁ, אַיִן), or a
-    /// pronoun no other word took (הוּא of <em>he is</em>): that word is the <em>is</em>, and its own rules place it.
-    /// Greek is left alone.</para>
+    /// <para>Nothing where the English clause reaches into two of the original's clauses or into none, where the
+    /// clause has a finite verb (היה among them), where it writes יֵשׁ or אַיִן, or a הוּא no word of the translation
+    /// took as its subject: that word is the <em>is</em>. Greek is left alone.</para>
     /// </summary>
     private static void AttachIs(
         IReadOnlyList<EvidentiaAnalysis> words,
         Dictionary<long, EvidentiaProposal> placedBySource,
         IReadOnlyDictionary<EvidentiaAddress, List<EvidentiaAnalysis>> targetsByVerse,
         IReadOnlySet<long> taken,
+        EvidentiaClauses clauses,
         List<EvidentiaProposal> proposals)
     {
         for (var index = 0; index < words.Count; index++)
@@ -647,47 +674,55 @@ internal static class EvidentiaAttachedWords
                 continue;
             }
 
-            var predicate = FrontedPredicate(words, index) ?? parsed;
-            if (!placedBySource.TryGetValue(predicate.Token.Id, out var head)
-                || head.Kind == EvidentiaProposalKind.AttachedWord
-                || !head.Target.Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
-                || !targetsByVerse.TryGetValue(head.Target.Token.Address, out var verse))
-            {
-                continue;
-            }
-
             var subject = words.FirstOrDefault(other => other.Token.SyntacticHead == parsed.Token.Id
-                && other.Token.Id != predicate.Token.Id
                 && other.Token.Relation?.StartsWith(SubjectRelation, StringComparison.Ordinal) == true);
-            var subjectRendering = subject is not null && placedBySource.TryGetValue(subject.Token.Id, out var placedSubject)
-                && placedSubject.Kind != EvidentiaProposalKind.AttachedWord
-                && placedSubject.Target.Token.Address.Equals(head.Target.Token.Address)
-                    ? placedSubject
-                    : null;
-            if (WritesBe(verse, head.Target, taken) || subjectRendering is not null && WritesBe(verse, subjectRendering.Target, taken))
+            var predicates = Placed([FrontedPredicate(words, index), parsed], placedBySource);
+            var subjectPlaced = Placed([subject], placedBySource).FirstOrDefault();
+            List<EvidentiaProposal> anchors = [.. predicates, .. subjectPlaced is null ? [] : new[] { subjectPlaced }];
+            var places = predicates.Select(anchor => clauses.Of(anchor.Target)).ToList();
+            if (predicates.Count == 0 || places.Any(place => place is null)
+                || places.Select(place => place!.Value.Clause).Distinct().Count() != 1
+                || predicates.Select(anchor => anchor.Target.Token.Address).Distinct().Count() != 1
+                || !VerblessClauses.Contains(places[0]!.Value.ClauseType ?? string.Empty)
+                || !targetsByVerse.TryGetValue(predicates[0].Target.Token.Address, out var verse))
             {
                 continue;
             }
 
-            var placement = head.Target;
-            if (subject is not null && Demonstratives.Contains(subject.Token.Surface) && Feature(subject, "PronType") != "Rel")
+            var clauseType = places[0]!.Value.ClauseType;
+            var clause = verse.Where(other => clauses.Of(other)?.Clause == places[0]!.Value.Clause).ToList();
+            var subjectOutside = subjectPlaced is not null && clause.All(other => other.Token.Id != subjectPlaced.Target.Token.Id);
+            if (subjectOutside && clause.Any(other => clauses.Of(other)?.Function == SubjectFunction)
+                || clause.Any(other => WritesBe(other, clause, clauses, taken, subjectPlaced)))
             {
-                if (subjectRendering is not null)
-                {
-                    head = subjectRendering;
-                    placement = head.Target;
-                }
-                else if (!placedBySource.ContainsKey(subject.Token.Id)
-                         && verse.LastOrDefault(other => Class(other) == "pron"
-                             && string.Equals(other.PartOfSpeech ?? other.Token.PartOfSpeech, HebrewDemonstrative, StringComparison.OrdinalIgnoreCase)
-                             && !taken.Contains(other.Token.Id)
-                             && other.Token.Position < head.Target.Token.Position
-                             && head.Target.Token.Position - other.Token.Position <= CopulaReach) is { } written)
-                {
-                    placement = written;
-                }
+                continue;
             }
 
+            var complements = clause
+                .Where(other => PredicateComplements.Contains(clauses.Of(other)!.Value.Function ?? string.Empty))
+                .GroupBy(other => clauses.Of(other)!.Value.Phrase)
+                .ToList();
+            var complement = complements.FirstOrDefault(phrase => phrase.Any(other => anchors.Any(anchor => anchor.Target.Token.Id == other.Token.Id)))
+                ?? complements.FirstOrDefault();
+            if (complement is null || PhraseHead([.. complement]) is not { } placement || IsHebrewFinite(placement))
+            {
+                continue;
+            }
+
+            var role = "the head of its predicate complement";
+            if (HebrewInterrogatives.Contains(HebrewPartOfSpeech(placement)))
+            {
+                role = "the interrogative of its predicate complement";
+            }
+            else if (DemonstrativeSubject(clause, clauses) is { } demonstrative)
+            {
+                placement = demonstrative;
+                role = "its demonstrative subject";
+            }
+
+            var head = anchors.FirstOrDefault(anchor => anchor.Target.Token.Id == placement.Token.Id)
+                ?? anchors.FirstOrDefault(anchor => complement.Any(other => other.Token.Id == anchor.Target.Token.Id))
+                ?? anchors[0];
             var proposal = new EvidentiaProposal(
                 word,
                 placement,
@@ -695,7 +730,7 @@ internal static class EvidentiaAttachedWords
                 Math.Max(0, head.Confidence - ConfidenceBelowHead),
                 new EvidentiaDecisionTrace(
                     "attached",
-                    $"{EvidentiaAttachment.CopulaOnThePredicate} of '{head.Source.Token.Surface}'{ParseCredit(word)}",
+                    $"{EvidentiaAttachment.CopulaOnThePredicate} of '{head.Source.Token.Surface}', on {role} in a {clauseType} clause",
                     head.Trace?.Evidence ?? []),
                 head);
             proposals.Add(proposal);
@@ -704,13 +739,64 @@ internal static class EvidentiaAttachedWords
     }
 
     /// <summary>
-    /// Whether the original writes its own <em>be</em> near a word of the clause: היה, יֵשׁ or אַיִן, or a הוּא no other
-    /// word took. Verb first, the clause's היה stands before its subject (וַיִּהְיוּ בְנֵי נֹחַ), so both are asked.
+    /// Whether a word of the clause is the original's own <em>is</em>: יֵשׁ, אַיִן, היה, or a הוּא no word took that
+    /// stands beside another subject (<em>the LORD, he is God</em>) rather than being the subject itself.
     /// </summary>
-    private static bool WritesBe(IReadOnlyList<EvidentiaAnalysis> verse, EvidentiaAnalysis near, IReadOnlySet<long> taken) =>
-        verse.Any(other => Math.Abs(other.Token.Position - near.Token.Position) <= CopulaReach
-            && other.Token.StrongNumber is { } number
-            && (HebrewBeWords.Contains(number) || HebrewCopulaPronouns.Contains(number) && !taken.Contains(other.Token.Id)));
+    private static bool WritesBe(
+        EvidentiaAnalysis word,
+        IReadOnlyList<EvidentiaAnalysis> clause,
+        EvidentiaClauses clauses,
+        IReadOnlySet<long> taken,
+        EvidentiaProposal? subject) =>
+        WrittenBeFunctions.Contains(clauses.Of(word)?.Function ?? string.Empty)
+        || word.Token.StrongNumber == HebrewBe
+        || word.Token.StrongNumber is { } number && HebrewCopulaPronouns.Contains(number) && !taken.Contains(word.Token.Id)
+            && (subject is not null && subject.Target.Token.Id != word.Token.Id
+                || clause.Any(other => clauses.Of(other)?.Function == SubjectFunction
+                    && other.Token.StrongNumber is not (HebrewArticle or Vav)
+                    && !HebrewCopulaPronouns.Contains(other.Token.StrongNumber ?? string.Empty)));
+
+    /// <summary>What these words were placed on in the original, where a rule of their own placed them.</summary>
+    private static List<EvidentiaProposal> Placed(
+        IEnumerable<EvidentiaAnalysis?> words, IReadOnlyDictionary<long, EvidentiaProposal> placedBySource) =>
+        [.. words
+            .OfType<EvidentiaAnalysis>()
+            .DistinctBy(word => word.Token.Id)
+            .Select(word => placedBySource.GetValueOrDefault(word.Token.Id))
+            .OfType<EvidentiaProposal>()
+            .Where(placed => placed.Kind != EvidentiaProposalKind.AttachedWord
+                && placed.Target.Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase))];
+
+    /// <summary>
+    /// The word a phrase is about: its first word past a conjunction, an article and a preposition, so the noun of
+    /// a prepositional phrase (<em>his delight is in the law</em> on תֹורַת, the בְּ being <em>in</em>'s), and the
+    /// preposition itself where it is all the phrase writes (<em>I am with you</em> on עִמְּךָ).
+    /// </summary>
+    private static EvidentiaAnalysis? PhraseHead(IReadOnlyList<EvidentiaAnalysis> phrase)
+    {
+        var words = phrase.OrderBy(word => word.Token.Position)
+            .Where(word => word.Token.StrongNumber is not (HebrewArticle or Vav) && HebrewPartOfSpeech(word) is not ("art" or "conj"))
+            .ToList();
+        return words.FirstOrDefault(word => HebrewPartOfSpeech(word) != "prep") ?? words.FirstOrDefault();
+    }
+
+    /// <summary>
+    /// The demonstrative a clause's subject is, where it is one and nothing else but כֹּל: אֵלֶּה of <em>These are
+    /// the sons</em>, and of כָּל־אֵלֶּה, <em>all these</em>; not זֶה of <em>this Philistine</em>, whose subject is a noun.
+    /// </summary>
+    private static EvidentiaAnalysis? DemonstrativeSubject(IReadOnlyList<EvidentiaAnalysis> clause, EvidentiaClauses clauses)
+    {
+        var subject = clause
+            .Where(word => clauses.Of(word)?.Function == SubjectFunction
+                && word.Token.StrongNumber is not (HebrewArticle or Vav or HebrewAll)
+                && HebrewPartOfSpeech(word) is not ("art" or "conj"))
+            .ToList();
+        return subject.Count > 0 && subject.All(word => HebrewPartOfSpeech(word) == HebrewDemonstrative) ? subject[^1] : null;
+    }
+
+    private static string HebrewPartOfSpeech(EvidentiaAnalysis word) => word.PartOfSpeech ?? word.Token.PartOfSpeech ?? string.Empty;
+
+    private static bool IsHebrewFinite(EvidentiaAnalysis word) => Feature(word, "tense") is { } tense && HebrewFiniteTenses.Contains(tense);
 
     /// <summary>
     /// The predicate English writes before its copula, where it does: <em>Great</em> of <em>Great is his glory</em>,
