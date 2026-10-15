@@ -484,7 +484,7 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
-    public void WhenAskedIsGoesOnThePredicateOrOnADemonstrativeSubjectAndNotWhereTheOriginalWritesBe()
+    public void WhenAskedIsGoesOnTheHeadOfThePredicateComplementOfAVerblessClause()
     {
         var god = English(1, Genesis122, 1, "God", "PROPN") with { SyntacticHead = 4, Relation = "nsubj" };
         var isJudge = English(2, Genesis122, 2, "is", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
@@ -492,35 +492,105 @@ public class EvidentiaAttachedWordTests
         var judge = English(4, Genesis122, 4, "judge", "NOUN");
         var elohim = Hebrew(11, Genesis122, 1, "אֱלֹהִים", "H430", "subs");
         var shofet = Hebrew(12, Genesis122, 2, "שֹׁפֵט", "H8199", "subs");
-        AttachOf([god, isJudge, a, judge], [elohim, shofet], (god, elohim), (judge, shofet)).Should().Contain((2L, 12L));
+        var nominal = Clauses((elohim, 1, "NmCl", 1, "Subj"), (shofet, 1, "NmCl", 2, "PreC"));
+        AttachIs([god, isJudge, a, judge], [elohim, shofet], nominal, (god, elohim), (judge, shofet)).Should().Contain((2L, 12L));
+        AttachOf([god, isJudge, a, judge], [elohim, shofet], (god, elohim), (judge, shofet)).Should().NotContain(pair => pair.Source == 2);
         Attach([god, isJudge, a, judge], [elohim, shofet], (god, elohim), (judge, shofet)).Should().NotContain(pair => pair.Source == 2);
 
-        var these = English(1, Genesis122, 1, "These", "PRON") with { SyntacticHead = 4, Relation = "nsubj" };
-        var are = English(2, Genesis122, 2, "are", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
-        var the = English(3, Genesis122, 3, "the", "DET");
-        var sons = English(4, Genesis122, 4, "sons", "NOUN");
-        var elleh = Hebrew(11, Genesis122, 1, "אֵלֶּה", "H428", "prde");
-        var bene = Hebrew(12, Genesis122, 2, "בְנֵי", "H1121", "subs", ("state", "c"));
-        AttachOf([these, are, the, sons], [elleh, bene], (these, elleh), (sons, bene)).Should().Contain((2L, 11L));
+        AttachIs([god, isJudge, a, judge], [elohim, shofet], nominal, (god, elohim)).Should().NotContain(pair => pair.Source == 2);
 
+        var verbal = Clauses((elohim, 1, "xQtX", 1, "Subj"), (shofet, 1, "xQtX", 2, "Pred"));
+        AttachIs([god, isJudge, a, judge], [elohim, shofet], verbal, (god, elohim), (judge, shofet)).Should().NotContain(pair => pair.Source == 2);
+
+        var hu = Hebrew(13, Genesis122, 3, "הוּא", "H1931", "prps");
+        var apart = Clauses((elohim, 1, "CPen", 1, "Frnt"), (hu, 2, "NmCl", 3, "Subj"), (shofet, 2, "NmCl", 2, "PreC"));
+        AttachIs([god, isJudge, a, judge], [elohim, hu, shofet], apart, (god, elohim), (judge, shofet)).Should().NotContain(pair => pair.Source == 2);
+
+        var subjectless = Clauses((elohim, 1, "WayX", 1, "Objc"), (shofet, 2, "AjCl", 2, "PreC"));
+        AttachIs([god, isJudge, a, judge], [elohim, shofet], subjectless, (god, elohim), (judge, shofet)).Should().Contain((2L, 12L));
+    }
+
+    [Fact]
+    public void WhenAskedIsGoesOnTheFrontedPredicateTheInterrogativeTheDemonstrativeSubjectAndTheNounOfAPreposition()
+    {
         var great = English(1, Genesis122, 1, "Great", "ADJ");
         var isGlory = English(2, Genesis122, 2, "is", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
         var his = English(3, Genesis122, 3, "his", "PRON");
         var glory = English(4, Genesis122, 4, "glory", "NOUN");
         var gadol = Hebrew(11, Genesis122, 1, "גָּדֹול", "H1419", "adjv");
         var kevodo = Hebrew(12, Genesis122, 2, "כְּבֹודֹו", "H3519", "subs");
-        AttachOf([great, isGlory, his, glory], [gadol, kevodo], (great, gadol), (glory, kevodo)).Should().Contain((2L, 11L));
+        AttachIs([great, isGlory, his, glory], [gadol, kevodo], Clauses((gadol, 1, "AjCl", 1, "PreC"), (kevodo, 1, "AjCl", 2, "Subj")),
+            (glory, kevodo)).Should().Contain((2L, 11L));
 
-        var the3 = English(1, Genesis122, 1, "the", "DET");
-        var third = English(2, Genesis122, 2, "third", "ADJ") with { SyntacticHead = 4, Relation = "nsubj" };
-        var was = English(3, Genesis122, 3, "was", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
-        var shammah = English(4, Genesis122, 4, "Shammah", "PROPN");
-        var shelishi = Hebrew(11, Genesis122, 1, "שְּׁלִשִׁי", "H7992", "adjv");
-        var shammahName = Hebrew(12, Genesis122, 2, "שַׁמָּה", "H8048", "nmpr");
-        AttachOf([the3, third, was, shammah], [shelishi, shammahName], (third, shelishi), (shammah, shammahName)).Should().Contain((3L, 12L));
+        var who = English(1, Genesis122, 1, "who", "PRON");
+        var isPhilistine = English(2, Genesis122, 2, "is", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
+        var this_ = English(3, Genesis122, 3, "this", "DET");
+        var philistine = English(4, Genesis122, 4, "Philistine", "PROPN");
+        var mi = Hebrew(11, Genesis122, 1, "מִי", "H4310", "prin");
+        var the = Hebrew(12, Genesis122, 2, "הַ", "H9009", "art");
+        var pelishti = Hebrew(13, Genesis122, 3, "פְּלִשְׁתִּי", "H6430", "adjv");
+        var zeh = Hebrew(14, Genesis122, 4, "זֶּה", "H2088", "prde");
+        AttachIs([who, isPhilistine, this_, philistine], [mi, the, pelishti, zeh],
+                Clauses((mi, 1, "NmCl", 1, "PreC"), (the, 1, "NmCl", 2, "Subj"), (pelishti, 1, "NmCl", 2, "Subj"), (zeh, 1, "NmCl", 2, "Subj")),
+                (philistine, pelishti), (this_, zeh))
+            .Should().Contain((2L, 11L));
 
-        var be = Hebrew(13, Genesis122, 3, "הָיָה", "H1961", "verb");
-        AttachOf([god, isJudge, a, judge], [elohim, shofet, be], (god, elohim), (judge, shofet)).Should().NotContain((2L, 12L));
+        var these = English(1, Genesis122, 1, "These", "PRON") with { SyntacticHead = 4, Relation = "nsubj" };
+        var are = English(2, Genesis122, 2, "are", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
+        var theSons = English(3, Genesis122, 3, "the", "DET");
+        var sons = English(4, Genesis122, 4, "sons", "NOUN");
+        var all = Hebrew(10, Genesis122, 1, "כָּל", "H3605", "subs", ("state", "c"));
+        var elleh = Hebrew(11, Genesis122, 2, "אֵלֶּה", "H428", "prde");
+        var bene = Hebrew(12, Genesis122, 3, "בְנֵי", "H1121", "subs", ("state", "c"));
+        AttachIs([these, are, theSons, sons], [all, elleh, bene],
+                Clauses((all, 1, "NmCl", 1, "Subj"), (elleh, 1, "NmCl", 1, "Subj"), (bene, 1, "NmCl", 2, "PreC")),
+                (sons, bene))
+            .Should().Contain((2L, 11L));
+
+        var darkness = English(1, Genesis122, 1, "darkness", "NOUN") with { SyntacticHead = 5, Relation = "nsubj" };
+        var was = English(2, Genesis122, 2, "was", "AUX") with { Lemma = "be", SyntacticHead = 5, Relation = "cop" };
+        var over = English(3, Genesis122, 3, "over", "ADP");
+        var theSurface = English(4, Genesis122, 4, "the", "DET");
+        var surface = English(5, Genesis122, 5, "surface", "NOUN");
+        var choshech = Hebrew(11, Genesis122, 1, "חֹשֶׁךְ", "H2822", "subs");
+        var al = Hebrew(12, Genesis122, 2, "עַל", "H5921", "prep");
+        var pene = Hebrew(13, Genesis122, 3, "פְּנֵי", "H6440", "subs", ("state", "c"));
+        AttachIs([darkness, was, over, theSurface, surface], [choshech, al, pene],
+                Clauses((choshech, 1, "NmCl", 1, "Subj"), (al, 1, "NmCl", 2, "PreC"), (pene, 1, "NmCl", 2, "PreC")),
+                (darkness, choshech), (surface, pene))
+            .Should().Contain((2L, 13L));
+
+        var blessed = English(1, Genesis122, 1, "Blessed", "ADJ");
+        var be = English(2, Genesis122, 2, "be", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
+        var theLord = English(3, Genesis122, 3, "the", "DET");
+        var lord = English(4, Genesis122, 4, "LORD", "PROPN");
+        var baruch = Hebrew(11, Genesis122, 1, "בָּרוּךְ", "H1288", "verb", ("tense", "ptcp"));
+        var yhwh = Hebrew(12, Genesis122, 2, "יְהוָה", "H3068", "nmpr");
+        AttachIs([blessed, be, theLord, lord], [baruch, yhwh], Clauses((baruch, 1, "Ptcp", 1, "PreC"), (yhwh, 1, "Ptcp", 2, "Subj")),
+            (lord, yhwh)).Should().Contain((2L, 11L));
+    }
+
+    [Fact]
+    public void WhenAskedIsIsNotPlacedWhereTheClauseWritesItsOwnBe()
+    {
+        var god = English(1, Genesis122, 1, "God", "PROPN") with { SyntacticHead = 4, Relation = "nsubj" };
+        var isJudge = English(2, Genesis122, 2, "is", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
+        var a = English(3, Genesis122, 3, "a", "DET");
+        var judge = English(4, Genesis122, 4, "judge", "NOUN");
+        var elohim = Hebrew(11, Genesis122, 1, "אֱלֹהִים", "H430", "subs");
+        var hu = Hebrew(12, Genesis122, 2, "הוּא", "H1931", "prps");
+        var shofet = Hebrew(13, Genesis122, 3, "שֹׁפֵט", "H8199", "subs");
+        var yesh = Hebrew(14, Genesis122, 4, "יֵשׁ", "H3426", "subs");
+        var withPronoun = Clauses((elohim, 1, "NmCl", 1, "Subj"), (hu, 1, "NmCl", 2, "Subj"), (shofet, 1, "NmCl", 3, "PreC"));
+        AttachIs([god, isJudge, a, judge], [elohim, hu, shofet], withPronoun, (god, elohim), (judge, shofet))
+            .Should().NotContain(pair => pair.Source == 2);
+        var withExistence = Clauses((elohim, 1, "NmCl", 1, "Subj"), (shofet, 1, "NmCl", 3, "PreC"), (yesh, 1, "NmCl", 4, "Exst"));
+        AttachIs([god, isJudge, a, judge], [elohim, shofet, yesh], withExistence, (god, elohim), (judge, shofet))
+            .Should().NotContain(pair => pair.Source == 2);
+
+        var he = English(1, Genesis122, 1, "He", "PRON") with { SyntacticHead = 4, Relation = "nsubj" };
+        AttachIs([he, isJudge, a, judge], [hu, shofet], Clauses((hu, 1, "NmCl", 2, "Subj"), (shofet, 1, "NmCl", 3, "PreC")), (he, hu), (judge, shofet))
+            .Should().Contain((2L, 13L));
     }
 
     [Fact]
@@ -801,6 +871,15 @@ public class EvidentiaAttachedWordTests
         IReadOnlyList<EvidentiaToken> target,
         params (EvidentiaToken Source, EvidentiaToken Target)[] placed) => Attach(source, target, false, placed, functionWords: true);
 
+    private static IReadOnlyList<(long Source, long Target)> AttachIs(
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        EvidentiaClauses clauses,
+        params (EvidentiaToken Source, EvidentiaToken Target)[] placed) => Attach(source, target, false, placed, functionWords: true, clauses);
+
+    private static EvidentiaClauses Clauses(params (EvidentiaToken Word, long Clause, string Type, long Phrase, string Function)[] words) =>
+        EvidentiaClauses.Of([.. words.Select(word => (word.Word.Id, new EvidentiaClausePlace(word.Clause, word.Type, word.Phrase, word.Function)))]);
+
     private static IReadOnlyList<(long Source, long Target)> AttachDefinite(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
@@ -811,7 +890,8 @@ public class EvidentiaAttachedWordTests
         IReadOnlyList<EvidentiaToken> target,
         bool definiteNouns,
         (EvidentiaToken Source, EvidentiaToken Target)[] placed,
-        bool functionWords = false)
+        bool functionWords = false,
+        EvidentiaClauses? clauses = null)
     {
         var proposals = placed
             .Select(pair => new EvidentiaProposal(
@@ -822,7 +902,8 @@ public class EvidentiaAttachedWordTests
                 [.. target.Select(Analysis)],
                 proposals,
                 definiteNouns,
-                functionWords)
+                functionWords,
+                clauses)
             .Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
             .ToList();
     }
