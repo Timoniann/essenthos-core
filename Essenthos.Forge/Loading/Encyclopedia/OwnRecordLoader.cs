@@ -185,6 +185,13 @@ internal sealed class OwnRecordLoader(
     /// this edition, and on a held person. The title is held as one, or is one of the owner's
     /// decided titles: on a corpus built from nothing those are written by a later step, and the
     /// record may not exist yet or still be held as the person it was.
+    ///
+    /// <para>
+    /// A ruling naming a people beside a place stands on a manual ruling of the place on the same
+    /// word, in an earlier file because a file gives a word one answer, and both records are held as
+    /// what they are: <em>the father of Gibeon</em> is the town and its people in every text, so the
+    /// pair carries across the links.
+    /// </para>
     /// </summary>
     private async Task ValidateCompanions(IReadOnlyList<OwnRecordRulings> files, CancellationToken cancellationToken)
     {
@@ -192,6 +199,16 @@ internal sealed class OwnRecordLoader(
         foreach (var file in files)
         foreach (var ruling in file.Rulings.Where(r => r.Alongside is not null))
         {
+            if (await db.Entities.AnyAsync(e => e.Slug == ruling.Alongside && e.Kind == EntityKind.Place, cancellationToken))
+            {
+                var place = files.Where(f => f.Method == "manual")
+                    .SelectMany(f => f.Rulings).SingleOrDefault(r => r.Word == ruling.Word && r.Existing == ruling.Alongside);
+                if (file.Method != "manual" || ruling.Corrects is not null || place is null || ruling.Existing is null
+                    || !await db.Entities.AnyAsync(e => e.Slug == ruling.Existing && e.Kind == EntityKind.People, cancellationToken))
+                    throw new InvalidDataException($"The companion ruling on {ruling.Word} must name a held people beside a place a manual ruling gives the same word.");
+                continue;
+            }
+
             var companion = files.Where(f => !f.Carry && f.Method == "manual")
                 .SelectMany(f => f.Rulings).SingleOrDefault(r => r.Word == ruling.Word && r.Existing == ruling.Alongside);
             if (file.Carry || file.Method != "manual" || ruling.Corrects is not null
@@ -659,7 +676,8 @@ internal sealed class OwnRecordLoader(
     /// those answers were carried to. A person decided who the word names, so a reading or a
     /// resolution that named somebody else there is not a second opinion to show beside it — it is
     /// the answer the ruling was written against, and left standing it puts two records on one word.
-    /// Another person's ruling is not overruled, and the answer the ruling gives is not touched.
+    /// Another person's ruling is not overruled, whether it wrote the row or landed as a claim on a
+    /// row a pass had already written, and the answer the ruling gives is not touched.
     /// </summary>
     private const string Overruled =
         """
@@ -668,6 +686,8 @@ internal sealed class OwnRecordLoader(
             FROM word_entity a
             JOIN pending_annotation ruled ON ruled.word_id = a.word_id AND ruled.through IS NULL
             WHERE a.entity_id <> ruled.entity_id AND a.method <> @manual
+              AND NOT EXISTS (SELECT 1 FROM word_entity_claim held
+                              WHERE held.word_entity_id = a.id AND held.method = @manual)
         )
         DELETE FROM word_entity a
         USING overruled o

@@ -1,0 +1,62 @@
+{
+  "decidedBy": "Essenthos, 2026-10-15, on the project owner's ruling of 2026-10-15 on 1 Chronicles 8:29 ('давай тоді як мінімум тут додати ще картку народа… додай народ як мінімум', add at least the people) and his instruction to treat the same construction alike; each word read against its verse and the Hebrew by claude-opus-5-5",
+  "policy": "Chronicles' 'father of <town>' (אֲבִי + the town) names the town and, through it, its people: where a people record for that town is held, the town's word carries the people beside the place in every text the links reach.",
+  "method": "manual",
+  "source": "Essenthos, 'father of' a town read as the town, on the project owner's ruling of 2026-10-15",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "1CH 2:24",
+      "position": 18,
+      "surface": "תְקֹֽועַ",
+      "strongNumber": "H8620",
+      "existing": "tekoa-2",
+      "why": "Ashur 'the father of Tekoa' (אֲבִי תְקוֹעַ, avi teqoa): the town Tekoa, whose people are the Tekoites (2SA 23:26, NEH 3:5)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 2:51",
+      "position": 3,
+      "surface": "בֵֽית־לָ֔חֶם",
+      "strongNumber": "H1035",
+      "existing": "bethlehem",
+      "why": "Salma 'the father of Bethlehem' (אֲבִי בֵית־לָחֶם, avi beit-lachem): the town Bethlehem, whose people are the Bethlehemites (1SA 16:1)."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 4:4",
+      "position": 15,
+      "surface": "בֵּ֥ית לָֽחֶם",
+      "strongNumber": "H1035",
+      "existing": "bethlehem",
+      "why": "Hur 'the father of Bethlehem' (אֲבִי בֵית לָחֶם, avi beit lachem): the town Bethlehem, whose people are the Bethlehemites."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 4:5",
+      "position": 5,
+      "surface": "תְקֹ֔ועַ",
+      "strongNumber": "H8620",
+      "existing": "tekoa-2",
+      "why": "Ashur 'the father of Tekoa' (אֲבִי תְקוֹעַ, avi teqoa), as in 1CH 2:24: the town Tekoa, whose people are the Tekoites."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 8:29",
+      "position": 6,
+      "surface": "גִבְעֹ֑ון",
+      "strongNumber": "H1391",
+      "existing": "gibeon",
+      "why": "'The father of Gibeon' (אֲבִי גִבְעוֹן, avi giv'on) dwelt at Gibeon: the town and its people, the Gibeonites; the Synodal prints it as the people, «отец Гаваонитян»."
+    },
+    {
+      "text": "BHSA",
+      "reference": "1CH 9:35",
+      "position": 6,
+      "surface": "גִבְעֹ֖ון",
+      "strongNumber": "H1391",
+      "existing": "gibeon",
+      "why": "Jeiel 'the father of Gibeon' (אֲבִי גִבְעוֹן, avi giv'on) dwelt at Gibeon: the town and its people, the Gibeonites; the Synodal prints it as the people, «отец Гаваонитян»."
+    }
+  ]
+}

@@ -836,7 +836,7 @@ internal static class Annotating
                  ORDER BY s.own DESC, s.standing DESC, s.confidence DESC, s.kind = '{Title}', s.kind COLLATE "C", s.entity_id)
          ),
          several AS MATERIALIZED (
-             SELECT r.word_id, r.entity_id, r.kind, r.place FROM ranked r WHERE r.claims > 1
+             SELECT r.word_id, r.entity_id, r.kind, r.standing, r.place FROM ranked r WHERE r.claims > 1
          ),
          bearer_first AS (
              SELECT DISTINCT ON (top.word_id) top.word_id, other.entity_id
@@ -857,7 +857,7 @@ internal static class Annotating
                             AND r.next_own = r.own
                             AND r.next_standing = r.standing
                             AND r.next_confidence = r.confidence)
-                    OR {Beside("r.kind", "r.entity_id", "r.next_kind", "r.next_entity")})
+                    OR {Beside("r.kind", "r.entity_id", "r.standing", "r.next_kind", "r.next_entity", "r.next_standing")})
          )
          """;
 
@@ -878,22 +878,31 @@ internal static class Annotating
              JOIN several top ON top.word_id = first.word_id AND top.place = 1
              JOIN several other ON other.word_id = first.word_id AND other.entity_id <> first.entity_id
              WHERE other.place = 1
-                OR {Beside("top.kind", "top.entity_id", "other.kind", "other.entity_id")}
+                OR {Beside("top.kind", "top.entity_id", "top.standing", "other.kind", "other.entity_id", "other.standing")}
          )
          """;
 
     /// <summary>A property and not a field, because the statements above are fields and are built first.</summary>
     private static string Title => EnumSpelling.Of(EntityKind.Title);
 
+    /// <summary>The standing of an answer a person ruled, as a property for the same reason.</summary>
+    private static string Ruled => ClaimStanding.Of(LinkMethod.Manual).ToString(CultureInfo.InvariantCulture);
+
     /// <summary>
     /// Whether one word names both records without either answering for the other: a title and a
-    /// record joined to it as its bearer, or a person and a people. Two men on one word, or a man
-    /// and a town, are two answers to one question, and the lower is the one the higher outranked.
+    /// record joined to it as its bearer, a person and a people, or a place and a people a person
+    /// ruled on the word together. Two men on one word, or a man and a town, are two answers to one
+    /// question, and the lower is the one the higher outranked.
     /// </summary>
-    private static string Beside(string kind, string entity, string otherKind, string otherEntity) =>
+    private static string Beside(
+        string kind, string entity, string standing, string otherKind, string otherEntity, string otherStanding) =>
         $"""
          (({kind} = '{EnumSpelling.Of(EntityKind.Person)}' AND {otherKind} = '{EnumSpelling.Of(EntityKind.People)}')
           OR ({kind} = '{EnumSpelling.Of(EntityKind.People)}' AND {otherKind} = '{EnumSpelling.Of(EntityKind.Person)}')
+          OR ({kind} IN ('{EnumSpelling.Of(EntityKind.Place)}', '{EnumSpelling.Of(EntityKind.People)}')
+              AND {otherKind} IN ('{EnumSpelling.Of(EntityKind.Place)}', '{EnumSpelling.Of(EntityKind.People)}')
+              AND {kind} <> {otherKind}
+              AND {standing} = {Ruled} AND {otherStanding} = {Ruled})
           OR ({kind} = '{Title}' AND EXISTS (
                   SELECT 1 FROM title_bearer borne
                   WHERE borne.title_entity_id = {entity} AND borne.bearer_entity_id = {otherEntity}))

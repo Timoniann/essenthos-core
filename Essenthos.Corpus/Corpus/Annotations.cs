@@ -35,9 +35,10 @@ namespace Essenthos.Core.Corpus;
 /// One answer is not always one record. <em>Christ</em> in <em>Jesus Christ</em> is a title and the
 /// man who bears it, and <em>the Shunammite</em> is Abishag and her people: neither answer takes
 /// anything from the other, so the word names both and the reader is shown both, the first answer
-/// first. That holds for exactly two pairs — a title and a record <see cref="TitleBearer"/> joins to
-/// it, and a person and a people — and for nothing else: two men, or a man and a town, on one word
-/// are two answers to one question, and the second is the one the first outranked.
+/// first. That holds for three pairs — a title and a record <see cref="TitleBearer"/> joins to it, a
+/// person and a people, and a town and its people where a person ruled both on the word (<em>the
+/// father of Gibeon</em>) — and for nothing else: two men, or a man and a town, on one word are two
+/// answers to one question, and the second is the one the first outranked.
 /// </para>
 /// </summary>
 internal static class Annotations
@@ -453,6 +454,9 @@ internal static class Annotations
                     .OrderBy(shown => shown.Kind == EntityKind.Title)
                     .ToList());
 
+    /// <summary>The standing of an answer a person ruled.</summary>
+    private static readonly int Ruled = ClaimStanding.Of(LinkMethod.Manual);
+
     private static bool Disputed(Claimed best, Claimed next) =>
         best.Slug != next.Slug
         && best.ReadHere == next.ReadHere
@@ -461,10 +465,13 @@ internal static class Annotations
 
     /// <summary>
     /// Whether one word names both records without either answering for the other: a title and a
-    /// record joined to it as its bearer, or a person and a people.
+    /// record joined to it as its bearer, a person and a people, or a place and a people a person
+    /// ruled on the word together.
     /// </summary>
     private static bool Beside(Claimed one, Claimed other, IReadOnlySet<(int Title, int Bearer)> bearers) =>
         (one.Kind, other.Kind) is (EntityKind.Person, EntityKind.People) or (EntityKind.People, EntityKind.Person)
+        || ((one.Kind, other.Kind) is (EntityKind.Place, EntityKind.People) or (EntityKind.People, EntityKind.Place)
+            && one.Standing == Ruled && other.Standing == Ruled)
         || (one.Kind == EntityKind.Title && bearers.Contains((one.EntityId, other.EntityId)))
         || (other.Kind == EntityKind.Title && bearers.Contains((other.EntityId, one.EntityId)));
 
