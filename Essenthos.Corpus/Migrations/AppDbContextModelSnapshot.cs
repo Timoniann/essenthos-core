@@ -1066,6 +1066,133 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityKinStatement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CanonicalBook")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_book");
+
+                    b.Property<int>("CanonicalChapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_chapter");
+
+                    b.Property<int>("CanonicalVerse")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_verse");
+
+                    b.Property<int?>("Children")
+                        .HasColumnType("integer")
+                        .HasColumnName("children");
+
+                    b.Property<string>("Citation")
+                        .HasColumnType("text")
+                        .HasColumnName("citation");
+
+                    b.Property<double?>("Confidence")
+                        .HasColumnType("double precision")
+                        .HasColumnName("confidence");
+
+                    b.Property<int?>("Daughters")
+                        .HasColumnType("integer")
+                        .HasColumnName("daughters");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_id");
+
+                    b.Property<string>("Family")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("family");
+
+                    b.Property<int?>("Grandsons")
+                        .HasColumnType("integer")
+                        .HasColumnName("grandsons");
+
+                    b.Property<string>("Kind")
+                        .IsRequired()
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
+                        .HasColumnName("kind");
+
+                    b.Property<string>("Method")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("method");
+
+                    b.Property<bool>("MoreDaughters")
+                        .HasColumnType("boolean")
+                        .HasColumnName("more_daughters");
+
+                    b.Property<bool>("MoreSons")
+                        .HasColumnType("boolean")
+                        .HasColumnName("more_sons");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("text")
+                        .HasColumnName("note");
+
+                    b.Property<int?>("Ordinal")
+                        .HasColumnType("integer")
+                        .HasColumnName("ordinal");
+
+                    b.Property<string>("Original")
+                        .HasMaxLength(256)
+                        .HasColumnType("character varying(256)")
+                        .HasColumnName("original");
+
+                    b.Property<int?>("ParentEntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("parent_entity_id");
+
+                    b.Property<int?>("Sons")
+                        .HasColumnType("integer")
+                        .HasColumnName("sons");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.Property<string>("Witness")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("witness");
+
+                    b.HasKey("Id")
+                        .HasName("pk_entity_kin_statement");
+
+                    b.HasIndex("EntityId")
+                        .HasDatabaseName("ix_entity_kin_statement_entity_id");
+
+                    b.HasIndex("ParentEntityId")
+                        .HasDatabaseName("ix_entity_kin_statement_parent_entity_id");
+
+                    b.ToTable("entity_kin_statement", null, t =>
+                        {
+                            t.HasComment("What a verse says of a person's children beyond naming them: how many, that there were more than it names, or a child's place among them, each with the verse and the words of the original it rests on.");
+
+                            t.HasCheckConstraint("ck_entity_kin_statement_confidence_range", "\"confidence\" IS NULL OR (\"confidence\" >= 0 AND \"confidence\" <= 1)");
+
+                            t.HasCheckConstraint("ck_entity_kin_statement_inferred_carries_confidence", "\"method\" IN ('stated-by-source', 'manual') OR \"confidence\" IS NOT NULL");
+
+                            t.HasCheckConstraint("ck_entity_kin_statement_kind", "\"kind\" IN ('count', 'more', 'order')");
+
+                            t.HasCheckConstraint("ck_entity_kin_statement_order_names_a_parent", "\"kind\" <> 'order' OR (\"ordinal\" >= 1 AND \"parent_entity_id\" IS NOT NULL)");
+
+                            t.HasCheckConstraint("ck_entity_kin_statement_source_not_empty", "length(btrim(\"source\")) > 0");
+
+                            t.HasCheckConstraint("ck_entity_kin_statement_stated_carries_no_confidence", "\"method\" <> 'stated-by-source' OR \"confidence\" IS NULL");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityName", b =>
                 {
                     b.Property<int>("Id")
@@ -5322,6 +5449,26 @@ namespace Essenthos.Core.Migrations
                         .HasConstraintName("fk_entity_image_caption_entity_image_entity_image_id");
 
                     b.Navigation("EntityImage");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityKinStatement", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
+                        .WithMany()
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_entity_kin_statement_entity_entity_id");
+
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Parent")
+                        .WithMany()
+                        .HasForeignKey("ParentEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasConstraintName("fk_entity_kin_statement_entity_parent_entity_id");
+
+                    b.Navigation("Entity");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityName", b =>

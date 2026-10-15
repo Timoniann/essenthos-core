@@ -402,6 +402,7 @@ internal sealed class DatasetLoader(
             new("name-glosses", cancellationToken => RenderTheTitlesAndGlossesOfNames(resources, cancellationToken)),
             new("refiled-ties", MoveWhatWasReadOffTheMisfiledVerses),
             new("own-relationships", RelateTheEntitiesOurOwnClausesRelate),
+            new("kin-statements", cancellationToken => CountTheChildrenTheVersesCount(resources, cancellationToken)),
             new("crossed-names", CrossBackTheNamesGivenToEachOther),
             new("relationship-verses", ListTheVersesTheRelationshipsWereReadFrom),
             new("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
@@ -2035,6 +2036,19 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<EntityDescriptorLoader>();
+        status.Record(await loader.Load(resources, cancellationToken));
+    }
+
+    /// <summary>
+    /// What the verses say of a person's children beyond naming them: how many, that there were more,
+    /// a child's place among them. After the records are folded, so each names the record it ends on.
+    /// </summary>
+    private async Task CountTheChildrenTheVersesCount(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the counts and places of children the verses state");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<KinStatementLoader>();
         status.Record(await loader.Load(resources, cancellationToken));
     }
 

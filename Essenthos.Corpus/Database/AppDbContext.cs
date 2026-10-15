@@ -298,6 +298,9 @@ public class AppDbContext : DbContext
     /// <summary>Every method that says a clause is true, the way link claims do for links.</summary>
     public DbSet<EntityDescriptorClaim> EntityDescriptorClaims { get; set; } = null!;
 
+    /// <summary>What a verse says of a person's children beyond naming them: a count, more, a place among them.</summary>
+    public DbSet<EntityKinStatement> EntityKinStatements { get; set; } = null!;
+
     /// <summary>An entity's name in a reader's language, in the case a phrase puts it in.</summary>
     public DbSet<EntityNameForm> EntityNameForms { get; set; } = null!;
 
@@ -1288,6 +1291,36 @@ public class AppDbContext : DbContext
             entity.ToTable(
                 "entity_descriptor_claim",
                 t => AddProvenanceConstraints(t, "entity_descriptor_claim"));
+        });
+
+        modelBuilder.Entity<EntityKinStatement>(entity =>
+        {
+            entity.Property(s => s.Method).HasConversion(EnumStorage.LinkMethod);
+
+            entity.HasOne(s => s.Entity)
+                .WithMany()
+                .HasForeignKey(s => s.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(s => s.Parent)
+                .WithMany()
+                .HasForeignKey(s => s.ParentEntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            var kinds = string.Join(", ", KinStatementKinds.All.Select(kind => $"'{kind}'"));
+            entity.ToTable(
+                "entity_kin_statement",
+                t =>
+                {
+                    AddProvenanceConstraints(t, "entity_kin_statement").HasComment(
+                        "What a verse says of a person's children beyond naming them: how many, that "
+                        + "there were more than it names, or a child's place among them, each with "
+                        + "the verse and the words of the original it rests on.");
+                    t.HasCheckConstraint("ck_entity_kin_statement_kind", $"\"kind\" IN ({kinds})");
+                    t.HasCheckConstraint(
+                        "ck_entity_kin_statement_order_names_a_parent",
+                        $"\"kind\" <> '{KinStatementKinds.Order}' OR (\"ordinal\" >= 1 AND \"parent_entity_id\" IS NOT NULL)");
+                });
         });
 
         modelBuilder.Entity<EntityNameForm>(entity =>

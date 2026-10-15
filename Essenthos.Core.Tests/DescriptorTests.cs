@@ -1487,7 +1487,10 @@ public sealed class DescriptorTests : IDisposable
             .OnlyContain(c => c.Target.Forms!.Count == GrammaticalCases.All.Count);
         counted.Commands.Should().Be(forTen, "the queries are per page, not per name");
         counted.Commands.Should().BeLessThanOrEqualTo(
-            9, "own clauses, clauses written on others, sexes, name forms and renamed headings");
+            16,
+            "own clauses, clauses written on others, sexes, name forms and renamed headings; the subjects, "
+            + "the counts and places of children, the parents and their children, the family tree, "
+            + "how often its people are named, and the people a line names that no clause brought");
         elapsed.Should().BeLessThan(TimeSpan.FromSeconds(1));
     }
 

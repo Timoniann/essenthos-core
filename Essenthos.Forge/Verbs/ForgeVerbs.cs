@@ -190,6 +190,7 @@ internal static partial class ForgeVerbs
         new("lands", "", "Load the periods of the lands from PeriodO.", Lands),
         new("name-forms", "", "Load the names the descriptions put into a case.", NameForms),
         new("name-glosses", "", "Load the titles and glosses of names in each reader's language.", NameGlosses),
+        new("kin-statements", "", "Load what the verses say of a person's children: how many, more than named, a child's place.", KinStatements),
         new("own-names", "", "Apply sourced name corrections and names the datasets do not give.", OwnNames),
         new("reigns", "", "Load the kings, the rulers of the nations and the prophets of their days.", Reigns),
         new("own-records", "", "Apply the rulings on records, then write their lines in every language.", OwnRecords),
