@@ -85,7 +85,8 @@ internal sealed class EvidentiaFileSourceTexts
                     .. verses.Select((verse, index) => new PlacedVerse(index, verse.Book, verse.Chapter,
                         verse.Verse.Number, verse.Verse.Label, verse.Verse.Words.Sum(word => word.Surface.Length))),
                 ],
-                BookTraditions.For(slug))
+                BookTraditions.For(slug),
+                CanonicalFrameLoader.Read(slug))
             .Where(reference => reference.IsPrimary)
             .ToDictionary(reference => reference.VerseId);
 
