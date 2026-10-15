@@ -387,6 +387,7 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
         EvidentiaProposalKind.SharedEntityInOrder => "shared-entity-in-order",
         EvidentiaProposalKind.ConfirmedRendering => "confirmed-rendering",
         EvidentiaProposalKind.AlignerAndLexicalEvidence => "aligner-and-lexical-evidence",
+        EvidentiaProposalKind.CombinedEvidence => "combined-evidence",
         _ => throw new ArgumentOutOfRangeException(nameof(kind), kind,
             $"{kind} has no stored spelling. Add it to EvidentiaDecisionRecorder.Spelling before a resolver emits it."),
     };
@@ -411,6 +412,7 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
         EvidentiaFormKind.Surface => "surface",
         EvidentiaFormKind.Lemma => "lemma",
         EvidentiaFormKind.Normalised => "normalised",
+        EvidentiaFormKind.Capitals => "capitals",
         _ => throw new ArgumentOutOfRangeException(nameof(form), form, $"{form} has no stored spelling."),
     };
 }

@@ -172,7 +172,19 @@ internal sealed record EvidentiaToken(
     string? PartOfSpeech = null,
     IReadOnlyDictionary<string, string>? Morphology = null,
     long? SyntacticHead = null,
-    string? Relation = null);
+    string? Relation = null)
+{
+    /// <summary>Every canonical address the word's verse stands at, where the frame places it at more than one.</summary>
+    public IReadOnlyList<EvidentiaAddress>? Span { get; init; }
+
+    /// <summary>
+    /// The verse and place the word is printed at, where the verse map reads it as part of another verse; an
+    /// answer key and its readings name words by where they are printed.
+    /// </summary>
+    public (EvidentiaAddress Address, int Position)? Home { get; init; }
+
+    public (EvidentiaAddress Address, int Position) Printed => Home ?? (Address, Position);
+}
 
 /// <summary>
 /// What a language pack concluded a word is. <see cref="Unknown"/> is the reason this is not a
@@ -228,6 +240,9 @@ internal enum EvidentiaFormKind
     Surface,
     Lemma,
     Normalised,
+
+    /// <summary>A word as printed in capitals: LORD and GOD, the name.</summary>
+    Capitals,
 }
 
 /// <summary>

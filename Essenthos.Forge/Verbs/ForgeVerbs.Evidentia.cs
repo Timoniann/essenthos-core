@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Essenthos.Core.Loading.Links.Evidentia;
 
 namespace Essenthos.Core.Verbs;
@@ -45,9 +46,33 @@ internal static partial class ForgeVerbs
         await WriteRows(args, "--words", measurement.Words);
         await WriteRows(args, "--absences", measurement.Absences);
         await WriteRows(args, "--key-doubts", measurement.KeyDoubts);
+        await WriteCombinerEdges(args, measureOptions, measurement.CombinerRows);
         measureOptions.Learns?.Write(OptionalText(args, "--confirmed-out")!);
         forge.Logger.LogInformation("\n{Measurement}", measurement);
         return 0;
+    }
+
+    /// <summary>Every edge the combiner weighed, under the names of its features, for a fit made outside the Forge.</summary>
+    private static async Task WriteCombinerEdges(
+        string[] args, EvidentiaMeasurementOptions options, IReadOnlyList<EvidentiaCombinerRow> rows)
+    {
+        if (OptionalText(args, "--combiner-export") is not { } path)
+        {
+            return;
+        }
+
+        var directory = Path.GetDirectoryName(Path.GetFullPath(path));
+        if (!string.IsNullOrEmpty(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        await using var stream = File.Create(path);
+        await JsonSerializer.SerializeAsync(stream, new
+        {
+            Features = EvidentiaCombinerFeatures.Names(options.Combiner?.Pivots ?? options.PivotTexts ?? []),
+            Rows = rows,
+        });
     }
 
     private static async Task<int> EvidentiaMeasureBook(ForgeRun forge, string[] args)
@@ -75,6 +100,7 @@ internal static partial class ForgeVerbs
         await WriteRows(args, "--words", measurement.Words);
         await WriteRows(args, "--absences", measurement.Absences);
         await WriteRows(args, "--key-doubts", measurement.KeyDoubts);
+        await WriteCombinerEdges(args, measureBookOptions, measurement.CombinerRows);
         measureBookOptions.Learns?.Write(OptionalText(args, "--confirmed-out")!);
         forge.Logger.LogInformation("\n{Measurement}", measurement);
         return 0;

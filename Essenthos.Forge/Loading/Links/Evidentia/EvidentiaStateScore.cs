@@ -63,7 +63,8 @@ internal sealed record EvidentiaWordStateRecord(
 /// right. <see cref="Boundary"/> and <see cref="BoundaryAttached"/> are the words among those it calls
 /// wrong that stand in the two chunk-boundary classes, and <see cref="SafeBoundary"/> those of either in
 /// the safe tier. <see cref="RightByTheJudgedKey"/> and <see cref="SafeRightByTheJudgedKey"/> are the words
-/// right by the key as its readers left it (<see cref="EvidentiaJudgedKey"/>).
+/// right by the key as its readers left it (<see cref="EvidentiaJudgedKey"/>). <see cref="OtherConvention"/> are
+/// those it calls wrong that place a Hebrew <em>of</em> by the other convention.
 /// </summary>
 internal readonly record struct EvidentiaStateCount(
     int Words,
@@ -75,13 +76,15 @@ internal readonly record struct EvidentiaStateCount(
     int BoundaryAttached = 0,
     int SafeBoundary = 0,
     int RightByTheJudgedKey = 0,
-    int SafeRightByTheJudgedKey = 0)
+    int SafeRightByTheJudgedKey = 0,
+    int OtherConvention = 0)
 {
     public static EvidentiaStateCount operator +(EvidentiaStateCount one, EvidentiaStateCount two) => new(
         one.Words + two.Words, one.Judged + two.Judged, one.Right + two.Right,
         one.SafeJudged + two.SafeJudged, one.SafeRight + two.SafeRight,
         one.Boundary + two.Boundary, one.BoundaryAttached + two.BoundaryAttached, one.SafeBoundary + two.SafeBoundary,
-        one.RightByTheJudgedKey + two.RightByTheJudgedKey, one.SafeRightByTheJudgedKey + two.SafeRightByTheJudgedKey);
+        one.RightByTheJudgedKey + two.RightByTheJudgedKey, one.SafeRightByTheJudgedKey + two.SafeRightByTheJudgedKey,
+        one.OtherConvention + two.OtherConvention);
 }
 
 /// <summary>
@@ -93,7 +96,8 @@ internal readonly record struct EvidentiaStateCount(
 /// <para>Every precision is quoted three ways: by the key, with the placements of a chunk-boundary
 /// class (<see cref="EvidentiaChunkBoundary"/>) counted right, each class apart, and against the judged
 /// key, which is the key with the corrections of its readers (<see cref="EvidentiaJudgedKey"/>) and no
-/// class counted by rule. <see cref="Loaded"/> is the same passage on the key as it was loaded;
+/// class counted by rule. Each line then ends with the placements of the other convention of a Hebrew
+/// <em>of</em> counted right, on their own. <see cref="Loaded"/> is the same passage on the key as it was loaded;
 /// <see cref="JudgedFinal"/>, <see cref="JudgedSafe"/> and <see cref="JudgedLoaded"/> are the placements
 /// right by the judged key: of all, of the safe tier, and on the key as loaded.</para>
 /// </summary>
@@ -166,6 +170,8 @@ internal sealed record EvidentiaStateMeasure(
 
     public const string JudgedName = "against the judged key";
 
+    private static readonly string OtherConventionCounted = $"with {EvidentiaChunkBoundary.OtherConventionName} counted right";
+
     /// <summary>A figure by the key, then with each class counted right, the classes apart.</summary>
     private static string BothWays(int right, int judged, int boundary, int attached) =>
         $"{Share(right, judged)} by the key; with {EvidentiaChunkBoundary.PrefixName} counted right {Share(right + boundary, judged)}; " +
@@ -200,14 +206,18 @@ internal sealed record EvidentiaStateMeasure(
             $"conjunctions {Share(Boundary.PrefixConjunctions, Boundary.Prefix)}, on a written word the key leaves out " +
             $"{Share(Boundary.PrefixOnWordsLeftOut, Boundary.Prefix)}; {EvidentiaChunkBoundary.AttachedName} " +
             $"{Share(Boundary.Attached, Final.OnCoveredWords)}, auxiliaries {Share(Boundary.AttachedAuxiliaries, Boundary.Attached)}, " +
-            $"on a verb the key leaves out beside its infinitive absolute {Share(Boundary.AttachedBesideInfinitives, Boundary.Attached)}",
+            $"on a verb the key leaves out beside its infinitive absolute {Share(Boundary.AttachedBesideInfinitives, Boundary.Attached)}; " +
+            $"{EvidentiaChunkBoundary.OtherConventionName} {Share(Boundary.OtherConvention, Final.OnCoveredWords)}",
             $"key as loaded, pairs, three ways: {BothWays(Loaded.Correct, Loaded.OnCoveredWords, Boundary.Prefix, Boundary.Attached)}; " +
             $"with both {Share(Loaded.Correct + Boundary.Prefix + Boundary.Attached, Loaded.OnCoveredWords)}; " +
-            $"{JudgedName} {Share(JudgedLoaded, Loaded.OnCoveredWords)}",
+            $"{JudgedName} {Share(JudgedLoaded, Loaded.OnCoveredWords)}; " +
+            $"{OtherConventionCounted} {Share(Loaded.Correct + Boundary.OtherConvention, Loaded.OnCoveredWords)}",
             $"split key, pairs, three ways: {BothWays(Final.Correct, Final.OnCoveredWords, Boundary.Prefix, Boundary.Attached)}; " +
             $"with both {Share(Final.Correct + Boundary.Prefix + Boundary.Attached, Final.OnCoveredWords)}; " +
             $"safe tier with both {Share(Safe.Correct + Boundary.SafePrefix + Boundary.SafeAttached, Safe.OnCoveredWords)}; " +
-            $"{JudgedName} {Share(JudgedFinal, Final.OnCoveredWords)}; safe tier {JudgedName} {Share(JudgedSafe, Safe.OnCoveredWords)}",
+            $"{JudgedName} {Share(JudgedFinal, Final.OnCoveredWords)}; safe tier {JudgedName} {Share(JudgedSafe, Safe.OnCoveredWords)}; " +
+            $"{OtherConventionCounted} {Share(Final.Correct + Boundary.OtherConvention, Final.OnCoveredWords)}; " +
+            $"safe tier {OtherConventionCounted} {Share(Safe.Correct + Boundary.SafeOtherConvention, Safe.OnCoveredWords)}",
             $"judged key: corrected {Share(Readings.Corrected, Readings.Readings)} of the readings of the key on these words, " +
             $"defensible {Share(Readings.Defensible, Readings.Readings)}, confirmed {Share(Readings.Confirmed, Readings.Readings)}, " +
             $"neither {Share(Readings.Neither, Readings.Readings)}, unsettled {Share(Readings.Unsettled, Readings.Readings)}; " +
@@ -230,7 +240,8 @@ internal sealed record EvidentiaStateMeasure(
                     $"safe tier {Share(count.SafeRight, count.SafeJudged)}; {Classes(count)}; " +
                     $"safe tier with both {Share(count.SafeRight + count.SafeBoundary, count.SafeJudged)}; " +
                     $"{JudgedName} {Share(count.RightByTheJudgedKey, count.Judged)}; " +
-                    $"safe tier {JudgedName} {Share(count.SafeRightByTheJudgedKey, count.SafeJudged)}",
+                    $"safe tier {JudgedName} {Share(count.SafeRightByTheJudgedKey, count.SafeJudged)}; " +
+                    $"{OtherConventionCounted} {Share(count.Right + count.OtherConvention, count.Judged)}",
             });
         }
 
@@ -239,14 +250,16 @@ internal sealed record EvidentiaStateMeasure(
             $"by state, explained: {Share(explained.Sum(pair => pair.Value.Words), SourceWords)} of words; " +
             $"right {Share(explained.Sum(pair => pair.Value.Right), SourceWords)} of all words; with both chunk-boundary classes " +
             $"{Share(explained.Sum(pair => pair.Value.Right + pair.Value.Boundary + pair.Value.BoundaryAttached), SourceWords)}; " +
-            $"{JudgedName} {Share(explained.Sum(pair => pair.Value.RightByTheJudgedKey), SourceWords)}");
+            $"{JudgedName} {Share(explained.Sum(pair => pair.Value.RightByTheJudgedKey), SourceWords)}; " +
+            $"{OtherConventionCounted} {Share(explained.Sum(pair => pair.Value.Right + pair.Value.OtherConvention), SourceWords)}");
         lines.AddRange(Rules
             .OrderBy(pair => pair.Key.State)
             .ThenByDescending(pair => pair.Value.Words)
             .ThenBy(pair => pair.Key.Rule, StringComparer.Ordinal)
             .Select(pair => $"by rule, {Name(pair.Key.State)}, {pair.Key.Rule}: {pair.Value.Words:N0} words; " +
                             $"right {Share(pair.Value.Right, pair.Value.Judged)}; {Classes(pair.Value)}; " +
-                            $"{JudgedName} {Share(pair.Value.RightByTheJudgedKey, pair.Value.Judged)}"));
+                            $"{JudgedName} {Share(pair.Value.RightByTheJudgedKey, pair.Value.Judged)}; " +
+                            $"{OtherConventionCounted} {Share(pair.Value.Right + pair.Value.OtherConvention, pair.Value.Judged)}"));
         var waiting = Cascade.Values.Sum();
         int Head(EvidentiaHeadState state) => Cascade.GetValueOrDefault(state);
         lines.Add(
@@ -359,9 +372,10 @@ internal static class EvidentiaStateScore
                 1, right is null ? 0 : 1, right == true ? 1 : 0,
                 isSafe && right is not null ? 1 : 0, isSafe && right == true ? 1 : 0,
                 found == EvidentiaBoundaryClass.Prefix ? 1 : 0, found == EvidentiaBoundaryClass.Attached ? 1 : 0,
-                isSafe && found != EvidentiaBoundaryClass.None ? 1 : 0,
+                isSafe && found is EvidentiaBoundaryClass.Prefix or EvidentiaBoundaryClass.Attached ? 1 : 0,
                 judgedRight.GetValueOrDefault(id) == true ? 1 : 0,
-                isSafe && judgedRight.GetValueOrDefault(id) == true ? 1 : 0);
+                isSafe && judgedRight.GetValueOrDefault(id) == true ? 1 : 0,
+                found == EvidentiaBoundaryClass.OtherConvention ? 1 : 0);
             byState[state] = byState.GetValueOrDefault(state) + count;
             if (rule is not null)
             {

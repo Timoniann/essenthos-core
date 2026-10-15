@@ -220,6 +220,20 @@ public class EvidentiaChunkBoundaryTests
     }
 
     [Fact]
+    public void AHebrewOfOnTheConstructWhereTheKeyHasItOnTheGovernedNounIsTheOtherConvention()
+    {
+        // the cry of the afflicted: the key has of the afflicted on עֲנִיִּים, ours puts of on צַעֲקַת.
+        EvidentiaToken[] english = [English(1, "cry", "NOUN"), English(2, "of", "ADP"), English(3, "the", "DET"), English(4, "afflicted", "NOUN")];
+        EvidentiaToken[] original = [Hebrew(11, "צַעֲקַת", "H6818", "subs", [("state", "c")]), Hebrew(12, "עֲנִיִּים", "H6041", "adjv", [("state", "a")])];
+
+        Classes(english, original, [([1], [11]), ([2, 3, 4], [12])], (1, 11), (2, 11))[(2, 11)]
+            .Should().Be(new EvidentiaBoundaryCase(EvidentiaBoundaryClass.OtherConvention));
+        // Where the key puts of on another word than the governed noun, ours is wrong.
+        EvidentiaToken[] further = [.. original, Hebrew(13, "קֹול", "H6963", "subs")];
+        Classes(english, further, [([1], [11]), ([2], [13]), ([3, 4], [12])], (1, 11), (2, 11)).Should().BeEmpty();
+    }
+
+    [Fact]
     public void EveryFigureIsQuotedByTheKeyAndWithEachClassCountedRight()
     {
         EvidentiaToken[] source = [English(1, "In", "ADP"), English(2, "those", "DET"), English(3, "days", "NOUN")];

@@ -187,6 +187,9 @@
              the scorer of a measurement and by nothing else: it is never a link and never a training label. -->
         <EmbeddedResource Include="Loading\Links\Evidentia\EvidentiaKeyCorrections.json" />
 
+        <!-- The combiner's fitted weights and calibration, versioned with the code that computes its features. -->
+        <EmbeddedResource Include="Loading\Links\Evidentia\EvidentiaCombiner.json" />
+
         <!-- Which Greek verse each verse of the Ge'ez books the church divides its own way answers. -->
         <EmbeddedResource Include="BetaMasaheft\GeezVerseMap.tsv" />
 

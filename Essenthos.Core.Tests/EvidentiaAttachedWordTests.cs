@@ -147,6 +147,40 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
+    public void TheBeforeANounItsConstructOrItsNameMakesDefiniteGoesWithTheNounWhenAsked()
+    {
+        var the = English(1, Genesis122, 1, "the", "DET");
+        var word = English(2, Genesis122, 2, "word", "NOUN");
+        var of = English(3, Genesis122, 3, "of", "ADP");
+        var theLord = English(4, Genesis122, 4, "the", "DET");
+        var lord = English(5, Genesis122, 5, "LORD", "PROPN");
+        var davar = Hebrew(11, Genesis122, 1, "דְּבַר", "H1697", "subs", ("state", "c"));
+        var yhwh = Hebrew(12, Genesis122, 2, "יְהוָה", "H3068", "nmpr");
+
+        Attach([the, word, of, theLord, lord], [davar, yhwh], (word, davar), (lord, yhwh)).Should().NotContain((1L, 11L));
+        AttachDefinite([the, word, of, theLord, lord], [davar, yhwh], (word, davar), (lord, yhwh))
+            .Should().Contain((1L, 11L)).And.Contain((4L, 12L));
+    }
+
+    [Fact]
+    public void TheBeforeAConstructChainThatWritesItsOwnArticleFurtherOnIsNotPutOnTheConstruct()
+    {
+        var the = English(1, Genesis122, 1, "the", "DET");
+        var clans = English(2, Genesis122, 2, "clans", "NOUN");
+        var of = English(3, Genesis122, 3, "of", "ADP");
+        var theOther = English(4, Genesis122, 4, "the", "DET");
+        var canaanites = English(5, Genesis122, 5, "Canaanites", "NOUN");
+        var families = Hebrew(11, Genesis122, 1, "מִשְׁפְּחֹות", "H4940", "subs", ("state", "c"));
+        var article = Hebrew(12, Genesis122, 2, "הַ", "H9009", "art");
+        var canaanite = Hebrew(13, Genesis122, 3, "כְּנַעֲנִי", "H3669", "subs");
+
+        var attached = AttachDefinite([the, clans, of, theOther, canaanites], [families, article, canaanite],
+            (clans, families), (canaanites, canaanite));
+
+        attached.Should().NotContain((1L, 11L)).And.Contain((4L, 12L));
+    }
+
+    [Fact]
     public void AnArticleWhoseNounWasNotPlacedIsNotPlacedEither()
     {
         var the = English(1, Genesis122, 1, "the", "DET");
@@ -306,6 +340,93 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
+    public void WhenAskedOfGoesWithTheConstructAndEachOfALongerChainWithTheNounBeforeIt()
+    {
+        var house = English(1, Genesis122, 1, "house", "NOUN");
+        var of = English(2, Genesis122, 2, "of", "ADP");
+        var the = English(3, Genesis122, 3, "the", "DET");
+        var god = English(4, Genesis122, 4, "God", "PROPN");
+        var of2 = English(5, Genesis122, 5, "of", "ADP");
+        var jacob = English(6, Genesis122, 6, "Jacob", "PROPN");
+        var houseNoun = Hebrew(11, Genesis122, 1, "בֵּית", "H1004", "subs", ("state", "c"));
+        var godNoun = Hebrew(12, Genesis122, 2, "אֱלֹהֵי", "H430", "subs", ("state", "c"));
+        var jacobName = Hebrew(13, Genesis122, 3, "יַעֲקֹב", "H3290", "nmpr", ("state", "a"));
+        (EvidentiaToken, EvidentiaToken)[] placed = [(house, houseNoun), (god, godNoun), (jacob, jacobName)];
+
+        AttachOf([house, of, the, god, of2, jacob], [houseNoun, godNoun, jacobName], placed)
+            .Should().Contain([(2L, 11L), (5L, 12L)]);
+        Attach([house, of, the, god, of2, jacob], [houseNoun, godNoun, jacobName], placed)
+            .Should().Contain([(2L, 12L), (5L, 13L)]);
+    }
+
+    [Fact]
+    public void WhenAskedOfGoesWithTheConstructOfThePhrasesNounPastTheModifiersEnglishWritesBeforeIt()
+    {
+        var beginning = English(1, Genesis122, 1, "beginning", "NOUN");
+        var of = English(2, Genesis122, 2, "of", "ADP") with { Relation = "case", SyntacticHead = 5 };
+        var the = English(3, Genesis122, 3, "the", "DET");
+        var barley = English(4, Genesis122, 4, "barley", "NOUN") with { Relation = "compound", SyntacticHead = 5 };
+        var harvest = English(5, Genesis122, 5, "harvest", "NOUN");
+        var start = Hebrew(11, Genesis122, 1, "תְחִלַּת", "H8462", "subs", ("state", "c"));
+        var reaping = Hebrew(12, Genesis122, 2, "קְצִיר", "H7105", "subs", ("state", "c"));
+        var grain = Hebrew(13, Genesis122, 3, "שְׂעֹרִים", "H8184", "subs", ("state", "a"));
+        AttachOf([beginning, of, the, barley, harvest], [start, reaping, grain], (beginning, start), (barley, grain), (harvest, reaping))
+            .Should().Contain((2L, 11L));
+    }
+
+    [Fact]
+    public void WhenAskedOfTheOriginalWritesNoWordForGoesOnTheConstructBeforeItsNounPastAPossessiveAndNotAfterAPreposition()
+    {
+        var cry = English(1, Genesis122, 1, "cry", "NOUN");
+        var of = English(2, Genesis122, 2, "of", "ADP") with { Relation = "case" };
+        var the = English(3, Genesis122, 3, "the", "DET");
+        var afflicted = English(4, Genesis122, 4, "afflicted", "NOUN");
+        var outOf = English(5, Genesis122, 5, "of", "ADP") with { Relation = "case" };
+        var ark = English(6, Genesis122, 6, "ark", "NOUN");
+        var ofHis = English(7, Genesis122, 7, "of", "ADP") with { Relation = "case" };
+        var his = English(8, Genesis122, 8, "his", "PRON") with { Relation = "nmod:poss", SyntacticHead = 9 };
+        var heart = English(9, Genesis122, 9, "heart", "NOUN");
+        var construct = Hebrew(11, Genesis122, 1, "צַעֲקַת", "H6818", "subs", ("state", "c"));
+        var humble = Hebrew(12, Genesis122, 2, "עֲנִיִּים", "H6041", "adjv", ("state", "a"));
+        var from = Hebrew(13, Genesis122, 3, "מִן", "H4480", "prep");
+        var article = Hebrew(14, Genesis122, 4, "הַ", "H9009", "art");
+        var arkNoun = Hebrew(15, Genesis122, 5, "תֵּבָה", "H8392", "subs", ("state", "a"));
+        var inclination = Hebrew(16, Genesis122, 6, "יֵצֶר", "H3336", "subs", ("state", "c"));
+        var heartNoun = Hebrew(17, Genesis122, 7, "לִבֹּו", "H3820", "subs", ("state", "a"));
+        (EvidentiaToken, EvidentiaToken)[] placed = [(afflicted, humble), (ark, arkNoun), (heart, heartNoun)];
+
+        AttachOf([cry, of, the, afflicted, outOf, ark, ofHis, his, heart], [construct, humble, from, article, arkNoun, inclination, heartNoun], placed)
+            .Should().Contain([(2L, 11L), (7L, 16L)]).And.NotContain(pair => pair.Source == 2 && pair.Target != 11 || pair.Source == 5);
+        Attach([cry, of, the, afflicted], [construct, humble], (afflicted, humble)).Should().NotContain(pair => pair.Source == 2);
+    }
+
+    [Fact]
+    public void WhenAskedOfAgainstGreekGoesOnTheGenitiveOrOnItsArticleWhenEnglishWritesTheToo()
+    {
+        var mind = English(1, Mark114, 1, "mind", "NOUN");
+        var of = English(2, Mark114, 2, "of", "ADP") with { Relation = "case" };
+        var the = English(3, Mark114, 3, "the", "DET");
+        var flesh = English(4, Mark114, 4, "flesh", "NOUN");
+        var son = English(5, Mark114, 5, "Son", "NOUN");
+        var ofGod = English(6, Mark114, 6, "of", "ADP") with { Relation = "case" };
+        var god = English(7, Mark114, 7, "God", "PROPN");
+        var outOf = English(8, Mark114, 8, "of", "ADP") with { Relation = "case" };
+        var water = English(9, Mark114, 9, "water", "NOUN");
+        (string, string)[] genitive = [("case", "genitive")];
+        var tes = Greek(11, Mark114, 1, "τῆς", "G3588", "det", morphology: genitive);
+        var sarkos = Greek(12, Mark114, 2, "σαρκός", "G4561", "noun", morphology: genitive);
+        var tou = Greek(13, Mark114, 3, "τοῦ", "G3588", "det", morphology: genitive);
+        var theou = Greek(14, Mark114, 4, "Θεοῦ", "G2316", "noun", morphology: genitive);
+        var ek = Greek(15, Mark114, 5, "ἐκ", "G1537", "prep");
+        var tou2 = Greek(16, Mark114, 6, "τοῦ", "G3588", "det", morphology: genitive);
+        var hydatos = Greek(17, Mark114, 7, "ὕδατος", "G5204", "noun", morphology: genitive);
+
+        AttachOf([mind, of, the, flesh, son, ofGod, god, outOf, water], [tes, sarkos, tou, theou, ek, tou2, hydatos],
+                (flesh, sarkos), (god, theou), (water, hydatos))
+            .Should().Contain([(2L, 11L), (6L, 14L)]).And.NotContain(pair => pair.Source == 8);
+    }
+
+    [Fact]
     public void AWordFollowsAHeadThatIsItselfAttached()
     {
         var and = English(1, Genesis122, 1, "and", "CCONJ");
@@ -360,6 +481,46 @@ public class EvidentiaAttachedWordTests
         var fine = Hebrew(13, Genesis122, 3, "טוֹב", "H2896", "adjv");
 
         Attach([was, good], [be, said, fine], (good, fine)).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void WhenAskedIsGoesOnThePredicateOrOnADemonstrativeSubjectAndNotWhereTheOriginalWritesBe()
+    {
+        var god = English(1, Genesis122, 1, "God", "PROPN") with { SyntacticHead = 4, Relation = "nsubj" };
+        var isJudge = English(2, Genesis122, 2, "is", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
+        var a = English(3, Genesis122, 3, "a", "DET");
+        var judge = English(4, Genesis122, 4, "judge", "NOUN");
+        var elohim = Hebrew(11, Genesis122, 1, "אֱלֹהִים", "H430", "subs");
+        var shofet = Hebrew(12, Genesis122, 2, "שֹׁפֵט", "H8199", "subs");
+        AttachOf([god, isJudge, a, judge], [elohim, shofet], (god, elohim), (judge, shofet)).Should().Contain((2L, 12L));
+        Attach([god, isJudge, a, judge], [elohim, shofet], (god, elohim), (judge, shofet)).Should().NotContain(pair => pair.Source == 2);
+
+        var these = English(1, Genesis122, 1, "These", "PRON") with { SyntacticHead = 4, Relation = "nsubj" };
+        var are = English(2, Genesis122, 2, "are", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
+        var the = English(3, Genesis122, 3, "the", "DET");
+        var sons = English(4, Genesis122, 4, "sons", "NOUN");
+        var elleh = Hebrew(11, Genesis122, 1, "אֵלֶּה", "H428", "prde");
+        var bene = Hebrew(12, Genesis122, 2, "בְנֵי", "H1121", "subs", ("state", "c"));
+        AttachOf([these, are, the, sons], [elleh, bene], (these, elleh), (sons, bene)).Should().Contain((2L, 11L));
+
+        var great = English(1, Genesis122, 1, "Great", "ADJ");
+        var isGlory = English(2, Genesis122, 2, "is", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
+        var his = English(3, Genesis122, 3, "his", "PRON");
+        var glory = English(4, Genesis122, 4, "glory", "NOUN");
+        var gadol = Hebrew(11, Genesis122, 1, "גָּדֹול", "H1419", "adjv");
+        var kevodo = Hebrew(12, Genesis122, 2, "כְּבֹודֹו", "H3519", "subs");
+        AttachOf([great, isGlory, his, glory], [gadol, kevodo], (great, gadol), (glory, kevodo)).Should().Contain((2L, 11L));
+
+        var the3 = English(1, Genesis122, 1, "the", "DET");
+        var third = English(2, Genesis122, 2, "third", "ADJ") with { SyntacticHead = 4, Relation = "nsubj" };
+        var was = English(3, Genesis122, 3, "was", "AUX") with { Lemma = "be", SyntacticHead = 4, Relation = "cop" };
+        var shammah = English(4, Genesis122, 4, "Shammah", "PROPN");
+        var shelishi = Hebrew(11, Genesis122, 1, "שְּׁלִשִׁי", "H7992", "adjv");
+        var shammahName = Hebrew(12, Genesis122, 2, "שַׁמָּה", "H8048", "nmpr");
+        AttachOf([the3, third, was, shammah], [shelishi, shammahName], (third, shelishi), (shammah, shammahName)).Should().Contain((3L, 12L));
+
+        var be = Hebrew(13, Genesis122, 3, "הָיָה", "H1961", "verb");
+        AttachOf([god, isJudge, a, judge], [elohim, shofet, be], (god, elohim), (judge, shofet)).Should().NotContain((2L, 12L));
     }
 
     [Fact]
@@ -633,7 +794,24 @@ public class EvidentiaAttachedWordTests
     private static IReadOnlyList<(long Source, long Target)> Attach(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
-        params (EvidentiaToken Source, EvidentiaToken Target)[] placed)
+        params (EvidentiaToken Source, EvidentiaToken Target)[] placed) => Attach(source, target, false, placed);
+
+    private static IReadOnlyList<(long Source, long Target)> AttachOf(
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        params (EvidentiaToken Source, EvidentiaToken Target)[] placed) => Attach(source, target, false, placed, functionWords: true);
+
+    private static IReadOnlyList<(long Source, long Target)> AttachDefinite(
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        params (EvidentiaToken Source, EvidentiaToken Target)[] placed) => Attach(source, target, true, placed);
+
+    private static IReadOnlyList<(long Source, long Target)> Attach(
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        bool definiteNouns,
+        (EvidentiaToken Source, EvidentiaToken Target)[] placed,
+        bool functionWords = false)
     {
         var proposals = placed
             .Select(pair => new EvidentiaProposal(
@@ -642,7 +820,9 @@ public class EvidentiaAttachedWordTests
         return EvidentiaAttachedWords.Resolve(
                 EvidentiaAuxiliaryWords.Mark([.. source.Select(Analysis)]),
                 [.. target.Select(Analysis)],
-                proposals)
+                proposals,
+                definiteNouns,
+                functionWords)
             .Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
             .ToList();
     }

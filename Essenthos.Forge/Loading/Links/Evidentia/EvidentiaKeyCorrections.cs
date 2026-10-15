@@ -264,7 +264,7 @@ internal sealed class EvidentiaJudgedKey
 
     private static Dictionary<(EvidentiaAddress Address, int Position), EvidentiaAnalysis> Places(IReadOnlyList<EvidentiaAnalysis> words) =>
         words.DistinctBy(word => word.Token.Id)
-            .GroupBy(word => (word.Token.Address, word.Token.Position))
+            .GroupBy(word => word.Token.Printed)
             .Where(place => place.Count() == 1)
             .ToDictionary(place => place.Key, place => place.First());
 

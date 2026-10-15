@@ -171,6 +171,32 @@ public class EvidentiaKnownRenderingIndexTests
         evidence.Find(English("the"), Target("H853")).Should().BeEmpty();
     }
 
+    [Fact]
+    public void TheNameIsLearnedOnceForEveryNumberStrongGivesItAndGodInCapitalsApartFromGod()
+    {
+        List<RenderingObservation> observations =
+        [
+            .. Enumerable.Range(1, 19).Select(verse => Observed(verse, "LORD", "H3068")),
+            Observed(20, "LORD", "H3069"),
+            .. Enumerable.Range(21, 20).Select(verse => Observed(verse, "God", "H430")),
+            Observed(41, "GOD", "H3069"),
+            Observed(42, "GOD", "H3069"),
+        ];
+        var wanted = observations.SelectMany(observation => RenderingKeys.Of(English(observation.SourceSurface), capitals: true)).ToHashSet();
+        var distributions = RenderingDistributions.Build(
+            observations, new HashSet<int>(), wanted,
+            observation => RenderingKeys.Of(English(observation.SourceSurface), capitals: true),
+            minimumObservations: 2, EvidentiaStrongFamilies.Of);
+        var source = new EvidentiaKnownRenderingEvidenceSource(distributions, "known-rendering:test",
+            new HashSet<string>(StringComparer.Ordinal), new HashSet<string>(StringComparer.Ordinal), EvidentiaStrongFamilies.Of, capitals: true);
+
+        source.Find(English("LORD"), Target("H3069")).Single().Support!.Share.Should().Be(1);
+        source.Find(English("LORD’s"), Target("H3069")).Single().Support!.MatchedForm.Should().Be(EvidentiaFormKind.Capitals);
+        source.Find(English("GOD"), Target("H3069")).Single().Support!.Share.Should().Be(1);
+        source.Find(English("God"), Target("H3069")).Should().BeEmpty("God is not the name, and GOD is not filed as God");
+        RenderingKeys.Of(English("I"), capitals: true).Should().NotContain(key => key.Kind == EvidentiaFormKind.Capitals);
+    }
+
     private static RenderingObservation Observed(int verse, string surface, string strongNumber) =>
         new(verse, surface, null, strongNumber);
 

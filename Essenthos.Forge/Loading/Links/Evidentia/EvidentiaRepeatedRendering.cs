@@ -25,8 +25,10 @@ internal static class EvidentiaRepeatedRendering
     public static EvidentiaResolution Resolve(
         IReadOnlyList<EvidentiaAnalysis> target,
         IEnumerable<EvidentiaCandidate> candidates,
-        IReadOnlyList<EvidentiaProposal> reserved)
+        IReadOnlyList<EvidentiaProposal> reserved,
+        Func<string, string>? family = null)
     {
+        family ??= EvidentiaStrongFamilies.None;
         var placed = reserved.Select(proposal => proposal.Source.Token.Id).ToHashSet();
         var taken = reserved.Select(proposal => proposal.Target.Token.Id).ToHashSet();
         var targetsByVerse = target
@@ -52,13 +54,13 @@ internal static class EvidentiaRepeatedRendering
 
             var bySense = verse
                 .GroupBy(candidate => candidate.Source.Token.Id)
-                .Where(word => word.Select(candidate => candidate.Target.Token.StrongNumber).Distinct().Count() == 1)
-                .GroupBy(word => word.First().Target.Token.StrongNumber!);
+                .Where(word => word.Select(candidate => family(candidate.Target.Token.StrongNumber!)).Distinct().Count() == 1)
+                .GroupBy(word => family(word.First().Target.Token.StrongNumber!));
             foreach (var sense in bySense)
             {
                 var words = sense.Select(word => word.First()).OrderBy(candidate => candidate.Source.Token.Position).ToList();
                 var occurrences = targetVerse
-                    .Where(word => word.Token.StrongNumber == sense.Key && !taken.Contains(word.Token.Id))
+                    .Where(word => word.Token.StrongNumber is { } number && family(number) == sense.Key && !taken.Contains(word.Token.Id))
                     .ToList();
                 if (words.Count < LeastRepetition || words.Count != occurrences.Count
                     || words.Select(candidate => candidate.Source.Lemma ?? candidate.Source.Normalised).Distinct().Count() != 1)
