@@ -147,7 +147,17 @@ internal static class Descriptors
             })
             .ToListAsync(cancellationToken);
 
-        if (own.Count == 0 && written.Count == 0)
+        var subjects = await db.Entities
+            .Where(e => wanted.Contains(e.Slug))
+            .Select(e => new { e.Id, e.Slug, e.Kind, e.Sex })
+            .ToListAsync(cancellationToken);
+        var people = subjects.Where(e => e.Kind == EntityKind.Person && !FamilyEndpoints.Deities.Contains(e.Slug))
+            .Select(e => e.Id)
+            .ToList();
+        var (statedCounts, places) = await KinFacts.Statements(db, people, cancellationToken);
+        var siblings = await SharedParents.Siblings(db, people, cancellationToken);
+
+        if (own.Count == 0 && written.Count == 0 && statedCounts.Count == 0 && siblings.Count == 0)
         {
             return [];
         }
@@ -156,6 +166,8 @@ internal static class Descriptors
         // tie is turned for, and the child or sibling a count has to call a son or a daughter.
         var unsexed = written.Where(c => c.SubjectSex is null).Select(c => c.SubjectId)
             .Concat(own.Where(c => c.TargetSex is null && FamilyTies.Counts(c.Relation)).Select(c => c.TargetEntityId))
+            .Concat(subjects.Where(e => e.Sex is null).Select(e => e.Id))
+            .Concat(siblings.Select(s => s.Sibling))
             .Distinct()
             .ToList();
         var sexes = await OursOnlyRecords.SexesOf(db, unsexed, cancellationToken);
@@ -168,6 +180,30 @@ internal static class Descriptors
             .OfType<Clause>()
             .ToList();
         var clauses = FamilyTies.Folded([.. own.Select(c => c with { TargetSex = SexOf(c.TargetEntityId, c.TargetSex) }), .. turned]);
+
+        // The brothers and sisters the parents give, where no clause says so of the pair already.
+        var subjectSex = subjects.ToDictionary(e => e.Id, e => SexOf(e.Id, e.Sex));
+        var subjectSlugs = subjects.ToDictionary(e => e.Id, e => e.Slug);
+        var tied = clauses.Where(c => FamilyTies.Siblings.Contains(c.Relation))
+            .Select(c => (c.SubjectId, c.TargetEntityId))
+            .ToHashSet();
+        var unsaid = siblings
+            .Where(s => !tied.Contains((s.Subject, s.Sibling))
+                        && subjectSex.GetValueOrDefault(s.Subject) is SharedParents.Male or SharedParents.Female)
+            .ToList();
+        var kin = await Persons(db, unsaid.Select(s => s.Sibling), cancellationToken);
+        clauses.AddRange(unsaid.Where(s => kin.ContainsKey(s.Sibling)).Select(s => Derived(
+            subjectSlugs[s.Subject],
+            s.Subject,
+            subjectSex[s.Subject],
+            subjectSex[s.Subject] == SharedParents.Male ? DescriptorRelations.BrotherOf : DescriptorRelations.SisterOf,
+            kin[s.Sibling] with { Sex = SexOf(s.Sibling, kin[s.Sibling].Sex) },
+            [s.Theirs, s.Mine],
+            s.Confidence,
+            ByTheParents)));
+
+        var ancestors = await Ancestors(db, people, clauses, subjectSlugs, subjectSex, cancellationToken);
+        clauses = ancestors.Clauses;
 
         // A brother or sister whom the recorded parents show to be a half-sibling is said so.
         var full = clauses
@@ -241,12 +277,184 @@ internal static class Descriptors
             ? c with { TargetEnglishName = heading.Name }
             : c)];
 
-        return clauses
-            .GroupBy(c => c.Slug, StringComparer.Ordinal)
-            .ToDictionary(
-                group => group.Key,
-                group => Render(spoken, [.. group], phrasings, forms),
-                StringComparer.Ordinal);
+        var lines = new Dictionary<string, EntityDescriptorResponse>(StringComparer.Ordinal);
+        foreach (var subject in subjects)
+        {
+            var said = clauses.Where(c => c.SubjectId == subject.Id).ToList();
+            var facts = new LineFacts(
+                subjectSex.GetValueOrDefault(subject.Id),
+                statedCounts.GetValueOrDefault(subject.Id),
+                places.Where(p => p.Key.Child == subject.Id).ToDictionary(p => p.Key.Parent, p => p.Value),
+                ancestors.Shown.GetValueOrDefault(subject.Id) ?? [],
+                ancestors.More.Contains(subject.Id));
+            if (said.Count == 0 && facts.Children is null)
+            {
+                continue;
+            }
+
+            var line = Render(spoken, said, phrasings, forms, facts);
+            if (line.Parts.Count > 0)
+            {
+                lines[subject.Slug] = line;
+            }
+        }
+
+        return lines;
+    }
+
+    /// <summary>Whom a clause the line works out rather than reads off a record is credited to.</summary>
+    private const string ByTheParents = "Essenthos, from the parents the records give";
+
+    private const string ByTheTree = "Essenthos, from the family tree";
+
+    /// <summary>The most descendants a line names; more are said as <em>and others</em>.</summary>
+    private const int MostDescendants = 4;
+
+    /// <summary>
+    /// The descendants each person's line names: the ones the family tree reaches below their
+    /// children and the ones a record states, chosen by how many verses name them, the most named
+    /// first. A child, or anyone the line already names otherwise, is not one of them. One the tree
+    /// reaches is said from the tree, with the verse that ties the two and the one that names the
+    /// descendant; one only a record states stays as the record wrote it.
+    /// </summary>
+    private static async Task<(List<Clause> Clauses, Dictionary<int, List<int>> Shown, HashSet<int> More)> Ancestors(
+        AppDbContext db,
+        IReadOnlyCollection<int> people,
+        List<Clause> clauses,
+        IReadOnlyDictionary<int, string> slugs,
+        IReadOnlyDictionary<int, string?> sexes,
+        CancellationToken cancellationToken)
+    {
+        var descendants = await KinFacts.Descendants(db, people, cancellationToken);
+        var candidates = new Dictionary<int, Dictionary<int, Descendant?>>();
+        foreach (var person in people)
+        {
+            var mine = clauses.Where(c => c.SubjectId == person).ToList();
+            var onTheLine = mine.Where(c => c.Relation != DescriptorRelations.AncestorOf).Select(c => c.TargetEntityId).ToHashSet();
+            var chosen = new Dictionary<int, Descendant?>();
+            foreach (var descendant in descendants.GetValueOrDefault(person) ?? [])
+            {
+                if (descendant.Depth >= 2 && !onTheLine.Contains(descendant.Id))
+                {
+                    chosen[descendant.Id] = descendant;
+                }
+            }
+
+            foreach (var written in mine.Where(c => c.Relation == DescriptorRelations.AncestorOf))
+            {
+                chosen.TryAdd(written.TargetEntityId, null);
+            }
+
+            if (chosen.Count > 0)
+            {
+                candidates[person] = chosen;
+            }
+        }
+
+        var named = await KinFacts.VerseCounts(db, [.. candidates.Values.SelectMany(c => c.Keys)], cancellationToken);
+        var shown = new Dictionary<int, List<int>>();
+        var more = new HashSet<int>();
+        foreach (var (person, chosen) in candidates)
+        {
+            var ranked = chosen.Keys
+                .OrderByDescending(id => named.GetValueOrDefault(id))
+                .ThenBy(id => chosen[id]?.Depth ?? int.MaxValue)
+                .ThenBy(id => id)
+                .ToList();
+            shown[person] = [.. ranked.Take(MostDescendants)];
+            if (ranked.Count > MostDescendants)
+            {
+                more.Add(person);
+            }
+        }
+
+        var reached = shown
+            .SelectMany(p => p.Value
+                .Where(id => candidates[p.Key][id] is not null)
+                .Select(id => (Person: p.Key, Descendant: candidates[p.Key][id]!)))
+            .ToList();
+        var known = await Persons(db, reached.Select(r => r.Descendant.Id), cancellationToken);
+        var derived = reached
+            .Where(r => known.ContainsKey(r.Descendant.Id))
+            .Select(r => Derived(
+                slugs[r.Person],
+                r.Person,
+                sexes.GetValueOrDefault(r.Person),
+                DescriptorRelations.AncestorOf,
+                known[r.Descendant.Id],
+                [.. new[] { r.Descendant.Tie, r.Descendant.Named }.OfType<VerseRefResponse>()],
+                r.Descendant.Confidence,
+                ByTheTree))
+            .ToLookup(c => c.SubjectId);
+
+        // The tree's beside the record's own, where the record has some, so the line keeps one place for them.
+        var all = new List<Clause>(clauses.Count);
+        foreach (var person in clauses.Select(c => c.SubjectId).Concat(derived.Select(g => g.Key)).Distinct())
+        {
+            var mine = clauses.Where(c => c.SubjectId == person).ToList();
+            var at = mine.FindLastIndex(c => c.Relation == DescriptorRelations.AncestorOf && c.Stated is null);
+            mine.InsertRange(at < 0 ? mine.FindLastIndex(c => c.Stated is null) + 1 : at + 1, derived[person]);
+            all.AddRange(mine);
+        }
+
+        return (all, shown, more);
+    }
+
+    /// <summary>The people a line names that no clause brought along, as a clause needs them.</summary>
+    private static async Task<Dictionary<int, Person>> Persons(
+        AppDbContext db,
+        IEnumerable<int> ids,
+        CancellationToken cancellationToken)
+    {
+        var wanted = ids.Distinct().ToList();
+        if (wanted.Count == 0)
+        {
+            return [];
+        }
+
+        return await db.Entities
+            .Where(e => wanted.Contains(e.Id))
+            .Select(e => new Person(e.Id, e.Kind, e.Slug, e.Name, e.Distinguisher, e.Sex))
+            .ToDictionaryAsync(e => e.Id, cancellationToken);
+    }
+
+    private sealed record Person(int Id, EntityKind Kind, string Slug, string Name, string? Distinguisher, string? Sex);
+
+    /// <summary>A clause no record wrote and the line works out, with the verses it rests on.</summary>
+    private static Clause Derived(
+        string slug,
+        int subject,
+        string? subjectSex,
+        string relation,
+        Person target,
+        IReadOnlyList<VerseRefResponse> verses,
+        double? confidence,
+        string source)
+    {
+        var distinct = verses.DistinctBy(v => (v.BookOrdinal, v.Chapter, v.Verse)).ToList();
+        var first = distinct.FirstOrDefault();
+        return new Clause(
+            slug,
+            0,
+            relation,
+            target.Id,
+            target.Kind,
+            target.Slug,
+            target.Name,
+            target.Distinguisher,
+            first?.BookOrdinal ?? 0,
+            first?.Chapter ?? 0,
+            first?.Verse ?? 0,
+            LinkMethod.RuleBased,
+            confidence,
+            source,
+            null)
+        {
+            SubjectId = subject,
+            SubjectSex = subjectSex,
+            TargetSex = target.Sex,
+            Verses = distinct.Count > 1 ? distinct : null,
+        };
     }
 
     /// <summary>The same for one entity, which is what the entity page and the hover card ask.</summary>
@@ -311,17 +519,21 @@ internal static class Descriptors
     /// them check it — the verse each clause was read from, and who read it.
     ///
     /// <para>
-    /// The line comes in a fixed order: parents, spouses, children, siblings, then everything else in
-    /// the order its clauses were written. Names that follow one another under one phrase share it —
-    /// <em>son of Isaac and Rebekah</em> — and more than three children, or more than three siblings
-    /// under one phrase, are counted rather than listed: <em>father of twelve sons and a daughter</em>.
+    /// The line comes in a fixed order: offices, parents, spouses, children, siblings, then everything
+    /// else in the order its clauses were written. Names that follow one another under one phrase share
+    /// it — <em>son of Isaac and Rebekah</em> — and more than three children, or more than three
+    /// siblings under one phrase, are counted rather than listed: <em>father of twelve sons and a
+    /// daughter</em>. Children no verse counts are counted as the named ones (<em>father of seven named
+    /// sons</em>); where a verse counts more than are named, its count is said and the named are named
+    /// among them; a child's place among a parent's children is said where a verse states it.
     /// </para>
     /// </summary>
     private static EntityDescriptorResponse Render(
         string language,
         IReadOnlyList<Clause> clauses,
         IReadOnlyDictionary<string, Phrasing> phrasings,
-        IReadOnlyDictionary<int, IReadOnlyDictionary<string, string>> forms)
+        IReadOnlyDictionary<int, IReadOnlyDictionary<string, string>> forms,
+        LineFacts facts)
     {
         var items = new List<Item>();
         var index = new Dictionary<(string Relation, int Target), Item>();
@@ -339,7 +551,13 @@ internal static class Descriptors
             if (!index.TryGetValue(key, out var item))
             {
                 phrasing = DescriptorPhrasings.ByTheSharedParent(language, clause.Relation, clause.SharedParent) ?? phrasing;
-                item = new Item(clause, phrasing, phrasings[clause.Relation]);
+                var place = clause.Relation is DescriptorRelations.SonOf or DescriptorRelations.DaughterOf
+                    ? facts.Places.GetValueOrDefault(clause.TargetEntityId)
+                    : null;
+                var ordinal = place is null
+                    ? null
+                    : DescriptorPhrasings.Ordinal(language, phrasing, clause.Relation == DescriptorRelations.DaughterOf, place.Ordinal);
+                item = new Item(clause, ordinal ?? phrasing, phrasings[clause.Relation]) { Place = ordinal is null ? null : place };
                 index[key] = item;
                 items.Add(item);
             }
@@ -349,51 +567,173 @@ internal static class Descriptors
 
         var parts = new List<DescriptorPartResponse>();
         var counted = new List<DescriptorCountResponse>();
+        var claimed = 0;
+
+        // A clause the API says in its own words is handed to a client that draws the line from the
+        // claims as the words of its relation's run, with the names in it and the verses it cites;
+        // where the line has no claim of that relation, with the place among the claims it stands at.
+        void Said(string relation, int from, IReadOnlyList<VerseRefResponse>? verses, bool placed)
+        {
+            var words = parts.Skip(from).SkipWhile(p => p.Text == DescriptorPhrasings.Separator && p.Entity is null).ToList();
+            counted.Add(new DescriptorCountResponse(relation, string.Concat(words.Select(p => p.Text)))
+            {
+                Parts = words,
+                References = verses is { Count: > 0 } ? [.. verses] : null,
+                At = placed ? claimed : null,
+            });
+        }
+
+        var children = facts.Children is null;
         foreach (var run in Runs(items, (a, b) => a.First.Relation == b.First.Relation))
         {
-            if (FamilyTies.Counts(run[0].First.Relation) && run.Count > MostListed)
+            var relation = run[0].First.Relation;
+            if (!children && FamilyTies.Rank(relation) > FamilyTies.ChildrenRank)
+            {
+                Children([]);
+                children = true;
+            }
+
+            var from = parts.Count;
+            if (relation is DescriptorRelations.FatherOf or DescriptorRelations.MotherOf && facts.Children is not null)
+            {
+                Children(run);
+                children = true;
+            }
+            else if (relation == DescriptorRelations.AncestorOf)
+            {
+                var order = facts.Ancestors.Select((id, at) => (id, at)).ToDictionary(p => p.id, p => p.at);
+                var shown = order.Count == 0
+                    ? run
+                    : [.. run.Where(item => order.ContainsKey(item.First.TargetEntityId)).OrderBy(item => order[item.First.TargetEntityId])];
+                Separate(parts);
+                parts.AddRange(Listed(language, shown, forms, closed: !facts.MoreAncestors));
+                if (facts.MoreAncestors)
+                {
+                    parts.Add(new DescriptorPartResponse(DescriptorPhrasings.AndOthers(language)));
+                }
+
+                Said(relation, from, [.. shown.Select(item => VerseOf(item.First)).DistinctBy(v => (v.BookOrdinal, v.Chapter, v.Verse))], placed: false);
+            }
+            else if (FamilyTies.Counts(relation) && run.Count > MostListed)
             {
                 Separate(parts);
                 var shared = run.Select(item => item.Phrasing).Distinct().Count() == 1 ? run[0].Phrasing : run[0].Unshared;
-                var text = shared.Before + DescriptorPhrasings.Counted(language, Kin(run));
+                var named = !FamilyTies.Siblings.Contains(relation);
+                var text = shared.Before + DescriptorPhrasings.Counted(language, Kin(run), named);
                 parts.Add(new DescriptorPartResponse(text) { Doubtful = run.All(item => item.Doubtful) });
-                counted.Add(new DescriptorCountResponse(run[0].First.Relation, text));
-                continue;
+                counted.Add(new DescriptorCountResponse(relation, text));
             }
-
-            var said = run.Select(item => (Item: item, Said: DescriptorPhrasings.Say(
-                language, item.Phrasing, item.First.TargetKind,
-                forms.GetValueOrDefault(item.First.TargetEntityId), item.First.TargetEnglishName))).ToList();
-            foreach (var list in Runs(said, (a, b) => a.Item.Phrasing == b.Item.Phrasing
-                                                      && a.Item.Phrasing.After.Length == 0
-                                                      && b.Said.Before.StartsWith(b.Item.Phrasing.Before, StringComparison.Ordinal)))
+            else
             {
                 Separate(parts);
-                for (var at = 0; at < list.Count; at++)
+                parts.AddRange(Listed(language, run, forms, closed: true));
+                if (run.Any(item => item.Place is not null))
                 {
-                    var (item, (before, name)) = list[at];
-                    var target = Target(item.First, forms.GetValueOrDefault(item.First.TargetEntityId));
-                    if (at == 0)
-                    {
-                        parts.Add(new DescriptorPartResponse(before) { Doubtful = list.All(one => one.Item.Doubtful) });
-                    }
-                    else
-                    {
-                        parts.Add(new DescriptorPartResponse(at == list.Count - 1
-                            ? $" {DescriptorPhrasings.Conjunction(language)} "
-                            : DescriptorPhrasings.Separator));
-                        if (before.Length > item.Phrasing.Before.Length)
-                        {
-                            parts.Add(new DescriptorPartResponse(before[item.Phrasing.Before.Length..]) { Doubtful = item.Doubtful });
-                        }
-                    }
-
-                    parts.Add(new DescriptorPartResponse(name) { Entity = target, Doubtful = item.Doubtful });
-                    if (item.Phrasing.After.Length > 0)
-                    {
-                        parts.Add(new DescriptorPartResponse(item.Phrasing.After) { Doubtful = item.Doubtful });
-                    }
+                    Said(relation, from, [.. run.SelectMany(item => item.Place?.Verses ?? [])], placed: false);
                 }
+            }
+
+            claimed += run.Sum(item => item.Clauses.Count);
+        }
+
+        if (!children)
+        {
+            Children([]);
+        }
+
+        // The children a person had: the ones a verse counts, and among them the ones the records
+        // name; or the ones named, and more than them where a verse says so. Then the grandsons a
+        // verse counts.
+        void Children(List<Item> run)
+        {
+            var stated = facts.Children;
+            var relation = run.Count > 0 ? run[0].First.Relation
+                : facts.Sex == SharedParents.Female ? DescriptorRelations.MotherOf
+                : facts.Sex == SharedParents.Male ? DescriptorRelations.FatherOf
+                : null;
+            if (relation is null)
+            {
+                return;
+            }
+
+            var lead = phrasings[relation].Before;
+            var named = run.Count;
+            var kin = named == 0 ? [] : Kin(run);
+            var daughters = kin.Count > 0 && kin.All(k => k.Kin == Endpoints.Kin.Daughter || k.Count == 0);
+            var counts = stated is { Counts: true } ? Stated(stated, kin, named) : null;
+            var from = parts.Count;
+            var doubtful = run.Count > 0 && run.All(item => item.Doubtful);
+            var own = false;
+            if (counts is not null && counts.Sum(c => c.Count) > named)
+            {
+                Separate(parts);
+                parts.Add(new DescriptorPartResponse(lead + DescriptorPhrasings.Counted(language, counts)) { Doubtful = doubtful });
+                if (named is > 0 and <= MostListed)
+                {
+                    parts.Add(new DescriptorPartResponse(DescriptorPhrasings.AmongThem(language, named, daughters)));
+                    parts.AddRange(Listed(language, run, forms, closed: true, bare: true));
+                }
+                else if (named > MostListed)
+                {
+                    parts.Add(new DescriptorPartResponse(DescriptorPhrasings.OfThemNamed(language, named, daughters)));
+                }
+
+                own = true;
+            }
+            else if (named == 0)
+            {
+                if (stated is not { More: true })
+                {
+                    return;
+                }
+
+                Separate(parts);
+                parts.Add(new DescriptorPartResponse(lead + DescriptorPhrasings.Unnamed(language, stated.MoreSons, stated.MoreDaughters)));
+                own = true;
+            }
+            else if (named <= MostListed)
+            {
+                var more = stated is { More: true };
+                Separate(parts);
+                parts.AddRange(Listed(language, run, forms, closed: !more));
+                if (more)
+                {
+                    parts.Add(new DescriptorPartResponse(DescriptorPhrasings.Others(language, stated!.MoreSons, stated.MoreDaughters, afterCount: false)));
+                }
+
+                own = more;
+            }
+            else
+            {
+                var text = lead + DescriptorPhrasings.Counted(language, kin, named: counts is null);
+                if (stated is { More: true })
+                {
+                    text += DescriptorPhrasings.Others(language, stated.MoreSons, stated.MoreDaughters, afterCount: true);
+                }
+
+                Separate(parts);
+                parts.Add(new DescriptorPartResponse(text) { Doubtful = doubtful });
+                own = true;
+            }
+
+            if (own)
+            {
+                Said(relation, from, stated?.Verses, placed: run.Count == 0);
+            }
+
+            if (stated?.Grandsons is { } grandsons && grandsons > 0)
+            {
+                var grand = relation == DescriptorRelations.MotherOf ? DescriptorRelations.GrandmotherOf : DescriptorRelations.GrandfatherOf;
+                var at = parts.Count;
+                Separate(parts);
+                parts.Add(new DescriptorPartResponse(phrasings[grand].Before
+                    + DescriptorPhrasings.Counted(language, [(Endpoints.Kin.Grandson, grandsons)])));
+
+                // It stands after the children's claims, which the run has not counted yet.
+                var before = claimed;
+                claimed += run.Sum(item => item.Clauses.Count);
+                Said(grand, at, stated.Verses, placed: true);
+                claimed = before;
             }
         }
 
@@ -409,6 +749,100 @@ internal static class Descriptors
 
     /// <summary>The most names of children or siblings under one phrase that are listed; more are counted.</summary>
     private const int MostListed = 3;
+
+    /// <summary>A name with no words before it, in the nominative: the names after <em>з них названі</em>.</summary>
+    private static readonly Phrasing Bare = new(string.Empty, GrammaticalCases.Nominative);
+
+    /// <summary>
+    /// A run of names under their phrases: <em>син Ісака та Ревеки</em>. Names that follow one another
+    /// under one phrase share it. An open list ends without the conjunction, for the words that
+    /// follow it to close: <em>батько Каїна, Авеля, Сифа</em> and other sons and daughters.
+    /// </summary>
+    private static List<DescriptorPartResponse> Listed(
+        string language,
+        IReadOnlyList<Item> run,
+        IReadOnlyDictionary<int, IReadOnlyDictionary<string, string>> forms,
+        bool closed,
+        bool bare = false)
+    {
+        var parts = new List<DescriptorPartResponse>();
+        var said = run.Select(item => (Item: item, Phrasing: bare ? Bare : item.Phrasing)).Select(one => (one.Item, one.Phrasing,
+            Said: DescriptorPhrasings.Say(language, one.Phrasing, one.Item.First.TargetKind,
+                forms.GetValueOrDefault(one.Item.First.TargetEntityId), one.Item.First.TargetEnglishName))).ToList();
+        var lists = Runs(said, (a, b) => a.Phrasing == b.Phrasing
+                                         && a.Phrasing.After.Length == 0
+                                         && b.Said.Before.StartsWith(b.Phrasing.Before, StringComparison.Ordinal)).ToList();
+        for (var at = 0; at < lists.Count; at++)
+        {
+            var list = lists[at];
+            Separate(parts);
+            for (var place = 0; place < list.Count; place++)
+            {
+                var (item, phrasing, (before, name)) = list[place];
+                var target = Target(item.First, forms.GetValueOrDefault(item.First.TargetEntityId));
+                if (place == 0)
+                {
+                    if (before.Length > 0)
+                    {
+                        parts.Add(new DescriptorPartResponse(before) { Doubtful = list.All(one => one.Item.Doubtful) });
+                    }
+                }
+                else
+                {
+                    parts.Add(new DescriptorPartResponse(place == list.Count - 1 && (closed || at < lists.Count - 1)
+                        ? $" {DescriptorPhrasings.Conjunction(language)} "
+                        : DescriptorPhrasings.Separator));
+                    if (before.Length > phrasing.Before.Length)
+                    {
+                        parts.Add(new DescriptorPartResponse(before[phrasing.Before.Length..]) { Doubtful = item.Doubtful });
+                    }
+                }
+
+                parts.Add(new DescriptorPartResponse(name) { Entity = target, Doubtful = item.Doubtful });
+                if (phrasing.After.Length > 0)
+                {
+                    parts.Add(new DescriptorPartResponse(phrasing.After) { Doubtful = item.Doubtful });
+                }
+            }
+        }
+
+        return parts;
+    }
+
+    /// <summary>
+    /// The children a line counts where a verse counts them: by sex as the verses count them, the
+    /// named ones where more are named than counted, and those the records name without a sex as
+    /// children where no count by sex holds them.
+    /// </summary>
+    private static List<(Kin Kin, int Count)> Stated(ChildrenCount stated, IReadOnlyList<(Kin Kin, int Count)> named, int total)
+    {
+        int Named(Kin kin) => named.Where(n => n.Kin == kin).Sum(n => n.Count);
+        if (Named(Endpoints.Kin.Child) > 0)
+        {
+            var all = (stated.Sons ?? 0) + (stated.Daughters ?? 0) + (stated.Children ?? 0);
+            return all >= total
+                ? [(Endpoints.Kin.Son, stated.Sons ?? 0), (Endpoints.Kin.Daughter, stated.Daughters ?? 0), (Endpoints.Kin.Child, stated.Children ?? 0)]
+                : [(Endpoints.Kin.Child, total)];
+        }
+
+        if (stated.Sons is null && stated.Daughters is null)
+        {
+            return [(Endpoints.Kin.Child, Math.Max(stated.Children ?? 0, total))];
+        }
+
+        return
+        [
+            (Endpoints.Kin.Son, Math.Max(stated.Sons ?? 0, Named(Endpoints.Kin.Son))),
+            (Endpoints.Kin.Daughter, Math.Max(stated.Daughters ?? 0, Named(Endpoints.Kin.Daughter))),
+            (Endpoints.Kin.Child, stated.Children ?? 0),
+        ];
+    }
+
+    /// <summary>The first verse a clause rests on.</summary>
+    private static VerseRefResponse VerseOf(Clause clause) =>
+        clause.Verses is { Count: > 0 } verses
+            ? verses[0]
+            : BookReferences.At(clause.Book, clause.Chapter, clause.Verse)!;
 
     private static void Separate(List<DescriptorPartResponse> parts)
     {
@@ -485,7 +919,7 @@ internal static class Descriptors
             clause.Doubtful)
         {
             Note = clause.Note,
-            Verses = Relationships.Verses(clause.Citation),
+            Verses = clause.Verses is { } verses ? [.. verses] : Relationships.Verses(clause.Citation),
             Witness = clause.Witness,
             Original = clause.Original,
             SharedParent = clause.SharedParent,
@@ -536,8 +970,23 @@ internal static class Descriptors
 
         public List<Clause> Clauses { get; } = [];
 
+        /// <summary>For a parent, the child's place among their children where a verse states it.</summary>
+        public PlaceAmongChildren? Place { get; init; }
+
         public bool Doubtful => Clauses.All(c => c.Doubtful);
     }
+
+    /// <summary>
+    /// What a person's line says beyond the clauses: the sex it says a parent's phrase by, the
+    /// children the verses count, the person's place among a parent's children by the parent's id,
+    /// and the descendants it names, in order, with whether there are more.
+    /// </summary>
+    private sealed record LineFacts(
+        string? Sex,
+        ChildrenCount? Children,
+        IReadOnlyDictionary<int, PlaceAmongChildren> Places,
+        IReadOnlyList<int> Ancestors,
+        bool MoreAncestors);
 
     /// <summary>One clause with its target flattened, so the render is a loop and not a join.</summary>
     internal sealed record Clause(
@@ -558,6 +1007,9 @@ internal static class Descriptors
         string? Note)
     {
         public string? Citation { get; init; }
+
+        /// <summary>The verses a clause the line works out rests on, where no citation of a record holds them.</summary>
+        public IReadOnlyList<VerseRefResponse>? Verses { get; init; }
 
         public string? Witness { get; init; }
 
@@ -615,7 +1067,23 @@ internal record EntityDescriptorResponse(
 
 /// <param name="Relation">The relation whose claims the count stands for: <c>father-of</c>.</param>
 /// <param name="Text">The whole clause, the phrase and the count, in the language rendered.</param>
-internal record DescriptorCountResponse(string Relation, string Text);
+internal record DescriptorCountResponse(string Relation, string Text)
+{
+    /// <summary>
+    /// The same words as pieces, each name with the entity it is: <em>батько сімдесяти синів, з них
+    /// названі</em> Єтер… Null where the words name nobody.
+    /// </summary>
+    public IList<DescriptorPartResponse>? Parts { get; init; }
+
+    /// <summary>The verses that state what the words say beyond the claims: the count, a child's place.</summary>
+    public IList<VerseRefResponse>? References { get; init; }
+
+    /// <summary>
+    /// Where the line has no claim of <see cref="Relation"/> to put the words in place of — Jair's
+    /// thirty sons, none of them named — how many of the claims come before them. Null otherwise.
+    /// </summary>
+    public int? At { get; init; }
+}
 
 /// <param name="Doubtful">
 /// The clause this part belongs to is below the confidence at which the corpus states something

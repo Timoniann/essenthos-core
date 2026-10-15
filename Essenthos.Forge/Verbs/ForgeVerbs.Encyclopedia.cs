@@ -126,6 +126,14 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
+    /// <summary>What the verses say of a person's children beyond naming them, for a corpus already loaded.</summary>
+    private static async Task<int> KinStatements(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        Console.WriteLine(await scope.ServiceProvider.GetRequiredService<KinStatementLoader>().Load(forge.Resources));
+        return 0;
+    }
+
     /// <summary>The sourced name corrections and additional names, for a corpus already loaded.</summary>
     private static async Task<int> OwnNames(ForgeRun forge, string[] args)
     {

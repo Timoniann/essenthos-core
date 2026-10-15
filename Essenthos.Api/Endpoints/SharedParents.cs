@@ -1,5 +1,7 @@
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Endpoints;
@@ -145,9 +147,89 @@ internal static class SharedParents
         return halved;
     }
 
+    /// <summary>
+    /// The brothers and sisters the recorded parents give each of these people: every other child of
+    /// a parent the person is recorded the child of. Jesse's record and his sons' give David six
+    /// brothers whether or not any record writes <em>brother of</em>. Each comes with the two parent
+    /// clauses that make it, the sibling's and the person's own.
+    /// </summary>
+    public static async Task<List<SiblingByParents>> Siblings(
+        AppDbContext db,
+        IReadOnlyCollection<int> people,
+        CancellationToken cancellationToken)
+    {
+        if (people.Count == 0)
+        {
+            return [];
+        }
+
+        var mine = await Parenthood(db, d => people.Contains(d.EntityId), d => people.Contains(d.TargetEntityId), cancellationToken);
+        var parents = mine.Select(p => p.Parent).Distinct().ToList();
+        if (parents.Count == 0)
+        {
+            return [];
+        }
+
+        var theirs = await Parenthood(db, d => parents.Contains(d.TargetEntityId), d => parents.Contains(d.EntityId), cancellationToken);
+        var byParent = theirs.GroupBy(p => p.Parent).ToDictionary(g => g.Key, g => g.ToList());
+
+        var siblings = new List<SiblingByParents>();
+        foreach (var person in mine.GroupBy(p => p.Child))
+        {
+            var seen = new HashSet<int> { person.Key };
+            foreach (var own in person)
+            {
+                foreach (var other in byParent.GetValueOrDefault(own.Parent) ?? [])
+                {
+                    if (seen.Add(other.Child))
+                    {
+                        var confidence = own.Confidence is { } a && other.Confidence is { } b ? Math.Min(a, b) : own.Confidence ?? other.Confidence;
+                        siblings.Add(new SiblingByParents(person.Key, other.Child, other.Verse, own.Verse, confidence));
+                    }
+                }
+            }
+        }
+
+        return siblings;
+    }
+
+    /// <summary>
+    /// Child and parent pairs the descriptor clauses state from either end: the child's <em>son of</em>
+    /// and the parent's <em>father of</em>. God is nobody's parent on a family line.
+    /// </summary>
+    private static async Task<List<(int Child, int Parent, VerseRefResponse Verse, double? Confidence)>> Parenthood(
+        AppDbContext db,
+        System.Linq.Expressions.Expression<Func<EntityDescriptor, bool>> asChild,
+        System.Linq.Expressions.Expression<Func<EntityDescriptor, bool>> asParent,
+        CancellationToken cancellationToken)
+    {
+        var rows = await db.EntityDescriptors
+            .Where(asChild)
+            .Where(d => (d.Relation == DescriptorRelations.SonOf || d.Relation == DescriptorRelations.DaughterOf)
+                        && d.Entity!.Kind == EntityKind.Person && d.Target!.Kind == EntityKind.Person
+                        && !FamilyEndpoints.Deities.Contains(d.Target.Slug))
+            .Select(d => new { Child = d.EntityId, Parent = d.TargetEntityId, d.CanonicalBook, d.CanonicalChapter, d.CanonicalVerse, d.Confidence })
+            .Concat(db.EntityDescriptors
+                .Where(asParent)
+                .Where(d => (d.Relation == DescriptorRelations.FatherOf || d.Relation == DescriptorRelations.MotherOf)
+                            && d.Entity!.Kind == EntityKind.Person && d.Target!.Kind == EntityKind.Person
+                            && !FamilyEndpoints.Deities.Contains(d.Entity.Slug))
+                .Select(d => new { Child = d.TargetEntityId, Parent = d.EntityId, d.CanonicalBook, d.CanonicalChapter, d.CanonicalVerse, d.Confidence }))
+            .ToListAsync(cancellationToken);
+        return
+        [
+            .. rows
+                .Where(r => r.Child != r.Parent)
+                .Select(r => (r.Child, r.Parent, BookReferences.At(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse)!, r.Confidence)),
+        ];
+    }
+
     /// <summary>A father among these parents, else a mother, else nothing: a parent of unknown sex says neither.</summary>
     private static string? Through(IReadOnlyCollection<(int Parent, string? Sex)> parents) =>
         parents.Any(p => p.Sex == Male) ? Father
         : parents.Any(p => p.Sex == Female) ? Mother
         : null;
 }
+
+/// <summary>A brother or sister two recorded parent clauses give a person, with the verse of each.</summary>
+internal sealed record SiblingByParents(int Subject, int Sibling, VerseRefResponse Theirs, VerseRefResponse Mine, double? Confidence);

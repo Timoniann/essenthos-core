@@ -132,6 +132,14 @@ public sealed class FamilyLineTests : IDisposable
 
         Tie("dinah", DescriptorRelations.DaughterOf, "jacob");
 
+        // The sons of Jacob were twelve (GEN 35:22): every son is named, so the count is not "named".
+        _db.EntityKinStatements.Add(new EntityKinStatement
+        {
+            EntityId = _people["jacob"].Id, Kind = KinStatementKinds.Count, Sons = 12,
+            CanonicalBook = 1, CanonicalChapter = 35, CanonicalVerse = 22,
+            Method = LinkMethod.Manual, Source = "read from Scripture by a test",
+        });
+
         // Joseph says his half-brothers himself; Reuben's own record calls Joseph a brother, which
         // the half-brother Joseph's record states outranks on Joseph's line.
         Tie("joseph", DescriptorRelations.SonOf, "jacob");
@@ -220,8 +228,9 @@ public sealed class FamilyLineTests : IDisposable
     {
         var jacob = (await Descriptors.Of(_db, "jacob", "eng", default))!;
 
-        jacob.Counted.Should().ContainSingle()
-            .Which.Should().Be(new DescriptorCountResponse(DescriptorRelations.FatherOf, "father of twelve sons and a daughter"));
+        var count = jacob.Counted.Should().ContainSingle().Which;
+        count.Relation.Should().Be(DescriptorRelations.FatherOf);
+        count.Text.Should().Be("father of twelve sons and a daughter");
         jacob.Claims.Where(c => c.Relation == DescriptorRelations.FatherOf).Select(c => c.Target.Slug).Distinct()
             .Should().HaveCount(13);
         jacob.Claims.Should().Contain(c => c.Target.Slug == "reuben" && c.Stated == DescriptorRelations.SonOf);

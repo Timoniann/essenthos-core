@@ -158,21 +158,27 @@ internal static class FamilyTies
             .ToDictionary(g => g.Key, g => g.Min(p => p.Position), StringComparer.Ordinal);
         return placed
             .OrderBy(p => Rank(p.Clause.Relation))
-            .ThenBy(p => Rank(p.Clause.Relation) is Office or Rest ? p.Position : first[p.Clause.Relation])
+            .ThenBy(p => Rank(p.Clause.Relation) is Office || (Rank(p.Clause.Relation) == Rest && p.Clause.Relation != DescriptorRelations.AncestorOf)
+                ? p.Position
+                : first[p.Clause.Relation])
             .ThenBy(p => p.Position)
             .Select(p => p.Clause);
     }
 
-    private static int Rank(string relation) =>
+    /// <summary>Where a relation stands in the line: offices, parents, spouses, children, siblings, the rest.</summary>
+    public static int Rank(string relation) =>
         Offices.Contains(relation) ? Office
         : Parents.Contains(relation) ? 0
         : Spouses.Contains(relation) ? 1
-        : Children.Contains(relation) ? 2
+        : Children.Contains(relation) ? ChildrenRank
         : Siblings.Contains(relation) ? 3
         : Rest;
 
     /// <summary>Everything that is not a parent, spouse, child or sibling, which keeps the order it was written in.</summary>
     private const int Rest = 4;
+
+    /// <summary>The children's place in the line, which a count of children takes where no child is named.</summary>
+    public const int ChildrenRank = 2;
 
     /// <summary>The offices, before the family.</summary>
     private const int Office = -1;
