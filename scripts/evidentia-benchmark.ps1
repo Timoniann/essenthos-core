@@ -18,7 +18,8 @@ param(
     # self: the King James against its own stated links; selfstrong: the same with source Strong allowed.
     # kjv, kjvval: the King James against its own links with the index learned from the Berean instead,
     # so nothing the King James states teaches it (the passages of ind, and of val and val2).
-    # spa: the Reina-Valera 1909 against Clear Bible's hand alignment of it, over the passages of ind, val and val2.
+    # spa: the Reina-Valera 1909 against Clear Bible's hand alignment of it, over the passages of ind, val and val2;
+    # spaheld: the same over the chapters of held, which no Spanish rule was chosen on.
     # bbe, nwt: the Bible in Basic English and the New World Translation, read from their files, over
     # the passages of ind and val. Neither states a link, so there is no gold: what they report is
     # coverage and how far the links agree with the King James's and the Berean's own.
@@ -185,6 +186,16 @@ $passages = @{
         @('spa-exo', 'RV1909', 'BHSA', 2, 21, 23, $spanish),
         @('spa-isa', 'RV1909', 'BHSA', 23, 40, 42, $spanish),
         @('spa-rom', 'RV1909', 'NESTLE1904', 45, 5, 8, ($spanish + '--learn-from-strong-numbers')))
+    spaheld    = @(
+        @('spaheld-num', 'RV1909', 'BHSA', 4, 33, 33, $spanish),
+        @('spaheld-1chr', 'RV1909', 'BHSA', 13, 7, 7, $spanish),
+        @('spaheld-ezra', 'RV1909', 'BHSA', 15, 9, 9, $spanish),
+        @('spaheld-isa', 'RV1909', 'BHSA', 23, 34, 34, $spanish),
+        @('spaheld-dan10', 'RV1909', 'BHSA', 27, 10, 10, $spanish),
+        @('spaheld-dan12', 'RV1909', 'BHSA', 27, 12, 12, $spanish),
+        @('spaheld-matt', 'RV1909', 'NESTLE1904', 40, 25, 25, ($spanish + '--learn-from-strong-numbers')),
+        @('spaheld-heb', 'RV1909', 'NESTLE1904', 58, 10, 10, ($spanish + '--learn-from-strong-numbers')),
+        @('spaheld-rev', 'RV1909', 'NESTLE1904', 66, 17, 17, ($spanish + '--learn-from-strong-numbers')))
     selfstrong = @(
         @('sst-gen', 'KJV', 'BHSA', 1, 1, 10, @()),
         @('sst-ruth', 'KJV', 'BHSA', 8, 0, 0, @()),
@@ -390,7 +401,7 @@ function MeasureSideBySide($set) {
 Push-Location $(if ($FromReports) { $directory } else { $snapshot })
 try {
     foreach ($set in $Runs -split ',') {
-        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, held2, kjv, kjvval, self, selfstrong, spa, bbe, nwt, noteach, kjvnoteach, spanoteach or keyless." }
+        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, held2, kjv, kjvval, self, selfstrong, spa, spaheld, bbe, nwt, noteach, kjvnoteach, spanoteach or keyless." }
         if ($set -eq 'held2' -and -not $Unseal) { throw 'held2 is sealed: it is run once per step, with its rules fixed. Pass -Unseal when this is that run.' }
         $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0; Seconds = 0.0 }
         $words = @{}

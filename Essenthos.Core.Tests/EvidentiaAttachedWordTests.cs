@@ -887,6 +887,138 @@ public class EvidentiaAttachedWordTests
         Attach([will, mourn], [hayiti, mourner], (mourn, mourner)).Should().Equal((2L, 12L));
     }
 
+    [Fact]
+    public void WhenAskedAnAuxiliaryGoesOnTheGreekVerbWhoseFormCarriesItAndNotOnOneWhoseFormSaysOtherwise()
+    {
+        var will = English(1, Mark114, 1, "will", "AUX") with { Lemma = "will", SyntacticHead = 2, Relation = "aux" };
+        var die = English(2, Mark114, 2, "die", "VERB");
+        var might = English(3, Mark114, 3, "might", "AUX") with { Lemma = "might", SyntacticHead = 4, Relation = "aux" };
+        var believe = English(4, Mark114, 4, "believe", "VERB");
+        var was = English(5, Mark114, 5, "was", "AUX") with { Lemma = "be", SyntacticHead = 6, Relation = "aux:pass" };
+        var baptized = English(6, Mark114, 6, "baptized", "VERB");
+        var shall = English(7, Mark114, 7, "shall", "AUX") with { Lemma = "shall", SyntacticHead = 8, Relation = "aux" };
+        var see = English(8, Mark114, 8, "see", "VERB");
+        var apothaneitai = Greek(11, Mark114, 1, "ἀποθανεῖται", "G599", "verb", morphology: [("tense", "future"), ("mood", "indicative")]);
+        var pisteusosin = Greek(12, Mark114, 2, "πιστεύσωσιν", "G4100", "verb", morphology: [("tense", "aorist"), ("mood", "subjunctive")]);
+        var ebaptisthe = Greek(13, Mark114, 3, "ἐβαπτίσθη", "G907", "verb", morphology: [("tense", "aorist"), ("mood", "indicative"), ("voice", "passive")]);
+        var eiden = Greek(14, Mark114, 4, "εἶδεν", "G3708", "verb", morphology: [("tense", "aorist"), ("mood", "indicative"), ("voice", "active")]);
+        (EvidentiaToken, EvidentiaToken)[] placed = [(die, apothaneitai), (believe, pisteusosin), (baptized, ebaptisthe), (see, eiden)];
+
+        AttachOf([will, die, might, believe, was, baptized, shall, see], [apothaneitai, pisteusosin, ebaptisthe, eiden], placed)
+            .Should().BeEquivalentTo([(1L, 11L), (3L, 12L), (5L, 13L)]);
+        Attach([will, die, might, believe, was, baptized, shall, see], [apothaneitai, pisteusosin, ebaptisthe, eiden], placed)
+            .Should().BeEmpty();
+    }
+
+    [Fact]
+    public void WhenAskedAGreekAuxiliaryGoesOnTheEimiOrMelloTheOriginalWritesForItButBeingStaysWithItsParticiple()
+    {
+        var were = English(1, Mark114, 1, "were", "AUX") with { Lemma = "be", SyntacticHead = 2, Relation = "aux" };
+        var sitting = English(2, Mark114, 2, "sitting", "VERB");
+        var will = English(3, Mark114, 3, "will", "AUX") with { Lemma = "will", SyntacticHead = 4, Relation = "aux" };
+        var die = English(4, Mark114, 4, "die", "VERB");
+        var being = English(5, Mark114, 5, "being", "AUX") with { Lemma = "be", SyntacticHead = 6, Relation = "aux:pass" };
+        var tempted = English(6, Mark114, 6, "tempted", "VERB");
+        (string, string)[] participle = [("tense", "present"), ("mood", "participle"), ("voice", "middlepassive")];
+        var esan = Greek(11, Mark114, 1, "ἦσαν", "G1510", "verb", morphology: [("tense", "imperfect"), ("mood", "indicative")]);
+        var tines = Greek(12, Mark114, 2, "τινες", "G5100", "pron");
+        var kathemenoi = Greek(13, Mark114, 3, "καθήμενοι", "G2521", "verb", morphology: participle);
+        var mellete = Greek(14, Mark114, 4, "μέλλετε", "G3195", "verb", morphology: [("tense", "present"), ("mood", "indicative")]);
+        var apothneskein = Greek(15, Mark114, 5, "ἀποθνήσκειν", "G599", "verb", morphology: [("tense", "present"), ("mood", "infinitive")]);
+        var peirazomenos = Greek(16, Mark114, 6, "πειραζόμενος", "G3985", "verb", morphology: participle);
+
+        AttachOf([were, sitting, will, die, being, tempted], [esan, tines, kathemenoi, mellete, apothneskein, peirazomenos],
+                (sitting, kathemenoi), (die, apothneskein), (tempted, peirazomenos))
+            .Should().BeEquivalentTo([(1L, 11L), (3L, 14L), (5L, 16L)]);
+    }
+
+    [Fact]
+    public void WhenAskedAnAuxiliaryGoesOnTheHebrewVerbAcrossTheNegationTheOriginalWritesApart()
+    {
+        var did = English(1, Genesis122, 1, "did", "AUX") with { Lemma = "do", SyntacticHead = 3, Relation = "aux" };
+        var not = English(2, Genesis122, 2, "not", "PART");
+        var see = English(3, Genesis122, 3, "see", "VERB");
+        var can = English(4, Genesis122, 4, "can", "AUX") with { Lemma = "can", SyntacticHead = 6, Relation = "aux" };
+        var notAgain = English(5, Genesis122, 5, "not", "PART");
+        var go = English(6, Genesis122, 6, "go", "VERB");
+        var lo = Hebrew(11, Genesis122, 1, "לֹא", "H3808", "nega");
+        var rau = Hebrew(12, Genesis122, 2, "רָאוּ", "H7200", "verb", ("tense", "perf"));
+        var loAgain = Hebrew(13, Genesis122, 3, "לֹא", "H3808", "nega");
+        var nelekh = Hebrew(14, Genesis122, 4, "נֵלֵךְ", "H1980", "verb", ("tense", "impf"));
+        (EvidentiaToken, EvidentiaToken)[] placed = [(not, lo), (see, rau), (notAgain, loAgain), (go, nelekh)];
+
+        AttachOf([did, not, see, can, notAgain, go], [lo, rau, loAgain, nelekh], placed).Should().Equal((1L, 12L));
+        Attach([did, not, see, can, notAgain, go], [lo, rau, loAgain, nelekh], placed).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void WhenAskedLetAndItsPronounGoOnTheVerbWhoseFormSaysTheWishButNotBeforeANoun()
+    {
+        var let = English(1, Genesis122, 1, "Let", "VERB");
+        var us = English(2, Genesis122, 2, "us", "PRON") with { SyntacticHead = 1, Relation = "obj" };
+        var make = English(3, Genesis122, 3, "make", "VERB") with { SyntacticHead = 1, Relation = "xcomp" };
+        var naaseh = Hebrew(11, Genesis122, 1, "נַעֲשֶׂה", "H6213", "verb", ("tense", "impf"), ("person", "p1"), ("number", "pl"));
+
+        AttachOf([let, us, make], [naaseh], (make, naaseh)).Should().BeEquivalentTo([(1L, 11L), (2L, 11L)]);
+
+        var earth = English(2, Genesis122, 2, "earth", "NOUN") with { SyntacticHead = 1, Relation = "obj" };
+        var bring = English(3, Genesis122, 3, "bring", "VERB") with { SyntacticHead = 1, Relation = "xcomp" };
+        var totse = Hebrew(12, Genesis122, 2, "תֹּוצֵא", "H3318", "verb", ("tense", "impf"), ("person", "p3"), ("number", "sg"));
+        var arets = Hebrew(13, Genesis122, 3, "אֶרֶץ", "H776", "subs");
+
+        AttachOf([let, earth, bring], [totse, arets], (earth, arets), (bring, totse)).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void WhenAskedToOfAGreekDativeGoesOnTheNounOrOnItsArticleWhereEnglishWritesTheAndNotAfterAPreposition()
+    {
+        var to = English(1, Mark114, 1, "to", "ADP") with { SyntacticHead = 2, Relation = "case" };
+        var god = English(2, Mark114, 2, "God", "PROPN");
+        var toThe = English(3, Mark114, 3, "to", "ADP") with { SyntacticHead = 5, Relation = "case" };
+        var the = English(4, Mark114, 4, "the", "DET");
+        var servants = English(5, Mark114, 5, "servants", "NOUN");
+        var toHouse = English(6, Mark114, 6, "to", "ADP") with { SyntacticHead = 7, Relation = "case" };
+        var house = English(7, Mark114, 7, "house", "NOUN");
+        (string, string)[] dative = [("case", "dative")];
+        var to1 = Greek(11, Mark114, 1, "τῷ", "G3588", "det", morphology: dative);
+        var theo = Greek(12, Mark114, 2, "Θεῷ", "G2316", "noun", morphology: dative);
+        var tois = Greek(13, Mark114, 3, "τοῖς", "G3588", "det", morphology: dative);
+        var diakonois = Greek(14, Mark114, 4, "διακόνοις", "G1249", "noun", morphology: dative);
+        var en = Greek(15, Mark114, 5, "ἐν", "G1722", "prep");
+        var oiko = Greek(16, Mark114, 6, "οἴκῳ", "G3624", "noun", morphology: dative);
+
+        var attached = AttachOf([to, god, toThe, the, servants, toHouse, house], [to1, theo, tois, diakonois, en, oiko],
+            (god, theo), (servants, diakonois), (house, oiko));
+
+        attached.Should().Contain([(1L, 12L), (3L, 13L), (6L, 15L)]).And.NotContain((6L, 16L));
+    }
+
+    [Fact]
+    public void WhenAskedTheRelativeOfAParticipleGoesOnItsArticleInGreekAndOnTheParticipleInHebrewButNotWhereAsherIsWritten()
+    {
+        var relative = new Dictionary<string, string> { ["PronType"] = "Rel" };
+        var the = English(1, Mark114, 1, "the", "DET") with { SyntacticHead = 2, Relation = "det" };
+        var one = English(2, Mark114, 2, "One", "NOUN");
+        var who = English(3, Mark114, 3, "who", "PRON") with { SyntacticHead = 4, Relation = "nsubj", Morphology = relative };
+        var comes = English(4, Mark114, 4, "comes", "VERB") with { SyntacticHead = 2, Relation = "acl:relcl" };
+        (string, string)[] agreeing = [("case", "nominative"), ("number", "singular"), ("gender", "masculine")];
+        var ho = Greek(11, Mark114, 1, "ὁ", "G3588", "det", morphology: agreeing);
+        var erchomenos = Greek(12, Mark114, 2, "ἐρχόμενος", "G2064", "verb", morphology: [.. agreeing, ("mood", "participle")]);
+
+        AttachOf([the, one, who, comes], [ho, erchomenos], (comes, erchomenos)).Should().BeEquivalentTo([(1L, 11L), (2L, 11L), (3L, 11L)]);
+
+        var those = English(1, Genesis122, 1, "those", "PRON");
+        var whoWalk = English(2, Genesis122, 2, "who", "PRON") with { SyntacticHead = 3, Relation = "nsubj", Morphology = relative };
+        var walk = English(3, Genesis122, 3, "walk", "VERB") with { SyntacticHead = 1, Relation = "acl:relcl" };
+        var article = Hebrew(11, Genesis122, 1, "הַ", "H9009", "art");
+        var holekhim = Hebrew(12, Genesis122, 2, "הֹלְכִים", "H1980", "verb", ("tense", "ptca"));
+
+        AttachOf([those, whoWalk, walk], [article, holekhim], (walk, holekhim)).Should().BeEquivalentTo([(1L, 12L), (2L, 12L)]);
+
+        var asher = Hebrew(13, Genesis122, 1, "אֲשֶׁר", "H834", "conj");
+        AttachOf([those, whoWalk, walk], [asher, holekhim], (walk, holekhim)).Should().BeEmpty();
+    }
+
     private static IReadOnlyList<(long Source, long Target)> Attach(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
