@@ -106,6 +106,11 @@ public sealed class FamilyLineTests : IDisposable
         Person("nobody", "Nobody", null);
         Person("someone", "Someone", null);
         Person("yhvh", "YHVH", null);
+        Person("jesse", "Jesse", Male);
+        Person("david", "David", Male);
+        Person("israelites", "Israelites", null);
+        Person("one", "One", Male);
+        Person("two", "Two", Male);
         _db.SaveChanges();
         AddForms();
 
@@ -159,8 +164,34 @@ public sealed class FamilyLineTests : IDisposable
         // father or the mother, so it is not turned.
         Tie("someone", DescriptorRelations.SonOf, "nobody");
         Tie("isaac", DescriptorRelations.SonOf, "yhvh");
+
+        // Benjamin's own record calls Simeon a brother; the parents both records give say otherwise.
+        Tie("benjamin", DescriptorRelations.SonOf, "rachel");
+        Tie("simeon", DescriptorRelations.SonOf, "leah");
+        Tie("benjamin", DescriptorRelations.BrotherOf, "simeon");
+
+        // An office is said before the family, whatever order the record wrote it in.
+        Tie("david", DescriptorRelations.SonOf, "jesse");
+        Tie("david", DescriptorRelations.ServantOf, "yhvh");
+        Tie("david", DescriptorRelations.KingOf, "israelites");
+
+        // The owner's ruling, written on the other record, outranks a model's reading of this one.
+        Tie("one", DescriptorRelations.BrotherOf, "two");
+        Tie("two", DescriptorRelations.HalfBrotherOf, "one", LinkMethod.Manual);
         _db.SaveChanges();
     }
+
+    [Fact]
+    public async Task ABrotherWithAnotherMotherIsAHalfBrother() =>
+        (await Line("benjamin", "eng")).Should().Contain("half-brother of Simeon").And.NotContain("brother of Joseph and Simeon");
+
+    [Fact]
+    public async Task AnOfficeComesFirst() =>
+        (await Line("david", "eng")).Should().StartWith("king of Israelites, son of Jesse");
+
+    [Fact]
+    public async Task TheOwnersRulingOnTheOtherRecordOutranksAReading() =>
+        (await Line("one", "eng")).Should().Be("half-brother of Two");
 
     public void Dispose()
     {
@@ -263,7 +294,7 @@ public sealed class FamilyLineTests : IDisposable
         }
     }
 
-    private void Tie(string subject, string relation, string target)
+    private void Tie(string subject, string relation, string target, LinkMethod method = LinkMethod.ModelReading)
     {
         var id = _people[subject].Id;
         _ordinals[id] = _ordinals.GetValueOrDefault(id) + 1;
@@ -276,7 +307,7 @@ public sealed class FamilyLineTests : IDisposable
             CanonicalBook = 1,
             CanonicalChapter = 30,
             CanonicalVerse = ++_verse,
-            Method = LinkMethod.ModelReading,
+            Method = method,
             Confidence = 0.9,
             Source = "a test",
         });

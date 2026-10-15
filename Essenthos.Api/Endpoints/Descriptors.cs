@@ -169,6 +169,23 @@ internal static class Descriptors
             .ToList();
         var clauses = FamilyTies.Folded([.. own.Select(c => c with { TargetSex = SexOf(c.TargetEntityId, c.TargetSex) }), .. turned]);
 
+        // A brother or sister whom the recorded parents show to be a half-sibling is said so.
+        var full = clauses
+            .Where(c => c.Relation is DescriptorRelations.BrotherOf or DescriptorRelations.SisterOf)
+            .Select(c => (c.SubjectId, c.TargetEntityId))
+            .Distinct()
+            .ToList();
+        var halved = await SharedParents.Halved(db, full, cancellationToken);
+        clauses = [.. clauses.Select(c => c.Relation is DescriptorRelations.BrotherOf or DescriptorRelations.SisterOf
+                                          && halved.Contains((c.SubjectId, c.TargetEntityId))
+            ? c with
+            {
+                Relation = c.Relation == DescriptorRelations.BrotherOf
+                    ? DescriptorRelations.HalfBrotherOf
+                    : DescriptorRelations.HalfSisterOf,
+            }
+            : c)];
+
         var halves = clauses
             .Where(c => c.Relation is DescriptorRelations.HalfBrotherOf or DescriptorRelations.HalfSisterOf)
             .Select(c => (c.Slug, c.TargetEntityId))

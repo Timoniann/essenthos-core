@@ -1,5 +1,6 @@
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
 
 namespace Essenthos.Core.Endpoints;
 
@@ -109,7 +110,12 @@ internal static class FamilyTies
                     continue;
                 }
 
-                if (rivals.All(rival => RelationshipVocabulary.Implies(turned.Relation, rival)))
+                // The owner's own word on a tie, written on the other person, outranks a reading of
+                // this person's record: Simeon's record says half-brother of Benjamin by his ruling of
+                // 2026-09-12, and Benjamin's own record still said brother.
+                var ruled = turned.Method == LinkMethod.Manual
+                            && own.Where(c => rivals.Contains(c.Relation)).All(c => c.Method != LinkMethod.Manual);
+                if (ruled || rivals.All(rival => RelationshipVocabulary.Implies(turned.Relation, rival)))
                 {
                     dropped.UnionWith(own.Where(c => rivals.Contains(c.Relation)));
                 }
@@ -124,7 +130,20 @@ internal static class FamilyTies
     }
 
     /// <summary>
-    /// The order the line says its clauses in: parents, spouses, children, siblings, then the rest.
+    /// The offices a person held, which the line says before anything else: <em>king of the
+    /// Israelites, son of Jesse</em>, as the owner asked on 2026-10-15. Among themselves they keep the
+    /// order they were written in.
+    /// </summary>
+    private static readonly IReadOnlySet<string> Offices = new HashSet<string>(StringComparer.Ordinal)
+    {
+        DescriptorRelations.KingOf, DescriptorRelations.QueenOf, DescriptorRelations.JudgeOf,
+        DescriptorRelations.ProphetTo, DescriptorRelations.HighPriestOf, DescriptorRelations.PriestOf,
+        DescriptorRelations.ApostleOf, DescriptorRelations.GovernorOf, DescriptorRelations.TetrarchOf,
+        DescriptorRelations.CommanderOf, DescriptorRelations.ScribeOf,
+    };
+
+    /// <summary>
+    /// The order the line says its clauses in: offices, parents, spouses, children, siblings, then the rest.
     /// Within each family group a relation's clauses stand together, the person's own first and in the
     /// order written, the other records' after them in the order of their verses; the rest keep the
     /// order they were written in.
@@ -139,13 +158,14 @@ internal static class FamilyTies
             .ToDictionary(g => g.Key, g => g.Min(p => p.Position), StringComparer.Ordinal);
         return placed
             .OrderBy(p => Rank(p.Clause.Relation))
-            .ThenBy(p => Rank(p.Clause.Relation) == Rest ? p.Position : first[p.Clause.Relation])
+            .ThenBy(p => Rank(p.Clause.Relation) is Office or Rest ? p.Position : first[p.Clause.Relation])
             .ThenBy(p => p.Position)
             .Select(p => p.Clause);
     }
 
     private static int Rank(string relation) =>
-        Parents.Contains(relation) ? 0
+        Offices.Contains(relation) ? Office
+        : Parents.Contains(relation) ? 0
         : Spouses.Contains(relation) ? 1
         : Children.Contains(relation) ? 2
         : Siblings.Contains(relation) ? 3
@@ -153,4 +173,7 @@ internal static class FamilyTies
 
     /// <summary>Everything that is not a parent, spouse, child or sibling, which keeps the order it was written in.</summary>
     private const int Rest = 4;
+
+    /// <summary>The offices, before the family.</summary>
+    private const int Office = -1;
 }

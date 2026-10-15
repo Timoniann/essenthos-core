@@ -88,6 +88,63 @@ internal static class SharedParents
         return shared;
     }
 
+    /// <summary>
+    /// The pairs called brother or sister whom the parents the records give show to be half-siblings:
+    /// they share a parent and each has a different one of the other sex. A model reading Genesis 42:36
+    /// called Benjamin Simeon's brother, while both records give Jacob as their father and Rachel and
+    /// Leah as their mothers. A pair that shares no recorded parent is left as it is: its records
+    /// disagree about something else, and calling them half-siblings would assert a parent nobody gave.
+    /// </summary>
+    public static async Task<HashSet<(int One, int Other)>> Halved(
+        AppDbContext db,
+        IReadOnlyCollection<(int One, int Other)> pairs,
+        CancellationToken cancellationToken)
+    {
+        if (pairs.Count == 0)
+        {
+            return [];
+        }
+
+        var people = pairs.SelectMany(p => new[] { p.One, p.Other }).Distinct().ToList();
+        var asChild = await db.EntityDescriptors
+            .Where(d => people.Contains(d.EntityId)
+                        && (d.Relation == DescriptorRelations.SonOf || d.Relation == DescriptorRelations.DaughterOf))
+            .Select(d => new { Child = d.EntityId, Parent = d.TargetEntityId, d.Target!.Sex })
+            .ToListAsync(cancellationToken);
+        var asParent = await db.EntityDescriptors
+            .Where(d => people.Contains(d.TargetEntityId)
+                        && (d.Relation == DescriptorRelations.FatherOf || d.Relation == DescriptorRelations.MotherOf))
+            .Select(d => new
+            {
+                Child = d.TargetEntityId,
+                Parent = d.EntityId,
+                Sex = d.Relation == DescriptorRelations.FatherOf ? Male : Female,
+            })
+            .ToListAsync(cancellationToken);
+        var parents = asChild.Select(r => (r.Child, r.Parent, r.Sex))
+            .Concat(asParent.Select(r => (r.Child, r.Parent, Sex: (string?)r.Sex)))
+            .Where(r => r.Sex is Male or Female)
+            .GroupBy(r => r.Child)
+            .ToDictionary(g => g.Key, g => g.Select(r => (r.Parent, Sex: r.Sex!)).Distinct().ToList());
+
+        var halved = new HashSet<(int, int)>();
+        foreach (var pair in pairs)
+        {
+            var mine = parents.GetValueOrDefault(pair.One) ?? [];
+            var theirs = parents.GetValueOrDefault(pair.Other) ?? [];
+            var shares = mine.Any(m => theirs.Any(t => t.Parent == m.Parent));
+            var differ = new[] { Male, Female }.Any(sex =>
+                mine.Any(m => m.Sex == sex) && theirs.Any(t => t.Sex == sex)
+                && !mine.Any(m => m.Sex == sex && theirs.Any(t => t.Parent == m.Parent)));
+            if (shares && differ)
+            {
+                halved.Add(pair);
+            }
+        }
+
+        return halved;
+    }
+
     /// <summary>A father among these parents, else a mother, else nothing: a parent of unknown sex says neither.</summary>
     private static string? Through(IReadOnlyCollection<(int Parent, string? Sex)> parents) =>
         parents.Any(p => p.Sex == Male) ? Father
