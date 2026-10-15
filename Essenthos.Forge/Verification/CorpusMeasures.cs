@@ -357,7 +357,7 @@ internal sealed record SharedAddresses(string Text, bool Labelled, int Addresses
 /// </summary>
 /// <param name="Book">The book's name as the text prints it.</param>
 /// <param name="Words">Its words that had a counterpart to reach, all of them silent.</param>
-internal sealed record Unaligned(string Text, int Ordinal, string Book, int Words);
+internal sealed record Unaligned(string Text, int Ordinal, string Book, int Words, int Reached = 0);
 
 /// <summary>
 /// Words of a text that no link joins to a witness, whose Strong number the witness prints in the
@@ -461,13 +461,13 @@ internal sealed record CorpusMeasures(
 
     /// <summary>
     /// <see cref="Rendered"/> over the books alignment has reached: the books in
-    /// <see cref="Unaligned"/> leave the denominator, and nothing leaves the numerator, since not
-    /// one of their words is linked. This is the share the floor holds, because a book nobody has
+    /// <see cref="Unaligned"/> leave the denominator, and the names a book reached ahead of its
+    /// alignment (<see cref="Unaligned.Reached"/>) leave the numerator; nothing else of them is linked. This is the share the floor holds, because a book nobody has
     /// aligned yet is work still to do and not something a load lost; the books it sets aside are
     /// named in the report, so nothing unaligned is hidden by it.
     /// </summary>
     public double Aligned => Words - UnalignedWords is var reached and > 0
-        ? (double)(RenderedWords + AbsentWords) / reached
+        ? (double)(RenderedWords + AbsentWords - (Unaligned ?? []).Sum(u => u.Reached)) / reached
         : 0;
 
     /// <summary>Words in the books of <see cref="Unaligned"/>, all inside <see cref="Words"/>.</summary>

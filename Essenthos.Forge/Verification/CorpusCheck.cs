@@ -136,8 +136,16 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     /// reach and not one word reaches or is shown absent from a witness: a text loaded whose
     /// alignment has not reached that book yet. Counted over the same words as coverage's
     /// denominator, so subtracting them from it is exact.
+    /// <para>
+    /// A book whose only links are the names <see cref="NamesFirstPass"/> placed is still one alignment
+    /// has not reached: the names are an anchor laid ahead of it, 291,563 words over 18 texts with no
+    /// other link on 2026-10-15. Counted as aligned, those texts' every book entered the floor's
+    /// denominator with a name in a verse in ten reached, and the share fell from 81% to 67% with
+    /// nothing lost. So such a book is set aside like any other, and the names it does reach
+    /// (<see cref="Unaligned.Reached"/>) leave the numerator with it.
+    /// </para>
     /// </summary>
-    private const string UnalignedSql =
+    private static readonly string UnalignedSql =
         """
         WITH witness AS (
             SELECT DISTINCT l.from_text_id, l.to_text_id
@@ -158,14 +166,17 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
                 AND (there.book, there.chapter, there.verse) = (here.book, here.chapter, here.verse)
         ),
         claimed AS (
-            SELECT DISTINCT lw.word_id
+            SELECT lw.word_id, bool_and(pr.source IS NOT DISTINCT FROM @names) AS named
             FROM link_word lw
             JOIN link l ON l.id = lw.link_id
             JOIN text other ON other.id = l.to_text_id AND other.kind <> 'translation'
+            LEFT JOIN provenance pr ON pr.id = l.provenance_id
             WHERE lw.side = 'from'
+            GROUP BY lw.word_id
         )
         SELECT t.slug, b.canonical_ordinal, b.name,
-               count(*) FILTER (WHERE pv.verse_id IS NOT NULL)
+               count(*) FILTER (WHERE pv.verse_id IS NOT NULL),
+               count(c.word_id) FILTER (WHERE pv.verse_id IS NOT NULL)
         FROM word w
         JOIN text t ON t.id = w.text_id
         JOIN placed p ON p.verse_id = w.verse_id
@@ -175,9 +186,9 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         WHERE t.kind = 'translation'
            OR EXISTS (SELECT 1 FROM witness x WHERE x.from_text_id = w.text_id)
         GROUP BY t.slug, b.canonical_ordinal, b.name
-        HAVING count(c.word_id) = 0 AND count(*) FILTER (WHERE pv.verse_id IS NOT NULL) > 0
+        HAVING count(c.word_id) FILTER (WHERE NOT c.named) = 0 AND count(*) FILTER (WHERE pv.verse_id IS NOT NULL) > 0
         ORDER BY t.slug, b.canonical_ordinal
-        """;
+        """.Replace("@names", "'" + NamesFirstPass.Source.Replace("'", "''") + "'", StringComparison.Ordinal);
 
     /// <summary>
     /// A verse pair whose links are all faint, which is what a wrong pairing looks like from
@@ -1037,7 +1048,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         }
 
         var unaligned = await Read(connection, UnalignedSql, cancellationToken, reader => new Unaligned(
-            reader.GetString(0), reader.GetInt32(1), reader.GetString(2), (int)reader.GetInt64(3)));
+            reader.GetString(0), reader.GetInt32(1), reader.GetString(2), (int)reader.GetInt64(3), (int)reader.GetInt64(4)));
 
         var stranded = await Read(connection, StrandedSql, cancellationToken, reader => new Stranded(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), reader.GetFieldValue<string[]>(3)));

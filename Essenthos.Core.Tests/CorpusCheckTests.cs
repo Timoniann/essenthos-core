@@ -2,6 +2,7 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Verbs;
 using Essenthos.Core.Verification;
 using FluentAssertions;
@@ -156,6 +157,30 @@ public sealed class CorpusCheckTests : IDisposable
         measures.Rendered.Should().BeApproximately(2d / 5, 1e-12);
         measures.Aligned.Should().BeApproximately(2d / 3, 1e-12);
         measures.Describe().Should().Contain("KJV: Exodus 2");
+    }
+
+    /// <summary>
+    /// A name placed ahead of the alignment does not make its book aligned: counted as aligned, the
+    /// texts with nothing but names took the floor from 81% to 67% on 2026-10-15 with nothing lost.
+    /// </summary>
+    [Fact]
+    public async Task ABookReachedOnlyByPlacedNamesIsNotAlignedYet()
+    {
+        _db.AddBook(_hebrew, 2, "Exodus", (2, 1, ["וְ", "אֵלֶּה"]));
+        _db.AddBook(_english, 2, "Exodus", (2, 1, ["Now", "these"]));
+        _db.SaveChanges();
+        Link(LinkRelation.Renders, english: 1, hebrew: 1);
+        Link(LinkRelation.Renders, english: 2, hebrew: 2);
+        var named = Link(LinkRelation.Renders, english: null, hebrew: null, LinkMethod.RuleBased, NamesFirstPass.Source);
+        _db.LinkWords.Add(new LinkWord { LinkId = named.Id, WordId = _db.WordAt(_english, 2, 1, 2).Id, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { LinkId = named.Id, WordId = _db.WordAt(_hebrew, 2, 1, 2).Id, Side = LinkSide.To });
+        _db.SaveChanges();
+
+        var measures = await _check.Measure();
+
+        measures.Unaligned.Should().ContainSingle()
+            .Which.Should().Be(new Unaligned("KJV", 2, "Exodus", 2, Reached: 1));
+        measures.Aligned.Should().BeApproximately(2d / 3, 1e-12);
     }
 
     [Fact]
