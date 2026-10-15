@@ -119,6 +119,9 @@ internal enum EvidentiaProposalKind
 
     /// <summary>An unplaced word on the word the statistical aligner pairs it with, where a dictionary sense or gloss names the same pair.</summary>
     AlignerAndLexicalEvidence,
+
+    /// <summary>A word on the edge of its verse a fitted model over all its signals gives the review band or better.</summary>
+    CombinedEvidence,
 }
 
 /// <param name="Head">For an attached word, the proposal of the word it belongs to.</param>

@@ -36,6 +36,11 @@ param(
     [string] $Pivot = 'none',
     [string] $PivotPolicy = 'none',
 
+    # The combiner re-decides the words the lexical tiers own by the weights the Forge carries (--combiner); and
+    # every edge it weighs, with its features and the key's label, is written beside the words (--combiner-export).
+    [switch] $Combiner,
+    [switch] $CombinerExport,
+
     # Says the one run of held2 a step is allowed is this one.
     [switch] $Unseal,
 
@@ -264,6 +269,8 @@ function Arguments($passage) {
     $arguments += $Extra
     if ($Pivot -ne 'none') { $arguments += '--pivot', $Pivot }
     if ($PivotPolicy -ne 'none') { $arguments += '--pivot-policy', $PivotPolicy }
+    if ($Combiner) { $arguments += '--combiner' }
+    if ($CombinerExport) { $arguments += '--combiner-export', "$prefix.edges.json" }
     $arguments + @('--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json",
         '--key-doubts', "$prefix.key-doubts.json")
 }
