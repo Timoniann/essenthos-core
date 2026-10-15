@@ -482,24 +482,6 @@
     {
       "verb": "align",
       "arguments": [
-        "GEEZ81",
-        "NESTLE1904",
-        "--replace"
-      ],
-      "at": "2026-09-27T21:14:43.8026556+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
-        "GEEZ81",
-        "RP2018",
-        "--replace"
-      ],
-      "at": "2026-09-27T21:15:03.0317923+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
         "DRA",
         "VULGCLEM",
         "--replace"
@@ -718,15 +700,6 @@
     {
       "verb": "align",
       "arguments": [
-        "GEEZ81",
-        "GRCBRENT",
-        "--replace"
-      ],
-      "at": "2026-09-29T05:53:11.1864833+00:00"
-    },
-    {
-      "verb": "align",
-      "arguments": [
         "GRCBRENT",
         "KJV",
         "--replace"
@@ -871,15 +844,6 @@
       "at": "2026-10-04T19:20:04.6639623+00:00"
     },
     {
-      "verb": "align",
-      "arguments": [
-        "GEEZ81",
-        "SWETE",
-        "--replace"
-      ],
-      "at": "2026-10-04T19:23:21.620216+00:00"
-    },
-    {
       "verb": "edition-boundaries",
       "arguments": [],
       "at": "2026-10-05T14:52:16.1175816+00:00"
@@ -931,13 +895,968 @@
       "note": "written down by hand: CrossWire's Schlachter leaves most names without a Strong number, or puts the name's number on the word beside it, so its names reach the Hebrew only by their letters"
     },
     {
+      "verb": "crosswire-positions",
+      "arguments": [],
+      "at": "2026-10-15T07:25:15.6048845+00:00"
+    },
+    {
+      "verb": "byzantine-apparatus",
+      "arguments": [],
+      "at": "2026-10-15T07:30:56.7399201+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "GRCBRENT",
+        "--replace"
+      ],
+      "at": "2026-10-15T15:27:04.9777647+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "SWETE",
+        "--replace"
+      ],
+      "at": "2026-10-15T15:28:04.1489894+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "NESTLE1904",
+        "--replace"
+      ],
+      "at": "2026-10-15T15:28:39.6478302+00:00"
+    },
+    {
+      "verb": "align",
+      "arguments": [
+        "GEEZ81",
+        "RP2018",
+        "--replace"
+      ],
+      "at": "2026-10-15T15:29:10.3775969+00:00"
+    },
+    {
       "verb": "names",
       "arguments": [
         "GEEZ81",
         "GRCBRENT",
         "--apply"
       ],
-      "note": "written down by hand: the Ge'ez names the aligner left unlinked, paired with the Greek name they spell"
+      "at": "2026-10-15T15:29:56.1500198+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "KRV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:29:52.8525195+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "ALEX",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:30:21.6349901+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "ALEX",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:30:54.1299536+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "ALM1911",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:31:46.5993026+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "ALM1911",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:32:30.8859871+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "ASV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:33:21.0805349+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "ASV",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:34:05.1194703+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "AVD1865",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:34:55.3059978+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "AVD1865",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:35:48.5577802+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "BBE",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:36:48.8853859+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "BBE",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:37:32.9228972+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "BRENTON",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:38:07.3256496+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "BRENTON",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:38:37.3271839+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "BSB",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:39:30.9674213+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "BSB",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:40:17.9581338+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "CSLELIZABETH",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:40:52.2201493+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "CSLELIZABETH",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:41:17.5533351+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "CUV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:41:53.8568069+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "CUV",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:42:30.5190571+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "CUVS",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:43:15.7754132+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "CUVS",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:43:56.9716724+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "DRA",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:44:28.3913184+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "DRA",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:44:57.1772759+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "ELB1905",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:45:59.0167638+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "ELB1905",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:46:44.1798675+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "GEEZ81",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:47:15.8685078+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "GEEZ81",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:47:47.6502808+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "GNV1599",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:48:32.6765461+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "GNV1599",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:49:13.6586649+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "GRCBRENT",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:49:58.792897+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "GRCBRENT",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:50:41.1251044+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRV2019",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:52:05.7797374+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRV2019",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:53:27.3813544+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVASM",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:54:09.3559532+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVASM",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:54:49.9682148+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVBEN",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:55:43.3640328+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVBEN",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:56:27.4910757+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVGUJ",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:57:01.5992383+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVKAN",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:57:35.8866727+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVMAL",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:58:16.3902084+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVMAL",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:58:49.3613308+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVMAR",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:59:25.2110658+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVPAN",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T16:59:59.2347871+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVTAM",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:00:44.4646047+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVTAM",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:01:25.2646548+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVTEL",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:01:58.0242476+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVURD",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:02:53.470802+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "IRVURD",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:03:45.159655+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "JND2024",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:04:44.2315128+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "JND2024",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:05:35.0510319+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "JPS1917",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:06:20.1357918+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "KJV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:07:16.3125353+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "KJV",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:08:06.5572314+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "KRV",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:08:36.9540564+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "LSG1910",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:10:11.128494+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "LSG1910",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:11:38.4505663+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "LUTH1912",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:13:09.6467889+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "LUTH1912",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:14:01.952582+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "NPU2022",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:14:30.5268352+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "NPU2022",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:15:01.7507006+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "OHCB",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:15:45.5286141+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "OHCB",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:16:20.4159811+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "OTTLEY",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:16:41.6140905+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "RLT2018",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:17:29.061622+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "RLT2018",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:18:03.582455+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "RP2018",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:18:22.6235322+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "RUSV",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:19:04.2765131+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "RUSV",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:19:41.5882105+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "RV1909",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:20:31.1249662+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "RV1909",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:21:13.6858741+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "SBLGNT",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:21:36.1014106+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "SCH1951",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:22:10.2515715+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "SCH1951",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:22:41.5904549+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "SIN",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:23:04.6752264+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "SP",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:23:27.3434951+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "SWETE",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:23:57.2387723+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "SWETE",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:24:20.688681+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "SWETEOG",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:24:37.3241608+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "SWETEOG",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:24:55.3592083+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "TISCH",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:25:18.5971628+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "TR1550",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:25:36.9677439+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "TR1894",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:25:55.5895624+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "TYN1534",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:26:19.6253995+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "UBIO",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:27:04.4959365+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "UBIO",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:27:44.268614+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "UKR1871",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:28:23.2972675+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "UKR1871",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:28:59.5309014+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "ULT",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:29:47.3914208+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "ULT",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:30:21.0997904+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "UST",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:31:00.9375355+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "UST",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:31:38.5087555+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "VAT",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:31:58.2906203+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "VIGLT",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:32:19.4291988+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "VIGLT",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:32:42.5654974+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "VULGCLEM",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:33:08.2735968+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "VULGCLEM",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:33:30.2958843+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "WEB",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:34:23.1806794+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "WEB",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:35:02.4078924+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "WH1881",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:35:23.8494227+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "YLT",
+        "BHSA",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:36:01.3796998+00:00"
+    },
+    {
+      "verb": "names-first",
+      "arguments": [
+        "YLT",
+        "NESTLE1904",
+        "--apply"
+      ],
+      "at": "2026-10-15T17:36:44.3831199+00:00"
     }
   ]
 }
