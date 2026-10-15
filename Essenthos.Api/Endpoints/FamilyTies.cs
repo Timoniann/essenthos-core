@@ -136,7 +136,7 @@ internal static class FamilyTies
     /// </summary>
     private static readonly IReadOnlySet<string> Offices = new HashSet<string>(StringComparer.Ordinal)
     {
-        DescriptorRelations.KingOf, DescriptorRelations.QueenOf, DescriptorRelations.JudgeOf,
+        DescriptorRelations.KingOf, DescriptorRelations.QueenOf, DescriptorRelations.JudgeOf, DescriptorRelations.LeaderOf,
         DescriptorRelations.ProphetTo, DescriptorRelations.HighPriestOf, DescriptorRelations.PriestOf,
         DescriptorRelations.ApostleOf, DescriptorRelations.GovernorOf, DescriptorRelations.TetrarchOf,
         DescriptorRelations.CommanderOf, DescriptorRelations.ScribeOf,

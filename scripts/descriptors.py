@@ -365,7 +365,7 @@ entity is the target's father-in-law:
             ancestor-of descendant-of
             father-in-law-of mother-in-law-of son-in-law-of daughter-in-law-of
             brother-in-law-of sister-in-law-of cousin-of
-  office    king-of queen-of prophet-to priest-of judge-of high-priest-of
+  office    king-of queen-of prophet-to priest-of judge-of leader-of high-priest-of
             commander-of governor-of tetrarch-of
             servant-of master-of disciple-of apostle-of scribe-of companion-of
             teacher-of ally-of supporter-of supported-by heir-of inherited-by

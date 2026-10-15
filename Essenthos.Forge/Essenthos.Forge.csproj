@@ -120,6 +120,8 @@
         <EmbeddedResource Include="Loading\Encyclopedia\SynodalPsalmTitleRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\KulishTwoWordNameRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\NamesReadPerVerseRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\FatherOfTownRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\FatherOfTownPeopleRecords.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />

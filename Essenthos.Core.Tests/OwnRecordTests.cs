@@ -47,12 +47,19 @@ public sealed class OwnRecordTests : IDisposable
         _db.SaveChanges();
         _words = placed.ToDictionary(word => word.Key, word => word.Value.Id);
 
-        // The records the rulings point at or name as alternatives.
+        // The records the rulings point at or name as alternatives; a people ruled beside a town is
+        // a people, and the town a place.
+        var towns = _rulings.Where(r => r.Alongside is not null && r.Alongside != "anointed").ToList();
+        var places = towns.Select(r => r.Alongside!).ToHashSet(StringComparer.Ordinal);
+        var peoples = towns.Select(r => r.Existing!).ToHashSet(StringComparer.Ordinal);
         foreach (var slug in Named())
         {
             _db.Entities.Add(new Entity
             {
-                Kind = slug == "anointed" ? EntityKind.Title : EntityKind.Person,
+                Kind = slug == "anointed" ? EntityKind.Title
+                    : places.Contains(slug) ? EntityKind.Place
+                    : peoples.Contains(slug) ? EntityKind.People
+                    : EntityKind.Person,
                 Slug = slug,
                 Name = slug,
                 SourceId = slug,
@@ -172,6 +179,76 @@ public sealed class OwnRecordTests : IDisposable
             .Include(a => a.Entity).Select(a => a.Entity!.Slug).ToArrayAsync()).Should().BeEquivalentTo("anointed", "jesus");
         (await _db.WordEntities.Where(a => a.WordId == greek.Id).Select(a => a.EntityId).ToArrayAsync())
             .Should().Equal(satan.Id);
+    }
+
+    /// <summary>
+    /// Chronicles' <em>the father of Gibeon</em> is the town and its people: the Hebrew word and the
+    /// Synodal's «Гаваонитян» linked to it each name the Gibeonites beside Gibeon, in the word panel
+    /// and on both pages, and a second load writes nothing again.
+    /// </summary>
+    [Fact]
+    public async Task TheFatherOfGibeonNamesTheTownAndItsPeople()
+    {
+        var ruled = _rulings.Single(r => r.Reference == "1CH 8:29" && r.Existing == "gibeonites");
+        ruled.Alongside.Should().Be("gibeon");
+        var town = _db.Words.Single(w => w.Id == _words[ruled.Word]);
+        var synodalAddress = new RuledWord("RUSV", "1CH 8:29", 5, "Гаваонитян");
+        var synodal = _db.Place([synodalAddress])[synodalAddress];
+        var gibeon = await _db.Entities.SingleAsync(e => e.Slug == "gibeon");
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = town.Id, EntityId = gibeon.Id, Method = LinkMethod.Lexical, Confidence = 0.9,
+            Source = "a resolution by number", Note = "H1391",
+        });
+        var link = new Link { FromTextId = synodal.TextId, ToTextId = town.TextId,
+            Method = LinkMethod.StatedBySource, Relation = LinkRelation.Renders,
+            Provenance = new() { Source = "a fixture's stated link" } };
+        _db.Links.Add(link);
+        link.Words.Add(new() { Word = synodal, Side = LinkSide.From });
+        link.Words.Add(new() { Word = town, Side = LinkSide.To });
+        await _db.SaveChangesAsync();
+
+        await Load();
+
+
+        foreach (var word in new[] { town.Id, synodal.Id })
+        {
+            (await Essenthos.Core.Corpus.Annotations.AllOf(_db, [word], CancellationToken.None))[word]
+                .Select(e => e.Slug).Should().Equal("gibeonites", "gibeon");
+            (await _db.Database.SqlQueryRaw<int>(
+                    $"WITH {Annotating.Settled}, {Annotating.Named} SELECT entity_id AS \"Value\" FROM named WHERE word_id = {word}")
+                    .ToListAsync())
+                .Should().BeEquivalentTo([gibeon.Id, (await _db.Entities.SingleAsync(e => e.Slug == "gibeonites")).Id]);
+        }
+
+        var ids = await _db.WordEntities.Where(a => a.WordId == town.Id || a.WordId == synodal.Id)
+            .OrderBy(a => a.Id).Select(a => a.Id).ToArrayAsync();
+        await Load();
+        (await _db.WordEntities.Where(a => a.WordId == town.Id || a.WordId == synodal.Id)
+            .OrderBy(a => a.Id).Select(a => a.Id).ToArrayAsync()).Should().Equal(ids);
+    }
+
+    /// <summary>
+    /// A town and its people stand beside each other only where a person ruled both on the word: a
+    /// people ruled over a town only a resolution gave is the one answer, as it was.
+    /// </summary>
+    [Fact]
+    public async Task ATownOnlyAResolutionGaveDoesNotStandBesideARuledPeople()
+    {
+        var word = _words[_rulings.First(r => r.Alongside is "gibeon").Word];
+        var gibeon = await _db.Entities.SingleAsync(e => e.Slug == "gibeon");
+        var gibeonites = await _db.Entities.SingleAsync(e => e.Slug == "gibeonites");
+        _db.WordEntities.AddRange(
+            new WordEntity { WordId = word, EntityId = gibeon.Id, Method = LinkMethod.Lexical, Confidence = 0.9, Source = "a resolution" },
+            new WordEntity { WordId = word, EntityId = gibeonites.Id, Method = LinkMethod.Manual, Source = "a ruling" });
+        await _db.SaveChangesAsync();
+
+        (await Essenthos.Core.Corpus.Annotations.AllOf(_db, [word], CancellationToken.None))[word]
+            .Select(e => e.Slug).Should().Equal("gibeonites");
+        (await _db.Database.SqlQueryRaw<int>(
+                $"WITH {Annotating.Settled}, {Annotating.Named} SELECT entity_id AS \"Value\" FROM named WHERE word_id = {word}")
+                .ToListAsync())
+            .Should().Equal(gibeonites.Id);
     }
 
     [Fact]
@@ -737,7 +814,8 @@ public sealed class OwnRecordTests : IDisposable
                     later.Corrects.Should().BeNull();
                     later.Alongside.Should().Be(earlier.Existing);
                     var companionFiles = SenseReadingFiles.AllRulings().Where(f => f.Rulings.Contains(earlier) || f.Rulings.Contains(later));
-                    companionFiles.Should().OnlyContain(f => !f.Carry && f.Method == "manual");
+                    var town = _db.Entities.Single(e => e.Slug == later.Alongside).Kind == EntityKind.Place;
+                    companionFiles.Should().OnlyContain(f => (town || !f.Carry) && f.Method == "manual");
                 }
                 else
                     later.Corrects.Should().Be(earlier.Create?.Slug ?? earlier.Existing,
