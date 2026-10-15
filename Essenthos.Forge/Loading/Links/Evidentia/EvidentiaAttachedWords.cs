@@ -82,6 +82,12 @@ internal enum EvidentiaAttachment
     /// written on the word of the noun its modifiers stand before.
     /// </summary>
     PrefixPreposition,
+
+    /// <summary>
+    /// <em>the</em> of <em>the word of the LORD</em>: no article is written, and the noun is definite by its grammar,
+    /// as the head of a construct chain or a name, so <em>the</em> goes with the noun.
+    /// </summary>
+    DefiniteNoun,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -135,6 +141,12 @@ internal enum EvidentiaAttachmentPlacement
 
     /// <summary>On the infinitive absolute of the rendering's own lexeme, written beside it.</summary>
     InfinitiveAbsolute,
+
+    /// <summary>
+    /// On the rendering, where the original writes no article before it and makes it definite by its grammar: the head of
+    /// a construct chain in which no article is written, or a name.
+    /// </summary>
+    DefiniteByGrammar,
 }
 
 /// <summary>
@@ -388,10 +400,15 @@ internal static class EvidentiaAttachedWords
     /// </summary>
     private static readonly HashSet<string> Coordinators = new(StringComparer.Ordinal) { "H9000", "G2532", "G1161" };
 
+    /// <param name="definiteNouns">
+    /// Whether <em>the</em> with no article of its own goes with a Hebrew noun its grammar makes definite
+    /// (<see cref="EvidentiaAttachment.DefiniteNoun"/>) rather than being left to be said supplied.
+    /// </param>
     public static IReadOnlyList<EvidentiaProposal> Resolve(
         IReadOnlyList<EvidentiaAnalysis> source,
         IReadOnlyList<EvidentiaAnalysis> target,
-        IReadOnlyList<EvidentiaProposal> placed)
+        IReadOnlyList<EvidentiaProposal> placed,
+        bool definiteNouns = false)
     {
         var placedBySource = placed
             .GroupBy(proposal => proposal.Source.Token.Id)
@@ -415,7 +432,7 @@ internal static class EvidentiaAttachedWords
             placing = false;
             foreach (var words in verses)
             {
-                placing |= Attach(words, placedBySource, targetsByVerse, taken, proposals);
+                placing |= Attach(words, placedBySource, targetsByVerse, taken, proposals, definiteNouns);
             }
         }
 
@@ -432,7 +449,8 @@ internal static class EvidentiaAttachedWords
         Dictionary<long, EvidentiaProposal> placedBySource,
         IReadOnlyDictionary<EvidentiaAddress, List<EvidentiaAnalysis>> targetsByVerse,
         HashSet<long> taken,
-        List<EvidentiaProposal> proposals)
+        List<EvidentiaProposal> proposals,
+        bool definiteNouns)
     {
         var attached = false;
         for (var index = 0; index < words.Count; index++)
@@ -453,6 +471,13 @@ internal static class EvidentiaAttachedWords
             {
                 found = lamed;
                 attachment = EvidentiaAttachment.GenitivePreposition;
+            }
+
+            if (found is null && definiteNouns && attachment == EvidentiaAttachment.Article
+                && Placed(EvidentiaAttachment.DefiniteNoun, index, head, words, placedBySource, targetsByVerse, taken) is { } noun)
+            {
+                found = noun;
+                attachment = EvidentiaAttachment.DefiniteNoun;
             }
 
             if (found is null)
@@ -786,6 +811,7 @@ internal static class EvidentiaAttachedWords
                 EvidentiaAttachment.GenitivePreposition => EvidentiaAttachmentPlacement.LamedBefore,
                 EvidentiaAttachment.LetBe => EvidentiaAttachmentPlacement.BeVerb,
                 EvidentiaAttachment.InfinitiveAbsolute => EvidentiaAttachmentPlacement.InfinitiveAbsolute,
+                EvidentiaAttachment.DefiniteNoun => EvidentiaAttachmentPlacement.DefiniteByGrammar,
                 _ => EvidentiaAttachmentPlacement.None,
             };
 
@@ -962,6 +988,7 @@ internal static class EvidentiaAttachedWords
             EvidentiaAttachmentPlacement.BeVerb =>
                 rendering.Token.StrongNumber is { } be && BeVerbs.Contains(be) ? rendering : null,
             EvidentiaAttachmentPlacement.InfinitiveAbsolute => InfinitiveAbsoluteBeside(rendering, verse, taken),
+            EvidentiaAttachmentPlacement.DefiniteByGrammar => DefiniteByGrammar(rendering, verse) ? rendering : null,
             _ => null,
         };
     }
@@ -1076,6 +1103,47 @@ internal static class EvidentiaAttachedWords
         }
 
         return null;
+    }
+
+    /// <summary>
+    /// A Hebrew noun its grammar makes definite and no article is written before: a name, or the head of a construct
+    /// chain (דְּבַר יְהוָה) in which no article is written further on - where one is (מִשְׁפְּחוֹת הַכְּנַעֲנִי), the
+    /// English <em>the</em> is as often that article's.
+    /// </summary>
+    private static bool DefiniteByGrammar(EvidentiaAnalysis rendering, IReadOnlyList<EvidentiaAnalysis> verse)
+    {
+        var at = IndexOf(verse, rendering);
+        if (at < 0 || (at > 0 && verse[at - 1].Token.StrongNumber == HebrewArticle))
+        {
+            return false;
+        }
+
+        if (Class(rendering) == "propn")
+        {
+            return true;
+        }
+
+        if (Feature(rendering, "state") != "c")
+        {
+            return false;
+        }
+
+        for (var next = at + 1; next < verse.Count && next <= at + 3; next++)
+        {
+            var word = verse[next];
+            if (word.Token.StrongNumber == HebrewArticle)
+            {
+                return false;
+            }
+
+            var nominal = Class(word) is "noun" or "propn" or "adj";
+            if (!(word.Token.Trailer.Length == 0 || nominal && (Feature(word, "state") == "c" || next == at + 1)))
+            {
+                break;
+            }
+        }
+
+        return true;
     }
 
     /// <summary>The free infinitive absolute of the rendering's own lexeme, written just before or after it: מוֹת תָּמוּת.</summary>

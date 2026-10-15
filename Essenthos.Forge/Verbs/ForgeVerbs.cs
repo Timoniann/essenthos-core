@@ -336,5 +336,38 @@ internal static partial class ForgeVerbs
         AlignerLinks: arguments.Contains("--aligner-links"),
         AlignerPairs: OptionalText(arguments, "--aligner-pairs") is { } alignerPairs
             ? EvidentiaAlignerPairs.Read(alignerPairs.Split(',', StringSplitOptions.RemoveEmptyEntries))
-            : null);
+            : null,
+        PivotTexts: CombinerPivots(arguments, OptionalText(arguments, "--pivot") is { } pivot
+            ? [.. pivot.Split(',', StringSplitOptions.RemoveEmptyEntries).Select(Identifier)]
+            : null),
+        PivotPolicy: OptionalText(arguments, "--pivot-policy") is { } pivotPolicy
+            ? pivotPolicy.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Aggregate(EvidentiaPivotPolicy.None, (policy, flag) => policy | Enum.Parse<EvidentiaPivotPolicy>(flag, ignoreCase: true))
+            : EvidentiaPivotPolicy.None,
+        Combiner: arguments.Contains("--combiner") ? EvidentiaCombiner.Default : null,
+        RecordCombinerEdges: OptionalText(arguments, "--combiner-export") is not null,
+        DefiniteNouns: arguments.Contains("--definite-nouns"));
+
+    /// <summary>
+    /// The pivot texts a run reads: the combiner's weights were fitted with its pivots' readings as features, so it
+    /// reads them whether or not they were named, and refuses a run that names others in their place.
+    /// </summary>
+    private static IReadOnlyList<string>? CombinerPivots(string[] arguments, IReadOnlyList<string>? named)
+    {
+        if (!arguments.Contains("--combiner"))
+        {
+            return named;
+        }
+
+        var wanted = EvidentiaCombiner.Default.Pivots;
+        if (named is null)
+        {
+            return wanted;
+        }
+
+        return wanted.All(named.Contains)
+            ? named
+            : throw new ArgumentException(
+                $"The combiner was fitted reading the pivots {string.Join(",", wanted)}; pass them with --pivot, or leave --pivot out.");
+    }
 }

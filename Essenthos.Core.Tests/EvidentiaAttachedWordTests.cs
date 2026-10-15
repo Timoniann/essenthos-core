@@ -147,6 +147,40 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
+    public void TheBeforeANounItsConstructOrItsNameMakesDefiniteGoesWithTheNounWhenAsked()
+    {
+        var the = English(1, Genesis122, 1, "the", "DET");
+        var word = English(2, Genesis122, 2, "word", "NOUN");
+        var of = English(3, Genesis122, 3, "of", "ADP");
+        var theLord = English(4, Genesis122, 4, "the", "DET");
+        var lord = English(5, Genesis122, 5, "LORD", "PROPN");
+        var davar = Hebrew(11, Genesis122, 1, "דְּבַר", "H1697", "subs", ("state", "c"));
+        var yhwh = Hebrew(12, Genesis122, 2, "יְהוָה", "H3068", "nmpr");
+
+        Attach([the, word, of, theLord, lord], [davar, yhwh], (word, davar), (lord, yhwh)).Should().NotContain((1L, 11L));
+        AttachDefinite([the, word, of, theLord, lord], [davar, yhwh], (word, davar), (lord, yhwh))
+            .Should().Contain((1L, 11L)).And.Contain((4L, 12L));
+    }
+
+    [Fact]
+    public void TheBeforeAConstructChainThatWritesItsOwnArticleFurtherOnIsNotPutOnTheConstruct()
+    {
+        var the = English(1, Genesis122, 1, "the", "DET");
+        var clans = English(2, Genesis122, 2, "clans", "NOUN");
+        var of = English(3, Genesis122, 3, "of", "ADP");
+        var theOther = English(4, Genesis122, 4, "the", "DET");
+        var canaanites = English(5, Genesis122, 5, "Canaanites", "NOUN");
+        var families = Hebrew(11, Genesis122, 1, "מִשְׁפְּחֹות", "H4940", "subs", ("state", "c"));
+        var article = Hebrew(12, Genesis122, 2, "הַ", "H9009", "art");
+        var canaanite = Hebrew(13, Genesis122, 3, "כְּנַעֲנִי", "H3669", "subs");
+
+        var attached = AttachDefinite([the, clans, of, theOther, canaanites], [families, article, canaanite],
+            (clans, families), (canaanites, canaanite));
+
+        attached.Should().NotContain((1L, 11L)).And.Contain((4L, 12L));
+    }
+
+    [Fact]
     public void AnArticleWhoseNounWasNotPlacedIsNotPlacedEither()
     {
         var the = English(1, Genesis122, 1, "the", "DET");
@@ -633,7 +667,18 @@ public class EvidentiaAttachedWordTests
     private static IReadOnlyList<(long Source, long Target)> Attach(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
-        params (EvidentiaToken Source, EvidentiaToken Target)[] placed)
+        params (EvidentiaToken Source, EvidentiaToken Target)[] placed) => Attach(source, target, false, placed);
+
+    private static IReadOnlyList<(long Source, long Target)> AttachDefinite(
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        params (EvidentiaToken Source, EvidentiaToken Target)[] placed) => Attach(source, target, true, placed);
+
+    private static IReadOnlyList<(long Source, long Target)> Attach(
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        bool definiteNouns,
+        (EvidentiaToken Source, EvidentiaToken Target)[] placed)
     {
         var proposals = placed
             .Select(pair => new EvidentiaProposal(
@@ -642,7 +687,8 @@ public class EvidentiaAttachedWordTests
         return EvidentiaAttachedWords.Resolve(
                 EvidentiaAuxiliaryWords.Mark([.. source.Select(Analysis)]),
                 [.. target.Select(Analysis)],
-                proposals)
+                proposals,
+                definiteNouns)
             .Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
             .ToList();
     }
