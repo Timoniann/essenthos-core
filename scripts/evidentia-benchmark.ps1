@@ -45,6 +45,9 @@ param(
     # The before a Hebrew noun its grammar makes definite, with no article written, goes with the noun (--definite-nouns).
     [switch] $DefiniteNouns,
 
+    # Reads an original's verse the frame places inside the measured text's verse as that verse (--verse-map).
+    [switch] $VerseMap,
+
     # Says the one run of held2 a step is allowed is this one.
     [switch] $Unseal,
 
@@ -290,6 +293,7 @@ function Arguments($passage) {
     if ($Combiner) { $arguments += '--combiner' }
     if ($CombinerExport) { $arguments += '--combiner-export', "$prefix.edges.json" }
     if ($DefiniteNouns) { $arguments += '--definite-nouns' }
+    if ($VerseMap) { $arguments += '--verse-map' }
     $arguments + @('--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json",
         '--key-doubts', "$prefix.key-doubts.json")
 }

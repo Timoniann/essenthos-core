@@ -83,11 +83,20 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         options ??= new EvidentiaMeasurementOptions();
         var sourceAnalysis = options.SourceFromFiles
             ? await udpipe.Annotate(fileSources.Tokens(fromSlug, canonicalBook, canonicalChapter, null), cancellationToken)
-            : await SourceTokens(fromSlug, canonicalBook, canonicalChapter, null, cancellationToken);
+            : await SourceTokens(fromSlug, canonicalBook, canonicalChapter, null, cancellationToken, options.VerseMap);
         var lengths = await ChapterLengths(fromSlug, toSlug, canonicalBook, cancellationToken);
         var source = EnglishCompounds.Join(sourceAnalysis.Tokens).Select(lengths.Place).ToList();
-        var target = (await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken)).Select(lengths.Place).ToList();
-        var window = await Window(toSlug, canonicalBook, canonicalChapter, target, lengths, options.NeighbourVerseDistance, cancellationToken);
+        var target = (await Tokens(toSlug, canonicalBook, canonicalChapter, null, cancellationToken, spans: options.VerseMap))
+            .Select(lengths.Place).ToList();
+        var window = await Window(
+            toSlug, canonicalBook, canonicalChapter, target, lengths, options.NeighbourVerseDistance, cancellationToken, options.VerseMap);
+        if (options.VerseMap && EvidentiaVerseMap.Read(source, window) is { Count: > 0 } mapped)
+        {
+            EvidentiaToken Mapped(EvidentiaToken token) => mapped.GetValueOrDefault(token.Id, token);
+            target = [.. target.Select(Mapped)];
+            window = [.. window.Select(Mapped)];
+        }
+
         var dictionaryEvidence = await dictionarySenseIndex.For(source, cancellationToken);
         var targetGlossEvidence = TargetGlossEvidenceSource.For(window);
         var knownRenderingEvidence = options.AllowKnownRenderingEvidence
@@ -781,13 +790,14 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         IReadOnlyList<EvidentiaToken> target,
         EvidentiaChapterLengths lengths,
         int neighbourVerseDistance,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        bool spans = false)
     {
         var window = target.ToList();
         var held = target.Select(token => token.Id).ToHashSet();
         foreach (var (chapter, verse) in lengths.Edges(canonicalChapter, neighbourVerseDistance))
         {
-            window.AddRange((await Tokens(slug, canonicalBook, chapter, verse, cancellationToken, required: false))
+            window.AddRange((await Tokens(slug, canonicalBook, chapter, verse, cancellationToken, required: false, spans: spans))
                 .Where(token => held.Add(token.Id))
                 .Select(lengths.Place));
         }
@@ -833,7 +843,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
         int? canonicalVerse,
         CancellationToken cancellationToken,
         bool required = true,
-        bool primaryChapterOnly = false)
+        bool primaryChapterOnly = false,
+        bool spans = false)
     {
         var references = db.VerseReferences
             .AsNoTracking()
@@ -872,6 +883,29 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                         placement.CanonicalBook, placement.CanonicalChapter, placement.CanonicalVerse))
                     .First());
         var verseIds = addressByVerse.Keys.ToList();
+        var spanByVerse = spans
+            ? (await db.VerseReferences.AsNoTracking()
+                .Where(reference => verseIds.Contains(reference.VerseId))
+                .Select(reference => new
+                {
+                    reference.VerseId,
+                    reference.CanonicalBook,
+                    reference.CanonicalChapter,
+                    reference.CanonicalVerse,
+                    reference.IsPrimary,
+                })
+                .ToListAsync(cancellationToken))
+                .GroupBy(reference => reference.VerseId)
+                .Where(group => group.Count() > 1)
+                .ToDictionary(
+                    group => group.Key,
+                    group => (IReadOnlyList<EvidentiaAddress>)[.. group
+                        .OrderByDescending(reference => reference.IsPrimary)
+                        .ThenBy(reference => reference.CanonicalChapter)
+                        .ThenBy(reference => reference.CanonicalVerse)
+                        .Select(reference => new EvidentiaAddress(
+                            reference.CanonicalBook, reference.CanonicalChapter, reference.CanonicalVerse))])
+            : [];
         var rows = await db.Words
             .AsNoTracking()
             .Where(word => verseIds.Contains(word.VerseId))
@@ -917,7 +951,10 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                     StrongNumber: row.StrongNumber,
                     Gloss: row.Gloss,
                     PartOfSpeech: morphology?.GetValueOrDefault("pos"),
-                    Morphology: morphology);
+                    Morphology: morphology)
+                {
+                    Span = spanByVerse.GetValueOrDefault(row.VerseId),
+                };
             })
             .OrderBy(token => token.Address.Verse)
             .ThenBy(token => token.Position)
@@ -926,9 +963,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
     }
 
     private async Task<UdpipeAnnotation> SourceTokens(
-        string slug, int book, int chapter, int? verse, CancellationToken cancellationToken)
+        string slug, int book, int chapter, int? verse, CancellationToken cancellationToken, bool spans = false)
     {
-        var tokens = await Tokens(slug, book, chapter, verse, cancellationToken, primaryChapterOnly: true);
+        var tokens = await Tokens(slug, book, chapter, verse, cancellationToken, primaryChapterOnly: true, spans: spans);
         return await udpipe.Annotate(tokens, cancellationToken);
     }
 
@@ -1801,7 +1838,8 @@ internal sealed record EvidentiaMeasurementOptions(
     EvidentiaPivotPolicy PivotPolicy = EvidentiaPivotPolicy.None,
     EvidentiaCombiner? Combiner = null,
     bool RecordCombinerEdges = false,
-    bool DefiniteNouns = false);
+    bool DefiniteNouns = false,
+    bool VerseMap = false);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.

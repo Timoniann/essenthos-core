@@ -346,7 +346,8 @@ internal static partial class ForgeVerbs
             : EvidentiaPivotPolicy.None,
         Combiner: arguments.Contains("--combiner") ? EvidentiaCombiner.Default : null,
         RecordCombinerEdges: OptionalText(arguments, "--combiner-export") is not null,
-        DefiniteNouns: arguments.Contains("--definite-nouns"));
+        DefiniteNouns: arguments.Contains("--definite-nouns"),
+        VerseMap: arguments.Contains("--verse-map"));
 
     /// <summary>
     /// The pivot texts a run reads: the combiner's weights were fitted with its pivots' readings as features, so it
