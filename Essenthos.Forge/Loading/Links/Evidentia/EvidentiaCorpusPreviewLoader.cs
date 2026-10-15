@@ -389,7 +389,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             }
         }
 
-        var attachedWords = EvidentiaAttachedWords.Resolve(markedSource, targetAnalyses, lexicalProposals, options.DefiniteNouns);
+        var attachedWords = EvidentiaAttachedWords.Resolve(
+            markedSource, targetAnalyses, lexicalProposals, options.DefiniteNouns, options.FunctionWords);
         List<EvidentiaProposal> finalProposals = [.. lexicalProposals, .. attachedWords];
         finalProposals.AddRange(frame.Near(EvidentiaCounterparts.Resolve(sourceAnalyses, targetAnalyses, finalProposals)));
 
@@ -1843,7 +1844,8 @@ internal sealed record EvidentiaMeasurementOptions(
     bool RecordCombinerEdges = false,
     bool DefiniteNouns = false,
     bool VerseMap = false,
-    bool RenderingFamilies = false);
+    bool RenderingFamilies = false,
+    bool FunctionWords = false);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.

@@ -51,6 +51,10 @@ param(
     # Learns a rendering once for every Strong number of one word, where Strong numbers it apart (--rendering-families).
     [switch] $RenderingFamilies,
 
+    # Places 'of' and 'is' where the original writes no word for them: 'of' with the noun before it, 'is' with
+    # the predicate (--function-words).
+    [switch] $FunctionWords,
+
     # Says the one run of held2 a step is allowed is this one.
     [switch] $Unseal,
 
@@ -298,6 +302,7 @@ function Arguments($passage) {
     if ($DefiniteNouns) { $arguments += '--definite-nouns' }
     if ($VerseMap) { $arguments += '--verse-map' }
     if ($RenderingFamilies) { $arguments += '--rendering-families' }
+    if ($FunctionWords) { $arguments += '--function-words' }
     $arguments + @('--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json",
         '--key-doubts', "$prefix.key-doubts.json")
 }

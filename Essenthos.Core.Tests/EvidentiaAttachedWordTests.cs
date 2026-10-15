@@ -340,6 +340,58 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
+    public void WhenAskedOfTheOriginalWritesNoWordForGoesOnTheNounAfterAConstructAndNotAfterAPrepositionOrAPossessive()
+    {
+        var cry = English(1, Genesis122, 1, "cry", "NOUN");
+        var of = English(2, Genesis122, 2, "of", "ADP") with { Relation = "case" };
+        var the = English(3, Genesis122, 3, "the", "DET");
+        var afflicted = English(4, Genesis122, 4, "afflicted", "NOUN");
+        var outOf = English(5, Genesis122, 5, "of", "ADP") with { Relation = "case" };
+        var ark = English(6, Genesis122, 6, "ark", "NOUN");
+        var ofHis = English(7, Genesis122, 7, "of", "ADP") with { Relation = "case" };
+        var his = English(8, Genesis122, 8, "his", "PRON");
+        var heart = English(9, Genesis122, 9, "heart", "NOUN");
+        var construct = Hebrew(11, Genesis122, 1, "צַעֲקַת", "H6818", "subs", ("state", "c"));
+        var humble = Hebrew(12, Genesis122, 2, "עֲנִיִּים", "H6041", "adjv", ("state", "a"));
+        var from = Hebrew(13, Genesis122, 3, "מִן", "H4480", "prep");
+        var article = Hebrew(14, Genesis122, 4, "הַ", "H9009", "art");
+        var arkNoun = Hebrew(15, Genesis122, 5, "תֵּבָה", "H8392", "subs", ("state", "a"));
+        var inclination = Hebrew(16, Genesis122, 6, "יֵצֶר", "H3336", "subs", ("state", "c"));
+        var heartNoun = Hebrew(17, Genesis122, 7, "לִבֹּו", "H3820", "subs", ("state", "a"));
+        (EvidentiaToken, EvidentiaToken)[] placed = [(afflicted, humble), (ark, arkNoun), (heart, heartNoun)];
+
+        AttachOf([cry, of, the, afflicted, outOf, ark, ofHis, his, heart], [construct, humble, from, article, arkNoun, inclination, heartNoun], placed)
+            .Should().Contain((2L, 12L)).And.NotContain(pair => pair.Source == 5 || pair.Source == 7);
+        Attach([cry, of, the, afflicted], [construct, humble], (afflicted, humble)).Should().NotContain(pair => pair.Source == 2);
+    }
+
+    [Fact]
+    public void WhenAskedOfAgainstGreekGoesOnTheGenitiveOrOnItsArticleWhenEnglishWritesTheToo()
+    {
+        var mind = English(1, Mark114, 1, "mind", "NOUN");
+        var of = English(2, Mark114, 2, "of", "ADP") with { Relation = "case" };
+        var the = English(3, Mark114, 3, "the", "DET");
+        var flesh = English(4, Mark114, 4, "flesh", "NOUN");
+        var son = English(5, Mark114, 5, "Son", "NOUN");
+        var ofGod = English(6, Mark114, 6, "of", "ADP") with { Relation = "case" };
+        var god = English(7, Mark114, 7, "God", "PROPN");
+        var outOf = English(8, Mark114, 8, "of", "ADP") with { Relation = "case" };
+        var water = English(9, Mark114, 9, "water", "NOUN");
+        (string, string)[] genitive = [("case", "genitive")];
+        var tes = Greek(11, Mark114, 1, "τῆς", "G3588", "det", morphology: genitive);
+        var sarkos = Greek(12, Mark114, 2, "σαρκός", "G4561", "noun", morphology: genitive);
+        var tou = Greek(13, Mark114, 3, "τοῦ", "G3588", "det", morphology: genitive);
+        var theou = Greek(14, Mark114, 4, "Θεοῦ", "G2316", "noun", morphology: genitive);
+        var ek = Greek(15, Mark114, 5, "ἐκ", "G1537", "prep");
+        var tou2 = Greek(16, Mark114, 6, "τοῦ", "G3588", "det", morphology: genitive);
+        var hydatos = Greek(17, Mark114, 7, "ὕδατος", "G5204", "noun", morphology: genitive);
+
+        AttachOf([mind, of, the, flesh, son, ofGod, god, outOf, water], [tes, sarkos, tou, theou, ek, tou2, hydatos],
+                (flesh, sarkos), (god, theou), (water, hydatos))
+            .Should().Contain([(2L, 11L), (6L, 14L)]).And.NotContain(pair => pair.Source == 8);
+    }
+
+    [Fact]
     public void AWordFollowsAHeadThatIsItselfAttached()
     {
         var and = English(1, Genesis122, 1, "and", "CCONJ");
@@ -669,6 +721,11 @@ public class EvidentiaAttachedWordTests
         IReadOnlyList<EvidentiaToken> target,
         params (EvidentiaToken Source, EvidentiaToken Target)[] placed) => Attach(source, target, false, placed);
 
+    private static IReadOnlyList<(long Source, long Target)> AttachOf(
+        IReadOnlyList<EvidentiaToken> source,
+        IReadOnlyList<EvidentiaToken> target,
+        params (EvidentiaToken Source, EvidentiaToken Target)[] placed) => Attach(source, target, false, placed, functionWords: true);
+
     private static IReadOnlyList<(long Source, long Target)> AttachDefinite(
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
@@ -678,7 +735,8 @@ public class EvidentiaAttachedWordTests
         IReadOnlyList<EvidentiaToken> source,
         IReadOnlyList<EvidentiaToken> target,
         bool definiteNouns,
-        (EvidentiaToken Source, EvidentiaToken Target)[] placed)
+        (EvidentiaToken Source, EvidentiaToken Target)[] placed,
+        bool functionWords = false)
     {
         var proposals = placed
             .Select(pair => new EvidentiaProposal(
@@ -688,7 +746,8 @@ public class EvidentiaAttachedWordTests
                 EvidentiaAuxiliaryWords.Mark([.. source.Select(Analysis)]),
                 [.. target.Select(Analysis)],
                 proposals,
-                definiteNouns)
+                definiteNouns,
+                functionWords)
             .Select(proposal => (proposal.Source.Token.Id, proposal.Target.Token.Id))
             .ToList();
     }

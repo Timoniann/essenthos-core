@@ -88,6 +88,13 @@ internal enum EvidentiaAttachment
     /// as the head of a construct chain or a name, so <em>the</em> goes with the noun.
     /// </summary>
     DefiniteNoun,
+
+    /// <summary>
+    /// <em>of</em> where the original writes no word for it and the word before it was not the one placed on the
+    /// construct: <em>the cry of the afflicted</em> on עֲנִיִּים after the construct צַעֲקַת, <em>the mind of the
+    /// flesh</em> on τῆς of τῆς σαρκός.
+    /// </summary>
+    OfTheGoverned,
 }
 
 /// <summary>Where an attached word goes once the word it belongs to has been placed.</summary>
@@ -284,6 +291,14 @@ internal static class EvidentiaAttachedWords
 
     private const string GreekLanguage = "grc";
 
+    private const string GreekGenitive = "genitive";
+
+    /// <summary>The words after <em>of</em> the keys put it on themselves: <em>of his heart</em>, <em>of this man</em>.</summary>
+    private static readonly HashSet<string> OwnersAfterOf = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "his", "her", "my", "your", "our", "their", "its", "whose", "this", "that", "these", "those",
+    };
+
     /// <summary>
     /// Greek's <em>and</em>. Its other conjunctions standing before a word subordinate rather than join
     /// (<em>εἰ</em>, <em>ὅτι</em>), and <em>δέ</em> is never written first.
@@ -404,11 +419,16 @@ internal static class EvidentiaAttachedWords
     /// Whether <em>the</em> with no article of its own goes with a Hebrew noun its grammar makes definite
     /// (<see cref="EvidentiaAttachment.DefiniteNoun"/>) rather than being left to be said supplied.
     /// </param>
+    /// <param name="functionWords">
+    /// Whether an <em>of</em> the original writes no word for goes with the governed noun once every other rule
+    /// has had its turn (<see cref="EvidentiaAttachment.OfTheGoverned"/>).
+    /// </param>
     public static IReadOnlyList<EvidentiaProposal> Resolve(
         IReadOnlyList<EvidentiaAnalysis> source,
         IReadOnlyList<EvidentiaAnalysis> target,
         IReadOnlyList<EvidentiaProposal> placed,
-        bool definiteNouns = false)
+        bool definiteNouns = false,
+        bool functionWords = false)
     {
         var placedBySource = placed
             .GroupBy(proposal => proposal.Source.Token.Id)
@@ -436,12 +456,114 @@ internal static class EvidentiaAttachedWords
             }
         }
 
+        if (functionWords)
+        {
+            foreach (var words in verses)
+            {
+                AttachOf(words, placedBySource, targetsByVerse, proposals);
+            }
+        }
+
         foreach (var words in verses)
         {
             AttachToPrefixes(words, placedBySource, targetsByVerse, taken, proposals);
         }
 
         return proposals;
+    }
+
+    /// <summary>
+    /// An <em>of</em> no rule placed, on the word the answer keys put it on, where the original writes no word for
+    /// it: the original of the first word after it, past an article. In Hebrew only where a noun in the construct
+    /// state stands directly before that word, past its article; in Greek only where that word is in the genitive,
+    /// and on the article written before it when English writes <em>the</em> too, as the keys do (<em>the mind of
+    /// the flesh</em> on τῆς). Nothing where a preposition is written before it (מִן, ἐκ: the original's own word
+    /// for <em>of</em>), and nothing where a possessive or a demonstrative follows <em>of</em>: the keys then put it on
+    /// that word, which the original writes as a suffix or a pronoun of its own.
+    ///
+    /// <para>It goes on a word that is already held, by the noun or by <em>the</em>, as <see cref="EvidentiaAttachment.Genitive"/>
+    /// does, and takes nothing from any other rule.</para>
+    /// </summary>
+    private static void AttachOf(
+        IReadOnlyList<EvidentiaAnalysis> words,
+        Dictionary<long, EvidentiaProposal> placedBySource,
+        IReadOnlyDictionary<EvidentiaAddress, List<EvidentiaAnalysis>> targetsByVerse,
+        List<EvidentiaProposal> proposals)
+    {
+        for (var index = 0; index < words.Count; index++)
+        {
+            var word = words[index];
+            if (!word.Token.Surface.Equals(Of, StringComparison.OrdinalIgnoreCase)
+                || word.Token.Relation?.StartsWith("case", StringComparison.Ordinal) != true
+                || placedBySource.ContainsKey(word.Token.Id))
+            {
+                continue;
+            }
+
+            var next = index + 1;
+            while (next < words.Count && Articles.Contains(words[next].Token.Surface))
+            {
+                next++;
+            }
+
+            if (next >= words.Count
+                || OwnersAfterOf.Contains(words[next].Token.Surface)
+                || !placedBySource.TryGetValue(words[next].Token.Id, out var head)
+                || head.Kind == EvidentiaProposalKind.AttachedWord
+                || !targetsByVerse.TryGetValue(head.Target.Token.Address, out var verse))
+            {
+                continue;
+            }
+
+            var rendering = head.Target;
+            var at = verse.FindIndex(analysis => analysis.Token.Id == rendering.Token.Id);
+            var before = at > 0 ? verse[at - 1] : null;
+            EvidentiaAnalysis? placement = null;
+            if (rendering.Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase))
+            {
+                var back = at - 1;
+                while (back >= 0 && verse[back].Token.StrongNumber == HebrewArticle)
+                {
+                    back--;
+                }
+
+                if (back >= 0 && Class(verse[back]) != "adp" && Feature(verse[back], "state") == ConstructState)
+                {
+                    placement = rendering;
+                }
+            }
+            else if (rendering.Token.Language.Equals(GreekLanguage, StringComparison.OrdinalIgnoreCase)
+                     && Feature(rendering, "case") == GreekGenitive)
+            {
+                var article = before is not null && Class(before) == "det" && Feature(before, "case") == GreekGenitive ? before : null;
+                var preceding = article is not null ? (at > 1 ? verse[at - 2] : null) : before;
+                if (preceding is null || Class(preceding) != "adp")
+                {
+                    placement = article is not null && index + 1 < next
+                        && words[index + 1].Token.Surface.Equals(DefiniteArticle, StringComparison.OrdinalIgnoreCase)
+                        ? article
+                        : rendering;
+                }
+            }
+
+            if (placement is null)
+            {
+                continue;
+            }
+
+            var proposal = new EvidentiaProposal(
+                word,
+                placement,
+                EvidentiaProposalKind.AttachedWord,
+                Math.Max(0, head.Confidence - ConfidenceBelowHead),
+                new EvidentiaDecisionTrace(
+                    "attached",
+                    $"{EvidentiaAttachment.OfTheGoverned} of '{words[next].Token.Surface}'{ParseCredit(word)}",
+                    head.Trace?.Evidence ?? []),
+                head);
+            proposals.Add(proposal);
+            placedBySource[word.Token.Id] = proposal;
+        }
     }
 
     private static bool Attach(
