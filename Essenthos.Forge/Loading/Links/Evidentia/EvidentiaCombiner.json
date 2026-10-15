@@ -1,5 +1,5 @@
 {
- "version": "2026-10-15.2",
+ "version": "2026-10-15.2-retier",
  "fittedOn": {
   "label": "s3-exp2",
   "train": [
@@ -80,8 +80,8 @@
  "bands": {
   "safe": 0.98,
   "review": 0.95,
-  "withdraw": 0.6,
-  "new": 0.98
+  "withdraw": 0.0,
+  "new": 1.01
  },
  "models": {
   "all": {
