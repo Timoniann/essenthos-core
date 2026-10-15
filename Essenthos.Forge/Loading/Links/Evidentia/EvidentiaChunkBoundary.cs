@@ -16,6 +16,13 @@ internal enum EvidentiaBoundaryClass
     /// with the word beside it: <em>May</em> of <em>May the LORD answer</em> on the verb.
     /// </summary>
     Attached,
+
+    /// <summary>
+    /// A Hebrew <em>of</em> on the construct noun, where the key puts it on the noun the construct governs,
+    /// written directly after it: <em>the cry of the afflicted</em> on צַעֲקַת, the key on עֲנִיִּים. The two are
+    /// conventions of one construction, not a right and a wrong placement.
+    /// </summary>
+    OtherConvention,
 }
 
 /// <summary>One placement of a class, and which of the class's kinds it is.</summary>
@@ -35,7 +42,9 @@ internal readonly record struct EvidentiaBoundaryCount(
     int AttachedAuxiliaries,
     int SafePrefix,
     int SafeAttached,
-    int AttachedBesideInfinitives = 0)
+    int AttachedBesideInfinitives = 0,
+    int OtherConvention = 0,
+    int SafeOtherConvention = 0)
 {
     public static EvidentiaBoundaryCount operator +(EvidentiaBoundaryCount one, EvidentiaBoundaryCount two) => new(
         one.Prefix + two.Prefix,
@@ -45,7 +54,9 @@ internal readonly record struct EvidentiaBoundaryCount(
         one.AttachedAuxiliaries + two.AttachedAuxiliaries,
         one.SafePrefix + two.SafePrefix,
         one.SafeAttached + two.SafeAttached,
-        one.AttachedBesideInfinitives + two.AttachedBesideInfinitives);
+        one.AttachedBesideInfinitives + two.AttachedBesideInfinitives,
+        one.OtherConvention + two.OtherConvention,
+        one.SafeOtherConvention + two.SafeOtherConvention);
 }
 
 /// <summary>
@@ -77,6 +88,10 @@ internal readonly record struct EvidentiaBoundaryCount(
 /// phrase <em>you will surely die</em> on the infinitive and leaves the finite verb out of every link, the
 /// finite verb is the word the auxiliary and the subject belong on, and the infinitive is no other verb.</para>
 ///
+/// <para><see cref="EvidentiaBoundaryClass.OtherConvention"/> is no chunk boundary but the other placement of a
+/// Hebrew <em>of</em>: on the construct noun, where every word of the key's for it is the noun written directly
+/// after the construct, past its article, or that article. It is quoted apart from the two classes above.</para>
+///
 /// <para>Whatever fails one of these stays wrong: a prefix another word of the key takes, a word whose
 /// link names a word of its kind elsewhere (<em>from</em> with מִמֶּנּוּ), a conjunction reordered away
 /// from its clause, an auxiliary whose key names another verb.</para>
@@ -86,6 +101,16 @@ internal static class EvidentiaChunkBoundary
     public const string PrefixName = "chunk-boundary";
 
     public const string AttachedName = "chunk-boundary-attached";
+
+    public const string OtherConventionName = "other-convention";
+
+    private const string OfWord = "of";
+
+    private const string HebrewLanguage = "hbo";
+
+    private const string HebrewArticle = "H9009";
+
+    private const string ConstructState = "c";
 
     private static readonly HashSet<string> Articles = new(StringComparer.OrdinalIgnoreCase) { "the", "a", "an" };
 
@@ -113,6 +138,7 @@ internal static class EvidentiaChunkBoundary
     {
         EvidentiaBoundaryClass.Prefix => PrefixName,
         EvidentiaBoundaryClass.Attached => AttachedName,
+        EvidentiaBoundaryClass.OtherConvention => OtherConventionName,
         _ => null,
     };
 
@@ -135,7 +161,9 @@ internal static class EvidentiaChunkBoundary
                 continue;
             }
 
-            if ((reading.OnAFreePrefix(proposal.Source, proposal.Target) ?? reading.OnTheWordItBelongsTo(proposal.Source, proposal.Target))
+            if ((reading.OnAFreePrefix(proposal.Source, proposal.Target)
+                    ?? reading.OnTheWordItBelongsTo(proposal.Source, proposal.Target)
+                    ?? reading.OnTheConstruct(proposal.Source, proposal.Target))
                 is { } found)
             {
                 cases[pair] = found;
@@ -161,7 +189,9 @@ internal static class EvidentiaChunkBoundary
             Of(EvidentiaBoundaryClass.Attached, found => found.Auxiliary),
             Of(EvidentiaBoundaryClass.Prefix, safeOnly: true),
             Of(EvidentiaBoundaryClass.Attached, safeOnly: true),
-            Of(EvidentiaBoundaryClass.Attached, found => found.BesideItsInfinitive));
+            Of(EvidentiaBoundaryClass.Attached, found => found.BesideItsInfinitive),
+            Of(EvidentiaBoundaryClass.OtherConvention),
+            Of(EvidentiaBoundaryClass.OtherConvention, safeOnly: true));
     }
 
     private sealed class Reading
@@ -171,6 +201,7 @@ internal static class EvidentiaChunkBoundary
         private readonly Dictionary<long, EvidentiaAnalysis> sourceById;
         private readonly Dictionary<long, EvidentiaAnalysis> targetById;
         private readonly Dictionary<EvidentiaAddress, List<EvidentiaAnalysis>> verses;
+        private readonly Dictionary<EvidentiaAddress, List<EvidentiaAnalysis>> targetVerses;
         private readonly Dictionary<long, (EvidentiaAddress Verse, int Word)> written;
         private readonly ILookup<(EvidentiaAddress Verse, int Word), EvidentiaAnalysis> parts;
         private readonly ILookup<long, long> keyTargets;
@@ -190,6 +221,8 @@ internal static class EvidentiaChunkBoundary
             sourceById = source.DistinctBy(word => word.Token.Id).ToDictionary(word => word.Token.Id);
             targetById = target.DistinctBy(word => word.Token.Id).ToDictionary(word => word.Token.Id);
             verses = sourceById.Values.GroupBy(word => word.Token.Address)
+                .ToDictionary(verse => verse.Key, verse => verse.OrderBy(word => word.Token.Position).ToList());
+            targetVerses = targetById.Values.GroupBy(word => word.Token.Address)
                 .ToDictionary(verse => verse.Key, verse => verse.OrderBy(word => word.Token.Position).ToList());
             written = EvidentiaKeySplit.WrittenWords(targetById.Values);
             parts = targetById.Values.OrderBy(word => word.Token.Position).ToLookup(word => written[word.Token.Id]);
@@ -275,6 +308,35 @@ internal static class EvidentiaChunkBoundary
                       || Feature(other, SuffixPerson) is not null));
             return writesIt && own.Count > 0 && !writtenElsewhere && IsChunkedWithItsNeighbour(word, head)
                 ? new EvidentiaBoundaryCase(EvidentiaBoundaryClass.Attached, Auxiliary: auxiliary, BesideItsInfinitive: infinitive is not null)
+                : null;
+        }
+
+        public EvidentiaBoundaryCase? OnTheConstruct(EvidentiaAnalysis word, EvidentiaAnalysis placement)
+        {
+            if (!word.Token.Surface.Equals(OfWord, StringComparison.OrdinalIgnoreCase)
+                || !placement.Token.Language.Equals(HebrewLanguage, StringComparison.OrdinalIgnoreCase)
+                || !string.Equals(Feature(placement, "state"), ConstructState, StringComparison.OrdinalIgnoreCase)
+                || !targetVerses.TryGetValue(placement.Token.Address, out var verse))
+            {
+                return null;
+            }
+
+            var at = verse.FindIndex(other => other.Token.Id == placement.Token.Id);
+            var next = at + 1;
+            while (next < verse.Count && verse[next].Token.StrongNumber == HebrewArticle)
+            {
+                next++;
+            }
+
+            if (at < 0 || next >= verse.Count)
+            {
+                return null;
+            }
+
+            var governed = verse.Skip(at + 1).Take(next - at).Select(other => other.Token.Id).ToHashSet();
+            var own = keyTargets[word.Token.Id].ToList();
+            return own.Contains(verse[next].Token.Id) && own.All(governed.Contains)
+                ? new EvidentiaBoundaryCase(EvidentiaBoundaryClass.OtherConvention)
                 : null;
         }
 

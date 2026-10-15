@@ -272,6 +272,9 @@ function AddFractions($total, $passage) {
 # (split key: then the safe tier against it). judged key: of the readings of the key on the passage's
 # words, those corrected, defensible, confirmed, neither and unsettled; the readings the text no longer
 # reads as; and of the placements the key counts wrong, those nobody has read.
+# Last on every line but judged key and cascade: right with other-convention counted right (a Hebrew of on
+# the construct where the key has it on the governed noun); split key, pairs: then its safe tier the same way;
+# chunk boundary: the size of other-convention.
 function FractionSummary([string] $name, $fractions) {
     foreach ($label in $fractions.Keys) {
         '{0,-10} {1}: {2}' -f $name, $label, (($fractions[$label] | ForEach-Object { Ratio $_[0] $_[1] }) -join '; ')
