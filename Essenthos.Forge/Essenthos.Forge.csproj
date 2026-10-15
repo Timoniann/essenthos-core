@@ -189,6 +189,11 @@
 
         <!-- Which Greek verse each verse of the Ge'ez books the church divides its own way answers. -->
         <EmbeddedResource Include="BetaMasaheft\GeezVerseMap.tsv" />
+
+        <!-- Which Greek verse each Ge'ez verse answers where the edition numbers otherwise than the
+             Greek, kept with the project's other reviewable decisions and built in from there. -->
+        <EmbeddedResource Include="..\Resources\Essenthos\versification\geez.tsv"
+                          LogicalName="Essenthos.Core.BetaMasaheft.GeezVersification.tsv" />
     </ItemGroup>
 
     <!-- An EVIDENTIA run records the build that made it, and a version number that never changes

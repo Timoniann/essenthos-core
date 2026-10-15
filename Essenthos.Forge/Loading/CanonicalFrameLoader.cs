@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Essenthos.Core.BetaMasaheft;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -85,7 +86,7 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
 
         var expected = Expected(rules, text.Versification, [
             .. verses.Select(v => new PlacedVerse(v.Id, v.Book, v.ChapterNumber, v.Number, v.Label, v.Length)),
-        ], BookTraditions.For(text.Slug));
+        ], BookTraditions.For(text.Slug), Read(text.Slug));
 
         var versesById = verses.ToDictionary(verse => verse.Id);
 
@@ -147,16 +148,30 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
     }
 
     /// <summary>
+    /// The verses of a text placed by a reading of which Greek verse each answers rather than by the number
+    /// it prints: the Ge'ez in the chapters it divides otherwise than the Greek (<see cref="GeezVersification"/>).
+    /// </summary>
+    internal static IReadOnlyDictionary<(int Book, int Chapter, int Verse), IReadOnlyList<CanonicalReference>>? Read(
+        string slug) =>
+        slug == GeezTextSource.Slug ? GeezVersification.Placements : null;
+
+    /// <summary>
     /// Where each verse of an edition stands, the first reference of a verse its primary place.
     /// Which scheme of its tradition the edition follows is a question only the edition can answer,
     /// and the versification data states the tests that ask it.
     /// </summary>
     /// <param name="books">Books the edition numbers in another tradition, placed by that tradition's rules.</param>
+    /// <param name="read">
+    /// Verses placed by a reading of where each answers the Greek, ahead of every scheme: at the rows
+    /// listed, or with the verse before it in its chapter where the list is empty, because the Greek has
+    /// nothing for it and its own number is some other verse's row.
+    /// </param>
     public static List<ReferenceDraft> Expected(
         VersificationRules rules,
         Versification tradition,
         IReadOnlyList<PlacedVerse> verses,
-        IReadOnlyDictionary<int, Versification>? books = null)
+        IReadOnlyDictionary<int, Versification>? books = null,
+        IReadOnlyDictionary<(int Book, int Chapter, int Verse), IReadOnlyList<CanonicalReference>>? read = null)
     {
         books ??= new Dictionary<int, Versification>();
         Versification TraditionOf(PlacedVerse verse) => books.GetValueOrDefault(verse.Book, tradition);
@@ -174,15 +189,39 @@ internal sealed class CanonicalFrameLoader(AppDbContext db, ILogger<CanonicalFra
             .Select(v => new CanonicalReference(v.Book, v.Chapter, v.Number))
             .ToHashSet();
 
+        IReadOnlyList<CanonicalReference> Framed(PlacedVerse verse) =>
+            frames.TryGetValue(TraditionOf(verse), out var frame)
+                ? frame.Resolve(
+                    verse.Book,
+                    verse.Chapter,
+                    verse.Number,
+                    lettered.Contains(new CanonicalReference(verse.Book, verse.Chapter, verse.Number)),
+                    verse.Label)
+                : [new CanonicalReference(verse.Book, verse.Chapter, verse.Number)];
+
+        var placed = new Dictionary<int, IReadOnlyList<CanonicalReference>>(verses.Count);
+        PlacedVerse? before = null;
+        foreach (var verse in verses
+                     .OrderBy(v => v.Book).ThenBy(v => v.Chapter).ThenBy(v => v.Number)
+                     .ThenBy(v => v.Label, StringComparer.Ordinal))
+        {
+            var reading = verse.Label.Length == 0 && read is not null
+                                                  && read.TryGetValue((verse.Book, verse.Chapter, verse.Number), out var rows)
+                ? rows
+                : null;
+            placed[verse.Id] = reading switch
+            {
+                null => Framed(verse),
+                [] when before is { } previous && previous.Book == verse.Book && previous.Chapter == verse.Chapter =>
+                    [placed[previous.Id][0]],
+                [] => Framed(verse),
+                _ => reading,
+            };
+            before = verse;
+        }
+
         return verses
-            .SelectMany(verse => AtBothNames(verse.Book, frames.TryGetValue(TraditionOf(verse), out var frame)
-                    ? frame.Resolve(
-                        verse.Book,
-                        verse.Chapter,
-                        verse.Number,
-                        lettered.Contains(new CanonicalReference(verse.Book, verse.Chapter, verse.Number)),
-                        verse.Label)
-                    : [new CanonicalReference(verse.Book, verse.Chapter, verse.Number)])
+            .SelectMany(verse => AtBothNames(verse.Book, placed[verse.Id])
                 .Select((placement, index) => new ReferenceDraft(
                     verse.Id,
                     placement.Book,

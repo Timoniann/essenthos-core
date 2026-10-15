@@ -144,7 +144,7 @@ internal sealed record DeclaredVersePair(string From, string To, IReadOnlySet<in
 /// </summary>
 internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> logger)
 {
-    private const string Source = "the canonical frame: the addresses the two texts share";
+    internal const string Source = "the canonical frame: the addresses the two texts share";
 
     /// <summary>
     /// Pairs that are joined verse by verse before any word of them is. A text that arrives with no
@@ -336,8 +336,9 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     {
         var ids = await db.Texts.Where(t => texts.Contains(t.Slug)).Select(t => t.Id).ToArrayAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
-        await db.VerseLinks.Where(l => (ids.Contains(l.FromTextId) || ids.Contains(l.ToTextId)) && l.Source == Source
-            && l.Method == LinkMethod.StatedBySource).ExecuteDeleteAsync(cancellationToken);
+        await db.VerseLinks.Where(l => (ids.Contains(l.FromTextId) || ids.Contains(l.ToTextId))
+            && ((l.Source == Source && l.Method == LinkMethod.StatedBySource) || l.Source == GeezVersification.Source))
+            .ExecuteDeleteAsync(cancellationToken);
         var outcome = await Load(cancellationToken, ids.ToHashSet());
         var repeated = await Unrepeat(cancellationToken);
         await transaction.CommitAsync(cancellationToken);
@@ -346,6 +347,14 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
     public async Task<VerseLinkOutcome> Load(CancellationToken cancellationToken = default, IReadOnlySet<int>? refresh = null)
     {
+        if (refresh is null && await JoinedBeforeTheReading(cancellationToken))
+        {
+            logger.LogInformation(
+                "The Ge'ez was joined by its own numbers where the reading of its verses places them otherwise; " +
+                "its verse links are drawn again");
+            return await Refresh(new HashSet<string> { GeezTextSource.Slug }, cancellationToken);
+        }
+
         var outcome = await Join(cancellationToken, refresh);
         var withdrawn = await WithdrawStatisticalCrossings(refresh, cancellationToken);
         return withdrawn == 0 ? outcome : outcome with { Withdrawn = withdrawn };
@@ -419,6 +428,9 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         var mapped = await Mapped(declared, cancellationToken);
         var geez = await db.Texts.Where(text => text.Slug == GeezTextSource.Slug)
             .Select(text => (int?)text.Id).SingleOrDefaultAsync(cancellationToken);
+        var read = geez is { } geezId && todo.Any(entry => entry.Pair.FromTextId == geezId)
+            ? await Read(geezId, cancellationToken)
+            : [];
 
         var addresses = new Dictionary<int, Dictionary<(int, int, int), List<int>>>();
         var covers = new Dictionary<int, IReadOnlySet<(int, int, int)>>();
@@ -445,6 +457,17 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
                 }
             }
 
+            var byReading = pair.FromTextId == geez && read.Count > 0;
+            if (byReading)
+            {
+                // A verse the Greek has nothing for stands beside the verse before it, and answers nothing there.
+                here = here
+                    .Select(address => (address.Key, Verses: address.Value
+                        .Where(verse => !read.TryGetValue(verse, out var line) || line.Greek.Count > 0).ToList()))
+                    .Where(address => address.Verses.Count > 0)
+                    .ToDictionary(address => address.Key, address => address.Verses);
+            }
+
             var components = Components(here, there, ref alone);
 
             straight += components.Count(c => c.From.Count == 1 && c.To.Count == 1);
@@ -452,7 +475,18 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             written += components.Count;
             pairs += components.Count > 0 ? 1 : 0;
 
-            await Write(pair.FromTextId, pair.ToTextId, components, cancellationToken);
+            if (!byReading)
+            {
+                await Write(pair.FromTextId, pair.ToTextId, components, cancellationToken);
+                continue;
+            }
+
+            var reading = components.Where(c => c.From.Any(read.ContainsKey)).ToList();
+            await Write(pair.FromTextId, pair.ToTextId, [.. components.Except(reading)], cancellationToken);
+            await Write(pair.FromTextId, pair.ToTextId, reading, cancellationToken, new MappedVerses(
+                [.. reading.Select(c => GeezVersification.Confidence(c.From.Where(read.ContainsKey).Select(verse => read[verse])))],
+                GeezVersification.Source,
+                LinkMethod.Aligner));
         }
 
         // A declared book no chapter of which the two print alike is asked about again on every load
@@ -700,7 +734,55 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     }
 
     /// <summary>How a set of verse links was established, where it is not the frame's statement.</summary>
-    private sealed record MappedVerses(IReadOnlyList<double> Confidences, string Source);
+    private sealed record MappedVerses(
+        IReadOnlyList<double> Confidences,
+        string Source,
+        LinkMethod Method = LinkMethod.ModelReading);
+
+    /// <summary>
+    /// The Ge'ez verses <see cref="GeezVersification"/> places by its reading, by their ids: the verse
+    /// links of the chapters they stand in are that reading's, not the frame's.
+    /// </summary>
+    private async Task<Dictionary<int, GeezVersificationLine>> Read(int geez, CancellationToken cancellationToken)
+    {
+        var books = GeezVersification.Lines.Select(line => line.Book).Distinct().ToList();
+        var verses = await db.Verses
+            .Where(verse => verse.TextId == geez && verse.Label == string.Empty
+                            && books.Contains(verse.Book!.CanonicalOrdinal))
+            .Select(verse => new { verse.Id, Book = verse.Book!.CanonicalOrdinal, verse.ChapterNumber, verse.Number })
+            .ToListAsync(cancellationToken);
+        return verses
+            .Where(verse => GeezVersification.ByVerse.ContainsKey((verse.Book, verse.ChapterNumber, verse.Number)))
+            .ToDictionary(verse => verse.Id, verse => GeezVersification.ByVerse[(verse.Book, verse.ChapterNumber, verse.Number)]);
+    }
+
+    /// <summary>
+    /// Whether the Ge'ez was joined before its verses were read against the Greek: no verse link is that
+    /// reading's, and a verse it places elsewhere is joined by its own number. Its verse links are then
+    /// drawn again, once; a corpus joined since has the reading's links and is left as it is.
+    /// </summary>
+    private async Task<bool> JoinedBeforeTheReading(CancellationToken cancellationToken)
+    {
+        var geez = await db.Texts.Where(text => text.Slug == GeezTextSource.Slug)
+            .Select(text => (int?)text.Id).SingleOrDefaultAsync(cancellationToken);
+        if (geez is not { } id
+            || await db.VerseLinks.AnyAsync(link => link.FromTextId == id && link.Source == GeezVersification.Source,
+                cancellationToken))
+        {
+            return false;
+        }
+
+        var placed = (await Read(id, cancellationToken))
+            .Where(entry => entry.Value.Greek.Count > 0)
+            .Select(entry => entry.Key)
+            .ToList();
+        return placed.Count > 0
+               && await db.VerseLinkVerses.AnyAsync(member => placed.Contains(member.VerseId)
+                                                               && member.VerseLink!.FromTextId == id
+                                                               && member.VerseLink.Method == LinkMethod.StatedBySource
+                                                               && member.VerseLink.Source == Source,
+                   cancellationToken);
+    }
 
     /// <summary>
     /// The pairs joined verse by verse whether or not any word of them is linked yet, by the texts'
@@ -1025,7 +1107,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
 
         var firstId = await ReserveIds(connection, components.Count, cancellationToken);
         var relation = EnumSpelling.Of(LinkRelation.Equals);
-        var method = EnumSpelling.Of(mapped is null ? LinkMethod.StatedBySource : LinkMethod.ModelReading);
+        var method = EnumSpelling.Of(mapped?.Method ?? LinkMethod.StatedBySource);
 
         await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
         {
