@@ -317,6 +317,27 @@ public sealed class EntitySearchTests : IDisposable
     public async Task ANameWithAnEpithetIsNotARenaming() =>
         (await RenamedHeadings.Of(_db, [_elijah.Id], "eng", CancellationToken.None)).Should().BeEmpty();
 
+    /// <summary>
+    /// The Synodal prints Basemath's genitive (<em>сын Васемафы</em>) three times and her nominative once;
+    /// the genitive is as long as the nominative, so only its ending tells them apart.
+    /// </summary>
+    [Fact]
+    public void AGenitivePrintedMoreDoesNotHeadTheNameItDeclines()
+    {
+        var family = new List<(string, string, int)>
+        {
+            ("Васемафы", "васемафы", 3), ("Васемафа", "васемафа", 1), ("Васемафу", "васемафу", 1),
+        };
+
+        var heading = RenamedHeadings.Heading(family, null);
+
+        heading.Should().Be("Васемафа");
+        RenamedHeadings.Genitive("rus", family, heading!).Should().Be("Васемафы");
+        RenamedHeadings.Heading(
+            [("Басмати", "басмати", 3), ("Басмату", "басмату", 1), ("Басмата", "басмата", 1)], null)
+            .Should().Be("Басмата");
+    }
+
     [Fact]
     public void ADeclinedSpellingIsTheNameItDeclines()
     {
