@@ -586,6 +586,43 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
+    /// The names of a translation placed on the original's words naming the same person, place or
+    /// people. Reports, and scores against the pair's stated links where it has any; writes nothing
+    /// without --apply.
+    /// </summary>
+    private static async Task<int> NamesFirst(ForgeRun forge, string[] args)
+    {
+        var (namesFrom, namesTo) = (args[1], args[2]);
+        using var namesScope = forge.Scope();
+        var alone = Option(args, "--alone") is not { } chosen
+            ? NamePolicy.Default.Alone
+            : chosen.Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Aggregate(NameSignal.None, (signals, signal) => signals | signal switch
+            {
+                "entity" => NameSignal.Entity,
+                "letters" => NameSignal.Letters,
+                "spelling" => NameSignal.Spelling,
+                "none" => NameSignal.None,
+                _ => throw new ArgumentException($"--alone takes entity, letters, spelling or none, not {signal}."),
+            });
+        forge.Logger.LogInformation("\n{Report}", await namesScope.ServiceProvider.GetRequiredService<NamesFirstPass>().Run(
+            Identifier(namesFrom),
+            Identifier(namesTo),
+            Option(args, "--books") is { } namesBooks ? namesBooks.Split(',').Select(int.Parse).ToHashSet() : null,
+            Option(args, "--names-from"),
+            new NamePolicy(alone, Even: !args.Contains("--uneven"), Repeated: !args.Contains("--single")),
+            args.Contains("--held"),
+            Option(args, "--out"),
+            args.Contains("--apply")));
+        if (args.Contains("--apply"))
+        {
+            await forge.Replay(namesScope, (from, to) => Between(from, to, Identifier(namesFrom), Identifier(namesTo)));
+        }
+
+        return 0;
+    }
+
+    /// <summary>
     /// The possessive a Slavic translation writes beside the word that renders a Hebrew word with a
     /// pronominal suffix, linked to the same Hebrew word by a rule. Reports and writes nothing without --apply.
     /// </summary>

@@ -103,6 +103,7 @@ builder.Services.AddScoped<EvidentiaKnownRenderingIndex>();
 builder.Services.AddSingleton<IEvidentiaEvidenceSource, StrongNumberEvidenceSource>();
 builder.Services.AddScoped<CompositionPipeline>();
 builder.Services.AddScoped<NameListPass>();
+builder.Services.AddScoped<NamesFirstPass>();
 builder.Services.AddScoped<PossessivePass>();
 builder.Services.AddScoped<SharedWordPass>();
 builder.Services.AddScoped<CorpusCheck>();
