@@ -412,6 +412,7 @@ internal sealed class EvidentiaDecisionRecorder(int runId, IReadOnlySet<Evidenti
         EvidentiaFormKind.Surface => "surface",
         EvidentiaFormKind.Lemma => "lemma",
         EvidentiaFormKind.Normalised => "normalised",
+        EvidentiaFormKind.Capitals => "capitals",
         _ => throw new ArgumentOutOfRangeException(nameof(form), form, $"{form} has no stored spelling."),
     };
 }

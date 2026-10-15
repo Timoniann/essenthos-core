@@ -48,6 +48,9 @@ param(
     # Reads an original's verse the frame places inside the measured text's verse as that verse (--verse-map).
     [switch] $VerseMap,
 
+    # Learns a rendering once for every Strong number of one word, where Strong numbers it apart (--rendering-families).
+    [switch] $RenderingFamilies,
+
     # Says the one run of held2 a step is allowed is this one.
     [switch] $Unseal,
 
@@ -294,6 +297,7 @@ function Arguments($passage) {
     if ($CombinerExport) { $arguments += '--combiner-export', "$prefix.edges.json" }
     if ($DefiniteNouns) { $arguments += '--definite-nouns' }
     if ($VerseMap) { $arguments += '--verse-map' }
+    if ($RenderingFamilies) { $arguments += '--rendering-families' }
     $arguments + @('--disagreements', "$prefix.disagreements.json", '--words', "$prefix.words.json", '--absences', "$prefix.absences.json",
         '--key-doubts', "$prefix.key-doubts.json")
 }

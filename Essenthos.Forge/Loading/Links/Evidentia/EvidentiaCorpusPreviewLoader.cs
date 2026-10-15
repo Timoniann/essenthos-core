@@ -103,7 +103,9 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             ? await knownRenderingIndex.For(
                 options.LearnRenderingsFrom ?? fromSlug, toSlug, source,
                 canonicalBook, canonicalChapter, options.LearnedRenderingMethods,
-                fromSlug, options.LearnAcrossLanguages, cancellationToken)
+                fromSlug, options.LearnAcrossLanguages, cancellationToken,
+                options.RenderingFamilies ? EvidentiaStrongFamilies.Of : null,
+                options.RenderingFamilies)
             : null;
         var previews = source.GroupBy(token => token.Address)
             .OrderBy(group => group.Key.Verse)
@@ -183,7 +185,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
                 .. residualKnownRenderingResolution.Proposals,
                 .. anchoredGapResolution.Proposals,
                 .. classMatchedTargetGlossResolution.Proposals,
-            ]);
+            ],
+            options.RenderingFamilies ? EvidentiaStrongFamilies.Of : null);
         var contextGlossProposals = EvidentiaContextGloss.Resolve(
             sourceAnalyses,
             targetAnalyses,
@@ -1839,7 +1842,8 @@ internal sealed record EvidentiaMeasurementOptions(
     EvidentiaCombiner? Combiner = null,
     bool RecordCombinerEdges = false,
     bool DefiniteNouns = false,
-    bool VerseMap = false);
+    bool VerseMap = false,
+    bool RenderingFamilies = false);
 
 /// <summary>
 /// One tier's proposals scored two ways, because the answer key does not reach every word.

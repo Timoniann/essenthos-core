@@ -30,11 +30,21 @@ internal readonly record struct RenderingKey(EvidentiaFormKind Kind, string Form
 /// </summary>
 internal static class RenderingKeys
 {
-    public static IReadOnlyList<RenderingKey> Of(EvidentiaAnalysis analysis)
+    /// <param name="capitals">
+    /// Whether a word printed in capitals is filed and asked under its capitals alone: English prints the name in
+    /// small capitals, LORD and GOD, and lower-cased they are Lord and God, which are other words. Filed under its
+    /// lower-cased forms too, LORD made <em>Lord</em> as much the name's word as אֲדֹנָי's.
+    /// </param>
+    public static IReadOnlyList<RenderingKey> Of(EvidentiaAnalysis analysis, bool capitals = false)
     {
         if (analysis.IsFunctionWord)
         {
             return [];
+        }
+
+        if (capitals && Capitals(analysis.Token.Surface) is { } printed)
+        {
+            return [new(EvidentiaFormKind.Capitals, printed)];
         }
 
         var keys = new List<RenderingKey>(3)
@@ -53,6 +63,22 @@ internal static class RenderingKeys
 
         keys.Add(new(EvidentiaFormKind.Normalised, analysis.Normalised));
         return keys;
+    }
+
+    /// <summary>The word as printed in capitals, its possessive taken off, or null if it is not printed so.</summary>
+    private static string? Capitals(string surface)
+    {
+        var word = surface;
+        foreach (var possessive in (string[])["’s", "'s", "’S", "'S"])
+        {
+            if (word.EndsWith(possessive, StringComparison.Ordinal))
+            {
+                word = word[..^possessive.Length];
+                break;
+            }
+        }
+
+        return word.Count(char.IsLetter) >= 2 && word.All(letter => !char.IsLetter(letter) || char.IsUpper(letter)) ? word : null;
     }
 }
 
@@ -83,7 +109,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
     private readonly Dictionary<RenderingCorpusKey, RenderingCorpus> observationsByTextPair = new();
     private readonly Dictionary<string, Dictionary<(int Book, int Chapter), IReadOnlySet<int>>> heldOutVersesByText =
         new(StringComparer.Ordinal);
-    private readonly Dictionary<(string Surface, string? Lemma, string Language), IReadOnlyList<RenderingKey>> keysByForm = [];
+    private readonly Dictionary<(string Surface, string? Lemma, string Language, bool Capitals), IReadOnlyList<RenderingKey>> keysByForm = [];
 
     /// <param name="fromSlug">The text whose links teach the index, or several, comma-separated, read as one.</param>
     /// <param name="sourceSlug">
@@ -102,9 +128,12 @@ internal sealed class EvidentiaKnownRenderingIndex(
         IReadOnlyList<LinkMethod>? methods = null,
         string? sourceSlug = null,
         bool acrossLanguages = false,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        Func<string, string>? family = null,
+        bool capitals = false)
     {
         methods ??= DefaultMethods;
+        family ??= EvidentiaStrongFamilies.None;
         var language = source.Select(token => token.Language).Distinct(StringComparer.OrdinalIgnoreCase).ToList();
         if (language.Count != 1)
         {
@@ -131,7 +160,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
         // Only the content words: they are the only ones a lookup asks about, so an entry for
         // anything else would be built and never read.
         var keysByToken = source
-            .Select(token => (Surface: token.Surface.ToLowerInvariant(), Keys: LookupKeys(token)))
+            .Select(token => (Surface: token.Surface.ToLowerInvariant(), Keys: LookupKeys(token, capitals)))
             .Where(item => item.Keys.Count > 0)
             .ToList();
         var wanted = keysByToken.SelectMany(item => item.Keys).ToHashSet();
@@ -150,7 +179,7 @@ internal sealed class EvidentiaKnownRenderingIndex(
             var heldOut = await HeldOutVerses(teacher, excludedBook, excludedChapter, cancellationToken);
             var taught = RenderingDistributions.Build(
                 corpus.Observations, heldOut, wanted,
-                observation => Keys(observation, corpus.Language), MinimumObservations);
+                observation => Keys(observation, corpus.Language, capitals), MinimumObservations, family);
             var unknown = keysByToken.Select(item => item.Keys).Where(keys => !keys.Any(distributions.ContainsKey)).ToList();
             foreach (var keys in unknown)
             {
@@ -177,29 +206,31 @@ internal sealed class EvidentiaKnownRenderingIndex(
             asked.Select(group => group.Key).ToHashSet(StringComparer.Ordinal),
             asked.Where(group => group.SelectMany(item => item.Keys).Any(distributions.ContainsKey))
                 .Select(group => group.Key)
-                .ToHashSet(StringComparer.Ordinal));
+                .ToHashSet(StringComparer.Ordinal),
+            family,
+            capitals);
     }
 
-    private IReadOnlyList<RenderingKey> LookupKeys(EvidentiaToken token) =>
+    private IReadOnlyList<RenderingKey> LookupKeys(EvidentiaToken token, bool capitals) =>
         languagePacks.TryAnalyse(token, out var analysis) && analysis.IsContentWord
-            ? RenderingKeys.Of(analysis)
+            ? RenderingKeys.Of(analysis, capitals)
             : [];
 
-    private IReadOnlyList<RenderingKey> Keys(EvidentiaToken token) =>
-        languagePacks.TryAnalyse(token, out var analysis) ? RenderingKeys.Of(analysis) : [];
+    private IReadOnlyList<RenderingKey> Keys(EvidentiaToken token, bool capitals) =>
+        languagePacks.TryAnalyse(token, out var analysis) ? RenderingKeys.Of(analysis, capitals) : [];
 
     // One observation list is read for every chapter of a book run, and analysing a form is the
     // same answer every time.
-    private IReadOnlyList<RenderingKey> Keys(RenderingObservation observation, string language)
+    private IReadOnlyList<RenderingKey> Keys(RenderingObservation observation, string language, bool capitals)
     {
-        var form = (observation.SourceSurface, observation.SourceLemma, language);
+        var form = (observation.SourceSurface, observation.SourceLemma, language, capitals);
         if (keysByForm.TryGetValue(form, out var cached))
         {
             return cached;
         }
 
         var keys = Keys(new EvidentiaToken(
-            0, default, 0, observation.SourceSurface, language, Lemma: observation.SourceLemma));
+            0, default, 0, observation.SourceSurface, language, Lemma: observation.SourceLemma), capitals);
         keysByForm.Add(form, keys);
         return keys;
     }
@@ -356,8 +387,10 @@ internal static class RenderingDistributions
         IReadOnlySet<int> heldOutVerses,
         IReadOnlySet<RenderingKey> wantedKeys,
         Func<RenderingObservation, IReadOnlyList<RenderingKey>> keys,
-        int minimumObservations)
+        int minimumObservations,
+        Func<string, string>? family = null)
     {
+        family ??= EvidentiaStrongFamilies.None;
         var counts = new Dictionary<RenderingKey, Dictionary<string, int>>();
         foreach (var observation in observations)
         {
@@ -383,7 +416,8 @@ internal static class RenderingDistributions
                     counts.Add(key, byNumber);
                 }
 
-                byNumber[observation.TargetStrongNumber] = byNumber.GetValueOrDefault(observation.TargetStrongNumber) + 1;
+                var number = family(observation.TargetStrongNumber);
+                byNumber[number] = byNumber.GetValueOrDefault(number) + 1;
             }
         }
 
@@ -443,7 +477,9 @@ internal sealed class EvidentiaKnownRenderingEvidenceSource(
     IReadOnlyDictionary<RenderingKey, RenderingDistribution> bySourceKey,
     string sourceName,
     IReadOnlySet<string> askedForms,
-    IReadOnlySet<string> answeredForms) : IEvidentiaEvidenceSource
+    IReadOnlySet<string> answeredForms,
+    Func<string, string>? family = null,
+    bool capitals = false) : IEvidentiaEvidenceSource
 {
     private const double MinimumScore = EvidentiaDefaults.KnownRenderingBaseScore;
     private const double MaximumAdditionalScore = EvidentiaDefaults.KnownRenderingShareScore;
@@ -457,7 +493,7 @@ internal sealed class EvidentiaKnownRenderingEvidenceSource(
         var (key, distribution) = source.IsContentWord ? Entry(source) : default;
         if (distribution is null
             || target.Token.StrongNumber is not { } strongNumber
-            || !distribution.Senses.TryGetValue(strongNumber, out var frequency))
+            || !distribution.Senses.TryGetValue((family ?? EvidentiaStrongFamilies.None)(strongNumber), out var frequency))
         {
             yield break;
         }
@@ -482,7 +518,7 @@ internal sealed class EvidentiaKnownRenderingEvidenceSource(
     /// </summary>
     private (RenderingKey Key, RenderingDistribution? Distribution) Entry(EvidentiaAnalysis source)
     {
-        foreach (var key in RenderingKeys.Of(source))
+        foreach (var key in RenderingKeys.Of(source, capitals))
         {
             if (bySourceKey.TryGetValue(key, out var distribution))
             {

@@ -240,6 +240,9 @@ internal enum EvidentiaFormKind
     Surface,
     Lemma,
     Normalised,
+
+    /// <summary>A word as printed in capitals: LORD and GOD, the name.</summary>
+    Capitals,
 }
 
 /// <summary>
