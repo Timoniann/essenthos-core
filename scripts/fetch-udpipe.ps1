@@ -24,7 +24,20 @@ $models = @(
     @{ Name = 'russian-syntagrus-ud-2.5-191206.udpipe'; Md5 = '8a985b9b7c3902bf76e55f0806ccbbd2'; Bytes = 45859472; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/f612687b-e000-4493-b078-b2d8fd9e008c/content' },
     @{ Name = 'english-ud-2.1-20180111.udpipe'; Md5 = 'a5e99059a91f04740e1a588732a8c27c'; Bytes = 16368326; Url = 'https://raw.githubusercontent.com/bnosac/udpipe.models.ud/master/models/english-ud-2.1-20180111.udpipe' },
     @{ Name = 'german-hdt-ud-2.5-191206.udpipe'; Md5 = '7f0a828e795c0f0c630629b4ab1a017d'; Bytes = 62982275; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/0d5a53e7-039b-4997-af3f-94faad001a6c/content' },
-    @{ Name = 'spanish-ancora-ud-2.5-191206.udpipe'; Md5 = '08e63ea07501b2917d29c011276a499a'; Bytes = 20400504; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/52474ca8-939b-4fcf-80b0-228679464582/content' }
+    @{ Name = 'spanish-ancora-ud-2.5-191206.udpipe'; Md5 = '08e63ea07501b2917d29c011276a499a'; Bytes = 20400504; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/52474ca8-939b-4fcf-80b0-228679464582/content' },
+    @{ Name = 'arabic-padt-ud-2.5-191206.udpipe'; Md5 = '4c4e36160d4d62fb096857aceed0a9a4'; Bytes = 19752087; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/950d4077-bd61-4e5c-af05-ac9de11ddb39/content' },
+    @{ Name = 'ancient_greek-proiel-ud-2.5-191206.udpipe'; Md5 = '26ba3e4b8f9b0b1dc0d853841ace3e3c'; Bytes = 22597368; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/f7fe8e97-506c-4f8c-a36c-bc835ec486a0/content' },
+    @{ Name = 'latin-proiel-ud-2.5-191206.udpipe'; Md5 = '9418fc6a1c750e7d94791dc19d32f068'; Bytes = 23839923; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/ed8a6a71-3753-471b-9941-1d384765f89b/content' },
+    @{ Name = 'french-gsd-ud-2.5-191206.udpipe'; Md5 = '8b558d0398b6d6fabeddc0cf4454f950'; Bytes = 23811948; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/75091a21-f175-4a57-8bbd-8f9a12a7d417/content' },
+    @{ Name = 'portuguese-bosque-ud-2.5-191206.udpipe'; Md5 = 'a6d426f6e49b95f8425bc5cc546c4c77'; Bytes = 16974480; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/29d8c3fd-1eb3-479f-93fc-e8982b051aa2/content' },
+    @{ Name = 'hindi-hdtb-ud-2.5-191206.udpipe'; Md5 = '31c61702c78985b6720a9f6ecce6557b'; Bytes = 25857814; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/08ffe51d-1072-4884-90e1-58693a198390/content' },
+    @{ Name = 'marathi-ufal-ud-2.5-191206.udpipe'; Md5 = 'd6ac0c0cae7c5b9216bfa1622cd3e6f3'; Bytes = 2382087; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/b7a1c990-cb8d-4b57-b8a3-87504d409e19/content' },
+    @{ Name = 'tamil-ttb-ud-2.5-191206.udpipe'; Md5 = 'c5e4ff1566798f96905eaa01e70e1732'; Bytes = 3201866; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/8b35bcb3-a284-4fce-93fe-118becba5018/content' },
+    @{ Name = 'telugu-mtg-ud-2.5-191206.udpipe'; Md5 = '7bcfa7add2d74fa49cb51f2b1cad5b0e'; Bytes = 2168122; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/998b4270-a70a-42fe-a292-b70d7d66d96c/content' },
+    @{ Name = 'korean-kaist-ud-2.5-191206.udpipe'; Md5 = 'b49f974d6886fb24fccd129e4ed9d2a9'; Bytes = 41461296; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/bf911ab5-54e7-4833-81ea-5e395da8fa33/content' },
+    @{ Name = 'vietnamese-vtb-ud-2.5-191206.udpipe'; Md5 = '2f029f63a9ddc4f95d3154ef30434007'; Bytes = 4673798; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/ec8bcc42-f06a-4193-9625-2e7be9fb587a/content' },
+    @{ Name = 'chinese-gsd-ud-2.5-191206.udpipe'; Md5 = '6268b716f0be98553c73815593d72ef1'; Bytes = 13863905; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/1dca5fb3-5bed-49d7-95d7-d35ba8832040/content' },
+    @{ Name = 'chinese-gsdsimp-ud-2.5-191206.udpipe'; Md5 = '4db292a2b8d8bb88b962589a5d6a82bf'; Bytes = 11864178; Url = 'https://lindat.mff.cuni.cz/repository/server/api/core/bitstreams/63505e33-0290-488d-a3bf-256ccac973e0/content' }
 )
 
 function Get-PinnedModel([hashtable] $model, [string] $directory) {
@@ -104,7 +117,7 @@ try {
         throw 'The verified UDPipe 1.4.0 release contained no Windows udpipe.exe.'
     }
 
-    # The three original licence texts are kept, not paraphrased: CC BY-NC-SA 4.0 for the four
+    # The three original licence texts are kept, not paraphrased: CC BY-NC-SA 4.0 for the
     # LINDAT models, CC BY-SA 4.0 for the English one, MPL-2.0 for the tool.
     $binaryDirectory = Join-Path $ready 'bin'
     New-Item -ItemType Directory -Force -Path $binaryDirectory | Out-Null

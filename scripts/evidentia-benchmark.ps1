@@ -21,6 +21,12 @@ param(
     # bbe, nwt: the Bible in Basic English and the New World Translation, read from their files, over
     # the passages of ind and val. Neither states a link, so there is no gold: what they report is
     # coverage and how far the links agree with the King James's and the Berean's own.
+    # Without a teacher, nothing learned from any text's links and no source Strong number: what a text
+    # with no links of its own gets from the dictionary, the original's gloss and its names alone.
+    # noteach: the Berean over the passages of ind and val; kjvnoteach: the King James over ind;
+    # spanoteach: the Reina-Valera 1909 over ind, against its stated links (a language with no dictionary).
+    # keyless: the Douay-Rheims and Brenton's Ruth, the Revised Literal Translation's Mark 1-4 and the
+    # Korean Revised Version's Ruth, which no link states: coverage only, and per-word outcomes to read by hand.
     [string] $Runs = 'ind,val,val2,kjv',
 
     [string] $Output = (Join-Path ([IO.Path]::GetTempPath()) 'essenthos-evidentia'),
@@ -73,6 +79,7 @@ $env:DOTNET_ENVIRONMENT = 'Production'
 $independent = '--without-source-strong', '--learn-from', 'KJV'
 $fromFiles = $independent + '--source-from-files', '--routes', 'KJV,BSB'
 $kjv = '--without-source-strong', '--learn-from', 'BSB'
+$noTeacher = '--without-source-strong', '--without-known-renderings'
 $passages = @{
     ind        = @(
         @('ind-gen', 'BSB', 'BHSA', 1, 1, 10, $independent),
@@ -145,6 +152,29 @@ $passages = @{
         @('sst-ruth', 'KJV', 'BHSA', 8, 0, 0, @()),
         @('sst-jon', 'KJV', 'BHSA', 32, 0, 0, @()),
         @('sst-mark', 'KJV', 'NESTLE1904', 41, 1, 4, @()))
+    noteach    = @(
+        @('nt-gen', 'BSB', 'BHSA', 1, 1, 10, $noTeacher),
+        @('nt-ruth', 'BSB', 'BHSA', 8, 0, 0, $noTeacher),
+        @('nt-jon', 'BSB', 'BHSA', 32, 0, 0, $noTeacher),
+        @('nt-mark', 'BSB', 'NESTLE1904', 41, 1, 4, $noTeacher),
+        @('nt-1sa', 'BSB', 'BHSA', 9, 17, 17, $noTeacher),
+        @('nt-ps', 'BSB', 'BHSA', 19, 1, 23, $noTeacher),
+        @('nt-john', 'BSB', 'NESTLE1904', 43, 1, 3, $noTeacher))
+    kjvnoteach = @(
+        @('ntk-gen', 'KJV', 'BHSA', 1, 1, 10, $noTeacher),
+        @('ntk-ruth', 'KJV', 'BHSA', 8, 0, 0, $noTeacher),
+        @('ntk-jon', 'KJV', 'BHSA', 32, 0, 0, $noTeacher),
+        @('ntk-mark', 'KJV', 'NESTLE1904', 41, 1, 4, $noTeacher))
+    spanoteach = @(
+        @('nts-gen', 'RV1909', 'BHSA', 1, 1, 10, $noTeacher),
+        @('nts-ruth', 'RV1909', 'BHSA', 8, 0, 0, $noTeacher),
+        @('nts-jon', 'RV1909', 'BHSA', 32, 0, 0, $noTeacher),
+        @('nts-mark', 'RV1909', 'NESTLE1904', 41, 1, 4, $noTeacher))
+    keyless    = @(
+        @('kl-dra-ruth', 'DRA', 'BHSA', 8, 0, 0, $noTeacher),
+        @('kl-brenton-ruth', 'BRENTON', 'BHSA', 8, 0, 0, $noTeacher),
+        @('kl-rlt-mark', 'RLT2018', 'NESTLE1904', 41, 1, 4, $noTeacher),
+        @('kl-krv-ruth', 'KRV', 'BHSA', 8, 0, 0, $noTeacher))
 }
 
 $final = 'global review + syntax-gated target gloss + attached grammatical words'
@@ -311,7 +341,7 @@ function MeasureSideBySide($set) {
 Push-Location $(if ($FromReports) { $directory } else { $snapshot })
 try {
     foreach ($set in $Runs -split ',') {
-        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, held2, kjv, kjvval, self, selfstrong, bbe or nwt." }
+        if (-not $passages.ContainsKey($set)) { throw "Unknown run '$set'; use ind, val, val2, held, held2, kjv, kjvval, self, selfstrong, bbe, nwt, noteach, kjvnoteach, spanoteach or keyless." }
         if ($set -eq 'held2' -and -not $Unseal) { throw 'held2 is sealed: it is run once per step, with its rules fixed. Pass -Unseal when this is that run.' }
         $total = @{ Correct = 0; Covered = 0; Gold = 0; SafeCorrect = 0; SafeCovered = 0; Seconds = 0.0 }
         $words = @{}
