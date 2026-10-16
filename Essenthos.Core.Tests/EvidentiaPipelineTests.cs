@@ -139,6 +139,19 @@ public class EvidentiaPipelineTests
     }
 
     [Fact]
+    public void AChaptersVerseZeroIsANeighbourOfTheChapterBeforeNotItsLastVerse()
+    {
+        var lengths = new EvidentiaChapterLengths([(56, 13), (57, 11)]);
+        var title = lengths.Place(new EvidentiaToken(1, new EvidentiaAddress(19, 57, 0), 1, "not", "eng"));
+        var closing = lengths.Place(new EvidentiaToken(11, new EvidentiaAddress(19, 56, 13), 1, "not", "eng"));
+
+        var preview = Pipeline().Preview(new EvidentiaRequest([title], [closing]));
+
+        title.Address.DistanceTo(closing.Address).Should().Be(1, "a psalm's title and the psalm before's last verse are two verses");
+        preview.Candidates.Should().NotContain(candidate => candidate.Evidence.Any(evidence => evidence.Kind == EvidentiaEvidenceKind.ExactCanonicalAddress));
+    }
+
+    [Fact]
     public void AWordOutsideTheNeighbourWindowIsNoCandidate()
     {
         var preview = Pipeline().Preview(new EvidentiaRequest(

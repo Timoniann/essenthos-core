@@ -99,10 +99,13 @@ internal readonly record struct EvidentiaAddress(int Book, int Chapter, int Vers
 {
     public int? Sequence { get; init; }
 
+    // Two chapters' verses are never one verse. A chapter's verse 0, such as a psalm title the Douay numbers 0,
+    // counts at the same place in the book as the last verse of the chapter before, and read as the same
+    // address it made Psalm 57's title render the 'not' of 56:13 (PRB-1098).
     public int DistanceTo(EvidentiaAddress other) =>
         Book != other.Book ? int.MaxValue
         : Chapter == other.Chapter ? Math.Abs(Verse - other.Verse)
-        : Sequence is { } here && other.Sequence is { } there ? Math.Abs(here - there)
+        : Sequence is { } here && other.Sequence is { } there ? Math.Max(1, Math.Abs(here - there))
         : int.MaxValue;
 
     public bool Equals(EvidentiaAddress other) => Book == other.Book && Chapter == other.Chapter && Verse == other.Verse;
