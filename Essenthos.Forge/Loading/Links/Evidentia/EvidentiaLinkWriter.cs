@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -21,6 +22,9 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// <param name="Withdrawn">Words taken out of an aligner's link so that a safe-tier absence could be written.</param>
 /// <param name="Superseded">Absences an earlier run's rule wrote on a word this run's verdicts render, taken back.</param>
 /// <param name="Attached">Words of the written links marked as going with another word of their own text.</param>
+/// <param name="Replaced">
+/// Placements an earlier run's rule wrote for a word this run's verdicts place on other words, taken back.
+/// </param>
 internal sealed record EvidentiaApplyOutcome(
     bool Written,
     int Verdicts,
@@ -34,13 +38,15 @@ internal sealed record EvidentiaApplyOutcome(
     int Superseded,
     IReadOnlyList<string> Lines,
     TimeSpan Elapsed,
-    int Attached = 0)
+    int Attached = 0,
+    int Replaced = 0)
 {
     public override string ToString() =>
         (Written ? "EVIDENTIA verdicts written" : "EVIDENTIA verdicts NOT written (plan only; pass --write to write)")
         + $": {Verdicts:N0} approved or corrected; {NewLinks:N0} new links ({NewAbsences:N0} of them absences), {OnExisting:N0} claims on a link naming the same words, "
         + $"{Within:N0} on a link naming more, {Promoted:N0} links whose settled answer changed, {Withheld:N0} withheld, "
         + $"{Withdrawn:N0} words withdrawn from the aligner's links for an absence, {Superseded:N0} earlier absences taken back for a rendering, "
+        + $"{Replaced:N0} earlier runs' placements taken back for one elsewhere, "
         + $"{Attached:N0} words marked as going with another word; in {Elapsed}"
         + (Lines.Count == 0 ? string.Empty : "\n" + string.Join("\n", Lines));
 }
@@ -95,6 +101,17 @@ internal sealed record EvidentiaApplyOutcome(
 /// </para>
 ///
 /// <para>
+/// **A later run of the same two texts replaces an earlier run's placement of a word.** Where a pair
+/// verdict places its word on other words than a link already does, and that link is an earlier
+/// EVIDENTIA run's rule and nobody else's — no source, number, reading or person — the earlier
+/// placement is taken back with an <see cref="EvidentiaWithdrawal"/> under the new verdict, and the
+/// review that wrote it is marked as superseded, as an absence is. Otherwise re-running a text with
+/// new rules would leave the old rules' placement standing as a second rendering beside the new one
+/// (PRB-1097). A word the later run does not decide keeps its link, and nothing is taken back for a
+/// verdict that is itself withheld.
+/// </para>
+///
+/// <para>
 /// **An attached word is a link like any other, and then says whose it is.** <em>did</em> of <em>did
 /// see</em> is written on the word its rule placed it on, and where that is its head's own
 /// counterpart, its membership of the link is marked with its role and the head it goes with
@@ -119,6 +136,8 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
     private const string WithdrawnNote = "the aligner's link of this word was withdrawn for it";
 
     private const string SupersededNote = "an earlier run's absence on this word was taken back for it";
+
+    private const string ReplacedNote = "an earlier run's placement of this word was taken back for it";
 
     public async Task<EvidentiaApplyOutcome> Apply(int runId, bool write, CancellationToken cancellationToken = default)
     {
@@ -153,7 +172,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
         }
 
         return new EvidentiaApplyOutcome(write, verdictIds.Count, tally.NewLinks, tally.NewAbsences, tally.OnExisting, tally.Within,
-            tally.Promoted, tally.Withheld, tally.Withdrawn, tally.Superseded, tally.Lines, elapsed.Elapsed, tally.Attached);
+            tally.Promoted, tally.Withheld, tally.Withdrawn, tally.Superseded, tally.Lines, elapsed.Elapsed, tally.Attached, tally.Replaced);
     }
 
     private async Task Settle(EvidentiaRun run, long[] reviewIds, bool write, Tally tally, CancellationToken cancellationToken)
@@ -189,10 +208,10 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             .Where(word => linked.Contains(word.Id) && EvidentiaAbsences.ArticleNumbers.Contains(word.StrongNumber!))
             .Select(word => word.Id)
             .ToListAsync(cancellationToken)).ToHashSet();
-        var ruleAbsences = touching.Where(link => link.Relation != LinkRelation.Renders && OnlyARule(link))
+        var takeable = touching.Where(link => (link.Relation != LinkRelation.Renders && OnlyARule(link)) || OnlyAnEarlierRun(link, run))
             .Select(link => (long?)link.Id).ToList();
         var writtenBy = (await db.EvidentiaReviews
-            .Where(review => ruleAbsences.Contains(review.LinkId))
+            .Where(review => takeable.Contains(review.LinkId))
             .ToListAsync(cancellationToken))
             .ToLookup(review => review.LinkId!.Value);
 
@@ -258,10 +277,44 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                     .ForEach(held => held.Provenance = Noted(held.Provenance!, WithdrawnNote));
             }
 
+            var replaced = claim.Relation == LinkRelation.Renders
+                ? links.Where(link => OnlyAnEarlierRun(link, run)
+                    && Counterparts(link, run, claim) is { Count: > 0 } counterparts && !counterparts.IsSupersetOf(claim.Target)).ToList()
+                : [];
             var elsewhere = links
-                .Where(link => Counterparts(link, run, claim) is { Count: > 0 } counterparts
+                .Where(link => !replaced.Contains(link)
+                    && Counterparts(link, run, claim) is { Count: > 0 } counterparts
                     && (claim.Relation != LinkRelation.Renders || !counterparts.IsSupersetOf(claim.Target)))
                 .MaxBy(link => ClaimStanding.Of(link.Method));
+
+            if (exact is null && within is null && elsewhere is not null && Withheld(claim, strongest, elsewhere))
+            {
+                review.Withheld = claim.Relation == LinkRelation.Renders
+                    ? $"link {elsewhere.Id} ({EnumSpelling.Of(elsewhere.Method)}) places this word on other words"
+                    : $"link {elsewhere.Id} ({EnumSpelling.Of(elsewhere.Method)}) gives this word a counterpart";
+                tally.Withheld++;
+                tally.Lines.Add($"review {review.Id} withheld: {review.Withheld}");
+                continue;
+            }
+
+            foreach (var earlier in replaced)
+            {
+                foreach (var by in writtenBy[earlier.Id])
+                {
+                    by.Withheld = $"review {review.Id} of run {run.Id} places this word elsewhere, so this placement was taken back";
+                }
+
+                Withdraw(earlier, claim.Word, review, removed);
+                index[claim.Word].Remove(earlier);
+                tally.Replaced++;
+                tally.Lines.Add($"link {earlier.Id}: an earlier run's placement taken back, review {review.Id} places its word elsewhere");
+            }
+
+            if (replaced.Count > 0)
+            {
+                claims.Where(held => held.Method == LinkMethod.RuleBased).ToList()
+                    .ForEach(held => held.Provenance = Noted(held.Provenance!, ReplacedNote));
+            }
 
             if (exact is not null)
             {
@@ -297,15 +350,6 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                 }));
                 review.Link = within;
                 tally.Within++;
-            }
-            else if (elsewhere is not null && Withheld(claim, strongest, elsewhere))
-            {
-                review.Withheld = claim.Relation == LinkRelation.Renders
-                    ? $"link {elsewhere.Id} ({EnumSpelling.Of(elsewhere.Method)}) places this word on other words"
-                    : $"link {elsewhere.Id} ({EnumSpelling.Of(elsewhere.Method)}) gives this word a counterpart";
-                tally.Withheld++;
-                tally.Lines.Add($"review {review.Id} withheld: {review.Withheld}");
-                continue;
             }
             else
             {
@@ -411,6 +455,32 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
     /// <summary>A link only EVIDENTIA's rules claim and no person read, which a later verdict may take back.</summary>
     private static bool OnlyARule(Link link) =>
         link.Method == LinkMethod.RuleBased && link.Claims.All(held => held.Method == LinkMethod.RuleBased);
+
+    /// <summary>
+    /// A placement only an earlier EVIDENTIA run's rules claim: every claim a rule's, and every rule an
+    /// earlier run's. The links looked at are already the run's two texts', so it is this pair's run.
+    /// </summary>
+    private static bool OnlyAnEarlierRun(Link link, EvidentiaRun run) =>
+        link.Relation == LinkRelation.Renders
+        && OnlyARule(link)
+        && link.Claims.Count > 0
+        && link.Claims.All(held => RunOf(held.Provenance!.Source) is { } earlier && earlier < run.Id);
+
+    /// <summary>The run a rule's claim names in its source, as <see cref="RuleSource"/> writes it; null for any other source.</summary>
+    internal static int? RunOf(string source)
+    {
+        const string prefix = Sources.EvidentiaRunPrefix + " ";
+        if (!source.StartsWith(prefix, StringComparison.Ordinal))
+        {
+            return null;
+        }
+
+        var rest = source.AsSpan(prefix.Length);
+        var end = rest.IndexOf(' ');
+        return int.TryParse(end < 0 ? rest : rest[..end], NumberStyles.None, CultureInfo.InvariantCulture, out var number)
+            ? number
+            : null;
+    }
 
     /// <summary>A link nothing but the aligner claims: no source stated it, no number, reading or person.</summary>
     private static bool OnlyTheAligner(Link link) =>
@@ -547,6 +617,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
         public int Withheld;
         public int Withdrawn;
         public int Superseded;
+        public int Replaced;
         public int Attached;
         public List<string> Lines { get; } = [];
     }

@@ -479,6 +479,86 @@ public sealed class EvidentiaReviewTests : IDisposable
         earlier.Withheld.Should().Contain($"run {later.Id} renders this word");
     }
 
+    /// <summary>
+    /// Re-running a text with new rules: a later run placing a word elsewhere takes back the placement
+    /// an earlier run's rule wrote for it, rather than leaving two renderings (PRB-1097). A word the
+    /// later run does not decide keeps the earlier run's link.
+    /// </summary>
+    [Fact]
+    public async Task ALaterRunPlacingAWordElsewhereTakesBackTheEarlierRunsPlacement()
+    {
+        var placed = Proposal(English(4), Hebrew(2), EvidentiaDecisionRecorder.SafeTier);
+        Proposal(English(5), Hebrew(2), EvidentiaDecisionRecorder.SafeTier);
+        await Queue().AcceptTier(_run.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Reviewer, null);
+        await Writer().Apply(_run.Id, write: true);
+        var kept = await _db.Links.AsNoTracking().SingleAsync(link => link.Words.Any(word => word.WordId == English(5)));
+        var later = LaterRun();
+        Proposal(English(4), Hebrew(3), EvidentiaDecisionRecorder.SafeTier, later.Id);
+        await Queue().AcceptTier(later.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Reviewer, null);
+
+        var plan = await Writer().Apply(later.Id, write: false);
+        (await _db.Links.CountAsync()).Should().Be(2, "a plan takes nothing back");
+        var outcome = await Writer().Apply(later.Id, write: true);
+
+        plan.Replaced.Should().Be(1);
+        outcome.Replaced.Should().Be(1);
+        outcome.NewLinks.Should().Be(1);
+        var links = await _db.Links.AsNoTracking().Include(row => row.Words).Include(row => row.Claims).ThenInclude(claim => claim.Provenance)
+            .ToListAsync();
+        links.Where(link => link.Words.Any(word => word.WordId == English(4)))
+            .Select(link => link.Words.Single(word => word.Side == LinkSide.To).WordId)
+            .Should().Equal(Hebrew(3));
+        links.Should().Contain(link => link.Id == kept.Id, "the later run says nothing of that word");
+        links.Single(link => link.Words.Any(word => word.WordId == English(4))).Claims
+            .Should().OnlyContain(claim => claim.Provenance!.Note!.Contains("placement of this word was taken back"));
+        var withdrawal = await _db.EvidentiaWithdrawals.AsNoTracking().Include(row => row.Review).ThenInclude(review => review!.Decision)
+            .SingleAsync();
+        (withdrawal.WordId, withdrawal.Relation, withdrawal.LinkId).Should().Be((English(4), LinkRelation.Renders, (long?)null));
+        withdrawal.ToWordIds.Should().Equal(Hebrew(2));
+        withdrawal.Review!.Decision!.RunId.Should().Be(later.Id);
+        var earlier = await _db.EvidentiaReviews.AsNoTracking().SingleAsync(review => review.DecisionId == placed.Id);
+        earlier.LinkId.Should().BeNull();
+        earlier.Withheld.Should().Contain($"run {later.Id} places this word elsewhere");
+    }
+
+    /// <summary>
+    /// An earlier placement a person read stays beside a later run's, and none is taken back for a
+    /// later verdict a stated link keeps out.
+    /// </summary>
+    [Fact]
+    public async Task AnEarlierPlacementAPersonReadOrAWithheldVerdictKeepsItsLink()
+    {
+        var read = Proposal(English(4), Hebrew(2), EvidentiaDecisionRecorder.SafeTier);
+        await Queue().Approve([read.Id], Reviewer, "the verb");
+        Proposal(English(5), Hebrew(2), EvidentiaDecisionRecorder.SafeTier);
+        await Queue().AcceptTier(_run.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Reviewer, null);
+        await Writer().Apply(_run.Id, write: true);
+        ExistingLink(English(5), Hebrew(1), LinkMethod.StatedBySource, null);
+        var later = LaterRun();
+        Proposal(English(4), Hebrew(3), EvidentiaDecisionRecorder.SafeTier, later.Id);
+        Proposal(English(5), Hebrew(3), EvidentiaDecisionRecorder.SafeTier, later.Id);
+        await Queue().AcceptTier(later.Id, new EvidentiaQueueFilter(Tier: EvidentiaDecisionRecorder.SafeTier), Reviewer, null);
+
+        var outcome = await Writer().Apply(later.Id, write: true);
+
+        outcome.Replaced.Should().Be(0);
+        outcome.Withheld.Should().Be(2, "a person placed the fourth word, and a source states where the fifth goes");
+        outcome.NewLinks.Should().Be(0);
+        (await _db.Links.AsNoTracking().AnyAsync(link => link.Words.Any(word => word.WordId == English(4))))
+            .Should().BeTrue();
+        (await _db.Links.CountAsync(link => link.Words.Any(word => word.WordId == English(5)) && link.Method == LinkMethod.RuleBased))
+            .Should().Be(1, "the earlier run's placement stands where the later verdict is kept out");
+        (await _db.EvidentiaWithdrawals.AnyAsync()).Should().BeFalse();
+    }
+
+    [Fact]
+    public void ARuleClaimNamesItsRun()
+    {
+        EvidentiaLinkWriter.RunOf(EvidentiaLinkWriter.RuleSource(26, "1.0.0+abc", "attached-word")).Should().Be(26);
+        EvidentiaLinkWriter.RunOf(NamesFirstPass.Source).Should().BeNull();
+        EvidentiaLinkWriter.RunOf("EVIDENTIA runner notes").Should().BeNull();
+    }
+
     [Fact]
     public async Task AnAbsenceAPersonReadOrASourceStatesKeepsALaterPairOut()
     {
