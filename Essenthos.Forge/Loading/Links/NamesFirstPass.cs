@@ -573,11 +573,25 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
         return $"Wrote {written.Written:N0} links of names; {written.Joined:N0} named words a link already joined.";
     }
 
+    /// <summary>The Lord of אֲדֹנָי יְהוִה, <em>the Lord GOD</em>.</summary>
+    internal const string Adonai = "אֲדֹנָי";
+
+    /// <summary>The name, which beside <see cref="Adonai"/> is pointed to be read as God.</summary>
+    internal const string Yhwh = "יְהוָה";
+
     /// <summary>
     /// The original's names of a person, a place or a people, with whom they name: the words BHSA marks
     /// as proper nouns or gentilics, and the Greek words whose lemma is capitalised. A common noun
     /// annotated with whom it means — the sons of בְּנֵי יִשְׂרָאֵל, the king who is Ahab, the man of
     /// God who is Elisha — is translated, not written by its letters, and is left to the other steps.
+    ///
+    /// <para>
+    /// So is אֲדֹנָי standing beside יְהוָה, either way round: BHSA marks both as names of the one God,
+    /// but the pair is a title the translations render word by word — <em>Lord GOD</em>, <em>O Lord
+    /// God</em>, <em>Herr HERR</em> — and the name there is pointed to be read as God. A translation's
+    /// spelling of the name is its word for the LORD, so the name took <em>Lord</em> and אֲדֹנָי
+    /// took whatever stood before it: the Douay's <em>O</em> (PRB-1099).
+    /// </para>
     /// </summary>
     private static async Task<Dictionary<long, (IReadOnlySet<int> Families, EntityKind Kind, IReadOnlyList<int> Entities, bool Proper)>> Originals(
         NpgsqlConnection connection,
@@ -589,8 +603,12 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
         await using (var command = new NpgsqlCommand(
                          """
                          SELECT we.word_id, we.entity_id, e.kind,
-                                w.morphology ->> 'pos' IN ('nmpr', 'adjv')
-                                OR (w.lemma IS NOT NULL AND left(w.lemma, 1) <> lower(left(w.lemma, 1)))
+                                (w.morphology ->> 'pos' IN ('nmpr', 'adjv')
+                                 OR (w.lemma IS NOT NULL AND left(w.lemma, 1) <> lower(left(w.lemma, 1))))
+                                AND NOT EXISTS (
+                                    SELECT 1 FROM word o
+                                    WHERE o.verse_id = w.verse_id AND abs(o.position - w.position) = 1
+                                      AND ((w.lemma = @adonai AND o.lemma = @yhwh) OR (w.lemma = @yhwh AND o.lemma = @adonai)))
                          FROM word_entity we
                          JOIN word w ON w.id = we.word_id
                          JOIN entity e ON e.id = we.entity_id
@@ -600,6 +618,8 @@ internal sealed class NamesFirstPass(AppDbContext db, AlignmentPipeline aligner,
         {
             command.Parameters.AddWithValue("text", textId);
             command.Parameters.AddWithValue("kinds", Kinds.Select(EnumSpelling.Of).ToArray());
+            command.Parameters.AddWithValue("adonai", Adonai);
+            command.Parameters.AddWithValue("yhwh", Yhwh);
             await using var reader = await command.ExecuteReaderAsync(cancellationToken);
             while (await reader.ReadAsync(cancellationToken))
             {

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -101,6 +102,45 @@ public sealed class NamesFirstPassTests : IDisposable
 
         report.Should().Contain("3 pairs placed");
         (await _db.Links.CountAsync()).Should().Be(0);
+    }
+
+    /// <summary>
+    /// אֲדֹנָי beside יְהוִה is a title rendered word by word, <em>O Lord God</em>: both are names of the
+    /// one God to BHSA, but neither is placed, where the Douay's verses name the Lord with its O and
+    /// its Lord and the name took the Lord (PRB-1099). Joshua beside them still is.
+    /// </summary>
+    [Fact]
+    public async Task LeavesTheLordGodToTheOtherSteps()
+    {
+        var english = Corpus.Add(_db, "DRA", TextKind.Translation, "eng", (10, 2, ["Josue", "said", "Alas", "O", "Lord", "God"]));
+        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo", (10, 2, ["אמר", "יְהֹושֻׁעַ", "אֲהָהּ", "אֲדֹנָי", "יְהוִה"]));
+        _db.SaveChanges();
+        foreach (var (position, lemma) in new[] { (2, "יְהֹושֻׁעַ"), (4, NamesFirstPass.Adonai), (5, NamesFirstPass.Yhwh) })
+        {
+            var word = _db.WordAt(hebrew, 10, 2, position);
+            word.Lemma = lemma;
+            word.Morphology = JsonDocument.Parse("""{"pos":"nmpr"}""");
+        }
+
+        var joshua = Person("joshua");
+        var god = Person("yhvh");
+        _db.SaveChanges();
+        foreach (var (position, entity) in new[] { (2, joshua), (4, god), (5, god) })
+        {
+            Name(hebrew, position, entity, LinkMethod.Lexical, "a test");
+        }
+
+        foreach (var (position, entity) in new[] { (1, joshua), (4, god), (5, god) })
+        {
+            Name(english, position, entity, LinkMethod.RuleBased, Annotations.Consensus);
+        }
+
+        _db.SaveChanges();
+
+        var report = await Pass().Run("DRA", "BHSA", null, null, NamePolicy.Default, held: false, output: null, apply: true);
+
+        report.Should().Contain("Wrote 1 links of names");
+        (await Links()).Should().BeEquivalentTo([(1, 2)]);
     }
 
     private Entity Person(string slug)
