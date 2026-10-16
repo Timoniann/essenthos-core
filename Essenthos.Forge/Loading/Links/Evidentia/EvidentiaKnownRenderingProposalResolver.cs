@@ -77,7 +77,14 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
                      .Where(IsExactKnownRendering)
                      .GroupBy(candidate => candidate.Source.Token.Address))
         {
-            var (sourceCount, targetCount) = extents[verse.Key];
+            // A verse the other text has no verse at, such as the Douay's psalm titles numbered 0 against
+            // BHSA, which counts the title in verse 1, has no frame to draw the diagonal over (PRB-1098).
+            if (!extents.TryGetValue(verse.Key, out var extent))
+            {
+                continue;
+            }
+
+            var (sourceCount, targetCount) = extent;
             // Counted before the auxiliary words are set aside, so refusing one word does not move
             // the relative position of every other word in the verse.
             var groups = verse
@@ -135,7 +142,14 @@ internal sealed class EvidentiaKnownRenderingProposalResolver
                      .Where(IsExactKnownRendering)
                      .GroupBy(candidate => candidate.Source.Token.Address))
         {
-            var (sourceCount, targetCount) = extents[verse.Key];
+            // A verse the other text has no verse at, such as the Douay's psalm titles numbered 0 against
+            // BHSA, which counts the title in verse 1, has no frame to draw the diagonal over (PRB-1098).
+            if (!extents.TryGetValue(verse.Key, out var extent))
+            {
+                continue;
+            }
+
+            var (sourceCount, targetCount) = extent;
             // Counted before the auxiliary words are set aside, so refusing one word does not move
             // the relative position of every other word in the verse.
             var choices = verse

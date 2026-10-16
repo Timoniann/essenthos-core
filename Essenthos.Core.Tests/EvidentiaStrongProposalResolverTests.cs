@@ -25,6 +25,18 @@ public class EvidentiaStrongProposalResolverTests
     }
 
     [Fact]
+    public void AVerseTheOtherTextHasNoVerseAtIsLeftUnplacedNotThrown()
+    {
+        // The Douay's psalm title is its verse 0; BHSA counts the title in verse 1, so every candidate of
+        // the title reaches a neighbouring verse and the verse has no frame of its own (PRB-1098).
+        var title = new[] { KnownCandidate(1, 11, "H1", 0.65, sourceVerse: 0) };
+        var resolver = new EvidentiaKnownRenderingProposalResolver();
+
+        resolver.Resolve(title).Proposals.Should().BeEmpty();
+        resolver.ResolveGlobally(title).Proposals.Should().BeEmpty();
+    }
+
+    [Fact]
     public void StableKnownRenderingLeavesNearEqualSensesForLaterEvidence()
     {
         var resolution = new EvidentiaKnownRenderingProposalResolver().Resolve(
@@ -235,10 +247,11 @@ public class EvidentiaStrongProposalResolverTests
         string strong,
         double score,
         int observations = 10,
-        double nextShare = 0)
+        double nextShare = 0,
+        int sourceVerse = 1)
     {
         var source = new EvidentiaAnalysis(
-            new EvidentiaToken(sourceId, new EvidentiaAddress(1, 1, 1), (int)sourceId, "word", "eng"),
+            new EvidentiaToken(sourceId, new EvidentiaAddress(1, 1, sourceVerse), (int)sourceId, "word", "eng"),
             "word", "word", null, EvidentiaWordClass.Content, LanguagePackCapability.Normalisation);
         var target = new EvidentiaAnalysis(
             new EvidentiaToken(targetId, new EvidentiaAddress(1, 1, 1), (int)(targetId - 10), "דבר", "hbo", StrongNumber: strong),
