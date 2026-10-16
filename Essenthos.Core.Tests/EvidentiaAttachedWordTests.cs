@@ -952,7 +952,7 @@ public class EvidentiaAttachedWordTests
     }
 
     [Fact]
-    public void WhenAskedLetAndItsPronounGoOnTheVerbWhoseFormSaysTheWishButNotBeforeANoun()
+    public void WhenAskedLetAndItsPronounGoOnTheVerbWhoseFormSaysTheWishAndLetBeforeANounToo()
     {
         var let = English(1, Genesis122, 1, "Let", "VERB");
         var us = English(2, Genesis122, 2, "us", "PRON") with { SyntacticHead = 1, Relation = "obj" };
@@ -966,7 +966,13 @@ public class EvidentiaAttachedWordTests
         var totse = Hebrew(12, Genesis122, 2, "תֹּוצֵא", "H3318", "verb", ("tense", "impf"), ("person", "p3"), ("number", "sg"));
         var arets = Hebrew(13, Genesis122, 3, "אֶרֶץ", "H776", "subs");
 
-        AttachOf([let, earth, bring], [totse, arets], (earth, arets), (bring, totse)).Should().BeEmpty();
+        // The owner's ruling of 2026-10-16 (TSK-1095): the wish is in the verb's form whatever English's subject is,
+        // so 'Let' goes on the third person's verb and the noun keeps its own word.
+        AttachOf([let, earth, bring], [totse, arets], (earth, arets), (bring, totse)).Should().Equal((1L, 12L));
+
+        var naaseh2 = Hebrew(14, Genesis122, 2, "נַעֲשֶׂה", "H6213", "verb", ("tense", "impf"), ("person", "p1"), ("number", "pl"));
+        AttachOf([let, earth, bring], [naaseh2, arets], (earth, arets), (bring, naaseh2)).Should().BeEmpty(
+            "a verb of the first person says nothing of a noun subject's wish");
     }
 
     [Fact]

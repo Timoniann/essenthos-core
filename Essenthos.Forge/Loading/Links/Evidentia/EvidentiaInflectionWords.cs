@@ -466,8 +466,9 @@ internal static partial class EvidentiaAttachedWords
     /// <em>Let</em> and the pronoun after it (<em>Let us make</em>, <em>let him hear</em>) on the verb that says the
     /// wish in its own form: a Hebrew imperfect, whose cohortative and jussive BHSA writes as one, or a Greek
     /// hortatory subjunctive of the first person or imperative of the third, whose ending names the pronoun's person
-    /// and number. Where English's subject is a noun (<em>Let the earth bring forth</em>) nothing is placed: the keys
-    /// put <em>Let</em> with the noun.
+    /// and number. Where English's subject is a noun (<em>Let the earth bring forth</em>), <em>Let</em> goes on a verb of
+    /// the third person the same way and the noun keeps its own word: the wish is in the verb's form, though the
+    /// Berean key puts <em>Let</em> with the noun (the owner's ruling of 2026-10-16 on TSK-1095).
     /// </summary>
     private static void AttachLet(
         IReadOnlyList<EvidentiaAnalysis> words,
@@ -475,10 +476,13 @@ internal static partial class EvidentiaAttachedWords
         Dictionary<long, EvidentiaProposal> placedBySource,
         List<EvidentiaProposal> proposals)
     {
-        var pronoun = words.FirstOrDefault(other => other.Token.SyntacticHead == let.Token.Id
-            && other.Token.Relation is "obj" or "nsubj" && Class(other) == "pron" && Feature(other, "PronType") == PersonalPronounType);
+        var subjects = words.Where(other => other.Token.SyntacticHead == let.Token.Id
+            && other.Token.Relation is "obj" or "nsubj").ToList();
+        var pronoun = subjects.FirstOrDefault(other => Class(other) == "pron" && Feature(other, "PronType") == PersonalPronounType);
+        var noun = pronoun is null ? subjects.FirstOrDefault(other => Class(other) is "noun" or "propn") : null;
         var verb = words.FirstOrDefault(other => other.Token.SyntacticHead == let.Token.Id && other.Token.Relation == "xcomp");
-        if (placedBySource.ContainsKey(let.Token.Id) || pronoun is null || OwnPlacement(verb, placedBySource) is not { } head)
+        if (placedBySource.ContainsKey(let.Token.Id) || pronoun is null && noun is null
+            || OwnPlacement(verb, placedBySource) is not { } head)
         {
             return;
         }
@@ -491,13 +495,16 @@ internal static partial class EvidentiaAttachedWords
                   && string.Equals(Feature(mood, "person"), "first", StringComparison.OrdinalIgnoreCase)
                   || string.Equals(Feature(mood, "mood"), "imperative", StringComparison.OrdinalIgnoreCase)
                   && string.Equals(Feature(mood, "person"), "third", StringComparison.OrdinalIgnoreCase));
-        if (!wish || !EvidentiaPersonAgreement.Agrees(pronoun, mood, suffix: false))
+        var agrees = pronoun is not null
+            ? EvidentiaPersonAgreement.Agrees(pronoun, mood, suffix: false)
+            : EvidentiaMorphologyLabels.Feature(Feature(mood, "person"), mood.Token.Language) == "3";
+        if (!wish || !agrees)
         {
             return;
         }
 
         Propose(let, mood, head, EvidentiaAttachment.LetOfTheMood, "on the verb whose form says the wish", placedBySource, proposals);
-        if (!placedBySource.ContainsKey(pronoun.Token.Id))
+        if (pronoun is not null && !placedBySource.ContainsKey(pronoun.Token.Id))
         {
             Propose(pronoun, mood, head, EvidentiaAttachment.LetOfTheMood, "on the verb whose ending names it", placedBySource, proposals);
         }
