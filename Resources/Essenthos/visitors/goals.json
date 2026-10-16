@@ -649,6 +649,501 @@
         "jessica"
       ],
       "checks": "The same first impression in English, from a chapter rather than the home page."
+    },
+    {
+      "id": "funeral-front-words",
+      "kind": "task",
+      "language": "uk",
+      "text": "Завтра ми ховаємо побратима, і мені треба сказати слово. Хочу підібрати три-чотири короткі місця з Писання про втіху і воскресіння, скопіювати їх з номерами віршів і зберегти, щоб читати з паперу.",
+      "queries": [
+        "слова з біблії на похорон військового",
+        "що читати з біблії на похороні",
+        "біблія слова втіхи при смерті",
+        "євангеліє від івана 14 розділ"
+      ],
+      "landing": "/uk/read/john/14/1",
+      "fits": [
+        "maksym"
+      ],
+      "checks": "Lands on John 14:1. Can he take only the verses he wants (14:1-3, say) and copy them cleanly with their reference, and is he led from here to other places of consolation (1 Thessalonians 4:13-14, Revelation 21:4) without knowing them in advance?"
+    },
+    {
+      "id": "ishmael-ibrahim",
+      "kind": "explore",
+      "language": "uk",
+      "text": "Ви відкрили з пошуку сторінку про Ісмаїла на сайті, якого не знаєте. Вам цікаво, що Біблія розповідає про Ібрагіма й Ісмаїла, і чи справді історію з жертвою пов'язано з Ісааком, а не з Ісмаїлом. Роздивіться, що тут є.",
+      "queries": [
+        "ісмаїл у біблії",
+        "хто такий ісмаїл",
+        "ібрахім і ісмаїл біблія",
+        "ісмаїл син авраама"
+      ],
+      "landing": "/uk/people/ishmael",
+      "fits": [
+        "amina"
+      ],
+      "checks": "Does the Ishmael page stay with the text (Genesis 16, 17, 21, 25) in a neutral tone a Muslim reader accepts, does it lead to Genesis 22 so she can see for herself which son the text names, and does anything on the site read as an attempt to convert her?"
+    },
+    {
+      "id": "elijah-icon",
+      "kind": "task",
+      "language": "uk",
+      "text": "Пишу ікону пророка Іллі з клеймами. Треба перевірити, як ім'я пророка пишеться грецькою (для напису на іконі), і підібрати вірші для клейм: ворони біля потоку, вдова в Сарепті, вогонь на Кармелі, вогненна колісниця.",
+      "queries": [
+        "ікона пророка іллі напис",
+        "пророк ілля життя клейма ікони",
+        "пророк ілля греською",
+        "ілля пророк біблія"
+      ],
+      "landing": "/uk/people/elijah",
+      "fits": [
+        "lyubomyr"
+      ],
+      "checks": "Can he reach the Greek spelling of the name (Ἠλίας) and the Hebrew (אֵלִיָּהוּ) from the person page, find each cycle scene with its verse (1 Kings 17, 18, 2 Kings 2), and does the name appear in the Ukrainian text in a form he recognises from the Church?"
+    },
+    {
+      "id": "jezebel-novel",
+      "kind": "explore",
+      "language": "uk",
+      "text": "Ви відкрили з пошуку сторінку про Єзавель на сайті, якого не знаєте. Ви збираєте матеріал для роману про неї: хто вона була за самим текстом, а не за проповідями. Роздивіться, що тут є і чи варто це використати.",
+      "queries": [
+        "єзавель хто така",
+        "єзавель біблія",
+        "цариця єзавель історія",
+        "єзавель дружина ахава"
+      ],
+      "landing": "/uk/people/jezebel",
+      "fits": [
+        "kateryna"
+      ],
+      "checks": "Does the Jezebel page tell her story from the verses (1 Kings 16:31, 18, 21, 2 Kings 9) with their references, in a neutral register, and does it keep apart Jezebel of Thyatira (Revelation 2:20) if it mentions her; can she move on to Ahab, Elijah, Naboth and the place Samaria?"
+    },
+    {
+      "id": "tattoo-hebrew",
+      "kind": "task",
+      "language": "uk",
+      "text": "Хочу татуювання івритом: «Не бійся, бо Я з тобою» з книги Ісаї 41:10. Мені потрібен точний єврейський текст, який можна показати майстру, щоб він не наробив помилок, і щоб я розумів, що означає кожне слово.",
+      "queries": [
+        "татуювання на івриті біблія",
+        "тату цитати з біблії на івриті",
+        "не бійся бо я з тобою іврит",
+        "ісая 41 10 іврит"
+      ],
+      "landing": "/uk/read/isaiah/41/10?c=UBIO,BHSA",
+      "fits": [
+        "bohdan"
+      ],
+      "checks": "Is the Hebrew of Isaiah 41:10 shown with its vowel signs, right to left, and can he copy it without broken letters or reversed order; can he see what each word means, and does anything help him choose between the pointed and the plain consonant text for a tattoo?"
+    },
+    {
+      "id": "bible-quiz-methuselah",
+      "kind": "task",
+      "language": "uk",
+      "text": "Складаю вікторину для молодіжної групи. Перше питання: хто найстарша людина в Біблії, скільки їй було років і де це написано. Потім хочу ще кілька питань з точними відповідями і віршами.",
+      "queries": [
+        "найстарша людина в біблії",
+        "скільки жив мафусаїл",
+        "хто найстарша людина в біблії і скільки їй років",
+        "вікторина по біблії питання і відповіді"
+      ],
+      "landing": "/uk/people/methuselah",
+      "fits": [
+        "artem"
+      ],
+      "checks": "Does the page give Methuselah's age (Genesis 5:27) with the verse at once, and can he get the other record answers he needs (Noah's age at the Flood, Adam's age, Enoch) from the pages without leaving the site?"
+    },
+    {
+      "id": "baby-name-meaning",
+      "kind": "task",
+      "language": "uk",
+      "text": "Ми чекаємо дівчинку і вибираємо біблійне ім'я: Рут, Ноомі, Ганна або Естер. Хочу побачити, що означає кожне ім'я і хто ця жінка в Біблії, щоб розповісти чоловікові.",
+      "queries": [
+        "ім'я рут значення",
+        "біблійні жіночі імена та їх значення",
+        "ім'я ганна значення біблія",
+        "ім'я естер значення"
+      ],
+      "landing": "/uk/people/ruth",
+      "fits": [
+        "oksana"
+      ],
+      "checks": "Does a person page say what the name means and where that comes from; can she compare four women quickly; and does the site cope with names that are several different people (Hannah, Anna, Mary) and with Esther, whose slug is not the obvious one?"
+    },
+    {
+      "id": "wedding-1-corinthians-13",
+      "kind": "task",
+      "language": "uk",
+      "text": "Брат одружується, і я маю сказати слово на весіллі. Хочу прочитати «Гімн любові» з 1 Послання до коринтян 13 і вибрати переклад, який найкраще звучить уголос.",
+      "queries": [
+        "1 коринтян 13 українською",
+        "любов довготерпить біблія",
+        "гімн любові 1 коринтян 13",
+        "біблія про любов на весіллі"
+      ],
+      "landing": "/uk/read/1-corinthians/13?c=UBIO,UKRK",
+      "fits": [
+        "ruslan"
+      ],
+      "checks": "Lands on two Ukrainian translations side by side. Does he see they differ (Ohienko and Kulish) and how, can he read one at a time or in whole, and does anything tell him what is being compared?"
+    },
+    {
+      "id": "politician-quote-check",
+      "kind": "task",
+      "language": "uk",
+      "text": "Політик в ефірі сказав: «В Біблії написано: хто не працює, той нехай і не їсть». Мені треба перевірити, чи це справді є в Біблії, де саме, хто це говорить і про що там йдеться. Відкриваю цей сайт і пишу в його пошуку цю фразу.",
+      "queries": [
+        "хто не працює той не їсть біблія",
+        "хто не працює нехай і не їсть де написано",
+        "хто не працює той не їсть хто сказав",
+        "хто не працює той не їсть апостол павло"
+      ],
+      "landing": "/uk",
+      "typed": "хто не працює той нехай і не їсть",
+      "fits": [
+        "svitlana"
+      ],
+      "checks": "A phrase search that starts on the home page: does the site's search find 2 Thessalonians 3:10 from a quoted sentence, does she see it is Paul (not Christ) and in which letter, and does the text round it (3:6-12) let her say what the verse is about?"
+    },
+    {
+      "id": "exodus-route-geography",
+      "kind": "task",
+      "language": "uk",
+      "text": "Я вчителька географії. Для уроку хочу показати на карті маршрут виходу євреїв з Єгипту: Рамсес, Сокхот, Хорив, Кадеш, Йордан, з підписаними місцями і текстом, звідки це взято.",
+      "queries": [
+        "маршрут виходу євреїв з єгипту карта",
+        "вихід з єгипту карта",
+        "шлях ізраїлю з єгипту до ханаану",
+        "числа 33 зупинки ізраїлю"
+      ],
+      "landing": "/uk/events/theexodus",
+      "fits": [
+        "halyna"
+      ],
+      "checks": "The map shows places, not routes. Can she find Rameses, Succoth, Horeb and the Jordan on it by name (several have two entries), and does the Exodus event page lead her to Numbers 33 and to the places on the way?"
+    },
+    {
+      "id": "widower-comfort",
+      "kind": "explore",
+      "language": "uk",
+      "text": "Ви відкрили сайт про Біблію. Місяць тому померла ваша дружина, і донька порадила: «Тату, якщо буде тяжко, поглянь Біблію». Роздивіться, чи знайдете тут щось, що допоможе, і чи зможете вернутися сюди ввечері.",
+      "queries": [
+        "біблія втіха у скорботі",
+        "що говорить біблія про смерть дружини",
+        "псалом для втіхи при смерті близької людини",
+        "біблія онлайн українською"
+      ],
+      "landing": "/uk",
+      "fits": [
+        "stepan"
+      ],
+      "checks": "What does the home page tell a grieving man with almost no computer skill; can he get to a chapter to read without knowing a book or a reference; and is the first sentence he meets a comfort or a scholarly apparatus?"
+    },
+    {
+      "id": "nativity-play",
+      "kind": "task",
+      "language": "uk",
+      "text": "Готую з дітьми різдвяну виставу. Мені потрібен перелік дійових осіб і місць за Євангеліями: хто там був, де, що кажуть Лука і Матвій, щоб не змішати двох розповідей.",
+      "queries": [
+        "різдвяна історія з біблії для дітей",
+        "різдво євангеліє від луки 2",
+        "хто були волхви біблія",
+        "різдвяна історія дійові особи"
+      ],
+      "landing": "/uk/read/luke/2",
+      "fits": [
+        "natalia"
+      ],
+      "checks": "From Luke 2, can she get the cast and the places (Mary, Joseph, shepherds, Quirinius, Bethlehem, Nazareth) and then the other half of the story in Matthew 2 (magi, Herod); does the site make clear which detail belongs to which Gospel?"
+    },
+    {
+      "id": "ukrainian-bible-canada",
+      "kind": "task",
+      "language": "uk",
+      "text": "Я живу в Канаді, онуки майже не знають української. Хочу залишити їм Біблію українською в перекладі Огієнка, щоб вони читали її поруч з англійською, а я зміг її завантажити або роздрукувати. Чи можна це тут?",
+      "queries": [
+        "біблія українською завантажити pdf",
+        "біблія огієнка pdf скачати",
+        "ukrainian bible download",
+        "біблія українською і англійською паралельно"
+      ],
+      "landing": "/uk/downloads",
+      "fits": [
+        "mykhailo"
+      ],
+      "checks": "Does the downloads page offer the Ohienko text in a form a very old and unpractised user can take (and print), is the licence of that text stated, and can he get Ukrainian and English side by side on screen; can he make the text large enough?"
+    },
+    {
+      "id": "lamentations-mariupol",
+      "kind": "task",
+      "language": "uk",
+      "text": "Я втекла з Маріуполя. Хочу прочитати Плач Єремії українською, знайти слова про зруйноване місто і надіслати одне місце мамі.",
+      "queries": [
+        "плач єремії 1",
+        "як сидить самотньо місто біблія",
+        "біблія про зруйноване місто",
+        "плач єремії українською"
+      ],
+      "landing": "/uk/read/lamentations/1",
+      "fits": [
+        "tetiana"
+      ],
+      "checks": "Is the first chapter of Lamentations restful to read on a phone; can she copy one verse, or link to a single verse she can send; and does the site show in what words Ohienko or Kulish render the city's lament (Lamentations 1:1)?"
+    },
+    {
+      "id": "hebrew-root-shalom",
+      "kind": "task",
+      "language": "uk",
+      "text": "Я вчу іврит і хочу зрозуміти корінь слова «шалом»: від чого воно походить, які слова мають той самий корінь і як його перекладають у різних місцях Біблії (мир, здоров'я, добро).",
+      "queries": [
+        "шалом значення слова",
+        "шалом корінь іврит",
+        "що означає шалом в біблії",
+        "ш-л-м корінь"
+      ],
+      "landing": "/uk/strong/H7965",
+      "fits": [
+        "yulia"
+      ],
+      "checks": "On the Strong page of shalom (H7965), does she find the root and related words (shalem H8003 and others) as links, a list of verses with their different renderings, and a way into the lexicon, or does she have to go back to Wiktionary?"
+    },
+    {
+      "id": "divine-name-translations",
+      "kind": "task",
+      "language": "uk",
+      "text": "Хочу побачити в староєврейському тексті Боже ім'я, скільки разів воно стоїть і як його передають українські переклади: «Господь», «Яхве» чи «Єгова».",
+      "queries": [
+        "боже ім'я єгова в біблії",
+        "скільки разів ім'я єгова в біблії",
+        "тетраграматон в біблії",
+        "ім'я бога в староєврейському тексті"
+      ],
+      "landing": "/uk/strong/H3068",
+      "fits": [
+        "vitalii"
+      ],
+      "checks": "On H3068, can he see the count of occurrences and examples; can he put the Hebrew beside Ohienko and Kulish for one verse and see how the name is rendered, and does the site take sides on the name?"
+    },
+    {
+      "id": "song-of-songs-erotic",
+      "kind": "explore",
+      "language": "uk",
+      "text": "Ви натрапили на розділ «Пісні над піснями». Вам казали, що це еротична книга в Біблії. Подивіться, чи це так, що це за книга і чи варто її читати далі.",
+      "queries": [
+        "пісня над піснями еротика",
+        "пісня над піснями біблія",
+        "чому пісня над піснями в біблії",
+        "пісня пісень текст"
+      ],
+      "landing": "/uk/read/song-of-solomon/4",
+      "fits": [
+        "daria"
+      ],
+      "checks": "Does a first-time reader landing in chapter 4 get any sense of what the book is (a song, who speaks), does the site tell her the Hebrew words behind the images, and does it move her to read the book or to give up?"
+    },
+    {
+      "id": "expert-places-map",
+      "kind": "task",
+      "language": "uk",
+      "text": "Як експерт-географ перевірте карту і картки місць: Віфлеєм, Назарет, Єрихон (на сайті їх два), Гілгал (їх кілька), Гошен, Рамсес, Хорив, Сіон. Чи правильні позначки на карті, сучасні назви й відомості в картках, чи не змішані однойменні місця. Кожну помилку запишіть з адресою сторінки і тим, як має бути.",
+      "queries": [],
+      "landing": "/uk/map",
+      "fits": [
+        "oleksii"
+      ],
+      "checks": "Data QA on places: the map pins against the place cards, the split of same-named places (Jericho and Jericho 2, the three Gilgals, Goshen), the modern names and the verses cited."
+    },
+    {
+      "id": "twelve-tribes-board-game",
+      "kind": "task",
+      "language": "en",
+      "text": "I'm designing a board game about the twelve tribes of Israel. I need a map of where each tribe settled, the list of the twelve with their ancestors, and anything that shows what makes each one different.",
+      "queries": [
+        "twelve tribes of israel map",
+        "12 tribes of israel map bible",
+        "tribes of israel territories map",
+        "twelve tribes of israel names and meanings"
+      ],
+      "landing": "/map",
+      "fits": [
+        "dana"
+      ],
+      "checks": "The map shows places, not tribal allotments. Can she get the twelve tribes as a list (the peoples pages such as Ephraimites and Danites) with their founding sons, does the site make clear that Levi had no allotment and Joseph became two tribes, and what does she do for the map?"
+    },
+    {
+      "id": "exodus-21-laws",
+      "kind": "task",
+      "language": "en",
+      "text": "I want to read the case laws of Exodus 21 the way a lawyer would: the laws on slaves, injuries, and the goring ox. Show me the English and the Hebrew together and what the key Hebrew words in 'eye for eye' mean.",
+      "queries": [
+        "exodus 21 laws explained",
+        "exodus 21 hebrew english",
+        "eye for an eye exodus 21 24",
+        "laws of exodus 21 22 23"
+      ],
+      "landing": "/read/exodus/21",
+      "fits": [
+        "robert"
+      ],
+      "checks": "Can he read Exodus 21 with the Hebrew beside the English, reach verse 24 and the words behind 'eye for eye' with their meanings, and find the parallels (Leviticus 24:19-20, Deuteronomy 19:21) without knowing them?"
+    },
+    {
+      "id": "de-profundis-psalm",
+      "kind": "task",
+      "language": "en",
+      "text": "My choir is singing the 'De profundis' ('Out of the depths I cry to you') and in my Latin missal it is Psalm 129. I need the English text to print in the programme and to give the singers.",
+      "queries": [
+        "psalm 129 de profundis",
+        "psalm 129 out of the depths",
+        "de profundis psalm english",
+        "psalm 129 douay"
+      ],
+      "landing": "/read/psalms/129",
+      "fits": [
+        "eileen"
+      ],
+      "checks": "The psalm she means is 130 in the numbering the site uses; 129 is 'Many a time have they afflicted me'. Does she notice she has the wrong psalm, does anything on the page say that the numbering differs (Hebrew and Latin), and is she led to 130?"
+    },
+    {
+      "id": "unicorns-dinosaurs",
+      "kind": "task",
+      "language": "en",
+      "text": "My uncle says the King James Bible has unicorns, and that Behemoth in Job is a dinosaur. I want to see what the verses actually say, and what the Hebrew word is behind them.",
+      "queries": [
+        "are there unicorns in the bible",
+        "unicorn in the bible kjv",
+        "dinosaurs in the bible behemoth",
+        "bible unicorn verse"
+      ],
+      "landing": "/read/numbers/23/22?c=KJV",
+      "fits": [
+        "tyler"
+      ],
+      "checks": "Does the page show 'unicorn' in the King James (Numbers 23:22), can he reach the Hebrew word re'em (H7214) and see how other translations render it, and can he get from there to Job 40:15 (Behemoth) without being told what to think?"
+    },
+    {
+      "id": "api-for-app",
+      "kind": "task",
+      "language": "en",
+      "text": "I'm building a daily-verse app that shows the Hebrew or Greek word behind a verse. Does this site have a free API or downloadable data? What does it return, and what does the licence let me do?",
+      "queries": [
+        "free bible api",
+        "bible api json",
+        "bible api with strong's numbers",
+        "open bible data hebrew greek"
+      ],
+      "landing": "/api",
+      "fits": [
+        "priyanka"
+      ],
+      "checks": "Is the API page enough to make a first request that works, does the response carry the original-language words and Strong numbers, and is the licence of each text clear enough to decide whether she can build an app on it?"
+    },
+    {
+      "id": "bar-mitzvah-shemot",
+      "kind": "task",
+      "language": "en",
+      "text": "My bar mitzvah is in March and my portion is Shemot, the beginning of Exodus. I need the Hebrew of Exodus 1 with the vowel signs to practise, and the English next to it so I know what I'm reading.",
+      "queries": [
+        "parashat shemot hebrew text",
+        "shemot bar mitzvah torah portion",
+        "exodus 1 hebrew english",
+        "torah portion shemot hebrew with vowels"
+      ],
+      "landing": "/read/exodus/1?c=BHSA,WEB",
+      "fits": [
+        "noam"
+      ],
+      "checks": "Does the Hebrew come with its vowel signs, right to left and at a readable size; can he scroll it with the English in step; does the site mention cantillation marks, which he needs for chanting, and does it make any claim it cannot meet?"
+    },
+    {
+      "id": "expert-kings-chronology",
+      "kind": "task",
+      "language": "en",
+      "text": "As an expert check the kings' timeline: Rehoboam, Jeroboam, Hezekiah, Josiah, Zedekiah, and the falls of Samaria and Jerusalem. Verify each reign length and accession against its verse (1 Kings 14:21, 2 Kings 18:1 and 10, 2 Kings 25:1-8), the Judah-Israel synchronisms, and that the page says which chronology it follows. Record each error with the page address, the figure shown and what it should be.",
+      "queries": [],
+      "landing": "/timeline/kings",
+      "fits": [
+        "miriam"
+      ],
+      "checks": "Data QA on regnal years, synchronisms and the dates of 722 and 586 BCE; whether the timeline names the chronological scheme it uses."
+    },
+    {
+      "id": "expert-strong-lexicon",
+      "kind": "task",
+      "language": "en",
+      "text": "As an expert check the Strong and lexicon pages: H1285 (berit), H6944 (qodesh), G4102 (pistis) and G225 (aletheia). For each, check the transliteration, part of speech, root and gloss, compare the occurrence count with the concordance, and confirm that the listed verses contain the word. Record each error with the number, the page address and what should stand.",
+      "queries": [],
+      "landing": "/strong/H1285",
+      "fits": [
+        "alan"
+      ],
+      "checks": "Data QA on Strong entries: glosses, roots, counts against the concordance and the verses listed; whether the lexicon and the Strong pages agree."
+    },
+    {
+      "id": "walter-large-print",
+      "kind": "explore",
+      "language": "en",
+      "text": "Your granddaughter put a Bible website on your tablet and said it has the King James and a lot more. Your eyes are not what they were. Take a look and see whether you can read it comfortably and whether it is worth coming back to.",
+      "queries": [
+        "king james bible online large print",
+        "bible online kjv",
+        "read the king james bible online"
+      ],
+      "landing": "/",
+      "fits": [
+        "walter"
+      ],
+      "checks": "Can an eighty-year-old with poor eyesight read the home page and a chapter at a comfortable size, find the King James by name without a menu hunt, and enlarge the text; is any contrast or small print a barrier?"
+    },
+    {
+      "id": "psalm-137-song",
+      "kind": "task",
+      "language": "en",
+      "text": "I'm writing a song from 'By the rivers of Babylon'. I want the King James words of Psalm 137 and to understand what is going on: who is weeping, where is Babylon, and why does it end so violently?",
+      "queries": [
+        "psalm 137 meaning",
+        "by the rivers of babylon bible verse",
+        "psalm 137 kjv",
+        "psalm 137 explained"
+      ],
+      "landing": "/read/psalms/137",
+      "fits": [
+        "tessa"
+      ],
+      "checks": "Does the chapter page lead from the psalm to its setting (Babylon, the exile, Edom in verse 7), so the singer understands the closing verses without being preached at?"
+    },
+    {
+      "id": "jeremiah-29-11-context",
+      "kind": "explore",
+      "language": "en",
+      "text": "A friend sent you Jeremiah 29:11 ('plans to prosper you') on WhatsApp, and you have landed on that verse. A colleague told you it was written to someone else. Look around and see whether that is true.",
+      "queries": [
+        "jeremiah 29 11 meaning",
+        "jeremiah 29 11 context",
+        "jeremiah 29 11 kjv",
+        "who was jeremiah 29 11 written to"
+      ],
+      "landing": "/read/jeremiah/29/11",
+      "fits": [
+        "chidinma"
+      ],
+      "checks": "Does the verse page show the chapter around it (a letter to exiles in Babylon, the seventy years in verse 10) and lead to Jeremiah, Babylon and the exile period, and can she tell who is addressed without a sermon?"
+    },
+    {
+      "id": "flood-and-gilgamesh",
+      "kind": "task",
+      "language": "en",
+      "text": "In class we were told the Flood story is copied from the Epic of Gilgamesh. I want to read the Genesis account myself, see how long it says the Flood lasted, what year this site puts it in, and whether the site says anything about other flood stories.",
+      "queries": [
+        "genesis flood vs gilgamesh",
+        "great flood in the bible",
+        "when was the flood in the bible",
+        "flood story other cultures"
+      ],
+      "landing": "/events/beginflood",
+      "fits": [
+        "jordan"
+      ],
+      "checks": "Does the Flood event page give the dates under different chronologies and say which is which, link to the text of Genesis 6-9, and does the site (sources, about) say anything on Mesopotamian flood stories or admit it has nothing?"
     }
   ]
 }
