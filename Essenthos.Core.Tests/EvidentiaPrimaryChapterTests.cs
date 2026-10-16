@@ -146,6 +146,23 @@ public sealed class EvidentiaPrimaryChapterTests : IDisposable
     }
 
     [Fact]
+    public async Task AChapterTheOriginalDoesNotHaveIsSetAsideNotThrown()
+    {
+        // The Douay's Esther 11, one of the Vulgate's additions, against BHSA's ten chapters (PRB-1098).
+        Corpus.Add(db, "SOURCE", TextKind.Translation, "eng", (1, 1, ["God"]), (11, 1, ["Mardochaeus"]));
+        Corpus.Add(db, "TARGET", TextKind.CriticalEdition, "hbo", (1, 1, ["אלהים"]));
+        await db.SaveChangesAsync();
+        db.ChangeTracker.Clear();
+
+        var measured = await Loader().MeasureBook("SOURCE", "TARGET", 1,
+            new EvidentiaMeasurementOptions(AllowKnownRenderingEvidence: false, RecordWords: true));
+
+        measured.Chapters.Select(chapter => chapter.CanonicalChapter).Should().Equal(1);
+        measured.SkippedChapters.Should().Equal(11);
+        measured.ToString().Should().Contain("chapters set aside, which TARGET does not have: 11");
+    }
+
+    [Fact]
     public async Task AChapterWithOnlyASecondarySourcePlacementHasAnEmptyMeasurement()
     {
         var source = Corpus.Add(db, "SOURCE", TextKind.Translation, "eng", (1, 1, ["God"]));

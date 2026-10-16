@@ -680,6 +680,17 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             .Distinct()
             .OrderBy(chapter => chapter)
             .ToListAsync(cancellationToken);
+
+        // A chapter the translation has and the original does not, such as the Vulgate's additions to Esther
+        // (chapters 11-16) or Daniel's 13 and 14 against the Masoretic text, has nothing to align to: its words
+        // are a plus of the translation, set aside here rather than measured against an empty chapter (PRB-1098).
+        var originalChapters = (await db.VerseReferences.AsNoTracking()
+            .Where(reference => reference.Verse!.Text!.Slug == toSlug && reference.CanonicalBook == canonicalBook)
+            .Select(reference => reference.CanonicalChapter)
+            .Distinct()
+            .ToListAsync(cancellationToken)).ToHashSet();
+        var skipped = chapters.Where(chapter => !originalChapters.Contains(chapter)).ToList();
+        chapters = [.. chapters.Where(originalChapters.Contains)];
         var measurements = new List<EvidentiaChapterMeasurement>(chapters.Count);
         foreach (var chapter in chapters)
         {
@@ -693,7 +704,8 @@ internal sealed class EvidentiaCorpusPreviewLoader(
             options.AllowSourceStrongEvidence,
             options.AllowKnownRenderingEvidence,
             canonicalBook,
-            measurements);
+            measurements,
+            skipped);
     }
 
     /// <summary>
@@ -1437,7 +1449,8 @@ internal sealed record EvidentiaBookMeasurement(
     bool SourceStrongEvidenceEnabled,
     bool KnownRenderingEvidenceEnabled,
     int CanonicalBook,
-    IReadOnlyList<EvidentiaChapterMeasurement> Chapters)
+    IReadOnlyList<EvidentiaChapterMeasurement> Chapters,
+    IReadOnlyList<int>? SkippedChapters = null)
 {
     public int Verses => Chapters.Sum(chapter => chapter.Verses);
     public int SourceWords => Chapters.Sum(chapter => chapter.SourceWords);
@@ -1516,6 +1529,9 @@ internal sealed record EvidentiaBookMeasurement(
                (KnownRenderingEvidenceEnabled ? "; held-out learned renderings enabled" : "; dictionary-only baseline") +
                $"; canonical book {CanonicalBook}\n" +
                $"chapters: {Chapters.Count:N0}; verses: {Verses:N0}; words: source {SourceWords:N0}, target {TargetWords:N0}\n" +
+               (SkippedChapters is { Count: > 0 } skipped
+                   ? $"chapters set aside, which {To} does not have: {string.Join(", ", skipped)}\n"
+                   : string.Empty) +
                $"source local UDPipe: {annotationStatuses}; POS values: {SourcePartOfSpeechWords:N0}/{SourceWords:N0}\n" +
                $"candidate edges: {CandidateEdges:N0} ({MorphologyScoredEdges:N0} with grammatical agreement); " +
                $"gold candidate hits: {GoldPairsInCandidates:N0}/{GoldPairs:N0} ({CandidateRecall:P2}); fallback verses: {FallbackVerses:N0}\n" +
