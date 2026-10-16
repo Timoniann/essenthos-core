@@ -234,6 +234,27 @@ public class EvidentiaChunkBoundaryTests
     }
 
     [Fact]
+    public void LetBeforeANounOnTheVerbWhereTheKeyHasItOnTheNounIsTheOtherConvention()
+    {
+        // Let the earth bring forth: the key has Let the earth on הָאָרֶץ, ours puts Let on תּוֹצֵא.
+        EvidentiaToken[] english =
+        [
+            English(1, "Let", "VERB"), English(2, "the", "DET"), English(3, "earth", "NOUN", head: 1, relation: "obj"),
+            English(4, "bring", "VERB", head: 1, relation: "xcomp"),
+        ];
+        EvidentiaToken[] original =
+        [
+            Hebrew(11, "תּוֹצֵא", "H3318", "verb", [("person", "p3"), ("number", "sg"), ("gender", "f"), ("tense", "impf")]),
+            Prefix(12, "הָ", "H9009", "art"), Hebrew(13, "אָרֶץ", "H776", "subs"), Hebrew(14, "דֶּשֶׁא", "H1877", "subs"),
+        ];
+
+        Classes(english, original, [([1, 2, 3], [12, 13]), ([4], [11])], (1, 11), (4, 11))[(1, 11)]
+            .Should().Be(new EvidentiaBoundaryCase(EvidentiaBoundaryClass.OtherConvention));
+        // Where the key puts the verb of Let on another word, Let follows a head placed wrong.
+        Classes(english, original, [([1, 2, 3], [12, 13]), ([4], [14])], (1, 11), (4, 11)).Should().BeEmpty();
+    }
+
+    [Fact]
     public void EveryFigureIsQuotedByTheKeyAndWithEachClassCountedRight()
     {
         EvidentiaToken[] source = [English(1, "In", "ADP"), English(2, "those", "DET"), English(3, "days", "NOUN")];

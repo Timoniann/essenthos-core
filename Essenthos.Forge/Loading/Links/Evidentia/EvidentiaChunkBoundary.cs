@@ -90,7 +90,12 @@ internal readonly record struct EvidentiaBoundaryCount(
 ///
 /// <para><see cref="EvidentiaBoundaryClass.OtherConvention"/> is no chunk boundary but the other placement of a
 /// Hebrew <em>of</em>: on the construct noun, where every word of the key's for it is the noun written directly
-/// after the construct, past its article, or that article. It is quoted apart from the two classes above.</para>
+/// after the construct, past its article, or that article. It is quoted apart from the two classes above.
+/// So is <em>Let</em> before a noun subject on the verb whose form says the wish (<em>Let the earth bring forth</em>),
+/// where the key puts it on that noun: the owner's ruling of 2026-10-16 (TSK-1095) puts it on the verb, as
+/// <em>Let us</em> already is, and counts the key's placement as its other convention. It counts only where the
+/// key gives the verb of <em>Let</em> that same word and every word the key gives <em>Let</em> is its subject's,
+/// or a prefix; a verb the key puts elsewhere is a head placed wrong, and so is <em>Let</em> on it.</para>
 ///
 /// <para>Whatever fails one of these stays wrong: a prefix another word of the key takes, a word whose
 /// link names a word of its kind elsewhere (<em>from</em> with מִמֶּנּוּ), a conjunction reordered away
@@ -105,6 +110,8 @@ internal static class EvidentiaChunkBoundary
     public const string OtherConventionName = "other-convention";
 
     private const string OfWord = "of";
+
+    private const string LetWord = "let";
 
     private const string HebrewLanguage = "hbo";
 
@@ -163,7 +170,8 @@ internal static class EvidentiaChunkBoundary
 
             if ((reading.OnAFreePrefix(proposal.Source, proposal.Target)
                     ?? reading.OnTheWordItBelongsTo(proposal.Source, proposal.Target)
-                    ?? reading.OnTheConstruct(proposal.Source, proposal.Target))
+                    ?? reading.OnTheConstruct(proposal.Source, proposal.Target)
+                    ?? reading.OnTheVerbOfLet(proposal.Source, proposal.Target))
                 is { } found)
             {
                 cases[pair] = found;
@@ -338,6 +346,32 @@ internal static class EvidentiaChunkBoundary
             return own.Contains(verse[next].Token.Id) && own.All(governed.Contains)
                 ? new EvidentiaBoundaryCase(EvidentiaBoundaryClass.OtherConvention)
                 : null;
+        }
+
+        public EvidentiaBoundaryCase? OnTheVerbOfLet(EvidentiaAnalysis word, EvidentiaAnalysis placement)
+        {
+            if (!word.Token.Surface.Equals(LetWord, StringComparison.OrdinalIgnoreCase)
+                || EvidentiaAttachedWords.Class(placement) != "verb"
+                || !verses.TryGetValue(word.Token.Address, out var verse))
+            {
+                return null;
+            }
+
+            var dependants = verse.Where(other => other.Token.SyntacticHead == word.Token.Id).ToList();
+            var subject = dependants.FirstOrDefault(other => other.Token.Relation is "obj" or "nsubj"
+                && EvidentiaAttachedWords.Class(other) is "noun" or "propn");
+            var verb = dependants.FirstOrDefault(other => other.Token.Relation == "xcomp");
+            if (subject is null || verb is null || !key.Pairs.Contains((verb.Token.Id, placement.Token.Id)))
+            {
+                return null;
+            }
+
+            var own = keyTargets[word.Token.Id].ToList();
+            var subjects = keyTargets[subject.Token.Id].ToHashSet();
+            return own.Any(subjects.Contains)
+                && own.All(to => subjects.Contains(to) || targetById.TryGetValue(to, out var part) && EvidentiaKeySplit.IsPrefix(part))
+                    ? new EvidentiaBoundaryCase(EvidentiaBoundaryClass.OtherConvention)
+                    : null;
         }
 
         /// <summary>
