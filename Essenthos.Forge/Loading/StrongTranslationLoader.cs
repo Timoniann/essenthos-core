@@ -38,14 +38,16 @@ internal sealed record TranslationOutcome(
     int Written,
     IReadOnlyList<string> Languages,
     TranslationRefusals Refused,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int Updated = 0)
 {
     public override string ToString() =>
         AlreadyLoaded ? "every translated lexicon entry on this disk is already loaded"
         : NoTranslations ? "no translated lexicon files are on this disk, so nothing was loaded from them"
-        : $"{Written} translated entries in {string.Join(", ", Languages)}, read from {Records} " +
-          $"records over {Files} files in {Elapsed}. {Skipped} were already loaded and were left " +
-          $"alone, {Replaced} records were superseded by a later file. Refused: {Refused}.";
+        : $"{Written} translated entries written and {Updated} rewritten in "
+          + $"{string.Join(", ", Languages)}, read from {Records} records over {Files} files in "
+          + $"{Elapsed}. {Skipped} were already loaded as published and were left alone, {Replaced} "
+          + $"records were superseded by a later file. Refused: {Refused}.";
 }
 
 /// <summary>
@@ -75,7 +77,10 @@ internal sealed record TranslationOutcome(
 /// <para>
 /// **The guard is per number and per language.** Guarding on "does the table hold anything" would
 /// mean the German run could never be loaded beside the Ukrainian one, and a corrected batch could
-/// never be loaded beside an uncorrected one. A row already present is left exactly as it is.
+/// never be loaded beside an uncorrected one. A row already present is left exactly as it is while
+/// its published record says the same. A record that changed takes the row's place, prose and
+/// provenance, in the transaction that writes the new rows; a changed record the checks refuse
+/// leaves the loaded row as it was.
 /// </para>
 /// </summary>
 internal sealed partial class StrongTranslationLoader(
@@ -130,6 +135,7 @@ internal sealed partial class StrongTranslationLoader(
         int unknownNumber = 0, unknownMethod = 0, nothingSaid = 0, lostReference = 0, lostSense = 0;
         var skipped = 0;
         var rows = new List<StrongEntryTranslation>(records.Count);
+        var changed = new List<StrongEntryTranslation>();
 
         foreach (var record in records)
         {
@@ -146,7 +152,8 @@ internal sealed partial class StrongTranslationLoader(
                 continue;
             }
 
-            if (loaded.Contains((record.StrongNumber, record.Language)))
+            loaded.TryGetValue((record.StrongNumber, record.Language), out var present);
+            if (present is not null && Same(present, record))
             {
                 skipped++;
                 continue;
@@ -171,8 +178,9 @@ internal sealed partial class StrongTranslationLoader(
                 continue;
             }
 
-            rows.Add(new StrongEntryTranslation
+            (present is null ? rows : changed).Add(new StrongEntryTranslation
             {
+                Id = present?.Id ?? 0,
                 StrongNumber = record.StrongNumber,
                 Language = record.Language,
                 Definition = Text(record.Definition),
@@ -186,25 +194,26 @@ internal sealed partial class StrongTranslationLoader(
             });
         }
 
-        if (rows.Count > 0)
+        if (rows.Count > 0 || changed.Count > 0)
         {
-            await Write(rows, cancellationToken);
+            await Write(rows, changed, cancellationToken);
         }
 
         var refused = new TranslationRefusals(
             unknownNumber, unknownMethod, nothingSaid, lostReference, lostSense);
 
         var outcome = new TranslationOutcome(
-            AlreadyLoaded: rows.Count == 0 && skipped == records.Count,
+            AlreadyLoaded: rows.Count == 0 && changed.Count == 0 && skipped == records.Count,
             NoTranslations: false,
             files,
             records.Count,
             replaced,
             skipped,
             rows.Count,
-            [.. rows.Select(r => r.Language).Distinct().Order(StringComparer.Ordinal)],
+            [.. rows.Concat(changed).Select(r => r.Language).Distinct().Order(StringComparer.Ordinal)],
             refused,
-            started.Elapsed);
+            started.Elapsed,
+            changed.Count);
 
         if (refused.Total > 0)
         {
@@ -241,7 +250,7 @@ internal sealed partial class StrongTranslationLoader(
         await db.StrongEntries.AsNoTracking().ToDictionaryAsync(
             entry => entry.StrongNumber, StringComparer.Ordinal, cancellationToken);
 
-    private async Task<HashSet<(string Number, string Language)>> Loaded(
+    private async Task<Dictionary<(string Number, string Language), StrongEntryTranslation>> Loaded(
         IReadOnlyList<StrongTranslationRecord> records,
         CancellationToken cancellationToken)
     {
@@ -249,11 +258,19 @@ internal sealed partial class StrongTranslationLoader(
         var already = await db.StrongEntryTranslations
             .AsNoTracking()
             .Where(t => languages.Contains(t.Language))
-            .Select(t => new { t.StrongNumber, t.Language })
             .ToListAsync(cancellationToken);
 
-        return [.. already.Select(t => (t.StrongNumber, t.Language))];
+        return already.ToDictionary(t => (t.StrongNumber, t.Language));
     }
+
+    /// <summary>Whether the loaded row already says what the record would write.</summary>
+    private static bool Same(StrongEntryTranslation row, StrongTranslationRecord record) =>
+        row.Definition == Text(record.Definition)
+        && row.Derivation == Text(record.Derivation)
+        && row.KjvDefinition == Text(record.KjvDefinition)
+        && row.DetailedDefinition == Text(record.DetailedDefinition)
+        && row.Source == Source(record)
+        && row.Note == Doubt(record);
 
     /// <summary>
     /// Who said it, in the words a reader gets: which model, under which prompt, and on which day.
@@ -337,11 +354,60 @@ internal sealed partial class StrongTranslationLoader(
     [GeneratedRegex(@"^\s*(\d+[a-z]?)\)", RegexOptions.Multiline)]
     private static partial Regex SenseNumber();
 
+    /// <summary>
+    /// The new rows and the rewritten ones commit together or not at all, so a failed write leaves
+    /// every loaded row as it was.
+    /// </summary>
     private async Task Write(
         IReadOnlyList<StrongEntryTranslation> rows,
+        IReadOnlyList<StrongEntryTranslation> changed,
         CancellationToken cancellationToken)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
+        var owned = db.Database.CurrentTransaction is null
+            ? await db.Database.BeginTransactionAsync(cancellationToken)
+            : null;
+        try
+        {
+            foreach (var row in changed)
+            {
+                await db.StrongEntryTranslations
+                    .Where(t => t.Id == row.Id)
+                    .ExecuteUpdateAsync(set => set
+                        .SetProperty(t => t.Definition, row.Definition)
+                        .SetProperty(t => t.Derivation, row.Derivation)
+                        .SetProperty(t => t.KjvDefinition, row.KjvDefinition)
+                        .SetProperty(t => t.DetailedDefinition, row.DetailedDefinition)
+                        .SetProperty(t => t.Method, row.Method)
+                        .SetProperty(t => t.Confidence, row.Confidence)
+                        .SetProperty(t => t.Source, row.Source)
+                        .SetProperty(t => t.Note, row.Note),
+                        cancellationToken);
+            }
+
+            if (rows.Count > 0)
+            {
+                await Copy(rows, cancellationToken);
+            }
+
+            if (owned is not null)
+            {
+                await owned.CommitAsync(cancellationToken);
+            }
+        }
+        finally
+        {
+            if (owned is not null)
+            {
+                await owned.DisposeAsync();
+            }
+        }
+    }
+
+    private async Task Copy(
+        IReadOnlyList<StrongEntryTranslation> rows,
+        CancellationToken cancellationToken)
+    {
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
         var method = EnumSpelling.Of(LinkMethod.ModelReading);
 
