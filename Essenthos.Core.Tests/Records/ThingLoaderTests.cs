@@ -1,0 +1,822 @@
+﻿using Essenthos.Core.Corpus;
+using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Encyclopedia;
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging.Abstractions;
+using Xunit;
+
+namespace Essenthos.Core.Tests.Records;
+
+/// <summary>
+/// The objects and the appointed times, written from the record files, and the rules that decide
+/// which occurrences of a word are the thing.
+///
+/// <para>
+/// Asked of Postgres because what is under test is the statement that finds a number's occurrences
+/// and the one that carries them, and the case that matters most is one word meaning three things:
+/// the ark of the covenant, Joseph's coffin and a money chest are all אָרוֹן.
+/// </para>
+/// </summary>
+[Collection(WitnessDatabaseCollection.Name)]
+public sealed class ThingLoaderTests : IDisposable
+{
+    private const string Ark = "H727";
+
+    private const string Altar = "H4196";
+
+    private const string Incense = "H7004";
+
+    private const string Boaz = "H1162";
+
+    private const string Serpent = "H5175";
+
+    private readonly AppDbContext _db;
+    private readonly ThingLoader _loader;
+    private readonly Text _hebrew;
+    private readonly Text _english;
+
+    public ThingLoaderTests(WitnessDatabase database)
+    {
+        _db = database.NewContext();
+        Clear();
+        _loader = new ThingLoader(_db, NullLogger<ThingLoader>.Instance);
+
+        // Everything stands in Genesis in a test corpus, so the rules below name GEN.
+        _hebrew = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
+            (25, 10, ["ועשו", "ארון"]),
+            (25, 14, ["ארון", "ארון"]),
+            (30, 1, ["מזבח", "ה", "קטרת"]),
+            (30, 2, ["מזבח"]),
+            (50, 26, ["ארון"]),
+            (7, 21, ["בעז"]));
+        _english = Corpus.Add(_db, "KJV", TextKind.Translation, "eng",
+            (25, 10, ["an", "ark"]),
+            (7, 21, ["Boaz"]));
+        _db.SaveChanges();
+
+        Number(25, 10, 2, Ark);
+        Number(25, 14, 1, Ark);
+        Number(25, 14, 2, Ark);
+        Number(30, 1, 1, Altar);
+        Number(30, 1, 3, Incense);
+        Number(30, 2, 1, Altar);
+        Number(50, 26, 1, Ark);
+        Number(7, 21, 1, Boaz);
+        _db.SaveChanges();
+    }
+
+    public void Dispose()
+    {
+        Clear();
+        _db.Dispose();
+    }
+
+    private void Clear()
+    {
+        _db.Database.ExecuteSqlRaw("DELETE FROM text");
+        _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+    }
+
+    private void Number(int chapter, int verse, int position, string number) =>
+        _db.WordAt(_hebrew, chapter, verse, position).StrongNumber = number;
+
+    private Word Hebrew(int chapter, int verse, int position) => _db.WordAt(_hebrew, chapter, verse, position);
+
+    private async Task<Dictionary<long, string>> Named() =>
+        await _db.WordEntities.AsNoTracking()
+            .Where(a => a.Source == ThingLoader.Source)
+            .Select(a => new { a.WordId, a.Entity!.Slug })
+            .ToDictionaryAsync(a => a.WordId, a => a.Slug);
+
+    private static ThingRecord Record(
+        string slug,
+        string kind = "object",
+        IReadOnlyList<OccurrenceRule>? rules = null,
+        IReadOnlyList<ThingRelation>? related = null,
+        IReadOnlyList<ThingPassage>? passages = null,
+        IReadOnlyList<ThingTime>? times = null) =>
+        new(slug, kind, kind == "object" ? "furnishing" : "feast", slug.Replace('-', ' '),
+            new Dictionary<string, string> { ["ukr"] = "назва " + slug },
+            new Dictionary<string, IReadOnlyDictionary<string, string>>
+            {
+                ["ukr"] = new Dictionary<string, string> { ["genitive"] = "назви " + slug },
+            },
+            "a thing the test made", "Notes written from the text.",
+            [new ThingWord("ark", "אָרוֹן", "aron", Ark, null, null, null, "chest")],
+            passages, times, related, rules, "Read verse by verse.");
+
+    private static readonly OccurrenceRule TheArk = new(Ark, null, ["GEN 50:26"], null);
+
+    /// <summary>
+    /// The ark of the covenant is every אָרוֹן but the coffin Joseph was put in, and the one word that
+    /// is the coffin stays unnamed.
+    /// </summary>
+    [Fact]
+    public async Task OneWordIsNotOneThing()
+    {
+        var outcome = await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+
+        var named = await Named();
+        named[Hebrew(25, 10, 2).Id].Should().Be("ark-of-the-covenant");
+        named[Hebrew(25, 14, 1).Id].Should().Be("ark-of-the-covenant");
+        named[Hebrew(25, 14, 2).Id].Should().Be("ark-of-the-covenant");
+        named.Should().NotContainKey(Hebrew(50, 26, 1).Id, "Genesis 50:26 is Joseph's coffin");
+        outcome.Words.Should().Be(3);
+    }
+
+    /// <summary>A rule naming one occurrence of a number in a verse takes that one and not its neighbour.</summary>
+    [Fact]
+    public async Task AnOccurrenceCanBeNamedByItsPlaceInTheVerse()
+    {
+        await _loader.Load(
+            [Record("ark-of-the-covenant", rules: [new OccurrenceRule(Ark, ["GEN 25:14#2"], null, null)])],
+            CancellationToken.None);
+
+        var named = await Named();
+        named.Should().ContainKey(Hebrew(25, 14, 2).Id);
+        named.Should().NotContainKey(Hebrew(25, 14, 1).Id);
+    }
+
+    /// <summary><em>The altar of the incense</em> is the altar of incense; <em>the altar</em> alone is not.</summary>
+    [Fact]
+    public async Task ASecondWordBesideItDecidesWhichAltar()
+    {
+        await _loader.Load(
+            [Record("altar-of-incense", rules: [new OccurrenceRule(Altar, ["GEN"], null, Incense)])],
+            CancellationToken.None);
+
+        var named = await Named();
+        named.Should().ContainKey(Hebrew(30, 1, 1).Id);
+        named.Should().NotContainKey(Hebrew(30, 2, 1).Id);
+    }
+
+    private async Task ResolvedOntoTheMan()
+    {
+        var man = new Entity { Kind = EntityKind.Person, Slug = "boaz", Name = "Boaz", SourceId = "person:Boaz_1", Source = "a test" };
+        _db.Entities.Add(man);
+        _db.WordEntities.Add(new WordEntity
+        {
+            Word = Hebrew(7, 21, 1), Entity = man, Method = LinkMethod.StrongNumber, Confidence = 0.9,
+            Source = "a resolution by number",
+        });
+        await _db.SaveChangesAsync();
+    }
+
+    /// <summary>
+    /// A model read these words, and says so: the annotation is a reading, with the number the corpus
+    /// measured for one, and not a person's ruling.
+    /// </summary>
+    [Fact]
+    public async Task AnUnreviewedRuleIsAModelsReading()
+    {
+        await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+
+        var shown = await Annotations.Of(_db, Hebrew(25, 10, 2).Id, CancellationToken.None);
+        shown!.Slug.Should().Be("ark-of-the-covenant");
+        shown.Method.Should().Be("model-reading");
+        shown.Confidence.Should().Be(ThingLoader.ByReading);
+    }
+
+    /// <summary>
+    /// A word its number resolved onto the one record bearing it keeps that record: a model's reading
+    /// cannot take a name away from a resolution that needed nobody, so until the owner has reviewed
+    /// the rule the reader is still shown the man, and the reading stands on the word beside it.
+    /// </summary>
+    [Fact]
+    public async Task AReadingDoesNotOverruleTheNumbersResolution()
+    {
+        await ResolvedOntoTheMan();
+
+        await _loader.Load(
+            [Record("boaz-pillar", rules: [new OccurrenceRule(Boaz, ["GEN 7:21"], null, null)])],
+            CancellationToken.None);
+
+        (await Annotations.Of(_db, Hebrew(7, 21, 1).Id, CancellationToken.None))!.Slug.Should().Be("boaz");
+        (await _db.WordEntities.CountAsync(a => a.WordId == Hebrew(7, 21, 1).Id)).Should().Be(2);
+    }
+
+    /// <summary>Once the owner has reviewed the rule it is his ruling, and a ruling outranks the number.</summary>
+    [Fact]
+    public async Task AReviewedRuleOutranksTheNumbersResolution()
+    {
+        await ResolvedOntoTheMan();
+
+        var outcome = await _loader.Load(
+            [Record("boaz-pillar", rules: [new OccurrenceRule(Boaz, ["GEN 7:21"], null, null, "the project owner, 2026-09-24")])],
+            CancellationToken.None);
+
+        var shown = await Annotations.Of(_db, Hebrew(7, 21, 1).Id, CancellationToken.None);
+        shown!.Slug.Should().Be("boaz-pillar");
+        shown.Method.Should().Be("manual");
+        shown.Confidence.Should().BeNull();
+        shown.Source.Should().Be(ThingLoader.ReviewedSource);
+        outcome.AlreadyLoaded.Should().BeFalse();
+    }
+
+    /// <summary>A review added to the file later turns the reading into a ruling on the next boot.</summary>
+    [Fact]
+    public async Task AReviewLandsOnTheNextBoot()
+    {
+        await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+
+        var reviewed = TheArk with { Reviewed = "the project owner, 2026-09-24" };
+        var record = Record("ark-of-the-covenant", rules: [reviewed]) with { Reviewed = "the project owner, 2026-09-24" };
+        (await _loader.Load([record], CancellationToken.None)).AlreadyLoaded.Should().BeFalse();
+
+        (await Annotations.Of(_db, Hebrew(25, 10, 2).Id, CancellationToken.None))!.Method.Should().Be("manual");
+        (await _db.WordEntities.CountAsync(a => a.Source == ThingLoader.Source)).Should().Be(0);
+        var claim = await _db.EntityClaims.SingleAsync(c => c.Entity!.Slug == "ark-of-the-covenant");
+        claim.Method.Should().Be(LinkMethod.Manual);
+        claim.Confidence.Should().BeNull();
+    }
+
+    /// <summary>
+    /// A list may name words for a record it does not write: <em>the woman</em> is Eve, whom another
+    /// source holds. The words are hers, the record is left as it was, and a record the encyclopedia
+    /// does not hold is counted rather than invented.
+    /// </summary>
+    [Fact]
+    public async Task AListNamesWordsForARecordItDoesNotWrite()
+    {
+        var eve = new Entity { Kind = EntityKind.Person, Slug = "eve", Name = "Eve", SourceId = "person:Eve_1", Source = "a test" };
+        _db.Entities.Add(eve);
+        await _db.SaveChangesAsync();
+
+        var outcome = await _loader.Load(
+            ThingSet.Narratives,
+            [],
+            [
+                new ThingReference("eve", [new OccurrenceRule(Ark, ["GEN 25:14#1"], null, null)], "the woman"),
+                new ThingReference("nobody", [TheArk], "nobody"),
+            ],
+            CancellationToken.None);
+
+        var shown = await Annotations.Of(_db, Hebrew(25, 14, 1).Id, CancellationToken.None);
+        shown!.Slug.Should().Be("eve");
+        shown.Source.Should().Be(ThingSet.Narratives.Source);
+        (await Annotations.Of(_db, Hebrew(25, 14, 2).Id, CancellationToken.None)).Should().BeNull();
+        outcome.Missing.Should().Be(1, "the list names words for a record nobody holds");
+        (await _db.Entities.SingleAsync(e => e.Slug == "eve")).Source.Should().Be("a test");
+    }
+
+    /// <summary>
+    /// A place says what sort of place it is, as the gazetteer's places do, and lies in the land the
+    /// file relates it to: the garden God planted is a garden, part of Eden. A second load writes
+    /// nothing.
+    /// </summary>
+    [Fact]
+    public async Task APlaceIsWrittenWithItsSortOfPlaceAndTheLandItLiesIn()
+    {
+        var eden = new Entity { Kind = EntityKind.Place, Slug = "eden-2", Name = "Eden", SourceId = "place:Eden_1", Source = "a test" };
+        _db.Entities.Add(eden);
+        await _db.SaveChangesAsync();
+        var garden = Record("garden-of-eden", kind: "place", rules: [new OccurrenceRule(Boaz, ["GEN 7:21"], null, null)],
+            related: [new ThingRelation(ThingRelations.PartOf, "eden-2", "GEN 2:8", null)]) with { PlaceKind = "garden" };
+
+        await _loader.Load(ThingSet.Narratives, [garden], [], CancellationToken.None);
+
+        var written = await _db.Entities.SingleAsync(e => e.Slug == "garden-of-eden");
+        (written.Kind, written.PlaceKind).Should().Be((EntityKind.Place, "garden"));
+        var relation = await _db.EntityRelationships.SingleAsync(r => r.FromEntityId == written.Id);
+        (relation.ToEntityId, relation.Type).Should().Be((eden.Id, ThingRelations.PartOf));
+        (await Annotations.Of(_db, Hebrew(7, 21, 1).Id, CancellationToken.None))!.Slug.Should().Be("garden-of-eden");
+        (await _loader.Load(ThingSet.Narratives, [garden], [], CancellationToken.None)).AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>
+    /// Two lists are loaded one after the other on every boot, and neither takes back what the other
+    /// wrote: each finds its own words by its own sources.
+    /// </summary>
+    [Fact]
+    public async Task EachListKeepsToItsOwnWords()
+    {
+        await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+        var serpent = Record("serpent", kind: "person", rules: [new OccurrenceRule(Boaz, ["GEN 7:21"], null, null)]);
+        await _loader.Load(ThingSet.Narratives, [serpent], [], CancellationToken.None);
+
+        var again = await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+
+        again.AlreadyLoaded.Should().BeTrue();
+        (await Named()).Should().HaveCount(3);
+        var written = await _db.Entities.SingleAsync(e => e.Slug == "serpent");
+        written.Kind.Should().Be(EntityKind.Person);
+        written.Source.Should().Be(ThingSet.Narratives.Source);
+        (await Annotations.Of(_db, Hebrew(7, 21, 1).Id, CancellationToken.None))!.Slug.Should().Be("serpent");
+    }
+
+    /// <summary>
+    /// A common noun somebody else is named by stays off these records' names: Satan's title is
+    /// <em>the serpent</em>, and a thing under the same number would stand beside him at every
+    /// occurrence of the word.
+    /// </summary>
+    [Fact]
+    public async Task ACommonNounAPersonIsNamedByStaysHis()
+    {
+        await Lexicon(Serpent, "n-m");
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Person, Slug = "satan", Name = "Satan", SourceId = "person:Satan_1", Source = "a test",
+            Names = [new EntityName { Label = "the serpent", HebrewStrongNumber = Serpent, Kind = "title" }],
+        });
+        await _db.SaveChangesAsync();
+        var serpent = Record("bronze-serpent") with
+        {
+            Called = [new ThingWord("serpent", "נָחָשׁ", "nachash", Serpent, null, null, null, "serpent")],
+        };
+
+        await _loader.Load([serpent], CancellationToken.None);
+
+        var name = await _db.EntityNames.SingleAsync(n => n.Entity!.Slug == "bronze-serpent");
+        name.Hebrew.Should().Be("נָחָשׁ");
+        name.HebrewStrongNumber.Should().BeNull();
+    }
+
+    /// <summary>
+    /// A proper name the lexicon heads for a man and a thing alike is the thing's name too: H1162 is
+    /// Ruth's husband and the pillar, and the pillar's name carries it.
+    /// </summary>
+    [Fact]
+    public async Task AProperNameIsTheThingsAsWellAsTheMans()
+    {
+        await Lexicon(Boaz, "n-pr-m");
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Person, Slug = "boaz", Name = "Boaz", SourceId = "person:Boaz_1", Source = "a test",
+            Names = [new EntityName { Label = "Boaz", HebrewStrongNumber = Boaz, Kind = "proper name" }],
+        });
+        await _db.SaveChangesAsync();
+        var pillar = Record("boaz-pillar") with
+        {
+            Called = [new ThingWord("Boaz", "בֹּעַז", "boaz", Boaz, null, null, null, "in it is strength")],
+        };
+
+        await _loader.Load([pillar], CancellationToken.None);
+
+        var name = await _db.EntityNames.SingleAsync(n => n.Entity!.Slug == "boaz-pillar");
+        name.HebrewStrongNumber.Should().Be(Boaz);
+        (await _db.EntityNames.CountAsync(n => n.HebrewStrongNumber == Boaz)).Should().Be(2);
+    }
+
+    private async Task Lexicon(string number, string morphology)
+    {
+        var entry = await _db.StrongEntries.SingleOrDefaultAsync(s => s.StrongNumber == number);
+        if (entry is null)
+        {
+            _db.StrongEntries.Add(new StrongEntry { StrongNumber = number, Morphology = morphology });
+        }
+        else
+        {
+            entry.Morphology = morphology;
+        }
+
+        await _db.SaveChangesAsync();
+    }
+
+    /// <summary>The translations reach the record through the links, as every other annotation does.</summary>
+    [Fact]
+    public async Task TheThingTravelsToTheTranslationTheLinksReach()
+    {
+        var rendering = _db.WordAt(_english, 25, 10, 2);
+        var link = new Link
+        {
+            FromTextId = _english.Id, ToTextId = _hebrew.Id, Relation = LinkRelation.Renders,
+            Method = LinkMethod.StatedBySource, Provenance = new() { Source = "a test" },
+        };
+        _db.Links.Add(link);
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = rendering, Side = LinkSide.From });
+        _db.LinkWords.Add(new LinkWord { Link = link, Word = Hebrew(25, 10, 2), Side = LinkSide.To });
+        await _db.SaveChangesAsync();
+
+        var outcome = await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+
+        (await Named())[rendering.Id].Should().Be("ark-of-the-covenant");
+        outcome.ByText.Should().Contain(("KJV", 1));
+    }
+
+    /// <summary>A word two records' rules both claim is given to neither: the file says two things about it.</summary>
+    [Fact]
+    public async Task AWordTwoRecordsClaimIsGivenToNeither()
+    {
+        var outcome = await _loader.Load(
+            [
+                Record("ark-of-the-covenant", rules: [TheArk]),
+                Record("josephs-coffin", rules: [new OccurrenceRule(Ark, ["GEN 50:26", "GEN 25:10"], null, null)]),
+            ],
+            CancellationToken.None);
+
+        var named = await Named();
+        named.Should().NotContainKey(Hebrew(25, 10, 2).Id);
+        named[Hebrew(50, 26, 1).Id].Should().Be("josephs-coffin");
+        outcome.Refused.Should().Be(1);
+    }
+
+    /// <summary>
+    /// Everything a page draws is written: the kind and its subtype, the names in a reader's language
+    /// and their cases, the passages in order, the calendar with its verse, the relation with its verse,
+    /// and the claim saying who decided it.
+    /// </summary>
+    [Fact]
+    public async Task TheRecordCarriesWhatThePageDraws()
+    {
+        await _loader.Load(
+            [
+                Record("tabernacle"),
+                Record("ark-of-the-covenant",
+                    related: [new ThingRelation(ThingRelations.StandsIn, "tabernacle", "GEN 40:21", null)],
+                    passages: [new ThingPassage("GEN 25:10-22", PassageRoles.Key, null), new ThingPassage("GEN 37", PassageRoles.Key, null)]),
+                Record("passover", "observance",
+                    passages: [new ThingPassage("GEN 23:5-8", PassageRoles.Command, null)],
+                    times: [new ThingTime(ObservanceCycles.Yearly, 1, 14, null, "GEN 23:5", "at even")]),
+            ],
+            CancellationToken.None);
+
+        var ark = await _db.Entities
+            .Include(e => e.Names).Include(e => e.Passages).Include(e => e.Claims)
+            .SingleAsync(e => e.Slug == "ark-of-the-covenant");
+        ark.Kind.Should().Be(EntityKind.Object);
+        ark.Subtype.Should().Be("furnishing");
+        ark.Names.Should().ContainSingle().Which.HebrewStrongNumber.Should().Be(Ark);
+        ark.Passages.OrderBy(p => p.Ordinal).Select(p => (p.CanonicalChapter, p.CanonicalVerse, p.EndChapter, p.EndVerse))
+            .Should().Equal((25, 10, 25, 22), (37, null, 37, null));
+        var established = ark.Claims.Should().ContainSingle().Which;
+        established.Method.Should().Be(LinkMethod.ModelReading, "a model read these verses and no person has yet");
+        established.Confidence.Should().Be(ThingLoader.ByReading);
+
+        var forms = await _db.EntityNameForms.Where(f => f.EntityId == ark.Id)
+            .ToDictionaryAsync(f => f.GrammaticalCase, f => f.Form);
+        forms.Should().Equal(new Dictionary<string, string>
+        {
+            [GrammaticalCases.Nominative] = "назва ark-of-the-covenant",
+            [GrammaticalCases.Genitive] = "назви ark-of-the-covenant",
+        });
+
+        var relation = await _db.EntityRelationships.SingleAsync(r => r.FromEntityId == ark.Id);
+        relation.Type.Should().Be("stands-in");
+        relation.Method.Should().Be(LinkMethod.ModelReading);
+        relation.Confidence.Should().Be(ThingLoader.ByReading);
+        relation.CanonicalChapter.Should().Be(40);
+
+        var passover = await _db.Entities.Include(e => e.Times).SingleAsync(e => e.Slug == "passover");
+        passover.Kind.Should().Be(EntityKind.Observance);
+        var time = passover.Times.Should().ContainSingle().Which;
+        (time.Month, time.Day, time.CanonicalChapter, time.CanonicalVerse).Should().Be((1, 14, 23, 5));
+    }
+
+    /// <summary>
+    /// Leviticus 16 never says <em>the day of atonement</em> and is the whole of how it is kept, so the
+    /// verses of a commanding passage are the observance's references, under a source that says they
+    /// came from the passage and not from a word; a passage the file no longer lists takes them back.
+    /// </summary>
+    [Fact]
+    public async Task ACommandingPassageGivesItsVersesAsReferences()
+    {
+        var atonement = Record("day-of-atonement", "observance",
+            passages: [new ThingPassage("GEN 25", PassageRoles.Command, null), new ThingPassage("GEN 30:1", PassageRoles.Key, null)]);
+
+        await _loader.Load([atonement], CancellationToken.None);
+
+        var cited = await _db.EntityVerses
+            .Where(v => v.Source == ThingLoader.PassageSource)
+            .Select(v => new { v.CanonicalChapter, v.CanonicalVerse })
+            .ToListAsync();
+        cited.Select(v => (v.CanonicalChapter, v.CanonicalVerse)).Should().BeEquivalentTo(
+            [(25, 10), (25, 14)], "a key passage is to be read about it, and only a commanding one is cited");
+
+        (await _loader.Load([atonement], CancellationToken.None)).AlreadyLoaded.Should().BeTrue();
+
+        await _loader.Load(
+            [atonement with { Passages = [new ThingPassage("GEN 25:14", PassageRoles.Command, null)] }],
+            CancellationToken.None);
+        (await _db.EntityVerses.CountAsync(v => v.Source == ThingLoader.PassageSource)).Should().Be(1);
+    }
+
+    /// <summary>
+    /// A record's names are its names: the phrase whole, with the number of each word of it, and never
+    /// one word of the phrase as a name of its own.
+    /// </summary>
+    [Fact]
+    public async Task APhraseIsOneNameCarryingEachOfItsNumbers()
+    {
+        var atonement = Record("day-of-atonement", "observance") with
+        {
+            Called =
+            [
+                new ThingWord("Day of Atonement", "יוֹם הַכִּפֻּרִים", "yom hakkippurim", "H3117,H3725", null, null, null, null),
+                new ThingWord("Yom Kippur", null, null, null, null, null, null, null),
+            ],
+        };
+
+        await _loader.Load([atonement], CancellationToken.None);
+
+        var names = await _db.EntityNames.Where(n => n.Entity!.Slug == "day-of-atonement")
+            .Select(n => new { n.Label, n.HebrewStrongNumber }).ToListAsync();
+        names.Select(n => n.Label).Should().Equal("Day of Atonement", "Yom Kippur");
+        names[0].HebrewStrongNumber.Should().Be("H3117,H3725");
+    }
+
+    /// <summary>The startup pipeline runs on every boot, and a second boot writes nothing.</summary>
+    [Fact]
+    public async Task ASecondBootWritesNothing()
+    {
+        IReadOnlyList<ThingRecord> records =
+        [
+            Record("tabernacle"),
+            Record("ark-of-the-covenant", rules: [TheArk],
+                related: [new ThingRelation(ThingRelations.StandsIn, "tabernacle", "GEN 40:21", null)],
+                passages: [new ThingPassage("GEN 25:10-22", PassageRoles.Key, null)]),
+        ];
+        (await _loader.Load(records, CancellationToken.None)).AlreadyLoaded.Should().BeFalse();
+        var rows = await _db.WordEntities.Select(a => a.Id).OrderBy(id => id).ToListAsync();
+
+        var again = await _loader.Load(records, CancellationToken.None);
+
+        again.AlreadyLoaded.Should().BeTrue();
+        (await _db.WordEntities.Select(a => a.Id).OrderBy(id => id).ToListAsync()).Should().Equal(rows);
+    }
+
+    /// <summary>
+    /// A record as the file has it is not revised on the next boot: its names keep their rows, and a
+    /// case another pass gave its name stays, since that pass would only write it again.
+    /// </summary>
+    [Fact]
+    public async Task ASecondBootLeavesTheNamesAndTheFormsAnotherPassWrote()
+    {
+        var atonement = Record("day-of-atonement", "observance") with
+        {
+            Called =
+            [
+                new ThingWord("Day of Atonement", null, null, "H3117,H3725", null, null, null, null),
+                new ThingWord("Yom Kippur", null, null, null, null, null, null, null),
+                new ThingWord("The fast", null, null, null, null, null, null, null),
+            ],
+        };
+        await _loader.Load([atonement], CancellationToken.None);
+        var entity = await _db.Entities.SingleAsync(e => e.Slug == "day-of-atonement");
+        _db.EntityNameForms.Add(new EntityNameForm
+        {
+            EntityId = entity.Id, Language = "rus", GrammaticalCase = GrammaticalCases.Nominative, Form = "День искупления",
+            Method = LinkMethod.ModelReading, Confidence = 1, Source = "read from Scripture by a test",
+        });
+        await _db.SaveChangesAsync();
+        var names = await _db.EntityNames.Where(n => n.EntityId == entity.Id).Select(n => n.Id).OrderBy(id => id).ToListAsync();
+        _db.ChangeTracker.Clear();
+
+        var again = await _loader.Load([atonement], CancellationToken.None);
+
+        again.Revised.Should().Be(0);
+        (await _db.EntityNames.Where(n => n.EntityId == entity.Id).Select(n => n.Id).OrderBy(id => id).ToListAsync())
+            .Should().Equal(names);
+        (await _db.EntityNameForms.AnyAsync(f => f.EntityId == entity.Id && f.Language == "rus")).Should().BeTrue();
+    }
+
+    /// <summary>A rule changed in the file is what the words say on the next boot.</summary>
+    [Fact]
+    public async Task AChangedRuleIsWrittenAgain()
+    {
+        await _loader.Load([Record("ark-of-the-covenant", rules: [TheArk])], CancellationToken.None);
+
+        var outcome = await _loader.Load(
+            [Record("ark-of-the-covenant", rules: [new OccurrenceRule(Ark, ["GEN 25:10"], null, null)])],
+            CancellationToken.None);
+
+        outcome.AlreadyLoaded.Should().BeFalse();
+        (await Named()).Keys.Should().Equal(Hebrew(25, 10, 2).Id);
+    }
+
+    /// <summary>A slug another record holds is not taken over: <c>ark</c> is the eponym of the Arkites.</summary>
+    [Fact]
+    public async Task ASlugAnotherRecordHoldsIsNotTakenOver()
+    {
+        _db.Entities.Add(new Entity { Kind = EntityKind.Person, Slug = "ark", Name = "Ark", SourceId = "person:Ark_1", Source = "a test" });
+        await _db.SaveChangesAsync();
+
+        var outcome = await _loader.Load([Record("ark", rules: [TheArk])], CancellationToken.None);
+
+        outcome.Missing.Should().Be(1);
+        (await _db.Entities.SingleAsync(e => e.Slug == "ark")).Kind.Should().Be(EntityKind.Person);
+        (await Named()).Should().BeEmpty();
+    }
+}
+
+/// <summary>
+/// The record files as they ship: every one of them has to be readable before the corpus ever sees
+/// it, because a loader that throws at the forty-first record of a boot has failed every step after it.
+/// </summary>
+public sealed class ThingFileTests
+{
+    private static readonly IReadOnlySet<string> Subtypes = new HashSet<string>(StringComparer.Ordinal)
+    {
+        "furnishing", "vessel", "structure", "vestment", "monument", "weapon", "image", "implement",
+        "feast", "fast", "sabbath", "new-moon", "sacred-year", "appointed-time", "rite", "book", "tree",
+    };
+
+    private readonly IReadOnlyList<ThingRecord> _records = ThingFiles.Read();
+
+    [Fact]
+    public void EveryRecordIsWellFormed()
+    {
+        _records.Select(r => r.Slug).Should().OnlyHaveUniqueItems();
+        foreach (var record in _records)
+        {
+            record.Called.Should().NotBeNullOrEmpty($"{record.Slug} has to be findable by its names");
+            foreach (var name in record.Called!)
+            {
+                name.Label.Should().NotBeNullOrWhiteSpace();
+                foreach (var number in $"{name.HebrewStrongNumber},{name.GreekStrongNumber}".Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    number.Should().MatchRegex("^[HG][0-9]+$", $"{record.Slug}: {name.Label}");
+                }
+            }
+
+            record.Kind.Should().BeOneOf("object", "observance");
+            Subtypes.Should().Contain(record.Subtype, $"{record.Slug} has to be sorted by a subtype the pages know");
+            record.Names.Should().ContainKeys(["ukr", "deu", "rus", "spa"], $"{record.Slug} is named in every language its page is read in");
+            record.Distinguisher.Should().NotBeNullOrWhiteSpace();
+            foreach (var passage in record.Passages ?? [])
+            {
+                ScriptureSpan.TryParse(passage.Reference).Should().NotBeNull($"{record.Slug}: {passage.Reference}");
+                PassageRoles.All.Should().Contain(passage.Role);
+            }
+
+            foreach (var time in record.Times ?? [])
+            {
+                ScriptureSpan.TryParse(time.Reference).Should().NotBeNull($"{record.Slug}: {time.Reference}");
+                ObservanceCycles.All.Should().Contain(time.Cycle);
+            }
+
+            foreach (var relation in record.Related ?? [])
+            {
+                ThingRelations.All.Should().Contain(relation.Type, $"{record.Slug} relates as {relation.Type}");
+                ScriptureSpan.TryParse(relation.Reference)!.IsVerse.Should().BeTrue($"{record.Slug}: {relation.Reference}");
+            }
+
+            foreach (var rule in record.Occurrences ?? [])
+            {
+                rule.Strong.Should().MatchRegex("^[HG][0-9]+$");
+                foreach (var span in (rule.Only ?? []).Concat(rule.Except ?? []))
+                {
+                    ScriptureSpan.TryParse(span).Should().NotBeNull($"{record.Slug}: {span}");
+                }
+            }
+        }
+    }
+
+    /// <summary>The names readers search the appointed times by, in the Hebrew they are known by.</summary>
+    [Theory]
+    [InlineData("day-of-atonement", "Yom Kippur")]
+    [InlineData("day-of-trumpets", "Yom Teruah")]
+    [InlineData("feast-of-booths", "Sukkot")]
+    [InlineData("feast-of-weeks", "Shavuot")]
+    [InlineData("passover", "Pesach")]
+    [InlineData("new-moon", "Rosh Chodesh")]
+    [InlineData("sabbath", "Shabbat")]
+    [InlineData("feast-of-dedication", "Hanukkah")]
+    [InlineData("menorah", "Menorah")]
+    public void AnAppointedTimeAnswersToItsHebrewName(string slug, string name) =>
+        _records.Single(r => r.Slug == slug).Called!.Select(n => n.Label).Should().Contain(name);
+
+    /// <summary>
+    /// The narratives' records are beings, a city and a man, and each is written as the others are:
+    /// named in Ukrainian, sorted by a kind the pages know, every span readable, and no address
+    /// another list holds, since two lists writing one record would each undo the other.
+    /// </summary>
+    [Fact]
+    public void TheNarrativesFileIsWellFormed()
+    {
+        var file = ThingFiles.Read(ThingSet.Narratives);
+
+        file.Records.Select(r => r.Slug).Should().OnlyHaveUniqueItems()
+            .And.NotIntersectWith(_records.Select(r => r.Slug));
+        foreach (var record in file.Records)
+        {
+            record.Kind.Should().BeOneOf("person", "place", "people");
+            record.Names.Should().ContainKey("ukr", $"{record.Slug} needs its Ukrainian name");
+            record.Called.Should().NotBeNullOrEmpty();
+            record.Distinguisher.Should().NotBeNullOrWhiteSpace();
+            record.Occurrences.Should().NotBeNullOrEmpty($"{record.Slug} has to name its words");
+        }
+
+        foreach (var rule in file.Records.SelectMany(r => r.Occurrences ?? []).Concat(file.Refers!.SelectMany(r => r.Occurrences)))
+        {
+            rule.Strong.Should().MatchRegex("^[HG][0-9]+$");
+            foreach (var span in (rule.Only ?? []).Concat(rule.Except ?? []))
+            {
+                ScriptureSpan.TryParse(span).Should().NotBeNull(span);
+            }
+        }
+
+        file.Refers.Should().ContainSingle(r => r.Slug == "eve");
+    }
+
+    /// <summary>
+    /// The woman of Genesis 2-4 is Eve where the word refers to her, the curse on the serpent
+    /// included; the naming of what she is (2:23) and any man's wife (2:24) are not her.
+    /// </summary>
+    [Theory]
+    [InlineData(2, 22, true)]
+    [InlineData(2, 23, false)]
+    [InlineData(2, 24, false)]
+    [InlineData(2, 25, true)]
+    [InlineData(3, 15, true)]
+    [InlineData(4, 1, true)]
+    [InlineData(4, 19, false)]
+    public void TheWomanIsEveWhereTheWordRefersToHer(int chapter, int verse, bool eve) =>
+        ThingFiles.Read(ThingSet.Narratives).Refers!.Single(r => r.Slug == "eve").Occurrences
+            .Any(rule => rule.Strong == "H802" && rule.Admits(1, chapter, verse, 1)).Should().Be(eve);
+
+    /// <summary>
+    /// The garden God planted is a garden inside the land of Eden, the trees of its midst stand in it,
+    /// and the Nephilim are a people; each is named in every language its page is read in.
+    /// </summary>
+    [Fact]
+    public void TheGardenIsAPlaceInEdenAndTheNephilimAPeople()
+    {
+        var narratives = ThingFiles.Read(ThingSet.Narratives).Records.ToDictionary(r => r.Slug);
+
+        var garden = narratives["garden-of-eden"];
+        (garden.Kind, garden.PlaceKind).Should().Be(("place", "garden"));
+        garden.Related.Should().ContainSingle().Which.Should().Be(new ThingRelation(ThingRelations.PartOf, "eden-2", "GEN 2:8", null));
+        garden.Occurrences.Should().ContainSingle().Which.Admits(1, 3, 23, 1).Should().BeTrue();
+        _records.Where(r => r.Slug.StartsWith("tree-of-", StringComparison.Ordinal)).Should().HaveCount(2)
+            .And.OnlyContain(r => r.Related!.Single().To == "garden-of-eden" && r.Related!.Single().Type == ThingRelations.StandsIn);
+
+        var nephilim = narratives["nephilim"];
+        nephilim.EntityKind.Should().Be(EntityKind.People);
+        nephilim.Occurrences.Should().ContainSingle().Which.Strong.Should().Be("H5303");
+
+        foreach (var record in new[] { garden, nephilim })
+        {
+            record.Names.Should().ContainKeys(["ukr", "deu", "rus", "spa"], record.Slug);
+        }
+    }
+
+    /// <summary>
+    /// Nathanael's words are the owner's ruling, which is what lets them show him and not the record
+    /// of Bartholomew; the New Jerusalem's in Revelation 21 likewise, and not the earthly city's.
+    /// </summary>
+    [Theory]
+    [InlineData("nathanael", "G3482")]
+    [InlineData("new-jerusalem", "G2419")]
+    public void TheWordsTheOwnerRuledOnSaySo(string slug, string strong) =>
+        ThingFiles.Read(ThingSet.Narratives).Records.Single(r => r.Slug == slug).Occurrences!
+            .Should().Contain(rule => rule.Strong == strong && rule.Reviewed != null);
+
+    /// <summary>The slugs another agent's models are keyed on, which the files must keep.</summary>
+    [Fact]
+    public void TheSlugsOthersDependOnAreThere() =>
+        _records.Select(r => r.Slug).Should()
+            .Contain(["ark-of-the-covenant", "menorah", "noahs-ark", "tabernacle"]);
+}
+
+/// <summary>How a record file writes a stretch of Scripture, and what each form holds.</summary>
+public sealed class ScriptureSpanTests
+{
+    [Theory]
+    [InlineData("LEV", 3, 23, 1, true)]
+    [InlineData("LEV", 4, 1, 1, false)]
+    [InlineData("GEN 6-9", 1, 9, 29, true)]
+    [InlineData("GEN 6-9", 1, 10, 1, false)]
+    [InlineData("EXO 25:10-22", 2, 25, 22, true)]
+    [InlineData("EXO 25:10-22", 2, 25, 23, false)]
+    [InlineData("EXO 25:10-26:37", 2, 26, 1, true)]
+    [InlineData("EXO 25:10-26:37", 2, 25, 9, false)]
+    [InlineData("LEV 23", 3, 23, 44, true)]
+    [InlineData("2KI 12:10", 12, 12, 10, true)]
+    [InlineData("1SA 4", 9, 4, 11, true)]
+    [InlineData("JHN 2:20", 43, 2, 20, true)]
+    [InlineData("PHP 2:8", 50, 2, 8, true)]
+    [InlineData("SNG 1:1", 22, 1, 1, true)]
+    [InlineData("EZK 40", 26, 40, 5, true)]
+    public void ASpanHoldsTheVersesItNames(string written, int book, int chapter, int verse, bool holds) =>
+        ScriptureSpan.Parse(written).Holds(book, chapter, verse, 1).Should().Be(holds);
+
+    [Fact]
+    public void AnOccurrenceIsNamedByItsPlaceInTheVerse()
+    {
+        var second = ScriptureSpan.Parse("NUM 8:2#2");
+        second.Holds(4, 8, 2, 2).Should().BeTrue();
+        second.Holds(4, 8, 2, 1).Should().BeFalse();
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("XYZ 1:1")]
+    [InlineData("EXO 25:22-10")]
+    [InlineData("EXO 25#2")]
+    [InlineData("EXO 0:1")]
+    [InlineData("EXO 25:x")]
+    public void WhatIsNotASpanIsRefused(string written) => ScriptureSpan.TryParse(written).Should().BeNull();
+
+    [Fact]
+    public void ARuleTakesWhatItsSpansAdmit()
+    {
+        var rule = new OccurrenceRule("H4501", ["EXO 25-40", "LEV"], ["EXO 37:17#2"], null);
+        rule.Admits(2, 25, 31, 1).Should().BeTrue();
+        rule.Admits(2, 37, 17, 2).Should().BeFalse();
+        rule.Admits(2, 37, 17, 1).Should().BeTrue();
+        rule.Admits(11, 7, 49, 1).Should().BeFalse();
+    }
+}
