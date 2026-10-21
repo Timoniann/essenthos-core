@@ -8,34 +8,10 @@ $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $false
 
 function ResolveCodex {
-    if ($env:ESSENTHOS_CODEX) {
-        $override = Get-Command $env:ESSENTHOS_CODEX -CommandType Application -ErrorAction SilentlyContinue
-        if (-not $override) { throw 'Configured ESSENTHOS_CODEX does not resolve to an executable.' }
-        return $override.Source
-    }
-    $onPath = Get-Command codex -CommandType Application -ErrorAction SilentlyContinue
-    if ($onPath) { return $onPath.Source }
-
-    $userPath = [Environment]::GetEnvironmentVariable('Path','User')
-    $machinePath = [Environment]::GetEnvironmentVariable('Path','Machine')
-    foreach ($directory in (($userPath + ';' + $machinePath) -split ';')) {
-        if (-not $directory) { continue }
-        $candidate = Join-Path ([Environment]::ExpandEnvironmentVariables($directory)) 'codex.exe'
-        if (Test-Path -LiteralPath $candidate -PathType Leaf) { return $candidate }
-    }
-    if ($env:LOCALAPPDATA) {
-        $standalone = Join-Path $env:LOCALAPPDATA 'Programs/OpenAI/Codex/bin/codex.exe'
-        if (Test-Path -LiteralPath $standalone -PathType Leaf) { return $standalone }
-        $desktopBin = Join-Path $env:LOCALAPPDATA 'OpenAI/Codex/bin'
-        if (Test-Path -LiteralPath $desktopBin -PathType Container) {
-            $candidates = @(Get-ChildItem -LiteralPath $desktopBin -Directory | ForEach-Object {
-                $candidate = Join-Path $_.FullName 'codex.exe'
-                if (Test-Path -LiteralPath $candidate -PathType Leaf) { Get-Item -LiteralPath $candidate }
-            } | Sort-Object LastWriteTimeUtc -Descending)
-            if ($candidates.Count) { return $candidates[0].FullName }
-        }
-    }
-    throw 'Codex CLI was not found on PATH or in the installed user locations. Set ESSENTHOS_CODEX to a valid executable.'
+    # One rule for every script: scripts/codex_cli.py (Codex moves its CLI on each update).
+    $found = & python (Join-Path $PSScriptRoot 'codex_cli.py')
+    if ($LASTEXITCODE -ne 0 -or -not $found) { throw 'Codex CLI not found; see scripts/codex_cli.py.' }
+    return ($found | Select-Object -Last 1).Trim()
 }
 
 $repo = Split-Path $PSScriptRoot

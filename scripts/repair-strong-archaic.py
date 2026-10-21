@@ -166,7 +166,7 @@ def prepare():
     if not occurrences.exists():
         raise RuntimeError('Write inputs/occurrences.json (review/risk.py) before preparing')
     (RUN / 'code').mkdir(exist_ok=True)
-    for name in ('lexicon.py', 'lexicon-codex.py', 'repair-strong-archaic.py'):
+    for name in ('lexicon.py', 'lexicon-codex.py', 'codex_cli.py', 'repair-strong-archaic.py'):
         (RUN / 'code' / name).write_bytes((HERE / name).read_bytes())
     files = {str(path.relative_to(RUN)).replace('\\', '/'): digest(path)
              for folder in ('code', 'inputs') for path in (RUN / folder).rglob('*') if path.is_file()}

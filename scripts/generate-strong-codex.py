@@ -23,7 +23,7 @@ ROOT = MAIN / 'Resources/Essenthos/generation/strong-codex-sol61-2026-10-17-v3'
 SONNET = MAIN / 'Resources/Essenthos/generation/strong-de-2026-10-17-v3'
 EXPECTED = 14197
 MODEL = 'gpt-6.1-sol'
-CODE = ('lexicon.py', 'lexicon-codex.py', 'generate-strong-codex.py')
+CODE = ('lexicon.py', 'lexicon-codex.py', 'codex_cli.py', 'generate-strong-codex.py')
 
 
 def digest(path):

@@ -17,6 +17,15 @@ HERE = Path(__file__).resolve().parent
 spec = importlib.util.spec_from_file_location('lexicon_shared', HERE / 'lexicon.py')
 lexicon = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(lexicon)
+# Beside this file in scripts/ and in a run's frozen code/ folder alike; a run frozen before it
+# existed finds the repository's copy above it.
+_cli = next((folder / 'codex_cli.py' for folder in (HERE, *(parent / 'scripts' for parent in HERE.parents))
+             if (folder / 'codex_cli.py').is_file()), None)
+if _cli is None:
+    raise RuntimeError('codex_cli.py is missing beside lexicon-codex.py and in the repository scripts/')
+_spec = importlib.util.spec_from_file_location('codex_cli', _cli)
+codex_cli = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(codex_cli)
 MODEL = 'gpt-6.1-sol'
 TRANSPORT_VERSION = 'codex-lexicon-2'
 DISABLED = ('shell_tool', 'multi_agent', 'apps', 'plugins', 'computer_use',
@@ -54,10 +63,8 @@ DISABLED_CODE_NOTICE = ('Code Mode is unavailable because code-mode host is disa
 
 
 def executable():
-    selected = os.environ.get('ESSENTHOS_CODEX') or shutil.which('codex')
-    if not selected:
-        raise RuntimeError('Codex CLI is not available. Set ESSENTHOS_CODEX to its executable.')
-    return selected
+    # Asked again for every call: Codex moves its CLI to a new folder on each update (codex_cli.py).
+    return codex_cli.executable()
 
 
 def decode(value):

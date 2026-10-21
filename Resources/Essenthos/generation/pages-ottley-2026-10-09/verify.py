@@ -20,7 +20,10 @@ ARGS = [a for a in sys.argv[1:] if a != "--status"]
 PAGES = Path(ARGS[0]) if ARGS else next((p / ".scans" / "ottley" for p in HERE.parents if (p / ".scans" / "ottley").is_dir()), HERE.parents[4] / ".scans" / "ottley")
 OUT = HERE / "verify"; RAW = PAGES.parent / "ottley-raw"; PROGRESS = HERE / "progress.json"
 OUT.mkdir(exist_ok=True); RAW.mkdir(exist_ok=True)
-CODEX = str(max(Path.home().joinpath("AppData/Local/OpenAI/Codex/bin").glob("*/codex.exe"), key=os.path.getmtime))
+# Codex moves its CLI to a new folder on every update, so it is looked up for each call
+# (scripts/codex_cli.py), not once when the run starts.
+sys.path.insert(0, str(next(p / "scripts" for p in Path(__file__).resolve().parents if (p / "scripts" / "codex_cli.py").is_file())))
+from codex_cli import executable as codex_executable
 MODEL, EFFORT = "gpt-6.1-sol", "high"
 SCHEMA = {"type": "object", "additionalProperties": False, "required": ["items"],
           "properties": {"items": {"type": "array", "items": {
@@ -90,7 +93,7 @@ def run(page, items):
         last = RAW / f"verify-{name}.last.json"
         if last.exists():
             last.unlink()
-        args = [CODEX, "exec", "--skip-git-repo-check", "--ephemeral", "--sandbox", "read-only", "-m", MODEL,
+        args = [codex_executable(), "exec", "--skip-git-repo-check", "--ephemeral", "--sandbox", "read-only", "-m", MODEL,
                 "-c", f'model_reasoning_effort="{EFFORT}"', "--output-schema", str(HERE / "verify-schema.json"), "-o", str(last),
                 "-C", str(RAW)]
         for img in images:
