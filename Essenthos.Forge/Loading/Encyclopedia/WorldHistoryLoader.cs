@@ -569,15 +569,14 @@ internal sealed class WorldHistoryLoader(AppDbContext db, ILogger<WorldHistoryLo
 
     /// <summary>
     /// Two datasets on one event, on the row that stays. Written out rather than resolved: the
-    /// reader is told both years and which dataset holds each, and is left to weigh them.
+    /// reader is told both years and is left to weigh them.
     /// </summary>
     private static string Disagreeing(Event scripture, Item item, int year)
     {
         var held = (scripture.YearFromCreation ?? BaseReckoningZero) - BaseReckoningZero;
         var said =
-            $"Wikidata has this event as \"{item.Label}\" at {Era(year)} ({item.Uri}), where this " +
-            $"row holds {Era(held)}. One event under two datasets, {Math.Abs(year - held)} years " +
-            "apart — so world history draws no second mark for it and the disagreement is here.";
+            $"Wikidata dates it, as \"{item.Label}\", to {Era(year)} ({item.Uri}): " +
+            $"{Math.Abs(year - held)} years from {Era(held)}.";
 
         return string.IsNullOrWhiteSpace(scripture.Notes) ? said : $"{scripture.Notes} {said}";
     }

@@ -198,8 +198,9 @@ internal record EntityRefResponse(string Type, string Slug, string Name)
     public string? Source { get; init; }
 
     /// <summary>
-    /// The route or the reason, where the row carries one: the number the resolution went through,
-    /// the word it was carried from, or the sentence a reading gave for its answer.
+    /// The word this naming was carried from and the link it crossed — <em>through BHSA word 123,
+    /// linked by aligner</em> — and nothing else of the row's note. The rest was written while the
+    /// word was settled, a reading's reasoning or a ruling's why, and is never served.
     /// </summary>
     public string? Note { get; init; }
 
@@ -429,6 +430,11 @@ internal record VerseRefResponse(int BookOrdinal, string Book, string Slug, int 
 /// True when this is the other entity's relationship read backwards — Isaac is recorded as the son
 /// of Abraham, and Abraham's page shows the same row from his side.
 /// </param>
+/// <remarks>
+/// The row's stored note is not here, nor anything made from it. It was written while the row was
+/// settled — a model's reasoning, an agent's working note, the owner's remark to whoever applied his
+/// decision — and none of it was written for a reader. What the row rests on is its verses.
+/// </remarks>
 internal record EntityRelationshipResponse(
     string Type,
     string Category,
@@ -436,15 +442,8 @@ internal record EntityRelationshipResponse(
     string Name,
     string? Distinguisher,
     bool Inward,
-    VerseRefResponse? Reference,
-    string? Notes)
+    VerseRefResponse? Reference)
 {
-    /// <summary>What of <see cref="Notes"/> a reader is shown; null where none of it is for a reader.</summary>
-    public string? ReaderNote => ReaderNotes.Of(Notes);
-
-    /// <summary>The language <see cref="ReaderNote"/> is written in, so a page in another language leaves it out.</summary>
-    public string? ReaderNoteLanguage => ReaderNotes.LanguageOf(ReaderNote);
-
     /// <summary>Our own line under the counterpart's name in the language asked for, where this corpus rendered one.</summary>
     public string? LocalDistinguisher { get; init; }
 
@@ -517,16 +516,9 @@ internal record EntityRelationshipWitnessResponse(
     string Type,
     string Category,
     bool Reversed,
-    VerseRefResponse? Reference,
-    string? Notes)
+    VerseRefResponse? Reference)
 {
     public IList<VerseRefResponse>? Verses { get; init; }
-
-    /// <summary>What of <see cref="Notes"/> a reader is shown; null where none of it is for a reader.</summary>
-    public string? ReaderNote => ReaderNotes.Of(Notes);
-
-    /// <summary>The language <see cref="ReaderNote"/> is written in, so a page in another language leaves it out.</summary>
-    public string? ReaderNoteLanguage => ReaderNotes.LanguageOf(ReaderNote);
 
     public string? Method { get; init; }
 

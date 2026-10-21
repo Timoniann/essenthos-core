@@ -52,7 +52,7 @@ public sealed class DescriptorTests : IDisposable
         var descriptor = (await Read("hobab-1", "eng"))!;
         descriptor.Parts.Count(part => part.Entity?.Slug == original.Target!.Slug).Should().Be(1);
         descriptor.Claims.Count(claim => claim.Target.Slug == original.Target.Slug).Should().Be(2);
-        descriptor.Claims.Should().Contain(claim => claim.Note == "A second reading of the same relationship"
+        descriptor.Claims.Should().Contain(claim => claim.Target.Slug == original.Target.Slug
             && claim.Reference!.Chapter == 4 && claim.Reference.Verse == 11);
         (await _db.EntityDescriptors.CountAsync(d => d.EntityId == original.EntityId
             && d.TargetEntityId == original.TargetEntityId && d.Relation == original.Relation)).Should().Be(2);

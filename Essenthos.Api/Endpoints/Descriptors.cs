@@ -99,8 +99,7 @@ internal static class Descriptors
                 d.CanonicalVerse,
                 d.Method,
                 d.Confidence,
-                d.Source,
-                d.Note)
+                d.Source)
             {
                 Citation = d.Citation,
                 Witness = d.Witness,
@@ -134,8 +133,7 @@ internal static class Descriptors
                 d.CanonicalVerse,
                 d.Method,
                 d.Confidence,
-                d.Source,
-                d.Note)
+                d.Source)
             {
                 Citation = d.Citation,
                 Witness = d.Witness,
@@ -447,8 +445,7 @@ internal static class Descriptors
             first?.Verse ?? 0,
             LinkMethod.RuleBased,
             confidence,
-            source,
-            null)
+            source)
         {
             SubjectId = subject,
             SubjectSex = subjectSex,
@@ -918,7 +915,6 @@ internal static class Descriptors
             clause.Source,
             clause.Doubtful)
         {
-            Note = clause.Note,
             Verses = clause.Verses is { } verses ? [.. verses] : Relationships.Verses(clause.Citation),
             Witness = clause.Witness,
             Original = clause.Original,
@@ -1003,8 +999,7 @@ internal static class Descriptors
         int Verse,
         LinkMethod Method,
         double? Confidence,
-        string Source,
-        string? Note)
+        string Source)
     {
         public string? Citation { get; init; }
 
@@ -1140,6 +1135,10 @@ internal record DescriptorTargetResponse(
 /// How sure the method that produced this clause was, and null exactly where a person or a source
 /// stated it rather than a process concluding it.
 /// </param>
+/// <remarks>
+/// The clause's reason is not served: it is what a model, an agent or the owner wrote while settling
+/// the clause, and none of it was written for a reader.
+/// </remarks>
 internal record DescriptorClaimResponse(
     int Ordinal,
     string Relation,
@@ -1150,9 +1149,6 @@ internal record DescriptorClaimResponse(
     string Source,
     bool Doubtful)
 {
-    /// <summary>Why, in the words the row carries. Usually the model's own sentence for the clause.</summary>
-    public string? Note { get; init; }
-
     /// <summary>
     /// Every verse the clause rests on where one does not hold it — a passage, or two verses
     /// composed — the first being <see cref="Reference"/>. Null for a clause read from one verse.

@@ -481,8 +481,18 @@ internal static class Annotations
             Method = EnumSpelling.Of(claimed.Method),
             Confidence = claimed.Confidence,
             Source = claimed.Source,
-            Note = claimed.Note,
+            Note = Route(claimed.Note),
         };
+
+    /// <summary>The carrying route a note begins with, which is the whole of it a response carries; null for any other note.</summary>
+    internal static string? Route(string? note)
+    {
+        var match = note is null ? null : Routed.Match(note);
+        return match is { Success: true } ? match.Value : null;
+    }
+
+    private static readonly Regex Routed =
+        new(@"^through \S+ word \d+(?:, linked by [\w-]+)?", RegexOptions.CultureInvariant);
 
     /// <summary>What a claim about one word says, flattened for the pick.</summary>
     private sealed record Claimed(

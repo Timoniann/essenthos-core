@@ -405,12 +405,15 @@ internal record PlaceMapResponse(int Total, IList<string> Datasets, IList<PlaceP
 /// How sure, and null exactly where a person or a source stated it rather than a process concluding
 /// it — the same rule the word annotations and the links follow.
 /// </param>
+/// <remarks>
+/// The claim's note is not served: it says how the record was settled and for whose review, which
+/// is not what a reader is told.
+/// </remarks>
 internal record EntityClaimResponse(
     string Method,
     double? Confidence,
     string Source,
-    string? Dataset,
-    string? Note);
+    string? Dataset);
 
 /// <summary>
 /// Whom or where a people is named after, as a page a reader can open.
