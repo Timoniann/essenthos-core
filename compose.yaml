@@ -119,6 +119,62 @@ services:
       retries: 5
     restart: unless-stopped
 
+  # The test suite's own Postgres, so that a hundred scratch databases made and dropped in a few
+  # minutes compete neither with the corpus nor with the site reading it. Nothing in it outlives a
+  # run, so it is built for speed instead of durability: a crash loses scratch databases a rerun
+  # makes again. Same image as `db`, so the suite asks the Postgres the corpus runs on.
+  test-db:
+    image: postgres:18.1@sha256:5773fe724c49c42a7a9ca70202e11e1dff21fb7235b335a73f39297d200b73a2
+    environment:
+      POSTGRES_USER: essenthos
+      POSTGRES_DB: essenthos_core_test
+      POSTGRES_PASSWORD: ${ESSENTHOS_DB_PASSWORD:?set ESSENTHOS_DB_PASSWORD, or put it in an .env file beside this one}
+    ports:
+      - "127.0.0.1:5439:5432"
+      - "[::1]:5439:5432"
+    shm_size: 2gb
+    command:
+      - postgres
+      - -c
+      - fsync=off
+      - -c
+      - synchronous_commit=off
+      - -c
+      - full_page_writes=off
+      - -c
+      - wal_level=minimal
+      - -c
+      - max_wal_senders=0
+      - -c
+      - max_wal_size=4GB
+      - -c
+      - checkpoint_timeout=30min
+      # Up to WitnessDatabase.MostAtOnce classes hold a database at once, each with a pool of its
+      # own, and a class that loads in parallel opens several connections.
+      - -c
+      - max_connections=400
+      - -c
+      - shared_buffers=1GB
+      - -c
+      - work_mem=16MB
+      - -c
+      - maintenance_work_mem=256MB
+      - -c
+      - random_page_cost=1.1
+      # Every table of a scratch database has autovacuum off already; this spares the launcher
+      # visiting hundreds of databases that live for seconds.
+      - -c
+      - autovacuum=off
+    volumes:
+      - test-scratch:/var/lib/postgresql
+      - ./initdb:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U essenthos -d essenthos_core_test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
   api:
     build:
       context: .
@@ -144,3 +200,4 @@ volumes:
   # From 18 the image keeps its data under /var/lib/postgresql/<major>/docker, so the volume is
   # mounted one level up and a later major version can be upgraded beside the old one.
   corpus:
+  test-scratch:

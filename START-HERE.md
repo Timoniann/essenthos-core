@@ -51,6 +51,8 @@ Also worth reading before you touch a loader: **DOC-0004** (what LLM alignment c
     docker compose up -d db
     docker exec essenthos-core-db-1 psql -U essenthos -d essenthos_core -c "..."
 
+**The tests have a Postgres of their own**, the `test-db` service on **127.0.0.1:5439**: the same image with fsync and full-page writes off, since every database on it is a scratch copy a run makes and drops. Start it with `docker compose up -d test-db` before `dotnet test`; `Database__ConnectionString` points the suite at another server. It takes the password from the same `.env` and user secret as `db`.
+
 The password is in two untracked places that must agree: `.env` beside `compose.yaml` (`ESSENTHOS_DB_PASSWORD`, which the container is created with) and the `essenthos-core` user secrets (`Database:Password`, which every project reads). The container only takes it on its first start; changing it later is `ALTER ROLE`, not an edit to `.env`.
 
 **Ports:** the old API holds 5277, the web client 5278, this API **5279** and its database **5437**.

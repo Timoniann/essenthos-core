@@ -95,7 +95,7 @@ public sealed class BookmarkAllowanceTests : IAsyncLifetime
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(new Dictionary<string, string?>
             {
-                [DatabaseConnection.ConnectionStringKey] = "Host=localhost;Port=5437;Database=postgres;Username=essenthos",
+                [DatabaseConnection.ConnectionStringKey] = $"{WitnessDatabase.TestServer};Database=postgres",
             })
             .AddUserSecrets(typeof(BookmarkAllowanceTests).Assembly)
             .AddEnvironmentVariables()

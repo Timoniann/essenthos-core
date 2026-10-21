@@ -51,14 +51,18 @@ public sealed class WitnessDatabase : IAsyncLifetime
     private static readonly string TemplateName = $"{RunPrefix}template";
 
     /// <summary>
-    /// How many classes hold a database at once. Each keeps a few connections open on a Postgres
-    /// that allows a hundred and serves the site beside the suite, and the classes that load whole
-    /// texts are bound by the database's cores rather than the runner's threads.
+    /// How many classes hold a database at once. Each keeps a few connections open, and the classes
+    /// that load whole texts are bound by the database's cores rather than the runner's threads.
     /// </summary>
     private const int MostAtOnce = 16;
 
-    private const string DefaultConnectionString =
-        "Host=localhost;Port=5437;Database=essenthos_core_test;Username=essenthos";
+    /// <summary>
+    /// The suite's own Postgres, the compose service <c>test-db</c>: durability off, and nothing on
+    /// it a reader is waiting for. <c>Database__ConnectionString</c> points the suite elsewhere.
+    /// </summary>
+    public const string TestServer = "Host=localhost;Port=5439;Username=essenthos";
+
+    private const string DefaultConnectionString = $"{TestServer};Database=essenthos_core_test";
 
     private static readonly SemaphoreSlim Slots = new(MostAtOnce);
 
@@ -69,6 +73,7 @@ public sealed class WitnessDatabase : IAsyncLifetime
     private Server? _server;
     private string _name = string.Empty;
     private string _connectionString = string.Empty;
+    private Task<object>? _shared;
 
     /// <summary>
     /// Copies the template for this class: a fraction of a second, where migrating takes seconds.
@@ -197,6 +202,11 @@ public sealed class WitnessDatabase : IAsyncLifetime
             return;
         }
 
+        if (_shared is { IsCompletedSuccessfully: true, Result: IDisposable shared })
+        {
+            shared.Dispose();
+        }
+
         try
         {
             // The pool still holds open connections to the database about to be dropped.
@@ -210,6 +220,20 @@ public sealed class WitnessDatabase : IAsyncLifetime
     }
 
     public AppDbContext NewContext() => NewContext(_connectionString);
+
+    /// <summary>
+    /// What a class makes once and every one of its tests reads: a load its tests only look at is
+    /// loaded for the first test and read by the rest, rather than loaded again for each. The class's
+    /// database is its own and its tests run one after another, so nothing else writes in between.
+    /// It is disposed with the database.
+    /// </summary>
+    public async Task<T> Shared<T>(Func<Task<T>> make) where T : class
+    {
+        _shared ??= Make();
+        return (T)await _shared;
+
+        async Task<object> Make() => await make();
+    }
 
     private static AppDbContext NewContext(string connectionString) =>
         new(new DbContextOptionsBuilder<AppDbContext>().UseNpgsql(connectionString).Options);
