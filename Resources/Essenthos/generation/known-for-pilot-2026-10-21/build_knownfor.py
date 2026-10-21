@@ -1,11 +1,15 @@
-"""Writes Essenthos.Forge/Loading/Encyclopedia/KnownFor.json from the pilot and the German and Spanish renderings."""
+"""Writes Essenthos.Forge/Loading/Encyclopedia/KnownFor.json from the pilot and the German and Spanish renderings.
+
+Usage: build_knownfor.py <pilot.json> <renderings.json> <out> [<people.json> <renderings.json>]...
+Each further pair adds a later batch of people, written in the pilot's shape."""
 import json
 import re
 import sys
 
-pilot_path, renderings_path, out_path = sys.argv[1:4]
-pilot = json.load(open(pilot_path, encoding="utf-8"))
-renderings = json.load(open(renderings_path, encoding="utf-8")) if renderings_path != "-" else {}
+out_path = sys.argv[3]
+batches = [sys.argv[1:3]] + [sys.argv[i:i + 2] for i in range(4, len(sys.argv), 2)]
+if any(len(pair) != 2 for pair in batches):
+    raise SystemExit("every batch needs its people file and its renderings file ('-' for none)")
 
 BOOKED = re.compile(r"^([1-4]?[A-Z]{2,3}) (\d+(?::\d+)?(?:-\d+(?::\d+)?)?)$")
 BARE = re.compile(r"^\d+(?::\d+)?(?:-\d+(?::\d+)?)?$")
@@ -27,7 +31,12 @@ def spans(written):
 
 
 records = []
-for person in pilot["people"]:
+people = []
+for people_path, renderings_path in batches:
+    renderings = json.load(open(renderings_path, encoding="utf-8")) if renderings_path != "-" else {}
+    people += [(person, renderings) for person in json.load(open(people_path, encoding="utf-8"))["people"]]
+
+for person, renderings in people:
     clauses = []
     for at, clause in enumerate(person["known_for"]["clauses"]):
         rendered = renderings.get(person["slug"], [])
@@ -43,6 +52,8 @@ for person in pilot["people"]:
     if len(renderings.get(person["slug"], [])) not in (0, len(clauses)):
         raise SystemExit(f"{person['slug']}: {len(renderings[person['slug']])} renderings for {len(clauses)} clauses")
     records.append({"slug": person["slug"], "clauses": clauses})
+if len({r["slug"] for r in records}) != len(records):
+    raise SystemExit("a person appears in two batches")
 
 source = (
     "Essenthos, what a person is known for, written from the person's verses in the King James Version "

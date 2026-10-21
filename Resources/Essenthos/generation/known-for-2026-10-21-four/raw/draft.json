@@ -1,0 +1,26 @@
+{
+"adam": [
+ ["was formed by God from the dust of the ground and put in the garden of Eden", "Бог створив його з пороху землі й поселив у саду в Едені", "GEN 2:7-8, 2:15"],
+ ["gave names to every living creature", "дав імена всім живим істотам", "GEN 2:19-20"],
+ ["ate from the tree God had forbidden him and was driven out of the garden", "скуштував плоду з дерева, від якого Бог заборонив йому їсти, і був вигнаний із саду", "GEN 2:16-17, 3:6, 3:17-19, 3:22-24"]
+],
+"eve": [
+ ["was made by God from a rib taken from Adam", "Бог створив її з ребра, взятого в Адама", "GEN 2:21-23"],
+ ["was beguiled by the serpent, ate the fruit of the forbidden tree and gave it to Adam", "була спокушена змієм, скуштувала плоду забороненого дерева й дала його Адамові", "GEN 3:1-6, 3:13"],
+ ["bore Cain, Abel and Seth", "народила Каїна, Авеля і Сифа", "GEN 4:1-2, 4:25"]
+],
+"jesus": [
+ ["was born of the virgin Mary in Bethlehem", "народився від діви Марії у Віфлеємі", "MAT 1:18-25, 2:1, LUK 1:26-27, 2:4-7"],
+ ["was baptized by John in the Jordan", "охрестився від Івана в Йордані", "MAT 3:13-17"],
+ ["preached the gospel of the kingdom and healed the sick", "проповідував Євангеліє Царства й уздоровляв хворих", "MAT 4:23, 9:35"],
+ ["was handed over by Pilate and crucified, died and was buried", "був виданий Пилатом і розп'ятий, помер і був похований", "MAT 27:26, 27:35, 27:50, 27:57-60"],
+ ["rose from the dead on the third day and was taken up into heaven", "на третій день воскрес із мертвих і був узятий на небо", "LUK 24:1-7, 24:46, 24:50-51, ACT 1:9-11"]
+],
+"yhvh": [
+ ["created the heaven and the earth, and made man in his own image", "створив небо й землю, а людину створив на свій образ", "GEN 1:1, 1:26-27"],
+ ["brought the Flood upon the earth, then made a covenant with Noah never again to destroy it by a flood", "навів на землю потоп, а потім уклав із Ноєм заповіт, що потоп більше не знищить її", "GEN 6:17, 7:17-23, 9:8-17"],
+ ["called Abraham and promised him a land and offspring as many as the stars", "покликав Авраама й пообіцяв йому землю та нащадків, численних, як зорі", "GEN 12:1-7, 15:5-7"],
+ ["brought Israel out of Egypt and gave them his law on Mount Sinai", "вивів Ізраїля з Єгипту й дав йому свій Закон на горі Сінай", "EXO 12:51, 20:1-17, 31:18"],
+ ["sent his only begotten Son into the world", "послав у світ свого Однородженого Сина", "JHN 3:16-17, 1JN 4:9"]
+]
+}

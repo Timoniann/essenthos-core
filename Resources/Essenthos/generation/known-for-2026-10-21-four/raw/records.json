@@ -1,0 +1,42 @@
+{
+ "adam": {
+  "slug": "adam",
+  "name_en": "Adam",
+  "name_uk": "Адам",
+  "sex": "male",
+  "distinguisher": null,
+  "references": 37,
+  "summary_en": "husband of Eve, father of Seth, Cain, Abel and other sons and daughters, ancestor of Jesus, David, Jacob, Moses and others",
+  "summary_uk": "чоловік Єви, батько Сифа, Каїна, Авеля та інших синів і дочок, предок Ісуса, Давида, Якова, Мойсея та інших"
+ },
+ "eve": {
+  "slug": "eve",
+  "name_en": "Eve",
+  "name_uk": "Єва",
+  "sex": "female",
+  "distinguisher": "first woman, created from Adam (GEN 2:22)",
+  "references": 20,
+  "summary_en": "wife of Adam, mother of Cain, Abel and Seth, ancestor of Jesus, David, Jacob, Moses and others",
+  "summary_uk": "дружина Адама, мати Каїна, Авеля та Сифа, прамати Ісуса, Давида, Якова, Мойсея та інших"
+ },
+ "jesus": {
+  "slug": "jesus",
+  "name_en": "Jesus",
+  "name_uk": "Ісус",
+  "sex": "male",
+  "distinguisher": "of Nazareth",
+  "references": 1483,
+  "summary_en": "prophet to Israelites, firstborn son of Mary, son of Joseph, brother of four brothers, descendant of David and Abraham, from Bethlehem, teacher of the Twelve and the Seventy",
+  "summary_uk": "пророк ізраїльтян, первісток Марії, син Йосипа, брат чотирьох братів, нащадок Давида та Авраама, з Віфлеєма, учитель Дванадцятьох та Сімдесятьох"
+ },
+ "yhvh": {
+  "slug": "yhvh",
+  "name_en": "YHVH",
+  "name_uk": "Господь",
+  "sex": "male",
+  "distinguisher": "the God of Israel",
+  "references": 6228,
+  "summary_en": "creator of Adam",
+  "summary_uk": "творець Адама"
+ }
+}

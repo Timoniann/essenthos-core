@@ -241,9 +241,9 @@ public sealed class KnownForLoaderTests : IDisposable
     {
         var file = KnownForLoader.Read();
 
-        file.Records.Should().HaveCount(30);
+        file.Records.Should().HaveCount(34);
         file.Records.Select(r => r.Slug).Should().OnlyHaveUniqueItems();
-        file.Records.SelectMany(r => r.Clauses).Should().HaveCount(76).And.AllSatisfy(clause =>
+        file.Records.SelectMany(r => r.Clauses).Should().HaveCount(92).And.AllSatisfy(clause =>
         {
             clause.Languages().Select(one => one.Language).Should().Equal("ukr", "deu", "spa");
             clause.References.Should().NotBeEmpty().And.AllSatisfy(reference =>

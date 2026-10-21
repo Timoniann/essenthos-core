@@ -1,0 +1,278 @@
+{
+ "batch": "FTR-1109 known for: Adam, Eve, Jesus and God",
+ "date": "2026-10-21",
+ "first_reading": "claude-opus-5-5 (Claude Code agent): read the KJV verses (live API, read-only) and wrote the clauses with references, English and Ukrainian, after the pilot's method",
+ "second_reading": "a separate claude-opus-5-5 agent with no part in the first reading: checked every clause against the KJV text of its cited verses; verdicts in raw/check.json",
+ "status": "model-produced, unreviewed by the owner",
+ "counts": {
+  "people": 4,
+  "clauses": 16,
+  "second_reading": {
+   "checked": 16,
+   "right": 13,
+   "fix": 3
+  }
+ },
+ "owner_rulings": [
+  {
+   "at": "2026-10-21",
+   "text": "«Також зроби для Адама та Єви також описи. І для Ісуса і для Бога, якшо не важко.»"
+  },
+  {
+   "at": "2026-10-21",
+   "text": "no minor details; more than three clauses allowed but not overdone"
+  }
+ ],
+ "people": [
+  {
+   "slug": "adam",
+   "name_en": "Adam",
+   "name_uk": "Адам",
+   "verses": 37,
+   "distinguisher": null,
+   "current_summary": {
+    "en": "husband of Eve, father of Seth, Cain, Abel and other sons and daughters, ancestor of Jesus, David, Jacob, Moses and others",
+    "uk": "чоловік Єви, батько Сифа, Каїна, Авеля та інших синів і дочок, предок Ісуса, Давида, Якова, Мойсея та інших"
+   },
+   "known_for": {
+    "en": "was formed by God from the dust of the ground and put in the garden of Eden (GEN 2:7-8, 2:15); gave names to every living creature (GEN 2:19-20); ate from the tree God had forbidden him and was driven out of the garden (GEN 2:16-17, 3:6, 3:17-19, 3:22-24)",
+    "uk": "був створений Богом із пороху землі й поселений у саду в Едені (GEN 2:7-8, 2:15); дав імена всім живим істотам (GEN 2:19-20); скуштував плоду з дерева, від якого Бог заборонив йому їсти, і був вигнаний із саду (GEN 2:16-17, 3:6, 3:17-19, 3:22-24)",
+    "length_en": 186,
+    "length_uk": 177,
+    "clauses": [
+     {
+      "en": "was formed by God from the dust of the ground and put in the garden of Eden",
+      "uk": "був створений Богом із пороху землі й поселений у саду в Едені",
+      "refs": "GEN 2:7-8, 2:15",
+      "check": {
+       "verdict": "fix",
+       "why": "The English is right (GEN 2:7-8, 2:15) and keeps Adam as the implied subject in the passive. The Ukrainian switches to the active «Бог створив його», which makes God the subject of a clause in Adam's own line, unlike his other clauses («дав імена…», «скуштував…»). The passive matches the English and the line."
+      },
+      "first": {
+       "uk": "Бог створив його з пороху землі й поселив у саду в Едені"
+      }
+     },
+     {
+      "en": "gave names to every living creature",
+      "uk": "дав імена всім живим істотам",
+      "refs": "GEN 2:19-20",
+      "check": {
+       "verdict": "right",
+       "why": "GEN 2:19 «whatsoever Adam called every living creature, that was the name thereof» and 2:20."
+      }
+     },
+     {
+      "en": "ate from the tree God had forbidden him and was driven out of the garden",
+      "uk": "скуштував плоду з дерева, від якого Бог заборонив йому їсти, і був вигнаний із саду",
+      "refs": "GEN 2:16-17, 3:6, 3:17-19, 3:22-24",
+      "check": {
+       "verdict": "right",
+       "why": "The prohibition is GEN 2:16-17, the eating is 3:6 and 3:17, and the expulsion is 3:23-24. 3:18-19 and 3:22 add nothing the clause states, but they do no harm."
+      }
+     }
+    ]
+   },
+   "selection_note": "The three clauses cover what a reader names. If a fourth is wanted, the one that is missing is his fatherhood: «fathered Cain, Abel and Seth» (GEN 4:1-2, 4:25, 5:3). That mirrors Eve's clause 3."
+  },
+  {
+   "slug": "eve",
+   "name_en": "Eve",
+   "name_uk": "Єва",
+   "verses": 20,
+   "distinguisher": "first woman, created from Adam (GEN 2:22)",
+   "current_summary": {
+    "en": "wife of Adam, mother of Cain, Abel and Seth, ancestor of Jesus, David, Jacob, Moses and others",
+    "uk": "дружина Адама, мати Каїна, Авеля та Сифа, прамати Ісуса, Давида, Якова, Мойсея та інших"
+   },
+   "known_for": {
+    "en": "was made by God from a rib taken from Adam (GEN 2:21-23); was beguiled by the serpent, ate the fruit of the forbidden tree and gave it to Adam (GEN 3:1-6, 3:13); bore Cain, Abel and Seth (GEN 4:1-2, 4:25)",
+    "uk": "була створена Богом із ребра, взятого в Адама (GEN 2:21-23); була спокушена змієм, скуштувала плоду забороненого дерева й дала його Адамові (GEN 3:1-6, 3:13); народила Каїна, Авеля і Сифа (GEN 4:1-2, 4:25)",
+    "length_en": 154,
+    "length_uk": 155,
+    "clauses": [
+     {
+      "en": "was made by God from a rib taken from Adam",
+      "uk": "була створена Богом із ребра, взятого в Адама",
+      "refs": "GEN 2:21-23",
+      "check": {
+       "verdict": "fix",
+       "why": "The English is right (GEN 2:21-22). The Ukrainian makes God the subject («Бог створив її») where the line's implied subject is Eve. The passive also carries the feminine agreement the rulings ask for."
+      },
+      "first": {
+       "uk": "Бог створив її з ребра, взятого в Адама"
+      }
+     },
+     {
+      "en": "was beguiled by the serpent, ate the fruit of the forbidden tree and gave it to Adam",
+      "uk": "була спокушена змієм, скуштувала плоду забороненого дерева й дала його Адамові",
+      "refs": "GEN 3:1-6, 3:13",
+      "check": {
+       "verdict": "right",
+       "why": "GEN 3:6 (took, did eat, gave unto her husband) and 3:13 «The serpent beguiled me». «спокушена» matches Ogienko's «Змій спокусив мене» (3:13)."
+      }
+     },
+     {
+      "en": "bore Cain, Abel and Seth",
+      "uk": "народила Каїна, Авеля і Сифа",
+      "refs": "GEN 4:1-2, 4:25",
+      "check": {
+       "verdict": "right",
+       "why": "GEN 4:1, 4:2, 4:25."
+      }
+     }
+    ]
+   },
+   "selection_note": "Complete as it stands."
+  },
+  {
+   "slug": "jesus",
+   "name_en": "Jesus",
+   "name_uk": "Ісус",
+   "verses": 1483,
+   "distinguisher": "of Nazareth",
+   "current_summary": {
+    "en": "prophet to Israelites, firstborn son of Mary, son of Joseph, brother of four brothers, descendant of David and Abraham, from Bethlehem, teacher of the Twelve and the Seventy",
+    "uk": "пророк ізраїльтян, первісток Марії, син Йосипа, брат чотирьох братів, нащадок Давида та Авраама, з Віфлеєма, учитель Дванадцятьох та Сімдесятьох"
+   },
+   "known_for": {
+    "en": "was born of the virgin Mary in Bethlehem (MAT 1:18-25, 2:1, LUK 1:26-27, 2:4-7); was baptized by John in the Jordan (MAT 3:13-17, MRK 1:9); preached the gospel of the kingdom and healed the sick (MAT 4:23, 9:35); was handed over by Pilate and crucified, died and was buried (MAT 27:24-26, 27:35, 27:50, 27:57-60, MRK 15:15); rose from the dead on the third day and was taken up into heaven (LUK 24:1-7, 24:46, 24:50-51, ACT 1:9-11)",
+    "uk": "народився від діви Марії у Віфлеємі (MAT 1:18-25, 2:1, LUK 1:26-27, 2:4-7); охрестився від Івана в Йордані (MAT 3:13-17, MRK 1:9); проповідував Євангеліє Царства й уздоровляв хворих (MAT 4:23, 9:35); був виданий Пилатом і розп'ятий, помер і був похований (MAT 27:24-26, 27:35, 27:50, 27:57-60, MRK 15:15); на третій день воскрес із мертвих і був узятий на небо (LUK 24:1-7, 24:46, 24:50-51, ACT 1:9-11)",
+    "length_en": 260,
+    "length_uk": 231,
+    "clauses": [
+     {
+      "en": "was born of the virgin Mary in Bethlehem",
+      "uk": "народився від діви Марії у Віфлеємі",
+      "refs": "MAT 1:18-25, 2:1, LUK 1:26-27, 2:4-7",
+      "check": {
+       "verdict": "right",
+       "why": "Virgin: LUK 1:27, MAT 1:23. Mary: MAT 1:18, LUK 1:27. Bethlehem: MAT 2:1, LUK 2:4-7."
+      }
+     },
+     {
+      "en": "was baptized by John in the Jordan",
+      "uk": "охрестився від Івана в Йордані",
+      "refs": "MAT 3:13-17, MRK 1:9",
+      "check": {
+       "verdict": "right",
+       "why": "MAT 3:13 and 3:16 support it. MRK 1:9 «was baptized of John in Jordan» states the whole clause in one verse, and Ogienko's wording there is exactly the Ukrainian («охрестився від Івана в Йордані»). It is worth adding: MAT 3:13-17, MRK 1:9."
+      },
+      "after_check": "MRK 1:9 added, as the second reading suggested",
+      "first": {
+       "refs": "MAT 3:13-17"
+      }
+     },
+     {
+      "en": "preached the gospel of the kingdom and healed the sick",
+      "uk": "проповідував Євангеліє Царства й уздоровляв хворих",
+      "refs": "MAT 4:23, 9:35",
+      "check": {
+       "verdict": "right",
+       "why": "MAT 4:23 and 9:35 state both parts."
+      }
+     },
+     {
+      "en": "was handed over by Pilate and crucified, died and was buried",
+      "uk": "був виданий Пилатом і розп'ятий, помер і був похований",
+      "refs": "MAT 27:24-26, 27:35, 27:50, 27:57-60, MRK 15:15",
+      "check": {
+       "verdict": "fix",
+       "why": "None of the cited verses names Pilate as the one who handed Jesus over. MAT 27:26 says only «he delivered him to be crucified», and Pilate is named as that «he» in MAT 27:24. MRK 15:15 names him in the same sentence: «Pilate… delivered Jesus… to be crucified»."
+      },
+      "first": {
+       "refs": "MAT 27:26, 27:35, 27:50, 27:57-60"
+      }
+     },
+     {
+      "en": "rose from the dead on the third day and was taken up into heaven",
+      "uk": "на третій день воскрес із мертвих і був узятий на небо",
+      "refs": "LUK 24:1-7, 24:46, 24:50-51, ACT 1:9-11",
+      "check": {
+       "verdict": "right",
+       "why": "Risen: LUK 24:6. Third day: 24:7, 24:46. Taken up: 24:51, ACT 1:9-11."
+      }
+     }
+    ]
+   },
+   "selection_note": "The five cover his life from birth to ascension. The clearest candidate for a sixth is «chose twelve apostles» (LUK 6:13, MRK 3:14). It is not required."
+  },
+  {
+   "slug": "yhvh",
+   "name_en": "YHVH",
+   "name_uk": "Господь",
+   "verses": 6228,
+   "distinguisher": "the God of Israel",
+   "current_summary": {
+    "en": "creator of Adam",
+    "uk": "творець Адама"
+   },
+   "known_for": {
+    "en": "created the heaven and the earth, and made man in his own image (GEN 1:1, 1:26-27); brought the Flood upon the earth, then made a covenant with Noah never to send another (GEN 6:17, 7:17-23, 9:8-17); called Abraham and promised him a land and offspring as many as the stars (GEN 12:1-7, 15:5-7); brought Israel out of Egypt and gave them his law on Mount Sinai (EXO 12:51, 19:20, 20:1-17, 31:18); sent his only begotten Son into the world (JHN 3:16-17, 1JN 4:9)",
+    "uk": "створив небо й землю, а людину — на свій образ (GEN 1:1, 1:26-27); навів на землю потоп, а потім уклав із Ноєм заповіт більше не наводити потопу (GEN 6:17, 7:17-23, 9:8-17); покликав Авраама й пообіцяв йому землю та нащадків, численних, як зорі (GEN 12:1-7, 15:5-7); вивів Ізраїля з Єгипту й дав йому свій Закон на горі Сінай (EXO 12:51, 19:20, 20:1-17, 31:18); послав у світ свого Однородженого Сина (JHN 3:16-17, 1JN 4:9)",
+    "length_en": 335,
+    "length_uk": 297,
+    "clauses": [
+     {
+      "en": "created the heaven and the earth, and made man in his own image",
+      "uk": "створив небо й землю, а людину — на свій образ",
+      "refs": "GEN 1:1, 1:26-27",
+      "check": {
+       "verdict": "right",
+       "why": "GEN 1:1, 1:27. The Ukrainian repeats «створив», which reads a little heavily. «створив небо й землю, а людину — на свій образ» would be smoother, but the current text is not wrong."
+      },
+      "after_check": "Ukrainian smoothed, as the second reading suggested",
+      "first": {
+       "uk": "створив небо й землю, а людину створив на свій образ"
+      }
+     },
+     {
+      "en": "brought the Flood upon the earth, then made a covenant with Noah never to send another",
+      "uk": "навів на землю потоп, а потім уклав із Ноєм заповіт більше не наводити потопу",
+      "refs": "GEN 6:17, 7:17-23, 9:8-17",
+      "check": {
+       "verdict": "right",
+       "why": "GEN 6:17 «I, even I, do bring a flood», 9:9, 9:11 «neither shall there any more be a flood to destroy the earth». «заповіт» is Ogienko's word for covenant."
+      },
+      "after_check": "shortened after the check for length; same verses, same sense",
+      "first": {
+       "en": "brought the Flood upon the earth, then made a covenant with Noah never again to destroy it by a flood",
+       "uk": "навів на землю потоп, а потім уклав із Ноєм заповіт, що потоп більше не знищить її"
+      }
+     },
+     {
+      "en": "called Abraham and promised him a land and offspring as many as the stars",
+      "uk": "покликав Авраама й пообіцяв йому землю та нащадків, численних, як зорі",
+      "refs": "GEN 12:1-7, 15:5-7",
+      "check": {
+       "verdict": "right",
+       "why": "Call: GEN 12:1. Land: 12:7, 15:7. Stars: 15:5. The text names him Abram here, and Abraham is the site's name for him."
+      }
+     },
+     {
+      "en": "brought Israel out of Egypt and gave them his law on Mount Sinai",
+      "uk": "вивів Ізраїля з Єгипту й дав йому свій Закон на горі Сінай",
+      "refs": "EXO 12:51, 19:20, 20:1-17, 31:18",
+      "check": {
+       "verdict": "right",
+       "why": "Out of Egypt: EXO 12:51, 20:2. The law: 20:1-17. On Sinai: 31:18. EXO 19:20 «the LORD came down upon mount Sinai» would tie the giving of the law at chapter 20 to Sinai more directly, but it is optional."
+      },
+      "after_check": "EXO 19:20 added, as the second reading suggested",
+      "first": {
+       "refs": "EXO 12:51, 20:1-17, 31:18"
+      }
+     },
+     {
+      "en": "sent his only begotten Son into the world",
+      "uk": "послав у світ свого Однородженого Сина",
+      "refs": "JHN 3:16-17, 1JN 4:9",
+      "check": {
+       "verdict": "right",
+       "why": "1JN 4:9 says it word for word, and Ogienko's wording there is «послав у світ Сина Свого Однородженого»."
+      }
+     }
+    ]
+   },
+   "selection_note": "For the record named YHVH, the one event missing is the giving of the name itself: «called Moses out of the burning bush and told him his name» (EXO 3:4, 3:13-15). Note that in EXO 3:2 it is «the angel of the LORD» who appears in the flame, while God calls from the bush in 3:4, so the actor has to be phrased as in this suggestion. This is the strongest candidate for a sixth clause."
+  }
+ ]
+}

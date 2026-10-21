@@ -1,0 +1,32 @@
+{
+  "adam": [
+    {"clause": 1, "verdict": "fix", "why": "The English is right (GEN 2:7-8, 2:15) and keeps Adam as the implied subject in the passive. The Ukrainian switches to the active «Бог створив його», which makes God the subject of a clause in Adam's own line, unlike his other clauses («дав імена…», «скуштував…»). The passive matches the English and the line.", "fix_uk": "був створений Богом із пороху землі й поселений у саду в Едені"},
+    {"clause": 2, "verdict": "right", "why": "GEN 2:19 «whatsoever Adam called every living creature, that was the name thereof» and 2:20."},
+    {"clause": 3, "verdict": "right", "why": "The prohibition is GEN 2:16-17, the eating is 3:6 and 3:17, and the expulsion is 3:23-24. 3:18-19 and 3:22 add nothing the clause states, but they do no harm."}
+  ],
+  "eve": [
+    {"clause": 1, "verdict": "fix", "why": "The English is right (GEN 2:21-22). The Ukrainian makes God the subject («Бог створив її») where the line's implied subject is Eve. The passive also carries the feminine agreement the rulings ask for.", "fix_uk": "була створена Богом із ребра, взятого в Адама"},
+    {"clause": 2, "verdict": "right", "why": "GEN 3:6 (took, did eat, gave unto her husband) and 3:13 «The serpent beguiled me». «спокушена» matches Ogienko's «Змій спокусив мене» (3:13)."},
+    {"clause": 3, "verdict": "right", "why": "GEN 4:1, 4:2, 4:25."}
+  ],
+  "jesus": [
+    {"clause": 1, "verdict": "right", "why": "Virgin: LUK 1:27, MAT 1:23. Mary: MAT 1:18, LUK 1:27. Bethlehem: MAT 2:1, LUK 2:4-7."},
+    {"clause": 2, "verdict": "right", "why": "MAT 3:13 and 3:16 support it. MRK 1:9 «was baptized of John in Jordan» states the whole clause in one verse, and Ogienko's wording there is exactly the Ukrainian («охрестився від Івана в Йордані»). It is worth adding: MAT 3:13-17, MRK 1:9."},
+    {"clause": 3, "verdict": "right", "why": "MAT 4:23 and 9:35 state both parts."},
+    {"clause": 4, "verdict": "fix", "why": "None of the cited verses names Pilate as the one who handed Jesus over. MAT 27:26 says only «he delivered him to be crucified», and Pilate is named as that «he» in MAT 27:24. MRK 15:15 names him in the same sentence: «Pilate… delivered Jesus… to be crucified».", "fix_refs": "MAT 27:24-26, 27:35, 27:50, 27:57-60, MRK 15:15"},
+    {"clause": 5, "verdict": "right", "why": "Risen: LUK 24:6. Third day: 24:7, 24:46. Taken up: 24:51, ACT 1:9-11."}
+  ],
+  "yhvh": [
+    {"clause": 1, "verdict": "right", "why": "GEN 1:1, 1:27. The Ukrainian repeats «створив», which reads a little heavily. «створив небо й землю, а людину — на свій образ» would be smoother, but the current text is not wrong."},
+    {"clause": 2, "verdict": "right", "why": "GEN 6:17 «I, even I, do bring a flood», 9:9, 9:11 «neither shall there any more be a flood to destroy the earth». «заповіт» is Ogienko's word for covenant."},
+    {"clause": 3, "verdict": "right", "why": "Call: GEN 12:1. Land: 12:7, 15:7. Stars: 15:5. The text names him Abram here, and Abraham is the site's name for him."},
+    {"clause": 4, "verdict": "right", "why": "Out of Egypt: EXO 12:51, 20:2. The law: 20:1-17. On Sinai: 31:18. EXO 19:20 «the LORD came down upon mount Sinai» would tie the giving of the law at chapter 20 to Sinai more directly, but it is optional."},
+    {"clause": 5, "verdict": "right", "why": "1JN 4:9 says it word for word, and Ogienko's wording there is «послав у світ Сина Свого Однородженого»."}
+  ],
+  "selection": {
+    "adam": "The three clauses cover what a reader names. If a fourth is wanted, the one that is missing is his fatherhood: «fathered Cain, Abel and Seth» (GEN 4:1-2, 4:25, 5:3). That mirrors Eve's clause 3.",
+    "eve": "Complete as it stands.",
+    "jesus": "The five cover his life from birth to ascension. The clearest candidate for a sixth is «chose twelve apostles» (LUK 6:13, MRK 3:14). It is not required.",
+    "yhvh": "For the record named YHVH, the one event missing is the giving of the name itself: «called Moses out of the burning bush and told him his name» (EXO 3:4, 3:13-15). Note that in EXO 3:2 it is «the angel of the LORD» who appears in the flame, while God calls from the bush in 3:4, so the actor has to be phrased as in this suggestion. This is the strongest candidate for a sixth clause."
+  }
+}
