@@ -328,6 +328,9 @@ public class AppDbContext : DbContext
     /// <summary>How many of those each text renders, book by book, counted once per load.</summary>
     public DbSet<StrongBookReach> StrongBookReaches { get; set; } = null!;
 
+    /// <summary>What each text's Strong counts were last counted from, so a load counts only what moved.</summary>
+    public DbSet<StrongCountMark> StrongCountMarks { get; set; } = null!;
+
     /// <summary>What one Strong entry's etymology says about another, read from the source's own words.</summary>
     public DbSet<StrongRelation> StrongRelations { get; set; } = null!;
 
@@ -1500,6 +1503,14 @@ public class AppDbContext : DbContext
                     "How many of a Strong number's words in one book of the edition a text is counted over the "
                     + "text's links render. Only books where it renders some; derived and rebuilt with strong_reach.");
             });
+        });
+
+        modelBuilder.Entity<StrongCountMark>(entity =>
+        {
+            entity.HasOne(m => m.Text).WithMany().HasForeignKey(m => m.TextId).OnDelete(DeleteBehavior.Cascade);
+            entity.ToTable("strong_count_mark", t => t.HasComment(
+                "A digest of what a text's Strong counts were last counted from and of the rows they left, so the "
+                + "load counts again only the texts where either moved. Derived; deleting a row only costs a recount."));
         });
 
         modelBuilder.Entity<StrongRelation>(entity =>

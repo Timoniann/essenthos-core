@@ -2472,7 +2472,8 @@ internal sealed class DatasetLoader(
 
     /// <summary>
     /// The phrases the lexicon quotes under each entry, counted from the links. After every step that
-    /// writes or withdraws a link, because it counts what they settled on, and rebuilt whole each time.
+    /// writes or withdraws a link, because it counts what they settled on; only the texts where anything
+    /// the count reads has moved are counted (<see cref="StrongCountDigest"/>).
     /// </summary>
     private async Task CountTheLexiconsPhrases(CancellationToken cancellationToken)
     {

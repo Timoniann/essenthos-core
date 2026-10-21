@@ -230,6 +230,9 @@ scripts/__pycache__/
 # prompt payloads and the verdicts. Reproducible from scripts/references.py.
 .references/
 
+# The published API and Forge the services run (scripts/start-core.ps1), rebuilt by their publish actions.
+/.run/
+
 # Corpus releases (a 376 MB dump each) and the local rehearsal of the server. Artefacts, never source.
 /.releases/
 

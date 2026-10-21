@@ -19,29 +19,94 @@ services:
       - "[::1]:5437:5432"
     # Docker's default /dev/shm is 64 MB, and a parallel query's workers exchange rows through it;
     # past that they fail with "could not resize shared memory segment". With work_mem at
-    # 64MB a parallel hash asks for 256 MB segments, and `forge verify` alone peaks at 1,085 MB, so 1 GB
-    # fails and 4 GB does not. It is a ceiling, not an allocation: tmpfs takes memory only as used.
-    shm_size: 4gb
-    # Sized for a development machine building an 11 GB corpus: the load is bulk inserts and index
-    # builds, which are what maintenance_work_mem and max_wal_size govern. A deployment reads and
-    # never loads, and gets settings of its own with the droplet.
+    # 64MB a parallel hash asks for 256 MB segments, and `forge verify` alone peaks at 1,085 MB with
+    # four workers. With up to sixteen workers running at once (a load beside the test suite) 4 GB
+    # is too tight. It is a ceiling, not an allocation: tmpfs takes memory only as used.
+    shm_size: 8gb
+    # Sized for the development machine: 16 cores / 32 threads and an NVMe disk, Postgres in Docker
+    # Desktop's WSL machine, which sees 30 GB of the host's 62 (WSL's default, half), building and
+    # verifying a 30 GB corpus while the test suite runs its databases beside it. A deployment reads
+    # and never loads, and gets settings of its own with the server. Durability stays on: fsync,
+    # full_page_writes and synchronous_commit are left at their defaults.
     command:
       - postgres
+      # A quarter of the machine Postgres runs in. The reader's working set fits in 2 GB, but a load
+      # and verify walk link (4 GB), link_word (6 GB) and word (6.4 GB) again and again.
       - -c
-      - shared_buffers=2GB
+      - shared_buffers=8GB
+      # What the planner may assume is cached: shared_buffers plus the page cache the rest of the
+      # 30 GB machine leaves, with room for the other containers and the backends' own memory.
       - -c
-      - effective_cache_size=8GB
-      # 64MB rather than the default 4MB: `forge verify` takes 105 s against 117 s.
+      - effective_cache_size=20GB
+      # 64MB rather than the default 4MB: `forge verify` takes 105 s against 117 s. Per sort or hash,
+      # per worker, so it stays where it was measured rather than growing with the workers.
       - -c
       - work_mem=64MB
+      # Index builds and the loads' VACUUM over 50-million-row tables; parallel index builds share it.
       - -c
-      - maintenance_work_mem=1GB
+      - maintenance_work_mem=2GB
+      # Autovacuum's workers would each take maintenance_work_mem; three of them at 2 GB is 6 GB
+      # nobody asked for.
       - -c
-      - max_wal_size=8GB
+      - autovacuum_work_mem=512MB
+      # Background processes Postgres may start: 16 parallel query workers, 4 for index builds and
+      # the rest for autovacuum and extensions. Read only at start.
       - -c
-      - random_page_cost=1.1
+      - max_worker_processes=24
+      # The query workers all sessions share. At 8 a load and the test suite took each other's,
+      # and a query that gets none runs alone.
+      - -c
+      - max_parallel_workers=16
+      # Per query, as measured before (verify peaks at shared_buffers + ~2.1 GB at 4 and 64MB).
       - -c
       - max_parallel_workers_per_gather=4
+      # CREATE INDEX after a bulk load: 4 workers rather than 2.
+      - -c
+      - max_parallel_maintenance_workers=4
+      # NVMe answers many reads at once; 16, the default, is sized for a single spinning disk's
+      # successor. Bitmap heap scans and the read-ahead of Postgres 18's asynchronous I/O use it.
+      - -c
+      - effective_io_concurrency=200
+      - -c
+      - maintenance_io_concurrency=200
+      # Postgres 18 reads through I/O worker processes (io_uring is refused inside this Docker:
+      # "could not setup io_uring queue: Operation not permitted"); 3 by default, too few to keep
+      # an NVMe busy under 16 parallel workers.
+      - -c
+      - io_workers=8
+      # Random reads cost about what sequential ones do on NVMe.
+      - -c
+      - random_page_cost=1.1
+      # Off: on the corpus's heaviest aggregates it made no difference beyond noise (1.8 s against
+      # 1.9 s over every link, 0.75-0.99 s against 0.65-0.82 s over the originals' words), and on the
+      # many medium queries of the API and the test suite it adds compile time to each.
+      - -c
+      - jit=off
+      # A load writes tens of gigabytes; at 8GB a checkpoint fell due every few minutes of it, and
+      # each one rewrites every page it touches in full into the WAL again.
+      - -c
+      - max_wal_size=16GB
+      - -c
+      - min_wal_size=2GB
+      # Checkpoints by time no more often than every quarter hour, spread over 90% of it.
+      - -c
+      - checkpoint_timeout=15min
+      - -c
+      - checkpoint_completion_target=0.9
+      # Full page images compressed: less WAL to write and fsync for the same durability.
+      - -c
+      - wal_compression=lz4
+      # Bulk COPY fills the default 16 MB (1/32 of shared_buffers, capped) faster than it is written.
+      - -c
+      - wal_buffers=64MB
+      # Autovacuum at the default cost limit crawls through a 50-million-row table on a disk that
+      # does not need protecting from it.
+      - -c
+      - autovacuum_vacuum_cost_limit=2000
+      # Per-statement read and write times in pg_stat_statements and EXPLAIN (ANALYZE, BUFFERS):
+      # what the profiling of loads needs, and nearly free on this kernel's clock.
+      - -c
+      - track_io_timing=on
     volumes:
       - corpus:/var/lib/postgresql
       # Read on the first start only, into an empty data directory: pg_trgm, which the corpus needs

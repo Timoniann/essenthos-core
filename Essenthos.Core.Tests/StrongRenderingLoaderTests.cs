@@ -264,6 +264,112 @@ public sealed class StrongRenderingLoaderTests : IDisposable
         (await _db.StrongRenderings.Select(r => r.Id).OrderBy(id => id).ToListAsync()).Should().Equal(ids);
     }
 
+    /// <summary>
+    /// A load counts only the texts where something their count reads has moved, and what it leaves is
+    /// what counting every text again leaves: after each kind of change the incremental count finds it,
+    /// a forced recount of every text then finds nothing to write, and a count from nothing agrees.
+    /// </summary>
+    [Fact]
+    public async Task AnIncrementalCountLeavesWhatAFullRecountWould()
+    {
+        var other = Corpus.Add(_db, "OTHER", TextKind.Translation, "en", (1, 1, ["made", "Gods"]));
+        _db.SaveChanges();
+        Renders([1], [1], other);
+        _db.SaveChanges();
+        await _loader.Load();
+        var god = await _db.LinkWords.Where(lw => lw.Word!.Surface == "God" && lw.Word.Position == 2 && lw.Word.TextId == _english.Id)
+            .Select(lw => lw.LinkId).SingleAsync();
+        var thy = _db.WordAt(_english, 1, 1, 3).Id;
+
+        var changes = new (string Because, bool OnlySome, FormattableString Sql)[]
+        {
+            ("a link took another word", true, $"INSERT INTO link_word (link_id, word_id, side) VALUES ({god}, {thy}, 'from')"),
+            ("a translation's word was rewritten in place", true, $"UPDATE word SET text = 'Lord' WHERE text_id = {_english.Id} AND text = 'God' AND position = 2"),
+            ("an original's word changed its number", false, $"UPDATE word SET strong_number = 'H433' WHERE text_id = {_hebrew.Id} AND text = 'אֱלֹהֶיךָ'"),
+            ("a link changed its method", true, $"UPDATE link SET method = 'manual' WHERE id = {god}"),
+            ("an original's word stated its part of speech", false, $"UPDATE word SET morphology = '{{\"pos\":\"prep\"}}'::jsonb WHERE text_id = {_hebrew.Id} AND strong_number = {God}"),
+            ("an original's book moved in the canon", false, $"UPDATE book SET canonical_ordinal = 2 WHERE text_id = {_hebrew.Id}"),
+            ("a link was withdrawn", true, $"DELETE FROM link WHERE id = {god}"),
+        };
+
+        foreach (var (because, onlySome, sql) in changes)
+        {
+            await _db.Database.ExecuteSqlAsync(sql);
+
+            var incremental = await _loader.Load();
+            incremental.AlreadyLoaded.Should().BeFalse(because);
+            if (onlySome)
+            {
+                incremental.Unchanged.Should().Be(2, "{0} touched only the King James", because);
+            }
+
+            var counted = await Counts();
+            (await _loader.Load(Relinked.Every, recount: true)).AlreadyLoaded.Should().BeTrue(because);
+            (await Counts()).Should().Equal(counted, because);
+        }
+
+        var last = await Counts();
+        await _db.Database.ExecuteSqlRawAsync(
+            "DELETE FROM strong_rendering; DELETE FROM strong_reach; DELETE FROM strong_book_reach; DELETE FROM strong_book; DELETE FROM strong_count_mark");
+        await _loader.Load(Relinked.Every, recount: true);
+        (await Counts()).Should().Equal(last);
+    }
+
+    [Fact]
+    public async Task ATextNothingMovedForIsNotCountedAgain()
+    {
+        var other = Corpus.Add(_db, "OTHER", TextKind.Translation, "en", (1, 1, ["made", "Gods"]));
+        _db.SaveChanges();
+        await _loader.Load();
+        var kept = await _db.StrongRenderings.Where(r => r.TextId == _english.Id).Select(r => r.Id).OrderBy(id => id).ToListAsync();
+
+        Renders([1], [1], other);
+        _db.SaveChanges();
+        var outcome = await _loader.Load();
+
+        outcome.Texts.Should().Be(1, "only OTHER's links moved");
+        outcome.Unchanged.Should().Be(2, "neither the King James nor the Hebrew moved");
+        (await _db.StrongRenderings.Where(r => r.TextId == other.Id).Select(r => r.Phrase).ToListAsync()).Should().Equal("made");
+        (await _db.StrongRenderings.Where(r => r.TextId == _english.Id).Select(r => r.Id).OrderBy(id => id).ToListAsync()).Should().Equal(kept);
+
+        var forced = await _loader.Load(Relinked.Every, recount: true);
+        (forced.Texts, forced.Unchanged, forced.AlreadyLoaded).Should().Be((2, 0, true));
+    }
+
+    /// <summary>Rows changed or lost by anything but the count are counted again, though nothing they rest on moved.</summary>
+    [Fact]
+    public async Task CountsChangedByAnythingElseAreCountedAgain()
+    {
+        await _loader.Load();
+        var counted = await Counts();
+        await _db.StrongReaches.Where(r => r.StrongNumber == God).ExecuteUpdateAsync(r => r.SetProperty(x => x.Reached, 1));
+        await _db.StrongBooks.ExecuteDeleteAsync();
+
+        (await _loader.Load()).AlreadyLoaded.Should().BeFalse();
+
+        (await Counts()).Should().Equal(counted);
+    }
+
+    /// <summary>Every row the count leaves, without the ids a rewrite renumbers.</summary>
+    private async Task<List<string>> Counts() =>
+        (await _db.Database.SqlQueryRaw<string>(
+                """
+                SELECT concat_ws('|', 'rendering', text_id, strong_number, rank, phrase, uses) AS "Value" FROM strong_rendering
+                UNION ALL
+                SELECT concat_ws('|', 'reach', text_id, strong_number, witness_id, occurrences, reached, phrases,
+                                 coalesce(renderings::text, 'null'), rendering_links, coalesce(lexical::text, 'null'))
+                FROM strong_reach
+                UNION ALL
+                SELECT concat_ws('|', 'method', text_id, strong_number, method, links) FROM strong_reach_method
+                UNION ALL
+                SELECT concat_ws('|', 'book-reach', text_id, strong_number, book, reached) FROM strong_book_reach
+                UNION ALL
+                SELECT concat_ws('|', 'book', witness_id, strong_number, book, occurrences) FROM strong_book
+                """)
+            .ToListAsync())
+        .Order(StringComparer.Ordinal)
+        .ToList();
+
     private Task<List<int>> OtherRows(Text other) =>
         _db.StrongRenderings.Where(r => r.TextId == other.Id).Select(r => r.Id).OrderBy(id => id).ToListAsync();
 

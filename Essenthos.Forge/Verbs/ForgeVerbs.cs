@@ -190,7 +190,7 @@ internal static partial class ForgeVerbs
         new("wikipedia", "", "Link the records to their Wikipedia articles, and list the ones that cannot be told from a namesake.", Wikipedia),
         new("spell", "", "Count how each text spells each name.", Spell),
         new("lexicon-relations", "", "Read what Strong's entries say about each other.", LexiconRelations),
-        new("cards", "", "Count how each text renders each Strong number: the lexicon's phrases and the entry page's reach.", Cards),
+        new("cards", "", "Count how every text renders each Strong number again, whatever moved: the lexicon's phrases and the entry page's reach.", Cards),
         new("commandments", "", "Load the 613 commandments.", Commandments),
         new("lands", "", "Load the periods of the lands from PeriodO.", Lands),
         new("name-forms", "", "Load the names the descriptions put into a case.", NameForms),

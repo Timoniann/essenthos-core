@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading.Encyclopedia;
 using Essenthos.Core.Loading.Links.Evidentia;
@@ -13,17 +14,20 @@ namespace Essenthos.Core.Loading;
 /// <param name="Texts">Texts linked to an original, each counted.</param>
 /// <param name="Numbers">Strong numbers counted, summed over the texts.</param>
 /// <param name="Renderings">Phrases kept, the commonest of each number in each text.</param>
+/// <param name="Unchanged">Texts not counted, because nothing their count reads or left has moved since it was made.</param>
 internal sealed record StrongRenderingOutcome(
     bool AlreadyLoaded,
     int Texts,
     int Numbers,
     int Renderings,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    int Unchanged = 0)
 {
     public override string ToString() =>
-        AlreadyLoaded
+        (AlreadyLoaded
             ? $"the lexicon's {Renderings} phrases from {Texts} texts are already counted, checked in {Elapsed}"
-            : $"{Renderings} phrases counted from {Texts} texts for {Numbers} Strong numbers in {Elapsed}";
+            : $"{Renderings} phrases counted from {Texts} texts for {Numbers} Strong numbers in {Elapsed}")
+        + (Unchanged > 0 ? $"; {Unchanged} texts unchanged since their last count" : "");
 }
 
 /// <summary>
@@ -60,20 +64,29 @@ internal sealed record Relinked(IReadOnlyList<string>? Texts, int? EvidentiaRun 
 /// </para>
 ///
 /// <para>
-/// **Counted whole on every load.** It is a projection of the links, which the recipe, the composed
-/// routes and the corrections all write after the texts are loaded, so a guard asking whether it had
-/// already run would keep the counts of links that no longer exist. It is one pass over each text's
-/// links to its originals, about ten seconds for the King James, and it writes only the texts whose
-/// count came out differently, each in one transaction so a reader never sees a text half counted.
+/// **Counted on every load, for the texts where something moved.** It is a projection of the links,
+/// which the recipe, the composed routes and the corrections all write after the texts are loaded, so
+/// a guard asking whether it had already run would keep the counts of links that no longer exist.
+/// Instead each text keeps a digest of everything its count reads and of the rows it left
+/// (<see cref="StrongCountDigest"/>, <see cref="StrongCountMark"/>): seconds for every text, against
+/// minutes for counting them all, and a text whose digest still holds would count to what it holds.
+/// A counted text is written only where its count came out differently, each in one transaction so a
+/// reader never sees a text half counted. <c>recount</c> counts every text named whatever its digest says.
 /// </para>
 /// </summary>
 internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRenderingLoader> logger)
 {
     public Task<StrongRenderingOutcome> Load(CancellationToken cancellationToken = default) =>
-        Load(Relinked.Every, cancellationToken);
+        Load(Relinked.Every, cancellationToken: cancellationToken);
 
-    /// <summary>The texts a run changed the links of, counted again; the rest are left as they were counted.</summary>
-    public async Task<StrongRenderingOutcome> Load(Relinked relinked, CancellationToken cancellationToken = default)
+    /// <summary>
+    /// The texts a run changed the links of, counted again where anything their count reads has moved;
+    /// the rest are left as they were counted. <paramref name="recount"/> counts them whatever moved.
+    /// </summary>
+    public async Task<StrongRenderingOutcome> Load(
+        Relinked relinked,
+        bool recount = false,
+        CancellationToken cancellationToken = default)
     {
         var started = Stopwatch.StartNew();
         var named = relinked.Texts?.ToList() ?? [];
@@ -93,15 +106,34 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
             .OrderBy(t => t.Slug)
             .Select(t => new { t.Id, t.Slug, t.Language })
             .ToListAsync(cancellationToken);
+        if (texts.Count == 0)
+        {
+            return new StrongRenderingOutcome(true, 0, 0, 0, started.Elapsed);
+        }
 
-        var lexical = Lexical(await StrongRenderingCounts.ClassesOf(db, cancellationToken));
-        int counted = 0, numbers = 0, renderings = 0;
+        var classes = await StrongRenderingCounts.ClassesOf(db, cancellationToken);
+        var lexical = Lexical(classes);
+        var digest = await StrongCountDigest.Read(db, classes, cancellationToken);
+        var marks = await db.StrongCountMarks.AsNoTracking().ToDictionaryAsync(m => m.TextId, cancellationToken);
+        var held = await StrongCountDigest.Counted(db, null, cancellationToken);
+        logger.LogInformation("Read what the counts rest on in {Elapsed}", started.Elapsed);
+
+        int counted = 0, unchanged = 0, numbers = 0, renderings = 0;
         var written = false;
         var editions = new HashSet<int>();
         foreach (var text in texts)
         {
-            var primary = LinkedOriginals.Primary(await LinkedOriginals.Of(db, text.Id, cancellationToken));
+            var primary = LinkedOriginals.Primary(digest.Originals(text.Id));
             editions.UnionWith(primary.Select(original => original.Id));
+            var inputs = digest.Phrases(text.Id);
+            if (!recount
+                && marks.TryGetValue(text.Id, out var mark)
+                && mark.Phrases == StrongCountDigest.Of(inputs, held.GetValueOrDefault(text.Id, "-")))
+            {
+                unchanged++;
+                continue;
+            }
+
             var count = primary.Count == 0
                 ? new StrongTextCount([], [])
                 : await StrongRenderingCounts.CountText(db, text.Id, primary, cancellationToken);
@@ -115,26 +147,55 @@ internal sealed class StrongRenderingLoader(AppDbContext db, ILogger<StrongRende
             }
 
             var variety = RenderingVariety.Count(text.Language, count.Everything);
-            if (await Holds(text.Id, count, variety, lexical, cancellationToken))
+            if (!await Holds(text.Id, count, variety, lexical, cancellationToken))
+            {
+                await Replace(text.Id, count, variety, lexical, cancellationToken);
+                written = true;
+                logger.LogInformation(
+                    "Counted {Text}: {Renderings} phrases, {Numbers} numbers reached",
+                    text.Slug, count.Renderings.Count, count.Reach.Count);
+            }
+
+            var now = (await StrongCountDigest.Counted(db, text.Id, cancellationToken)).GetValueOrDefault(text.Id, "-");
+            await Mark(text.Id, phrases: StrongCountDigest.Of(inputs, now), cancellationToken: cancellationToken);
+        }
+
+        var books = await StrongCountDigest.CountedBooks(db, null, cancellationToken);
+        foreach (var edition in editions.Order())
+        {
+            var inputs = digest.Books(edition);
+            if (!recount
+                && marks.TryGetValue(edition, out var mark)
+                && mark.Books == StrongCountDigest.Of(inputs, books.GetValueOrDefault(edition, "-")))
             {
                 continue;
             }
 
-            await Replace(text.Id, count, variety, lexical, cancellationToken);
-            written = true;
-            logger.LogInformation(
-                "Counted {Text}: {Renderings} phrases, {Numbers} numbers reached",
-                text.Slug, count.Renderings.Count, count.Reach.Count);
-        }
-
-        foreach (var edition in editions.Order())
-        {
             written |= await CountTheBooks(edition, cancellationToken);
+            var now = (await StrongCountDigest.CountedBooks(db, edition, cancellationToken)).GetValueOrDefault(edition, "-");
+            await Mark(edition, books: StrongCountDigest.Of(inputs, now), cancellationToken: cancellationToken);
         }
 
-        var outcome = new StrongRenderingOutcome(!written, counted, numbers, renderings, started.Elapsed);
+        var outcome = new StrongRenderingOutcome(!written, counted, numbers, renderings, started.Elapsed, unchanged);
         logger.LogInformation("The lexicon's phrases: {Outcome}", outcome);
         return outcome;
+    }
+
+    private async Task Mark(int textId, Guid? phrases = null, Guid? books = null, CancellationToken cancellationToken = default)
+    {
+        if (phrases is { } p)
+        {
+            await db.Database.ExecuteSqlAsync(
+                $"INSERT INTO strong_count_mark (text_id, phrases) VALUES ({textId}, {p}) ON CONFLICT (text_id) DO UPDATE SET phrases = excluded.phrases",
+                cancellationToken);
+        }
+
+        if (books is { } b)
+        {
+            await db.Database.ExecuteSqlAsync(
+                $"INSERT INTO strong_count_mark (text_id, books) VALUES ({textId}, {b}) ON CONFLICT (text_id) DO UPDATE SET books = excluded.books",
+                cancellationToken);
+        }
     }
 
     /// <summary>

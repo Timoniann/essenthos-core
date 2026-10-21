@@ -50,14 +50,21 @@ internal static class LinkedOriginals
                 + db.Links.Count(l => l.FromTextId == t.Id && l.ToTextId == textId)))
             .ToListAsync(cancellationToken);
 
-        return
-        [
-            .. originals
-                .OrderBy(original => original.Kind == TextKind.CriticalEdition ? 0 : 1)
-                .ThenByDescending(original => original.Links)
-                .ThenBy(original => original.Slug, StringComparer.Ordinal),
-        ];
+        return Ordered(originals);
     }
+
+    /// <summary>
+    /// The non-translation texts linked to a text, in <see cref="Of"/>'s order, for a caller that has
+    /// already counted every pair's links.
+    /// </summary>
+    public static List<LinkedOriginal> Ordered(IEnumerable<LinkedOriginal> originals) =>
+    [
+        .. originals
+            .Where(original => original.Kind != TextKind.Translation)
+            .OrderBy(original => original.Kind == TextKind.CriticalEdition ? 0 : 1)
+            .ThenByDescending(original => original.Links)
+            .ThenBy(original => original.Slug, StringComparer.Ordinal),
+    ];
 
     /// <summary>The first of each language in <see cref="Of"/>.</summary>
     public static List<LinkedOriginal> Primary(IEnumerable<LinkedOriginal> originals) =>
