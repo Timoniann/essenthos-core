@@ -159,6 +159,26 @@ public sealed class RelationshipMergeTests : IDisposable
     }
 
     /// <summary>
+    /// On a place's page the row is said of the woman buried there, so it carries her sex for the
+    /// words to agree with her: <em>Сара похована у Махпелі</em>.
+    /// </summary>
+    [Fact]
+    public async Task ARowSaysTheSexOfItsCounterpart()
+    {
+        var sarah = Person("sarai");
+        sarah.Sex = "female";
+        var machpelah = Person("machpelah");
+        machpelah.Kind = EntityKind.Place;
+        _db.SaveChanges();
+        Read(sarah, machpelah, DescriptorRelations.BuriedIn, 1, 23, 19);
+
+        var inward = (await Page(machpelah)).Should().ContainSingle().Which;
+        inward.Inward.Should().BeTrue();
+        inward.Sex.Should().Be("female");
+        (await Page(sarah)).Should().ContainSingle().Which.Sex.Should().BeNull("a place has no sex");
+    }
+
+    /// <summary>
     /// What is folded is the repetition and never the fact: where only the other end exists, it is
     /// the row, and Haran's page is where a reader meets it that way round.
     /// </summary>

@@ -468,6 +468,13 @@ internal record EntityRelationshipResponse(
     public string Kind { get; init; } = "person";
 
     /// <summary>
+    /// The counterpart's sex, <c>male</c> or <c>female</c>, where the corpus states it: on a place's
+    /// page the row is said of her — <em>Сара похована у Махпелі</em> — and the words agree with
+    /// her. Null where it is not stated.
+    /// </summary>
+    public string? Sex { get; init; }
+
+    /// <summary>
     /// What established it: a model's reading of the verse, or a person's decision. A reader who
     /// cannot tell the two apart is being asked to trust both equally.
     /// </summary>

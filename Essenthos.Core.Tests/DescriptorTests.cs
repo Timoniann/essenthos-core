@@ -1106,6 +1106,62 @@ public sealed class DescriptorTests : IDisposable
     }
 
     /// <summary>
+    /// A woman's place clauses agree with her, in every language that says them by her sex: Sarah
+    /// is <em>похована</em> and <em>sepultada</em>, not <em>похований</em> and <em>sepultado</em>.
+    /// German says <em>begraben</em> of both. The line says whose sex it agreed with, for a client
+    /// that draws it from the claims.
+    /// </summary>
+    [Fact]
+    public async Task AWomansPlaceClausesAgreeWithHer()
+    {
+        await Load("located");
+        var subject = await _db.Entities.SingleAsync(e => e.Slug == "abraham-1");
+        subject.Sex = "female";
+        await _db.SaveChangesAsync();
+
+        var ukrainian = await Read("abraham-1", DescriptorPhrasings.Ukrainian);
+
+        Line(ukrainian).Should().Be("жила у Хевроні, похована у Хевроні");
+        ukrainian!.Sex.Should().Be("female");
+        Line(await Read("abraham-1", DescriptorPhrasings.Spanish)).Should().Be("habitó en Hebron, sepultada en Hebron");
+        Line(await Read("abraham-1", DescriptorPhrasings.German)).Should().Be("wohnte in Hebron, begraben in Hebron");
+        Line(await Read("abraham-1", DescriptorPhrasings.English)).Should().Be("lived in Hebron, buried in Hebron");
+    }
+
+    [Fact]
+    public async Task AMansPlaceClausesStayAsTheyWere()
+    {
+        await Load("located");
+        var subject = await _db.Entities.SingleAsync(e => e.Slug == "abraham-1");
+        subject.Sex = "male";
+        await _db.SaveChangesAsync();
+
+        var ukrainian = await Read("abraham-1", DescriptorPhrasings.Ukrainian);
+
+        Line(ukrainian).Should().Be("жив у Хевроні, похований у Хевроні");
+        ukrainian!.Sex.Should().Be("male");
+        Line(await Read("abraham-1", DescriptorPhrasings.Spanish)).Should().Be("habitó en Hebron, sepultado en Hebron");
+    }
+
+    /// <summary>
+    /// A woman killed is <em>загинула</em> and <em>muerta</em>, and the clause before it, an office,
+    /// is said in the feminine too where the language has one.
+    /// </summary>
+    [Fact]
+    public async Task AWomansOfficeAndDeathAreSaidOfHer()
+    {
+        await Load("widened");
+        var subject = await _db.Entities.SingleAsync(e => e.Slug == "azrikam-4");
+        subject.Sex = "female";
+        await _db.SaveChangesAsync();
+
+        Line(await Read("azrikam-4", DescriptorPhrasings.Ukrainian))
+            .Should().Be("намісник Єрусалима, загинула від руки Зіхрі");
+        Line(await Read("azrikam-4", DescriptorPhrasings.Spanish))
+            .Should().Be("gobernador de Jerusalén, muerta a manos de Zicri");
+    }
+
+    /// <summary>
     /// The other path, and the one that matters today: 727 entities' worth of claims have been
     /// generated and none of them carries a locative yet, so this is what almost every place clause
     /// renders as until a second pass over the name forms fills the locative in.

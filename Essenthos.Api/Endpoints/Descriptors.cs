@@ -547,6 +547,9 @@ internal static class Descriptors
                 continue;
             }
 
+            phrasing = DescriptorPhrasings.OfSubject(language, clause.Relation, facts.Sex) ?? phrasing;
+            var plain = phrasing;
+
             var key = (clause.Relation, clause.TargetEntityId);
             if (!index.TryGetValue(key, out var item))
             {
@@ -557,7 +560,7 @@ internal static class Descriptors
                 var ordinal = place is null
                     ? null
                     : DescriptorPhrasings.Ordinal(language, phrasing, clause.Relation == DescriptorRelations.DaughterOf, place.Ordinal);
-                item = new Item(clause, ordinal ?? phrasing, phrasings[clause.Relation]) { Place = ordinal is null ? null : place };
+                item = new Item(clause, ordinal ?? phrasing, plain) { Place = ordinal is null ? null : place };
                 index[key] = item;
                 items.Add(item);
             }
@@ -744,6 +747,7 @@ internal static class Descriptors
         return new EntityDescriptorResponse(language, parts, claims)
         {
             Counted = counted.Count == 0 ? null : counted,
+            Sex = facts.Sex,
         };
     }
 
@@ -1063,6 +1067,13 @@ internal record EntityDescriptorResponse(
     /// counted.
     /// </summary>
     public IList<DescriptorCountResponse>? Counted { get; init; }
+
+    /// <summary>
+    /// The sex of the one the line is about, <c>male</c> or <c>female</c>, where the corpus states it:
+    /// a client drawing the line from the claims needs it for what agrees with her, <em>похована</em>
+    /// rather than <em>похований</em>. Null where it is not stated.
+    /// </summary>
+    public string? Sex { get; init; }
 }
 
 /// <param name="Relation">The relation whose claims the count stands for: <c>father-of</c>.</param>

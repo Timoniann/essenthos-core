@@ -102,6 +102,7 @@ internal static class Relationships
                 r.Source)
             {
                 Citation = r.Citation,
+                Sex = r.ToEntityId == entityId ? r.From!.Sex : r.To!.Sex,
             })
             .ToListAsync(cancellationToken);
 
@@ -192,6 +193,7 @@ internal static class Relationships
             row.Reference, row.Notes)
         {
             Kind = EnumSpelling.Of(row.Kind),
+            Sex = row.Sex,
             Method = EnumSpelling.Of(row.Method),
             Confidence = row.Confidence,
             Source = row.Source,
@@ -241,5 +243,8 @@ internal static class Relationships
     {
         /// <summary>The passage or the two verses composed, where one verse does not hold the row.</summary>
         public string? Citation { get; init; }
+
+        /// <summary>The counterpart's sex, where the corpus states it.</summary>
+        public string? Sex { get; init; }
     }
 }
