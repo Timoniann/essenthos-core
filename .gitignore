@@ -231,3 +231,6 @@ scripts/__pycache__/
 deploy/.env
 deploy/.env.*
 .worktrees/
+
+# Calls made through scripts/claude_api.py: tokens and estimated cost per call, batch ids.
+.claude-api/
