@@ -1,0 +1,323 @@
+{
+  "decidedBy": "Essenthos, 2026-10-21, each word read against its verse by claude-opus-5-5 on the project owner's instruction of that day to go over Adam and Eve in Genesis 1-5 and the verses that refer back to them; no person has reviewed this ruling",
+  "policy": "Where the narrative of Genesis 2-4 speaks of Adam as הָאָדָם, the man, or as the woman's husband, the word is his, as 'the woman' is Eve's. Where אָדָם is mankind (GEN 1:26-27; 5:1-2, where God called their name Adam, male and female), a man yet to be (GEN 2:5), the man the woman is named from (GEN 2:23) or any man (GEN 2:24), it is nobody's. The woman of 1 Timothy 2:14 is Eve, named in the verse before; the last Adam of 1 Corinthians 15:45 is Christ.",
+  "method": "manual",
+  "source": "Essenthos, Adam, Eve and the last Adam where the verse speaks of them by another word, each word read against its verse by claude-opus-5-5 on the project owner's instruction of 2026-10-21",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:7",
+      "position": 7,
+      "surface": "אָדָ֗ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "וַיִּיצֶר ... אֶת־הָאָדָם: the LORD God formed the man of the dust of the ground. The man he formed is Adam, whom 1CO 15:45 calls the first man Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:7",
+      "position": 21,
+      "surface": "אָדָ֖ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "וַיְהִי הָאָדָם לְנֶפֶשׁ חַיָּה: the man became a living soul, the words 1CO 15:45 says of the first man Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:8",
+      "position": 15,
+      "surface": "אָדָ֖ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "There he put the man whom he had formed: Adam, the man of 2:7."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:15",
+      "position": 7,
+      "surface": "אָדָ֑ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "The LORD God took the man and put him into the garden of Eden: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:16",
+      "position": 7,
+      "surface": "אָדָ֖ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "The LORD God commanded the man: Adam, the one man the narrative has."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:18",
+      "position": 9,
+      "surface": "אָדָ֖ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "It is not good that the man should be alone: Adam, before the woman is made."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:19",
+      "position": 22,
+      "surface": "אָדָ֔ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "Brought them unto the man to see what he would call them: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:19",
+      "position": 34,
+      "surface": "אָדָ֛ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "Whatsoever the man called every living creature, that was the name thereof: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:20",
+      "position": 4,
+      "surface": "אָדָ֜ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "The man gave names to all cattle: Adam. The second אָדָם of the verse, pointed without the article, is ruled in the owner's reading report."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:21",
+      "position": 8,
+      "surface": "אָדָ֖ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "The LORD God caused a deep sleep to fall upon the man: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:22",
+      "position": 12,
+      "surface": "אָדָ֖ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "The rib, which the LORD God had taken from the man: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:22",
+      "position": 19,
+      "surface": "אָדָֽם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "And brought her unto the man: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:23",
+      "position": 4,
+      "surface": "אָדָם֒",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "And the man said, This is now bone of my bones: Adam. The man of 'taken out of Man' in the same verse is the word the woman is named from, and is not ruled."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 2:25",
+      "position": 6,
+      "surface": "אָדָ֖ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "They were both naked, the man and his wife: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 3:6",
+      "position": 34,
+      "surface": "אִישָׁ֛הּ",
+      "strongNumber": "H582",
+      "existing": "adam",
+      "why": "She gave also unto her husband with her, and he did eat: her husband is Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 3:8",
+      "position": 18,
+      "surface": "אָדָ֜ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "The man and his wife hid themselves from the presence of the LORD God: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 3:9",
+      "position": 7,
+      "surface": "אָדָ֑ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "The LORD God called unto the man: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 3:12",
+      "position": 4,
+      "surface": "אָדָ֑ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "And the man said, The woman whom thou gavest to be with me: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 3:16",
+      "position": 16,
+      "surface": "אִישֵׁךְ֙",
+      "strongNumber": "H376",
+      "existing": "adam",
+      "why": "Said to the woman: thy desire shall be to thy husband, and he shall rule over thee. Her husband is Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 3:20",
+      "position": 4,
+      "surface": "אָדָ֛ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "And the man called his wife's name Eve: Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 3:22",
+      "position": 7,
+      "surface": "אָדָם֙",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "Behold, the man is become as one of us, and now, lest he put forth his hand: the man who ate of the tree, Adam."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 3:24",
+      "position": 5,
+      "surface": "אָדָ֑ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "So he drove out the man: Adam, sent forth from the garden in 3:23."
+    },
+    {
+      "text": "BHSA",
+      "reference": "GEN 4:1",
+      "position": 3,
+      "surface": "אָדָ֔ם",
+      "strongNumber": "H120",
+      "existing": "adam",
+      "why": "And the man knew Eve his wife: Adam."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "1CO 15:45",
+      "position": 14,
+      "surface": "Ἀδὰμ",
+      "strongNumber": "G76",
+      "existing": "jesus",
+      "why": "The first man Adam was made a living soul; the last Adam was made a quickening spirit. The last Adam is set against the first and is Christ, whom 1CO 15:47 calls the second man, the Lord from heaven; the first Ἀδάμ of the verse stays Adam's."
+    },
+    {
+      "text": "RP2018",
+      "reference": "1CO 15:45",
+      "position": 14,
+      "surface": "αδαμ",
+      "strongNumber": "G76",
+      "existing": "jesus",
+      "why": "The first man Adam was made a living soul; the last Adam was made a quickening spirit. The last Adam is set against the first and is Christ, whom 1CO 15:47 calls the second man, the Lord from heaven; the first Ἀδάμ of the verse stays Adam's."
+    },
+    {
+      "text": "TISCH",
+      "reference": "1CO 15:45",
+      "position": 14,
+      "surface": "Ἀδὰμ",
+      "strongNumber": "G76",
+      "existing": "jesus",
+      "why": "The first man Adam was made a living soul; the last Adam was made a quickening spirit. The last Adam is set against the first and is Christ, whom 1CO 15:47 calls the second man, the Lord from heaven; the first Ἀδάμ of the verse stays Adam's."
+    },
+    {
+      "text": "TR1550",
+      "reference": "1CO 15:45",
+      "position": 14,
+      "surface": "αδαμ",
+      "strongNumber": "G76",
+      "existing": "jesus",
+      "why": "The first man Adam was made a living soul; the last Adam was made a quickening spirit. The last Adam is set against the first and is Christ, whom 1CO 15:47 calls the second man, the Lord from heaven; the first Ἀδάμ of the verse stays Adam's."
+    },
+    {
+      "text": "TR1894",
+      "reference": "1CO 15:45",
+      "position": 14,
+      "surface": "αδαμ",
+      "strongNumber": "G76",
+      "existing": "jesus",
+      "why": "The first man Adam was made a living soul; the last Adam was made a quickening spirit. The last Adam is set against the first and is Christ, whom 1CO 15:47 calls the second man, the Lord from heaven; the first Ἀδάμ of the verse stays Adam's."
+    },
+    {
+      "text": "WH1881",
+      "reference": "1CO 15:45",
+      "position": 14,
+      "surface": "αδαμ",
+      "strongNumber": "G76",
+      "existing": "jesus",
+      "why": "The first man Adam was made a living soul; the last Adam was made a quickening spirit. The last Adam is set against the first and is Christ, whom 1CO 15:47 calls the second man, the Lord from heaven; the first Ἀδάμ of the verse stays Adam's."
+    },
+    {
+      "text": "NESTLE1904",
+      "reference": "1TI 2:14",
+      "position": 7,
+      "surface": "γυνὴ",
+      "strongNumber": "G1135",
+      "existing": "eve",
+      "why": "Adam was not deceived, but the woman being deceived was in the transgression: the woman set against Adam is Eve, whom the verse before names, and whom the serpent beguiled (GEN 3:13; 2CO 11:3)."
+    },
+    {
+      "text": "RP2018",
+      "reference": "1TI 2:14",
+      "position": 7,
+      "surface": "γυνη",
+      "strongNumber": "G1135",
+      "existing": "eve",
+      "why": "Adam was not deceived, but the woman being deceived was in the transgression: the woman set against Adam is Eve, whom the verse before names, and whom the serpent beguiled (GEN 3:13; 2CO 11:3)."
+    },
+    {
+      "text": "TISCH",
+      "reference": "1TI 2:14",
+      "position": 7,
+      "surface": "γυνὴ",
+      "strongNumber": "G1135",
+      "existing": "eve",
+      "why": "Adam was not deceived, but the woman being deceived was in the transgression: the woman set against Adam is Eve, whom the verse before names, and whom the serpent beguiled (GEN 3:13; 2CO 11:3)."
+    },
+    {
+      "text": "TR1550",
+      "reference": "1TI 2:14",
+      "position": 7,
+      "surface": "γυνη",
+      "strongNumber": "G1135",
+      "existing": "eve",
+      "why": "Adam was not deceived, but the woman being deceived was in the transgression: the woman set against Adam is Eve, whom the verse before names, and whom the serpent beguiled (GEN 3:13; 2CO 11:3)."
+    },
+    {
+      "text": "TR1894",
+      "reference": "1TI 2:14",
+      "position": 7,
+      "surface": "γυνη",
+      "strongNumber": "G1135",
+      "existing": "eve",
+      "why": "Adam was not deceived, but the woman being deceived was in the transgression: the woman set against Adam is Eve, whom the verse before names, and whom the serpent beguiled (GEN 3:13; 2CO 11:3)."
+    },
+    {
+      "text": "WH1881",
+      "reference": "1TI 2:14",
+      "position": 7,
+      "surface": "γυνη",
+      "strongNumber": "G1135",
+      "existing": "eve",
+      "why": "Adam was not deceived, but the woman being deceived was in the transgression: the woman set against Adam is Eve, whom the verse before names, and whom the serpent beguiled (GEN 3:13; 2CO 11:3)."
+    }
+  ]
+}

@@ -355,6 +355,7 @@ internal sealed class ThingLoader(AppDbContext db, ILogger<ThingLoader> logger)
 
         Set(entity.Kind, record.EntityKind, v => entity.Kind = v);
         Set(entity.Subtype, record.Subtype, v => entity.Subtype = v);
+        Set(entity.PlaceKind, record.PlaceKind, v => entity.PlaceKind = v);
         Set(entity.Name, record.Name, v => entity.Name = v);
         Set(entity.Distinguisher, record.Distinguisher, v => entity.Distinguisher = v);
         Set(entity.Notes, record.Notes, v => entity.Notes = v);

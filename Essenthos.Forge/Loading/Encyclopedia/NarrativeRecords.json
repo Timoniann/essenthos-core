@@ -1,5 +1,5 @@
 {
-  "decidedBy": "the project owner, 2026-09-24: the beings, things and places the chapters turn on are records of their own — the serpent and the cherubim as beings, the Holy Spirit, the New Jerusalem apart from the earthly city, and Nathanael as the text names him — and 'the woman' of Genesis 2-4 is Eve where the narrative leaves no doubt. Each record says only what its verses say; an identification a later verse makes is cited to that verse.",
+  "decidedBy": "the project owner, 2026-09-24: the beings, things and places the chapters turn on are records of their own — the serpent and the cherubim as beings, the Holy Spirit, the New Jerusalem apart from the earthly city, and Nathanael as the text names him — and 'the woman' of Genesis 2-4 is Eve where the narrative leaves no doubt. Each record says only what its verses say; an identification a later verse makes is cited to that verse. On 2026-10-21 the owner asked for the garden in Eden as a place of its own and for the Nephilim to have their own page.",
   "records": [
     {
       "slug": "serpent-of-eden",
@@ -378,6 +378,168 @@
         }
       ],
       "why": "The owner ruled on 2026-09-24 that the man John 1:45-49 and 21:2 name is Nathanael, the name the text uses, and that his identification with Bartholomew is a later tradition and not the text's, kept in the notes. Every G3482 of the Greek editions stands in those verses."
+    },
+    {
+      "slug": "garden-of-eden",
+      "kind": "place",
+      "placeKind": "garden",
+      "name": "Garden of Eden",
+      "names": {
+        "ukr": "Еденський сад",
+        "deu": "Der Garten Eden",
+        "rus": "Едемский сад",
+        "spa": "El huerto de Edén"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Еденського саду",
+          "locative": "Еденському саду"
+        },
+        "rus": {
+          "genitive": "Едемского сада",
+          "locative": "Едемском саду"
+        },
+        "deu": {
+          "genitive": "des Gartens Eden",
+          "locative": "dem Garten Eden"
+        }
+      },
+      "distinguisher": "the garden the LORD God planted eastward in Eden, where he put the man he had formed (GEN 2:8)",
+      "notes": "The LORD God planted a garden eastward in Eden, and there he put the man whom he had formed (GEN 2:8). Out of the ground he made to grow every tree that is pleasant to the sight and good for food, the tree of life also in the midst of the garden, and the tree of knowledge of good and evil (GEN 2:9). A river went out of Eden to water the garden, and from thence it was parted and became four heads: Pison, Gihon, Hiddekel and Euphrates (GEN 2:10-14). The LORD God put the man into the garden of Eden to dress it and to keep it, and commanded him, Of every tree of the garden thou mayest freely eat, but of the tree of the knowledge of good and evil thou shalt not eat (GEN 2:15-17). There the serpent spoke to the woman, and the man and his wife heard the voice of the LORD God walking in the garden in the cool of the day, and hid themselves among the trees of the garden (GEN 3:1-8). The LORD God sent the man forth from the garden of Eden to till the ground from whence he was taken, and placed at the east of the garden cherubims and a flaming sword which turned every way, to keep the way of the tree of life (GEN 3:23-24). Later verses name it as the measure of a fruitful land: the plain of Jordan was well watered everywhere, even as the garden of the LORD (GEN 13:10); the LORD will make Zion's desert like the garden of the LORD (ISA 51:3); the desolate land is become like the garden of Eden (EZK 36:35); the land is as the garden of Eden before the army of the day of the LORD (JOL 2:3). Ezekiel calls it Eden the garden of God (EZK 28:13; 31:8-9). Genesis does not say where Eden lay beyond the four rivers it names.",
+      "called": [
+        {
+          "label": "Garden of Eden",
+          "hebrew": "גַּן־עֵדֶן",
+          "hebrewTransliterated": "gan-eden",
+          "hebrewStrongNumber": "H1588,H5731",
+          "meaning": "GEN 2:15; 3:23-24"
+        },
+        {
+          "label": "Garden of the LORD",
+          "hebrew": "גַּן־יְהוָה",
+          "hebrewTransliterated": "gan-YHVH",
+          "hebrewStrongNumber": "H1588,H3068",
+          "meaning": "GEN 13:10; ISA 51:3"
+        },
+        {
+          "label": "Garden of God",
+          "hebrew": "גַּן־אֱלֹהִים",
+          "hebrewTransliterated": "gan-elohim",
+          "hebrewStrongNumber": "H1588,H430",
+          "meaning": "EZK 28:13; 31:8-9"
+        },
+        {
+          "label": "Еденський сад"
+        },
+        {
+          "label": "Едемський сад"
+        },
+        {
+          "label": "Garten Eden"
+        },
+        {
+          "label": "Huerto de Edén"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "GEN 2:8-17",
+          "role": "key"
+        },
+        {
+          "reference": "GEN 3:1-24",
+          "role": "key"
+        }
+      ],
+      "related": [
+        {
+          "type": "part-of",
+          "to": "eden-2",
+          "reference": "GEN 2:8"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "H1588",
+          "only": [
+            "GEN 2:8",
+            "GEN 2:9",
+            "GEN 2:10",
+            "GEN 2:15",
+            "GEN 2:16",
+            "GEN 3",
+            "GEN 13:10",
+            "ISA 51:3",
+            "EZK 28:13",
+            "EZK 31:8",
+            "EZK 31:9",
+            "EZK 36:35",
+            "JOL 2:3"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by claude-opus-5-5 on 2026-10-21, on the project owner's instruction of that day that the garden in Eden is a record of its own, a place inside the land of Eden. Every H1588 of Genesis 2-3 is this garden (2:8, 9, 10, 15, 16; 3:1, 2, 3, 8 twice, 10, 23, 24), and so are the garden of the LORD of GEN 13:10 and ISA 51:3, Eden the garden of God of EZK 28:13 and 31:8-9 (31:8 twice), and the garden of Eden of EZK 36:35 and JOL 2:3. The other gardens, the king's garden, the garden of Uzza, the gardens of the Song of Songs and those Jeremiah bids the exiles plant, are not linked."
+    },
+    {
+      "slug": "nephilim",
+      "kind": "people",
+      "name": "Nephilim",
+      "names": {
+        "ukr": "Нефілими",
+        "deu": "Die Nephilim",
+        "rus": "Исполины",
+        "spa": "Los nefilim"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Нефілимів",
+          "locative": "Нефілимах"
+        },
+        "rus": {
+          "genitive": "Исполинов",
+          "locative": "Исполинах"
+        }
+      },
+      "distinguisher": "the giants who were on the earth in those days, and also after that (GEN 6:4), of whom the spies said the sons of Anak came (NUM 13:33)",
+      "notes": "There were Nephilim, the giants, in the earth in those days; and also after that, when the sons of God came in unto the daughters of men, and they bare children to them, the same became mighty men which were of old, men of renown (GEN 6:4). The spies Moses sent into the land of Canaan brought up an evil report of it: all the people we saw in it are men of a great stature, and there we saw the Nephilim, the sons of Anak, which come of the Nephilim, and we were in our own sight as grasshoppers (NUM 13:32-33). The name stands in these two verses only. The Septuagint renders it giants (γίγαντες), as the King James, Ohienko and the Synodal do; the Rephaim and the Anakim, whom the King James also calls giants (DEU 2:11), are named by other words.",
+      "called": [
+        {
+          "label": "Nephilim",
+          "hebrew": "נְפִלִים",
+          "hebrewTransliterated": "nefilim",
+          "hebrewStrongNumber": "H5303",
+          "meaning": "GEN 6:4; NUM 13:33"
+        },
+        {
+          "label": "Нефілими"
+        },
+        {
+          "label": "Велетні"
+        },
+        {
+          "label": "Исполины"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "GEN 6:1-4",
+          "role": "key"
+        },
+        {
+          "reference": "NUM 13:32-33",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "H5303",
+          "only": [
+            "GEN 6:4",
+            "NUM 13:33"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by claude-opus-5-5 on 2026-10-21, on the project owner's instruction of that day that the Nephilim have their own page. נְפִלִים stands three times in the Hebrew, once in GEN 6:4 and twice in NUM 13:33, and every one is this people; the Septuagint's γίγαντες of those verses reach it through the links. That the sons of Anak come of them is NUM 13:33's statement, the spies' report."
     }
   ],
   "refers": [
@@ -388,7 +550,6 @@
           "strong": "H802",
           "only": [
             "GEN 2:22",
-            "GEN 2:23",
             "GEN 2:25",
             "GEN 3:1",
             "GEN 3:2",
@@ -407,7 +568,7 @@
           ]
         }
       ],
-      "why": "Read verse by verse by a language model on 2026-09-24, on the project owner's ruling of that day that 'the woman' of Genesis 2-4 is Eve where the narrative leaves no doubt. From the woman made from the rib (GEN 2:22) to Adam knowing his wife (GEN 4:1, 25), every H802 is she, 'the woman' or 'his wife' (18 words in 17 verses); GEN 2:24, 'shall cleave unto his wife', speaks of any man and his wife and is left, and so is every woman after GEN 4:25."
+      "why": "Read verse by verse by a language model on 2026-09-24, on the project owner's ruling of that day that 'the woman' of Genesis 2-4 is Eve where the narrative leaves no doubt, and read again word by word by claude-opus-5-5 on 2026-10-21, on his instruction to take Eve off every word that does not refer to her. From the woman made from the rib (GEN 2:22) to Adam knowing his wife (GEN 4:1, 25), H802 is she, 'the woman' or 'his wife' (17 words in 16 verses), the woman of the curse on the serpent (GEN 3:15) included, since the verse speaks to the serpent of the woman it beguiled (3:13). Not her: GEN 2:23, where 'she shall be called Woman, because she was taken out of Man' names what she is, the word for woman from the word for man; GEN 2:24, 'shall cleave unto his wife', which speaks of any man and his wife; and every woman after GEN 4:25."
     }
   ]
 }

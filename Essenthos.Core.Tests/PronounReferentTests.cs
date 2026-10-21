@@ -240,9 +240,40 @@ public sealed class PronounReferentTests : IDisposable
             .Should().Be(0, "nothing was written");
     }
 
+    /// <summary>
+    /// A possessive agrees with the thing possessed and says nothing of the possessor: the Synodal's
+    /// <em>жены твоей</em> and Ohienko's <em>своєї жінки</em> in Genesis 3:17 are Adam's wife, and the
+    /// <em>твоей</em> and <em>своєї</em> a link carried Eve onto are his. The wife keeps her.
+    /// </summary>
+    [Fact]
+    public async Task APossessiveSaysNoSexAndKeepsNobodyItWasCarriedOnto()
+    {
+        Corpus.Add(_db, "RUSV", TextKind.Translation, "rus", (3, 17, ["голос", "жены", "твоей"]));
+        Corpus.Add(_db, "UBIO", TextKind.Translation, "ukr", (3, 18, ["голосу", "своєї", "жінки"]));
+        var eve = Person("eve", "Eve", "female");
+        await _db.SaveChangesAsync();
+
+        await Name(3, 17, 2, eve);
+        await Name(3, 17, 3, eve);
+        await Name(3, 18, 2, eve);
+        await Name(3, 18, 3, eve);
+        await _db.SaveChangesAsync();
+
+        var outcome = await new PronounReferents(_db, NullLogger<PronounReferents>.Instance).Withdraw();
+
+        outcome.Withdrawn.Should().Be(2);
+        (await _db.WordEntities.Select(a => a.Word!.Surface).ToListAsync())
+            .Should().BeEquivalentTo("жены", "жінки");
+    }
+
     [Theory]
     [InlineData("eng", "Him", true)]
     [InlineData("ukr", "його", true)]
+    [InlineData("rus", "твоей", true)]
+    [InlineData("rus", "своей", true)]
+    [InlineData("ukr", "своєї", true)]
+    [InlineData("ukr", "твоєї", true)]
+    [InlineData("rus", "жены", false)]
     [InlineData("deu", "ihm", true)]
     [InlineData("eng", "Moses", false)]
     [InlineData("grc", "αὐτόν", true)]

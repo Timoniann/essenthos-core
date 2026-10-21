@@ -377,8 +377,8 @@ internal sealed class DatasetLoader(
             new("words-for-god", WriteTheWordsForGod),
             new("titles", HoldTheTitlesAsTitles),
             new("own-names", GiveTheNamesNoDatasetGives),
-            new("things", WriteTheThingsMadeAndTheTimesKept),
             new("narratives", WriteWhatTheNarrativesTurnOn),
+            new("things", WriteTheThingsMadeAndTheTimesKept),
             new("eponyms", NameTheAncestorsTheTribesAreNamedAfter),
             new("realms", cancellationToken => NameThePeoplesTheRealmsAreNamedAfter(resources, cancellationToken)),
             new("spelled-names", NameTheGreekNamesARecordSpells),
@@ -1976,9 +1976,11 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// The serpent, the cherubim, the Holy Spirit, the New Jerusalem and Nathanael, and the words the
-    /// narrative refers to Eve by. Beside the objects, for the same reasons, and before the fold,
-    /// which moves onto Nathanael what the dataset's record of Bartholomew holds of him.
+    /// The serpent, the cherubim, the Holy Spirit, the New Jerusalem, Nathanael, the garden of Eden and
+    /// the Nephilim, and the words the narrative refers to Eve by. Beside the objects, for the same
+    /// reasons, and before them, because the trees of Eden stand in the garden and a relation is
+    /// written only to a record already held; and before the fold, which moves onto Nathanael what
+    /// the dataset's record of Bartholomew holds of him.
     /// </summary>
     private async Task WriteWhatTheNarrativesTurnOn(CancellationToken cancellationToken)
     {

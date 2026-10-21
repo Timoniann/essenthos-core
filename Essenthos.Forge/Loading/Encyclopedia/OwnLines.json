@@ -707,6 +707,13 @@
       "ukr": "Мертве море, куди впадає Йордан (NUM 34:12; JOS 15:5)",
       "deu": "das Tote Meer, in das der Jordan mündet (NUM 34:12; JOS 15:5)",
       "spa": "el mar Muerto, donde desemboca el Jordán (NUM 34:12; JOS 15:5)"
+    },
+    {
+      "slug": "eden-2",
+      "english": "the land in the east where the LORD God planted a garden, and out of which a river went to water it (GEN 2:8-10)",
+      "ukr": "край на сході, де Господь Бог насадив сад і звідки виходила ріка, щоб напувати його (GEN 2:8-10)",
+      "deu": "das Land im Osten, in dem Gott der HERR einen Garten pflanzte und aus dem ein Strom ausging, ihn zu bewässern (GEN 2:8-10)",
+      "spa": "la tierra al oriente donde Jehová Dios plantó un huerto, y de la que salía un río para regarlo (GEN 2:8-10)"
     }
   ]
 }
