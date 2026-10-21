@@ -50,22 +50,28 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
     /// </summary>
     private static readonly string Named =
         $"""
+        WITH rendered AS (
+            -- Gathered for every annotation at once: asked per word, the lookup ran a million and a
+            -- half times one after another, beside a scan that had finished long before.
+            SELECT a.id, min(theirs_word.lemma) AS lemma
+            FROM word_entity a
+            JOIN link_word mine ON mine.word_id = a.word_id
+            JOIN link_word theirs ON theirs.link_id = mine.link_id AND theirs.side <> mine.side
+            JOIN word theirs_word ON theirs_word.id = theirs.word_id
+            JOIN text theirs_text ON theirs_text.id = theirs_word.text_id
+                 AND theirs_text.language = ANY(@originals)
+            JOIN word_entity same ON same.word_id = theirs_word.id AND same.entity_id = a.entity_id
+            GROUP BY a.id
+        )
         SELECT a.entity_id, hw.text_id, hw.verse_id, hw.position, hw.text, hw.trailer, hw.lemma, ht.language,
-               CASE WHEN ht.language = ANY(@originals) THEN NULL ELSE (
-                   SELECT min(theirs_word.lemma)
-                   FROM link_word mine
-                   JOIN link_word theirs ON theirs.link_id = mine.link_id AND theirs.side <> mine.side
-                   JOIN word theirs_word ON theirs_word.id = theirs.word_id
-                   JOIN text theirs_text ON theirs_text.id = theirs_word.text_id
-                        AND theirs_text.language = ANY(@originals)
-                   JOIN word_entity same ON same.word_id = theirs_word.id AND same.entity_id = a.entity_id
-                   WHERE mine.word_id = hw.id) END AS renders,
+               CASE WHEN ht.language = ANY(@originals) THEN NULL ELSE rendered.lemma END AS renders,
                CASE WHEN a.note LIKE @guessed THEN a.confidence END AS guess,
                e.kind IN ('object', 'observance', 'title') AS thing
         FROM word_entity a
         JOIN entity e ON e.id = a.entity_id
         JOIN word hw ON hw.id = a.word_id
         JOIN text ht ON ht.id = hw.text_id
+        LEFT JOIN rendered ON rendered.id = a.id
         WHERE NOT {Annotating.NeverAName} AND NOT {Pronouns.IsWord()}
         """;
 

@@ -74,12 +74,15 @@ internal sealed class ConsensusNamesakes(AppDbContext db, ILogger<ConsensusNames
         CREATE INDEX ON consensus (b, c, v);
         CREATE TEMP TABLE read_here ON COMMIT DROP AS
         SELECT DISTINCT r.canonical_book AS b, r.canonical_chapter AS c, r.canonical_verse AS v, a.entity_id
-        FROM (SELECT DISTINCT b, c, v FROM consensus) at_verse
-        JOIN verse_reference r ON r.canonical_book = at_verse.b AND r.canonical_chapter = at_verse.c
-             AND r.canonical_verse = at_verse.v AND r.is_primary
-        JOIN word w ON w.verse_id = r.verse_id
-        JOIN word_entity a ON a.word_id = w.id
-        WHERE a.source NOT IN (@consensus, @source) AND coalesce(a.note, '') NOT LIKE @carried;
+        FROM word_entity a
+        JOIN word w ON w.id = a.word_id
+        JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
+        WHERE a.source NOT IN (@consensus, @source) AND coalesce(a.note, '') NOT LIKE @carried
+          -- From the annotations to the verses rather than the other way: walked from the verses,
+          -- every word of thirteen thousand verses in every text was looked up for an annotation.
+          AND EXISTS (SELECT 1 FROM consensus at_verse
+                      WHERE at_verse.b = r.canonical_book AND at_verse.c = r.canonical_chapter
+                        AND at_verse.v = r.canonical_verse);
         CREATE INDEX ON read_here (b, c, v);
         CREATE TEMP TABLE misread ON COMMIT DROP AS
         SELECT c.*, namesakes.ids

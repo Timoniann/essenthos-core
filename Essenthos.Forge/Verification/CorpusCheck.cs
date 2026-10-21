@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System.Diagnostics;
+using System.Globalization;
 using System.Text.Json;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -36,7 +37,7 @@ namespace Essenthos.Core.Verification;
 /// worst-covered text in this corpus is a printed edition and a headline share computed without it
 /// is a headline about a subset.
 /// </summary>
-internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
+internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger, int parallel = 1)
 {
     /// <summary>
     /// Where the corpus already stands, less a margin. A floor is for catching a load that lost
@@ -238,6 +239,16 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             SELECT text_id, book, chapter, count(*) AS verses FROM placed GROUP BY 1, 2, 3
         ),
         pairs AS (SELECT DISTINCT from_text_id, to_text_id FROM link),
+        chapters AS (
+            SELECT p.from_text_id, p.to_text_id,
+                   count(DISTINCT (here.book, here.chapter)) FILTER (WHERE there.text_id IS NOT NULL) AS shared,
+                   count(DISTINCT (here.book, here.chapter)) FILTER (WHERE here.verses <> there.verses) AS differing
+            FROM pairs p
+            LEFT JOIN size here ON here.text_id = p.from_text_id
+            LEFT JOIN size there ON there.text_id = p.to_text_id
+                AND (there.book, there.chapter) = (here.book, here.chapter)
+            GROUP BY p.from_text_id, p.to_text_id
+        ),
         strength AS (
             SELECT l.from_text_id, l.to_text_id, w.verse_id, avg(l.confidence::numeric) AS mean, count(*) AS links
             FROM link l
@@ -245,32 +256,31 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             JOIN word w ON w.id = lw.word_id
             WHERE l.confidence IS NOT NULL
             GROUP BY 1, 2, 3
+        ),
+        -- One pass over the verses' strengths for every pair. Asked of each pair in turn, the
+        -- strengths were materialised and read three times per pair, which was most of the measure.
+        judged AS (
+            SELECT from_text_id, to_text_id, count(*) AS verses,
+                   count(*) FILTER (WHERE links >= {EnoughLinks} AND mean < {Weak}) AS weak,
+                   (array_agg(verse_id ORDER BY mean, verse_id)
+                       FILTER (WHERE links >= {EnoughLinks} AND mean < {Weak}))[1:{WorstNamed}] AS worst
+            FROM strength
+            GROUP BY 1, 2
         )
         SELECT f.slug,
                t.slug,
-               count(DISTINCT (here.book, here.chapter)) FILTER (WHERE there.text_id IS NOT NULL),
-               count(DISTINCT (here.book, here.chapter)) FILTER (WHERE here.verses <> there.verses),
-               (SELECT count(*) FROM strength s
-                 WHERE s.from_text_id = p.from_text_id AND s.to_text_id = p.to_text_id),
-               (SELECT count(*) FROM strength s
-                 WHERE s.from_text_id = p.from_text_id AND s.to_text_id = p.to_text_id
-                   AND s.links >= {EnoughLinks} AND s.mean < {Weak}),
-               (SELECT coalesce(array_agg(name ORDER BY mean, verse_id), ARRAY[]::text[]) FROM (
-                    SELECT b.name || ' ' || v.chapter_number || ':' || v.number AS name, s.mean, s.verse_id
-                    FROM strength s
-                    JOIN verse v ON v.id = s.verse_id
-                    JOIN book b ON b.id = v.book_id
-                    WHERE s.from_text_id = p.from_text_id AND s.to_text_id = p.to_text_id
-                      AND s.links >= {EnoughLinks} AND s.mean < {Weak}
-                    ORDER BY s.mean, s.verse_id
-                    LIMIT {WorstNamed}) worst)
-        FROM pairs p
-        JOIN text f ON f.id = p.from_text_id
-        JOIN text t ON t.id = p.to_text_id
-        LEFT JOIN size here ON here.text_id = p.from_text_id
-        LEFT JOIN size there ON there.text_id = p.to_text_id
-            AND (there.book, there.chapter) = (here.book, here.chapter)
-        GROUP BY f.slug, t.slug, p.from_text_id, p.to_text_id
+               c.shared,
+               c.differing,
+               coalesce(j.verses, 0),
+               coalesce(j.weak, 0),
+               coalesce((SELECT array_agg(b.name || ' ' || v.chapter_number || ':' || v.number ORDER BY x.n)
+                         FROM unnest(j.worst) WITH ORDINALITY AS x(verse_id, n)
+                         JOIN verse v ON v.id = x.verse_id
+                         JOIN book b ON b.id = v.book_id), ARRAY[]::text[])
+        FROM chapters c
+        JOIN text f ON f.id = c.from_text_id
+        JOIN text t ON t.id = c.to_text_id
+        LEFT JOIN judged j ON j.from_text_id = c.from_text_id AND j.to_text_id = c.to_text_id
         ORDER BY f.slug, t.slug
         """;
 
@@ -979,6 +989,7 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        var took = Stopwatch.StartNew();
 
         // Planned against what the load just wrote, not against whatever autovacuum last sampled
         // before it. Statistics saying link words are nearly all on the 'from' side — true of an
@@ -990,39 +1001,35 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
             await analyze.ExecuteNonQueryAsync(cancellationToken);
         }
 
-        var coverage = await Read(connection, CoverageSql, cancellationToken, reader => new Coverage(
+        logger.LogInformation("Verify: statistics in {Seconds:F1} s", took.Elapsed.TotalSeconds);
+
+        var votersLoaded = await db.Texts
+            .Where(t => t.Slug == Voted || t.Slug == FirstVoter || t.Slug == SecondVoter)
+            .CountAsync(cancellationToken) == 3;
+        var profiled = await db.StrongProfiles.CountAsync(cancellationToken);
+
+        // A test measures inside a transaction its rows were never committed from, and only the
+        // connection holding it can see them.
+        var sessions = new Sessions(connection, db.Database.CurrentTransaction is null ? parallel : 1, logger, cancellationToken);
+
+        var stranded = sessions.Read("stranded", StrandedSql, reader => new Stranded(
+            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), reader.GetFieldValue<string[]>(3)));
+
+        var coverage = sessions.Read("coverage", CoverageSql, reader => new Coverage(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
             (int)reader.GetInt64(4), (int)reader.GetInt64(5), (int)reader.GetInt64(6),
             (int)reader.GetInt64(7), (int)reader.GetInt64(8)));
 
-        var reach = Reach.Gather(await Read(connection, ReachSql, cancellationToken,
-            reader => (Witness: reader.GetString(0), From: reader.GetString(1),
-                       Lexical: (int)reader.GetInt64(2), Reached: (int)reader.GetInt64(3),
-                       Method: reader.IsDBNull(4) ? null : reader.GetString(4))));
+        var unaligned = sessions.Read("unaligned", UnalignedSql, reader => new Unaligned(
+            reader.GetString(0), reader.GetInt32(1), reader.GetString(2), (int)reader.GetInt64(3), (int)reader.GetInt64(4)));
 
-        var contention = await Read(connection, ContentionSql, cancellationToken, reader => new Contention(
-            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
-            (int)reader.GetInt64(4), (int)reader.GetInt64(5)));
-
-        var crowding = await Read(connection, CrowdingSql, cancellationToken, reader => new Crowding(
-            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
-
-        var absence = Absence.Gather(await Read(connection, AbsenceSql, cancellationToken,
-            reader => (Text: reader.GetString(0), Against: reader.GetString(1),
-                       Ordinal: reader.GetInt32(2), Book: reader.GetString(3),
-                       Omits: (int)reader.GetInt64(4), Expands: (int)reader.GetInt64(5))));
-
-        var pairing = await Read(connection, PairingSql, cancellationToken, reader => new Pairing(
+        var pairing = sessions.Read("pairing", PairingSql, reader => new Pairing(
             reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
             (int)reader.GetInt64(4), (int)reader.GetInt64(5), reader.GetFieldValue<string[]>(6)));
 
-        var agreement = await Read(connection, AgreementSql, cancellationToken, reader =>
-            new Agreement((int)reader.GetInt64(0), (int)reader.GetInt64(1)));
-
-        var vote = await TheVote(connection, cancellationToken);
-
-        var shared = await Read(connection, SharedSql, cancellationToken, reader => new SharedAddresses(
-            reader.GetString(0), reader.GetBoolean(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
+        var contention = sessions.Read("contention", ContentionSql, reader => new Contention(
+            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
+            (int)reader.GetInt64(4), (int)reader.GetInt64(5)));
 
         // Single-threaded, deliberately. These sweep every link in the corpus, and Postgres
         // parallelises them across workers that share their sort state through /dev/shm — which a
@@ -1030,44 +1037,82 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         // verification died with "No space left on device", which is a true sentence about a
         // segment nobody sized and a false one about the disk. Raising it belongs in the frozen
         // repository's compose file; not needing it belongs here.
-        await using (var single = new NpgsqlCommand("SET max_parallel_workers_per_gather = 0", connection))
-        {
-            await single.ExecuteNonQueryAsync(cancellationToken);
-        }
+        var integrity = Integrity
+            .Select(check => sessions.Read(check.Breaks, check.Sql,
+                reader => new IntegrityCheck(check.Breaks, (int)reader.GetInt64(0)), singleThreaded: true))
+            .ToList();
 
-        var integrity = new List<IntegrityCheck>(Integrity.Length);
-        foreach (var (breaks, sql) in Integrity)
-        {
-            await using var command = new NpgsqlCommand(sql, connection);
-            integrity.Add(new IntegrityCheck(breaks, (int)(long)(await command.ExecuteScalarAsync(cancellationToken))!));
-        }
+        var reach = sessions.Read("reach", ReachSql,
+            reader => (Witness: reader.GetString(0), From: reader.GetString(1),
+                       Lexical: (int)reader.GetInt64(2), Reached: (int)reader.GetInt64(3),
+                       Method: reader.IsDBNull(4) ? null : reader.GetString(4)));
 
-        await using (var restore = new NpgsqlCommand("RESET max_parallel_workers_per_gather", connection))
-        {
-            await restore.ExecuteNonQueryAsync(cancellationToken);
-        }
+        var crowding = sessions.Read("crowding", CrowdingSql, reader => new Crowding(
+            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
 
-        var unaligned = await Read(connection, UnalignedSql, cancellationToken, reader => new Unaligned(
-            reader.GetString(0), reader.GetInt32(1), reader.GetString(2), (int)reader.GetInt64(3), (int)reader.GetInt64(4)));
+        var absence = sessions.Read("absence", AbsenceSql,
+            reader => (Text: reader.GetString(0), Against: reader.GetString(1),
+                       Ordinal: reader.GetInt32(2), Book: reader.GetString(3),
+                       Omits: (int)reader.GetInt64(4), Expands: (int)reader.GetInt64(5)));
 
-        var stranded = await Read(connection, StrandedSql, cancellationToken, reader => new Stranded(
-            reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), reader.GetFieldValue<string[]>(3)));
+        var agreement = sessions.Read("agreement", AgreementSql, reader =>
+            new Agreement((int)reader.GetInt64(0), (int)reader.GetInt64(1)));
 
-        var counted = await Read(connection, LexiconCountSql, cancellationToken, reader => new CountDisagreement(
+        // Empty until both voters are loaded, which is silence rather than a claim that Nestle agrees
+        // with nobody: a corpus without them would report every word of his as decided by an edition
+        // it does not hold.
+        var vote = votersLoaded
+            ? sessions.Read("vote", VoteSql, reader => new Vote(
+                    Voted, FirstVoter, SecondVoter,
+                    (int)reader.GetInt64(0), (int)reader.GetInt64(1), (int)reader.GetInt64(2),
+                    (int)reader.GetInt64(3), (int)reader.GetInt64(4)),
+                parameters: command =>
+                {
+                    command.Parameters.AddWithValue("text", Voted);
+                    command.Parameters.AddWithValue("first", FirstVoter);
+                    command.Parameters.AddWithValue("second", SecondVoter);
+                    command.Parameters.AddWithValue("voters", new[] { FirstVoter, SecondVoter });
+                })
+            : Task.FromResult(new List<Vote>());
+
+        var shared = sessions.Read("shared addresses", SharedSql, reader => new SharedAddresses(
+            reader.GetString(0), reader.GetBoolean(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3)));
+
+        var counted = sessions.Read("lexicon counts", LexiconCountSql, reader => new CountDisagreement(
             reader.GetString(0), reader.GetInt32(1), (int)reader.GetInt64(2)));
-        var profiled = await db.StrongProfiles.CountAsync(cancellationToken);
+
+        var variation = sessions.Read("variation", VariationSql, reader => new Variation(
+                reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
+                (int)reader.GetInt64(4)),
+            parameters: command =>
+            {
+                command.Parameters.AddWithValue("source", SeptuagintLinkLoader.Source);
+                command.Parameters.AddWithValue("texts", Varied);
+            });
+
+        var twoParents = sessions.Read("two parents", TwoParentsSql, reader => new TwoParents(
+            reader.GetString(0), reader.GetString(1), reader.GetFieldValue<string[]>(2)));
+
+        await sessions.Run();
+        var lexiconCounted = await counted;
         LexiconCounts? lexicon = profiled == 0
             ? null
             : new LexiconCounts(
                 profiled,
-                profiled - counted.Count,
-                counted.Count(d => d.Counted == 0),
-                [.. counted.OrderByDescending(d => Math.Abs(d.Stated - d.Counted)).ThenBy(d => d.Number).Take(LargestDisagreements)]);
+                profiled - lexiconCounted.Count,
+                lexiconCounted.Count(d => d.Counted == 0),
+                [.. lexiconCounted.OrderByDescending(d => Math.Abs(d.Stated - d.Counted)).ThenBy(d => d.Number).Take(LargestDisagreements)]);
 
-        var variation = await TheVariation(connection, cancellationToken);
+        var integrityFound = new List<IntegrityCheck>(Integrity.Length);
+        foreach (var check in integrity)
+        {
+            integrityFound.Add((await check).Single());
+        }
 
-        var parents = await Read(connection, TwoParentsSql, cancellationToken, reader => new TwoParents(
-            reader.GetString(0), reader.GetString(1), reader.GetFieldValue<string[]>(2)));
+        logger.LogInformation("Verify: measured in {Seconds:F1} s over {Sessions} session(s)",
+            took.Elapsed.TotalSeconds, sessions.Degree);
+
+        var parents = await twoParents;
         if (parents.Count > 0)
         {
             logger.LogWarning(
@@ -1078,8 +1123,132 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         }
 
         return new CorpusMeasures(
-            coverage, reach, contention, crowding, absence, pairing, agreement, vote, integrity, shared, unaligned,
-            stranded, variation, lexicon, parents);
+            await coverage, Reach.Gather(await reach), await contention, await crowding, Absence.Gather(await absence),
+            await pairing, await agreement, await vote, integrityFound, await shared, await unaligned,
+            await stranded, await variation, lexicon, parents);
+    }
+
+    /// <summary>
+    /// The connections the measures run on. One is the context's own, and the measures take turns on
+    /// it; more open beside it, each measure on one of its own, because every measure is a read of
+    /// its own and the slowest of them alone is a fraction of the whole.
+    /// </summary>
+    private sealed class Sessions(
+        NpgsqlConnection own,
+        int degree,
+        ILogger logger,
+        CancellationToken cancellationToken)
+    {
+        /// <summary>
+        /// Seconds each measure took on the whole corpus with six sessions (2026-10-21), so the longest
+        /// start first and the last to start are short. Only the order they start in comes from here.
+        /// </summary>
+        private static readonly Dictionary<string, double> Expected = new(StringComparer.Ordinal)
+        {
+            ["contention"] = 68,
+            ["word links crossing a verse pair no verse link joins"] = 67,
+            ["stranded"] = 60,
+            ["link words whose text disagrees with the link's own"] = 53,
+            ["unaligned"] = 47,
+            ["coverage"] = 45,
+            ["reach"] = 27,
+            ["crowding"] = 25,
+            ["words shown as having no counterpart and as rendered at once"] = 21,
+            ["pairing"] = 20,
+            ["agreement"] = 11,
+            ["links no claim stands on, so nothing says what asserted them"] = 9,
+            ["verse links saying again what another link of the same pair says"] = 8,
+        };
+
+        private readonly List<(double Expected, Func<Task> Start)> _waiting = [];
+
+        public int Degree { get; } = Math.Max(1, degree);
+
+        public Task<List<T>> Read<T>(
+            string what,
+            string sql,
+            Func<NpgsqlDataReader, T> row,
+            Action<NpgsqlCommand>? parameters = null,
+            bool singleThreaded = false)
+        {
+            var result = new TaskCompletionSource<List<T>>(TaskCreationOptions.RunContinuationsAsynchronously);
+            _waiting.Add((Expected.GetValueOrDefault(what), async () =>
+            {
+                try
+                {
+                    result.SetResult(await Measure(what, sql, row, parameters, singleThreaded));
+                }
+                catch (Exception exception)
+                {
+                    result.SetException(exception);
+                    throw;
+                }
+            }));
+            return result.Task;
+        }
+
+        /// <summary>Every measure asked for, at most <see cref="Degree"/> at once, the longest first.</summary>
+        public async Task Run()
+        {
+            using var free = new SemaphoreSlim(Degree);
+            async Task Next(Func<Task> start)
+            {
+                await free.WaitAsync(cancellationToken);
+                try
+                {
+                    await start();
+                }
+                finally
+                {
+                    free.Release();
+                }
+            }
+
+            await Task.WhenAll(_waiting.OrderByDescending(measure => measure.Expected).Select(measure => Next(measure.Start)).ToList());
+        }
+
+        private async Task<List<T>> Measure<T>(
+            string what,
+            string sql,
+            Func<NpgsqlDataReader, T> row,
+            Action<NpgsqlCommand>? parameters,
+            bool singleThreaded)
+        {
+            var took = Stopwatch.StartNew();
+            await using var opened = Degree > 1 ? own.CloneWith(own.ConnectionString) : null;
+            if (opened is not null)
+            {
+                await opened.OpenAsync(cancellationToken);
+            }
+
+            var connection = opened ?? own;
+            if (singleThreaded)
+            {
+                await Execute(connection, "SET max_parallel_workers_per_gather = 0");
+            }
+
+            List<T> rows;
+            try
+            {
+                rows = await CorpusCheck.Read(connection, sql, cancellationToken, row, parameters);
+            }
+            finally
+            {
+                if (singleThreaded)
+                {
+                    await Execute(connection, "RESET max_parallel_workers_per_gather");
+                }
+            }
+
+            logger.LogInformation("Verify: {What} in {Seconds:F1} s", what, took.Elapsed.TotalSeconds);
+            return rows;
+        }
+
+        private async Task Execute(NpgsqlConnection connection, string sql)
+        {
+            await using var command = new NpgsqlCommand(sql, connection);
+            await command.ExecuteNonQueryAsync(cancellationToken);
+        }
     }
 
     /// <summary>The editions whose places of variation are counted against each text they are joined to by their letters.</summary>
@@ -1161,26 +1330,6 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         ORDER BY f.slug, t.slug
         """;
 
-    private static async Task<IReadOnlyList<Variation>> TheVariation(
-        NpgsqlConnection connection,
-        CancellationToken cancellationToken)
-    {
-        await using var command = new NpgsqlCommand(VariationSql, connection);
-        command.Parameters.AddWithValue("source", SeptuagintLinkLoader.Source);
-        command.Parameters.AddWithValue("texts", Varied);
-
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        var rows = new List<Variation>();
-        while (await reader.ReadAsync(cancellationToken))
-        {
-            rows.Add(new Variation(
-                reader.GetString(0), reader.GetString(1), (int)reader.GetInt64(2), (int)reader.GetInt64(3),
-                (int)reader.GetInt64(4)));
-        }
-
-        return rows;
-    }
-
     /// <summary>How many of the numbers the compiler's count parts from BHSA's on most are kept to name.</summary>
     private const int LargestDisagreements = 50;
 
@@ -1209,45 +1358,6 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
     private const string FirstVoter = TischendorfTextSource.Slug;
 
     private const string SecondVoter = WestcottHortTextSource.Slug;
-
-    /// <summary>
-    /// Empty until both voters are loaded, which is silence rather than a claim that Nestle agrees
-    /// with nobody. A corpus without them would otherwise report every word of his as decided by an
-    /// edition it does not hold.
-    /// </summary>
-    private async Task<IReadOnlyList<Vote>> TheVote(
-        NpgsqlConnection connection,
-        CancellationToken cancellationToken)
-    {
-        var loaded = await db.Texts
-            .Where(t => t.Slug == Voted || t.Slug == FirstVoter || t.Slug == SecondVoter)
-            .CountAsync(cancellationToken);
-
-        if (loaded < 3)
-        {
-            return [];
-        }
-
-        await using var command = new NpgsqlCommand(VoteSql, connection);
-        command.Parameters.AddWithValue("text", Voted);
-        command.Parameters.AddWithValue("first", FirstVoter);
-        command.Parameters.AddWithValue("second", SecondVoter);
-        command.Parameters.AddWithValue("voters", new[] { FirstVoter, SecondVoter });
-
-        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
-        if (!await reader.ReadAsync(cancellationToken))
-        {
-            return [];
-        }
-
-        return
-        [
-            new Vote(
-                Voted, FirstVoter, SecondVoter,
-                (int)reader.GetInt64(0), (int)reader.GetInt64(1), (int)reader.GetInt64(2),
-                (int)reader.GetInt64(3), (int)reader.GetInt64(4)),
-        ];
-    }
 
     /// <summary>
     /// Measures the corpus, stores the row, and says how it compares with the load before it. The
@@ -1390,9 +1500,11 @@ internal sealed class CorpusCheck(AppDbContext db, ILogger<CorpusCheck> logger)
         NpgsqlConnection connection,
         string sql,
         CancellationToken cancellationToken,
-        Func<NpgsqlDataReader, T> row)
+        Func<NpgsqlDataReader, T> row,
+        Action<NpgsqlCommand>? parameters = null)
     {
         await using var command = new NpgsqlCommand(sql, connection);
+        parameters?.Invoke(command);
         await using var reader = await command.ExecuteReaderAsync(cancellationToken);
 
         var rows = new List<T>();

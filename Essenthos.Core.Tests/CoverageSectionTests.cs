@@ -153,6 +153,21 @@ public sealed class CoverageSectionTests : IDisposable
         coverage.Unpaired.Should().Be(5);
     }
 
+    /// <summary>
+    /// The measures run side by side on connections of their own when the check is given more than
+    /// one, and say exactly what they say one after another on the context's own.
+    /// </summary>
+    [Fact]
+    public async Task SeveralSessionsMeasureWhatOneMeasures()
+    {
+        var alone = await _check.Measure();
+        var together = await new CorpusCheck(_db, NullLogger<CorpusCheck>.Instance, parallel: 4).Measure();
+
+        together.Should().BeEquivalentTo(alone, options => options.WithStrictOrdering());
+        together.Coverage.Should().NotBeEmpty();
+        together.Integrity.Should().HaveCount(alone.Integrity.Count);
+    }
+
     private async Task<IReadOnlyList<Coverage>> Coverage() => (await _check.Measure()).Coverage;
 
     /// <summary>The first word of each text's first verse, which is enough to pair the two.</summary>

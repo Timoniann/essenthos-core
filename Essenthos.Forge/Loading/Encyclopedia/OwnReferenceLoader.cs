@@ -100,6 +100,7 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();
 
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+        await Run(connection, transaction, Settle, cancellationToken);
         var written = await Run(connection, transaction, Derivation, cancellationToken);
         written += await Run(connection, transaction, PeopleDerivation, cancellationToken,
             PeopleLoader.FromOurOwnWords);
@@ -113,6 +114,20 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
         logger.LogInformation("Read the references off the annotations: {Outcome}", outcome);
         return outcome;
     }
+
+    /// <summary>
+    /// What every word names once its annotations are settled, read once for the three statements
+    /// below: settling the whole corpus's annotations is most of what each of them cost. Nothing the
+    /// three write is read by it.
+    /// </summary>
+    private static readonly string Settle =
+        $"""
+         CREATE TEMP TABLE own_named ON COMMIT DROP AS
+         WITH {Annotating.Settled},
+         {Annotating.Named}
+         SELECT word_id, entity_id FROM named;
+         ANALYZE own_named
+         """;
 
     /// <summary>
     /// The settled annotations, and the verse each of them stands in.
@@ -133,13 +148,11 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     /// </summary>
     private static readonly string Derivation =
         $"""
-         WITH {Annotating.Settled},
-         {Annotating.Named}
          INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
                                    label, disputed, source)
          SELECT DISTINCT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
                 NULL, FALSE, @source
-         FROM named s
+         FROM own_named s
          JOIN entity e ON e.id = s.entity_id AND e.kind IN ({Named})
          JOIN word w ON w.id = s.word_id
          JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
@@ -160,13 +173,11 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     /// </summary>
     private static readonly string PeopleDerivation =
         $"""
-         WITH {Annotating.Settled},
-         {Annotating.Named}
          INSERT INTO entity_verse (entity_id, canonical_book, canonical_chapter, canonical_verse,
                                    label, disputed, source)
          SELECT DISTINCT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse,
                 e.name, FALSE, @source
-         FROM named s
+         FROM own_named s
          JOIN entity e ON e.id = s.entity_id AND e.kind = '{EnumSpelling.Of(EntityKind.People)}'
          JOIN word w ON w.id = s.word_id
          JOIN text t ON t.id = w.text_id AND t.slug = '{EntityCandidates.Witness}'
@@ -207,11 +218,9 @@ internal sealed class OwnReferenceLoader(AppDbContext db, ILogger<OwnReferenceLo
     /// </summary>
     private static readonly string Retraction =
         $"""
-         WITH {Annotating.Settled},
-         {Annotating.Named},
-         kept AS MATERIALIZED (
+         WITH kept AS MATERIALIZED (
              SELECT DISTINCT s.entity_id, r.canonical_book, r.canonical_chapter, r.canonical_verse
-             FROM named s
+             FROM own_named s
              JOIN word w ON w.id = s.word_id
              JOIN verse_reference r ON r.verse_id = w.verse_id AND r.is_primary
          )

@@ -139,14 +139,24 @@ internal sealed class DatasetLoader(
                 logger.LogInformation("Resuming at {Step}; the {Skipped} steps before it are not run", current.Name, first);
             }
 
+            var took = new List<(string Step, TimeSpan Took)>();
             foreach (var step in steps.Skip(first))
             {
                 current = step;
+                var started = Stopwatch.GetTimestamp();
                 await step.Run(stoppingToken);
+                var elapsed = Stopwatch.GetElapsedTime(started);
+                took.Add((step.Name, elapsed));
+                logger.LogInformation("Step {Step} took {Seconds:F1} s", step.Name, elapsed.TotalSeconds);
             }
 
             status.Ready();
-            logger.LogInformation("The dataset is loaded");
+            logger.LogInformation(
+                "The dataset is loaded in {Seconds:F0} s; the steps over a second: {Steps}",
+                took.Sum(step => step.Took.TotalSeconds),
+                string.Join(", ", took.Where(step => step.Took.TotalSeconds >= 1)
+                    .OrderByDescending(step => step.Took)
+                    .Select(step => $"{step.Step} {step.Took.TotalSeconds:F0} s")));
             return true;
         }
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)

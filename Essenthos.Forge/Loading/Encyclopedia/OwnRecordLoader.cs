@@ -574,8 +574,28 @@ internal sealed class OwnRecordLoader(
     /// same file wrote is not saved yet, so it is looked for among the tracked entities first.
     /// </summary>
     private async Task<Entity?> Existing(string slug, CancellationToken cancellationToken) =>
-        db.Entities.Local.FirstOrDefault(e => e.Slug == slug)
+        Tracked(slug)
         ?? await db.Entities.Include(e => e.Claims).FirstOrDefaultAsync(e => e.Slug == slug, cancellationToken);
+
+    /// <summary>
+    /// The record of that slug the context already tracks, read without detecting changes first:
+    /// every record here is tracked when it is added or read, never by being reached through
+    /// another, so detecting changes finds none the tracker does not hold, and doing it for every
+    /// ruling was most of what a file of rulings cost.
+    /// </summary>
+    private Entity? Tracked(string slug)
+    {
+        var detecting = db.ChangeTracker.AutoDetectChangesEnabled;
+        db.ChangeTracker.AutoDetectChangesEnabled = false;
+        try
+        {
+            return db.Entities.Local.FirstOrDefault(e => e.Slug == slug);
+        }
+        finally
+        {
+            db.ChangeTracker.AutoDetectChangesEnabled = detecting;
+        }
+    }
 
     /// <summary>
     /// What the ruling makes the record say about itself, and the claim that it was a person who

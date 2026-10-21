@@ -153,7 +153,12 @@ internal sealed class ForeignNames(AppDbContext db, ILogger<ForeignNames> logger
              UNION ALL SELECT title_entity_id, 'title ' || title_entity_id FROM title_bearer
              UNION ALL SELECT bearer_entity_id, 'title ' || title_entity_id FROM title_bearer) keyed;
          CREATE INDEX ON foreign_key (entity_id);
-         CREATE INDEX ON foreign_key (k, entity_id)
+         CREATE INDEX ON foreign_key (k, entity_id);
+         -- Autovacuum never reaches a temporary table; unanalysed, the three were planned as a few
+         -- hundred rows, and the refusal over the whole corpus took a quarter longer.
+         ANALYZE foreign_number;
+         ANALYZE foreign_spelling;
+         ANALYZE foreign_key
          """;
 
     /// <summary>
