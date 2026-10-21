@@ -45,7 +45,7 @@ internal static class StrongEndpoints
 
             if (entry is not null)
             {
-                var (relations, kin) = await Relations(db, canonical, cancellationToken);
+                var (relations, kin) = await Relations(db, canonical, cancellationToken, language);
                 return Results.Ok(Response(entry, await Gentilic(db, canonical, cancellationToken)) with
                 {
                     Relations = relations,
@@ -551,7 +551,8 @@ internal static class StrongEndpoints
     internal static async Task<(IList<StrongRelationResponse> Relations, IList<StrongRelationResponse> Kin)> Relations(
         AppDbContext db,
         string canonical,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? language = null)
     {
         var stated = await db.StrongRelations
             .AsNoTracking()
@@ -568,6 +569,7 @@ internal static class StrongEndpoints
             .Where(e => others.Contains(e.StrongNumber))
             .Select(e => new { e.StrongNumber, e.Lemma, e.Definition })
             .ToDictionaryAsync(e => e.StrongNumber, cancellationToken);
+        var glosses = await Glosses(db, others, language, cancellationToken);
 
         StrongRelationResponse Of(Database.Entities.StrongRelation relation, string? other) => new(
             relation.Kind,
@@ -576,7 +578,10 @@ internal static class StrongEndpoints
             other is null ? null : entries.GetValueOrDefault(other)?.Definition,
             relation.Hedged,
             relation.Statement,
-            relation.Source);
+            relation.Source)
+        {
+            Translation = other is null ? null : glosses.GetValueOrDefault(other),
+        };
 
         return (
             [.. stated.Where(r => r.FromNumber == canonical).Select(r => Of(r, r.ToNumber))],
@@ -647,6 +652,27 @@ internal static class StrongEndpoints
             .ToDictionaryAsync(t => t.StrongNumber, t => new StrongTranslationResponse(
                     t.Language, t.Definition, t.Derivation, t.KjvDefinition, t.DetailedDefinition,
                     t.Method, t.Confidence, t.Source, t.Note), cancellationToken);
+    }
+
+    /// <summary>
+    /// The definition alone of each entry in the language asked for, for a list that shows an entry's
+    /// gloss beside its number. Empty for English, which is the entries' own.
+    /// </summary>
+    internal static async Task<Dictionary<string, StrongGlossTranslationResponse>> Glosses(
+        AppDbContext db, IReadOnlyCollection<string> numbers, string? language, CancellationToken cancellationToken)
+    {
+        var code = LanguageCodes.Normalise(language);
+        if (numbers.Count == 0 || string.IsNullOrWhiteSpace(code) || code == "eng")
+        {
+            return [];
+        }
+
+        return await db.StrongEntryTranslations
+            .Where(t => numbers.Contains(t.StrongNumber) && t.Language == code && t.Definition != null)
+            .ToDictionaryAsync(
+                t => t.StrongNumber,
+                t => new StrongGlossTranslationResponse(t.Language, t.Definition!),
+                cancellationToken);
     }
 
     private static StrongEntryResponse Response(
@@ -771,6 +797,9 @@ internal record StrongTranslationResponse(
     string Source,
     string? Note);
 
+/// <summary>An entry's definition in one language other than Strong's English.</summary>
+internal record StrongGlossTranslationResponse(string Language, string Definition);
+
 /// <param name="Kind">
 /// <c>same-as</c>, <c>from</c>, <c>same-root-as</c>, <c>form-of</c>, <c>variant</c>,
 /// <c>contracted-from</c>, <c>corresponds-to</c>, <c>loan-from</c>, <c>patronymic</c>, <c>patrial</c>,
@@ -786,7 +815,11 @@ internal record StrongRelationResponse(
     string? Definition,
     bool Hedged,
     string Statement,
-    string Source);
+    string Source)
+{
+    /// <summary>The other entry's definition in the language asked for, where it has been translated.</summary>
+    public StrongGlossTranslationResponse? Translation { get; init; }
+}
 
 /// <param name="Language"><c>hbo</c> or <c>arc</c>.</param>
 /// <param name="Source">Whose analysis it is: a compiler's, never Strong's.</param>

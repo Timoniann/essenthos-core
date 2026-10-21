@@ -50,6 +50,7 @@ internal static class RenderingEndpoints
             [FromQuery] string? corpus,
             [FromQuery] string? word,
             [FromQuery] bool? exact,
+            [FromQuery] string? prose,
             AppDbContext db,
             ICanonIndex canon,
             WordForms forms,
@@ -78,7 +79,7 @@ internal static class RenderingEndpoints
             var matched = index.Matching(terms[0], exact ?? false);
             var witnesses = matched.Count == 0
                 ? []
-                : await Behind(db, text.Id, [.. matched.Select(form => form.Text)], cancellationToken);
+                : await Behind(db, text.Id, [.. matched.Select(form => form.Text)], cancellationToken, prose);
 
             return Results.Ok(new WordRenderingsResponse(
                 text.Slug,
@@ -104,7 +105,8 @@ internal static class RenderingEndpoints
         AppDbContext db,
         int textId,
         IReadOnlyCollection<string> spellings,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? prose = null)
     {
         var originals = await LinkedOriginals.Of(db, textId, cancellationToken);
         if (originals.Count == 0)
@@ -134,6 +136,7 @@ internal static class RenderingEndpoints
             .Where(e => numbers.Contains(e.StrongNumber))
             .Select(e => new { e.StrongNumber, e.Lemma, e.Transliteration, e.Definition })
             .ToDictionaryAsync(e => e.StrongNumber, cancellationToken);
+        var glosses = await StrongEndpoints.Glosses(db, numbers, prose, cancellationToken);
 
         var byWitness = rows.ToLookup(row => row.Witness);
 
@@ -166,7 +169,10 @@ internal static class RenderingEndpoints
                                         row.Ordinal, BookReferences.Name(row.Ordinal), BookReferences.Slug(row.Ordinal)),
                                     row.Chapter,
                                     row.Verse,
-                                    row.Surface))]);
+                                    row.Surface))])
+                        {
+                            Translation = group.Key.Number is { } glossed ? glosses.GetValueOrDefault(glossed) : null,
+                        };
                     })
                     .OrderByDescending(original => original.Occurrences)
                     .ThenBy(original => original.StrongNumber ?? original.Lemma, StringComparer.Ordinal)
@@ -367,7 +373,11 @@ internal record WordOriginalResponse(
     int Occurrences,
     int Links,
     IList<TextLinkMethodResponse> Methods,
-    IList<WordPlaceResponse> Samples);
+    IList<WordPlaceResponse> Samples)
+{
+    /// <summary>The entry's definition in the language <c>prose</c> asked for, where it has been translated.</summary>
+    public StrongGlossTranslationResponse? Translation { get; init; }
+}
 
 /// <param name="Text">The translation's word as it is printed there.</param>
 internal record WordPlaceResponse(BookRefResponse Book, int Chapter, int Verse, string Text);

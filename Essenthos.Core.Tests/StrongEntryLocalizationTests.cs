@@ -127,6 +127,56 @@ public sealed class StrongEntryLocalizationTests : IDisposable
         translated.GetProperty("confidence").ValueKind.Should().Be(JsonValueKind.Null);
     }
 
+    [Fact]
+    public async Task AListAsksForTheDefinitionAloneInTheReadersLanguage()
+    {
+        var glosses = await StrongEndpoints.Glosses(_db, ["G26", "G27"], "de", default);
+
+        glosses.Should().BeEquivalentTo(new Dictionary<string, StrongGlossTranslationResponse>
+        {
+            ["G26"] = new("deu", "Liebe"),
+        });
+        (await StrongEndpoints.Glosses(_db, ["G26"], "es", default))["G26"].Definition.Should().Be("amor");
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("en")]
+    public async Task AnEnglishListKeepsStrongsOwnWordsAndAsksNothing(string? language)
+    {
+        _commands.Reads = 0;
+        (await StrongEndpoints.Glosses(_db, ["G26"], language, default)).Should().BeEmpty();
+        _commands.Reads.Should().Be(0);
+    }
+
+    [Fact]
+    public void EveryListThatShowsAnEntrysGlossCarriesItsTranslationOnTheWire()
+    {
+        var gloss = new StrongGlossTranslationResponse("deu", "Liebe");
+        var relation = new StrongRelationResponse("from", "G26", "ἀγάπη", "love", false, "from G26", "Strong")
+        {
+            Translation = gloss,
+        };
+        var varied = new VariedRenderingResponse("G26", "ἀγάπη", "agápē", "love", "NESTLE1904", 1, 1, 1, 1, 1, [])
+        {
+            Translation = gloss,
+        };
+        var original = new WordOriginalResponse("G26", "ἀγάπη", "agápē", "love", 1, 1, [], []) { Translation = gloss };
+
+        foreach (var json in new[]
+                 {
+                     JsonSerializer.Serialize(relation, AppJsonSerializerContext.Default.StrongRelationResponse),
+                     JsonSerializer.Serialize(varied, AppJsonSerializerContext.Default.VariedRenderingResponse),
+                     JsonSerializer.Serialize(original, AppJsonSerializerContext.Default.WordOriginalResponse),
+                 })
+        {
+            using var document = JsonDocument.Parse(json);
+            document.RootElement.GetProperty("definition").GetString().Should().Be("love");
+            document.RootElement.GetProperty("translation").GetProperty("definition").GetString().Should().Be("Liebe");
+            document.RootElement.GetProperty("translation").GetProperty("language").GetString().Should().Be("deu");
+        }
+    }
+
     private sealed class TranslationCommands : DbCommandInterceptor
     {
         public int Reads { get; set; }

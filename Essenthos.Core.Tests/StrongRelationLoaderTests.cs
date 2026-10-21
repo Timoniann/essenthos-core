@@ -122,6 +122,28 @@ public sealed class StrongRelationLoaderTests : IDisposable
             StrongRelationLoader.HebrewSource));
         kin.Should().ContainSingle().Which.Should().Match<Endpoints.StrongRelationResponse>(r =>
             r.Kind == StrongRelationKinds.SameAs && r.Number == "H1006" && r.Lemma == "בַּיִת");
+        relations[0].Translation.Should().BeNull();
+    }
+
+    [Fact]
+    public async Task A_related_entry_is_glossed_in_the_readers_language_where_it_has_been_translated()
+    {
+        _db.StrongEntries.Add(new StrongEntry { StrongNumber = "H1129", Lemma = "בָּנָה", Definition = "to build" });
+        _db.StrongEntries.Add(new StrongEntry { StrongNumber = "H1006", Lemma = "בַּיִת", Definition = "Bajith" });
+        _db.StrongEntryTranslations.Add(new StrongEntryTranslation
+        {
+            StrongNumber = "H1129", Language = "ukr", Definition = "будувати",
+            Method = Database.Entities.Enums.LinkMethod.ModelReading, Source = "translator",
+        });
+        await _db.SaveChangesAsync();
+        await _loader.Load(HebrewPath, GreekPath, null);
+
+        var (relations, kin) = await Endpoints.StrongEndpoints.Relations(_db, "H1004", CancellationToken.None, "uk");
+
+        relations.Should().ContainSingle().Which.Translation.Should()
+            .Be(new Endpoints.StrongGlossTranslationResponse("ukr", "будувати"));
+        relations[0].Definition.Should().Be("to build");
+        kin.Should().ContainSingle().Which.Translation.Should().BeNull();
     }
 
     [Fact]
