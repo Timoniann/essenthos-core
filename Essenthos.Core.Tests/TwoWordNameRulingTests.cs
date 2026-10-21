@@ -19,6 +19,7 @@ namespace Essenthos.Core.Tests;
 /// Hebrew title carried its neighbours' numbers.
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
+[LongRunning]
 public sealed class TwoWordNameRulingTests : IDisposable
 {
     private const string Kulish = "Essenthos.Core.Loading.Encyclopedia.KulishTwoWordNameRecords.json";
@@ -64,6 +65,10 @@ public sealed class TwoWordNameRulingTests : IDisposable
         }
 
         _db.SaveChanges();
+
+        // The loader compares everything its context tracks on every query and save; the tens of
+        // thousands of rows written here made a load of seconds take minutes.
+        _db.ChangeTracker.Clear();
     }
 
     public void Dispose()

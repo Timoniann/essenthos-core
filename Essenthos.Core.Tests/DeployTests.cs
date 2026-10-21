@@ -18,6 +18,7 @@ namespace Essenthos.Core.Tests;
 /// server that answers as a deployed API does, and stand-ins for pwsh and dotnet that record what they
 /// were asked. Nothing here reaches a server: the addresses are documentation ones or this machine.
 /// </summary>
+[LongRunning]
 public sealed class DeployTests : IAsyncLifetime
 {
     private const string Origin = "http://localhost:5280";

@@ -122,11 +122,32 @@ internal static class Corpus
         IReadOnlyDictionary<string, Text>? texts = null)
     {
         var placed = new Dictionary<RuledWord, Word>();
+
+        // Looked up here rather than in DbSet.Local, which detects changes across everything the
+        // context tracks on every call: over a thousand rulings that was most of a test's setup.
+        var trackedTexts = new Dictionary<string, Text>(StringComparer.Ordinal);
+        foreach (var tracked in db.Texts.Local)
+        {
+            trackedTexts.TryAdd(tracked.Slug, tracked);
+        }
+
+        var trackedBooks = new Dictionary<(Text, int), Book>();
+        foreach (var tracked in db.Books.Local.Where(b => b.Text is not null))
+        {
+            trackedBooks.TryAdd((tracked.Text!, tracked.CanonicalOrdinal), tracked);
+        }
+
+        var trackedChapters = new Dictionary<(Book, int), Chapter>();
+        foreach (var tracked in db.Chapters.Local.Where(c => c.Book is not null))
+        {
+            trackedChapters.TryAdd((tracked.Book!, tracked.Number), tracked);
+        }
+
         foreach (var verse in words.Distinct().GroupBy(word => (word.Text, Address: word.Address()!.Value)))
         {
             var (book, chapter, number, label) = verse.Key.Address;
             var text = texts?.GetValueOrDefault(verse.Key.Text)
-                       ?? db.Texts.Local.FirstOrDefault(t => t.Slug == verse.Key.Text)
+                       ?? trackedTexts.GetValueOrDefault(verse.Key.Text)
                        ?? db.Texts.Add(new Text
                        {
                            Slug = verse.Key.Text,
@@ -139,13 +160,16 @@ internal static class Corpus
                                _ => "eng",
                            },
                        }).Entity;
-            var bookRow = db.Books.Local.FirstOrDefault(b => b.Text == text && b.CanonicalOrdinal == book)
+            trackedTexts.TryAdd(text.Slug, text);
+            var bookRow = trackedBooks.GetValueOrDefault((text, book))
                           ?? db.Books.Add(new Book
                           {
                               Text = text, CanonicalOrdinal = book, Position = book, Name = $"Book {book}", Slug = $"b{book}",
                           }).Entity;
-            var chapterRow = db.Chapters.Local.FirstOrDefault(c => c.Book == bookRow && c.Number == chapter)
+            trackedBooks.TryAdd((text, book), bookRow);
+            var chapterRow = trackedChapters.GetValueOrDefault((bookRow, chapter))
                              ?? db.Chapters.Add(new Chapter { Text = text, Book = bookRow, Number = chapter }).Entity;
+            trackedChapters.TryAdd((bookRow, chapter), chapterRow);
             var verseRow = db.Verses.Add(new Verse
             {
                 Text = text, Book = bookRow, Chapter = chapterRow, ChapterNumber = chapter, Number = number, Label = label,
