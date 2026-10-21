@@ -174,6 +174,16 @@ Resources/*/*
 # the backup rather than here, at the owner's word (NOT-0209). This line must stay below the one above it.
 Resources/Essenthos/lexicon/strong-*.jsonl
 
+# Raw model output of generation runs: Swete's page readings while the run goes, the Strong candidate
+# runs and the portrait drafts -- tens to hundreds of MB, rewritten while a run works. The backup
+# mirrors Resources/ whole, so they are kept there. What a loader reads from a run (a written table,
+# a corrections file) is committed under its own path. The owner's word, 2026-10-21. Below the line
+# that carries Resources/Essenthos/, like the Strong line.
+Resources/Essenthos/generation/pages-swete-*/out/
+Resources/Essenthos/generation/pages-swete-*/progress.json
+Resources/Essenthos/generation/strong-*/
+Resources/Essenthos/generation/portrait-*/
+
 # Maimonides' count of the commandments as this project curated it from two public-domain works:
 # 613 rows, 59 KB. The downloads it is written from stay out, and scripts/maimonides.py puts them back.
 !Resources/Maimonides/commandments.tsv
