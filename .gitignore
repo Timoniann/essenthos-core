@@ -180,7 +180,7 @@ Resources/Essenthos/lexicon/strong-*.jsonl
 # a corrections file) is committed under its own path. The owner's word, 2026-10-21. Below the line
 # that carries Resources/Essenthos/, like the Strong line.
 Resources/Essenthos/generation/pages-swete-*/out/
-Resources/Essenthos/generation/pages-swete-*/progress.json
+Resources/Essenthos/generation/pages-swete-*/progress.*
 Resources/Essenthos/generation/strong-*/
 Resources/Essenthos/generation/portrait-*/
 
