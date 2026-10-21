@@ -106,7 +106,11 @@ builder.Services.AddScoped<NameListPass>();
 builder.Services.AddScoped<NamesFirstPass>();
 builder.Services.AddScoped<PossessivePass>();
 builder.Services.AddScoped<SharedWordPass>();
-builder.Services.AddScoped<CorpusCheck>();
+// How many of verify's measures run at once, each on its own connection. A server verifying a
+// restored release builds its own CorpusCheck and measures one at a time.
+var verifySessions = builder.Configuration.GetValue("Verification:Sessions", 1);
+builder.Services.AddScoped(services => new CorpusCheck(
+    services.GetRequiredService<AppDbContext>(), services.GetRequiredService<ILogger<CorpusCheck>>(), verifySessions));
 builder.Services.AddScoped<StrongLexiconLoader>();
 builder.Services.AddScoped<StrongGentilicLoader>();
 builder.Services.AddScoped<StrongRelationLoader>();

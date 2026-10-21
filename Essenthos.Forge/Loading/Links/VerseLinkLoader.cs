@@ -245,7 +245,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// </summary>
     private const string StatedVerseImport =
         """
-        CREATE TEMP TABLE stated_verse_pair ON COMMIT DROP AS
+        CREATE TEMP TABLE stated_verse_crossing ON COMMIT DROP AS
         WITH crossing AS (
             SELECT l.from_text_id, l.to_text_id, fw.verse_id AS from_verse, tw.verse_id AS to_verse,
                    min(p.source) AS source,
@@ -261,12 +261,18 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
             WHERE l.method = 'stated-by-source' OR l.relation = 'transposes'
             GROUP BY l.from_text_id, l.to_text_id, fw.verse_id, tw.verse_id
         )
-        SELECT nextval(pg_get_serial_sequence('verse_link', 'id'))::int AS id, c.*
+        SELECT c.*
         FROM crossing c
         WHERE NOT EXISTS (
             SELECT 1 FROM verse_link_verse a
             JOIN verse_link_verse b ON b.verse_link_id = a.verse_link_id AND b.verse_id = c.to_verse
             WHERE a.verse_id = c.from_verse);
+
+        -- Numbered apart from the sweep: nextval cannot run in a parallel query, and in it the whole
+        -- sweep over every stated link ran in one process.
+        CREATE TEMP TABLE stated_verse_pair ON COMMIT DROP AS
+        SELECT nextval(pg_get_serial_sequence('verse_link', 'id'))::int AS id, c.*
+        FROM stated_verse_crossing c;
 
         INSERT INTO verse_link (id, from_text_id, to_text_id, relation, method, confidence, source, note)
         SELECT id, from_text_id, to_text_id,
@@ -297,8 +303,10 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     /// Gathered the way the integrity check gathers them, the verse pairs first and each looked up
     /// once. <c>@texts</c> limits it to links of the texts a refresh redrew unless <c>@every</c> is set.
     /// </summary>
-    private const string StatisticalCrossings =
+    private const string StrayCrossings =
         """
+        DROP TABLE IF EXISTS stray_crossing;
+        CREATE TEMP TABLE stray_crossing AS
         WITH crossing AS MATERIALIZED (
             SELECT DISTINCT l.id AS link_id, fw.verse_id AS from_verse, tw.verse_id AS to_verse
             FROM link l
@@ -320,14 +328,21 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
                 SELECT 1 FROM verse_link_verse a
                 JOIN verse_link_verse b ON b.verse_link_id = a.verse_link_id AND b.verse_id = p.to_verse
                 WHERE a.verse_id = p.from_verse)
-        ),
-        stray AS (
-            SELECT DISTINCT c.link_id
-            FROM crossing c
-            JOIN unjoined u ON u.from_verse = c.from_verse AND u.to_verse = c.to_verse
         )
+        SELECT DISTINCT c.link_id
+        FROM crossing c
+        JOIN unjoined u ON u.from_verse = c.from_verse AND u.to_verse = c.to_verse
+        """;
+
+    /// <summary>
+    /// The links of <see cref="StrayCrossings"/> no other method stands on. Found apart from the
+    /// delete because a delete runs in one process, and the sweep that finds them was most of the
+    /// verse links' step.
+    /// </summary>
+    private const string StatisticalCrossings =
+        """
         DELETE FROM link l
-        USING stray s
+        USING stray_crossing s
         WHERE l.id = s.link_id
           AND NOT EXISTS (SELECT 1 FROM link_claim c WHERE c.link_id = l.id AND c.method <> 'aligner')
         """;
@@ -368,10 +383,25 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         IReadOnlySet<int>? texts = null, CancellationToken cancellationToken = default)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
-        await using var command = new NpgsqlCommand(StatisticalCrossings, (NpgsqlConnection)db.Database.GetDbConnection());
-        command.Parameters.AddWithValue("every", texts is null);
-        command.Parameters.AddWithValue("texts", texts?.ToArray() ?? []);
-        var removed = await command.ExecuteNonQueryAsync(cancellationToken);
+        var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+        await using (var find = new NpgsqlCommand(StrayCrossings, connection))
+        {
+            find.Parameters.AddWithValue("every", texts is null);
+            find.Parameters.AddWithValue("texts", texts?.ToArray() ?? []);
+            await find.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        int removed;
+        await using (var command = new NpgsqlCommand(StatisticalCrossings, connection))
+        {
+            removed = await command.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        await using (var drop = new NpgsqlCommand("DROP TABLE stray_crossing", connection))
+        {
+            await drop.ExecuteNonQueryAsync(cancellationToken);
+        }
+
         if (removed > 0)
         {
             logger.LogInformation(
