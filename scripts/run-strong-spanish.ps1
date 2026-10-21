@@ -1,6 +1,6 @@
 param(
     [ValidateSet('es')][string] $Language = 'es',
-    [ValidateSet('prepare','smoke','pilot','repair','full','check-pilot','check-full','status','publish','judge-smoke','preflight','transport-smoke')]
+    [ValidateSet('prepare','smoke','pilot','repair','full','check-pilot','check-full','status','publish','judge-smoke','preflight','transport-smoke','finish-prepare','finish-recover','finish-repair','finish-check','finish-status','finish-publish')]
     [string] $Mode = 'status',
     [ValidateRange(1,8)][int] $Workers = 6
 )
@@ -41,6 +41,14 @@ function ResolveCodex {
 $repo = Split-Path $PSScriptRoot
 $main = if ((Split-Path (Split-Path $repo) -Leaf) -eq '.worktrees') { Split-Path (Split-Path $repo) } else { $repo }
 $run = Join-Path $main 'Resources/Essenthos/generation/strong-codex-sol61-2026-10-17-v3/es'
+$finish = $Mode.StartsWith('finish-')
+if ($finish) {
+    $run = Join-Path $main 'Resources/Essenthos/generation/strong-es-finish-codex-2026-10-21-v1'
+    if ($Mode -ne 'finish-repair') {
+        & python -u (Join-Path $PSScriptRoot 'finish-strong-es-codex.py') --mode $Mode.Substring(7)
+        exit $LASTEXITCODE
+    }
+}
 $env:ESSENTHOS_CODEX = ResolveCodex
 $version = & $env:ESSENTHOS_CODEX --version 2>&1
 if ($LASTEXITCODE -ne 0) { throw 'The resolved Codex executable failed its version check.' }
@@ -64,7 +72,9 @@ if ($Mode -eq 'transport-smoke') {
     & python -u (Join-Path $run 'code/lexicon-codex.py') check --dir $check
     exit $LASTEXITCODE
 }
-if ($Mode -eq 'judge-smoke') {
+if ($finish) {
+    & python -u (Join-Path $PSScriptRoot 'finish-strong-es-codex.py') --mode repair
+} elseif ($Mode -eq 'judge-smoke') {
     & python -u (Join-Path $run 'code/lexicon-codex.py') judge --dir (Join-Path $run 'smoke') --model gpt-6.1-sol --effort medium --workers 1
 } else {
     & python -u (Join-Path $PSScriptRoot 'generate-strong-codex.py') --language $Language --mode $Mode --workers $Workers

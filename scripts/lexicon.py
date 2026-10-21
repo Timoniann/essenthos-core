@@ -1215,6 +1215,98 @@ REVIEWED_GERMAN_FIELDS = {
     ('H8590', 'kjv_definition'): ('c6cb97e64acdfba864e81deba9dc4c5718a4df1667bb462aec7b8e605b396caf', 'c6cb97e64acdfba864e81deba9dc4c5718a4df1667bb462aec7b8e605b396caf', 'Literal source-attested naming/title aliases, with meanings translated in the surrounding entry; not English prose or an asserted new German form.'),
 }
 
+# Exact reviewed Spanish fields that legitimately equal the English; any change loses the allowance.
+REVIEWED_SPANISH_FIELDS = {
+    ('G107', 'kjv_definition'): ('a66d567c119646d4243e8cf4b914c9d46bd50db7dd8d8adc1c4cc1af7b9c4b5b', 'a66d567c119646d4243e8cf4b914c9d46bd50db7dd8d8adc1c4cc1af7b9c4b5b', 'Corrupt source fragment kept as given and marked uncertain; the English beside it reads the same.'),
+    ('G278', 'definition'): ('62eb186f69c7232aa3396ba5821048483965dbf7f880068edbd50df6dadd9522', '62eb186f69c7232aa3396ba5821048483965dbf7f880068edbd50df6dadd9522', 'The Spanish word is spelled the same as the English.'),
+    ('G448', 'definition'): ('90e8905f4951ac97ca7aa6adb981e9187be641f16ced2271a6e28328663000c6', '90e8905f4951ac97ca7aa6adb981e9187be641f16ced2271a6e28328663000c6', 'The Spanish word is spelled the same as the English.'),
+    ('G517', 'definition'): ('b75af7ef6c4de2b99053f7f6c005d549e95be118be0eb500f1cf86f36ec8f324', 'b75af7ef6c4de2b99053f7f6c005d549e95be118be0eb500f1cf86f36ec8f324', 'The Spanish word is spelled the same as the English.'),
+    ('G896', 'kjv_definition'): ('39a11d0843cb76584af79acc1cedb4eaf752d09d7c07946700e4c6cd490934b2', '39a11d0843cb76584af79acc1cedb4eaf752d09d7c07946700e4c6cd490934b2', 'KJV name form spelled the same in Spanish.'),
+    ('G1857', 'definition'): ('a123a777ca1a5b437abfa9e88c1be0cfc36365f125dcaeeacb1f2d762450d1fa', 'a123a777ca1a5b437abfa9e88c1be0cfc36365f125dcaeeacb1f2d762450d1fa', 'The Spanish word is spelled the same as the English.'),
+    ('G2082', 'definition'): ('6b6b85aed8adda90f7a71069f651b0be8cdfcaab56b645a3c065319f6e5d4dcf', '6b6b85aed8adda90f7a71069f651b0be8cdfcaab56b645a3c065319f6e5d4dcf', 'The Spanish word is spelled the same as the English.'),
+    ('G3165', 'definition'): ('2744ccd10c7533bd736ad890f9dd5cab2adb27b07d500b9493f29cdc420cb2e0', '2744ccd10c7533bd736ad890f9dd5cab2adb27b07d500b9493f29cdc420cb2e0', 'The Spanish word is spelled the same as the English.'),
+    ('G3711', 'definition'): ('908136a8f6e20e0890fce1c795465dc69b7fad1b2ca107553b1995ede3e1c120', '908136a8f6e20e0890fce1c795465dc69b7fad1b2ca107553b1995ede3e1c120', 'The Spanish word is spelled the same as the English.'),
+    ('G4324', 'kjv_definition'): ('4c83460fa84a82bdfb87719c82726d7e3c0f60deebce523ecff333e422a04fe1', '4c83460fa84a82bdfb87719c82726d7e3c0f60deebce523ecff333e422a04fe1', 'Source fragment kept as given and marked uncertain.'),
+    ('G4427', 'definition'): ('020ffaad0678c8d6ade519ec5505ce682530a010e23865bbf9d226918b606569', '020ffaad0678c8d6ade519ec5505ce682530a010e23865bbf9d226918b606569', 'The Spanish word is spelled the same as the English.'),
+    ('H394', 'definition'): ('fcfebb572f03efe3c5487d9e8aaf696505cc576341d41a360fb690d83aa31691', 'fcfebb572f03efe3c5487d9e8aaf696505cc576341d41a360fb690d83aa31691', 'The Spanish word is spelled the same as the English.'),
+    ('H394', 'detailed_definition'): ('140597942f1aeee8e25f075f9ade166e8fc365fddda20ae18d90021224703298', '140597942f1aeee8e25f075f9ade166e8fc365fddda20ae18d90021224703298', 'The Spanish word is spelled the same as the English.'),
+    ('H574', 'detailed_definition'): ('4c2d8c1c0c32e9ea4c161603785a614dc205b8992d3e9d496c82976c8d95636d', '4c2d8c1c0c32e9ea4c161603785a614dc205b8992d3e9d496c82976c8d95636d', 'The Spanish word is spelled the same as the English.'),
+    ('H609', 'kjv_definition'): ('0a1701df4245cfa01a2179280f51fdbc1f1bf50bd18b5079b267ac3f3237a8c2', '0a1701df4245cfa01a2179280f51fdbc1f1bf50bd18b5079b267ac3f3237a8c2', 'KJV name form spelled the same in Spanish.'),
+    ('H945', 'kjv_definition'): ('b933adb40b957e672ca85ed22d727f16307b6d942bf23c66819b8799c24559f0', 'b933adb40b957e672ca85ed22d727f16307b6d942bf23c66819b8799c24559f0', 'KJV name form spelled the same in Spanish.'),
+    ('H1150', 'kjv_definition'): ('d10af23d605c6345c5c6f3990136a4e259c2fcad2384479e8dac1eb30529c4a1', 'd10af23d605c6345c5c6f3990136a4e259c2fcad2384479e8dac1eb30529c4a1', 'KJV name form spelled the same in Spanish.'),
+    ('H1153', 'kjv_definition'): ('d10aaaf208e5785e977bc7192392a4c7ccacb5d744bf7b50397ede2ef8058256', 'd10aaaf208e5785e977bc7192392a4c7ccacb5d744bf7b50397ede2ef8058256', 'KJV name form spelled the same in Spanish.'),
+    ('H1609', 'kjv_definition'): ('18ed58529195a8c7ee234ef8e49afd65c8bf48d6d76d62ce82aeb25d08bc1977', '18ed58529195a8c7ee234ef8e49afd65c8bf48d6d76d62ce82aeb25d08bc1977', 'KJV name form spelled the same in Spanish.'),
+    ('H1835', 'kjv_definition'): ('7297db81c2f7916e25b9593f8c8785e1aa1487fa9f3961c50b7cc5f1a541bc82', '7297db81c2f7916e25b9593f8c8785e1aa1487fa9f3961c50b7cc5f1a541bc82', 'The source KJV field reads Daniel for Dan; kept as given, not corrected.'),
+    ('H2371', 'kjv_definition'): ('0680fe108def3712623b23b6cd10ae1aa60a64703085f6db3bf81c5ac8644cc5', '0680fe108def3712623b23b6cd10ae1aa60a64703085f6db3bf81c5ac8644cc5', 'KJV name form spelled the same in Spanish.'),
+    ('H2618', 'kjv_definition'): ('ff21d6314d31da5ba9b62a7284fdc5bdc0f8c4a405a575289ef881a6e4589a44', 'ff21d6314d31da5ba9b62a7284fdc5bdc0f8c4a405a575289ef881a6e4589a44', 'KJV name form spelled the same in Spanish.'),
+    ('H2849', 'definition'): ('bd778891dbe86ede8cdb26c8d9c48419d7e5a8797cf1599cf58ee3087f514c7a', 'bd778891dbe86ede8cdb26c8d9c48419d7e5a8797cf1599cf58ee3087f514c7a', 'The Spanish word is spelled the same as the English.'),
+    ('H2849', 'detailed_definition'): ('59812ad84b81fb6af38f2ae557bed9fde5a7f7271e980b417893d9b4b828da3b', '59812ad84b81fb6af38f2ae557bed9fde5a7f7271e980b417893d9b4b828da3b', 'The Spanish word is spelled the same as the English.'),
+    ('H2851', 'detailed_definition'): ('59812ad84b81fb6af38f2ae557bed9fde5a7f7271e980b417893d9b4b828da3b', '59812ad84b81fb6af38f2ae557bed9fde5a7f7271e980b417893d9b4b828da3b', 'The Spanish word is spelled the same as the English.'),
+    ('H2866', 'detailed_definition'): ('59812ad84b81fb6af38f2ae557bed9fde5a7f7271e980b417893d9b4b828da3b', '59812ad84b81fb6af38f2ae557bed9fde5a7f7271e980b417893d9b4b828da3b', 'The Spanish word is spelled the same as the English.'),
+    ('H3035', 'kjv_definition'): ('6b655ec05dc410cef72773ebc9fdd826066b72dfbe68ffde9b808665eb99a266', '6b655ec05dc410cef72773ebc9fdd826066b72dfbe68ffde9b808665eb99a266', 'KJV name form spelled the same in Spanish.'),
+    ('H3069', 'definition'): ('6644766367c5ebcc72a34cfd5f60d0e0ccf7eac64fdefedf231b8c0c84f925c5', '6644766367c5ebcc72a34cfd5f60d0e0ccf7eac64fdefedf231b8c0c84f925c5', 'Tetragrammaton notation, not English prose.'),
+    ('H3695', 'kjv_definition'): ('52943db74b860e357c0250df4e70fb9f4a4fc3b532bcae8cbeebe08fcd88e6fd', '52943db74b860e357c0250df4e70fb9f4a4fc3b532bcae8cbeebe08fcd88e6fd', 'KJV name form spelled the same in Spanish.'),
+    ('H3942', 'definition'): ('1cc40893501a6a30f02e8b24ee70ba2dff7115af4783a67fda2dc4cba4c895d5', '1cc40893501a6a30f02e8b24ee70ba2dff7115af4783a67fda2dc4cba4c895d5', 'The Spanish word is spelled the same as the English.'),
+    ('H4025', 'kjv_definition'): ('2a511815ee7a6193edbe47fffc10df234dcba91107665bd6d2aadc56a7302fb8', '2a511815ee7a6193edbe47fffc10df234dcba91107665bd6d2aadc56a7302fb8', 'KJV name form spelled the same in Spanish.'),
+    ('H4027', 'kjv_definition'): ('0f60ee2adfa2241461009cfd881ed1b68fd53b4c136d5ce974ed103f4ba16c20', '0f60ee2adfa2241461009cfd881ed1b68fd53b4c136d5ce974ed103f4ba16c20', 'KJV name form spelled the same in Spanish.'),
+    ('H4028', 'kjv_definition'): ('4ed09cb820c783516525949e5cea92bb1e9774b3125e3459b5140e8ee18d9c9b', '4ed09cb820c783516525949e5cea92bb1e9774b3125e3459b5140e8ee18d9c9b', 'KJV name form spelled the same in Spanish.'),
+    ('H4056', 'detailed_definition'): ('8130767ed1e3d77e571de94e0fd341de4d70227217df83db5a2e75cbd301e92f', '8130767ed1e3d77e571de94e0fd341de4d70227217df83db5a2e75cbd301e92f', 'The Spanish word is spelled the same as the English.'),
+    ('H4196', 'detailed_definition'): ('8130767ed1e3d77e571de94e0fd341de4d70227217df83db5a2e75cbd301e92f', '8130767ed1e3d77e571de94e0fd341de4d70227217df83db5a2e75cbd301e92f', 'The Spanish word is spelled the same as the English.'),
+    ('H4879', 'detailed_definition'): ('6b7f0bd6929fd23f1f5545723ec8518b8a38c750005550e61f69fb18bfbd05d9', '6b7f0bd6929fd23f1f5545723ec8518b8a38c750005550e61f69fb18bfbd05d9', 'The Spanish word is spelled the same as the English.'),
+    ('H5113', 'kjv_definition'): ('6e98cd099e903513a7097222ece86f7df298ea73fd90ca7ecf6d53c27a26679b', '6e98cd099e903513a7097222ece86f7df298ea73fd90ca7ecf6d53c27a26679b', 'KJV name form spelled the same in Spanish.'),
+    ('H5114', 'kjv_definition'): ('d44f3bfe197603de2e1bde5ef799141916928a824b9dc7ff8e457963defbbcb5', 'd44f3bfe197603de2e1bde5ef799141916928a824b9dc7ff8e457963defbbcb5', 'KJV name form spelled the same in Spanish.'),
+    ('H5334', 'kjv_definition'): ('1de82e64fb330c2fc07e5bb04b25186a73e9329a6bbc3441f8bbd47a8aec2aaf', '1de82e64fb330c2fc07e5bb04b25186a73e9329a6bbc3441f8bbd47a8aec2aaf', 'KJV name form spelled the same in Spanish.'),
+    ('H5512', 'kjv_definition'): ('41dde809c27cecc41c7a1bc38598e22c816a9af6198de776d94a17b45a4c531c', '41dde809c27cecc41c7a1bc38598e22c816a9af6198de776d94a17b45a4c531c', 'KJV name form spelled the same in Spanish.'),
+    ('H5515', 'kjv_definition'): ('b43ba200a3cc39b68411852c0e8a204348e06df06cd15a9fb98068334e9bd7ac', 'b43ba200a3cc39b68411852c0e8a204348e06df06cd15a9fb98068334e9bd7ac', 'KJV name form spelled the same in Spanish.'),
+    ('H5540', 'kjv_definition'): ('89f2c5ae9c67b8321b785f2710640cd2100f3549bc24e3e895669e7f042fb6e6', '89f2c5ae9c67b8321b785f2710640cd2100f3549bc24e3e895669e7f042fb6e6', 'KJV name form spelled the same in Spanish.'),
+    ('H5617', 'derivation'): ('7f31e61a45aa106ee5cc9864fbebd3b36f48219ea91a7481268ab30d785ee785', '7f31e61a45aa106ee5cc9864fbebd3b36f48219ea91a7481268ab30d785ee785', 'Grammatical label spelled the same in Spanish.'),
+    ('H5653', 'kjv_definition'): ('02230f814ea93690e76eea21005ea8dd523fb0c5ee87881b77a9c947a8915a01', '02230f814ea93690e76eea21005ea8dd523fb0c5ee87881b77a9c947a8915a01', 'KJV name form spelled the same in Spanish.'),
+    ('H5681', 'kjv_definition'): ('6e3dbb48f6ab67f42ea892e01fb188250c4029d30edc24bac00a4112bcc54029', '6e3dbb48f6ab67f42ea892e01fb188250c4029d30edc24bac00a4112bcc54029', 'KJV name form spelled the same in Spanish.'),
+    ('H5696', 'definition'): ('f5060d458702a74ce89c52391cc38acb074cd73b6c955849117b1cf7d34408ad', 'f5060d458702a74ce89c52391cc38acb074cd73b6c955849117b1cf7d34408ad', 'The Spanish word is spelled the same as the English.'),
+    ('H5717', 'kjv_definition'): ('3bea56a508c1b5e5726f28a510c77fb95e5196be230f642c4cc5802d33ecab3d', '3bea56a508c1b5e5726f28a510c77fb95e5196be230f642c4cc5802d33ecab3d', 'KJV name form spelled the same in Spanish.'),
+    ('H5733', 'kjv_definition'): ('0ed0be5e1b9a35ffe6be688b3a847a99f40a3e7f2e3aea78e319a2a8fcc82f71', '0ed0be5e1b9a35ffe6be688b3a847a99f40a3e7f2e3aea78e319a2a8fcc82f71', 'KJV name form spelled the same in Spanish.'),
+    ('H6036', 'kjv_definition'): ('4a9b615296d7351f3e13b8d17f45f32c7e6745dad1b4a25f91aabdbb828f562c', '4a9b615296d7351f3e13b8d17f45f32c7e6745dad1b4a25f91aabdbb828f562c', 'KJV name form spelled the same in Spanish.'),
+    ('H6063', 'kjv_definition'): ('e39f3c520d89ead33837c359292ebe6a8a935ad967b1c593918502c37a4a5b22', 'e39f3c520d89ead33837c359292ebe6a8a935ad967b1c593918502c37a4a5b22', 'KJV name form spelled the same in Spanish.'),
+    ('H6088', 'kjv_definition'): ('5356f8052093cb4974ea2197982137577cafc1633181b809db5eb4f4149e9743', '5356f8052093cb4974ea2197982137577cafc1633181b809db5eb4f4149e9743', 'KJV name form spelled the same in Spanish.'),
+    ('H6107', 'kjv_definition'): ('ae1a78407a636baffad33d83d93a856b79d0667462fc5d869bfa800bd450725a', 'ae1a78407a636baffad33d83d93a856b79d0667462fc5d869bfa800bd450725a', 'KJV spelling variants listed as given.'),
+    ('H6221', 'kjv_definition'): ('1f5c3c2a772172f26f107b250659e19f439cc8ce8a8120c515810c545d57f98f', '1f5c3c2a772172f26f107b250659e19f439cc8ce8a8120c515810c545d57f98f', 'KJV name form spelled the same in Spanish.'),
+    ('H6268', 'definition'): ('18a6be2532dda699987c473fb559cd67d37c7e431d70281237dcc1cb400fb76b', '18a6be2532dda699987c473fb559cd67d37c7e431d70281237dcc1cb400fb76b', 'The Spanish word is spelled the same as the English.'),
+    ('H6317', 'kjv_definition'): ('dc01d5fd14cf971af37d25bfb16bcef8651035b4af8029b378f683a98d739486', 'dc01d5fd14cf971af37d25bfb16bcef8651035b4af8029b378f683a98d739486', 'KJV name form spelled the same in Spanish.'),
+    ('H6332', 'kjv_definition'): ('90197788bd41bfacaad3e4497c274d9421a7eefa34f6fb602a62990db78670b6', '90197788bd41bfacaad3e4497c274d9421a7eefa34f6fb602a62990db78670b6', 'Pur and Purim are the Spanish forms too.'),
+    ('H6405', 'definition'): ('b3140286ac71ad2acf69681f4f2a907b0b83d8edfbffdd4e0a38c05a23180495', 'b3140286ac71ad2acf69681f4f2a907b0b83d8edfbffdd4e0a38c05a23180495', 'The Spanish word is spelled the same as the English.'),
+    ('H6416', 'definition'): ('8ab7ab8937c8bd23548d1dc42c3ba7c10ef22111ed4ead961384b97fc38fe4e6', '8ab7ab8937c8bd23548d1dc42c3ba7c10ef22111ed4ead961384b97fc38fe4e6', 'The Spanish word is spelled the same as the English.'),
+    ('H6442', 'definition'): ('6b6b85aed8adda90f7a71069f651b0be8cdfcaab56b645a3c065319f6e5d4dcf', '6b6b85aed8adda90f7a71069f651b0be8cdfcaab56b645a3c065319f6e5d4dcf', 'The Spanish word is spelled the same as the English.'),
+    ('H6464', 'kjv_definition'): ('c5a3863db63407753e5c3e13bfaa73b4d6105475624713a32e8a1634a0ec36ec', 'c5a3863db63407753e5c3e13bfaa73b4d6105475624713a32e8a1634a0ec36ec', 'KJV name form spelled the same in Spanish.'),
+    ('H6514', 'kjv_definition'): ('eb116b679d4678d4b655e3e3e455665cae322ef2e785df28bf05b301856a4143', 'eb116b679d4678d4b655e3e3e455665cae322ef2e785df28bf05b301856a4143', 'KJV name form spelled the same in Spanish.'),
+    ('H6516', 'kjv_definition'): ('e8f8a0e139e4a452f32abe0938be464204e3f687bdaca620bca465444013706e', 'e8f8a0e139e4a452f32abe0938be464204e3f687bdaca620bca465444013706e', 'KJV name form spelled the same in Spanish.'),
+    ('H6559', 'kjv_definition'): ('a89bce49ce66ef995f3b63de9ebf1f98c99cd05171163e053d6738bfa87ed185', 'a89bce49ce66ef995f3b63de9ebf1f98c99cd05171163e053d6738bfa87ed185', 'KJV name form spelled the same in Spanish.'),
+    ('H6615', 'kjv_definition'): ('145ed781fc6a02631bed011d10f2a4d52d86f2779a310c216516209ac0d20864', '145ed781fc6a02631bed011d10f2a4d52d86f2779a310c216516209ac0d20864', 'KJV name form spelled the same in Spanish.'),
+    ('H6727', 'kjv_definition'): ('4ef323d779d46b520e8685b15f7408216e9eb7c549be410a54b846f8944ffd35', '4ef323d779d46b520e8685b15f7408216e9eb7c549be410a54b846f8944ffd35', 'KJV name form spelled the same in Spanish.'),
+    ('H6730', 'kjv_definition'): ('0ad3642feed7b7fd3044d0c2aeb1b0b8ac402fc792318738a57bfbd9b4e2f9f8', '0ad3642feed7b7fd3044d0c2aeb1b0b8ac402fc792318738a57bfbd9b4e2f9f8', 'KJV name form spelled the same in Spanish.'),
+    ('H6811', 'kjv_definition'): ('62e932fc04c99d9a1c4f81ffe906bfb4dcff2d26764b50231f9c117930300fd4', '62e932fc04c99d9a1c4f81ffe906bfb4dcff2d26764b50231f9c117930300fd4', 'KJV name form spelled the same in Spanish.'),
+    ('H6820', 'kjv_definition'): ('58a272d5178d0b2b341e820a3a8df51470c61a3911653e58ca6d9a24119a617f', '58a272d5178d0b2b341e820a3a8df51470c61a3911653e58ca6d9a24119a617f', 'KJV name form spelled the same in Spanish.'),
+    ('H6988', 'definition'): ('37ecf521c8f469c92ce485da3ed4de7f257837873f92d012257308dfac63a567', '37ecf521c8f469c92ce485da3ed4de7f257837873f92d012257308dfac63a567', 'The Spanish word is spelled the same as the English.'),
+    ('H7002', 'definition'): ('37ecf521c8f469c92ce485da3ed4de7f257837873f92d012257308dfac63a567', '37ecf521c8f469c92ce485da3ed4de7f257837873f92d012257308dfac63a567', 'The Spanish word is spelled the same as the English.'),
+    ('H7020', 'definition'): ('4e686af7bdcc5ae005a247624fd8c7283257c2514f6b3ad2ff5d4cb6d95196e6', '4e686af7bdcc5ae005a247624fd8c7283257c2514f6b3ad2ff5d4cb6d95196e6', 'The Spanish word is spelled the same as the English.'),
+    ('H7254', 'kjv_definition'): ('8425db5c080f0312a95a5d9007531a5372f94ee643a5cc42c93ee36beeb1d73c', '8425db5c080f0312a95a5d9007531a5372f94ee643a5cc42c93ee36beeb1d73c', 'KJV name form spelled the same in Spanish.'),
+    ('H7357', 'kjv_definition'): ('58b556449f2848ea0c76c79084bf64ca2a49a73ae2337e95ddb2ab52fba9386c', '58b556449f2848ea0c76c79084bf64ca2a49a73ae2337e95ddb2ab52fba9386c', 'KJV name form spelled the same in Spanish.'),
+    ('H7374', 'definition'): ('bd778891dbe86ede8cdb26c8d9c48419d7e5a8797cf1599cf58ee3087f514c7a', 'bd778891dbe86ede8cdb26c8d9c48419d7e5a8797cf1599cf58ee3087f514c7a', 'The Spanish word is spelled the same as the English.'),
+    ('H7380', 'kjv_definition'): ('c8372393a7cf5a1234a6c5136a92bc5aec6312a79d28bd608dd63f94235b98a6', 'c8372393a7cf5a1234a6c5136a92bc5aec6312a79d28bd608dd63f94235b98a6', 'KJV name form spelled the same in Spanish.'),
+    ('H7466', 'kjv_definition'): ('62a93a56ad03655531fbd91c89b2e4e7751520db2a0b6c880b596e0229f256cb', '62a93a56ad03655531fbd91c89b2e4e7751520db2a0b6c880b596e0229f256cb', 'KJV name form spelled the same in Spanish.'),
+    ('H7578', 'definition'): ('bd778891dbe86ede8cdb26c8d9c48419d7e5a8797cf1599cf58ee3087f514c7a', 'bd778891dbe86ede8cdb26c8d9c48419d7e5a8797cf1599cf58ee3087f514c7a', 'The Spanish word is spelled the same as the English.'),
+    ('H7691', 'detailed_definition'): ('6b7f0bd6929fd23f1f5545723ec8518b8a38c750005550e61f69fb18bfbd05d9', '6b7f0bd6929fd23f1f5545723ec8518b8a38c750005550e61f69fb18bfbd05d9', 'The Spanish word is spelled the same as the English.'),
+    ('H7755', 'kjv_definition'): ('2edfb9179d5edb6f683ebf12f4bc61277df75c017aac90f98a578c8f9ccd14cc', '2edfb9179d5edb6f683ebf12f4bc61277df75c017aac90f98a578c8f9ccd14cc', 'KJV spelling variants listed as given.'),
+    ('H8004', 'kjv_definition'): ('2c077c8e0b51cc8f63e92431ae0c968c3811d12d5a4078a15f5cb6c6af4dead9', '2c077c8e0b51cc8f63e92431ae0c968c3811d12d5a4078a15f5cb6c6af4dead9', 'KJV name form spelled the same in Spanish.'),
+    ('H8007', 'kjv_definition'): ('c4cf4edccef89fc67d970e40972ffbc76e4e664f69d717f2063cdbfe58d6b756', 'c4cf4edccef89fc67d970e40972ffbc76e4e664f69d717f2063cdbfe58d6b756', 'KJV name form spelled the same in Spanish.'),
+    ('H8286', 'kjv_definition'): ('237f90eaa02faeb6340f1102fbb362450026a5a0f8c7b9d98c53b6b8102db5c1', '237f90eaa02faeb6340f1102fbb362450026a5a0f8c7b9d98c53b6b8102db5c1', 'KJV name form spelled the same in Spanish.'),
+    ('H8396', 'kjv_definition'): ('2aa3c43c689b1c7e7361a5492d7a5cc987a4a71586b1cc2a2549a415a63ba172', '2aa3c43c689b1c7e7361a5492d7a5cc987a4a71586b1cc2a2549a415a63ba172', 'KJV name form spelled the same in Spanish.'),
+    ('H8417', 'detailed_definition'): ('6b7f0bd6929fd23f1f5545723ec8518b8a38c750005550e61f69fb18bfbd05d9', '6b7f0bd6929fd23f1f5545723ec8518b8a38c750005550e61f69fb18bfbd05d9', 'The Spanish word is spelled the same as the English.'),
+    ('H8459', 'kjv_definition'): ('86cf2d016b2c157b9d7226962e1a656ffbdf0ae20599757025b47377393cee20', '86cf2d016b2c157b9d7226962e1a656ffbdf0ae20599757025b47377393cee20', 'KJV name form spelled the same in Spanish.'),
+    ('H8484', 'definition'): ('8cb6279a8e1b12a9677497cc5c71e90337f2dfad637b35a9d1be0b0668a85f06', '8cb6279a8e1b12a9677497cc5c71e90337f2dfad637b35a9d1be0b0668a85f06', 'The Spanish word is spelled the same as the English.'),
+    ('H8488', 'kjv_definition'): ('4f7eef0d6468d8cc86dffd2bb9887656eeba38c8130a8ee014d2c12a81a2cb1e', '4f7eef0d6468d8cc86dffd2bb9887656eeba38c8130a8ee014d2c12a81a2cb1e', 'KJV name form spelled the same in Spanish.'),
+    ('H8559', 'kjv_definition'): ('45dd0926627262fdab412a19e971f77b62bb3a428ce7ca4392d22ef717bb885e', '45dd0926627262fdab412a19e971f77b62bb3a428ce7ca4392d22ef717bb885e', 'KJV name form spelled the same in Spanish.'),
+}
+
 ENGLISH_PROSE = re.compile(
     r'\b(?:of uncertain affinity|by implication|a primitive root|of Hebrew origin|'
     r'by extension|the same as|a primary word|an unused root|in the sense of|'
@@ -1284,9 +1376,8 @@ def sense_numbers(text):
 
 
 def reviewed_unchanged_field(number, field, english, translated, language):
-    if language != 'de':
-        return False
-    entry = REVIEWED_GERMAN_FIELDS.get((number, field))
+    reviewed = {'de': REVIEWED_GERMAN_FIELDS, 'es': REVIEWED_SPANISH_FIELDS}.get(language)
+    entry = reviewed and reviewed.get((number, field))
     return bool(entry and hashlib.sha256(english.encode('utf-8')).hexdigest() == entry[0]
                 and hashlib.sha256(translated.encode('utf-8')).hexdigest() == entry[1])
 
