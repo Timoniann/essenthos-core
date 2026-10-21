@@ -11,7 +11,6 @@ namespace Essenthos.Core.Tests.Witnesses;
 /// superscription on, which the reader that loads a text deliberately folds into the first verse
 /// and which this has to be able to get at separately.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class PsalmSuperscriptionReaderTests
 {
     /// <summary>

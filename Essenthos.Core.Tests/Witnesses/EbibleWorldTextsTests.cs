@@ -15,7 +15,6 @@ namespace Essenthos.Core.Tests.Witnesses;
 /// earlier eBible text had: publishers' headings over the text, cross references printed in the
 /// running text, a footnote broken across two lines, and scripts whose words end in a vowel sign.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class UsfmWorldTextTests
 {
     private const string Headed =
@@ -231,7 +230,6 @@ public class EbibleWorldTextsTests(WorldTexts texts) : IClassFixture<WorldTexts>
 /// The Segond's records count French words over a division of the text the release's own token file
 /// does not follow, so the loader counts them itself; and the Arabic is searched without its vowels.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class ClearBibleRetokenisedTests
 {
     [Theory]

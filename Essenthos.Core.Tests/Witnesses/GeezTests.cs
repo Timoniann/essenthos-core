@@ -12,7 +12,6 @@ namespace Essenthos.Core.Tests.Witnesses;
 /// The rules the Ge'ez reader follows, on files written to show each one: which lines are verses,
 /// which edition of a file is read, and what a line break inside a line is.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class GeezReaderTests
 {
     private const string Header =
@@ -113,7 +112,6 @@ public class GeezReaderTests
 }
 
 /// <summary>How a hand-typed numbering is read, each case taken from a chapter of the church's Bible.</summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class GeezVerseSequenceTests
 {
     /// <summary>A verse broken over two lines carries its number twice (Malachi 3:13).</summary>
@@ -257,7 +255,6 @@ public class GeezAlignmentScopeTests
 }
 
 /// <summary>A verse the typist ran on into the next, with the next one's number as a word between them.</summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class GeezRunInTests
 {
     [Fact]
@@ -283,7 +280,6 @@ public class GeezRunInTests
 }
 
 /// <summary>Words, divided the same way whichever way the source sets its wordspace.</summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class GeezWordTests
 {
     [Theory]

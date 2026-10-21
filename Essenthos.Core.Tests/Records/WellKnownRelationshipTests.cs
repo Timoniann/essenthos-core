@@ -5,7 +5,6 @@ using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Endpoints;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore.Storage;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Records;
@@ -22,26 +21,32 @@ namespace Essenthos.Core.Tests.Records;
 /// </para>
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
-public sealed class WellKnownRelationshipTests : IDisposable
+public sealed class WellKnownRelationshipTests(WitnessDatabase database) : IAsyncLifetime
 {
     private static readonly string[] People = ["david", "jacob", "ruth", "jesus"];
 
     private static readonly JsonSerializerOptions Shape = new() { PropertyNameCaseInsensitive = true };
 
-    private readonly AppDbContext _db;
-    private readonly IDbContextTransaction _transaction;
-    private readonly Fixture _fixture;
-    private readonly Dictionary<string, Entity> _entities;
+    private static readonly Fixture Recorded = JsonSerializer.Deserialize<Fixture>(
+        File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Resources", "relationships", "well-known.json")),
+        Shape)!;
 
-    public WellKnownRelationshipTests(WitnessDatabase database)
+    private AppDbContext _db = null!;
+    private Dictionary<string, Entity> _entities = null!;
+
+    /// <summary>The rows are written once for the class: every test only reads them.</summary>
+    public async Task InitializeAsync()
     {
+        _entities = await database.Shared(Seed);
         _db = database.NewContext();
-        _transaction = _db.Database.BeginTransaction();
-        _fixture = JsonSerializer.Deserialize<Fixture>(
-            File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Resources", "relationships", "well-known.json")),
-            Shape)!;
+    }
 
-        _entities = _fixture.Kinds.ToDictionary(
+    public async Task DisposeAsync() => await _db.DisposeAsync();
+
+    private async Task<Dictionary<string, Entity>> Seed()
+    {
+        await using var db = database.NewContext();
+        var entities = Recorded.Kinds.ToDictionary(
             kind => kind.Key,
             kind => new Entity
             {
@@ -51,17 +56,17 @@ public sealed class WellKnownRelationshipTests : IDisposable
                 SourceId = $"test:{kind.Key}",
                 Source = "test",
             });
-        _db.Entities.AddRange(_entities.Values);
-        _db.SaveChanges();
+        db.Entities.AddRange(entities.Values);
+        await db.SaveChangesAsync();
 
         // One at a time, so the rows are numbered in the order the corpus held them: a page lists
         // its rows by that number.
-        foreach (var row in _fixture.Rows)
+        foreach (var row in Recorded.Rows)
         {
-            _db.EntityRelationships.Add(new EntityRelationship
+            db.EntityRelationships.Add(new EntityRelationship
             {
-                FromEntityId = _entities[row.From].Id,
-                ToEntityId = _entities[row.To].Id,
+                FromEntityId = entities[row.From].Id,
+                ToEntityId = entities[row.To].Id,
                 Type = row.Type,
                 Category = RelationshipCategories.Read,
                 CanonicalBook = row.At[0],
@@ -72,15 +77,10 @@ public sealed class WellKnownRelationshipTests : IDisposable
                 Confidence = row.Confidence,
                 Source = row.Source,
             });
-            _db.SaveChanges();
+            await db.SaveChangesAsync();
         }
-    }
 
-    public void Dispose()
-    {
-        _transaction.Rollback();
-        _transaction.Dispose();
-        _db.Dispose();
+        return entities;
     }
 
     [Theory]
@@ -92,7 +92,7 @@ public sealed class WellKnownRelationshipTests : IDisposable
     {
         var page = await Relationships.Of(_db, _entities[slug].Id, null, default);
 
-        page.Select(Shown).Should().Equal(_fixture.Pages[slug].Select(Shown));
+        page.Select(Shown).Should().Equal(Recorded.Pages[slug].Select(Shown));
         page.Should().OnlyContain(row => row.Dataset == Datasets.Own
             && row.Corroboration.All(folded => folded.Dataset == Datasets.Own));
     }
@@ -107,7 +107,7 @@ public sealed class WellKnownRelationshipTests : IDisposable
         {
             person.Ties.Select(tie => $"{tie.Type} {tie.Inward} {tie.Slug} {At(tie.Reference)}")
                 .Should().Equal(
-                    _fixture.Family[person.Slug].Select(tie => $"{tie.Type} {tie.Inward} {tie.Slug} {At(tie.At)}"),
+                    Recorded.Family[person.Slug].Select(tie => $"{tie.Type} {tie.Inward} {tie.Slug} {At(tie.At)}"),
                     person.Slug);
         }
     }

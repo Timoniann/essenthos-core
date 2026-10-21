@@ -92,45 +92,4 @@ public sealed class OwnRecordSecondBearerTests(WitnessDatabase database) : OwnRe
             record.Notes.Should().MatchRegex("the text does not say|^Another man|^Not the king");
         }
     }
-
-    /// <summary>
-    /// A record that held two men keeps the one its line and picture were made for, and the other is
-    /// written as a record of his own from the word of his verse, taking it from the record that held
-    /// him: Pashhur the priest of 1 Chronicles 9:12 leaves Zedekiah's envoy, the Merarite Amaziah
-    /// leaves the priest of Bethel, and Levi the publican is a man of his own beside Matthew.
-    /// </summary>
-    [Theory]
-    [InlineData("pashhur-the-priest", "pashhur", "1CH 9:12")]
-    [InlineData("malchijah-father-of-pashhur", "malchijah-2", "1CH 9:12")]
-    [InlineData("amaziah-the-merarite", "amaziah-3", "1CH 6:30")]
-    [InlineData("elhanan-son-of-dodo", "elhanan", "2SA 23:24")]
-    [InlineData("conaniah-chief-of-the-levites", "conaniah", "2CH 35:9")]
-    [InlineData("benaiah-the-trumpeting-priest", "benaiah-4", "1CH 15:24")]
-    public async Task AManARecordHeldBesideAnotherIsWrittenFromHisOwnVerse(string written, string held, string reference)
-    {
-        var ruling = Rulings.Single(r => r.Create?.Slug == written);
-        ruling.Reference.Should().Be(reference);
-        ruling.Corrects.Should().Be(held);
-        var heldRecord = Db.Entities.SingleOrDefault(e => e.Slug == held)
-                         ?? Db.Entities.Add(new Entity
-                         {
-                             Kind = EntityKind.Person, Slug = held, Name = held, SourceId = held, Source = "a test",
-                         }).Entity;
-        await Db.SaveChangesAsync();
-        var heldId = heldRecord.Id;
-        Db.WordEntities.Add(new WordEntity
-        {
-            WordId = Words[ruling.Word], EntityId = heldId, Method = LinkMethod.ModelReading, Confidence = 0.8,
-            Source = "a reading of the verse",
-        });
-        await Db.SaveChangesAsync();
-
-        await Load();
-
-        var record = await Db.Entities.SingleAsync(e => e.Slug == written);
-        record.Source.Should().StartWith("Essenthos");
-        record.Distinguisher.Should().NotBeNullOrEmpty();
-        (await Db.WordEntities.Where(a => a.WordId == Words[ruling.Word]).Select(a => a.EntityId).ToListAsync())
-            .Should().Equal(record.Id);
-    }
 }

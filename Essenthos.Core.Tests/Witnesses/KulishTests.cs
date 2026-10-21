@@ -18,7 +18,6 @@ namespace Essenthos.Core.Tests.Witnesses;
 /// <c>\wj</c> encloses words of the text, and dropping what it encloses would take most of what
 /// Jesus says out of the Gospels.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class UsfmNoteTests
 {
     private const string WithANote =

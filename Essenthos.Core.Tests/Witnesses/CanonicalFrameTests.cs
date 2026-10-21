@@ -17,7 +17,6 @@ public sealed class VersificationFrames
     internal VersificationFrame Greek => Rules.Frame(Versification.Septuagint);
 }
 
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class CanonicalReferenceTests
 {
     [Theory]

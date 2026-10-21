@@ -5,7 +5,6 @@ using Xunit;
 
 namespace Essenthos.Core.Tests.Witnesses;
 
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class UsfmReaderTests
 {
     private const string Genesis =
@@ -89,7 +88,6 @@ public class UsfmReaderTests
     }
 }
 
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SeptuagintCanonTests
 {
     [Theory]

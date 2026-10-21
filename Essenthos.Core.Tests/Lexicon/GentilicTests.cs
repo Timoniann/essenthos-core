@@ -17,7 +17,6 @@ namespace Essenthos.Core.Tests.Lexicon;
 /// and every reader will repeat. So each clause the dictionary phrases loosely is here as its own
 /// case, with the sentence that has to keep being refused.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class GentilicTests
 {
     [Fact]

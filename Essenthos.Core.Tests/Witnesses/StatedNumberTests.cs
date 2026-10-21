@@ -163,7 +163,6 @@ public class StatedNumberTests(ITestOutputHelper output)
 /// <summary>
 /// The filler that writes those addresses beside verses already loaded, against a real database.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class StatedNumberLoadTests : IDisposable
 {

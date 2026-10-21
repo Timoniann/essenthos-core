@@ -16,7 +16,6 @@ namespace Essenthos.Core.Tests.Witnesses;
 /// only through this project's own aligner; dropping the second would print the translators'
 /// additions as though the source had them.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class UsfmAnnotationTests
 {
     [Fact]

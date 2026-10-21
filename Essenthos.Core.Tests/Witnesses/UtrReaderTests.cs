@@ -10,7 +10,6 @@ namespace Essenthos.Core.Tests.Witnesses;
 /// files rather than invented, because the shapes that break a reader are exactly the ones a
 /// description of the format leaves out.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class UtrReaderTests
 {
     private const string Genealogy =

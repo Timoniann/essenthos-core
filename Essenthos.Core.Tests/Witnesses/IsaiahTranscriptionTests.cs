@@ -8,7 +8,6 @@ using Xunit;
 namespace Essenthos.Core.Tests.Witnesses;
 
 /// <summary>A First1KGreek TEI edition read into the one-token-per-line form, on an edition made up here.</summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class First1KGreekReaderTests
 {
     private static List<string> Read(string body)
@@ -90,7 +89,6 @@ public class First1KGreekReaderTests
              """).Should().Equal("48.7.3 ὁ", "48.7.3 <", "48.7.3 υἱός>", "48.7.3 σου");
 }
 
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class EditionRepairTests
 {
     private static readonly string[] Lines =

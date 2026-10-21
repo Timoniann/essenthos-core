@@ -16,7 +16,6 @@ namespace Essenthos.Core.Tests.Witnesses;
 /// Psalms of Solomon, the prologue of Lamentations and the heading of Obadiah all arrive that way,
 /// and left alone every one of them would claim an address that belongs to another verse.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SweteUnnumberedTests
 {
     [Fact]

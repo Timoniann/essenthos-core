@@ -19,7 +19,6 @@ namespace Essenthos.Core.Tests.Evidentia;
 /// run row, the same decisions, under the same ids, in the same order. Both runs start from empty run
 /// tables with their sequences reset, so an id that differs is a row written out of turn.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class EvidentiaParallelRunTests : IDisposable
 {

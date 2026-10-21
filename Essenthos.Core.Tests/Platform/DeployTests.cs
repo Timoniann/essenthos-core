@@ -70,6 +70,10 @@ public sealed class DeployTests : IAsyncLifetime
             $$"""{ "commit": "{{_deployed[..12]}}", "builtAt": "2026-09-20T09:00:00Z", "release": { "name": "20260918a", "builtAt": "2026-09-18T07:00:00Z" } }""",
             "application/json"));
         _server.MapGet("/version.json", () => Results.Text($$"""{ "commit": "{{_webHead}}" }""", "application/json"));
+
+        // A site that answers but is not up. A port nobody listens on says the same thing to the
+        // probe, and on Windows takes two to three seconds to refuse each time it is asked.
+        _server.MapGet("/down/v1/health/ready", () => Results.StatusCode(StatusCodes.Status502BadGateway));
         await _server.StartAsync();
         var site = _server.Urls.First();
 
@@ -90,10 +94,10 @@ public sealed class DeployTests : IAsyncLifetime
             $"--Desk:Deploy:Local={site}",
             $"--Desk:Deploy:Environments:dev:Site={site}",
             "--Desk:Deploy:Environments:dev:Target=dev",
-            // Nothing listens on port 1: production does not answer yet.
-            "--Desk:Deploy:Environments:prod:Site=http://127.0.0.1:1",
+            // Production is not up yet.
+            $"--Desk:Deploy:Environments:prod:Site={site.TrimEnd('/')}/down",
             "--Desk:Deploy:Environments:prod:Target=prod",
-            "--Desk:Deploy:Environments:staging:Site=http://127.0.0.1:1",
+            $"--Desk:Deploy:Environments:staging:Site={site.TrimEnd('/')}/down",
             $"--Publish:ReleasesPath={Releases}",
             "--Publish:Targets:dev:Ssh=deploy@192.0.2.1",
             "--Publish:Targets:dev:Password=not-a-password",

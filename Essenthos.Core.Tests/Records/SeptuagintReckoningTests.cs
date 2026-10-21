@@ -10,7 +10,6 @@ using Xunit;
 
 namespace Essenthos.Core.Tests.Records;
 
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class GreekNumeralTests
 {
     [Theory]
@@ -145,7 +144,6 @@ public class SeptuagintReadingTests(SeptuagintEditions editions) : IClassFixture
     }
 }
 
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class SeptuagintSideTests
 {
     private const int Exodus = 2515;

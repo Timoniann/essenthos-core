@@ -81,36 +81,4 @@ public abstract class OwnRecordTests : IDisposable
         Db.LinkWords.Add(new LinkWord { Link = link, Word = hebrew, Side = LinkSide.From });
         Db.LinkWords.Add(new LinkWord { Link = link, Word = to, Side = LinkSide.To });
     }
-
-    /// <summary>
-    /// The word a ruling reads again, put on the wrong record first where <paramref name="wrong"/>
-    /// names one, names the record its verse names once the rulings are loaded, and nothing else.
-    /// </summary>
-    private protected async Task ReadAgain(string text, string reference, int position, string? wrong, string named)
-    {
-        var ruling = Rulings.Single(r => r.Text == text && r.Reference == reference && r.Position == position);
-        var word = Words[ruling.Word];
-        if (wrong is not null)
-        {
-            var held = await Db.Entities.SingleOrDefaultAsync(e => e.Slug == wrong);
-            if (held is null)
-            {
-                held = new Entity { Kind = EntityKind.Person, Slug = wrong, Name = wrong, SourceId = wrong, Source = "a test" };
-                Db.Entities.Add(held);
-                await Db.SaveChangesAsync();
-            }
-
-            Db.WordEntities.Add(new WordEntity
-            {
-                WordId = word, EntityId = held.Id, Method = LinkMethod.StrongNumber, Confidence = 0.99,
-                Source = "a resolution by number",
-            });
-            await Db.SaveChangesAsync();
-        }
-
-        await Load();
-
-        (await Db.WordEntities.Where(a => a.WordId == word).Select(a => a.Entity!.Slug).ToListAsync())
-            .Should().Equal(named);
-    }
 }

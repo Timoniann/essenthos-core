@@ -17,110 +17,30 @@ namespace Essenthos.Core.Tests.Names;
 /// name on it (<em>Астарот Карнаїмі</em> of Genesis 14:5, the second word named Kiriathaim), and the
 /// Synodal's <em>Доик</em> in the title of Psalm 52, whose links to the Hebrew were drawn while the
 /// Hebrew title carried its neighbours' numbers.
+///
+/// <para>
+/// Both are laid in one world before one load of the rulings: they are words of different texts,
+/// linked to different words of the translation, and each test reads that load.
+/// </para>
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
-[LongRunning]
-public sealed class TwoWordNameRulingTests : IDisposable
+public sealed class TwoWordNameRulingTests(WitnessDatabase database) : IAsyncLifetime
 {
-    private const string Kulish = "Essenthos.Core.Loading.Encyclopedia.KulishTwoWordNameRecords.json";
-
     private const string Resolution = "BHSA's proper-noun marking, and the Strong number resolving to exactly one entity";
 
-    private readonly AppDbContext _db;
-    private readonly IReadOnlyList<OwnRecordRuling> _rulings;
-    private readonly Dictionary<RuledWord, long> _words;
-    private readonly Text _english;
+    private World _world = null!;
 
-    public TwoWordNameRulingTests(WitnessDatabase database)
-    {
-        _db = database.NewContext();
-        Clear();
-        _rulings = [.. SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings)];
+    private AppDbContext Db => _world.Db;
 
-        var placed = _db.Place(_rulings.Select(ruling => ruling.Word));
-        foreach (var ruling in _rulings)
-        {
-            placed[ruling.Word].StrongNumber = ruling.StrongNumber;
-            placed[ruling.Word].Morphology = JsonDocument.Parse("""{"pos": "subs", "nameType": "pers"}""");
-        }
+    public async Task InitializeAsync() => _world = await database.Shared(() => World.Loaded(database));
 
-        _english = Corpus.Add(_db, "ENGLISH", TextKind.Translation, "eng", (1, 1, ["Karnaim", "Doeg"]));
-        _db.SaveChanges();
-        _words = placed.ToDictionary(word => word.Key, word => word.Value.Id);
-
-        foreach (var slug in _rulings
-                     .SelectMany(r => new[] { r.Existing }.Concat(r.Alternatives?.Select(a => a.Slug) ?? []))
-                     .Where(slug => slug is not null && _rulings.All(r => r.Create?.Slug != slug))
-                     .Append("kiriathaim")
-                     .Distinct())
-        {
-            _db.Entities.Add(new Entity
-            {
-                Kind = slug == "anointed" ? EntityKind.Title : EntityKind.Person,
-                Slug = slug!,
-                Name = slug!,
-                SourceId = slug!,
-                Source = "a test",
-            });
-        }
-
-        _db.SaveChanges();
-
-        // The loader compares everything its context tracks on every query and save; the tens of
-        // thousands of rows written here made a load of seconds take minutes.
-        _db.ChangeTracker.Clear();
-    }
-
-    public void Dispose()
-    {
-        Clear();
-        _db.Dispose();
-    }
-
-    private void Clear()
-    {
-        _db.Database.ExecuteSqlRaw("DELETE FROM text");
-        _db.Database.ExecuteSqlRaw("DELETE FROM entity");
-    }
-
-    private Task<OwnRecordOutcome> Load() =>
-        new OwnRecordLoader(
-                _db,
-                new ConfigurationBuilder()
-                    .AddInMemoryCollection(new Dictionary<string, string?> { [OwnRecordLoader.BulkConfigurationKey] = "false" })
-                    .Build(),
-                NullLogger<OwnRecordLoader>.Instance)
-            .Load(Path.Combine(Path.GetTempPath(), $"absent-{Guid.NewGuid():N}"));
+    public Task DisposeAsync() => Task.CompletedTask;
 
     private static OwnRecordRulings File(string source) =>
         SenseReadingFiles.AllRulings().Single(file => file.Source.Contains(source, StringComparison.Ordinal));
 
-    private long Word(string text, string reference, int position) =>
-        _words.Single(w => w.Key.Text == text && w.Key.Reference == reference && w.Key.Position == position).Value;
-
-    private int Entity(string slug) => _db.Entities.Single(e => e.Slug == slug).Id;
-
     private async Task<List<string>> Names(long word) =>
-        await _db.WordEntities.Where(a => a.WordId == word).Select(a => a.Entity!.Slug).ToListAsync();
-
-    /// <summary>A link of the kind the aligner draws, between one word of each of two texts.</summary>
-    private async Task Linked(long from, long to)
-    {
-        var words = await _db.Words.Where(w => w.Id == from || w.Id == to).ToDictionaryAsync(w => w.Id);
-        var link = new Link
-        {
-            FromTextId = words[from].TextId,
-            ToTextId = words[to].TextId,
-            Relation = LinkRelation.Renders,
-            Method = LinkMethod.Aligner,
-            Confidence = 0.9,
-            Provenance = new() { Source = "a test" },
-        };
-        _db.Links.Add(link);
-        _db.LinkWords.Add(new LinkWord { Link = link, WordId = from, Side = LinkSide.From });
-        _db.LinkWords.Add(new LinkWord { Link = link, WordId = to, Side = LinkSide.To });
-        await _db.SaveChangesAsync();
-    }
+        await Db.WordEntities.Where(a => a.WordId == word).Select(a => a.Entity!.Slug).ToListAsync();
 
     /// <summary>
     /// Every word of a name the Kulish Bible prints in two words where the link reaches the other one:
@@ -159,28 +79,18 @@ public sealed class TwoWordNameRulingTests : IDisposable
     [Fact]
     public async Task KarnaimNamesAshterothKarnaimAndNotTheKiriathaimTheLinkGaveIt()
     {
-        var karnaim = Word("UKR1871", "GEN 14:5", 19);
-        var beside = _db.WordAt(_english, 1, 1, 1).Id;
-        await Linked(karnaim, beside);
-        _db.WordEntities.Add(new WordEntity
-        {
-            WordId = karnaim, EntityId = Entity("kiriathaim"), Method = LinkMethod.StrongNumber, Confidence = 0.9,
-            Source = Resolution, Note = "through BHSA word 1, linked by aligner",
-        });
-        await _db.SaveChangesAsync();
-        (await Names(karnaim)).Should().Equal("kiriathaim");
-
-        await Load();
+        var karnaim = _world.Word("UKR1871", "GEN 14:5", 19);
+        _world.KarnaimBefore.Should().Equal("kiriathaim");
 
         (await Names(karnaim)).Should().Equal("ashterothkarnaim");
-        (await _db.WordEntities.SingleAsync(a => a.WordId == karnaim)).Method.Should().Be(LinkMethod.Manual);
-        (await Names(beside)).Should().BeEmpty();
-        (await Names(Word("UKR1871", "GEN 14:5", 27))).Should().Equal("kiriathaim");
-        (await Names(Word("UKR1871", "2KI 20:12", 5))).Should().Equal("berodachbaladan");
+        (await Db.WordEntities.SingleAsync(a => a.WordId == karnaim)).Method.Should().Be(LinkMethod.Manual);
+        (await Names(_world.Beside(1))).Should().BeEmpty();
+        (await Names(_world.Word("UKR1871", "GEN 14:5", 27))).Should().Equal("kiriathaim");
+        (await Names(_world.Word("UKR1871", "2KI 20:12", 5))).Should().Equal("berodachbaladan");
 
-        var before = await _db.WordEntities.OrderBy(a => a.Id).Select(a => a.Id).ToListAsync();
-        (await Load()).AlreadyLoaded.Should().BeTrue();
-        (await _db.WordEntities.OrderBy(a => a.Id).Select(a => a.Id).ToListAsync()).Should().Equal(before);
+        var before = await Db.WordEntities.OrderBy(a => a.Id).Select(a => a.Id).ToListAsync();
+        (await _world.Load()).AlreadyLoaded.Should().BeTrue();
+        (await Db.WordEntities.OrderBy(a => a.Id).Select(a => a.Id).ToListAsync()).Should().Equal(before);
     }
 
     /// <summary>
@@ -196,13 +106,128 @@ public sealed class TwoWordNameRulingTests : IDisposable
         file.Rulings.Should().ContainSingle().Which.Should().Match<OwnRecordRuling>(r =>
             r.Text == "RUSV" && r.Reference == "PSA 52:1" && r.Position == 9 && r.Surface == "Доик" && r.Existing == "doeg");
 
-        var doeg = Word("RUSV", "PSA 52:1", 9);
-        var beside = _db.WordAt(_english, 1, 1, 2).Id;
-        await Linked(doeg, beside);
+        (await Names(_world.Word("RUSV", "PSA 52:1", 9))).Should().Equal("doeg");
+        (await Names(_world.Beside(2))).Should().BeEmpty();
+    }
 
-        await Load();
+    /// <summary>
+    /// Every word a ruling the corpus ships names, at its address and with its Strong number, the
+    /// records the rulings name, and a translation whose two words the arrangements link to.
+    /// </summary>
+    private sealed class World : IDisposable
+    {
+        private readonly Dictionary<RuledWord, long> _words;
+        private readonly Text _english;
 
-        (await Names(doeg)).Should().Equal("doeg");
-        (await Names(beside)).Should().BeEmpty();
+        private World(AppDbContext db, Dictionary<RuledWord, long> words, Text english)
+        {
+            Db = db;
+            _words = words;
+            _english = english;
+        }
+
+        public AppDbContext Db { get; }
+
+        /// <summary>What <em>Карнаїмі</em> was named before the load.</summary>
+        public List<string> KarnaimBefore { get; private set; } = [];
+
+        public static async Task<World> Loaded(WitnessDatabase database)
+        {
+            var world = Make(database);
+            await world.ArrangeKarnaim();
+            await world.Linked(world.Word("RUSV", "PSA 52:1", 9), world.Beside(2));
+            await world.Load();
+            return world;
+        }
+
+        private static World Make(WitnessDatabase database)
+        {
+            var db = database.NewContext();
+            IReadOnlyList<OwnRecordRuling> rulings = [.. SenseReadingFiles.AllRulings().SelectMany(file => file.Rulings)];
+
+            var placed = db.Place(rulings.Select(ruling => ruling.Word));
+            foreach (var ruling in rulings)
+            {
+                placed[ruling.Word].StrongNumber = ruling.StrongNumber;
+                placed[ruling.Word].Morphology = JsonDocument.Parse("""{"pos": "subs", "nameType": "pers"}""");
+            }
+
+            var english = Corpus.Add(db, "ENGLISH", TextKind.Translation, "eng", (1, 1, ["Karnaim", "Doeg"]));
+            db.SaveChanges();
+            var words = placed.ToDictionary(word => word.Key, word => word.Value.Id);
+
+            foreach (var slug in rulings
+                         .SelectMany(r => new[] { r.Existing }.Concat(r.Alternatives?.Select(a => a.Slug) ?? []))
+                         .Where(slug => slug is not null && rulings.All(r => r.Create?.Slug != slug))
+                         .Distinct())
+            {
+                db.Entities.Add(new Entity
+                {
+                    Kind = slug == "anointed" ? EntityKind.Title : EntityKind.Person,
+                    Slug = slug!,
+                    Name = slug!,
+                    SourceId = slug!,
+                    Source = "a test",
+                });
+            }
+
+            db.SaveChanges();
+
+            // The loader compares everything its context tracks on every query and save; the tens of
+            // thousands of rows written here made a load of seconds take minutes.
+            db.ChangeTracker.Clear();
+            return new World(db, words, english);
+        }
+
+        public long Word(string text, string reference, int position) =>
+            _words.Single(w => w.Key.Text == text && w.Key.Reference == reference && w.Key.Position == position).Value;
+
+        /// <summary>The translation's word an arrangement links to.</summary>
+        public long Beside(int position) => Db.WordAt(_english, 1, 1, position).Id;
+
+        public Task<OwnRecordOutcome> Load() =>
+            new OwnRecordLoader(
+                    Db,
+                    new ConfigurationBuilder()
+                        .AddInMemoryCollection(new Dictionary<string, string?> { [OwnRecordLoader.BulkConfigurationKey] = "false" })
+                        .Build(),
+                    NullLogger<OwnRecordLoader>.Instance)
+                .Load(Path.Combine(Path.GetTempPath(), $"absent-{Guid.NewGuid():N}"));
+
+        public void Dispose() => Db.Dispose();
+
+        /// <summary><em>Карнаїмі</em> linked by the aligner and carrying the Kiriathaim the link gave it.</summary>
+        private async Task ArrangeKarnaim()
+        {
+            var karnaim = Word("UKR1871", "GEN 14:5", 19);
+            await Linked(karnaim, Beside(1));
+            Db.WordEntities.Add(new WordEntity
+            {
+                WordId = karnaim, EntityId = Db.Entities.Single(e => e.Slug == "kiriathaim").Id,
+                Method = LinkMethod.StrongNumber, Confidence = 0.9, Source = Resolution,
+                Note = "through BHSA word 1, linked by aligner",
+            });
+            await Db.SaveChangesAsync();
+            KarnaimBefore = await Db.WordEntities.Where(a => a.WordId == karnaim).Select(a => a.Entity!.Slug).ToListAsync();
+        }
+
+        /// <summary>A link of the kind the aligner draws, between one word of each of two texts.</summary>
+        private async Task Linked(long from, long to)
+        {
+            var words = await Db.Words.Where(w => w.Id == from || w.Id == to).ToDictionaryAsync(w => w.Id);
+            var link = new Link
+            {
+                FromTextId = words[from].TextId,
+                ToTextId = words[to].TextId,
+                Relation = LinkRelation.Renders,
+                Method = LinkMethod.Aligner,
+                Confidence = 0.9,
+                Provenance = new() { Source = "a test" },
+            };
+            Db.Links.Add(link);
+            Db.LinkWords.Add(new LinkWord { Link = link, WordId = from, Side = LinkSide.From });
+            Db.LinkWords.Add(new LinkWord { Link = link, WordId = to, Side = LinkSide.To });
+            await Db.SaveChangesAsync();
+        }
     }
 }

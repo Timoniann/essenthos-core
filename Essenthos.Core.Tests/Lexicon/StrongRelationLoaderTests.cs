@@ -14,7 +14,6 @@ namespace Essenthos.Core.Tests.Lexicon;
 /// The relations step reads both dictionaries on every load and writes only when the reading
 /// changed, so a second load leaves the table exactly as the first wrote it.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 [Collection(WitnessDatabaseCollection.Name)]
 public sealed class StrongRelationLoaderTests : IDisposable
 {

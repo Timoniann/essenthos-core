@@ -87,10 +87,18 @@ internal sealed class OwnRecordWorld : IDisposable
         return new OwnRecordWorld(db, rulings, words, db.Texts.Local.Single(t => t.Id == english.Id));
     }
 
-    /// <summary>The world with the rulings loaded into it once, for tests that only read the load.</summary>
-    public static async Task<OwnRecordWorld> Loaded(WitnessDatabase database)
+    /// <summary>
+    /// The world with the rulings loaded into it once, for tests that only read the load; what
+    /// <paramref name="arrange"/> writes is in the world before the load.
+    /// </summary>
+    public static async Task<OwnRecordWorld> Loaded(WitnessDatabase database, Func<OwnRecordWorld, Task>? arrange = null)
     {
         var world = Make(database);
+        if (arrange is not null)
+        {
+            await arrange(world);
+        }
+
         world.FirstLoad = await world.Load();
         return world;
     }

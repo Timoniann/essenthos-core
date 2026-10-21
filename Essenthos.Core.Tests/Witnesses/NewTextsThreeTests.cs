@@ -214,7 +214,6 @@ public class NewTextsThreeTests(ThirdBatchTexts texts) : IClassFixture<ThirdBatc
 /// where a word is spelled or accented differently, the join finds it by its Strong number — only
 /// where the number stands once in the source verse and once in the witness verse.
 /// </summary>
-[Trait(TestCategory.Name, TestCategory.Corpus)]
 public class InterlinearNumberTests
 {
     [Theory]
