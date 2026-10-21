@@ -116,8 +116,8 @@ public sealed class StrongTranslationLoadTests : IDisposable
 
     /// <summary>
     /// The guard is per number and per language, so a second language loads beside the first and a
-    /// row already there is left exactly as it is. Guarding on whether the table holds anything is
-    /// what left another table empty for a whole load.
+    /// row whose record has not changed is left exactly as it is. Guarding on whether the table
+    /// holds anything is what left another table empty for a whole load.
     /// </summary>
     [Fact]
     public async Task ASecondLanguageLoadsBesideTheFirstAndTheFirstIsLeftAlone()
@@ -140,6 +140,65 @@ public sealed class StrongTranslationLoadTests : IDisposable
             .ToListAsync();
         rows.Select(r => r.Language).Should().Equal("deu", "ukr");
         rows.Single(r => r.Language == "ukr").Definition.Should().Be("боги у звичайному значенні");
+    }
+
+    /// <summary>
+    /// A reviewed repair republishes one entry with one item changed. That row takes the new text
+    /// and the new provenance where it stands, and every row whose record did not change is left
+    /// exactly as it was, so a second load writes nothing.
+    /// </summary>
+    [Fact]
+    public async Task AChangedRecordRewritesItsRowInPlaceAndTheOthersAreLeftAlone()
+    {
+        English("H430", definition: "gods in the ordinary sense");
+        English("H6544", definition: "to loosen; by implication, to let alone");
+        Published("H430", definition: "боги у звичайному значенні");
+        Published("H6544", definition: "відпускати; дозволяти");
+        (await Load()).Written.Should().Be(2);
+        var before = await _db.StrongEntryTranslations.AsNoTracking().ToDictionaryAsync(t => t.StrongNumber);
+
+        Published("H6544", definition: "відпускати; перешкоджати", file: "zz-repair.jsonl",
+            model: "claude-sonnet-5 + gpt-6.1-sol", prompt: "lexicon-3 + strong-archaic-repair-1",
+            translatedAt: "2026-10-21T12:00:00+00:00", uncertain: ["let"]);
+
+        var outcome = await Load();
+
+        outcome.Written.Should().Be(0);
+        outcome.Updated.Should().Be(1);
+        outcome.Skipped.Should().Be(1);
+        outcome.Replaced.Should().Be(1);
+        outcome.AlreadyLoaded.Should().BeFalse();
+
+        var after = await _db.StrongEntryTranslations.AsNoTracking().ToDictionaryAsync(t => t.StrongNumber);
+        after.Should().HaveCount(2);
+        after["H6544"].Id.Should().Be(before["H6544"].Id);
+        after["H6544"].Definition.Should().Be("відпускати; перешкоджати");
+        after["H6544"].Source.Should().Be(
+            $"{StrongTranslationLoader.SourcePrefix} claude-sonnet-5 + gpt-6.1-sol, prompt lexicon-3 + strong-archaic-repair-1, run 2026-10-21");
+        after["H6544"].Note.Should().Be("the translator was unsure of: let");
+        after["H430"].Should().BeEquivalentTo(before["H430"]);
+
+        var replay = await Load();
+        replay.Written.Should().Be(0);
+        replay.Updated.Should().Be(0);
+        replay.AlreadyLoaded.Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task AChangedRecordTheChecksRefuseLeavesTheLoadedRowAsItWas()
+    {
+        English("H430", derivation: "plural of אֱלוֹהַּ (H433);");
+        Published("H430", derivation: "множина від אֱלוֹהַּ (H433);");
+        (await Load()).Written.Should().Be(1);
+
+        Published("H430", derivation: "множина від елоах;", file: "zz-repair.jsonl");
+
+        var outcome = await Load();
+
+        outcome.Updated.Should().Be(0);
+        outcome.Refused.LostReference.Should().Be(1);
+        (await _db.StrongEntryTranslations.SingleAsync(t => t.StrongNumber == "H430"))
+            .Derivation.Should().Be("множина від אֱלוֹהַּ (H433);");
     }
 
     /// <summary>
@@ -241,16 +300,19 @@ public sealed class StrongTranslationLoadTests : IDisposable
         string? detailed = null,
         string language = "ukr",
         string file = "ukr.jsonl",
-        string[]? uncertain = null)
+        string[]? uncertain = null,
+        string model = Model,
+        string prompt = Prompt,
+        string translatedAt = "2026-09-06T17:41:02+00:00")
     {
         var row = new Dictionary<string, object?>
         {
             ["strong_number"] = number,
             ["language"] = language,
             ["method"] = StrongTranslationFiles.ModelTranslation,
-            ["model"] = Model,
-            ["prompt_version"] = Prompt,
-            ["translated_at"] = "2026-09-06T17:41:02+00:00",
+            ["model"] = model,
+            ["prompt_version"] = prompt,
+            ["translated_at"] = translatedAt,
         };
 
         Say(row, "definition", definition);
