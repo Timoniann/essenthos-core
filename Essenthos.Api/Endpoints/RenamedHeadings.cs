@@ -262,33 +262,59 @@ internal static class RenamedHeadings
     }
 
     /// <summary>
-    /// The nominative of a family: its shortest spelling printed often enough to head it, never one
-    /// that only declines a printed <em>-а</em> or <em>-я</em> of the same length.
+    /// The nominative of a family: of its spellings printed often enough to head it and not another
+    /// case of one of them, the one its texts print most, every text counted together.
     /// </summary>
+    /// <remarks>
+    /// Two texts of one language can spell the nominative two ways. Kulish's New Testament of 1871
+    /// prints <em>Петр</em> 94 times, and the Ohienko and the New Ukrainian Translation print
+    /// <em>Петро</em> 87 and 91 times: the reader's name for him is the one printed most, which the
+    /// shorter spelling is not.
+    /// </remarks>
     private static string Heading(List<(string Form, string Folded, int Occurrences)> most)
     {
-        var commonest = most[0].Occurrences;
-        var heads = most.Where(s => s.Occurrences >= commonest * HeadingShare).ToList();
-        var nominatives = heads.Where(s => !Declines(s.Form, most)).ToList();
+        var printed = most
+            .GroupBy(s => s.Form, StringComparer.Ordinal)
+            .Select(g => (Form: g.Key, Occurrences: g.Sum(s => s.Occurrences)))
+            .ToList();
+        var commonest = printed.Max(s => s.Occurrences);
+        var heads = printed.Where(s => s.Occurrences >= commonest * HeadingShare).ToList();
+        var nominatives = heads
+            .Where(s => !heads.Any(other => other.Form != s.Form && Declines(s.Form, other.Form)))
+            .ToList();
         return (nominatives.Count > 0 ? nominatives : heads)
-            .OrderBy(s => s.Form.Length)
-            .ThenByDescending(s => s.Occurrences)
+            .OrderByDescending(s => s.Occurrences)
+            .ThenBy(s => s.Form.Length)
             .ThenBy(s => s.Form, StringComparer.Ordinal)
             .First().Form;
     }
 
-    /// <summary>The endings by which a feminine-declined name in <em>-а</em> or <em>-я</em> is in another case.</summary>
-    private const string ObliqueEndings = "ыиіїуюе";
+    /// <summary>The endings by which a name in <em>-а</em> or <em>-я</em> is in another case: <em>Варнави</em>, <em>Марією</em>.</summary>
+    private static readonly string[] FeminineEndings = ["ы", "и", "і", "ї", "у", "ю", "е", "є", "ою", "ею", "єю", "ой", "ей"];
 
     /// <summary>
-    /// Whether a spelling is another case of a printed spelling ending in <em>-а</em> or <em>-я</em> on the
-    /// same stem: <em>Васемафы</em> and <em>Васемафу</em> beside <em>Васемафа</em>, <em>Варнави</em> beside
-    /// <em>Варнава</em>. The genitive a text prints more often must not head the name it declines.
+    /// The endings by which any other name is in another case: <em>Петра</em>, <em>Мойсея</em>,
+    /// <em>Павлові</em>, <em>Авраамом</em>.
     /// </summary>
-    private static bool Declines(string form, List<(string Form, string Folded, int Occurrences)> family) =>
-        form.Length > 1
-        && ObliqueEndings.Contains(char.ToLowerInvariant(form[^1]))
-        && family.Any(s => s.Form.Length == form.Length
-                           && "ая".Contains(char.ToLowerInvariant(s.Form[^1]))
-                           && string.Equals(s.Form[..^1], form[..^1], StringComparison.Ordinal));
+    private static readonly string[] OtherEndings = ["а", "я", "у", "ю", "і", "е", "є", "ові", "еві", "єві", "ом", "ем", "єм", "ым", "ой", "ы"];
+
+    /// <summary>
+    /// Whether a spelling is another case of a printed spelling on the same stem: <em>Васемафы</em>
+    /// beside <em>Васемафа</em>, <em>Петра</em> beside <em>Петр</em> or <em>Петро</em>, <em>Мойсея</em>
+    /// beside <em>Мойсей</em>. Two nominatives are not: <em>Петро</em> is not a case of <em>Петр</em>.
+    /// A genitive a text prints more often must not head the name it declines.
+    /// </summary>
+    private static bool Declines(string form, string nominative)
+    {
+        if (nominative.Length < 2 || form.Length <= nominative.Length - 1)
+        {
+            return false;
+        }
+
+        var last = char.ToLowerInvariant(nominative[^1]);
+        var stem = "аяоьй".Contains(last) ? nominative[..^1] : nominative;
+        var endings = last is 'а' or 'я' ? FeminineEndings : OtherEndings;
+        return form.StartsWith(stem, StringComparison.Ordinal)
+               && endings.Contains(form[stem.Length..].ToLowerInvariant(), StringComparer.Ordinal);
+    }
 }
