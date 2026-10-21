@@ -1,0 +1,917 @@
+﻿using System.Text.Json;
+using Essenthos.Core.Database;
+using Essenthos.Core.Database.Entities;
+using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading.Encyclopedia;
+using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging.Abstractions;
+using Xunit;
+
+namespace Essenthos.Core.Tests.Records;
+
+/// <summary>
+/// The register meeting an encyclopedia that already holds people of these names.
+///
+/// The fixture is the Zimri group as the corpus actually holds it, because every claim worth testing
+/// is in it: three men called Zimri, a fourth the dataset files under Zabdi and Chronicles calls
+/// Zimri, and Jehu — whom Jezebel calls <em>Zimri</em> once, so forty-eight of his verses are in the
+/// group's occurrence list and none of them are about anybody of that name.
+///
+/// What the design promises a reader is five things. A bearer whose verses meet a held man's keeps
+/// that man's address and stops being the dataset's; a bearer nobody holds is added with the verses
+/// that print his name; a held namesake nothing reaches is left exactly as it was; a bearer nothing
+/// but the enumeration establishes says so on its claim and cites nothing; and a verse that does not
+/// print the name is never written as a reference, whatever a dataset attributes it to.
+/// </summary>
+[Collection(WitnessDatabaseCollection.Name)]
+public sealed class PersonRegisterLoadTests : IDisposable
+{
+    private const string Dataset =
+        "BibleData by Brady Stephenson, github.com/BradyStephenson/bible-data, CC BY 4.0";
+
+    private const string Ours =
+        "Essenthos, from the bearers Strong's Dictionary enumerates under the name";
+
+    private readonly AppDbContext _db;
+    private readonly string _folder;
+
+    public PersonRegisterLoadTests(WitnessDatabase database)
+    {
+        _db = database.NewContext();
+        _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+
+        _folder = Path.Combine(Path.GetTempPath(), $"persons-{Guid.NewGuid():N}");
+        Directory.CreateDirectory(_folder);
+
+        Held("zimri", "Zimri", "Zimri_1", ["Zimri"], [(4, 25, 14)]);
+        Held("zimri-2", "Zimri", "Zimri_2", ["Zimri"],
+            [(11, 16, 9), (11, 16, 10), (11, 16, 15), (12, 9, 31)]);
+        Held("zabdi", "Zabdi", "Zabdi_1", ["Zabdi", "Zimri"],
+            [(6, 7, 1), (6, 7, 17), (13, 2, 6)]);
+        Held("jehu-2", "Jehu", "Jehu_2", ["Jehu", "Zimri"], [(12, 9, 14), (12, 9, 31)]);
+        _db.SaveChanges();
+    }
+
+    public void Dispose()
+    {
+        _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        _db.Dispose();
+        Directory.Delete(_folder, recursive: true);
+    }
+
+    [Fact]
+    public async Task A_bearer_whose_verses_meet_a_held_man_keeps_his_slug_and_becomes_ours()
+    {
+        Register(
+            Bearer(1, "Son of Salu, the Simeonite chief", ["NUM 25:14"]),
+            Bearer(2, "Fifth king of Israel, who killed Elah",
+                ["1KI 16:9", "1KI 16:10", "1KI 16:15", "2KI 9:31"]));
+
+        var outcome = await Load();
+
+        outcome.Claimed.Should().Be(2);
+        outcome.Added.Should().Be(0);
+
+        var king = await Person("zimri-2");
+        king.Should().NotBeNull("the row stays and its address with it");
+        king!.Source.Should().Be(Ours);
+        king.SourceId.Should().Be("Zimri_2", "a corrected upstream record still has to be findable");
+        king.Claims.Should().Contain(claim =>
+            claim.Source == Ours && claim.Method == LinkMethod.ModelReading && claim.Confidence != null);
+        king.Claims.Should().Contain(claim =>
+            claim.Source == Dataset && claim.Method == LinkMethod.StatedBySource,
+            "the dataset's testimony moves to a claim rather than being dropped");
+    }
+
+    [Fact]
+    public async Task A_bearer_the_dataset_files_under_another_name_reaches_that_record()
+    {
+        // Chronicles calls him Zimri and BibleData files him as Zabdi. He is one man with two
+        // spellings, and a register that added a second page for him would be making the namesake
+        // problem worse rather than settling it.
+        Register(Bearer(3, "Son of Zerah, grandson of Judah", ["1CH 2:6"], ["JOS 7:1", "JOS 7:17"]));
+
+        var outcome = await Load();
+
+        outcome.Claimed.Should().Be(1);
+        outcome.Added.Should().Be(0);
+        (await Person("zabdi"))!.Source.Should().Be(Ours);
+    }
+
+    [Fact]
+    public async Task A_held_man_gains_the_verse_this_reading_gives_him_and_keeps_the_ones_he_had()
+    {
+        // 1 Chronicles 9:37 calls him Zechariah where 1 Chronicles 8:31 calls him Zecher, and the
+        // dataset has neither on the king. A pass about which Zechariah a verse is about that left
+        // every reference where it found it would have changed nothing a reader can see.
+        Register(Bearer(2, "Fifth king of Israel", ["1KI 16:9", "1KI 16:20"]));
+
+        var outcome = await Load();
+
+        outcome.Claimed.Should().Be(1);
+        outcome.Referenced.Should().Be(1, "only the verse the record did not already hold");
+
+        var king = await Person("zimri-2");
+        king!.Verses.Should().HaveCount(5);
+        king.Verses.Should().ContainSingle(verse => verse.CanonicalChapter == 16 && verse.CanonicalVerse == 20)
+            .Which.Source.Should().Contain("person split", "ours stands beside theirs and says so");
+        king.Verses.Count(verse => verse.Source == Dataset).Should().Be(4,
+            "a row a dataset wrote stays where it is");
+    }
+
+    [Fact]
+    public async Task One_man_two_names_reach_is_one_row_and_one_claim_naming_both()
+    {
+        // Zimri son of Zerah and Zabdi father of Carmi are one man, and both names are namesake
+        // groups of their own. Letting a row be claimed once altogether rather than once per name
+        // gives the second group a page of its own for somebody already on one — the namesake
+        // problem made worse rather than settled.
+        Register(
+            Bearer(3, "Son of Zerah, grandson of Judah", ["1CH 2:6"]),
+            Bearer(1, "Father of Carmi, whose son Achan took the accursed thing", ["JOS 7:1"],
+                group: "Zabdi", name: "Zabdi"));
+
+        var outcome = await Load();
+
+        outcome.Records.Should().Be(2);
+        outcome.Claimed.Should().Be(1, "two records, one man, one row");
+        outcome.Added.Should().Be(0);
+
+        var claim = (await Person("zabdi"))!.Claims.Should()
+            .ContainSingle(claim => claim.Source == Ours).Subject;
+        claim.Note.Should().Contain("Zimri #3").And.Contain("Zabdi #1",
+            "a reader is owed both names the record was reached by");
+    }
+
+    [Fact]
+    public async Task A_namesake_nothing_of_ours_reaches_keeps_the_provenance_it_has()
+    {
+        // Jehu is in this group because Jezebel calls him Zimri once. Two of his verses are in the
+        // occurrence list; neither is assigned to anybody of that name.
+        Register(Bearer(2, "Fifth king of Israel", ["1KI 16:9", "2KI 9:31"]));
+
+        await Load();
+
+        var jehu = await Person("jehu-2");
+        jehu!.Source.Should().Be(Dataset);
+        jehu.Claims.Should().BeEmpty("nothing of ours reaches him, so nothing of ours is said of him");
+    }
+
+    [Fact]
+    public async Task A_record_this_corpus_wrote_for_itself_is_reached_though_it_carries_no_name_row()
+    {
+        // OwnRecordLoader writes the people a verse names and no dataset holds. A record of that
+        // kind reaches this pass before its own name row does — it is written a step later on a cold
+        // load — so a group built out of `entity_name` cannot see it, and the register would add a
+        // second page for a man it already holds.
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Person,
+            Slug = "zimri-the-charioteer",
+            Name = "Zimri",
+            SourceId = "essenthos:zimri-the-charioteer",
+            Source = "Essenthos, on the project owner's ruling",
+            Verses = [new EntityVerse { CanonicalBook = 11, CanonicalChapter = 16, CanonicalVerse = 20, Source = "Essenthos" }],
+        });
+        _db.SaveChanges();
+
+        Register(Bearer(2, "Captain of half Elah's chariots", ["1KI 16:20"]));
+
+        var outcome = await Load();
+
+        outcome.Claimed.Should().Be(1);
+        outcome.Added.Should().Be(0, "a record with no name row is still a record of this man");
+        (await Person("zimri-the-charioteer"))!.Source.Should().Be(Ours);
+    }
+
+    [Fact]
+    public async Task A_bearer_nobody_holds_is_added_with_the_verses_that_print_his_name()
+    {
+        Register(Bearer(4, "Son of Jehoadah, a descendant of Saul",
+            ["1CH 8:36", "1CH 9:42"], ["1CH 8:35"]));
+
+        var outcome = await Load();
+
+        outcome.Added.Should().Be(1);
+        outcome.Claimed.Should().Be(0);
+        outcome.Referenced.Should().Be(2);
+
+        var added = await Person("zimri-3");
+        added.Should().NotBeNull();
+        added!.Source.Should().Be(Ours);
+        added.Distinguisher.Should().Be("Son of Jehoadah, a descendant of Saul");
+        added.Names.Should().ContainSingle().Which.HebrewStrongNumber.Should().Be("H2174");
+        added.Verses.Select(verse => (verse.CanonicalBook, verse.CanonicalChapter, verse.CanonicalVerse))
+            .Should().BeEquivalentTo([(13, 8, 36), (13, 9, 42)]);
+        added.Verses.Should().NotContain(verse => verse.CanonicalVerse == 35,
+            "a verse that does not print the name is context, and citing it would show a reader a "
+            + "page whose reference does not hold the person");
+    }
+
+    [Fact]
+    public async Task A_bearer_the_enumeration_alone_establishes_says_so_and_cites_nothing()
+    {
+        Register(Bearer(5, "An obscure name among the mingled people of Jeremiah", [],
+            standing: "lexicon", why: "a second reading upholds the item as a man"));
+
+        var outcome = await Load();
+
+        outcome.Added.Should().Be(1);
+        outcome.OnTheLexicon.Should().Be(1);
+        outcome.OnAVerse.Should().Be(0);
+        outcome.Referenced.Should().Be(0);
+
+        var added = await Person("zimri-3");
+        added!.Verses.Should().BeEmpty("no verse of this corpus tells him from his namesakes");
+        var claim = added.Claims.Should().ContainSingle().Subject;
+        claim.Confidence.Should().BeLessThan(0.9,
+            "a split nothing we hold makes is not as well established as one a verse makes");
+        claim.Note.Should().Contain("no verse of this corpus tells him from his namesakes");
+    }
+
+    private const string ZimriFive =
+        "Obscure name in Jeremiah among 'mingled people'; possibly same as Zimran; no verse supplied here";
+
+    [Fact]
+    public async Task A_bearer_the_register_describes_with_a_sentence_about_our_verses_gets_a_line_for_the_reader()
+    {
+        Register(Bearer(5, ZimriFive, [], standing: "lexicon", why: "a second reading upholds the item as a man"));
+
+        await Load();
+
+        var line = (await Person("zimri-3"))!.Distinguisher;
+        line.Should().Be("A name among the mingled peoples in Jeremiah, possibly the same as Zimran");
+    }
+
+    [Fact]
+    public async Task A_corpus_loaded_with_the_registers_sentence_is_given_the_readers_line_once()
+    {
+        Register(Bearer(5, ZimriFive, [], standing: "lexicon", why: "a second reading upholds the item as a man"));
+        await Load();
+        var added = await Person("zimri-3");
+        added!.Distinguisher = ZimriFive;
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        await Load();
+
+        (await Person("zimri-3"))!.Distinguisher.Should().Be("A name among the mingled peoples in Jeremiah, possibly the same as Zimran");
+
+        var saved = await _db.Entities.AsNoTracking().SingleAsync(e => e.Slug == "zimri-3");
+        _db.ChangeTracker.Clear();
+        await Load();
+        (await _db.Entities.AsNoTracking().SingleAsync(e => e.Slug == "zimri-3")).Distinguisher.Should().Be(saved.Distinguisher);
+    }
+
+    [Fact]
+    public async Task A_line_somebody_else_has_since_rewritten_is_left_alone()
+    {
+        Register(Bearer(5, ZimriFive, [], standing: "lexicon", why: "a second reading upholds the item as a man"));
+        await Load();
+        var added = await Person("zimri-3");
+        added!.Distinguisher = "A man a later reading described";
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        await Load();
+
+        (await Person("zimri-3"))!.Distinguisher.Should().Be("A man a later reading described");
+    }
+
+    [Fact]
+    public async Task Two_bearers_cannot_both_be_one_held_man()
+    {
+        Register(
+            Bearer(2, "Fifth king of Israel", ["1KI 16:9", "1KI 16:10", "1KI 16:15"]),
+            Bearer(6, "Somebody else the same verse names", ["1KI 16:9"]));
+
+        var outcome = await Load();
+
+        outcome.Claimed.Should().Be(1, "the row goes to whoever shares the most of it");
+        outcome.Added.Should().Be(1);
+        (await Person("zimri-2"))!.Distinguisher.Should().BeNull("a claimed row is not rewritten");
+    }
+
+    [Fact]
+    public async Task A_bearer_the_register_refuses_writes_nothing()
+    {
+        Register(Bearer(5, "The mingled people of Jeremiah 25:25", [],
+            kept: false, standing: null, why: "a second reading refuses it: a people, not a man"));
+
+        var outcome = await Load();
+
+        outcome.Entries.Should().Be(1);
+        outcome.Records.Should().Be(0);
+        outcome.Added.Should().Be(0);
+        (await _db.Entities.CountAsync()).Should().Be(4);
+    }
+
+    [Fact]
+    public async Task A_verse_the_dataset_files_under_the_wrong_philip_moves_to_the_tetrarch()
+    {
+        // BibleData holds Herodias's first husband and Philip the tetrarch as one man, with Luke 3:1,
+        // the tetrarch's title and a note calling him the tetrarch. The register tells them apart and
+        // adds the tetrarch; what the dataset says at Luke 3:1 is about him and goes with him.
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Person,
+            Slug = "philip-2",
+            Name = "Philip",
+            Distinguisher = "brother of Herod (MAT 14:3)",
+            Notes = "Philip the Tetrarch of Iturea and Trachonitis",
+            SourceId = "person:Philip_2",
+            Source = Dataset,
+            Names =
+            [
+                new EntityName { Label = "Philip", Kind = "proper name" },
+                new EntityName { Label = "Tetrarch of Ituraea and Trachonitis", Kind = "title" },
+            ],
+            Verses =
+            [
+                new EntityVerse { CanonicalBook = 40, CanonicalChapter = 14, CanonicalVerse = 3, Label = "Philip", Source = Dataset },
+                new EntityVerse { CanonicalBook = 41, CanonicalChapter = 6, CanonicalVerse = 17, Label = "Philip", Source = Dataset },
+                new EntityVerse { CanonicalBook = 42, CanonicalChapter = 3, CanonicalVerse = 1, Label = "Philip", Source = Dataset },
+            ],
+        });
+        await _db.SaveChangesAsync();
+
+        Register(
+            Bearer(3, "Son of Herod the Great, tetrarch of Ituraea and Trachonitis", ["LUK 3:1"],
+                group: "Philip", name: "Philip"),
+            Bearer(4, "Son of Herod the Great, first husband of Herodias", ["MAT 14:3", "MRK 6:17"],
+                group: "Philip", name: "Philip"));
+
+        var outcome = await Load();
+
+        outcome.Claimed.Should().Be(1);
+        outcome.Added.Should().Be(1);
+
+        var husband = await Person("philip-2");
+        husband!.Verses.Should().NotContain(verse => verse.CanonicalBook == 42,
+            "Luke 3:1 names the tetrarch, not Herodias's husband");
+        husband.Names.Select(name => name.Label).Should().BeEquivalentTo(["Philip"]);
+        husband.Notes.Should().BeNull();
+
+        var tetrarch = await _db.Entities
+            .Include(e => e.Claims).Include(e => e.Names).Include(e => e.Verses)
+            .AsSplitQuery()
+            .SingleAsync(e => e.SourceId == "essenthos:philip3");
+        tetrarch.Verses.Where(verse => verse.Source == Dataset)
+            .Select(verse => verse.Label)
+            .Should().BeEquivalentTo(["Philip"]);
+        tetrarch.Names.Should().Contain(name => name.Label == "Tetrarch of Ituraea and Trachonitis");
+        tetrarch.Notes.Should().Be("Philip the Tetrarch of Iturea and Trachonitis");
+        tetrarch.Claims.Should().Contain(claim =>
+            claim.Source == Dataset && claim.Method == LinkMethod.StatedBySource
+            && claim.Note!.StartsWith("files LUK 3:1 under a record it also gives another man of this name")
+            && !claim.Note.Contains("person:Philip_2"));
+    }
+
+    /// <summary>
+    /// The dataset labelled the Shishak verses it filed under Solomon's father-in-law with Shishak's
+    /// name. Once the verses are Shishak's, the name goes with them and the father-in-law keeps his own.
+    /// </summary>
+    [Fact]
+    public async Task A_name_only_the_moved_verses_used_leaves_with_them()
+    {
+        Held("pharaoh-5", "Pharaoh", "person:Pharaoh_5", ["Pharaoh", "Shishak"], [(11, 3, 1), (11, 14, 25)]);
+        Held("shishak", "Shishak", "person:Shishak_1", ["Shishak"], []);
+        await _db.SaveChangesAsync();
+        await _db.EntityVerses.Where(v => v.CanonicalChapter == 14)
+            .ExecuteUpdateAsync(set => set.SetProperty(v => v.Label, "Shishak"));
+        Register();
+
+        await Load();
+
+        var father = (await Person("pharaoh-5"))!;
+        father.Names.Select(name => name.Label).Should().BeEquivalentTo(["Pharaoh"]);
+        father.Verses.Should().OnlyContain(verse => verse.CanonicalChapter == 3);
+        (await Person("shishak"))!.Names.Select(name => name.Label).Should().BeEquivalentTo(["Shishak"]);
+    }
+
+    [Fact]
+    public async Task Misfiled_Adah_verses_are_repaired_before_the_register_matches_bearers()
+    {
+        Held("adah", "Adah", "person:Adah_1", ["Adah"],
+            [(1, 4, 19), (1, 4, 20), (1, 4, 23), (1, 36, 2), (1, 36, 4), (1, 36, 10), (1, 36, 12), (1, 36, 16)]);
+        Held("basemath", "Basemath", "person:Basemath_1", ["Basemath", "Adah"], [(1, 26, 34)]);
+        await _db.SaveChangesAsync();
+
+        Register(
+            Bearer(1, "Wife of Lamech", ["GEN 4:19", "GEN 4:20", "GEN 4:23"], group: "Adah", name: "Adah"),
+            Bearer(2, "Daughter of Elon the Hittite and wife of Esau",
+                ["GEN 36:2", "GEN 36:4", "GEN 36:10", "GEN 36:12", "GEN 36:16"],
+                group: "Adah", name: "Adah"));
+
+        var outcome = await Load();
+
+        outcome.Claimed.Should().Be(2);
+        outcome.Added.Should().Be(0);
+        (await Person("adah"))!.Verses.Should().OnlyContain(verse =>
+            verse.CanonicalBook == 1 && verse.CanonicalChapter == 4);
+        (await Person("basemath"))!.Verses.Should().Contain(verse =>
+            verse.CanonicalBook == 1 && verse.CanonicalChapter == 36 && verse.CanonicalVerse == 2);
+        (await Person("adah-2")).Should().BeNull();
+    }
+
+    /// <summary>
+    /// The corpus as it stood when the register read it before Jeremiah 36 was moved: the son of
+    /// Shaphan's verses were on the son of Hilkiah's record, so the register's son of Shaphan reached
+    /// it and the son of Hilkiah was added a second time. Once the verses move, a load puts each
+    /// bearer on his own man and folds the second record into the first.
+    /// </summary>
+    [Fact]
+    public async Task A_corpus_read_before_the_verses_moved_is_matched_again_on_the_next_load()
+    {
+        Held("gemariah", "Gemariah", "person:Gemariah_1", ["Gemariah"], [(24, 29, 3)]);
+        Held("gemariah-shaphan", "Gemariah", "person:Gemariah_2", ["Gemariah"],
+            [(24, 36, 10), (24, 36, 11), (24, 36, 12), (24, 36, 25)]);
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Person,
+            Slug = "gemariah-2",
+            Name = "Gemariah",
+            SourceId = "essenthos:gemariah2",
+            Source = Ours,
+            Names = [new EntityName { Label = "Gemariah", Kind = "proper name" }],
+            Verses = [new EntityVerse { CanonicalBook = 24, CanonicalChapter = 29, CanonicalVerse = 3, Source = Ours }],
+        });
+        await _db.SaveChangesAsync();
+        var hilkiahs = (await Person("gemariah"))!;
+        hilkiahs.Claims.Add(new EntityClaim
+        {
+            Method = LinkMethod.StatedBySource, Source = Dataset,
+            Note = "holds this man as a record of its own, which is where this record's relationships, verses "
+                   + "and descriptors come from and whose they stay",
+        });
+        Claimed(hilkiahs, "Gemariah #1, \"son of Shaphan\" — 4 verses of this corpus print the name");
+        Claimed((await Person("gemariah-2"))!, "Gemariah #2, \"son of Hilkiah\" — 1 verse of this corpus prints the name");
+        await _db.SaveChangesAsync();
+        Register(
+            Bearer(1, "Son of Shaphan the scribe", ["JER 36:10", "JER 36:11", "JER 36:12", "JER 36:25"],
+                group: "Gemariah", name: "Gemariah"),
+            Bearer(2, "Son of Hilkiah, who bore Jeremiah's letter", ["JER 29:3"],
+                group: "Gemariah", name: "Gemariah"));
+
+        (await Load()).AlreadyLoaded.Should().BeTrue();
+
+        _db.ChangeTracker.Clear();
+        hilkiahs = (await Person("gemariah"))!;
+        var shaphans = await Person("gemariah-shaphan");
+        (await Person("gemariah-2")).Should().BeNull("the record added for him is folded into the one he is");
+        hilkiahs.Claims.Should().ContainSingle(c => c.Source == Ours && c.Method == LinkMethod.ModelReading)
+            .Which.Note.Should().StartWith("Gemariah #2, ").And.NotContain("Gemariah #1, ");
+        shaphans!.Source.Should().Be(Ours);
+        shaphans.Claims.Should().ContainSingle(c => c.Source == Ours && c.Method == LinkMethod.ModelReading)
+            .Which.Note.Should().StartWith("Gemariah #1, ");
+        shaphans.Claims.Should().Contain(c => c.Source == Dataset && c.Method == LinkMethod.StatedBySource);
+        shaphans.Verses.Should().HaveCount(4);
+        (await _db.MergedRecords.AsNoTracking().SingleAsync()).Slug.Should().Be("gemariah-2");
+
+        await Load();
+        (await _db.Entities.CountAsync(e => e.Name == "Gemariah")).Should().Be(2, "a second load finds nothing to move");
+    }
+
+    /// <summary>
+    /// The dataset numbered the judge Deborah by the word for a bee, so her name in Judges resolved to
+    /// the record of Rebekah's nurse: the register's judge reached the nurse's record by the verses
+    /// read off those words, and the nurse was added a second time. Matched again, the judge is on
+    /// her own record, the nurse's record says it is the nurse, and the second nurse is folded into it.
+    /// </summary>
+    [Fact]
+    public async Task The_judge_Deborah_leaves_the_record_of_Rebekahs_nurse()
+    {
+        (int Book, int Chapter, int Verse)[] judges =
+            [(7, 4, 4), (7, 4, 5), (7, 4, 9), (7, 4, 10), (7, 4, 14), (7, 5, 1), (7, 5, 7), (7, 5, 12), (7, 5, 15)];
+        string[] cited = ["JDG 4:4", "JDG 4:5", "JDG 4:9", "JDG 4:10", "JDG 4:14", "JDG 5:1", "JDG 5:7", "JDG 5:12", "JDG 5:15"];
+        const string fromTheWords = "Essenthos, from the words this corpus annotates to the person or the place they name";
+
+        Held("deborah", "Deborah", "person:Deborah_1", ["Deborah"], [(1, 35, 8)]);
+        Held("deborah-2", "Deborah", "person:Deborah_2", ["Deborah"], judges);
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Person,
+            Slug = "deborah-3",
+            Name = "Deborah",
+            SourceId = "essenthos:deborah2",
+            Source = Ours,
+            Names = [new EntityName { Label = "Deborah", Kind = "proper name" }],
+        });
+        await _db.SaveChangesAsync();
+        var nurse = (await Person("deborah"))!;
+        foreach (var (book, chapter, verse) in judges)
+        {
+            nurse.Verses.Add(new EntityVerse
+            {
+                CanonicalBook = book, CanonicalChapter = chapter, CanonicalVerse = verse, Source = fromTheWords,
+            });
+        }
+
+        nurse.Claims.Add(new EntityClaim
+        {
+            Method = LinkMethod.StatedBySource, Source = Dataset,
+            Note = "holds this man as a record of its own, which is where this record's relationships, verses "
+                   + "and descriptors come from and whose they stay",
+        });
+        Claimed(nurse, "Deborah #3, \"a prophetess who judged Israel\" — 9 verses of this corpus print the name");
+        Claimed((await Person("deborah-3"))!, "Deborah #2, \"the nurse of Rebekah\" — 1 verse of this corpus prints the name");
+        await _db.SaveChangesAsync();
+        Register(
+            Bearer(2, "Rebekah's nurse, buried under an oak below Bethel.", ["GEN 35:8"], group: "Deborah", name: "Deborah"),
+            Bearer(3, "Prophetess, wife of Lapidoth, judged Israel.", cited, group: "Deborah", name: "Deborah"));
+
+        (await Load()).AlreadyLoaded.Should().BeTrue();
+
+        _db.ChangeTracker.Clear();
+        nurse = (await Person("deborah"))!;
+        var judge = (await Person("deborah-2"))!;
+        (await Person("deborah-3")).Should().BeNull("the second record of the nurse is folded into the first");
+        nurse.Claims.Should().ContainSingle(c => c.Source == Ours && c.Method == LinkMethod.ModelReading)
+            .Which.Note.Should().StartWith("Deborah #2, ").And.NotContain("Deborah #3, ");
+        nurse.Verses.Select(v => v.CanonicalBook).Distinct().Should().Equal(1);
+        judge.Source.Should().Be(Ours);
+        judge.Claims.Should().ContainSingle(c => c.Source == Ours && c.Method == LinkMethod.ModelReading)
+            .Which.Note.Should().StartWith("Deborah #3, ");
+        judge.Verses.Select(v => (v.CanonicalBook, v.CanonicalChapter, v.CanonicalVerse)).Distinct()
+            .Should().BeEquivalentTo(judges);
+
+        await Load();
+        (await _db.Entities.CountAsync(e => e.Name == "Deborah")).Should().Be(2, "a second load finds nothing to move");
+    }
+
+    /// <summary>
+    /// Genesis 36's Adah is the woman the dataset keeps as Basemath. The register read before the
+    /// verses moved put her on Lamech's wife; matched again she is on Basemath's record beside
+    /// Basemath's own bearer, and Lamech's wife is the Adah she is.
+    /// </summary>
+    [Fact]
+    public async Task A_bearer_moved_off_a_record_leaves_it_to_the_bearer_it_is()
+    {
+        Held("adah", "Adah", "person:Adah_1", ["Adah"], [(1, 4, 19), (1, 4, 20), (1, 4, 23)]);
+        Held("basemath", "Basemath", "person:Basemath_1", ["Basemath", "Adah"],
+            [(1, 26, 34), (1, 36, 2), (1, 36, 4), (1, 36, 10), (1, 36, 12), (1, 36, 16)]);
+        await _db.SaveChangesAsync();
+        var lamechs = (await Person("adah"))!;
+        Claimed(lamechs, "Adah #2, \"Hittite wife of Esau\" — 5 verses of this corpus print the name");
+        Claimed((await Person("basemath"))!, "Basemath #1, \"Esau's wife\" — 3 verses of this corpus print the name");
+        await _db.SaveChangesAsync();
+        Register(
+            Bearer(1, "Wife of Lamech", ["GEN 4:19", "GEN 4:20", "GEN 4:23"], group: "Adah", name: "Adah"),
+            Bearer(2, "Hittite wife of Esau", ["GEN 36:2", "GEN 36:4", "GEN 36:10", "GEN 36:12", "GEN 36:16"],
+                group: "Adah", name: "Adah"),
+            Bearer(1, "Esau's wife", ["GEN 26:34", "GEN 36:4", "GEN 36:10"], group: "Basemath", name: "Basemath"));
+
+        await Load();
+
+        _db.ChangeTracker.Clear();
+        (await Person("adah"))!.Claims.Single(c => c.Source == Ours).Note.Should().StartWith("Adah #1, ");
+        var basemath = (await Person("basemath"))!.Claims.Single(c => c.Source == Ours).Note;
+        basemath.Should().StartWith("Adah #2, ").And.Contain("; Basemath #1, ");
+    }
+
+    /// <summary>
+    /// BibleData's Zadok son of Meraioth also holds Nehemiah 13:13, the scribe Nehemiah made a
+    /// treasurer. That verse is no evidence the scribe is this record, so the register adds him with
+    /// it and leaves the record to the man it describes, whom the list of records written twice folds.
+    /// </summary>
+    [Fact]
+    public async Task A_verse_the_list_takes_off_a_record_is_no_evidence_for_it()
+    {
+        Held("zadok-3", "Zadok", "person:Zadok_3", ["Zadok"], [(13, 6, 12), (13, 9, 11), (15, 7, 2), (16, 11, 11)]);
+        Held("zadok-6", "Zadok", "person:Zadok_6", ["Zadok"], [(13, 9, 11), (16, 11, 11), (16, 13, 13)]);
+        await _db.SaveChangesAsync();
+        Register(
+            Bearer(2, "Later priest, descendant of Ahitub via Meraioth",
+                ["1CH 6:12", "1CH 9:11", "EZR 7:2", "NEH 11:11"], group: "Zadok", name: "Zadok"),
+            Bearer(7, "Scribe appointed by Nehemiah as a treasurer", ["NEH 13:13"], group: "Zadok", name: "Zadok"));
+
+        var outcome = await Load();
+
+        outcome.Added.Should().Be(1);
+        var scribe = await _db.Entities.Include(e => e.Verses).SingleAsync(e => e.SourceId == "essenthos:zadok7");
+        scribe.Verses.Should().ContainSingle(v => v.Source == Dataset).Which.CanonicalVerse.Should().Be(13);
+        var meraioths = await Person("zadok-6");
+        meraioths!.Source.Should().Be(Dataset, "no bearer of the register reaches him");
+        meraioths.Verses.Should().NotContain(v => v.CanonicalChapter == 13);
+    }
+
+    /// <summary>The same corpus read before the list took the verse off: the next load adds the scribe.</summary>
+    [Fact]
+    public async Task A_bearer_on_a_record_that_no_longer_shares_his_verse_is_added_as_his_own()
+    {
+        Held("zadok-3", "Zadok", "person:Zadok_3", ["Zadok"], [(13, 6, 12), (13, 9, 11), (15, 7, 2), (16, 11, 11)]);
+        Held("zadok-6", "Zadok", "person:Zadok_6", ["Zadok"], [(13, 9, 11), (16, 11, 11), (16, 13, 13)]);
+        await _db.SaveChangesAsync();
+        var meraioths = (await Person("zadok-6"))!;
+        meraioths.Source = Ours;
+        meraioths.Claims.Add(new EntityClaim
+        {
+            Method = LinkMethod.StatedBySource, Source = Dataset,
+            Note = "holds this man as a record of its own, which is where this record's relationships, verses "
+                   + "and descriptors come from and whose they stay",
+        });
+        Claimed(meraioths, "Zadok #7, \"a scribe\" — 1 verse of this corpus prints the name");
+        Claimed((await Person("zadok-3"))!, "Zadok #2, \"a priest, son of Meraioth\" — 4 verses of this corpus print the name");
+        await _db.SaveChangesAsync();
+        Register(
+            Bearer(2, "Later priest, descendant of Ahitub via Meraioth",
+                ["1CH 6:12", "1CH 9:11", "EZR 7:2", "NEH 11:11"], group: "Zadok", name: "Zadok"),
+            Bearer(7, "Scribe appointed by Nehemiah as a treasurer", ["NEH 13:13"], group: "Zadok", name: "Zadok"));
+
+        await Load();
+
+        _db.ChangeTracker.Clear();
+        meraioths = (await Person("zadok-6"))!;
+        meraioths.Source.Should().Be(Dataset);
+        meraioths.Claims.Should().BeEmpty();
+        meraioths.Verses.Should().NotContain(v => v.CanonicalChapter == 13);
+        var scribe = await _db.Entities.Include(e => e.Verses).Include(e => e.Claims)
+            .SingleAsync(e => e.SourceId == "essenthos:zadok7");
+        scribe.Verses.Select(v => v.CanonicalChapter).Should().OnlyContain(chapter => chapter == 13);
+        scribe.Claims.Should().Contain(c => c.Source == Ours && c.Note!.StartsWith("Zadok #7, "));
+        (await Person("zadok-3"))!.Claims.Single(c => c.Source == Ours).Note.Should().StartWith("Zadok #2, ");
+    }
+
+    /// <summary>
+    /// The register added Joshua son of Nun under the spelling Jeshua, on the lexicon alone, and the
+    /// list of records written twice folded that record into Joshua's. Matched again, the bearer shares
+    /// no verse with Joshua, since he has none, and is still the man he was folded into: nothing is
+    /// added, and the address a dataset's Levite was folded under stays his.
+    /// </summary>
+    [Fact]
+    public async Task A_bearer_the_list_folded_stays_on_the_record_it_was_folded_into()
+    {
+        await Jeshuas(recreated: false);
+
+        (await Load()).AlreadyLoaded.Should().BeTrue();
+
+        _db.ChangeTracker.Clear();
+        (await _db.Entities.AnyAsync(e => e.SourceId == "essenthos:jeshua1")).Should().BeFalse();
+        (await Person("jeshua-8")).Should().BeNull();
+        (await Person("joshua"))!.Claims.Single(c => c.Source == Ours).Note.Should().Contain("Jeshua #1, ");
+        (await _db.MergedRecords.CountAsync()).Should().Be(2);
+    }
+
+    /// <summary>
+    /// The corpus as a load left it before the fold was respected: the bearer added again under the
+    /// address the Levite was folded under. The next load folds him back into Joshua and leaves the
+    /// address arriving at the Levite.
+    /// </summary>
+    [Fact]
+    public async Task A_bearer_added_again_under_a_folded_address_goes_back_where_he_was_folded()
+    {
+        await Jeshuas(recreated: true);
+
+        await Load();
+
+        _db.ChangeTracker.Clear();
+        (await Person("jeshua-8")).Should().BeNull();
+        var joshua = (await Person("joshua"))!;
+        joshua.Claims.Single(c => c.Source == Ours && c.Method == LinkMethod.ModelReading)
+            .Note.Should().Contain("Jeshua #1, ");
+        var addresses = await _db.MergedRecords.AsNoTracking().ToListAsync();
+        addresses.Should().HaveCount(2);
+        addresses.Single(m => m.Slug == "jeshua-8").EntityId.Should().Be((await Person("jeshua-7"))!.Id);
+
+        var people = await _db.Entities.CountAsync();
+        await Load();
+        (await _db.Entities.CountAsync()).Should().Be(people, "a second load finds nothing to add or fold");
+        (await _db.MergedRecords.CountAsync()).Should().Be(2);
+    }
+
+    [Fact]
+    public async Task A_bearer_added_never_takes_the_address_of_a_folded_record()
+    {
+        _db.MergedRecords.Add(new MergedRecord
+        {
+            Slug = "zimri-3", EntityId = (await Person("zimri"))!.Id, Name = "Zimri",
+            RecordSourceId = "person:Zimri_3", RecordSource = Dataset, Method = LinkMethod.Manual,
+            Reason = "a test", Source = "a test",
+        });
+        await _db.SaveChangesAsync();
+        Register(Bearer(5, "An obscure name among the mingled people of Jeremiah", [], standing: "lexicon"));
+
+        (await Load()).Added.Should().Be(1);
+
+        (await Person("zimri-3")).Should().BeNull();
+        (await Person("zimri-4"))!.SourceId.Should().Be("essenthos:zimri5");
+    }
+
+    private async Task Jeshuas(bool recreated)
+    {
+        _db.Database.ExecuteSqlRaw("DELETE FROM entity");
+        Held("joshua", "Joshua", "person:Joshua_1", ["Joshua", "Jeshua"], [(6, 1, 1), (16, 8, 17)]);
+        Held("jeshua-3", "Jeshua", "person:Jeshua_3", ["Jeshua"], [(15, 3, 2), (16, 12, 26)]);
+        Held("jeshua-7", "Jeshua", "person:Jeshua_7", ["Jeshua"], [(16, 8, 7), (16, 12, 10)]);
+        await _db.SaveChangesAsync();
+        var sonOfNun = "Jeshua #1, \"son of Nun\" — no verse of this corpus tells him from his namesakes";
+        Claimed((await Person("joshua"))!,
+            "Joshua #1, \"son of Nun\" — 2 verses of this corpus print the name" + (recreated ? "" : "; " + sonOfNun));
+        Claimed((await Person("jeshua-3"))!, "Jeshua #2, \"the high priest\" — 2 verses of this corpus print the name");
+        Claimed((await Person("jeshua-7"))!, "Jeshua #5, \"a Levite\" — 1 verse of this corpus prints the name");
+        _db.MergedRecords.AddRange(
+            new MergedRecord
+            {
+                Slug = "jeshua-10", EntityId = (await Person("joshua"))!.Id, Name = "Jeshua",
+                RecordSourceId = "essenthos:jeshua1", RecordSource = Ours, Method = LinkMethod.Manual,
+                Reason = "the register's spelling of Joshua son of Nun", Source = "a test",
+            },
+            new MergedRecord
+            {
+                Slug = "jeshua-8", EntityId = (await Person("jeshua-7"))!.Id, Name = "Jeshua",
+                RecordSourceId = "person:Jeshua_8", RecordSource = Dataset, Method = LinkMethod.Manual,
+                Reason = "one assembly, one Jeshua", Source = "a test",
+            });
+        if (recreated)
+        {
+            _db.Entities.Add(new Entity
+            {
+                Kind = EntityKind.Person, Slug = "jeshua-8", Name = "Jeshua", SourceId = "essenthos:jeshua1",
+                Source = Ours, Names = [new EntityName { Label = "Jeshua", Kind = "proper name" }],
+                Claims = [new EntityClaim { Method = LinkMethod.ModelReading, Confidence = 0.7, Source = Ours, Note = sonOfNun }],
+            });
+        }
+
+        await _db.SaveChangesAsync();
+        Register(
+            Bearer(1, "son of Nun", [], standing: "lexicon", group: "Jeshua", name: "Jeshua"),
+            Bearer(2, "the high priest", ["EZR 3:2", "NEH 12:10", "NEH 12:26"], group: "Jeshua", name: "Jeshua"),
+            Bearer(5, "a Levite", ["NEH 8:7"], group: "Jeshua", name: "Jeshua"),
+            Bearer(1, "son of Nun", ["JOS 1:1", "NEH 8:17"], group: "Joshua", name: "Joshua"));
+    }
+
+    private void Claimed(Entity person, string note)
+    {
+        person.Source = Ours;
+        person.Claims.Add(new EntityClaim { Method = LinkMethod.ModelReading, Confidence = 0.9, Source = Ours, Note = note });
+    }
+
+    [Fact]
+    public async Task Running_it_twice_writes_the_register_once()
+    {
+        Register(Bearer(4, "Son of Jehoadah", ["1CH 8:36"]));
+
+        await Load();
+        var again = await Load();
+
+        again.AlreadyLoaded.Should().BeTrue();
+        (await _db.Entities.CountAsync(e => e.Source == Ours)).Should().Be(1);
+    }
+
+    /// <summary>
+    /// Built from nothing the register runs before the records this corpus writes for itself, so it adds
+    /// a record for a bearer one of them is the record of. Matched again once they are held, it folds
+    /// the added record into theirs in the load that added it, where it was the next load that did.
+    /// </summary>
+    [Fact]
+    public async Task A_bearer_added_before_his_record_was_written_is_folded_into_it_in_the_same_load()
+    {
+        Held("gemariah-shaphan", "Gemariah", "person:Gemariah_2", ["Gemariah"],
+            [(24, 36, 10), (24, 36, 11), (24, 36, 12), (24, 36, 25)]);
+        await _db.SaveChangesAsync();
+        Register(
+            Bearer(1, "Son of Shaphan the scribe", ["JER 36:10", "JER 36:11", "JER 36:12", "JER 36:25"],
+                group: "Gemariah", name: "Gemariah"),
+            Bearer(2, "Son of Hilkiah, who bore Jeremiah's letter", ["JER 29:3"],
+                group: "Gemariah", name: "Gemariah"));
+        (await Load()).Added.Should().Be(1);
+        (await Person("gemariah")).Should().NotBeNull("the register added a record for the man nobody held");
+
+        Held("gemariah-hilkiah", "Gemariah", "essenthos:gemariah-hilkiah", ["Gemariah"], [(24, 29, 3)]);
+        await _db.SaveChangesAsync();
+        _db.ChangeTracker.Clear();
+
+        var settled = await Settle();
+
+        settled.Folded.Should().Be(1);
+        _db.ChangeTracker.Clear();
+        (await Person("gemariah")).Should().BeNull("the added record is folded into the one written for him");
+        (await Person("gemariah-hilkiah"))!.Claims.Should()
+            .ContainSingle(c => c.Source == Ours && c.Method == LinkMethod.ModelReading)
+            .Which.Note.Should().StartWith("Gemariah #2, ");
+        (await _db.MergedRecords.AsNoTracking().SingleAsync()).Slug.Should().Be("gemariah");
+
+        var again = await Settle();
+        again.Folded.Should().Be(0);
+        again.Rewritten.Should().Be(0);
+        again.Added.Should().Be(0);
+    }
+
+    [Fact]
+    public async Task Settling_a_corpus_the_register_was_never_read_into_does_nothing()
+    {
+        Register(Bearer(1, "Son of Shaphan the scribe", ["JER 36:10"], group: "Gemariah", name: "Gemariah"));
+
+        (await Settle()).ToString().Should().Be("every bearer of those names is on the record its verses reach");
+        (await _db.Entities.CountAsync(e => e.Source == Ours)).Should().Be(0);
+    }
+
+    private void Held(
+        string slug,
+        string name,
+        string sourceId,
+        string[] labels,
+        (int Book, int Chapter, int Verse)[] verses) =>
+        _db.Entities.Add(new Entity
+        {
+            Kind = EntityKind.Person,
+            Slug = slug,
+            Name = name,
+            SourceId = sourceId,
+            Source = Dataset,
+            Names = labels
+                .Select(label => new EntityName { Label = label, Kind = "proper name" })
+                .ToList(),
+            Verses = verses
+                .Select(address => new EntityVerse
+                {
+                    CanonicalBook = address.Book,
+                    CanonicalChapter = address.Chapter,
+                    CanonicalVerse = address.Verse,
+                    Source = Dataset,
+                })
+                .ToList(),
+        });
+
+    private async Task<Entity?> Person(string slug) =>
+        await _db.Entities
+            .Include(e => e.Claims)
+            .Include(e => e.Names)
+            .Include(e => e.Verses)
+            .AsSplitQuery()
+            .FirstOrDefaultAsync(e => e.Slug == slug);
+
+    private static object Bearer(
+        int id,
+        string description,
+        string[] references,
+        string[]? otherReferences = null,
+        bool kept = true,
+        string? standing = "verse",
+        string? why = null,
+        string group = "Zimri",
+        string name = "Zimri") =>
+        new
+        {
+            group,
+            id,
+            key = $"{group}#{id}",
+            name,
+            description,
+            kind = "person",
+            kept,
+            standing,
+            why = why ?? $"{references.Length} verses of this corpus print the name",
+            confidence = "high",
+            sameAs = (int?)null,
+            enumerated = id,
+            enumeration = description,
+            strongNumbers = new[] { "H2174" },
+            references,
+            otherReferences = otherReferences ?? [],
+            reading = new
+            {
+                model = "a test", effort = "medium", promptVersion = "persons-2",
+                askedAt = "2026-09-09", note = (string?)null,
+            },
+            check = (object?)null,
+            reaches = (object?)null,
+        };
+
+    private void Register(params object[] records)
+    {
+        using var handle = new StreamWriter(Path.Combine(_folder, "register-0000.jsonl"));
+        foreach (var record in records)
+        {
+            handle.WriteLine(JsonSerializer.Serialize(record));
+        }
+    }
+
+    private Task<RegisterRematchOutcome> Settle() =>
+        new PersonRegisterLoader(
+                _db,
+                new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string?>
+                    {
+                        [PersonRegisterFiles.ConfigurationKey] = _folder,
+                    })
+                    .Build(),
+                new DuplicateRecordLoader(_db, NullLogger<DuplicateRecordLoader>.Instance),
+                NullLogger<PersonRegisterLoader>.Instance)
+            .Settle(Path.Combine(Path.GetTempPath(), $"absent-{Guid.NewGuid():N}"));
+
+    private Task<PersonRegisterOutcome> Load() =>
+        new PersonRegisterLoader(
+                _db,
+                new ConfigurationBuilder()
+                    .AddInMemoryCollection(new Dictionary<string, string?>
+                    {
+                        [PersonRegisterFiles.ConfigurationKey] = _folder,
+                    })
+                    .Build(),
+                new DuplicateRecordLoader(_db, NullLogger<DuplicateRecordLoader>.Instance),
+                NullLogger<PersonRegisterLoader>.Instance)
+            .Load(Path.Combine(Path.GetTempPath(), $"absent-{Guid.NewGuid():N}"));
+}

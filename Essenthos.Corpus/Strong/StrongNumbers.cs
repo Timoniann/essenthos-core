@@ -34,10 +34,4 @@ public static class StrongNumbers
 
         return $"{language}{number}";
     }
-
-    public static string FormatHint(string? value)
-    {
-        return $"'{value}' is not a Strong's number. Expected a language letter followed by a positive " +
-               "number, for example H430 (Hebrew) or G26 (Greek). Leading zeros and lower case are accepted.";
-    }
 }

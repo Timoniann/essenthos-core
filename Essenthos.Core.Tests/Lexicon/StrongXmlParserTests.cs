@@ -1,0 +1,957 @@
+﻿using Essenthos.Core.Strong;
+using FluentAssertions;
+using Xunit;
+
+namespace Essenthos.Core.Tests.Lexicon;
+
+/// <summary>
+/// Tests for <see cref="StrongXmlParser"/>. Covers Greek and Hebrew XML parsing,
+/// ensuring all fields (including cross-references, derivation with inline refs, etc.)
+/// are correctly extracted.
+/// </summary>
+[Trait(TestCategory.Name, TestCategory.Corpus)]
+public class StrongXmlParserTests
+{
+    private readonly StrongXmlParser _parser = new();
+
+    // ────────────────────────────────────────────────────────────────
+    //  Greek tests
+    // ────────────────────────────────────────────────────────────────
+
+    [Fact]
+    public void ParseGreek_BasicEntry_ExtractsAllFields()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="00018">
+                   <strongs>18</strongs>
+                   <greek BETA="A)GAQO/S" unicode="ἀγαθός" translit="agathós"/>
+                   <pronunciation strongs="ag-ath-os'"/>
+                   <strongs_derivation>a primary word;</strongs_derivation>
+                   <strongs_def> "good" (in any sense, often as noun)</strongs_def>
+                   <kjv_def>:--benefit, good(-s, things), well.</kjv_def>
+                   <see language="GREEK" strongs="2570"/>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+
+        entries.Should().HaveCount(1);
+        var e = entries[0];
+        e.StrongNumber.Should().Be("G18");
+        e.Lemma.Should().Be("ἀγαθός");
+        e.Transliteration.Should().Be("agathós");
+        e.Pronunciation.Should().Be("ag-ath-os'");
+        e.Definition.Should().Contain("good");
+        e.Derivation.Should().Be("a primary word;");
+        e.KjvDefinition.Should().Contain("benefit");
+        e.SeeAlso.Should().Be("G2570");
+    }
+
+    [Fact]
+    public void ParseGreek_DerivationWithStrongsRef_PreservesReference()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="05624">
+                   <strongs>5624</strongs>
+                   <greek BETA="W)FE/LIMOS" unicode="ὠφέλιμος" translit="ōphélimos"/>
+                   <pronunciation strongs="o-fel'-ee-mos"/>
+                   <strongs_derivation>from a form of <strongsref language="GREEK" strongs="3786"/>;</strongs_derivation>
+                   <strongs_def> helpful or serviceable, i.e. advantageous</strongs_def>
+                   <kjv_def>:--profit(-able).</kjv_def>
+                   <see language="GREEK" strongs="3786"/>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+
+        entries.Should().HaveCount(1);
+        var e = entries[0];
+        e.StrongNumber.Should().Be("G5624");
+        e.Derivation.Should().Be("from a form of G3786;");
+        e.SeeAlso.Should().Be("G3786");
+    }
+
+    [Fact]
+    public void ParseGreek_DerivationWithMultipleStrongsRefs_PreservesAll()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="00500">
+                   <strongs>500</strongs>
+                   <greek BETA="A)NTI/XRISTOS" unicode="ἀντίχριστος" translit="antíchristos"/>
+                   <pronunciation strongs="an-tee'-khris-tos"/>
+                   <strongs_derivation>from <strongsref language="GREEK" strongs="473"/> and <strongsref language="GREEK" strongs="5547"/>;</strongs_derivation>
+                   <strongs_def> an opponent of the Messiah</strongs_def>
+                   <kjv_def>:--antichrist.</kjv_def>
+                   <see language="GREEK" strongs="473"/>
+                   <see language="GREEK" strongs="5547"/>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+
+        var e = entries[0];
+        e.Derivation.Should().Be("from G473 and G5547;");
+        e.SeeAlso.Should().Be("G473,G5547");
+    }
+
+    [Fact]
+    public void ParseGreek_DerivationWithGreekInline_PreservesUnicode()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="00100">
+                   <strongs>100</strongs>
+                   <greek BETA="A(DRO/THS" unicode="ἁδρότης" translit="hadrótēs"/>
+                   <pronunciation strongs="had-rot'-ace"/>
+                   <strongs_derivation>from <greek BETA="A(DRO/S" unicode="ἁδρός" translit="hadrós"/> (stout);</strongs_derivation>
+                   <strongs_def> plumpness, i.e. (figuratively) liberality</strongs_def>
+                   <kjv_def>:--abundance.</kjv_def>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+
+        var e = entries[0];
+        e.Derivation.Should().Be("from ἁδρός (stout);");
+        e.SeeAlso.Should().BeNull();
+    }
+
+    [Fact]
+    public void ParseGreek_SeeWithHebrewRef_PrefixesWithH()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="00002">
+                   <strongs>2</strongs>
+                   <greek BETA="*AARW/N" unicode="Ἀαρών" translit="Aarṓn"/>
+                   <pronunciation strongs="ah-ar-ohn'"/>
+                   <strongs_derivation>of Hebrew origin (<strongsref language="HEBREW" strongs="175"/>);</strongs_derivation>
+                   <strongs_def> Aaron, the brother of Moses</strongs_def>
+                   <kjv_def>:--Aaron.</kjv_def>
+                   <see language="HEBREW" strongs="0175"/>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+
+        var e = entries[0];
+        e.Derivation.Should().Be("of Hebrew origin (H175);");
+        e.SeeAlso.Should().Be("H175");
+    }
+
+    [Fact]
+    public void ParseGreek_BareCrossReferenceIsWrittenAsAReference()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="02705">
+                   <strongs>2705</strongs>
+                   <greek unicode="καταφιλέω" translit="kataphiléō"/>
+                   <strongs_derivation>from 2596 and 5368;</strongs_derivation>
+                   <strongs_def>to kiss earnestly</strongs_def>
+                   <kjv_def>:--kiss.</kjv_def>
+                  </entry>
+                  <entry strongs="05516">
+                   <strongs>5516</strongs>
+                   <greek unicode="χξϛ" translit="chi xi stigma"/>
+                   <strongs_def>666 as a numeral</strongs_def>
+                   <kjv_def>:--six hundred threescore and six.</kjv_def>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+
+        entries[0].Derivation.Should().Be("from G2596 and G5368;");
+        entries[0].SeeAlso.Should().Be("G2596,G5368");
+        entries[1].Definition.Should().Be("666 as a numeral", "the number is the entry, not a reference");
+        entries[1].SeeAlso.Should().BeNull();
+    }
+
+    [Fact]
+    public void ParseGreek_StrongNumberParsesLeadingZeros()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="00001">
+                   <strongs>1</strongs>
+                   <greek BETA="*A" unicode="Α" translit="A"/>
+                   <pronunciation strongs="al'-fah"/>
+                   <strongs_derivation>of Hebrew origin;</strongs_derivation>
+                   <strongs_def> the first letter of the alphabet</strongs_def>
+                   <kjv_def>--Alpha.</kjv_def>
+                   <see language="GREEK" strongs="427"/>
+                   <see language="GREEK" strongs="260"/>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+
+        entries[0].StrongNumber.Should().Be("G1");
+        entries[0].SeeAlso.Should().Be("G427,G260");
+    }
+
+    [Fact]
+    public void ParseGreek_MultipleEntries_ParsesAll()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="00001">
+                   <strongs>1</strongs>
+                   <greek BETA="*A" unicode="Α" translit="A"/>
+                   <pronunciation strongs="al'-fah"/>
+                   <strongs_def> first</strongs_def>
+                  </entry>
+                  <entry strongs="00002">
+                   <strongs>2</strongs>
+                   <greek BETA="*AARW/N" unicode="Ἀαρών" translit="Aarṓn"/>
+                   <pronunciation strongs="ah-ar-ohn'"/>
+                   <strongs_def> Aaron</strongs_def>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+
+        entries.Should().HaveCount(2);
+        entries[0].StrongNumber.Should().Be("G1");
+        entries[1].StrongNumber.Should().Be("G2");
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  Hebrew tests
+    // ────────────────────────────────────────────────────────────────
+
+    [Fact]
+    public void ParseHebrew_BasicEntry_ExtractsAllFields()
+    {
+        var xml = """
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <osis xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
+                  <osisText>
+                  <div type="glossary">
+                  <div type="entry" n="1">
+                    <w gloss="4a" lemma="אָב" morph="n-m" POS="awb" xlit="ʼâb" ID="H1" xml:lang="heb">אב</w>
+                    <foreign xml:lang="grc">
+                      <w gloss="G:1118" />
+                      <w gloss="G:3962" />
+                    </foreign>
+                    <list>
+                      <item>1) father of an individual</item>
+                      <item>2) of God as father of his people</item>
+                    </list>
+                    <note type="exegesis">a primitive word;</note>
+                    <note type="explanation"><hi>father</hi>, in a literal and immediate application</note>
+                    <note type="translation">chief, (fore-) father(-less), patrimony.</note>
+                  </div>
+                  </div>
+                  </osisText>
+                  </osis>
+                  """;
+
+        var entries = _parser.ParseHebrew(xml);
+
+        entries.Should().HaveCount(1);
+        var e = entries[0];
+        e.StrongNumber.Should().Be("H1");
+        e.Lemma.Should().Be("אָב");
+        e.Transliteration.Should().Be("ʼâb");
+        e.Pronunciation.Should().Be("awb");
+        e.Morphology.Should().Be("n-m");
+        e.SourceLanguage.Should().Be("heb");
+        e.TwotReference.Should().Be("4a");
+        e.Definition.Should().Contain("father");
+        e.Derivation.Should().Be("a primitive word;");
+        e.KjvDefinition.Should().Contain("chief");
+        e.DetailedDefinition.Should().Contain("father of an individual");
+        e.DetailedDefinition.Should().Contain("\n");
+        e.SeeAlso.Should().Be("G1118,G3962");
+    }
+
+    [Fact]
+    public void ParseHebrew_AnEditorsCorrectionNoteInTheDerivation_IsNotStrongsSentence()
+    {
+        var xml = """
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <osis xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
+                  <osisText>
+                  <div type="glossary">
+                  <div type="entry" n="348">
+                    <w lemma="אֵיזֶבֶל" morph="n-pr-f" POS="ay-zeh'-bel" xlit="ʼÎyzebel" ID="H348" xml:lang="heb">איזבל</w>
+                    <note type="exegesis">from <w lemma="אִי" POS="ee" src="336" xlit="ʼîy"/><note type="x-typo">lemma אי missing vowel, corrected to <catchWord>אִי</catchWord></note> and <w lemma="זְבֻל" POS="zeb-ool'" src="2083" xlit="Zᵉbul"/>;</note>
+                  </div>
+                  </div>
+                  </osisText>
+                  </osis>
+                  """;
+
+        var e = _parser.ParseHebrew(xml).Single();
+
+        e.Derivation.Should().Be("from אִי (H336) and זְבֻל (H2083);");
+    }
+
+    [Fact]
+    public void ParseHebrew_NoDerivationInTheFile_CarriesAnEditorsRemark()
+    {
+        var entries = _parser.ParseHebrew(File.ReadAllText(TestResources.Path("Strong", "StrongHebrew.xml")));
+
+        entries.Should().NotContain(e => (e.Derivation ?? "").Contains(" corrected to ")
+                                         || (e.Definition ?? "").Contains(" corrected to ")
+                                         || (e.KjvDefinition ?? "").Contains(" corrected to "));
+        Entry(entries, "H348").Derivation.Should().NotContain("lemma");
+    }
+
+    [Fact]
+    public void ParseHebrew_ExegesisWithWordRefs_PreservesStrongReferences()
+    {
+        var xml = """
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <osis xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
+                  <osisText>
+                  <div type="glossary">
+                  <div type="entry" n="3">
+                    <w gloss="1a" lemma="אֵב" morph="n-m" POS="abe" xlit="ʼêb" ID="H3" xml:lang="heb">אב</w>
+                    <foreign xml:lang="grc">
+                      <w gloss="G:1080" />
+                    </foreign>
+                    <list>
+                      <item>1) freshness, green shoots</item>
+                    </list>
+                    <note type="exegesis">from the same as <w lemma="אָבִיב" POS="aw-beeb'" src="24" xlit="ʼâbîyb"/>;</note>
+                    <note type="explanation"><hi>a green plant</hi></note>
+                    <note type="translation">greenness, fruit.</note>
+                  </div>
+                  </div>
+                  </osisText>
+                  </osis>
+                  """;
+
+        var entries = _parser.ParseHebrew(xml);
+
+        var e = entries[0];
+        e.StrongNumber.Should().Be("H3");
+        e.Derivation.Should().Be("from the same as אָבִיב (H24);");
+        e.SeeAlso.Should().Be("G1080");
+    }
+
+    [Fact]
+    public void ParseHebrew_ExegesisWithMultipleWordRefs_PreservesAll()
+    {
+        var xml = """
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <osis xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
+                  <osisText>
+                  <div type="glossary">
+                  <div type="entry" n="500">
+                    <w lemma="אֶלְעָלֵא" morph="n-pr-loc" POS="el-aw-lay'" xlit="ʼElʻâlêʼ" ID="H500" xml:lang="x-pn">אלעלא</w>
+                    <list>
+                      <item>Elealeh = "God is ascending"</item>
+                    </list>
+                    <note type="exegesis">from <w lemma="אֵל" POS="ale" src="410" xlit="ʼêl"/> and <w lemma="עָלָה" POS="aw-law'" src="5927" xlit="ʻâlâh"/>; God (is) going up;</note>
+                    <note type="explanation"><hi>Elale</hi> or <hi>Elaleh</hi>, a place east of the Jordan</note>
+                    <note type="translation">Elealeh.</note>
+                  </div>
+                  </div>
+                  </osisText>
+                  </osis>
+                  """;
+
+        var entries = _parser.ParseHebrew(xml);
+
+        var e = entries[0];
+        e.StrongNumber.Should().Be("H500");
+        e.SourceLanguage.Should().Be("x-pn");
+        e.Derivation.Should().Contain("אֵל (H410)");
+        e.Derivation.Should().Contain("עָלָה (H5927)");
+        e.TwotReference.Should().BeNull(); // no gloss on proper name entries
+    }
+
+    [Fact]
+    public void ParseHebrew_AramaicEntry_SetsSourceLanguage()
+    {
+        var xml = """
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <osis xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
+                  <osisText>
+                  <div type="glossary">
+                  <div type="entry" n="1001">
+                    <w gloss="2628" lemma="בִּירָא" morph="n-f" POS="bee-raw'" xlit="bîyrâʼ" ID="H1001" xml:lang="arc">בירא</w>
+                    <list>
+                      <item>1) castle, citadel, palace</item>
+                    </list>
+                    <note type="exegesis">(Aramaic) corresponding to <w lemma="בִּירָה" POS="bee-raw'" src="1002" xlit="bîyrâh"/>;</note>
+                    <note type="explanation"><hi>a palace</hi></note>
+                    <note type="translation">palace.</note>
+                  </div>
+                  </div>
+                  </osisText>
+                  </osis>
+                  """;
+
+        var entries = _parser.ParseHebrew(xml);
+
+        var e = entries[0];
+        e.StrongNumber.Should().Be("H1001");
+        e.SourceLanguage.Should().Be("arc");
+        e.TwotReference.Should().Be("2628");
+        e.Derivation.Should().Contain("בִּירָה (H1002)");
+    }
+
+    [Fact]
+    public void ParseHebrew_NoForeignBlock_SeeAlsoIsNull()
+    {
+        var xml = """
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <osis xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
+                  <osisText>
+                  <div type="glossary">
+                  <div type="entry" n="5000">
+                    <w gloss="1271a" lemma="נָאוֶה" morph="a" POS="naw-veh'" xlit="nâʼveh" ID="H5000" xml:lang="heb">נאוה</w>
+                    <list>
+                      <item>1) comely, beautiful, seemly</item>
+                    </list>
+                    <note type="exegesis">from <w lemma="נָאָה" POS="naw-aw'" src="4998" xlit="nâʼâh"/> or <w lemma="נָוֶה" POS="naw-veh'" src="5116" xlit="nâveh"/>;</note>
+                    <note type="explanation"><hi>suitable</hi>, or <hi>beautiful</hi></note>
+                    <note type="translation">becometh, comely, seemly.</note>
+                  </div>
+                  </div>
+                  </osisText>
+                  </osis>
+                  """;
+
+        var entries = _parser.ParseHebrew(xml);
+
+        var e = entries[0];
+        e.SeeAlso.Should().BeNull();
+        e.Derivation.Should().Contain("נָאָה (H4998)");
+        e.Derivation.Should().Contain("נָוֶה (H5116)");
+    }
+
+    [Fact]
+    public void ParseHebrew_NoListItems_DetailedDefinitionIsNull()
+    {
+        var xml = """
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <osis xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
+                  <osisText>
+                  <div type="glossary">
+                  <div type="entry" n="99">
+                    <w gloss="10" lemma="אֲגָם" morph="n-m" POS="ag-am'" xlit="ʼăgam" ID="H99" xml:lang="heb">אגם</w>
+                    <note type="exegesis">a primitive root;</note>
+                    <note type="explanation"><hi>a marsh</hi></note>
+                    <note type="translation">pool, standing water.</note>
+                  </div>
+                  </div>
+                  </osisText>
+                  </osis>
+                  """;
+
+        var entries = _parser.ParseHebrew(xml);
+
+        entries[0].DetailedDefinition.Should().BeNull();
+    }
+
+    [Fact]
+    public void ParseHebrew_DefinitionWithHiElements_ExtractsText()
+    {
+        var xml = """
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <osis xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
+                  <osisText>
+                  <div type="glossary">
+                  <div type="entry" n="50">
+                    <w gloss="5" lemma="אָבָה" morph="v" POS="aw-baw'" xlit="ʼâbâh" ID="H50" xml:lang="heb">אבה</w>
+                    <note type="explanation"><hi>suitable</hi>, or <hi>beautiful</hi></note>
+                  </div>
+                  </div>
+                  </osisText>
+                  </osis>
+                  """;
+
+        var entries = _parser.ParseHebrew(xml);
+
+        entries[0].Definition.Should().Be("suitable, or beautiful");
+    }
+
+    [Fact]
+    public void ParseHebrew_MultipleEntries_ParsesAll()
+    {
+        var xml = """
+                  <?xml version="1.0" encoding="UTF-8"?>
+                  <osis xmlns="http://www.bibletechnologies.net/2003/OSIS/namespace">
+                  <osisText>
+                  <div type="glossary">
+                  <div type="entry" n="1">
+                    <w lemma="אָב" morph="n-m" POS="awb" xlit="ʼâb" ID="H1" xml:lang="heb">אב</w>
+                    <note type="explanation"><hi>father</hi></note>
+                  </div>
+                  <div type="entry" n="2">
+                    <w lemma="אַב" morph="n-m" POS="ab" xlit="ʼab" ID="H2" xml:lang="arc">אב</w>
+                    <note type="explanation"><hi>father</hi></note>
+                  </div>
+                  </div>
+                  </osisText>
+                  </osis>
+                  """;
+
+        var entries = _parser.ParseHebrew(xml);
+
+        entries.Should().HaveCount(2);
+        entries[0].StrongNumber.Should().Be("H1");
+        entries[0].SourceLanguage.Should().Be("heb");
+        entries[1].StrongNumber.Should().Be("H2");
+        entries[1].SourceLanguage.Should().Be("arc");
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  Edge cases
+    // ────────────────────────────────────────────────────────────────
+
+    [Fact]
+    public void ParseGreek_EmptyEntries_ReturnsEmptyList()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries></entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+        entries.Should().BeEmpty();
+    }
+
+    [Fact]
+    public void ParseGreek_EntryWithNoSeeElements_SeeAlsoIsNull()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="00100">
+                   <strongs>100</strongs>
+                   <greek BETA="A(DRO/THS" unicode="ἁδρότης" translit="hadrótēs"/>
+                   <pronunciation strongs="had-rot'-ace"/>
+                   <strongs_derivation>from ἁδρός (stout);</strongs_derivation>
+                   <strongs_def> plumpness</strongs_def>
+                   <kjv_def>:--abundance.</kjv_def>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+        entries[0].SeeAlso.Should().BeNull();
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  The Greek file's own artefacts
+    // ────────────────────────────────────────────────────────────────
+
+    [Fact]
+    public void ParseGreek_NotUsedEntry_IsNotAnEntry()
+    {
+        var xml = Greek(
+            """
+            <entry strongs="03204">
+             <strongs>3204</strongs>  Not Used
+            </entry>
+            <entry strongs="03303">
+             <strongs>3303</strongs>   <greek BETA="ME/N" unicode="μέν" translit="mén"/>
+             <strongs_def> a primary particle</strongs_def>
+             <kjv_def>:--even, indeed.</kjv_def>
+            </entry>
+            """);
+
+        var entries = _parser.ParseGreek(xml);
+
+        entries.Should().ContainSingle().Which.StrongNumber.Should().Be("G3303");
+    }
+
+    [Fact]
+    public void ParseGreek_RenderingSeparator_IsNotPartOfTheRenderings()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="02570">
+             <strongs>2570</strongs>   <greek BETA="KALO/S" unicode="καλός" translit="kalós"/>
+             <strongs_def> beautiful</strongs_def>
+             <kjv_def>:--X better, fair, good(-ly).</kjv_def>
+            </entry>
+            """));
+
+        entries[0].KjvDefinition.Should().Be("X better, fair, good(-ly).");
+    }
+
+    /// <summary>
+    /// Ten entries put the colon on the definition and the two dashes on the renderings. Both
+    /// halves of the separator go.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_SeparatorSplitBetweenTheElements_GoesFromBoth()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="00001">
+             <strongs>1</strongs>   <greek BETA="*A" unicode="Α" translit="A"/>
+             <strongs_def> the first letter of the alphabet:</strongs_def>
+             <kjv_def>--Alpha.</kjv_def>
+            </entry>
+            """));
+
+        entries[0].Definition.Should().Be("the first letter of the alphabet");
+        entries[0].KjvDefinition.Should().Be("Alpha.");
+    }
+
+    /// <summary>
+    /// G2384 Ἰακώβ. <em>Also an Israelite</em> is the rest of the definition, and no translation of
+    /// Ἰακώβ.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_DefinitionRunningPastTheSeparator_GoesBackToTheDefinition()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="02384">
+             <strongs>2384</strongs>   <greek BETA="*)IAKW/B" unicode="Ἰακώβ" translit="Iakṓb"/>
+             <strongs_def> Jacob, the progenitor of the Israelites</strongs_def>
+             <kjv_def>:--also an Israelite:--Jacob.</kjv_def>
+            </entry>
+            """));
+
+        entries[0].Definition.Should().Be("Jacob, the progenitor of the Israelites; also an Israelite");
+        entries[0].KjvDefinition.Should().Be("Jacob.");
+    }
+
+    /// <summary>
+    /// G2022 ἐπιχέω, whose definition element holds one space and whose sense sits in front of a
+    /// second separator.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_EmptyDefinitionElement_TakesTheSenseFromTheRenderings()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="02022">
+             <strongs>2022</strongs>   <greek BETA="E)PIXE/W" unicode="ἐπιχέω" translit="epichéō"/>
+             <strongs_derivation>from <strongsref language="GREEK" strongs="1909"/>;</strongs_derivation>
+             <strongs_def> </strongs_def>
+             <kjv_def>--to pour upon:--pour in.</kjv_def>
+            </entry>
+            """));
+
+        entries[0].Definition.Should().Be("to pour upon");
+        entries[0].Derivation.Should().Be("from G1909;");
+        entries[0].KjvDefinition.Should().Be("pour in.");
+    }
+
+    /// <summary>
+    /// G1473 ἐγώ has no definition element at all, and the derivation is the whole of what Strong
+    /// says about the word.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_NoDefinitionElement_TheDerivationIsTheDefinition()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="01473">
+             <strongs>1473</strongs>   <greek BETA="E)GW/" unicode="ἐγώ" translit="egṓ"/>
+             <strongs_derivation>a primary pronoun of the first person I</strongs_derivation>
+             <kjv_def>:--I, me.</kjv_def>
+            </entry>
+            """));
+
+        entries[0].Definition.Should().Be("a primary pronoun of the first person I");
+        entries[0].Derivation.Should().BeNull();
+    }
+
+    /// <summary>
+    /// "of uncertain affinity" is a whole etymology, so the clause after it is the sense the XML
+    /// left on the wrong side of the cut. G2316 θεός is the case that matters: its definition
+    /// element holds only the figurative extension, so the entry answered that the word means a
+    /// magistrate.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_SenseLeftInTheDerivation_GoesBackToTheDefinition()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="02316">
+             <strongs>2316</strongs>   <greek BETA="QEO/S" unicode="θεός" translit="theós"/>
+             <strongs_derivation>of uncertain affinity; a deity, especially (with <strongsref language="GREEK" strongs="3588"/>) the supreme
+             Divinity;</strongs_derivation><strongs_def> figuratively, a magistrate; by Hebraism, very</strongs_def><kjv_def>:--X exceeding,
+             God, god(-ly, -ward).</kjv_def>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be("of uncertain affinity;");
+        entries[0].Definition.Should().Be(
+            "a deity, especially (with G3588) the supreme Divinity; "
+            + "figuratively, a magistrate; by Hebraism, very");
+        entries[0].KjvDefinition.Should().Be("X exceeding, God, god(-ly, -ward).");
+    }
+
+    /// <summary>
+    /// The same phrase continued inside a parenthesis is still naming an origin, not a sense.
+    /// G1088 γέρων is the only entry in the file that does this, and the semicolon is what tells
+    /// it apart from the six that do not.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_UncertainAffinityWithACrossReference_StaysADerivation()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="01088">
+             <strongs>1088</strongs>   <greek BETA="GE/RWN" unicode="γέρων" translit="gérōn"/>
+             <strongs_derivation>of uncertain affinity (compare <strongsref language="GREEK" strongs="1094"/>);</strongs_derivation><strongs_def> aged</strongs_def>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be("of uncertain affinity (compare G1094);");
+        entries[0].Definition.Should().Be("aged");
+    }
+
+    /// <summary>
+    /// The cut fell inside a parenthesis, so the tail of the etymology stands at the head of the
+    /// definition and the entry says ἀήρ means <em>by analogy, to blow)</em>. The bracket says where
+    /// the clause ends.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_EtymologyCutThroughAParenthesis_IsClosedBeforeTheSense()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="00109">
+             <strongs>109</strongs>   <greek BETA="A)H/R" unicode="ἀήρ" translit="aḗr"/>
+             <strongs_derivation>from ἄημι (to breathe unconsciously, i.e. respire;</strongs_derivation><strongs_def> by analogy, to blow); "air" (as naturally circumambient)</strongs_def>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be(
+            "from ἄημι (to breathe unconsciously, i.e. respire; by analogy, to blow);");
+        entries[0].Definition.Should().Be("\"air\" (as naturally circumambient)");
+    }
+
+    /// <summary>
+    /// Two refusals, and they are the point of counting rather than judging: a definition that never
+    /// closes the bracket leaves the source unbalanced wherever the cut is made, and one whose
+    /// closing bracket is its last character has no sense left to stand behind it.
+    /// </summary>
+    [Theory]
+    [InlineData(
+        "a primary verb (for which other ones are used in certain tenses only;",
+        "to \"bear\" or carry (in a very wide application, as follows)")]
+    [InlineData(
+        "a primary preposition denoting origin (the point whence action proceeds, from, out;",
+        "literal or figurative; direct or remote)")]
+    public void ParseGreek_AnEtymologyTheDefinitionNeverCloses_IsLeftWhereItIs(
+        string derivation,
+        string definition)
+    {
+        var entries = _parser.ParseGreek(Greek(
+            $"""
+            <entry strongs="05342">
+             <strongs>5342</strongs>   <greek BETA="FE/RW" unicode="φέρω" translit="phérō"/>
+             <strongs_derivation>{derivation}</strongs_derivation><strongs_def> {definition}</strongs_def>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be(derivation);
+        entries[0].Definition.Should().Be(definition);
+    }
+
+    /// <summary>A derivation that balances is not touched, whatever its definition opens with.</summary>
+    [Fact]
+    public void ParseGreek_ABalancedEtymology_KeepsTheDefinitionsOwnParenthesis()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="00668">
+             <strongs>668</strongs>   <greek BETA="A)POFEU/GW" unicode="ἀποφεύγω" translit="apopheúgō"/>
+             <strongs_derivation>from G575 and G5343;</strongs_derivation><strongs_def> (figuratively) to escape</strongs_def>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be("from G575 and G5343;");
+        entries[0].Definition.Should().Be("(figuratively) to escape");
+    }
+
+    /// <summary>
+    /// Where the entry has no definition element the sense still comes out of the derivation on its
+    /// own, rather than the whole block moving across with the etymology attached to the front.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_SenseLeftInTheDerivationWithNoDefinition_LeavesTheEtymologyBehind()
+    {
+        var entries = _parser.ParseGreek(Greek(
+            """
+            <entry strongs="02063">
+             <strongs>2063</strongs>   <greek BETA="E)RUQRO/S" unicode="ἐρυθρός" translit="erythrós"/>
+             <strongs_derivation>of uncertain affinity; red, i.e. (with <strongsref language="GREEK" strongs="2281"/>) the Red Sea</strongs_derivation>
+            </entry>
+            """));
+
+        entries[0].Derivation.Should().Be("of uncertain affinity;");
+        entries[0].Definition.Should().Be("red, i.e. (with G2281) the Red Sea");
+    }
+
+    private static string Greek(string body) =>
+        $"""
+         <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+         <strongsdictionary>
+         <prologue>test</prologue>
+         <entries>
+         {body}
+         </entries>
+         </strongsdictionary>
+         """;
+
+    [Fact]
+    public void ParseGreek_CleanTextCollapsesWhitespace()
+    {
+        var xml = """
+                  <?xml version='1.0' encoding='utf-8' standalone='yes'?>
+                  <strongsdictionary>
+                  <prologue>test</prologue>
+                  <entries>
+                  <entry strongs="00018">
+                   <strongs>18</strongs>
+                   <greek BETA="A)GAQO/S" unicode="ἀγαθός" translit="agathós"/>
+                   <pronunciation strongs="ag-ath-os'"/>
+                   <strongs_def> "good"  (in any sense,
+                   often as noun)</strongs_def>
+                  </entry>
+                  </entries>
+                  </strongsdictionary>
+                  """;
+
+        var entries = _parser.ParseGreek(xml);
+        // Multiline and extra whitespace should be collapsed
+        entries[0].Definition.Should().NotContain("\n");
+        entries[0].Definition.Should().NotContain("  ");
+    }
+
+    // ────────────────────────────────────────────────────────────────
+    //  The census, over the files themselves
+    // ────────────────────────────────────────────────────────────────
+
+    /// <summary>
+    /// The whole Greek file, which is the only place the counts can be checked: a hand-written
+    /// fixture proves the rule and says nothing about how much of the dictionary it touches.
+    /// 5,624 entries stand in the file and 101 of them are the unassigned numbers — 2717 and the
+    /// block 3203-3302 — so 5,523 words come out, every one of them with a lemma and a definition.
+    /// </summary>
+    [Fact]
+    public void ParseGreek_TheFile_HasNoBlankEntriesAndNoSeparators()
+    {
+        var entries = _parser.ParseGreek(File.ReadAllText(TestResources.Path("Strong", "StrongGreek.xml")));
+
+        entries.Should().HaveCount(5_523);
+        entries.Should().OnlyContain(e => e.Lemma != null, "an entry with no lemma is one of the unassigned numbers");
+        entries.Should().OnlyContain(e => e.Definition != null, "every assigned number says what the word means");
+        entries.Where(e => e.KjvDefinition != null).Should().OnlyContain(
+            e => !e.KjvDefinition!.StartsWith('-') && !e.KjvDefinition.StartsWith(':'),
+            "the separator between the definition and the renderings belongs to neither");
+        entries.Where(e => e.KjvDefinition != null).Should().OnlyContain(
+            e => !e.KjvDefinition!.Contains(":--"),
+            "a second separator means the definition ran on into the renderings");
+        entries.Should().Contain(e => e.StrongNumber == "G3303", "3303 is the first number after the block");
+        entries.Should().NotContain(e => e.StrongNumber == "G3204");
+        entries.Should().NotContain(e => e.StrongNumber == "G2717");
+
+        // ἐγώ and καλός are two of the commonest words in the New Testament, and the file keeps what
+        // it has to say about both of them outside the definition element.
+        Entry(entries, "G1473").Definition.Should().StartWith("a primary pronoun of the first person");
+        Entry(entries, "G1473").KjvDefinition.Should().Be("I, me.");
+        Entry(entries, "G2570").Definition.Should().StartWith("properly, beautiful");
+        Entry(entries, "G2570").Derivation.Should().Be("of uncertain affinity;");
+        Entry(entries, "G2570").KjvDefinition.Should().StartWith("X better, fair, good(-ly)");
+
+        // An unknown origin is not a meaning, and it is never what a definition opens with. θεός is
+        // the entry a reader is likeliest to open, and the one the misplaced cut cost the most.
+        entries.Should().OnlyContain(
+            e => !e.Definition!.StartsWith("of uncertain affinity"),
+            "an etymology at the head of a definition is the cut landing in the wrong place");
+
+        // The etymology and the definition are one printed paragraph cut in two, and the brackets
+        // say where the cut should have fallen. 115 derivations are short of a bracket as the file
+        // stands; the seven left are the ones the definition never closes either, where the source
+        // itself does not balance and nothing says where the clause ends.
+        entries
+            .Where(e => e.Derivation is { } d && d.Count(c => c == '(') != d.Count(c => c == ')'))
+            .Select(e => e.StrongNumber)
+            .Should().Equal("G123", "G1537", "G2819", "G2983", "G4092", "G5177", "G5342");
+        Entry(entries, "G109").Derivation.Should().Be(
+            "from ἄημι (to breathe unconsciously, i.e. respire; by analogy, to blow);");
+        Entry(entries, "G109").Definition.Should().Be("\"air\" (as naturally circumambient)");
+        Entry(entries, "G2246").Definition.Should().StartWith("the sun");
+        Entry(entries, "G4506").Definition.Should().StartWith("to rush or draw");
+        Entry(entries, "G2442").Definition.Should().Be("to long for");
+        Entry(entries, "G2316").Derivation.Should().Be("of uncertain affinity;");
+        Entry(entries, "G2316").Definition.Should().Be(
+            "a deity, especially (with G3588) the supreme Divinity; "
+            + "figuratively, a magistrate; by Hebraism, very");
+    }
+
+    private static StrongParsedEntry Entry(IEnumerable<StrongParsedEntry> entries, string number) =>
+        entries.Single(e => e.StrongNumber == number);
+
+    /// <summary>
+    /// The Hebrew file has none of this: the separator was taken out where it was prepared, and
+    /// every one of its 8,674 entries carries a lemma. It is read here so that a change made for
+    /// the Greek side cannot quietly reach it.
+    /// </summary>
+    [Fact]
+    public void ParseHebrew_TheFile_IsUntouchedByTheGreekRepairs()
+    {
+        var entries = _parser.ParseHebrew(File.ReadAllText(TestResources.Path("Strong", "StrongHebrew.xml")));
+
+        entries.Should().HaveCount(8_674);
+        entries.Should().OnlyContain(e => e.Lemma != null);
+        entries.Where(e => e.KjvDefinition != null).Should().OnlyContain(e => !e.KjvDefinition!.Contains(":--"));
+    }
+}
+

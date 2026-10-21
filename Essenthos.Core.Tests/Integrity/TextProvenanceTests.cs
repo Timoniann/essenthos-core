@@ -1,0 +1,197 @@
+﻿using Essenthos.Core.Database.Entities.Enums;
+using Essenthos.Core.Loading;
+using Essenthos.Core.TextusReceptus;
+using FluentAssertions;
+using Xunit;
+
+namespace Essenthos.Core.Tests.Integrity;
+
+/// <summary>
+/// What each text of the corpus says about itself, checked rather than trusted.
+///
+/// The question these answer is one a reader asked and the corpus could not: *which* Ukrainian
+/// Bible is this. The row said "Ukrainian Bible", 1962, no translator — and 1962 is when a
+/// translation finished in 1940 was first printed, so even the one number there was pointed at the
+/// wrong thing.
+///
+/// A text is loaded once and read for years, so a missing attribution is not caught by using the
+/// product. These are the check that it is there, and they are deliberately about every text rather
+/// than the one that prompted them: the next text loaded should fail here until somebody has
+/// established who made it.
+/// </summary>
+public sealed class TextProvenanceTests
+{
+    private static IReadOnlyList<TextDefinition> All => TextCorpus.Definitions;
+
+    /// <summary>Every text, so a text added to the corpus is checked without anyone remembering.</summary>
+    public static TheoryData<string> EverySlug
+    {
+        get
+        {
+            var data = new TheoryData<string>();
+            foreach (var slug in TextCorpus.Slugs)
+            {
+                data.Add(slug);
+            }
+
+            return data;
+        }
+    }
+
+    private static TextDefinition Of(string slug) => All.Single(definition => definition.Slug == slug);
+
+    /// <summary>
+    /// Every text says what it is. A licence and a year identify a file, not an edition, and the
+    /// columns beside them cannot hold the sentence that actually answers the reader's question.
+    /// </summary>
+    [Theory]
+    [MemberData(nameof(EverySlug))]
+    public void EveryTextSaysWhatItIs(string slug) =>
+        Of(slug).About.Should().NotBeNullOrWhiteSpace();
+
+    /// <summary>
+    /// Somebody is named for every text: whoever put it into its language, or whoever established
+    /// the edition. Both may be present and one must be — a text with neither is one nobody has
+    /// looked into, which is the state the whole corpus was in.
+    /// </summary>
+    [Theory]
+    [MemberData(nameof(EverySlug))]
+    public void EveryTextNamesWhoMadeIt(string slug)
+    {
+        var definition = Of(slug);
+        var named = !string.IsNullOrWhiteSpace(definition.Translators)
+                    || !string.IsNullOrWhiteSpace(definition.Editors);
+
+        named.Should().BeTrue(
+            $"\"{slug}\" names neither a translator nor an editor. Establish who made it and set one of "
+            + "them; leave both null only where nobody is known, and say so in About.");
+    }
+
+    /// <summary>
+    /// Every translation names whoever translated it, as a person or as the body that did it. The
+    /// King James has no single translator and naming one would be as false as naming none, which
+    /// is why the field takes a body — not why it may be left empty.
+    /// </summary>
+    [Theory]
+    [InlineData(Bible4uTextSource.KingJames)]
+    [InlineData(Bible4uTextSource.Synodal)]
+    [InlineData(Bible4uTextSource.Ohienko)]
+    [InlineData(KulishTextSource.Slug)]
+    [InlineData(BereanTextSource.Slug)]
+    public void EveryTranslationNamesItsTranslators(string slug)
+    {
+        var definition = Of(slug);
+
+        definition.Kind.Should().Be(TextKind.Translation);
+        definition.Translators.Should().NotBeNullOrWhiteSpace();
+    }
+
+    /// <summary>The question that started this, asked of the row that could not answer it.</summary>
+    [Fact]
+    public void TheUkrainianTextIsOhienkosAndSaysSo()
+    {
+        var ukr = Of(Bible4uTextSource.Ohienko);
+
+        ukr.Name.Should().Be("Ohienko Bible");
+        ukr.Translators.Should().Contain("Ohienko");
+        ukr.Edition.Should().Contain("1962");
+        ukr.Citation.Should().NotBeNullOrWhiteSpace();
+    }
+
+    /// <summary>
+    /// The rights on the Ukrainian text are contested and the row has to say so. Three sources call
+    /// it public domain by copying one another; the Society whose notice is on the same text has
+    /// never been asked. A reader deciding whether to republish must meet that, not discover it.
+    /// </summary>
+    [Fact]
+    public void TheUkrainianTextCarriesTheNoticeThatDisputesItsLicence()
+    {
+        var ukr = Of(Bible4uTextSource.Ohienko);
+
+        ukr.RightsNote.Should().Contain("British and Foreign Bible Society");
+        ukr.RightsHolder.Should().Contain("British and Foreign Bible Society");
+    }
+
+    /// <summary>
+    /// There are two Ukrainian Bibles here now, sixty years and two rights positions apart, and the
+    /// rows have to be told apart by reading them rather than by knowing which is which. The one
+    /// with no dispute over it is the one that says so.
+    /// </summary>
+    [Fact]
+    public void TheSecondUkrainianTextIsKulishsAndItsRightsAreSettled()
+    {
+        var kulish = Of(KulishTextSource.Slug);
+
+        kulish.Language.Should().Be("ukr");
+        kulish.Translators.Should().Contain("Kulish").And.Contain("Puliui").And.Contain("Nechui-Levytsky");
+        kulish.PublishedYear.Should().Be(1903);
+        kulish.Redistribution.Should().Be(Redistribution.PublicDomain);
+        kulish.RightsHolder.Should().BeNull();
+        kulish.RightsNote.Should().Contain("life-plus-seventy");
+    }
+
+    /// <summary>
+    /// The one field that answers "on what terms may we serve this" has to be able to say
+    /// ShareAlike, and two texts have to say it. The Ohienko said public domain, which three sources
+    /// claim by copying one another and none of them by a grant; Swete said plain attribution,
+    /// because until now the enum had no value for the clause its licence actually carries.
+    ///
+    /// Checked as a pair rather than one at a time: the fault was not two wrong rows, it was a
+    /// vocabulary that could not express the answer, so both rows were as right as they could be.
+    /// Ottley's Isaiah came later, from the same transcription as Swete and under the same terms.
+    /// </summary>
+    [Fact]
+    public void EveryShareAlikeTextSaysShareAlike()
+    {
+        All.Where(definition => definition.Licence.Contains("SA", StringComparison.OrdinalIgnoreCase))
+            .Should().OnlyContain(definition => definition.Redistribution == Redistribution.ShareAlike)
+            .And.HaveCount(22);
+
+        Of(Bible4uTextSource.Ohienko).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(SweteTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(OttleyTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(SweteOldGreekTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(EbibleTextSource.IrvHindi).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(EbibleTextSource.BiblicaUkrainian).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(UnfoldingWordTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(GeezTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Of(AlexandrinusTextSource.Slug).Redistribution.Should().Be(Redistribution.ShareAlike);
+        Door43TextSource.Definitions.Values.Should().OnlyContain(text => text.Redistribution == Redistribution.ShareAlike);
+        Of(ClearBible.ClearBibleTextSource.OpenHausa).Redistribution.Should().Be(Redistribution.ShareAlike);
+    }
+
+    /// <summary>
+    /// bible4u serves its three files under one notice calling them public domain, and it is right
+    /// about two of them. A shared notice is not a licence for each thing it covers.
+    /// </summary>
+    [Fact]
+    public void TheOtherTwoBible4uTextsAreStillPublicDomain()
+    {
+        Of(Bible4uTextSource.KingJames).Redistribution.Should().Be(Redistribution.PublicDomain);
+        Of(Bible4uTextSource.Synodal).Redistribution.Should().Be(Redistribution.PublicDomain);
+    }
+
+    /// <summary>
+    /// A publication year alone says the wrong thing about a revised text. Every digital King James
+    /// is the modern standard text, and a row reading 1611 invites a reader to quote it as the 1611
+    /// printing, which it is not.
+    /// </summary>
+    [Fact]
+    public void TheKingJamesSaysWhichEditionItIs()
+    {
+        var kjv = Of(Bible4uTextSource.KingJames);
+
+        kjv.PublishedYear.Should().Be(1611);
+        kjv.EditionYear.Should().Be(1769);
+        kjv.Edition.Should().Contain("not the 1611 printing");
+    }
+
+    /// <summary>
+    /// An edition year is set only where it differs from publication. Repeating the same number in
+    /// both fields would make "this is a revision" indistinguishable from "nobody looked".
+    /// </summary>
+    [Fact]
+    public void AnEditionYearIsOnlySetWhereItDiffersFromPublication() =>
+        All.Where(definition => definition.EditionYear is not null)
+            .Should().OnlyContain(definition => definition.EditionYear != definition.PublishedYear);
+}

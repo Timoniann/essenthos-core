@@ -91,22 +91,6 @@ internal static class SearchTerms
     /// </summary>
     public const string MixedMatching = "mixed";
 
-    public const string EnglishDictionary = "english";
-
-    public const string RussianDictionary = "russian";
-
-    /// <summary>
-    /// Postgres dictionaries the loaded languages can be stemmed with. Ukrainian, Hebrew and
-    /// Greek have none, so those corpora fall back to substring matching and say so.
-    /// </summary>
-    private static readonly Dictionary<string, string> DictionariesByLanguage = new(StringComparer.OrdinalIgnoreCase)
-    {
-        ["en"] = EnglishDictionary,
-        ["eng"] = EnglishDictionary,
-        ["ru"] = RussianDictionary,
-        ["rus"] = RussianDictionary,
-    };
-
     public static string[] Parse(string? query)
     {
         if (string.IsNullOrWhiteSpace(query))
@@ -119,16 +103,6 @@ internal static class SearchTerms
             .Where(term => term.Length > 0)
             .Take(MaxTerms)
             .ToArray();
-    }
-
-    public static string? Dictionary(string language)
-    {
-        return DictionariesByLanguage.GetValueOrDefault(language);
-    }
-
-    public static string Matching(string language)
-    {
-        return Dictionary(language) is null ? SubstringMatching : FullTextMatching;
     }
 
     /// <summary>
