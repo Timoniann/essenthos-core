@@ -6,6 +6,8 @@ WITH said(place, slug, text) AS (
     UNION ALL SELECT 'entity.distinguisher', slug, distinguisher FROM entity
     UNION ALL SELECT 'entity_note_translation', e.slug, t.text FROM entity_note_translation t JOIN entity e ON e.id = t.entity_id
     UNION ALL SELECT 'entity_distinguisher', e.slug, d.text FROM entity_distinguisher d JOIN entity e ON e.id = d.entity_id
+    UNION ALL SELECT 'entity_known_for', e.slug, k.english FROM entity_known_for k JOIN entity e ON e.id = k.entity_id
+    UNION ALL SELECT 'entity_known_for_text', e.slug, t.text FROM entity_known_for_text t JOIN entity_known_for k ON k.id = t.known_for_id JOIN entity e ON e.id = k.entity_id
     UNION ALL SELECT 'entity_alternative.reason', e.slug, a.reason FROM entity_alternative a JOIN entity e ON e.id = a.entity_id
     UNION ALL SELECT 'entity_alternative.describes', e.slug, a.describes FROM entity_alternative a JOIN entity e ON e.id = a.entity_id
     UNION ALL SELECT 'title_bearer.note', e.slug, b.note FROM title_bearer b JOIN entity e ON e.id = b.title_entity_id

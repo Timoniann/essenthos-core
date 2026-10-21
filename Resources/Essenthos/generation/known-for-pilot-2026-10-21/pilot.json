@@ -1,0 +1,1468 @@
+{
+ "pilot": "FTR-1109 known-for pilot",
+ "date": "2026-10-21",
+ "first_reading": "claude-opus-5-5 (Claude Code agent): read the person's verses (KJV, from the live API read-only) and wrote 1-3 clauses with references",
+ "second_reading": "a separate claude-opus-5-5 agent with no part in the first reading: checked every clause against the KJV text of its cited verses; verdicts in raw/check.json",
+ "status": "model-produced, unreviewed by the owner; nothing loaded",
+ "counts": {
+  "people": 30,
+  "clauses": 76,
+  "second_reading": {
+   "checked": 76,
+   "right": 65,
+   "fix": 11
+  },
+  "selection_replacements": 2,
+  "reference_additions": 3
+ },
+ "people": [
+  {
+   "slug": "noah",
+   "band": "most",
+   "name_en": "Noah",
+   "name_uk": "Ной",
+   "verses": 48,
+   "distinguisher": "son of Lamech (GEN 5:28-29)",
+   "current_summary": {
+    "en": "son of Lamech, father of Shem, Ham and Japheth, ancestor of Jesus, Jacob, David, Moses and others",
+    "uk": "син Ламеха, батько Сима, Хама та Яфета, предок Ісуса, Якова, Давида, Мойсея та інших"
+   },
+   "known_for": {
+    "en": "built the ark and was saved from the Flood with his family (GEN 6:13-8:19); received God's covenant never again to destroy the earth by a flood (GEN 9:8-17)",
+    "uk": "збудував ковчег і врятувався від потопу зі своєю родиною (GEN 6:13-8:19); прийняв Божий заповіт, що потоп більше не знищить землі (GEN 9:8-17)",
+    "length_en": 127,
+    "length_uk": 113,
+    "length_en_with_refs": 156,
+    "clauses": [
+     {
+      "en": "built the ark and was saved from the Flood with his family",
+      "uk": "збудував ковчег і врятувався від потопу зі своєю родиною",
+      "refs": "GEN 6:13-8:19",
+      "check": {
+       "verdict": "right",
+       "why": "GEN 6:22, 7:7, 8:18 state it; the range is the whole Flood narrative but that is the event."
+      }
+     },
+     {
+      "en": "received God's covenant never again to destroy the earth by a flood",
+      "uk": "прийняв Божий заповіт, що потоп більше не знищить землі",
+      "refs": "GEN 9:8-17",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "abram",
+   "band": "most",
+   "name_en": "Abraham",
+   "name_uk": "Авраам",
+   "verses": 277,
+   "distinguisher": "son of Terah (GEN 11:26)",
+   "current_summary": {
+    "en": "son of Terah, husband of Sarah, Hagar and Keturah, father of eight named sons, brother of Haran and Nahor, half-brother of Sarah, servant of LORD, grandfather of Jacob, ancestor of Jesus, David, Moses, Saul and others",
+    "uk": "син Тераха, чоловік Сари, Аґари та Кетури, батько восьми названих синів, брат Гарана та Нахора, єдинокровний брат Сари, слуга Господа, дід Якова, предок Ісуса, Давида, Мойсея, Саула та інших"
+   },
+   "known_for": {
+    "en": "left his country at God's call and went to Canaan (GEN 12:1-5); was promised offspring as many as the stars (GEN 15:1-6); bound Isaac to offer him up at God's command (GEN 22:1-14)",
+    "uk": "на Божий поклик покинув свій край і пішов до Ханаану (GEN 12:1-5); отримав обітницю нащадків, численних, як зорі (GEN 15:1-6); зв'язав Ісака, щоб за Божим наказом принести його в жертву (GEN 22:1-14)",
+    "length_en": 140,
+    "length_uk": 159,
+    "length_en_with_refs": 180,
+    "clauses": [
+     {
+      "en": "left his country at God's call and went to Canaan",
+      "uk": "на Божий поклик покинув свій край і пішов до Ханаану",
+      "refs": "GEN 12:1-5",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "was promised offspring as many as the stars",
+      "uk": "отримав обітницю нащадків, численних, як зорі",
+      "refs": "GEN 15:1-6",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "bound Isaac to offer him up at God's command",
+      "uk": "зв'язав Ісака, щоб за Божим наказом принести його в жертву",
+      "refs": "GEN 22:1-14",
+      "check": {
+       "verdict": "right",
+       "why": "22:13 has Abraham find the ram; God's providing is stated in 22:8 and 22:14, both in range."
+      },
+      "owner_trim": {
+       "before": {
+        "en": "bound Isaac to offer him up, and God provided a ram",
+        "uk": "зв'язав Ісака, щоб принести його в жертву, і Бог дав барана"
+       },
+       "note": "Owner 2026-10-21: «Такі деталі як \"and God provided a ram\" не потрібні» — minor detail dropped from the clause."
+      }
+     }
+    ]
+   },
+   "selection_note": "Clause 2 could carry GEN 15:6 ('he believed ... counted it to him for righteousness'), which is the verse the NT quotes."
+  },
+  {
+   "slug": "sarai",
+   "band": "most",
+   "name_en": "Sarah",
+   "name_uk": "Сара",
+   "verses": 48,
+   "distinguisher": "Abram's wife (11:29)",
+   "current_summary": {
+    "en": "daughter of Terah, wife of Abraham, mother of Isaac, sister of Haran and Nahor, half-sister of Abraham, daughter-in-law of Terah, buried in Machpelah, ancestor of Jesus, Jacob, David, Moses and others",
+    "uk": "дочка Тераха, дружина Авраама, мати Ісака, сестра Гарана та Нахора, єдинокровна сестра Авраама, невістка Тераха, похований у Махпелі, предок Ісуса, Якова, Давида, Мойсея та інших"
+   },
+   "known_for": {
+    "en": "gave her maid Hagar to Abraham as a wife (GEN 16:1-3); laughed at the promise of a son, then bore Isaac in her old age (GEN 18:10-15, 21:1-7)",
+    "uk": "дала Авраамові за жінку свою служницю Аґар (GEN 16:1-3); засміялася з обітниці сина, а потім у старості народила Ісака (GEN 18:10-15, 21:1-7)",
+    "length_en": 105,
+    "length_uk": 105,
+    "length_en_with_refs": 141,
+    "clauses": [
+     {
+      "en": "gave her maid Hagar to Abraham as a wife",
+      "uk": "дала Авраамові за жінку свою служницю Аґар",
+      "refs": "GEN 16:1-3",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "laughed at the promise of a son, then bore Isaac in her old age",
+      "uk": "засміялася з обітниці сина, а потім у старості народила Ісака",
+      "refs": "GEN 18:10-15, 21:1-7",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "moses",
+   "band": "most",
+   "name_en": "Moses",
+   "name_uk": "Мойсей",
+   "verses": 806,
+   "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+   "current_summary": {
+    "en": "prophet to Israelites, priest of LORD, leader of Israelites, son of Amram and Jochebed, husband of Zipporah, father of Gershom and Eliezer, brother of Miriam and Aaron, one of the Hebrews, lived in Midian, son-in-law of Jethro, servant of LORD, brother-in-law of Hobab, descendant of Jacob, ancestor of Shebuel, Rehabiah, Shelomoth, Isshiah and others",
+    "uk": "пророк ізраїльтян, священник Господа, вождь ізраїльтян, син Амрама та Йохевед, чоловік Ціппори, батько Ґершома та Еліезера, брат Маріям та Аарона, з народу євреїв, жив у Мідіяні, зять Єтра, слуга Господа, свояк Ховава, нащадок Якова, предок Шевуїла, Рехавії, Шеломіта, Їшшійї та інших"
+   },
+   "known_for": {
+    "en": "was called by God from a burning bush (EXO 3:1-10); led Israel out of Egypt and through the sea on dry ground (EXO 12:51, 14:21-31, ACT 7:36); received the law from God on Mount Sinai (EXO 19:20-20:21, 31:18)",
+    "uk": "Бог покликав його з палаючої купини (EXO 3:1-10); вивів Ізраїля з Єгипту й провів морем по суші (EXO 12:51, 14:21-31, ACT 7:36); прийняв від Бога Закон на горі Синай (EXO 19:20-20:21, 31:18)",
+    "length_en": 138,
+    "length_uk": 120,
+    "length_en_with_refs": 208,
+    "clauses": [
+     {
+      "en": "was called by God from a burning bush",
+      "uk": "Бог покликав його з палаючої купини",
+      "refs": "EXO 3:1-10",
+      "check": {
+       "verdict": "selection",
+       "why": "God called unto him out of the midst of the bush (EXO 3:4); replaced after the second reading's selection note; checked by the first reader against the verses, not by the second",
+       "replaced": {
+        "en": "died in Moab after seeing the promised land from afar",
+        "uk": "помер у Моаві, побачивши обіцяний край здалека",
+        "refs": "DEU 34:1-5",
+        "check": {
+         "verdict": "right",
+         "why": null
+        }
+       }
+      }
+     },
+     {
+      "en": "led Israel out of Egypt and through the sea on dry ground",
+      "uk": "вивів Ізраїля з Єгипту й провів морем по суші",
+      "refs": "EXO 12:51, 14:21-31, ACT 7:36",
+      "check": {
+       "verdict": "fix",
+       "why": "The only cited verse for the leading out (EXO 12:51) says the LORD brought Israel out, and 14:21-31 credits the LORD with the sea; ACT 7:36 says Moses brought them out with signs in the Red sea.",
+       "first_reading": {
+        "en": "led Israel out of Egypt and through the sea on dry ground",
+        "uk": "вивів Ізраїля з Єгипту й провів морем по суші",
+        "refs": "EXO 12:51, 14:21-31"
+       }
+      }
+     },
+     {
+      "en": "received the law from God on Mount Sinai",
+      "uk": "прийняв від Бога Закон на горі Синай",
+      "refs": "EXO 19:20-20:21, 31:18",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": "His call at the burning bush (EXO 3) and the confrontation with Pharaoh are missing; either is more central than his death (clause 3)."
+  },
+  {
+   "slug": "david",
+   "band": "most",
+   "name_en": "David",
+   "name_uk": "Давид",
+   "verses": 1024,
+   "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+   "current_summary": {
+    "en": "king of Israelites, seventh son of Jesse, husband of Michal, Abigail, Ahinoam, Maacah, Haggith, Abital, Eglah and Bathsheba, father of twenty named sons and a daughter, and of other sons and daughters, brother of six brothers and two sisters, descendant of Obed, servant of Saul and LORD, ancestor of Jesus, Hezekiah, Jehoshaphat, Zedekiah and others",
+    "uk": "цар ізраїльтян, сьомий син Єссея, чоловік Мелхоли, Авіґаїл, Ахіноам, Маахи, Хаґґіт, Авітал, Еґли та Вірсавії, батько двадцяти названих синів та дочки, а також інших синів і дочок, брат шести братів та двох сестер, нащадок Оведа, слуга Саула та Господа, предок Ісуса, Єзекії, Йосафата, Седекії та інших"
+   },
+   "known_for": {
+    "en": "killed Goliath with a sling and a stone (1SA 17:48-51); was anointed king over Israel and reigned forty years (2SA 5:3-5); took Jerusalem and brought the ark of God into it (2SA 5:6-9, 6:12-17)",
+    "uk": "убив Ґоліята пращею і каменем (1SA 17:48-51); був помазаний на царя над Ізраїлем і царював сорок років (2SA 5:3-5); здобув Єрусалим і переніс до нього Божий ковчег (2SA 5:6-9, 6:12-17)",
+    "length_en": 145,
+    "length_uk": 136,
+    "length_en_with_refs": 193,
+    "clauses": [
+     {
+      "en": "killed Goliath with a sling and a stone",
+      "uk": "убив Ґоліята пращею і каменем",
+      "refs": "1SA 17:48-51",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "was anointed king over Israel and reigned forty years",
+      "uk": "був помазаний на царя над Ізраїлем і царював сорок років",
+      "refs": "2SA 5:3-5",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "took Jerusalem and brought the ark of God into it",
+      "uk": "здобув Єрусалим і переніс до нього Божий ковчег",
+      "refs": "2SA 5:6-9, 6:12-17",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": "His sin with Bathsheba and the death of Uriah (2SA 11-12) is a defining event and is missing; Samuel's anointing of him (1SA 16:13) is another."
+  },
+  {
+   "slug": "elijah",
+   "band": "most",
+   "name_en": "Elijah",
+   "name_uk": "Ілля",
+   "verses": 93,
+   "distinguisher": "the prophet, Tishbite, who was of the settlers of Gilead (1KI 17:1)",
+   "current_summary": {
+    "en": "prophet to Ahab, from Tishbe, lived in Gilead",
+    "uk": "пророк Ахава, з Тішбе, жив у Ґілеаді"
+   },
+   "known_for": {
+    "en": "foretold a drought and was fed by ravens (1KI 17:1-6); prayed on Mount Carmel, and the fire of the LORD fell on the sacrifice (1KI 18:20-39); was taken up to heaven in a whirlwind (2KI 2:11)",
+    "uk": "провістив посуху, і його годували круки (1KI 17:1-6); помолився на горі Кармел, і Господній вогонь упав на жертву (1KI 18:20-39); був узятий вихором на небо (2KI 2:11)",
+    "length_en": 151,
+    "length_uk": 128,
+    "length_en_with_refs": 190,
+    "clauses": [
+     {
+      "en": "foretold a drought and was fed by ravens",
+      "uk": "провістив посуху, і його годували круки",
+      "refs": "1KI 17:1-6",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "prayed on Mount Carmel, and the fire of the LORD fell on the sacrifice",
+      "uk": "помолився на горі Кармел, і Господній вогонь упав на жертву",
+      "refs": "1KI 18:20-39",
+      "check": {
+       "verdict": "fix",
+       "why": "Elijah prayed (18:36-37) and 'the fire of the LORD fell' (18:38); 'called down' credits him with the act, as 'healed' would where God healed.",
+       "first_reading": {
+        "en": "called down fire from heaven on Mount Carmel",
+        "uk": "звів вогонь з неба на горі Кармел",
+        "refs": "1KI 18:20-39"
+       }
+      }
+     },
+     {
+      "en": "was taken up to heaven in a whirlwind",
+      "uk": "був узятий вихором на небо",
+      "refs": "2KI 2:11",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "elisha",
+   "band": "most",
+   "name_en": "Elisha",
+   "name_uk": "Єлисей",
+   "verses": 76,
+   "distinguisher": "anointed prophet in Elijah's place (1KI 19:16)",
+   "current_summary": {
+    "en": "prophet to Israelites, son of Shaphat, from Abelmeholah, disciple of Elijah",
+    "uk": "пророк ізраїльтян, син Шафата, з Авел-Мехоли, учень Іллі"
+   },
+   "known_for": {
+    "en": "succeeded Elijah, whose spirit rested on him (1KI 19:19-21, 2KI 2:9-15); raised the Shunammite woman's son from the dead (2KI 4:32-37); sent Naaman to wash in the Jordan, and he was healed of leprosy (2KI 5:9-14)",
+    "uk": "став наступником Іллі, і дух Іллі спочив на ньому (1KI 19:19-21, 2KI 2:9-15); воскресив сина шунаммітянки (2KI 4:32-37); послав Наамана обмитися в Йордані, і той очистився від прокази (2KI 5:9-14)",
+    "length_en": 158,
+    "length_uk": 142,
+    "length_en_with_refs": 212,
+    "clauses": [
+     {
+      "en": "succeeded Elijah, whose spirit rested on him",
+      "uk": "став наступником Іллі, і дух Іллі спочив на ньому",
+      "refs": "1KI 19:19-21, 2KI 2:9-15",
+      "check": {
+       "verdict": "right",
+       "why": "2KI 2:15 is the sons of the prophets saying it; acceptable.",
+       "applied": "shortened after the check for length (was: followed Elijah and succeeded him, and Elijah's spirit rested on him); same verses, same sense"
+      }
+     },
+     {
+      "en": "raised the Shunammite woman's son from the dead",
+      "uk": "воскресив сина шунаммітянки",
+      "refs": "2KI 4:32-37",
+      "check": {
+       "verdict": "right",
+       "why": "Elisha prayed and stretched himself on the child (4:33-35); the text does not attribute the raising to anyone else."
+      }
+     },
+     {
+      "en": "sent Naaman to wash in the Jordan, and he was healed of leprosy",
+      "uk": "послав Наамана обмитися в Йордані, і той очистився від прокази",
+      "refs": "2KI 5:9-14",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "simon",
+   "band": "most",
+   "name_en": "Peter",
+   "name_uk": "Петр",
+   "verses": 181,
+   "distinguisher": "Peter, brother of Andrew (MAT 4:18)",
+   "current_summary": {
+    "en": "apostle of Jesus, son of Jonas, brother of Andrew, servant of Jesus",
+    "uk": "апостол Ісуса, син Йони, брат Андрія, слуга Ісуса"
+   },
+   "known_for": {
+    "en": "left his nets to follow Jesus (MAT 4:18-20); confessed Jesus as the Christ, yet later denied him three times (MAT 16:15-16, 26:69-75); preached to the crowds at Pentecost (ACT 2:1, 2:14-41)",
+    "uk": "покинув сіті й пішов за Ісусом (MAT 4:18-20); визнав Ісуса Христом, а згодом тричі зрікся його (MAT 16:15-16, 26:69-75); проповідував натовпу в день П'ятидесятниці (ACT 2:1, 2:14-41)",
+    "length_en": 131,
+    "length_uk": 124,
+    "length_en_with_refs": 189,
+    "clauses": [
+     {
+      "en": "left his nets to follow Jesus",
+      "uk": "покинув сіті й пішов за Ісусом",
+      "refs": "MAT 4:18-20",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "confessed Jesus as the Christ, yet later denied him three times",
+      "uk": "визнав Ісуса Христом, а згодом тричі зрікся його",
+      "refs": "MAT 16:15-16, 26:69-75",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "preached to the crowds at Pentecost",
+      "uk": "проповідував натовпу в день П'ятидесятниці",
+      "refs": "ACT 2:1, 2:14-41",
+      "check": {
+       "verdict": "fix",
+       "why": "Pentecost is named only in ACT 2:1, outside the cited range.",
+       "first_reading": {
+        "en": "preached to the crowds at Pentecost",
+        "uk": "проповідував натовпу в день П'ятидесятниці",
+        "refs": "ACT 2:14-41"
+       }
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "saul-2",
+   "band": "most",
+   "name_en": "Paul",
+   "name_uk": "Павло",
+   "verses": 186,
+   "distinguisher": "the apostle Paul, at whose feet witnesses to Stephen's death laid their robes (ACT 7:58)",
+   "current_summary": {
+    "en": "apostle of Jesus, from Tarsus, lived in Damascus",
+    "uk": "апостол Ісуса, з Тарсу, жив у Дамаску"
+   },
+   "known_for": {
+    "en": "persecuted the church (ACT 8:3, GAL 1:13); was met by Jesus on the road to Damascus (ACT 9:3-18); preached to the Gentiles in many cities and was taken to Rome a prisoner (ACT 13:46-49, 15:36, 28:14-16)",
+    "uk": "переслідував церкву (ACT 8:3, GAL 1:13); на дорозі до Дамаску йому з'явився Ісус (ACT 9:3-18); проповідував поганам у багатьох містах і в'язнем прибув до Риму (ACT 13:46-49, 15:36, 28:14-16)",
+    "length_en": 137,
+    "length_uk": 125,
+    "length_en_with_refs": 202,
+    "clauses": [
+     {
+      "en": "persecuted the church",
+      "uk": "переслідував церкву",
+      "refs": "ACT 8:3, GAL 1:13",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "was met by Jesus on the road to Damascus",
+      "uk": "на дорозі до Дамаску йому з'явився Ісус",
+      "refs": "ACT 9:3-18",
+      "check": {
+       "verdict": "fix",
+       "why": "The Ukrainian makes Paul the one who met Jesus; the English (and ACT 9:17, 'Jesus, that appeared unto thee') has Jesus as the actor.",
+       "first_reading": {
+        "en": "was met by Jesus on the road to Damascus and baptized",
+        "uk": "зустрів Ісуса на дорозі до Дамаску й охрестився",
+        "refs": "ACT 9:3-18"
+       }
+      },
+      "owner_trim": {
+       "before": {
+        "en": "was met by Jesus on the road to Damascus and baptized",
+        "uk": "на дорозі до Дамаску йому з'явився Ісус, і він охрестився"
+       },
+       "note": "Owner 2026-10-21: «Такі деталі як \"and God provided a ram\" не потрібні» — minor detail dropped from the clause."
+      }
+     },
+     {
+      "en": "preached to the Gentiles in many cities and was taken to Rome a prisoner",
+      "uk": "проповідував поганам у багатьох містах і в'язнем прибув до Риму",
+      "refs": "ACT 13:46-49, 15:36, 28:14-16",
+      "check": {
+       "verdict": "fix",
+       "why": "ACT 13:46-49 is one city (Antioch in Pisidia); 'in many cities' needs a verse such as ACT 15:36, 'every city where we have preached'.",
+       "first_reading": {
+        "en": "preached to the Gentiles in many cities and was taken to Rome a prisoner",
+        "uk": "проповідував поганам у багатьох містах і в'язнем прибув до Риму",
+        "refs": "ACT 13:46-49, 28:14-16"
+       }
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "jacob",
+   "band": "most",
+   "name_en": "Jacob",
+   "name_uk": "Яків",
+   "verses": 1029,
+   "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+   "current_summary": {
+    "en": "son of Isaac and Rebekah, husband of Leah, Bilhah, Zilpah and Rachel, father of twelve sons and a daughter, brother of Esau, servant of LORD, nephew of Laban, ancestor of Jesus, David, Moses, Saul and others",
+    "uk": "син Ісака та Ревеки, чоловік Лії, Білги, Зілпи та Рахілі, батько дванадцяти синів та дочки, брат Ісава, слуга Господа, племінник Лавана, предок Ісуса, Давида, Мойсея, Саула та інших"
+   },
+   "known_for": {
+    "en": "bought Esau's birthright and took his blessing by deceit (GEN 25:29-34, 27:1-36); dreamed of a ladder reaching to heaven (GEN 28:10-17); wrestled until daybreak and was named Israel (GEN 32:24-28)",
+    "uk": "купив Ісавове первородство і підступом забрав його благословення (GEN 25:29-34, 27:1-36); бачив уві сні драбину, що сягала неба (GEN 28:10-17); боровся до світанку й дістав ім'я Ізраїль (GEN 32:24-28)",
+    "length_en": 142,
+    "length_uk": 146,
+    "length_en_with_refs": 196,
+    "clauses": [
+     {
+      "en": "bought Esau's birthright and took his blessing by deceit",
+      "uk": "купив Ісавове первородство і підступом забрав його благословення",
+      "refs": "GEN 25:29-34, 27:1-36",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "dreamed of a ladder reaching to heaven",
+      "uk": "бачив уві сні драбину, що сягала неба",
+      "refs": "GEN 28:10-17",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "wrestled until daybreak and was named Israel",
+      "uk": "боровся до світанку й дістав ім'я Ізраїль",
+      "refs": "GEN 32:24-28",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "joseph",
+   "band": "most",
+   "name_en": "Joseph",
+   "name_uk": "Йосип",
+   "verses": 196,
+   "distinguisher": "eleventh-born son of Jacob and Rachel (GEN 30:24)",
+   "current_summary": {
+    "en": "governor of Egypt, son of Jacob and Rachel, husband of Asenath, father of Manasseh and Ephraim, half-brother of ten brothers and a sister, brother of Benjamin, son-in-law of Potipherah, servant of Potiphar, ancestor of Joshua, Nun, Machir, Gilead and others",
+    "uk": "намісник Єгипту, син Якова та Рахілі, чоловік Оснати, батько Манасії та Єфрема, єдинокровний брат десяти братів та сестри, брат Веніямина, зять Поті-Фера, слуга Потіфара, предок Ісуса, Навина, Махіра, Ґілеада та інших"
+   },
+   "known_for": {
+    "en": "was sold by his brothers and taken to Egypt (GEN 37:26-28); interpreted Pharaoh's dreams and was set over all Egypt (GEN 41:14-41); stored grain against the famine and kept his family alive (GEN 41:47-57, 45:4-11, 47:11-12)",
+    "uk": "брати продали його, і його відвели до Єгипту (GEN 37:26-28); витлумачив фараонові сни і був поставлений над усім Єгиптом (GEN 41:14-41); зібрав збіжжя на голодні роки і зберіг життя своїй родині (GEN 41:47-57, 45:4-11, 47:11-12)",
+    "length_en": 159,
+    "length_uk": 164,
+    "length_en_with_refs": 223,
+    "clauses": [
+     {
+      "en": "was sold by his brothers and taken to Egypt",
+      "uk": "брати продали його, і його відвели до Єгипту",
+      "refs": "GEN 37:26-28",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "interpreted Pharaoh's dreams and was set over all Egypt",
+      "uk": "витлумачив фараонові сни і був поставлений над усім Єгиптом",
+      "refs": "GEN 41:14-41",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "stored grain against the famine and kept his family alive",
+      "uk": "зібрав збіжжя на голодні роки і зберіг життя своїй родині",
+      "refs": "GEN 41:47-57, 45:4-11, 47:11-12",
+      "check": {
+       "verdict": "fix",
+       "why": "45:4-11 is Joseph's plan to nourish them ('there will I nourish thee'); that he did keep them alive is stated in 47:12, outside the range.",
+       "first_reading": {
+        "en": "stored grain against the famine and kept his family alive",
+        "uk": "зібрав збіжжя на голодні роки і зберіг життя своїй родині",
+        "refs": "GEN 41:47-57, 45:4-11"
+       }
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "samuel-2",
+   "band": "most",
+   "name_en": "Samuel",
+   "name_uk": "Самуїл",
+   "verses": 122,
+   "distinguisher": "son of Elkanah and Hannah (1SA 1:20)",
+   "current_summary": {
+    "en": "prophet to Israelites, judge of Israelites, son of Hannah and Elkanah, father of Joel and Abijah, servant of LORD, disciple of Eli, lived in Naioth, ancestor of Heman, Bukkiah, Mattaniah, Shebuel and others",
+    "uk": "пророк ізраїльтян, суддя ізраїльтян, син Анни та Елкани, батько Йоїла та Авійї, слуга Господа, учень Ілія, жив у Найоті, предок Гемана, Буккійї, Маттанії, Шевуїла та інших"
+   },
+   "known_for": {
+    "en": "was called by the LORD in the night (1SA 3:1-10); judged Israel all his life (1SA 7:15-17); anointed Saul and then David as king (1SA 10:1, 15:1, 16:13)",
+    "uk": "Господь покликав його вночі (1SA 3:1-10); судив Ізраїля все своє життя (1SA 7:15-17); помазав на царя Саула, а потім Давида (1SA 10:1, 15:1, 16:13)",
+    "length_en": 101,
+    "length_uk": 96,
+    "length_en_with_refs": 152,
+    "clauses": [
+     {
+      "en": "was called by the LORD in the night",
+      "uk": "Господь покликав його вночі",
+      "refs": "1SA 3:1-10",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "judged Israel all his life",
+      "uk": "судив Ізраїля все своє життя",
+      "refs": "1SA 7:15-17",
+      "check": {
+       "verdict": "selection",
+       "why": "1SA 7:15 states it; replaced after the second reading's selection note; checked by the first reader against the verses, not by the second",
+       "replaced": {
+        "en": "was given to the LORD by his mother as a child",
+        "uk": "мати ще дитиною віддала його Господеві",
+        "refs": "1SA 1:24-28",
+        "check": {
+         "verdict": "right",
+         "why": null
+        }
+       }
+      }
+     },
+     {
+      "en": "anointed Saul and then David as king",
+      "uk": "помазав на царя Саула, а потім Давида",
+      "refs": "1SA 10:1, 15:1, 16:13",
+      "check": {
+       "verdict": "right",
+       "why": "10:1 says 'captain over his inheritance', but the kingship is plain from 10:24 and 15:1; 1SA 15:1 could be added.",
+       "applied": "added 1SA 15:1, as the second reading suggested"
+      }
+     }
+    ]
+   },
+   "selection_note": "That he judged Israel all his life (1SA 7:15) is his chief role and is missing."
+  },
+  {
+   "slug": "solomon",
+   "band": "most",
+   "name_en": "Solomon",
+   "name_uk": "Соломон",
+   "verses": 279,
+   "distinguisher": "son of David (2SA 5:14)",
+   "current_summary": {
+    "en": "king of Israelites, son of David and Bathsheba, father of Taphath, Basemath and Rehoboam, half-brother of six brothers and a sister, brother of thirteen brothers, ancestor of Jesus, Hezekiah, Jehoshaphat, Zedekiah and others",
+    "uk": "цар ізраїльтян, син Давида та Вірсавії, батько Тафат, Босмат та Рехав'ама, єдинокровний брат шести братів та сестри, брат тринадцяти братів, предок Ісуса, Єзекії, Йосафата, Седекії та інших"
+   },
+   "known_for": {
+    "en": "asked God for wisdom and was given it (1KI 3:5-12); built the temple of the LORD in Jerusalem (1KI 6:1-38, 2CH 3:1); was turned after other gods by his wives in his old age (1KI 11:1-8)",
+    "uk": "попросив у Бога мудрості й отримав її (1KI 3:5-12); збудував Господній храм у Єрусалимі (1KI 6:1-38, 2CH 3:1); у старості жінки схилили його до інших богів (1KI 11:1-8)",
+    "length_en": 137,
+    "length_uk": 120,
+    "length_en_with_refs": 185,
+    "clauses": [
+     {
+      "en": "asked God for wisdom and was given it",
+      "uk": "попросив у Бога мудрості й отримав її",
+      "refs": "1KI 3:5-12",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "built the temple of the LORD in Jerusalem",
+      "uk": "збудував Господній храм у Єрусалимі",
+      "refs": "1KI 6:1-38, 2CH 3:1",
+      "check": {
+       "verdict": "right",
+       "why": "1KI 6 never names Jerusalem; 2CH 3:1 ('the house of the LORD at Jerusalem') could be added, but the place is not in doubt.",
+       "applied": "added 2CH 3:1, as the second reading suggested"
+      }
+     },
+     {
+      "en": "was turned after other gods by his wives in his old age",
+      "uk": "у старості жінки схилили його до інших богів",
+      "refs": "1KI 11:1-8",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "enoch-2",
+   "band": "middling",
+   "name_en": "Enoch",
+   "name_uk": "Енох",
+   "verses": 10,
+   "distinguisher": "son of Jared (GEN 5:18)",
+   "current_summary": {
+    "en": "son of Jared, father of Methuselah and other sons and daughters, descendant of Adam, ancestor of Jesus, Jacob, David, Moses and others",
+    "uk": "син Яреда, батько Метушалаха та інших синів і дочок, нащадок Адама, предок Ісуса, Якова, Давида, Мойсея та інших"
+   },
+   "known_for": {
+    "en": "walked with God, and God took him (GEN 5:22-24, HEB 11:5); prophesied that the Lord would come with his saints (JUD 1:14-15)",
+    "uk": "ходив з Богом, і Бог узяв його (GEN 5:22-24, HEB 11:5); пророкував, що Господь прийде зі своїми святими (JUD 1:14-15)",
+    "length_en": 86,
+    "length_uk": 79,
+    "length_en_with_refs": 124,
+    "clauses": [
+     {
+      "en": "walked with God, and God took him",
+      "uk": "ходив з Богом, і Бог узяв його",
+      "refs": "GEN 5:22-24, HEB 11:5",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "prophesied that the Lord would come with his saints",
+      "uk": "пророкував, що Господь прийде зі своїми святими",
+      "refs": "JUD 1:14-15",
+      "check": {
+       "verdict": "right",
+       "why": "JUD 1:14 names 'Enoch, the seventh from Adam', so it is this Enoch."
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "gideon",
+   "band": "middling",
+   "name_en": "Gideon",
+   "name_uk": "Гедеон",
+   "verses": 52,
+   "distinguisher": "son of Joash (JDG 6:11) who torn down the altar to Baal (JDG 6:25)",
+   "current_summary": {
+    "en": "commander of Abiezer, son of Joash, father of 70 sons, among them Jether, Abimelech and Jotham, lived in Ophrah",
+    "uk": "воєначальник Авіезера, син Йоаша, батько 70 синів, з них названі Єтер, Авімелех та Йотам, жив у Офрі"
+   },
+   "known_for": {
+    "en": "tore down the altar of Baal (JDG 6:25-28); asked God for a sign with a fleece (JDG 6:36-40); routed the Midianites with three hundred men (JDG 7:7-22)",
+    "uk": "зруйнував жертовник Баала (JDG 6:25-28); просив у Бога знаку з руном (JDG 6:36-40); з трьомастами чоловіками розбив мідіянітян (JDG 7:7-22)",
+    "length_en": 109,
+    "length_uk": 98,
+    "length_en_with_refs": 150,
+    "clauses": [
+     {
+      "en": "tore down the altar of Baal",
+      "uk": "зруйнував жертовник Баала",
+      "refs": "JDG 6:25-28",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "asked God for a sign with a fleece",
+      "uk": "просив у Бога знаку з руном",
+      "refs": "JDG 6:36-40",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "routed the Midianites with three hundred men",
+      "uk": "з трьомастами чоловіками розбив мідіянітян",
+      "refs": "JDG 7:7-22",
+      "check": {
+       "verdict": "fix",
+       "why": "The English holds (7:7, 7:20-22), but the Ukrainian numeral phrase does not agree: in the instrumental the noun follows the numeral, so it is «трьомастами чоловіками», not «трьомастами чоловік».",
+       "first_reading": {
+        "en": "routed the Midianites with three hundred men",
+        "uk": "з трьомастами чоловік розбив мідіянітян",
+        "refs": "JDG 7:7-22"
+       }
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "deborah-2",
+   "band": "middling",
+   "name_en": "Deborah",
+   "name_uk": "Девора",
+   "verses": 9,
+   "distinguisher": "a prophetess and judge in Israel (JDG 4:4)",
+   "current_summary": {
+    "en": "prophet to Barak, judge of Israelites, wife of Lappidoth",
+    "uk": "пророк Барака, суддя ізраїльтян, дружина Лаппідота"
+   },
+   "known_for": {
+    "en": "was a prophetess and judged Israel (JDG 4:4-5); sent Barak against Sisera and went with him to battle (JDG 4:6-14); sang the song of victory with Barak (JDG 5:1-31)",
+    "uk": "була пророчицею і судила Ізраїля (JDG 4:4-5); послала Барака проти Сісери і пішла з ним на битву (JDG 4:6-14); заспівала з Бараком пісню перемоги (JDG 5:1-31)",
+    "length_en": 126,
+    "length_uk": 120,
+    "length_en_with_refs": 164,
+    "clauses": [
+     {
+      "en": "was a prophetess and judged Israel",
+      "uk": "була пророчицею і судила Ізраїля",
+      "refs": "JDG 4:4-5",
+      "check": {
+       "verdict": "right",
+       "why": null
+      },
+      "owner_trim": {
+       "before": {
+        "en": "judged Israel under her palm tree",
+        "uk": "судила Ізраїля під своєю пальмою"
+       },
+       "note": "Owner 2026-10-21: «Такі деталі як \"and God provided a ram\" не потрібні» — minor detail dropped from the clause."
+      }
+     },
+     {
+      "en": "sent Barak against Sisera and went with him to battle",
+      "uk": "послала Барака проти Сісери і пішла з ним на битву",
+      "refs": "JDG 4:6-14",
+      "check": {
+       "verdict": "right",
+       "why": "4:9-10 has her go up with Barak and 4:14 has her at Tabor sending him down; 'went with him to battle' is fair."
+      }
+     },
+     {
+      "en": "sang the song of victory with Barak",
+      "uk": "заспівала з Бараком пісню перемоги",
+      "refs": "JDG 5:1-31",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": "Fine; a reader may note that Jael, not Deborah or Barak, killed Sisera (4:21)."
+  },
+  {
+   "slug": "ruth",
+   "band": "middling",
+   "name_en": "Ruth",
+   "name_uk": "Рут",
+   "verses": 13,
+   "distinguisher": "the Moabitess (RUT 1:22)",
+   "current_summary": {
+    "en": "wife of Boaz and Mahlon, mother of Obed, one of the Moabites, daughter-in-law of Naomi, ancestor of Jesus, David, Solomon, Hezekiah and others",
+    "uk": "дружина Боаза та Махлона, мати Оведа, з народу моавітян, невістка Ноомі, предок Ісуса, Давида, Соломона, Єзекії та інших"
+   },
+   "known_for": {
+    "en": "would not leave her mother-in-law and went with her to Bethlehem (RUT 1:14-22); gleaned in the field of Boaz, became his wife and bore Obed (RUT 2:2-3, 4:13-17)",
+    "uk": "не покинула свекрухи й пішла з нею до Віфлеєму (RUT 1:14-22); збирала колоски на полі Боаза, стала його дружиною і народила Оведа (RUT 2:2-3, 4:13-17)",
+    "length_en": 125,
+    "length_uk": 115,
+    "length_en_with_refs": 160,
+    "clauses": [
+     {
+      "en": "would not leave her mother-in-law and went with her to Bethlehem",
+      "uk": "не покинула свекрухи й пішла з нею до Віфлеєму",
+      "refs": "RUT 1:14-22",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "gleaned in the field of Boaz, became his wife and bore Obed",
+      "uk": "збирала колоски на полі Боаза, стала його дружиною і народила Оведа",
+      "refs": "RUT 2:2-3, 4:13-17",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "nehemiah",
+   "band": "middling",
+   "name_en": "Nehemiah",
+   "name_uk": "Неемія",
+   "verses": 5,
+   "distinguisher": "son of Hachaliah, cupbearer to King Artaxerxes and governor of Judah, who rebuilt the wall of Jerusalem (NEH 1:1, 1:11, 8:9)",
+   "current_summary": {
+    "en": "governor of Judahites, son of Hachaliah, brother of Hanani",
+    "uk": "намісник юдеїв, син Хахалії, брат Ханані"
+   },
+   "known_for": {
+    "en": "asked King Artaxerxes for leave to rebuild Jerusalem (NEH 1:3, 2:1-8); led the rebuilding of the city wall (NEH 2:17-18, 6:15)",
+    "uk": "попросив у царя Артаксеркса дозволу відбудувати Єрусалим (NEH 1:3, 2:1-8); очолив відбудову міського муру (NEH 2:17-18, 6:15)",
+    "length_en": 89,
+    "length_uk": 88,
+    "length_en_with_refs": 126,
+    "clauses": [
+     {
+      "en": "asked King Artaxerxes for leave to rebuild Jerusalem",
+      "uk": "попросив у царя Артаксеркса дозволу відбудувати Єрусалим",
+      "refs": "NEH 1:3, 2:1-8",
+      "check": {
+       "verdict": "right",
+       "why": "NEH 2:1-8 says only 'the city of my fathers' sepulchres' in Judah; Jerusalem is named in 1:3 and 2:11, either of which could be added.",
+       "applied": "added NEH 1:3, as the second reading suggested"
+      }
+     },
+     {
+      "en": "led the rebuilding of the city wall",
+      "uk": "очолив відбудову міського муру",
+      "refs": "NEH 2:17-18, 6:15",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "jonah",
+   "band": "middling",
+   "name_en": "Jonah",
+   "name_uk": "Йона",
+   "verses": 25,
+   "distinguisher": "the prophet, son of Amittai, from Gath-hepher (2KI 14:25)",
+   "current_summary": {
+    "en": "prophet to Israelites, son of Amittai, from Gath-hepher",
+    "uk": "пророк ізраїльтян, син Амміттая, з Ґат-Хеферу"
+   },
+   "known_for": {
+    "en": "fled from God's call and was swallowed by a great fish (JON 1:1-17); preached in Nineveh, and the city repented (JON 3:1-10)",
+    "uk": "утік від Божого доручення, і його проковтнула велика риба (JON 1:1-17); проповідував у Ніневії, і місто покаялося (JON 3:1-10)",
+    "length_en": 98,
+    "length_uk": 100,
+    "length_en_with_refs": 124,
+    "clauses": [
+     {
+      "en": "fled from God's call and was swallowed by a great fish",
+      "uk": "утік від Божого доручення, і його проковтнула велика риба",
+      "refs": "JON 1:1-17",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "preached in Nineveh, and the city repented",
+      "uk": "проповідував у Ніневії, і місто покаялося",
+      "refs": "JON 3:1-10",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "joseph-12",
+   "band": "middling",
+   "name_en": "Barnabas",
+   "name_uk": "Варнава",
+   "verses": 29,
+   "distinguisher": "a Levite of Cyprian birth (ACT 4:36)",
+   "current_summary": {
+    "en": "apostle of Jesus, companion of Paul, from Cyprus, companion of John, descendant of Levi",
+    "uk": "апостол Ісуса, товариш Павла, з Кіпру, товариш Івана, нащадок Левія"
+   },
+   "known_for": {
+    "en": "sold his land and gave the money to the apostles (ACT 4:36-37); brought Saul to the apostles (ACT 9:26-27); was sent out with Saul from Antioch to preach (ACT 13:1-4)",
+    "uk": "продав свою землю і віддав гроші апостолам (ACT 4:36-37); привів Савла до апостолів (ACT 9:26-27); разом із Савлом був посланий з Антіохії проповідувати (ACT 13:1-4)",
+    "length_en": 125,
+    "length_uk": 124,
+    "length_en_with_refs": 166,
+    "clauses": [
+     {
+      "en": "sold his land and gave the money to the apostles",
+      "uk": "продав свою землю і віддав гроші апостолам",
+      "refs": "ACT 4:36-37",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "brought Saul to the apostles",
+      "uk": "привів Савла до апостолів",
+      "refs": "ACT 9:26-27",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "was sent out with Saul from Antioch to preach",
+      "uk": "разом із Савлом був посланий з Антіохії проповідувати",
+      "refs": "ACT 13:1-4",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "stephen",
+   "band": "middling",
+   "name_en": "Stephen",
+   "name_uk": "Степан",
+   "verses": 7,
+   "distinguisher": "one of the seven chosen to serve, full of faith and of the Holy Ghost (ACT 6:5), stoned in Jerusalem (ACT 7:59)",
+   "current_summary": {
+    "en": null,
+    "uk": null
+   },
+   "known_for": {
+    "en": "was chosen as one of the seven and did great wonders (ACT 6:5-8); was stoned to death, praying for those who stoned him (ACT 7:54-60)",
+    "uk": "був обраний одним із сімох і чинив великі чуда (ACT 6:5-8); був побитий камінням і молився за тих, хто його вбивав (ACT 7:54-60)",
+    "length_en": 107,
+    "length_uk": 102,
+    "length_en_with_refs": 133,
+    "clauses": [
+     {
+      "en": "was chosen as one of the seven and did great wonders",
+      "uk": "був обраний одним із сімох і чинив великі чуда",
+      "refs": "ACT 6:5-8",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "was stoned to death, praying for those who stoned him",
+      "uk": "був побитий камінням і молився за тих, хто його вбивав",
+      "refs": "ACT 7:54-60",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": "His speech before the council (ACT 7:2-53) is what most of his story consists of."
+  },
+  {
+   "slug": "rahab",
+   "band": "middling",
+   "name_en": "Rahab",
+   "name_uk": "Рахав",
+   "verses": 7,
+   "distinguisher": null,
+   "current_summary": {
+    "en": "mother of Boaz, lived in Jericho, ancestor of Jesus, David, Solomon, Hezekiah and others",
+    "uk": "мати Боаза, жив у Єрихоні, предок Ісуса, Давида, Соломона, Єзекії та інших"
+   },
+   "known_for": {
+    "en": "hid the two spies in Jericho (JOS 2:1-16); was spared with her family when the city fell (JOS 6:22-25)",
+    "uk": "переховала двох вивідувачів у Єрихоні (JOS 2:1-16); була врятована з родиною, коли місто впало (JOS 6:22-25)",
+    "length_en": 75,
+    "length_uk": 81,
+    "length_en_with_refs": 102,
+    "clauses": [
+     {
+      "en": "hid the two spies in Jericho",
+      "uk": "переховала двох вивідувачів у Єрихоні",
+      "refs": "JOS 2:1-16",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "was spared with her family when the city fell",
+      "uk": "була врятована з родиною, коли місто впало",
+      "refs": "JOS 6:22-25",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "hezekiah",
+   "band": "middling",
+   "name_en": "Hezekiah",
+   "name_uk": "Єзекія",
+   "verses": 117,
+   "distinguisher": "King of Judah, son of Ahaz (2KI 16:20)",
+   "current_summary": {
+    "en": "king of Judahites, son of Ahaz and Abi, father of Manasseh, brother of Maaseiah, ancestor of Jesus, Zedekiah, Josiah, Jehoiakim and others",
+    "uk": "цар юдеїв, син Ахаза та Аві, батько Манасії, брат Маасеї, предок Ісуса, Седекії, Йосії, Йоакима та інших"
+   },
+   "known_for": {
+    "en": "removed the high places and broke the bronze serpent (2KI 18:3-4); prayed, and Jerusalem was delivered from Sennacherib (2KI 19:14-36); was healed and given fifteen more years (2KI 20:1-7)",
+    "uk": "усунув пагірки для жертв і розбив мідного змія (2KI 18:3-4); помолився, і Єрусалим був урятований від Санхеріва (2KI 19:14-36); був зцілений і дістав ще п'ятнадцять років життя (2KI 20:1-7)",
+    "length_en": 147,
+    "length_uk": 148,
+    "length_en_with_refs": 188,
+    "clauses": [
+     {
+      "en": "removed the high places and broke the bronze serpent",
+      "uk": "усунув пагірки для жертв і розбив мідного змія",
+      "refs": "2KI 18:3-4",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "prayed, and Jerusalem was delivered from Sennacherib",
+      "uk": "помолився, і Єрусалим був урятований від Санхеріва",
+      "refs": "2KI 19:14-36",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "was healed and given fifteen more years",
+      "uk": "був зцілений і дістав ще п'ятнадцять років життя",
+      "refs": "2KI 20:1-7",
+      "check": {
+       "verdict": "fix",
+       "why": "20:1-6 is only God's promise ('I will heal thee'); the recovery itself is 20:7.",
+       "first_reading": {
+        "en": "was healed and given fifteen more years",
+        "uk": "був зцілений і дістав ще п'ятнадцять років життя",
+        "refs": "2KI 20:1-6"
+       }
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "josiah",
+   "band": "middling",
+   "name_en": "Josiah",
+   "name_uk": "Йосія",
+   "verses": 54,
+   "distinguisher": "prophesied son of the house of David (1KI 13:2), King of Judah and son of Amon (2KI 21:24)",
+   "current_summary": {
+    "en": "king of Jerusalem, son of Amon and Jedidah, father of four named sons, descendant of David, grandfather of Jehoiachin, ancestor of Jesus, Zerubbabel, Joseph, Shealtiel and others",
+    "uk": "цар Єрусалима, син Амона та Єдиди, батько чотирьох названих синів, нащадок Давида, дід Єгояхіна, предок Ісуса, Зоровавеля, Йосипа, Шеалтіїла та інших"
+   },
+   "known_for": {
+    "en": "repaired the temple, where the book of the law was found (2KI 22:3-13); removed the idols and the high places from the land (2KI 23:4-20, 23:24); was killed by Pharaoh Necho at Megiddo (2KI 23:29)",
+    "uk": "відновив храм, де знайшли книгу Закону (2KI 22:3-13); усунув ідолів і пагірки для жертв з краю (2KI 23:4-20, 23:24); загинув від руки фараона Нехо в Меґіддо (2KI 23:29)",
+    "length_en": 149,
+    "length_uk": 121,
+    "length_en_with_refs": 196,
+    "clauses": [
+     {
+      "en": "repaired the temple, where the book of the law was found",
+      "uk": "відновив храм, де знайшли книгу Закону",
+      "refs": "2KI 22:3-13",
+      "check": {
+       "verdict": "right",
+       "why": "Josiah ordered the repair (22:3-6); that counts as his act."
+      }
+     },
+     {
+      "en": "removed the idols and the high places from the land",
+      "uk": "усунув ідолів і пагірки для жертв з краю",
+      "refs": "2KI 23:4-20, 23:24",
+      "check": {
+       "verdict": "fix",
+       "why": "'Idols' are named in 2KI 23:24 ('the images, and the idols ... did Josiah put away'), outside 23:4-20.",
+       "first_reading": {
+        "en": "removed the idols and the high places from the land",
+        "uk": "усунув ідолів і пагірки для жертв з краю",
+        "refs": "2KI 23:4-20"
+       }
+      }
+     },
+     {
+      "en": "was killed by Pharaoh Necho at Megiddo",
+      "uk": "загинув від руки фараона Нехо в Меґіддо",
+      "refs": "2KI 23:29",
+      "check": {
+       "verdict": "fix",
+       "why": "«загинув від фараона» is not natural Ukrainian; the death needs «від руки».",
+       "first_reading": {
+        "en": "was killed by Pharaoh Necho at Megiddo",
+        "uk": "загинув від фараона Нехо в Меґіддо",
+        "refs": "2KI 23:29"
+       }
+      }
+     }
+    ]
+   },
+   "selection_note": "His Passover (2KI 23:21-23) is a further candidate, but the selection is sound."
+  },
+  {
+   "slug": "naboth",
+   "band": "minor",
+   "name_en": "Naboth",
+   "name_uk": "Навот",
+   "verses": 18,
+   "distinguisher": "the Jezreelite whose vineyard Ahab took (1KI 21:1)",
+   "current_summary": {
+    "en": "one of the Jezreelites",
+    "uk": "з народу їзреелян"
+   },
+   "known_for": {
+    "en": "refused to give King Ahab his vineyard (1KI 21:1-3); was falsely accused by Jezebel's plot and stoned (1KI 21:7-14)",
+    "uk": "відмовився віддати цареві Ахаву свій виноградник (1KI 21:1-3); через змову Єзавелі був фальшиво обвинувачений і побитий камінням (1KI 21:7-14)",
+    "length_en": 88,
+    "length_uk": 115,
+    "length_en_with_refs": 115,
+    "clauses": [
+     {
+      "en": "refused to give King Ahab his vineyard",
+      "uk": "відмовився віддати цареві Ахаву свій виноградник",
+      "refs": "1KI 21:1-3",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "was falsely accused by Jezebel's plot and stoned",
+      "uk": "через змову Єзавелі був фальшиво обвинувачений і побитий камінням",
+      "refs": "1KI 21:7-14",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "gehazi",
+   "band": "minor",
+   "name_en": "Gehazi",
+   "name_uk": "Ґехазі",
+   "verses": 12,
+   "distinguisher": "servant of Elisha (2KI 4:12) who became leprous (2KI 5:27)",
+   "current_summary": {
+    "en": "servant of Elisha",
+    "uk": "слуга Єлисея"
+   },
+   "known_for": {
+    "en": "took silver from Naaman by a lie and was struck with his leprosy (2KI 5:20-27); told the king of all the great things Elisha had done (2KI 8:4-6)",
+    "uk": "обманом узяв срібло в Наамана і був уражений його проказою (2KI 5:20-27); розповів цареві про всі великі діла Єлисея (2KI 8:4-6)",
+    "length_en": 119,
+    "length_uk": 102,
+    "length_en_with_refs": 145,
+    "clauses": [
+     {
+      "en": "took silver from Naaman by a lie and was struck with his leprosy",
+      "uk": "обманом узяв срібло в Наамана і був уражений його проказою",
+      "refs": "2KI 5:20-27",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "told the king of all the great things Elisha had done",
+      "uk": "розповів цареві про всі великі діла Єлисея",
+      "refs": "2KI 8:4-6",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "abigail",
+   "band": "minor",
+   "name_en": "Abigail",
+   "name_uk": "Авіґаїл",
+   "verses": 14,
+   "distinguisher": "the Carmelitess (1SA 25:3)",
+   "current_summary": {
+    "en": "wife of Nabal and David, mother of Chileab, from Carmel",
+    "uk": "дружина Навала та Давида, мати Кіл'ава, з Кармелу"
+   },
+   "known_for": {
+    "en": "brought food to David and kept him from shedding blood (1SA 25:18-35); became David's wife after Nabal died (1SA 25:39-42)",
+    "uk": "принесла Давидові їжу і втримала його від кровопролиття (1SA 25:18-35); після смерті Навала стала дружиною Давида (1SA 25:39-42)",
+    "length_en": 92,
+    "length_uk": 98,
+    "length_en_with_refs": 122,
+    "clauses": [
+     {
+      "en": "brought food to David and kept him from shedding blood",
+      "uk": "принесла Давидові їжу і втримала його від кровопролиття",
+      "refs": "1SA 25:18-35",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "became David's wife after Nabal died",
+      "uk": "після смерті Навала стала дружиною Давида",
+      "refs": "1SA 25:39-42",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "naaman-2",
+   "band": "minor",
+   "name_en": "Naaman",
+   "name_uk": "Нааман",
+   "verses": 11,
+   "distinguisher": "captain of the army of the king of Aram (2KI 5:1)",
+   "current_summary": {
+    "en": "commander of Syria, one of the Syrians",
+    "uk": "воєначальник Араму, з народу арамеян"
+   },
+   "known_for": {
+    "en": "washed seven times in the Jordan and was healed of leprosy (2KI 5:9-14); vowed to sacrifice to no god but the LORD (2KI 5:15-17)",
+    "uk": "сім разів занурився в Йордан і очистився від прокази (2KI 5:9-14); пообіцяв не приносити жертв жодним богам, крім Господа (2KI 5:15-17)",
+    "length_en": 101,
+    "length_uk": 108,
+    "length_en_with_refs": 128,
+    "clauses": [
+     {
+      "en": "washed seven times in the Jordan and was healed of leprosy",
+      "uk": "сім разів занурився в Йордан і очистився від прокази",
+      "refs": "2KI 5:9-14",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "vowed to sacrifice to no god but the LORD",
+      "uk": "пообіцяв не приносити жертв жодним богам, крім Господа",
+      "refs": "2KI 5:15-17",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "cornelius",
+   "band": "minor",
+   "name_en": "Cornelius",
+   "name_uk": "Корнилій",
+   "verses": 10,
+   "distinguisher": null,
+   "current_summary": {
+    "en": "from Caesarea",
+    "uk": "з Кесарії"
+   },
+   "known_for": {
+    "en": "saw an angel in a vision and sent for Peter (ACT 10:1-8); received the Holy Ghost with those in his house and was baptized (ACT 10:44-48)",
+    "uk": "побачив у видінні ангела і послав по Петра (ACT 10:1-8); разом із тими, хто був у його домі, прийняв Святого Духа й охрестився (ACT 10:44-48)",
+    "length_en": 109,
+    "length_uk": 113,
+    "length_en_with_refs": 137,
+    "clauses": [
+     {
+      "en": "saw an angel in a vision and sent for Peter",
+      "uk": "побачив у видінні ангела і послав по Петра",
+      "refs": "ACT 10:1-8",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     },
+     {
+      "en": "received the Holy Ghost with those in his house and was baptized",
+      "uk": "разом із тими, хто був у його домі, прийняв Святого Духа й охрестився",
+      "refs": "ACT 10:44-48",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  },
+  {
+   "slug": "martha",
+   "band": "minor",
+   "name_en": "Martha",
+   "name_uk": "Марта",
+   "verses": 12,
+   "distinguisher": null,
+   "current_summary": {
+    "en": "sister of Mary and Lazarus, from Bethany",
+    "uk": "сестра Марії та Лазаря, з Віфанії"
+   },
+   "known_for": {
+    "en": "received Jesus into her house and was busy with much serving (LUK 10:38-41); confessed Jesus as the Christ after Lazarus died (JHN 11:21-27)",
+    "uk": "прийняла Ісуса до свого дому й клопоталася великою службою (LUK 10:38-41); після смерті Лазаря визнала Ісуса Христом (JHN 11:21-27)",
+    "length_en": 110,
+    "length_uk": 101,
+    "length_en_with_refs": 140,
+    "clauses": [
+     {
+      "en": "received Jesus into her house and was busy with much serving",
+      "uk": "прийняла Ісуса до свого дому й клопоталася великою службою",
+      "refs": "LUK 10:38-41",
+      "check": {
+       "verdict": "fix",
+       "why": "«прийняла ... у своєму домі» does not render 'received into her house', and «клопоталася про багато служіння» is not natural Ukrainian.",
+       "first_reading": {
+        "en": "received Jesus into her house and was busy with much serving",
+        "uk": "прийняла Ісуса у своєму домі і клопоталася про багато служіння",
+        "refs": "LUK 10:38-41"
+       }
+      }
+     },
+     {
+      "en": "confessed Jesus as the Christ after Lazarus died",
+      "uk": "після смерті Лазаря визнала Ісуса Христом",
+      "refs": "JHN 11:21-27",
+      "check": {
+       "verdict": "right",
+       "why": null
+      }
+     }
+    ]
+   },
+   "selection_note": null
+  }
+ ],
+ "owner_rulings": [
+  {
+   "at": "2026-10-21",
+   "text": "no minor details; more than three clauses allowed but not overdone; no full run; load the pilot now"
+  }
+ ]
+}

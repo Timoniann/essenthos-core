@@ -256,6 +256,13 @@ public class AppDbContext : DbContext
     /// <summary>The passages an object's or an observance's page sends a reader to.</summary>
     public DbSet<EntityPassage> EntityPassages { get; set; } = null!;
 
+    /// <summary>What a person is known for, clause by clause, each with the verses that say it.</summary>
+    public DbSet<EntityKnownFor> EntityKnownFor { get; set; } = null!;
+
+    public DbSet<EntityKnownForText> EntityKnownForTexts { get; set; } = null!;
+
+    public DbSet<EntityKnownForReference> EntityKnownForReferences { get; set; } = null!;
+
     /// <summary>Where an observance falls in the year, as its verses state it.</summary>
     public DbSet<ObservanceTime> ObservanceTimes { get; set; } = null!;
 
@@ -558,6 +565,44 @@ public class AppDbContext : DbContext
                     + "AND (canonical_verse IS NULL OR end_verse IS NULL OR end_verse >= canonical_verse))");
                 t.HasCheckConstraint("ck_entity_passage_source_not_empty", "length(btrim(source)) > 0");
             });
+        });
+
+        modelBuilder.Entity<EntityKnownFor>(entity =>
+        {
+            entity.HasOne(k => k.Entity)
+                .WithMany(e => e.KnownFor)
+                .HasForeignKey(k => k.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("entity_known_for", t =>
+            {
+                t.HasCheckConstraint("ck_entity_known_for_text", "length(btrim(english)) > 0 AND length(btrim(source)) > 0");
+                t.HasCheckConstraint("ck_entity_known_for_ordinal", "ordinal >= 0");
+            });
+        });
+
+        modelBuilder.Entity<EntityKnownForText>(entity =>
+        {
+            entity.HasOne(t => t.KnownFor)
+                .WithMany(k => k.Texts)
+                .HasForeignKey(t => t.KnownForId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("entity_known_for_text", t =>
+                t.HasCheckConstraint("ck_entity_known_for_text_text", "length(btrim(text)) > 0"));
+        });
+
+        modelBuilder.Entity<EntityKnownForReference>(entity =>
+        {
+            entity.HasOne(r => r.KnownFor)
+                .WithMany(k => k.References)
+                .HasForeignKey(r => r.KnownForId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("entity_known_for_reference", t =>
+                t.HasCheckConstraint(
+                    "ck_entity_known_for_reference_runs_forward",
+                    "end_chapter > canonical_chapter OR (end_chapter = canonical_chapter AND end_verse >= canonical_verse)"));
         });
 
         modelBuilder.Entity<ObservanceTime>(entity =>

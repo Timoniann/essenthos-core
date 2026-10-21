@@ -1193,6 +1193,135 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityKnownFor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("English")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("english");
+
+                    b.Property<int>("EntityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("entity_id");
+
+                    b.Property<int>("Ordinal")
+                        .HasColumnType("integer")
+                        .HasColumnName("ordinal");
+
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("source");
+
+                    b.HasKey("Id")
+                        .HasName("pk_entity_known_for");
+
+                    b.HasIndex("EntityId", "Ordinal")
+                        .IsUnique()
+                        .HasDatabaseName("ix_entity_known_for_entity_id_ordinal");
+
+                    b.ToTable("entity_known_for", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_entity_known_for_ordinal", "ordinal >= 0");
+
+                            t.HasCheckConstraint("ck_entity_known_for_text", "length(btrim(english)) > 0 AND length(btrim(source)) > 0");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityKnownForReference", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CanonicalBook")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_book");
+
+                    b.Property<int>("CanonicalChapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_chapter");
+
+                    b.Property<int>("CanonicalVerse")
+                        .HasColumnType("integer")
+                        .HasColumnName("canonical_verse");
+
+                    b.Property<int>("EndChapter")
+                        .HasColumnType("integer")
+                        .HasColumnName("end_chapter");
+
+                    b.Property<int>("EndVerse")
+                        .HasColumnType("integer")
+                        .HasColumnName("end_verse");
+
+                    b.Property<int>("KnownForId")
+                        .HasColumnType("integer")
+                        .HasColumnName("known_for_id");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer")
+                        .HasColumnName("position");
+
+                    b.HasKey("Id")
+                        .HasName("pk_entity_known_for_reference");
+
+                    b.HasIndex("KnownForId", "Position")
+                        .IsUnique()
+                        .HasDatabaseName("ix_entity_known_for_reference_known_for_id_position");
+
+                    b.ToTable("entity_known_for_reference", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_entity_known_for_reference_runs_forward", "end_chapter > canonical_chapter OR (end_chapter = canonical_chapter AND end_verse >= canonical_verse)");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityKnownForText", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("KnownForId")
+                        .HasColumnType("integer")
+                        .HasColumnName("known_for_id");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
+                        .HasColumnName("language");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("text");
+
+                    b.HasKey("Id")
+                        .HasName("pk_entity_known_for_text");
+
+                    b.HasIndex("KnownForId", "Language")
+                        .IsUnique()
+                        .HasDatabaseName("ix_entity_known_for_text_known_for_id_language");
+
+                    b.ToTable("entity_known_for_text", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_entity_known_for_text_text", "length(btrim(text)) > 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityName", b =>
                 {
                     b.Property<int>("Id")
@@ -5471,6 +5600,42 @@ namespace Essenthos.Core.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityKnownFor", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Entity", "Entity")
+                        .WithMany("KnownFor")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_entity_known_for_entities_entity_id");
+
+                    b.Navigation("Entity");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityKnownForReference", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.EntityKnownFor", "KnownFor")
+                        .WithMany("References")
+                        .HasForeignKey("KnownForId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_entity_known_for_reference_entity_known_for_known_for_id");
+
+                    b.Navigation("KnownFor");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityKnownForText", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.EntityKnownFor", "KnownFor")
+                        .WithMany("Texts")
+                        .HasForeignKey("KnownForId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_entity_known_for_text_entity_known_for_known_for_id");
+
+                    b.Navigation("KnownFor");
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityName", b =>
                 {
                     b.HasOne("Essenthos.Core.Database.Entities.Entity", "AspectOf")
@@ -6479,6 +6644,8 @@ namespace Essenthos.Core.Migrations
 
                     b.Navigation("Images");
 
+                    b.Navigation("KnownFor");
+
                     b.Navigation("Location");
 
                     b.Navigation("Names");
@@ -6500,6 +6667,13 @@ namespace Essenthos.Core.Migrations
             modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityImage", b =>
                 {
                     b.Navigation("Captions");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.EntityKnownFor", b =>
+                {
+                    b.Navigation("References");
+
+                    b.Navigation("Texts");
                 });
 
             modelBuilder.Entity("Essenthos.Core.Database.Entities.Event", b =>

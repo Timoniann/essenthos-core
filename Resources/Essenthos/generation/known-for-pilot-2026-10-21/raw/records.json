@@ -1,0 +1,474 @@
+{
+ "noah": {
+  "band": "most",
+  "slug": "noah",
+  "name_en": "Noah",
+  "name_uk": "Ной",
+  "distinguisher": "son of Lamech (GEN 5:28-29)",
+  "references": 48,
+  "verses": 48,
+  "summary_en": "son of Lamech, father of Shem, Ham and Japheth, ancestor of Jesus, Jacob, David, Moses and others",
+  "summary_uk": "син Ламеха, батько Сима, Хама та Яфета, предок Ісуса, Якова, Давида, Мойсея та інших",
+  "name_meaning": [
+   "rest, comfort"
+  ]
+ },
+ "abram": {
+  "band": "most",
+  "slug": "abram",
+  "name_en": "Abraham",
+  "name_uk": "Авраам",
+  "distinguisher": "son of Terah (GEN 11:26)",
+  "references": 277,
+  "verses": 277,
+  "summary_en": "son of Terah, husband of Sarah, Hagar and Keturah, father of eight named sons, brother of Haran and Nahor, half-brother of Sarah, servant of LORD, grandfather of Jacob, ancestor of Jesus, David, Moses, Saul and others",
+  "summary_uk": "син Тераха, чоловік Сари, Аґари та Кетури, батько восьми названих синів, брат Гарана та Нахора, єдинокровний брат Сари, слуга Господа, дід Якова, предок Ісуса, Давида, Мойсея, Саула та інших",
+  "name_meaning": [
+   "exalted father",
+   "father of many",
+   "Abraham [my] servant",
+   "Abraham [my] friend [literally, \"my love\"]",
+   "Abraham our father",
+   "friend [of] G-d"
+  ]
+ },
+ "sarai": {
+  "band": "most",
+  "slug": "sarai",
+  "name_en": "Sarah",
+  "name_uk": "Сара",
+  "distinguisher": "Abram's wife (11:29)",
+  "references": 48,
+  "verses": 48,
+  "summary_en": "daughter of Terah, wife of Abraham, mother of Isaac, sister of Haran and Nahor, half-sister of Abraham, daughter-in-law of Terah, buried in Machpelah, ancestor of Jesus, Jacob, David, Moses and others",
+  "summary_uk": "дочка Тераха, дружина Авраама, мати Ісака, сестра Гарана та Нахора, єдинокровна сестра Авраама, невістка Тераха, похований у Махпелі, предок Ісуса, Якова, Давида, Мойсея та інших",
+  "name_meaning": [
+   "princess",
+   "queen"
+  ]
+ },
+ "moses": {
+  "band": "most",
+  "slug": "moses",
+  "name_en": "Moses",
+  "name_uk": "Мойсей",
+  "distinguisher": "led Israel out of Egypt in the Exodus (EXO 13:3)",
+  "references": 806,
+  "verses": 806,
+  "summary_en": "prophet to Israelites, priest of LORD, leader of Israelites, son of Amram and Jochebed, husband of Zipporah, father of Gershom and Eliezer, brother of Miriam and Aaron, one of the Hebrews, lived in Midian, son-in-law of Jethro, servant of LORD, brother-in-law of Hobab, descendant of Jacob, ancestor of Shebuel, Rehabiah, Shelomoth, Isshiah and others",
+  "summary_uk": "пророк ізраїльтян, священник Господа, вождь ізраїльтян, син Амрама та Йохевед, чоловік Ціппори, батько Ґершома та Еліезера, брат Маріям та Аарона, з народу євреїв, жив у Мідіяні, зять Єтра, слуга Господа, свояк Ховава, нащадок Якова, предок Шевуїла, Рехавії, Шеломіта, Їшшійї та інших",
+  "name_meaning": [
+   "draw out",
+   "servant [of mine] Moses",
+   "man [of] G-d",
+   "servant of the LORD",
+   "servant of G-d"
+  ]
+ },
+ "david": {
+  "band": "most",
+  "slug": "david",
+  "name_en": "David",
+  "name_uk": "Давид",
+  "distinguisher": "son of Jesse (RUT 4:17), King of Israel (2SA 5:3)",
+  "references": 1024,
+  "verses": 1024,
+  "summary_en": "king of Israelites, seventh son of Jesse, husband of Michal, Abigail, Ahinoam, Maacah, Haggith, Abital, Eglah and Bathsheba, father of twenty named sons and a daughter, and of other sons and daughters, brother of six brothers and two sisters, descendant of Obed, servant of Saul and LORD, ancestor of Jesus, Hezekiah, Jehoshaphat, Zedekiah and others",
+  "summary_uk": "цар ізраїльтян, сьомий син Єссея, чоловік Мелхоли, Авіґаїл, Ахіноам, Маахи, Хаґґіт, Авітал, Еґли та Вірсавії, батько двадцяти названих синів та дочки, а також інших синів і дочок, брат шести братів та двох сестер, нащадок Оведа, слуга Саула та Господа, предок Ісуса, Єзекії, Йосафата, Седекії та інших",
+  "name_meaning": [
+   "beloved one",
+   "son [of] Jesse",
+   "David [my] servant",
+   "king David",
+   "king of Israel",
+   "David [my] servant",
+   "man [of] G-d",
+   "my king",
+   "my son",
+   "your holy one",
+   "his [the LORD's] anointed",
+   "king of Judah"
+  ]
+ },
+ "elijah": {
+  "band": "most",
+  "slug": "elijah",
+  "name_en": "Elijah",
+  "name_uk": "Ілля",
+  "distinguisher": "the prophet, Tishbite, who was of the settlers of Gilead (1KI 17:1)",
+  "references": 93,
+  "verses": 93,
+  "summary_en": "prophet to Ahab, from Tishbe, lived in Gilead",
+  "summary_uk": "пророк Ахава, з Тішбе, жив у Ґілеаді",
+  "name_meaning": [
+   "y-h-v-h is G-d",
+   "man [of] G-d"
+  ]
+ },
+ "elisha": {
+  "band": "most",
+  "slug": "elisha",
+  "name_en": "Elisha",
+  "name_uk": "Єлисей",
+  "distinguisher": "anointed prophet in Elijah's place (1KI 19:16)",
+  "references": 76,
+  "verses": 76,
+  "summary_en": "prophet to Israelites, son of Shaphat, from Abelmeholah, disciple of Elijah",
+  "summary_uk": "пророк ізраїльтян, син Шафата, з Авел-Мехоли, учень Іллі",
+  "name_meaning": [
+   "G-d [El] is [my] salvation",
+   "man [of] G-d",
+   "G-d [El] is [my] salvation"
+  ]
+ },
+ "simon": {
+  "band": "most",
+  "slug": "simon",
+  "name_en": "Peter",
+  "name_uk": "Петр",
+  "distinguisher": "Peter, brother of Andrew (MAT 4:18)",
+  "references": 181,
+  "verses": 181,
+  "summary_en": "apostle of Jesus, son of Jonas, brother of Andrew, servant of Jesus",
+  "summary_uk": "апостол Ісуса, син Йони, брат Андрія, слуга Ісуса",
+  "name_meaning": [
+   "he has heard or obedient one",
+   "rock",
+   "he has heard or obedient one, rock",
+   "he has heard or obedient one, son of Jonah",
+   "rock",
+   "he has heard or obedient one"
+  ]
+ },
+ "saul-2": {
+  "band": "most",
+  "slug": "saul-2",
+  "name_en": "Paul",
+  "name_uk": "Павло",
+  "distinguisher": "the apostle Paul, at whose feet witnesses to Stephen's death laid their robes (ACT 7:58)",
+  "references": 186,
+  "verses": 186,
+  "summary_en": "apostle of Jesus, from Tarsus, lived in Damascus",
+  "summary_uk": "апостол Ісуса, з Тарсу, жив у Дамаску",
+  "name_meaning": [
+   "asked [dedicated?] to G-d",
+   null,
+   null
+  ]
+ },
+ "jacob": {
+  "band": "most",
+  "slug": "jacob",
+  "name_en": "Jacob",
+  "name_uk": "Яків",
+  "distinguisher": "second-born son of Isaac (GEN 25:25-26)",
+  "references": 1029,
+  "verses": 1029,
+  "summary_en": "son of Isaac and Rebekah, husband of Leah, Bilhah, Zilpah and Rachel, father of twelve sons and a daughter, brother of Esau, servant of LORD, nephew of Laban, ancestor of Jesus, David, Moses, Saul and others",
+  "summary_uk": "син Ісака та Ревеки, чоловік Лії, Білги, Зілпи та Рахілі, батько дванадцяти синів та дочки, брат Ісава, слуга Господа, племінник Лавана, предок Ісуса, Давида, Мойсея, Саула та інших",
+  "name_meaning": [
+   "follower, replacer, one who follows at the heel",
+   "he struggles with G-d [El]",
+   "upright",
+   "Israel [my] servant",
+   "Jacob [my] servant",
+   "my servant Jacob",
+   "Israel [my] chosen [one]",
+   "[my] servant Israel"
+  ]
+ },
+ "joseph": {
+  "band": "most",
+  "slug": "joseph",
+  "name_en": "Joseph",
+  "name_uk": "Йосип",
+  "distinguisher": "eleventh-born son of Jacob and Rachel (GEN 30:24)",
+  "references": 196,
+  "verses": 196,
+  "summary_en": "governor of Egypt, son of Jacob and Rachel, husband of Asenath, father of Manasseh and Ephraim, half-brother of ten brothers and a sister, brother of Benjamin, son-in-law of Potipherah, servant of Potiphar, ancestor of Joshua, Nun, Machir, Gilead and others",
+  "summary_uk": "намісник Єгипту, син Якова та Рахілі, чоловік Оснати, батько Манасії та Єфрема, єдинокровний брат десяти братів та сестри, брат Веніямина, зять Поті-Фера, слуга Потіфара, предок Ісуса, Навина, Махіра, Ґілеада та інших",
+  "name_meaning": [
+   "he will add",
+   "probably Egyptian for \"god speaks, he lives\""
+  ]
+ },
+ "samuel-2": {
+  "band": "most",
+  "slug": "samuel-2",
+  "name_en": "Samuel",
+  "name_uk": "Самуїл",
+  "distinguisher": "son of Elkanah and Hannah (1SA 1:20)",
+  "references": 122,
+  "verses": 122,
+  "summary_en": "prophet to Israelites, judge of Israelites, son of Hannah and Elkanah, father of Joel and Abijah, servant of LORD, disciple of Eli, lived in Naioth, ancestor of Heman, Bukkiah, Mattaniah, Shebuel and others",
+  "summary_uk": "пророк ізраїльтян, суддя ізраїльтян, син Анни та Елкани, батько Йоїла та Авійї, слуга Господа, учень Ілія, жив у Найоті, предок Гемана, Буккійї, Маттанії, Шевуїла та інших",
+  "name_meaning": [
+   "his name is G-d [El]; heard of G-d; the unnamed god is El"
+  ]
+ },
+ "solomon": {
+  "band": "most",
+  "slug": "solomon",
+  "name_en": "Solomon",
+  "name_uk": "Соломон",
+  "distinguisher": "son of David (2SA 5:14)",
+  "references": 279,
+  "verses": 279,
+  "summary_en": "king of Israelites, son of David and Bathsheba, father of Taphath, Basemath and Rehoboam, half-brother of six brothers and a sister, brother of thirteen brothers, ancestor of Jesus, Hezekiah, Jehoshaphat, Zedekiah and others",
+  "summary_uk": "цар ізраїльтян, син Давида та Вірсавії, батько Тафат, Босмат та Рехав'ама, єдинокровний брат шести братів та сестри, брат тринадцяти братів, предок Ісуса, Єзекії, Йосафата, Седекії та інших",
+  "name_meaning": [
+   "peace, well-being",
+   "beloved of y-h-v-h",
+   "king Solomon",
+   "king of Israel",
+   "(as a title or name) the Teacher, one who calls together and instructs the assembly",
+   "peace, well-being"
+  ]
+ },
+ "enoch-2": {
+  "band": "middling",
+  "slug": "enoch-2",
+  "name_en": "Enoch",
+  "name_uk": "Енох",
+  "distinguisher": "son of Jared (GEN 5:18)",
+  "references": 10,
+  "verses": 10,
+  "summary_en": "son of Jared, father of Methuselah and other sons and daughters, descendant of Adam, ancestor of Jesus, Jacob, David, Moses and others",
+  "summary_uk": "син Яреда, батько Метушалаха та інших синів і дочок, нащадок Адама, предок Ісуса, Якова, Давида, Мойсея та інших",
+  "name_meaning": [
+   "initiated; follower",
+   null
+  ]
+ },
+ "gideon": {
+  "band": "middling",
+  "slug": "gideon",
+  "name_en": "Gideon",
+  "name_uk": "Гедеон",
+  "distinguisher": "son of Joash (JDG 6:11) who torn down the altar to Baal (JDG 6:25)",
+  "references": 52,
+  "verses": 52,
+  "summary_en": "commander of Abiezer, son of Joash, father of 70 sons, among them Jether, Abimelech and Jotham, lived in Ophrah",
+  "summary_uk": "воєначальник Авіезера, син Йоаша, батько 70 синів, з них названі Єтер, Авімелех та Йотам, жив у Офрі",
+  "name_meaning": [
+   "one who cuts, hacks",
+   "Baal contends",
+   "Shame [Baal] contends"
+  ]
+ },
+ "deborah-2": {
+  "band": "middling",
+  "slug": "deborah-2",
+  "name_en": "Deborah",
+  "name_uk": "Девора",
+  "distinguisher": "a prophetess and judge in Israel (JDG 4:4)",
+  "references": 9,
+  "verses": 9,
+  "summary_en": "prophet to Barak, judge of Israelites, wife of Lappidoth",
+  "summary_uk": "пророк Барака, суддя ізраїльтян, дружина Лаппідота",
+  "name_meaning": [
+   "hornet, wasp, wild honey bee"
+  ]
+ },
+ "ruth": {
+  "band": "middling",
+  "slug": "ruth",
+  "name_en": "Ruth",
+  "name_uk": "Рут",
+  "distinguisher": "the Moabitess (RUT 1:22)",
+  "references": 13,
+  "verses": 13,
+  "summary_en": "wife of Boaz and Mahlon, mother of Obed, one of the Moabites, daughter-in-law of Naomi, ancestor of Jesus, David, Solomon, Hezekiah and others",
+  "summary_uk": "дружина Боаза та Махлона, мати Оведа, з народу моавітян, невістка Ноомі, предок Ісуса, Давида, Соломона, Єзекії та інших",
+  "name_meaning": [
+   "friendship; refreshed [as with water]; [poss.] comrade, companion"
+  ]
+ },
+ "nehemiah": {
+  "band": "middling",
+  "slug": "nehemiah",
+  "name_en": "Nehemiah",
+  "name_uk": "Неемія",
+  "distinguisher": "son of Hachaliah, cupbearer to King Artaxerxes and governor of Judah, who rebuilt the wall of Jerusalem (NEH 1:1, 1:11, 8:9)",
+  "references": 5,
+  "verses": 5,
+  "summary_en": "governor of Judahites, son of Hachaliah, brother of Hanani",
+  "summary_uk": "намісник юдеїв, син Хахалії, брат Ханані",
+  "name_meaning": [
+   "y-h-v-h has comforted"
+  ]
+ },
+ "jonah": {
+  "band": "middling",
+  "slug": "jonah",
+  "name_en": "Jonah",
+  "name_uk": "Йона",
+  "distinguisher": "the prophet, son of Amittai, from Gath-hepher (2KI 14:25)",
+  "references": 25,
+  "verses": 25,
+  "summary_en": "prophet to Israelites, son of Amittai, from Gath-hepher",
+  "summary_uk": "пророк ізраїльтян, син Амміттая, з Ґат-Хеферу",
+  "name_meaning": [
+   "dove"
+  ]
+ },
+ "joseph-12": {
+  "band": "middling",
+  "slug": "joseph-12",
+  "name_en": "Barnabas",
+  "name_uk": "Варнава",
+  "distinguisher": "a Levite of Cyprian birth (ACT 4:36)",
+  "references": 29,
+  "verses": 29,
+  "summary_en": "apostle of Jesus, companion of Paul, from Cyprus, companion of John, descendant of Levi",
+  "summary_uk": "апостол Ісуса, товариш Павла, з Кіпру, товариш Івана, нащадок Левія",
+  "name_meaning": [
+   "he will add",
+   "son of encouragement [lit. prophecy]"
+  ]
+ },
+ "stephen": {
+  "band": "middling",
+  "slug": "stephen",
+  "name_en": "Stephen",
+  "name_uk": "Степан",
+  "distinguisher": "one of the seven chosen to serve, full of faith and of the Holy Ghost (ACT 6:5), stoned in Jerusalem (ACT 7:59)",
+  "references": 7,
+  "verses": 7,
+  "summary_en": null,
+  "summary_uk": null,
+  "name_meaning": [
+   null
+  ]
+ },
+ "rahab": {
+  "band": "middling",
+  "slug": "rahab",
+  "name_en": "Rahab",
+  "name_uk": "Рахав",
+  "distinguisher": null,
+  "references": 7,
+  "verses": 7,
+  "summary_en": "mother of Boaz, lived in Jericho, ancestor of Jesus, David, Solomon, Hezekiah and others",
+  "summary_uk": "мати Боаза, жив у Єрихоні, предок Ісуса, Давида, Соломона, Єзекії та інших",
+  "name_meaning": [
+   "spacious, broad"
+  ]
+ },
+ "hezekiah": {
+  "band": "middling",
+  "slug": "hezekiah",
+  "name_en": "Hezekiah",
+  "name_uk": "Єзекія",
+  "distinguisher": "King of Judah, son of Ahaz (2KI 16:20)",
+  "references": 117,
+  "verses": 117,
+  "summary_en": "king of Judahites, son of Ahaz and Abi, father of Manasseh, brother of Maaseiah, ancestor of Jesus, Zedekiah, Josiah, Jehoiakim and others",
+  "summary_uk": "цар юдеїв, син Ахаза та Аві, батько Манасії, брат Маасеї, предок Ісуса, Седекії, Йосії, Йоакима та інших",
+  "name_meaning": [
+   "y-h-v-h is [my] strength",
+   "King Hezekiah",
+   "king of Judah"
+  ]
+ },
+ "josiah": {
+  "band": "middling",
+  "slug": "josiah",
+  "name_en": "Josiah",
+  "name_uk": "Йосія",
+  "distinguisher": "prophesied son of the house of David (1KI 13:2), King of Judah and son of Amon (2KI 21:24)",
+  "references": 54,
+  "verses": 54,
+  "summary_en": "king of Jerusalem, son of Amon and Jedidah, father of four named sons, descendant of David, grandfather of Jehoiachin, ancestor of Jesus, Zerubbabel, Joseph, Shealtiel and others",
+  "summary_uk": "цар Єрусалима, син Амона та Єдиди, батько чотирьох названих синів, нащадок Давида, дід Єгояхіна, предок Ісуса, Зоровавеля, Йосипа, Шеалтіїла та інших",
+  "name_meaning": [
+   "let or may y-h-v-h give",
+   "king Josiah",
+   "king of Judah"
+  ]
+ },
+ "naboth": {
+  "band": "minor",
+  "slug": "naboth",
+  "name_en": "Naboth",
+  "name_uk": "Навот",
+  "distinguisher": "the Jezreelite whose vineyard Ahab took (1KI 21:1)",
+  "references": 18,
+  "verses": 18,
+  "summary_en": "one of the Jezreelites",
+  "summary_uk": "з народу їзреелян",
+  "name_meaning": [
+   "sprout"
+  ]
+ },
+ "gehazi": {
+  "band": "minor",
+  "slug": "gehazi",
+  "name_en": "Gehazi",
+  "name_uk": "Ґехазі",
+  "distinguisher": "servant of Elisha (2KI 4:12) who became leprous (2KI 5:27)",
+  "references": 12,
+  "verses": 12,
+  "summary_en": "servant of Elisha",
+  "summary_uk": "слуга Єлисея",
+  "name_meaning": [
+   "[poss.] valley of vision"
+  ]
+ },
+ "abigail": {
+  "band": "minor",
+  "slug": "abigail",
+  "name_en": "Abigail",
+  "name_uk": "Авіґаїл",
+  "distinguisher": "the Carmelitess (1SA 25:3)",
+  "references": 14,
+  "verses": 14,
+  "summary_en": "wife of Nabal and David, mother of Chileab, from Carmel",
+  "summary_uk": "дружина Навала та Давида, мати Кіл'ава, з Кармелу",
+  "name_meaning": [
+   "[my] father rejoices or father [cause] of joy"
+  ]
+ },
+ "naaman-2": {
+  "band": "minor",
+  "slug": "naaman-2",
+  "name_en": "Naaman",
+  "name_uk": "Нааман",
+  "distinguisher": "captain of the army of the king of Aram (2KI 5:1)",
+  "references": 11,
+  "verses": 11,
+  "summary_en": "commander of Syria, one of the Syrians",
+  "summary_uk": "воєначальник Араму, з народу арамеян",
+  "name_meaning": [
+   "pleasantness"
+  ]
+ },
+ "cornelius": {
+  "band": "minor",
+  "slug": "cornelius",
+  "name_en": "Cornelius",
+  "name_uk": "Корнилій",
+  "distinguisher": null,
+  "references": 10,
+  "verses": 10,
+  "summary_en": "from Caesarea",
+  "summary_uk": "з Кесарії",
+  "name_meaning": [
+   null
+  ]
+ },
+ "martha": {
+  "band": "minor",
+  "slug": "martha",
+  "name_en": "Martha",
+  "name_uk": "Марта",
+  "distinguisher": null,
+  "references": 12,
+  "verses": 12,
+  "summary_en": "sister of Mary and Lazarus, from Bethany",
+  "summary_uk": "сестра Марії та Лазаря, з Віфанії",
+  "name_meaning": [
+   null
+  ]
+ }
+}
