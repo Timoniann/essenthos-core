@@ -856,6 +856,196 @@
           ]
         }
       ]
+    },
+    {
+      "slug": "adam",
+      "clauses": [
+        {
+          "english": "was formed by God from the dust of the ground and put in the garden of Eden",
+          "ukr": "був створений Богом із пороху землі й поселений у саду в Едені",
+          "deu": "wurde von Gott aus dem Staub der Erde gemacht und in den Garten Eden gesetzt",
+          "spa": "fue formado por Dios del polvo de la tierra y puesto en el huerto de Edén",
+          "references": [
+            "GEN 2:7-8",
+            "GEN 2:15"
+          ]
+        },
+        {
+          "english": "gave names to every living creature",
+          "ukr": "дав імена всім живим істотам",
+          "deu": "gab jedem lebendigen Tier seinen Namen",
+          "spa": "puso nombre a todo ser viviente",
+          "references": [
+            "GEN 2:19-20"
+          ]
+        },
+        {
+          "english": "ate from the tree God had forbidden him and was driven out of the garden",
+          "ukr": "скуштував плоду з дерева, від якого Бог заборонив йому їсти, і був вигнаний із саду",
+          "deu": "aß von dem Baum, den Gott ihm verboten hatte, und wurde aus dem Garten vertrieben",
+          "spa": "comió del árbol que Dios le había prohibido y fue echado del huerto",
+          "references": [
+            "GEN 2:16-17",
+            "GEN 3:6",
+            "GEN 3:17-19",
+            "GEN 3:22-24"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "eve",
+      "clauses": [
+        {
+          "english": "was made by God from a rib taken from Adam",
+          "ukr": "була створена Богом із ребра, взятого в Адама",
+          "deu": "wurde von Gott aus einer Rippe gebaut, die er Adam genommen hatte",
+          "spa": "fue hecha por Dios de una costilla tomada de Adam",
+          "references": [
+            "GEN 2:21-23"
+          ]
+        },
+        {
+          "english": "was beguiled by the serpent, ate the fruit of the forbidden tree and gave it to Adam",
+          "ukr": "була спокушена змієм, скуштувала плоду забороненого дерева й дала його Адамові",
+          "deu": "wurde von der Schlange betrogen, aß von der Frucht des verbotenen Baumes und gab Adam davon",
+          "spa": "fue engañada por la serpiente, comió del fruto del árbol prohibido y se lo dio a Adam",
+          "references": [
+            "GEN 3:1-6",
+            "GEN 3:13"
+          ]
+        },
+        {
+          "english": "bore Cain, Abel and Seth",
+          "ukr": "народила Каїна, Авеля і Сифа",
+          "deu": "gebar Kain, Abel und Seth",
+          "spa": "dio a luz a Caín, Abel y Seth",
+          "references": [
+            "GEN 4:1-2",
+            "GEN 4:25"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "jesus",
+      "clauses": [
+        {
+          "english": "was born of the virgin Mary in Bethlehem",
+          "ukr": "народився від діви Марії у Віфлеємі",
+          "deu": "wurde von der Jungfrau Maria in Bethlehem geboren",
+          "spa": "nació de la virgen María en Beth-lehem",
+          "references": [
+            "MAT 1:18-25",
+            "MAT 2:1",
+            "LUK 1:26-27",
+            "LUK 2:4-7"
+          ]
+        },
+        {
+          "english": "was baptized by John in the Jordan",
+          "ukr": "охрестився від Івана в Йордані",
+          "deu": "ließ sich von Johannes im Jordan taufen",
+          "spa": "fue bautizado por Juan en el Jordán",
+          "references": [
+            "MAT 3:13-17",
+            "MRK 1:9"
+          ]
+        },
+        {
+          "english": "preached the gospel of the kingdom and healed the sick",
+          "ukr": "проповідував Євангеліє Царства й уздоровляв хворих",
+          "deu": "predigte das Evangelium vom Reich und heilte die Kranken",
+          "spa": "predicó el evangelio del reino y sanó a los enfermos",
+          "references": [
+            "MAT 4:23",
+            "MAT 9:35"
+          ]
+        },
+        {
+          "english": "was handed over by Pilate and crucified, died and was buried",
+          "ukr": "був виданий Пилатом і розп'ятий, помер і був похований",
+          "deu": "wurde von Pilatus ausgeliefert und gekreuzigt, starb und wurde begraben",
+          "spa": "fue entregado por Pilato y crucificado, murió y fue sepultado",
+          "references": [
+            "MAT 27:24-26",
+            "MAT 27:35",
+            "MAT 27:50",
+            "MAT 27:57-60",
+            "MRK 15:15"
+          ]
+        },
+        {
+          "english": "rose from the dead on the third day and was taken up into heaven",
+          "ukr": "на третій день воскрес із мертвих і був узятий на небо",
+          "deu": "stand am dritten Tag von den Toten auf und wurde in den Himmel aufgenommen",
+          "spa": "resucitó de los muertos al tercer día y fue llevado al cielo",
+          "references": [
+            "LUK 24:1-7",
+            "LUK 24:46",
+            "LUK 24:50-51",
+            "ACT 1:9-11"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "yhvh",
+      "clauses": [
+        {
+          "english": "created the heaven and the earth, and made man in his own image",
+          "ukr": "створив небо й землю, а людину — на свій образ",
+          "deu": "schuf Himmel und Erde und den Menschen nach seinem Bilde",
+          "spa": "creó los cielos y la tierra, e hizo al hombre a su imagen",
+          "references": [
+            "GEN 1:1",
+            "GEN 1:26-27"
+          ]
+        },
+        {
+          "english": "brought the Flood upon the earth, then made a covenant with Noah never to send another",
+          "ukr": "навів на землю потоп, а потім уклав із Ноєм заповіт більше не наводити потопу",
+          "deu": "brachte die Sintflut über die Erde und schloss danach mit Noah den Bund, keine Sintflut mehr kommen zu lassen",
+          "spa": "trajo el diluvio sobre la tierra y después hizo un pacto con Noé de no enviar otro",
+          "references": [
+            "GEN 6:17",
+            "GEN 7:17-23",
+            "GEN 9:8-17"
+          ]
+        },
+        {
+          "english": "called Abraham and promised him a land and offspring as many as the stars",
+          "ukr": "покликав Авраама й пообіцяв йому землю та нащадків, численних, як зорі",
+          "deu": "berief Abraham und verhieß ihm ein Land und Nachkommen so zahlreich wie die Sterne",
+          "spa": "llamó a Abraham y le prometió una tierra y una descendencia tan numerosa como las estrellas",
+          "references": [
+            "GEN 12:1-7",
+            "GEN 15:5-7"
+          ]
+        },
+        {
+          "english": "brought Israel out of Egypt and gave them his law on Mount Sinai",
+          "ukr": "вивів Ізраїля з Єгипту й дав йому свій Закон на горі Сінай",
+          "deu": "führte Israel aus Ägypten und gab ihm sein Gesetz auf dem Berg Sinai",
+          "spa": "sacó a Israel de Egipto y le dio su ley en el monte Sinaí",
+          "references": [
+            "EXO 12:51",
+            "EXO 19:20",
+            "EXO 20:1-17",
+            "EXO 31:18"
+          ]
+        },
+        {
+          "english": "sent his only begotten Son into the world",
+          "ukr": "послав у світ свого Однородженого Сина",
+          "deu": "sandte seinen eingeborenen Sohn in die Welt",
+          "spa": "envió a su Hijo unigénito al mundo",
+          "references": [
+            "JHN 3:16-17",
+            "1JN 4:9"
+          ]
+        }
+      ]
     }
   ]
 }
