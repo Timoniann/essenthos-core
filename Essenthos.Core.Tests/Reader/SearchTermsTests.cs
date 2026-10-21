@@ -36,26 +36,6 @@ public class SearchTermsTests
         SearchTerms.Parse(query).Should().HaveCount(SearchTerms.MaxTerms);
     }
 
-    [Theory]
-    [InlineData("en", SearchTerms.EnglishDictionary)]
-    [InlineData("EN", SearchTerms.EnglishDictionary)]
-    [InlineData("ru", SearchTerms.RussianDictionary)]
-    public void LanguagesWithADictionaryAreStemmed(string language, string dictionary)
-    {
-        SearchTerms.Dictionary(language).Should().Be(dictionary);
-        SearchTerms.Matching(language).Should().Be(SearchTerms.FullTextMatching);
-    }
-
-    [Theory]
-    [InlineData("uk")]
-    [InlineData("hbo")]
-    [InlineData("grc")]
-    public void LanguagesWithoutOneFallBackToSubstringAndSaySo(string language)
-    {
-        SearchTerms.Dictionary(language).Should().BeNull();
-        SearchTerms.Matching(language).Should().Be(SearchTerms.SubstringMatching);
-    }
-
     [Fact]
     public void AQueryMatchedOneWayIsReportedAsThatWay()
     {

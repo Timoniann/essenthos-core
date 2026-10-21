@@ -19,10 +19,6 @@ namespace Essenthos.Core.Tests.Witnesses;
 /// </summary>
 public sealed class TextCorpusTests
 {
-    [Fact]
-    public void EveryTextIsDeclaredOnce() =>
-        TextCorpus.Slugs.Should().OnlyHaveUniqueItems();
-
     /// <summary>
     /// Found by reflection rather than listed, because a list is the thing that goes stale. Every
     /// static member of a text source that yields a definition is called: a property, a

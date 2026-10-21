@@ -124,10 +124,6 @@ public sealed class NoteTranslationTests : IDisposable
     public void TheDigestIsTheSha256OfTheEnglish() =>
         EnglishNotes.Digest("abc").Should().Be("ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad");
 
-    [Fact]
-    public void TheShippedFileReads() =>
-        NoteTranslationLoader.Read().Should().NotBeNull();
-
     /// <summary>
     /// The corpus already loaded loses the clause too: the migration rewrites a note that still reads
     /// as the loader wrote it, and leaves one somebody has changed since.

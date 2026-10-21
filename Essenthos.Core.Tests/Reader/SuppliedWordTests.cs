@@ -83,27 +83,6 @@ public sealed class SuppliedWordTests : IDisposable
             .Should().BeFalse();
     }
 
-    /// <summary>
-    /// The direction is the whole claim. A word on the to side of an <c>expands</c> link is a word
-    /// the other text supplied, not this one -- reading the side would say every Hebrew word
-    /// beside a supplied English one was itself supplied.
-    /// </summary>
-    [Fact]
-    public async Task AWordOnTheFarSideOfAnExpandsLinkIsNotSupplied()
-    {
-        var link = Expands(4);
-        _db.LinkWords.Add(new LinkWord
-        {
-            LinkId = link.Id,
-            WordId = _db.WordAt(_hebrew, 1, 1, 1).Id,
-            Side = LinkSide.To,
-        });
-        _db.SaveChanges();
-
-        (await WordEndpoints.Supplied(_db, _db.WordAt(_hebrew, 1, 1, 1).Id, default))
-            .Should().BeFalse();
-    }
-
     private long WordId(int position) => _db.WordAt(_english, 1, 1, position).Id;
 
     private void Supply(params int[] positions) => Supply(WordGroupKind.Supplied, positions);

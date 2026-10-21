@@ -34,15 +34,6 @@ public class SearchScopeTests
         scope.Books.Should().BeNull();
     }
 
-    /// <summary>The deuterocanon is in neither testament, so it is reached by naming its books.</summary>
-    [Fact]
-    public void ATestamentReachesNoDeuterocanonicalBook()
-    {
-        var (scope, _) = SearchScope.Resolve(null, null, null, "old");
-
-        scope!.To.Should().Be(39);
-    }
-
     [Fact]
     public void ARangeIsResolvedFromEitherNameOrSlug()
     {

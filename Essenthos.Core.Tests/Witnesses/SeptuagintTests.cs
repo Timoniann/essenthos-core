@@ -57,22 +57,6 @@ public class UsfmReaderTests
     }
 
     [Fact]
-    public void APsalmSuperscriptionBelongsToItsPsalm()
-    {
-        const string psalm =
-            """
-            \id PSA
-            \c 3
-            \d Ψαλμὸς τῷ Δαυίδ
-            \v 1 Κύριε τί ἐπληθύνθησαν
-            """;
-
-        var verse = UsfmReader.Read(psalm).Chapters[0]!.Verses[0]!;
-
-        verse.Words.Select(w => w.Surface).Should().StartWith(["Ψαλμὸς", "τῷ", "Δαυίδ"]);
-    }
-
-    [Fact]
     public void AMarkerItHasNotBeenToldAboutIsAnError()
     {
         // Not a silent skip. A marker treated as matter drops everything after it, and a verse

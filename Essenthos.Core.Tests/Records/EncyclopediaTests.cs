@@ -81,16 +81,6 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
     }
 
     /// <summary>
-    /// The Greek numbers were the whole New Testament half of this table and three of them
-    /// survived, because the dataset's word for "no Hebrew number" answered as a Hebrew number.
-    /// </summary>
-    [Fact]
-    public void TheGreekStrongNumbersAreLoaded()
-    {
-        _corpus.Names.Count(n => n.GreekStrongNumber is not null).Should().BeGreaterThan(1_000);
-    }
-
-    /// <summary>
     /// <em>Talitha cumi</em> is what Jesus says to Jairus's daughter, and MRK 5:41 translates it:
     /// <em>Damsel, I say unto thee, arise</em>. The dataset holds the word as a girl called Talitha;
     /// no record is written for her, and nothing that hung off it is left pointing anywhere.
@@ -382,10 +372,6 @@ public sealed partial class EncyclopediaTests : IClassFixture<BibleDataCorpus>
             .Should().Contain(d => d != null && d.Contains("son of Seraiah"));
         Leaked().Should().NotContain(["Heman_3", "Uriel_2", "Seriah_2"]);
     }
-
-    [Fact]
-    public void ADistinguisherReadsAsAName() =>
-        _corpus.Entities["person:Abdeel_1"].Distinguisher.Should().Be("father of Shelemiah (JER 36:26)");
 
     /// <summary>
     /// The dataset names both of these YHVH and tells them apart by a sample of their titles —

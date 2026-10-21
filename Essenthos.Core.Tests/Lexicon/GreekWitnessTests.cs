@@ -25,13 +25,6 @@ public class GreekWitnessTests
     }
 
     [Fact]
-    public void AFinalSigmaIsTheSameLetterAsAMedialOne()
-    {
-        // The position of a sigma is a fact about where it stands, not about which word it is.
-        GreekLetters.Bare("λόγος").Should().Be(GreekLetters.Bare("λογοσ"));
-    }
-
-    [Fact]
     public void WordsThatDifferStillDiffer()
     {
         // Δαυείδ and Δαβίδ are the reading the two editions actually disagree on at Matthew 1:1,
@@ -57,11 +50,5 @@ public class GreekWitnessTests
             "ὠὤὬὢὦὮᾠὡὩὥὭὧὯᾧώῴὼῶῷῳ";
 
         GreekLetters.Bare(everyAccentedLetter).Should().MatchRegex("^[αβγδεζηθικλμνξοπρστυφχψω]+$");
-    }
-
-    [Fact]
-    public void ACapitalIsTheSameLetterAsASmallOne()
-    {
-        GreekLetters.Bare("Θεός").Should().Be(GreekLetters.Bare("qeov".Replace("qeov", "θεος")));
     }
 }

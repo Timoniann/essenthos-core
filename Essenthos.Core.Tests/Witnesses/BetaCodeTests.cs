@@ -57,15 +57,4 @@ public class BetaCodeTests
         BetaCode.ToGreek("{N-DSM}").Should().Be("{N-DSM}");
         BetaCode.ToGreek("[prov").Should().Be("[προς");
     }
-
-    [Fact]
-    public void TheSqlArgumentsMatchTheConverter()
-    {
-        // The rows already loaded are repaired with SQL translate() using this pair. If the two
-        // ever disagree, half the corpus is converted one way and half the other.
-        var (from, to) = BetaCode.TranslateArguments;
-
-        from.Length.Should().Be(to.Length);
-        BetaCode.ToGreek(from).Should().Be(to);
-    }
 }

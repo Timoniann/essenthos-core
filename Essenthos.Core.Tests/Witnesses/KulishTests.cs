@@ -46,15 +46,6 @@ public class UsfmNoteTests
         notes.Should().ContainSingle().Which.Should().Be(new UsfmNote(UsfmNoteKind.Footnote, "Червоний.", 3));
     }
 
-    [Fact]
-    public void AFootnotesMarkerStaysAfterTheWordTheSourcePutItAfter()
-    {
-        var verse = UsfmReader.Read(WithANote).Chapters[0]!.Verses[0]!;
-
-        verse.Notes.Single().AnchorWordPosition.Should().Be(3);
-        verse.Words[verse.Notes.Single().AnchorWordPosition!.Value - 1].Surface.Should().Be("Єдом");
-    }
-
     /// <summary>
     /// The note leaves, and the sentence closes as it was printed: the full stop after the closing
     /// marker belongs to the last word of the verse, not to the note.

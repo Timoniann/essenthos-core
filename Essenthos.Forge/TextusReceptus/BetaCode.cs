@@ -27,12 +27,6 @@ internal static class BetaCode
     private const string Greek = "αβγδεζηθικλμνξοπρσςτυφχψω";
 
     /// <summary>
-    /// The same pair as SQL <c>translate()</c> arguments, for the one-off repair of rows already
-    /// loaded as beta-code. Kept here so the two can never drift apart quietly.
-    /// </summary>
-    public static (string From, string To) TranslateArguments => (Latin, Greek);
-
-    /// <summary>
     /// One word in Greek letters. Anything not in the alphabet is passed through: the source files
     /// leak a handful of subscription lines and division markers, and mangling those into Greek
     /// would hide them rather than leave them visible to be dealt with.

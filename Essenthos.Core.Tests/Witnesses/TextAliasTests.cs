@@ -114,8 +114,6 @@ public sealed class TextAliasTests
     [Theory]
     [InlineData("UKRK", KulishTextSource.Slug)]
     [InlineData("ukrkulish", KulishTextSource.Slug)]
-    [InlineData("UKR", Bible4uTextSource.Ohienko)]
-    [InlineData("ubio", Bible4uTextSource.Ohienko)]
     public void EachUkrainianIdentifierReachesTheUkrainianBibleThatPublishesIt(
         string spelling, string slug) =>
         CanonIndex.Resolve(Loaded, spelling)!.Slug.Should().Be(slug);

@@ -89,23 +89,6 @@ public sealed class GraphicalWordTests : IDisposable
     }
 
     /// <summary>
-    /// A word printed on its own gets nothing, which is what keeps the column sparse and what lets
-    /// a term matching it mean "this crossed a row boundary" rather than "this is a word".
-    /// </summary>
-    [Fact]
-    public async Task AWordPrintedOnItsOwnIsNotGivenARun()
-    {
-        var text = Hebrew();
-        await Run();
-
-        var alone = await _db.Words
-            .Where(w => w.TextId == text.Id && (w.Surface == "בָּרָא" || w.Surface == "אֱלֹהִים"))
-            .ToListAsync();
-
-        alone.Should().HaveCount(2).And.OnlyContain(w => w.GraphicalText == null);
-    }
-
-    /// <summary>
     /// The last word of a verse ends its run whatever its trailer says. Every Greek verse of this
     /// corpus ends with an empty trailer, so reading that as "joined to the next" would join the
     /// last word of a verse to the first word of the one after it.

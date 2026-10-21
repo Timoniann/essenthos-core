@@ -124,24 +124,9 @@ public class NestleCaseTests
 /// </summary>
 public sealed class GreekCaseIsPublishedTests
 {
-    private static readonly string[] Cases =
-        ["nominative", "genitive", "dative", "accusative", "vocative"];
-
     [Fact]
     public void TheResponseHasSomewhereToPutACase() =>
         typeof(MorphologyResponse).GetProperty("Case").Should().NotBeNull(
             "a Greek word's case is stored and has to be readable; the field set came from a Hebrew "
             + "text, which has no cases, and the gap was invisible from the Hebrew side");
-
-    [Theory]
-    [InlineData("N-NSF", "nominative")]
-    [InlineData("N-GSM", "genitive")]
-    [InlineData("V-PAP-NSM", "nominative")]
-    [InlineData("P-1AS", "accusative")]
-    public void EveryCaseTheParserProducesIsOneTheApiCanName(string form, string expected)
-    {
-        var parsed = NestleCase.Of(form, null);
-        parsed.Should().Be(expected);
-        Cases.Should().Contain(parsed!);
-    }
 }

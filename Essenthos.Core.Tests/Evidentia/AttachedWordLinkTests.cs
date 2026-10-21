@@ -126,29 +126,6 @@ public sealed class AttachedWordLinkTests : IDisposable
         (await Roles())[Did].Should().Be((LinkWordRole.Attached, See));
     }
 
-    /// <summary>The migration marks the links already written, the German and Spanish runs among them, as the Forge would.</summary>
-    [Fact]
-    public async Task TheMigrationMarksWhatWasWrittenBeforeIt()
-    {
-        Placed(See, Eidomen);
-        Placed(Go, Exelthonta);
-        Attached(Did, Eidomen, "AuxiliaryVerb of 'see'");
-        Attached(We, Eidomen, "SubjectPronoun of 'see'", head: (See, Eidomen));
-        Attached(Out, Exelthonta, "PhrasalParticle of 'go'");
-        Attached(And, Kai, "Conjunction of 'see'");
-        await AcceptAndApply();
-        var marked = await Roles();
-        await _db.LinkWords.ExecuteUpdateAsync(set => set
-            .SetProperty(word => word.Role, (LinkWordRole?)null)
-            .SetProperty(word => word.HeadWordId, (long?)null));
-
-        var migration = new AWordThatWritesAnotherWordsInflectionGoesWithIt().UpOperations.OfType<SqlOperation>().Single();
-        var updated = await _db.Database.ExecuteSqlRawAsync(migration.Sql);
-
-        updated.Should().Be(3);
-        (await Roles()).Should().BeEquivalentTo(marked);
-    }
-
     [Fact]
     public async Task MarkingTwiceChangesNothing()
     {

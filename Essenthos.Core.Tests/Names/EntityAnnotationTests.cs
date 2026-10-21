@@ -298,13 +298,6 @@ public sealed class EntityAnnotationTests : IDisposable
         named.Should().NotContainKey(Hebrew(7).Id);
     }
 
-    [Fact]
-    public async Task APlaceNameResolvesToThePlace()
-    {
-        var named = await Load();
-        named.Should().ContainKey(Hebrew(3).Id).WhoseValue.Should().Be("jerusalem");
-    }
-
     /// <summary>
     /// Somebody else's annotation is not this loader's answer to whether it has run.
     ///

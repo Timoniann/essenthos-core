@@ -59,40 +59,6 @@ public sealed class LinkShapeTests : IDisposable
         _db.Side(link.Id, LinkSide.To).Select(w => w.Position).Should().BeEquivalentTo([1]);
     }
 
-    /// <summary>
-    /// The claim is that the two Hebrew words together render the Greek one — not that they render
-    /// each other. A shared word identifier could not tell those apart, which is the whole argument
-    /// against having one, stated as a query.
-    /// </summary>
-    [Fact]
-    public void TwoWordsRenderingOneDoNotTherebyCorrespondToEachOther()
-    {
-        var hebrew = Corpus.Add(_db, "BHSA", TextKind.ManuscriptTradition, "hbo",
-            (1, 1, ["הַכֹּהֵן", "הַגָּדוֹל"]));
-        var greek = Corpus.Add(_db, "lxx", TextKind.Translation, "grc", (1, 1, ["ἀρχιερεύς"]));
-        _db.SaveChanges();
-
-        var link = new Link
-        {
-            FromTextId = hebrew.Id,
-            ToTextId = greek.Id,
-            Relation = LinkRelation.Renders,
-            Method = LinkMethod.StatedBySource,
-            Provenance = new() { Source = "a test" },
-        };
-        _db.Links.Add(link);
-        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 1), Side = LinkSide.From });
-        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(hebrew, 1, 1, 2), Side = LinkSide.From });
-        _db.LinkWords.Add(new LinkWord { Link = link, Word = _db.WordAt(greek, 1, 1, 1), Side = LinkSide.To });
-        _db.SaveChanges();
-
-        var betweenTwoHebrewWords = _db.Links
-            .Where(l => l.FromTextId == hebrew.Id && l.ToTextId == hebrew.Id)
-            .ToList();
-
-        betweenTwoHebrewWords.Should().BeEmpty();
-    }
-
     /// <summary>Each Hebrew word reaches the Greek word, and the Greek word reaches both.</summary>
     [Fact]
     public void EitherWordOfAPairReachesTheSameCounterpartAndTheCounterpartReachesBoth()

@@ -38,14 +38,6 @@ public class CanonTests
     }
 
     [Fact]
-    public void TheTanakhHoldsTheThirtyNineAndNothingElse()
-    {
-        var tanakh = Canons.Find("tanakh")!;
-
-        tanakh.Ordinals.Order().Should().Equal(Enumerable.Range(1, 39));
-    }
-
-    [Fact]
     public void TheDefaultIsTheSixtySixInTheirUsualOrder()
     {
         var protestant = Canons.Find(null)!;

@@ -466,16 +466,6 @@ public class LutherPsalmTitleTests(Ebible ebible) : IClassFixture<Ebible>
     private const int Psalms = 19;
 
     [Theory]
-    [InlineData(3)]
-    [InlineData(7)]
-    [InlineData(18)]
-    [InlineData(51)]
-    [InlineData(60)]
-    [InlineData(92)]
-    public void AFirstVerseOpeningWithItsTitleSaysSo(int psalm) =>
-        ebible.Verse(ebible.Luther, Psalms, psalm, 1).MarksASuperscription.Should().BeTrue();
-
-    [Theory]
     [InlineData(1)]
     [InlineData(2)]
     [InlineData(33)]

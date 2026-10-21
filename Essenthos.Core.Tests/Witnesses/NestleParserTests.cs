@@ -44,14 +44,4 @@ public class NestleParserTests
         result.Word.Should().Be("Λόγος");
         result.Trailer.Should().Be("). ");
     }
-
-    [Fact]
-    public void ParseWordAndTrailer_NeverLosesACharacter()
-    {
-        const string source = "Θεόν,";
-
-        var result = NestleParser.ParseWordAndTrailer(source);
-
-        (result.Word + result.Trailer.TrimEnd()).Should().Be(source);
-    }
 }

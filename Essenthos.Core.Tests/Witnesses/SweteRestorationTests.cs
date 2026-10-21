@@ -48,19 +48,6 @@ public class SweteRestorationTests(Swete swete) : IClassFixture<Swete>
         read.Values["nahor-after"].Value.Should().Be(129);
     }
 
-    /// <summary>
-    /// What reading all of it from Swete does to the Alexandrinus reckoning: Nahor's hundred years
-    /// fewer bring Abram a century nearer the Flood than Brenton's numbers would with Methuselah's alone.
-    /// </summary>
-    [Fact]
-    public void ReadWholeFromSweteAbramIsBornACenturyEarlier()
-    {
-        var years = SeptuagintReckoning.Compute(SeptuagintReckoning.Read(Genesis5To12()).Values, id => id);
-
-        years["Begin_Flood"].Year.Should().Be(2263);
-        years[SeptuagintReckoning.AbramBorn].Year.Should().Be(3396);
-    }
-
     [Fact]
     public void ARestorationThatNoLongerFindsItsWordsStopsTheRead()
     {

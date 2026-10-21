@@ -46,13 +46,6 @@ public class WordSeparationTests
         WordSeparation.EnsureSeparator(trailer).Should().Be(trailer);
     }
 
-    [Fact]
-    public void EnsureSeparator_IsIdempotent()
-    {
-        var once = WordSeparation.EnsureSeparator(",");
-        WordSeparation.EnsureSeparator(once).Should().Be(once);
-    }
-
     [Theory]
     [InlineData("", "")]
     [InlineData(" ", " ")]

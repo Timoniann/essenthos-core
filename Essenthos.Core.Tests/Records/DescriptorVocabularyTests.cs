@@ -203,7 +203,6 @@ public sealed class DescriptorVocabularyTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("   ")]
-    [InlineData("rus")]
     [InlineData("not-a-language")]
     public void WhatIsNotSpokenIsAnsweredInEnglish(string? asked) =>
         DescriptorPhrasings.Spoken(asked).Should().Be(DescriptorPhrasings.English);

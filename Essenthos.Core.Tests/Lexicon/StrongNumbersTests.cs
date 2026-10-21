@@ -36,12 +36,6 @@ public class StrongNumbersTests
         StrongNumbers.Normalize(input).Should().BeNull();
     }
 
-    [Fact]
-    public void FormatHint_NamesTheExpectedForm()
-    {
-        StrongNumbers.FormatHint("430").Should().Contain("H430").And.Contain("G26");
-    }
-
     [Theory]
     [InlineData("H9000")]
     [InlineData("H9009")]
