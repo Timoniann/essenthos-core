@@ -170,6 +170,10 @@ Resources/*/*
 # not reproducible from a fetch script -- reproducing it is another model run -- so it is carried.
 !Resources/Essenthos/**
 
+# The Strong translations (German, Spanish, Ukrainian): model runs of 6-8 MB a file, kept on disk and in
+# the backup rather than here, at the owner's word (NOT-0209). This line must stay below the one above it.
+Resources/Essenthos/lexicon/strong-*.jsonl
+
 # Maimonides' count of the commandments as this project curated it from two public-domain works:
 # 613 rows, 59 KB. The downloads it is written from stay out, and scripts/maimonides.py puts them back.
 !Resources/Maimonides/commandments.tsv
