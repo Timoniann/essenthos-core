@@ -373,6 +373,15 @@ public sealed class EntitySearchTests : IDisposable
             .Should().Be("Марія");
     }
 
+    /// <summary>
+    /// The Ohienko names Elzaphan once and his sons twice, as <em>Еліцафанових</em>: a word made from
+    /// the name heads nothing, however often it is printed.
+    /// </summary>
+    [Fact]
+    public void APossessiveMadeFromTheNameDoesNotHeadIt() =>
+        RenamedHeadings.Heading(
+            [("Еліцафанових", "еліцафанових", 2), ("Еліцафан", "еліцафан", 1)], null).Should().Be("Еліцафан");
+
     [Fact]
     public void ADeclinedSpellingIsTheNameItDeclines()
     {

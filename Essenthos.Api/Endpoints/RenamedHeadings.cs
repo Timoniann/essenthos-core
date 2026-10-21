@@ -301,7 +301,8 @@ internal static class RenamedHeadings
     /// <summary>
     /// Whether a spelling is another case of a printed spelling on the same stem: <em>Васемафы</em>
     /// beside <em>Васемафа</em>, <em>Петра</em> beside <em>Петр</em> or <em>Петро</em>, <em>Мойсея</em>
-    /// beside <em>Мойсей</em>. Two nominatives are not: <em>Петро</em> is not a case of <em>Петр</em>.
+    /// beside <em>Мойсей</em>; and a word made from it, as the possessive <em>Еліцафанових</em> is made
+    /// from <em>Еліцафан</em>. Two nominatives are not: <em>Петро</em> is not a case of <em>Петр</em>.
     /// A genitive a text prints more often must not head the name it declines.
     /// </summary>
     private static bool Declines(string form, string nominative)
@@ -314,7 +315,12 @@ internal static class RenamedHeadings
         var last = char.ToLowerInvariant(nominative[^1]);
         var stem = "аяоьй".Contains(last) ? nominative[..^1] : nominative;
         var endings = last is 'а' or 'я' ? FeminineEndings : OtherEndings;
-        return form.StartsWith(stem, StringComparison.Ordinal)
-               && endings.Contains(form[stem.Length..].ToLowerInvariant(), StringComparer.Ordinal);
+        if (!form.StartsWith(stem, StringComparison.Ordinal))
+        {
+            return false;
+        }
+
+        var ending = form[stem.Length..].ToLowerInvariant();
+        return endings.Contains(ending, StringComparer.Ordinal) || (ending.Length > 1 && form.Length > nominative.Length);
     }
 }
