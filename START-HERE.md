@@ -46,12 +46,12 @@ Also worth reading before you touch a loader: **DOC-0004** (what LLM alignment c
 
 **The folder** is a copy of essenthos-api with build output and git history stripped and its own git repository initialised. `Resources/` is its own again — see below — and `.gitignore` keeps the gigabyte of corpus out of every commit while admitting the licence beside each folder and `Resources/WorldHistory`.
 
-**The database** `essenthos_core` lives in this repository's own Postgres — the `db` service in `compose.yaml`, PostgreSQL 18.1 pinned by digest, on **127.0.0.1:5437**, with a 4 GB `/dev/shm` and settings sized for building the corpus. It is not the frozen API's container any more, and nothing here should connect to 5435.
+**The database** `essenthos_core` lives in this repository's own Postgres — the `db` service in `compose.yaml`, PostgreSQL 18.1 pinned by digest, on **127.0.0.1:5437**, with an 8 GB `/dev/shm` and settings sized for building the corpus on this machine (Docker's VM sees 30 GB; the reasons are beside each line in `compose.yaml`). It is not the frozen API's container any more, and nothing here should connect to 5435.
 
     docker compose up -d db
     docker exec essenthos-core-db-1 psql -U essenthos -d essenthos_core -c "..."
 
-**The tests have a Postgres of their own**, the `test-db` service on **127.0.0.1:5439**: the same image with fsync and full-page writes off, since every database on it is a scratch copy a run makes and drops. Start it with `docker compose up -d test-db` before `dotnet test`; `Database__ConnectionString` points the suite at another server. It takes the password from the same `.env` and user secret as `db`.
+**The tests have a Postgres of their own**, the `test-db` service on **127.0.0.1:5439**: the same image with fsync and full-page writes off, since every database on it is a scratch copy a run makes and drops. Start it with `avioniq services start core-test-db` (which is `docker compose up -d test-db`) before any test run, and run the tests through the registered actions — `core-test-one`, `core-check-isolated`; the avioniq guide `fast-checks` says which and what each costs; `Database__ConnectionString` points the suite at another server. It takes the password from the same `.env` and user secret as `db`.
 
 The password is in two untracked places that must agree: `.env` beside `compose.yaml` (`ESSENTHOS_DB_PASSWORD`, which the container is created with) and the `essenthos-core` user secrets (`Database:Password`, which every project reads). The container only takes it on its first start; changing it later is `ALTER ROLE`, not an edit to `.env`.
 
@@ -72,7 +72,9 @@ Split out of the single `Essenthos.Core` project on 2026-09-18, because a server
 | `Essenthos.Accounts` | The database the API owns and writes. Empty until accounts arrive; it exists so the boundary is drawn before there is anything to put behind it. |
 | `Essenthos.Forge` | Every loader, parser, aligner, EVIDENTIA pass and the verification. A console application, run here and never deployed. |
 
-The loaders are no longer a background service. What used to happen while the API served is now `avioniq services run core-load`, and the measures are `avioniq services run core-verify`.
+The loaders are no longer a background service. What used to happen while the API served is now `avioniq services run core-load`, and the measures are `avioniq services run core-verify` — which a load already ends in, so it is not run again after one.
+
+Both run from one build: `avioniq services run core-forge-build` publishes the Forge into `.run/forge` once per chain, and every Forge action runs that copy, so after a merge it comes first or the old code runs. The API is the same: the `core` service starts its published copy from `.run/api` (`scripts/start-core.ps1`, about 1.5 s), and `avioniq services run core-api-publish` puts a new one in `.run/api-next` while the old one serves, taken at the next `avioniq services restart core`. `.run/` is ignored.
 
 `essenthos-api/Resources` still holds its own copy and the frozen API still runs on it. The two are now separate trees: a correction or a licence note made here does not reach it, which is the point.
 
