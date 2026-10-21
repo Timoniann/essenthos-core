@@ -263,6 +263,30 @@ public sealed class ThingLoaderTests : IDisposable
     }
 
     /// <summary>
+    /// A place says what sort of place it is, as the gazetteer's places do, and lies in the land the
+    /// file relates it to: the garden God planted is a garden, part of Eden. A second load writes
+    /// nothing.
+    /// </summary>
+    [Fact]
+    public async Task APlaceIsWrittenWithItsSortOfPlaceAndTheLandItLiesIn()
+    {
+        var eden = new Entity { Kind = EntityKind.Place, Slug = "eden-2", Name = "Eden", SourceId = "place:Eden_1", Source = "a test" };
+        _db.Entities.Add(eden);
+        await _db.SaveChangesAsync();
+        var garden = Record("garden-of-eden", kind: "place", rules: [new OccurrenceRule(Boaz, ["GEN 7:21"], null, null)],
+            related: [new ThingRelation(ThingRelations.PartOf, "eden-2", "GEN 2:8", null)]) with { PlaceKind = "garden" };
+
+        await _loader.Load(ThingSet.Narratives, [garden], [], CancellationToken.None);
+
+        var written = await _db.Entities.SingleAsync(e => e.Slug == "garden-of-eden");
+        (written.Kind, written.PlaceKind).Should().Be((EntityKind.Place, "garden"));
+        var relation = await _db.EntityRelationships.SingleAsync(r => r.FromEntityId == written.Id);
+        (relation.ToEntityId, relation.Type).Should().Be((eden.Id, ThingRelations.PartOf));
+        (await Annotations.Of(_db, Hebrew(7, 21, 1).Id, CancellationToken.None))!.Slug.Should().Be("garden-of-eden");
+        (await _loader.Load(ThingSet.Narratives, [garden], [], CancellationToken.None)).AlreadyLoaded.Should().BeTrue();
+    }
+
+    /// <summary>
     /// Two lists are loaded one after the other on every boot, and neither takes back what the other
     /// wrote: each finds its own words by its own sources.
     /// </summary>
@@ -668,7 +692,7 @@ public sealed class ThingFileTests
             .And.NotIntersectWith(_records.Select(r => r.Slug));
         foreach (var record in file.Records)
         {
-            record.Kind.Should().BeOneOf("person", "place");
+            record.Kind.Should().BeOneOf("person", "place", "people");
             record.Names.Should().ContainKey("ukr", $"{record.Slug} needs its Ukrainian name");
             record.Called.Should().NotBeNullOrEmpty();
             record.Distinguisher.Should().NotBeNullOrWhiteSpace();
@@ -685,6 +709,48 @@ public sealed class ThingFileTests
         }
 
         file.Refers.Should().ContainSingle(r => r.Slug == "eve");
+    }
+
+    /// <summary>
+    /// The woman of Genesis 2-4 is Eve where the word refers to her, the curse on the serpent
+    /// included; the naming of what she is (2:23) and any man's wife (2:24) are not her.
+    /// </summary>
+    [Theory]
+    [InlineData(2, 22, true)]
+    [InlineData(2, 23, false)]
+    [InlineData(2, 24, false)]
+    [InlineData(2, 25, true)]
+    [InlineData(3, 15, true)]
+    [InlineData(4, 1, true)]
+    [InlineData(4, 19, false)]
+    public void TheWomanIsEveWhereTheWordRefersToHer(int chapter, int verse, bool eve) =>
+        ThingFiles.Read(ThingSet.Narratives).Refers!.Single(r => r.Slug == "eve").Occurrences
+            .Any(rule => rule.Strong == "H802" && rule.Admits(1, chapter, verse, 1)).Should().Be(eve);
+
+    /// <summary>
+    /// The garden God planted is a garden inside the land of Eden, the trees of its midst stand in it,
+    /// and the Nephilim are a people; each is named in every language its page is read in.
+    /// </summary>
+    [Fact]
+    public void TheGardenIsAPlaceInEdenAndTheNephilimAPeople()
+    {
+        var narratives = ThingFiles.Read(ThingSet.Narratives).Records.ToDictionary(r => r.Slug);
+
+        var garden = narratives["garden-of-eden"];
+        (garden.Kind, garden.PlaceKind).Should().Be(("place", "garden"));
+        garden.Related.Should().ContainSingle().Which.Should().Be(new ThingRelation(ThingRelations.PartOf, "eden-2", "GEN 2:8", null));
+        garden.Occurrences.Should().ContainSingle().Which.Admits(1, 3, 23, 1).Should().BeTrue();
+        _records.Where(r => r.Slug.StartsWith("tree-of-", StringComparison.Ordinal)).Should().HaveCount(2)
+            .And.OnlyContain(r => r.Related!.Single().To == "garden-of-eden" && r.Related!.Single().Type == ThingRelations.StandsIn);
+
+        var nephilim = narratives["nephilim"];
+        nephilim.EntityKind.Should().Be(EntityKind.People);
+        nephilim.Occurrences.Should().ContainSingle().Which.Strong.Should().Be("H5303");
+
+        foreach (var record in new[] { garden, nephilim })
+        {
+            record.Names.Should().ContainKeys(["ukr", "deu", "rus", "spa"], record.Slug);
+        }
     }
 
     /// <summary>

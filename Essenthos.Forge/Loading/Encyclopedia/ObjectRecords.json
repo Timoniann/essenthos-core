@@ -5042,8 +5042,8 @@
       ],
       "related": [
         {
-          "type": "stands-at",
-          "to": "eden-2",
+          "type": "stands-in",
+          "to": "garden-of-eden",
           "reference": "GEN 2:9"
         }
       ],
@@ -5115,8 +5115,8 @@
       ],
       "related": [
         {
-          "type": "stands-at",
-          "to": "eden-2",
+          "type": "stands-in",
+          "to": "garden-of-eden",
           "reference": "GEN 2:9"
         }
       ],

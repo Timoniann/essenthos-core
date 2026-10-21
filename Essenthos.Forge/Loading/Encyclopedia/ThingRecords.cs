@@ -134,6 +134,7 @@ internal sealed record ThingReference(string Slug, IReadOnlyList<OccurrenceRule>
 /// Who reviewed the record itself — its claim, its relations and its names — and when, once somebody
 /// has. Absent, the record is a model's reading and says so.
 /// </param>
+/// <param name="PlaceKind">What sort of place a place is, in the gazetteer's words: <c>garden</c>, <c>river</c>.</param>
 internal sealed record ThingRecord(
     string Slug,
     string Kind,
@@ -149,7 +150,8 @@ internal sealed record ThingRecord(
     IReadOnlyList<ThingRelation>? Related,
     IReadOnlyList<OccurrenceRule>? Occurrences,
     string? Why,
-    string? Reviewed = null)
+    string? Reviewed = null,
+    string? PlaceKind = null)
 {
     public EntityKind EntityKind => EnumSpelling.ToEntityKind(Kind);
 }

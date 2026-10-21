@@ -1438,6 +1438,47 @@ public sealed class OwnRecordTests : IDisposable
         });
     }
 
+    /// <summary>
+    /// הָאָדָם of Genesis 2-4 is Adam where the narrative means him, and the translation it reaches
+    /// prints his name; אָדָם as mankind (GEN 1:26-27; 5:1-2), a man yet to be (2:5) and the man the
+    /// woman is named from (2:23) stay nobody's. The last Adam of 1 Corinthians 15:45 is Christ, and the
+    /// name's own resolution there gives way to the ruling; the first Adam of the verse is not touched.
+    /// </summary>
+    [Fact]
+    public async Task TheManIsAdamWhereTheNarrativeMeansHimAndTheLastAdamIsChrist()
+    {
+        var file = SenseReadingFiles.AllRulings().Single(f => f.Rulings.Any(r => r.Reference == "1CO 15:45"));
+        file.Rulings.Where(r => r.Text == "BHSA").Should().OnlyContain(r => r.Existing == "adam")
+            .And.HaveCount(23);
+        file.Rulings.Select(r => r.Reference).Should()
+            .NotContain(["GEN 1:26", "GEN 1:27", "GEN 2:5", "GEN 2:24", "GEN 5:1", "GEN 5:2"]);
+        file.Rulings.Should().NotContain(r => r.Reference == "GEN 2:23" && r.Position != 4);
+        file.Rulings.Where(r => r.Reference == "1TI 2:14").Should().HaveCount(6).And.OnlyContain(r => r.Existing == "eve");
+        file.Rulings.Where(r => r.Reference == "1CO 15:45").Should().HaveCount(6)
+            .And.OnlyContain(r => r.Existing == "jesus" && r.Position == 14);
+
+        var english = _db.WordAt(_english, 1, 1, 1);
+        Tie(_words[Ruled("adam", "GEN 2:7").Word], english);
+        var adam = await _db.Entities.SingleAsync(e => e.Slug == "adam");
+        var lastAdam = _words[file.Rulings.First(r => r.Reference == "1CO 15:45" && r.Text == "NESTLE1904").Word];
+        _db.WordEntities.Add(new WordEntity
+        {
+            WordId = lastAdam, EntityId = adam.Id, Method = LinkMethod.StrongNumber, Confidence = 0.99,
+            Source = "the lexicon's capitalised lemma, as a test",
+        });
+        await _db.SaveChangesAsync();
+
+        await Load();
+
+        (await _db.WordEntities.Where(a => a.WordId == english.Id).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("adam");
+        (await _db.WordEntities.Where(a => a.WordId == lastAdam).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("jesus");
+        var woman = _words[file.Rulings.First(r => r.Reference == "1TI 2:14" && r.Text == "TR1894").Word];
+        (await _db.WordEntities.Where(a => a.WordId == woman).Select(a => a.Entity!.Slug).ToListAsync())
+            .Should().Equal("eve");
+    }
+
     private void Tie(long from, Word to)
     {
         var hebrew = _db.Words.Single(w => w.Id == from);

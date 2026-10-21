@@ -646,6 +646,20 @@
       "spa": "la santa ciudad que Juan vio descender del cielo, de Dios (REV 21:2)"
     },
     {
+      "slug": "garden-of-eden",
+      "english": "the garden the LORD God planted eastward in Eden, where he put the man he had formed (GEN 2:8)",
+      "ukr": "сад, який Господь Бог насадив в Едені на сході й де поселив людину, яку створив (GEN 2:8)",
+      "deu": "der Garten, den Gott der HERR in Eden gegen Osten pflanzte und in den er den Menschen setzte, den er gebildet hatte (GEN 2:8)",
+      "spa": "el huerto que Jehová Dios plantó en Edén, al oriente, donde puso al hombre que había formado (GEN 2:8)"
+    },
+    {
+      "slug": "nephilim",
+      "english": "the giants who were on the earth in those days, and also after that (GEN 6:4), of whom the spies said the sons of Anak came (NUM 13:33)",
+      "ukr": "велетні, що були на землі за тих днів, а також і після того (GEN 6:4), і від яких, за словами розвідників, походили сини Енака (NUM 13:33)",
+      "deu": "die Riesen, die in jenen Tagen auf der Erde waren, und auch danach (GEN 6:4), von denen nach dem Wort der Kundschafter die Söhne Enaks abstammten (NUM 13:33)",
+      "spa": "los gigantes que había en la tierra en aquellos días, y también después (GEN 6:4), de los que, según los espías, venían los hijos de Anac (NUM 13:33)"
+    },
+    {
       "slug": "nathanael",
       "english": "of Cana in Galilee, whom Philip brought to Jesus (JHN 1:45; 21:2)",
       "ukr": "з Кани Галілейської, якого Пилип привів до Ісуса (JHN 1:45; 21:2)",

@@ -74,6 +74,15 @@ public sealed class DatasetLoaderStepTests : IDisposable
     }
 
     /// <summary>
+    /// The trees of Eden stand in the garden, which the narratives write, and a relation is written
+    /// only to a record already held: the narratives come before the objects, or a corpus built from
+    /// nothing would leave the trees unplaced until its second load.
+    /// </summary>
+    [Fact]
+    public void TheNarrativesAreWrittenBeforeTheObjectsThatStandInThem() =>
+        Loader().StepNames().Should().ContainInOrder("narratives", "things");
+
+    /// <summary>
     /// A corpus built from nothing runs the register before the records this corpus writes and before the
     /// verses a dataset filed under a namesake are given to their men, so the register is matched again as
     /// soon as each is done, in the load that added its records.
