@@ -212,6 +212,10 @@ internal static class StrongRenderingCounts
         GROUP BY w.strong_number, w.morphology ->> 'pos'
         """;
 
+    /// <summary>Every statement a count is made with: a change to one of them is a reason to count every text again.</summary>
+    public static string Statements =>
+        string.Join('\n', OfSides, Sides, Occurrences, Reached, Methods, ReachedByBook, OccurrencesByBook, Classes);
+
     /// <summary>Each number's stated parts of speech, as the edition labels them, with how many words carry each.</summary>
     public static async Task<List<(string Number, string Label, int Words)>> ClassesOf(AppDbContext db, CancellationToken cancellationToken)
     {

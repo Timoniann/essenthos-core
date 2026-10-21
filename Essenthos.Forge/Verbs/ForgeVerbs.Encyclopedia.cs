@@ -74,11 +74,15 @@ internal static partial class ForgeVerbs
         return 0;
     }
 
-    /// <summary>The phrases the lexicon quotes under each entry, counted again from the links.</summary>
+    /// <summary>
+    /// The phrases the lexicon quotes under each entry, counted again from the links for every text,
+    /// whatever their digests say: the load counts only the texts where something moved.
+    /// </summary>
     private static async Task<int> Cards(ForgeRun forge, string[] args)
     {
         using var cardsScope = forge.Scope();
-        Console.WriteLine(await cardsScope.ServiceProvider.GetRequiredService<StrongRenderingLoader>().Load());
+        Console.WriteLine(await cardsScope.ServiceProvider.GetRequiredService<StrongRenderingLoader>()
+            .Load(Relinked.Every, recount: true));
         return 0;
     }
 

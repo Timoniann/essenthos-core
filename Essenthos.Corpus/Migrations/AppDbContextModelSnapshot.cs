@@ -3902,6 +3902,29 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongCountMark", b =>
+                {
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<Guid?>("Books")
+                        .HasColumnType("uuid")
+                        .HasColumnName("books");
+
+                    b.Property<Guid?>("Phrases")
+                        .HasColumnType("uuid")
+                        .HasColumnName("phrases");
+
+                    b.HasKey("TextId")
+                        .HasName("pk_strong_count_mark");
+
+                    b.ToTable("strong_count_mark", null, t =>
+                        {
+                            t.HasComment("A digest of what a text's Strong counts were last counted from and of the rows they left, so the load counts again only the texts where either moved. Derived; deleting a row only costs a recount.");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongEntry", b =>
                 {
                     b.Property<int>("Id")
@@ -6243,6 +6266,18 @@ namespace Essenthos.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_strong_book_reach_texts_text_id");
+
+                    b.Navigation("Text");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.StrongCountMark", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_strong_count_mark_text_text_id");
 
                     b.Navigation("Text");
                 });
