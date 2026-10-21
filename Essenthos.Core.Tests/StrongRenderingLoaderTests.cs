@@ -129,6 +129,25 @@ public sealed class StrongRenderingLoaderTests : IDisposable
         floored.Total.Should().Be(1);
     }
 
+    [Fact]
+    public async Task TheIndexGlossesEachNumberInTheReadersLanguageWhereItHasBeenTranslated()
+    {
+        await _loader.Load();
+        _db.StrongEntryTranslations.Add(new StrongEntryTranslation
+        {
+            StrongNumber = God, Language = "spa", Definition = "dioses",
+            Method = Database.Entities.Enums.LinkMethod.ModelReading, Source = "translator",
+        });
+        await _db.SaveChangesAsync();
+
+        var ranked = await VariedRenderingEndpoints.Page(
+            _db, _english.Id, _english.Slug, null, 1, false, 0, 10, CancellationToken.None, "es");
+
+        ranked.Items.Single(i => i.StrongNumber == God).Translation.Should()
+            .Be(new StrongGlossTranslationResponse("spa", "dioses"));
+        ranked.Items.Single(i => i.StrongNumber == Create).Translation.Should().BeNull();
+    }
+
     /// <summary>
     /// The map of where a word stands: the edition's words book by book, a text's reach in each, and a
     /// book a text does not hold or has no links into said as such, never as a count of zero.

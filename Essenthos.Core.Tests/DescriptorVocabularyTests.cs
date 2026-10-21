@@ -43,6 +43,45 @@ public sealed class DescriptorVocabularyTests
             + "itself", language);
     }
 
+    /// <summary>
+    /// A feminine stands in for a phrasing the language already has, and puts the name in the same
+    /// case, so a line listing names under one phrase reads the forms it would read of a man.
+    /// </summary>
+    [Fact]
+    public void EveryFeminineReplacesAPhrasingOfItsLanguageAndAsksForTheSameCase()
+    {
+        foreach (var ((language, relation), feminine) in DescriptorPhrasings.Feminine)
+        {
+            var phrasings = DescriptorPhrasings.For(language);
+            phrasings.Should().NotBeNull("{0} must be a language the encyclopedia speaks", language);
+            phrasings!.Should().ContainKey(relation);
+            feminine.Case.Should().Be(phrasings[relation].Case, "{0} {1}", language, relation);
+            feminine.Before.Should().NotBe(phrasings[relation].Before, "{0} {1}", language, relation);
+            feminine.Before.Should().EndWith(" ");
+        }
+    }
+
+    [Theory]
+    [InlineData(DescriptorPhrasings.Ukrainian, "lived-in", "жила у ")]
+    [InlineData(DescriptorPhrasings.Ukrainian, "buried-in", "похована у ")]
+    [InlineData(DescriptorPhrasings.Ukrainian, "killed-by", "загинула від руки ")]
+    [InlineData(DescriptorPhrasings.Ukrainian, "prophet-to", "пророчиця ")]
+    [InlineData(DescriptorPhrasings.Ukrainian, "servant-of", "служниця ")]
+    [InlineData(DescriptorPhrasings.German, "prophet-to", "Prophetin für ")]
+    [InlineData(DescriptorPhrasings.German, "inherited-by", "deren Erbe war ")]
+    [InlineData(DescriptorPhrasings.Spanish, "buried-in", "sepultada en ")]
+    [InlineData(DescriptorPhrasings.Spanish, "prophet-to", "profetisa de ")]
+    public void AWomanIsSaidInTheFeminine(string language, string relation, string before)
+    {
+        DescriptorPhrasings.OfSubject(language, relation, "female")!.Before.Should().Be(before);
+        DescriptorPhrasings.OfSubject(language, relation, "male").Should().BeNull();
+        DescriptorPhrasings.OfSubject(language, relation, null).Should().BeNull();
+    }
+
+    [Fact]
+    public void EnglishSaysEveryClauseOneWay() =>
+        DescriptorPhrasings.Feminine.Keys.Should().NotContain(key => key.Language == DescriptorPhrasings.English);
+
     [Theory]
     [MemberData(nameof(Languages))]
     public void NoLanguagePhrasesARelationNothingCanStore(string language) =>

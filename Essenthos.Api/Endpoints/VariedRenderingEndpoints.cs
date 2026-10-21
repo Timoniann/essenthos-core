@@ -24,6 +24,7 @@ internal static class VariedRenderingEndpoints
         routes.MapGet("/strong/varied", async (
             [FromQuery] string? corpus,
             [FromQuery] string? language,
+            [FromQuery] string? prose,
             [FromQuery] int? min,
             [FromQuery] string? sort,
             [FromQuery] int? skip,
@@ -44,7 +45,7 @@ internal static class VariedRenderingEndpoints
                 : null;
             return Results.Ok(await Page(
                 db, text.Id, text.Slug, letter, Math.Max(1, min ?? DefaultFloor), sort == "share",
-                Math.Max(0, skip ?? 0), Math.Clamp(take ?? 50, 1, MostPerPage), cancellationToken));
+                Math.Max(0, skip ?? 0), Math.Clamp(take ?? 50, 1, MostPerPage), cancellationToken, prose));
         }).RequireRateLimiting(RateLimits.Expensive);
 
     internal static async Task<VariedRenderingsResponse> Page(
@@ -56,7 +57,8 @@ internal static class VariedRenderingEndpoints
         bool byShare,
         int skip,
         int take,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? prose = null)
     {
         var counted = await db.StrongReaches.AnyAsync(r => r.TextId == textId && r.Renderings != null, cancellationToken);
 
@@ -92,6 +94,7 @@ internal static class VariedRenderingEndpoints
             .Where(e => numbers.Contains(e.StrongNumber))
             .Select(e => new { e.StrongNumber, e.Lemma, e.Transliteration, e.Definition })
             .ToDictionaryAsync(e => e.StrongNumber, cancellationToken);
+        var glosses = await StrongEndpoints.Glosses(db, numbers, prose, cancellationToken);
         var commonest = await StrongEndpoints.Renderings(db, numbers, textId, StrongRenderingCounts.CardRenderings, cancellationToken);
 
         return new VariedRenderingsResponse(
@@ -113,7 +116,10 @@ internal static class VariedRenderingEndpoints
                     r.RenderingLinks,
                     r.Renderings,
                     r.Phrases,
-                    commonest.GetValueOrDefault(r.StrongNumber, []))),
+                    commonest.GetValueOrDefault(r.StrongNumber, []))
+                {
+                    Translation = glosses.GetValueOrDefault(r.StrongNumber),
+                }),
             ]);
     }
 }
@@ -151,4 +157,8 @@ internal record VariedRenderingResponse(
     int RenderingLinks,
     int Renderings,
     int Phrases,
-    IList<StrongRenderingResponse> Commonest);
+    IList<StrongRenderingResponse> Commonest)
+{
+    /// <summary>The entry's definition in the language <c>prose</c> asked for, where it has been translated.</summary>
+    public StrongGlossTranslationResponse? Translation { get; init; }
+}

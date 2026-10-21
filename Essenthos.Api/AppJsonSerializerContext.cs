@@ -104,6 +104,7 @@ namespace Essenthos.Core;
 [JsonSerializable(typeof(System.Text.Json.Nodes.JsonObject))]
 [JsonSerializable(typeof(StrongEntryResponse))]
 [JsonSerializable(typeof(StrongTranslationResponse))]
+[JsonSerializable(typeof(StrongGlossTranslationResponse))]
 [JsonSerializable(typeof(StrongGentilicResponse))]
 [JsonSerializable(typeof(StrongRelationResponse))]
 [JsonSerializable(typeof(VariedRenderingsResponse))]

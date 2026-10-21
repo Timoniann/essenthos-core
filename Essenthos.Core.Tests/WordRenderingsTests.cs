@@ -102,6 +102,26 @@ public sealed class WordRenderingsTests : IDisposable
             .Equal((Agapao, 2), (Agape, 1), (Phileo, 1));
     }
 
+    /// <summary>Each original carries its gloss in the reader's language beside Strong's English, where one is loaded.</summary>
+    [Fact]
+    public async Task EachOriginalIsGlossedInTheReadersLanguage()
+    {
+        _db.StrongEntryTranslations.Add(new StrongEntryTranslation
+        {
+            StrongNumber = Agapao, Language = "deu", Definition = "lieben",
+            Method = LinkMethod.ModelReading, Source = "translator",
+        });
+        await _db.SaveChangesAsync();
+
+        var german = (await RenderingEndpoints.Behind(_db, _english.Id, ["love", "loved", "loveth"], default, "de"))[0];
+        var english = (await RenderingEndpoints.Behind(_db, _english.Id, ["love", "loved", "loveth"], default))[0];
+
+        german.Originals.Single(o => o.StrongNumber == Agapao).Translation.Should()
+            .Be(new StrongGlossTranslationResponse("deu", "lieben"));
+        german.Originals.Single(o => o.StrongNumber == Agape).Translation.Should().BeNull();
+        english.Originals.Should().OnlyContain(o => o.Translation == null);
+    }
+
     /// <summary>A count says what made its links, per original and for the edition as a whole.</summary>
     [Fact]
     public async Task EveryCountSaysWhatItsLinksWereMadeBy()

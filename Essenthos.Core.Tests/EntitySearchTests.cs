@@ -338,6 +338,50 @@ public sealed class EntitySearchTests : IDisposable
             .Should().Be("Басмата");
     }
 
+    /// <summary>
+    /// Peter as the Ukrainian texts print him: Kulish's 1871 New Testament writes <em>Петр</em>, and the
+    /// Ohienko and the New Ukrainian Translation <em>Петро</em>, more often between them. The name
+    /// printed most heads him, counted over every text, and the shorter spelling does not win for
+    /// being shorter. In the Synodal alone <em>Петр</em> is the name.
+    /// </summary>
+    [Fact]
+    public void TheNominativePrintedMostHeadsTheNameAcrossTexts()
+    {
+        RenamedHeadings.Heading(
+            [
+                ("Петр", "петр", 94), ("Петро", "петро", 91), ("Петро", "петро", 87),
+                ("Петра", "петра", 26), ("Петра", "петра", 25), ("Петра", "петра", 21),
+                ("Петрові", "петрові", 11), ("Петром", "петром", 9),
+            ],
+            null).Should().Be("Петро");
+        RenamedHeadings.Heading(
+            [("Петр", "петр", 98), ("Петра", "петра", 22), ("Петру", "петру", 15), ("Петром", "петром", 11)],
+            null).Should().Be("Петр");
+    }
+
+    /// <summary>A masculine name's genitive printed more often than the name still does not head it.</summary>
+    [Fact]
+    public void AMasculineGenitivePrintedMoreDoesNotHeadTheName()
+    {
+        RenamedHeadings.Heading([("Павла", "павла", 50), ("Павло", "павло", 40), ("Павлові", "павлові", 20)], null)
+            .Should().Be("Павло");
+        RenamedHeadings.Heading([("Мойсея", "мойсея", 50), ("Мойсей", "мойсей", 40)], null)
+            .Should().Be("Мойсей");
+        RenamedHeadings.Heading([("Авраама", "авраама", 60), ("Авраам", "авраам", 59)], null)
+            .Should().Be("Авраам");
+        RenamedHeadings.Heading([("Марією", "марією", 30), ("Марія", "марія", 20), ("Марії", "марії", 25)], null)
+            .Should().Be("Марія");
+    }
+
+    /// <summary>
+    /// The Ohienko names Elzaphan once and his sons twice, as <em>Еліцафанових</em>: a word made from
+    /// the name heads nothing, however often it is printed.
+    /// </summary>
+    [Fact]
+    public void APossessiveMadeFromTheNameDoesNotHeadIt() =>
+        RenamedHeadings.Heading(
+            [("Еліцафанових", "еліцафанових", 2), ("Еліцафан", "еліцафан", 1)], null).Should().Be("Еліцафан");
+
     [Fact]
     public void ADeclinedSpellingIsTheNameItDeclines()
     {
