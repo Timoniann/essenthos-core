@@ -216,6 +216,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.ScribeOf] = new("scribe of ", Nominative),
             [DescriptorRelations.CompanionOf] = new("companion of ", Nominative),
             [DescriptorRelations.TeacherOf] = new("teacher of ", Nominative),
+            [DescriptorRelations.MemberOf] = new("one of ", Nominative),
             [DescriptorRelations.AllyOf] = new("ally of ", Nominative),
             [DescriptorRelations.FounderOf] = new("founder of ", Nominative),
             [DescriptorRelations.KilledBy] = new("killed by ", Nominative),
@@ -303,6 +304,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.ScribeOf] = new("писар ", Genitive),
             [DescriptorRelations.CompanionOf] = new("товариш ", Genitive),
             [DescriptorRelations.TeacherOf] = new("учитель ", Genitive),
+            [DescriptorRelations.MemberOf] = new("один із ", Genitive),
             [DescriptorRelations.AllyOf] = new("союзник ", Genitive),
             [DescriptorRelations.FounderOf] = new("засновник ", Genitive),
 
@@ -411,6 +413,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.ScribeOf] = new("Schreiber ", Genitive),
             [DescriptorRelations.CompanionOf] = new("Gefährte ", Genitive),
             [DescriptorRelations.TeacherOf] = new("Lehrer ", Genitive),
+            [DescriptorRelations.MemberOf] = new("einer ", Genitive),
             [DescriptorRelations.AllyOf] = new("Verbündeter ", Genitive),
             [DescriptorRelations.FounderOf] = new("Gründer ", Genitive),
 
@@ -504,6 +507,7 @@ internal static partial class DescriptorPhrasings
             [DescriptorRelations.ScribeOf] = new("escriba de ", Nominative),
             [DescriptorRelations.CompanionOf] = new("compañero de ", Nominative),
             [DescriptorRelations.TeacherOf] = new("maestro de ", Nominative),
+            [DescriptorRelations.MemberOf] = new("uno de ", Nominative),
             [DescriptorRelations.AllyOf] = new("aliado de ", Nominative),
             [DescriptorRelations.FounderOf] = new("fundador de ", Nominative),
             [DescriptorRelations.KilledBy] = new("muerto a manos de ", Nominative),

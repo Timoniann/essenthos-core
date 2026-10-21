@@ -122,7 +122,7 @@ RENDERING = 'KJV'
 UKRAINIAN = 'UBIO'
 RUSSIAN = 'RUSV'
 
-PROMPT_VERSION = 'descriptor-3'
+PROMPT_VERSION = 'descriptor-4'
 
 # The book codes the corpus's own book file publishes (BibleData-Book.csv, usx_code), which is the
 # spelling the contract's examples are written in.
@@ -368,7 +368,7 @@ entity is the target's father-in-law:
   office    king-of queen-of prophet-to priest-of judge-of leader-of high-priest-of
             commander-of governor-of tetrarch-of
             servant-of master-of disciple-of apostle-of scribe-of companion-of
-            teacher-of ally-of supporter-of supported-by heir-of inherited-by
+            teacher-of member-of ally-of supporter-of supported-by heir-of inherited-by
   violence  killed-by killer-of struck-by raped-by raper-of exiler-of exiled-by
   making    creator-of created-by
   belonging of-tribe of-people from-place lived-in buried-in angel-of
@@ -396,6 +396,9 @@ The readings that go wrong often enough to be worth naming:
   together -- *with him*, *together*, *his companions*, *my fellowprisoner*, *beside him*, *along with*.
   Two names in one list, one sentence, one commission or one work party are not company, even where
   they acted in the same event, and a verse marked `register: true` never is.
+- **`member-of` is a company the text counts and names as a whole** -- *the twelve*, *the seventy* --
+  and only where the candidates hold that company. A nation, a tribe or a clan is `of-people` or
+  `of-tribe`, never `member-of`.
 - **A town is `city-in`, not `region-of`.** `region-of` is for a district, a land or a territory that is
   part of a larger one; a town, a village or a site in a territory's border is `city-in` that territory.
 - **A gentilic is a people, not a place.** *Ahimelech the Hittite* is `of-people` the Hittites;

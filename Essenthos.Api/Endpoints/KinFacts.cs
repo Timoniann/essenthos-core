@@ -35,6 +35,35 @@ internal sealed record PlaceAmongChildren(int Ordinal, IReadOnlyList<VerseRefRes
 internal sealed record Descendant(int Id, int Depth, VerseRefResponse? Tie, VerseRefResponse? Named, double? Confidence);
 
 /// <summary>
+/// Everyone the family tree reaches below each person asked about; which of them lived before the
+/// Flood; and everyone born after it, who is every descendant of Noah's sons (GEN 9:19; 10:32).
+/// </summary>
+/// <param name="BeforeTheFlood">
+/// Of the people asked about, those who lived before the Flood: Adam, Noah and Noah's forebears, and
+/// Adam's line that does not run through Noah, which the Flood ended (GEN 7:23). Shem, Ham and
+/// Japheth were born before it and lived after it, so they are not among them.
+/// </param>
+internal sealed record FamilyReach(
+    IReadOnlyDictionary<int, List<Descendant>> Below,
+    IReadOnlySet<int> BeforeTheFlood,
+    IReadOnlySet<int> AfterTheFlood)
+{
+    public static readonly FamilyReach Nobody = new(new Dictionary<int, List<Descendant>>(), new HashSet<int>(), new HashSet<int>());
+}
+
+/// <summary>
+/// The two records the Flood is told by: the first man, whose line reaches everyone, and the man
+/// whose household alone came through it (GEN 7:23), from whose sons the whole earth was overspread
+/// (GEN 9:19).
+/// </summary>
+internal static class Flood
+{
+    public const string FirstMan = "adam";
+
+    public const string Survivor = "noah";
+}
+
+/// <summary>
 /// What a person's line says of their children and their descendants beyond the clauses on the
 /// records: the counts and places the verses state, and the descendants the family tree reaches.
 /// </summary>
@@ -102,14 +131,14 @@ internal static class KinFacts
     /// of a tribe whose eponym they are. A tribe is followed only where a record states its member
     /// <em>of the tribe</em>; a people a person belongs to is not their descent.
     /// </summary>
-    public static async Task<Dictionary<int, List<Descendant>>> Descendants(
+    public static async Task<FamilyReach> Descendants(
         AppDbContext db,
         IReadOnlyCollection<int> people,
         CancellationToken cancellationToken)
     {
         if (people.Count == 0)
         {
-            return [];
+            return FamilyReach.Nobody;
         }
 
         var rows = await db.EntityRelationships
@@ -123,6 +152,8 @@ internal static class KinFacts
                 r.Type,
                 FromKind = r.From!.Kind,
                 ToKind = r.To!.Kind,
+                FromSlug = r.From.Slug,
+                ToSlug = r.To.Slug,
                 r.CanonicalBook,
                 r.CanonicalChapter,
                 r.CanonicalVerse,
@@ -184,8 +215,7 @@ internal static class KinFacts
             }
         }
 
-        var found = new Dictionary<int, List<Descendant>>();
-        foreach (var person in people.Distinct())
+        Dictionary<int, Descendant> Reach(int person)
         {
             var reached = new Dictionary<int, Descendant>();
             var queue = new PriorityQueue<Descendant, int>();
@@ -216,10 +246,70 @@ internal static class KinFacts
             }
 
             reached.Remove(person);
-            found[person] = [.. reached.Values];
+            return reached;
         }
 
-        return found;
+        var found = new Dictionary<int, List<Descendant>>();
+        int? Called(string slug) =>
+            rows.Where(r => r.FromSlug == slug).Select(r => (int?)r.From).FirstOrDefault()
+            ?? rows.Where(r => r.ToSlug == slug).Select(r => (int?)r.To).FirstOrDefault();
+        var noah = Called(Flood.Survivor);
+        var adam = Called(Flood.FirstMan);
+        var parents = children
+            .SelectMany(parent => parent.Value.Select(child => (Parent: parent.Key, child.Child)))
+            .ToLookup(tie => tie.Child, tie => tie.Parent);
+
+        // Whom a person comes of, all the way up: a short walk, where the walk down from Adam is
+        // everyone.
+        HashSet<int> Above(int person)
+        {
+            var seen = new HashSet<int>();
+            var waiting = new Stack<int>([person]);
+            while (waiting.TryPop(out var at))
+            {
+                foreach (var parent in parents[at])
+                {
+                    if (seen.Add(parent))
+                    {
+                        waiting.Push(parent);
+                    }
+                }
+            }
+
+            return seen;
+        }
+
+        var beforeTheFlood = new HashSet<int>();
+        foreach (var person in people.Distinct())
+        {
+            var reached = Reach(person);
+            found[person] = [.. reached.Values];
+            if (noah is not { } survivor || adam is not { } first)
+            {
+                continue;
+            }
+
+            var above = Above(person);
+            if (person == survivor || person == first || reached.ContainsKey(survivor)
+                || (above.Contains(first) && !above.Contains(survivor)))
+            {
+                beforeTheFlood.Add(person);
+            }
+        }
+
+        var afterTheFlood = new HashSet<int>();
+        if (beforeTheFlood.Count > 0)
+        {
+            foreach (var (son, step, _, _) in children.GetValueOrDefault(noah!.Value) ?? [])
+            {
+                if (step == 1)
+                {
+                    afterTheFlood.UnionWith(Reach(son).Keys);
+                }
+            }
+        }
+
+        return new FamilyReach(found, beforeTheFlood, afterTheFlood);
     }
 
     /// <summary>How many verses name each of these people: what the descendants on a line are chosen by.</summary>

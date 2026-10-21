@@ -1,5 +1,5 @@
 {
-  "decidedBy": "the project owner, 2026-09-24: the beings, things and places the chapters turn on are records of their own — the serpent and the cherubim as beings, the Holy Spirit, the New Jerusalem apart from the earthly city, and Nathanael as the text names him — and 'the woman' of Genesis 2-4 is Eve where the narrative leaves no doubt. Each record says only what its verses say; an identification a later verse makes is cited to that verse. On 2026-10-21 the owner asked for the garden in Eden as a place of its own and for the Nephilim to have their own page.",
+  "decidedBy": "the project owner, 2026-09-24: the beings, things and places the chapters turn on are records of their own — the serpent and the cherubim as beings, the Holy Spirit, the New Jerusalem apart from the earthly city, and Nathanael as the text names him — and 'the woman' of Genesis 2-4 is Eve where the narrative leaves no doubt. Each record says only what its verses say; an identification a later verse makes is cited to that verse. On 2026-10-21 the owner asked for the garden in Eden as a place of its own and for the Nephilim to have their own page. The same day he asked that Jesus be said to have taught the Twelve, the Seventy and many other disciples, so the two companies have their own pages and the Twelve their members.",
   "records": [
     {
       "slug": "serpent-of-eden",
@@ -540,6 +540,169 @@
         }
       ],
       "why": "Read verse by verse by claude-opus-5-5 on 2026-10-21, on the project owner's instruction of that day that the Nephilim have their own page. נְפִלִים stands three times in the Hebrew, once in GEN 6:4 and twice in NUM 13:33, and every one is this people; the Septuagint's γίγαντες of those verses reach it through the links. That the sons of Anak come of them is NUM 13:33's statement, the spies' report."
+    },
+    {
+      "slug": "the-twelve",
+      "kind": "people",
+      "name": "The Twelve",
+      "names": {
+        "eng": "the Twelve",
+        "ukr": "Дванадцятеро",
+        "deu": "die Zwölf",
+        "rus": "Двенадцать",
+        "spa": "los Doce"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Дванадцятьох",
+          "locative": "Дванадцятьох"
+        },
+        "deu": {
+          "genitive": "der Zwölf"
+        },
+        "rus": {
+          "genitive": "Двенадцати",
+          "locative": "Двенадцати"
+        }
+      },
+      "distinguisher": "the twelve disciples Jesus chose and named apostles, that they should be with him and that he might send them forth to preach (MRK 3:14; LUK 6:13)",
+      "notes": "Jesus went up into a mountain and called unto him whom he would, and he ordained twelve, that they should be with him, and that he might send them forth to preach (MRK 3:13-14); Luke says that of his disciples he chose twelve, whom also he named apostles (LUK 6:13). Matthew names them: Simon, who is called Peter, and Andrew his brother; James the son of Zebedee, and John his brother; Philip, and Bartholomew; Thomas, and Matthew the publican; James the son of Alphaeus, and Lebbaeus, whose surname was Thaddaeus; Simon the Canaanite, and Judas Iscariot, who also betrayed him (MAT 10:2-4). Mark gives the same names (MRK 3:16-19); Luke and Acts call the second Simon Zelotes and have Judas the brother of James where Matthew and Mark have Thaddaeus (LUK 6:14-16; ACT 1:13). He gave them power against unclean spirits and sent them forth two and two (MAT 10:1, 5; MRK 6:7). After Judas, the lot fell upon Matthias, and he was numbered with the eleven apostles (ACT 1:26). The text calls them the twelve, the twelve disciples and the twelve apostles, and the eleven while Judas's place stood empty (MAT 28:16); the twelve called the multitude of the disciples unto them when the seven were chosen (ACT 6:2).",
+      "called": [
+        {
+          "label": "The Twelve",
+          "greek": "οἱ δώδεκα",
+          "greekTransliterated": "hoi dōdeka",
+          "greekStrongNumber": "G1427",
+          "meaning": "MRK 3:14; MAT 26:14; JHN 6:67"
+        },
+        {
+          "label": "The twelve apostles",
+          "meaning": "MAT 10:2; LUK 22:14"
+        },
+        {
+          "label": "Дванадцятеро"
+        },
+        {
+          "label": "Двенадцать"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "MRK 3:13-19",
+          "role": "key"
+        },
+        {
+          "reference": "MAT 10:1-5",
+          "role": "key"
+        },
+        {
+          "reference": "LUK 6:12-16",
+          "role": "key"
+        },
+        {
+          "reference": "ACT 1:13-26",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "G1427",
+          "only": [
+            "MAT 10:1",
+            "MAT 10:2",
+            "MAT 10:5",
+            "MAT 11:1",
+            "MAT 20:17",
+            "MAT 26:14",
+            "MAT 26:20",
+            "MAT 26:47",
+            "MRK 3:14",
+            "MRK 3:16",
+            "MRK 4:10",
+            "MRK 6:7",
+            "MRK 9:35",
+            "MRK 10:32",
+            "MRK 11:11",
+            "MRK 14:10",
+            "MRK 14:17",
+            "MRK 14:20",
+            "MRK 14:43",
+            "LUK 6:13",
+            "LUK 8:1",
+            "LUK 9:1",
+            "LUK 9:12",
+            "LUK 18:31",
+            "LUK 22:3",
+            "LUK 22:14",
+            "LUK 22:47",
+            "JHN 6:67",
+            "JHN 6:70",
+            "JHN 6:71",
+            "JHN 20:24",
+            "ACT 6:2",
+            "1CO 15:5"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by claude-opus-5-5 on 2026-10-21, on the project owner's word of that day that Jesus taught twelve disciples, seventy and many more, not four. δώδεκα is named as this company in every verse where it stands for the twelve he chose, alone or as the twelve disciples or apostles, and in no other: not the twelve years, baskets, thrones, tribes, legions or hours, and not Revelation's twelve apostles of the Lamb (REV 21:14), where the number stands three times beside the other twelves of the city."
+    },
+    {
+      "slug": "the-seventy",
+      "kind": "people",
+      "name": "The Seventy",
+      "names": {
+        "eng": "the Seventy",
+        "ukr": "Сімдесятеро",
+        "deu": "die Siebzig",
+        "rus": "Семьдесят",
+        "spa": "los Setenta"
+      },
+      "forms": {
+        "ukr": {
+          "genitive": "Сімдесятьох",
+          "locative": "Сімдесятьох"
+        },
+        "deu": {
+          "genitive": "der Siebzig"
+        },
+        "rus": {
+          "genitive": "Семидесяти",
+          "locative": "Семидесяти"
+        }
+      },
+      "distinguisher": "the other seventy the Lord appointed and sent two and two before his face into every city and place whither he himself would come (LUK 10:1)",
+      "notes": "After these things the Lord appointed other seventy also, and sent them two and two before his face into every city and place, whither he himself would come (LUK 10:1). He told them that the harvest truly is great, but the labourers are few, sent them forth as lambs among wolves, and said, He that heareth you heareth me (LUK 10:2-16). The seventy returned again with joy, saying, Lord, even the devils are subject unto us through thy name; and he told them to rejoice rather because their names are written in heaven (LUK 10:17-20). Only Luke tells of them, and he names none of them.",
+      "called": [
+        {
+          "label": "The Seventy",
+          "greek": "ἑβδομήκοντα",
+          "greekTransliterated": "hebdomēkonta",
+          "greekStrongNumber": "G1440",
+          "meaning": "LUK 10:1; LUK 10:17"
+        },
+        {
+          "label": "Сімдесятеро"
+        },
+        {
+          "label": "Семьдесят"
+        }
+      ],
+      "passages": [
+        {
+          "reference": "LUK 10:1-20",
+          "role": "key"
+        }
+      ],
+      "occurrences": [
+        {
+          "strong": "G1440",
+          "only": [
+            "LUK 10:1",
+            "LUK 10:17"
+          ]
+        }
+      ],
+      "why": "Read verse by verse by claude-opus-5-5 on 2026-10-21, on the project owner's word of that day that Jesus taught twelve disciples, seventy and many more, not four. ἑβδομήκοντα is named as this company in the two verses that tell of it, LUK 10:1 and 10:17."
     }
   ],
   "refers": [
