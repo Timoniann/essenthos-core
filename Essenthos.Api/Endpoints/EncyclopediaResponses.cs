@@ -313,6 +313,13 @@ internal record EntityResponse(
 
     /// <summary>Where an observance falls in the year, one entry per position a verse states.</summary>
     public IList<ObservanceTimeResponse> Times { get; init; } = [];
+
+    /// <summary>
+    /// What the person is known for, clause by clause in the order it is told, each in the language
+    /// a line's own words are asked in or in English, with the verses that say it. Null for everyone
+    /// nothing has been written of.
+    /// </summary>
+    public IList<KnownForResponse>? KnownFor { get; init; }
 }
 
 /// <param name="Corpus">The text, by the id every other response names it by.</param>

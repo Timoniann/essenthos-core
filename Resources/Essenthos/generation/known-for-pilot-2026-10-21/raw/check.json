@@ -1,0 +1,147 @@
+{
+  "noah": [
+    {"clause": 1, "verdict": "right", "why": "GEN 6:22, 7:7, 8:18 state it; the range is the whole Flood narrative but that is the event."},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "abram": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"},
+    {"clause": 3, "verdict": "right", "why": "22:13 has Abraham find the ram; God's providing is stated in 22:8 and 22:14, both in range."}
+  ],
+  "sarai": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "moses": [
+    {"clause": 1, "verdict": "fix", "why": "The only cited verse for the leading out (EXO 12:51) says the LORD brought Israel out, and 14:21-31 credits the LORD with the sea; ACT 7:36 says Moses brought them out with signs in the Red sea.", "fix_refs": "EXO 12:51, 14:21-31, ACT 7:36"},
+    {"clause": 2, "verdict": "right"},
+    {"clause": 3, "verdict": "right"}
+  ],
+  "david": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"},
+    {"clause": 3, "verdict": "right"}
+  ],
+  "elijah": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "fix", "why": "Elijah prayed (18:36-37) and 'the fire of the LORD fell' (18:38); 'called down' credits him with the act, as 'healed' would where God healed.", "fix_en": "prayed on Mount Carmel, and the fire of the LORD fell on the sacrifice", "fix_uk": "помолився на горі Кармел, і Господній вогонь упав на жертву"},
+    {"clause": 3, "verdict": "right"}
+  ],
+  "elisha": [
+    {"clause": 1, "verdict": "right", "why": "2KI 2:15 is the sons of the prophets saying it; acceptable."},
+    {"clause": 2, "verdict": "right", "why": "Elisha prayed and stretched himself on the child (4:33-35); the text does not attribute the raising to anyone else."},
+    {"clause": 3, "verdict": "right"}
+  ],
+  "simon": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"},
+    {"clause": 3, "verdict": "fix", "why": "Pentecost is named only in ACT 2:1, outside the cited range.", "fix_refs": "ACT 2:1, 2:14-41"}
+  ],
+  "saul-2": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "fix", "why": "The Ukrainian makes Paul the one who met Jesus; the English (and ACT 9:17, 'Jesus, that appeared unto thee') has Jesus as the actor.", "fix_uk": "на дорозі до Дамаску йому з'явився Ісус, і він охрестився"},
+    {"clause": 3, "verdict": "fix", "why": "ACT 13:46-49 is one city (Antioch in Pisidia); 'in many cities' needs a verse such as ACT 15:36, 'every city where we have preached'.", "fix_refs": "ACT 13:46-49, 15:36, 28:14-16"}
+  ],
+  "jacob": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"},
+    {"clause": 3, "verdict": "right"}
+  ],
+  "joseph": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"},
+    {"clause": 3, "verdict": "fix", "why": "45:4-11 is Joseph's plan to nourish them ('there will I nourish thee'); that he did keep them alive is stated in 47:12, outside the range.", "fix_refs": "GEN 41:47-57, 45:4-11, 47:11-12"}
+  ],
+  "samuel-2": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"},
+    {"clause": 3, "verdict": "right", "why": "10:1 says 'captain over his inheritance', but the kingship is plain from 10:24 and 15:1; 1SA 15:1 could be added."}
+  ],
+  "solomon": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right", "why": "1KI 6 never names Jerusalem; 2CH 3:1 ('the house of the LORD at Jerusalem') could be added, but the place is not in doubt."},
+    {"clause": 3, "verdict": "right"}
+  ],
+  "enoch-2": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right", "why": "JUD 1:14 names 'Enoch, the seventh from Adam', so it is this Enoch."}
+  ],
+  "gideon": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"},
+    {"clause": 3, "verdict": "fix", "why": "The English holds (7:7, 7:20-22), but the Ukrainian numeral phrase does not agree: in the instrumental the noun follows the numeral, so it is «трьомастами чоловіками», not «трьомастами чоловік».", "fix_uk": "з трьомастами чоловіками розбив мідіянітян"}
+  ],
+  "deborah-2": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right", "why": "4:9-10 has her go up with Barak and 4:14 has her at Tabor sending him down; 'went with him to battle' is fair."},
+    {"clause": 3, "verdict": "right"}
+  ],
+  "ruth": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "nehemiah": [
+    {"clause": 1, "verdict": "right", "why": "NEH 2:1-8 says only 'the city of my fathers' sepulchres' in Judah; Jerusalem is named in 1:3 and 2:11, either of which could be added."},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "jonah": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "joseph-12": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"},
+    {"clause": 3, "verdict": "right"}
+  ],
+  "stephen": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "rahab": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "hezekiah": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"},
+    {"clause": 3, "verdict": "fix", "why": "20:1-6 is only God's promise ('I will heal thee'); the recovery itself is 20:7.", "fix_refs": "2KI 20:1-7"}
+  ],
+  "josiah": [
+    {"clause": 1, "verdict": "right", "why": "Josiah ordered the repair (22:3-6); that counts as his act."},
+    {"clause": 2, "verdict": "fix", "why": "'Idols' are named in 2KI 23:24 ('the images, and the idols ... did Josiah put away'), outside 23:4-20.", "fix_refs": "2KI 23:4-20, 23:24"},
+    {"clause": 3, "verdict": "fix", "why": "«загинув від фараона» is not natural Ukrainian; the death needs «від руки».", "fix_uk": "загинув від руки фараона Нехо в Меґіддо"}
+  ],
+  "naboth": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "gehazi": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "abigail": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "naaman-2": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "cornelius": [
+    {"clause": 1, "verdict": "right"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "martha": [
+    {"clause": 1, "verdict": "fix", "why": "«прийняла ... у своєму домі» does not render 'received into her house', and «клопоталася про багато служіння» is not natural Ukrainian.", "fix_uk": "прийняла Ісуса до свого дому й клопоталася великою службою"},
+    {"clause": 2, "verdict": "right"}
+  ],
+  "_notes": {
+    "moses": "His call at the burning bush (EXO 3) and the confrontation with Pharaoh are missing; either is more central than his death (clause 3).",
+    "david": "His sin with Bathsheba and the death of Uriah (2SA 11-12) is a defining event and is missing; Samuel's anointing of him (1SA 16:13) is another.",
+    "samuel-2": "That he judged Israel all his life (1SA 7:15) is his chief role and is missing.",
+    "abram": "Clause 2 could carry GEN 15:6 ('he believed ... counted it to him for righteousness'), which is the verse the NT quotes.",
+    "stephen": "His speech before the council (ACT 7:2-53) is what most of his story consists of.",
+    "josiah": "His Passover (2KI 23:21-23) is a further candidate, but the selection is sound.",
+    "deborah-2": "Fine; a reader may note that Jael, not Deborah or Barak, killed Sisera (4:21)."
+  }
+}

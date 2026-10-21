@@ -421,6 +421,7 @@ internal sealed class DatasetLoader(
             new("images", cancellationToken => PictureThePeopleAndPlaces(resources, cancellationToken)),
             new("withdrawn-records", WithdrawTheRecordsThatAreNoName),
             new("wikipedia", cancellationToken => LinkTheRecordsToWikipedia(resources, cancellationToken)),
+            new("known-for", SayWhatThePeopleAreKnownFor),
             new("verify", async cancellationToken =>
             {
                 // The index answers from what it read the first time it was asked, and until now that
@@ -1958,6 +1959,19 @@ internal sealed class DatasetLoader(
         status.Starting("the notes of our own records in every language");
         var notes = scope.ServiceProvider.GetRequiredService<NoteTranslationLoader>();
         status.Record(await notes.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// What people are known for, clause by clause with their verses, in every reader's language. Last
+    /// among the records, after every step that folds, renames or withdraws one.
+    /// </summary>
+    private async Task SayWhatThePeopleAreKnownFor(CancellationToken cancellationToken)
+    {
+        status.Starting("what people are known for");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<KnownForLoader>();
+        status.Record(await loader.Load(cancellationToken));
     }
 
     /// <summary>

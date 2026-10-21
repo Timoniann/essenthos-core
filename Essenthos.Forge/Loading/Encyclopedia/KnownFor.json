@@ -1,0 +1,861 @@
+{
+  "source": "Essenthos, what a person is known for, written from the person's verses in the King James Version with the verses each clause rests on, in English and Ukrainian by claude-opus-5-5 on 2026-10-21 and read again clause by clause against those verses by a second, separate reading; rendered into German and Spanish by claude-opus-5-5 on 2026-10-21; on the project owner's instruction",
+  "records": [
+    {
+      "slug": "noah",
+      "clauses": [
+        {
+          "english": "built the ark and was saved from the Flood with his family",
+          "ukr": "збудував ковчег і врятувався від потопу зі своєю родиною",
+          "deu": "baute die Arche und wurde mit seiner Familie aus der Sintflut gerettet",
+          "spa": "construyó el arca y se salvó del diluvio con su familia",
+          "references": [
+            "GEN 6:13-8:19"
+          ]
+        },
+        {
+          "english": "received God's covenant never again to destroy the earth by a flood",
+          "ukr": "прийняв Божий заповіт, що потоп більше не знищить землі",
+          "deu": "empfing Gottes Bund, dass keine Sintflut die Erde mehr verderben soll",
+          "spa": "recibió el pacto de Dios de no volver a destruir la tierra con un diluvio",
+          "references": [
+            "GEN 9:8-17"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "abram",
+      "clauses": [
+        {
+          "english": "left his country at God's call and went to Canaan",
+          "ukr": "на Божий поклик покинув свій край і пішов до Ханаану",
+          "deu": "verließ auf Gottes Ruf sein Land und zog nach Kanaan",
+          "spa": "dejó su tierra al llamado de Dios y fue a Canaán",
+          "references": [
+            "GEN 12:1-5"
+          ]
+        },
+        {
+          "english": "was promised offspring as many as the stars",
+          "ukr": "отримав обітницю нащадків, численних, як зорі",
+          "deu": "erhielt die Verheißung von Nachkommen, so zahlreich wie die Sterne",
+          "spa": "recibió la promesa de una descendencia tan numerosa como las estrellas",
+          "references": [
+            "GEN 15:1-6"
+          ]
+        },
+        {
+          "english": "bound Isaac to offer him up at God's command",
+          "ukr": "зв'язав Ісака, щоб за Божим наказом принести його в жертву",
+          "deu": "band Isaak, um ihn auf Gottes Befehl zu opfern",
+          "spa": "ató a Isaac para ofrecerlo en sacrificio por mandato de Dios",
+          "references": [
+            "GEN 22:1-14"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "sarai",
+      "clauses": [
+        {
+          "english": "gave her maid Hagar to Abraham as a wife",
+          "ukr": "дала Авраамові за жінку свою служницю Аґар",
+          "deu": "gab Abraham ihre Magd Hagar zur Frau",
+          "spa": "dio a Abraham su sierva Agar por mujer",
+          "references": [
+            "GEN 16:1-3"
+          ]
+        },
+        {
+          "english": "laughed at the promise of a son, then bore Isaac in her old age",
+          "ukr": "засміялася з обітниці сина, а потім у старості народила Ісака",
+          "deu": "lachte über die Verheißung eines Sohnes und gebar dann im Alter Isaak",
+          "spa": "se rió de la promesa de un hijo, y después dio a luz a Isaac en su vejez",
+          "references": [
+            "GEN 18:10-15",
+            "GEN 21:1-7"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "moses",
+      "clauses": [
+        {
+          "english": "was called by God from a burning bush",
+          "ukr": "Бог покликав його з палаючої купини",
+          "deu": "wurde von Gott aus einem brennenden Dornbusch gerufen",
+          "spa": "fue llamado por Dios desde una zarza ardiente",
+          "references": [
+            "EXO 3:1-10"
+          ]
+        },
+        {
+          "english": "led Israel out of Egypt and through the sea on dry ground",
+          "ukr": "вивів Ізраїля з Єгипту й провів морем по суші",
+          "deu": "führte Israel aus Ägypten und trockenen Fußes durch das Meer",
+          "spa": "sacó a Israel de Egipto y lo hizo pasar el mar en seco",
+          "references": [
+            "EXO 12:51",
+            "EXO 14:21-31",
+            "ACT 7:36"
+          ]
+        },
+        {
+          "english": "received the law from God on Mount Sinai",
+          "ukr": "прийняв від Бога Закон на горі Сінай",
+          "deu": "empfing von Gott das Gesetz auf dem Berg Sinai",
+          "spa": "recibió de Dios la ley en el monte Sinaí",
+          "references": [
+            "EXO 19:20-20:21",
+            "EXO 31:18"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "david",
+      "clauses": [
+        {
+          "english": "killed Goliath with a sling and a stone",
+          "ukr": "убив Ґоліята пращею і каменем",
+          "deu": "tötete Goliath mit Schleuder und Stein",
+          "spa": "mató a Goliath con una honda y una piedra",
+          "references": [
+            "1SA 17:48-51"
+          ]
+        },
+        {
+          "english": "was anointed king over Israel and reigned forty years",
+          "ukr": "був помазаний на царя над Ізраїлем і царював сорок років",
+          "deu": "wurde zum König über Israel gesalbt und regierte vierzig Jahre",
+          "spa": "fue ungido rey sobre Israel y reinó cuarenta años",
+          "references": [
+            "2SA 5:3-5"
+          ]
+        },
+        {
+          "english": "took Jerusalem and brought the ark of God into it",
+          "ukr": "здобув Єрусалим і переніс до нього Божий ковчег",
+          "deu": "nahm Jerusalem ein und brachte die Lade Gottes hinein",
+          "spa": "tomó Jerusalem y llevó a ella el arca de Dios",
+          "references": [
+            "2SA 5:6-9",
+            "2SA 6:12-17"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "elijah",
+      "clauses": [
+        {
+          "english": "foretold a drought and was fed by ravens",
+          "ukr": "провістив посуху, і його годували круки",
+          "deu": "sagte eine Dürre an und wurde von Raben ernährt",
+          "spa": "anunció una sequía y fue alimentado por cuervos",
+          "references": [
+            "1KI 17:1-6"
+          ]
+        },
+        {
+          "english": "prayed on Mount Carmel, and the fire of the LORD fell on the sacrifice",
+          "ukr": "помолився на горі Кармел, і Господній вогонь упав на жертву",
+          "deu": "betete auf dem Berg Karmel, und das Feuer des HERRN fiel auf das Opfer",
+          "spa": "oró en el monte Carmelo, y el fuego del SEÑOR cayó sobre el sacrificio",
+          "references": [
+            "1KI 18:20-39"
+          ]
+        },
+        {
+          "english": "was taken up to heaven in a whirlwind",
+          "ukr": "був узятий вихором на небо",
+          "deu": "wurde in einem Sturmwind zum Himmel hinaufgenommen",
+          "spa": "fue llevado al cielo en un torbellino",
+          "references": [
+            "2KI 2:11"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "elisha",
+      "clauses": [
+        {
+          "english": "succeeded Elijah, whose spirit rested on him",
+          "ukr": "став наступником Іллі, і дух Іллі спочив на ньому",
+          "deu": "folgte Elia nach, und dessen Geist ruhte auf ihm",
+          "spa": "sucedió a Elías, y el espíritu de Elías reposó sobre él",
+          "references": [
+            "1KI 19:19-21",
+            "2KI 2:9-15"
+          ]
+        },
+        {
+          "english": "raised the Shunammite woman's son from the dead",
+          "ukr": "воскресив сина шунаммітянки",
+          "deu": "erweckte den Sohn der Sunamitin wieder zum Leben",
+          "spa": "resucitó al hijo de la sunamita",
+          "references": [
+            "2KI 4:32-37"
+          ]
+        },
+        {
+          "english": "sent Naaman to wash in the Jordan, and he was healed of leprosy",
+          "ukr": "послав Наамана обмитися в Йордані, і той очистився від прокази",
+          "deu": "schickte Naeman, sich im Jordan zu waschen, und er wurde vom Aussatz rein",
+          "spa": "envió a Naamán a lavarse en el Jordán, y quedó limpio de la lepra",
+          "references": [
+            "2KI 5:9-14"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "simon",
+      "clauses": [
+        {
+          "english": "left his nets to follow Jesus",
+          "ukr": "покинув сіті й пішов за Ісусом",
+          "deu": "verließ seine Netze, um Jesus nachzufolgen",
+          "spa": "dejó sus redes para seguir a Jesús",
+          "references": [
+            "MAT 4:18-20"
+          ]
+        },
+        {
+          "english": "confessed Jesus as the Christ, yet later denied him three times",
+          "ukr": "визнав Ісуса Христом, а згодом тричі зрікся його",
+          "deu": "bekannte Jesus als den Christus und verleugnete ihn doch später dreimal",
+          "spa": "confesó a Jesús como el Cristo, pero después lo negó tres veces",
+          "references": [
+            "MAT 16:15-16",
+            "MAT 26:69-75"
+          ]
+        },
+        {
+          "english": "preached to the crowds at Pentecost",
+          "ukr": "проповідував натовпу в день П'ятидесятниці",
+          "deu": "predigte an Pfingsten vor der Menge",
+          "spa": "predicó a la multitud el día de Pentecostés",
+          "references": [
+            "ACT 2:1",
+            "ACT 2:14-41"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "saul-2",
+      "clauses": [
+        {
+          "english": "persecuted the church",
+          "ukr": "переслідував церкву",
+          "deu": "verfolgte die Gemeinde",
+          "spa": "persiguió a la iglesia",
+          "references": [
+            "ACT 8:3",
+            "GAL 1:13"
+          ]
+        },
+        {
+          "english": "was met by Jesus on the road to Damascus",
+          "ukr": "на дорозі до Дамаску йому з'явився Ісус",
+          "deu": "auf dem Weg nach Damaskus erschien ihm Jesus",
+          "spa": "en el camino a Damasco se le apareció Jesús",
+          "references": [
+            "ACT 9:3-18"
+          ]
+        },
+        {
+          "english": "preached to the Gentiles in many cities and was taken to Rome a prisoner",
+          "ukr": "проповідував поганам у багатьох містах і в'язнем прибув до Риму",
+          "deu": "predigte den Heiden in vielen Städten und wurde als Gefangener nach Rom gebracht",
+          "spa": "predicó a los gentiles en muchas ciudades y fue llevado preso a Roma",
+          "references": [
+            "ACT 13:46-49",
+            "ACT 15:36",
+            "ACT 28:14-16"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "jacob",
+      "clauses": [
+        {
+          "english": "bought Esau's birthright and took his blessing by deceit",
+          "ukr": "купив Ісавове первородство і підступом забрав його благословення",
+          "deu": "kaufte Esau das Erstgeburtsrecht ab und erschlich sich seinen Segen",
+          "spa": "compró la primogenitura de Esaú y le quitó con engaño su bendición",
+          "references": [
+            "GEN 25:29-34",
+            "GEN 27:1-36"
+          ]
+        },
+        {
+          "english": "dreamed of a ladder reaching to heaven",
+          "ukr": "бачив уві сні драбину, що сягала неба",
+          "deu": "sah im Traum eine Leiter, die bis an den Himmel reichte",
+          "spa": "soñó con una escalera que llegaba hasta el cielo",
+          "references": [
+            "GEN 28:10-17"
+          ]
+        },
+        {
+          "english": "wrestled until daybreak and was named Israel",
+          "ukr": "боровся до світанку й дістав ім'я Ізраїль",
+          "deu": "rang bis zum Anbruch des Tages und erhielt den Namen Israel",
+          "spa": "luchó hasta rayar el alba y recibió el nombre de Israel",
+          "references": [
+            "GEN 32:24-28"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "joseph",
+      "clauses": [
+        {
+          "english": "was sold by his brothers and taken to Egypt",
+          "ukr": "брати продали його, і його відвели до Єгипту",
+          "deu": "wurde von seinen Brüdern verkauft und nach Ägypten gebracht",
+          "spa": "fue vendido por sus hermanos y llevado a Egipto",
+          "references": [
+            "GEN 37:26-28"
+          ]
+        },
+        {
+          "english": "interpreted Pharaoh's dreams and was set over all Egypt",
+          "ukr": "витлумачив фараонові сни і був поставлений над усім Єгиптом",
+          "deu": "deutete dem Pharao die Träume und wurde über ganz Ägypten gesetzt",
+          "spa": "interpretó los sueños de Faraón y fue puesto sobre toda la tierra de Egipto",
+          "references": [
+            "GEN 41:14-41"
+          ]
+        },
+        {
+          "english": "stored grain against the famine and kept his family alive",
+          "ukr": "зібрав збіжжя на голодні роки і зберіг життя своїй родині",
+          "deu": "sammelte Getreide für die Hungersnot und erhielt seine Familie am Leben",
+          "spa": "almacenó grano para el tiempo del hambre y preservó la vida de su familia",
+          "references": [
+            "GEN 41:47-57",
+            "GEN 45:4-11",
+            "GEN 47:11-12"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "samuel-2",
+      "clauses": [
+        {
+          "english": "was called by the LORD in the night",
+          "ukr": "Господь покликав його вночі",
+          "deu": "wurde in der Nacht vom HERRN gerufen",
+          "spa": "fue llamado por el SEÑOR en la noche",
+          "references": [
+            "1SA 3:1-10"
+          ]
+        },
+        {
+          "english": "judged Israel all his life",
+          "ukr": "судив Ізраїля все своє життя",
+          "deu": "richtete Israel sein Leben lang",
+          "spa": "juzgó a Israel todos los días de su vida",
+          "references": [
+            "1SA 7:15-17"
+          ]
+        },
+        {
+          "english": "anointed Saul and then David as king",
+          "ukr": "помазав на царя Саула, а потім Давида",
+          "deu": "salbte Saul und danach David zum König",
+          "spa": "ungió por rey a Saúl y después a David",
+          "references": [
+            "1SA 10:1",
+            "1SA 15:1",
+            "1SA 16:13"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "solomon",
+      "clauses": [
+        {
+          "english": "asked God for wisdom and was given it",
+          "ukr": "попросив у Бога мудрості й отримав її",
+          "deu": "bat Gott um Weisheit und erhielt sie",
+          "spa": "pidió a Dios sabiduría y la recibió",
+          "references": [
+            "1KI 3:5-12"
+          ]
+        },
+        {
+          "english": "built the temple of the LORD in Jerusalem",
+          "ukr": "збудував Господній храм у Єрусалимі",
+          "deu": "baute den Tempel des HERRN in Jerusalem",
+          "spa": "edificó el templo del SEÑOR en Jerusalem",
+          "references": [
+            "1KI 6:1-38",
+            "2CH 3:1"
+          ]
+        },
+        {
+          "english": "was turned after other gods by his wives in his old age",
+          "ukr": "у старості жінки схилили його до інших богів",
+          "deu": "wurde im Alter von seinen Frauen zu anderen Göttern verleitet",
+          "spa": "en su vejez sus mujeres lo desviaron tras otros dioses",
+          "references": [
+            "1KI 11:1-8"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "enoch-2",
+      "clauses": [
+        {
+          "english": "walked with God, and God took him",
+          "ukr": "ходив з Богом, і Бог узяв його",
+          "deu": "wandelte mit Gott, und Gott nahm ihn hinweg",
+          "spa": "caminó con Dios, y Dios se lo llevó",
+          "references": [
+            "GEN 5:22-24",
+            "HEB 11:5"
+          ]
+        },
+        {
+          "english": "prophesied that the Lord would come with his saints",
+          "ukr": "пророкував, що Господь прийде зі своїми святими",
+          "deu": "weissagte, dass der Herr mit seinen Heiligen kommen werde",
+          "spa": "profetizó que el Señor vendría con sus santos",
+          "references": [
+            "JUD 1:14-15"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "gideon",
+      "clauses": [
+        {
+          "english": "tore down the altar of Baal",
+          "ukr": "зруйнував жертовник Баала",
+          "deu": "riss den Altar Baals nieder",
+          "spa": "derribó el altar de Baal",
+          "references": [
+            "JDG 6:25-28"
+          ]
+        },
+        {
+          "english": "asked God for a sign with a fleece",
+          "ukr": "просив у Бога знаку з руном",
+          "deu": "bat Gott mit einem Fell um ein Zeichen",
+          "spa": "pidió a Dios una señal con un vellón",
+          "references": [
+            "JDG 6:36-40"
+          ]
+        },
+        {
+          "english": "routed the Midianites with three hundred men",
+          "ukr": "з трьомастами чоловіками розбив мідіянітян",
+          "deu": "schlug die Midianiter mit dreihundert Mann",
+          "spa": "derrotó a los Madianitas con trescientos hombres",
+          "references": [
+            "JDG 7:7-22"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "deborah-2",
+      "clauses": [
+        {
+          "english": "was a prophetess and judged Israel",
+          "ukr": "була пророчицею і судила Ізраїля",
+          "deu": "war eine Prophetin und richtete Israel",
+          "spa": "fue profetisa y juzgó a Israel",
+          "references": [
+            "JDG 4:4-5"
+          ]
+        },
+        {
+          "english": "sent Barak against Sisera and went with him to battle",
+          "ukr": "послала Барака проти Сісери і пішла з ним на битву",
+          "deu": "sandte Barak gegen Sisera und zog mit ihm in den Kampf",
+          "spa": "envió a Barac contra Sísara y fue con él a la batalla",
+          "references": [
+            "JDG 4:6-14"
+          ]
+        },
+        {
+          "english": "sang the song of victory with Barak",
+          "ukr": "заспівала з Бараком пісню перемоги",
+          "deu": "sang mit Barak das Siegeslied",
+          "spa": "cantó con Barac el cántico de la victoria",
+          "references": [
+            "JDG 5:1-31"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "ruth",
+      "clauses": [
+        {
+          "english": "would not leave her mother-in-law and went with her to Bethlehem",
+          "ukr": "не покинула свекрухи й пішла з нею до Віфлеєму",
+          "deu": "wollte ihre Schwiegermutter nicht verlassen und ging mit ihr nach Bethlehem",
+          "spa": "no quiso dejar a su suegra y fue con ella a Beth-lehem",
+          "references": [
+            "RUT 1:14-22"
+          ]
+        },
+        {
+          "english": "gleaned in the field of Boaz, became his wife and bore Obed",
+          "ukr": "збирала колоски на полі Боаза, стала його дружиною і народила Оведа",
+          "deu": "las Ähren auf dem Feld des Boas, wurde seine Frau und gebar Obed",
+          "spa": "espigó en el campo de Booz, llegó a ser su mujer y dio a luz a Obed",
+          "references": [
+            "RUT 2:2-3",
+            "RUT 4:13-17"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "nehemiah",
+      "clauses": [
+        {
+          "english": "asked King Artaxerxes for leave to rebuild Jerusalem",
+          "ukr": "попросив у царя Артаксеркса дозволу відбудувати Єрусалим",
+          "deu": "bat König Arthahsastha um Erlaubnis, Jerusalem wieder aufzubauen",
+          "spa": "pidió al rey Artajerjes licencia para reedificar Jerusalem",
+          "references": [
+            "NEH 1:3",
+            "NEH 2:1-8"
+          ]
+        },
+        {
+          "english": "led the rebuilding of the city wall",
+          "ukr": "очолив відбудову міського муру",
+          "deu": "leitete den Wiederaufbau der Stadtmauer",
+          "spa": "dirigió la reedificación del muro de la ciudad",
+          "references": [
+            "NEH 2:17-18",
+            "NEH 6:15"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "jonah",
+      "clauses": [
+        {
+          "english": "fled from God's call and was swallowed by a great fish",
+          "ukr": "утік від Божого доручення, і його проковтнула велика риба",
+          "deu": "floh vor Gottes Auftrag und wurde von einem großen Fisch verschlungen",
+          "spa": "huyó del llamado de Dios y fue tragado por un gran pez",
+          "references": [
+            "JON 1:1-17"
+          ]
+        },
+        {
+          "english": "preached in Nineveh, and the city repented",
+          "ukr": "проповідував у Ніневії, і місто покаялося",
+          "deu": "predigte in Ninive, und die Stadt tat Buße",
+          "spa": "predicó en Nínive, y la ciudad se arrepintió",
+          "references": [
+            "JON 3:1-10"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "joseph-12",
+      "clauses": [
+        {
+          "english": "sold his land and gave the money to the apostles",
+          "ukr": "продав свою землю і віддав гроші апостолам",
+          "deu": "verkaufte seinen Acker und gab das Geld den Aposteln",
+          "spa": "vendió su heredad y dio el dinero a los apóstoles",
+          "references": [
+            "ACT 4:36-37"
+          ]
+        },
+        {
+          "english": "brought Saul to the apostles",
+          "ukr": "привів Савла до апостолів",
+          "deu": "brachte Saulus zu den Aposteln",
+          "spa": "llevó a Saulo a los apóstoles",
+          "references": [
+            "ACT 9:26-27"
+          ]
+        },
+        {
+          "english": "was sent out with Saul from Antioch to preach",
+          "ukr": "разом із Савлом був посланий з Антіохії проповідувати",
+          "deu": "wurde mit Saulus von Antiochien ausgesandt, um zu predigen",
+          "spa": "fue enviado con Saulo desde Antioquía a predicar",
+          "references": [
+            "ACT 13:1-4"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "stephen",
+      "clauses": [
+        {
+          "english": "was chosen as one of the seven and did great wonders",
+          "ukr": "був обраний одним із сімох і чинив великі чуда",
+          "deu": "wurde als einer der Sieben gewählt und tat große Wunder",
+          "spa": "fue elegido como uno de los siete e hizo grandes prodigios",
+          "references": [
+            "ACT 6:5-8"
+          ]
+        },
+        {
+          "english": "was stoned to death, praying for those who stoned him",
+          "ukr": "був побитий камінням і молився за тих, хто його вбивав",
+          "deu": "wurde gesteinigt und betete für die, die ihn steinigten",
+          "spa": "murió apedreado, orando por los que lo apedreaban",
+          "references": [
+            "ACT 7:54-60"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "rahab",
+      "clauses": [
+        {
+          "english": "hid the two spies in Jericho",
+          "ukr": "переховала двох вивідувачів у Єрихоні",
+          "deu": "versteckte die beiden Kundschafter in Jericho",
+          "spa": "escondió a los dos espías en Jericó",
+          "references": [
+            "JOS 2:1-16"
+          ]
+        },
+        {
+          "english": "was spared with her family when the city fell",
+          "ukr": "була врятована з родиною, коли місто впало",
+          "deu": "wurde mit ihrer Familie verschont, als die Stadt fiel",
+          "spa": "fue salvada con su familia cuando cayó la ciudad",
+          "references": [
+            "JOS 6:22-25"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "hezekiah",
+      "clauses": [
+        {
+          "english": "removed the high places and broke the bronze serpent",
+          "ukr": "усунув пагірки для жертв і розбив мідного змія",
+          "deu": "entfernte die Höhen und zerschlug die eherne Schlange",
+          "spa": "quitó los lugares altos y quebró la serpiente de bronce",
+          "references": [
+            "2KI 18:3-4"
+          ]
+        },
+        {
+          "english": "prayed, and Jerusalem was delivered from Sennacherib",
+          "ukr": "помолився, і Єрусалим був урятований від Санхеріва",
+          "deu": "betete, und Jerusalem wurde vor Sanherib errettet",
+          "spa": "oró, y Jerusalem fue librada de Sennachêrib",
+          "references": [
+            "2KI 19:14-36"
+          ]
+        },
+        {
+          "english": "was healed and given fifteen more years",
+          "ukr": "був зцілений і дістав ще п'ятнадцять років життя",
+          "deu": "wurde geheilt und erhielt fünfzehn weitere Lebensjahre",
+          "spa": "fue sanado y recibió quince años más de vida",
+          "references": [
+            "2KI 20:1-7"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "josiah",
+      "clauses": [
+        {
+          "english": "repaired the temple, where the book of the law was found",
+          "ukr": "відновив храм, де знайшли книгу Закону",
+          "deu": "ließ den Tempel ausbessern, in dem das Gesetzbuch gefunden wurde",
+          "spa": "reparó el templo, donde fue hallado el libro de la ley",
+          "references": [
+            "2KI 22:3-13"
+          ]
+        },
+        {
+          "english": "removed the idols and the high places from the land",
+          "ukr": "усунув ідолів і пагірки для жертв з краю",
+          "deu": "entfernte die Götzen und die Höhen aus dem Land",
+          "spa": "quitó de la tierra los ídolos y los lugares altos",
+          "references": [
+            "2KI 23:4-20",
+            "2KI 23:24"
+          ]
+        },
+        {
+          "english": "was killed by Pharaoh Necho at Megiddo",
+          "ukr": "загинув від руки фараона Нехо в Меґіддо",
+          "deu": "wurde von Pharao Necho bei Megiddo getötet",
+          "spa": "murió a manos de Faraón Nechâo en Megiddo",
+          "references": [
+            "2KI 23:29"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "naboth",
+      "clauses": [
+        {
+          "english": "refused to give King Ahab his vineyard",
+          "ukr": "відмовився віддати цареві Ахаву свій виноградник",
+          "deu": "weigerte sich, König Ahab seinen Weinberg zu geben",
+          "spa": "se negó a dar su viña al rey Achâb",
+          "references": [
+            "1KI 21:1-3"
+          ]
+        },
+        {
+          "english": "was falsely accused by Jezebel's plot and stoned",
+          "ukr": "через змову Єзавелі був фальшиво обвинувачений і побитий камінням",
+          "deu": "wurde durch Isebels Anschlag falsch angeklagt und gesteinigt",
+          "spa": "fue acusado falsamente por una trama de Jezabel y apedreado",
+          "references": [
+            "1KI 21:7-14"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "gehazi",
+      "clauses": [
+        {
+          "english": "took silver from Naaman by a lie and was struck with his leprosy",
+          "ukr": "обманом узяв срібло в Наамана і був уражений його проказою",
+          "deu": "nahm Naeman mit einer Lüge Silber ab und wurde mit dessen Aussatz geschlagen",
+          "spa": "tomó plata de Naamán con una mentira, y la lepra de Naamán se le pegó",
+          "references": [
+            "2KI 5:20-27"
+          ]
+        },
+        {
+          "english": "told the king of all the great things Elisha had done",
+          "ukr": "розповів цареві про всі великі діла Єлисея",
+          "deu": "erzählte dem König von allen großen Taten Elisas",
+          "spa": "contó al rey todas las maravillas que había hecho Eliseo",
+          "references": [
+            "2KI 8:4-6"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "abigail",
+      "clauses": [
+        {
+          "english": "brought food to David and kept him from shedding blood",
+          "ukr": "принесла Давидові їжу і втримала його від кровопролиття",
+          "deu": "brachte David Speise und hielt ihn davon ab, Blut zu vergießen",
+          "spa": "llevó alimentos a David y lo apartó de derramar sangre",
+          "references": [
+            "1SA 25:18-35"
+          ]
+        },
+        {
+          "english": "became David's wife after Nabal died",
+          "ukr": "після смерті Навала стала дружиною Давида",
+          "deu": "wurde nach Nabals Tod Davids Frau",
+          "spa": "llegó a ser mujer de David después de que murió Nabal",
+          "references": [
+            "1SA 25:39-42"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "naaman-2",
+      "clauses": [
+        {
+          "english": "washed seven times in the Jordan and was healed of leprosy",
+          "ukr": "сім разів занурився в Йордан і очистився від прокази",
+          "deu": "tauchte siebenmal im Jordan unter und wurde vom Aussatz rein",
+          "spa": "se zambulló siete veces en el Jordán y quedó limpio de la lepra",
+          "references": [
+            "2KI 5:9-14"
+          ]
+        },
+        {
+          "english": "vowed to sacrifice to no god but the LORD",
+          "ukr": "пообіцяв не приносити жертв жодним богам, крім Господа",
+          "deu": "gelobte, keinem anderen Gott mehr zu opfern als dem HERRN",
+          "spa": "prometió no ofrecer sacrificio a otro dios sino al SEÑOR",
+          "references": [
+            "2KI 5:15-17"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "cornelius",
+      "clauses": [
+        {
+          "english": "saw an angel in a vision and sent for Peter",
+          "ukr": "побачив у видінні ангела і послав по Петра",
+          "deu": "sah in einer Erscheinung einen Engel und ließ Petrus holen",
+          "spa": "vio en visión un ángel y mandó llamar a Pedro",
+          "references": [
+            "ACT 10:1-8"
+          ]
+        },
+        {
+          "english": "received the Holy Ghost with those in his house and was baptized",
+          "ukr": "разом із тими, хто був у його домі, прийняв Святого Духа й охрестився",
+          "deu": "empfing mit denen in seinem Haus den Heiligen Geist und wurde getauft",
+          "spa": "recibió el Espíritu Santo con los de su casa y fue bautizado",
+          "references": [
+            "ACT 10:44-48"
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "martha",
+      "clauses": [
+        {
+          "english": "received Jesus into her house and was busy with much serving",
+          "ukr": "прийняла Ісуса до свого дому й клопоталася великою службою",
+          "deu": "nahm Jesus in ihr Haus auf und machte sich viel zu schaffen, ihm zu dienen",
+          "spa": "recibió a Jesús en su casa y andaba afanada con muchos quehaceres",
+          "references": [
+            "LUK 10:38-41"
+          ]
+        },
+        {
+          "english": "confessed Jesus as the Christ after Lazarus died",
+          "ukr": "після смерті Лазаря визнала Ісуса Христом",
+          "deu": "bekannte Jesus nach dem Tod des Lazarus als den Christus",
+          "spa": "confesó a Jesús como el Cristo después de la muerte de Lázaro",
+          "references": [
+            "JHN 11:21-27"
+          ]
+        }
+      ]
+    }
+  ]
+}

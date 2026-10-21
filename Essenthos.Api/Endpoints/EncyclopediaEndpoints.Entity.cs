@@ -351,6 +351,7 @@ internal static partial class EncyclopediaEndpoints
                         o.Cycle, o.Month, o.Day, o.LastDay,
                         BookReferences.At(o.CanonicalBook, o.CanonicalChapter, o.CanonicalVerse)!, o.Note)),
                 ],
+                KnownFor = await KnownForClauses.Of(db, entity.Id, words, cancellationToken),
             });
         });
     }

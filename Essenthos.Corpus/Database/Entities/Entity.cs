@@ -118,6 +118,9 @@ public class Entity
     /// <summary>The passages a reader is sent to about this entity, and those that command it.</summary>
     public ICollection<EntityPassage> Passages { get; set; } = [];
 
+    /// <summary>What a person is known for, in the order it is told; empty for nearly everyone.</summary>
+    public ICollection<EntityKnownFor> KnownFor { get; set; } = [];
+
     /// <summary>The article each language's Wikipedia has on it, where it could be told which.</summary>
     public ICollection<EntityWikipedia> Wikipedia { get; set; } = [];
 
