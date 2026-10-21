@@ -99,7 +99,7 @@ public sealed class AnnotationProvenanceTests
             "zimri-in-jezebels-cry", "person", "Zimri", "whom Jezebel names", null, null, null, null,
             "The rhetoric is recorded rather than resolved.", null, null,
             "Essenthos, on the project owner's ruling", "essenthos", 1, 1, 0, [], [], [], [],
-            [new EntityClaimResponse("manual", null, "Essenthos, on the project owner's ruling", "essenthos", "why")],
+            [new EntityClaimResponse("manual", null, "Essenthos, on the project owner's ruling", "essenthos")],
             [new EntityAlternativeResponse("jehu-2", "Jehu", null, null, "she may be addressing him", "Essenthos", "essenthos")],
             true);
 

@@ -43,12 +43,9 @@ internal static partial class Periods
             "Israel falls to Assyria within this era, 137 years before Judah falls to Babylon."),
         ("era-exile", "The exile in Babylon", "beginseventyyearexileinbabylon", "endseventyyearexileinbabylon", null),
         ("era-return", "The return and the Persian period", "endseventyyearexileinbabylon", "endartaxerxes1reign",
-            "Where the computed chronology stops. It is arithmetic over the genealogies and the "
-            + "reign lengths, and those stop here, so the four centuries between the testaments are "
-            + "still unnarrated on this axis and the jubilees past this point are counted forward "
-            + "rather than narrated. The New Testament is narrated, by a different hand: Ussher "
-            + "dates 354 of its paragraphs, AD 7 to AD 73, and they say so on every row. The gap "
-            + "that remains is stated, not a loading failure."),
+            "Where the chronology the genealogies and the reign lengths give stops, because they stop "
+            + "here: the four centuries between the testaments are not dated by them, and the jubilees "
+            + "after this point are counted forward. The New Testament is dated by Ussher, AD 7 to AD 73."),
     ];
 
     /// <summary>
@@ -127,8 +124,7 @@ internal static partial class Periods
             {
                 period.Notes = Appended(
                     period.Notes,
-                    $"Runs {period.EndYear - closes} years past the close of \"{era.Name}\", the era " +
-                    "it opens in. The parent of a band is where it begins, not what contains it.");
+                    $"Runs {period.EndYear - closes} years past the close of \"{era.Name}\", the era it opens in.");
             }
         }
     }
@@ -241,8 +237,7 @@ internal static partial class Periods
     }
 
     private const string Inferred =
-        "The dataset marks one end of this with an asterisk, meaning the year is inferred from " +
-        "another figure rather than stated in the text.";
+        "One end of this is inferred from another figure rather than stated in the text.";
 
     /// <summary>
     /// What the two halves of a pair have in common. The dataset writes the marker at either end

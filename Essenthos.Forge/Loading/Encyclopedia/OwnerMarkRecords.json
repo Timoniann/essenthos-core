@@ -1,0 +1,20 @@
+{
+  "decidedBy": "the project owner, in his note on the review page of relationship facts, 2026-09-13, written onto the record by claude-opus-5-5 on 2026-10-21",
+  "policy": "Where the owner confirmed a relationship and asked that it carry a mark no relationship row can hold, the record says it.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's note on the review page of relationship facts, 2026-09-13, written onto the record 2026-10-21",
+  "rulings": [
+    {
+      "text": "BHSA",
+      "reference": "2SA 3:4",
+      "position": 12,
+      "surface": "אֲבִיטָֽל",
+      "strongNumber": "H37",
+      "existing": "abital",
+      "says": {
+        "notes": "2 Samuel 3:4 and 1 Chronicles 3:3 name her as the mother of David's son Shephatiah and do not call her his wife, so she may have been his concubine."
+      },
+      "why": "'And the fifth, Shephatiah the son of Abital': Abital, David's wife, marked as one who may have been his concubine."
+    }
+  ]
+}

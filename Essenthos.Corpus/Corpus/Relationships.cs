@@ -96,7 +96,6 @@ internal static class Relationships
                 r.ToEntityId == entityId ? r.From!.Kind : r.To!.Kind,
                 r.ToEntityId == entityId,
                 BookReferences.At(r.CanonicalBook, r.CanonicalChapter, r.CanonicalVerse),
-                r.Notes,
                 r.Method,
                 r.Confidence,
                 r.Source)
@@ -188,8 +187,7 @@ internal static class Relationships
         && RelationshipVocabulary.Reversed(outward.Type).Contains(inward.Type);
 
     private static EntityRelationshipResponse Show(Related row, IReadOnlyList<Related> corroboration) =>
-        new(row.Type, row.Category, row.Slug, row.Name, row.Distinguisher, row.Inward,
-            row.Reference, row.Notes)
+        new(row.Type, row.Category, row.Slug, row.Name, row.Distinguisher, row.Inward, row.Reference)
         {
             Kind = EnumSpelling.Of(row.Kind),
             Method = EnumSpelling.Of(row.Method),
@@ -206,7 +204,7 @@ internal static class Relationships
             : null;
 
     private static EntityRelationshipWitnessResponse Corroborating(Related row, Related witness) =>
-        new(witness.Type, witness.Category, witness.Inward != row.Inward, witness.Reference, witness.Notes)
+        new(witness.Type, witness.Category, witness.Inward != row.Inward, witness.Reference)
         {
             Method = EnumSpelling.Of(witness.Method),
             Confidence = witness.Confidence,
@@ -234,7 +232,6 @@ internal static class Relationships
         EntityKind Kind,
         bool Inward,
         VerseRefResponse? Reference,
-        string? Notes,
         LinkMethod Method,
         double? Confidence,
         string Source)

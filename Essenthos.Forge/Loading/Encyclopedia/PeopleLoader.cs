@@ -421,7 +421,7 @@ internal sealed class PeopleLoader(
                     slug => peoples.ContainsKey(slug) || taken.Contains(slug)),
                 name,
                 Distinguisher(gentilic),
-                correction is null ? null : $"Named here as {name}. {correction.Why}",
+                null,
                 gentilic.OriginEntityId,
                 FromTheDictionary);
 

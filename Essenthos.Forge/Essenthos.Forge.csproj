@@ -122,6 +122,7 @@
         <EmbeddedResource Include="Loading\Encyclopedia\NamesReadPerVerseRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\FatherOfTownRecords.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\FatherOfTownPeopleRecords.json" />
+        <EmbeddedResource Include="Loading\Encyclopedia\OwnerMarkRecords.json" />
         <Content Remove="Loading\Encyclopedia\PharaohReadings.json" />
         <EmbeddedResource Include="Loading\Encyclopedia\PharaohReadings.json" />
         <Content Remove="Loading\Encyclopedia\CaesarReadings.json" />

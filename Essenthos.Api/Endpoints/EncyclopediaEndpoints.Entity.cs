@@ -165,7 +165,7 @@ internal static partial class EncyclopediaEndpoints
             // for itself can never reach a reader looking like one it merely carried.
             var established = await db.EntityClaims
                 .Where(c => c.EntityId == entity.Id)
-                .Select(c => new { c.Method, c.Confidence, c.Source, c.Note })
+                .Select(c => new { c.Method, c.Confidence, c.Source })
                 .ToListAsync(cancellationToken);
 
             var bearers = await db.TitleBearers
@@ -298,7 +298,7 @@ internal static partial class EncyclopediaEndpoints
                 ],
                 [
                     .. established.Select(c => new EntityClaimResponse(
-                        EnumSpelling.Of(c.Method), c.Confidence, c.Source, Datasets.Of(c.Source), c.Note)),
+                        EnumSpelling.Of(c.Method), c.Confidence, c.Source, Datasets.Of(c.Source))),
                 ],
                 alternatives,
                 alternatives.Count > 0)
