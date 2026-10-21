@@ -1,0 +1,64 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:1	2	anciano		2	πρεσβύτερος		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:1	8	cual		6	ὃν		global-review-known-rendering	safe	0.6282	approved	0				global known-rendering assignment; lexical score 0.48
+1:1	10	amo		8	ἀγαπῶ		global-review-known-rendering	safe	0.53	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:1	12	verdad		10	ἀληθείᾳ		global-review-known-rendering	safe	0.6353	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:2	1	Amado		1	Ἀγαπητέ		global-review-known-rendering	safe	0.6105	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:2	9	todas		3	πάντων		global-review-known-rendering	safe	0.7628	approved	0				global known-rendering assignment; lexical score 0.61
+1:3	3	gocé		1	ἐχάρην		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:3	4	mucho		3	λίαν		anchored-gap-review	safe	0.4	approved	0				the one free word of its class between the renderings of its placed neighbours; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:3	6	vinieron		4	ἐρχομένων		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:3	7	los				expands	supplied-article-spa	safe	0.7938	approved	0				article the original does not write, read as one by UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'hermanos' → 'ἀδελφῶν'
+1:3	8	hermanos		5	ἀδελφῶν		global-review-known-rendering	safe	0.7938	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:4	2	tengo		4	ἔχω		global-review-known-rendering	safe	0.6412	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:4	3	yo		4	ἔχω		attached-word	attached	0.5412	approved	1				SubjectPronoun of 'tengo', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:4	5	gozo		5	χαράν		global-review-known-rendering	safe	0.7429	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:4	7	éste		2	τούτων		global-review-known-rendering	safe	0.7585	approved	0				global known-rendering assignment; lexical score 0.61
+1:4	9	oir		7	ἀκούω		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:4	13	andan		14	περιπατοῦντα		global-review-known-rendering	safe	0.75	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:4	16	verdad		13	ἀληθείᾳ		global-review-known-rendering	safe	0.6353	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:5	1	Amado		1	Ἀγαπητέ		global-review-known-rendering	safe	0.6105	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:5	3	haces		3	ποιεῖς		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:5	11	hermanos		9	ἀδελφοὺς		global-review-known-rendering	safe	0.7938	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:6	2	cuales		1	οἳ		global-review-known-rendering	safe	0.6727	approved	0				global known-rendering assignment; lexical score 0.52
+1:6	8	amor		5	ἀγάπῃ		global-review-known-rendering	safe	0.7649	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:6	10	presencia		6	ἐνώπιον		global-review-known-rendering	safe	0.6	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:6	12	la				expands	supplied-article-spa	safe	0.8	approved	0				article the original does not write, read as one by UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'iglesia' → 'ἐκκλησίας'
+1:6	13	iglesia		7	ἐκκλησίας		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:6	16	cuales		8	οὓς		global-review-known-rendering	safe	0.6727	approved	0				global known-rendering assignment; lexical score 0.52
+1:7	1	Porque		2	γὰρ		global-review-known-rendering	safe	0.6408	approved	0				global known-rendering assignment; lexical score 0.49
+1:7	10	tomando		7	λαμβάνοντες		global-review-known-rendering	safe	0.6012	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:7	14	Gentiles		10	ἐθνικῶν		unique-context-gloss-review	safe	0.45	approved	0				unique gloss in the verse, from STEPBible's TBESG (Tyndale House, Cambridge, CC BY 4.0); EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:8	2	pues		2	οὖν		global-review-known-rendering	safe	0.6031	approved	0				global known-rendering assignment; lexical score 0.45
+1:8	3	debemos		3	ὀφείλομεν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:8	7	tales		6	τοιούτους		global-review-known-rendering	safe	0.6962	approved	0				global known-rendering assignment; lexical score 0.55
+1:8	14	verdad		11	ἀληθείᾳ		global-review-known-rendering	safe	0.6353	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:9	1	Yo		1	Ἔγραψά		attached-word	attached	0.6814	approved	1				SubjectPronoun of 'escrito', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:9	2	he		1	Ἔγραψά		attached-word	attached	0.6814	approved	1				AuxiliaryVerb of 'escrito', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:9	3	escrito		1	Ἔγραψά		global-review-known-rendering	safe	0.7814	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:9	6	iglesia		4	ἐκκλησίᾳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:10	2	esta		2	τοῦτο		global-review-known-rendering	safe	0.7274	approved	0				global known-rendering assignment; lexical score 0.58
+1:10	5	yo		4	ἔλθω		attached-word	attached	0.7	approved	1				SubjectPronoun of 'viniere', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	6	viniere		4	ἔλθω		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:10	9	obras		8	ἔργα		global-review-known-rendering	safe	0.7832	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:10	11	hace		10	ποιεῖ		global-review-known-rendering	safe	0.6322	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:10	20	contento		17	ἀρκούμενος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:10	22	estas		19	τούτοις		global-review-known-rendering	safe	0.7689	approved	0				global known-rendering assignment; lexical score 0.62
+1:10	28	hermanos		24	ἀδελφοὺς		global-review-known-rendering	safe	0.7938	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:10	30	prohibe		28	κωλύει		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:10	35	quieren		27	βουλομένους		residual-known-rendering	safe	0.3821	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.07; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:10	42	iglesia		32	ἐκκλησίας		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:11	1	Amado		1	Ἀγαπητέ		global-review-known-rendering	safe	0.6105	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:11	8	sino		6	ἀλλὰ		global-review-known-rendering	safe	0.6765	approved	0				global known-rendering assignment; lexical score 0.53
+1:11	26	ha		18	ἑώρακεν		attached-word	attached	0.6481	approved	1				AuxiliaryVerb of 'visto', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:11	27	visto		18	ἑώρακεν		global-review-known-rendering	safe	0.7481	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:12	1	Todos		4	πάντων		global-review-known-rendering	safe	0.7626	approved	0				global known-rendering assignment; lexical score 0.61
+1:12	9	misma		7	αὐτῆς		global-review-known-rendering	safe	0.7182	approved	0				global known-rendering assignment; lexical score 0.57
+1:12	10	verdad		9	ἀληθείας		global-review-known-rendering	safe	0.6353	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:12	21	nuestro		19	ἡμῶν		global-review-known-rendering	safe	0.7955	approved	0				global known-rendering assignment; lexical score 0.65
+1:13	1	Yo		2	εἶχον		attached-word	attached	0.6088	approved	1				SubjectPronoun of 'tenía', by the parse of UDPipe's Spanish-AnCora model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:13	2	tenía		2	εἶχον		global-review-known-rendering	safe	0.7088	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:13	3	muchas		1	Πολλὰ		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+1:13	9	quiero		7	θέλω		global-review-known-rendering	safe	0.7077	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:14	2	espero		1	ἐλπίζω		global-review-known-rendering	safe	0.755	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:14	24	nombre		21	ὄνομα		global-review-known-rendering	safe	0.784	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988

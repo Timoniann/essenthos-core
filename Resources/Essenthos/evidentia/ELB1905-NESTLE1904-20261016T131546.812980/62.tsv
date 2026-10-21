@@ -1,0 +1,673 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:1	3	Anfang		4	ἀρχῆς		global-review-known-rendering	safe	0.7538	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:1	6	wir		6	ἀκηκόαμεν		attached-word	attached	0.6707	approved	1				SubjectPronoun of 'gehört', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:1	7	gehört		6	ἀκηκόαμεν		global-review-known-rendering	safe	0.7707	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:1	9	wir		8	ἑωράκαμεν		attached-word	attached	0.6294	approved	1				SubjectPronoun of 'gesehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:1	11	unseren		11	ἡμῶν		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56
+1:1	12	Augen		10	ὀφθαλμοῖς		global-review-known-rendering	safe	0.7389	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:1	18	unsere		17	ἡμῶν		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
+1:1	19	Hände		16	χεῖρες		global-review-known-rendering	safe	0.7931	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:1	24	Wort		21	Λόγου		global-review-known-rendering	safe	0.7409	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:1	26	Lebens		23	ζωῆς		global-review-known-rendering	safe	0.7614	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:2	8	wir		6	ἑωράκαμεν		attached-word	attached	0.6294	approved	1				SubjectPronoun of 'gesehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:2	9	haben		6	ἑωράκαμεν		attached-word	attached	0.6294	approved	1				AuxiliaryVerb of 'gesehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:2	10	gesehen		6	ἑωράκαμεν		global-review-known-rendering	safe	0.7294	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:2	12	bezeugen		8	μαρτυροῦμεν		global-review-known-rendering	safe	0.53	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:2	14	verkündigen		10	ἀπαγγέλλομεν		residual-known-rendering	safe	0.4062	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.12; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:2	17	ewige		15	αἰώνιον		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:2	22	Vater		20	Πατέρα		global-review-known-rendering	safe	0.7957	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:3	2	wir		2	ἑωράκαμεν		attached-word	attached	0.6294	approved	1				SubjectPronoun of 'gesehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:3	3	gesehen		2	ἑωράκαμεν		global-review-known-rendering	safe	0.7294	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:3	5	gehört		4	ἀκηκόαμεν		global-review-known-rendering	safe	0.7707	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:3	6	haben		2	ἑωράκαμεν		attached-word	attached	0.6294	approved	1				AuxiliaryVerb of 'gesehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:3	7	verkündigen		5	ἀπαγγέλλομεν		residual-known-rendering	safe	0.4062	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.12; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:3	8	wir		5	ἀπαγγέλλομεν		attached-word	attached	0.3063	approved	1				SubjectPronoun of 'verkündigen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:3	21	unsere		14	ἡμῶν		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
+1:3	25	Vater		23	Πατρὸς		global-review-known-rendering	safe	0.7957	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:3	28	seinem		28	αὐτοῦ		global-review-known-rendering	safe	0.7853	approved	0				global known-rendering assignment; lexical score 0.64
+1:3	29	Sohne		27	Υἱοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:3	30	Jesus		29	Ἰησοῦ		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:3	31	Christus		30	Χριστοῦ		global-review-known-rendering	safe	0.7976	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:4	2	dies		2	ταῦτα		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+1:4	3	schreiben		3	γράφομεν		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:4	9	Freude		7	χαρὰ		global-review-known-rendering	safe	0.7581	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:4	11	sei		9	ᾖ		global-review-known-rendering	safe	0.5856	approved	0				global known-rendering assignment; lexical score 0.44
+1:5	2	dies		3	αὕτη		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+1:5	5	Botschaft		5	ἀγγελία		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:5	7	wir		7	ἀκηκόαμεν		attached-word	attached	0.6707	approved	1				SubjectPronoun of 'gehört', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:5	10	gehört		7	ἀκηκόαμεν		global-review-known-rendering	safe	0.7707	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:5	11	haben		7	ἀκηκόαμεν		attached-word	attached	0.6707	approved	1				AuxiliaryVerb of 'gehört', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:5	14	verkündigen		11	ἀναγγέλλομεν		residual-known-rendering	safe	0.4062	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.12; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:5	16	Gott		15	Θεὸς		global-review-known-rendering	safe	0.7883	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:5	17	Licht		16	φῶς		global-review-known-rendering	safe	0.6966	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:5	21	keine		22	οὐκ		global-review-known-rendering	safe	0.6024	approved	0				global known-rendering assignment; lexical score 0.45
+1:6	2	wir		2	εἴπωμεν		attached-word	attached	0.5602	approved	1				SubjectPronoun of 'sagen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:6	6	Gemeinschaft		4	κοινωνίαν		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:6	11	wandeln		12	περιπατῶμεν		global-review-known-rendering	safe	0.6116	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:6	14	Finsternis		11	σκότει		global-review-known-rendering	safe	0.61	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:6	16	lügen		13	ψευδόμεθα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:6	17	wir		13	ψευδόμεθα		attached-word	attached	0.7	approved	1				SubjectPronoun of 'lügen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:6	19	tun		16	ποιοῦμεν		global-review-known-rendering	safe	0.6644	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:6	22	Wahrheit		18	ἀλήθειαν		global-review-known-rendering	safe	0.7904	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:7	2	wir		6	περιπατῶμεν		attached-word	attached	0.5116	approved	1				SubjectPronoun of 'wandeln', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:7	7	wandeln		6	περιπατῶμεν		global-review-known-rendering	safe	0.6116	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:7	17	Gemeinschaft		13	κοινωνίαν		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:7	21	Blut		19	αἷμα		global-review-known-rendering	safe	0.7945	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:7	22	Jesu		20	Ἰησοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:7	24	seines		23	αὐτοῦ		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61
+1:7	25	Sohnes		22	Υἱοῦ		global-review-known-rendering	safe	0.75	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:7	26	reinigt		24	καθαρίζει		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:7	29	aller		27	πάσης		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+1:7	30	Sünde		28	ἁμαρτίας		global-review-known-rendering	safe	0.7672	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:8	2	wir		2	εἴπωμεν		attached-word	attached	0.5602	approved	1				SubjectPronoun of 'sagen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:8	3	sagen		2	εἴπωμεν		global-review-known-rendering	safe	0.6602	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:8	6	keine		5	οὐκ		global-review-known-rendering	safe	0.6024	approved	0				global known-rendering assignment; lexical score 0.45
+1:8	7	Sünde		4	ἁμαρτίαν		global-review-known-rendering	safe	0.7672	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:8	16	Wahrheit		11	ἀλήθεια		global-review-known-rendering	safe	0.7904	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:9	2	wir		2	ὁμολογῶμεν		attached-word	attached	0.55	approved	1				SubjectPronoun of 'bekennen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:9	3	unsere		5	ἡμῶν		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
+1:9	4	Sünden		4	ἁμαρτίας		global-review-known-rendering	safe	0.7404	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:9	5	bekennen		2	ὁμολογῶμεν		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:9	9	treu		6	πιστός		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:9	11	gerecht		9	δίκαιος		global-review-known-rendering	safe	0.5828	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:9	13	er		11	ἀφῇ		attached-word	attached	0.475	approved	1				SubjectPronoun of 'vergibt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:9	20	reinigt		16	καθαρίσῃ		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:9	22	aller		19	πάσης		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+1:9	23	Ungerechtigkeit		20	ἀδικίας		global-review-known-rendering	safe	0.6714	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:10	2	wir		2	εἴπωμεν		attached-word	attached	0.5602	approved	1				SubjectPronoun of 'sagen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	3	sagen		2	εἴπωμεν		global-review-known-rendering	safe	0.6602	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:10	5	wir		5	ἡμαρτήκαμεν		attached-word	attached	0.55	approved	1				SubjectPronoun of 'gesündigt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	7	gesündigt		5	ἡμαρτήκαμεν		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:10	8	haben		5	ἡμαρτήκαμεν		attached-word	attached	0.55	approved	1				AuxiliaryVerb of 'gesündigt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	11	wir		7	ποιοῦμεν		attached-word	attached	0.3605	approved	1				SubjectPronoun of 'machen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+1:10	14	Lügner		6	ψεύστην		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:1	1	Meine		2	μου		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:1	4	schreibe		4	γράφω		global-review-known-rendering	safe	0.7804	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:1	6	dieses		3	ταῦτα		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62
+2:1	14	jemand		11	τις		global-review-known-rendering	safe	0.6397	approved	0				global known-rendering assignment; lexical score 0.49
+2:1	15	gesündigt		12	ἁμάρτῃ		global-review-known-rendering	safe	0.6714	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:1	16	hat		12	ἁμάρτῃ		attached-word	attached	0.5714	approved	1				AuxiliaryVerb of 'gesündigt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:1	23	Vater		17	Πατέρα		global-review-known-rendering	safe	0.7956	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:1	24	Jesum		18	Ἰησοῦν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:1	25	Christum		19	Χριστὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:1	26	den				expands	supplied-article-deu	safe	0.8	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Gerechten' → 'δίκαιον'
+2:1	27	Gerechten		20	δίκαιον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:2	8	Sünden		7	ἁμαρτιῶν		global-review-known-rendering	safe	0.7404	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:2	14	unseren		8	ἡμῶν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+2:2	15	sondern		15	ἀλλὰ		global-review-known-rendering	safe	0.7716	approved	0				global known-rendering assignment; lexical score 0.62
+2:2	19	ganze		18	ὅλου		global-review-known-rendering	safe	0.5985	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:2	20	Welt		20	κόσμου		global-review-known-rendering	safe	0.7055	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:3	4	wir		4	γινώσκομεν		attached-word	attached	0.3665	approved	1				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:3	10	wir		12	τηρῶμεν		attached-word	attached	0.3647	approved	1				SubjectPronoun of 'halten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:3	11	seine		11	αὐτοῦ		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
+2:3	12	Gebote		10	ἐντολὰς		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:3	13	halten		12	τηρῶμεν		global-review-known-rendering	safe	0.4647	approved	0				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:4	3	sagt		2	λέγων		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:4	4	Ich		4	Ἔγνωκα		attached-word	attached	0.35	approved	1				SubjectPronoun of 'kenne', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:4	5	kenne		4	Ἔγνωκα		global-review-known-rendering	safe	0.45	approved	0				global known-rendering assignment; lexical score 0.30; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:4	9	seine		9	αὐτοῦ		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
+2:4	10	Gebote		8	ἐντολὰς		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:4	13	ein				expands	supplied-indefinite-article-deu	safe	0.7	approved	0				indefinite article, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Lügner' → 'ψεύστης'
+2:4	14	Lügner		12	ψεύστης		global-review-known-rendering	safe	0.7	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:4	17	diesem		16	τούτῳ		global-review-known-rendering	safe	0.7176	approved	0				global known-rendering assignment; lexical score 0.57
+2:4	20	Wahrheit		18	ἀλήθεια		global-review-known-rendering	safe	0.7903	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:5	8	diesem		10	τούτῳ		global-review-known-rendering	safe	0.7176	approved	0				global known-rendering assignment; lexical score 0.57
+2:5	12	Liebe		12	ἀγάπη		global-review-known-rendering	safe	0.7061	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:5	13	Gottes		14	Θεοῦ		global-review-known-rendering	safe	0.7955	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:5	14	vollendet		15	τετελείωται		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:5	17	wir		18	γινώσκομεν		attached-word	attached	0.3665	approved	1				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:6	3	sagt		2	λέγων		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:6	8	bleibe		5	μένειν		global-review-known-rendering	safe	0.74	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:6	19	hat		13	περιπατεῖν		attached-word	attached	0.475	approved	1				AuxiliaryVerb of 'gewandelt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:7	4	neues		4	καινὴν		global-review-known-rendering	safe	0.75	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:7	6	schreibe		5	γράφω		global-review-known-rendering	safe	0.7804	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:7	7	ich		5	γράφω		attached-word	attached	0.6804	approved	1				SubjectPronoun of 'schreibe', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:7	9	sondern		7	ἀλλ		global-review-known-rendering	safe	0.7716	approved	0				global known-rendering assignment; lexical score 0.62
+2:7	16	Anfang		13	ἀρχῆς		global-review-known-rendering	safe	0.7471	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:7	23	Wort		20	λόγος		global-review-known-rendering	safe	0.7406	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:8	1	Wiederum		1	πάλιν		global-review-known-rendering	safe	0.7217	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:8	2	schreibe		4	γράφω		global-review-known-rendering	safe	0.7804	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:8	3	ich		4	γράφω		attached-word	attached	0.6804	approved	1				SubjectPronoun of 'schreibe', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:8	5	ein				expands	supplied-indefinite-article-deu	safe	0.6333	approved	0				indefinite article, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Gebot' → 'ἐντολὴν'
+2:8	6	neues		3	καινὴν		global-review-known-rendering	safe	0.75	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:8	7	Gebot		2	ἐντολὴν		global-review-known-rendering	safe	0.6333	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:8	17	weil		14	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+2:8	19	Finsternis		16	σκοτία		residual-known-rendering	safe	0.4464	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.21; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:8	23	wahrhaftige		22	ἀληθινὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:8	24	Licht		20	φῶς		global-review-known-rendering	safe	0.6966	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:8	25	schon		23	ἤδη		global-review-known-rendering	safe	0.7419	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:8	26	leuchtet		24	φαίνει		global-review-known-rendering	safe	0.4625	approved	0				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:9	3	sagt		2	λέγων		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:9	8	Lichte		5	φωτὶ		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:9	9	sei		6	εἶναι		global-review-known-rendering	safe	0.5845	approved	0				global known-rendering assignment; lexical score 0.43
+2:9	11	haßt		11	μισῶν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:9	12	seinen		10	αὐτοῦ		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+2:9	13	Bruder		9	ἀδελφὸν		global-review-known-rendering	safe	0.7958	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:9	17	Finsternis		14	σκοτίᾳ		residual-known-rendering	safe	0.4464	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.21; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:10	2	seinen		5	αὐτοῦ		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+2:10	3	Bruder		4	ἀδελφὸν		global-review-known-rendering	safe	0.7958	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:10	4	liebt		2	ἀγαπῶν		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:10	8	Lichte		8	φωτὶ		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:10	10	kein		14	οὐκ		global-review-known-rendering	safe	0.59	approved	0				global known-rendering assignment; lexical score 0.44
+2:10	11	Ärgernis		11	σκάνδαλον		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:11	3	seinen		6	αὐτοῦ		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+2:11	4	Bruder		5	ἀδελφὸν		global-review-known-rendering	safe	0.7958	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:11	5	haßt		3	μισῶν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:11	11	wandelt		15	περιπατεῖ		global-review-known-rendering	safe	0.7735	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:11	16	weiß		18	οἶδεν		global-review-known-rendering	safe	0.6728	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:11	21	weil		21	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+2:11	23	Finsternis		23	σκοτία		anchored-gap-review	safe	0.4	approved	0				the one free word of its class between the renderings of its placed neighbours; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:11	24	seine		27	αὐτοῦ		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
+2:11	25	Augen		26	ὀφθαλμοὺς		global-review-known-rendering	safe	0.7381	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:11	26	verblendet		24	ἐτύφλωσεν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:11	27	hat		24	ἐτύφλωσεν		attached-word	attached	0.7	approved	1				AuxiliaryVerb of 'verblendet', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:12	1	Ich		1	Γράφω		attached-word	attached	0.6804	approved	1				SubjectPronoun of 'schreibe', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:12	2	schreibe		1	Γράφω		global-review-known-rendering	safe	0.7804	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:12	5	weil		4	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+2:12	8	Sünden		8	ἁμαρτίαι		global-review-known-rendering	safe	0.7404	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:12	9	vergeben		5	ἀφέωνται		global-review-known-rendering	safe	0.7827	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:12	10	sind		5	ἀφέωνται		attached-word	attached	0.6827	approved	1				AuxiliaryVerb of 'vergeben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:12	12	seines		12	αὐτοῦ		global-review-known-rendering	safe	0.7596	approved	0				global known-rendering assignment; lexical score 0.61
+2:12	13	Namens		11	ὄνομα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:13	1	Ich		1	γράφω		attached-word	attached	0.6804	approved	1				SubjectPronoun of 'schreibe', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:13	5	weil		4	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+2:13	6	ihr		5	ἐγνώκατε		attached-word	attached	0.6156	approved	1				SubjectPronoun of 'erkannt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:13	8	erkannt		5	ἐγνώκατε		global-review-known-rendering	safe	0.7156	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:13	9	habt		5	ἐγνώκατε		attached-word	attached	0.6156	approved	1				AuxiliaryVerb of 'erkannt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:13	12	Anfang		8	ἀρχῆς		global-review-known-rendering	safe	0.7471	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:13	14	Ich		9	γράφω		attached-word	attached	0.6804	approved	1				SubjectPronoun of 'schreibe', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:13	17	Jünglinge		11	νεανίσκοι		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:13	18	weil		12	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+2:13	22	überwunden		13	νενικήκατε		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:13	23	habt		13	νενικήκατε		attached-word	attached	0.7	approved	1				AuxiliaryVerb of 'überwunden', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:14	1	Ich		8	ἔγραψα		attached-word	attached	0.6481	approved	1				SubjectPronoun of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:14	2	habe		8	ἔγραψα		attached-word	attached	0.6481	approved	1				AuxiliaryVerb of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:14	6	weil		4	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+2:14	7	ihr		12	ἐγνώκατε		attached-word	attached	0.6156	approved	1				SubjectPronoun of 'erkannt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:14	10	habt		12	ἐγνώκατε		attached-word	attached	0.6156	approved	1				AuxiliaryVerb of 'erkannt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:14	13	Anfang		15	ἀρχῆς		global-review-known-rendering	safe	0.7471	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:14	15	Ich		16	ἔγραψα		attached-word	attached	0.6481	approved	1				SubjectPronoun of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:14	16	habe		16	ἔγραψα		attached-word	attached	0.6481	approved	1				AuxiliaryVerb of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:14	18	Jünglinge		18	νεανίσκοι		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:14	20	weil		19	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+2:14	22	stark		20	ἰσχυροί		global-review-known-rendering	safe	0.5136	approved	0				global known-rendering assignment; lexical score 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:14	26	Wort		24	λόγος		global-review-known-rendering	safe	0.7406	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:14	27	Gottes		26	Θεοῦ		global-review-known-rendering	safe	0.7955	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:14	30	bleibt		29	μένει		global-review-known-rendering	safe	0.72	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:14	35	überwunden		31	νενικήκατε		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:14	36	habt		31	νενικήκατε		attached-word	attached	0.7	approved	1				AuxiliaryVerb of 'überwunden', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:15	12	jemand		11	τις		global-review-known-rendering	safe	0.6397	approved	0				global known-rendering assignment; lexical score 0.49
+2:15	19	Liebe		18	ἀγάπη		global-review-known-rendering	safe	0.7061	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:15	21	Vaters		20	Πατρὸς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:16	2	alles		2	πᾶν		global-review-known-rendering	safe	0.7524	approved	0				global known-rendering assignment; lexical score 0.60
+2:16	11	Fleisches		10	σαρκὸς		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:16	14	Lust		13	ἐπιθυμία		global-review-known-rendering	safe	0.625	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:16	16	Augen		15	ὀφθαλμῶν		global-review-known-rendering	safe	0.7381	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:16	26	Vater		25	πατρός		global-review-known-rendering	safe	0.7956	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:16	27	sondern		26	ἀλλὰ		global-review-known-rendering	safe	0.7716	approved	0				global known-rendering assignment; lexical score 0.62
+2:17	6	ihre		8	αὐτοῦ		global-review-known-rendering	safe	0.7744	approved	0				global known-rendering assignment; lexical score 0.62
+2:17	7	Lust		7	ἐπιθυμία		global-review-known-rendering	safe	0.625	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:17	12	Gottes		15	Θεοῦ		global-review-known-rendering	safe	0.7955	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:17	14	bleibt		16	μένει		global-review-known-rendering	safe	0.72	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:17	16	Ewigkeit		19	αἰῶνα		global-review-known-rendering	safe	0.7855	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:18	1	Kindlein		1	Παιδία		global-review-known-rendering	safe	0.6759	approved	0				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:18	10	gehört		7	ἠκούσατε		global-review-known-rendering	safe	0.7707	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:18	15	kommt		10	ἔρχεται		global-review-known-rendering	safe	0.6884	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:18	19	jetzt		12	νῦν		global-review-known-rendering	safe	0.5848	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:18	20	viele		14	πολλοὶ		global-review-known-rendering	safe	0.7609	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:18	23	daher		16	ὅθεν		global-review-known-rendering	safe	0.6313	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:18	24	wissen		17	γινώσκομεν		global-review-known-rendering	safe	0.4665	approved	0				global known-rendering assignment; lexical score 0.32; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:18	25	wir		17	γινώσκομεν		attached-word	attached	0.3665	approved	1				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:18	29	letzte		19	ἐσχάτη		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:19	1	Sie		3	ἐξῆλθαν		attached-word	attached	0.7	approved	1				SubjectPronoun of 'ausgegangen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:19	2	sind		3	ἐξῆλθαν		attached-word	attached	0.7	approved	1				AuxiliaryVerb of 'ausgegangen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:19	5	ausgegangen		3	ἐξῆλθαν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:19	35	alle		24	πάντες		global-review-known-rendering	safe	0.7631	approved	0				global known-rendering assignment; lexical score 0.61
+2:20	8	Heiligen		7	Ἁγίου		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:20	10	wisset		9	οἴδατε		global-review-known-rendering	safe	0.6714	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:20	11	alles		10	πάντες		global-review-known-rendering	safe	0.7524	approved	0				global known-rendering assignment; lexical score 0.60
+2:21	1	Ich		2	ἔγραψα		attached-word	attached	0.6481	approved	1				SubjectPronoun of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:21	2	habe		2	ἔγραψα		attached-word	attached	0.6481	approved	1				AuxiliaryVerb of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:21	5	geschrieben		2	ἔγραψα		global-review-known-rendering	safe	0.7481	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:21	6	weil		4	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+2:21	12	sondern		9	ἀλλ		global-review-known-rendering	safe	0.7716	approved	0				global known-rendering assignment; lexical score 0.62
+2:21	13	weil		10	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+2:21	14	ihr		11	οἴδατε		attached-word	attached	0.5714	approved	1				SubjectPronoun of 'wisset', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:21	19	keine		20	οὐκ		global-review-known-rendering	safe	0.6056	approved	0				global known-rendering assignment; lexical score 0.46
+2:22	4	Lügner		4	ψεύστης		global-review-known-rendering	safe	0.7	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:22	12	Jesus		10	Ἰησοῦς		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:22	14	Christus		14	Χριστός		global-review-known-rendering	safe	0.7976	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:22	16	Dieser		15	οὗτός		global-review-known-rendering	safe	0.7342	approved	0				global known-rendering assignment; lexical score 0.58
+2:22	19	Antichrist		18	ἀντίχριστος		unique-context-gloss-review	safe	0.45	approved	0				unique gloss in the verse, from STEPBible's TBESG (Tyndale House, Cambridge, CC BY 4.0); EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:22	22	Vater		22	Πατέρα		global-review-known-rendering	safe	0.7956	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:22	25	Sohn		25	Υἱόν		global-review-known-rendering	safe	0.7498	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:23	5	leugnet		3	ἀρνούμενος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:23	14	bekennt		11	ὁμολογῶν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:24	18	Anfang		15	ἀρχῆς		global-review-known-rendering	safe	0.7471	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:24	27	Sohne		21	Υἱῷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:24	31	Vater		25	Πατρὶ		global-review-known-rendering	safe	0.7956	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:25	2	dies		2	αὕτη		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+2:25	5	Verheißung		5	ἐπαγγελία		global-review-known-rendering	safe	0.7769	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:25	6	welche		6	ἣν		global-review-known-rendering	safe	0.5523	approved	0				global known-rendering assignment; lexical score 0.40
+2:25	9	verheißen		8	ἐπηγγείλατο		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:25	12	ewige		13	αἰώνιον		global-review-known-rendering	safe	0.7763	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:26	1	Dies		1	Ταῦτα		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+2:26	2	habe		2	ἔγραψα		attached-word	attached	0.6481	approved	1				AuxiliaryVerb of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:26	3	ich		2	ἔγραψα		attached-word	attached	0.6481	approved	1				SubjectPronoun of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:26	10	verführen		6	πλανώντων		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:27	2	ihr		9	μένει		attached-word	attached	0.62	approved	1				SubjectPronoun of 'bleibt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:27	9	empfangen		6	ἐλάβετε		global-review-known-rendering	safe	0.6588	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:27	16	bedürfet		14	χρείαν		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:27	20	jemand		17	τις		global-review-known-rendering	safe	0.6397	approved	0				global known-rendering assignment; lexical score 0.49
+2:27	22	sondern		20	ἀλλ		global-review-known-rendering	safe	0.7716	approved	0				global known-rendering assignment; lexical score 0.62
+2:27	28	alles		28	πάντων		global-review-known-rendering	safe	0.7524	approved	0				global known-rendering assignment; lexical score 0.60
+2:27	31	wahr		30	ἀληθές		global-review-known-rendering	safe	0.53	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:27	34	keine		33	οὐκ		global-review-known-rendering	safe	0.6056	approved	0				global known-rendering assignment; lexical score 0.46
+2:27	35	Lüge		35	ψεῦδος		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:27	44	werdet		40	μένετε		attached-word	attached	0.43	approved	1				AuxiliaryVerb of 'bleiben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:28	4	bleibet		4	μένετε		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:28	24	seiner		20	αὐτοῦ		global-review-known-rendering	safe	0.7479	approved	0				global known-rendering assignment; lexical score 0.60
+2:28	25	Ankunft		19	παρουσίᾳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:29	2	ihr		2	εἰδῆτε		attached-word	attached	0.5714	approved	1				SubjectPronoun of 'wisset', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+2:29	14	Gerechtigkeit		13	δικαιοσύνην		global-review-known-rendering	safe	0.7707	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:29	15	tut		11	ποιῶν		global-review-known-rendering	safe	0.6629	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:29	18	geboren		16	γεγέννηται		global-review-known-rendering	safe	0.6929	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:29	19	ist		16	γεγέννηται		attached-word	attached	0.5929	approved	1				AuxiliaryVerb of 'geboren', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:1	2	welch		2	ποταπὴν		residual-known-rendering	safe	0.44	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.20; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:1	3	eine				expands	supplied-indefinite-article-deu	safe	0.7054	approved	0				indefinite article, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Liebe' → 'ἀγάπην'
+3:1	4	Liebe		3	ἀγάπην		global-review-known-rendering	safe	0.7054	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:1	7	Vater		7	Πατὴρ		global-review-known-rendering	safe	0.7957	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:1	8	gegeben		4	δέδωκεν		global-review-known-rendering	safe	0.7475	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:1	9	hat		4	δέδωκεν		attached-word	attached	0.6475	approved	1				AuxiliaryVerb of 'gegeben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:1	11	wir		11	κληθῶμεν		attached-word	attached	0.5826	approved	1				SubjectPronoun of 'heißen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:1	14	heißen		11	κληθῶμεν		global-review-known-rendering	safe	0.6826	approved	0				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:1	15	sollen		11	κληθῶμεν		attached-word	attached	0.5826	approved	1				AuxiliaryVerb of 'heißen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:1	20	Welt		17	κόσμος		global-review-known-rendering	safe	0.7072	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:1	22	weil		21	ὅτι		global-review-known-rendering	safe	0.6579	approved	0				global known-rendering assignment; lexical score 0.51
+3:1	27	hat		23	ἔγνω		attached-word	attached	0.6036	approved	1				AuxiliaryVerb of 'erkannt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:2	2	jetzt		2	νῦν		global-review-known-rendering	safe	0.5798	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:2	5	Kinder		3	τέκνα		global-review-known-rendering	safe	0.5708	approved	0				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:2	6	Gottes		4	Θεοῦ		global-review-known-rendering	safe	0.7955	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:2	18	wir		11	οἴδαμεν		attached-word	attached	0.5157	approved	1				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:2	19	wissen		11	οἴδαμεν		global-review-known-rendering	safe	0.6157	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:2	28	gleich		15	ὅμοιοι		global-review-known-rendering	safe	0.623	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:2	32	wir		19	ὀψόμεθα		attached-word	attached	0.5113	approved	1				SubjectPronoun of 'sehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:2	35	sehen		19	ὀψόμεθα		global-review-known-rendering	safe	0.6113	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:3	4	diese		7	ταύτην		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59
+3:3	5	Hoffnung		6	ἐλπίδα		global-review-known-rendering	safe	0.7759	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:3	11	selbst		11	ἑαυτὸν		global-review-known-rendering	safe	0.6192	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:3	12	gleichwie		12	καθὼς		global-review-known-rendering	safe	0.5519	approved	0				global known-rendering assignment; lexical score 0.40
+3:3	14	rein		14	ἁγνός		residual-known-rendering	safe	0.375	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.06; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:5	2	ihr		2	οἴδατε		attached-word	attached	0.5732	approved	1				SubjectPronoun of 'wisset', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:5	3	wisset		2	οἴδατε		global-review-known-rendering	safe	0.6732	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:5	14	wegnehme		9	ἄρῃ		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:6	5	bleibt		5	μένων		global-review-known-rendering	safe	0.72	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:6	11	hat		15	ἔγνωκεν		attached-word	attached	0.6036	approved	1				AuxiliaryVerb of 'erkannt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:6	14	gesehen		12	ἑώρακεν		global-review-known-rendering	safe	0.7308	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:6	17	erkannt		15	ἔγνωκεν		global-review-known-rendering	safe	0.7036	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:7	5	verführe		3	πλανάτω		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:7	8	Gerechtigkeit		8	δικαιοσύνην		global-review-known-rendering	safe	0.7707	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:7	12	gleichwie		11	καθὼς		global-review-known-rendering	safe	0.5519	approved	0				global known-rendering assignment; lexical score 0.40
+3:8	3	Sünde		4	ἁμαρτίαν		global-review-known-rendering	safe	0.7661	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:8	4	tut		2	ποιῶν		global-review-known-rendering	safe	0.6574	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:8	12	sündigt		14	ἁμαρτάνει		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:8	14	Anfang		11	ἀρχῆς		global-review-known-rendering	safe	0.7526	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:8	18	Sohn		19	Υἱὸς		global-review-known-rendering	safe	0.7503	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:8	19	Gottes		21	Θεοῦ		global-review-known-rendering	safe	0.7955	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:8	26	Werke		25	ἔργα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:9	6	ist		3	γεγεννημένος		attached-word	attached	0.5929	approved	1				AuxiliaryVerb of 'geboren', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:9	7	tut		9	ποιεῖ		global-review-known-rendering	safe	0.6574	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:9	9	Sünde		7	ἁμαρτίαν		global-review-known-rendering	safe	0.7661	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:9	13	bleibt		15	μένει		global-review-known-rendering	safe	0.72	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:9	18	kann		18	δύναται		global-review-known-rendering	safe	0.6645	approved	0				global known-rendering assignment; lexical score 0.51
+3:9	20	sündigen		19	ἁμαρτάνειν		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:9	21	weil		20	ὅτι		global-review-known-rendering	safe	0.6579	approved	0				global known-rendering assignment; lexical score 0.51
+3:9	22	er		24	γεγέννηται		attached-word	attached	0.5929	approved	1				SubjectPronoun of 'geboren', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:9	26	ist		24	γεγέννηται		attached-word	attached	0.5929	approved	1				AuxiliaryVerb of 'geboren', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:10	11	Teufels		13	διαβόλου		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:10	15	Gerechtigkeit		18	δικαιοσύνην		global-review-known-rendering	safe	0.7707	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:10	16	tut		17	ποιῶν		global-review-known-rendering	safe	0.6574	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:10	24	seinen		30	αὐτοῦ		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+3:10	25	Bruder		29	ἀδελφὸν		global-review-known-rendering	safe	0.7957	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:10	26	liebt		27	ἀγαπῶν		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:11	2	dies		2	αὕτη		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+3:11	9	Anfang		9	ἀρχῆς		global-review-known-rendering	safe	0.7526	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:11	10	gehört		7	ἠκούσατε		global-review-known-rendering	safe	0.7707	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:11	13	wir		11	ἀγαπῶμεν		attached-word	attached	0.4818	approved	1				SubjectPronoun of 'lieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:11	14	einander		12	ἀλλήλους		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
+3:11	15	lieben		11	ἀγαπῶμεν		global-review-known-rendering	safe	0.5818	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:11	16	sollen		11	ἀγαπῶμεν		attached-word	attached	0.4818	approved	1				AuxiliaryVerb of 'lieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:12	3	Kain		3	Κάϊν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:12	9	seinen		12	αὐτοῦ		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+3:12	17	Weil		18	ὅτι		global-review-known-rendering	safe	0.6579	approved	0				global known-rendering assignment; lexical score 0.51
+3:12	18	seine		21	αὐτοῦ		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
+3:12	19	Werke		20	ἔργα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:12	23	seines		28	αὐτοῦ		global-review-known-rendering	safe	0.7586	approved	0				global known-rendering assignment; lexical score 0.61
+3:12	26	gerecht		29	δίκαια		global-review-known-rendering	safe	0.5667	approved	0				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:13	1	Wundert		2	θαυμάζετε		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:13	4	Brüder		3	ἀδελφοί		global-review-known-rendering	safe	0.7878	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:14	2	wissen		2	οἴδαμεν		global-review-known-rendering	safe	0.6157	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:14	10	Leben		10	ζωήν		global-review-known-rendering	safe	0.5881	approved	0				global known-rendering assignment; lexical score 0.44; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:14	13	weil		11	ὅτι		global-review-known-rendering	safe	0.6579	approved	0				global known-rendering assignment; lexical score 0.51
+3:14	20	Bruder		14	ἀδελφούς		global-review-known-rendering	safe	0.7957	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:14	22	liebt		17	ἀγαπῶν		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:14	23	bleibt		18	μένει		global-review-known-rendering	safe	0.72	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:15	3	seinen		6	αὐτοῦ		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+3:15	4	Bruder		5	ἀδελφὸν		global-review-known-rendering	safe	0.7957	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:15	5	haßt		3	μισῶν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:15	11	wisset		10	οἴδατε		global-review-known-rendering	safe	0.6732	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:15	13	kein		14	οὐκ		global-review-known-rendering	safe	0.592	approved	0				global known-rendering assignment; lexical score 0.44
+3:15	15	ewiges		17	αἰώνιον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:15	16	Leben		16	ζωὴν		global-review-known-rendering	safe	0.5881	approved	0				global known-rendering assignment; lexical score 0.44; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:16	2	haben		3	ἐγνώκαμεν		attached-word	attached	0.6036	approved	1				AuxiliaryVerb of 'erkannt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:16	5	Liebe		5	ἀγάπην		global-review-known-rendering	safe	0.7054	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:16	6	erkannt		3	ἐγνώκαμεν		global-review-known-rendering	safe	0.7036	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:16	21	Brüder		19	ἀδελφῶν		global-review-known-rendering	safe	0.7878	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:17	4	Welt		8	κόσμου		global-review-known-rendering	safe	0.7072	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:17	8	sieht		10	θεωρῇ		global-review-known-rendering	safe	0.47	approved	0				global known-rendering assignment; lexical score 0.32; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:17	9	seinen		13	αὐτοῦ		global-review-known-rendering	safe	0.7635	approved	0				global known-rendering assignment; lexical score 0.61
+3:17	10	Bruder		12	ἀδελφὸν		global-review-known-rendering	safe	0.7957	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:17	20	bleibt		28	μένει		global-review-known-rendering	safe	0.72	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:17	22	Liebe		25	ἀγάπη		global-review-known-rendering	safe	0.7054	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:17	23	Gottes		27	Θεοῦ		global-review-known-rendering	safe	0.7955	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:18	5	lieben		3	ἀγαπῶμεν		global-review-known-rendering	safe	0.5818	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:18	7	Worten		4	λόγῳ		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:18	11	Zunge		7	γλώσσῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:18	12	sondern		8	ἀλλὰ		global-review-known-rendering	safe	0.7719	approved	0				global known-rendering assignment; lexical score 0.62
+3:18	16	Wahrheit		12	ἀληθείᾳ		global-review-known-rendering	safe	0.7904	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:19	3	werden		3	γνωσόμεθα		attached-word	attached	0.5172	approved	1				AuxiliaryVerb of 'erkennen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:19	4	wir		3	γνωσόμεθα		attached-word	attached	0.5172	approved	1				SubjectPronoun of 'erkennen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:19	5	erkennen		3	γνωσόμεθα		global-review-known-rendering	safe	0.6172	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:19	10	Wahrheit		7	ἀληθείας		global-review-known-rendering	safe	0.7904	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:19	16	unsere		15	ἡμῶν		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
+3:19	17	Herzen		14	καρδίαν		global-review-known-rendering	safe	0.7804	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:20	3	unser		4	ἡμῶν		global-review-known-rendering	safe	0.7804	approved	0				global known-rendering assignment; lexical score 0.63
+3:20	8	größer		8	μείζων		global-review-known-rendering	safe	0.7437	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:20	11	unser		14	ἡμῶν		global-review-known-rendering	safe	0.7804	approved	0				global known-rendering assignment; lexical score 0.63
+3:20	14	alles		17	πάντα		global-review-known-rendering	safe	0.7511	approved	0				global known-rendering assignment; lexical score 0.60
+3:20	15	kennt		16	γινώσκει		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:21	4	Herz		4	καρδία		global-review-known-rendering	safe	0.7713	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:21	13	Gott		11	Θεόν		global-review-known-rendering	safe	0.7883	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:22	4	wir		4	αἰτῶμεν		attached-word	attached	0.52	approved	1				SubjectPronoun of 'bitten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:22	5	bitten		4	αἰτῶμεν		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:22	6	empfangen		5	λαμβάνομεν		global-review-known-rendering	safe	0.6588	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:22	7	wir		5	λαμβάνομεν		attached-word	attached	0.5588	approved	1				SubjectPronoun of 'empfangen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:22	10	weil		8	ὅτι		global-review-known-rendering	safe	0.6579	approved	0				global known-rendering assignment; lexical score 0.51
+3:22	11	wir		12	τηροῦμεν		attached-word	attached	0.3647	approved	1				SubjectPronoun of 'halten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:22	12	seine		11	αὐτοῦ		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
+3:22	13	Gebote		10	ἐντολὰς		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:23	2	dies		2	αὕτη		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+3:23	7	wir		8	πιστεύσωμεν		attached-word	attached	0.358	approved	1				SubjectPronoun of 'glauben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:23	10	Namen		10	ὀνόματι		global-review-known-rendering	safe	0.7925	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:23	11	seines		13	αὐτοῦ		global-review-known-rendering	safe	0.7586	approved	0				global known-rendering assignment; lexical score 0.61
+3:23	12	Sohnes		12	Υἱοῦ		global-review-known-rendering	safe	0.75	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:23	13	Jesus		14	Ἰησοῦ		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:23	17	einander		18	ἀλλήλους		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
+3:23	18	lieben		17	ἀγαπῶμεν		global-review-known-rendering	safe	0.5818	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:23	19	gleichwie		19	καθὼς		global-review-known-rendering	safe	0.5519	approved	0				global known-rendering assignment; lexical score 0.40
+3:23	20	er		20	ἔδωκεν		attached-word	attached	0.6475	approved	1				SubjectPronoun of 'gegeben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:23	24	gegeben		20	ἔδωκεν		global-review-known-rendering	safe	0.7475	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:23	25	hat		20	ἔδωκεν		attached-word	attached	0.6475	approved	1				AuxiliaryVerb of 'gegeben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:24	3	seine		6	αὐτοῦ		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
+3:24	4	Gebote		5	ἐντολὰς		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:24	5	hält		3	τηρῶν		global-review-known-rendering	safe	0.5341	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:24	15	erkennen		17	γινώσκομεν		global-review-known-rendering	safe	0.6172	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:24	16	wir		17	γινώσκομεν		attached-word	attached	0.5172	approved	1				SubjectPronoun of 'erkennen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+3:24	21	bleibt		19	μένει		global-review-known-rendering	safe	0.72	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:24	24	Geist		24	Πνεύματος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:24	28	gegeben		27	ἔδωκεν		global-review-known-rendering	safe	0.7475	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:24	29	hat		27	ἔδωκεν		attached-word	attached	0.6475	approved	1				AuxiliaryVerb of 'gegeben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:1	2	glaubet		5	πιστεύετε		global-review-known-rendering	safe	0.7864	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:1	6	sondern		6	ἀλλὰ		global-review-known-rendering	safe	0.7718	approved	0				global known-rendering assignment; lexical score 0.62
+4:1	7	prüfet		7	δοκιμάζετε		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:1	13	Gott		13	Θεοῦ		global-review-known-rendering	safe	0.788	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:1	16	viele		16	πολλοὶ		global-review-known-rendering	safe	0.7612	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+4:1	18	Propheten		17	ψευδοπροφῆται		residual-known-rendering	safe	0.3798	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.07; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+4:1	19	sind		18	ἐξεληλύθασιν		attached-word	attached	0.7	approved	1				AuxiliaryVerb of 'ausgegangen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:1	22	Welt		21	κόσμον		global-review-known-rendering	safe	0.7046	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:1	23	ausgegangen		18	ἐξεληλύθασιν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:2	2	erkennet		3	γινώσκετε		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:2	10	Jesum		12	Ἰησοῦν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:2	11	Christum		13	Χριστὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:2	13	Fleische		15	σαρκὶ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:2	14	gekommen		16	ἐληλυθότα		global-review-known-rendering	safe	0.6433	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:3	3	Geist		3	πνεῦμα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+4:3	6	Jesum		8	Ἰησοῦν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+4:3	11	bekennt		6	ὁμολογεῖ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:3	15	Gott		11	Θεοῦ		global-review-known-rendering	safe	0.788	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:3	17	dies		15	τοῦτό		global-review-known-rendering	safe	0.7712	approved	0				global known-rendering assignment; lexical score 0.62
+4:3	22	Antichrists		19	ἀντιχρίστου		unique-context-gloss-review	safe	0.45	approved	0				unique gloss in the verse, from STEPBible's TBESG (Tyndale House, Cambridge, CC BY 4.0); EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:3	24	welchem		20	ὃ		global-review-known-rendering	safe	0.7239	approved	0				global known-rendering assignment; lexical score 0.57
+4:3	26	gehört		21	ἀκηκόατε		global-review-known-rendering	safe	0.77	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:3	30	komme		23	ἔρχεται		global-review-known-rendering	safe	0.6658	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:3	38	Welt		28	κόσμῳ		global-review-known-rendering	safe	0.7046	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:4	4	Gott		4	Θεοῦ		global-review-known-rendering	safe	0.788	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:4	9	überwunden		8	νενικήκατε		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:4	10	weil		10	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+4:4	16	größer		11	μείζων		global-review-known-rendering	safe	0.7437	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:4	23	Welt		20	κόσμῳ		global-review-known-rendering	safe	0.7046	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:5	15	hört		16	ἀκούει		global-review-known-rendering	safe	0.7855	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+4:6	24	Wahrheit		27	ἀληθείας		global-review-known-rendering	safe	0.7905	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:6	29	Irrtums		32	πλάνης		global-review-known-rendering	safe	0.7	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:7	4	einander		3	ἀλλήλους		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
+4:7	16	ist		18	γεγέννηται		attached-word	attached	0.5929	approved	1				AuxiliaryVerb of 'geboren', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:7	19	geboren		18	γεγέννηται		global-review-known-rendering	safe	0.6929	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:7	21	erkennt		20	γινώσκει		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+4:8	3	liebt		3	ἀγαπῶν		global-review-known-rendering	safe	0.764	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:8	9	Gott		10	Θεὸς		global-review-known-rendering	safe	0.788	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:9	4	Liebe		5	ἀγάπη		global-review-known-rendering	safe	0.7079	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:9	12	seinen		13	αὐτοῦ		global-review-known-rendering	safe	0.7632	approved	0				global known-rendering assignment; lexical score 0.61
+4:9	19	hat		16	ἀπέσταλκεν		attached-word	attached	0.5085	approved	1				AuxiliaryVerb of 'gesandt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:9	22	wir		23	ζήσωμεν		attached-word	attached	0.3523	approved	1				SubjectPronoun of 'leben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:10	1	Hierin		1	ἐν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:10	2	ist		9	ἠγαπήκαμεν		attached-word	attached	0.6625	approved	1				AuxiliaryVerb of 'geliebt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:10	4	Liebe		5	ἀγάπη		global-review-known-rendering	safe	0.7079	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:10	8	Gott		11	Θεόν		global-review-known-rendering	safe	0.788	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:10	10	haben		9	ἠγαπήκαμεν		attached-word	attached	0.6625	approved	1				AuxiliaryVerb of 'geliebt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:10	11	sondern		12	ἀλλ		global-review-known-rendering	safe	0.7718	approved	0				global known-rendering assignment; lexical score 0.62
+4:10	17	seinen		21	αὐτοῦ		global-review-known-rendering	safe	0.7632	approved	0				global known-rendering assignment; lexical score 0.61
+4:10	18	Sohn		20	Υἱὸν		global-review-known-rendering	safe	0.7498	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:10	19	gesandt		18	ἀπέστειλεν		global-review-known-rendering	safe	0.6085	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:10	25	unsere		26	ἡμῶν		global-review-known-rendering	safe	0.7571	approved	0				global known-rendering assignment; lexical score 0.61
+4:10	26	Sünden		25	ἁμαρτιῶν		global-review-known-rendering	safe	0.7411	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:11	7	hat		6	ἠγάπησεν		attached-word	attached	0.6625	approved	1				AuxiliaryVerb of 'geliebt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:11	12	schuldig		10	ὀφείλομεν		global-review-known-rendering	safe	0.5214	approved	0				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:11	13	einander		11	ἀλλήλους		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
+4:12	1	Niemand		2	οὐδεὶς		global-review-known-rendering	safe	0.6059	approved	0				global known-rendering assignment; lexical score 0.46
+4:12	7	wir		6	ἀγαπῶμεν		attached-word	attached	0.4823	approved	1				SubjectPronoun of 'lieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:12	8	einander		7	ἀλλήλους		global-review-known-rendering	safe	0.62	approved	0				global known-rendering assignment; lexical score 0.47
+4:12	11	bleibt		12	μένει		global-review-known-rendering	safe	0.7163	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:12	16	seine		16	αὐτοῦ		global-review-known-rendering	safe	0.7776	approved	0				global known-rendering assignment; lexical score 0.63
+4:12	18	ist		17	τετελειωμένη		attached-word	attached	0.4	approved	1				AuxiliaryVerb of 'vollendet', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:13	2	erkennen		3	γινώσκομεν		global-review-known-rendering	safe	0.6113	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:13	3	wir		3	γινώσκομεν		attached-word	attached	0.5113	approved	1				SubjectPronoun of 'erkennen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:13	5	wir		7	μένομεν		attached-word	attached	0.43	approved	1				SubjectPronoun of 'bleiben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:13	8	bleiben		7	μένομεν		global-review-known-rendering	safe	0.53	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:13	17	seinem		16	αὐτοῦ		global-review-known-rendering	safe	0.7853	approved	0				global known-rendering assignment; lexical score 0.64
+4:13	18	Geiste		15	Πνεύματος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:13	19	gegeben		17	δέδωκεν		global-review-known-rendering	safe	0.7475	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:13	20	hat		17	δέδωκεν		attached-word	attached	0.6475	approved	1				AuxiliaryVerb of 'gegeben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:14	6	bezeugen		5	μαρτυροῦμεν		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:14	9	Vater		8	Πατὴρ		global-review-known-rendering	safe	0.7957	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:14	12	gesandt		9	ἀπέσταλκεν		global-review-known-rendering	safe	0.6085	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:14	13	hat		9	ἀπέσταλκεν		attached-word	attached	0.5085	approved	1				AuxiliaryVerb of 'gesandt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:14	15	Heiland		12	Σωτῆρα		global-review-known-rendering	safe	0.7308	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:14	17	Welt		14	κόσμου		global-review-known-rendering	safe	0.7046	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:15	3	bekennt		3	ὁμολογήσῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:15	5	Jesus		5	Ἰησοῦς		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:15	7	Sohn		8	Υἱὸς		global-review-known-rendering	safe	0.7498	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:15	12	bleibt		15	μένει		global-review-known-rendering	safe	0.7163	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:16	3	haben		3	ἐγνώκαμεν		attached-word	attached	0.61	approved	1				AuxiliaryVerb of 'erkannt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:16	4	erkannt		3	ἐγνώκαμεν		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+4:16	6	geglaubt		5	πεπιστεύκαμεν		global-review-known-rendering	safe	0.7625	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:17	2	ist		3	τετελείωται		attached-word	attached	0.4	approved	1				AuxiliaryVerb of 'vollendet', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:17	4	Liebe		5	ἀγάπη		global-review-known-rendering	safe	0.7079	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:17	8	worden		3	τετελείωται		attached-word	attached	0.4	approved	1				AuxiliaryVerb of 'vollendet', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:17	15	Tage		13	ἡμέρᾳ		global-review-known-rendering	safe	0.7836	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:17	17	Gerichts		15	κρίσεως		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:17	19	gleichwie		17	καθὼς		global-review-known-rendering	safe	0.5551	approved	0				global known-rendering assignment; lexical score 0.41
+4:17	26	dieser		26	τούτῳ		global-review-known-rendering	safe	0.7334	approved	0				global known-rendering assignment; lexical score 0.58
+4:17	27	Welt		25	κόσμῳ		global-review-known-rendering	safe	0.7046	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+4:18	7	sondern		7	ἀλλ		global-review-known-rendering	safe	0.7718	approved	0				global known-rendering assignment; lexical score 0.62
+4:18	9	vollkommene		9	τελεία		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+4:18	23	fürchtet		22	φοβούμενος		global-review-known-rendering	safe	0.7471	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+4:18	26	vollendet		24	τετελείωται		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+4:19	3	weil		3	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+4:19	8	hat		6	ἠγάπησεν		attached-word	attached	0.6625	approved	1				AuxiliaryVerb of 'geliebt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:20	2	jemand		2	τις		global-review-known-rendering	safe	0.6411	approved	0				global known-rendering assignment; lexical score 0.49
+4:20	3	sagt		3	εἴπῃ		global-review-known-rendering	safe	0.7735	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+4:20	8	haßt		12	μισῇ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:20	9	seinen		11	αὐτοῦ		global-review-known-rendering	safe	0.7632	approved	0				global known-rendering assignment; lexical score 0.61
+4:20	14	ein				expands	supplied-indefinite-article-deu	safe	0.71	approved	0				indefinite article, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Lügner' → 'ψεύστης'
+4:20	15	Lügner		13	ψεύστης		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:20	18	seinen		21	αὐτοῦ		global-review-known-rendering	safe	0.7632	approved	0				global known-rendering assignment; lexical score 0.61
+4:20	23	er		23	ἑώρακεν		attached-word	attached	0.6471	approved	1				SubjectPronoun of 'gesehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:20	25	hat		23	ἑώρακεν		attached-word	attached	0.6471	approved	1				AuxiliaryVerb of 'gesehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:20	27	kann		30	δύναται		global-review-known-rendering	safe	0.6645	approved	0				global known-rendering assignment; lexical score 0.51
+4:20	32	er		28	ἑώρακεν		attached-word	attached	0.6471	approved	1				SubjectPronoun of 'gesehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:20	35	hat		28	ἑώρακεν		attached-word	attached	0.6471	approved	1				AuxiliaryVerb of 'gesehen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+4:21	2	dieses		2	ταύτην		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62
+4:21	3	Gebot		4	ἐντολὴν		global-review-known-rendering	safe	0.6421	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+4:21	10	Gott		12	Θεὸν		global-review-known-rendering	safe	0.788	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+4:21	11	liebt		13	ἀγαπᾷ		global-review-known-rendering	safe	0.764	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+4:21	13	seinen		17	αὐτοῦ		global-review-known-rendering	safe	0.7632	approved	0				global known-rendering assignment; lexical score 0.61
+4:21	14	Bruder		16	ἀδελφὸν		global-review-known-rendering	safe	0.7958	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:1	4	glaubt		3	πιστεύων		global-review-known-rendering	safe	0.7791	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:1	6	Jesus		5	Ἰησοῦς		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+5:1	10	ist		12	γεγέννηται		attached-word	attached	0.5929	approved	1				AuxiliaryVerb of 'geboren', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:1	12	Gott		11	Θεοῦ		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:1	21	hat		18	γεννήσαντα		attached-word	attached	0.5929	approved	1				AuxiliaryVerb of 'geboren', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:1	22	liebt		19	ἀγαπᾷ		global-review-known-rendering	safe	0.764	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:1	29	ist		21	γεγεννημένον		attached-word	attached	0.5929	approved	1				AuxiliaryVerb of 'geboren', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:2	3	wir		3	γινώσκομεν		attached-word	attached	0.3722	approved	1				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:2	5	wir		5	ἀγαπῶμεν		attached-word	attached	0.4783	approved	1				SubjectPronoun of 'lieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:2	7	Kinder		7	τέκνα		global-review-known-rendering	safe	0.577	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:2	11	wir		13	ἀγαπῶμεν		attached-word	attached	0.4783	approved	1				SubjectPronoun of 'lieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:2	15	seine		17	αὐτοῦ		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
+5:2	16	Gebote		16	ἐντολὰς		global-review-known-rendering	safe	0.7325	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:2	17	halten		18	ποιῶμεν		residual-known-rendering	safe	0.4118	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.14; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:3	2	dies		1	αὕτη		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+5:3	5	Liebe		5	ἀγάπη		global-review-known-rendering	safe	0.7068	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:3	6	Gottes		7	Θεοῦ		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:3	8	wir		12	τηρῶμεν		attached-word	attached	0.3647	approved	1				SubjectPronoun of 'halten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:3	9	seine		11	αὐτοῦ		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
+5:3	11	halten		12	τηρῶμεν		global-review-known-rendering	safe	0.4647	approved	0				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:3	13	seine		16	αὐτοῦ		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63
+5:3	17	schwer		17	βαρεῖαι		residual-known-rendering	safe	0.4	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.11; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:4	2	alles		2	πᾶν		global-review-known-rendering	safe	0.7509	approved	0				global known-rendering assignment; lexical score 0.60
+5:4	6	geboren		4	γεγεννημένον		global-review-known-rendering	safe	0.6929	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:4	7	ist		4	γεγεννημένον		attached-word	attached	0.5929	approved	1				AuxiliaryVerb of 'geboren', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:4	8	überwindet		8	νικᾷ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:4	12	dies		12	αὕτη		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+5:4	20	hat		17	νικήσασα		attached-word	attached	0.7	approved	1				AuxiliaryVerb of 'überwunden', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:4	21	unser		22	ἡμῶν		global-review-known-rendering	safe	0.781	approved	0				global known-rendering assignment; lexical score 0.63
+5:4	22	Glaube		21	πίστις		global-review-known-rendering	safe	0.6833	approved	0				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:5	6	Welt		6	κόσμον		global-review-known-rendering	safe	0.7068	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:5	7	überwindet		4	νικῶν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:5	12	glaubt		10	πιστεύων		global-review-known-rendering	safe	0.7791	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:5	14	Jesus		12	Ἰησοῦς		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+5:5	16	Sohn		15	Υἱὸς		global-review-known-rendering	safe	0.749	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:5	17	Gottes		17	Θεοῦ		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:6	1	Dieser		1	οὗτός		global-review-known-rendering	safe	0.7334	approved	0				global known-rendering assignment; lexical score 0.58
+5:6	5	gekommen		4	ἐλθὼν		global-review-known-rendering	safe	0.6467	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:6	6	ist		2	ἐστιν		attached-word	attached	0.5467	approved	1				AuxiliaryVerb of 'gekommen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:6	11	Jesus		9	Ἰησοῦς		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+5:6	13	Christus		10	Χριστός		global-review-known-rendering	safe	0.7975	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:6	18	allein		15	μόνον		global-review-known-rendering	safe	0.5667	approved	0				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:6	19	sondern		16	ἀλλ		global-review-known-rendering	safe	0.7718	approved	0				global known-rendering assignment; lexical score 0.62
+5:6	33	zeugt		29	μαρτυροῦν		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:6	34	weil		30	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+5:6	38	Wahrheit		35	ἀλήθεια		global-review-known-rendering	safe	0.7905	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:7	2	drei		2	τρεῖς		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:7	6	zeugen		5	μαρτυροῦντες		global-review-known-rendering	safe	0.4679	approved	0				global known-rendering assignment; lexical score 0.32; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:8	2	Geist		2	Πνεῦμα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:8	5	Wasser		5	ὕδωρ		global-review-known-rendering	safe	0.7455	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:8	8	Blut		8	αἷμα		global-review-known-rendering	safe	0.7944	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:8	11	drei		11	τρεῖς		global-review-known-rendering	safe	0.792	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:9	2	wir		6	λαμβάνομεν		attached-word	attached	0.3625	approved	1				SubjectPronoun of 'annehmen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:9	6	Menschen		5	ἀνθρώπων		global-review-known-rendering	safe	0.791	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:9	7	annehmen		6	λαμβάνομεν		global-review-known-rendering	safe	0.4625	approved	0				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:9	12	größer		11	μείζων		global-review-known-rendering	safe	0.7437	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:9	14	dies		14	αὕτη		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+5:9	20	er		21	μεμαρτύρηκεν		attached-word	attached	0.3625	approved	1				SubjectPronoun of 'gezeugt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:9	22	hat		21	μεμαρτύρηκεν		attached-word	attached	0.3625	approved	1				AuxiliaryVerb of 'gezeugt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:9	24	seinen		25	αὐτοῦ		global-review-known-rendering	safe	0.764	approved	0				global known-rendering assignment; lexical score 0.61
+5:9	25	Sohn		24	Υἱοῦ		global-review-known-rendering	safe	0.749	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:10	7	hat		19	πεποίηκεν		attached-word	attached	0.3873	approved	1				AuxiliaryVerb of 'gemacht', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:10	17	hat		19	πεποίηκεν		attached-word	attached	0.3873	approved	1				AuxiliaryVerb of 'gemacht', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:10	20	Lügner		18	ψεύστην		global-review-known-rendering	safe	0.71	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:10	21	gemacht		19	πεποίηκεν		global-review-known-rendering	safe	0.4873	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:10	22	weil		21	ὅτι		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52
+5:10	23	er		23	πεπίστευκεν		attached-word	attached	0.6654	approved	1				SubjectPronoun of 'geglaubt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:10	29	hat		23	πεπίστευκεν		attached-word	attached	0.6654	approved	1				AuxiliaryVerb of 'geglaubt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:10	33	hat		28	μεμαρτύρηκεν		attached-word	attached	0.3625	approved	1				AuxiliaryVerb of 'gezeugt', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:10	35	seinen		34	αὐτοῦ		global-review-known-rendering	safe	0.764	approved	0				global known-rendering assignment; lexical score 0.61
+5:11	2	dies		2	αὕτη		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+5:11	5	Zeugnis		5	μαρτυρία		global-review-known-rendering	safe	0.5794	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:11	9	ewiges		8	αἰώνιον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:11	11	gegeben		9	ἔδωκεν		global-review-known-rendering	safe	0.7466	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:11	12	hat		9	ἔδωκεν		attached-word	attached	0.6466	approved	1				AuxiliaryVerb of 'gegeben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:11	14	dieses		14	αὕτη		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62
+5:11	18	seinem		20	αὐτοῦ		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
+5:12	11	Gottes		14	Θεοῦ		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:13	1	Dies		1	Ταῦτα		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+5:13	2	habe		2	ἔγραψα		attached-word	attached	0.654	approved	1				AuxiliaryVerb of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:13	3	ich		2	ἔγραψα		attached-word	attached	0.654	approved	1				SubjectPronoun of 'geschrieben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:13	5	geschrieben		2	ἔγραψα		global-review-known-rendering	safe	0.754	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:13	8	ihr		5	εἰδῆτε		attached-word	attached	0.575	approved	1				SubjectPronoun of 'wisset', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:13	9	wisset		5	εἰδῆτε		global-review-known-rendering	safe	0.675	approved	0				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:13	12	ewiges		9	αἰώνιον		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:13	13	Leben		7	ζωὴν		global-review-known-rendering	safe	0.579	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:13	17	glaubet		11	πιστεύουσιν		global-review-known-rendering	safe	0.7859	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:13	20	Namen		14	ὄνομα		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+5:13	22	Sohnes		16	Υἱοῦ		global-review-known-rendering	safe	0.7471	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:13	23	Gottes		18	Θεοῦ		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:14	2	dies		2	αὕτη		global-review-known-rendering	safe	0.7715	approved	0				global known-rendering assignment; lexical score 0.62
+5:14	13	wir		13	αἰτώμεθα		attached-word	attached	0.5	approved	1				SubjectPronoun of 'bitten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:14	16	seinem		17	αὐτοῦ		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
+5:14	19	er		18	ἀκούει		attached-word	attached	0.6859	approved	1				SubjectPronoun of 'hört', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:14	21	hört		18	ἀκούει		global-review-known-rendering	safe	0.7859	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:15	3	wir		3	οἴδαμεν		attached-word	attached	0.5111	approved	1				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:15	6	er		5	ἀκούει		attached-word	attached	0.6859	approved	1				SubjectPronoun of 'hört', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:15	8	hört		5	ἀκούει		global-review-known-rendering	safe	0.7859	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+5:15	12	wir		9	αἰτώμεθα		attached-word	attached	0.5	approved	1				SubjectPronoun of 'bitten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:15	15	wissen		10	οἴδαμεν		global-review-known-rendering	safe	0.6111	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:15	16	wir		10	οἴδαμεν		attached-word	attached	0.5111	approved	1				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:16	2	jemand		2	τις		global-review-known-rendering	safe	0.6411	approved	0				global known-rendering assignment; lexical score 0.49
+5:16	3	seinen		6	αὐτοῦ		global-review-known-rendering	safe	0.764	approved	0				global known-rendering assignment; lexical score 0.61
+5:16	4	Bruder		5	ἀδελφὸν		global-review-known-rendering	safe	0.7959	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:16	6	sieht		3	ἴδῃ		residual-known-rendering	safe	0.425	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.17; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:16	13	wird		12	αἰτήσει		attached-word	attached	0.5	approved	1				AuxiliaryVerb of 'bitten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:16	14	er		12	αἰτήσει		attached-word	attached	0.5	approved	1				SubjectPronoun of 'bitten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:16	17	er		14	δώσει		attached-word	attached	0.6318	approved	1				SubjectPronoun of 'geben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:16	18	wird		14	δώσει		attached-word	attached	0.6318	approved	1				AuxiliaryVerb of 'geben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:16	20	das				expands	supplied-article-deu	safe	0.579	approved	0				article the original does not write, read as one by UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0); rests on 'Leben' → 'ζωήν'
+5:16	21	Leben		16	ζωήν		global-review-known-rendering	safe	0.579	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:16	37	sage		29	λέγω		global-review-known-rendering	safe	0.7683	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:16	38	ich		29	λέγω		attached-word	attached	0.6683	approved	1				SubjectPronoun of 'sage', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:16	40	er		31	ἐρωτήσῃ		attached-word	attached	0.35	approved	1				SubjectPronoun of 'bitten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:16	42	solle		31	ἐρωτήσῃ		attached-word	attached	0.35	approved	1				AuxiliaryVerb of 'bitten', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:17	2	Ungerechtigkeit		2	ἀδικία		global-review-known-rendering	safe	0.6714	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:17	12	Tode		10	θάνατον		global-review-known-rendering	safe	0.7016	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:18	1	Wir		1	Οἴδαμεν		attached-word	attached	0.5111	approved	1				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:18	2	wissen		1	Οἴδαμεν		global-review-known-rendering	safe	0.6111	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:18	9	ist		5	γεγεννημένος		attached-word	attached	0.5929	approved	1				AuxiliaryVerb of 'geboren', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:18	11	sündigt		10	ἁμαρτάνει		global-review-known-rendering	safe	0.77	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:18	12	sondern		11	ἀλλ		global-review-known-rendering	safe	0.7718	approved	0				global known-rendering assignment; lexical score 0.62
+5:18	17	bewahrt		17	τηρεῖ		global-review-known-rendering	safe	0.5429	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:19	1	Wir		1	οἴδαμεν		attached-word	attached	0.5111	approved	1				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:19	2	wissen		1	οἴδαμεν		global-review-known-rendering	safe	0.6111	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:19	6	Gott		5	Θεοῦ		global-review-known-rendering	safe	0.7882	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:19	10	ganze		10	ὅλος		global-review-known-rendering	safe	0.5955	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:19	11	Welt		9	κόσμος		global-review-known-rendering	safe	0.7068	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:20	1	Wir		14	γινώσκομεν		attached-word	attached	0.3722	approved	1				SubjectPronoun of 'wissen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:20	14	gegeben		10	δέδωκεν		global-review-known-rendering	safe	0.7466	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:20	15	hat		10	δέδωκεν		attached-word	attached	0.6466	approved	1				AuxiliaryVerb of 'gegeben', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:20	18	wir		1	οἴδαμεν		attached-word	attached	0.65	approved	1				SubjectPronoun of 'kennen', by the parse of UDPipe's German-HDT model (Straka and Straková, ÚFAL, CC BY-NC-SA 4.0)
+5:20	29	seinem		25	αὐτοῦ		global-review-known-rendering	safe	0.7848	approved	0				global known-rendering assignment; lexical score 0.63
+5:20	31	Jesus		26	Ἰησοῦ		global-review-known-rendering	safe	0.7954	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+5:20	32	Christus		27	Χριστῷ		global-review-known-rendering	safe	0.7975	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+5:20	33	Dieser		28	οὗτός		global-review-known-rendering	safe	0.7334	approved	0				global known-rendering assignment; lexical score 0.58
+5:20	40	ewige		35	αἰώνιος		global-review-known-rendering	safe	0.775	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+5:20	41	Leben		34	ζωὴ		global-review-known-rendering	safe	0.579	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+5:21	6	Götzen		6	εἰδώλων		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000

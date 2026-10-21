@@ -1,0 +1,502 @@
+at	word	surface	target_at	target	target_surface	absence	rule	tier	confidence	verdict	review	corrected_at	corrected	corrected_surface	rationale
+1:1	1	Paul		1	Παῦλος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65
+1:1	2	a				expands	supplied-indefinite-article	safe	0.7067	approved	0				indefinite article; rests on 'servant' → 'δοῦλος'
+1:1	3	servant		2	δοῦλος		global-review-known-rendering	safe	0.7067	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:1	4	of		3	Θεοῦ		attached-word	attached	0.6935	approved	1				OfTheGoverned of 'God'
+1:1	5	God		3	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:1	7	an				expands	supplied-indefinite-article	safe	0.8	approved	0				indefinite article; rests on 'apostle' → 'ἀπόστολος'
+1:1	8	apostle		4	ἀπόστολος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:1	9	of		6	Ἰησοῦ		attached-word	attached	0.697	approved	1				OfTheGoverned of 'Jesus'
+1:1	10	Jesus		6	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:1	11	Christ		7	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:1	14	the				expands	supplied-article	safe	0.7887	approved	0				article the original does not write; rests on 'faith' → 'πίστιν'
+1:1	15	faith		9	πίστιν		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:1	16	of		10	ἐκλεκτῶν		attached-word	attached	0.7	approved	1				OfTheGoverned of 'elect'
+1:1	17	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'elect' → 'ἐκλεκτῶν'
+1:1	18	elect		10	ἐκλεκτῶν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:1	19	of		11	Θεοῦ		attached-word	attached	0.6935	approved	1				OfTheGoverned of 'God'
+1:1	20	God		11	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:1	21	and		12	καὶ		attached-word	attached	0.7	approved	1				Conjunction of 'acknowledging'
+1:1	22	the				expands	supplied-article	safe	0.8	approved	0				article the original does not write; rests on 'acknowledging' → 'ἐπίγνωσιν'
+1:1	23	acknowledging		13	ἐπίγνωσιν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:1	24	of		14	ἀληθείας		attached-word	attached	0.6428	approved	1				OfTheGoverned of 'truth'
+1:1	25	the				expands	supplied-article	safe	0.7428	approved	0				article the original does not write; rests on 'truth' → 'ἀληθείας'
+1:1	26	truth		14	ἀληθείας		global-review-known-rendering	safe	0.7428	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:1	31	godliness		17	εὐσέβειαν		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:2	1	Unto		1	ἐπ		attached-word	attached	0.6619	approved	1				Preposition of 'hope'
+1:2	2	the				expands	supplied-article	safe	0.7619	approved	0				article the original does not write; rests on 'hope' → 'ἐλπίδι'
+1:2	3	hope		2	ἐλπίδι		global-review-known-rendering	safe	0.7619	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:2	4	of		3	ζωῆς		attached-word	attached	0.5768	approved	1				OfTheGoverned of 'life'
+1:2	5	life		3	ζωῆς		global-review-known-rendering	safe	0.6768	approved	0				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:2	8	God		9	Θεὸς		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:2	13	promised		6	ἐπηγγείλατο		global-review-known-rendering	safe	0.7182	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:2	14	before		10	πρὸ		attached-word	attached	0.3	approved	1				Preposition of 'times'
+1:3	4	due		4	ἰδίοις		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:3	5	times		3	καιροῖς		global-review-known-rendering	safe	0.5261	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:3	6	manifested		1	ἐφανέρωσεν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:3	7	his		7	αὐτοῦ		global-review-known-rendering	safe	0.7891	approved	0				global known-rendering assignment; lexical score 0.64
+1:3	8	word		6	λόγον		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:3	9	in		8	ἐν		attached-word	attached	0.387	approved	1				Preposition of 'preaching'
+1:3	10	preaching		9	κηρύγματι		global-review-known-rendering	safe	0.487	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:3	13	committed		11	ἐπιστεύθην		residual-known-rendering	safe	0.4447	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.21; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:3	15	me		12	ἐγὼ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+1:3	16	according		13	κατ		global-review-known-rendering	safe	0.7914	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:3	18	the				expands	supplied-article	safe	0.4	approved	0				article the original does not write; rests on 'commandment' → 'ἐπιταγὴν'
+1:3	19	commandment		14	ἐπιταγὴν		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:3	20	of		18	Θεοῦ		attached-word	attached	0.6935	approved	1				OfTheGoverned of 'God'
+1:3	21	God		18	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:3	22	our		17	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+1:3	23	Saviour		16	Σωτῆρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:4	2	Titus		1	Τίτῳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:4	5	son		3	τέκνῳ		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:4	6	according		4	κατὰ		global-review-known-rendering	safe	0.7914	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:4	8	the				expands	supplied-article	safe	0.5429	approved	0				article the original does not write; rests on 'common' → 'κοινὴν'
+1:4	9	common		5	κοινὴν		global-review-known-rendering	safe	0.5429	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:4	10	faith		6	πίστιν		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:4	11	grace		7	χάρις		global-review-known-rendering	safe	0.7967	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:4	12	and		8	καὶ		attached-word	attached	0.6068	approved	1				Conjunction of 'peace'
+1:4	13	peace		9	εἰρήνη		global-review-known-rendering	safe	0.7068	approved	0				global known-rendering assignment; lexical score 0.56; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:4	14	from		10	ἀπὸ		attached-word	attached	0.6935	approved	1				Preposition of 'God'
+1:4	15	God		11	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:4	16	the				expands	supplied-article	safe	0.7987	approved	0				article the original does not write; rests on 'Father' → 'Πατρὸς'
+1:4	17	Father		12	Πατρὸς		global-review-known-rendering	safe	0.7987	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:4	18	and		13	καὶ		attached-word	attached	0.7	approved	1				Conjunction of 'Christ'
+1:4	20	Christ		14	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:4	21	Jesus		15	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:4	22	our		18	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+1:4	23	Saviour		17	Σωτῆρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:5	2	this		1	Τούτου		global-review-known-rendering	safe	0.7776	approved	0				global known-rendering assignment; lexical score 0.63
+1:5	4	I		3	ἀπέλιπόν		attached-word	attached	0.3	approved	1				SubjectPronoun of 'left'
+1:5	5	left		3	ἀπέλιπόν		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:5	6	thee		4	σε		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62
+1:5	7	in		5	ἐν		attached-word	attached	0.7	approved	1				Preposition of 'Crete'
+1:5	8	Crete		6	Κρήτῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:5	17	that		8	τὰ		attached-word	attached	0.7	approved	1				RelativeOfTheParticiple of 'wanting', on the article of its participle
+1:5	18	are		9	λείποντα		attached-word	attached	0.7	approved	1				GreekAuxiliary of 'wanting', on the verb whose form carries it
+1:5	19	wanting		9	λείποντα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:5	24	in		13	κατὰ		attached-word	attached	0.6783	approved	1				Preposition of 'city'
+1:5	26	city		14	πόλιν		global-review-known-rendering	safe	0.7783	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:5	28	I		17	ἐγώ		global-review-known-rendering	safe	0.7469	approved	0				global known-rendering assignment; lexical score 0.60
+1:5	31	thee		18	σοι		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62
+1:6	2	any		2	τίς		global-review-known-rendering	safe	0.6021	approved	0				global known-rendering assignment; lexical score 0.45
+1:6	6	the				expands	supplied-article	safe	0.7885	approved	0				article the original does not write; rests on 'husband' → 'ἀνήρ'
+1:6	7	husband		7	ἀνήρ		global-review-known-rendering	safe	0.7885	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:6	8	of		5	μιᾶς		attached-word	attached	0.5363	approved	1				OfTheGoverned of 'one'
+1:6	9	one		5	μιᾶς		global-review-known-rendering	safe	0.6363	approved	0				global known-rendering assignment; lexical score 0.49; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:6	10	wife		6	γυναικὸς		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:6	11	having		9	ἔχων		global-review-known-rendering	safe	0.7843	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:6	12	faithful		10	πιστά		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:6	13	children		8	τέκνα		global-review-known-rendering	safe	0.549	approved	0				global known-rendering assignment; lexical score 0.40; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:6	16	of		14	ἀσωτίας		attached-word	attached	0.475	approved	1				OfTheGoverned of 'riot'
+1:6	17	riot		14	ἀσωτίας		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:6	19	unruly		16	ἀνυπότακτα		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:7	2	a				expands	supplied-indefinite-article	safe	0.65	approved	0				indefinite article; rests on 'bishop' → 'ἐπίσκοπον'
+1:7	3	bishop		4	ἐπίσκοπον		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:7	4	must		1	δεῖ		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+1:7	9	the				expands	supplied-article	safe	0.55	approved	0				article the original does not write; rests on 'steward' → 'οἰκονόμον'
+1:7	10	steward		9	οἰκονόμον		global-review-known-rendering	safe	0.55	approved	0				global known-rendering assignment; lexical score 0.40; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:7	11	of		8	Θεοῦ		attached-word	attached	0.6935	approved	1				OfTheGoverned of 'God'
+1:7	12	God		8	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:7	24	striker		17	πλήκτην		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:7	29	lucre		19	αἰσχροκερδῆ		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:8	6	sober		4	σώφρονα		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:8	7	just		5	δίκαιον		global-review-known-rendering	safe	0.7667	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:9	3	faithful		6	πιστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:9	13	be		10	ᾖ		attached-word	attached	0.3	approved	1				Copula of 'able'
+1:9	14	able		9	δυνατὸς		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:9	15	to		12	παρακαλεῖν		attached-word	attached	0.6679	approved	1				Infinitive of 'exhort'
+1:9	16	exhort		12	παρακαλεῖν		global-review-known-rendering	safe	0.7679	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:9	17	in		13	ἐν		attached-word	attached	0.39	approved	1				PrepositionOfPhrase of 'doctrine'
+1:9	18	sound		17	ὑγιαινούσῃ		global-review-known-rendering	safe	0.4786	approved	0				global known-rendering assignment; lexical score 0.33; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:9	21	to		21	ἐλέγχειν		attached-word	attached	0.5875	approved	1				Infinitive of 'convince'
+1:9	22	convince		21	ἐλέγχειν		global-review-known-rendering	safe	0.6875	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:10	2	there		1	Εἰσὶν		attached-word	attached	0.6847	approved	1				Expletive of 'are'
+1:10	5	many		3	πολλοὶ		global-review-known-rendering	safe	0.7463	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:10	6	disobedient		4	ἀνυπότακτοι		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:10	8	talkers		5	ματαιολόγοι		dictionary-and-gloss-review	safe	0.45	approved	0				dictionary sense and gloss agree on the only free candidate; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:10	9	and		6	καὶ		attached-word	attached	0.3	approved	1				Conjunction of 'seducers'
+1:10	10	seducers		7	φρεναπάται		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:10	11	especially		8	μάλιστα		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:10	16	the		11	τῆς		attached-word	safe	0.7	approved	0				Article of 'circumcision'
+1:10	17	circumcision		12	περιτομῆς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:11	2	must		2	δεῖ		global-review-known-rendering	safe	0.7839	approved	0				global known-rendering assignment; lexical score 0.63
+1:11	6	subvert		7	ἀνατρέπουσιν		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:11	7	whole		5	ὅλους		global-review-known-rendering	safe	0.5337	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:11	8	houses		6	οἴκους		global-review-known-rendering	safe	0.5136	approved	0				global known-rendering assignment; lexical score 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:11	9	teaching		8	διδάσκοντες		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:11	16	filthy		12	αἰσχροῦ		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:12	1	One		2	τις		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+1:12	3	them		4	αὐτῶν		global-review-known-rendering	safe	0.7399	approved	0				global known-rendering assignment; lexical score 0.59
+1:12	4	a				expands	supplied-indefinite-article	safe	0.7723	approved	0				indefinite article; rests on 'prophet' → 'προφήτης'
+1:12	5	prophet		7	προφήτης		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:12	7	their		6	αὐτῶν		global-review-known-rendering	safe	0.7837	approved	0				global known-rendering assignment; lexical score 0.63
+1:12	8	own		5	ἴδιος		residual-known-rendering	safe	0.5099	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:12	10	The				expands	supplied-article	safe	0.4	approved	0				article the original does not write; rests on 'Cretians' → 'Κρῆτες'
+1:12	11	Cretians		8	Κρῆτες		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:12	13	always		9	ἀεὶ		anchored-gap-review	safe	0.4	approved	0				the one free word of its class between the renderings of its placed neighbours; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:12	14	liars		10	ψεῦσται		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:12	15	evil		11	κακὰ		global-review-known-rendering	safe	0.5065	approved	0				global known-rendering assignment; lexical score 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:12	16	beasts		12	θηρία		residual-known-rendering	safe	0.4143	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.14; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:12	18	bellies		13	γαστέρες		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:13	1	This		3	αὕτη		global-review-known-rendering	safe	0.7776	approved	0				global known-rendering assignment; lexical score 0.63
+1:13	2	testimony		2	μαρτυρία		global-review-known-rendering	safe	0.5469	approved	0				global known-rendering assignment; lexical score 0.40; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:13	3	is		4	ἐστὶν		attached-word	attached	0.4353	approved	1				Copula of 'true'
+1:13	4	true		5	ἀληθής		global-review-known-rendering	safe	0.5353	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:13	6	rebuke		9	ἔλεγχε		global-review-known-rendering	safe	0.485	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:13	7	them		10	αὐτοὺς		global-review-known-rendering	safe	0.7399	approved	0				global known-rendering assignment; lexical score 0.59
+1:13	8	sharply		11	ἀποτόμως		anchored-gap-review	safe	0.4	approved	0				the one free word of its class between the renderings of its placed neighbours; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:13	10	they		13	ὑγιαίνωσιν		attached-word	attached	0.3786	approved	1				SubjectPronoun of 'sound'
+1:13	11	may		13	ὑγιαίνωσιν		attached-word	attached	0.3786	approved	1				GreekAuxiliary of 'sound', on the verb whose form carries it
+1:13	13	sound		13	ὑγιαίνωσιν		global-review-known-rendering	safe	0.4786	approved	0				global known-rendering assignment; lexical score 0.33; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:13	14	in		14	ἐν		attached-word	attached	0.6888	approved	1				Preposition of 'faith'
+1:13	15	the		15	τῇ		attached-word	safe	0.6888	approved	0				Article of 'faith'
+1:13	16	faith		16	πίστει		global-review-known-rendering	safe	0.7887	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:14	3	heed		2	προσέχοντες		global-review-known-rendering	safe	0.4956	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+1:14	4	to		4	μύθοις		attached-word	attached	0.7	approved	1				DativeTo of 'fables', on its dative
+1:14	5	Jewish		3	Ἰουδαϊκοῖς		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:14	6	fables		4	μύθοις		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:14	7	and		5	καὶ		attached-word	attached	0.6224	approved	1				Conjunction of 'commandments'
+1:14	8	commandments		6	ἐντολαῖς		global-review-known-rendering	safe	0.7224	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:14	9	of		7	ἀνθρώπων		attached-word	attached	0.5244	approved	1				OfTheGoverned of 'men'
+1:14	10	men		7	ἀνθρώπων		global-review-known-rendering	safe	0.6244	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:14	12	turn		8	ἀποστρεφομένων		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:14	16	the		9	τὴν		attached-word	safe	0.6428	approved	0				Article of 'truth'
+1:14	17	truth		10	ἀλήθειαν		global-review-known-rendering	safe	0.7428	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:15	1	All		1	πάντα		global-review-known-rendering	safe	0.7298	approved	0				global known-rendering assignment; lexical score 0.58
+1:15	5	to		3	τοῖς		attached-word	attached	0.475	approved	1				DativeTo of 'clean', on the article of its dative
+1:15	6	the		3	τοῖς		attached-word	attached	0.475	approved	1				Article of 'clean'
+1:15	10	them		5	τοῖς		attached-word	attached	0.4	approved	1				RelativeOfTheParticiple of 'defiled', on the article of its participle
+1:15	11	that		5	τοῖς		attached-word	attached	0.4	approved	1				RelativeOfTheParticiple of 'defiled', on the article of its participle
+1:15	12	are		7	μεμιαμμένοις		attached-word	attached	0.4	approved	1				GreekAuxiliary of 'defiled', on the verb whose form carries it
+1:15	14	and		8	καὶ		attached-word	attached	0.7	approved	1				Conjunction of 'unbelievers'
+1:15	15	to		9	ἀπίστοις		attached-word	attached	0.7	approved	1				DativeTo of 'unbelievers', on its dative
+1:15	17	nothing		10	οὐδὲν		global-review-known-rendering	safe	0.5944	approved	0				global known-rendering assignment; lexical score 0.44
+1:15	21	both		15	καὶ		global-review-known-rendering	safe	0.6122	approved	0				global known-rendering assignment; lexical score 0.46
+1:15	22	their		14	αὐτῶν		global-review-known-rendering	safe	0.7837	approved	0				global known-rendering assignment; lexical score 0.63
+1:15	23	mind		17	νοῦς		global-review-known-rendering	safe	0.45	approved	0				global known-rendering assignment; lexical score 0.30; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:15	24	and		18	καὶ		attached-word	attached	0.7	approved	1				Conjunction of 'their'
+1:15	26	conscience		20	συνείδησις		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:15	27	are		13	μεμίανται		attached-word	attached	0.4	approved	1				GreekAuxiliary of 'defiled', on the verb whose form carries it
+1:16	1	They		2	ὁμολογοῦσιν		attached-word	attached	0.4	approved	1				SubjectPronoun of 'profess'
+1:16	2	profess		2	ὁμολογοῦσιν		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:16	5	know		3	εἰδέναι		global-review-known-rendering	safe	0.6242	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:16	6	God		1	Θεὸν		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+1:16	11	they		7	ἀρνοῦνται		attached-word	attached	0.4187	approved	1				SubjectPronoun of 'deny'
+1:16	12	deny		7	ἀρνοῦνται		global-review-known-rendering	safe	0.5188	approved	0				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:16	14	being		9	ὄντες		global-review-known-rendering	safe	0.6615	approved	0				global known-rendering assignment; lexical score 0.51
+1:16	19	to		13	πρὸς		attached-word	attached	0.7	approved	1				PrepositionOfPhrase of 'reprobate'
+1:16	20	every		14	πᾶν		global-review-known-rendering	safe	0.7281	approved	0				global known-rendering assignment; lexical score 0.58
+1:16	21	good		16	ἀγαθὸν		global-review-known-rendering	safe	0.5439	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+1:16	23	reprobate		17	ἀδόκιμοι		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:1	1	But		2	δὲ		attached-word	attached	0.5701	approved	1				SentenceConjunction of 'speak'
+2:1	2	speak		3	λάλει		global-review-known-rendering	safe	0.6701	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:1	3	thou		1	Σὺ		global-review-known-rendering	safe	0.7979	approved	0				global known-rendering assignment; lexical score 0.65
+2:1	7	become		5	πρέπει		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:1	8	sound		7	ὑγιαινούσῃ		global-review-known-rendering	safe	0.485	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:1	9	doctrine		8	διδασκαλίᾳ		global-review-known-rendering	safe	0.4756	approved	0				global known-rendering assignment; lexical score 0.33; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:2	4	men		1	πρεσβύτας		unique-context-gloss-review	safe	0.45	approved	0				unique gloss in the verse, from STEPBible's TBESG (Tyndale House, Cambridge, CC BY 4.0); EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:2	5	be		3	εἶναι		attached-word	attached	0.3	approved	1				Copula of 'sober'
+2:2	9	sound		6	ὑγιαίνοντας		global-review-known-rendering	safe	0.485	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:2	11	faith		8	πίστει		global-review-known-rendering	safe	0.7888	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:2	13	love		10	ἀγάπῃ		global-review-known-rendering	safe	0.5686	approved	0				global known-rendering assignment; lexical score 0.42; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:2	15	patience		12	ὑπομονῇ		global-review-known-rendering	safe	0.7318	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:3	3	women		1	πρεσβύτιδας		unique-context-gloss-review	safe	0.45	approved	0				unique gloss in the verse, from STEPBible's TBESG (Tyndale House, Cambridge, CC BY 4.0); EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:3	6	manner		2	ὡσαύτως		residual-known-rendering	safe	0.3793	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.07; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:3	10	not		6	μὴ		global-review-known-rendering	safe	0.4852	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:3	12	accusers		7	διαβόλους		residual-known-rendering	safe	0.425	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.17; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:3	15	to		9	οἴνῳ		attached-word	attached	0.6486	approved	1				DativeTo of 'wine', on its dative
+2:3	16	much		10	πολλῷ		global-review-known-rendering	safe	0.6663	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:3	17	wine		9	οἴνῳ		global-review-known-rendering	safe	0.7486	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:4	2	they		2	σωφρονίζωσιν		attached-word	attached	0.3	approved	1				SubjectPronoun of 'teach'
+2:4	3	may		2	σωφρονίζωσιν		attached-word	attached	0.3	approved	1				GreekAuxiliary of 'teach', on the verb whose form carries it
+2:4	4	teach		2	σωφρονίζωσιν		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:4	5	the		3	τὰς		attached-word	attached	0.475	approved	1				Article of 'young'
+2:4	14	husbands		5	φιλάνδρους		unique-context-gloss-review	safe	0.45	approved	0				unique gloss in the verse, from STEPBible's TBESG (Tyndale House, Cambridge, CC BY 4.0); EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:4	18	children		7	φιλοτέκνους		unique-context-gloss-review	safe	0.45	approved	0				unique gloss in the verse, from STEPBible's TBESG (Tyndale House, Cambridge, CC BY 4.0); EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:5	4	chaste		2	ἁγνάς		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:5	14	to		6	τοῖς		attached-word	attached	0.7	approved	1				DativeTo of 'husbands', on the article of its dative
+2:5	16	husbands		8	ἀνδράσιν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:5	18	the		11	ὁ		attached-word	safe	0.6254	approved	0				Article of 'word'
+2:5	19	word		12	λόγος		global-review-known-rendering	safe	0.7254	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:5	20	of		14	Θεοῦ		attached-word	attached	0.6935	approved	1				OfTheGoverned of 'God'
+2:5	21	God		14	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:5	22	be		15	βλασφημῆται		attached-word	attached	0.7	approved	1				GreekAuxiliary of 'blasphemed', on the verb whose form carries it
+2:5	24	blasphemed		15	βλασφημῆται		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:6	5	manner		3	ὡσαύτως		residual-known-rendering	safe	0.3793	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.07; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:6	6	exhort		4	παρακάλει		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:6	10	sober		5	σωφρονεῖν		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:7	2	all		2	πάντα		global-review-known-rendering	safe	0.7294	approved	0				global known-rendering assignment; lexical score 0.58
+2:7	4	shew		4	παρεχόμενος		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:7	5	thyself		3	σεαυτὸν		global-review-known-rendering	safe	0.725	approved	0				global known-rendering assignment; lexical score 0.57
+2:7	6	an				expands	supplied-indefinite-article	safe	0.395	approved	0				indefinite article; rests on 'example' → 'τύπον'
+2:7	7	example		5	τύπον		residual-known-rendering	safe	0.395	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.10; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:7	8	of		6	καλῶν		attached-word	attached	0.4397	approved	1				OfTheGoverned of 'good'
+2:7	9	good		6	καλῶν		global-review-known-rendering	safe	0.5397	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:7	10	works		7	ἔργων		global-review-known-rendering	safe	0.7463	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:7	11	in		8	ἐν		attached-word	attached	0.3756	approved	1				Preposition of 'doctrine'
+2:7	12	doctrine		10	διδασκαλίᾳ		global-review-known-rendering	safe	0.4756	approved	0				global known-rendering assignment; lexical score 0.33; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:7	14	integrity		11	ἀφθορίαν		anchored-gap-review	safe	0.4	approved	0				the one free word of its class between the renderings of its placed neighbours; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:7	16	gravity		12	σεμνότητα		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:8	1	The				expands	supplied-article	safe	0.4	approved	0				article the original does not write; rests on 'sound' → 'ὑγιῆ'
+2:8	2	sound		2	ὑγιῆ		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:8	13	on		6	ἐξ		attached-word	attached	0.4375	approved	1				Preposition of 'contrary'
+2:8	15	contrary		7	ἐναντίας		global-review-known-rendering	safe	0.5375	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:8	20	having		10	ἔχων		global-review-known-rendering	safe	0.7843	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:8	23	to		11	λέγειν		attached-word	attached	0.6342	approved	1				Infinitive of 'say'
+2:8	24	say		11	λέγειν		global-review-known-rendering	safe	0.7342	approved	0				global known-rendering assignment; lexical score 0.58; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:8	26	us		13	ἡμῶν		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+2:9	2	servants		1	δούλους		global-review-known-rendering	safe	0.6925	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:9	5	obedient		4	ὑποτάσσεσθαι		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:9	6	to		3	δεσπόταις		attached-word	attached	0.3	approved	1				DativeTo of 'masters', on its dative
+2:9	8	masters		3	δεσπόταις		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:9	10	all		6	πᾶσιν		global-review-known-rendering	safe	0.7294	approved	0				global known-rendering assignment; lexical score 0.58
+2:9	12	pleasing		7	εὐαρέστους		global-review-known-rendering	safe	0.4625	approved	0				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:9	13	not		9	μὴ		global-review-known-rendering	safe	0.4852	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:9	14	gainsaying		10	ἀντιλέγοντας		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:10	5	all		4	πᾶσαν		global-review-known-rendering	safe	0.7294	approved	0				global known-rendering assignment; lexical score 0.58
+2:10	7	shewing		6	ἐνδεικνυμένους		residual-known-rendering	safe	0.44	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.20; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:10	8	good		7	ἀγαθήν		global-review-known-rendering	safe	0.5446	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:10	9	fidelity		5	πίστιν		unique-target-gloss-review	safe	0.45	approved	0				unique exact-verse target gloss after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:10	11	they		16	κοσμῶσιν		attached-word	attached	0.61	approved	1				SubjectPronoun of 'adorn'
+2:10	12	may		16	κοσμῶσιν		attached-word	attached	0.61	approved	1				GreekAuxiliary of 'adorn', on the verb whose form carries it
+2:10	14	the		9	τὴν		attached-word	attached	0.3756	approved	1				Article of 'doctrine'
+2:10	16	of		15	Θεοῦ		attached-word	attached	0.6935	approved	1				OfTheGoverned of 'God'
+2:10	17	God		15	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:10	18	our		14	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+2:10	19	Saviour		13	Σωτῆρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:10	21	all		18	πᾶσιν		global-review-known-rendering	safe	0.7294	approved	0				global known-rendering assignment; lexical score 0.58
+2:11	2	the		3	ἡ		attached-word	safe	0.6967	approved	0				Article of 'grace'
+2:11	3	grace		4	χάρις		global-review-known-rendering	safe	0.7967	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:11	4	of		6	Θεοῦ		attached-word	attached	0.6935	approved	1				OfTheGoverned of 'God'
+2:11	5	God		6	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:11	10	to		9	ἀνθρώποις		attached-word	attached	0.5252	approved	1				DativeTo of 'men', on its dative
+2:11	11	all		8	πᾶσιν		global-review-known-rendering	safe	0.7294	approved	0				global known-rendering assignment; lexical score 0.58
+2:11	12	men		9	ἀνθρώποις		global-review-known-rendering	safe	0.6252	approved	0				global known-rendering assignment; lexical score 0.48; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:12	1	Instructing		1	παιδεύουσα		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:12	2	us		2	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+2:12	4	denying		4	ἀρνησάμενοι		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:12	5	ungodliness		6	ἀσέβειαν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:12	6	and		7	καὶ		attached-word	attached	0.3	approved	1				Conjunction of 'worldly'
+2:12	7	worldly		9	κοσμικὰς		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:12	8	desires		10	ἐπιθυμίας		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:12	9	we		16	ζήσωμεν		attached-word	attached	0.6612	approved	1				SubjectPronoun of 'live'
+2:12	10	should		16	ζήσωμεν		attached-word	attached	0.6612	approved	1				GreekAuxiliary of 'live', on the verb whose form carries it
+2:12	11	live		16	ζήσωμεν		global-review-known-rendering	safe	0.7612	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:12	13	and		12	καὶ		attached-word	attached	0.7	approved	1				Conjunction of 'justly'
+2:13	1	Looking		1	προσδεχόμενοι		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:13	3	the		2	τὴν		attached-word	safe	0.6619	approved	0				Article of 'hope'
+2:13	4	blessed		3	μακαρίαν		global-review-known-rendering	safe	0.5804	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:13	5	hope		4	ἐλπίδα		global-review-known-rendering	safe	0.7619	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:13	8	of		7	τῆς		attached-word	attached	0.6246	approved	1				OfTheGoverned of 'glory'
+2:13	9	the		7	τῆς		attached-word	safe	0.6246	approved	0				Article of 'glory'
+2:13	10	glory		8	δόξης		global-review-known-rendering	safe	0.7246	approved	0				global known-rendering assignment; lexical score 0.57; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:13	11	of		9	τοῦ		attached-word	attached	0.5543	approved	1				OfTheGoverned of 'great'
+2:13	12	the		9	τοῦ		attached-word	safe	0.6935	approved	0				Article of 'great'
+2:13	13	great		10	μεγάλου		global-review-known-rendering	safe	0.6543	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:13	14	God		11	Θεοῦ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:13	15	and		12	καὶ		attached-word	attached	0.7	approved	1				Conjunction of 'our'
+2:13	16	our		14	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+2:13	17	Saviour		13	Σωτῆρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:13	18	Jesus		16	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+2:13	19	Christ		15	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:14	2	gave		2	ἔδωκεν		global-review-known-rendering	safe	0.7365	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:14	4	for		4	ὑπὲρ		attached-word	attached	0.6978	approved	1				Preposition of 'us'
+2:14	5	us		5	ἡμῶν		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+2:14	7	he		7	λυτρώσηται		attached-word	attached	0.3	approved	1				SubjectPronoun of 'redeem'
+2:14	8	might		7	λυτρώσηται		attached-word	attached	0.3	approved	1				GreekAuxiliary of 'redeem', on the verb whose form carries it
+2:14	9	redeem		7	λυτρώσηται		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:14	10	us		8	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+2:14	11	from		9	ἀπὸ		attached-word	attached	0.49	approved	1				PrepositionOfPhrase of 'iniquity'
+2:14	12	all		10	πάσης		global-review-known-rendering	safe	0.7294	approved	0				global known-rendering assignment; lexical score 0.58
+2:14	13	iniquity		11	ἀνομίας		global-review-known-rendering	safe	0.59	approved	0				global known-rendering assignment; lexical score 0.44; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+2:14	14	and		12	καὶ		attached-word	attached	0.7	approved	1				Conjunction of 'cleanse'
+2:14	15	might		13	καθαρίσῃ		attached-word	attached	0.7	approved	1				GreekAuxiliary of 'cleanse', on the verb whose form carries it
+2:14	16	cleanse		13	καθαρίσῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:14	17	to		14	ἑαυτῷ		attached-word	attached	0.5216	approved	1				DativeTo of 'himself', on its dative
+2:14	19	a				expands	supplied-indefinite-article	safe	0.6184	approved	0				indefinite article; rests on 'people' → 'λαὸν'
+2:14	20	people		15	λαὸν		global-review-known-rendering	safe	0.6184	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:14	24	of		18	καλῶν		attached-word	attached	0.4397	approved	1				OfTheGoverned of 'good'
+2:14	25	good		18	καλῶν		global-review-known-rendering	safe	0.5397	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:14	26	works		19	ἔργων		global-review-known-rendering	safe	0.7463	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:15	1	These		1	Ταῦτα		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
+2:15	3	speak		2	λάλει		global-review-known-rendering	safe	0.6701	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:15	4	and		3	καὶ		attached-word	attached	0.6654	approved	1				Conjunction of 'exhort'
+2:15	5	exhort		4	παρακάλει		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:15	6	and		5	καὶ		attached-word	attached	0.385	approved	1				Conjunction of 'rebuke'
+2:15	7	rebuke		6	ἔλεγχε		global-review-known-rendering	safe	0.485	approved	0				global known-rendering assignment; lexical score 0.34; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:15	8	with		7	μετὰ		attached-word	attached	0.3	approved	1				PrepositionOfPhrase of 'authority'
+2:15	9	all		8	πάσης		global-review-known-rendering	safe	0.7294	approved	0				global known-rendering assignment; lexical score 0.58
+2:15	10	authority		9	ἐπιταγῆς		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+2:15	14	despise		12	περιφρονείτω		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+2:15	15	thee		11	σου		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62
+3:1	2	them		2	αὐτοὺς		global-review-known-rendering	safe	0.7388	approved	0				global known-rendering assignment; lexical score 0.59
+3:1	5	subject		5	ὑποτάσσεσθαι		global-review-known-rendering	safe	0.7591	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:1	10	to		6	πειθαρχεῖν		attached-word	attached	0.3	approved	1				Infinitive of 'obey'
+3:1	11	obey		6	πειθαρχεῖν		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:1	16	be		12	εἶναι		attached-word	attached	0.4125	approved	1				Copula of 'ready'
+3:1	17	ready		11	ἑτοίμους		global-review-known-rendering	safe	0.5125	approved	0				global known-rendering assignment; lexical score 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:1	18	to		7	πρὸς		attached-word	attached	0.5568	approved	1				PrepositionOfPhrase of 'work'
+3:1	19	every		8	πᾶν		global-review-known-rendering	safe	0.7281	approved	0				global known-rendering assignment; lexical score 0.58
+3:1	20	good		10	ἀγαθὸν		global-review-known-rendering	safe	0.547	approved	0				global known-rendering assignment; lexical score 0.40; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:1	21	work		9	ἔργον		global-review-known-rendering	safe	0.6568	approved	0				global known-rendering assignment; lexical score 0.51; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:2	1	To		2	βλασφημεῖν		attached-word	attached	0.35	approved	1				Infinitive of 'speak'
+3:2	12	gentle		5	ἐπιεικεῖς		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:2	13	shewing		7	ἐνδεικνυμένους		residual-known-rendering	safe	0.425	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.17; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:2	14	all		6	πᾶσαν		global-review-known-rendering	safe	0.7295	approved	0				global known-rendering assignment; lexical score 0.58
+3:2	16	towards		9	πρὸς		attached-word	attached	0.5229	approved	1				PrepositionOfPhrase of 'men'
+3:2	17	all		10	πάντας		global-review-known-rendering	safe	0.7295	approved	0				global known-rendering assignment; lexical score 0.58
+3:2	18	men		11	ἀνθρώπους		global-review-known-rendering	safe	0.6229	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:3	2	we		5	ἡμεῖς		global-review-known-rendering	safe	0.7825	approved	0				global known-rendering assignment; lexical score 0.63
+3:3	8	unwise		6	ἀνόητοι		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:3	10	erring		8	πλανώμενοι		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:3	11	slaves		9	δουλεύοντες		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:3	12	to		10	ἐπιθυμίαις		attached-word	attached	0.3	approved	1				DativeTo of 'desires', on its dative
+3:3	13	divers		13	ποικίλαις		global-review-known-rendering	safe	0.665	approved	0				global known-rendering assignment; lexical score 0.52; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:3	15	and		11	καὶ		attached-word	attached	0.3625	approved	1				Conjunction of 'pleasures'
+3:3	16	pleasures		12	ἡδοναῖς		global-review-known-rendering	safe	0.4625	approved	0				global known-rendering assignment; lexical score 0.31; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:3	17	living		18	διάγοντες		unique-target-gloss-review	safe	0.45	approved	0				unique exact-verse target gloss after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:3	18	in		14	ἐν		attached-word	attached	0.7	approved	1				Preposition of 'malice'
+3:3	19	malice		15	κακίᾳ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:3	20	and		16	καὶ		attached-word	attached	0.55	approved	1				Conjunction of 'envy'
+3:3	21	envy		17	φθόνῳ		global-review-known-rendering	safe	0.65	approved	0				global known-rendering assignment; lexical score 0.50; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:3	24	hating		20	μισοῦντες		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:4	2	when		1	ὅτε		global-review-known-rendering	safe	0.4746	approved	0				global known-rendering assignment; lexical score 0.32; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:4	7	of		12	Θεοῦ		attached-word	attached	0.6935	approved	1				OfTheGoverned of 'God'
+3:4	9	our		11	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+3:4	10	Saviour		10	Σωτῆρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:5	1	Not		1	οὐκ		global-review-known-rendering	safe	0.6289	approved	0				global known-rendering assignment; lexical score 0.48
+3:5	2	by		2	ἐξ		attached-word	attached	0.6458	approved	1				Preposition of 'works'
+3:5	3	the				expands	supplied-article	safe	0.7458	approved	0				article the original does not write; rests on 'works' → 'ἔργων'
+3:5	4	works		3	ἔργων		global-review-known-rendering	safe	0.7458	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:5	6	justice		6	δικαιοσύνῃ		residual-known-rendering	safe	0.3909	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.09; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:5	8	we		9	ἡμεῖς		global-review-known-rendering	safe	0.7825	approved	0				global known-rendering assignment; lexical score 0.63
+3:5	9	have		8	ἐποιήσαμεν		attached-word	attached	0.4272	approved	1				GreekAuxiliary of 'done', on the verb whose form carries it
+3:5	10	done		8	ἐποιήσαμεν		global-review-known-rendering	safe	0.5272	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:5	12	according		11	κατὰ		global-review-known-rendering	safe	0.7914	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:5	14	his		13	αὐτοῦ		global-review-known-rendering	safe	0.7894	approved	0				global known-rendering assignment; lexical score 0.64
+3:5	15	mercy		14	ἔλεος		global-review-known-rendering	safe	0.5273	approved	0				global known-rendering assignment; lexical score 0.38; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:5	16	he		15	ἔσωσεν		attached-word	attached	0.6457	approved	1				SubjectPronoun of 'saved'
+3:5	17	saved		15	ἔσωσεν		global-review-known-rendering	safe	0.7457	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:5	18	us		16	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+3:5	22	of		19	παλινγενεσίας		attached-word	attached	0.35	approved	1				OfTheGoverned of 'regeneration'
+3:5	23	regeneration		19	παλινγενεσίας		unique-target-gloss-review	safe	0.45	approved	0				unique exact-verse target gloss after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:5	24	and		20	καὶ		attached-word	attached	0.3	approved	1				Conjunction of 'renovation'
+3:5	26	of		23	Ἁγίου		attached-word	attached	0.6831	approved	1				OfTheGoverned of 'Holy'
+3:5	27	the				expands	supplied-article	safe	0.7831	approved	0				article the original does not write; rests on 'Holy' → 'Ἁγίου'
+3:5	28	Holy		23	Ἁγίου		global-review-known-rendering	safe	0.7831	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:5	29	Ghost		22	Πνεύματος		global-review-known-rendering	safe	0.7719	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:6	1	Whom		1	οὗ		global-review-known-rendering	safe	0.694	approved	0				global known-rendering assignment; lexical score 0.54
+3:6	2	he		2	ἐξέχεεν		attached-word	attached	0.3	approved	1				SubjectPronoun of 'poured'
+3:6	4	poured		2	ἐξέχεεν		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:6	6	upon		3	ἐφ		global-review-known-rendering	safe	0.6526	approved	0				global known-rendering assignment; lexical score 0.50
+3:6	7	us		4	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+3:6	8	abundantly		5	πλουσίως		anchored-gap-review	safe	0.4	approved	0				the one free word of its class between the renderings of its placed neighbours; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:6	9	through		6	διὰ		global-review-known-rendering	safe	0.6056	approved	0				global known-rendering assignment; lexical score 0.46
+3:6	10	Jesus		7	Ἰησοῦ		global-review-known-rendering	safe	0.797	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:6	11	Christ		8	Χριστοῦ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:6	12	our		11	ἡμῶν		global-review-known-rendering	safe	0.7924	approved	0				global known-rendering assignment; lexical score 0.64
+3:6	13	Saviour		10	Σωτῆρος		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:7	2	being		2	δικαιωθέντες		attached-word	attached	0.6855	approved	1				GreekAuxiliary of 'justified', on the verb whose form carries it
+3:7	3	justified		2	δικαιωθέντες		global-review-known-rendering	safe	0.7855	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:7	6	grace		5	χάριτι		global-review-known-rendering	safe	0.7967	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:7	9	be		7	γενηθῶμεν		attached-word	attached	0.6357	approved	1				Copula of 'heirs'
+3:7	10	heirs		6	κληρονόμοι		global-review-known-rendering	safe	0.7357	approved	0				global known-rendering assignment; lexical score 0.59; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:7	11	according		8	κατ		global-review-known-rendering	safe	0.7914	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:7	13	hope		9	ἐλπίδα		global-review-known-rendering	safe	0.7619	approved	0				global known-rendering assignment; lexical score 0.61; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:7	14	of		10	ζωῆς		attached-word	attached	0.5768	approved	1				OfTheGoverned of 'life'
+3:7	15	life		10	ζωῆς		global-review-known-rendering	safe	0.6768	approved	0				global known-rendering assignment; lexical score 0.53; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:7	16	everlasting		11	αἰωνίου		global-review-known-rendering	safe	0.7827	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:8	5	saying		3	λόγος		dictionary-and-gloss-review	safe	0.45	approved	0				dictionary sense and gloss agree on the only free candidate; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:8	7	these		6	τούτων		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
+3:8	12	thee		8	σε		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62
+3:8	13	affirm		9	διαβεβαιοῦσθαι		global-review-known-rendering	safe	0.575	approved	0				global known-rendering assignment; lexical score 0.43; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:8	16	they		15	οἱ		attached-word	attached	0.6775	approved	1				RelativeOfTheParticiple of 'believe', on the article of its participle
+3:8	17	who		15	οἱ		attached-word	attached	0.6775	approved	1				RelativeOfTheParticiple of 'believe', on the article of its participle
+3:8	18	believe		16	πεπιστευκότες		global-review-known-rendering	safe	0.7775	approved	0				global known-rendering assignment; lexical score 0.63; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:8	20	God		17	Θεῷ		global-review-known-rendering	safe	0.7935	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:8	21	may		11	φροντίζωσιν		attached-word	attached	0.3	approved	1				GreekAuxiliary of 'careful', on the verb whose form carries it
+3:8	28	works		13	ἔργων		global-review-known-rendering	safe	0.7458	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:8	29	These		18	ταῦτά		global-review-known-rendering	safe	0.7895	approved	0				global known-rendering assignment; lexical score 0.64
+3:8	31	are		19	ἐστιν		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
+3:8	32	good		20	καλὰ		global-review-known-rendering	safe	0.5373	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:8	33	and		21	καὶ		attached-word	attached	0.4187	approved	1				Conjunction of 'profitable'
+3:8	34	profitable		22	ὠφέλιμα		global-review-known-rendering	safe	0.5188	approved	0				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:8	36	men		24	ἀνθρώποις		global-review-known-rendering	safe	0.6229	approved	0				global known-rendering assignment; lexical score 0.47; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:9	3	foolish		1	μωρὰς		global-review-known-rendering	safe	0.5231	approved	0				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:9	4	questions		3	ζητήσεις		global-review-known-rendering	safe	0.47	approved	0				global known-rendering assignment; lexical score 0.32; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:9	5	and		4	καὶ		attached-word	attached	0.3	approved	1				Conjunction of 'genealogies'
+3:9	6	genealogies		5	γενεαλογίας		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:9	7	and		6	καὶ		attached-word	attached	0.4	approved	1				Conjunction of 'contentions'
+3:9	8	contentions		7	ἔριν		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:9	9	and		8	καὶ		attached-word	attached	0.3	approved	1				Conjunction of 'strivings'
+3:9	10	strivings		9	μάχας		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:9	12	the				expands	supplied-article	safe	0.4	approved	0				article the original does not write; rests on 'law' → 'νομικὰς'
+3:9	13	law		10	νομικὰς		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:9	16	are		12	εἰσὶν		global-review-known-rendering	safe	0.7847	approved	0				global known-rendering assignment; lexical score 0.63
+3:9	17	unprofitable		14	ἀνωφελεῖς		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:9	18	and		15	καὶ		attached-word	attached	0.3	approved	1				Conjunction of 'vain'
+3:9	19	vain		16	μάταιοι		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:10	1	A				expands	supplied-indefinite-article	safe	0.524	approved	0				indefinite article; rests on 'man' → 'ἄνθρωπον'
+3:10	2	man		2	ἄνθρωπον		global-review-known-rendering	safe	0.524	approved	0				global known-rendering assignment; lexical score 0.37; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:10	8	the				expands	supplied-article	safe	0.4	approved	0				article the original does not write; rests on 'first' → 'μίαν'
+3:10	9	first		4	μίαν		anchored-gap-review	safe	0.4	approved	0				the one free word of its class between the renderings of its placed neighbours; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:10	10	and		5	καὶ		attached-word	attached	0.7	approved	1				Conjunction of 'second'
+3:10	11	second		6	δευτέραν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:10	12	admonition		7	νουθεσίαν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:10	13	avoid		8	παραιτοῦ		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:11	1	Knowing		1	εἰδὼς		global-review-known-rendering	safe	0.6924	approved	0				global known-rendering assignment; lexical score 0.54; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:11	6	such		5	τοιοῦτος		global-review-known-rendering	safe	0.699	approved	0				global known-rendering assignment; lexical score 0.55
+3:11	9	is		3	ἐξέστραπται		attached-word	attached	0.3	approved	1				GreekAuxiliary of 'subverted', on the verb whose form carries it
+3:11	11	and		6	καὶ		attached-word	attached	0.7	approved	1				Conjunction of 'sinneth'
+3:11	12	sinneth		7	ἁμαρτάνει		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:11	13	being		8	ὢν		global-review-known-rendering	safe	0.6615	approved	0				global known-rendering assignment; lexical score 0.51
+3:12	1	When		1	Ὅταν		global-review-known-rendering	safe	0.5051	approved	0				global known-rendering assignment; lexical score 0.36; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:12	2	I		2	πέμψω		attached-word	attached	0.4857	approved	1				SubjectPronoun of 'send'
+3:12	3	shall		2	πέμψω		attached-word	attached	0.4857	approved	1				GreekAuxiliary of 'send', on the verb whose form carries it
+3:12	4	send		2	πέμψω		global-review-known-rendering	safe	0.5857	approved	0				global known-rendering assignment; lexical score 0.44; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:12	5	to		4	πρὸς		attached-word	attached	0.6723	approved	1				Preposition of 'thee'
+3:12	6	thee		5	σὲ		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62
+3:12	7	Artemas		3	Ἀρτεμᾶν		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:12	9	Tychicus		7	Τυχικόν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:12	10	make		8	σπούδασον		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:12	12	to		9	ἐλθεῖν		attached-word	attached	0.5099	approved	1				Infinitive of 'come'
+3:12	13	come		9	ἐλθεῖν		global-review-known-rendering	safe	0.6099	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:12	14	unto		10	πρός		attached-word	attached	0.6921	approved	1				Preposition of 'me'
+3:12	15	me		11	με		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+3:12	16	to		12	εἰς		attached-word	attached	0.3	approved	1				Preposition of 'Nicopolis'
+3:12	17	Nicopolis		13	Νικόπολιν		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:12	19	there		14	ἐκεῖ		global-review-known-rendering	safe	0.6981	approved	0				global known-rendering assignment; lexical score 0.55; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:12	20	I		16	κέκρικα		attached-word	attached	0.4955	approved	1				SubjectPronoun of 'determined'
+3:12	21	have		16	κέκρικα		attached-word	attached	0.4955	approved	1				GreekAuxiliary of 'determined', on the verb whose form carries it
+3:12	22	determined		16	κέκρικα		global-review-known-rendering	safe	0.5955	approved	0				global known-rendering assignment; lexical score 0.45; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:12	24	winter		17	παραχειμάσαι		global-review-known-rendering	safe	0.5	approved	0				global known-rendering assignment; lexical score 0.35; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:13	4	the		2	τὸν		attached-word	safe	0.7	approved	0				Article of 'lawyer'
+3:13	5	lawyer		3	νομικὸν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:13	6	and		4	καὶ		attached-word	attached	0.7	approved	1				Conjunction of 'Apollo'
+3:13	7	Apollo		5	Ἀπολλῶν		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:13	12	be		11	λείπῃ		attached-word	attached	0.7	approved	1				GreekAuxiliary of 'wanting', on the verb whose form carries it
+3:13	13	wanting		11	λείπῃ		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:13	14	to		10	αὐτοῖς		attached-word	attached	0.6388	approved	1				DativeTo of 'them', on its dative
+3:13	15	them		10	αὐτοῖς		global-review-known-rendering	safe	0.7388	approved	0				global known-rendering assignment; lexical score 0.59
+3:14	6	learn		1	μανθανέτωσαν		global-review-known-rendering	safe	0.7654	approved	0				global known-rendering assignment; lexical score 0.62; EvidentiaCombiner 2026-10-15.2-retier: probability 0.987
+3:14	10	good		6	καλῶν		global-review-known-rendering	safe	0.5373	approved	0				global known-rendering assignment; lexical score 0.39; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:14	11	works		7	ἔργων		global-review-known-rendering	safe	0.7458	approved	0				global known-rendering assignment; lexical score 0.60; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:14	12	for		9	εἰς		attached-word	attached	0.5071	approved	1				Preposition of 'necessary'
+3:14	13	necessary		11	ἀναγκαίας		global-review-known-rendering	safe	0.6071	approved	0				global known-rendering assignment; lexical score 0.46; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:14	14	uses		12	χρείας		residual-known-rendering	safe	0.38	approved	0				only learned rendering of the word in the verse, and the word the only one to claim it; share 0.07; EvidentiaCombiner 2026-10-15.2-retier: probability 0.988
+3:14	17	be		15	ὦσιν		attached-word	attached	0.7	approved	1				Copula of 'unfruitful'
+3:14	19	unfruitful		16	ἄκαρποι		global-review-known-rendering	safe	0.8	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:15	1	All		6	πάντες		global-review-known-rendering	safe	0.7295	approved	0				global known-rendering assignment; lexical score 0.58
+3:15	4	with		4	μετ		attached-word	attached	0.6921	approved	1				Preposition of 'me'
+3:15	5	me		5	ἐμοῦ		global-review-known-rendering	safe	0.7921	approved	0				global known-rendering assignment; lexical score 0.64
+3:15	7	thee		2	σε		global-review-known-rendering	safe	0.7723	approved	0				global known-rendering assignment; lexical score 0.62
+3:15	9	them		8	τοὺς		attached-word	attached	0.3	approved	1				RelativeOfTheParticiple of 'love', on the article of its participle
+3:15	10	that		8	τοὺς		attached-word	attached	0.3	approved	1				RelativeOfTheParticiple of 'love', on the article of its participle
+3:15	11	love		9	φιλοῦντας		unique-dictionary-sense-review	safe	0.4	approved	0				reciprocal exact-verse dictionary sense after stronger reservations; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:15	12	us		10	ἡμᾶς		global-review-known-rendering	safe	0.7978	approved	0				global known-rendering assignment; lexical score 0.65
+3:15	13	in		11	ἐν		attached-word	attached	0.6888	approved	1				Preposition of 'faith'
+3:15	14	the				expands	supplied-article	safe	0.7888	approved	0				article the original does not write; rests on 'faith' → 'πίστει'
+3:15	15	faith		12	πίστει		global-review-known-rendering	safe	0.7888	approved	0				global known-rendering assignment; lexical score 0.64; EvidentiaCombiner 2026-10-15.2-retier: probability 0.989
+3:15	16	The		13	Ἡ		attached-word	safe	0.6967	approved	0				Article of 'grace'
+3:15	17	grace		14	χάρις		global-review-known-rendering	safe	0.7967	approved	0				global known-rendering assignment; lexical score 0.65; EvidentiaCombiner 2026-10-15.2-retier: probability 1.000
+3:15	23	all		16	πάντων		global-review-known-rendering	safe	0.7295	approved	0				global known-rendering assignment; lexical score 0.58
