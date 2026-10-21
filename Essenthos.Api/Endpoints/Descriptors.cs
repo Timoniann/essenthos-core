@@ -314,6 +314,14 @@ internal static class Descriptors
     /// first. A child, or anyone the line already names otherwise, is not one of them. One the tree
     /// reaches is said from the tree, with the verse that ties the two and the one that names the
     /// descendant; one only a record states stays as the record wrote it.
+    ///
+    /// <para>
+    /// **Someone who lived before the Flood names only descendants born before it.** Everyone born
+    /// after it descends from Adam and from Noah alike, so <em>ancestor of Jesus, David, Jacob,
+    /// Moses</em> is true of both and tells a reader nothing about either: Adam's line names Enoch,
+    /// Methuselah and Noah, and Noah's names none beyond his sons. The record's own statement stays
+    /// where it is, in the relationships and on the family tree; the line leaves it out.
+    /// </para>
     /// </summary>
     private static async Task<(List<Clause> Clauses, Dictionary<int, List<int>> Shown, HashSet<int> More)> Ancestors(
         AppDbContext db,
@@ -323,16 +331,20 @@ internal static class Descriptors
         IReadOnlyDictionary<int, string?> sexes,
         CancellationToken cancellationToken)
     {
-        var descendants = await KinFacts.Descendants(db, people, cancellationToken);
+        var reach = await KinFacts.Descendants(db, people, cancellationToken);
+        bool Unsaid(int person, int descendant) =>
+            reach.BeforeTheFlood.Contains(person) && reach.AfterTheFlood.Contains(descendant);
+        clauses = [.. clauses.Where(c => c.Relation != DescriptorRelations.AncestorOf || !Unsaid(c.SubjectId, c.TargetEntityId))];
+
         var candidates = new Dictionary<int, Dictionary<int, Descendant?>>();
         foreach (var person in people)
         {
             var mine = clauses.Where(c => c.SubjectId == person).ToList();
             var onTheLine = mine.Where(c => c.Relation != DescriptorRelations.AncestorOf).Select(c => c.TargetEntityId).ToHashSet();
             var chosen = new Dictionary<int, Descendant?>();
-            foreach (var descendant in descendants.GetValueOrDefault(person) ?? [])
+            foreach (var descendant in reach.Below.GetValueOrDefault(person) ?? [])
             {
-                if (descendant.Depth >= 2 && !onTheLine.Contains(descendant.Id))
+                if (descendant.Depth >= 2 && !onTheLine.Contains(descendant.Id) && !Unsaid(person, descendant.Id))
                 {
                     chosen[descendant.Id] = descendant;
                 }
