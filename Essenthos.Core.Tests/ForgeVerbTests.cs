@@ -23,6 +23,8 @@ public sealed class ForgeVerbTests
     [Theory]
     [InlineData(new[] { "load" }, true)]
     [InlineData(new[] { "load", "--from", "encyclopedia" }, true)]
+    [InlineData(new[] { "lexicon-translations" }, true)]
+    [InlineData(new[] { "lexicon-translations", "--from", "lexicon" }, false)]
     [InlineData(new[] { "compose", "RUSV", "KJV" }, false)]
     [InlineData(new[] { "compose", "RUSV", "KJV", "BHSA", "--daughter" }, true)]
     [InlineData(new[] { "redraw", "berean" }, false)]

@@ -29,6 +29,7 @@ internal static class StrongEndpoints
     {
         routes.MapGet("/strong/{number}", async (
             string number,
+            [FromQuery] string? language,
             AppDbContext db,
             CancellationToken cancellationToken) =>
         {
@@ -50,6 +51,7 @@ internal static class StrongEndpoints
                     Relations = relations,
                     Kin = kin,
                     Profile = await Profile(db, canonical, cancellationToken),
+                    Translation = await Translation(db, canonical, language, cancellationToken),
                 });
             }
 
@@ -67,6 +69,7 @@ internal static class StrongEndpoints
         routes.MapGet("/strong", async (
             [FromQuery] string? query,
             [FromQuery] string? language,
+            [FromQuery] string? prose,
             [FromQuery] string? corpus,
             [FromQuery] int? skip,
             [FromQuery] int? take,
@@ -91,6 +94,7 @@ internal static class StrongEndpoints
                 .ToListAsync(cancellationToken);
 
             var numbers = page.Select(e => e.StrongNumber).ToList();
+            var translations = await Translations(db, numbers, prose, cancellationToken);
             var occurrences = await Occurrences(db, numbers, cancellationToken);
             var renderings = await Renderings(db, numbers, text.Id, StrongRenderingCounts.CardRenderings, cancellationToken);
 
@@ -101,6 +105,7 @@ internal static class StrongEndpoints
                     {
                         Occurrences = occurrences.GetValueOrDefault(e.StrongNumber),
                         Renderings = renderings.GetValueOrDefault(e.StrongNumber, []),
+                        Translation = translations.GetValueOrDefault(e.StrongNumber),
                     }),
                 ])
             {
@@ -624,6 +629,26 @@ internal static class StrongEndpoints
     /// <summary>The edition the Hebrew is read in, whose book names a compiler's first verse.</summary>
     private const string BhsaSlug = "BHSA";
 
+    internal static async Task<StrongTranslationResponse?> Translation(
+        AppDbContext db, string number, string? language, CancellationToken cancellationToken) =>
+        (await Translations(db, [number], language, cancellationToken)).GetValueOrDefault(number);
+
+    internal static async Task<Dictionary<string, StrongTranslationResponse>> Translations(
+        AppDbContext db, IReadOnlyCollection<string> numbers, string? language, CancellationToken cancellationToken)
+    {
+        var code = LanguageCodes.Normalise(language);
+        if (numbers.Count == 0 || string.IsNullOrWhiteSpace(code) || code == "eng")
+        {
+            return [];
+        }
+
+        return await db.StrongEntryTranslations
+            .Where(t => numbers.Contains(t.StrongNumber) && t.Language == code)
+            .ToDictionaryAsync(t => t.StrongNumber, t => new StrongTranslationResponse(
+                    t.Language, t.Definition, t.Derivation, t.KjvDefinition, t.DetailedDefinition,
+                    t.Method, t.Confidence, t.Source, t.Note), cancellationToken);
+    }
+
     private static StrongEntryResponse Response(
         Database.Entities.StrongEntry entry,
         StrongGentilicResponse? gentilic) => new(
@@ -701,6 +726,8 @@ internal record StrongEntryResponse(
     bool Morpheme,
     StrongGentilicResponse? Gentilic)
 {
+    public StrongTranslationResponse? Translation { get; init; }
+
     /// <summary>
     /// How many words of the corpus carry this number, in every witness that tags it — what the
     /// entry page's list of occurrences totals to. Stated on the lexicon's list, for its cards;
@@ -732,6 +759,17 @@ internal record StrongEntryResponse(
     /// </summary>
     public IList<StrongRenderingResponse>? Renderings { get; init; }
 }
+
+internal record StrongTranslationResponse(
+    string Language,
+    string? Definition,
+    string? Derivation,
+    string? KjvDefinition,
+    string? DetailedDefinition,
+    LinkMethod Method,
+    double? Confidence,
+    string Source,
+    string? Note);
 
 /// <param name="Kind">
 /// <c>same-as</c>, <c>from</c>, <c>same-root-as</c>, <c>form-of</c>, <c>variant</c>,

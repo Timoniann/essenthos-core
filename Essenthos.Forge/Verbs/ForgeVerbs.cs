@@ -34,6 +34,8 @@ internal static partial class ForgeVerbs
         new("load", "[--from <step>] [--steps]",
             "Load the corpus: every witness, the lexicon, the frame, the links, the encyclopedia and the verification pass.",
             Load),
+        new("lexicon-translations", "", "Load only published Strong translations beside the English dictionary.",
+            LexiconTranslations, Most: 0),
         new("maintain", "[<table> ...]", "VACUUM (ANALYZE) of the tables that need it, or of the ones named.", Maintain),
         new("verify", "[--floor <share>]",
             "Measure the corpus, record what it finds for /v1/health, and fail on anything broken.", Verify),

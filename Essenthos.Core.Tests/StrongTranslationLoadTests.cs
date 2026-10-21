@@ -3,10 +3,12 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Essenthos.Core.Loading;
+using Essenthos.Core.Verbs;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging.Abstractions;
 using Xunit;
 
@@ -170,6 +172,50 @@ public sealed class StrongTranslationLoadTests : IDisposable
             _db, configuration, NullLogger<StrongTranslationLoader>.Instance);
 
         return await loader.Load("unused-because-the-key-is-set");
+    }
+
+    [Fact]
+    public async Task TheBoundedVerbLoadsTranslationsAndReplaysWithoutOtherLoaders()
+    {
+        English("G26", definition: "love");
+        Published("G26", definition: "Liebe", language: "deu");
+
+        (await RunVerb()).Should().Be(0);
+        (await RunVerb()).Should().Be(0);
+
+        var rows = await _db.StrongEntryTranslations.Where(t => t.StrongNumber == "G26").ToListAsync();
+        rows.Should().ContainSingle().Which.Definition.Should().Be("Liebe");
+        (await _db.StrongEntries.SingleAsync(e => e.StrongNumber == "G26")).Definition.Should().Be("love");
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task TheBoundedVerbFailsForMissingOrRefusedTranslations(bool refused)
+    {
+        if (refused)
+        {
+            Published("G26", definition: "Liebe", language: "deu");
+        }
+
+        (await RunVerb()).Should().Be(1);
+        (await _db.StrongEntryTranslations.AnyAsync()).Should().BeFalse();
+    }
+
+    private async Task<int> RunVerb()
+    {
+        var configuration = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            [StrongTranslationFiles.ConfigurationKey] = _directory,
+        }).Build();
+        using var services = new ServiceCollection()
+            .AddSingleton(new StrongTranslationLoader(_db, configuration, NullLogger<StrongTranslationLoader>.Instance))
+            .BuildServiceProvider();
+        var verb = ForgeVerbs.Find("lexicon-translations")!;
+        verb.Records.Should().BeNull();
+        verb.Changed(["lexicon-translations"]).Nothing.Should().BeTrue();
+        return await verb.Run(new ForgeRun(services, NullLogger.Instance, "unused-because-the-key-is-set", ""),
+            ["lexicon-translations"]);
     }
 
     private void English(

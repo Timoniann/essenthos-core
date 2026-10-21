@@ -39,6 +39,14 @@ internal static partial class ForgeVerbs
         args.FirstOrDefault(argument => argument.StartsWith("--from=", StringComparison.Ordinal))?["--from=".Length..]
         ?? Option(args, "--from");
 
+    private static async Task<int> LexiconTranslations(ForgeRun forge, string[] args)
+    {
+        using var scope = forge.Scope();
+        var outcome = await scope.ServiceProvider.GetRequiredService<StrongTranslationLoader>().Load(forge.Resources);
+        forge.Logger.LogInformation("{Outcome}", outcome);
+        return outcome.NoTranslations || outcome.Refused.Total > 0 ? 1 : 0;
+    }
+
     /// <summary>
     /// VACUUM (ANALYZE) of the tables that need it, or of the ones named. The steps that write millions of
     /// rows end with this themselves; on its own it is for after a step that does not.
