@@ -350,6 +350,13 @@ public static class DescriptorRelations
     public const string TeacherOf = "teacher-of";
 
     /// <summary>
+    /// One of a company the text names as a whole and counts: Peter one of <em>the twelve</em>
+    /// (MAT 10:2), Matthias <em>numbered with the eleven</em> (ACT 1:26). The company is a record of
+    /// its own, so the line of whoever taught or sent it can name it and some of its members.
+    /// </summary>
+    public const string MemberOf = "member-of";
+
+    /// <summary>
     /// A party bound to another by a covenant or a league: <em>these were confederate with
     /// Abram</em> (GEN 14:13). Symmetric, as the text states it.
     /// </summary>
@@ -469,7 +476,7 @@ public static class DescriptorRelations
         BrotherInLawOf, SisterInLawOf, ConcubineOf, CousinOf,
         KingOf, QueenOf, ProphetTo, PriestOf, JudgeOf, LeaderOf, HighPriestOf,
         CommanderOf, GovernorOf, TetrarchOf, ServantOf, MasterOf,
-        DiscipleOf, ApostleOf, ScribeOf, CompanionOf, TeacherOf, AllyOf, FounderOf,
+        DiscipleOf, ApostleOf, ScribeOf, CompanionOf, TeacherOf, MemberOf, AllyOf, FounderOf,
         KilledBy, KillerOf, StruckBy, RapedBy, RaperOf, AngelOf,
         SupporterOf, SupportedBy, CreatorOf, CreatedBy, HeirOf, InheritedBy, ExilerOf, ExiledBy,
         OfTribe, OfPeople, FromPlace, LivedIn, BuriedIn,
@@ -604,6 +611,7 @@ public static class DescriptorSubjects
             DescriptorRelations.CommanderOf, DescriptorRelations.GovernorOf, DescriptorRelations.TetrarchOf,
             DescriptorRelations.MasterOf, DescriptorRelations.DiscipleOf, DescriptorRelations.ApostleOf,
             DescriptorRelations.ScribeOf, DescriptorRelations.CompanionOf, DescriptorRelations.TeacherOf,
+            DescriptorRelations.MemberOf,
             DescriptorRelations.RapedBy, DescriptorRelations.RaperOf, DescriptorRelations.CreatorOf,
             DescriptorRelations.AngelOf, DescriptorRelations.FounderOf,
             DescriptorRelations.KilledBy, DescriptorRelations.KillerOf,
@@ -675,7 +683,7 @@ public static class DescriptorTargets
     [
         ([EntityKind.People],
         [
-            DescriptorRelations.OfPeople,
+            DescriptorRelations.OfPeople, DescriptorRelations.MemberOf,
         ]),
         ([EntityKind.Person, EntityKind.People],
         [

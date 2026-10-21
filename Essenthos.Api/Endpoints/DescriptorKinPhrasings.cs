@@ -79,6 +79,38 @@ internal static partial class DescriptorPhrasings
     };
 
     /// <summary>
+    /// More members of a company than the line names, inside the parenthesis that names them, where the
+    /// names stand in the nominative: <em>(Петро, Іван, Яків, Андрій та інші)</em>.
+    /// </summary>
+    public static string AndTheOthers(string language) => language switch
+    {
+        Ukrainian => " та інші",
+        German => " und andere",
+        Spanish => " y otros",
+        _ => " and others",
+    };
+
+    /// <summary>The fewest other disciples a teacher's line calls many.</summary>
+    private const int ManyDisciples = 3;
+
+    /// <summary>
+    /// The disciples a teacher had beyond the companies the line names, after the last of them, in the
+    /// case the teacher's phrase puts its names in: <em>учитель Дванадцятьох, Сімдесятьох та багатьох
+    /// інших учнів</em>, <em>Lehrer der Zwölf, der Siebzig und vieler anderer Jünger</em>.
+    /// </summary>
+    public static string OtherDisciples(string language, int count)
+    {
+        var many = count >= ManyDisciples;
+        return language switch
+        {
+            Ukrainian => many ? " та багатьох інших учнів" : " та інших учнів",
+            German => many ? " und vieler anderer Jünger" : " und anderer Jünger",
+            Spanish => many ? " y muchos otros discípulos" : " y otros discípulos",
+            _ => many ? " and many other disciples" : " and other disciples",
+        };
+    }
+
+    /// <summary>
     /// A son or daughter said by their place among the parent's children, where a verse states it:
     /// <em>сьомий син</em> Єссея, <em>firstborn son of</em> Jacob. Null past the places a verse numbers.
     /// </summary>

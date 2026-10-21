@@ -230,7 +230,11 @@ internal static class Descriptors
             ? c with { SharedParent = parent }
             : c)];
 
-        var targets = clauses.Select(c => c.TargetEntityId).Distinct().ToList();
+        var taught = await Companies(db, clauses, cancellationToken);
+        var targets = clauses.Select(c => c.TargetEntityId)
+            .Concat(taught.Members.Values.SelectMany(members => members.Select(m => m.Id)))
+            .Distinct()
+            .ToList();
         var rows = await db.EntityNameForms
             .Where(f => targets.Contains(f.EntityId) && f.Language == named)
             .Select(f => new { f.EntityId, f.GrammaticalCase, f.Form })
@@ -274,6 +278,7 @@ internal static class Descriptors
         clauses = [.. clauses.Select(c => headings.TryGetValue(c.TargetEntityId, out var heading)
             ? c with { TargetEnglishName = heading.Name }
             : c)];
+        taught = taught.HeadedAs(headings);
 
         var lines = new Dictionary<string, EntityDescriptorResponse>(StringComparer.Ordinal);
         foreach (var subject in subjects)
@@ -284,7 +289,11 @@ internal static class Descriptors
                 statedCounts.GetValueOrDefault(subject.Id),
                 places.Where(p => p.Key.Child == subject.Id).ToDictionary(p => p.Key.Parent, p => p.Value),
                 ancestors.Shown.GetValueOrDefault(subject.Id) ?? [],
-                ancestors.More.Contains(subject.Id));
+                ancestors.More.Contains(subject.Id))
+            {
+                Taught = taught,
+                OtherDisciples = taught.Others.GetValueOrDefault(subject.Id),
+            };
             if (said.Count == 0 && facts.Children is null)
             {
                 continue;
@@ -408,6 +417,122 @@ internal static class Descriptors
         }
 
         return (all, shown, more);
+    }
+
+    /// <summary>The most members of a company a teacher's line names; more are said as <em>and others</em>.</summary>
+    private const int MostMembers = 4;
+
+    /// <summary>
+    /// The companies these lines say someone taught — the Twelve, the Seventy — with the members each
+    /// line names among them, and how many disciples each teacher had beyond them. The members are the
+    /// ones the records say are <em>one of</em> the company, in the order of the verses that say so and
+    /// then by how many verses name them; the other disciples, everyone a record says was the
+    /// teacher's disciple, or whom he taught, outside every company he taught.
+    /// </summary>
+    private static async Task<Taught> Companies(
+        AppDbContext db,
+        IReadOnlyList<Clause> clauses,
+        CancellationToken cancellationToken)
+    {
+        var taught = clauses
+            .Where(c => c.Relation == DescriptorRelations.TeacherOf && c.TargetKind == EntityKind.People)
+            .ToList();
+        if (taught.Count == 0)
+        {
+            return Taught.Nothing;
+        }
+
+        var companies = taught.Select(c => c.TargetEntityId).Distinct().ToList();
+        var teachers = taught.Select(c => c.SubjectId).Distinct().ToList();
+        var rows = await db.EntityRelationships
+            .Where(r => (r.Type == DescriptorRelations.MemberOf && companies.Contains(r.ToEntityId))
+                        || (r.Type == DescriptorRelations.DiscipleOf && teachers.Contains(r.ToEntityId))
+                        || (r.Type == DescriptorRelations.TeacherOf && teachers.Contains(r.FromEntityId)))
+            .Select(r => new
+            {
+                r.Type,
+                From = r.FromEntityId,
+                FromKind = r.From!.Kind,
+                FromSlug = r.From.Slug,
+                FromName = r.From.Name,
+                FromDistinguisher = r.From.Distinguisher,
+                FromSex = r.From.Sex,
+                To = r.ToEntityId,
+                ToKind = r.To!.Kind,
+                r.CanonicalBook,
+                r.CanonicalChapter,
+                r.CanonicalVerse,
+            })
+            .ToListAsync(cancellationToken);
+
+        var joined = rows
+            .Where(r => r.Type == DescriptorRelations.MemberOf && r.FromKind == EntityKind.Person)
+            .ToList();
+        var named = await KinFacts.VerseCounts(db, [.. joined.Select(r => r.From).Distinct()], cancellationToken);
+        var members = joined
+            .GroupBy(r => r.To)
+            .ToDictionary(
+                company => company.Key,
+                company => (IReadOnlyList<Person>)
+                [
+                    .. company
+                        .OrderBy(r => r.CanonicalBook).ThenBy(r => r.CanonicalChapter).ThenBy(r => r.CanonicalVerse)
+                        .ThenByDescending(r => named.GetValueOrDefault(r.From))
+                        .ThenBy(r => r.From)
+                        .DistinctBy(r => r.From)
+                        .Select(r => new Person(r.From, r.FromKind, r.FromSlug, r.FromName, r.FromDistinguisher, r.FromSex)),
+                ]);
+
+        var others = new Dictionary<int, int>();
+        foreach (var teacher in teachers)
+        {
+            var within = taught
+                .Where(c => c.SubjectId == teacher)
+                .SelectMany(c => members.GetValueOrDefault(c.TargetEntityId) ?? [])
+                .Select(person => person.Id)
+                .ToHashSet();
+            var disciples = rows
+                .Where(r => r.Type == DescriptorRelations.DiscipleOf && r.To == teacher && r.FromKind == EntityKind.Person)
+                .Select(r => r.From)
+                .Concat(rows
+                    .Where(r => r.Type == DescriptorRelations.TeacherOf && r.From == teacher && r.ToKind == EntityKind.Person)
+                    .Select(r => r.To))
+                .Where(id => id != teacher && !within.Contains(id))
+                .Distinct()
+                .Count();
+            if (disciples > 0)
+            {
+                others[teacher] = disciples;
+            }
+        }
+
+        return new Taught(members, others);
+    }
+
+    /// <summary>
+    /// The companies a teacher's line names and the members of each, by the company's id; and by the
+    /// teacher's id, how many disciples the records give him beyond them.
+    /// </summary>
+    private sealed record Taught(
+        IReadOnlyDictionary<int, IReadOnlyList<Person>> Members,
+        IReadOnlyDictionary<int, int> Others)
+    {
+        public static readonly Taught Nothing = new(new Dictionary<int, IReadOnlyList<Person>>(), new Dictionary<int, int>());
+
+        /// <summary>The members called by the name most of their verses use, as every other name in a line is.</summary>
+        public Taught HeadedAs(IReadOnlyDictionary<int, RenamedHeading> headings) =>
+            headings.Count == 0 || Members.Count == 0
+                ? this
+                : this with
+                {
+                    Members = Members.ToDictionary(
+                        company => company.Key,
+                        company => (IReadOnlyList<Person>)
+                        [
+                            .. company.Value.Select(person =>
+                                headings.TryGetValue(person.Id, out var heading) ? person with { Name = heading.Name } : person),
+                        ]),
+                };
     }
 
     /// <summary>The people a line names that no clause brought along, as a clause needs them.</summary>
@@ -626,7 +751,28 @@ internal static class Descriptors
 
                 Said(relation, from, [.. shown.Select(item => VerseOf(item.First)).DistinctBy(v => (v.BookOrdinal, v.Chapter, v.Verse))], placed: false);
             }
-            else if (FamilyTies.Counts(relation) && run.Count > MostListed)
+            else if (relation == DescriptorRelations.TeacherOf
+                     && run.Any(item => facts.Taught.Members.ContainsKey(item.First.TargetEntityId)))
+            {
+                Separate(parts);
+                foreach (var part in Listed(language, run, forms, closed: facts.OtherDisciples == 0))
+                {
+                    parts.Add(part);
+                    var company = run.FirstOrDefault(item => part.Entity is not null && item.First.TargetSlug == part.Entity.Slug);
+                    if (company is not null && facts.Taught.Members.TryGetValue(company.First.TargetEntityId, out var members))
+                    {
+                        parts.AddRange(Members(language, members, forms));
+                    }
+                }
+
+                if (facts.OtherDisciples > 0)
+                {
+                    parts.Add(new DescriptorPartResponse(DescriptorPhrasings.OtherDisciples(language, facts.OtherDisciples)));
+                }
+
+                Said(relation, from, [.. run.Select(item => VerseOf(item.First)).DistinctBy(v => (v.BookOrdinal, v.Chapter, v.Verse))], placed: false);
+            }
+            else if (FamilyTies.Counts(relation) && run.Count > (FamilyTies.Siblings.Contains(relation) ? MostSiblingsListed : MostListed))
             {
                 Separate(parts);
                 var shared = run.Select(item => item.Phrasing).Distinct().Count() == 1 ? run[0].Phrasing : run[0].Unshared;
@@ -760,8 +906,15 @@ internal static class Descriptors
         };
     }
 
-    /// <summary>The most names of children or siblings under one phrase that are listed; more are counted.</summary>
+    /// <summary>The most names of children under one phrase that are listed; more are counted.</summary>
     private const int MostListed = 3;
+
+    /// <summary>
+    /// The most brothers or sisters under one phrase that are listed. Four, because a verse that names
+    /// a man's brothers names them so — <em>James, and Joses, and Simon, and Judas</em> (MAT 13:55) —
+    /// and the owner asked for them by name; Jacob's eleven and David's six stay counted.
+    /// </summary>
+    private const int MostSiblingsListed = 4;
 
     /// <summary>A name with no words before it, in the nominative: the names after <em>з них названі</em>.</summary>
     private static readonly Phrasing Bare = new(string.Empty, GrammaticalCases.Nominative);
@@ -819,6 +972,53 @@ internal static class Descriptors
             }
         }
 
+        return parts;
+    }
+
+    /// <summary>
+    /// Some members of a company after its name, in the nominative whatever case the company's own
+    /// phrase put it in: <em>Дванадцятьох (Петро, Іван, Яків, Андрій та інші)</em>.
+    /// </summary>
+    private static List<DescriptorPartResponse> Members(
+        string language,
+        IReadOnlyList<Person> members,
+        IReadOnlyDictionary<int, IReadOnlyDictionary<string, string>> forms)
+    {
+        var shown = members.Take(MostMembers).ToList();
+        var more = members.Count > shown.Count;
+        var parts = new List<DescriptorPartResponse> { new(" (") };
+        for (var at = 0; at < shown.Count; at++)
+        {
+            if (at > 0)
+            {
+                parts.Add(new DescriptorPartResponse(at == shown.Count - 1 && !more
+                    ? $" {DescriptorPhrasings.Conjunction(language)} "
+                    : DescriptorPhrasings.Separator));
+            }
+
+            var member = shown[at];
+            var cases = forms.GetValueOrDefault(member.Id);
+            var (_, name) = DescriptorPhrasings.Say(language, Bare, member.Kind, cases, member.Name);
+            parts.Add(new DescriptorPartResponse(name)
+            {
+                Entity = new DescriptorTargetResponse(
+                    EnumSpelling.Of(member.Kind),
+                    member.Slug,
+                    cases?.GetValueOrDefault(GrammaticalCases.Nominative) ?? member.Name,
+                    member.Name)
+                {
+                    Forms = cases is { Count: > 0 } ? new Dictionary<string, string>(cases, StringComparer.Ordinal) : null,
+                    Distinguisher = member.Distinguisher,
+                },
+            });
+        }
+
+        if (more)
+        {
+            parts.Add(new DescriptorPartResponse(DescriptorPhrasings.AndTheOthers(language)));
+        }
+
+        parts.Add(new DescriptorPartResponse(")"));
         return parts;
     }
 
@@ -998,7 +1198,14 @@ internal static class Descriptors
         ChildrenCount? Children,
         IReadOnlyDictionary<int, PlaceAmongChildren> Places,
         IReadOnlyList<int> Ancestors,
-        bool MoreAncestors);
+        bool MoreAncestors)
+    {
+        /// <summary>The companies the line's teacher taught, with the members it names in each.</summary>
+        public Taught Taught { get; init; } = Taught.Nothing;
+
+        /// <summary>How many disciples the records give the line's teacher beyond the companies he taught.</summary>
+        public int OtherDisciples { get; init; }
+    }
 
     /// <summary>One clause with its target flattened, so the render is a loop and not a join.</summary>
     internal sealed record Clause(
