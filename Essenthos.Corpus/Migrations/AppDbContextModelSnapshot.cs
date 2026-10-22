@@ -4619,6 +4619,45 @@ namespace Essenthos.Core.Migrations
                     b.ToTable("text", (string)null);
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.TextForm", b =>
+                {
+                    b.Property<int>("TextId")
+                        .HasColumnType("integer")
+                        .HasColumnName("text_id");
+
+                    b.Property<string>("Form")
+                        .HasColumnType("text")
+                        .HasColumnName("form");
+
+                    b.Property<int>("Occurrences")
+                        .HasColumnType("integer")
+                        .HasColumnName("occurrences");
+
+                    b.Property<string>("Stem")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("stem");
+
+                    b.HasKey("TextId", "Form")
+                        .HasName("pk_text_form");
+
+                    b.HasIndex("Form")
+                        .HasDatabaseName("ix_text_form_form_trigrams");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Form"), "gin");
+                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("Form"), new[] { "gin_trgm_ops" });
+
+                    b.HasIndex("TextId", "Stem")
+                        .HasDatabaseName("ix_text_form_text_id_stem");
+
+                    b.ToTable("text_form", null, t =>
+                        {
+                            t.HasComment("Every word form a text prints, as a search compares it, with its stem and how often the text prints it: a typed word is matched through its stem's forms, and a missing one is answered with a near spelling. Derived from word; rebuilt by the load's search-forms step.");
+
+                            t.HasCheckConstraint("ck_text_form_occurrences", "occurrences > 0");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.TextRelation", b =>
                 {
                     b.Property<int>("Id")
@@ -6451,6 +6490,18 @@ namespace Essenthos.Core.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_strong_rendering_texts_text_id");
+
+                    b.Navigation("Text");
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.TextForm", b =>
+                {
+                    b.HasOne("Essenthos.Core.Database.Entities.Text", "Text")
+                        .WithMany()
+                        .HasForeignKey("TextId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_text_form_text_text_id");
 
                     b.Navigation("Text");
                 });

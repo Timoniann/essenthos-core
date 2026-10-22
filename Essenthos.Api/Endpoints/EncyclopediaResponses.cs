@@ -54,6 +54,12 @@ internal record EntitySummaryResponse(
     public EntityMatchResponse? Matched { get; init; }
 
     /// <summary>
+    /// In a list, the first verse that names the record, where it has neither a descriptor nor a line
+    /// of its own to tell it from a record of the same name; null otherwise.
+    /// </summary>
+    public VerseRefResponse? FirstVerse { get; init; }
+
+    /// <summary>
     /// The name a renamed person's record is filed under, in the language asked for where the corpus
     /// holds it, for a client to say they are also called that: <em>Савл</em> beside <em>Павло</em>.
     /// Null for everyone the text calls by one name most and the record is filed under.
@@ -76,7 +82,14 @@ internal static class MatchKinds
     public const string Title = "title";
 }
 
-internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items);
+internal record EntityListResponse(int Total, IList<EntitySummaryResponse> Items)
+{
+    /// <summary>
+    /// Nothing is called what was typed, and these are the records whose names are spelled near it
+    /// (<em>Рамесес</em> for <em>Рамсес</em>); false where the rows hold what was typed.
+    /// </summary>
+    public bool Near { get; init; }
+}
 
 /// <summary>
 /// A stretch of Scripture an object's or an observance's page sends a reader to, as the record lists

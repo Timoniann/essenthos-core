@@ -331,6 +331,8 @@ public class AppDbContext : DbContext
     /// <summary>What each text's Strong counts were last counted from, so a load counts only what moved.</summary>
     public DbSet<StrongCountMark> StrongCountMarks { get; set; } = null!;
 
+    public DbSet<TextForm> TextForms { get; set; } = null!;
+
     /// <summary>What each step of the load last ran on, so a load skips a step whose inputs have not moved.</summary>
     public DbSet<LoadStepMark> LoadStepMarks { get; set; } = null!;
 
@@ -1545,6 +1547,26 @@ public class AppDbContext : DbContext
             entity.ToTable("strong_count_mark", t => t.HasComment(
                 "A digest of what a text's Strong counts were last counted from and of the rows they left, so the "
                 + "load counts again only the texts where either moved. Derived; deleting a row only costs a recount."));
+        });
+
+        modelBuilder.Entity<TextForm>(entity =>
+        {
+            entity.HasOne(f => f.Text).WithMany().HasForeignKey(f => f.TextId).OnDelete(DeleteBehavior.Cascade);
+
+            // A near spelling is looked for among the forms of one text, as a trigram neighbour.
+            entity.HasIndex(f => f.Form)
+                .HasMethod("gin")
+                .HasOperators("gin_trgm_ops")
+                .HasDatabaseName("ix_text_form_form_trigrams");
+
+            entity.ToTable("text_form", t =>
+            {
+                t.HasCheckConstraint("ck_text_form_occurrences", "occurrences > 0");
+                t.HasComment(
+                    "Every word form a text prints, as a search compares it, with its stem and how often the text "
+                    + "prints it: a typed word is matched through its stem's forms, and a missing one is answered "
+                    + "with a near spelling. Derived from word; rebuilt by the load's search-forms step.");
+            });
         });
 
         modelBuilder.Entity<StrongRelation>(entity =>
