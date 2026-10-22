@@ -55,15 +55,35 @@ public sealed class RecipeTests : IDisposable
     [Fact]
     public void The_committed_recipe_reads_and_every_step_is_a_verb_that_records_itself()
     {
+        var steps = Committed();
+
+        steps.Should().NotBeEmpty();
+        steps.Should().OnlyContain(step => Recipe.Records(new[] { step.Verb }.Concat(step.Arguments).ToArray()));
+    }
+
+    /// <summary>
+    /// A composition nothing states the target for, in its own pair or in another text of its language,
+    /// has no measure, and a run without --unmeasured refuses. The corpus's compositions of these pairs
+    /// were drawn unmeasured, so a load from the first step replays them so or stops at the recipe.
+    /// </summary>
+    [Theory]
+    [InlineData("UBIO", "TR1894")]
+    [InlineData("GRCBRENT", "BHSA")]
+    [InlineData("GEEZ81", "BHSA")]
+    public void A_composition_with_nothing_in_its_language_to_measure_on_is_replayed_unmeasured(string from, string to) =>
+        Committed()
+            .Where(step => step.Verb == "compose" && step.Arguments[0] == from && step.Arguments[2] == to)
+            .Should().ContainSingle()
+            .Which.Arguments.Should().Contain("--unmeasured");
+
+    private static IReadOnlyList<RecipeStep> Committed()
+    {
         var checkout = new DirectoryInfo(AppContext.BaseDirectory);
         while (!Directory.Exists(Path.Combine(checkout.FullName, "Essenthos.Forge")))
         {
             checkout = checkout.Parent!;
         }
 
-        var steps = Recipe.Read(Path.Combine(checkout.FullName, "Resources"));
-
-        steps.Should().NotBeEmpty();
-        steps.Should().OnlyContain(step => Recipe.Records(new[] { step.Verb }.Concat(step.Arguments).ToArray()));
+        return Recipe.Read(Path.Combine(checkout.FullName, "Resources"));
     }
 }

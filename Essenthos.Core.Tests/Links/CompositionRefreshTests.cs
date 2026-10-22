@@ -134,6 +134,25 @@ public sealed class CompositionRefreshTests : IDisposable
         Recipe.Records(["compose", "ASV", "KJV,BSB", "BHSA", "--refresh"]).Should().BeFalse();
     }
 
+    [Fact]
+    public async Task AStaleCompositionDrawnUnmeasuredIsRedrawnUnmeasured()
+    {
+        Link(_american, Word(_american, 2, 2), Word(_hebrew, 2, 1), LinkMethod.Aligner, 0.8, "SIL.Machine, aligned through KJV");
+        Link(_kingJames, Word(_kingJames, 1, 2), Word(_hebrew, 1, 2), LinkMethod.StatedBySource, null, Mapping);
+        var step = new RecipeStep("compose", ["ASV", "KJV", "BHSA", "--unmeasured"]);
+
+        await _db.Database.OpenConnectionAsync();
+        try
+        {
+            var replayed = await Recipe.Replayed((NpgsqlConnection)_db.Database.GetDbConnection(), step, CancellationToken.None);
+            replayed.ToString().Should().Be("compose ASV KJV BHSA --unmeasured --refresh");
+        }
+        finally
+        {
+            await _db.Database.CloseConnectionAsync();
+        }
+    }
+
     private async Task<List<int>> Stale(bool daughter)
     {
         await _db.Database.OpenConnectionAsync();

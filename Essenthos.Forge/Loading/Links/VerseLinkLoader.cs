@@ -218,6 +218,8 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
          DELETE FROM verse_link l USING shaped s WHERE l.id = s.id AND s.nth > 1
          """;
 
+    private const string AnalyseTheVerseLinks = "ANALYZE verse_link, verse_link_verse";
+
     /// <summary>
     /// The verse correspondences a source states through its word links, wherever the frame joins
     /// nothing.
@@ -868,6 +870,11 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
     public async Task<int> Stated(CancellationToken cancellationToken = default)
     {
         await db.Database.OpenConnectionAsync(cancellationToken);
+
+        // The sweep looks the verse links up once per verse pair a source states. On a corpus being
+        // built they grow faster than autovacuum counts them, and planned on a stale count it read the
+        // whole table for every pair: over half an hour where it takes twenty seconds. Under a second.
+        await db.Database.ExecuteSqlRawAsync(AnalyseTheVerseLinks, cancellationToken);
         await using var transaction = db.Database.CurrentTransaction is null
             ? await db.Database.BeginTransactionAsync(cancellationToken) : null;
         var connection = (NpgsqlConnection)db.Database.GetDbConnection();

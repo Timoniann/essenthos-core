@@ -85,6 +85,15 @@ internal sealed class Admission
     public bool Admits(RoutedLink link) =>
         link.Confidence >= (_floors.TryGetValue(link.Route, out var floor) ? floor.Confidence : _threshold);
 
+    /// <summary>
+    /// Whether a source's statements can measure answers at all: enough of its words have a word they
+    /// render. A source that states only what renders nothing — the words a translation's italics or
+    /// brackets print as its own — makes every answer on them wrong by construction, so the precision
+    /// read off it is 0 whatever the readings did.
+    /// </summary>
+    public static bool Measures(IReadOnlyDictionary<long, HashSet<long>> statements) =>
+        statements.Values.Count(targets => targets.Count > 0) >= FewestToMeasure;
+
     /// <param name="every">The merged answers with every combination admitted from the threshold.</param>
     /// <param name="statements">The target words a source states for each source word.</param>
     /// <param name="precision">The bar, <see cref="DefaultPrecision"/> unless a run asks for another.</param>

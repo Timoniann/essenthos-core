@@ -83,9 +83,10 @@
       "arguments": [
         "UBIO",
         "KJV",
-        "TR1894"
+        "TR1894",
+        "--unmeasured"
       ],
-      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves"
+      "note": "written down from what essenthos_core held on 2026-09-25, before runs recorded themselves; unmeasured, as it was first drawn: nothing in Ukrainian states the Received Text"
     },
     {
       "verb": "compose",
