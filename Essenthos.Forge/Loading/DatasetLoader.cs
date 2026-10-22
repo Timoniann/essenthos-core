@@ -149,16 +149,17 @@ internal sealed class DatasetLoader(
 
             var outcomes = await marks.Run(selected, request.Everything, step => current = step, stoppingToken);
             var took = outcomes.Where(outcome => outcome.Ran).ToList();
-            var skipped = outcomes.Count - took.Count;
+            var ran = took.Select(outcome => outcome.Step).Distinct(StringComparer.Ordinal).Count();
 
             status.Ready();
             var (summing, summed) = marks.Summing;
             logger.LogInformation(
-                "The dataset is loaded in {Seconds:F0} s: {Ran} step(s) ran and {Skipped} were skipped, nothing they read having moved; "
-                + "the tables' sums took {Summing:F0} s over {Summed} table(s); the steps over a second: {Steps}",
+                "The dataset is loaded in {Seconds:F0} s: {Ran} step(s) ran ({Again} run(s) again to settle) and {Skipped} were skipped, "
+                + "nothing they read having moved; the tables' sums took {Summing:F0} s over {Summed} table(s); the steps over a second: {Steps}",
                 Stopwatch.GetElapsedTime(started).TotalSeconds,
-                took.Count,
-                skipped,
+                ran,
+                took.Count - ran,
+                selected.Count - ran,
                 summing.TotalSeconds,
                 summed,
                 string.Join(", ", took.Where(outcome => outcome.Took.TotalSeconds >= 1)

@@ -34,6 +34,9 @@ internal sealed class LoadMarks(
     private readonly Dictionary<string, Mark> _marks = new(StringComparer.Ordinal);
     private readonly Dictionary<string, (string Digest, IReadOnlyList<string> Lines)> _code = new(StringComparer.Ordinal);
 
+    /// <summary>The tables the steps of this load changed, and the last step that changed each.</summary>
+    private readonly Dictionary<string, string> _movedBy = new(StringComparer.Ordinal);
+
     /// <summary>
     /// Where the lines each step's code digest was taken over are kept between runs, so a step whose code
     /// moved can say which methods moved. Outside the corpus: nothing decides from it.
@@ -96,7 +99,7 @@ internal sealed class LoadMarks(
             return new Decision(step, true, $"nothing it reads moved since {mark.At.ToLocalTime():yyyy-MM-dd HH:mm}", step.Version, codeDigest, fileDigests);
         }
 
-        return new Decision(step, false, Moved(mark.Inputs, now, CodeMoved(step)), step.Version, codeDigest, fileDigests);
+        return new Decision(step, false, Moved(mark.Inputs, now, CodeMoved(step), _movedBy), step.Version, codeDigest, fileDigests);
     }
 
     /// <summary>
@@ -209,9 +212,24 @@ internal sealed class LoadMarks(
     }
 
     /// <summary>
+    /// How many times the steps are gone through in one load before it stops settling: the first time,
+    /// and as often again as a step changes what a step before it read.
+    /// </summary>
+    public const int Passes = 4;
+
+    /// <summary>
     /// Runs the steps in order, each skipped when its mark says nothing it reads moved, unless
     /// <paramref name="everything"/>; <paramref name="starting"/> hears of each step before it is
     /// decided, so a failure can be put down to it. Stops at the first step that throws.
+    ///
+    /// <para>
+    /// A step can change a table that a step before it read, or that it read itself; that step's mark
+    /// then no longer holds, and the next load would run it. So the load goes through the steps again
+    /// from the first such step, marks deciding, until nothing it went through changes what an earlier
+    /// step read: the load after it finds nothing to run. A load that has not settled after
+    /// <see cref="Passes"/> passes says which steps keep moving what others read, and leaves their
+    /// marks as they are, so the next load runs them too.
+    /// </para>
     /// </summary>
     public async Task<IReadOnlyList<StepOutcome>> Run(
         IReadOnlyList<LoadStep> steps,
@@ -221,6 +239,76 @@ internal sealed class LoadMarks(
     {
         var outcomes = new List<StepOutcome>();
         files.Prefetch(steps.SelectMany(step => step.Files), cancellationToken);
+        var pass = steps;
+        for (var passes = 1; ; passes++)
+        {
+            var moved = await Pass(pass, everything && passes == 1, starting, outcomes, cancellationToken);
+            var unsettled = await Unsettled(steps, moved, cancellationToken);
+            if (unsettled.Count == 0)
+            {
+                return outcomes;
+            }
+
+            var why = string.Join("; ", unsettled.Select(stale => $"{stale.Step.Name} ({stale.Why})"));
+            if (passes == Passes)
+            {
+                logger.LogWarning(
+                    "The load did not settle in {Passes} passes: these steps read what a step of the load changes every time, "
+                    + "and the next load runs them again: {Steps}",
+                    Passes, why);
+                return outcomes;
+            }
+
+            var first = unsettled.Min(stale => stale.Index);
+            logger.LogInformation(
+                "Going through the steps again from {Step}: a step of this load changed what {Count} step(s) had read: {Steps}",
+                steps[first].Name, unsettled.Count, why);
+            pass = [.. steps.Skip(first)];
+        }
+    }
+
+    /// <summary>
+    /// The steps whose marks a table moved in the pass no longer hold: they read it as it stood before.
+    /// A step that runs every time decides from the run, not from a mark, and is not counted.
+    /// </summary>
+    private async Task<List<(int Index, LoadStep Step, string Why)>> Unsettled(
+        IReadOnlyList<LoadStep> steps,
+        IReadOnlySet<string> moved,
+        CancellationToken cancellationToken)
+    {
+        var unsettled = new List<(int, LoadStep, string)>();
+        if (moved.Count == 0)
+        {
+            return unsettled;
+        }
+
+        for (var index = 0; index < steps.Count; index++)
+        {
+            var step = steps[index];
+            if (step.Always || !_marks.TryGetValue(step.Name, out var mark) || mark.Reads is null || !mark.Reads.Any(moved.Contains))
+            {
+                continue;
+            }
+
+            var decision = await Decide(step, force: false, cancellationToken);
+            if (!decision.Skip)
+            {
+                unsettled.Add((index, step, decision.Why));
+            }
+        }
+
+        return unsettled;
+    }
+
+    /// <summary>Goes through the steps once; returns the tables whose rows a step changed.</summary>
+    private async Task<IReadOnlySet<string>> Pass(
+        IReadOnlyList<LoadStep> steps,
+        bool everything,
+        Action<LoadStep> starting,
+        List<StepOutcome> outcomes,
+        CancellationToken cancellationToken)
+    {
+        var changed = new HashSet<string>(StringComparer.Ordinal);
         foreach (var step in steps)
         {
             starting(step);
@@ -259,9 +347,14 @@ internal sealed class LoadMarks(
             }
 
             outcomes.Add(new StepOutcome(step.Name, true, decision.Why, took, wrote, moved));
+            foreach (var table in moved)
+            {
+                changed.Add(table);
+                _movedBy[table] = step.Name;
+            }
         }
 
-        return outcomes;
+        return changed;
     }
 
     /// <summary>How long the table sums took in this run, and how many were taken.</summary>
@@ -303,7 +396,7 @@ internal sealed class LoadMarks(
     }
 
     /// <summary>What moved between the inputs a mark recorded and the inputs now, in a line.</summary>
-    private static string Moved(Inputs then, Inputs now, string? codeMoved)
+    private static string Moved(Inputs then, Inputs now, string? codeMoved, IReadOnlyDictionary<string, string> movedBy)
     {
         var moved = new List<string>();
         if (then.Version != now.Version)
@@ -322,7 +415,7 @@ internal sealed class LoadMarks(
         moved.AddRange(then.Files.Keys.Except(now.Files.Keys).Select(file => $"file {file} no longer read"));
         moved.AddRange(now.Tables
             .Where(table => then.Tables.GetValueOrDefault(table.Key) != table.Value)
-            .Select(table => $"table {table.Key}"));
+            .Select(table => movedBy.TryGetValue(table.Key, out var by) ? $"table {table.Key}, which {by} changed" : $"table {table.Key}"));
         return moved.Count == 0
             ? "its inputs moved"
             : string.Join(", ", moved.Take(10)) + (moved.Count > 10 ? $" and {moved.Count - 10} more" : "");

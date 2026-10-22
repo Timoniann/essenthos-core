@@ -18,9 +18,9 @@ namespace Essenthos.Core.Tests.Platform;
 /// the provenances.
 ///
 /// <para>
-/// A step that changed a table it reads finds it changed the next time, and runs once more, as a whole
-/// load would: that run writes nothing, and the load after it is skipped. <see cref="Settle"/> loads
-/// until nothing runs.
+/// A step that changed a table it or a step before it reads leaves a mark that no longer holds, so the
+/// load goes through the steps again from there until nothing moves: the load after it runs nothing.
+/// <see cref="Settle"/> loads until nothing runs.
 /// </para>
 /// </summary>
 [Collection(WitnessDatabaseCollection.Name)]
@@ -29,6 +29,8 @@ public sealed class LoadMarksTests : IDisposable
     private const string Source = "source";
     private const string Copier = "copier";
     private const string Reader = "reader";
+    private const string Early = "early";
+    private const string Late = "late";
 
     private readonly string _connectionString;
     private readonly string _root = Directory.CreateTempSubdirectory("load-marks-").FullName;
@@ -36,6 +38,7 @@ public sealed class LoadMarksTests : IDisposable
     private readonly AppDbContext _db;
     private bool _failOnce;
     private int _readerVersion = 1;
+    private readonly List<string> _earlySaw = [];
 
     public LoadMarksTests(WitnessDatabase database)
     {
@@ -57,11 +60,11 @@ public sealed class LoadMarksTests : IDisposable
     [Fact]
     public async Task AStepIsSkippedOnceNothingItReadsMoves()
     {
-        Ran(await Load()).Should().Equal(Source, Copier, Reader);
+        var first = await Load();
 
-        var again = await Load();
-        Ran(again).Should().Equal(Source, Copier);
-        again.Where(outcome => outcome.Ran).Should().OnlyContain(outcome => outcome.Moved.Count == 0);
+        // The source and the copier changed tables they read, so the load went through them again.
+        Ran(first).Should().Equal(Source, Copier, Reader, Source, Copier);
+        first.Where(outcome => outcome.Ran).Skip(3).Should().OnlyContain(outcome => outcome.Moved.Count == 0);
 
         Ran(await Load()).Should().BeEmpty();
         (await Scalar("SELECT count(*) FROM strong_entry")).Should().Be(1);
@@ -75,10 +78,10 @@ public sealed class LoadMarksTests : IDisposable
 
         var outcomes = await Load();
 
-        Ran(outcomes).Should().Equal(Source, Copier, Reader);
-        outcomes.Single(outcome => outcome.Step == Source).Why.Should().Contain("file input.txt");
-        outcomes.Single(outcome => outcome.Step == Copier).Why.Should().Contain("table provenance");
-        (await Settle()).Should().BeLessThanOrEqualTo(2);
+        Ran(outcomes).Should().StartWith([Source, Copier, Reader]);
+        outcomes.First(outcome => outcome.Step == Source).Why.Should().Contain("file input.txt");
+        outcomes.First(outcome => outcome.Step == Copier).Why.Should().Contain("table provenance, which source changed");
+        Ran(await Load()).Should().BeEmpty();
     }
 
     /// <summary>
@@ -105,9 +108,12 @@ public sealed class LoadMarksTests : IDisposable
 
         var outcomes = await Load();
 
-        Ran(outcomes).Should().Equal(Copier);
-        outcomes.Single(outcome => outcome.Ran).Why.Should().Contain("table strong_entry");
+        // The copier took the row out of a table it reads, so it ran once more, and wrote nothing.
+        Ran(outcomes).Should().Equal(Copier, Copier);
+        outcomes.First(outcome => outcome.Ran).Why.Should().Contain("table strong_entry");
+        outcomes.Last(outcome => outcome.Ran).Moved.Should().BeEmpty();
         (await Scalar("SELECT count(*) FROM strong_entry WHERE strong_number = 'H9999'")).Should().Be(0);
+        Ran(await Load()).Should().BeEmpty();
     }
 
     [Fact]
@@ -163,7 +169,7 @@ public sealed class LoadMarksTests : IDisposable
         await Settle();
         await Execute("TRUNCATE strong_entry CASCADE");
 
-        Ran(await Load()).Should().Equal(Copier);
+        Ran(await Load()).Should().Equal(Copier, Copier);
         (await Scalar("SELECT count(*) FROM strong_entry")).Should().Be(1);
     }
 
@@ -218,7 +224,65 @@ public sealed class LoadMarksTests : IDisposable
         var outcomes = await Load(extra: parent);
 
         Ran(outcomes).Should().Contain("parent");
-        outcomes.Single(outcome => outcome.Step == "parent").Why.Should().Contain("table strong_entry");
+        outcomes.First(outcome => outcome.Step == "parent" && outcome.Ran).Why.Should().Contain("table strong_entry");
+    }
+
+    /// <summary>
+    /// The early step reads a table the late step after it writes. Rewritten with the rows it already
+    /// held, the table has not moved, and the early step is not run again in this load or the next.
+    /// </summary>
+    [Fact]
+    public async Task ALaterStepRewritingWhatAnEarlierStepReadWithTheSameRowsRunsNothingAgain()
+    {
+        File.WriteAllText(Path.Combine(_resources, "late.txt"), "one\n");
+        await Settle(steps: EarlyAndLate());
+        File.AppendAllText(Path.Combine(_resources, "late.txt"), "a line nothing reads\n");
+
+        var outcomes = await Load(steps: EarlyAndLate());
+
+        Ran(outcomes).Should().Equal(Late);
+        outcomes.Single(outcome => outcome.Ran).Wrote.Should().Contain("strong_entry");
+        outcomes.Single(outcome => outcome.Ran).Moved.Should().BeEmpty();
+        Ran(await Load(steps: EarlyAndLate())).Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// When the late step changes the rows the early step read, the load goes back and runs the early
+    /// step over them, and the load after it finds nothing to run.
+    /// </summary>
+    [Fact]
+    public async Task ALaterStepChangingWhatAnEarlierStepReadRunsTheEarlierOneAgainInTheSameLoad()
+    {
+        File.WriteAllText(Path.Combine(_resources, "late.txt"), "one\n");
+        await Settle(steps: EarlyAndLate());
+        File.WriteAllText(Path.Combine(_resources, "late.txt"), "two\n");
+        _earlySaw.Clear();
+
+        var outcomes = await Load(steps: EarlyAndLate());
+
+        Ran(outcomes).Should().Equal(Late, Early, Late);
+        outcomes.First(outcome => outcome.Step == Early && outcome.Ran).Why.Should().Contain("table strong_entry, which late changed");
+        outcomes.Last(outcome => outcome.Step == Late).Moved.Should().BeEmpty();
+        _earlySaw.Should().Equal("Ltwo");
+        Ran(await Load(steps: EarlyAndLate())).Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// A late step that changes what the early one reads every time it runs never settles: the load
+    /// stops going back after a few passes, and the next load runs the early step again rather than
+    /// skipping it over rows it never read.
+    /// </summary>
+    [Fact]
+    public async Task AStepThatChangesWhatAnEarlierStepReadsEveryTimeStopsTheLoadGoingBackAndIsNotSkippedNextTime()
+    {
+        var outcomes = await Load(steps: EarlyAndLate(everyTime: true));
+
+        Ran(outcomes).Count(step => step == Early).Should().Be(LoadMarks.Passes);
+        _earlySaw.Should().HaveCount(LoadMarks.Passes);
+
+        var next = await Load(steps: EarlyAndLate(everyTime: true));
+        Ran(next).Should().StartWith([Early]);
+        next.First(outcome => outcome.Step == Early && outcome.Ran).Why.Should().Contain("table strong_entry");
     }
 
     [Fact]
@@ -261,11 +325,11 @@ public sealed class LoadMarksTests : IDisposable
     }
 
     /// <summary>Loads until a load runs nothing, and says how many loads that took.</summary>
-    private async Task<int> Settle(LoadStep? extra = null)
+    private async Task<int> Settle(LoadStep? extra = null, List<LoadStep>? steps = null)
     {
         for (var loads = 1; loads <= 4; loads++)
         {
-            if (!Ran(await Load(extra: extra)).Any())
+            if (!Ran(await Load(extra: extra, steps: steps)).Any())
             {
                 return loads;
             }
@@ -274,7 +338,8 @@ public sealed class LoadMarksTests : IDisposable
         throw new InvalidOperationException("Four loads in a row each ran something.");
     }
 
-    private async Task<IReadOnlyList<LoadMarks.StepOutcome>> Load(bool everything = false, bool failCopier = false, LoadStep? extra = null)
+    private async Task<IReadOnlyList<LoadMarks.StepOutcome>> Load(
+        bool everything = false, bool failCopier = false, LoadStep? extra = null, List<LoadStep>? steps = null)
     {
         _failOnce = failCopier;
         var configuration = new ConfigurationBuilder().Build();
@@ -285,7 +350,8 @@ public sealed class LoadMarksTests : IDisposable
             CodeDigest.ForTheForge(),
             NullLogger.Instance);
         await marks.Open(CancellationToken.None);
-        return await marks.Run(extra is null ? Steps() : [extra, .. Steps()], everything, _ => { }, CancellationToken.None);
+        steps ??= extra is null ? Steps() : [extra, .. Steps()];
+        return await marks.Run(steps, everything, _ => { }, CancellationToken.None);
     }
 
     private List<LoadStep> Steps() =>
@@ -313,6 +379,28 @@ public sealed class LoadMarksTests : IDisposable
         new(Reader, async _ => await Scalar("SELECT count(*) FROM provenance")) { Version = _readerVersion },
     ];
 
+    private const string EarlyReads =
+        "SELECT coalesce(string_agg(strong_number, ',' ORDER BY strong_number), '') FROM strong_entry WHERE strong_number LIKE 'L%' OR strong_number LIKE 'C%'";
+
+    /// <summary>
+    /// The early step reads the rows the late step writes: the late step's from the first line of its
+    /// file (rewriting the row that is there with itself), or a new row every time it runs.
+    /// </summary>
+    private List<LoadStep> EarlyAndLate(bool everyTime = false) =>
+    [
+        new(Early, async _ => _earlySaw.Add(await Text(EarlyReads))),
+        everyTime
+            ? new(Late, async _ => await Execute(
+                "INSERT INTO strong_entry (strong_number) SELECT 'C' || (count(*) + 1) FROM strong_entry WHERE strong_number LIKE 'C%'"))
+            : new(Late, async _ =>
+            {
+                var line = File.ReadLines(Path.Combine(_resources, "late.txt")).First();
+                await Execute($"DELETE FROM strong_entry WHERE strong_number LIKE 'L%' AND strong_number <> 'L{line}'");
+                await Execute($"INSERT INTO strong_entry (strong_number) SELECT 'L{line}' WHERE NOT EXISTS (SELECT 1 FROM strong_entry WHERE strong_number = 'L{line}')");
+                await Execute($"UPDATE strong_entry SET strong_number = strong_number WHERE strong_number = 'L{line}'");
+            }) { Files = ["late.txt"] },
+    ];
+
     private static IEnumerable<string> Ran(IEnumerable<LoadMarks.StepOutcome> outcomes) =>
         outcomes.Where(outcome => outcome.Ran).Select(outcome => outcome.Step);
 
@@ -322,6 +410,14 @@ public sealed class LoadMarksTests : IDisposable
         await connection.OpenAsync();
         await using var command = new NpgsqlCommand(sql, connection);
         await command.ExecuteNonQueryAsync();
+    }
+
+    private async Task<string> Text(string sql)
+    {
+        await using var connection = new NpgsqlConnection(_connectionString);
+        await connection.OpenAsync();
+        await using var command = new NpgsqlCommand(sql, connection);
+        return (string)(await command.ExecuteScalarAsync())!;
     }
 
     private async Task<long> Scalar(string sql)
