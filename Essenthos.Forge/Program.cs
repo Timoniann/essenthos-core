@@ -240,6 +240,9 @@ if (!verb.Accepts(arguments))
     return 1;
 }
 
+// A Forge a load step started reports what its statements named, so they count as the step's reads.
+using var statementLog = Essenthos.Core.Loading.Marks.StatementTables.ForParent();
+
 var forge = new ForgeRun(app.Services, logger, resources, databaseConnection);
 var exit = await verb.Run(forge, arguments);
 if (exit == 0)

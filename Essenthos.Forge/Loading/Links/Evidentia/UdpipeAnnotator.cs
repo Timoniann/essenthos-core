@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Text;
 using Essenthos.Core.Configuration;
 
@@ -80,6 +80,7 @@ internal sealed class UdpipeAnnotator(IConfiguration configuration, IHostEnviron
     private static async Task<string> Parse(
         string executable, string model, IReadOnlyList<EvidentiaToken> tokens, CancellationToken cancellationToken)
     {
+        ModelRuns.Refuse("UDPipe would parse a passage");
         var start = new ProcessStartInfo(executable,
             $"--tag --parse --input horizontal --output conllu \"{model}\"")
         {

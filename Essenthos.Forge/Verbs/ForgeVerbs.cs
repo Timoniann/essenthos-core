@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 using System.Text.Json;
 using Essenthos.Core.Database.Entities.Enums;
@@ -31,9 +31,14 @@ internal static partial class ForgeVerbs
         new("help", "", "This list.", Help),
 
         // The load, the corpus measures and the releases.
-        new("load", "[--from <step>] [--steps]",
-            "Load the corpus: every witness, the lexicon, the frame, the links, the encyclopedia and the verification pass.",
+        new("load", "[--from <step>] [--only <step|module,...>] [--no-skip] [--steps]",
+            "Load the corpus: every witness, the lexicon, the frame, the links, the encyclopedia and the verification pass; "
+            + "a step nothing it reads has moved for is skipped.",
             Load),
+        new("rebuild", "<database> --compare <reference> --resources <folder>",
+            "Build the corpus from nothing into a new database of its own, every step and no model run, verify it, and compare "
+            + "it table by table with a reference corpus. Never touches the configured database and swaps nothing.",
+            RebuildVerb, Least: 5, Most: 5),
         new("lexicon-translations", "", "Load only published Strong translations beside the English dictionary.",
             LexiconTranslations, Most: 0),
         new("maintain", "[<table> ...]", "VACUUM (ANALYZE) of the tables that need it, or of the ones named.", Maintain),

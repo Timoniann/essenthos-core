@@ -331,6 +331,15 @@ public class AppDbContext : DbContext
     /// <summary>What each text's Strong counts were last counted from, so a load counts only what moved.</summary>
     public DbSet<StrongCountMark> StrongCountMarks { get; set; } = null!;
 
+    /// <summary>What each step of the load last ran on, so a load skips a step whose inputs have not moved.</summary>
+    public DbSet<LoadStepMark> LoadStepMarks { get; set; } = null!;
+
+    /// <summary>Every table's rows summed, kept while nothing has written the table since.</summary>
+    public DbSet<TableFingerprint> TableFingerprints { get; set; } = null!;
+
+    /// <summary>The transactions that wrote each table, so a kept sum is known to be stale.</summary>
+    public DbSet<TableWrite> TableWrites { get; set; } = null!;
+
     /// <summary>What one Strong entry's etymology says about another, read from the source's own words.</summary>
     public DbSet<StrongRelation> StrongRelations { get; set; } = null!;
 
@@ -1503,6 +1512,31 @@ public class AppDbContext : DbContext
                     "How many of a Strong number's words in one book of the edition a text is counted over the "
                     + "text's links render. Only books where it renders some; derived and rebuilt with strong_reach.");
             });
+        });
+
+        modelBuilder.Entity<LoadStepMark>(entity =>
+        {
+            entity.Property(m => m.Inputs).HasColumnType("jsonb");
+            entity.ToTable("load_step_mark", t => t.HasComment(
+                "What each step of the load last ran on: digests of its code, files and the tables it read, and of "
+                + "the tables it left. A step whose inputs digest the same is skipped. Derived; deleting a row only "
+                + "costs running that step once more."));
+        });
+
+        modelBuilder.Entity<TableFingerprint>(entity =>
+        {
+            entity.ToTable("table_fingerprint", t => t.HasComment(
+                "Each table's rows summed (count and a 64-bit hash of every row), with the table's file, its "
+                + "columns and the count of transactions that had written it, so the sum is taken again only after "
+                + "a write. Derived; deleting a row only costs taking that sum again."));
+        });
+
+        modelBuilder.Entity<TableWrite>(entity =>
+        {
+            entity.HasIndex(w => w.TableName);
+            entity.ToTable("table_write", t => t.HasComment(
+                "One row per table per transaction that wrote it, added by the statement trigger note_table_write "
+                + "in the same transaction; folded per table by the load, the weights summed."));
         });
 
         modelBuilder.Entity<StrongCountMark>(entity =>

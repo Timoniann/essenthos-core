@@ -9,8 +9,10 @@ using Essenthos.Core.Loading.Frame;
 using Essenthos.Core.TextusReceptus;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Loading.Links.Evidentia;
+using Essenthos.Core.Loading.Marks;
 using Essenthos.Core.Verification;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using Essenthos.Core.Loading.Encyclopedia;
 
 namespace Essenthos.Core.Loading;
@@ -109,59 +111,73 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// Runs the load from its first step, or from the step named, and says whether it finished. A step
-    /// that fails stops the load and is named in the log and on <see cref="DatasetStatus"/>, so the
-    /// load can be run again from it: every step before it has written what it writes.
+    /// Runs the load and says whether it finished: from its first step or the step named, every step or
+    /// only the ones named (and then verify), each skipped when nothing it reads has moved since it last
+    /// ran to the end (<see cref="LoadMarks"/>) unless every step was asked for. A step that fails stops
+    /// the load and is named in the log and on <see cref="DatasetStatus"/>, so the load can be run again
+    /// from it: every step before it has written what it writes, and the failed step has no mark.
     /// </summary>
-    public async Task<bool> Run(string? from, CancellationToken stoppingToken)
+    public async Task<bool> Run(LoadRequest request, CancellationToken stoppingToken)
     {
         var resources = ResourcePaths.Read(configuration, environment.ContentRootPath);
         var steps = Steps(resources);
-        var first = 0;
-        if (from is { Length: > 0 })
+        if (Select(steps, request) is not { } selected)
         {
-            first = steps.FindIndex(step => string.Equals(step.Name, from, StringComparison.OrdinalIgnoreCase));
-            if (first < 0)
-            {
-                logger.LogError(
-                    "The load has no step \"{From}\". Its steps, in order: {Steps}",
-                    from, string.Join(", ", steps.Select(step => step.Name)));
-                return false;
-            }
+            return false;
         }
 
-        var current = steps[first];
+        var current = selected[0];
         try
         {
             logger.LogInformation("Loading the dataset from {ResourcesPath}", resources);
-            if (first > 0)
+            if (request.From is { Length: > 0 } || request.Only is { Count: > 0 })
             {
-                logger.LogInformation("Resuming at {Step}; the {Skipped} steps before it are not run", current.Name, first);
+                logger.LogInformation(
+                    "Considering {Selected} of the load's {All} steps: {Steps}",
+                    selected.Count, steps.Count, Summary(selected.Select(step => step.Name)));
             }
 
-            var took = new List<(string Step, TimeSpan Took)>();
-            foreach (var step in steps.Skip(first))
-            {
-                current = step;
-                var started = Stopwatch.GetTimestamp();
-                await step.Run(stoppingToken);
-                var elapsed = Stopwatch.GetElapsedTime(started);
-                took.Add((step.Name, elapsed));
-                logger.LogInformation("Step {Step} took {Seconds:F1} s", step.Name, elapsed.TotalSeconds);
-            }
+            var started = Stopwatch.GetTimestamp();
+            var connection = DatabaseConnection.Read(configuration);
+            using var marks = new LoadMarks(
+                connection,
+                new TableFingerprints(connection, FingerprintSessions, logger),
+                new FileDigests(resources, environment.ContentRootPath, configuration, logger),
+                CodeDigest.ForTheForge(),
+                logger);
+            await marks.Open(stoppingToken);
+
+            var outcomes = await marks.Run(selected, request.Everything, step => current = step, stoppingToken);
+            var took = outcomes.Where(outcome => outcome.Ran).ToList();
+            var skipped = outcomes.Count - took.Count;
 
             status.Ready();
+            var (summing, summed) = marks.Summing;
             logger.LogInformation(
-                "The dataset is loaded in {Seconds:F0} s; the steps over a second: {Steps}",
-                took.Sum(step => step.Took.TotalSeconds),
-                string.Join(", ", took.Where(step => step.Took.TotalSeconds >= 1)
-                    .OrderByDescending(step => step.Took)
-                    .Select(step => $"{step.Step} {step.Took.TotalSeconds:F0} s")));
+                "The dataset is loaded in {Seconds:F0} s: {Ran} step(s) ran and {Skipped} were skipped, nothing they read having moved; "
+                + "the tables' sums took {Summing:F0} s over {Summed} table(s); the steps over a second: {Steps}",
+                Stopwatch.GetElapsedTime(started).TotalSeconds,
+                took.Count,
+                skipped,
+                summing.TotalSeconds,
+                summed,
+                string.Join(", ", took.Where(outcome => outcome.Took.TotalSeconds >= 1)
+                    .OrderByDescending(outcome => outcome.Took)
+                    .Select(outcome => $"{outcome.Step} {outcome.Took.TotalSeconds:F0} s")));
             return true;
         }
         catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
         {
             logger.LogInformation("The dataset load was cancelled at {Step}", current.Name);
+            return false;
+        }
+        catch (PostgresException exception) when (exception.SqlState == PostgresErrorCodes.UndefinedFunction
+                                                   && exception.MessageText.Contains("watch_table_writes", StringComparison.Ordinal))
+        {
+            status.Failed($"{current.Name}: {exception.Message}");
+            logger.LogError(
+                "This database has not had the migration that lets the load skip what has not moved "
+                + "(LoadStepsAreSkippedWhenNothingTheyReadMoved). Apply the migrations first (guide Database / Migrations)");
             return false;
         }
         catch (Exception exception)
@@ -175,109 +191,211 @@ internal sealed class DatasetLoader(
         }
     }
 
+    /// <summary>
+    /// The steps a request names, in the load's order: from the step it starts at, and of those only the
+    /// steps and modules it names, with verify last. Null, after saying why, if it names what the load has not.
+    /// </summary>
+    private List<LoadStep>? Select(List<LoadStep> steps, LoadRequest request)
+    {
+        var first = 0;
+        if (request.From is { Length: > 0 } from)
+        {
+            first = steps.FindIndex(step => string.Equals(step.Name, from, StringComparison.OrdinalIgnoreCase));
+            if (first < 0)
+            {
+                logger.LogError(
+                    "The load has no step \"{From}\". Its steps, in order: {Steps}",
+                    from, string.Join(", ", steps.Select(step => step.Name)));
+                return null;
+            }
+        }
+
+        if (request.Only is not { Count: > 0 } only)
+        {
+            if (first > 0)
+            {
+                logger.LogInformation("Resuming at {Step}; the {Skipped} steps before it are not run", steps[first].Name, first);
+            }
+
+            return steps[first..];
+        }
+
+        var named = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var name in only)
+        {
+            var matched = steps.Where(step => string.Equals(step.Name, name, StringComparison.OrdinalIgnoreCase)).ToList();
+            if (matched.Count == 0)
+            {
+                matched = [.. steps.Where(step => string.Equals(step.Module, name, StringComparison.OrdinalIgnoreCase))];
+            }
+
+            if (matched.Count == 0)
+            {
+                logger.LogError(
+                    "The load has no step or module \"{Name}\". Its modules: {Modules}; `forge load --steps` lists the steps",
+                    name, string.Join(", ", LoadModules.All));
+                return null;
+            }
+
+            named.UnionWith(matched.Select(step => step.Name));
+        }
+
+        named.Add(steps[^1].Name);
+        return [.. steps[first..].Where(step => named.Contains(step.Name))];
+    }
+
+    private int FingerprintSessions =>
+        int.TryParse(configuration["Loading:FingerprintSessions"], out var sessions) && sessions > 0 ? sessions : 6;
+
+    private static string Summary(IEnumerable<string> names)
+    {
+        var list = names.ToList();
+        return string.Join(", ", list.Take(15)) + (list.Count > 15 ? $" and {list.Count - 15} more" : "");
+    }
+
     /// <summary>The names of the load's steps, in the order it runs them.</summary>
-    public IReadOnlyList<string> StepNames() =>
-        [.. Steps(ResourcePaths.Read(configuration, environment.ContentRootPath)).Select(step => step.Name)];
+    public IReadOnlyList<string> StepNames() => [.. StepList().Select(step => step.Name)];
+
+    /// <summary>The load's steps themselves, for what reads their declarations.</summary>
+    internal IReadOnlyList<LoadStep> StepList() => Steps(ResourcePaths.Read(configuration, environment.ContentRootPath));
 
     /// <summary>
-    /// Every step of the load, in order, each under the name <c>load --from</c> resumes at. A text is
-    /// its own step, named by its slug; nothing is read from disk until a step runs.
+    /// Every step of the load, in order, each under the name <c>load --from</c> resumes at, with the module
+    /// <c>load --only</c> can name it by and the files under Resources it reads. A text is its own step,
+    /// named by its slug; nothing is read from disk until a step runs.
     /// </summary>
     private List<LoadStep> Steps(string resources)
     {
         BhsaProject? bhsa = null;
         BhsaProject Bhsa() => bhsa ??= BhsaProject.Load(Path.Combine(resources, "etcbc"));
 
-        LoadStep Text(string slug, string what, Func<TextSource> read) =>
-            new(slug, cancellationToken => Load(what, read, cancellationToken));
+        LoadStep Text(string slug, string what, Func<TextSource> read, params StepFile[] files) =>
+            new(slug, cancellationToken => Load(what, read, cancellationToken)) { Module = LoadModules.Texts, Files = files };
+
+        static IEnumerable<LoadStep> In(string module, params LoadStep[] steps) =>
+            steps.Select(step => step with { Module = module });
+
+        // The folders DeuterocanonTextSource.Extend adds books from, and the ones the bible4u texts are
+        // corrected against.
+        StepFile[] extended =
+        [
+            DeuterocanonTextSource.KingJamesFolder, DeuterocanonTextSource.SynodalFolder, DeuterocanonTextSource.WorldEnglishFolder,
+        ];
+        StepFile[] bible4u =
+        [
+            "bible4u", LostPsalmOpenings.KingJamesFolder, LostPsalmOpenings.OhienkoFolder, .. extended,
+        ];
+
+        // Every text the psalm titles are read again from, in its own files.
+        StepFile[] titled =
+        [
+            "bible4u",
+            .. EbibleTextSource.Definitions.Keys.Select(folder => (StepFile)folder),
+            .. EnglishTextSource.Definitions.Keys.Select(folder => (StepFile)folder),
+            "Door43", AlmeidaTextSource.Folder, "ClearBible/data/hau",
+            .. SwordTextSource.Texts.Values.Select(text => (StepFile)text.Folder),
+        ];
+
+        // What the recipe's Forge runs read besides the database: the ledger, the numbered editions the
+        // Strong verbs read for the run, the mappings, the interlinears and the editions the repairs read.
+        StepFile[] recipe =
+        [
+            "Essenthos/recipe.json", "Essenthos/evidentia", "SynodalStrong", "ChineseUnion1919", "ReinaValera1909",
+            "Segond1910Strong", "DarbyFrench", "Schlachter1951", "RevisedLiteral", "Byzantine", "mapping",
+            "OpenHebrewBible", "Door43", "Berean", "Swete", "STEPBible", "Versification", .. bible4u, "Septuagint",
+        ];
+
+        var senseReadings = new StepFile("SenseReadings", "Dataset:SenseReadingsPath");
+        var persons = new StepFile("Essenthos/persons", "Dataset:PersonRegisterPath");
 
         return
         [
-            Text(BhsaTextSource.Slug, "BHSA", () => BhsaTextSource.Build(Bhsa())),
-            new("bhsa-headwords", LemmatiseTheHebrewByItsHeadwords),
+            Text(BhsaTextSource.Slug, "BHSA", () => BhsaTextSource.Build(Bhsa()), "etcbc"),
+            .. In(LoadModules.Lexicons, new LoadStep("bhsa-headwords", LemmatiseTheHebrewByItsHeadwords)),
             Text(NestleTextSource.Slug, "Nestle 1904", () => NestleTextSource.Read(
                 ResourcePaths.File(resources, "Nestle1904", "Nestle1904.xml"),
-                ResourcePaths.File(resources, "Nestle1904", "berean-interlinear-glosses.xml"))),
+                ResourcePaths.File(resources, "Nestle1904", "berean-interlinear-glosses.xml")), "Nestle1904"),
 
             // Both printed editions come out of one file, so they are one parse and two texts. The
             // extraction is checked against byztxt/greektext-scrivener in the tests rather than here:
             // it is a property of the reader, not of a particular load.
             .. Editions.Select(edition => Text(TextusReceptusTextSource.Slug(edition), $"the {edition} Textus Receptus",
-                () => TextusReceptusTextSource.Read(Path.Combine(resources, "TextusReceptus"), edition))),
+                () => TextusReceptusTextSource.Read(Path.Combine(resources, "TextusReceptus"), edition), "TextusReceptus")),
 
             // The two editions Nestle 1904 was voted out of. They add almost no reading the corpus
             // could not already see; what they add is the reason Nestle reads as it does, because
             // at every place the three differ his text is whichever two of them agreed.
             Text(TischendorfTextSource.Slug, "Tischendorf's eighth edition", () => TischendorfTextSource.Read(
-                Path.Combine(resources, TischendorfFolder))),
+                Path.Combine(resources, TischendorfFolder)), TischendorfFolder),
             Text(WestcottHortTextSource.Slug, "Westcott and Hort", () => WestcottHortTextSource.Read(
-                Path.Combine(resources, WestcottHortFolder))),
+                Path.Combine(resources, WestcottHortFolder)), WestcottHortFolder),
 
             // A modern critical text decided apart from the Nestle line, read without the parsing
             // MorphGNT lays over it, and so joined to the other editions by its letters alone.
-            Text(SblgntTextSource.Slug, SblgntTextSource.Definition.Name, () => SblgntTextSource.Read(resources)),
+            Text(SblgntTextSource.Slug, SblgntTextSource.Definition.Name, () => SblgntTextSource.Read(resources), "SBLGNT"),
 
             // The one Greek witness that is neither critical nor Erasmian. It is loaded from the
             // same shape of file as the two above and carries a Strong number on every word, so it
             // needs no reader of its own beyond an alphabet and no aligner at all.
             Text(ByzantineTextSource.Slug, "the Byzantine Textform", () => ByzantineTextSource.Read(
-                Path.Combine(resources, "Byzantine"))),
+                Path.Combine(resources, "Byzantine")), "Byzantine"),
 
             Text(SeptuagintTextSource.Slug, "Brenton's Septuagint", () => SeptuagintTextSource.Read(
-                Path.Combine(resources, "Septuagint"))),
+                Path.Combine(resources, "Septuagint")), "Septuagint"),
 
             // The second Greek Old Testament, and a diplomatic one: Codex Vaticanus as it stands
             // where Brenton is a text printed to be translated from. They disagree about the verse
             // division of most of the books they share, which is the whole reason to hold both.
             Text(SweteTextSource.Slug, "Swete's Septuagint", () => SweteTextSource.Read(
-                Path.Combine(resources, "Swete"))),
+                Path.Combine(resources, "Swete")), "Swete"),
 
             // The Old Greek of Susanna, Daniel and Bel, which Swete prints beside Theodotion's: another
             // translation of the same books, so a text of its own beside his.
             Text(SweteOldGreekTextSource.Slug, "Swete's Old Greek Daniel", () => SweteOldGreekTextSource.Read(
-                Path.Combine(resources, "Swete"))),
+                Path.Combine(resources, "Swete")), "Swete"),
 
             // Codex Alexandrinus, in the one book it is printed whole here: Ottley's Isaiah, a
             // diplomatic text of a different manuscript from the Vaticanus Swete prints.
             Text(OttleyTextSource.Slug, "Ottley's Isaiah", () => OttleyTextSource.Read(
-                Path.Combine(resources, "Swete"))),
+                Path.Combine(resources, "Swete")), "Swete"),
 
             // The same manuscript as one witness of both Testaments: INTF's transcription of its New
             // Testament, and the Old Testament where a printing gives its own text.
             Text(AlexandrinusTextSource.Slug, AlexandrinusTextSource.Definition.Name,
-                () => AlexandrinusTextSource.Read(resources)),
+                () => AlexandrinusTextSource.Read(resources), "Alexandrinus", "Swete"),
 
             // The other two great codices, as far as their New Testaments survive transcribed.
-            .. CodexTextSource.All.Select(codex => Text(codex.Slug, codex.Definition.Name, () => codex.Read(resources))),
+            .. CodexTextSource.All.Select(codex => Text(codex.Slug, codex.Definition.Name, () => codex.Read(resources), codex.Folder)),
 
             // The Torah as the Samaritan community transmitted it, which is the first text here
             // that disagrees with BHSA about the Hebrew rather than about a translation of it.
             Text(SamaritanTextSource.Slug, "the Samaritan Pentateuch", () => SamaritanTextSource.Read(
-                Path.Combine(resources, "SamaritanPentateuch"))),
+                Path.Combine(resources, "SamaritanPentateuch")), "SamaritanPentateuch"),
 
             // The Ethiopic Bible, the first daughter version of the Septuagint here and the only text
             // of Enoch and Jubilees: the church's printed Bible, with Dillmann's and Ludolf's editions
             // where the files hold them in verses.
             Text(GeezTextSource.Slug, GeezTextSource.Definition.Name, () => GeezTextSource.Read(
-                Path.Combine(resources, GeezTextSource.Folder))),
+                Path.Combine(resources, GeezTextSource.Folder)), GeezTextSource.Folder),
 
             // The Berean's own edition, because rebuilding it from the tables is right nine verses
             // in ten and a text that is right nine times in ten is not a text. The tables then say
             // which of its words renders which Greek word.
             Text(BereanTextSource.Slug, "the Berean Standard Bible", () => BereanTextSource.Read(
                 ResourcePaths.File(resources, "Berean", "bsb.txt"),
-                ResourcePaths.File(resources, "Berean", "bsb_tables.tsv"))),
+                ResourcePaths.File(resources, "Berean", "bsb_tables.tsv")), "Berean"),
 
             // The Synodal's non-canonical books and the King James's Apocrypha are not in bible4u's
             // files; they come from their own sources and are written into the same texts.
             .. Bible4uTranslations.Select(translation => Text(translation, translation,
                 () => DeuterocanonTextSource.Extend(Bible4uTextSource.Read(
-                    ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation, resources), resources))),
+                    ResourcePaths.File(resources, "bible4u", $"{translation}.xml"), translation, resources), resources),
+                bible4u)),
 
             // The first complete Ukrainian Bible, and the only Ukrainian text the corpus holds that
             // needs nobody's permission. It reads through the same USFM reader as Brenton.
             Text(KulishTextSource.Slug, "the Kulish Bible", () => KulishTextSource.Read(
-                Path.Combine(resources, "Kulish"))),
+                Path.Combine(resources, "Kulish")), "Kulish"),
 
             // The German and the Spanish, which the interface is to speak and the corpus had no
             // text in. Luther carries Strong numbers on its own words, which is the only route to
@@ -285,13 +403,13 @@ internal sealed class DatasetLoader(
             // reaches them through an alignment somebody else published, and its own tagging is
             // deliberately not loaded.
             .. EbibleTextSource.Definitions.Select(text => Text(text.Value.Slug, text.Value.Name,
-                () => EbibleTextSource.Read(Path.Combine(resources, text.Key)))),
+                () => EbibleTextSource.Read(Path.Combine(resources, text.Key)), text.Key)),
 
             // The Chinese Union Version in both scripts and the Korean Revised Version, from CrossWire's
             // modules. The Chinese reaches the originals through FHL's Strong numbers, which are read
             // by their own command and never stored; the Korean carries nothing but its words.
             .. SwordTextSource.Texts.Values.Select(text => Text(text.Definition.Slug, text.Definition.Name,
-                () => SwordTextSource.Read(Path.Combine(resources, text.Folder)))),
+                () => SwordTextSource.Read(Path.Combine(resources, text.Folder)), text.Folder)),
 
             // The English that is not the King James in other spelling: Tyndale, which the King
             // James is largely a revision of, and five more each made from a different underlying
@@ -300,149 +418,252 @@ internal sealed class DatasetLoader(
             // lexeme by one lexeme, which is what makes it a check on the aligner rather than only
             // another consumer of it.
             .. EnglishTextSource.Definitions.Select(text => Text(text.Value.Slug, text.Value.Name,
-                () => DeuterocanonTextSource.Extend(EnglishTextSource.Read(Path.Combine(resources, text.Key)), resources))),
+                () => DeuterocanonTextSource.Extend(EnglishTextSource.Read(Path.Combine(resources, text.Key)), resources),
+                [text.Key, .. extended])),
 
             // The texts that hold the deuterocanon as a matter of course: Brenton's English beside his
             // Greek, and the Vulgate with the Douay-Rheims translated from it, in the Latin numbering.
             .. DeuterocanonTextSource.Texts.Select(text => Text(text.Definition.Slug, text.Definition.Name,
-                () => DeuterocanonTextSource.Read(Path.Combine(resources, text.Folder)))),
+                () => DeuterocanonTextSource.Read(Path.Combine(resources, text.Folder)), text.Folder)),
 
             // The one English besides the Berean whose words people tied to the originals, read from the
             // aligned file the ties are drawn from later; and the Portuguese Almeida, whose New Testament
             // Clear Bible's Portuguese set speaks about.
             Text(UnfoldingWordTextSource.Slug, UnfoldingWordTextSource.Definition.Name, () => UnfoldingWordTextSource.Read(
-                Path.Combine(resources, "Door43", UnfoldingWordTextSource.Folder))),
+                Path.Combine(resources, "Door43", UnfoldingWordTextSource.Folder)), $"Door43/{UnfoldingWordTextSource.Folder}"),
             Text(AlmeidaTextSource.Slug, AlmeidaTextSource.Definition.Name, () => AlmeidaTextSource.Read(
-                Path.Combine(resources, AlmeidaTextSource.Folder))),
+                Path.Combine(resources, AlmeidaTextSource.Folder)), AlmeidaTextSource.Folder),
 
             // The Indian Revised Version in Bengali and Assamese, from the aligned files their links are
             // drawn from; and the Hausa, which nobody publishes in a form the corpus may take except the
             // token files of the alignment Clear Bible made of it.
             .. Door43TextSource.Definitions.Select(text => Text(text.Value.Slug, text.Value.Name,
-                () => Door43TextSource.Read(Path.Combine(resources, "Door43", text.Key)))),
+                () => Door43TextSource.Read(Path.Combine(resources, "Door43", text.Key)), $"Door43/{text.Key}")),
 
             Text(ClearBible.ClearBibleTextSource.Definition.Slug, ClearBible.ClearBibleTextSource.Definition.Name,
-                () => ClearBible.ClearBibleTextSource.Read(Path.Combine(resources, "ClearBible"))),
-            new("statistics", async cancellationToken =>
+                () => ClearBible.ClearBibleTextSource.Read(Path.Combine(resources, "ClearBible")), "ClearBible/data/hau"),
+
+            // Whether to analyse depends on whether a text step wrote words in this run, not on anything stored.
+            new LoadStep("statistics", async cancellationToken =>
             {
                 if (_wroteWords)
                 {
                     await RefreshTheStatistics(cancellationToken);
                 }
-            }),
+            }) { Module = LoadModules.Texts, Always = true },
 
-            new("relations", RelateTheTexts),
-            new("lexicon", cancellationToken => LoadTheLexicon(resources, cancellationToken)),
-            new("lexicon-translations", cancellationToken => TranslateTheLexicon(resources, cancellationToken)),
-            new("lexicon-relations", cancellationToken => RelateTheLexiconsEntries(resources, cancellationToken)),
-            new("syntax", cancellationToken => LoadTheSyntax(Bhsa(), cancellationToken)),
-            new("frame", cancellationToken => PlaceInTheFrame(resources, cancellationToken)),
-            new("misprints", cancellationToken => CorrectWhatTheirFilesMisprint(resources, cancellationToken)),
-            new("psalm-openings", cancellationToken => OpenThePsalmsTheirEditionsOpenWith(resources, cancellationToken)),
-            new("ohienko-endings", cancellationToken => FinishTheVersesOhienkosFileCutShort(resources, cancellationToken)),
-            new("swete-restoration", cancellationToken => RestoreWhatSwetesTranscriptionLost(resources, cancellationToken)),
-            new("septuagint-lemmas", cancellationToken => LemmatiseTheSeptuagint(resources, cancellationToken)),
-            new("greek-glosses", cancellationToken => GlossTheGreek(resources, cancellationToken)),
-            new("geez-lexicon", cancellationToken => GlossTheGeez(resources, cancellationToken)),
-            new("morphgnt", cancellationToken => ParseTheGreekASecondTime(resources, cancellationToken)),
-            new("macula", cancellationToken => AnnotateTheGreek(resources, cancellationToken)),
-            new("old-testament-links", cancellationToken => LinkTheOldTestament(resources, cancellationToken)),
-            new("new-testament-links", cancellationToken => LinkTheNewTestament(resources, cancellationToken)),
-            new("berean", cancellationToken => LinkTheBerean(resources, cancellationToken)),
-            new("edition-marks", cancellationToken => MarkTheEditions(resources, cancellationToken)),
-            new("clearbible", cancellationToken => ReadTheHandMadeAlignments(resources, cancellationToken)),
-            new("printed-editions", cancellationToken => LinkThePrintedEditions(resources, cancellationToken)),
-            new("greek-witnesses", LinkTheGreekWitnesses),
-            new("hebrew-witnesses", LinkTheHebrewWitnesses),
-            new("septuagints", LinkTheTwoSeptuagints),
-            new("greek-editions", LinkTheGreekEditionsByTheirLetters),
-            new("searchable-forms", GiveEveryWordASearchableForm),
-            new("printed-forms", JoinTheWordsThatArePrintedTogether),
-            new("interlinear", cancellationToken => LinkFromTheInterlinear(resources, cancellationToken)),
-            new("psalm-titles", cancellationToken => CoverThePsalmTitles(resources, cancellationToken)),
-            new("recipe", cancellationToken => FollowTheRecipe(resources, cancellationToken)),
-            new("renumbered-links", cancellationToken => MatchAgainWhereTheHebrewWasNumberedAgain(resources, cancellationToken)),
-            new("rejected-renderings", WithdrawRejectedRenderings),
-            new("unlike-names", WithdrawTheNamesTheLettersNoLongerPair),
-            new("verse-links", JoinTheVerses),
-            new("evidentia-verdicts", cancellationToken => ReplayTheVerdictsOnEvidentia(resources, cancellationToken)),
-            new("supplied-words", StateWhatTheEditionsSupplied),
-            new("encyclopedia", cancellationToken => LoadTheEncyclopedia(resources, cancellationToken)),
-            new("miswritten-numbers", CorrectTheNumbersADatasetMiswrote),
-            new("gentilics", cancellationToken => ReadTheStatedKinship(resources, cancellationToken)),
-            new("peoples", cancellationToken => NameThePeoples(resources, cancellationToken)),
-            new("place-register", cancellationToken => MakeThePlacesOurs(resources, cancellationToken)),
-            new("person-register", cancellationToken => TellTheNamesakesApart(resources, cancellationToken)),
-            new("annotations", SayWhichWordNamesWhom),
-            new("own-records", cancellationToken => WriteTheRecordsNobodyElseHolds(resources, cancellationToken)),
-            new("register-rematch", cancellationToken => MatchTheRegisterToTheOwnRecords(resources, cancellationToken)),
-            new("sense-readings", cancellationToken => ReadTheNamesNothingSettles(resources, cancellationToken)),
-            new("namesake-places", cancellationToken => TellTheNamesakePlacesApart(resources, cancellationToken)),
-            new("greek-namesakes", TellTheGreekNamesakesApart),
-            new("hebrew-origin-names", NameTheGreekNamesOfHebrewOrigin),
-            new("listed-bearers", cancellationToken => NameWhatTheVerseListLeavesOneBearerFor(resources, cancellationToken)),
-            new("rendered-names", NameWhatTheEncyclopediaHoldsUnderAnotherNumber),
-            new("tribe-names", NameTheTribesTheConstructNames),
-            new("sole-bearers", ReachTheNamesNobodyElseCarries),
-            new("words-for-god", WriteTheWordsForGod),
-            new("titles", HoldTheTitlesAsTitles),
-            new("own-names", GiveTheNamesNoDatasetGives),
-            new("narratives", WriteWhatTheNarrativesTurnOn),
-            new("things", WriteTheThingsMadeAndTheTimesKept),
-            new("eponyms", NameTheAncestorsTheTribesAreNamedAfter),
-            new("realms", cancellationToken => NameThePeoplesTheRealmsAreNamedAfter(resources, cancellationToken)),
-            new("spelled-names", NameTheGreekNamesARecordSpells),
-            new("context-bearers", cancellationToken => NameTheBearerTheBookNames(resources, cancellationToken)),
-            new("fixed-titles", NameTheTitlesTheTextFixes),
-            new("title-readings", ReadWhoseTheTitleIsWhereItStands),
-            new("settled-titles", HoldTheTitlesAsTitlesAgain),
-            new("passage-readings", cancellationToken => NameWhomTheReadingsOfThePassagesFind(resources, cancellationToken)),
-            new("verse-readings", KeepTheVersesReadForTheRecordsTheySpeakOf),
-            new("eponym-readings", TellTheManFromThePeopleATribesNameStandsFor),
-            new("misplaced-annotations", TakeTheMisplacedNamesOffTheirRecords),
-            new("lexeme-names", NameTheHebrewNamesTheirLexemeNames),
-            new("own-references", CiteTheVersesOurOwnWordsName),
-            new("misfiled-verses", cancellationToken => GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, cancellationToken)),
-            new("register-rematch-verses", cancellationToken => MatchTheRegisterToTheMovedVerses(resources, cancellationToken)),
-            new("descriptors", cancellationToken => DescribeTheEntitiesInOurOwnWords(resources, cancellationToken)),
-            new("name-forms", cancellationToken => DeclineTheNamesThoseLinesName(resources, cancellationToken)),
-            new("fold-records", FoldTheRecordsWrittenTwice),
-            new("settled-names", SayAgainWhichWordNamesWhom),
-            new("own-lines", RenderOurOwnLinesInEveryLanguage),
-            new("name-glosses", cancellationToken => RenderTheTitlesAndGlossesOfNames(resources, cancellationToken)),
-            new("refiled-ties", MoveWhatWasReadOffTheMisfiledVerses),
-            new("own-relationships", RelateTheEntitiesOurOwnClausesRelate),
-            new("kin-statements", cancellationToken => CountTheChildrenTheVersesCount(resources, cancellationToken)),
-            new("crossed-names", CrossBackTheNamesGivenToEachOther),
-            new("relationship-verses", ListTheVersesTheRelationshipsWereReadFrom),
-            new("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
-            new("foreign-names", TakeBackTheNamesCarriedOntoAnothersName),
-            new("pronouns", TakeBackThePersonsAPronounDoesNotSettle),
-            new("consensus-namesakes", GiveTheConsensusNamesToTheBearerTheVerseNames),
-            new("edition-twins", NameTheSameWordInTheOtherEditions),
-            new("spellings", CountHowEachTextSpellsEachName),
-            new("lexicon-phrases", CountTheLexiconsPhrases),
-            new("locations", cancellationToken => PutThePlacesOnTheMap(resources, cancellationToken)),
-            new("commandments", CountTheCommandments),
-            new("reigns", SetTheProphetsInTheirKingsDays),
-            new("topics", cancellationToken => FileTheVersesUnderNavesTopics(resources, cancellationToken)),
-            new("cross-references", cancellationToken => SendTheVersesToOneAnother(resources, cancellationToken)),
-            new("naming-verses", TellTheVersesThatNameFromThoseThatConcern),
-            new("images", cancellationToken => PictureThePeopleAndPlaces(resources, cancellationToken)),
-            new("withdrawn-records", WithdrawTheRecordsThatAreNoName),
-            new("wikipedia", cancellationToken => LinkTheRecordsToWikipedia(resources, cancellationToken)),
-            new("known-for", SayWhatThePeopleAreKnownFor),
-            new("verify", async cancellationToken =>
+            .. In(LoadModules.Texts, new LoadStep("relations", RelateTheTexts)),
+            .. In(LoadModules.Lexicons,
+                new LoadStep("lexicon", cancellationToken => LoadTheLexicon(resources, cancellationToken)) { Files = ["Strong"] },
+                new LoadStep("lexicon-translations", cancellationToken => TranslateTheLexicon(resources, cancellationToken))
+                {
+                    Files = [new StepFile("Essenthos/lexicon", "Dataset:LexiconTranslationsPath")],
+                },
+                new LoadStep("lexicon-relations", cancellationToken => RelateTheLexiconsEntries(resources, cancellationToken))
+                {
+                    Files = ["Strong", $"BibleData2026/{Strong.CompiledHebrewStrongs.File}"],
+                }),
+            .. In(LoadModules.SyntaxFrame,
+                new LoadStep("syntax", cancellationToken => LoadTheSyntax(Bhsa(), cancellationToken)) { Files = ["etcbc"] },
+                new LoadStep("frame", cancellationToken => PlaceInTheFrame(resources, cancellationToken)) { Files = ["Versification"] }),
+            .. In(LoadModules.Texts,
+                new LoadStep("misprints", cancellationToken => CorrectWhatTheirFilesMisprint(resources, cancellationToken))
+                {
+                    Files = [.. bible4u, "Septuagint", "mapping", "STEPBible", "SynodalStrong", "Versification"],
+                },
+                new LoadStep("psalm-openings", cancellationToken => OpenThePsalmsTheirEditionsOpenWith(resources, cancellationToken))
+                {
+                    Files = bible4u,
+                },
+                new LoadStep("ohienko-endings", cancellationToken => FinishTheVersesOhienkosFileCutShort(resources, cancellationToken))
+                {
+                    Files = bible4u,
+                },
+                new LoadStep("swete-restoration", cancellationToken => RestoreWhatSwetesTranscriptionLost(resources, cancellationToken))
+                {
+                    Files = ["Swete"],
+                }),
+            .. In(LoadModules.Lexicons,
+                new LoadStep("septuagint-lemmas", cancellationToken => LemmatiseTheSeptuagint(resources, cancellationToken)) { Files = ["Glaux"] },
+                new LoadStep("greek-glosses", cancellationToken => GlossTheGreek(resources, cancellationToken)) { Files = ["STEPBibleLexicons"] },
+                new LoadStep("geez-lexicon", cancellationToken => GlossTheGeez(resources, cancellationToken)) { Files = ["Dillmann"] }),
+            .. In(LoadModules.OriginalAnnotations,
+                new LoadStep("morphgnt", cancellationToken => ParseTheGreekASecondTime(resources, cancellationToken)) { Files = ["MorphGnt"] },
+                new LoadStep("macula", cancellationToken => AnnotateTheGreek(resources, cancellationToken)) { Files = ["Macula"] }),
+            .. In(LoadModules.Links,
+                new LoadStep("old-testament-links", cancellationToken => LinkTheOldTestament(resources, cancellationToken))
+                {
+                    Files = ["mapping", "STEPBible", "OpenHebrewBible", "ChineseUnion1919"],
+                },
+                new LoadStep("new-testament-links", cancellationToken => LinkTheNewTestament(resources, cancellationToken)) { Files = ["Zefania"] },
+                new LoadStep("berean", cancellationToken => LinkTheBerean(resources, cancellationToken))
+                {
+                    Files = ["Berean", "Essenthos/link-rulings.json"],
+                },
+                new LoadStep("edition-marks", cancellationToken => MarkTheEditions(resources, cancellationToken)) { Files = ["Berean"] },
+                new LoadStep("clearbible", cancellationToken => ReadTheHandMadeAlignments(resources, cancellationToken))
+                {
+                    Files = ["ClearBible", "Essenthos/link-rulings.json"],
+                },
+                new LoadStep("printed-editions", cancellationToken => LinkThePrintedEditions(resources, cancellationToken)) { Files = ["TextusReceptus"] },
+                new LoadStep("greek-witnesses", LinkTheGreekWitnesses),
+                new LoadStep("hebrew-witnesses", LinkTheHebrewWitnesses),
+                new LoadStep("septuagints", LinkTheTwoSeptuagints),
+                new LoadStep("greek-editions", LinkTheGreekEditionsByTheirLetters)),
+            .. In(LoadModules.Texts,
+                new LoadStep("searchable-forms", GiveEveryWordASearchableForm),
+                new LoadStep("printed-forms", JoinTheWordsThatArePrintedTogether)),
+            .. In(LoadModules.Links,
+                new LoadStep("interlinear", cancellationToken => LinkFromTheInterlinear(resources, cancellationToken)) { Files = ["Door43"] }),
+            .. In(LoadModules.SyntaxFrame,
+                new LoadStep("psalm-titles", cancellationToken => CoverThePsalmTitles(resources, cancellationToken)) { Files = titled }),
+            .. In(LoadModules.Links,
+                new LoadStep("recipe", cancellationToken => FollowTheRecipe(resources, cancellationToken))
+                {
+                    Files = recipe,
+                    Children = () => Recipe.Read(resources)
+                        .Select(step => step.Verb)
+                        .Distinct(StringComparer.Ordinal)
+                        .Select(Verbs.ForgeVerbs.Find)
+                        .OfType<Verbs.ForgeVerb>()
+                        .Select(verb => (Delegate)verb.Run),
+                },
+                new LoadStep("renumbered-links", cancellationToken => MatchAgainWhereTheHebrewWasNumberedAgain(resources, cancellationToken))
+                {
+                    Files = ["SynodalStrong", "ChineseUnion1919", "ReinaValera1909", "Segond1910Strong", "DarbyFrench", "Schlachter1951", "RevisedLiteral"],
+                },
+                new LoadStep("rejected-renderings", WithdrawRejectedRenderings),
+                new LoadStep("unlike-names", WithdrawTheNamesTheLettersNoLongerPair),
+                new LoadStep("verse-links", JoinTheVerses),
+                new LoadStep("evidentia-verdicts", cancellationToken => ReplayTheVerdictsOnEvidentia(resources, cancellationToken))
+                {
+                    Files = ["Essenthos/evidentia"],
+                },
+                new LoadStep("supplied-words", StateWhatTheEditionsSupplied)),
+            .. In(LoadModules.EncyclopediaRegisters,
+                new LoadStep("encyclopedia", cancellationToken => LoadTheEncyclopedia(resources, cancellationToken))
+                {
+                    Files = ["BibleData2026", "OpenBible", "PeriodO", "Septuagint", "Swete", new StepFile("Resources/WorldHistory", Built: true)],
+                },
+                new LoadStep("miswritten-numbers", CorrectTheNumbersADatasetMiswrote),
+                new LoadStep("gentilics", cancellationToken => ReadTheStatedKinship(resources, cancellationToken)) { Files = ["Strong"] },
+                new LoadStep("peoples", cancellationToken => NameThePeoples(resources, cancellationToken)) { Files = [senseReadings] },
+                new LoadStep("place-register", cancellationToken => MakeThePlacesOurs(resources, cancellationToken))
+                {
+                    Files = [new StepFile("Essenthos/places", "Dataset:PlaceRegisterPath")],
+                },
+                new LoadStep("person-register", cancellationToken => TellTheNamesakesApart(resources, cancellationToken)) { Files = [persons] },
+                new LoadStep("annotations", SayWhichWordNamesWhom)),
+            .. In(LoadModules.Records,
+                new LoadStep("own-records", cancellationToken => WriteTheRecordsNobodyElseHolds(resources, cancellationToken)) { Files = [senseReadings] },
+                new LoadStep("register-rematch", cancellationToken => MatchTheRegisterToTheOwnRecords(resources, cancellationToken)) { Files = [persons] },
+                new LoadStep("sense-readings", cancellationToken => ReadTheNamesNothingSettles(resources, cancellationToken)) { Files = [senseReadings] },
+                new LoadStep("namesake-places", cancellationToken => TellTheNamesakePlacesApart(resources, cancellationToken))
+                {
+                    Files = [new StepFile("Essenthos/sites", "Dataset:SiteRegisterPath")],
+                },
+                new LoadStep("greek-namesakes", TellTheGreekNamesakesApart),
+                new LoadStep("hebrew-origin-names", NameTheGreekNamesOfHebrewOrigin),
+                new LoadStep("listed-bearers", cancellationToken => NameWhatTheVerseListLeavesOneBearerFor(resources, cancellationToken))
+                {
+                    Files = [senseReadings],
+                },
+                new LoadStep("rendered-names", NameWhatTheEncyclopediaHoldsUnderAnotherNumber),
+                new LoadStep("tribe-names", NameTheTribesTheConstructNames),
+                new LoadStep("sole-bearers", ReachTheNamesNobodyElseCarries),
+                new LoadStep("words-for-god", WriteTheWordsForGod),
+                new LoadStep("titles", HoldTheTitlesAsTitles),
+                new LoadStep("own-names", GiveTheNamesNoDatasetGives),
+                new LoadStep("narratives", WriteWhatTheNarrativesTurnOn),
+                new LoadStep("things", WriteTheThingsMadeAndTheTimesKept),
+                new LoadStep("eponyms", NameTheAncestorsTheTribesAreNamedAfter),
+                new LoadStep("realms", cancellationToken => NameThePeoplesTheRealmsAreNamedAfter(resources, cancellationToken)),
+                new LoadStep("spelled-names", NameTheGreekNamesARecordSpells),
+                new LoadStep("context-bearers", cancellationToken => NameTheBearerTheBookNames(resources, cancellationToken)) { Files = [senseReadings] },
+                new LoadStep("fixed-titles", NameTheTitlesTheTextFixes),
+                new LoadStep("title-readings", ReadWhoseTheTitleIsWhereItStands),
+                new LoadStep("settled-titles", HoldTheTitlesAsTitlesAgain),
+                new LoadStep("passage-readings", cancellationToken => NameWhomTheReadingsOfThePassagesFind(resources, cancellationToken))
+                {
+                    Files = [new StepFile("Essenthos/references", "Dataset:PassageReadingsPath")],
+                },
+                new LoadStep("verse-readings", KeepTheVersesReadForTheRecordsTheySpeakOf),
+                new LoadStep("eponym-readings", TellTheManFromThePeopleATribesNameStandsFor),
+                new LoadStep("misplaced-annotations", TakeTheMisplacedNamesOffTheirRecords),
+                new LoadStep("lexeme-names", NameTheHebrewNamesTheirLexemeNames),
+                new LoadStep("own-references", CiteTheVersesOurOwnWordsName),
+                new LoadStep("misfiled-verses", cancellationToken => GiveThePeoplesTheVersesFiledUnderTheirAncestors(resources, cancellationToken))
+                {
+                    Files = ["BibleData2026/BibleData-PersonRelationship.csv", $"Essenthos/review/{MisfiledVerseLoader.ReviewFile}"],
+                },
+                new LoadStep("register-rematch-verses", cancellationToken => MatchTheRegisterToTheMovedVerses(resources, cancellationToken))
+                {
+                    Files = [persons],
+                },
+                new LoadStep("descriptors", cancellationToken => DescribeTheEntitiesInOurOwnWords(resources, cancellationToken))
+                {
+                    Files = [new StepFile("Essenthos/descriptors", "Dataset:DescriptorsPath")],
+                },
+                new LoadStep("name-forms", cancellationToken => DeclineTheNamesThoseLinesName(resources, cancellationToken))
+                {
+                    Files = [new StepFile("Essenthos/name-forms", "Dataset:NameFormsPath")],
+                },
+                new LoadStep("fold-records", FoldTheRecordsWrittenTwice)),
+            .. In(LoadModules.Names, new LoadStep("settled-names", SayAgainWhichWordNamesWhom)),
+            .. In(LoadModules.Records,
+                new LoadStep("own-lines", RenderOurOwnLinesInEveryLanguage),
+                new LoadStep("name-glosses", cancellationToken => RenderTheTitlesAndGlossesOfNames(resources, cancellationToken))
+                {
+                    Files = ["Essenthos/name-glosses"],
+                },
+                new LoadStep("refiled-ties", MoveWhatWasReadOffTheMisfiledVerses),
+                new LoadStep("own-relationships", RelateTheEntitiesOurOwnClausesRelate),
+                new LoadStep("kin-statements", cancellationToken => CountTheChildrenTheVersesCount(resources, cancellationToken)) { Files = ["Essenthos/kin"] }),
+            .. In(LoadModules.Names, new LoadStep("crossed-names", CrossBackTheNamesGivenToEachOther)),
+            .. In(LoadModules.Records, new LoadStep("relationship-verses", ListTheVersesTheRelationshipsWereReadFrom)),
+            .. In(LoadModules.Names,
+                new LoadStep("name-consensus", cancellationToken => NameWhatTheVersesShare(resources, cancellationToken)),
+                new LoadStep("foreign-names", TakeBackTheNamesCarriedOntoAnothersName),
+                new LoadStep("pronouns", TakeBackThePersonsAPronounDoesNotSettle),
+                new LoadStep("consensus-namesakes", GiveTheConsensusNamesToTheBearerTheVerseNames),
+                new LoadStep("edition-twins", NameTheSameWordInTheOtherEditions),
+                new LoadStep("spellings", CountHowEachTextSpellsEachName)),
+            .. In(LoadModules.Derived,
+                new LoadStep("lexicon-phrases", CountTheLexiconsPhrases),
+                new LoadStep("locations", cancellationToken => PutThePlacesOnTheMap(resources, cancellationToken)) { Files = ["OpenBible"] },
+                new LoadStep("commandments", CountTheCommandments) { Files = [new StepFile("Resources/Maimonides", Built: true)] },
+                new LoadStep("reigns", SetTheProphetsInTheirKingsDays),
+                new LoadStep("topics", cancellationToken => FileTheVersesUnderNavesTopics(resources, cancellationToken))
+                {
+                    Files = ["BibleData2026/NavesTopicalDictionary.csv"],
+                },
+                new LoadStep("cross-references", cancellationToken => SendTheVersesToOneAnother(resources, cancellationToken))
+                {
+                    Files = ["OpenBibleCrossReferences", "TreasuryOfScriptureKnowledge"],
+                },
+                new LoadStep("naming-verses", TellTheVersesThatNameFromThoseThatConcern),
+                new LoadStep("images", cancellationToken => PictureThePeopleAndPlaces(resources, cancellationToken))
+                {
+                    Files = ["Images", "OpenBible", $"Essenthos/{ImageChoices.FileName}"],
+                }),
+            .. In(LoadModules.Records, new LoadStep("withdrawn-records", WithdrawTheRecordsThatAreNoName)),
+            .. In(LoadModules.Derived,
+                new LoadStep("wikipedia", cancellationToken => LinkTheRecordsToWikipedia(resources, cancellationToken))
+                {
+                    Files = ["Wikidata", "OpenBible", "Essenthos/review/wikipedia-matches.json"],
+                }),
+            .. In(LoadModules.Records, new LoadStep("known-for", SayWhatThePeopleAreKnownFor)),
+            .. In(LoadModules.Verify, new LoadStep("verify", async cancellationToken =>
             {
                 // The index answers from what it read the first time it was asked, and until now that
                 // was an empty database.
                 canon.Forget();
 
-                // Measured after every load and not only after a change, because the corpus is written
-                // by several loaders and the question is what they produced together.
+                // Measured after every load that changed what it measures, because the corpus is
+                // written by several loaders and the question is what they produced together.
                 status.Starting("the verification pass");
                 await Verify(cancellationToken);
-            }),
+            }) { Logs = ["verification_run"] }),
         ];
     }
 
@@ -2691,5 +2912,8 @@ internal sealed class DatasetLoader(
     }
 }
 
-/// <summary>One step of the load, under the name <c>load --from</c> resumes at.</summary>
-internal sealed record LoadStep(string Name, Func<CancellationToken, Task> Run);
+/// <summary>What a load is asked to do.</summary>
+/// <param name="From">The step to start at; null or empty for the first.</param>
+/// <param name="Only">The steps and modules to run, and then verify; null or empty for every step.</param>
+/// <param name="Everything">Run every step considered, whatever its mark says.</param>
+internal sealed record LoadRequest(string? From = null, IReadOnlyList<string>? Only = null, bool Everything = false);
