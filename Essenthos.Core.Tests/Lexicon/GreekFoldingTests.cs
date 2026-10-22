@@ -16,9 +16,12 @@ namespace Essenthos.Core.Tests.Lexicon;
 public class GreekFoldingTests
 {
     /// <summary>
-    /// Every letter of the Greek and Greek Extended blocks folds into the twenty-four, or is
-    /// dropped as a mark. This is the property the old table could not hold: it covered the
-    /// letters that were loaded, and a new text brought fourteen it had never seen.
+    /// Every letter of the Greek block's alphabet (U+0386 to U+03CE) and of Greek Extended, with
+    /// whatever accent, breathing or subscript it carries, folds into the twenty-four. This is the
+    /// property the old table could not hold: it covered the letters that were loaded, and a new text
+    /// brought fourteen it had never seen. What may pass through unchanged is only what lies outside
+    /// those: the archaic letters (heta, digamma, koppa, sampi) and the symbol forms, which no
+    /// edition here writes.
     /// </summary>
     [Fact]
     public void FoldsEveryGreekLetterToTheAlphabet()
@@ -34,17 +37,14 @@ public class GreekFoldingTests
             }
 
             var folded = GreekLetters.Fold(c);
-            if (folded != ' ' && !alphabet.Contains(folded) && char.IsLetter(folded))
+            var polytonic = c is (>= 'Ά' and <= 'ώ') or >= 'ἀ';
+            if (folded != ' ' && !alphabet.Contains(folded) && char.IsLetter(folded) && (polytonic || folded != c))
             {
                 unfolded.Add($"U+{(int)c:X4} {c} -> {folded}");
             }
         }
 
-        // Not zero: the block holds archaic letters no edition here uses — digamma, koppa, sampi —
-        // and passing those through unchanged is right. What must not appear is an accented form.
-        unfolded.Should().OnlyContain(
-            line => !line.Contains('́') && !line.Contains('̀'),
-            "an accented letter left unfolded is a search that silently misses");
+        unfolded.Should().BeEmpty("a letter of the alphabet left unfolded is a search that silently misses");
     }
 
     [Theory]

@@ -30,7 +30,7 @@ public sealed class DescriptorCountTests
         DescriptorPhrasings.Counted(language, [(Kin.Brother, 10), (Kin.Sister, 1)]).Should().Be(said);
 
     [Theory]
-    [InlineData("eng", "seventy sons", 70)]
+    [InlineData("eng", "70 sons", 70)]
     [InlineData("eng", "five sons", 5)]
     [InlineData("ukr", "п’яти синів", 5)]
     [InlineData("ukr", "21 сина", 21)]
@@ -38,11 +38,8 @@ public sealed class DescriptorCountTests
     [InlineData("ukr", "111 синів", 111)]
     [InlineData("deu", "von 28 Söhnen", 28)]
     [InlineData("spa", "veinte hijos", 20)]
-    public void ACountAgreesWithItsNumber(string language, string said, int count)
-    {
-        var expected = language == "eng" && count == 70 ? "70 sons" : said;
-        DescriptorPhrasings.Counted(language, [(Kin.Son, count), (Kin.Daughter, 0)]).Should().Be(expected);
-    }
+    public void ACountAgreesWithItsNumber(string language, string said, int count) =>
+        DescriptorPhrasings.Counted(language, [(Kin.Son, count), (Kin.Daughter, 0)]).Should().Be(said);
 
     [Theory]
     [InlineData("eng", "five children")]

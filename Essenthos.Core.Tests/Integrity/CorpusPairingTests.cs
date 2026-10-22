@@ -105,14 +105,20 @@ public sealed class CorpusPairingTests : IDisposable
     /// <summary>
     /// A verse whose links average exactly the threshold is not below it, whatever order they are read
     /// in: added as floating point, 0.7 + 0.6 + 0.2 is 1.4999999999999998, and the same three links
-    /// read in another order are 1.5.
+    /// read in another order are 1.5. Each order is written in the order the links are read.
     /// </summary>
-    [Fact]
-    public async Task AVerseAtTheThresholdIsNotSuspectInAnyOrder()
+    [Theory]
+    [InlineData(0.7, 0.6, 0.2)]
+    [InlineData(0.7, 0.2, 0.6)]
+    [InlineData(0.6, 0.7, 0.2)]
+    [InlineData(0.6, 0.2, 0.7)]
+    [InlineData(0.2, 0.7, 0.6)]
+    [InlineData(0.2, 0.6, 0.7)]
+    public async Task AVerseAtTheThresholdIsNotSuspectInAnyOrder(double first, double second, double third)
     {
-        Aligned(verse: 1, position: 1, confidence: 0.7);
-        Aligned(verse: 1, position: 2, confidence: 0.6);
-        Aligned(verse: 1, position: 3, confidence: 0.2);
+        Aligned(verse: 1, position: 1, confidence: first);
+        Aligned(verse: 1, position: 2, confidence: second);
+        Aligned(verse: 1, position: 3, confidence: third);
 
         var pairing = (await _check.Measure()).Pairing.Single();
 

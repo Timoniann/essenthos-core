@@ -408,7 +408,7 @@ public class SweteFigureTests(Swete swete) : IClassFixture<Swete>
     private const string Figures = "0123456789⁰¹²³⁴⁵⁶⁷⁸⁹";
 
     /// <summary>
-    /// Of the 699 words a Swete loaded before this held with a figure in them, eight are left: a
+    /// Of the 699 words a Swete loaded before this held with a figure in them, seven are left: a
     /// word whose letters the figure took where nothing beside it shows which, or one with a Latin
     /// letter in it besides.
     /// </summary>

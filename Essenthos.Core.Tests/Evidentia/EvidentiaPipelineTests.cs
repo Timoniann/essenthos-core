@@ -179,7 +179,7 @@ public class EvidentiaPipelineTests
     public void AnUnsupportedLanguageRequestsAFallbackWithoutInventingCandidates()
     {
         var preview = Pipeline().Preview(new EvidentiaRequest(
-            [Token(1, "Glaube", "deu", verse: 2)],
+            [Token(1, "foi", "fra", verse: 2)],
             [Token(11, "faith", "eng", verse: 2)]));
 
         preview.Status.Should().Be(EvidentiaPreviewStatus.UnsupportedLanguage);
@@ -192,11 +192,11 @@ public class EvidentiaPipelineTests
     public void AnUnsupportedLanguageDoesNotMatchItselfBySpelling()
     {
         var preview = Pipeline().Preview(new EvidentiaRequest(
-            [Token(1, "und", "deu", verse: 2)],
-            [Token(11, "und", "deu", verse: 2)]));
+            [Token(1, "et", "fra", verse: 2)],
+            [Token(11, "et", "fra", verse: 2)]));
 
         preview.Candidates.Should().BeEmpty(
-            "nobody has written a German pack, so nothing knows whether this is a particle");
+            "nobody has written a French pack, so nothing knows whether this is a particle");
         preview.Status.Should().Be(EvidentiaPreviewStatus.UnsupportedLanguage);
         preview.NeedsStatisticalFallback.Should().BeTrue();
     }
@@ -286,8 +286,13 @@ public class EvidentiaPipelineTests
             evidence.Kind == EvidentiaEvidenceKind.TargetGloss);
     }
 
+    /// <summary>The pipeline with every language pack the Forge registers.</summary>
     private static EvidentiaPipeline Pipeline(params IEvidentiaEvidenceSource[] sources) => new(
-        new LanguagePackRegistry([new EnglishLanguagePack(), new UkrainianLanguagePack(), new RussianLanguagePack(), new OriginalLanguagePack()]),
+        new LanguagePackRegistry(
+        [
+            new EnglishLanguagePack(), new UkrainianLanguagePack(), new RussianLanguagePack(), new GermanLanguagePack(),
+            new SpanishLanguagePack(), new OriginalLanguagePack(),
+        ]),
         sources);
 
     private static EvidentiaToken Token(long id, string text, string language, int verse, string? strong = null) =>

@@ -67,11 +67,22 @@ public sealed class EvidentiaBookOrderTests
     public async Task ASlowFirstBookHoldsTheWorkersAFixedDistanceAhead()
     {
         var first = new TaskCompletionSource();
+        var eightStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var started = 0;
+        var startedWhileHeld = new System.Collections.Concurrent.ConcurrentBag<int>();
         var running = EvidentiaBookOrder.Run(40, 4,
             async (_, book, _) =>
             {
-                Interlocked.Increment(ref started);
+                if (!first.Task.IsCompleted)
+                {
+                    startedWhileHeld.Add(book);
+                }
+
+                if (Interlocked.Increment(ref started) == 8)
+                {
+                    eightStarted.SetResult();
+                }
+
                 if (book == 0)
                 {
                     await first.Task;
@@ -81,12 +92,14 @@ public sealed class EvidentiaBookOrderTests
             },
             (_, _, _) => Task.CompletedTask);
 
-        await Task.Delay(300);
-        var whileHeld = Volatile.Read(ref started);
+        await eightStarted.Task.WaitAsync(TimeSpan.FromSeconds(30));
+
+        // Time for a ninth book to start if the workers ran further ahead than they may.
+        await Task.Delay(100);
         first.SetResult();
         await running;
 
-        whileHeld.Should().Be(8, "four workers run two books each ahead of the writer and no further");
+        startedWhileHeld.Should().BeEquivalentTo(Enumerable.Range(0, 8), "four workers run two books each ahead of the writer and no further");
         started.Should().Be(40);
     }
 

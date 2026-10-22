@@ -1081,10 +1081,10 @@ public sealed class DuplicateRecordTests : IDisposable
     [Fact]
     public void SolomonsAzariahSonOfZadokIsParted()
     {
-        var split = DuplicateRecordLoader.Read().Splits!.Single(s => s.From == "azariah" && s.To == "azariah-son-of-zadok");
+        var splits = DuplicateRecordLoader.Read().Splits!;
 
-        split.To.Should().Be("azariah-son-of-zadok");
-        split.Verses.Should().Equal("1KI 4:2");
+        splits.Single(s => s.From == "azariah" && s.Verses.Contains("1KI 4:2")).To.Should().Be("azariah-son-of-zadok");
+        splits.Where(s => s.To == "azariah-son-of-zadok").SelectMany(s => s.Verses).Should().Equal("1KI 4:2");
     }
 
     /// <summary>

@@ -1,4 +1,6 @@
 using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -295,18 +297,37 @@ public sealed class OwnNameLoadTests : IDisposable
             .Should().Equal("Johanan");
     }
 
-    /// <summary>The list ships inside the loader, so a build that dropped it would load nothing silently.</summary>
+    /// <summary>
+    /// The list ships inside the loader, so a build that dropped it, or a field the loader no longer
+    /// reads under the name the file gives it, would correct nothing and say nothing. Everything the
+    /// file says is what the loader reads: written back, it is the file.
+    /// </summary>
     [Fact]
-    public async Task TheEmbeddedListIsRead()
+    public async Task TheEmbeddedListIsReadWhole()
     {
         await using var stream = typeof(OwnNameLoader).Assembly
             .GetManifestResourceStream("Essenthos.Core.Loading.Encyclopedia.OwnNames.json");
         stream.Should().NotBeNull();
-        using var list = await JsonDocument.ParseAsync(stream!);
-        list.RootElement.GetProperty("numbers").GetArrayLength().Should().BeGreaterThan(0);
+        var file = WithoutNulls(await JsonNode.ParseAsync(stream!));
+        file!["numbers"]!.AsArray().Should().NotBeEmpty();
 
-        var outcome = await new OwnNameLoader(_db, NullLogger<OwnNameLoader>.Instance).Load();
+        var read = JsonSerializer.SerializeToNode(OwnNameLoader.Read(), new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+        });
 
-        outcome.Missing.Should().Be(0, "no name is given to a record the scratch database lacks");
+        JsonNode.DeepEquals(read, file).Should().BeTrue(
+            "the loader read {0}, from {1}", read!.ToJsonString(), file.ToJsonString());
     }
+
+    /// <summary>A field written null says what a field left out says.</summary>
+    private static JsonNode? WithoutNulls(JsonNode? node) => node switch
+    {
+        JsonObject fields => new JsonObject(fields
+            .Where(field => field.Value is not null)
+            .Select(field => KeyValuePair.Create(field.Key, WithoutNulls(field.Value)))),
+        JsonArray items => new JsonArray([.. items.Select(WithoutNulls)]),
+        _ => node?.DeepClone(),
+    };
 }
