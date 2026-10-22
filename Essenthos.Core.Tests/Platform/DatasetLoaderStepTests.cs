@@ -120,18 +120,51 @@ public sealed class DatasetLoaderStepTests : IDisposable
     [Fact]
     public async Task AStepThatIsNotThereIsRefusedBeforeAnythingRuns()
     {
-        (await Loader().Run("no-such-step", CancellationToken.None)).Should().BeFalse();
+        (await Loader().Run(new LoadRequest(From: "no-such-step"), CancellationToken.None)).Should().BeFalse();
 
         _status.State.Should().Be(DatasetState.Waiting);
     }
 
     [Fact]
-    public async Task AFailedStepIsNamedAndTheStepsBeforeTheOneNamedAreNotRun()
+    public async Task AStepOrModuleOnlyIsToRunThatIsNotThereIsRefusedBeforeAnythingRuns()
     {
-        (await Loader().Run("Relations", CancellationToken.None)).Should().BeFalse();
+        (await Loader().Run(new LoadRequest(Only: ["texts", "no-such-step"]), CancellationToken.None)).Should().BeFalse();
 
-        _status.State.Should().Be(DatasetState.Failed);
-        _status.Detail.Should().StartWith("relations: ");
-        _status.Texts.Should().BeEmpty();
+        _status.State.Should().Be(DatasetState.Waiting);
+    }
+
+    /// <summary>
+    /// Every step belongs to one of the modules <c>load --only</c> names, and a module's name is never a
+    /// step's, so a name means one thing; the one exception is verify, which is both and the same step.
+    /// </summary>
+    [Fact]
+    public void EveryStepIsInAModuleAndNoModuleIsNamedLikeAnotherStep()
+    {
+        var steps = Loader().StepList();
+
+        steps.Should().OnlyContain(step => LoadModules.All.Contains(step.Module));
+        LoadModules.All.Should().OnlyContain(module => steps.All(step => step.Name != module)
+                                                       || steps.Where(step => step.Module == module).Select(step => step.Name).SequenceEqual(new[] { module }));
+        LoadModules.All.Should().OnlyContain(module => steps.Any(step => step.Module == module));
+    }
+
+    /// <summary>The recipe alone runs Forge processes of its own, and their code is the verbs its file records.</summary>
+    [Fact]
+    public void OnlyTheRecipeRunsProcessesOfItsOwn() =>
+        Loader().StepList().Where(step => step.Children is not null).Select(step => step.Name).Should().Equal("recipe");
+
+    [Fact]
+    public void TheRequestReadsFromOnlyAndNoSkipInEitherForm()
+    {
+        var request = Essenthos.Core.Verbs.ForgeVerbs.LoadRequestOf(["load", "--from=frame", "--only", "texts,links", "--no-skip=true"]);
+
+        request.From.Should().Be("frame");
+        request.Only.Should().Equal("texts", "links");
+        request.Everything.Should().BeTrue();
+
+        var empty = Essenthos.Core.Verbs.ForgeVerbs.LoadRequestOf(["load", "--from=", "--only=", "--no-skip=false"]);
+        empty.From.Should().BeEmpty();
+        empty.Only.Should().BeEmpty();
+        empty.Everything.Should().BeFalse();
     }
 }

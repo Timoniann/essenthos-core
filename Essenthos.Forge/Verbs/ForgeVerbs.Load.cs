@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
@@ -15,9 +15,11 @@ internal static partial class ForgeVerbs
     /// <summary>
     /// The load, which the API used to run in the background while it served. It is a command here
     /// because that is what it always was: hours of parsing that ends, against a database nobody is
-    /// reading yet. Each source checks whether it is already there and does nothing if it is, so running
-    /// it twice is how a new witness is added. <c>--from &lt;step&gt;</c> starts at a step, the one a
-    /// failed load names; <c>--steps</c> lists them.
+    /// reading yet. Each step is skipped when nothing it reads has moved since it last ran to the end
+    /// (<see cref="Loading.Marks.LoadMarks"/>). <c>--from &lt;step&gt;</c> starts at a step, the one a
+    /// failed load names; <c>--only &lt;step|module,...&gt;</c> runs only those, then verify;
+    /// <c>--no-skip</c> runs every step considered whatever its mark says; <c>--steps</c> lists the steps
+    /// with their modules.
     /// </summary>
     private static async Task<int> Load(ForgeRun forge, string[] args)
     {
@@ -25,19 +27,52 @@ internal static partial class ForgeVerbs
         var loader = loadScope.ServiceProvider.GetRequiredService<DatasetLoader>();
         if (args.Contains("--steps"))
         {
-            Console.WriteLine(string.Join('\n', loader.StepNames()));
+            Console.WriteLine(string.Join('\n', loader.StepList().Select(step => $"{step.Name}\t{step.Module}")));
             return 0;
         }
 
-        var loaded = await loader.Run(LoadFrom(args), CancellationToken.None);
+        var loaded = await loader.Run(LoadRequestOf(args), CancellationToken.None);
         await forge.Tidy();
         return loaded ? 0 : 1;
     }
 
-    /// <summary><c>--from &lt;step&gt;</c> or <c>--from=&lt;step&gt;</c>; an empty one is the first step, so an action can always pass it.</summary>
-    private static string? LoadFrom(string[] args) =>
-        args.FirstOrDefault(argument => argument.StartsWith("--from=", StringComparison.Ordinal))?["--from=".Length..]
-        ?? Option(args, "--from");
+    /// <summary>
+    /// <c>--from</c>, <c>--only</c> and <c>--no-skip</c>, each also as <c>--name=value</c>; an empty value is
+    /// the same as none, so an action can always pass all three.
+    /// </summary>
+    internal static LoadRequest LoadRequestOf(string[] args) =>
+        new(
+            Named(args, "--from"),
+            Named(args, "--only")?.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries),
+            args.Contains("--no-skip") || Named(args, "--no-skip") is { } force && bool.TryParse(force, out var yes) && yes);
+
+    private static string? Named(string[] args, string name) =>
+        args.FirstOrDefault(argument => argument.StartsWith(name + "=", StringComparison.Ordinal))?[(name.Length + 1)..]
+        ?? (Array.IndexOf(args, name) is var at and >= 0 && at + 1 < args.Length && !args[at + 1].StartsWith("--", StringComparison.Ordinal)
+            ? args[at + 1]
+            : null);
+
+    /// <summary>
+    /// <c>rebuild &lt;database&gt; --compare &lt;reference&gt; --resources &lt;folder&gt;</c>: see
+    /// <see cref="Loading.Marks.Rebuild"/>. The Resources folder is asked for, not defaulted, because the
+    /// load writes review lists into the one it is given.
+    /// </summary>
+    private static async Task<int> RebuildVerb(ForgeRun forge, string[] args)
+    {
+        var reference = Named(args, "--compare");
+        var resources = Named(args, "--resources");
+        if (reference is not { Length: > 0 } || resources is not { Length: > 0 } || args[1].StartsWith("--", StringComparison.Ordinal))
+        {
+            forge.Logger.LogError("forge rebuild <database> --compare <reference> --resources <folder>");
+            return 1;
+        }
+
+        using var scope = forge.Scope();
+        var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
+        var sessions = int.TryParse(configuration["Loading:FingerprintSessions"], out var configured) && configured > 0 ? configured : 6;
+        return await Loading.Marks.Rebuild.Run(
+            forge.DatabaseConnection, args[1], reference, Path.GetFullPath(resources), sessions, forge.Logger, CancellationToken.None);
+    }
 
     private static async Task<int> LexiconTranslations(ForgeRun forge, string[] args)
     {

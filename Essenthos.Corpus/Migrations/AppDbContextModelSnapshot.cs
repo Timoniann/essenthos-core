@@ -2753,6 +2753,44 @@ namespace Essenthos.Core.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.LoadStepMark", b =>
+                {
+                    b.Property<string>("Step")
+                        .HasColumnType("text")
+                        .HasColumnName("step");
+
+                    b.Property<DateTimeOffset>("At")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("at");
+
+                    b.Property<string>("InputDigest")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("input_digest");
+
+                    b.Property<string>("Inputs")
+                        .IsRequired()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("inputs");
+
+                    b.Property<string>("OutputDigest")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("output_digest");
+
+                    b.PrimitiveCollection<string[]>("Reads")
+                        .HasColumnType("text[]")
+                        .HasColumnName("reads");
+
+                    b.HasKey("Step")
+                        .HasName("pk_load_step_mark");
+
+                    b.ToTable("load_step_mark", null, t =>
+                        {
+                            t.HasComment("What each step of the load last ran on: digests of its code, files and the tables it read, and of the tables it left. A step whose inputs digest the same is skipped. Derived; deleting a row only costs running that step once more.");
+                        });
+                });
+
             modelBuilder.Entity("Essenthos.Core.Database.Entities.MergedRecord", b =>
                 {
                     b.Property<int>("Id")
@@ -4389,6 +4427,77 @@ namespace Essenthos.Core.Migrations
                             t.HasCheckConstraint("ck_strong_rendering_rank", "rank > 0");
 
                             t.HasCheckConstraint("ck_strong_rendering_uses", "uses > 0");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.TableFingerprint", b =>
+                {
+                    b.Property<string>("TableName")
+                        .HasColumnType("text")
+                        .HasColumnName("table_name");
+
+                    b.Property<DateTimeOffset>("At")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("at");
+
+                    b.Property<string>("Columns")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("columns");
+
+                    b.Property<long>("FileNode")
+                        .HasColumnType("bigint")
+                        .HasColumnName("file_node");
+
+                    b.Property<string>("Fingerprint")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("fingerprint");
+
+                    b.Property<long>("Rows")
+                        .HasColumnType("bigint")
+                        .HasColumnName("rows");
+
+                    b.Property<long>("Writes")
+                        .HasColumnType("bigint")
+                        .HasColumnName("writes");
+
+                    b.HasKey("TableName")
+                        .HasName("pk_table_fingerprint");
+
+                    b.ToTable("table_fingerprint", null, t =>
+                        {
+                            t.HasComment("Each table's rows summed (count and a 64-bit hash of every row), with the table's file, its columns and the count of transactions that had written it, so the sum is taken again only after a write. Derived; deleting a row only costs taking that sum again.");
+                        });
+                });
+
+            modelBuilder.Entity("Essenthos.Core.Database.Entities.TableWrite", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("TableName")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("table_name");
+
+                    b.Property<long>("Weight")
+                        .HasColumnType("bigint")
+                        .HasColumnName("weight");
+
+                    b.HasKey("Id")
+                        .HasName("pk_table_write");
+
+                    b.HasIndex("TableName")
+                        .HasDatabaseName("ix_table_write_table_name");
+
+                    b.ToTable("table_write", null, t =>
+                        {
+                            t.HasComment("One row per table per transaction that wrote it, added by the statement trigger note_table_write in the same transaction; folded per table by the load, the weights summed.");
                         });
                 });
 

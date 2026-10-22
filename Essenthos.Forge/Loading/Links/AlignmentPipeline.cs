@@ -279,6 +279,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
                 return alignmentFile;
             }
 
+            RefuseToTrain(workspace);
             logger.LogWarning(
                 "The alignment in {Workspace} was made from other verses than {From} and {To} share now; training again",
                 workspace, fromSlug, toSlug);
@@ -289,6 +290,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             }
         }
 
+        RefuseToTrain(workspace);
         Directory.CreateDirectory(workspace);
         foreach (var (path, lines) in inputs)
         {
@@ -387,6 +389,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             return alignmentFile;
         }
 
+        RefuseToTrain(workspace);
         Directory.CreateDirectory(workspace);
         foreach (var (path, lines) in inputs)
         {
@@ -441,6 +444,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             return (modelPrefix, File.ReadAllText(stampFile).Trim());
         }
 
+        RefuseToTrain(workspace);
         if (Directory.Exists(workspace))
         {
             Directory.Delete(workspace, recursive: true);
@@ -1299,8 +1303,13 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         await transaction.CommitAsync(cancellationToken);
     }
 
+    /// <summary>Before anything in a workspace is cleared or the aligner is run (<see cref="ModelRuns"/>).</summary>
+    private static void RefuseToTrain(string workspace) =>
+        ModelRuns.Refuse($"The alignment in {workspace} was made from other words than the corpus holds now, or there is none");
+
     private static async Task Machine(string[] arguments, CancellationToken cancellationToken)
     {
+        ModelRuns.Refuse($"`machine {string.Join(' ', arguments)}` would run the aligner");
         var start = new ProcessStartInfo("machine") { RedirectStandardOutput = true, RedirectStandardError = true };
         foreach (var argument in arguments)
         {
