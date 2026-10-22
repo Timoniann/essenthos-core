@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -214,22 +213,54 @@ internal static class EntityNames
     /// </remarks>
     public static IQueryable<Entity> Matching(AppDbContext db, IQueryable<Entity> entities, string q)
     {
-        IQueryable<Entity>? matching = null;
-        foreach (var typed in Typed(q))
-        {
-            var holding = entities.Where(Holding(db, typed, titles: true));
-            matching = matching is null ? holding : matching.Union(holding);
-        }
-
         var familiar = Familiar(q);
-        if (familiar.Count > 0)
+        var ids = Typed(q)
+            .Select(typed => Named(db, typed, titles: true))
+            .Aggregate((all, one) => all.Concat(one))
+            .Concat(db.Entities.Where(e => familiar.Contains(e.Slug)).Select(e => e.Id));
+
+        return entities.Where(e => ids.Contains(e.Id));
+    }
+
+    /// <summary>
+    /// What a search by name found, read once: the entities <see cref="Matching"/> finds, and which of
+    /// them are called exactly what was typed and which carry it in a name rather than only in a title,
+    /// for <see cref="Banded"/> to order by without looking for the names again. Where nothing is
+    /// called that, the near spellings <see cref="Near"/> finds, marked as such.
+    /// </summary>
+    public static async Task<NameMatches> Find(
+        AppDbContext db, IQueryable<Entity> entities, string q, CancellationToken cancellationToken)
+    {
+        var familiar = Familiar(q);
+        var hits = Typed(q)
+            .Select(one => Tagged(Named(db, one, titles: false), NameHit.Named)
+                .Concat(Tagged(Titled(db, one), NameHit.Titled))
+                .Concat(Tagged(CalledExactly(db, one), NameHit.Called)))
+            .Aggregate((all, one) => all.Concat(one))
+            .Concat(Tagged(db.Entities.Where(e => familiar.Contains(e.Slug)).Select(e => e.Id), NameHit.Familiar));
+
+        var found = await hits
+            .Where(hit => entities.Any(e => e.Id == hit.Id))
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
+        var ids = found.Where(hit => hit.How != NameHit.Called).Select(hit => hit.Id).Distinct().ToList();
+        if (ids.Count == 0)
         {
-            var named = entities.Where(e => familiar.Contains(e.Slug));
-            matching = matching is null ? named : matching.Union(named);
+            var near = await Near(db, entities, q, cancellationToken);
+            return new NameMatches(q, near, [], [], near.Count > 0);
         }
 
-        return matching ?? entities.Where(_ => false);
+        return new NameMatches(
+            q,
+            ids,
+            [.. found.Where(hit => hit.How is NameHit.Called or NameHit.Familiar).Select(hit => hit.Id).Distinct()],
+            [.. found.Where(hit => hit.How == NameHit.Named).Select(hit => hit.Id).Distinct()],
+            false);
     }
+
+    private static IQueryable<NameHit> Tagged(IQueryable<int> ids, int how) =>
+        ids.Select(id => new NameHit { Id = id, How = how });
 
     /// <summary>
     /// The entities a name of which is spelled near what was typed, for a search that found none by
@@ -317,27 +348,50 @@ internal static class EntityNames
     public static bool IsTitle(string? kind) => kind is not null && TitleKinds.Contains(kind);
 
     /// <summary>
-    /// Whether a word of some name of the entity opens with what was typed — and, with
-    /// <paramref name="titles"/>, a word of a title of it too. A spelling a text prints is compared
+    /// The entities a word of some name of which opens with what was typed — and, with
+    /// <paramref name="titles"/>, a word of a title of them too. A spelling a text prints is compared
     /// folded, so the points and accents nobody types do not stand in the way.
     /// </summary>
-    private static Expression<Func<Entity, bool>> Holding(AppDbContext db, string q, bool titles)
+    /// <remarks>
+    /// A set of ids read table by table, which the database finds through its trigram indexes and
+    /// hashes, rather than a test of every entity's names one entity at a time: the second reads
+    /// every printed spelling of the corpus for each of five thousand entities, a quarter of a
+    /// second on every search Go To asks as the reader types.
+    /// </remarks>
+    private static IQueryable<int> Named(AppDbContext db, string typed, bool titles)
     {
-        var start = WordStart(q);
-        var folded = NameFolding.Fold(q);
+        var start = WordStart(typed);
+        var folded = NameFolding.Fold(typed);
         var opening = LikePatterns.StartingWith(folded);
         var inside = LikePatterns.Containing(folded);
-        var anyFolded = folded.Length > 0;
 
-        return e =>
-            Regex.IsMatch(e.Name, start, RegexOptions.IgnoreCase)
-            || Regex.IsMatch(e.Slug, start, RegexOptions.IgnoreCase)
-            || e.Names.Any(n => (titles || n.Kind == null || !TitleKinds.Contains(n.Kind))
-                                && Regex.IsMatch(n.Label, start, RegexOptions.IgnoreCase))
-            || db.EntityNameForms.Any(f => f.EntityId == e.Id && Regex.IsMatch(f.Form, start, RegexOptions.IgnoreCase))
-            || (anyFolded && db.EntityRenderings.Any(r => r.EntityId == e.Id
-                && (EF.Functions.Like(r.Folded, opening)
-                    || (EF.Functions.Like(r.Folded, inside) && Regex.IsMatch(r.Form, start, RegexOptions.IgnoreCase)))));
+        return db.Entities
+            .Where(e => Regex.IsMatch(e.Name, start, RegexOptions.IgnoreCase)
+                        || Regex.IsMatch(e.Slug, start, RegexOptions.IgnoreCase))
+            .Select(e => e.Id)
+            .Concat(db.EntityNames
+                .Where(n => (titles || n.Kind == null || !TitleKinds.Contains(n.Kind))
+                            && Regex.IsMatch(n.Label, start, RegexOptions.IgnoreCase))
+                .Select(n => n.EntityId))
+            .Concat(db.EntityNameForms
+                .Where(f => Regex.IsMatch(f.Form, start, RegexOptions.IgnoreCase))
+                .Select(f => f.EntityId))
+            .Concat(db.EntityRenderings
+                .Where(r => folded.Length > 0
+                            && (EF.Functions.Like(r.Folded, opening)
+                                || (EF.Functions.Like(r.Folded, inside)
+                                    && Regex.IsMatch(r.Form, start, RegexOptions.IgnoreCase))))
+                .Select(r => r.EntityId));
+    }
+
+    /// <summary>The entities a word of a title of which opens with what was typed.</summary>
+    private static IQueryable<int> Titled(AppDbContext db, string typed)
+    {
+        var start = WordStart(typed);
+        return db.EntityNames
+            .Where(n => n.Kind != null && TitleKinds.Contains(n.Kind)
+                        && Regex.IsMatch(n.Label, start, RegexOptions.IgnoreCase))
+            .Select(n => n.EntityId);
     }
 
     /// <summary>
@@ -351,12 +405,11 @@ internal static class EntityNames
     /// with a thousand namings comes before the Judah with two.
     /// </summary>
     public static IOrderedQueryable<LocalisedEntity> ByRelevance(
-        AppDbContext db,
         IQueryable<LocalisedEntity> entities,
-        string q,
+        NameMatches found,
         string? language) =>
         Alphabetical(
-            Banded(db, entities, q).ThenByDescending(l => l.Entity.Verses.AsQueryable().Count(ShownVerses.IsShown)),
+            Banded(entities, found).ThenByDescending(l => l.Entity.Verses.AsQueryable().Count(ShownVerses.IsShown)),
             language);
 
     /// <summary>
@@ -364,24 +417,16 @@ internal static class EntityNames
     /// else: an index ordered by how often each is named still heads with the one called what was
     /// typed, and ends with those that only carry it in a title.
     /// </summary>
-    public static IOrderedQueryable<LocalisedEntity> Banded(AppDbContext db, IQueryable<LocalisedEntity> entities, string q)
+    public static IOrderedQueryable<LocalisedEntity> Banded(IQueryable<LocalisedEntity> entities, NameMatches found)
     {
+        var q = found.Query;
         var name = TitleWords.Without(q) ?? q;
         var exactly = LikePatterns.Exactly(q);
         var exactName = LikePatterns.Exactly(name);
         var opening = LikePatterns.StartingWith(q);
         var openingName = LikePatterns.StartingWith(name);
-
-        // Each band beyond the shown name is a set of ids read once, which the database hashes,
-        // rather than a test of every row's names and spellings one row at a time: the second costs
-        // half a second on a two-letter search, which Go To asks as the reader types.
-        var typed = Typed(q);
-        var familiar = Familiar(q);
-        var calledThat = typed.Skip(1)
-            .Aggregate(CalledExactly(db, typed[0]), (ids, one) => ids.Concat(CalledExactly(db, one)))
-            .Concat(db.Entities.Where(e => familiar.Contains(e.Slug)).Select(e => e.Id));
-        var named = typed.Skip(1)
-            .Aggregate(NamedContaining(db, typed[0]), (ids, one) => ids.Concat(NamedContaining(db, one)));
+        var calledThat = found.Called;
+        var named = found.Named;
 
         return entities.OrderBy(l =>
             EF.Functions.ILike(l.Shown, exactly) || EF.Functions.ILike(l.Shown, exactName)
@@ -407,33 +452,6 @@ internal static class EntityNames
                 .Where(f => f.GrammaticalCase == GrammaticalCases.Nominative && EF.Functions.ILike(f.Form, exactly))
                 .Select(f => f.EntityId))
             .Concat(db.EntityRenderings.Where(r => folded.Length > 0 && r.Folded == folded).Select(r => r.EntityId));
-    }
-
-    /// <summary>The entities a word of some name of which — not a title — opens with what was typed.</summary>
-    private static IQueryable<int> NamedContaining(AppDbContext db, string typed)
-    {
-        var start = WordStart(typed);
-        var folded = NameFolding.Fold(typed);
-        var opening = LikePatterns.StartingWith(folded);
-        var inside = LikePatterns.Containing(folded);
-
-        return db.Entities
-            .Where(e => Regex.IsMatch(e.Name, start, RegexOptions.IgnoreCase)
-                        || Regex.IsMatch(e.Slug, start, RegexOptions.IgnoreCase))
-            .Select(e => e.Id)
-            .Concat(db.EntityNames
-                .Where(n => (n.Kind == null || !TitleKinds.Contains(n.Kind))
-                            && Regex.IsMatch(n.Label, start, RegexOptions.IgnoreCase))
-                .Select(n => n.EntityId))
-            .Concat(db.EntityNameForms
-                .Where(f => Regex.IsMatch(f.Form, start, RegexOptions.IgnoreCase))
-                .Select(f => f.EntityId))
-            .Concat(db.EntityRenderings
-                .Where(r => folded.Length > 0
-                            && (EF.Functions.Like(r.Folded, opening)
-                                || (EF.Functions.Like(r.Folded, inside)
-                                    && Regex.IsMatch(r.Form, start, RegexOptions.IgnoreCase))))
-                .Select(r => r.EntityId));
     }
 
     /// <summary>
@@ -563,4 +581,25 @@ internal static class EntityNames
         Collation(language) is { } collation
             ? entities.OrderBy(l => EF.Functions.Collate(l.Shown, collation)).ThenBy(l => l.Entity.Slug)
             : entities.OrderBy(l => l.Shown).ThenBy(l => l.Entity.Slug);
+}
+
+/// <summary>What a search by name found, and how well each answers it: see <see cref="EntityNames.Find"/>.</summary>
+/// <param name="Query">What was typed.</param>
+/// <param name="Ids">The entities found.</param>
+/// <param name="Called">Those among them called exactly what was typed, or known by it.</param>
+/// <param name="Named">Those among them a name of which, not only a title, holds it.</param>
+/// <param name="Near">Whether nothing is called that, and these are spelled near it.</param>
+internal sealed record NameMatches(string Query, List<int> Ids, int[] Called, int[] Named, bool Near);
+
+/// <summary>One entity a search found, and by what.</summary>
+internal sealed class NameHit
+{
+    public const int Named = 0;
+    public const int Titled = 1;
+    public const int Called = 2;
+    public const int Familiar = 3;
+
+    public int Id { get; init; }
+
+    public int How { get; init; }
 }

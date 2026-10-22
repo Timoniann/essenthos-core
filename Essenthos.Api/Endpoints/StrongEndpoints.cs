@@ -222,7 +222,7 @@ internal static class StrongEndpoints
     /// Folded in Postgres on both sides, with the expression the corpus's other folded columns
     /// use: the API runs without ICU, so folding the term in C# would leave its accents on.
     /// </summary>
-    private static readonly string WordSearch =
+    internal static readonly string WordSearch =
         "SELECT strong_number, CASE " +
         $"WHEN {Folded("{1}")} THEN 0 WHEN {Folded("{2}")} THEN 1 ELSE 2 END AS rank " +
         "FROM strong_entry WHERE " +

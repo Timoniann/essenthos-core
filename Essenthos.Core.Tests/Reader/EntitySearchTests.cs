@@ -221,9 +221,10 @@ public sealed class EntitySearchTests : IDisposable
 
     private async Task<List<string>> Ranked(string? sort, string typed)
     {
-        var matched = await EntityNames.Matching(_db, _db.Entities, typed).Select(e => e.Id).ToListAsync();
+        var found = await EntityNames.Find(_db, _db.Entities, typed, CancellationToken.None);
+        var matched = found.Ids;
         return await EncyclopediaEndpoints
-            .Ordered(_db, EntityNames.Localised(_db, _db.Entities.Where(e => matched.Contains(e.Id)), "ukr"), sort, typed, "ukr")
+            .Ordered(EntityNames.Localised(_db, _db.Entities.Where(e => matched.Contains(e.Id)), "ukr"), sort, found, "ukr")
             .Select(l => l.Entity.Slug)
             .ToListAsync();
     }

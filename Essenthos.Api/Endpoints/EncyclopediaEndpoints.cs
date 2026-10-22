@@ -261,25 +261,24 @@ internal static partial class EncyclopediaEndpoints
     /// is the one shown, in the language asked for and in that language's own alphabetical order.
     /// </summary>
     internal static IQueryable<LocalisedEntity> Ordered(
-        AppDbContext db,
         IQueryable<LocalisedEntity> entities,
         string? sort,
-        string? q,
+        NameMatches? found,
         string? language) => sort switch
     {
         "verses" => EntityNames.Alphabetical(
-            MostFirst(db, entities, q, l => l.Entity.Verses
+            MostFirst(entities, found, l => l.Entity.Verses
                 .AsQueryable().Where(ShownVerses.IsShown)
                 .Select(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride)
                              + v.CanonicalVerse)
                 .Distinct().Count()),
             language),
         "mentions" => EntityNames.Alphabetical(
-            MostFirst(db, entities, q, l => l.Entity.Verses.AsQueryable().Count(ShownVerses.IsShown)),
+            MostFirst(entities, found, l => l.Entity.Verses.AsQueryable().Count(ShownVerses.IsShown)),
             language),
         "name" => EntityNames.Alphabetical(entities, language),
-        _ => q is { Length: > 0 }
-            ? EntityNames.ByRelevance(db, entities, q, language)
+        _ => found is not null
+            ? EntityNames.ByRelevance(entities, found, language)
             : EntityNames.Alphabetical(entities, language),
     };
 
@@ -289,12 +288,11 @@ internal static partial class EncyclopediaEndpoints
     /// Abraham, who is named far more often and only carries the name in a title.
     /// </summary>
     private static IOrderedQueryable<LocalisedEntity> MostFirst(
-        AppDbContext db,
         IQueryable<LocalisedEntity> entities,
-        string? q,
+        NameMatches? found,
         Expression<Func<LocalisedEntity, int>> count) =>
-        q is { Length: > 0 }
-            ? EntityNames.Banded(db, entities, q).ThenByDescending(count)
+        found is not null
+            ? EntityNames.Banded(entities, found).ThenByDescending(count)
             : entities.OrderByDescending(count);
 
     /// <summary>The orders <c>sort</c> accepts. Anything else is refused rather than ignored.</summary>

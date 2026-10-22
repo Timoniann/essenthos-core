@@ -4024,6 +4024,18 @@ namespace Essenthos.Core.Migrations
                     b.HasKey("Id")
                         .HasName("pk_strong_entry");
 
+                    b.HasIndex("Definition")
+                        .HasDatabaseName("ix_strong_entry_definition");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Definition"), "gin");
+                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("Definition"), new[] { "gin_trgm_ops" });
+
+                    b.HasIndex("KjvDefinition")
+                        .HasDatabaseName("ix_strong_entry_kjv_definition");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("KjvDefinition"), "gin");
+                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("KjvDefinition"), new[] { "gin_trgm_ops" });
+
                     b.HasIndex("StrongNumber")
                         .IsUnique()
                         .HasDatabaseName("ix_strong_entry_strong_number");
