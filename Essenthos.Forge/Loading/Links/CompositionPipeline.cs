@@ -400,7 +400,9 @@ internal sealed class CompositionPipeline(
         CancellationToken cancellationToken)
     {
         var every = Merge(proposed, Admission.Everything(minimumConfidence));
-        var own = Admission.Measure(every, statements, minimumConfidence, precision);
+        var own = Admission.Measures(statements)
+            ? Admission.Measure(every, statements, minimumConfidence, precision)
+            : Admission.Everything(minimumConfidence);
         if (own.Floors.Count > 0)
         {
             return (own, $"  {from.Slug} to {to.Slug}, on its own statements:{Environment.NewLine}" +
@@ -450,9 +452,10 @@ internal sealed class CompositionPipeline(
     }
 
     /// <summary>
-    /// The other texts in the source's language whose words a source states against the target,
+    /// The other texts in the source's language whose words a source states a word of the target for,
     /// enough of them to measure on, most first. For English against the originals, the King James
-    /// and the Berean; not a text EVIDENTIA alone links, whose links are another inference.
+    /// and the Berean; not a text EVIDENTIA alone links, whose links are another inference, nor one
+    /// whose only statements are the words it prints as its own (<see cref="Admission.Measures"/>).
     /// </summary>
     private static async Task<List<(int Id, string Slug)>> Proxies(
         NpgsqlConnection connection,
@@ -467,6 +470,7 @@ internal sealed class CompositionPipeline(
             JOIN text t ON t.id = l.from_text_id
             JOIN link_word f ON f.link_id = l.id AND f.side = 'from'
             WHERE l.to_text_id = @to AND l.method NOT IN ('aligner', 'rule-based') AND t.language = @language AND t.id <> @from
+              AND EXISTS (SELECT 1 FROM link_word r WHERE r.link_id = l.id AND r.side = 'to')
             GROUP BY t.id, t.slug
             HAVING count(DISTINCT f.word_id) >= @fewest
             ORDER BY count(DISTINCT f.word_id) DESC, t.slug
