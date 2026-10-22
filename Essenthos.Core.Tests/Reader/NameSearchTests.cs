@@ -112,6 +112,21 @@ public sealed class NameSearchTests : IDisposable
     }
 
     [Fact]
+    public async Task OneSearchSaysWhatWasFoundAndHow()
+    {
+        var called = await EntityNames.Find(_db, _db.Entities, "Рувим", CancellationToken.None);
+        var near = await EntityNames.Find(_db, _db.Entities, "Рамесесс", CancellationToken.None);
+
+        called.Ids.Should().Equal(_reuben.Id);
+        called.Called.Should().Equal(_reuben.Id);
+        called.Named.Should().Equal(_reuben.Id);
+        called.Near.Should().BeFalse();
+        near.Near.Should().BeTrue();
+        near.Called.Should().BeEmpty();
+        (await _db.Entities.Where(e => near.Ids.Contains(e.Id)).Select(e => e.Slug).ToListAsync()).Should().Equal("rameses");
+    }
+
+    [Fact]
     public async Task ARecordWithNoLineIsToldApartByItsFirstVerse()
     {
         var first = await EncyclopediaEndpoints.FirstVerses(_db, [_reuben.Id], CancellationToken.None);

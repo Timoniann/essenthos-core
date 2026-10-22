@@ -1,9 +1,12 @@
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Endpoints;
+using Essenthos.Core.Migrations;
+using Essenthos.Core.Utils;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Npgsql;
 using Xunit;
 
 namespace Essenthos.Core.Tests.Lexicon;
@@ -112,6 +115,48 @@ public sealed class StrongSearchTests : IDisposable
     public async Task AWildcardIsTypedNotObeyed()
     {
         (await Numbers("%", null)).Should().BeEmpty();
+    }
+
+    /// <summary>
+    /// The folded lemma and transliteration are indexed by an expression a migration wrote down. A
+    /// search that folds otherwise is still right, and reads every entry again on every keystroke.
+    /// </summary>
+    [Theory]
+    [InlineData("lemma")]
+    [InlineData("transliteration")]
+    public void TheSearchFoldsAsItsIndexesWereBuilt(string column)
+    {
+        DiacriticFolding.Expression(column).Should().Be(
+            string.Format(LexiconSearchFindsSpellingsThroughTrigrams.Fold, column),
+            "a new fold needs a migration that builds the lexicon's trigram indexes again");
+    }
+
+    [Fact]
+    public async Task ASpellingIsLookedUpThroughTheIndexes()
+    {
+        await _db.Database.ExecuteSqlRawAsync("SET LOCAL enable_seqscan = off");
+        var connection = (NpgsqlConnection)_db.Database.GetDbConnection();
+        await using var explain = new NpgsqlCommand(
+            "EXPLAIN " + StrongEndpoints.WordSearch.Replace("{0}", "@contains").Replace("{1}", "@exactly").Replace("{2}", "@opening"),
+            connection,
+            (NpgsqlTransaction)_transaction.GetDbTransaction());
+        explain.Parameters.AddWithValue("contains", "%phil%");
+        explain.Parameters.AddWithValue("exactly", "phil");
+        explain.Parameters.AddWithValue("opening", "phil%");
+
+        var plan = new List<string>();
+        await using (var reader = await explain.ExecuteReaderAsync())
+        {
+            while (await reader.ReadAsync())
+            {
+                plan.Add(reader.GetString(0));
+            }
+        }
+
+        string.Join('\n', plan).Should()
+            .Contain("ix_strong_entry_lemma_folded").And.Contain("ix_strong_entry_transliteration_folded")
+            .And.Contain("ix_strong_entry_definition").And.Contain("ix_strong_entry_kjv_definition")
+            .And.NotContain("Seq Scan");
     }
 
     private async Task<List<string>> Numbers(string query, string? language)

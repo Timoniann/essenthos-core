@@ -128,8 +128,9 @@ public sealed class OursOnlyReferenceTests : IDisposable
 
         await _db.SaveChangesAsync();
 
+        var found = q is null ? null : await EntityNames.Find(_db, _db.Entities, q, CancellationToken.None);
         var ordered = await EncyclopediaEndpoints
-            .Ordered(_db, EntityNames.Localised(_db, _db.Entities, null), sort, q, null)
+            .Ordered(EntityNames.Localised(_db, _db.Entities, null), sort, found, null)
             .Select(l => l.Entity.Slug)
             .ToListAsync();
 

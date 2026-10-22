@@ -888,6 +888,19 @@ public class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.SetNull);
         });
 
+        // The lexicon search reads the glosses for any part of a word. The lemma and the
+        // transliteration it reads folded, through expression indexes the model cannot state: the
+        // migration LexiconSearchFindsSpellingsThroughTrigrams makes them.
+        modelBuilder.Entity<StrongEntry>(entity =>
+        {
+            entity.HasIndex(e => e.Definition)
+                .HasMethod("gin")
+                .HasOperators("gin_trgm_ops");
+            entity.HasIndex(e => e.KjvDefinition)
+                .HasMethod("gin")
+                .HasOperators("gin_trgm_ops");
+        });
+
         // The dictionary in a reader's language. Three of the four provenance constraints hold
         // here; the fourth, which requires an inference to carry a confidence, does not, and the
         // table comment says why rather than leaving a reader of the schema to wonder which of the

@@ -503,10 +503,10 @@ public sealed class EntityRenderingTests : IDisposable
     {
         await Load();
 
+        var found = await EntityNames.Find(_db, _db.Entities, "Мойсей", CancellationToken.None);
         var ranked = await EntityNames.ByRelevance(
-                _db,
-                EntityNames.Localised(_db, EntityNames.Matching(_db, _db.Entities, "Мойсей"), "ukr"),
-                "Мойсей",
+                EntityNames.Localised(_db, _db.Entities.Where(e => found.Ids.Contains(e.Id)), "ukr"),
+                found,
                 "ukr")
             .Select(l => new { l.Entity.Slug, l.Shown })
             .ToListAsync();

@@ -23,6 +23,7 @@ internal static partial class EncyclopediaEndpoints
             [FromQuery] int? skip,
             [FromQuery] int? take,
             AppDbContext db,
+            IServiceScopeFactory scopes,
             SiteSettingsFile settings,
             CancellationToken cancellationToken) =>
         {
@@ -39,7 +40,7 @@ internal static partial class EncyclopediaEndpoints
                 return refusal!;
             }
 
-            var near = false;
+            NameMatches? found = null;
             if (q is { Length: > 0 })
             {
                 // Every name the entity is called by, in every language and every text — Peter is
@@ -49,14 +50,9 @@ internal static partial class EncyclopediaEndpoints
                 // Asked first and on its own: the planner cannot estimate how many rows a disjunction
                 // of five name lookups keeps, guesses nearly all of them, and prices the ordering
                 // below high enough to compile it — which costs more than the query. Handed the ids,
-                // it knows.
-                var matched = await EntityNames.Matching(db, entities, q).Select(e => e.Id).ToListAsync(cancellationToken);
-                if (matched.Count == 0)
-                {
-                    matched = await EntityNames.Near(db, entities, q, cancellationToken);
-                    near = matched.Count > 0;
-                }
-
+                // it knows; and handed how well each answers, the ordering looks for no name again.
+                found = await EntityNames.Find(db, entities, q, cancellationToken);
+                var matched = found.Ids;
                 entities = db.Entities.Where(e => matched.Contains(e.Id));
             }
 
@@ -73,22 +69,28 @@ internal static partial class EncyclopediaEndpoints
             }
 
             var total = await localised.CountAsync(cancellationToken);
-            var named = await Ordered(db, localised, sort, q, language)
+            var named = await Ordered(localised, sort, found, language)
                 .Skip(Math.Max(0, skip ?? 0))
                 .Take(Math.Clamp(take ?? 40, 1, MostPerPage))
                 .Select(l => new { l.Entity.Id, l.Entity.Slug, l.LocalName })
                 .ToListAsync(cancellationToken);
 
+            var slugs = named.Select(row => row.Slug).ToList();
+            var words = ReaderLanguages.Prose(prose, language);
+
+            // What each row says under its name is read beside the rest, each on a connection of its
+            // own: both take a dozen small reads, and one after the other they were most of the time
+            // Go To waited for a page of five.
+            var describing = Beside(scopes, other => Descriptors.Of(other, slugs, words, cancellationToken, language));
+            var owning = Beside(scopes, other => OursOnlyRecords.Among(other, slugs, cancellationToken));
+
             // The summaries in a second read, by slug: the projection is an expression the provider
             // cannot put beside the name the first read ordered by.
-            var slugs = named.Select(row => row.Slug).ToList();
             var summaries = await db.Entities
                 .Where(e => slugs.Contains(e.Slug))
                 .Select(Summary)
                 .ToDictionaryAsync(row => row.Slug, cancellationToken);
-            var words = ReaderLanguages.Prose(prose, language);
             var lines = await EntityDistinguishers.Of(db, [.. named.Select(row => row.Id)], words, cancellationToken);
-            var ours = await OursOnlyRecords.Among(db, slugs, cancellationToken);
             var renamed = await RenamedHeadings.Of(db, [.. named.Select(row => row.Id)], language, cancellationToken);
             var headed = named.ToDictionary(
                 row => row.Id,
@@ -99,6 +101,7 @@ internal static partial class EncyclopediaEndpoints
                 ? await EntityNames.FoundAs(
                     db, headed.ToDictionary(row => row.Key, row => row.Value.LocalName ?? row.Value.Name), q, cancellationToken, renamed)
                 : [];
+            var ours = await owning;
             var page = named
                 .Select(row => ours.TryGetValue(row.Slug, out var own)
                     ? headed[row.Id] with
@@ -114,8 +117,7 @@ internal static partial class EncyclopediaEndpoints
                     })
                 .ToList();
 
-            var described = await Descriptors.Of(
-                db, page.Select(e => e.Slug), words, cancellationToken, language);
+            var described = await describing;
             var pictured = await ImageEndpoints.Leading(
                 db, slugs, cancellationToken, settings.Is(SiteSettings.GeneratedImages));
             var undescribed = named
@@ -136,7 +138,7 @@ internal static partial class EncyclopediaEndpoints
                     }),
                 ])
             {
-                Near = near,
+                Near = found?.Near ?? false,
             });
         });
 
@@ -181,6 +183,13 @@ internal static partial class EncyclopediaEndpoints
                     db, named, language, cancellationToken, settings.Is(SiteSettings.GeneratedImages), prose))
                 : Results.BadRequest(new ProblemResponse(
                     $"Name between 1 and {FamilyEndpoints.MostPeople} people, as slugs=moses,aaron.")));
+    }
+
+    /// <summary>A read on a connection of its own, to run beside what the request's own connection reads.</summary>
+    private static async Task<T> Beside<T>(IServiceScopeFactory scopes, Func<AppDbContext, Task<T>> read)
+    {
+        await using var scope = scopes.CreateAsyncScope();
+        return await read(scope.ServiceProvider.GetRequiredService<AppDbContext>());
     }
 
     /// <summary>
