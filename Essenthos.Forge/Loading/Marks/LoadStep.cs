@@ -1,4 +1,4 @@
-namespace Essenthos.Core.Loading;
+﻿namespace Essenthos.Core.Loading;
 
 /// <summary>
 /// One step of the load, under the name <c>load --from</c> resumes at and <c>load --only</c> names.
@@ -40,4 +40,11 @@ internal sealed record LoadStep(string Name, Func<CancellationToken, Task> Run)
 
     /// <summary>The step runs every time: it decides from what this run did, not from what is stored.</summary>
     public bool Always { get; init; }
+
+    /// <summary>
+    /// The step keeps finer marks of its own (the recipe, one per line: <see cref="Marks.RecipeMarks"/>) and
+    /// decides inside what it runs. Its step mark holds the tables it wrote as it left them, so its own
+    /// writes do not run it again; a step after it writing them does, and its own marks then decide.
+    /// </summary>
+    public bool KeepsItsOwnMarks { get; init; }
 }

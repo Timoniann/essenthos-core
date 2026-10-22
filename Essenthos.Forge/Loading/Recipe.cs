@@ -89,6 +89,11 @@ internal static class Recipe
         && !args.Contains("--dry-run")
         && records(args);
 
+    /// <summary>The step a run of these arguments is recorded as.</summary>
+    public static RecipeStep StepOf(string[] args, DateTimeOffset? at = null) =>
+        // A configuration switch (--Database:ConnectionString=…) belongs to the machine, not the step.
+        new(args[0], [.. args[1..].Where(argument => !(argument.StartsWith("--", StringComparison.Ordinal) && argument.Contains(':')))], at);
+
     public static void Record(string resources, string[] args, DateTimeOffset at)
     {
         if (!Records(args))
@@ -96,9 +101,7 @@ internal static class Recipe
             return;
         }
 
-        // A configuration switch (--Database:ConnectionString=…) belongs to the machine, not the step.
-        var step = new RecipeStep(
-            args[0], [.. args[1..].Where(argument => !(argument.StartsWith("--", StringComparison.Ordinal) && argument.Contains(':')))], at);
+        var step = StepOf(args, at);
         var steps = Read(resources)
             .Where(earlier => !Same(earlier, step))
             .Append(step)
@@ -106,6 +109,69 @@ internal static class Recipe
         var path = PathIn(resources);
         Directory.CreateDirectory(Path.GetDirectoryName(path)!);
         File.WriteAllText(path, JsonSerializer.Serialize(new RecipeFile(About, steps), Json) + "\n");
+    }
+
+    /// <summary>The verbs that put back the EVIDENTIA ledger's verdicts on their own pair after they write.</summary>
+    private static readonly HashSet<string> ReplayTheLedger = new(StringComparer.Ordinal) { "align", "compose", "names", "names-first" };
+
+    /// <summary>The verbs that read nothing on disk but the ledger runs of their pair, if that.</summary>
+    private static readonly HashSet<string> ReadOnlyTheDatabase =
+        new(StringComparer.Ordinal) { "align", "compose", "names", "names-first", "possessives", "unshare", "strong" };
+
+    /// <summary>
+    /// The recipe's steps as its marks see them (<see cref="Marks.RecipeMarks"/>): each under the line the
+    /// recipe dedupes it by, with the texts it reads — the slugs among its arguments and the texts its verb
+    /// says it changes, every text where it cannot say — and the files it reads: the ledger runs of its own
+    /// pair for a verb that replays them, nothing more for a verb that reads only the database, and
+    /// <paramref name="sources"/> for the rest.
+    /// </summary>
+    public static IReadOnlyList<Marks.RecipeLine> Lines(
+        IReadOnlyList<RecipeStep> steps, IReadOnlyCollection<string> texts, string resources, IReadOnlyList<Marks.StepFile> sources)
+    {
+        var known = texts.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var ledger = Path.Combine(resources, "Essenthos", "evidentia");
+        var runs = Directory.Exists(ledger)
+            ? Directory.EnumerateDirectories(ledger).Select(Path.GetFileName).OfType<string>().Order(StringComparer.Ordinal).ToList()
+            : [];
+        var seen = new Dictionary<string, int>(StringComparer.Ordinal);
+        var lines = new List<Marks.RecipeLine>();
+        foreach (var step in steps)
+        {
+            var command = string.Join(' ', [step.Verb, .. step.Arguments.Select(Normalised)]);
+            seen[command] = seen.GetValueOrDefault(command) + 1;
+            if (seen[command] > 1)
+            {
+                command += $" #{seen[command]}";
+            }
+
+            var read = Read(step, known);
+            IReadOnlyList<Marks.StepFile> files = ReplayTheLedger.Contains(step.Verb)
+                ? [.. runs.Where(run => run.Split('-') is [var from, var to, ..] && read.Contains(from) && read.Contains(to))
+                    .Select(run => (Marks.StepFile)$"Essenthos/evidentia/{run}")]
+                : ReadOnlyTheDatabase.Contains(step.Verb) ? []
+                : sources;
+            lines.Add(new Marks.RecipeLine(step, command, read, files));
+        }
+
+        return lines;
+    }
+
+    private static IReadOnlyList<string> Read(RecipeStep step, IReadOnlySet<string> known)
+    {
+        var read = step.Arguments
+            .Where(argument => !argument.StartsWith("--", StringComparison.Ordinal))
+            .SelectMany(argument => argument.Split(',', StringSplitOptions.RemoveEmptyEntries))
+            .Select(argument => argument.ToUpperInvariant())
+            .Where(known.Contains)
+            .ToHashSet(StringComparer.Ordinal);
+        var changes = ForgeVerbs.Find(step.Verb)?.Relinks?.Invoke([step.Verb, .. step.Arguments]);
+        if (changes is { Texts: null } || (read.Count == 0 && changes is not { Texts.Count: > 0 }))
+        {
+            return [.. known.Select(text => text.ToUpperInvariant()).Order(StringComparer.Ordinal)];
+        }
+
+        read.UnionWith((changes?.Texts ?? []).Select(text => text.ToUpperInvariant()).Where(known.Contains));
+        return [.. read.Order(StringComparer.Ordinal)];
     }
 
     private static bool Same(RecipeStep one, RecipeStep two) =>
@@ -263,9 +329,10 @@ internal static class Recipe
     /// The Forge as a process of its own, with one step's arguments, against the same database and
     /// the same Resources as this one: handed down in the environment, because a connection string
     /// given on this process's command line would otherwise not reach the child, and a rebuild into a
-    /// scratch database would replay into the default one.
+    /// scratch database would replay into the default one. What its statements name goes to
+    /// <paramref name="statements"/> when one is given (<see cref="Marks.StatementTables.ChildLog"/>).
     /// </summary>
-    public static ProcessStartInfo Process(RecipeStep step, string connectionString, string resources)
+    public static ProcessStartInfo Process(RecipeStep step, string connectionString, string resources, string? statements = null)
     {
         var host = Environment.ProcessPath
                    ?? throw new InvalidOperationException("The Forge cannot find its own executable to replay the recipe with.");
@@ -286,6 +353,11 @@ internal static class Recipe
         start.Environment[Replaying] = step.ToString();
         start.Environment["Database__ConnectionString"] = connectionString;
         start.Environment["Dataset__ResourcesPath"] = resources;
+        if (statements is not null)
+        {
+            start.Environment[Marks.StatementTables.ChildLog] = statements;
+        }
+
         return start;
     }
 }

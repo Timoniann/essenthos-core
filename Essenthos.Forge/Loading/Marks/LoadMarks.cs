@@ -1,4 +1,4 @@
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using Npgsql;
@@ -170,7 +170,9 @@ internal sealed class LoadMarks(
         var readSums = new SortedDictionary<string, string>(StringComparer.Ordinal);
         foreach (var table in reads)
         {
-            readSums[table] = running.Before.GetValueOrDefault(table, "absent");
+            readSums[table] = step.KeepsItsOwnMarks && after.TryGetValue(table, out var left)
+                ? left
+                : running.Before.GetValueOrDefault(table, "absent");
         }
 
         var inputs = new Inputs(step.Version, running.Decision.Code, running.Decision.Files, readSums);

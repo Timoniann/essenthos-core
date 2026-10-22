@@ -116,6 +116,31 @@ public sealed class LoadMarksTests : IDisposable
         Ran(await Load()).Should().BeEmpty();
     }
 
+    /// <summary>
+    /// A step that keeps marks of its own (the recipe) holds what it wrote as it left it: its own writes do
+    /// not send the load back to it, and a write by anything else to what it read still runs it.
+    /// </summary>
+    [Fact]
+    public async Task AStepKeepingItsOwnMarksIsNotRunAgainByItsOwnWritesButIsByAnotherWrite()
+    {
+        var steps = Steps().Select(step => step.Name == Copier ? step with { KeepsItsOwnMarks = true } : step).ToList();
+
+        Ran(await Load(steps: steps)).Should().Equal(Source, Copier, Reader, Source);
+        Ran(await Load(steps: steps)).Should().BeEmpty();
+
+        await Execute("INSERT INTO strong_entry (strong_number) VALUES ('H9999')");
+        Ran(await Load(steps: steps)).Should().Equal(Copier);
+        Ran(await Load(steps: steps)).Should().BeEmpty();
+    }
+
+    [Fact]
+    public void AVacuumOrAnAnalyzeReadsNoTable()
+    {
+        StatementTables.Maintenance("VACUUM (ANALYZE) \"strong_reach\"").Should().BeTrue();
+        StatementTables.Maintenance("  analyze word").Should().BeTrue();
+        StatementTables.Maintenance("SELECT relname FROM pg_stat_user_tables").Should().BeFalse();
+    }
+
     [Fact]
     public async Task AWriteThatWasRolledBackIsNotAWrite()
     {

@@ -244,8 +244,13 @@ if (!verb.Accepts(arguments))
 // A Forge a load step started reports what its statements named, so they count as the step's reads.
 using var statementLog = Essenthos.Core.Loading.Marks.StatementTables.ForParent();
 
+// A run the recipe records, run by hand, is watched so its line can be marked as the load would mark it.
+using var adoption = await Essenthos.Core.Loading.Marks.RecipeAdoption.Begin(
+    databaseConnection, resources, configuration, environment.ContentRootPath, arguments, logger);
+
 var forge = new ForgeRun(app.Services, logger, resources, databaseConnection);
 var exit = await verb.Run(forge, arguments);
+adoption?.Ran();
 if (exit == 0)
 {
     await forge.Recount(verb.Changed(arguments));
@@ -255,6 +260,10 @@ if (exit == 0)
 if (exit == 0)
 {
     Recipe.Record(resources, arguments, DateTimeOffset.UtcNow);
+    if (adoption is not null)
+    {
+        await adoption.Finish();
+    }
 }
 
 return exit;

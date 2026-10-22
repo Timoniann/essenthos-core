@@ -147,6 +147,7 @@ internal sealed class DatasetLoader(
                 logger);
             await marks.Open(stoppingToken);
 
+            _everyRecipeLine = request.Everything;
             var outcomes = await marks.Run(selected, request.Everything, step => current = step, stoppingToken);
             var took = outcomes.Where(outcome => outcome.Ran).ToList();
             var ran = took.Select(outcome => outcome.Step).Distinct(StringComparer.Ordinal).Count();
@@ -260,6 +261,25 @@ internal sealed class DatasetLoader(
     /// <summary>The load's steps themselves, for what reads their declarations.</summary>
     internal IReadOnlyList<LoadStep> StepList() => Steps(ResourcePaths.Read(configuration, environment.ContentRootPath));
 
+    // The folders DeuterocanonTextSource.Extend adds books from, and the ones the bible4u texts are corrected against.
+    private static StepFile[] Bible4uFiles() =>
+    [
+        "bible4u", LostPsalmOpenings.KingJamesFolder, LostPsalmOpenings.OhienkoFolder,
+        DeuterocanonTextSource.KingJamesFolder, DeuterocanonTextSource.SynodalFolder, DeuterocanonTextSource.WorldEnglishFolder,
+    ];
+
+    /// <summary>
+    /// What the recipe's Forge runs read on disk besides the recipe and the EVIDENTIA ledger: the numbered
+    /// editions the Strong verbs read for the run, the mappings, the interlinears and the editions the
+    /// repairs read.
+    /// </summary>
+    internal static StepFile[] RecipeSources() =>
+    [
+        "SynodalStrong", "ChineseUnion1919", "ReinaValera1909", "Segond1910Strong", "DarbyFrench", "Schlachter1951",
+        "RevisedLiteral", "Byzantine", "mapping", "OpenHebrewBible", "Door43", "Berean", "Swete", "STEPBible",
+        "Versification", .. Bible4uFiles(), "Septuagint",
+    ];
+
     /// <summary>
     /// Every step of the load, in order, each under the name <c>load --from</c> resumes at, with the module
     /// <c>load --only</c> can name it by and the files under Resources it reads. A text is its own step,
@@ -282,10 +302,7 @@ internal sealed class DatasetLoader(
         [
             DeuterocanonTextSource.KingJamesFolder, DeuterocanonTextSource.SynodalFolder, DeuterocanonTextSource.WorldEnglishFolder,
         ];
-        StepFile[] bible4u =
-        [
-            "bible4u", LostPsalmOpenings.KingJamesFolder, LostPsalmOpenings.OhienkoFolder, .. extended,
-        ];
+        StepFile[] bible4u = Bible4uFiles();
 
         // Every text the psalm titles are read again from, in its own files.
         StepFile[] titled =
@@ -297,14 +314,7 @@ internal sealed class DatasetLoader(
             .. SwordTextSource.Texts.Values.Select(text => (StepFile)text.Folder),
         ];
 
-        // What the recipe's Forge runs read besides the database: the ledger, the numbered editions the
-        // Strong verbs read for the run, the mappings, the interlinears and the editions the repairs read.
-        StepFile[] recipe =
-        [
-            "Essenthos/recipe.json", "Essenthos/evidentia", "SynodalStrong", "ChineseUnion1919", "ReinaValera1909",
-            "Segond1910Strong", "DarbyFrench", "Schlachter1951", "RevisedLiteral", "Byzantine", "mapping",
-            "OpenHebrewBible", "Door43", "Berean", "Swete", "STEPBible", "Versification", .. bible4u, "Septuagint",
-        ];
+        StepFile[] recipe = ["Essenthos/recipe.json", "Essenthos/evidentia", .. RecipeSources()];
 
         var senseReadings = new StepFile("SenseReadings", "Dataset:SenseReadingsPath");
         var persons = new StepFile("Essenthos/persons", "Dataset:PersonRegisterPath");
@@ -522,6 +532,7 @@ internal sealed class DatasetLoader(
                 new LoadStep("recipe", cancellationToken => FollowTheRecipe(resources, cancellationToken))
                 {
                     Files = recipe,
+                    KeepsItsOwnMarks = true,
                     Children = () => Recipe.Read(resources)
                         .Select(step => step.Verb)
                         .Distinct(StringComparer.Ordinal)
@@ -1710,51 +1721,112 @@ internal sealed class DatasetLoader(
 
     /// <summary>
     /// The Forge runs recorded in <see cref="Recipe"/>, each as its own process, in the order they
-    /// last ran, skipping what the corpus already holds. After every link the load writes itself, since
-    /// the compositions go through the stated links, and before the verses are joined and EVIDENTIA's
-    /// verdicts replayed, since both settle against the links these write. A step that fails stops the
-    /// load: every later step was run on top of it.
+    /// last ran: each line skipped when nothing it reads has moved since it last ran
+    /// (<see cref="RecipeMarks"/>), and otherwise skipped when the corpus already holds what it writes.
+    /// After every link the load writes itself, since the compositions go through the stated links, and
+    /// before the verses are joined and EVIDENTIA's verdicts replayed, since both settle against the links
+    /// these write. A line that fails stops the load: every later line was run on top of it.
     /// </summary>
     public async Task FollowTheRecipe(string resources, CancellationToken cancellationToken)
     {
         var steps = Recipe.Read(resources);
         status.Starting($"the {steps.Count} recorded Forge runs");
         var connectionString = DatabaseConnection.Read(configuration);
-        int ran = 0, skipped = 0;
 
-        foreach (var recorded in steps)
+        IReadOnlyList<string> texts;
+        using (var scope = services.CreateScope())
         {
-            RecipeStep step;
-            using (var scope = services.CreateScope())
+            texts = await scope.ServiceProvider.GetRequiredService<AppDbContext>().Texts.AsNoTracking()
+                .Select(text => text.Slug).ToListAsync(cancellationToken);
+        }
+
+        var lines = Recipe.Lines(steps, texts, resources, RecipeSources());
+        var marks = new RecipeMarks(
+            connectionString,
+            new TableFingerprints(connectionString, FingerprintSessions, logger),
+            new FileDigests(resources, environment.ContentRootPath, configuration, logger),
+            RecipeCode(),
+            logger);
+        var outcomes = await marks.Run(lines, _everyRecipeLine, (line, token) => Replay(line, connectionString, resources, token), cancellationToken);
+
+        // A load that goes through the steps again to settle has already run every line once.
+        _everyRecipeLine = false;
+        var ran = outcomes.Count(outcome => outcome.Ran);
+        status.Record($"The recipe: {ran} of {lines.Count} lines run ({outcomes.Count(outcome => outcome.Wrote)} wrote), "
+                      + $"{lines.Count - ran} skipped, nothing they read having moved");
+    }
+
+    /// <summary>Whether this load was asked to run every step, the recipe's lines included.</summary>
+    private bool _everyRecipeLine;
+
+    /// <summary>
+    /// The code each recipe line's verb runs, with how the recipe decides what a line is replayed as and
+    /// whether the corpus already holds it, digested once per verb.
+    /// </summary>
+    internal static Func<string, string> RecipeCode()
+    {
+        var code = CodeDigest.ForTheForge();
+        var deciding = code.Of(Recipe.Replayed).Digest + " " + code.Of(Recipe.AlreadyThere).Digest;
+        var digests = new Dictionary<string, string>(StringComparer.Ordinal);
+        return verb =>
+        {
+            if (!digests.TryGetValue(verb, out var digest))
             {
-                var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-                await db.Database.OpenConnectionAsync(cancellationToken);
-                var connection = (Npgsql.NpgsqlConnection)db.Database.GetDbConnection();
-                step = await Recipe.Replayed(connection, recorded, cancellationToken);
-                var already = await Recipe.AlreadyThere(connection, step, cancellationToken);
-                if (already is not null)
-                {
-                    logger.LogInformation("Recipe: not running `{Step}`: {Reason}", step, already);
-                    skipped++;
-                    continue;
-                }
+                digests[verb] = digest = (Verbs.ForgeVerbs.Find(verb) is { } found ? code.Of(found.Run).Digest : "unknown verb")
+                                         + " " + deciding;
             }
 
-            logger.LogInformation("Recipe: running `{Step}`", step);
-            using var process = System.Diagnostics.Process.Start(Recipe.Process(step, connectionString, resources))
+            return digest;
+        };
+    }
+
+    /// <summary>
+    /// One recipe line run as its own Forge process, unless the corpus already holds what it writes; what
+    /// its statements named comes back, and goes on to this step's own list too.
+    /// </summary>
+    private async Task<RecipeRun> Replay(RecipeLine line, string connectionString, string resources, CancellationToken cancellationToken)
+    {
+        RecipeStep step;
+        using (var scope = services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+            await db.Database.OpenConnectionAsync(cancellationToken);
+            var connection = (NpgsqlConnection)db.Database.GetDbConnection();
+            step = await Recipe.Replayed(connection, line.Step, cancellationToken);
+            var already = await Recipe.AlreadyThere(connection, step, cancellationToken);
+            if (already is not null)
+            {
+                logger.LogInformation("Recipe: not running `{Step}`: {Reason}", step, already);
+                return RecipeRun.AlreadyThere;
+            }
+        }
+
+        logger.LogInformation("Recipe: running `{Step}`", step);
+        var statements = Path.Combine(Path.GetTempPath(), $"essenthos-statements-{Guid.NewGuid():N}.txt");
+        try
+        {
+            using var process = System.Diagnostics.Process.Start(Recipe.Process(step, connectionString, resources, statements))
                                 ?? throw new InvalidOperationException($"The Forge could not be started for `{step}`.");
             await process.WaitForExitAsync(cancellationToken);
             if (process.ExitCode != 0)
             {
                 throw new InvalidOperationException(
                     $"The recorded run `{step}` exited with {process.ExitCode}. Run it by hand to see why, fix it, " +
-                    "and run the load again: the steps before it are skipped as already there.");
+                    "and run the load again: the lines before it are skipped by their marks.");
             }
 
-            ran++;
-        }
+            var heard = File.Exists(statements) ? File.ReadAllLines(statements).ToHashSet(StringComparer.Ordinal) : [];
+            if (Environment.GetEnvironmentVariable(StatementTables.ChildLog) is { Length: > 0 } stepLog)
+            {
+                File.AppendAllLines(stepLog, heard.Order(StringComparer.Ordinal));
+            }
 
-        status.Record($"The recipe: {ran} Forge runs replayed, {skipped} already in the corpus");
+            return new RecipeRun(true, heard);
+        }
+        finally
+        {
+            File.Delete(statements);
+        }
     }
 
     /// <summary>
