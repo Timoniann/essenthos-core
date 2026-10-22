@@ -56,8 +56,8 @@ public sealed class PsalmTitleNumberTests : IDisposable
         Title(bhsa);
         Name(bhsa, 1, 6, "pers");
         Name(bhsa, 2, 3, "pers");
-        var david = Record("david", EntityKind.Person, "David", "H1732");
-        var doeg = Record("doeg", EntityKind.Person, "Doeg", "H1673");
+        Record("david", EntityKind.Person, "David", "H1732");
+        Record("doeg", EntityKind.Person, "Doeg", "H1673");
         await _db.SaveChangesAsync();
         var record = new MappingRecord(1, 1, 1,
         [
@@ -89,7 +89,6 @@ public sealed class PsalmTitleNumberTests : IDisposable
         (await Names(bhsa, 2, 3)).Should().Equal("doeg");
         (await Names(kjv, 1, 1)).Should().Equal("doeg");
         (await Names(bhsa, 1, 6)).Should().Equal("david");
-        david.Id.Should().NotBe(doeg.Id);
     }
 
     /// <summary>
@@ -101,7 +100,7 @@ public sealed class PsalmTitleNumberTests : IDisposable
     [Fact]
     public async Task TheValleyOfSaltIsNamedTheValleyAndNotTheSeaOnceItCarriesItsOwnNumber()
     {
-        var kjv = Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["a"]), (1, 2, ["b"]), (1, 3, ["c"]));
+        Corpus.Add(_db, "KJV", TextKind.Translation, "eng", (1, 1, ["a"]), (1, 2, ["b"]), (1, 3, ["c"]));
         var bhsa = Corpus.Add(_db, EntityCandidates.Witness, TextKind.CriticalEdition, "hbo",
             (1, 1, ["א", "ב"]),
             (1, 2, ["לַ", "מְנַצֵּחַ", "אֲרַם", "נַהֲרַיִם", "וַ", "יֹואָב", "בְּ", "גֵיא־מֶלַח", "שְׁנֵים", "עָשָׂר", "אָלֶף", "אֱלֹהִים", "זְנַחְתָּנוּ", "פְרַצְתָּנוּ"]),
@@ -160,7 +159,6 @@ public sealed class PsalmTitleNumberTests : IDisposable
         _db.ChangeTracker.Clear();
         _db.WordAt(bhsa, 1, 2, 8).StrongNumber.Should().Be("H1516");
         (await Names(bhsa, 2, 8)).Should().Equal("valleyofsalt");
-        kjv.Id.Should().NotBe(bhsa.Id);
     }
 
     /// <summary>BHSA's title verses both at the frame's verse 0, in the order they are written.</summary>

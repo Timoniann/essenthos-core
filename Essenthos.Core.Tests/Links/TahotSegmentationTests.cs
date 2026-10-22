@@ -218,17 +218,13 @@ public class TahotSegmentationTests(ITestOutputHelper output)
     /// many function words reach a Hebrew morpheme with the segmentation and without it, and how
     /// many of them rest on a gloss a source printed rather than on a list this project wrote.
     ///
-    /// Skipped where TAHOT has not been fetched, because a checkout is meant to work without it.
+    /// It reads TAHOT, so like every corpus test it fails where the fetch script has not been run.
     /// </summary>
     [Fact]
     public void TheStatedGlossesReachMoreFunctionWordsThanTheProjectsListAlone()
     {
         var volumes = TestResources.Tahot();
-        if (volumes.Count == 0)
-        {
-            output.WriteLine("TAHOT is not on disk; run scripts/fetch-stepbible.ps1");
-            return;
-        }
+        volumes.Should().NotBeEmpty("TAHOT is read from Resources/STEPBible; run scripts/fetch-stepbible.ps1");
 
         var segmentation = TahotSegmentation.Read(volumes);
         var records = KjvBhsMapping.Read(TestResources.KjvBhsMapping);

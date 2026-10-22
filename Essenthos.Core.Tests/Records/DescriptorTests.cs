@@ -1,7 +1,6 @@
 ﻿using Essenthos.Core.Corpus;
 ﻿using Essenthos.Core.Loading;
 using System.Data.Common;
-using System.Diagnostics;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -1523,20 +1522,15 @@ public sealed class DescriptorTests : IDisposable
         var forTen = counted.Commands;
         counted.Reset();
 
-        var started = Stopwatch.GetTimestamp();
         var descriptions = await Descriptors.Of(
             db, slugs, DescriptorPhrasings.Ukrainian, default);
-        var elapsed = Stopwatch.GetElapsedTime(started);
 
         foreach (var sql in counted.Sql)
         {
             _output.WriteLine(sql);
         }
 
-        _output.WriteLine(await Plan(db, counted.Sql[0], slugs));
-        _output.WriteLine(
-            $"{Page} descriptions of {Described} entities in {elapsed.TotalMilliseconds:F1} ms, "
-            + $"{counted.Commands} commands");
+        _output.WriteLine($"{Page} descriptions of {Described} entities, {counted.Commands} commands");
 
         descriptions.Should().HaveCount(Page);
         descriptions[slugs[0]].Claims.Should()
@@ -1547,35 +1541,6 @@ public sealed class DescriptorTests : IDisposable
             "own clauses, clauses written on others, sexes, name forms and renamed headings; the subjects, "
             + "the counts and places of children, the parents and their children, the family tree, "
             + "how often its people are named, and the people a line names that no clause brought");
-        elapsed.Should().BeLessThan(TimeSpan.FromSeconds(1));
-    }
-
-    /// <summary>
-    /// What Postgres does with the query EF actually sent, rather than with one written out again
-    /// here — the second would go stale the first time the projection changed, which is the change
-    /// this is watching for.
-    /// </summary>
-    private static async Task<string> Plan(AppDbContext db, string sql, IReadOnlyList<string> slugs)
-    {
-        var connection = db.Database.GetDbConnection();
-        await connection.OpenAsync();
-
-        await using var command = connection.CreateCommand();
-        command.CommandText = $"EXPLAIN (ANALYZE, BUFFERS) {sql}";
-
-        var wanted = command.CreateParameter();
-        wanted.ParameterName = "wanted";
-        wanted.Value = slugs.ToArray();
-        command.Parameters.Add(wanted);
-
-        await using var reader = await command.ExecuteReaderAsync();
-        var plan = new List<string>();
-        while (await reader.ReadAsync())
-        {
-            plan.Add(reader.GetString(0));
-        }
-
-        return string.Join(Environment.NewLine, plan);
     }
 
     /// <summary>

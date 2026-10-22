@@ -608,11 +608,8 @@ public sealed class EntityImageTests : IDisposable
     {
         var images = Path.Combine(TestResources.OpenBibleFolder, OpenBibleThumbnails.ImageFile);
         var archive = Path.Combine(TestResources.OpenBibleFolder, OpenBibleThumbnails.ArchiveFile);
-        if (!File.Exists(images) || !File.Exists(archive))
-        {
-            return;
-        }
-
+        File.Exists(images).Should().BeTrue("the gazetteer's pictures are read from {0}", images);
+        File.Exists(archive).Should().BeTrue("the thumbnails are read from {0}", archive);
         var reading = OpenBibleThumbnails.Read(
             Path.Combine(TestResources.OpenBibleFolder, OpenBibleThumbnails.AncientFile), images);
 

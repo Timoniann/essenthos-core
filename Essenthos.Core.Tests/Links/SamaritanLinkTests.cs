@@ -112,7 +112,7 @@ public sealed class SamaritanLinkTests(ITestOutputHelper output)
 
         measured.Elided.Should().Be(ElidedMasoreticWords);
         measured.ElidedStandingAlone.Should().Be(0);
-        ElidedMasoreticWords.Should().BeGreaterThan(MasoreticHasAndSamaritanHasNot);
+        measured.Elided.Should().BeGreaterThan(measured.Relations[LinkRelation.Omits]);
     }
 
     /// <summary>

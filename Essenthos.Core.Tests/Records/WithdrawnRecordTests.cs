@@ -204,7 +204,7 @@ public sealed class WithdrawnRecordTests : IDisposable
             .Where(record => record.OwnerRuled is not null)
             .Select(record => record.Slug)
             .ToHashSet();
-        var (records, _, _) = DescriptorFiles.Read(TestResources.Folder(Path.Combine("Essenthos", "descriptors")));
+        var (records, _, _) = DescriptorFiles.Read(TestResources.Shipped(Path.Combine("Essenthos", "descriptors")));
 
         var standing = records
             .SelectMany(record => (record.Claims ?? []).Select(claim => (record.Entity, Claim: claim)))

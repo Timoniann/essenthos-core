@@ -11,7 +11,7 @@ namespace Essenthos.Core.Tests.Links;
 /// writes, which numbers each carries, and which of them are one rendering.
 ///
 /// The snippets are the file's own markup, cut down. The last two tests read the whole file and lay
-/// it onto bible4u's Synodal, and are skipped where the fetch script has not been run.
+/// it onto bible4u's Synodal, and fail where the fetch script has not been run.
 /// </summary>
 [Trait(TestCategory.Name, TestCategory.Corpus)]
 public sealed class SynodalStrongEditionTests(ITestOutputHelper output)
@@ -110,11 +110,7 @@ public sealed class SynodalStrongEditionTests(ITestOutputHelper output)
     [Fact]
     public void TheEditionIsNumberedTheSynodalWay()
     {
-        if (Absent())
-        {
-            return;
-        }
-
+        TheEditionIsOnDisk();
         var edition = SynodalStrongEdition.Read(TestResources.SynodalStrong);
 
         edition.Should().HaveCount(EditionVerses);
@@ -131,11 +127,7 @@ public sealed class SynodalStrongEditionTests(ITestOutputHelper output)
     [Fact]
     public void TheWholeEditionLaysOntoTheLoadedSynodal()
     {
-        if (Absent())
-        {
-            return;
-        }
-
+        TheEditionIsOnDisk();
         var edition = SynodalStrongEdition.Read(TestResources.SynodalStrong);
         var bible = new XmlBibleParser().Parse(File.ReadAllText(TestResources.Bible4u("RUSV")));
 
@@ -159,14 +151,7 @@ public sealed class SynodalStrongEditionTests(ITestOutputHelper output)
         laid.TaggedWords.Should().BeGreaterThan(340_000);
     }
 
-    private bool Absent()
-    {
-        if (File.Exists(TestResources.SynodalStrong))
-        {
-            return false;
-        }
-
-        output.WriteLine("The tagged Synodal is not on disk; run scripts/fetch-synodal-strong.ps1");
-        return true;
-    }
+    private static void TheEditionIsOnDisk() =>
+        File.Exists(TestResources.SynodalStrong).Should().BeTrue(
+            "the tagged Synodal is read from {0}; run scripts/fetch-synodal-strong.ps1", TestResources.SynodalStrong);
 }
