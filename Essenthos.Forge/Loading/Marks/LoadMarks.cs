@@ -68,7 +68,7 @@ internal sealed class LoadMarks(
                 reader.GetFieldValue<DateTimeOffset>(5));
         }
 
-        _statements = new StatementTables(tables.Tables);
+        _statements = new StatementTables(tables.Tables, new NpgsqlConnectionStringBuilder(connectionString).Database);
     }
 
     public void Dispose() => _statements?.Dispose();

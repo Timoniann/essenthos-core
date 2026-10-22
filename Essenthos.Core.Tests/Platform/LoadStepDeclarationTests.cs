@@ -35,10 +35,6 @@ public sealed class LoadStepDeclarationTests(ITestOutputHelper output) : IDispos
         digests["TR1894"].Should().NotBe(digests["SBLGNT"]);
         digests["lexicon"].Should().NotBe(digests["syntax"]);
         CodeDigest.ForTheForge().Of(Steps().Single(step => step.Name == "SWETE").Run).Digest.Should().Be(digests["SWETE"]);
-
-        var verify = code.Of(Steps().Single(step => step.Name == "verify").Run).Lines;
-        output.WriteLine($"verify reaches {verify.Count} lines");
-        File.WriteAllLines(Path.Combine(Path.GetTempPath(), "essenthos-verify-reach.txt"), verify);
     }
 
     /// <summary>The files compiled into the Forge that no step of the load reads, each with who does.</summary>

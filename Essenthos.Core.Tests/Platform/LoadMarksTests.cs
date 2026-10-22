@@ -236,7 +236,7 @@ public sealed class LoadMarksTests : IDisposable
     public async Task EveryKindOfStatementIsHeard()
     {
         var tables = new HashSet<string>(StringComparer.Ordinal) { "provenance", "strong_entry", "text", "verse" };
-        using var heard = new StatementTables(tables);
+        using var heard = new StatementTables(tables, new NpgsqlConnectionStringBuilder(_connectionString).Database);
         heard.Start();
 
         await _db.Provenances.CountAsync();

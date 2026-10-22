@@ -20,16 +20,24 @@ internal sealed partial class StatementTables : IDisposable
 
     private const string QueryText = "db.query.text";
 
+    private const string Namespace = "db.namespace";
+
     private readonly IReadOnlySet<string>? _tables;
+    private readonly string? _database;
     private readonly ActivityListener _listener;
     private readonly ConcurrentDictionary<string, byte> _named = new(StringComparer.Ordinal);
     private long _statements;
     private volatile bool _listening;
 
     /// <param name="tables">The tables to listen for; null for every name a statement uses.</param>
-    public StatementTables(IReadOnlySet<string>? tables)
+    /// <param name="database">
+    /// The database to listen to: a statement Npgsql says went to another one is not heard. One it says
+    /// nothing about is heard.
+    /// </param>
+    public StatementTables(IReadOnlySet<string>? tables, string? database = null)
     {
         _tables = tables;
+        _database = database;
         _listener = new ActivityListener
         {
             ShouldListenTo = source => source.Name == "Npgsql",
@@ -96,6 +104,11 @@ internal sealed partial class StatementTables : IDisposable
     private void Heard(Activity activity)
     {
         if (!_listening || activity.GetTagItem(QueryText) is not string sql)
+        {
+            return;
+        }
+
+        if (_database is not null && activity.GetTagItem(Namespace) is string database && database != _database)
         {
             return;
         }
