@@ -631,6 +631,7 @@ internal sealed class DatasetLoader(
                 new LoadStep("spellings", CountHowEachTextSpellsEachName)),
             .. In(LoadModules.Derived,
                 new LoadStep("lexicon-phrases", CountTheLexiconsPhrases),
+                new LoadStep("search-forms", CountTheFormsASearchMatches),
                 new LoadStep("locations", cancellationToken => PutThePlacesOnTheMap(resources, cancellationToken)) { Files = ["OpenBible"] },
                 new LoadStep("commandments", CountTheCommandments) { Files = [new StepFile("Resources/Maimonides", Built: true)] },
                 new LoadStep("reigns", SetTheProphetsInTheirKingsDays),
@@ -2713,6 +2714,19 @@ internal sealed class DatasetLoader(
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<StrongRenderingLoader>();
+        status.Record(await loader.Load(cancellationToken));
+    }
+
+    /// <summary>
+    /// Every word form of every text with its stem, which the verse search matches a typed word
+    /// through. After the texts and every repair to their words, which is all it counts.
+    /// </summary>
+    private async Task CountTheFormsASearchMatches(CancellationToken cancellationToken)
+    {
+        status.Starting("the word forms a search matches");
+
+        using var scope = services.CreateScope();
+        var loader = scope.ServiceProvider.GetRequiredService<SearchFormLoader>();
         status.Record(await loader.Load(cancellationToken));
     }
 

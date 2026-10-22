@@ -130,6 +130,13 @@ internal static class SearchEndpoints
                 return Results.BadRequest(new ProblemResponse(SearchTerms.ShortPartHint(tooShort)));
             }
 
+            if (!Unspaced.Contains(language))
+            {
+                return Results.Ok(await VerseSearch.Search(
+                    db, text.Id, text.Slug, language, TypedQuery.Parse(q), scope, widening,
+                    Math.Max(0, skip ?? 0), Math.Clamp(take ?? 20, 1, MostPerPage), cancellationToken));
+            }
+
             // Every term narrows the set of verses. Each is resolved on its own so that the
             // response can say how each one was matched, and so that one term falling back to a
             // substring does not quietly change how the others were read.
@@ -314,7 +321,21 @@ internal record SearchResultsResponse(
     int Take,
     IList<SearchHitResponse> Items,
     string Matching,
-    IList<SearchTermResponse> Terms);
+    IList<SearchTermResponse> Terms)
+{
+    /// <summary>
+    /// No verse holds every word asked for, and these are the verses holding most of them. Each hit
+    /// says so too.
+    /// </summary>
+    public bool Partial { get; init; }
+
+    /// <summary>
+    /// The query again with a near spelling in place of a word the text does not print, or prints
+    /// rarely beside one it prints often: <em>воскресення</em> for <em>воскресіння</em>. Offered, never
+    /// searched for silently; null where there is nothing to offer.
+    /// </summary>
+    public string? Suggestion { get; init; }
+}
 
 /// <param name="Snippet">
 /// The verse, rebuilt from its words with the matched ones wrapped in <c>&lt;em&gt;</c> and
@@ -328,6 +349,22 @@ internal record SearchHitResponse(
     int Chapter,
     int Verse,
     string Snippet,
-    string Label);
+    string Label)
+{
+    /// <summary>
+    /// <c>phrase</c> where the verse holds the words side by side as typed, <c>all</c> where it holds
+    /// every word asked for, <c>most</c> where it holds only most of them; null where the search does
+    /// not rank.
+    /// </summary>
+    public string? Match { get; init; }
+}
 
-internal record SearchTermResponse(string Text, string Matching);
+/// <param name="Matching">How the term was matched: <c>stemmed</c>, <c>folded</c>, <c>printed-word</c> or <c>substring</c>.</param>
+internal record SearchTermResponse(string Text, string Matching)
+{
+    /// <summary>A joint of the language — <em>і</em>, <em>й</em>, <em>у</em>, <em>в</em>, <em>та</em> — which a verse need not hold.</summary>
+    public bool Optional { get; init; }
+
+    /// <summary>A near spelling the text prints, offered for this term; null where there is none.</summary>
+    public string? Instead { get; init; }
+}

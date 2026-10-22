@@ -1,4 +1,4 @@
-using Essenthos.Core.Configuration;
+﻿using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -39,6 +39,7 @@ internal static partial class EncyclopediaEndpoints
                 return refusal!;
             }
 
+            var near = false;
             if (q is { Length: > 0 })
             {
                 // Every name the entity is called by, in every language and every text — Peter is
@@ -50,6 +51,12 @@ internal static partial class EncyclopediaEndpoints
                 // below high enough to compile it — which costs more than the query. Handed the ids,
                 // it knows.
                 var matched = await EntityNames.Matching(db, entities, q).Select(e => e.Id).ToListAsync(cancellationToken);
+                if (matched.Count == 0)
+                {
+                    matched = await EntityNames.Near(db, entities, q, cancellationToken);
+                    near = matched.Count > 0;
+                }
+
                 entities = db.Entities.Where(e => matched.Contains(e.Id));
             }
 
@@ -111,6 +118,12 @@ internal static partial class EncyclopediaEndpoints
                 db, page.Select(e => e.Slug), words, cancellationToken, language);
             var pictured = await ImageEndpoints.Leading(
                 db, slugs, cancellationToken, settings.Is(SiteSettings.GeneratedImages));
+            var undescribed = named
+                .Where(row => !described.ContainsKey(row.Slug)
+                              && page.First(e => e.Slug == row.Slug) is { Distinguisher: null, LocalDistinguisher: null })
+                .ToDictionary(row => row.Id, row => row.Slug);
+            var first = (await FirstVerses(db, undescribed.Keys, cancellationToken))
+                .ToDictionary(pair => undescribed[pair.Key], pair => pair.Value);
 
             return Results.Ok(new EntityListResponse(
                 total,
@@ -119,8 +132,12 @@ internal static partial class EncyclopediaEndpoints
                     {
                         Descriptor = described.GetValueOrDefault(e.Slug),
                         Thumbnail = pictured.GetValueOrDefault(e.Slug),
+                        FirstVerse = first.GetValueOrDefault(e.Slug),
                     }),
-                ]));
+                ])
+            {
+                Near = near,
+            });
         });
 
         // How far each layer of the encyclopedia actually reaches, measured rather than declared.
@@ -164,5 +181,40 @@ internal static partial class EncyclopediaEndpoints
                     db, named, language, cancellationToken, settings.Is(SiteSettings.GeneratedImages), prose))
                 : Results.BadRequest(new ProblemResponse(
                     $"Name between 1 and {FamilyEndpoints.MostPeople} people, as slugs=moses,aaron.")));
+    }
+
+    /// <summary>
+    /// The first verse that names each of these entities, in canonical order: what tells two records of
+    /// one name apart in a list where neither has a line of its own.
+    /// </summary>
+    internal static async Task<Dictionary<int, VerseRefResponse>> FirstVerses(
+        AppDbContext db, IEnumerable<int> entities, CancellationToken cancellationToken)
+    {
+        var ids = entities.ToList();
+        if (ids.Count == 0)
+        {
+            return [];
+        }
+
+        var firsts = await db.EntityVerses
+            .Where(v => ids.Contains(v.EntityId))
+            .Where(ShownVerses.IsShown)
+            .GroupBy(v => v.EntityId)
+            .Select(g => new
+            {
+                g.Key,
+                First = g.Min(v => (v.CanonicalBook * BookStride) + (v.CanonicalChapter * ChapterStride) + v.CanonicalVerse),
+            })
+            .ToListAsync(cancellationToken);
+
+        return firsts.ToDictionary(
+            row => row.Key,
+            row =>
+            {
+                var book = row.First / BookStride;
+                return new VerseRefResponse(
+                    book, BookReferences.Name(book), BookReferences.Slug(book),
+                    row.First % BookStride / ChapterStride, row.First % ChapterStride);
+            });
     }
 }

@@ -205,6 +205,7 @@ builder.Services.AddScoped<KinStatementLoader>();
 builder.Services.AddScoped<EntityRenderingLoader>();
 builder.Services.AddScoped<NameConsensusPass>();
 builder.Services.AddScoped<StrongRenderingLoader>();
+builder.Services.AddScoped<SearchFormLoader>();
 builder.Services.AddScoped<OwnRelationshipLoader>();
 builder.Services.AddScoped<DuplicateRecordLoader>();
 builder.Services.AddScoped<RefiledTieLoader>();

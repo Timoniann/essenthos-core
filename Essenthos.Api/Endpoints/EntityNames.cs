@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
@@ -198,21 +199,112 @@ internal static class EntityNames
     }
 
     /// <summary>
-    /// The entities some name of which contains what was typed: the English headword, the slug, every
-    /// label a dataset gives it, its name in any language this corpus holds, and every spelling any
-    /// text prints for it — so <em>Аарон</em>, <em>Aarón</em>, <em>Aarons</em> and <em>אהרן</em> all
-    /// find Aaron.
+    /// The entities some name of which has a word that opens with what was typed: the English headword,
+    /// the slug, every label a dataset gives it, its name in any language this corpus holds, and every
+    /// spelling any text prints for it — so <em>Аарон</em>, <em>Aarón</em>, <em>Aarons</em> and
+    /// <em>אהרן</em> all find Aaron, and <em>Шемеш</em> finds <em>Бет-Шемеш</em>. A word that only holds
+    /// it somewhere inside does not: <em>Херувими</em> is not found for <em>Рувим</em>, nor <em>Іоанна</em>
+    /// for <em>Анна</em>.
     /// </summary>
     /// <remarks>
     /// A title in front of the name is read past as well: <em>цар Давид</em> finds David by
-    /// <em>Давид</em>, as <em>King David</em> finds him by the whole label.
+    /// <em>Давид</em>, as <em>King David</em> finds him by the whole label. A name typed in Cyrillic is
+    /// also looked for in Latin letters (<see cref="NameTransliteration"/>), and a familiar name no text
+    /// prints finds the record it stands for (<see cref="FamiliarNames"/>).
     /// </remarks>
     public static IQueryable<Entity> Matching(AppDbContext db, IQueryable<Entity> entities, string q)
     {
-        var matching = entities.Where(Containing(db, q, titles: true));
-        return TitleWords.Without(q) is { } name
-            ? matching.Union(entities.Where(Containing(db, name, titles: true)))
-            : matching;
+        IQueryable<Entity>? matching = null;
+        foreach (var typed in Typed(q))
+        {
+            var holding = entities.Where(Holding(db, typed, titles: true));
+            matching = matching is null ? holding : matching.Union(holding);
+        }
+
+        var familiar = Familiar(q);
+        if (familiar.Count > 0)
+        {
+            var named = entities.Where(e => familiar.Contains(e.Slug));
+            matching = matching is null ? named : matching.Union(named);
+        }
+
+        return matching ?? entities.Where(_ => false);
+    }
+
+    /// <summary>
+    /// The entities a name of which is spelled near what was typed, for a search that found none by
+    /// name: <em>Рамсес</em> is one letter from <em>Рамесес</em>. Trigram likeness over every spelling
+    /// a text prints and every name form, at <see cref="NearEnough"/> or closer.
+    /// </summary>
+    public static async Task<List<int>> Near(
+        AppDbContext db, IQueryable<Entity> entities, string q, CancellationToken cancellationToken)
+    {
+        var near = new HashSet<int>();
+        foreach (var typed in Typed(q).Select(NameFolding.Fold).Where(t => t.Length >= ShortestNear).Distinct())
+        {
+            near.UnionWith(await db.Database.SqlQuery<int>(
+                    $"""
+                     SELECT entity_id AS "Value" FROM entity_rendering
+                     WHERE folded % {typed} AND similarity(folded, {typed}) >= {NearEnough}
+                     UNION
+                     SELECT entity_id FROM entity_name_form
+                     WHERE form % {typed} AND similarity(lower(form), {typed}) >= {NearEnough}
+                     """)
+                .ToListAsync(cancellationToken));
+        }
+
+        if (near.Count == 0)
+        {
+            return [];
+        }
+
+        return await entities.Where(e => near.Contains(e.Id)).Select(e => e.Id).ToListAsync(cancellationToken);
+    }
+
+    /// <summary>How alike two spellings' trigrams must be for one to be offered for the other.</summary>
+    private const double NearEnough = 0.45;
+
+    /// <summary>The fewest letters a name has before a near spelling of it is looked for.</summary>
+    private const int ShortestNear = 4;
+
+    /// <summary>What was typed, the name without the title in front of it, and both in Latin letters.</summary>
+    private static List<string> Typed(string q)
+    {
+        var names = new List<string> { q };
+        if (TitleWords.Without(q) is { } name)
+        {
+            names.Add(name);
+        }
+
+        foreach (var one in names.ToList())
+        {
+            names.AddRange(NameTransliteration.Latin(one));
+        }
+
+        return [.. names.Distinct()];
+    }
+
+    private static List<string> Familiar(string q) =>
+        [.. FamiliarNames.Of(q).Concat(TitleWords.Without(q) is { } name ? FamiliarNames.Of(name) : [])];
+
+    /// <summary>
+    /// A pattern finding what was typed at the start of a word: at the start of the name, or after
+    /// anything that is not a letter or a digit — <em>Бет-Шемеш</em>, <em>Kirjath-sannah</em>.
+    /// </summary>
+    internal static string WordStart(string typed)
+    {
+        var pattern = new System.Text.StringBuilder("(^|[^[:alnum:]])");
+        foreach (var c in typed.Trim())
+        {
+            if (!char.IsLetterOrDigit(c) && !char.IsWhiteSpace(c))
+            {
+                pattern.Append('\\');
+            }
+
+            pattern.Append(c);
+        }
+
+        return pattern.ToString();
     }
 
     /// <summary>
@@ -225,22 +317,27 @@ internal static class EntityNames
     public static bool IsTitle(string? kind) => kind is not null && TitleKinds.Contains(kind);
 
     /// <summary>
-    /// Whether some name of the entity contains what was typed — and, with <paramref name="titles"/>,
-    /// a title of it too.
+    /// Whether a word of some name of the entity opens with what was typed — and, with
+    /// <paramref name="titles"/>, a word of a title of it too. A spelling a text prints is compared
+    /// folded, so the points and accents nobody types do not stand in the way.
     /// </summary>
-    private static Expression<Func<Entity, bool>> Containing(AppDbContext db, string q, bool titles)
+    private static Expression<Func<Entity, bool>> Holding(AppDbContext db, string q, bool titles)
     {
-        var like = LikePatterns.Containing(q);
+        var start = WordStart(q);
         var folded = NameFolding.Fold(q);
-        var foldedLike = LikePatterns.Containing(folded);
+        var opening = LikePatterns.StartingWith(folded);
+        var inside = LikePatterns.Containing(folded);
         var anyFolded = folded.Length > 0;
 
         return e =>
-            EF.Functions.ILike(e.Name, like)
-            || EF.Functions.ILike(e.Slug, like)
-            || e.Names.Any(n => (titles || n.Kind == null || !TitleKinds.Contains(n.Kind)) && EF.Functions.ILike(n.Label, like))
-            || db.EntityNameForms.Any(f => f.EntityId == e.Id && EF.Functions.ILike(f.Form, like))
-            || (anyFolded && db.EntityRenderings.Any(r => r.EntityId == e.Id && EF.Functions.Like(r.Folded, foldedLike)));
+            Regex.IsMatch(e.Name, start, RegexOptions.IgnoreCase)
+            || Regex.IsMatch(e.Slug, start, RegexOptions.IgnoreCase)
+            || e.Names.Any(n => (titles || n.Kind == null || !TitleKinds.Contains(n.Kind))
+                                && Regex.IsMatch(n.Label, start, RegexOptions.IgnoreCase))
+            || db.EntityNameForms.Any(f => f.EntityId == e.Id && Regex.IsMatch(f.Form, start, RegexOptions.IgnoreCase))
+            || (anyFolded && db.EntityRenderings.Any(r => r.EntityId == e.Id
+                && (EF.Functions.Like(r.Folded, opening)
+                    || (EF.Functions.Like(r.Folded, inside) && Regex.IsMatch(r.Form, start, RegexOptions.IgnoreCase)))));
     }
 
     /// <summary>
@@ -278,8 +375,13 @@ internal static class EntityNames
         // Each band beyond the shown name is a set of ids read once, which the database hashes,
         // rather than a test of every row's names and spellings one row at a time: the second costs
         // half a second on a two-letter search, which Go To asks as the reader types.
-        var calledThat = name == q ? CalledExactly(db, q) : CalledExactly(db, q).Concat(CalledExactly(db, name));
-        var named = name == q ? NamedContaining(db, q) : NamedContaining(db, q).Concat(NamedContaining(db, name));
+        var typed = Typed(q);
+        var familiar = Familiar(q);
+        var calledThat = typed.Skip(1)
+            .Aggregate(CalledExactly(db, typed[0]), (ids, one) => ids.Concat(CalledExactly(db, one)))
+            .Concat(db.Entities.Where(e => familiar.Contains(e.Slug)).Select(e => e.Id));
+        var named = typed.Skip(1)
+            .Aggregate(NamedContaining(db, typed[0]), (ids, one) => ids.Concat(NamedContaining(db, one)));
 
         return entities.OrderBy(l =>
             EF.Functions.ILike(l.Shown, exactly) || EF.Functions.ILike(l.Shown, exactName)
@@ -307,20 +409,30 @@ internal static class EntityNames
             .Concat(db.EntityRenderings.Where(r => folded.Length > 0 && r.Folded == folded).Select(r => r.EntityId));
     }
 
-    /// <summary>The entities some name of which — not a title — holds what was typed.</summary>
+    /// <summary>The entities a word of some name of which — not a title — opens with what was typed.</summary>
     private static IQueryable<int> NamedContaining(AppDbContext db, string typed)
     {
-        var like = LikePatterns.Containing(typed);
+        var start = WordStart(typed);
         var folded = NameFolding.Fold(typed);
-        var foldedLike = LikePatterns.Containing(folded);
+        var opening = LikePatterns.StartingWith(folded);
+        var inside = LikePatterns.Containing(folded);
 
-        return db.Entities.Where(e => EF.Functions.ILike(e.Name, like) || EF.Functions.ILike(e.Slug, like)).Select(e => e.Id)
+        return db.Entities
+            .Where(e => Regex.IsMatch(e.Name, start, RegexOptions.IgnoreCase)
+                        || Regex.IsMatch(e.Slug, start, RegexOptions.IgnoreCase))
+            .Select(e => e.Id)
             .Concat(db.EntityNames
-                .Where(n => (n.Kind == null || !TitleKinds.Contains(n.Kind)) && EF.Functions.ILike(n.Label, like))
+                .Where(n => (n.Kind == null || !TitleKinds.Contains(n.Kind))
+                            && Regex.IsMatch(n.Label, start, RegexOptions.IgnoreCase))
                 .Select(n => n.EntityId))
-            .Concat(db.EntityNameForms.Where(f => EF.Functions.ILike(f.Form, like)).Select(f => f.EntityId))
+            .Concat(db.EntityNameForms
+                .Where(f => Regex.IsMatch(f.Form, start, RegexOptions.IgnoreCase))
+                .Select(f => f.EntityId))
             .Concat(db.EntityRenderings
-                .Where(r => folded.Length > 0 && EF.Functions.Like(r.Folded, foldedLike))
+                .Where(r => folded.Length > 0
+                            && (EF.Functions.Like(r.Folded, opening)
+                                || (EF.Functions.Like(r.Folded, inside)
+                                    && Regex.IsMatch(r.Form, start, RegexOptions.IgnoreCase))))
                 .Select(r => r.EntityId));
     }
 
