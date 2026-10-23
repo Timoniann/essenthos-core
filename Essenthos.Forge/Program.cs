@@ -45,6 +45,8 @@ UserSecrets.AddBelowEnvironment(builder.Configuration, typeof(Program).Assembly)
 // password stops the process at startup with the message that says what to set.
 var databaseConnection = DatabaseConnection.Read(builder.Configuration);
 
+AlignmentStore.Configure(builder.Configuration, builder.Environment.ContentRootPath);
+
 // Every context and every command made from its connection waits as long as the configuration says,
 // so no step is the one that forgot to raise Npgsql's thirty seconds.
 var commandTimeout = new Npgsql.NpgsqlConnectionStringBuilder(databaseConnection).CommandTimeout;

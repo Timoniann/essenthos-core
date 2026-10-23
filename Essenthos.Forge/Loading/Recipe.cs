@@ -2,6 +2,7 @@
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Loading.Links;
 using Essenthos.Core.Verbs;
 using Npgsql;
@@ -353,6 +354,7 @@ internal static class Recipe
         start.Environment[Replaying] = step.ToString();
         start.Environment["Database__ConnectionString"] = connectionString;
         start.Environment["Dataset__ResourcesPath"] = resources;
+        start.Environment["Dataset__AlignmentsPath"] = AlignmentStore.Root;
         if (statements is not null)
         {
             start.Environment[Marks.StatementTables.ChildLog] = statements;

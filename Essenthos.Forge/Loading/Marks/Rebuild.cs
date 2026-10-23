@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Database;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
@@ -86,7 +87,9 @@ internal static partial class Rebuild
             await db.Database.MigrateAsync(cancellationToken);
         }
 
-        logger.LogInformation("Rebuild: loading {Database} from nothing, every step, no model run, from {Resources}", database, resources);
+        logger.LogInformation(
+            "Rebuild: loading {Database} from nothing, every step, no model run, from {Resources}, with the alignments stored in {Alignments}",
+            database, resources, AlignmentStore.Root);
         if (await Forge(["load", "--no-skip"], target, resources, cancellationToken) is not 0 and var loadExit)
         {
             logger.LogError("Rebuild: the load into {Database} failed ({Exit}); the database is left as it stands", database, loadExit);
@@ -124,6 +127,7 @@ internal static partial class Rebuild
 
         start.Environment["Database__ConnectionString"] = connectionString;
         start.Environment["Dataset__ResourcesPath"] = resources;
+        start.Environment["Dataset__AlignmentsPath"] = AlignmentStore.Root;
         start.Environment[ModelRuns.Forbidden] = "1";
         using var process = Process.Start(start) ?? throw new InvalidOperationException("The Forge could not be started.");
         await process.WaitForExitAsync(cancellationToken);

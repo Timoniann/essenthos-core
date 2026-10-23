@@ -71,9 +71,14 @@ if selected:
     if missing:
         raise SystemExit('Unknown corpus folder(s): ' + ', '.join(sorted(missing)))
 
+# The aligner's own trained workspaces (Resources/Alignments): ours, not a fetched source, ten gigabytes
+# rewritten whenever a pair is trained again. The backup mirrors them; a fingerprint of them would only
+# ever say that a training ran.
+generated = {'Alignments'}
+
 for name in sorted(selected if selected is not None else available):
     d = os.path.join(root, name)
-    if not os.path.isdir(d):
+    if not os.path.isdir(d) or name in generated:
         continue
     files = []
     for dirpath, _, filenames in os.walk(d):

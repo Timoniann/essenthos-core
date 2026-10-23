@@ -21,7 +21,9 @@
       essenthos-core  the rebuild itself, with no git remote either.
       Resources/      1.2 GB of third-party corpus sources. Thirteen of nineteen folders have no
                       fetch script and exist because somebody downloaded them once; several are one
-                      repository deletion from unrecoverable.
+                      repository deletion from unrecoverable. With them, Resources/Alignments: the
+                      aligner's trained workspaces, about 11 GB and hours of CPU, which a rebuild from
+                      nothing reads instead of training.
 
     Resources is mirrored rather than archived, so a second run copies only what changed and takes
     seconds. Everything else is a git bundle: one file, the whole history, and `git bundle verify`
