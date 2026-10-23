@@ -15,10 +15,10 @@ namespace Essenthos.Core.Loading.Marks;
 /// <para>
 /// It never touches the database the Forge is configured for, nor the reference beyond reading it, and it
 /// swaps nothing: putting a rebuilt corpus in place of the live one is a separate step, taken by hand. No
-/// model runs (<see cref="ModelRuns"/>): the recipe's alignments come from the aligner's stored
-/// workspaces, and a pair whose stored alignment no longer fits its words stops the rebuild rather than
-/// training again. The load writes review lists and reads the recipe under the Resources it is given,
-/// so it is given a folder of its own.
+/// model runs but the aligner's (<see cref="ModelRuns"/>): the recipe's alignments come from the aligner's
+/// stored workspaces, and a pair whose stored alignment was made from other words is trained again into a
+/// workspace keyed by its own inputs, beside the one the live corpus's runs use. The load writes review
+/// lists and reads the recipe under the Resources it is given, so it is given a folder of its own.
 /// </para>
 /// </summary>
 internal static partial class Rebuild
@@ -88,7 +88,7 @@ internal static partial class Rebuild
         }
 
         logger.LogInformation(
-            "Rebuild: loading {Database} from nothing, every step, no model run, from {Resources}, with the alignments stored in {Alignments}",
+            "Rebuild: loading {Database} from nothing, every step, no model run but the aligner's, from {Resources}, with the alignments stored in {Alignments}",
             database, resources, AlignmentStore.Root);
         if (await Forge(["load", "--no-skip"], target, resources, cancellationToken) is not 0 and var loadExit)
         {
@@ -129,6 +129,7 @@ internal static partial class Rebuild
         start.Environment["Dataset__ResourcesPath"] = resources;
         start.Environment["Dataset__AlignmentsPath"] = AlignmentStore.Root;
         start.Environment[ModelRuns.Forbidden] = "1";
+        start.Environment[ModelRuns.AlignerAllowed] = "1";
         using var process = Process.Start(start) ?? throw new InvalidOperationException("The Forge could not be started.");
         await process.WaitForExitAsync(cancellationToken);
         return process.ExitCode;

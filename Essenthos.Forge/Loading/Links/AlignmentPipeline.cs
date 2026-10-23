@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 using System.Diagnostics;
 using System.Globalization;
+using System.Security.Cryptography;
 using System.Text;
 using Essenthos.Core.BetaMasaheft;
 using Essenthos.Core.Configuration;
@@ -238,7 +239,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// made while a text lacked the Psalms put each verse's pairs on the verse 2,461 lines earlier
     /// from Psalm 1:1 to the end, and left the last 2,461 with none. So the inputs are written out
     /// again and compared with the ones the answer was trained on, and anything that differs trains
-    /// afresh.
+    /// afresh (<see cref="Answer"/>).
     /// </para>
     /// </summary>
     private async Task<string> Align(
@@ -253,70 +254,178 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         IReadOnlyDictionary<(int Book, int Chapter, int Verse), List<(int Source, int Target)>>? anchors = null,
         bool shareAnchorTokens = false)
     {
-        var sourceFile = Path.Combine(workspace, "source.txt");
-        var targetFile = Path.Combine(workspace, "target.txt");
-        var anchorFile = Path.Combine(workspace, "anchors.txt");
-        var alignmentFile = Path.Combine(workspace, "alignment", "pharaoh.txt");
-        var modelPrefix = Path.Combine(workspace, "model", $"{fromSlug}-{toSlug}");
-
         var shared = shareAnchorTokens && anchors is not null
             ? SharedAnchorTokens(source, target, anchors)
             : null;
-        var inputs = new List<(string Path, string[] Lines)>
+        var inputs = new List<(string Name, string[] Lines)>
         {
-            (sourceFile, Lines(addresses, source, shared?.Source)),
-            (targetFile, Lines(addresses, target, shared?.Target)),
+            (SourceFile, Lines(addresses, source, shared?.Source)),
+            (TargetFile, Lines(addresses, target, shared?.Target)),
         };
         if (anchors is not null)
         {
-            inputs.Add((anchorFile, AnchorLines(addresses, anchors)));
+            inputs.Add((AnchorFile, AnchorLines(addresses, anchors)));
         }
 
-        var stored = Stored(alignmentFile);
-        if (stored == StoredAlignment.Whole && Unchanged(inputs))
+        var folder = await Answer(workspace, modelType, inputs, AlignmentFile, async training =>
         {
-            logger.LogInformation("Reusing the alignment already in {Workspace}", workspace);
-            return alignmentFile;
+            var modelPrefix = Path.Combine(training, "model", $"{fromSlug}-{toSlug}");
+            Directory.CreateDirectory(Path.GetDirectoryName(modelPrefix)!);
+            Directory.CreateDirectory(Path.Combine(training, "alignment"));
+
+            logger.LogInformation("Training {Model} over {Verses} verse pairs", modelType, addresses.Count);
+            var train = new List<string> { "train", "alignment-model", "-mt", modelType };
+            if (anchors is not null)
+            {
+                train.Add("-a");
+                train.Add(Path.Combine(training, AnchorFile));
+            }
+
+            train.Add(modelPrefix);
+            train.Add(Path.Combine(training, SourceFile));
+            train.Add(Path.Combine(training, TargetFile));
+            await Machine([.. train], cancellationToken);
+            await AlignWhole(modelType, modelPrefix, Path.Combine(training, SourceFile),
+                Path.Combine(training, TargetFile), Path.Combine(training, AlignmentFile), cancellationToken);
+        });
+
+        return Path.Combine(folder, AlignmentFile);
+    }
+
+    private const string SourceFile = "source.txt";
+    private const string TargetFile = "target.txt";
+    private const string AnchorFile = "anchors.txt";
+    internal static readonly string AlignmentFile = Path.Combine("alignment", "pharaoh.txt");
+
+    /// <summary>
+    /// The folder holding the answer made from exactly these inputs, trained by <paramref name="train"/>
+    /// if no folder does.
+    ///
+    /// <para>
+    /// A workspace keeps one answer per set of inputs, each in a folder named by their digest
+    /// (<see cref="Key"/>), so two runs that align one pair from different words — a recipe line before
+    /// and after a text is reloaded, live's words and a cold build's — keep both and each finds its own.
+    /// An answer stored before answers were keyed lies in the workspace itself and is reused while its
+    /// inputs are these. Nothing an earlier run stored is cleared or rewritten.
+    /// </para>
+    /// <para>
+    /// Training happens in a folder beside the keyed one, which is renamed into place only once the
+    /// answer is written and not empty, so a run stopped half way leaves no answer rather than a partial
+    /// one, and an empty answer is never reused.
+    /// </para>
+    /// </summary>
+    internal async Task<string> Answer(
+        string workspace,
+        string modelType,
+        IReadOnlyList<(string Name, string[] Lines)> inputs,
+        string answer,
+        Func<string, Task> train)
+    {
+        var keyed = Path.Combine(workspace, Key(modelType, inputs));
+        foreach (var folder in new[] { keyed, workspace })
+        {
+            if (Holds(folder, inputs, answer))
+            {
+                logger.LogInformation("Reusing the {Answer} already in {Workspace}",
+                    answer == AlignmentFile ? "alignment" : "model", folder);
+                return folder;
+            }
         }
 
-        RefuseToTrain(workspace, stored == StoredAlignment.Whole ? StoredAlignment.OfOtherWords : stored);
+        var standing = Directory.Exists(keyed) ? keyed : workspace;
+        var stored = Stored(Path.Combine(standing, answer)) is var found && found == StoredAlignment.Whole
+            ? StoredAlignment.OfOtherWords
+            : found;
+        RefuseToTrain(standing, stored);
         if (stored != StoredAlignment.None)
         {
             logger.LogWarning(
                 stored == StoredAlignment.Empty
-                    ? "The alignment in {Workspace} is empty; training {From} and {To} again"
-                    : "The alignment in {Workspace} was made from other verses than {From} and {To} share now; training again",
-                workspace, fromSlug, toSlug);
-            Directory.Delete(Path.GetDirectoryName(alignmentFile)!, recursive: true);
-            if (Directory.Exists(Path.GetDirectoryName(modelPrefix)))
+                    ? "The answer in {Workspace} is empty; training again into {Keyed}"
+                    : "The answer in {Workspace} was made from other words than the corpus holds now; training into {Keyed} beside it",
+                standing, keyed);
+        }
+
+        if (Directory.Exists(keyed))
+        {
+            Directory.Delete(keyed, recursive: true);
+        }
+
+        var training = $"{keyed}.training-{Guid.NewGuid():N}";
+        var clock = Stopwatch.StartNew();
+        try
+        {
+            Directory.CreateDirectory(training);
+            foreach (var (name, lines) in inputs)
             {
-                Directory.Delete(Path.GetDirectoryName(modelPrefix)!, recursive: true);
+                AlignmentStore.WriteWhole(Path.Combine(training, name), lines);
+            }
+
+            await train(training);
+            if (Stored(Path.Combine(training, answer)) != StoredAlignment.Whole)
+            {
+                throw new InvalidOperationException(
+                    $"Training in {training} finished without writing {answer}, so no answer was stored.");
+            }
+
+            try
+            {
+                Directory.Move(training, keyed);
+            }
+            catch (IOException) when (Holds(keyed, inputs, answer))
+            {
+                // Another run trained the same inputs first; its answer stands.
+                Directory.Delete(training, recursive: true);
+            }
+        }
+        catch
+        {
+            if (Directory.Exists(training))
+            {
+                Directory.Delete(training, recursive: true);
+            }
+
+            throw;
+        }
+
+        logger.LogInformation(
+            "Aligner trained: {Workspace} in {Seconds:F0} s ({Why}), stored in {Keyed}",
+            Path.GetFileName(workspace), clock.Elapsed.TotalSeconds,
+            stored switch
+            {
+                StoredAlignment.OfOtherWords => "the stored answer was made from other words",
+                StoredAlignment.Empty => "the stored answer was empty",
+                _ => "no answer was stored",
+            },
+            keyed);
+        return keyed;
+    }
+
+    /// <summary>Whether <paramref name="folder"/> holds a whole answer made from exactly these inputs.</summary>
+    private static bool Holds(string folder, IReadOnlyList<(string Name, string[] Lines)> inputs, string answer) =>
+        Stored(Path.Combine(folder, answer)) == StoredAlignment.Whole
+        && Unchanged(inputs.Select(input => (Path.Combine(folder, input.Name), input.Lines)));
+
+    /// <summary>
+    /// The name of the folder an answer made from these inputs is kept in: a digest of the model type
+    /// and of every input file's name and lines, so different words never share a folder.
+    /// </summary>
+    internal static string Key(string modelType, IEnumerable<(string Name, string[] Lines)> inputs)
+    {
+        using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
+        void Add(string text) => hash.AppendData(Encoding.UTF8.GetBytes(text + "\n"));
+        Add(modelType);
+        foreach (var (name, lines) in inputs)
+        {
+            Add(name);
+            Add(lines.Length.ToString(CultureInfo.InvariantCulture));
+            foreach (var line in lines)
+            {
+                Add(line);
             }
         }
 
-        Directory.CreateDirectory(workspace);
-        foreach (var (path, lines) in inputs)
-        {
-            AlignmentStore.WriteWhole(path, lines);
-        }
-        Directory.CreateDirectory(Path.GetDirectoryName(alignmentFile)!);
-        Directory.CreateDirectory(Path.GetDirectoryName(modelPrefix)!);
-
-        logger.LogInformation("Training {Model} over {Verses} verse pairs", modelType, addresses.Count);
-        var train = new List<string> { "train", "alignment-model", "-mt", modelType };
-        if (anchors is not null)
-        {
-            train.Add("-a");
-            train.Add(anchorFile);
-        }
-
-        train.Add(modelPrefix);
-        train.Add(sourceFile);
-        train.Add(targetFile);
-        await Machine([.. train], cancellationToken);
-        await AlignWhole(modelType, modelPrefix, sourceFile, targetFile, alignmentFile, cancellationToken);
-
-        return alignmentFile;
+        return "inputs-" + Convert.ToHexStringLower(hash.GetHashAndReset())[..16];
     }
 
     /// <summary>
@@ -385,7 +494,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     /// Aligns one pair of a pool with the model the whole pool trains, training it first unless the
     /// pool's inputs are the ones it was trained on. The pair's own answer is reused on the same
     /// terms as <see cref="Align"/>'s, and also only while the model it came from is still the one
-    /// standing.
+    /// standing: the model's stamp is one of the pair's inputs.
     /// </summary>
     private async Task<string> AlignPooled(
         string fromSlug,
@@ -399,41 +508,23 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
     {
         var (modelPrefix, stamp) = await PoolModel(fromSlug, pool, modelType, source, cancellationToken);
 
-        var sourceFile = Path.Combine(workspace, "source.txt");
-        var targetFile = Path.Combine(workspace, "target.txt");
-        var stampFile = Path.Combine(workspace, "model.txt");
-        var alignmentFile = Path.Combine(workspace, "alignment", "pharaoh.txt");
-        var inputs = new List<(string Path, string[] Lines)>
+        var inputs = new List<(string Name, string[] Lines)>
         {
-            (sourceFile, Lines(addresses, source)),
-            (targetFile, Lines(addresses, target)),
-            (stampFile, [stamp]),
+            (SourceFile, Lines(addresses, source)),
+            (TargetFile, Lines(addresses, target)),
+            ("model.txt", [stamp]),
         };
 
-        var stored = Stored(alignmentFile);
-        if (stored == StoredAlignment.Whole && Unchanged(inputs))
+        var folder = await Answer(workspace, modelType, inputs, AlignmentFile, async training =>
         {
-            logger.LogInformation("Reusing the alignment already in {Workspace}", workspace);
-            return alignmentFile;
-        }
+            Directory.CreateDirectory(Path.Combine(training, "alignment"));
+            logger.LogInformation("Aligning {Verses} verse pairs with the model {Pool} trained", addresses.Count,
+                string.Join(", ", pool));
+            await AlignWhole(modelType, modelPrefix, Path.Combine(training, SourceFile),
+                Path.Combine(training, TargetFile), Path.Combine(training, AlignmentFile), cancellationToken);
+        });
 
-        RefuseToTrain(workspace, stored == StoredAlignment.Whole ? StoredAlignment.OfOtherWords : stored);
-        if (File.Exists(alignmentFile))
-        {
-            File.Delete(alignmentFile);
-        }
-
-        Directory.CreateDirectory(workspace);
-        foreach (var (path, lines) in inputs)
-        {
-            AlignmentStore.WriteWhole(path, lines);
-        }
-
-        Directory.CreateDirectory(Path.GetDirectoryName(alignmentFile)!);
-        logger.LogInformation("Aligning {Verses} verse pairs with the model {Pool} trained", addresses.Count,
-            string.Join(", ", pool));
-        await AlignWhole(modelType, modelPrefix, sourceFile, targetFile, alignmentFile, cancellationToken);
-        return alignmentFile;
+        return Path.Combine(folder, AlignmentFile);
     }
 
     /// <summary>
@@ -448,10 +539,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         CancellationToken cancellationToken)
     {
         var workspace = AlignmentStore.Workspace($"{fromSlug}-{string.Join('-', pool)}");
-        var sourceFile = Path.Combine(workspace, "source.txt");
-        var targetFile = Path.Combine(workspace, "target.txt");
-        var stampFile = Path.Combine(workspace, "trained.txt");
-        var modelPrefix = Path.Combine(workspace, "model", fromSlug);
+        const string stampFile = "trained.txt";
 
         var sourceLines = new List<string>();
         var targetLines = new List<string>();
@@ -463,39 +551,25 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             targetLines.AddRange(Lines(addresses, target));
         }
 
-        var inputs = new List<(string Path, string[] Lines)>
+        var inputs = new List<(string Name, string[] Lines)>
         {
-            (sourceFile, [.. sourceLines]),
-            (targetFile, [.. targetLines]),
+            (SourceFile, [.. sourceLines]),
+            (TargetFile, [.. targetLines]),
         };
 
-        var stored = Stored(stampFile);
-        if (stored == StoredAlignment.Whole && Unchanged(inputs))
+        var folder = await Answer(workspace, modelType, inputs, stampFile, async training =>
         {
-            logger.LogInformation("Reusing the model already in {Workspace}", workspace);
-            return (modelPrefix, File.ReadAllText(stampFile).Trim());
-        }
+            var prefix = Path.Combine(training, "model", fromSlug);
+            Directory.CreateDirectory(Path.GetDirectoryName(prefix)!);
+            logger.LogInformation("Training {Model} over {Verses} verse pairs of {From} against {Pool}",
+                modelType, sourceLines.Count, fromSlug, string.Join(", ", pool));
+            await Machine(["train", "alignment-model", "-mt", modelType, prefix,
+                    Path.Combine(training, SourceFile), Path.Combine(training, TargetFile)],
+                cancellationToken);
+            AlignmentStore.WriteWhole(Path.Combine(training, stampFile), [Key(modelType, inputs)]);
+        });
 
-        RefuseToTrain(workspace, stored == StoredAlignment.Whole ? StoredAlignment.OfOtherWords : stored);
-        if (Directory.Exists(workspace))
-        {
-            Directory.Delete(workspace, recursive: true);
-        }
-
-        Directory.CreateDirectory(Path.GetDirectoryName(modelPrefix)!);
-        foreach (var (path, lines) in inputs)
-        {
-            AlignmentStore.WriteWhole(path, lines);
-        }
-
-        logger.LogInformation("Training {Model} over {Verses} verse pairs of {From} against {Pool}",
-            modelType, sourceLines.Count, fromSlug, string.Join(", ", pool));
-        await Machine(["train", "alignment-model", "-mt", modelType, modelPrefix, sourceFile, targetFile],
-            cancellationToken);
-
-        var stamp = Guid.NewGuid().ToString("N");
-        AlignmentStore.WriteWhole(stampFile, [stamp]);
-        return (modelPrefix, stamp);
+        return (Path.Combine(folder, "model", fromSlug), File.ReadAllText(Path.Combine(folder, stampFile)).Trim());
     }
 
     /// <summary>
@@ -1355,8 +1429,9 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         : new FileInfo(file).Length == 0 ? StoredAlignment.Empty
         : StoredAlignment.Whole;
 
-    /// <summary>Before anything in a workspace is cleared or the aligner is run (<see cref="ModelRuns"/>).</summary>
-    private static void RefuseToTrain(string workspace, StoredAlignment stored) => ModelRuns.Refuse(Refusal(workspace, stored));
+    /// <summary>Before the aligner is trained or run (<see cref="ModelRuns"/>).</summary>
+    private static void RefuseToTrain(string workspace, StoredAlignment stored) =>
+        ModelRuns.RefuseAligner(Refusal(workspace, stored));
 
     /// <summary>Why the workspace's answer cannot be reused, and what to do about it.</summary>
     internal static string Refusal(string workspace, StoredAlignment stored) => stored switch
@@ -1376,7 +1451,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
 
     private static async Task Machine(string[] arguments, CancellationToken cancellationToken)
     {
-        ModelRuns.Refuse($"`machine {string.Join(' ', arguments)}` would run the aligner");
+        ModelRuns.RefuseAligner($"`machine {string.Join(' ', arguments)}` would run the aligner");
         var start = new ProcessStartInfo("machine") { RedirectStandardOutput = true, RedirectStandardError = true };
         foreach (var argument in arguments)
         {

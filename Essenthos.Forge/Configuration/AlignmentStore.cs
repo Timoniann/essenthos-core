@@ -2,8 +2,9 @@ namespace Essenthos.Core.Configuration;
 
 /// <summary>
 /// Where SIL's aligner keeps what it trained: one workspace per pair of texts, holding the inputs, the
-/// model and the answer, reused by every later run whose inputs are the same. A rebuild from nothing
-/// trains nothing (<see cref="Loading.ModelRuns"/>) and reads only these, so they are kept with the
+/// model and the answer, reused by every later run whose inputs are the same — one answer per set of
+/// inputs, each in a folder of the workspace named by their digest. A rebuild from nothing reads these
+/// and trains only what they lack (<see cref="Loading.ModelRuns"/>), so they are kept with the
 /// corpus — <c>Resources/Alignments</c> unless <c>Dataset:AlignmentsPath</c> says otherwise: out of git,
 /// mirrored by the backup, reached from a rebuild's Resources folder through its junctions. The system's
 /// temporary folder, where they were kept before, is emptied by the operating system's cleanup.
