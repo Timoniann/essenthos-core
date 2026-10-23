@@ -14,6 +14,9 @@ public static class ProvenanceIds
     /// One statement: what is new comes back from the insert, what was there from the read. A pair
     /// another transaction commits while this one runs is in neither, because the read sees the
     /// table as it was when the statement began, so the caller asks again for what is missing.
+    /// The read matches the note by equality, and a missing note by <c>IS NULL</c>, so that both
+    /// columns reach the index: one source can carry a hundred thousand notes (an EVIDENTIA run's
+    /// every decision), and <c>IS NOT DISTINCT FROM</c> would read all of them for each pair.
     /// </summary>
     private const string Upsert =
         """
@@ -26,7 +29,11 @@ public static class ProvenanceIds
         SELECT id, source, note FROM written
         UNION ALL
         SELECT p.id, p.source, p.note
-        FROM wanted w JOIN provenance p ON p.source = w.source AND p.note IS NOT DISTINCT FROM w.note
+        FROM wanted w JOIN provenance p ON p.source = w.source AND p.note = w.note
+        UNION ALL
+        SELECT p.id, p.source, p.note
+        FROM wanted w JOIN provenance p ON p.source = w.source AND p.note IS NULL
+        WHERE w.note IS NULL
         """;
 
     private const int Attempts = 3;
