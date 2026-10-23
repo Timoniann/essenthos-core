@@ -35,6 +35,9 @@ public sealed class NameFormRemainderTests(WitnessDatabase database)
                 SourceId = record.Entity,
                 Source = "a frozen target fixture",
             };
+
+            // Named more often than the place beside it, so a line may say it is near it.
+            target.Verses.Add(new EntityVerse { CanonicalBook = 6, CanonicalChapter = 11, CanonicalVerse = 5, Source = "a frozen target fixture" });
             db.Entities.Add(target);
             var relation = record.Names!["ukr"].ContainsKey("locative") ? "city-in" : "near";
             var subject = new Entity

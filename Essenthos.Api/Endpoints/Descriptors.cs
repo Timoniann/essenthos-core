@@ -76,7 +76,10 @@ internal static class Descriptors
         }
 
         var spoken = DescriptorPhrasings.Spoken(language);
-        var phrasings = DescriptorPhrasings.For(spoken)!;
+        var phrasings = new Dictionary<string, Phrasing>(DescriptorPhrasings.For(spoken)!, StringComparer.Ordinal)
+        {
+            [PlaceLines.AllottedTo] = PlaceLines.Phrasings[spoken],
+        };
         var named = string.IsNullOrWhiteSpace(names) ? spoken : names.Trim();
 
         // Everything the target contributes is taken along this join rather than looked up per
@@ -155,7 +158,8 @@ internal static class Descriptors
         var (statedCounts, places) = await KinFacts.Statements(db, people, cancellationToken);
         var siblings = await SharedParents.Siblings(db, people, cancellationToken);
 
-        if (own.Count == 0 && written.Count == 0 && statedCounts.Count == 0 && siblings.Count == 0)
+        if (own.Count == 0 && written.Count == 0 && statedCounts.Count == 0 && siblings.Count == 0
+            && subjects.All(e => e.Kind != EntityKind.Place))
         {
             return [];
         }
@@ -178,6 +182,7 @@ internal static class Descriptors
             .OfType<Clause>()
             .ToList();
         var clauses = FamilyTies.Folded([.. own.Select(c => c with { TargetSex = SexOf(c.TargetEntityId, c.TargetSex) }), .. turned]);
+        clauses = await PlaceLines.Located(db, clauses, [.. subjects.Where(e => e.Kind == EntityKind.Place).Select(e => e.Id)], cancellationToken);
 
         // The brothers and sisters the parents give, where no clause says so of the pair already.
         var subjectSex = subjects.ToDictionary(e => e.Id, e => SexOf(e.Id, e.Sex));
