@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
@@ -18,8 +19,12 @@ internal sealed record EntityRenderingOutcome(
     IReadOnlyList<(string Text, int Entities)> ByText,
     TimeSpan Elapsed)
 {
+    /// <summary>Names in a language put back to the spelling its texts print (<see cref="PrintedNames"/>).</summary>
+    public int Renamed { get; init; }
+
     public override string ToString() =>
-        $"{Renderings} spellings of {Entities} entities counted from {Words} named words in {Elapsed}. " +
+        $"{Renderings} spellings of {Entities} entities counted from {Words} named words in {Elapsed}; " +
+        $"{Renamed} names in a language put back to the spelling its texts print. " +
         "Entities per text: " + string.Join(", ", ByText.Select(t => $"{t.Text} {t.Entities}"));
 }
 
@@ -89,6 +94,19 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
 
         var renderings = Renderings.Of(words, nominatives).ToList();
 
+        // A name a pass read off a few verses gives way to the one the texts print where the record
+        // is named, and the texts are headed again by it.
+        var renamed = await NamesAsPrinted(renderings, cancellationToken);
+        foreach (var name in renamed)
+        {
+            nominatives[(name.EntityId, name.Language)] = name.Cases[GrammaticalCases.Nominative]!;
+        }
+
+        if (renamed.Count > 0)
+        {
+            renderings = [.. Renderings.Of(words, nominatives)];
+        }
+
         // Only what changed is written, so a load that counts the same spellings leaves the rows as
         // they are, ids and all.
         var standing = await db.EntityRenderings
@@ -120,6 +138,7 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
             await writer.CompleteAsync(cancellationToken);
         }
 
+        await Rename(renamed, cancellationToken);
         await transaction.CommitAsync(cancellationToken);
 
         var slugs = await db.Texts.ToDictionaryAsync(t => t.Id, t => t.Slug, cancellationToken);
@@ -135,10 +154,94 @@ internal sealed class EntityRenderingLoader(AppDbContext db, ILogger<EntityRende
             renderings.Count,
             renderings.Select(r => r.EntityId).Distinct().Count(),
             byText,
-            started.Elapsed);
+            started.Elapsed)
+        {
+            Renamed = renamed.Count,
+        };
         logger.LogInformation("Counted how each text spells each name: {Outcome}", outcome);
         return outcome;
     }
+
+    /// <summary>
+    /// The names a pass read that the texts print elsewhere than where the record is named, and what
+    /// the texts call it instead. Only a name the pass alone holds is read again: a form a person
+    /// gave is theirs.
+    /// </summary>
+    private async Task<List<PrintedName>> NamesAsPrinted(List<Rendering> renderings, CancellationToken cancellationToken)
+    {
+        var languages = await db.Texts.ToDictionaryAsync(t => t.Id, t => t.Language, cancellationToken);
+        var forms = await db.EntityNameForms
+            .AsNoTracking()
+            .Where(f => f.Entity!.Kind == EntityKind.Person || f.Entity!.Kind == EntityKind.Place)
+            .Select(f => new { f.EntityId, f.Language, f.GrammaticalCase, f.Form, f.Method })
+            .ToListAsync(cancellationToken);
+        var held = forms
+            .GroupBy(f => (f.EntityId, f.Language))
+            .Where(g => g.All(f => f.Method == LinkMethod.ModelReading))
+            .ToDictionary(
+                g => g.Key,
+                g => (IReadOnlyDictionary<string, string>)g.ToDictionary(f => f.GrammaticalCase, f => f.Form, StringComparer.Ordinal));
+
+        var entities = held.Keys.Select(k => k.EntityId).ToHashSet();
+        var kinds = PrintedNames.NameKinds.ToArray();
+        var labels = await db.EntityNames
+            .Where(n => entities.Contains(n.EntityId) && n.Kind != null && kinds.Contains(n.Kind))
+            .Select(n => new { n.EntityId, n.Label })
+            .ToListAsync(cancellationToken);
+        var named = labels.GroupBy(n => n.EntityId)
+            .Where(g => g.Select(n => NameFolding.Fold(n.Label)).Distinct().Count() > 1)
+            .Select(g => g.Key)
+            .ToHashSet();
+        entities.ExceptWith(named);
+
+        return [.. PrintedNames.Of(renderings, languages, held, entities)];
+    }
+
+    /// <summary>
+    /// Writes the names <see cref="PrintedNames"/> found over the forms the pass read, saying in the
+    /// source which form each replaces; a case the texts give no form for loses the old one.
+    /// </summary>
+    private async Task Rename(IReadOnlyList<PrintedName> renamed, CancellationToken cancellationToken)
+    {
+        if (renamed.Count == 0)
+        {
+            return;
+        }
+
+        var ids = renamed.Select(r => r.EntityId).ToHashSet();
+        var rows = await db.EntityNameForms
+            .Where(f => ids.Contains(f.EntityId))
+            .ToListAsync(cancellationToken);
+        foreach (var name in renamed)
+        {
+            foreach (var (grammaticalCase, form) in name.Cases)
+            {
+                var row = rows.Single(f => f.EntityId == name.EntityId && f.Language == name.Language
+                                           && f.GrammaticalCase == grammaticalCase);
+                if (form is null)
+                {
+                    db.EntityNameForms.Remove(row);
+                    continue;
+                }
+
+                row.Source = $"{PrintedSource}, where it was «{row.Form}», {row.Source}";
+                row.Form = form;
+                row.Method = LinkMethod.StatedBySource;
+                row.Confidence = null;
+                row.Run = null;
+            }
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        logger.LogInformation(
+            "Put {Count} names back to the spelling their texts print where the record is named: {Names}",
+            renamed.Count,
+            string.Join(", ", renamed.Select(r =>
+                $"{r.Language} {r.Replaced[GrammaticalCases.Nominative]} → {r.Cases[GrammaticalCases.Nominative]}")));
+    }
+
+    /// <summary>How a name put back to the printed spelling is sourced.</summary>
+    internal const string PrintedSource = "Essenthos, as the texts of the language print it where the record is named";
 
     private static async Task<List<NamedWord>> Words(NpgsqlConnection connection, CancellationToken cancellationToken)
     {

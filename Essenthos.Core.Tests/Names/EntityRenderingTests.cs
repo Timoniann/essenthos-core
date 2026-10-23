@@ -438,6 +438,88 @@ public sealed class EntityRenderingTests : IDisposable
     }
 
     /// <summary>
+    /// A Ukrainian name the pass read off one verse gives way to the one the text prints where the
+    /// place is named: the forms are rewritten with what they replace in their source, the text is
+    /// headed by the new nominative, and a second load writes nothing.
+    /// </summary>
+    [Fact]
+    public async Task ANameReadOffAFewVersesGivesWayToThePrintedOne()
+    {
+        var open = Corpus.Add(_db, "NPU2022", TextKind.Translation, "ukr",
+            (2, 1, ["Галілея"]), (2, 2, ["Галілеї"]), (2, 3, ["Галілеї"]), (2, 4, ["Галілеї"]),
+            (2, 5, ["Галілеї"]), (2, 6, ["Галілею"]), (2, 7, ["Ґаліл"]));
+        var galilee = new Entity { Kind = EntityKind.Place, Slug = "galilee", Name = "Galilee", SourceId = "galilee", Source = "a test" };
+        _db.Entities.Add(galilee);
+        _db.SaveChanges();
+        for (var verse = 1; verse <= 7; verse++)
+        {
+            Name(open, 2, verse, 1, galilee);
+        }
+
+        foreach (var (grammaticalCase, form) in new[]
+                 {
+                     (GrammaticalCases.Nominative, "Ґаліл"), (GrammaticalCases.Genitive, "Ґаліла"), (GrammaticalCases.Locative, "Ґалілі"),
+                 })
+        {
+            _db.EntityNameForms.Add(new EntityNameForm
+            {
+                EntityId = galilee.Id, Language = "ukr", GrammaticalCase = grammaticalCase, Form = form,
+                Method = LinkMethod.ModelReading, Confidence = 1, Source = "read from Scripture by a test",
+            });
+        }
+
+        _db.SaveChanges();
+
+        await Load();
+
+        var forms = await _db.EntityNameForms.AsNoTracking().Where(f => f.EntityId == galilee.Id).ToListAsync();
+        forms.ToDictionary(f => f.GrammaticalCase, f => f.Form).Should().BeEquivalentTo(new Dictionary<string, string>
+        {
+            [GrammaticalCases.Nominative] = "Галілея", [GrammaticalCases.Genitive] = "Галілеї", [GrammaticalCases.Locative] = "Галілеї",
+        });
+        forms.Should().OnlyContain(f => f.Method == LinkMethod.StatedBySource && f.Confidence == null
+                                        && f.Source.StartsWith(EntityRenderingLoader.PrintedSource));
+        forms.Single(f => f.GrammaticalCase == GrammaticalCases.Nominative).Source.Should().Contain("«Ґаліл»");
+        (await _db.EntityRenderings.AsNoTracking().SingleAsync(r => r.EntityId == galilee.Id && r.Heading)).Form
+            .Should().Be("Галілея");
+        (await EntityNames.Of(_db, [galilee.Id], "ukr", CancellationToken.None))[galilee.Id].Should().Be("Галілея");
+
+        var before = await _db.EntityNameForms.AsNoTracking().OrderBy(f => f.Id).ToListAsync();
+        var renderings = await _db.EntityRenderings.AsNoTracking().OrderBy(r => r.Id).ToListAsync();
+        await Load();
+
+        (await _db.EntityNameForms.AsNoTracking().OrderBy(f => f.Id).ToListAsync()).Should().BeEquivalentTo(before);
+        (await _db.EntityRenderings.AsNoTracking().OrderBy(r => r.Id).ToListAsync()).Should().BeEquivalentTo(renderings);
+    }
+
+    /// <summary>A form a person gave is theirs, however few verses print it.</summary>
+    [Fact]
+    public async Task ANameAPersonGaveIsNeverRespelled()
+    {
+        var open = Corpus.Add(_db, "NPU2022", TextKind.Translation, "ukr",
+            (2, 1, ["Галілеї"]), (2, 2, ["Галілеї"]), (2, 3, ["Галілеї"]), (2, 4, ["Галілеї"]),
+            (2, 5, ["Галілеї"]), (2, 6, ["Галілея"]), (2, 7, ["Ґаліл"]));
+        var galilee = new Entity { Kind = EntityKind.Place, Slug = "galilee", Name = "Galilee", SourceId = "galilee", Source = "a test" };
+        _db.Entities.Add(galilee);
+        _db.SaveChanges();
+        for (var verse = 1; verse <= 7; verse++)
+        {
+            Name(open, 2, verse, 1, galilee);
+        }
+
+        _db.EntityNameForms.Add(new EntityNameForm
+        {
+            EntityId = galilee.Id, Language = "ukr", GrammaticalCase = GrammaticalCases.Nominative, Form = "Ґаліл",
+            Method = LinkMethod.Manual, Source = "the project owner",
+        });
+        _db.SaveChanges();
+
+        await Load();
+
+        (await _db.EntityNameForms.AsNoTracking().SingleAsync(f => f.EntityId == galilee.Id)).Form.Should().Be("Ґаліл");
+    }
+
+    /// <summary>
     /// A reader is shown the nominative the corpus holds in their language. Where it holds none, a
     /// Spanish reader is shown how the Spanish text spells the name, and a Ukrainian one the English
     /// name — a Ukrainian text's commonest spelling may be any case of it. In English, the headword

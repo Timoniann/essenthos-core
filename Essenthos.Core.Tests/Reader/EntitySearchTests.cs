@@ -333,7 +333,7 @@ public sealed class EntitySearchTests : IDisposable
         var heading = RenamedHeadings.Heading(family, null);
 
         heading.Should().Be("Васемафа");
-        RenamedHeadings.Genitive("rus", family, heading!).Should().Be("Васемафы");
+        NameCases.Genitive("rus", family, heading!).Should().Be("Васемафы");
         RenamedHeadings.Heading(
             [("Басмати", "басмати", 3), ("Басмату", "басмату", 1), ("Басмата", "басмата", 1)], null)
             .Should().Be("Басмата");
