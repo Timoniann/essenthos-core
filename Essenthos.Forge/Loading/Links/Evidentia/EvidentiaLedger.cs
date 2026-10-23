@@ -346,8 +346,11 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
             await ReplayRun(folder, run, tally, cancellationToken);
         }
 
+        var replayed = runs.SelectMany(held => new[] { held.Run.From, held.Run.To }).Distinct().ToList();
         var verseLinks = tally.Applied.Any(applied => applied.NewLinks > 0)
-            ? await writer.JoinVerses(cancellationToken)
+            ? await writer.JoinVerses(
+                (await db.Texts.Where(text => replayed.Contains(text.Slug)).Select(text => text.Id).ToListAsync(cancellationToken)).ToHashSet(),
+                cancellationToken)
             : null;
         return new EvidentiaReplayOutcome(tally.Runs, tally.Verdicts, tally.Reconstituted, tally.AlreadyThere, tally.Restored,
             tally.Conflicts, tally.Applied, elapsed.Elapsed, verseLinks);

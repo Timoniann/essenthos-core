@@ -362,7 +362,15 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         return outcome with { Repeated = outcome.Repeated + repeated };
     }
 
-    public async Task<VerseLinkOutcome> Load(CancellationToken cancellationToken = default, IReadOnlySet<int>? refresh = null)
+    /// <param name="swept">
+    /// The texts whose aligner links are looked over for a crossing no verse link joins; null for
+    /// <paramref name="refresh"/>'s, or every text's where that is null too. A writer that adds no
+    /// aligner link and takes no verse link away — an EVIDENTIA replay — can make no new crossing, so
+    /// it names its own pair rather than sweep the whole corpus's aligner links after every line
+    /// (23–66 s each on cold rebuild attempt 7, and none of those sweeps withdrew a link: PRB-1191).
+    /// </param>
+    public async Task<VerseLinkOutcome> Load(
+        CancellationToken cancellationToken = default, IReadOnlySet<int>? refresh = null, IReadOnlySet<int>? swept = null)
     {
         if (refresh is null && await JoinedBeforeTheReading(cancellationToken))
         {
@@ -373,7 +381,7 @@ internal sealed class VerseLinkLoader(AppDbContext db, ILogger<VerseLinkLoader> 
         }
 
         var outcome = await Join(cancellationToken, refresh);
-        var withdrawn = await WithdrawStatisticalCrossings(refresh, cancellationToken);
+        var withdrawn = await WithdrawStatisticalCrossings(swept ?? refresh, cancellationToken);
         return withdrawn == 0 ? outcome : outcome with { Withdrawn = withdrawn };
     }
 

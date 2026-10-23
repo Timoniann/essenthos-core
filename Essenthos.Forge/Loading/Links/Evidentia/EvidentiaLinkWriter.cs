@@ -248,7 +248,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                 await transaction.CommitAsync(cancellationToken);
                 if (tally.NewLinks > 0 && joinVerses)
                 {
-                    tally.Lines.Add(await JoinVerses(cancellationToken));
+                    tally.Lines.Add(await JoinVerses(new HashSet<int> { run.FromTextId, run.ToTextId }, cancellationToken));
                 }
             }
         }
@@ -262,9 +262,13 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             tally.Reading, tally.Writing);
     }
 
-    /// <summary>Draws the verse links the links written since call for; says what it did.</summary>
-    public async Task<string> JoinVerses(CancellationToken cancellationToken = default) =>
-        (await verseLinks.Load(cancellationToken)).ToString();
+    /// <summary>
+    /// Draws the verse links the links written since call for; says what it did. A run writes no
+    /// aligner link and takes no verse link away, so only its own texts' aligner links are looked
+    /// over for a crossing (<see cref="VerseLinkLoader.Load"/>'s <c>swept</c>).
+    /// </summary>
+    public async Task<string> JoinVerses(IReadOnlySet<int> texts, CancellationToken cancellationToken = default) =>
+        (await verseLinks.Load(cancellationToken, swept: texts)).ToString();
 
     /// <summary>
     /// Decides a batch of verdicts, in the order they were given, against the links of the pair as the
