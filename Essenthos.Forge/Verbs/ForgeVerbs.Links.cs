@@ -36,7 +36,7 @@ internal static partial class ForgeVerbs
         forge.Logger.LogInformation("{Outcome}", await pipeline.Run(
             alignOne,
             alignTwo,
-            Path.Combine(Path.GetTempPath(), "essenthos-align", $"{alignOne}-{alignTwo}"),
+            AlignmentStore.Workspace($"{alignOne}-{alignTwo}"),
             confidence >= 0 && confidence + 1 < args.Length
                 ? double.Parse(args[confidence + 1], CultureInfo.InvariantCulture)
                 : null,
@@ -121,7 +121,7 @@ internal static partial class ForgeVerbs
         forge.Logger.LogInformation("\n{Report}", await scorer.Measure(
             scoreOne,
             scoreTwo,
-            Path.Combine(Path.GetTempPath(), "essenthos-align",
+            AlignmentStore.Workspace(
                 $"{scoreOne}-{scoreTwo}{(args.Contains("--surface") ? "-surface" : string.Empty)}" +
                 $"{(args.Contains("--suppletion") ? "-suppletion" : string.Empty)}"),
             args.Contains("--min")
@@ -153,7 +153,7 @@ internal static partial class ForgeVerbs
         forge.Logger.LogInformation("\n{Report}", await scorer.MeasureAnchors(
             anchorOne,
             anchorTwo,
-            Path.Combine(Path.GetTempPath(), "essenthos-align",
+            AlignmentStore.Workspace(
                 $"{anchorOne}-{anchorTwo}-held-out-strong-anchors-{anchorModel}-fold-{anchorFold}"),
             args.Contains("--min")
                 ? [.. args[Array.IndexOf(args, "--min") + 1].Split(',')
@@ -178,7 +178,7 @@ internal static partial class ForgeVerbs
         forge.Logger.LogInformation("\n{Report}", await prior.Diagnose(
             syntaxOne,
             syntaxTwo,
-            Path.Combine(Path.GetTempPath(), "essenthos-align", $"{syntaxOne}-{syntaxTwo}"),
+            AlignmentStore.Workspace($"{syntaxOne}-{syntaxTwo}"),
             args.Contains("--model") ? args[Array.IndexOf(args, "--model") + 1] : "ibm4",
             args.Contains("--stated")));
         return 0;

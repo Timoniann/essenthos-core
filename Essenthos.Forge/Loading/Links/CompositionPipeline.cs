@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
 using System.Text;
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
@@ -366,7 +367,7 @@ internal sealed class CompositionPipeline(
         IReadOnlyList<(long From, long To, double Confidence)> written = daughter
             ? []
             : await aligner.Proposals(
-                fromSlug, toSlug, Workspace(fromSlug, toSlug, trial, books) + "-written", AgreementFloor,
+                fromSlug, toSlug, Workspace(fromSlug, toSlug, trial, books, written: true), AgreementFloor,
                 asWritten: true, books: books, cancellationToken: cancellationToken);
         var composed = new List<IReadOnlyList<(long From, long To, double Confidence)>>(viaSlugs.Count);
         foreach (var viaSlug in viaSlugs)
@@ -528,10 +529,12 @@ internal sealed class CompositionPipeline(
     /// and reuse: a model is reused whenever its workspace exists, and a trial's may be over a few
     /// books, or over tokens an earlier build reduced differently.
     /// </summary>
-    internal static string Workspace(string from, string to, bool trial = false, IReadOnlySet<int>? books = null) =>
-        Path.Combine(Path.GetTempPath(), "essenthos-align",
+    internal static string Workspace(
+        string from, string to, bool trial = false, IReadOnlySet<int>? books = null, bool written = false) =>
+        AlignmentStore.Workspace(
             $"{from}-{to}" + (trial ? "-trial" : string.Empty) +
-            (books is null ? string.Empty : $"-books-{string.Join('-', books.Order())}"));
+            (books is null ? string.Empty : $"-books-{string.Join('-', books.Order())}") +
+            (written ? "-written" : string.Empty));
 
     /// <summary>
     /// The two hops joined at the middle text's word. One link of the middle text may name several

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using Essenthos.Core.BetaMasaheft;
+using Essenthos.Core.Configuration;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities.Enums;
@@ -271,17 +272,20 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             inputs.Add((anchorFile, AnchorLines(addresses, anchors)));
         }
 
-        if (File.Exists(alignmentFile))
+        var stored = Stored(alignmentFile);
+        if (stored == StoredAlignment.Whole && Unchanged(inputs))
         {
-            if (Unchanged(inputs))
-            {
-                logger.LogInformation("Reusing the alignment already in {Workspace}", workspace);
-                return alignmentFile;
-            }
+            logger.LogInformation("Reusing the alignment already in {Workspace}", workspace);
+            return alignmentFile;
+        }
 
-            RefuseToTrain(workspace);
+        RefuseToTrain(workspace, stored == StoredAlignment.Whole ? StoredAlignment.OfOtherWords : stored);
+        if (stored != StoredAlignment.None)
+        {
             logger.LogWarning(
-                "The alignment in {Workspace} was made from other verses than {From} and {To} share now; training again",
+                stored == StoredAlignment.Empty
+                    ? "The alignment in {Workspace} is empty; training {From} and {To} again"
+                    : "The alignment in {Workspace} was made from other verses than {From} and {To} share now; training again",
                 workspace, fromSlug, toSlug);
             Directory.Delete(Path.GetDirectoryName(alignmentFile)!, recursive: true);
             if (Directory.Exists(Path.GetDirectoryName(modelPrefix)))
@@ -290,11 +294,10 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             }
         }
 
-        RefuseToTrain(workspace);
         Directory.CreateDirectory(workspace);
         foreach (var (path, lines) in inputs)
         {
-            File.WriteAllLines(path, lines);
+            AlignmentStore.WriteWhole(path, lines);
         }
         Directory.CreateDirectory(Path.GetDirectoryName(alignmentFile)!);
         Directory.CreateDirectory(Path.GetDirectoryName(modelPrefix)!);
@@ -311,11 +314,35 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         train.Add(sourceFile);
         train.Add(targetFile);
         await Machine([.. train], cancellationToken);
-        await Machine(
-            ["align", "-mt", modelType, "-sh", "och", "-s", modelPrefix, sourceFile, targetFile, alignmentFile],
-            cancellationToken);
+        await AlignWhole(modelType, modelPrefix, sourceFile, targetFile, alignmentFile, cancellationToken);
 
         return alignmentFile;
+    }
+
+    /// <summary>
+    /// Runs the trained model over the inputs into a file beside the answer and renames it into place
+    /// only when the aligner has finished and written something, so a stopped run never leaves an
+    /// answer that is only its first verses.
+    /// </summary>
+    private static async Task AlignWhole(
+        string modelType,
+        string modelPrefix,
+        string sourceFile,
+        string targetFile,
+        string alignmentFile,
+        CancellationToken cancellationToken)
+    {
+        var partial = alignmentFile + ".partial";
+        await Machine(
+            ["align", "-mt", modelType, "-sh", "och", "-s", modelPrefix, sourceFile, targetFile, partial],
+            cancellationToken);
+        if (Stored(partial) != StoredAlignment.Whole)
+        {
+            throw new InvalidOperationException(
+                $"The aligner finished and wrote nothing to {partial}, so no alignment was stored in its place.");
+        }
+
+        File.Move(partial, alignmentFile, overwrite: true);
     }
 
     /// <summary>
@@ -383,25 +410,29 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             (stampFile, [stamp]),
         };
 
-        if (File.Exists(alignmentFile) && Unchanged(inputs))
+        var stored = Stored(alignmentFile);
+        if (stored == StoredAlignment.Whole && Unchanged(inputs))
         {
             logger.LogInformation("Reusing the alignment already in {Workspace}", workspace);
             return alignmentFile;
         }
 
-        RefuseToTrain(workspace);
+        RefuseToTrain(workspace, stored == StoredAlignment.Whole ? StoredAlignment.OfOtherWords : stored);
+        if (File.Exists(alignmentFile))
+        {
+            File.Delete(alignmentFile);
+        }
+
         Directory.CreateDirectory(workspace);
         foreach (var (path, lines) in inputs)
         {
-            File.WriteAllLines(path, lines);
+            AlignmentStore.WriteWhole(path, lines);
         }
 
         Directory.CreateDirectory(Path.GetDirectoryName(alignmentFile)!);
         logger.LogInformation("Aligning {Verses} verse pairs with the model {Pool} trained", addresses.Count,
             string.Join(", ", pool));
-        await Machine(
-            ["align", "-mt", modelType, "-sh", "och", "-s", modelPrefix, sourceFile, targetFile, alignmentFile],
-            cancellationToken);
+        await AlignWhole(modelType, modelPrefix, sourceFile, targetFile, alignmentFile, cancellationToken);
         return alignmentFile;
     }
 
@@ -416,7 +447,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         Dictionary<(int, int, int), List<Word>> source,
         CancellationToken cancellationToken)
     {
-        var workspace = Path.Combine(Path.GetTempPath(), "essenthos-align", $"{fromSlug}-{string.Join('-', pool)}");
+        var workspace = AlignmentStore.Workspace($"{fromSlug}-{string.Join('-', pool)}");
         var sourceFile = Path.Combine(workspace, "source.txt");
         var targetFile = Path.Combine(workspace, "target.txt");
         var stampFile = Path.Combine(workspace, "trained.txt");
@@ -438,13 +469,14 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             (targetFile, [.. targetLines]),
         };
 
-        if (File.Exists(stampFile) && Unchanged(inputs))
+        var stored = Stored(stampFile);
+        if (stored == StoredAlignment.Whole && Unchanged(inputs))
         {
             logger.LogInformation("Reusing the model already in {Workspace}", workspace);
             return (modelPrefix, File.ReadAllText(stampFile).Trim());
         }
 
-        RefuseToTrain(workspace);
+        RefuseToTrain(workspace, stored == StoredAlignment.Whole ? StoredAlignment.OfOtherWords : stored);
         if (Directory.Exists(workspace))
         {
             Directory.Delete(workspace, recursive: true);
@@ -453,7 +485,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         Directory.CreateDirectory(Path.GetDirectoryName(modelPrefix)!);
         foreach (var (path, lines) in inputs)
         {
-            File.WriteAllLines(path, lines);
+            AlignmentStore.WriteWhole(path, lines);
         }
 
         logger.LogInformation("Training {Model} over {Verses} verse pairs of {From} against {Pool}",
@@ -462,7 +494,7 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
             cancellationToken);
 
         var stamp = Guid.NewGuid().ToString("N");
-        await File.WriteAllTextAsync(stampFile, stamp, cancellationToken);
+        AlignmentStore.WriteWhole(stampFile, [stamp]);
         return (modelPrefix, stamp);
     }
 
@@ -906,6 +938,12 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         Dictionary<(int, int, int), List<Word>> source,
         Dictionary<(int, int, int), List<Word>> target)
     {
+        if (Stored(path) == StoredAlignment.Empty)
+        {
+            throw new InvalidOperationException(
+                $"The alignment {path} is empty, so nothing was written from it. Train it again with model runs allowed.");
+        }
+
         var line = 0;
 
         foreach (var text in File.ReadLines(path))
@@ -1303,9 +1341,38 @@ internal sealed class AlignmentPipeline(AppDbContext db, ILogger<AlignmentPipeli
         await transaction.CommitAsync(cancellationToken);
     }
 
+    /// <summary>What a workspace holds of the file a run would reuse: the answer, or a pool's stamp.</summary>
+    internal enum StoredAlignment
+    {
+        None,
+        Empty,
+        Whole,
+        OfOtherWords,
+    }
+
+    internal static StoredAlignment Stored(string file) =>
+        !File.Exists(file) ? StoredAlignment.None
+        : new FileInfo(file).Length == 0 ? StoredAlignment.Empty
+        : StoredAlignment.Whole;
+
     /// <summary>Before anything in a workspace is cleared or the aligner is run (<see cref="ModelRuns"/>).</summary>
-    private static void RefuseToTrain(string workspace) =>
-        ModelRuns.Refuse($"The alignment in {workspace} was made from other words than the corpus holds now, or there is none");
+    private static void RefuseToTrain(string workspace, StoredAlignment stored) => ModelRuns.Refuse(Refusal(workspace, stored));
+
+    /// <summary>Why the workspace's answer cannot be reused, and what to do about it.</summary>
+    internal static string Refusal(string workspace, StoredAlignment stored) => stored switch
+    {
+        StoredAlignment.Empty =>
+            $"The alignment in {workspace} is empty: the run that made it stopped before it was written whole, " +
+            "so it has to be trained again with model runs allowed",
+        StoredAlignment.OfOtherWords =>
+            $"The alignment in {workspace} was made from other words than the corpus holds now, " +
+            "so it has to be trained again with model runs allowed",
+        _ when Directory.Exists(workspace) && !Directory.EnumerateFiles(workspace, "*", SearchOption.AllDirectories).Any() =>
+            $"There is no alignment in {workspace}: the folder is there and holds no file, so it was emptied after " +
+            "it was made, and has to be trained again with model runs allowed",
+        _ => $"There is no alignment in {workspace} (the store is {AlignmentStore.Root}), " +
+             "so it has to be trained with model runs allowed",
+    };
 
     private static async Task Machine(string[] arguments, CancellationToken cancellationToken)
     {
