@@ -18,6 +18,9 @@ internal sealed record FoldingOutcome(int Folded, int Texts, TimeSpan Elapsed)
 /// <summary>
 /// Fills the form a word is searched by, for every word that has none.
 ///
+/// A text's words are written with their form (<see cref="CorpusLoader"/>), so on a build this finds
+/// only the few words a repair adds one at a time, and those of a database written before that.
+///
 /// Idempotent by the column itself: a word with a folded form is skipped, so this costs one
 /// indexed count on a loaded corpus and does the work exactly once per text. That is what lets it
 /// sit in the startup pipeline beside the other fillers rather than being a migration somebody has
