@@ -62,12 +62,25 @@ internal static class Descriptors
     /// the Synodal reads <em>син Марии</em>, Ukrainian words around the Synodal's name. The line's own
     /// language where nothing is said.
     /// </param>
-    public static async Task<Dictionary<string, EntityDescriptorResponse>> Of(
+    public static Task<Dictionary<string, EntityDescriptorResponse>> Of(
         AppDbContext db,
         IEnumerable<string> slugs,
         string? language,
         CancellationToken cancellationToken,
-        string? names = null)
+        string? names = null) =>
+        Lines(db, slugs, language, names, distinguish: true, cancellationToken);
+
+    /// <param name="distinguish">
+    /// Whether two records a line names by the same name are told apart (<see cref="Distinctions"/>),
+    /// which reads the lines of those two; false for that reading, so it does not go round again.
+    /// </param>
+    private static async Task<Dictionary<string, EntityDescriptorResponse>> Lines(
+        AppDbContext db,
+        IEnumerable<string> slugs,
+        string? language,
+        string? names,
+        bool distinguish,
+        CancellationToken cancellationToken)
     {
         var wanted = slugs.Distinct(StringComparer.Ordinal).ToList();
         if (wanted.Count == 0)
@@ -284,6 +297,11 @@ internal static class Descriptors
             ? c with { TargetEnglishName = heading.Name }
             : c)];
         taught = taught.HeadedAs(headings);
+
+        if (distinguish)
+        {
+            clauses = await Distinctions(db, clauses, forms, language, names, cancellationToken);
+        }
 
         var lines = new Dictionary<string, EntityDescriptorResponse>(StringComparer.Ordinal);
         foreach (var subject in subjects)
@@ -594,6 +612,88 @@ internal static class Descriptors
             TargetSex = target.Sex,
             Verses = distinct.Count > 1 ? distinct : null,
         };
+    }
+
+    /// <summary>
+    /// Two different records one line names by the same name, each told by the first clause of its own
+    /// line that does not name the line's subject and that the other does not say too: Jehoiakim is
+    /// <em>father of Jehoiachin, Zedekiah (brother of Jehoiachin and Jerahmeel) and Jerahmeel,
+    /// half-brother of Jehoahaz and Zedekiah (king of Jerusalem)</em>, where the son and the king are
+    /// two men. A record whose own line has no such clause is left as it is.
+    /// </summary>
+    private static async Task<List<Clause>> Distinctions(
+        AppDbContext db,
+        List<Clause> clauses,
+        IReadOnlyDictionary<int, IReadOnlyDictionary<string, string>> forms,
+        string? language,
+        string? names,
+        CancellationToken cancellationToken)
+    {
+        string Shown(Clause clause) =>
+            forms.GetValueOrDefault(clause.TargetEntityId)?.GetValueOrDefault(GrammaticalCases.Nominative)
+            ?? clause.TargetEnglishName;
+
+        var clashes = clauses
+            .GroupBy(c => (c.SubjectId, Name: Shown(c).ToLowerInvariant()))
+            .Select(g => g.DistinctBy(c => c.TargetEntityId).ToList())
+            .Where(g => g.Count > 1)
+            .ToList();
+        if (clashes.Count == 0)
+        {
+            return clauses;
+        }
+
+        var own = await Lines(
+            db, clashes.SelectMany(g => g).Select(c => c.TargetSlug).Distinct(), language, names, distinguish: false,
+            cancellationToken);
+
+        // Each takes the first clause of its own that none of the others with its name also says:
+        // two brothers both "son of Jehoshaphat" are told by what else their lines say, or not at all.
+        var told = new Dictionary<(int Subject, int Target), string>();
+        foreach (var clash in clashes)
+        {
+            var said = clash.ToDictionary(
+                c => c.TargetEntityId,
+                c => own.TryGetValue(c.TargetSlug, out var line) ? ClausesNotNaming(line, c.Slug) : []);
+            foreach (var clause in clash)
+            {
+                var others = said.Where(o => o.Key != clause.TargetEntityId).SelectMany(o => o.Value).ToHashSet(StringComparer.Ordinal);
+                if (said[clause.TargetEntityId].FirstOrDefault(words => !others.Contains(words)) is { } words)
+                {
+                    told[(clause.SubjectId, clause.TargetEntityId)] = words;
+                }
+            }
+        }
+
+        return [.. clauses.Select(c => told.TryGetValue((c.SubjectId, c.TargetEntityId), out var said)
+            ? c with { Distinction = said }
+            : c)];
+    }
+
+    /// <summary>The words of each of a line's clauses that names nobody by this slug, in order.</summary>
+    private static List<string> ClausesNotNaming(EntityDescriptorResponse line, string slug)
+    {
+        var found = new List<string>();
+        var clause = new List<DescriptorPartResponse>();
+        foreach (var part in line.Parts.Append(new DescriptorPartResponse(DescriptorPhrasings.Separator)))
+        {
+            if (part.Text != DescriptorPhrasings.Separator || part.Entity is not null)
+            {
+                clause.Add(part);
+                continue;
+            }
+
+            // A piece that opens on a name is the rest of a list the comma cut, not a clause.
+            var said = string.Concat(clause.Select(p => p.Text)).Trim();
+            if (said.Length > 0 && clause[0].Entity is null && clause.All(p => p.Entity?.Slug != slug))
+            {
+                found.Add(said);
+            }
+
+            clause.Clear();
+        }
+
+        return found;
     }
 
     /// <summary>The same for one entity, which is what the entity page and the hover card ask.</summary>
@@ -970,6 +1070,11 @@ internal static class Descriptors
                 }
 
                 parts.Add(new DescriptorPartResponse(name) { Entity = target, Doubtful = item.Doubtful });
+                if (item.First.Distinction is { } distinction)
+                {
+                    parts.Add(new DescriptorPartResponse($" ({distinction})") { Doubtful = item.Doubtful });
+                }
+
                 if (phrasing.After.Length > 0)
                 {
                     parts.Add(new DescriptorPartResponse(phrasing.After) { Doubtful = item.Doubtful });
@@ -1168,6 +1273,7 @@ internal static class Descriptors
                 ? new Dictionary<string, string>(cases, StringComparer.Ordinal)
                 : null,
             Distinguisher = clause.TargetDistinguisher,
+            Distinction = clause.Distinction,
         };
 
     /// <summary>
@@ -1256,6 +1362,12 @@ internal static class Descriptors
         public string? Stated { get; init; }
 
         public bool Doubtful => Confidence is { } confidence && confidence < Plain;
+
+        /// <summary>
+        /// What tells the target from another record the same line names by the same name, in the
+        /// line's language (<see cref="Distinctions"/>); null where the line names no other so.
+        /// </summary>
+        public string? Distinction { get; init; }
     }
 }
 
@@ -1364,6 +1476,13 @@ internal record DescriptorTargetResponse(
     /// until a description has been generated for the entity on the other end.
     /// </summary>
     public string? Distinguisher { get; init; }
+
+    /// <summary>
+    /// What tells this target from another record the same line names by the same name, in the line's
+    /// language: <em>цар Єрусалима</em> for King Zedekiah in a line that also names Jehoiakim's son
+    /// Zedekiah. A client says it after the name. Null where the line names no other by this name.
+    /// </summary>
+    public string? Distinction { get; init; }
 }
 
 /// <param name="Confidence">
