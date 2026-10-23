@@ -1533,16 +1533,33 @@ internal sealed class DatasetLoader(
     /// </summary>
     private async Task ReadTheHandMadeAlignments(string resources, CancellationToken cancellationToken)
     {
-        status.Starting("Clear Bible's hand-made alignments");
+        status.Starting($"Clear Bible's hand-made alignments, {InterlinearsAtOnce} translations at a time");
 
-        using var scope = services.CreateScope();
-        var loader = scope.ServiceProvider.GetRequiredService<Links.ClearBibleLinkLoader>();
         var clearBible = Path.Combine(resources, "ClearBible");
         var rulings = Links.LinkRulings.Read(resources);
 
-        foreach (var set in ClearBible.ClearBibleSet.All())
+        // A translation's sets stay in the order All() gives, one after another, so whatever one of
+        // them settles against another of the same translation is as it was. Different translations
+        // share no link (their from-text differs), so they run side by side, as the interlinears do.
+        var sets = ClearBible.ClearBibleSet.All();
+        var outcomes = new object[sets.Count];
+        var byTranslation = Enumerable.Range(0, sets.Count).GroupBy(at => sets[at].From).Select(group => group.ToList()).ToList();
+        await Parallel.ForEachAsync(
+            byTranslation,
+            new ParallelOptions { MaxDegreeOfParallelism = InterlinearsAtOnce, CancellationToken = cancellationToken },
+            async (indices, token) =>
+            {
+                using var scope = services.CreateScope();
+                var loader = scope.ServiceProvider.GetRequiredService<Links.ClearBibleLinkLoader>();
+                foreach (var at in indices)
+                {
+                    outcomes[at] = await loader.Load(clearBible, sets[at], rulings, token);
+                }
+            });
+
+        foreach (var outcome in outcomes)
         {
-            status.Record(await loader.Load(clearBible, set, rulings, cancellationToken));
+            status.Record(outcome);
         }
     }
 
