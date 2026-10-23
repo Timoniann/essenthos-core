@@ -114,6 +114,11 @@ internal sealed partial class StatementTables : IDisposable
         }
 
         Interlocked.Increment(ref _statements);
+        if (Maintenance(sql))
+        {
+            return;
+        }
+
         foreach (var table in Named(sql, _tables))
         {
             _named.TryAdd(table, 0);
@@ -152,6 +157,17 @@ internal sealed partial class StatementTables : IDisposable
 
             yield return name;
         }
+    }
+
+    /// <summary>
+    /// A <c>VACUUM</c> or <c>ANALYZE</c>, which the link verbs end with over whatever table is worn: it
+    /// names tables without reading what is in them, and what it names is whatever a step before wrote.
+    /// </summary>
+    public static bool Maintenance(string sql)
+    {
+        var start = sql.AsSpan().TrimStart();
+        return start.StartsWith("VACUUM", StringComparison.OrdinalIgnoreCase)
+               || start.StartsWith("ANALYZE", StringComparison.OrdinalIgnoreCase);
     }
 
     [GeneratedRegex("\"(?<quoted>[^\"]+)\"|(?<bare>[A-Za-z_][A-Za-z0-9_$]*)")]
