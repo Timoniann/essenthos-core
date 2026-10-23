@@ -60,6 +60,24 @@ public sealed class CorpusLoaderTests : IDisposable
     }
 
     /// <summary>
+    /// A word is written searchable. Folding it afterwards rewrote every word of a cold build a second
+    /// time, through all seven of the table's indexes (PRB-1192), so the form goes in with the COPY,
+    /// and it is the form the filler would have given it.
+    /// </summary>
+    [Fact]
+    public async Task AWordIsWrittenWithTheFormItIsSearchedBy()
+    {
+        await Loader().Load(Sample());
+
+        var language = await _db.Texts.Where(t => t.Slug == "sample").Select(t => t.Language).SingleAsync();
+        var words = await _db.Words.Select(w => new { w.Surface, w.NormalisedText }).ToListAsync();
+
+        words.Should().NotBeEmpty();
+        words.Should().AllSatisfy(word => word.NormalisedText.Should().Be(WordFolding.Fold(word.Surface, language)));
+        (await new WordFoldingLoader(_db, NullLogger<WordFoldingLoader>.Instance).Load()).Folded.Should().Be(0);
+    }
+
+    /// <summary>
     /// Who made the text and which edition it is reach the row. A field the definition holds and
     /// the loader drops is worse than one nobody filled in: it reads as established and absent.
     /// </summary>

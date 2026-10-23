@@ -52,11 +52,15 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
     /// <summary>
     /// Words are written with COPY rather than through the change tracker. Half a million tracked
     /// entities is minutes and a gigabyte; the binary import is seconds and nothing.
+    ///
+    /// The searchable form is written with the word. Left to <see cref="WordFoldingLoader"/>, a cold
+    /// build wrote all 29.4 million words twice: the fold's UPDATE is never HOT, because the form is
+    /// indexed, so every word took a second entry in each of the table's seven indexes (PRB-1192).
     /// </summary>
     private const string WordImport =
         """
         COPY word (text_id, verse_id, "position", "text", trailer, lemma, strong_number, gloss, morphology,
-                   elided, "break")
+                   elided, "break", normalised_text)
         FROM STDIN (FORMAT BINARY)
         """;
 
@@ -476,6 +480,7 @@ internal sealed class CorpusLoader(AppDbContext db, ILogger<CorpusLoader> logger
                 await WriteNullable(
                     writer, word.Break is { } opening ? EnumSpelling.Of(opening) : null, NpgsqlDbType.Text,
                     cancellationToken);
+                await writer.WriteAsync(WordFolding.Fold(word.Surface, text.Language), NpgsqlDbType.Text, cancellationToken);
                 written++;
             }
         }
