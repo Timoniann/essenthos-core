@@ -5,6 +5,9 @@ using Essenthos.Core.Database;
 using Essenthos.Core.Database.Entities;
 using Essenthos.Core.Database.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using Npgsql;
+using NpgsqlTypes;
 
 namespace Essenthos.Core.Loading.Links.Evidentia;
 
@@ -25,6 +28,8 @@ namespace Essenthos.Core.Loading.Links.Evidentia;
 /// <param name="Replaced">
 /// Placements an earlier run's rule wrote for a word this run's verdicts place on other words, taken back.
 /// </param>
+/// <param name="Reading">Of the time, how much went on reading the verdicts and the links they settle against.</param>
+/// <param name="Writing">Of the time, how much went on writing what they settled.</param>
 internal sealed record EvidentiaApplyOutcome(
     bool Written,
     int Verdicts,
@@ -39,7 +44,9 @@ internal sealed record EvidentiaApplyOutcome(
     IReadOnlyList<string> Lines,
     TimeSpan Elapsed,
     int Attached = 0,
-    int Replaced = 0)
+    int Replaced = 0,
+    TimeSpan Reading = default,
+    TimeSpan Writing = default)
 {
     public override string ToString() =>
         (Written ? "EVIDENTIA verdicts written" : "EVIDENTIA verdicts NOT written (plan only; pass --write to write)")
@@ -47,7 +54,7 @@ internal sealed record EvidentiaApplyOutcome(
         + $"{Within:N0} on a link naming more, {Promoted:N0} links whose settled answer changed, {Withheld:N0} withheld, "
         + $"{Withdrawn:N0} words withdrawn from the aligner's links for an absence, {Superseded:N0} earlier absences taken back for a rendering, "
         + $"{Replaced:N0} earlier runs' placements taken back for one elsewhere, "
-        + $"{Attached:N0} words marked as going with another word; in {Elapsed}"
+        + $"{Attached:N0} words marked as going with another word; in {Elapsed} ({Reading} reading, {Writing} writing)"
         + (Lines.Count == 0 ? string.Empty : "\n" + string.Join("\n", Lines));
 }
 
@@ -117,6 +124,15 @@ internal sealed record EvidentiaApplyOutcome(
 /// counterpart, its membership of the link is marked with its role and the head it goes with
 /// (<see cref="AttachedWords"/>), in the same transaction.
 /// </para>
+///
+/// <para>
+/// **The verdicts are settled in memory and written together.** Each batch reads the links of the
+/// pair its words are on, decides every verdict against them in order, and then writes what it
+/// decided as a few statements: the new links, their words and every new claim by COPY, the settled
+/// answers, the words taken out of links, the withdrawals, the reviews, and last the links taken back.
+/// A link a verdict of the same batch wrote and a later one takes back stays written, because the
+/// verdict that wrote it still names it.
+/// </para>
 /// </summary>
 internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verseLinks)
 {
@@ -139,6 +155,58 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
 
     private const string ReplacedNote = "an earlier run's placement of this word was taken back for it";
 
+    /// <summary>The links of the run's two texts, either way round, naming any of the words.</summary>
+    private const string Touching =
+        """
+        SELECT DISTINCT l.id
+        FROM unnest(@words) AS w(id)
+        JOIN link_word lw ON lw.word_id = w.id
+        JOIN link l ON l.id = lw.link_id
+        WHERE (l.from_text_id = @from AND l.to_text_id = @to) OR (l.from_text_id = @to AND l.to_text_id = @from)
+        """;
+
+    private const string LinkImport =
+        """
+        COPY link (id, from_text_id, to_text_id, relation, method, confidence, provenance_id, fingerprint)
+        FROM STDIN (FORMAT BINARY)
+        """;
+
+    private const string LinkWordImport = "COPY link_word (link_id, word_id, side) FROM STDIN (FORMAT BINARY)";
+
+    private const string ClaimImport =
+        "COPY link_claim (link_id, method, confidence, provenance_id) FROM STDIN (FORMAT BINARY)";
+
+    private const string WithdrawalImport =
+        """
+        COPY evidentia_withdrawal (
+            review_id, word_id, link_id, from_text_id, to_text_id, relation, method, confidence, source, note,
+            from_word_ids, to_word_ids, claim_sources, claim_confidences, claim_notes, withdrawn_at)
+        FROM STDIN (FORMAT BINARY)
+        """;
+
+    private const string Promote =
+        """
+        UPDATE link l SET method = d.method, confidence = d.confidence, provenance_id = d.provenance_id
+        FROM unnest(@links, @methods, @confidences, @provenances) AS d(id, method, confidence, provenance_id)
+        WHERE l.id = d.id
+        """;
+
+    private const string Unlink =
+        """
+        DELETE FROM link_word lw
+        USING unnest(@links, @words, @sides) AS d(link_id, word_id, side)
+        WHERE lw.link_id = d.link_id AND lw.word_id = d.word_id AND lw.side = d.side
+        """;
+
+    private const string Reviewed =
+        """
+        UPDATE evidentia_review r SET withheld = d.withheld, applied_at = d.applied_at, link_id = d.link_id
+        FROM unnest(@reviews, @withheld, @applied, @links) AS d(id, withheld, applied_at, link_id)
+        WHERE r.id = d.id
+        """;
+
+    private const string TakenBack = "DELETE FROM link WHERE id = ANY(@links)";
+
     public async Task<EvidentiaApplyOutcome> Apply(int runId, bool write, CancellationToken cancellationToken = default)
     {
         var elapsed = Stopwatch.StartNew();
@@ -154,30 +222,49 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             .ToListAsync(cancellationToken);
 
         var tally = new Tally();
-        await using var transaction = write ? await db.Database.BeginTransactionAsync(cancellationToken) : null;
-        foreach (var chunk in verdictIds.Chunk(Batch))
+        await db.Database.OpenConnectionAsync(cancellationToken);
+        try
         {
-            await Settle(run, chunk, write, tally, cancellationToken);
-            db.ChangeTracker.Clear();
-        }
-
-        if (transaction is not null)
-        {
-            tally.Attached = await db.Database.ExecuteSqlInterpolatedAsync(AttachedWords.Mark(runId), cancellationToken);
-            await transaction.CommitAsync(cancellationToken);
-            if (tally.NewLinks > 0)
+            await using var transaction = write ? await db.Database.BeginTransactionAsync(cancellationToken) : null;
+            foreach (var chunk in verdictIds.Chunk(Batch))
             {
-                tally.Lines.Add((await verseLinks.Load(cancellationToken)).ToString());
+                var changes = await Settle(run, chunk, tally, cancellationToken);
+                if (transaction is not null)
+                {
+                    var writing = Stopwatch.StartNew();
+                    await Write(changes, (NpgsqlTransaction)transaction.GetDbTransaction(), cancellationToken);
+                    tally.Writing += writing.Elapsed;
+                }
             }
+
+            if (transaction is not null)
+            {
+                tally.Attached = await db.Database.ExecuteSqlInterpolatedAsync(AttachedWords.Mark(runId), cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
+                if (tally.NewLinks > 0)
+                {
+                    tally.Lines.Add((await verseLinks.Load(cancellationToken)).ToString());
+                }
+            }
+        }
+        finally
+        {
+            await db.Database.CloseConnectionAsync();
         }
 
         return new EvidentiaApplyOutcome(write, verdictIds.Count, tally.NewLinks, tally.NewAbsences, tally.OnExisting, tally.Within,
-            tally.Promoted, tally.Withheld, tally.Withdrawn, tally.Superseded, tally.Lines, elapsed.Elapsed, tally.Attached, tally.Replaced);
+            tally.Promoted, tally.Withheld, tally.Withdrawn, tally.Superseded, tally.Lines, elapsed.Elapsed, tally.Attached, tally.Replaced,
+            tally.Reading, tally.Writing);
     }
 
-    private async Task Settle(EvidentiaRun run, long[] reviewIds, bool write, Tally tally, CancellationToken cancellationToken)
+    /// <summary>
+    /// Decides a batch of verdicts, in the order they were given, against the links of the pair as the
+    /// batch finds them, and says what is to be written. Nothing here writes.
+    /// </summary>
+    private async Task<Changes> Settle(EvidentiaRun run, long[] reviewIds, Tally tally, CancellationToken cancellationToken)
     {
-        var reviews = await db.EvidentiaReviews
+        var reading = Stopwatch.StartNew();
+        var reviews = await db.EvidentiaReviews.AsNoTracking()
             .Include(review => review.Decision)
             .Where(review => reviewIds.Contains(review.Id))
             .OrderBy(review => review.Id)
@@ -185,15 +272,15 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
         var claimed = reviews.Select(review => Claimed(review)).ToList();
         var words = claimed.Select(claim => claim.Word)
             .Concat(claimed.Where(claim => claim.Relation == LinkRelation.Renders).SelectMany(claim => claim.Target))
-            .Distinct().ToList();
-        var touching = await db.Links
+            .Distinct().ToArray();
+        var touchingIds = await TouchingIds(run, words, cancellationToken);
+        var touching = await db.Links.AsNoTracking()
             .Include(link => link.Words)
             .Include(link => link.Provenance)
             .Include(link => link.Claims).ThenInclude(held => held.Provenance)
             .AsSplitQuery()
-            .Where(link => link.Words.Any(word => words.Contains(word.WordId)))
-            .Where(link => (link.FromTextId == run.FromTextId && link.ToTextId == run.ToTextId)
-                || (link.FromTextId == run.ToTextId && link.ToTextId == run.FromTextId))
+            .Where(link => touchingIds.Contains(link.Id))
+            .OrderBy(link => link.Id)
             .ToListAsync(cancellationToken);
         var bySourceWord = touching
             .SelectMany(link => Sides(link, run).Source.Select(word => (word, link)))
@@ -210,12 +297,14 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             .ToListAsync(cancellationToken)).ToHashSet();
         var takeable = touching.Where(link => (link.Relation != LinkRelation.Renders && OnlyARule(link)) || OnlyAnEarlierRun(link, run))
             .Select(link => (long?)link.Id).ToList();
-        var writtenBy = (await db.EvidentiaReviews
+        var writtenBy = (await db.EvidentiaReviews.AsNoTracking()
             .Where(review => takeable.Contains(review.LinkId))
             .ToListAsync(cancellationToken))
             .ToLookup(review => review.LinkId!.Value);
+        tally.Reading += reading.Elapsed;
 
-        var removed = new HashSet<Link>();
+        var changes = new Changes(reviews, touching);
+        var removed = changes.Removed;
         foreach (var (review, claim) in reviews.Zip(claimed))
         {
             var claims = Claims(run, review);
@@ -238,9 +327,10 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                     foreach (var earlier in writtenBy[absence.Id])
                     {
                         earlier.Withheld = $"review {review.Id} of run {run.Id} renders this word, so this absence was taken back";
+                        changes.TakenBackFrom.Add(earlier);
                     }
 
-                    Withdraw(absence, absence.Words.Single().WordId, review, removed);
+                    Withdraw(absence, absence.Words.Single().WordId, review, changes);
                     tally.Superseded++;
                     tally.Lines.Add($"link {absence.Id}: {EnumSpelling.Of(absence.Relation)} taken back, review {review.Id} renders its word");
                 }
@@ -267,7 +357,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             {
                 foreach (var guess in guesses)
                 {
-                    Withdraw(guess, claim.Word, review, removed);
+                    Withdraw(guess, claim.Word, review, changes);
                     index[claim.Word].Remove(guess);
                     links.Remove(guess);
                     tally.Withdrawn++;
@@ -302,9 +392,10 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                 foreach (var by in writtenBy[earlier.Id])
                 {
                     by.Withheld = $"review {review.Id} of run {run.Id} places this word elsewhere, so this placement was taken back";
+                    changes.TakenBackFrom.Add(by);
                 }
 
-                Withdraw(earlier, claim.Word, review, removed);
+                Withdraw(earlier, claim.Word, review, changes);
                 index[claim.Word].Remove(earlier);
                 tally.Replaced++;
                 tally.Lines.Add($"link {earlier.Id}: an earlier run's placement taken back, review {review.Id} places its word elsewhere");
@@ -327,6 +418,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                     exact.Method = strongest.Method;
                     exact.Confidence = strongest.Confidence;
                     exact.Provenance = strongest.Provenance;
+                    changes.Promoted.Add(exact);
                     tally.Promoted++;
                     tally.Lines.Add($"link {exact.Id}: settled answer now {EnumSpelling.Of(strongest.Method)} (review {review.Id})");
                 }
@@ -368,7 +460,7 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
                     ],
                     Claims = [.. claims],
                 };
-                db.Links.Add(link);
+                changes.Created.Add(link);
                 if (!index.TryGetValue(claim.Word, out var standing))
                 {
                     index[claim.Word] = standing = [];
@@ -384,9 +476,217 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             review.AppliedAt = DateTimeOffset.UtcNow;
         }
 
-        if (write)
+        return changes;
+    }
+
+    private async Task<long[]> TouchingIds(EvidentiaRun run, long[] words, CancellationToken cancellationToken)
+    {
+        await using var command = new NpgsqlCommand(Touching, (NpgsqlConnection)db.Database.GetDbConnection(),
+            db.Database.CurrentTransaction?.GetDbTransaction() as NpgsqlTransaction);
+        command.Parameters.AddWithValue("words", words);
+        command.Parameters.AddWithValue("from", run.FromTextId);
+        command.Parameters.AddWithValue("to", run.ToTextId);
+        var ids = new List<long>();
+        await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+        while (await reader.ReadAsync(cancellationToken))
         {
-            await db.SaveChangesAsync(cancellationToken);
+            ids.Add(reader.GetInt64(0));
+        }
+
+        return [.. ids];
+    }
+
+    /// <summary>
+    /// Writes what a batch settled: the sources first, then the new links with their words and claims
+    /// and every claim added to a link already there, the settled answers that changed, the words
+    /// taken out of links that stay, the withdrawals and the reviews, and the links taken back last,
+    /// so that a review or withdrawal naming one of them is let go by the database as it goes.
+    /// </summary>
+    private static async Task Write(Changes changes, NpgsqlTransaction transaction, CancellationToken cancellationToken)
+    {
+        var connection = transaction.Connection!;
+        var standing = changes.Touching.Where(link => !changes.Removed.Contains(link)).ToList();
+        var claims = changes.Created.SelectMany(link => link.Claims.Select(held => (Link: link, Claim: held)))
+            .Concat(standing.SelectMany(link => link.Claims.Where(held => held.Id == 0).Select(held => (Link: link, Claim: held))))
+            .ToList();
+        var promoted = changes.Promoted.Where(link => link.Id != 0 && !changes.Removed.Contains(link)).ToList();
+
+        var unnamed = changes.Created.Select(link => link.Provenance!)
+            .Concat(claims.Select(pair => pair.Claim.Provenance!))
+            .Concat(promoted.Select(link => link.Provenance!))
+            .Where(provenance => provenance.Id == 0)
+            .ToList();
+        var provenance = await ProvenanceIds.Of(
+            connection, transaction, unnamed.Select(held => (held.Source, held.Note)), cancellationToken);
+        unnamed.ForEach(held => held.Id = provenance[(held.Source, held.Note)]);
+
+        if (changes.Created.Count > 0)
+        {
+            var first = await LinkWriter.ReserveIds(connection, transaction, changes.Created.Count, cancellationToken);
+            for (var n = 0; n < changes.Created.Count; n++)
+            {
+                changes.Created[n].Id = first + n;
+            }
+
+            await CopyLinks(connection, changes.Created, cancellationToken);
+        }
+
+        await CopyClaims(connection, claims, cancellationToken);
+        if (promoted.Count > 0)
+        {
+            await using var command = new NpgsqlCommand(Promote, connection, transaction);
+            command.Parameters.AddWithValue("links", promoted.Select(link => link.Id).ToArray());
+            command.Parameters.AddWithValue("methods", promoted.Select(link => EnumSpelling.Of(link.Method)).ToArray());
+            command.Parameters.Add(new NpgsqlParameter<double?[]>("confidences", promoted.Select(link => link.Confidence).ToArray()));
+            command.Parameters.AddWithValue("provenances", promoted.Select(link => link.Provenance!.Id).ToArray());
+            await command.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        var unlinked = changes.Unlinked.Where(pair => !changes.Removed.Contains(pair.Link)).ToList();
+        if (unlinked.Count > 0)
+        {
+            await using var command = new NpgsqlCommand(Unlink, connection, transaction);
+            command.Parameters.AddWithValue("links", unlinked.Select(pair => pair.Link.Id).ToArray());
+            command.Parameters.AddWithValue("words", unlinked.Select(pair => pair.Word.WordId).ToArray());
+            command.Parameters.AddWithValue("sides", unlinked.Select(pair => EnumSpelling.Of(pair.Word.Side)).ToArray());
+            await command.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        await CopyWithdrawals(connection, changes.Withdrawals, cancellationToken);
+
+        var reviews = changes.Reviews
+            .Select(review => (review.Id, review.Withheld, review.AppliedAt, LinkId: review.Link?.Id ?? review.LinkId))
+            .Concat(changes.TakenBackFrom.Where(review => changes.Reviews.All(settled => settled.Id != review.Id))
+                .Select(review => (review.Id, review.Withheld, review.AppliedAt, review.LinkId)))
+            .ToList();
+        await using (var command = new NpgsqlCommand(Reviewed, connection, transaction))
+        {
+            command.Parameters.AddWithValue("reviews", reviews.Select(review => review.Id).ToArray());
+            command.Parameters.Add(new NpgsqlParameter<string?[]>("withheld", reviews.Select(review => review.Withheld).ToArray()));
+            command.Parameters.Add(new NpgsqlParameter<DateTimeOffset?[]>("applied", reviews.Select(review => review.AppliedAt).ToArray()));
+            command.Parameters.Add(new NpgsqlParameter<long?[]>("links", reviews.Select(review => review.LinkId).ToArray()));
+            await command.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        // A link a verdict of this batch wrote stays, taken back or not: its own verdict still names it.
+        var created = changes.Created.ToHashSet();
+        var takenBack = changes.Removed.Where(link => !created.Contains(link)).Select(link => link.Id).ToArray();
+        if (takenBack.Length > 0)
+        {
+            await using var command = new NpgsqlCommand(TakenBack, connection, transaction);
+            command.Parameters.AddWithValue("links", takenBack);
+            await command.ExecuteNonQueryAsync(cancellationToken);
+        }
+    }
+
+    private static async Task CopyLinks(NpgsqlConnection connection, List<Link> links, CancellationToken cancellationToken)
+    {
+        await using (var writer = await connection.BeginBinaryImportAsync(LinkImport, cancellationToken))
+        {
+            foreach (var link in links)
+            {
+                await writer.StartRowAsync(cancellationToken);
+                await writer.WriteAsync(link.Id, NpgsqlDbType.Bigint, cancellationToken);
+                await writer.WriteAsync(link.FromTextId, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(link.ToTextId, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(EnumSpelling.Of(link.Relation), NpgsqlDbType.Text, cancellationToken);
+                await writer.WriteAsync(EnumSpelling.Of(link.Method), NpgsqlDbType.Text, cancellationToken);
+                await Nullable(writer, link.Confidence, NpgsqlDbType.Double, cancellationToken);
+                await writer.WriteAsync(link.Provenance!.Id, NpgsqlDbType.Integer, cancellationToken);
+                await writer.WriteAsync(
+                    LinkShape.Of(
+                        link.Words.Where(word => word.Side == LinkSide.From).Select(word => word.WordId),
+                        link.Words.Where(word => word.Side == LinkSide.To).Select(word => word.WordId)),
+                    NpgsqlDbType.Uuid, cancellationToken);
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+
+        await using (var writer = await connection.BeginBinaryImportAsync(LinkWordImport, cancellationToken))
+        {
+            foreach (var link in links)
+            {
+                foreach (var word in link.Words)
+                {
+                    await writer.StartRowAsync(cancellationToken);
+                    await writer.WriteAsync(link.Id, NpgsqlDbType.Bigint, cancellationToken);
+                    await writer.WriteAsync(word.WordId, NpgsqlDbType.Bigint, cancellationToken);
+                    await writer.WriteAsync(EnumSpelling.Of(word.Side), NpgsqlDbType.Text, cancellationToken);
+                }
+            }
+
+            await writer.CompleteAsync(cancellationToken);
+        }
+    }
+
+    private static async Task CopyClaims(
+        NpgsqlConnection connection,
+        List<(Link Link, LinkClaim Claim)> claims,
+        CancellationToken cancellationToken)
+    {
+        if (claims.Count == 0)
+        {
+            return;
+        }
+
+        await using var writer = await connection.BeginBinaryImportAsync(ClaimImport, cancellationToken);
+        foreach (var (link, claim) in claims)
+        {
+            await writer.StartRowAsync(cancellationToken);
+            await writer.WriteAsync(link.Id, NpgsqlDbType.Bigint, cancellationToken);
+            await writer.WriteAsync(EnumSpelling.Of(claim.Method), NpgsqlDbType.Text, cancellationToken);
+            await Nullable(writer, claim.Confidence, NpgsqlDbType.Double, cancellationToken);
+            await writer.WriteAsync(claim.Provenance!.Id, NpgsqlDbType.Integer, cancellationToken);
+        }
+
+        await writer.CompleteAsync(cancellationToken);
+    }
+
+    private static async Task CopyWithdrawals(
+        NpgsqlConnection connection,
+        List<(EvidentiaWithdrawal Row, Link? Link)> withdrawals,
+        CancellationToken cancellationToken)
+    {
+        if (withdrawals.Count == 0)
+        {
+            return;
+        }
+
+        await using var writer = await connection.BeginBinaryImportAsync(WithdrawalImport, cancellationToken);
+        foreach (var (row, link) in withdrawals)
+        {
+            await writer.StartRowAsync(cancellationToken);
+            await writer.WriteAsync(row.ReviewId, NpgsqlDbType.Bigint, cancellationToken);
+            await writer.WriteAsync(row.WordId, NpgsqlDbType.Bigint, cancellationToken);
+            await Nullable(writer, link?.Id, NpgsqlDbType.Bigint, cancellationToken);
+            await writer.WriteAsync(row.FromTextId, NpgsqlDbType.Integer, cancellationToken);
+            await writer.WriteAsync(row.ToTextId, NpgsqlDbType.Integer, cancellationToken);
+            await writer.WriteAsync(EnumSpelling.Of(row.Relation), NpgsqlDbType.Text, cancellationToken);
+            await writer.WriteAsync(EnumSpelling.Of(row.Method), NpgsqlDbType.Text, cancellationToken);
+            await Nullable(writer, row.Confidence, NpgsqlDbType.Double, cancellationToken);
+            await writer.WriteAsync(row.Source, NpgsqlDbType.Text, cancellationToken);
+            await Nullable(writer, row.Note, NpgsqlDbType.Text, cancellationToken);
+            await writer.WriteAsync(row.FromWordIds, NpgsqlDbType.Array | NpgsqlDbType.Bigint, cancellationToken);
+            await writer.WriteAsync(row.ToWordIds, NpgsqlDbType.Array | NpgsqlDbType.Bigint, cancellationToken);
+            await writer.WriteAsync(row.ClaimSources, NpgsqlDbType.Array | NpgsqlDbType.Text, cancellationToken);
+            await writer.WriteAsync(row.ClaimConfidences, NpgsqlDbType.Array | NpgsqlDbType.Double, cancellationToken);
+            await writer.WriteAsync(row.ClaimNotes, NpgsqlDbType.Array | NpgsqlDbType.Text, cancellationToken);
+            await writer.WriteAsync(row.WithdrawnAt, NpgsqlDbType.TimestampTz, cancellationToken);
+        }
+
+        await writer.CompleteAsync(cancellationToken);
+    }
+
+    private static async Task Nullable<T>(NpgsqlBinaryImporter writer, T? value, NpgsqlDbType type, CancellationToken cancellationToken)
+    {
+        if (value is null)
+        {
+            await writer.WriteNullAsync(cancellationToken);
+        }
+        else
+        {
+            await writer.WriteAsync(value, type, cancellationToken);
         }
     }
 
@@ -491,16 +791,15 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
     /// the link said. The link goes with it where the word was the only one on its side, since a
     /// rendering with one side empty would be an absence nobody claimed.
     /// </summary>
-    private void Withdraw(Link link, long word, EvidentiaReview review, HashSet<Link> removed)
+    private static void Withdraw(Link link, long word, EvidentiaReview review, Changes changes)
     {
         var named = link.Words.Single(held => held.WordId == word);
         var alone = link.Words.Count(held => held.Side == named.Side) == 1;
         var claims = link.Claims.OrderBy(held => held.Id).ToList();
-        db.EvidentiaWithdrawals.Add(new EvidentiaWithdrawal
+        changes.Withdrawals.Add((new EvidentiaWithdrawal
         {
-            Review = review,
+            ReviewId = review.Id,
             WordId = word,
-            Link = alone ? null : link,
             FromTextId = link.FromTextId,
             ToTextId = link.ToTextId,
             Relation = link.Relation,
@@ -514,17 +813,16 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             ClaimConfidences = [.. claims.Select(held => held.Confidence)],
             ClaimNotes = [.. claims.Select(held => held.Provenance!.Note)],
             WithdrawnAt = DateTimeOffset.UtcNow,
-        });
+        }, alone ? null : link));
 
         if (alone)
         {
-            db.Links.Remove(link);
-            removed.Add(link);
+            changes.Removed.Add(link);
         }
         else
         {
             link.Words.Remove(named);
-            db.LinkWords.Remove(named);
+            changes.Unlinked.Add((link, named));
         }
     }
 
@@ -607,8 +905,31 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
         HashSet<long> Source,
         HashSet<long> Target);
 
+    /// <summary>What a batch settled, to be written. <see cref="Touching"/> is what it read, as it left it.</summary>
+    private sealed class Changes(List<EvidentiaReview> reviews, List<Link> touching)
+    {
+        public List<EvidentiaReview> Reviews { get; } = reviews;
+
+        public List<Link> Touching { get; } = touching;
+
+        public List<Link> Created { get; } = [];
+
+        public HashSet<Link> Removed { get; } = [];
+
+        public HashSet<Link> Promoted { get; } = [];
+
+        public List<(Link Link, LinkWord Word)> Unlinked { get; } = [];
+
+        public List<(EvidentiaWithdrawal Row, Link? Link)> Withdrawals { get; } = [];
+
+        /// <summary>Earlier reviews whose link a verdict of this batch took back.</summary>
+        public HashSet<EvidentiaReview> TakenBackFrom { get; } = [];
+    }
+
     private sealed class Tally
     {
+        public TimeSpan Reading;
+        public TimeSpan Writing;
         public int NewLinks;
         public int NewAbsences;
         public int OnExisting;
