@@ -71,8 +71,8 @@ the loader's own guards, read out of the C#, and the narrower question, so a ref
 countable. A claim whose target does not resolve to a slug is never turned into prose.
 
 **The name forms are produced with the name, and the model is shown the Ohienko and Synodal verses
-to produce them from.** The Synodal comes with every verse's witnesses, the Ohienko with the first
-few. A stemmer guessing the genitive of a Hebrew proper name is wrong often and
+to produce them from.** The Synodal comes with every verse's witnesses, the Ohienko with a few
+spread over all the entity's verses, so the forms are read where the name mostly stands. A stemmer guessing the genitive of a Hebrew proper name is wrong often and
 silently; a model that has seen *Мойсея* in the Ukrainian text of the same verse is not guessing.
 
 **A published record never says less than the one it replaces.** The loader takes the later file
@@ -206,6 +206,9 @@ FORMS = ['nominative', 'genitive', 'locative']
 # itself, so the head of the list is taken whole and the tail is sampled.
 VERSES_SHOWN = 14
 VERSES_FROM_THE_HEAD = 9
+# The Ohienko verses the forms are read from. Spread over all the entity's verses rather than taken
+# from the head: Galilee's first verses are Joshua's, where the Ohienko writes *Ґаліл*, and its
+# seventy Gospel verses *Галілеї* -- forms read from the first three name it by its rarest spelling.
 TRANSLATED_VERSES_SHOWN = 3
 CANDIDATES_SHOWN = 40
 CANDIDATE_REFERENCES_SHOWN = 4
@@ -877,6 +880,22 @@ def shown_verses(all_of_them):
     return head + tail[::step][:room]
 
 
+def translated_verses(shown, all_of_them):
+    """
+    Which of the shown verses carry the Ohienko text: those nearest to evenly spaced points of all
+    the entity's verses, so the forms are read where the name mostly stands.
+    """
+    if len(shown) <= TRANSLATED_VERSES_SHOWN:
+        return set(shown)
+    rank = {key: index for index, key in enumerate(all_of_them)}
+    chosen = set()
+    for point in range(TRANSLATED_VERSES_SHOWN):
+        target = (point + 0.5) * len(all_of_them) / TRANSLATED_VERSES_SHOWN
+        nearest = min((key for key in shown if key not in chosen), key=lambda key: abs(rank[key] - target))
+        chosen.add(nearest)
+    return chosen
+
+
 LIST_SEGMENT = re.compile(r'[,;:]| and ')
 LIST_OPENER = re.compile(r'^\s*(?:And|Also|Now|Then)\s+')
 
@@ -1027,11 +1046,12 @@ def build(entity, verses, by_verse, texts, by_slug, index, read, with_context=Fa
         })
 
     lines = []
-    for index, key in enumerate(shown):
+    translated = translated_verses(shown, verses)
+    for key in shown:
         line = {'reference': reference(*key), 'king_james': texts[RENDERING].get(key)}
         if list_shaped(line['king_james']):
             line['register'] = True
-        if index < TRANSLATED_VERSES_SHOWN:
+        if key in translated:
             line['ukrainian'] = texts[UKRAINIAN].get(key)
         if key in read:
             line['witnesses'] = read[key]
