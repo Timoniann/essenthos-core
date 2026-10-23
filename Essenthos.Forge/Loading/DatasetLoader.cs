@@ -1355,44 +1355,46 @@ internal sealed class DatasetLoader(
     /// </summary>
     private async Task LinkFromTheInterlinear(string resources, CancellationToken cancellationToken)
     {
-        status.Starting("the Ukrainian interlinear");
-
-        using var scope = services.CreateScope();
-        var loader = scope.ServiceProvider.GetRequiredService<InterlinearLinkLoader>();
-        var ukrainian = InterlinearLinkLoader.Interlinear(Bible4uTextSource.Ohienko);
-        status.Record(await loader.Load(
-            Path.Combine(resources, "Door43", ukrainian.Folder),
-            Bible4uTextSource.Ohienko,
-            ukrainian.Source,
-            cancellationToken));
-
-        status.Starting("the Russian Synodal alignment");
-
-        var russian = InterlinearLinkLoader.Interlinear(Bible4uTextSource.Synodal);
-        status.Record(await loader.Load(
-            Path.Combine(resources, "Door43", russian.Folder),
-            Bible4uTextSource.Synodal,
-            russian.Source,
-            cancellationToken));
-
-        status.Starting("the unfoldingWord Literal Text alignment");
-
-        var literal = InterlinearLinkLoader.Interlinear(UnfoldingWordTextSource.Slug);
-        status.Record(await loader.Load(
-            Path.Combine(resources, "Door43", literal.Folder),
-            UnfoldingWordTextSource.Slug,
-            literal.Source,
-            cancellationToken));
+        var interlinears = new List<(string Folder, string Slug, string Source)>();
+        foreach (var slug in new[] { Bible4uTextSource.Ohienko, Bible4uTextSource.Synodal, UnfoldingWordTextSource.Slug })
+        {
+            var interlinear = InterlinearLinkLoader.Interlinear(slug);
+            interlinears.Add((interlinear.Folder, slug, interlinear.Source));
+        }
 
         // The Van Dyck, the Indian Revised Version in three languages: their translators' own ties,
         // beside Clear Bible's where both exist, each kept as its own statement.
-        foreach (var aligned in Door43.Door43AlignedBible.All)
+        interlinears.AddRange(Door43.Door43AlignedBible.All.Select(aligned => (aligned.Folder, aligned.Slug, aligned.Source)));
+
+        // Each is one translation's links and nothing else's — its links, their words and claims, the
+        // fingerprints its own words give them — and the provenance rows they share are written by
+        // ProvenanceIds, which two sessions may ask at once. So they run side by side, each in its
+        // own scope and connection, and a load that took one core for 18 of them in turn (403 s of
+        // attempt 7) takes several. Their outcomes are recorded in the order they are listed.
+        status.Starting($"the interlinears and translators' alignments of {interlinears.Count} texts, {InterlinearsAtOnce} at a time");
+        var outcomes = new InterlinearOutcome[interlinears.Count];
+        await Parallel.ForEachAsync(
+            Enumerable.Range(0, interlinears.Count),
+            new ParallelOptions { MaxDegreeOfParallelism = InterlinearsAtOnce, CancellationToken = cancellationToken },
+            async (at, token) =>
+            {
+                var (folder, slug, source) = interlinears[at];
+                using var scope = services.CreateScope();
+                var loader = scope.ServiceProvider.GetRequiredService<InterlinearLinkLoader>();
+                outcomes[at] = await loader.Load(Path.Combine(resources, "Door43", folder), slug, source, token);
+            });
+
+        foreach (var outcome in outcomes)
         {
-            status.Starting($"the Door43 alignment of {aligned.Slug}");
-            status.Record(await loader.Load(
-                Path.Combine(resources, "Door43", aligned.Folder), aligned.Slug, aligned.Source, cancellationToken));
+            status.Record(outcome);
         }
     }
+
+    /// <summary>
+    /// How many interlinears are written at once: each is one Postgres session, mostly on one core,
+    /// and the machine they are built on has sixteen.
+    /// </summary>
+    private const int InterlinearsAtOnce = 4;
 
     /// <summary>
     /// The one text that arrived without lemmas. GLAUx is used as a dictionary and its own Greek is
