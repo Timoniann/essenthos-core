@@ -42,7 +42,8 @@ internal sealed record EvidentiaReplayOutcome(
     int Restored,
     IReadOnlyList<string> Conflicts,
     IReadOnlyList<EvidentiaApplyOutcome> Applied,
-    TimeSpan Elapsed)
+    TimeSpan Elapsed,
+    string? VerseLinks = null)
 {
     /// <summary>How many conflicts a report names one by one before it only counts the rest.</summary>
     private const int Named = 20;
@@ -53,6 +54,7 @@ internal sealed record EvidentiaReplayOutcome(
             : $"The EVIDENTIA ledger: {Runs} runs, {Verdicts:N0} verdicts — {Reconstituted} runs written again from the ledger, "
               + $"{AlreadyThere:N0} verdicts already in the corpus as recorded, {Restored:N0} restored, {Conflicts.Count:N0} not replayed; in {Elapsed}"
               + string.Concat(Applied.Select(applied => "\n" + applied))
+              + (VerseLinks is null ? string.Empty : "\n" + VerseLinks)
               + string.Concat(Conflicts.Take(Named).Select(conflict => "\n  not replayed: " + conflict))
               + (Conflicts.Count > Named ? $"\n  … and {Conflicts.Count - Named:N0} more" : string.Empty);
 }
@@ -344,8 +346,11 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
             await ReplayRun(folder, run, tally, cancellationToken);
         }
 
+        var verseLinks = tally.Applied.Any(applied => applied.NewLinks > 0)
+            ? await writer.JoinVerses(cancellationToken)
+            : null;
         return new EvidentiaReplayOutcome(tally.Runs, tally.Verdicts, tally.Reconstituted, tally.AlreadyThere, tally.Restored,
-            tally.Conflicts, tally.Applied, elapsed.Elapsed);
+            tally.Conflicts, tally.Applied, elapsed.Elapsed, verseLinks);
     }
 
     private async Task ReplayRun(string folder, LedgerRun recorded, ReplayTally tally, CancellationToken cancellationToken)
@@ -393,7 +398,7 @@ internal sealed class EvidentiaLedger(AppDbContext db, EvidentiaLinkWriter write
 
         if (toApply is { } runId)
         {
-            tally.Applied.Add(await writer.Apply(runId, write: true, cancellationToken));
+            tally.Applied.Add(await writer.Apply(runId, write: true, cancellationToken, joinVerses: false));
         }
     }
 

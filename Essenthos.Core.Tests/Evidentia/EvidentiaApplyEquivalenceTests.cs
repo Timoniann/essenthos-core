@@ -64,6 +64,8 @@ public sealed class EvidentiaApplyEquivalenceTests : IDisposable
         await Decide();
         await Ledger().ExportAll(_resources);
         (await Snapshot()).Should().Equal(Expected);
+        var verses = await VerseLinks();
+        verses.Should().NotBeEmpty();
 
         await _db.Database.ExecuteSqlRawAsync("TRUNCATE text CASCADE");
         _db.ChangeTracker.Clear();
@@ -72,6 +74,9 @@ public sealed class EvidentiaApplyEquivalenceTests : IDisposable
 
         outcome.Conflicts.Should().BeEmpty();
         outcome.Reconstituted.Should().Be(2);
+        outcome.VerseLinks.Should().NotBeNull("the verse links are drawn once, after the last run");
+        outcome.Applied.SelectMany(applied => applied.Lines).Should().NotContain(line => line.Contains("verse link"));
+        (await VerseLinks()).Should().Equal(verses);
         var replayed = await Snapshot();
         replayed.Should().Equal([.. Expected.Append(ReplayedOutOfOrder).Order(StringComparer.Ordinal)]);
         (await Ledger().Replay(_resources)).Restored.Should().Be(0, "a second replay finds every verdict in the corpus as recorded");
@@ -367,6 +372,12 @@ public sealed class EvidentiaApplyEquivalenceTests : IDisposable
 
         return [.. lines.Order(StringComparer.Ordinal)];
     }
+
+    private async Task<List<string>> VerseLinks() =>
+        [.. (await _db.VerseLinks.AsNoTracking().Include(link => link.Verses).ToListAsync())
+            .Select(link => $"{(link.FromTextId == _english.Id ? "E" : "H")} {EnumSpelling.Of(link.Relation)} {EnumSpelling.Of(link.Method)} "
+                + $"{link.Source} {link.Verses.Count}")
+            .Order(StringComparer.Ordinal)];
 
     private static string Blotted(string? text) => text is null ? "-" : Regex.Replace(text, "[0-9]+", "#");
 

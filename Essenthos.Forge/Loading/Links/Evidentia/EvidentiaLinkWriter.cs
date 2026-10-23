@@ -207,7 +207,12 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
 
     private const string TakenBack = "DELETE FROM link WHERE id = ANY(@links)";
 
-    public async Task<EvidentiaApplyOutcome> Apply(int runId, bool write, CancellationToken cancellationToken = default)
+    /// <param name="joinVerses">
+    /// Whether the verse links are drawn again for what the run wrote. A replay of several runs draws
+    /// them once after the last (<see cref="JoinVerses"/>), because no verdict is settled against them.
+    /// </param>
+    public async Task<EvidentiaApplyOutcome> Apply(
+        int runId, bool write, CancellationToken cancellationToken = default, bool joinVerses = true)
     {
         var elapsed = Stopwatch.StartNew();
         var run = await db.EvidentiaRuns.AsNoTracking()
@@ -241,9 +246,9 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             {
                 tally.Attached = await db.Database.ExecuteSqlInterpolatedAsync(AttachedWords.Mark(runId), cancellationToken);
                 await transaction.CommitAsync(cancellationToken);
-                if (tally.NewLinks > 0)
+                if (tally.NewLinks > 0 && joinVerses)
                 {
-                    tally.Lines.Add((await verseLinks.Load(cancellationToken)).ToString());
+                    tally.Lines.Add(await JoinVerses(cancellationToken));
                 }
             }
         }
@@ -256,6 +261,10 @@ internal sealed class EvidentiaLinkWriter(AppDbContext db, VerseLinkLoader verse
             tally.Promoted, tally.Withheld, tally.Withdrawn, tally.Superseded, tally.Lines, elapsed.Elapsed, tally.Attached, tally.Replaced,
             tally.Reading, tally.Writing);
     }
+
+    /// <summary>Draws the verse links the links written since call for; says what it did.</summary>
+    public async Task<string> JoinVerses(CancellationToken cancellationToken = default) =>
+        (await verseLinks.Load(cancellationToken)).ToString();
 
     /// <summary>
     /// Decides a batch of verdicts, in the order they were given, against the links of the pair as the
