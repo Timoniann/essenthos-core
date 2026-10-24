@@ -53,7 +53,7 @@ internal static partial class ForgeVerbs
             : null);
 
     /// <summary>
-    /// <c>rebuild &lt;database&gt; --compare &lt;reference&gt; --resources &lt;folder&gt;</c>: see
+    /// <c>rebuild &lt;database&gt; --compare &lt;reference&gt; --resources &lt;folder&gt; [--resume]</c>: see
     /// <see cref="Loading.Marks.Rebuild"/>. The Resources folder is asked for, not defaulted, because the
     /// load writes review lists into the one it is given.
     /// </summary>
@@ -63,7 +63,7 @@ internal static partial class ForgeVerbs
         var resources = Named(args, "--resources");
         if (reference is not { Length: > 0 } || resources is not { Length: > 0 } || args[1].StartsWith("--", StringComparison.Ordinal))
         {
-            forge.Logger.LogError("forge rebuild <database> --compare <reference> --resources <folder>");
+            forge.Logger.LogError("forge rebuild <database> --compare <reference> --resources <folder> [--resume]");
             return 1;
         }
 
@@ -71,7 +71,8 @@ internal static partial class ForgeVerbs
         var configuration = scope.ServiceProvider.GetRequiredService<IConfiguration>();
         var sessions = int.TryParse(configuration["Loading:FingerprintSessions"], out var configured) && configured > 0 ? configured : 6;
         return await Loading.Marks.Rebuild.Run(
-            forge.DatabaseConnection, args[1], reference, Path.GetFullPath(resources), sessions, forge.Logger, CancellationToken.None);
+            forge.DatabaseConnection, args[1], reference, Path.GetFullPath(resources), sessions, args.Contains("--resume"), forge.Logger,
+            CancellationToken.None);
     }
 
     private static async Task<int> LexiconTranslations(ForgeRun forge, string[] args)
