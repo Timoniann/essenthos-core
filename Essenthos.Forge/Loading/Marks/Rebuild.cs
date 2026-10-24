@@ -20,6 +20,13 @@ namespace Essenthos.Core.Loading.Marks;
 /// workspace keyed by its own inputs, beside the one the live corpus's runs use. The load writes review
 /// lists and reads the recipe under the Resources it is given, so it is given a folder of its own.
 /// </para>
+///
+/// <para>
+/// A rebuild that stopped is resumed, not started again: <c>--resume</c> loads the database it left with
+/// the marks heeded, so the steps and recipe lines that finished cold are skipped and the load goes on from
+/// the one that stopped it (<see cref="LoadMarks"/>, <see cref="RecipeMarks"/>). What finished was still
+/// built from nothing; only what had not run yet is left to run.
+/// </para>
 /// </summary>
 internal static partial class Rebuild
 {
@@ -29,6 +36,7 @@ internal static partial class Rebuild
         string reference,
         string resources,
         int sessions,
+        bool resume,
         ILogger logger,
         CancellationToken cancellationToken)
     {
@@ -61,9 +69,18 @@ internal static partial class Rebuild
             await connection.OpenAsync(cancellationToken);
             await using var exists = new NpgsqlCommand("SELECT count(*) FROM pg_database WHERE datname = ANY(@names)", connection);
             exists.Parameters.AddWithValue("names", new[] { database });
-            if ((long)(await exists.ExecuteScalarAsync(cancellationToken))! > 0)
+            var there = (long)(await exists.ExecuteScalarAsync(cancellationToken))! > 0;
+            if (there && !resume)
             {
-                logger.LogError("{Database} already exists. A rebuild starts from nothing and drops nothing: drop it by hand first", database);
+                logger.LogError(
+                    "{Database} already exists. A rebuild starts from nothing and drops nothing: drop it by hand first, "
+                    + "or pass --resume to go on from where it stopped", database);
+                return 1;
+            }
+
+            if (!there && resume)
+            {
+                logger.LogError("There is no {Database} to resume: a rebuild is resumed into the database it stopped in", database);
                 return 1;
             }
 
@@ -75,12 +92,15 @@ internal static partial class Rebuild
                 return 1;
             }
 
-            await using var create = new NpgsqlCommand($"CREATE DATABASE \"{database}\"", connection);
-            await create.ExecuteNonQueryAsync(cancellationToken);
+            if (!resume)
+            {
+                await using var create = new NpgsqlCommand($"CREATE DATABASE \"{database}\"", connection);
+                await create.ExecuteNonQueryAsync(cancellationToken);
+            }
         }
 
         var started = Stopwatch.GetTimestamp();
-        logger.LogInformation("Rebuild: {Database} created; migrating it", database);
+        logger.LogInformation("Rebuild: {Database} {How}; migrating it", database, resume ? "resumed" : "created");
         await using (var db = new AppDbContext(new DbContextOptionsBuilder<AppDbContext>()
                          .UseNpgsql(target, npgsql => npgsql.CommandTimeout(1800)).Options))
         {
@@ -88,11 +108,16 @@ internal static partial class Rebuild
         }
 
         logger.LogInformation(
-            "Rebuild: loading {Database} from nothing, every step, no model run but the aligner's, from {Resources}, with the alignments stored in {Alignments}",
+            resume
+                ? "Rebuild: loading {Database} on from where it stopped, the steps and lines that finished skipped by their marks, "
+                  + "no model run but the aligner's, from {Resources}, with the alignments stored in {Alignments}"
+                : "Rebuild: loading {Database} from nothing, every step, no model run but the aligner's, from {Resources}, with the alignments stored in {Alignments}",
             database, resources, AlignmentStore.Root);
-        if (await Forge(["load", "--no-skip"], target, resources, cancellationToken) is not 0 and var loadExit)
+        if (await Forge(resume ? ["load"] : ["load", "--no-skip"], target, resources, cancellationToken) is not 0 and var loadExit)
         {
-            logger.LogError("Rebuild: the load into {Database} failed ({Exit}); the database is left as it stands", database, loadExit);
+            logger.LogError(
+                "Rebuild: the load into {Database} failed ({Exit}); the database is left as it stands, and --resume goes on from there",
+                database, loadExit);
             return 1;
         }
 

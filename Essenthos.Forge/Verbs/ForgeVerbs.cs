@@ -35,10 +35,11 @@ internal static partial class ForgeVerbs
             "Load the corpus: every witness, the lexicon, the frame, the links, the encyclopedia and the verification pass; "
             + "a step nothing it reads has moved for is skipped.",
             Load),
-        new("rebuild", "<database> --compare <reference> --resources <folder>",
+        new("rebuild", "<database> --compare <reference> --resources <folder> [--resume]",
             "Build the corpus from nothing into a new database of its own, every step and no model run but the aligner's, verify it, and compare "
-            + "it table by table with a reference corpus. Never touches the configured database and swaps nothing.",
-            RebuildVerb, Least: 5, Most: 5),
+            + "it table by table with a reference corpus. Never touches the configured database and swaps nothing. "
+            + "--resume goes on in a rebuild that stopped, from the step or recipe line that stopped it.",
+            RebuildVerb, Least: 5, Most: 6),
         new("lexicon-translations", "", "Load only published Strong translations beside the English dictionary.",
             LexiconTranslations, Most: 0),
         new("maintain", "[<table> ...]", "VACUUM (ANALYZE) of the tables that need it, or of the ones named.", Maintain),

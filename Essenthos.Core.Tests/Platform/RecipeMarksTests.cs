@@ -29,6 +29,7 @@ public sealed class RecipeMarksTests : IDisposable
     private readonly Dictionary<string, string> _code = new(StringComparer.Ordinal);
     private readonly Dictionary<string, string[]> _heard = new(StringComparer.Ordinal);
     private readonly List<string> _ran = [];
+    private readonly HashSet<string> _failing = new(StringComparer.Ordinal);
 
     public RecipeMarksTests(WitnessDatabase database)
     {
@@ -181,6 +182,24 @@ public sealed class RecipeMarksTests : IDisposable
         (await Ran(recipe)).Should().BeEmpty();
     }
 
+    /// <summary>
+    /// A rebuild that stopped is resumed, not started again: the lines that finished while every line was
+    /// asked for keep their marks, so a load heeding them goes on from the line that threw.
+    /// </summary>
+    [Fact]
+    public async Task ALoadAfterALineThrewGoesOnFromThatLine()
+    {
+        string[] recipe = ["fake RMA RMB", "fake RMB RMC", "fake RMC RMD", "fake RMA RMD"];
+        _failing.Add("fake RMC RMD");
+
+        await FluentActions.Awaiting(() => Ran(recipe, everything: true)).Should().ThrowAsync<InvalidOperationException>();
+        _ran.Should().Equal("fake RMA RMB", "fake RMB RMC", "fake RMC RMD");
+
+        _failing.Clear();
+        (await Ran(recipe)).Should().Equal("fake RMC RMD", "fake RMA RMD");
+        (await Ran(recipe)).Should().BeEmpty();
+    }
+
     private async Task<List<string>> Ran(IReadOnlyList<string> recipe, bool everything = false)
     {
         _ran.Clear();
@@ -221,6 +240,11 @@ public sealed class RecipeMarksTests : IDisposable
     private async Task<RecipeRun> Run(RecipeLine line, CancellationToken cancellationToken)
     {
         _ran.Add(line.Command);
+        if (_failing.Contains(line.Command))
+        {
+            throw new InvalidOperationException($"`{line.Command}` failed");
+        }
+
         if (await Scalar($"SELECT count(*) FROM provenance WHERE source = '{line.Command}'") == 0)
         {
             await Link(line.Texts[0], line.Texts[^1], line.Command);
