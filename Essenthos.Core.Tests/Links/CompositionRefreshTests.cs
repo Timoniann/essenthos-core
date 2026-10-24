@@ -135,6 +135,34 @@ public sealed class CompositionRefreshTests : IDisposable
     }
 
     [Fact]
+    public async Task AnAlignmentIsDoneOnlyByTheAlignersOwnLinksInItsOwnDirection()
+    {
+        // PRB-1200: a cold rebuild skipped `align RUSV KJV --replace` because the names pass, which
+        // also writes method `aligner`, had linked 23,000 of RUSV's names to the King James.
+        Link(_american, Word(_american, 1, 2), Word(_hebrew, 1, 2), LinkMethod.Aligner, 1.0, NameListPass.Source);
+
+        await _db.Database.OpenConnectionAsync();
+        try
+        {
+            var connection = (NpgsqlConnection)_db.Database.GetDbConnection();
+            var align = new RecipeStep("align", ["ASV", "BHSA"]);
+            (await Recipe.AlreadyThere(connection, align, CancellationToken.None))
+                .Should().BeNull("names paired by spelling are not an alignment");
+
+            Link(_american, Word(_american, 2, 2), Word(_hebrew, 2, 1), LinkMethod.Aligner, 0.8, "SIL.Machine ibm4, symmetrised och");
+            (await Recipe.AlreadyThere(connection, align, CancellationToken.None)).Should().NotBeNull();
+            (await Recipe.AlreadyThere(connection, new RecipeStep("align", ["BHSA", "ASV"]), CancellationToken.None))
+                .Should().BeNull("an alignment the other way is another line's");
+            (await Recipe.AlreadyThere(connection, new RecipeStep("align", ["ASV", "BHSA", "--replace"]), CancellationToken.None))
+                .Should().BeNull("a line that replaces what is there is its mark's to skip");
+        }
+        finally
+        {
+            await _db.Database.CloseConnectionAsync();
+        }
+    }
+
+    [Fact]
     public async Task AStaleCompositionDrawnUnmeasuredIsRedrawnUnmeasured()
     {
         Link(_american, Word(_american, 2, 2), Word(_hebrew, 2, 1), LinkMethod.Aligner, 0.8, "SIL.Machine, aligned through KJV");

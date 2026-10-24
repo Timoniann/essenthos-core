@@ -226,12 +226,23 @@ internal static class Recipe
             case "compose" when step.Arguments.Contains(Refresh):
                 return null;
 
+            // A line that replaces what is there asks to run whatever is there; whether it runs again
+            // is its mark's to say, not the corpus's.
+            case "align" when step.Arguments.Contains("--replace"):
+                return null;
+
+            // Only the aligner's own links, and only in the line's own direction, say the line has run
+            // (PRB-1200). The names pass writes method `aligner` too, and an alignment the other way, or
+            // of another part of the canon, is another line's: either one used to stand in for this
+            // line, and a cold rebuild skipped `align RUSV KJV --replace` for 23,000 name links, which
+            // left RUSV and the Brenton Septuagint without 95% of their links to the King James.
             case "align" when slugs.Count >= 2:
             case "compose" when slugs.Count >= 3:
                 var from = slugs[0];
                 var to = step.Verb == "align" ? slugs[1] : slugs[2];
-                return await Exists(connection, PairLinks + " AND l.method = 'aligner'", from, to, null, cancellationToken)
-                    ? $"{from} and {to} are already aligned"
+                return await Exists(connection, DirectedLinks + " AND l.method = 'aligner'" + FromSource, from, to,
+                    CompositionPipeline.Machine, cancellationToken)
+                    ? $"{from} is already aligned to {to}"
                     : null;
 
             case "names" when slugs.Count >= 2:
@@ -306,6 +317,15 @@ internal static class Recipe
             JOIN text f ON f.id = l.from_text_id
             JOIN text t ON t.id = l.to_text_id
             WHERE ((f.slug = @from AND t.slug = @to) OR (f.slug = @to AND t.slug = @from))
+        """;
+
+    private const string DirectedLinks =
+        """
+        SELECT EXISTS (
+            SELECT 1 FROM link l
+            JOIN text f ON f.id = l.from_text_id
+            JOIN text t ON t.id = l.to_text_id
+            WHERE f.slug = @from AND t.slug = @to
         """;
 
     private const string FromSource =

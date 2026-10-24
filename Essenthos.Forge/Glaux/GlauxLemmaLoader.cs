@@ -1,6 +1,5 @@
 using Essenthos.Core.Utils;
 ﻿using System.Diagnostics;
-using System.Text;
 using Essenthos.Core.Database;
 using Essenthos.Core.Loading;
 using Essenthos.Core.TextusReceptus;
@@ -241,7 +240,11 @@ internal sealed class GlauxLemmaLoader(AppDbContext db, ILogger<GlauxLemmaLoader
         // Normalised here, at the one point every lemma passes through, rather than at each of the
         // places that will one day compare them: a comparison that forgets is one that silently
         // finds nothing, and finding nothing looks exactly like having no data.
-        written = [.. written.Select(row => (row.Id, Lemma: row.Lemma.Normalize(NormalizationForm.FormC)))];
+        //
+        // By the database, in the UPDATE below, and not by `string.Normalize`: the Forge runs with
+        // InvariantGlobalization, under which Normalize returns its string unchanged and IsNormalized
+        // says yes (PRB-0093). It did here, and a cold load stored 560,848 lemmas decomposed that
+        // only a one-off migration had ever composed on live (PRB-1201).
 
         await db.Database.OpenConnectionAsync(cancellationToken);
         await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
@@ -268,7 +271,7 @@ internal sealed class GlauxLemmaLoader(AppDbContext db, ILogger<GlauxLemmaLoader
         }
 
         await using (var update = new NpgsqlCommand(
-            "UPDATE word SET lemma = g.lemma FROM glaux_lemma g WHERE word.id = g.word_id",
+            "UPDATE word SET lemma = normalize(g.lemma, NFC) FROM glaux_lemma g WHERE word.id = g.word_id",
             connection, (NpgsqlTransaction)transaction.GetDbTransaction()))
         {
             await update.ExecuteNonQueryAsync(cancellationToken);
