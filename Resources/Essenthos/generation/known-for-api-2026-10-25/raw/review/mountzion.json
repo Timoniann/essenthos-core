@@ -1,0 +1,25 @@
+{
+ "slug": "mountzion",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.659375+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була вибрана Богом як гора, яку Він полюбив",
+    "deu": "wurde von Gott erwählt als der Berg, den er liebte",
+    "spa": "fue escogido por Dios como el monte al cual amó",
+    "why": "Ukrainian verb made feminine to agree with «гора»."
+   },
+   {
+    "ukr": "була спустошена, і лисиці бродили по ній",
+    "deu": "lag wüst, und die Füchse liefen darüber",
+    "spa": "estuvo asolado, y las zorras andaban en él",
+    "why": "Ukrainian verb and pronoun made feminine to agree with «гора»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

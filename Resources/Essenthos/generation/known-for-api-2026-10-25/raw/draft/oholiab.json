@@ -1,0 +1,32 @@
+{
+ "slug": "oholiab",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.757241+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of his work on the sanctuary beside Bezaleel and of the wisdom he was given for it, which adds to the summary.",
+  "clauses": [
+   {
+    "english": "was filled with wisdom of heart to teach and to do all manner of skilled work",
+    "references": [
+     "EXO 35:34-35"
+    ],
+    "quote": "Them hath he filled with wisdom of heart"
+   },
+   {
+    "english": "worked with Bezaleel on the sanctuary as the LORD had commanded",
+    "references": [
+     "EXO 36:1"
+    ],
+    "quote": "Then wrought Bezaleel and Aholiab, and every wise hearted man"
+   }
+  ],
+  "doubts": [
+   "EXO 38:19 is marked but describes the pillars of the court and does not name him, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,19 @@
+{
+ "slug": "zechariah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:11.962456+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був убитий Шаллумом, який учинив на нього змову і зацарював замість нього",
+    "deu": "wurde von Sallum getötet, der sich gegen ihn verschworen hatte und an seiner Statt König wurde",
+    "spa": "fue muerto por Sallum, que se conjuró contra él y reinó en su lugar",
+    "why": "German: replaced the archaic «einen Bund wider ihn machte» and «an seiner Statt König wurde» wording with modern «sich gegen ihn verschworen hatte»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

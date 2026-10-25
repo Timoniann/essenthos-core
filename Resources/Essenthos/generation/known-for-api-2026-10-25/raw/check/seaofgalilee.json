@@ -1,0 +1,36 @@
+{
+ "slug": "seaofgalilee",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.023180+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jesus called the fishermen Simon and Andrew to follow him",
+    "references": [
+     "MAT 4:18-20"
+    ],
+    "ukr": "було місцем, де Ісус покликав рибалок Симона й Андрія йти за Ним",
+    "deu": "war der Ort, an dem Jesus die Fischer Simon und Andreas rief, ihm nachzufolgen",
+    "spa": "fue el lugar donde Jesús llamó a los pescadores Simón y Andrés a seguirle"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses put the healing on a mountain near the sea, not at the sea itself.",
+    "english": "was near where Jesus healed the lame, blind and dumb brought to him",
+    "references": [
+     "MAT 15:29-31"
+    ],
+    "ukr": "було поблизу місця, де Ісус уздоровив кривих, сліпих і німих, приведених до Нього",
+    "deu": "war in der Nähe des Ortes, an dem Jesus die Lahmen, Blinden und Stummen heilte, die zu ihm gebracht wurden",
+    "spa": "estaba cerca del lugar donde Jesús sanó a los cojos, ciegos y mudos que le fueron traídos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

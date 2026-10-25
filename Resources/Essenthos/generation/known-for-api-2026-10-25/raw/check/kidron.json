@@ -1,0 +1,47 @@
+{
+ "slug": "kidron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:18.886500+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "David is named only in 2SA 15:22, just outside the citation, so the citation is widened to take it in.",
+    "english": "was crossed by King David and all the people toward the wilderness",
+    "references": [
+     "2SA 15:22-23"
+    ],
+    "ukr": "був перейдений царем Давидом і всім народом дорогою до пустині",
+    "deu": "wurde vom König David und allem Volk auf dem Weg zur Wüste überquert",
+    "spa": "fue cruzado por el rey David y todo el pueblo, camino al desierto"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses shown never name Josiah, so the name is removed.",
+    "english": "was where the grove was burned and stamped to powder",
+    "references": [
+     "2KI 23:6"
+    ],
+    "ukr": "був місцем, де спалили Астарту і стерли її на порох",
+    "deu": "war der Ort, an dem das Ascherabild verbrannt und zu Staub gemacht wurde",
+    "spa": "fue el lugar donde el bosque fue quemado y vuelto polvo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was crossed by Jesus and his disciples on the way to a garden",
+    "references": [
+     "JHN 18:1"
+    ],
+    "ukr": "був перейдений Ісусом та Його учнями дорогою до саду",
+    "deu": "wurde von Jesus und seinen Jüngern auf dem Weg zu einem Garten überquert",
+    "spa": "fue cruzado por Jesús y sus discípulos de camino a un huerto"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

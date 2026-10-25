@@ -1,0 +1,37 @@
+{
+ "slug": "ark-of-the-covenant",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.095253+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був несений у Йордан, і весь Ізраїль переходив по сухому",
+    "deu": "wurde in den Jordan getragen, und ganz Israel ging trocken hindurch",
+    "spa": "fue llevada al Jordán, y todo Israel pasó en seco",
+    "why": "Ukrainian: replaced the old spelling «ввесь» with the modern «весь»."
+   },
+   {
+    "ukr": "був узятий филистимлянами в бою",
+    "deu": "wurde von den Philistern in der Schlacht genommen",
+    "spa": "fue tomada por los filisteos en la batalla",
+    "why": "Spanish: «Filisteos» is lower-case in modern Spanish."
+   },
+   {
+    "ukr": "був винесений Давидом до Давидового Міста",
+    "deu": "wurde von David in die Stadt Davids heraufgeholt",
+    "spa": "fue traída por David a la ciudad de David",
+    "why": ""
+   },
+   {
+    "ukr": "був поставлений у Святому Святих храму Соломона",
+    "deu": "wurde in das Allerheiligste von Salomos Tempel gebracht",
+    "spa": "fue puesta en el lugar santísimo del templo de Salomón",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

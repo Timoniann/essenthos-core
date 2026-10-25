@@ -1,0 +1,34 @@
+{
+ "slug": "mishael-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.042613+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Mishael, named Meshach, is known for being set over Babylon's affairs and for surviving the fiery furnace after refusing to worship the golden image.",
+  "clauses": [
+   {
+    "english": "was set over the affairs of the province of Babylon",
+    "references": [
+     "DAN 2:49"
+    ],
+    "quote": "he set Shadrach, Meshach, and Abednego, over the affairs of the province of Babylon"
+   },
+   {
+    "english": "was cast into the burning fiery furnace for refusing to worship the golden image, and came out unharmed",
+    "references": [
+     "DAN 3:19-23",
+     "DAN 3:26"
+    ],
+    "quote": "Shadrach, Meshach, and Abednego, came forth of the midst of the fire."
+   }
+  ],
+  "doubts": [
+   "Mishael is named Meshach in the verses (DAN 1:7); the clauses rest on verses naming Meshach with Shadrach and Abednego.",
+   "The clause on the furnace joins being cast in and coming out as one event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

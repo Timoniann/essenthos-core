@@ -1,0 +1,25 @@
+{
+ "slug": "apollos",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.451166+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "пильно навчав про Господа, хоча знав тільки хрещення Івана",
+    "deu": "lehrte mit Fleiß von dem HERRN, wusste aber allein von der Taufe des Johannes",
+    "spa": "enseñaba diligentemente las cosas del SEÑOR, aunque conocía solamente el bautismo de Juan",
+    "why": "Spanish: wrote the LORD as «SEÑOR» instead of «Señor»."
+   },
+   {
+    "ukr": "був прийнятий Акилою й Прискиллою, які докладніше розповіли йому про дорогу Божу",
+    "deu": "wurde von Aquila und Priscilla zu sich genommen, die ihm den Weg Gottes genauer auslegten",
+    "spa": "fue recibido por Aquila y Priscila, quienes le declararon más particularmente el camino de Dios",
+    "why": "Ukrainian: changed «дорогу Господню» to «дорогу Божу» to match the English «way of God»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

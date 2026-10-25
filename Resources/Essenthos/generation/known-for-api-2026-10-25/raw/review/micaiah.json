@@ -1,0 +1,25 @@
+{
+ "slug": "micaiah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.502285+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "розповів, що Господь дав духа неправди в уста пророків Ахава і говорив на нього лихе",
+    "deu": "berichtete, dass der HERR einen falschen Geist in den Mund der Propheten Ahabs gegeben und Böses über ihn geredet hat",
+    "spa": "contó que el SEÑOR había puesto espíritu de mentira en la boca de los profetas de Achâb y había decretado el mal acerca de él",
+    "why": "German: modern spelling «dass» instead of old «daß»."
+   },
+   {
+    "ukr": "був ударений Седекією по щоці, а за наказом царя мав бути посаджений до в'язниці",
+    "deu": "wurde von Zedekia auf die Wange geschlagen und sollte auf Befehl des Königs in den Kerker gesetzt werden",
+    "spa": "fue herido en la mejilla por Sedechîas y por orden del rey debía ser echado en la cárcel",
+    "why": "German: replaced the old-fashioned «auf den Backen» with modern «auf die Wange»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

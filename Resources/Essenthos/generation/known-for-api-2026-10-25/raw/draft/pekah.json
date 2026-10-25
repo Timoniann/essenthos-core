@@ -1,0 +1,42 @@
+{
+ "slug": "pekah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.130446+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give Pekah's deeds beyond the summary: the war on Jerusalem with Rezin and the slaughter in Judah, with the Assyrian conquest of Israelite lands in his days.",
+  "clauses": [
+   {
+    "english": "went up with Rezin king of Syria to war against Jerusalem but could not overcome it",
+    "references": [
+     "2KI 16:5",
+     "ISA 7:1"
+    ],
+    "quote": "came up to Jerusalem to war: and they besieged Ahaz, but could not overcome him"
+   },
+   {
+    "english": "slew a hundred and twenty thousand valiant men of Judah in one day",
+    "references": [
+     "2CH 28:6"
+    ],
+    "quote": "slew in Judah an hundred and twenty thousand in one day"
+   },
+   {
+    "english": "saw Tiglathpileser of Assyria take Galilee, Gilead and the land of Naphtali in his days",
+    "references": [
+     "2KI 15:29"
+    ],
+    "quote": "came Tiglathpileser king of Assyria, and took Ijon"
+   }
+  ],
+  "doubts": [
+   "The summary already names Pekah's killing of Pekahiah and his death at Hoshea's hands, so those are left out.",
+   "The third clause is something that happened in his reign rather than to him personally, but it is a major event of his days.",
+   "The dataset events about rival reigns with Menahem are not supported by the verses given and were ignored."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

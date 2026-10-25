@@ -1,0 +1,36 @@
+{
+ "slug": "jeshua-7",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.608626+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says he and others caused the people to understand the law; 'as it was read' is not in this verse.",
+    "english": "caused the people to understand the law",
+    "references": [
+     "NEH 8:7"
+    ],
+    "ukr": "пояснював народові Закон",
+    "deu": "machte, dass das Volk aufs Gesetz merkte",
+    "spa": "hacía entender al pueblo la ley"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say he stood up on the Levites' platform, cried to the LORD and said 'Stand up and bless'; 'stairs' is the KJV word, and 'called the people' is implied, so it is better to keep close to the text.",
+    "english": "stood up on the stairs of the Levites, cried loudly to the LORD, and called on all to bless him",
+    "references": [
+     "NEH 9:4-5"
+    ],
+    "ukr": "став на левитському підвищенні, кликав сильним голосом до Господа й закликав благословити Господа",
+    "deu": "stand auf dem hohen Platz für die Leviten auf, schrie laut zu dem HERRN und rief auf, den HERRN zu loben",
+    "spa": "se levantó sobre la grada de los Levitas, clamó en voz alta al SEÑOR y llamó a bendecir al SEÑOR"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

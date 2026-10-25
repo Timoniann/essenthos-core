@@ -1,0 +1,47 @@
+{
+ "slug": "philip",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.197144+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say he brought Nathanael to Jesus; they say he found him, told him of Jesus and said 'Come and see'.",
+    "english": "found Nathanael, told him of Jesus and bade him come and see",
+    "references": [
+     "JHN 1:45-46"
+    ],
+    "ukr": "знайшов Нафанаїла, сказав йому про Ісуса й запросив прийти та побачити",
+    "deu": "fand Nathanael, sagte ihm von Jesus und forderte ihn auf: Komm und sieh es!",
+    "spa": "halló a Natanael, le habló de Jesús y le dijo: Ven y ve"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "told Jesus that two hundred pennyworth of bread was not enough for the great company",
+    "references": [
+     "JHN 6:5-7"
+    ],
+    "ukr": "сказав Ісусові, що хліба за двісті динаріїв не вистачить для безлічі народу",
+    "deu": "sagte Jesus, für zweihundert Groschen Brot reiche es für das viele Volk nicht aus",
+    "spa": "dijo a Jesús que doscientos denarios de pan no bastaban para la gran multitud"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "told Andrew of the Greeks who wished to see Jesus, and they told Jesus",
+    "references": [
+     "JHN 12:20-22"
+    ],
+    "ukr": "сказав Андрієві про геллен, які хотіли побачити Ісуса, і вони обоє розповіли Ісусові",
+    "deu": "sagte Andreas von den Griechen, die Jesus gerne sehen wollten, und beide sagten es Jesus weiter",
+    "spa": "dijo a Andrés de los griegos que querían ver a Jesús, y ambos se lo dijeron a Jesús"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,65 @@
+{
+ "slug": "aaron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:48:39.601291+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Aaron's life is told at length, with several major deeds the summary does not give: spokesman to Pharaoh, the golden calf, consecration, the budding rod, and death on Mount Hor.",
+  "clauses": [
+   {
+    "english": "spoke to Pharaoh for Moses and cast down his rod, which became a serpent and swallowed up the magicians' rods",
+    "references": [
+     "EXO 4:30",
+     "EXO 7:10-12"
+    ],
+    "quote": "Aaron's rod swallowed up their rods."
+   },
+   {
+    "english": "made a molten calf from the people's golden earrings when Moses delayed on the mount",
+    "references": [
+     "EXO 32:1-5"
+    ],
+    "quote": "he received them at their hand, and fashioned it with a graving tool, after he had made it a molten calf"
+   },
+   {
+    "english": "was anointed and consecrated with his sons to minister in the priest's office",
+    "references": [
+     "LEV 8:6-12"
+    ],
+    "quote": "he poured of the anointing oil upon Aaron's head, and anointed him, to sanctify him."
+   },
+   {
+    "english": "stood between the dead and the living with incense, and the plague was stayed",
+    "references": [
+     "NUM 16:46-48"
+    ],
+    "quote": "he stood between the dead and the living; and the plague was stayed."
+   },
+   {
+    "english": "saw his rod bud and yield almonds, chosen from the twelve rods",
+    "references": [
+     "NUM 17:8"
+    ],
+    "quote": "the rod of Aaron for the house of Levi was budded, and brought forth buds, and bloomed blossoms, and yielded almonds."
+   },
+   {
+    "english": "was barred from the promised land, was stripped of his garments, and died on Mount Hor",
+    "references": [
+     "NUM 20:24-28"
+    ],
+    "quote": "Aaron died there in the top of the mount"
+   }
+  ],
+  "doubts": [
+   "The dataset's 'Birth of Aaron' event is only his age at speaking to Pharaoh (EXO 7:7), not a birth, so it was not used.",
+   "LEV 10:3 and the golden-calf verses show Aaron's failings; only the making of the calf is given as the chief deed.",
+   "In the quote for the Mount Hor clause, 'Aaron died there in the top of the mount' is a verbatim fragment of NUM 20:28 where it reads 'and Aaron died there in the top of the mount'."
+  ]
+ },
+ "problems": [
+  "6 clauses",
+  "clause 3: LEV 8:6-12 cites verses the reader was not shown"
+ ]
+}

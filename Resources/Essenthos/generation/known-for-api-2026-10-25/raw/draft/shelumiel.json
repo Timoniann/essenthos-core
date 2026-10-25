@@ -1,0 +1,25 @@
+{
+ "slug": "shelumiel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.810117+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Beyond the census and march lists, the verses record the offering Shelumiel brought on the fifth day.",
+  "clauses": [
+   {
+    "english": "brought his offering of silver, gold and animals on the fifth day",
+    "references": [
+     "NUM 7:36-41"
+    ],
+    "quote": "this was the offering of Shelumiel the son of Zurishaddai"
+   }
+  ],
+  "doubts": [
+   "The offering is told in the same form for every tribal prince, so it may be too thin to name him for."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

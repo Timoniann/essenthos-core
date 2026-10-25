@@ -1,0 +1,31 @@
+{
+ "slug": "michael-9",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.040321+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прийшов допомогти проти опору князя перського царства",
+    "deu": "kam zu Hilfe gegen den Widerstand des Fürsten des Königreiches im Perserland",
+    "spa": "vino para ayudar contra la oposición del príncipe del reino de Persia",
+    "why": ""
+   },
+   {
+    "ukr": "сперечався з дияволом про Мойсеєве тіло",
+    "deu": "stritt mit dem Teufel über den Leichnam des Mose",
+    "spa": "contendió con el diablo, disputando sobre el cuerpo de Moisés",
+    "why": "German: replaced the old genitive spelling «Mose's» with modern «des Mose»."
+   },
+   {
+    "ukr": "воював зі своїми ангелами проти змія на небі",
+    "deu": "stritt mit seinen Engeln im Himmel gegen den Drachen",
+    "spa": "lidió con sus ángeles contra el dragón en el cielo",
+    "why": "Ukrainian: replaced the old-orthography «анголами» with modern «ангелами»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

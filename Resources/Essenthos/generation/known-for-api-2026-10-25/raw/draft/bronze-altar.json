@@ -1,0 +1,39 @@
+{
+ "slug": "bronze-altar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.774818+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of the altar's setting up and first offerings, its covering made from the censers, and Solomon's offerings on it.",
+  "clauses": [
+   {
+    "english": "received the burnt offering and the meat offering from Moses at the tabernacle door",
+    "references": [
+     "EXO 40:29"
+    ],
+    "quote": "offered upon it the burnt offering and the meat offering"
+   },
+   {
+    "english": "was covered with broad plates made from the bronze censers of the men who were burnt",
+    "references": [
+     "NUM 16:39"
+    ],
+    "quote": "they were made broad plates for a covering of the altar"
+   },
+   {
+    "english": "received a thousand burnt offerings from Solomon",
+    "references": [
+     "2CH 1:6"
+    ],
+    "quote": "offered a thousand burnt offerings upon it"
+   }
+  ],
+  "doubts": [
+   "Verses on the golden altar of incense, where marked or nearby, were not used; the marked LEV 4:7 and LEV 4:18 partly concern it."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

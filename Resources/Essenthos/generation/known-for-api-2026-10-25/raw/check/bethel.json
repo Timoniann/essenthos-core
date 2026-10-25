@@ -1,0 +1,47 @@
+{
+ "slug": "bethel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.578769+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jacob built an altar after God appeared to him",
+    "references": [
+     "GEN 35:6-7"
+    ],
+    "ukr": "був місцем, де Яків збудував жертовник після того, як йому явився Бог",
+    "deu": "war der Ort, wo Jakob einen Altar baute, nachdem ihm Gott offenbart worden war",
+    "spa": "fue el lugar donde Jacob edificó un altar después de que Dios le había aparecido"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say he set one of two golden calves there, not that it was for worship, and Jeroboam is named in verse 26.",
+    "english": "was where Jeroboam set up one of two golden calves",
+    "references": [
+     "1KI 12:26-29"
+    ],
+    "ukr": "був місцем, де Єровоам поставив одного з двох золотих тельців",
+    "deu": "war der Ort, wo Jerobeam eins von zwei goldenen Kälbern aufstellte",
+    "spa": "fue el lugar donde Jeroboam puso uno de dos becerros de oro"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 15 says only 'he'; Josiah is named in verse 16, so the citation must take it in.",
+    "english": "had its altar and high place broken down by Josiah",
+    "references": [
+     "2KI 23:15-16"
+    ],
+    "ukr": "мав жертовник і узвишшя, зруйновані Йосією",
+    "deu": "hatte seinen Altar und seine Höhe von Josia niedergerissen",
+    "spa": "tuvo su altar y su alto destruidos por Josías"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

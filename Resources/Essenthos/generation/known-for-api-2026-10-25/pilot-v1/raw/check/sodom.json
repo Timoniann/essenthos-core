@@ -1,0 +1,35 @@
+{
+ "slug": "sodom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:49:10.010526+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses name the plunderers only in 14:9, which is not cited, and Lot is taken with his goods rather than the goods of Sodom.",
+    "english": "was plundered by Chedorlaomer and his allies, who also took Lot and his goods",
+    "references": [
+     "GEN 14:9-12"
+    ],
+    "ukr": "Був пограбований Кедор-Лаомером та його союзниками, які взяли й Лота з його добром",
+    "deu": "wurde von Kedor-Laomor und seinen Verbündeten geplündert, die auch Lot und seine Habe mitnahmen",
+    "spa": "fue saqueada por Chêdorlaomer y sus aliados, que también se llevaron a Lot y su hacienda"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was overthrown when the LORD rained brimstone and fire on it from heaven",
+    "references": [
+     "GEN 19:24-25"
+    ],
+    "ukr": "Був зруйнований, коли Господь послав на нього з неба дощ із сірки й огню",
+    "deu": "wurde umgekehrt, als der HERR Schwefel und Feuer vom Himmel darauf regnen ließ",
+    "spa": "fue destruida cuando el SEÑOR llovió sobre ella azufre y fuego desde los cielos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": []
+}

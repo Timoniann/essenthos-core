@@ -1,0 +1,40 @@
+{
+ "slug": "ahab",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.402980+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Ahab's worship of Baal, the taking of Naboth's vineyard, and his death in battle, which go beyond the summary.",
+  "clauses": [
+   {
+    "english": "served Baal and worshipped him",
+    "references": [
+     "1KI 16:31"
+    ],
+    "quote": "went and served Baal, and worshipped him"
+   },
+   {
+    "english": "took possession of Naboth's vineyard after Naboth was stoned",
+    "references": [
+     "1KI 21:15-16"
+    ],
+    "quote": "Ahab rose up to go down to the vineyard of Naboth"
+   },
+   {
+    "english": "was struck by an arrow in battle and died that evening",
+    "references": [
+     "1KI 22:34-35"
+    ],
+    "quote": "a certain man drew a bow at a venture, and smote the king of Israel"
+   }
+  ],
+  "doubts": [
+   "Verses naming Ahab's son, the house of Ahab, or Ahab only as a comparison (2KI 8:18, 2KI 21:3, MIC 6:16) were not used.",
+   "Ahab's victories over Benhadad and the covenant he made with him were left out to keep only the chief events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

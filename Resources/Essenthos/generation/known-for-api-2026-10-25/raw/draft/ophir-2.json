@@ -1,0 +1,41 @@
+{
+ "slug": "ophir-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.759241+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The historical verses tell what came from Ophir and what befell Jehoshaphat's voyage there, while the poetic verses only use its gold as a comparison.",
+  "clauses": [
+   {
+    "english": "was reached by Solomon's navy, which fetched gold from there",
+    "references": [
+     "1KI 9:26-28"
+    ],
+    "quote": "they came to Ophir, and fetched from thence gold"
+   },
+   {
+    "english": "supplied almug trees and precious stones, which Hiram's navy brought to Solomon",
+    "references": [
+     "1KI 10:11-12"
+    ],
+    "quote": "brought in from Ophir great plenty of almug trees, and precious stones"
+   },
+   {
+    "english": "was the goal of Jehoshaphat's ships, which were broken at Eziongeber before they could go",
+    "references": [
+     "1KI 22:48"
+    ],
+    "quote": "Jehoshaphat made ships of Tharshish to go to Ophir for gold: but they went not"
+   }
+  ],
+  "doubts": [
+   "The summary's kind list (island, mine, region, settlement) is uncertain; the verses do not say what sort of place Ophir was.",
+   "Job 22:24, Job 28:16, Psalm 45:9 and Isaiah 13:12 use Ophir's gold only as a comparison, so they are left out.",
+   "1CH 29:4 and 2CH 8:18 and 2CH 9:10 repeat the same gold and wood trade; the figures differ (420 vs 450 talents), so only the 1 Kings account is cited."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

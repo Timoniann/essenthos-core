@@ -1,0 +1,19 @@
+{
+ "slug": "shelah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.252171+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був утриманий Юдою від одруження з Тамарою, хоч і виріс",
+    "deu": "wurde von Juda daran gehindert, Thamar zur Frau zu nehmen, obwohl er groß geworden war",
+    "spa": "fue impedido por Judá de casarse con Thamar, aunque había crecido",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

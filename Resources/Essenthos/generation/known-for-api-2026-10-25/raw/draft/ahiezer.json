@@ -1,0 +1,25 @@
+{
+ "slug": "ahiezer",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.429682+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Besides the census and camp-order lists, the verses record his own offering on the tenth day.",
+  "clauses": [
+   {
+    "english": "offered silver vessels, incense and animals for sacrifice on the tenth day",
+    "references": [
+     "NUM 7:66-71"
+    ],
+    "quote": "this was the offering of Ahiezer the son of Ammishaddai"
+   }
+  ],
+  "doubts": [
+   "The verses given do not say what the offerings were for, so the clause does not say."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

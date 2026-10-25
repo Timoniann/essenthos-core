@@ -1,0 +1,31 @@
+{
+ "slug": "megiddo",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.985110+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було місцем, де фараон Нехо вбив царя Йосію",
+    "deu": "war der Ort, wo Pharao Necho den König Josia tötete",
+    "spa": "fue el lugar donde el faraón Nechâo mató al rey Josías",
+    "why": "Ukrainian: «убив» changed to «вбив» after a vowel."
+   },
+   {
+    "ukr": "було місцем, куди цар Юди Ахазія втік від Єгу і де помер",
+    "deu": "war der Ort, wohin der König Ahasja von Juda vor Jehu floh und wo er starb",
+    "spa": "fue el lugar adonde huyó de Jehú el rey Ochôzías de Judá y donde murió",
+    "why": "Added the omitted «from Jehu» in all three languages."
+   },
+   {
+    "ukr": "було збудоване царем Соломоном",
+    "deu": "wurde von König Salomo gebaut",
+    "spa": "fue edificado por el rey Salomón",
+    "why": "Ukrainian verb made neuter and Spanish participle made masculine, to agree with the name Megiddo in each language."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

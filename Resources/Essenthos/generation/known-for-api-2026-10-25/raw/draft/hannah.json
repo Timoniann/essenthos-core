@@ -1,0 +1,40 @@
+{
+ "slug": "hannah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:01:55.383807+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell Hannah's own story: her prayer and vow for a son, and bringing him to the LORD's house after he was weaned.",
+  "clauses": [
+   {
+    "english": "vowed to give a son to the LORD if he would look on her affliction",
+    "references": [
+     "1SA 1:10-11"
+    ],
+    "quote": "if thou wilt indeed look on the affliction of thine handmaid"
+   },
+   {
+    "english": "brought the weaned child Samuel to the house of the LORD in Shiloh",
+    "references": [
+     "1SA 1:24"
+    ],
+    "quote": "brought him unto the house of the LORD in Shiloh"
+   },
+   {
+    "english": "was visited by the LORD and bore three more sons and two daughters",
+    "references": [
+     "1SA 2:21"
+    ],
+    "quote": "the LORD visited Hannah, so that she conceived, and bare three sons and two daughters"
+   }
+  ],
+  "doubts": [
+   "Her bearing Samuel is already in the summary (mother of Samuel), so it is not a clause.",
+   "Her song of praise in 1SA 2:1 is a prayer and was left out as not a distinct event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

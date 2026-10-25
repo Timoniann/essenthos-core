@@ -1,0 +1,30 @@
+{
+ "slug": "cushanrishathaim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.438708+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two things that happened to or through him: Israel was sold into his hand and served him, and he was delivered into Othniel's hand and defeated.",
+  "clauses": [
+   {
+    "english": "held Israel in servitude for eight years, the LORD having sold them into his hand",
+    "references": [
+     "JDG 3:8"
+    ],
+    "quote": "he sold them into the hand of Chushanrishathaim king of Mesopotamia"
+   },
+   {
+    "english": "was delivered by the LORD into the hand of Othniel and defeated",
+    "references": [
+     "JDG 3:10"
+    ],
+    "quote": "the LORD delivered Chushanrishathaim king of Mesopotamia into his hand"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,40 @@
+{
+ "slug": "hagar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.567742+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Genesis tells of Hagar's flight from Sarai, her expulsion with her son, and God's provision of a well, none of which the summary states.",
+  "clauses": [
+   {
+    "english": "fled from Sarai and was found by the angel of the LORD in the wilderness",
+    "references": [
+     "GEN 16:6-8"
+    ],
+    "quote": "I flee from the face of my mistress Sarai"
+   },
+   {
+    "english": "was sent away by Abraham and wandered in the wilderness",
+    "references": [
+     "GEN 21:14"
+    ],
+    "quote": "and she departed, and wandered in the wilderness of Beersheba"
+   },
+   {
+    "english": "had her eyes opened by God to see a well of water",
+    "references": [
+     "GEN 21:19"
+    ],
+    "quote": "God opened her eyes, and she saw a well of water"
+   }
+  ],
+  "doubts": [
+   "GAL 4:24-25 (Agar) is an allegory about covenants, not an event, so it was left out.",
+   "Her bearing Ishmael is already in the summary as motherhood, so it was not made a clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

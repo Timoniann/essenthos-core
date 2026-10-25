@@ -1,0 +1,25 @@
+{
+ "slug": "amon-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.093245+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "приносив жертви бовванам, яких наробив його батько Манасія, і служив їм",
+    "deu": "opferte den Götzen, die sein Vater Manasse gemacht hatte, und diente ihnen",
+    "spa": "sacrificó a los ídolos que su padre Manasés había hecho, y les sirvió",
+    "why": "Spanish: 'los sirvió' changed to 'les sirvió' (indirect object, serving idols), matching the Reina-Valera sense of serving them."
+   },
+   {
+    "ukr": "був убитий своїми слугами, які вчинили змову проти нього, у його домі",
+    "deu": "wurde von seinen Knechten getötet, die sich gegen ihn verschworen hatten, in seinem Hause",
+    "spa": "fue muerto por sus siervos, que conspiraron contra él, en su casa",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

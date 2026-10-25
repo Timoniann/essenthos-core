@@ -1,0 +1,19 @@
+{
+ "slug": "barabbas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.611027+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був ув'язнений за вбивство, вчинене під час повстання",
+    "deu": "war wegen eines Mordes, der in einem Aufruhr begangen worden war, gefangen",
+    "spa": "fue puesto preso por un asesinato cometido en una revuelta",
+    "why": "Replaced the archaic, unnatural «una muerte hecha» with modern «un asesinato cometido».'"
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

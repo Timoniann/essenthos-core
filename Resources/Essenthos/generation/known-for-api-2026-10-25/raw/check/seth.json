@@ -1,0 +1,36 @@
+{
+ "slug": "seth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.094201+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse does not name Eve, and the parentage only restates the summary; 'slew' is a minor detail, and God's act is 'appointed'.",
+    "english": "was born as another seed God appointed in place of Abel",
+    "references": [
+     "GEN 4:25"
+    ],
+    "ukr": "народився як інше насіння, дане Богом замість Авеля",
+    "deu": "wurde geboren als anderer Same, den Gott für Abel gesetzt hatte",
+    "spa": "nació como otra simiente puesta por Dios en lugar de Abel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "died at the age of nine hundred and twelve years",
+    "references": [
+     "GEN 5:8"
+    ],
+    "ukr": "помер у віці дев'ятисот дванадцяти років",
+    "deu": "starb im Alter von neunhundertzwölf Jahren",
+    "spa": "murió a la edad de novecientos doce años"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

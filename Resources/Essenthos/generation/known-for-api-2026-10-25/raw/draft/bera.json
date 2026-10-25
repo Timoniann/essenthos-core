@@ -1,0 +1,33 @@
+{
+ "slug": "bera",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.805604+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give him two events beyond his kingship: the battle in the vale of Siddim and his request to Abram for the rescued people.",
+  "clauses": [
+   {
+    "english": "went out to battle against Chedorlaomer and his allies in the vale of Siddim",
+    "references": [
+     "GEN 14:8-9"
+    ],
+    "quote": "they joined battle with them in the vale of Siddim"
+   },
+   {
+    "english": "asked Abram to give him the persons and keep the goods",
+    "references": [
+     "GEN 14:21"
+    ],
+    "quote": "Give me the persons, and take the goods to thyself."
+   }
+  ],
+  "doubts": [
+   "Verses after GEN 14:2 say only 'the king of Sodom' and do not repeat the name Bera; they are assumed to mean him.",
+   "GEN 14:10 says the kings of Sodom and Gomorrah fled and fell, but it is not marked and is unclear, so it is not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

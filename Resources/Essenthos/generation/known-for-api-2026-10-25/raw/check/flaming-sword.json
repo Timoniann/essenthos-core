@@ -1,0 +1,25 @@
+{
+ "slug": "flaming-sword",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.936751+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was placed to keep the way of the tree of life",
+    "references": [
+     "GEN 3:24"
+    ],
+    "ukr": "був поставлений, щоб стерегти дорогу до дерева життя",
+    "deu": "wurde vor den Garten Eden gelagert, um den Weg zu dem Baum des Lebens zu bewahren",
+    "spa": "fue puesta para guardar el camino del árbol de la vida"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,40 @@
+{
+ "slug": "mamre-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.647833+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Abram settling and building an altar there, the LORD appearing there, and Sarah being buried in the cave before it.",
+  "clauses": [
+   {
+    "english": "was where Abram dwelt and built an altar to the LORD",
+    "references": [
+     "GEN 13:18"
+    ],
+    "quote": "built there an altar unto the LORD"
+   },
+   {
+    "english": "was where the LORD appeared to Abraham",
+    "references": [
+     "GEN 18:1"
+    ],
+    "quote": "the LORD appeared unto him in the plains of Mamre"
+   },
+   {
+    "english": "was beside the cave where Abraham buried Sarah",
+    "references": [
+     "GEN 23:19"
+    ],
+    "quote": "buried Sarah his wife in the cave of the field of Machpelah before Mamre"
+   }
+  ],
+  "doubts": [
+   "GEN 14:13 names Mamre the Amorite, a man and ally of Abram, so it was left out as concerning someone else of the same name.",
+   "Other burials before Mamre (Abraham, Isaac, Jacob) were not made separate clauses."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

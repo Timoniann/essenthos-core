@@ -1,0 +1,33 @@
+{
+ "slug": "nahash",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.899443+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Nahash besieging Jabesh-gilead and demanding the right eyes of its men, and of his death and the kindness he had shown David.",
+  "clauses": [
+   {
+    "english": "encamped against Jabeshgilead and offered a covenant only if all their right eyes were thrust out",
+    "references": [
+     "1SA 11:1-2"
+    ],
+    "quote": "On this condition will I make a covenant with you, that I may thrust out all your right eyes"
+   },
+   {
+    "english": "showed kindness to David, and his son reigned in his stead when he died",
+    "references": [
+     "2SA 10:1-2"
+    ],
+    "quote": "as his father shewed kindness unto me"
+   }
+  ],
+  "doubts": [
+   "2SA 17:25 names a Nahash whose daughter Abigail is Amasa's mother's relation; this may be another man or the same, so it was left out.",
+   "The second clause joins his death and the kindness shown to David; the kindness is known only through David's words."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

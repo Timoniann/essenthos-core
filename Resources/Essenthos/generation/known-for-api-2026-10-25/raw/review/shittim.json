@@ -1,0 +1,25 @@
+{
+ "slug": "shittim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.031812+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Ізраїль приліпився до пеорського Ваала і запалав гнів Господній на Ізраїля",
+    "deu": "war der Ort, wo Israel sich an den Baal-Peor hängte und der Zorn des HERRN über Israel ergrimmte",
+    "spa": "fue el lugar donde Israel se allegó a Baal-peor y el furor del SEÑOR se encendió contra Israel",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, звідки Ісус послав двох вивідувачів розвідати Єрихон",
+    "deu": "war der Ort, von dem aus Josua zwei Kundschafter aussandte, um Jericho zu erkunden",
+    "spa": "fue el lugar desde donde Josué envió dos espías a reconocer Jericó",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

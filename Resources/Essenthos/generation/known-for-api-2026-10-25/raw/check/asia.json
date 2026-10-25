@@ -1,0 +1,47 @@
+{
+ "slug": "asia",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.187435+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says only \"they\"; Paul and his companions are not named in the verses shown.",
+    "english": "was where the Holy Ghost forbade them to preach the word",
+    "references": [
+     "ACT 16:6"
+    ],
+    "ukr": "була місцем, де Дух Святий не звелів їм провіщати слово",
+    "deu": "war der Ort, an dem ihnen vom heiligen Geiste gewehrt wurde, das Wort zu reden",
+    "spa": "fue el lugar donde el Espíritu Santo les prohibió hablar la palabra"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where all who dwelt there, Jews and Greeks, heard the word of the Lord Jesus during two years",
+    "references": [
+     "ACT 19:10"
+    ],
+    "ukr": "була місцем, де всі, хто в ній мешкав, юдеї та геллени, два роки слухали слово Господа Ісуса",
+    "deu": "war der Ort, an dem alle, die dort wohnten, Juden und Griechen, zwei Jahre lang das Wort des HERRN Jesus hörten",
+    "spa": "fue el lugar donde todos los que habitaban en ella, judíos y griegos, oyeron durante dos años la palabra del Señor Jesús"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says \"we\"; Paul is not named in the verses shown.",
+    "english": "was where trouble pressed them beyond measure, so that they despaired even of life",
+    "references": [
+     "2CO 1:8"
+    ],
+    "ukr": "була місцем, де їх спіткала скорбота над міру, так що вони не сподівалися навіть жити",
+    "deu": "war der Ort, an dem sie über die Maßen beschwert waren, so daß sie am Leben verzagten",
+    "spa": "fue el lugar donde fueron cargados sobremanera, hasta dudar de la vida"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

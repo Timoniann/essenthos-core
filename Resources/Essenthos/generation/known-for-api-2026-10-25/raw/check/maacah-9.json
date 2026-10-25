@@ -1,0 +1,37 @@
+{
+ "slug": "maacah-9",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.099113+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was not driven out by Israel, and its people dwelt among the Israelites",
+    "references": [
+     "JOS 13:13"
+    ],
+    "ukr": "не був вигнаний Ізраїлевими синами, і його народ сидів серед Ізраїля",
+    "deu": "wurde von den Kindern Israel nicht vertrieben, und sein Volk wohnte unter den Kindern Israel",
+    "spa": "no fue expulsada por los hijos de Israel, y su pueblo habitó entre los Israelitas"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had its king and a thousand men hired by Ammon for battle",
+    "references": [
+     "2SA 10:6",
+     "1CH 19:7"
+    ],
+    "ukr": "мав царя й тисячу чоловіка, яких найняли аммонітяни для бою",
+    "deu": "hatte einen König und tausend Mann, die von den Kindern Ammon zum Streit gedungen wurden",
+    "spa": "tuvo a su rey y mil hombres que los hijos de Ammón tomaron a sueldo para la guerra"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

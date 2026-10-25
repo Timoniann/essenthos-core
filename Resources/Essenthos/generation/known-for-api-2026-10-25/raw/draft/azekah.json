@@ -1,0 +1,32 @@
+{
+ "slug": "azekah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.845323+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Joshua 10 tells of events at Azekah (the flight of the Amorites and the hailstones), and Jeremiah 34 tells of the Babylonian attack, while the other verses only list the city or place the Philistines near it.",
+  "clauses": [
+   {
+    "english": "was where the LORD cast down great stones from heaven on the fleeing Amorites, and they died",
+    "references": [
+     "JOS 10:11"
+    ],
+    "quote": "the LORD cast down great stones from heaven upon them unto Azekah"
+   },
+   {
+    "english": "was one of the last defenced cities of Judah to be fought against by the king of Babylon's army",
+    "references": [
+     "JER 34:7"
+    ],
+    "quote": "the king of Babylon's army fought against Jerusalem, and against all the cities of Judah that were left"
+   }
+  ],
+  "doubts": [
+   "The Joshua 10:10 mention is only the extent of the pursuit and is not cited separately; the list verses in JOS 15:35, 2CH 11:9 and NEH 11:30 were left out as lists."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

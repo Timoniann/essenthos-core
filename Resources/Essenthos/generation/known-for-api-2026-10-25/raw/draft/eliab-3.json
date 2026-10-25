@@ -1,0 +1,33 @@
+{
+ "slug": "eliab-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.967785+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two events of Eliab's own: the LORD refused him when Samuel looked on him, and he was angry with David at the battle.",
+  "clauses": [
+   {
+    "english": "was refused by the LORD when Samuel took him for the anointed",
+    "references": [
+     "1SA 16:6-7"
+    ],
+    "quote": "because I have refused him"
+   },
+   {
+    "english": "was angry with David and accused him of pride at the battle",
+    "references": [
+     "1SA 17:28"
+    ],
+    "quote": "Eliab's anger was kindled against David"
+   }
+  ],
+  "doubts": [
+   "1CH 27:18 names Elihu, a brother of David, not Eliab; it may be another name or person, so it was left out.",
+   "His going to the battle with Saul (1SA 17:13) and his daughter Abihail (2CH 11:18) were left out as minor or already in the summary."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "ahaziah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.548661+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says he asked whether he would recover from his disease, not from his fall.",
+    "english": "sent messengers to enquire of Baalzebub, god of Ekron, whether he would recover from his sickness",
+    "references": [
+     "2KI 1:2"
+    ],
+    "ukr": "послав послів запитати Ваал-Зевува, екронського бога, чи видужає від своєї хвороби",
+    "deu": "sandte Boten, um Baal-Sebub, den Gott zu Ekron, zu fragen, ob er von seiner Krankheit genesen werde",
+    "spa": "envió mensajeros a consultar a Baal-zebub, dios de Ecrón, si sanaría de su enfermedad"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "died as the LORD had said by Elijah",
+    "references": [
+     "2KI 1:16-17"
+    ],
+    "ukr": "помер за словом Господа, яке проказав Ілля",
+    "deu": "starb nach dem Wort des HERRN, das Elia geredet hatte",
+    "spa": "murió conforme a la palabra del SEÑOR que había hablado Elías"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

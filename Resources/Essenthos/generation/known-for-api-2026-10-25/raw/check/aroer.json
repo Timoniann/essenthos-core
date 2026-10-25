@@ -1,0 +1,36 @@
+{
+ "slug": "aroer",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.990206+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was built by the children of Gad",
+    "references": [
+     "NUM 32:34"
+    ],
+    "ukr": "був збудований Ґадовими синами",
+    "deu": "wurde von den Kindern Gad gebaut",
+    "spa": "fue edificado por los hijos de Gad"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say they went out to number the people, not that they were sent.",
+    "english": "was where Joab and the captains camped when going to number Israel",
+    "references": [
+     "2SA 24:4-5"
+    ],
+    "ukr": "був місцем, де таборували Йоав та військові провідники, коли йшли перелічити Ізраїлів народ",
+    "deu": "war der Ort, wo Joab und die Hauptleute des Heeres lagerten, als sie auszogen, das Volk Israel zu zählen",
+    "spa": "fue el lugar donde asentaron Joab y los capitanes del ejército cuando salieron a contar el pueblo de Israel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

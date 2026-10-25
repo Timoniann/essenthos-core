@@ -1,0 +1,27 @@
+{
+ "slug": "abel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.707253+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Genesis 4 tells of Abel's occupation, his accepted offering and his death; the killing is already in the summary as a relation, but his offering is a deed of his own.",
+  "clauses": [
+   {
+    "english": "kept sheep and offered the firstlings of his flock, and the LORD had respect to his offering",
+    "references": [
+     "GEN 4:2",
+     "GEN 4:4"
+    ],
+    "quote": "And the LORD had respect unto Abel and to his offering"
+   }
+  ],
+  "doubts": [
+   "Killing by Cain is already in the summary, so left out as a clause.",
+   "Marked verses in MAT 23:35, LUK 11:51, HEB 11:4 and HEB 12:24 are interpretive or comparative references, so not used; GEN 4:2 is cited only for keeping sheep, which is an occupation, so the clause is kept to the offering."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

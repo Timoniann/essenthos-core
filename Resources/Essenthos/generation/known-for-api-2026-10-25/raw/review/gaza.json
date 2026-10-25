@@ -1,0 +1,31 @@
+{
+ "slug": "gaza",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.698128+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Самсон опівночі взяв двері міської брами й виніс їх",
+    "deu": "war der Ort, an dem Simson um Mitternacht die Türen des Stadttors nahm und davontrug",
+    "spa": "fue el lugar donde Samsón tomó a medianoche las puertas de la ciudad y se las llevó",
+    "why": ""
+   },
+   {
+    "ukr": "була місцем, куди филистимляни привели осліпленого Самсона й зв'язали його мідяними ланцюгами",
+    "deu": "war der Ort, wohin die Philister den geblendeten Simson brachten und ihn mit bronzenen Ketten banden",
+    "spa": "fue el lugar adonde los Filisteos llevaron al cegado Samsón y lo ataron con cadenas de bronce",
+    "why": "German: replaced archaic «ehernen» with «bronzenen». Spanish: added the missing «de bronce» (brass)."
+   },
+   {
+    "ukr": "була здобута Юдою разом із її територією",
+    "deu": "wurde von Juda mit seinem Gebiet erobert",
+    "spa": "fue tomada por Judá con su territorio",
+    "why": "German: «ihrem» changed to «seinem» to match the neuter place name. Spanish: archaic «término» replaced with «territorio»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

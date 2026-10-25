@@ -1,0 +1,19 @@
+{
+ "slug": "chebar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.336659+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де відкрилося небо і Єзекіїль побачив Божі видіння серед полонених",
+    "deu": "war der Ort, an dem sich der Himmel auftat und Hesekiel unter den Gefangenen Visionen Gottes sah",
+    "spa": "fue el lugar donde los cielos se abrieron y Ezequiel vio visiones de Dios entre los cautivos",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

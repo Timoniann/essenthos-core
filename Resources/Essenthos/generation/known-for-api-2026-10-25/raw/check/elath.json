@@ -1,0 +1,36 @@
+{
+ "slug": "elath",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.971663+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says the king (Azariah) slept with his fathers, not that Amaziah died; it gives no 'after Amaziah died' detail beyond that, so keep it simple.",
+    "english": "was built and restored to Judah by Azariah",
+    "references": [
+     "2KI 14:22"
+    ],
+    "ukr": "був збудований Азарією й повернений Юді",
+    "deu": "wurde von Asarja gebaut und Juda wiedergegeben",
+    "spa": "fue edificada por Azarías y restituida a Judá"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was recovered by Rezin king of Syria, who drove the Jews out",
+    "references": [
+     "2KI 16:6"
+    ],
+    "ukr": "був повернений Реціном, сирійським царем, який вигнав юдеїв",
+    "deu": "wurde von Rezin, dem König von Syrien, wieder an Syrien gebracht, der die Juden daraus vertrieb",
+    "spa": "fue restituida a Siria por Resín, rey de Siria, que echó de ella a los judíos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

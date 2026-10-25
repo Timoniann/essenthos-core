@@ -1,0 +1,33 @@
+{
+ "slug": "michmash",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.891411+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The Philistine camp at Michmash and the rout of the Philistines from Michmash to Aijalon are events of the place, beyond the list entries.",
+  "clauses": [
+   {
+    "english": "was where the Philistines pitched their camp against Israel",
+    "references": [
+     "1SA 13:5",
+     "1SA 13:16"
+    ],
+    "quote": "and pitched in Michmash, eastward from Bethaven"
+   },
+   {
+    "english": "was the starting point of Israel's slaughter of the Philistines as far as Aijalon",
+    "references": [
+     "1SA 14:31"
+    ],
+    "quote": "And they smote the Philistines that day from Michmash to Aijalon"
+   }
+  ],
+  "doubts": [
+   "The Ezra, Nehemiah and Isaiah verses only list the men of Michmas, record where Benjamites dwelt, or describe an advance in prophecy, so they were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

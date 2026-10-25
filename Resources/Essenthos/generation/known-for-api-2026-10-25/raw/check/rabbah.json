@@ -1,0 +1,36 @@
+{
+ "slug": "rabbah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.054931+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Joab fought against Rabbah rather than besieging it, and David went and took it; the verses give no siege.",
+    "english": "was fought against by Joab and taken by David, who seized its king's crown",
+    "references": [
+     "2SA 12:26-30"
+    ],
+    "ukr": "зазнала нападу Йоава і була здобута Давидом, який узяв корону її царя",
+    "deu": "wurde von Joab angegriffen und von David eingenommen, der die Krone ihres Königs nahm",
+    "spa": "fue atacada por Joab y tomada por David, que tomó la corona de su rey"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was foretold to become a desolate heap, with its daughters burned with fire",
+    "references": [
+     "JER 49:2"
+    ],
+    "ukr": "було провіщено, що вона стане купою руїн, а її підлеглі міста будуть спалені вогнем",
+    "deu": "sollte laut Weissagung auf einem Haufen wüst liegen, und ihre Töchter sollten mit Feuer angesteckt werden",
+    "spa": "se anunció que sería puesta en montón de asolamiento y que sus ciudades serían puestas a fuego"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

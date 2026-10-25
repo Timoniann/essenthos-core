@@ -1,0 +1,32 @@
+{
+ "slug": "sodom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:47:27.041204+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Sodom's story has two chief events told in the verses: the capture of its goods and people by the eastern kings, and its destruction by fire from the LORD.",
+  "clauses": [
+   {
+    "english": "was plundered by Chedorlaomer and his allies, who took Lot with the goods",
+    "references": [
+     "GEN 14:10-12"
+    ],
+    "quote": "And they took Lot, Abram's brother's son, who dwelt in Sodom, and his goods, and departed."
+   },
+   {
+    "english": "was overthrown when the LORD rained brimstone and fire on it from heaven",
+    "references": [
+     "GEN 19:24-25"
+    ],
+    "quote": "Then the LORD rained upon Sodom and upon Gomorrah brimstone and fire from the LORD out of heaven;"
+   }
+  ],
+  "doubts": [
+   "Verses where Sodom is only a comparison or a warning (Isaiah, Jeremiah, Matthew, Luke, Jude, Revelation and others) were not used as events of the city itself.",
+   "REV 11:8 uses Sodom as a figurative name for another city, so it was left out."
+  ]
+ },
+ "problems": []
+}

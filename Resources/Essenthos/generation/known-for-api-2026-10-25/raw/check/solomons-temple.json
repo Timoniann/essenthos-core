@@ -1,0 +1,61 @@
+{
+ "slug": "solomons-temple",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.817598+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was built by Solomon over seven years",
+    "references": [
+     "1KI 6:1",
+     "1KI 6:37-38"
+    ],
+    "ukr": "був збудований Соломоном за сім років",
+    "deu": "wurde von Salomo in sieben Jahren gebaut",
+    "spa": "fue edificado por Salomón en siete años"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was filled with the glory of the LORD when the ark was brought in",
+    "references": [
+     "1KI 8:6",
+     "1KI 8:10-11"
+    ],
+    "ukr": "був наповнений славою Господньою, коли в нього внесли ковчег",
+    "deu": "wurde von der Herrlichkeit des HERRN erfüllt, als die Lade hineingebracht wurde",
+    "spa": "fue llenado de la gloria del SEÑOR cuando se metió el arca en él"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was dedicated by Solomon with a great sacrifice of oxen and sheep",
+    "references": [
+     "1KI 8:63"
+    ],
+    "ukr": "був освячений Соломоном через велику жертву волів і овець",
+    "deu": "wurde von Salomo mit einem großen Opfer von Ochsen und Schafen eingeweiht",
+    "spa": "fue dedicado por Salomón con un gran sacrificio de bueyes y ovejas"
+   },
+   {
+    "verdict": "fix",
+    "why": "The burning is done by Nebuzaradan (named in verse 8); only the breaking of the pillars and sea is by the Chaldeans.",
+    "english": "was burnt by Nebuzaradan, and its bronze pillars and sea broken up by the Chaldeans",
+    "references": [
+     "2KI 25:8-9",
+     "2KI 25:13"
+    ],
+    "ukr": "був спалений Невузар'аданом, а його мідяні стовпи й море поламані халдеями",
+    "deu": "wurde von Nebusaradan verbrannt, und seine ehernen Säulen und das eherne Meer wurden von den Chaldäern zerbrochen",
+    "spa": "fue quemado por Nabuzaradán, y sus columnas de bronce y el mar de bronce fueron quebrados por los caldeos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

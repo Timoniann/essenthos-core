@@ -1,0 +1,37 @@
+{
+ "slug": "ai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:56:27.967702+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say it was Israel's first attack, and they give about three thousand men fleeing before Ai, not a 'rout' of the whole attack.",
+    "english": "routed about three thousand men of Israel and killed about thirty-six of them",
+    "references": [
+     "JOS 7:4-5"
+    ],
+    "ukr": "обернув навтікача близько трьох тисяч ізраїльтян і побив близько тридцяти шістьох із них",
+    "deu": "schlug etwa dreitausend Mann Israels in die Flucht und erschlug etwa sechsunddreißig von ihnen",
+    "spa": "puso en fuga a unos tres mil hombres de Israel e hirió a unos treinta y seis de ellos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by an ambush and burnt by Joshua into a heap for ever",
+    "references": [
+     "JOS 8:19-21",
+     "JOS 8:28"
+    ],
+    "ukr": "був здобутий засідкою, а потім спалений Ісусом і обернений на вічну руїну",
+    "deu": "wurde vom Hinterhalt eingenommen und von Josua niedergebrannt, zu einem ewigen Haufen gemacht",
+    "spa": "fue tomado por la emboscada y quemado por Josué, reducido a un montón perpetuo"
+   }
+  ],
+  "note": "The line omits that Israel's defeat at Ai was due to Achan's sin, and that Joshua hanged the king of Ai."
+ },
+ "problems": [],
+ "attempts": []
+}

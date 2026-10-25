@@ -1,0 +1,36 @@
+{
+ "slug": "nergalsarezer-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.062905+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "sat with the princes of Babylon in the middle gate of captured Jerusalem",
+    "references": [
+     "JER 39:3"
+    ],
+    "ukr": "посідав зі зверхниками вавилонського царя в Середущій брамі завойованого Єрусалима",
+    "deu": "hielt mit den Fürsten des Königs zu Babel unter dem Mitteltor der eroberten Stadt Jerusalem",
+    "spa": "asentó con los príncipes del rey de Babilonia a la puerta del medio de la conquistada Jerusalén"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verses say the group sent and took Jeremiah; 'helped send for' is loose, and the committal to Gedaliah is not named.",
+    "english": "sent with the princes of Babylon and took Jeremiah out of the court of the prison",
+    "references": [
+     "JER 39:13-14"
+    ],
+    "ukr": "послав разом з усіма начальниками вавилонського царя і взяв Єремію з подвір'я в'язниці",
+    "deu": "sandte hin mit allen Fürsten des Königs zu Babel und ließ Jeremia aus dem Vorhof des Gefängnisses holen",
+    "spa": "envió con todos los príncipes del rey de Babilonia y tomó a Jeremías del patio de la cárcel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

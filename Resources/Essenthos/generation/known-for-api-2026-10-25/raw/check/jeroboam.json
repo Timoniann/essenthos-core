@@ -1,0 +1,58 @@
+{
+ "slug": "jeroboam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.211851+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was told by the prophet Ahijah that he would receive ten tribes of the kingdom",
+    "references": [
+     "1KI 11:29-31"
+    ],
+    "ukr": "почув від пророка Ахійї, що отримає десять племен із царства",
+    "deu": "erfuhr vom Propheten Ahia, dass er zehn Stämme des Königreichs erhalten würde",
+    "spa": "fue informado por el profeta Ahías de que recibiría diez tribus del reino"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "fled into Egypt from Solomon, who sought to kill him",
+    "references": [
+     "1KI 11:40"
+    ],
+    "ukr": "втік до Єгипту від Соломона, який шукав, щоб забити його",
+    "deu": "floh nach Ägypten vor Salomo, der ihn zu töten trachtete",
+    "spa": "huyó a Egipto de Salomón, que procuraba matarlo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The break from David's house is stated in 12:19, just outside the citation, and 12:20 does not say 'the tribes broke'.",
+    "english": "was made king over all Israel when Israel rebelled against the house of David",
+    "references": [
+     "1KI 12:19-20"
+    ],
+    "ukr": "був настановлений царем над усім Ізраїлем, коли Ізраїль збунтувався проти Давидового дому",
+    "deu": "wurde zum König über ganz Israel gemacht, als Israel vom Hause David abfiel",
+    "spa": "fue hecho rey sobre todo Israel cuando Israel se apartó de la casa de David"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "made two golden calves and set them in Bethel and Dan",
+    "references": [
+     "1KI 12:28-29"
+    ],
+    "ukr": "зробив два золоті тельці й поставив одного в Бет-Елі, а одного в Дані",
+    "deu": "machte zwei goldene Kälber und setzte eins zu Beth-El und das andere gen Dan",
+    "spa": "hizo dos becerros de oro y puso el uno en Beth-el y el otro en Dan"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

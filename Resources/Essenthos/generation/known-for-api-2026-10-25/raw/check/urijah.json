@@ -1,0 +1,36 @@
+{
+ "slug": "urijah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.632286+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "built an altar from the pattern Ahaz sent from Damascus",
+    "references": [
+     "2KI 16:10-11"
+    ],
+    "ukr": "збудував жертівника за взірцем, який Ахаз послав із Дамаску",
+    "deu": "baute einen Altar nach dem, was der König Ahas von Damaskus gesandt hatte",
+    "spa": "edificó el altar conforme a lo que el rey Achâz había enviado de Damasco"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "carried out Ahaz's orders for the offerings on the great altar",
+    "references": [
+     "2KI 16:15-16"
+    ],
+    "ukr": "виконав усе, що наказав Ахаз щодо жертв на великому жертівнику",
+    "deu": "tat alles, was der König Ahas ihn wegen der Opfer auf dem großen Altar hieß",
+    "spa": "hizo conforme a todo lo que el rey Achâz le mandó acerca de los sacrificios en el gran altar"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

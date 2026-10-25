@@ -1,0 +1,37 @@
+{
+ "slug": "jehoiachin",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.469293+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Nebuchadnezzar is named only in 2KI 24:11, which the citation leaves out.",
+    "english": "was carried away captive to Babylon by Nebuchadnezzar",
+    "references": [
+     "2KI 24:11-12",
+     "2KI 24:15"
+    ],
+    "ukr": "був відведений у неволю до Вавилону Навуходоносором",
+    "deu": "wurde von Nebukadnezar gefangen nach Babel weggeführt",
+    "spa": "fue llevado cautivo a Babilonia por Nabucodonosor"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say he was given a place at the table; they say Evilmerodach freed him and set his throne above the other kings.",
+    "english": "was released from prison by Evilmerodach and given a seat above the other kings in Babylon",
+    "references": [
+     "2KI 25:27-28"
+    ],
+    "ukr": "був виведений Евіл-Меродахом з дому ув'язнення, і йому поставили трон понад тронами інших царів у Вавилоні",
+    "deu": "wurde von Evil-Merodach aus dem Kerker befreit und erhielt einen Stuhl über den Stühlen der anderen Könige in Babel",
+    "spa": "fue sacado de la cárcel por Evil-merodach y recibió un asiento sobre el de los otros reyes en Babilonia"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

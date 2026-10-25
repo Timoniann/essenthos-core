@@ -1,0 +1,37 @@
+{
+ "slug": "shishak",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.589775+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says Jeroboam fled to Shishak, not that Shishak took him in.",
+    "english": "was the king to whom Jeroboam fled from Solomon",
+    "references": [
+     "1KI 11:40"
+    ],
+    "ukr": "був царем, до якого Єровоам утік від Соломона",
+    "deu": "war der König, zu dem Jerobeam vor Salomo floh",
+    "spa": "fue el rey a quien Jeroboam huyó de Salomón"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "came up against Jerusalem and took away the treasures of the temple and the king's house",
+    "references": [
+     "1KI 14:25-26",
+     "2CH 12:9"
+    ],
+    "ukr": "пішов на Єрусалим і забрав скарби Господнього дому та скарби дому царевого",
+    "deu": "zog herauf wider Jerusalem und nahm die Schätze aus dem Hause des HERRN und aus dem Hause des Königs",
+    "spa": "subió contra Jerusalem y tomó los tesoros de la casa del SEÑOR y los tesoros de la casa del rey"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

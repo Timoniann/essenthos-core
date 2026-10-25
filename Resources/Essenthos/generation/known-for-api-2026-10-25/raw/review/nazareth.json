@@ -1,0 +1,31 @@
+{
+ "slug": "nazareth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.607290+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди ангел Гавриїл був посланий до діви Марії",
+    "deu": "war der Ort, an den der Engel Gabriel zur Jungfrau Maria gesandt wurde",
+    "spa": "fue el lugar adonde el ángel Gabriel fue enviado a la virgen María",
+    "why": "Replaced the archaic Ukrainian «ангол» with the modern «ангел»."
+   },
+   {
+    "ukr": "був місцем, де Ісус жив у дитинстві",
+    "deu": "war der Ort, an dem Jesus als Kind wohnte",
+    "spa": "fue el lugar donde Jesús habitó de niño",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де Ісус у суботу ввійшов до синагоги і встав, щоб читати",
+    "deu": "war der Ort, an dem Jesus am Sabbattag in die Synagoge ging und aufstand, um zu lesen",
+    "spa": "fue el lugar donde Jesús entró en la sinagoga el día del sábado y se levantó a leer",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

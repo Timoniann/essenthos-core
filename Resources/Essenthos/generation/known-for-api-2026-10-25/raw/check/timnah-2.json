@@ -1,0 +1,36 @@
+{
+ "slug": "timnah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.481600+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Samson saw the woman in Timnath, but he asked his parents to get her for him after coming up, not there.",
+    "english": "was where Samson saw a Philistine woman",
+    "references": [
+     "JDG 14:1"
+    ],
+    "ukr": "була місцем, де Самсон побачив жінку з филистимських дочок",
+    "deu": "war der Ort, wo Simson eine Frau unter den Töchtern der Philister sah",
+    "spa": "fue donde Samsón vio una mujer de las hijas de los Filisteos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by the Philistines, who settled there",
+    "references": [
+     "2CH 28:18"
+    ],
+    "ukr": "була здобута филистимлянами, які осілися там",
+    "deu": "wurde von den Philistern eingenommen, die sich darin niederließen",
+    "spa": "fue tomada por los Filisteos, que habitaron en ella"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

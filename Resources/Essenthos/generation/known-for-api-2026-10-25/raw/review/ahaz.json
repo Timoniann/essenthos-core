@@ -1,0 +1,31 @@
+{
+ "slug": "ahaz",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.812156+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був обложений у Єрусалимі Рецином і Пекахом, але вони не змогли його подолати",
+    "deu": "wurde in Jerusalem von Rezin und Pekah belagert, aber sie konnten ihn nicht gewinnen",
+    "spa": "fue cercado en Jerusalem por Resín y Peka, pero no pudieron tomarlo",
+    "why": "German and Spanish pronouns now refer to Ahaz (masculine: ihn, tomarlo), not to the city."
+   },
+   {
+    "ukr": "послав срібло та золото з дому Господнього та з дому царевого до асирійського царя",
+    "deu": "sandte das Silber und Gold aus dem Haus des HERRN und dem Königshaus dem König von Assyrien",
+    "spa": "envió al rey de Asiria la plata y el oro de la casa del SEÑOR y de la casa real",
+    "why": "German: modernized 'Hause' to 'Haus'."
+   },
+   {
+    "ukr": "послав священикові Урії подобу жертівника, що побачив у Дамаску",
+    "deu": "sandte dem Priester Uria das Ebenbild eines Altars, den er in Damaskus sah",
+    "spa": "envió al sacerdote Urías el diseño de un altar que vio en Damasco",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

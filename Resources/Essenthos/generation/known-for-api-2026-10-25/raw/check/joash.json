@@ -1,0 +1,25 @@
+{
+ "slug": "joash",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.975652+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "defended his son Gideon against the men who wanted him killed for casting down Baal's altar",
+    "references": [
+     "JDG 6:30-31"
+    ],
+    "ukr": "захистив свого сина Гедеона від людей, які хотіли, щоб він помер за те, що розбив Ваалового жертівника",
+    "deu": "verteidigte seinen Sohn Gideon gegen die Leute, die ihn sterben lassen wollten, weil er den Altar Baals zerbrochen hatte",
+    "spa": "defendió a su hijo Gedeón contra los hombres que querían que muriera por haber derribado el altar de Baal"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "nahash",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.403536+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "отаборився при ґілеадському Явешу й запропонував умову лише за того, що кожному з них виколють праве око",
+    "deu": "belagerte Jabes in Gilead und wollte einen Bund nur schließen, wenn allen das rechte Auge ausgestochen würde",
+    "spa": "asentó campo contra Jabes de Galaad y ofreció alianza solo con la condición de sacar el ojo derecho a todos ellos",
+    "why": "Fixed the ungrammatical Ukrainian condition phrase so it reads as a proper subordinate clause."
+   },
+   {
+    "ukr": "зробив ласку Давидові, а коли він помер, замість нього зацарював його син",
+    "deu": "erwies David Barmherzigkeit, und als er starb, wurde sein Son an seiner Stelle König",
+    "spa": "hizo misericordia con David, y cuando murió, reinó en su lugar su hijo",
+    "why": "Replaced the archaic German «an seiner Statt» with modern «an seiner Stelle»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

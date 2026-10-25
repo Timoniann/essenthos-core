@@ -1,0 +1,30 @@
+{
+ "slug": "zebul",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.811762+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what Zebul did: he warned Abimelech against Gaal and later drove Gaal out of Shechem.",
+  "clauses": [
+   {
+    "english": "sent word secretly to Abimelech of Gaal's revolt and advised an attack on the city",
+    "references": [
+     "JDG 9:30-33"
+    ],
+    "quote": "he sent messengers unto Abimelech privily"
+   },
+   {
+    "english": "thrust Gaal and his brethren out of Shechem",
+    "references": [
+     "JDG 9:41"
+    ],
+    "quote": "Zebul thrust out Gaal and his brethren, that they should not dwell in Shechem."
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

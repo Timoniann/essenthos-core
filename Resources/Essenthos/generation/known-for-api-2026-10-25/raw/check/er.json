@@ -1,0 +1,25 @@
+{
+ "slug": "er",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.206459+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was wicked in the sight of the LORD",
+    "references": [
+     "GEN 38:7"
+    ],
+    "ukr": "був злий в очах Господа",
+    "deu": "war böse vor dem HERRN",
+    "spa": "fue malo a los ojos del SEÑOR"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

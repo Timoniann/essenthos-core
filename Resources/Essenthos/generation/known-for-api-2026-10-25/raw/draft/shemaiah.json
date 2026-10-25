@@ -1,0 +1,33 @@
+{
+ "slug": "shemaiah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.260304+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state two distinct deeds of Shemaiah: forbidding Rehoboam's war against Israel, and declaring that the LORD had left Judah in Shishak's hand.",
+  "clauses": [
+   {
+    "english": "told Rehoboam not to fight against Israel, and the army returned home",
+    "references": [
+     "1KI 12:22-24"
+    ],
+    "quote": "Ye shall not go up, nor fight against your brethren the children of Israel"
+   },
+   {
+    "english": "told Rehoboam and the princes that the LORD had left them in the hand of Shishak",
+    "references": [
+     "2CH 12:5"
+    ],
+    "quote": "Ye have forsaken me, and therefore have I also left you in the hand of Shishak."
+   }
+  ],
+  "doubts": [
+   "2CH 12:15 only mentions a book of Shemaiah the prophet, so it was not used.",
+   "2CH 12:7 (word of the LORD of partial deliverance) was left out as a minor detail beside the main message of 2CH 12:5."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

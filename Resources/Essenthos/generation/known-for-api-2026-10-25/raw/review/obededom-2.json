@@ -1,0 +1,31 @@
+{
+ "slug": "obededom-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.685293+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "грав на арфі",
+    "deu": "spielte die Harfe",
+    "spa": "tocaba el arpa",
+    "why": ""
+   },
+   {
+    "ukr": "був придверним для ковчега",
+    "deu": "war Torhüter an der Lade",
+    "spa": "era portero del arca",
+    "why": ""
+   },
+   {
+    "ukr": "отримав за жеребом південну браму",
+    "deu": "erhielt durch das Los das südliche Tor",
+    "spa": "recibió por suerte la puerta del sur",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,37 @@
+{
+ "slug": "menorah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.037950+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses 37:19-21 and 37:24 give details the clause does not need, so the citation can be narrowed to the verses that state it.",
+    "english": "was made of one piece of beaten pure gold, with six branches and seven lamps",
+    "references": [
+     "EXO 37:17-18",
+     "EXO 37:22-23"
+    ],
+    "ukr": "був зроблений з одного куття щирого золота, з шістьма раменами й сімома лямпадками",
+    "deu": "wurde aus einem Stück getriebenen, feinen Goldes gemacht, mit sechs Röhren und sieben Lampen",
+    "spa": "fue hecho de una pieza de oro puro labrado a martillo, con seis brazos y siete candilejas"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was set in the tent on the south side and its lamps were lit before the LORD",
+    "references": [
+     "EXO 40:24-25"
+    ],
+    "ukr": "був поставлений у скинії заповіту на південній стороні, і його лямпадки були засвічені перед Господом",
+    "deu": "wurde in der Wohnung an der Seite gegen Mittag aufgestellt, und seine Lampen wurden vor dem HERRN angezündet",
+    "spa": "fue puesto en el tabernáculo del testimonio, al lado meridional del pabellón, y sus lámparas fueron encendidas delante del SEÑOR"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,43 @@
+{
+ "slug": "nathan-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.616953+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Nathan's message to David about the house, his rebuke of David over Uriah, and his part in anointing Solomon.",
+  "clauses": [
+   {
+    "english": "told David in the LORD's name that he should not build the LORD a house",
+    "references": [
+     "2SA 7:4-5",
+     "2SA 7:17"
+    ],
+    "quote": "according to all this vision, so did Nathan speak unto David."
+   },
+   {
+    "english": "rebuked David with the parable of the ewe lamb, saying \"Thou art the man\"",
+    "references": [
+     "2SA 12:1-7"
+    ],
+    "quote": "And Nathan said to David, Thou art the man."
+   },
+   {
+    "english": "helped anoint Solomon king over Israel at Gihon",
+    "references": [
+     "1KI 1:34",
+     "1KI 1:38-45"
+    ],
+    "quote": "Zadok the priest and Nathan the prophet have anointed him king in Gihon"
+   }
+  ],
+  "doubts": [
+   "ZEC 12:12 names a house of Nathan, probably a different Nathan, so it was left out.",
+   "2SA 7:4-5 and 1CH 17:3-4 both give the message to David; only the 2 Samuel verses are cited.",
+   "The wording of the first clause depends on verses 2SA 7:5 and 7:6, which were only partly shown; 1CH 17:4 says plainly that David should not build the house."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

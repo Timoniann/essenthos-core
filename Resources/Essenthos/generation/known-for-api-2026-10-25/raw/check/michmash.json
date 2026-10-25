@@ -1,0 +1,37 @@
+{
+ "slug": "michmash",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:18.919689+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the Philistines pitched their camp against Israel",
+    "references": [
+     "1SA 13:5",
+     "1SA 13:16"
+    ],
+    "ukr": "був місцем, де филистимляни таборували проти Ізраїля",
+    "deu": "war der Ort, an dem die Philister sich gegen Israel lagerten",
+    "spa": "fue el lugar donde los Filisteos asentaron campo contra Israel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was the starting point of Israel's slaughter of the Philistines as far as Aijalon",
+    "references": [
+     "1SA 14:31"
+    ],
+    "ukr": "був початком, звідки Ізраїль бив филистимлян аж до Айялону",
+    "deu": "war der Ausgangspunkt, von dem aus Israel die Philister bis Ajalon schlug",
+    "spa": "fue el punto de partida desde donde Israel hirió a los Filisteos hasta Ajalón"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

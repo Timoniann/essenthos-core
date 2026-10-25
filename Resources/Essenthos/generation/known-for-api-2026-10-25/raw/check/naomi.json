@@ -1,0 +1,48 @@
+{
+ "slug": "naomi",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.644834+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Moab and the word widow are not in the cited verses; they say she outlived her husband and both sons.",
+    "english": "outlived her husband and her two sons",
+    "references": [
+     "RUT 1:3",
+     "RUT 1:5"
+    ],
+    "ukr": "пережила чоловіка та обох синів",
+    "deu": "überlebte ihren Mann und ihre beiden Söhne",
+    "spa": "quedó desamparada de su marido y de sus dos hijos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "returned from Moab to Bethlehem with Ruth, and asked to be called Mara",
+    "references": [
+     "RUT 1:19-22"
+    ],
+    "ukr": "повернулася з Рут з моавських піль до Віфлеєму й просила звати її Марою",
+    "deu": "kehrte mit Ruth aus dem Moabiterland nach Bethlehem zurück und bat, sie Mara zu nennen",
+    "spa": "volvió de los campos de Moab a Beth-lehem con Ruth y pidió que la llamaran Mara"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse does not say the child was newborn or name its mother; it says she took the child to her bosom.",
+    "english": "took the child, laid it in her bosom and became its nurse",
+    "references": [
+     "RUT 4:16"
+    ],
+    "ukr": "взяла дитину, поклала її на коліна свої й була їй за няньку",
+    "deu": "nahm das Kind, legte es auf ihren Schoß und wurde seine Wärterin",
+    "spa": "tomó al niño, lo puso en su regazo y fue su ama"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

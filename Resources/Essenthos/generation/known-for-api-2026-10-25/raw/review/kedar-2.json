@@ -1,0 +1,31 @@
+{
+ "slug": "kedar-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.005902+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було провіщено, що за рік утратить усю свою славу, а число його лучників зменшиться",
+    "deu": "wurde vorausgesagt, dass es in einem Jahr alle seine Herrlichkeit verlieren und die Zahl seiner Schützen gering sein würde",
+    "spa": "fue profetizado que en un año perdería toda su gloria y que sus flecheros serían disminuidos",
+    "why": "Spanish: replaced the archaic 'apocados' with the modern 'disminuidos'."
+   },
+   {
+    "ukr": "було провіщено, що буде пограбований, а його намети й отару заберуть",
+    "deu": "wurde vorausgesagt, dass es geplündert würde und man ihm Zelte und Herden nähme",
+    "spa": "fue profetizado que sería saqueado y que le tomarían sus tiendas y sus ganados",
+    "why": "German: replaced the old 'Hütten' with modern 'Zelte' (tents). Spanish: 'destruido' changed to 'saqueado' to match 'spoiled'."
+   },
+   {
+    "ukr": "торгував ягнятами, баранами й козлами через своїх князів",
+    "deu": "handelte durch seine Fürsten mit Schafen, Widdern und Böcken",
+    "spa": "comerció con corderos, carneros y machos cabríos por medio de sus príncipes",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

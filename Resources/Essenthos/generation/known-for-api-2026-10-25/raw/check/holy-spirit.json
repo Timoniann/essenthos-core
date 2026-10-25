@@ -1,0 +1,49 @@
+{
+ "slug": "holy-spirit",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.019857+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "came upon Mary, who was found with child of the Holy Ghost",
+    "references": [
+     "MAT 1:18",
+     "LUK 1:35"
+    ],
+    "ukr": "злинув на Марію, яка, як виявилося, мала в утробі від Духа Святого",
+    "deu": "kam über Maria, die vom heiligen Geist schwanger befunden wurde",
+    "spa": "vino sobre María, quien se halló haber concebido del Espíritu Santo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "descended like a dove upon Jesus at his baptism",
+    "references": [
+     "MAT 3:16",
+     "LUK 3:22"
+    ],
+    "ukr": "спустився, як голуб, на Ісуса при хрещенні",
+    "deu": "fuhr bei seiner Taufe wie eine Taube auf Jesus herab",
+    "spa": "descendió como paloma sobre Jesús en su bautismo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say 'they were all filled', not that they were 'the disciples'.",
+    "english": "filled all who were together at Pentecost, and they began to speak with other tongues",
+    "references": [
+     "ACT 2:1-4"
+    ],
+    "ukr": "сповнив усіх, хто був укупі на П'ятдесятницю, і вони почали говорити іншими мовами",
+    "deu": "erfüllte an Pfingsten alle, die beieinander waren, und sie fingen an, mit anderen Zungen zu reden",
+    "spa": "llenó a todos los que estaban juntos en Pentecostés, y comenzaron a hablar en otras lenguas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

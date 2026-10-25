@@ -1,0 +1,32 @@
+{
+ "slug": "silver-trumpets",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.901449+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state what the trumpets were made for and how they were to be used.",
+  "clauses": [
+   {
+    "english": "was made of one piece of silver to call the assembly and set the camps moving",
+    "references": [
+     "NUM 10:2"
+    ],
+    "quote": "Make thee two trumpets of silver; of a whole piece shalt thou make them"
+   },
+   {
+    "english": "was blown by the priests in war, so that Israel would be remembered before the LORD",
+    "references": [
+     "NUM 10:8-9"
+    ],
+    "quote": "ye shall be remembered before the LORD your God, and ye shall be saved from your enemies"
+   }
+  ],
+  "doubts": [
+   "The trumpets are only commanded here, not described as used, so the clauses state their purpose rather than events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

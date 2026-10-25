@@ -1,0 +1,40 @@
+{
+ "slug": "machpelah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.206926+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses cited do not say Ephron was a Hittite; GEN 23:10 does, so the citation is widened to include it.",
+    "english": "was bought by Abraham from Ephron the Hittite for four hundred shekels of silver as a burying place",
+    "references": [
+     "GEN 23:9-10",
+     "GEN 23:16-18"
+    ],
+    "ukr": "була куплена Авраамом в хіттеянина Ефрона за чотири сотні шеклів срібла для гробу",
+    "deu": "wurde von Abraham von Ephron, dem Hethiter, für vierhundert Lot Silber als Erbbegräbnis gekauft",
+    "spa": "fue comprada por Abraham a Ephrón el Hetheo por cuatrocientos siclos de plata como lugar de sepultura"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Sarah was buried, and later Abraham, Isaac, Rebekah, Leah and Jacob",
+    "references": [
+     "GEN 23:19",
+     "GEN 25:9-10",
+     "GEN 49:31",
+     "GEN 50:13"
+    ],
+    "ukr": "була місцем поховання Сарри, а згодом Авраама, Ісака, Ревеки, Лії та Якова",
+    "deu": "war der Ort, an dem Sara begraben wurde und später Abraham, Isaak, Rebekka, Lea und Jakob",
+    "spa": "fue el lugar donde fue sepultada Sara, y después Abraham, Isaac, Rebeca, Lea y Jacob"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

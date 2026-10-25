@@ -1,0 +1,25 @@
+{
+ "slug": "veil-of-the-sanctuary",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.190907+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була зроблена з блакиті, пурпуру, червені та суканого віссону, з херувимами",
+    "deu": "wurde aus blauem und rotem Purpur, Scharlach und gezwirntem Leinen gemacht, mit Cherubim daran",
+    "spa": "fue hecho de cárdeno, púrpura, carmesí y lino torcido, con querubines",
+    "why": "German: replaced the old-fashioned «gezwirnter weißer Leinwand» with modern «gezwirntem Leinen» (fine linen)."
+   },
+   {
+    "ukr": "була повішена в скинії, щоб відділяти святиню від Святого Святих",
+    "deu": "wurde in der Wohnung aufgehängt, um das Heilige vom Allerheiligsten zu scheiden",
+    "spa": "fue puesto en el tabernáculo para separar el lugar santo del santísimo",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,26 @@
+{
+ "slug": "iconium",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.447022+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Iconium is where Paul and Barnabas preached in the synagogue and many believed, which is a defining event of the place.",
+  "clauses": [
+   {
+    "english": "was where Paul and Barnabas spoke in the synagogue and a great multitude of Jews and Greeks believed",
+    "references": [
+     "ACT 14:1"
+    ],
+    "quote": "a great multitude both of the Jews and also of the Greeks believed"
+   }
+  ],
+  "doubts": [
+   "ACT 14:19 names Jews from Iconium who stoned Paul at Lystra; that event happened at Lystra, so it is not made a clause.",
+   "ACT 14:3 context (long stay, signs and wonders) is only partly shown and is not cited."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "elizabeth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.767263+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Elisabeth conceiving in her old age, being filled with the Holy Ghost at Mary's greeting, and bearing a son, beyond what the summary states.",
+  "clauses": [
+   {
+    "english": "conceived a son in her old age, though she had been barren",
+    "references": [
+     "LUK 1:24",
+     "LUK 1:36"
+    ],
+    "quote": "she hath also conceived a son in her old age"
+   },
+   {
+    "english": "was filled with the Holy Ghost when Mary greeted her",
+    "references": [
+     "LUK 1:40-41"
+    ],
+    "quote": "Elisabeth was filled with the Holy Ghost"
+   }
+  ],
+  "doubts": [
+   "Her bearing of a son (LUK 1:57) is left out because the summary already names her as mother of John."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

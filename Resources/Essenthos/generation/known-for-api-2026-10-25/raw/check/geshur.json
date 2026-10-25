@@ -1,0 +1,36 @@
+{
+ "slug": "geshur",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.169225+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Absalom fled and stayed three years",
+    "references": [
+     "2SA 13:37-38"
+    ],
+    "ukr": "був місцем, куди втік Авесалом і де пробув три роки",
+    "deu": "war der Ort, wohin Absalom floh und wo er drei Jahre blieb",
+    "spa": "fue el lugar adonde huyó Absalom y donde estuvo tres años"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says Israel did not expel the Geshurites, not that the place was not taken.",
+    "english": "had its people, whom Israel did not expel, living among the Israelites",
+    "references": [
+     "JOS 13:13"
+    ],
+    "ukr": "мав свій народ, якого Ізраїль не вигнав і який жив серед Ізраїля",
+    "deu": "hatte sein Volk, das Israel nicht vertrieb und das unter den Kindern Israel wohnte",
+    "spa": "tuvo a su pueblo, al cual Israel no echó, y que habitó entre los Israelitas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

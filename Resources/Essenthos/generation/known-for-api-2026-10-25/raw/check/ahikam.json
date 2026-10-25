@@ -1,0 +1,36 @@
+{
+ "slug": "ahikam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.250223+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was sent by the king to enquire of the LORD about the book of the law",
+    "references": [
+     "2KI 22:12-14"
+    ],
+    "ukr": "був посланий царем звернутися до Господа про книгу Закону",
+    "deu": "wurde vom König gesandt, den HERRN um das Gesetzbuch zu befragen",
+    "spa": "fue enviado por el rey a preguntar al SEÑOR acerca del libro de la ley"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "kept Jeremiah from being given to the people to be put to death",
+    "references": [
+     "JER 26:24"
+    ],
+    "ukr": "не дав видати Єремію народові на смерть",
+    "deu": "bewahrte Jeremia davor, dem Volk zum Töten ausgeliefert zu werden",
+    "spa": "evitó que Jeremías fuera entregado al pueblo para matarlo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "ahaziah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.965057+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "ходив дорогою Ахавого дому і робив зло в очах Господа",
+    "deu": "wandelte auf dem Weg des Hauses Ahab und tat, was dem HERRN missfiel",
+    "spa": "anduvo en el camino de la casa de Achâb e hizo lo malo ante los ojos del SEÑOR",
+    "why": ""
+   },
+   {
+    "ukr": "був поранений на колесниці, коли втікав від Єгу, і помер у Меґіддо",
+    "deu": "wurde auf der Flucht vor Jehu im Wagen geschlagen und starb in Megiddo",
+    "spa": "fue herido en el carro cuando huía de Jehú, y murió en Megiddo",
+    "why": "Corrected the Ukrainian misspelling «колеснииці» to «колесниці»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,34 @@
+{
+ "slug": "abijam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.586539+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state Abijam's battle victory over Jeroboam and Israel and his capture of cities, beyond what the summary gives.",
+  "clauses": [
+   {
+    "english": "defeated Jeroboam and Israel in battle, when God smote them before Judah",
+    "references": [
+     "2CH 13:15-17"
+    ],
+    "quote": "God smote Jeroboam and all Israel before Abijah and Judah"
+   },
+   {
+    "english": "took the cities of Bethel, Jeshanah and Ephraim from Jeroboam",
+    "references": [
+     "2CH 13:19"
+    ],
+    "quote": "took cities from him, Bethel with the towns thereof"
+   }
+  ],
+  "doubts": [
+   "The verses call him Abijah in 2 Chronicles and Abia in 1 Chronicles and Matthew; taken as the same king of Judah, son of Rehoboam and father of Asa.",
+   "2CH 13:2 gives his mother as Michaiah daughter of Uriel, unlike 1KI 15:2 and 2CH 11:20; left out of the line.",
+   "1KI 15:3 says he walked in his father's sins; omitted as a judgment, not an event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

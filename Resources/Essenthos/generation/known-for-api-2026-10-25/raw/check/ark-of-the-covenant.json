@@ -1,0 +1,58 @@
+{
+ "slug": "ark-of-the-covenant",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.549765+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was borne into the Jordan, and Israel crossed on dry ground",
+    "references": [
+     "JOS 3:15-17"
+    ],
+    "ukr": "був несений у Йордан, і ввесь Ізраїль переходив по сухому",
+    "deu": "wurde in den Jordan getragen, und ganz Israel ging trocken hindurch",
+    "spa": "fue llevada al Jordán, y todo Israel pasó en seco"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by the Philistines in battle",
+    "references": [
+     "1SA 4:10-11"
+    ],
+    "ukr": "був узятий филистимлянами в бою",
+    "deu": "wurde von den Philistern in der Schlacht genommen",
+    "spa": "fue tomada por los Filisteos en la batalla"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was brought up by David into the city of David",
+    "references": [
+     "2SA 6:12"
+    ],
+    "ukr": "був винесений Давидом до Давидового Міста",
+    "deu": "wurde von David in die Stadt Davids heraufgeholt",
+    "spa": "fue traída por David a la ciudad de David"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was set in the most holy place of Solomon's temple",
+    "references": [
+     "1KI 8:6"
+    ],
+    "ukr": "був поставлений у Святому Святих храму Соломона",
+    "deu": "wurde in das Allerheiligste von Salomos Tempel gebracht",
+    "spa": "fue puesta en el lugar santísimo del templo de Salomón"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

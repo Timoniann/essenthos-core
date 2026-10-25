@@ -1,0 +1,25 @@
+{
+ "slug": "mizpah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.558355+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де таборували ізраїльтяни, коли аммонітяни зібралися в Ґілеаді",
+    "deu": "war der Ort, wo die Israeliten ihr Lager aufschlugen, als die Ammoniter sich in Gilead versammelten",
+    "spa": "fue el lugar donde los israelitas acamparon cuando los amonitas se reunieron en Galaad",
+    "why": "Replaced the old-fashioned 'sons/children of Israel/Ammon' wording with modern terms (ізраїльтяни/аммонітяни, Israeliten/Ammoniter, israelitas/amonitas) and modernised the German and Spanish verbs."
+   },
+   {
+    "ukr": "була місцем, де дочка Їфтаха вийшла йому назустріч з бубнами",
+    "deu": "war der Ort, wo die Tochter Jephthahs ihm mit Pauken entgegenging",
+    "spa": "fue el lugar donde la hija de Jephté salió a recibirlo con panderos",
+    "why": "Ukrainian word order made natural (йому назустріч); Spanish archaic 'adufes' replaced with modern 'panderos'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

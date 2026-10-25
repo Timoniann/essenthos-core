@@ -1,0 +1,49 @@
+{
+ "slug": "jehoshaphat-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.693910+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say they taught and carried the book of the law, but do not say he sent them to teach the law.",
+    "english": "sent princes and Levites to teach in the cities of Judah",
+    "references": [
+     "2CH 17:7-9"
+    ],
+    "ukr": "послав своїх зверхників та левітів навчати в Юдиних містах",
+    "deu": "sandte seine Fürsten und Leviten, damit sie in den Städten Judas lehrten",
+    "spa": "envió a sus príncipes y a los levitas para que enseñasen en las ciudades de Judá"
+   },
+   {
+    "verdict": "fix",
+    "why": "Ahab is not named in the cited verses, which say only 'the king of Israel', and 18:28 gives going up to Ramothgilead, not battle.",
+    "english": "went up to Ramothgilead with the king of Israel and was helped by the LORD",
+    "references": [
+     "2CH 18:28",
+     "2CH 18:31"
+    ],
+    "ukr": "вийшов з Ізраїлевим царем до ґілеадського Рамоту і дістав допомогу від Господа",
+    "deu": "zog mit dem König Israels hinauf gen Ramoth in Gilead und erfuhr die Hilfe des HERRN",
+    "spa": "subió con el rey de Israel a Ramoth de Galaad y fue ayudado por el SEÑOR"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say he sought the LORD when Moab and Ammon came against him, not that he sought him against them.",
+    "english": "sought the LORD when Moab and Ammon came against him, and they destroyed one another",
+    "references": [
+     "2CH 20:1-3",
+     "2CH 20:22-24"
+    ],
+    "ukr": "звернувся до Господа, коли моавітяни та аммонітяни пішли проти нього, і вони винищили один одного",
+    "deu": "suchte den HERRN, als die Kinder Moab und Ammon wider ihn kamen, und sie vernichteten einander",
+    "spa": "buscó al SEÑOR cuando los hijos de Moab y de Ammón vinieron contra él, y se destruyeron unos a otros"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

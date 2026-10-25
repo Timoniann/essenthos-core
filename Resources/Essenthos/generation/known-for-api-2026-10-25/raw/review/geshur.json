@@ -1,0 +1,25 @@
+{
+ "slug": "geshur",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.462446+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди втік Авесалом і де пробув три роки",
+    "deu": "war der Ort, wohin Absalom floh und wo er drei Jahre blieb",
+    "spa": "fue el lugar adonde huyó Absalom y donde estuvo tres años",
+    "why": ""
+   },
+   {
+    "ukr": "мав свій народ, якого Ізраїль не вигнав і який жив серед Ізраїля",
+    "deu": "hatte sein Volk, das Israel nicht vertrieb und das unter den Israeliten wohnte",
+    "spa": "tuvo a su pueblo, al cual Israel no echó, y que habitó entre los israelitas",
+    "why": "German: archaic 'Kindern Israel' replaced by modern 'Israeliten'; Spanish: 'israelitas' lowercased."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

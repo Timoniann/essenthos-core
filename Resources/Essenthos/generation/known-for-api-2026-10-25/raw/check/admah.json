@@ -1,0 +1,36 @@
+{
+ "slug": "admah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.702810+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse naming Chedorlaomer and his allies is GEN 14:9, just outside the citation.",
+    "english": "went to battle with its king against Chedorlaomer and his allies in the vale of Siddim",
+    "references": [
+     "GEN 14:8-9"
+    ],
+    "ukr": "вийшла з її царем на бій проти Кедор-Лаомера та його союзників у долині Сіддім",
+    "deu": "zog mit ihrem König aus, um im Tal Siddim gegen Kedor-Laomor und seine Verbündeten zu streiten",
+    "spa": "salió con su rey a la batalla contra Chêdorlaomer y sus aliados en el valle de Siddim"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was overthrown by the LORD in his anger and wrath, with Sodom, Gomorrah and Zeboim",
+    "references": [
+     "DEU 29:23"
+    ],
+    "ukr": "була зруйнована Господом у Його гніві та люті разом із Содомом, Гоморою та Цевоїмом",
+    "deu": "wurde vom HERRN in seinem Zorn und Grimm umgekehrt, zusammen mit Sodom, Gomorra und Zeboim",
+    "spa": "fue subvertida por el SEÑOR en su furor y en su ira, con Sodoma, Gomorra y Zeboim"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

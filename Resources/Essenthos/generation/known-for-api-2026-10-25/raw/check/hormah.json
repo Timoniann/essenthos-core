@@ -1,0 +1,36 @@
+{
+ "slug": "hormah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.116148+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says the Amalekites and Canaanites beat Israel as far as Hormah; it does not say Hormah was where it happened.",
+    "english": "was the place up to which the Amalekites and Canaanites beat Israel",
+    "references": [
+     "NUM 14:45"
+    ],
+    "ukr": "було місцем, аж до якого амаликитянин та ханаанеянин били Ізраїля",
+    "deu": "war der Ort, bis zu dem die Amalekiter und Kanaaniter Israel schlugen",
+    "spa": "fue el lugar hasta el cual el Amalecita y el Cananeo hirieron a Israel"
+   },
+   {
+    "verdict": "fix",
+    "why": "JDG 1:17 tells of Judah and Simeon destroying Zephath, not of Israel; only NUM 21:3 supports the clause.",
+    "english": "received its name when Israel utterly destroyed the Canaanites and their cities",
+    "references": [
+     "NUM 21:3"
+    ],
+    "ukr": "отримала назву, коли Ізраїль учинив закляттям ханаанеянина та їхні міста",
+    "deu": "erhielt ihren Namen, als Israel die Kanaaniter samt ihren Städten verbannte",
+    "spa": "recibió su nombre cuando Israel destruyó al Cananeo y a sus ciudades"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,47 @@
+{
+ "slug": "jehoram",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.809236+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "slew all his brothers with the sword when he became king",
+    "references": [
+     "2CH 21:4"
+    ],
+    "ukr": "позабивав усіх братів своїх мечем, коли став царем",
+    "deu": "erwürgte alle seine Brüder mit dem Schwert, als er König wurde",
+    "spa": "mató a cuchillo a todos sus hermanos cuando fue elevado al reino"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say the LORD stirred up the Philistines and Arabians against him; the wealth and sons were taken from the king's house, not 'his house's wealth' only, and 'was invaded' lacks the LORD as the cause.",
+    "english": "was attacked by Philistines and Arabians, whom the LORD stirred up, and lost his wealth and sons",
+    "references": [
+     "2CH 21:16-17"
+    ],
+    "ukr": "був атакований филистимлянами та арабами, яких збудив Господь, і втратив маєток та синів",
+    "deu": "wurde von Philistern und Arabern angegriffen, die der HERR erweckte, und verlor seine Habe und seine Söhne",
+    "spa": "fue atacado por los Filisteos y los Árabes, a quienes despertó el SEÑOR, y perdió su hacienda y sus hijos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was struck by the LORD with an incurable disease of the bowels",
+    "references": [
+     "2CH 21:18"
+    ],
+    "ukr": "був вдарений Господом невидужною хворобою в нутрощах",
+    "deu": "wurde vom HERRN in seinem Eingeweide mit einer unheilbaren Krankheit geplagt",
+    "spa": "fue herido por el SEÑOR en las entrañas con una enfermedad incurable"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "mountgerizim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.965780+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Joshua 8 and Judges 9 each tell an event that happened at the mountain.",
+  "clauses": [
+   {
+    "english": "was where half of Israel stood to bless the people after entering the land",
+    "references": [
+     "JOS 8:33"
+    ],
+    "quote": "half of them over against mount Gerizim"
+   },
+   {
+    "english": "was where Jotham stood and cried out to the men of Shechem",
+    "references": [
+     "JDG 9:7"
+    ],
+    "quote": "he went and stood in the top of mount Gerizim"
+   }
+  ],
+  "doubts": [
+   "JHN 4:20 says only \"this mountain\" and does not name Gerizim, so I left it out.",
+   "DEU 11:29 and DEU 27:12 are commands about the blessing, not events, so I cited only JOS 8:33, which says it was carried out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

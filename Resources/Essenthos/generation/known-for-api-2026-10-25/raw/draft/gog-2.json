@@ -1,0 +1,32 @@
+{
+ "slug": "gog-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.028628+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses foretell Gog's coming against Israel and his defeat, which the summary does not give beyond his burial.",
+  "clauses": [
+   {
+    "english": "was brought by God against the land of Israel in the latter days",
+    "references": [
+     "EZK 38:16"
+    ],
+    "quote": "I will bring thee against my land"
+   },
+   {
+    "english": "was turned back by God and left with only a sixth part of his host",
+    "references": [
+     "EZK 39:2"
+    ],
+    "quote": "I will turn thee back, and leave but the sixth part of thee"
+   }
+  ],
+  "doubts": [
+   "All the events are foretold by the LORD through Ezekiel as future, and are written here as events of the record. His burial is left out because the summary already gives it."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

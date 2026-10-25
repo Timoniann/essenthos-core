@@ -1,0 +1,98 @@
+{
+ "slug": "hannah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:07:05.249773+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The vow was that if the LORD gave her a son she would give him to the LORD all his life; the clause garbles the condition.",
+    "english": "vowed to give a son, if the LORD gave her one, to the LORD all his life",
+    "references": [
+     "1SA 1:11"
+    ],
+    "ukr": "склала обітницю віддати Господеві сина, якщо Він дасть його, на всі дні його життя",
+    "deu": "gelobte, dem HERRN einen Sohn, falls er ihr einen gäbe, sein Leben lang zu geben",
+    "spa": "hizo voto de dedicar al SEÑOR un hijo, si él se lo daba, todos los días de su vida"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse does not name the child Samuel; it only says the child was weaned.",
+    "english": "brought the weaned child to the house of the LORD in Shiloh",
+    "references": [
+     "1SA 1:24"
+    ],
+    "ukr": "привела відлученого хлопчика до дому Господнього в Шіло",
+    "deu": "brachte den entwöhnten Knaben in das Haus des HERRN zu Silo",
+    "spa": "llevó al niño destetado a la casa del SEÑOR en Silo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse does not say 'more'; it says she conceived and bore three sons and two daughters.",
+    "english": "was visited by the LORD, conceived and bore three sons and two daughters",
+    "references": [
+     "1SA 2:21"
+    ],
+    "ukr": "була відвідана Господом, завагітніла й породила трьох синів та дві дочки",
+    "deu": "wurde vom HERRN heimgesucht, wurde schwanger und gebar drei Söhne und zwei Töchter",
+    "spa": "fue visitada por el SEÑOR, concibió y dio a luz tres hijos y dos hijas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": [
+  {
+   "how": "ask",
+   "at": "2026-10-25T16:04:33.470884+00:00",
+   "answer": {
+    "clauses": [
+     {
+      "verdict": "fix",
+      "why": "The vow was to give the child to the LORD all his life, not simply a son; the clause also adds that God would look on her affliction, which the verses do give, but it garbles the vow.",
+      "english": "vowed to give a son, if the LORD gave her one, to the LORD all his life",
+      "references": [
+       "1SA 1:11"
+      ],
+      "ukr": "склала обітницю віддати Господеві сина, якщо Він дасть його, на всі дні його життя",
+      "deu": "gelobte, dem HERRN einen Sohn, falls er ihr einen gäbe, sein Leben lang zu geben",
+      "spa": "hizo voto de dedicar a Jehová un hijo, si él se lo daba, todos los días de su vida"
+     },
+     {
+      "verdict": "fix",
+      "why": "The verse gives the child as unnamed and young; 'Samuel' is not named in it, and the weaning is stated.",
+      "english": "brought the child, once weaned, to the house of the LORD in Shiloh",
+      "references": [
+       "1SA 1:24"
+      ],
+      "ukr": "привела відлучену дитину до дому Господнього в Шіло",
+      "deu": "brachte den entwöhnten Knaben in das Haus des HERRN zu Silo",
+      "spa": "trajo al niño destetado a la casa de Jehová en Silo"
+     },
+     {
+      "verdict": "fix",
+      "why": "'More' is not in the verse and the child is not said to be a further one; the verse says she conceived and bore three sons and two daughters.",
+      "english": "was visited by the LORD, conceived and bore three sons and two daughters",
+      "references": [
+       "1SA 2:21"
+      ],
+      "ukr": "була відвідана Господом, завагітніла й породила трьох синів та дві дочки",
+      "deu": "wurde vom HERRN heimgesucht, wurde schwanger und gebar drei Söhne und zwei Töchter",
+      "spa": "fue visitada por Jehová, concibió y parió tres hijos y dos hijas"
+     }
+    ],
+    "note": ""
+   },
+   "problems": [
+    "clause 1: the Spanish writes Jehová for the LORD",
+    "clause 1: the LORD is not «el SEÑOR» in the Spanish",
+    "clause 2: the Spanish writes Jehová for the LORD",
+    "clause 2: the LORD is not «el SEÑOR» in the Spanish",
+    "clause 3: the Spanish writes Jehová for the LORD",
+    "clause 3: the LORD is not «el SEÑOR» in the Spanish"
+   ]
+  }
+ ]
+}

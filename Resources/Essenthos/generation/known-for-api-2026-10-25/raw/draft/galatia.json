@@ -1,0 +1,33 @@
+{
+ "slug": "galatia",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.618460+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell of events in Galatia: Paul's journey through it and his order to its churches.",
+  "clauses": [
+   {
+    "english": "was crossed by Paul, who strengthened all the disciples there",
+    "references": [
+     "ACT 18:23"
+    ],
+    "quote": "strengthening all the disciples"
+   },
+   {
+    "english": "had churches that Paul ordered to set aside a collection for the saints",
+    "references": [
+     "1CO 16:1-2"
+    ],
+    "quote": "as I have given order to the churches of Galatia"
+   }
+  ],
+  "doubts": [
+   "ACT 16:6, GAL 1:2, 2TI 4:10 and 1PE 1:1 only name Galatia in passing, so they were left unused.",
+   "The collection clause rests on 1CO 16:1-2, and it does not say the saints were at Jerusalem."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

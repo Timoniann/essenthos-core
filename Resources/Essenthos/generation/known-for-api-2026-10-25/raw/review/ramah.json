@@ -1,0 +1,31 @@
+{
+ "slug": "ramah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.360934+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була збудована Башею, царем Ізраїлевим, щоб нікому не давати виходити та входити до Аси, царя Юдиного",
+    "deu": "wurde von Basea, dem König Israels, gebaut, damit niemand auf der Seite Asas, des Königs Judas, aus und ein ziehen konnte",
+    "spa": "fue edificada por Baasa rey de Israel para no dejar salir ni entrar a ninguno de Asa, rey de Judá",
+    "why": "German: spelled the name Basea as Luther has it in 1KI 15:17, not Baesa."
+   },
+   {
+    "ukr": "була позбавлена каміння та дерева, використаних Асою для побудови Ґеви та Міцпи",
+    "deu": "wurde ihrer Steine und ihres Holzes beraubt, die Asa zum Bau von Geba-Benjamin und Mizpa verwendete",
+    "spa": "fue despojada de su piedra y su madera, que Asa usó para edificar Gabaa y Mizpa",
+    "why": ""
+   },
+   {
+    "ukr": "була місцем, де Невузар'адан відпустив закутого в кайдани Єремію",
+    "deu": "war der Ort, wo Nebusaradan den mit Ketten gebundenen Jeremia losließ",
+    "spa": "fue el lugar donde Nabuzaradán soltó a Jeremías, que estaba atado con esposas",
+    "why": "Ukrainian: made the verb feminine (була) to agree with Рама."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

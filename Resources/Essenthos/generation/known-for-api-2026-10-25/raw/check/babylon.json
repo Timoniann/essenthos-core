@@ -1,0 +1,47 @@
+{
+ "slug": "babylon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.760273+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses name no Nebuchadnezzar and do not say the people of Judah in general, only Jehoiachin and the mighty of Jerusalem, were taken to Babylon; 25:11 does not name the destination.",
+    "english": "was where Jehoiachin and the mighty of Jerusalem were carried captive",
+    "references": [
+     "2KI 24:15-16"
+    ],
+    "ukr": "був місцем, куди з Єрусалиму вивели в неволю Єгояхіна та видатних у Краї",
+    "deu": "war der Ort, wohin Jojachin und die Mächtigen im Lande von Jerusalem gefangen weggeführt wurden",
+    "spa": "fue el lugar adonde fueron llevados cautivos de Jerusalem Joachîn y los poderosos de la tierra"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jehoiachin of Judah was freed from prison and honoured by Evilmerodach",
+    "references": [
+     "2KI 25:27-29"
+    ],
+    "ukr": "був місцем, де Єгояхіна, Юдиного царя, Евіл-Меродах вивів з дому ув'язнення і вшанував",
+    "deu": "war der Ort, an dem Jojachin, der König Juda's, von Evil-Merodach aus dem Kerker geholt und geehrt wurde",
+    "spa": "fue el lugar donde Evil-merodach sacó de la cárcel a Joachîn rey de Judá y lo honró"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was foretold to be overthrown like Sodom and Gomorrah and never inhabited again",
+    "references": [
+     "ISA 13:19-20"
+    ],
+    "ukr": "було провіщено, що він буде зруйнований, як Содом та Гоморра, і ніколи не буде заселений",
+    "deu": "wurde vorhergesagt, dass es wie Sodom und Gomorra umgekehrt und nie mehr bewohnt würde",
+    "spa": "fue anunciado que sería como Sodoma y Gomorra y que nunca más sería habitada"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

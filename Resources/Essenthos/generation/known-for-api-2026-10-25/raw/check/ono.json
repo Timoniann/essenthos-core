@@ -1,0 +1,25 @@
+{
+ "slug": "ono",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.125398+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says Shamed (one of Elpaal's sons) built Ono; 'Lod and its towns' is a detail about Lod, and the record's own fact is that it was built by Elpaal's son.",
+    "english": "was built by Shamed, a son of Elpaal",
+    "references": [
+     "1CH 8:12"
+    ],
+    "ukr": "був збудований Шемером, сином Елпаала",
+    "deu": "wurde von Semer, einem Sohn Elpaals, gebaut",
+    "spa": "fue edificada por Semeb, hijo de Elphaal"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "macedonia",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.581846+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була там, куди македонянин у видінні Павла благав його прийти й допомогти",
+    "deu": "war dort, wohin ihn ein Mann in der Vision des Paulus bat, herüberzukommen und zu helfen",
+    "spa": "fue el lugar adonde un hombre en la visión de Pablo le rogó que pasara y ayudara",
+    "why": "German: replaced old 'Gesicht' with 'Vision' and fixed word order and comma. Spanish: 'fue adonde' made Macedonia the one who went, so I changed it to 'fue el lugar adonde', and 'varón' to 'hombre'."
+   },
+   {
+    "ukr": "подала допомогу незаможним святим в Єрусалимі, хоч сама була в глибокому убозтві",
+    "deu": "legte eine Gabe für die armen Heiligen zu Jerusalem zusammen, obwohl es selbst sehr arm war",
+    "spa": "hizo una colecta para los pobres de los santos que están en Jerusalem, aunque ella misma era muy pobre",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

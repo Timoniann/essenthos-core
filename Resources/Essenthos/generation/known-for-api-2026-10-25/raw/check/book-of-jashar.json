@@ -1,0 +1,36 @@
+{
+ "slug": "book-of-jashar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.320563+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was cited as the written record of the sun standing still in the midst of heaven",
+    "references": [
+     "JOS 10:13"
+    ],
+    "ukr": "була наведена як письмове свідчення про те, що сонце стало на половині неба",
+    "deu": "wurde angeführt als schriftliche Aufzeichnung davon, dass die Sonne mitten am Himmel stand",
+    "spa": "fue citado como el registro escrito de que el sol se paró en medio del cielo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was cited as the place where the teaching of the bow to the children of Judah was written",
+    "references": [
+     "2SA 1:18"
+    ],
+    "ukr": "була наведена як місце, де було записано навчання Юдиних синів пісні про лука",
+    "deu": "wurde angeführt als der Ort, wo geschrieben stand, man solle die Kinder Juda das Bogenlied lehren",
+    "spa": "fue citado como el lugar donde estaba escrito que se enseñase el arco a los hijos de Judá"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

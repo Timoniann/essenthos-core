@@ -1,0 +1,37 @@
+{
+ "slug": "pharaoh-8",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.975364+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had his army come out of Egypt, and the Chaldeans left Jerusalem",
+    "references": [
+     "JER 37:5",
+     "JER 37:11"
+    ],
+    "ukr": "вивів своє військо з Єгипту, і халдеї відійшли від Єрусалиму",
+    "deu": "ließ sein Heer aus Ägypten ziehen, und die Chaldäer zogen von Jerusalem ab",
+    "spa": "hizo salir su ejército de Egipto, y los Caldeos se fueron de Jerusalem"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "smote Gaza",
+    "references": [
+     "JER 47:1"
+    ],
+    "ukr": "побив Аззу",
+    "deu": "schlug Gaza",
+    "spa": "hirió a Gaza"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "hazael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.091447+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "дізнався від Єлисея, що буде царем над Сирією, і зацарював після того, як помер його пан",
+    "deu": "erfuhr von Elisa, dass er König von Syrien sein werde, und wurde König, nachdem sein Herr gestorben war",
+    "spa": "supo por Eliseo que sería rey de Siria, y reinó después de morir su señor",
+    "why": ""
+   },
+   {
+    "ukr": "побив Ізраїль в усіх його межах і тиснув його всі дні Єгоахаза",
+    "deu": "schlug Israel in allen seinen Grenzen und zwang es, solange Joahas lebte",
+    "spa": "hirió a Israel en todos sus términos y lo afligió todo el tiempo de Joachâz",
+    "why": "Ukrainian: 'in all its borders' was rendered as 'in all its land'; now 'в усіх його межах'."
+   },
+   {
+    "ukr": "здобув Ґат і відійшов від Єрусалиму, коли Єгоаш послав йому золото та святі речі",
+    "deu": "gewann Gath und zog von Jerusalem ab, nachdem Joas ihm Gold und Geheiligtes geschickt hatte",
+    "spa": "tomó Gath y se retiró de Jerusalem después de que Joas le envió oro y ofrendas",
+    "why": "Spanish: replaced archaic 'se partió' with modern 'se retiró'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

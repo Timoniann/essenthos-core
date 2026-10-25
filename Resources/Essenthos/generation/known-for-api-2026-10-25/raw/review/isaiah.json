@@ -1,0 +1,31 @@
+{
+ "slug": "isaiah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.931984+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "сказав хворому цареві Єзекії, що той помре, а потім був посланий назад сказати, що той буде вилікуваний",
+    "deu": "sagte dem kranken König Hiskia, er werde sterben, und wurde dann zurückgesandt, um ihm zu sagen, er werde gesund werden",
+    "spa": "dijo al rey Ezechîas enfermo que moriría, y luego fue enviado de vuelta a decirle que sería sanado",
+    "why": ""
+   },
+   {
+    "ukr": "кликнув до Господа, і тінь повернулася назад на десять ступенів на годиннику Ахаза",
+    "deu": "rief den HERRN an, und der Schatten ging zehn Stufen zurück an der Sonnenuhr des Ahas",
+    "spa": "clamó al SEÑOR, y la sombra volvió atrás diez grados en el reloj de Achâz",
+    "why": "Ukrainian: replaced the old wording 'вернулася' and 'на ступенях Ахазових' with modern wording; German: replaced the archaic 'am Zeiger Ahas' with 'an der Sonnenuhr des Ahas'."
+   },
+   {
+    "ukr": "ходив нагий та босий три роки як ознака для Єгипту та Етіопії",
+    "deu": "ging drei Jahre nackt und barfuß als Zeichen für Ägypten und Mohrenland",
+    "spa": "anduvo desnudo y descalzo tres años como señal sobre Egipto y Etiopía",
+    "why": "Removed 'and wonder' (чудо / Wunder / pronóstico), which the English does not have."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

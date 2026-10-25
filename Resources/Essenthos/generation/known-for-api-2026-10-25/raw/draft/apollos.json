@@ -1,0 +1,33 @@
+{
+ "slug": "apollos",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.949724+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Acts 18 tells what Apollos did in Ephesus and how Aquila and Priscilla taught him, which goes beyond the summary.",
+  "clauses": [
+   {
+    "english": "taught diligently the things of the Lord, though he knew only John's baptism",
+    "references": [
+     "ACT 18:25"
+    ],
+    "quote": "he spake and taught diligently the things of the Lord"
+   },
+   {
+    "english": "was taken aside by Aquila and Priscilla and taught the way of God more perfectly",
+    "references": [
+     "ACT 18:26"
+    ],
+    "quote": "expounded unto him the way of God more perfectly"
+   }
+  ],
+  "doubts": [
+   "The 'planted, watered' saying in 1CO 3:6 is a figure of speech, so I did not use it as an event.",
+   "1CO 16:12 and TIT 3:13 only mention his travel plans, so I left them out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

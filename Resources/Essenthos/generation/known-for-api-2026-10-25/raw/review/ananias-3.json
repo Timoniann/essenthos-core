@@ -1,0 +1,25 @@
+{
+ "slug": "ananias-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.510204+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "звелів тим, що стояли при ньому, бити Павла по устах",
+    "deu": "befahl denen, die um ihn standen, Paulus auf den Mund zu schlagen",
+    "spa": "mandó a los que estaban delante de él que hirieran a Pablo en la boca",
+    "why": "German: replaced the old vulgar «aufs Maul» with modern «auf den Mund»."
+   },
+   {
+    "ukr": "спустився зі старшими та з промовцем Тертилом проти Павла",
+    "deu": "zog mit den Ältesten und mit dem Redner Tertullus hinab gegen Paulus",
+    "spa": "descendió con los ancianos y con Tértulo contra Pablo",
+    "why": "Ukrainian: «прибув» (arrived) changed to «спустився» (went down) and «з старшими» to «зі старшими»; German: archaic «wider» changed to «gegen»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

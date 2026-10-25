@@ -1,0 +1,36 @@
+{
+ "slug": "rome",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:18.896357+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Paul, a prisoner, was allowed to dwell with a soldier guarding him",
+    "references": [
+     "ACT 28:16"
+    ],
+    "ukr": "був місцем, де Павлові, ув'язненому, дозволили жити осібно з вояком, що його сторожив",
+    "deu": "war der Ort, an dem Paulus als Gefangenem erlaubt wurde, mit einem Kriegsknechte, der ihn hütete, zu bleiben",
+    "spa": "fue el lugar donde a Pablo, preso, le fue permitido estar por sí con un soldado que le guardase"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Paul preached the kingdom of God for two years, no man forbidding him",
+    "references": [
+     "ACT 28:30-31"
+    ],
+    "ukr": "був місцем, де Павло цілих два роки проповідував Боже Царство беззаборонно",
+    "deu": "war der Ort, an dem Paulus zwei Jahre lang das Reich Gottes unverboten predigte",
+    "spa": "fue el lugar donde Pablo predicó el reino de Dios dos años enteros, sin impedimento"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

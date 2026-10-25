@@ -1,0 +1,19 @@
+{
+ "slug": "kingofthesouth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.346199+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "розлютився, воював із царем північним, і натовп був відданий у його руку",
+    "deu": "ergrimmte, stritt mit dem König gegen Mitternacht, und ein Haufe wurde in seine Hand gegeben",
+    "spa": "se enfureció, peleó con el rey del norte, y una multitud fue entregada en su mano",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

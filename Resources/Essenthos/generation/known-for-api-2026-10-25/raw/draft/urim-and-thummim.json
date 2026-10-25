@@ -1,0 +1,41 @@
+{
+ "slug": "urim-and-thummim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.125449+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state what was done with the Urim and Thummim and what happened through them, beyond the summary's placement in the breastpiece.",
+  "clauses": [
+   {
+    "english": "was put in the breastplate on Aaron when he was clothed as priest",
+    "references": [
+     "LEV 8:7-8"
+    ],
+    "quote": "also he put in the breastplate the Urim and the Thummim"
+   },
+   {
+    "english": "was used to ask counsel of the LORD for Joshua and Israel's going out and coming in",
+    "references": [
+     "NUM 27:21"
+    ],
+    "quote": "who shall ask counsel for him after the judgment of Urim before the LORD"
+   },
+   {
+    "english": "gave no answer to Saul when he enquired of the LORD",
+    "references": [
+     "1SA 28:6"
+    ],
+    "quote": "the LORD answered him not, neither by dreams, nor by Urim, nor by prophets"
+   }
+  ],
+  "doubts": [
+   "EXO 28:30 gives the placement already stated in the summary, so it is not used as a separate clause.",
+   "DEU 33:8 is a blessing pronounced on Levi, not an event, so it is left out.",
+   "EZR 2:63 and NEH 7:65 only say no priest stood up with Urim and Thummim yet, so they are left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

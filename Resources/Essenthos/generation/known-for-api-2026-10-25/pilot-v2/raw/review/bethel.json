@@ -1,0 +1,31 @@
+{
+ "slug": "bethel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:58:51.936256+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Яків поставив камінь як пам'ятник і назвав те місце Бет-Елом",
+    "deu": "war der Ort, an dem Jakob einen Stein als Mal aufrichtete und die Stätte Beth-El nannte",
+    "spa": "fue donde Jacob alzó una piedra como monumento y llamó a aquel lugar Beth-el",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де Єровоам поставив одного з двох золотих тельців",
+    "deu": "war der Ort, an dem Jerobeam eines von zwei goldenen Kälbern aufstellte",
+    "spa": "fue donde Jeroboam puso uno de dos becerros de oro",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де Йосія розбив жертовник і узвишшя та спалив узвишшя",
+    "deu": "war der Ort, an dem Josia den Altar und die Höhe abbrach und die Höhe verbrannte",
+    "spa": "fue donde Josías destruyó el altar y el alto, y quemó el alto",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

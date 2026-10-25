@@ -1,0 +1,34 @@
+{
+ "slug": "herod",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.484347+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Herod's troubled inquiry of the wise men and his slaughter of the children of Bethlehem.",
+  "clauses": [
+   {
+    "english": "was troubled at the news of a newborn King and questioned the wise men about the star",
+    "references": [
+     "MAT 2:3",
+     "MAT 2:7"
+    ],
+    "quote": "Herod the king had heard these things, he was troubled"
+   },
+   {
+    "english": "slew all the children in Bethlehem two years old and under",
+    "references": [
+     "MAT 2:16"
+    ],
+    "quote": "sent forth, and slew all the children that were in Bethlehem"
+   }
+  ],
+  "doubts": [
+   "ACT 23:35 names Herod's judgment hall, probably another Herod's building; left out.",
+   "MAT 2:22 only names Herod as Archelaus' father, already in the summary."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

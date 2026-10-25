@@ -1,0 +1,37 @@
+{
+ "slug": "titus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.620812+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "потішив Павла, розповівши про тугу коринтян і їхню горливість до нього",
+    "deu": "tröstete Paulus, indem er ihm von dem Verlangen und dem Eifer der Korinther für ihn berichtete",
+    "spa": "consoló a Pablo, haciéndole saber el gran deseo y el celo de los corintios por él",
+    "why": "Ukrainian 'журбу' (sorrow) became 'тугу' (longing); German 'um ihn' became 'für ihn' and Spanish 'deseo grande' became 'gran deseo', both modernised."
+   },
+   {
+    "ukr": "удався до коринтян добровільно, щоб закінчити те, що розпочав у них",
+    "deu": "reiste aus eigenem Antrieb zu den Korinthern, um zu vollenden, was er bei ihnen angefangen hatte",
+    "spa": "partió por su propia voluntad hacia los corintios para acabar lo que había comenzado entre ellos",
+    "why": "Replaced the archaic German 'von selber' and Spanish 'de su voluntad' with modern wording."
+   },
+   {
+    "ukr": "не був змушений до обрізання, бувши греком",
+    "deu": "wurde nicht gezwungen, sich beschneiden zu lassen, obwohl er ein Grieche war",
+    "spa": "no fue obligado a circuncidarse, siendo griego",
+    "why": "Spanish 'compelido' replaced with modern 'obligado'."
+   },
+   {
+    "ukr": "був полишений у Кріті, щоб впорядкувати справи та настановити пресвітерів у кожному місті",
+    "deu": "wurde in Kreta zurückgelassen, um zu ordnen, was noch fehlte, und in jeder Stadt Älteste einzusetzen",
+    "spa": "fue dejado en Creta para poner en orden lo que faltaba y establecer ancianos en cada ciudad",
+    "why": "Added 'every city' (кожному місті / jeder Stadt / cada ciudad) and replaced archaic wording; German now says 'set in order' and 'appoint elders' instead of 'besetzen die Städte'; Spanish 'villas' became 'ciudad'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

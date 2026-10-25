@@ -1,0 +1,25 @@
+{
+ "slug": "judea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.349199+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "виходила до Івана і була охрещена ним в Йордані",
+    "deu": "ging zu Johannes hinaus und ließ sich von ihm im Jordan taufen",
+    "spa": "salió a Juan y fue bautizada por él en el Jordán",
+    "why": "Ukrainian: replaced the archaic «христилася від нього» with modern «була охрещена ним»."
+   },
+   {
+    "ukr": "була місцем, де Ісус перебував з учнями і хрестив",
+    "deu": "war der Ort, wo Jesus mit seinen Jüngern verweilte und taufte",
+    "spa": "fue el lugar donde Jesús estuvo con sus discípulos y bautizó",
+    "why": "Ukrainian: «христив» corrected to modern «хрестив»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

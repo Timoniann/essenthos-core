@@ -1,0 +1,31 @@
+{
+ "slug": "daniel-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.417832+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "відкрив і розтлумачив сон Навуходоносора, коли мудреці не могли цього зробити",
+    "deu": "offenbarte und deutete den Traum Nebukadnezars, als die Weisen es nicht konnten",
+    "spa": "reveló e interpretó el sueño de Nabucodonosor cuando los sabios no pudieron",
+    "why": ""
+   },
+   {
+    "ukr": "прочитав і розтлумачив писання, що з'явилося перед Валтасаром",
+    "deu": "las und deutete die Schrift, die vor Belsazer erschien",
+    "spa": "leyó e interpretó la escritura que apareció delante de Belsasar",
+    "why": ""
+   },
+   {
+    "ukr": "був кинутий до лев'ячої ями і виведений з неї неушкодженим",
+    "deu": "wurde in die Löwengrube geworfen und unversehrt herausgezogen",
+    "spa": "fue echado en el foso de los leones y sacado sin lesión alguna",
+    "why": "German used Luther's archaic 'Graben' for the den; replaced with modern 'Löwengrube'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

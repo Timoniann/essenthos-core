@@ -1,0 +1,39 @@
+{
+ "slug": "gilgal",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:03:40.396020+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of events at Gilgal beyond its location: the twelve stones, the naming, and Saul made king.",
+  "clauses": [
+   {
+    "english": "was where Israel set up twelve stones taken from the Jordan",
+    "references": [
+     "JOS 4:20"
+    ],
+    "quote": "did Joshua pitch in Gilgal"
+   },
+   {
+    "english": "was where the LORD rolled away the reproach of Egypt from Israel",
+    "references": [
+     "JOS 5:9"
+    ],
+    "quote": "This day have I rolled away the reproach of Egypt from off you."
+   },
+   {
+    "english": "was where Saul was made king before the LORD",
+    "references": [
+     "1SA 11:15"
+    ],
+    "quote": "there they made Saul king before the LORD in Gilgal"
+   }
+  ],
+  "doubts": [
+   "Some marked verses (JDG 3:19, 1SA 13, 1SA 15, HOS, AMO, MIC 6:5) may concern a different Gilgal or give no clear event; they were left out, as was 1SA 11:15's identity with the Jordan Gilgal being only assumed."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

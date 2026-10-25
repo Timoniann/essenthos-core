@@ -1,0 +1,19 @@
+{
+ "slug": "araunah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.893865+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "продав Давидові свій тік і волів для жертовника Господу",
+    "deu": "verkaufte David seine Tenne und seine Rinder für einen Altar für den HERRN",
+    "spa": "vendió a David su era y sus bueyes para un altar al SEÑOR",
+    "why": "Ukrainian: replaced the clumsy «для жертовника для Господа» with «жертовника Господу»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

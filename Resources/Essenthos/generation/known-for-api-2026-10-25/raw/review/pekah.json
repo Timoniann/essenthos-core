@@ -1,0 +1,31 @@
+{
+ "slug": "pekah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.409686+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "пішов із Реціном, сирійським царем, на війну до Єрусалиму, але не зміг його здолати",
+    "deu": "zog mit Rezin, dem König von Syrien, gegen Jerusalem in den Krieg, konnte es aber nicht gewinnen",
+    "spa": "subió con Resín, rey de Siria, a Jerusalem para hacer guerra, pero no pudo tomarla",
+    "why": "Ukrainian: corrected the instrumental of the name to Реціном (Ohienko's Рецін)."
+   },
+   {
+    "ukr": "побив у Юді сто двадцять тисяч хоробрих мужів за один день",
+    "deu": "schlug in Juda an einem Tag hundertzwanzigtausend streitbare Leute",
+    "spa": "mató en Judá en un día a ciento veinte mil hombres valientes",
+    "why": ""
+   },
+   {
+    "ukr": "був царем, коли Тіґлат-Піл'есер, цар асирійський, взяв Ґілеад, Ґаліл і весь край Нефталимів",
+    "deu": "war König, als Thiglath-Pileser, der König von Assyrien, Gilead, Galiläa und das ganze Land Naphthali einnahm",
+    "spa": "era rey cuando Tiglath-pileser, rey de Asiria, tomó Galaad, Galilea y toda la tierra de Nephtalí",
+    "why": "Ukrainian: «ввесь» changed to modern «весь». Spanish: «rey de los Asirios» changed to «rey de Asiria» to match the English."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

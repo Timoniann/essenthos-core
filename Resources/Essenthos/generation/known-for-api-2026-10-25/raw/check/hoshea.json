@@ -1,0 +1,36 @@
+{
+ "slug": "hoshea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.694486+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "conspired against Pekah, killed him and reigned in his place",
+    "references": [
+     "2KI 15:30"
+    ],
+    "ukr": "склав змову на Пекаха, убив його і зацарював замість нього",
+    "deu": "machte einen Bund wider Pekah, schlug ihn tot und wurde König an seiner Statt",
+    "spa": "hizo conjuración contra Peka, lo mató y reinó en su lugar"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was shut up and bound in prison by the king of Assyria for sending to So king of Egypt",
+    "references": [
+     "2KI 17:4"
+    ],
+    "ukr": "був замкнений і зв'язаний у в'язниці асирійським царем за те, що посилав до Со, єгипетського царя",
+    "deu": "wurde vom König von Assyrien eingesperrt und im Gefängnis gefesselt, weil er zu So, dem König in Ägypten, gesandt hatte",
+    "spa": "fue detenido y aprisionado por el rey de Asiria por haber enviado a So, rey de Egipto"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

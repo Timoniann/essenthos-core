@@ -1,0 +1,19 @@
+{
+ "slug": "bethuel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.445423+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "разом з Лаваном сказав, що ця річ від Господа, і дозволив рабові Авраамовому взяти Ревеку для сина його пана",
+    "deu": "sagte zusammen mit Laban, die Sache komme vom HERRN, und ließ Abrahams Knecht Rebekka für den Sohn seines Herrn nehmen",
+    "spa": "junto con Labán dijo que aquello venía del SEÑOR, y dejó al criado de Abraham tomar a Rebeca para el hijo de su señor",
+    "why": "Removed the added 'as wife' (за жінку / als Frau / como mujer), which is not in the English; German 'mit Laban' changed to 'zusammen mit Laban' for natural phrasing."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

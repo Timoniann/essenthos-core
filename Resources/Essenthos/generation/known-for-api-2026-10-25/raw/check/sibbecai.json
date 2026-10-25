@@ -1,0 +1,25 @@
+{
+ "slug": "sibbecai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.071433+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "slew Saph, one of the sons of the giant, in battle with the Philistines at Gob",
+    "references": [
+     "2SA 21:18"
+    ],
+    "ukr": "побив Сафа, одного з нащадків Рафи, у війні з филистимлянами в Нові",
+    "deu": "schlug Saph, einen der Kinder Raphas, im Krieg mit den Philistern zu Gob",
+    "spa": "hirió a Saph, uno de los hijos del gigante, en la guerra contra los Filisteos en Gob"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

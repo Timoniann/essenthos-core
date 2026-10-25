@@ -1,0 +1,40 @@
+{
+ "slug": "sauls-spear",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.878952+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Saul hurling the spear at David and Jonathan and of David taking it from his bolster.",
+  "clauses": [
+   {
+    "english": "was thrown at David, who slipped away, and stuck in the wall",
+    "references": [
+     "1SA 19:10"
+    ],
+    "quote": "Saul sought to smite David even to the wall with the javelin"
+   },
+   {
+    "english": "was thrown at Jonathan in Saul's anger",
+    "references": [
+     "1SA 20:33"
+    ],
+    "quote": "And Saul cast a javelin at him to smite him"
+   },
+   {
+    "english": "was taken by David from Saul's bolster while Saul slept",
+    "references": [
+     "1SA 26:12"
+    ],
+    "quote": "So David took the spear and the cruse of water from Saul's bolster"
+   }
+  ],
+  "doubts": [
+   "The verses say \"javelin\" in 1SA 18-20 and \"spear\" in 1SA 22 and 26; I took them as the same weapon, as the summary does.",
+   "Left out 1SA 18:11 (an earlier throw at David), 1SA 26:22 (the spear returned) and 2SA 1:6 (Saul leaning on his spear at Gilboa) as lesser or repeated detail."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

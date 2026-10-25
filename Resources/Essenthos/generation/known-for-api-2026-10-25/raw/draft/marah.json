@@ -1,0 +1,30 @@
+{
+ "slug": "marah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.799247+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two things that happened at Marah: its waters were bitter, and they were made sweet.",
+  "clauses": [
+   {
+    "english": "had bitter waters that Israel could not drink",
+    "references": [
+     "EXO 15:23"
+    ],
+    "quote": "they could not drink of the waters of Marah, for they were bitter"
+   },
+   {
+    "english": "had its waters made sweet when Moses cast in a tree the LORD showed him",
+    "references": [
+     "EXO 15:25"
+    ],
+    "quote": "the LORD shewed him a tree, which when he had cast into the waters, the waters were made sweet"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

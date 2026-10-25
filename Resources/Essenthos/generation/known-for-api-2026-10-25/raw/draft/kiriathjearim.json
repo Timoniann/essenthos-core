@@ -1,0 +1,35 @@
+{
+ "slug": "kiriathjearim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.558851+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses show events that happened at Kiriath-jearim: the ark was kept there, and David later brought it up from there.",
+  "clauses": [
+   {
+    "english": "received the ark of the LORD, which stayed there twenty years",
+    "references": [
+     "1SA 7:1-2"
+    ],
+    "quote": "the men of Kirjathjearim came, and fetched up the ark of the LORD"
+   },
+   {
+    "english": "was where David went with all Israel to bring up the ark of God",
+    "references": [
+     "1CH 13:5-6",
+     "2CH 1:4"
+    ],
+    "quote": "the ark of God had David brought up from Kirjathjearim"
+   }
+  ],
+  "doubts": [
+   "JDG 18:12 (the Danites camping behind the city) was left out as a minor stage of a journey.",
+   "JOS 9:17 (one of the Gibeonite cities) was left out because it only names the city.",
+   "JER 26:20 concerns Urijah, the prophet from the city, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

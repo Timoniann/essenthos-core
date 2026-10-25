@@ -1,0 +1,25 @@
+{
+ "slug": "sodom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:08:03.686325+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був позбавлений усього свого маєтку, а Лота, який жив у ньому, було взято",
+    "deu": "wurde seiner ganzen Habe beraubt, und Lot, der dort wohnte, wurde mitgenommen",
+    "spa": "fue saqueada de toda su riqueza, y Lot, que moraba en ella, fue llevado",
+    "why": "Ukrainian: removed the doubled 'taken' so goods are plundered and only Lot is taken, and replaced archaic 'пробував' with 'жив'."
+   },
+   {
+    "ukr": "був зруйнований сіркою й вогнем від Господа з неба",
+    "deu": "wurde durch Schwefel und Feuer vom HERRN aus dem Himmel zerstört",
+    "spa": "fue destruida con azufre y fuego de parte del SEÑOR desde los cielos",
+    "why": "Ukrainian: removed the added 'дощем' (rain), which is not in the English, so it now reads 'сіркою й вогнем'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

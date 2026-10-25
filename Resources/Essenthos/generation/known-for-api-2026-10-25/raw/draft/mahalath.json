@@ -1,0 +1,17 @@
+{
+ "slug": "mahalath",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.569897+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only record her marriage to Esau and her family ties, which the summary already gives, and the marked verses in Genesis 36 concern Bashemath, whose name differs.",
+  "clauses": [],
+  "doubts": [
+   "GEN 36:3, 36:4, 36:10, 36:13 and 36:17 name Bashemath, Ishmael's daughter and sister of Nebajoth, who may be the same woman under another name, but the verses do not say so, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

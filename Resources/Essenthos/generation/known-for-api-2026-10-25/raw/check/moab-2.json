@@ -1,0 +1,48 @@
+{
+ "slug": "moab-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.952430+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "sent for Balaam to curse Israel",
+    "references": [
+     "JOS 24:9",
+     "NUM 22:5-6"
+    ],
+    "ukr": "послав по Валаама, щоб він прокляв Ізраїля",
+    "deu": "sandte nach Bileam, damit er Israel verfluchte",
+    "spa": "envió a llamar a Balaam para que maldijese a Israel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Moses died and was buried",
+    "references": [
+     "DEU 34:5-6"
+    ],
+    "ukr": "був місцем, де помер і був похований Мойсей",
+    "deu": "war der Ort, wo Mose starb und begraben wurde",
+    "spa": "fue el lugar donde murió y fue enterrado Moisés"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says about ten thousand men, not exactly ten thousand.",
+    "english": "lost about ten thousand men and was subdued under Israel",
+    "references": [
+     "JDG 3:29-30"
+    ],
+    "ukr": "втратив близько десяти тисяч чоловіків і був приборканий під рукою Ізраїля",
+    "deu": "verlor bei zehntausend Mann und wurde unter die Hand der Kinder Israel unterworfen",
+    "spa": "perdió como diez mil hombres y quedó sojuzgado bajo la mano de Israel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

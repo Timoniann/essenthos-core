@@ -1,0 +1,19 @@
+{
+ "slug": "evilmerodach",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.165131+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "підніс голову Єгояхіна, Юдиного царя, і вивів його з дому ув'язнення",
+    "deu": "hob das Haupt Jojachins, des Königs von Juda, empor und führte ihn aus dem Gefängnis hinaus",
+    "spa": "levantó la cabeza de Joachîn, rey de Judá, y lo sacó de la casa de la cárcel",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

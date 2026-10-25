@@ -1,0 +1,33 @@
+{
+ "slug": "ahikam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.753244+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give two deeds of Ahikam himself: his errand to enquire of the LORD for the king, and his protection of Jeremiah.",
+  "clauses": [
+   {
+    "english": "was sent by the king to enquire of the LORD about the book of the law",
+    "references": [
+     "2KI 22:12-14"
+    ],
+    "quote": "went unto Huldah the prophetess"
+   },
+   {
+    "english": "kept Jeremiah from being given to the people to be put to death",
+    "references": [
+     "JER 26:24"
+    ],
+    "quote": "the hand of Ahikam the son of Shaphan was with Jeremiah"
+   }
+  ],
+  "doubts": [
+   "2CH 34:20 repeats the errand to Huldah and was not cited separately.",
+   "The many verses naming Gedaliah son of Ahikam concern Gedaliah, not Ahikam, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

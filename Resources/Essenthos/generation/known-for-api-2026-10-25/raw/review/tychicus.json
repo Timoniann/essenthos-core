@@ -1,0 +1,25 @@
+{
+ "slug": "tychicus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.995139+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був посланий Павлом до колосян, щоб потішити їхні серця",
+    "deu": "wurde von Paulus zu den Kolossern gesandt, um ihre Herzen zu ermahnen",
+    "spa": "fue enviado por Pablo a los colosenses para consolar sus corazones",
+    "why": ""
+   },
+   {
+    "ukr": "був посланий Павлом в Ефес",
+    "deu": "wurde von Paulus nach Ephesus gesandt",
+    "spa": "fue enviado por Pablo a Efeso",
+    "why": "German: replaced the archaic «gen Ephesus» with modern «nach Ephesus»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

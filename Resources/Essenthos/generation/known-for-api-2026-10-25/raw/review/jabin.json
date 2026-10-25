@@ -1,0 +1,25 @@
+{
+ "slug": "jabin",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.316358+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "послав до мадонського царя Йовава та до інших царів",
+    "deu": "sandte zu Jobab, dem König zu Madon, und zu anderen Königen",
+    "spa": "envió mensaje a Jobab rey de Madón y a otros reyes",
+    "why": ""
+   },
+   {
+    "ukr": "сильно утискав Ізраїлевих синів двадцять років, коли Господь продав їх у його руку",
+    "deu": "unterdrückte die Kinder Israels zwanzig Jahre lang gewaltig, als der HERR sie in seine Hand verkaufte",
+    "spa": "afligió en gran manera a los hijos de Israel por veinte años, cuando el SEÑOR los vendió en su mano",
+    "why": "Ukrainian: 'передав' changed to 'продав' (sold) and 'літ' to 'років'; German: 'zwang ... mit Gewalt' replaced with the modern 'unterdrückte ... gewaltig' (oppressed mightily) and 'Kinder Israel' with 'Kinder Israels'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

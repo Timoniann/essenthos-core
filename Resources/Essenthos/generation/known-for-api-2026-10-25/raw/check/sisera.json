@@ -1,0 +1,37 @@
+{
+ "slug": "sisera",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.886089+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was routed with all his chariots and host by the LORD before Barak",
+    "references": [
+     "JDG 4:15"
+    ],
+    "ukr": "був приведений Господом у замішання разом з усіма колесницями та всім табором перед Бараком",
+    "deu": "wurde vom HERRN samt allen seinen Wagen und seinem ganzen Heer vor Barak erschreckt",
+    "spa": "fue desbaratado por el SEÑOR con todos sus carros y todo su ejército delante de Barac"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "fled to Jael's tent and was killed with a tent nail driven through his temples",
+    "references": [
+     "JDG 4:17",
+     "JDG 4:21"
+    ],
+    "ukr": "втік до намету Яїли й був убитий наметовим кілком, вбитим йому в скроню",
+    "deu": "floh zur Hütte Jaels und wurde getötet, indem ihm ein Nagel von der Hütte durch die Schläfe geschlagen wurde",
+    "spa": "huyó a la tienda de Jael y fue muerto con una estaca de la tienda metida por sus sienes"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

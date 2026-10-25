@@ -1,0 +1,34 @@
+{
+ "slug": "dibon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.632000+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses say Gad built Dibon and that the spoiler of Moab would destroy its strong holds, which adds to the summary.",
+  "clauses": [
+   {
+    "english": "was built by the children of Gad",
+    "references": [
+     "NUM 32:34"
+    ],
+    "quote": "the children of Gad built Dibon"
+   },
+   {
+    "english": "was warned that the spoiler of Moab would destroy its strong holds",
+    "references": [
+     "JER 48:18"
+    ],
+    "quote": "he shall destroy thy strong holds"
+   }
+  ],
+  "doubts": [
+   "NUM 33:45-46 name Dibongad, an Israelite camp, which may be a different place, so I left those verses out.",
+   "The other verses only list Dibon among cities or boundaries (NUM 32:3, JOS 13:9, JOS 13:17), name it in a lament (ISA 15:2) or in a list of places judged (JER 48:22), and add nothing as events.",
+   "The clause from JER 48:18 reports a prophecy of destruction, not a completed event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

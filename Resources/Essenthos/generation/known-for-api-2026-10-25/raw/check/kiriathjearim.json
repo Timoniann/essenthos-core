@@ -1,0 +1,37 @@
+{
+ "slug": "kiriathjearim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.402497+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "received the ark of the LORD, which stayed there twenty years",
+    "references": [
+     "1SA 7:1-2"
+    ],
+    "ukr": "прийняв ковчег Господа, що пробув там двадцять років",
+    "deu": "nahm die Lade des HERRN auf, die dort zwanzig Jahre blieb",
+    "spa": "recibió el arca del SEÑOR, que permaneció allí veinte años"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where David went with all Israel to bring up the ark of God",
+    "references": [
+     "1CH 13:5-6",
+     "2CH 1:4"
+    ],
+    "ukr": "був місцем, куди Давид пішов з усім Ізраїлем, щоб винести ковчег Божий",
+    "deu": "war der Ort, wohin David mit ganz Israel hinaufzog, um die Lade Gottes heraufzubringen",
+    "spa": "fue el lugar adonde subió David con todo Israel para traer el arca de Dios"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

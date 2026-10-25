@@ -1,0 +1,17 @@
+{
+ "slug": "caesar-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.016121+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only mention Caesar as the one Paul appealed to and was to be sent to, which the summary already says, and record no deed or event of his own.",
+  "clauses": [],
+  "doubts": [
+   "ACT 25:8 and PHP 4:22 mention Caesar only in passing (an offence against him; his household), which adds no deed of his own."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

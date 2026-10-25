@@ -1,0 +1,19 @@
+{
+ "slug": "athens",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.018753+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "були місцем, де Павло розмовляв на ринку й промовляв до мужів атенських на ареопагу",
+    "deu": "war der Ort, an dem Paulus auf dem Markt redete und auf dem Gerichtsplatz zu den Männern von Athen sprach",
+    "spa": "fueron el lugar donde Pablo disputó en la plaza y habló a los hombres de Atenas en el Areópago",
+    "why": "Ukrainian: corrected the misspelt «ареопазі» to «ареопагу». Spanish: replaced the old wording «varones Atenienses» with «hombres de Atenas» and dropped «en medio del», which is not in the English."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

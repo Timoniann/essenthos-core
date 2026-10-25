@@ -1,0 +1,25 @@
+{
+ "slug": "ephesus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.736390+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де багато віруючих спалили свої книги про чари",
+    "deu": "war der Ort, an dem viele Gläubige ihre Bücher über magische Künste verbrannten",
+    "spa": "fue el lugar donde muchos creyentes quemaron sus libros de vanas artes",
+    "why": "German: replaced Luther's archaic «vorwitziger Kunst» (which now means something else) with modern «Bücher über magische Künste»."
+   },
+   {
+    "ukr": "наповнився заколотом, коли ремісники, розгнівані навчанням Павла, кричали: Артеміда ефеська велика!",
+    "deu": "war voller Getümmel, als Handwerker, zornig über die Lehre des Paulus, schrien: Groß ist die Diana der Epheser!",
+    "spa": "se llenó de confusión cuando artesanos, llenos de ira por la enseñanza de Pablo, gritaron: ¡Grande es Diana de los Efesios!",
+    "why": "German: «voll Getümmels» became modern «voller Getümmel». Spanish: archaic «artífices» and «dieron alarido» became «artesanos» and «gritaron»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

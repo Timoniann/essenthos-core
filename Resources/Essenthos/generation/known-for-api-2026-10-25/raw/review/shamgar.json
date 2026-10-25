@@ -1,0 +1,19 @@
+{
+ "slug": "shamgar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.357294+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "побив шістсот филистимлян києм на худобу",
+    "deu": "schlug sechshundert Philister mit einem Ochsenstecken",
+    "spa": "hirió a seiscientos hombres de los filisteos con una aguijada de bueyes",
+    "why": "Spanish: added the personal 'a' before the object and used modern lower-case 'filisteos'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,47 @@
+{
+ "slug": "aarons-rod",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.305256+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "became a serpent and swallowed up the magicians' rods",
+    "references": [
+     "EXO 7:10-12"
+    ],
+    "ukr": "стала вужем і проковтнула палиці чарівників",
+    "deu": "wurde zur Schlange und verschlang die Stäbe der Zauberer",
+    "spa": "se tornó culebra y devoró las varas de los encantadores"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 20 alone states the lifting, the striking and the blood; verse 19 only gives the command, and \"its waters\" is unclear.",
+    "english": "was lifted up and struck the waters of the river, and they turned to blood",
+    "references": [
+     "EXO 7:20"
+    ],
+    "ukr": "була піднята й ударила воду в Річці, і вона змінилася на кров",
+    "deu": "wurde erhoben und schlug das Wasser im Strom, und es wurde in Blut verwandelt",
+    "spa": "fue alzada e hirió las aguas del río, y se convirtieron en sangre"
+   },
+   {
+    "verdict": "fix",
+    "why": "The tabernacle setting comes from verse 7, where the rods are laid up, so the citation needs it.",
+    "english": "budded overnight and yielded almonds in the tabernacle",
+    "references": [
+     "NUM 17:7-8"
+    ],
+    "ukr": "зацвіла за ніч і випустила мигдалі в скинії заповіту",
+    "deu": "grünte über Nacht und trug Mandeln in der Hütte des Zeugnisses",
+    "spa": "brotó en una noche y produjo almendras en el tabernáculo del testimonio"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

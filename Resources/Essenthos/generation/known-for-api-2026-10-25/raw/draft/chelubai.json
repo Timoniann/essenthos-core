@@ -1,0 +1,17 @@
+{
+ "slug": "chelubai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.880891+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Chelubai (Caleb) in genealogies of sons, wives and descendants, and state no deed or event of his own.",
+  "clauses": [],
+  "doubts": [
+   "Verses 2:46-50 may concern a different Caleb (son of Hur) rather than Chelubai."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

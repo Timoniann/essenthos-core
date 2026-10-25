@@ -1,0 +1,31 @@
+{
+ "slug": "joseph-6",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.097957+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прийняв свою дружину Марію, як звелів йому ангел Господній у сні",
+    "deu": "nahm seine Gemahlin Maria zu sich, wie ihm der Engel des HERRN im Traum befohlen hatte",
+    "spa": "recibió a María su mujer, como el ángel del SEÑOR le había mandado en sueños",
+    "why": "Ukrainian: modernised 'Ангол' to 'ангел'. Spanish: 'Señor' changed to 'SEÑOR'."
+   },
+   {
+    "ukr": "узяв дитину та його матір уночі й утік до Єгипту",
+    "deu": "nahm das Kind und seine Mutter bei Nacht zu sich und floh nach Ägyptenland",
+    "spa": "tomó al niño y a su madre de noche y huyó a Egipto",
+    "why": "Ukrainian: modernised 'Дитятко' and the capitalised 'Його', and 'пішов' became 'утік' to match 'fled'. German: modernised 'Kindlein', 'bei der Nacht' and 'entwich'. Spanish: 'se fue' became 'huyó' to match 'fled'."
+   },
+   {
+    "ukr": "узяв дитину та його матір з Єгипту й прийшов у землю Ізраїлеву",
+    "deu": "nahm das Kind und seine Mutter aus Ägyptenland mit und kam in das Land Israel",
+    "spa": "tomó al niño y a su madre, los sacó de Egipto y se vino a tierra de Israel",
+    "why": "All three: 'out of Egypt' was missing and is added. Ukrainian and German: modernised 'Дитятко'/'Його' and 'Kindlein'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

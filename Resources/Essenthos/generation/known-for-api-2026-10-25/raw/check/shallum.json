@@ -1,0 +1,25 @@
+{
+ "slug": "shallum",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.155118+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The name Zachariah is right, but \"killed him before the people\" blurs the order: he struck him before the people, then slew him; the line also leaves out that he became king.",
+    "english": "conspired against Zachariah, struck him before the people and killed him",
+    "references": [
+     "2KI 15:10"
+    ],
+    "ukr": "вчинив змову на Захарія, бив його перед народом і вбив його",
+    "deu": "machte einen Bund wider Sacharja, schlug ihn vor dem Volk und tötete ihn",
+    "spa": "se conjuró contra Zachârías, lo hirió en presencia de su pueblo y lo mató"
+   }
+  ],
+  "note": "The line leaves out that he became king in Zachariah's place and reigned one month in Samaria (2KI 15:10, 13)."
+ },
+ "problems": [],
+ "attempts": []
+}

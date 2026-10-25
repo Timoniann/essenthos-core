@@ -1,0 +1,31 @@
+{
+ "slug": "mary-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.394397+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "сіла в ногах у Ісуса й слухала Його слова, і про неї було сказано, що вона обрала найкращу частку",
+    "deu": "setzte sich zu Jesu Füßen und hörte seinem Wort zu, und von ihr wurde gesagt, sie habe das gute Teil erwählt",
+    "spa": "se sentó a los pies de Jesús y oyó su palabra, y se dijo de ella que escogió la buena parte",
+    "why": "German: replaced Luther's old 'Rede' with modern 'Wort' (his word)."
+   },
+   {
+    "ukr": "припала до ніг Ісуса й сказала Йому, що коли б Він був там, її брат не вмер би",
+    "deu": "fiel Jesus zu Füßen und sagte ihm, wenn er dort gewesen wäre, wäre ihr Bruder nicht gestorben",
+    "spa": "cayó a los pies de Jesús, diciéndole que si hubiera estado allí, su hermano no habría muerto",
+    "why": "German: modern wording ('fiel Jesus zu Füßen', 'sagte') and 'dort' for 'there'; Spanish: archaic 'se derribó' replaced by 'cayó'."
+   },
+   {
+    "ukr": "намастила Ісусові ноги найдорожчим миром і обтерла їх своїм волоссям",
+    "deu": "salbte die Füße Jesu mit köstlicher Salbe und trocknete sie mit ihrem Haar",
+    "spa": "ungió los pies de Jesús con ungüento de mucho precio y los limpió con sus cabellos",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

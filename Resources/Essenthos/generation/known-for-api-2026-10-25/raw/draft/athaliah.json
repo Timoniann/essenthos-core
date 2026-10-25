@@ -1,0 +1,42 @@
+{
+ "slug": "athaliah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.417129+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of her destroying the royal seed, reigning over Judah, and being slain, which go beyond the summary.",
+  "clauses": [
+   {
+    "english": "destroyed all the royal offspring after her son Ahaziah died",
+    "references": [
+     "2KI 11:1",
+     "2CH 22:10"
+    ],
+    "quote": "she arose and destroyed all the seed royal"
+   },
+   {
+    "english": "reigned over the land while Joash was hidden in the house of the LORD six years",
+    "references": [
+     "2KI 11:3"
+    ],
+    "quote": "And Athaliah did reign over the land."
+   },
+   {
+    "english": "was slain with the sword after crying \"Treason\" at the crowning of Joash",
+    "references": [
+     "2KI 11:13-16",
+     "2KI 11:20"
+    ],
+    "quote": "they slew Athaliah with the sword beside the king's house"
+   }
+  ],
+  "doubts": [
+   "2KI 11:2 and 2CH 22:11 mainly concern Jehosheba hiding Joash, so they are not cited for the clauses about Athaliah.",
+   "2CH 24:7 says her sons broke up the house of God; this is about her sons, so it is not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

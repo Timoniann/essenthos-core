@@ -1,0 +1,36 @@
+{
+ "slug": "mountsinai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:18.977779+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verse 19:18 alone states the smoke, the fire and the quaking; 19:20 adds nothing the clause says.",
+    "english": "was all in smoke and quaked greatly when the LORD descended upon it in fire",
+    "references": [
+     "EXO 19:18"
+    ],
+    "ukr": "був увесь у димі й сильно затремтів, коли Господь зійшов на нього в огні",
+    "deu": "war ganz in Rauch gehüllt und bebte sehr, als der HERR mit Feuer auf ihn herabfuhr",
+    "spa": "estuvo todo envuelto en humo y se estremeció en gran manera cuando el SEÑOR descendió sobre él en fuego"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where God gave Moses two tables of stone written with his finger",
+    "references": [
+     "EXO 31:18"
+    ],
+    "ukr": "був місцем, де Бог дав Мойсеєві дві кам'яні таблиці, писані Божим перстом",
+    "deu": "war der Ort, an dem Gott Mose zwei Tafeln gab, beschrieben mit dem Finger Gottes",
+    "spa": "fue el lugar donde Dios dio a Moisés dos tablas de piedra escritas con el dedo de Dios"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

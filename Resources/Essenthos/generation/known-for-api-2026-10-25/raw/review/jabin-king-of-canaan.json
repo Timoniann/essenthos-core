@@ -1,0 +1,25 @@
+{
+ "slug": "jabin-king-of-canaan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.755923+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "сильно утискав Ізраїлевих синів двадцять років",
+    "deu": "unterdrückte die Kinder Israels zwanzig Jahre lang mit Gewalt",
+    "spa": "afligió en gran manera a los hijos de Israel por veinte años",
+    "why": "Ukrainian: archaic «літ» changed to «років»; German: Luther's «zwang ... mit Gewalt» (forced) replaced by modern «unterdrückte ... mit Gewalt» and «Kinder Israels»."
+   },
+   {
+    "ukr": "був приборканий Богом перед Ізраїлевими синами, а потім знищений ними",
+    "deu": "wurde von Gott vor den Kindern Israels gedemütigt und dann von ihnen ausgerottet",
+    "spa": "fue abatido por Dios delante de los hijos de Israel y después destruido por ellos",
+    "why": "Ukrainian: archaic «вигублений» changed to «знищений»; German: old «gedämpft» changed to «gedemütigt» and «Kinder Israels»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

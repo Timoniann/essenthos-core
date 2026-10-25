@@ -1,0 +1,49 @@
+{
+ "slug": "isaac",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.908948+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was bound by Abraham and laid on an altar as an offering",
+    "references": [
+     "GEN 22:2",
+     "GEN 22:9"
+    ],
+    "ukr": "був зв'язаний Авраамом і покладений на жертівник як цілопалення",
+    "deu": "wurde von Abraham gebunden und als Brandopfer auf den Altar gelegt",
+    "spa": "fue atado por Abraham y puesto sobre el altar como holocausto"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "took Rebekah as his wife",
+    "references": [
+     "GEN 24:67"
+    ],
+    "ukr": "взяв Ревеку за жінку",
+    "deu": "nahm die Rebekka zur Frau",
+    "spa": "tomó a Rebeca por mujer"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "blessed Jacob, taking him for Esau",
+    "references": [
+     "GEN 27:23-24",
+     "GEN 27:33"
+    ],
+    "ukr": "поблагословив Якова, помилково взявши його за Ісава",
+    "deu": "segnete Jakob, da er ihn für Esau hielt",
+    "spa": "bendijo a Jacob, tomándolo por Esaú"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

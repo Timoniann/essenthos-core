@@ -1,0 +1,7913 @@
+{
+ "criteria": {
+  "person": "not another name for a record, no line yet, and named in at least 5 verses, or in fewer but with an event, a title or a key passage of its own in the corpus",
+  "place": "not another name for a record, and named in at least 5 verses",
+  "object": "every object named in at least one verse",
+  "all": "the first reader may decline a record whose verses only list it (a genealogy, a census, a list of towns or a boundary) or say no more than its summary; a declined record gets no line"
+ },
+ "export": [
+  "fc10b8602ee2cb774439a472c6b4f3997cde65014014204092e2bb2e5a134438 *export/descriptors.csv",
+  "895c3158bd67521e3b87e67abfabcc6bacd26624bce633df3270e5616836f7a0 *export/entities.csv",
+  "83c2daf70d424cc19513130953be966da71bd0a4ce8b67cf1f190d3218b5dcbe *export/entity_verses.csv",
+  "6d47caed5a4152d6a33b85cff0bb8549e7d35921c02b3bc2e0d2a406f2e7dc8e *export/events.csv",
+  "c2924e0dc279315de84fc69bc20b3bd7ad91c1650cd27a536ffde1921e1d20cc *export/known_for_held.csv",
+  "1588f6b36b253e7cf05bd254a6ca0b45a815c17a5ef7548c8a4b41e3fa73b05f *export/name_forms.csv",
+  "0a3d2faf82a2df92325c4df251a944e56609acc9eec4f8042fc90058fecfc87f *export/passages.csv",
+  "9c3e2b8abd7959913f93ef2c47f81f6be45e0ddb69f777ecc2df34d9a159bcac *export/titles.csv",
+  "de3c8288b7bd5e4ed0eeaab35501e677e7d3a457896b966b4916b9e2dca944bc *export/verses_KJV.csv",
+  "73918bed6b6400b4a049b4e7bd299c2c0045f4a4a365711afd9ebda5de9c4724 *export/verses_LUTH1912.csv",
+  "0796adb39c26d35b7bddbd8b1c6e0686763e9fc2780b490e6fa9b6695e9ff5b8 *export/verses_RV1909.csv",
+  "877e2f97f6652800af657fa7e1741b9cf6c7254c8deeac080f4b1d87466e3733 *export/verses_UBIO.csv"
+ ],
+ "counts": {
+  "person": 530,
+  "place": 279,
+  "object": 67
+ },
+ "records": [
+  {
+   "slug": "aaron",
+   "kind": "person",
+   "name": "Aaron",
+   "verses": 345,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "saul",
+   "kind": "person",
+   "name": "Saul",
+   "verses": 343,
+   "events": 4,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "joshua",
+   "kind": "person",
+   "name": "Joshua",
+   "verses": 191,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nebuchadnezzar",
+   "kind": "person",
+   "name": "Nebuchadnezzar",
+   "verses": 160,
+   "events": 5,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "isaac",
+   "kind": "person",
+   "name": "Isaac",
+   "verses": 125,
+   "events": 6,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jeremiah-6",
+   "kind": "person",
+   "name": "Jeremiah",
+   "verses": 125,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joab",
+   "kind": "person",
+   "name": "Joab",
+   "verses": 121,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahab",
+   "kind": "person",
+   "name": "Ahab",
+   "verses": 120,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "holy-spirit",
+   "kind": "person",
+   "name": "Holy Spirit",
+   "verses": 120,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "pharaoh-4",
+   "kind": "person",
+   "name": "Pharaoh",
+   "verses": 115,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "judah",
+   "kind": "person",
+   "name": "Judah",
+   "verses": 106,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ezekiel",
+   "kind": "person",
+   "name": "Ezekiel",
+   "verses": 100,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "satan",
+   "kind": "person",
+   "name": "Satan",
+   "verses": 97,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "john",
+   "kind": "person",
+   "name": "John",
+   "verses": 94,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "absalom",
+   "kind": "person",
+   "name": "Absalom",
+   "verses": 89,
+   "events": 7,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "esau",
+   "kind": "person",
+   "name": "Esau",
+   "verses": 87,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mordecai-2",
+   "kind": "person",
+   "name": "Mordecai",
+   "verses": 84,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jeroboam",
+   "kind": "person",
+   "name": "Jeroboam",
+   "verses": 82,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jonathan-2",
+   "kind": "person",
+   "name": "Jonathan",
+   "verses": 82,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "benjamin",
+   "kind": "person",
+   "name": "Benjamin",
+   "verses": 76,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hadassah",
+   "kind": "person",
+   "name": "Hadassah",
+   "verses": 76,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "daniel-2",
+   "kind": "person",
+   "name": "Daniel",
+   "verses": 74,
+   "events": 6,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "theangelofthelord",
+   "kind": "person",
+   "name": "the angel of the LORD",
+   "verses": 74,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pharaoh-2",
+   "kind": "person",
+   "name": "Pharaoh",
+   "verses": 72,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "jehoshaphat-3",
+   "kind": "person",
+   "name": "Jehoshaphat",
+   "verses": 68,
+   "events": 7,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "job",
+   "kind": "person",
+   "name": "Job",
+   "verses": 64,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mattaniah",
+   "kind": "person",
+   "name": "Mattaniah",
+   "verses": 64,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "manasseh",
+   "kind": "person",
+   "name": "Manasseh",
+   "verses": 63,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eleazar",
+   "kind": "person",
+   "name": "Eleazar",
+   "verses": 61,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "balaam",
+   "kind": "person",
+   "name": "Balaam",
+   "verses": 59,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "reuben",
+   "kind": "person",
+   "name": "Reuben",
+   "verses": 58,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "asa",
+   "kind": "person",
+   "name": "Asa",
+   "verses": 54,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "isaiah",
+   "kind": "person",
+   "name": "Isaiah",
+   "verses": 54,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abner",
+   "kind": "person",
+   "name": "Abner",
+   "verses": 53,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pilate",
+   "kind": "person",
+   "name": "Pilate",
+   "verses": 53,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "laban",
+   "kind": "person",
+   "name": "Laban",
+   "verses": 47,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehu-2",
+   "kind": "person",
+   "name": "Jehu",
+   "verses": 46,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gad",
+   "kind": "person",
+   "name": "Gad",
+   "verses": 45,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "haman",
+   "kind": "person",
+   "name": "Haman",
+   "verses": 45,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "rachel",
+   "kind": "person",
+   "name": "Rachel",
+   "verses": 45,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sennacherib",
+   "kind": "person",
+   "name": "Sennacherib",
+   "verses": 45,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jesse",
+   "kind": "person",
+   "name": "Jesse",
+   "verses": 44,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "korah-3",
+   "kind": "person",
+   "name": "Korah",
+   "verses": 43,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "rehoboam",
+   "kind": "person",
+   "name": "Rehoboam",
+   "verses": 43,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "balak",
+   "kind": "person",
+   "name": "Balak",
+   "verses": 42,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "levi",
+   "kind": "person",
+   "name": "Levi",
+   "verses": 42,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "asaph-2",
+   "kind": "person",
+   "name": "Asaph",
+   "verses": 41,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zadok",
+   "kind": "person",
+   "name": "Zadok",
+   "verses": 40,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehoram-2",
+   "kind": "person",
+   "name": "Jehoram",
+   "verses": 39,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "samson",
+   "kind": "person",
+   "name": "Samson",
+   "verses": 39,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eliakim-2",
+   "kind": "person",
+   "name": "Eliakim",
+   "verses": 38,
+   "events": 5,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ephraim",
+   "kind": "person",
+   "name": "Ephraim",
+   "verses": 38,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "merari",
+   "kind": "person",
+   "name": "Merari",
+   "verses": 38,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abimelech-2",
+   "kind": "person",
+   "name": "Abimelech",
+   "verses": 37,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahaz",
+   "kind": "person",
+   "name": "Ahaz",
+   "verses": 37,
+   "events": 6,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lot",
+   "kind": "person",
+   "name": "Lot",
+   "verses": 35,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sihon",
+   "kind": "person",
+   "name": "Sihon",
+   "verses": 35,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "amaziah",
+   "kind": "person",
+   "name": "Amaziah",
+   "verses": 34,
+   "events": 5,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "azariah-3",
+   "kind": "person",
+   "name": "Azariah",
+   "verses": 34,
+   "events": 6,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "dan",
+   "kind": "person",
+   "name": "Dan",
+   "verses": 32,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "john-2",
+   "kind": "person",
+   "name": "John",
+   "verses": 32,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "leah",
+   "kind": "person",
+   "name": "Leah",
+   "verses": 32,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eli",
+   "kind": "person",
+   "name": "Eli",
+   "verses": 31,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nathan-2",
+   "kind": "person",
+   "name": "Nathan",
+   "verses": 31,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahasuerus",
+   "kind": "person",
+   "name": "Ahasuerus",
+   "verses": 30,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "benhadad",
+   "kind": "person",
+   "name": "Ben-hadad",
+   "verses": 30,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cherubim",
+   "kind": "person",
+   "name": "Cherubim",
+   "verses": 30,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "nun",
+   "kind": "person",
+   "name": "Nun",
+   "verses": 30,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "rebekah",
+   "kind": "person",
+   "name": "Rebekah",
+   "verses": 30,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "simeon",
+   "kind": "person",
+   "name": "Simeon",
+   "verses": 30,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abiathar",
+   "kind": "person",
+   "name": "Abiathar",
+   "verses": 29,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "kohath",
+   "kind": "person",
+   "name": "Kohath",
+   "verses": 29,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "caleb",
+   "kind": "person",
+   "name": "Caleb",
+   "verses": 27,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahaziah-2",
+   "kind": "person",
+   "name": "Ahaziah",
+   "verses": 26,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "asher",
+   "kind": "person",
+   "name": "Asher",
+   "verses": 26,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "baasha",
+   "kind": "person",
+   "name": "Baasha",
+   "verses": 26,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gedaliah",
+   "kind": "person",
+   "name": "Gedaliah",
+   "verses": 26,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "herod-2",
+   "kind": "person",
+   "name": "Herod",
+   "verses": 26,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "jephthah",
+   "kind": "person",
+   "name": "Jephthah",
+   "verses": 26,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joash-3",
+   "kind": "person",
+   "name": "Joash",
+   "verses": 26,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nebat",
+   "kind": "person",
+   "name": "Nebat",
+   "verses": 26,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "timothy",
+   "kind": "person",
+   "name": "Timothy",
+   "verses": 26,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abishai",
+   "kind": "person",
+   "name": "Abishai",
+   "verses": 25,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ezra",
+   "kind": "person",
+   "name": "Ezra",
+   "verses": 25,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehoiada-2",
+   "kind": "person",
+   "name": "Jehoiada",
+   "verses": 25,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joash-4",
+   "kind": "person",
+   "name": "Joash",
+   "verses": 25,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "naphtali",
+   "kind": "person",
+   "name": "Naphtali",
+   "verses": 25,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zeruiah",
+   "kind": "person",
+   "name": "Zeruiah",
+   "verses": 25,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "adonijah",
+   "kind": "person",
+   "name": "Adonijah",
+   "verses": 24,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "benaiah",
+   "kind": "person",
+   "name": "Benaiah",
+   "verses": 24,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gershon",
+   "kind": "person",
+   "name": "Gershon",
+   "verses": 24,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "goliath",
+   "kind": "person",
+   "name": "Goliath",
+   "verses": 24,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hiram",
+   "kind": "person",
+   "name": "Hiram",
+   "verses": 24,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "judas",
+   "kind": "person",
+   "name": "Judas",
+   "verses": 24,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "manasseh-3",
+   "kind": "person",
+   "name": "Manasseh",
+   "verses": 24,
+   "events": 6,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hazael",
+   "kind": "person",
+   "name": "Hazael",
+   "verses": 23,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehoiada",
+   "kind": "person",
+   "name": "Jehoiada",
+   "verses": 23,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shaphan",
+   "kind": "person",
+   "name": "Shaphan",
+   "verses": 23,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zerubbabel-2",
+   "kind": "person",
+   "name": "Zerubbabel",
+   "verses": 23,
+   "events": 1,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "boaz",
+   "kind": "person",
+   "name": "Boaz",
+   "verses": 22,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehoiachin",
+   "kind": "person",
+   "name": "Jehoiachin",
+   "verses": 22,
+   "events": 5,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehoram",
+   "kind": "person",
+   "name": "Jehoram",
+   "verses": 22,
+   "events": 7,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mary",
+   "kind": "person",
+   "name": "Mary",
+   "verses": 22,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "og",
+   "kind": "person",
+   "name": "Og",
+   "verses": 22,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "uriah",
+   "kind": "person",
+   "name": "Uriah",
+   "verses": 22,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zebulun",
+   "kind": "person",
+   "name": "Zebulun",
+   "verses": 22,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "amnon",
+   "kind": "person",
+   "name": "Amnon",
+   "verses": 21,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "baruch-4",
+   "kind": "person",
+   "name": "Baruch",
+   "verses": 21,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ishmael-2",
+   "kind": "person",
+   "name": "Ishmael",
+   "verses": 21,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "issachar",
+   "kind": "person",
+   "name": "Issachar",
+   "verses": 21,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ithamar",
+   "kind": "person",
+   "name": "Ithamar",
+   "verses": 21,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "naomi",
+   "kind": "person",
+   "name": "Naomi",
+   "verses": 21,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pharaoh-8",
+   "kind": "person",
+   "name": "Pharaoh",
+   "verses": 21,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "abijam",
+   "kind": "person",
+   "name": "Abijam",
+   "verses": 20,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "achish",
+   "kind": "person",
+   "name": "Achish",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahikam",
+   "kind": "person",
+   "name": "Ahikam",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "james",
+   "kind": "person",
+   "name": "James",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jotham-2",
+   "kind": "person",
+   "name": "Jotham",
+   "verses": 20,
+   "events": 8,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "micaiah",
+   "kind": "person",
+   "name": "Micaiah",
+   "verses": 20,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cyrus",
+   "kind": "person",
+   "name": "Cyrus",
+   "verses": 19,
+   "events": 5,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "hilkiah-2",
+   "kind": "person",
+   "name": "Hilkiah",
+   "verses": 19,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "ishmael",
+   "kind": "person",
+   "name": "Ishmael",
+   "verses": 19,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jezebel",
+   "kind": "person",
+   "name": "Jezebel",
+   "verses": 19,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "micah",
+   "kind": "person",
+   "name": "Micah",
+   "verses": 19,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "azariah-18",
+   "kind": "person",
+   "name": "Azariah",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "darius",
+   "kind": "person",
+   "name": "Darius",
+   "verses": 18,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hadadezer",
+   "kind": "person",
+   "name": "Hadadezer",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hananiah-12",
+   "kind": "person",
+   "name": "Hananiah",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mishael-3",
+   "kind": "person",
+   "name": "Mishael",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nabal",
+   "kind": "person",
+   "name": "Nabal",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shem",
+   "kind": "person",
+   "name": "Shem",
+   "verses": 18,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sisera",
+   "kind": "person",
+   "name": "Sisera",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahithophel",
+   "kind": "person",
+   "name": "Ahithophel",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "araunah",
+   "kind": "person",
+   "name": "Araunah",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "machir",
+   "kind": "person",
+   "name": "Machir",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "michal",
+   "kind": "person",
+   "name": "Michal",
+   "verses": 17,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pharaoh-3",
+   "kind": "person",
+   "name": "Pharaoh",
+   "verses": 17,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "phinehas",
+   "kind": "person",
+   "name": "Phinehas",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "silas",
+   "kind": "person",
+   "name": "Silas",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cain",
+   "kind": "person",
+   "name": "Cain",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joseph-6",
+   "kind": "person",
+   "name": "Joseph",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ner",
+   "kind": "person",
+   "name": "Ner",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nethaniah",
+   "kind": "person",
+   "name": "Nethaniah",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pekah",
+   "kind": "person",
+   "name": "Pekah",
+   "verses": 16,
+   "events": 6,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "philip-3",
+   "kind": "person",
+   "name": "Philip",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shimei-2",
+   "kind": "person",
+   "name": "Shimei",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "vashti",
+   "kind": "person",
+   "name": "Vashti",
+   "verses": 16,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "amon-2",
+   "kind": "person",
+   "name": "Amon",
+   "verses": 15,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "athaliah",
+   "kind": "person",
+   "name": "Athaliah",
+   "verses": 15,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehoahaz",
+   "kind": "person",
+   "name": "Jehoahaz",
+   "verses": 15,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jephunneh",
+   "kind": "person",
+   "name": "Jephunneh",
+   "verses": 15,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jeroboam-2",
+   "kind": "person",
+   "name": "Jeroboam",
+   "verses": 15,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "johanan",
+   "kind": "person",
+   "name": "Johanan",
+   "verses": 15,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nebuzaradan",
+   "kind": "person",
+   "name": "Nebuzaradan",
+   "verses": 15,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "perez",
+   "kind": "person",
+   "name": "Perez",
+   "verses": 15,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "philip",
+   "kind": "person",
+   "name": "Philip",
+   "verses": 15,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shalmaneser",
+   "kind": "person",
+   "name": "Shalmaneser",
+   "verses": 15,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "artaxerxes",
+   "kind": "person",
+   "name": "Artaxerxes",
+   "verses": 14,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "asahel",
+   "kind": "person",
+   "name": "Asahel",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "barak",
+   "kind": "person",
+   "name": "Barak",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bathsheba",
+   "kind": "person",
+   "name": "Bathsheba",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "canaan",
+   "kind": "person",
+   "name": "Canaan",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ishbosheth",
+   "kind": "person",
+   "name": "Ish-bosheth",
+   "verses": 14,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jeshua-3",
+   "kind": "person",
+   "name": "Jeshua",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kareah",
+   "kind": "person",
+   "name": "Kareah",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "manoah",
+   "kind": "person",
+   "name": "Manoah",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mary-2",
+   "kind": "person",
+   "name": "Mary",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mephibosheth",
+   "kind": "person",
+   "name": "Mephibosheth",
+   "verses": 14,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "reuel-2",
+   "kind": "person",
+   "name": "Reuel",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shechem",
+   "kind": "person",
+   "name": "Shechem",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "titus",
+   "kind": "person",
+   "name": "Titus",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahimaaz-2",
+   "kind": "person",
+   "name": "Ahimaaz",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "amoz",
+   "kind": "person",
+   "name": "Amoz",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gad-2",
+   "kind": "person",
+   "name": "Gad",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ham",
+   "kind": "person",
+   "name": "Ham",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hamor",
+   "kind": "person",
+   "name": "Hamor",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hezron-2",
+   "kind": "person",
+   "name": "Hezron",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "omri",
+   "kind": "person",
+   "name": "Omri",
+   "verses": 13,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "porcius",
+   "kind": "person",
+   "name": "Porcius",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "remaliah",
+   "kind": "person",
+   "name": "Remaliah",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tamar-2",
+   "kind": "person",
+   "name": "Tamar",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zerah-3",
+   "kind": "person",
+   "name": "Zerah",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ziba",
+   "kind": "person",
+   "name": "Ziba",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abihu",
+   "kind": "person",
+   "name": "Abihu",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "agrippa",
+   "kind": "person",
+   "name": "Agrippa",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahijah",
+   "kind": "person",
+   "name": "Ahijah",
+   "verses": 12,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahimelech",
+   "kind": "person",
+   "name": "Ahimelech",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "andrew",
+   "kind": "person",
+   "name": "Andrew",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bezalel",
+   "kind": "person",
+   "name": "Bezalel",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "caesar",
+   "kind": "person",
+   "name": "Caesar",
+   "verses": 12,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "hagar",
+   "kind": "person",
+   "name": "Hagar",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "haggai",
+   "kind": "person",
+   "name": "Haggai",
+   "verses": 12,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "heman-2",
+   "kind": "person",
+   "name": "Heman",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "heth",
+   "kind": "person",
+   "name": "Heth",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hur",
+   "kind": "person",
+   "name": "Hur",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hushai",
+   "kind": "person",
+   "name": "Hushai",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "japheth",
+   "kind": "person",
+   "name": "Japheth",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joshua-4",
+   "kind": "person",
+   "name": "Joshua",
+   "verses": 12,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "melchizedek",
+   "kind": "person",
+   "name": "Melchizedek",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "miriam",
+   "kind": "person",
+   "name": "Miriam",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nadab",
+   "kind": "person",
+   "name": "Nadab",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nahor-2",
+   "kind": "person",
+   "name": "Nahor",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shallum-7",
+   "kind": "person",
+   "name": "Shallum",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "thomas",
+   "kind": "person",
+   "name": "Thomas",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tobiah-2",
+   "kind": "person",
+   "name": "Tobiah",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "amasa",
+   "kind": "person",
+   "name": "Amasa",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "amminadab",
+   "kind": "person",
+   "name": "Amminadab",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "amram",
+   "kind": "person",
+   "name": "Amram",
+   "verses": 11,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eber",
+   "kind": "person",
+   "name": "Eber",
+   "verses": 11,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gilead",
+   "kind": "person",
+   "name": "Gilead",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hannah",
+   "kind": "person",
+   "name": "Hannah",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "herod",
+   "kind": "person",
+   "name": "Herod",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "james-3",
+   "kind": "person",
+   "name": "James",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jeduthun",
+   "kind": "person",
+   "name": "Jeduthun",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "john-5",
+   "kind": "person",
+   "name": "John",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kish",
+   "kind": "person",
+   "name": "Kish",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lazarus-2",
+   "kind": "person",
+   "name": "Lazarus",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mary-3",
+   "kind": "person",
+   "name": "Mary",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nahshon",
+   "kind": "person",
+   "name": "Nahshon",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "rezin",
+   "kind": "person",
+   "name": "Rezin",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shealtiel-2",
+   "kind": "person",
+   "name": "Shealtiel",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tiglathpileser",
+   "kind": "person",
+   "name": "Tiglath-pileser",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "uzziel",
+   "kind": "person",
+   "name": "Uzziel",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zebedee",
+   "kind": "person",
+   "name": "Zebedee",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "apollos",
+   "kind": "person",
+   "name": "Apollos",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "arpachshad",
+   "kind": "person",
+   "name": "Arpachshad",
+   "verses": 10,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "barabbas",
+   "kind": "person",
+   "name": "Barabbas",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bilhah",
+   "kind": "person",
+   "name": "Bilhah",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "caesar-2",
+   "kind": "person",
+   "name": "Caesar",
+   "verses": 10,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "eliashib-7",
+   "kind": "person",
+   "name": "Eliashib",
+   "verses": 10,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "elkanah-2",
+   "kind": "person",
+   "name": "Elkanah",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ephron",
+   "kind": "person",
+   "name": "Ephron",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "izhar",
+   "kind": "person",
+   "name": "Izhar",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "neriah",
+   "kind": "person",
+   "name": "Neriah",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pharaoh-5",
+   "kind": "person",
+   "name": "Pharaoh",
+   "verses": 10,
+   "events": 1,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "pharaohneco",
+   "kind": "person",
+   "name": "Pharaoh Neco",
+   "verses": 10,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "queenofsheba",
+   "kind": "person",
+   "name": "Queen of Sheba",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sanballat",
+   "kind": "person",
+   "name": "Sanballat",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shelah",
+   "kind": "person",
+   "name": "Shelah",
+   "verses": 10,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "terah",
+   "kind": "person",
+   "name": "Terah",
+   "verses": 10,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abel",
+   "kind": "person",
+   "name": "Abel",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahaziah",
+   "kind": "person",
+   "name": "Ahaziah",
+   "verses": 9,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "anak",
+   "kind": "person",
+   "name": "Anak",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "barzillai",
+   "kind": "person",
+   "name": "Barzillai",
+   "verses": 9,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "beor-2",
+   "kind": "person",
+   "name": "Beor",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bethuel",
+   "kind": "person",
+   "name": "Bethuel",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "caiaphas",
+   "kind": "person",
+   "name": "Caiaphas",
+   "verses": 9,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "dathan",
+   "kind": "person",
+   "name": "Dathan",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eliakim",
+   "kind": "person",
+   "name": "Eliakim",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gaal",
+   "kind": "person",
+   "name": "Gaal",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hananiah-10",
+   "kind": "person",
+   "name": "Hananiah",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hoshea",
+   "kind": "person",
+   "name": "Hoshea",
+   "verses": 9,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehonadab",
+   "kind": "person",
+   "name": "Jehonadab",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "obededom-2",
+   "kind": "person",
+   "name": "Obed-edom",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "seth",
+   "kind": "person",
+   "name": "Seth",
+   "verses": 9,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shebnah",
+   "kind": "person",
+   "name": "Shebnah",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zacharias",
+   "kind": "person",
+   "name": "Zacharias",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zalmunna",
+   "kind": "person",
+   "name": "Zalmunna",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zebah",
+   "kind": "person",
+   "name": "Zebah",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zelophehad",
+   "kind": "person",
+   "name": "Zelophehad",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abiram",
+   "kind": "person",
+   "name": "Abiram",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "belshazzar",
+   "kind": "person",
+   "name": "Belshazzar",
+   "verses": 8,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bichri",
+   "kind": "person",
+   "name": "Bichri",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "chelubai",
+   "kind": "person",
+   "name": "Chelubai",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "darius-2",
+   "kind": "person",
+   "name": "Darius",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "dinah",
+   "kind": "person",
+   "name": "Dinah",
+   "verses": 8,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eliphaz",
+   "kind": "person",
+   "name": "Eliphaz",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elizabeth",
+   "kind": "person",
+   "name": "Elizabeth",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "enosh",
+   "kind": "person",
+   "name": "Enosh",
+   "verses": 8,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "felix",
+   "kind": "person",
+   "name": "Felix",
+   "verses": 8,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "hanun",
+   "kind": "person",
+   "name": "Hanun",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehoahaz-2",
+   "kind": "person",
+   "name": "Jehoahaz",
+   "verses": 8,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehozadak-2",
+   "kind": "person",
+   "name": "Jehozadak",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joash",
+   "kind": "person",
+   "name": "Joash",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kadmiel",
+   "kind": "person",
+   "name": "Kadmiel",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kenan",
+   "kind": "person",
+   "name": "Kenan",
+   "verses": 8,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lamech-2",
+   "kind": "person",
+   "name": "Lamech",
+   "verses": 8,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "libni",
+   "kind": "person",
+   "name": "Libni",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "maacah-3",
+   "kind": "person",
+   "name": "Maacah",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mahli",
+   "kind": "person",
+   "name": "Mahli",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "menachem",
+   "kind": "person",
+   "name": "Menachem",
+   "verses": 8,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mushi",
+   "kind": "person",
+   "name": "Mushi",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "peleg",
+   "kind": "person",
+   "name": "Peleg",
+   "verses": 8,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "rechab-2",
+   "kind": "person",
+   "name": "Rechab",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "serpent-of-eden",
+   "kind": "person",
+   "name": "The Serpent",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "shammah-2",
+   "kind": "person",
+   "name": "Shammah",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sheba-4",
+   "kind": "person",
+   "name": "Sheba",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shelah-2",
+   "kind": "person",
+   "name": "Shelah",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sherebiah-2",
+   "kind": "person",
+   "name": "Sherebiah",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "uzzah",
+   "kind": "person",
+   "name": "Uzzah",
+   "verses": 8,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zimri-2",
+   "kind": "person",
+   "name": "Zimri",
+   "verses": 8,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "achan",
+   "kind": "person",
+   "name": "Achan",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "adonizedek",
+   "kind": "person",
+   "name": "Adoni-zedek",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "amos",
+   "kind": "person",
+   "name": "Amos",
+   "verses": 7,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "anah-son-of-zibeon",
+   "kind": "person",
+   "name": "Anah",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bela-2",
+   "kind": "person",
+   "name": "Bela",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "delilah",
+   "kind": "person",
+   "name": "Delilah",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ehud",
+   "kind": "person",
+   "name": "Ehud",
+   "verses": 7,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elam-4",
+   "kind": "person",
+   "name": "Elam",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elihu-5",
+   "kind": "person",
+   "name": "Elihu",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gog-2",
+   "kind": "person",
+   "name": "Gog",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hammedatha",
+   "kind": "person",
+   "name": "Hammedatha",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hebron",
+   "kind": "person",
+   "name": "Hebron",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hilkiah",
+   "kind": "person",
+   "name": "Hilkiah",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "immer",
+   "kind": "person",
+   "name": "Immer",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jabin-king-of-canaan",
+   "kind": "person",
+   "name": "Jabin",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jared",
+   "kind": "person",
+   "name": "Jared",
+   "verses": 7,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jeshua-7",
+   "kind": "person",
+   "name": "Jeshua",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joseph-8",
+   "kind": "person",
+   "name": "Joseph",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kingofthenorth",
+   "kind": "person",
+   "name": "King of the North",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mahalalel",
+   "kind": "person",
+   "name": "Mahalalel",
+   "verses": 7,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mary-7",
+   "kind": "person",
+   "name": "Mary",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "methuselah",
+   "kind": "person",
+   "name": "Methuselah",
+   "verses": 7,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nahash",
+   "kind": "person",
+   "name": "Nahash",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "phinehas-2",
+   "kind": "person",
+   "name": "Phinehas",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "raphah",
+   "kind": "person",
+   "name": "Raphah",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tamar",
+   "kind": "person",
+   "name": "Tamar",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tychicus",
+   "kind": "person",
+   "name": "Tychicus",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zibeon-2",
+   "kind": "person",
+   "name": "Zibeon",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zilpah",
+   "kind": "person",
+   "name": "Zilpah",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zippor",
+   "kind": "person",
+   "name": "Zippor",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "adah-wife-of-esau",
+   "kind": "person",
+   "name": "Adah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahinoam-2",
+   "kind": "person",
+   "name": "Ahinoam",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ammihud",
+   "kind": "person",
+   "name": "Ammihud",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "aquila",
+   "kind": "person",
+   "name": "Aquila",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "aristarchus",
+   "kind": "person",
+   "name": "Aristarchus",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ashbel",
+   "kind": "person",
+   "name": "Ashbel",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bani-4",
+   "kind": "person",
+   "name": "Bani",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bigvai",
+   "kind": "person",
+   "name": "Bigvai",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cush",
+   "kind": "person",
+   "name": "Cush",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "deuel",
+   "kind": "person",
+   "name": "Deuel",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "doeg",
+   "kind": "person",
+   "name": "Doeg",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ebedmelech",
+   "kind": "person",
+   "name": "Ebed-melech",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eliab-3",
+   "kind": "person",
+   "name": "Eliab",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elimelech",
+   "kind": "person",
+   "name": "Elimelech",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eliphaz-2",
+   "kind": "person",
+   "name": "Eliphaz",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elishama",
+   "kind": "person",
+   "name": "Elishama",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elkanah-4",
+   "kind": "person",
+   "name": "Elkanah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "epaphroditus",
+   "kind": "person",
+   "name": "Epaphroditus",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "er",
+   "kind": "person",
+   "name": "Er",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gera-3",
+   "kind": "person",
+   "name": "Gera",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "harim-3",
+   "kind": "person",
+   "name": "Harim",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "herod-3",
+   "kind": "person",
+   "name": "Herod",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "herodias",
+   "kind": "person",
+   "name": "Herodias",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "iddo-5",
+   "kind": "person",
+   "name": "Iddo",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ittai",
+   "kind": "person",
+   "name": "Ittai",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jael",
+   "kind": "person",
+   "name": "Jael",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jair",
+   "kind": "person",
+   "name": "Jair",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jedaiah-2",
+   "kind": "person",
+   "name": "Jedaiah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jerahmeel",
+   "kind": "person",
+   "name": "Jerahmeel",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joah",
+   "kind": "person",
+   "name": "Joah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joktan",
+   "kind": "person",
+   "name": "Joktan",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jonathan-3",
+   "kind": "person",
+   "name": "Jonathan",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kingofai",
+   "kind": "person",
+   "name": "King of Ai",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kingofthesouth",
+   "kind": "person",
+   "name": "King of the South",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mahalath",
+   "kind": "person",
+   "name": "Mahalath",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "milcah",
+   "kind": "person",
+   "name": "Milcah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nahor",
+   "kind": "person",
+   "name": "Nahor",
+   "verses": 6,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nathanael",
+   "kind": "person",
+   "name": "Nathanael",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "obadiah",
+   "kind": "person",
+   "name": "Obadiah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "obed",
+   "kind": "person",
+   "name": "Obed",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "obededom",
+   "kind": "person",
+   "name": "Obed-edom",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "oholiab",
+   "kind": "person",
+   "name": "Oholiab",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "onan",
+   "kind": "person",
+   "name": "Onan",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "othniel",
+   "kind": "person",
+   "name": "Othniel",
+   "verses": 6,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pashhur-the-priest",
+   "kind": "person",
+   "name": "Pashhur",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "priscilla",
+   "kind": "person",
+   "name": "Priscilla",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ram",
+   "kind": "person",
+   "name": "Ram",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "reu",
+   "kind": "person",
+   "name": "Reu",
+   "verses": 6,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "reuel",
+   "kind": "person",
+   "name": "Reuel",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "salmon",
+   "kind": "person",
+   "name": "Salmon",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "serug",
+   "kind": "person",
+   "name": "Serug",
+   "verses": 6,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shemaiah-19",
+   "kind": "person",
+   "name": "Shemaiah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shimei",
+   "kind": "person",
+   "name": "Shimei",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shishak",
+   "kind": "person",
+   "name": "Shishak",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zechariah-13",
+   "kind": "person",
+   "name": "Zechariah",
+   "verses": 6,
+   "events": 3,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zephaniah-2",
+   "kind": "person",
+   "name": "Zephaniah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abiasaph",
+   "kind": "person",
+   "name": "Abiasaph",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abidan",
+   "kind": "person",
+   "name": "Abidan",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abishag",
+   "kind": "person",
+   "name": "Abishag",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abishalom",
+   "kind": "person",
+   "name": "Abishalom",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "achbor-2",
+   "kind": "person",
+   "name": "Achbor",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "achsah",
+   "kind": "person",
+   "name": "Achsah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "adoniram",
+   "kind": "person",
+   "name": "Adoniram",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "agag-2",
+   "kind": "person",
+   "name": "Agag",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahiezer",
+   "kind": "person",
+   "name": "Ahiezer",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahimelech-3",
+   "kind": "person",
+   "name": "Ahimelech",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahira",
+   "kind": "person",
+   "name": "Ahira",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahitub",
+   "kind": "person",
+   "name": "Ahitub",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahitub-2",
+   "kind": "person",
+   "name": "Ahitub",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ahitub-3",
+   "kind": "person",
+   "name": "Ahitub",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "akkub-2",
+   "kind": "person",
+   "name": "Akkub",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "alphaeus",
+   "kind": "person",
+   "name": "Alphaeus",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ammishaddai",
+   "kind": "person",
+   "name": "Ammishaddai",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ananias-2",
+   "kind": "person",
+   "name": "Ananias",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bebai",
+   "kind": "person",
+   "name": "Bebai",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "benhadad-2",
+   "kind": "person",
+   "name": "Ben-hadad",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bera",
+   "kind": "person",
+   "name": "Bera",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "beriah",
+   "kind": "person",
+   "name": "Beriah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bildad",
+   "kind": "person",
+   "name": "Bildad",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "chedorlaomer",
+   "kind": "person",
+   "name": "Chedorlaomer",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "dishan",
+   "kind": "person",
+   "name": "Dishan",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "dishon",
+   "kind": "person",
+   "name": "Dishon",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ebed",
+   "kind": "person",
+   "name": "Ebed",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eglon",
+   "kind": "person",
+   "name": "Eglon",
+   "verses": 5,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eliab",
+   "kind": "person",
+   "name": "Eliab",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eliab-2",
+   "kind": "person",
+   "name": "Eliab",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eliasaph",
+   "kind": "person",
+   "name": "Eliasaph",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eliphelet",
+   "kind": "person",
+   "name": "Eliphelet",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elizur",
+   "kind": "person",
+   "name": "Elizur",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elzaphan",
+   "kind": "person",
+   "name": "Elzaphan",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "enan",
+   "kind": "person",
+   "name": "Enan",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ethan",
+   "kind": "person",
+   "name": "Ethan",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ezer",
+   "kind": "person",
+   "name": "Ezer",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gabriel",
+   "kind": "person",
+   "name": "Gabriel",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gamaliel",
+   "kind": "person",
+   "name": "Gamaliel",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gershom",
+   "kind": "person",
+   "name": "Gershom",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gideoni",
+   "kind": "person",
+   "name": "Gideoni",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hadad-3",
+   "kind": "person",
+   "name": "Hadad",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "haggith",
+   "kind": "person",
+   "name": "Haggith",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hakkoz",
+   "kind": "person",
+   "name": "Hakkoz",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hanani",
+   "kind": "person",
+   "name": "Hanani",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "haran",
+   "kind": "person",
+   "name": "Haran",
+   "verses": 5,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "harim-2",
+   "kind": "person",
+   "name": "Harim",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hashabiah-4",
+   "kind": "person",
+   "name": "Hashabiah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hathach",
+   "kind": "person",
+   "name": "Hathach",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "helon",
+   "kind": "person",
+   "name": "Helon",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hepher",
+   "kind": "person",
+   "name": "Hepher",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hoham",
+   "kind": "person",
+   "name": "Hoham",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hophni",
+   "kind": "person",
+   "name": "Hophni",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "huppim",
+   "kind": "person",
+   "name": "Huppim",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "iezer",
+   "kind": "person",
+   "name": "Iezer",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "immanuel",
+   "kind": "person",
+   "name": "Immanuel",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ishvi-2",
+   "kind": "person",
+   "name": "Ishvi",
+   "verses": 5,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jason",
+   "kind": "person",
+   "name": "Jason",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "javan",
+   "kind": "person",
+   "name": "Javan",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jehu",
+   "kind": "person",
+   "name": "Jehu",
+   "verses": 5,
+   "events": 4,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jeremiah-7",
+   "kind": "person",
+   "name": "Jeremiah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jeshua-5",
+   "kind": "person",
+   "name": "Jeshua",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jozadak",
+   "kind": "person",
+   "name": "Jozadak",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kenaz",
+   "kind": "person",
+   "name": "Kenaz",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kenaz-2",
+   "kind": "person",
+   "name": "Kenaz",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lotan",
+   "kind": "person",
+   "name": "Lotan",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "malcam",
+   "kind": "person",
+   "name": "Malcam",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "malchishua",
+   "kind": "person",
+   "name": "Malchi-shua",
+   "verses": 5,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mattaniah-9",
+   "kind": "person",
+   "name": "Mattaniah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "matthew",
+   "kind": "person",
+   "name": "Matthew",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "memucan",
+   "kind": "person",
+   "name": "Memucan",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "meremoth",
+   "kind": "person",
+   "name": "Meremoth",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mica",
+   "kind": "person",
+   "name": "Mica",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mica-2",
+   "kind": "person",
+   "name": "Mica",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "michael-9",
+   "kind": "person",
+   "name": "Michael",
+   "verses": 5,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "moab",
+   "kind": "person",
+   "name": "Moab",
+   "verses": 5,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nethanel",
+   "kind": "person",
+   "name": "Nethanel",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nicodemus",
+   "kind": "person",
+   "name": "Nicodemus",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nimshi",
+   "kind": "person",
+   "name": "Nimshi",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ochran",
+   "kind": "person",
+   "name": "Ochran",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "oholibamah-wife-of-esau",
+   "kind": "person",
+   "name": "Oholibamah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pagiel",
+   "kind": "person",
+   "name": "Pagiel",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pahathmoab",
+   "kind": "person",
+   "name": "Pahath-moab",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pallu",
+   "kind": "person",
+   "name": "Pallu",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "parosh",
+   "kind": "person",
+   "name": "Parosh",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pedahzur",
+   "kind": "person",
+   "name": "Pedahzur",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pul",
+   "kind": "person",
+   "name": "Pul",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "seraiah-6",
+   "kind": "person",
+   "name": "Seraiah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shallum-6",
+   "kind": "person",
+   "name": "Shallum",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shedeur",
+   "kind": "person",
+   "name": "Shedeur",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shelumiel",
+   "kind": "person",
+   "name": "Shelumiel",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shemaiah",
+   "kind": "person",
+   "name": "Shemaiah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shobal",
+   "kind": "person",
+   "name": "Shobal",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sibbecai",
+   "kind": "person",
+   "name": "Sibbecai",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "talmon",
+   "kind": "person",
+   "name": "Talmon",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "teman",
+   "kind": "person",
+   "name": "Teman",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "uri",
+   "kind": "person",
+   "name": "Uri",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "urijah",
+   "kind": "person",
+   "name": "Urijah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zattu",
+   "kind": "person",
+   "name": "Zattu",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zebul",
+   "kind": "person",
+   "name": "Zebul",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zuar",
+   "kind": "person",
+   "name": "Zuar",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zurishaddai",
+   "kind": "person",
+   "name": "Zurishaddai",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "annas",
+   "kind": "person",
+   "name": "Annas",
+   "verses": 4,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "claudius",
+   "kind": "person",
+   "name": "Claudius",
+   "verses": 4,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "elah-2",
+   "kind": "person",
+   "name": "Elah",
+   "verses": 4,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "merab",
+   "kind": "person",
+   "name": "Merab",
+   "verses": 4,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nadab-2",
+   "kind": "person",
+   "name": "Nadab",
+   "verses": 4,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nathan",
+   "kind": "person",
+   "name": "Nathan",
+   "verses": 4,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pharaoh",
+   "kind": "person",
+   "name": "Pharaoh",
+   "verses": 4,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "pharaoh-7",
+   "kind": "person",
+   "name": "Pharaoh",
+   "verses": 4,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "shallum",
+   "kind": "person",
+   "name": "Shallum",
+   "verses": 4,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sheshbazzar",
+   "kind": "person",
+   "name": "Sheshbazzar",
+   "verses": 4,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "tattenai",
+   "kind": "person",
+   "name": "Tattenai",
+   "verses": 4,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "evilmerodach",
+   "kind": "person",
+   "name": "Evil-merodach",
+   "verses": 3,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gallio",
+   "kind": "person",
+   "name": "Gallio",
+   "verses": 3,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "hosea",
+   "kind": "person",
+   "name": "Hosea",
+   "verses": 3,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jabin",
+   "kind": "person",
+   "name": "Jabin",
+   "verses": 3,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pekahiah",
+   "kind": "person",
+   "name": "Pekahiah",
+   "verses": 3,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shammua-2",
+   "kind": "person",
+   "name": "Shammua",
+   "verses": 3,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shobab",
+   "kind": "person",
+   "name": "Shobab",
+   "verses": 3,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zechariah",
+   "kind": "person",
+   "name": "Zechariah",
+   "verses": 3,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abdon",
+   "kind": "person",
+   "name": "Abdon",
+   "verses": 2,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ananias-3",
+   "kind": "person",
+   "name": "Ananias",
+   "verses": 2,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "azariah-8",
+   "kind": "person",
+   "name": "Azariah",
+   "verses": 2,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "benammi",
+   "kind": "person",
+   "name": "Ben-ammi",
+   "verses": 2,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "chileab",
+   "kind": "person",
+   "name": "Chileab",
+   "verses": 2,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cushanrishathaim",
+   "kind": "person",
+   "name": "Cushan-rishathaim",
+   "verses": 2,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elishah",
+   "kind": "person",
+   "name": "Elishah",
+   "verses": 2,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elon-3",
+   "kind": "person",
+   "name": "Elon",
+   "verses": 2,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "habakkuk",
+   "kind": "person",
+   "name": "Habakkuk",
+   "verses": 2,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ibzan",
+   "kind": "person",
+   "name": "Ibzan",
+   "verses": 2,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ithream",
+   "kind": "person",
+   "name": "Ithream",
+   "verses": 2,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jair-2",
+   "kind": "person",
+   "name": "Jair",
+   "verses": 2,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joel-11",
+   "kind": "person",
+   "name": "Joel",
+   "verses": 2,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "micah-4",
+   "kind": "person",
+   "name": "Micah",
+   "verses": 2,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nergalsarezer-2",
+   "kind": "person",
+   "name": "Nergal-sar-ezer",
+   "verses": 2,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "shamgar",
+   "kind": "person",
+   "name": "Shamgar",
+   "verses": 2,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shephatiah",
+   "kind": "person",
+   "name": "Shephatiah",
+   "verses": 2,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tibni",
+   "kind": "person",
+   "name": "Tibni",
+   "verses": 2,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "caesaraugustus",
+   "kind": "person",
+   "name": "Caesar Augustus",
+   "verses": 1,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "cainan",
+   "kind": "person",
+   "name": "Cainan",
+   "verses": 1,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "deborah",
+   "kind": "person",
+   "name": "Deborah",
+   "verses": 1,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hiel",
+   "kind": "person",
+   "name": "Hiel",
+   "verses": 1,
+   "events": 1,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lysanias",
+   "kind": "person",
+   "name": "Lysanias",
+   "verses": 1,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "malachi",
+   "kind": "person",
+   "name": "Malachi",
+   "verses": 1,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nahum",
+   "kind": "person",
+   "name": "Nahum",
+   "verses": 1,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "obadiah-12",
+   "kind": "person",
+   "name": "Obadiah",
+   "verses": 1,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pharaoh-6",
+   "kind": "person",
+   "name": "Pharaoh",
+   "verses": 1,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "philip-4",
+   "kind": "person",
+   "name": "Philip",
+   "verses": 1,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "quirinius",
+   "kind": "person",
+   "name": "Quirinius",
+   "verses": 1,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "sergius",
+   "kind": "person",
+   "name": "Sergius",
+   "verses": 1,
+   "events": 0,
+   "titles": 1,
+   "passages": 0
+  },
+  {
+   "slug": "tola-2",
+   "kind": "person",
+   "name": "Tola",
+   "verses": 1,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zephaniah-3",
+   "kind": "person",
+   "name": "Zephaniah",
+   "verses": 1,
+   "events": 2,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jerusalem",
+   "kind": "place",
+   "name": "Jerusalem",
+   "verses": 974,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "egypt",
+   "kind": "place",
+   "name": "Egypt",
+   "verses": 708,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "babylon",
+   "kind": "place",
+   "name": "Babylon",
+   "verses": 310,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jordan",
+   "kind": "place",
+   "name": "Jordan",
+   "verses": 205,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "moab-2",
+   "kind": "place",
+   "name": "Moab",
+   "verses": 167,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "assyria",
+   "kind": "place",
+   "name": "Assyria",
+   "verses": 153,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "edom",
+   "kind": "place",
+   "name": "Edom",
+   "verses": 117,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "samaria",
+   "kind": "place",
+   "name": "Samaria",
+   "verses": 114,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "syria",
+   "kind": "place",
+   "name": "Syria",
+   "verses": 109,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "canaan-2",
+   "kind": "place",
+   "name": "Canaan",
+   "verses": 107,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ammon",
+   "kind": "place",
+   "name": "Ammon",
+   "verses": 106,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gilead-4",
+   "kind": "place",
+   "name": "Gilead",
+   "verses": 95,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "chaldea",
+   "kind": "place",
+   "name": "Chaldea",
+   "verses": 85,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "galilee",
+   "kind": "place",
+   "name": "Galilee",
+   "verses": 78,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lebanon",
+   "kind": "place",
+   "name": "Lebanon",
+   "verses": 72,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bethel",
+   "kind": "place",
+   "name": "Bethel",
+   "verses": 71,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tyre",
+   "kind": "place",
+   "name": "Tyre",
+   "verses": 66,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hebron-3",
+   "kind": "place",
+   "name": "Hebron",
+   "verses": 64,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jericho",
+   "kind": "place",
+   "name": "Jericho",
+   "verses": 63,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "damascus",
+   "kind": "place",
+   "name": "Damascus",
+   "verses": 60,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bashan",
+   "kind": "place",
+   "name": "Bashan",
+   "verses": 54,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "midian-2",
+   "kind": "place",
+   "name": "Midian",
+   "verses": 54,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bethlehem",
+   "kind": "place",
+   "name": "Bethlehem",
+   "verses": 53,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "judea",
+   "kind": "place",
+   "name": "Judea",
+   "verses": 52,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sodom",
+   "kind": "place",
+   "name": "Sodom",
+   "verses": 50,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shechem-4",
+   "kind": "place",
+   "name": "Shechem",
+   "verses": 48,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cityofdavid",
+   "kind": "place",
+   "name": "City of David",
+   "verses": 46,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gibeah",
+   "kind": "place",
+   "name": "Gibeah",
+   "verses": 46,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nile",
+   "kind": "place",
+   "name": "Nile",
+   "verses": 46,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "euphrates",
+   "kind": "place",
+   "name": "Euphrates",
+   "verses": 44,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "judaea",
+   "kind": "place",
+   "name": "Judaea",
+   "verses": 44,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "negev",
+   "kind": "place",
+   "name": "Negev",
+   "verses": 43,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gath",
+   "kind": "place",
+   "name": "Gath",
+   "verses": 40,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gibeon",
+   "kind": "place",
+   "name": "Gibeon",
+   "verses": 40,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "heshbon",
+   "kind": "place",
+   "name": "Heshbon",
+   "verses": 39,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shiloh",
+   "kind": "place",
+   "name": "Shiloh",
+   "verses": 38,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sidon-2",
+   "kind": "place",
+   "name": "Sidon",
+   "verses": 37,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "greatsea",
+   "kind": "place",
+   "name": "Great Sea",
+   "verses": 36,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "persia",
+   "kind": "place",
+   "name": "Persia",
+   "verses": 36,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mountseir",
+   "kind": "place",
+   "name": "Mount Seir",
+   "verses": 35,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ai",
+   "kind": "place",
+   "name": "Ai",
+   "verses": 34,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gilgal",
+   "kind": "place",
+   "name": "Gilgal",
+   "verses": 34,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shushan",
+   "kind": "place",
+   "name": "Shushan",
+   "verses": 33,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hamath-2",
+   "kind": "place",
+   "name": "Hamath",
+   "verses": 32,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jezreel-4",
+   "kind": "place",
+   "name": "Jezreel",
+   "verses": 32,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mizpah-3",
+   "kind": "place",
+   "name": "Mizpah",
+   "verses": 32,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nazareth",
+   "kind": "place",
+   "name": "Nazareth",
+   "verses": 32,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mountsinai",
+   "kind": "place",
+   "name": "Mount Sinai",
+   "verses": 31,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "carmel",
+   "kind": "place",
+   "name": "Carmel",
+   "verses": 30,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nineveh",
+   "kind": "place",
+   "name": "Nineveh",
+   "verses": 30,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kadesh",
+   "kind": "place",
+   "name": "Kadesh",
+   "verses": 29,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "amalek-2",
+   "kind": "place",
+   "name": "Amalek",
+   "verses": 28,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "arabah",
+   "kind": "place",
+   "name": "Arabah",
+   "verses": 26,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "dan-2",
+   "kind": "place",
+   "name": "Dan",
+   "verses": 26,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "macedonia",
+   "kind": "place",
+   "name": "Macedonia",
+   "verses": 26,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mountzion",
+   "kind": "place",
+   "name": "Mount Zion",
+   "verses": 25,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cush-4",
+   "kind": "place",
+   "name": "Cush",
+   "verses": 24,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gomorrah",
+   "kind": "place",
+   "name": "Gomorrah",
+   "verses": 24,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "holyplace",
+   "kind": "place",
+   "name": "Holy Place",
+   "verses": 24,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mostholyplace-2",
+   "kind": "place",
+   "name": "Most Holy Place",
+   "verses": 24,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "arnon",
+   "kind": "place",
+   "name": "Arnon",
+   "verses": 23,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "beersheba-2",
+   "kind": "place",
+   "name": "Beersheba",
+   "verses": 23,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gaza",
+   "kind": "place",
+   "name": "Gaza",
+   "verses": 23,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "holyplace-2",
+   "kind": "place",
+   "name": "Holy Place",
+   "verses": 23,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "asia",
+   "kind": "place",
+   "name": "Asia",
+   "verses": 22,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lachish",
+   "kind": "place",
+   "name": "Lachish",
+   "verses": 22,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "philistia",
+   "kind": "place",
+   "name": "Philistia",
+   "verses": 22,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ashdod",
+   "kind": "place",
+   "name": "Ashdod",
+   "verses": 21,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "redsea-2",
+   "kind": "place",
+   "name": "Red Sea",
+   "verses": 21,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "rome",
+   "kind": "place",
+   "name": "Rome",
+   "verses": 21,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "saltsea",
+   "kind": "place",
+   "name": "Salt Sea",
+   "verses": 21,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "caesarea",
+   "kind": "place",
+   "name": "Caesarea",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ekron",
+   "kind": "place",
+   "name": "Ekron",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ephesus",
+   "kind": "place",
+   "name": "Ephesus",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jabeshgilead",
+   "kind": "place",
+   "name": "Jabesh-gilead",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ramah",
+   "kind": "place",
+   "name": "Ramah",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ramothgilead",
+   "kind": "place",
+   "name": "Ramoth-gilead",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sheba-6",
+   "kind": "place",
+   "name": "Sheba",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "susa",
+   "kind": "place",
+   "name": "Susa",
+   "verses": 20,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "garden-of-eden",
+   "kind": "place",
+   "name": "Garden of Eden",
+   "verses": 19,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "kiriathjearim",
+   "kind": "place",
+   "name": "Kiriath-jearim",
+   "verses": 19,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kirjath",
+   "kind": "place",
+   "name": "Kirjath",
+   "verses": 19,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shephelah",
+   "kind": "place",
+   "name": "Shephelah",
+   "verses": 19,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "anathoth-3",
+   "kind": "place",
+   "name": "Anathoth",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "antioch",
+   "kind": "place",
+   "name": "Antioch",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "capernaum",
+   "kind": "place",
+   "name": "Capernaum",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "landoftheeast",
+   "kind": "place",
+   "name": "Land of the East",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mountcarmel",
+   "kind": "place",
+   "name": "Mount Carmel",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mountofolives",
+   "kind": "place",
+   "name": "Mount of Olives",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bethshemesh",
+   "kind": "place",
+   "name": "Beth-shemesh",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "geba",
+   "kind": "place",
+   "name": "Geba",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mahanaim",
+   "kind": "place",
+   "name": "Mahanaim",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "media",
+   "kind": "place",
+   "name": "Media",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "rabbah",
+   "kind": "place",
+   "name": "Rabbah",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zobah",
+   "kind": "place",
+   "name": "Zobah",
+   "verses": 17,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "babylonia",
+   "kind": "place",
+   "name": "Babylonia",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "beyondtheriver",
+   "kind": "place",
+   "name": "Beyond the River",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elam-6",
+   "kind": "place",
+   "name": "Elam",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "keilah-2",
+   "kind": "place",
+   "name": "Keilah",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "libnah",
+   "kind": "place",
+   "name": "Libnah",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mounthermon",
+   "kind": "place",
+   "name": "Mount Hermon",
+   "verses": 16,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gezer",
+   "kind": "place",
+   "name": "Gezer",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jazer",
+   "kind": "place",
+   "name": "Jazer",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "joppa",
+   "kind": "place",
+   "name": "Joppa",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kidron",
+   "kind": "place",
+   "name": "Kidron",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tekoa-2",
+   "kind": "place",
+   "name": "Tekoa",
+   "verses": 14,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "aroer",
+   "kind": "place",
+   "name": "Aroer",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eden-2",
+   "kind": "place",
+   "name": "Eden",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gerar",
+   "kind": "place",
+   "name": "Gerar",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "samaria-2",
+   "kind": "place",
+   "name": "Samaria",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tirzah-2",
+   "kind": "place",
+   "name": "Tirzah",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "wildernessofsinai",
+   "kind": "place",
+   "name": "Wilderness of Sinai",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ziklag",
+   "kind": "place",
+   "name": "Ziklag",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ashkelon",
+   "kind": "place",
+   "name": "Ashkelon",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bethany",
+   "kind": "place",
+   "name": "Bethany",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "corinth",
+   "kind": "place",
+   "name": "Corinth",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cyprus",
+   "kind": "place",
+   "name": "Cyprus",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "haran-4",
+   "kind": "place",
+   "name": "Haran",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lebohamath",
+   "kind": "place",
+   "name": "Lebo-hamath",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "megiddo",
+   "kind": "place",
+   "name": "Megiddo",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "moab-3",
+   "kind": "place",
+   "name": "Moab",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "south-3",
+   "kind": "place",
+   "name": "South",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "succoth",
+   "kind": "place",
+   "name": "Succoth",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "valleyofhinnom",
+   "kind": "place",
+   "name": "Valley of Hinnom",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "aram-4",
+   "kind": "place",
+   "name": "Aram",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "debir-2",
+   "kind": "place",
+   "name": "Debir",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "geshur",
+   "kind": "place",
+   "name": "Geshur",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "goshen",
+   "kind": "place",
+   "name": "Goshen",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hazor",
+   "kind": "place",
+   "name": "Hazor",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mesopotamia",
+   "kind": "place",
+   "name": "Mesopotamia",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "michmash",
+   "kind": "place",
+   "name": "Michmash",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "riblah",
+   "kind": "place",
+   "name": "Riblah",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zorah",
+   "kind": "place",
+   "name": "Zorah",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "achaia",
+   "kind": "place",
+   "name": "Achaia",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "dibon",
+   "kind": "place",
+   "name": "Dibon",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ethiopia",
+   "kind": "place",
+   "name": "Ethiopia",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hormah",
+   "kind": "place",
+   "name": "Hormah",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kadeshbarnea",
+   "kind": "place",
+   "name": "Kadeshbarnea",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kedar-2",
+   "kind": "place",
+   "name": "Kedar",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mounthor",
+   "kind": "place",
+   "name": "Mount Hor",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "north",
+   "kind": "place",
+   "name": "North",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ophir-2",
+   "kind": "place",
+   "name": "Ophir",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "paran",
+   "kind": "place",
+   "name": "Paran",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "seaofgalilee",
+   "kind": "place",
+   "name": "Sea of Galilee",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zoar",
+   "kind": "place",
+   "name": "Zoar",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "adullam",
+   "kind": "place",
+   "name": "Adullam",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "beeroth",
+   "kind": "place",
+   "name": "Beeroth",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "brookofegypt",
+   "kind": "place",
+   "name": "Brook of Egypt",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "crete",
+   "kind": "place",
+   "name": "Crete",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jahaz",
+   "kind": "place",
+   "name": "Jahaz",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mamre-2",
+   "kind": "place",
+   "name": "Mamre",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mounttabor",
+   "kind": "place",
+   "name": "Mount Tabor",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "peor",
+   "kind": "place",
+   "name": "Peor",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shunem",
+   "kind": "place",
+   "name": "Shunem",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "thessalonica",
+   "kind": "place",
+   "name": "Thessalonica",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "timnah-2",
+   "kind": "place",
+   "name": "Timnah",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "topheth",
+   "kind": "place",
+   "name": "Topheth",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zoan",
+   "kind": "place",
+   "name": "Zoan",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "aijalon",
+   "kind": "place",
+   "name": "Aijalon",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "athens",
+   "kind": "place",
+   "name": "Athens",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bethshan",
+   "kind": "place",
+   "name": "Beth-shan",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bozrah",
+   "kind": "place",
+   "name": "Bozrah",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "chebar",
+   "kind": "place",
+   "name": "Chebar",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cilicia",
+   "kind": "place",
+   "name": "Cilicia",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eglon-2",
+   "kind": "place",
+   "name": "Eglon",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eshtaol",
+   "kind": "place",
+   "name": "Eshtaol",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kiriathaim",
+   "kind": "place",
+   "name": "Kiriathaim",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "maacah-9",
+   "kind": "place",
+   "name": "Maacah",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "makkedah",
+   "kind": "place",
+   "name": "Makkedah",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "memphis",
+   "kind": "place",
+   "name": "Memphis",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mountgilboa",
+   "kind": "place",
+   "name": "Mount Gilboa",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "netophah",
+   "kind": "place",
+   "name": "Netophah",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ophel",
+   "kind": "place",
+   "name": "Ophel",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pisgah",
+   "kind": "place",
+   "name": "Pisgah",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sion",
+   "kind": "place",
+   "name": "Sion",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "syria-2",
+   "kind": "place",
+   "name": "Syria",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "valleyofrephaim",
+   "kind": "place",
+   "name": "Valley of Rephaim",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "valleyofthejordan",
+   "kind": "place",
+   "name": "Valley of the Jordan",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zin",
+   "kind": "place",
+   "name": "Zin",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ar",
+   "kind": "place",
+   "name": "Ar",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ashtaroth",
+   "kind": "place",
+   "name": "Ashtaroth",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "azekah",
+   "kind": "place",
+   "name": "Azekah",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "bahurim",
+   "kind": "place",
+   "name": "Bahurim",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "chinnereth",
+   "kind": "place",
+   "name": "Chinnereth",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cyrene",
+   "kind": "place",
+   "name": "Cyrene",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "dedan-3",
+   "kind": "place",
+   "name": "Dedan",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "edrei",
+   "kind": "place",
+   "name": "Edrei",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eziongeber",
+   "kind": "place",
+   "name": "Ezion-geber",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "greece",
+   "kind": "place",
+   "name": "Greece",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "harim-5",
+   "kind": "place",
+   "name": "Harim",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hazeroth",
+   "kind": "place",
+   "name": "Hazeroth",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jabbok",
+   "kind": "place",
+   "name": "Jabbok",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "judea-2",
+   "kind": "place",
+   "name": "Judea",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "laodicea",
+   "kind": "place",
+   "name": "Laodicea",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lod",
+   "kind": "place",
+   "name": "Lod",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "meshech-2",
+   "kind": "place",
+   "name": "Meshech",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nebo-2",
+   "kind": "place",
+   "name": "Nebo",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "nob",
+   "kind": "place",
+   "name": "Nob",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "noph",
+   "kind": "place",
+   "name": "Noph",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sharon",
+   "kind": "place",
+   "name": "Sharon",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "taanach",
+   "kind": "place",
+   "name": "Taanach",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tahpanhes",
+   "kind": "place",
+   "name": "Tahpanhes",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abelbethmaacah",
+   "kind": "place",
+   "name": "Abel-beth-maacah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "arabia",
+   "kind": "place",
+   "name": "Arabia",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "arpad",
+   "kind": "place",
+   "name": "Arpad",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "berea",
+   "kind": "place",
+   "name": "Berea",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "dor",
+   "kind": "place",
+   "name": "Dor",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elath",
+   "kind": "place",
+   "name": "Elath",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "engedi",
+   "kind": "place",
+   "name": "Engedi",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "enrogel",
+   "kind": "place",
+   "name": "En-rogel",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "galatia",
+   "kind": "place",
+   "name": "Galatia",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gihon-2",
+   "kind": "place",
+   "name": "Gihon",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "havvothjair",
+   "kind": "place",
+   "name": "Havvoth-jair",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "houseoftheforestoflebanon",
+   "kind": "place",
+   "name": "House of the Forest of Lebanon",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "hushah-2",
+   "kind": "place",
+   "name": "Hushah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "iconium",
+   "kind": "place",
+   "name": "Iconium",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jarmuth",
+   "kind": "place",
+   "name": "Jarmuth",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jattir",
+   "kind": "place",
+   "name": "Jattir",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jeshimon",
+   "kind": "place",
+   "name": "Jeshimon",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kishon",
+   "kind": "place",
+   "name": "Kishon",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lystra",
+   "kind": "place",
+   "name": "Lystra",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "machpelah",
+   "kind": "place",
+   "name": "Machpelah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mareshah-3",
+   "kind": "place",
+   "name": "Mareshah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "millo",
+   "kind": "place",
+   "name": "Millo",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "naioth",
+   "kind": "place",
+   "name": "Naioth",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "peniel",
+   "kind": "place",
+   "name": "Peniel",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "philippi",
+   "kind": "place",
+   "name": "Philippi",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "rahab-2",
+   "kind": "place",
+   "name": "Rahab",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shittim",
+   "kind": "place",
+   "name": "Shittim",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "shur",
+   "kind": "place",
+   "name": "Shur",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sibmah",
+   "kind": "place",
+   "name": "Sibmah",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "sin",
+   "kind": "place",
+   "name": "Sin",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tarshish-5",
+   "kind": "place",
+   "name": "Tarshish",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "teman-2",
+   "kind": "place",
+   "name": "Teman",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "thebes",
+   "kind": "place",
+   "name": "Thebes",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "troas",
+   "kind": "place",
+   "name": "Troas",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "valleyofsalt",
+   "kind": "place",
+   "name": "Valley of Salt",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ziph-3",
+   "kind": "place",
+   "name": "Ziph",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "abarim",
+   "kind": "place",
+   "name": "Abarim",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "admah",
+   "kind": "place",
+   "name": "Admah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "angle",
+   "kind": "place",
+   "name": "Angle",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "cornergate",
+   "kind": "place",
+   "name": "Corner Gate",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "derbe",
+   "kind": "place",
+   "name": "Derbe",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "elealeh",
+   "kind": "place",
+   "name": "Elealeh",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "eshtemoa-3",
+   "kind": "place",
+   "name": "Eshtemoa",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gibbethon",
+   "kind": "place",
+   "name": "Gibbethon",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "gozan",
+   "kind": "place",
+   "name": "Gozan",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "italy",
+   "kind": "place",
+   "name": "Italy",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "jericho-2",
+   "kind": "place",
+   "name": "Jericho",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kibrothhattaavah",
+   "kind": "place",
+   "name": "Kibroth-hattaavah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kir",
+   "kind": "place",
+   "name": "Kir",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kirhareseth",
+   "kind": "place",
+   "name": "Kir-hareseth",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "kirjathsannah",
+   "kind": "place",
+   "name": "Kirjath-sannah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "laish-2",
+   "kind": "place",
+   "name": "Laish",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "lowerbethhoron",
+   "kind": "place",
+   "name": "Lower Beth-horon",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "maon-2",
+   "kind": "place",
+   "name": "Maon",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "marah",
+   "kind": "place",
+   "name": "Marah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mede",
+   "kind": "place",
+   "name": "Mede",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "medeba",
+   "kind": "place",
+   "name": "Medeba",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mephaath",
+   "kind": "place",
+   "name": "Mephaath",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mizpah",
+   "kind": "place",
+   "name": "Mizpah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mountebal",
+   "kind": "place",
+   "name": "Mount Ebal",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "mountgerizim",
+   "kind": "place",
+   "name": "Mount Gerizim",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "on-2",
+   "kind": "place",
+   "name": "On",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ono",
+   "kind": "place",
+   "name": "Ono",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "ophrah-3",
+   "kind": "place",
+   "name": "Ophrah",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pamphylia",
+   "kind": "place",
+   "name": "Pamphylia",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pathros",
+   "kind": "place",
+   "name": "Pathros",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "pirathon",
+   "kind": "place",
+   "name": "Pirathon",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "rameses",
+   "kind": "place",
+   "name": "Rameses",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "redsea-3",
+   "kind": "place",
+   "name": "Red Sea",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "rephidim",
+   "kind": "place",
+   "name": "Rephidim",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "siloam",
+   "kind": "place",
+   "name": "Siloam",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tarsus",
+   "kind": "place",
+   "name": "Tarsus",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "tubal-2",
+   "kind": "place",
+   "name": "Tubal",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "valleyofachor",
+   "kind": "place",
+   "name": "Valley of Achor",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "valleyofjezreel",
+   "kind": "place",
+   "name": "Valley of Jezreel",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "watergate",
+   "kind": "place",
+   "name": "Water Gate",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "zeboiim",
+   "kind": "place",
+   "name": "Zeboiim",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 0
+  },
+  {
+   "slug": "solomons-temple",
+   "kind": "object",
+   "name": "Solomon's Temple",
+   "verses": 348,
+   "events": 0,
+   "titles": 0,
+   "passages": 5
+  },
+  {
+   "slug": "tabernacle",
+   "kind": "object",
+   "name": "Tabernacle",
+   "verses": 227,
+   "events": 0,
+   "titles": 0,
+   "passages": 14
+  },
+  {
+   "slug": "ark-of-the-covenant",
+   "kind": "object",
+   "name": "Ark of the Covenant",
+   "verses": 171,
+   "events": 0,
+   "titles": 0,
+   "passages": 14
+  },
+  {
+   "slug": "second-temple",
+   "kind": "object",
+   "name": "Second Temple",
+   "verses": 86,
+   "events": 0,
+   "titles": 0,
+   "passages": 5
+  },
+  {
+   "slug": "herods-temple",
+   "kind": "object",
+   "name": "Herod's Temple",
+   "verses": 77,
+   "events": 0,
+   "titles": 0,
+   "passages": 7
+  },
+  {
+   "slug": "ezekiels-temple",
+   "kind": "object",
+   "name": "Ezekiel's Temple",
+   "verses": 48,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "bronze-altar",
+   "kind": "object",
+   "name": "Bronze Altar",
+   "verses": 41,
+   "events": 0,
+   "titles": 0,
+   "passages": 8
+  },
+  {
+   "slug": "high-priests-ephod",
+   "kind": "object",
+   "name": "Ephod of the High Priest",
+   "verses": 33,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "breastpiece-of-judgment",
+   "kind": "object",
+   "name": "Breastpiece of Judgment",
+   "verses": 28,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "noahs-ark",
+   "kind": "object",
+   "name": "Noah's Ark",
+   "verses": 28,
+   "events": 0,
+   "titles": 0,
+   "passages": 8
+  },
+  {
+   "slug": "holy-of-holies",
+   "kind": "object",
+   "name": "Holy of Holies",
+   "verses": 26,
+   "events": 0,
+   "titles": 0,
+   "passages": 6
+  },
+  {
+   "slug": "table-of-showbread",
+   "kind": "object",
+   "name": "Table of Showbread",
+   "verses": 26,
+   "events": 0,
+   "titles": 0,
+   "passages": 8
+  },
+  {
+   "slug": "tablets-of-the-covenant",
+   "kind": "object",
+   "name": "Tablets of the Covenant",
+   "verses": 24,
+   "events": 0,
+   "titles": 0,
+   "passages": 10
+  },
+  {
+   "slug": "menorah",
+   "kind": "object",
+   "name": "Golden Lampstand",
+   "verses": 23,
+   "events": 0,
+   "titles": 0,
+   "passages": 6
+  },
+  {
+   "slug": "mercy-seat",
+   "kind": "object",
+   "name": "Mercy Seat",
+   "verses": 23,
+   "events": 0,
+   "titles": 0,
+   "passages": 8
+  },
+  {
+   "slug": "veil-of-the-sanctuary",
+   "kind": "object",
+   "name": "Veil of the Sanctuary",
+   "verses": 23,
+   "events": 0,
+   "titles": 0,
+   "passages": 8
+  },
+  {
+   "slug": "bronze-sea",
+   "kind": "object",
+   "name": "Bronze Sea",
+   "verses": 18,
+   "events": 0,
+   "titles": 0,
+   "passages": 6
+  },
+  {
+   "slug": "altar-of-incense",
+   "kind": "object",
+   "name": "Altar of Incense",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 9
+  },
+  {
+   "slug": "sauls-spear",
+   "kind": "object",
+   "name": "Saul's Spear",
+   "verses": 13,
+   "events": 0,
+   "titles": 0,
+   "passages": 5
+  },
+  {
+   "slug": "aarons-rod",
+   "kind": "object",
+   "name": "Aaron's Rod",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 7
+  },
+  {
+   "slug": "solomons-palace",
+   "kind": "object",
+   "name": "Solomon's Palace",
+   "verses": 12,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "cross-of-christ",
+   "kind": "object",
+   "name": "Cross of Christ",
+   "verses": 11,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "bronze-laver",
+   "kind": "object",
+   "name": "Bronze Laver",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 6
+  },
+  {
+   "slug": "golden-calf",
+   "kind": "object",
+   "name": "Golden Calf",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 5
+  },
+  {
+   "slug": "nebuchadnezzars-image",
+   "kind": "object",
+   "name": "Nebuchadnezzar's Golden Image",
+   "verses": 10,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "moses-staff",
+   "kind": "object",
+   "name": "Staff of Moses",
+   "verses": 9,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "micahs-image",
+   "kind": "object",
+   "name": "Micah's Graven Image",
+   "verses": 8,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "jordan-memorial-stones",
+   "kind": "object",
+   "name": "Twelve Stones from the Jordan",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "tree-of-knowledge-of-good-and-evil",
+   "kind": "object",
+   "name": "Tree of the Knowledge of Good and Evil",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "tree-of-life",
+   "kind": "object",
+   "name": "Tree of Life",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "urim-and-thummim",
+   "kind": "object",
+   "name": "Urim and Thummim",
+   "verses": 7,
+   "events": 0,
+   "titles": 0,
+   "passages": 7
+  },
+  {
+   "slug": "altar-of-witness",
+   "kind": "object",
+   "name": "Altar of Witness (Ed)",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "jeroboams-golden-calves",
+   "kind": "object",
+   "name": "Jeroboam's Golden Calves",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 5
+  },
+  {
+   "slug": "solomons-golden-shields",
+   "kind": "object",
+   "name": "Solomon's Golden Shields",
+   "verses": 6,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "elijahs-mantle",
+   "kind": "object",
+   "name": "Elijah's Mantle",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "holy-crown",
+   "kind": "object",
+   "name": "Holy Crown",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "josephs-tunic",
+   "kind": "object",
+   "name": "Joseph's Tunic",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "tent-of-meeting-outside-the-camp",
+   "kind": "object",
+   "name": "Tent of Meeting outside the Camp",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "thirty-pieces-of-silver",
+   "kind": "object",
+   "name": "Thirty Pieces of Silver",
+   "verses": 5,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "crown-of-thorns",
+   "kind": "object",
+   "name": "Crown of Thorns",
+   "verses": 4,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "davids-tent-for-the-ark",
+   "kind": "object",
+   "name": "David's Tent for the Ark",
+   "verses": 4,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "inscription-on-the-cross",
+   "kind": "object",
+   "name": "Inscription on the Cross",
+   "verses": 4,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "moses-veil",
+   "kind": "object",
+   "name": "Moses' Veil",
+   "verses": 4,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "nebuchadnezzars-dream-image",
+   "kind": "object",
+   "name": "Great Image of Nebuchadnezzar's Dream",
+   "verses": 4,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "nehushtan",
+   "kind": "object",
+   "name": "Bronze Serpent (Nehushtan)",
+   "verses": 4,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "silver-trumpets",
+   "kind": "object",
+   "name": "Two Silver Trumpets",
+   "verses": 4,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "solomons-throne",
+   "kind": "object",
+   "name": "Solomon's Ivory Throne",
+   "verses": 4,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "steps-of-ahaz",
+   "kind": "object",
+   "name": "Steps of Ahaz",
+   "verses": 4,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "goliaths-sword",
+   "kind": "object",
+   "name": "Sword of Goliath",
+   "verses": 3,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "heavenly-sanctuary",
+   "kind": "object",
+   "name": "Heavenly Sanctuary",
+   "verses": 3,
+   "events": 0,
+   "titles": 0,
+   "passages": 5
+  },
+  {
+   "slug": "jacobs-pillar",
+   "kind": "object",
+   "name": "Jacob's Pillar at Bethel",
+   "verses": 3,
+   "events": 0,
+   "titles": 0,
+   "passages": 3
+  },
+  {
+   "slug": "ark-of-bulrushes",
+   "kind": "object",
+   "name": "Ark of Bulrushes",
+   "verses": 2,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "boaz-pillar",
+   "kind": "object",
+   "name": "Boaz",
+   "verses": 2,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "book-of-jashar",
+   "kind": "object",
+   "name": "Book of Jashar",
+   "verses": 2,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "jachin-pillar",
+   "kind": "object",
+   "name": "Jachin",
+   "verses": 2,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "jar-of-manna",
+   "kind": "object",
+   "name": "Jar of Manna",
+   "verses": 2,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "rahabs-scarlet-cord",
+   "kind": "object",
+   "name": "Rahab's Scarlet Cord",
+   "verses": 2,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "tower-of-babel",
+   "kind": "object",
+   "name": "Tower of Babel",
+   "verses": 2,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "altar-el-elohe-israel",
+   "kind": "object",
+   "name": "Altar El-elohe-Israel",
+   "verses": 1,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "altar-the-lord-is-my-banner",
+   "kind": "object",
+   "name": "Altar 'The LORD Is My Banner' (Jehovah-nissi)",
+   "verses": 1,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "altar-the-lord-is-peace",
+   "kind": "object",
+   "name": "Altar 'The LORD Is Peace' (Jehovah-shalom)",
+   "verses": 1,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "flaming-sword",
+   "kind": "object",
+   "name": "Flaming Sword",
+   "verses": 1,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "gideons-ephod",
+   "kind": "object",
+   "name": "Gideon's Ephod",
+   "verses": 1,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "hezekiahs-tunnel",
+   "kind": "object",
+   "name": "Hezekiah's Tunnel",
+   "verses": 1,
+   "events": 0,
+   "titles": 0,
+   "passages": 4
+  },
+  {
+   "slug": "ogs-bed",
+   "kind": "object",
+   "name": "Og's Iron Bed",
+   "verses": 1,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  },
+  {
+   "slug": "seamless-tunic",
+   "kind": "object",
+   "name": "Seamless Tunic of Jesus",
+   "verses": 1,
+   "events": 0,
+   "titles": 0,
+   "passages": 2
+  },
+  {
+   "slug": "tower-of-siloam",
+   "kind": "object",
+   "name": "Tower of Siloam",
+   "verses": 1,
+   "events": 0,
+   "titles": 0,
+   "passages": 1
+  }
+ ]
+}

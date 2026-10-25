@@ -1,0 +1,26 @@
+{
+ "slug": "derbe",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.307378+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Derbe is where Paul and Barnabas fled and preached the gospel and taught many, which goes beyond the summary.",
+  "clauses": [
+   {
+    "english": "was where Paul and Barnabas fled, preached the gospel and taught many",
+    "references": [
+     "ACT 14:6",
+     "ACT 14:20-21"
+    ],
+    "quote": "when they had preached the gospel to that city, and had taught many"
+   }
+  ],
+  "doubts": [
+   "ACT 16:1 and ACT 20:4 only mention Timotheus and Gaius of Derbe, so they were left out as bare mentions."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

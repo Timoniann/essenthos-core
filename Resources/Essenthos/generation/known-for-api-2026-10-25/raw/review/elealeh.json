@@ -1,0 +1,19 @@
+{
+ "slug": "elealeh",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.558532+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було збудоване синами Рувимовими",
+    "deu": "wurde von den Kindern Rubens gebaut",
+    "spa": "fue edificado por los hijos de Rubén",
+    "why": "Ukrainian verb changed to neuter to agree with the neuter place name Ел'але."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

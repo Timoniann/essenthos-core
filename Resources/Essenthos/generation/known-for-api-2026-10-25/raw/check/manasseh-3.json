@@ -1,0 +1,48 @@
+{
+ "slug": "manasseh-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.940257+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "rebuilt the high places and built altars for the host of heaven in the house of the LORD",
+    "references": [
+     "2KI 21:3-5"
+    ],
+    "ukr": "знову побудував узвишшя і збудував жертовники для всіх небесних світил у Господньому домі",
+    "deu": "baute die Höhen wieder auf und baute allem Heer des Himmels Altäre im Hause des HERRN",
+    "spa": "volvió a edificar los altos y edificó altares para todo el ejército del cielo en la casa del SEÑOR"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "shed innocent blood in great measure and led Judah into sin",
+    "references": [
+     "2KI 21:9",
+     "2KI 21:16"
+    ],
+    "ukr": "пролив дуже багато невинної крові та ввів Юду в гріх",
+    "deu": "vergoss sehr viel unschuldiges Blut und ließ Juda sündigen",
+    "spa": "derramó mucha sangre inocente en gran manera e hizo pecar a Judá"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by the Assyrians in chains to Babylon, and after he prayed was brought back to Jerusalem",
+    "references": [
+     "2CH 33:11-13"
+    ],
+    "ukr": "був відведений асирійцями в кайданах до Вавилону, а після того як помолився, був повернений до Єрусалиму",
+    "deu": "wurde von den Assyrern in Ketten nach Babel gebracht und nach seinem Gebet wieder nach Jerusalem zurückgebracht",
+    "spa": "fue llevado por los asirios con cadenas a Babilonia, y después de orar fue vuelto a Jerusalem"
+   }
+  ],
+  "note": "The line omits that he made his son pass through the fire and later removed the foreign gods and altars (2KI 21:6; 2CH 33:15)."
+ },
+ "problems": [],
+ "attempts": []
+}

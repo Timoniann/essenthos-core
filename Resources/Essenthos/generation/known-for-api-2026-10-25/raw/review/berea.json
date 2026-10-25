@@ -1,0 +1,31 @@
+{
+ "slug": "berea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.416204+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, куди вночі відіслали Павла й Силу і де вони пішли в синагогу",
+    "deu": "war der Ort, wohin Paulus und Silas bei Nacht geschickt wurden und wo sie in die Synagoge gingen",
+    "spa": "fue el lugar adonde enviaron de noche a Pablo y a Silas, y donde entraron en la sinagoga",
+    "why": "Removed 'юдейську' and 'de los Judíos', which the English lacks; replaced Luther's old 'abgefertigt' and 'Judenschule' with modern 'geschickt' and 'Synagoge'."
+   },
+   {
+    "ukr": "була місцем, де люди прийняли слово з повним запалом і щодня досліджували Писання",
+    "deu": "war der Ort, wo die Leute das Wort bereitwillig aufnahmen und täglich in den Schriften forschten",
+    "spa": "fue el lugar donde la gente recibió la palabra con toda disposición y escudriñó cada día las Escrituras",
+    "why": "Replaced the old German 'ganz willig' and singular 'Schrift' with modern 'bereitwillig' and 'den Schriften'; replaced the archaic Spanish 'solicitud' with 'disposición'."
+   },
+   {
+    "ukr": "була місцем, куди прибули солунські юдеї і де баламутили народ",
+    "deu": "war der Ort, wohin die Juden von Thessalonich kamen und das Volk aufwiegelten",
+    "spa": "fue el lugar adonde fueron los judíos de Tesalónica y alborotaron al pueblo",
+    "why": "Replaced the old 'bewegten' with 'aufwiegelten' and the old 'tumultuaron' with 'alborotaron'; lower-cased 'judíos'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

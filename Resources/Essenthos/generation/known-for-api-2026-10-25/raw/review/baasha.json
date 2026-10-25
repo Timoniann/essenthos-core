@@ -1,0 +1,31 @@
+{
+ "slug": "baasha",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.586922+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "будував Раму, щоб не дати нікому від Аси виходити та входити",
+    "deu": "baute Rama, damit niemand auf Asas Seite aus und ein ziehen sollte",
+    "spa": "edificó Rama para no dejar salir ni entrar a ninguno de Asa",
+    "why": ""
+   },
+   {
+    "ukr": "побив увесь дім Єровоама",
+    "deu": "schlug das ganze Haus Jerobeams",
+    "spa": "hirió toda la casa de Jeroboam",
+    "why": ""
+   },
+   {
+    "ukr": "був попереджений Господом через Єгу, що його дім буде вигублений",
+    "deu": "wurde vom HERRN durch Jehu gewarnt, dass sein Haus weggenommen werden würde",
+    "spa": "fue advertido por el SEÑOR por medio de Jehú de que su casa sería barrida",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "sidon-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.570825+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "почув від Господа через Єзекиїля, що Він проти нього",
+    "deu": "erfuhr vom HERRN durch Hesekiel, dass er gegen Sidon sei",
+    "spa": "fue advertido por el SEÑOR, por medio de Ezequiel, de que estaba contra él",
+    "why": "German: old spelling «daß» changed to modern «dass»."
+   },
+   {
+    "ukr": "був місцем, де пристав корабель Павла і де йому дозволили піти до друзів",
+    "deu": "war der Ort, wo das Schiff des Paulus anlegte und ihm erlaubt wurde, zu seinen Freunden zu gehen",
+    "spa": "fue el lugar donde llegó la nave de Pablo y donde se le permitió ir a visitar a sus amigos",
+    "why": "Ukrainian: verb made masculine to agree with Сидон («був»); Spanish: «ir a sus amigos» changed to «ir a visitar a sus amigos»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

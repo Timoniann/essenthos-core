@@ -1,0 +1,19 @@
+{
+ "slug": "naphtali",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.154571+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "народився Якову і був названий Рахіллю, яка боролася із сестрою",
+    "deu": "wurde Jakob geboren und von Rahel benannt, die mit ihrer Schwester gerungen hatte",
+    "spa": "nació a Jacob y fue nombrado por Rachêl, quien había luchado con su hermana",
+    "why": "Ukrainian: restored the passive form with Rachel as agent instead of making her the subject. German: added the missing clause about her wrestling with her sister. Spanish: changed 'tras luchar' to the relative clause 'quien había luchado'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,40 @@
+{
+ "slug": "ashdod",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.738413+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Ashdod is the Philistine city where the captured ark of God was taken, Dagon fell before it and the LORD struck the people, and it was later taken by Tartan.",
+  "clauses": [
+   {
+    "english": "was where the captured ark of God was set beside Dagon, who fell on his face before it",
+    "references": [
+     "1SA 5:1-4"
+    ],
+    "quote": "Dagon was fallen upon his face to the earth before the ark of the LORD"
+   },
+   {
+    "english": "was struck by the hand of the LORD with emerods while the ark was there",
+    "references": [
+     "1SA 5:6-7"
+    ],
+    "quote": "the hand of the LORD was heavy upon them of Ashdod, and he destroyed them"
+   },
+   {
+    "english": "was fought against and taken by Tartan, sent by Sargon king of Assyria",
+    "references": [
+     "ISA 20:1"
+    ],
+    "quote": "fought against Ashdod, and took it"
+   }
+  ],
+  "doubts": [
+   "ACT 8:40 names Azotus (Greek form of Ashdod), where Philip was found; left out as a different spelling and not an event of the place.",
+   "2CH 26:6 (Uzziah breaking down the wall of Ashdod) was left out as a lesser event, as were the prophetic threats in Amos, Zephaniah and Zechariah."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

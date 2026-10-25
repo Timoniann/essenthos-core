@@ -1,0 +1,35 @@
+{
+ "slug": "jael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:48:57.234201+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "took Sisera into her tent and killed him by driving a tent nail into his temples as he slept",
+    "references": [
+     "JDG 4:18-21"
+    ],
+    "ukr": "Прийняла Сісеру до свого намету і вбила його, вбивши йому кілок у скроню, коли він спав",
+    "deu": "Nahm Sisera in ihre Hütte auf und tötete ihn, indem sie ihm den Nagel der Hütte durch die Schläfe schlug, als er schlief",
+    "spa": "Recibió a Sísara en su tienda y lo mató clavándole una estaca de la tienda por las sienes mientras dormía"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse is a pronouncement of blessing ('shall she be'), not a blessing that already happened.",
+    "english": "was pronounced blessed above women in the tent",
+    "references": [
+     "JDG 5:24"
+    ],
+    "ukr": "Була проголошена благословенною між жінками в наметі",
+    "deu": "Wurde gesegnet genannt unter den Weibern in der Hütte",
+    "spa": "Fue declarada bendita entre las mujeres en la tienda"
+   }
+  ],
+  "note": ""
+ },
+ "problems": []
+}

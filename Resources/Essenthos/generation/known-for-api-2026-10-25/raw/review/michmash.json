@@ -1,0 +1,25 @@
+{
+ "slug": "michmash",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.069926+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де филистимляни таборували проти Ізраїля",
+    "deu": "war der Ort, an dem die Philister sich gegen Israel lagerten",
+    "spa": "fue el lugar donde los filisteos establecieron su campamento contra Israel",
+    "why": "Spanish: lowercased 'filisteos' and replaced the old-fashioned 'asentaron campo' with modern 'establecieron su campamento'."
+   },
+   {
+    "ukr": "був початком, звідки Ізраїль бив филистимлян аж до Айялону",
+    "deu": "war der Ausgangspunkt, von dem aus Israel die Philister bis Ajalon schlug",
+    "spa": "fue el punto de partida desde donde Israel derrotó a los filisteos hasta Ajalón",
+    "why": "Spanish: lowercased 'filisteos' and replaced the old-fashioned 'hirió' with modern 'derrotó'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

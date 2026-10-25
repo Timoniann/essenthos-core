@@ -1,0 +1,36 @@
+{
+ "slug": "makkedah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.179448+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say the kings hid from Joshua.",
+    "english": "was where five kings hid in a cave",
+    "references": [
+     "JOS 10:16-17"
+    ],
+    "ukr": "було місцем, де п'ять царів сховалися в печері",
+    "deu": "war der Ort, wo sich fünf Könige in einer Höhle versteckten",
+    "spa": "fue el lugar donde cinco reyes se escondieron en una cueva"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by Joshua and struck with the sword, and its king destroyed",
+    "references": [
+     "JOS 10:28"
+    ],
+    "ukr": "була здобута Ісусом і побита вістрям меча, а її цар знищений",
+    "deu": "wurde von Josua gewonnen und mit der Schärfe des Schwerts geschlagen, und sein König vernichtet",
+    "spa": "fue tomada por Josué y puesta a cuchillo, y su rey destruido"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

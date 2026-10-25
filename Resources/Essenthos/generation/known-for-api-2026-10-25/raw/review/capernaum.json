@@ -1,0 +1,25 @@
+{
+ "slug": "capernaum",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.654865+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Ісус оселився, покинувши Назарет",
+    "deu": "war der Ort, wo Jesus wohnte, nachdem er Nazareth verlassen hatte",
+    "spa": "fue el lugar donde Jesús habitó después de dejar Nazaret",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де Ісус навчав у синагозі в суботу",
+    "deu": "war der Ort, wo Jesus am Sabbat in der Synagoge lehrte",
+    "spa": "fue el lugar donde Jesús enseñó en la sinagoga en sábado",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

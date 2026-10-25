@@ -1,0 +1,33 @@
+{
+ "slug": "golden-calf",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:47:47.439648+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was made of the golden calf, how it was worshipped, and how it was destroyed.",
+  "clauses": [
+   {
+    "english": "was made by Aaron from the people's golden earrings and worshipped with sacrifices as the god that brought Israel out of Egypt",
+    "references": [
+     "EXO 32:2-4",
+     "EXO 32:8"
+    ],
+    "quote": "they have made them a molten calf, and have worshipped it, and have sacrificed thereunto"
+   },
+   {
+    "english": "was burnt by Moses, ground to powder, scattered on the water, and given to the Israelites to drink",
+    "references": [
+     "EXO 32:20"
+    ],
+    "quote": "took the calf which they had made, and burnt it in the fire, and ground it to powder"
+   }
+  ],
+  "doubts": [
+   "NEH 9:18, PSA 106:19 and ACT 7:41 only repeat the event, so they are not cited.",
+   "The line leaves out the plague and the slaying of three thousand, which came as punishment on the people and not through the calf itself."
+  ]
+ },
+ "problems": []
+}

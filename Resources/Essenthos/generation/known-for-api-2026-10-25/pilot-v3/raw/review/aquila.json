@@ -1,0 +1,25 @@
+{
+ "slug": "aquila",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:09:22.466471+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прийняв з Прискиллою Аполлоса і докладніше пояснив йому дорогу Божу",
+    "deu": "nahm mit Priscilla den Apollos zu sich und legte ihm den Weg Gottes genauer aus",
+    "spa": "tomó con Priscila a Apolos y le declaró más particularmente el camino de Dios",
+    "why": ""
+   },
+   {
+    "ukr": "поклали з Прискиллою свої голови за життя Павла",
+    "deu": "gaben mit Priscilla ihren eigenen Hals für das Leben des Paulus hin",
+    "spa": "pusieron con Priscila sus propios cuellos por la vida de Pablo",
+    "why": "The English has the plural 'their own necks', so I made the verb plural and added 'own' in all three languages; the German also now says 'hin' instead of the archaic 'dar'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

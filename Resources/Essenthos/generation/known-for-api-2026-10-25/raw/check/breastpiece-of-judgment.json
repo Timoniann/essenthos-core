@@ -1,0 +1,37 @@
+{
+ "slug": "breastpiece-of-judgment",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.203311+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "bore the names of the children of Israel on Aaron's heart as a memorial before the LORD",
+    "references": [
+     "EXO 28:29"
+    ],
+    "ukr": "носив імена Ізраїлевих синів на серці Аарона на пам'ять перед Господнім лицем",
+    "deu": "trug die Namen der Kinder Israel auf dem Herzen Aarons zum Gedächtnis vor dem HERRN",
+    "spa": "llevó los nombres de los hijos de Israel sobre el corazón de Aarón para memoria delante del SEÑOR"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "held the Urim and the Thummim, which Aaron wore on his heart before the LORD",
+    "references": [
+     "EXO 28:30",
+     "LEV 8:8"
+    ],
+    "ukr": "містив Урім та Туммім, які Аарон носив на серці перед Господнім лицем",
+    "deu": "enthielt Licht und Recht, die Aaron auf dem Herzen trug vor dem HERRN",
+    "spa": "contuvo el Urim y Thummim, que Aarón llevaba sobre el corazón delante del SEÑOR"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

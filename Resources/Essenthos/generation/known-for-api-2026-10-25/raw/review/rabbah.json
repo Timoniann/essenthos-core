@@ -1,0 +1,25 @@
+{
+ "slug": "rabbah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.100461+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "зазнала нападу Йоава і була здобута Давидом, який узяв корону її царя",
+    "deu": "wurde von Joab angegriffen und von David eingenommen, der die Krone ihres Königs nahm",
+    "spa": "fue atacada por Joab y tomada por David, que tomó la corona de su rey",
+    "why": ""
+   },
+   {
+    "ukr": "було провіщено, що вона стане купою руїн, а її дочки будуть спалені вогнем",
+    "deu": "wurde vorhergesagt, dass sie zu einem wüsten Haufen werden und ihre Töchter mit Feuer verbrannt werden sollten",
+    "spa": "se anunció que se convertiría en un montón desolado y que sus hijas serían quemadas con fuego",
+    "why": "Restored 'daughters' as in the English (the Ukrainian and Spanish had 'cities'), and modernised the German and Spanish wording ('wüst liegen', 'angesteckt', 'puesta en montón de asolamiento', 'puestas a fuego')."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "uzzah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:18.933177+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "drove the cart that carried the ark of God from his father's house",
+    "references": [
+     "2SA 6:3"
+    ],
+    "ukr": "провадив нового воза, що віз Божого ковчега з дому свого батька",
+    "deu": "trieb den neuen Wagen, auf dem die Lade Gottes aus dem Hause seines Vaters geholt wurde",
+    "spa": "guiaba el carro nuevo que llevaba el arca de Dios desde la casa de su padre"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say he meant to steady the ark; they say he took hold of it, and God struck him and he died there.",
+    "english": "put out his hand and took hold of the ark, and God struck him down, and he died there",
+    "references": [
+     "2SA 6:6-7"
+    ],
+    "ukr": "простяг руку до Божого ковчега й схопив його, і Бог уразив його там, і він помер там",
+    "deu": "griff zur Lade Gottes und hielt sie, und Gott schlug ihn dort, sodass er dort starb",
+    "spa": "extendió la mano al arca de Dios y la sujetó, y Dios lo hirió allí, y murió allí"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

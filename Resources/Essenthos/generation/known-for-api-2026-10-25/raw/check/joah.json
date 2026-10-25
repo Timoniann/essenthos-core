@@ -1,0 +1,37 @@
+{
+ "slug": "joah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.664111+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Rabshakeh is named only in verse 17, where the envoys are listed, so the citation needs that verse.",
+    "english": "went out with Eliakim and Shebna to meet Rabshakeh and asked him to speak in the Syrian language",
+    "references": [
+     "2KI 18:17-18",
+     "2KI 18:26"
+    ],
+    "ukr": "вийшов з Еліякимом і Шевною до великого чашника та попросив його говорити по-арамейському",
+    "deu": "ging mit Eljakim und Sebna zum Erzschenken hinaus und bat ihn, auf syrisch zu reden",
+    "spa": "salió con Eliacim y Sebna a encontrarse con Rabsaces y le rogó que hablara en siriaco"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "came to Hezekiah with his clothes rent and told him Rabshakeh's words",
+    "references": [
+     "2KI 18:37"
+    ],
+    "ukr": "прийшов до Єзекії з роздертим одягом і переказав йому слова великого чашника",
+    "deu": "kam zu Hiskia mit zerrissenen Kleidern und berichtete ihm die Worte des Erzschenken",
+    "spa": "vino a Ezechîas con sus vestidos rotos y le refirió las palabras de Rabsaces"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

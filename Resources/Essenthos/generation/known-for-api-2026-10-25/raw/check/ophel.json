@@ -1,0 +1,37 @@
+{
+ "slug": "ophel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.593598+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was encircled by a very high wall built by Manasseh",
+    "references": [
+     "2CH 33:14"
+    ],
+    "ukr": "був оточений дуже високим муром, який збудував Манасія",
+    "deu": "wurde von einer sehr hohen Mauer umgeben, die Manasse gebaut hatte",
+    "spa": "fue rodeado por un muro muy alto que edificó Manasés"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the Nethinims dwelt",
+    "references": [
+     "NEH 3:26",
+     "NEH 11:21"
+    ],
+    "ukr": "був місцем, де жили храмові підданці",
+    "deu": "war der Ort, an dem die Tempelknechte wohnten",
+    "spa": "fue el lugar donde habitaban los Nethineos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

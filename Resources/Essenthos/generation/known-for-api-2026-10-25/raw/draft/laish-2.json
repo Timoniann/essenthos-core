@@ -1,0 +1,32 @@
+{
+ "slug": "laish-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.145977+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Judges 18 tells what happened to Laish: the Danites destroyed it and renamed it Dan.",
+  "clauses": [
+   {
+    "english": "was attacked by the Danites, its people put to the sword and the city burned",
+    "references": [
+     "JDG 18:27"
+    ],
+    "quote": "they smote them with the edge of the sword, and burnt the city with fire"
+   },
+   {
+    "english": "was rebuilt by the Danites and renamed Dan",
+    "references": [
+     "JDG 18:28-29"
+    ],
+    "quote": "they called the name of the city Dan"
+   }
+  ],
+  "doubts": [
+   "ISA 10:30 places a Laish near Gallim and Anathoth in Benjamin, which may be a different place from the northern Laish of Judges 18; I left it out and used only Judges 18."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

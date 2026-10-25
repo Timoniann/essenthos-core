@@ -1,0 +1,31 @@
+{
+ "slug": "jericho",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.523806+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "мав мур, що впав, коли Ізраїль закричав, і був здобутий та спалений",
+    "deu": "sah seine Mauer einstürzen, als Israel aufschrie, und wurde eingenommen und verbrannt",
+    "spa": "vio caer su muro cuando Israel gritó, y fue tomado y quemado",
+    "why": "German: replaced the old-fashioned 'Feldgeschrei machte', restored 'its wall' and dropped the added 'mit Feuer'; Spanish: dropped the added 'con fuego'."
+   },
+   {
+    "ukr": "був відбудований Хіїлом з Бет-Елу",
+    "deu": "wurde von Hiel von Beth-El wieder aufgebaut",
+    "spa": "fue reedificado por Hiel de Beth-el",
+    "why": "German: 'gebaut' became 'wieder aufgebaut' to render 'rebuilt'."
+   },
+   {
+    "ukr": "мав воду, вилікувану за словом Єлисея, який кинув у джерело сіль",
+    "deu": "bekam gesundes Wasser nach dem Wort Elisas, der Salz in die Quelle warf",
+    "spa": "tuvo sanas sus aguas conforme a la palabra de Eliseo, que echó sal en el manantial",
+    "why": "Spanish: modernised the old spelling 'á' to 'a' and the archaic 'manadero' to 'manantial'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

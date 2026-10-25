@@ -1,0 +1,33 @@
+{
+ "slug": "aram-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.425664+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Two events of the story belong to Aram: David's garrisons and tribute there, and Jacob's flight to it.",
+  "clauses": [
+   {
+    "english": "was garrisoned by David, and its people became his servants and brought gifts",
+    "references": [
+     "2SA 8:6"
+    ],
+    "quote": "the Syrians became servants to David, and brought gifts"
+   },
+   {
+    "english": "was where Jacob fled and served for a wife",
+    "references": [
+     "HOS 12:12"
+    ],
+    "quote": "Jacob fled into the country of Syria, and Israel served for a wife"
+   }
+  ],
+  "doubts": [
+   "JDG 18:7 (Laish), 2KI 5:18 (Rimmon), 2KI 6:14 (Dothan), 2KI 8:15 (Hazael) and ZEC 9:1 (Hadrach) do not name Aram or concern this place, so they were left out.",
+   "NUM 23:7 only says Balaam was brought from Aram; 2SA 15:8 and 1CH 2:23 concern Geshur and the summary already covers them, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

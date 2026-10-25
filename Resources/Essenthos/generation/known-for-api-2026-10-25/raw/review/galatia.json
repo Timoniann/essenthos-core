@@ -1,0 +1,25 @@
+{
+ "slug": "galatia",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.899385+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була пройдена Павлом, який зміцнював там усіх учнів",
+    "deu": "wurde von Paulus durchwandert, der dort alle Jünger stärkte",
+    "spa": "fue recorrida por Pablo, que confirmó allí a todos los discípulos",
+    "why": "Added the missing 'there' (там / dort / allí) in all three languages."
+   },
+   {
+    "ukr": "мала церкви, яким Павло дав розпорядження щодо збору для святих",
+    "deu": "hatte Gemeinden, denen Paulus Anweisungen wegen der Sammlung für die Heiligen gab",
+    "spa": "tuvo iglesias a las que Pablo ordenó acerca de la colecta para los santos",
+    "why": "Ukrainian: replaced the archaic 'складок' and the capital letter in 'Церкви', and used 'яким' and 'дав розпорядження'. German: replaced Luther's 'Steuer' with 'Sammlung' and the pluperfect with the simple past."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

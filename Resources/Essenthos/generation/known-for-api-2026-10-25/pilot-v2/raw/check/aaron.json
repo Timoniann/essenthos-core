@@ -1,0 +1,70 @@
+{
+ "slug": "aaron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:55:34.379913+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The cited verses say he went in to Pharaoh and cast down his rod; the speaking is in 7:7, not cited.",
+    "english": "went in to Pharaoh with Moses and cast down his rod, which became a serpent",
+    "references": [
+     "EXO 7:10"
+    ],
+    "ukr": "ввійшов разом з Мойсеєм до фараона й кинув свою палицю, і вона стала вужем",
+    "deu": "ging mit Mose zu Pharao hinein und warf seinen Stab hin, der zur Schlange wurde",
+    "spa": "fue con Moisés a Faraón y echó su vara, que se volvió culebra"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses show Moses washing, clothing and anointing Aaron; his sons were only washed, and 'to serve as priest' is not stated.",
+    "english": "was washed with his sons, clothed and anointed with oil by Moses to sanctify him",
+    "references": [
+     "LEV 8:6-9",
+     "LEV 8:12"
+    ],
+    "ukr": "був умитий разом зі своїми синами, зодягнений і помазаний Мойсеєм оливою, щоб бути посвяченим",
+    "deu": "wurde mit seinen Söhnen gewaschen, von Mose bekleidet und mit Salböl gesalbt, damit er geweiht würde",
+    "spa": "fue lavado con sus hijos, vestido y ungido por Moisés con aceite para santificarlo"
+   },
+   {
+    "verdict": "fix",
+    "why": "'At Sinai' is not in the verses; the calf was made from the people's golden earrings, and he built an altar before it.",
+    "english": "made a molten calf from the people's golden earrings and built an altar before it",
+    "references": [
+     "EXO 32:2-5"
+    ],
+    "ukr": "зробив лите теля із золотих сережок народу й збудував перед ним жертовник",
+    "deu": "machte aus den goldenen Ohrenringen des Volkes ein gegossenes Kalb und baute einen Altar davor",
+    "spa": "hizo un becerro de fundición con los zarcillos de oro del pueblo y edificó un altar delante de él"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "stood between the dead and the living with incense and stopped the plague",
+    "references": [
+     "NUM 16:46-48"
+    ],
+    "ukr": "став поміж померлими й живими з кадилом і зупинив поразку",
+    "deu": "stand mit Räucherwerk zwischen den Toten und den Lebendigen und hielt die Plage auf",
+    "spa": "se puso entre los muertos y los vivos con incienso y detuvo la mortandad"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "died on Mount Hor, and his garments were put on Eleazar his son",
+    "references": [
+     "NUM 20:25-28"
+    ],
+    "ukr": "помер на Гор-горі, а його шати були зодягнені на його сина Елеазара",
+    "deu": "starb auf dem Berg Hor, und seine Kleider wurden seinem Sohn Eleasar angezogen",
+    "spa": "murió en el monte de Hor, y sus vestidos fueron puestos a Eleazar su hijo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

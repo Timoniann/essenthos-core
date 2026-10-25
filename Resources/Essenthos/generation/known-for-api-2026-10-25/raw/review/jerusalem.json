@@ -1,0 +1,31 @@
+{
+ "slug": "jerusalem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.107022+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Давид здобув твердиню Сіон, Давидове Місто",
+    "deu": "war der Ort, wo David die Burg Zion gewann, das ist Davids Stadt",
+    "spa": "fue el lugar donde David tomó la fortaleza de Sión, la cual es la ciudad de David",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де Соломон зачав будувати дім Господній",
+    "deu": "war der Ort, wo Salomo anfing, das Haus des HERRN zu bauen",
+    "spa": "fue el lugar donde Salomón comenzó a edificar la casa del SEÑOR",
+    "why": ""
+   },
+   {
+    "ukr": "мав спалені Невузар'аданом будинки та порозбивані халдейським військом мури",
+    "deu": "hatte seine Häuser durch Nebusaradan verbrannt und seine Mauern durch das Heer der Chaldäer niedergerissen",
+    "spa": "tuvo sus casas quemadas por Nabuzaradán y sus muros derribados por el ejército de los caldeos",
+    "why": "Ukrainian: archaic «доми» became «будинки». German: «Mauer» became plural «Mauern» and «Macht der Chaldäer» became «Heer der Chaldäer» (army). Spanish: «Caldeos» lowercased as in modern usage."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

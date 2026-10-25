@@ -665,7 +665,10 @@ internal sealed class DatasetLoader(
                 {
                     Files = ["Wikidata", "OpenBible", "Essenthos/review/wikipedia-matches.json"],
                 }),
-            .. In(LoadModules.Records, new LoadStep("known-for", SayWhatThePeopleAreKnownFor)),
+            .. In(LoadModules.Records, new LoadStep("known-for", cancellationToken => SayWhatTheRecordsAreKnownFor(resources, cancellationToken))
+            {
+                Files = [$"Essenthos/review/{KnownForReviewList.FileName}"],
+            }),
             .. In(LoadModules.Verify, new LoadStep("verify", async cancellationToken =>
             {
                 // The index answers from what it read the first time it was asked, and until now that
@@ -2286,16 +2289,17 @@ internal sealed class DatasetLoader(
     }
 
     /// <summary>
-    /// What people are known for, clause by clause with their verses, in every reader's language. Last
-    /// among the records, after every step that folds, renames or withdraws one.
+    /// What people, places and things are known for, clause by clause with their verses, in every
+    /// reader's language: the file's, and what the owner approved in his review list. Last among the
+    /// records, after every step that folds, renames or withdraws one.
     /// </summary>
-    private async Task SayWhatThePeopleAreKnownFor(CancellationToken cancellationToken)
+    private async Task SayWhatTheRecordsAreKnownFor(string resources, CancellationToken cancellationToken)
     {
-        status.Starting("what people are known for");
+        status.Starting("what people, places and things are known for");
 
         using var scope = services.CreateScope();
         var loader = scope.ServiceProvider.GetRequiredService<KnownForLoader>();
-        status.Record(await loader.Load(cancellationToken));
+        status.Record(await loader.Load(KnownForReviewList.PathUnder(resources), cancellationToken));
     }
 
     /// <summary>

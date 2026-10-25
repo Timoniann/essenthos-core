@@ -1,0 +1,44 @@
+{
+ "slug": "herod-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.565743+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Herod the tetrarch's imprisoning and beheading of John and his mocking of Jesus, which go beyond the summary.",
+  "clauses": [
+   {
+    "english": "imprisoned John for reproving him over Herodias, his brother Philip's wife",
+    "references": [
+     "MRK 6:17-18",
+     "LUK 3:19-20"
+    ],
+    "quote": "he shut up John in prison"
+   },
+   {
+    "english": "beheaded John after promising Herodias' daughter whatever she asked",
+    "references": [
+     "MRK 6:21-24",
+     "LUK 9:9"
+    ],
+    "quote": "John have I beheaded"
+   },
+   {
+    "english": "mocked Jesus, dressed him in a gorgeous robe and sent him back to Pilate",
+    "references": [
+     "LUK 23:7-11"
+    ],
+    "quote": "Herod with his men of war set him at nought, and mocked him"
+   }
+  ],
+  "doubts": [
+   "MAT 14:1 and MRK 6:14 call him king Herod; taken as the same tetrarch.",
+   "MRK 8:15 (leaven of Herod), LUK 8:3 (Chuza, Herod's steward), ACT 4:27 and ACT 13:1 do not clearly say more of his own deeds and were left out.",
+   "LUK 13:31 reports only that Herod would kill Jesus; not an event, so left out.",
+   "The beheading itself is only stated by Herod's own words (MRK 6:16, LUK 9:9), with the request in MRK 6:24; the order is not in the verses given."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

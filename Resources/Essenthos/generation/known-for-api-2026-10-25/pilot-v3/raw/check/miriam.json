@@ -1,0 +1,38 @@
+{
+ "slug": "miriam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:05:50.971435+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say \"after the Red Sea\", and she told the women to sing rather than leading the singing itself.",
+    "english": "led the women out with timbrels and dances and told them to sing to the LORD",
+    "references": [
+     "EXO 15:20-21"
+    ],
+    "ukr": "повела жінок із бубнами та танцями і сказала їм співати для Господа",
+    "deu": "führte die Frauen mit Pauken im Reigen hinaus und forderte sie auf, dem HERRN zu singen",
+    "spa": "condujo a las mujeres con panderos y danzas y les dijo que cantaran al SEÑOR"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "spoke against Moses and became leprous, and was shut out of the camp seven days",
+    "references": [
+     "NUM 12:1",
+     "NUM 12:10",
+     "NUM 12:15"
+    ],
+    "ukr": "нарікала на Мойсея, стала прокаженою і була замкнена поза табором сім днів",
+    "deu": "redete wider Mose, wurde aussätzig und wurde sieben Tage aus dem Lager ausgeschlossen",
+    "spa": "habló contra Moisés, quedó leprosa y fue echada del real siete días"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

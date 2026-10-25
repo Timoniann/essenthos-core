@@ -1,0 +1,25 @@
+{
+ "slug": "dibon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.597797+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був збудований Ґадовими синами",
+    "deu": "wurde von den Kindern Gad gebaut",
+    "spa": "fue edificado por los hijos de Gad",
+    "why": ""
+   },
+   {
+    "ukr": "був попереджений, що спустошувач Моава понищить його твердині",
+    "deu": "wurde gewarnt, dass der Zerstörer Moabs seine Festungen zerstören würde",
+    "spa": "fue advertido de que el destruidor de Moab destruiría sus fortalezas",
+    "why": "Ukrainian: the archaic «спустошник» became «спустошувач». German: the old «Verstörer», «Festen» and «zerreißen» became «Zerstörer», «Festungen» and «zerstören». Spanish: «disiparía» became «destruiría» to match 'destroy'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "adoniram",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.668596+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say he was over the levy, not that he was set over it.",
+    "english": "was over Solomon's levy of men sent to Lebanon",
+    "references": [
+     "1KI 5:13-14"
+    ],
+    "ukr": "доглядав над даниною робітників Соломона, посланих на Ливан",
+    "deu": "war über Salomos Fronarbeiter, die auf den Libanon gesandt wurden",
+    "spa": "estuvo sobre el tributo de hombres de Salomón enviados al Líbano"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse does not say he was sent to Israel; it says all Israel stoned him.",
+    "english": "was sent by Rehoboam and was stoned to death by all Israel",
+    "references": [
+     "1KI 12:18"
+    ],
+    "ukr": "був посланий Рехав'амом і був забитий камінням усім Ізраїлем, і він помер",
+    "deu": "wurde von Rehabeam gesandt und von ganz Israel mit Steinen zu Tode geworfen",
+    "spa": "fue enviado por Roboam y fue apedreado por todo Israel, y murió"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

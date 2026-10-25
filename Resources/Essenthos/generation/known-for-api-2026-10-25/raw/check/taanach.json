@@ -1,0 +1,36 @@
+{
+ "slug": "taanach",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.228120+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the kings of Canaan fought, by the waters of Megiddo",
+    "references": [
+     "JDG 5:19"
+    ],
+    "ukr": "був місцем, де воювали царі ханаанські при воді Меґідда",
+    "deu": "war der Ort, wo die Könige der Kanaaniter am Wasser Megiddos stritten",
+    "spa": "fue donde pelearon los reyes de Canaán, junto a las aguas de Megiddo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says Manasseh did not drive out Taanach's people, but does not say Taanach kept Canaanite inhabitants.",
+    "english": "was a town whose people Manasseh did not drive out",
+    "references": [
+     "JDG 1:27"
+    ],
+    "ukr": "був містом, мешканців якого Манасія не повиганяв",
+    "deu": "war eine Stadt, deren Einwohner Manasse nicht vertrieb",
+    "spa": "fue una ciudad cuyos habitantes Manasés no echó"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

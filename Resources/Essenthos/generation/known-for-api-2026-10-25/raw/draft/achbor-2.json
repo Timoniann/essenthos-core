@@ -1,0 +1,26 @@
+{
+ "slug": "achbor-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.525395+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Achbor is named in 2KI 22:12-14 as one sent by King Josiah to enquire of the LORD through Huldah the prophetess, which is a deed beyond the summary; the JER verses concern his son Elnathan and 2CH 34:20 names Abdon, a different name.",
+  "clauses": [
+   {
+    "english": "was sent by the king to enquire of the LORD about the book of the law, and went to Huldah the prophetess",
+    "references": [
+     "2KI 22:12-14"
+    ],
+    "quote": "Go ye, enquire of the LORD for me, and for the people"
+   }
+  ],
+  "doubts": [
+   "2CH 34:20 names Abdon the son of Micah in the parallel account, which may be the same man but is a different name, so it was left out.",
+   "JER 26:22 and JER 36:12 concern his son Elnathan, not Achbor himself, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

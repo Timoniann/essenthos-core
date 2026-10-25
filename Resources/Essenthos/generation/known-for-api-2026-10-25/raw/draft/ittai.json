@@ -1,0 +1,32 @@
+{
+ "slug": "ittai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.149478+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give two chief events for Ittai: his vow to follow David into exile and his command of a third of David's army.",
+  "clauses": [
+   {
+    "english": "vowed to stay with David, in death or life, when he fled from Absalom",
+    "references": [
+     "2SA 15:19-22"
+    ],
+    "quote": "whether in death or life, even there also will thy servant be"
+   },
+   {
+    "english": "was given command of a third of David's army against Absalom",
+    "references": [
+     "2SA 18:2"
+    ],
+    "quote": "a third part under the hand of Ittai the Gittite"
+   }
+  ],
+  "doubts": [
+   "2SA 15:19-22 is cited from the verses that name Ittai; the context verse 15:20 is not needed for the clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

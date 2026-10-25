@@ -1,0 +1,15 @@
+{
+ "slug": "akkub-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.094316+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Akkub among the porters or his descendants and say no more than the summary's \"one of the gatekeepers\" does.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

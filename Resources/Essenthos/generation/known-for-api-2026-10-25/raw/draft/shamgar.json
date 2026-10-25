@@ -1,0 +1,26 @@
+{
+ "slug": "shamgar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.672610+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "JDG 3:31 states what Shamgar did: he slew six hundred Philistines with an ox goad and delivered Israel.",
+  "clauses": [
+   {
+    "english": "slew six hundred Philistines with an ox goad",
+    "references": [
+     "JDG 3:31"
+    ],
+    "quote": "slew of the Philistines six hundred men with an ox goad"
+   }
+  ],
+  "doubts": [
+   "JDG 5:6 only dates a time of empty highways to his days, so it was left out.",
+   "His delivering Israel was folded into the single deed rather than given a separate clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

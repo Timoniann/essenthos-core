@@ -1,0 +1,36 @@
+{
+ "slug": "golden-calf",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:49:40.893567+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say the people called it 'gods' (plural), not 'the god'.",
+    "english": "was made by Aaron from the people's gold earrings and worshipped as the gods that brought Israel out of Egypt",
+    "references": [
+     "EXO 32:2-4",
+     "EXO 32:8"
+    ],
+    "ukr": "було зроблене Аароном із золотих сережок народу, і йому поклонялися як богам, що вивели Ізраїля з єгипетського краю",
+    "deu": "wurde von Aaron aus den goldenen Ohrenringen des Volkes gemacht und als die Götter angebetet, die Israel aus Ägyptenland geführt haben",
+    "spa": "fue hecho por Aarón con los zarcillos de oro del pueblo y adorado como los dioses que sacaron a Israel de la tierra de Egipto"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was burnt by Moses, ground to powder, scattered on the water, and given to the Israelites to drink",
+    "references": [
+     "EXO 32:20"
+    ],
+    "ukr": "було спалене Мойсеєм, змолоте на порох, розсипане на поверхні води й дане пити синам Ізраїлевим",
+    "deu": "wurde von Mose mit Feuer zerschmolzen, zu Pulver zermalmt, aufs Wasser gestäubt und den Kindern Israel zu trinken gegeben",
+    "spa": "fue quemado por Moisés, molido hasta reducirlo a polvo, esparcido sobre las aguas y dado a beber a los hijos de Israel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": []
+}

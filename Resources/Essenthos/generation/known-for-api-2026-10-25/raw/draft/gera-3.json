@@ -1,0 +1,17 @@
+{
+ "slug": "gera-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.915591+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only name Gera as the father of Ehud or Shimei or as a son of Bela in a genealogy, and tell nothing that he himself did or that happened to him.",
+  "clauses": [],
+  "doubts": [
+   "JDG 3:15 names Ehud son of Gera, who may be a different Gera from the father of Shimei or the son of Bela."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,39 @@
+{
+ "slug": "josephs-tunic",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.460839+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was made of the coat and what was done with it, which is more than the summary states.",
+  "clauses": [
+   {
+    "english": "was made by Israel for Joseph, whom he loved more than all his children",
+    "references": [
+     "GEN 37:3"
+    ],
+    "quote": "he made him a coat of many colours"
+   },
+   {
+    "english": "was stripped from Joseph by his brothers",
+    "references": [
+     "GEN 37:23"
+    ],
+    "quote": "they stript Joseph out of his coat"
+   },
+   {
+    "english": "was dipped in goat's blood and brought to Jacob, who took it as proof that Joseph was devoured",
+    "references": [
+     "GEN 37:31-33"
+    ],
+    "quote": "It is my son's coat; an evil beast hath devoured him"
+   }
+  ],
+  "doubts": [
+   "The summary already names the dipping in blood, so the third clause may partly repeat it; it is kept for the brothers' deceit of their father."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

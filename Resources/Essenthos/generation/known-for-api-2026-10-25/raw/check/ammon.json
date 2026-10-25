@@ -1,0 +1,47 @@
+{
+ "slug": "ammon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.689499+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says the LORD gave it to the children of Lot and Israel was told not to meddle, not that Israel did not take it.",
+    "english": "was given by the LORD to the children of Lot for a possession",
+    "references": [
+     "DEU 2:19"
+    ],
+    "ukr": "був даний Господом Лотовим синам на спадщину",
+    "deu": "wurde vom HERRN den Kindern Lot zu besitzen gegeben",
+    "spa": "fue dado por el SEÑOR a los hijos de Lot por heredad"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was struck by Jephthah with a very great slaughter",
+    "references": [
+     "JDG 11:32-33"
+    ],
+    "ukr": "був побитий Їфтахом дуже великою поразкою",
+    "deu": "wurde von Jephthah in einer sehr großen Schlacht geschlagen",
+    "spa": "fue herido por Jephté con grandísimo estrago"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "lost its royal city Rabbah to Joab and David",
+    "references": [
+     "2SA 12:26-29"
+    ],
+    "ukr": "втратив царське місто Раббу, здобуте Йоавом і Давидом",
+    "deu": "verlor die königliche Stadt Rabba an Joab und David",
+    "spa": "perdió la ciudad real de Rabba, tomada por Joab y David"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

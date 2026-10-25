@@ -1,0 +1,31 @@
+{
+ "slug": "heshbon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.536079+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був узятий Ізраїлем, який оселився в ньому після перемоги над його царем Сигоном",
+    "deu": "wurde von Israel eingenommen, das darin wohnte, nachdem es Sihon, seinen König, geschlagen hatte",
+    "spa": "fue tomado por Israel, que habitó en él después de vencer a Sehón, su rey",
+    "why": ""
+   },
+   {
+    "ukr": "був збудований синами Рувима",
+    "deu": "wurde von den Kindern Ruben gebaut",
+    "spa": "fue edificado por los hijos de Rubén",
+    "why": "Replaced the archaic «синами Рувимовими» with modern «синами Рувима»."
+   },
+   {
+    "ukr": "був відданий левітам разом з його пасовиськами",
+    "deu": "wurde den Leviten mit seinen Vorstädten gegeben",
+    "spa": "fue dado a los levitas con sus ejidos",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

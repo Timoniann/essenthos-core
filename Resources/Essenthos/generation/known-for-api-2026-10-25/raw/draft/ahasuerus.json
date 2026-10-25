@@ -1,0 +1,41 @@
+{
+ "slug": "ahasuerus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.803252+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The Esther verses give Ahasuerus several defining deeds beyond what the summary states.",
+  "clauses": [
+   {
+    "english": "banished Vashti from his presence after she refused to come at his command",
+    "references": [
+     "EST 1:12",
+     "EST 1:19-21"
+    ],
+    "quote": "the king did according to the word of Memucan"
+   },
+   {
+    "english": "made Esther queen instead of Vashti",
+    "references": [
+     "EST 2:16-17"
+    ],
+    "quote": "made her queen instead of Vashti"
+   },
+   {
+    "english": "gave Haman his ring, and a decree was sent out to destroy all the Jews",
+    "references": [
+     "EST 3:10-13"
+    ],
+    "quote": "the king took his ring from his hand, and gave it unto Haman"
+   }
+  ],
+  "doubts": [
+   "EZR 4:6 (an accusation written to him against Judah) was left out as a minor detail, and its identification with the king of Esther is taken from the record's disambiguation.",
+   "Later deeds such as granting the Jews leave to defend themselves (EST 8:11) were left out to keep the line short."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

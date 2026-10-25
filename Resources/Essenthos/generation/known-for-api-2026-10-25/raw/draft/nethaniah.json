@@ -1,0 +1,17 @@
+{
+ "slug": "nethaniah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.503505+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses name Nethaniah only as the father of Ishmael, who is the one who acts, so they say no more of him than the summary already does.",
+  "clauses": [],
+  "doubts": [
+   "Every marked verse describes the deeds of Ishmael son of Nethaniah, not of Nethaniah himself."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

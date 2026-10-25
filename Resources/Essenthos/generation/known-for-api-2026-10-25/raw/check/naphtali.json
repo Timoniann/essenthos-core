@@ -1,0 +1,25 @@
+{
+ "slug": "naphtali",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.320311+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say Bilhah bore him to Jacob and Rachel named him after her wrestlings; 'was born to Jacob' is fine but 'named by Rachel' is supported, though 'after her wrestlings with her sister' is a stated reason; only wording needs tightening.",
+    "english": "was born to Jacob and named by Rachel, who had wrestled with her sister",
+    "references": [
+     "GEN 30:7-8"
+    ],
+    "ukr": "народився Якову, і Рахіль назвала його так після боротьби з сестрою",
+    "deu": "wurde Jakob geboren und von Rahel benannt",
+    "spa": "nació a Jacob y fue nombrado por Rachêl tras luchar con su hermana"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

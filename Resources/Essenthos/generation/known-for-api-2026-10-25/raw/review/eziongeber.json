@@ -1,0 +1,25 @@
+{
+ "slug": "eziongeber",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.885836+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Соломон збудував флот кораблів",
+    "deu": "war der Ort, wo Salomo eine Flotte von Schiffen baute",
+    "spa": "fue donde Salomón hizo una flota de navíos",
+    "why": "Ukrainian verb now masculine to agree with Ецйон-Ґевер and the dated «наробив» replaced; the «navy» (флот, Flotte, flota) was missing in all three; German «machte» changed to «baute»."
+   },
+   {
+    "ukr": "був місцем, де розбилися кораблі Йосафата, що прямували до Офіру",
+    "deu": "war der Ort, wo die Schiffe Josaphats, die nach Ophir gehen sollten, zerbrochen wurden",
+    "spa": "fue donde se rompieron los navíos de Josaphat, que debían ir a Ophir",
+    "why": "Ukrainian verb now masculine and the colloquial «порозбивалися» and «йшли» modernised; Spanish «habían de ir» modernised to «debían ir»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

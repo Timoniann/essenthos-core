@@ -1,0 +1,31 @@
+{
+ "slug": "haran-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.822439+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де родина Тераха зупинилася й оселилася дорогою до Ханаану",
+    "deu": "war der Ort, wo die Familie Tharahs auf dem Weg ins Land Kanaan haltmachte und wohnte",
+    "spa": "fue el lugar donde la familia de Thare se detuvo y asentó de camino a la tierra de Canaán",
+    "why": "Replaced the old-fashioned «до краю ханаанського» with the modern «до Ханаану»."
+   },
+   {
+    "ukr": "був місцем, звідки Аврам вирушив, як сказав Господь, і з ним пішов Лот",
+    "deu": "war der Ort, aus dem Abram auszog, wie der HERR zu ihm gesagt hatte, und Lot zog mit ihm",
+    "spa": "fue el lugar de donde Abram partió con Lot, como el SEÑOR le dijo",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, куди Яків пішов до Лавана, щоб уникнути лютості Ісава",
+    "deu": "war der Ort, wohin Jakob zu Laban zog, um dem Grimm Esaus zu entgehen",
+    "spa": "fue el lugar adonde Jacob fue, a Labán, para escapar del enojo de Esaú",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

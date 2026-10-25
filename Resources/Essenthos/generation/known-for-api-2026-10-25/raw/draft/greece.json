@@ -1,0 +1,26 @@
+{
+ "slug": "greece",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.936686+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Only Paul's visit is told as something that happened in Greece; the Daniel and Zechariah verses are prophecy or vision, and the Macedonia and Achaia verses concern other places.",
+  "clauses": [
+   {
+    "english": "was visited by Paul, who stayed there three months",
+    "references": [
+     "ACT 20:2-3"
+    ],
+    "quote": "he came into Greece,"
+   }
+  ],
+  "doubts": [
+   "ACT 16:9 and 1TH 1:7 name Macedonia and Achaia, not Greece, so they were left out.",
+   "DAN 8:21, DAN 10:20, DAN 11:2 and ZEC 9:13 are visions or prophecies about Grecia or Greece, not events, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

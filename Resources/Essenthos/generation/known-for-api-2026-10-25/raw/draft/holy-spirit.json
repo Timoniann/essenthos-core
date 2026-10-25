@@ -1,0 +1,42 @@
+{
+ "slug": "holy-spirit",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.595905+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give several defining events of the Spirit's coming, among many teaching and doctrinal statements that are not deeds.",
+  "clauses": [
+   {
+    "english": "came upon Mary, who was found with child of the Holy Ghost",
+    "references": [
+     "MAT 1:18",
+     "LUK 1:35"
+    ],
+    "quote": "she was found with child of the Holy Ghost"
+   },
+   {
+    "english": "descended like a dove upon Jesus at his baptism",
+    "references": [
+     "MAT 3:16",
+     "LUK 3:22"
+    ],
+    "quote": "he saw the Spirit of God descending like a dove, and lighting upon him"
+   },
+   {
+    "english": "filled the disciples at Pentecost, and they spoke with other tongues",
+    "references": [
+     "ACT 2:1-4"
+    ],
+    "quote": "they were all filled with the Holy Ghost, and began to speak with other tongues"
+   }
+  ],
+  "doubts": [
+   "Many marked verses are teaching or doctrine (ROM 8, 1CO 2, EPH 4:30, 1JN 5:7), not events, so they were left out.",
+   "The Gentile Pentecost at Cornelius's house (ACT 10:44) and the sending of Barnabas and Saul (ACT 13:2-4) were also left out to keep the line short."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

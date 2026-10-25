@@ -1,0 +1,39 @@
+{
+ "slug": "berea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.372594+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what happened at Berea: Paul and Silas were sent there, its people received the word, and the Thessalonian Jews stirred up trouble.",
+  "clauses": [
+   {
+    "english": "was where Paul and Silas were sent by night and preached in the synagogue",
+    "references": [
+     "ACT 17:10"
+    ],
+    "quote": "sent away Paul and Silas by night unto Berea"
+   },
+   {
+    "english": "was where the people received the word readily and searched the scriptures daily",
+    "references": [
+     "ACT 17:11-12"
+    ],
+    "quote": "received the word with all readiness of mind, and searched the scriptures daily"
+   },
+   {
+    "english": "was where Jews from Thessalonica came and stirred up the people against Paul",
+    "references": [
+     "ACT 17:13"
+    ],
+    "quote": "they came thither also, and stirred up the people"
+   }
+  ],
+  "doubts": [
+   "ACT 20:4 only names Sopater of Berea, so it was left out as it adds nothing beyond the summary."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

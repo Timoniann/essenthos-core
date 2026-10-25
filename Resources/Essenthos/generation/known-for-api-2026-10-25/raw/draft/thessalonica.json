@@ -1,0 +1,33 @@
+{
+ "slug": "thessalonica",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.593286+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Paul's preaching in its synagogue and the pursuit of him by its Jews are events that belong to the place.",
+  "clauses": [
+   {
+    "english": "was where Paul reasoned from the scriptures in the synagogue three sabbath days",
+    "references": [
+     "ACT 17:1-2"
+    ],
+    "quote": "three sabbath days reasoned with them out of the scriptures"
+   },
+   {
+    "english": "had Jews who followed Paul to Berea and stirred up the people",
+    "references": [
+     "ACT 17:13"
+    ],
+    "quote": "they came thither also, and stirred up the people"
+   }
+  ],
+  "doubts": [
+   "ACT 17:11, ACT 20:4, ACT 27:2, PHP 4:16, 1TH 1:1, 2TH 1:1 and 2TI 4:10 only compare, list, address or name people tied to the place, so they were left out.",
+   "ACT 17:2-3 are context verses, used for the synagogue clause alongside the marked ACT 17:1."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

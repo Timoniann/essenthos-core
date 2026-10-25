@@ -1,0 +1,25 @@
+{
+ "slug": "debir-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.717156+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був здобутий Ісусом, який знищив його царя та кожну душу в ньому",
+    "deu": "wurde von Josua erobert, der seinen König und alle Menschen darin vernichtete",
+    "spa": "fue tomado por Josué, quien destruyó a su rey y a todos sus habitantes",
+    "why": "German: replaced archaic 'gewonnen' with 'erobert' and 'Seelen' with 'Menschen'; Spanish: 'todo lo que allí había vivo' changed to 'todos sus habitantes' to match 'all its people'."
+   },
+   {
+    "ukr": "був здобутий Отніїлом, який за це отримав за жінку дочку Калева Ахсу",
+    "deu": "wurde von Othniel erobert, der dafür Kalebs Tochter Achsa zur Frau erhielt",
+    "spa": "fue tomado por Othoniel, quien por ello obtuvo por mujer a Axa, hija de Caleb",
+    "why": "German: replaced archaic 'gewonnen' with modern 'erobert'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

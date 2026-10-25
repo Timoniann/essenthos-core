@@ -1,0 +1,25 @@
+{
+ "slug": "hamor",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.474227+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "просив родину Якова віддати Діну за жінку його сину Сихему",
+    "deu": "bat die Familie Jakobs, Dina seinem Sohn Sichem zur Frau zu geben",
+    "spa": "pidió a la familia de Jacob que diera a Dina por mujer a su hijo Sichêm",
+    "why": ""
+   },
+   {
+    "ukr": "переконав чоловіків свого міста обрізатися",
+    "deu": "überredete die Männer seiner Stadt, sich beschneiden zu lassen",
+    "spa": "persuadió a los varones de su ciudad a circuncidarse",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

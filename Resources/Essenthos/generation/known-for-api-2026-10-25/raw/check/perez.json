@@ -1,0 +1,25 @@
+{
+ "slug": "perez",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.971998+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was born first of twins, breaking out ahead of his brother Zerah",
+    "references": [
+     "GEN 38:27-30"
+    ],
+    "ukr": "народився першим із близнят, прорвавшись поперед брата свого Зераха",
+    "deu": "wurde als erster von Zwillingen geboren und brach vor seinem Bruder Serah hervor",
+    "spa": "nació primero de dos gemelos, irrumpiendo antes que su hermano Zara"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

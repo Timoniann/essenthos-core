@@ -1,0 +1,48 @@
+{
+ "slug": "cain",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.363082+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Genesis 4 tells of Cain's offering, the killing of Abel, and his banishment and city-building, though the killing is already named in the summary only as a relation, so it can be told once as a deed.",
+  "clauses": [
+   {
+    "english": "brought an offering of the fruit of the ground, which the LORD did not accept",
+    "references": [
+     "GEN 4:3",
+     "GEN 4:5"
+    ],
+    "quote": "But unto Cain and to his offering he had not respect."
+   },
+   {
+    "english": "rose up against his brother Abel in the field and slew him",
+    "references": [
+     "GEN 4:8"
+    ],
+    "quote": "Cain rose up against Abel his brother, and slew him."
+   },
+   {
+    "english": "was marked by the LORD so that no one finding him would kill him",
+    "references": [
+     "GEN 4:15"
+    ],
+    "quote": "the LORD set a mark upon Cain, lest any finding him should kill him."
+   },
+   {
+    "english": "built a city and named it after his son Enoch",
+    "references": [
+     "GEN 4:17"
+    ],
+    "quote": "he builded a city, and called the name of the city, after the name of his son, Enoch."
+   }
+  ],
+  "doubts": [
+   "Four clauses chosen for a life told in one chapter; the offering and the mark could be dropped if the line runs long.",
+   "Left out HEB 11:4, 1JN 3:12 and JUD 1:11 as comment on Cain rather than new events; GEN 4:24 is Lamech's boast, not a deed of Cain."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

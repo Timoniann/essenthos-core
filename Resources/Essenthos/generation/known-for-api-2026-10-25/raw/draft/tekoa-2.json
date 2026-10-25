@@ -1,0 +1,35 @@
+{
+ "slug": "tekoa-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.649506+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Besides Tekoa being named as a home town, the verses tell of its fortification by Rehoboam and of its people's work on the wall of Jerusalem.",
+  "clauses": [
+   {
+    "english": "was built up by Rehoboam as one of his cities for defence",
+    "references": [
+     "2CH 11:5-6"
+    ],
+    "quote": "He built even Bethlehem, and Etam, and Tekoa,"
+   },
+   {
+    "english": "sent its people to repair two pieces of the wall of Jerusalem",
+    "references": [
+     "NEH 3:5",
+     "NEH 3:27"
+    ],
+    "quote": "After them the Tekoites repaired another piece,"
+   }
+  ],
+  "doubts": [
+   "2SA 14:2 (Joab fetched a wise woman from Tekoah) left out as a minor event.",
+   "Verses naming Ira the Tekoite, Ashur father of Tekoa (a person), Jeremiah's call to blow the trumpet, and Amos's origin were left out as lists, a command or the summary's own content.",
+   "2CH 20:20 names the wilderness of Tekoa, not the settlement, so was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

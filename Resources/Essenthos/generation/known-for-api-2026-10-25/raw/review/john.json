@@ -1,0 +1,37 @@
+{
+ "slug": "john",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.229886+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "проповідував хрещення на покаяння і хрестив людей у Йордані",
+    "deu": "predigte von der Taufe der Buße und taufte Leute im Jordan",
+    "spa": "predicó el bautismo del arrepentimiento y bautizó a la gente en el Jordán",
+    "why": "Ukrainian: replaced the old spellings «хрищення» and «христив» with the modern «хрещення» and «хрестив»."
+   },
+   {
+    "ukr": "хрестив Ісуса в Йордані",
+    "deu": "taufte Jesus im Jordan",
+    "spa": "bautizó a Jesús en el Jordán",
+    "why": "Ukrainian: replaced the old spelling «христив» with the modern «хрестив»."
+   },
+   {
+    "ukr": "був посаджений Іродом у в'язницю після того, як сказав, що йому не годиться мати Іродіяду",
+    "deu": "wurde von Herodes ins Gefängnis gelegt, nachdem er gesagt hatte, es sei nicht recht, dass er Herodias habe",
+    "spa": "fue puesto en la cárcel por Herodes después de decirle que no le era lícito tener a Herodías",
+    "why": "German: replaced the old spelling «daß» with the modern «dass»."
+   },
+   {
+    "ukr": "був обезголовлений у в'язниці за наказом Ірода",
+    "deu": "wurde auf Befehl des Herodes im Gefängnis enthauptet",
+    "spa": "fue degollado en la cárcel por orden de Herodes",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

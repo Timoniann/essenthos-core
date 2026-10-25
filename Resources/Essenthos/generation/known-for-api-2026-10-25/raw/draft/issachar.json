@@ -1,0 +1,17 @@
+{
+ "slug": "issachar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.587546+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only record his birth and naming, which the summary already covers as son of Leah, and otherwise list his sons, the tribe's numbers, lots and cities; the tribe's deeds are not his own.",
+  "clauses": [],
+  "doubts": [
+   "Verses such as 1CH 12:32, JOS 19:17 and NUM 1:29 concern the tribe of Issachar rather than the son of Jacob, so none of them was used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

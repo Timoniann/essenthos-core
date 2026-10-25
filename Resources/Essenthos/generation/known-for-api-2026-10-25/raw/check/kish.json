@@ -1,0 +1,25 @@
+{
+ "slug": "kish",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.734329+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "sent his son Saul to seek his lost asses",
+    "references": [
+     "1SA 9:3"
+    ],
+    "ukr": "послав свого сина Саула шукати ослиць, що пропали",
+    "deu": "sandte seinen Sohn Saul, die verlorenen Eselinnen zu suchen",
+    "spa": "envió a su hijo Saúl a buscar las asnas perdidas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

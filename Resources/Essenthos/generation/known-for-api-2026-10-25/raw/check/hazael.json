@@ -1,0 +1,48 @@
+{
+ "slug": "hazael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.272533+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not name Benhadad at that point, and the record is only said to reign after his master's death.",
+    "english": "was told by Elisha that he would be king over Syria, and reigned after his master died",
+    "references": [
+     "2KI 8:13-15"
+    ],
+    "ukr": "дізнався від Єлисея, що буде царем над Сирією, і зацарював після того, як помер його пан",
+    "deu": "erfuhr von Elisa, dass er König von Syrien sein werde, und wurde König, nachdem sein Herr gestorben war",
+    "spa": "supo por Eliseo que sería rey de Siria, y reinó después de morir su señor"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 13:3 is not needed, and the days of Jehu are not stated beyond 'those days'; the clause is reduced to what 10:32 and 13:22 say.",
+    "english": "smote Israel in all its borders and oppressed it all the days of Jehoahaz",
+    "references": [
+     "2KI 10:32",
+     "2KI 13:22"
+    ],
+    "ukr": "побив Ізраїль в усій його країні й тиснув його всі дні Єгоахаза",
+    "deu": "schlug Israel in allen seinen Grenzen und zwang es, solange Joahas lebte",
+    "spa": "hirió a Israel en todos sus términos y lo afligió todo el tiempo de Joachâz"
+   },
+   {
+    "verdict": "fix",
+    "why": "Jehoash sent gold and hallowed things from the temple and the king's house, not only temple treasures; 'paid off' is an interpretation.",
+    "english": "took Gath, and left Jerusalem after Jehoash sent him gold and hallowed things",
+    "references": [
+     "2KI 12:17-18"
+    ],
+    "ukr": "здобув Ґат і відійшов від Єрусалиму, коли Єгоаш послав йому золото та святі речі",
+    "deu": "gewann Gath und zog von Jerusalem ab, nachdem Joas ihm Gold und Geheiligtes geschickt hatte",
+    "spa": "tomó Gath y se partió de Jerusalem después de que Joas le envió oro y ofrendas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

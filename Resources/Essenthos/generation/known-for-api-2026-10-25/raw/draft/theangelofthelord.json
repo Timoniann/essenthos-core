@@ -1,0 +1,47 @@
+{
+ "slug": "theangelofthelord",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.080249+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of several deeds of the angel of the LORD, and the chief ones can be stated from them.",
+  "clauses": [
+   {
+    "english": "found Hagar by a fountain in the wilderness and told her to return to Sarai",
+    "references": [
+     "GEN 16:7-9"
+    ],
+    "quote": "the angel of the LORD found her by a fountain of water in the wilderness"
+   },
+   {
+    "english": "called to Abraham out of heaven and stopped him from slaying Isaac",
+    "references": [
+     "GEN 22:11-12"
+    ],
+    "quote": "the angel of the LORD called unto him out of heaven"
+   },
+   {
+    "english": "appeared to Moses in a flame of fire out of a bush",
+    "references": [
+     "EXO 3:2"
+    ],
+    "quote": "the angel of the LORD appeared unto him in a flame of fire"
+   },
+   {
+    "english": "smote 185,000 in the camp of the Assyrians in one night",
+    "references": [
+     "2KI 19:35"
+    ],
+    "quote": "smote in the camp of the Assyrians an hundred fourscore and five thousand"
+   }
+  ],
+  "doubts": [
+   "Several marked verses speak of 'the angel of God' or 'an angel of the LORD' (GEN 21:17, GEN 31:11, EXO 14:19, JDG 6:11, JDG 13), so the record may merge more than one appearance.",
+   "The Psalms, Zechariah and the New Testament verses may concern other angels or figures of speech, so I left them out; the same goes for Balaam, Gideon, Manoah, the plague on Israel and Elijah, which were omitted only for brevity."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

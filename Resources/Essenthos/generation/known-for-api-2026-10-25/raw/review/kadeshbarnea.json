@@ -1,0 +1,25 @@
+{
+ "slug": "kadeshbarnea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.563664+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, звідки Мойсей посилав людей побачити землю",
+    "deu": "war der Ort, von dem aus Mose Männer aussandte, das Land zu schauen",
+    "spa": "fue el lugar desde donde Moisés envió hombres para que viesen la tierra",
+    "why": "Ukrainian verb made feminine to match Кадеш-Барнеа, and the old-style capitalised «той Край» replaced with modern «землю»."
+   },
+   {
+    "ukr": "була місцем, де Ізраїль був неслухняний наказу увійти та посісти землю",
+    "deu": "war der Ort, an dem Israel dem Gebot, hinaufzugehen und das Land einzunehmen, ungehorsam war",
+    "spa": "fue el lugar donde Israel fue rebelde al mandato de subir y poseer la tierra",
+    "why": "Ukrainian verb made feminine to match Кадеш-Барнеа, and the old-style «той Край» replaced with modern «землю»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,34 @@
+{
+ "slug": "joshua-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.720841+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give two events for this high priest: he obeyed the LORD's word and worked on the temple, and in Zechariah's vision his filthy garments were replaced and a mitre set on his head.",
+  "clauses": [
+   {
+    "english": "obeyed the LORD's word and came to work on the house of the LORD",
+    "references": [
+     "HAG 1:12",
+     "HAG 1:14"
+    ],
+    "quote": "they came and did work in the house of the LORD of hosts, their God"
+   },
+   {
+    "english": "was cleansed of his filthy garments and clothed with fair raiment and a mitre in a vision",
+    "references": [
+     "ZEC 3:3-5"
+    ],
+    "quote": "Take away the filthy garments from him."
+   }
+  ],
+  "doubts": [
+   "ZEC 6:11 (crowns set on Joshua's head) is a command in a prophecy, not stated as done, so it was not used.",
+   "The vision in ZEC 3 is cited with verses 4-5, which are context, since they state the clothing."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

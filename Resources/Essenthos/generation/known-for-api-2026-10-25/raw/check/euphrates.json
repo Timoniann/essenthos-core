@@ -1,0 +1,47 @@
+{
+ "slug": "euphrates",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.474977+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Hiding the girdle by the river is stated; 'found marred' is fine but the record is the place, so keep it short and accurate.",
+    "english": "was where Jeremiah hid a girdle and later found it marred",
+    "references": [
+     "JER 13:4-7"
+    ],
+    "ukr": "було місцем, де Єремія сховав пояса і згодом знайшов його зіпсованим",
+    "deu": "war der Ort, wo Jeremia einen Gürtel versteckte und ihn später verdorben fand",
+    "spa": "fue el lugar donde Jeremías escondió un cinto y después lo halló podrido"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Nebuchadrezzar smote the army of Pharaoh Necho",
+    "references": [
+     "JER 46:2"
+    ],
+    "ukr": "було місцем, де Навуходоносор побив військо фараона Нехо",
+    "deu": "war der Ort, wo Nebukadnezar das Heer Pharao Nechos schlug",
+    "spa": "fue el lugar donde Nabucodonosor hirió al ejército de Faraón Nechâo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had its water dried up when the sixth angel poured out his vial",
+    "references": [
+     "REV 16:12"
+    ],
+    "ukr": "його вода висохла, коли шостий Ангол вилив свою чашу",
+    "deu": "sein Wasser vertrocknete, als der sechste Engel seine Schale ausgoß",
+    "spa": "su agua se secó cuando el sexto ángel derramó su copa"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

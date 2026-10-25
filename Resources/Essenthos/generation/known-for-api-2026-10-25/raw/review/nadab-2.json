@@ -1,0 +1,25 @@
+{
+ "slug": "nadab-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.176157+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "робив зле в Господніх очах, ходячи в гріху свого батька",
+    "deu": "tat, was dem HERRN übel gefiel, und wandelte in der Sünde seines Vaters",
+    "spa": "hizo lo malo ante los ojos del SEÑOR, andando en el pecado de su padre",
+    "why": "Spanish: put 'pecados' into the singular 'pecado' to match the English 'sin'."
+   },
+   {
+    "ukr": "облягав филистимське місто Ґіббетон з усім Ізраїлем",
+    "deu": "belagerte mit dem ganzen Israel Gibbethon, das den Philistern gehörte",
+    "spa": "tenía cercado con todo Israel a Gibbethón, que era de los filisteos",
+    "why": "Ukrainian: added 'місто' (town), which was missing; Spanish: 'filisteos' now in lower case, as in modern usage."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

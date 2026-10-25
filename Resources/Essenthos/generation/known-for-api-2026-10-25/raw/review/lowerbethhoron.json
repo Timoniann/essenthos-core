@@ -1,0 +1,25 @@
+{
+ "slug": "lowerbethhoron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.459304+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був збудований Шеерою, дочкою Єфрема",
+    "deu": "wurde von Seera, der Tochter Ephraims, gebaut",
+    "spa": "fue edificada por Seera, hija de Ephraim",
+    "why": "Ukrainian verb now agrees with masculine Бет-Хорон; Spanish Efraín changed to Ephraim as in Reina-Valera 1909."
+   },
+   {
+    "ukr": "був збудований Соломоном як твердинне місто з мурами, дверима та засувами",
+    "deu": "wurde von Salomo als feste Stadt mit Mauern, Türen und Riegeln gebaut",
+    "spa": "fue edificada por Salomón como ciudad fortificada con muros, puertas y barras",
+    "why": "Ukrainian verb now agrees with masculine Бет-Хорон."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

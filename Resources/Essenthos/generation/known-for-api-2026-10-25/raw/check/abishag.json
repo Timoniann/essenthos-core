@@ -1,0 +1,37 @@
+{
+ "slug": "abishag",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.211366+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Old age and David's name are in 1:1, and the verses give her cherishing and ministering as deeds, not as the purpose of her being brought.",
+    "english": "was found and brought to the aged King David, and cherished and ministered to him",
+    "references": [
+     "1KI 1:1-4"
+    ],
+    "ukr": "була знайдена й приведена до старого царя Давида, доглядала його та прислуговувала йому",
+    "deu": "wurde gefunden und zum alten König David gebracht, pflegte ihn und diente ihm",
+    "spa": "fue hallada y traída al anciano rey David, y lo calentó y le sirvió"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was asked for as a wife by Adonijah through Bathsheba, which led Solomon to condemn him to death",
+    "references": [
+     "1KI 2:17",
+     "1KI 2:21-24"
+    ],
+    "ukr": "була випрошена Адонією за жінку через Вірсавію, через що Соломон засудив його на смерть",
+    "deu": "wurde von Adonia durch Bath-Seba zur Frau erbeten, weshalb Salomo ihn zum Tod verurteilte",
+    "spa": "fue pedida como esposa por Adonía por medio de Bath-sheba, por lo cual Salomón lo condenó a muerte"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "herod",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.323004+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "занепокоївся через вістку про народженого Царя і випитував мудреців про час, коли з'явилась зоря",
+    "deu": "erschrak über die Nachricht vom neugeborenen König und erforschte von den Weisen, wann der Stern erschienen war",
+    "spa": "se turbó por la noticia del Rey que había nacido y se informó de los magos del tiempo en que apareció la estrella",
+    "why": ""
+   },
+   {
+    "ukr": "повбивав усіх дітей у Віфлеємі від двох років і менше",
+    "deu": "ließ alle Kinder zu Bethlehem töten, die zweijährig und darunter waren",
+    "spa": "mató a todos los niños que había en Bethlehem, de dos años para abajo",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

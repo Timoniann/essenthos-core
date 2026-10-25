@@ -1,0 +1,37 @@
+{
+ "slug": "gozan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.334302+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the king of Assyria placed the Israelites he carried away from Samaria",
+    "references": [
+     "2KI 17:6",
+     "2KI 18:11"
+    ],
+    "ukr": "був місцем, де асирійський цар осадив ізраїльтян, вигнаних із Самарії",
+    "deu": "war der Ort, wo der König von Assyrien die aus Samaria weggeführten Israeliten ansiedelte",
+    "spa": "fue el lugar donde el rey de Asiria puso a los israelitas llevados de Samaria"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say the kings of Assyria destroyed lands and Gozan was among those destroyed; that its gods did not deliver it is only implied by a rhetorical question.",
+    "english": "was destroyed by the kings of Assyria",
+    "references": [
+     "2KI 19:11-12"
+    ],
+    "ukr": "був знищений асирійськими царями",
+    "deu": "wurde von den Königen von Assyrien zerstört",
+    "spa": "fue destruido por los reyes de Asiria"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

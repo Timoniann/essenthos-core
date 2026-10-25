@@ -1,0 +1,25 @@
+{
+ "slug": "jacobs-pillar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.146548+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був поставлений Яковом за пам'ятник і помазаний олією",
+    "deu": "wurde von Jakob als Mal aufgerichtet und mit Öl gesalbt",
+    "spa": "fue alzado por Jacob como título y ungido con aceite",
+    "why": "Replaced the old-fashioned «оливою» with the modern «олією» (oil)."
+   },
+   {
+    "ukr": "був оголошений Яковом домом Божим",
+    "deu": "wurde von Jakob zu einem Gotteshaus erklärt",
+    "spa": "fue declarado por Jacob casa de Dios",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

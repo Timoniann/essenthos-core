@@ -1,0 +1,25 @@
+{
+ "slug": "obededom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.159513+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "housed the ark of the LORD for three months and was blessed by the LORD with all his household",
+    "references": [
+     "2SA 6:11"
+    ],
+    "ukr": "мав у своєму домі Господній ковчег три місяці й був поблагословенний Господом разом з усім своїм домом",
+    "deu": "beherbergte die Lade des HERRN drei Monate in seinem Haus und wurde vom HERRN samt seinem ganzen Haus gesegnet",
+    "spa": "tuvo en su casa el arca del SEÑOR tres meses y fue bendecido por el SEÑOR con toda su casa"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

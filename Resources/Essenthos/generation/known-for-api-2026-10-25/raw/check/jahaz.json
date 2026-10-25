@@ -1,0 +1,27 @@
+{
+ "slug": "jahaz",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.510245+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say Sihon gathered his people and then came to Jahaz; only the fight is placed there.",
+    "english": "was where Sihon fought against Israel",
+    "references": [
+     "NUM 21:23",
+     "DEU 2:32",
+     "JDG 11:20"
+    ],
+    "ukr": "був місцем, де Сигон воював з Ізраїлем",
+    "deu": "war der Ort, an dem Sihon wider Israel stritt",
+    "spa": "fue el lugar donde Sehón peleó contra Israel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

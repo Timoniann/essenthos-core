@@ -1,0 +1,31 @@
+{
+ "slug": "holy-of-holies",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.704135+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було покрите Соломоном щирим золотом",
+    "deu": "wurde von Salomo mit lauterem Gold überzogen",
+    "spa": "fue vestido de oro puro por Salomón",
+    "why": ""
+   },
+   {
+    "ukr": "прийняло ковчег заповіту під крила херувимів",
+    "deu": "nahm die Lade des Bundes unter den Flügeln der Cherubim auf",
+    "spa": "recibió el arca del pacto debajo de las alas de los querubines",
+    "why": ""
+   },
+   {
+    "ukr": "було доступне лише первосвященикові, раз на рік, не без крові",
+    "deu": "wurde nur einmal im Jahr allein vom Hohenpriester betreten, nicht ohne Blut",
+    "spa": "era accesible solo al sumo sacerdote, una vez al año, no sin sangre",
+    "why": "Ukrainian: the clause had made the high priest the subject, so it now begins with the verb and uses modern «крові». Spanish: replaced the old «pontífice» with «sumo sacerdote» and «sólo» with «solo»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

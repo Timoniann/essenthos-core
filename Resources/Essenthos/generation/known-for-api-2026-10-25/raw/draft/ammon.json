@@ -1,0 +1,40 @@
+{
+ "slug": "ammon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.494852+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of events that happened to the land of Ammon: it was given to Lot's children, was struck by Jephthah, and lost its royal city Rabbah.",
+  "clauses": [
+   {
+    "english": "was given by the LORD to the children of Lot, so Israel did not take it",
+    "references": [
+     "DEU 2:19"
+    ],
+    "quote": "I have given it unto the children of Lot for a possession"
+   },
+   {
+    "english": "was struck by Jephthah with a very great slaughter",
+    "references": [
+     "JDG 11:32-33"
+    ],
+    "quote": "he smote them from Aroer, even till thou come to Minnith"
+   },
+   {
+    "english": "lost its royal city Rabbah to Joab and David",
+    "references": [
+     "2SA 12:26-29"
+    ],
+    "quote": "Joab fought against Rabbah of the children of Ammon, and took the royal city."
+   }
+  ],
+  "doubts": [
+   "Most marked verses concern the Ammonite people or kings rather than the land, so only events that touch the land and its royal city are used.",
+   "Prophecies of Rabbah's ruin and desolation (JER 49, EZK 25, ZEP 2, AMO 1) are left out because they are not events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

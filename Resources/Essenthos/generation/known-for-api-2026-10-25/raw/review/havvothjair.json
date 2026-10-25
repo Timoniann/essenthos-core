@@ -1,0 +1,19 @@
+{
+ "slug": "havvothjair",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.689799+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був здобутий Яіром, сином Манасії, який назвав села своїм іменем",
+    "deu": "wurde von Jair, dem Sohn Manasses, genommen, der die Dörfer nach seinem Namen benannte",
+    "spa": "fue tomado por Jair hijo de Manasés, que llamó a las aldeas con su nombre",
+    "why": "Ukrainian: removed the added demonstrative «ці» before «села». Spanish: replaced the unidiomatic «llamó las aldeas de su nombre» with «llamó a las aldeas con su nombre»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

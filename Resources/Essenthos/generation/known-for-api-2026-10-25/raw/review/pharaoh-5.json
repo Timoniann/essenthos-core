@@ -1,0 +1,25 @@
+{
+ "slug": "pharaoh-5",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.016355+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "здобув Ґезер, спалив його вогнем і вбив ханаанеян, що жили в місті",
+    "deu": "eroberte Geser, verbrannte es mit Feuer und tötete die Kanaaniter, die in der Stadt wohnten",
+    "spa": "tomó Gezer, la quemó con fuego y mató a los cananeos que habitaban la ciudad",
+    "why": "Ukrainian: modern «вогнем», plural Canaanites, modern «жили»; German: modern «eroberte» and «tötete» instead of «gewann» and «erwürgte»; Spanish: added the missing «con fuego»."
+   },
+   {
+    "ukr": "прийняв Гадада і дав йому дім, утримання та землю",
+    "deu": "nahm Hadad auf und gab ihm ein Haus, Nahrung und ein Land",
+    "spa": "recibió a Adad y le dio casa, alimentos y tierra",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

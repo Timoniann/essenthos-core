@@ -1,0 +1,41 @@
+{
+ "slug": "jazer",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.865944+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell what happened at Jazer: it was taken from the Amorites, built by Gad, and given to the Levites.",
+  "clauses": [
+   {
+    "english": "was spied out by men sent by Moses, and its villages were taken from the Amorites",
+    "references": [
+     "NUM 21:32"
+    ],
+    "quote": "And Moses sent to spy out Jaazer, and they took the villages thereof"
+   },
+   {
+    "english": "was built by the children of Gad",
+    "references": [
+     "NUM 32:34-35"
+    ],
+    "quote": "And Atroth, Shophan, and Jaazer, and Jogbehah,"
+   },
+   {
+    "english": "was given with its suburbs to the Levites of Merari's family",
+    "references": [
+     "JOS 21:39-40"
+    ],
+    "quote": "Heshbon with her suburbs, Jazer with her suburbs; four cities in all."
+   }
+  ],
+  "doubts": [
+   "NUM 32:1, NUM 32:3 and JOS 13:25 only speak of the land or border of Jazer, so they were left out.",
+   "2SA 24:5, ISA 16:8-9 and JER 48:32 give only a location or a simile of weeping, so they were left out.",
+   "1CH 26:31 is already in the summary."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

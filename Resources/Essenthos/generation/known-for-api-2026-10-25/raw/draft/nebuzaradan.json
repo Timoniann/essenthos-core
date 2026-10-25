@@ -1,0 +1,38 @@
+{
+ "slug": "nebuzaradan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.415944+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of his burning Jerusalem and the house of the LORD, carrying the people captive to Babylon, and releasing Jeremiah.",
+  "clauses": [
+   {
+    "english": "burned the house of the LORD and the houses of Jerusalem",
+    "references": [
+     "2KI 25:8-9"
+    ],
+    "quote": "he burnt the house of the LORD, and the king's house"
+   },
+   {
+    "english": "carried the remnant of the people captive to Babylon",
+    "references": [
+     "JER 39:9"
+    ],
+    "quote": "carried away captive into Babylon the remnant of the people that remained in the city"
+   },
+   {
+    "english": "let Jeremiah go from Ramah, at the king of Babylon's charge",
+    "references": [
+     "JER 39:11-14",
+     "JER 40:1"
+    ],
+    "quote": "Nebuzaradan the captain of the guard had let him go from Ramah"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

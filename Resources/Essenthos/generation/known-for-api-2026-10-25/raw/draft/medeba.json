@@ -1,0 +1,26 @@
+{
+ "slug": "medeba",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.138466+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "One verse states an event at Medeba: the hired Syrian host camped before it ahead of battle with Joab, while the other verses give only boundaries or a prophecy of mourning.",
+  "clauses": [
+   {
+    "english": "was where the hired Syrian chariots and the king of Maachah pitched against David's army",
+    "references": [
+     "1CH 19:7"
+    ],
+    "quote": "came and pitched before Medeba"
+   }
+  ],
+  "doubts": [
+   "The 1CH 19:7 verse says the host pitched before Medeba, not that the battle itself was fought there.",
+   "NUM 21:30, JOS 13:9 and JOS 13:16 only mark boundaries and ISA 15:2 is a prophecy of mourning, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

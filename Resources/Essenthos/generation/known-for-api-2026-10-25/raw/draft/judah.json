@@ -1,0 +1,41 @@
+{
+ "slug": "judah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.781466+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The Genesis verses tell several deeds of Judah himself, so a line of three clauses fits.",
+  "clauses": [
+   {
+    "english": "proposed selling Joseph to the Ishmeelites rather than killing him",
+    "references": [
+     "GEN 37:26-27"
+    ],
+    "quote": "let us sell him to the Ishmeelites"
+   },
+   {
+    "english": "acknowledged that Tamar had been more righteous than he",
+    "references": [
+     "GEN 38:26"
+    ],
+    "quote": "She hath been more righteous than I"
+   },
+   {
+    "english": "offered to be surety to Jacob for Benjamin's safe return",
+    "references": [
+     "GEN 43:8-9"
+    ],
+    "quote": "I will be surety for him"
+   }
+  ],
+  "doubts": [
+   "Most verses marked from Numbers onward concern the tribe of Judah, its land, its cities or its people, or men of that tribe (Achan, Bezaleel, Caleb, Nahshon, Daniel); I left them out.",
+   "Jacob's words in Genesis 49 are a blessing pronounced, not an event, so I did not use them.",
+   "The birth of Judah and the genealogies only restate the summary."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

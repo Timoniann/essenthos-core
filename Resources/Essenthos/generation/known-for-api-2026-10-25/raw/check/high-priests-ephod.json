@@ -1,0 +1,48 @@
+{
+ "slug": "high-priests-ephod",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.939252+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "\"cunning work\" is stated in EXO 39:3, just outside the citation.",
+    "english": "was made of gold, blue, purple, scarlet and fine twined linen, with cunning work",
+    "references": [
+     "EXO 39:2-3"
+    ],
+    "ukr": "був зроблений із золота, блакиті, пурпуру, червені та суканого віссону, роботою мистця",
+    "deu": "wurde aus Gold, blauem und rotem Purpur, Scharlach und gezwirnter weißer Leinwand gemacht, künstlich gewirkt",
+    "spa": "fue hecho de oro, cárdeno, púrpura, carmesí y lino torcido, con delicada obra"
+   },
+   {
+    "verdict": "fix",
+    "why": "The onyx stones are named in EXO 39:6, outside the citation.",
+    "english": "bore on its shoulders two onyx stones as a memorial to the children of Israel",
+    "references": [
+     "EXO 28:12",
+     "EXO 39:6-7"
+    ],
+    "ukr": "носив на нараменниках два оніксові камені на пам'ять для Ізраїлевих синів",
+    "deu": "trug auf seinen Schulterstücken zwei Onyxsteine zum Gedächtnis der Kinder Israel",
+    "spa": "llevó sobre sus hombreras dos piedras oniquinas por memoria a los hijos de Israel"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say Moses clothed him for the priest's office, only that Moses put the ephod on Aaron.",
+    "english": "was put upon Aaron by Moses",
+    "references": [
+     "LEV 8:6-7"
+    ],
+    "ukr": "був накладений Мойсеєм на Аарона",
+    "deu": "wurde von Mose Aaron angetan",
+    "spa": "fue puesto por Moisés sobre Aarón"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

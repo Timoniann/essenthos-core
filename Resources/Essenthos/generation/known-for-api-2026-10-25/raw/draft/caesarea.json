@@ -1,0 +1,34 @@
+{
+ "slug": "caesarea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.517148+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The coastal city of Caesarea is the setting for the story of Cornelius and for Paul's custody before the governor.",
+  "clauses": [
+   {
+    "english": "was where the centurion Cornelius lived and received Peter",
+    "references": [
+     "ACT 10:1",
+     "ACT 10:24"
+    ],
+    "quote": "There was a certain man in Caesarea called Cornelius"
+   },
+   {
+    "english": "was where Paul was brought before the governor and kept in custody",
+    "references": [
+     "ACT 23:33-35"
+    ],
+    "quote": "when they came to Caesarea and delivered the epistle to the governor"
+   }
+  ],
+  "doubts": [
+   "MAT 16:13 and MRK 8:27 name Caesarea Philippi, a different place, so they were left out.",
+   "The other verses only mention travel to or through Caesarea, so they were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

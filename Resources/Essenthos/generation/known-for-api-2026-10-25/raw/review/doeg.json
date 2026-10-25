@@ -1,0 +1,25 @@
+{
+ "slug": "doeg",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.954515+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "сказав Саулові, що Давид приходив до Ахімелеха до Нова",
+    "deu": "sagte Saul, dass David zu Ahimelech nach Nobe gekommen war",
+    "spa": "dijo a Saúl que David había venido a Nob, a Ahimelech",
+    "why": ""
+   },
+   {
+    "ukr": "за наказом Саула вбив вісімдесят п'ять священиків, що носили лляний ефод",
+    "deu": "auf Befehl Sauls erschlug fünfundachtzig Priester, die leinene Leibröcke trugen",
+    "spa": "por orden de Saúl mató a ochenta y cinco sacerdotes que vestían efod de lino",
+    "why": "Ukrainian: modern accusative «лляний ефод» instead of the old «лляного ефода»; Spanish: modern spelling «efod» instead of «ephod»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

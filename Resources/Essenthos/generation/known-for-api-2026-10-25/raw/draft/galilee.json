@@ -1,0 +1,40 @@
+{
+ "slug": "galilee",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.287730+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of events in Galilee beyond what the summary says: its capture by Assyria and Jesus' work there.",
+  "clauses": [
+   {
+    "english": "was taken by Tiglathpileser king of Assyria, and its people were carried captive",
+    "references": [
+     "2KI 15:29"
+    ],
+    "quote": "and carried them captive to Assyria"
+   },
+   {
+    "english": "was where Jesus went about teaching, preaching and healing",
+    "references": [
+     "MAT 4:23"
+    ],
+    "quote": "And Jesus went about all Galilee, teaching in their synagogues"
+   },
+   {
+    "english": "was where Jesus did his first miracle, at Cana",
+    "references": [
+     "JHN 2:11"
+    ],
+    "quote": "This beginning of miracles did Jesus in Cana of Galilee"
+   }
+  ],
+  "doubts": [
+   "Left out the Kedesh in Galilee city-of-refuge and Levite-city lists, and Solomon's gift of twenty cities to Hiram, as lesser events.",
+   "Left out the many verses that only name where Jesus or others came from or travelled."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

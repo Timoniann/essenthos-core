@@ -1,0 +1,25 @@
+{
+ "slug": "gomorrah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.856517+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була зруйнована, коли Господь послав на неї з неба дощ із сірки й вогню",
+    "deu": "wurde zerstört, als der HERR Schwefel und Feuer vom Himmel auf sie regnen ließ",
+    "spa": "fue destruida cuando el SEÑOR llovió sobre ella azufre y fuego desde los cielos",
+    "why": "Replaced the old spelling «огню» with the modern «вогню» in the Ukrainian."
+   },
+   {
+    "ukr": "була позбавлена всього маєтку після того, як її цар утік і впав у долині Сіддім",
+    "deu": "wurde ihrer ganzen Habe beraubt, nachdem ihr König geflohen und im Tal Siddim gefallen war",
+    "spa": "fue despojada de toda su riqueza después de que su rey huyó y cayó en el valle de Siddim",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

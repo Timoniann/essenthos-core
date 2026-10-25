@@ -1,0 +1,25 @@
+{
+ "slug": "aristarchus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.844488+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був схоплений разом з Гаєм, коли місто наповнилось заколотом",
+    "deu": "wurde mit Gajus ergriffen, als die Stadt voller Getümmel war",
+    "spa": "fue arrebatado con Gayo cuando la ciudad se llenó de confusión",
+    "why": "German: replaced the old 'voll Getümmels' with modern 'voller Getümmel' and dropped 'ganze', which the English does not have."
+   },
+   {
+    "ukr": "був ув'язнений разом з Павлом",
+    "deu": "war ein Mitgefangener des Paulus",
+    "spa": "fue compañero de Pablo en la prisión",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

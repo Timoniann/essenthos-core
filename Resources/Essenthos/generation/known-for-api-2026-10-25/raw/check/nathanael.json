@@ -1,0 +1,36 @@
+{
+ "slug": "nathanael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.301747+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses show Philip finding Nathanael and telling him, not bringing him to Jesus.",
+    "english": "was found by Philip, who told him they had found the one of whom Moses wrote",
+    "references": [
+     "JHN 1:45"
+    ],
+    "ukr": "був знайдений Пилипом, який сказав йому, що вони знайшли Того, про Кого писав Мойсей",
+    "deu": "wurde von Philippus gefunden, der ihm sagte, sie hätten den gefunden, von dem Moses geschrieben hat",
+    "spa": "fue hallado por Felipe, quien le dijo que habían hallado a aquel de quien escribió Moisés"
+   },
+   {
+    "verdict": "fix",
+    "why": "The confession and the fig tree remark are in verses 48-49; verse 47 is not needed.",
+    "english": "confessed Jesus as the Son of God and King of Israel after Jesus saw him under the fig tree",
+    "references": [
+     "JHN 1:48-49"
+    ],
+    "ukr": "визнав Ісуса Сином Божим і Царем Ізраїлевим після того, як Ісус побачив його під фіґовим деревом",
+    "deu": "bekannte Jesus als Gottes Sohn und König von Israel, nachdem Jesus ihn unter dem Feigenbaum gesehen hatte",
+    "spa": "confesó a Jesús como el Hijo de Dios y el Rey de Israel después de que Jesús lo vio debajo de la higuera"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

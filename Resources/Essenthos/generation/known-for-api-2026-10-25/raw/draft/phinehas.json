@@ -1,0 +1,37 @@
+{
+ "slug": "phinehas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.695696+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of several deeds of Phinehas beyond his lineage and priesthood, chiefly the javelin deed at Peor, the covenant given him, and his mission to the eastern tribes.",
+  "clauses": [
+   {
+    "english": "killed an Israelite and a Midianite woman with a javelin, and the plague was stayed",
+    "references": [
+     "NUM 25:7-8"
+    ],
+    "quote": "thrust both of them through"
+   },
+   {
+    "english": "was given the LORD's covenant of an everlasting priesthood",
+    "references": [
+     "NUM 25:11-13"
+    ],
+    "quote": "the covenant of an everlasting priesthood"
+   },
+   {
+    "english": "was sent to the eastern tribes over the altar they had built",
+    "references": [
+     "JOS 22:13"
+    ],
+    "quote": "the children of Israel sent unto the children of Reuben"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

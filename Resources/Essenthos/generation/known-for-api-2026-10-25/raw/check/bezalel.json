@@ -1,0 +1,47 @@
+{
+ "slug": "bezalel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.235915+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verse 31:3 alone states being filled with the spirit of God in wisdom and workmanship; verse 31:4 is not needed.",
+    "english": "was filled with the spirit of God in wisdom and all manner of workmanship",
+    "references": [
+     "EXO 31:3"
+    ],
+    "ukr": "був наповнений Духом Божим, мудрістю і здібністю до всякої роботи",
+    "deu": "wurde mit dem Geist Gottes erfüllt, mit Weisheit und mit allerlei Geschicklichkeit",
+    "spa": "fue henchido de espíritu de Dios, en sabiduría y en todo artificio"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "made the ark of shittim wood",
+    "references": [
+     "EXO 37:1"
+    ],
+    "ukr": "зробив ковчег з акаційного дерева",
+    "deu": "machte die Lade aus Akazienholz",
+    "spa": "hizo el arca de madera de Sittim"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "made all that the LORD commanded Moses",
+    "references": [
+     "EXO 38:22"
+    ],
+    "ukr": "зробив усе, що Господь наказав Мойсеєві",
+    "deu": "machte alles, wie der HERR dem Mose geboten hatte",
+    "spa": "hizo todas las cosas que el SEÑOR mandó a Moisés"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

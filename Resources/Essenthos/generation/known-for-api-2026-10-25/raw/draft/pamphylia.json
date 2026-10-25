@@ -1,0 +1,27 @@
+{
+ "slug": "pamphylia",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.772821+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "One event of the story belongs to Pamphylia: John Mark left Paul and Barnabas there and returned to Jerusalem.",
+  "clauses": [
+   {
+    "english": "was where John Mark left Paul and Barnabas and returned to Jerusalem",
+    "references": [
+     "ACT 13:13",
+     "ACT 15:38"
+    ],
+    "quote": "John departing from them returned to Jerusalem"
+   }
+  ],
+  "doubts": [
+   "ACT 2:10 and ACT 27:5 only name Pamphylia in a list of peoples and a sea route, so they were left out.",
+   "Paul's preaching at Perga (ACT 14:25) belongs to that city, so it was not made a clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

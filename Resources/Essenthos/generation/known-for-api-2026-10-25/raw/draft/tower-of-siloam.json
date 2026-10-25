@@ -1,0 +1,23 @@
+{
+ "slug": "tower-of-siloam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.048625+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verse states one event of the tower: it fell and killed eighteen people.",
+  "clauses": [
+   {
+    "english": "fell and killed eighteen people",
+    "references": [
+     "LUK 13:4"
+    ],
+    "quote": "those eighteen, upon whom the tower in Siloam fell, and slew them"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

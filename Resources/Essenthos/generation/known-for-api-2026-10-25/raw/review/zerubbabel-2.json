@@ -1,0 +1,31 @@
+{
+ "slug": "zerubbabel-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.180669+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "збудував жертовник Бога Ізраїля разом з Ісусом",
+    "deu": "baute mit Jesua den Altar des Gottes Israels",
+    "spa": "edificó con Jesuá el altar del Dios de Israel",
+    "why": ""
+   },
+   {
+    "ukr": "відхилив пропозицію ворогів допомогти збудувати храм для Бога",
+    "deu": "lehnte das Angebot der Widersacher ab, beim Bau des Hauses Gottes zu helfen",
+    "spa": "rechazó la oferta de los enemigos de ayudar a edificar la casa de Dios",
+    "why": ""
+   },
+   {
+    "ukr": "послухався слова Господа через пророка Огія і працював над домом Господа",
+    "deu": "gehorchte dem Wort des HERRN durch den Propheten Haggai und arbeitete am Haus des HERRN",
+    "spa": "obedeció la palabra del SEÑOR por medio del profeta Haggeo y trabajó en la casa del SEÑOR",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

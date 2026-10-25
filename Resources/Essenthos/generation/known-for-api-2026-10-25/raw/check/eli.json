@@ -1,0 +1,47 @@
+{
+ "slug": "eli",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.258820+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse gives only his blessing and prayer; 'asked God' is fine but the clause is accurate enough once shortened.",
+    "english": "told Hannah to go in peace and prayed that God would grant her petition",
+    "references": [
+     "1SA 1:17"
+    ],
+    "ukr": "сказав Анні йти з миром і бажав, щоб Бог Ізраїлів дав їй бажання її",
+    "deu": "sagte Hanna, sie solle mit Frieden hingehen, und wünschte, der Gott Israels möge ihr ihre Bitte geben",
+    "spa": "dijo a Ana que fuera en paz y deseó que el Dios de Israel le otorgara su petición"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses show God told Samuel about judging Eli's house; Eli was not the one told here, and the clause needs the sons' wickedness and Eli's failure to restrain them.",
+    "english": "was to have his house judged by the LORD for ever because he did not restrain his sons",
+    "references": [
+     "1SA 3:12-13"
+    ],
+    "ukr": "мав зазнати, що Господь судитиме його дім навіки, бо він не спиняв своїх синів",
+    "deu": "sollte erleben, dass der HERR sein Haus ewig richtet, weil er seinen Söhnen nicht wehrte",
+    "spa": "vio que el SEÑOR juzgaría su casa para siempre, porque no estorbó a sus hijos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "fell backward from his seat and died on hearing the ark was taken",
+    "references": [
+     "1SA 4:17-18"
+    ],
+    "ukr": "впав зо стільця навзнак і помер, коли почув, що ковчег Божий узятий",
+    "deu": "fiel rücklings vom Stuhl und starb, als er hörte, dass die Lade Gottes genommen war",
+    "spa": "cayó hacia atrás de la silla y murió al oír que el arca de Dios era tomada"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "hoshea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.673996+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "склав змову проти Пекаха, вбив його і зацарював замість нього",
+    "deu": "verschwor sich gegen Pekah, schlug ihn tot und wurde König an seiner Stelle",
+    "spa": "conspiró contra Peka, lo mató y reinó en su lugar",
+    "why": "Replaced dated wording: Ukrainian «змову на»→«проти» and «убив»→«вбив»; German «machte einen Bund wider»→«verschwor sich gegen» and «Statt»→«Stelle»; Spanish «hizo conjuración»→«conspiró»."
+   },
+   {
+    "ukr": "був замкнений і зв'язаний у в'язниці асирійським царем за те, що посилав до Со, єгипетського царя",
+    "deu": "wurde vom König von Assyrien eingesperrt und im Gefängnis gefesselt, weil er zu So, dem König in Ägypten, gesandt hatte",
+    "spa": "fue detenido y aprisionado por el rey de Asiria por haber enviado a So, rey de Egipto",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

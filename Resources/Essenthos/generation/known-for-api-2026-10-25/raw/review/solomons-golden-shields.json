@@ -1,0 +1,25 @@
+{
+ "slug": "solomons-golden-shields",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.465314+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "були зроблені Соломоном із кутого золота й віддані до дому Ливанського Лісу",
+    "deu": "wurden von Salomo aus dem besten Gold gemacht und in das Haus am Wald Libanon gebracht",
+    "spa": "fueron hechos por Salomón de oro extendido y puestos en la casa del bosque del Líbano",
+    "why": ""
+   },
+   {
+    "ukr": "були забрані Шушаком, єгипетським царем, коли той пішов на Єрусалим",
+    "deu": "wurden von Sisak, dem König in Ägypten, genommen, als er gegen Jerusalem heraufzog",
+    "spa": "fueron llevados por Sisac, rey de Egipto, cuando subió contra Jerusalem",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

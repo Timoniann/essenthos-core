@@ -1,0 +1,17 @@
+{
+ "slug": "pharaoh-6",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.905450+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list this Pharaoh as the father of Bithiah within a genealogy, which is no more than the summary already says.",
+  "clauses": [],
+  "doubts": [
+   "The verse marked 1CH 4:17 does not itself name Pharaoh; the name appears in 1CH 4:18."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

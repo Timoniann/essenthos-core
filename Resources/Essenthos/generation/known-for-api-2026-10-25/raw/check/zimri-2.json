@@ -1,0 +1,36 @@
+{
+ "slug": "zimri-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.607900+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "destroyed all the house of Baasha after he became king",
+    "references": [
+     "1KI 16:11-12"
+    ],
+    "ukr": "вигубив увесь Башин дім, коли зацарював",
+    "deu": "vertilgte das ganze Haus Baesas, als er König wurde",
+    "spa": "exterminó toda la casa de Baasa cuando comenzó a reinar"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says only 'the city'; Tirzah is named in verse 17, so the citation is widened to include it.",
+    "english": "burned the king's house over himself and died when Tirzah was taken",
+    "references": [
+     "1KI 16:17-18"
+    ],
+    "ukr": "спалив над собою царський дім і помер, коли була здобута Тірца",
+    "deu": "verbrannte sich mit dem Haus des Königs und starb, als Thirza eingenommen wurde",
+    "spa": "quemó la casa real consigo mismo y murió cuando fue tomada Thirsa"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

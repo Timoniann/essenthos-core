@@ -1,0 +1,48 @@
+{
+ "slug": "joppa",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.810033+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says Jonah went down to Joppa and found a ship there, but not that Joppa was a port.",
+    "english": "was where Jonah boarded a ship to flee to Tarshish",
+    "references": [
+     "JON 1:3"
+    ],
+    "ukr": "була місцем, де Йона ввійшов на корабель, щоб утекти до Таршішу",
+    "deu": "war der Ort, an dem Jona ein Schiff bestieg, um nach Tharsis zu fliehen",
+    "spa": "fue el lugar donde Jonás entró en un navío para huir a Tarsis"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Peter raised the disciple Tabitha from the dead",
+    "references": [
+     "ACT 9:36-42"
+    ],
+    "ukr": "була місцем, де Петро воскресив ученицю Тавіту з мертвих",
+    "deu": "war der Ort, an dem Petrus die Jüngerin Tabea vom Tod auferweckte",
+    "spa": "fue el lugar donde Pedro resucitó a la discípula Tabita"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Peter lodged with Simon a tanner and was sent for by Cornelius",
+    "references": [
+     "ACT 9:43",
+     "ACT 10:5-8"
+    ],
+    "ukr": "була місцем, де Петро гостював у гарбарника Симона і за ним посилав Корнилій",
+    "deu": "war der Ort, an dem Petrus bei dem Gerber Simon zur Herberge war und von Kornelius gerufen wurde",
+    "spa": "fue el lugar donde Pedro posó en casa de Simón, curtidor, y fue llamado por Cornelio"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

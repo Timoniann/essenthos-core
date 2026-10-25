@@ -1,0 +1,25 @@
+{
+ "slug": "enrogel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.593874+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Йонатан та Ахімаац чекали, щоб донести вістку цареві Давидові",
+    "deu": "war der Ort, an dem Jonathan und Ahimaaz warteten, um dem König David Nachricht zu bringen",
+    "spa": "fue el lugar donde Jonatán y Ahimaas esperaron para llevar aviso al rey David",
+    "why": ""
+   },
+   {
+    "ukr": "був поблизу місця, де Адонія приніс у жертву дрібну й велику худобу та ситу худобу й закликав своїх братів",
+    "deu": "lag nahe bei dem Ort, wo Adonia Schafe, Rinder und gemästetes Vieh opferte und seine Brüder einlud",
+    "spa": "estuvo cerca de donde Adonía mató ovejas, vacas y animales engordados y convidó a sus hermanos",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

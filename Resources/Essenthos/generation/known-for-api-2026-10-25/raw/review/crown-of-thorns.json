@@ -1,0 +1,25 @@
+{
+ "slug": "crown-of-thorns",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.181398+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був сплетений вояками й покладений Ісусові на голову, щоб познущатися з Нього як з Царя Юдейського",
+    "deu": "wurde von den Soldaten geflochten und Jesus auf den Kopf gesetzt, um ihn als König der Juden zu verspotten",
+    "spa": "fue tejida por los soldados y puesta sobre la cabeza de Jesús para burlarse de él como Rey de los Judíos",
+    "why": "German: replaced old wording 'Kriegsknechten', 'Haupt' and 'der Juden König' with modern 'Soldaten', 'Kopf' and 'König der Juden'."
+   },
+   {
+    "ukr": "був на Ісусі, коли Він вийшов назовні, а Пилат сказав: Оце Чоловік!",
+    "deu": "wurde von Jesus getragen, als er herausging und Pilatus sprach: Seht, welch ein Mensch!",
+    "spa": "fue llevada por Jesús cuando salió fuera y Pilato dijo: He aquí el hombre.",
+    "why": "German: replaced archaic 'Sehet' with modern 'Seht'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

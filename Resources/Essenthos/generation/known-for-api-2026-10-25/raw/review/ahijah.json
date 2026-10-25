@@ -1,0 +1,25 @@
+{
+ "slug": "ahijah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.147550+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "подер нову одіж на дванадцять кусків і пообіцяв Єровоамові десять племен",
+    "deu": "riss den neuen Mantel in zwölf Stücke und verhieß Jerobeam zehn Stämme",
+    "spa": "rompió la capa nueva en doce pedazos y prometió a Jeroboam diez tribus",
+    "why": ""
+   },
+   {
+    "ukr": "провістив суд Господа над Єровоамовим домом за те, що той наробив собі інших богів",
+    "deu": "kündigte das Gericht des HERRN über das Haus Jerobeams an, weil er sich andere Götter gemacht hatte",
+    "spa": "anunció el juicio del SEÑOR sobre la casa de Jeroboam porque se había hecho dioses ajenos",
+    "why": "Ukrainian: replaced the adjective «Господній» with the declined name «Господа» (суд Господа)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

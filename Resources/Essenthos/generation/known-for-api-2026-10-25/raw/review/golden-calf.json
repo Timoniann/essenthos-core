@@ -1,0 +1,25 @@
+{
+ "slug": "golden-calf",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.270225+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було зроблене Аароном із золотих сережок народу і шановане як боги, що вивели Ізраїля з єгипетського краю",
+    "deu": "wurde von Aaron aus den goldenen Ohrringen des Volkes gemacht und als die Götter angebetet, die Israel aus Ägyptenland geführt haben",
+    "spa": "fue hecho por Aarón con los zarcillos de oro del pueblo y adorado como los dioses que sacaron a Israel de la tierra de Egipto",
+    "why": "Ukrainian: replaced the turned-round 'йому поклонялися' with a passive participle and 'як боги'; German: modernised 'Ohrenringe' to 'Ohrringe'."
+   },
+   {
+    "ukr": "було спалене, змелене на порох і розсипане Мойсеєм по воді та дане народові випити",
+    "deu": "wurde von Mose verbrannt, zu Pulver zermalmt und aufs Wasser gestreut und dem Volk zu trinken gegeben",
+    "spa": "fue quemado por Moisés, molido hasta reducirlo a polvo y esparcido sobre el agua, y dado a beber al pueblo",
+    "why": "Made the final act passive so the calf stays the subject (not Moses or the water), used 'the people' as in the English, dropped the added 'mit Feuer'/'en el fuego', and modernised 'gestäubt' to 'gestreut'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

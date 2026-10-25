@@ -1,0 +1,31 @@
+{
+ "slug": "gibeon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.138024+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "уклав з Ісусом умову, видавши себе за послів",
+    "deu": "schloss mit Josua einen Bund, indem es sich als Gesandte ausgab",
+    "spa": "obtuvo alianza con Josué fingiéndose embajadores",
+    "why": "German: the verb and pronoun must agree with neuter Gibeon (es, not er)."
+   },
+   {
+    "ukr": "зазнав нападу п'яти аморейських царів, яких Господь розбив там",
+    "deu": "wurde von fünf Königen der Amoriter angegriffen, die der HERR dort in Schrecken versetzte",
+    "spa": "fue atacado por cinco reyes de los amorreos, a los que el SEÑOR turbó allí",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де Господь з'явився Соломонові в нічному сні",
+    "deu": "war der Ort, an dem der HERR Salomo im Traum erschien",
+    "spa": "fue donde el SEÑOR se apareció a Salomón en sueños",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "rehoboam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.515644+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Rehoboam's harsh answer that split the kingdom and of Shishak's attack on Jerusalem in his fifth year.",
+  "clauses": [
+   {
+    "english": "answered the people roughly, and ten tribes of Israel departed from him",
+    "references": [
+     "1KI 12:12-16"
+    ],
+    "quote": "the king hearkened not unto them"
+   },
+   {
+    "english": "was attacked at Jerusalem by Shishak king of Egypt, who took the treasures of the LORD's house",
+    "references": [
+     "1KI 14:25-26"
+    ],
+    "quote": "Shishak king of Egypt came up against Jerusalem"
+   }
+  ],
+  "doubts": [
+   "1KI 11:40 and 1KI 12:3 name Jeroboam, not Rehoboam, and were left out as context.",
+   "The clause on the kingdom's division joins the harsh answer with Israel's departure, which are one event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

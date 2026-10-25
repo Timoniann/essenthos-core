@@ -1,0 +1,49 @@
+{
+ "slug": "athaliah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.983415+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "destroyed all the royal offspring after her son Ahaziah died",
+    "references": [
+     "2KI 11:1",
+     "2CH 22:10"
+    ],
+    "ukr": "вигубила все цареве насіння після того, як помер її син Ахазія",
+    "deu": "brachte alle aus dem königlichen Geschlecht um, nachdem ihr Sohn Ahasja gestorben war",
+    "spa": "destruyó toda la simiente real después de que murió su hijo Ochôzías"
+   },
+   {
+    "verdict": "fix",
+    "why": "The citation leaves out 2KI 11:2, which names Joash as the one hidden.",
+    "english": "reigned over the land while Joash was hidden in the house of the LORD six years",
+    "references": [
+     "2KI 11:2-3"
+    ],
+    "ukr": "царювала над краєм, поки Йоаш шість років ховався в Господньому домі",
+    "deu": "war Königin im Lande, während Joas sechs Jahre im Hause des HERRN versteckt war",
+    "spa": "fue reina sobre el país mientras Joas estuvo escondido seis años en la casa del SEÑOR"
+   },
+   {
+    "verdict": "fix",
+    "why": "The crowning of Joash is in 2KI 11:12, outside the citation; the cried word and the slaying are what the verses cited give.",
+    "english": "cried \"Treason, Treason\" and was slain with the sword",
+    "references": [
+     "2KI 11:14-16",
+     "2KI 11:20"
+    ],
+    "ukr": "крикнула: «Зрада, зрада!» і була вбита мечем",
+    "deu": "rief: «Aufruhr, Aufruhr!» und wurde mit dem Schwert getötet",
+    "spa": "clamó: «¡Traición, traición!» y fue muerta a cuchillo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

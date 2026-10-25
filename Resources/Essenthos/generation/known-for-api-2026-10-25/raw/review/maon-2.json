@@ -1,0 +1,19 @@
+{
+ "slug": "maon-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.636843+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де перебували Давид та його люди й куди гнався за Давидом Саул",
+    "deu": "war der Ort, an dem David und seine Männer waren und Saul David nachjagte",
+    "spa": "fue el lugar donde David y su gente estuvieron y Saúl siguió a David",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

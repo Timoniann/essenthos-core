@@ -1,0 +1,31 @@
+{
+ "slug": "asia",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.599287+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Дух Святий не звелів їм провіщати слово",
+    "deu": "war der Ort, an dem ihnen vom Heiligen Geist verwehrt wurde, das Wort zu verkünden",
+    "spa": "fue el lugar donde el Espíritu Santo les prohibió hablar la palabra",
+    "why": "German: replaced the archaic 'vom heiligen Geiste gewehrt' and 'das Wort zu reden' with modern 'vom Heiligen Geist verwehrt' and 'das Wort zu verkünden'."
+   },
+   {
+    "ukr": "була місцем, де всі, хто в ній мешкав, юдеї та геллени, два роки слухали слово Господа Ісуса",
+    "deu": "war der Ort, an dem alle, die dort wohnten, Juden und Griechen, zwei Jahre lang das Wort des HERRN Jesus hörten",
+    "spa": "fue el lugar donde todos los que habitaban en ella, judíos y griegos, oyeron durante dos años la palabra del Señor Jesús",
+    "why": ""
+   },
+   {
+    "ukr": "була місцем, де їх спіткала скорбота над міру, так що вони не сподівалися навіть жити",
+    "deu": "war der Ort, an dem sie über die Maßen beschwert waren, so dass sie am Leben verzagten",
+    "spa": "fue el lugar donde fueron cargados sobremanera, hasta dudar de la vida",
+    "why": "German: modernized the spelling 'daß' to 'dass'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

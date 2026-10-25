@@ -1,0 +1,33 @@
+{
+ "slug": "timnah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.750946+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Samson's visit to Timnath to seek a Philistine wife and the Philistine capture of Timnah under Ahaz are events beyond the summary; the border and town lists are not.",
+  "clauses": [
+   {
+    "english": "was where Samson saw a Philistine woman and asked to marry her",
+    "references": [
+     "JDG 14:1-2"
+    ],
+    "quote": "I have seen a woman in Timnath of the daughters of the Philistines"
+   },
+   {
+    "english": "was taken by the Philistines, who settled there",
+    "references": [
+     "2CH 28:18"
+    ],
+    "quote": "Timnah with the villages thereof"
+   }
+  ],
+  "doubts": [
+   "JOS 15:10 (border) and JOS 19:43 (list of Dan's towns) only name the place, so they were left out; Thimnathah in JOS 19:43 may be a different town.",
+   "JDG 15:6 mentions 'the Timnite' only as Samson's father-in-law, so it was not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

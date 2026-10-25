@@ -1,0 +1,58 @@
+{
+ "slug": "theangelofthelord",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.484750+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "found Hagar by a fountain in the wilderness and told her to return to Sarai",
+    "references": [
+     "GEN 16:7-9"
+    ],
+    "ukr": "знайшов Аґар біля джерела води на пустині й наказав їй вернутися до Сари",
+    "deu": "fand Hagar bei einem Wasserbrunnen in der Wüste und hieß sie zu Sarai zurückkehren",
+    "spa": "halló a Agar junto a una fuente de agua en el desierto y le dijo que volviera a Sarai"
+   },
+   {
+    "verdict": "fix",
+    "why": "Isaac is named only in GEN 22:9, just outside the citation, so the citation is widened.",
+    "english": "called to Abraham out of heaven and stopped him from slaying Isaac",
+    "references": [
+     "GEN 22:9-12"
+    ],
+    "ukr": "озвався до Авраама з неба й не дозволив йому зарізати Ісаака",
+    "deu": "rief Abraham vom Himmel zu und hinderte ihn daran, Isaak zu schlachten",
+    "spa": "llamó a Abraham desde el cielo y le impidió degollar a Isaac"
+   },
+   {
+    "verdict": "fix",
+    "why": "Moses is named only in EXO 3:1, just outside the citation, so the citation is widened.",
+    "english": "appeared to Moses in a flame of fire out of a bush",
+    "references": [
+     "EXO 3:1-2"
+    ],
+    "ukr": "явився Мойсею в полум'ї огняному з-посеред тернового куща",
+    "deu": "erschien Mose in einer feurigen Flamme aus dem Busch",
+    "spa": "se le apareció a Moisés en una llama de fuego en medio de una zarza"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "smote 185,000 in the camp of the Assyrians in one night",
+    "references": [
+     "2KI 19:35"
+    ],
+    "ukr": "забив в асирійському таборі сто вісімдесят п'ять тисяч за одну ніч",
+    "deu": "schlug in einer Nacht im Lager von Assyrien hundertfünfundachtzigtausend",
+    "spa": "hirió en una noche en el campo de los asirios a ciento ochenta y cinco mil"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

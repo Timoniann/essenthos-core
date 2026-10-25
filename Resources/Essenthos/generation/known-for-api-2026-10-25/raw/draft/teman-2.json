@@ -1,0 +1,33 @@
+{
+ "slug": "teman-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.589051+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Teman is named in the LORD's oracle of fire against it and in Habakkuk's vision of God coming from it, which say more than the summary does.",
+  "clauses": [
+   {
+    "english": "was threatened by the LORD with a fire sent upon it",
+    "references": [
+     "AMO 1:12"
+    ],
+    "quote": "I will send a fire upon Teman"
+   },
+   {
+    "english": "was the place God came from in Habakkuk's vision",
+    "references": [
+     "HAB 3:3"
+    ],
+    "quote": "God came from Teman, and the Holy One from mount Paran."
+   }
+  ],
+  "doubts": [
+   "The fire against Teman is a pronounced threat, not a narrated event.",
+   "JER 49:7, JER 49:20, EZK 25:13 and OBA 1:9 only place Teman within the judgment on Edom, so they are not cited."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

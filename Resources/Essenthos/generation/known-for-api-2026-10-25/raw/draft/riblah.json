@@ -1,0 +1,41 @@
+{
+ "slug": "riblah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.465776+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Riblah is where Pharaoh Necho bound Jehoahaz and where the king of Babylon judged Zedekiah and executed Judah's leaders.",
+  "clauses": [
+   {
+    "english": "was where Pharaoh Necho put Jehoahaz in bands",
+    "references": [
+     "2KI 23:33"
+    ],
+    "quote": "Pharaohnechoh put him in bands at Riblah in the land of Hamath"
+   },
+   {
+    "english": "was where the king of Babylon judged Zedekiah and slew his sons",
+    "references": [
+     "2KI 25:6-7",
+     "JER 52:9-10"
+    ],
+    "quote": "the king of Babylon slew the sons of Zedekiah before his eyes"
+   },
+   {
+    "english": "was where the king of Babylon slew the leaders of Judah brought to him",
+    "references": [
+     "2KI 25:20-21",
+     "JER 52:26-27"
+    ],
+    "quote": "smote them, and slew them at Riblah in the land of Hamath"
+   }
+  ],
+  "doubts": [
+   "EZK 6:14 is marked, but it names Diblath (the wilderness toward Diblath), probably a different place or a variant reading; left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

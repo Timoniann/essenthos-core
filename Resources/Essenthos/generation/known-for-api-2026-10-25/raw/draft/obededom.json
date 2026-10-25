@@ -1,0 +1,26 @@
+{
+ "slug": "obededom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.766157+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell that the ark stayed in his house three months and the LORD blessed him and his household.",
+  "clauses": [
+   {
+    "english": "housed the ark of the LORD for three months and was blessed by the LORD with all his household",
+    "references": [
+     "2SA 6:11"
+    ],
+    "quote": "the LORD blessed Obededom, and all his household"
+   }
+  ],
+  "doubts": [
+   "The summary already names the house where the ark rested, so the clause adds the blessing and the three months.",
+   "1CH 15:24 names an Obededom as doorkeeper, which may be a different man of the same name, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

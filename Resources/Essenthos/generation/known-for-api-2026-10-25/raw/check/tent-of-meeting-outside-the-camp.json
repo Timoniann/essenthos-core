@@ -1,0 +1,37 @@
+{
+ "slug": "tent-of-meeting-outside-the-camp",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.771320+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says they went out to the tent, not to the LORD himself.",
+    "english": "was where everyone who sought the LORD went out",
+    "references": [
+     "EXO 33:7"
+    ],
+    "ukr": "була місцем, куди виходив кожен, хто шукав Господа",
+    "deu": "war der Ort, zu dem jeder hinausging, der den HERRN befragen wollte",
+    "spa": "fue el lugar adonde salía todo el que buscaba al SEÑOR"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 10 (the people's worship) is not needed; only verses 9 and 11 are.",
+    "english": "was where the cloudy pillar descended and the LORD spoke with Moses face to face",
+    "references": [
+     "EXO 33:9",
+     "EXO 33:11"
+    ],
+    "ukr": "була місцем, де сходив стовп хмари і Господь говорив з Мойсеєм лице в лице",
+    "deu": "war der Ort, wo die Wolkensäule herabkam und der HERR mit Mose von Angesicht zu Angesicht redete",
+    "spa": "fue el lugar donde descendía la columna de nube y el SEÑOR hablaba con Moisés cara a cara"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

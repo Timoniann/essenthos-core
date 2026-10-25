@@ -1,0 +1,43 @@
+{
+ "slug": "nazareth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.079249+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell what happened at Nazareth: the angel sent to Mary, Jesus dwelling there as a child, and Jesus reading in the synagogue.",
+  "clauses": [
+   {
+    "english": "was where the angel Gabriel was sent to the virgin Mary",
+    "references": [
+     "LUK 1:26-28"
+    ],
+    "quote": "the angel Gabriel was sent from God unto a city of Galilee"
+   },
+   {
+    "english": "was where Jesus dwelt as a child",
+    "references": [
+     "MAT 2:23",
+     "LUK 2:39",
+     "LUK 2:51"
+    ],
+    "quote": "he came and dwelt in a city called Nazareth"
+   },
+   {
+    "english": "was where Jesus went into the synagogue on the sabbath and stood up to read",
+    "references": [
+     "LUK 4:16-17"
+    ],
+    "quote": "he went into the synagogue on the sabbath day, and stood up for to read"
+   }
+  ],
+  "doubts": [
+   "MAT 13:54 and MRK 6:1 speak of Jesus' \"own country\" without naming Nazareth, so I left them out.",
+   "Verses that only call Jesus \"of Nazareth\" (as a title or label) were not used as events of the place.",
+   "LUK 2:43 (Jesus tarrying in Jerusalem) is marked but concerns Jerusalem, not Nazareth."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

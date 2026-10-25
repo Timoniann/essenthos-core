@@ -1,0 +1,37 @@
+{
+ "slug": "elizabeth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.339992+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "conceived a son in her old age, though she had been barren",
+    "references": [
+     "LUK 1:24",
+     "LUK 1:36"
+    ],
+    "ukr": "зачала сина в старості, хоч була неплідною",
+    "deu": "wurde in ihrem Alter mit einem Sohn schwanger, obwohl sie unfruchtbar gewesen war",
+    "spa": "concibió un hijo en su vejez, aunque había sido estéril"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was filled with the Holy Ghost when Mary greeted her",
+    "references": [
+     "LUK 1:40-41"
+    ],
+    "ukr": "наповнилась Духом Святим, коли Марія поздоровила її",
+    "deu": "ward des heiligen Geistes voll, als Maria sie grüßte",
+    "spa": "fue llena del Espíritu Santo cuando María la saludó"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

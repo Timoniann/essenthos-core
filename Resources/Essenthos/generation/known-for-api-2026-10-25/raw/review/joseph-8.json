@@ -1,0 +1,25 @@
+{
+ "slug": "joseph-8",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.977083+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "просив у Пилата тіла Ісусового, і йому видали його",
+    "deu": "bat Pilatus um den Leib Jesu und bekam ihn",
+    "spa": "pidió a Pilato el cuerpo de Jesús y se le dio",
+    "why": ""
+   },
+   {
+    "ukr": "обгорнув тіло Ісусове чистою плащаницею і поклав його у своєму новому гробі",
+    "deu": "wickelte den Leib Jesu in ein reines Leinentuch und legte ihn in sein eigenes neues Grab",
+    "spa": "envolvió el cuerpo de Jesús en una sábana limpia y lo puso en su sepulcro nuevo",
+    "why": "German: replaced Luther's old word «eine reine Leinwand» with modern «ein reines Leinentuch»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

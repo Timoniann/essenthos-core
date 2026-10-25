@@ -1,0 +1,41 @@
+{
+ "slug": "michal",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.888402+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell deeds of Michal beyond the relations in the summary: saving David, being taken from Phaltiel, and despising David at the ark.",
+  "clauses": [
+   {
+    "english": "let David down through a window so he escaped Saul's messengers",
+    "references": [
+     "1SA 19:11-12"
+    ],
+    "quote": "So Michal let David down through a window"
+   },
+   {
+    "english": "was taken from her husband Phaltiel at David's demand",
+    "references": [
+     "2SA 3:14-15"
+    ],
+    "quote": "And Ishbosheth sent, and took her from her husband"
+   },
+   {
+    "english": "despised David in her heart as he danced before the ark of the LORD",
+    "references": [
+     "2SA 6:16"
+    ],
+    "quote": "saw king David leaping and dancing before the LORD; and she despised him in her heart"
+   }
+  ],
+  "doubts": [
+   "2SA 21:8 names five sons of Michal brought up for Adriel; this is likely a different woman (Merab, Adriel's wife) and was left out.",
+   "1CH 15:29 repeats the scene of 2SA 6:16 and was not cited separately.",
+   "Her love for David (1SA 18:20) and her childlessness (2SA 6:23) were left out as minor or already shown in the summary."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

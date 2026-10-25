@@ -1,0 +1,17 @@
+{
+ "slug": "cyrene",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.604247+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only name men of Cyrene or a Cyrenian synagogue, and nothing in the story happened in or to the place itself.",
+  "clauses": [],
+  "doubts": [
+   "The people of Cyrene (Simon, the Cyrenian synagogue, Lucius, the preachers at Antioch) belong to those people's own records rather than to the place."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

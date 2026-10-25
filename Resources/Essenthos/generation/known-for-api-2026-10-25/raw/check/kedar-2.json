@@ -1,0 +1,47 @@
+{
+ "slug": "kedar-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.143930+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was foretold to lose all its glory within a year, its archers diminished",
+    "references": [
+     "ISA 21:16-17"
+    ],
+    "ukr": "було провіщено, що за рік утратить усю свою славу, а число його лучників зменшиться",
+    "deu": "wurde vorausgesagt, dass es in einem Jahr alle seine Herrlichkeit verlieren und die Zahl seiner Schützen gering sein würde",
+    "spa": "fue profetizado que en un año perdería toda su gloria y que sus flecheros serían apocados"
+   },
+   {
+    "verdict": "fix",
+    "why": "Nebuchadrezzar's smiting is said of the kingdoms of Hazor, not Kedar; Kedar is to be gone up against and spoiled.",
+    "english": "was foretold to be spoiled, its tents and flocks taken away",
+    "references": [
+     "JER 49:28-29"
+    ],
+    "ukr": "було провіщено, що буде пограбований, а його намети й отару заберуть",
+    "deu": "wurde vorausgesagt, dass es geplündert würde und man ihm Hütten und Herden nähme",
+    "spa": "fue profetizado que sería destruido y que le tomarían sus tiendas y sus ganados"
+   },
+   {
+    "verdict": "fix",
+    "why": "Tyre is not named in the verses shown, only 'thee'.",
+    "english": "traded in lambs, rams and goats through its princes",
+    "references": [
+     "EZK 27:21"
+    ],
+    "ukr": "торгував ягнятами, баранами й козлами через своїх князів",
+    "deu": "handelte durch seine Fürsten mit Schafen, Widdern und Böcken",
+    "spa": "comerció con corderos, carneros y machos cabríos por medio de sus príncipes"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

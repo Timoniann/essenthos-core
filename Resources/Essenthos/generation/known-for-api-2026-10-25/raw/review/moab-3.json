@@ -1,0 +1,25 @@
+{
+ "slug": "moab-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.083443+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Мойсей та Елеазар перелічили Ізраїлевих синів",
+    "deu": "war der Ort, an dem Mose und Eleasar die Kinder Israel zählten",
+    "spa": "fue el lugar donde Moisés y Eleazar contaron a los hijos de Israel",
+    "why": "Ukrainian verb changed from neuter «було» to masculine «був» to agree with Моав."
+   },
+   {
+    "ukr": "був місцем, де Ізраїль оплакував Мойсея тридцять днів",
+    "deu": "war der Ort, an dem Israel dreißig Tage um Mose weinte",
+    "spa": "fue el lugar donde Israel lloró a Moisés treinta días",
+    "why": "Ukrainian verb changed from neuter «було» to masculine «був» to agree with Моав."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

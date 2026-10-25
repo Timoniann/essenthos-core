@@ -1,0 +1,18 @@
+{
+ "slug": "seraiah-6",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.298230+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Seraiah among those who returned with Zerubbabel and among priestly families, which the summary already states, and tell nothing he did.",
+  "clauses": [],
+  "doubts": [
+   "NEH 12:33 names Azariah, probably a different man, so it was left out.",
+   "NEH 12:12 names Seraiah only as a priestly household in the days of Joiakim."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

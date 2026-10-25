@@ -1,0 +1,25 @@
+{
+ "slug": "hormah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.399536+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, аж до якого амаликитяни та ханаанеяни били Ізраїля",
+    "deu": "war der Ort, bis zu dem die Amalekiter und Kanaaniter Israel schlugen",
+    "spa": "fue el lugar hasta el cual los amalecitas y los cananeos hirieron a Israel",
+    "why": "Ukrainian verb made feminine to agree with Хорма (було→була); Amalekites and Canaanites put in the plural in Ukrainian and Spanish."
+   },
+   {
+    "ukr": "отримала назву, коли Ізраїль учинив закляттям ханаанеян та їхні міста",
+    "deu": "erhielt seinen Namen, als Israel die Kanaaniter samt ihren Städten verbannte",
+    "spa": "recibió su nombre cuando Israel destruyó a los cananeos y a sus ciudades",
+    "why": "Canaanites made plural in Ukrainian and Spanish; German possessive changed to «seinen» to agree with the neuter place name Horma."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

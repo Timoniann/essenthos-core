@@ -1,0 +1,48 @@
+{
+ "slug": "amalek-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.187435+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verses 11-12 on Moses' hands are not needed; only verses 8 and 13 carry the clause.",
+    "english": "fought Israel at Rephidim and was beaten by Joshua",
+    "references": [
+     "EXO 17:8",
+     "EXO 17:13"
+    ],
+    "ukr": "воював з Ізраїлем у Рефідімі й був переможений Ісусом",
+    "deu": "kämpfte gegen Israel in Raphidim und wurde von Josua besiegt",
+    "spa": "peleó con Israel en Rephidim y fue vencido por Josué"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "joined Midian in coming up against Israel",
+    "references": [
+     "JDG 6:3"
+    ],
+    "ukr": "приєднався до Мідіяна, щоб піднятися проти Ізраїля",
+    "deu": "schloss sich den Midianitern an, als sie gegen Israel heraufkamen",
+    "spa": "se unió a los Madianitas para subir contra Israel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was destroyed by Saul with the edge of the sword",
+    "references": [
+     "1SA 15:7-8"
+    ],
+    "ukr": "був побитий Саулом вістрям меча",
+    "deu": "wurde von Saul mit der Schärfe des Schwertes geschlagen",
+    "spa": "fue herido por Saúl a filo de espada"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

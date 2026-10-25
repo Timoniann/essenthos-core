@@ -1,0 +1,26 @@
+{
+ "slug": "anah-son-of-zibeon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.313501+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "GEN 36:24 states one deed of Anah beyond the summary: he found the mules in the wilderness.",
+  "clauses": [
+   {
+    "english": "found the mules in the wilderness while feeding his father's asses",
+    "references": [
+     "GEN 36:24"
+    ],
+    "quote": "this was that Anah that found the mules in the wilderness"
+   }
+  ],
+  "doubts": [
+   "GEN 36:2 and GEN 36:14 call Aholibamah daughter of Anah the daughter of Zibeon, which may refer to a different Anah (a woman), so they were not used.",
+   "The clause mentions feeding the asses, which is a minor detail kept only to place the finding."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

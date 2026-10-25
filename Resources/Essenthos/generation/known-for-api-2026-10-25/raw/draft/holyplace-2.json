@@ -1,0 +1,20 @@
+{
+ "slug": "holyplace-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.006098+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The marked verses only mention the holy place in passing (where staves showed, where priests stood or came out, what was carried out of it) or concern other sanctuaries, so no event clearly belongs to it.",
+  "clauses": [],
+  "doubts": [
+   "EZK 41, 42 and 44 concern the visionary temple, not the Mount Moriah room, so they were left out.",
+   "HEB 9 and 13, PSA 68:17 and MAT 24:15 use 'holy place' of the heavenly sanctuary, the tabernacle, Sinai or a future event, so they were left out.",
+   "LUK 1:21-22 says 'temple', not the holy place by name, so it was not used.",
+   "1KI 8:10 and 2CH 5:11 only say the priests came out before the cloud filled the house, which is an event of the house, not of this room."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

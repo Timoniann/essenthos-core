@@ -1,0 +1,39 @@
+{
+ "slug": "antioch",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.852847+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Antioch is the setting of several defining events of the story, chiefly the preaching to the Greeks and the first naming of Christians.",
+  "clauses": [
+   {
+    "english": "was where men of Cyprus and Cyrene preached the Lord Jesus to the Grecians and a great number believed",
+    "references": [
+     "ACT 11:20-21"
+    ],
+    "quote": "spake unto the Grecians, preaching the Lord Jesus."
+   },
+   {
+    "english": "was where the disciples were first called Christians",
+    "references": [
+     "ACT 11:26"
+    ],
+    "quote": "the disciples were called Christians first in Antioch."
+   },
+   {
+    "english": "was where the church sent Barnabas and Saul away for the work the Holy Ghost called them to",
+    "references": [
+     "ACT 13:1-3"
+    ],
+    "quote": "Separate me Barnabas and Saul for the work whereunto I have called them."
+   }
+  ],
+  "doubts": [
+   "ACT 6:5 names Nicolas as a proselyte of Antioch, which only gives a man's origin, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

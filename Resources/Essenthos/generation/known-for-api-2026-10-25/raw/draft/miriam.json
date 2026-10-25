@@ -1,0 +1,35 @@
+{
+ "slug": "miriam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:02:51.110128+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state two chief events of Miriam's life: leading the women in song after the Red Sea and being struck with leprosy for speaking against Moses.",
+  "clauses": [
+   {
+    "english": "led the women with timbrels and dances in singing to the LORD after the Red Sea",
+    "references": [
+     "EXO 15:20-21"
+    ],
+    "quote": "Sing ye to the LORD, for he hath triumphed gloriously"
+   },
+   {
+    "english": "spoke against Moses and became leprous, and was shut out of the camp seven days",
+    "references": [
+     "NUM 12:1",
+     "NUM 12:10",
+     "NUM 12:15"
+    ],
+    "quote": "Miriam became leprous, white as snow"
+   }
+  ],
+  "doubts": [
+   "The Micah verse (MIC 6:4) and the Deuteronomy verse (DEU 24:9) only mention her sending or what God did to her, so they were not used as separate clauses.",
+   "Her death and burial at Kadesh is already in the summary."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

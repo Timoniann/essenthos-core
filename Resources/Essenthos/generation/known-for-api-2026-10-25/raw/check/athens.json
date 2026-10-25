@@ -1,0 +1,26 @@
+{
+ "slug": "athens",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.850451+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Paul's stirred spirit at the idolatry is what he felt, not a chief deed; the market and Mars' hill are in verses 17 and 22.",
+    "english": "was where Paul disputed in the market and spoke to the men of Athens on Mars' hill",
+    "references": [
+     "ACT 17:17",
+     "ACT 17:22"
+    ],
+    "ukr": "були місцем, де Павло розмовляв на ринку й промовляв до мужів атенських на ареопазі",
+    "deu": "war der Ort, an dem Paulus auf dem Markt redete und auf dem Gerichtsplatz zu den Männern von Athen sprach",
+    "spa": "fueron el lugar donde Pablo disputó en la plaza y habló a los varones Atenienses en medio del Areópago"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

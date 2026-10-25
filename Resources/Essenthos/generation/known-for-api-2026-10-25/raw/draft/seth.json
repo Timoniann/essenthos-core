@@ -1,0 +1,33 @@
+{
+ "slug": "seth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.646822+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Seth's birth as a replacement for Abel is stated in Genesis 4:25, which goes beyond the summary's relations, and the verses also give his death at 912 years.",
+  "clauses": [
+   {
+    "english": "was born to Adam and Eve and given by God in place of Abel, whom Cain slew",
+    "references": [
+     "GEN 4:25"
+    ],
+    "quote": "God, said she, hath appointed me another seed instead of Abel"
+   },
+   {
+    "english": "died at the age of nine hundred and twelve years",
+    "references": [
+     "GEN 5:8"
+    ],
+    "quote": "all the days of Seth were nine hundred and twelve years: and he died"
+   }
+  ],
+  "doubts": [
+   "The birth clause may restate the summary's relation to Adam, Eve and Abel, but it says what happened at his birth; the editor may prefer to drop it.",
+   "GEN 4:26 says men began to call upon the name of the LORD in the days of Seth's son Enos; it is not stated as Seth's own deed, so it is left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "ai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:59:01.423557+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "змусив утікати близько трьох тисяч ізраїльтян і побив близько тридцяти шістьох із них",
+    "deu": "schlug etwa dreitausend Mann Israels in die Flucht und erschlug etwa sechsunddreißig von ihnen",
+    "spa": "puso en fuga a unos tres mil hombres de Israel y mató a unos treinta y seis de ellos",
+    "why": "Ukrainian: replaced the non-standard «обернув навтікача» with «змусив утікати». Spanish: «hirió» changed to «mató» to match «killed», and «e» changed to «y»."
+   },
+   {
+    "ukr": "був здобутий засідкою і спалений Ісусом, обернений на вічну руїну",
+    "deu": "wurde vom Hinterhalt eingenommen und von Josua niedergebrannt, zu einem ewigen Haufen gemacht",
+    "spa": "fue tomado por la emboscada y quemado por Josué, reducido a un montón perpetuo",
+    "why": "Ukrainian: removed «а потім», which is not in the English."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

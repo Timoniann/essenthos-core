@@ -1,0 +1,25 @@
+{
+ "slug": "peor",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.933723+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Balak brought Balaam, hoping he would curse Israel from there",
+    "references": [
+     "NUM 23:27-28"
+    ],
+    "ukr": "було місцем, куди Балак привів Валаама, сподіваючись, що той звідти проклянe Ізраїля",
+    "deu": "war der Ort, wohin Balak Bileam führte, in der Hoffnung, dass er von dort aus Israel verfluchen würde",
+    "spa": "fue el lugar adonde Balac llevó a Balaam, esperando que desde allí maldijera a Israel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

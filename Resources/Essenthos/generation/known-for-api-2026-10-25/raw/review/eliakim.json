@@ -1,0 +1,31 @@
+{
+ "slug": "eliakim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.526682+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "просив великого чашника говорити по-арамейському, а не по-юдейському, в слух людей",
+    "deu": "bat den Erzschenken, auf syrisch und nicht auf jüdisch zu reden, vor den Ohren des Volks",
+    "spa": "rogó a Rabsaces que hablara en siriaco y no en judaico, a oídos del pueblo",
+    "why": ""
+   },
+   {
+    "ukr": "був посланий Єзекією до пророка Ісаї",
+    "deu": "wurde von Hiskia zu dem Propheten Jesaja gesandt",
+    "spa": "fue enviado por Ezechîas al profeta Isaías",
+    "why": ""
+   },
+   {
+    "ukr": "отримав від Господа обітницю панування та ключа дому Давидового",
+    "deu": "erhielt vom HERRN die Zusage der Gewalt und des Schlüssels zum Hause Davids",
+    "spa": "recibió del SEÑOR la promesa del gobierno y de la llave de la casa de David",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "solomons-golden-shields",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.368637+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say the king put them in the house; they do not say kept, and the record is plural.",
+    "english": "were made by Solomon of beaten gold and put in the house of the forest of Lebanon",
+    "references": [
+     "1KI 10:16-17"
+    ],
+    "ukr": "були зроблені Соломоном із кутого золота й віддані до дому Ливанського Лісу",
+    "deu": "wurden von Salomo aus dem besten Gold gemacht und in das Haus am Wald Libanon gebracht",
+    "spa": "fueron hechos por Salomón de oro extendido y puestos en la casa del bosque del Líbano"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "were carried off by Shishak king of Egypt when he came against Jerusalem",
+    "references": [
+     "1KI 14:25-26"
+    ],
+    "ukr": "були забрані Шушаком, єгипетським царем, коли той пішов на Єрусалим",
+    "deu": "wurden von Sisak, dem König in Ägypten, genommen, als er gegen Jerusalem heraufzog",
+    "spa": "fueron llevados por Sisac, rey de Egipto, cuando subió contra Jerusalem"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

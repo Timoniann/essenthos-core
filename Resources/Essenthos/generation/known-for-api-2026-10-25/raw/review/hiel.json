@@ -1,0 +1,19 @@
+{
+ "slug": "hiel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.530940+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "відбудував Єрихон, заклав його фундаменти на своєму первородному Авірамі, а брами його поставив на наймолодшому своєму Сеґівові",
+    "deu": "baute Jericho, legte den Grund an seinem ersten Sohn Abiram und setzte die Tore an seinem jüngsten Sohn Segub",
+    "spa": "reedificó Jericó, echando el cimiento en Abiram su primogénito y poniendo sus puertas en Segub su hijo menor",
+    "why": "German: made the record the subject again and followed the English structure, with modern «Tore»; Spanish: replaced the archaic «postrero» with «menor»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

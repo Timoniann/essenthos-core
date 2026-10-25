@@ -1,0 +1,58 @@
+{
+ "slug": "aaron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.365323+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The cited verses 7:11-12 are about the magicians; the rod becoming a serpent is in 7:10 alone.",
+    "english": "cast down his rod before Pharaoh, and it became a serpent",
+    "references": [
+     "EXO 7:10"
+    ],
+    "ukr": "кинув свою палицю перед фараоном, і вона стала вужем",
+    "deu": "warf seinen Stab vor Pharao, und er ward zur Schlange",
+    "spa": "echó su vara delante de Faraón, y se tornó culebra"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "made a molten calf from the people's golden earrings",
+    "references": [
+     "EXO 32:2-4"
+    ],
+    "ukr": "зробив лите теля із золотих сережок народу",
+    "deu": "machte aus den goldenen Ohrenringen des Volkes ein gegossenes Kalb",
+    "spa": "hizo un becerro de fundición con los zarcillos de oro del pueblo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say he stopped the plague by running; he ran, put on incense, made atonement and stood between the dead and the living, and the plague was stayed.",
+    "english": "made atonement for the people with incense, and the plague was stayed",
+    "references": [
+     "NUM 16:47-48"
+    ],
+    "ukr": "очистив народ кадилом, і поразка затрималась",
+    "deu": "versöhnte das Volk mit Räuchwerk, und der Plage ward gewehrt",
+    "spa": "hizo expiación por el pueblo con perfume, y cesó la mortandad"
+   },
+   {
+    "verdict": "fix",
+    "why": "Mount Hor is named in 20:27, just outside the citation; the death is in 20:28.",
+    "english": "died on Mount Hor",
+    "references": [
+     "NUM 20:27-28"
+    ],
+    "ukr": "помер на Гор-горі",
+    "deu": "starb auf dem Berge Hor",
+    "spa": "murió en el monte de Hor"
+   }
+  ],
+  "note": "The line omits his making of the altar and the proclamation of a feast to the LORD at the calf, and his role in the priesthood."
+ },
+ "problems": [],
+ "attempts": []
+}

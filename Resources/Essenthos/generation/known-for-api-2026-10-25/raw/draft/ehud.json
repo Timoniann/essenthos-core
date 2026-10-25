@@ -1,0 +1,30 @@
+{
+ "slug": "ehud",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.723890+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two chief deeds of Ehud: killing King Eglon and leading Israel against Moab.",
+  "clauses": [
+   {
+    "english": "killed Eglon king of Moab with a dagger in his summer parlour",
+    "references": [
+     "JDG 3:20-21"
+    ],
+    "quote": "took the dagger from his right thigh, and thrust it into his belly"
+   },
+   {
+    "english": "led Israel to take the fords of Jordan and defeat Moab",
+    "references": [
+     "JDG 3:27-29"
+    ],
+    "quote": "they slew of Moab at that time about ten thousand men"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

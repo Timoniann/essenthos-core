@@ -1,0 +1,19 @@
+{
+ "slug": "jar-of-manna",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.561032+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була наповнена гомером манни та поставлена перед Господом на зберігання для поколінь Ізраїля",
+    "deu": "wurde mit einem Gomer Man gefüllt und vor dem HERRN niedergelegt, um für die Nachkommen Israels aufbewahrt zu werden",
+    "spa": "fue llenada con un gomer de maná y puesta delante del SEÑOR para ser guardada para los descendientes de Israel",
+    "why": "Ukrainian: replaced the dated word «на сховок» with modern «на зберігання»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

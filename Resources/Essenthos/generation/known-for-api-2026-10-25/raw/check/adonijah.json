@@ -1,0 +1,51 @@
+{
+ "slug": "adonijah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.636999+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "exalted himself as king and was helped by Joab and Abiathar",
+    "references": [
+     "1KI 1:5",
+     "1KI 1:7"
+    ],
+    "ukr": "підніс себе як царя, і йому допомагали Йоав та Евіятар",
+    "deu": "erhob sich als König, und Joab und Abjathar halfen ihm",
+    "spa": "se levantó como rey, y Joab y Abiathar le ayudaron"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say he fled; they say he arose, went and caught hold of the horns of the altar.",
+    "english": "caught hold of the altar's horns in fear of Solomon and was told to go home",
+    "references": [
+     "1KI 1:50",
+     "1KI 1:53"
+    ],
+    "ukr": "схопився за роги жертівника, боячись Соломона, і йому було сказано йти до свого дому",
+    "deu": "faßte aus Furcht vor Salomo die Hörner des Altars und bekam gesagt, er solle in sein Haus gehen",
+    "spa": "cogió los cornijales del altar por temor a Salomón y se le dijo que se fuera a su casa"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "asked through Bathsheba for Abishag as wife and was put to death on Solomon's order",
+    "references": [
+     "1KI 2:17",
+     "1KI 2:21",
+     "1KI 2:24-25"
+    ],
+    "ukr": "просив через Вірсавію шунаммітку Авішаґ за жінку і був убитий за наказом Соломона",
+    "deu": "bat durch Bath-Seba um Abisag von Sunem zur Frau und wurde auf Salomos Befehl getötet",
+    "spa": "pidió por medio de Bath-sheba a Abisag Sunamita por mujer y fue muerto por orden de Salomón"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

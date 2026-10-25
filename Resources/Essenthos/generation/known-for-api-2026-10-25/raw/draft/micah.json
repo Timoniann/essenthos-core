@@ -1,0 +1,40 @@
+{
+ "slug": "micah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.635666+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Micah's household shrine and his hired Levite priest, and of the Danites taking both away.",
+  "clauses": [
+   {
+    "english": "made a house of gods with an ephod and teraphim, and consecrated his son as priest",
+    "references": [
+     "JDG 17:4-5"
+    ],
+    "quote": "the man Micah had an house of gods, and made an ephod, and teraphim"
+   },
+   {
+    "english": "hired a Levite from Bethlehemjudah to be his priest",
+    "references": [
+     "JDG 17:10-12"
+    ],
+    "quote": "Dwell with me, and be unto me a father and a priest"
+   },
+   {
+    "english": "lost his images and his priest to the men of Dan, who were too strong for him",
+    "references": [
+     "JDG 18:18-26"
+    ],
+    "quote": "when Micah saw that they were too strong for him, he turned and went back unto his house"
+   }
+  ],
+  "doubts": [
+   "JDG 17:4 says Micah's mother had the graven image made; the clause on his house of gods rests on JDG 17:5, so the citation may be narrowed to that verse.",
+   "The verses given do not say how Micah's son priest was replaced; only that he later had the Levite as priest."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

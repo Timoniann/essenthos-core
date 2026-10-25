@@ -1,0 +1,31 @@
+{
+ "slug": "midian-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.426337+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди втік Мойсей від фараона й де оселився",
+    "deu": "war der Ort, wohin Mose vor Pharao floh und wo er blieb",
+    "spa": "fue donde Moisés huyó de delante de Faraón y habitó",
+    "why": ""
+   },
+   {
+    "ukr": "тримав Ізраїля в своїй руці сім років і довів його до великого зубожіння",
+    "deu": "hielt Israel sieben Jahre in seiner Hand und machte es sehr arm",
+    "spa": "tuvo a Israel en sus manos siete años y lo dejó muy empobrecido",
+    "why": "Modernized the old wording: літ became років, gering became arm, and en gran manera became muy."
+   },
+   {
+    "ukr": "був упокорений перед Ізраїлем за днів Гедеона",
+    "deu": "wurde in den Tagen Gideons vor Israel gedemütigt",
+    "spa": "fue humillado delante de Israel en los días de Gedeón",
+    "why": "Matched the English 'before Israel' instead of 'sons/children of Israel', replaced the archaic Гедеонових днів, and smoothed the German word order."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

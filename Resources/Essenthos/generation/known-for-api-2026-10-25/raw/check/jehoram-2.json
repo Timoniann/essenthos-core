@@ -1,0 +1,47 @@
+{
+ "slug": "jehoram-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.853080+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verses 5-7 tell only of the call to Jehoshaphat and his agreement; the going out together is in verse 9.",
+    "english": "went to war against Moab with Jehoshaphat after Moab rebelled",
+    "references": [
+     "2KI 3:5-9"
+    ],
+    "ukr": "пішов на війну проти Моаву з Йосафатом, коли Моав збунтувався",
+    "deu": "zog mit Josaphat in den Streit wider die Moabiter, nachdem der Moabiter König abgefallen war",
+    "spa": "fue a la guerra contra Moab con Josaphat después de que Moab se rebeló"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was wounded by the Syrians in the war at Ramothgilead",
+    "references": [
+     "2KI 8:28-29"
+    ],
+    "ukr": "був побитий сиріянами на війні в ґілеадському Рамоті",
+    "deu": "wurde im Streit bei Ramoth in Gilead von den Syrern geschlagen",
+    "spa": "fue herido por los Siros en la guerra de Ramoth de Galaad"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was killed by an arrow from Jehu's bow",
+    "references": [
+     "2KI 9:24"
+    ],
+    "ukr": "був убитий стрілою з лука Єгу",
+    "deu": "wurde durch einen Pfeil aus Jehus Bogen getötet",
+    "spa": "fue muerto por una saeta del arco de Jehú"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

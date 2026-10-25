@@ -1,0 +1,31 @@
+{
+ "slug": "wildernessofsinai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:11.990044+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Ізраїль отаборився навпроти гори після виходу з єгипетського краю",
+    "deu": "war der Ort, wo Israel nach dem Auszug aus Ägyptenland gegenüber dem Berg lagerte",
+    "spa": "fue el lugar donde Israel acampó delante del monte después de salir de la tierra de Egipto",
+    "why": "German: replaced the archaic dative «dem Berge» with the modern «dem Berg»."
+   },
+   {
+    "ukr": "була місцем, де Мойсей перелічив синів Ізраїля",
+    "deu": "war der Ort, wo Mose die Kinder Israels zählte",
+    "spa": "fue el lugar donde Moisés contó a los hijos de Israel",
+    "why": "German: replaced the old uninflected «Kinder Israel» with the modern «Kinder Israels»."
+   },
+   {
+    "ukr": "була місцем, де Надав та Авігу померли перед Господом, коли принесли чужий вогонь",
+    "deu": "war der Ort, wo Nadab und Abihu starben, weil sie fremdes Feuer vor dem HERRN opferten",
+    "spa": "fue el lugar donde Nadab y Abiú murieron delante del SEÑOR por ofrecer fuego extraño",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

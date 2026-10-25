@@ -1,0 +1,39 @@
+{
+ "slug": "kingofai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.820142+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what happened to the king of Ai: he led his people out to battle, was captured alive, and was hanged.",
+  "clauses": [
+   {
+    "english": "went out to battle against Israel, not knowing of the ambush behind the city",
+    "references": [
+     "JOS 8:14"
+    ],
+    "quote": "he wist not that there were liers in ambush against him behind the city"
+   },
+   {
+    "english": "was taken alive and brought to Joshua",
+    "references": [
+     "JOS 8:23"
+    ],
+    "quote": "the king of Ai they took alive, and brought him to Joshua"
+   },
+   {
+    "english": "was hanged on a tree and buried under a heap of stones at the city gate",
+    "references": [
+     "JOS 8:29"
+    ],
+    "quote": "the king of Ai he hanged on a tree until eventide"
+   }
+  ],
+  "doubts": [
+   "JOS 8:14 (going out to battle) and JOS 8:23 (capture) are close; the battle clause could be dropped for brevity."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

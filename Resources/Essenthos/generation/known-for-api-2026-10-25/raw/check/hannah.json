@@ -1,0 +1,47 @@
+{
+ "slug": "hannah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.573633+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The vow was to give the LORD the son if he gave her one; looking on her affliction is only part of her petition.",
+    "english": "vowed to give the LORD a son, if he would give her one",
+    "references": [
+     "1SA 1:11"
+    ],
+    "ukr": "склала обітницю дати Господеві сина, якщо Він дасть їй його",
+    "deu": "gelobte, dem HERRN einen Sohn zu geben, wenn er ihr einen gäbe",
+    "spa": "hizo voto de dedicar al SEÑOR un hijo varón, si él le daba uno"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verse says only 'him' and 'the child'; the name Samuel is not in it.",
+    "english": "brought her weaned child to the house of the LORD in Shiloh",
+    "references": [
+     "1SA 1:24"
+    ],
+    "ukr": "привела свого відлученого хлопчика до Господнього дому в Шіло",
+    "deu": "brachte ihren entwöhnten Knaben in das Haus des HERRN zu Silo",
+    "spa": "trajo a su niño destetado a la casa del SEÑOR en Silo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse does not say 'more' sons.",
+    "english": "was visited by the LORD and bore three sons and two daughters",
+    "references": [
+     "1SA 2:21"
+    ],
+    "ukr": "була відвідана Господом і породила трьох синів та дві дочки",
+    "deu": "wurde vom HERRN heimgesucht und gebar drei Söhne und zwei Töchter",
+    "spa": "fue visitada por el SEÑOR, concibió y dio a luz tres hijos y dos hijas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

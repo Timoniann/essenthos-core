@@ -1,0 +1,33 @@
+{
+ "slug": "epaphroditus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.129447+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses naming Epaphroditus tell of his illness and of the gifts he brought Paul from the Philippians.",
+  "clauses": [
+   {
+    "english": "brought Paul the gifts the Philippians had sent him",
+    "references": [
+     "PHP 4:18"
+    ],
+    "quote": "having received of Epaphroditus the things which were sent from you"
+   },
+   {
+    "english": "was sick nearly to death, but God had mercy on him",
+    "references": [
+     "PHP 2:27"
+    ],
+    "quote": "he was sick nigh unto death: but God had mercy on him"
+   }
+  ],
+  "doubts": [
+   "COL 1:7, COL 4:12 and PHM 1:23 name Epaphras, a different person, so I left them out.",
+   "PHP 4:23 is a subscription note ('written ... by Epaphroditus') rather than part of the letter's text, so I did not use it."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

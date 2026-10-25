@@ -1,0 +1,37 @@
+{
+ "slug": "judea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.050616+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say all Judea went out to John and was baptized; they do not say it sent its people.",
+    "english": "went out to John and was baptized by him in the Jordan",
+    "references": [
+     "MAT 3:5-6",
+     "MRK 1:5"
+    ],
+    "ukr": "виходила до Івана і христилася від нього в Йордані",
+    "deu": "ging zu Johannes hinaus und ließ sich von ihm im Jordan taufen",
+    "spa": "salió a Juan y fue bautizada por él en el Jordán"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jesus tarried with his disciples and baptized",
+    "references": [
+     "JHN 3:22"
+    ],
+    "ukr": "була місцем, де Ісус перебував з учнями і христив",
+    "deu": "war der Ort, wo Jesus mit seinen Jüngern verweilte und taufte",
+    "spa": "fue el lugar donde Jesús estuvo con sus discípulos y bautizó"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

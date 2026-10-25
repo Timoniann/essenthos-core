@@ -1,0 +1,23 @@
+{
+ "slug": "hiel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.413938+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verse states one deed of Hiel, the rebuilding of Jericho, which goes beyond the summary's relations.",
+  "clauses": [
+   {
+    "english": "built Jericho, laying its foundation in his firstborn Abiram and setting up its gates in his youngest son Segub",
+    "references": [
+     "1KI 16:34"
+    ],
+    "quote": "did Hiel the Bethelite build Jericho"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

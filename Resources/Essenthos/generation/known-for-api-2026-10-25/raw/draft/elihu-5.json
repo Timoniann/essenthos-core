@@ -1,0 +1,33 @@
+{
+ "slug": "elihu-5",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.470328+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses show Elihu's anger at Job and his three friends and his speaking after they ceased, which goes beyond the summary's lineage.",
+  "clauses": [
+   {
+    "english": "waited for the elder men to finish, then grew angry at Job and his three friends",
+    "references": [
+     "JOB 32:2-5"
+    ],
+    "quote": "Elihu had waited till Job had spoken, because they were elder than he."
+   },
+   {
+    "english": "spoke up to Job on God's behalf after the three friends had ceased",
+    "references": [
+     "JOB 32:6",
+     "JOB 36:1-3"
+    ],
+    "quote": "I have yet to speak on God's behalf."
+   }
+  ],
+  "doubts": [
+   "The second clause joins his speeches (chapters 32, 34, 35, 36) into one; the first clause combines waiting and anger, which may be one event or two."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,26 @@
+{
+ "slug": "hathach",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.994544+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "went to Mordecai at Esther's command and brought his words back to her",
+    "references": [
+     "EST 4:5-6",
+     "EST 4:9"
+    ],
+    "ukr": "пішов до Мордехая за наказом Естер і переніс їй його слова",
+    "deu": "ging auf Esthers Befehl zu Mardochai und sagte ihr die Worte Mardochais",
+    "spa": "fue a Mardochêo por mandato de Esther y le contó las palabras de Mardochêo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

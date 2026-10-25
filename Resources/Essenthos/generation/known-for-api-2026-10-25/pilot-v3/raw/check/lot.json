@@ -1,0 +1,49 @@
+{
+ "slug": "lot",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:05:40.904296+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "chose the plain of Jordan and separated from Abram",
+    "references": [
+     "GEN 13:10-12"
+    ],
+    "ukr": "вибрав околицю йорданську і розлучився з Аврамом",
+    "deu": "wählte sich die ganze Gegend am Jordan und trennte sich von Abram",
+    "spa": "escogió la llanura del Jordán y se apartó de Abram"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken captive with his goods and brought back by Abram",
+    "references": [
+     "GEN 14:12",
+     "GEN 14:16"
+    ],
+    "ukr": "був узятий у полон разом з добром своїм і повернений Аврамом",
+    "deu": "wurde mit seiner Habe gefangen genommen und von Abram zurückgebracht",
+    "spa": "fue llevado cautivo con su hacienda y fue recobrado por Abram"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verses do not name Sodom, and verse 29 says God destroyed the cities of the plain.",
+    "english": "was brought out of the city by the angels before God destroyed the cities of the plain",
+    "references": [
+     "GEN 19:15-16",
+     "GEN 19:29"
+    ],
+    "ukr": "був виведений ангелами з міста, перш ніж Бог знищив міста околиці",
+    "deu": "wurde von den Engeln aus der Stadt geführt, ehe Gott die Städte in der Gegend zerstörte",
+    "spa": "fue sacado de la ciudad por los ángeles antes de que Dios destruyera las ciudades de la llanura"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

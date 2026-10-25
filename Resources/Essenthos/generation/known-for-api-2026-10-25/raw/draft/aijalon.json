@@ -1,0 +1,41 @@
+{
+ "slug": "aijalon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.709764+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses say something of the city beyond listing it: its gift to the Kohathites, the Philistine pursuit that ended there, and its capture by the Philistines.",
+  "clauses": [
+   {
+    "english": "was given with its suburbs to the children of Kohath",
+    "references": [
+     "JOS 21:24-26"
+    ],
+    "quote": "Aijalon with her suburbs, Gathrimmon with her suburbs"
+   },
+   {
+    "english": "marked the end of the slaughter of the Philistines that began at Michmash",
+    "references": [
+     "1SA 14:31"
+    ],
+    "quote": "they smote the Philistines that day from Michmash to Aijalon"
+   },
+   {
+    "english": "was taken by the Philistines, who dwelt there",
+    "references": [
+     "2CH 28:18"
+    ],
+    "quote": "had taken Bethshemesh, and Ajalon, and Gederoth"
+   }
+  ],
+  "doubts": [
+   "JOS 19:42, 2CH 11:10 and 1CH 6:69 only list the city, so they were not used.",
+   "JDG 1:35 (Amorites dwelling in Aijalon) and 1CH 8:13 (heads of the fathers of its inhabitants) were left out as minor.",
+   "JOS 21:24 places the city under Dan, but the Kohathite link rests on JOS 21:26 as context."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

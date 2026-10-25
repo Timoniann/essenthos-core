@@ -1,0 +1,36 @@
+{
+ "slug": "zeboiim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.090518+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Chedorlaomer and his allies are named in GEN 14:9, which the citation leaves out, and GEN 14:2 is not needed.",
+    "english": "went out with its king to battle against Chedorlaomer and his allies in the vale of Siddim",
+    "references": [
+     "GEN 14:8-9"
+    ],
+    "ukr": "вийшов зі своїм царем на бій проти Кедор-Лаомера та його союзників у долині Сіддім",
+    "deu": "zog mit seinem König aus zum Kampf gegen Kedor-Laomor und seine Verbündeten im Tal Siddim",
+    "spa": "salió con su rey a la batalla contra Chêdorlaomer y sus aliados en el valle de Siddim"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was overthrown by the LORD in his anger and wrath",
+    "references": [
+     "DEU 29:23"
+    ],
+    "ukr": "був зруйнований Господом у гніві та в люті Його",
+    "deu": "wurde vom HERRN in seinem Zorn und Grimm umgekehrt",
+    "spa": "fue subvertido por el SEÑOR en su furor y en su ira"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

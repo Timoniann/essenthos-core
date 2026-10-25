@@ -1,0 +1,33 @@
+{
+ "slug": "ahimelech",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.557346+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what Ahimelech did for David and how Saul condemned him for it.",
+  "clauses": [
+   {
+    "english": "gave David the hallowed bread and the sword of Goliath",
+    "references": [
+     "1SA 21:4-6",
+     "1SA 21:8-9"
+    ],
+    "quote": "So the priest gave him hallowed bread"
+   },
+   {
+    "english": "was sentenced to death by Saul, with all his father's house",
+    "references": [
+     "1SA 22:16"
+    ],
+    "quote": "Thou shalt surely die, Ahimelech, thou, and all thy father's house."
+   }
+  ],
+  "doubts": [
+   "His own death is not stated in so many words; only Saul's sentence on him and the slaying of the priests by Doeg are given, so the second clause rests on the sentence."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

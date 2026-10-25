@@ -1,0 +1,25 @@
+{
+ "slug": "joah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.171651+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "вийшов з Еліякимом і Шевною до великого чашника та попросив його говорити по-арамейському",
+    "deu": "ging mit Eljakim und Sebna zum Erzschenken hinaus und bat ihn, auf syrisch zu reden",
+    "spa": "salió con Eliacim y Sebna a encontrarse con Rabsaces y le rogó que hablara en siriaco",
+    "why": ""
+   },
+   {
+    "ukr": "прийшов до Єзекії з роздертим одягом і переказав йому слова великого чашника",
+    "deu": "kam zu Hiskia mit zerrissenen Kleidern und berichtete ihm die Worte des Erzschenken",
+    "spa": "vino a Ezechîas con sus vestidos rotos y le refirió las palabras de Rabsaces",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

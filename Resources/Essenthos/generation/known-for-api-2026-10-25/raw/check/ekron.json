@@ -1,0 +1,37 @@
+{
+ "slug": "ekron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.682317+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses attribute the deadly destruction to the hand of God, not to the ark itself.",
+    "english": "was where the Philistines sent the ark of God and there was deadly destruction throughout the city",
+    "references": [
+     "1SA 5:10-12"
+    ],
+    "ukr": "був місцем, куди филистимляни вислали Божого ковчега і де в усьому місті було смертельне замішання",
+    "deu": "war der Ort, wohin die Philister die Lade Gottes sandten und wo in der ganzen Stadt Schrecken mit Würgen herrschte",
+    "spa": "fue el lugar adonde los filisteos enviaron el arca de Dios y donde hubo quebrantamiento de muerte en toda la ciudad"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where King Ahaziah sent to enquire of its god Baalzebub, for which the LORD doomed him",
+    "references": [
+     "2KI 1:2-4",
+     "2KI 1:16"
+    ],
+    "ukr": "був місцем, де цар Ахазія послав запитати екронського бога Ваал-Зевува, за що Господь засудив його на смерть",
+    "deu": "war der Ort, dessen Gott Baal-Sebub König Ahasja befragen ließ, wofür der HERR ihn zum Tod verurteilte",
+    "spa": "fue el lugar cuyo dios Baal-zebub el rey Ochôzías envió a consultar, por lo cual el SEÑOR lo condenó a morir"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

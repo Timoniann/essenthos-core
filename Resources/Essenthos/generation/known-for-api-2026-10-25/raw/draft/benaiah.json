@@ -1,0 +1,40 @@
+{
+ "slug": "benaiah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.804606+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give several deeds of Benaiah beyond the killings his summary already names, so a short line is possible.",
+  "clauses": [
+   {
+    "english": "slew a lion in a pit on a snowy day",
+    "references": [
+     "2SA 23:20"
+    ],
+    "quote": "slew a lion in the midst of a pit in time of snow"
+   },
+   {
+    "english": "took the spear from an Egyptian and slew him with it",
+    "references": [
+     "2SA 23:21"
+    ],
+    "quote": "slew him with his own spear"
+   },
+   {
+    "english": "was put over the host in Joab's room",
+    "references": [
+     "1KI 2:34-35"
+    ],
+    "quote": "the king put Benaiah the son of Jehoiada in his room over the host"
+   }
+  ],
+  "doubts": [
+   "The killings of Adonijah, Joab and Shimei and the slaying of the two lionlike men of Moab are already in the summary, so they are left out.",
+   "Benaiah's command of the Cherethites and Pelethites and his place among the thirty are only offices or lists, so they are not clauses."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,18 @@
+{
+ "slug": "asher",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.764241+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses give only his birth and naming, genealogies, tribal censuses and lists, and a blessing pronounced on him, none of which is a deed or event beyond what the summary already says.",
+  "clauses": [],
+  "doubts": [
+   "LUK 2:36 (Aser) and REV 7:6 (Aser) speak of the tribe, not of the man himself.",
+   "GEN 49:20 is a blessing, not an event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

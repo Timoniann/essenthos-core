@@ -1,0 +1,37 @@
+{
+ "slug": "ai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.220198+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not call it Israel's first attack; they say about three thousand men fled and about thirty-six were struck down.",
+    "english": "routed about three thousand men of Israel, striking down about thirty-six of them",
+    "references": [
+     "JOS 7:4-5"
+    ],
+    "ukr": "змусив утікати коло трьох тисяч людей з народу й побив коло тридцяти шести з них",
+    "deu": "schlug etwa dreitausend Mann des Volkes in die Flucht und schlug etwa sechsunddreißig von ihnen",
+    "spa": "puso en fuga a unos tres mil hombres del pueblo e hirió a unos treinta y seis de ellos"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 19 says the ambush took the city; Joshua is the one who burnt it and made it a heap.",
+    "english": "was taken by an ambush and burnt by Joshua into a heap for ever",
+    "references": [
+     "JOS 8:19",
+     "JOS 8:28"
+    ],
+    "ukr": "був здобутий засідкою і спалений Ісусом, який обернув його на вічну руїну",
+    "deu": "wurde von einem Hinterhalt eingenommen und von Josua ausgebrannt, der einen ewigen Haufen daraus machte",
+    "spa": "fue tomada por una emboscada y quemada por Josué, quien la redujo a un montón perpetuo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

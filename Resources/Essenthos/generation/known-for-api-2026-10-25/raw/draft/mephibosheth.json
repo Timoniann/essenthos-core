@@ -1,0 +1,42 @@
+{
+ "slug": "mephibosheth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.645487+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of his fall and lameness, David's kindness to him, and his being spared, which go beyond the summary.",
+  "clauses": [
+   {
+    "english": "was dropped by his nurse as she fled and became lame in both feet",
+    "references": [
+     "2SA 4:4"
+    ],
+    "quote": "as she made haste to flee, that he fell, and became lame"
+   },
+   {
+    "english": "was shown kindness by David, who restored Saul's land to him and seated him at the king's table",
+    "references": [
+     "2SA 9:7",
+     "2SA 9:11"
+    ],
+    "quote": "thou shalt eat bread at my table continually"
+   },
+   {
+    "english": "was spared by David when Saul's sons were given up to the Gibeonites, because of the LORD's oath",
+    "references": [
+     "2SA 21:7"
+    ],
+    "quote": "the king spared Mephibosheth"
+   }
+  ],
+  "doubts": [
+   "2SA 21:8 names another Mephibosheth, a son of Rizpah, who was hanged; left out.",
+   "1CH 8:34 and 9:40 call him Meribbaal and only list his descent, so they were not used.",
+   "Ziba's claim in 2SA 16:3 and David's grant to Ziba in 16:4 and 19:29 are disputed, so the division of the land was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

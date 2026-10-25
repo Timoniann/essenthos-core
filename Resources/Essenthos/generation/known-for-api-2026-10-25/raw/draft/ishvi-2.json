@@ -1,0 +1,17 @@
+{
+ "slug": "ishvi-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.677546+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The only verse that names Ishvi (1SA 14:49) lists him among Saul's children, which the summary already says; the other marked verses name other sons of Saul (Abinadab, Eshbaal) and do not mention him.",
+  "clauses": [],
+  "doubts": [
+   "1SA 31:2, 1CH 8:33, 1CH 9:39 and 1CH 10:2 are marked but do not name Ishvi; they list Abinadab, Malchishua and Eshbaal, and Ishvi is not stated to have died at Gilboa."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

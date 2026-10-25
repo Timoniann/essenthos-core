@@ -1,0 +1,37 @@
+{
+ "slug": "bethshemesh",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.699845+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of events at Beth-shemesh: the ark's return, the slaughter of its men, and the capture of Amaziah.",
+  "clauses": [
+   {
+    "english": "received the returning ark of the LORD and offered burnt offerings",
+    "references": [
+     "1SA 6:12-15"
+    ],
+    "quote": "the men of Bethshemesh offered burnt offerings"
+   },
+   {
+    "english": "saw many of its men struck down by the LORD for looking into the ark",
+    "references": [
+     "1SA 6:19"
+    ],
+    "quote": "he smote the men of Bethshemesh, because they had looked into the ark of the LORD"
+   },
+   {
+    "english": "was where Jehoash of Israel captured Amaziah king of Judah",
+    "references": [
+     "2KI 14:11-13"
+    ],
+    "quote": "Jehoash king of Israel took Amaziah king of Judah"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "nob",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.815136+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Two events of the story belong to Nob: David's visit to the priest Ahimelech, and the killing of its people by Saul's order.",
+  "clauses": [
+   {
+    "english": "was where David came to the priest Ahimelech and asked for bread",
+    "references": [
+     "1SA 21:1-3"
+    ],
+    "quote": "Then came David to Nob to Ahimelech the priest"
+   },
+   {
+    "english": "was put to the sword, men, women and children, by Doeg at Saul's command",
+    "references": [
+     "1SA 22:18-19"
+    ],
+    "quote": "Nob, the city of the priests, smote he with the edge of the sword"
+   }
+  ],
+  "doubts": [
+   "1SA 21:16 (2SA 21:16) is marked but names Ishbibenob, a different person whose name only resembles Nob, so it was left out.",
+   "NEH 11:32 and ISA 10:32 only list Nob among settlements and say it is near Jerusalem, so they were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "shebnah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.897833+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "asked Rabshakeh to speak in the Syrian language, not the Jews' language, in the hearing of the people on the wall",
+    "references": [
+     "2KI 18:26"
+    ],
+    "ukr": "просив великого чашника говорити по-арамейському, а не по-юдейському в слух людей, що на мурі",
+    "deu": "bat den Erzschenken, auf syrisch zu reden und nicht auf jüdisch vor den Ohren des Volks auf der Mauer",
+    "spa": "pidió a Rabsaces que hablase en siriaco y no en judaico a oídos del pueblo que estaba sobre el muro"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was sent in sackcloth by Hezekiah to Isaiah the prophet",
+    "references": [
+     "2KI 19:2"
+    ],
+    "ukr": "був посланий Єзекією, покритий веретою, до пророка Ісаї",
+    "deu": "wurde von Hiskia, mit Sack angetan, zu dem Propheten Jesaja gesandt",
+    "spa": "fue enviado por Ezechîas, vestido de saco, al profeta Isaías"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

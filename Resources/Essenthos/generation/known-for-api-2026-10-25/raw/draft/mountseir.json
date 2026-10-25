@@ -1,0 +1,41 @@
+{
+ "slug": "mountseir",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.875482+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell what happened to Mount Seir beyond its location: it was given to Esau, its earlier people were destroyed, and its inhabitants were later slain.",
+  "clauses": [
+   {
+    "english": "was given by the LORD to Esau for a possession",
+    "references": [
+     "DEU 2:5",
+     "JOS 24:4"
+    ],
+    "quote": "I have given mount Seir unto Esau for a possession"
+   },
+   {
+    "english": "was taken from the Horites when the children of Esau destroyed them",
+    "references": [
+     "DEU 2:12"
+    ],
+    "quote": "the children of Esau succeeded them, when they had destroyed them from before them"
+   },
+   {
+    "english": "had its inhabitants destroyed by Ammon and Moab",
+    "references": [
+     "2CH 20:23"
+    ],
+    "quote": "stood up against the inhabitants of mount Seir, utterly to slay and destroy them"
+   }
+  ],
+  "doubts": [
+   "Ezekiel 35's pronouncement of desolation was left out as a prophecy rather than an event.",
+   "Verses where Seir means the people or the land generally (GEN 32:3, 2CH 25:11) were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

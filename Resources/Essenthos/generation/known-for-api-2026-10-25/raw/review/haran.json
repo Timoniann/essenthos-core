@@ -1,0 +1,19 @@
+{
+ "slug": "haran",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.129494+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "помер за життя свого батька Тераха в Урі халдейському",
+    "deu": "starb vor seinem Vater Tharah in Ur in Chaldäa",
+    "spa": "murió antes que su padre Thare en Ur de los Caldeos",
+    "why": "German: replaced the dated 'zu Ur' with 'in Ur'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

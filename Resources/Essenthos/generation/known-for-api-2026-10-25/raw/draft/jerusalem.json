@@ -1,0 +1,40 @@
+{
+ "slug": "jerusalem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.674546+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell several defining events of the city: David's capture of it, the building of the temple, and its burning by Babylon.",
+  "clauses": [
+   {
+    "english": "was taken by David from the Jebusites and became the city of David",
+    "references": [
+     "2SA 5:6-7"
+    ],
+    "quote": "David took the strong hold of Zion: the same is the city of David"
+   },
+   {
+    "english": "was where Solomon began to build the house of the LORD",
+    "references": [
+     "2CH 3:1"
+    ],
+    "quote": "Solomon began to build the house of the LORD at Jerusalem"
+   },
+   {
+    "english": "had its houses burned and its walls broken down by the Chaldeans",
+    "references": [
+     "2KI 25:9-10"
+    ],
+    "quote": "brake down the walls of Jerusalem round about"
+   }
+  ],
+  "doubts": [
+   "The Salem of Melchizedek (GEN 14:18, HEB 7:1-2) is marked but not named as Jerusalem in the verses given, so it was left out.",
+   "Many marked verses only mention Jerusalem as a setting, a residence or the subject of prophecy, and were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "eliphaz-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.213116+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прийшов співчувати Йову та потішити його",
+    "deu": "kam, um Hiob zu beklagen und zu trösten",
+    "spa": "vino a condolerse de Job y a consolarle",
+    "why": ""
+   },
+   {
+    "ukr": "почув від Господа, що запалився Його гнів на нього за те, що він не говорив слушного про Нього",
+    "deu": "bekam vom HERRN gesagt, sein Zorn sei gegen ihn entbrannt, weil er nicht recht von ihm geredet hatte",
+    "spa": "fue informado por el SEÑOR de que su ira se encendió contra él por no haber hablado rectamente de él",
+    "why": "German: replaced the archaic Luther word «ergrimmt» with modern «gegen ihn entbrannt»."
+   },
+   {
+    "ukr": "зробив, як говорив Господь, а Йов помолився за своїх приятелів",
+    "deu": "tat, wie der HERR ihm gesagt hatte, und Hiob bat für seine Freunde",
+    "spa": "hizo como el SEÑOR le dijo, y Job oró por sus amigos",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

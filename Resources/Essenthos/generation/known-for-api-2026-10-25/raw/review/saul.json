@@ -1,0 +1,37 @@
+{
+ "slug": "saul",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.835471+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "розбив аммонітян у бою",
+    "deu": "schlug die Ammoniter in der Schlacht",
+    "spa": "derrotó a los amonitas en la batalla",
+    "why": "Ukrainian: «Аммона» (singular) changed to the plural «аммонітян»; Spanish: «Ammonitas» modernized to «amonitas»."
+   },
+   {
+    "ukr": "був відкинутий Господом від царювання",
+    "deu": "wurde vom HERRN verworfen, nicht mehr König zu sein",
+    "spa": "fue desechado por el SEÑOR para que no fuera rey",
+    "why": ""
+   },
+   {
+    "ukr": "щодня шукав, щоб убити Давида",
+    "deu": "suchte Tag für Tag, David zu töten",
+    "spa": "buscaba todos los días matar a David",
+    "why": ""
+   },
+   {
+    "ukr": "упав на меч на горі Ґілбоа",
+    "deu": "fiel auf dem Berg Gilboa in ein Schwert",
+    "spa": "se echó sobre una espada en el monte de Gilboa",
+    "why": "Ukrainian: mountain name spelled «Ґілбоа» as in Ohienko; Spanish: «monte de Gilboa» as in Reina-Valera."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

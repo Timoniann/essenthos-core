@@ -1,0 +1,36 @@
+{
+ "slug": "tarshish-5",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.210891+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "brought Solomon gold, silver, ivory, apes and peacocks once in three years",
+    "references": [
+     "1KI 10:22"
+    ],
+    "ukr": "привозили Соломонові золото, срібло, слонову кість, мавп і пав раз на три роки",
+    "deu": "brachten Salomo einmal in drei Jahren Gold, Silber, Elfenbein, Affen und Pfauen",
+    "spa": "traían a Salomón oro, plata, marfil, simios y pavos una vez cada tres años"
+   },
+   {
+    "verdict": "fix",
+    "why": "The ships never reached Ophir; 'for Jehoshaphat' is clumsy and the verse says they did not go.",
+    "english": "were broken at Eziongeber before they could go to Ophir",
+    "references": [
+     "1KI 22:48"
+    ],
+    "ukr": "порозбивалися при Ецйон-Ґевері, не встигши піти до Офіру",
+    "deu": "wurden zu Ezeon-Geber zerbrochen, ehe sie nach Ophir fahren konnten",
+    "spa": "se rompieron en Ezion-geber antes de ir a Ophir"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

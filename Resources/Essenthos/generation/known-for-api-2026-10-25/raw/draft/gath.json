@@ -1,0 +1,41 @@
+{
+ "slug": "gath",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.731040+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell what happened at and to Gath: the ark's plague, David's stay there, and its capture.",
+  "clauses": [
+   {
+    "english": "was struck with a very great destruction when the ark of God was carried there",
+    "references": [
+     "1SA 5:8-9"
+    ],
+    "quote": "the hand of the LORD was against the city with a very great destruction"
+   },
+   {
+    "english": "was where David fled from Saul and dwelt with King Achish and his men",
+    "references": [
+     "1SA 27:2-3"
+    ],
+    "quote": "David dwelt with Achish at Gath"
+   },
+   {
+    "english": "was taken by David from the Philistines",
+    "references": [
+     "1CH 18:1"
+    ],
+    "quote": "took Gath and her towns out of the hand of the Philistines"
+   }
+  ],
+  "doubts": [
+   "Left out the verses that only name Goliath or the giants of Gath, the Gittites, and Gath in lists or warnings (1SA 17, 2SA 21, 1CH 20, 2SA 15, 1SA 6:17, 2SA 1:20, AMO 6:2, MIC 1:10, 2CH 11:8, 1SA 7:14, JOS 11:22, JOS 13:3).",
+   "Hazael's capture (2KI 12:17) and Uzziah's breaking of the wall (2CH 26:6) are real events but were left out to keep the line short.",
+   "The Gath of the Psalm 56 title, and the time of David's stay there, may differ from the one in 1SA 27."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

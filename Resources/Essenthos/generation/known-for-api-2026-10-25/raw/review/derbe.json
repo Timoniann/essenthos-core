@@ -1,0 +1,19 @@
+{
+ "slug": "derbe",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.396468+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Павло і Варнава проповідували Євангелію та навчали багатьох",
+    "deu": "war der Ort, wo Paulus und Barnabas das Evangelium predigten und viele unterwiesen",
+    "spa": "fue el lugar donde Pablo y Bernabé anunciaron el evangelio y enseñaron a muchos",
+    "why": "Ukrainian: verb made feminine to agree with Дервія («була»); «звістили» changed to «проповідували» and «придбали багато учнів» to «навчали багатьох» to match the English."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

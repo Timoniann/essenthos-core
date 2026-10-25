@@ -1,0 +1,36 @@
+{
+ "slug": "jehonadab",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.527218+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken up into Jehu's chariot to see his zeal for the LORD",
+    "references": [
+     "2KI 10:15-16"
+    ],
+    "ukr": "був підведений на колесницю Ііуя, щоб побачити його запопадливість для Господа",
+    "deu": "wurde auf Jehus Wagen genommen, um seinen Eifer um den HERRN zu sehen",
+    "spa": "fue subido al carro de Jehú para ver su celo por el SEÑOR"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "commanded his sons to drink no wine and dwell in tents, and they obeyed",
+    "references": [
+     "JER 35:6-10"
+    ],
+    "ukr": "наказав своїм синам не пити вина й жити в наметах, і вони послухалися",
+    "deu": "gebot seinen Söhnen, keinen Wein zu trinken und in Hütten zu wohnen, und sie gehorchten",
+    "spa": "mandó a sus hijos no beber vino y morar en tiendas, y ellos obedecieron"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

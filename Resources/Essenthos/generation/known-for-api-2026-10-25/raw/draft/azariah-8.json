@@ -1,0 +1,26 @@
+{
+ "slug": "azariah-8",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.782465+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of one event for Azariah, the Spirit coming on him and his message to Asa, which goes beyond the bare summary.",
+  "clauses": [
+   {
+    "english": "was moved by the Spirit of God to meet Asa and urge him and Judah to seek the LORD",
+    "references": [
+     "2CH 15:1-2"
+    ],
+    "quote": "The LORD is with you, while ye be with him; and if ye seek him, he will be found of you"
+   }
+  ],
+  "doubts": [
+   "The dataset cites 1CH 15:1-2, which concerns David and the ark, not Azariah; those verses were left out.",
+   "2CH 15:8 names Oded the prophet, not Azariah, so it was not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

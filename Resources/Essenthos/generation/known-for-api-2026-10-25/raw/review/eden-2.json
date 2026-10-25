@@ -1,0 +1,25 @@
+{
+ "slug": "eden-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.908897+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Господь Бог насадив рай і оселив людину, яку створив",
+    "deu": "war der Ort, an dem Gott der HERR einen Garten pflanzte und den Menschen hineinsetzte, den er gemacht hatte",
+    "spa": "fue el lugar donde el SEÑOR Dios plantó un huerto y puso al hombre que había formado",
+    "why": ""
+   },
+   {
+    "ukr": "був краєм, з якого вигнали людину, а на схід від його раю поставили херувимів і полум'яний меч",
+    "deu": "war das Land, aus dem der Mensch vertrieben wurde, mit Cherubim und einem flammenden Schwert, die östlich von seinem Garten aufgestellt wurden",
+    "spa": "fue la tierra de la que el hombre fue echado, con querubines y una espada encendida puestos al oriente de su huerto",
+    "why": "Ukrainian: cherubim made plural and 'меч' in modern form. German: 'bloßen' replaced by 'flammenden', article dropped before Cherubim, and 'east of' added."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

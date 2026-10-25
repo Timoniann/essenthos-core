@@ -1,0 +1,25 @@
+{
+ "slug": "mountgerizim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.078438+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "мала навпроти себе половину Ізраїлю, що стояла, щоб благословляти Ізраїлів народ",
+    "deu": "hatte die Hälfte Israels sich gegenüber stehen, um das Volk Israel zu segnen",
+    "spa": "tuvo a la mitad de Israel de pie frente a él, para que bendijesen al pueblo de Israel",
+    "why": "German «neben sich» (beside) changed to «gegenüber» to match the English «opposite it»."
+   },
+   {
+    "ukr": "була місцем, де Йотам став і закликав сихемських господарів",
+    "deu": "war der Ort, wo Jotham auftrat und den Männern zu Sichem zurief",
+    "spa": "fue el lugar donde Jotham se puso y clamó a los varones de Sichêm",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

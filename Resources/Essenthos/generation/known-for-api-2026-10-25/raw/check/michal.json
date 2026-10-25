@@ -1,0 +1,47 @@
+{
+ "slug": "michal",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:18.982411+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "let David down through a window so he escaped Saul's messengers",
+    "references": [
+     "1SA 19:11-12"
+    ],
+    "ukr": "спустила Давида через вікно, і він утік від посланців Саула",
+    "deu": "ließ David durchs Fenster hinab, sodass er den Boten Sauls entkam",
+    "spa": "descolgó a David por una ventana, y él escapó de los mensajeros de Saúl"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken from her husband Phaltiel at David's demand",
+    "references": [
+     "2SA 3:14-15"
+    ],
+    "ukr": "була взята від чоловіка свого Палтіїла на вимогу Давида",
+    "deu": "wurde auf Davids Verlangen von ihrem Mann Paltiel genommen",
+    "spa": "fue quitada a su marido Paltiel a petición de David"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says David danced before the LORD, not before the ark.",
+    "english": "despised David in her heart as he danced before the LORD",
+    "references": [
+     "2SA 6:16"
+    ],
+    "ukr": "погордила Давидом у серці своєму, коли він танцював перед Господом",
+    "deu": "verachtete David in ihrem Herzen, als er vor dem HERRN tanzte",
+    "spa": "menospreció a David en su corazón cuando él saltaba delante del SEÑOR"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,41 @@
+{
+ "slug": "jabeshgilead",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.283291+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of events at Jabesh-gilead: its destruction for missing the assembly, its rescue from Nahash, and its men's burial of Saul.",
+  "clauses": [
+   {
+    "english": "was struck with the sword for sending no one to the assembly at Mizpeh, and four hundred virgins were taken",
+    "references": [
+     "JDG 21:8-12"
+    ],
+    "quote": "Go and smite the inhabitants of Jabeshgilead with the edge of the sword"
+   },
+   {
+    "english": "was besieged by Nahash the Ammonite and was rescued by Saul",
+    "references": [
+     "1SA 11:1-3",
+     "1SA 11:9-11"
+    ],
+    "quote": "Then Nahash the Ammonite came up, and encamped against Jabeshgilead"
+   },
+   {
+    "english": "sent its valiant men to take Saul's body from Bethshan and bury his bones",
+    "references": [
+     "1SA 31:11-13"
+    ],
+    "quote": "All the valiant men arose, and went all night, and took the body of Saul"
+   }
+  ],
+  "doubts": [
+   "The 1SA 11:12 context and 1SA 10:27 do not name Jabesh; 1SA 10:27 is marked but concerns Saul being despised, so I left it out.",
+   "The rescue clause rests on 1SA 11:11, a context verse that does not name Jabesh, together with the marked verses."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

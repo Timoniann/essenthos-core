@@ -1,0 +1,47 @@
+{
+ "slug": "leah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.915612+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say she was brought to Jacob, not given, and her sister relation is not stated in them.",
+    "english": "was brought to Jacob in the evening in place of Rachel",
+    "references": [
+     "GEN 29:23-25"
+    ],
+    "ukr": "була приведена до Якова ввечері замість Рахілі",
+    "deu": "wurde am Abend anstelle von Rahel zu Jakob gebracht",
+    "spa": "fue llevada a Jacob por la noche en lugar de Rachêl"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verses give one son, Reuben, not sons, and do not name Jacob as the father.",
+    "english": "bore a son, Reuben, after the LORD opened her womb",
+    "references": [
+     "GEN 29:31-32"
+    ],
+    "ukr": "породила сина Рувима після того, як Господь відкрив її утробу",
+    "deu": "gebar einen Sohn, Ruben, nachdem der HERR ihren Mutterleib geöffnet hatte",
+    "spa": "parió un hijo, Rubén, después de que el SEÑOR abrió su matriz"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "gave her maid Zilpah to Jacob as a wife",
+    "references": [
+     "GEN 30:9-10"
+    ],
+    "ukr": "дала свою невільницю Зілпу Якову за жінку",
+    "deu": "gab ihre Magd Silpa Jakob zur Frau",
+    "spa": "dio a su sierva Zilpa a Jacob por mujer"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "thomas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.150055+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "закликав співучнів піти також, щоб повмирати з Ним",
+    "deu": "forderte seine Mitjünger auf mitzuziehen, damit sie mit ihm sterben",
+    "spa": "dijo a sus condiscípulos que fueran también, para que murieran con él",
+    "why": "German: \"die Jünger\" became \"seine Mitjünger\" to render \"his fellow disciples\"."
+   },
+   {
+    "ukr": "не хотів увірувати, поки не побачить знаків від цвяхів і не вкладе пальця, а потім сказав Ісусові: «Господь мій і Бог мій!»",
+    "deu": "wollte nicht glauben, es sei denn, er sähe die Nägelmale und legte seinen Finger hinein; dann sprach er zu Jesus: „Mein HERR und mein Gott!“",
+    "spa": "no quiso creer si no veía la señal de los clavos y metía su dedo en ella; luego dijo a Jesús: «¡Señor mío, y Dios mío!»",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

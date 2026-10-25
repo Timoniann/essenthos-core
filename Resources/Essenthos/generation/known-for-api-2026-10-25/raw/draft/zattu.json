@@ -1,0 +1,18 @@
+{
+ "slug": "zattu",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.792745+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Zattu in registers of returning families, of men who had taken foreign wives, and of chiefs of the people, which says no more than the summary does.",
+  "clauses": [],
+  "doubts": [
+   "EZR 8:5 is marked but names Shechaniah's son, not Zattu (the name is probably missing from the text), so it was left out.",
+   "NEH 10:14 spells the name Zatthu and only lists him among the chiefs of the people."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

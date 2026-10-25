@@ -1,0 +1,36 @@
+{
+ "slug": "eglon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.979023+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verse 13 says he gathered the children of Ammon and Amalek, not Ammon and Amalek themselves; verse 12 only says the LORD strengthened him, so the citation should be 3:13.",
+    "english": "gathered the children of Ammon and Amalek and defeated Israel",
+    "references": [
+     "JDG 3:13"
+    ],
+    "ukr": "зібрав до себе синів Аммонових та Амаликових і підбив Ізраїля",
+    "deu": "sammelte die Kinder Ammon und die Amalekiter zu sich und schlug Israel",
+    "spa": "juntó consigo a los hijos de Ammón y de Amalec e hirió a Israel"
+   },
+   {
+    "verdict": "fix",
+    "why": "Israel served him, so the actor is Israel's service to Eglon; the passive form is supported, but the clause is better stated as received service.",
+    "english": "was served by Israel for eighteen years",
+    "references": [
+     "JDG 3:14"
+    ],
+    "ukr": "йому служили сини Ізраїлеві вісімнадцять літ",
+    "deu": "ihm dienten die Kinder Israel achtzehn Jahre",
+    "spa": "le sirvieron los hijos de Israel diez y ocho años"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

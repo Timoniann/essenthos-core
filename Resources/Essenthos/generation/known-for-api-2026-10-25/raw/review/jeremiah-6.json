@@ -1,0 +1,31 @@
+{
+ "slug": "jeremiah-6",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.579838+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "дав Барухові записати Господні слова на книжковий звій",
+    "deu": "ließ Baruch die Worte des HERRN in ein Buch schreiben",
+    "spa": "hizo que Baruch escribiera las palabras del SEÑOR en un rollo",
+    "why": ""
+   },
+   {
+    "ukr": "був кинутий до ями з багном і витягнений Евед-Мелехом",
+    "deu": "wurde in eine Grube mit Schlamm geworfen und von Ebed-Melech heraufgezogen",
+    "spa": "fue echado en una mazmorra con cieno y sacado por Ebed-melec",
+    "why": ""
+   },
+   {
+    "ukr": "був узятий з подвір'я в'язниці й переданий Ґедалії",
+    "deu": "wurde aus dem Vorhof des Gefängnisses geholt und Gedalja anvertraut",
+    "spa": "fue tomado del patio de la cárcel y entregado a Gedalías",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

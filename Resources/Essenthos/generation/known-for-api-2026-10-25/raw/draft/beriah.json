@@ -1,0 +1,15 @@
+{
+ "slug": "beriah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.981790+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Beriah among the sons of Asher and name his sons and the family descended from him, which the summary already gives, and they record no deed or event.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

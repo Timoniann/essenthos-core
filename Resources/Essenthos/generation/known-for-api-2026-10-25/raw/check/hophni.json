@@ -1,0 +1,25 @@
+{
+ "slug": "hophni",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.070383+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was foretold to die with his brother Phinehas in one day",
+    "references": [
+     "1SA 2:34"
+    ],
+    "ukr": "було провіщено, що він помре одного дня зі своїм братом Пінхасом",
+    "deu": "wurde angekündigt, dass er mit seinem Bruder Pinehas an einem Tag sterben würde",
+    "spa": "le fue anunciado que moriría en un día con su hermano Phinees"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

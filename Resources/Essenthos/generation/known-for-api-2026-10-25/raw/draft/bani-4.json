@@ -1,0 +1,18 @@
+{
+ "slug": "bani-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.767715+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Bani's descendants in a register, a list of men with foreign wives and a list of chiefs, and tell nothing of any deed or event of his own.",
+  "clauses": [],
+  "doubts": [
+   "EZR 8:10 names the sons of Shelomith, not Bani, and NEH 7:15 names Binnui, so both were left out.",
+   "NEH 10:14 may name a different Bani, a chief who sealed the covenant, and it is only a list of names."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

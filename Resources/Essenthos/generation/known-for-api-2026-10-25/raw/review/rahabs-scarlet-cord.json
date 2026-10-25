@@ -1,0 +1,25 @@
+{
+ "slug": "rahabs-scarlet-cord",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.519384+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був призначений розвідниками, щоб Рахава прив'язала його у вікні",
+    "deu": "wurde von den Kundschaftern bestimmt, damit Rahab es ins Fenster knüpfe",
+    "spa": "fue señalado por los espías para que Rahab lo atara a la ventana",
+    "why": ""
+   },
+   {
+    "ukr": "був прив'язаний Рахавою у вікні, коли розвідники пішли",
+    "deu": "wurde von Rahab ins Fenster geknüpft, als die Kundschafter gegangen waren",
+    "spa": "fue atado por Rahab a la ventana cuando los espías se fueron",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

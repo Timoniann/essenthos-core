@@ -1,0 +1,33 @@
+{
+ "slug": "dedan-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.426667+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses state what Dedan did in trade and what the LORD declared against it, beyond the summary's note that it was a region of Arabia.",
+  "clauses": [
+   {
+    "english": "traded with Tyre in precious clothes for chariots",
+    "references": [
+     "EZK 27:20"
+    ],
+    "quote": "Dedan was thy merchant in precious clothes for chariots."
+   },
+   {
+    "english": "was warned to flee because the LORD would bring calamity upon it",
+    "references": [
+     "JER 49:8"
+    ],
+    "quote": "Flee ye, turn back, dwell deep, O inhabitants of Dedan"
+   }
+  ],
+  "doubts": [
+   "ISA 21:13, JER 25:23, EZK 25:13, EZK 27:15 and EZK 38:13 were left out as list entries, a repeat of the same judgment, or a minor detail.",
+   "The Dedan of EZK 25:13 and JER 49:8 may be linked to Edom, but the verses given do not settle where it lay."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

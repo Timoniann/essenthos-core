@@ -1,0 +1,47 @@
+{
+ "slug": "asa",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.347871+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "defeated Zerah the Ethiopian when the LORD smote the Ethiopians",
+    "references": [
+     "2CH 14:9-13"
+    ],
+    "ukr": "переміг кушеянина Зераха, коли Господь побив кушеян",
+    "deu": "besiegte Serah, den Mohren, als der HERR die Mohren schlug",
+    "spa": "derrotó a Zera el Etiope cuando el SEÑOR deshizo a los Etiopes"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says he removed her from being queen and destroyed and burnt her idol; 'burnt her idol' alone is incomplete, and the verse shown is fine, but the line should keep it short and accurate.",
+    "english": "removed his mother Maachah from being queen and burnt her idol",
+    "references": [
+     "1KI 15:13"
+    ],
+    "ukr": "позбавив свою матір Мааху права бути царицею й спалив її ідола",
+    "deu": "setzte seine Mutter Maacha ab und verbrannte ihr Greuelbild",
+    "spa": "privó a su madre Maachâ de ser princesa y quemó su ídolo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "sent silver and gold to Benhadad of Syria to turn him against Baasha",
+    "references": [
+     "1KI 15:18-20"
+    ],
+    "ukr": "послав срібло та золото сирійському цареві Бен-Гададові, щоб він порушив умову з Башею",
+    "deu": "sandte Silber und Gold zu Benhadad, dem König von Syrien, damit er den Bund mit Baesa fahren ließe",
+    "spa": "envió plata y oro a Ben-adad, rey de Siria, para que rompiera su alianza con Baasa"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

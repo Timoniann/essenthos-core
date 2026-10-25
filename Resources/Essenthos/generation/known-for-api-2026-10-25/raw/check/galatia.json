@@ -1,0 +1,36 @@
+{
+ "slug": "galatia",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.659932+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was crossed by Paul, who strengthened all the disciples there",
+    "references": [
+     "ACT 18:23"
+    ],
+    "ukr": "була пройдена Павлом, який зміцнював усіх учнів",
+    "deu": "wurde von Paulus durchwandert, der alle Jünger stärkte",
+    "spa": "fue recorrida por Pablo, que confirmó a todos los discípulos"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 1 says only that Paul gave order to the churches of Galatia about the collection; the laying aside of money is the instruction to Corinth.",
+    "english": "had churches to which Paul gave orders about the collection for the saints",
+    "references": [
+     "1CO 16:1"
+    ],
+    "ukr": "мала Церкви, для яких Павло постановив щодо складок на святих",
+    "deu": "hatte Gemeinden, denen Paulus wegen der Steuer für die Heiligen Anordnung gegeben hatte",
+    "spa": "tuvo iglesias a las que Pablo ordenó acerca de la colecta para los santos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

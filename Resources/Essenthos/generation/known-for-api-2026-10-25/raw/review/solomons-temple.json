@@ -1,0 +1,37 @@
+{
+ "slug": "solomons-temple",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:11.974654+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був збудований Соломоном за сім років",
+    "deu": "wurde von Salomo in sieben Jahren gebaut",
+    "spa": "fue edificado por Salomón en siete años",
+    "why": ""
+   },
+   {
+    "ukr": "був наповнений славою Господа, коли в нього внесли ковчег",
+    "deu": "wurde von der Herrlichkeit des HERRN erfüllt, als die Lade hineingebracht wurde",
+    "spa": "fue llenado de la gloria del SEÑOR cuando se metió el arca en él",
+    "why": "Ukrainian: replaced the adjective «Господньою» with the declined «Господа»."
+   },
+   {
+    "ukr": "був освячений Соломоном великою жертвою волів і овець",
+    "deu": "wurde von Salomo mit einem großen Opfer von Ochsen und Schafen eingeweiht",
+    "spa": "fue dedicado por Salomón con un gran sacrificio de bueyes y ovejas",
+    "why": "Ukrainian: «через велику жертву» (because of) changed to the instrumental «великою жертвою» (with)."
+   },
+   {
+    "ukr": "був спалений Невузар'аданом, а його бронзові стовпи й море були поламані халдеями",
+    "deu": "wurde von Nebusaradan verbrannt, und seine bronzenen Säulen und das bronzene Meer wurden von den Chaldäern zerbrochen",
+    "spa": "fue quemado por Nabuzaradán, y sus columnas de bronce y el mar de bronce fueron quebrados por los caldeos",
+    "why": "Ukrainian: «мідяні» (copper) changed to «бронзові» (bronze) and «були» added to the second part. German: archaic «ehernen» changed to «bronzenen»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

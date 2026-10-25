@@ -1,0 +1,31 @@
+{
+ "slug": "eshtaol",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.168953+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "лежав біля Данового табору, де Дух Господній почав діяти в Самсоні",
+    "deu": "lag beim Lager Dan, wo der Geist des HERRN anfing, Simson zu treiben",
+    "spa": "estaba junto al campamento de Dan, donde el espíritu del SEÑOR comenzó a manifestarse en Samsón",
+    "why": "Removed the stress mark in the Ukrainian; made 'campamentos' singular to match the English 'camp'."
+   },
+   {
+    "ukr": "лежав поблизу гробу Маноаха, де був похований Самсон",
+    "deu": "lag nahe dem Grab Manoahs, wo Simson begraben wurde",
+    "spa": "estaba cerca del sepulcro de Manoa, donde Samsón fue sepultado",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, звідки рушили шістсот оперезаних зброєю чоловіків з Данового роду",
+    "deu": "war ein Ort, von dem sechshundert mit Waffen gerüstete Männer aus den Geschlechtern Dan auszogen",
+    "spa": "fue un lugar de donde partieron seiscientos hombres de Dan armados de armas de guerra",
+    "why": "German: 'gerüstete Mann' corrected to 'gerüstete Männer'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

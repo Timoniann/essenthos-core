@@ -1,0 +1,31 @@
+{
+ "slug": "shechem-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.464952+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Ісус зібрав племена й склав заповіт з народом",
+    "deu": "war der Ort, wo Josua die Stämme versammelte und mit dem Volk einen Bund machte",
+    "spa": "fue el lugar donde Josué juntó las tribus e hizo alianza con el pueblo",
+    "why": "Ukrainian verb now masculine (було -> був) to agree with Сихем."
+   },
+   {
+    "ukr": "був здобутий Авімелехом, який зруйнував його та обсіяв сіллю",
+    "deu": "wurde von Abimelech eingenommen, der es zerstörte und Salz darauf säte",
+    "spa": "fue tomado por Abimelech, quien lo asoló y lo sembró de sal",
+    "why": "German: replaced the dated 'gewonnen' and 'zerbrach' with modern 'eingenommen' and 'zerstörte'. Spanish: made masculine to agree with Sichêm (tomada -> tomado, la -> lo)."
+   },
+   {
+    "ukr": "був місцем, де зібрався весь Ізраїль, щоб настановити царем Рехав'ама",
+    "deu": "war der Ort, wohin ganz Israel kam, um Rehabeam zum König zu machen",
+    "spa": "fue el lugar adonde vino todo Israel para hacer rey a Roboam",
+    "why": "Ukrainian verb now masculine (було -> був) to agree with Сихем."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

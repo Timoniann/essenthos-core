@@ -1,0 +1,19 @@
+{
+ "slug": "kibrothhattaavah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.538797+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де поховали пожадливий народ після того, як Господь вдарив його великим мором",
+    "deu": "war der Ort, wo man das lüsterne Volk begrub, nachdem der HERR es mit einer großen Plage geschlagen hatte",
+    "spa": "fue el lugar donde sepultaron al pueblo codicioso después de que el SEÑOR lo hirió con una gran plaga",
+    "why": "Ukrainian: replaced the archaic «великою поразкою» (now means 'defeat') with the modern «великим мором» for 'plague'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

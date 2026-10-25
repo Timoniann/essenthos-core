@@ -1,0 +1,23 @@
+{
+ "slug": "elizur",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.406404+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Besides the roles already in the summary, the verses give one deed: his offering on the fourth day.",
+  "clauses": [
+   {
+    "english": "made his offering for the tribe on the fourth day of the offerings",
+    "references": [
+     "NUM 7:30-35"
+    ],
+    "quote": "On the fourth day Elizur the son of Shedeur"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

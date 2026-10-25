@@ -1,0 +1,15 @@
+{
+ "slug": "gideoni",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.396361+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "Gideoni appears only as the father's name in the lists of tribal leaders, where all the deeds belong to his son Abidan, so the verses say no more of him than the summary does.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

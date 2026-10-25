@@ -1,0 +1,36 @@
+{
+ "slug": "james-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.439569+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was one of those to whom Christ appeared",
+    "references": [
+     "1CO 15:7"
+    ],
+    "ukr": "був одним із тих, кому з'явився Христос",
+    "deu": "war einer von denen, denen Christus erschien",
+    "spa": "fue uno de aquellos a quienes apareció Cristo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says they gave the right hands of fellowship, not that James gave them alone; 'to go to the Gentiles' is fine, but the actor is James with Cephas and John.",
+    "english": "with Cephas and John, gave Paul and Barnabas the right hands of fellowship",
+    "references": [
+     "GAL 2:9"
+    ],
+    "ukr": "разом із Кифою та Іваном подав Павлові та Варнаві правиці спільноти",
+    "deu": "gab mit Kephas und Johannes Paulus und Barnabas die rechte Hand",
+    "spa": "con Cefas y Juan dio a Pablo y a Bernabé las diestras de compañía"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

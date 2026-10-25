@@ -1,0 +1,36 @@
+{
+ "slug": "tree-of-knowledge-of-good-and-evil",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.094110+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was forbidden to the man on pain of death",
+    "references": [
+     "GEN 2:16-17"
+    ],
+    "ukr": "було заборонене людині під загрозою смерті",
+    "deu": "wurde dem Menschen unter Androhung des Todes verboten",
+    "spa": "fue prohibido al hombre bajo pena de muerte"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was eaten from by the woman, who gave its fruit to her husband, and he ate",
+    "references": [
+     "GEN 3:6"
+    ],
+    "ukr": "було спожите жінкою, яка дала його плід своєму чоловікові, і він з'їв",
+    "deu": "wurde von der Frau gegessen, die ihrem Mann von der Frucht gab, und er aß",
+    "spa": "fue comido por la mujer, que dio de su fruto a su marido, y él comió"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

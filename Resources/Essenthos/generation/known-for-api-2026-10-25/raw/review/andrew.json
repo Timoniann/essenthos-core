@@ -1,0 +1,25 @@
+{
+ "slug": "andrew",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.460421+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "покинув свої сіті й пішов вслід за Ісусом, коли той покликав його з риболовлі",
+    "deu": "verließ seine Netze und folgte Jesus nach, als er ihn vom Fischfang rief",
+    "spa": "dejó sus redes y siguió a Jesús cuando lo llamó de la pesca",
+    "why": ""
+   },
+   {
+    "ukr": "привів свого брата Симона до Ісуса, сказавши, що вони знайшли Месію",
+    "deu": "führte seinen Bruder Simon zu Jesus und sagte, sie hätten den Messias gefunden",
+    "spa": "trajo a su hermano Simón a Jesús, diciendo que habían hallado al Mesías",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

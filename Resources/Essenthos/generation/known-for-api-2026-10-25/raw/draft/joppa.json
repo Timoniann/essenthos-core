@@ -1,0 +1,42 @@
+{
+ "slug": "joppa",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.447228+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Joppa is the setting of several events: the port where Jonah took ship, where Peter raised Tabitha, and where Peter was called to Cornelius.",
+  "clauses": [
+   {
+    "english": "was the port where Jonah boarded a ship to flee to Tarshish",
+    "references": [
+     "JON 1:3"
+    ],
+    "quote": "went down to Joppa; and he found a ship going to Tarshish"
+   },
+   {
+    "english": "was where Peter raised the disciple Tabitha from the dead",
+    "references": [
+     "ACT 9:36-42"
+    ],
+    "quote": "Tabitha, arise. And she opened her eyes"
+   },
+   {
+    "english": "was where Peter lodged with Simon a tanner and was sent for by Cornelius",
+    "references": [
+     "ACT 9:43",
+     "ACT 10:5-8"
+    ],
+    "quote": "he tarried many days in Joppa with one Simon a tanner"
+   }
+  ],
+  "doubts": [
+   "JOS 19:46 names Japho, a Danite border city, which may be the same place; left out as a bare border mention.",
+   "2CH 2:16 and EZR 3:7 mention Joppa as the sea landing for cedar from Lebanon; left out as it is a minor detail and the summary already cites EZR 3:7.",
+   "The third clause joins lodging and the summons; the lodging may be better dropped if the line is too long."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

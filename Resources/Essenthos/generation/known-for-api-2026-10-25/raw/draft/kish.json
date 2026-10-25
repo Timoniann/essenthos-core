@@ -1,0 +1,26 @@
+{
+ "slug": "kish",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.725826+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The one deed told of Kish himself is that he sent Saul to seek his lost asses; the other verses only list him as Saul's father or name Saul.",
+  "clauses": [
+   {
+    "english": "sent his son Saul to seek his lost asses",
+    "references": [
+     "1SA 9:3"
+    ],
+    "quote": "Take now one of the servants with thee, and arise, go seek the asses."
+   }
+  ],
+  "doubts": [
+   "1SA 10:11, 10:21, 1CH 12:1, 1CH 26:28 and ACT 13:21 mention Kish only as Saul's father, so they were not used.",
+   "The summary already gives his burial in Zelah (2SA 21:14), so it is not repeated."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

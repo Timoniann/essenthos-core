@@ -1,0 +1,25 @@
+{
+ "slug": "jehoiachin",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.665988+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був відведений у неволю до Вавилону Навуходоносором",
+    "deu": "wurde von Nebukadnezar gefangen nach Babel weggeführt",
+    "spa": "fue llevado cautivo a Babilonia por Nabucodonosor",
+    "why": ""
+   },
+   {
+    "ukr": "був виведений Евіл-Меродахом з дому ув'язнення і отримав трон понад тронами інших царів у Вавилоні",
+    "deu": "wurde von Evil-Merodach aus dem Kerker befreit und erhielt einen Stuhl über den Stühlen der anderen Könige in Babel",
+    "spa": "fue sacado de la cárcel por Evil-merodach y recibió un asiento sobre el de los otros reyes en Babilonia",
+    "why": "In Ukrainian, the impersonal «йому поставили трон» gave the clause a different subject; it now has the record as subject («отримав трон»)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

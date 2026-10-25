@@ -1,0 +1,19 @@
+{
+ "slug": "peor",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.423338+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди Балак привів Валаама, сподіваючись, що той звідти прокляне Ізраїля",
+    "deu": "war der Ort, wohin Balak Bileam führte, in der Hoffnung, dass er von dort aus Israel verfluchen würde",
+    "spa": "fue el lugar adonde Balac llevó a Balaam, esperando que desde allí maldijera a Israel",
+    "why": "Changed the Ukrainian verb «було» to masculine «був» to agree with the name Пеор, and replaced a stray Latin 'e' in «прокляне» with Cyrillic."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,26 @@
+{
+ "slug": "sion",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.276501+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Only the vision in Revelation 14:1 states something that happened at Sion; the other verses use it as a boundary marker or in quoted prophecy and figures of speech.",
+  "clauses": [
+   {
+    "english": "was where the Lamb stood with the hundred forty and four thousand",
+    "references": [
+     "REV 14:1"
+    ],
+    "quote": "a Lamb stood on the mount Sion"
+   }
+  ],
+  "doubts": [
+   "DEU 4:48 names Sion as another name for Hermon, a different place, and only marks a boundary, so it was left out.",
+   "MAT 21:5, JHN 12:15, ROM 9:33, ROM 11:26, HEB 12:22 and 1PE 2:6 use Sion in quoted prophecy or as a figure, not as an event, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

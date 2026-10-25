@@ -1,0 +1,31 @@
+{
+ "slug": "herods-temple",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:11.879398+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Ісус поперевертав столи міняйлів і вигнав продавців",
+    "deu": "war der Ort, an dem Jesus die Tische der Wechsler umstieß und die Verkäufer hinaustrieb",
+    "spa": "fue el lugar donde Jesús volcó las mesas de los cambiadores y echó fuera a los vendedores",
+    "why": "Replaced the old-fashioned 'грошомінів' with modern 'міняйлів' and the archaic 'trastornó' with 'volcó'."
+   },
+   {
+    "ukr": "мав завісу, що роздерлася надвоє згори донизу, коли Ісус віддав духа",
+    "deu": "hatte einen Vorhang, der von oben bis unten in zwei Teile zerriss, als Jesus starb",
+    "spa": "tuvo un velo que se rompió en dos, de arriba abajo, cuando Jesús murió",
+    "why": "Modernized old wording in all three languages: 'аж додолу', 'obenan/untenaus/zerriß/verschied', 'de alto a bajo/dio el espíritu'."
+   },
+   {
+    "ukr": "був провіщений Ісусом як такий, що буде зруйнований, так що не залишиться каменя на камені",
+    "deu": "wurde von Jesus angekündigt: Er werde niedergerissen, sodass kein Stein auf dem anderen bleibe",
+    "spa": "fue anunciado por Jesús como destinado a ser derribado, sin que quedara piedra sobre piedra",
+    "why": "Fixed the clumsy or old wording: 'каменя на камені', 'niedergerissen' instead of 'zerbrochen', and a grammatical 'derribado' construction in Spanish."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

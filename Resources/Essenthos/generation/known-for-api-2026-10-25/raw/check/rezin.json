@@ -1,0 +1,48 @@
+{
+ "slug": "rezin",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.385664+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "went up with Pekah to war against Jerusalem but could not overcome it",
+    "references": [
+     "2KI 16:5",
+     "ISA 7:1"
+    ],
+    "ukr": "прийшов із Пекахом на війну до Єрусалима, але не зміг його здолати",
+    "deu": "zog mit Pekah hinauf gen Jerusalem, um Krieg zu führen, konnte es aber nicht gewinnen",
+    "spa": "subió con Peka a Jerusalén para hacer guerra, pero no pudo tomarla"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "recovered Elath for Syria and drove the Jews out of it",
+    "references": [
+     "2KI 16:6"
+    ],
+    "ukr": "повернув Елат Сирії та вигнав юдеїв з Елату",
+    "deu": "brachte Elath wieder an Syrien und stieß die Juden aus Elath",
+    "spa": "restituyó Elath a Siria y echó a los judíos de Elath"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was slain when the king of Assyria took Damascus",
+    "references": [
+     "2KI 16:9"
+    ],
+    "ukr": "був убитий, коли асирійський цар узяв Дамаск",
+    "deu": "wurde getötet, als der König von Assyrien Damaskus einnahm",
+    "spa": "fue muerto cuando el rey de Asiria tomó Damasco"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

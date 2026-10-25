@@ -1,0 +1,36 @@
+{
+ "slug": "paran",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.089902+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the cloud rested when Israel left Sinai",
+    "references": [
+     "NUM 10:12"
+    ],
+    "ukr": "був місцем, де спинилася хмара, коли Ізраїлеві сини рушили з Сінайської пустині",
+    "deu": "war der Ort, an dem die Wolke blieb, als die Kinder Israel aus der Wüste Sinai aufbrachen",
+    "spa": "fue donde paró la nube cuando los hijos de Israel partieron del desierto de Sinaí"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Moses sent out men to search the land of Canaan",
+    "references": [
+     "NUM 13:2-3"
+    ],
+    "ukr": "був місцем, звідки Мойсей послав людей розвідати ханаанський край",
+    "deu": "war der Ort, von dem aus Mose Männer sandte, um das Land Kanaan zu erkunden",
+    "spa": "fue desde donde Moisés envió hombres para reconocer la tierra de Canaán"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

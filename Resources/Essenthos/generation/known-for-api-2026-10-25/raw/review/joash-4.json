@@ -1,0 +1,31 @@
+{
+ "slug": "joash-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.498003+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "узяв стріли за словом Єлисея, ударив по землі три рази і зупинився",
+    "deu": "nahm die Pfeile auf Elisas Wort, schlug dreimal auf die Erde und stand still",
+    "spa": "tomó las flechas por mandato de Eliseo, hirió la tierra tres veces y cesó",
+    "why": "Ukrainian: replaced dated «та й став» with «і зупинився»; Spanish: «saetas» changed to modern «flechas»."
+   },
+   {
+    "ukr": "побив Бен-Гадада три рази і повернув Ізраїлеві міста",
+    "deu": "schlug Benhadad dreimal und brachte die Städte Israels zurück",
+    "spa": "derrotó a Ben-adad tres veces y restituyó las ciudades a Israel",
+    "why": "Ukrainian «вернув» changed to «повернув», German «wieder» to «zurück», Spanish «batió» to «derrotó», all as modern wording."
+   },
+   {
+    "ukr": "переміг Амацію, царя Юдиного, у Бет-Шемеші та зруйнував єрусалимський мур",
+    "deu": "besiegte Amazja, den König von Juda, bei Beth-Semes und riss die Mauer Jerusalems ein",
+    "spa": "venció a Amasías, rey de Judá, en Beth-semes y rompió el muro de Jerusalem",
+    "why": "German: modern spelling «riss» and «bei» instead of «zu»; Spanish: commas added around the apposition."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

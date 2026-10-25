@@ -1,0 +1,25 @@
+{
+ "slug": "samaria",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.583861+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була обложена сирійським царем Бен-Гададом і зазнала великого голоду",
+    "deu": "wurde von Benhadad, dem König von Syrien, belagert und erlitt eine große Hungersnot",
+    "spa": "fue sitiada por Ben-adad, rey de Siria, y sufrió una gran hambre",
+    "why": ""
+   },
+   {
+    "ukr": "була здобута асирійським царем після трирічної облоги",
+    "deu": "wurde vom König von Assyrien nach dreijähriger Belagerung eingenommen",
+    "spa": "fue tomada por el rey de Asiria tras un cerco de tres años",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

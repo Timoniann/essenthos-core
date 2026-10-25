@@ -1,0 +1,15 @@
+{
+ "slug": "uzziel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.432976+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses marked for Uzziel only list him and his descendants in genealogies and Levite rolls, and say nothing he did or that happened to him beyond what the summary already gives.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,48 @@
+{
+ "slug": "gibeah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.624071+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "JDG 20:4-5 state everything; 19:15 only tells of lodging and is not needed.",
+    "english": "was where the men of the city abused the Levite's concubine, and she died",
+    "references": [
+     "JDG 20:4-5"
+    ],
+    "ukr": "була місцем, де господарі міста збезчестили наложницю Левита, і вона померла",
+    "deu": "war der Ort, wo die Bürger der Stadt das Kebsweib des Leviten schändeten, sodass sie starb",
+    "spa": "fue el lugar donde los hombres de la ciudad oprimieron a la concubina del levita, y ella murió"
+   },
+   {
+    "verdict": "fix",
+    "why": "That the ambush was Israel's is stated in 20:36, just outside the citation; 20:14 is not needed.",
+    "english": "was attacked by Israel after Benjamin refused to give up its wicked men, and was smitten with the sword",
+    "references": [
+     "JDG 20:13",
+     "JDG 20:36-37"
+    ],
+    "ukr": "була атакована Ізраїлем після того, як сини Веніяминові не захотіли видати розпусних людей, і була побита вістрям меча",
+    "deu": "wurde von Israel angegriffen, nachdem die Kinder Benjamin sich geweigert hatten, die bösen Buben auszuliefern, und wurde mit der Schärfe des Schwerts geschlagen",
+    "spa": "fue atacada por Israel después de que los de Benjamín no quisieron entregar a aquellos hombres, hijos de Belial, y fue pasada a cuchillo"
+   },
+   {
+    "verdict": "fix",
+    "why": "Saul's being chosen king is in 10:24, outside the citation; 'home of King Saul' is more than the verse says.",
+    "english": "was where Saul went home after being chosen king",
+    "references": [
+     "1SA 10:24-26"
+    ],
+    "ukr": "була місцем, куди Саул пішов додому після того, як його обрав Господь",
+    "deu": "war der Ort, wohin Saul heimging, nachdem ihn der HERR erwählt hatte",
+    "spa": "fue el lugar adonde Saúl se fue a su casa después de ser elegido por el SEÑOR"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

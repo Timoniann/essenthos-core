@@ -1,0 +1,32 @@
+{
+ "slug": "troas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.701397+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Paul's vision and his midnight preaching at Troas, which are events that happened there.",
+  "clauses": [
+   {
+    "english": "was where Paul saw a vision of a man of Macedonia asking for help",
+    "references": [
+     "ACT 16:8-10"
+    ],
+    "quote": "Come over into Macedonia, and help us."
+   },
+   {
+    "english": "was where Paul preached to the disciples until midnight",
+    "references": [
+     "ACT 20:6-7"
+    ],
+    "quote": "continued his speech until midnight"
+   }
+  ],
+  "doubts": [
+   "The 2 Timothy verse (a cloak left with Carpus) and 2 Corinthians 2:12-13 are passing travel notes and were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

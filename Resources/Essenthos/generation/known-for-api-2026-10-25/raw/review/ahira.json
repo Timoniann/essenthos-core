@@ -1,0 +1,19 @@
+{
+ "slug": "ahira",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.437762+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "приніс дванадцятого дня жертву на освячення жертовника",
+    "deu": "opferte am zwölften Tage zur Einweihung des Altars",
+    "spa": "ofreció el duodécimo día para la dedicación del altar",
+    "why": "Replaced the old spelling «жертівника» with the modern «жертовника»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

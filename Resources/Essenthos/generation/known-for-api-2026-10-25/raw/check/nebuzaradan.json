@@ -1,0 +1,47 @@
+{
+ "slug": "nebuzaradan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.276201+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "burned the house of the LORD and the houses of Jerusalem",
+    "references": [
+     "2KI 25:8-9"
+    ],
+    "ukr": "спалив дім Господній і доми в Єрусалимі",
+    "deu": "verbrannte das Haus des HERRN und die Häuser zu Jerusalem",
+    "spa": "quemó la casa del SEÑOR y las casas de Jerusalem"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says he carried away the remnant of the people left in the city, not all the remnant; the wording is fine but \"captive\" and Babylon are stated, so only a tighter wording is needed.",
+    "english": "carried the remnant of the people captive to Babylon",
+    "references": [
+     "JER 39:9"
+    ],
+    "ukr": "вигнав решту народу до Вавилону",
+    "deu": "führte den Rest des Volkes gefangen gen Babel",
+    "spa": "transportó el resto del pueblo a Babilonia"
+   },
+   {
+    "verdict": "fix",
+    "why": "The charge was given by Nebuchadrezzar, and the release from Ramah is in JER 40:1; the sending to fetch Jeremiah in 39:13-14 was done with the princes, so narrow the clause to the release.",
+    "english": "let Jeremiah go from Ramah",
+    "references": [
+     "JER 40:1"
+    ],
+    "ukr": "відпустив Єремію з Рами",
+    "deu": "ließ Jeremia zu Rama los",
+    "spa": "envió a Jeremías desde Ramá"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

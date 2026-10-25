@@ -1,0 +1,37 @@
+{
+ "slug": "shiloh",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.384146+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було місцем, де помістили скинію і де Ісус жеребом поділив землю між племенами",
+    "deu": "war der Ort, wo die Hütte aufgerichtet wurde und Josua das Land durch das Los unter die Stämme verteilte",
+    "spa": "fue el lugar donde se asentó el tabernáculo y donde Josué repartió la tierra por suerte entre las tribus",
+    "why": "Ukrainian: replaced the old-style capitalised «Край» with modern «землю»."
+   },
+   {
+    "ukr": "було місцем, де Господь явився Самуїлові в слові Господньому",
+    "deu": "war der Ort, wo sich der HERR dem Samuel durch sein Wort offenbarte",
+    "spa": "fue el lugar donde el SEÑOR se manifestó a Samuel con su palabra",
+    "why": ""
+   },
+   {
+    "ukr": "було місцем, звідки взяли ковчег заповіту після поразки Ізраїля від филистимлян",
+    "deu": "war der Ort, von wo man die Lade des Bundes holte, nachdem Israel von den Philistern geschlagen worden war",
+    "spa": "fue el lugar de donde trajeron el arca del pacto después de que Israel fue derrotado por los filisteos",
+    "why": "Spanish: replaced the archaic «vencido delante de» with modern «derrotado por»."
+   },
+   {
+    "ukr": "було місцем, де Бог покинув скинію",
+    "deu": "war der Ort, wo Gott die Hütte verließ",
+    "spa": "fue el lugar donde Dios dejó el tabernáculo",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

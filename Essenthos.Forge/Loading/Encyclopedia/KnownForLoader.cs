@@ -7,28 +7,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Essenthos.Core.Loading.Encyclopedia;
 
-/// <param name="Written">People whose clauses were written or rewritten: all of them on a cold corpus, none after.</param>
-/// <param name="Clauses">How many clauses those people now hold.</param>
-/// <param name="Removed">People the file no longer names, whose clauses were taken away.</param>
-/// <param name="Missing">People the file names and the encyclopedia does not hold.</param>
+/// <param name="Written">Records whose clauses were written or rewritten: all of them on a cold corpus, none after.</param>
+/// <param name="Clauses">How many clauses those records now hold.</param>
+/// <param name="Removed">Records neither file names any more, whose clauses were taken away.</param>
+/// <param name="Missing">Records a file names and the encyclopedia does not hold.</param>
 internal sealed record KnownForOutcome(int Written, int Clauses, int Removed, int Missing, TimeSpan Elapsed)
 {
     public override string ToString() =>
         Written == 0 && Removed == 0 && Missing == 0
-            ? "what people are known for is already there"
-            : $"what {Written} people are known for written in {Clauses} clauses, {Removed} people's taken away, " +
-              $"{Missing} for people the encyclopedia does not hold, in {Elapsed}";
+            ? "what people, places and things are known for is already there"
+            : $"what {Written} records are known for written in {Clauses} clauses, {Removed} records' taken away, " +
+              $"{Missing} for records the encyclopedia does not hold, in {Elapsed}";
 }
 
 /// <summary>
-/// What a person is known for — <em>built the ark and was saved from the Flood with his family</em>
-/// — clause by clause, each with the verses that say it, in English and in each reader's language,
-/// read from <c>KnownFor.json</c>.
+/// What a person, a place or a thing is known for — <em>built the ark and was saved from the Flood
+/// with his family</em> — clause by clause, each with the verses that say it, in English and in each
+/// reader's language: every record of <c>KnownFor.json</c>, and every record of the owner's review
+/// list (<see cref="KnownForReviewList"/>) that he has approved and the file does not name.
 ///
 /// <para>
-/// Idempotent and atomic: the rows are this file's alone, a person is rewritten only where what the
-/// file says of them differs from what is held, a person the file no longer names loses theirs, and
-/// all of it is one transaction, so a failed write leaves what was there.
+/// Idempotent and atomic: the rows are these files' alone, a record is rewritten only where what they
+/// say of it differs from what is held, a record neither names any more loses its clauses, and all of
+/// it is one transaction, so a failed write leaves what was there.
 /// </para>
 /// </summary>
 internal sealed class KnownForLoader(AppDbContext db, ILogger<KnownForLoader> logger)
@@ -41,13 +42,30 @@ internal sealed class KnownForLoader(AppDbContext db, ILogger<KnownForLoader> lo
         PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
     };
 
-    public Task<KnownForOutcome> Load(CancellationToken cancellationToken = default) =>
-        Load(Read(), cancellationToken);
+    /// <param name="reviewList">The owner's review list; a list that is not there approves nothing.</param>
+    public Task<KnownForOutcome> Load(string reviewList, CancellationToken cancellationToken = default) =>
+        Load(Read(), KnownForReviewList.Approved(reviewList), cancellationToken);
 
-    internal async Task<KnownForOutcome> Load(KnownForFile file, CancellationToken cancellationToken)
+    internal Task<KnownForOutcome> Load(KnownForFile file, CancellationToken cancellationToken) =>
+        Load(file, null, cancellationToken);
+
+    internal async Task<KnownForOutcome> Load(KnownForFile file, KnownForFile? approved, CancellationToken cancellationToken)
     {
         var started = Stopwatch.StartNew();
         var wanted = file.Records.ToDictionary(r => r.Slug, r => Clauses(r, file.Source), StringComparer.Ordinal);
+        foreach (var record in approved?.Records ?? [])
+        {
+            if (wanted.ContainsKey(record.Slug))
+            {
+                logger.LogWarning(
+                    "The review list approves what \"{Slug}\" is known for, and KnownFor.json already says it; the file's " +
+                    "clauses stand. Take the entry out of the list or the record out of the file", record.Slug);
+                continue;
+            }
+
+            wanted[record.Slug] = Clauses(record, approved!.Source);
+        }
+
         var slugs = wanted.Keys.ToList();
         var entities = await db.Entities
             .Where(e => slugs.Contains(e.Slug))

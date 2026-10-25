@@ -1,0 +1,25 @@
+{
+ "slug": "maacah-9",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.183402+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "не був вигнаний Ізраїлевими синами, і його народ жив серед Ізраїля",
+    "deu": "wurde von Israel nicht vertrieben, und sein Volk wohnte unter den Israeliten",
+    "spa": "no fue expulsada por los hijos de Israel, y su pueblo habitó entre los israelitas",
+    "why": "Ukrainian: 'сидів' became 'жив'. German: archaic 'Kindern Israel' modernized to 'Israel' and 'Israeliten'. Spanish: 'Israelitas' lowercased to 'israelitas'."
+   },
+   {
+    "ukr": "мав царя й тисячу чоловіків, яких найняли аммонітяни для бою",
+    "deu": "hatte seinen König und tausend Mann, die von Ammon für den Kampf angeworben wurden",
+    "spa": "tuvo a su rey y mil hombres que los hijos de Ammón tomaron a sueldo para la guerra",
+    "why": "Ukrainian: 'чоловіка' corrected to 'чоловіків'. German: archaic 'Kindern Ammon', 'zum Streit' and 'gedungen' replaced with modern wording, and 'einen König' changed to 'seinen König'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

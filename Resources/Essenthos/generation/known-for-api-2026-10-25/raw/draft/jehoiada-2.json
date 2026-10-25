@@ -1,0 +1,41 @@
+{
+ "slug": "jehoiada-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.474907+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Jehoiada's part in crowning Joash and overthrowing Athaliah, and of his work repairing the temple.",
+  "clauses": [
+   {
+    "english": "made a covenant with the captains and brought out the king's son, and they crowned and anointed him king",
+    "references": [
+     "2KI 11:4",
+     "2KI 11:12"
+    ],
+    "quote": "brought forth the king's son, and put the crown upon him"
+   },
+   {
+    "english": "made a covenant between the LORD, the king and the people that they should be the LORD's people",
+    "references": [
+     "2KI 11:17"
+    ],
+    "quote": "Jehoiada made a covenant between the LORD and the king and the people"
+   },
+   {
+    "english": "set a chest by the altar to collect money for repairing the house of the LORD",
+    "references": [
+     "2KI 12:9"
+    ],
+    "quote": "Jehoiada the priest took a chest, and bored a hole in the lid of it"
+   }
+  ],
+  "doubts": [
+   "2CH 24:20 and 24:22 concern Zechariah, Jehoiada's son, so they are left out.",
+   "Joash is named Jehoash in 2 Kings 12; the clauses avoid the name."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

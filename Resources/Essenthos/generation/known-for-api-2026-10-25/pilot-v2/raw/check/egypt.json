@@ -1,0 +1,36 @@
+{
+ "slug": "egypt",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:57:26.042855+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "lost all its firstborn when the LORD smote them at midnight",
+    "references": [
+     "EXO 12:29"
+    ],
+    "ukr": "втратив усіх перворідних, коли Господь вдарив їх опівночі",
+    "deu": "verlor alle seine Erstgeburt, als der HERR sie um Mitternacht schlug",
+    "spa": "perdió a todos sus primogénitos cuando el SEÑOR los hirió a la medianoche"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "saw its pursuing army overthrown by the LORD in the midst of the sea",
+    "references": [
+     "EXO 14:23-27"
+    ],
+    "ukr": "побачив, як Господь кинув його військо, що гналося, у середину моря",
+    "deu": "sah, wie der HERR sein verfolgendes Heer mitten ins Meer stürzte",
+    "spa": "vio al SEÑOR derribar a su ejército perseguidor en medio de la mar"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

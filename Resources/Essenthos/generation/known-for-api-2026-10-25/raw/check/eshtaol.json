@@ -1,0 +1,47 @@
+{
+ "slug": "eshtaol",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.741848+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse puts the camp of Dan between Zorah and Eshtaol; it does not say the Spirit moved Samson at Eshtaol itself.",
+    "english": "lay by the camp of Dan, where the Spirit of the LORD began to move Samson",
+    "references": [
+     "JDG 13:25"
+    ],
+    "ukr": "лежав біля Даново́го табору, де Дух Господній почав діяти в Самсоні",
+    "deu": "lag beim Lager Dan, wo der Geist des HERRN anfing, Simson zu treiben",
+    "spa": "estaba junto a los campamentos de Dan, donde el espíritu del SEÑOR comenzó a manifestarse en Samsón"
+   },
+   {
+    "verdict": "fix",
+    "why": "Samson was buried between Zorah and Eshtaol, not at Eshtaol itself.",
+    "english": "lay near the burying place of Manoah, where Samson was buried",
+    "references": [
+     "JDG 16:31"
+    ],
+    "ukr": "лежав поблизу гробу Маноаха, де був похований Самсон",
+    "deu": "lag nahe dem Grab Manoahs, wo Simson begraben wurde",
+    "spa": "estaba cerca del sepulcro de Manoa, donde Samsón fue sepultado"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse does not say they were seeking land; that purpose is not in the cited verse.",
+    "english": "was where six hundred armed Danites set out from",
+    "references": [
+     "JDG 18:11"
+    ],
+    "ukr": "був місцем, звідки рушили шістсот оперезаних зброєю чоловіків з Данового роду",
+    "deu": "war ein Ort, von dem sechshundert mit Waffen gerüstete Mann aus den Geschlechtern Dan auszogen",
+    "spa": "fue un lugar de donde partieron seiscientos hombres de Dan armados de armas de guerra"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

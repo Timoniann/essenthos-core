@@ -1,0 +1,25 @@
+{
+ "slug": "dan-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.262206+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був спалений як Лаїш Дановими синами, які оселилися в ньому й назвали його Даном",
+    "deu": "wurde als Lais von den Kindern Dan verbrannt, die darin wohnten und es Dan nannten",
+    "spa": "fue quemado como Lais por los hijos de Dan, que habitaron en él y lo llamaron Dan",
+    "why": "Ukrainian: put the name after «назвали» in the instrumental case (Даном)."
+   },
+   {
+    "ukr": "був місцем, де Єровоам поставив золотого тельця для поклоніння народу",
+    "deu": "war der Ort, an dem Jerobeam ein goldenes Kalb aufstellte, vor dem das Volk anbetete",
+    "spa": "fue el lugar donde Jeroboam puso un becerro de oro para que el pueblo lo adorara",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

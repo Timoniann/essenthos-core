@@ -1,0 +1,18 @@
+{
+ "slug": "rahab-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.808115+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "These poetic verses use Rahab as a figure for Egypt or a sea monster, or mention it in a list of nations, so they state no event of a place.",
+  "clauses": [],
+  "doubts": [
+   "Rahab here is a poetic name (for Egypt or a sea power), not the woman of Jericho, so a line would rest on figures of speech.",
+   "JOB 9:13, JOB 26:12 and ISA 30:7 are marked, but only JOB 9:13 and JOB 26:12 may allude to Rahab, and ISA 30:7 speaks of Egypt without naming Rahab in the verse."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

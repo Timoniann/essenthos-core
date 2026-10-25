@@ -1,0 +1,48 @@
+{
+ "slug": "abishai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.127987+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "went down with David by night to Saul's camp and was forbidden to strike the sleeping king",
+    "references": [
+     "1SA 26:6-9"
+    ],
+    "ukr": "зійшов із Давидом уночі до табору Саула, і йому заборонили вдарити сплячого царя",
+    "deu": "ging mit David bei Nacht hinab zu Sauls Lager und durfte den schlafenden König nicht erschlagen",
+    "spa": "descendió con David de noche al campo de Saúl, y se le prohibió herir al rey dormido"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "saved David by striking down the Philistine Ishbibenob",
+    "references": [
+     "2SA 21:16-17"
+    ],
+    "ukr": "врятував Давида, убивши филистимлянина Ішбі",
+    "deu": "rettete David, indem er den Philister Jesbi erschlug",
+    "spa": "salvó a David al herir de muerte al filisteo Isbi-benob"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "lifted up his spear against three hundred and slew them",
+    "references": [
+     "2SA 23:18",
+     "1CH 11:20"
+    ],
+    "ukr": "підняв свій спис проти трьохсот і побив їх",
+    "deu": "hob seinen Spieß auf gegen dreihundert und erschlug sie",
+    "spa": "alzó su lanza contra trescientos y los mató"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

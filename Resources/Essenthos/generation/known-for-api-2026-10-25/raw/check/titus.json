@@ -1,0 +1,59 @@
+{
+ "slug": "titus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.797928+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "comforted Paul by bringing news of the Corinthians' longing and zeal for him",
+    "references": [
+     "2CO 7:6-7"
+    ],
+    "ukr": "потішив Павла, розповівши про журбу коринтян і їхню горливість до нього",
+    "deu": "tröstete Paulus, indem er ihm von dem Verlangen und dem Eifer der Korinther um ihn berichtete",
+    "spa": "consoló a Pablo, haciéndole saber el deseo grande y el celo de los corintios por él"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verses do not mention a collection or the saints, and name no city, only 'you'.",
+    "english": "went to the Corinthians of his own accord to finish what he had begun among them",
+    "references": [
+     "2CO 8:6",
+     "2CO 8:17"
+    ],
+    "ukr": "удався до коринтян добровільно, щоб закінчити те, що розпочав у них",
+    "deu": "reiste von selber zu den Korinthern, um zu vollenden, was er bei ihnen angefangen hatte",
+    "spa": "partió de su voluntad hacia los corintios para acabar lo que había comenzado entre ellos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was not compelled to be circumcised, being a Greek",
+    "references": [
+     "GAL 2:3"
+    ],
+    "ukr": "не був змушений до обрізання, бувши греком",
+    "deu": "wurde nicht gezwungen, sich beschneiden zu lassen, obwohl er ein Grieche war",
+    "spa": "no fue compelido a circuncidarse, siendo griego"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was left in Crete to set things in order and ordain elders in every city",
+    "references": [
+     "TIT 1:5"
+    ],
+    "ukr": "був полишений у Кріті, щоб впорядкувати недокінчене та настановити пресвітерів по містах",
+    "deu": "wurde in Kreta zurückgelassen, um zu vollenden, was noch fehlte, und die Städte mit Ältesten zu besetzen",
+    "spa": "fue dejado en Creta para corregir lo que faltaba y poner ancianos por las villas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

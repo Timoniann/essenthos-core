@@ -1,0 +1,36 @@
+{
+ "slug": "shemaiah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.628800+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say 'they' hearkened and returned, not that an army went home; the message was to Rehoboam and Judah and Benjamin.",
+    "english": "told Rehoboam and Judah not to fight against Israel, and they obeyed",
+    "references": [
+     "1KI 12:22-24"
+    ],
+    "ukr": "сказав Рехав'амові та Юді не воювати з Ізраїлем, і вони послухалися",
+    "deu": "sagte Rehabeam und Juda, sie sollten nicht wider Israel streiten, und sie gehorchten",
+    "spa": "dijo a Roboam y a Judá que no pelearan contra Israel, y ellos obedecieron"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "told Rehoboam and the princes that the LORD had left them in the hand of Shishak",
+    "references": [
+     "2CH 12:5"
+    ],
+    "ukr": "сказав Рехав'амові та Юдиним зверхникам, що Господь залишив їх і видав у Шішакову руку",
+    "deu": "sagte Rehabeam und den Obersten Juda's, der HERR habe sie in Sisaks Hand verlassen",
+    "spa": "dijo a Roboam y a los príncipes de Judá que el SEÑOR los había dejado en manos de Sisac"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

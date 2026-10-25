@@ -1,0 +1,25 @@
+{
+ "slug": "valleyofjezreel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.396023+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де мідіяніти й амаликитяни таборували",
+    "deu": "war der Ort, wo die Midianiter und Amalekiter sich lagerten",
+    "spa": "fue donde los madianitas y amalecitas acamparon",
+    "why": "Spanish: lower-cased the peoples' names and replaced the archaic «asentaron campo» with «acamparon»."
+   },
+   {
+    "ukr": "була місцем, де Господь сказав, що зламає Ізраїлевого лука",
+    "deu": "war der Ort, an dem der HERR sagte, er werde den Bogen Israels zerbrechen",
+    "spa": "fue donde el SEÑOR dijo que quebraría el arco de Israel",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

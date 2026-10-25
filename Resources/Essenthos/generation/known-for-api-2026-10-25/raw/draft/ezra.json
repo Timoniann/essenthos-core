@@ -1,0 +1,40 @@
+{
+ "slug": "ezra",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.916597+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Ezra's coming to Jerusalem, his reading of the law to the people, and the oath to put away foreign wives.",
+  "clauses": [
+   {
+    "english": "came to Jerusalem in the seventh year of King Artaxerxes",
+    "references": [
+     "EZR 7:8"
+    ],
+    "quote": "he came to Jerusalem in the fifth month"
+   },
+   {
+    "english": "brought the law before the people and read it from morning until midday",
+    "references": [
+     "NEH 8:2-3"
+    ],
+    "quote": "he read therein before the street that was before the water gate"
+   },
+   {
+    "english": "made the priests, the Levites and all Israel swear to put away their foreign wives",
+    "references": [
+     "EZR 10:5"
+    ],
+    "quote": "made the chief priests, the Levites, and all Israel, to swear"
+   }
+  ],
+  "doubts": [
+   "NEH 12:1, 12:13, 12:26, 12:33 and 12:36 only list Ezra among priests and processions and were left out.",
+   "The putting away of the foreign wives is cited only to the oath in EZR 10:5, since the later verses describe the people's examination rather than Ezra's own act."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

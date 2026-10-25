@@ -1,0 +1,36 @@
+{
+ "slug": "dinah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.416644+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was defiled by Shechem the son of Hamor",
+    "references": [
+     "GEN 34:1-2"
+    ],
+    "ukr": "була збезчещена Сихемом, сином Гамора",
+    "deu": "wurde von Sichem, dem Sohn Hemors, entehrt",
+    "spa": "fue deshonrada por Sichêm, hijo de Hamor"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken out of Shechem's house after her brothers slew the males of the city",
+    "references": [
+     "GEN 34:25-26"
+    ],
+    "ukr": "була забрана з дому Сихемового після того, як її брати повбивали всіх чоловіків міста",
+    "deu": "wurde aus dem Hause Sichems geholt, nachdem ihre Brüder alles Männliche der Stadt erschlagen hatten",
+    "spa": "fue tomada de casa de Sichêm después de que sus hermanos mataron a todo varón de la ciudad"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

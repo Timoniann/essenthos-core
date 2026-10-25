@@ -1,0 +1,36 @@
+{
+ "slug": "noph",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.866384+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was foretold to become waste and desolate, without an inhabitant",
+    "references": [
+     "JER 46:19"
+    ],
+    "ukr": "була провіщена стати спустошенням, і в ній не буде мешканця",
+    "deu": "sollte wüst werden, sodass niemand darin wohnen wird",
+    "spa": "fue anunciada que sería yermo y asolada hasta no quedar morador"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was told its idols and images would be destroyed and made to cease",
+    "references": [
+     "EZK 30:13"
+    ],
+    "ukr": "їй було сказано, що її божків буде повигублювано і бовванам покладено кінець",
+    "deu": "wurde angekündigt, dass ihre Götzen ausgerottet und die Abgötter vertilgt würden",
+    "spa": "se le dijo que sus imágenes serían destruidas y sus ídolos cesarían"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

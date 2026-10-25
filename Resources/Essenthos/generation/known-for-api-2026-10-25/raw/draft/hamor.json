@@ -1,0 +1,35 @@
+{
+ "slug": "hamor",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.841486+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Hamor's plea to Jacob for Dinah and of his persuading his city to be circumcised, which adds to the summary.",
+  "clauses": [
+   {
+    "english": "asked Jacob's family to give Dinah to his son Shechem as wife",
+    "references": [
+     "GEN 34:6",
+     "GEN 34:8"
+    ],
+    "quote": "I pray you give her him to wife."
+   },
+   {
+    "english": "persuaded the men of his city to be circumcised",
+    "references": [
+     "GEN 34:20-24"
+    ],
+    "quote": "every male was circumcised"
+   }
+  ],
+  "doubts": [
+   "GEN 33:19 and the other mentions of the 'sons of Hamor' (JOS 24:32, ACT 7:16) name his sons or descendants as the sellers of the field, so I left them out.",
+   "JDG 9:28 only names Hamor as ancestor of the men of Shechem, so it was not used.",
+   "ACT 7:16 calls him Emmor and names Abraham as the buyer, which differs from GEN 33:19; I did not use it."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

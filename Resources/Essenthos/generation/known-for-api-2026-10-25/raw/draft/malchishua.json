@@ -1,0 +1,15 @@
+{
+ "slug": "malchishua",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.400874+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list him among Saul's sons and say he was slain by the Philistines with his brothers, which the summary already states (killed by Philistines).",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

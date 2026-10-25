@@ -1,0 +1,34 @@
+{
+ "slug": "corinth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.612248+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Paul's stay at Corinth, where many believed and the Jews brought him before Gallio, is the place's defining story and is stated in the verses given.",
+  "clauses": [
+   {
+    "english": "was where Paul taught for a year and six months, and many Corinthians believed and were baptized",
+    "references": [
+     "ACT 18:8",
+     "ACT 18:11"
+    ],
+    "quote": "many of the Corinthians hearing believed, and were baptized"
+   },
+   {
+    "english": "was where the Jews brought Paul before the judgment seat of Gallio, who would not judge the matter",
+    "references": [
+     "ACT 18:12-16"
+    ],
+    "quote": "the Jews made insurrection with one accord against Paul, and brought him to the judgment seat"
+   }
+  ],
+  "doubts": [
+   "ROM 16:27 and 2TI 4:20 only mention Corinth in a subscription and a passing note, so they were left out.",
+   "ACT 19:1 was left out because it only says where Apollos was."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

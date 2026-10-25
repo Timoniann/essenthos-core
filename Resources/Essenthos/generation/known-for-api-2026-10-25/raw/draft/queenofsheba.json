@@ -1,0 +1,33 @@
+{
+ "slug": "queenofsheba",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.817143+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of her visit to Solomon with hard questions and the gifts she gave him, which go beyond what the summary states.",
+  "clauses": [
+   {
+    "english": "came to Jerusalem to test Solomon with hard questions",
+    "references": [
+     "1KI 10:1-2"
+    ],
+    "quote": "she came to prove him with hard questions"
+   },
+   {
+    "english": "gave King Solomon gold, spices and precious stones",
+    "references": [
+     "1KI 10:10"
+    ],
+    "quote": "she gave the king an hundred and twenty talents of gold"
+   }
+  ],
+  "doubts": [
+   "MAT 12:42 and LUK 11:31 only speak of her coming to hear Solomon's wisdom and being raised in judgment; the judgment is a future saying, not an event, so I did not use it as a clause.",
+   "The summary already names her trip to Solomon only as a test (1KI 10:1), but the clause adds the journey to Jerusalem."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

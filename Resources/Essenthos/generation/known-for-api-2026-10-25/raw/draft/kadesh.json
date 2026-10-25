@@ -1,0 +1,40 @@
+{
+ "slug": "kadesh",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.069717+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several passages tell what happened at Kadesh: the spies' return, Miriam's death and the rebellion at Meribah.",
+  "clauses": [
+   {
+    "english": "was where the spies came back with word of the land",
+    "references": [
+     "NUM 13:26-28"
+    ],
+    "quote": "brought back word unto them, and unto all the congregation"
+   },
+   {
+    "english": "was where Miriam died and was buried",
+    "references": [
+     "NUM 20:1"
+    ],
+    "quote": "Miriam died there, and was buried there"
+   },
+   {
+    "english": "was where Moses and Aaron rebelled at the water of Meribah",
+    "references": [
+     "NUM 27:14"
+    ],
+    "quote": "the water of Meribah in Kadesh in the wilderness of Zin"
+   }
+  ],
+  "doubts": [
+   "Kadeshbarnea and Enmishpat are taken as the same place as Kadesh.",
+   "Verses that only give a border or a journey (GEN 14:7, NUM 34:4, JOS 15:3, EZK 47:19) were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

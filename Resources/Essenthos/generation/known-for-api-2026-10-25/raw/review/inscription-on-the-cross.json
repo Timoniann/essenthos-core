@@ -1,0 +1,31 @@
+{
+ "slug": "inscription-on-the-cross",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.089739+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був написаний Пилатом і вміщений на хресті: Ісус Назарянин, Цар Юдейський",
+    "deu": "wurde von Pilatus geschrieben und auf das Kreuz gesetzt: Jesus von Nazareth, der König der Juden",
+    "spa": "fue escrito por Pilato y puesto encima de la cruz: Jesús Nazareno, Rey de los judíos",
+    "why": "German: replaced Luther's old 'der Juden König' with modern 'der König der Juden'; Spanish: 'judíos' lowercased as in modern usage."
+   },
+   {
+    "ukr": "був написаний єврейською, грецькою та латинською мовами і прочитаний багатьма з юдеїв",
+    "deu": "wurde in hebräischer, griechischer und lateinischer Sprache geschrieben und von vielen Juden gelesen",
+    "spa": "fue escrito en hebreo, en griego y en latín, y fue leído por muchos de los judíos",
+    "why": "Ukrainian: made the reading passive ('прочитаний багатьма з юдеїв') instead of turning the clause round to a new subject; Spanish: 'judíos' lowercased."
+   },
+   {
+    "ukr": "залишився таким, як був написаний, коли Пилат відмовився змінити його на прохання первосвящеників",
+    "deu": "blieb, wie es geschrieben war, als Pilatus die Bitte der Hohenpriester ablehnte, es zu ändern",
+    "spa": "se mantuvo como estaba escrito cuando Pilato rechazó la petición de los pontífices de cambiarlo",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

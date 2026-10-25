@@ -1,0 +1,37 @@
+{
+ "slug": "joseph-8",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.698373+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "MRK 15:43-45 takes in far more than needed (Pilate's questioning of the centurion); MAT 27:58 and MRK 15:45 cover the request and the grant.",
+    "english": "begged Pilate for the body of Jesus and was given it",
+    "references": [
+     "MAT 27:58",
+     "MRK 15:45"
+    ],
+    "ukr": "просив у Пилата тіла Ісусового, і йому видали його",
+    "deu": "bat Pilatus um den Leib Jesu und bekam ihn",
+    "spa": "pidió a Pilato el cuerpo de Jesús y se le dio"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "wrapped the body of Jesus in linen and laid it in his own new tomb",
+    "references": [
+     "MAT 27:59-60"
+    ],
+    "ukr": "обгорнув тіло Ісусове чистою плащаницею і поклав його у своєму новому гробі",
+    "deu": "wickelte den Leib Jesu in eine reine Leinwand und legte ihn in sein eigenes neues Grab",
+    "spa": "envolvió el cuerpo de Jesús en una sábana limpia y lo puso en su sepulcro nuevo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,47 @@
+{
+ "slug": "josephs-tunic",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.574939+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was made by Israel for Joseph, whom he loved more than all his children",
+    "references": [
+     "GEN 37:3"
+    ],
+    "ukr": "було зроблене Ізраїлем для Йосипа, якого він любив більше за всіх своїх синів",
+    "deu": "wurde von Israel für Joseph gemacht, den er lieber hatte als alle seine Kinder",
+    "spa": "fue hecha por Israel para José, a quien amaba más que a todos sus hijos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was stripped from Joseph by his brothers",
+    "references": [
+     "GEN 37:23"
+    ],
+    "ukr": "було стягнене з Йосипа його братами",
+    "deu": "wurde Joseph von seinen Brüdern ausgezogen",
+    "spa": "fue quitada a José por sus hermanos"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say Jacob took it as proof; they say he knew it as his son's and spoke of a beast, and Jacob is named only in verse 34.",
+    "english": "was dipped in goat's blood and brought to Joseph's father, who knew it as his son's",
+    "references": [
+     "GEN 37:31-33"
+    ],
+    "ukr": "було вмочене в кров козла і принесене батькові Йосипа, який пізнав його як вбрання свого сина",
+    "deu": "wurde in das Blut eines Ziegenbocks getaucht und dem Vater Josephs gebracht, der ihn als den Rock seines Sohnes erkannte",
+    "spa": "fue teñida con la sangre de un cabrito y llevada al padre de José, quien la reconoció como la ropa de su hijo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

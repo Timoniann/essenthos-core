@@ -1,0 +1,48 @@
+{
+ "slug": "baruch-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.251679+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "wrote Jeremiah's words on a roll and read them to the people in the house of the LORD",
+    "references": [
+     "JER 36:4",
+     "JER 36:8-10"
+    ],
+    "ukr": "написав слова Єремії на звої та прочитав їх народові в домі Господньому",
+    "deu": "schrieb die Reden Jeremias in ein Buch und las sie vor dem ganzen Volk im Hause des HERRN",
+    "spa": "escribió las palabras de Jeremías en un rollo y las leyó al pueblo en la casa del SEÑOR"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 26 does not name Jehoiakim or say the roll was already burned, and it says the king commanded men to take Baruch, not that he sought him.",
+    "english": "was to be taken by the king's command, but the LORD hid him",
+    "references": [
+     "JER 36:26"
+    ],
+    "ukr": "мав бути схоплений за наказом царя, та Господь його сховав",
+    "deu": "sollte auf Befehl des Königs ergriffen werden, aber der HERR verbarg ihn",
+    "spa": "debía ser preso por orden del rey, mas el SEÑOR lo escondió"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "wrote the words again on another roll after Jehoiakim burned the first",
+    "references": [
+     "JER 36:32"
+    ],
+    "ukr": "знову написав ті слова на іншому звої після того, як Єгояким спалив перший",
+    "deu": "schrieb die Reden noch einmal in ein anderes Buch, nachdem Jojakim das erste hatte verbrennen lassen",
+    "spa": "escribió de nuevo las palabras en otro rollo, después de que Joacim quemó el primero"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

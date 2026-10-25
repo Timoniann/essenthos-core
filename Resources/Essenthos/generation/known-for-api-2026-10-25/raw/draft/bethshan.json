@@ -1,0 +1,35 @@
+{
+ "slug": "bethshan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.839842+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Beth-shan has two events of its own in the verses: Manasseh's failure to drive out its inhabitants, and Saul's body being fastened to its wall.",
+  "clauses": [
+   {
+    "english": "was where the Philistines fastened the body of Saul to the wall",
+    "references": [
+     "1SA 31:10",
+     "1SA 31:12"
+    ],
+    "quote": "they fastened his body to the wall of Bethshan"
+   },
+   {
+    "english": "was not cleared of its Canaanite inhabitants by Manasseh",
+    "references": [
+     "JDG 1:27"
+    ],
+    "quote": "Neither did Manasseh drive out the inhabitants of Bethshean and her towns"
+   }
+  ],
+  "doubts": [
+   "JOS 17:11 and 1CH 7:29 only list it among Manasseh's towns, so they were not cited.",
+   "JOS 17:16 mentions iron chariots of its Canaanites only as a remark of the children of Joseph, so it was left out.",
+   "2SA 21:12 repeats the hanging of Saul's body but was not cited, to keep the clause narrow."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

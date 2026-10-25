@@ -1,0 +1,41 @@
+{
+ "slug": "baruch-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.913086+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Baruch writing and reading Jeremiah's words, and of the burned roll he wrote again.",
+  "clauses": [
+   {
+    "english": "wrote Jeremiah's words on a roll and read them to the people in the house of the LORD",
+    "references": [
+     "JER 36:4",
+     "JER 36:8-10"
+    ],
+    "quote": "Baruch wrote from the mouth of Jeremiah all the words of the LORD"
+   },
+   {
+    "english": "was sought by King Jehoiakim after the roll was burned, but the LORD hid him",
+    "references": [
+     "JER 36:26"
+    ],
+    "quote": "but the LORD hid them"
+   },
+   {
+    "english": "wrote the words again on another roll after Jehoiakim burned the first",
+    "references": [
+     "JER 36:32"
+    ],
+    "quote": "Then took Jeremiah another roll, and gave it to Baruch the scribe"
+   }
+  ],
+  "doubts": [
+   "JER 32:12-16 (the deed of purchase given to Baruch) is left out as a minor detail, and the clause on reading the roll stands as a single event.",
+   "JER 43:3 and 43:6 (accused of inciting Jeremiah, taken to Egypt) are left out as accusations and journey stages; JER 45 only tells what the LORD said to him."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "shem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.800150+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse does not say the entry came before the Flood.",
+    "english": "entered the ark with Noah and his family",
+    "references": [
+     "GEN 7:13"
+    ],
+    "ukr": "ввійшов до ковчегу з Ноєм і його родиною",
+    "deu": "ging mit Noah und seiner Familie in den Kasten",
+    "spa": "entró en el arca con Noé y su familia"
+   },
+   {
+    "verdict": "fix",
+    "why": "Shem acted with Japheth; 'drunken' is outside the citation and the manner of walking backward is a minor detail.",
+    "english": "took a garment with Japheth and covered their father's nakedness",
+    "references": [
+     "GEN 9:23"
+    ],
+    "ukr": "взяв з Яфетом одежину і прикрив наготу їхнього батька",
+    "deu": "nahm mit Japheth ein Kleid und deckte die Blöße ihres Vaters zu",
+    "spa": "tomó con Japhet la ropa y cubrió la desnudez de su padre"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

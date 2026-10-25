@@ -1,0 +1,40 @@
+{
+ "slug": "nebuchadnezzars-image",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.151479+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was done with the image: it was set up and all the people were commanded to worship it, and the refusal of Shadrach, Meshach and Abednego to worship it is part of its story.",
+  "clauses": [
+   {
+    "english": "was set up by Nebuchadnezzar in the plain of Dura",
+    "references": [
+     "DAN 3:1-3"
+    ],
+    "quote": "he set it up in the plain of Dura, in the province of Babylon."
+   },
+   {
+    "english": "was worshipped by all the people at the sound of the music",
+    "references": [
+     "DAN 3:5-7"
+    ],
+    "quote": "all the people, the nations, and the languages, fell down and worshipped the golden image"
+   },
+   {
+    "english": "was refused worship by Shadrach, Meshach and Abednego, who would not worship it",
+    "references": [
+     "DAN 3:12-18"
+    ],
+    "quote": "we will not serve thy gods, nor worship the golden image which thou hast set up."
+   }
+  ],
+  "doubts": [
+   "The summary already names the setting up in Dura, so the first clause may partly restate it.",
+   "The third clause leans on the men's refusal, which could be seen as the story of the men rather than of the image."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

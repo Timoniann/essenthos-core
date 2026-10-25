@@ -1,0 +1,31 @@
+{
+ "slug": "micahs-image",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.132002+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був зроблений ливарем зі срібла, яке мати Михи присвятила Господеві",
+    "deu": "wurde von einem Gießer aus Silber gemacht, das Michas Mutter dem HERRN geheiligt hatte",
+    "spa": "fue hecha por un fundidor con plata que la madre de Michâs había dedicado al SEÑOR",
+    "why": "English says 'founder', so 'золотарем' and 'Goldschmied' (goldsmith) became 'ливарем' and 'Gießer'."
+   },
+   {
+    "ukr": "був узятий данітами з Михиного дому",
+    "deu": "wurde von den Danitern aus dem Haus Michas genommen",
+    "spa": "fue tomada por los danitas de la casa de Michâs",
+    "why": "English says 'Danites', so 'Дановими синами' became 'данітами' and 'los hijos de Dan' became 'los danitas'."
+   },
+   {
+    "ukr": "був поставлений Дановими синами",
+    "deu": "wurde von den Kindern Dan aufgerichtet",
+    "spa": "fue levantada por los hijos de Dan",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

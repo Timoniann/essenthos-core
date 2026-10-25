@@ -1,0 +1,19 @@
+{
+ "slug": "shamgar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:58:29.278347+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "побив шістсот филистимлян києм на худобу і урятував Ізраїля",
+    "deu": "schlug sechshundert Philister mit einem Ochsenstecken und erlöste Israel",
+    "spa": "hirió a seiscientos hombres de los filisteos con una aguijada de bueyes y salvó a Israel",
+    "why": "Spanish: «Filisteos» is lower-cased to «filisteos» as modern usage requires."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,37 @@
+{
+ "slug": "samaria-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.853747+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The citation takes in the long passage about Simon; only verses 5-6 and 12 are needed.",
+    "english": "heard Philip preach Christ and believed and was baptized",
+    "references": [
+     "ACT 8:5-6",
+     "ACT 8:12"
+    ],
+    "ukr": "слухала проповідь Пилипа про Христа, увірувала й охристилася",
+    "deu": "hörte Philippus von Christus predigen, glaubte und ließ sich taufen",
+    "spa": "escuchó a Felipe predicar a Cristo, creyó y fue bautizada"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say Samaria received Peter and John; they say the apostles sent them after Samaria received the word.",
+    "english": "received the word of God, and the apostles at Jerusalem sent Peter and John to it",
+    "references": [
+     "ACT 8:14"
+    ],
+    "ukr": "прийняла Боже Слово, і до неї апостоли з Єрусалима послали Петра та Івана",
+    "deu": "nahm das Wort Gottes an, und die Apostel in Jerusalem sandten Petrus und Johannes zu ihr",
+    "spa": "recibió la palabra de Dios, y los apóstoles que estaban en Jerusalem le enviaron a Pedro y a Juan"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,30 @@
+{
+ "slug": "nathanael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.285295+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Nathanael being brought to Jesus and confessing him as the Son of God, which goes beyond the summary.",
+  "clauses": [
+   {
+    "english": "was brought to Jesus by Philip, who told him they had found the one Moses wrote of",
+    "references": [
+     "JHN 1:45-46"
+    ],
+    "quote": "Philip findeth Nathanael, and saith unto him, We have found him"
+   },
+   {
+    "english": "confessed Jesus as the Son of God and King of Israel after Jesus said he had seen him under the fig tree",
+    "references": [
+     "JHN 1:47-49"
+    ],
+    "quote": "Rabbi, thou art the Son of God; thou art the King of Israel."
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

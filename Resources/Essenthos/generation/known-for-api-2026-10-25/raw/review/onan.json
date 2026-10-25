@@ -1,0 +1,19 @@
+{
+ "slug": "onan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.530460+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "марнував своє насіння на землю, щоб не дати насіння своєму братові",
+    "deu": "ließ seinen Samen auf die Erde fallen, um seinem Bruder keinen Samen zu geben",
+    "spa": "vertía su simiente en tierra por no dar simiente a su hermano",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

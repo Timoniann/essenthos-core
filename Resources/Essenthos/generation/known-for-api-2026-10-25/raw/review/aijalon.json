@@ -1,0 +1,31 @@
+{
+ "slug": "aijalon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.340509+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був даний разом з його пасовиськами Кегатовим синам",
+    "deu": "wurde mit seinen Vorstädten den Kindern Kahaths gegeben",
+    "spa": "fue dado con sus ejidos a los hijos de Coath",
+    "why": "Ukrainian: added the missing «його» for «its» suburbs."
+   },
+   {
+    "ukr": "був місцем, де закінчилося побиття филистимлян, що почалося від Міхмашу",
+    "deu": "war der Ort, wo das Schlagen der Philister, das bei Michmas begann, endete",
+    "spa": "fue donde terminó la matanza de los filisteos que comenzó en Michmas",
+    "why": "Spanish: modern lower-case «filisteos» instead of «Filisteos»."
+   },
+   {
+    "ukr": "був захоплений филистимлянами, які осіли там",
+    "deu": "wurde von den Philistern eingenommen, die dort wohnten",
+    "spa": "fue tomado por los filisteos, que habitaban allí",
+    "why": "Ukrainian: «осіли» replaces the old form «осілися»; Spanish: lower-case «filisteos»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,40 @@
+{
+ "slug": "inscription-on-the-cross",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.659041+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state what was written on the cross and that Pilate wrote it and refused to change it, which are the chief things the object is known for.",
+  "clauses": [
+   {
+    "english": "was written by Pilate and put on the cross over Jesus: the King of the Jews",
+    "references": [
+     "JHN 19:19"
+    ],
+    "quote": "And Pilate wrote a title, and put it on the cross."
+   },
+   {
+    "english": "was written in Hebrew, Greek and Latin, and read by many of the Jews",
+    "references": [
+     "JHN 19:20",
+     "LUK 23:38"
+    ],
+    "quote": "it was written in Hebrew, and Greek, and Latin."
+   },
+   {
+    "english": "was kept as written when Pilate refused the chief priests' request to change it",
+    "references": [
+     "JHN 19:21-22"
+    ],
+    "quote": "What I have written I have written."
+   }
+  ],
+  "doubts": [
+   "The Matthew and Mark verses give differing wordings of the inscription; only the John wording is used for the first clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

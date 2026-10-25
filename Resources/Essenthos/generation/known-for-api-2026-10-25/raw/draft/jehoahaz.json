@@ -1,0 +1,33 @@
+{
+ "slug": "jehoahaz",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.506399+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give Jehoahaz a few distinct deeds and experiences beyond the summary: his evil reign, his prayer to the LORD, and the destruction of his army by Syria.",
+  "clauses": [
+   {
+    "english": "besought the LORD, and the LORD hearkened to him because of Syria's oppression of Israel",
+    "references": [
+     "2KI 13:4"
+    ],
+    "quote": "Jehoahaz besought the LORD, and the LORD hearkened unto him"
+   },
+   {
+    "english": "was left with only fifty horsemen, ten chariots and ten thousand footmen after Syria destroyed his army",
+    "references": [
+     "2KI 13:7"
+    ],
+    "quote": "Neither did he leave of the people to Jehoahaz but fifty horsemen, and ten chariots, and ten thousand footmen"
+   }
+  ],
+  "doubts": [
+   "2KI 13:3 and 13:22 say Israel was oppressed by Hazael all his days, but this is not a separate clause; kept only the army's destruction.",
+   "Verses naming Jehoash/Joash son of Jehoahaz (2KI 13:10, 13:25, 14:1, 14:8, 14:17, 2CH 25:17, 23, 25) concern his son, not him, and were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "aquila",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.244169+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прийняв Аполлоса разом з Прискиллою і докладніше розповів йому про дорогу Божу",
+    "deu": "nahm Apollos mit Priscilla zu sich und legte ihm den Weg Gottes noch genauer aus",
+    "spa": "tomó a Apolos con Priscila y le explicó con más exactitud el camino de Dios",
+    "why": "Ukrainian: «Господню» became «Божу», since the English says God, not the Lord. German: archaic «fleißiger» became «genauer». Spanish: archaic «declaró más particularmente» became «explicó con más exactitud»."
+   },
+   {
+    "ukr": "підставили свої шиї за життя Павла разом з Прискиллою",
+    "deu": "gaben ihren Hals für das Leben des Paulus dahin, zusammen mit Priscilla",
+    "spa": "pusieron sus cuellos por la vida de Pablo, con Priscila",
+    "why": "Ukrainian: «голови» (heads) became «шиї» (necks) to match the English, in natural phrasing."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

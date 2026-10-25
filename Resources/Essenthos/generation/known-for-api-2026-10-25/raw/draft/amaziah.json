@@ -1,0 +1,42 @@
+{
+ "slug": "amaziah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.134461+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Amaziah's victory over Edom, his defeat by Israel's king, and his death by conspiracy, beyond the summary's relation and office.",
+  "clauses": [
+   {
+    "english": "defeated ten thousand of the children of Seir in the valley of salt",
+    "references": [
+     "2CH 25:11"
+    ],
+    "quote": "smote of the children of Seir ten thousand"
+   },
+   {
+    "english": "was taken captive by Jehoash of Israel at Bethshemesh, and Jerusalem's wall was broken down",
+    "references": [
+     "2KI 14:11-13"
+    ],
+    "quote": "Jehoash king of Israel took Amaziah king of Judah"
+   },
+   {
+    "english": "fled to Lachish after a conspiracy in Jerusalem and was slain there",
+    "references": [
+     "2KI 14:19",
+     "2CH 25:27"
+    ],
+    "quote": "they sent after him to Lachish, and slew him there"
+   }
+  ],
+  "doubts": [
+   "2KI 14:7 and 2CH 25:12 on Edom were not marked, so only the marked 2CH 25:11 is cited for the victory.",
+   "Marked verses 2KI 13:12, 2KI 14:15, 2KI 14:21, 2KI 15:1, 2KI 15:3 and 2CH 26:1 mention him only in passing, and 1CH 3:12 only in a genealogy.",
+   "2KI 14:19 is not marked but states the conspiracy and death, and 2CH 25:27 is the marked parallel."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

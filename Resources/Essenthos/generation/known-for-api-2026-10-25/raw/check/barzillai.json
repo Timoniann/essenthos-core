@@ -1,0 +1,36 @@
+{
+ "slug": "barzillai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.597171+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say David was fleeing from Absalom, and 2SA 19:32 is not needed for what was brought.",
+    "english": "brought beds and food to David and his people at Mahanaim",
+    "references": [
+     "2SA 17:27-29"
+    ],
+    "ukr": "приніс постелі та їжу Давидові та його людям у Маханаїмі",
+    "deu": "brachte David und dem Volk, das bei ihm war, Bettzeug und Speise nach Mahanaim",
+    "spa": "trajo camas y alimentos a David y al pueblo que estaba con él en Mahanaim"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "escorted David over the Jordan, declined to go with him to Jerusalem, and was blessed by the king",
+    "references": [
+     "2SA 19:31-39"
+    ],
+    "ukr": "провів Давида за Йордан, відмовився йти з ним до Єрусалиму і був поблагословлений царем",
+    "deu": "geleitete David über den Jordan, lehnte es ab, mit ihm nach Jerusalem zu ziehen, und wurde vom König gesegnet",
+    "spa": "acompañó a David al otro lado del Jordán, no quiso ir con él a Jerusalem y fue bendecido por el rey"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

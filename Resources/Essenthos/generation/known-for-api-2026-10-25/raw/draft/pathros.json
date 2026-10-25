@@ -1,0 +1,26 @@
+{
+ "slug": "pathros",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.756245+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Only one verse says something particular about Pathros itself: the LORD's declared judgment of desolation; the rest only list it among places.",
+  "clauses": [
+   {
+    "english": "was declared by the LORD to be made desolate",
+    "references": [
+     "EZK 30:14"
+    ],
+    "quote": "I will make Pathros desolate"
+   }
+  ],
+  "doubts": [
+   "The desolation is a prophecy of judgment, not a narrated event.",
+   "ISA 11:11, JER 44:1 and JER 44:15 only list Pathros or say where people lived, and EZK 29:14 (the Egyptians' return) is left out as a second, prophesied event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,19 @@
+{
+ "slug": "caesaraugustus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.292715+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "видав наказ переписати всю землю",
+    "deu": "erließ ein Gebot, dass alle Welt geschätzt würde",
+    "spa": "emitió un edicto para que toda la tierra fuese empadronada",
+    "why": "German: replaced old spelling «daß» with modern «dass»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

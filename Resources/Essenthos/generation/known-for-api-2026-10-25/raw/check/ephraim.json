@@ -1,0 +1,36 @@
+{
+ "slug": "ephraim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.987064+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses call the blesser Israel, not Jacob, and the citation takes in verses it does not need.",
+    "english": "was blessed by Israel, who set him before Manasseh",
+    "references": [
+     "GEN 48:14-20"
+    ],
+    "ukr": "був поблагословлений Ізраїлем, який поставив його перед Манасією",
+    "deu": "wurde von Israel gesegnet, der ihn Manasse vorsetzte",
+    "spa": "fue bendecido por Israel, quien lo puso delante de Manasés"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "mourned many days for his sons slain by the men of Gath",
+    "references": [
+     "1CH 7:21-22"
+    ],
+    "ukr": "багато днів оплакував своїх синів, убитих людьми Ґату",
+    "deu": "trug lange Zeit Leid um seine Söhne, die von den Männern zu Gath getötet worden waren",
+    "spa": "hizo duelo por muchos días por sus hijos, muertos por los naturales de Gath"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

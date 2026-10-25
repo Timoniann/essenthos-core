@@ -1,0 +1,47 @@
+{
+ "slug": "mary",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.260302+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was told by the angel Gabriel that she would conceive and bear a son, and accepted it",
+    "references": [
+     "LUK 1:26-38"
+    ],
+    "ukr": "почула від Ангола Гавриїла, що зачне в утробі й породить Сина, і прийняла це",
+    "deu": "erfuhr vom Engel Gabriel, dass sie schwanger werden und einen Sohn gebären werde, und nahm es an",
+    "spa": "fue informada por el ángel Gabriel de que concebiría y pariría un hijo, y lo aceptó"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was found with child of the Holy Ghost before she and Joseph came together",
+    "references": [
+     "MAT 1:18"
+    ],
+    "ukr": "виявилася вагітною від Духа Святого, перш ніж вона й Йосип зійшлися",
+    "deu": "erwies sich als schwanger von dem heiligen Geist, ehe sie und Joseph zusammenkamen",
+    "spa": "se halló haber concebido del Espíritu Santo antes que ella y José se juntasen"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "bore her firstborn son and laid him in a manger in Bethlehem",
+    "references": [
+     "LUK 2:4-7"
+    ],
+    "ukr": "породила свого первенця Сина і поклала Його до ясел у Віфлеємі",
+    "deu": "gebar ihren ersten Sohn und legte ihn in eine Krippe in Bethlehem",
+    "spa": "parió a su hijo primogénito y lo acostó en un pesebre en Bethlehem"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

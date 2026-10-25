@@ -1,0 +1,34 @@
+{
+ "slug": "rameses",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.345813+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Rameses as a city the Israelites built for Pharaoh and as the place they set out from at the Exodus.",
+  "clauses": [
+   {
+    "english": "was built by the Israelites as a treasure city for Pharaoh",
+    "references": [
+     "EXO 1:11"
+    ],
+    "quote": "they built for Pharaoh treasure cities, Pithom and Raamses."
+   },
+   {
+    "english": "was where the Israelites set out from when they left Egypt",
+    "references": [
+     "EXO 12:37",
+     "NUM 33:3"
+    ],
+    "quote": "they departed from Rameses in the first month"
+   }
+  ],
+  "doubts": [
+   "EXO 1:11 spells the name Raamses; taken as the same place as Rameses.",
+   "GEN 47:11 (land of Rameses) left out because the summary already covers it."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

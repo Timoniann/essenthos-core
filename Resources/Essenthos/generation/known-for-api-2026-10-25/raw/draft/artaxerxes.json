@@ -1,0 +1,35 @@
+{
+ "slug": "artaxerxes",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.280510+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state two chief deeds of Artaxerxes: his letter that stopped the Jerusalem work, and his decree sending Ezra with royal support.",
+  "clauses": [
+   {
+    "english": "sent a letter that made the building of Jerusalem cease",
+    "references": [
+     "EZR 4:21-23"
+    ],
+    "quote": "made them to cease by force and power"
+   },
+   {
+    "english": "gave Ezra a decree to go up to Jerusalem, with silver and supplies from the king's treasury",
+    "references": [
+     "EZR 7:11-13",
+     "EZR 7:21-22"
+    ],
+    "quote": "I make a decree, that all they of the people of Israel"
+   }
+  ],
+  "doubts": [
+   "EZR 4:7 and 4:11 only mention letters written to him, so they are not cited.",
+   "EZR 4:21-22 sits in a gap between shown verses, and its speaker is inferred from 4:23 naming Artaxerxes' letter.",
+   "The Nehemiah verses (2:1, 5:14, 13:6) only date events by his reign, and the cupbearer scene's outcome is not given, so I left them out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

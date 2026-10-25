@@ -1,0 +1,31 @@
+{
+ "slug": "anathoth-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.814157+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був даний разом із пасовиськами священикам, синам Аарона",
+    "deu": "wurde mit seinen Vorstädten den Priestern, den Kindern Aarons, gegeben",
+    "spa": "fue dado con sus ejidos a los sacerdotes, hijos de Aarón",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, куди Соломон послав священика Евіятара на свої поля",
+    "deu": "war der Ort, wohin Salomo den Priester Abjathar zu seinem Acker schickte",
+    "spa": "fue el lugar adonde Salomón envió al sacerdote Abiathar a sus heredades",
+    "why": "Ukrainian: 'на його поля' could mean Solomon's fields, so it now reads 'на свої поля' (Abiathar's own)."
+   },
+   {
+    "ukr": "був місцем, де Єремія купив поле Ганамеїла, сина свого дядька",
+    "deu": "war der Ort, wo Jeremia den Acker Hanameels, des Sohnes seines Onkels, kaufte",
+    "spa": "fue el lugar donde Jeremías compró la heredad de Hanameel, hijo de su tío",
+    "why": "German: replaced the old word 'Oheims' with modern 'Onkels'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

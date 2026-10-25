@@ -1,0 +1,36 @@
+{
+ "slug": "hazor",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.562466+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken and burned with fire by Joshua, and its king killed",
+    "references": [
+     "JOS 11:10-11"
+    ],
+    "ukr": "був здобутий Ісусом і спалений вогнем, а його царя вбито",
+    "deu": "wurde von Josua eingenommen und mit Feuer verbrannt, und sein König wurde erschlagen",
+    "spa": "fue tomada por Josué y quemada al fuego, y su rey fue muerto"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says Tiglathpileser took Hazor; that its people were carried captive is not stated, since \"them\" is ambiguous.",
+    "english": "was taken by Tiglathpileser king of Assyria",
+    "references": [
+     "2KI 15:29"
+    ],
+    "ukr": "був узятий Тіґлат-Піл'есером, царем асирійським",
+    "deu": "wurde von Thiglath-Pileser, dem König von Assyrien, genommen",
+    "spa": "fue tomada por Tiglath-pileser, rey de los asirios"
+   }
+  ],
+  "note": "The line leaves out that Hazor had been the head of all the kingdoms around it (JOS 11:10)."
+ },
+ "problems": [],
+ "attempts": []
+}

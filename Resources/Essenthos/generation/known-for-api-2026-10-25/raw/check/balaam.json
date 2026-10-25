@@ -1,0 +1,48 @@
+{
+ "slug": "balaam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.079247+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Balak and Israel are named only in verses just before the citation (22:3-4), and 24:10 adds nothing the others do not already say.",
+    "english": "was sent for by Balak to curse Israel, but blessed them instead",
+    "references": [
+     "NUM 22:3-6",
+     "NUM 23:11"
+    ],
+    "ukr": "був покликаний Балаком, щоб проклясти Ізраїля, але натомість поблагословив його",
+    "deu": "wurde von Balak geholt, um Israel zu verfluchen, segnete es aber stattdessen",
+    "spa": "fue llamado por Balac para maldecir a Israel, pero en cambio lo bendijo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The angel's rebuke is in 22:32, just outside the citation, so the citation must reach that verse.",
+    "english": "was rebuked by the angel of the LORD after his ass spoke to him",
+    "references": [
+     "NUM 22:28-32"
+    ],
+    "ukr": "отримав докір від Ангола Господнього після того, як до нього заговорила ослиця",
+    "deu": "wurde vom Engel des HERRN getadelt, nachdem seine Eselin zu ihm gesprochen hatte",
+    "spa": "fue reprendido por el ángel del SEÑOR después de que su asna le habló"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was slain with the sword among the Midianites",
+    "references": [
+     "NUM 31:8"
+    ],
+    "ukr": "був забитий мечем серед мідіянців",
+    "deu": "wurde unter den Midianitern mit dem Schwert getötet",
+    "spa": "fue muerto a cuchillo entre los madianitas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

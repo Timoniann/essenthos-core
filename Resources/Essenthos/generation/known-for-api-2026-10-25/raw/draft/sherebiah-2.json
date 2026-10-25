@@ -1,0 +1,47 @@
+{
+ "slug": "sherebiah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.431689+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give Sherebiah a few distinct events: being brought to Ezra, being set apart to guard the offering, helping the people understand the law, and leading the Levites in worship.",
+  "clauses": [
+   {
+    "english": "was brought to Ezra as a man of understanding to serve at the house of God",
+    "references": [
+     "EZR 8:18"
+    ],
+    "quote": "they brought us a man of understanding, of the sons of Mahli"
+   },
+   {
+    "english": "was set apart as one of twelve chief priests to receive the silver, gold and vessels",
+    "references": [
+     "EZR 8:24-26"
+    ],
+    "quote": "Then I separated twelve of the chief of the priests, Sherebiah, Hashabiah"
+   },
+   {
+    "english": "helped cause the people to understand the law as it was read",
+    "references": [
+     "NEH 8:7"
+    ],
+    "quote": "caused the people to understand the law"
+   },
+   {
+    "english": "stood on the stairs of the Levites and cried to the LORD, then called the people to bless him",
+    "references": [
+     "NEH 9:4-5"
+    ],
+    "quote": "cried with a loud voice unto the LORD their God"
+   }
+  ],
+  "doubts": [
+   "EZR 8:24 calls the twelve chief of the priests, though Sherebiah is elsewhere a Levite; kept as the verse words it.",
+   "NEH 10:12, NEH 12:8 and NEH 12:24 only list his name and were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

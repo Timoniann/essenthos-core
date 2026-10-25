@@ -1,0 +1,31 @@
+{
+ "slug": "rebekah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.443266+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "напоїла слугу Авраама та його верблюдів біля джерела й пішла, щоб стати дружиною Ісака",
+    "deu": "tränkte Abrahams Diener und seine Kamele am Brunnen und zog hin, um Isaaks Frau zu werden",
+    "spa": "dio de beber al criado de Abraham y a sus camellos en la fuente, y fue para ser mujer de Isaac",
+    "why": "Replaced the old wording «раба Авраамового», «жінкою» with «слугу Авраама», «дружиною», and «Knecht», «Weib» with «Diener», «Frau»."
+   },
+   {
+    "ukr": "завагітніла близнюками, будучи неплідною, після молитви Ісака до Господа",
+    "deu": "wurde schwanger mit Zwillingen, nachdem Isaak den HERRN gebeten hatte, denn sie war unfruchtbar",
+    "spa": "concibió mellizos después de que Isaac oró al SEÑOR, pues era estéril",
+    "why": ""
+   },
+   {
+    "ukr": "одягла Якова в одяг Ісава й поклала шкури козлят на його руки та шию",
+    "deu": "zog Jakob die Kleider Esaus an und legte ihm Felle von Böcklein um Hände und Hals",
+    "spa": "vistió a Jacob con los vestidos de Esaú y le puso pieles de cabritos sobre las manos y el cuello",
+    "why": "Ukrainian «наділила шкури» (endowed) was the wrong verb; changed to «поклала»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

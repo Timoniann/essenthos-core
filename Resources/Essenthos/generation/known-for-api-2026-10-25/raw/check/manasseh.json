@@ -1,0 +1,36 @@
+{
+ "slug": "manasseh",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.880690+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says the two sons are 'mine' like Reuben and Simeon; 'taken' and 'son' go beyond it.",
+    "english": "was claimed by Jacob as his own, like Reuben and Simeon",
+    "references": [
+     "GEN 48:5"
+    ],
+    "ukr": "був визнаний Яковом своїм, як Рувим і Симеон",
+    "deu": "wurde von Jakob als sein Eigen beansprucht, wie Ruben und Simeon",
+    "spa": "fue reclamado por Jacob como suyo, como Rubén y Simeón"
+   },
+   {
+    "verdict": "fix",
+    "why": "The blessing and Ephraim's precedence are in verses 19-20; 13-20 takes in far more than needed.",
+    "english": "was blessed by Jacob, who set his younger brother Ephraim before him",
+    "references": [
+     "GEN 48:19-20"
+    ],
+    "ukr": "був поблагословлений Яковом, який поставив його молодшого брата Єфрема перед ним",
+    "deu": "wurde von Jakob gesegnet, der seinen jüngeren Bruder Ephraim ihm voransetzte",
+    "spa": "fue bendecido por Jacob, quien puso delante de él a su hermano menor Ephraim"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

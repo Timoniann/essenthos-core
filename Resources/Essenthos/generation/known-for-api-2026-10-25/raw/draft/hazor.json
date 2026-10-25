@@ -1,0 +1,34 @@
+{
+ "slug": "hazor",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.606431+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Hazor has defining events: it was taken and burned by Joshua, and later taken by Tiglathpileser.",
+  "clauses": [
+   {
+    "english": "was taken and burned with fire by Joshua, and its king killed",
+    "references": [
+     "JOS 11:10-11"
+    ],
+    "quote": "he burnt Hazor with fire"
+   },
+   {
+    "english": "was taken by Tiglathpileser king of Assyria, and its people carried captive to Assyria",
+    "references": [
+     "2KI 15:29"
+    ],
+    "quote": "took Ijon, and Abelbethmaachah, and Janoah, and Kedesh, and Hazor"
+   }
+  ],
+  "doubts": [
+   "JOS 12:19 and JOS 19:36 only list Hazor, so they were not used.",
+   "1KI 9:15 (Solomon's levy to build Hazor) was left out as a minor detail.",
+   "JDG 4:2 and 1SA 12:9 name Hazor only through Jabin and Sisera, which the summary already covers."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

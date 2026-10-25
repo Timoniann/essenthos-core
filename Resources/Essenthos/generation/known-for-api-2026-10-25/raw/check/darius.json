@@ -1,0 +1,36 @@
+{
+ "slug": "darius",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.529655+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "EZR 6:1 does not say the search was for the decree about the house of God (that comes in 6:3), nor that the records were royal.",
+    "english": "ordered a search of the house of the rolls in Babylon",
+    "references": [
+     "EZR 6:1"
+    ],
+    "ukr": "видав наказ шукати в домі книжок у Вавилоні",
+    "deu": "befahl, in der Kanzlei im Schatzhaus zu Babel zu suchen",
+    "spa": "mandó buscar en la casa de los libros en Babilonia"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "decreed that whoever altered his word be hanged and his house made a dunghill",
+    "references": [
+     "EZR 6:11-12"
+    ],
+    "ukr": "видав наказ, що коли хтось змінить його слово, той буде прибитий на дереві з його дому, а дім його буде обернений на руїну",
+    "deu": "befahl, dass jeder, der sein Wort verändere, an einem Balken aus seinem Haus aufgehängt werde und sein Haus dem Gericht verfallen sei",
+    "spa": "decretó que cualquiera que mudare su decreto fuera colgado de un madero de su casa y que su casa fuera hecha muladar"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

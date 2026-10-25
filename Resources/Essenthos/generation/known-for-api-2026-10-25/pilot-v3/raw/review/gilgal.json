@@ -1,0 +1,31 @@
+{
+ "slug": "gilgal",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:09:50.187635+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Ісус поставив дванадцять каменів, узятих з Йордану",
+    "deu": "war der Ort, an dem Josua zwölf aus dem Jordan genommene Steine aufrichtete",
+    "spa": "fue el lugar donde Josué erigió doce piedras traídas del Jordán",
+    "why": "Spanish: removed the definite article before «doce piedras», which the English does not have."
+   },
+   {
+    "ukr": "був місцем, де Господь зняв з Ізраїля єгипетську ганьбу",
+    "deu": "war der Ort, an dem der HERR die Schande Ägyptens von Israel wegnahm",
+    "spa": "fue el lugar donde el SEÑOR quitó de Israel el oprobio de Egipto",
+    "why": "German: replaced the archaic «wendete» with modern «wegnahm»."
+   },
+   {
+    "ukr": "був місцем, де Саула настановили царем перед Господнім лицем",
+    "deu": "war der Ort, an dem Saul vor dem HERRN zum König gemacht wurde",
+    "spa": "fue el lugar donde Saúl fue investido rey delante del SEÑOR",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,41 @@
+{
+ "slug": "naomi",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.934686+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell Naomi's story of losing her husband and sons in Moab and returning to Bethlehem with Ruth, and of nursing Ruth's child.",
+  "clauses": [
+   {
+    "english": "was left a widow in Moab when her husband and two sons died",
+    "references": [
+     "RUT 1:3",
+     "RUT 1:5"
+    ],
+    "quote": "Elimelech Naomi's husband died; and she was left, and her two sons."
+   },
+   {
+    "english": "returned from Moab to Bethlehem with Ruth, and asked to be called Mara",
+    "references": [
+     "RUT 1:19-22"
+    ],
+    "quote": "Call me not Naomi, call me Mara"
+   },
+   {
+    "english": "took Ruth's newborn son and became nurse to him",
+    "references": [
+     "RUT 4:16"
+    ],
+    "quote": "And Naomi took the child, and laid it in her bosom, and became nurse unto it."
+   }
+  ],
+  "doubts": [
+   "RUT 1:5 is not marked but is cited with RUT 1:3 for the deaths of the sons; the summary states only the relationships, not the bereavement.",
+   "Some clauses may overlap slightly with the summary's mention of her sons."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

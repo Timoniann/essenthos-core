@@ -1,0 +1,25 @@
+{
+ "slug": "houseoftheforestoflebanon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.055865+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди Соломон віддав свої три сотні щитів із кутого золота",
+    "deu": "war der Ort, wohin Salomo seine dreihundert Tartschen vom besten Gold tat",
+    "spa": "fue donde Salomón puso sus trescientos escudos de oro extendido",
+    "why": ""
+   },
+   {
+    "ukr": "мав усі свої речі зі щирого золота, нічого із срібла",
+    "deu": "hatte alle Gefäße aus lauterem Gold, keines aus Silber",
+    "spa": "tenía toda su vajilla de oro fino, nada de plata",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

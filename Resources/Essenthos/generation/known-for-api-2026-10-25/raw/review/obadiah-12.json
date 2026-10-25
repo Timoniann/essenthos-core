@@ -1,0 +1,19 @@
+{
+ "slug": "obadiah-12",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.388557+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "бачив видіння Господнього суду над Едомом за його гордість і насильство",
+    "deu": "sah eine Vision vom Gericht des HERRN über Edom wegen seines Hochmuts und seiner Gewalt",
+    "spa": "vio una visión del juicio del SEÑOR contra Edom por su soberbia y su violencia",
+    "why": "German: replaced old-fashioned «Gesicht» with «Vision» and «Frevels» with «Gewalt» to match 'violence'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

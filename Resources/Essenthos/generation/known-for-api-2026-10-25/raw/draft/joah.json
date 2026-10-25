@@ -1,0 +1,31 @@
+{
+ "slug": "joah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.269681+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses show Joah going out with Eliakim and Shebna to meet Rabshakeh and then reporting his words to Hezekiah.",
+  "clauses": [
+   {
+    "english": "went out with Eliakim and Shebna to meet Rabshakeh and asked him to speak in the Syrian language",
+    "references": [
+     "2KI 18:18",
+     "2KI 18:26"
+    ],
+    "quote": "Speak, I pray thee, to thy servants in the Syrian language"
+   },
+   {
+    "english": "came to Hezekiah with his clothes rent and told him Rabshakeh's words",
+    "references": [
+     "2KI 18:37"
+    ],
+    "quote": "to Hezekiah with their clothes rent, and told him the words of Rabshakeh"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

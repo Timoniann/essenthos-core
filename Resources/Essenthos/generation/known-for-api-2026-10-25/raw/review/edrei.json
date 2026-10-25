@@ -1,0 +1,19 @@
+{
+ "slug": "edrei",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.453286+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Оґ, цар башанський, вийшов на війну",
+    "deu": "war der Ort, an dem Og, der König von Basan, auszog, um zu streiten",
+    "spa": "fue el lugar donde Og, rey de Basán, salió a pelear",
+    "why": "Added commas around the apposition «rey de Basán» in Spanish."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

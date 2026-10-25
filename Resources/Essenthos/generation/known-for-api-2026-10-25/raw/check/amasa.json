@@ -1,0 +1,36 @@
+{
+ "slug": "amasa",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.124732+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was made captain of the host by Absalom in place of Joab",
+    "references": [
+     "2SA 17:25"
+    ],
+    "ukr": "був настановлений Авесаломом над військом замість Йоава",
+    "deu": "wurde von Absalom an Joabs Statt über das Heer gesetzt",
+    "spa": "fue constituido por Absalom sobre el ejército en lugar de Joab"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was told by David to assemble the men of Judah, but tarried past the set time",
+    "references": [
+     "2SA 20:4-5"
+    ],
+    "ukr": "отримав від Давида наказ скликати юдеян, але спізнився від означеного часу",
+    "deu": "wurde von David beauftragt, die Männer Judas zu berufen, verzog aber die bestimmte Zeit",
+    "spa": "fue enviado por David a juntar a los varones de Judá, pero se detuvo más del tiempo señalado"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

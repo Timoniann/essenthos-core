@@ -1,0 +1,25 @@
+{
+ "slug": "hosea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.167004+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "HOS 1:2-3 state a deed of Hosea: at the LORD's command he took Gomer as his wife.",
+  "clauses": [
+   {
+    "english": "took Gomer the daughter of Diblaim as his wife at the LORD's command",
+    "references": [
+     "HOS 1:2-3"
+    ],
+    "quote": "So he went and took Gomer the daughter of Diblaim"
+   }
+  ],
+  "doubts": [
+   "ROM 9:25 names Osee (Hosea) only as a quoted saying, not as an event, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,27 @@
+{
+ "slug": "redsea-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.799165+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give one event that happened at this gulf: Solomon built a navy of ships on its shore; the other verses only mention it as a boundary, a stage of a journey, or a place where a cry was heard.",
+  "clauses": [
+   {
+    "english": "was where King Solomon made a navy of ships",
+    "references": [
+     "1KI 9:26"
+    ],
+    "quote": "king Solomon made a navy of ships in Eziongeber"
+   }
+  ],
+  "doubts": [
+   "EXO 23:31 (boundary) and JDG 11:16 (a stage of Israel's journey) only mark the place, so they were left out.",
+   "JER 49:21 is a figure of speech about Edom's fall, so it was left out.",
+   "The Red Sea named in these verses may be the Gulf of Aqaba or the larger sea; only 1KI 9:26 fits the Gulf of Aqaba, near Ezion-geber."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

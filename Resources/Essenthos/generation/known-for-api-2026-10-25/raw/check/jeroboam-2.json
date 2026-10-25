@@ -1,0 +1,47 @@
+{
+ "slug": "jeroboam-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.167398+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "restored the coast of Israel from Hamath to the sea of the plain",
+    "references": [
+     "2KI 14:25"
+    ],
+    "ukr": "вернув Ізраїлеву границю від Гамату аж до степового моря",
+    "deu": "brachte das Gebiet Israels von Hamath bis an das Meer im blachen Felde wieder herzu",
+    "spa": "restituyó los términos de Israel desde Amath hasta la mar de la llanura"
+   },
+   {
+    "verdict": "fix",
+    "why": "The LORD's hand is not the means; he saved Israel by the hand of Jeroboam, and the affliction is in verse 26.",
+    "english": "saved Israel, whom the LORD had seen afflicted",
+    "references": [
+     "2KI 14:26-27"
+    ],
+    "ukr": "спас Ізраїля, біду якого побачив Господь",
+    "deu": "rettete Israel, dessen Jammer der HERR angesehen hatte",
+    "spa": "salvó a Israel, cuya aflicción había mirado el SEÑOR"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says he recovered Damascus and Hamath, which had belonged to Judah, for Israel; keep it exact.",
+    "english": "recovered Damascus and Hamath, which belonged to Judah, for Israel",
+    "references": [
+     "2KI 14:28"
+    ],
+    "ukr": "вернув Юді Дамаск та Хамат в Ізраїлі",
+    "deu": "brachte Damaskus und Hamath an Juda in Israel wieder",
+    "spa": "restituyó á Judá en Israel á Damasco y á Hamath"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

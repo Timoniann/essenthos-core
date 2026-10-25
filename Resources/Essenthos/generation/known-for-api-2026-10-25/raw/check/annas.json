@@ -1,0 +1,26 @@
+{
+ "slug": "annas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.183260+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "received Jesus first after his arrest, then sent him bound to Caiaphas",
+    "references": [
+     "JHN 18:12-13",
+     "JHN 18:24"
+    ],
+    "ukr": "спочатку прийняв Ісуса після Його арешту, а потім відіслав Його зв'язаним до Кайяфи",
+    "deu": "empfing Jesus nach seiner Verhaftung zuerst und sandte ihn dann gebunden zu Kaiphas",
+    "spa": "recibió primeramente a Jesús después de su arresto y luego lo envió atado a Caifás"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

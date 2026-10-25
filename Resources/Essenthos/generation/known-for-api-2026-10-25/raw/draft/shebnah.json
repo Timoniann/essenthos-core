@@ -1,0 +1,33 @@
+{
+ "slug": "shebnah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.744927+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Shebna's part in the Assyrian envoy's demand at Jerusalem and of his being sent to Isaiah, which adds deeds beyond the summary.",
+  "clauses": [
+   {
+    "english": "asked Rabshakeh to speak in the Syrian language, not the Jews' language, in the hearing of the people on the wall",
+    "references": [
+     "2KI 18:26"
+    ],
+    "quote": "Speak, I pray thee, to thy servants in the Syrian language"
+   },
+   {
+    "english": "was sent in sackcloth by Hezekiah to Isaiah the prophet",
+    "references": [
+     "2KI 19:2"
+    ],
+    "quote": "And he sent Eliakim, which was over the household, and Shebna the scribe,"
+   }
+  ],
+  "doubts": [
+   "ISA 22:15 names a Shebna the treasurer over the house, who is rebuked; he may be another man of the same name, so the verse was left out.",
+   "The parallel passages in Isaiah 36 and 37 were not cited, because the Kings verses already state the same events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

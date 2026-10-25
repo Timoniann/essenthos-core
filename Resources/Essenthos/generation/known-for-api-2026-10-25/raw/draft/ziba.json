@@ -1,0 +1,41 @@
+{
+ "slug": "ziba",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.813624+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Ziba's deeds: he told David of Mephibosheth, brought provisions to the fleeing David, and was given part of the land.",
+  "clauses": [
+   {
+    "english": "told David of Jonathan's lame son Mephibosheth, and was set to till his land",
+    "references": [
+     "2SA 9:3-4",
+     "2SA 9:9-10"
+    ],
+    "quote": "Jonathan hath yet a son, which is lame on his feet."
+   },
+   {
+    "english": "met the fleeing David with asses, bread and wine, and was given all that had been Mephibosheth's",
+    "references": [
+     "2SA 16:1-4"
+    ],
+    "quote": "Behold, thine are all that pertained unto Mephibosheth."
+   },
+   {
+    "english": "was told by David to divide the land with Mephibosheth",
+    "references": [
+     "2SA 19:29"
+    ],
+    "quote": "Thou and Ziba divide the land."
+   }
+  ],
+  "doubts": [
+   "The first clause joins two things (telling of Mephibosheth, being set to till his land); the editor may wish to trim it to one.",
+   "The slander of Mephibosheth is mentioned only in 2SA 19:27, which is not a marked verse, so it is not stated as Ziba's deed."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

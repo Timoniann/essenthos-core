@@ -1,0 +1,48 @@
+{
+ "slug": "mahanaim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.777145+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jacob saw God's host and named the place",
+    "references": [
+     "GEN 32:2"
+    ],
+    "ukr": "був місцем, де Яків побачив Божий табір і назвав те місце",
+    "deu": "war der Ort, an dem Jakob Gottes Heere sah und die Stätte benannte",
+    "spa": "fue el lugar donde Jacob vio el campo de Dios y puso nombre a aquel lugar"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Abner brought Ishbosheth and made him king over Israel",
+    "references": [
+     "2SA 2:8-9"
+    ],
+    "ukr": "був місцем, куди Авнер привів Іш-Бошета і настановив його царем над усім Ізраїлем",
+    "deu": "war der Ort, wohin Abner Is-Boseth führte und ihn zum König über ganz Israel machte",
+    "spa": "fue el lugar adonde Abner llevó a Is-boseth y lo alzó por rey sobre todo Israel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where David came and was given food and supplies",
+    "references": [
+     "2SA 17:24",
+     "2SA 17:27-29"
+    ],
+    "ukr": "був місцем, куди прийшов Давид і де йому принесли їжу та припаси",
+    "deu": "war der Ort, an den David kam und wo ihm Speise und Vorräte gebracht wurden",
+    "spa": "fue el lugar adonde llegó David y donde le trajeron comida y provisiones"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

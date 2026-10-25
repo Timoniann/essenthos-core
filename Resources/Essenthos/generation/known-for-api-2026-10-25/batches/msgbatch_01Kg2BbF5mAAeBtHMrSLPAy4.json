@@ -1,0 +1,47 @@
+{
+ "failures": {},
+ "refused": {
+  "nehushtan": [
+   "clause 2: Latin letters in the Ukrainian"
+  ],
+  "joshua-4": [
+   "clause 1: the Spanish writes Jehová for the LORD",
+   "clause 1: the LORD is not «el SEÑOR» in the Spanish",
+   "clause 2: Latin letters in the Ukrainian"
+  ],
+  "michael-9": [
+   "clause 1: no ukr",
+   "clause 1: no deu",
+   "clause 1: no spa"
+  ],
+  "altar-the-lord-is-peace": [
+   "clause 1: the Spanish writes Jehová for the LORD"
+  ],
+  "megiddo": [
+   "clause 1: '2KI 23:29-2KI 23:30' is no run of verses"
+  ],
+  "abel": [
+   "clause 1: the Spanish writes Jehová for the LORD",
+   "clause 1: the LORD is not «el SEÑOR» in the Spanish"
+  ],
+  "altar-the-lord-is-my-banner": [
+   "clause 1: the Spanish writes Jehová for the LORD"
+  ],
+  "habakkuk": [
+   "clause 1: 'HAB 1:2-HAB 1:4' is no run of verses",
+   "clause 2: 'HAB 3:1-HAB 3:2' is no run of verses"
+  ],
+  "abihu": [
+   "clause 1: Latin letters in the Ukrainian"
+  ],
+  "galilee": [
+   "clause 3: Latin letters in the Ukrainian"
+  ],
+  "bozrah": [
+   "2 verdicts for 1 clauses"
+  ],
+  "eliakim": [
+   "clause 3: the ukr does not begin in lower case"
+  ]
+ }
+}

@@ -1,0 +1,39 @@
+{
+ "slug": "micahs-image",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.192864+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was made of the image and what happened to it: it was made from the silver, taken by the Danites, and set up at Dan.",
+  "clauses": [
+   {
+    "english": "was made by a founder from silver Micah's mother dedicated to the LORD",
+    "references": [
+     "JDG 17:3-4"
+    ],
+    "quote": "who made thereof a graven image and a molten image"
+   },
+   {
+    "english": "was taken by the Danites from Micah's house",
+    "references": [
+     "JDG 18:17-18"
+    ],
+    "quote": "came in thither, and took the graven image"
+   },
+   {
+    "english": "was set up by the children of Dan in their city",
+    "references": [
+     "JDG 18:30-31"
+    ],
+    "quote": "the children of Dan set up the graven image"
+   }
+  ],
+  "doubts": [
+   "JDG 18:14 and 18:20 name the image only in lists of items or in the priest's taking it; left uncited as minor."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

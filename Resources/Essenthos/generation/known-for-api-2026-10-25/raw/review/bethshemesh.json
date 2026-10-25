@@ -1,0 +1,31 @@
+{
+ "slug": "bethshemesh",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.179890+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прийняв ковчег Господній, що повертався, і приніс цілопалення",
+    "deu": "nahm die zurückkehrende Lade des HERRN auf und opferte Brandopfer",
+    "spa": "recibió el arca del SEÑOR que volvía y ofreció holocaustos",
+    "why": ""
+   },
+   {
+    "ukr": "бачив, як Господь вразив багатьох його чоловіків за те, що вони заглядали в Господній ковчег",
+    "deu": "sah, wie viele seiner Männer vom HERRN geschlagen wurden, weil sie in die Lade des HERRN geschaut hatten",
+    "spa": "vio cómo el SEÑOR hirió a muchos de sus hombres porque habían mirado en el arca del SEÑOR",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де Йоаш, цар Ізраїлів, схопив Амацію, Юдиного царя",
+    "deu": "war der Ort, an dem Joas, der König Israels, Amazja, den König in Juda, ergriff",
+    "spa": "fue el lugar donde Joas, rey de Israel, tomó a Amasías, rey de Judá",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

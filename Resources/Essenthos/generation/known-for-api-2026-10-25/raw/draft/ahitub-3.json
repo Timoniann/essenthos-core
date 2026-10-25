@@ -1,0 +1,15 @@
+{
+ "slug": "ahitub-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.790163+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only place Ahitub in priestly genealogies and record no deed or event of his own beyond what the summary already says.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

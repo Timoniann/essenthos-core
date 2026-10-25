@@ -1,0 +1,41 @@
+{
+ "slug": "edom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.480914+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell events that happened to or in the land of Edom, such as refusing Israel passage, David's conquest and the revolt against Judah.",
+  "clauses": [
+   {
+    "english": "refused Israel passage through its border",
+    "references": [
+     "NUM 20:18-21"
+    ],
+    "quote": "Edom refused to give Israel passage through his border"
+   },
+   {
+    "english": "was put under garrisons by David, and its people became his servants",
+    "references": [
+     "2SA 8:14"
+    ],
+    "quote": "all they of Edom became David's servants"
+   },
+   {
+    "english": "revolted from under the hand of Judah and made a king of its own",
+    "references": [
+     "2KI 8:20"
+    ],
+    "quote": "Edom revolted from under the hand of Judah"
+   }
+  ],
+  "doubts": [
+   "GEN 25:30 and GEN 36:1 concern Esau, who is called Edom, and were left out as person-verses.",
+   "The prophecies of Edom's desolation (Isaiah, Jeremiah, Ezekiel, Obadiah and others) were left out because they are predictions rather than events told.",
+   "The Edom verses in the lists of kings, dukes and borders only name the land, so they were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

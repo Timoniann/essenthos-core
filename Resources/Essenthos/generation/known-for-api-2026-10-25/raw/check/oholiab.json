@@ -1,0 +1,36 @@
+{
+ "slug": "oholiab",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.224608+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say God put teaching in his heart and filled him with wisdom of heart for all manner of work; the clause merges the two and adds 'skilled'.",
+    "english": "was given in his heart to teach and was filled with wisdom of heart to do all manner of work",
+    "references": [
+     "EXO 35:34-35"
+    ],
+    "ukr": "було вкладено в його серце навчати, і був наповнений мудрістю серця, щоб робити всяку роботу",
+    "deu": "wurde ihm ins Herz gegeben, zu unterweisen, und wurde mit Weisheit des Herzens erfüllt, um allerlei Werk zu machen",
+    "spa": "fue puesto en su corazón enseñar, y fue henchido de sabiduría de corazón para hacer toda obra"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "worked with Bezaleel on the sanctuary as the LORD had commanded",
+    "references": [
+     "EXO 36:1"
+    ],
+    "ukr": "працював із Бецал'їлом для служби в святині, як наказав Господь",
+    "deu": "arbeitete mit Bezaleel am Heiligtum nach allem, was der HERR geboten hatte",
+    "spa": "trabajó con Bezaleel en la obra del santuario, según todo lo que el SEÑOR había mandado"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

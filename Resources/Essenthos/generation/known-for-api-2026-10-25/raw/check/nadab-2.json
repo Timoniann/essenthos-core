@@ -1,0 +1,36 @@
+{
+ "slug": "nadab-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.224640+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "did evil in the sight of the LORD, walking in his father's sin",
+    "references": [
+     "1KI 15:26"
+    ],
+    "ukr": "робив зле в Господніх очах, ходячи в гріху свого батька",
+    "deu": "tat, was dem HERRN übel gefiel, und wandelte in der Sünde seines Vaters",
+    "spa": "hizo lo malo ante los ojos del SEÑOR, andando en los pecados de su padre"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "laid siege to the Philistine town of Gibbethon with all Israel",
+    "references": [
+     "1KI 15:27"
+    ],
+    "ukr": "облягав филистимський Ґіббетон з усім Ізраїлем",
+    "deu": "belagerte mit dem ganzen Israel Gibbethon, das den Philistern gehörte",
+    "spa": "tenía cercado con todo Israel a Gibbethón, que era de los Filisteos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

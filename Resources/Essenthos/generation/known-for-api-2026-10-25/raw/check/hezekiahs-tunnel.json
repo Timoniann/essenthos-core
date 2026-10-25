@@ -1,0 +1,36 @@
+{
+ "slug": "hezekiahs-tunnel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.397173+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was made by Hezekiah to bring water into the city",
+    "references": [
+     "2KI 20:20"
+    ],
+    "ukr": "був зроблений Єзекією, щоб впровадити воду до міста",
+    "deu": "wurde von Hiskia gemacht, um Wasser in die Stadt zu leiten",
+    "spa": "fue hecho por Ezechîas para meter las aguas en la ciudad"
+   },
+   {
+    "verdict": "fix",
+    "why": "Hezekiah stopped the watercourse, so \"stopped\" does not belong to the conduit; \"straight\" also goes beyond the other translations.",
+    "english": "carried the upper watercourse of Gihon down to the west side of the city of David",
+    "references": [
+     "2CH 32:30"
+    ],
+    "ukr": "виводив воду горішнього Ґіхону вдолину на захід від Давидового Міста",
+    "deu": "leitete die obere Wasserquelle in Gihon hinunter, westlich von der Stadt Davids",
+    "spa": "encaminó los manaderos de las aguas de Gihón la de arriba abajo, al occidente de la ciudad de David"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

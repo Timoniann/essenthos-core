@@ -1,0 +1,33 @@
+{
+ "slug": "jachin-pillar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.542477+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses naming Jachin only say it was set up and named, which the summary already gives, but the surrounding verses tell how the pillars were cast and later broken.",
+  "clauses": [
+   {
+    "english": "was cast in brass by Hiram of Tyre",
+    "references": [
+     "1KI 7:13-15"
+    ],
+    "quote": "he cast two pillars of brass"
+   },
+   {
+    "english": "was broken in pieces by the Chaldees, and its brass carried to Babylon",
+    "references": [
+     "2KI 25:13"
+    ],
+    "quote": "did the Chaldees break in pieces, and carried the brass of them to Babylon"
+   }
+  ],
+  "doubts": [
+   "The casting and the breaking are told of both pillars together; Jachin is not named in those verses, only in 1KI 7:21 and 2CH 3:17.",
+   "2CH 3:15 gives the pillars' height as thirty-five cubits, against eighteen in 1KI 7:15, so I left height out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

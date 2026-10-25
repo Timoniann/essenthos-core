@@ -1,0 +1,47 @@
+{
+ "slug": "jordan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.617843+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had its waters cut off so that Israel crossed on dry ground",
+    "references": [
+     "JOS 3:16-17"
+    ],
+    "ukr": "мав відрізані води, так що ввесь Ізраїль переходив по сухому",
+    "deu": "wurde von seinem Wasser abgeschnitten, sodass ganz Israel trocken hindurchging",
+    "spa": "tuvo sus aguas cortadas, de modo que todo Israel pasó en seco"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses shown never name Naaman, only 'he'.",
+    "english": "was where a man dipped himself seven times and became clean",
+    "references": [
+     "2KI 5:14"
+    ],
+    "ukr": "був місцем, де чоловік занурився сім раз і став чистий",
+    "deu": "war der Ort, an dem ein Mann sich siebenmal tauchte und rein wurde",
+    "spa": "fue el lugar donde un hombre se zambulló siete veces y fue limpio"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jesus was baptized by John",
+    "references": [
+     "MRK 1:9"
+    ],
+    "ukr": "був місцем, де Ісус христився від Івана",
+    "deu": "war der Ort, an dem Jesus sich von Johannes taufen ließ",
+    "spa": "fue el lugar donde Jesús fue bautizado por Juan"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

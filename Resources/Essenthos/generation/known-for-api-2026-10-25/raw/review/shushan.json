@@ -1,0 +1,31 @@
+{
+ "slug": "shushan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.208384+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де був виданий закон, і місто було в замішанні",
+    "deu": "war der Ort, wo das Gebot angeschlagen wurde, und die Stadt war bestürzt",
+    "spa": "fue el lugar donde se dio el edicto, y la ciudad estaba conmovida",
+    "why": "Ukrainian verb made masculine to agree with Шушан; German archaic «ward» replaced by «war»."
+   },
+   {
+    "ukr": "радів та тішився, коли Мордехай вийшов з-перед царевого обличчя",
+    "deu": "jauchzte und war fröhlich, als Mardochai von dem König ausging",
+    "spa": "se alegró y regocijó cuando salió Mardochêo de delante del rey",
+    "why": "Ukrainian verbs made masculine to agree with Шушан."
+   },
+   {
+    "ukr": "був місцем, де юдеї повбивали та знищили п'ятсот чоловіків",
+    "deu": "war der Ort, wo die Juden fünfhundert Mann erschlugen und umbrachten",
+    "spa": "fue el lugar donde los judíos mataron y destruyeron a quinientos hombres",
+    "why": "Ukrainian verb made masculine and old wording modernized; German archaic «erwürgten» replaced by «erschlugen»; Spanish «Judíos» lowercased."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

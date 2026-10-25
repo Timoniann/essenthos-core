@@ -1,0 +1,25 @@
+{
+ "slug": "ziph-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.601290+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "мав зіфеян, які сказали Саулові, що Давид ховається",
+    "deu": "hatte Siphiter, die Saul sagten, David halte sich verborgen",
+    "spa": "tuvo zipheos que dijeron a Saúl que David estaba escondido",
+    "why": "Spanish: lower-cased 'Zipheos' to 'zipheos' (common noun for people, as in modern usage)."
+   },
+   {
+    "ukr": "був збудований як твердинне місто в Юді",
+    "deu": "wurde als feste Stadt in Juda gebaut",
+    "spa": "fue edificado como ciudad fuerte en Judá",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

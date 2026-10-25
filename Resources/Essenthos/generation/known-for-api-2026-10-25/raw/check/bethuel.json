@@ -1,0 +1,25 @@
+{
+ "slug": "bethuel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.467218+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not name Isaac or say Bethuel gave her; they say the matter came from the LORD and tell the servant to take Rebekah for his master's son.",
+    "english": "with Laban, said the matter came from the LORD and let Abraham's servant take Rebekah for his master's son",
+    "references": [
+     "GEN 24:50-52"
+    ],
+    "ukr": "разом з Лаваном сказав, що ця річ від Господа, і дозволив рабові Авраамовому взяти Ревеку за жінку синові його пана",
+    "deu": "sagte mit Laban, die Sache komme vom HERRN, und ließ Abrahams Knecht Rebekka nehmen als Frau für den Sohn seines Herrn",
+    "spa": "junto con Labán dijo que aquello venía del SEÑOR, y dejó al criado de Abraham tomar a Rebeca como mujer del hijo de su señor"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

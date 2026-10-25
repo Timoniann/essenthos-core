@@ -1,0 +1,31 @@
+{
+ "slug": "herod-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.058870+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "кинув Івана до в'язниці за те, що той докоряв йому через Іродіяду, дружину його брата Пилипа",
+    "deu": "warf Johannes ins Gefängnis, weil er ihn wegen Herodias, der Frau seines Bruders Philippus, gestraft hatte",
+    "spa": "encerró a Juan en la cárcel porque le reprendía a causa de Herodías, mujer de Felipe su hermano",
+    "why": ""
+   },
+   {
+    "ukr": "стяв голову Іванові після того, як пообіцяв дочці Іродіяди дати все, чого вона попросить",
+    "deu": "enthauptete Johannes, nachdem er der Tochter der Herodias versprochen hatte, ihr zu geben, worum sie bitten würde",
+    "spa": "degolló a Juan después de prometer a la hija de Herodías darle lo que pidiese",
+    "why": "German: replaced the archaic 'was sie bitten würde' with the standard 'worum sie bitten würde'."
+   },
+   {
+    "ukr": "насміявся з Ісуса, зодягнув Його в пишний одяг і відіслав назад до Пилата",
+    "deu": "verspottete Jesus, legte ihm ein prächtiges Gewand an und sandte ihn wieder zu Pilatus",
+    "spa": "escarneció a Jesús, lo vistió con una ropa rica y lo envió de nuevo a Pilato",
+    "why": "Ukrainian and German: 'white' robe changed to 'gorgeous' as in the English, Ukrainian also given modern 'одяг' and the missing 'back' (назад)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

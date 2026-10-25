@@ -1,0 +1,15 @@
+{
+ "slug": "shealtiel-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.561362+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses name Shealtiel only as Zerubbabel's father or as a link in genealogies, and every deed in them belongs to Zerubbabel, so they say no more than the summary does.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

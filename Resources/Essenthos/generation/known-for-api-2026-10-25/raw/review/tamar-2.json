@@ -1,0 +1,25 @@
+{
+ "slug": "tamar-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.474953+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була збезчещена Амноном",
+    "deu": "wurde von Amnon vergewaltigt",
+    "spa": "fue forzada por Amnón",
+    "why": "German: replaced the archaic, now misleading «geschwächt» with modern «vergewaltigt»."
+   },
+   {
+    "ukr": "залишилася знівеченою в домі Авесалома",
+    "deu": "blieb einsam in Absaloms Haus",
+    "spa": "quedó desconsolada en casa de Absalom",
+    "why": "Ukrainian: replaced the odd «осіла» with modern «залишилася» and put the predicate in the instrumental."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

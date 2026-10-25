@@ -1,0 +1,19 @@
+{
+ "slug": "adullam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.208117+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди Давид утік до печери й став провідником близько чотирьох сотень людей",
+    "deu": "war der Ort, wohin David in eine Höhle entrann und Oberster von etwa vierhundert Mann wurde",
+    "spa": "fue el lugar adonde David se escapó a una cueva y llegó a ser capitán de unos cuatrocientos hombres",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

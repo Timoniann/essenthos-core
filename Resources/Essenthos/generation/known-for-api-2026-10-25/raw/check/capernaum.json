@@ -1,0 +1,37 @@
+{
+ "slug": "capernaum",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.292068+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jesus came to live after leaving Nazareth",
+    "references": [
+     "MAT 4:13"
+    ],
+    "ukr": "був місцем, де Ісус оселився, покинувши Назарет",
+    "deu": "war der Ort, wo Jesus wohnte, nachdem er Nazareth verlassen hatte",
+    "spa": "fue el lugar donde Jesús habitó después de dejar Nazaret"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jesus taught in the synagogue on the sabbath",
+    "references": [
+     "MRK 1:21",
+     "LUK 4:31"
+    ],
+    "ukr": "був місцем, де Ісус навчав у синагозі в суботу",
+    "deu": "war der Ort, wo Jesus am Sabbat in der Synagoge lehrte",
+    "spa": "fue el lugar donde Jesús enseñó en la sinagoga en sábado"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

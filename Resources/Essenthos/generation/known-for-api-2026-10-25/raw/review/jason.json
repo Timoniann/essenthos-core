@@ -1,0 +1,19 @@
+{
+ "slug": "jason",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.852996+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був відпущений начальниками, які взяли з нього поруку",
+    "deu": "wurde von den Obersten freigelassen, nachdem ihnen von ihm Genüge geleistet worden war",
+    "spa": "fue soltado por los gobernadores, después de recibir satisfacción de él",
+    "why": "German: replaced the dated 'losgelassen' with 'freigelassen' and put the 'Genüge geleistet' clause in modern grammar ('worden war')."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

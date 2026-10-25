@@ -1,0 +1,31 @@
+{
+ "slug": "omri",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.545126+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був настановлений усім Ізраїлем царем у таборі після того, як Зімрі вбив царя",
+    "deu": "wurde vom ganzen Israel im Lager zum König gemacht, nachdem Simri den König erschlagen hatte",
+    "spa": "fue puesto por rey por todo Israel en el campo después de que Zimri mató al rey",
+    "why": ""
+   },
+   {
+    "ukr": "мав за собою сильнішу половину Ізраїлю проти Тівні й зацарював",
+    "deu": "hatte die stärkere Hälfte Israels gegen Thibni hinter sich und wurde König",
+    "spa": "tuvo tras de sí a la mitad más fuerte de Israel contra Thibni y fue rey",
+    "why": ""
+   },
+   {
+    "ukr": "купив гору Шомерон і збудував на ній місто",
+    "deu": "kaufte den Berg Samaria und baute auf dem Berg eine Stadt",
+    "spa": "compró el monte de Samaria y edificó en el monte una ciudad",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

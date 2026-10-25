@@ -1,0 +1,37 @@
+{
+ "slug": "gedaliah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.701634+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The captains are named only in the neighbouring verse, and the oath said it would be well if they served, so the citation is widened and the wording tightened.",
+    "english": "swore to the captains and their men that all would be well if they served the Chaldees",
+    "references": [
+     "2KI 25:23-24",
+     "JER 40:9"
+    ],
+    "ukr": "присягнув військовим зверхникам та їхнім людям, що їм буде добре, якщо вони служитимуть халдеям",
+    "deu": "schwor den Hauptleuten des Kriegsvolks und ihren Männern, dass es ihnen wohlergehen werde, wenn sie den Chaldäern untertan seien",
+    "spa": "juró a los príncipes del ejército y a los suyos que les iría bien si servían a los caldeos"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verses 13-14 state the warning and his disbelief; verses 15-16 are more than the clause needs.",
+    "english": "did not believe Johanan's warning that Ishmael was sent to slay him",
+    "references": [
+     "JER 40:13-14"
+    ],
+    "ukr": "не повірив Йоханану, який попередив, що Ізмаїла послано вбити його",
+    "deu": "glaubte Johanan nicht, der ihn warnte, dass Ismael gesandt sei, ihn zu erschlagen",
+    "spa": "no creyó a Johanán, que le advirtió que Ismael había sido enviado para matarlo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

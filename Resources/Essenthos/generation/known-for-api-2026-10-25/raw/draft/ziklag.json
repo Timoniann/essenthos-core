@@ -1,0 +1,33 @@
+{
+ "slug": "ziklag",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.754988+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Ziklag being given to David and of its burning by the Amalekites, which are events of the place beyond the summary.",
+  "clauses": [
+   {
+    "english": "was given to David by Achish the Philistine king",
+    "references": [
+     "1SA 27:5-6"
+    ],
+    "quote": "Then Achish gave him Ziklag that day"
+   },
+   {
+    "english": "was burned with fire by the Amalekites, and its women and children taken captive",
+    "references": [
+     "1SA 30:1-3"
+    ],
+    "quote": "the Amalekites had invaded the south, and Ziklag, and smitten Ziklag, and burned it with fire"
+   }
+  ],
+  "doubts": [
+   "Left out the list verses (JOS 15:31, JOS 19:5, 1CH 4:30, NEH 11:28), which only name the town.",
+   "Left out the arrival of David's helpers (1CH 12) and the slaying of Saul's messenger (2SA 4:10) as lesser events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

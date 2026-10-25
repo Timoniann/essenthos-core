@@ -1,0 +1,19 @@
+{
+ "slug": "ibzan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.419710+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "віддав заміж на сторону тридцять дочок і привів зі сторони тридцять дочок для своїх синів",
+    "deu": "gab dreißig Töchter hinaus und nahm dreißig Töchter von außen für seine Söhne",
+    "spa": "casó fuera a treinta hijas y tomó de fuera a treinta hijas para sus hijos",
+    "why": "Ukrainian: replaced Ohienko's archaic wording (відпустив, назовні, впровадив) with modern phrasing. Spanish: added the personal 'a' before the objects for correct grammar."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,41 @@
+{
+ "slug": "jezreel-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.013609+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell events that happened at Jezreel, chiefly Jehu's killings of Joram, Jezebel and Ahab's house.",
+  "clauses": [
+   {
+    "english": "was where Jezebel was thrown down from a window and trodden underfoot",
+    "references": [
+     "2KI 9:30-33"
+    ],
+    "quote": "Throw her down. So they threw her down"
+   },
+   {
+    "english": "was where Jehu shot King Joram with an arrow, in Naboth's field",
+    "references": [
+     "2KI 9:24-25"
+    ],
+    "quote": "smote Jehoram between his arms, and the arrow went out at his heart"
+   },
+   {
+    "english": "was where Jehu slew all that remained of the house of Ahab",
+    "references": [
+     "2KI 10:11"
+    ],
+    "quote": "So Jehu slew all that remained of the house of Ahab in Jezreel"
+   }
+  ],
+  "doubts": [
+   "HOS 1:4-5, 1:11 and 2:22 use Jezreel as a child's name and in prophecy, so I left them out.",
+   "The verses on the valley of Jezreel (JOS 17:16, JDG 6:33) may refer to the region rather than the town, so I left them out.",
+   "Naboth's vineyard (1KI 21) is left out because the verses given do not say where he was killed."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

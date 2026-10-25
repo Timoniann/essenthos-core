@@ -1,0 +1,48 @@
+{
+ "slug": "bethlehem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.951150+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says Rachel died and was buried on the way to Ephrath, which is Bethlehem; it does not say Bethlehem had her buried.",
+    "english": "was the town on the way to which Rachel was buried",
+    "references": [
+     "GEN 35:19"
+    ],
+    "ukr": "був містом, на дорозі до якого була похована Рахіль",
+    "deu": "war die Stadt, auf deren Weg Rahel begraben wurde",
+    "spa": "fue la ciudad en cuyo camino fue sepultada Rachêl"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jesus was born in the days of Herod the king",
+    "references": [
+     "MAT 2:1",
+     "LUK 2:4-7"
+    ],
+    "ukr": "був містом, де народився Ісус за днів царя Ірода",
+    "deu": "war der Ort, wo Jesus zur Zeit des Königs Herodes geboren wurde",
+    "spa": "fue el lugar donde nació Jesús en días del rey Herodes"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had its young children slain by Herod",
+    "references": [
+     "MAT 2:16"
+    ],
+    "ukr": "був містом, де Ірод звелів повбивати малих дітей",
+    "deu": "war der Ort, an dem Herodes die kleinen Kinder töten ließ",
+    "spa": "fue el lugar donde Herodes mandó matar a los niños pequeños"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

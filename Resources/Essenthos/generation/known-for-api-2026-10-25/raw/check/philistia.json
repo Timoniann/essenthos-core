@@ -1,0 +1,25 @@
+{
+ "slug": "philistia",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.454924+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had the walls of Gath, Jabneh and Ashdod broken down by Uzziah",
+    "references": [
+     "2CH 26:6"
+    ],
+    "ukr": "зазнала руйнування мурів Ґату, Явне й Асдоду від Уззії",
+    "deu": "ließ durch Usia die Mauern von Gath, Jabne und Asdod niederreißen",
+    "spa": "sufrió que Uzzías rompiera los muros de Gath, Jabnia y Asdod"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "barzillai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.307826+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "приніс постелі та їжу Давидові та його людям у Маханаїмі",
+    "deu": "brachte David und dem Volk, das bei ihm war, Bettzeug und Speise in Mahanaim",
+    "spa": "trajo camas y alimentos a David y al pueblo que estaba con él en Mahanaim",
+    "why": "German: 'nach Mahanaim' (direction) changed to 'in Mahanaim' to match the English 'at Mahanaim'."
+   },
+   {
+    "ukr": "провів Давида за Йордан, відмовився йти з ним до Єрусалиму і був поблагословлений царем",
+    "deu": "geleitete David über den Jordan, lehnte es ab, mit ihm nach Jerusalem zu ziehen, und wurde vom König gesegnet",
+    "spa": "acompañó a David al otro lado del Jordán, no quiso ir con él a Jerusalem y fue bendecido por el rey",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "tahpanhes",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.911282+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the people of Judah came in disobedience to the LORD",
+    "references": [
+     "JER 43:5-7"
+    ],
+    "ukr": "був місцем, куди прийшли юдеї, не послухавшись Господнього голосу",
+    "deu": "war der Ort, wohin die Leute aus Juda kamen, weil sie der Stimme des HERRN nicht gehorchen wollten",
+    "spa": "fue el lugar adonde llegaron los de Judá sin obedecer la voz del SEÑOR"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not call the stones a sign, and the clause needs only verses 8-9.",
+    "english": "was where the LORD told Jeremiah to hide great stones in the brickkiln",
+    "references": [
+     "JER 43:8-9"
+    ],
+    "ukr": "був місцем, де Господь сказав Єремії сховати великі камені на цегляному майдані",
+    "deu": "war der Ort, wo der HERR zu Jeremia sprach, er solle große Steine im Ziegelofen verbergen",
+    "spa": "fue el lugar donde el SEÑOR dijo a Jeremías que escondiera piedras grandes en un horno de ladrillos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

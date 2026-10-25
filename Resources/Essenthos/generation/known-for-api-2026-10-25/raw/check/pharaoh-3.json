@@ -1,0 +1,45 @@
+{
+ "slug": "pharaoh-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.008142+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "drop",
+    "why": "Verse 1:11 says 'they' set taskmasters, the Egyptians generally, and does not name Pharaoh as the one who did it.",
+    "english": "",
+    "references": [],
+    "ukr": "",
+    "deu": "",
+    "spa": ""
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "commanded that every newborn son be cast into the river",
+    "references": [
+     "EXO 1:22"
+    ],
+    "ukr": "наказав кидати кожного народженого сина до річки",
+    "deu": "gebot, jeden neugeborenen Sohn ins Wasser zu werfen",
+    "spa": "mandó echar al río a todo hijo que naciere"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "sought to slay Moses, who fled from him to Midian",
+    "references": [
+     "EXO 2:15"
+    ],
+    "ukr": "шукав, щоб убити Мойсея, який утік від нього до країни Мідіян",
+    "deu": "trachtete danach, Mose zu erwürgen, der vor ihm ins Land Midian floh",
+    "spa": "procuró matar a Moisés, que huyó de él a la tierra de Madián"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

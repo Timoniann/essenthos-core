@@ -1,0 +1,25 @@
+{
+ "slug": "makkedah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.159622+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де п'ять царів сховалися в печері",
+    "deu": "war der Ort, wo sich fünf Könige in einer Höhle versteckten",
+    "spa": "fue el lugar donde cinco reyes se escondieron en una cueva",
+    "why": "Ukrainian verb now agrees with the feminine place name Маккеда (було → була)."
+   },
+   {
+    "ukr": "була здобута Ісусом і побита вістрям меча, а її цар знищений",
+    "deu": "wurde von Josua gewonnen und mit der Schärfe des Schwerts geschlagen, und sein König vernichtet",
+    "spa": "fue tomada por Josué y puesta a cuchillo, y su rey destruido",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

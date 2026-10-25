@@ -1,0 +1,19 @@
+{
+ "slug": "claudius",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.509810+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "звелів усім юдеям, щоб покинули Рим",
+    "deu": "gebot allen Juden, aus Rom zu weichen",
+    "spa": "mandó que todos los judíos saliesen de Roma",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

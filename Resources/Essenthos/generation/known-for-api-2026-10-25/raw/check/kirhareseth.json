@@ -1,0 +1,25 @@
+{
+ "slug": "kirhareseth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.860752+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says only that its stones were left and slingers surrounded and struck it; the allies' destruction of Moab is wider context and \"Israel's allies\" is not stated.",
+    "english": "had its stones left in place, and slingers surrounded and struck it",
+    "references": [
+     "2KI 3:25"
+    ],
+    "ukr": "було залишено в ньому каміння, а пращники оточили його й били його",
+    "deu": "ließ man nur seine Steine übrig, und die Schleuderer umgaben es und warfen auf es",
+    "spa": "se dejaron sus piedras, y los honderos la cercaron y la hirieron"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

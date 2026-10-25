@@ -1,0 +1,36 @@
+{
+ "slug": "zebah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.344225+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "fled from Gideon and was taken captive with Zalmunna",
+    "references": [
+     "JDG 8:12"
+    ],
+    "ukr": "втік від Гедеона й був узятий у полон разом із Цалмунною",
+    "deu": "floh vor Gideon und wurde mit Zalmuna gefangen genommen",
+    "spa": "huyó de Gedeón y fue tomado cautivo con Zalmunna"
+   },
+   {
+    "verdict": "fix",
+    "why": "The question is a minor detail; the verses give the reason he was slain: he had killed Gideon's brothers at Tabor.",
+    "english": "was slain by Gideon for having killed his brothers at Tabor",
+    "references": [
+     "JDG 8:18-21"
+    ],
+    "ukr": "був убитий Гедеоном за те, що повбивав його братів на Фаворі",
+    "deu": "wurde von Gideon getötet, weil er seine Brüder zu Thabor erwürgt hatte",
+    "spa": "fue muerto por Gedeón por haber matado a sus hermanos en Tabor"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

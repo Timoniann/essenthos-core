@@ -1,0 +1,19 @@
+{
+ "slug": "judea-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.543432+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де будували дім Божий, і робота мала успіх",
+    "deu": "war der Ort, wo das Haus Gottes gebaut wurde und das Werk gut vonstatten ging",
+    "spa": "fue el lugar donde se edificaba la casa de Dios, y la obra prosperaba",
+    "why": "Ukrainian verb now agrees with the feminine name Юдея: було -> була."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

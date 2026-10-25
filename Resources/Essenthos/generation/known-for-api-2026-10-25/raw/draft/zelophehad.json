@@ -1,0 +1,26 @@
+{
+ "slug": "zelophehad",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.644486+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Beyond his lineage, the verses tell that the LORD ordered his inheritance to pass to his daughters because he had no sons.",
+  "clauses": [
+   {
+    "english": "had his inheritance pass to his daughters at the LORD's word",
+    "references": [
+     "NUM 27:7"
+    ],
+    "quote": "thou shalt cause the inheritance of their father to pass unto them"
+   }
+  ],
+  "doubts": [
+   "NUM 27:3 says he died in the wilderness, but only in his daughters' words, so it was left out.",
+   "The marriage of his daughters (NUM 36) is their deed, so it was not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

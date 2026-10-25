@@ -1,0 +1,17 @@
+{
+ "slug": "benammi",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.731407+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The only verse that truly names Ben-ammi (GEN 19:38) states his birth and his fathering of the Ammonites, which the summary already gives, and the 1CH 19:5 mark concerns someone else.",
+  "clauses": [],
+  "doubts": [
+   "1CH 19:5 is marked as naming the record but concerns David and his shamed servants, not Ben-ammi, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,17 @@
+{
+ "slug": "harim-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.618757+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Harim in priestly courses, a census of returning families, a list of those with foreign wives and a list of sealers, none of which says more than the summary does.",
+  "clauses": [],
+  "doubts": [
+   "EZR 10:21 lists the sons of Harim among those who put away foreign wives, but it only names them and does not tell of Harim himself."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

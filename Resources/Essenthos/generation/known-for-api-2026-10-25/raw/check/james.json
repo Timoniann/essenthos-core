@@ -1,0 +1,47 @@
+{
+ "slug": "james",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.604234+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "left his ship and his father at Jesus' call and followed him",
+    "references": [
+     "MAT 4:21-22"
+    ],
+    "ukr": "залишив човна та батька свого на Христів поклик і пішов услід за Ним",
+    "deu": "verließ auf Jesu Ruf das Schiff und seinen Vater und folgte ihm nach",
+    "spa": "dejó el barco y a su padre al llamado de Jesús y le siguió"
+   },
+   {
+    "verdict": "fix",
+    "why": "The transfiguration is stated in verse 2, but the clause adds 'where Jesus was transfigured' fine; it is supported, though the cited verses say Jesus brought them, so the actor must be passive and short.",
+    "english": "was taken up a high mountain with Peter and John, where Jesus was transfigured",
+    "references": [
+     "MAT 17:1-2"
+    ],
+    "ukr": "був узятий на гору високу з Петром та Іваном, де Ісус переобразився",
+    "deu": "wurde mit Petrus und Johannes auf einen hohen Berg geführt, wo Jesus verklärt wurde",
+    "spa": "fue llevado a un monte alto con Pedro y Juan, donde Jesús se transfiguró"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was killed with the sword by Herod the king",
+    "references": [
+     "ACT 12:1-2"
+    ],
+    "ukr": "був убитий мечем царем Іродом",
+    "deu": "wurde von dem König Herodes mit dem Schwert getötet",
+    "spa": "fue muerto a cuchillo por el rey Herodes"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

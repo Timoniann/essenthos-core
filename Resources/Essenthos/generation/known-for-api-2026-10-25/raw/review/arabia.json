@@ -1,0 +1,19 @@
+{
+ "slug": "arabia",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.087739+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "посилала золото й срібло Соломонові через своїх царів",
+    "deu": "schickte durch seine Könige Gold und Silber an Salomo",
+    "spa": "enviaba oro y plata a Salomón por medio de sus reyes",
+    "why": "The English says 'sent', but all three renderings said 'brought' (довозила, brachte, traía), so I changed the verb in each."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

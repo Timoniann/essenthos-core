@@ -1,0 +1,17 @@
+{
+ "slug": "harim-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.638665+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Harim's name or his sons in returnee rosters, lists of those who took foreign wives, wall-repairer lists and a list of signatories, and state no deed or event of Harim himself beyond what the summary says.",
+  "clauses": [],
+  "doubts": [
+   "EZR 10:31, NEH 3:11 and NEH 10:27 may refer to different men or families named Harim; the verses only list them."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

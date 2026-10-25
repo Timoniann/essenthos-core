@@ -1,0 +1,34 @@
+{
+ "slug": "angle",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.722344+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give two events at this turning of the wall: Uzziah fortified towers there, and sections of it were repaired under Nehemiah.",
+  "clauses": [
+   {
+    "english": "was fortified with towers by King Uzziah",
+    "references": [
+     "2CH 26:9"
+    ],
+    "quote": "Uzziah built towers in Jerusalem at the corner gate, and at the valley gate, and at the turning of the wall, and fortified them."
+   },
+   {
+    "english": "was repaired in pieces by Ezer, Baruch and Binnui when the wall was rebuilt",
+    "references": [
+     "NEH 3:19-20",
+     "NEH 3:24"
+    ],
+    "quote": "Baruch the son of Zabbai earnestly repaired the other piece, from the turning of the wall"
+   }
+  ],
+  "doubts": [
+   "NEH 3:25 mentions the turning of the wall again, but only as a location for Palal's repair, so it was left out as a separate citation.",
+   "The record is a place name for the wall's turning; the Hebrew word may mean 'corner' in NEH 3:24, and that verse's 'corner' was not treated as a separate place."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

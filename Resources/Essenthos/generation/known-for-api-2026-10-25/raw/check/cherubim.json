@@ -1,0 +1,47 @@
+{
+ "slug": "cherubim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.477943+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "kept the way of the tree of life with a flaming sword",
+    "references": [
+     "GEN 3:24"
+    ],
+    "ukr": "стерегли дорогу до дерева життя з полум'яним мечем",
+    "deu": "bewahrten den Weg zu dem Baum des Lebens mit dem bloßen, hauenden Schwert",
+    "spa": "guardaron el camino del árbol de la vida con una espada encendida"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "gave fire from between them to the man clothed with linen",
+    "references": [
+     "EZK 10:7"
+    ],
+    "ukr": "дали вогонь з-поміж них чоловікові, одягненому в льняне",
+    "deu": "gaben dem Mann in der Leinwand Feuer von zwischen ihnen",
+    "spa": "dieron fuego de entre ellos al varón vestido de lienzos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "mounted up from the earth with the glory of the God of Israel over them",
+    "references": [
+     "EZK 10:19"
+    ],
+    "ukr": "знялися з землі, а слава Ізраїлевого Бога була зверху над ними",
+    "deu": "erhoben sich von der Erde, und die Herrlichkeit des Gottes Israels war oben über ihnen",
+    "spa": "se levantaron de la tierra, y la gloria del Dios de Israel estaba arriba sobre ellos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "hur",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.600236+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Exodus 17 tells what Hur did, and Exodus 24 adds that he was left in charge with Aaron; the other verses are genealogy or only name him as Bezaleel's grandfather.",
+  "clauses": [
+   {
+    "english": "helped Aaron hold up Moses' hands until Israel won the battle against Amalek",
+    "references": [
+     "EXO 17:10-13"
+    ],
+    "quote": "Aaron and Hur stayed up his hands"
+   },
+   {
+    "english": "was left with Aaron to judge the elders' matters while Moses was on the mount",
+    "references": [
+     "EXO 24:14"
+    ],
+    "quote": "Aaron and Hur are with you: if any man have any matters to do, let him come unto them."
+   }
+  ],
+  "doubts": [
+   "The genealogical verses in 1 Chronicles 2 and 4 may concern other men named Hur, or only list him, so they were left out.",
+   "The verses naming Bezaleel as son of Hur only give kinship, so no clause rests on them."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

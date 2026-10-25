@@ -1,0 +1,47 @@
+{
+ "slug": "heshbon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.313614+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by Israel, who dwelt in it after defeating Sihon its king",
+    "references": [
+     "NUM 21:23-26"
+    ],
+    "ukr": "був узятий Ізраїлем, який оселився в ньому після перемоги над його царем Сигоном",
+    "deu": "wurde von Israel eingenommen, das darin wohnte, nachdem es Sihon, seinen König, geschlagen hatte",
+    "spa": "fue tomado por Israel, que habitó en él después de vencer a Sehón, su rey"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was built by the children of Reuben",
+    "references": [
+     "NUM 32:37"
+    ],
+    "ukr": "був збудований синами Рувимовими",
+    "deu": "wurde von den Kindern Ruben gebaut",
+    "spa": "fue edificado por los hijos de Rubén"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verses 38-39 do not mention the Levites; verse 40 does, so the citation needs it.",
+    "english": "was given with its suburbs to the Levites",
+    "references": [
+     "JOS 21:38-40"
+    ],
+    "ukr": "був відданий левітам разом з його пасовиськами",
+    "deu": "wurde den Leviten mit seinen Vorstädten gegeben",
+    "spa": "fue dado a los levitas con sus ejidos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

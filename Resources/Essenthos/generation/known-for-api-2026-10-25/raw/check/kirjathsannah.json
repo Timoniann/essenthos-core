@@ -1,0 +1,23 @@
+{
+ "slug": "kirjathsannah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.710527+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "drop",
+    "why": "The cited verses speak of Kirjathsepher (Debir) and never name Kirjath-sannah, so they cannot support the clause for this record.",
+    "english": "",
+    "references": [],
+    "ukr": "",
+    "deu": "",
+    "spa": ""
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

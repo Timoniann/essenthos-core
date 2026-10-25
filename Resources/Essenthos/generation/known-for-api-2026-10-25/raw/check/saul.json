@@ -1,0 +1,58 @@
+{
+ "slug": "saul",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.868868+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "routed the Ammonites in battle",
+    "references": [
+     "1SA 11:11"
+    ],
+    "ukr": "розбив Аммона в бою",
+    "deu": "schlug die Ammoniter in der Schlacht",
+    "spa": "derrotó a los Ammonitas en la batalla"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was rejected by the LORD from being king",
+    "references": [
+     "1SA 15:26"
+    ],
+    "ukr": "був відкинутий Господом від царювання",
+    "deu": "wurde vom HERRN verworfen, nicht mehr König zu sein",
+    "spa": "fue desechado por el SEÑOR para que no fuera rey"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "sought day after day to kill David",
+    "references": [
+     "1SA 23:14-15"
+    ],
+    "ukr": "щодня шукав, щоб убити Давида",
+    "deu": "suchte Tag für Tag, David zu töten",
+    "spa": "buscaba todos los días matar a David"
+   },
+   {
+    "verdict": "fix",
+    "why": "Mount Gilboa is named only in 1SA 31:1, outside the citation, and the verses say he took a sword, not his own.",
+    "english": "fell on a sword on mount Gilboa",
+    "references": [
+     "1SA 31:1-4"
+    ],
+    "ukr": "упав на меч на горі Гільбоа",
+    "deu": "fiel auf dem Berg Gilboa in ein Schwert",
+    "spa": "se echó sobre una espada en el monte Gilboa"
+   }
+  ],
+  "note": "The line omits that Saul was anointed the first king of Israel by Samuel."
+ },
+ "problems": [],
+ "attempts": []
+}

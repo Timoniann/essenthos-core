@@ -1,0 +1,37 @@
+{
+ "slug": "sennacherib",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.489488+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прийшов на всі укріплені Юдині міста та захопив їх",
+    "deu": "zog herauf gegen alle festen Städte Judas und nahm sie ein",
+    "spa": "subió contra todas las ciudades fuertes de Judá y las tomó",
+    "why": "German: replaced archaic 'wider' with 'gegen' and 'Juda's' with 'Judas'."
+   },
+   {
+    "ukr": "послав велике військо до Єрусалиму",
+    "deu": "sandte ein großes Heer gegen Jerusalem",
+    "spa": "envió un gran ejército contra Jerusalem",
+    "why": "German: replaced archaic 'gen' with 'gegen'."
+   },
+   {
+    "ukr": "повернувся до Ніневії після того, як Ангол Господній уразив асирійський табір",
+    "deu": "kehrte nach Ninive zurück, nachdem der Engel des HERRN das Lager von Assyrien geschlagen hatte",
+    "spa": "volvió a Nínive después de que el ángel del SEÑOR hirió el campo de los asirios",
+    "why": ""
+   },
+   {
+    "ukr": "був убитий своїми синами мечем, коли молився в домі свого бога",
+    "deu": "wurde von seinen Söhnen mit dem Schwert erschlagen, als er im Haus seines Gottes anbetete",
+    "spa": "fue muerto a cuchillo por sus hijos mientras adoraba en el templo de su dios",
+    "why": "Ukrainian: fixed the awkward word order 'мечем своїми синами'. German: 'im Hause' changed to modern 'im Haus'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

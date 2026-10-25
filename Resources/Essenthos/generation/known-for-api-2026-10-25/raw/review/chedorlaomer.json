@@ -1,0 +1,31 @@
+{
+ "slug": "chedorlaomer",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.874296+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був дванадцять років обслуговуваний тими, хто потім повстав, і побив Рефаїв, Зузів та Емів",
+    "deu": "wurde zwölf Jahre bedient von denen, die dann abfielen, und schlug die Riesen, die Susiter und die Emiter",
+    "spa": "fue servido doce años por quienes luego se rebelaron, y derrotó a los Raphaitas, a los Zuzitas y a los Emitas",
+    "why": "Ukrainian clause was turned round with others as subject and began with a pronoun; now begins with the passive verb and keeps the record as subject."
+   },
+   {
+    "ukr": "воював із царями Содому й Гомори в долині Сіддім і взяв Лота та його добро",
+    "deu": "stritt mit den Königen von Sodom und Gomorra im Tal Siddim und nahm Lot und seine Habe mit",
+    "spa": "combatió contra los reyes de Sodoma y de Gomorra en el valle de Siddim y tomó a Lot y su hacienda",
+    "why": ""
+   },
+   {
+    "ukr": "був розбитий Аврамом разом із царями, що були з ним, коли той гнався за ними",
+    "deu": "wurde von Abram, der ihnen nachjagte, mit den Königen, die mit ihm waren, geschlagen",
+    "spa": "fue derrotado por Abram, que los siguió, junto con los reyes que estaban con él",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,15 @@
+{
+ "slug": "ebed",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.925132+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "Ebed is named only as the father of Gaal in each verse, and nothing is told of Ebed himself beyond what the summary already says.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "kibrothhattaavah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.607248+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the people who lusted were buried after the LORD struck them with a great plague",
+    "references": [
+     "NUM 11:33-34"
+    ],
+    "ukr": "була місцем, де поховали пожадливий народ після того, як Господь вдарив його великою поразкою",
+    "deu": "war der Ort, wo man das lüsterne Volk begrub, nachdem der HERR es mit einer großen Plage geschlagen hatte",
+    "spa": "fue el lugar donde sepultaron al pueblo codicioso después de que el SEÑOR lo hirió con una gran plaga"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

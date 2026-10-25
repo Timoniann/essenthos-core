@@ -1,0 +1,31 @@
+{
+ "slug": "gibeah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.312273+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де чоловіки міста збезчестили наложницю Левита, і вона померла",
+    "deu": "war der Ort, wo die Männer der Stadt die Nebenfrau des Leviten schändeten, sodass sie starb",
+    "spa": "fue el lugar donde los hombres de la ciudad abusaron de la concubina del levita, y ella murió",
+    "why": "Replaced the old or inexact wording (господарі, Bürger, Kebsweib, oprimieron) with modern equivalents of 'men of the city', 'concubine' and 'abused'."
+   },
+   {
+    "ukr": "була атакована Ізраїлем після того, як Веніямин не захотів видати її розпусних людей, і була побита вістрям меча",
+    "deu": "wurde von Israel angegriffen, nachdem Benjamin sich geweigert hatte, seine bösen Männer auszuliefern, und wurde mit der Schärfe des Schwerts geschlagen",
+    "spa": "fue atacada por Israel después de que Benjamín no quiso entregar a sus hombres perversos, y fue pasada a cuchillo",
+    "why": "Made 'Benjamin' the tribe as in the English, rendered 'its wicked men' plainly instead of 'sons/Buben/hijos de Belial', and used modern wording."
+   },
+   {
+    "ukr": "була місцем, куди Саул пішов додому після того, як його обрали царем",
+    "deu": "war der Ort, wohin Saul heimging, nachdem er zum König gewählt worden war",
+    "spa": "fue el lugar adonde Saúl se fue a su casa después de ser elegido rey",
+    "why": "The English says 'chosen king' with no agent; removed the added 'the LORD' and added the missing 'king'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

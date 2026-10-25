@@ -1,0 +1,36 @@
+{
+ "slug": "lazarus-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.684598+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses shown do not say he had been four days in the tomb.",
+    "english": "was raised from the dead by Jesus",
+    "references": [
+     "JHN 11:43-44"
+    ],
+    "ukr": "був воскрешений Ісусом із мертвих",
+    "deu": "wurde von Jesus von den Toten auferweckt",
+    "spa": "fue resucitado de los muertos por Jesús"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was plotted against by the chief priests, who wanted to put him to death",
+    "references": [
+     "JHN 12:10-11"
+    ],
+    "ukr": "проти нього змовилися первосвященики, щоб заподіяти йому смерть",
+    "deu": "gegen ihn trachteten die Hohenpriester danach, ihn zu töten",
+    "spa": "contra él consultaron los príncipes de los sacerdotes matarlo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

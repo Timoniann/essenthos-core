@@ -1,0 +1,40 @@
+{
+ "slug": "asa",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.518376+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Asa's battle with Zerah, his removal of Maachah's idol, and his dealings with Benhadad against Baasha.",
+  "clauses": [
+   {
+    "english": "defeated Zerah the Ethiopian when the LORD smote the Ethiopians",
+    "references": [
+     "2CH 14:10-13"
+    ],
+    "quote": "the LORD smote the Ethiopians before Asa"
+   },
+   {
+    "english": "removed his mother Maachah from being queen and burnt her idol",
+    "references": [
+     "1KI 15:13"
+    ],
+    "quote": "Asa destroyed her idol, and burnt it by the brook Kidron"
+   },
+   {
+    "english": "sent silver and gold to Benhadad of Syria to turn him against Baasha",
+    "references": [
+     "1KI 15:18-20"
+    ],
+    "quote": "king Asa sent them to Benhadad"
+   }
+  ],
+  "doubts": [
+   "Left out the covenant at Jerusalem (2CH 15:10-12) and the disease in his feet (2CH 16:12) to keep to three clauses.",
+   "Left out 1KI 15:25-33, 1KI 16, 1KI 22:41, 2CH 17:2, 2CH 20:32, 2CH 21:12 and MAT 1:7-8, which only date other reigns or mention Asa in passing."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

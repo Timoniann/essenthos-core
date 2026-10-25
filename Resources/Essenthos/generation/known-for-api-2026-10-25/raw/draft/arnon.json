@@ -1,0 +1,15 @@
+{
+ "slug": "arnon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.920617+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only mention the Arnon as a border of Moab and of the land taken from Sihon, or as a stage of Israel's journey, and tell no event of the river itself.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

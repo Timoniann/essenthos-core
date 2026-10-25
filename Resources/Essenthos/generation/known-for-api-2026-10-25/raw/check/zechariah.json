@@ -1,0 +1,25 @@
+{
+ "slug": "zechariah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.185348+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was killed by Shallum, who conspired against him and reigned in his place",
+    "references": [
+     "2KI 15:10"
+    ],
+    "ukr": "був убитий Шаллумом, який учинив на нього змову і зацарював замість нього",
+    "deu": "wurde von Sallum getötet, der einen Bund wider ihn machte und an seiner Statt König wurde",
+    "spa": "fue muerto por Sallum, que se conjuró contra él y reinó en su lugar"
+   }
+  ],
+  "note": "The line leaves out that he reigned over Israel in Samaria for six months and did evil in the sight of the LORD (2KI 15:8-9)."
+ },
+ "problems": [],
+ "attempts": []
+}

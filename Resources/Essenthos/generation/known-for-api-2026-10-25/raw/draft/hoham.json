@@ -1,0 +1,33 @@
+{
+ "slug": "hoham",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.872181+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Hoham joining the five kings against Gibeon and being brought out to Joshua, which goes beyond the summary.",
+  "clauses": [
+   {
+    "english": "went up with four other Amorite kings and made war against Gibeon",
+    "references": [
+     "JOS 10:5"
+    ],
+    "quote": "gathered themselves together, and went up"
+   },
+   {
+    "english": "was brought out of the cave to Joshua with the four other kings",
+    "references": [
+     "JOS 10:23"
+    ],
+    "quote": "brought forth those five kings unto him out of the cave"
+   }
+  ],
+  "doubts": [
+   "JOS 12:10 only lists him among the defeated kings, so it was not used.",
+   "The verses on the cave and his fate (JOS 10:16-22, 26) were not fully given, so nothing is said of how he came to be in the cave or what became of him."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

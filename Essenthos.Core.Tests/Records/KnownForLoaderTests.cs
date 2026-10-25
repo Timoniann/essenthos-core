@@ -233,6 +233,105 @@ public sealed class KnownForLoaderTests : IDisposable
     }
 
     /// <summary>
+    /// The owner's review list adds the records he approved, each with the list's source, and nothing he
+    /// rejected or left open; a record the file already holds keeps the file's clauses; a second load
+    /// changes nothing, and taking an approval back takes the record's clauses away.
+    /// </summary>
+    [Fact]
+    public async Task TheReviewListAddsWhatTheOwnerApprovedAndNothingElse()
+    {
+        var sodom = Place("sodom", "Sodom");
+        var bethel = Place("bethel", "Bethel");
+        var ai = Place("ai", "Ai");
+        await _db.SaveChangesAsync();
+        var path = Path.Combine(Path.GetTempPath(), $"known-for-{Guid.NewGuid():N}.json");
+        try
+        {
+            System.IO.File.WriteAllText(path, ReviewList(sodom: "approved", bethel: "rejected", noah: "approved"));
+            var file = new KnownForFile("a test", [File.Records[0]]);
+
+            var first = await _loader.Load(file, KnownForReviewList.Approved(path), CancellationToken.None);
+            var written = await Fingerprint();
+            _db.ChangeTracker.Clear();
+            var second = await _loader.Load(file, KnownForReviewList.Approved(path), CancellationToken.None);
+
+            first.Should().Be(first with { Written = 2, Clauses = 3, Removed = 0, Missing = 0 });
+            second.Should().Be(second with { Written = 0, Clauses = 0, Removed = 0, Missing = 0 });
+            (await Fingerprint()).Should().Equal(written);
+            var overthrown = (await _db.EntityKnownFor.AsNoTracking().Include(k => k.Texts)
+                .Where(k => k.EntityId == sodom.Id).ToListAsync()).Should().ContainSingle().Subject;
+            overthrown.English.Should().Be("was overthrown when the LORD rained brimstone and fire on it");
+            overthrown.Source.Should().Be("written by a model, approved by the owner");
+            overthrown.Texts.Select(t => t.Language).Should().BeEquivalentTo(["ukr", "deu", "spa"]);
+            (await KnownForClauses.Of(_db, bethel.Id, "eng", CancellationToken.None)).Should().BeNull();
+            (await KnownForClauses.Of(_db, ai.Id, "eng", CancellationToken.None)).Should().BeNull();
+            (await KnownForClauses.Of(_db, _noah.Id, "eng", CancellationToken.None))!
+                .Select(k => k.Text).Should().Equal(Ark, Covenant);
+
+            System.IO.File.WriteAllText(path, ReviewList(sodom: null, bethel: "rejected", noah: "approved"));
+            _db.ChangeTracker.Clear();
+            var takenBack = await _loader.Load(file, KnownForReviewList.Approved(path), CancellationToken.None);
+
+            takenBack.Removed.Should().Be(1);
+            (await KnownForClauses.Of(_db, sodom.Id, "eng", CancellationToken.None)).Should().BeNull();
+        }
+        finally
+        {
+            System.IO.File.Delete(path);
+        }
+    }
+
+    /// <summary>A review list that is not there approves nothing.</summary>
+    [Fact]
+    public void AMissingReviewListApprovesNothing() =>
+        KnownForReviewList.Approved(Path.Combine(Path.GetTempPath(), $"none-{Guid.NewGuid():N}.json"))
+            .Records.Should().BeEmpty();
+
+    private Entity Place(string slug, string name)
+    {
+        var entity = new Entity
+        {
+            Kind = EntityKind.Place,
+            Slug = slug,
+            Name = name,
+            SourceId = slug,
+            Source = "a test",
+        };
+        _db.Entities.Add(entity);
+        return entity;
+    }
+
+    private static string ReviewList(string? sodom, string? bethel, string? noah)
+    {
+        static object Entry(string slug, string english, string reference, string? answer) => new
+        {
+            slug,
+            kind = "place",
+            name = slug,
+            clauses = new[]
+            {
+                new { english, ukr = "у", deu = "d", spa = "e", references = new[] { reference }, renderingsChanged = (string?)null },
+            },
+            readings = new { note = "the readers' notes are not loaded" },
+            decision = answer is null ? null : new { answer, note = (string?)null, at = "2026-10-25T00:00:00Z" },
+        };
+
+        return JsonSerializer.Serialize(new
+        {
+            about = "a test",
+            source = "written by a model, approved by the owner",
+            records = new[]
+            {
+                Entry("sodom", "was overthrown when the LORD rained brimstone and fire on it", "GEN 19:24-25", sodom),
+                Entry("bethel", "was named by Jacob", "GEN 28:19", bethel),
+                Entry("ai", "was burned into a heap for ever", "JOS 8:28", null),
+                Entry("noah", "was not the file's noah", "GEN 6:9", noah),
+            },
+            declined = Array.Empty<object>(),
+        });
+    }
+
+    /// <summary>
     /// The file the load reads: every clause in every reader's language, and every reference a run of
     /// verses in the book it names — Jude's prophecy of Enoch is Jude and not Judges.
     /// </summary>

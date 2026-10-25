@@ -1,0 +1,36 @@
+{
+ "slug": "ark-of-bulrushes",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.512918+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says she took the ark and daubed it with slime and pitch; it does not say she made it.",
+    "english": "was daubed with slime and pitch by Moses' mother, who laid the child in it among the flags",
+    "references": [
+     "EXO 2:3"
+    ],
+    "ukr": "була вимазана асфальтом та смолою матір'ю Мойсея, яка поклала до неї дитину в очереті",
+    "deu": "wurde von der Mutter des Mose mit Erdharz und Pech verklebt, die das Kind hineinlegte und es ins Schilf legte",
+    "spa": "fue calafateada con pez y betún por la madre de Moisés, que puso en ella al niño en el carrizal"
+   },
+   {
+    "verdict": "fix",
+    "why": "Only verse 5 is needed for the sighting and the maid; the verse says she saw the ark, not that she found it.",
+    "english": "was seen among the flags by Pharaoh's daughter, who sent her maid to fetch it",
+    "references": [
+     "EXO 2:5"
+    ],
+    "ukr": "була побачена серед очерету дочкою фараона, яка послала свою невільницю, щоб узяла її",
+    "deu": "wurde von der Tochter Pharaos im Schilf gesehen, die ihre Magd hinsandte und es holen ließ",
+    "spa": "fue vista en el carrizal por la hija de Faraón, que envió una criada suya a tomarla"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

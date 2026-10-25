@@ -1,0 +1,36 @@
+{
+ "slug": "jeduthun",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.058749+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was appointed with Heman to give thanks to the LORD with trumpets, cymbals and instruments of God",
+    "references": [
+     "1CH 16:41-42"
+    ],
+    "ukr": "був призначений разом із Гемано́м дякувати Господеві, із сурмами, цимбалами та знаряддями для Божої пісні",
+    "deu": "wurde mit Heman bestimmt, dem HERRN zu danken, mit Trompeten, Zimbeln und Saitenspielen Gottes",
+    "spa": "fue designado con Hemán para dar gracias al SEÑOR, con trompetas, címbalos e instrumentos de música de Dios"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 25:1 says David and the captains set apart the sons, not David alone; the detail about the sons is minor, so it is removed.",
+    "english": "prophesied with a harp, to give thanks and praise the LORD",
+    "references": [
+     "1CH 25:3"
+    ],
+    "ukr": "пророкував на цитрі на дяку та на хвалу Господеві",
+    "deu": "weissagte mit Harfen, zu danken und den HERRN zu loben",
+    "spa": "profetizaba con arpa, para celebrar y alabar al SEÑOR"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

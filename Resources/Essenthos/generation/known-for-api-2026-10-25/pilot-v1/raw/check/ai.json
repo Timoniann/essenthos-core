@@ -1,0 +1,37 @@
+{
+ "slug": "ai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:49:29.581046+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say about thirty-six were struck down, and the clause drops 'about'.",
+    "english": "routed about three thousand Israelites and struck down about thirty-six of them",
+    "references": [
+     "JOS 7:4-5"
+    ],
+    "ukr": "Обернув навтіки коло трьох тисяч ізраїльтян і побив коло тридцяти шести з них",
+    "deu": "Jagte etwa dreitausend Israeliten in die Flucht und schlug etwa sechsunddreißig von ihnen",
+    "spa": "Puso en fuga a como tres mil Israelitas e hirió a como treinta y seis de ellos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by an Israelite ambush, its people slain, and burned into a heap for ever",
+    "references": [
+     "JOS 8:19",
+     "JOS 8:24-26",
+     "JOS 8:28"
+    ],
+    "ukr": "Був здобутий засідкою ізраїльтян, його мешканців перебито, а його спалено й обернено на вічну руїну",
+    "deu": "Wurde von einem Hinterhalt der Israeliten eingenommen, seine Einwohner wurden erschlagen, und es wurde zu einem ewigen Haufen niedergebrannt",
+    "spa": "Fue tomada por una emboscada de los Israelitas, sus moradores fueron muertos, y fue quemada y reducida a un montón perpetuo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": []
+}

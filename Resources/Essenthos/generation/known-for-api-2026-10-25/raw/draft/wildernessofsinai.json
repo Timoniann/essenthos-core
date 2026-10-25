@@ -1,0 +1,37 @@
+{
+ "slug": "wildernessofsinai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.643315+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several events of Israel's story took place in the wilderness of Sinai, so the place merits a line of its chief happenings.",
+  "clauses": [
+   {
+    "english": "was where Israel camped before the mount after leaving Egypt",
+    "references": [
+     "EXO 19:1-2"
+    ],
+    "quote": "there Israel camped before the mount."
+   },
+   {
+    "english": "was where Moses numbered the children of Israel",
+    "references": [
+     "NUM 1:19"
+    ],
+    "quote": "As the LORD commanded Moses, so he numbered them in the wilderness of Sinai."
+   },
+   {
+    "english": "was where Nadab and Abihu died for offering strange fire",
+    "references": [
+     "NUM 3:4"
+    ],
+    "quote": "when they offered strange fire before the LORD"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

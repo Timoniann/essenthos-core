@@ -1,0 +1,17 @@
+{
+ "slug": "gilead",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.406601+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses mention Gilead only in genealogies and tribal lists, giving his sons and descendants and nothing he did or that happened to him.",
+  "clauses": [],
+  "doubts": [
+   "JOS 17:1 and 1CH 2:21-23 use Gilead as the name of a land or region, not the person, so they were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

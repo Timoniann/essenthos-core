@@ -1,0 +1,43 @@
+{
+ "slug": "rebekah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.410617+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of her giving water to Abraham's servant and going to marry Isaac, her conceiving after Isaac's prayer, and her scheme to have Jacob blessed.",
+  "clauses": [
+   {
+    "english": "gave Abraham's servant and his camels water at the well, and went to become Isaac's wife",
+    "references": [
+     "GEN 24:45-46",
+     "GEN 24:58-61",
+     "GEN 24:67"
+    ],
+    "quote": "And they called Rebekah, and said unto her, Wilt thou go with this man? And she said, I will go."
+   },
+   {
+    "english": "conceived twins after Isaac prayed to the LORD, being barren",
+    "references": [
+     "GEN 25:21-24"
+    ],
+    "quote": "Isaac intreated the LORD for his wife, because she was barren"
+   },
+   {
+    "english": "helped Jacob obtain his father's blessing by disguising him as Esau",
+    "references": [
+     "GEN 27:15-17"
+    ],
+    "quote": "Rebekah took goodly raiment of her eldest son Esau"
+   }
+  ],
+  "doubts": [
+   "GEN 24:15-16 and 24:45-46 give her drawing water; the cited run GEN 24:45-46 is used for the well scene.",
+   "The blessing deed rests on GEN 27:15-17; the verses are given only in part (the middle of chapter 27 is omitted).",
+   "ROM 9:10 spells the name Rebecca; it refers to the same woman and adds nothing beyond GEN 25."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

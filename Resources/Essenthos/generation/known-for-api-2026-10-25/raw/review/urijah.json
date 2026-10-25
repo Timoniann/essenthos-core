@@ -1,0 +1,25 @@
+{
+ "slug": "urijah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:11.955711+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "збудував жертовника за взірцем, який Ахаз послав із Дамаску",
+    "deu": "baute einen Altar nach dem Muster, das Ahas von Damaskus gesandt hatte",
+    "spa": "edificó un altar conforme al diseño que Achâz había enviado de Damasco",
+    "why": "Ukrainian: modern spelling жертовника. German and Spanish: added the missing 'pattern' and 'an altar', and dropped the 'king' that the English does not have."
+   },
+   {
+    "ukr": "виконав усе, що наказав Ахаз щодо жертв на великому жертовнику",
+    "deu": "führte alles aus, was Ahas ihm wegen der Opfer auf dem großen Altar befohlen hatte",
+    "spa": "hizo conforme a todo lo que Achâz le mandó acerca de los sacrificios en el gran altar",
+    "why": "Ukrainian: modern spelling жертовнику. German: modern wording instead of Luther's 'hieß', and dropped 'der König'. Spanish: dropped 'el rey'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,49 @@
+{
+ "slug": "rebekah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.769315+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "gave Abraham's servant and his camels water at the well, and went to become Isaac's wife",
+    "references": [
+     "GEN 24:45-46",
+     "GEN 24:58-61",
+     "GEN 24:67"
+    ],
+    "ukr": "напоїла раба Авраамового та його верблюдів біля джерела й пішла, щоб стати жінкою Ісака",
+    "deu": "tränkte Abrahams Knecht und seine Kamele am Brunnen und zog hin, um Isaaks Weib zu werden",
+    "spa": "dio de beber al criado de Abraham y a sus camellos en la fuente, y fue para ser mujer de Isaac"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "conceived twins after Isaac prayed to the LORD, being barren",
+    "references": [
+     "GEN 25:21-24"
+    ],
+    "ukr": "завагітніла близнюками, будучи неплідною, після молитви Ісака до Господа",
+    "deu": "wurde schwanger mit Zwillingen, nachdem Isaak den HERRN gebeten hatte, denn sie war unfruchtbar",
+    "spa": "concibió mellizos después de que Isaac oró al SEÑOR, pues era estéril"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verses do not mention the blessing; they say she dressed Jacob in Esau's clothes and put kid skins on him.",
+    "english": "dressed Jacob in Esau's clothes and put kid skins on his hands and neck",
+    "references": [
+     "GEN 27:15-16"
+    ],
+    "ukr": "одягла Якова в одяг Ісава й наділила шкури козлят на його руки та шию",
+    "deu": "zog Jakob die Kleider Esaus an und legte ihm Felle von Böcklein um Hände und Hals",
+    "spa": "vistió a Jacob con los vestidos de Esaú y le puso pieles de cabritos sobre las manos y el cuello"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

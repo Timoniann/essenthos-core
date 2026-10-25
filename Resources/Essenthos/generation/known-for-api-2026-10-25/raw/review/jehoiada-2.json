@@ -1,0 +1,31 @@
+{
+ "slug": "jehoiada-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.862275+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "склав умову із сотниками, вивів царського сина і поклав на нього корону",
+    "deu": "schloss einen Bund mit den Obersten, führte den Sohn des Königs heraus und setzte ihm die Krone auf",
+    "spa": "hizo un pacto con los centuriones, sacó al hijo del rey y le puso la corona",
+    "why": "Modernised the old wording: Ukrainian 'царевого' became 'царського'; German 'des Königs Sohn hervorkommen ließ' and 'eine Krone' became 'den Sohn des Königs heraus führte' and 'die Krone'; Spanish 'hizo liga' became 'hizo un pacto'."
+   },
+   {
+    "ukr": "склав завіт між Господом, царем і народом, щоб вони були народом Господнім",
+    "deu": "schloss einen Bund zwischen dem HERRN, dem König und dem Volk, dass sie das Volk des HERRN sein sollten",
+    "spa": "hizo alianza entre el SEÑOR y el rey y el pueblo, para que fueran pueblo del SEÑOR",
+    "why": "Replaced the archaic Ukrainian 'заповіта' with 'завіт' and the archaic German 'des HERRN Volk' with 'das Volk des HERRN'."
+   },
+   {
+    "ukr": "поставив скриньку біля жертовника для срібла, що приносилося до Господнього дому",
+    "deu": "stellte eine Truhe neben den Altar für das Geld, das in das Haus des HERRN gebracht wurde",
+    "spa": "puso un arca junto al altar para el dinero que se metía en la casa del SEÑOR",
+    "why": "Replaced the old German 'Lade' with 'Truhe' and 'zum Haus' with 'in das Haus'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

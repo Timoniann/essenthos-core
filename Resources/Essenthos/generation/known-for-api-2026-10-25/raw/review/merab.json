@@ -1,0 +1,19 @@
+{
+ "slug": "merab",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.407585+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була обіцяна Саулом Давидові за жінку, але натомість була видана за мехолатитянина Адріїла",
+    "deu": "wurde von Saul David zur Frau versprochen, aber stattdessen Adriel, dem Meholathiter, zur Frau gegeben",
+    "spa": "fue prometida por Saúl a David por mujer, pero en cambio fue dada por mujer a Adriel Meholatita",
+    "why": "German: replaced the old-fashioned «zum Weibe» with «zur Frau» (twice)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

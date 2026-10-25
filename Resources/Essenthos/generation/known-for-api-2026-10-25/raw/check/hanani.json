@@ -1,0 +1,25 @@
+{
+ "slug": "hanani",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.042367+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "rebuked King Asa for relying on the king of Syria and not on the LORD",
+    "references": [
+     "2CH 16:7-9"
+    ],
+    "ukr": "докорив цареві Асі за те, що той спирався на сирійського царя, а не на Господа",
+    "deu": "tadelte den König Asa, weil er sich auf den König von Syrien verlassen hatte und nicht auf den HERRN",
+    "spa": "reprendió al rey Asa porque se había apoyado en el rey de Siria y no en el SEÑOR"
+   }
+  ],
+  "note": "The line omits that Asa put Hanani in prison for this rebuke (2CH 16:10)."
+ },
+ "problems": [],
+ "attempts": []
+}

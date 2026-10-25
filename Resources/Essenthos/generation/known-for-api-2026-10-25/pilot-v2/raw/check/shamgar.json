@@ -1,0 +1,25 @@
+{
+ "slug": "shamgar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:55:36.607810+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "slew six hundred Philistines with an ox goad and delivered Israel",
+    "references": [
+     "JDG 3:31"
+    ],
+    "ukr": "побив шістсот филистимлян києм на худобу і урятував Ізраїля",
+    "deu": "schlug sechshundert Philister mit einem Ochsenstecken und erlöste Israel",
+    "spa": "hirió a seiscientos hombres de los Filisteos con una aguijada de bueyes y salvó a Israel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

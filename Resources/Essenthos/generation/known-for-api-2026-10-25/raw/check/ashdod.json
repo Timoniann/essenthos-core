@@ -1,0 +1,47 @@
+{
+ "slug": "ashdod",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.804905+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the captured ark of God was set beside Dagon, who fell on his face before it",
+    "references": [
+     "1SA 5:1-4"
+    ],
+    "ukr": "був місцем, де захоплений Божий ковчег поставили біля Даґона, що лежав ницьма перед ним",
+    "deu": "war der Ort, wo die genommene Lade Gottes neben Dagon gestellt wurde, der vor ihr auf seinem Antlitz lag",
+    "spa": "fue el lugar donde el arca de Dios tomada fue puesta junto a Dagón, que cayó postrado delante de ella"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was struck by the hand of the LORD with emerods while the ark was there",
+    "references": [
+     "1SA 5:6-7"
+    ],
+    "ukr": "був уражений рукою Господа болячками, поки там був ковчег",
+    "deu": "wurde von der Hand des HERRN mit bösen Beulen geschlagen, solange die Lade dort war",
+    "spa": "fue herido por la mano del SEÑOR con hemorroides mientras el arca estaba allí"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was fought against and taken by Tartan, sent by Sargon king of Assyria",
+    "references": [
+     "ISA 20:1"
+    ],
+    "ukr": "зазнав нападу і був здобутий Тартаном, якого послав Сарґон, цар асирійський",
+    "deu": "wurde von Tharthan, den Sargon, der König von Assyrien, gesandt hatte, bekämpft und eingenommen",
+    "spa": "fue atacado y tomado por Thartán, a quien envió Sargón, rey de Asiria"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

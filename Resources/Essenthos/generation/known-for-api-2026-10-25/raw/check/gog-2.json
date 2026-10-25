@@ -1,0 +1,36 @@
+{
+ "slug": "gog-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.342709+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says 'my land'; 'the land of Israel' is stated only in the following verse, so the citation needs widening.",
+    "english": "was brought by God against the land of Israel in the latter days",
+    "references": [
+     "EZK 38:16-18"
+    ],
+    "ukr": "був виведений Богом на землю Ізраїлю наприкінці днів",
+    "deu": "wurde von Gott zur letzten Zeit in das Land Israel kommen gelassen",
+    "spa": "fue traído por Dios contra la tierra de Israel al cabo de los días"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says God would leave a sixth of 'thee', not of his host, and the Ukrainian and German texts do not give the sixth part, so only the turning back is kept.",
+    "english": "was turned back by God",
+    "references": [
+     "EZK 39:2"
+    ],
+    "ukr": "був повернений Богом",
+    "deu": "wurde von Gott herumgelenkt",
+    "spa": "fue hecho volver por Dios"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

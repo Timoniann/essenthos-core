@@ -1,0 +1,37 @@
+{
+ "slug": "cornergate",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.943203+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say the wall was broken down from the gate of Ephraim to the corner gate, so it marks the end of the breach, not the place where it was broken.",
+    "english": "was the end of the wall Jehoash of Israel broke down, four hundred cubits from the gate of Ephraim",
+    "references": [
+     "2KI 14:13",
+     "2CH 25:23"
+    ],
+    "ukr": "була кінцем муру, зруйнованого Йоашем, царем Ізраїлевим, на чотири сотні ліктів від Єфремової брами",
+    "deu": "war das Ende der Mauer, die Joas, der König Israels, einriß, vierhundert Ellen vom Tor Ephraim an",
+    "spa": "fue el final del muro que derribó Joas, rey de Israel, a cuatrocientos codos de la puerta de Ephraim"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Uzziah built and fortified towers",
+    "references": [
+     "2CH 26:9"
+    ],
+    "ukr": "була місцем, де Уззійя збудував башти й укріпив їх",
+    "deu": "war der Ort, an dem Usia Türme baute und befestigte",
+    "spa": "fue donde Uzzías edificó torres y las fortificó"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

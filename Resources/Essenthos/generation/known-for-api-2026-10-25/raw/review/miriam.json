@@ -1,0 +1,25 @@
+{
+ "slug": "miriam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.044847+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "повела жінок з бубнами та з танцями і закликала їх співати для Господа",
+    "deu": "führte die Frauen mit Pauken und Reigen hinaus und forderte sie auf, dem HERRN zu singen",
+    "spa": "condujo a las mujeres con panderos y danzas, y las llamó a cantar al SEÑOR",
+    "why": ""
+   },
+   {
+    "ukr": "нарікала на Мойсея, стала прокаженою і була замкнена поза табором сім днів",
+    "deu": "redete gegen Mose, wurde aussätzig und wurde sieben Tage aus dem Lager ausgeschlossen",
+    "spa": "habló contra Moisés, se volvió leprosa y fue echada del campamento siete días",
+    "why": "German: archaic «wider» and «verschlossen außerhalb des Lagers» replaced with modern «gegen» and «aus dem Lager ausgeschlossen»; Spanish: archaic «real» replaced with «campamento»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

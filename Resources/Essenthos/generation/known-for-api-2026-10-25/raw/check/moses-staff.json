@@ -1,0 +1,47 @@
+{
+ "slug": "moses-staff",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.491951+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "became a serpent when cast down, and a rod again when seized",
+    "references": [
+     "EXO 4:3-4"
+    ],
+    "ukr": "стала вужем, коли її кинули на землю, і знову стала палицею, коли її схопили",
+    "deu": "wurde zur Schlange, als man ihn auf die Erde warf, und wieder zum Stab, als man ihn ergriff",
+    "spa": "se tornó culebra al ser echada en tierra, y otra vez vara al ser tomada"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was stretched toward heaven, and the LORD sent thunder and hail on Egypt",
+    "references": [
+     "EXO 9:23"
+    ],
+    "ukr": "була простягнута до неба, і Господь дав громи та град на єгипетську землю",
+    "deu": "wurde gen Himmel gereckt, und der HERR ließ donnern und hageln und Hagel regnen über Ägyptenland",
+    "spa": "fue extendida hacia el cielo, y el SEÑOR hizo tronar y granizar, y llovió granizo sobre la tierra de Egipto"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was stretched over Egypt, and an east wind brought the locusts",
+    "references": [
+     "EXO 10:13"
+    ],
+    "ukr": "була простягнута на єгипетську землю, і східний вітер наніс сарани",
+    "deu": "wurde über Ägyptenland gereckt, und der Ostwind führte die Heuschrecken her",
+    "spa": "fue extendida sobre la tierra de Egipto, y el viento oriental trajo la langosta"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

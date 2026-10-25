@@ -1,0 +1,27 @@
+{
+ "slug": "shelah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.596343+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was withheld by Judah from marrying Tamar, though he had grown",
+    "references": [
+     "GEN 38:11",
+     "GEN 38:14",
+     "GEN 38:26"
+    ],
+    "ukr": "був утриманий Юдою від одруження з Тамарою, хоч і виріс",
+    "deu": "wurde von Juda daran gehindert, Thamar zur Frau zu nehmen, obwohl er groß geworden war",
+    "spa": "fue impedido por Judá de casarse con Thamar, aunque había crecido"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,47 @@
+{
+ "slug": "timothy",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.671865+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was circumcised by Paul because of the Jews of those parts",
+    "references": [
+     "ACT 16:1-3"
+    ],
+    "ukr": "був обрізаний Павлом через юдеїв, що були в тих місцях",
+    "deu": "wurde von Paulus um der Juden willen beschnitten, die an jenen Orten waren",
+    "spa": "fue circuncidado por Pablo por causa de los judíos que estaban en aquellos lugares"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say 'we' sent him and do not name Paul or the Thessalonians.",
+    "english": "was sent to establish and comfort others in their faith",
+    "references": [
+     "1TH 3:1-2"
+    ],
+    "ukr": "був посланий, щоб упевнити й потішити інших у їхній вірі",
+    "deu": "wurde gesandt, um andere in ihrem Glauben zu stärken und zu ermahnen",
+    "spa": "fue enviado a confirmar y exhortar a otros en su fe"
+   },
+   {
+    "verdict": "fix",
+    "why": "Paul is named as the writer only in verse 1, so the citation must include it.",
+    "english": "was asked by Paul to stay at Ephesus and charge some to teach no other doctrine",
+    "references": [
+     "1TI 1:1-3"
+    ],
+    "ukr": "був попрошений Павлом залишитися в Ефесі й наказати декому не навчати іншої науки",
+    "deu": "wurde von Paulus ermahnt, in Ephesus zu bleiben und etlichen zu gebieten, nicht anders zu lehren",
+    "spa": "fue rogado por Pablo que se quedase en Efeso y requiriese a algunos que no enseñen diversa doctrina"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

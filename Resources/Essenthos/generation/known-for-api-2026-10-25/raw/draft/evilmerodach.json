@@ -1,0 +1,27 @@
+{
+ "slug": "evilmerodach",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.710763+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell one deed of Evilmerodach: he freed Jehoiachin from prison and honoured him.",
+  "clauses": [
+   {
+    "english": "lifted up the head of Jehoiachin king of Judah and brought him out of prison",
+    "references": [
+     "2KI 25:27",
+     "JER 52:31"
+    ],
+    "quote": "lifted up the head of Jehoiachin king of Judah, and brought him forth out of prison"
+   }
+  ],
+  "doubts": [
+   "JER 52:34 names the king of Babylon only as giver of the diet; treated as part of the same kindness, not a separate clause.",
+   "The two accounts give different days of the month (27th and 25th); no date is stated in the clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

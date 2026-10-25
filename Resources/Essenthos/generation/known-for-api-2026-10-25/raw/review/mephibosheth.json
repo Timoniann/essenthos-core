@@ -1,0 +1,31 @@
+{
+ "slug": "mephibosheth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.206387+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "упав, коли нянька втікала з ним, і окривів на ноги",
+    "deu": "fiel, als seine Amme mit ihm floh, und wurde an den Füßen lahm",
+    "spa": "cayó mientras su ama huía con él y quedó cojo",
+    "why": ""
+   },
+   {
+    "ukr": "отримав від Давида обіцянку повернути йому все поле Саула і завжди їсти хліб при його столі",
+    "deu": "erhielt von David das Versprechen, den ganzen Acker Sauls wiederzubekommen und täglich an seinem Tisch das Brot zu essen",
+    "spa": "recibió de David la promesa de que le haría volver todas las tierras de Saúl y comería siempre pan a su mesa",
+    "why": ""
+   },
+   {
+    "ukr": "був пощадений Давидом через Господню присягу між Давидом та Йонатаном",
+    "deu": "wurde von David verschont um des Eides des HERRN willen, der zwischen David und Jonathan war",
+    "spa": "fue perdonado por David por el juramento del SEÑOR que hubo entre David y Jonathán",
+    "why": "Spanish: spelled Jonathán as in Reina-Valera 1909 instead of Jonatán."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,24 @@
+{
+ "slug": "steps-of-ahaz",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.529280+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell one event that happened on the steps: the shadow went back ten degrees as a sign to Hezekiah.",
+  "clauses": [
+   {
+    "english": "had its shadow brought back ten degrees by the LORD as a sign to Hezekiah",
+    "references": [
+     "2KI 20:9-11",
+     "ISA 38:7-8"
+    ],
+    "quote": "he brought the shadow ten degrees backward, by which it had gone down in the dial of Ahaz"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

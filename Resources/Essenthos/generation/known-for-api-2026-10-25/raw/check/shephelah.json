@@ -1,0 +1,36 @@
+{
+ "slug": "shephelah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.015155+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was struck by Joshua along with the hills and the south, and none was left remaining",
+    "references": [
+     "JOS 10:40"
+    ],
+    "ukr": "була побита Ісусом разом із горою та Неґевом, і жодного не зосталося",
+    "deu": "wurde von Josua samt dem Gebirge und dem Land gegen Mittag geschlagen, und niemand blieb übrig",
+    "spa": "fue herido por Josué junto con las montañas y el mediodía, sin quedar nada"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had its cities invaded and some of them taken by the Philistines",
+    "references": [
+     "2CH 28:18"
+    ],
+    "ukr": "зазнала нападу филистимлян на свої міста, деякі з яких вони здобули",
+    "deu": "erlitt den Einfall der Philister in ihre Städte, von denen sie einige gewannen",
+    "spa": "sufrió que los Filisteos se derramaran por sus ciudades y tomaran algunas de ellas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

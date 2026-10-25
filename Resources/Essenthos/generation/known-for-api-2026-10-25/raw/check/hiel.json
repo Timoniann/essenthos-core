@@ -1,0 +1,25 @@
+{
+ "slug": "hiel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.560751+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "built Jericho, laying its foundation in his firstborn Abiram and setting up its gates in his youngest son Segub",
+    "references": [
+     "1KI 16:34"
+    ],
+    "ukr": "відбудував Єрихон, заклав його фундаменти на своєму первородному Авірамі, а брами його поставив на наймолодшому своєму Сеґівові",
+    "deu": "baute Jericho; es kostete ihn seinen ersten Sohn Abiram, als er den Grund legte, und den jüngsten Sohn Segub, als er die Türen setzte",
+    "spa": "reedificó Jericó, echando el cimiento en Abiram su primogénito y poniendo sus puertas en Segub su hijo postrero"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

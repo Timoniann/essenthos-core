@@ -1,0 +1,25 @@
+{
+ "slug": "cyprus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.830470+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди припливли Варнава й Савл, послані Святим Духом, і де проповідували в синагогах",
+    "deu": "war der Ort, wohin Barnabas und Saulus, vom Heiligen Geist ausgesandt, segelten und in den Synagogen predigten",
+    "spa": "fue el lugar adonde navegaron Bernabé y Saulo, enviados por el Espíritu Santo, y donde predicaron en las sinagogas",
+    "why": "Removed 'of the Jews' (юдейських / der Juden / de los Judíos) and Spanish 'la palabra de Dios', which the English lacks; modernised German 'heiligen Geist' to 'Heiligen Geist' and 'schifften' to 'segelten'."
+   },
+   {
+    "ukr": "був місцем, куди Варнава поплив із Марком, розлучившись з Павлом",
+    "deu": "war der Ort, wohin Barnabas mit Markus segelte, nachdem er sich von Paulus getrennt hatte",
+    "spa": "fue el lugar adonde navegó Bernabé con Marcos, tras apartarse de Pablo",
+    "why": "Replaced archaic German 'schiffte' with modern 'segelte'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

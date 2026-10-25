@@ -1,0 +1,17 @@
+{
+ "slug": "jarmuth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.381650+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses mention Jarmuth only as the seat of one of five allied kings and in lists of kings and towns, so nothing happens to the city itself beyond what the summary says.",
+  "clauses": [],
+  "doubts": [
+   "JOS 10:3, 10:5 and 10:23 concern the king of Jarmuth (Piram), not the city, so they give no event of the place."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

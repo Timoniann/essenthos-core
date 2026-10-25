@@ -1,0 +1,47 @@
+{
+ "slug": "pharaoh-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.634978+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "dreamed of seven fat and seven lean cattle and seven full and seven thin ears of corn",
+    "references": [
+     "GEN 41:1-7"
+    ],
+    "ukr": "бачив уві сні сім ситих і сім худих корів та сім повних і сім тонких колосків",
+    "deu": "träumte von sieben fetten und sieben mageren Kühen und von sieben vollen und sieben dünnen Ähren",
+    "spa": "soñó con siete vacas gordas y siete flacas, y con siete espigas llenas y siete menudas"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verses do not say he interpreted the dreams, so that clause is removed, and the citation is narrowed to the verses that state the appointment.",
+    "english": "set Joseph over all the land of Egypt",
+    "references": [
+     "GEN 41:41-43"
+    ],
+    "ukr": "поставив Йосипа над усім єгипетським краєм",
+    "deu": "setzte Joseph über ganz Ägyptenland",
+    "spa": "puso a José sobre toda la tierra de Egipto"
+   },
+   {
+    "verdict": "fix",
+    "why": "Pharaoh told Joseph to settle them in Goshen; he did not himself give the land, and 47:11 names Rameses.",
+    "english": "told Joseph to settle his father and brothers in the land of Goshen",
+    "references": [
+     "GEN 47:5-6"
+    ],
+    "ukr": "сказав Йосипові оселити батька та братів його в країні Ґошен",
+    "deu": "sagte Joseph, er solle seinen Vater und seine Brüder im Lande Gosen wohnen lassen",
+    "spa": "dijo a José que hiciera habitar a su padre y a sus hermanos en la tierra de Gosén"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

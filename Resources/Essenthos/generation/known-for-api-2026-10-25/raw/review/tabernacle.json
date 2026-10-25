@@ -1,0 +1,37 @@
+{
+ "slug": "tabernacle",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.072933+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була зроблена Ізраїлевими синами і закінчена згідно з усім, що Господь наказав Мойсеєві",
+    "deu": "wurde von den Kindern Israel gemacht und vollendet, ganz wie der HERR es Mose geboten hatte",
+    "spa": "fue hecho por los hijos de Israel y acabado conforme a todo lo que el SEÑOR mandó a Moisés",
+    "why": ""
+   },
+   {
+    "ukr": "була поставлена Мойсеєм першого місяця другого року",
+    "deu": "wurde von Mose im ersten Monat des zweiten Jahres aufgerichtet",
+    "spa": "fue erigido por Moisés en el primer mes del segundo año",
+    "why": ""
+   },
+   {
+    "ukr": "була наповнена славою Господньою, закрита хмарою",
+    "deu": "wurde von der Herrlichkeit des HERRN erfüllt, von der Wolke bedeckt",
+    "spa": "fue llenado de la gloria del SEÑOR, cubierto por la nube",
+    "why": ""
+   },
+   {
+    "ukr": "була поставлена в Шіло всією громадою Ізраїлевих синів",
+    "deu": "wurde von der ganzen Gemeinde der Kinder Israel zu Silo aufgerichtet",
+    "spa": "fue asentado en Silo por toda la congregación de los hijos de Israel",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

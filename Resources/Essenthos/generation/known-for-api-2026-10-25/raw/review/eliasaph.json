@@ -1,0 +1,19 @@
+{
+ "slug": "eliasaph",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.023259+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "приніс свою жертву за плем'я Ґада шостого дня",
+    "deu": "brachte am sechsten Tag seine Gabe für den Stamm Gad dar",
+    "spa": "ofreció el sexto día su ofrenda por la tribu de Gad",
+    "why": "German: replaced the dated dative form «Tage» with modern «Tag»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

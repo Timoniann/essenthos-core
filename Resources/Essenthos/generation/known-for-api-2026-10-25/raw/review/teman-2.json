@@ -1,0 +1,25 @@
+{
+ "slug": "teman-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.819440+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був під загрозою від Господа, що Він пошле на нього вогонь",
+    "deu": "wurde vom HERRN mit einem Feuer bedroht, das er über Teman senden wollte",
+    "spa": "fue amenazado por el SEÑOR con fuego que metería en él",
+    "why": "Ukrainian: masculine verb and pronoun for Теман, modern 'вогонь'. German: added the missing 'upon it' (über Teman). Spanish: masculine 'amenazado' and 'en él'."
+   },
+   {
+    "ukr": "був місцем, звідки прийшов Бог, у видінні Авакума",
+    "deu": "war der Ort, von dem Gott kam, in Habakuks Vision",
+    "spa": "fue el lugar de donde vino Dios, en la visión de Habacuc",
+    "why": "Ukrainian: masculine 'був' for Теман and past tense 'прийшов'. Spanish: past tense 'vino' instead of future 'vendrá'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

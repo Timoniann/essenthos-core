@@ -1,0 +1,37 @@
+{
+ "slug": "agrippa",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.931378+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Agrippa said he would like to hear the man, he did not formally ask; Paul is named only in 25:14.",
+    "english": "came to Caesarea to greet Festus and said he wished to hear Paul himself",
+    "references": [
+     "ACT 25:13-14",
+     "ACT 25:22"
+    ],
+    "ukr": "приїхав до Кесарії, щоб вітати Феста, і сказав, що хотів би й сам послухати Павла",
+    "deu": "kam nach Cäsarea, um Festus zu begrüßen, und sagte, er möchte Paulus auch selbst gerne hören",
+    "spa": "vino a Cesarea a saludar a Festo y dijo que también quisiera oír él mismo a Pablo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "told Paul he almost persuaded him to be a Christian",
+    "references": [
+     "ACT 26:28"
+    ],
+    "ukr": "сказав Павлові, що той малощо не намовляє його стати християнином",
+    "deu": "sagte zu Paulus, es fehle nicht viel, so überrede er ihn, ein Christ zu werden",
+    "spa": "dijo a Pablo que por poco le persuadía a ser cristiano"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

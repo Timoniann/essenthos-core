@@ -1,0 +1,40 @@
+{
+ "slug": "james",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.218429+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The marked verses tell of James's call, his presence at the transfiguration, and his death by Herod's sword.",
+  "clauses": [
+   {
+    "english": "left his ship and his father at Jesus' call and followed him",
+    "references": [
+     "MAT 4:21-22"
+    ],
+    "quote": "they immediately left the ship and their father, and followed him"
+   },
+   {
+    "english": "was taken up the high mountain with Peter and John, where Jesus was transfigured",
+    "references": [
+     "MAT 17:1-2"
+    ],
+    "quote": "Jesus taketh Peter, James, and John his brother"
+   },
+   {
+    "english": "was killed with the sword by Herod the king",
+    "references": [
+     "ACT 12:1-2"
+    ],
+    "quote": "And he killed James the brother of John with the sword."
+   }
+  ],
+  "doubts": [
+   "1CO 15:7 (seen of James) probably concerns another James, so it was left out.",
+   "Other scenes (Jairus' daughter, the request for seats, the fire from heaven) were left out to keep the line short."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

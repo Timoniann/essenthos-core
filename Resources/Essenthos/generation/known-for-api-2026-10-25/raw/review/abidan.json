@@ -1,0 +1,19 @@
+{
+ "slug": "abidan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.397027+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "приніс свою жертву дев'ятого дня за плем'я Веніяминове",
+    "deu": "brachte am neunten Tag seine Gabe dar für den Stamm Benjamin",
+    "spa": "ofreció su ofrenda el noveno día por la tribu de Benjamín",
+    "why": "The English says 'tribe', not 'sons/children', so all three now say tribe; the German also loses the old 'Tage' and 'Kinder'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

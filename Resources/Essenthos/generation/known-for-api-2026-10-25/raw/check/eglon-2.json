@@ -1,0 +1,25 @@
+{
+ "slug": "eglon-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.826585+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Only the people in the town are said to be utterly destroyed, not the town itself.",
+    "english": "was taken by Joshua in one day and struck with the sword, all its people destroyed",
+    "references": [
+     "JOS 10:34-35"
+    ],
+    "ukr": "був здобутий Ісусом того ж дня і побитий вістрям меча, а всіх, хто був у ньому, знищено",
+    "deu": "wurde von Josua am selben Tag eingenommen und mit der Schärfe des Schwerts geschlagen, und alle Seelen darin wurden vernichtet",
+    "spa": "fue tomado por Josué el mismo día y pasado a cuchillo, y todo lo vivo que había en él fue muerto, ya que Josué lo mató todo en ese día.\"}],\"note\":\"\"}"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

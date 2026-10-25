@@ -1,0 +1,25 @@
+{
+ "slug": "ephron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.021628+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give one defining event, Ephron's sale of the field and cave of Machpelah to Abraham, which the summary does not state.",
+  "clauses": [
+   {
+    "english": "sold Abraham the field and cave of Machpelah for four hundred shekels of silver",
+    "references": [
+     "GEN 23:14-18"
+    ],
+    "quote": "Abraham weighed to Ephron the silver"
+   }
+  ],
+  "doubts": [
+   "The namesake line already says he sold the cave, so the clause may largely repeat it, but the sale is the only deed told of him."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

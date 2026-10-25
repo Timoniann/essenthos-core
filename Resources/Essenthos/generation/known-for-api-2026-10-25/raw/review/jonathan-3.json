@@ -1,0 +1,25 @@
+{
+ "slug": "jonathan-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.358841+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "переказав Давидові раду Ахітофела та уник рабів Авесалома",
+    "deu": "überbrachte David den Rat Ahithophels und entkam den Knechten Absaloms",
+    "spa": "llevó aviso a David del consejo de Achitophel y escapó de los criados de Absalom",
+    "why": ""
+   },
+   {
+    "ukr": "сказав Адонії, що цар Давид настановив царем Соломона",
+    "deu": "sagte Adonia, dass der König David Salomo zum König gemacht habe",
+    "spa": "dijo a Adonía que el rey David había hecho rey a Salomón",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

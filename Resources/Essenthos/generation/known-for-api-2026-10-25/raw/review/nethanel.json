@@ -1,0 +1,19 @@
+{
+ "slug": "nethanel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.618811+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "приніс другого дня срібну миску, срібну кропильницю та жертви",
+    "deu": "opferte am zweiten Tag eine silberne Schüssel, eine silberne Schale und Opfer",
+    "spa": "ofreció el segundo día un plato de plata, un jarro de plata y sacrificios",
+    "why": "German: replaced the dated dative 'Tage' with modern 'Tag'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

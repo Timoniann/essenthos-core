@@ -1,0 +1,36 @@
+{
+ "slug": "queenofsheba",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.124826+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "came to Jerusalem to test Solomon with hard questions",
+    "references": [
+     "1KI 10:1-2"
+    ],
+    "ukr": "прийшла до Єрусалиму випробувати Соломона загадками",
+    "deu": "kam nach Jerusalem, um Salomo mit Rätseln zu prüfen",
+    "spa": "vino a Jerusalem para probar a Salomón con preguntas"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "gave King Solomon gold, spices and precious stones",
+    "references": [
+     "1KI 10:10"
+    ],
+    "ukr": "дала цареві Соломонові золото, пахощі та дороге каміння",
+    "deu": "gab dem König Salomo Gold, Gewürze und Edelsteine",
+    "spa": "dio al rey Salomón oro, especias y piedras preciosas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

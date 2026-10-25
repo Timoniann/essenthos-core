@@ -1,0 +1,33 @@
+{
+ "slug": "goliaths-sword",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.854847+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was done with the sword: David used it to cut off Goliath's head, and it was later given to him at Nob.",
+  "clauses": [
+   {
+    "english": "was drawn by David from its sheath to cut off Goliath's head",
+    "references": [
+     "1SA 17:51"
+    ],
+    "quote": "took his sword, and drew it out of the sheath thereof, and slew him, and cut off his head therewith"
+   },
+   {
+    "english": "was given to David by the priest at Nob, wrapped in a cloth behind the ephod",
+    "references": [
+     "1SA 21:9",
+     "1SA 22:10"
+    ],
+    "quote": "The sword of Goliath the Philistine, whom thou slewest in the valley of Elah, behold, it is here wrapped in a cloth behind the ephod"
+   }
+  ],
+  "doubts": [
+   "The summary already mentions it was kept at Nob, so the second clause rests on the giving to David rather than the keeping."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

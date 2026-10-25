@@ -1,0 +1,25 @@
+{
+ "slug": "hushai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.158281+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "пішов до Авесалома, як просив Давид, і пообіцяв служити йому",
+    "deu": "ging zu Absalom, wie David ihn gebeten hatte, und versprach, ihm zu dienen",
+    "spa": "fue a Absalom, como David le pidió, y prometió servirle",
+    "why": ""
+   },
+   {
+    "ukr": "дав раду, яку Авесалом визнав ліпшою за раду Ахітофела, бо Господь наказав зламати Ахітофелову раду",
+    "deu": "gab einen Rat, den Absalom dem Rat Ahithophels vorzog, denn der HERR hatte bestimmt, dass Ahithophels Rat verhindert würde",
+    "spa": "dio un consejo que Absalom prefirió al de Achitophel, porque el SEÑOR había ordenado que el consejo de Achitophel se frustrara",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "lystra",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.193187+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Павло зцілив чоловіка, кульгавого від народження, і той скочив та почав ходити",
+    "deu": "war der Ort, an dem Paulus einen von Geburt an lahmen Mann heilte, der aufsprang und ging",
+    "spa": "fue el lugar donde Pablo sanó a un hombre cojo de nacimiento, que saltó y anduvo",
+    "why": "Spanish: Paulo became Pablo. All three: dated phrasing replaced with modern wording (кульгавого від народження, von Geburt an, de nacimiento; German wandelte became ging)."
+   },
+   {
+    "ukr": "була місцем, де Павла побили камінням і виволокли за місто, а він встав і повернувся до міста",
+    "deu": "war der Ort, an dem Paulus gesteinigt und zur Stadt hinausgeschleift wurde, dann aufstand und in die Stadt ging",
+    "spa": "fue el lugar donde Pablo fue apedreado y sacado fuera de la ciudad, y luego se levantó y entró en la ciudad",
+    "why": "Ukrainian: устав became встав and вернувся became повернувся (modern standard)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

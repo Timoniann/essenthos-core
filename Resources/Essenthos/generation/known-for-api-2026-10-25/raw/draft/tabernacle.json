@@ -1,0 +1,48 @@
+{
+ "slug": "tabernacle",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.566892+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The tabernacle's story has clear events: it was built by Israel's offerings, reared up by Moses, and filled with the LORD's glory, and later it was set up at Shiloh.",
+  "clauses": [
+   {
+    "english": "was made by the children of Israel and finished according to all the LORD commanded Moses",
+    "references": [
+     "EXO 39:32"
+    ],
+    "quote": "Thus was all the work of the tabernacle of the tent of the congregation finished"
+   },
+   {
+    "english": "was reared up by Moses in the first month of the second year",
+    "references": [
+     "EXO 40:17-19"
+    ],
+    "quote": "in the second year, on the first day of the month, that the tabernacle was reared up"
+   },
+   {
+    "english": "was filled with the glory of the LORD, covered by the cloud",
+    "references": [
+     "EXO 40:34-35"
+    ],
+    "quote": "the glory of the LORD filled the tabernacle"
+   },
+   {
+    "english": "was set up at Shiloh by the whole congregation of Israel",
+    "references": [
+     "JOS 18:1"
+    ],
+    "quote": "set up the tabernacle of the congregation there"
+   }
+  ],
+  "doubts": [
+   "Many marked verses (Leviticus, Numbers) only give laws or lists of Levite duties at the tabernacle and were not used.",
+   "Several marked verses mention other tabernacles, such as the tabernacle of Moloch in ACT 7:43 (not marked) and the later tabernacle at Gibeon, so they were left out.",
+   "Cloud guiding the journeys (EXO 40:36-38) could be a fifth clause but was omitted to keep the line short."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

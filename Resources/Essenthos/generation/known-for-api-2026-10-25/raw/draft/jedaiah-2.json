@@ -1,0 +1,17 @@
+{
+ "slug": "jedaiah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.802261+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Jedaiah among priests, returning families and heads of priestly houses, and tell no deed or event beyond what the summary already says.",
+  "clauses": [],
+  "doubts": [
+   "NEH 12:7 and NEH 12:21 may name a different Jedaiah (a later priest or head of a house), so they were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

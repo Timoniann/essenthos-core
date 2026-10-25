@@ -1,0 +1,32 @@
+{
+ "slug": "jordan-memorial-stones",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.204105+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was done with the stones: they were taken from the Jordan and set up at Gilgal as a memorial.",
+  "clauses": [
+   {
+    "english": "were taken from the midst of the Jordan, one for each tribe, and carried over",
+    "references": [
+     "JOS 4:8"
+    ],
+    "quote": "took up twelve stones out of the midst of Jordan"
+   },
+   {
+    "english": "were set up at Gilgal as a memorial of Israel's crossing on dry land",
+    "references": [
+     "JOS 4:20-22"
+    ],
+    "quote": "those twelve stones, which they took out of Jordan, did Joshua pitch in Gilgal"
+   }
+  ],
+  "doubts": [
+   "JOS 4:9 mentions a separate set of twelve stones set up in the midst of Jordan; it is not marked as naming this record, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

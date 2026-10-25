@@ -1,0 +1,33 @@
+{
+ "slug": "balak",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.501881+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Balak's attempt to hire Balaam to curse Israel and its failure, which is more than the summary states.",
+  "clauses": [
+   {
+    "english": "sent messengers to Balaam to call him to curse Israel",
+    "references": [
+     "NUM 22:5-6"
+    ],
+    "quote": "Come now therefore, I pray thee, curse me this people"
+   },
+   {
+    "english": "was angered when Balaam blessed Israel three times instead of cursing them",
+    "references": [
+     "NUM 24:10"
+    ],
+    "quote": "I called thee to curse mine enemies, and, behold, thou hast altogether blessed them these three times."
+   }
+  ],
+  "doubts": [
+   "REV 2:14 spells the name Balac and speaks of the doctrine of Balaam, so it was left out; MIC 6:5 and JDG 11:25 only recall him, and JOS 24:9 adds warring against Israel, which the narrative in Numbers does not state, so it was left out.",
+   "NUM 22:5-6 are not marked as naming Balak but are the verses that state the sending of messengers; the marked NUM 22:7 and 22:16 show it."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

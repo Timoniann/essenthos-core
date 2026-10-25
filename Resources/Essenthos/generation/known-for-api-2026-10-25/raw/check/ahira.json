@@ -1,0 +1,25 @@
+{
+ "slug": "ahira",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.733340+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say the offering was for the dedication; that is stated in verse 84, just outside the citation.",
+    "english": "offered on the twelfth day for the dedication of the altar",
+    "references": [
+     "NUM 7:78-84"
+    ],
+    "ukr": "приніс дванадцятого дня жертву на освячення жертівника",
+    "deu": "opferte am zwölften Tage zur Einweihung des Altars",
+    "spa": "ofreció el duodécimo día para la dedicación del altar"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

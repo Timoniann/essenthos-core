@@ -1,0 +1,26 @@
+{
+ "slug": "phinehas-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.778953+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state that Phinehas was slain with his brother Hophni when the ark was taken, and that a sign of this was foretold.",
+  "clauses": [
+   {
+    "english": "was slain with his brother Hophni when the Philistines took the ark of God",
+    "references": [
+     "1SA 4:10-11"
+    ],
+    "quote": "the ark of God was taken; and the two sons of Eli, Hophni and Phinehas, were slain"
+   }
+  ],
+  "doubts": [
+   "1SA 2:34 foretells the death of both sons in one day; left out as it is the same event as the slaying in 1SA 4:11.",
+   "1SA 14:3 and 1SA 4:19 only give family relations, already in the summary."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

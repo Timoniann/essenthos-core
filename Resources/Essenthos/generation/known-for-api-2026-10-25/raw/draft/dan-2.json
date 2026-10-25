@@ -1,0 +1,36 @@
+{
+ "slug": "dan-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.208114+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of the city's capture and renaming by the Danites and of Jeroboam's golden calf set up there, which are its defining events.",
+  "clauses": [
+   {
+    "english": "was taken from Laish by the Danites, who burnt it and renamed it Dan",
+    "references": [
+     "JDG 18:27-29"
+    ],
+    "quote": "they smote them with the edge of the sword, and burnt the city with fire"
+   },
+   {
+    "english": "was where Jeroboam set up a golden calf for the people to worship",
+    "references": [
+     "1KI 12:28-30"
+    ],
+    "quote": "the other put he in Dan"
+   }
+  ],
+  "doubts": [
+   "Verses where Dan appears only in the phrase 'from Dan even to Beersheba' were left out as boundary markers.",
+   "GEN 14:14 (Abram's pursuit to Dan) was left out as a stage of a journey.",
+   "2SA 24:6 'Danjaan' may be a different place and was not used.",
+   "JOS 19:47 repeats the capture of Leshem and was not cited separately.",
+   "The tribe and the patriarch Dan are not the place; AMO 8:14 and EZK 27:19 are unclear on whether they mean the city or the tribe and were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

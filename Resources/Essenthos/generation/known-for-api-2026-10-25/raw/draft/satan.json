@@ -1,0 +1,50 @@
+{
+ "slug": "satan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.039361+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of several major deeds and events of Satan that a reader would name him for.",
+  "clauses": [
+   {
+    "english": "was permitted by the LORD to afflict Job, and smote him with sore boils",
+    "references": [
+     "JOB 1:12",
+     "JOB 2:6-7"
+    ],
+    "quote": "So went Satan forth from the presence of the LORD, and smote Job with sore boils"
+   },
+   {
+    "english": "tempted Jesus in the wilderness and was told to get behind him",
+    "references": [
+     "MAT 4:1-11",
+     "LUK 4:1-13"
+    ],
+    "quote": "Get thee hence, Satan: for it is written"
+   },
+   {
+    "english": "entered into Judas Iscariot, who betrayed Jesus",
+    "references": [
+     "LUK 22:3-4"
+    ],
+    "quote": "Then entered Satan into Judas surnamed Iscariot"
+   },
+   {
+    "english": "was cast out of heaven to the earth after war with Michael and his angels",
+    "references": [
+     "REV 12:7-9"
+    ],
+    "quote": "the great dragon was cast out, that old serpent, called the Devil, and Satan"
+   }
+  ],
+  "doubts": [
+   "The Revelation verses about the dragon are taken as speaking of Satan because REV 12:9 names him.",
+   "Beelzebub and the beast verses were left out as not stating a deed of Satan himself.",
+   "The future events of REV 20 (binding, loosing, the lake of fire) were left out to keep the line short."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

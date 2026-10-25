@@ -1,0 +1,26 @@
+{
+ "slug": "zechariah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.244777+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of his evil reign and his killing by Shallum, which goes beyond the summary's bare statement of kingship.",
+  "clauses": [
+   {
+    "english": "was killed by Shallum, who conspired against him and reigned in his place",
+    "references": [
+     "2KI 15:10"
+    ],
+    "quote": "Shallum the son of Jabesh conspired against him, and smote him before the people, and slew him"
+   }
+  ],
+  "doubts": [
+   "The verses spell the name Zachariah; the record is named Zechariah.",
+   "2KI 15:9 (did evil in the sight of the LORD) was left out as a judgment rather than a distinct event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

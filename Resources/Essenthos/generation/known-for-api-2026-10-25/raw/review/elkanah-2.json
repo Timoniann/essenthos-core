@@ -1,0 +1,25 @@
+{
+ "slug": "elkanah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.312361+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "ходив щороку вклонятися та приносити жертви Господу в Шіло",
+    "deu": "ging jährlich hinauf, um den HERRN in Silo anzubeten und ihm zu opfern",
+    "spa": "subía todos los años a adorar y sacrificar al SEÑOR en Silo",
+    "why": "Removed the added epithet «Саваоту»/«Zebaoth»/«de los ejércitos», which is not in the English."
+   },
+   {
+    "ukr": "був поблагословлений Ілієм разом зі своєю жінкою",
+    "deu": "wurde von Eli zusammen mit seiner Frau gesegnet",
+    "spa": "fue bendecido por Eli junto con su mujer",
+    "why": "Ukrainian: «із» changed to «зі» before «своєю»; German: old «Weib» replaced by modern «Frau»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

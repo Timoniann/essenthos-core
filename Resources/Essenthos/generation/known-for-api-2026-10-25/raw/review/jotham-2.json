@@ -1,0 +1,31 @@
+{
+ "slug": "jotham-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.350643+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "судив народ краю, коли його батько був прокажений",
+    "deu": "richtete das Volk im Lande, während sein Vater aussätzig war",
+    "spa": "gobernó al pueblo de la tierra mientras su padre era leproso",
+    "why": "Ukrainian: lower-cased «краю» (modern orthography)."
+   },
+   {
+    "ukr": "збудував горішню браму Господнього дому",
+    "deu": "baute das obere Tor am Hause des HERRN",
+    "spa": "edificó la puerta mayor de la casa del SEÑOR",
+    "why": ""
+   },
+   {
+    "ukr": "воював з аммонітянами і був сильніший від них",
+    "deu": "stritt mit den Kindern Ammon und wurde ihrer mächtig",
+    "spa": "tuvo guerra con los hijos de Ammón y los venció",
+    "why": "All three: removed the added «king of» so the enemy is the Ammonites themselves, as in the English; German: archaic «ward» became «wurde»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

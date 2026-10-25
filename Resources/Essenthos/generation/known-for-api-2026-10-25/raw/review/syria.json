@@ -1,0 +1,25 @@
+{
+ "slug": "syria",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.108473+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "дістав від Давида залоги, а його жителі стали Давидові за рабів",
+    "deu": "bekam von David Besatzung, und seine Bewohner wurden David untertänig",
+    "spa": "recibió guarnición de David, y sus habitantes fueron siervos de David",
+    "why": ""
+   },
+   {
+    "ukr": "втратив сто тисяч піхоти за один день від Ізраїлевих синів",
+    "deu": "verlor an die Kinder Israel hunderttausend Mann Fußvolk an einem Tag",
+    "spa": "perdió a manos de los hijos de Israel cien mil hombres de a pie en un día",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

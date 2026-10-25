@@ -1,0 +1,33 @@
+{
+ "slug": "nehushtan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.585034+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state two chief events of the bronze serpent: Moses made it and those bitten who looked at it lived, and Hezekiah later broke it in pieces.",
+  "clauses": [
+   {
+    "english": "was made by Moses and set on a pole, and those bitten who looked at it lived",
+    "references": [
+     "NUM 21:8-9"
+    ],
+    "quote": "when he beheld the serpent of brass, he lived"
+   },
+   {
+    "english": "was broken in pieces by Hezekiah after Israel had burned incense to it",
+    "references": [
+     "2KI 18:4"
+    ],
+    "quote": "brake in pieces the brasen serpent that Moses had made"
+   }
+  ],
+  "doubts": [
+   "JHN 3:14 compares the lifted serpent to the Son of man; this is a comparison, not an event, so it was left out.",
+   "The summary already names Hezekiah breaking it, but the deed is told here once as it happened, with the incense burning as its reason."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

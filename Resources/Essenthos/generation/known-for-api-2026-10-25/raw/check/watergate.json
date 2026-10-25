@@ -1,0 +1,25 @@
+{
+ "slug": "watergate",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.270397+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses place the reading in the street before the gate, not at the gate itself.",
+    "english": "had before it the street where Ezra read the book of the law to the people",
+    "references": [
+     "NEH 8:1-3"
+    ],
+    "ukr": "мала перед собою майдан, де Ездра читав народові книгу Закону",
+    "deu": "hatte vor sich die breite Gasse, auf der Esra dem Volk aus dem Buch des Gesetzes vorlas",
+    "spa": "tenía delante la plaza donde Esdras leyó al pueblo el libro de la ley"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "ishmael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.676000+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був обрізаний у тринадцять років разом з Авраамом",
+    "deu": "wurde mit dreizehn Jahren zusammen mit Abraham beschnitten",
+    "spa": "fue circuncidado a los trece años junto con Abraham",
+    "why": "Ukrainian: replaced the dated «літ» with the modern «років»."
+   },
+   {
+    "ukr": "був поблагословлений Богом, який обіцяв зробити його плідним і великим народом",
+    "deu": "wurde von Gott gesegnet, der versprach, ihn fruchtbar und zu einem großen Volk zu machen",
+    "spa": "fue bendecido por Dios, que prometió hacerlo fructificar y convertirlo en una gran nación",
+    "why": "Ukrainian: replaced the archaic «вчинити» with the modern «зробити»."
+   },
+   {
+    "ukr": "поховав Авраама разом з Ісаком у печері Махпелі",
+    "deu": "begrub Abraham zusammen mit Isaak in der Höhle Machpela",
+    "spa": "sepultó a Abraham junto con Isaac en la cueva de Macpela",
+    "why": "German: replaced the old wording «zwiefachen Höhle» with the place name «Höhle Machpela», as in the English."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

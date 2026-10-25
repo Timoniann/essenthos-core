@@ -1,0 +1,34 @@
+{
+ "slug": "eden-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.824788+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Genesis tells what happened in Eden: the LORD God planted a garden there and put the man in it, and later drove him out; the prophetic mentions are comparisons and figures of speech.",
+  "clauses": [
+   {
+    "english": "was where the LORD God planted a garden and put the man he had formed",
+    "references": [
+     "GEN 2:8",
+     "GEN 2:15"
+    ],
+    "quote": "the LORD God planted a garden eastward in Eden; and there he put the man whom he had formed"
+   },
+   {
+    "english": "was where the man was driven out, with cherubims and a flaming sword set to keep the way of the tree of life",
+    "references": [
+     "GEN 3:23-24"
+    ],
+    "quote": "he placed at the east of the garden of Eden Cherubims, and a flaming sword which turned every way"
+   }
+  ],
+  "doubts": [
+   "The mentions in Isaiah 51:3, Ezekiel 28:13, 31:9, 31:16, 31:18, 36:35 and Joel 2:3 are comparisons or figures of speech, so they were left out.",
+   "GEN 4:16 only places Nod east of Eden, so it was not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

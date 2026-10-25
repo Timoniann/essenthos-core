@@ -1,0 +1,38 @@
+{
+ "slug": "zacharias",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.459355+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The cited verses do not mention a son, and the dumbness is confirmed in verse 22; the angel's words are the cause given in verse 20.",
+    "english": "was struck dumb for not believing the angel's words",
+    "references": [
+     "LUK 1:20",
+     "LUK 1:22"
+    ],
+    "ukr": "занімів за те, що не повірив словам Ангола",
+    "deu": "wurde stumm, weil er den Worten des Engels nicht glaubte",
+    "spa": "quedó mudo por no haber creído las palabras del ángel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "wrote that his son's name was John, regained his speech and prophesied",
+    "references": [
+     "LUK 1:63-64",
+     "LUK 1:67"
+    ],
+    "ukr": "написав, що ім'я його сина Іван, знову заговорив і став пророкувати",
+    "deu": "schrieb, sein Sohn heiße Johannes, konnte wieder reden und weissagte",
+    "spa": "escribió que el nombre de su hijo era Juan, recobró el habla y profetizó"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

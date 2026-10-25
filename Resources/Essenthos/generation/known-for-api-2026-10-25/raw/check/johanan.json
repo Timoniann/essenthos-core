@@ -1,0 +1,47 @@
+{
+ "slug": "johanan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.243156+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "warned Gedaliah of Ishmael's plot to kill him",
+    "references": [
+     "JER 40:13-16"
+    ],
+    "ukr": "попередив Ґедалію про намір Ізмаїла вбити його",
+    "deu": "warnte Gedalja vor dem Plan Ismaels, ihn zu erschlagen",
+    "spa": "advirtió a Gedalías del plan de Ismael de matarlo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say he went to fight Ishmael, not that a fight took place; the people were recovered.",
+    "english": "went to fight Ishmael and recovered the people he had carried away captive from Mizpah",
+    "references": [
+     "JER 41:12-16"
+    ],
+    "ukr": "пішов воювати з Ізмаїлом і повернув народ, який той взяв у полон з Міцпи",
+    "deu": "zog hin, um wider Ismael zu streiten, und brachte das Volk wieder, das er von Mizpa weggeführt hatte",
+    "spa": "fue a pelear con Ismael y recobró al pueblo que éste había traído cautivo de Mizpa"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verses do not say the word came through Jeremiah.",
+    "english": "disobeyed the voice of the LORD and took the remnant of Judah into Egypt",
+    "references": [
+     "JER 43:4-7"
+    ],
+    "ukr": "не послухався Господнього голосу і взяв Юдину решту до єгипетського краю",
+    "deu": "gehorchte der Stimme des HERRN nicht und nahm die Übrigen aus Juda mit nach Ägyptenland",
+    "spa": "no obedeció la voz del SEÑOR y llevó al resto de Judá a tierra de Egipto"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}
