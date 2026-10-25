@@ -33,12 +33,18 @@ public sealed class BookmarksTests
     }
 
     [Fact]
-    public void AColourIsOneOfThePaletteAndDefaultsToTheFirst()
+    public void AColourIsOneOfThePaletteOrTheReadersOwnAndDefaultsToTheFirst()
     {
         BookmarkEndpoints.Color(null).Should().Be("amber");
         BookmarkEndpoints.Color("rose").Should().Be("rose");
-        BookmarkEndpoints.Color("#ff0000").Should().BeNull();
+        BookmarkEndpoints.Color("#ff0000").Should().Be("#ff0000");
+        BookmarkEndpoints.Color("#3A6FC4").Should().Be("#3a6fc4", "one colour is kept one way");
         BookmarkEndpoints.Color("Rose").Should().BeNull();
+        BookmarkEndpoints.Color("#f00").Should().BeNull();
+        BookmarkEndpoints.Color("#ff00001").Should().BeNull();
+        BookmarkEndpoints.Color("#gg0000").Should().BeNull();
+        BookmarkEndpoints.Color("ff00000").Should().BeNull();
+        BookmarkEndpoints.Color("red").Should().BeNull();
     }
 
     [Theory]

@@ -38,8 +38,9 @@ public class Bookmark : ISoftDeleted
     public int EndVerse { get; set; }
 
     /// <summary>
-    /// One of <see cref="Colors"/>, by name rather than as a hex value, so the client can draw each in a
-    /// shade that reads on a light page and on a dark one.
+    /// One of <see cref="Colors"/> by name, or a colour of the reader's own as <c>#rrggbb</c> in lower
+    /// case. The client draws either in a shade that reads on a light page and on a dark one, so a named
+    /// colour is kept as its name and a chosen one as what was chosen.
     /// </summary>
     public required string Color { get; set; }
 
@@ -63,7 +64,10 @@ public class Bookmark : ISoftDeleted
         Comment = null;
     }
 
-    /// <summary>The colours a bookmark can be. The first is what one gets when none is named.</summary>
+    /// <summary>
+    /// The colours a bookmark can be called by name. The first is what one gets when none is named; any
+    /// other colour is written as <c>#rrggbb</c>.
+    /// </summary>
     public static readonly IReadOnlyList<string> Colors = ["amber", "green", "blue", "rose", "violet"];
 
     public override string ToString() => $"Bookmark({Id}, {Book} {Chapter}:{Verse}-{EndChapter}:{EndVerse}, {Color})";

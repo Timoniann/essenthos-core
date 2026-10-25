@@ -118,7 +118,7 @@ public sealed class ChapterBookmarksStoreTests : IAsyncLifetime
         await using (var db = NewContext())
         {
             db.Accounts.Add(account);
-            db.ChapterBookmarks.Add(Mark(account.Id, ["KJV", "HEB"]));
+            db.ChapterBookmarks.Add(Mark(account.Id, ["KJV", "HEB"], "#3a6fc4"));
             await db.SaveChangesAsync();
         }
 
@@ -127,6 +127,7 @@ public sealed class ChapterBookmarksStoreTests : IAsyncLifetime
             var kept = await db.ChapterBookmarks.SingleAsync(b => b.AccountId == account.Id);
             kept.Texts.Should().Equal("KJV", "HEB");
             kept.Verse.Should().Be(16);
+            kept.Color.Should().Be("#3a6fc4", "a colour of the reader's own is kept as it was chosen");
             kept.Revision.Should().BePositive();
 
             db.ChapterBookmarks.Add(Mark(account.Id, []));
@@ -143,9 +144,9 @@ public sealed class ChapterBookmarksStoreTests : IAsyncLifetime
         }
     }
 
-    private static ChapterBookmark Mark(Guid account, List<string> texts) => new()
+    private static ChapterBookmark Mark(Guid account, List<string> texts, string color = "amber") => new()
     {
         Id = Guid.CreateVersion7(), AccountId = account, Book = 43, Chapter = 3, Verse = 16, Texts = texts,
-        Color = "amber", CreatedAt = DateTimeOffset.UtcNow,
+        Color = color, CreatedAt = DateTimeOffset.UtcNow,
     };
 }

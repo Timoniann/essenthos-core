@@ -50,9 +50,10 @@ internal static class ChapterBookmarkEndpoints
                 return Results.BadRequest(new ProblemResponse("A position is 0 or more."));
             }
 
-            if (put.Color is not null && BookmarkEndpoints.Color(put.Color) is null)
+            var color = put.Color is null ? null : BookmarkEndpoints.Color(put.Color);
+            if (put.Color is not null && color is null)
             {
-                return Results.BadRequest(new ProblemResponse(ColorRule));
+                return Results.BadRequest(new ProblemResponse(BookmarkEndpoints.ColorRule));
             }
 
             List<string>? texts = null;
@@ -92,7 +93,7 @@ internal static class ChapterBookmarkEndpoints
                     AccountId = account,
                     Book = ordinal,
                     Chapter = chapter,
-                    Color = put.Color ?? Bookmark.Colors[0],
+                    Color = color ?? Bookmark.Colors[0],
                     Position = put.Position ?? (await mine.MaxAsync(b => (int?)b.Position, context.RequestAborted) ?? -1) + 1,
                     CreatedAt = DateTimeOffset.UtcNow,
                 };
@@ -100,7 +101,7 @@ internal static class ChapterBookmarkEndpoints
             }
             else
             {
-                bookmark.Color = put.Color ?? bookmark.Color;
+                bookmark.Color = color ?? bookmark.Color;
                 bookmark.Position = put.Position ?? bookmark.Position;
             }
 
@@ -156,8 +157,6 @@ internal static class ChapterBookmarkEndpoints
             return Results.Ok(new ChapterBookmarksResponse(mine.OrderBy(b => b.Position).Select(Describe).ToList()));
         });
     }
-
-    private static readonly string ColorRule = $"A bookmark is one of {string.Join(", ", Bookmark.Colors)}.";
 
     private static async Task<ChapterBookmarksResponse> List(AccountsDbContext db, Guid account, CancellationToken cancellationToken)
     {

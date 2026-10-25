@@ -1,3 +1,4 @@
+using System.Buffers;
 using Essenthos.Core.Accounts;
 using Essenthos.Core.Corpus;
 using Essenthos.Core.Database;
@@ -216,13 +217,22 @@ internal static class BookmarkEndpoints
     private static IResult Refuse(Refused refused) =>
         Results.Json(new ProblemResponse(refused.Problem), statusCode: refused.Status);
 
-    private static readonly string ColorRule = $"A bookmark is one of {string.Join(", ", Bookmark.Colors)}.";
+    internal static readonly string ColorRule =
+        $"A bookmark is one of {string.Join(", ", Bookmark.Colors)}, or a colour written #rrggbb.";
 
     private const string CommentRule = "A comment is at most 20,000 characters.";
 
-    /// <summary>The colour asked for, the first of the palette when none is, or null for one that is not in it.</summary>
+    /// <summary>
+    /// The colour asked for — a name from the palette, or <c>#rrggbb</c> made lower case — the first of
+    /// the palette when none is, or null for anything else.
+    /// </summary>
     internal static string? Color(string? color) =>
-        color is null ? Bookmark.Colors[0] : Bookmark.Colors.FirstOrDefault(c => c == color);
+        color is null ? Bookmark.Colors[0]
+        : Bookmark.Colors.Contains(color) ? color
+        : color.Length == 7 && color[0] == '#' && !color.AsSpan(1).ContainsAnyExcept(HexDigits) ? color.ToLowerInvariant()
+        : null;
+
+    private static readonly SearchValues<char> HexDigits = SearchValues.Create("0123456789abcdefABCDEF");
 
     /// <summary>
     /// The comment with its ends trimmed and its line endings made one kind — null when nothing was
