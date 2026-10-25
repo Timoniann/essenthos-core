@@ -10,14 +10,16 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Written">Names added, which is all of them on a cold corpus and none after.</param>
 /// <param name="Missing">Names for a record the encyclopedia does not hold, which the log names.</param>
 /// <param name="Corrected">Existing name rows whose numbers or forms this pass corrected.</param>
-internal sealed record OwnNameOutcome(int Written, int Missing, TimeSpan Elapsed, int Corrected = 0)
+/// <param name="Bynamed">Records whose byname this pass wrote or changed.</param>
+internal sealed record OwnNameOutcome(int Written, int Missing, TimeSpan Elapsed, int Corrected = 0, int Bynamed = 0)
 {
     public override string ToString() =>
         (Written == 0 && Missing == 0
             ? "the names this corpus gives records of other datasets are already there"
             : $"{Written} names this corpus gives records of other datasets written, {Missing} for records it " +
               $"does not hold, in {Elapsed}")
-        + (Corrected > 0 ? $"; {Corrected} name rows corrected" : string.Empty);
+        + (Corrected > 0 ? $"; {Corrected} name rows corrected" : string.Empty)
+        + (Bynamed > 0 ? $"; {Bynamed} bynames written" : string.Empty);
 }
 
 /// <summary>
@@ -46,8 +48,58 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
     public async Task<OwnNameOutcome> Load(CancellationToken cancellationToken = default)
     {
         var corrected = await Correct(cancellationToken);
-        return (await Load(Read().Names, cancellationToken)) with { Corrected = corrected };
+        var list = Read();
+        var outcome = await Load(list.Names, cancellationToken);
+        return outcome with { Corrected = corrected, Bynamed = await Byname(list.Bynames ?? [], cancellationToken) };
     }
+
+    /// <summary>
+    /// What the text calls a person beside the heading, written on the record: <em>Thomas, which is
+    /// called Didymus</em>. A record already holding the same is left alone, so a second run writes
+    /// nothing.
+    /// </summary>
+    /// <returns>The records whose byname was written or changed.</returns>
+    internal async Task<int> Byname(IReadOnlyList<OwnByname> bynames, CancellationToken cancellationToken)
+    {
+        var slugs = bynames.Select(b => b.Entity).ToList();
+        var records = await db.Entities.Where(e => slugs.Contains(e.Slug))
+            .ToDictionaryAsync(e => e.Slug, StringComparer.Ordinal, cancellationToken);
+        var written = 0;
+        foreach (var byname in bynames)
+        {
+            if (!records.TryGetValue(byname.Entity, out var record)
+                || TitleLoader.Verse(byname.Reference) is not { } verse)
+            {
+                logger.LogWarning(
+                    "The byname of {Slug} at {Reference} names a record the encyclopedia does not hold or a verse " +
+                    "that is no verse; OwnNames.json has to follow it", byname.Entity, byname.Reference);
+                continue;
+            }
+
+            var wanted = new Bynames(verse.Book, verse.Chapter, verse.Verse, byname.Names);
+            if (Bynames.Read(record.Byname) is { } held && Same(held, wanted))
+            {
+                continue;
+            }
+
+            record.Byname = wanted.Write();
+            written++;
+            logger.LogInformation("{Slug} is also called {Byname}: {Why}", record.Slug,
+                string.Join(", ", byname.Names.GetValueOrDefault("eng") ?? []), byname.Why);
+        }
+
+        if (written > 0)
+        {
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        return written;
+    }
+
+    private static bool Same(Bynames held, Bynames wanted) =>
+        held.Book == wanted.Book && held.Chapter == wanted.Chapter && held.Verse == wanted.Verse
+        && held.Names.Count == wanted.Names.Count
+        && wanted.Names.All(pair => held.Names.TryGetValue(pair.Key, out var names) && names.SequenceEqual(pair.Value));
 
     /// <summary>
     /// The Strong numbers a dataset wrote on a name that are another word's, set to the name's own.
@@ -299,7 +351,17 @@ internal sealed class OwnNameLoader(AppDbContext db, ILogger<OwnNameLoader> logg
 /// <summary>The embedded list, as a file.</summary>
 internal sealed record OwnNames(IReadOnlyList<OwnName> Names, IReadOnlyList<CorrectedNumber>? Numbers,
     IReadOnlyList<CorrectedNameForm>? Forms = null, IReadOnlyList<CorrectedNameKind>? Kinds = null,
-    IReadOnlyList<DroppedName>? Drops = null);
+    IReadOnlyList<DroppedName>? Drops = null, IReadOnlyList<OwnByname>? Bynames = null);
+
+/// <summary>
+/// What the text calls a person beside the heading, at the verse that says it, as each language's
+/// text prints it (language code to the bynames, in the verse's order), with why.
+/// </summary>
+internal sealed record OwnByname(
+    string Entity,
+    string Reference,
+    IReadOnlyDictionary<string, IReadOnlyList<string>> Names,
+    string Why);
 
 /// <summary>A name row the record with this source id does not bear, by its label and Hebrew number.</summary>
 internal sealed record DroppedName(string Entity, string SourceId, string Label, string? HebrewStrongNumber, string Why);

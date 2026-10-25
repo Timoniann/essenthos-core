@@ -49,6 +49,27 @@ internal static partial class DescriptorPhrasings
         _ => "and",
     };
 
+    /// <summary>
+    /// The relation a line's bynames are handed to a client under, among the words the API says itself:
+    /// <em>called Didymus</em>.
+    /// </summary>
+    public const string CalledRelation = "called";
+
+    /// <summary>
+    /// The words before a byname, agreeing with the person it is said of: <em>called Didymus</em>,
+    /// <em>званий Близнюк</em>, <em>genannt Zwilling</em>, <em>llamado Dídimo</em>. The byname stands
+    /// in the nominative, as the texts print it after these words (<em>Хома, називаний Близнюк</em>).
+    /// </summary>
+    public static string Called(string language, string? sex) => (language, sex == SharedParents.Female) switch
+    {
+        (Ukrainian, true) => "звана ",
+        (Ukrainian, false) => "званий ",
+        (German, _) => "genannt ",
+        (Spanish, true) => "llamada ",
+        (Spanish, false) => "llamado ",
+        _ => "called ",
+    };
+
     private static string Count(string language, Kin kin, int count, bool named) => language switch
     {
         Ukrainian => UkrainianCount(kin, count, named),

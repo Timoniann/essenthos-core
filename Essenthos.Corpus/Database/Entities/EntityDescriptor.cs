@@ -447,6 +447,18 @@ public static class DescriptorRelations
     /// </summary>
     public const string BearsTitle = "bears-title";
 
+    /// <summary>
+    /// Whose God the text calls its subject: <em>the LORD God of Israel</em> (EXO 5:1). Said of the
+    /// God of Israel's own record, with the people whose God he is called as the target.
+    /// </summary>
+    public const string GodOf = "god-of";
+
+    /// <summary>
+    /// The one whose place the subject was chosen to take: Matthias, on whom the lot fell for the
+    /// place from which Judas fell (ACT 1:25-26).
+    /// </summary>
+    public const string ChosenInPlaceOf = "chosen-in-place-of";
+
     public const string OfTribe = "of-tribe";
     public const string OfPeople = "of-people";
     public const string FromPlace = "from-place";
@@ -484,7 +496,7 @@ public static class DescriptorRelations
         KingOf, QueenOf, ProphetTo, PriestOf, JudgeOf, LeaderOf, HighPriestOf,
         CommanderOf, GovernorOf, TetrarchOf, ServantOf, MasterOf,
         DiscipleOf, ApostleOf, ScribeOf, CompanionOf, TeacherOf, MemberOf, AllyOf, FounderOf,
-        KilledBy, KillerOf, StruckBy, RapedBy, RaperOf, AngelOf, BearsTitle,
+        KilledBy, KillerOf, StruckBy, RapedBy, RaperOf, AngelOf, BearsTitle, GodOf, ChosenInPlaceOf,
         SupporterOf, SupportedBy, CreatorOf, CreatedBy, HeirOf, InheritedBy, ExilerOf, ExiledBy,
         OfTribe, OfPeople, FromPlace, LivedIn, BuriedIn,
         DescendantsOf,
@@ -622,14 +634,14 @@ public static class DescriptorSubjects
             DescriptorRelations.RapedBy, DescriptorRelations.RaperOf, DescriptorRelations.CreatorOf,
             DescriptorRelations.AngelOf, DescriptorRelations.FounderOf,
             DescriptorRelations.KilledBy, DescriptorRelations.KillerOf,
-            DescriptorRelations.BearsTitle,
+            DescriptorRelations.GodOf, DescriptorRelations.ChosenInPlaceOf,
         ]),
         ([EntityKind.Person, EntityKind.Title, EntityKind.People],
         [
             DescriptorRelations.AncestorOf, DescriptorRelations.DescendantOf, DescriptorRelations.ServantOf,
             DescriptorRelations.HeirOf,
             DescriptorRelations.OfTribe, DescriptorRelations.OfPeople, DescriptorRelations.FromPlace,
-            DescriptorRelations.LivedIn, DescriptorRelations.BuriedIn,
+            DescriptorRelations.LivedIn, DescriptorRelations.BuriedIn, DescriptorRelations.BearsTitle,
         ]),
         ([EntityKind.Person, EntityKind.Title, EntityKind.People, EntityKind.Place],
         [
@@ -691,7 +703,7 @@ public static class DescriptorTargets
     [
         ([EntityKind.People],
         [
-            DescriptorRelations.OfPeople, DescriptorRelations.MemberOf,
+            DescriptorRelations.OfPeople, DescriptorRelations.MemberOf, DescriptorRelations.GodOf,
         ]),
         ([EntityKind.Person, EntityKind.People],
         [
@@ -707,7 +719,7 @@ public static class DescriptorTargets
         ]),
         ([EntityKind.Person, EntityKind.Title],
         [
-            .. KinRelations.All, DescriptorRelations.KillerOf,
+            .. KinRelations.All, DescriptorRelations.KillerOf, DescriptorRelations.ChosenInPlaceOf,
         ]),
         ([EntityKind.Person, EntityKind.Title, EntityKind.People],
         [

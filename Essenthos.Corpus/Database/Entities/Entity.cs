@@ -54,6 +54,13 @@ public class Entity
     public string? Notes { get; set; }
 
     /// <summary>
+    /// What else the text calls the person beside the heading, as a byname and not another man:
+    /// <em>Thomas, which is called Didymus</em> (JHN 11:16). JSON, <see cref="Bynames"/>: the verse
+    /// that says it and the byname as each language's text prints it. Null for everyone else.
+    /// </summary>
+    public string? Byname { get; set; }
+
+    /// <summary>
     /// Its identifier in the dataset it came from — <c>Moses_1</c>, <c>heaven_1</c>. Kept so a
     /// correction upstream can be found again, and so two datasets can be reconciled later.
     /// </summary>
@@ -304,6 +311,13 @@ public class TitleBearer
 
     /// <summary>Why this verse settles it, in a sentence a reader can check against it.</summary>
     public string? Note { get; set; }
+
+    /// <summary>
+    /// What the text calls this bearer by the title, in each language, where it is not the title's
+    /// own name: <em>Jesus, who is called Christ</em> (MAT 1:16) bears the Anointed, and a people of
+    /// giants is said <em>Giants</em>. JSON, language code to name. Null where the title's name stands.
+    /// </summary>
+    public string? Called { get; set; }
 
     public required string Source { get; set; }
 

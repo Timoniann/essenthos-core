@@ -528,6 +528,10 @@ namespace Essenthos.Core.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("another_name_for_entity_id");
 
+                    b.Property<string>("Byname")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("byname");
+
                     b.Property<string>("Distinguisher")
                         .HasColumnType("text")
                         .HasColumnName("distinguisher")
@@ -4786,6 +4790,10 @@ namespace Essenthos.Core.Migrations
                     b.Property<int>("BearerEntityId")
                         .HasColumnType("integer")
                         .HasColumnName("bearer_entity_id");
+
+                    b.Property<string>("Called")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("called");
 
                     b.Property<int>("CanonicalBook")
                         .HasColumnType("integer")

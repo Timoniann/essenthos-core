@@ -31,7 +31,7 @@ internal static class Relationships
         CancellationToken cancellationToken)
     {
         var rows = await Rows(db, entityId, cancellationToken);
-        var merged = Merged(rows);
+        var merged = await Placed(db, Merged(rows), cancellationToken);
 
         // The counterpart's name in the case the reader's language puts it in. Without it the
         // section is English on a Ukrainian page, because the phrase and the case are one decision
@@ -75,6 +75,69 @@ internal static class Relationships
                 one => one.Key,
                 one => one.ToDictionary(f => f.GrammaticalCase, f => f.Form, StringComparer.Ordinal),
                 StringComparer.Ordinal);
+    }
+
+    /// <summary>
+    /// The text this reads the order of a verse's names in: the King James, whose numbering is the
+    /// canonical one every relationship cites.
+    /// </summary>
+    private const string OrderText = "KJV";
+
+    /// <summary>
+    /// Where each counterpart's name first stands in the verse its row cites, for the rows that cite a
+    /// verse another row of the page cites too: the Twelve as Matthew lists them (MAT 10:2-4), Simon
+    /// before Andrew, rather than by name. Null on every other row.
+    /// </summary>
+    private static async Task<List<EntityRelationshipResponse>> Placed(
+        AppDbContext db,
+        List<EntityRelationshipResponse> rows,
+        CancellationToken cancellationToken)
+    {
+        var shared = rows
+            .Where(r => r.Reference is not null)
+            .GroupBy(r => (r.Reference!.BookOrdinal, r.Reference.Chapter, r.Reference.Verse))
+            .Where(g => g.Select(r => r.Slug).Distinct().Count() > 1)
+            .Select(g => g.Key)
+            .ToHashSet();
+        if (shared.Count == 0)
+        {
+            return rows;
+        }
+
+        var books = shared.Select(v => v.BookOrdinal).Distinct().ToList();
+        var chapters = shared.Select(v => v.Chapter).Distinct().ToList();
+        var numbers = shared.Select(v => v.Verse).Distinct().ToList();
+        var slugs = rows.Where(r => r.Reference is not null
+                                    && shared.Contains((r.Reference.BookOrdinal, r.Reference.Chapter, r.Reference.Verse)))
+            .Select(r => r.Slug)
+            .Distinct()
+            .ToList();
+        var named = await db.WordEntities
+            .Where(n => slugs.Contains(n.Entity!.Slug)
+                        && n.Word!.Text!.Slug == OrderText
+                        && books.Contains(n.Word.Verse!.Book!.CanonicalOrdinal)
+                        && chapters.Contains(n.Word.Verse.ChapterNumber)
+                        && numbers.Contains(n.Word.Verse.Number))
+            .Select(n => new
+            {
+                n.Entity!.Slug,
+                Book = n.Word!.Verse!.Book!.CanonicalOrdinal,
+                Chapter = n.Word.Verse.ChapterNumber,
+                Verse = n.Word.Verse.Number,
+                n.Word.Position,
+            })
+            .ToListAsync(cancellationToken);
+        var first = named
+            .GroupBy(n => (n.Slug, n.Book, n.Chapter, n.Verse))
+            .ToDictionary(g => g.Key, g => g.Min(n => n.Position));
+
+        return
+        [
+            .. rows.Select(r => r.Reference is { } verse
+                                && first.TryGetValue((r.Slug, verse.BookOrdinal, verse.Chapter, verse.Verse), out var position)
+                ? r with { Position = position }
+                : r),
+        ];
     }
 
     private static async Task<List<Related>> Rows(

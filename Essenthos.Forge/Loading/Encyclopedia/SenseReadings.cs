@@ -295,7 +295,15 @@ internal sealed record TitleName(
 
 /// <param name="Reference">The verse naming the person and the title together, as <c>2KI 23:29</c>.</param>
 /// <param name="Why">What the verse says, so the claim can be checked against it.</param>
-internal sealed record TitleBearerRecord(string Slug, string Reference, string Why);
+/// <param name="Called">
+/// What the text calls the bearer by the title, per language code, where it is not the title's own
+/// name: <em>Jesus, who is called Christ</em>, or a people said in the plural.
+/// </param>
+internal sealed record TitleBearerRecord(
+    string Slug,
+    string Reference,
+    string Why,
+    IReadOnlyDictionary<string, string>? Called = null);
 
 /// <summary>A record written for one bearer of a title, which the title now answers for.</summary>
 internal sealed record ReplacedRecord(string Slug, string Why);

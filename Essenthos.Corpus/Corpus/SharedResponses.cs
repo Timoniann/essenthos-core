@@ -448,6 +448,13 @@ internal record EntityRelationshipResponse(
     public string? LocalDistinguisher { get; init; }
 
     /// <summary>
+    /// Where the counterpart's name first stands in the cited verse, as the King James orders it, on a
+    /// row whose verse another row of the page cites too: the order a list in one verse names them in.
+    /// Null on every other row.
+    /// </summary>
+    public int? Position { get; init; }
+
+    /// <summary>
     /// The counterpart's name in every case a pass produced for the language asked for, keyed by
     /// case. Null where no pass has declined this name into that language, which is where the
     /// English name is the whole of what a renderer can say.
