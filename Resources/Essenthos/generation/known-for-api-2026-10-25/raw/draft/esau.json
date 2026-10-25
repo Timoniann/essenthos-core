@@ -1,0 +1,40 @@
+{
+ "slug": "esau",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.948718+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Esau's sale of his birthright, the loss of Isaac's blessing to Jacob, and his reconciliation with Jacob, which are the events he is known for.",
+  "clauses": [
+   {
+    "english": "sold his birthright to Jacob for bread and lentil pottage",
+    "references": [
+     "GEN 25:29-34"
+    ],
+    "quote": "thus Esau despised his birthright"
+   },
+   {
+    "english": "lost his father's blessing when Jacob received it by deceit",
+    "references": [
+     "GEN 27:30-38"
+    ],
+    "quote": "Thy brother came with subtilty, and hath taken away thy blessing."
+   },
+   {
+    "english": "ran to meet Jacob on his return and embraced him",
+    "references": [
+     "GEN 33:4"
+    ],
+    "quote": "And Esau ran to meet him, and embraced him, and fell on his neck, and kissed him"
+   }
+  ],
+  "doubts": [
+   "GEN 27:41 (Esau's hatred of Jacob and plan to kill him) was left out as intent, not an event.",
+   "The Esau of the later prophets (JER 49, OBA, MAL) and ROM 9:13 stands for Edom, so those verses were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

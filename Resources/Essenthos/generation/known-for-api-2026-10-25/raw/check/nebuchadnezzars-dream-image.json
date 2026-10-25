@@ -1,0 +1,36 @@
+{
+ "slug": "nebuchadnezzars-dream-image",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.624033+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was struck on its feet of iron and clay by a stone cut without hands, and broken to pieces",
+    "references": [
+     "DAN 2:34-35"
+    ],
+    "ukr": "був вдарений по ногах із заліза та з глини каменем, що відірвався сам, не через руки, і розторощений",
+    "deu": "wurde an seinen Füßen aus Eisen und Ton von einem ohne Hände herabgerissenen Stein geschlagen und zermalmt",
+    "spa": "fue herida en sus pies de hierro y de barro cocido por una piedra cortada, no con mano, y fue desmenuzada"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was carried away like chaff by the wind, while the stone became a great mountain filling the whole earth",
+    "references": [
+     "DAN 2:35"
+    ],
+    "ukr": "був розвіяний вітром, немов полова з току жнив, а камінь, що вдарив його, став великою горою і наповнив усю землю",
+    "deu": "wurde wie Spreu auf der Sommertenne vom Wind verweht, während der Stein, der das Bild zerschlug, ein großer Berg wurde und die ganze Welt füllte",
+    "spa": "fue levantada por el viento como tamo de las eras del verano, mientras la piedra que hirió a la imagen fue hecha un gran monte que llenó toda la tierra"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,41 @@
+{
+ "slug": "bethel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:02:27.525392+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of events at Bethel: God appearing to Jacob, Jeroboam's calf, and Josiah's breaking down of the altar.",
+  "clauses": [
+   {
+    "english": "was where Jacob built an altar after God appeared to him",
+    "references": [
+     "GEN 35:6-7"
+    ],
+    "quote": "there God appeared unto him"
+   },
+   {
+    "english": "was where Jeroboam set up a golden calf for worship",
+    "references": [
+     "1KI 12:28-29"
+    ],
+    "quote": "And he set the one in Bethel"
+   },
+   {
+    "english": "had its altar and high place broken down by Josiah",
+    "references": [
+     "2KI 23:15"
+    ],
+    "quote": "that altar and the high place he brake down"
+   }
+  ],
+  "doubts": [
+   "Marked verses naming Bethel only in lists, borders or as a direction (e.g. GEN 12:8, JOS 18:22, EZR 2:28) were left out.",
+   "Hiel the Bethelite (1KI 16:34) concerns a man, not the place, so it was left out.",
+   "Jacob's dream at Bethel is described in verses not given (only GEN 28:17-21 are shown), so the line rests on GEN 35."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

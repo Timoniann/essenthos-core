@@ -1,0 +1,36 @@
+{
+ "slug": "bahurim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.613811+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Shimei came out and cursed David, throwing stones at him",
+    "references": [
+     "2SA 16:5-6"
+    ],
+    "ukr": "був місцем, де Шім'ї вийшов і проклинав Давида, кидаючи в нього камінням",
+    "deu": "war der Ort, an dem Simei herauskam und David fluchte und ihn mit Steinen bewarf",
+    "spa": "fue el lugar donde Semei salió maldiciendo a David y echándole piedras"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verses do not call Jonathan and Ahimaaz David's messengers; that detail is removed.",
+    "english": "was where Jonathan and Ahimaaz hid in a well from Absalom's servants",
+    "references": [
+     "2SA 17:18-20"
+    ],
+    "ukr": "був місцем, де Йонатан та Ахімаац сховалися в колодязі від рабів Авесалома",
+    "deu": "war der Ort, an dem sich Jonathan und Ahimaaz vor den Knechten Absaloms in einem Brunnen verbargen",
+    "spa": "fue el lugar donde Jonathán y Ahimaas se escondieron en un pozo de los criados de Absalom"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

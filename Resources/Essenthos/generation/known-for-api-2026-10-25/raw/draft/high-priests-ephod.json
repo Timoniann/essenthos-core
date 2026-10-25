@@ -1,0 +1,42 @@
+{
+ "slug": "high-priests-ephod",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.015116+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of the ephod's making, the memorial stones set on its shoulders, and its being put on Aaron, which are events that happened through the object.",
+  "clauses": [
+   {
+    "english": "was made of gold, blue, purple, scarlet and fine twined linen, with cunning work",
+    "references": [
+     "EXO 39:2"
+    ],
+    "quote": "And he made the ephod of gold, blue, and purple, and scarlet, and fine twined linen."
+   },
+   {
+    "english": "bore on its shoulders two onyx stones as a memorial to the children of Israel",
+    "references": [
+     "EXO 28:12",
+     "EXO 39:7"
+    ],
+    "quote": "he put them on the shoulders of the ephod, that they should be stones for a memorial to the children of Israel"
+   },
+   {
+    "english": "was put upon Aaron when Moses clothed him for the priest's office",
+    "references": [
+     "LEV 8:7"
+    ],
+    "quote": "put the ephod upon him"
+   }
+  ],
+  "doubts": [
+   "EXO 25:6 and EXO 36:9, 36:14-30 are marked but concern oil and the tabernacle curtains and boards, not the ephod, so they were left out.",
+   "EXO 28:31, 39:22 name the robe of the ephod, a separate garment, so they were left out.",
+   "The breastplate verses (EXO 28:25-28, 39:17-21) concern the breastplate, which was bound to the ephod, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

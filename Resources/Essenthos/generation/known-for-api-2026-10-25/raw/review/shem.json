@@ -1,0 +1,25 @@
+{
+ "slug": "shem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.529437+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "ввійшов до ковчегу з Ноєм і його родиною",
+    "deu": "ging mit Noah und seiner Familie in die Arche",
+    "spa": "entró en el arca con Noé y su familia",
+    "why": "German: replaced the old word «Kasten» with modern «Arche»."
+   },
+   {
+    "ukr": "взяв з Яфетом одяг і прикрив наготу їхнього батька",
+    "deu": "nahm mit Japheth ein Gewand und deckte die Blöße ihres Vaters zu",
+    "spa": "tomó con Japhet la ropa y cubrió la desnudez de su padre",
+    "why": "Ukrainian: replaced the old word «одежину» with «одяг»; German: replaced «Kleid» with «Gewand»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

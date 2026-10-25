@@ -1,0 +1,31 @@
+{
+ "slug": "haman",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.307278+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був повищений царем Ахашверошем над усіма князями",
+    "deu": "wurde vom König Ahasveros über alle Fürsten erhöht",
+    "spa": "fue engrandecido por el rey Assuero sobre todos los príncipes",
+    "why": ""
+   },
+   {
+    "ukr": "шукав вигубити всіх юдеян у царстві, бо Мордехай не вклонявся йому",
+    "deu": "trachtete danach, alle Juden im Königreich zu vertilgen, weil Mardochai ihm nicht die Knie beugte",
+    "spa": "procuró destruir a todos los judíos del reino, porque Mardochêo no se arrodillaba ante él",
+    "why": "German: modernized old spelling 'Kniee' to 'Knie'. Spanish: lower-cased 'Judíos' to 'judíos'."
+   },
+   {
+    "ukr": "був повішений на шибениці, яку приготував для Мордехая",
+    "deu": "wurde an den Baum gehängt, den er für Mardochai gemacht hatte",
+    "spa": "fue colgado en la horca que él había hecho aparejar para Mardochêo",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

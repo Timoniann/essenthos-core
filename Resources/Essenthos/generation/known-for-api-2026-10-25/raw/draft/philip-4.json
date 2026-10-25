@@ -1,0 +1,15 @@
+{
+ "slug": "philip-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.002240+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The only verse naming this Philip merely lists him as tetrarch of Ituraea and Trachonitis in a dating formula, which is no more than the summary already says.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

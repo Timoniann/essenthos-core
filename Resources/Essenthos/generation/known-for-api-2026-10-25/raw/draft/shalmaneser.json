@@ -1,0 +1,42 @@
+{
+ "slug": "shalmaneser",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.857847+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The marked verses in 2 Kings tell what Shalmaneser did to Hoshea and to Samaria.",
+  "clauses": [
+   {
+    "english": "shut up Hoshea and bound him in prison",
+    "references": [
+     "2KI 17:4"
+    ],
+    "quote": "the king of Assyria shut him up, and bound him in prison"
+   },
+   {
+    "english": "besieged Samaria for three years and captured it",
+    "references": [
+     "2KI 17:5",
+     "2KI 18:9-10"
+    ],
+    "quote": "Shalmaneser king of Assyria came up against Samaria, and besieged it"
+   },
+   {
+    "english": "carried Israel away captive into Assyria",
+    "references": [
+     "2KI 17:6",
+     "2KI 18:11"
+    ],
+    "quote": "the king of Assyria did carry away Israel unto Assyria"
+   }
+  ],
+  "doubts": [
+   "The marked verses in Isaiah and 2KI 17:24-27 say only 'the king of Assyria' without naming Shalmaneser, so they were left out.",
+   "2KI 17:4-6 also say only 'the king of Assyria', but they continue the account of Shalmaneser begun in 2KI 17:3, and 2KI 18:9-11 repeats it with his name."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

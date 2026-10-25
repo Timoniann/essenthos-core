@@ -1,0 +1,33 @@
+{
+ "slug": "jehoahaz-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.795034+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of his being made king by the people, and of his capture by Pharaoh Necho and death in Egypt.",
+  "clauses": [
+   {
+    "english": "was anointed king by the people of the land in place of his father",
+    "references": [
+     "2KI 23:30"
+    ],
+    "quote": "the people of the land took Jehoahaz the son of Josiah, and anointed him"
+   },
+   {
+    "english": "was put in bands by Pharaoh Necho at Riblah and taken to Egypt, where he died",
+    "references": [
+     "2KI 23:33-34"
+    ],
+    "quote": "took Jehoahaz away: and he came to Egypt, and died there"
+   }
+  ],
+  "doubts": [
+   "2KI 23:31 and 2CH 36:2 only give his age and the length of his reign, so they are not cited.",
+   "JER 22:11 is a prophecy about Shallum, so it is not used for an event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

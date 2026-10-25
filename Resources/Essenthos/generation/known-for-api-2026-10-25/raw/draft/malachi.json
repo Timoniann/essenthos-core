@@ -1,0 +1,15 @@
+{
+ "slug": "malachi",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.946693+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The only verse naming Malachi is the book's heading, which says no more than the summary does about his role as prophet, and it records no deed or event of his.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

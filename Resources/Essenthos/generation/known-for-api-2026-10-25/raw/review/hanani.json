@@ -1,0 +1,19 @@
+{
+ "slug": "hanani",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.163129+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "докорив цареві Асі за те, що той спирався на сирійського царя, а не на Господа",
+    "deu": "tadelte den König Asa, weil er sich auf den König von Syrien verlassen hatte und nicht auf den HERRN",
+    "spa": "reprendió al rey Asa porque se había apoyado en el rey de Siria y no en el SEÑOR",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

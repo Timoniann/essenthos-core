@@ -1,0 +1,38 @@
+{
+ "slug": "mercy-seat",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.623267+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell how the mercy seat was made, that God spoke from above it, and that the high priest sprinkled blood on it.",
+  "clauses": [
+   {
+    "english": "was made of pure gold, with two cherubim of beaten gold on its ends",
+    "references": [
+     "EXO 37:6-9"
+    ],
+    "quote": "And he made the mercy seat of pure gold"
+   },
+   {
+    "english": "was where the LORD spoke with Moses from between the two cherubim",
+    "references": [
+     "NUM 7:89",
+     "EXO 25:22"
+    ],
+    "quote": "heard the voice of one speaking unto him from off the mercy seat"
+   },
+   {
+    "english": "was sprinkled with the blood of the bullock and of the goat",
+    "references": [
+     "LEV 16:14-15"
+    ],
+    "quote": "sprinkle it with his finger upon the mercy seat eastward"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

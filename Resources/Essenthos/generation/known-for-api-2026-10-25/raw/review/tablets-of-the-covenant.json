@@ -1,0 +1,37 @@
+{
+ "slug": "tablets-of-the-covenant",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.515435+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "були дані Мойсеєві на Сінайській горі, написані Божим пальцем",
+    "deu": "wurden Mose auf dem Berg Sinai gegeben, beschrieben mit dem Finger Gottes",
+    "spa": "fueron dadas a Moisés en el monte de Sinaí, escritas con el dedo de Dios",
+    "why": "Ukrainian: archaic «перстом» changed to «пальцем» and «писані» to «написані»; German: «Berge» modernized to «Berg»."
+   },
+   {
+    "ukr": "були розбиті Мойсеєм під горою",
+    "deu": "wurden von Mose unten am Berg zerbrochen",
+    "spa": "fueron quebradas por Moisés al pie del monte",
+    "why": "Ukrainian: «розторощені» replaced by the standard «розбиті»; German: «am Berge» modernized to «am Berg»."
+   },
+   {
+    "ukr": "були знову витесані Мойсеєм і наново написані Господом десятьма заповідями",
+    "deu": "wurden von Mose von neuem gehauen und vom HERRN von neuem mit den zehn Worten beschrieben",
+    "spa": "fueron labradas de nuevo por Moisés y escritas de nuevo por el SEÑOR con las diez palabras",
+    "why": "Ukrainian: «списані» (copied) corrected to «написані» (written), and «Десятьма Заповідями» put in lower case as in the English."
+   },
+   {
+    "ukr": "були покладені Мойсеєм у ковчег, який він зробив",
+    "deu": "wurden von Mose in die Lade gelegt, die er gemacht hatte",
+    "spa": "fueron puestas por Moisés en el arca que había hecho",
+    "why": "Ukrainian: «до ковчегу, що» changed to the modern «у ковчег, який»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

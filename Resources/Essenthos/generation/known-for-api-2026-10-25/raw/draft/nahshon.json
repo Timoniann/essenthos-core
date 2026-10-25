@@ -1,0 +1,26 @@
+{
+ "slug": "nahshon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.963761+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Nahshon's one distinct deed is that he offered first at the dedication of the altar; the other verses give only his lineage, his command, and his place in the march, which the summary already covers.",
+  "clauses": [
+   {
+    "english": "offered first of the princes at the dedication of the altar",
+    "references": [
+     "NUM 7:10-12"
+    ],
+    "quote": "he that offered his offering the first day was Nahshon the son of Amminadab"
+   }
+  ],
+  "doubts": [
+   "NUM 10:14 (leading the march of Judah) was left out as a stage of a journey and covered by the summary's 'commander of Judahites'.",
+   "EXO 6:23 only names him as brother of Elisheba, and the genealogies (RUT 4, 1CH 2, MAT 1, LUK 3) only list him, so they were not cited."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

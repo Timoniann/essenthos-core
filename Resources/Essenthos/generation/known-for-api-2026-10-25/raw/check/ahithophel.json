@@ -1,0 +1,36 @@
+{
+ "slug": "ahithophel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.751793+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The advice is in 16:21 alone; verses 20 and 22 are Absalom's question and his own act.",
+    "english": "advised Absalom to go in to his father's concubines",
+    "references": [
+     "2SA 16:21"
+    ],
+    "ukr": "порадив Авесаломові прийти до наложниць свого батька",
+    "deu": "riet Absalom, zu den Kebsweibern seines Vaters hineinzugehen",
+    "spa": "aconsejó a Absalom entrar a las concubinas de su padre"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "hanged himself when his counsel was not followed",
+    "references": [
+     "2SA 17:23"
+    ],
+    "ukr": "повісився, коли його порада не була виконана",
+    "deu": "erhängte sich, als sein Rat nicht ausgeführt wurde",
+    "spa": "se ahorcó cuando su consejo no fue puesto por obra"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

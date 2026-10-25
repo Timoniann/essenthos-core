@@ -1,0 +1,25 @@
+{
+ "slug": "marah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.613650+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "мала гірку воду, якої Ізраїль не міг пити",
+    "deu": "hatte bitteres Wasser, das Israel nicht trinken konnte",
+    "spa": "tenía aguas amargas que Israel no pudo beber",
+    "why": ""
+   },
+   {
+    "ukr": "мала свою воду підсолодженою, коли в неї кинули дерево, яке показав Господь",
+    "deu": "hatte süßes Wasser, als man einen Baum hineinwarf, den der HERR gezeigt hatte",
+    "spa": "tuvo sus aguas endulzadas cuando se metió en ellas un árbol que el SEÑOR mostró",
+    "why": "All three began with the water as subject instead of the verb 'had'; recast so the clause starts with 'had' (мала/hatte/tuvo), and the Spanish also gets 'en ellas' for 'cast in'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

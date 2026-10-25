@@ -1,0 +1,31 @@
+{
+ "slug": "valleyofhinnom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.928981+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де люди палили своїх синів і дочок у вогні",
+    "deu": "war der Ort, an dem die Leute ihre Söhne und Töchter im Feuer verbrannten",
+    "spa": "fue el lugar donde el pueblo quemó en el fuego a sus hijos y a sus hijas",
+    "why": ""
+   },
+   {
+    "ukr": "мав опоганений Тофет, щоб ніхто не переводив через вогонь свого сина чи дочку для Молоха",
+    "deu": "ließ sein Topheth verunreinigen, damit niemand seinen Sohn oder seine Tochter dem Moloch durchs Feuer gehen ließe",
+    "spa": "vio profanado su Topheth, para que nadie pasara a su hijo o a su hija por el fuego a Moloch",
+    "why": "Replaced the old Spanish wording (ninguno pasase su hijo ... por fuego) with modern standard Spanish."
+   },
+   {
+    "ukr": "мав, за словом Господа, зватися Долиною Убивства",
+    "deu": "sollte nach dem Wort des HERRN Würgetal heißen",
+    "spa": "había de llamarse Valle de la Matanza, según dijo el SEÑOR",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

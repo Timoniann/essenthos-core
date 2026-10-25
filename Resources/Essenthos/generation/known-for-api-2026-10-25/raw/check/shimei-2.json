@@ -1,0 +1,50 @@
+{
+ "slug": "shimei-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.252281+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say David came to Bahurim and Shimei came out there; they do not say David passed it.",
+    "english": "cursed King David and threw stones at him as he came to Bahurim",
+    "references": [
+     "2SA 16:5-6",
+     "2SA 16:13"
+    ],
+    "ukr": "проклинав царя Давида й кидав на нього камінням, коли той прийшов до Бахуріму",
+    "deu": "fluchte dem König David und warf mit Steinen nach ihm, als er gen Bahurim kam",
+    "spa": "maldijo al rey David y le echó piedras cuando él vino a Bahurim"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "fell down before David and begged forgiveness, and was spared by the king's oath",
+    "references": [
+     "2SA 19:18-20",
+     "2SA 19:23"
+    ],
+    "ukr": "упав перед царем, просив пробачення і був помилуваний завдяки присязі царя",
+    "deu": "fiel vor dem König nieder und bat um Vergebung und wurde durch den Eid des Königs verschont",
+    "spa": "se postró delante del rey y pidió perdón, y fue perdonado por el juramento del rey"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was put to death by Solomon's order after leaving Jerusalem for Gath",
+    "references": [
+     "1KI 2:40-42",
+     "1KI 2:46"
+    ],
+    "ukr": "був убитий за наказом Соломона після того, як пішов з Єрусалиму в Ґат",
+    "deu": "wurde auf Salomos Befehl getötet, nachdem er von Jerusalem nach Gath gezogen war",
+    "spa": "fue muerto por orden de Salomón después de ir de Jerusalem a Gath"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

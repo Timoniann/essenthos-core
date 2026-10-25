@@ -1,0 +1,39 @@
+{
+ "slug": "darius-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.214113+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Darius signing the decree against prayer, freeing Daniel from the lions' den, and ordering all his realm to fear Daniel's God.",
+  "clauses": [
+   {
+    "english": "signed a decree forbidding prayer to any god or man but himself",
+    "references": [
+     "DAN 6:7-9"
+    ],
+    "quote": "king Darius signed the writing and the decree"
+   },
+   {
+    "english": "had Daniel taken up unharmed out of the lions' den",
+    "references": [
+     "DAN 6:23"
+    ],
+    "quote": "commanded that they should take Daniel up out of the den"
+   },
+   {
+    "english": "decreed that men in all his kingdom fear the God of Daniel",
+    "references": [
+     "DAN 6:25-26"
+    ],
+    "quote": "men tremble and fear before the God of Daniel"
+   }
+  ],
+  "doubts": [
+   "DAN 5:31 (took the kingdom) was left out because the summary already names him king of Chaldea."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

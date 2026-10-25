@@ -1,0 +1,40 @@
+{
+ "slug": "jotham-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.432698+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Jotham judging the people while his father was a leper, building the high gate, and defeating the Ammonites.",
+  "clauses": [
+   {
+    "english": "judged the people of the land while his father was a leper",
+    "references": [
+     "2KI 15:5"
+    ],
+    "quote": "Jotham the king's son was over the house, judging the people of the land"
+   },
+   {
+    "english": "built the high gate of the house of the LORD",
+    "references": [
+     "2CH 27:3"
+    ],
+    "quote": "He built the high gate of the house of the LORD"
+   },
+   {
+    "english": "fought the Ammonites and prevailed against them",
+    "references": [
+     "2CH 27:5"
+    ],
+    "quote": "He fought also with the king of the Ammonites, and prevailed against them."
+   }
+  ],
+  "doubts": [
+   "Verses that only date prophets or events by Jotham's reign (ISA 1:1, HOS 1:1, MIC 1:1, 1CH 5:17, 2KI 15:30) and the genealogies (1CH 3:12, MAT 1:9) were left out.",
+   "The leprosy and the judging in 2KI 15:5 and 2CH 26:21 are told of Uzziah; only the part about Jotham is used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "kingofthenorth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.558167+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "received the king of the south's daughter to make an agreement",
+    "references": [
+     "DAN 11:6"
+    ],
+    "ukr": "прийняв доньку південного царя, щоб укласти мир",
+    "deu": "empfing die Tochter des Königs des Südens, um Einigkeit zu machen",
+    "spa": "recibió a la hija del rey del mediodía para hacer los conciertos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

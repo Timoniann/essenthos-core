@@ -1,0 +1,25 @@
+{
+ "slug": "vashti",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.545714+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "відмовилася прийти за царським словом, коли той послав по неї",
+    "deu": "wollte auf den Befehl des Königs hin nicht kommen, als er nach ihr schicken ließ",
+    "spa": "no quiso comparecer a la orden del rey, cuando mandó traerla",
+    "why": "German: replaced Luther's archaic 'nach dem Wort' and 'sandte' with modern wording."
+   },
+   {
+    "ukr": "було заборонено їй більше приходити перед обличчя царя, і вона була замінена на посаді цариці Естер",
+    "deu": "durfte nicht mehr vor den König kommen und wurde als Königin durch Esther ersetzt",
+    "spa": "tuvo prohibido volver a presentarse ante el rey y fue reemplazada como reina por Esther",
+    "why": "Made Vashti the subject again so each clause starts with its verb, and put the replacement in the passive instead of making Esther the subject."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

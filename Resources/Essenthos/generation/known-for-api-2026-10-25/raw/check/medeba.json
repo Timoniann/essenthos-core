@@ -1,0 +1,25 @@
+{
+ "slug": "medeba",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.829207+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verse says they hired 32,000 chariots and the king of Maachah, who pitched before Medeba; 'Syrian' and 'against David's army' are not stated.",
+    "english": "was where the king of Maachah and his people pitched camp, with the hired chariots",
+    "references": [
+     "1CH 19:7"
+    ],
+    "ukr": "було місцем, перед яким таборували цар Маахи та його народ із найнятими колесницями",
+    "deu": "war der Ort, vor dem der König von Maacha mit seinem Volk und den gedungenen Wagen sich lagerte",
+    "spa": "fue el lugar delante del cual asentaron su campo el rey de Maachâ y su pueblo con los carros tomados a sueldo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

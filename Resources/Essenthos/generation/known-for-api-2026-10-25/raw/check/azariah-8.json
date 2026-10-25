@@ -1,0 +1,25 @@
+{
+ "slug": "azariah-8",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.876507+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say he was moved to urge them to seek the LORD; he met Asa and told him the LORD is with those who seek him.",
+    "english": "went out to meet Asa and told him and Judah that the LORD would be found by those who seek him",
+    "references": [
+     "2CH 15:1-2"
+    ],
+    "ukr": "вийшов назустріч Асі та сказав йому й усьому Юді, що Господь дасть знайти Себе тим, хто Його шукатиме",
+    "deu": "ging Asa entgegen und sagte ihm und ganz Juda, dass der HERR sich von denen finden lassen wird, die ihn suchen",
+    "spa": "salió al encuentro de Asa y le dijo a él y a todo Judá que el SEÑOR será hallado por quienes le busquen"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

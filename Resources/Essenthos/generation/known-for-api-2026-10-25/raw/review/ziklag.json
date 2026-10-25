@@ -1,0 +1,25 @@
+{
+ "slug": "ziklag",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.887844+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був даний Давидові Ахішем",
+    "deu": "wurde David von Achis gegeben",
+    "spa": "fue dada a David por Achîs",
+    "why": ""
+   },
+   {
+    "ukr": "був спалений вогнем амаликитянами, а його жінки та діти були забрані в неволю",
+    "deu": "wurde von den Amalekitern mit Feuer verbrannt, und seine Frauen und Kinder wurden gefangen weggeführt",
+    "spa": "fue quemada a fuego por los de Amalec, y sus mujeres e hijos fueron llevados cautivos",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

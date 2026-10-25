@@ -1,0 +1,33 @@
+{
+ "slug": "rahabs-scarlet-cord",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.871143+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The marked verses state that the scarlet line was appointed as the sign and that Rahab bound it in her window, which is the object's own story.",
+  "clauses": [
+   {
+    "english": "was appointed by the spies as the sign for Rahab to bind in her window",
+    "references": [
+     "JOS 2:18"
+    ],
+    "quote": "thou shalt bind this line of scarlet thread in the window"
+   },
+   {
+    "english": "was bound by Rahab in her window when the spies departed",
+    "references": [
+     "JOS 2:21"
+    ],
+    "quote": "she bound the scarlet line in the window"
+   }
+  ],
+  "doubts": [
+   "The verses never say the cord saved Rahab's house at the fall of Jericho; JOS 6:22-25 tells her rescue without mentioning the cord, so no clause on that.",
+   "The cord she let the spies down by (JOS 2:15) is a different cord from the scarlet thread, so it is not cited."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

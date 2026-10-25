@@ -1,0 +1,41 @@
+{
+ "slug": "euphrates",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.615247+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell of events at the Euphrates, beyond the summary's mention of it as a river of Eden.",
+  "clauses": [
+   {
+    "english": "was where Jeremiah hid a girdle, found marred after many days",
+    "references": [
+     "JER 13:4-7"
+    ],
+    "quote": "the girdle was marred, it was profitable for nothing"
+   },
+   {
+    "english": "was where Nebuchadrezzar smote the army of Pharaoh Necho",
+    "references": [
+     "JER 46:2"
+    ],
+    "quote": "which Nebuchadrezzar king of Babylon smote"
+   },
+   {
+    "english": "had its water dried up when the sixth angel poured out his vial",
+    "references": [
+     "REV 16:12"
+    ],
+    "quote": "the water thereof was dried up"
+   }
+  ],
+  "doubts": [
+   "Verses that say only \"the river\" (GEN 31:21, EXO 23:31, 1KI 4:21, PSA 72:8, ISA 8:7 and others) may or may not mean the Euphrates; I left them out.",
+   "Verses that give the river as a boundary of the promised land (GEN 15:18, DEU 11:24, JOS 1:4) name no event at the river, so I did not use them.",
+   "JOS 24:2-3 speak of \"the flood\" (the other side of the river), which I did not treat as an event at the Euphrates."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

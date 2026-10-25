@@ -1,0 +1,25 @@
+{
+ "slug": "joshua-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.277225+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "послухався голосу Господа і прийшов працювати в домі Господа",
+    "deu": "gehorchte der Stimme des HERRN und kam, um am Haus des HERRN zu arbeiten",
+    "spa": "obedeció la voz del SEÑOR y vino a hacer la obra en la casa del SEÑOR",
+    "why": "Spanish: 'oyó' (heard) changed to 'obedeció' (obeyed); German: dated 'am Hause' modernised to 'am Haus'."
+   },
+   {
+    "ukr": "був позбавлений брудної одежі й зодягнений у шати та чистий завій",
+    "deu": "wurde seiner unreinen Kleider entledigt und mit Kleidern und einem reinen Kopfbund bekleidet",
+    "spa": "fue despojado de las vestimentas viles y vestido de ropas y de una mitra limpia",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,34 @@
+{
+ "slug": "abiram",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.233108+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Abiram's defiance of Moses and his being swallowed by the earth, which go beyond the summary's relations and tribe.",
+  "clauses": [
+   {
+    "english": "refused to come when Moses called him",
+    "references": [
+     "NUM 16:12-14"
+    ],
+    "quote": "We will not come up"
+   },
+   {
+    "english": "was swallowed up by the earth with his household and Korah's company",
+    "references": [
+     "NUM 26:9-10",
+     "DEU 11:6"
+    ],
+    "quote": "the earth opened her mouth, and swallowed them up, and their households"
+   }
+  ],
+  "doubts": [
+   "NUM 16:1 only names him among the rebels, so it is left out as a separate clause; NUM 16:24-25 and 27 are also left uncited as they add only the scene before the judgment.",
+   "The rebellion itself is covered by the disambiguator, so only his refusal and his end are given."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

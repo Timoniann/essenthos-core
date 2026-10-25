@@ -1,0 +1,25 @@
+{
+ "slug": "bashan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.334398+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had all its cities taken by Israel when King Og and his people were destroyed",
+    "references": [
+     "DEU 3:3-4"
+    ],
+    "ukr": "мав усі свої міста здобуті Ізраїлем, коли було побито царя Оґа та весь його народ",
+    "deu": "verlor alle seine Städte an Israel, als König Og und sein ganzes Volk geschlagen wurden",
+    "spa": "vio tomadas todas sus ciudades por Israel cuando el rey Og y todo su pueblo fueron heridos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

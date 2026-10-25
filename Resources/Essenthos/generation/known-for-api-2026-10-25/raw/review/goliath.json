@@ -1,0 +1,25 @@
+{
+ "slug": "goliath",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.485975+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "зневажив полки Ізраїля і закликав їх послати чоловіка, щоб битися з ним",
+    "deu": "verhöhnte das Heer Israels und forderte es auf, einen Mann zum Kampf mit ihm zu schicken",
+    "spa": "desafió a los escuadrones de Israel y les pidió que enviaran un hombre para pelear con él",
+    "why": ""
+   },
+   {
+    "ukr": "був уражений у чоло каменем Давида й убитий, і Давид відтяв йому голову його ж мечем",
+    "deu": "wurde von Davids Stein an der Stirn getroffen und getötet, und David hieb ihm mit seinem eigenen Schwert den Kopf ab",
+    "spa": "fue herido en la frente por la piedra de David y muerto, y David le cortó la cabeza con su propia espada",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

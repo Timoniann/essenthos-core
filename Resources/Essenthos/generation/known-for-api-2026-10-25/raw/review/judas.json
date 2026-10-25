@@ -1,0 +1,31 @@
+{
+ "slug": "judas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.631504+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "домовився з первосвящениками видати Ісуса за тридцять срібняків",
+    "deu": "verabredete mit den Hohenpriestern, Jesus für dreißig Silberlinge zu verraten",
+    "spa": "convino con los príncipes de los sacerdotes entregar a Jesús por treinta piezas de plata",
+    "why": ""
+   },
+   {
+    "ukr": "видав Ісуса поцілунком натовпові від первосвящеників і старших народу",
+    "deu": "verriet Jesus mit einem Kuss an eine Schar von den Hohenpriestern und Ältesten des Volks",
+    "spa": "entregó a Jesús con un beso a una multitud de parte de los príncipes de los sacerdotes y de los ancianos del pueblo",
+    "why": ""
+   },
+   {
+    "ukr": "розкаявся, кинув срібняки в храм і повісився",
+    "deu": "bereute es, warf die Silberlinge in den Tempel und erhängte sich",
+    "spa": "se arrepintió, arrojó las piezas de plata en el templo y se ahorcó",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

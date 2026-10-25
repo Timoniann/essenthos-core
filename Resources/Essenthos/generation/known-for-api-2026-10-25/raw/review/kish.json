@@ -1,0 +1,19 @@
+{
+ "slug": "kish",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.540313+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "послав свого сина Саула шукати загублених ослиць",
+    "deu": "sandte seinen Sohn Saul, die verlorenen Eselinnen zu suchen",
+    "spa": "envió a su hijo Saúl a buscar las asnas perdidas",
+    "why": "Ukrainian: replaced the relative clause 'що пропали' with the participle 'загублених' to match the English 'lost asses' more naturally."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

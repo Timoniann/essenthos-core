@@ -1,0 +1,32 @@
+{
+ "slug": "tahpanhes",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.165000+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Jeremiah 43 tells two things that happened at Tahpanhes: the arrival of the Judah remnant and the LORD's command to Jeremiah to hide stones there.",
+  "clauses": [
+   {
+    "english": "was where the people of Judah came in disobedience to the LORD",
+    "references": [
+     "JER 43:5-7"
+    ],
+    "quote": "thus came they even to Tahpanhes"
+   },
+   {
+    "english": "was where the LORD told Jeremiah to hide great stones in the brickkiln as a sign of Nebuchadrezzar's coming",
+    "references": [
+     "JER 43:8-10"
+    ],
+    "quote": "Take great stones in thine hand, and hide them in the clay in the brickkiln"
+   }
+  ],
+  "doubts": [
+   "JER 2:16, JER 44:1, JER 46:14 and EZK 30:18 only list the city or foretell its fate, so they were not used as clauses."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

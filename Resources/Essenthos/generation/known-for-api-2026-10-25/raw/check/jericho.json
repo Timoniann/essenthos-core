@@ -1,0 +1,48 @@
+{
+ "slug": "jericho",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.194798+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had its wall fall down flat when Israel shouted, and was taken and burnt",
+    "references": [
+     "JOS 6:20",
+     "JOS 6:24"
+    ],
+    "ukr": "мав мур, що впав, коли Ізраїль закричав, і був здобутий та спалений",
+    "deu": "hatte eine Mauer, die umfiel, als Israel ein Feldgeschrei machte, und wurde eingenommen und mit Feuer verbrannt",
+    "spa": "vio caer su muro cuando Israel gritó, y fue tomado y quemado con fuego"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says the foundation and gates were set in his sons, not that it cost him them.",
+    "english": "was rebuilt by Hiel the Bethelite",
+    "references": [
+     "1KI 16:34"
+    ],
+    "ukr": "був відбудований Хіїлом з Бет-Елу",
+    "deu": "wurde von Hiel von Beth-El gebaut",
+    "spa": "fue reedificado por Hiel de Beth-el"
+   },
+   {
+    "verdict": "fix",
+    "why": "The LORD healed the waters at Elisha's word; Elisha cast the salt into the spring.",
+    "english": "had its waters healed at Elisha's word, when he cast salt into the spring",
+    "references": [
+     "2KI 2:19-22"
+    ],
+    "ukr": "мав воду, вилікувану за словом Єлисея, який кинув у джерело сіль",
+    "deu": "bekam gesundes Wasser nach dem Wort Elisas, der Salz in die Quelle warf",
+    "spa": "tuvo sanas sus aguas conforme á la palabra de Eliseo, que echó sal en el manadero"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

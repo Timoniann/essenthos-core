@@ -1,0 +1,31 @@
+{
+ "slug": "balaam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.076150+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був покликаний Балаком, щоб проклясти Ізраїля, але натомість поблагословив його",
+    "deu": "wurde von Balak geholt, um Israel zu verfluchen, segnete es aber stattdessen",
+    "spa": "fue llamado por Balac para maldecir a Israel, pero en cambio lo bendijo",
+    "why": ""
+   },
+   {
+    "ukr": "отримав докір від Ангола Господнього після того, як до нього заговорила його ослиця",
+    "deu": "wurde vom Engel des HERRN getadelt, nachdem seine Eselin zu ihm gesprochen hatte",
+    "spa": "fue reprendido por el ángel del SEÑOR después de que su asna le habló",
+    "why": "Ukrainian left out «his» before «ass»; added «його»."
+   },
+   {
+    "ukr": "був забитий мечем серед мідіянців",
+    "deu": "wurde unter den Midianitern mit dem Schwert getötet",
+    "spa": "fue muerto a cuchillo entre los madianitas",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

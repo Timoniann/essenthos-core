@@ -1,0 +1,41 @@
+{
+ "slug": "jericho",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.784834+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Jericho's defining events are its fall to Israel under Joshua and, later, its rebuilding, with the healing of its waters a lesser but notable event.",
+  "clauses": [
+   {
+    "english": "had its wall fall down flat when Israel shouted, and was taken and burnt",
+    "references": [
+     "JOS 6:20",
+     "JOS 6:24"
+    ],
+    "quote": "the wall fell down flat, so that the people went up into the city"
+   },
+   {
+    "english": "was rebuilt by Hiel the Bethelite, at the cost of his sons",
+    "references": [
+     "1KI 16:34"
+    ],
+    "quote": "In his days did Hiel the Bethelite build Jericho"
+   },
+   {
+    "english": "had its bad waters healed by Elisha with salt",
+    "references": [
+     "2KI 2:19-22"
+    ],
+    "quote": "I have healed these waters"
+   }
+  ],
+  "doubts": [
+   "JOS 6:20 and JOS 6:24 are joined in the first clause as one event, the city's fall; the burning could be dropped.",
+   "Verses on Jericho's lot in the tribal inheritance, the plains of Moab, the exiles' return and the wall building are lists or locations, and were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

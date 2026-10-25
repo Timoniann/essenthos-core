@@ -1,0 +1,26 @@
+{
+ "slug": "watergate",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.848956+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The street before the Water Gate is where the people gathered and Ezra read the law to them, which is more than the summary says.",
+  "clauses": [
+   {
+    "english": "was where Ezra read the book of the law to all the people",
+    "references": [
+     "NEH 8:1-3"
+    ],
+    "quote": "he read therein before the street that was before the water gate"
+   }
+  ],
+  "doubts": [
+   "NEH 3:26 and NEH 12:37 only place the gate and add nothing to the summary, so they are not used.",
+   "NEH 8:16 mentions booths built in the street of the water gate, but this is a minor detail of the feast, so it is left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

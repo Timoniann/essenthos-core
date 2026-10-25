@@ -1,0 +1,33 @@
+{
+ "slug": "shem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.289745+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Shem has two events of his own beyond the genealogies: entering the ark and covering his father's nakedness.",
+  "clauses": [
+   {
+    "english": "entered the ark with Noah and his family before the Flood",
+    "references": [
+     "GEN 7:13"
+    ],
+    "quote": "entered Noah, and Shem, and Ham, and Japheth"
+   },
+   {
+    "english": "covered his drunken father Noah's nakedness with a garment, walking backward",
+    "references": [
+     "GEN 9:23"
+    ],
+    "quote": "Shem and Japheth took a garment, and laid it upon both their shoulders"
+   }
+  ],
+  "doubts": [
+   "GEN 9:26-27 is a blessing pronounced by Noah, not an event, so it is left out.",
+   "GEN 11:10 names Shem's age at fatherhood only; the dataset's 'Death of Shem' event does not describe a death."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,47 @@
+{
+ "slug": "gaza",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.028958+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say he escaped; they say he took the gate doors at midnight and carried them off.",
+    "english": "was where Samson took the city gate doors at midnight and carried them off",
+    "references": [
+     "JDG 16:1-3"
+    ],
+    "ukr": "була місцем, де Самсон опівночі взяв двері міської брами й виніс їх",
+    "deu": "war der Ort, an dem Simson um Mitternacht die Türen des Stadttors nahm und davontrug",
+    "spa": "fue el lugar donde Samsón tomó a medianoche las puertas de la ciudad y se las llevó"
+   },
+   {
+    "verdict": "fix",
+    "why": "He was bound with fetters of brass; the verse does not say he was bound in the prison house, only that he ground there.",
+    "english": "was where the Philistines brought the blinded Samson and bound him with fetters of brass",
+    "references": [
+     "JDG 16:21"
+    ],
+    "ukr": "була місцем, куди филистимляни привели осліпленого Самсона й зв'язали його мідяними ланцюгами",
+    "deu": "war der Ort, wohin die Philister den geblendeten Simson brachten und ihn mit ehernen Ketten banden",
+    "spa": "fue el lugar adonde los Filisteos llevaron al cegado Samsón y lo ataron con cadenas"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says Judah took Gaza with its territory; the old word coast is replaced by modern wording.",
+    "english": "was taken by Judah with its territory",
+    "references": [
+     "JDG 1:18"
+    ],
+    "ukr": "була здобута Юдою разом із її територією",
+    "deu": "wurde von Juda mit ihrem Gebiet erobert",
+    "spa": "fue tomada por Judá con su término"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "ezra",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.626320+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прибув до Єрусалиму сьомого року царя Артаксеркса",
+    "deu": "kam nach Jerusalem im siebenten Jahr des Königs Arthahsastha",
+    "spa": "llegó a Jerusalem en el año séptimo del rey Artajerjes",
+    "why": ""
+   },
+   {
+    "ukr": "приніс Закон перед збори й читав його від світанку аж до полудня",
+    "deu": "brachte das Gesetz vor die Gemeinde und las daraus vom frühen Morgen bis zum Mittag",
+    "spa": "trajo la ley delante de la congregación y la leyó desde el alba hasta el mediodía",
+    "why": "Spanish: modernized «medio día» to «mediodía» and replaced the added «en el libro» with «la leyó» (read it)."
+   },
+   {
+    "ukr": "змусив зверхників священиків, Левитів і весь Ізраїль заприсягти, що відішлють жінок",
+    "deu": "ließ die Obersten der Priester, die Leviten und ganz Israel schwören, die Frauen zu entlassen",
+    "spa": "hizo jurar a los príncipes de los sacerdotes, a los Levitas y a todo Israel que echarían a las mujeres",
+    "why": "Ukrainian: «chief priests» is one group (зверхників священиків), not two separate groups."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

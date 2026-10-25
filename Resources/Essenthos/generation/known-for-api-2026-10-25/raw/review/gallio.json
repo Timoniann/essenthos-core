@@ -1,0 +1,19 @@
+{
+ "slug": "gallio",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.290211+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "відмовився судити звинувачення юдеїв проти Павла і прогнав їх від суду",
+    "deu": "weigerte sich, über die Anklage der Juden gegen Paulus zu richten, und trieb sie vom Richterstuhl",
+    "spa": "no quiso juzgar la acusación de los judíos contra Pablo y los echó del tribunal",
+    "why": "German: archaic «von dem Richtstuhl» changed to modern «vom Richterstuhl»; Spanish: «Judíos» lower-cased to «judíos» per modern orthography."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

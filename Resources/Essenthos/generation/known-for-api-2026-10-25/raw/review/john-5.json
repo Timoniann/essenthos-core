@@ -1,0 +1,31 @@
+{
+ "slug": "john-5",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.314777+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був на службі в Варнави та Савла в Саламіні",
+    "deu": "war in Salamis Diener des Barnabas und des Saulus",
+    "spa": "sirvió como ayudante de Bernabé y Saulo en Salamina",
+    "why": "The Spanish 'estuvo en el ministerio con' read as a fellow minister, so it now says he served as their attendant, as in the English."
+   },
+   {
+    "ukr": "відлучився від Павла та його супутників у Пергії та повернувся до Єрусалиму",
+    "deu": "wich in Perge von Paulus und seinen Begleitern und zog wieder nach Jerusalem",
+    "spa": "se apartó de Pablo y sus compañeros en Perge y se volvió a Jerusalem",
+    "why": ""
+   },
+   {
+    "ukr": "був узятий Варнавою до Кіпру після гострої незгоди між Павлом і Варнавою через нього",
+    "deu": "wurde von Barnabas nach Zypern mitgenommen, nachdem Paulus und Barnabas seinetwegen scharf aneinandergeraten waren",
+    "spa": "fue llevado por Bernabé a Cipro después de una fuerte contención entre Pablo y Bernabé por causa de él",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

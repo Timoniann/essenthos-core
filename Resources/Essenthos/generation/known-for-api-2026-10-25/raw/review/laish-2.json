@@ -1,0 +1,25 @@
+{
+ "slug": "laish-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.661479+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "зазнав нападу Данових синів, його народ побили вістрям меча, а місто спалили вогнем",
+    "deu": "wurde von den Kindern Dan angegriffen, sein Volk mit der Schärfe des Schwerts geschlagen und die Stadt mit Feuer verbrannt",
+    "spa": "fue atacado por los hijos de Dan, su pueblo pasado a cuchillo y la ciudad abrasada con fuego",
+    "why": ""
+   },
+   {
+    "ukr": "був збудований Дановими синами і названий Даном",
+    "deu": "wurde von den Kindern Dan gebaut und Dan genannt",
+    "spa": "fue edificado por los hijos de Dan y llamado Dan",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

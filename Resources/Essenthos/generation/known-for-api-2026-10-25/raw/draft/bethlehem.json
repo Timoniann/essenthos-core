@@ -1,0 +1,42 @@
+{
+ "slug": "bethlehem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.977785+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several events of the story belong to Bethlehem itself: Rachel's burial on the way to it, the birth of Jesus there, and the slaughter of its children.",
+  "clauses": [
+   {
+    "english": "had Rachel buried on the way to it",
+    "references": [
+     "GEN 35:19"
+    ],
+    "quote": "Rachel died, and was buried in the way to Ephrath, which is Bethlehem."
+   },
+   {
+    "english": "was where Jesus was born in the days of Herod the king",
+    "references": [
+     "MAT 2:1",
+     "LUK 2:4-7"
+    ],
+    "quote": "Jesus was born in Bethlehem of Judaea in the days of Herod the king"
+   },
+   {
+    "english": "had its young children slain by Herod",
+    "references": [
+     "MAT 2:16"
+    ],
+    "quote": "slew all the children that were in Bethlehem"
+   }
+  ],
+  "doubts": [
+   "Verses naming the Bethlehemite Jesse, Elhanan, Asahel's tomb, or the Levite and concubine mention the town only as a home or origin, so were left out.",
+   "Rachel's burial is said to be on the way to Ephrath, which is Bethlehem, so the clause says on the way to it.",
+   "Genealogy, census, Rehoboam's fortifying and the prophecy verses were not used as events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

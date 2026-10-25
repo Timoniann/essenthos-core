@@ -1,0 +1,36 @@
+{
+ "slug": "hamath-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.836263+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Most verses use Hamath only as a northern boundary marker, but two state events that happened to it: its recovery for Israel and the store cities Solomon built there.",
+  "clauses": [
+   {
+    "english": "was recovered for Israel by Jeroboam son of Joash",
+    "references": [
+     "2KI 14:28"
+    ],
+    "quote": "he recovered Damascus, and Hamath, which belonged to Judah, for Israel"
+   },
+   {
+    "english": "had store cities built in it by Solomon",
+    "references": [
+     "2CH 8:4"
+    ],
+    "quote": "all the store cities, which he built in Hamath"
+   }
+  ],
+  "doubts": [
+   "Left out the many verses that use 'the entering in of Hamath' only as a boundary.",
+   "Left out Riblah in the land of Hamath (2KI 23:33, 2KI 25:21, JER 39:5), since those events happened at Riblah.",
+   "Toi king of Hamath (2SA 8:9, 1CH 18:9) is a deed of the king, not of the place.",
+   "Hamathzobah (2CH 8:3) may be a different place, so it is not used.",
+   "The Assyrian taunts about Hamath's gods (2KI 18:34, 2KI 19:13) are rhetorical questions and do not state an event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,47 @@
+{
+ "slug": "judah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.103617+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "proposed selling Joseph to the Ishmeelites rather than killing him",
+    "references": [
+     "GEN 37:26-27"
+    ],
+    "ukr": "запропонував продати Йосипа ізмаїльтянам, а не вбивати його",
+    "deu": "schlug vor, Joseph den Ismaelitern zu verkaufen, statt ihn zu erwürgen",
+    "spa": "propuso vender a José a los Ismaelitas en lugar de matarlo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "acknowledged that Tamar had been more righteous than he",
+    "references": [
+     "GEN 38:26"
+    ],
+    "ukr": "визнав, що Тамар справедливіша від нього",
+    "deu": "erkannte an, dass Tamar gerechter war als er",
+    "spa": "reconoció que Tamar era más justa que él"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "offered to be surety to Jacob for Benjamin's safe return",
+    "references": [
+     "GEN 43:8-9"
+    ],
+    "ukr": "запропонував поручитися перед Яковом за благополучне повернення Веніяміна",
+    "deu": "erbot sich, gegenüber Jakob für Benjamins sichere Rückkehr zu bürgen",
+    "spa": "se ofreció a ser fiador ante Jacob por el regreso seguro de Benjamín"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

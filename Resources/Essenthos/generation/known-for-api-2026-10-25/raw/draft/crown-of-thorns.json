@@ -1,0 +1,32 @@
+{
+ "slug": "crown-of-thorns",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.911086+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of the crown's making and its use in the soldiers' mockery of Jesus, and of Jesus being brought out wearing it.",
+  "clauses": [
+   {
+    "english": "was plaited by the soldiers and put on Jesus' head to mock him as King of the Jews",
+    "references": [
+     "MAT 27:29",
+     "MRK 15:17-18",
+     "JHN 19:2-3"
+    ],
+    "quote": "platted a crown of thorns, they put it upon his head"
+   },
+   {
+    "english": "was worn by Jesus when Pilate brought him out saying, Behold the man",
+    "references": [
+     "JHN 19:5"
+    ],
+    "quote": "Then came Jesus forth, wearing the crown of thorns"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

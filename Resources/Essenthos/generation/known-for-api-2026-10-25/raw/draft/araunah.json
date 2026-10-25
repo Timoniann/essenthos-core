@@ -1,0 +1,25 @@
+{
+ "slug": "araunah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.775949+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell one event of Araunah: David bought his threshingfloor for an altar to the LORD.",
+  "clauses": [
+   {
+    "english": "sold his threshingfloor and oxen to David for an altar to the LORD",
+    "references": [
+     "2SA 24:21-24"
+    ],
+    "quote": "So David bought the threshingfloor and the oxen for fifty shekels of silver."
+   }
+  ],
+  "doubts": [
+   "The Chronicles verses (1CH 21, 2CH 3:1) call him Ornan and give a price of six hundred shekels of gold; I left them out and used only the Samuel account."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,37 @@
+{
+ "slug": "aaron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:07:24.808052+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "кинув свою палицю перед фараоном, і вона стала вужем",
+    "deu": "warf seinen Stab vor Pharao, und er wurde zur Schlange",
+    "spa": "echó su vara delante de Faraón, y se volvió culebra",
+    "why": ""
+   },
+   {
+    "ukr": "зробив лите теля із золотих сережок народу",
+    "deu": "machte aus den goldenen Ohrenringen des Volkes ein gegossenes Kalb",
+    "spa": "hizo un becerro de fundición con los zarcillos de oro del pueblo",
+    "why": ""
+   },
+   {
+    "ukr": "побіг до середини громади з пахощами і зупинив мор",
+    "deu": "lief mit Räucherwerk mitten unter die Gemeinde und hielt die Plage auf",
+    "spa": "corrió con incienso en medio de la congregación y detuvo la mortandad",
+    "why": "Ukrainian: «кадилом» (censer) became «пахощами» (incense) and «поразку» (defeat) became «мор» (plague); Spanish: old-fashioned «perfume» became «incienso»."
+   },
+   {
+    "ukr": "помер на Гор-горі",
+    "deu": "starb auf dem Berg Hor",
+    "spa": "murió en el monte de Hor",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

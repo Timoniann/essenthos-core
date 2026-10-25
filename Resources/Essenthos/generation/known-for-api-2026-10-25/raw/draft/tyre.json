@@ -1,0 +1,42 @@
+{
+ "slug": "tyre",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.063205+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several passages tell of things that happened at or to Tyre: its king supplying David, the prophecy of its fall, and Jesus entering its coasts.",
+  "clauses": [
+   {
+    "english": "sent cedar trees, carpenters and masons to build David a house",
+    "references": [
+     "2SA 5:11"
+    ],
+    "quote": "sent messengers to David, and cedar trees, and carpenters, and masons"
+   },
+   {
+    "english": "was foretold to fall to Nebuchadrezzar and be made like the top of a rock",
+    "references": [
+     "EZK 26:4",
+     "EZK 26:7"
+    ],
+    "quote": "I will bring upon Tyrus Nebuchadrezzar king of Babylon"
+   },
+   {
+    "english": "was visited by Jesus, who went into its coasts",
+    "references": [
+     "MAT 15:21"
+    ],
+    "quote": "Jesus went thence, and departed into the coasts of Tyre and Sidon."
+   }
+  ],
+  "doubts": [
+   "Verses naming Hiram the brass-worker, a man of Tyre (1KI 7:13-14), and the verses on the king of Tyre's gifts to Solomon concern other persons or repeat the same help, so they were left out.",
+   "The Ezekiel 28 verses addressed to the prince and king of Tyre were not used, since they are rebuke and lamentation, not events.",
+   "Joshua 19:29 and 2 Samuel 24:7 only list Tyre among places and were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

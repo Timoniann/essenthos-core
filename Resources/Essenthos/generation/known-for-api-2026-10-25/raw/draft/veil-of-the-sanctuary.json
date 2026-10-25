@@ -1,0 +1,34 @@
+{
+ "slug": "veil-of-the-sanctuary",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.555347+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was made of the veil and how it was used, so a short line on its making and its setting up is supported.",
+  "clauses": [
+   {
+    "english": "was made of blue, purple, scarlet and fine linen, with cherubims worked into it",
+    "references": [
+     "EXO 36:35"
+    ],
+    "quote": "he made a vail of blue, and purple, and scarlet, and fine twined linen"
+   },
+   {
+    "english": "was set up to cover the ark of the testimony and divide the holy place from the most holy",
+    "references": [
+     "EXO 40:21",
+     "EXO 26:33"
+    ],
+    "quote": "set up the vail of the covering, and covered the ark of the testimony"
+   }
+  ],
+  "doubts": [
+   "HEB 9:3 speaks of the second veil, which is not the same wording as the others; left unused.",
+   "LEV 16 and NUM 4 give rules for priests (entering within the veil, taking it down to cover the ark), which are commands, not events, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

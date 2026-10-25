@@ -1,0 +1,36 @@
+{
+ "slug": "cyprus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.639055+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say they sailed to Cyprus, not that they landed; the names Barnabas and Saul are in 13:2, just outside the citation.",
+    "english": "was where Barnabas and Saul, sent by the Holy Ghost, sailed and preached in the synagogues",
+    "references": [
+     "ACT 13:2-5"
+    ],
+    "ukr": "був місцем, куди припливли Варнава й Савл, послані Святим Духом, і де проповідували в синагогах юдейських",
+    "deu": "war der Ort, wohin Barnabas und Saulus, vom heiligen Geist ausgesandt, schifften und in den Synagogen der Juden predigten",
+    "spa": "fue el lugar adonde navegaron Bernabé y Saulo, enviados por el Espíritu Santo, y donde anunciaron la palabra de Dios en las sinagogas de los Judíos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Barnabas sailed with Mark after parting from Paul",
+    "references": [
+     "ACT 15:39"
+    ],
+    "ukr": "був місцем, куди Варнава поплив із Марком, розлучившись з Павлом",
+    "deu": "war der Ort, wohin Barnabas mit Markus schiffte, nachdem er sich von Paulus getrennt hatte",
+    "spa": "fue el lugar adonde navegó Bernabé con Marcos, tras apartarse de Pablo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

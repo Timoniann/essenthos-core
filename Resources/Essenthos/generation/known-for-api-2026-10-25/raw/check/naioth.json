@@ -1,0 +1,36 @@
+{
+ "slug": "naioth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.889930+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says David and Samuel dwelt in Naioth; 'found refuge' is the reader's gloss.",
+    "english": "was where David and Samuel dwelt after David fled from Saul",
+    "references": [
+     "1SA 19:18"
+    ],
+    "ukr": "був місцем, де Давид та Самуїл осілися після того, як Давид утік від Саула",
+    "deu": "war der Ort, wo David und Samuel blieben, nachdem David vor Saul entflohen war",
+    "spa": "fue el lugar donde moraron David y Samuel después de que David huyó de Saúl"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verses do not say Saul himself came to seize David; that detail is not given there.",
+    "english": "was where Saul prophesied and lay naked all day and night",
+    "references": [
+     "1SA 19:23-24"
+    ],
+    "ukr": "був місцем, де Саул пророкував і лежав нагий цілий день та цілу ніч",
+    "deu": "war der Ort, wo Saul weissagte und den ganzen Tag und die ganze Nacht bloß dalag",
+    "spa": "fue el lugar donde Saúl profetizó y estuvo tendido desnudo todo aquel día y toda aquella noche"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

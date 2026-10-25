@@ -1,0 +1,47 @@
+{
+ "slug": "cross-of-christ",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.801681+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was carried by Jesus to Golgotha",
+    "references": [
+     "JHN 19:17"
+    ],
+    "ukr": "був несений Ісусом на Голгофу",
+    "deu": "wurde von Jesus nach Golgatha getragen",
+    "spa": "fue llevada por Jesús al Gólgotha"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say Jesus was crucified with two others, but not that it happened on the cross itself; keep only what the cross stood for: the cross on which Jesus was crucified is stated only by the context, and the two others are a minor detail.",
+    "english": "was where Jesus was crucified",
+    "references": [
+     "JHN 19:17-18"
+    ],
+    "ukr": "була місцем, де розп'яли Ісуса",
+    "deu": "war der Ort, an dem Jesus gekreuzigt wurde",
+    "spa": "fue donde crucificaron a Jesús"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had Pilate's title, JESUS OF NAZARETH THE KING OF THE JEWS, put on it",
+    "references": [
+     "JHN 19:19"
+    ],
+    "ukr": "мала на собі напис Пилата: Ісус Назарянин, Цар Юдейський",
+    "deu": "trug die Überschrift des Pilatus: Jesus von Nazareth, der Juden König",
+    "spa": "tuvo puesto encima el título de Pilato: JESUS NAZARENO, REY DE LOS JUDIOS"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

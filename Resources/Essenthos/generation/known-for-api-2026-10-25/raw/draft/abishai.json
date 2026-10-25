@@ -1,0 +1,42 @@
+{
+ "slug": "abishai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.733107+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of several deeds of Abishai beyond the relations and the killing of Abner already in the summary.",
+  "clauses": [
+   {
+    "english": "went down with David by night to Saul's camp and was forbidden to strike the sleeping king",
+    "references": [
+     "1SA 26:6-9"
+    ],
+    "quote": "So David and Abishai came to the people by night"
+   },
+   {
+    "english": "saved David by striking down the Philistine Ishbibenob",
+    "references": [
+     "2SA 21:16-17"
+    ],
+    "quote": "succoured him, and smote the Philistine, and killed him"
+   },
+   {
+    "english": "lifted up his spear against three hundred and slew them",
+    "references": [
+     "2SA 23:18",
+     "1CH 11:20"
+    ],
+    "quote": "he lifted up his spear against three hundred, and slew them"
+   }
+  ],
+  "doubts": [
+   "Left out his request to take off Shimei's head (2SA 16:9), his command of part of the army against Ammon and Absalom, and the slaying of eighteen thousand Edomites (1CH 18:12), to keep to the chief deeds.",
+   "Left out the killing of Abner (2SA 3:30) because the summary already names it.",
+   "1CH 12:4 names a different man, Ismaiah, and was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

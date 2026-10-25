@@ -1,0 +1,49 @@
+{
+ "slug": "pharaoh-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.424698+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses cover the hail only, not 'the plagues', and Moses' name is not needed.",
+    "english": "refused to let Israel go and hardened his heart",
+    "references": [
+     "EXO 5:1-2",
+     "EXO 9:34-35"
+    ],
+    "ukr": "відмовився відпустити Ізраїля й зробив своє серце запеклим",
+    "deu": "weigerte sich, Israel ziehen zu lassen, und verhärtete sein Herz",
+    "spa": "se negó a dejar ir a Israel y endureció su corazón"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "lost his firstborn when the LORD smote all the firstborn of Egypt, and let Israel go",
+    "references": [
+     "EXO 12:29-31"
+    ],
+    "ukr": "втратив свого перворідного, коли Господь вдарив кожного перворідного в єгипетському краї, і відпустив Ізраїля",
+    "deu": "verlor seinen ersten Sohn, als der HERR alle Erstgeburt in Ägyptenland schlug, und ließ Israel ziehen",
+    "spa": "perdió a su primogénito cuando el SEÑOR hirió a todo primogénito en la tierra de Egipto, y dejó ir a Israel"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say the returning waters covered his host; they do not say Pharaoh himself was overthrown.",
+    "english": "pursued Israel with his army, and the returning waters covered his host",
+    "references": [
+     "EXO 14:8-9",
+     "EXO 14:28"
+    ],
+    "ukr": "погнався за Ізраїлевими синами зі своїм військом, і вода, що вернулася, закрила все його військо",
+    "deu": "jagte den Kindern Israel mit seinem Heer nach, und das wiedergekommene Wasser bedeckte sein ganzes Heer",
+    "spa": "siguió a los hijos de Israel con su ejército, y las aguas que volvieron cubrieron todo su ejército"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

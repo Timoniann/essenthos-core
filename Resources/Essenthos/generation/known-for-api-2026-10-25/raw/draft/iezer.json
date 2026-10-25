@@ -1,0 +1,17 @@
+{
+ "slug": "iezer",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.919100+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Iezer among the sons of Gilead and name his clan in a lot and a tribal reference, saying nothing he did or that happened to him beyond the summary.",
+  "clauses": [],
+  "doubts": [
+   "JDG 6:34 and JDG 8:2 speak of the clan of Abiezer, not of Iezer himself, and 1CH 7:18 may concern a different Abiezer."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,40 @@
+{
+ "slug": "mary",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.061205+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Mary's conception, the angel's announcement, and the birth of Jesus, which go beyond the summary's relations.",
+  "clauses": [
+   {
+    "english": "was told by the angel Gabriel that she would conceive and bear a son, and accepted it",
+    "references": [
+     "LUK 1:26-38"
+    ],
+    "quote": "Behold the handmaid of the Lord; be it unto me according to thy word."
+   },
+   {
+    "english": "was found with child of the Holy Ghost before she and Joseph came together",
+    "references": [
+     "MAT 1:18"
+    ],
+    "quote": "she was found with child of the Holy Ghost"
+   },
+   {
+    "english": "bore her firstborn son and laid him in a manger in Bethlehem",
+    "references": [
+     "LUK 2:4-7"
+    ],
+    "quote": "she brought forth her firstborn son, and wrapped him in swaddling clothes, and laid him in a manger"
+   }
+  ],
+  "doubts": [
+   "MAT 13:55 and MRK 6:3 only name her as mother, so they were not used.",
+   "The visit to Elisabeth (LUK 1:39-56) was left out as secondary to the announcement and birth."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

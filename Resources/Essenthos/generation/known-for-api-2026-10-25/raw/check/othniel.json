@@ -1,0 +1,36 @@
+{
+ "slug": "othniel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.455646+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "JOS 15:17 says only 'took it'; the name Kirjathsepher is in the verse just before, so the citation should take it in.",
+    "english": "took Kirjathsepher",
+    "references": [
+     "JOS 15:16-17"
+    ],
+    "ukr": "здобув Кір'ят-Сефер",
+    "deu": "gewann Kirjath-Sepher",
+    "spa": "tomó Chîriath-sepher"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say he delivered Israel and his hand prevailed against Chushanrishathaim; 'from' goes slightly beyond them.",
+    "english": "delivered Israel and prevailed against Chushanrishathaim king of Mesopotamia",
+    "references": [
+     "JDG 3:9-10"
+    ],
+    "ukr": "врятував Ізраїля і подужав Кушан-Ріш'атаїма, царя арамського",
+    "deu": "erlöste Israel und überwältigte Kusan-Risathaim, den König von Mesopotamien",
+    "spa": "libró a Israel y prevaleció contra Chusan-risathaim, rey de Siria"
+   }
+  ],
+  "note": "The line leaves out that the Spirit of the LORD came upon him and that he judged Israel (JDG 3:10), and that the land had rest forty years (JDG 3:11)."
+ },
+ "problems": [],
+ "attempts": []
+}

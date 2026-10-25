@@ -1,0 +1,30 @@
+{
+ "slug": "tree-of-knowledge-of-good-and-evil",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.788526+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was forbidden about the tree and what happened when its fruit was eaten.",
+  "clauses": [
+   {
+    "english": "was forbidden to the man on pain of death",
+    "references": [
+     "GEN 2:16-17"
+    ],
+    "quote": "of the tree of the knowledge of good and evil, thou shalt not eat of it"
+   },
+   {
+    "english": "was eaten from by the woman, who gave its fruit to her husband, and he ate",
+    "references": [
+     "GEN 3:6"
+    ],
+    "quote": "she took of the fruit thereof, and did eat, and gave also unto her husband with her; and he did eat"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

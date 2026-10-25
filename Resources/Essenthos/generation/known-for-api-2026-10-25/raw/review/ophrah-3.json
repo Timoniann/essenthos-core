@@ -1,0 +1,31 @@
+{
+ "slug": "ophrah-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.110019+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де ангел Господній явився Гедеонові під дубом",
+    "deu": "war der Ort, wo der Engel des HERRN dem Gideon unter einer Eiche erschien",
+    "spa": "fue el lugar donde el ángel del SEÑOR se apareció a Gedeón debajo de un alcornoque",
+    "why": "Ukrainian: replaced the archaic «Ангол» with modern «ангел»."
+   },
+   {
+    "ukr": "була місцем, де Гедеон поставив ефод, за яким пішов увесь Ізраїль і який став пасткою для нього та його дому",
+    "deu": "war der Ort, wo Gideon einen Efod aufstellte, dem ganz Israel nachging und der ihm und seinem Haus zum Fallstrick wurde",
+    "spa": "fue el lugar donde Gedeón puso un efod, tras el cual fue todo Israel y que fue tropiezo para él y su casa",
+    "why": "German: replaced the old wording «Leibrock», «zum Fall geriet» and «Hause» with modern «Efod», «zum Fallstrick wurde» and «Haus». Spanish: modernized «ephod» to «efod»."
+   },
+   {
+    "ukr": "була місцем, де Авімелех повбивав своїх сімдесят братів на одному камені",
+    "deu": "war der Ort, wo Abimelech seine siebzig Brüder auf einem Stein tötete",
+    "spa": "fue el lugar donde Abimelech mató a sus setenta hermanos sobre una piedra",
+    "why": "German: replaced the old word «erwürgte» with modern «tötete»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

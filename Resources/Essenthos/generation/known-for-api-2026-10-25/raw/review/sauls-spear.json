@@ -1,0 +1,31 @@
+{
+ "slug": "sauls-spear",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.216985+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був увігнаний у стіну, коли Саул хотів прибити ним Давида, а той відхилився",
+    "deu": "fuhr in die Wand, als Saul David damit an die Wand spießen wollte und dieser sich losriss",
+    "spa": "fue clavada en la pared cuando Saúl intentó clavar a David con ella y David se apartó",
+    "why": "Ukrainian: added the missing «ним» (with it). German: old spelling «losriß» became «losriss». Spanish: archaic «procuró enclavar» became «intentó clavar»."
+   },
+   {
+    "ukr": "був кинутий Саулом на Йонатана",
+    "deu": "wurde von Saul nach Jonathan geworfen",
+    "spa": "fue arrojada por Saúl a Jonathán",
+    "why": "German: «geschossen» is wrong for throwing a spear, so it became «geworfen»."
+   },
+   {
+    "ukr": "був узятий Давидом з Саулового приголів'я, коли Саул спав",
+    "deu": "wurde von David vom Kopfende Sauls genommen, als Saul schlief",
+    "spa": "fue tomada por David de la cabecera de Saúl mientras Saúl dormía",
+    "why": "German: archaic «zu den Häupten Sauls» became modern «vom Kopfende Sauls»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

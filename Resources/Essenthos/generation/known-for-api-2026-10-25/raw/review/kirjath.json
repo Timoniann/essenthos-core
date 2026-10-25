@@ -1,0 +1,25 @@
+{
+ "slug": "kirjath",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.106472+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прийняв ковчег Господній, що пробув там двадцять років",
+    "deu": "nahm die Lade des HERRN auf, die dort zwanzig Jahre blieb",
+    "spa": "recibió el arca del SEÑOR, que permaneció allí veinte años",
+    "why": "Ukrainian: replaced the archaic animate accusative «Господнього ковчега» with modern «ковчег Господній», and «літ» with «років»."
+   },
+   {
+    "ukr": "був місцем, звідки Давид переніс ковчег Божий",
+    "deu": "war der Ort, von dem David die Lade Gottes heraufbrachte",
+    "spa": "fue el lugar de donde David trajo el arca de Dios",
+    "why": "Ukrainian: replaced the archaic «Божого ковчега» with modern «ковчег Божий»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "hoshea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.056697+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of his killing Pekah and of his imprisonment by the king of Assyria, both beyond what the summary states.",
+  "clauses": [
+   {
+    "english": "conspired against Pekah, killed him and reigned in his place",
+    "references": [
+     "2KI 15:30"
+    ],
+    "quote": "made a conspiracy against Pekah the son of Remaliah, and smote him"
+   },
+   {
+    "english": "was shut up and bound in prison by the king of Assyria for sending to So king of Egypt",
+    "references": [
+     "2KI 17:4"
+    ],
+    "quote": "the king of Assyria shut him up, and bound him in prison"
+   }
+  ],
+  "doubts": [
+   "HOS 10:15 speaks of an unnamed king of Israel, so it was left out.",
+   "The fall of Samaria in his ninth year (2KI 17:6, 18:10) was left out as an event of the nation rather than a deed of Hoshea."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,34 @@
+{
+ "slug": "mephaath",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.457738+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Beyond the lists, the verses say it was given to the Levites and that judgment was pronounced on it.",
+  "clauses": [
+   {
+    "english": "was given with its suburbs to the Levites of the family of Merari",
+    "references": [
+     "JOS 21:34",
+     "JOS 21:36-37"
+    ],
+    "quote": "Kedemoth with her suburbs, and Mephaath with her suburbs"
+   },
+   {
+    "english": "had judgment come upon it with the cities of the plain country",
+    "references": [
+     "JER 48:21"
+    ],
+    "quote": "judgment is come upon the plain country"
+   }
+  ],
+  "doubts": [
+   "JER 48:21 is a prophecy of judgment on Moab's cities, stated in the present tense; the clause relies on that wording.",
+   "JOS 13:18 and 1CH 6:79 only list the name and were not used as separate clauses."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

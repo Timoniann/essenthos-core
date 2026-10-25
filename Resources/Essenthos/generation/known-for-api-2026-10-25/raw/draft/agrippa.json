@@ -1,0 +1,34 @@
+{
+ "slug": "agrippa",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.752944+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Agrippa's visit to Festus, his hearing of Paul, and his remark to Paul; the summary gives only his judgment of Paul.",
+  "clauses": [
+   {
+    "english": "came to Caesarea to salute Festus, and asked to hear Paul himself",
+    "references": [
+     "ACT 25:13",
+     "ACT 25:22"
+    ],
+    "quote": "I would also hear the man myself."
+   },
+   {
+    "english": "told Paul he almost persuaded him to be a Christian",
+    "references": [
+     "ACT 26:28"
+    ],
+    "quote": "Almost thou persuadest me to be a Christian."
+   }
+  ],
+  "doubts": [
+   "The summary names Agrippa's judgment of Paul (ACT 26:32), so it is left out of the clauses.",
+   "The first clause joins the visit and the request to hear Paul because the request grows out of the visit; it could be cut to one of the two."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

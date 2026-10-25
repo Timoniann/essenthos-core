@@ -1,0 +1,25 @@
+{
+ "slug": "eliab-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.386052+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був відкинутий Господом, коли Самуїл вважав його помазанцем",
+    "deu": "wurde vom HERRN verworfen, als Samuel ihn für den Gesalbten hielt",
+    "spa": "fue desechado por el SEÑOR cuando Samuel lo tuvo por el ungido",
+    "why": ""
+   },
+   {
+    "ukr": "розгнівався на Давида і звинуватив його в зарозумілості",
+    "deu": "wurde zornig auf David und warf ihm Vermessenheit vor",
+    "spa": "se encendió en ira contra David y le acusó de soberbia",
+    "why": "Ukrainian «докорив зарозумілістю» (reproached) became «звинуватив його в зарозумілості» (accused him of pride); German archaic «ergrimmte im Zorn wider» became modern «wurde zornig auf»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

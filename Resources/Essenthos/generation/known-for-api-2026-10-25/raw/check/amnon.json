@@ -1,0 +1,36 @@
+{
+ "slug": "amnon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.139707+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse does not name Tamar or say she was his sister; verse 12 has her call him brother, so widen the citation and drop the name.",
+    "english": "forced his sister and lay with her",
+    "references": [
+     "2SA 13:12-14"
+    ],
+    "ukr": "збезчестив свою сестру і лежав із нею",
+    "deu": "überwältigte seine Schwester und schlief bei ihr",
+    "spa": "forzó a su hermana y se echó con ella"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was killed by Absalom's servants at Absalom's command",
+    "references": [
+     "2SA 13:28-29"
+    ],
+    "ukr": "був убитий юнаками Авесалома за його наказом",
+    "deu": "wurde auf Absaloms Befehl von den Leuten Absaloms getötet",
+    "spa": "fue muerto por los criados de Absalom por orden de este"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

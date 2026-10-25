@@ -1,0 +1,25 @@
+{
+ "slug": "sheshbazzar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.288708+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "завіз храмовий посуд із золота і срібла з Вавилону до Єрусалиму",
+    "deu": "brachte die Tempelgefäße aus Gold und Silber von Babel herauf nach Jerusalem",
+    "spa": "hizo llevar los vasos del templo, de oro y de plata, de Babilonia a Jerusalem",
+    "why": "Added the missing 'temple' (храмовий, Tempelgefäße, del templo) to all three renderings."
+   },
+   {
+    "ukr": "заклав підвалини Божого дому в Єрусалимі",
+    "deu": "legte den Grund des Hauses Gottes in Jerusalem",
+    "spa": "puso los fundamentos de la casa de Dios en Jerusalem",
+    "why": "German: replaced the dated 'am Hause Gottes zu Jerusalem' with modern wording."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

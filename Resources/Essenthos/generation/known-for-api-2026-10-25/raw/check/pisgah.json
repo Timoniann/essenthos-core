@@ -1,0 +1,37 @@
+{
+ "slug": "pisgah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.586121+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse gives no request of Balak's, and Balaam is named only in the following verses.",
+    "english": "was where Balaam built seven altars and offered a bullock and a ram on each",
+    "references": [
+     "NUM 23:14-16"
+    ],
+    "ukr": "була місцем, де Валаам збудував сім жертовників і приніс бичка та барана на кожному",
+    "deu": "war der Ort, an dem Bileam sieben Altäre baute und auf jedem einen Farren und einen Widder opferte",
+    "spa": "fue el lugar donde Balaam edificó siete altares y ofreció un becerro y un carnero en cada altar"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Moses went up and the LORD showed him all the land he would not enter",
+    "references": [
+     "DEU 3:27",
+     "DEU 34:1-3"
+    ],
+    "ukr": "була місцем, куди піднявся Мойсей і де Господь показав йому весь Край, до якого він не мав увійти",
+    "deu": "war der Ort, auf den Mose hinaufging und wo ihm der HERR das ganze Land zeigte, in das er nicht hinübergehen sollte",
+    "spa": "fue el lugar adonde subió Moisés y donde el SEÑOR le mostró toda la tierra a la que no pasaría"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

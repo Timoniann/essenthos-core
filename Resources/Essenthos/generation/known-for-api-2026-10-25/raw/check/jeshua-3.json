@@ -1,0 +1,48 @@
+{
+ "slug": "jeshua-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.389276+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "built the altar of the God of Israel with Zerubbabel and the priests",
+    "references": [
+     "EZR 3:2"
+    ],
+    "ukr": "збудував разом із Зоровавелем та священиками жертівника Бога Ізраїля",
+    "deu": "baute mit Serubabel und den Priestern den Altar des Gottes Israels",
+    "spa": "edificó con Zorobabel y los sacerdotes el altar del Dios de Israel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "began with Zerubbabel to build the house of God at Jerusalem",
+    "references": [
+     "EZR 3:8",
+     "EZR 5:2"
+    ],
+    "ukr": "почав разом із Зоровавелем будувати Божий дім у Єрусалимі",
+    "deu": "fing mit Serubabel an, das Haus Gottes zu Jerusalem zu bauen",
+    "spa": "comenzó con Zorobabel a edificar la casa de Dios en Jerusalem"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says they told the adversaries they had nothing to do with them; letting or helping is not stated, but refusing to build with them is.",
+    "english": "refused with Zerubbabel to build the house of God together with the adversaries",
+    "references": [
+     "EZR 4:2-3"
+    ],
+    "ukr": "відмовився разом із Зоровавелем будувати дім Божий разом із противниками",
+    "deu": "lehnte mit Serubabel ab, das Haus Gottes zusammen mit den Widersachern zu bauen",
+    "spa": "rehusó con Zorobabel edificar la casa de Dios junto con los adversarios"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

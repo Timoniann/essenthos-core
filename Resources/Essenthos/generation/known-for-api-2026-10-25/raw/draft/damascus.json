@@ -1,0 +1,41 @@
+{
+ "slug": "damascus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.825788+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Damascus is a great city with a few defining events: David's garrisons there, its capture by Assyria, and Saul's conversion and preaching there.",
+  "clauses": [
+   {
+    "english": "was garrisoned by David, and its Syrians became his servants",
+    "references": [
+     "2SA 8:5-6"
+    ],
+    "quote": "David put garrisons in Syria of Damascus"
+   },
+   {
+    "english": "was taken by the king of Assyria, who carried its people captive to Kir",
+    "references": [
+     "2KI 16:9"
+    ],
+    "quote": "went up against Damascus, and took it, and carried the people of it captive to Kir"
+   },
+   {
+    "english": "was where Saul, struck blind on the road, received his sight and preached Christ",
+    "references": [
+     "ACT 9:3-8",
+     "ACT 9:17-20"
+    ],
+    "quote": "he came near Damascus: and suddenly there shined round about him a light from heaven"
+   }
+  ],
+  "doubts": [
+   "Prophecies against Damascus (Isaiah, Jeremiah, Amos) were left out as pronouncements, not events.",
+   "Saul's escape in a basket (2CO 11:32-33, ACT 9:25) left out as a minor detail."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

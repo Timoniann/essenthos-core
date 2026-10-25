@@ -1,0 +1,33 @@
+{
+ "slug": "jeroboams-golden-calves",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.328772+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was made of the calves, where they were set and how they were used in worship, so a short line can be written.",
+  "clauses": [
+   {
+    "english": "were made of gold by Jeroboam and set up at Bethel and Dan",
+    "references": [
+     "1KI 12:28-29"
+    ],
+    "quote": "made two calves of gold"
+   },
+   {
+    "english": "were sacrificed to by Jeroboam at Bethel, with priests placed there for them",
+    "references": [
+     "1KI 12:32"
+    ],
+    "quote": "sacrificing unto the calves that he had made"
+   }
+  ],
+  "doubts": [
+   "2KI 17:16 says only 'two calves' among the sins of Israel, so it was not used as a separate clause.",
+   "Jehu's keeping of the calves (2KI 10:29) was left out as a detail of Jehu's own story rather than of the calves."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

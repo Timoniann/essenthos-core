@@ -1,0 +1,41 @@
+{
+ "slug": "topheth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.873891+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Topheth has a few defining events: its high places were built for burning children, King Josiah defiled it, and the LORD pronounced it would be renamed the valley of slaughter.",
+  "clauses": [
+   {
+    "english": "had high places built on it where sons and daughters were burned in the fire",
+    "references": [
+     "JER 7:31"
+    ],
+    "quote": "they have built the high places of Tophet"
+   },
+   {
+    "english": "was defiled by the king so that no one could make his son or daughter pass through the fire to Molech",
+    "references": [
+     "2KI 23:10"
+    ],
+    "quote": "he defiled Topheth"
+   },
+   {
+    "english": "was declared by the LORD to be renamed the valley of slaughter, where they would bury till there was no place",
+    "references": [
+     "JER 19:6",
+     "JER 19:11"
+    ],
+    "quote": "this place shall no more be called Tophet"
+   }
+  ],
+  "doubts": [
+   "ISA 30:33 uses Tophet as a figure of fiery judgment on the Assyrian and the king, so it was left out as not an event of the place.",
+   "JER 19:14 only says Jeremiah came from Tophet, so it was not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

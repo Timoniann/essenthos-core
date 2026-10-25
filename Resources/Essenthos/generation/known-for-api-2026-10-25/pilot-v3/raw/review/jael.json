@@ -1,0 +1,25 @@
+{
+ "slug": "jael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:07:41.688943+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "запросила Сісеру до свого намету і накрила його килимом",
+    "deu": "lud Sisera in ihre Hütte ein und deckte ihn mit einer Decke zu",
+    "spa": "invitó a Sísara a su tienda y lo cubrió con una manta",
+    "why": ""
+   },
+   {
+    "ukr": "всадила наметовий кілок у скроню сплячого Сісери, і він помер",
+    "deu": "schlug dem schlafenden Sisera einen Nagel der Hütte durch die Schläfe, und er starb",
+    "spa": "metió una estaca de la tienda por las sienes del dormido Sísara, y él murió",
+    "why": "Ukrainian: used the modern accusative of an inanimate noun (наметовий кілок, not the old наметового кілка)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

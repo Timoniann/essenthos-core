@@ -1,0 +1,36 @@
+{
+ "slug": "hashabiah-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.834772+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not name Ezra as the one brought to, and 'his brethren' are Jeshaiah's; the bringing is in 8:18-19.",
+    "english": "was brought with Jeshaiah as a minister for the house of God",
+    "references": [
+     "EZR 8:17-19"
+    ],
+    "ukr": "був приведений разом з Єшаєю як служитель для дому Бога",
+    "deu": "wurde mit Jesaja gebracht als Diener für das Haus Gottes",
+    "spa": "fue traído con Isaía como ministro para la casa de Dios"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say he was separated and the offering was weighed to him, but do not say he was to carry it.",
+    "english": "was set apart, and the offering for the house of God was weighed out to him",
+    "references": [
+     "EZR 8:24-25"
+    ],
+    "ukr": "був відділений, і принесення для Божого дому було відважене йому",
+    "deu": "wurde abgesondert, und ihm wurde die Gabe für das Haus Gottes zugewogen",
+    "spa": "fue apartado, y se le pesó la ofrenda para la casa de Dios"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "melchizedek",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.405637+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "brought out bread and wine and blessed Abram, who gave him tithes of all",
+    "references": [
+     "GEN 14:18-20"
+    ],
+    "ukr": "виніс хліб і вино та поблагословив Аврама, який дав йому десятину зо всього",
+    "deu": "trug Brot und Wein hervor und segnete Abram, der ihm den Zehnten von allem gab",
+    "spa": "sacó pan y vino y bendijo a Abram, quien le dio los diezmos de todo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

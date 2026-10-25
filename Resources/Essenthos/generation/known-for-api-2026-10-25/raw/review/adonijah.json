@@ -1,0 +1,31 @@
+{
+ "slug": "adonijah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.198427+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "підніс себе як царя і отримав допомогу від Йоава та Евіятара",
+    "deu": "erhob sich als König und wurde von Joab und Abjathar unterstützt",
+    "spa": "se levantó como rey y fue ayudado por Joab y Abiathar",
+    "why": "The second part turned the clause round with Joab and Abiathar as subjects; it is now passive with Adonijah as subject, in all three languages."
+   },
+   {
+    "ukr": "схопився за роги жертовника, боячись Соломона, і йому було сказано йти до свого дому",
+    "deu": "fasste aus Furcht vor Salomo die Hörner des Altars und bekam gesagt, er solle in sein Haus gehen",
+    "spa": "cogió los cuernos del altar por temor a Salomón y se le dijo que se fuera a su casa",
+    "why": "Replaced old wording with modern words: жертівника became жертовника, faßte became fasste, cornijales became cuernos."
+   },
+   {
+    "ukr": "просив через Вірсавію шунаммітку Авішаґ за жінку і був убитий за наказом Соломона",
+    "deu": "bat durch Bath-Seba um Abisag von Sunem zur Frau und wurde auf Salomos Befehl getötet",
+    "spa": "pidió por medio de Bath-sheba a Abisag Sunamita por mujer y fue muerto por orden de Salomón",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

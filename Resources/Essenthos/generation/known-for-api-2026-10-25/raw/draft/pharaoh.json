@@ -1,0 +1,40 @@
+{
+ "slug": "pharaoh",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.705607+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two chief events of this Pharaoh: taking Sarai into his house and being plagued by the LORD because of her.",
+  "clauses": [
+   {
+    "english": "took Sarai into his house",
+    "references": [
+     "GEN 12:15"
+    ],
+    "quote": "the woman was taken into Pharaoh's house"
+   },
+   {
+    "english": "was plagued by the LORD with great plagues because of Sarai",
+    "references": [
+     "GEN 12:17"
+    ],
+    "quote": "the LORD plagued Pharaoh and his house with great plagues"
+   },
+   {
+    "english": "sent Abram away with his wife and all that he had",
+    "references": [
+     "GEN 12:18-20"
+    ],
+    "quote": "they sent him away, and his wife, and all that he had"
+   }
+  ],
+  "doubts": [
+   "Pharaoh's rebuke of Abram (GEN 12:18-19) is folded into the sending away rather than given its own clause.",
+   "Verse 12:15 says Sarai was taken by Pharaoh's house, with Pharaoh's princes commending her; the clause says he took her, which the text supports only loosely."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

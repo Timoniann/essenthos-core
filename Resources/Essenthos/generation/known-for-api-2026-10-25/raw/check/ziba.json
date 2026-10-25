@@ -1,0 +1,48 @@
+{
+ "slug": "ziba",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.720912+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "told David of Jonathan's lame son Mephibosheth, and was set to till his land",
+    "references": [
+     "2SA 9:3-4",
+     "2SA 9:9-10"
+    ],
+    "ukr": "розповів Давидові про кривого на ноги сина Йонатана Мефівошета й мав обробляти для нього землю",
+    "deu": "erzählte David von Jonathans lahmem Sohn Mephiboseth und sollte ihm den Acker bearbeiten",
+    "spa": "habló a David del hijo lisiado de Jonathán, Mephi-boseth, y fue encargado de labrarle las tierras"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say David was fleeing.",
+    "english": "met David with asses, bread and wine, and was given all that had been Mephibosheth's",
+    "references": [
+     "2SA 16:1-4"
+    ],
+    "ukr": "зустрів Давида з ослами, хлібом і вином, і йому було віддано все, що належало Мефівошетові",
+    "deu": "begegnete David mit Eseln, Brot und Wein, und ihm wurde alles gegeben, was Mephiboseth gehört hatte",
+    "spa": "salió al encuentro de David con asnos, panes y vino, y le fue dado todo lo que tenía Mephi-boseth"
+   },
+   {
+    "verdict": "fix",
+    "why": "David spoke this to Mephibosheth, not to Ziba, and Mephibosheth is named in the next verse.",
+    "english": "was to divide the land with Mephibosheth, as David decided",
+    "references": [
+     "2SA 19:29-30"
+    ],
+    "ukr": "мав поділити поле з Мефівошетом, як визначив Давид",
+    "deu": "sollte den Acker mit Mephiboseth teilen, wie David bestimmt hatte",
+    "spa": "debía partir las tierras con Mephi-boseth, según lo determinó David"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

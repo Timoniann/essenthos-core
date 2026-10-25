@@ -1,0 +1,19 @@
+{
+ "slug": "iconium",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.328010+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де двоє чоловіків ввійшли до синагоги й промовили так, що безліч юдеїв та огречених увірували",
+    "deu": "war der Ort, an dem zwei Männer in die Synagoge gingen und so sprachen, dass eine große Menge von Juden und Griechen zum Glauben kam",
+    "spa": "fue el lugar donde dos hombres entraron juntos en la sinagoga y hablaron de tal manera que creyó una gran multitud de judíos y de griegos",
+    "why": "Each clause now begins with the verb 'was' (feminine in Ukrainian) and says 'two men'. The German is in modern wording (Synagoge, dass, zum Glauben kam), and the Spanish has modern wording (una gran, lowercase judíos/griegos)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,40 @@
+{
+ "slug": "philip",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.435198+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give Philip a few distinct deeds beyond the summary: bringing Nathanael to Jesus, answering at the feeding of the multitude, and bringing the Greeks' request to Jesus.",
+  "clauses": [
+   {
+    "english": "found Nathanael and brought him to Jesus",
+    "references": [
+     "JHN 1:45-46"
+    ],
+    "quote": "Philip findeth Nathanael, and saith unto him, We have found him"
+   },
+   {
+    "english": "told Jesus that two hundred pennyworth of bread was not enough for the great company",
+    "references": [
+     "JHN 6:5-7"
+    ],
+    "quote": "Two hundred pennyworth of bread is not sufficient for them"
+   },
+   {
+    "english": "told Andrew of the Greeks who wished to see Jesus, and they told Jesus",
+    "references": [
+     "JHN 12:20-22"
+    ],
+    "quote": "Philip cometh and telleth Andrew: and again Andrew and Philip tell Jesus."
+   }
+  ],
+  "doubts": [
+   "Philip's request \"show us the Father\" (JHN 14:8-9) was left out as a saying rather than a deed.",
+   "Verses listing the Twelve and the upper room (MAT 10:3, MRK 3:18, LUK 6:14, ACT 1:13) only name him and were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

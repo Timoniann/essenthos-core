@@ -1,0 +1,17 @@
+{
+ "slug": "ahimelech-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.075743+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Ahimelech as a priest alongside Zadok and as a witness to the division of the priestly courses, which adds nothing beyond the summary.",
+  "clauses": [],
+  "doubts": [
+   "1CH 18:16 reads Abimelech, probably the same man, but it adds nothing either."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

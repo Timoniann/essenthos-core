@@ -1,0 +1,19 @@
+{
+ "slug": "shur",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.160285+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був пустинею, до якої Ізраїль вийшов від Червоного моря і де три дні не знаходив води",
+    "deu": "war die Wüste, in die Israel vom Schilfmeer zog und wo es drei Tage kein Wasser fand",
+    "spa": "fue el desierto al que Israel salió del mar Bermejo y donde anduvo tres días sin hallar agua",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

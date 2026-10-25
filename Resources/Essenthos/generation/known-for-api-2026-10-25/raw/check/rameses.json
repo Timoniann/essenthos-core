@@ -1,0 +1,37 @@
+{
+ "slug": "rameses",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.502452+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was built by the Israelites as a treasure city for Pharaoh",
+    "references": [
+     "EXO 1:11"
+    ],
+    "ukr": "був збудований Ізраїлевими синами як місто на запаси для фараона",
+    "deu": "wurde von den Kindern Israel dem Pharao als Vorratshaus gebaut",
+    "spa": "fue edificado por los hijos de Israel como ciudad de bastimentos para Faraón"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the Israelites set out from when they left Egypt",
+    "references": [
+     "EXO 12:37",
+     "NUM 33:3"
+    ],
+    "ukr": "був місцем, звідки Ізраїлеві сини вирушили, коли виходили з Єгипту",
+    "deu": "war der Ort, von dem die Kinder Israel auszogen, als sie Ägypten verließen",
+    "spa": "fue el lugar de donde partieron los hijos de Israel al salir de Egipto"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

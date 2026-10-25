@@ -1,0 +1,71 @@
+{
+ "slug": "abihu",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "ask",
+ "at": "2026-10-25T16:33:16.769390+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verses 9-10 state the going up and the seeing; verse 11 is not needed.",
+    "english": "went up with Moses and saw the God of Israel",
+    "references": [
+     "EXO 24:9-10"
+    ],
+    "ukr": "піднявся з Мойсеєм і побачив Ізраїлевого Бога",
+    "deu": "stieg mit Mose hinauf und sah den Gott Israels",
+    "spa": "subió con Moisés y vio al Dios de Israel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "offered strange fire before the LORD and was devoured by fire from the LORD",
+    "references": [
+     "LEV 10:1-2"
+    ],
+    "ukr": "приніс перед Господом чужий вогонь і був спалений вогнем від Господа",
+    "deu": "brachte fremdes Feuer vor den HERRN und wurde vom Feuer des HERRN verzehrt",
+    "spa": "ofreció delante del SEÑOR fuego extraño y fue quemado por el fuego del SEÑOR"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": [
+  {
+   "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+   "at": "2026-10-25T16:31:21.202691+00:00",
+   "answer": {
+    "clauses": [
+     {
+      "verdict": "right",
+      "why": "",
+      "english": "went up with Moses and saw the God of Israel",
+      "references": [
+       "EXO 24:9-10"
+      ],
+      "ukr": "вийшов з Мойсеєм і споглядав Ізraїлевого Бога",
+      "deu": "stieg mit Mose hinauf und sah den Gott Israels",
+      "spa": "subió con Moisés y vio al Dios de Israel"
+     },
+     {
+      "verdict": "right",
+      "why": "",
+      "english": "offered strange fire before the LORD and was devoured by fire from the LORD",
+      "references": [
+       "LEV 10:1-2"
+      ],
+      "ukr": "приніс перед Господнє лице чужий огонь і був спалений огнем від Господа",
+      "deu": "brachte fremdes Feuer vor den HERRN und wurde vom Feuer des HERRN verzehrt",
+      "spa": "ofreció delante del SEÑOR fuego extraño y fue quemado por el fuego del SEÑOR"
+     }
+    ],
+    "note": ""
+   },
+   "problems": [
+    "clause 1: Latin letters in the Ukrainian"
+   ]
+  }
+ ]
+}

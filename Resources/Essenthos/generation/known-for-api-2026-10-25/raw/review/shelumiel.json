@@ -1,0 +1,19 @@
+{
+ "slug": "shelumiel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.084742+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "приніс свою жертву зі срібла, золота й тварин п'ятого дня",
+    "deu": "brachte am fünften Tag seine Gabe aus Silber, Gold und Tieren dar",
+    "spa": "ofreció su ofrenda de plata, oro y animales el quinto día",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

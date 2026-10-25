@@ -1,0 +1,48 @@
+{
+ "slug": "jeremiah-6",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.291353+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says Baruch wrote the words of the LORD, not Jeremiah's own words.",
+    "english": "had Baruch write the words of the LORD on a roll",
+    "references": [
+     "JER 36:4"
+    ],
+    "ukr": "дав Барухові записати Господні слова на книжковий звій",
+    "deu": "ließ Baruch die Worte des HERRN in ein Buch schreiben",
+    "spa": "hizo que Baruch escribiera las palabras del SEÑOR en un rollo"
+   },
+   {
+    "verdict": "fix",
+    "why": "Ebedmelech is named only in the verses just before 38:13, so the citation must take them in.",
+    "english": "was cast into a miry dungeon and drawn up by Ebedmelech",
+    "references": [
+     "JER 38:6",
+     "JER 38:11-13"
+    ],
+    "ukr": "був кинутий до ями з багном і витягнений Евед-Мелехом",
+    "deu": "wurde in eine Grube mit Schlamm geworfen und von Ebed-Melech heraufgezogen",
+    "spa": "fue echado en una mazmorra con cieno y sacado por Ebed-melec"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verse does not mention the fall of Jerusalem; it says he was committed to Gedaliah.",
+    "english": "was taken out of the court of the prison and committed to Gedaliah",
+    "references": [
+     "JER 39:14"
+    ],
+    "ukr": "був узятий з подвір'я в'язниці й переданий Ґедалії",
+    "deu": "wurde aus dem Vorhof des Gefängnisses geholt und Gedalja anvertraut",
+    "spa": "fue tomado del patio de la cárcel y entregado a Gedalías"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

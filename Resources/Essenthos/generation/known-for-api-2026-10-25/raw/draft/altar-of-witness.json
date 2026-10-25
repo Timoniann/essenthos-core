@@ -1,0 +1,32 @@
+{
+ "slug": "altar-of-witness",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.821143+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was done with the altar: it was built by Jordan, provoked Israel to gather for war, and was named Ed as a witness.",
+  "clauses": [
+   {
+    "english": "was built by the eastern tribes beside the Jordan, a great altar to see",
+    "references": [
+     "JOS 22:10"
+    ],
+    "quote": "built there an altar by Jordan, a great altar to see to."
+   },
+   {
+    "english": "was named Ed, a witness between the tribes that the LORD is God",
+    "references": [
+     "JOS 22:34"
+    ],
+    "quote": "called the altar Ed: for it shall be a witness between us that the LORD is God."
+   }
+  ],
+  "doubts": [
+   "JOS 22:11-12 show Israel gathering for war over the altar; this is left out as a separate event from the altar's building and naming, and could be added as a clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

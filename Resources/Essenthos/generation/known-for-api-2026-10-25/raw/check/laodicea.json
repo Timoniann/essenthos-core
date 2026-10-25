@@ -1,0 +1,37 @@
+{
+ "slug": "laodicea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.703072+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was rebuked as lukewarm, neither cold nor hot",
+    "references": [
+     "REV 3:14-16"
+    ],
+    "ukr": "дістала докір за те, що була теплувата, ні гаряча, ні холодна",
+    "deu": "wurde als lau getadelt, weder kalt noch warm",
+    "spa": "fue reprendida por ser tibia, ni fría ni caliente"
+   },
+   {
+    "verdict": "fix",
+    "why": "Paul is named only in COL 4:18, which the citation leaves out.",
+    "english": "was to have Paul's letter read in its church",
+    "references": [
+     "COL 4:16",
+     "COL 4:18"
+    ],
+    "ukr": "мала мати прочитаний у своїй церкві лист Павла",
+    "deu": "sollte den Brief des Paulus in ihrer Gemeinde lesen lassen",
+    "spa": "debía hacer leer la carta de Pablo en su iglesia"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,17 @@
+{
+ "slug": "deuel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.978785+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses mention Deuel only as the father of Eliasaph in lists of tribal princes and offerings, which says no more than the summary already does.",
+  "clauses": [],
+  "doubts": [
+   "NUM 1:13 (Pagiel son of Ocran, of Asher) and NUM 2:14 (Eliasaph son of Reuel) are marked but do not name Deuel; they concern other people or a variant name."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

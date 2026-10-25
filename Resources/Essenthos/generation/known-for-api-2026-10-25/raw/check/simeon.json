@@ -1,0 +1,36 @@
+{
+ "slug": "simeon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.027988+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say he did it to avenge Dinah; 34:27 gives that reason only for the sons of Jacob plundering the city.",
+    "english": "with Levi, slew all the males of a city and took Dinah out of Shechem's house",
+    "references": [
+     "GEN 34:25-26"
+    ],
+    "ukr": "разом з Левієм повбивав усіх чоловіків міста й забрав Діну з дому Сихемового",
+    "deu": "erwürgte mit Levi alles, was männlich war in der Stadt, und nahm Dina aus dem Hause Sichems",
+    "spa": "con Leví mató a todo varón de la ciudad y tomó a Dina de casa de Sichêm"
+   },
+   {
+    "verdict": "fix",
+    "why": "Joseph took and bound Simeon; Egypt and 'his brothers' eyes' are not as stated, so it is the record to whom it happened, with the actor stated passively.",
+    "english": "was taken from his brothers and bound by Joseph before their eyes",
+    "references": [
+     "GEN 42:24"
+    ],
+    "ukr": "був узятий Йосипом від братів і зв'язаний на їхніх очах",
+    "deu": "wurde von Joseph aus den Brüdern genommen und vor ihren Augen gebunden",
+    "spa": "fue tomado por José de entre sus hermanos y aprisionado a vista de ellos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

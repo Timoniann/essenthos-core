@@ -1,0 +1,32 @@
+{
+ "slug": "houseoftheforestoflebanon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.462840+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Beyond its building, the verses say the king put his gold shields there and that its vessels were all of pure gold.",
+  "clauses": [
+   {
+    "english": "was where Solomon put his three hundred shields of beaten gold",
+    "references": [
+     "1KI 10:17"
+    ],
+    "quote": "the king put them in the house of the forest of Lebanon"
+   },
+   {
+    "english": "had all its vessels made of pure gold, none of silver",
+    "references": [
+     "1KI 10:21"
+    ],
+    "quote": "all the vessels of the house of the forest of Lebanon were of pure gold"
+   }
+  ],
+  "doubts": [
+   "ISA 22:8 mentions the armour of the house of the forest, but says nothing of what happened there, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "samson",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.741601+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "побив тисячу чоловіків ослячою щелепою",
+    "deu": "tötete tausend Mann mit einem Eselskinnbacken",
+    "spa": "mató a mil hombres con una quijada de asno",
+    "why": "Ukrainian: modern plural «чоловіків» instead of «чоловіка». German: «schlug» changed to «tötete» for «killed». Spanish: «hirió» (wounded) changed to «mató» (killed)."
+   },
+   {
+    "ukr": "втратив силу, коли Деліла наказала зголити його волосся, і був осліплений та ув'язнений филистимлянами",
+    "deu": "verlor seine Kraft, als Delila ihm das Haar abrasieren ließ, und wurde von den Philistern geblendet und eingekerkert",
+    "spa": "perdió su fuerza cuando Dalila le hizo rapar el cabello, y fue cegado y encarcelado por los filisteos",
+    "why": "German: «abschneiden» changed to «abrasieren» (shaved) and the archaic «gefangen gesetzt» to «eingekerkert». Spanish: «Filisteos» lower-cased as in modern usage."
+   },
+   {
+    "ukr": "обвалив дім на филистимлян і загинув разом з ними",
+    "deu": "brachte das Haus über den Philistern zum Einsturz und starb mit ihnen",
+    "spa": "derribó la casa sobre los filisteos y murió con ellos",
+    "why": "Spanish: «Filisteos» lower-cased as in modern usage."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

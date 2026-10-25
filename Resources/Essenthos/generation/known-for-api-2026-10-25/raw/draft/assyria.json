@@ -1,0 +1,33 @@
+{
+ "slug": "assyria",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.087316+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Assyria's story rests on two defining events, the captivity of Israel and the destruction of Sennacherib's host, which the verses state plainly.",
+  "clauses": [
+   {
+    "english": "took Samaria and carried Israel away captive",
+    "references": [
+     "2KI 17:6"
+    ],
+    "quote": "took Samaria, and carried Israel away into Assyria"
+   },
+   {
+    "english": "lost 185,000 of its army in one night to the angel of the LORD",
+    "references": [
+     "2KI 19:35"
+    ],
+    "quote": "the angel of the LORD went out, and smote in the camp of the Assyrians"
+   }
+  ],
+  "doubts": [
+   "Most marked verses speak of the kings of Assyria (Pul, Tiglathpileser, Shalmaneser, Sennacherib) and are treated as events of the land and its kingdom.",
+   "GEN 10:11 names Asshur as a man who built Nineveh, and some other verses (Ezekiel 23, Hosea) use Assyria figuratively; none of these were used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "gezer",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.575331+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "бачив, як його цар Горам, що прийшов допомогти Лахішу, був побитий Ісусом",
+    "deu": "sah seinen König Horam, der Lachis zu helfen heraufzog, von Josua geschlagen",
+    "spa": "vio a su rey Horam, que subió en ayuda de Lachîs, herido por Josué",
+    "why": ""
+   },
+   {
+    "ukr": "був здобутий і спалений вогнем фараоном, єгипетським царем, який віддав його своїй дочці, жінці Соломона",
+    "deu": "wurde von Pharao, dem König in Ägypten, der es seiner Tochter, der Frau Salomos, zum Geschenk gab, erobert und mit Feuer verbrannt",
+    "spa": "fue tomado y quemado por Faraón, rey de Egipto, que lo dio como regalo a su hija, mujer de Salomón",
+    "why": "German: moved the relative clause next to Pharao, since it wrongly hung on 'Feuer'. Spanish: replaced the archaic 'en don' with 'como regalo'."
+   },
+   {
+    "ukr": "був вибудуваний Соломоном",
+    "deu": "wurde von Salomo gebaut",
+    "spa": "fue edificado por Salomón",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

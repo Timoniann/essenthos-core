@@ -1,0 +1,31 @@
+{
+ "slug": "meshech-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.219916+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "торгував людською душею та мідяними речами",
+    "deu": "handelte mit leibeigenen Leuten und Geräten von Erz",
+    "spa": "comerció con hombres y con vasos de metal",
+    "why": ""
+   },
+   {
+    "ukr": "лежав з усім своїм множеством, необрізаний, побитий мечем",
+    "deu": "lag mit seiner ganzen Menge, unbeschnitten, vom Schwert erschlagen",
+    "spa": "yació con toda su multitud, incircunciso, muerto a cuchillo",
+    "why": ""
+   },
+   {
+    "ukr": "мав Ґоґа головним князем, проти якого став Господь",
+    "deu": "hatte Gog zum obersten Fürsten, gegen den sich der HERR wandte",
+    "spa": "tuvo a Gog por príncipe de la cabecera, contra quien estuvo el SEÑOR",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,34 @@
+{
+ "slug": "heman-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.041473+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Heman's appointment as a singer with cymbals and of the sons God gave him for song in the house of the LORD, which go beyond the summary.",
+  "clauses": [
+   {
+    "english": "was appointed with Asaph and Ethan to sound with cymbals of brass",
+    "references": [
+     "1CH 15:17",
+     "1CH 15:19"
+    ],
+    "quote": "the singers, Heman, Asaph, and Ethan, were appointed to sound with cymbals of brass"
+   },
+   {
+    "english": "was given fourteen sons and three daughters by God, who served under him in song in the house of the LORD",
+    "references": [
+     "1CH 25:5-6"
+    ],
+    "quote": "God gave to Heman fourteen sons and three daughters."
+   }
+  ],
+  "doubts": [
+   "1CH 25:5 calls Heman the king's seer, a role close to the summary's 'prophet to David', so it is not made a clause.",
+   "The fourteen sons and three daughters are already in the disambiguation text, so the second clause may repeat the summary; it is kept for the sons' service in song."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

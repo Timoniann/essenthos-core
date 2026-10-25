@@ -1,0 +1,23 @@
+{
+ "slug": "altar-the-lord-is-my-banner",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.980784+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verse states that Moses built the altar and gave it a name, which is what the altar is known for.",
+  "clauses": [
+   {
+    "english": "was built by Moses and named Jehovahnissi",
+    "references": [
+     "EXO 17:15"
+    ],
+    "quote": "Moses built an altar, and called the name of it Jehovahnissi"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

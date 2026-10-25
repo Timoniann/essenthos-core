@@ -1,0 +1,17 @@
+{
+ "slug": "iddo-5",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.572816+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The marked verses only name Iddo as an ancestor of Zechariah or list him among priestly heads, so they say no more of him than the summary already does.",
+  "clauses": [],
+  "doubts": [
+   "NEH 12:4 and NEH 12:16 may refer to a priest of the same name, and the verses only list him."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

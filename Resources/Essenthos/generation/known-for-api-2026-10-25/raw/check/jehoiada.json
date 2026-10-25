@@ -1,0 +1,25 @@
+{
+ "slug": "jehoiada",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.292272+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse does not say they came to David, and it gives no word for 'men'.",
+    "english": "was the leader of the Aaronites, with three thousand seven hundred with him",
+    "references": [
+     "1CH 12:27"
+    ],
+    "ukr": "був проводирем синів Ааронових, а з ним було три тисячі сімсот",
+    "deu": "war der Fürst unter denen von Aaron und hatte dreitausendsiebenhundert bei sich",
+    "spa": "fue príncipe de los del linaje de Aarón, y con él había tres mil setecientos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "abidan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.482912+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Num 7 records a distinct deed of Abidan, his offering at the dedication of the altar, which the summary does not state.",
+  "clauses": [
+   {
+    "english": "offered his gift on the ninth day at the dedication, for the tribe of Benjamin",
+    "references": [
+     "NUM 7:60-65"
+    ],
+    "quote": "On the ninth day Abidan the son of Gideoni, prince of the children of Benjamin, offered"
+   }
+  ],
+  "doubts": [
+   "The listing as captain (NUM 2:22) and leader of the host (NUM 10:24) is an office already in the summary, so it is left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

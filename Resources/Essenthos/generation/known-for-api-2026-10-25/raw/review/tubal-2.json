@@ -1,0 +1,25 @@
+{
+ "slug": "tubal-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.369968+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "торгував людьми та мідяними речами як купець",
+    "deu": "handelte als Kaufmann mit Menschen und Gefäßen aus Bronze",
+    "spa": "comerció como mercader con hombres y vasijas de bronce",
+    "why": "German: replaced Luther's old wording (leibeigenen Leuten, Geräten von Erz) with modern Menschen and Gefäßen aus Bronze. Spanish: 'vasos de metal' became 'vasijas de bronce' to match 'vessels of brass'."
+   },
+   {
+    "ukr": "був краєм, куди Господь мав послати урятованих, щоб вони звістили Його славу",
+    "deu": "war ein Land, zu dem der HERR Gerettete senden wollte, damit sie seine Herrlichkeit verkündigten",
+    "spa": "fue una tierra a la que el SEÑOR enviaría sobrevivientes para que proclamaran su gloria",
+    "why": "Spanish: replaced the archaic 'escapados' with 'sobrevivientes' and 'publicaran' with 'proclamaran' (declare)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

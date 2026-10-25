@@ -1,0 +1,58 @@
+{
+ "slug": "sennacherib",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.275344+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "came up against the fortified cities of Judah and took them",
+    "references": [
+     "2KI 18:13"
+    ],
+    "ukr": "прийшов на всі укріплені Юдині міста та захопив їх",
+    "deu": "zog herauf wider alle festen Städte Juda's und nahm sie ein",
+    "spa": "subió contra todas las ciudades fuertes de Judá y las tomó"
+   },
+   {
+    "verdict": "fix",
+    "why": "Rabshakeh's speech was his own; the verses only say Sennacherib sent a great host against Jerusalem, and do not say 'taunt'.",
+    "english": "sent a great host against Jerusalem",
+    "references": [
+     "2KI 18:17"
+    ],
+    "ukr": "послав велике військо до Єрусалиму",
+    "deu": "sandte ein großes Heer gen Jerusalem",
+    "spa": "envió un gran ejército contra Jerusalem"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say the angel struck the camp of the Assyrians, not 'his' camp.",
+    "english": "returned to Nineveh after the angel of the LORD struck the Assyrian camp",
+    "references": [
+     "2KI 19:35-36"
+    ],
+    "ukr": "повернувся до Ніневії після того, як Ангол Господній уразив асирійський табір",
+    "deu": "kehrte nach Ninive zurück, nachdem der Engel des HERRN das Lager von Assyrien geschlagen hatte",
+    "spa": "volvió a Nínive después de que el ángel del SEÑOR hirió el campo de los asirios"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was slain with the sword by his sons while worshipping in his god's house",
+    "references": [
+     "2KI 19:37"
+    ],
+    "ukr": "був убитий мечем своїми синами, коли молився в домі свого бога",
+    "deu": "wurde von seinen Söhnen mit dem Schwert erschlagen, als er im Hause seines Gottes anbetete",
+    "spa": "fue muerto a cuchillo por sus hijos mientras adoraba en el templo de su dios"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

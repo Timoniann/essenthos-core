@@ -1,0 +1,47 @@
+{
+ "slug": "antioch",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.389338+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where men of Cyprus and Cyrene preached the Lord Jesus to the Grecians and a great number believed",
+    "references": [
+     "ACT 11:20-21"
+    ],
+    "ukr": "була місцем, де мужі з Кіпру та з Кірінеї благовістили грекам про Господа Ісуса і велике число їх увірувало",
+    "deu": "war der Ort, an dem Männer von Zypern und Kyrene zu den Griechen das Evangelium vom HERRN Jesus predigten und eine große Zahl gläubig wurde",
+    "spa": "fue el lugar donde varones Ciprios y Cirenenses anunciaron a los Griegos el evangelio del Señor Jesús y un gran número creyó"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the disciples were first called Christians",
+    "references": [
+     "ACT 11:26"
+    ],
+    "ukr": "була місцем, де найперш учнів названо християнами",
+    "deu": "war der Ort, an dem die Jünger zuerst Christen genannt wurden",
+    "spa": "fue el lugar donde los discípulos fueron llamados Cristianos primeramente"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say 'they' sent them away, not the church as a whole.",
+    "english": "was where Barnabas and Saul were sent away for the work the Holy Ghost called them to",
+    "references": [
+     "ACT 13:1-3"
+    ],
+    "ukr": "була місцем, де Варнаву та Савла відпустили на справу, до якої їх покликав Святий Дух",
+    "deu": "war der Ort, an dem man Barnabas und Saulus für das Werk gehen ließ, zu dem der heilige Geist sie berufen hatte",
+    "spa": "fue el lugar donde Bernabé y Saulo fueron despedidos para la obra a la cual el Espíritu Santo los había llamado"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

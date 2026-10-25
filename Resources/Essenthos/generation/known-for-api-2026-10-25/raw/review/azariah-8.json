@@ -1,0 +1,19 @@
+{
+ "slug": "azariah-8",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.321751+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "вийшов назустріч Асі та сказав йому й Юді, що Господь дасть знайти Себе тим, хто Його шукатиме",
+    "deu": "ging Asa entgegen und sagte ihm und Juda, dass der HERR sich von denen finden lassen wird, die ihn suchen",
+    "spa": "salió al encuentro de Asa y le dijo a él y a Judá que el SEÑOR será hallado por quienes le busquen",
+    "why": "Removed 'all' (усьому / ganz / todo) before Judah, which the English does not have."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

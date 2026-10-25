@@ -1,0 +1,28 @@
+{
+ "slug": "shelah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.419951+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Shelah is mainly a name in genealogies, but Genesis 38 states one thing that happened to him: Judah withheld him from Tamar although he had grown.",
+  "clauses": [
+   {
+    "english": "was withheld by Judah from marrying Tamar, though he had grown",
+    "references": [
+     "GEN 38:11",
+     "GEN 38:14",
+     "GEN 38:26"
+    ],
+    "quote": "she saw that Shelah was grown, and she was not given unto him to wife"
+   }
+  ],
+  "doubts": [
+   "GEN 38:11 and 38:26 only state Judah's intent; GEN 38:14 states that Tamar was not given to Shelah though he was grown.",
+   "1CH 4:21 names Shelah's sons, which the summary already covers, and NUM 26:20 only lists his family."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "eliakim-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.391796+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був настановлений на царя фараоном Нехо, який змінив його ім'я на Єгояким",
+    "deu": "wurde von Pharao Necho, der seinen Namen in Jojakim änderte, zum König gemacht",
+    "spa": "fue puesto como rey por el faraón Nechâo, quien cambió su nombre por el de Joacim",
+    "why": "Ukrainian: removed the ambiguous 'царем фараоном'. German: replaced the old 'wandte' with 'änderte' and put the relative clause next to Necho. Spanish: replaced the old 'mudó' and the doubled 'por', and added the article before 'faraón'."
+   },
+   {
+    "ukr": "збунтувався проти Навуходоносора після того, як три роки був його невільником",
+    "deu": "wurde von Nebukadnezar abtrünnig, dem er drei Jahre untertänig gewesen war",
+    "spa": "se rebeló contra Nabucodonosor, al cual había servido tres años",
+    "why": ""
+   },
+   {
+    "ukr": "спалив сувій, який Барух написав з уст Єремії",
+    "deu": "verbrannte das Buch, das Baruch aus dem Mund Jeremias geschrieben hatte",
+    "spa": "quemó el rollo que Baruch había escrito de boca de Jeremías",
+    "why": "Ukrainian: replaced the old 'звоя' with modern 'сувій'. German: replaced the dated 'dem Munde' with 'dem Mund'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

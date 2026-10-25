@@ -1,0 +1,33 @@
+{
+ "slug": "south-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.770847+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The marked verses tell of the king of the south in his wars with the king of the north, so a short line on what befell the south is possible.",
+  "clauses": [
+   {
+    "english": "was unable to withstand the king of the north when he came against it",
+    "references": [
+     "DAN 11:15"
+    ],
+    "quote": "the arms of the south shall not withstand"
+   },
+   {
+    "english": "saw its king go to battle against the king of the north with a very great army, but he did not stand",
+    "references": [
+     "DAN 11:25"
+    ],
+    "quote": "the king of the south shall be stirred up to battle with a very great and mighty army; but he shall not stand"
+   }
+  ],
+  "doubts": [
+   "The verses are a prophecy about the kings of the south and north, not a narrative of events in the region itself.",
+   "Other marked verses (DAN 11:5-14, 11:17, 11:29, 11:40) only describe the king of the south and were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

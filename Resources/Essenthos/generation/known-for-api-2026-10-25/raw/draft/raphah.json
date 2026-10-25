@@ -1,0 +1,17 @@
+{
+ "slug": "raphah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.842820+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses mention him only as the giant to whom four Philistine warriors were born, which is what the summary already says, and the deeds recorded are those of his sons and their slayers.",
+  "clauses": [],
+  "doubts": [
+   "The marked verses name \"the giant\" only as the parent of the sons; the Hebrew name Raphah does not appear in the English text."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

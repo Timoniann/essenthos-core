@@ -1,0 +1,49 @@
+{
+ "slug": "herod-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.134991+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "imprisoned John for reproving him over Herodias, his brother Philip's wife",
+    "references": [
+     "MRK 6:17-18",
+     "LUK 3:19-20"
+    ],
+    "ukr": "кинув Івана до в'язниці за те, що той докоряв йому через Іродіяду, дружину його брата Пилипа",
+    "deu": "warf Johannes ins Gefängnis, weil er ihn wegen Herodias, der Frau seines Bruders Philippus, gestraft hatte",
+    "spa": "encerró a Juan en la cárcel porque le reprendía a causa de Herodías, mujer de Felipe su hermano"
+   },
+   {
+    "verdict": "fix",
+    "why": "The citation takes in the supper and the girl's question, which the clause does not need.",
+    "english": "beheaded John after promising Herodias' daughter whatever she asked",
+    "references": [
+     "MRK 6:22-23",
+     "LUK 9:9"
+    ],
+    "ukr": "стяв голову Іванові після того, як пообіцяв дочці Іродіяди дати все, чого вона попросить",
+    "deu": "enthauptete Johannes, nachdem er der Tochter der Herodias versprochen hatte, ihr zu geben, was sie bitten würde",
+    "spa": "degolló a Juan después de prometer a la hija de Herodías darle lo que pidiese"
+   },
+   {
+    "verdict": "fix",
+    "why": "Only the last verse states the mocking, the robe and the sending back; the citation is far wider than needed.",
+    "english": "mocked Jesus, dressed him in a gorgeous robe and sent him back to Pilate",
+    "references": [
+     "LUK 23:11"
+    ],
+    "ukr": "насміявся з Ісуса, зодягнув Його в яснобілу одіж і відіслав до Пилата",
+    "deu": "verspottete Jesus, legte ihm ein weißes Kleid an und sandte ihn wieder zu Pilatus",
+    "spa": "escarneció a Jesús, lo vistió con una ropa rica y lo envió de nuevo a Pilato"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

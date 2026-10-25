@@ -1,0 +1,36 @@
+{
+ "slug": "jael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:55:12.412871+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "took Sisera into her tent when he fled, and gave him milk and covered him",
+    "references": [
+     "JDG 4:17-19"
+    ],
+    "ukr": "прийняла Сісеру до свого намету, коли він утікав, напоїла його молоком і накрила його",
+    "deu": "nahm Sisera in ihre Hütte auf, als er floh, gab ihm Milch zu trinken und deckte ihn zu",
+    "spa": "recibió a Sísara en su tienda cuando huía, le dio de beber leche y lo cubrió"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "killed Sisera in his sleep by driving a tent nail into his temples",
+    "references": [
+     "JDG 4:21"
+    ],
+    "ukr": "убила Сісеру в його сні, вбивши йому в скроню наметового кілка",
+    "deu": "tötete Sisera im Schlaf, indem sie ihm einen Zeltnagel durch die Schläfe schlug",
+    "spa": "mató a Sísara mientras dormía, metiéndole una estaca de la tienda por las sienes"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

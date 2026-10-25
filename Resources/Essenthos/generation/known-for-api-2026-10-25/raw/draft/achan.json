@@ -1,0 +1,35 @@
+{
+ "slug": "achan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.388157+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two chief events of Achan: taking the accursed thing from the spoils, and being stoned for it at the valley of Achor.",
+  "clauses": [
+   {
+    "english": "took of the accursed thing, and the LORD's anger was kindled against Israel",
+    "references": [
+     "JOS 7:1",
+     "JOS 7:21"
+    ],
+    "quote": "took of the accursed thing: and the anger of the LORD was kindled against the children of Israel"
+   },
+   {
+    "english": "was singled out by lot, confessed, and was stoned with his household in the valley of Achor",
+    "references": [
+     "JOS 7:18-20",
+     "JOS 7:24-25"
+    ],
+    "quote": "Indeed I have sinned against the LORD God of Israel"
+   }
+  ],
+  "doubts": [
+   "The summary names the deed only as 'took forbidden things from Jericho', so the taking is told once as an event with its result.",
+   "1CH 2:7 calls him Achar, which may be the same man; it was not used for a clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

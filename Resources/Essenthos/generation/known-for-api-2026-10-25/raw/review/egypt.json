@@ -1,0 +1,25 @@
+{
+ "slug": "egypt",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.528919+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де синів Ізраїля змушували тяжко працювати",
+    "deu": "war der Ort, an dem die Kinder Israel zum Dienst mit Unbarmherzigkeit gezwungen wurden",
+    "spa": "fue el lugar donde se hizo servir a los hijos de Israel con dureza",
+    "why": ""
+   },
+   {
+    "ukr": "мав усіх своїх первістків, уражених Господом опівночі",
+    "deu": "hatte um Mitternacht alle seine Erstgeborenen vom HERRN erschlagen",
+    "spa": "tuvo a todos sus primogénitos heridos por el SEÑOR a medianoche",
+    "why": "Removed the relative clause that made the LORD the subject and restored the passive sense of the English; modernized the old wording (перворідних, у половині ночі, Erstgeburt) and fixed the ungrammatical Spanish agreement."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

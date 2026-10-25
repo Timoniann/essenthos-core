@@ -1,0 +1,43 @@
+{
+ "slug": "gibeah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.624965+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Gibeah of Benjamin is the setting of two defining events: the outrage against the Levite's concubine that led to war, and its destruction by Israel; it was also Saul's home.",
+  "clauses": [
+   {
+    "english": "was where the men of the city abused the Levite's concubine, and she died",
+    "references": [
+     "JDG 19:15",
+     "JDG 20:4-5"
+    ],
+    "quote": "the men of Gibeah rose against me, and beset the house round about upon me by night"
+   },
+   {
+    "english": "was attacked by Israel after Benjamin refused to give up its wicked men, and was smitten with the sword",
+    "references": [
+     "JDG 20:13-14",
+     "JDG 20:37"
+    ],
+    "quote": "smote all the city with the edge of the sword"
+   },
+   {
+    "english": "was the home of King Saul, to which he went after being chosen king",
+    "references": [
+     "1SA 10:26"
+    ],
+    "quote": "Saul also went home to Gibeah"
+   }
+  ],
+  "doubts": [
+   "Some verses naming Gibeah in Judges 19-20, 1 Samuel and Hosea may concern a different Gibeah or are used only in passing; I relied on the Benjamite Gibeah.",
+   "Hosea's references (HOS 9:9, 10:9) allude to the old sin of Gibeah but state no event, so I left them out.",
+   "1SA 7:1 and 2SA 6:3-4 mention the house of Abinadab 'in the hill' or 'in Gibeah'; the ark's keeping there may belong to a different place, so I did not use it."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

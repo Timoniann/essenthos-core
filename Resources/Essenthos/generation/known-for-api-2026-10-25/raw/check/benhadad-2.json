@@ -1,0 +1,36 @@
+{
+ "slug": "benhadad-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.327868+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says God delivered Israel into his hand (with Hazael's), not that he was given power over them in those words; the wording should follow it.",
+    "english": "was given Israel into his hand when the LORD's anger was kindled against them",
+    "references": [
+     "2KI 13:3"
+    ],
+    "ukr": "був даний Ізраїль у його руку, коли запалився гнів Господа на Ізраїля",
+    "deu": "wurde Israel in die Hand gegeben, als der Zorn des HERRN über Israel ergrimmte",
+    "spa": "recibió a Israel en su mano cuando se encendió el furor del SEÑOR contra Israel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was beaten three times by Jehoash, who took back the cities of Israel from him",
+    "references": [
+     "2KI 13:25"
+    ],
+    "ukr": "був тричі побитий Йоашем, який повернув у нього міста Ізраїля",
+    "deu": "wurde dreimal von Joas geschlagen, der ihm die Städte Israels wieder abnahm",
+    "spa": "fue batido tres veces por Joas, que le quitó de nuevo las ciudades de Israel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

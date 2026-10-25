@@ -1,0 +1,25 @@
+{
+ "slug": "beersheba-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.423293+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Samuel's sons Joel and Abiah served as judges",
+    "references": [
+     "1SA 8:2"
+    ],
+    "ukr": "було місцем, де сини Самуїла Йоїл і Авійя були суддями",
+    "deu": "war der Ort, wo die Söhne Samuels, Joel und Abia, Richter waren",
+    "spa": "fue el lugar donde los hijos de Samuel, Joel y Abia, fueron jueces"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

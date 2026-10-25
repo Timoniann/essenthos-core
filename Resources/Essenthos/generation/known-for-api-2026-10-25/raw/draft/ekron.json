@@ -1,0 +1,35 @@
+{
+ "slug": "ekron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.688988+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Ekron is a Philistine city where several things happened: the ark of God was sent there and brought deadly destruction, and Ahaziah sought its god Baalzebub.",
+  "clauses": [
+   {
+    "english": "was where the ark of God brought deadly destruction when the Philistines sent it there",
+    "references": [
+     "1SA 5:10-12"
+    ],
+    "quote": "there was a deadly destruction throughout all the city"
+   },
+   {
+    "english": "was where King Ahaziah sent to enquire of its god Baalzebub, for which the LORD doomed him",
+    "references": [
+     "2KI 1:2-4",
+     "2KI 1:16"
+    ],
+    "quote": "Go, enquire of Baalzebub the god of Ekron whether I shall recover of this disease."
+   }
+  ],
+  "doubts": [
+   "Prophecies of its being rooted up (ZEP 2:4, AMO 1:8) are foretellings, not events, so left out.",
+   "JDG 1:18 says Judah took Ekron, but it is a brief mention and was not used; the Philistines' later holding of it is not shown in the verses.",
+   "Boundary and city-list verses (JOS 13:3, 15:11, 15:45-46, 19:43) only list the place and were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

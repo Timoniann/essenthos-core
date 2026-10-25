@@ -1,0 +1,25 @@
+{
+ "slug": "micah-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.620531+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "foretold that Zion would be plowed like a field and Jerusalem become heaps",
+    "references": [
+     "JER 26:18"
+    ],
+    "ukr": "провіщав, що Сіон буде заораний, як поле, а Єрусалим стане румовищем",
+    "deu": "sprach, Zion werde wie ein Acker gepflügt werden und Jerusalem zum Steinhaufen werden",
+    "spa": "profetizó que Sión sería arada como campo y Jerusalem vendría a ser montones"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

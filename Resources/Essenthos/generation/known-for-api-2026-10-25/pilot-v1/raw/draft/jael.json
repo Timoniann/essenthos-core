@@ -1,0 +1,32 @@
+{
+ "slug": "jael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:47:11.519191+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell a single chief event: Jael received the fleeing Sisera into her tent and killed him with a tent nail, which the summary names only as a relation.",
+  "clauses": [
+   {
+    "english": "took Sisera into her tent and killed him by driving a tent nail into his temples as he slept",
+    "references": [
+     "JDG 4:18-21"
+    ],
+    "quote": "smote the nail into his temples, and fastened it into the ground"
+   },
+   {
+    "english": "was blessed above women in the tent",
+    "references": [
+     "JDG 5:24"
+    ],
+    "quote": "Blessed above women shall Jael the wife of Heber the Kenite be"
+   }
+  ],
+  "doubts": [
+   "JDG 5:6 names Jael only to date the days of Shamgar, so it was left out.",
+   "The summary already names her as killer of Sisera, so the deed is told once as it happened."
+  ]
+ },
+ "problems": []
+}

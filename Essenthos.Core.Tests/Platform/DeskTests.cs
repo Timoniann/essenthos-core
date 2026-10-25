@@ -315,6 +315,92 @@ public sealed class DeskTests : IAsyncLifetime
     }
 
     [Fact]
+    public async Task TheKnownForListIsEmptyUntilItIsWritten()
+    {
+        var read = await Json<KnownForReviewResponse>(await _http.GetAsync("/desk-api/review/known-for"));
+
+        (read.Written, read.Open).Should().Be((false, 0));
+        read.Entries.Should().BeEmpty();
+    }
+
+    [Fact]
+    public async Task ApprovingWhatARecordIsKnownForWritesTheAnswerTheLoadReadsAndLogsIt()
+    {
+        WriteKnownFor();
+
+        var read = await Json<KnownForReviewResponse>(await _http.GetAsync("/desk-api/review/known-for"));
+        (read.Written, read.Open, read.Approved, read.Rejected).Should().Be((true, 2, 0, 0));
+        var sodom = read.Entries.Single(e => e.Slug == "sodom");
+        sodom.Clauses.Single().Addresses.Should().Equal("genesis:19:24");
+        read.Declined.Single().Reason.Should().Be("only listed");
+
+        var response = await Put("/desk-api/review/known-for/sodom", new { answer = "approved", note = "так" });
+        (await Put("/desk-api/review/known-for/bethel", new { answer = "rejected", note = "" })).StatusCode
+            .Should().Be(HttpStatusCode.OK);
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+        KnownForReviewList.Approved(Path.Combine(Review, KnownForReview.FileName)).Records
+            .Select(r => (r.Slug, r.Clauses.Single().English))
+            .Should().Equal(("sodom", "was overthrown when the LORD rained brimstone and fire on it"));
+        var logged = Logged();
+        logged.Select(l => (l.Section, l.Action, l.Target, l.Needs, l.Label, l.After?.GetValue<string>())).Should().Equal(
+            ("known-for", "verdict", "place/sodom", "load", "Sodom", "approved"),
+            ("known-for", "verdict", "place/bethel", "load", "Bethel", "rejected"));
+        logged[0].Note.Should().Be("так");
+        var summary = await Json<SummaryResponse>(await _http.GetAsync("/desk-api/summary"));
+        summary.Counts.Single(c => c.Key == "known-for").Count.Should().Be(0, "both records are answered");
+    }
+
+    [Fact]
+    public async Task AKnownForAnswerCanBeTakenBackAndAnythingButApprovedOrRejectedIsRefused()
+    {
+        WriteKnownFor();
+        var before = File.ReadAllText(Path.Combine(Review, KnownForReview.FileName));
+
+        (await Put("/desk-api/review/known-for/sodom", new { answer = "maybe", note = "" })).StatusCode
+            .Should().Be(HttpStatusCode.UnprocessableEntity);
+        (await Put("/desk-api/review/known-for/nobody", new { answer = "approved", note = "" })).StatusCode
+            .Should().Be(HttpStatusCode.UnprocessableEntity);
+        File.ReadAllText(Path.Combine(Review, KnownForReview.FileName)).Should().Be(before);
+        Logged().Should().BeEmpty();
+
+        (await Put("/desk-api/review/known-for/sodom", new { answer = "approved", note = "" })).StatusCode.Should().Be(HttpStatusCode.OK);
+        (await Put("/desk-api/review/known-for/sodom", new { answer = (string?)null, note = "" })).StatusCode.Should().Be(HttpStatusCode.OK);
+
+        JsonFiles.Read(Path.Combine(Review, KnownForReview.FileName))["records"]![0]!["decision"].Should().BeNull();
+        KnownForReviewList.Approved(Path.Combine(Review, KnownForReview.FileName)).Records.Should().BeEmpty();
+        Logged().Select(l => (l.Before?.GetValue<string>(), l.After?.GetValue<string>())).Should().Equal(
+            ((string?)null, "approved"), ("approved", null));
+    }
+
+    private void WriteKnownFor() =>
+        File.WriteAllText(Path.Combine(Review, KnownForReview.FileName),
+            """
+            {
+              "about": "a test",
+              "source": "written by a model",
+              "records": [
+                {
+                  "slug": "sodom", "kind": "place", "name": "Sodom", "sex": null, "verses": 50,
+                  "clauses": [
+                    { "english": "was overthrown when the LORD rained brimstone and fire on it", "ukr": "був зруйнований", "deu": "wurde zerstört", "spa": "fue destruida", "references": ["GEN 19:24-25"], "renderingsChanged": null }
+                  ],
+                  "readings": { "first": { "reason": null, "doubts": [] }, "second": [{ "verdict": "right", "why": null }], "note": null }
+                },
+                {
+                  "slug": "bethel", "kind": "place", "name": "Bethel", "sex": null, "verses": 71,
+                  "clauses": [
+                    { "english": "was named by Jacob", "ukr": "був названий Яковом", "deu": "wurde von Jakob benannt", "spa": "fue nombrada por Jacob", "references": ["GEN 28:19"], "renderingsChanged": null }
+                  ],
+                  "readings": { "first": { "reason": null, "doubts": [] }, "second": [{ "verdict": "right", "why": null }], "note": null }
+                }
+              ],
+              "declined": [{ "slug": "ashbel", "kind": "person", "name": "Ashbel", "verses": 6, "reason": "only listed" }],
+              "unfinished": []
+            }
+            """);
+
+    [Fact]
     public async Task TheAgentsProposalIsShownBesideTheEntryAndOneTheEntryNoLongerOffersIsDropped()
     {
         WriteWikipedia();

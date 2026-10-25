@@ -1,0 +1,47 @@
+{
+ "slug": "succoth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.907631+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jacob built a house and made booths for his cattle, giving the place its name",
+    "references": [
+     "GEN 33:17"
+    ],
+    "ukr": "було місцем, де Яків збудував собі хату і поробив курені для своєї худоби, і від цього дістало назву",
+    "deu": "war der Ort, wo Jakob sich ein Haus baute und seinem Vieh Hütten machte, und daher erhielt es seinen Namen",
+    "spa": "fue el lugar donde Jacob edificó casa para sí e hizo cabañas para su ganado, y por eso recibió su nombre"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "refused bread to Gideon's weary men as he pursued Zebah and Zalmunna",
+    "references": [
+     "JDG 8:5-6"
+    ],
+    "ukr": "відмовив у хлібі змученим людям Гедеона, коли він гнався за Зевахом та Цалмунною",
+    "deu": "verweigerte den müden Leuten Gideons Brot, als er Sebah und Zalmuna nachjagte",
+    "spa": "negó pan a la gente cansada de Gedeón cuando perseguía a Zeba y a Zalmunna"
+   },
+   {
+    "verdict": "fix",
+    "why": "Gideon took the elders and the thorns and used them to punish the men of Succoth; the elders were not what was taught.",
+    "english": "was punished by Gideon with thorns and briers of the wilderness",
+    "references": [
+     "JDG 8:16"
+    ],
+    "ukr": "був покараний Гедеоном пустинним терням і колючками",
+    "deu": "wurde von Gideon mit Dornen aus der Wüste und Hecken bestraft",
+    "spa": "fue castigado por Gedeón con espinas y abrojos del desierto"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,40 @@
+{
+ "slug": "ezekiel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.969784+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Ezekiel's vision by the Chebar, the valley of dry bones and the death of his wife, which add to the summary of his office and father.",
+  "clauses": [
+   {
+    "english": "saw the heavens opened and visions of God by the river Chebar",
+    "references": [
+     "EZK 1:1"
+    ],
+    "quote": "the heavens were opened, and I saw visions of God"
+   },
+   {
+    "english": "was set down in a valley of dry bones and prophesied, and they lived",
+    "references": [
+     "EZK 37:1-10"
+    ],
+    "quote": "the breath came into them, and they lived"
+   },
+   {
+    "english": "lost his wife and was forbidden to mourn, as a sign to Israel",
+    "references": [
+     "EZK 24:16-18"
+    ],
+    "quote": "at even my wife died; and I did in the morning as I was commanded."
+   }
+  ],
+  "doubts": [
+   "Many other verses marked in the passage are only the address 'Son of man' to Ezekiel or his commands, and I did not use them.",
+   "His call (EZK 2-3), the eating of the roll, the sign-acts and the temple vision could also have been chosen; I kept only the three clearest events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

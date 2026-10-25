@@ -1,0 +1,40 @@
+{
+ "slug": "jehu-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.356084+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell at length of Jehu's deeds after his anointing, and the chief ones add to what the summary says.",
+  "clauses": [
+   {
+    "english": "killed Joram with an arrow shot from his bow",
+    "references": [
+     "2KI 9:24"
+    ],
+    "quote": "Jehu drew a bow with his full strength, and smote Jehoram between his arms"
+   },
+   {
+    "english": "killed all that remained of the house of Ahab in Jezreel",
+    "references": [
+     "2KI 10:11"
+    ],
+    "quote": "Jehu slew all that remained of the house of Ahab in Jezreel"
+   },
+   {
+    "english": "had all the worshippers of Baal slain in the house of Baal",
+    "references": [
+     "2KI 10:18-25"
+    ],
+    "quote": "Go in, and slay them; let none come forth."
+   }
+  ],
+  "doubts": [
+   "Verses 2KI 12:1, 2KI 13:1, 2KI 14:8, 2CH 25:17, 2KI 15:12 and HOS 1:4 mention Jehu only as an ancestor or a dating reference, so I left them out.",
+   "Jezebel's death at Jehu's word (2KI 9:33) and the killing of Ahaziah's brethren (2KI 10:14) were left out to keep to the chief deeds; Ahaziah's killing is already in the summary."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

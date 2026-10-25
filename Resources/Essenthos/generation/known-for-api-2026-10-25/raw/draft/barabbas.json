@@ -1,0 +1,24 @@
+{
+ "slug": "barabbas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.425910+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The summary already gives his release instead of Jesus, but the verses add that he was imprisoned for murder in an insurrection.",
+  "clauses": [
+   {
+    "english": "was bound in prison for murder committed in an insurrection",
+    "references": [
+     "MRK 15:7",
+     "LUK 23:19"
+    ],
+    "quote": "who had committed murder in the insurrection"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

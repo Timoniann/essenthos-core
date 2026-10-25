@@ -1,0 +1,34 @@
+{
+ "slug": "gozan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.408105+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Gozan is where the Assyrian kings settled the exiles of Israel, and its people were destroyed by the Assyrian kings.",
+  "clauses": [
+   {
+    "english": "was where the king of Assyria placed the Israelites he carried away from Samaria",
+    "references": [
+     "2KI 17:6",
+     "2KI 18:11"
+    ],
+    "quote": "placed them in Halah and in Habor by the river of Gozan"
+   },
+   {
+    "english": "was destroyed by the kings of Assyria, and its gods did not deliver it",
+    "references": [
+     "2KI 19:12"
+    ],
+    "quote": "Have the gods of the nations delivered them which my fathers have destroyed; as Gozan"
+   }
+  ],
+  "doubts": [
+   "1CH 5:26 also names the river Gozan as a place of exile for Reuben, Gad and half Manasseh, but it was left out as the same event as the first clause.",
+   "ISA 37:12 repeats 2KI 19:12 and was not cited separately."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

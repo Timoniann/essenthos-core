@@ -1,0 +1,15 @@
+{
+ "slug": "mushi",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.864176+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Mushi in genealogies of the Levites, giving his father and sons, which the summary already states, and tell no deed or event of him.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

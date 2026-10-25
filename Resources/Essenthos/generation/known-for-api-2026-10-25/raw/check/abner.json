@@ -1,0 +1,47 @@
+{
+ "slug": "abner",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.046174+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "took Ishbosheth to Mahanaim and made him king over Israel",
+    "references": [
+     "2SA 2:8-9"
+    ],
+    "ukr": "узяв Іш-Бошета, привів його до Маханаїму й настановив його царем над Ізраїлем",
+    "deu": "nahm Is-Boseth, führte ihn nach Mahanaim und machte ihn zum König über Israel",
+    "spa": "tomó a Is-boseth, lo llevó a Mahanaim y lo alzó por rey sobre Israel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "killed Asahel with his spear when Asahel would not stop pursuing him",
+    "references": [
+     "2SA 2:19-23"
+    ],
+    "ukr": "убив Асаїла списом, коли Асаїл не хотів спинити погоні за ним",
+    "deu": "erstach Asahel mit dem Spieß, als Asahel nicht von ihm ablassen wollte",
+    "spa": "mató a Asael con la lanza cuando Asael no quiso apartarse de en pos de él"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say Abner came to David, not that he went.",
+    "english": "came to David at Hebron and promised to gather all Israel to him",
+    "references": [
+     "2SA 3:20-21"
+    ],
+    "ukr": "прийшов до Давида до Хеврону й пообіцяв привести до нього всього Ізраїля",
+    "deu": "kam zu David nach Hebron und versprach, ganz Israel zu ihm zu sammeln",
+    "spa": "vino a David en Hebrón y prometió juntarle a todo Israel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

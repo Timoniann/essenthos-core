@@ -1,0 +1,17 @@
+{
+ "slug": "nebat",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.568897+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "Nebat is named only as the father of Jeroboam in verses that tell of Jeroboam's deeds, and nothing is stated of Nebat himself beyond what the summary says.",
+  "clauses": [],
+  "doubts": [
+   "Every marked verse that names Nebat does so only to identify Jeroboam, so the deeds in them belong to Jeroboam and not to Nebat."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

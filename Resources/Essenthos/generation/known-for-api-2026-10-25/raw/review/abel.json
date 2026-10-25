@@ -1,0 +1,19 @@
+{
+ "slug": "abel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.445272+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був пастухом отари й приніс від своїх перворідних з отари, і Господь зглянувся на його жертву",
+    "deu": "wurde ein Schäfer und brachte von den Erstlingen seiner Herde, und der HERR sah gnädig auf sein Opfer",
+    "spa": "fue pastor de ovejas y trajo de los primogénitos de sus ovejas, y el SEÑOR miró con agrado su ofrenda",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

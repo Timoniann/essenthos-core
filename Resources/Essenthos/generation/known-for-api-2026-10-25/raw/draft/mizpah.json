@@ -1,0 +1,32 @@
+{
+ "slug": "mizpah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.462738+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of events at Mizpah of Gilead: Israel's camp against Ammon and Jephthah's return to his house.",
+  "clauses": [
+   {
+    "english": "was where the Israelites encamped when Ammon gathered in Gilead",
+    "references": [
+     "JDG 10:17"
+    ],
+    "quote": "the children of Israel assembled themselves together, and encamped in Mizpeh"
+   },
+   {
+    "english": "was where Jephthah's daughter came out with timbrels to meet him",
+    "references": [
+     "JDG 11:34"
+    ],
+    "quote": "his daughter came out to meet him with timbrels and with dances"
+   }
+  ],
+  "doubts": [
+   "HOS 5:1 names Mizpah beside Tabor and may mean a different place, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

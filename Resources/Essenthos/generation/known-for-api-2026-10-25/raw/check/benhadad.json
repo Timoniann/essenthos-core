@@ -1,0 +1,47 @@
+{
+ "slug": "benhadad",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.280353+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "attacked Ijon, Dan and other cities of Israel at Asa's request",
+    "references": [
+     "1KI 15:19-20"
+    ],
+    "ukr": "напав на Іййона, Дана та інші ізраїльські міста на прохання Аси",
+    "deu": "schlug Ijon, Dan und andere Städte Israels auf Bitten Asas",
+    "spa": "atacó a Ahión, a Dan y a otras ciudades de Israel a petición de Asa"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "besieged Samaria with thirty-two kings and all his host",
+    "references": [
+     "1KI 20:1"
+    ],
+    "ukr": "обліг Самарію з тридцятьма двома царями та всім своїм військом",
+    "deu": "belagerte Samaria mit zweiunddreißig Königen und seiner ganzen Macht",
+    "spa": "puso cerco a Samaria con treinta y dos reyes y todo su ejército"
+   },
+   {
+    "verdict": "fix",
+    "why": "The cited verses do not state the defeat at Aphek, and they show Ahab sending him away rather than the word 'spared'.",
+    "english": "made a covenant with Ahab, who let him go",
+    "references": [
+     "1KI 20:32-34"
+    ],
+    "ukr": "склав умову з Ахавом, який відпустив його",
+    "deu": "machte mit Ahab einen Bund, der ihn ziehen ließ",
+    "spa": "hizo alianza con Achâb, quien lo dejó ir"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "rephidim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.968057+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Мойсей вдарив у скелю і вийшла вода для спраглого народу",
+    "deu": "war der Ort, an dem Mose den Fels schlug und Wasser für das durstige Volk herauslief",
+    "spa": "fue el lugar donde Moisés hirió la peña y salió agua para el pueblo sediento",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де прибув Амалик і воював з Ізраїлем",
+    "deu": "war der Ort, an den Amalek kam und gegen Israel stritt",
+    "spa": "fue el lugar donde vino Amalec y peleó con Israel",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

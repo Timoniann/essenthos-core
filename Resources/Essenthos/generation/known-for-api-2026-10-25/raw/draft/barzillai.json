@@ -1,0 +1,34 @@
+{
+ "slug": "barzillai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.332449+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Barzillai providing for David at Mahanaim and escorting him over the Jordan, where he declined to go to Jerusalem.",
+  "clauses": [
+   {
+    "english": "brought food and supplies to David at Mahanaim when he fled from Absalom",
+    "references": [
+     "2SA 17:27-29",
+     "2SA 19:32"
+    ],
+    "quote": "he had provided the king of sustenance while he lay at Mahanaim"
+   },
+   {
+    "english": "escorted David over the Jordan but declined to go with him to Jerusalem, and was blessed by the king",
+    "references": [
+     "2SA 19:31-39"
+    ],
+    "quote": "the king kissed Barzillai, and blessed him; and he returned unto his own place"
+   }
+  ],
+  "doubts": [
+   "EZR 2:61 and NEH 7:63 mention a priest who took a wife from Barzillai's daughters; this concerns descendants, so left out.",
+   "1KI 2:7 gives David's charge to Solomon to show kindness to Barzillai's sons; left out as it concerns the sons."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

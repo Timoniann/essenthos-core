@@ -1,0 +1,47 @@
+{
+ "slug": "hadad-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.706860+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was stirred up by the LORD as an adversary to Solomon",
+    "references": [
+     "1KI 11:14"
+    ],
+    "ukr": "був поставлений Господом противником Соломонові",
+    "deu": "wurde vom HERRN Salomo als Widersacher erweckt",
+    "spa": "fue suscitado por el SEÑOR como adversario a Salomón"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says he fled with Edomites of his father's servants; 'to Egypt' is stated but the clause omits nothing wrong; keep it simple and accurate.",
+    "english": "fled to Egypt as a little child",
+    "references": [
+     "1KI 11:17"
+    ],
+    "ukr": "втік до Єгипту малим хлопцем",
+    "deu": "floh nach Ägypten als junger Knabe",
+    "spa": "huyó a Egipto siendo muchacho pequeño"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "found great favour with Pharaoh, who gave him his wife's sister in marriage",
+    "references": [
+     "1KI 11:19"
+    ],
+    "ukr": "знайшов велику милість у фараона, і той дав йому за жінку сестру своєї жінки",
+    "deu": "fand große Gnade vor dem Pharao, der ihm die Schwester seines Weibes zum Weibe gab",
+    "spa": "halló grande gracia delante de Faraón, el cual le dió por mujer a la hermana de su esposa"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

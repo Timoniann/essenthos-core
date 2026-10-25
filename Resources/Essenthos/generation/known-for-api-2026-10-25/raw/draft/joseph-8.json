@@ -1,0 +1,31 @@
+{
+ "slug": "joseph-8",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.819789+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two chief deeds of Joseph of Arimathaea: asking Pilate for the body of Jesus and burying it in his own tomb.",
+  "clauses": [
+   {
+    "english": "begged Pilate for the body of Jesus and was given it",
+    "references": [
+     "MAT 27:58",
+     "MRK 15:43-45"
+    ],
+    "quote": "went in boldly unto Pilate, and craved the body of Jesus."
+   },
+   {
+    "english": "wrapped the body of Jesus in linen and laid it in his own new tomb",
+    "references": [
+     "MAT 27:59-60"
+    ],
+    "quote": "laid it in his own new tomb, which he had hewn out in the rock"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

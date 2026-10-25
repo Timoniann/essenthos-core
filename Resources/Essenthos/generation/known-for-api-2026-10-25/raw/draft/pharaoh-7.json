@@ -1,0 +1,18 @@
+{
+ "slug": "pharaoh-7",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.894924+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only speak of Pharaoh's counsellors, his strength as a false trust, and a comparison to a broken reed, none of which is a deed or event that happened to him.",
+  "clauses": [],
+  "doubts": [
+   "ISA 36:6 'broken reed' is a figure of speech, not an event.",
+   "ISA 19:11 and 30:2-3 concern his counsellors and the trust placed in him, not his own acts."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

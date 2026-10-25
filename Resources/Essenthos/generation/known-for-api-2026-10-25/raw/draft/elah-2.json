@@ -1,0 +1,26 @@
+{
+ "slug": "elah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.660042+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Elah's death at the hands of Zimri, an event beyond what the summary states.",
+  "clauses": [
+   {
+    "english": "was killed by his servant Zimri, who conspired against him while he was drinking himself drunk in Tirzah",
+    "references": [
+     "1KI 16:9-10"
+    ],
+    "quote": "Zimri went in and smote him, and killed him"
+   }
+  ],
+  "doubts": [
+   "The reign itself (two years in Tirzah) is already covered by the summary and offices, so it is left out.",
+   "1KI 16:13 says Elah sinned and made Israel sin, but this is a judgment rather than a deed, so it is not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

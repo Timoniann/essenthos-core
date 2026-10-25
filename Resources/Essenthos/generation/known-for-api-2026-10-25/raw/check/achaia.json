@@ -1,0 +1,25 @@
+{
+ "slug": "achaia",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.220467+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "made a contribution for the poor saints at Jerusalem",
+    "references": [
+     "ROM 15:26"
+    ],
+    "ukr": "визнала за добре подати деяку поміч незаможним святим, що в Єрусалимі живуть",
+    "deu": "legte willig eine gemeinsame Steuer zusammen für die armen Heiligen zu Jerusalem",
+    "spa": "tuvo por bien hacer una colecta para los pobres de los santos que están en Jerusalem"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

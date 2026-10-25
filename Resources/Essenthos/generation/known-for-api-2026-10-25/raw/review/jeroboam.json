@@ -1,0 +1,37 @@
+{
+ "slug": "jeroboam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.556429+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "почув від пророка Ахійї, що отримає десять племен із царства",
+    "deu": "erfuhr vom Propheten Ahia, dass er zehn Stämme des Königreichs erhalten würde",
+    "spa": "fue informado por el profeta Ahías de que recibiría diez tribus del reino",
+    "why": ""
+   },
+   {
+    "ukr": "втік до Єгипту від Соломона, який намагався вбити його",
+    "deu": "floh nach Ägypten vor Salomo, der ihn zu töten trachtete",
+    "spa": "huyó a Egipto de Salomón, que procuraba matarlo",
+    "why": "Replaced the colloquial «шукав, щоб забити» with modern «намагався вбити»."
+   },
+   {
+    "ukr": "був настановлений царем над усім Ізраїлем, коли Ізраїль збунтувався проти Давидового дому",
+    "deu": "wurde zum König über ganz Israel gemacht, als Israel vom Hause David abfiel",
+    "spa": "fue hecho rey sobre todo Israel cuando Israel se apartó de la casa de David",
+    "why": ""
+   },
+   {
+    "ukr": "зробив два золоті тельці й поставив одного в Бет-Елі, а одного в Дані",
+    "deu": "machte zwei goldene Kälber und setzte das eine in Beth-El und das andere in Dan",
+    "spa": "hizo dos becerros de oro y puso uno en Beth-el y el otro en Dan",
+    "why": "Modernized the German (archaic «eins… gen Dan») and the Spanish («el uno»)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

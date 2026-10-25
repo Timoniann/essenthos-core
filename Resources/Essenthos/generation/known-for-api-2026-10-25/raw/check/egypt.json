@@ -1,0 +1,36 @@
+{
+ "slug": "egypt",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.307881+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the children of Israel were made to serve in hard bondage",
+    "references": [
+     "EXO 1:13-14"
+    ],
+    "ukr": "був місцем, де синів Ізраїля змушували тяжко працювати",
+    "deu": "war der Ort, an dem die Kinder Israel zum Dienst mit Unbarmherzigkeit gezwungen wurden",
+    "spa": "fue el lugar donde se hizo servir a los hijos de Israel con dureza"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had all its firstborn struck down by the LORD at midnight",
+    "references": [
+     "EXO 12:29"
+    ],
+    "ukr": "мав усіх перворідних, яких Господь вдарив у половині ночі",
+    "deu": "hatte alle Erstgeburt, die der HERR zur Mitternacht schlug",
+    "spa": "tuvo a todo primogénito, a quienes el SEÑOR hirió a la medianoche"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

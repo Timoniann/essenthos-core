@@ -1,0 +1,31 @@
+{
+ "slug": "cherubim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.804137+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "стерегли дорогу до дерева життя з полум'яним мечем",
+    "deu": "bewachten den Weg zum Baum des Lebens mit einem flammenden Schwert",
+    "spa": "guardaron el camino del árbol de la vida con una espada encendida",
+    "why": "German: replaced Luther's old wording «bewahrten ... bloßen, hauenden Schwert» with modern «bewachten ... flammenden Schwert»."
+   },
+   {
+    "ukr": "дали вогонь з-поміж них чоловікові, одягненому в льняне",
+    "deu": "gaben dem in Leinen gekleideten Mann Feuer aus ihrer Mitte",
+    "spa": "dieron fuego de entre ellos al hombre vestido de lino",
+    "why": "German: modernized «Mann in der Leinwand» and «von zwischen ihnen»; Spanish: modernized «varón vestido de lienzos» to «hombre vestido de lino»."
+   },
+   {
+    "ukr": "знялися з землі, а слава Ізраїлевого Бога була зверху над ними",
+    "deu": "erhoben sich von der Erde, und die Herrlichkeit des Gottes Israels war oben über ihnen",
+    "spa": "se levantaron de la tierra, y la gloria del Dios de Israel estaba arriba sobre ellos",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

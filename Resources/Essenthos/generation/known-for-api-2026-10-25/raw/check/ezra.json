@@ -1,0 +1,47 @@
+{
+ "slug": "ezra",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.585004+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The king's name Artaxerxes is in EZR 7:7, just outside the citation, so the citation is widened.",
+    "english": "came to Jerusalem in the seventh year of King Artaxerxes",
+    "references": [
+     "EZR 7:7-8"
+    ],
+    "ukr": "прибув до Єрусалиму сьомого року царя Артаксеркса",
+    "deu": "kam nach Jerusalem im siebenten Jahr des Königs Arthahsastha",
+    "spa": "llegó a Jerusalem en el año séptimo del rey Artajerjes"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "brought the law before the people and read it from morning until midday",
+    "references": [
+     "NEH 8:2-3"
+    ],
+    "ukr": "приніс Закон перед збори й читав його від світанку аж до полудня",
+    "deu": "brachte das Gesetz vor die Gemeinde und las daraus vom frühen Morgen bis zum Mittag",
+    "spa": "trajo la ley delante de la congregación y leyó en el libro desde el alba hasta el medio día"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not call the wives foreign; the oath's content (putting away the wives) is in EZR 10:3, and the priests are chief priests.",
+    "english": "made the chief priests, the Levites and all Israel swear to put away the wives",
+    "references": [
+     "EZR 10:3-5"
+    ],
+    "ukr": "змусив зверхників, священиків, Левитів і весь Ізраїль заприсягти, що відішлють жінок",
+    "deu": "ließ die Obersten der Priester, die Leviten und ganz Israel schwören, die Frauen zu entlassen",
+    "spa": "hizo jurar a los príncipes de los sacerdotes, a los Levitas y a todo Israel que echarían a las mujeres"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

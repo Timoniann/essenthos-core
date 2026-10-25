@@ -1,0 +1,25 @@
+{
+ "slug": "jericho-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.576354+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди ввійшов Ісус і через яке він переходив",
+    "deu": "wurde von Jesus betreten und durchzogen",
+    "spa": "fue el lugar al que entró Jesús y por el que pasó",
+    "why": "Ukrainian: the ungrammatical «був увійдений» is replaced by a natural clause that keeps the record as subject. Spanish: «entrada» wrongly agreed with a feminine, since Jericó is masculine, and the passive of «entrar» is unnatural, so it was rephrased."
+   },
+   {
+    "ukr": "був місцем, де сліпий Вартимей кликав до Ісуса, коли Він виходив",
+    "deu": "war der Ort, an dem der blinde Bartimäus zu Jesus schrie, als er hinausging",
+    "spa": "fue el lugar donde el ciego Bartimeo dio voces a Jesús cuando salía",
+    "why": "Each clause now begins with the verb «was» («був», «war», «fue») and has the record as its subject, as the English does, instead of starting with an adverb of place."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

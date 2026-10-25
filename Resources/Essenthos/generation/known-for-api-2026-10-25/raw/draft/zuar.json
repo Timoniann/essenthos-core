@@ -1,0 +1,15 @@
+{
+ "slug": "zuar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.347330+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "Zuar appears only as the father in the name of his son Nethanel, so the verses say nothing of him beyond the summary.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

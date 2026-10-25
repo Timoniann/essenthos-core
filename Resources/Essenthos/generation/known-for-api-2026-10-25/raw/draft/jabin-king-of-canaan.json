@@ -1,0 +1,33 @@
+{
+ "slug": "jabin-king-of-canaan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.009101+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state what happened to Jabin: he oppressed Israel and was subdued and destroyed by them.",
+  "clauses": [
+   {
+    "english": "oppressed the children of Israel mightily for twenty years",
+    "references": [
+     "JDG 4:2-3"
+    ],
+    "quote": "twenty years he mightily oppressed the children of Israel"
+   },
+   {
+    "english": "was subdued by God before Israel and then destroyed by them",
+    "references": [
+     "JDG 4:23-24"
+    ],
+    "quote": "So God subdued on that day Jabin the king of Canaan before the children of Israel."
+   }
+  ],
+  "doubts": [
+   "PSA 83:7 is marked but names Gebal, Ammon and Amalek, not Jabin, so it was left out.",
+   "PSA 83:9 only compares enemies to Jabin, so it was not used as an event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

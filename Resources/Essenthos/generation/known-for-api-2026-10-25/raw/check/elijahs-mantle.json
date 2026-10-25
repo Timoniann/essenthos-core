@@ -1,0 +1,47 @@
+{
+ "slug": "elijahs-mantle",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.054800+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "\"as he passed by\" is a minor detail of how it was done, so it is cut.",
+    "english": "was cast upon Elisha by Elijah",
+    "references": [
+     "1KI 19:19"
+    ],
+    "ukr": "був кинутий Іллею на Єлисея",
+    "deu": "wurde von Elia auf Elisa geworfen",
+    "spa": "fue echado por Elías sobre Eliseo"
+   },
+   {
+    "verdict": "fix",
+    "why": "Elijah wrapped the mantle and struck with it, and verse 8 names only the waters, so the Jordan is taken from verse 7.",
+    "english": "was wrapped together by Elijah, who struck the Jordan's waters with it, and they divided",
+    "references": [
+     "2KI 2:7-8"
+    ],
+    "ukr": "був згорнутий Іллею, який ударив ним по воді Йордану, і вона розділилася",
+    "deu": "wurde von Elia zusammengewickelt, der damit ins Wasser des Jordans schlug, und es teilte sich",
+    "spa": "fue doblado por Elías, quien hirió con él las aguas del Jordán, y se apartaron a uno y otro lado"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "fell from Elijah and was used by Elisha to part the Jordan again",
+    "references": [
+     "2KI 2:13-14"
+    ],
+    "ukr": "спав з Іллі і був використаний Єлисеєм, щоб знову розділити Йордан",
+    "deu": "entfiel Elia und wurde von Elisa benutzt, um den Jordan wieder zu teilen",
+    "spa": "se le cayó a Elías y fue usado por Eliseo para dividir de nuevo el Jordán"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

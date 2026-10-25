@@ -1,0 +1,36 @@
+{
+ "slug": "elam-6",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.857751+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses name Chedorlaomer as Elam's king fighting with allies, not as its overall leader, and the battle is introduced in verse 8.",
+    "english": "fought the kings of Sodom and Gomorrah with its king Chedorlaomer and took their goods",
+    "references": [
+     "GEN 14:8-11"
+    ],
+    "ukr": "воював із царями Содому й Гомори разом зі своїм царем Кедор-Лаомером і взяв їхній маєток",
+    "deu": "kämpfte mit seinem König Kedor-Laomor gegen die Könige von Sodom und Gomorra und nahm ihre Habe",
+    "spa": "luchó con su rey Chêdorlaomer contra los reyes de Sodoma y de Gomorra y tomó su riqueza"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was told by the LORD that its bow would be broken and its people scattered",
+    "references": [
+     "JER 49:35-36"
+    ],
+    "ukr": "почув від Господа, що його лук буде зламано, а народ розпорошено",
+    "deu": "bekam vom HERRN gesagt, dass sein Bogen zerbrochen und sein Volk zerstreut werde",
+    "spa": "fue advertido por el SEÑOR de que su arco sería quebrado y su gente dispersada"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

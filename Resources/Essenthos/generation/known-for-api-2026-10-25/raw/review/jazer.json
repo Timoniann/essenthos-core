@@ -1,0 +1,31 @@
+{
+ "slug": "jazer",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:11.987958+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був розвіданий людьми, яких послав Мойсей, і його села були здобуті",
+    "deu": "wurde von Männern ausgekundschaftet, die Mose gesandt hatte, und seine Ortschaften wurden eingenommen",
+    "spa": "fue reconocido por hombres que Moisés envió, y sus aldeas fueron tomadas",
+    "why": "The English says men sent by Moses spied it out, not 'by Moses' order'; also modernized 'залежні міста' to 'села' and 'gewonnen' to 'eingenommen'."
+   },
+   {
+    "ukr": "був збудований синами Ґада",
+    "deu": "wurde von den Kindern Gad gebaut",
+    "spa": "fue edificado por los hijos de Gad",
+    "why": ""
+   },
+   {
+    "ukr": "був даний з його пасовиськами левітам, синам Мерарі",
+    "deu": "wurde mit seinen Vorstädten den Leviten der Kinder Merari gegeben",
+    "spa": "fue dado con sus ejidos a los levitas de los hijos de Merari",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

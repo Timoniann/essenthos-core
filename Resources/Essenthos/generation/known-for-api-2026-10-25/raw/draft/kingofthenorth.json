@@ -1,0 +1,26 @@
+{
+ "slug": "kingofthenorth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.443517+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Only DAN 11:6 clearly concerns the king of the north named in the record, and it states one event.",
+  "clauses": [
+   {
+    "english": "received the king of the south's daughter to make an agreement",
+    "references": [
+     "DAN 11:6"
+    ],
+    "quote": "shall come to the king of the north to make an agreement"
+   }
+  ],
+  "doubts": [
+   "Daniel 11 speaks of several kings of the north; DAN 11:7-8, 11, 13, 15 and 40 may concern other kings, so they were left out.",
+   "The verses are prophecy, so the clause relates the foretold event as a deed."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

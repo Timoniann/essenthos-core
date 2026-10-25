@@ -1,0 +1,25 @@
+{
+ "slug": "shunem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.063411+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де таборували филистимляни",
+    "deu": "war der Ort, an dem die Philister sich lagerten",
+    "spa": "fue el lugar donde los Filisteos asentaron campo",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де Єлисей, якого сильно просила багата жінка, часто їв хліб і спав у горниці",
+    "deu": "war der Ort, an dem Elisa, von einer reichen Frau gedrängt, oft Brot aß und in einer Kammer schlief",
+    "spa": "fue el lugar donde Eliseo, instado por una mujer importante, comía pan con frecuencia y dormía en una cámara",
+    "why": "Ukrainian: 'pressed' is now stronger (сильно просила). German: archaic 'gehalten' became 'gedrängt', and 'der Kammer' became 'einer Kammer'. Spanish: archaic 'constreñido' and 'principal' modernised, and 'durmió' became 'dormía' to match 'comía'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

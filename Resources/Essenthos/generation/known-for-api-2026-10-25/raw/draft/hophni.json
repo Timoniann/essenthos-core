@@ -1,0 +1,26 @@
+{
+ "slug": "hophni",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.951731+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses add little beyond the summary, but the sign that Hophni and his brother would die in one day is something that happened to him.",
+  "clauses": [
+   {
+    "english": "was foretold to die with his brother Phinehas in one day",
+    "references": [
+     "1SA 2:34"
+    ],
+    "quote": "in one day they shall die both of them"
+   }
+  ],
+  "doubts": [
+   "His death at the Philistines' hands (1SA 4:11, 4:17) is already in the summary, so I did not repeat it.",
+   "1SA 4:4 only says he was with the ark at Shiloh, and does not say he went with it into battle."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

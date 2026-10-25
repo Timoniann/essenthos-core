@@ -1,0 +1,31 @@
+{
+ "slug": "tattenai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.014253+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "запитав юдеїв, хто видав їм наказ будувати храм",
+    "deu": "fragte die Juden, wer ihnen befohlen habe, das Haus zu bauen",
+    "spa": "preguntó a los judíos quién les había dado mandamiento para edificar la casa",
+    "why": ""
+   },
+   {
+    "ukr": "послав листа цареві Дарію про будівництво храму",
+    "deu": "sandte einen Brief an den König Darius über den Bau des Hauses",
+    "spa": "envió una carta al rey Darío acerca de la construcción de la casa",
+    "why": ""
+   },
+   {
+    "ukr": "швидко виконав наказ Дарія",
+    "deu": "führte den Befehl des Darius eilig aus",
+    "spa": "ejecutó con prontitud el decreto de Darío",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

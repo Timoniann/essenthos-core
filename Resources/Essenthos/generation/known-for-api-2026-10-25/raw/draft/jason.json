@@ -1,0 +1,26 @@
+{
+ "slug": "jason",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.862865+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The Thessalonica verses add one event beyond the summary, his release after the rulers took security of him, while the Romans verse only gives a greeting.",
+  "clauses": [
+   {
+    "english": "was let go by the rulers after they took security of him",
+    "references": [
+     "ACT 17:9"
+    ],
+    "quote": "they had taken security of Jason, and of the other, they let them go"
+   }
+  ],
+  "doubts": [
+   "ROM 16:21 is only a greeting from a Jason, and it may be a different man, so it was left out.",
+   "The dragging before the rulers is already in the summary, so it was not repeated as a clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "tubal-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.054697+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Tubal as a trading land and as a place to which the LORD would send survivors, so a short line is possible.",
+  "clauses": [
+   {
+    "english": "traded men and vessels of brass as a merchant",
+    "references": [
+     "EZK 27:13"
+    ],
+    "quote": "Javan, Tubal, and Meshech, they were thy merchants"
+   },
+   {
+    "english": "was a land to which the LORD would send survivors to declare his glory",
+    "references": [
+     "ISA 66:19"
+    ],
+    "quote": "to Tubal, and Javan, to the isles afar off"
+   }
+  ],
+  "doubts": [
+   "EZK 38:2-3 and EZK 39:1 name Tubal only as part of the domain of Gog, the chief prince of Meshech and Tubal, against whom the LORD set himself; I left them out because the deed is Gog's, not Tubal's.",
+   "EZK 27 does not name the city whose market is meant in the verses given, so it is left unnamed."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

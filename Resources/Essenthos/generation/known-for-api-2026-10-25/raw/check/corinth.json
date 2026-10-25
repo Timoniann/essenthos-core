@@ -1,0 +1,37 @@
+{
+ "slug": "corinth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.294995+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Paul taught for a year and six months, and many Corinthians believed and were baptized",
+    "references": [
+     "ACT 18:8",
+     "ACT 18:11"
+    ],
+    "ukr": "був місцем, де Павло навчав рік і шість місяців, і багато коринтян увірували й охристилися",
+    "deu": "war der Ort, an dem Paulus ein Jahr und sechs Monate lehrte und viele Korinther gläubig wurden und sich taufen ließen",
+    "spa": "fue el lugar donde Pablo enseñó un año y seis meses, y muchos corintios creyeron y fueron bautizados"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the Jews brought Paul before the judgment seat of Gallio, who would not judge the matter",
+    "references": [
+     "ACT 18:12-16"
+    ],
+    "ukr": "був місцем, де юдеї привели Павла на суд до Галліона, який не захотів бути суддею в цій справі",
+    "deu": "war der Ort, an dem die Juden Paulus vor den Richtstuhl Gallions führten, der darüber nicht Richter sein wollte",
+    "spa": "fue el lugar donde los judíos llevaron a Pablo al tribunal de Galión, que no quiso ser juez de esas cosas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

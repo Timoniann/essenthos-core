@@ -1,0 +1,34 @@
+{
+ "slug": "hushai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.450544+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Hushai's two chief deeds: going over to Absalom as David's agent and defeating Ahithophel's counsel.",
+  "clauses": [
+   {
+    "english": "returned to Jerusalem and professed himself Absalom's servant, at David's request",
+    "references": [
+     "2SA 15:32-34",
+     "2SA 16:16-18"
+    ],
+    "quote": "Hushai the Archite, David's friend, was come unto Absalom"
+   },
+   {
+    "english": "gave counsel that Absalom accepted over Ahithophel's, for the LORD had appointed it",
+    "references": [
+     "2SA 17:5-8",
+     "2SA 17:14"
+    ],
+    "quote": "The counsel of Hushai the Archite is better than the counsel of Ahithophel."
+   }
+  ],
+  "doubts": [
+   "The first clause joins David's request with Hushai's arrival before Absalom; both are one event of going over to Absalom."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

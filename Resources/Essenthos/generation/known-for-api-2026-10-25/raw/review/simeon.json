@@ -1,0 +1,25 @@
+{
+ "slug": "simeon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.807134+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "разом з Левієм повбивав усіх чоловіків міста й забрав Діну з дому Сихемового",
+    "deu": "tötete mit Levi alle Männer der Stadt und nahm Dina aus dem Haus Sichems",
+    "spa": "con Leví mató a todo varón de la ciudad y tomó a Dina de casa de Sichêm",
+    "why": "Ukrainian: Dina's name now matches Ohienko's spelling «Діну»; German: replaced Luther's old wording «erwürgte», «alles, was männlich war» and «Hause» with modern «tötete», «alle Männer», «Haus»."
+   },
+   {
+    "ukr": "був узятий Йосипом від братів і зв'язаний на їхніх очах",
+    "deu": "wurde von Joseph aus der Mitte seiner Brüder genommen und vor ihren Augen gebunden",
+    "spa": "fue tomado por José de entre sus hermanos y aprisionado a vista de ellos",
+    "why": "German: «aus den Brüdern» changed to the natural «aus der Mitte seiner Brüder»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

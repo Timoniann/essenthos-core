@@ -1,0 +1,19 @@
+{
+ "slug": "machir",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.372471+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "отримав від Мойсея Ґілеад і осів у ньому",
+    "deu": "bekam von Mose Gilead und wohnte darin",
+    "spa": "recibió de Moisés Galaad y habitó allí",
+    "why": "Spanish 'en ella' had no feminine antecedent after masculine Galaad, so I changed it to 'allí' to match 'there'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "tahpanhes",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.839975+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди прийшли юдеї, не послухавшись голосу Господа",
+    "deu": "war der Ort, wohin die Leute aus Juda kamen, weil sie der Stimme des HERRN nicht gehorchen wollten",
+    "spa": "fue el lugar adonde llegaron los de Judá sin obedecer la voz del SEÑOR",
+    "why": "Ukrainian: replaced the old adjective «Господнього голосу» with «голосу Господа» (the LORD as declined «Господь»)."
+   },
+   {
+    "ukr": "був місцем, де Господь сказав Єремії сховати великі камені в цегляній печі",
+    "deu": "war der Ort, wo der HERR zu Jeremia sprach, er solle große Steine im Ziegelofen verbergen",
+    "spa": "fue el lugar donde el SEÑOR dijo a Jeremías que escondiera piedras grandes en un horno de ladrillos",
+    "why": "Ukrainian: replaced the archaic «на цегляному майдані» with «в цегляній печі» to match the English «brickkiln»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

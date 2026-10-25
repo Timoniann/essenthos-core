@@ -1,0 +1,31 @@
+{
+ "slug": "delilah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.902449+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Delilah's pressing Samson for the secret of his strength and betraying him to the Philistines.",
+  "clauses": [
+   {
+    "english": "pressed Samson daily until he told her the secret of his great strength",
+    "references": [
+     "JDG 16:6",
+     "JDG 16:15-17"
+    ],
+    "quote": "she pressed him daily with her words, and urged him"
+   },
+   {
+    "english": "had Samson's seven locks shaved off while he slept, and called the Philistine lords to take him",
+    "references": [
+     "JDG 16:18-19"
+    ],
+    "quote": "she caused him to shave off the seven locks of his head"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

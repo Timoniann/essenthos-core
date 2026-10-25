@@ -1,0 +1,31 @@
+{
+ "slug": "gaal",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.569487+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "виступив проти Авімелеха і закликав людей Сихема не служити йому",
+    "deu": "redete gegen Abimelech und forderte die Männer zu Sichem auf, ihm nicht zu dienen",
+    "spa": "habló contra Abimelech y exhortó a los de Sichêm a no servirle",
+    "why": ""
+   },
+   {
+    "ukr": "воював з Авімелехом і побіг перед ним",
+    "deu": "stritt mit Abimelech und floh vor ihm",
+    "spa": "peleó contra Abimelech y huyó delante de él",
+    "why": ""
+   },
+   {
+    "ukr": "був вигнаний Зевулом із Сихема разом зі своїми братами",
+    "deu": "wurde von Sebul aus Sichem verjagt, samt seinen Brüdern",
+    "spa": "fue echado fuera de Sichêm por Zebul, junto con sus hermanos",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

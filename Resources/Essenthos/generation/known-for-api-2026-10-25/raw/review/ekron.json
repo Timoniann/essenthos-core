@@ -1,0 +1,25 @@
+{
+ "slug": "ekron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.061380+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди филистимляни вислали Божого ковчега і де в усьому місті було смертельне замішання",
+    "deu": "war der Ort, wohin die Philister die Lade Gottes sandten und wo in der ganzen Stadt Schrecken mit Würgen herrschte",
+    "spa": "fue el lugar adonde los filisteos enviaron el arca de Dios y donde hubo quebrantamiento de muerte en toda la ciudad",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де цар Ахазія послав запитати екронського бога Ваал-Зевува, за що Господь засудив його на смерть",
+    "deu": "war der Ort, dessen Gott Baal-Sebub König Ahasja befragen ließ, wofür der HERR ihn zum Tod verurteilte",
+    "spa": "fue el lugar cuyo dios Baal-zebub el rey Ochôzías envió a consultar, por lo cual el SEÑOR lo condenó a morir",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

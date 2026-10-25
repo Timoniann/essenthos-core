@@ -1,0 +1,40 @@
+{
+ "slug": "abner",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.194569+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Abner setting up Ishbosheth, killing Asahel, and turning to David, which goes beyond the summary.",
+  "clauses": [
+   {
+    "english": "took Ishbosheth to Mahanaim and made him king over Israel",
+    "references": [
+     "2SA 2:8-9"
+    ],
+    "quote": "took Ishbosheth the son of Saul, and brought him over to Mahanaim"
+   },
+   {
+    "english": "killed Asahel with his spear when Asahel would not stop pursuing him",
+    "references": [
+     "2SA 2:19-23"
+    ],
+    "quote": "Abner with the hinder end of the spear smote him under the fifth rib"
+   },
+   {
+    "english": "went to David at Hebron and promised to gather all Israel to him",
+    "references": [
+     "2SA 3:20-21"
+    ],
+    "quote": "I will arise and go, and will gather all Israel unto my lord the king"
+   }
+  ],
+  "doubts": [
+   "His death at Joab's hand (2SA 3:27) is left out because the summary already gives it.",
+   "1CH 27:21 names Jaasiel son of Abner, and 1CH 26:28 names an Abner who dedicated spoils. I left both out as lists that add no deed."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

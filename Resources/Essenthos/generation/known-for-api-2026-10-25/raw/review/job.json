@@ -1,0 +1,31 @@
+{
+ "slug": "job",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.411205+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "утратив за один день отари, худобу та дітей, і поклонився Господу",
+    "deu": "verlor an einem Tag seine Schafe, Rinder und Kinder und betete den HERRN an",
+    "spa": "perdió en un día sus ovejas, sus bueyes y sus hijos, y adoró al SEÑOR",
+    "why": ""
+   },
+   {
+    "ukr": "був уражений тяжкими гнійними виразками від голови до ніг",
+    "deu": "wurde mit schlimmen Geschwüren geschlagen, von Kopf bis Fuß",
+    "spa": "fue herido con llagas malignas de pies a cabeza",
+    "why": "Replaced the old wording (гнояк, Schwären, sarna) with modern words for boils/sores."
+   },
+   {
+    "ukr": "помолився за трьох своїх приятелів, і Господь помножив усе, що він мав, удвоє",
+    "deu": "betete für seine drei Freunde, und der HERR gab ihm doppelt so viel, wie er gehabt hatte",
+    "spa": "oró por sus tres amigos, y el SEÑOR aumentó al doble todas las cosas que habían sido suyas",
+    "why": "German: replaced 'bat für' with modern 'betete für' and 'als' with 'wie' after 'doppelt so viel'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

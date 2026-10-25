@@ -1,0 +1,25 @@
+{
+ "slug": "jael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.902895+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "запросила до свого намету Сісеру, що втікав, і накрила його",
+    "deu": "lud den fliehenden Sisera in ihr Zelt ein und deckte ihn zu",
+    "spa": "invitó a su tienda al fugitivo Sísara y lo cubrió",
+    "why": ""
+   },
+   {
+    "ukr": "всадила наметовий кілок у скроню Сісери, який спав, і він помер",
+    "deu": "schlug dem schlafenden Sisera einen Zeltnagel durch die Schläfe, und er starb",
+    "spa": "metió una estaca de la tienda por las sienes de Sísara, que dormía, y él murió",
+    "why": "Ukrainian: replaced the old-style accusative 'наметового кілка' with the modern 'наметовий кілок'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

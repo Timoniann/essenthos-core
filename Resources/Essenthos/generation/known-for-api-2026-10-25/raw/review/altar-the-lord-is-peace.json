@@ -1,0 +1,19 @@
+{
+ "slug": "altar-the-lord-is-peace",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.532456+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був збудований Гедеоном в Офрі для Господа і названий Єгова-Шалом",
+    "deu": "wurde von Gideon in Ophra dem HERRN gebaut und „Der HERR ist der Friede“ genannt",
+    "spa": "fue edificado por Gedeón para el SEÑOR en Ophra y llamado Jehová-salom",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

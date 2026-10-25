@@ -1,0 +1,25 @@
+{
+ "slug": "ashkelon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.345136+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був здобутий Юдою разом з його границею",
+    "deu": "wurde von Juda mit seinem Zugehör gewonnen",
+    "spa": "fue tomado por Judá con su término",
+    "why": "Changed the verb and possessive to agree with the masculine (Ukrainian, Spanish) and neuter (German) name of the place."
+   },
+   {
+    "ukr": "був місцем, де Самсон вбив тридцять чоловіків і забрав їхню здобич",
+    "deu": "war der Ort, wo Simson dreißig Mann erschlug und ihre Beute nahm",
+    "spa": "fue el lugar donde Samsón mató a treinta hombres y tomó sus despojos",
+    "why": "Fixed the gender of the verb, removed the added 'went/descended', rendered 'slew' as killed and 'spoil' as spoil, and modernised 'тридцять чоловіка'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

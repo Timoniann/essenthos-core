@@ -1,0 +1,25 @@
+{
+ "slug": "ar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.367873+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був даний Господом Лотовим синам на спадок",
+    "deu": "wurde vom HERRN den Kindern Lots zum Besitz gegeben",
+    "spa": "fue dada por el SEÑOR por heredad a los hijos de Lot",
+    "why": "German: replaced Luther's archaic 'den Kindern Lot zu besitzen' with modern 'den Kindern Lots zum Besitz'."
+   },
+   {
+    "ukr": "був уночі пограбований і понищений",
+    "deu": "wurde in der Nacht verwüstet und zum Schweigen gebracht",
+    "spa": "fue destruida de noche y puesta en silencio",
+    "why": "German: replaced the archaic 'verstört ... ging dahin' with modern 'verwüstet und zum Schweigen gebracht', which matches the English."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "achsah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.667663+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was offered by Caleb as wife to the man who took Kirjathsepher, and was given to Othniel",
+    "references": [
+     "JOS 15:16-17"
+    ],
+    "ukr": "була обіцяна Калевом за жінку тому, хто здобуде Кір'ят-Сефер, і була дана Отніїлу",
+    "deu": "wurde von Kaleb dem zur Frau versprochen, der Kirjath-Sepher gewinnen würde, und wurde Othniel gegeben",
+    "spa": "fue ofrecida por Caleb por mujer al que tomara Chîriath-sepher, y fue dada a Othoniel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "asked her father for springs of water and received the upper and nether springs",
+    "references": [
+     "JOS 15:18-19"
+    ],
+    "ukr": "попросила в батька водні джерела і отримала джерела горішні та долішні",
+    "deu": "bat ihren Vater um Wasserquellen und erhielt die Quellen von oben und unten",
+    "spa": "pidió a su padre fuentes de aguas y recibió las de arriba y las de abajo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

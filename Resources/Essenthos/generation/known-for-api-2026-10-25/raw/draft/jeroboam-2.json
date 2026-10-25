@@ -1,0 +1,41 @@
+{
+ "slug": "jeroboam-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.617751+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state what Jeroboam II did as king: he restored Israel's border and saved Israel, and he recovered Damascus and Hamath.",
+  "clauses": [
+   {
+    "english": "restored the coast of Israel from Hamath to the sea of the plain",
+    "references": [
+     "2KI 14:25"
+    ],
+    "quote": "He restored the coast of Israel from the entering of Hamath unto the sea of the plain"
+   },
+   {
+    "english": "saved Israel from affliction by the hand of the LORD",
+    "references": [
+     "2KI 14:26-27"
+    ],
+    "quote": "he saved them by the hand of Jeroboam the son of Joash"
+   },
+   {
+    "english": "recovered Damascus and Hamath for Israel",
+    "references": [
+     "2KI 14:28"
+    ],
+    "quote": "how he recovered Damascus, and Hamath, which belonged to Judah, for Israel"
+   }
+  ],
+  "doubts": [
+   "2KI 14:25 and 2KI 14:27 may describe the same deliverance as 2KI 14:28, so the second and third clauses could be merged.",
+   "1CH 5:17, HOS 1:1, AMO 1:1 only date other events by his reign, so they were left out.",
+   "AMO 7:9-11 give Amos's prophecy and Amaziah's accusation, not something Jeroboam did, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

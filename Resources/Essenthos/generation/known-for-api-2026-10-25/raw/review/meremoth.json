@@ -1,0 +1,25 @@
+{
+ "slug": "meremoth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.425710+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був тим, на чию руку відважили срібло, золото та посуд у домі Бога",
+    "deu": "war der, unter dessen Hand Silber, Gold und Gefäße im Haus Gottes gewogen wurden",
+    "spa": "fue aquel por cuya mano fueron pesados la plata, el oro y los vasos en la casa de Dios",
+    "why": ""
+   },
+   {
+    "ukr": "відновив дві ділянки муру",
+    "deu": "reparierte zwei Abschnitte der Mauer",
+    "spa": "restauró dos tramos del muro",
+    "why": "Ukrainian: replaced the archaic «направляв» with modern «відновив»; German: replaced «baute» with «reparierte» to match 'repaired'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

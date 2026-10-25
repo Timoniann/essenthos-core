@@ -1,0 +1,19 @@
+{
+ "slug": "altar-the-lord-is-my-banner",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.612798+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був збудований Мойсеєм і названий Єгова-Ніссі",
+    "deu": "wurde von Mose gebaut und »Der HERR ist mein Panier« genannt",
+    "spa": "fue edificado por Moisés y llamado Jehová-nissi",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

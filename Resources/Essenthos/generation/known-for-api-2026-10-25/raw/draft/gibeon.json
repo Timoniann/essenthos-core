@@ -1,0 +1,41 @@
+{
+ "slug": "gibeon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.874891+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of events at Gibeon: its league with Joshua, its siege and relief, and the LORD's appearing to Solomon there.",
+  "clauses": [
+   {
+    "english": "won a league with Joshua by posing as ambassadors",
+    "references": [
+     "JOS 9:3-5",
+     "JOS 9:15"
+    ],
+    "quote": "And Joshua made peace with them, and made a league with them"
+   },
+   {
+    "english": "was besieged by five Amorite kings and saved by Joshua",
+    "references": [
+     "JOS 10:5-7",
+     "JOS 10:10"
+    ],
+    "quote": "encamped before Gibeon, and made war against it"
+   },
+   {
+    "english": "was where the LORD appeared to Solomon in a dream",
+    "references": [
+     "1KI 3:5"
+    ],
+    "quote": "In Gibeon the LORD appeared to Solomon in a dream by night"
+   }
+  ],
+  "doubts": [
+   "The sun standing still upon Gibeon (JOS 10:12-13) was left out as part of the same battle story as the relief of the city."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

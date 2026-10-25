@@ -1,0 +1,49 @@
+{
+ "slug": "gibeon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.107817+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "won a league with Joshua by posing as ambassadors",
+    "references": [
+     "JOS 9:3-5",
+     "JOS 9:15"
+    ],
+    "ukr": "уклав з Ісусом умову, видавши себе за послів",
+    "deu": "schloss mit Josua einen Bund, indem er sich als Gesandte ausgab",
+    "spa": "obtuvo alianza con Josué fingiéndose embajadores"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say the kings encamped against and fought Gibeon and that the LORD routed them; they do not say Joshua saved it.",
+    "english": "was attacked by five Amorite kings, whom the LORD routed there",
+    "references": [
+     "JOS 10:5",
+     "JOS 10:10"
+    ],
+    "ukr": "зазнав нападу п'яти аморейських царів, яких Господь розбив там",
+    "deu": "wurde von fünf Königen der Amoriter angegriffen, die der HERR dort in Schrecken versetzte",
+    "spa": "fue atacado por cinco reyes de los amorreos, a los que el SEÑOR turbó allí"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the LORD appeared to Solomon in a dream",
+    "references": [
+     "1KI 3:5"
+    ],
+    "ukr": "був місцем, де Господь з'явився Соломонові в нічному сні",
+    "deu": "war der Ort, an dem der HERR Salomo im Traum erschien",
+    "spa": "fue donde el SEÑOR se apareció a Salomón en sueños"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

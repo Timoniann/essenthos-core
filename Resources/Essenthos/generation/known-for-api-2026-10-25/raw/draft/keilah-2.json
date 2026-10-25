@@ -1,0 +1,32 @@
+{
+ "slug": "keilah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.250549+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The Keilah story in 1 Samuel 23 tells what happened there: David delivered the town from the Philistines and then left it when the LORD said its men would give him up.",
+  "clauses": [
+   {
+    "english": "was saved from the Philistines by David, who smote them with a great slaughter",
+    "references": [
+     "1SA 23:1-5"
+    ],
+    "quote": "So David saved the inhabitants of Keilah."
+   },
+   {
+    "english": "was where David learned its men would deliver him up to Saul, and he departed",
+    "references": [
+     "1SA 23:12-13"
+    ],
+    "quote": "They will deliver thee up."
+   }
+  ],
+  "doubts": [
+   "JOS 15:44, 1CH 4:19 and NEH 3:17-18 only list the place or its rulers, or name a man called the father of Keilah, so they were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

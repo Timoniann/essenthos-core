@@ -1,0 +1,36 @@
+{
+ "slug": "habakkuk",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.082909+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "cried to the LORD against the violence and wrong he saw",
+    "references": [
+     "HAB 1:2-HAB 1:4"
+    ],
+    "ukr": "кликав до Господа про насильство та неправість, які бачив",
+    "deu": "schrie zum HERRN über den Frevel und die Mühsal, die er sah",
+    "spa": "clamó al SEÑOR a causa de la violencia y la iniquidad que veía"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "prayed that the LORD would revive his work and remember mercy in wrath",
+    "references": [
+     "HAB 3:1-HAB 3:2"
+    ],
+    "ukr": "молився, щоб Господь оживив Своє діло та в гніві згадав про милість",
+    "deu": "betete, dass der HERR sein Werk lebendig mache und in Trübsal der Barmherzigkeit gedenke",
+    "spa": "oró para que el SEÑOR avivara su obra y en la ira se acordara de la misericordia"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,41 @@
+{
+ "slug": "hannah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:54:31.950798+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Hannah's prayer and vow for a son and of her bringing Samuel to the LORD, which go beyond the summary.",
+  "clauses": [
+   {
+    "english": "prayed and vowed to give a son to the LORD, and Eli thought she was drunken",
+    "references": [
+     "1SA 1:10-15"
+    ],
+    "quote": "I have drunk neither wine nor strong drink, but have poured out my soul before the LORD."
+   },
+   {
+    "english": "bore Samuel and brought him to the house of the LORD in Shiloh when he was weaned",
+    "references": [
+     "1SA 1:20",
+     "1SA 1:24"
+    ],
+    "quote": "brought him unto the house of the LORD in Shiloh"
+   },
+   {
+    "english": "was visited by the LORD and bore three more sons and two daughters",
+    "references": [
+     "1SA 2:21"
+    ],
+    "quote": "bare three sons and two daughters"
+   }
+  ],
+  "doubts": [
+   "Clause 1 joins the prayer with Eli's mistake; the second part may be trimmed as a minor detail.",
+   "The 'Hannah prayed' song of 1SA 2:1 was left out as praise rather than an event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

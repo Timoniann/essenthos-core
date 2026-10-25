@@ -1,0 +1,25 @@
+{
+ "slug": "crete",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.456303+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Тита полишили, щоб він впорядкував недокінчене та настановив пресвітерів по містах",
+    "deu": "war der Ort, an dem Titus zurückgelassen wurde, um zu vollenden, was fehlte, und die Städte mit Ältesten zu besetzen",
+    "spa": "fue el lugar donde se dejó a Tito para que corrigiese lo que faltaba y pusiese ancianos por las ciudades",
+    "why": "Spanish: replaced the old-fashioned «villas» with modern «ciudades»."
+   },
+   {
+    "ukr": "був обпливений кораблем зблизька, перш ніж ударив бурхливий вітер",
+    "deu": "wurde von einem Schiff dicht umsegelt, ehe ein stürmischer Wind aufkam",
+    "spa": "fue costeada de cerca por una nave antes de que se levantara un viento tempestuoso",
+    "why": "Ukrainian: replaced the archaic «рвачкий» with «бурхливий»; German: replaced the archaic «Windsbraut» with «ein stürmischer Wind»; Spanish: replaced «repentino» with «tempestuoso» to match «tempestuous»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

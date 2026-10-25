@@ -1,0 +1,36 @@
+{
+ "slug": "libnah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:18.943286+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say the LORD delivered it into Israel's hand and it was smitten with the sword; 'taken by Joshua' is not stated.",
+    "english": "was delivered by the LORD with its king into Israel's hand and smitten with the sword",
+    "references": [
+     "JOS 10:29-30"
+    ],
+    "ukr": "була віддана Господом разом з її царем в Ізраїлеву руку і побита вістрям меча",
+    "deu": "wurde vom HERRN samt seinem König in die Hand Israels gegeben und mit der Schärfe des Schwerts geschlagen",
+    "spa": "fue entregada por el SEÑOR con su rey en manos de Israel y puesta a filo de espada"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "revolted from Judah at the time Edom revolted",
+    "references": [
+     "2KI 8:22"
+    ],
+    "ukr": "збунтувалася проти Юди того часу, коли збунтувався Едом",
+    "deu": "fiel von Juda ab zur selben Zeit, als Edom abtrünnig wurde",
+    "spa": "se rebeló contra Judá en el mismo tiempo en que Edom se sustrajo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

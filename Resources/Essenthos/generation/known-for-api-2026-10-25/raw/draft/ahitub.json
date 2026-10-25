@@ -1,0 +1,15 @@
+{
+ "slug": "ahitub",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.570742+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses name Ahitub only as a forebear in the lineage of Ahijah, Ahimelech and Abiathar, and say nothing he did or that happened to him.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,57 @@
+{
+ "slug": "jerusalem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:50:00.201337+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by Judah and set on fire",
+    "references": [
+     "JDG 1:8"
+    ],
+    "ukr": "Була здобута синами Юди та пущена з огнем",
+    "deu": "Wurde von den Kindern Juda gewonnen und angezündet",
+    "spa": "Fue tomada por los hijos de Judá y puesta a fuego"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Solomon built the house of the LORD",
+    "references": [
+     "2CH 3:1"
+    ],
+    "ukr": "Там Соломон почав будувати дім Господній",
+    "deu": "Hier fing Salomo an, das Haus des HERRN zu bauen",
+    "spa": "Allí Salomón comenzó a edificar la casa de Jehová"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says the LORD saved Hezekiah and its inhabitants, not the city itself; the clause also says Solomon 'built' though the verse only says he began.",
+    "english": "Its people were saved by the LORD from Sennacherib king of Assyria",
+    "references": [
+     "2CH 32:22"
+    ],
+    "ukr": "Її мешканців Господь спас від руки Санхеріва, царя асирійського",
+    "deu": "Ihre Einwohner rettete der HERR aus der Hand Sanheribs, des Königs von Assyrien",
+    "spa": "Sus moradores fueron salvados por Jehová de las manos de Sennachêrib rey de Asiria"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 9 says Nebuzaradan's burning covered the houses, and verse 10 says the Chaldean army broke the walls; the actor is the Babylonian forces, and the burning and walls are right but need verse 8 for the captain.",
+    "english": "Was burned and had its walls broken down by the Chaldean army",
+    "references": [
+     "2KI 25:9-10"
+    ],
+    "ukr": "Була спалена, а її мури порозбивало халдейське військо",
+    "deu": "Wurde verbrannt, und das Heer der Chaldäer zerbrach ihre Mauer",
+    "spa": "Fue quemada, y el ejército de los Caldeos derribó sus muros"
+   }
+  ],
+  "note": ""
+ },
+ "problems": []
+}

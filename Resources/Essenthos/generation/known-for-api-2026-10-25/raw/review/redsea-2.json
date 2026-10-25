@@ -1,0 +1,25 @@
+{
+ "slug": "redsea-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.367970+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було розтято на частини, і Ізраїль перейшов через нього, немов суходолом",
+    "deu": "wurde in zwei Teile geteilt, und Israel ging hindurch wie durch trockenes Land",
+    "spa": "fue dividido en partes, y Israel pasó por medio de él como por tierra seca",
+    "why": ""
+   },
+   {
+    "ukr": "було місцем, де були втоплені вибрані воєначальники фараона",
+    "deu": "war der Ort, an dem Pharaos auserwählte Hauptleute versanken",
+    "spa": "fue el lugar donde los escogidos príncipes de Faraón fueron hundidos",
+    "why": "Replaced the archaic «трійкові» with modern «воєначальники» and made the verb passive («були втоплені») to match 'were drowned'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

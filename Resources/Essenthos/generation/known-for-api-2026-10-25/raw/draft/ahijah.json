@@ -1,0 +1,66 @@
+{
+ "slug": "ahijah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "ask",
+ "at": "2026-10-25T16:18:55.532865+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state two distinct deeds of Ahijah: the torn garment promising Jeroboam ten tribes, and the LORD's word of judgment sent to Jeroboam.",
+  "clauses": [
+   {
+    "english": "tore a new garment in twelve pieces and promised Jeroboam ten tribes",
+    "references": [
+     "1KI 11:29-31"
+    ],
+    "quote": "Take thee ten pieces: for thus saith the LORD, the God of Israel"
+   },
+   {
+    "english": "sent the LORD's word of judgment to Jeroboam for making other gods",
+    "references": [
+     "1KI 14:6-9"
+    ],
+    "quote": "for thou hast gone and made thee other gods, and molten images"
+   }
+  ],
+  "doubts": [
+   "1KI 14:10 is not among the verses given, so the foretold ruin of Jeroboam's house is not stated as a clause.",
+   "NEH 11:5 (Shiloni) names another family and was left out; 2CH 9:29, 1KI 12:15, 1KI 14:18 and 1KI 15:29 only mention or report fulfilment of his words and were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": [
+  {
+   "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+   "at": "2026-10-25T16:18:29.677546+00:00",
+   "answer": {
+    "decision": "write",
+    "reason": "The verses state two distinct deeds of Ahijah the prophet of Shiloh: the torn garment foretelling the kingdom's division, and the message of doom given to Jeroboam's wife.",
+    "clauses": [
+     {
+      "english": "tore a new garment in twelve pieces and promised Jeroboam ten tribes",
+      "references": [
+       "1KI 11:29-31"
+      ],
+      "quote": "Take thee ten pieces: for thus saith the LORD, the God of Israel"
+     },
+     {
+      "english": "foretold the ruin of Jeroboam's house to his wife, who came in disguise about her sick son",
+      "references": [
+       "1KI 14:4-6",
+       "1KI 14:10"
+      ],
+      "quote": "why feignest thou thyself to be another? for I am sent to thee with heavy tidings."
+     }
+    ],
+    "doubts": [
+     "1KI 14:10 is not among the verses given (elided), so it is cited only from the dataset's text; the clause may rest on 14:6 alone.",
+     "NEH 11:5 (Shiloni) and 2CH 9:29 concern other people or only mention his prophecy; 1KI 14:18 and 15:29 only report fulfilment and were not used as separate clauses."
+    ]
+   },
+   "problems": [
+    "clause 2: 1KI 14:10 cites verses that were not shown"
+   ]
+  }
+ ]
+}

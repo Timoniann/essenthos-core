@@ -1,0 +1,36 @@
+{
+ "slug": "azekah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.245507+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says the stones fell on them as far as Azekah, and the Amorites are named in the next verse.",
+    "english": "was as far as the LORD cast great stones from heaven on the fleeing Amorites, and they died",
+    "references": [
+     "JOS 10:11-12"
+    ],
+    "ukr": "була місцем, аж до якого Господь кидав із неба велике каміння на втікаючих амореян, і вони вмирали",
+    "deu": "war der Ort, bis zu dem der HERR einen großen Hagel vom Himmel auf die fliehenden Amoriter fallen ließ, so daß sie starben",
+    "spa": "fue el lugar hasta donde el SEÑOR echó del cielo grandes piedras sobre los Amorrheos que huían, y murieron"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says only that these defenced cities remained and the army fought against them, not that they were the last to be fought against.",
+    "english": "was one of the last defenced cities of Judah, fought against by the king of Babylon's army",
+    "references": [
+     "JER 34:7"
+    ],
+    "ukr": "була одним із останніх твердинних міст Юдиних, проти яких воювало військо вавилонського царя",
+    "deu": "war eine der letzten festen Städte Juda's, wider die das Heer des Königs zu Babel stritt",
+    "spa": "fue una de las últimas ciudades fuertes de Judá, contra las que peleó el ejército del rey de Babilonia"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

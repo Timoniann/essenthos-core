@@ -1,0 +1,31 @@
+{
+ "slug": "johanan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.500285+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "попередив Ґедалію про намір Ізмаїла вбити його",
+    "deu": "warnte Gedalja vor dem Plan Ismaels, ihn zu erschlagen",
+    "spa": "advirtió a Gedalías del plan de Ismael de matarlo",
+    "why": ""
+   },
+   {
+    "ukr": "пішов воювати з Ізмаїлом і повернув народ, який той взяв у полон з Міцпи",
+    "deu": "zog hin, um gegen Ismael zu kämpfen, und brachte das Volk zurück, das er aus Mizpa weggeführt hatte",
+    "spa": "fue a pelear con Ismael y recobró al pueblo que este había traído cautivo de Mizpa",
+    "why": "German: replaced the archaic «wider… streiten» and «wieder» with modern «gegen… kämpfen» and «zurück»; Spanish: «éste» written without the accent."
+   },
+   {
+    "ukr": "не послухався Господнього голосу і взяв Юдину решту до єгипетського краю",
+    "deu": "gehorchte der Stimme des HERRN nicht und nahm die Übrigen aus Juda mit nach Ägyptenland",
+    "spa": "no obedeció la voz del SEÑOR y llevó al resto de Judá a tierra de Egipto",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,37 @@
+{
+ "slug": "veil-of-the-sanctuary",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.236455+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was made of blue, purple, scarlet and fine linen, with cherubims worked into it",
+    "references": [
+     "EXO 36:35"
+    ],
+    "ukr": "була зроблена з блакиті, пурпуру, червені та суканого віссону, з херувимами",
+    "deu": "wurde aus blauem und rotem Purpur, Scharlach und gezwirnter weißer Leinwand gemacht, mit Cherubim daran",
+    "spa": "fue hecho de cárdeno, púrpura, carmesí y lino torcido, con querubines"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say the veil was set up in the tabernacle and would divide the places; it is Moses who covered the ark, not the veil.",
+    "english": "was set up in the tabernacle to divide the holy place from the most holy",
+    "references": [
+     "EXO 26:33",
+     "EXO 40:21"
+    ],
+    "ukr": "була повішена в скинії, щоб відділяти святиню від Святого Святих",
+    "deu": "wurde in der Wohnung aufgehängt, um das Heilige vom Allerheiligsten zu scheiden",
+    "spa": "fue puesto en el tabernáculo para separar el lugar santo del santísimo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

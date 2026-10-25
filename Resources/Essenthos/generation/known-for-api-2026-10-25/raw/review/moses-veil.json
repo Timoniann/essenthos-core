@@ -1,0 +1,25 @@
+{
+ "slug": "moses-veil",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.157115+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було покладене на лице Мойсея, коли він скінчив говорити з Ізраїлевими синами",
+    "deu": "wurde auf das Angesicht Moses gelegt, als er mit den Kindern Israel zu Ende geredet hatte",
+    "spa": "fue puesto sobre el rostro de Moisés cuando acabó de hablar con los hijos de Israel",
+    "why": ""
+   },
+   {
+    "ukr": "знімалося щоразу, коли Мойсей входив перед лице Господнє на розмову з Ним",
+    "deu": "wurde abgenommen, wenn Mose hineinging vor den HERRN, mit ihm zu reden",
+    "spa": "era quitado cada vez que Moisés venía delante del SEÑOR para hablar con él",
+    "why": "German: replaced the archaic «abgetan» with modern «abgenommen»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

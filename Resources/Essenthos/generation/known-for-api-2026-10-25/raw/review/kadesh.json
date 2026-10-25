@@ -1,0 +1,31 @@
+{
+ "slug": "kadesh",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.798453+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, куди розвідники повернулися з вістями про землю",
+    "deu": "war der Ort, wohin die Kundschafter mit Nachricht über das Land zurückkehrten",
+    "spa": "fue el lugar adonde los espías volvieron con noticias de la tierra",
+    "why": "Ukrainian verb now masculine «був», agreeing with Кадеш."
+   },
+   {
+    "ukr": "був місцем, де померла й була похована Маріям",
+    "deu": "war der Ort, wo Mirjam starb und begraben wurde",
+    "spa": "fue el lugar donde murió y fue sepultada María",
+    "why": "Ukrainian verb now masculine «був», agreeing with Кадеш."
+   },
+   {
+    "ukr": "був місцем, де Мойсей і Аарон були неслухняні Божому наказу біля води Меріви",
+    "deu": "war der Ort, wo Mose und Aaron dem Wort Gottes beim Haderwasser ungehorsam waren",
+    "spa": "fue el lugar donde Moisés y Aarón fueron rebeldes al mandato de Dios junto a las aguas de la rencilla",
+    "why": "Ukrainian verb now masculine «був»; Spanish archaic «dicho» replaced with modern «mandato»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "ittai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.455187+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "поклявся бути з Давидом, де б той не був, чи на смерть, чи на життя",
+    "deu": "schwor, bei David zu sein, wo immer er sein werde, zum Tod oder zum Leben",
+    "spa": "juró estar con David dondequiera que estuviera, para muerte o para vida",
+    "why": ""
+   },
+   {
+    "ukr": "дістав під начало третину народу, якого послав Давид",
+    "deu": "erhielt das Kommando über ein Drittel des Volkes, das David aussandte",
+    "spa": "recibió el mando de la tercera parte del pueblo que David envió",
+    "why": "Ukrainian: replaced the participle phrase with a relative clause so the sense is the same as the English, though it was fine; kept the verb-first form."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

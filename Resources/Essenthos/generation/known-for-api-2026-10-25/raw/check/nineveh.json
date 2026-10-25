@@ -1,0 +1,36 @@
+{
+ "slug": "nineveh",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.565686+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verse 5 says the people believed God, proclaimed a fast and put on sackcloth; 'repented' and 'at Jonah's preaching' are not stated there.",
+    "english": "believed God, proclaimed a fast and put on sackcloth",
+    "references": [
+     "JON 3:5"
+    ],
+    "ukr": "увірувала в Бога, оголосила піст і зодягла верети",
+    "deu": "glaubte an Gott, ließ zum Fasten aufrufen und zog Säcke an",
+    "spa": "creyó a Dios, pregonó ayuno y se vistió de sacos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was foretold to be made a desolation, dry like a wilderness",
+    "references": [
+     "ZEP 2:13"
+    ],
+    "ukr": "було провіщено, що стане спустошенням і суходолом, мов пустеля",
+    "deu": "wurde vorausgesagt, dass sie öde und dürr wie eine Wüste gemacht wird",
+    "spa": "fue predicho que sería puesta en asolamiento y en secadal como un desierto"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

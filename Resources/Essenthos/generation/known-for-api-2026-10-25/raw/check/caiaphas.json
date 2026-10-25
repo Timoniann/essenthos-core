@@ -1,0 +1,37 @@
+{
+ "slug": "caiaphas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.066722+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "\"The council\" is named in JHN 11:47, just outside the citation, so that verse is added.",
+    "english": "advised the council that one man should die for the people",
+    "references": [
+     "JHN 11:47-50",
+     "JHN 18:14"
+    ],
+    "ukr": "порадив раді, що краще, щоб один чоловік помер за народ",
+    "deu": "riet dem Rat, es sei besser, daß ein Mensch für das Volk sterbe",
+    "spa": "aconsejó al concilio que un hombre muriese por el pueblo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say Jesus was sent or led to Caiaphas, not that he received him; the scribes and elders detail is dropped, and the clause is rebuilt on JHN 18:24.",
+    "english": "was sent Jesus bound by Annas",
+    "references": [
+     "JHN 18:24"
+    ],
+    "ukr": "одержав від Анни зв'язаного Ісуса",
+    "deu": "bekam von Hannas Jesus gebunden gesandt",
+    "spa": "recibió de Anás a Jesús atado"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

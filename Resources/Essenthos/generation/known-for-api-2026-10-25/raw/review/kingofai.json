@@ -1,0 +1,31 @@
+{
+ "slug": "kingofai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.114964+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "вийшов на бій проти Ізраїля з усім своїм народом",
+    "deu": "zog mit seinem ganzen Volk zum Kampf gegen Israel aus",
+    "spa": "salió con todo su pueblo a combatir contra Israel",
+    "why": "Ukrainian: replaced the dated 'навперейми' with 'проти' to match 'against'. German: replaced the old-fashioned 'mit allem seinem Volk … im Streit zu begegnen' with modern wording."
+   },
+   {
+    "ukr": "був схоплений живим і приведений до Ісуса",
+    "deu": "wurde lebendig gefangen genommen und zu Josua gebracht",
+    "spa": "fue tomado vivo y llevado a Josué",
+    "why": "German: replaced the archaic 'gegriffen' with 'gefangen genommen'."
+   },
+   {
+    "ukr": "був повішений на дереві, а над його тілом біля брами міста накидали велику купу каміння",
+    "deu": "wurde an einen Baum gehängt, und über seinem Leichnam am Stadttor wurde ein großer Steinhaufen aufgeschüttet",
+    "spa": "fue colgado de un madero, y sobre su cuerpo a la puerta de la ciudad levantaron un gran montón de piedras",
+    "why": "German: made the second part passive like the English ('was raised') and modernised the wording."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,17 @@
+{
+ "slug": "zibeon-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.850528+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Zibeon in genealogies and lists of Horite sons and dukes, saying nothing of his own deeds beyond what the summary already gives.",
+  "clauses": [],
+  "doubts": [
+   "GEN 36:2 and GEN 36:14 name a Zibeon the Hivite, grandfather of Aholibamah, which may be the same man or a namesake; neither verse states a deed."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

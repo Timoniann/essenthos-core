@@ -1,0 +1,33 @@
+{
+ "slug": "media",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.047122+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Two events of the story belong to Media: Israel's exiles were settled in its cities, and the LORD raised up its kings against Babylon.",
+  "clauses": [
+   {
+    "english": "received the exiles of Israel in its cities after Samaria fell",
+    "references": [
+     "2KI 17:6"
+    ],
+    "quote": "and in the cities of the Medes"
+   },
+   {
+    "english": "had the spirit of its kings raised up by the LORD to destroy Babylon",
+    "references": [
+     "JER 51:11"
+    ],
+    "quote": "the LORD hath raised up the spirit of the kings of the Medes"
+   }
+  ],
+  "doubts": [
+   "ISA 21:2 (\"besiege, O Media\") is a call in a vision, not a recorded event, so it is left out.",
+   "EZR 6:2, where a roll was found in the province of the Medes, only names the place, so it is left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

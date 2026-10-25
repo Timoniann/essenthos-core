@@ -1,0 +1,25 @@
+{
+ "slug": "chinnereth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.322820+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Most verses only give boundaries or list a fenced city, but one verse tells of the place being struck by Benhadad's army.",
+  "clauses": [
+   {
+    "english": "was struck by Benhadad's captains, together with all the land of Naphtali",
+    "references": [
+     "1KI 15:20"
+    ],
+    "quote": "smote Ijon, and Dan, and Abelbethmaachah, and all Cinneroth"
+   }
+  ],
+  "doubts": [
+   "Cinneroth in 1KI 15:20 is taken to be the same place as Chinnereth; it may refer to the region around the sea rather than the settlement."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

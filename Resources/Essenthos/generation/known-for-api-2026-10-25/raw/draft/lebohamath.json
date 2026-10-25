@@ -1,0 +1,17 @@
+{
+ "slug": "lebohamath",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.877894+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only use the entrance of Hamath as a boundary marker for the land of Israel, and nothing happens at or to the place itself.",
+  "clauses": [],
+  "doubts": [
+   "Some verses may use the Hebrew phrase differently, but all of them give only a border point, not an event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

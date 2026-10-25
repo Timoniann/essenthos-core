@@ -1,0 +1,19 @@
+{
+ "slug": "elzaphan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.859132+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "виніс поза табір, як сказав Мойсей, тих, кого пожер вогонь від Господа",
+    "deu": "trug vor das Lager hinaus, wie Mose gesagt hatte, die das Feuer des HERRN verzehrt hatte",
+    "spa": "sacó fuera del campo, como dijo Moisés, a los que el fuego del SEÑOR había consumido",
+    "why": "Ukrainian: «наказав» (commanded) changed to «сказав» (said) to match the English."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

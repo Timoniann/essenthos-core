@@ -1,0 +1,31 @@
+{
+ "slug": "eli",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.765577+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "сказав Анні йти з миром і молився, щоб Бог виконав її прохання",
+    "deu": "sagte Hanna, sie solle in Frieden hingehen, und betete, dass Gott ihr ihre Bitte gewähren möge",
+    "spa": "dijo a Ana que fuera en paz y oró para que Dios le otorgara su petición",
+    "why": "Removed the added «of Israel», changed «wished» to «prayed», and modernised the petition wording and word order."
+   },
+   {
+    "ukr": "мав зазнати, що Господь судитиме його дім навіки, бо він не спиняв своїх синів",
+    "deu": "sollte erleben, dass der HERR sein Haus ewig richtet, weil er seinen Söhnen nicht wehrte",
+    "spa": "debía ver su casa juzgada por el SEÑOR para siempre, porque no estorbó a sus hijos",
+    "why": "Spanish «vio que» (saw) did not match the English «was to have his house judged»; reworded."
+   },
+   {
+    "ukr": "впав зі стільця навзнак і помер, коли почув, що ковчег Божий забрано",
+    "deu": "fiel rücklings vom Stuhl und starb, als er hörte, dass die Lade Gottes genommen war",
+    "spa": "cayó hacia atrás de la silla y murió al oír que el arca de Dios había sido tomada",
+    "why": "Ukrainian: modern «зі» and «забрано» instead of the old «зо» and «узятий»; Spanish: «había sido tomada» instead of the odd imperfect «era tomada»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

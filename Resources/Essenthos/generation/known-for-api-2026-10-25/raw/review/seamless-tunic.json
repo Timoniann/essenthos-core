@@ -1,0 +1,19 @@
+{
+ "slug": "seamless-tunic",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.163293+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "не був роздертий, а був розіграний за жеребом вояками, що розп'яли Ісуса",
+    "deu": "wurde nicht zerteilt, sondern von den Soldaten, die Jesus gekreuzigt hatten, verlost",
+    "spa": "no fue partida, sino sorteada por los soldados que crucificaron a Jesús",
+    "why": "Made the tunic the subject again with passive verbs, as in the English; in Ukrainian the verb is now masculine, and in German the archaic 'Kriegsknechte' became 'Soldaten'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

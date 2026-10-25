@@ -1,0 +1,36 @@
+{
+ "slug": "mountgerizim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.031674+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say 'after entering the land', and they say half stood over against Gerizim, not on it.",
+    "english": "had half of Israel standing opposite it, to bless the people of Israel",
+    "references": [
+     "JOS 8:33"
+    ],
+    "ukr": "мала навпроти себе половину Ізраїлю, що стояла, щоб благословляти Ізраїлів народ",
+    "deu": "hatte die Hälfte Israels neben sich stehen, um das Volk Israel zu segnen",
+    "spa": "tuvo a la mitad de Israel de pie frente a él, para que bendijesen al pueblo de Israel"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jotham stood and cried out to the men of Shechem",
+    "references": [
+     "JDG 9:7"
+    ],
+    "ukr": "була місцем, де Йотам став і закликав сихемських господарів",
+    "deu": "war der Ort, wo Jotham auftrat und den Männern zu Sichem zurief",
+    "spa": "fue el lugar donde Jotham se puso y clamó a los varones de Sichêm"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

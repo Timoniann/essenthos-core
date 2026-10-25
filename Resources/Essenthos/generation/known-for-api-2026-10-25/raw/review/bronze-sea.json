@@ -1,0 +1,31 @@
+{
+ "slug": "bronze-sea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.594526+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було відлите круглим, десять ліктів від краю до краю, і стояло на дванадцятьох волах",
+    "deu": "wurde gegossen, rundum zehn Ellen weit, und stand auf zwölf Rindern",
+    "spa": "fue fundido, perfectamente redondo, de diez codos de un lado al otro, y estaba asentado sobre doce bueyes",
+    "why": ""
+   },
+   {
+    "ukr": "було зняте царем Ахазом з мідяних волів і поставлене на камінну підлогу",
+    "deu": "wurde vom König Ahas von den Ehernen Ochsen genommen und auf steinernes Pflaster gesetzt",
+    "spa": "fue quitado por el rey Achâz de sobre los bueyes de bronce y puesto sobre el solado de piedra",
+    "why": ""
+   },
+   {
+    "ukr": "було поламане халдеями, а його мідь віднесена до Вавилону",
+    "deu": "wurde von den Chaldäern zerbrochen, und sein Erz wurde nach Babel geführt",
+    "spa": "fue quebrado por los Caldeos, y su metal llevado a Babilonia",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

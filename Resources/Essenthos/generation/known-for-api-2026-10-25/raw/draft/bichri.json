@@ -1,0 +1,15 @@
+{
+ "slug": "bichri",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.424911+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "Bichri appears in these verses only as the father named in 'Sheba the son of Bichri', so the verses say nothing of him beyond the summary's 'father of Sheba'.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

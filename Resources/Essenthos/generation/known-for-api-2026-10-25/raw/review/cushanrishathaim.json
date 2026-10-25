@@ -1,0 +1,25 @@
+{
+ "slug": "cushanrishathaim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:11.995612+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "тримав Ізраїля в неволі вісім років, після того як Господь продав їх у його руку",
+    "deu": "hielt Israel acht Jahre in Knechtschaft, nachdem der HERR sie unter seine Hand verkauft hatte",
+    "spa": "tuvo a Israel en servidumbre ocho años, habiéndolos vendido el SEÑOR en su mano",
+    "why": "Ukrainian: «передав» changed to «продав» (sold), «літ» to modern «років», and «підданстві» (citizenship) to «в неволі» (servitude)."
+   },
+   {
+    "ukr": "був виданий Господом у руку Отніїла й переможений",
+    "deu": "wurde vom HERRN in die Hand Athniels gegeben und besiegt",
+    "spa": "fue entregado por el SEÑOR en la mano de Othoniel y vencido",
+    "why": "German: Othniels changed to Athniels, the spelling of Luther 1912."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

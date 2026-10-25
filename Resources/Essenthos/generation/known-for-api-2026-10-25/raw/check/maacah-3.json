@@ -1,0 +1,37 @@
+{
+ "slug": "maacah-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.730603+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was loved by Rehoboam above all his wives and concubines",
+    "references": [
+     "2CH 11:21"
+    ],
+    "ukr": "була покохана Рехав'амом над усіх його жінок та наложниць",
+    "deu": "wurde von Rehabeam mehr geliebt als alle seine Weiber und Kebsweiber",
+    "spa": "fue amada por Roboam sobre todas sus mujeres y concubinas"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was removed from being queen by Asa for making an idol in a grove",
+    "references": [
+     "1KI 15:13",
+     "2CH 15:16"
+    ],
+    "ukr": "була позбавлена Асою права бути царицею за те, що зробила ідола",
+    "deu": "wurde von Asa abgesetzt, weil sie ein Greuelbild gemacht hatte",
+    "spa": "fue privada por Asa de ser princesa porque había hecho un ídolo en un bosque"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

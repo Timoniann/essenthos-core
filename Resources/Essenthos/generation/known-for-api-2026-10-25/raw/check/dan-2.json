@@ -1,0 +1,36 @@
+{
+ "slug": "dan-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.075838+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say the Danites smote the people, burnt the city, built and settled it and named it Dan, not that it was taken.",
+    "english": "was burnt as Laish by the Danites, who settled there and called it Dan",
+    "references": [
+     "JDG 18:27-29"
+    ],
+    "ukr": "був спалений як Лаїш Дановими синами, які оселилися в ньому й назвали його Дан",
+    "deu": "wurde als Lais von den Kindern Dan verbrannt, die darin wohnten und es Dan nannten",
+    "spa": "fue quemado como Lais por los hijos de Dan, que habitaron en él y lo llamaron Dan"
+   },
+   {
+    "verdict": "fix",
+    "why": "Jeroboam is named only in 1KI 12:26, just outside the citation, so it should be widened.",
+    "english": "was where Jeroboam set up a golden calf for the people to worship",
+    "references": [
+     "1KI 12:26-30"
+    ],
+    "ukr": "був місцем, де Єровоам поставив золотого тельця для поклоніння народу",
+    "deu": "war der Ort, an dem Jerobeam ein goldenes Kalb aufstellte, vor dem das Volk anbetete",
+    "spa": "fue el lugar donde Jeroboam puso un becerro de oro para que el pueblo lo adorara"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

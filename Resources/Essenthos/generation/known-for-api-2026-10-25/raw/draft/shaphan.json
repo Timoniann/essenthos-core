@@ -1,0 +1,34 @@
+{
+ "slug": "shaphan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.467855+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Shaphan receiving the found book of the law, reading it before the king, and going with the delegation to Huldah.",
+  "clauses": [
+   {
+    "english": "received the found book of the law from Hilkiah and read it before the king",
+    "references": [
+     "2KI 22:8",
+     "2KI 22:10"
+    ],
+    "quote": "Hilkiah the priest hath delivered me a book. And Shaphan read it before the king."
+   },
+   {
+    "english": "was sent by the king with others to enquire of the LORD through Huldah the prophetess",
+    "references": [
+     "2KI 22:12-14"
+    ],
+    "quote": "went unto Huldah the prophetess"
+   }
+  ],
+  "doubts": [
+   "JER 26:24, JER 29:3, JER 36:10-12 and the Gedaliah verses name Shaphan only as father or grandfather of others, so they were not used; the Gemariah of JER 36 is his son, not Shaphan himself.",
+   "2KI 22:3 and 2CH 34:8 (his being sent to repair the temple) were left out as that mission is partly covered by the summary's description as scribe."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

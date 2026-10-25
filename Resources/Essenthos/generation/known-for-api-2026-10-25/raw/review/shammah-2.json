@@ -1,0 +1,25 @@
+{
+ "slug": "shammah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.384549+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був приведений перед Самуїлом і не був вибраний Господом",
+    "deu": "wurde an Samuel vorübergeführt und wurde vom HERRN nicht erwählt",
+    "spa": "fue hecho pasar delante de Samuel y no fue elegido por el SEÑOR",
+    "why": "Restored the passive form of the second verb so the record stays the subject, instead of the LORD; also fixed 'перед Самуїла' to 'перед Самуїлом'."
+   },
+   {
+    "ukr": "пішов за Саулом на війну разом зі своїми двома старшими братами",
+    "deu": "folgte Saul in die Schlacht, zusammen mit seinen zwei älteren Brüdern",
+    "spa": "fue a seguir a Saúl a la guerra con sus dos hermanos mayores",
+    "why": "German: replaced the old-fashioned 'zog mit Saul in den Streit' with the modern 'folgte Saul in die Schlacht'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

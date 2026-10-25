@@ -1,0 +1,25 @@
+{
+ "slug": "keilah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.651362+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була врятована Давидом від филистимлян, який завдав їм великої поразки",
+    "deu": "wurde von David vor den Philistern errettet, der unter ihnen ein großes Blutbad anrichtete",
+    "spa": "fue librada de los filisteos por David, que los hirió con gran estrago",
+    "why": "German: replaced Luther's archaic 'eine Schlacht an ihnen tat' with modern wording; Spanish: lower-cased 'filisteos' and modernized 'grande' to 'gran'."
+   },
+   {
+    "ukr": "була місцем, де Давид дізнався, що її громадяни видадуть його Саулові, і він вийшов із неї",
+    "deu": "war der Ort, wo David erfuhr, dass ihre Bürger ihn Saul ausliefern würden, und er zog von dort aus",
+    "spa": "fue el lugar donde David supo que sus vecinos lo entregarían a Saúl, y él salió de ella",
+    "why": "German: added the missing 'its' (ihre Bürger), replaced dated 'überantworten' with 'ausliefern', and put the word order into natural modern German."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "ashkelon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.188166+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Two events happened at or to the city in the verses (Judah's capture of it, and Samson's killing of thirty men there), while the prophecies of its ruin are not events.",
+  "clauses": [
+   {
+    "english": "was taken by Judah with its coast",
+    "references": [
+     "JDG 1:18"
+    ],
+    "quote": "Judah took Gaza with the coast thereof, and Askelon with the coast thereof"
+   },
+   {
+    "english": "was where Samson slew thirty men and took their spoil",
+    "references": [
+     "JDG 14:19"
+    ],
+    "quote": "he went down to Ashkelon, and slew thirty men of them"
+   }
+  ],
+  "doubts": [
+   "The prophecies of desolation (JER 47, ZEP 2, ZEC 9, AMO 1) foretell rather than report events, so none became a clause.",
+   "The golden emerod sent from Ashkelon (1SA 6:17) is a minor detail in a list, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

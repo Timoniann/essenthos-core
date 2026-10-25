@@ -1,0 +1,25 @@
+{
+ "slug": "sisera",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.066643+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був приведений Господом у замішання разом з усіма колесницями та всім табором перед Бараком",
+    "deu": "wurde vom HERRN samt allen seinen Wagen und seinem ganzen Heer vor Barak erschreckt",
+    "spa": "fue desbaratado por el SEÑOR con todos sus carros y todo su ejército delante de Barac",
+    "why": ""
+   },
+   {
+    "ukr": "втік до намету Яїли й був убитий наметовим кілком, вбитим йому в скроню",
+    "deu": "floh zur Hütte Jaels und wurde getötet, indem ihm ein Nagel von der Hütte durch die Schläfe geschlagen wurde",
+    "spa": "huyó a la tienda de Jael y fue muerto con una estaca de la tienda metida por sus sienes",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

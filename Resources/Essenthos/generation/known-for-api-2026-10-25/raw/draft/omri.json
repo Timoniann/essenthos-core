@@ -1,0 +1,41 @@
+{
+ "slug": "omri",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.480342+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Omri's being made king by the army, his overcoming Tibni, and his founding of Samaria.",
+  "clauses": [
+   {
+    "english": "was made king by all Israel in the camp after Zimri slew the king",
+    "references": [
+     "1KI 16:16"
+    ],
+    "quote": "all Israel made Omri, the captain of the host, king over Israel that day in the camp"
+   },
+   {
+    "english": "prevailed over Tibni, who had half the people behind him, and reigned",
+    "references": [
+     "1KI 16:21-22"
+    ],
+    "quote": "the people that followed Omri prevailed against the people that followed Tibni"
+   },
+   {
+    "english": "bought the hill of Samaria and built the city there",
+    "references": [
+     "1KI 16:24"
+    ],
+    "quote": "he bought the hill Samaria of Shemer for two talents of silver"
+   }
+  ],
+  "doubts": [
+   "2KI 8:26 and 2CH 22:2 only name Omri as Athaliah's father, so they are left out.",
+   "MIC 6:16 mentions the statutes of Omri, which is not an event, so it is left out.",
+   "1KI 16:17 (the siege of Tirzah) is folded into the account of his becoming king rather than given its own clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

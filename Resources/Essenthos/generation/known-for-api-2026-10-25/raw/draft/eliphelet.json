@@ -1,0 +1,15 @@
+{
+ "slug": "eliphelet",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.116933+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Eliphelet among David's sons born in Jerusalem, which adds nothing to the summary that he was a son of David.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

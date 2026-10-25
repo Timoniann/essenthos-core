@@ -1,0 +1,33 @@
+{
+ "slug": "valleyofjezreel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.790030+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Two marked verses say something happened or was foretold in the valley beyond the summary: the enemy camp in Gideon's day and the LORD's word about breaking Israel's bow.",
+  "clauses": [
+   {
+    "english": "was where the Midianites and Amalekites pitched their camp against Israel",
+    "references": [
+     "JDG 6:33"
+    ],
+    "quote": "pitched in the valley of Jezreel"
+   },
+   {
+    "english": "was where the LORD said he would break the bow of Israel",
+    "references": [
+     "HOS 1:5"
+    ],
+    "quote": "I will break the bow of Israel, in the valley of Jezreel."
+   }
+  ],
+  "doubts": [
+   "JOS 17:16 only says Canaanites with iron chariots lived near it, which the summary already covers, so it is left out.",
+   "1SA 31:7 and 1CH 10:7 say only 'the valley' without naming Jezreel, so they are not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

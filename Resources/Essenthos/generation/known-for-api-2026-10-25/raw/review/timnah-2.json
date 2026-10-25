@@ -1,0 +1,25 @@
+{
+ "slug": "timnah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.134006+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Самсон побачив жінку з филистимських дочок",
+    "deu": "war der Ort, wo Simson eine Frau unter den Töchtern der Philister sah",
+    "spa": "fue donde Samsón vio una mujer de las hijas de los Filisteos",
+    "why": ""
+   },
+   {
+    "ukr": "була здобута филистимлянами, які осіли там",
+    "deu": "wurde von den Philistern eingenommen, die sich darin niederließen",
+    "spa": "fue tomada por los Filisteos, que habitaron en ella",
+    "why": "Changed the dated form «осілися» to the modern standard «осіли»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

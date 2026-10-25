@@ -1,0 +1,31 @@
+{
+ "slug": "herod-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.429231+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "стяв мечем Якова, брата Іванового",
+    "deu": "tötete Jakobus, den Bruder des Johannes, mit dem Schwert",
+    "spa": "mató con la espada a Jacobo, hermano de Juan",
+    "why": "Spanish: replaced the old phrase «a cuchillo» with the modern «con la espada»."
+   },
+   {
+    "ukr": "посадив Петра до в'язниці під охорону вояків",
+    "deu": "legte Petrus ins Gefängnis unter die Bewachung von Soldaten",
+    "spa": "puso a Pedro en la cárcel bajo la guardia de soldados",
+    "why": "German: replaced the old word «Kriegsknechten» with «Soldaten»."
+   },
+   {
+    "ukr": "був уражений ангелом Господа і помер, з'їдений черв'яками",
+    "deu": "wurde vom Engel des HERRN geschlagen und starb, von den Würmern gefressen",
+    "spa": "fue herido por el ángel del SEÑOR y murió devorado por gusanos",
+    "why": "Ukrainian: replaced the old «червою» with «черв'яками», lower-cased «ангелом» and used «Господа». Spanish: replaced the old «comido de gusanos» with «devorado por gusanos»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

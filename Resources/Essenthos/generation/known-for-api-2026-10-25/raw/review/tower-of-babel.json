@@ -1,0 +1,25 @@
+{
+ "slug": "tower-of-babel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.300766+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була збудована разом з містом людьми, які хотіли, щоб її вершина сягала неба, і створити собі ім'я",
+    "deu": "wurde mit der Stadt von Menschen gebaut, die wollten, dass ihre Spitze bis an den Himmel reiche, und sich einen Namen machen",
+    "spa": "fue edificada con la ciudad por hombres que querían que su cúspide llegara al cielo y hacerse un nombre",
+    "why": ""
+   },
+   {
+    "ukr": "була побачена Господом, який змішав мову її будівничих і розпорошив їх",
+    "deu": "wurde vom HERRN gesehen, der die Sprache der Erbauer verwirrte und sie zerstreute",
+    "spa": "fue vista por el SEÑOR, que confundió el lenguaje de los constructores y los esparció",
+    "why": "Ukrainian: replaced the wrong-sense «помішав» (stirred) with the standard «змішав» (confounded)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "tobiah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.043320+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "сказав, що коли вийде лисиця, то зруйнує кам'яну стіну юдеїв",
+    "deu": "sagte, wenn ein Fuchs hinaufginge, würde er die steinerne Mauer der Juden einreißen",
+    "spa": "dijo que si subiera una zorra, derribaría el muro de piedra de los judíos",
+    "why": "Ukrainian: modern «кам'яну» for «камінну». German: singular fox and modern subjunctive instead of Luther's archaic plural wording. Spanish: modern «subiera» and lowercase «judíos»."
+   },
+   {
+    "ukr": "підкупив лжепророка, щоб налякати Неемію, і посилав листи, щоб настрахати його",
+    "deu": "bestach einen falschen Propheten, um Nehemia zu erschrecken, und sandte Briefe, um ihn abzuschrecken",
+    "spa": "alquiló a un falso profeta para atemorizar a Nehemías, y envió cartas para atemorizarlo",
+    "why": ""
+   },
+   {
+    "ukr": "отримав велику комору на подвір'ях Божого дому, з якої Неемія повикидав його речі",
+    "deu": "bekam eine große Kammer in den Höfen des Hauses Gottes, aus der Nehemia seine Geräte hinauswarf",
+    "spa": "recibió una gran cámara en los patios de la casa de Dios, de la cual Nehemías echó sus enseres",
+    "why": "Ukrainian: «отримав» for colloquial «дістав». German: «in den Höfen des Hauses Gottes» (plural courts, modern wording). Spanish: «enseres» for archaic «alhajas»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

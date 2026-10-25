@@ -1,0 +1,40 @@
+{
+ "slug": "hiram",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.478838+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state several deeds of Hiram beyond his kingship and alliance: aiding David's house, supplying Solomon's temple timber, and sending ships and gold.",
+  "clauses": [
+   {
+    "english": "sent messengers, cedar trees, carpenters and masons to David to build him a house",
+    "references": [
+     "2SA 5:11"
+    ],
+    "quote": "Hiram king of Tyre sent messengers to David, and cedar trees, and carpenters, and masons"
+   },
+   {
+    "english": "gave Solomon cedar and fir trees for building the house of the LORD",
+    "references": [
+     "1KI 5:8-10"
+    ],
+    "quote": "So Hiram gave Solomon cedar trees and fir trees according to all his desire."
+   },
+   {
+    "english": "sent his shipmen with Solomon's servants to fetch gold from Ophir",
+    "references": [
+     "1KI 9:27-28"
+    ],
+    "quote": "And Hiram sent in the navy his servants, shipmen that had knowledge of the sea"
+   }
+  ],
+  "doubts": [
+   "Huram in 2 Chronicles is taken as the same king of Tyre; those verses were used only as support, not cited.",
+   "1KI 9:11-14 (the twenty cities) left out as a minor detail; 2CH 2:13 concerns a craftsman, not Hiram himself."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "teman-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.861666+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was threatened by the LORD with a fire sent upon it",
+    "references": [
+     "AMO 1:12"
+    ],
+    "ukr": "була під загрозою від Господа, що Він пошле на неї огонь",
+    "deu": "wurde vom HERRN mit einem Feuer bedroht, das er schicken wollte",
+    "spa": "fue amenazada por el SEÑOR con fuego que él metería en ella"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was the place God came from in Habakkuk's vision",
+    "references": [
+     "HAB 3:3"
+    ],
+    "ukr": "було місцем, звідки йде Бог, у видінні Авакума",
+    "deu": "war der Ort, von dem Gott kam, in Habakuks Vision",
+    "spa": "fue el lugar de donde vendrá Dios, en la visión de Habacuc"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,71 @@
+{
+ "slug": "nehushtan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "ask",
+ "at": "2026-10-25T16:32:51.472690+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was made by Moses and set on a pole, and those bitten who looked at it lived",
+    "references": [
+     "NUM 21:8-9"
+    ],
+    "ukr": "був зроблений Мойсеєм і виставлений на жердині, і покусані, що дивилися на нього, жили",
+    "deu": "wurde von Mose gemacht und zum Zeichen aufgerichtet, und wer gebissen war und sie ansah, blieb am Leben",
+    "spa": "fue hecha por Moisés y puesta sobre la bandera, y los mordidos que la miraban vivían"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was broken in pieces by Hezekiah after Israel had burned incense to it",
+    "references": [
+     "2KI 18:4"
+    ],
+    "ukr": "був розбитий Єзекією після того, як Ізраїлеві сини кадили йому",
+    "deu": "wurde von Hiskia zerstoßen, nachdem ihr die Kinder Israel geräuchert hatten",
+    "spa": "fue hecha pedazos por Ezequías, después de que los hijos de Israel le habían quemado perfumes"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": [
+  {
+   "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+   "at": "2026-10-25T16:31:19.019715+00:00",
+   "answer": {
+    "clauses": [
+     {
+      "verdict": "right",
+      "why": "",
+      "english": "was made by Moses and set on a pole, and those bitten who looked at it lived",
+      "references": [
+       "NUM 21:8-9"
+      ],
+      "ukr": "був зроблений Мойсеєм і виставлений на жердині, і покусані, що дивилися на нього, жили",
+      "deu": "wurde von Mose gemacht und zum Zeichen aufgerichtet, und wer gebissen war und sie ansah, blieb am Leben",
+      "spa": "fue hecha por Moisés y puesta sobre la bandera, y los mordidos que la miraban vivían"
+     },
+     {
+      "verdict": "right",
+      "why": "",
+      "english": "was broken in pieces by Hezekiah after Israel had burned incense to it",
+      "references": [
+       "2KI 18:4"
+      ],
+      "ukr": "був розбитий Єзекією після того, як Ізraїлеві сини кадили йому",
+      "deu": "wurde von Hiskia zerstoßen, nachdem ihr die Kinder Israel geräuchert hatten",
+      "spa": "fue hecha pedazos por Ezequías, después de que los hijos de Israel le habían quemado perfumes"
+     }
+    ],
+    "note": ""
+   },
+   "problems": [
+    "clause 2: Latin letters in the Ukrainian"
+   ]
+  }
+ ]
+}

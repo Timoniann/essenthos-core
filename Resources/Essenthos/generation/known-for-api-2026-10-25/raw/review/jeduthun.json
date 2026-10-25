@@ -1,0 +1,25 @@
+{
+ "slug": "jeduthun",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.430397+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був призначений разом із Гееманом дякувати Господеві, із сурмами, цимбалами та знаряддями для Божої пісні",
+    "deu": "wurde mit Heman bestimmt, dem HERRN zu danken, mit Trompeten, Zimbeln und Saitenspielen Gottes",
+    "spa": "fue designado con Hemán para dar gracias al SEÑOR, con trompetas, címbalos e instrumentos de música de Dios",
+    "why": "Corrected the name to Геман (instrumental Гемaном) as in Ohienko and removed the stress mark."
+   },
+   {
+    "ukr": "пророкував на цитрі на дяку та на хвалу Господеві",
+    "deu": "weissagte mit Harfen, zu danken und den HERRN zu loben",
+    "spa": "profetizaba con arpa, para celebrar y alabar al SEÑOR",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

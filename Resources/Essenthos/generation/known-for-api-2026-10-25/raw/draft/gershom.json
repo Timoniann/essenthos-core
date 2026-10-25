@@ -1,0 +1,15 @@
+{
+ "slug": "gershom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.779328+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only record Gershom's birth and naming, his being taken with his brother to Moses by Jethro, and his place in a genealogy, which add nothing the summary does not already say.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

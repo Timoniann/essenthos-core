@@ -1,0 +1,41 @@
+{
+ "slug": "samson",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:02:57.915379+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Samson's life is told at length in Judges, so three or four chief events can be named, each resting on narrow verses.",
+  "clauses": [
+   {
+    "english": "killed a thousand Philistines with a donkey's jawbone",
+    "references": [
+     "JDG 15:14-15"
+    ],
+    "quote": "and slew a thousand men therewith"
+   },
+   {
+    "english": "lost his strength when Delilah had his hair shaved, and was blinded and imprisoned by the Philistines",
+    "references": [
+     "JDG 16:17-21"
+    ],
+    "quote": "the Philistines took him, and put out his eyes"
+   },
+   {
+    "english": "pulled down the house of Dagon on the Philistines and died with them",
+    "references": [
+     "JDG 16:28-30"
+    ],
+    "quote": "the house fell upon the lords, and upon all the people that were therein"
+   }
+  ],
+  "doubts": [
+   "JDG 14:5-6 (lion) and JDG 15:4-5 (foxes) left out to keep the line short.",
+   "The dataset's judging years are only the summary's office, so not used.",
+   "HEB 11:32 only lists his name, so not cited."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

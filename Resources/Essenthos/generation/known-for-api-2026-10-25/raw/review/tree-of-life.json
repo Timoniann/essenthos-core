@@ -1,0 +1,25 @@
+{
+ "slug": "tree-of-life",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.926462+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "мало дорогу, яку стерегли Херувим і полум'яний меч на схід від еденського раю",
+    "deu": "hatte seinen Weg, den die Cherubim und ein flammendes Schwert östlich des Gartens Eden bewachten",
+    "spa": "tuvo su camino guardado por querubines y una espada encendida al oriente del huerto de Edén",
+    "why": "German: 'hauendes' replaced by modern 'flammendes', 'einen Weg' changed to 'seinen Weg', and 'östlich' added for 'east of'."
+   },
+   {
+    "ukr": "родило дванадцять видів плодів, а його листя було для зцілення народів",
+    "deu": "trug zwölf Arten von Früchten, und seine Blätter dienten zur Heilung der Völker",
+    "spa": "llevó doce clases de frutos, y sus hojas eran para la sanidad de las naciones",
+    "why": "Added 'kinds of' (видів, Arten von, clases de) in all three; German 'Gesundheit' changed to 'Heilung'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

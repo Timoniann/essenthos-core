@@ -1,0 +1,25 @@
+{
+ "slug": "paran",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.301826+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де спинилася хмара, коли Ізраїль рушив із Сінайської пустелі",
+    "deu": "war der Ort, an dem die Wolke blieb, als Israel aus der Wüste Sinai aufbrach",
+    "spa": "fue donde paró la nube cuando Israel partió del desierto de Sinaí",
+    "why": "Replaced the old wording 'Ізраїлеві сини' / 'die Kinder Israel' / 'los hijos de Israel' with 'Israel', and 'пустині' with modern 'пустелі'."
+   },
+   {
+    "ukr": "був місцем, звідки Мойсей послав людей розвідати ханаанський край",
+    "deu": "war der Ort, von dem aus Mose Männer sandte, um das Land Kanaan zu erkunden",
+    "spa": "fue desde donde Moisés envió hombres para reconocer la tierra de Canaán",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,19 @@
+{
+ "slug": "memucan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:11.882013+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "порадив цареві, щоб Вашті більше не приходила перед його обличчя",
+    "deu": "riet dem König, dass Vasthi nicht mehr vor ihn kommen sollte",
+    "spa": "aconsejó al rey que Vasthi no viniera más delante de él",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

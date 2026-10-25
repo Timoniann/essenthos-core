@@ -1,0 +1,36 @@
+{
+ "slug": "jericho-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.589826+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was entered and passed through by Jesus",
+    "references": [
+     "LUK 19:1"
+    ],
+    "ukr": "був увійдений Ісусом і пройдений ним",
+    "deu": "wurde von Jesus betreten und durchzogen",
+    "spa": "fue entrada y atravesada por Jesús"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say Bartimaeus sat begging and cried out as Jesus left; 'blind Bartimaeus cried out' is supported, but the name's cry is at 10:47 while 10:46 gives the place; wording simplified.",
+    "english": "was where blind Bartimaeus cried out to Jesus as he left",
+    "references": [
+     "MRK 10:46-47"
+    ],
+    "ukr": "там сліпий Вартимей кликав до Ісуса, коли Він виходив",
+    "deu": "dort schrie der blinde Bartimäus zu Jesus, als er hinausging",
+    "spa": "allí el ciego Bartimeo dio voces a Jesús cuando salía"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

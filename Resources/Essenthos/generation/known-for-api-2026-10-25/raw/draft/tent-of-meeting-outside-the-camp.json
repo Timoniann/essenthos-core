@@ -1,0 +1,32 @@
+{
+ "slug": "tent-of-meeting-outside-the-camp",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.865871+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was done with the tent and what happened at it, beyond the summary's account of its pitching.",
+  "clauses": [
+   {
+    "english": "was where everyone who sought the LORD went out to him",
+    "references": [
+     "EXO 33:7"
+    ],
+    "quote": "every one which sought the LORD went out unto the tabernacle of the congregation"
+   },
+   {
+    "english": "was where the cloudy pillar descended and the LORD spoke with Moses face to face",
+    "references": [
+     "EXO 33:9-11"
+    ],
+    "quote": "the LORD spake unto Moses face to face, as a man speaketh unto his friend"
+   }
+  ],
+  "doubts": [
+   "The summary already says Moses pitched it outside the camp, so the pitching is not a clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

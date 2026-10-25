@@ -1,0 +1,33 @@
+{
+ "slug": "crete",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.885403+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Two events in the verses belong to the island: Titus was left there to ordain elders, and Paul's ship sailed close by it before the storm.",
+  "clauses": [
+   {
+    "english": "was where Titus was left to set things in order and ordain elders in every city",
+    "references": [
+     "TIT 1:5"
+    ],
+    "quote": "For this cause left I thee in Crete"
+   },
+   {
+    "english": "was sailed close by Paul's ship before a tempestuous wind struck it",
+    "references": [
+     "ACT 27:13-14"
+    ],
+    "quote": "they sailed close by Crete"
+   }
+  ],
+  "doubts": [
+   "ZEP 2:5 names the Cherethites of the Philistine coast, not the island, so I left it out.",
+   "TIT 1:12 only reports a saying about the Cretians, which is not an event, so I left it out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

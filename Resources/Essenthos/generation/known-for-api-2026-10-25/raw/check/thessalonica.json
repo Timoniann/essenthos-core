@@ -1,0 +1,36 @@
+{
+ "slug": "thessalonica",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.375583+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Paul reasoned from the scriptures in the synagogue three sabbath days",
+    "references": [
+     "ACT 17:1-2"
+    ],
+    "ukr": "було місцем, де Павло три суботи змагався з юдеями з Писання в синагозі",
+    "deu": "war der Ort, wo Paulus an drei Sabbaten in der Judenschule aus der Schrift redete",
+    "spa": "fue el lugar donde Pablo por tres sábados disputó de las Escrituras en la sinagoga"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says the Jews came to Berea and stirred up the people, not that they followed Paul.",
+    "english": "had Jews who came to Berea and stirred up the people against Paul's preaching",
+    "references": [
+     "ACT 17:13"
+    ],
+    "ukr": "мала юдеїв, які прибули до Верії й баламутили народ",
+    "deu": "hatte Juden, die nach Beröa kamen und das Volk bewegten",
+    "spa": "tuvo judíos que fueron a Berea y tumultuaron al pueblo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

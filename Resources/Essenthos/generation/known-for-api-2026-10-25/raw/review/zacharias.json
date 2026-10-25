@@ -1,0 +1,25 @@
+{
+ "slug": "zacharias",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.917956+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "занімів за те, що не повірив словам ангела",
+    "deu": "wurde stumm, weil er den Worten des Engels nicht glaubte",
+    "spa": "quedó mudo por no haber creído las palabras del ángel",
+    "why": "Fixed the Ukrainian typo «Ангола» to «ангела»."
+   },
+   {
+    "ukr": "написав, що ім'я його сина Іван, знову заговорив і став пророкувати",
+    "deu": "schrieb, sein Sohn heiße Johannes, konnte wieder reden und weissagte",
+    "spa": "escribió que el nombre de su hijo era Juan, recobró el habla y profetizó",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

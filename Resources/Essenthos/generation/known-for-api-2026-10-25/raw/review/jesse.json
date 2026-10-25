@@ -1,0 +1,25 @@
+{
+ "slug": "jesse",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.055908+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "провів своїх синів перед Самуїлом, але Господь не вибрав жодного з них",
+    "deu": "ließ seine Söhne an Samuel vorübergehen, aber der HERR erwählte keinen von ihnen",
+    "spa": "hizo pasar a sus hijos delante de Samuel, pero el SEÑOR no eligió a ninguno de ellos",
+    "why": "Changed «привів... перед Самуїла» to «провів... перед Самуїлом» to keep the sense of making them pass before him."
+   },
+   {
+    "ukr": "послав свого сина Давида до Саула",
+    "deu": "sandte seinen Sohn David zu Saul",
+    "spa": "envió a su hijo David a Saúl",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

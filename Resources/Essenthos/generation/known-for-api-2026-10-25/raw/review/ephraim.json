@@ -1,0 +1,25 @@
+{
+ "slug": "ephraim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.302766+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був поблагословлений Ізраїлем, який поставив його перед Манасією",
+    "deu": "wurde von Israel gesegnet, der ihn Manasse vorsetzte",
+    "spa": "fue bendecido por Israel, quien lo puso delante de Manasés",
+    "why": ""
+   },
+   {
+    "ukr": "багато днів оплакував своїх синів, убитих людьми Ґату",
+    "deu": "trug lange Zeit Leid um seine Söhne, die von den Männern zu Gath getötet worden waren",
+    "spa": "hizo duelo por muchos días por sus hijos, muertos por los naturales de Gath",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

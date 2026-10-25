@@ -1,0 +1,31 @@
+{
+ "slug": "abiathar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.457256+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "уникнув різанини священиків у Нові та втік до Давида",
+    "deu": "entkam dem Gemetzel an den Priestern in Nobe und floh zu David",
+    "spa": "escapó de la matanza de los sacerdotes en Nob y huyó a David",
+    "why": ""
+   },
+   {
+    "ukr": "допомагав Адонії в його намаганні стати царем",
+    "deu": "half Adonia in seinem Streben, König zu werden",
+    "spa": "ayudó a Adonía en su intento de ser rey",
+    "why": ""
+   },
+   {
+    "ukr": "був вигнаний Соломоном зі священства та відісланий до Анатоту",
+    "deu": "wurde von Salomo aus dem Priesteramt verstoßen und nach Anathoth geschickt",
+    "spa": "fue echado por Salomón del sacerdocio y enviado a Anathoth",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

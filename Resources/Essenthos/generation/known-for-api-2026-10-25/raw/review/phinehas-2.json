@@ -1,0 +1,19 @@
+{
+ "slug": "phinehas-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.871295+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "поліг разом зі своїм братом Хофні, коли филистимляни взяли Божий ковчег",
+    "deu": "starb mit seinem Bruder Hophni, als die Philister die Lade Gottes nahmen",
+    "spa": "fue muerto con su hermano Ophni cuando los Filisteos tomaron el arca de Dios",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

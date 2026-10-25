@@ -1,0 +1,25 @@
+{
+ "slug": "goliaths-sword",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.841978+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був витягнутий Давидом з піхви, щоб відтяти голову Ґоліятові",
+    "deu": "wurde von David aus der Scheide gezogen, um Goliath den Kopf abzuhauen",
+    "spa": "fue sacada de su vaina por David para cortar la cabeza a Goliath",
+    "why": ""
+   },
+   {
+    "ukr": "був даний Давидові священиком у Нові, загорнений у тканину за ефодом",
+    "deu": "wurde David vom Priester in Nobe gegeben, gewickelt in ein Tuch hinter dem Efod",
+    "spa": "fue dada a David por el sacerdote en Nob, envuelta en un paño detrás del efod",
+    "why": "Replaced the dated or translation-specific wording (одежа, Mantel/Leibrock, velo, ephod) with modern words matching the English 'cloth' and 'ephod'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

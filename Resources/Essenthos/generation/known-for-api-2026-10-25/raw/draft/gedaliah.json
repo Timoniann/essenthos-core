@@ -1,0 +1,34 @@
+{
+ "slug": "gedaliah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.294090+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Gedaliah's oath to the captains and his death, beyond what the summary states as relations and office.",
+  "clauses": [
+   {
+    "english": "swore to the captains and their men that they should serve the Chaldees and it would be well with them",
+    "references": [
+     "2KI 25:24",
+     "JER 40:9"
+    ],
+    "quote": "Fear not to be the servants of the Chaldees: dwell in the land, and serve the king of Babylon"
+   },
+   {
+    "english": "disbelieved the warning of Johanan that Ishmael had been sent to slay him",
+    "references": [
+     "JER 40:13-16"
+    ],
+    "quote": "But Gedaliah the son of Ahikam believed them not."
+   }
+  ],
+  "doubts": [
+   "The summary already says he was killed by Ishmael, so the killing is not given as a clause.",
+   "The reception of Jeremiah into his care (JER 39:14, 40:6) was left out as a minor detail."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

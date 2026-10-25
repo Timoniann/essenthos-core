@@ -1,0 +1,36 @@
+{
+ "slug": "micaiah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.272718+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say the LORD put a lying spirit in the prophets' mouths and spoke evil concerning Ahab; they do not call it his 'foretelling'.",
+    "english": "told that the LORD had put a lying spirit in the mouth of Ahab's prophets and spoken evil against him",
+    "references": [
+     "1KI 22:19-23"
+    ],
+    "ukr": "розповів, що Господь дав духа неправди в уста пророків Ахава і говорив на нього лихе",
+    "deu": "berichtete, daß der HERR einen falschen Geist in den Mund der Propheten Ahabs gegeben und Böses über ihn geredet hat",
+    "spa": "contó que el SEÑOR había puesto espíritu de mentira en la boca de los profetas de Achâb y había decretado el mal acerca de él"
+   },
+   {
+    "verdict": "fix",
+    "why": "The king only ordered Micaiah put in prison; the verses do not say it was carried out.",
+    "english": "was struck on the cheek by Zedekiah and ordered into prison by the king",
+    "references": [
+     "1KI 22:24-27"
+    ],
+    "ukr": "був ударений Седекією по щоці, а за наказом царя мав бути посаджений до в'язниці",
+    "deu": "wurde von Zedekia auf den Backen geschlagen und sollte auf Befehl des Königs in den Kerker gesetzt werden",
+    "spa": "fue herido en la mejilla por Sedechîas y por orden del rey debía ser echado en la cárcel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

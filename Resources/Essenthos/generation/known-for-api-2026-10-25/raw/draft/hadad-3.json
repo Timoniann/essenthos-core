@@ -1,0 +1,40 @@
+{
+ "slug": "hadad-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.474839+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The marked verses tell of Hadad's rise as an adversary, his flight to Egypt as a child, and his favour with Pharaoh.",
+  "clauses": [
+   {
+    "english": "was stirred up by the LORD as an adversary to Solomon",
+    "references": [
+     "1KI 11:14"
+    ],
+    "quote": "the LORD stirred up an adversary unto Solomon, Hadad the Edomite"
+   },
+   {
+    "english": "fled to Egypt as a little child",
+    "references": [
+     "1KI 11:17"
+    ],
+    "quote": "to go into Egypt; Hadad being yet a little child."
+   },
+   {
+    "english": "found great favour with Pharaoh, who gave him his wife's sister in marriage",
+    "references": [
+     "1KI 11:19"
+    ],
+    "quote": "Hadad found great favour in the sight of Pharaoh"
+   }
+  ],
+  "doubts": [
+   "1KI 11:25 (reigned over Syria) seems to describe Rezon, so it was not used for a clause.",
+   "His request to Pharaoh in 1KI 11:21 to go back to his own country was left out as a minor detail."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

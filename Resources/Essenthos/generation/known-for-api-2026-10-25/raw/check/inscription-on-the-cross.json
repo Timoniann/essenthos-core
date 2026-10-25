@@ -1,0 +1,48 @@
+{
+ "slug": "inscription-on-the-cross",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.038873+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "\"over Jesus\" is not in John 19:19, and the wording of the inscription is given more fully there.",
+    "english": "was written by Pilate and put on the cross: Jesus of Nazareth the King of the Jews",
+    "references": [
+     "JHN 19:19"
+    ],
+    "ukr": "був написаний Пилатом і вміщений на хресті: Ісус Назарянин, Цар Юдейський",
+    "deu": "wurde von Pilatus geschrieben und auf das Kreuz gesetzt: Jesus von Nazareth, der Juden König",
+    "spa": "fue escrito por Pilato y puesto encima de la cruz: Jesús Nazareno, Rey de los Judíos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was written in Hebrew, Greek and Latin, and read by many of the Jews",
+    "references": [
+     "JHN 19:20",
+     "LUK 23:38"
+    ],
+    "ukr": "був написаний єврейською, грецькою та латинською мовами, і його читали багато юдеїв",
+    "deu": "wurde in hebräischer, griechischer und lateinischer Sprache geschrieben und von vielen Juden gelesen",
+    "spa": "fue escrito en hebreo, en griego y en latín, y fue leído por muchos de los Judíos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was kept as written when Pilate refused the chief priests' request to change it",
+    "references": [
+     "JHN 19:21-22"
+    ],
+    "ukr": "залишився таким, як був написаний, коли Пилат відмовився змінити його на прохання первосвящеників",
+    "deu": "blieb, wie es geschrieben war, als Pilatus die Bitte der Hohenpriester ablehnte, es zu ändern",
+    "spa": "se mantuvo como estaba escrito cuando Pilato rechazó la petición de los pontífices de cambiarlo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

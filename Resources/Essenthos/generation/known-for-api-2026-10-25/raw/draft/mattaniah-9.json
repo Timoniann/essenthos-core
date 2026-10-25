@@ -1,0 +1,26 @@
+{
+ "slug": "mattaniah-9",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.611430+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "NEH 11:17 says he was the principal to begin the thanksgiving in prayer, which goes beyond the summary, while the other verses only list him or restate his lineage.",
+  "clauses": [
+   {
+    "english": "was the principal one to begin the thanksgiving in prayer",
+    "references": [
+     "NEH 11:17"
+    ],
+    "quote": "was the principal to begin the thanksgiving in prayer"
+   }
+  ],
+  "doubts": [
+   "NEH 12:25 (porter) and 1CH 9:15 may concern different men named Mattaniah; the porter role is already in the disambiguation, so it is not repeated.",
+   "NEH 12:8 names a Mattaniah over the thanksgiving, which may be the same man; it is not cited."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

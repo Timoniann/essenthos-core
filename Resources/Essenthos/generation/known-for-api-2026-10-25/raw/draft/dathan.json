@@ -1,0 +1,34 @@
+{
+ "slug": "dathan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.562234+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two things of Dathan beyond the summary: his refusal to come to Moses and his being swallowed by the earth.",
+  "clauses": [
+   {
+    "english": "refused to come when Moses called him, and accused Moses of making himself a prince",
+    "references": [
+     "NUM 16:12-14"
+    ],
+    "quote": "We will not come up"
+   },
+   {
+    "english": "was swallowed up by the earth with his household and tents",
+    "references": [
+     "DEU 11:6",
+     "NUM 26:10"
+    ],
+    "quote": "the earth opened her mouth, and swallowed them up, and their households"
+   }
+  ],
+  "doubts": [
+   "The summary's phrase 'rebelled against Moses with Korah' already covers the rebellion itself, so the clauses give only his refusal and his end.",
+   "NUM 16:31-33 were not given, so the swallowing rests on DEU 11:6 and NUM 26:10."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

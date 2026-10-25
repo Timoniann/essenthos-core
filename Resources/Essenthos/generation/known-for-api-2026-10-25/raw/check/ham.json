@@ -1,0 +1,36 @@
+{
+ "slug": "ham",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.686307+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse names Noah's wife, not Ham's, and Ham's own wife is among the three wives; the wife should be left out.",
+    "english": "entered the ark with Noah and his brothers",
+    "references": [
+     "GEN 7:13"
+    ],
+    "ukr": "ввійшов до ковчегу з Ноєм та своїми братами",
+    "deu": "ging mit Noah und seinen Brüdern in den Kasten",
+    "spa": "entró en el arca con Noé y sus hermanos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "saw his father Noah's nakedness and told his two brothers outside",
+    "references": [
+     "GEN 9:22"
+    ],
+    "ukr": "побачив наготу батька свого Ноя й розказав обом своїм братам надворі",
+    "deu": "sah die Blöße seines Vaters Noah und sagte es seinen beiden Brüdern draußen",
+    "spa": "vio la desnudez de su padre Noé y se lo dijo a sus dos hermanos afuera"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

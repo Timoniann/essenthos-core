@@ -1,0 +1,36 @@
+{
+ "slug": "saltsea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.063937+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the kings of Sodom and Gomorrah and their allies joined together",
+    "references": [
+     "GEN 14:2-3"
+    ],
+    "ukr": "було місцем, де зібралися царі Содому, Гомори та їхні союзники",
+    "deu": "war der Ort, wo die Könige von Sodom und Gomorra und ihre Verbündeten zusammenkamen",
+    "spa": "fue el lugar donde se juntaron los reyes de Sodoma y de Gomorra y sus aliados"
+   },
+   {
+    "verdict": "fix",
+    "why": "\"On dry ground\" is stated in verse 17, just outside the citation, so the citation is widened.",
+    "english": "had the Jordan's waters cut off from it as Israel crossed over on dry ground",
+    "references": [
+     "JOS 3:16-17"
+    ],
+    "ukr": "було відрізане від вод Йордану, коли Ізраїль переходив по сухому",
+    "deu": "wurde von den Wassern des Jordan abgeschnitten, als Israel trocken hindurchging",
+    "spa": "quedó cortado de las aguas del Jordán cuando Israel pasó en seco"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

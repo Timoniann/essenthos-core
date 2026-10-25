@@ -1,0 +1,47 @@
+{
+ "slug": "hagar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.139346+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "fled from Sarai and was found by the angel of the LORD in the wilderness",
+    "references": [
+     "GEN 16:6-8"
+    ],
+    "ukr": "втекла від Сари й була знайдена Анголом Господнім у пустині",
+    "deu": "floh vor Sarai und wurde vom Engel des HERRN in der Wüste gefunden",
+    "spa": "huyó de Sarai y fue hallada por el ángel del SEÑOR en el desierto"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was sent away by Abraham and wandered in the wilderness",
+    "references": [
+     "GEN 21:14"
+    ],
+    "ukr": "була відіслана Авраамом і блукала в пустині",
+    "deu": "wurde von Abraham fortgeschickt und irrte in der Wüste umher",
+    "spa": "fue despedida por Abraham y anduvo errante por el desierto"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had her eyes opened by God to see a well of water",
+    "references": [
+     "GEN 21:19"
+    ],
+    "ukr": "мала відкриті Богом очі й побачила криницю води",
+    "deu": "bekam von Gott die Augen aufgetan und sah einen Wasserbrunnen",
+    "spa": "tuvo los ojos abiertos por Dios y vio una fuente de agua"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

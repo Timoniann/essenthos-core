@@ -1,0 +1,41 @@
+{
+ "slug": "manasseh-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.470398+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Manasseh's idolatry and bloodshed, his captivity in Babylon and his restoration after prayer.",
+  "clauses": [
+   {
+    "english": "rebuilt the high places and built altars for the host of heaven in the house of the LORD",
+    "references": [
+     "2KI 21:3-5"
+    ],
+    "quote": "he built altars for all the host of heaven in the two courts of the house of the LORD"
+   },
+   {
+    "english": "shed innocent blood in great measure and led Judah into sin",
+    "references": [
+     "2KI 21:9",
+     "2KI 21:16"
+    ],
+    "quote": "Manasseh shed innocent blood very much, till he had filled Jerusalem from one end to another"
+   },
+   {
+    "english": "was taken by the Assyrians in chains to Babylon, and after he prayed was brought back to Jerusalem",
+    "references": [
+     "2CH 33:11-13"
+    ],
+    "quote": "which took Manasseh among the thorns, and bound him with fetters, and carried him to Babylon"
+   }
+  ],
+  "doubts": [
+   "2KI 21:6 and 2CH 33:6 (passing his son through the fire) were left as detail within his idolatry.",
+   "2KI 24:3 and JER 15:4 give his sins as the reason for Judah's removal; this is not a deed of his own, so it is not a clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

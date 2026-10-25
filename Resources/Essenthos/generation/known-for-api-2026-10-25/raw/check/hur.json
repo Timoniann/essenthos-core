@@ -1,0 +1,36 @@
+{
+ "slug": "hur",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.813417+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say Aaron and Hur held up his hands until sunset, not until Israel won; the win is credited to Joshua.",
+    "english": "held up Moses' hands with Aaron until sunset",
+    "references": [
+     "EXO 17:12"
+    ],
+    "ukr": "підтримував руки Мойсея разом з Аароном аж до заходу сонця",
+    "deu": "stützte mit Aaron die Hände Moses, bis die Sonne unterging",
+    "spa": "sustentó con Aarón las manos de Moisés hasta que se puso el sol"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say he judged; they say Aaron and Hur were with the elders and anyone with a matter was to come to them.",
+    "english": "was left with Aaron to receive any man's matters while Moses went up the mount",
+    "references": [
+     "EXO 24:13-14"
+    ],
+    "ukr": "був залишений з Аароном приймати справи будь-кого, коли Мойсей вийшов на гору",
+    "deu": "wurde mit Aaron zurückgelassen, um die Sache jedes Mannes entgegenzunehmen, als Mose auf den Berg stieg",
+    "spa": "fue dejado con Aarón para recibir los negocios de cualquiera mientras Moisés subía al monte"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

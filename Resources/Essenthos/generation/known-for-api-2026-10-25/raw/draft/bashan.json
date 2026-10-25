@@ -1,0 +1,28 @@
+{
+ "slug": "bashan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.493432+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Beyond its inheritance by Manasseh, the verses tell chiefly of Israel's conquest of Bashan from King Og.",
+  "clauses": [
+   {
+    "english": "had all its cities taken by Israel when King Og and his people were destroyed",
+    "references": [
+     "DEU 3:3-4"
+    ],
+    "quote": "we took all his cities at that time"
+   }
+  ],
+  "doubts": [
+   "Left out the bulls, oaks, kine and fatlings of Bashan (PSA 22:12, ISA 2:13, AMO 4:1, EZK 39:18 and others) as figures of speech, not events.",
+   "Left out Dan leaping from Bashan (DEU 33:22) as a blessing pronounced, not an event.",
+   "Left out the lists of Levitical cities and cities of refuge, such as Golan, as lists that name places inside Bashan.",
+   "Left out the allotment of Bashan to Manasseh, since the summary already says it."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,38 @@
+{
+ "slug": "jezebel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.374098+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Jezebel's killing of the LORD's prophets, her plot against Naboth, and her death at Jehu's command.",
+  "clauses": [
+   {
+    "english": "cut off the prophets of the LORD",
+    "references": [
+     "1KI 18:4",
+     "1KI 18:13"
+    ],
+    "quote": "when Jezebel cut off the prophets of the LORD"
+   },
+   {
+    "english": "plotted the stoning of Naboth so that Ahab could take his vineyard",
+    "references": [
+     "1KI 21:7-15"
+    ],
+    "quote": "did as Jezebel had sent unto them, and as it was written in the letters"
+   },
+   {
+    "english": "was thrown down from a window at Jehu's command and trodden underfoot",
+    "references": [
+     "2KI 9:30-33"
+    ],
+    "quote": "Throw her down. So they threw her down"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

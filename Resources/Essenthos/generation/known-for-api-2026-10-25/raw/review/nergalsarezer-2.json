@@ -1,0 +1,25 @@
+{
+ "slug": "nergalsarezer-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.734272+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "сидів зі зверхниками Вавилона в Середущій брамі завойованого Єрусалима",
+    "deu": "saß mit den Fürsten von Babel im Mitteltor des eroberten Jerusalem",
+    "spa": "se sentó con los príncipes de Babilonia en la puerta del medio de la Jerusalén conquistada",
+    "why": "Replaced the wrong or archaic verbs (посідав, hielt, asentó) with 'sat'; removed the added 'king' and, in German, the added 'Stadt'; modernised the wording."
+   },
+   {
+    "ukr": "послав разом з начальниками Вавилона і взяв Єремію з подвір'я в'язниці",
+    "deu": "sandte hin mit den Fürsten von Babel und ließ Jeremia aus dem Vorhof des Gefängnisses holen",
+    "spa": "envió con los príncipes de Babilonia y tomó a Jeremías del patio de la cárcel",
+    "why": "Removed the added 'all' and 'king' so the princes are simply those of Babylon, as in the English."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,47 @@
+{
+ "slug": "heavenly-sanctuary",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.247493+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was opened in heaven, and the ark of his testament was seen in it",
+    "references": [
+     "REV 11:19"
+    ],
+    "ukr": "розкрився на небі, і в ньому з'явився ковчег Його заповіту",
+    "deu": "ward im Himmel aufgetan, und die Lade seines Bundes ward darin gesehen",
+    "spa": "fue abierto en el cielo, y el arca de su testamento fue vista en él"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was opened, and the seven angels with the seven plagues came out of it",
+    "references": [
+     "REV 15:5-6"
+    ],
+    "ukr": "відчинився, і сім Анголів із сімома карами вийшли з нього",
+    "deu": "ward aufgetan, und die sieben Engel mit den sieben Plagen gingen aus ihm hervor",
+    "spa": "fue abierto, y los siete ángeles con las siete plagas salieron de él"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was filled with smoke from the glory of God, so that no man could enter",
+    "references": [
+     "REV 15:8"
+    ],
+    "ukr": "переповнився димом від Божої слави, так що ніхто не спромігся ввійти",
+    "deu": "ward voll Rauch von der Herrlichkeit Gottes, so daß niemand hineingehen konnte",
+    "spa": "fue lleno de humo por la majestad de Dios, y ninguno podía entrar"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

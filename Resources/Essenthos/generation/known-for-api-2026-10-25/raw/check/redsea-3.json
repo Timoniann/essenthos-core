@@ -1,0 +1,25 @@
+{
+ "slug": "redsea-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.102302+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where King Solomon made a navy of ships",
+    "references": [
+     "1KI 9:26"
+    ],
+    "ukr": "був місцем, де цар Соломон наробив кораблів",
+    "deu": "war der Ort, an dem der König Salomo Schiffe machte",
+    "spa": "fue donde el rey Salomón hizo navíos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

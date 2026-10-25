@@ -1,0 +1,39 @@
+{
+ "slug": "elijahs-mantle",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.811116+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state three events of the mantle: it was cast on Elisha, it divided the Jordan for Elijah and Elisha, and it divided the Jordan again when Elisha took it up.",
+  "clauses": [
+   {
+    "english": "was cast upon Elisha by Elijah as he passed by",
+    "references": [
+     "1KI 19:19"
+    ],
+    "quote": "Elijah passed by him, and cast his mantle upon him."
+   },
+   {
+    "english": "was wrapped together and struck the Jordan, dividing its waters for Elijah and Elisha",
+    "references": [
+     "2KI 2:8"
+    ],
+    "quote": "Elijah took his mantle, and wrapped it together, and smote the waters"
+   },
+   {
+    "english": "fell from Elijah and was used by Elisha to part the Jordan again",
+    "references": [
+     "2KI 2:13-14"
+    ],
+    "quote": "he took the mantle of Elijah that fell from him, and smote the waters"
+   }
+  ],
+  "doubts": [
+   "1KI 19:13 (Elijah wrapping his face in his mantle at the cave) is a minor detail and was left out; it may be a different occasion of the same garment."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

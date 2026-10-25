@@ -1,0 +1,40 @@
+{
+ "slug": "bronze-sea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.072223+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was done with the Bronze Sea: it was made and set in the temple, taken down by Ahaz, and broken up and carried to Babylon.",
+  "clauses": [
+   {
+    "english": "was made by Solomon as a great molten basin standing on twelve oxen",
+    "references": [
+     "1KI 7:23-25"
+    ],
+    "quote": "It stood upon twelve oxen"
+   },
+   {
+    "english": "was taken down from the brasen oxen by King Ahaz and put on the stone pavement",
+    "references": [
+     "2KI 16:17"
+    ],
+    "quote": "took down the sea from off the brasen oxen that were under it"
+   },
+   {
+    "english": "was broken in pieces by the Chaldees, and its brass carried to Babylon",
+    "references": [
+     "2KI 25:13"
+    ],
+    "quote": "did the Chaldees break in pieces, and carried the brass of them to Babylon"
+   }
+  ],
+  "doubts": [
+   "1CH 18:8 (David's brass used for it) and 2CH 4:6 (the sea for the priests to wash in) left out as detail beyond the chief events.",
+   "JER 27:19 only names the sea among vessels and states no deed, so it was not cited."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

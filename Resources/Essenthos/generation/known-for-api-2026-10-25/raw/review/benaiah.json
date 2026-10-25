@@ -1,0 +1,31 @@
+{
+ "slug": "benaiah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.614306+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "забив лева в ямі сніжного дня",
+    "deu": "erschlug einen Löwen im Brunnen an einem Schneetag",
+    "spa": "mató a un león en un foso en tiempo de nieve",
+    "why": ""
+   },
+   {
+    "ukr": "видер спис у єгиптянина й убив його ним",
+    "deu": "nahm dem Ägypter den Spieß ab und erschlug ihn damit",
+    "spa": "arrebató la lanza al egipcio y lo mató con ella",
+    "why": "Ukrainian: used the modern accusative «спис» instead of the old «списа», and «у» instead of «в» after a consonant."
+   },
+   {
+    "ukr": "був настановлений над військом замість Йоава",
+    "deu": "wurde an Joabs Statt über das Heer gesetzt",
+    "spa": "fue puesto sobre el ejército en lugar de Joab",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

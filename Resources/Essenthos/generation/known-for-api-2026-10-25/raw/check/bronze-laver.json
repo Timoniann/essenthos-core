@@ -1,0 +1,47 @@
+{
+ "slug": "bronze-laver",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.180929+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was made of brass from the mirrors of the women who assembled at the tabernacle door",
+    "references": [
+     "EXO 38:8"
+    ],
+    "ukr": "була зроблена з міді, з дзеркал жінок, що служили при вході скинії заповіту",
+    "deu": "wurde aus Erz gemacht, aus den Spiegeln der Frauen, die vor der Tür der Hütte des Stifts dienten",
+    "spa": "fue hecha de metal, de los espejos de las mujeres que velaban a la puerta del tabernáculo del testimonio"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was set between the tent and the altar, where Moses, Aaron and his sons washed their hands and feet",
+    "references": [
+     "EXO 40:30-32"
+    ],
+    "ukr": "була поставлена між скинією заповіту та жертовником, де Мойсей, Аарон та його сини мили свої руки та ноги",
+    "deu": "wurde zwischen die Hütte des Stifts und den Altar gesetzt, wo Mose, Aaron und seine Söhne ihre Hände und Füße wuschen",
+    "spa": "fue puesta entre el tabernáculo del testimonio y el altar, donde Moisés, Aarón y sus hijos lavaban sus manos y sus pies"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was anointed with oil and sanctified by Moses",
+    "references": [
+     "LEV 8:10-11"
+    ],
+    "ukr": "була намащена оливою помазання та освячена Мойсеєм",
+    "deu": "wurde von Mose mit Salböl gesalbt und geweiht",
+    "spa": "fue ungida con el aceite de la unción y santificada por Moisés"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

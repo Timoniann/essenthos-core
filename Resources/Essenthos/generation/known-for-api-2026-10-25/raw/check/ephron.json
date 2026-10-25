@@ -1,0 +1,25 @@
+{
+ "slug": "ephron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.001791+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "sold Abraham the field and cave of Machpelah for four hundred shekels of silver",
+    "references": [
+     "GEN 23:14-18"
+    ],
+    "ukr": "продав Авраамові поле й печеру в Махпелі за чотириста шеклів срібла",
+    "deu": "verkaufte Abraham den Acker und die Höhle von Machpela für vierhundert Schekel Silber",
+    "spa": "vendió a Abraham la heredad y la cueva de Macpela por cuatrocientos siclos de plata"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,47 @@
+{
+ "slug": "sauls-spear",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.872641+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says Saul sought to pin David and drove the javelin into the wall, not that it was thrown at him.",
+    "english": "was driven into the wall when Saul sought to pin David with it and David slipped away",
+    "references": [
+     "1SA 19:10"
+    ],
+    "ukr": "був увігнаний у стіну, коли Саул хотів прибити Давида, а той відхилився",
+    "deu": "fuhr in die Wand, als Saul David damit an die Wand spießen wollte und dieser sich losriß",
+    "spa": "fue clavada en la pared cuando Saúl procuró enclavar a David con ella y David se apartó"
+   },
+   {
+    "verdict": "fix",
+    "why": "Saul's anger is not stated in this verse; the anger belongs to Jonathan in the next verse.",
+    "english": "was thrown at Jonathan by Saul",
+    "references": [
+     "1SA 20:33"
+    ],
+    "ukr": "був кинутий Саулом на Йонатана",
+    "deu": "wurde von Saul nach Jonathan geschossen",
+    "spa": "fue arrojada por Saúl a Jonathán"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by David from Saul's bolster while Saul slept",
+    "references": [
+     "1SA 26:12"
+    ],
+    "ukr": "був узятий Давидом з Саулового приголів'я, коли Саул спав",
+    "deu": "wurde von David zu den Häupten Sauls genommen, als Saul schlief",
+    "spa": "fue tomada por David de la cabecera de Saúl mientras Saúl dormía"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

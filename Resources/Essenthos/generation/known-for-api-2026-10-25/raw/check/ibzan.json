@@ -1,0 +1,25 @@
+{
+ "slug": "ibzan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.346353+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "sent thirty daughters abroad and took in thirty daughters from abroad for his sons",
+    "references": [
+     "JDG 12:9"
+    ],
+    "ukr": "відпустив тридцять дочок заміж назовні і впровадив тридцять дочок з-назовні для своїх синів",
+    "deu": "gab dreißig Töchter hinaus und nahm dreißig Töchter von außen für seine Söhne",
+    "spa": "casó fuera treinta hijas y tomó de fuera treinta hijas para sus hijos"
+   }
+  ],
+  "note": "The line omits that he judged Israel seven years (JDG 12:9), though the summary already marks him as a judge."
+ },
+ "problems": [],
+ "attempts": []
+}

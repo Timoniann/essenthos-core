@@ -1,0 +1,25 @@
+{
+ "slug": "habakkuk",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.563973+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "кликав до Господа про насильство та неправість, які бачив",
+    "deu": "schrie zum HERRN über den Frevel und die Mühsal, die er sah",
+    "spa": "clamó al SEÑOR a causa de la violencia y la iniquidad que veía",
+    "why": ""
+   },
+   {
+    "ukr": "молився, щоб Господь оживив Своє діло та в гніві згадав про милість",
+    "deu": "betete, dass der HERR sein Werk lebendig mache und in Trübsal der Barmherzigkeit gedenke",
+    "spa": "oró para que el SEÑOR avivara su obra y en la ira se acordara de la misericordia",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "jehonadab",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.763241+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Jehonadab joining Jehu in his chariot and of the command he gave his sons to drink no wine, which they kept.",
+  "clauses": [
+   {
+    "english": "was taken up into Jehu's chariot to see his zeal for the LORD",
+    "references": [
+     "2KI 10:15-16"
+    ],
+    "quote": "he took him up to him into the chariot"
+   },
+   {
+    "english": "commanded his sons to drink no wine and dwell in tents, and they obeyed",
+    "references": [
+     "JER 35:6-10"
+    ],
+    "quote": "Jonadab the son of Rechab our father commanded us"
+   }
+  ],
+  "doubts": [
+   "JER 35 spells the name Jonadab; taken as the same man as Jehonadab son of Rechab.",
+   "Verse 2KI 10:23 only mentions him going into the house of Baal with Jehu, so it was left out as adding no separate deed."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

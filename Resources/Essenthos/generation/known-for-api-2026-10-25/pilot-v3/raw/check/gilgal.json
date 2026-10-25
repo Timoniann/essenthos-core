@@ -1,0 +1,47 @@
+{
+ "slug": "gilgal",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:06:46.385824+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says Joshua set up the stones, not Israel.",
+    "english": "was where Joshua set up twelve stones taken from the Jordan",
+    "references": [
+     "JOS 4:20"
+    ],
+    "ukr": "був місцем, де Ісус поставив дванадцять каменів, узятих з Йордану",
+    "deu": "war der Ort, an dem Josua zwölf aus dem Jordan genommene Steine aufrichtete",
+    "spa": "fue el lugar donde Josué erigió las doce piedras traídas del Jordán"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the LORD rolled away the reproach of Egypt from Israel",
+    "references": [
+     "JOS 5:9"
+    ],
+    "ukr": "був місцем, де Господь зняв з Ізраїля єгипетську ганьбу",
+    "deu": "war der Ort, an dem der HERR die Schande Ägyptens von Israel wendete",
+    "spa": "fue el lugar donde el SEÑOR quitó de Israel el oprobio de Egipto"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Saul was made king before the LORD",
+    "references": [
+     "1SA 11:15"
+    ],
+    "ukr": "був місцем, де Саула настановили царем перед Господнім лицем",
+    "deu": "war der Ort, an dem Saul vor dem HERRN zum König gemacht wurde",
+    "spa": "fue el lugar donde Saúl fue investido rey delante del SEÑOR"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

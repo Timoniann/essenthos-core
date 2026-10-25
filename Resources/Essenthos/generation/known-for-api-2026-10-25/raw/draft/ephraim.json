@@ -1,0 +1,33 @@
+{
+ "slug": "ephraim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.098826+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Jacob's blessing of Ephraim above his elder brother and of Ephraim's mourning for his sons.",
+  "clauses": [
+   {
+    "english": "was blessed by Jacob, who set him before his elder brother Manasseh",
+    "references": [
+     "GEN 48:13-20"
+    ],
+    "quote": "and he set Ephraim before Manasseh"
+   },
+   {
+    "english": "mourned many days for his sons slain by the men of Gath",
+    "references": [
+     "1CH 7:21-22"
+    ],
+    "quote": "Ephraim their father mourned many days"
+   }
+  ],
+  "doubts": [
+   "Many marked verses (the censuses, camp, borders, Levite cities, Psalm 78, and the Chronicles and Numbers lists) concern the tribe of Ephraim, not the son of Joseph, so they were left out.",
+   "GEN 41:52 and GEN 46:20 only give his birth and naming, which the summary already covers."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

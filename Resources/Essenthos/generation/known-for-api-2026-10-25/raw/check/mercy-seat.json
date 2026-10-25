@@ -1,0 +1,48 @@
+{
+ "slug": "mercy-seat",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.959009+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verses 37:6-7 give everything the clause says; 37:8-9 are not needed.",
+    "english": "was made of pure gold, with two cherubim of beaten gold on its ends",
+    "references": [
+     "EXO 37:6-7"
+    ],
+    "ukr": "було зроблене зі щирого золота, з двома херувимами з кутого золота на обох кінцях",
+    "deu": "wurde aus feinem Gold gemacht, mit zwei Cherubim aus getriebenem Gold an seinen beiden Enden",
+    "spa": "fue hecha de oro puro, con dos querubines de oro labrados a martillo en sus dos cabos"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses shown do not name the LORD as the speaker; they speak only of a voice speaking to Moses.",
+    "english": "was where Moses heard a voice speaking to him from between the two cherubim",
+    "references": [
+     "NUM 7:89",
+     "EXO 25:22"
+    ],
+    "ukr": "було місцем, де Мойсей чув голос, що говорив до нього з-поміж обох херувимів",
+    "deu": "war der Ort, von dem aus Mose zwischen den zwei Cherubim eine Stimme zu sich reden hörte",
+    "spa": "fue el lugar donde Moisés oyó la Voz que le hablaba de entre los dos querubines"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was sprinkled with the blood of the bullock and of the goat",
+    "references": [
+     "LEV 16:14-15"
+    ],
+    "ukr": "було покроплене кров'ю бичка й козла",
+    "deu": "wurde mit dem Blut des Farren und des Bocks besprengt",
+    "spa": "fue rociada con la sangre del becerro y del macho cabrío"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

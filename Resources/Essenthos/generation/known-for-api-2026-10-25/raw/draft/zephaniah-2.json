@@ -1,0 +1,41 @@
+{
+ "slug": "zephaniah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.953242+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of several things done by or happening to this priest beyond what the summary states.",
+  "clauses": [
+   {
+    "english": "was sent by King Zedekiah to ask Jeremiah to enquire of the LORD",
+    "references": [
+     "JER 21:1-2"
+    ],
+    "quote": "Enquire, I pray thee, of the LORD for us"
+   },
+   {
+    "english": "read Shemaiah's letter in the hearing of Jeremiah the prophet",
+    "references": [
+     "JER 29:25",
+     "JER 29:29"
+    ],
+    "quote": "Zephaniah the priest read this letter in the ears of Jeremiah the prophet."
+   },
+   {
+    "english": "was taken by the captain of the guard to the king of Babylon at Riblah",
+    "references": [
+     "2KI 25:18",
+     "2KI 25:20"
+    ],
+    "quote": "the captain of the guard took Seraiah the chief priest, and Zephaniah the second priest"
+   }
+  ],
+  "doubts": [
+   "JER 37:3 tells of a second sending to Jeremiah, to pray for the people; left out to avoid repeating the first."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

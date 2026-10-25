@@ -1,0 +1,35 @@
+{
+ "slug": "ophel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.299236+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses give Ophel a deed of its own: a wall built round it by Manasseh and the Nethinims living there.",
+  "clauses": [
+   {
+    "english": "was encircled by a very high wall built by Manasseh",
+    "references": [
+     "2CH 33:14"
+    ],
+    "quote": "compassed about Ophel, and raised it up a very great height"
+   },
+   {
+    "english": "was where the Nethinims dwelt",
+    "references": [
+     "NEH 3:26",
+     "NEH 11:21"
+    ],
+    "quote": "the Nethinims dwelt in Ophel"
+   }
+  ],
+  "doubts": [
+   "2KI 5:24 (\"the tower\") is marked but does not name Ophel in the King James text, so it was left out.",
+   "ISA 32:14 and MIC 4:8 are marked but speak of forts, towers and the tower of the flock without naming Ophel, so they were left out.",
+   "Jotham's building on the wall of Ophel (2CH 27:3) and the Tekoites repairing its wall (NEH 3:27) were omitted as minor works on the same wall."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

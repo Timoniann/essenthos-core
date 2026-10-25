@@ -1,0 +1,37 @@
+{
+ "slug": "jordan-memorial-stones",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.982860+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "were taken from the midst of the Jordan, one for each tribe, and carried over",
+    "references": [
+     "JOS 4:8"
+    ],
+    "ukr": "були взяті з середини Йордану, по одному на кожне плем'я, і перенесені",
+    "deu": "wurden mitten aus dem Jordan genommen, für jeden Stamm einer, und hinübergebracht",
+    "spa": "fueron tomadas del medio del Jordán, una por cada tribu, y llevadas al otro lado"
+   },
+   {
+    "verdict": "fix",
+    "why": "The word 'memorial' is in JOS 4:7, just outside the citation, so that verse is added.",
+    "english": "were set up at Gilgal as a memorial of Israel's crossing on dry land",
+    "references": [
+     "JOS 4:7",
+     "JOS 4:20-22"
+    ],
+    "ukr": "були поставлені в Ґілґалі за пам'ятку про перехід Ізраїля по сухому через Йордан",
+    "deu": "wurden in Gilgal als Gedächtnis an Israels trockenen Durchzug durch den Jordan aufgerichtet",
+    "spa": "fueron erigidas en Gilgal como memoria del paso de Israel en seco por el Jordán"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

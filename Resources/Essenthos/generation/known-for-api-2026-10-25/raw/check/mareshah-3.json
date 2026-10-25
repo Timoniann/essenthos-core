@@ -1,0 +1,37 @@
+{
+ "slug": "mareshah-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.915611+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say Rehoboam built it among fenced cities in Judah and Benjamin; 'built up' is fine, but 'of Judah' omits Benjamin and the citation should span the list.",
+    "english": "was built up as one of the fenced cities in Judah and Benjamin",
+    "references": [
+     "2CH 11:8-10"
+    ],
+    "ukr": "була укріплена як одне з твердинних міст у Юді та Веніямині",
+    "deu": "wurde als eine der festen Städte in Juda und Benjamin ausgebaut",
+    "spa": "fue fortificada como una de las ciudades fuertes en Judá y en Benjamín"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses name Mareshah as where the battle was set and the LORD smote the Ethiopians; the 'routed' wording is fine but the citation takes in the prayer, and 'great host' is only the enemy's size.",
+    "english": "was where the LORD smote the Ethiopians before Asa",
+    "references": [
+     "2CH 14:9-10",
+     "2CH 14:12"
+    ],
+    "ukr": "було місцем, де Господь побив кушеян перед Асою",
+    "deu": "war der Ort, wo der HERR die Mohren vor Asa schlug",
+    "spa": "fue el lugar donde el SEÑOR deshizo a los etiopes delante de Asa"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

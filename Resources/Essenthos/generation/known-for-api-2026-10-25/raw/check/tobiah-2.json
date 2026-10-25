@@ -1,0 +1,49 @@
+{
+ "slug": "tobiah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.640671+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verse 4:3 gives only Tobiah's saying about the fox; it does not say he mocked, and Jerusalem is not named there.",
+    "english": "said that if a fox went up, it would break down the Jews' stone wall",
+    "references": [
+     "NEH 4:2-3"
+    ],
+    "ukr": "сказав, що коли вийде лисиця, то зруйнує камінну стіну юдеїв",
+    "deu": "sagte, wenn Füchse hinaufzögen, zerrissen sie wohl die steinerne Mauer der Juden",
+    "spa": "dijo que si subiere una zorra, derribaría el muro de piedra de los Judíos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "hired a false prophet to frighten Nehemiah, and sent letters to put him in fear",
+    "references": [
+     "NEH 6:12-13",
+     "NEH 6:19"
+    ],
+    "ukr": "підкупив лжепророка, щоб налякати Неемію, і посилав листи, щоб настрахати його",
+    "deu": "bestach einen falschen Propheten, um Nehemia zu erschrecken, und sandte Briefe, um ihn abzuschrecken",
+    "spa": "alquiló a un falso profeta para atemorizar a Nehemías, y envió cartas para atemorizarlo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was given a great chamber in the courts of the house of God, from which Nehemiah cast out his goods",
+    "references": [
+     "NEH 13:4-5",
+     "NEH 13:7-8"
+    ],
+    "ukr": "дістав велику комору на подвір'ях Божого дому, з якої Неемія повикидав його речі",
+    "deu": "bekam eine große Kammer im Hofe am Hause Gottes, aus der Nehemia seine Geräte hinauswarf",
+    "spa": "recibió una gran cámara en los patios de la casa de Dios, de la cual Nehemías echó sus alhajas"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

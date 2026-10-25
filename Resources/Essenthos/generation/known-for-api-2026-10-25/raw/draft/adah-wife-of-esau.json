@@ -1,0 +1,17 @@
+{
+ "slug": "adah-wife-of-esau",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.027631+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Adah as Esau's wife and the mother of Eliphaz in a genealogy, which the summary already gives, so no further deed or event is stated.",
+  "clauses": [],
+  "doubts": [
+   "GEN 26:34 names Bashemath the daughter of Elon, which may be the same woman as Adah under another name, but the verses do not say so."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,47 @@
+{
+ "slug": "berea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.284237+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says they went into the synagogue, not that they preached there.",
+    "english": "was where Paul and Silas were sent by night and went into the synagogue",
+    "references": [
+     "ACT 17:10"
+    ],
+    "ukr": "була місцем, куди вночі відіслали Павла й Силу і де вони пішли в синагогу юдейську",
+    "deu": "war der Ort, wohin Paulus und Silas bei Nacht abgefertigt wurden und wo sie in die Judenschule gingen",
+    "spa": "fue el lugar adonde enviaron de noche a Pablo y a Silas, y donde entraron en la sinagoga de los Judíos"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 12 (many believed) is not needed for what the clause says.",
+    "english": "was where the people received the word readily and searched the scriptures daily",
+    "references": [
+     "ACT 17:11"
+    ],
+    "ukr": "була місцем, де люди прийняли слово з повним запалом і щодня досліджували Писання",
+    "deu": "war der Ort, wo die Leute das Wort ganz willig aufnahmen und täglich in der Schrift forschten",
+    "spa": "fue el lugar donde la gente recibió la palabra con toda solicitud y escudriñó cada día las Escrituras"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse does not say the people were stirred up against Paul.",
+    "english": "was where Jews from Thessalonica came and stirred up the people",
+    "references": [
+     "ACT 17:13"
+    ],
+    "ukr": "була місцем, куди прибули солунські юдеї і де баламутили народ",
+    "deu": "war der Ort, wohin die Juden von Thessalonich kamen und das Volk bewegten",
+    "spa": "fue el lugar adonde fueron los Judíos de Tesalónica y tumultuaron al pueblo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,59 @@
+{
+ "slug": "joab",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.541668+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "killed Abner to avenge his brother Asahel",
+    "references": [
+     "2SA 3:27",
+     "2SA 3:30"
+    ],
+    "ukr": "убив Авнера за кров свого брата Асаїла",
+    "deu": "tötete Abner um des Bluts seines Bruders Asahel willen",
+    "spa": "mató a Abner a causa de la muerte de su hermano Asael"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say he thrust darts through Absalom's heart while he was alive in the oak; the killing was finished by his armourbearers, and 'hung' is not stated.",
+    "english": "thrust three darts through the heart of Absalom while he was still alive in the oak",
+    "references": [
+     "2SA 18:14"
+    ],
+    "ukr": "устромив три стріли в серце Авесалома, що ще живий був на середині дуба",
+    "deu": "stieß drei Spieße Absalom ins Herz, als er noch an der Eiche lebte",
+    "spa": "hincó tres dardos en el corazón de Absalom, que aún estaba vivo en medio del alcornoque"
+   },
+   {
+    "verdict": "fix",
+    "why": "Joab struck Amasa with the sword in the hand, not 'while greeting'; the greeting detail is how it was done, so trim it.",
+    "english": "killed Amasa with a sword in the fifth rib",
+    "references": [
+     "2SA 20:9-10"
+    ],
+    "ukr": "убив Амасу мечем, ударивши його в живіт",
+    "deu": "tötete Amasa, indem er ihn mit dem Schwert in den Bauch stach",
+    "spa": "mató a Amasa hiriéndolo con la daga en la quinta costilla"
+   },
+   {
+    "verdict": "fix",
+    "why": "Benaiah slew him by Solomon's command; the altar is given in 1KI 2:28-29, and the citation should include the fleeing; the clause's subject must remain Joab.",
+    "english": "was slain by Benaiah on Solomon's order after he fled to the altar",
+    "references": [
+     "1KI 2:28-34"
+    ],
+    "ukr": "був убитий Бенаєю за наказом Соломона після того, як утік до жертівника",
+    "deu": "wurde auf Salomos Befehl von Benaja getötet, nachdem er zum Altar geflohen war",
+    "spa": "fue muerto por Benaía por orden de Salomón después de huir al altar"
+   }
+  ],
+  "note": "The line omits Joab's turning after Adonijah, and his holding back the people after Absalom's death."
+ },
+ "problems": [],
+ "attempts": []
+}

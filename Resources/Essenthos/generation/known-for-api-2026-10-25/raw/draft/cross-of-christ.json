@@ -1,0 +1,41 @@
+{
+ "slug": "cross-of-christ",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.601430+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was done with the cross and what happened on it: it was carried to Golgotha, Jesus was crucified there, and Pilate's title was set on it.",
+  "clauses": [
+   {
+    "english": "was carried by Jesus to Golgotha",
+    "references": [
+     "JHN 19:17"
+    ],
+    "quote": "he bearing his cross went forth into a place called the place of a skull"
+   },
+   {
+    "english": "was where Jesus was crucified, with two others on either side",
+    "references": [
+     "JHN 19:17-18"
+    ],
+    "quote": "Where they crucified him, and two other with him, on either side one"
+   },
+   {
+    "english": "had Pilate's title, JESUS OF NAZARETH THE KING OF THE JEWS, put on it",
+    "references": [
+     "JHN 19:19"
+    ],
+    "quote": "Pilate wrote a title, and put it on the cross."
+   }
+  ],
+  "doubts": [
+   "JHN 19:18 says where Jesus was crucified without using the word cross; the link comes from verse 17.",
+   "Simon of Cyrene being made to bear the cross (MAT 27:32, MRK 15:21, LUK 23:26) was left out to keep the line short.",
+   "Verses where passers-by and priests say 'come down from the cross' are taunts, not events of the cross, so they were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

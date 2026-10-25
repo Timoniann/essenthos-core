@@ -1,0 +1,36 @@
+{
+ "slug": "mountzion",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.455006+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was chosen by God as the mount he loved",
+    "references": [
+     "PSA 78:68"
+    ],
+    "ukr": "був вибраний Богом як гора, яку Він полюбив",
+    "deu": "wurde von Gott erwählt als der Berg, den er liebte",
+    "spa": "fue escogido por Dios como el monte al cual amó"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "lay desolate, with foxes walking on it",
+    "references": [
+     "LAM 5:18"
+    ],
+    "ukr": "був спустошений, і лисиці бродили по ньому",
+    "deu": "lag wüst, und die Füchse liefen darüber",
+    "spa": "estuvo asolado, y las zorras andaban en él"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,18 @@
+{
+ "slug": "dan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.861621+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses about Dan himself only record his birth and name, which the summary already gives as son of Bilhah, and the rest are lists, censuses and deeds of his tribe.",
+  "clauses": [],
+  "doubts": [
+   "Most marked verses (NUM, JOS, JDG, EXO 31, 35, 38, LEV 24) concern the tribe of Dan or its members, such as Aholiab, Ahiezer and Shelomith, and not the patriarch himself.",
+   "JDG 18 tells of the Danites taking Laish and renaming it Dan, which is a deed of the tribe and not of the patriarch."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

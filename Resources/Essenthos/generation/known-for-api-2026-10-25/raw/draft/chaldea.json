@@ -1,0 +1,33 @@
+{
+ "slug": "chaldea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.089317+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Two events belong to the land itself: Abram's departure from it, and the word of the LORD coming to Ezekiel there; the verses about the Chaldean army and wise men concern the people.",
+  "clauses": [
+   {
+    "english": "was the land Abram came out of before he dwelt in Charran",
+    "references": [
+     "ACT 7:4"
+    ],
+    "quote": "Then came he out of the land of the Chaldaeans"
+   },
+   {
+    "english": "was where the word of the LORD came to Ezekiel among the captives",
+    "references": [
+     "EZK 1:3"
+    ],
+    "quote": "The word of the LORD came expressly unto Ezekiel the priest"
+   }
+  ],
+  "doubts": [
+   "Most marked verses speak of the Chaldeans as a people or army (besieging Jerusalem, wise men, prophecies against Babylon), not of the land, so they were left out.",
+   "The Ur of the Chaldees verses (GEN 11:28, 11:31, 15:7, NEH 9:7) name the city Ur rather than the region, so they were not cited."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

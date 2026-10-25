@@ -1,0 +1,17 @@
+{
+ "slug": "elkanah-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:53:52.246808+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Elkanah in Levitical genealogies and give no deed or event beyond the family relations the summary already states.",
+  "clauses": [],
+  "doubts": [
+   "Several different men named Elkanah appear in these genealogies; 1CH 9:16 also names an Elkanah as an ancestor of Berechiah."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

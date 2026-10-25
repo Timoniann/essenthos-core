@@ -1,0 +1,47 @@
+{
+ "slug": "jeroboam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.639488+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Jeroboam's rise, his division of the kingdom and his golden calves, so a line of the chief events is possible.",
+  "clauses": [
+   {
+    "english": "was told by the prophet Ahijah that he would receive ten tribes of the kingdom",
+    "references": [
+     "1KI 11:29-31"
+    ],
+    "quote": "I will rend the kingdom out of the hand of Solomon, and will give ten tribes to thee"
+   },
+   {
+    "english": "fled into Egypt from Solomon, who sought to kill him",
+    "references": [
+     "1KI 11:40"
+    ],
+    "quote": "Jeroboam arose, and fled into Egypt, unto Shishak king of Egypt"
+   },
+   {
+    "english": "was made king over all Israel when the tribes broke from the house of David",
+    "references": [
+     "1KI 12:20"
+    ],
+    "quote": "made him king over all Israel"
+   },
+   {
+    "english": "made two golden calves and set them in Bethel and Dan",
+    "references": [
+     "1KI 12:28-29"
+    ],
+    "quote": "made two calves of gold"
+   }
+  ],
+  "doubts": [
+   "The summary already names him king of Israel, so the clause on being made king rests on the event of the tribes' choice, which is not just the office.",
+   "Verses 1KI 11:28 and 2KI 14:23-26 partly concern another Jeroboam (son of Joash); I left out the latter and the later verses naming the sins of Jeroboam in other kings' stories."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

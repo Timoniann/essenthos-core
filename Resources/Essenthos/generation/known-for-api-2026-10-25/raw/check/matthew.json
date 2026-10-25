@@ -1,0 +1,25 @@
+{
+ "slug": "matthew",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.157165+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was called by Jesus from the tax booth and rose and followed him",
+    "references": [
+     "MAT 9:9"
+    ],
+    "ukr": "був покликаний Ісусом з митниці, устав і пішов услід за Ним",
+    "deu": "wurde von Jesus vom Zoll gerufen, stand auf und folgte ihm",
+    "spa": "fue llamado por Jesús del banco de los públicos tributos, y se levantó y le siguió"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

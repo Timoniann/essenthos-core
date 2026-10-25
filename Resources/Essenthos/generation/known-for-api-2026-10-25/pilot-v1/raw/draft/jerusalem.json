@@ -1,0 +1,47 @@
+{
+ "slug": "jerusalem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:48:04.196375+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give Jerusalem several events of its own: its capture, the temple built there, its rescue from Sennacherib, and its burning.",
+  "clauses": [
+   {
+    "english": "was taken by Judah and set on fire",
+    "references": [
+     "JDG 1:8"
+    ],
+    "quote": "had fought against Jerusalem, and had taken it"
+   },
+   {
+    "english": "was where Solomon built the house of the LORD",
+    "references": [
+     "2CH 3:1"
+    ],
+    "quote": "Solomon began to build the house of the LORD at Jerusalem"
+   },
+   {
+    "english": "was saved from Sennacherib king of Assyria",
+    "references": [
+     "2CH 32:22"
+    ],
+    "quote": "the LORD saved Hezekiah and the inhabitants of Jerusalem from the hand of Sennacherib"
+   },
+   {
+    "english": "was burned and had its walls broken down by the army of Babylon",
+    "references": [
+     "2KI 25:9-10"
+    ],
+    "quote": "and all the houses of Jerusalem, and every great man's house burnt he with fire"
+   }
+  ],
+  "doubts": [
+   "GEN 14:18 names Salem, not Jerusalem, so it was left out.",
+   "The verses do not clearly say David captured the city, so it was left out.",
+   "Jesus' crucifixion near the city (JHN 19:20) was omitted as only a location."
+  ]
+ },
+ "problems": []
+}

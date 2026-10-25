@@ -1,0 +1,36 @@
+{
+ "slug": "epaphroditus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.462003+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "brought Paul the gifts the Philippians had sent him",
+    "references": [
+     "PHP 4:18"
+    ],
+    "ukr": "приніс Павлові дари, які послали йому філіппійці",
+    "deu": "brachte Paulus, was die Philipper ihm gesandt hatten",
+    "spa": "llevó a Pablo lo que los filipenses le habían enviado"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was sick nearly to death, but God had mercy on him",
+    "references": [
+     "PHP 2:27"
+    ],
+    "ukr": "смертельно хворів, але Бог змилувався над ним",
+    "deu": "war todkrank, aber Gott erbarmte sich über ihn",
+    "spa": "estuvo enfermo a la muerte, pero Dios tuvo misericordia de él"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

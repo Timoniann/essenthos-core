@@ -1,0 +1,19 @@
+{
+ "slug": "sibbecai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.896379+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "побив Сафа, одного з нащадків Рафи, у війні з филистимлянами в Нові",
+    "deu": "schlug Saph, einen der Kinder Raphas, im Krieg mit den Philistern zu Gob",
+    "spa": "mató a Saph, uno de los hijos del gigante, en la guerra contra los filisteos en Gob",
+    "why": "Spanish: 'hirió' (wounded) changed to 'mató' to match 'slew', and 'Filisteos' lowercased to modern usage."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

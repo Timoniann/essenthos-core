@@ -1,0 +1,37 @@
+{
+ "slug": "geba",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.737847+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jonathan struck the Philistine garrison",
+    "references": [
+     "1SA 13:3"
+    ],
+    "ukr": "була місцем, де Йонатан побив филистимський гарнізон",
+    "deu": "war der Ort, wo Jonathan die Wache der Philister schlug",
+    "spa": "fue el lugar donde Jonathán hirió la guarnición de los Filisteos"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was built by King Asa with the stones and timber of Ramah",
+    "references": [
+     "1KI 15:22",
+     "2CH 16:6"
+    ],
+    "ukr": "була збудована царем Асою з каміння та дерева Рами",
+    "deu": "wurde vom König Asa mit den Steinen und dem Holz von Rama gebaut",
+    "spa": "fue edificada por el rey Asa con la piedra y la madera de Rama"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

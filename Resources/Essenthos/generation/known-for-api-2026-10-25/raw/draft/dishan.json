@@ -1,0 +1,15 @@
+{
+ "slug": "dishan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.869583+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Dishan among the sons and dukes of Seir the Horite and name his children, which the summary already states.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

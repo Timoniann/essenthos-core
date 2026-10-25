@@ -1,0 +1,47 @@
+{
+ "slug": "midian-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.256096+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Moses fled from Pharaoh and dwelt",
+    "references": [
+     "EXO 2:15"
+    ],
+    "ukr": "був місцем, куди втік Мойсей від фараона й де оселився",
+    "deu": "war der Ort, wohin Mose vor Pharao floh und wo er blieb",
+    "spa": "fue donde Moisés huyó de delante de Faraón y habitó"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "held Israel in its power for seven years and left them greatly impoverished",
+    "references": [
+     "JDG 6:1-6"
+    ],
+    "ukr": "тримав Ізраїля в своїй руці сім літ і довів його до великого зубожіння",
+    "deu": "hielt Israel sieben Jahre in seiner Hand und machte es sehr gering",
+    "spa": "tuvo a Israel en sus manos siete años y lo dejó en gran manera empobrecido"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was subdued before Israel in the days of Gideon",
+    "references": [
+     "JDG 8:28"
+    ],
+    "ukr": "був упокорений перед Ізраїлевими синами за Гедеонових днів",
+    "deu": "wurde vor den Kindern Israel gedemütigt in den Tagen Gideons",
+    "spa": "fue humillado delante de los hijos de Israel en los días de Gedeón"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

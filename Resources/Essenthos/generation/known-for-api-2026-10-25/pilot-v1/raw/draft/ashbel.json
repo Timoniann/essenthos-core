@@ -1,0 +1,16 @@
+{
+ "slug": "ashbel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:47:23.459362+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "Every verse that names Ashbel only lists him among the sons of Benjamin or as the head of the Ashbelite family, which says no more than the summary already does.",
+  "clauses": [],
+  "doubts": [
+   "1CH 7:6 and 1CH 7:10-11 are marked but do not name Ashbel; they concern Jediael and Bilhan, so they were left out."
+  ]
+ },
+ "problems": []
+}

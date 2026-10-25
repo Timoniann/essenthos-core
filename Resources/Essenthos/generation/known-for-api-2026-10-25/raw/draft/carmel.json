@@ -1,0 +1,34 @@
+{
+ "slug": "carmel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.114928+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The settlement Carmel in Judah is the setting of Nabal's sheep-shearing and of David's servants coming to take Abigail as his wife.",
+  "clauses": [
+   {
+    "english": "was where Nabal had his possessions and sheared his sheep",
+    "references": [
+     "1SA 25:2"
+    ],
+    "quote": "he was shearing his sheep in Carmel"
+   },
+   {
+    "english": "was where David's servants came to take Abigail to be his wife",
+    "references": [
+     "1SA 25:40"
+    ],
+    "quote": "David sent us unto thee, to take thee to him to wife."
+   }
+  ],
+  "doubts": [
+   "Verses on mount Carmel (Elijah's contest with the prophets of Baal, Elisha and the Shunammite, the border of Asher) probably concern the mountain, not this settlement, so I left them out.",
+   "Verses calling Abigail, Hezrai or Hezro a Carmelite only name the place of origin, and the prophetic verses (Isaiah, Jeremiah, Amos, Nahum, Song of Solomon) use Carmel as a figure, so none of them gave a clause.",
+   "JOS 12:22 'Jokneam of Carmel' may refer to the mountain district, so it is uncertain whether the summary's Carmel is the same as the settlement in Judah."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

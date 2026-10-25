@@ -1,0 +1,47 @@
+{
+ "slug": "ebedmelech",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.410959+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses show him speaking to the king, not Zedekiah by name; 'pleaded' goes slightly beyond that, and the cited run takes in the king's command.",
+    "english": "spoke to the king for Jeremiah, who had been cast into the dungeon",
+    "references": [
+     "JER 38:7-9"
+    ],
+    "ukr": "говорив до царя за Єремію, якого кинули до ями",
+    "deu": "redete mit dem König für Jeremia, den man in die Grube geworfen hatte",
+    "spa": "habló al rey por Jeremías, al cual hicieron echar en la mazmorra"
+   },
+   {
+    "verdict": "fix",
+    "why": "He did not draw Jeremiah up alone: the men with him did it, and the rags were for his armholes.",
+    "english": "with the men drew Jeremiah up out of the dungeon with cords",
+    "references": [
+     "JER 38:11-13"
+    ],
+    "ukr": "з людьми витягнув Єремію з ями шнурами",
+    "deu": "zog mit den Männern Jeremia an Stricken aus der Grube herauf",
+    "spa": "con los hombres sacó a Jeremías de la mazmorra con sogas"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was promised deliverance by the LORD because he trusted in him",
+    "references": [
+     "JER 39:16-18"
+    ],
+    "ukr": "отримав від Господа обіцянку порятунку, бо надіявся на Нього",
+    "deu": "bekam vom HERRN die Verheißung der Rettung, weil er ihm vertraut hatte",
+    "spa": "recibió del SEÑOR la promesa de ser librado, porque tuvo confianza en él"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "pharaoh-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.252935+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "бачив уві сні сім ситих і сім худих корів та сім повних і сім тонких колосків",
+    "deu": "träumte von sieben fetten und sieben mageren Kühen und von sieben vollen und sieben dünnen Ähren",
+    "spa": "soñó con siete vacas gordas y siete flacas, y con siete espigas llenas y siete menudas",
+    "why": ""
+   },
+   {
+    "ukr": "поставив Йосипа над усім єгипетським краєм",
+    "deu": "setzte Joseph über ganz Ägyptenland",
+    "spa": "puso a José sobre toda la tierra de Egipto",
+    "why": ""
+   },
+   {
+    "ukr": "сказав Йосипові оселити свого батька та братів у країні Ґошен",
+    "deu": "sagte Joseph, er solle seinen Vater und seine Brüder im Lande Gosen wohnen lassen",
+    "spa": "dijo a José que hiciera habitar a su padre y a sus hermanos en la tierra de Gosén",
+    "why": "Replaced the archaic «братів його» with the modern «свого батька та братів»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,36 @@
+{
+ "slug": "shechem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.541555+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says only 'this damsel'; Dinah is named in the verse just before, so the citation should take it in.",
+    "english": "asked his father Hamor to get Dinah for him as wife",
+    "references": [
+     "GEN 34:3-4"
+    ],
+    "ukr": "попросив свого батька Гамора взяти для нього Діну за жінку",
+    "deu": "bat seinen Vater Hemor, ihm Dina zum Weibe zu nehmen",
+    "spa": "pidió a su padre Hamor que le tomara a Dina por mujer"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "offered Jacob's sons any dowry they asked for Dinah",
+    "references": [
+     "GEN 34:11-12"
+    ],
+    "ukr": "запропонував синам Якова будь-яке віно, яке вони попросять за Діну",
+    "deu": "bot den Söhnen Jakobs jede Morgengabe an, die sie für Dina fordern würden",
+    "spa": "ofreció a los hijos de Jacob cualquier dote que pidieran por Dina"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

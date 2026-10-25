@@ -1,0 +1,31 @@
+{
+ "slug": "ezekiel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.376983+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "побачив Божі видіння над річкою Кевар, коли відкрилося небо",
+    "deu": "sah Visionen Gottes am Wasser Chebar, als sich der Himmel auftat",
+    "spa": "vio visiones de Dios junto al río de Chebar, cuando los cielos se abrieron",
+    "why": ""
+   },
+   {
+    "ukr": "був поставлений посеред долини, повної сухих кісток, і пророкував, і вони ожили",
+    "deu": "wurde auf ein weites Feld voller verdorrter Totengebeine gestellt und weissagte, und sie wurden wieder lebendig",
+    "spa": "fue puesto en medio de un campo lleno de huesos secos y profetizó, y vivieron",
+    "why": "Added the omitted word 'dry' (сухих, verdorrter, secos) in all three languages."
+   },
+   {
+    "ukr": "втратив жінку, і йому було заборонено голосити",
+    "deu": "verlor seine Frau und durfte keine Totenklage führen",
+    "spa": "perdió a su mujer y le fue prohibido hacer luto",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

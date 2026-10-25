@@ -1,0 +1,35 @@
+{
+ "slug": "zeboiim",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.893928+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give two things that happened to Zeboiim: its king joined battle in the vale of Siddim, and the LORD overthrew it in his anger.",
+  "clauses": [
+   {
+    "english": "went to battle with its king against Chedorlaomer and his allies in the vale of Siddim",
+    "references": [
+     "GEN 14:2",
+     "GEN 14:8"
+    ],
+    "quote": "and the king of Zeboiim, and the king of Bela (the same is Zoar;) and they joined battle with them"
+   },
+   {
+    "english": "was overthrown by the LORD in his anger and wrath",
+    "references": [
+     "DEU 29:23"
+    ],
+    "quote": "which the LORD overthrew in his anger, and in his wrath"
+   }
+  ],
+  "doubts": [
+   "GEN 10:19 only lists Zeboim as a border point, so it was left out.",
+   "HOS 11:8 uses Zeboim as a comparison, not an event, so it was left out.",
+   "DEU 29:23 names the overthrow only in passing, as a comparison for the land's desolation."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

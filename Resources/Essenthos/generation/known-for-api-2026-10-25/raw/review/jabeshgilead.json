@@ -1,0 +1,31 @@
+{
+ "slug": "jabeshgilead",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.534614+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був атакований за те, що ніхто з нього не прийшов на збори до Міцпи, і чотириста незайманих дівчат було взято",
+    "deu": "wurde angegriffen, weil niemand von ihm zur Versammlung nach Mizpa gekommen war, und vierhundert Jungfrauen wurden weggebracht",
+    "spa": "fue atacado porque ninguno de él había venido a la reunión en Mizpa, y fueron tomadas cuatrocientas doncellas",
+    "why": "Replaced archaic «паннів» with «незайманих дівчат» in Ukrainian and archaic «gen» with «nach» in German."
+   },
+   {
+    "ukr": "був обложений аммонітянином Нахашем і врятований Саулом",
+    "deu": "wurde von Nahas, dem Ammoniter, belagert und von Saul gerettet",
+    "spa": "fue sitiado por Naas el amonita y librado por Saúl",
+    "why": "Spanish: added the article and used the lower-case gentilic, «Naas el amonita», for natural modern phrasing."
+   },
+   {
+    "ukr": "мав хоробрих чоловіків, які взяли Саулове тіло з муру Бет-Шану і поховали його кості",
+    "deu": "hatte tapfere Männer, die den Leichnam Sauls von der Mauer zu Beth-Sean nahmen und seine Gebeine begruben",
+    "spa": "tuvo hombres valientes que quitaron el cuerpo de Saúl del muro de Beth-san y sepultaron sus huesos",
+    "why": "Ukrainian: added the missing noun «чоловіків» after «хоробрих»; German: replaced archaic «streitbare» with «tapfere»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

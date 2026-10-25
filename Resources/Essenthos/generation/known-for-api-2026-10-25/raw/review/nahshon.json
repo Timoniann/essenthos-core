@@ -1,0 +1,19 @@
+{
+ "slug": "nahshon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.394561+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "приніс своє приношення першим, першого дня, на освячення жертовника",
+    "deu": "opferte seine Gabe als Erster, am ersten Tag, zur Einweihung des Altars",
+    "spa": "ofreció su ofrenda primero, el primer día, en la dedicación del altar",
+    "why": "All three lacked the English «first» (offered first, as well as on the first day); Ukrainian also modernised «понову жертівника» to «освячення жертовника», and German «Tage» to «Tag»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

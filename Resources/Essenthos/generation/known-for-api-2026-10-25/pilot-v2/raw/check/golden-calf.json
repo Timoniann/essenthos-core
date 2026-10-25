@@ -1,0 +1,37 @@
+{
+ "slug": "golden-calf",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:56:40.345869+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was made by Aaron from the people's golden earrings and worshipped with sacrifices as the gods who brought Israel out of Egypt",
+    "references": [
+     "EXO 32:2-4",
+     "EXO 32:8"
+    ],
+    "ukr": "було зроблене Аароном із золотих сережок народу, і йому поклонялися та приносили жертви як богам, що вивели Ізраїля з єгипетського краю",
+    "deu": "wurde von Aaron aus den goldenen Ohrenringen des Volkes gemacht und angebetet und mit Opfern verehrt als die Götter, die Israel aus Ägyptenland geführt haben",
+    "spa": "fue hecho por Aarón con los zarcillos de oro del pueblo, y fue adorado y se le sacrificó como a los dioses que sacaron a Israel de la tierra de Egipto"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was burnt, ground to powder and scattered on the water by Moses, who made Israel drink of it",
+    "references": [
+     "EXO 32:20"
+    ],
+    "ukr": "було спалене у вогні, змолоте на порох і розсипане на воді Мойсеєм, який напоїв цим синів Ізраїлевих",
+    "deu": "wurde von Mose mit Feuer verbrannt, zu Pulver zermalmt und aufs Wasser gestreut, und er gab es den Kindern Israel zu trinken",
+    "spa": "fue quemado en el fuego, molido hasta reducirlo a polvo y esparcido sobre las aguas por Moisés, que lo dio a beber a los hijos de Israel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

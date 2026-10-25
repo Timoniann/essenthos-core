@@ -1,0 +1,32 @@
+{
+ "slug": "doeg",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:54:52.062846+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two chief deeds of Doeg beyond the summary: his report to Saul and his slaying of the priests at Nob.",
+  "clauses": [
+   {
+    "english": "told Saul he had seen David come to Ahimelech at Nob",
+    "references": [
+     "1SA 22:9-10"
+    ],
+    "quote": "I saw the son of Jesse coming to Nob"
+   },
+   {
+    "english": "slew eighty-five priests at Saul's command",
+    "references": [
+     "1SA 22:18"
+    ],
+    "quote": "he fell upon the priests, and slew on that day fourscore and five persons"
+   }
+  ],
+  "doubts": [
+   "PSA 52:1 repeats the telling of Saul in a psalm title, so it was not cited separately."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

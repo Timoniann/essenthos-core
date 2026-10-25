@@ -1,0 +1,34 @@
+{
+ "slug": "ai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:54:14.626207+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Ai is the place where Israel was first defeated and then took the city by ambush and burned it.",
+  "clauses": [
+   {
+    "english": "routed Israel's first attack, killing about thirty-six men",
+    "references": [
+     "JOS 7:4-5"
+    ],
+    "quote": "the men of Ai smote of them about thirty and six men"
+   },
+   {
+    "english": "was taken by an ambush and burnt by Joshua into a heap for ever",
+    "references": [
+     "JOS 8:19-21",
+     "JOS 8:28"
+    ],
+    "quote": "Joshua burnt Ai, and made it an heap for ever"
+   }
+  ],
+  "doubts": [
+   "Genesis verses spell the name Hai and only place Abram's tent beside it, so they were left out.",
+   "The Ezra and Nehemiah verses only list the men of Bethel and Ai, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

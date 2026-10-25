@@ -1,0 +1,25 @@
+{
+ "slug": "valleyofsalt",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.518031+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Давид побив вісімнадцять тисяч арамеян",
+    "deu": "war der Ort, wo David achtzehntausend Syrer schlug",
+    "spa": "fue el lugar donde David hirió a dieciocho mil siros",
+    "why": "Spanish: modernized 'diez y ocho' to 'dieciocho' and lowercased the demonym."
+   },
+   {
+    "ukr": "була місцем, де Амація побив десять тисяч едомців",
+    "deu": "war der Ort, wo Amazja zehntausend Edomiter schlug",
+    "spa": "fue el lugar donde Amasías hirió a diez mil idumeos",
+    "why": "Spanish: lowercased the demonym 'idumeos' as in modern usage."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

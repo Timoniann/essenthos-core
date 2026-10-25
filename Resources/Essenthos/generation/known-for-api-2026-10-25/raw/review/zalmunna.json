@@ -1,0 +1,25 @@
+{
+ "slug": "zalmunna",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.511813+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "утік від Гедеона й був схоплений разом із Зевахом",
+    "deu": "floh vor Gideon und wurde mit Sebah gefangen",
+    "spa": "huyó de Gedeón y fue tomado con Zeba",
+    "why": ""
+   },
+   {
+    "ukr": "був убитий Гедеоном за те, що повбивав його братів на Фаворі",
+    "deu": "wurde von Gideon getötet, weil er seine Brüder bei Thabor getötet hatte",
+    "spa": "fue muerto por Gedeón por haber matado a sus hermanos en Tabor",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

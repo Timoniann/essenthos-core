@@ -1,0 +1,47 @@
+{
+ "slug": "ophrah-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.322151+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the angel of the LORD appeared to Gideon under an oak",
+    "references": [
+     "JDG 6:11-12"
+    ],
+    "ukr": "була місцем, де Ангол Господній явився Гедеонові під дубом",
+    "deu": "war der Ort, wo der Engel des HERRN dem Gideon unter einer Eiche erschien",
+    "spa": "fue el lugar donde el ángel del SEÑOR se apareció a Gedeón debajo de un alcornoque"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says Gideon put the ephod in Ophrah, not that he made it there; the snare was to Gideon and his house.",
+    "english": "was where Gideon put an ephod that all Israel went after, a snare to him and his house",
+    "references": [
+     "JDG 8:27"
+    ],
+    "ukr": "була місцем, де Гедеон поставив ефод, за яким пішов увесь Ізраїль і який став пасткою для нього та його дому",
+    "deu": "war der Ort, wo Gideon einen Leibrock aufstellte, dem ganz Israel nachging und der ihm und seinem Hause zum Fall geriet",
+    "spa": "fue el lugar donde Gedeón puso un ephod, tras el cual fue todo Israel y que fue tropiezo para él y su casa"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Abimelech slew his seventy brethren upon one stone",
+    "references": [
+     "JDG 9:5"
+    ],
+    "ukr": "була місцем, де Авімелех повбивав своїх сімдесят братів на одному камені",
+    "deu": "war der Ort, wo Abimelech seine siebzig Brüder auf einem Stein erwürgte",
+    "spa": "fue el lugar donde Abimelech mató a sus setenta hermanos sobre una piedra"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

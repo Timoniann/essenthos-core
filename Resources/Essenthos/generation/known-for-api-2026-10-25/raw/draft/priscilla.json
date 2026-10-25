@@ -1,0 +1,33 @@
+{
+ "slug": "priscilla",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.633481+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give two deeds beyond the summary: taking Apollos aside to teach him, and risking their necks for Paul's life.",
+  "clauses": [
+   {
+    "english": "took Apollos aside and expounded the way of God to him more perfectly",
+    "references": [
+     "ACT 18:26"
+    ],
+    "quote": "they took him unto them, and expounded unto him the way of God more perfectly"
+   },
+   {
+    "english": "laid down their own necks for Paul's life",
+    "references": [
+     "ROM 16:3-4"
+    ],
+    "quote": "Who have for my life laid down their own necks"
+   }
+  ],
+  "doubts": [
+   "The summary calls Aquila's wife Priscilla a companion of 'Saul', which presumably means Paul; I took Paul as the person meant in the verses.",
+   "ROM 16:4 says 'their' necks, which covers both Priscilla and Aquila; I read it as applying to Priscilla too."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

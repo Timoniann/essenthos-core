@@ -1,0 +1,36 @@
+{
+ "slug": "aquila",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.628626+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say they took him to them, not aside, and that they expounded to him, with Priscilla.",
+    "english": "took Apollos to them with Priscilla and explained the way of God to him more perfectly",
+    "references": [
+     "ACT 18:24-26"
+    ],
+    "ukr": "прийняв Аполлоса разом з Прискиллою і докладніше розповів йому про дорогу Господню",
+    "deu": "nahm Apollos mit Priscilla zu sich und legte ihm den Weg Gottes noch fleißiger aus",
+    "spa": "tomó a Apolos con Priscila y le declaró más particularmente el camino de Dios"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "laid down their own necks for Paul's life, with Priscilla",
+    "references": [
+     "ROM 16:3-4"
+    ],
+    "ukr": "поклали свої голови за життя Павла разом з Прискиллою",
+    "deu": "gaben ihren Hals für das Leben des Paulus dahin, zusammen mit Priscilla",
+    "spa": "pusieron sus cuellos por la vida de Pablo, con Priscila"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,44 @@
+{
+ "slug": "ark-of-the-covenant",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:02:38.383624+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of the ark's capture, its power at the Jordan, and its journeys to Jerusalem and the temple, so a line of its chief events can be written.",
+  "clauses": [
+   {
+    "english": "was borne into the Jordan, and Israel crossed on dry ground",
+    "references": [
+     "JOS 3:15-17"
+    ],
+    "quote": "stood firm on dry ground in the midst of Jordan"
+   },
+   {
+    "english": "was taken by the Philistines in battle",
+    "references": [
+     "1SA 4:10-11"
+    ],
+    "quote": "And the ark of God was taken"
+   },
+   {
+    "english": "was brought up by David into the city of David",
+    "references": [
+     "2SA 6:12"
+    ],
+    "quote": "brought up the ark of God from the house of Obededom into the city of David"
+   },
+   {
+    "english": "was set in the most holy place of Solomon's temple",
+    "references": [
+     "1KI 8:6"
+    ],
+    "quote": "unto his place, into the oracle of the house, to the most holy place"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

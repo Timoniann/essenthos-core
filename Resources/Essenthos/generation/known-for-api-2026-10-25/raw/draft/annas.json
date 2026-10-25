@@ -1,0 +1,27 @@
+{
+ "slug": "annas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.434190+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses show Annas receiving Jesus after his arrest and sending him bound to Caiaphas, which is a deed beyond the summary.",
+  "clauses": [
+   {
+    "english": "received Jesus first after his arrest, then sent him bound to Caiaphas",
+    "references": [
+     "JHN 18:12-13",
+     "JHN 18:24"
+    ],
+    "quote": "Now Annas had sent him bound unto Caiaphas the high priest."
+   }
+  ],
+  "doubts": [
+   "LUK 3:2 and ACT 4:6 give only his office and the gathering of rulers, so they were not used as clauses.",
+   "ACT 4:6 says only that he was gathered with the rulers; the questioning of Peter is not stated of him."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

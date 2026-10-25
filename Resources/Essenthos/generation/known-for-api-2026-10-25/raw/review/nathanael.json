@@ -1,0 +1,25 @@
+{
+ "slug": "nathanael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.663987+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був знайдений Пилипом, який сказав йому, що вони знайшли Того, про Кого писав Мойсей",
+    "deu": "wurde von Philippus gefunden, der ihm sagte, sie hätten den gefunden, von dem Moses geschrieben hat",
+    "spa": "fue hallado por Felipe, quien le dijo que habían hallado a aquel de quien escribió Moisés",
+    "why": ""
+   },
+   {
+    "ukr": "визнав Ісуса Сином Божим і Царем Ізраїлевим після того, як Ісус побачив його під фіґовим деревом",
+    "deu": "bekannte Jesus als Gottes Sohn und König von Israel, nachdem Jesus ihn unter dem Feigenbaum gesehen hatte",
+    "spa": "confesó a Jesús como el Hijo de Dios y el Rey de Israel después de que Jesús lo vio debajo de la higuera",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

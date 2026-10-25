@@ -1,0 +1,25 @@
+{
+ "slug": "memucan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.067718+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Memucan is known for one event, his counsel to the king about Vashti, which the king followed.",
+  "clauses": [
+   {
+    "english": "advised the king that Vashti should come no more before him",
+    "references": [
+     "EST 1:16-19"
+    ],
+    "quote": "That Vashti come no more before king Ahasuerus"
+   }
+  ],
+  "doubts": [
+   "EST 2:15 and EST 2:20 are marked but speak of Esther, not Memucan, so I left them out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -35,6 +35,7 @@ internal static class DeskEndpoints
         routes.MapGet("/summary", async (
             ThingReview things,
             WikipediaReview wikipedia,
+            KnownForReview knownFor,
             PortraitBoard portraits,
             ChangeLog log,
             CancellationToken cancellationToken) =>
@@ -45,6 +46,7 @@ internal static class DeskEndpoints
                     "There is no list of open questions in the review folder."),
                 Count("records", () => things.Unreviewed(), null),
                 Count("wikipedia", () => wikipedia.Unanswered(), null),
+                Count("known-for", () => knownFor.Unanswered(), null),
             };
 
             try
@@ -114,6 +116,17 @@ internal static class DeskEndpoints
                 ? Results.Ok(answered)
                 : Results.UnprocessableEntity(new ProblemResponse(
                     "That record is not in the list, or the answer is not one of its items. Reload the list and answer again.")));
+    }
+
+    public static void MapKnownForReview(this RouteGroupBuilder routes)
+    {
+        routes.MapGet("/review/known-for", (KnownForReview review) => review.Read());
+
+        routes.MapPut("/review/known-for/{slug}", async (string slug, KnownForAnswerRequest request, KnownForReview review) =>
+            await review.Answer(slug, request) is { } answered
+                ? Results.Ok(answered)
+                : Results.UnprocessableEntity(new ProblemResponse(
+                    "That record is not in the list, or the answer is neither approved nor rejected. Reload the list and answer again.")));
     }
 
     public static void MapPortraits(this RouteGroupBuilder routes)

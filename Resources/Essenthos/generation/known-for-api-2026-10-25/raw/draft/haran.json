@@ -1,0 +1,25 @@
+{
+ "slug": "haran",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.325214+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give one event of his own, his death before his father Terah in Ur, beyond the family ties the summary already shows.",
+  "clauses": [
+   {
+    "english": "died before his father Terah in Ur of the Chaldees",
+    "references": [
+     "GEN 11:28"
+    ],
+    "quote": "Haran died before his father Terah"
+   }
+  ],
+  "doubts": [
+   "GEN 11:31 is marked but 'Haran' there is the city where Terah's family settled, not this man, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "shechem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.480521+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "попросив свого батька Гамора взяти для нього Діну за жінку",
+    "deu": "bat seinen Vater Hemor, ihm Dina zur Frau zu nehmen",
+    "spa": "pidió a su padre Hamor que le tomara a Dina por mujer",
+    "why": "German: replaced the old-fashioned «zum Weibe» with «zur Frau»."
+   },
+   {
+    "ukr": "запропонував синам Якова будь-яке віно, яке вони попросять за Діну",
+    "deu": "bot den Söhnen Jakobs jeden Brautpreis an, den sie für Dina fordern würden",
+    "spa": "ofreció a los hijos de Jacob cualquier dote que pidieran por Dina",
+    "why": "German: replaced the archaic «Morgengabe» with the modern «Brautpreis» (and adjusted the article)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

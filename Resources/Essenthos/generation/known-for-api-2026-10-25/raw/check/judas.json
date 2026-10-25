@@ -1,0 +1,47 @@
+{
+ "slug": "judas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.382519+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "agreed with the chief priests to betray Jesus for thirty pieces of silver",
+    "references": [
+     "MAT 26:14-16"
+    ],
+    "ukr": "домовився з первосвящениками видати Ісуса за тридцять срібняків",
+    "deu": "verabredete mit den Hohenpriestern, Jesus für dreißig Silberlinge zu verraten",
+    "spa": "convino con los príncipes de los sacerdotes entregar a Jesús por treinta piezas de plata"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say the crowd was sent by the chief priests, only that it came from them; the kiss was a sign to the crowd.",
+    "english": "betrayed Jesus with a kiss to a crowd from the chief priests and elders",
+    "references": [
+     "MAT 26:47-49"
+    ],
+    "ukr": "видав Ісуса поцілунком натовпові від первосвящеників і старших народу",
+    "deu": "verriet Jesus mit einem Kuss an eine Schar von den Hohenpriestern und Ältesten des Volks",
+    "spa": "entregó a Jesús con un beso a una multitud de parte de los príncipes de los sacerdotes y de los ancianos del pueblo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "repented, cast down the silver in the temple, and hanged himself",
+    "references": [
+     "MAT 27:3-5"
+    ],
+    "ukr": "розкаявся, кинув срібняки в храм і повісився",
+    "deu": "bereute es, warf die Silberlinge in den Tempel und erhängte sich",
+    "spa": "se arrepintió, arrojó las piezas de plata en el templo y se ahorcó"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

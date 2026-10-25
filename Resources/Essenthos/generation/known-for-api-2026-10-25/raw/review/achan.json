@@ -1,0 +1,25 @@
+{
+ "slug": "achan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.248169+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "узяв із заклятого",
+    "deu": "nahm etwas von dem Verbannten",
+    "spa": "tomó del anatema",
+    "why": ""
+   },
+   {
+    "ukr": "був виявлений, признався і був побитий камінням у долині Ахор",
+    "deu": "wurde getroffen, bekannte und wurde im Tal Achor gesteinigt",
+    "spa": "fue tomado, confesó y fue apedreado en el valle de Achôr",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

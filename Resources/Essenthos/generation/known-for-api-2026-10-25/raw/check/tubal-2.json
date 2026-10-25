@@ -1,0 +1,36 @@
+{
+ "slug": "tubal-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.047768+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "traded men and vessels of brass as a merchant",
+    "references": [
+     "EZK 27:13"
+    ],
+    "ukr": "торгував людьми та мідяними речами як купець",
+    "deu": "handelte als Kaufmann mit leibeigenen Leuten und Geräten von Erz",
+    "spa": "comerció como mercader con hombres y vasos de metal"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was a land to which the LORD would send survivors to declare his glory",
+    "references": [
+     "ISA 66:19"
+    ],
+    "ukr": "був краєм, куди Господь мав послати урятованих, щоб вони звістили Його славу",
+    "deu": "war ein Land, zu dem der HERR Gerettete senden wollte, damit sie seine Herrlichkeit verkündigten",
+    "spa": "fue una tierra a la que el SEÑOR enviaría escapados para que publicaran su gloria"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

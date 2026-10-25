@@ -1,0 +1,17 @@
+{
+ "slug": "beyondtheriver",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.822142+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses use Beyond the River only as the name of a Persian administrative region whose governors and tribute appear in the letters and decrees, and no event belongs to the region itself.",
+  "clauses": [],
+  "doubts": [
+   "EZR 6:8 has the king's tribute from beyond the river paying for the temple, but that is an order about revenue rather than an event of the region."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

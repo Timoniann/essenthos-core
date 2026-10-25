@@ -1,0 +1,31 @@
+{
+ "slug": "sodom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:58:44.479996+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був позбавлений маєтку Кедор-Лаомером та його союзниками, які забрали також Лота",
+    "deu": "wurde von Kedor-Laomor und seinen Verbündeten, die auch Lot mitnahmen, seiner Habe beraubt",
+    "spa": "fue despojada de sus riquezas por Chêdorlaomer y sus aliados, que se llevaron también a Lot",
+    "why": "Ukrainian and German: the name now follows Ohienko (Кедор-Лаомер) and Luther (Kedor-Laomor). German: the relative clause is moved so «die» clearly refers to the allies."
+   },
+   {
+    "ukr": "був місцем, де люди міста оточили дім Лота, вимагаючи видати двох ангелів, що прийшли до нього",
+    "deu": "war der Ort, an dem die Männer der Stadt Lots Haus umringten und die zwei Engel forderten, die zu ihm gekommen waren",
+    "spa": "fue el lugar donde los hombres de la ciudad cercaron la casa de Lot y exigieron que les entregaran a los dos ángeles que habían llegado a él",
+    "why": "Spanish: «exigieron a los dos ángeles» made the angels the ones being asked, so it now says the men demanded that the angels be handed over."
+   },
+   {
+    "ukr": "був зруйнований, коли Господь послав на нього з неба дощ із сірки й вогню",
+    "deu": "wurde zerstört, als der HERR Schwefel und Feuer vom Himmel darauf regnen ließ",
+    "spa": "fue destruida cuando el SEÑOR hizo llover sobre ella azufre y fuego desde el cielo",
+    "why": "German: «auf es» replaced by the more natural «darauf»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

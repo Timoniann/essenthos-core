@@ -1,0 +1,31 @@
+{
+ "slug": "samson",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:09:08.710290+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "убив тисячу чоловіків ослячою щелепою",
+    "deu": "erschlug tausend Mann mit einem Eselskinnbacken",
+    "spa": "mató a mil hombres con una quijada de asno",
+    "why": ""
+   },
+   {
+    "ukr": "втратив силу, коли Даліла звеліла обголити його голову, і був осліплений та ув'язнений филистимлянами",
+    "deu": "verlor seine Kraft, als Delila ihm das Haar scheren ließ, und wurde von den Philistern geblendet und gefangen gesetzt",
+    "spa": "perdió su fuerza cuando Dalila le hizo rapar el cabello, y fue cegado y encarcelado por los Filisteos",
+    "why": "Changed the Ukrainian spelling of Delilah's name from Деліла to Даліла, as in the Ohienko translation."
+   },
+   {
+    "ukr": "обвалив дім на филистимлян і помер разом із ними",
+    "deu": "ließ das Haus auf die Philister einstürzen und starb mit ihnen",
+    "spa": "derribó la casa sobre los Filisteos y murió con ellos",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

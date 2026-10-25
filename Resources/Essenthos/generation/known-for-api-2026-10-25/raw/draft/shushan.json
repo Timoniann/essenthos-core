@@ -1,0 +1,41 @@
+{
+ "slug": "shushan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.635490+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several events of the story of Esther happened at Shushan: the decree was given there, the city rejoiced, and the Jews fought there.",
+  "clauses": [
+   {
+    "english": "was where the decree to destroy the Jews was given, and the city was perplexed",
+    "references": [
+     "EST 3:15"
+    ],
+    "quote": "the decree was given in Shushan the palace"
+   },
+   {
+    "english": "rejoiced and was glad when Mordecai went out in royal apparel",
+    "references": [
+     "EST 8:15"
+    ],
+    "quote": "the city of Shushan rejoiced and was glad"
+   },
+   {
+    "english": "was where the Jews slew five hundred men",
+    "references": [
+     "EST 9:6"
+    ],
+    "quote": "in Shushan the palace the Jews slew and destroyed five hundred men"
+   }
+  ],
+  "doubts": [
+   "NEH 1:1, EST 1:2, EST 2:3-8 and DAN 8:2 only place someone at Shushan, so they were not used.",
+   "The marked verses in EST 11 are from the Additions to Esther (Apocrypha) and describe a dream, not an event at Shushan, so they were left out.",
+   "The second day's three hundred slain (EST 9:15) and the hanging of Haman's ten sons (EST 9:14) were left out to keep the line short."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

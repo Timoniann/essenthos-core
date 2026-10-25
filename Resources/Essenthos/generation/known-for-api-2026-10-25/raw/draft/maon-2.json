@@ -1,0 +1,27 @@
+{
+ "slug": "maon-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.382650+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The wilderness of Maon is where David hid from Saul's pursuit, which is an event of the story beyond a list entry.",
+  "clauses": [
+   {
+    "english": "was where David and his men hid while Saul pursued them",
+    "references": [
+     "1SA 23:24-25"
+    ],
+    "quote": "he pursued after David in the wilderness of Maon"
+   }
+  ],
+  "doubts": [
+   "JOS 15:55 is only a list of towns, so it was left out.",
+   "JDG 10:12 names the Maonites as a people who oppressed Israel; it may not refer to this place, so it was left out.",
+   "1SA 25:2 only says where Nabal lived, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

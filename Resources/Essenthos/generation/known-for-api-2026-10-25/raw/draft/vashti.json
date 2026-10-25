@@ -1,0 +1,34 @@
+{
+ "slug": "vashti",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.508411+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two events of Vashti: her refusal of the king's summons and the resulting loss of her royal place.",
+  "clauses": [
+   {
+    "english": "refused to come at the king's command when he sent for her",
+    "references": [
+     "EST 1:11-12"
+    ],
+    "quote": "the queen Vashti refused to come at the king's commandment"
+   },
+   {
+    "english": "was barred from the king's presence and replaced as queen by Esther",
+    "references": [
+     "EST 1:19-21",
+     "EST 2:17"
+    ],
+    "quote": "That Vashti come no more before king Ahasuerus"
+   }
+  ],
+  "doubts": [
+   "Marked verses EST 3:1 and EST 3:4 do not concern Vashti and were left out.",
+   "EST 1:9 (her feast for the women) and the marked verses of EST 2:9-15 about Esther were left out as minor or not about Vashti."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

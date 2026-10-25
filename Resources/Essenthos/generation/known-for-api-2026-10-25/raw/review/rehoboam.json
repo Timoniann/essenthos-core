@@ -1,0 +1,25 @@
+{
+ "slug": "rehoboam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.568827+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "жорстоко відповів народові, а Ізраїль пішов до своїх наметів",
+    "deu": "gab dem Volk eine harte Antwort, und Israel ging in seine Zelte",
+    "spa": "respondió al pueblo duramente, y Israel se fue a sus tiendas",
+    "why": "Replaced the old words for 'tents' (German Hütten, Spanish estancias) with modern Zelte and tiendas."
+   },
+   {
+    "ukr": "зазнав нападу в Єрусалимі від Шушака, єгипетського царя, який забрав скарби Господнього дому",
+    "deu": "wurde bei Jerusalem von Sisak, dem König in Ägypten, angegriffen, der die Schätze aus dem Haus des HERRN nahm",
+    "spa": "fue atacado en Jerusalén por Sisac, rey de Egipto, que tomó los tesoros de la casa del SEÑOR",
+    "why": "Ukrainian: fixed 'на Єрусалим' to 'в Єрусалимі'. German: modernized 'Hause' to 'Haus'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

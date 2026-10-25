@@ -1,0 +1,19 @@
+{
+ "slug": "bozrah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.485846+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була приречена присягою Господа стати спустошенням і прокляттям",
+    "deu": "wurde durch den Schwur des HERRN zur Verwüstung und zum Fluch bestimmt",
+    "spa": "fue destinada por el juramento del SEÑOR a ser desolación y maldición",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

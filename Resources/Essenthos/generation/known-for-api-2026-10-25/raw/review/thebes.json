@@ -1,0 +1,19 @@
+{
+ "slug": "thebes",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.305835+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був відведений у полон",
+    "deu": "wurde in die Gefangenschaft weggeführt",
+    "spa": "fue llevada en cautiverio",
+    "why": "Ukrainian changed from active 'went into exile' to the passive 'was carried away into captivity' (masculine, as Но is); German replaced the old-fashioned 'musste vertrieben werden und gefangen wegziehen' with a modern passive matching the English."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

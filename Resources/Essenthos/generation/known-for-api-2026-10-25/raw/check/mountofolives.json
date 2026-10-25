@@ -1,0 +1,49 @@
+{
+ "slug": "mountofolives",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.825546+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was climbed weeping by David and all his people",
+    "references": [
+     "2SA 15:30"
+    ],
+    "ukr": "була місцем, куди плачучи зійшли Давид і весь його народ",
+    "deu": "war der Berg, den David und alles Volk weinend hinangingen",
+    "spa": "fue la cuesta que David y todo su pueblo subieron llorando"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jesus sat and was asked about the sign of his coming",
+    "references": [
+     "MAT 24:3",
+     "MRK 13:3-4"
+    ],
+    "ukr": "була місцем, де сидів Ісус, коли в Нього спитали про ознаку Його приходу",
+    "deu": "war der Ort, an dem Jesus saß und nach dem Zeichen seiner Zukunft gefragt wurde",
+    "spa": "fue el lugar donde Jesús se sentó y le preguntaron por la señal de su venida"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Jesus went with his disciples after they sang the hymn",
+    "references": [
+     "MAT 26:30",
+     "MRK 14:26"
+    ],
+    "ukr": "була місцем, куди пішов Ісус з учнями після співу",
+    "deu": "war der Ort, an den Jesus mit seinen Jüngern nach dem Lobgesang hinausging",
+    "spa": "fue el lugar adonde salió Jesús con sus discípulos después de cantar el himno"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

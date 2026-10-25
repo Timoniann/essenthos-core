@@ -1,0 +1,37 @@
+{
+ "slug": "tekoa-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.537868+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The name Tekoa is in 2CH 11:6, and 'one of his cities' is not stated; the verses say he built cities for defence in Judah, including Tekoa.",
+    "english": "was built by Rehoboam as a city for defence",
+    "references": [
+     "2CH 11:5-6"
+    ],
+    "ukr": "була збудована Рехав'амом як твердинне місто",
+    "deu": "wurde von Rehabeam als Festung gebaut",
+    "spa": "fue edificada por Roboam para fortificar Judá"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say the Tekoites repaired, not that the place sent people; 'two pieces' is the clause's gloss, and a piece beside the nobles' refusal is not needed; keep repairing wall sections, but 'another piece' is the second one.",
+    "english": "was repaired by its people in two places along the wall of Jerusalem",
+    "references": [
+     "NEH 3:5",
+     "NEH 3:27"
+    ],
+    "ukr": "її жителі направляли дві ділянки муру Єрусалима",
+    "deu": "ihre Leute bauten zwei Stücke an der Mauer Jerusalems",
+    "spa": "sus habitantes restauraron dos tramos del muro de Jerusalén"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

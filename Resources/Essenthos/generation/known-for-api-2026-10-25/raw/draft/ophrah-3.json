@@ -1,0 +1,39 @@
+{
+ "slug": "ophrah-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.553339+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several events of Gideon's story happened at Ophrah, and the verses state them plainly.",
+  "clauses": [
+   {
+    "english": "was where the angel of the LORD appeared to Gideon under an oak",
+    "references": [
+     "JDG 6:11-12"
+    ],
+    "quote": "there came an angel of the LORD, and sat under an oak which was in Ophrah"
+   },
+   {
+    "english": "was where Gideon made an ephod that all Israel went after as a snare",
+    "references": [
+     "JDG 8:27"
+    ],
+    "quote": "Gideon made an ephod thereof, and put it in his city, even in Ophrah"
+   },
+   {
+    "english": "was where Abimelech slew his seventy brethren upon one stone",
+    "references": [
+     "JDG 9:5"
+    ],
+    "quote": "went unto his father's house at Ophrah, and slew his brethren the sons of Jerubbaal"
+   }
+  ],
+  "doubts": [
+   "Gideon's altar Jehovahshalom (JDG 6:24) and his burial (JDG 8:32) at Ophrah were left out to keep the line short."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "japheth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.310352+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "ввійшов до ковчегу з родиною того самого дня, коли почався потоп",
+    "deu": "ging mit seiner Familie am selben Tag, als die Sintflut begann, in die Arche",
+    "spa": "entró en el arca con su familia el mismo día en que comenzó el diluvio",
+    "why": "German: replaced Luther's old word «Kasten» with «Arche» and modernised «Tage» to «Tag»."
+   },
+   {
+    "ukr": "разом із Симом прикрив одягом наготу свого батька Ноя",
+    "deu": "deckte zusammen mit Sem die Blöße seines Vaters Noah mit einem Gewand zu",
+    "spa": "con Sem cubrió con una ropa la desnudez de su padre Noé",
+    "why": "Ukrainian: replaced the archaic «одежиною» with «одягом». German: replaced «Kleid» with «Gewand» and removed the clumsy double «mit»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

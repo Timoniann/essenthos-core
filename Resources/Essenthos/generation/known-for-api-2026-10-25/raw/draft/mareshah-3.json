@@ -1,0 +1,35 @@
+{
+ "slug": "mareshah-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.469365+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Mareshah was fortified as a city of Judah and was the site of Asa's battle against Zerah the Ethiopian.",
+  "clauses": [
+   {
+    "english": "was built up as one of the fenced cities of Judah",
+    "references": [
+     "2CH 11:8",
+     "2CH 11:10"
+    ],
+    "quote": "And Gath, and Mareshah, and Ziph,"
+   },
+   {
+    "english": "was where the LORD routed Zerah the Ethiopian's great host before Asa",
+    "references": [
+     "2CH 14:9-12"
+    ],
+    "quote": "So the LORD smote the Ethiopians before Asa, and before Judah"
+   }
+  ],
+  "doubts": [
+   "The verses given do not name Rehoboam as the builder of the fenced cities, so the first clause leaves him unnamed.",
+   "JOS 15:44 only lists Mareshah among Judah's towns, and MIC 1:15 is a prophecy, so neither is used.",
+   "2CH 20:37 names Eliezer of Mareshah, but it concerns his origin, not an event of the place."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "asa",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.634845+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "переміг кушеянина Зераха, коли Господь побив кушеян",
+    "deu": "besiegte Serah, den Äthiopier, als der HERR die Äthiopier schlug",
+    "spa": "derrotó a Zera el etíope cuando el SEÑOR deshizo a los etíopes",
+    "why": "German: replaced the outdated 'Mohr' with 'Äthiopier'. Spanish: 'Etiope' is now lower-case 'etíope' with its accent."
+   },
+   {
+    "ukr": "позбавив свою матір Мааху права бути царицею й спалив її ідола",
+    "deu": "setzte seine Mutter Maacha als Königin ab und verbrannte ihr Götzenbild",
+    "spa": "privó a su madre Maachâ de ser reina y quemó su ídolo",
+    "why": "German: added the missing 'queen' and replaced the old 'Greuelbild' with 'Götzenbild'. Spanish: 'princesa' changed to 'reina' to match the English 'queen'."
+   },
+   {
+    "ukr": "послав срібло та золото сирійському цареві Бен-Гададові, щоб він порушив умову з Башею",
+    "deu": "sandte Silber und Gold an Benhadad, den König von Syrien, damit er den Bund mit Baesa aufkündigte",
+    "spa": "envió plata y oro a Ben-adad, rey de Siria, para que rompiera su alianza con Baasa",
+    "why": "German: replaced the archaic 'zu' and 'fahren ließe' with modern 'an' and 'aufkündigte'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

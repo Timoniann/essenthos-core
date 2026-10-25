@@ -1,0 +1,59 @@
+{
+ "slug": "shiloh",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.349025+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the tabernacle was set up and Joshua divided the land by lot among the tribes",
+    "references": [
+     "JOS 18:1",
+     "JOS 18:10"
+    ],
+    "ukr": "було місцем, де помістили скинію і де Ісус жеребом поділив Край між племенами",
+    "deu": "war der Ort, wo die Hütte aufgerichtet wurde und Josua das Land durch das Los unter die Stämme verteilte",
+    "spa": "fue el lugar donde se asentó el tabernáculo y donde Josué repartió la tierra por suerte entre las tribus"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the LORD revealed himself to Samuel by his word",
+    "references": [
+     "1SA 3:21"
+    ],
+    "ukr": "було місцем, де Господь явився Самуїлові в слові Господньому",
+    "deu": "war der Ort, wo sich der HERR dem Samuel durch sein Wort offenbarte",
+    "spa": "fue el lugar donde el SEÑOR se manifestó a Samuel con su palabra"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say the ark was carried into battle; they say it was fetched to save Israel after the defeat by the Philistines.",
+    "english": "was where the ark of the covenant was fetched from after Israel's defeat by the Philistines",
+    "references": [
+     "1SA 4:3-4"
+    ],
+    "ukr": "було місцем, звідки взяли ковчег заповіту після поразки Ізраїля від филистимлян",
+    "deu": "war der Ort, von wo man die Lade des Bundes holte, nachdem Israel von den Philistern geschlagen worden war",
+    "spa": "fue el lugar de donde trajeron el arca del pacto después de que Israel fue vencido delante de los filisteos"
+   },
+   {
+    "verdict": "fix",
+    "why": "God forsook the tabernacle of Shiloh, not the place itself.",
+    "english": "was where God forsook the tabernacle",
+    "references": [
+     "PSA 78:60"
+    ],
+    "ukr": "було місцем, де Бог покинув скинію",
+    "deu": "war der Ort, wo Gott die Hütte verließ",
+    "spa": "fue el lugar donde Dios dejó el tabernáculo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

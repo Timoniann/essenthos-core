@@ -1,0 +1,40 @@
+{
+ "slug": "succoth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.613247+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Jacob building a house there, Gideon's dealings with its men, and its naming, so a line of events can be drawn.",
+  "clauses": [
+   {
+    "english": "was where Jacob built a house and made booths for his cattle, giving the place its name",
+    "references": [
+     "GEN 33:17"
+    ],
+    "quote": "built him an house, and made booths for his cattle"
+   },
+   {
+    "english": "refused bread to Gideon's weary men as he pursued Zebah and Zalmunna",
+    "references": [
+     "JDG 8:5-6"
+    ],
+    "quote": "Are the hands of Zebah and Zalmunna now in thine hand"
+   },
+   {
+    "english": "had its elders taught with thorns and briers by Gideon",
+    "references": [
+     "JDG 8:16"
+    ],
+    "quote": "he took the elders of the city, and thorns of the wilderness and briers"
+   }
+  ],
+  "doubts": [
+   "JDG 8:14-15 left out as part of the same event as the punishment of the men of Succoth.",
+   "1KI 7:46, 2CH 4:17 only locate the place and are already in the summary; PSA 60:6 and PSA 108:7 mention the valley of Succoth in a divine declaration, not an event; JOS 13:27 only lists it among the cities of Gad."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "kadmiel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.372515+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "став з Ісусом та його синами наглядати за робітниками в Божому домі",
+    "deu": "stand mit Jesua und seinen Söhnen, um den Arbeitern am Hause Gottes vorzustehen",
+    "spa": "asistió con Jesuá y sus hijos para dar prisa a los que hacían la obra en la casa de Dios",
+    "why": ""
+   },
+   {
+    "ukr": "закликав разом з левитами народ встати та благословити Господа",
+    "deu": "rief mit den Leviten das Volk auf, aufzustehen und den HERRN zu loben",
+    "spa": "exhortó con los levitas al pueblo a levantarse y bendecir al SEÑOR",
+    "why": "Ukrainian now starts with the verb and drops the added 'іншими', 'кликав до Господа' and 'Бога свого'; German drops the added 'cried to the LORD' and 'their God' and gains 'the people' and 'stand up'; Spanish makes 'the people' the object, drops 'su Dios' and the ungrammatical 'a el' becomes 'al'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,31 @@
+{
+ "slug": "gerar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.513816+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де цар Авімелех взяв Сарру, жінку Авраама",
+    "deu": "war der Ort, an dem König Abimelech Sara, die Frau Abrahams, holen ließ",
+    "spa": "fue el lugar donde el rey Abimelech tomó a Sara, mujer de Abraham",
+    "why": ""
+   },
+   {
+    "ukr": "мав пастухів, які сварилися з пастухами Ісака через воду",
+    "deu": "hatte Hirten, die mit den Hirten Isaaks um das Wasser zankten",
+    "spa": "tuvo pastores que riñeron con los pastores de Isaac por el agua",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, аж до якого Аса гнав кушеян, які попадали",
+    "deu": "war der Ort, bis zu dem Asa die Äthiopier jagte, die fielen",
+    "spa": "fue hasta donde Asa siguió a los etíopes, que cayeron",
+    "why": "Added the missing accent in «etíopes» (modern spelling)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

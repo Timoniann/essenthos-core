@@ -1,0 +1,25 @@
+{
+ "slug": "hezekiahs-tunnel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.466953+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був зроблений Єзекією, щоб впровадити воду до міста",
+    "deu": "wurde von Hiskia gemacht, um Wasser in die Stadt zu leiten",
+    "spa": "fue hecho por Ezechîas para meter las aguas en la ciudad",
+    "why": ""
+   },
+   {
+    "ukr": "виводив воду горішнього Ґіхону вдолину на захід від Давидового Міста",
+    "deu": "leitete die obere Wasserquelle in Gihon hinunter, westlich von der Stadt Davids",
+    "spa": "encaminó los manantiales de las aguas de arriba de Gihón hacia abajo, al occidente de la ciudad de David",
+    "why": "Spanish: replaced the garbled 'la de arriba abajo' and the archaic 'manaderos' with clear modern wording."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

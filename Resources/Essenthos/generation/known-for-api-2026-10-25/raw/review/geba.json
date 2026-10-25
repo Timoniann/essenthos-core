@@ -1,0 +1,25 @@
+{
+ "slug": "geba",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.152054+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Йонатан побив филистимський гарнізон",
+    "deu": "war der Ort, wo Jonathan die Wache der Philister schlug",
+    "spa": "fue el lugar donde Jonathán hirió la guarnición de los filisteos",
+    "why": "Spanish: 'Filisteos' lowercased to 'filisteos' per modern orthography."
+   },
+   {
+    "ukr": "була збудована царем Асою з каміння та дерева Рами",
+    "deu": "wurde von König Asa mit den Steinen und dem Holz von Rama gebaut",
+    "spa": "fue edificada por el rey Asa con la piedra y la madera de Rama",
+    "why": "German: 'vom König Asa' changed to 'von König Asa' (standard usage with a title before a name)."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

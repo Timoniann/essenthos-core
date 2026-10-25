@@ -1,0 +1,31 @@
+{
+ "slug": "susa",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.101461+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "були місцем, де збирали багато дівчат і де Естер була взята до царського дому",
+    "deu": "war der Ort, an dem viele Mädchen zusammengebracht wurden und Esther zum Haus des Königs genommen wurde",
+    "spa": "fue el lugar donde se reunieron muchas mozas y Esther fue tomada para la casa del rey",
+    "why": ""
+   },
+   {
+    "ukr": "були місцем, де був виданий царський указ про знищення юдеїв",
+    "deu": "war der Ort, an dem das Edikt des Königs zur Vernichtung der Juden erlassen wurde",
+    "spa": "fue el lugar donde se dio el decreto del rey para destruir a los judíos",
+    "why": "Replaced old wording (Ukrainian «закон на вигублення», German «Gebot… Vertilgung») with modern «указ про знищення» and «Edikt… Vernichtung»."
+   },
+   {
+    "ukr": "були місцем, де юдеї вбили п'ятсот чоловіків, а чотирнадцятого дня місяця адару — ще триста",
+    "deu": "war der Ort, an dem die Juden fünfhundert Mann töteten und am vierzehnten Tag des Monats Adar dreihundert weitere",
+    "spa": "fue el lugar donde los judíos mataron a quinientos hombres, y el catorce del mes de Adar a trescientos más",
+    "why": "Ukrainian: replaced old wording «позабивали п'ять сотень чоловіка… три сотні» with modern «вбили п'ятсот чоловіків… триста», and declined «адару»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

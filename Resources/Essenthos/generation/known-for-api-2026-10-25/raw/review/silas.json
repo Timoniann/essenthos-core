@@ -1,0 +1,31 @@
+{
+ "slug": "silas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.635278+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був вибраний і посланий з Павлом та Варнавою до Антіохії з листом до братів із язичників",
+    "deu": "wurde erwählt und mit Paulus und Barnabas nach Antiochien gesandt, mit einem Schreiben an die Brüder aus den Heiden",
+    "spa": "fue elegido y enviado a Antioquía con Pablo y Bernabé, con una carta a los hermanos gentiles",
+    "why": "Ukrainian: replaced archaic «із поган» with «із язичників»; Spanish: replaced old capitalised «de los Gentiles» with «hermanos gentiles»."
+   },
+   {
+    "ukr": "був вибраний Павлом і вирушив, доручений братами Божій благодаті",
+    "deu": "wurde von Paulus gewählt und zog hin, von den Brüdern der Gnade Gottes anvertraut",
+    "spa": "fue escogido por Pablo y partió, encomendado por los hermanos a la gracia de Dios",
+    "why": "German: replaced archaic «befohlen» with «anvertraut»; Spanish: «del Señor» changed to «de Dios» to match the English «God»."
+   },
+   {
+    "ukr": "був побитий і ув'язнений, а опівночі співав хвалу Богові",
+    "deu": "wurde ausgepeitscht und ins Gefängnis geworfen und lobte um Mitternacht Gott",
+    "spa": "fue azotado y echado en la cárcel, y a media noche cantaba himnos a Dios",
+    "why": "Ukrainian: replaced old «північної пори» with «опівночі» and added the missing «praises» («хвалу»); German: replaced archaic «gestäupt» with «ausgepeitscht»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

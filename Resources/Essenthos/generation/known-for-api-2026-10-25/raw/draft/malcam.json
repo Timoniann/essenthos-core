@@ -1,0 +1,17 @@
+{
+ "slug": "malcam",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.658329+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The only verse that concerns this son of Shaharaim, 1CH 8:9, merely lists him among his father's sons, and the other marked verses speak of the idol Milcom/Malcham, not this man.",
+  "clauses": [],
+  "doubts": [
+   "1KI 11:5, 1KI 11:33, 2KI 23:13 and ZEP 1:5 concern the Ammonite god Milcom/Malcham, not this person, and were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

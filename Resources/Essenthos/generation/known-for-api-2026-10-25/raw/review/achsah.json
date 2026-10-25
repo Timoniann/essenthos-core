@@ -1,0 +1,25 @@
+{
+ "slug": "achsah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.610798+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була обіцяна Калевом за жінку тому, хто здобуде Кір'ят-Сефер, і була дана Отніїлу",
+    "deu": "wurde von Kaleb dem zur Frau versprochen, der Kirjath-Sepher gewinnen würde, und wurde Othniel gegeben",
+    "spa": "fue ofrecida por Caleb por mujer al que tomara Chîriath-sepher, y fue dada a Othoniel",
+    "why": ""
+   },
+   {
+    "ukr": "попросила в батька водні джерела і отримала верхні та нижні джерела",
+    "deu": "bat ihren Vater um Wasserquellen und erhielt die Quellen von oben und unten",
+    "spa": "pidió a su padre fuentes de aguas y recibió las de arriba y las de abajo",
+    "why": "Replaced the archaic «горішні та долішні» with modern «верхні та нижні»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

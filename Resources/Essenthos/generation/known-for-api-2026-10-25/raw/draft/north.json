@@ -1,0 +1,17 @@
+{
+ "slug": "north",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.482346+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses speak only of an unnamed prophesied 'king of the north' in Daniel's vision of kings and wars, not of a place with events of its own, so no clause could rest on them.",
+  "clauses": [],
+  "doubts": [
+   "The marked verses concern a prophesied king called 'of the north', not North as a place in its own right."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

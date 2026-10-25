@@ -1,0 +1,36 @@
+{
+ "slug": "canaan-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.525999+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was promised by God to Abraham and his seed as an everlasting possession",
+    "references": [
+     "GEN 17:8"
+    ],
+    "ukr": "був обіцяний Богом Аврааму та його потомству на вічне володіння",
+    "deu": "wurde von Gott Abraham und seinem Samen zu ewiger Besitzung verheißen",
+    "spa": "fue prometido por Dios a Abraham y a su simiente en heredad perpetua"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say the land was allotted by lot to the nine and a half tribes, not to all the tribes.",
+    "english": "was divided by lot among the nine and a half tribes of Israel as their inheritance",
+    "references": [
+     "JOS 14:1-2"
+    ],
+    "ukr": "був поділений жеребком між дев'ятьма племенами і половиною племени Ізраїлевих синів як їхній спадок",
+    "deu": "wurde durchs Los unter die neuneinhalb Stämme der Kinder Israel als Erbteil verteilt",
+    "spa": "fue repartido por suerte entre las nueve tribus y media de los hijos de Israel como heredad"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

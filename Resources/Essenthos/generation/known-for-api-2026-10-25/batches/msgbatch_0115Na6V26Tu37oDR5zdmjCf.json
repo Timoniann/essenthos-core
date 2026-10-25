@@ -1,0 +1,13 @@
+{
+ "failures": {},
+ "refused": {
+  "jehoshaphat-3": [
+   "clause 2: no ukr",
+   "clause 2: no spa",
+   "clause 2: the LORD is not «el SEÑOR» in the Spanish",
+   "clause 2: the LORD is not «Господь» in the Ukrainian",
+   "clause 3: no ukr",
+   "clause 3: the LORD is not «Господь» in the Ukrainian"
+  ]
+ }
+}

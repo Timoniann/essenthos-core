@@ -1,0 +1,28 @@
+{
+ "slug": "jahaz",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.472402+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Jahaz is where Sihon came out and fought Israel and was defeated, an event the summary does not state.",
+  "clauses": [
+   {
+    "english": "was where King Sihon gathered his people and fought against Israel",
+    "references": [
+     "NUM 21:23",
+     "DEU 2:32",
+     "JDG 11:20"
+    ],
+    "quote": "Then Sihon came out against us, he and all his people, to fight at Jahaz."
+   }
+  ],
+  "doubts": [
+   "The verses naming Jahaza/Jahazah/Jahzah in the lists of Reuben's cities and the Levitical cities only list it, so they were left out.",
+   "The defeat of Sihon is stated in the verses after the battle, not as happening at Jahaz itself, so only the battle is claimed."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

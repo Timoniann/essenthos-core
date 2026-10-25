@@ -1,0 +1,25 @@
+{
+ "slug": "valleyofachor",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.415128+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The valley is where Achan and his household were stoned and burned, and it received its name there.",
+  "clauses": [
+   {
+    "english": "was where Achan and his household were stoned and burned, and the place was named for it",
+    "references": [
+     "JOS 7:24-26"
+    ],
+    "quote": "Wherefore the name of that place was called, The valley of Achor"
+   }
+  ],
+  "doubts": [
+   "ISA 65:10 and HOS 2:15 are promises about the valley, not events, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

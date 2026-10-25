@@ -1,0 +1,19 @@
+{
+ "slug": "pathros",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.348638+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був оголошений Господом таким, що буде спустошений",
+    "deu": "wurde vom HERRN zur Verwüstung bestimmt",
+    "spa": "fue declarado por el SEÑOR para ser asolado",
+    "why": "Spanish participles changed from feminine to masculine to agree with the name Patros."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,16 @@
+{
+ "slug": "elkanah-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v1",
+ "how": "ask",
+ "at": "2026-10-25T15:47:21.244347+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Elkanah in Levite genealogies and say nothing of him beyond his sons and ancestry, which the summary already gives.",
+  "clauses": [],
+  "doubts": [
+   "Several marked verses (1CH 6:23, 6:26, 6:35, 9:16) may concern different men named Elkanah in the same genealogies."
+  ]
+ },
+ "problems": []
+}

@@ -1,0 +1,37 @@
+{
+ "slug": "ahimaaz-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.443797+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses name Ahimaaz and Jonathan together as the bearers; 'escaping Absalom's servants' is covered by hiding in the well, but 'Ahithophel's counsel' is stated and the citation should include 17:18-19 for the escape.",
+    "english": "carried word to King David of Ahithophel's counsel against him, escaping Absalom's servants",
+    "references": [
+     "2SA 17:17-21"
+    ],
+    "ukr": "доніс цареві Давидові про раду Ахітофела проти нього, уникнувши слуг Авесалома",
+    "deu": "sagte dem König David den Rat Ahithophels wider ihn an und entkam den Knechten Absaloms",
+    "spa": "dio aviso al rey David del consejo de Achitophel contra él, escapando de los criados de Absalom"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses give the race but not that the news was of the battle; he ran and outran Cushi, then announced peace and blessed the LORD for the victory.",
+    "english": "outran Cushi, running to bring King David news",
+    "references": [
+     "2SA 18:23",
+     "2SA 18:28"
+    ],
+    "ukr": "випередив кушита, побігши з вісткою до царя Давида",
+    "deu": "kam Chusi zuvor, als er lief, um dem König David Botschaft zu bringen",
+    "spa": "pasó delante de Cusi, corriendo para llevar nuevas al rey David"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

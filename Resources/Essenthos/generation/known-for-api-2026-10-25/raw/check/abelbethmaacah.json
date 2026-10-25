@@ -1,0 +1,47 @@
+{
+ "slug": "abelbethmaacah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.960799+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was besieged by Joab's army pursuing Sheba",
+    "references": [
+     "2SA 20:13-15"
+    ],
+    "ukr": "була облягнута військом Йоава, що гналося за Шевою",
+    "deu": "wurde von Joabs Heer belagert, das Seba nachjagte",
+    "spa": "fue cercada por el ejército de Joab, que perseguía a Seba"
+   },
+   {
+    "verdict": "fix",
+    "why": "\"King of Syria\" is stated in 1KI 15:18, just outside the citation, so the citation is widened.",
+    "english": "was smitten by the captains of Benhadad king of Syria",
+    "references": [
+     "1KI 15:18-20"
+    ],
+    "ukr": "була побита воєначальниками Бен-Гаддада, царя сирійського",
+    "deu": "wurde von den Hauptleuten Benhadads, des Königs von Syrien, geschlagen",
+    "spa": "fue herida por los príncipes de los ejércitos de Ben-adad, rey de Siria"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by Tiglathpileser king of Assyria, and its people carried captive",
+    "references": [
+     "2KI 15:29"
+    ],
+    "ukr": "була взята Тіґлат-Піл'есером, царем асирійським, а її жителів вигнано до Асирії",
+    "deu": "wurde von Thiglath-Pileser, dem König von Assyrien, genommen, und ihre Bewohner wurden nach Assyrien weggeführt",
+    "spa": "fue tomada por Tiglath-pileser, rey de los Asirios, y su gente fue trasportada a Asiria"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

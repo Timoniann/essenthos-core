@@ -1,0 +1,34 @@
+{
+ "slug": "sharon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.404379+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Sharon has one pastoral fact under David and one event in Acts; the Song and Isaiah verses are figures or prophecy.",
+  "clauses": [
+   {
+    "english": "had King David's herds feeding on its plain",
+    "references": [
+     "1CH 27:29"
+    ],
+    "quote": "over the herds that fed in Sharon was Shitrai the Sharonite"
+   },
+   {
+    "english": "saw its people turn to the Lord after Peter healed Aeneas",
+    "references": [
+     "ACT 9:35"
+    ],
+    "quote": "all that dwelt at Lydda and Saron saw him, and turned to the Lord"
+   }
+  ],
+  "doubts": [
+   "SNG 1:17 does not concern Sharon and was left out.",
+   "SNG 2:1 (rose of Sharon) is a figure of speech, not an event.",
+   "ISA 33:9, ISA 35:2 and ISA 65:10 are prophetic images or promises, not events, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

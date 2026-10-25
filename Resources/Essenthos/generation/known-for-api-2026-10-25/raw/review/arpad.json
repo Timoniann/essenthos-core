@@ -1,0 +1,19 @@
+{
+ "slug": "arpad",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.508307+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "засоромився й був у тривожному неспокої, бо почув злу звістку",
+    "deu": "war bestürzt und mutlos, als es schlimme Nachrichten hörte",
+    "spa": "se confundió y se desalentó al oír malas noticias",
+    "why": "German and Spanish: replaced the old wording (jämmerlich, Geschrei; malas nuevas, desmayó) with modern phrasing that matches 'confounded and fainthearted' and 'evil tidings'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

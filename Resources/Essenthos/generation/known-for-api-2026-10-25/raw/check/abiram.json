@@ -1,0 +1,37 @@
+{
+ "slug": "abiram",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.171596+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "refused to come when Moses called him",
+    "references": [
+     "NUM 16:12-14"
+    ],
+    "ukr": "відмовився прийти, коли Мойсей покликав його",
+    "deu": "weigerte sich zu kommen, als Mose ihn rufen ließ",
+    "spa": "se negó a ir cuando Moisés lo mandó llamar"
+   },
+   {
+    "verdict": "fix",
+    "why": "Korah's company is not said to be swallowed with him; the earth swallowed them together with Korah, and the household is in DEU 11:6.",
+    "english": "was swallowed up by the earth with his household and Korah",
+    "references": [
+     "NUM 26:10",
+     "DEU 11:6"
+    ],
+    "ukr": "був поглинений землею разом зі своїм домом і Кореєм",
+    "deu": "wurde von der Erde verschlungen mit seinem Gesinde und mit Korah",
+    "spa": "fue tragado por la tierra con su casa y con Coré"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

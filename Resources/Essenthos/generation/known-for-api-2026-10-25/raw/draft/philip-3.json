@@ -1,0 +1,41 @@
+{
+ "slug": "philip-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.711625+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell two chief deeds of Philip: preaching in Samaria and baptizing the Ethiopian eunuch.",
+  "clauses": [
+   {
+    "english": "preached Christ in Samaria, and many believed and were baptized",
+    "references": [
+     "ACT 8:5-6",
+     "ACT 8:12"
+    ],
+    "quote": "when they believed Philip preaching the things concerning the kingdom of God"
+   },
+   {
+    "english": "preached Jesus to an Ethiopian eunuch and baptized him",
+    "references": [
+     "ACT 8:35-38"
+    ],
+    "quote": "Philip opened his mouth, and began at the same scripture, and preached unto him Jesus."
+   },
+   {
+    "english": "was caught away by the Spirit of the Lord and found at Azotus",
+    "references": [
+     "ACT 8:39-40"
+    ],
+    "quote": "the Spirit of the Lord caught away Philip"
+   }
+  ],
+  "doubts": [
+   "The summary already names the Caesarea residence, so ACT 21:8 was not used for a clause.",
+   "The third clause is a separate event but could be dropped if the line is thought too long."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

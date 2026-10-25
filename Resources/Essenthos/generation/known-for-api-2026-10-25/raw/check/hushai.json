@@ -1,0 +1,38 @@
+{
+ "slug": "hushai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.295708+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say he returned to Jerusalem; he came to Absalom at David's request and pledged to serve him (16:19 completes the pledge).",
+    "english": "went to Absalom as David asked and pledged to serve him",
+    "references": [
+     "2SA 15:32-34",
+     "2SA 16:16-19"
+    ],
+    "ukr": "пішов до Авесалома, як просив Давид, і пообіцяв служити йому",
+    "deu": "ging zu Absalom, wie David ihn gebeten hatte, und versprach, ihm zu dienen",
+    "spa": "fue a Absalom, como David le pidió, y prometió servirle"
+   },
+   {
+    "verdict": "fix",
+    "why": "The LORD appointed the defeat of Ahithophel's counsel, not Hushai's counsel itself.",
+    "english": "gave counsel Absalom preferred to Ahithophel's, for the LORD had set Ahithophel's to fail",
+    "references": [
+     "2SA 17:5-8",
+     "2SA 17:14"
+    ],
+    "ukr": "дав раду, яку Авесалом визнав ліпшою за раду Ахітофела, бо Господь наказав зламати Ахітофелову раду",
+    "deu": "gab einen Rat, den Absalom dem Rat Ahithophels vorzog, denn der HERR hatte bestimmt, dass Ahithophels Rat verhindert würde",
+    "spa": "dio un consejo que Absalom prefirió al de Achitophel, porque el SEÑOR había ordenado que el consejo de Achitophel se frustrara"
+   }
+  ],
+  "note": "The line omits that Hushai sent word through Zadok and Abiathar to warn David (2SA 17:15-16)."
+ },
+ "problems": [],
+ "attempts": []
+}

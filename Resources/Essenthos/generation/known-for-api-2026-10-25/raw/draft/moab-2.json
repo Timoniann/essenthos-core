@@ -1,0 +1,42 @@
+{
+ "slug": "moab-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.008101+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell events that happened in or to Moab: its king hiring Balaam, the death of Moses there, and its defeat under Ehud.",
+  "clauses": [
+   {
+    "english": "sent for Balaam to curse Israel",
+    "references": [
+     "JOS 24:9",
+     "NUM 22:5-6"
+    ],
+    "quote": "sent and called Balaam the son of Beor to curse you"
+   },
+   {
+    "english": "was where Moses died and was buried",
+    "references": [
+     "DEU 34:5-6"
+    ],
+    "quote": "Moses the servant of the LORD died there in the land of Moab"
+   },
+   {
+    "english": "lost ten thousand men and was subdued under Israel",
+    "references": [
+     "JDG 3:29-30"
+    ],
+    "quote": "So Moab was subdued that day under the hand of Israel."
+   }
+  ],
+  "doubts": [
+   "The marked verses naming Hadad who smote Midian in the field of Moab, Shaharaim, Ithmah and Jokim only mention Moab as a place or origin, so they were left out.",
+   "Many marked prophecies against Moab (Isaiah, Jeremiah, Amos, Zephaniah) were left out because they foretell and do not state events that happened.",
+   "Other events (Moab under David, the revolt against Israel, the war with Jehoshaphat) were passed over to keep the line short."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

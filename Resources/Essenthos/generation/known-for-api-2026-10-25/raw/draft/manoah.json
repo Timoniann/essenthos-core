@@ -1,0 +1,30 @@
+{
+ "slug": "manoah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.642307+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Manoah's story in Judges 13 gives two chief events: his prayer for instruction about the promised child and his offering to the LORD, at which the angel ascended in the flame.",
+  "clauses": [
+   {
+    "english": "prayed that the man of God come again to teach them how to raise the promised child",
+    "references": [
+     "JDG 13:8-9"
+    ],
+    "quote": "let the man of God which thou didst send come again unto us"
+   },
+   {
+    "english": "offered a kid on a rock to the LORD, and the angel of the LORD ascended in the flame",
+    "references": [
+     "JDG 13:19-20"
+    ],
+    "quote": "the angel of the LORD ascended in the flame of the altar"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

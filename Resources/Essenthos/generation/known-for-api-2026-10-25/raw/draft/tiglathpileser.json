@@ -1,0 +1,41 @@
+{
+ "slug": "tiglathpileser",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.096319+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give two distinct deeds of Tiglath-pileser beyond the summary: conquering northern Israelite lands and carrying off captives, and answering Ahaz's appeal; the killing of Rezin is already in the summary.",
+  "clauses": [
+   {
+    "english": "took Galilee, Gilead and the land of Naphtali and carried the people captive to Assyria",
+    "references": [
+     "2KI 15:29"
+    ],
+    "quote": "took Ijon, and Abelbethmaachah, and Janoah, and Kedesh, and Hazor, and Gilead, and Galilee"
+   },
+   {
+    "english": "went up against Damascus and took it, answering Ahaz's call for help",
+    "references": [
+     "2KI 16:7-9"
+    ],
+    "quote": "the king of Assyria went up against Damascus, and took it"
+   },
+   {
+    "english": "carried the Reubenites, Gadites and half tribe of Manasseh away to Halah and Habor",
+    "references": [
+     "1CH 5:26"
+    ],
+    "quote": "he carried them away, even the Reubenites, and the Gadites, and the half tribe of Manasseh"
+   }
+  ],
+  "doubts": [
+   "1CH 5:6 and 1CH 5:26 spell the name Tilgathpilneser and 2CH 28:20 Tilgathpilneser; taken as the same king. 1CH 5:26 also names Pul, left out as a possibly separate record.",
+   "ISA 7:17 speaks only of the king of Assyria unnamed, so left out.",
+   "2CH 28:20-21 says he distressed Ahaz and did not help him, which is not clearly a deed apart from 2KI 16:9, so left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

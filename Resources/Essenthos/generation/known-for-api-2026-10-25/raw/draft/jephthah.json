@@ -1,0 +1,43 @@
+{
+ "slug": "jephthah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.605247+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Jephthah's vow, his victory over Ammon, and his war with Ephraim, which add to the summary.",
+  "clauses": [
+   {
+    "english": "vowed a vow to the LORD, and the LORD delivered the children of Ammon into his hands",
+    "references": [
+     "JDG 11:30",
+     "JDG 11:32"
+    ],
+    "quote": "the LORD delivered them into his hands"
+   },
+   {
+    "english": "was met by his only daughter on his return, and did with her according to his vow",
+    "references": [
+     "JDG 11:34",
+     "JDG 11:39"
+    ],
+    "quote": "who did with her according to his vow which he had vowed"
+   },
+   {
+    "english": "fought with Ephraim, and the men of Gilead smote them",
+    "references": [
+     "JDG 12:4"
+    ],
+    "quote": "the men of Gilead smote Ephraim"
+   }
+  ],
+  "doubts": [
+   "JDG 11:39 is cited though not marked, because it states what he did with his daughter; the quote comes from it.",
+   "1SA 12:11 and HEB 11:32 only name him and add nothing, so they were left out.",
+   "The dataset's 300-year event belongs to Jephthah's argument about Israel's dwelling in the land, not to him, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

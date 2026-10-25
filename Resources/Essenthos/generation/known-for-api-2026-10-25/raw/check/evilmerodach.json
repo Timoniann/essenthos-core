@@ -1,0 +1,26 @@
+{
+ "slug": "evilmerodach",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.635422+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "lifted up the head of Jehoiachin king of Judah and brought him out of prison",
+    "references": [
+     "2KI 25:27",
+     "JER 52:31"
+    ],
+    "ukr": "підніс голову Єгояхіна, Юдиного царя, і вивів його з дому ув'язнення",
+    "deu": "hob das Haupt Jojachins, des Königs von Juda, empor und führte ihn aus dem Gefängnis hinaus",
+    "spa": "levantó la cabeza de Joachîn, rey de Judá, y lo sacó de la casa de la cárcel"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

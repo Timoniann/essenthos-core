@@ -1,0 +1,47 @@
+{
+ "slug": "jonathan-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.834842+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Jonathan's own deeds and fate: his raid on the Philistines, his covenant with David, his rescue from Saul's oath, and his death at Gilboa.",
+  "clauses": [
+   {
+    "english": "attacked the Philistine garrison with his armourbearer, and the Philistines fled",
+    "references": [
+     "1SA 14:13-14"
+    ],
+    "quote": "they fell before Jonathan; and his armourbearer slew after him."
+   },
+   {
+    "english": "made a covenant with David, loving him as his own soul",
+    "references": [
+     "1SA 18:3"
+    ],
+    "quote": "Then Jonathan and David made a covenant, because he loved him as his own soul."
+   },
+   {
+    "english": "warned David of Saul's plan to kill him and pleaded for him with Saul",
+    "references": [
+     "1SA 19:1-6"
+    ],
+    "quote": "Jonathan spake good of David unto Saul his father"
+   },
+   {
+    "english": "was slain by the Philistines on mount Gilboa",
+    "references": [
+     "1SA 31:2"
+    ],
+    "quote": "the Philistines slew Jonathan, and Abinadab, and Melchishua, Saul's sons."
+   }
+  ],
+  "doubts": [
+   "1SA 14:39-45 (Jonathan taken by lot for tasting honey and rescued by the people) could be a fifth clause; left out to keep the line short.",
+   "Genealogical verses (1CH 8:33-34, 1CH 9:39-40) and verses naming his son Mephibosheth only relate him to others, so were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

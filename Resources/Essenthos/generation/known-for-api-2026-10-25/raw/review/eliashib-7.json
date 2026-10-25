@@ -1,0 +1,25 @@
+{
+ "slug": "eliashib-7",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.224417+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "встав з братами священиками і збудував та освятив Овечу браму",
+    "deu": "machte sich mit seinen Brüdern, den Priestern, auf und baute und heiligte das Schaftor",
+    "spa": "se levantó con sus hermanos los sacerdotes y edificó y santificó la puerta de las Ovejas",
+    "why": "Spanish: replaced the archaic «aparejó» with «santificó» to match «sanctified»."
+   },
+   {
+    "ukr": "зробив Товійї велику комору в домі Божому",
+    "deu": "machte Tobia eine große Kammer im Haus Gottes",
+    "spa": "hizo para Tobías una gran cámara en la casa de Dios",
+    "why": "German: replaced the archaic «am Hause Gottes» with the modern «im Haus Gottes», which matches «in the house of God»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

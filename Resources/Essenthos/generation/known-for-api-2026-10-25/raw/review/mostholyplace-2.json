@@ -1,0 +1,25 @@
+{
+ "slug": "mostholyplace-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.469953+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було покрите добрим золотом",
+    "deu": "wurde mit dem besten Gold überzogen",
+    "spa": "fue cubierto de buen oro",
+    "why": ""
+   },
+   {
+    "ukr": "прийняло ковчег заповіту Господа під крилами херувимів",
+    "deu": "nahm die Lade des Bundes des HERRN unter den Flügeln der Cherubim auf",
+    "spa": "recibió el arca del pacto del SEÑOR debajo de las alas de los querubines",
+    "why": "Ukrainian: replaced the adjective «Господнього» with the declined noun «Господа», as the rule for the LORD requires."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

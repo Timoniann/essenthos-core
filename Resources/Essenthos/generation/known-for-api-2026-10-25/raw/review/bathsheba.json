@@ -1,0 +1,31 @@
+{
+ "slug": "bathsheba",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.303826+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була взята Давидом і завагітніла від нього",
+    "deu": "wurde von David geholt und wurde von ihm schwanger",
+    "spa": "fue tomada por David y concibió de él",
+    "why": "German: replaced archaic 'ward schwanger' with modern 'wurde ... schwanger'."
+   },
+   {
+    "ukr": "увійшла до старого царя Давида і нагадала йому, що він присягнув, що Соломон царюватиме",
+    "deu": "ging hinein zum alten König David und erinnerte ihn, dass er geschworen hatte, Salomo solle König sein",
+    "spa": "entró a ver al anciano rey David y le recordó que había jurado que Salomón reinaría",
+    "why": "Spanish: replaced ungrammatical 'entró al rey' and the added relative clause with 'entró a ver al anciano rey David'."
+   },
+   {
+    "ukr": "погодилася просити царя Соломона віддати Авішаґ Адонії",
+    "deu": "war bereit, König Salomo zu bitten, Abisag dem Adonia zu geben",
+    "spa": "accedió a pedir al rey Salomón que diera Abisag a Adonía",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

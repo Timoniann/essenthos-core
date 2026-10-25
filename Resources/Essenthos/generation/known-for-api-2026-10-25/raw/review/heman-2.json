@@ -1,0 +1,25 @@
+{
+ "slug": "heman-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.517820+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був поставлений разом з Асафом та Етаном грати на мідяних цимбалах",
+    "deu": "wurde mit Asaph und Ethan bestellt, mit ehernen Zimbeln zu klingen",
+    "spa": "fue constituido con Asaph y Ethán para sonar con címbalos de metal",
+    "why": ""
+   },
+   {
+    "ukr": "був обдарований від Бога чотирнадцятьма синами та трьома дочками",
+    "deu": "bekam von Gott vierzehn Söhne und drei Töchter",
+    "spa": "recibió de Dios catorce hijos y tres hijas",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

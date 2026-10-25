@@ -1,0 +1,31 @@
+{
+ "slug": "heavenly-sanctuary",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.617819+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "розкрилася на небі, і в ній з'явився ковчег Його заповіту",
+    "deu": "wurde im Himmel geöffnet, und die Lade seines Bundes wurde darin gesehen",
+    "spa": "fue abierto en el cielo, y el arca de su testamento fue vista en él",
+    "why": "Ukrainian verb and pronoun made feminine to agree with Небесна святиня; German old 'ward' modernised to 'wurde'."
+   },
+   {
+    "ukr": "відчинилася, і сім Анголів із сімома карами вийшли з неї",
+    "deu": "wurde geöffnet, und die sieben Engel mit den sieben Plagen gingen aus ihm hervor",
+    "spa": "fue abierto, y los siete ángeles con las siete plagas salieron de él",
+    "why": "Ukrainian verb and pronoun made feminine to agree with the record's name; German 'ward aufgetan' modernised to 'wurde geöffnet'."
+   },
+   {
+    "ukr": "переповнилася димом від Божої слави, так що ніхто не спромігся ввійти",
+    "deu": "wurde voll Rauch von der Herrlichkeit Gottes, sodass niemand hineingehen konnte",
+    "spa": "fue lleno de humo por la majestad de Dios, y ninguno podía entrar",
+    "why": "Ukrainian verb made feminine; German 'ward' modernised to 'wurde' and old 'so daß' to 'sodass'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "jehu",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.861360+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses show Jehu delivering the LORD's word against Baasha and rebuking Jehoshaphat, which are deeds beyond the summary's bare office and relation.",
+  "clauses": [
+   {
+    "english": "foretold the end of Baasha's house for walking in the way of Jeroboam",
+    "references": [
+     "1KI 16:1-4"
+    ],
+    "quote": "I will take away the posterity of Baasha, and the posterity of his house"
+   },
+   {
+    "english": "rebuked King Jehoshaphat for helping the ungodly and loving those who hate the LORD",
+    "references": [
+     "2CH 19:2"
+    ],
+    "quote": "Shouldest thou help the ungodly, and love them that hate the LORD?"
+   }
+  ],
+  "doubts": [
+   "1KI 16:7, 1KI 16:12 and 2CH 20:34 are context for the same prophet; 2CH 20:34 only says Jehoshaphat's acts were written in his book, which is not used as a clause.",
+   "The summary names him prophet to Baasha and Jehoshaphat, so clauses state what he said rather than the office."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,40 @@
+{
+ "slug": "eshtaol",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.437701+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several events of the Samson and Danite stories took place at Eshtaol, so it is worth a short line beyond the summary.",
+  "clauses": [
+   {
+    "english": "was where the Spirit of the LORD began to move Samson at times",
+    "references": [
+     "JDG 13:25"
+    ],
+    "quote": "began to move him at times in the camp of Dan"
+   },
+   {
+    "english": "was where Samson was buried in his father Manoah's burying place",
+    "references": [
+     "JDG 16:31"
+    ],
+    "quote": "buried him between Zorah and Eshtaol in the buryingplace of Manoah his father"
+   },
+   {
+    "english": "was where six hundred armed men of Dan set out from, seeking land",
+    "references": [
+     "JDG 18:11"
+    ],
+    "quote": "six hundred men appointed with weapons of war"
+   }
+  ],
+  "doubts": [
+   "Joshua 15:33, Joshua 19:41 and 1 Chronicles 2:53 only list the place or its families, so they were not used.",
+   "The five spies sent out in Judges 18:2 are left out as a lesser step of the same Danite story."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

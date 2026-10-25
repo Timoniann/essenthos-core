@@ -1,0 +1,15 @@
+{
+ "slug": "joel-11",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.367597+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only give Joel's name and parentage and say a word came to him, which the summary already states, and they record no deed or event of his own.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

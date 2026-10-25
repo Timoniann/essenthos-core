@@ -1,0 +1,30 @@
+{
+ "slug": "ezekiels-temple",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.681133+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Beyond the measurements, the marked verses tell of the LORD's glory filling the house and of waters flowing out from it.",
+  "clauses": [
+   {
+    "english": "was filled with the glory of the LORD, which came in by the east gate",
+    "references": [
+     "EZK 43:4-5"
+    ],
+    "quote": "the glory of the LORD filled the house"
+   },
+   {
+    "english": "had waters flowing out from under its threshold eastward",
+    "references": [
+     "EZK 47:1"
+    ],
+    "quote": "waters issued out from under the threshold of the house eastward"
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

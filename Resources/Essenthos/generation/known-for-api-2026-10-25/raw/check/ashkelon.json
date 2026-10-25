@@ -1,0 +1,36 @@
+{
+ "slug": "ashkelon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.142682+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was taken by Judah with its coast",
+    "references": [
+     "JDG 1:18"
+    ],
+    "ukr": "була здобута Юдою разом з її границею",
+    "deu": "wurde von Juda mit ihrem Zugehör gewonnen",
+    "spa": "fue tomada por Judá con su término"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Samson slew thirty men and took their spoil",
+    "references": [
+     "JDG 14:19"
+    ],
+    "ukr": "було місцем, куди Самсон пішов і побив тридцять чоловіка та пороздягав їх",
+    "deu": "war der Ort, wohin Simson ging und dreißig Mann schlug und ihr Gewand nahm",
+    "spa": "fue el lugar adonde Samsón descendió e hirió a treinta hombres y tomó sus despojos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

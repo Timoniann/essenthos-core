@@ -1,0 +1,33 @@
+{
+ "slug": "philippi",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.843819+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of the gospel being spoken at Philippi, where Lydia's heart was opened, and of Paul's companions being shamefully treated there.",
+  "clauses": [
+   {
+    "english": "was where the Lord opened Lydia's heart to Paul's preaching by the river",
+    "references": [
+     "ACT 16:13-14"
+    ],
+    "quote": "whose heart the Lord opened"
+   },
+   {
+    "english": "was where Paul and his companions suffered and were shamefully treated",
+    "references": [
+     "1TH 2:2"
+    ],
+    "quote": "we had suffered before, and were shamefully entreated"
+   }
+  ],
+  "doubts": [
+   "The notes at the end of 1CO 16:24 and 2CO 13:14 saying the epistles were written from Philippi are later subscriptions, not part of the letters, so I did not use them.",
+   "PHP 1:1 only addresses the letter to the saints there, so I left it out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

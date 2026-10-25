@@ -1,0 +1,25 @@
+{
+ "slug": "tekoa-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:11.985348+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була збудована Рехав'амом як твердинне місто",
+    "deu": "wurde von Rehabeam als Festung gebaut",
+    "spa": "fue edificada por Roboam como ciudad para la defensa",
+    "why": "Spanish said 'to fortify Judah'; changed to 'as a city for defence' to match the English."
+   },
+   {
+    "ukr": "була відремонтована її жителями в двох місцях уздовж муру Єрусалима",
+    "deu": "wurde von seinen Leuten an zwei Stellen entlang der Mauer Jerusalems ausgebessert",
+    "spa": "fue restaurada por sus habitantes en dos tramos a lo largo del muro de Jerusalén",
+    "why": "Ukrainian and German turned the clause round with the people as subject; made them passive with the place as subject, and Spanish now says 'fue restaurada' and 'a lo largo del muro'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

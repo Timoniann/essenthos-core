@@ -1,0 +1,34 @@
+{
+ "slug": "bilhah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.741417+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Bilhah being given to Jacob and bearing sons, and of Reuben lying with her, which go beyond the summary's relations.",
+  "clauses": [
+   {
+    "english": "was given by Rachel to Jacob as a wife and bore him two sons",
+    "references": [
+     "GEN 30:3-5",
+     "GEN 30:7"
+    ],
+    "quote": "And she gave him Bilhah her handmaid to wife: and Jacob went in unto her."
+   },
+   {
+    "english": "was lain with by Reuben, Jacob's firstborn",
+    "references": [
+     "GEN 35:22"
+    ],
+    "quote": "Reuben went and lay with Bilhah his father's concubine"
+   }
+  ],
+  "doubts": [
+   "GEN 29:29, GEN 46:25 and 1CH 7:13 only repeat her relations, so they are not cited.",
+   "The first clause joins her being given to Jacob with her bearing sons; these may be better as one event or trimmed to one."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

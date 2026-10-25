@@ -1,0 +1,31 @@
+{
+ "slug": "jordan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.449606+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "мав відрізані води, так що увесь Ізраїль переходив по сухому",
+    "deu": "wurde von seinem Wasser abgeschnitten, sodass ganz Israel trocken hindurchging",
+    "spa": "tuvo sus aguas cortadas, de modo que todo Israel pasó en seco",
+    "why": "Ukrainian: replaced the old-fashioned «ввесь» with «увесь»."
+   },
+   {
+    "ukr": "був місцем, де чоловік занурився сім разів і став чистим",
+    "deu": "war der Ort, an dem ein Mann sich siebenmal tauchte und rein wurde",
+    "spa": "fue el lugar donde un hombre se zambulló siete veces y quedó limpio",
+    "why": "Ukrainian: «сім раз» became «сім разів» and «чистий» became «чистим»; Spanish: archaic «fue limpio» became «quedó limpio»."
+   },
+   {
+    "ukr": "був місцем, де Ісус був охрещений Іваном",
+    "deu": "war der Ort, an dem Jesus sich von Johannes taufen ließ",
+    "spa": "fue el lugar donde Jesús fue bautizado por Juan",
+    "why": "Ukrainian: replaced old «христився від Івана» with the modern passive «був охрещений Іваном»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

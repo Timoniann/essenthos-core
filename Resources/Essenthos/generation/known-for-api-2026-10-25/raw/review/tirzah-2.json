@@ -1,0 +1,31 @@
+{
+ "slug": "tirzah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.257445+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Баша зацарював над усім Ізраїлем",
+    "deu": "war der Ort, wo Baesa König über das ganze Israel wurde",
+    "spa": "fue el lugar donde Baasa comenzó a reinar sobre todo Israel",
+    "why": ""
+   },
+   {
+    "ukr": "була місцем, де царя Елу вбив Зімрі",
+    "deu": "war der Ort, wo König Ela von Simri erschlagen wurde",
+    "spa": "fue el lugar donde el rey Ela fue muerto por Zimri",
+    "why": ""
+   },
+   {
+    "ukr": "була обложена Омрі й здобута",
+    "deu": "wurde von Omri belagert und eingenommen",
+    "spa": "fue cercada por Omri y tomada",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

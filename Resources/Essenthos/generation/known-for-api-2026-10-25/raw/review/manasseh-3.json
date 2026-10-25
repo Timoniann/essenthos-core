@@ -1,0 +1,31 @@
+{
+ "slug": "manasseh-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.457303+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "знову побудував узвишшя і збудував жертовники для всіх небесних світил у Господньому домі",
+    "deu": "baute die Höhen wieder auf und baute allem Heer des Himmels Altäre im Hause des HERRN",
+    "spa": "volvió a edificar los altos y edificó altares para todo el ejército del cielo en la casa del SEÑOR",
+    "why": ""
+   },
+   {
+    "ukr": "пролив дуже багато невинної крові та ввів Юду в гріх",
+    "deu": "vergoss sehr viel unschuldiges Blut und ließ Juda sündigen",
+    "spa": "derramó mucha sangre inocente en gran manera e hizo pecar a Judá",
+    "why": ""
+   },
+   {
+    "ukr": "був відведений асирійцями в кайданах до Вавилону, а після того, як помолився, був повернений до Єрусалиму",
+    "deu": "wurde von den Assyrern in Ketten nach Babel gebracht und nach seinem Gebet wieder nach Jerusalem zurückgebracht",
+    "spa": "fue llevado por los asirios con cadenas a Babilonia, y después de orar fue devuelto a Jerusalem",
+    "why": "Ukrainian: added the missing comma before «як»; Spanish: replaced the unnatural «fue vuelto» with «fue devuelto»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

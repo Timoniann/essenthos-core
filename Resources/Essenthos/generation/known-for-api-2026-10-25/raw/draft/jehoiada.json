@@ -1,0 +1,27 @@
+{
+ "slug": "jehoiada",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.701606+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses naming Jehoiada mostly present him as Benaiah's father, but 1CH 12:27 states that he led the Aaronites who came to David, which is a deed beyond the summary.",
+  "clauses": [
+   {
+    "english": "was the leader of the Aaronites who came to David with three thousand seven hundred men",
+    "references": [
+     "1CH 12:27"
+    ],
+    "quote": "Jehoiada was the leader of the Aaronites, and with him were three thousand and seven hundred;"
+   }
+  ],
+  "doubts": [
+   "Most marked verses name Benaiah son of Jehoiada and only restate the father relation, so they were left out.",
+   "1CH 27:34 names a Jehoiada son of Benaiah, a different person, so it was left out.",
+   "1CH 12:27 may refer to a different Jehoiada from Benaiah's father, though 1CH 27:5 calls Benaiah's father a chief priest."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,33 @@
+{
+ "slug": "laodicea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.687915+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give two things that belong to the city's church: the rebuke in the letter to Laodicea, and the instruction that the epistle be read there.",
+  "clauses": [
+   {
+    "english": "was rebuked as lukewarm, neither cold nor hot",
+    "references": [
+     "REV 3:14-16"
+    ],
+    "quote": "because thou art lukewarm, and neither cold nor hot"
+   },
+   {
+    "english": "was to have Paul's letter read in its church",
+    "references": [
+     "COL 4:16"
+    ],
+    "quote": "cause that it be read also in the church of the Laodiceans"
+   }
+  ],
+  "doubts": [
+   "1TI 6:21 is excluded because it names Laodicea only in the added subscription, which is not part of Paul's words.",
+   "COL 4:16 mentions an epistle from Laodicea, but the verses do not say what it was, so it is left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

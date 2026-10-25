@@ -1,0 +1,47 @@
+{
+ "slug": "meshech-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.990713+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse does not name Tyre, so 'Tyre's' goes; Meshech was one of the merchants who traded in the market.",
+    "english": "traded persons of men and vessels of brass",
+    "references": [
+     "EZK 27:13"
+    ],
+    "ukr": "торгував людською душею та мідяними речами",
+    "deu": "handelte mit leibeigenen Leuten und Geräten von Erz",
+    "spa": "comerció con hombres y con vasos de metal"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says Meshech lay with its multitude, uncircumcised and slain by the sword, but does not say 'among the uncircumcised'.",
+    "english": "lay with all its multitude, uncircumcised and slain by the sword",
+    "references": [
+     "EZK 32:26"
+    ],
+    "ukr": "лежав з усім своїм множеством, необрізаний, побитий мечем",
+    "deu": "lag mit seiner ganzen Menge, unbeschnitten, vom Schwert erschlagen",
+    "spa": "yació con toda su multitud, incircunciso, muerto a cuchillo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had Gog as its chief prince, against whom the LORD set himself",
+    "references": [
+     "EZK 38:2-3"
+    ],
+    "ukr": "мав Ґоґа головним князем, проти якого став Господь",
+    "deu": "hatte Gog zum obersten Fürsten, gegen den sich der HERR wandte",
+    "spa": "tuvo a Gog por príncipe de la cabecera, contra quien estuvo el SEÑOR"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

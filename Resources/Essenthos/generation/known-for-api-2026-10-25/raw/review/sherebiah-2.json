@@ -1,0 +1,37 @@
+{
+ "slug": "sherebiah-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.615216+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був приведений із синами та братами, усього вісімнадцять",
+    "deu": "wurde mit seinen Söhnen und Brüdern gebracht, achtzehn",
+    "spa": "fue traído con sus hijos y sus hermanos, dieciocho",
+    "why": ""
+   },
+   {
+    "ukr": "був відокремлений як один із дванадцяти головних священників, щоб отримати срібло, золото й посуд",
+    "deu": "wurde als einer von zwölf obersten Priestern ausgesondert, um das Silber, das Gold und die Gefäße zu empfangen",
+    "spa": "fue apartado como uno de doce de los principales sacerdotes para recibir la plata, el oro y los vasos",
+    "why": ""
+   },
+   {
+    "ukr": "допомагав народові розуміти Закон",
+    "deu": "half, das Volk das Gesetz verstehen zu lassen",
+    "spa": "ayudó a hacer entender al pueblo la ley",
+    "why": ""
+   },
+   {
+    "ukr": "став на левитському підвищенні й кликав до Господа, а потім закликав народ поблагословити Його",
+    "deu": "stand auf dem hohen Platz für die Leviten auf und schrie zum HERRN, dann rief er das Volk auf, ihn zu loben",
+    "spa": "se levantó sobre la grada de los levitas y clamó al SEÑOR, y luego llamó al pueblo a bendecirle",
+    "why": "Spanish: wrote «levitas» in lower case, as modern usage has it."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "mephaath",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.453635+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був відданий з його пасовиськами левітам з родів Мерарієвих синів",
+    "deu": "wurde mit seinen Vorstädten den Leviten der Geschlechter der Kinder Merari gegeben",
+    "spa": "fue dado con sus ejidos a los levitas de las familias de los hijos de Merari",
+    "why": ""
+   },
+   {
+    "ukr": "зазнав суду разом з рештою рівнинного краю",
+    "deu": "wurde samt dem übrigen ebenen Land von der Strafe getroffen",
+    "spa": "sufrió el juicio junto con el resto de la tierra de la campiña",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

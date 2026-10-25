@@ -1,0 +1,40 @@
+{
+ "slug": "john-5",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.498456+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give John Mark a few distinct events: serving Barnabas and Saul, leaving them at Perga, and the dispute with Paul that led Barnabas to take him to Cyprus.",
+  "clauses": [
+   {
+    "english": "served as minister to Barnabas and Saul on their journey, preaching at Salamis",
+    "references": [
+     "ACT 13:5"
+    ],
+    "quote": "they had also John to their minister"
+   },
+   {
+    "english": "departed from Paul and his company at Perga and returned to Jerusalem",
+    "references": [
+     "ACT 13:13"
+    ],
+    "quote": "John departing from them returned to Jerusalem"
+   },
+   {
+    "english": "was taken by Barnabas to Cyprus after a sharp contention with Paul over him",
+    "references": [
+     "ACT 15:37-39"
+    ],
+    "quote": "so Barnabas took Mark, and sailed unto Cyprus"
+   }
+  ],
+  "doubts": [
+   "ACT 12:25 and ACT 12:12, COL 4:10 are already in the summary, so they were not used as clauses.",
+   "Later mentions (2TI 4:11, PHM 1:24, 1PE 5:13) only name or salute Mark, or ask for him, so they were left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

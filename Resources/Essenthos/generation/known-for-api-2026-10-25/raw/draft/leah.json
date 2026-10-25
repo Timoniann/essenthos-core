@@ -1,0 +1,39 @@
+{
+ "slug": "leah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.502887+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Leah being given to Jacob in place of Rachel and of the sons she bore, which go beyond the summary.",
+  "clauses": [
+   {
+    "english": "was given to Jacob in the evening in place of her sister Rachel",
+    "references": [
+     "GEN 29:23-25"
+    ],
+    "quote": "he took Leah his daughter, and brought her to him"
+   },
+   {
+    "english": "bore Jacob sons after the LORD opened her womb",
+    "references": [
+     "GEN 29:31-32"
+    ],
+    "quote": "he opened her womb: but Rachel was barren"
+   },
+   {
+    "english": "gave her maid Zilpah to Jacob as a wife",
+    "references": [
+     "GEN 30:9-10"
+    ],
+    "quote": "she took Zilpah her maid, and gave her Jacob to wife"
+   }
+  ],
+  "doubts": [
+   "Leah's sons are mentioned as being born to her, but the mother-of-Reuben fact is already in the summary, so only the opening of her womb is stated as an event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "belshazzar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.462807+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "справив великий бенкет і пив із золотого посуду, винесеного з храму в Єрусалимі",
+    "deu": "veranstaltete ein großes Festmahl und trank aus den goldenen Gefäßen, die aus dem Tempel in Jerusalem genommen worden waren",
+    "spa": "hizo un gran banquete y bebió en los vasos de oro traídos del templo de Jerusalem",
+    "why": "Replaced the dated 'прийняття' with 'бенкет', Luther's 'herrliches Mahl' and 'zu Jerusalem' with modern German, and 'genommen waren' with 'genommen worden waren'."
+   },
+   {
+    "ukr": "був забитий тієї ночі",
+    "deu": "wurde in derselben Nacht getötet",
+    "spa": "fue muerto la misma noche",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

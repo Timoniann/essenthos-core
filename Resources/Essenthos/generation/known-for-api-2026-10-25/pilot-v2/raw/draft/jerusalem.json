@@ -1,0 +1,41 @@
+{
+ "slug": "jerusalem",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:54:28.353652+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Jerusalem is a great city, and a few defining events of its story are plainly stated in the verses: its capture by Judah, David's taking of it, and its burning by the Chaldeans.",
+  "clauses": [
+   {
+    "english": "was taken by the children of Judah, smitten with the sword and set on fire",
+    "references": [
+     "JDG 1:8"
+    ],
+    "quote": "the children of Judah had fought against Jerusalem, and had taken it"
+   },
+   {
+    "english": "was taken by David from the Jebusites and became the city of David",
+    "references": [
+     "2SA 5:6-9"
+    ],
+    "quote": "Nevertheless David took the strong hold of Zion: the same is the city of David."
+   },
+   {
+    "english": "was besieged by Nebuchadnezzar, and its temple, houses and walls were burned and broken down",
+    "references": [
+     "2KI 25:1-2",
+     "2KI 25:8-10"
+    ],
+    "quote": "And he burnt the house of the LORD, and the king's house, and all the houses of Jerusalem"
+   }
+  ],
+  "doubts": [
+   "Marked verses naming Salem (GEN 14:18, HEB 7:1-2) concern Melchizedek's Salem; the verses here do not identify it with Jerusalem, so they were left out.",
+   "Jebus/Jebusite verses (JOS 15:63, JDG 1:21, JDG 19:10) were left out because the clauses chosen rest on stronger events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

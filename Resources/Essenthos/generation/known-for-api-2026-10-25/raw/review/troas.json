@@ -1,0 +1,25 @@
+{
+ "slug": "troas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.287100+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, де Павло побачив видіння македонянина, який благав про допомогу",
+    "deu": "war der Ort, an dem Paulus ein Gesicht von einem Mann aus Mazedonien sah, der um Hilfe bat",
+    "spa": "fue el lugar donde Pablo vio una visión de un varón macedonio que le rogaba ayuda",
+    "why": ""
+   },
+   {
+    "ukr": "була місцем, де Павло промовляв до учнів до півночі",
+    "deu": "war der Ort, an dem Paulus den Jüngern bis zu Mitternacht predigte",
+    "spa": "fue el lugar donde Pablo enseñó a los discípulos hasta la media noche",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

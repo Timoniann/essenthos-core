@@ -1,0 +1,37 @@
+{
+ "slug": "kishon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.001704+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Judges 4:13 only says Sisera's army gathered at the Kishon; the clause rests on 4:15 and 5:21.",
+    "english": "swept away Sisera's army when the LORD routed it before Barak",
+    "references": [
+     "JDG 4:15",
+     "JDG 5:21"
+    ],
+    "ukr": "змів військо Сісери, коли Господь привів його в замішання перед Бараком",
+    "deu": "riss das Heer Siseras fort, als der HERR es vor Barak erschreckte",
+    "spa": "barrió al ejército de Sísara cuando el SEÑOR lo desbarató delante de Barac"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Elijah brought down the prophets of Baal and slew them",
+    "references": [
+     "1KI 18:40"
+    ],
+    "ukr": "був місцем, де Ілля звів пророків Ваала і порізав їх",
+    "deu": "war der Ort, an dem Elia die Propheten Baals hinabführte und sie schlachtete",
+    "spa": "fue el lugar donde Elías llevó a los profetas de Baal y los degolló"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

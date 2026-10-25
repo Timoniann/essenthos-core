@@ -44,6 +44,7 @@ internal static class DeskApplication
         builder.Services.AddSingleton<ChangeLog>();
         builder.Services.AddSingleton<ThingReview>();
         builder.Services.AddSingleton<WikipediaReview>();
+        builder.Services.AddSingleton<KnownForReview>();
         builder.Services.AddSingleton<PictureChoices>();
         builder.Services.AddSingleton<SiteSwitches>();
         builder.Services.AddScoped<PortraitBoard>();
@@ -80,6 +81,7 @@ internal static class DeskApplication
         desk.MapSettings();
         desk.MapThingReview();
         desk.MapWikipediaReview();
+        desk.MapKnownForReview();
         desk.MapPortraits();
         desk.MapOperations();
         desk.MapTexts();

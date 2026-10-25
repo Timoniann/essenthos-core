@@ -1,0 +1,26 @@
+{
+ "slug": "bethuel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.178517+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Bethuel acts once in the story: with Laban he answered Abraham's servant and agreed to give Rebekah to Isaac, which the summary does not state.",
+  "clauses": [
+   {
+    "english": "with Laban, answered Abraham's servant that the matter came from the LORD and gave Rebekah to be Isaac's wife",
+    "references": [
+     "GEN 24:50-51"
+    ],
+    "quote": "The thing proceedeth from the LORD: we cannot speak unto thee bad or good."
+   }
+  ],
+  "doubts": [
+   "The clause is about 105 characters, slightly over the usual limit, and shares the deed with Laban.",
+   "Some copies of the text have Bethuel in verse 24:55 and 24:50 only by name with Laban; I used only the verses given."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

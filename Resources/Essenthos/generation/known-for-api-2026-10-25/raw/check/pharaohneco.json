@@ -1,0 +1,47 @@
+{
+ "slug": "pharaohneco",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.878254+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "put Jehoahaz in bands and carried him off to Egypt",
+    "references": [
+     "2KI 23:33-34"
+    ],
+    "ukr": "зв'язав Єгоахаза та забрав його до Єгипту",
+    "deu": "legte Joahas ins Gefängnis und brachte ihn nach Ägypten",
+    "spa": "echó preso a Joachâz y lo llevó a Egipto"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "made Eliakim king in Josiah's place and renamed him Jehoiakim",
+    "references": [
+     "2KI 23:34"
+    ],
+    "ukr": "настановив Ел'якима царем замість Йосії і змінив його ім'я на Єгояким",
+    "deu": "machte Eljakim zum König anstatt Josias und wandte seinen Namen in Jojakim",
+    "spa": "puso por rey a Eliacim en lugar de Josías y le mudó el nombre en el de Joacim"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says Nebuchadrezzar smote his army; it does not say Neco saw it.",
+    "english": "had his army beaten by Nebuchadrezzar at Carchemish",
+    "references": [
+     "JER 46:2"
+    ],
+    "ukr": "мав своє військо, побите Навуходоносором у Каркеміші",
+    "deu": "erlitt mit seinem Heer bei Karchemis eine Niederlage durch Nebukadnezar",
+    "spa": "tuvo su ejército batido por Nabucodonosor en Carchêmis"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

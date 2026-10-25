@@ -1,0 +1,31 @@
+{
+ "slug": "jehoram-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.386658+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "пішов на війну проти Моаву з Йосафатом, коли Моав збунтувався",
+    "deu": "zog mit Josaphat in den Krieg wider die Moabiter, nachdem der König der Moabiter abgefallen war",
+    "spa": "fue a la guerra contra Moab con Josaphat después de que Moab se rebeló",
+    "why": "German: replaced old «Streit» with «Krieg» and put «der König der Moabiter» in modern word order."
+   },
+   {
+    "ukr": "був побитий сиріянами на війні в ґілеадському Рамоті",
+    "deu": "wurde im Krieg bei Ramoth in Gilead von den Syrern geschlagen",
+    "spa": "fue herido por los siros en la guerra de Ramoth de Galaad",
+    "why": "German: «Streit» became «Krieg»; Spanish: «Siros» is now lower case «siros»."
+   },
+   {
+    "ukr": "був убитий стрілою з лука Єгу",
+    "deu": "wurde durch einen Pfeil aus Jehus Bogen getötet",
+    "spa": "fue muerto por una saeta del arco de Jehú",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

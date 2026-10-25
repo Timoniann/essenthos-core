@@ -1,0 +1,31 @@
+{
+ "slug": "caleb",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.440762+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "закликав народ ввійти й заволодіти тим Краєм",
+    "deu": "forderte das Volk auf, hinaufzuziehen und das Land einzunehmen",
+    "spa": "instó al pueblo a subir y poseer la tierra",
+    "why": ""
+   },
+   {
+    "ukr": "був виключений разом з Ісусом з-поміж тих, кому заборонено ввійти до Краю, і залишився живим",
+    "deu": "wurde mit Josua von denen ausgenommen, die nicht in das Land kommen sollten, und blieb am Leben",
+    "spa": "fue exceptuado, con Josué, de los que no entrarían en la tierra, y quedó con vida",
+    "why": ""
+   },
+   {
+    "ukr": "отримав Хеврон за спадок і повиганяв звідти трьох велетнів",
+    "deu": "erhielt Hebron als Erbteil und vertrieb von dort die drei Söhne Enaks",
+    "spa": "recibió Hebrón por heredad y echó de allí a los tres hijos de Anac",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

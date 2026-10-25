@@ -1,0 +1,58 @@
+{
+ "slug": "aaron",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:04:28.110666+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Only 7:10 states the deed; 7:11-12 are about the magicians and the rods.",
+    "english": "cast down his rod before Pharaoh, and it became a serpent",
+    "references": [
+     "EXO 7:10"
+    ],
+    "ukr": "кинув свою палицю перед фараоном, і вона стала вужем",
+    "deu": "warf seinen Stab vor Pharao, und er wurde zur Schlange",
+    "spa": "echó su vara delante de Faraón, y se volvió culebra"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "made a molten calf from the people's golden earrings",
+    "references": [
+     "EXO 32:2-4"
+    ],
+    "ukr": "зробив лите теля із золотих сережок народу",
+    "deu": "machte aus den goldenen Ohrenringen des Volkes ein gegossenes Kalb",
+    "spa": "hizo un becerro de fundición con los zarcillos de oro del pueblo"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "ran among the people with incense and stopped the plague",
+    "references": [
+     "NUM 16:46-48"
+    ],
+    "ukr": "побіг до середини громади з кадилом і зупинив поразку",
+    "deu": "lief mit Räucherwerk mitten unter die Gemeinde und hielt die Plage auf",
+    "spa": "corrió con perfume en medio de la congregación y detuvo la mortandad"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 28 does not name the mountain; Mount Hor is named in 20:27.",
+    "english": "died on Mount Hor",
+    "references": [
+     "NUM 20:27-28"
+    ],
+    "ukr": "помер на Гор-горі",
+    "deu": "starb auf dem Berg Hor",
+    "spa": "murió en el monte de Hor"
+   }
+  ],
+  "note": "The line omits Aaron's appointment as high priest and the making of the priesthood, which is more important than some clauses given."
+ },
+ "problems": [],
+ "attempts": []
+}

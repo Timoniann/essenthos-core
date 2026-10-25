@@ -1,0 +1,36 @@
+{
+ "slug": "sodom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:04:53.702084+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The cited verses say only 'they' took the goods and Lot; Chedorlaomer and 'eastern kings' are not named in them.",
+    "english": "was plundered of all its goods, and Lot, who lived there, was taken",
+    "references": [
+     "GEN 14:11-12"
+    ],
+    "ukr": "був пограбований, і взято ввесь його маєток та Лота, що пробував у ньому",
+    "deu": "wurde seiner ganzen Habe beraubt, und Lot, der dort wohnte, wurde mitgenommen",
+    "spa": "fue saqueada de toda su riqueza, y Lot, que moraba en ella, fue llevado"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was destroyed by brimstone and fire from the LORD out of heaven",
+    "references": [
+     "GEN 19:24-25"
+    ],
+    "ukr": "був зруйнований дощем із сірки й вогню від Господа з неба",
+    "deu": "wurde durch Schwefel und Feuer vom HERRN aus dem Himmel zerstört",
+    "spa": "fue destruida con azufre y fuego de parte del SEÑOR desde los cielos"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

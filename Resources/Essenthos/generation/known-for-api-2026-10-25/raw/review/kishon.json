@@ -1,0 +1,25 @@
+{
+ "slug": "kishon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.508013+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "змів військо Сісери, коли Господь привів його в замішання перед Бараком",
+    "deu": "riss das Heer Siseras fort, als der HERR es vor Barak erschreckte",
+    "spa": "barrió al ejército de Sísara cuando el SEÑOR lo desbarató delante de Barac",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де Ілля звів пророків Ваала і порізав їх",
+    "deu": "war der Ort, an dem Elia die Propheten Baals hinabführte und sie schlachtete",
+    "spa": "fue el lugar donde Elías llevó a los profetas de Baal y los degolló",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

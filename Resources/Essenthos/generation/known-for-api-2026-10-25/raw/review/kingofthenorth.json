@@ -1,0 +1,19 @@
+{
+ "slug": "kingofthenorth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.472953+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прийняв доньку південного царя, щоб укласти мир",
+    "deu": "empfing die Tochter des Königs des Südens, um eine Übereinkunft zu schließen",
+    "spa": "recibió a la hija del rey del sur para hacer un acuerdo",
+    "why": "German and Spanish used archaic wording (Einigkeit zu machen; los conciertos, del mediodía), replaced with modern 'eine Übereinkunft zu schließen' and 'un acuerdo', 'del sur'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

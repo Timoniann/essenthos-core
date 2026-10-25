@@ -1,0 +1,57 @@
+{
+ "slug": "ark-of-the-covenant",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:54:45.702290+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell the ark's story through its making, its crossing of Jordan, its capture by the Philistines, and its bringing to Jerusalem and the temple.",
+  "clauses": [
+   {
+    "english": "was made by Bezaleel of shittim wood overlaid with gold",
+    "references": [
+     "EXO 37:1-2"
+    ],
+    "quote": "And Bezaleel made the ark of shittim wood"
+   },
+   {
+    "english": "was carried before Israel, and the waters of Jordan were cut off before it",
+    "references": [
+     "JOS 3:14-17",
+     "JOS 4:7"
+    ],
+    "quote": "the waters of Jordan were cut off before the ark of the covenant of the LORD"
+   },
+   {
+    "english": "was taken by the Philistines in battle, and Dagon fell before it at Ashdod",
+    "references": [
+     "1SA 4:11",
+     "1SA 5:1-4"
+    ],
+    "quote": "And the ark of God was taken"
+   },
+   {
+    "english": "was brought up to Jerusalem by David, and Uzzah died for touching it on the way",
+    "references": [
+     "2SA 6:6-7",
+     "2SA 6:12-15"
+    ],
+    "quote": "God smote him there for his error; and there he died by the ark of God."
+   },
+   {
+    "english": "was brought by Solomon into the most holy place of the temple",
+    "references": [
+     "1KI 8:6"
+    ],
+    "quote": "the priests brought in the ark of the covenant of the LORD unto his place"
+   }
+  ],
+  "doubts": [
+   "Several marked verses (such as 1SA 14:18 and 2SA 15:24-29) were not used because they are minor episodes beyond the chief events chosen.",
+   "1SA 6:19 is not used; the count of those smitten is uncertain and it is a lesser detail than the chief events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

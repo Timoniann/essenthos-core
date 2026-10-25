@@ -1,0 +1,40 @@
+{
+ "slug": "gaza",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.034357+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Gaza is the setting of events in the story of Samson and was taken by Judah and foretold to be judged, so a short line can rest on those verses.",
+  "clauses": [
+   {
+    "english": "was where Samson carried off the city gate doors by night, escaping those lying in wait",
+    "references": [
+     "JDG 16:1-3"
+    ],
+    "quote": "took the doors of the gate of the city, and the two posts"
+   },
+   {
+    "english": "was where the Philistines brought the blinded Samson and bound him in the prison house",
+    "references": [
+     "JDG 16:21"
+    ],
+    "quote": "brought him down to Gaza, and bound him with fetters of brass"
+   },
+   {
+    "english": "was taken by Judah with its coast",
+    "references": [
+     "JDG 1:18"
+    ],
+    "quote": "Judah took Gaza with the coast thereof"
+   }
+  ],
+  "doubts": [
+   "Jeremiah 47:1 (Pharaoh smote Gaza) and the prophecies of its desolation (Amos 1, Zephaniah 2, Zechariah 9) were left out as prophecy rather than event.",
+   "Gaza being taken by Judah (Judges 1:18) is omitted from the line's final form only if the editor wants fewer clauses; the Samson clauses are the chief ones, and these two could be merged by the editor, though two events should not be joined."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

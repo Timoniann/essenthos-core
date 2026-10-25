@@ -1,0 +1,31 @@
+{
+ "slug": "nebuzaradan",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.256699+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "спалив дім Господній і будинки в Єрусалимі",
+    "deu": "verbrannte das Haus des HERRN und die Häuser in Jerusalem",
+    "spa": "quemó la casa del SEÑOR y las casas de Jerusalem",
+    "why": "Ukrainian: archaic «доми» changed to «будинки». German: archaic «zu Jerusalem» changed to «in Jerusalem»."
+   },
+   {
+    "ukr": "забрав решту народу в полон до Вавилону",
+    "deu": "führte den Rest des Volkes gefangen nach Babel",
+    "spa": "llevó cautivo al resto del pueblo a Babilonia",
+    "why": "Ukrainian: «вигнав» (drove out) replaced by «забрав ... в полон» to express 'carried captive'. German: archaic «gen» changed to «nach». Spanish: added 'cautivo', which was missing, and 'al' before the object."
+   },
+   {
+    "ukr": "відпустив Єремію з Рами",
+    "deu": "ließ Jeremia in Rama frei",
+    "spa": "dejó ir a Jeremías desde Ramá",
+    "why": "German: archaic «zu Rama los» replaced by modern «in Rama frei». Spanish: «envió» (sent) changed to «dejó ir» to match 'let go'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

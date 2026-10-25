@@ -1,0 +1,33 @@
+{
+ "slug": "kadeshbarnea",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.709114+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses say what happened at Kadeshbarnea: spies were sent from it and Israel rebelled there; the rest are boundary or distance notes.",
+  "clauses": [
+   {
+    "english": "was where Moses sent men to see the land",
+    "references": [
+     "NUM 32:8",
+     "JOS 14:7"
+    ],
+    "quote": "when I sent them from Kadeshbarnea to see the land"
+   },
+   {
+    "english": "was where Israel rebelled against the command to go up and possess the land",
+    "references": [
+     "DEU 9:23"
+    ],
+    "quote": "ye rebelled against the commandment of the LORD your God"
+   }
+  ],
+  "doubts": [
+   "Verses giving it as a border point (NUM 34:4, JOS 15:3), a distance (DEU 1:2) or a limit of Joshua's conquest (JOS 10:41) were not used as events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

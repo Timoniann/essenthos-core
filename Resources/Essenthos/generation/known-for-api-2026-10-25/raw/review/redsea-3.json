@@ -1,0 +1,19 @@
+{
+ "slug": "redsea-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.914409+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де цар Соломон збудував флот кораблів",
+    "deu": "war der Ort, an dem der König Salomo eine Flotte von Schiffen baute",
+    "spa": "fue donde el rey Salomón construyó una flota de navíos",
+    "why": "The 'navy/fleet' was missing in all three, and the Ukrainian colloquial «наробив кораблів» was replaced with modern wording."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,19 @@
+{
+ "slug": "zerah-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.337661+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "народився з червоною ниткою, пов'язаною на руці",
+    "deu": "wurde mit einem um seine Hand gebundenen roten Faden geboren",
+    "spa": "nació con un hilo de grana atado a su mano",
+    "why": "German: added the missing idea of the thread being bound (gebunden) on his hand."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

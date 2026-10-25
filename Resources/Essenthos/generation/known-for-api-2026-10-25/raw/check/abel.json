@@ -1,0 +1,52 @@
+{
+ "slug": "abel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "ask",
+ "at": "2026-10-25T16:33:08.720072+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "kept sheep and offered the firstlings of his flock, and the LORD had respect to his offering",
+    "references": [
+     "GEN 4:2",
+     "GEN 4:4"
+    ],
+    "ukr": "був пастухом отари й приніс від своїх перворідних з отари, і Господь зглянувся на його жертву",
+    "deu": "wurde ein Schäfer und brachte von den Erstlingen seiner Herde, und der HERR sah gnädig auf sein Opfer",
+    "spa": "fue pastor de ovejas y trajo de los primogénitos de sus ovejas, y el SEÑOR miró con agrado su ofrenda"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": [
+  {
+   "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+   "at": "2026-10-25T16:31:20.697737+00:00",
+   "answer": {
+    "clauses": [
+     {
+      "verdict": "right",
+      "why": "",
+      "english": "kept sheep and offered the firstlings of his flock, and the LORD had respect to his offering",
+      "references": [
+       "GEN 4:2",
+       "GEN 4:4"
+      ],
+      "ukr": "був пастухом отари й приніс від своїх перворідних з отари, і Господь зглянувся на його жертву",
+      "deu": "wurde ein Schäfer und brachte von den Erstlingen seiner Herde, und der HERR sah gnädig an sein Opfer",
+      "spa": "fue pastor de ovejas y trajo de los primogénitos de sus ovejas, y Jehová miró con agrado su ofrenda"
+     }
+    ],
+    "note": ""
+   },
+   "problems": [
+    "clause 1: the Spanish writes Jehová for the LORD",
+    "clause 1: the LORD is not «el SEÑOR» in the Spanish"
+   ]
+  }
+ ]
+}

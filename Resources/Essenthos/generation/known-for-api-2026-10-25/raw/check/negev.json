@@ -1,0 +1,36 @@
+{
+ "slug": "negev",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.031406+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was struck by Joshua, who left none remaining",
+    "references": [
+     "JOS 10:40"
+    ],
+    "ukr": "був побитий Ісусом, який не зоставив жодного врятованого",
+    "deu": "wurde von Josua geschlagen, der niemand übrigbleiben ließ",
+    "spa": "fue herido por Josué, que no dejó quedar nada"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was invaded by the Amalekites",
+    "references": [
+     "1SA 30:1"
+    ],
+    "ukr": "зазнав вторгнення амаликитян",
+    "deu": "wurde von den Amalekitern überfallen",
+    "spa": "fue invadido por los de Amalec"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

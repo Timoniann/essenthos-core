@@ -1,0 +1,27 @@
+{
+ "slug": "sibbecai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.903449+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses give one deed, his killing of a giant's son in battle with the Philistines, which the summary names only as a relation.",
+  "clauses": [
+   {
+    "english": "slew Saph, one of the sons of the giant, in battle with the Philistines at Gob",
+    "references": [
+     "2SA 21:18"
+    ],
+    "quote": "Sibbechai the Hushathite slew Saph, which was of the sons of the giant"
+   }
+  ],
+  "doubts": [
+   "1CH 20:4 tells of Sibbechai slaying Sippai at Gezer, probably the same event under other names, so it is not cited.",
+   "2SA 23:27 names Mebunnai the Hushathite, possibly the same man, but that is not certain, so the verse is left out.",
+   "The mention of him in the list of David's mighty men (1CH 11:29) and as captain of the eighth month's course (1CH 27:11) is an office or list entry, so it gets no clause."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

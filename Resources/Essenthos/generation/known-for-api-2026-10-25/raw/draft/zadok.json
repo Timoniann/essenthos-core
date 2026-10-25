@@ -1,0 +1,41 @@
+{
+ "slug": "zadok",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.542672+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Zadok's carrying back of the ark during Absalom's revolt, his anointing of Solomon, and his appointment in Abiathar's place.",
+  "clauses": [
+   {
+    "english": "carried the ark of God back to Jerusalem at David's command",
+    "references": [
+     "2SA 15:25",
+     "2SA 15:29"
+    ],
+    "quote": "Zadok therefore and Abiathar carried the ark of God again to Jerusalem"
+   },
+   {
+    "english": "anointed Solomon king at Gihon",
+    "references": [
+     "1KI 1:38-39"
+    ],
+    "quote": "took an horn of oil out of the tabernacle, and anointed Solomon"
+   },
+   {
+    "english": "was put by the king in the place of Abiathar as priest",
+    "references": [
+     "1KI 2:35"
+    ],
+    "quote": "Zadok the priest did the king put in the room of Abiathar"
+   }
+  ],
+  "doubts": [
+   "Verses naming sons of Zadok (EZK 40:46, 43:19, 44:15, 48:11) and the house of Zadok (2CH 31:10) concern a priestly line, not Zadok's own deeds, so they were left out.",
+   "1CH 12:28 (a young man mighty of valour) was left out as a description, not an event."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

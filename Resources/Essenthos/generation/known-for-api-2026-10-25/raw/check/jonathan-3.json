@@ -1,0 +1,37 @@
+{
+ "slug": "jonathan-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.667923+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "carried word to David of Ahithophel's counsel and escaped Absalom's servants",
+    "references": [
+     "2SA 17:17",
+     "2SA 17:20-21"
+    ],
+    "ukr": "переказав Давидові раду Ахітофела та уник рабів Авесалома",
+    "deu": "überbrachte David den Rat Ahithophels und entkam den Knechten Absaloms",
+    "spa": "llevó aviso a David del consejo de Achitophel y escapó de los criados de Absalom"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "told Adonijah that David had made Solomon king",
+    "references": [
+     "1KI 1:42-43"
+    ],
+    "ukr": "сказав Адонії, що цар Давид настановив царем Соломона",
+    "deu": "sagte Adonia, dass der König David Salomo zum König gemacht habe",
+    "spa": "dijo a Adonía que el rey David había hecho rey a Salomón"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,48 @@
+{
+ "slug": "isaiah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.677609+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "told the sick King Hezekiah he would die, then was sent back to say he would be healed",
+    "references": [
+     "2KI 20:1",
+     "2KI 20:4-6"
+    ],
+    "ukr": "сказав хворому цареві Єзекії, що той помре, а потім був посланий назад сказати, що той буде вилікуваний",
+    "deu": "sagte dem kranken König Hiskia, er werde sterben, und wurde dann zurückgesandt, um ihm zu sagen, er werde gesund werden",
+    "spa": "dijo al rey Ezechîas enfermo que moriría, y luego fue enviado de vuelta a decirle que sería sanado"
+   },
+   {
+    "verdict": "fix",
+    "why": "Verse 11 alone states the cry and the shadow; verses 9-10 add far more than the clause needs.",
+    "english": "cried to the LORD and the shadow went back ten degrees on the dial of Ahaz",
+    "references": [
+     "2KI 20:11"
+    ],
+    "ukr": "кликнув до Господа, і тінь вернулася назад на десять ступенів на ступенях Ахазових",
+    "deu": "rief den HERRN an, und der Schatten ging zehn Stufen zurück am Zeiger Ahas",
+    "spa": "clamó al SEÑOR, y la sombra volvió atrás diez grados en el reloj de Achâz"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "walked naked and barefoot three years as a sign upon Egypt and Ethiopia",
+    "references": [
+     "ISA 20:2-3"
+    ],
+    "ukr": "ходив нагий та босий три роки як ознака та чудо для Єгипту та Етіопії",
+    "deu": "ging drei Jahre nackt und barfuß als Zeichen und Wunder für Ägypten und Mohrenland",
+    "spa": "anduvo desnudo y descalzo tres años como señal y pronóstico sobre Egipto y Etiopía"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

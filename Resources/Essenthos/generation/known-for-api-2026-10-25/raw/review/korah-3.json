@@ -1,0 +1,25 @@
+{
+ "slug": "korah-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.213896+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "повстав разом з Датаном і Авіроном проти Мойсея та Аарона",
+    "deu": "empörte sich mit Dathan und Abiram wider Mose und Aaron",
+    "spa": "se levantó con Dathán y Abiram contra Moisés y Aarón",
+    "why": ""
+   },
+   {
+    "ukr": "був поглинений зі своєю громадою, коли земля відкрила свої уста",
+    "deu": "wurde mit seiner Rotte verschlungen, als die Erde ihren Mund auftat",
+    "spa": "fue tragado con su compañía cuando la tierra abrió su boca",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

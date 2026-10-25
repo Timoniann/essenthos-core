@@ -1,0 +1,25 @@
+{
+ "slug": "taanach",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.580838+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де воювали царі ханаанські при воді Меґідда",
+    "deu": "war der Ort, wo die Könige der Kanaaniter am Wasser Megiddos stritten",
+    "spa": "fue donde pelearon los reyes de Canaán, junto a las aguas de Megiddo",
+    "why": ""
+   },
+   {
+    "ukr": "був містом, мешканців якого Манасія не повиганяв",
+    "deu": "war eine Stadt, deren Einwohner Manasse nicht vertrieb",
+    "spa": "fue una ciudad cuyos habitantes Manasés no echó",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

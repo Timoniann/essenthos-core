@@ -1,0 +1,25 @@
+{
+ "slug": "mountsinai",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.714648+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був увесь у димі й сильно затремтів, коли Господь зійшов на нього в огні",
+    "deu": "war ganz in Rauch gehüllt und bebte sehr, als der HERR mit Feuer auf ihn herabfuhr",
+    "spa": "estuvo todo envuelto en humo y se estremeció en gran manera cuando el SEÑOR descendió sobre él en fuego",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де Бог дав Мойсеєві дві кам'яні таблиці, написані Божим пальцем",
+    "deu": "war der Ort, an dem Gott Mose zwei Tafeln gab, beschrieben mit dem Finger Gottes",
+    "spa": "fue el lugar donde Dios dio a Moisés dos tablas de piedra escritas con el dedo de Dios",
+    "why": "Replaced archaic Ukrainian «писані ... перстом» with modern «написані ... пальцем»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

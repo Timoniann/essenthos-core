@@ -1,0 +1,36 @@
+{
+ "slug": "mountcarmel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.190951+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where Ahab gathered Israel and the prophets of Baal at Elijah's word",
+    "references": [
+     "1KI 18:19-20"
+    ],
+    "ukr": "була місцем, де Ахав за словом Іллі зібрав Ізраїля та пророків Ваала",
+    "deu": "war der Ort, an dem Ahab auf das Wort Elias Israel und die Propheten Baals versammelte",
+    "spa": "fue el lugar donde Achâb, por palabra de Elías, juntó a Israel y a los profetas de Baal"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the Shunammite woman came to the man of God",
+    "references": [
+     "2KI 4:25"
+    ],
+    "ukr": "була місцем, куди шунамітянка приїхала до Божого чоловіка",
+    "deu": "war der Ort, an dem die Sunamitin zu dem Mann Gottes kam",
+    "spa": "fue el lugar adonde la Sunamita vino al varón de Dios"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

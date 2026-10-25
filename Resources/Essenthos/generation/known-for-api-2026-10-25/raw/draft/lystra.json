@@ -1,0 +1,33 @@
+{
+ "slug": "lystra",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.411623+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Lystra is where Paul healed a cripple and was stoned, events that go beyond the summary.",
+  "clauses": [
+   {
+    "english": "was where Paul healed a man crippled from birth, who leaped and walked",
+    "references": [
+     "ACT 14:8-10"
+    ],
+    "quote": "Stand upright on thy feet. And he leaped and walked."
+   },
+   {
+    "english": "was where Paul was stoned and dragged out of the city, then rose up and returned",
+    "references": [
+     "ACT 14:19-20"
+    ],
+    "quote": "having stoned Paul, drew him out of the city, supposing he had been dead."
+   }
+  ],
+  "doubts": [
+   "ACT 14:11-18 (the crowd calling Paul and Barnabas gods) was elided in the given verses and not used.",
+   "Timotheus being well reported of at Lystra (ACT 16:1-2) was left out as a minor detail about a person."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,18 @@
+{
+ "slug": "caesar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.393847+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only mention Caesar as the one owed tribute, as the name on the coin and as a title invoked in accusations, and they record nothing he did or that happened to him.",
+  "clauses": [],
+  "doubts": [
+   "MAT 22:17, MRK 12:14 and LUK 20:22 ask about tribute but state no deed of Caesar himself.",
+   "LUK 3:1 only dates John's ministry by Tiberius Caesar's reign."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

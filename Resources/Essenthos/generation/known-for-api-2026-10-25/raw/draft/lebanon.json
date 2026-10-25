@@ -1,0 +1,28 @@
+{
+ "slug": "lebanon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.834708+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Lebanon is a region, so only its defining event qualifies: it supplied cedar for Solomon's building of the LORD's house, and the rest of the verses only mark boundaries or use it in comparisons.",
+  "clauses": [
+   {
+    "english": "yielded cedar trees for Solomon's building of the house of the LORD",
+    "references": [
+     "1KI 5:5-6",
+     "1KI 5:10"
+    ],
+    "quote": "command thou that they hew me cedar trees out of Lebanon"
+   }
+  ],
+  "doubts": [
+   "Many marked verses (Psalms, Isaiah, Song of Solomon, Hosea, Ezekiel) use Lebanon only as a figure or comparison, so they were left out.",
+   "JOS 11:17 and JOS 12:7 mention the valley of Lebanon only as a boundary of Joshua's conquests, so no clause was written from them.",
+   "1KI 5:14, 1KI 7:2, 1KI 9:19 and the Ezra passage show Solomon's work in Lebanon or its timber, but I treated them as detail of the same story rather than separate events."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

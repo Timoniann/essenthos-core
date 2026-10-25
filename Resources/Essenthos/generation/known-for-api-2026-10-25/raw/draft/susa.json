@@ -1,0 +1,42 @@
+{
+ "slug": "susa",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.693315+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell what happened at Shushan: the decree against the Jews was given there, Esther was brought there, and the Jews slew their enemies there.",
+  "clauses": [
+   {
+    "english": "was where Esther was brought with the maidens gathered for the king",
+    "references": [
+     "EST 2:8"
+    ],
+    "quote": "Esther was brought also unto the king's house"
+   },
+   {
+    "english": "was where the king's decree to destroy the Jews was given",
+    "references": [
+     "EST 3:15",
+     "EST 4:8"
+    ],
+    "quote": "the decree was given in Shushan the palace"
+   },
+   {
+    "english": "was where the Jews slew five hundred men, and three hundred more the next day",
+    "references": [
+     "EST 9:6",
+     "EST 9:15"
+    ],
+    "quote": "the Jews slew and destroyed five hundred men."
+   }
+  ],
+  "doubts": [
+   "EZR 4:9 (Susanchites) names a people, not the city, and was left out.",
+   "NEH 1:1 and DAN 8:2 only say someone was at Shushan, so they were not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

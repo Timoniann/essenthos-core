@@ -1,0 +1,38 @@
+{
+ "slug": "ziph-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.651838+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The Ziphites told Saul at Gibeah, not at Ziph, and 'their land' is not in the verses.",
+    "english": "had Ziphites who told Saul that David was hiding",
+    "references": [
+     "1SA 23:19",
+     "1SA 26:1"
+    ],
+    "ukr": "мав зіфеян, які сказали Саулові, що Давид ховається",
+    "deu": "hatte Siphiter, die Saul sagten, David halte sich verborgen",
+    "spa": "tuvo Zipheos que dijeron a Saúl que David estaba escondido"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was built up as a fenced city in Judah",
+    "references": [
+     "2CH 11:8",
+     "2CH 11:10"
+    ],
+    "ukr": "був збудований як твердинне місто в Юді",
+    "deu": "wurde als feste Stadt in Juda gebaut",
+    "spa": "fue edificado como ciudad fuerte en Judá"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

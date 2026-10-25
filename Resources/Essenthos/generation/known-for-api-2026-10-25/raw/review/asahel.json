@@ -1,0 +1,19 @@
+{
+ "slug": "asahel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.338268+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "гнався за Авнером і не захотів спинитися, коли його застерігали",
+    "deu": "jagte Abner nach und wollte nicht weichen, als er gewarnt wurde",
+    "spa": "siguió a Abner y no quiso apartarse cuando fue advertido",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

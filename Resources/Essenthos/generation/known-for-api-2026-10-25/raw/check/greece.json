@@ -1,0 +1,25 @@
+{
+ "slug": "greece",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.527837+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was visited by Paul, who stayed there three months",
+    "references": [
+     "ACT 20:2-3"
+    ],
+    "ukr": "була відвідана Павлом, який прожив там три місяці",
+    "deu": "wurde von Paulus besucht, der dort drei Monate blieb",
+    "spa": "fue visitada por Pablo, quien estuvo allí tres meses"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

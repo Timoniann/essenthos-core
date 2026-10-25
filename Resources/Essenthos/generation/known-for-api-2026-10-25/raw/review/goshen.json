@@ -1,0 +1,31 @@
+{
+ "slug": "goshen",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.217718+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де осів Ізраїль і де він зростав та сильно розмножився",
+    "deu": "war der Ort, wo Israel wohnte und wo es wuchs und sich sehr vermehrte",
+    "spa": "fue donde habitó Israel, y donde creció y se multiplicó en gran manera",
+    "why": "Ukrainian: masculine verb, and 'розродився' (gave birth) replaced by 'зростав та ... розмножився'; German: 'mehrte' modernized to 'vermehrte'; Spanish: 'se aumentó' changed to 'creció y se multiplicó'."
+   },
+   {
+    "ukr": "був відділений, щоб не було там роїв мух",
+    "deu": "wurde ausgesondert, damit dort keine Fliegenschwärme seien",
+    "spa": "fue apartado para que no hubiera enjambres de moscas en él",
+    "why": "Ukrainian and Spanish: masculine agreement with the name; German: 'Ungeziefer' replaced by 'Fliegenschwärme' to match 'swarms of flies'; Spanish: archaic 'ninguna suerte de moscas' replaced by 'enjambres de moscas'."
+   },
+   {
+    "ukr": "був убережений від граду, що вразив Єгипет",
+    "deu": "blieb vom Hagel verschont, der Ägypten schlug",
+    "spa": "fue librado del granizo que hirió a Egipto",
+    "why": "Ukrainian and Spanish: masculine agreement with the name; Ukrainian 'вбережена' corrected to 'убережений'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

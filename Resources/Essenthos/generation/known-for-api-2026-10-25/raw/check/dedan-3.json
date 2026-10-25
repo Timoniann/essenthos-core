@@ -1,0 +1,36 @@
+{
+ "slug": "dedan-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.410668+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse does not name Tyre; it says only that Dedan was a merchant in precious clothes for chariots.",
+    "english": "traded in precious clothes for chariots",
+    "references": [
+     "EZK 27:20"
+    ],
+    "ukr": "торгував дорогим одягом для колісниць",
+    "deu": "handelte mit kostbaren Kleidern für Wagen",
+    "spa": "comerció con paños preciosos para carros"
+   },
+   {
+    "verdict": "fix",
+    "why": "The LORD is named as speaker only in verse 7, so the citation should take it in.",
+    "english": "was warned to flee because the LORD would bring calamity upon it",
+    "references": [
+     "JER 49:7-8"
+    ],
+    "ukr": "був попереджений тікати, бо Господь наведе на нього лихо",
+    "deu": "wurde gewarnt zu fliehen, weil der HERR Unheil über ihn bringen würde",
+    "spa": "fue advertido de huir porque el SEÑOR traería quebranto sobre él"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

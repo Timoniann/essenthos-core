@@ -1,0 +1,40 @@
+{
+ "slug": "michael-9",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.748222+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses state several deeds of Michael: helping against the prince of Persia, disputing with the devil, and fighting the dragon.",
+  "clauses": [
+   {
+    "english": "came to help against the prince of Persia",
+    "references": [
+     "DAN 10:13"
+    ],
+    "quote": "Michael, one of the chief princes, came to help me"
+   },
+   {
+    "english": "disputed with the devil about the body of Moses",
+    "references": [
+     "JUD 1:9"
+    ],
+    "quote": "contending with the devil he disputed about the body of Moses"
+   },
+   {
+    "english": "fought with his angels against the dragon in heaven",
+    "references": [
+     "REV 12:7-9"
+    ],
+    "quote": "Michael and his angels fought against the dragon"
+   }
+  ],
+  "doubts": [
+   "DAN 12:1 foretells that Michael will stand up in the future, so it was left out as not a past event.",
+   "DAN 10:21 only says he holds with the speaker, so it was not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "sion",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.817469+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was where the Lamb stood with the hundred forty and four thousand",
+    "references": [
+     "REV 14:1"
+    ],
+    "ukr": "було місцем, де стояв Агнець зі ста сорока чотирма тисячами",
+    "deu": "war der Ort, auf dem das Lamm mit den hundertvierundvierzigtausend stand",
+    "spa": "fue el lugar donde estaba el Cordero con los ciento cuarenta y cuatro mil"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

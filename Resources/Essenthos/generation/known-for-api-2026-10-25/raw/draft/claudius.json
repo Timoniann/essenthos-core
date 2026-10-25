@@ -1,0 +1,27 @@
+{
+ "slug": "claudius",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.520175+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "ACT 18:2 states one deed of Claudius, his command that all Jews leave Rome.",
+  "clauses": [
+   {
+    "english": "commanded all Jews to depart from Rome",
+    "references": [
+     "ACT 18:2"
+    ],
+    "quote": "Claudius had commanded all Jews to depart from Rome"
+   }
+  ],
+  "doubts": [
+   "ACT 23:26 names Claudius Lysias, a Roman commander, not the emperor, so I left it out.",
+   "ACT 17:7 says only 'Caesar' without naming Claudius, so I left it out.",
+   "ACT 11:28 gives only the time of the famine, which the summary already covers, so I made no clause of it."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

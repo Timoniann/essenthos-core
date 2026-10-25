@@ -1,0 +1,48 @@
+{
+ "slug": "sanballat",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.438674+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verse 4:1 does not say the wall was Jerusalem's, and 4:2 only gives his words.",
+    "english": "mocked the Jews when they built the wall",
+    "references": [
+     "NEH 4:1"
+    ],
+    "ukr": "сміявся з юдеїв, коли вони будували мур",
+    "deu": "spottete der Juden, als sie die Mauer bauten",
+    "spa": "hizo escarnio de los Judíos cuando edificaban el muro"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say only that they conspired to hinder Jerusalem, not that they hindered the work.",
+    "english": "conspired with others to fight against Jerusalem",
+    "references": [
+     "NEH 4:7-8"
+    ],
+    "ukr": "змовився з іншими іти воювати з Єрусалимом",
+    "deu": "machte mit anderen einen Bund, um wider Jerusalem zu streiten",
+    "spa": "conspiró con otros para combatir a Jerusalem"
+   },
+   {
+    "verdict": "fix",
+    "why": "The plural messages rest on 6:4, and 6:6-7 give the letter's contents, which the clause does not use.",
+    "english": "sent Nehemiah messages and an open letter, plotting mischief against him",
+    "references": [
+     "NEH 6:2",
+     "NEH 6:4-5"
+    ],
+    "ukr": "посилав Неемії вісті та відкритий лист, замишляючи зробити йому зло",
+    "deu": "sandte Nehemia Botschaften und einen offenen Brief und gedachte ihm Böses zu tun",
+    "spa": "envió a Nehemías mensajes y una carta abierta, pensando hacerle mal"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

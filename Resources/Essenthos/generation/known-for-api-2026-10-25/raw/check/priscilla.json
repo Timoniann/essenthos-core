@@ -1,0 +1,36 @@
+{
+ "slug": "priscilla",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.805322+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says Aquila and Priscilla took him unto them, not 'aside'; the record acted together with Aquila.",
+    "english": "took Apollos in and expounded the way of God to him more perfectly",
+    "references": [
+     "ACT 18:26"
+    ],
+    "ukr": "прийняла Аполлоса й докладніше розповіла йому про дорогу Господню",
+    "deu": "nahm Apollos zu sich und legte ihm den Weg Gottes noch fleißiger aus",
+    "spa": "tomó a Apolos y le declaró más particularmente el camino de Dios"
+   },
+   {
+    "verdict": "fix",
+    "why": "Only the necks laid down for Paul's life is stated; 'their own' is fine, but Paul is the speaker, so name him in the clause; citation is right.",
+    "english": "laid down her neck for Paul's life",
+    "references": [
+     "ROM 16:3-4"
+    ],
+    "ukr": "поклала свою голову за життя Павла",
+    "deu": "gab ihren Hals für das Leben des Paulus dar",
+    "spa": "puso su cuello por la vida de Pablo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

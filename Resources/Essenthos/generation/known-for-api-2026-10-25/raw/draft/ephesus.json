@@ -1,0 +1,30 @@
+{
+ "slug": "ephesus",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.641488+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of events at Ephesus beyond what the summary says: the burning of the books and the uproar over Diana.",
+  "clauses": [
+   {
+    "english": "was where many believers burned their books of curious arts before all men",
+    "references": [
+     "ACT 19:18-19"
+    ],
+    "quote": "brought their books together, and burned them before all men"
+   },
+   {
+    "english": "was thrown into an uproar by silversmiths angry at Paul's teaching against Diana",
+    "references": [
+     "ACT 19:23-28"
+    ],
+    "quote": "Great is Diana of the Ephesians."
+   }
+  ],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

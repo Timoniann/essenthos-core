@@ -1,0 +1,36 @@
+{
+ "slug": "tamar",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.083113+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses do not say Judah would pass there; she sat by the way to Timnath after hearing he was going there.",
+    "english": "covered herself with a veil and sat by the way to Timnath",
+    "references": [
+     "GEN 38:14"
+    ],
+    "ukr": "покрилася покривалом і сіла при дорозі до Тімни",
+    "deu": "deckte sich mit einem Mantel und setzte sich an den Weg gen Thimnath",
+    "spa": "se cubrió con un velo y se puso junto al camino de Timnath"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say 'proved'; she told Judah to discern whose the signet, bracelets and staff were, and the burning was ordered by Judah.",
+    "english": "was sentenced to be burnt by Judah, but bade him discern whose signet, bracelets and staff these were",
+    "references": [
+     "GEN 38:24-25"
+    ],
+    "ukr": "була засуджена Юдою на спалення, але звеліла йому пізнати, чия то печатка, і шнури, і палиця",
+    "deu": "wurde von Juda zum Verbrennen verurteilt, hieß ihn aber erkennen, wes dieser Ring und diese Schnur und dieser Stab ist",
+    "spa": "fue condenada por Judá a ser quemada, pero le dijo que mirase cúyos eran el anillo, el manto y el bordón"
+   }
+  ],
+  "note": "The line leaves out that she bore twins, Perez and Zerah, by Judah."
+ },
+ "problems": [],
+ "attempts": []
+}

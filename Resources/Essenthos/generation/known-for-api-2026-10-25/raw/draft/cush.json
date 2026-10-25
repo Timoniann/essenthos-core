@@ -1,0 +1,15 @@
+{
+ "slug": "cush",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.876891+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Cush among the sons of Ham and name his own sons, which the summary already states, and tell no deed of his own.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

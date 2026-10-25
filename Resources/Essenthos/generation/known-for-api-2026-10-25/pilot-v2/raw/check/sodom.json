@@ -1,0 +1,47 @@
+{
+ "slug": "sodom",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v2",
+ "how": "ask",
+ "at": "2026-10-25T15:55:58.096823+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses say the kings took Sodom's goods and Lot, not that the city itself was taken; the actors are named in verse 9.",
+    "english": "had its goods taken by Chedorlaomer and his allies, who also carried off Lot",
+    "references": [
+     "GEN 14:9-12"
+    ],
+    "ukr": "був позбавлений маєтку Кедорлаомером та його союзниками, які забрали також Лота",
+    "deu": "wurde von Kedor-Laomer und seinen Verbündeten seiner Habe beraubt, die auch Lot mitnahmen",
+    "spa": "fue despojada de sus riquezas por Chêdorlaomer y sus aliados, que se llevaron también a Lot"
+   },
+   {
+    "verdict": "fix",
+    "why": "The men demanded the guests be brought out; 'to get at' goes beyond this, and verse 3 is needed for Lot's house.",
+    "english": "was where its men surrounded Lot's house, demanding the two angels who had come to him",
+    "references": [
+     "GEN 19:1-5"
+    ],
+    "ukr": "був місцем, де люди міста оточили дім Лота, вимагаючи видати двох ангелів, що прийшли до нього",
+    "deu": "war der Ort, an dem die Männer der Stadt Lots Haus umringten und die zwei Engel forderten, die zu ihm gekommen waren",
+    "spa": "fue el lugar donde los hombres de la ciudad cercaron la casa de Lot y exigieron a los dos ángeles que habían llegado a él"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was overthrown when the LORD rained brimstone and fire on it out of heaven",
+    "references": [
+     "GEN 19:24-25"
+    ],
+    "ukr": "був зруйнований, коли Господь послав на нього з неба дощ із сірки й вогню",
+    "deu": "wurde zerstört, als der HERR Schwefel und Feuer vom Himmel auf es regnen ließ",
+    "spa": "fue destruida cuando el SEÑOR hizo llover sobre ella azufre y fuego desde el cielo"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

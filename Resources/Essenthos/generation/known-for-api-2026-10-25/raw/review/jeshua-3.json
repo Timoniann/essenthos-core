@@ -1,0 +1,31 @@
+{
+ "slug": "jeshua-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.433762+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "збудував разом із Зоровавелем та священиками жертовник Бога Ізраїля",
+    "deu": "baute mit Serubabel und den Priestern den Altar des Gottes Israels",
+    "spa": "edificó con Zorobabel y los sacerdotes el altar del Dios de Israel",
+    "why": "Ukrainian: replaced the old-fashioned «жертівника» with the modern accusative «жертовник»."
+   },
+   {
+    "ukr": "почав разом із Зоровавелем будувати Божий дім у Єрусалимі",
+    "deu": "fing mit Serubabel an, das Haus Gottes zu Jerusalem zu bauen",
+    "spa": "comenzó con Zorobabel a edificar la casa de Dios en Jerusalem",
+    "why": ""
+   },
+   {
+    "ukr": "відмовився разом із Зоровавелем будувати дім Божий разом із противниками",
+    "deu": "lehnte mit Serubabel ab, das Haus Gottes zusammen mit den Widersachern zu bauen",
+    "spa": "rehusó con Zorobabel edificar la casa de Dios junto con los adversarios",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

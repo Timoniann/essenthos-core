@@ -1,0 +1,34 @@
+{
+ "slug": "admah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.627772+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Admah's king went out to battle in the vale of Siddim, and DEU 29:23 says the LORD overthrew it in his anger.",
+  "clauses": [
+   {
+    "english": "went to battle with its king against Chedorlaomer and his allies in the vale of Siddim",
+    "references": [
+     "GEN 14:8"
+    ],
+    "quote": "the king of Admah, and the king of Zeboiim"
+   },
+   {
+    "english": "was overthrown by the LORD in his anger and wrath, with Sodom, Gomorrah and Zeboim",
+    "references": [
+     "DEU 29:23"
+    ],
+    "quote": "which the LORD overthrew in his anger, and in his wrath"
+   }
+  ],
+  "doubts": [
+   "GEN 14:8 names Admah only through its king, who joined the battle with the other four kings.",
+   "HOS 11:8 only uses Admah as a comparison and is not an event, so it was left out.",
+   "GEN 10:19 only gives a border, so it was left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

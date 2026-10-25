@@ -1,0 +1,17 @@
+{
+ "slug": "gershon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.206114+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only list Gershon among Levi's sons and speak of his descendants, their numbers, duties and cities, and say nothing of Gershon himself beyond what the summary already gives.",
+  "clauses": [],
+  "doubts": [
+   "Verses about the sons of Gershon (the Gershonites) describe the later tribe's service and cities, not deeds of Gershon himself."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

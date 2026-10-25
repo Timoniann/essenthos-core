@@ -1,0 +1,47 @@
+{
+ "slug": "hananiah-10",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.352765+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Verse 11 alone states the prophecy, naming Nebuchadnezzar king of Babylon and the two years; verses 1-4 are more than needed.",
+    "english": "prophesied that the LORD would break the yoke of Nebuchadnezzar king of Babylon within two years",
+    "references": [
+     "JER 28:11"
+    ],
+    "ukr": "пророкував, що Господь зламає ярмо Навуходоносора, царя вавилонського, за два роки",
+    "deu": "weissagte, dass der HERR das Joch Nebukadnezars, des Königs zu Babel, innerhalb von zwei Jahren zerbrechen werde",
+    "spa": "profetizó que el SEÑOR quebraría el yugo de Nabucodonosor, rey de Babilonia, dentro de dos años"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "broke the yoke from off Jeremiah's neck",
+    "references": [
+     "JER 28:10"
+    ],
+    "ukr": "поламав ярмо з шиї пророка Єремії",
+    "deu": "zerbrach das Joch vom Halse des Propheten Jeremia",
+    "spa": "quebró el yugo del cuello de Jeremías"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was told by Jeremiah that the LORD had not sent him, and died that same year",
+    "references": [
+     "JER 28:15-17"
+    ],
+    "ukr": "почув від Єремії, що Господь не посилав його, і помер того ж року",
+    "deu": "bekam von Jeremia gesagt, der HERR habe ihn nicht gesandt, und starb noch im selben Jahr",
+    "spa": "fue informado por Jeremías de que el SEÑOR no lo había enviado, y murió en el mismo año"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,48 @@
+{
+ "slug": "topheth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.577809+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says they built the high places of Tophet, not that they were built on it.",
+    "english": "had its high places built to burn sons and daughters in the fire",
+    "references": [
+     "JER 7:31"
+    ],
+    "ukr": "мав збудовані жертовні пагірки, щоб палити на вогні синів і дочок",
+    "deu": "bekam Altäre gebaut, um Söhne und Töchter zu verbrennen",
+    "spa": "tuvo sus altos edificados para quemar al fuego sus hijos y sus hijas"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was defiled by the king so that no one could make his son or daughter pass through the fire to Molech",
+    "references": [
+     "2KI 23:10"
+    ],
+    "ukr": "був опоганений царем, щоб ніхто не переводив через вогонь сина свого чи дочку свою для Молоха",
+    "deu": "wurde vom König verunreinigt, damit niemand seinen Sohn oder seine Tochter dem Moloch durchs Feuer gehen ließe",
+    "spa": "fue profanado por el rey para que ninguno pasase su hijo o su hija por fuego a Moloch"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses say it would be called the valley of slaughter, not that it was renamed; the wording is also shortened.",
+    "english": "was declared by the LORD to be called the valley of slaughter, where they would bury till no place was left",
+    "references": [
+     "JER 19:6",
+     "JER 19:11"
+    ],
+    "ukr": "був оголошений Господом таким, що зватиметься Долиною Убивства, де ховатимуть, поки не стане місця",
+    "deu": "wurde vom HERRN zum künftigen Würgetal erklärt, in dem man begraben würde, bis kein Raum mehr wäre",
+    "spa": "fue declarado por el SEÑOR como el que se llamaría Valle de la Matanza, donde se enterraría hasta no haber lugar"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

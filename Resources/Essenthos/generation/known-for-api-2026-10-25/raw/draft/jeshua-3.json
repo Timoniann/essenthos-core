@@ -1,0 +1,41 @@
+{
+ "slug": "jeshua-3",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.110792+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Several verses tell what Jeshua the son of Jozadak did in rebuilding the altar and the temple, beyond what the summary says.",
+  "clauses": [
+   {
+    "english": "built the altar of the God of Israel with Zerubbabel and the priests",
+    "references": [
+     "EZR 3:2"
+    ],
+    "quote": "builded the altar of the God of Israel, to offer burnt offerings thereon"
+   },
+   {
+    "english": "began with Zerubbabel to build the house of God at Jerusalem",
+    "references": [
+     "EZR 3:8",
+     "EZR 5:2"
+    ],
+    "quote": "began to build the house of God which is at Jerusalem"
+   },
+   {
+    "english": "refused with Zerubbabel to let the adversaries help build the temple",
+    "references": [
+     "EZR 4:3"
+    ],
+    "quote": "Ye have nothing to do with us to build an house unto our God"
+   }
+  ],
+  "doubts": [
+   "EZR 2:36 (priestly house of Jeshua), EZR 8:33 (Jozabad son of Jeshua) and NEH 12:8 (Levite Jeshua) may concern other men of the name, so I left them out.",
+   "EZR 2:2, NEH 7:7, NEH 12:1, NEH 12:7, NEH 12:10, NEH 12:26 and EZR 10:18 only list him, give his descendants or restate the summary, so I did not use them."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

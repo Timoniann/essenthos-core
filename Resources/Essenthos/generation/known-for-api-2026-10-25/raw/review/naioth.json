@@ -1,0 +1,25 @@
+{
+ "slug": "naioth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.640843+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був місцем, де Давид та Самуїл оселилися після того, як Давид утік від Саула",
+    "deu": "war der Ort, wo David und Samuel blieben, nachdem David vor Saul entflohen war",
+    "spa": "fue el lugar donde moraron David y Samuel después de que David huyó de Saúl",
+    "why": "Ukrainian: replaced the dated 'осілися' with the modern 'оселилися'."
+   },
+   {
+    "ukr": "був місцем, де Саул пророкував і лежав нагий цілий день та цілу ніч",
+    "deu": "war der Ort, wo Saul weissagte und den ganzen Tag und die ganze Nacht nackt dalag",
+    "spa": "fue el lugar donde Saúl profetizó y estuvo tendido desnudo todo aquel día y toda aquella noche",
+    "why": "German: replaced the archaic 'bloß' with the modern 'nackt'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

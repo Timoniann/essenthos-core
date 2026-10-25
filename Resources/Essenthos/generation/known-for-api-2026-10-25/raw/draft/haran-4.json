@@ -1,0 +1,42 @@
+{
+ "slug": "haran-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.124449+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The story verses tell of Terah's family settling at Haran, Abram leaving it at the LORD's word, and Jacob fleeing there to Laban.",
+  "clauses": [
+   {
+    "english": "was where Terah's family stopped and dwelt on the way to Canaan",
+    "references": [
+     "GEN 11:31"
+    ],
+    "quote": "they came unto Haran, and dwelt there"
+   },
+   {
+    "english": "was where Abram departed from at the LORD's word, with Lot",
+    "references": [
+     "GEN 12:4"
+    ],
+    "quote": "So Abram departed, as the LORD had spoken unto him"
+   },
+   {
+    "english": "was where Jacob fled to Laban to escape Esau's anger",
+    "references": [
+     "GEN 27:43",
+     "GEN 28:10"
+    ],
+    "quote": "flee thou to Laban my brother to Haran"
+   }
+  ],
+  "doubts": [
+   "2KI 19:12, ISA 37:12 and EZK 27:23 only name Haran among conquered cities or trading peoples, so they were left out.",
+   "ACT 7:2-4 repeat the Genesis account under the spelling Charran, so they were not cited separately.",
+   "GEN 11:29 names Haran the man, not the place, and is context only."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "tent-of-meeting-outside-the-camp",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.327254+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "була місцем, куди виходив кожен, хто шукав Господа",
+    "deu": "war der Ort, zu dem jeder hinausging, der den HERRN befragen wollte",
+    "spa": "fue el lugar adonde salía todo el que buscaba al SEÑOR",
+    "why": ""
+   },
+   {
+    "ukr": "була місцем, де сходив стовп хмари і Господь говорив з Мойсеєм лице в лице",
+    "deu": "war der Ort, wo die Wolkensäule herabkam und der HERR mit Mose von Angesicht zu Angesicht redete",
+    "spa": "fue el lugar donde descendía la columna de nube y el SEÑOR hablaba con Moisés cara a cara",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

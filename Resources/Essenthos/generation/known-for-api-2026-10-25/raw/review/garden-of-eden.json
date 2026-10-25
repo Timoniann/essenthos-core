@@ -1,0 +1,31 @@
+{
+ "slug": "garden-of-eden",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.525121+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був насаджений Господом Богом в Едені на сході, де Він помістив людину, яку створив",
+    "deu": "wurde von Gott dem HERRN in Eden im Osten gepflanzt, und er setzte den Menschen hinein, den er gemacht hatte",
+    "spa": "fue plantado por el SEÑOR Dios en Edén al oriente, y allí puso al hombre que había formado",
+    "why": "Replaced the archaic Ukrainian «осадив» with «помістив» and the old German «gegen Morgen» with «im Osten»."
+   },
+   {
+    "ukr": "був місцем, де змій заговорив до жінки, а Адам і його жінка сховалися від Господа Бога",
+    "deu": "war der Ort, an dem die Schlange zur Frau sprach und Adam und seine Frau sich vor Gott dem HERRN versteckten",
+    "spa": "fue donde la serpiente habló a la mujer, y Adán y su mujer se escondieron del SEÑOR Dios",
+    "why": "Spanish: «el hombre» changed to «Adán» to match the English."
+   },
+   {
+    "ukr": "був місцем, звідки Господь Бог вигнав Адама і де поставив Херувимів і полум'яний меч, щоб стерегти дорогу до дерева життя",
+    "deu": "war der Ort, aus dem Gott der HERR Adam austrieb und vor dem er die Cherubim und ein flammendes Schwert aufstellte, um den Weg zum Baum des Lebens zu bewachen",
+    "spa": "fue donde el SEÑOR Dios echó fuera al hombre y puso querubines y una espada encendida que se revolvía a todos lados, para guardar el camino del árbol de la vida",
+    "why": "Ukrainian: plural cherubim and modern «полум'яний меч» instead of the old «меча полум'яного»; German: «flammendes Schwert» for the old «bloßen, hauenden Schwert» and «bewachen» for «bewahren»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

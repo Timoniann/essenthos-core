@@ -1,0 +1,47 @@
+{
+ "slug": "phinehas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.014477+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "That the woman was Midianite is stated in 25:6, just outside the citation.",
+    "english": "killed an Israelite and a Midianite woman with a javelin, and the plague was stayed",
+    "references": [
+     "NUM 25:6-8"
+    ],
+    "ukr": "пробив списом ізраїльтянина та мідіянітянку, і поразка була стримана",
+    "deu": "durchstach einen Israeliten und eine Midianitin mit einem Spieß, und die Plage hörte auf",
+    "spa": "alanceó a un varón de Israel y a una madianita, y cesó la mortandad"
+   },
+   {
+    "verdict": "fix",
+    "why": "That the LORD speaks is stated in 25:10, just outside the citation.",
+    "english": "was given the LORD's covenant of an everlasting priesthood",
+    "references": [
+     "NUM 25:10-13"
+    ],
+    "ukr": "отримав заповіт Господа про вічне священство",
+    "deu": "erhielt den Bund des HERRN eines ewigen Priestertums",
+    "spa": "recibió el pacto del SEÑOR del sacerdocio perpetuo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse does not say 'eastern tribes' or give the altar as the reason; it names the tribes and Gilead.",
+    "english": "was sent to Reuben, Gad and half of Manasseh in the land of Gilead",
+    "references": [
+     "JOS 22:13"
+    ],
+    "ukr": "був посланий до синів Рувимових, синів Ґадових і половини племені Манасії в краю Ґілеад",
+    "deu": "wurde zu den Kindern Ruben, den Kindern Gad und dem halben Stamm Manasse ins Land Gilead gesandt",
+    "spa": "fue enviado a los hijos de Rubén, a los hijos de Gad y a la media tribu de Manasés, a la tierra de Galaad"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "philippi",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.590366+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "були місцем, де Господь відкрив серце Лідії на те, що говорив Павло",
+    "deu": "war der Ort, an dem der HERR Lydia das Herz auftat für das, was Paulus redete",
+    "spa": "fueron donde el SEÑOR abrió el corazón de Lidia a lo que Pablo decía",
+    "why": "Spanish verb made plural to agree with the plural name Filipos."
+   },
+   {
+    "ukr": "були місцем, де Павло та його супутники натерпілися й зазнали зневаги",
+    "deu": "war der Ort, an dem Paulus und seine Gefährten gelitten hatten und geschmäht worden waren",
+    "spa": "fueron donde Pablo y sus compañeros padecieron y fueron afrentados",
+    "why": "Spanish verb made plural to agree with the plural name Filipos."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,19 @@
+{
+ "slug": "eglon-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.087447+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "був здобутий Ісусом того ж дня і побитий вістрям меча, а всіх, хто був у ньому, знищено",
+    "deu": "wurde von Josua am selben Tag eingenommen und mit der Schärfe des Schwerts geschlagen, und alle Menschen darin wurden vernichtet",
+    "spa": "fue tomado por Josué el mismo día y pasado a cuchillo, y todas las personas que había en él fueron destruidas",
+    "why": "German: replaced the old word «Seelen» with «Menschen». Spanish: removed the stray trailing text and the added clause, and changed «todo lo vivo» to «todas las personas», as in the English."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

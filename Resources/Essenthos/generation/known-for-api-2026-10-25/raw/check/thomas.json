@@ -1,0 +1,36 @@
+{
+ "slug": "thomas",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.414272+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "He urged his fellow disciples to go too, and the verse does not say whose company he meant to die in or that Jesus was setting out.",
+    "english": "told his fellow disciples to go too, that they might die with him",
+    "references": [
+     "JHN 11:16"
+    ],
+    "ukr": "закликав співучнів піти також, щоб повмирати з Ним",
+    "deu": "forderte die Jünger auf mitzuziehen, damit sie mit ihm sterben",
+    "spa": "dijo a sus condiscípulos que fueran también, para que murieran con él"
+   },
+   {
+    "verdict": "fix",
+    "why": "He refused to believe the other disciples' report unless he saw the nail prints and put his finger in them; the clause adds that Jesus had risen and that he touched wounds.",
+    "english": "refused to believe unless he saw the nail prints and touched them, then said to Jesus, \"My Lord and my God\"",
+    "references": [
+     "JHN 20:25-28"
+    ],
+    "ukr": "не хотів увірувати, поки не побачить знаків від цвяхів і не вкладе пальця, а потім сказав Ісусові: «Господь мій і Бог мій!»",
+    "deu": "wollte nicht glauben, es sei denn, er sähe die Nägelmale und legte seinen Finger hinein; dann sprach er zu Jesus: „Mein HERR und mein Gott!“",
+    "spa": "no quiso creer si no veía la señal de los clavos y metía su dedo en ella; luego dijo a Jesús: «¡Señor mío, y Dios mío!»"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

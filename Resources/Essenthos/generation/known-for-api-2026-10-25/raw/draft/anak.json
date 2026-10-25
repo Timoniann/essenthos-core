@@ -1,0 +1,15 @@
+{
+ "slug": "anak",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.448260+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses name Anak only as the ancestor or father of the Anakim and his three sons, and the events they tell (the spies' fear, the sons' expulsion from Hebron) belong to his descendants, not to him.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

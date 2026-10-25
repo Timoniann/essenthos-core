@@ -1,0 +1,31 @@
+{
+ "slug": "bildad",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.423711+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "прийшов з двома приятелями, щоб поспівчувати Йову й потішити його",
+    "deu": "kam mit zwei Freunden, um Hiob zu beklagen und zu trösten",
+    "spa": "vino con dos amigos para condolerse de Job y consolarle",
+    "why": ""
+   },
+   {
+    "ukr": "відповів Йову, питаючи, чи Бог скривлює суд",
+    "deu": "antwortete Hiob und fragte, ob Gott unrecht richte",
+    "spa": "respondió a Job preguntando si Dios pervierte el derecho",
+    "why": "Spanish: changed the future 'pervertirá' to the present 'pervierte' to match the English 'perverts'."
+   },
+   {
+    "ukr": "пішов і зробив, як говорив йому Господь",
+    "deu": "ging hin und tat, wie der HERR ihm gesagt hatte",
+    "spa": "fue e hizo como el SEÑOR le dijo",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

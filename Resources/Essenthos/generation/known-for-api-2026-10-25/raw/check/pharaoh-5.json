@@ -1,0 +1,36 @@
+{
+ "slug": "pharaoh-5",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.162449+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "took Gezer, burned it with fire and slew the Canaanites there",
+    "references": [
+     "1KI 9:16"
+    ],
+    "ukr": "здобув Ґезер, спалив його огнем і вбив ханаанеянина, що сидів у місті",
+    "deu": "gewann Geser, verbrannte es mit Feuer und erwürgte die Kanaaniter, die in der Stadt wohnten",
+    "spa": "tomó Gezer, la quemó y mató a los cananeos que habitaban la ciudad"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "took in Hadad and gave him a house, food and land",
+    "references": [
+     "1KI 11:18"
+    ],
+    "ukr": "прийняв Гадада і дав йому дім, утримання та землю",
+    "deu": "nahm Hadad auf und gab ihm ein Haus, Nahrung und ein Land",
+    "spa": "recibió a Adad y le dio casa, alimentos y tierra"
+   }
+  ],
+  "note": "The line leaves out that he gave Gezer as a present to his daughter, Solomon's wife (1KI 9:16)."
+ },
+ "problems": [],
+ "attempts": []
+}

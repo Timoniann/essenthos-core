@@ -1,0 +1,31 @@
+{
+ "slug": "philip",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.363004+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "знайшов Нафанаїла, сказав йому про Ісуса й запросив прийти та побачити",
+    "deu": "fand Nathanael, sagte ihm von Jesus und forderte ihn auf: Komm und sieh es!",
+    "spa": "halló a Natanael, le habló de Jesús y le dijo: Ven y ve",
+    "why": ""
+   },
+   {
+    "ukr": "сказав Ісусові, що хліба за двісті динаріїв не вистачить для безлічі народу",
+    "deu": "sagte Jesus, Brot für zweihundert Denare reiche für das viele Volk nicht aus",
+    "spa": "dijo a Jesús que doscientos denarios de pan no bastaban para la gran multitud",
+    "why": "German: replaced the old word «Groschen» with modern «Denare» and removed the clumsy doubled «für»."
+   },
+   {
+    "ukr": "сказав Андрієві про геллен, які хотіли побачити Ісуса, і вони обоє розповіли Ісусові",
+    "deu": "sagte Andreas von den Griechen, die Jesus gerne sehen wollten, und beide sagten es Jesus weiter",
+    "spa": "dijo a Andrés de los griegos que querían ver a Jesús, y ambos se lo dijeron a Jesús",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

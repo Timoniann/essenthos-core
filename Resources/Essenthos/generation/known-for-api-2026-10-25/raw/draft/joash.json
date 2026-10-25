@@ -1,0 +1,26 @@
+{
+ "slug": "joash",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.495432+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "Joash's one deed in the verses is defending his son Gideon against the men of the city who wanted him put to death for casting down Baal's altar.",
+  "clauses": [
+   {
+    "english": "defended his son Gideon against the men who wanted him killed for casting down Baal's altar",
+    "references": [
+     "JDG 6:30-31"
+    ],
+    "quote": "Will ye plead for Baal? will ye save him?"
+   }
+  ],
+  "doubts": [
+   "JDG 6:11, 6:29, 7:14, 8:13, 8:29 and 8:32 only name Joash as Gideon's father, his place or his burial, so they were not cited.",
+   "JDG 6:32 says he called Gideon Jerubbaal, but the verse says only 'he', so it was not used."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,37 @@
+{
+ "slug": "delilah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.639834+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "pressed Samson daily until he told her the secret of his great strength",
+    "references": [
+     "JDG 16:6",
+     "JDG 16:15-17"
+    ],
+    "ukr": "докучала Самсонові щодня, аж поки він не відкрив їй таємницю своєї великої сили",
+    "deu": "drängte Simson täglich, bis er ihr das Geheimnis seiner großen Kraft sagte",
+    "spa": "apremió cada día a Samsón hasta que él le descubrió el secreto de su gran fuerza"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses do not say the lords were called to take him, and she called them before the shaving.",
+    "english": "called the Philistine lords and had Samson's seven locks shaved off as he slept",
+    "references": [
+     "JDG 16:18-19"
+    ],
+    "ukr": "покликала филистимських володарів і звеліла оголити сім кучерів Самсона, коли він спав",
+    "deu": "ließ der Philister Fürsten rufen und ließ Simson die sieben Locken abscheren, als er schlief",
+    "spa": "llamó a los príncipes de los Filisteos e hizo rapar las siete guedejas de Samsón mientras dormía"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,48 @@
+{
+ "slug": "ishmael-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.627092+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "slew Gedaliah the governor at Mizpah, with those who were with him",
+    "references": [
+     "JER 41:2-3"
+    ],
+    "ukr": "убив начальника Ґедалію в Міцпі разом з тими, що були з ним",
+    "deu": "erschlug Gedalja, den Statthalter, in Mizpa samt denen, die bei ihm waren",
+    "spa": "mató a Gedalías, el gobernador, en Mizpa, junto con los que estaban con él"
+   },
+   {
+    "verdict": "fix",
+    "why": "Ten of the eighty were spared (41:8), and the verses do not call them pilgrims; they say only that men came from Shechem, Shiloh and Samaria.",
+    "english": "slew men from Shechem, Shiloh and Samaria and cast them into a pit",
+    "references": [
+     "JER 41:5",
+     "JER 41:7"
+    ],
+    "ukr": "порізав людей з Сихему, з Шіло та з Самарії і повкидав їх до ями",
+    "deu": "ermordete Männer von Sichem, von Silo und von Samaria und warf sie in den Brunnen",
+    "spa": "degolló a hombres de Sichêm, de Silo y de Samaria, y los echó en un aljibe"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "carried the people of Mizpah away captive toward the Ammonites",
+    "references": [
+     "JER 41:10"
+    ],
+    "ukr": "забрав у полон народ, що був у Міцпі, і рушив до Аммонових синів",
+    "deu": "führte das Volk, das zu Mizpa war, gefangen weg und zog hin zu den Kindern Ammon",
+    "spa": "llevó cautivo al pueblo que estaba en Mizpa y se fue hacia los hijos de Ammón"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

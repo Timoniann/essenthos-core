@@ -1,0 +1,31 @@
+{
+ "slug": "thirty-pieces-of-silver",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.483978+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "були обіцяні Юді первосвящениками за видання Ісуса їм",
+    "deu": "wurden Judas von den Hohenpriestern dafür geboten, dass er ihnen Jesus verriet",
+    "spa": "fueron prometidas a Judas por los sumos sacerdotes por entregarles a Jesús",
+    "why": "Spanish: replaced the old wording «señaladas» with «prometidas» and «príncipes de los sacerdotes» with «sumos sacerdotes»."
+   },
+   {
+    "ukr": "були кинуті в храм Юдою, який їх повернув",
+    "deu": "wurden von Judas, der sie zurückgebracht hatte, in den Tempel geworfen",
+    "spa": "fueron arrojadas en el templo por Judas, que las había devuelto",
+    "why": ""
+   },
+   {
+    "ukr": "були використані первосвящениками, щоб купити поле гончаря для поховання чужинців",
+    "deu": "wurden von den Hohenpriestern verwendet, um den Töpferacker als Begräbnisstätte für Fremde zu kaufen",
+    "spa": "fueron usadas por los sumos sacerdotes para comprar el campo del alfarero, para sepultar a los extranjeros",
+    "why": "Ukrainian: «поле ганчарське» became «поле гончаря» and «мандрівників» became «чужинців» (strangers); German: «Töpfersacker» became «Töpferacker» and «Pilger» became «Fremde»; Spanish: «príncipes de los sacerdotes» became «sumos sacerdotes» and «para sepultura de» became «para sepultar a»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

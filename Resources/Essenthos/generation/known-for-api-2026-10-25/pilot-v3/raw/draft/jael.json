@@ -1,0 +1,34 @@
+{
+ "slug": "jael",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v3",
+ "how": "ask",
+ "at": "2026-10-25T16:02:00.579281+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell of Jael sheltering Sisera and then killing him, and showing his body to Barak, which add to the summary's bare relation.",
+  "clauses": [
+   {
+    "english": "took Sisera into her tent when he fled and covered him",
+    "references": [
+     "JDG 4:17-18"
+    ],
+    "quote": "Turn in, my lord, turn in to me; fear not."
+   },
+   {
+    "english": "drove a tent nail into the temples of the sleeping Sisera, and he died",
+    "references": [
+     "JDG 4:21"
+    ],
+    "quote": "smote the nail into his temples, and fastened it into the ground"
+   }
+  ],
+  "doubts": [
+   "JDG 5:6 mentions the days of Jael only as a time reference, so it was left out.",
+   "JDG 5:24 is a blessing pronounced on her, not an event, so it was left out.",
+   "The second clause restates the summary's 'killer of Sisera' as the deed itself, as the rules allow."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

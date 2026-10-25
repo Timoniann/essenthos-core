@@ -1,0 +1,19 @@
+{
+ "slug": "anah-son-of-zibeon",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.125475+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "знайшов мулів у пустелі",
+    "deu": "fand die Maultiere in der Wüste",
+    "spa": "descubrió los mulos en el desierto",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

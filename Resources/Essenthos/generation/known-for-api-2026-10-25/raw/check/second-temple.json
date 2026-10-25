@@ -1,0 +1,47 @@
+{
+ "slug": "second-temple",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.465129+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had its foundation laid amid praise and great shouting",
+    "references": [
+     "EZR 3:10-11"
+    ],
+    "ukr": "мав закладену основу серед хвали й гучних вигуків",
+    "deu": "bekam seinen Grund gelegt unter Lobgesang und lautem Jauchzen",
+    "spa": "recibió sus cimientos entre alabanzas y gran júbilo"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says the work ceased until Darius's second year, not that the temple was left unbuilt.",
+    "english": "had its work cease until the second year of Darius",
+    "references": [
+     "EZR 4:24"
+    ],
+    "ukr": "зазнав зупинки роботи аж до другого року царювання Дарія",
+    "deu": "erlebte einen Stillstand des Werkes bis ins zweite Jahr des Darius",
+    "spa": "vio cesar su obra hasta el año segundo del reinado de Darío"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was dedicated with joy and offerings of bullocks, rams and lambs",
+    "references": [
+     "EZR 6:16-17"
+    ],
+    "ukr": "був освячений з радістю й жертвами волів, баранів і ягнят",
+    "deu": "wurde mit Freuden eingeweiht, mit Opfern von Farren, Widdern und Lämmern",
+    "spa": "fue dedicado con gozo y con ofrendas de becerros, carneros y corderos"
+   }
+  ],
+  "note": "The line omits that the temple was finished in Darius's sixth year (EZR 6:15)."
+ },
+ "problems": [],
+ "attempts": []
+}

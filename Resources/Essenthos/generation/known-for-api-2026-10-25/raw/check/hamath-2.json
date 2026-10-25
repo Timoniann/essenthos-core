@@ -1,0 +1,36 @@
+{
+ "slug": "hamath-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:20.610250+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "Jeroboam is named as son of Joash in 2KI 14:27, just outside the citation, so the citation is widened.",
+    "english": "was recovered for Israel by Jeroboam son of Joash",
+    "references": [
+     "2KI 14:27-28"
+    ],
+    "ukr": "був повернений Ізраїлю Єровоамом, сином Йоаша",
+    "deu": "wurde von Jerobeam, dem Sohn des Joas, für Israel zurückgewonnen",
+    "spa": "fue recuperado para Israel por Jeroboam hijo de Joas"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says only 'he built'; Solomon is named in 2CH 8:3, so the citation is widened.",
+    "english": "had store cities built in it by Solomon",
+    "references": [
+     "2CH 8:3-4"
+    ],
+    "ukr": "мав збудовані в ньому Соломоном міста для запасів",
+    "deu": "bekam von Salomo Kornstädte gebaut",
+    "spa": "tuvo ciudades de municiones edificadas en él por Salomón"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

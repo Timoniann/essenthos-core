@@ -1,0 +1,75 @@
+{
+ "slug": "joshua-4",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "ask",
+ "at": "2026-10-25T16:33:03.305786+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "obeyed the LORD's word and came to work on the house of the LORD",
+    "references": [
+     "HAG 1:12",
+     "HAG 1:14"
+    ],
+    "ukr": "послухався голосу Господа і прийшов працювати в домі Господа",
+    "deu": "gehorchte der Stimme des HERRN und kam, um am Hause des HERRN zu arbeiten",
+    "spa": "oyó la voz del SEÑOR y vino a hacer la obra en la casa del SEÑOR"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verses show filthy garments taken off and garments and a mitre put on, not cleansing; 'in a vision' is not in the cited verses.",
+    "english": "had his filthy garments taken away and was clothed with garments and a fair mitre",
+    "references": [
+     "ZEC 3:4-5"
+    ],
+    "ukr": "був позбавлений брудної одежі й зодягнений у шати та чистий завій",
+    "deu": "wurde seiner unreinen Kleider entledigt und mit Kleidern und einem reinen Kopfbund bekleidet",
+    "spa": "fue despojado de las vestimentas viles y vestido de ropas y de una mitra limpia"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": [
+  {
+   "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+   "at": "2026-10-25T16:31:19.241172+00:00",
+   "answer": {
+    "clauses": [
+     {
+      "verdict": "right",
+      "why": "",
+      "english": "obeyed the LORD's word and came to work on the house of the LORD",
+      "references": [
+       "HAG 1:12",
+       "HAG 1:14"
+      ],
+      "ukr": "послухався голосу Господа і прийшов працювати над домом Господа",
+      "deu": "gehorchte der Stimme des HERRN und kam, um am Hause des HERRN zu arbeiten",
+      "spa": "oyó la voz de Jehová y vino a hacer la obra en la casa de Jehová"
+     },
+     {
+      "verdict": "fix",
+      "why": "The verses show the filthy garments taken off and garments and a mitre put on, not cleansing; 'in a vision' is not in the cited verses.",
+      "english": "had his filthy garments taken away and was clothed with garments and a fair mitre",
+      "references": [
+       "ZEC 3:4-5"
+      ],
+      "ukr": "був позбavлений брудної одежі та зодягнений у шати і чистого завоя",
+      "deu": "wurde von den unreinen Kleidern befreit und mit Kleidern und einem reinen Hut angezogen",
+      "spa": "fue despojado de las vestimentas viles y vestido de ropas y de una mitra limpia"
+     }
+    ],
+    "note": ""
+   },
+   "problems": [
+    "clause 1: the Spanish writes Jehová for the LORD",
+    "clause 1: the LORD is not «el SEÑOR» in the Spanish",
+    "clause 2: Latin letters in the Ukrainian"
+   ]
+  }
+ ]
+}

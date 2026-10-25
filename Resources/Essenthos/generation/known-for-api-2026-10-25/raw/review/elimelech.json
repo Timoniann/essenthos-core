@@ -1,0 +1,25 @@
+{
+ "slug": "elimelech",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.632842+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "пішов з жінкою та синами мешкати в моавських полях під час голоду",
+    "deu": "zog während einer Hungersnot mit seiner Frau und seinen Söhnen, um als Fremder im Land der Moabiter zu leben",
+    "spa": "fue con su mujer y sus hijos a peregrinar en los campos de Moab durante una hambruna",
+    "why": "Removed 'two' (added to the sons, not in the English) in all three; German modernized Weib/Teuerung/wallen; Spanish 'el hambre' became 'una hambruna' and the word order was smoothed."
+   },
+   {
+    "ukr": "помер у моавських полях, і Ноомі зосталася з двома синами",
+    "deu": "starb im Land der Moabiter, und Naemi blieb mit ihren zwei Söhnen übrig",
+    "spa": "murió en los campos de Moab, y Noemi quedó con sus dos hijos",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

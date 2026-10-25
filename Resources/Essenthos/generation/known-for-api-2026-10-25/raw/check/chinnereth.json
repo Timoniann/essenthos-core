@@ -1,0 +1,25 @@
+{
+ "slug": "chinnereth",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.111994+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verse says Benhadad smote it, after sending his captains; the captains are not the subject of the striking.",
+    "english": "was struck by Benhadad, together with all the land of Naphtali",
+    "references": [
+     "1KI 15:20"
+    ],
+    "ukr": "був побитий Бен-Гаддадом разом з усією землею Нефталимовою",
+    "deu": "wurde von Benhadad geschlagen, samt dem Lande Naphthali",
+    "spa": "fue herida por Ben-adad, con toda la tierra de Nephtalí"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

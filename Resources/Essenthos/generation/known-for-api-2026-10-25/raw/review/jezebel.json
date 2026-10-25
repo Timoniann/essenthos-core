@@ -1,0 +1,31 @@
+{
+ "slug": "jezebel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.232400+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "винищила пророків Господа",
+    "deu": "rottete die Propheten des HERRN aus",
+    "spa": "destruyó a los profetas del SEÑOR",
+    "why": ""
+   },
+   {
+    "ukr": "підстроїла побиття Навота камінням, щоб Ахав міг заволодіти його виноградником",
+    "deu": "plante die Steinigung Naboths, damit Ahab seinen Weinberg einnehmen konnte",
+    "spa": "tramó el apedreamiento de Naboth para que Achâb tomara su viña",
+    "why": ""
+   },
+   {
+    "ukr": "була скинута з вікна за наказом Єгу і розтоптана",
+    "deu": "wurde auf Jehus Befehl aus dem Fenster herabgestürzt und zertreten",
+    "spa": "fue echada abajo desde una ventana por orden de Jehú y fue atropellada",
+    "why": ""
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

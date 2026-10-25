@@ -1,0 +1,41 @@
+{
+ "slug": "bezalel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:30.127450+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell what was given to him and what he made for the tabernacle, beyond the summary's calling and descent.",
+  "clauses": [
+   {
+    "english": "was filled with the spirit of God in wisdom and all manner of workmanship",
+    "references": [
+     "EXO 31:3-4"
+    ],
+    "quote": "I have filled him with the spirit of God"
+   },
+   {
+    "english": "made the ark of shittim wood",
+    "references": [
+     "EXO 37:1"
+    ],
+    "quote": "And Bezaleel made the ark of shittim wood"
+   },
+   {
+    "english": "made all that the LORD commanded Moses",
+    "references": [
+     "EXO 38:22"
+    ],
+    "quote": "made all that the LORD commanded Moses"
+   }
+  ],
+  "doubts": [
+   "EXO 34:23 and NUM 16:9 are marked but do not concern this person; left out.",
+   "EXO 36:8 and EXO 38:19 are marked but speak of other workmen or of pillars, not of him by name; left out.",
+   "The brazen altar he made (2CH 1:5) is left out as part of all he made."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

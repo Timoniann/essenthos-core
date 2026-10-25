@@ -1,0 +1,37 @@
+{
+ "slug": "mede",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:21.531034+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "fix",
+    "why": "The verses never name Babylon; the kingdom is addressed as Belshazzar's, who is named in the neighbouring verses.",
+    "english": "received the divided kingdom of Belshazzar, given to the Medes and Persians",
+    "references": [
+     "DAN 5:28-30"
+    ],
+    "ukr": "отримала поділене царство Валтасара, віддане мідянам та персам",
+    "deu": "erhielt das zerteilte Königreich Belsazers, den Medern und Persern gegeben",
+    "spa": "recibió el reino dividido de Belsasar, dado a Medos y Persas"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had a law that altered not, so that a decree the king established could not be changed",
+    "references": [
+     "DAN 6:8",
+     "DAN 6:15"
+    ],
+    "ukr": "мала закон, що не змінюється, тож постанова, яку встановить цар, не могла бути змінена",
+    "deu": "hatte ein Recht, das nicht aufgehoben wird, sodass ein vom König beschlossenes Gebot nicht geändert werden konnte",
+    "spa": "tuvo una ley que no se revoca, de modo que un decreto que el rey confirmara no podía mudarse"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}

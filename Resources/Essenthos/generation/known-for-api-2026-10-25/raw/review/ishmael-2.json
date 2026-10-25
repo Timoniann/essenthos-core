@@ -1,0 +1,31 @@
+{
+ "slug": "ishmael-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:11.993606+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "убив начальника Ґедалію в Міцпі разом з тими, що були з ним",
+    "deu": "erschlug Gedalja, den Statthalter, in Mizpa samt denen, die bei ihm waren",
+    "spa": "mató a Gedalías, el gobernador, en Mizpa, junto con los que estaban con él",
+    "why": ""
+   },
+   {
+    "ukr": "порізав людей з Сихему, з Шіло та з Самарії і повкидав їх до ями",
+    "deu": "ermordete Männer von Sichem, von Silo und von Samaria und warf sie in den Brunnen",
+    "spa": "degolló a hombres de Sichêm, de Silo y de Samaria, y los echó en un aljibe",
+    "why": ""
+   },
+   {
+    "ukr": "забрав у полон народ, що був у Міцпі, і рушив до Аммонових синів",
+    "deu": "führte das Volk, das in Mizpa war, gefangen weg und zog hin zu den Ammonitern",
+    "spa": "llevó cautivo al pueblo que estaba en Mizpa y se fue hacia los hijos de Ammón",
+    "why": "In the German, replaced the dated «zu Mizpa» with «in Mizpa» and the ungrammatical «Kindern Ammon» with «Ammonitern»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

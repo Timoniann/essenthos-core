@@ -1,0 +1,25 @@
+{
+ "slug": "nadab",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.702128+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "вийшов з Мойсеєм і споглядав Ізраїлевого Бога",
+    "deu": "stieg mit Mose hinauf und sah den Gott Israels",
+    "spa": "subió con Moisés y vio al Dios de Israel",
+    "why": ""
+   },
+   {
+    "ukr": "приніс перед лице Господнє чужий вогонь і був спалений вогнем від лиця Господнього",
+    "deu": "brachte das fremde Feuer vor den HERRN und wurde von einem Feuer vom HERRN verzehrt",
+    "spa": "ofreció delante del SEÑOR fuego extraño y fue quemado por el fuego que salió de delante del SEÑOR",
+    "why": "Replaced the old-fashioned «огонь/огнем» with modern «вогонь/вогнем» in Ukrainian."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,39 @@
+{
+ "slug": "abelbethmaacah",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.930639+00:00",
+ "answer": {
+  "decision": "write",
+  "reason": "The verses tell three events of the city: Joab's siege, Benhadad's attack and the Assyrian capture.",
+  "clauses": [
+   {
+    "english": "was besieged by Joab's army pursuing Sheba",
+    "references": [
+     "2SA 20:13-15"
+    ],
+    "quote": "besieged him in Abel of Bethmaachah"
+   },
+   {
+    "english": "was smitten by the captains of Benhadad king of Syria",
+    "references": [
+     "1KI 15:20"
+    ],
+    "quote": "smote Ijon, and Dan, and Abelbethmaachah"
+   },
+   {
+    "english": "was taken by Tiglathpileser king of Assyria, and its people carried captive",
+    "references": [
+     "2KI 15:29"
+    ],
+    "quote": "took Ijon, and Abelbethmaachah, and Janoah"
+   }
+  ],
+  "doubts": [
+   "2CH 16:4 names Abelmaim, probably the same city, but it is not spelled as this record's name, so it is left out."
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

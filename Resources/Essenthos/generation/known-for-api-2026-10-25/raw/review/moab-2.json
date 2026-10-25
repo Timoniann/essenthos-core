@@ -1,0 +1,31 @@
+{
+ "slug": "moab-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:12.438765+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "послав по Валаама, щоб він прокляв Ізраїля",
+    "deu": "sandte nach Bileam, damit er Israel verfluchte",
+    "spa": "envió a llamar a Balaam para que maldijese a Israel",
+    "why": ""
+   },
+   {
+    "ukr": "був місцем, де помер і був похований Мойсей",
+    "deu": "war der Ort, wo Mose starb und begraben wurde",
+    "spa": "fue el lugar donde murió y fue enterrado Moisés",
+    "why": ""
+   },
+   {
+    "ukr": "втратив близько десяти тисяч чоловіків і був приборканий під рукою Ізраїля",
+    "deu": "verlor etwa zehntausend Mann und wurde unter die Hand Israels unterworfen",
+    "spa": "perdió como diez mil hombres y quedó sojuzgado bajo la mano de Israel",
+    "why": "German: replaced the old-fashioned «bei zehntausend» with «etwa zehntausend» and «der Kinder Israel» with «Israels»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,25 @@
+{
+ "slug": "on-2",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.358261+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "було пророковано, що його статуї будуть поламані",
+    "deu": "wurde vorhergesagt, dass seine Statuen zerbrochen würden",
+    "spa": "se predijo que sus estatuas serían quebradas",
+    "why": "Replaced the translations' old wording for 'images' (Ukrainian 'стовпи', German 'Bildsäulen') with modern 'статуї' and 'Statuen'."
+   },
+   {
+    "ukr": "було пророковано, що його юнаки падуть від меча, а місто піде в полон",
+    "deu": "wurde vorhergesagt, dass seine jungen Männer durch das Schwert fallen und die Stadt in Gefangenschaft gehen würde",
+    "spa": "se predijo que sus jóvenes caerían a espada y que la ciudad iría al cautiverio",
+    "why": "Modernized wording: Ukrainian 'впадуть' to 'падуть'; German 'junge Mannschaft' to 'jungen Männer' and 'durchs' to 'durch das'; Spanish 'mancebos' to 'jóvenes', 'a cuchillo' to 'a espada', 'en cautiverio' to 'al cautiverio'."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

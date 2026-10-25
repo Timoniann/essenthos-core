@@ -1,0 +1,25 @@
+{
+ "slug": "zebul",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_0115Na6V26Tu37oDR5zdmjCf",
+ "at": "2026-10-25T16:41:13.566279+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "ukr": "послав потай послів до Авімелеха про Ґаала й порадив йому напасти на місто",
+    "deu": "sandte heimlich Boten zu Abimelech wegen Gaals und riet ihm, die Stadt zu überfallen",
+    "spa": "envió mensajeros secretamente a Abimelech acerca de Gaal y le aconsejó atacar la ciudad",
+    "why": "Ukrainian now begins with the verb, as the English does, instead of the adverb."
+   },
+   {
+    "ukr": "вигнав Ґаала та його братів з Сихему",
+    "deu": "verjagte den Gaal und seine Brüder aus Sichem",
+    "spa": "echó fuera a Gaal y a sus hermanos de Sichêm",
+    "why": "Ukrainian word order modernized: «його братів» instead of «братів його»."
+   }
+  ]
+ },
+ "problems": [],
+ "attempts": []
+}

@@ -1,0 +1,15 @@
+{
+ "slug": "mahalalel",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01MsucnvzcVcabru3xxgiEnU",
+ "at": "2026-10-25T16:18:29.575539+00:00",
+ "answer": {
+  "decision": "none",
+  "reason": "The verses only place Mahalaleel in a genealogy, giving his sons, his age and his death, which the summary already covers or which is no deed or event beyond the list.",
+  "clauses": [],
+  "doubts": []
+ },
+ "problems": [],
+ "attempts": []
+}

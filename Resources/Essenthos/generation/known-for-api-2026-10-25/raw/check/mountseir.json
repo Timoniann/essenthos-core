@@ -1,0 +1,48 @@
+{
+ "slug": "mountseir",
+ "model": "claude-sonnet-5-5",
+ "prompt": "v4",
+ "how": "batch msgbatch_01Kg2BbF5mAAeBtHMrSLPAy4",
+ "at": "2026-10-25T16:31:19.415367+00:00",
+ "answer": {
+  "clauses": [
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "was given by the LORD to Esau for a possession",
+    "references": [
+     "DEU 2:5",
+     "JOS 24:4"
+    ],
+    "ukr": "був даний Господом Ісавові у спадщину",
+    "deu": "wurde vom HERRN Esau zum Besitz gegeben",
+    "spa": "fue dado por el SEÑOR a Esaú por heredad"
+   },
+   {
+    "verdict": "fix",
+    "why": "The verse says the children of Esau destroyed the Horims and dwelt in their stead, not that the mount was 'taken from' them.",
+    "english": "was settled by the children of Esau, who destroyed the Horims there",
+    "references": [
+     "DEU 2:12"
+    ],
+    "ukr": "був заселений Ісавовими синами, які вигубили гореїв, що там сиділи раніше",
+    "deu": "wurde von den Kindern Esau besiedelt, die die Horiter vertilgten, die dort zuvor wohnten",
+    "spa": "fue poblado por los hijos de Esaú, que destruyeron a los Horeos que antes habitaban allí"
+   },
+   {
+    "verdict": "right",
+    "why": "",
+    "english": "had its inhabitants destroyed by Ammon and Moab",
+    "references": [
+     "2CH 20:23"
+    ],
+    "ukr": "втратив мешканців, яких вигубили аммонітяни та моавітяни",
+    "deu": "verlor seine Bewohner, die von den Kindern Ammon und Moab vertilgt wurden",
+    "spa": "vio destruidos a sus habitantes por los hijos de Ammón y Moab"
+   }
+  ],
+  "note": ""
+ },
+ "problems": [],
+ "attempts": []
+}
