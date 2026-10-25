@@ -440,6 +440,13 @@ public static class DescriptorRelations
     /// </summary>
     public const string AngelOf = "angel-of";
 
+    /// <summary>
+    /// A title the text gives its subject and nothing else says, so the line says the title itself:
+    /// <em>Michael the archangel</em> (JUD 1:9). The target is the title's own record, and the clause
+    /// reads as its name with no words around it.
+    /// </summary>
+    public const string BearsTitle = "bears-title";
+
     public const string OfTribe = "of-tribe";
     public const string OfPeople = "of-people";
     public const string FromPlace = "from-place";
@@ -477,7 +484,7 @@ public static class DescriptorRelations
         KingOf, QueenOf, ProphetTo, PriestOf, JudgeOf, LeaderOf, HighPriestOf,
         CommanderOf, GovernorOf, TetrarchOf, ServantOf, MasterOf,
         DiscipleOf, ApostleOf, ScribeOf, CompanionOf, TeacherOf, MemberOf, AllyOf, FounderOf,
-        KilledBy, KillerOf, StruckBy, RapedBy, RaperOf, AngelOf,
+        KilledBy, KillerOf, StruckBy, RapedBy, RaperOf, AngelOf, BearsTitle,
         SupporterOf, SupportedBy, CreatorOf, CreatedBy, HeirOf, InheritedBy, ExilerOf, ExiledBy,
         OfTribe, OfPeople, FromPlace, LivedIn, BuriedIn,
         DescendantsOf,
@@ -615,6 +622,7 @@ public static class DescriptorSubjects
             DescriptorRelations.RapedBy, DescriptorRelations.RaperOf, DescriptorRelations.CreatorOf,
             DescriptorRelations.AngelOf, DescriptorRelations.FounderOf,
             DescriptorRelations.KilledBy, DescriptorRelations.KillerOf,
+            DescriptorRelations.BearsTitle,
         ]),
         ([EntityKind.Person, EntityKind.Title, EntityKind.People],
         [
@@ -692,6 +700,10 @@ public static class DescriptorTargets
         ([EntityKind.Place],
         [
             DescriptorRelations.FounderOf,
+        ]),
+        ([EntityKind.Title],
+        [
+            DescriptorRelations.BearsTitle,
         ]),
         ([EntityKind.Person, EntityKind.Title],
         [
