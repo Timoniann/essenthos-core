@@ -11,8 +11,10 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 internal sealed record LocationsOutcome(
     bool AlreadyLoaded,
     int Located,
+    int Candidates,
     int OpenStreetMap,
     int Commercial,
+    int NoSite,
     int Unidentified,
     int Unheld,
     TimeSpan Elapsed)
@@ -20,14 +22,16 @@ internal sealed record LocationsOutcome(
     public override string ToString() =>
         AlreadyLoaded
             ? "the places are already located"
-            : $"{Located} places located; {OpenStreetMap} left unlocated because their coordinates are " +
-              $"OpenStreetMap's, {Commercial} because they are read off a commercial map, " +
-              $"{Unidentified} the gazetteer does not identify, and {Unheld} located places the " +
-              $"encyclopedia holds no record of, in {Elapsed}";
+            : $"{Located} places located and {Candidates} proposed sites held; {OpenStreetMap} places left " +
+              $"unlocated because their likeliest site's coordinates are OpenStreetMap's, {Commercial} " +
+              $"because it is read off a commercial map, {NoSite} because the gazetteer's likeliest answer " +
+              $"is that they are no located place, {Unidentified} the gazetteer does not identify, and " +
+              $"{Unheld} located places the encyclopedia holds no record of, in {Elapsed}";
 }
 
 /// <summary>
-/// Where each place is, as one point, from OpenBible.info's Bible Geocoding.
+/// Where each place is, from OpenBible.info's Bible Geocoding: every answer the gazetteer records,
+/// ranked by its score, and the likeliest of them as the place's one point.
 ///
 /// <para>
 /// <c>ancient.jsonl</c> already says, for every place, which modern location each identification
@@ -39,10 +43,12 @@ internal sealed record LocationsOutcome(
 /// </para>
 ///
 /// <para>
-/// What is left out, and why, is counted in the outcome: a point the gazetteer credits to
-/// OpenStreetMap, a point read off Google Maps with no independent point beside it, and a place the
-/// gazetteer cannot identify at all. Where it read a point off a commercial map and made its own
-/// beside it, its own is the one taken. See Resources/OpenBible/LICENCE.md.
+/// A site whose point the terms do not allow is still held as an answer, by its name and score, with
+/// no point. An answer that is no site — the gazetteer's <em>not a place</em>, <em>unknown place</em>
+/// — is held too, and where it outranks every site the place gets no point: falling back to the
+/// best site would put the place where its own source thinks it probably is not. Where the gazetteer
+/// read a point off a commercial map and made its own beside it, its own is the one taken. See
+/// Resources/OpenBible/LICENCE.md.
 /// </para>
 /// </summary>
 internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBibleLocationLoader> logger)
@@ -77,6 +83,35 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
     };
 
     /// <summary>
+    /// How a place stands to the site it is identified by, in the gazetteer's modifiers: inside it
+    /// (<c>&lt;</c>), the region round it (<c>&gt;</c>), near it, along a river, on a mountain.
+    /// </summary>
+    private static readonly Dictionary<string, string> Relations = new(StringComparer.Ordinal)
+    {
+        ["near"] = "near",
+        ["along"] = "along",
+        ["on"] = "on",
+        ["<"] = "in",
+        [">"] = "around",
+    };
+
+    /// <summary>
+    /// The gazetteer's answers that are no site. <c>recursive</c> is left out: it says only that
+    /// every path from the place leads back to it, which tells a reader nothing.
+    /// </summary>
+    private static readonly Dictionary<string, string> Specials = new(StringComparer.Ordinal)
+    {
+        ["not_a_place"] = "not-a-place",
+        ["not_a_proper_name"] = "not-a-proper-name",
+        ["unknown_place"] = "unknown-place",
+        ["nonspecific_place"] = "nonspecific-place",
+        ["multiple_locations"] = "multiple-locations",
+    };
+
+    /// <summary>The gazetteer's tags for on whose authority an identification is made.</summary>
+    private const string AuthorityTag = "authority_";
+
+    /// <summary>
     /// Which of a modern location's drawn roles the point is, so that a credit on that role can be
     /// read. A representative point has a role of its own; the other three are drawn as the point.
     /// </summary>
@@ -93,12 +128,7 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
                 "No place locations: {Ancient} and {Modern} are both needed. Run " +
                 "scripts/fetch-openbible.ps1; without them no place has a point on a map.",
                 ancient, modern);
-            return new LocationsOutcome(true, 0, 0, 0, 0, 0, started.Elapsed);
-        }
-
-        if (await db.PlaceLocations.AnyAsync(cancellationToken))
-        {
-            return new LocationsOutcome(true, 0, 0, 0, 0, 0, started.Elapsed);
+            return new LocationsOutcome(true, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
         }
 
         var read = Read(ancient, modern);
@@ -109,17 +139,11 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
             .ToListAsync(cancellationToken);
         var byOpenBibleId = places.ToLookup(p => p.OpenBibleId!, p => p.Id, StringComparer.Ordinal);
 
-        var rows = new List<PlaceLocation>(read.Located.Count);
-        var unheld = 0;
+        var locations = new List<PlaceLocation>(read.Located.Count);
+        var unheld = read.Located.Count(located => !byOpenBibleId.Contains(located.PlaceId));
         foreach (var located in read.Located)
         {
-            if (!byOpenBibleId.Contains(located.PlaceId))
-            {
-                unheld++;
-                continue;
-            }
-
-            rows.AddRange(byOpenBibleId[located.PlaceId].Select(entityId => new PlaceLocation
+            locations.AddRange(byOpenBibleId[located.PlaceId].Select(entityId => new PlaceLocation
             {
                 EntityId = entityId,
                 Longitude = located.Longitude,
@@ -132,14 +156,92 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
             }));
         }
 
-        db.PlaceLocations.AddRange(rows);
-        await db.SaveChangesAsync(cancellationToken);
+        var candidates = new List<PlaceCandidate>();
+        foreach (var (placeId, answers) in read.Candidates)
+        {
+            foreach (var entityId in byOpenBibleId[placeId])
+            {
+                candidates.AddRange(answers.Select(answer => new PlaceCandidate
+                {
+                    EntityId = entityId,
+                    Rank = answer.Rank,
+                    Score = answer.Score,
+                    ModernId = answer.ModernId,
+                    Site = answer.Site,
+                    Longitude = answer.Longitude,
+                    Latitude = answer.Latitude,
+                    Kind = answer.Kind,
+                    RadiusMeters = answer.RadiusMeters,
+                    SiteType = answer.SiteType,
+                    Relation = answer.Relation,
+                    ThroughOpenBibleId = answer.Through,
+                    Special = answer.Special,
+                    Withheld = answer.Withheld,
+                    Grounds = [.. answer.Grounds],
+                    CoordinatesSource = answer.CoordinatesSource,
+                    Source = Source,
+                }));
+            }
+        }
+
+        if (await Holds(locations, candidates, cancellationToken))
+        {
+            return new LocationsOutcome(true, 0, 0, 0, 0, 0, 0, 0, started.Elapsed);
+        }
+
+        // The points and the answers are replaced together or not at all: a place must never be
+        // left with a point its answers no longer give, nor without the point it had.
+        await using (var own = db.Database.CurrentTransaction is null
+                         ? await db.Database.BeginTransactionAsync(cancellationToken)
+                         : null)
+        {
+            await db.PlaceCandidates.ExecuteDeleteAsync(cancellationToken);
+            await db.PlaceLocations.ExecuteDeleteAsync(cancellationToken);
+            foreach (var gone in db.ChangeTracker.Entries()
+                         .Where(e => e.Entity is PlaceLocation or PlaceCandidate).ToList())
+            {
+                gone.State = EntityState.Detached;
+            }
+
+            db.PlaceLocations.AddRange(locations);
+            db.PlaceCandidates.AddRange(candidates);
+            await db.SaveChangesAsync(cancellationToken);
+            if (own is not null)
+            {
+                await own.CommitAsync(cancellationToken);
+            }
+        }
 
         var outcome = new LocationsOutcome(
-            false, rows.Count, read.OpenStreetMap, read.Commercial, read.Unidentified, unheld, started.Elapsed);
+            false, locations.Count, candidates.Count, read.OpenStreetMap, read.Commercial, read.NoSite,
+            read.Unidentified, unheld, started.Elapsed);
         logger.LogInformation("Located the places: {Outcome}", outcome);
         return outcome;
     }
+
+    /// <summary>Whether the tables already hold exactly these rows, so a load writes nothing.</summary>
+    private async Task<bool> Holds(
+        List<PlaceLocation> locations, List<PlaceCandidate> candidates, CancellationToken cancellationToken)
+    {
+        var heldLocations = await db.PlaceLocations.AsNoTracking().ToListAsync(cancellationToken);
+        var heldCandidates = await db.PlaceCandidates.AsNoTracking().ToListAsync(cancellationToken);
+        return heldLocations.Count == locations.Count
+               && heldCandidates.Count == candidates.Count
+               && heldLocations.Select(Row).ToHashSet().SetEquals(locations.Select(Row))
+               && heldCandidates.Select(Row).ToHashSet().SetEquals(candidates.Select(Row));
+    }
+
+    private static string Row(PlaceLocation l) =>
+        string.Join('\u001f',
+            l.EntityId, Exact(l.Longitude), Exact(l.Latitude), l.Kind, l.Score, l.ModernId, l.CoordinatesSource, l.Source);
+
+    private static string Row(PlaceCandidate c) =>
+        string.Join('\u001f',
+            c.EntityId, c.Rank, c.Score, c.ModernId, c.Site, Exact(c.Longitude), Exact(c.Latitude), c.Kind,
+            c.RadiusMeters, c.SiteType, c.Relation, c.ThroughOpenBibleId, c.Special, c.Withheld,
+            string.Join(',', c.Grounds), c.CoordinatesSource, c.Source);
+
+    private static string Exact(double? value) => value?.ToString("R", CultureInfo.InvariantCulture) ?? "";
 
     /// <param name="PlaceId">The gazetteer's identifier for the ancient place — what an entity holds.</param>
     internal sealed record Located(
@@ -151,14 +253,37 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
         string ModernId,
         string CoordinatesSource);
 
+    /// <summary>One answer to where a place was, as <see cref="PlaceCandidate"/> holds it.</summary>
+    internal sealed record Candidate(
+        int Rank,
+        int Score,
+        string? ModernId,
+        string? Site,
+        double? Longitude,
+        double? Latitude,
+        string? Kind,
+        int? RadiusMeters,
+        string? SiteType,
+        string? Relation,
+        string? Through,
+        string? Special,
+        string? Withheld,
+        IReadOnlyList<string> Grounds,
+        string? CoordinatesSource);
+
+    /// <param name="Candidates">Every place's answers, the likeliest first, by the gazetteer's id.</param>
+    /// <param name="NoSite">Places whose likeliest answer is that they are no located place.</param>
     internal sealed record Reading(
         List<Located> Located,
+        Dictionary<string, List<Candidate>> Candidates,
         int OpenStreetMap,
         int Commercial,
+        int NoSite,
         int Unidentified);
 
     /// <summary>
-    /// Every place's best point that the terms allow, and a count of each reason a place has none.
+    /// Every place's answers, and its likeliest one as its point where the terms allow it, with a
+    /// count of each reason a place has none.
     /// </summary>
     internal static Reading Read(string ancientFile, string modernFile)
     {
@@ -179,7 +304,8 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
         }
 
         var located = new List<Located>(1_400);
-        int openStreetMap = 0, commercial = 0, unidentified = 0;
+        var candidates = new Dictionary<string, List<Candidate>>(StringComparer.Ordinal);
+        int openStreetMap = 0, commercial = 0, noSite = 0, unidentified = 0;
 
         foreach (var line in File.ReadLines(ancientFile))
         {
@@ -195,41 +321,200 @@ internal sealed class OpenBibleLocationLoader(AppDbContext db, ILogger<OpenBible
                 continue;
             }
 
-            if (Best(root) is not { } resolution
-                || Text(resolution.Element, "lonlat") is not { } stated
-                || Text(resolution.Element, "lonlat_type") is not { } type
-                || !Kinds.TryGetValue(type, out var kind)
-                || Text(resolution.Element, "modern_basis_id") is not { } basis
-                || !modern.TryGetValue(basis, out var at))
+            var answers = Answers(root, modern);
+            if (answers.Count == 0)
             {
                 unidentified++;
                 continue;
             }
 
-            if (at.CreditedToOpenStreetMap(Role(type)))
+            candidates[placeId] = answers;
+            var first = answers[0];
+            if (first.Special is not null)
+            {
+                noSite++;
+            }
+            else if (first.Withheld == "openstreetmap")
             {
                 openStreetMap++;
-                continue;
             }
-
-            if (at.Independent is null && CommercialMaps.Contains(at.CoordinatesSource))
+            else if (first.Withheld == "commercial")
             {
                 commercial++;
-                continue;
             }
-
-            if (Point(at.Independent ?? stated) is not { } point)
+            else if (first is { Longitude: { } longitude, Latitude: { } latitude, Kind: { } kind })
+            {
+                located.Add(new Located(
+                    placeId, longitude, latitude, kind, first.Score, first.ModernId!, first.CoordinatesSource!));
+            }
+            else
             {
                 unidentified++;
+            }
+        }
+
+        return new Reading(located, candidates, openStreetMap, commercial, noSite, unidentified);
+    }
+
+    /// <summary>
+    /// A place's answers ranked by the gazetteer's score: each modern location its associations
+    /// score, read through the identification and resolution the association names first, and each
+    /// kind of answer that is no site at the best score the gazetteer gives it. A site goes before an
+    /// answer that is no site at the same score, and a tie between sites to the lower modern
+    /// identifier, so a reload answers the same.
+    /// </summary>
+    private static List<Candidate> Answers(JsonElement root, Dictionary<string, Modern> modern)
+    {
+        var found = new List<Candidate>();
+        if (!root.TryGetProperty("identifications", out var identifications)
+            || identifications.ValueKind != JsonValueKind.Array)
+        {
+            return found;
+        }
+
+        if (root.TryGetProperty("modern_associations", out var associations)
+            && associations.ValueKind == JsonValueKind.Object)
+        {
+            foreach (var association in associations.EnumerateObject())
+            {
+                if (Site(association, identifications, modern) is { } site)
+                {
+                    found.Add(site);
+                }
+            }
+        }
+
+        var specials = new Dictionary<string, Candidate>(StringComparer.Ordinal);
+        foreach (var identification in identifications.EnumerateArray())
+        {
+            if (Text(identification, "id_source") != "special"
+                || Text(identification, "special") is not { } said
+                || !Specials.TryGetValue(said, out var special))
+            {
                 continue;
             }
 
-            located.Add(new Located(
-                placeId, point.Longitude, point.Latitude, kind, resolution.Score, basis, at.CoordinatesSource));
+            var score = TimeTotal(identification);
+            if (!specials.TryGetValue(special, out var held) || score > held.Score)
+            {
+                specials[special] = new Candidate(
+                    0, score, null, null, null, null, null, null, null, null, null, special, null,
+                    Grounds(identification), null);
+            }
         }
 
-        return new Reading(located, openStreetMap, commercial, unidentified);
+        found.AddRange(specials.Values);
+        return
+        [
+            .. found
+                .OrderByDescending(c => c.Score)
+                .ThenBy(c => c.Special is null ? 0 : 1)
+                .ThenBy(c => c.ModernId, StringComparer.Ordinal)
+                .ThenBy(c => c.Special, StringComparer.Ordinal)
+                .Select((c, rank) => c with { Rank = rank }),
+        ];
     }
+
+    /// <summary>One modern location a place is identified with, or null where the gazetteer gives it no score.</summary>
+    private static Candidate? Site(
+        JsonProperty association, JsonElement identifications, Dictionary<string, Modern> modern)
+    {
+        var value = association.Value;
+        if (value.ValueKind != JsonValueKind.Object
+            || !value.TryGetProperty("score", out var scored)
+            || scored.ValueKind != JsonValueKind.Number
+            || !value.TryGetProperty("identification_ids", out var ids)
+            || ids.ValueKind != JsonValueKind.Array
+            || ids.GetArrayLength() == 0)
+        {
+            return null;
+        }
+
+        var score = scored.GetInt32();
+        var name = Text(value, "name");
+        var pair = ids[0];
+        var at = pair[0].GetInt32();
+        var index = pair[1].GetInt32();
+        if (at >= identifications.GetArrayLength()
+            || !identifications[at].TryGetProperty("resolutions", out var resolutions)
+            || index >= resolutions.GetArrayLength())
+        {
+            return Unread();
+        }
+
+        var identification = identifications[at];
+        var resolution = resolutions[index];
+        if (Text(resolution, "lonlat") is not { } stated
+            || Text(resolution, "lonlat_type") is not { } type
+            || !Kinds.TryGetValue(type, out var kind)
+            || Text(resolution, "modern_basis_id") is not { } basis
+            || !modern.TryGetValue(basis, out var credit))
+        {
+            return Unread();
+        }
+
+        var withheld = credit.CreditedToOpenStreetMap(Role(type))
+            ? "openstreetmap"
+            : credit.Independent is null && CommercialMaps.Contains(credit.CoordinatesSource)
+                ? "commercial"
+                : null;
+        var point = withheld is null ? Point(credit.Independent ?? stated) : null;
+
+        return new Candidate(
+            0,
+            score,
+            basis,
+            name,
+            point?.Longitude,
+            point?.Latitude,
+            point is null ? null : kind,
+            Number(resolution, "geometry_radius_meters") ?? Number(identification, "geometry_radius_meters"),
+            Text(resolution, "type"),
+            Text(identification, "modifier") is { } modifier ? Relations.GetValueOrDefault(modifier) : null,
+            Text(identification, "id_source") == "ancient" ? Text(identification, "id") : null,
+            null,
+            withheld,
+            Grounds(identification),
+            point is null ? null : credit.CoordinatesSource);
+
+        // A site the gazetteer scores but whose point cannot be read is still its answer, without a point.
+        Candidate Unread() => new(
+            0, score, association.Name, name, null, null, null, null, null, null, null, null, null, [], null);
+    }
+
+    /// <summary>
+    /// On whose authority an identification is made, the gazetteer's <c>authority_</c> tags without
+    /// the prefix, the most cited first.
+    /// </summary>
+    private static List<string> Grounds(JsonElement identification) =>
+        identification.TryGetProperty("votes", out var votes)
+        && votes.ValueKind == JsonValueKind.Object
+        && votes.TryGetProperty("tags", out var tags)
+        && tags.ValueKind == JsonValueKind.Object
+            ?
+            [
+                .. tags.EnumerateObject()
+                    .Where(tag => tag.Name.StartsWith(AuthorityTag, StringComparison.Ordinal)
+                                  && tag.Value.ValueKind == JsonValueKind.Number && tag.Value.GetInt32() > 0)
+                    .OrderByDescending(tag => tag.Value.GetInt32())
+                    .ThenBy(tag => tag.Name, StringComparer.Ordinal)
+                    .Select(tag => tag.Name[AuthorityTag.Length..]),
+            ]
+            : [];
+
+    /// <summary>The identification's score for current scholarship, the one its sites are ranked by.</summary>
+    private static int TimeTotal(JsonElement identification) =>
+        identification.TryGetProperty("score", out var score)
+        && score.ValueKind == JsonValueKind.Object
+        && Number(score, "time_total") is { } total
+            ? total
+            : 0;
+
+    private static int? Number(JsonElement element, string property) =>
+        element.TryGetProperty(property, out var value) && value.ValueKind == JsonValueKind.Number
+            && value.TryGetInt32(out var number)
+            ? number
+            : null;
 
     /// <summary>A resolution, the identification it belongs to, and that identification's score.</summary>
     internal readonly record struct Resolution(JsonElement Element, int Score, JsonElement Identification);

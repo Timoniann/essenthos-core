@@ -42,9 +42,10 @@ OpenStreetMap's. What the repository holds that is left behind:
 The images are fetched, since 2026-09-23, under their own terms rather than the dataset's; see the
 next section.
 
-## Coordinates: one point per place, and never an OpenStreetMap one
+## Coordinates: every proposed site, one point per place, and never an OpenStreetMap one
 
-Decided 2026-09-18, when a map of the places was asked for.
+Decided 2026-09-18, when a map of the places was asked for; every proposed site held since
+2026-10-25, when the owner asked for all of a place's possible locations to be shown.
 
 `modern.jsonl` is fetched, because it is the only file that says **whose** each point is. Every
 modern location carries a `coordinates_source` whose `type` names where its coordinates came from
@@ -65,16 +66,29 @@ The point for a place is the one `ancient.jsonl` already gives the resolution it
 - its coordinates were read off Google Maps (`google_maps`), whose terms are Google's; for readings
   off a commercial source the gazetteer supplies its own independent `custom_lonlat` "nearby", and
   for these four it supplies none — 4 places;
-- the gazetteer does not identify the place with any modern location — 7 places.
+- the gazetteer does not identify the place with any modern location — 7 places;
+- the gazetteer's best-scored answer is not a site at all: an identification of `id_source`
+  `special` (`not_a_place`, `not_a_proper_name`, `unknown_place`, …) whose `score.time_total`
+  is higher than every site's association score — Bether 1 is most likely "not a place" (628)
+  against its best site at -87, Eden 1 an "unknown place" (447) against 178. 37 places, among them
+  six of the seven above, which have no site at all.
 
 Where a `custom_lonlat` is given (a point read off a commercial source, Amud Anan in these cases),
-that independently created point is the one taken instead — 5 places. A place whose best point is
+that independently created point is the one taken instead — 5 places. A place whose best answer is
 left out gets **no** point: falling back to the second-best identification would put it where its
 own source thinks it probably is not.
 
-That leaves 1,311 of the 1,342 places with a point, each held with the modern location it was read
-from and the source the gazetteer credits for it, so any row can be traced back to the credit that
-let it in. OpenStreetMap geometry that merely sits beside a point credited to someone else — a
+That leaves 1,281 of the 1,342 places with a point (19 left out as OpenStreetMap's, 4 as
+commercial, 37 as no site, 1 with no answer at all), each held with the modern location it was
+read from and the source the gazetteer credits for it, so any row can be traced back to the
+credit that let it in.
+
+Every other answer is held too, ranked below the first by the same scores: 4,448 answers for 1,341
+places, each a modern site (its name, its point under the rule above or none, what the point
+stands for, the radius the gazetteer puts round it where it gives one, how the place stands to it —
+near, along, on, in, around — and the ancient place it passes through where the answer is "another
+name for" one) or an answer that is no site, with the gazetteer's `authority_` tags as the grounds
+it is given on. 13 places have no site whose point is held, 566 one, 205 two and 557 three or more. OpenStreetMap geometry that merely sits beside a point credited to someone else — a
 river's course beside a Wikidata point for the river — is not taken, and does not make the point
 OpenStreetMap's.
 
@@ -118,15 +132,15 @@ from, so a map can carry the credit beside it.
 > https://github.com/openbibleinfo/Bible-Geocoding-Data
 
 The dataset itself cites over 400 works — commentaries, dictionaries, encyclopedias and atlases —
-in `source.jsonl`, which is not fetched. The per-source votes are not loaded; the one score taken is
-the gazetteer's own summary of them for the identification a place's point comes from.
+in `source.jsonl`, which is not fetched. The per-source votes are not loaded; what is taken of them
+is the gazetteer's own summary, per answer: its score and the names of its `authority_` tags.
 
 ## What is loaded and what is not
 
 From `ancient.jsonl`, per place: its identifier, its name, the kind of thing it is, the list of
 verses that name it, and — through the rule above — one point, what kind of point it is
 (`point`, `representative point`, `center` or `settlement`) and the score of the identification
-it belongs to. From `modern.jsonl`: only each location's credit, and an independent point where
+it belongs to; and every answer it scores, as above. From `modern.jsonl`: only each location's credit, and an independent point where
 one is given. The other identifications, the linked-data cross-references and the per-source votes
 are read past.
 

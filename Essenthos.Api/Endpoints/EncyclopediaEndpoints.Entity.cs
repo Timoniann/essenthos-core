@@ -309,6 +309,9 @@ internal static partial class EncyclopediaEndpoints
                 Descriptor = await Descriptors.Of(
                     db, entity.Slug, words, cancellationToken, language),
                 Location = entity.Location,
+                Locations = entity.Kind == EntityKind.Place
+                    ? await Candidates(db, entity.Id, language, cancellationToken)
+                    : null,
                 AnotherNameFor = await AnotherNameFor(db, entity.AnotherNameForEntityId, language, cancellationToken),
                 Wikipedia = await WikipediaLinks.Of(db, entity.Id, words, cancellationToken),
                 LocalName = renamed is null ? localNames.GetValueOrDefault(entity.Id) : renamed.LocalName,

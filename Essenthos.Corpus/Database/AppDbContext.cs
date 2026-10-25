@@ -238,6 +238,9 @@ public class AppDbContext : DbContext
     /// <summary>Where a place is, as one point, and whose coordinates they are.</summary>
     public DbSet<PlaceLocation> PlaceLocations { get; set; } = null!;
 
+    /// <summary>Every site its gazetteer proposes for a place, ranked by its score.</summary>
+    public DbSet<PlaceCandidate> PlaceCandidates { get; set; } = null!;
+
     /// <summary>The pictures of people and places, each credited, and whether it is ours.</summary>
     public DbSet<EntityImage> EntityImages { get; set; } = null!;
 
@@ -493,6 +496,38 @@ public class AppDbContext : DbContext
                 t.HasCheckConstraint(
                     "ck_place_location_kind",
                     "kind IN ('point', 'representative-point', 'center', 'settlement')");
+            });
+        });
+
+        modelBuilder.Entity<PlaceCandidate>(entity =>
+        {
+            entity.HasKey(c => new { c.EntityId, c.Rank });
+
+            entity.HasOne(c => c.Entity)
+                .WithMany(e => e.Candidates)
+                .HasForeignKey(c => c.EntityId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.ToTable("place_candidate", t =>
+            {
+                t.HasCheckConstraint("ck_place_candidate_longitude", "longitude BETWEEN -180 AND 180");
+                t.HasCheckConstraint("ck_place_candidate_latitude", "latitude BETWEEN -90 AND 90");
+                t.HasCheckConstraint("ck_place_candidate_point", "(longitude IS NULL) = (latitude IS NULL)");
+                t.HasCheckConstraint(
+                    "ck_place_candidate_kind",
+                    "kind IN ('point', 'representative-point', 'center', 'settlement')");
+                t.HasCheckConstraint(
+                    "ck_place_candidate_relation",
+                    "relation IN ('near', 'along', 'on', 'in', 'around')");
+                t.HasCheckConstraint(
+                    "ck_place_candidate_special",
+                    "special IN ('not-a-place', 'not-a-proper-name', 'unknown-place', 'nonspecific-place', 'multiple-locations')");
+                t.HasCheckConstraint(
+                    "ck_place_candidate_withheld",
+                    "withheld IN ('openstreetmap', 'commercial')");
+                t.HasCheckConstraint(
+                    "ck_place_candidate_site_or_special",
+                    "(modern_id IS NULL) <> (special IS NULL)");
             });
         });
 
