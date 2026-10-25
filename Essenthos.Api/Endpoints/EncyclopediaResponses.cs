@@ -550,3 +550,43 @@ internal record EntityReferenceResponse(
     string Kind);
 
 internal record EntityReferenceListResponse(int Total, IList<EntityReferenceResponse> Items);
+
+/// <summary>The places of one record's story, the most verses shared first.</summary>
+internal record EntityPlacesResponse(int Total, IList<EntityPlaceResponse> Items);
+
+/// <param name="SharedVerses">How many verses name both the record and the place.</param>
+/// <param name="Verses">The first of those verses, in canonical order; at most as many as asked for.</param>
+/// <param name="Roles">
+/// What the place was in the story, in this order: <c>born</c>, <c>lived</c> (a tie says the record
+/// lived there or came from there), <c>event</c> (one of its dated events happens there),
+/// <c>died</c>, <c>buried</c>; or <c>named-together</c> alone, where only shared verses stand behind
+/// the place.
+/// </param>
+internal record EntityPlaceResponse(
+    string Slug,
+    string Name,
+    int SharedVerses,
+    IList<VerseRefResponse> Verses,
+    IList<string> Roles)
+{
+    /// <summary>The name in the language asked for; null where there is none.</summary>
+    public string? LocalName { get; init; }
+
+    /// <summary>True where the English name is the source's alone, as on the map.</summary>
+    public bool NameFromSource { get; init; }
+
+    /// <summary>A few words telling it from another place of the same name among these; null otherwise.</summary>
+    public string? Distinguisher { get; init; }
+
+    public string? PlaceKind { get; init; }
+
+    /// <summary>Null, with <see cref="Lat"/>, where the place has no point: listed, not drawn.</summary>
+    public double? Lon { get; init; }
+
+    public double? Lat { get; init; }
+
+    /// <summary>What the point marks, as on the map; null where there is no point.</summary>
+    public string? Kind { get; init; }
+
+    public double? Confidence { get; init; }
+}

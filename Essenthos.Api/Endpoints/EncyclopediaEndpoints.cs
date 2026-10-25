@@ -440,6 +440,7 @@ internal static partial class EncyclopediaEndpoints
         MapEntity(routes);
         MapPlaces(routes);
         MapReferences(routes);
+        MapStoryPlaces(routes);
         MapEvents(routes);
         MapChronology(routes);
     }
