@@ -745,6 +745,46 @@
           }
         }
       ]
+    },
+    {
+      "slug": "creator",
+      "name": "Creator",
+      "distinguisher": "maker of all things: what the text calls God, who in the beginning created the heaven and the earth (GEN 1:1; ECC 12:1)",
+      "notes": "'In the beginning God created the heaven and the earth' (GEN 1:1). The text calls him the Creator: 'Remember now thy Creator in the days of thy youth' (ECC 12:1), 'the everlasting God, the LORD, the Creator of the ends of the earth' (ISA 40:28), 'the Creator, who is blessed for ever' (ROM 1:25), 'a faithful Creator' (1PE 4:19).",
+      "why": "The owner ruled that the line of the God of Israel says first that he is God, the Creator of heaven and earth, as the first verse says (GEN 1:1): the text's own word for him, held as a title as the archangel and the giant are, and joined to him where the creation names him the LORD God (GEN 2:4).",
+      "source": "Essenthos, on the project owner's decision of 2026-10-25 that the line of the God of Israel starts God, Creator of heaven and earth",
+      "localNames": {
+        "ukr": "Творець",
+        "rus": "Творец",
+        "deu": "Schöpfer",
+        "spa": "Creador"
+      },
+      "names": [
+        {
+          "label": "Creator",
+          "hebrew": null,
+          "hebrewTransliterated": null,
+          "greek": null,
+          "greekTransliterated": null,
+          "meaning": "maker of all things",
+          "hebrewStrongNumber": null,
+          "greekStrongNumber": null
+        }
+      ],
+      "bearers": [
+        {
+          "slug": "yhvh",
+          "reference": "GEN 1:1",
+          "why": "In the beginning God created the heaven and the earth.",
+          "called": {
+            "eng": "God, Creator of heaven and earth",
+            "ukr": "Бог, Творець неба і землі",
+            "rus": "Бог, Творец неба и земли",
+            "deu": "Gott, Schöpfer des Himmels und der Erde",
+            "spa": "Dios, Creador de los cielos y la tierra"
+          }
+        }
+      ]
     }
   ],
   "rulings": [
