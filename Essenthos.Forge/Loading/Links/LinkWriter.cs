@@ -339,16 +339,43 @@ internal static class LinkWriter
     /// COPY cannot report the keys it generated, so a block of them is taken from the identity
     /// sequence up front and the rows are written with the ids already known.
     /// </summary>
+    /// <remarks>
+    /// The block starts past both the sequence and the highest id stored. The table alone is not
+    /// enough once two sessions write at once: a block another session took and has not committed
+    /// is invisible to this one's <c>max(id)</c>, and the two wrote the same ids (the interlinears
+    /// written four at a time, TSK-1190). The sequence is not transactional, so it shows that block
+    /// at once, and a session-level lock held for this one statement keeps two sessions from reading
+    /// it at the same moment.
+    /// </remarks>
     public static async Task<long> ReserveIds(
         NpgsqlConnection connection,
         NpgsqlTransaction? transaction,
         int count,
         CancellationToken cancellationToken)
     {
-        await using var command = new NpgsqlCommand(
-            "SELECT setval(pg_get_serial_sequence('link', 'id'), " +
-            "coalesce((SELECT max(id) FROM link), 0) + @count) - @count + 1", connection, transaction);
-        command.Parameters.AddWithValue("count", count);
-        return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
+        await using (var take = new NpgsqlCommand("SELECT pg_advisory_lock(@key)", connection, transaction))
+        {
+            take.Parameters.AddWithValue("key", IdsLock);
+            await take.ExecuteNonQueryAsync(cancellationToken);
+        }
+
+        try
+        {
+            await using var command = new NpgsqlCommand(
+                "SELECT setval(s, greatest(coalesce(pg_sequence_last_value(s), 0), " +
+                "coalesce((SELECT max(id) FROM link), 0)) + @count) - @count + 1 " +
+                "FROM (SELECT pg_get_serial_sequence('link', 'id')::regclass AS s) sequence", connection, transaction);
+            command.Parameters.AddWithValue("count", count);
+            return (long)(await command.ExecuteScalarAsync(cancellationToken))!;
+        }
+        finally
+        {
+            await using var give = new NpgsqlCommand("SELECT pg_advisory_unlock(@key)", connection, transaction);
+            give.Parameters.AddWithValue("key", IdsLock);
+            await give.ExecuteNonQueryAsync(CancellationToken.None);
+        }
     }
+
+    /// <summary>The advisory lock <see cref="ReserveIds"/> holds while it takes a block of link ids.</summary>
+    private const long IdsLock = 0x6C696E6B_69647321; // "link ids!"
 }

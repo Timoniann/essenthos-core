@@ -21,12 +21,14 @@ public sealed class LinkWriterTests : IDisposable
     private const string Aligner = "SIL.Machine, aligned as written";
     private const string Clear = "Clear Bible's alignment";
 
+    private readonly WitnessDatabase _database;
     private readonly AppDbContext _db;
     private readonly Text _english;
     private readonly Text _greek;
 
     public LinkWriterTests(WitnessDatabase database)
     {
+        _database = database;
         _db = database.NewContext();
         _db.Database.ExecuteSqlRaw("DELETE FROM text");
         _english = Corpus.Add(_db, "ENGT", TextKind.Translation, "eng", (1, 1, ["Paul", "an", "apostle"]));
@@ -135,6 +137,27 @@ public sealed class LinkWriterTests : IDisposable
 
         (await _db.Provenances.CountAsync(p => p.Source == Clear)).Should().Be(1);
         (await _db.Links.Select(link => link.ProvenanceId).Distinct().CountAsync()).Should().Be(1);
+    }
+
+    [Fact]
+    public async Task TwoSessionsWritingAtOnceAreGivenDifferentIds()
+    {
+        // TSK-1190: the interlinears written four at a time took the same block of ids, because a
+        // block another session has not committed is not in this one's max(id).
+        Link([English(1)], [Greek(1)], LinkMethod.Aligner, 0.8, Aligner);
+        await using var first = _database.NewContext();
+        await using var second = _database.NewContext();
+        await first.Database.OpenConnectionAsync();
+        await second.Database.OpenConnectionAsync();
+        var one = (NpgsqlConnection)first.Database.GetDbConnection();
+        var two = (NpgsqlConnection)second.Database.GetDbConnection();
+        await using var firstWrite = await one.BeginTransactionAsync();
+        await using var secondWrite = await two.BeginTransactionAsync();
+
+        var firstBlock = await LinkWriter.ReserveIds(one, firstWrite, 3, CancellationToken.None);
+        var secondBlock = await LinkWriter.ReserveIds(two, secondWrite, 3, CancellationToken.None);
+
+        secondBlock.Should().BeGreaterThanOrEqualTo(firstBlock + 3, "the first block is taken although nothing of it is committed");
     }
 
     private Link Link(long[] english, long[] greek, LinkMethod method, double? confidence, string source)
