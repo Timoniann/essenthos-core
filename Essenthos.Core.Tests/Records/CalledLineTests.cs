@@ -13,7 +13,7 @@ namespace Essenthos.Core.Tests.Records;
 
 /// <summary>
 /// What a line says first about whom the text calls by another word: Jesus the Christ, the God of
-/// Israel, the giants and a people of them, the bynames of the Twelve; and Matthias chosen in Judas's
+/// Israel the Creator of heaven and earth, the giants and a people of them, the bynames of the Twelve; and Matthias chosen in Judas's
 /// place, Zeruiah and Abigail daughters of Jesse, Amos a prophet. The shipped titles, names and
 /// descriptor records, loaded as the titles, own-names and descriptors steps load them.
 /// </summary>
@@ -35,7 +35,7 @@ public sealed class CalledLineTests : IDisposable
 
         _db.Entities.AddRange(
             Record("jesus", "Jesus", EntityKind.Person, "male", (40, 1, 16), (42, 24, 19)),
-            Record("yhvh", "YHVH", EntityKind.Person, "male", (2, 5, 1)),
+            Record("yhvh", "YHVH", EntityKind.Person, "male", (1, 2, 4), (2, 5, 1)),
             Record("israelites", "Israelites", EntityKind.People, null, (2, 5, 1)),
             Record("goliath", "Goliath", EntityKind.Person, "male", (10, 21, 19)),
             Record("og", "Og", EntityKind.Person, "male", (5, 3, 11)),
@@ -124,15 +124,29 @@ public sealed class CalledLineTests : IDisposable
     }
 
     [Theory]
-    [InlineData("eng", "God of the Israelites")]
-    [InlineData("ukr", "Бог ізраїльтян")]
-    [InlineData("deu", "Gott der Israeliten")]
-    [InlineData("spa", "Dios de ")]
-    public async Task TheGodOfIsraelsLineSaysGodFirst(string language, string expected)
+    [InlineData("eng", "God, Creator of heaven and earth, God of the Israelites")]
+    [InlineData("ukr", "Бог, Творець неба і землі, Бог ізраїльтян")]
+    [InlineData("deu", "Gott, Schöpfer des Himmels und der Erde, Gott der Israeliten")]
+    [InlineData("spa", "Dios, Creador de los cielos y la tierra, Dios de ")]
+    public async Task TheGodOfIsraelsLineSaysGodTheCreatorOfHeavenAndEarthFirst(string language, string expected)
     {
         await Load();
 
         (await Line("yhvh", language)).Should().StartWith(expected);
+    }
+
+    [Fact]
+    public async Task TheGodOfIsraelsLineCitesTheFirstVerseAndSaysCreatorOnce()
+    {
+        await Load();
+
+        var line = (await Descriptors.Of(_db, "yhvh", "eng", default))!;
+        string.Concat(line.Parts.Select(p => p.Text)).Should().NotContain("creator of");
+        line.Claims.Should().ContainSingle(c => c.Relation == DescriptorRelations.BearsTitle)
+            .Which.Should().Match<DescriptorClaimResponse>(c => c.Target.Slug == "creator"
+                && c.Reference.BookOrdinal == 1 && c.Reference.Chapter == 1 && c.Reference.Verse == 1
+                && !c.Doubtful);
+        line.Claims.Should().NotContain(c => c.Relation == DescriptorRelations.CreatorOf);
     }
 
     [Theory]

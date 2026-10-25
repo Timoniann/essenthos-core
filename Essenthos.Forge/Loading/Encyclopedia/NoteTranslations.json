@@ -2498,5 +2498,17 @@
     "model": "claude-opus-5-5",
     "effort": null,
     "at": "2026-10-25"
+  },
+  {
+    "file": "TitleRecords.json",
+    "slug": "creator",
+    "sha256": "a7bb2ea8b777445b7bb632428668b399fa3c73d348a5c486ed83672f1279cd83",
+    "english": "'In the beginning God created the heaven and the earth' (GEN 1:1). The text calls him the Creator: 'Remember now thy Creator in the days of thy youth' (ECC 12:1), 'the everlasting God, the LORD, the Creator of the ends of the earth' (ISA 40:28), 'the Creator, who is blessed for ever' (ROM 1:25), 'a faithful Creator' (1PE 4:19).",
+    "ukr": "«На початку Бог створив Небо та землю» (GEN 1:1). Текст називає його Творцем: «Пам'ятай про свого Творця за днів твоєї юності» (ECC 12:1), «Бог віковічний, Господь, Творець кінців землі» (ISA 40:28), «Творець, що благословенний навіки» (ROM 1:25), «вірний Творець» (1PE 4:19).",
+    "deu": "„Am Anfang schuf Gott Himmel und Erde“ (GEN 1:1). Der Text nennt ihn den Schöpfer: „Gedenke an deinen Schöpfer in deiner Jugend“ (ECC 12:1), „der HERR, der ewige Gott, der die Enden der Erde geschaffen hat“ (ISA 40:28), „der Schöpfer, der da gelobt ist in Ewigkeit“ (ROM 1:25), „ein treuer Schöpfer“ (1PE 4:19).",
+    "spa": "«En el principio creó Dios los cielos y la tierra» (GEN 1:1). El texto lo llama el Creador: «Acuérdate de tu Creador en los días de tu juventud» (ECC 12:1), «el Dios eterno, el SEÑOR, el Creador de los confines de la tierra» (ISA 40:28), «el Creador, el cual es bendito por los siglos» (ROM 1:25), «un fiel Creador» (1PE 4:19).",
+    "model": "claude-opus-5-5",
+    "effort": null,
+    "at": "2026-10-25"
   }
 ]
