@@ -142,6 +142,40 @@ public sealed class StatisticalCrossingTests : IDisposable
         (await Stands(elsewhere)).Should().BeFalse("the first load took the crossing that was there");
     }
 
+    /// <summary>
+    /// A replay names its own pair: it adds no aligner link, so it can make no crossing elsewhere, and
+    /// sweeping every text's aligner links after each replaying line was most of its verse links' time
+    /// (PRB-1191). The verse links are still drawn for every pair.
+    /// </summary>
+    [Fact]
+    public async Task ASweepOfNamedTextsLooksOverTheirAlignerLinksOnly()
+    {
+        var crossing = Link(_english, 6, _greek, 7, LinkMethod.Aligner, LinkMethod.Aligner);
+        var elsewhere = Link(_other, 6, _greek, 7, LinkMethod.Aligner, LinkMethod.Aligner);
+        Link(_english, 6, _greek, 6, LinkMethod.Aligner, LinkMethod.Aligner);
+        Link(_other, 6, _greek, 6, LinkMethod.Aligner, LinkMethod.Aligner);
+
+        var outcome = await _loader.Load(swept: new HashSet<int> { _english.Id });
+
+        outcome.Withdrawn.Should().Be(1);
+        (await Stands(crossing)).Should().BeFalse();
+        (await Stands(elsewhere)).Should().BeTrue();
+        (await _db.VerseLinks.AnyAsync(l => l.FromTextId == _other.Id || l.ToTextId == _other.Id)).Should().BeTrue();
+    }
+
+    [Fact]
+    public async Task ASweepOfNoTextWithdrawsNothing()
+    {
+        // What an EVIDENTIA replay asks for: it can make no crossing, so it looks for none.
+        var crossing = Link(_english, 6, _greek, 7, LinkMethod.Aligner, LinkMethod.Aligner);
+        Link(_english, 6, _greek, 6, LinkMethod.Aligner, LinkMethod.Aligner);
+
+        var outcome = await _loader.Load(swept: new HashSet<int>());
+
+        outcome.Withdrawn.Should().Be(0);
+        (await Stands(crossing)).Should().BeTrue();
+    }
+
     [Fact]
     public async Task ARefreshOfATextTheCorpusDoesNotHoldWithdrawsNothing()
     {
