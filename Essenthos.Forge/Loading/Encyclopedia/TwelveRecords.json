@@ -1,0 +1,20 @@
+{
+  "decidedBy": "the project owner, 2026-10-25, written onto the record by claude-opus-5-5 on 2026-10-25",
+  "policy": "Thaddaeus and Judas of James are one man, one of the Twelve: the record that holds him says what each of the four lists and John call him.",
+  "method": "manual",
+  "source": "Essenthos, on the project owner's decision of 2026-10-25 that Thaddaeus and Judas of James are one man",
+  "rulings": [
+    {
+      "text": "NESTLE1904",
+      "reference": "MAT 10:3",
+      "position": 14,
+      "surface": "Θαδδαῖος",
+      "strongNumber": "G2280",
+      "existing": "thaddaeus",
+      "says": {
+        "notes": "Matthew lists him among the Twelve as 'Lebbaeus, whose surname was Thaddaeus' (MAT 10:3) and Mark as Thaddaeus (MRK 3:18); in the same place Luke and Acts list 'Judas of James' (LUK 6:16; ACT 1:13), and Acts lists him again after the betrayer's death. John calls him 'Judas, not Iscariot', who asked the Lord at the supper how he would manifest himself to them and not unto the world (JHN 14:22)."
+      },
+      "why": "'Lebbaeus, whose surname was Thaddaeus': the apostle Luke and Acts call Judas of James and John 'Judas, not Iscariot'."
+    }
+  ]
+}

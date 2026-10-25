@@ -1522,16 +1522,16 @@
   "at": "2026-10-07T17:28:37+00:00"
  },
  {
-  "file": "SeveralPeopleRecords.json",
-  "slug": "judas-of-james",
-  "sha256": "6b4fa5b57585492dde4910dfa60f0edaf42000c238e6c0794576f0c1ad49389d",
-  "english": "Luke 6:16 lists two men called Judas among the Twelve, Judas of James and Judas Iscariot, and Acts 1:13 lists Judas of James again after the betrayer's death. John 14:22 says of the Judas who asks the Lord a question that he is 'not Iscariot'.",
-  "ukr": "У Луки 6:16 серед Дванадцятьох названо двох чоловіків на ім’я Юда — Юду Якового та Юду Іскаріотського, а в Діях 1:13 Юду Якового знову названо після смерті зрадника. В Івана 14:22 про Юду, який ставить Господу запитання, сказано, що він «не Іскаріотський».",
-  "deu": "Lukas 6:16 nennt unter den Zwölf zwei Männer namens Judas, Judas des Jakobus und Judas Ischariot, und Apostelgeschichte 1:13 nennt Judas des Jakobus nach dem Tod des Verräters erneut. Johannes 14:22 sagt über den Judas, der dem Herrn eine Frage stellt, dass er „nicht der Ischariot“ ist.",
-  "spa": "Lucas 6:16 enumera entre los Doce a dos hombres llamados Judas, Judas de Jacobo y Judas Iscariote, y Hechos 1:13 vuelve a mencionar a Judas de Jacobo después de la muerte del traidor. Juan 14:22 dice del Judas que le hace una pregunta al Señor que es «no el Iscariote».",
-  "model": "gpt-6.1-sol",
-  "effort": "medium",
-  "at": "2026-10-07T17:28:27+00:00"
+  "file": "TwelveRecords.json",
+  "slug": "thaddaeus",
+  "sha256": "d9848b287de4d829ca756fe7449094bb0c529bc0088504531e22132493cacdcf",
+  "english": "Matthew lists him among the Twelve as 'Lebbaeus, whose surname was Thaddaeus' (MAT 10:3) and Mark as Thaddaeus (MRK 3:18); in the same place Luke and Acts list 'Judas of James' (LUK 6:16; ACT 1:13), and Acts lists him again after the betrayer's death. John calls him 'Judas, not Iscariot', who asked the Lord at the supper how he would manifest himself to them and not unto the world (JHN 14:22).",
+  "ukr": "Матвій називає його серед Дванадцятьох «Леввій, на прізвище Тадей» (MAT 10:3), а Марко — Тадеєм (MRK 3:18); на тому самому місці Лука й Дії називають «Юду Якового» (LUK 6:16; ACT 1:13), і Дії згадують його знову після смерті зрадника. Іван називає його «Юда, не Іскаріотський», який на вечері спитав Господа, чому Він об'явиться їм, а не світові (JHN 14:22).",
+  "deu": "Matthäus nennt ihn unter den Zwölf „Lebbäus, mit dem Zunamen Thaddäus“ (MAT 10:3), Markus Thaddäus (MRK 3:18); an derselben Stelle nennen Lukas und die Apostelgeschichte „Judas des Jakobus“ (LUK 6:16; ACT 1:13), und die Apostelgeschichte nennt ihn nach dem Tod des Verräters erneut. Johannes nennt ihn „Judas, nicht der Ischariot“, der beim Mahl den Herrn fragte, warum er sich ihnen offenbaren wolle und nicht der Welt (JHN 14:22).",
+  "spa": "Mateo lo nombra entre los Doce «Lebeo, por sobrenombre Tadeo» (MAT 10:3) y Marcos Tadeo (MRK 3:18); en el mismo lugar Lucas y Hechos nombran a «Judas de Jacobo» (LUK 6:16; ACT 1:13), y Hechos lo nombra de nuevo después de la muerte del traidor. Juan lo llama «Judas, no el Iscariote», que en la cena preguntó al Señor por qué se manifestaría a ellos y no al mundo (JHN 14:22).",
+  "model": "claude-opus-5-5",
+  "effort": null,
+  "at": "2026-10-25"
  },
  {
   "file": "SeveralPeopleRecordsFifth.json",
