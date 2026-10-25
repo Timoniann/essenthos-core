@@ -276,6 +276,14 @@ internal record EntityResponse(
     /// </summary>
     public EntityLocationResponse? Location { get; init; }
 
+    /// <summary>
+    /// Every answer the place's gazetteer records to where it was, the likeliest first: the site
+    /// <see cref="Location"/> is, the other sites proposed for it, an area round one, another ancient
+    /// place it is taken to be, or that it is no located place at all. Null on every person and
+    /// people, and on a place its gazetteer does not identify.
+    /// </summary>
+    public IList<PlaceCandidateResponse>? Locations { get; init; }
+
     /// <summary>The name in the language asked for, as on the index; null where there is none.</summary>
     public string? LocalName { get; init; }
 
@@ -419,7 +427,94 @@ internal record PlacePointResponse(
 }
 
 /// <param name="Datasets">Whose points these are, as declared dataset ids, for the credit a map owes.</param>
-internal record PlaceMapResponse(int Total, IList<string> Datasets, IList<PlacePointResponse> Items);
+internal record PlaceMapResponse(int Total, IList<string> Datasets, IList<PlacePointResponse> Items)
+{
+    /// <summary>
+    /// Only when asked for: every other site proposed for a place, beside the one its point is. Null
+    /// otherwise, so the map that draws the likeliest sites alone does not carry them.
+    /// </summary>
+    public IList<PlaceVariantResponse>? Variants { get; init; }
+
+    /// <summary>
+    /// Only when variants are asked for: the places some of whose proposed sites are on the map
+    /// although the likeliest answer puts them at none, so a variant can be named and filtered.
+    /// </summary>
+    public IList<PlaceUnlocatedResponse>? Unlocated { get; init; }
+}
+
+/// <summary>
+/// A site proposed for a place other than its likeliest one, for the map.
+/// </summary>
+/// <param name="Slug">The place it is proposed for.</param>
+/// <param name="Site">What the site is called today, as the gazetteer names it.</param>
+/// <param name="Kind">What the point stands for, as <see cref="PlacePointResponse.Kind"/>.</param>
+/// <param name="Confidence">The gazetteer's score for this answer over a thousand, as on the point.</param>
+internal record PlaceVariantResponse(string Slug, string? Site, double Lon, double Lat, string Kind, double Confidence)
+{
+    /// <summary>How far round the point the place is taken to lie, in kilometres, where the gazetteer says.</summary>
+    public double? RadiusKm { get; init; }
+}
+
+/// <summary>A place on the map only through its proposed sites, named and counted as a point is.</summary>
+internal record PlaceUnlocatedResponse(string Slug, string Name, int References, IList<int> Chapters)
+{
+    public string? PlaceKind { get; init; }
+
+    public string? LocalName { get; init; }
+
+    public bool NameFromSource { get; init; }
+}
+
+/// <summary>
+/// One answer a place's gazetteer records to where it was, ranked with the others by its score.
+/// </summary>
+/// <param name="Site">
+/// What the site is called today, as the gazetteer names it — <c>Jebel Musa</c>. Null for an answer
+/// that is no site.
+/// </param>
+/// <param name="Lon">Null where the answer is no site or its point is not shown (<paramref name="Withheld"/>).</param>
+/// <param name="Kind">What the point stands for, as on <see cref="EntityLocationResponse"/>; null with no point.</param>
+/// <param name="RadiusKm">
+/// How far round the point the place is taken to lie, in kilometres, where the gazetteer gives a size.
+/// </param>
+/// <param name="SiteType">What is at the site, in the gazetteer's words: <c>mountain</c>, <c>region</c>.</param>
+/// <param name="Relation">
+/// How the place stands to the site where it is not the site itself: <c>near</c>, <c>along</c>,
+/// <c>on</c>, <c>in</c> or <c>around</c>. Null where it is the site.
+/// </param>
+/// <param name="Special">
+/// For an answer that is no site: <c>not-a-place</c>, <c>not-a-proper-name</c>, <c>unknown-place</c>,
+/// <c>nonspecific-place</c> or <c>multiple-locations</c>.
+/// </param>
+/// <param name="Withheld">True for a site the gazetteer names whose point this corpus does not hold.</param>
+/// <param name="Confidence">
+/// The gazetteer's score for the answer over a thousand: how much of current scholarship takes it.
+/// Below zero where more of it rejects the answer than holds it.
+/// </param>
+/// <param name="Likeliest">True for the first answer, the one the place's point is where it has one.</param>
+/// <param name="Grounds">
+/// On whose authority the answer is given, the most cited first: <c>traditional</c> (a tradition
+/// older than 1800), <c>usually</c> (scholars generally), <c>scholar</c> (one scholar),
+/// <c>preserved</c> (the modern name keeps the ancient one), <c>parallel</c> (a parallel passage),
+/// <c>variant</c> (a manuscript or translation reads it), <c>old</c> (once held, no longer).
+/// </param>
+internal record PlaceCandidateResponse(
+    string? Site,
+    double? Lon,
+    double? Lat,
+    string? Kind,
+    double? RadiusKm,
+    string? SiteType,
+    string? Relation,
+    string? Special,
+    bool Withheld,
+    double Confidence,
+    bool Likeliest,
+    IList<string> Grounds)
+{
+    /// <summary>The ancient place this answer takes the place to be, where it is that: Babylon of Revelation, Rome.</summary>
+    public EntityTribeResponse? Through { get; init; }
+}
 
 /// <param name="Confidence">
 /// How sure, and null exactly where a person or a source stated it rather than a process concluding

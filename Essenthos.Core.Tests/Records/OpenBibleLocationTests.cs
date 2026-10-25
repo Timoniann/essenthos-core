@@ -140,10 +140,12 @@ public sealed class OpenBibleLocationTests : IDisposable
 
         var reading = OpenBibleLocationLoader.Read(ancient, modern);
 
-        reading.Located.Should().HaveCount(1_311);
-        reading.OpenStreetMap.Should().Be(20);
+        reading.Located.Should().HaveCount(1_281);
+        reading.OpenStreetMap.Should().Be(19);
         reading.Commercial.Should().Be(4);
-        reading.Unidentified.Should().Be(7);
+        reading.NoSite.Should().Be(37);
+        reading.Unidentified.Should().Be(1);
+        reading.Candidates.Values.Sum(answers => answers.Count).Should().Be(4_448);
 
         var credited = File.ReadLines(modern)
             .Select(line => JsonDocument.Parse(line).RootElement)
@@ -155,6 +157,28 @@ public sealed class OpenBibleLocationTests : IDisposable
         credited.Should().NotBeEmpty();
         reading.Located.Where(l => credited.Contains(l.ModernId)).Should().BeEmpty();
         reading.Located.Should().OnlyContain(l => l.CoordinatesSource != "osm" && l.CoordinatesSource != "google_maps");
+    }
+
+    /// <summary>
+    /// Mount Sinai's likeliest site is Jebel Musa; the others the gazetteer scores are held below it,
+    /// Arabia's Jabal al Lawz among them, and each answer's point is its own site's.
+    /// </summary>
+    [Fact]
+    public void MountSinaiKeepsEverySiteTheGazetteerProposes()
+    {
+        var reading = OpenBibleLocationLoader.Read(
+            Path.Combine(TestResources.OpenBibleFolder, "ancient.jsonl"),
+            Path.Combine(TestResources.OpenBibleFolder, "modern.jsonl"));
+
+        var sinai = reading.Candidates["abfba2a"];
+
+        sinai.Should().HaveCount(14);
+        (sinai[0].Site, sinai[0].Score, sinai[0].Longitude, sinai[0].Latitude)
+            .Should().Be(("Jebel Musa", 465, 33.973333, 28.539722));
+        sinai[0].Grounds.Should().StartWith("traditional");
+        sinai.Select(c => c.Site).Should().Contain(["Har Karkom", "Jabal al Lawz"]);
+        sinai.Select(c => c.Score).Should().BeInDescendingOrder();
+        reading.Located.Single(l => l.PlaceId == "abfba2a").ModernId.Should().Be("mb374b4");
     }
 
     [Fact]

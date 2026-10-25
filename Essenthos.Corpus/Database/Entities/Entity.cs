@@ -119,6 +119,9 @@ public class Entity
     /// <summary>Where a place is, as one point, when a source says so under terms that allow it.</summary>
     public PlaceLocation? Location { get; set; }
 
+    /// <summary>Every site its gazetteer proposes for a place, the likeliest first.</summary>
+    public ICollection<PlaceCandidate> Candidates { get; set; } = [];
+
     /// <summary>Its pictures, each with whose it is and under what licence.</summary>
     public ICollection<EntityImage> Images { get; set; } = [];
 
@@ -149,8 +152,10 @@ public class Entity
 /// </para>
 ///
 /// <para>
-/// Only the best identification, and none where that one is not allowed: falling back to the
-/// second-best would put a place where its own source thinks it probably is not.
+/// Only the best answer, and none where that one is not allowed or is no site at all — the
+/// gazetteer's likeliest answer for Bether is that it is not a place: falling back to the
+/// second-best would put a place where its own source thinks it probably is not. Every answer,
+/// that one included, is a <see cref="PlaceCandidate"/>.
 /// </para>
 /// </summary>
 public class PlaceLocation
@@ -187,6 +192,91 @@ public class PlaceLocation
     public required string Source { get; set; }
 
     public override string ToString() => $"PlaceLocation({EntityId} at {Longitude},{Latitude})";
+}
+
+/// <summary>
+/// One answer its gazetteer records to where a place was: a modern site, an area round one, another
+/// ancient place it is taken to be, or that it is no located place at all. Every answer the gazetteer
+/// scores is held, the doubted ones too, ranked by its own score; <see cref="PlaceLocation"/> is the
+/// first of them, where that first one is a point the terms allow.
+/// </summary>
+public class PlaceCandidate
+{
+    public int EntityId { get; set; }
+
+    public Entity? Entity { get; set; }
+
+    /// <summary>0 for the answer the gazetteer scores highest, then down its scores.</summary>
+    public int Rank { get; set; }
+
+    /// <summary>
+    /// The gazetteer's score, read as thousandths as <see cref="PlaceLocation.Score"/> is: how much of
+    /// current scholarship takes this answer. Below zero where more of it rejects the answer than holds it.
+    /// </summary>
+    public int Score { get; set; }
+
+    /// <summary>The gazetteer's identifier for the modern site; null for an answer that is no site.</summary>
+    public string? ModernId { get; set; }
+
+    /// <summary>What the site is called today, as the gazetteer names it: <c>Jebel Musa</c>.</summary>
+    public string? Site { get; set; }
+
+    /// <summary>Null where the answer is no site, or the terms do not allow its point to be held.</summary>
+    public double? Longitude { get; set; }
+
+    public double? Latitude { get; set; }
+
+    /// <summary>What the point stands for, in <see cref="PlaceLocation.Kind"/>'s four words; null with no point.</summary>
+    public string? Kind { get; set; }
+
+    /// <summary>
+    /// How far round the point the place is taken to lie, in metres, where the gazetteer gives a size:
+    /// a circle for an answer it can only put somewhere about a site, or for the reach of a region.
+    /// </summary>
+    public int? RadiusMeters { get; set; }
+
+    /// <summary>What the gazetteer says is at the site: <c>mountain</c>, <c>settlement</c>, <c>region</c>.</summary>
+    public string? SiteType { get; set; }
+
+    /// <summary>
+    /// How the place stands to the site where it is not the site itself: <c>near</c>, <c>along</c> a
+    /// river, <c>on</c> a mountain, <c>in</c> it, or the land <c>around</c> it.
+    /// </summary>
+    public string? Relation { get; set; }
+
+    /// <summary>
+    /// The gazetteer's identifier of the ancient place this answer takes the place to be — Babylon of
+    /// Revelation another name for Rome — where the answer is that and not a site of its own.
+    /// </summary>
+    public string? ThroughOpenBibleId { get; set; }
+
+    /// <summary>
+    /// For an answer that is no site: <c>not-a-place</c>, <c>not-a-proper-name</c>,
+    /// <c>unknown-place</c>, <c>nonspecific-place</c> or <c>multiple-locations</c>.
+    /// </summary>
+    public string? Special { get; set; }
+
+    /// <summary>
+    /// Why a site's point is not held: <c>openstreetmap</c> where the gazetteer credits it to
+    /// OpenStreetMap, <c>commercial</c> where it was read off a commercial map. Null otherwise.
+    /// </summary>
+    public string? Withheld { get; set; }
+
+    /// <summary>
+    /// On what authority the answer is given, the gazetteer's own tags, the most cited first:
+    /// <c>traditional</c> (a tradition older than 1800), <c>usually</c> (scholars generally),
+    /// <c>scholar</c> (one scholar), <c>preserved</c> (the modern name keeps the ancient one),
+    /// <c>parallel</c> (a parallel passage), <c>variant</c> (a manuscript or translation reads it),
+    /// <c>old</c> (once held, no longer).
+    /// </summary>
+    public List<string> Grounds { get; set; } = [];
+
+    /// <summary>Whom the gazetteer credits for the coordinates, as on <see cref="PlaceLocation"/>.</summary>
+    public string? CoordinatesSource { get; set; }
+
+    public required string Source { get; set; }
+
+    public override string ToString() => $"PlaceCandidate({EntityId} #{Rank} {Site ?? Special})";
 }
 
 /// <summary>

@@ -238,6 +238,7 @@ internal sealed class DuplicateRecordLoader(AppDbContext db, ILogger<DuplicateRe
         MoveUnlessHeld("entity_claim", "c.method = o.method AND c.source = o.source"),
         MoveUnlessHeld("entity_name_form", "c.language = o.language AND c.grammatical_case = o.grammatical_case"),
         MoveUnlessHeld("place_location", "true"),
+        MoveUnlessHeld("place_candidate", "true"),
         """
         UPDATE entity_rendering r SET occurrences = r.occurrences + o.occurrences
         FROM entity_rendering o JOIN folding f ON o.entity_id = f.folded
