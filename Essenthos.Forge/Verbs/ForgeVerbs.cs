@@ -192,7 +192,7 @@ internal static partial class ForgeVerbs
         new("dillmann", "", "Load Dillmann's lexicon of Ge'ez.", Dillmann),
         new("dillmann-measure", "[--sample <file>]", "How many Ge'ez words reach Dillmann's lexicon. Reads only.",
             DillmannMeasure),
-        new("images", "", "Load the pictures of people and places again.", Images),
+        new("images", "", "Draw the things whose 3D model changed, then load the pictures of people, places and things again.", Images),
         new("wikipedia", "", "Link the records to their Wikipedia articles, and list the ones that cannot be told from a namesake.", Wikipedia),
         new("spell", "", "Count how each text spells each name.", Spell),
         new("lexicon-relations", "", "Read what Strong's entries say about each other.", LexiconRelations),

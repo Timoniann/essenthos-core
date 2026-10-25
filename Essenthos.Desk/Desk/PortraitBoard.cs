@@ -68,7 +68,7 @@ internal sealed record PortraitShare(string Slug, string Name, string? LocalName
 /// <param name="Brief">What the briefs file says about the person, as it says it, or null.</param>
 internal sealed record PortraitDetail(PortraitPerson Person, JsonNode? Brief, IReadOnlyList<PortraitImage> Images);
 
-/// <param name="Kind"><c>person</c> or <c>place</c>.</param>
+/// <param name="Kind"><c>person</c>, <c>place</c> or <c>object</c>.</param>
 /// <param name="Leading">The file the page leads with now, for a thumbnail, or null.</param>
 /// <param name="Pictures">How many pictures the corpus holds of it.</param>
 /// <param name="Chosen">How many of them the owner chose something about.</param>
@@ -129,6 +129,11 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
 
     private const string Public = "public";
 
+    /// <summary>A thing drawn from its 3D model, which lives in its own folder of the images.</summary>
+    private const string Rendered = "rendered";
+
+    private const string RenderedFolder = "models/";
+
     private static readonly JsonDocumentOptions Lenient = new()
     {
         AllowTrailingCommas = true,
@@ -165,13 +170,13 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
             await Images(row.Id, slug, manifest, brief, cancellationToken));
     }
 
-    /// <summary>Every person and place with a picture, or with a choice the owner made about one.</summary>
+    /// <summary>Every person, place and thing with a picture, or with a choice the owner made about one.</summary>
     public async Task<PicturedResponse> Pictured(CancellationToken cancellationToken)
     {
         var choices = PictureChoices.Read(paths);
         var chosen = choices.Keys.ToList();
         var rows = await Summaries(
-            db.Entities.Where(e => (e.Kind == EntityKind.Person || e.Kind == EntityKind.Place)
+            db.Entities.Where(e => (e.Kind == EntityKind.Person || e.Kind == EntityKind.Place || e.Kind == EntityKind.Object)
                                    && (e.Images.Any() || chosen.Contains(e.Slug))),
             cancellationToken);
         return new PicturedResponse(rows
@@ -241,7 +246,8 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
 
         foreach (var choice in choices.Values.Where(c => images.All(i => i.File != c.File)))
         {
-            images.Add(new PortraitImage(choice.File, Public, "gallery", null, null, null, null, false, OnDisk(choice.File),
+            var kind = choice.File.StartsWith(RenderedFolder, StringComparison.Ordinal) ? Rendered : Public;
+            images.Add(new PortraitImage(choice.File, kind, "gallery", null, null, null, null, false, OnDisk(choice.File),
                 false, null, choice, null, []));
         }
 
@@ -340,7 +346,7 @@ internal sealed class PortraitBoard(AppDbContext db, DeskPaths paths)
         row.Slug,
         row.Name,
         row.LocalName,
-        row.Kind == EntityKind.Place ? "place" : "person",
+        row.Kind switch { EntityKind.Place => "place", EntityKind.Object => "object", _ => "person" },
         row.Distinguisher,
         choices.FirstOrDefault(c => c.Primary)?.File ?? row.Leading,
         row.Pictures,

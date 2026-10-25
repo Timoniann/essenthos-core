@@ -93,11 +93,15 @@ internal static class ImageChoices
         return kept.OrderBy(c => chosen.Contains((c.Slug, c.File)) ? 0 : 1).ToList();
     }
 
+    /// <summary>The pictures the owner chose to lead with, by slug and file, leaving out any he also hid.</summary>
+    public static IReadOnlySet<(string Slug, string File)> Leading(ImageChoiceFile choices) =>
+        choices.Images.Where(c => c.Primary == true && c.Hidden != true).Select(c => (c.Entity, Normal(c.File))).ToHashSet();
+
     private static string Normal(string file) => file.Replace('\\', '/');
 }
 
 internal sealed record ImageChoiceFile(IReadOnlyList<ImageChoice> Images);
 
-/// <param name="Entity">The slug of the person or place.</param>
+/// <param name="Entity">The slug of the person, place or thing.</param>
 /// <param name="File">The picture's path under the images folder.</param>
 internal sealed record ImageChoice(string Entity, string File, bool? Hidden = null, bool? Primary = null, string? Caption = null);

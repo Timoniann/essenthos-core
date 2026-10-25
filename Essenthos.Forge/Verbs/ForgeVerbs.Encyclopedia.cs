@@ -45,12 +45,14 @@ internal static partial class ForgeVerbs
     }
 
     /// <summary>
-    /// The pictures of people and places, drawn again from the images folder and its manifests, so a new
-    /// portrait or a corrected credit arrives without reading the corpus again.
+    /// The pictures of people, places and things, drawn again from the images folder and its manifests,
+    /// so a new portrait or a corrected credit arrives without reading the corpus again; first the
+    /// pictures of the things whose 3D model changed are drawn from it again.
     /// </summary>
     private static async Task<int> Images(ForgeRun forge, string[] args)
     {
         using var imagesScope = forge.Scope();
+        Console.WriteLine(await imagesScope.ServiceProvider.GetRequiredService<ModelPictures>().Draw(forge.Resources));
         Console.WriteLine(await imagesScope.ServiceProvider.GetRequiredService<EntityImageLoader>().Load(forge.Resources));
         return 0;
     }
