@@ -28,6 +28,30 @@ internal static partial class EncyclopediaEndpoints
     }
 
     /// <summary>
+    /// Which part of the list a place belongs to: <see cref="Story"/>, the places the story happens
+    /// at, or <see cref="OtherBooks"/>, places only named alongside the record outside the books that
+    /// tell a story.
+    /// </summary>
+    internal static class StoryGroups
+    {
+        public const string Story = "story";
+        public const string OtherBooks = "other-books";
+    }
+
+    private const int Genesis = 1;
+    private const int Esther = 17;
+    private const int Matthew = 40;
+    private const int Acts = 44;
+
+    /// <summary>
+    /// Genesis to Esther, the four Gospels and Acts: the books that tell what happened where. A
+    /// place named with someone in a psalm, a prophecy or a letter's greeting is not where their
+    /// story happens.
+    /// </summary>
+    internal static bool TellsAStory(int canonicalBook) =>
+        canonicalBook is >= Genesis and <= Esther or >= Matthew and <= Acts;
+
+    /// <summary>
     /// The ties to a place that say what it was in someone's life. <c>from-place</c> is where the
     /// text says they came from, which is where they lived.
     /// </summary>
@@ -65,7 +89,9 @@ internal static partial class EncyclopediaEndpoints
     /// <summary>
     /// Every place named in a verse that also names this record, and every place its dated events
     /// happen at or its ties put it in, whether or not a verse names the two together. Each with
-    /// how many verses name both, the first of them, and what the place was in the story.
+    /// how many verses name both, the first of them, what the place was in the story, and whether
+    /// it is a place of the story at all: one a role gives or a verse of a book that tells a story
+    /// names, before those only named together elsewhere.
     ///
     /// The verses are the ones the record's own list of verses shows, so a count here is a count
     /// of verses a reader can find there. The places named alongside come from one query, a
@@ -165,14 +191,24 @@ internal static partial class EncyclopediaEndpoints
             places.Count,
             [
                 .. places
-                    .Select(p => (Place: p, Addresses: addresses.GetValueOrDefault(p.Id) ?? []))
-                    .OrderByDescending(p => p.Addresses.Count)
+                    .Select(p =>
+                    {
+                        var shared = addresses.GetValueOrDefault(p.Id) ?? [];
+                        var told = shared.Count(address => TellsAStory(address / BookStride));
+                        var story = told > 0 || !roles[p.Id].SetEquals([StoryRoles.NamedTogether]);
+                        return (Place: p, Addresses: shared, Told: told, Story: story);
+                    })
+                    .OrderByDescending(p => p.Story)
+                    .ThenByDescending(p => p.Told)
+                    .ThenByDescending(p => p.Addresses.Count)
                     .ThenBy(p => local.GetValueOrDefault(p.Place.Id) ?? p.Place.Name, StringComparer.CurrentCulture)
                     .ThenBy(p => p.Place.Slug, StringComparer.Ordinal)
                     .Select(p => new EntityPlaceResponse(
                         p.Place.Slug,
                         p.Place.Name,
+                        p.Story ? StoryGroups.Story : StoryGroups.OtherBooks,
                         p.Addresses.Count,
+                        p.Told,
                         [.. p.Addresses.Take(take).Select(VerseAt)],
                         [.. StoryRoles.Order.Where(roles[p.Place.Id].Contains)])
                     {

@@ -19,6 +19,9 @@ public sealed class StoryPlacesTests : IDisposable
     private const int FirstSamuel = 9;
     private const int SecondSamuel = 10;
     private const int FirstKings = 11;
+    private const int Psalms = 19;
+    private const int Acts = 44;
+    private const int Romans = 45;
 
     private readonly AppDbContext _db;
     private readonly IDbContextTransaction _transaction;
@@ -150,6 +153,101 @@ public sealed class StoryPlacesTests : IDisposable
         var places = await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, "ukr", "ukr", 20);
 
         places.Items.Single(p => p.Slug == "jerusalem").LocalName.Should().Be("Єрусалим");
+    }
+
+    [Theory]
+    [InlineData(1, true)]
+    [InlineData(17, true)]
+    [InlineData(18, false)]
+    [InlineData(19, false)]
+    [InlineData(23, false)]
+    [InlineData(39, false)]
+    [InlineData(40, true)]
+    [InlineData(43, true)]
+    [InlineData(44, true)]
+    [InlineData(45, false)]
+    [InlineData(66, false)]
+    [InlineData(73, false)]
+    public void GenesisToEstherTheGospelsAndActsTellAStory(int book, bool tells) =>
+        EncyclopediaEndpoints.TellsAStory(book).Should().Be(tells);
+
+    [Fact]
+    public async Task EveryPlaceOfTheStoryIsInTheStoryGroup()
+    {
+        var places = await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20);
+
+        places.Items.Should().OnlyContain(p => p.Group == "story");
+        places.Items.Select(p => (p.Slug, p.StoryVerses)).Should().Equal(
+            ("jerusalem", 3), ("bethlehem", 1), ("hebron", 1), ("ziklag", 0));
+    }
+
+    [Fact]
+    public async Task APlaceOnlyNamedTogetherOutsideTheStoryBooksComesAfterTheStory()
+    {
+        var zion = Place("zion", "Zion");
+        var rome = Place("rome", "Rome");
+        var antioch = Place("antioch", "Antioch");
+        _db.SaveChanges();
+        foreach (var verse in new[] { 2, 3, 4, 5, 6 })
+        {
+            Verse(_david, Psalms, 2, verse);
+            Verse(zion, Psalms, 2, verse);
+        }
+
+        Verse(_david, Romans, 1, 7);
+        Verse(rome, Romans, 1, 7);
+        Verse(_david, Acts, 11, 26);
+        Verse(antioch, Acts, 11, 26);
+        _db.SaveChanges();
+
+        var places = await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20);
+
+        places.Items.Select(p => (p.Slug, p.Group, p.SharedVerses, p.StoryVerses)).Should().Equal(
+            ("jerusalem", "story", 3, 3),
+            ("antioch", "story", 1, 1),
+            ("bethlehem", "story", 1, 1),
+            ("hebron", "story", 1, 1),
+            ("ziklag", "story", 0, 0),
+            ("zion", "other-books", 5, 0),
+            ("rome", "other-books", 1, 0));
+        places.Total.Should().Be(7);
+        places.Items.Single(p => p.Slug == "zion").Roles.Should().Equal("named-together");
+    }
+
+    [Fact]
+    public async Task APlaceOfTheStoryCountsItsVersesInEachGroupOfBooks()
+    {
+        Verse(_david, Psalms, 122, 2);
+        Verse(_david, Psalms, 122, 3);
+        var jerusalem = _db.Entities.Local.Single(e => e.Slug == "jerusalem");
+        Verse(jerusalem, Psalms, 122, 2);
+        Verse(jerusalem, Psalms, 122, 3);
+        _db.SaveChanges();
+
+        var place = (await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20))
+            .Items.Single(p => p.Slug == "jerusalem");
+
+        place.Group.Should().Be("story");
+        (place.SharedVerses, place.StoryVerses).Should().Be((5, 3));
+        place.Verses.Select(v => v.BookOrdinal).Should().Equal(SecondSamuel, SecondSamuel, FirstKings, Psalms, Psalms);
+    }
+
+    [Fact]
+    public async Task APlaceARoleGivesIsInTheStoryWhereverItsVersesAre()
+    {
+        var anathoth = Place("anathoth", "Anathoth");
+        _db.SaveChanges();
+        Verse(_david, 24, 1, 1);
+        Verse(anathoth, 24, 1, 1);
+        Tie(_david, anathoth, DescriptorRelations.FromPlace);
+        _db.SaveChanges();
+
+        var place = (await EncyclopediaEndpoints.StoryPlaces(_db, _david.Id, null, null, 20))
+            .Items.Single(p => p.Slug == "anathoth");
+
+        place.Group.Should().Be("story");
+        (place.SharedVerses, place.StoryVerses).Should().Be((1, 0));
+        place.Roles.Should().Equal("lived");
     }
 
     [Fact]
