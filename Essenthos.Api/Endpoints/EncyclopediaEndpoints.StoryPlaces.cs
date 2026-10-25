@@ -28,6 +28,66 @@ internal static partial class EncyclopediaEndpoints
     }
 
     /// <summary>
+    /// Which part of the list a place belongs to: <see cref="Story"/>, the places the story happens
+    /// at, or <see cref="OtherBooks"/>, places only named alongside the record outside the books that
+    /// tell a story.
+    /// </summary>
+    internal static class StoryGroups
+    {
+        public const string Story = "story";
+        public const string OtherBooks = "other-books";
+    }
+
+    private const int Genesis = 1;
+    private const int Esther = 17;
+    private const int Matthew = 40;
+    private const int Acts = 44;
+
+    private const int Romans = 45;
+    private const int Philemon = 57;
+
+    /// <summary>
+    /// The books named after the person they are for, outside those that tell a story already: a
+    /// prophet's own book, and the letters that bear their writer's name, Paul's from Romans to
+    /// Philemon. Hebrews is not Paul's by name, Lamentations is not Jeremiah's, and Revelation is not
+    /// named after John. Keyed by the record's address, which is stable across rebuilds.
+    /// </summary>
+    private static readonly Dictionary<string, int[]> OwnBooks = new(StringComparer.Ordinal)
+    {
+        ["job"] = [18],
+        ["isaiah"] = [23],
+        ["jeremiah-6"] = [24],
+        ["ezekiel"] = [26],
+        ["daniel-2"] = [27],
+        ["hosea"] = [28],
+        ["joel-11"] = [29],
+        ["amos"] = [30],
+        ["obadiah-12"] = [31],
+        ["jonah"] = [32],
+        ["micah-4"] = [33],
+        ["nahum"] = [34],
+        ["habakkuk"] = [35],
+        ["zephaniah-3"] = [36],
+        ["haggai"] = [37],
+        ["zechariah-13"] = [38],
+        ["malachi"] = [39],
+        ["saul-2"] = [.. Enumerable.Range(Romans, Philemon - Romans + 1)],
+        ["james-3"] = [59],
+        ["simon"] = [60, 61],
+        ["john-2"] = [62, 63, 64],
+        ["judas-2"] = [65],
+    };
+
+    /// <summary>
+    /// Genesis to Esther, the four Gospels and Acts: the books that tell what happened where; and,
+    /// for the person a book is named after, that book too. A place named with someone in a psalm,
+    /// in another's prophecy or in a letter's greeting is not where their story happens.
+    /// </summary>
+    internal static bool TellsAStory(int canonicalBook, string? slug = null) =>
+        canonicalBook is >= Genesis and <= Esther or >= Matthew and <= Acts
+        || (slug is not null && OwnBooks.TryGetValue(slug, out var own) && own.Contains(canonicalBook));
+
+    /// <summary>
     /// The ties to a place that say what it was in someone's life. <c>from-place</c> is where the
     /// text says they came from, which is where they lived.
     /// </summary>
@@ -65,7 +125,9 @@ internal static partial class EncyclopediaEndpoints
     /// <summary>
     /// Every place named in a verse that also names this record, and every place its dated events
     /// happen at or its ties put it in, whether or not a verse names the two together. Each with
-    /// how many verses name both, the first of them, and what the place was in the story.
+    /// how many verses name both, the first of them, what the place was in the story, and whether
+    /// it is a place of the story at all: one a role gives or a verse of a book that tells a story
+    /// (or of the record's own book) names, before those only named together elsewhere.
     ///
     /// The verses are the ones the record's own list of verses shows, so a count here is a count
     /// of verses a reader can find there. The places named alongside come from one query, a
@@ -79,6 +141,8 @@ internal static partial class EncyclopediaEndpoints
         int verses,
         CancellationToken cancellationToken = default)
     {
+        var record = await db.Entities.Where(e => e.Id == entityId).Select(e => e.Slug)
+            .FirstOrDefaultAsync(cancellationToken);
         var shared = await SharedAddresses(db, entityId).ToListAsync(cancellationToken);
         var addresses = shared
             .GroupBy(row => row.EntityId)
@@ -165,14 +229,24 @@ internal static partial class EncyclopediaEndpoints
             places.Count,
             [
                 .. places
-                    .Select(p => (Place: p, Addresses: addresses.GetValueOrDefault(p.Id) ?? []))
-                    .OrderByDescending(p => p.Addresses.Count)
+                    .Select(p =>
+                    {
+                        var shared = addresses.GetValueOrDefault(p.Id) ?? [];
+                        var told = shared.Count(address => TellsAStory(address / BookStride, record));
+                        var story = told > 0 || !roles[p.Id].SetEquals([StoryRoles.NamedTogether]);
+                        return (Place: p, Addresses: shared, Told: told, Story: story);
+                    })
+                    .OrderByDescending(p => p.Story)
+                    .ThenByDescending(p => p.Told)
+                    .ThenByDescending(p => p.Addresses.Count)
                     .ThenBy(p => local.GetValueOrDefault(p.Place.Id) ?? p.Place.Name, StringComparer.CurrentCulture)
                     .ThenBy(p => p.Place.Slug, StringComparer.Ordinal)
                     .Select(p => new EntityPlaceResponse(
                         p.Place.Slug,
                         p.Place.Name,
+                        p.Story ? StoryGroups.Story : StoryGroups.OtherBooks,
                         p.Addresses.Count,
+                        p.Told,
                         [.. p.Addresses.Take(take).Select(VerseAt)],
                         [.. StoryRoles.Order.Where(roles[p.Place.Id].Contains)])
                     {
