@@ -511,7 +511,7 @@ public class AppDbContext : DbContext
 
             entity.ToTable("entity_image", t =>
             {
-                t.HasCheckConstraint("ck_entity_image_kind", "kind IN ('public', 'generated')");
+                t.HasCheckConstraint("ck_entity_image_kind", "kind IN ('public', 'generated', 'rendered')");
                 t.HasCheckConstraint("ck_entity_image_role", "role IN ('primary', 'gallery')");
                 t.HasCheckConstraint("ck_entity_image_credit", "length(credit) > 0 AND length(licence) > 0");
                 t.HasCheckConstraint("ck_entity_image_size", "width > 0 AND height > 0");

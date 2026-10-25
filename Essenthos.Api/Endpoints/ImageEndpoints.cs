@@ -57,6 +57,9 @@ internal static class ImageEndpoints
 
     public const string Generated = "generated";
 
+    /// <summary>Ours too: a thing drawn from the site's own 3D model of it.</summary>
+    public const string Rendered = "rendered";
+
     /// <summary>
     /// How a path is compared with the folder it must stay in: as the file system compares names. On
     /// Linux <c>../IMAGES</c> is another folder, and ignoring case there would let a path into it.
@@ -190,7 +193,7 @@ internal static class ImageEndpoints
 
         return
         [
-            .. images.Select(i => i.Kind == Generated
+            .. images.Select(i => i.Kind is Generated or Rendered
                 ? new EntityImageResponse(
                     Url(i.File, i.Digest), i.Kind, i.Role, i.Width, i.Height, null, null, null, null, null, null,
                     i.FocusX, i.FocusY)
@@ -242,7 +245,10 @@ internal static class ImageEndpoints
 /// line, and every field of one is null on it.
 /// </summary>
 /// <param name="Url">Where it is served, relative to the API's own address.</param>
-/// <param name="Kind"><c>public</c> for an openly licensed work of somebody else's, <c>generated</c> for ours.</param>
+/// <param name="Kind">
+/// <c>public</c> for an openly licensed work of somebody else's, <c>generated</c> for ours, <c>rendered</c>
+/// for ours drawn from a thing's 3D model.
+/// </param>
 /// <param name="Role"><c>primary</c> for the picture a page leads with, <c>gallery</c> for the rest.</param>
 /// <param name="Caption">What it shows, fit to be its alternative text. Null where the source says nothing.</param>
 /// <param name="Credit">Who made it, as its source asks to be credited. Null on ours.</param>

@@ -655,6 +655,10 @@ internal sealed class DatasetLoader(
                     Files = ["OpenBibleCrossReferences", "TreasuryOfScriptureKnowledge"],
                 },
                 new LoadStep("naming-verses", TellTheVersesThatNameFromThoseThatConcern),
+                new LoadStep("model-pictures", cancellationToken => DrawTheThingsFromTheirModels(resources, cancellationToken))
+                {
+                    Files = ModelPictures.Files(configuration, resources),
+                },
                 new LoadStep("images", cancellationToken => PictureThePeopleAndPlaces(resources, cancellationToken))
                 {
                     Files = ["Images", "OpenBible", $"Essenthos/{ImageChoices.FileName}"],
@@ -2843,6 +2847,18 @@ internal sealed class DatasetLoader(
     /// The pictures of people and places, each with its credit. Last, because it pictures whatever
     /// records the steps before it settled on, found by slug and by the gazetteer's identifier.
     /// </summary>
+    /// <summary>
+    /// The picture of each thing that has a 3D model, drawn from the model where it changed or has none
+    /// yet, before the pictures are loaded.
+    /// </summary>
+    private async Task DrawTheThingsFromTheirModels(string resources, CancellationToken cancellationToken)
+    {
+        status.Starting("the pictures of things drawn from their models");
+
+        using var scope = services.CreateScope();
+        status.Record(await scope.ServiceProvider.GetRequiredService<ModelPictures>().Draw(resources, cancellationToken));
+    }
+
     private async Task PictureThePeopleAndPlaces(string resources, CancellationToken cancellationToken)
     {
         status.Starting("the pictures of people and places");

@@ -1026,7 +1026,7 @@ namespace Essenthos.Core.Migrations
 
                             t.HasCheckConstraint("ck_entity_image_focus", "(focus_x IS NULL OR focus_x BETWEEN 0 AND 1) AND (focus_y IS NULL OR focus_y BETWEEN 0 AND 1)");
 
-                            t.HasCheckConstraint("ck_entity_image_kind", "kind IN ('public', 'generated')");
+                            t.HasCheckConstraint("ck_entity_image_kind", "kind IN ('public', 'generated', 'rendered')");
 
                             t.HasCheckConstraint("ck_entity_image_role", "role IN ('primary', 'gallery')");
 

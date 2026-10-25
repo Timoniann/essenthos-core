@@ -12,6 +12,7 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Places">Place pictures taken from the gazetteer.</param>
 /// <param name="Curated">Pictures taken from the curated list of public works.</param>
 /// <param name="Generated">Our own pictures taken from the generated folder's manifest.</param>
+/// <param name="Rendered">Pictures of things drawn from the site's own 3D models.</param>
 /// <param name="Unlicensed">Pictures left out because their terms are not ones a picture is shown under.</param>
 /// <param name="Uncredited">Pictures left out because nobody is named to credit.</param>
 /// <param name="Missing">Pictures left out because their file is not in the images folder.</param>
@@ -19,10 +20,12 @@ namespace Essenthos.Core.Loading.Encyclopedia;
 /// <param name="Refused">Pictures of God other than the glory, which are never shown.</param>
 /// <param name="Withheld">Our own pictures the owner has not approved yet or has rejected.</param>
 /// <param name="Hidden">Pictures the owner hid in his console.</param>
+/// <param name="Unthings">Pictures drawn from a model of a record that is not a thing, which only things are given.</param>
 internal sealed record EntityImageOutcome(
     int Places,
     int Curated,
     int Generated,
+    int Rendered,
     int Unlicensed,
     int Uncredited,
     int Missing,
@@ -30,19 +33,22 @@ internal sealed record EntityImageOutcome(
     int Refused,
     int Withheld,
     int Hidden,
+    int Unthings,
     TimeSpan Elapsed)
 {
     public override string ToString() =>
-        $"{Places} place pictures from the gazetteer, {Curated} curated public works and {Generated} of our " +
-        $"own; left out: {Unlicensed} under terms that do not allow showing them, {Uncredited} with nobody " +
-        $"to credit, {Missing} whose file is not in the images folder, {Unheld} of records the " +
-        $"encyclopedia does not hold, {Refused} of God that were not the glory, {Withheld} of our own not " +
-        $"approved and {Hidden} the owner hid, in {Elapsed}";
+        $"{Places} place pictures from the gazetteer, {Curated} curated public works, {Generated} of our " +
+        $"own and {Rendered} drawn from the models of things; left out: {Unlicensed} under terms that do " +
+        $"not allow showing them, {Uncredited} with nobody to credit, {Missing} whose file is not in the " +
+        $"images folder, {Unheld} of records the encyclopedia does not hold, {Refused} of God that were not " +
+        $"the glory, {Withheld} of our own not approved, {Hidden} the owner hid and {Unthings} drawn from a " +
+        $"model of what is not a thing, in {Elapsed}";
 }
 
 /// <summary>
-/// The pictures of people and places: the gazetteer's photograph of each place, a curated list of
-/// public-domain and openly licensed works, and our own generated portraits once there are any.
+/// The pictures of people, places and things: the gazetteer's photograph of each place, a curated list
+/// of public-domain and openly licensed works, our own generated portraits, and the pictures of things
+/// drawn from the site's own 3D models.
 ///
 /// <para>
 /// The files live under <c>Resources/Images</c>, outside the repository like the rest of the corpus
@@ -74,6 +80,13 @@ internal sealed record EntityImageOutcome(
 /// </para>
 ///
 /// <para>
+/// A thing's picture drawn from its 3D model is listed in <c>models/manifest.json</c>, which the
+/// <c>model-pictures</c> step writes (<see cref="ModelPictures"/>). It fills a page only where nothing
+/// else pictures the thing: beside any other picture it joins the gallery, unless the owner chose to
+/// lead with it, and he hides it as he hides any other.
+/// </para>
+///
+/// <para>
 /// <strong>Rebuilt whole on every run.</strong> It is a thousand-odd rows read from three small
 /// descriptions, so a guard asking whether it had already run would only stop a new portrait or a
 /// corrected credit from arriving. Written in one transaction, so a reader never finds a page with
@@ -93,6 +106,9 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
 
     public const string GeneratedFolder = "generated";
 
+    /// <summary>The folder of the pictures drawn from the models, beside their manifest.</summary>
+    public const string RenderedFolder = "models";
+
     public const string ManifestFile = "manifest.json";
 
     private const string CuratedResource = "Essenthos.Core.Loading.Encyclopedia.PublicImages.json";
@@ -103,6 +119,9 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
     public const string Public = "public";
 
     public const string Generated = "generated";
+
+    /// <summary>Ours, drawn from the site's own 3D model of a thing.</summary>
+    public const string Rendered = "rendered";
 
     public const string Primary = "primary";
 
@@ -142,7 +161,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         var depiction = entities.ToDictionary(e => e.Id, e => (e.Kind, e.SourceId));
 
         var candidates = new List<Candidate>();
-        int unlicensed = 0, uncredited = 0, unheld = 0, withheld = 0;
+        int unlicensed = 0, uncredited = 0, unheld = 0, withheld = 0, unthings = 0;
 
         // The curated and generated lists first: somebody chose each of those, so where one names a
         // primary picture for a place it leads over the gazetteer's.
@@ -163,6 +182,12 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                 if (kind == Generated && entry.Review is ImageChoices.Pending or ImageChoices.Rejected)
                 {
                     withheld++;
+                    continue;
+                }
+
+                if (kind == Rendered && entity.Kind != EntityKind.Object)
+                {
+                    unthings++;
                     continue;
                 }
 
@@ -244,8 +269,8 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
                 ancient, images);
         }
 
-        candidates = ImageChoices.Apply(
-            candidates, ImageChoices.Read(Path.Combine(resources, ImageChoices.Folder, ImageChoices.FileName)), out var hidden);
+        var choices = ImageChoices.Read(Path.Combine(resources, ImageChoices.Folder, ImageChoices.FileName));
+        candidates = FillIn(ImageChoices.Apply(candidates, choices, out var hidden), ImageChoices.Leading(choices));
 
         var refused = candidates.RemoveAll(c =>
         {
@@ -307,6 +332,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
             rows.Count(r => r.Source == GazetteerSource),
             rows.Count(r => r.Kind == Public && r.Source != GazetteerSource),
             rows.Count(r => r.Kind == Generated),
+            rows.Count(r => r.Kind == Rendered),
             unlicensed,
             uncredited,
             missing,
@@ -314,9 +340,31 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
             refused,
             withheld,
             hidden,
+            unthings,
             started.Elapsed);
-        logger.LogInformation("Pictured the people and places: {Outcome}", outcome);
+        logger.LogInformation("Pictured the people, places and things: {Outcome}", outcome);
         return outcome;
+    }
+
+    /// <summary>
+    /// The candidates with each picture drawn from a model put where it belongs: leading its thing's
+    /// page where nothing else pictures it, or where the owner chose to lead with it, and then every
+    /// other picture of the thing joins the gallery behind it; joining the gallery after the others
+    /// wherever anything else pictures the thing.
+    /// </summary>
+    internal static List<Candidate> FillIn(IReadOnlyList<Candidate> candidates, IReadOnlySet<(string Slug, string File)> leading)
+    {
+        var chosen = candidates
+            .Where(c => c.Kind == Rendered && leading.Contains((c.Slug, c.File)))
+            .Select(c => c.EntityId)
+            .ToHashSet();
+        var pictured = candidates.Where(c => c.Kind != Rendered).Select(c => c.EntityId).ToHashSet();
+        return candidates
+            .Select(c => c.Kind == Rendered
+                ? c with { Role = chosen.Contains(c.EntityId) || !pictured.Contains(c.EntityId) ? Primary : Gallery }
+                : chosen.Contains(c.EntityId) ? c with { Role = Gallery } : c)
+            .OrderBy(c => c.Kind == Rendered && chosen.Contains(c.EntityId) ? 0 : c.Kind == Rendered ? 2 : 1)
+            .ToList();
     }
 
     /// <summary>Everything a picture's row says, its captions included, as one string to compare.</summary>
@@ -462,7 +510,7 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
         return (rows, missing);
     }
 
-    /// <summary>The curated list inside the assembly, and the generated folder's manifest where there is one.</summary>
+    /// <summary>The curated list inside the assembly, and the generated and the models' manifests where there are any.</summary>
     private static IEnumerable<(ImageManifest Manifest, string Kind)> Manifests(string root)
     {
         using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(CuratedResource)
@@ -473,11 +521,14 @@ internal sealed class EntityImageLoader(AppDbContext db, ILogger<EntityImageLoad
             yield return (Parse(stream, "PublicImages.json"), Public);
         }
 
-        var generated = Path.Combine(root, GeneratedFolder, ManifestFile);
-        if (File.Exists(generated))
+        foreach (var (folder, kind) in new[] { (GeneratedFolder, Generated), (RenderedFolder, Rendered) })
         {
-            using var stream = File.OpenRead(generated);
-            yield return (Parse(stream, generated), Generated);
+            var listed = Path.Combine(root, folder, ManifestFile);
+            if (File.Exists(listed))
+            {
+                using var stream = File.OpenRead(listed);
+                yield return (Parse(stream, listed), kind);
+            }
         }
     }
 
@@ -523,7 +574,7 @@ internal sealed record ImageManifest(
     public string Name { get; init; } = string.Empty;
 }
 
-/// <param name="Entity">The slug of the person or place pictured.</param>
+/// <param name="Entity">The slug of the person, place or thing pictured.</param>
 /// <param name="File">The path under the images folder.</param>
 /// <param name="Download">Where the fetch script takes the file from. Not read by the loader.</param>
 /// <param name="Glory">

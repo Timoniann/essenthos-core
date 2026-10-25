@@ -5,15 +5,17 @@ using Microsoft.EntityFrameworkCore;
 namespace Essenthos.Core.Database.Entities;
 
 /// <summary>
-/// One picture of a person or a place, and whose it is.
+/// One picture of a person, a place or a thing, and whose it is.
 ///
 /// <para>
-/// Two kinds. A <see cref="Kind"/> of <c>public</c> is somebody else's work under an open licence —
+/// Three kinds. A <see cref="Kind"/> of <c>public</c> is somebody else's work under an open licence —
 /// a photograph of the site as it stands today, or an old engraving of the person — and carries its
 /// author, where it was published and its licence, because a picture with no credit under it reads
 /// as ours. <c>generated</c> is ours: the one identity portrait a person may be given so a reader
 /// recognises them at a glance. Its caption, credit, licence and source are our own record of how it
 /// was made, kept here and never shown: a painting plainly is not a photograph, and needs no label.
+/// <c>rendered</c> is ours too: a thing drawn from the site's own 3D model of it, shown where nothing
+/// else pictures the thing, and as bare.
 /// </para>
 ///
 /// <para>
@@ -35,7 +37,10 @@ public class EntityImage
 
     public Entity? Entity { get; set; }
 
-    /// <summary><c>public</c> for an openly licensed work of somebody else's, <c>generated</c> for ours.</summary>
+    /// <summary>
+    /// <c>public</c> for an openly licensed work of somebody else's, <c>generated</c> for ours,
+    /// <c>rendered</c> for ours drawn from a thing's 3D model.
+    /// </summary>
     public required string Kind { get; set; }
 
     /// <summary><c>primary</c> for the one picture a page leads with, <c>gallery</c> for the rest.</summary>
